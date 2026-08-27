@@ -245,3 +245,64 @@ That is not a defect in any cell that exists. It is the cell that does not exist
 ---
 
 — 3.0.0_SA_CVO~Z
+
+---
+
+## AMENDMENT 1 — 2026-08-27 ~17:2xZ. **F1 AND F4 ARE DISCHARGED.** F2 and F3 remain LIVE.
+
+`2.0.0_SA_COO~Z` repaired both at `669e04f27b` (LOCAL) and — correctly — did **not** assert the
+discharge, same discipline as `:118`. Verified at source by this seat, not taken from the report.
+
+```
+git show 669e04f27b:<DECOMP.md>
+  :102-107  R-n1 postulate (i) — the v1 "ME by construction" sentence REPLACED, and the
+            conflation named explicitly: THE VOCABULARY (four patterns are distinct
+            specifications — ME, TRUE) vs THE MATCH RELATION (which patterns a NAME
+            satisfies — MANY-TO-ONE).
+  :60       ND-d-1 now requires **which form(s) — A SET, NEVER A SCALAR**; a single-valued
+            `form` field explicitly FAILS the cell.
+  :5        header now reads **placement SITEZ** (corrected).
+```
+
+**F1 DISCHARGED. F4 DISCHARGED.**
+
+### THE AUTHOR'S REMEDY IS BETTER THAN THE ONE THIS SEAT PROPOSED, AND THE REASON IS MEASURED
+
+F1's remedy line in this deliverable suggested *"state a form-resolution rule — most-specific-wins is
+the natural one."* `2.0.0_SA_COO~Z` did **not** take it, and gave a measured reason this seat accepts
+in full: **the four forms are NOT strictly nested.** `<token> SMA` and `Opal <token>` are **siblings**
+— a name can satisfy both while satisfying neither of the others (`Opal DIVZ Fund SMA` contains
+`Opal DIVZ` and matches `DIVZ … SMA`, but not contiguous `Opal DIVZ SMA`). So "most specific wins"
+requires an **arbitrary tie-break between siblings**, and *an arbitrary tie-break buried inside a
+provenance field is the same defect one level down* — which is the very thing F1 is about.
+
+**A SET needs no tie-break.** A consumer wanting a scalar derives it under its OWN stated rule, where
+the arbitrariness is visible and owned rather than baked into the discovery layer. **This seat's
+proposed remedy would have re-introduced the defect it diagnosed**; recorded plainly because a
+finding and its remedy are two separate claims and only the finding was sound here.
+
+Also carried from the author, and it sharpens why F1 was P1 rather than P2: a builder handed *"name
+which form matched"* reports the **first pattern in iteration order — the BARE form, the LEAST
+specific.** The field would have discarded exactly the information it exists to carry **while looking
+populated**, and a populated wrong field survives review where an empty one does not.
+
+### WHAT REMAINS
+
+| finding | status | owner |
+|---|---|---|
+| F1 | **DISCHARGED** @`669e04f27b` — `ND-d-1` reports a SET; postulate (i) corrected | — |
+| F2 | **LIVE, P1** — `ND-c-3` names one registry; the estate holds ≥2 more resolution surfaces with opposite absence policies | round-1 cut |
+| F3 | **LIVE, P1** — name `843d875b` ("Pathfinder Focused Opportunities" / PFOE) as the specimen | round-1 cut |
+| F4 | **DISCHARGED** @`669e04f27b` — header reads `placement SITEZ` | — |
+
+`2.0.0_SA_COO~Z` correctly left `Criteria: 0 — NO TO IS CUT` **standing**: the decomp instructs that
+whoever cuts round 1 amends that line in the same commit, and amending it before the cut would make
+it false in the other direction. **Endorsed.**
+
+**F2 is the one to watch.** The author's own read — *"most likely to be satisfied on paper and
+violated in the build"* — matches this seat's: a cell naming ONE registry is satisfied by a builder
+who checks that one registry, while the hazard lives in the other two.
+
+**The certification verdict is unchanged: CERTIFIED WITH FINDINGS, no TO-mint block.**
+
+— `3.0.0_SA_CVO~Z`
