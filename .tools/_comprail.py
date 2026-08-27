@@ -3,13 +3,19 @@
 comp-glob). Single-sources the tricky bits so the two CLIs can't drift:
 
   * repo_root()            -- the workspace root (git toplevel, .tools/.. fallback)
-  * gitignore_aware_files  -- the .gitignore-aware working set, RECURSING nested git repos
+  * gitignore_aware_files  -- the CORPUS-SELECTABLE working set, RECURSING nested git repos
                               (portal is a tracked gitlink, NOT a .gitmodules submodule;
                               git ls-files in the parent sees only the pointer, so a naive
                               enumeration silently misses all 1000+ portal files -- the bug
                               this module exists to prevent).
   * log_rail               -- best-effort parseable telemetry to org/mcp/comp-which-rail.log
                               (the TO-5 coverage-audit feed).
+  * out_of_corpus_count    -- HIDDEN-FILE TRACKING: how many files in a scope the DEFAULT corpus
+                              cannot see, split searchable vs ephemeral floor. Lets a caller tell
+                              "0 hits, nothing here" apart from "0 hits, and I could not look".
+
+CORPUS MODES (Andrew-direct 2026-08-27): default | all | ignored | raw -- see the CORPUS SELECTION
+block below. The default is the historical population and is unchanged; every other mode is opt-in.
 
 NOTE on Windows safety: only ever shells out to git.exe (a native exe -- safe via subprocess);
 never `bash -c` (which can silently return empty rc0 on this box). ASCII-only.
@@ -258,9 +264,107 @@ def _names_held(pathspec) -> bool:
     return False
 
 
-def gitignore_aware_files(ws: str, pathspec, include_held: bool = False):
+# ---- CORPUS SELECTION (NFRA_COMPRAIL corpus extension, Andrew-direct 2026-08-27) -------------
+# THE PREMISE THAT WAS WRONG, AND THE MEASUREMENT THAT CORRECTED IT (0.8.0_AE_CloudComp,
+# 2026-08-27, this device): the build spec recorded comp-find's corpus as "TRACKED FILES ONLY".
+# IT IS NOT. _ls_files runs `git ls-files --cached --others --exclude-standard`, and `--others`
+# puts UNTRACKED-BUT-NOT-IGNORED files IN the corpus already. Positive control, same turn:
+# data/assets/scripts/gold/runners_49f/fit_reports/fit_report_2026-08-07.json -- confirmed
+# untracked via `git ls-files --error-unmatch` -- returned `1 hit across 1 file(s) scanned` for
+# a token in its body.  ==> THE CORPUS BOUNDARY IS THE .gitignore, AND ONLY THE .gitignore.
+# Had the spec's premise been built to, "add untracked files" would have added NOTHING.
+#
+# Populations measured at this device, same turn:
+#   IN corpus (tracked + untracked-not-ignored)    27,370 scanned (+13 unreadable, +1,951 binary)
+#   IGNORED -- invisible to every comp-find to date    449,884
+#
+# WHY `--corpus all` IS NOT A LITERAL ALL. Enumerating the ignored set alone costs 11.7s, and the
+# in-corpus sweep of 27,370 files already costs 25.7s (~0.94ms/file); a literal 449,884-file sweep
+# is ~7 minutes, and a rail nobody waits for is a rail nobody uses. The mass is EPHEMERA, not
+# content:
+#   .runtmp/portal-promote-*   326,639   10 dead promote worktrees
+#   org/mcp                     80,873   agent inbox mail -- REAL search value, keep it
+#   infra/aws                   31,152   vendored lambda layer deps
+# Dropping the declared floor below leaves 93,771 -- a 79% cut that removes almost no answerable
+# content. THE FLOOR IS PRINTED, NEVER SILENT: a corpus that quietly discards 356k files is the
+# same false-absence machine this rail exists to prevent. --corpus raw disables the floor.
+# FLOOR MEMBERSHIP, MEASURED AT THIS DEVICE 2026-08-27 (files matched per entry):
+#   .runtmp 328,445 | node_modules 345,742 | __pycache__ 3,715 | .ruff_cache 243
+#   .pytest_cache 10 | .pyc 3,715 | .o 277
+#   NOT FIRING TODAY (kept -- these are PROSPECTIVE, and each CAN fire the moment such a tree
+#   appears; node_modules itself did not exist here before portal): .venv venv .git .mypy_cache
+#   .next .turbo .pyo .class .so.dbg
+# `dist-info` WAS listed and was REMOVED: this predicate is an EXACT SEGMENT match and real dirs
+# are named `<pkg>-<ver>.dist-info`, so that entry could never fire BY CONSTRUCTION -- a declared
+# control that cannot fire reads as coverage while providing none. A member that has not fired YET
+# is defensive; a member that CANNOT fire is a lie in the floor's own denominator.
+EPHEMERAL_DIRS = (".runtmp", "node_modules", "__pycache__", ".venv", "venv", ".git",
+                  ".ruff_cache", ".mypy_cache", ".pytest_cache", ".next", ".turbo")
+EPHEMERAL_EXT = (".pyc", ".pyo", ".class", ".o", ".so.dbg")
+CORPUS_MODES = ("default", "all", "ignored", "raw")
+
+
+def _is_ephemeral(path: str) -> bool:
+    """Declared ephemeral/vendor noise floor. String-only on the PATH -- never opens the file."""
+    p = _norm(path)
+    for seg in p.split("/"):
+        if seg in EPHEMERAL_DIRS:
+            return True
+    return p.endswith(EPHEMERAL_EXT)
+
+
+def _ls_ignored(cwd: str, pathspec, prefix: str = ""):
+    """The IGNORED set -- files git is deliberately hiding. `--directory` is deliberately NOT
+    passed: it would collapse an ignored directory to one entry and the files inside would be
+    invisible again, which is the exact defect this function exists to remove. Returns (list, err).
+
+    The pathspec is pushed DOWN into git (`-- <ps>...`) rather than filtered in python: scoping
+    org/mcp costs 1.35s against 11.7s unscoped (measured), so a targeted --corpus all stays usable.
+    """
+    cmd = ["git", "ls-files", "-z", "--others", "--ignored", "--exclude-standard"]
+    if pathspec:
+        cmd.append("--")
+        cmd.extend([p for p in pathspec if p not in ("", ".")])
+    try:
+        out = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=180)
+    except Exception as e:
+        return None, "git ls-files --ignored failed in %s: %s" % (cwd, e)
+    if out.returncode != 0:
+        return None, "git ls-files --ignored rc=%d in %s: %s" % (
+            out.returncode, cwd, (out.stderr or "").strip()[:160])
+    return [prefix + p for p in out.stdout.split("\0") if p], None
+
+
+def out_of_corpus_count(ws: str, pathspec):
+    """HIDDEN-FILE TRACKING. How many files sit in this scope that the DEFAULT corpus cannot see?
+
+    This is the instrument for the trap the build spec named: a comp-find zero whose denominator
+    reads `across 0 file(s)` is OUT OF CORPUS, not absence -- and until now nothing in the tool
+    could tell those two apart. A zero over a scope holding N ignored files is a DIFFERENT claim
+    from a zero over a scope holding none, and the caller must be told which one they have.
+
+    Returns (searchable, ephemeral, err). `searchable` = ignored files a --corpus all WOULD read;
+    `ephemeral` = the declared noise floor, reported separately so the number is never a mystery.
+    On any error returns (None, None, msg) -- the caller prints UNKNOWN and NEVER prints a zero,
+    because a failed count and a true zero are the same value and must not render the same way.
+    """
+    ig, err = _ls_ignored(ws, pathspec)
+    if ig is None:
+        return None, None, err
+    eph = sum(1 for f in ig if _is_ephemeral(f))
+    return len(ig) - eph, eph, None
+
+
+def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
+                          corpus: str = "default"):
     """The .gitignore-aware working set across the parent repo AND nested git repos (portal etc.),
     pathspec-filtered, with the section-8 sovereign-held trees EXCLUDED BY DEFAULT (GG1).
+
+    `corpus` selects the POPULATION (Andrew-direct 2026-08-27):
+      default  tracked + untracked-not-ignored          (unchanged; what every caller had)
+      all      default + ignored MINUS the ephemeral floor
+      ignored  ONLY the ignored set minus the floor     (targeted "is it in the hidden files?")
+      raw      default + ALL ignored, floor disabled    (the honest, slow, everything sweep)
 
     Returns (files, held_note, err):
       * err       -- non-None ONLY on a hard git failure -> callers surface it LOUD (never read
@@ -269,9 +373,29 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False):
                      print, so an excluded held path is never mistaken for 'confirmed absent' and
                      an --include-held override is never silent. None when no held path was involved.
       * files     -- the working set MINUS held prefixes (unless include_held)."""
-    parent, err = _ls_files(ws)
-    if parent is None:
-        return None, None, err
+    if corpus not in CORPUS_MODES:
+        return None, None, "unknown corpus mode %r (valid: %s)" % (corpus, ", ".join(CORPUS_MODES))
+    if corpus == "ignored":
+        parent, err = _ls_ignored(ws, pathspec)
+        if parent is None:
+            return None, None, err
+        parent = [f for f in parent if not _is_ephemeral(f)]
+    else:
+        parent, err = _ls_files(ws)
+        if parent is None:
+            return None, None, err
+        if corpus in ("all", "raw"):
+            ig, ierr = _ls_ignored(ws, pathspec)
+            # A FAILED IGNORED ENUMERATION IS A HARD ERROR HERE, NOT A DEGRADED SEARCH. Falling
+            # back to the default corpus would answer a --corpus all question with a default-corpus
+            # population and print `all` beside it -- a wrong denominator wearing the right label,
+            # which is worse than no answer.
+            if ig is None:
+                return None, None, ierr
+            if corpus == "all":
+                ig = [f for f in ig if not _is_ephemeral(f)]
+            seen = set(_norm(f) for f in parent)
+            parent = parent + [f for f in ig if _norm(f) not in seen]
     nested = _gitlinks(ws)
     nested_set = set(_norm(n) for n in nested)
     # drop the bare gitlink pointer entries from the parent set (they are not files)
@@ -282,7 +406,23 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False):
         rdir = os.path.join(ws, r)
         if not os.path.exists(os.path.join(rdir, ".git")):
             continue  # gitlink whose worktree is absent/uninitialized -> skip quietly
-        sub, _serr = _ls_files(rdir, _norm(r) + "/")
+        # THE NESTED REPO GETS THE SAME CORPUS AS THE PARENT. A --corpus all that widened the
+        # parent but left portal on the default set would report `corpus=all` over a population
+        # that is only partly `all` -- the nested-repo half of the very bug this module's header
+        # says it exists to prevent (a naive enumeration silently missing all 1000+ portal files).
+        # pathspec is NOT pushed down: it is parent-relative, and the _under filter below is what
+        # scopes nested paths -- same contract _ls_files has always had here.
+        sub = []
+        if corpus != "ignored":
+            sub, _serr = _ls_files(rdir, _norm(r) + "/")
+            sub = sub or []
+        if corpus in ("all", "raw", "ignored"):
+            sig, _ierr = _ls_ignored(rdir, None, _norm(r) + "/")
+            if sig:
+                if corpus != "raw":
+                    sig = [f for f in sig if not _is_ephemeral(f)]
+                have = set(_norm(f) for f in sub)
+                sub += [f for f in sig if _norm(f) not in have]
         if sub:
             files += sub
     if pathspec:
