@@ -70,6 +70,7 @@ FIXTURES = {
         "subject_serial": f"ent:{ULID_A}", "object_serial": f"ent:{ULID_B}",
         "claim_origin": "rule_derived", "verification_standing": "unverified",
         "asserted_at": TS, "asserted_by": "1.0.0_SA_CTO~X",
+        "evidence_refs": ["migration-map:kimi_to_isck_v0"],
     },
     "materializer": {
         "record_type": "materializer", "materializer_serial": f"mat:{ULID_A}",
@@ -190,11 +191,13 @@ def _mutants():
         integrity="unverified", evidence_refs=_DEL)
     # F5 warrant conditionals on identity_relation
     add("relation.corroborated-no-evidence", "identity_relation", ["required"],
-        verification_standing="corroborated")
+        verification_standing="corroborated", claim_origin="producer_declared",
+        evidence_refs=_DEL)
     add("relation.contradicted-no-adjudicator", "identity_relation", ["required"],
         verification_standing="contradicted", evidence_refs=["obs:" + ULID_A])
     add("relation.superseded-no-successor", "identity_relation", ["required"],
-        verification_standing="superseded")
+        verification_standing="superseded", claim_origin="producer_declared",
+        evidence_refs=_DEL)
     add("relation.evidence-empty-list", "identity_relation", ["minItems"],
         verification_standing="corroborated", evidence_refs=[])
     # honesty conditionals
@@ -215,7 +218,7 @@ def _mutants():
     # ABLATION COVERAGE (COO~X 76625: 5 conditional rules no mutant depended on -- one per rule,
     # each built so ONLY its rule catches it, making every arm ablation-visible)
     add("relation.independently-observed-no-evidence", "identity_relation", ["required"],
-        claim_origin="independently_observed")
+        claim_origin="independently_observed", evidence_refs=_DEL)
     add("run.invariant-with-device", "materialization_run", ["not"], device_id="some-laptop")
     add("observation.observed-with-nothing", "state_observation", ["required"],
         fingerprint=_DEL, fingerprint_method=_DEL, normalization_version=_DEL)
@@ -228,6 +231,15 @@ def _mutants():
         evidence_refs=_DEL)
     add("materializer.superseded-no-successor", "materializer", ["required"],
         current_status="superseded")
+    # ROUND-2 BATCH 2 (DT-R2-1/DT-R2-2 + CRO~X R2-3 PARTIAL)
+    add("materializer.active-with-successor", "materializer", ["not"],
+        superseded_by_version=f"matv:{ULID_B}")
+    add("entity.contested-no-adjudicator", "entity", ["required"],
+        current_status="contested")
+    add("relation.rule-derived-no-evidence", "identity_relation", ["required"],
+        evidence_refs=_DEL)
+    add("binding.model-inferred-no-evidence", "entity_binding", ["required"],
+        binding_basis="model_inferred", evidence_refs=_DEL)
     # enum discipline (F4 renames; dead enums stay dead)
     add("binding.basis-is-dead-enum-measured", "entity_binding", ["enum"],
         binding_basis="measured")
@@ -254,6 +266,11 @@ def _semantic_mutants():
          [_mk("entity"), _mk("entity", entity_class="symbol", plane="symbol")]),
         ("sem.entity-active-canonicalized",
          _mk("entity", canonicalized_as=f"ent:{ULID_B}")),
+        ("sem.relation-entirely-self-cited",
+         _mk("identity_relation", verification_standing="corroborated",
+             claim_origin="producer_declared", evidence_refs=[f"rel:{ULID_A}"])),
+        ("sem.observation-cites-own-vintage",
+         _mk("state_observation", evidence_refs=["commit:9fc70e31a1"])),
         ("sem.frontier-duplicate-coordinate",
          _mk("source_frontier", entries=[
              FIXTURES["source_frontier"]["entries"][0],
@@ -332,6 +349,19 @@ def semantic_errors(instances):
             if isinstance(s, str) and isinstance(c, str) and _parse_iso(s) and _parse_iso(c):
                 if c < s:
                     errs.append(f"[{i}] materialization_run: completed_at precedes started_at")
+        # CVR2-1: syntactic self-citation (sec 6 limit 2's mechanical subcase, moved to the
+        # partially-mechanical class). ENTIRELY-self-cited evidence defeats the warrant.
+        refs = inst.get("evidence_refs")
+        if isinstance(refs, list) and refs:
+            self_tokens = {inst.get(_PRIMARY_ID.get(rt, "")), inst.get("subject_serial"),
+                           inst.get("entity_serial"), inst.get("source_vintage"),
+                           inst.get("source_native_key")}
+            self_tokens.discard(None)
+            self_hits = [r for r in refs if r in self_tokens]
+            if self_hits and len(self_hits) == len(refs):
+                errs.append(f"[{i}] {rt}: evidence_refs is ENTIRELY self-citation "
+                            f"({self_hits}) -- a warrant that cites only its own record is "
+                            "no warrant (sec 6 limit 2, mechanical subcase / CVR2-1)")
         # batch-scope serial uniqueness
         pid_field = _PRIMARY_ID.get(rt)
         if pid_field:

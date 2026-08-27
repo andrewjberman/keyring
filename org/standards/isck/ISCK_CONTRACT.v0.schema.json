@@ -160,8 +160,33 @@
         },
         "canonicalized_as": {
           "$ref": "#/$defs/ent_serial"
+        },
+        "adjudicated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "current_status": {
+                "const": "contested"
+              }
+            },
+            "required": [
+              "current_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "adjudicated_by"
+            ]
+          }
+        }
+      ]
     },
     "entity_binding": {
       "type": "object",
@@ -289,6 +314,26 @@
             "properties": {
               "binding_basis": {
                 "const": "independently_observed"
+              }
+            },
+            "required": [
+              "binding_basis"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding_basis": {
+                "enum": [
+                  "rule_derived",
+                  "model_inferred"
+                ]
               }
             },
             "required": [
@@ -625,6 +670,26 @@
               "evidence_refs"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "claim_origin": {
+                "enum": [
+                  "rule_derived",
+                  "model_inferred"
+                ]
+              }
+            },
+            "required": [
+              "claim_origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
         }
       ]
     },
@@ -687,6 +752,28 @@
             "required": [
               "superseded_by_version"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "current_status": {
+                "enum": [
+                  "active",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "current_status"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "superseded_by_version"
+              ]
+            }
           }
         }
       ]

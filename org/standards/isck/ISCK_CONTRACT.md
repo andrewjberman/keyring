@@ -210,7 +210,10 @@ ALLOWED list with a stated same-sense reason. ALLOWED at v0.1: `retired` (same s
 `partial` (same sense — "some, not all, of the expected whole" — applied to instrument/run/surface;
 the REMEDIES differ per §3.6/3.9/3.14 arm tables, which is where the difference belongs);
 `unknown`, `active`, `superseded`, `complete`, `unverified` (same epistemic/lifecycle sense per
-pair; remedy divergence lives in each enum's state-coherence record). ELIMINATED rather than
+pair; remedy divergence lives in each enum's state-coherence record — and per CVR2-2, `unknown`'s
+entry carries a grain note: same sense, DIFFERENT grain-legitimacy — observer-state is coherent at
+observer grain (coherence axes) and mixed at subject grain (materializer status); the subject-grain
+use dissolves under R2-2's derived-status work). ELIMINATED rather than
 allowed: `candidate`, `held` (different meanings — renamed out at F4). The gate REFUSES any new
 collision not on the list.
 
@@ -243,9 +246,14 @@ Classified per DT-2's taxonomy (genuinely-inexpressible vs deferred vs process-n
 1. **LAW-1 derivation-freedom — INEXPRESSIBLE** (confirmed by execution, CV-2/P2): the serial regex
    enforces shape; a derived value of the right length and alphabet passes. Control: the minting
    authority's audit — itself INCOMPLETE until WP-3 (§5).
-2. **Evidence INDEPENDENCE — INEXPRESSIBLE** (F5 boundary limit): a validator cannot resolve what a
-   ref semantically reads; corroboration-by-the-claim's-own-source validates. Evidence PRESENCE is
-   mechanical; independence is the verifying seat's Rule 22 duty.
+2. **Evidence INDEPENDENCE — inexpressible in the SCHEMA, PARTIALLY MECHANICAL in the VALIDATOR**
+   (RECLASSIFIED at round 2, CVR2-1 — the original "inexpressible" classification was wrong within
+   this section's own taxonomy): the SYNTACTIC-IDENTITY subcase (evidence_refs that are entirely
+   the record's own id / subject / source coordinates) is rejected by the semantic arm with
+   both-direction mutants. ⛔ THE RESIDUAL IS STATED so the mechanical half is not read as the
+   whole: an ALIASED or MIRRORED self-citation (same substrate under a different name) passes the
+   syntactic check — semantic independence (does ref X genuinely support claim Y from a different
+   substrate) remains the verifying seat's Rule 22 duty, un-mechanizable here.
 3. **REFERENTIAL RESOLUTION — INEXPRESSIBLE at instance grain** (DT-2a): every `*_serial`/`*_id` is
    shape-checked, never resolved; a surface_version may cite three nonexistent records and
    validate. Resolution needs the ledger (WP-3).
