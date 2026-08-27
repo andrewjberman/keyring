@@ -909,16 +909,62 @@
                 ]
               },
               "additionalProperties": {
-                "type": "string",
-                "minLength": 1,
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mint",
+                  "note"
+                ],
+                "properties": {
+                  "mint": {
+                    "enum": [
+                      "always",
+                      "conditional",
+                      "unknown"
+                    ],
+                    "x-enum-definitions": {
+                      "always": "The producer mints this companion with EVERY instance. This is a CLOSURE claim per companion and therefore REQUIRES `evidence` naming where the producer's code makes it unconditional.",
+                      "conditional": "The producer mints it only under a condition; `note` states which. An instance may lack it and still be well-formed.",
+                      "unknown": "The producer's rule has not been read. EXPRESSIBLE ABSENCE -- not a weak 'conditional', and never a licence to assume either other value."
+                    },
+                    "x-rule24": {
+                      "axis": "WHEN the producer mints this companion",
+                      "grain": "one companion suffix of one producer",
+                      "intent": "one -- the producer's minting rule; NOT what the companion holds (`note`), NOT whether any instance currently has it (unobservable from here)",
+                      "mece": "always | conditional | unknown spans it: the rule is unconditional, conditional, or unread.",
+                      "state_coherence": "reading the producer moves unknown -> always|conditional and moves NOTHING else. Observing an instance moves NOTHING at all."
+                    }
+                  },
+                  "note": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "What this companion HOLDS, one line. NOT when it is minted -- that is `mint`."
+                  },
+                  "evidence": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "REQUIRED when mint=always: where the producer's code makes it unconditional. A closure claim carries its proof or it is not made."
+                  }
+                },
                 "allOf": [
                   {
-                    "not": {
-                      "pattern": "^\\s*$"
-                    }
+                    "if": {
+                      "properties": {
+                        "mint": {
+                          "const": "always"
+                        }
+                      },
+                      "required": [
+                        "mint"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "evidence"
+                      ]
+                    },
+                    "$comment": "⛔ `always` IS THE CLOSURE CLAIM THIS FIELD WITHDREW AT THE SET LEVEL. It is still expressible PER COMPANION -- but only with evidence, because the reason the set-level claim fell was that observation cannot certify closure."
                   }
                 ],
-                "description": "What this companion IS **and under what CONDITION it is minted**, in one line. A suffix with no condition asserts always-present, which is the closure claim this field no longer makes."
+                "description": "⛔ WAS A FREE STRING UNTIL 2026-08-27 AND IT CARRIED TWO CLAIMS AT ONCE: what the companion IS and WHEN it is minted, in one unparsed line that accepted 'banana'. The suffix KEY already identifies the companion; the value now separates the two axes and binds the minting rule to a schema-local enum a consumer can branch on."
               },
               "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'this producer mints no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ THESE ARE THE SUFFIXES THE PRODUCER *MAY* MINT, NOT A CLOSED SET AND NOT A PER-INSTANCE GUARANTEE. RULED 2026-08-27 after 4.0.0_SA_CRO~A refused the prior wording: it claimed an EXACT FINITE companion set with per-instance cardinality 1 + keys, while the only available evidence for '.wal' was OBSERVATION of existing homes -- and the producer source `_rm_kuzu` names `.wal`, `.lock`, `.shadow` and `.tmp`. **DERIVING A CLOSED SET FROM OBSERVED ARTIFACTS CANNOT CERTIFY CLOSURE**: it is 'total minus the part I measured' wearing an enumeration's costume. PER-INSTANCE CARDINALITY IS THEREFORE UNDEFINED, exactly as the total is: a given instance may carry any subset of these, and each value must state the CONDITION under which that companion appears. AN OBJECT KEYED BY SUFFIX, not an array: JSON objects are unordered by specification and duplicate keys are impossible, so no canonicalisation is left for anyone to forget -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (`pattern`) and this companion axis. TOTAL cardinality stays UNDEFINED -- the instance axis is unbounded and a reaper is running.",
               "examples": [
@@ -927,11 +973,17 @@
                 }
               ],
               "x-rule24": {
-                "axis": "the FINITE companion set minted alongside each instance",
-                "grain": "one member_set under enumerable=false",
-                "intent": "one -- WHICH extra artifacts accompany each instance; NOT how many instances exist (undefined), NOT what an instance is named (pattern)",
-                "mece": "{} = this producer mints no companions. A non-empty object enumerates the suffixes it CAN mint, keyed by suffix. ⛔ NOT A CLOSURE CLAIM over any single instance -- that is why per-instance cardinality is undefined rather than derived. No third state: omission is REJECTED.",
-                "state_coherence": "discovering a further mintable suffix ADDS A KEY and moves NOTHING in `pattern`. ORDER IS NOT STATE AND CANNOT BE: an object has none. Observing that an instance lacks a companion moves NOTHING here -- this field is about the PRODUCER's repertoire, not about any instance."
+                "axis": "the PRODUCER'S REPERTOIRE of companion suffixes it can mint",
+                "grain": "one producer's repertoire, as pinned by variant_suffixes_source_home/_line",
+                "intent": "one -- WHICH companions this producer is capable of minting; NOT what any single instance carries (unobservable from the manifest), NOT how many instances exist (undefined), NOT what an instance is named (`pattern`)",
+                "mece": "{} = this producer mints no companions. A non-empty object enumerates the suffixes it CAN mint. NOT a closure claim over any single instance -- per-instance cardinality is undefined, which is why each entry carries its own `mint` rule. Omission is REJECTED.",
+                "state_coherence": "discovering a further mintable suffix ADDS A KEY and moves NOTHING in `pattern`. Reading the producer moves an entry's `mint` and nothing else. ORDER IS NOT STATE AND CANNOT BE: an object has none.",
+                "x-correction": "axis/grain/intent previously described a PER-INSTANCE companion set while mece/state_coherence described the PRODUCER REPERTOIRE -- one Rule-24 record carrying two different subjects, which is the same two-axes defect it exists to catch."
+              },
+              "x-parser-obligations": {
+                "duplicate_keys": "JSON SCHEMA CANNOT SEE RAW DUPLICATE KEYS -- Python's parser is last-wins, so {'.wal':<invalid>, '.wal':<valid>} validates. The COMPILER must reject duplicate member names AT PARSE TIME, before validation, with an invalid-first/valid-last negative control.",
+                "byte_ordering": "An object removes SEMANTIC ordering, not RAW-BYTE ordering: reversed insertion validates identically and hashes differently. The EMITTER must sort keys canonically during deterministic emission/hashing, with a reversed-order byte-equality control.",
+                "enforcement_limit": "NEITHER of these is enforced by this schema. They are recorded here so no reader cites schema validity as covering them -- the same discipline as the placeholder-name limit on `pattern`."
               }
             },
             "variant_suffixes_source_home": {
@@ -1244,6 +1296,25 @@
         "mece": "the four negatives partition every way a string fails to be repo-relative: whitespace, a scheme, an absolute root, a traversal.",
         "state_coherence": "moving a file changes the VALUE and nothing else in this contract."
       }
+    },
+    "one_line_text": {
+      "$comment": "THE owning contract for any field this schema promises is ONE LINE. Minted 2026-08-27 after 4.0.0_SA_CRO~A found SEVEN promised-one-line values validating: trailing LF, CR, CRLF, and two-line values with each terminator, plus U+2028. `minLength` and a not-all-blank negative say NOTHING about line count -- 'one line' had been enforced entirely by hope.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "[\\r\\n\\u2028\\u2029\\u0085\\u000b\\u000c]"
+          },
+          "$comment": "no line terminator of ANY kind -- CR, LF, CRLF, U+2028 LINE SEPARATOR, U+2029 PARAGRAPH SEPARATOR, U+0085 NEL, vertical tab, form feed. Written as ESCAPES, never as literal characters: a literal U+2028 in a source file is invisible to every reviewer."
+        },
+        {
+          "not": {
+            "pattern": "^\\s*$"
+          },
+          "$comment": "not blank and not whitespace-only"
+        }
+      ]
     }
   }
 }
