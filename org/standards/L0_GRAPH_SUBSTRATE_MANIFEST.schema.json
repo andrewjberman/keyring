@@ -472,11 +472,8 @@
                     "minLength": 1
                   },
                   "basis": {
-                    "enum": [
-                      "measured",
-                      "held",
-                      "inferred"
-                    ]
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
                   }
                 }
               }
@@ -637,11 +634,8 @@
                     "type": "boolean"
                   },
                   "basis": {
-                    "enum": [
-                      "measured",
-                      "held",
-                      "inferred"
-                    ]
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
                   }
                 }
               }
@@ -837,11 +831,8 @@
                     }
                   },
                   "basis": {
-                    "enum": [
-                      "measured",
-                      "held",
-                      "inferred"
-                    ]
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
                   }
                 }
               }
@@ -898,6 +889,12 @@
                     "pattern": "\\s"
                   },
                   "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                },
+                {
+                  "not": {
+                    "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+                  },
+                  "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
                 }
               ]
             },
@@ -1082,6 +1079,12 @@
                       "pattern": "\\s"
                     },
                     "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+                    },
+                    "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
                   }
                 ]
               }
@@ -1110,6 +1113,12 @@
                       "pattern": "\\s"
                     },
                     "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+                    },
+                    "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
                   }
                 ]
               }
