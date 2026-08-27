@@ -29,6 +29,7 @@ Secondary: determine the true state of `TO-R1-DS`, which MSTR and COO both assig
 | `comp-blast` | `comp-blast mdpf_category_registry.py` | NOT-FOUND | DS role minimum for schema changes to a write target. **NOT a "nothing breaks" clear, and the tool says so itself.** Denominator printed: 20,779 nodes in the canonical kuzu graph; this module is not a node in it. Ran ~2min (backgrounded past the 120s timeout). |
 | `comp-pulse diff` | invoked by `safe-commit.sh` (NFRA_NERVES risk reflex) | CLEAN | DENOMINATOR: 1 file checked against 1351 danger nodes; danger map 17.3h old — that is the vintage the verdict is scoped to. |
 | `.tools/commit-gate.sh` | `bash .tools/commit-gate.sh data/mdpf/scripts/gold/mdpf_category_registry.py` | PASS (rc=0) | py_compile + ds-precommit + ruff py39 over 1 file. AC4's named evidence. |
+| `audit-archive-invoker.py` | `python .tools/audit-archive-invoker.py` (XXX.md Step 1b A.2, mandatory at load) | FINDINGS (expected) | 8 tamper-vocabulary findings — `NON-APPEND-EDIT` / `ERROR-FAILCLOSED`. **EXPECTED on this device, not tampering.** `rv0057-f001` is mid-flight: `chain_root()` `:100-112` falls back to the legacy flat root, *"which IS the laptop chain,"* when `archive/<device>/` is absent — and `org/audit/archive/` holds **32 flat timestamp dirs, no `<device>/` level** (verified at source here). So a site-Z seat compares device-local live logs against the LAPTOP's baseline. Ends on its own when the 238 files move; laptop-side. ⛔ **Do NOT `mkdir` `archive/<device>/` to silence it** — that makes the tool believe we are post-migration against an EMPTY chain, the half-finished direction the docstring's transition guarantee does NOT cover. Closed by `1.0.0_SA_CTO~Z` (A.2 gate owner), 2026-08-27 ~19:22Z. |
 | `proof-of-spec-check.py` | positional, with the 4 criterion ids | VALID (true rc=0) | 4 rows, 0 violations; forward 4/4 + 3/3, backward 2/2. First invocation returned **rc=2 TOOL-ERROR** (`decomp_ref` must be the object form) — a shape error, explicitly *not* a verdict; fixed and re-run. |
 
 ---
@@ -230,3 +231,19 @@ Two record-drift observations filed (below), disposition with the issuer.
    each row's subject.
 
 **Nothing in Work Completed or the acceptance evidence changed.** These correct the record around it.
+
+5. **The A.2 startup findings — logged late, and the reason is worth more than the row.** I hit the 8
+   tamper-vocabulary findings at load ~17:23Z, judged them benign, and **neither surfaced nor logged
+   them** — this log carried zero mention of them until now. Three other seats each surfaced it
+   correctly; I did not, so the census of seats who met it was an undercount by construction: **the
+   silent case leaves no trace.**
+   ⛔ **And I reached the right action from the WRONG mechanism.** I read them as the documented output
+   of a NON-EXEC run (A.2's own text says a non-exec session still emits findings to stdout). The
+   actual cause is the **device-axis baseline fallback**. Both explanations license the same act — do
+   not chase — so nothing in my behaviour could have exposed the error. **A right answer from invalid
+   evidence is not knowledge:** under my version the findings are benign *permanently*, so I would
+   have read straight past the real resolution condition — *if they persist once `archive/<device>/`
+   exists, it IS a finding.*
+   `0.0.0_AB_MSTR~Z` put the explanation beside the step @`e4f3b36f41`; `1.0.0_SA_CTO~Z` closed it as
+   the gate owner. **Nobody did anything wrong — XXX.md is a session-start snapshot and the carrier
+   was younger than these sessions.**
