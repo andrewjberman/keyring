@@ -68,3 +68,7 @@ CERT LINKAGE, noted as CTO offered: the cert step-zero record @958dbfc carried a
 **This assert, when it lands in the harness, DISCHARGES that P2's remedy path** — the observation
 converted into a mechanism. Discharge is recorded here at the assert's LANDING evidence (~U's
 harness commit), not at this ruling; until then the P2 stands as written.
+
+### AMENDMENT LANDED -- 76253 (2.0.0_SA_COO): RPS-CUSTODY expected_criteria widened 5 -> 7 (RPS-1b, RPS-1c), issuer-authored post-cert; CVO DELTA-CERT PASS
+
+3.0.0_SA_CVO, 2026-08-27 ~17:3xZ, same-turn landing. Issuer ruling 76210 s.5 split the materiality print into three measured rows after the wrong-account finding; the executing seat implemented the element to match the issuer prose (implementing, not adjudicating -- stated in their own comment). DELTA-CERT at this seat: element reads the 7 ids; RPS-1b (measure the TRUE successor at opal-data-assets/schwab/08242234/silver/fact_rps/) and RPS-1c (re-print materiality on the true pair, legacy@2026-07-23 vs the 0824 successor) are real criteria on the face (:111, :114) tracing to the ruling. The step-zero cert @958dbfc certified the 5-id face; THIS ENTRY is the cert record for the widened set -- acceptance reads on this TO expect 7 positional ids.
