@@ -41,23 +41,36 @@ Session-scoped: it dies with the Monitor / session.
 
 CORRECTED 2026-08-27 -- this line read "Session-scoped, EXACTLY LIKE INBOX-WATCH.SH: it dies with
 the Monitor / session." That comparison was true when written and INVERTED SILENTLY on 2026-07-14,
-when inbox-watch.sh gained a PARENT-LIVENESS SELF-EXIT (inbox-watch.sh:113 opens it, :161 runs
+when inbox-watch.sh gained a PARENT-LIVENESS SELF-EXIT (inbox-watch.sh:113 opens it, inbox-watch.sh:161 runs
 kill -0 "$WATCH_PARENT" then exits) and this engine did not. So the sentence had come to name the
 one watcher that DOES self-exit as the model for the one that CANNOT.
 A COMPARATIVE CLAIM GOES STALE WHEN ITS REFERENT MOVES, AND NOTHING TOUCHES THE FILE THAT CARRIES
-IT. Measured at source 2026-08-27: `ppid|getppid` occurrences in this file = 0 (positive control
-`os.environ` = 2, so the search reaches the file); the main loop is `while True:` at :477; all four
-sys.exit calls (:118 :138 :155 :406) are STARTUP token/pin failures and sit BEFORE the loop. There
-is no exit path inside it. This process dies only if something else reaps it.
+IT. Measured at source 2026-08-27, and stated so that WRITING IT DOWN CANNOT FALSIFY IT:
+  - `ppid` / `getppid` occurrences IN CODE: ZERO. There is no parent-liveness check of any kind.
+    READ THE HITS, DO NOT COUNT THEM: a whole-file grep for those tokens now returns NONZERO
+    because THIS DOCSTRING CONTAINS THEM. Every hit above the `import` block is prose. Positive
+    control that the search reaches real code: the two `os.environ.get("TMPDIR", ...)` call sites
+    that build CURSOR_FILE and CHANNEL_CURSOR_FILE.
+  - The main loop is the module's single `while True:`; every `sys.exit(2)` is a STARTUP token/pin
+    failure and sits BEFORE it. There is no exit path inside the loop. This process dies only if
+    something else reaps it.
+
+SAME-FILE CITATIONS HERE ARE BY ANCHOR, NEVER BY LINE NUMBER, AND THAT IS DELIBERATE. The first
+version of this docstring cited lines 98, 101, 406, 437, 477 and 544; adding these 37 lines shifted every
+one of them by +36 and the citations were wrong THE MOMENT THEY LANDED. A LINE NUMBER POINTING INTO
+THE FILE THAT CARRIES IT IS SELF-INVALIDATING -- the edit that records it moves what it records.
+Grep the anchor instead.
 
 WHY THAT MATTERS MORE HERE THAN FOR inbox-watch.sh, which is the part not to skim: an orphaned
 inbox watcher `mv`s a file to read/ -- visible, and the message still exists. An orphaned
-teams-watch would hold a live pinned token and ADVANCE THE CURSOR (:544 for DMs and :437 for
-channels, both INSIDE the loop, after the emits) while echoing into a dead pipe. A CURSOR ADVANCE
+teams-watch would hold a live pinned token and ADVANCE THE CURSOR (grep `open(CURSOR_FILE, "w"`
+for DMs and `open(CHANNEL_CURSOR_FILE, "w"` for channels -- both INSIDE the loop, after the emits)
+while echoing into a dead pipe. A CURSOR ADVANCE
 IS NOT RECOVERABLE BY INSPECTION: the next legitimate session starts PAST those messages and they
 are never re-emitted. That is silent LOSS, not a duplicate, and it would cover DMs and the
-client-facing channel alike. It compounds with the two-cursor-home divergence (:98 and :101 both
-build from TMPDIR): an orphan can advance one home while a live session reads the other.
+client-facing channel alike. It compounds with the two-cursor-home divergence (the CURSOR_FILE and
+CHANNEL_CURSOR_FILE assignments BOTH build from TMPDIR): an orphan can advance one home while a
+live session reads the other.
 
 NOT ESTABLISHED, AND DELIBERATELY NOT CLAIMED: nobody has measured that teams-watch children
 actually survive session end. Evidence against -- a 2026-08-25 launch found ZERO straggling
@@ -70,7 +83,7 @@ INBOX-WATCH.SH NO LONGER DEPENDS ON THAT VARIABILITY. THIS ENGINE STILL DOES, EN
 Two OPEN items, both owned by 0.5.0_AE_OpalETL~Z, neither implemented here and neither a gate:
   (1) port the parent-liveness self-exit (with inbox-watch.sh:139's fail-open when PPID <= 1 --
       that guard is correct and must travel with it, or healthy watchers suicide under MSYS);
-  (2) there is no arm-banner equivalent to inbox-watch.sh:159, so a seat CANNOT READ its own
+  (2) there is no arm-banner equivalent to inbox-watch.sh's STREAM-mode banner, so a seat CANNOT READ its own
       protection state here -- which is precisely what org/XXX.md now instructs agents to do.
 Found by 0.0.3_BG_BBGTerminal (msg 9123) applying the @073b1679e2 law edit to its other watcher;
 verified at source by 0.0.0_AB_MSTR~Z before this edit. Doc layer corrected; ENGINE UNCHANGED.
