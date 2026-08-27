@@ -1265,6 +1265,9 @@
         },
         "built_on_fabric": {
           "$ref": "#/$defs/nonempty"
+        },
+        "built_on_device": {
+          "$ref": "#/$defs/nonempty"
         }
       }
     },
@@ -1361,6 +1364,9 @@
           "$ref": "#/$defs/evidence_refs"
         },
         "evaluated_on_fabric": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evaluated_on_device": {
           "$ref": "#/$defs/nonempty"
         }
       },
