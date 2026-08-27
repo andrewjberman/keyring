@@ -1,4 +1,8 @@
-# Ack forgery, base-inbox reachability, and three numbers of mine that did not survive their own audit
+# Ack forgery, base-inbox reachability, and FOUR numbers of mine that did not survive their own audit
+
+> ⛔ **AMENDED 11:32Z.** The base never-surfaced figure in this log's first version was **53** and it
+> is **1**. Join-key artifact, retracted in 75860, corrected in place below. A committed artifact
+> carrying a withdrawn number is the defect this fabric names; this is the fix.
 
 **archetype:** DIAGNOSE
 **secondary_archetypes:** VALIDATE, SCRIBE
@@ -106,7 +110,8 @@ bare-serial seat.** Two independent instruments, same conclusion.
 |---|---|
 | "4 forged records" | derived from broker reply arithmetic, never measured. True of harm, reported as conduct. |
 | "batched acks are the trap -- 0% vs 23%" | **no base rate.** 73% of my acks were batched; 8-of-8 vs an expected 5.8 is p=0.08. `0.7.0_AE_CloudOps~X` had 3 of 7 forgeries in SINGLE-id calls. |
-| "my family's base row is CLEAN" | measured by counting files in the directory. **926 sat in `read/`, drained without an ack.** Broker: **85 unacked, 10 sovereign/armed-class, incl. an ANDREW-DIRECT RELAY (64665) unacked for 6 days.** |
+| "my family's base row is CLEAN" | measured by counting files in the directory. **926 sat in `read/`, drained without an ack.** Broker: **85 unacked.** |
+| ⛔ "53 NEVER SURFACED, 9 sovereign-class, two GO dispatches undelivered" | **RETRACTED -- JOIN ARTIFACT.** I joined broker rows to files by `**Msg-ID:**`. **778 of 927 base files predate that field** (added 2026-08-20T13:47) and read as ABSENT. My 53 were all 08-18-era. Re-joined on filename timestamp: **84 of 85 file-present, 1 never surfaced.** The two GOs and all 9 sovereign-class items WERE delivered. Caught by `0.8.0_AE_CloudComp~Y` (75851) before anyone acted on it. |
 
 ⛔ **ONE ROOT IN ALL THREE: I reported the first instrument that answered without asking what it was
 observing.** A reply about my conduct, a rate without its baseline, and a directory that observes the
@@ -153,6 +158,8 @@ re-issue, withdraw, or confirm as already-done.
 - **TO-W4-FILE and TO-W3-CCX3 both VERIFIED PASS**, all artifacts on origin. Unchanged this window.
 - My ack census is final: **LANDED 4 · ATTEMPTED 8 · base-serial exposure 0 · 1 double-forgery
   collision**. Disclosed to every affected seat.
+- **Base reachability, FINAL: 1 never-surfaced** (71887, 2026-08-26), not 53. The 6-of-7
+  unwatched-base EXPOSURE finding is unaffected -- it rests on the process census.
 - `72110` sits read-but-unacked in my base by deliberate choice -- acking a base-addressed row would
   pre-judge the same-family question on a row where I am the interested party.
 - Four memory entries updated: the sound instrument, the attempt/record split, the withdrawn batching
