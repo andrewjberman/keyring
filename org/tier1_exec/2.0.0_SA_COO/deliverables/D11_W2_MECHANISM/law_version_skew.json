@@ -1,0 +1,35 @@
+{
+  "measured_utc": "20260827T0346Z",
+  "finding": "LIVE SEATS IN ONE FABRIC ARE RUNNING MATERIALLY DIFFERENT VERSIONS OF CLAUDE.md, and NO SEAT CAN DETECT THIS FROM INSIDE ITSELF. The law arrives in the system prompt; from inside, every version simply reads as 'the law'.",
+  "three_populations_ALL_MEASURED_FROM_INSIDE": {
+    "population_1_working_tree": {
+      "seats": [
+        "2.0.0_SA_COO~X",
+        "1.0.0_SA_CTO~X"
+      ],
+      "state": "HAVE the uncommitted pronoun amendment; loaded the working tree",
+      "measured_by": "each seat reading its own loaded context"
+    },
+    "population_2_committed_record": {
+      "state": "does NOT carry the amendment",
+      "measured_by": "git diff, +2/-1, not staged"
+    },
+    "population_3_pre_edit": {
+      "seats": [
+        "0.8.0_AE_CloudComp~X"
+      ],
+      "state": "\u26d4 PRE-SLIM 707-LINE VERSION -- missing TWO law commits AND AN ENTIRE RULE (29)",
+      "measured_by": "0.8.0_AE_CloudComp~X quoting their own loaded header verbatim against HEAD's"
+    }
+  },
+  "\u26d4_THE_GAP_IS_BIGGER_THAN_THE_MODEL": "the three-population model predicted has/lacks ONE LINE. Measured, it is has/lacks A DIFFERENT LAW FILE -- a different header, two missing commits, and a missing numbered rule. The skew is not a bookkeeping detail about an uncommitted edit; it is version drift across live seats.",
+  "OBSERVED_COST_TONIGHT_STATED_HONESTLY": "0.8.0_AE_CloudComp~X has been operating all night WITHOUT Rule 29 and without the pronoun rule, and their work has been among the most disciplined in the wave -- they surfaced the uncommitted law itself, refused two credits, caught their own regex nearly accusing a peer, and stopped on instruction rather than blocking. THE MEASURED COST TONIGHT APPEARS TO BE ZERO. The RISK is structural and real; the HARM is not demonstrated, and I am not inflating it -- I over-stated an urgency once already tonight.",
+  "recent_CLAUDE_md_commits": [
+    "bb5032b2cd 0.0.0_AB_MSTR 2026-08-26T18:10:40-04:00 law(CLAUDE.md, part 2): Andrew editorial -- sections 7+8 and the comp-tools table OUT of the index (rules keep stable numbers, annex is their citable home, declared in preamble); BUILD LADDER moved to the top of section 4 (anti-duplication belongs near the top). 262 -> 215 lines. LD-0462 part 2.",
+    "556f45f0cc 0.0.0_AB_MSTR 2026-08-26T18:02:17-04:00 law(CLAUDE.md): SLIMMED 707 -> 262 lines, Andrew-direct -- the file now obeys its own format law (imperative + mechanism + pointer). Full text preserved BYTE-VERIFIED at docs/doctrine/CLAUDE_ANNEX.md. All 20 stable rule ids verified resolving. LD-0462.",
+    "6982e60539 0.0.0_AB_MSTR 2026-08-26T17:38:15-04:00 law(CLAUDE.md Rule 29): A REPORT IS NOT THE DELIVERABLE WHILE UNBLOCKED WORK REMAINS -- Andrew-direct after the third same-day report-then-stop at one seat. Turn-end gate + mandatory non-application clause. LD-0461",
+    "690a5d5023 1.0.0_SA_CTO 2026-08-26T16:45:49-04:00 law(22a) cite finalized: independence MEASURED (CVO 73608 -- the warning sat unread, delivered 2 min before the second hit). Cite now reads \"independence and distinctness both MEASURED\"."
+  ],
+  "disposition": "SURFACED, NOT ACTED. Law surface is 1.0.0_SA_CTO~X's; the uncommitted amendment is routed to 0.0.0_AB_MSTR, who is NOT LIVE. No seat commits another's law edit. Nothing here is a gate.",
+  "the_transferable_property": "A SEAT CANNOT AUDIT ITS OWN LAW VERSION FROM INSIDE -- the only way this surfaced is seats QUOTING THEIR LOADED HEADERS TO EACH OTHER and comparing against git. That is a cross-seat act; no self-check reaches it."
+}
