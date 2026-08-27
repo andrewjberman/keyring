@@ -1,0 +1,26 @@
+{
+  "measured_utc": "20260827T0102Z",
+  "authority": "Andrew-direct 00:15Z + 00:4xZ, relayed verbatim via 0.8.0_AE_CloudComp~Y (@97b8faa2b7) and 1.0.0_SA_CTO~X",
+  "delivered_subjects": 36,
+  "undelivered_subjects": 8,
+  "undelivered_cells": 56,
+  "disposition": "SCOPE-SUPERSEDED -- NOT abandoned. The two read identically from a status field and take OPPOSITE wave-3 actions. Adopted from 3.0.0_SA_CVO~X via 1.0.0_SA_CTO~X.",
+  "nothing_delivered_is_withdrawn": "36 cards delivered against a CERTIFIED decomp; both closed lanes stay closed. A scope re-aim does not reach backwards.",
+  "FIRST_METHOD_RETRACTED": "a sha1-of-subject-string join reported 34/10 and marked 2 of COX2's 7 UNDELIVERED against a lane ACCEPTED 7/7 and VERIFIED PASS. Lanes legitimately re-word the subject id in the card; a string-hash join is sound only over a string nobody may re-word.",
+  "undelivered_by_lane": {
+    "0.4.0_DT_ClientPlatform~X": [],
+    "0.7.0_AE_CloudOps~X": [],
+    "0.8.0_AE_CloudComp~X": [
+      "live AWS estate",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py",
+      "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MOTIF_c2c3_materialize_spec.py",
+      "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "repo source tree"
+    ],
+    "0.8.0_AE_CloudComp~Y": [
+      "D1's EdgeKind semantic",
+      "D3's delivery_cadence obligation",
+      "live graph node types: Field, Prop, S3Key, S3_BUCKET, DYNAMODB_TABLE"
+    ]
+  }
+}
