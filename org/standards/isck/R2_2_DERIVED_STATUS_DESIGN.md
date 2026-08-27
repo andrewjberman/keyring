@@ -41,6 +41,12 @@ abolition.
   records / SIX axes):** `entity.current_status` · `entity_binding.status` ·
   `identity_relation.verification_standing` · `materializer.current_status` ·
   `bridge_assertion.verification_standing` AND `bridge_assertion.registry_standing`.
+  **AT-2, ACCEPTED — pre-ledger honesty, restated:** with `derived` illegal, `authored` is a
+  ONE-VALUE enum and fails DISCRIMINATION by construction; pre-WP-3 the field is a **RESERVED
+  DISCRIMINATOR whose only live bit is VINTAGE** — absence = pre-R2-2 record, presence = post —
+  and the certification bridge binds on ABSENCE (checkable today), not on the value. The Rule-24
+  uncovered member is housed: a MIGRATED value is `authored` + migration-receipt ref in
+  `evidence_refs` — no third enum value; the receipt is the discriminator.
   **FIELD-SCOPED IS THE RULING on CRO input 2:** bridge_assertion is the forcing case — its
   verification axis is event/evidence-derivable while its adjudication values may stay authored
   indefinitely; a record-level flag would either lie about one axis or freeze both. Atomic
@@ -65,9 +71,15 @@ standing where recoverable, else `unverified` + `superseded_by` (honest floor) �
 migration input, EVERY rewrite emits an APPEND-ONLY MIGRATION RECEIPT preserving the source value,
 the target, and the recoverability decision with its evidence: a migration that erases what a
 value used to say is the laundering defect performed by the remedy, and the receipt is what makes
-the rewrite auditable instead of trusted.** The warrant arm
+the rewrite auditable instead of trusted.** **AT-1's reflexive
+completion: the rewrite is ITSELF a status change in a kernel whose thesis is
+a-change-is-an-observation — so a rewritten standing carries `claim_origin: rule_derived` with the
+migration-map ref in `evidence_refs`, making a migrated `unverified` DISCRIMINABLE from a virgin
+one (the substrate-vs-absent collapse at migration grain, cured by the kernel's own rule applied
+to the kernel's own migration).** The warrant arm
 moves from the value to the field: `superseded_by present -> no further standing changes on THIS
-record` (append-only; a new assertion carries the new standing).
+record` (append-only; a new assertion carries the new standing) — **and per AT-1: this promise has
+NO enforcement plane pre-WP-3; it is DECLARED as such in §6 beside limit 6, not worn as coverage.**
 
 **3b. CONTESTED/DISPUTED OVERLAYS.** Under the two layers: a CONTEST is an EVENT — and per CRO
 input 3, the event vocabulary must be TOTAL AND REPLAYABLE before the projection can be: the
@@ -87,7 +99,11 @@ honest projection of an empty history, observer-grain by construction.
 **3d. `partial_legacy` INTENT FUSION.** `bundle_completeness` splits: DEGREE (`complete |
 partial`) stays the enum; CAUSE moves to `absent_components[]` + evidence (already required) —
 the partial-NOT-legacy member gets its honest home with NO new value. The `partial_legacy` token
-retires at the same boundary (migration: `partial_legacy -> partial` + cause preserved).
+retires at the same boundary. **AT-6, ACCEPTED — "cause preserved" named NO slot: the WHAT lives
+on `absent_components[]` + `evidence_refs` (ongoing state); the legacy WHY is PROVENANCE, an
+event-layer fact, and its carrier is the MIGRATION RECEIPT (source value `partial_legacy`
+preserved there verbatim) — the record itself carries no legacy marker going forward, and that is
+the design, not an omission.**
 
 **3e. RETIREMENT REASON (the routed design question).** Confirmed at design: the reason lives on
 the SUCCESSION EVENT, never as prose on the entity. **CRO input 4 names the missing shape and the
@@ -118,4 +134,7 @@ The migration rules (3a's rewrite floor especially); whether `status_basis: auth
 an unenforced honesty field (its consuming half: certifications must read it — is that enough
 before WP-3?); whether 3b's projection erases any state the overlay values currently carry;
 whether dropping `superseded` breaks any existing consumer (census owed before landing);
-the un-derivability of `registry_standing`'s adjudication values from events that are messages.
+the un-derivability of `registry_standing`'s adjudication values from events that are messages
+(AT-5's split is the standing answer; attack the split). DECLARED LIMIT (AT-1, beside limit 6):
+the `superseded_by`-freezes-standing promise is UNENFORCED pre-WP-3 — a validator arm cannot see
+cross-version writes; it becomes a rejected-write rule when the ledger lands.
