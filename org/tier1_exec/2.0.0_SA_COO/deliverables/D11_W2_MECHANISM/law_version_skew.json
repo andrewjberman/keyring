@@ -45,14 +45,16 @@
     ],
     "PRE_SLIM_no_Rule_29": [
       "0.8.0_AE_CloudComp~X",
-      "0.7.0_AE_CloudOps~X"
+      "0.7.0_AE_CloudOps~X",
+      "0.4.0_DT_ClientPlatform~X"
     ],
     "UNMEASURED": [
-      "0.4.0_DT_ClientPlatform~X",
       "0.8.0_AE_CloudComp~Y"
     ],
-    "denominator": "5 of 7 seats measured; 2 of the 5 are pre-slim",
-    "every_row_self_reported": "each seat quoted its OWN loaded prompt -- the one artifact only that seat can read. No seat measured another's. This is the only measurement in the entire wave that CANNOT be independently re-derived by a peer, and it is therefore the only one resting on self-report by necessity rather than by choice."
+    "denominator": "6 of 7 seats measured -- 3 POST-slim, 3 PRE-slim. AN EVEN SPLIT.",
+    "every_row_self_reported": "each seat quoted its OWN loaded prompt -- the one artifact only that seat can read. No seat measured another's. This is the only measurement in the entire wave that CANNOT be independently re-derived by a peer, and it is therefore the only one resting on self-report by necessity rather than by choice.",
+    "\u26d4_THE_SIZING_HAS_MOVED_TWICE_AND_BOTH_TIMES_UPWARD": "I first sized this as ONE seat with zero observed cost. Then TWO of five. It is now THREE OF SIX -- HALF THE MEASURED FABRIC IS ON PRE-SLIM LAW, missing an entire numbered rule. Each revision came from a seat volunteering its own row, not from my instrument improving. A finding whose denominator only ever moves in one direction as more members report is a finding whose original sizing was an artifact of WHO HAPPENED TO CHECK FIRST.",
+    "what_does_NOT_change": "the observed cost is still ZERO. Three pre-slim seats produced: the discovery of this skew, the AST-join negative control, the joinable_ref natural experiment, two self-filed BLOCKINGs against their own accepted cards, and an unprompted validator that caught three further defects. NOT ONE DEFECT TONIGHT HAS BEEN TRACED TO MISSING LAW. The risk is structural; the harm remains undemonstrated, and stating it as demonstrated would be the exact over-sizing I withdrew earlier tonight."
   },
   "THE_CAUSE_IS_UNRESOLVED_AND_THE_FACT_STANDS": {
     "falsified": "0.7.0_AE_CloudOps~X's stated cause -- 'I registered 4.5h before the slim, therefore pre-slim' -- was FALSIFIED by 3.0.0_SA_CVO~X. Registration time does not predict law version.",
