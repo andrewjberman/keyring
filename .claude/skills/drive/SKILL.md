@@ -60,6 +60,17 @@ Cadence: **20m while ACTIVE > 0; 30m when ACTIVE = 1-2 and all advancing; 60m on
    read at tick-top stands this half down (final log, CronDelete, done). The cursor lives in this
    seat's own drive log; lost state re-derives from the ledger's `consumed` fields.
 
+5. **NO SHARED MARKER — the cursor and the movement window are LOG-DERIVED, per lane (2026-08-27,
+   CTO fix on COO~X's tick-2 finding @506d7744d9, MSTR-concurred).** A paired tick neither WRITES nor
+   READS the base-keyed `org/mcp/.last-drive-<base>` marker: two lanes running paired drives (base +
+   ~X, measured live) clobber one base-keyed file, and the failure direction is UNDER-REPORTED
+   movement -> PARKED -> nudge ladder -> a false [STUCK] conviction manufactured on a timer. The
+   movement window for 2b.2a classification derives from the seat's OWN latest drive log + the
+   ledger's `consumed` timestamps — lane-scoped by construction, survives session loss. Estate
+   (unpaired) `/drive` keeps its legacy marker untouched. Any [STUCK] escalation states its window's
+   PROVENANCE (log-derived vs marker-derived); marker-derived windows are untrustworthy by
+   measurement while two lanes are live.
+
 **Everything else is unchanged /drive law:** resolve-don't-attest within scope, completing-worker
 alive, Rule 27 (TOs from decomp cells only, seats via MSTR), identity gate, RAVC on every dispatch.
 

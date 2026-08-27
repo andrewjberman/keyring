@@ -36,7 +36,11 @@ log under the driver's author line. `<scope>` is the selector string, filesystem
   id + dispatch receipt, or `"no-act: <reason>"`. Everything else is the producer's.
 
 **Cursor:** /drive keeps its read position in its OWN drive log (last consumed `{ts, tick}`); on lost
-state it re-derives from the newest `consumed` field in the ledger itself.
+state it re-derives from the newest `consumed` field in the ledger itself. **The cursor AND the
+movement window are LOG-DERIVED per lane — a paired tick never writes or reads the base-keyed
+`.last-drive-<base>` marker** (two live lanes clobber one base-keyed file; the failure direction
+manufactures false [STUCK] convictions — measured 2026-08-27 @506d7744d9, fix CTO-landed,
+MSTR-concurred; estate /drive's legacy marker is untouched).
 
 ## Mechanics, stated once
 
