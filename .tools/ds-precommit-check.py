@@ -58,8 +58,15 @@ _COERCE_HELPER_NAMES = {'coerce_silver_ids'}
 # S3 bucket. Maps a pipeline dir -> the foreign buckets a script there may NOT reference.
 # cot also bans opal-data-inf (zero legitimate cross-ref). Extensible to inf/orion when
 # that separation lands; today scoped to the Andrew-directed bd<->cot pair.
+# 2026-08-27 (1.0.0_SA_CTO~Z): 'opal-data-49financial' added to the cot bans. It is 49
+# Financial's NEW client bucket under Andrew's unabbreviated naming ("opal-data-49financial
+# opal-data-inflection opal-data-cottonwood ... notice they are not abbreviated"), it EXISTS
+# (created 2026-08-19), and nothing here named it -- so the guard covered the old name only.
+# Scoped to buckets that EXIST: opal-data-inflection/-cottonwood are absent today and are NOT
+# pre-banned, because a ban on a nonexistent bucket cannot be exercised and would enter the
+# record as an untested row. Revisit when they are created.
 _CROSS_FIRM_FOREIGN_BUCKETS = {
-    'data/cot/': ('opal-data-bd', 'opal-data-inf'),
+    'data/cot/': ('opal-data-bd', 'opal-data-inf', 'opal-data-49financial'),
     'data/black_diamond/': ('opal-data-cot',),
 }
 
@@ -69,8 +76,30 @@ _CROSS_FIRM_FOREIGN_BUCKETS = {
 # shared bucket). Maps a pipeline dir -> foreign KEY PREFIXES a script there may NOT
 # reference. Prefixes end with '/' deliberately: the matcher requires the trailing slash,
 # mirroring _is_real_bucket_ref's no-bare-substring design.
+# STOP: 2026-08-27 (1.0.0_SA_CTO~Z): 'blackdiamond/49financial/' added, and the reason is the
+# sharpest form this defect takes anywhere in the estate -- THE GUARD BANNED THE EMPTY PREFIX
+# AND PERMITTED THE POPULATED ONE.
+#   blackdiamond/49f/          only _ops/probe objects, NOTHING SINCE 2026-07-14 (six weeks cold)
+#   blackdiamond/49financial/  LIVE BRONZE, 2026-08-25 -- and it was NOT banned
+# (population measured by 2.0.0_SA_COO~Z at s3api, msg 9952). EXERCISED before the edit, not
+# inferred: a data/cot/ probe referencing blackdiamond/49financial/ passed the gate at rc=0
+# while blackdiamond/49f/, opal-data-bd and opal-data-inf all blocked -- three positive
+# controls firing beside the hole.
+#
+# The old entry was never WRONG; it was written when 49f/ was the live prefix and the rename
+# to 49financial/ moved the data out from under it without moving the ban. 49f/ STAYS BANNED:
+# it is cold, not deleted, and a ban on a cold prefix costs nothing.
+#
+# >> THE CLASS, because it is the one this guard exists to catch and it happened INSIDE the
+#    guard: A FIRM ENUMERATION MISSING A FIRM. comp-secrets:58 already carries '49financial'
+#    in its bd pattern -- two carriers of one firm-to-token map in this same directory, one
+#    updated at the rename and one not, with nothing comparing them. Found by composing two
+#    seats' partial reads: 3.0.0_SA_CVO~Z read the BUCKET map and saw 49financial absent;
+#    2.0.0_SA_COO~Z measured the PREFIX populations and downgraded 49f/ as holding nothing
+#    to leak. Both correct, neither sufficient -- the leak question and the guard question
+#    have opposite answers on the same measurement. <<
 _CROSS_FIRM_FOREIGN_KEY_PREFIXES = {
-    'data/cot/': ('blackdiamond/49f/',),
+    'data/cot/': ('blackdiamond/49f/', 'blackdiamond/49financial/'),
     'data/black_diamond/': ('blackdiamond/cottonwood/',),
 }
 
