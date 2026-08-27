@@ -30,5 +30,20 @@
   "claim_bound": "structural capability is NOT a write. The capable set is UNRESOLVED, not confirmed.",
   "BOUND_ON_THE_REMAINING_26": "\u26d4 26 IS STILL NOT A MATERIALIZER COUNT. Those 26 carry a STRONG write token (overwrite/upsert/add_files/to_arrow/write_parquet/put_object/load_table) somewhere in the file -- which does NOT establish that the write targets graph_nodes or graph_edges. A file can reference the tables in one place and put_object to an unrelated S3 key in another. The token and the table are not joined by this test and I am not claiming they are.",
   "what_this_result_IS": "a floor correction, not a producer count: AT LEAST 17 of 43 fall out on a structural impossibility with both control arms firing. The honest statement is 'at most 26 of 43 could be writers of these tables', and the true number is BELOW that by an unmeasured amount.",
-  "next_bounded_task": "join the write CALL to the TABLE for the 26 -- read whether the strong token's target is graph_nodes/graph_edges. Bounded, 26 files, and it is the last step before a number is fit for a decomp face."
+  "next_bounded_task": "join the write CALL to the TABLE for the 26 -- read whether the strong token's target is graph_nodes/graph_edges. Bounded, 26 files, and it is the last step before a number is fit for a decomp face.",
+  "CITATION_FALSE_POSITIVE_found_by_CTO_X": {
+    "mechanism": "`pyiceberg` can appear in a file that NEVER USES IT -- inside a QUOTED CITATION of another file's header. My structural test reads the STRING, so a quotation makes a pure consumer test table-capable. 1.0.0_SA_CTO~X built the same test independently and killed it on this.",
+    "my_controls_cannot_see_it": "Both my arms fired correctly and neither can detect this: the positive control is a real user and the negative control has NO pyiceberg string at all. NEITHER ARM IS A FILE THAT MENTIONS PYICEBERG WITHOUT USING IT -- the control set does not span the failure surface. A control set is sound only when both halves can fail at the field under test.",
+    "measured_across_my_43": {
+      "mentions_pyiceberg_with_NO_import_and_NO_load_table_or_load_catalog": 3,
+      "files": [
+        "infra/aws/globgrph/iceberg_parity.py",
+        "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/build_cards_2.py",
+        "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/build_manifest.py"
+      ],
+      "status": "MARKER FOR READING, NOT A VERDICT -- a file can use iceberg through another API surface"
+    },
+    "the_notable_part": "2 of the 3 are D11's OWN card and manifest builders. THE WAVE'S TOOLING ENTERED THE WAVE'S CENSUS because it quotes source headers as evidence -- the census counting the instrument that produces it.",
+    "DIRECTION_OF_THE_ERROR_leaves_the_17_intact": "This inflates the CAPABLE side, so it can only make 26 too HIGH. The 17 fall-outs had NO pyiceberg string at all, quoted or otherwise, so they are untouched and the 43->26 reduction stands. It confirms the bound's direction rather than breaking it: 'at most 26, and the true number is below that by an unmeasured amount' -- now with one mechanism named."
+  }
 }
