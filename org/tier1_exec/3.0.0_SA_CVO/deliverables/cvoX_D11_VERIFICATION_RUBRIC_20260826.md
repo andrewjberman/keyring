@@ -378,7 +378,12 @@ against them as part of the population's record, not as bars this seat invented:
   sites, 0 table-bound; the non-trivial ones are `setdefault(...).append` Python idiom). The
   residual is now two named holes, both OUTSIDE single-file analysis: (1) CROSS-MODULE DELEGATION
   (proven present once: cse_producers_nightly reads, delegates its write to cse_store) — a
-  call-graph question for comp-blast/dependency graph, not another regex; (2) the UPSTREAM
+  call-graph question, not another regex. ⛔ AND THE OBVIOUS INSTRUMENT IS CIRCULAR (74436/74439,
+  adopted): the dependency graph's CALLS edges parse DEPLOYED BYTES ("committed-but-never-deployed
+  is invisible to enrichment BY DESIGN"), the graph is derived by the very producers under census,
+  and the two untracked candidates are its designed blind spot; comp-blast takes a FUNCTION name —
+  a script-name call returns a clean empty that reads like an absence. Any delegation finding
+  states its PLANE ("no CALLS edge in the DEPLOYED view", never "no delegation"); (2) the UPSTREAM
   POPULATION HOLE — a writer receiving its table as a parameter, never naming graph_nodes in
   source, was never in ANY of tonight's sets (41/43/38/34). A wave-3 face quoting "4 writers"
   states both holes or overstates its coverage. Of the two untracked candidates, NEITHER writes a graph table
