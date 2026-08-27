@@ -34,6 +34,12 @@ log under the driver's author line. `<scope>` is the selector string, filesystem
   so the pair's history is complete.
 - `consumed` is written ONLY by the consumer (the one field the COO half may edit): the /drive tick
   id + dispatch receipt, or `"no-act: <reason>"`. Everything else is the producer's.
+- **PRE-FILL BOUNDARY (COO-pinned 2026-08-27, msg 76940, on row 7 of D2-D3):** the producer may
+  pre-fill `consumed` EXACTLY when the row's work was ALREADY EXECUTED off the message before the
+  row landed, and the pre-fill CITES the COO-side receipt (msg-id + commit) — that prevents a
+  phantom unconsumed row. A row whose work is NOT yet executed lands with `consumed` empty; a
+  producer pre-fill there silently drops the obligation the consumer's tick converts, and the
+  unconsumed count stops being a work signal.
 
 **Cursor:** /drive keeps its read position in its OWN drive log (last consumed `{ts, tick}`); on lost
 state it re-derives from the newest `consumed` field in the ledger itself. **The cursor AND the
