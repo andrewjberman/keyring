@@ -69,15 +69,36 @@ marker discriminates instead of decorating every row. Re-exercised as planted mu
 
 ## 6. Surprise channel (OBSERVATION / INERT -- surfaced, no action taken)
 
-- **`python .tools/audit-archive-invoker.py` (XXX.md step A.2) reports 11 integrity findings on
-  this device**: 7 `NON-APPEND-EDIT` (e.g. `org/mcp/agent-spawn-audit.log` baseline 276176B vs
-  live-head 32434B; `org/mcp/comp-which-rail.log` 7962173B vs 326248B) and 4 `ERROR-FAILCLOSED`
-  live-missing logs (`org/surface-check-ack-audit.log`, `org/mcp/comp-detect-gate-override.log`,
-  `org/mcp/log-open-ok-override.log`, `org/jq-ban-override-audit.log`). The shape is consistent
-  with site Z holding shorter log histories than the baseline snapshot rather than with tampering,
-  but **I did not test that and am not claiming it** -- the two are not distinguishable from the
-  invoker's output alone. It never blocked startup. Surfaced to `3.0.0_SA_CVO~Z`, cc
-  `0.0.0_AB_MSTR~Z`. NOT chased -- off-mandate.
+- **`python .tools/audit-archive-invoker.py` (XXX.md step A.2) integrity findings on this device.**
+  ⛔ **CORRECTED ~19:2xZ, AND THE ERROR WAS MINE: this bullet first read "11 findings ... 7
+  NON-APPEND-EDIT and 4 ERROR-FAILCLOSED". THE TRUE CENSUS IS 13 -- 8 and 5.** I ran the invoker
+  under `tail -12` and counted the visible lines as the census; the output is 19 lines. **A
+  truncated read reported as a denominator** -- the exact class this estate has banked twice over
+  (*never head OR tail a search whose count carries a verdict*; *a denominator is an artifact, not
+  a summary*). Re-run untruncated: rc=1, 19 lines, `grep -c 'INTEGRITY/'` = **13**, split 8/5.
+  Nothing downstream read the number -- it lives in a surprises array, not in any acceptance row,
+  denominator or verdict -- but a wrong number in a certified record is a wrong number, so it is
+  corrected in all three instances rather than left standing.
+
+  **SUBSTANCE: CLOSED, and not by me.** `0.0.0_AB_MSTR~Z` established the mechanism at source
+  (`@e4f3b36f41`): `chain_root()` returns `archive/<device>/` only if that dir exists and otherwise
+  falls back to the legacy flat root, which its own docstring says **is the laptop chain** -- so a
+  site-Z seat compares device-local live logs against the LAPTOP's baseline. `1.0.0_SA_CTO~Z` then
+  closed it as the named A.2 gate: it is `rv0057-f001`, a migration mid-flight with a named
+  terminus, **not an artifact and not a tamper**, and no further reports are needed.
+  **I verified both halves here rather than relaying them.** The named discriminator is
+  **DIRECTION, not magnitude**: over all 8 sized rows, **shrank=8, grew=0, unchanged=0**
+  (1.46x-23.81x). A wide spread is what the device-axis reading *predicts*; a tamper reading
+  predicts mixed directions with some logs UNCHANGED, and 0 of 8 are unchanged. That
+  independently reproduces `0.4.0_DS_ClientPlatform~L`'s 8/8 from a different seat and run.
+  Resolution condition unmet: **0 device-level subdirs** under `org/audit/archive/`.
+  ⛔ **I did NOT create that directory** -- `1.0.0_SA_CTO~Z` names one `mkdir` as the trap (it would
+  make the tool believe we are post-migration while all 238 files remain flat, comparing live logs
+  against an EMPTY chain). I only listed it read-only.
+  **The invariant is the ZERO, not the total:** I read 29 subdirs, CTO read 32 minutes later. The
+  total grows as archives are minted and is wrong the moment it is written; `0 device-level` is what
+  the fallback actually keys on. Banking the perishable total would have manufactured a false
+  disagreement between two correct reads.
 - **CVO F2 named three resolution surfaces over this name space; there are FIVE.** The two it did
   not name are `data/mdpf/scripts/gold/mdpf_model_registry.json:1 @e88c54e238` (whose declared
   absence policy, *"emits model_key=null + model_key_unmapped -- surfaced, never silently dropped"*,
