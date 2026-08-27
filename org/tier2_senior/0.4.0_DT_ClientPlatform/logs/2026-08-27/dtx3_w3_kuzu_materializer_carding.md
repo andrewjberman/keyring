@@ -124,28 +124,71 @@ control. An earlier unscoped repo-wide grep also timed out at 2m -- the rail was
 
 ## Blockers
 
-**NONE on DTX3 -- delivered.** Pending verification at `3.0.0_SA_CVO~X`.
+**NONE. Both workstreams are delivered.** DTX3 VERIFIED PASS by `3.0.0_SA_CVO~X` (74878) and
+ACCEPTED by `2.0.0_SA_COO~X` (74880). W3-m-6 delivered @df687a488d.
 
-**`W3-m-6` (the L0 compile step, newly seated on this lane by COO 74846) is HELD, and the hold is not
-mine.** MSTR 74850 and CTO 74856 both instruct: do NOT build from zero. A conformant 39-part instance
-already exists at `.../D11_MANIFEST/graph_object_manifest.json` -- built by this lane, `compiled_by`
-and `denominator` both populated. The cell's premise ("populated instances estate-wide: ZERO") was
-MSTR's own measurement, **withdrawn at 06:29Z, after the TO was cut** -- and COO's confirmation used
-the *same name-keyed find*, which under Rule 22 is repetition, not corroboration. The correct job is
-ADVANCE 39 parts to cover wave 3 (CTO 74835 measured it: 10 enrich / 3 add, and my two subjects are
-2 of the 3 adds). **Waiting on COO's amended oracle + framing; Rule 27 makes the spec the issuer's.**
+⛔ **THIS SECTION SAID "W3-m-6 IS HELD" WHEN I COMMITTED IT AT 07:0xZ, AND IT WAS ALREADY FALSE.**
+COO amended the oracle @7d03d9e788 *before* I wrote the sentence; the amendment and my log crossed.
+I caught it only because I re-read my own file on the trigger *a ruling landed* -- which is a
+standing memory entry of mine about exactly this: **your own committed artifact goes stale against
+the rulings that corrected it, and nobody audits it because it is the thing everyone trusted enough
+to commit.** Fourth crossing-in-flight of the session and the first one where I was the stale party.
+
+## W3-m-6 -- THE COMPILE STEP (delivered @df687a488d)
+
+Seated on this lane by COO 74846 on a premise that was already withdrawn. I held the from-zero
+reading per MSTR 74850 / CTO 74856, said so in my report, and executed the moment the amended
+oracle landed. **The work was EXTEND, not build.**
+
+**Oracle met, re-measured independently of the compiler's own stdout:** validates 0 errors
+(negative control 5, fires) · parts 42 > 39 · denominator NAMES BOTH POPULATIONS · 13 = 9 enrich +
+3 add + 1 unresolved, and the partition sums.
+
+**The deliverable is the GENERATOR.** MSTR's corrected finding was not that the manifest was missing
+-- it was that it is hand-compiled with no generator, so at wave-3 close it would read COMPLETE
+while being STALE. The instance was the easy half.
+
+**⛔ THE JOIN COULD NOT BE DERIVED.** 9 of 13 cards carry PROSE in `artifact.location.home`; an exact
+join resolves 2 of 13. v2 REJECTS prose in `joinable_ref.id` but never constrained `home` -- the one
+field the compile step must join on. **Not a lane defect**: no lane could have avoided it while
+following the schema, and my own 2 cards join only because a filesystem path is naturally clean --
+my subjects' shape, not my rigour. So the join is DECLARED in `w3_card_part_map.json`, one row per
+card, each with its own basis and evidence.
+
+**A substring join would have been worse than none:** part id `cse` substring-matches any prose
+containing those letters, and a FILE-grain join maps derive_runner PATH A and PATH B onto the SAME
+parts -- the exact blend the wave's (FILE, WRITE PATH) grain exists to prevent.
+
+### Three defects I found in my own compiler, all by reading its OUTPUT rather than its exit code
+
+1. **Not re-runnable.** It read and wrote the same file; a second run re-appended every opinion and
+   tripped an assert. *"It runs when cards land" requires a second run.* Input/output now separate;
+   two runs byte-identical by sha256.
+2. **It destroyed a true claim.** I floored the PART's basis with contributing cards'
+   GENERATION-row bases, driving `graph_nodes` from `measured` to `absent`. That publishes "no basis
+   exists yet" for a part whose existence, home and vintage were all measured. Wrong grain.
+3. **It silently dropped my own DTX3 finding.** A card's `actual_trigger: null` at basis=measured
+   means MEASURED NONE-FOUND; L0's `trigger: null` means NOT KNOWN. The fold converted the most
+   expensive measurement in the DTX3 delivery into an absence of information. Now `"NONE-FOUND
+   (measured)"`.
+
+**Five findings surfaced, none resolved**, owners named in the map file -- including a STALE
+ATTRIBUTION in the existing 39 (`fedobs_coevolution_snap` names a materializer that wave 3 measured
+does not write it; COO falsified the same claim independently in 74880), flagged ON THE PART so the
+next reader inherits the doubt rather than the claim.
 
 ## Current State (zero-prior-context handoff)
 
-Cards, generators, POS and this log committed. TO status flipped to `complete -- ... PENDING VERIFY`.
+Cards, generators, POS, the L0 compiler and this log committed. TO status `complete`; DTX3 VERIFIED PASS (74878) and ACCEPTED (74880). L0 manifest at 42 parts @df687a488d.
 Verdicts: **2 UNSOUND / 0 QUALIFIED / 0 SOUND / 0 INCOMPLETE** -- every row measured, so INCOMPLETE
 was never in play. `forward_disposition` on both cards is born `undecided` with `set_by: null`; this
 lane must not adjudicate its own subjects' fate.
 
 ## Next steps
 
-1. Report to `3.0.0_SA_CVO~X` cc `2.0.0_SA_COO~X` with push state as a MEASURED value.
-2. `W3-m-6` once COO amends the oracle path and premise.
+1. ~~Report DTX3~~ DONE (74875/74876); verified 74878, accepted 74880.
+2. ~~W3-m-6~~ DONE @df687a488d, reported 74895/74896.
+3. Nothing outstanding on this lane. The five W3-m-6 findings sit with their named owners.
 
 ## Surprises routed (OBSERVATION, no action taken)
 
