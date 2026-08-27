@@ -392,10 +392,15 @@ against them as part of the population's record, not as bars this seat invented:
   names the graph tables in source), finding 3 files, one decisive: snap_store.py — the estate's
   GENERIC writer by design (:222 `table_id = (NAMESPACE, surface)` with surface a PARAMETER, :256
   real pyiceberg append; docstring "the ONE writer for all siblings"), invisible to every
-  name-based predicate AND to trigger-reachability. AND the census SYSTEMATICALLY names the
-  row-BUILDER as materializer while the writer holds 0 of 39 parts (4 _snap parts name their
-  emitters) — the same producer/writer split as cse_producers→cse_store, now a two-family
-  PATTERN, not a slip. ⛔ CORRECTED by 74634: the earlier "3 of 4 demonstrably CALL snap_store"
+  name-based predicate AND to trigger-reachability. The writer holds 0 of 39 census parts — that stands.
+  ⛔ But the "census SYSTEMATICALLY names the builder / two-family PATTERN" claim is RETRACTED
+  (74648/74657, stager-grain resolution by the staging prefix): of the 4 _snap rows, 2 name the
+  CORRECT stager, 1 names an UNRELATED file (ms_cloud_extract, 0 snap_ingest refs, no import chain
+  to the real stager ms_heat_index), 1 unresolved. cse_producers→cse_store remains a real
+  import-measured split — ONE confirmed instance, not a pattern. Ledger note: a refuted premise
+  does not automatically retract the conclusion it was carrying — the "systematic" generalisation
+  rode on the grep-rl caller limb and outlived that limb's correction until a second seat went
+  back for it. ⛔ CORRECTED by 74634: the earlier "3 of 4 demonstrably CALL snap_store"
   was a grep -rl over comments/help strings — 0 of 5 import or call it (AST-measured). The REAL
   coupling is a FIFTH REACHABILITY MECHANISM: an S3 staging-prefix contract
   (warehouse/snap_ingest/pending/{surface}/ — producers stage JSONL, snap_store --ingest-pending
