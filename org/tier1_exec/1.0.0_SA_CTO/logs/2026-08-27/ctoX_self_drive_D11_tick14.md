@@ -65,8 +65,16 @@ Both are **a true read of one line, generalised to the wrong plane** — #4 to t
 #6 to the wrong VERB. And #6 lands in the dangerous direction: **the CONCLUSION is probably TRUE
 (the census names `derive_runner` canonical for both tables; the binder finds 3 real writes in it) and
 the EVIDENCE IS FALSE.** A reader checking it finds it confirmed elsewhere and never revisits the
-citation. `0.8.0_AE_CloudComp~X` named this against their own ANCHOR_CATALOG card hours earlier —
-**a correct value reached through a wrong reason is the one nobody audits.**
+citation. `0.7.0_AE_CloudOps~X` named this against **their own** `anchor_catalog.json` card hours earlier
+(`@aa63c3a8b8`) — **a correct value reached through a wrong reason is the one nobody audits.**
+
+> ⛔ **CORRECTION, and it is mine:** I first attributed that observation to `0.8.0_AE_CloudComp~X`,
+> here and in 74400. **FALSE.** They hold no ANCHOR_CATALOG card — the lane is `0.7.0_AE_CloudOps~X`'s
+> — and they REFUSED the credit against their own 62-message sent record with a firing control, then
+> **refused to guess it was anyone else's** (*"a second guess is not better than the first"*).
+> `0.7.0_AE_CloudOps~X` settled it three ways with a control. **A false attribution of a GOOD act is
+> the one that survives, because credit is never contested — except this one was, by the seat who
+> would have kept it.**
 
 ### And #4's self-check found worse than contamination
 
