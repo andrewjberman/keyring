@@ -40,9 +40,26 @@ routine `/watcher` startup: `1.0.0_SA_CTO` found pid 2124 (`inbox-watch.sh 1.0.0
 parent dead) holding its own inbox, and `0.4.0_DS_ClientPlatform` had a **7h17m orphan** (pid 31391)
 polling the mailbox of an agent that was `NOT REGISTERED`.
 
-`inbox-watch.sh:113` is `while true` with **no parent-liveness check and no exit path.** When the
-session ends the harness reaps the Monitor task and the eval wrapper; the bash child keeps polling
-forever. **An orphan is not inert — it is a thief**, and the source order is load-bearing:
+⛔ **THE MECHANISM SENTENCE THAT STOOD HERE WAS FALSE FOR SIX WEEKS, AND IT WAS FALSE ABOUT A FIX THIS
+SEAT AUTHORED.** It read: *"`inbox-watch.sh:113` is `while true` with no parent-liveness check and no exit
+path ... the bash child keeps polling forever."* **Corrected 2026-08-27, every line read at source:**
+`:112-120` names the block *PARENT-LIVENESS SELF-EXIT (2026-07-14, 0.0.0_AB_MSTR -- the orphan-thief ROOT
+fix)*; `:161-165` tests `kill -0 "$WATCH_PARENT"`, appends `WATCHER-SELF-EXIT` to `orphan-audit.log`, and
+`exit 0`s. **There IS an exit path.** `orphan-audit.log` at this device: **458 `WATCHER-SELF-EXIT` of 471
+lines** — the routine path.
+
+⚠ **NOT "orphans are solved."** `:137-141` sets `PARENT_CHECK=0` when `INBOX_WATCH_NO_PARENT_CHECK` is set
+**or `$PPID <= 1`** — a deliberate fail-open, because MSYS can render a live non-MSYS parent as 1 and a naive
+check would make healthy watchers suicide (the documented 7-false-positive trap). **Never kill on a probe that
+cannot see its subject.** Orphans remain possible in exactly that cell, so both halves must travel together.
+**Read the arm banner** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid <N>` = armed,
+`parent-tied: OFF` = orphan-capable. ⛔ **This instruction has NO INSTRUMENT on `teams-watch.py`** — that
+engine has no banner equivalent (0.0.0_AB_MSTR~Z, verified at source; owner `0.5.0_AE_OpalETL~Z`), so a seat
+arming it cannot read its protection state and the honest answer is *unknown, and it cannot self-exit*.
+
+⛔ **NOTHING ABOUT ORACLES CHANGES, AND THIS ARGUES THE OTHER WAY.** A self-exit narrows how orphans are
+BORN; it changes nothing about how you may REASON. Do not read "orphans are rarer" as licence to infer
+delivery from a drained inbox. When an orphan DOES exist, the source order below is still load-bearing: **An orphan is not inert — it is a thief**, and the source order is load-bearing:
 
 ```
 inbox-watch.sh:120   mv "$msg" read/       <-- drains top-level. COMMITS THE THEFT.

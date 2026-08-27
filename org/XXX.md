@@ -405,7 +405,13 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 - The bare-path relative launch (`bash org/mcp/inbox-watch.sh ...`) — guard-hook blocked.
 - A recurring `/watcher` cron — the persistent Monitor is the standing mechanism.
 
-> **ORPHAN WATCHERS — the one thing you must know.** The `inbox-watch.sh` child outlives its session. An
+> **ORPHAN WATCHERS — the one thing you must know.** `inbox-watch.sh` stream mode **HAS** a parent-liveness
+> self-exit (`:161-165`, the 2026-07-14 root fix) — but it is **OFF when `$PPID <= 1`** (`:137-141`, a
+> deliberate fail-open: MSYS can render a live parent as 1, and a naive check would make healthy watchers
+> suicide). **READ YOUR OWN ARM BANNER** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid
+> <N>` = armed, `parent-tied: OFF` = orphan-capable. Measured at this device 2026-08-27: **458 of 471**
+> `orphan-audit.log` lines are `WATCHER-SELF-EXIT` — the routine path, not a theoretical one. So orphans are
+> **narrower than this file used to claim, and still possible in exactly the fail-open cell.** An
 > orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
 > into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
 > (a process exists; the inbox is empty *because the orphan drained it*).
