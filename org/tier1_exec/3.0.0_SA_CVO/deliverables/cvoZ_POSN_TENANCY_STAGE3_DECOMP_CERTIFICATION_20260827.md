@@ -350,6 +350,67 @@ which cell.** The scoping is the only part I am changing.
 
 ---
 
+# AMENDMENT 5 — ~22:2xZ — `PT-a-1` AND `PT-a-3` RE-CERTIFIED @`4a1d7a5e3c`
+
+**Re-certification requested by `2.0.0_SA_COO~Z` after the sovereign ruling settled the shape.**
+**`PT-a-2` is NOT part of this** — unchanged and already discharged by `TO-3-AE` `AC2`, exercised.
+
+**VINTAGE GUARD.** `4a1d7a5e3c` is an ancestor of HEAD. **The decomp file DIFFERS from the pin by one
+line** — so I hashed the cells rather than trusting a file-level diff:
+```
+PT-a-1  pin 1f7b8261159a == worktree 1f7b8261159a   IDENTICAL
+PT-a-3  pin c7cbdbb0e60e == worktree c7cbdbb0e60e   IDENTICAL
+```
+⭐ **A file-level diff cannot distinguish "my cell changed" from "some other cell changed."** The
+certified objects did not move; something else in the file did.
+
+## `PT-a-1` — CERTIFIED. AND IT CORRECTS THE FRAME I SUPPLIED THREE HOURS AGO.
+
+> *"This is NOT a superseded measurement (the `D1-h-r3` Claim-A shape) — it is an **UNMEASURED
+> PREMISE that was false when written.** No vintage stamp rehabilitates it: **nothing was measured to
+> age.**"*
+
+⛔ **Right, and it narrows my own ruling.** I held that a certified measurement does not become an
+error by being overtaken, so the remedy is **stamp the vintage and preserve the text.** **That remedy
+presupposes something was measured.**
+```
+D1-h-r3 Claim A   TRUE at its pin, overtaken later    -> STAMP + PRESERVE
+PT-a-1  premise   NEVER true, asserted not measured   -> STRIKE
+```
+**Stamping a vintage on an unmeasured assertion would be a lie about its history** — it would imply a
+moment at which it held. **There was none.**
+
+**Also affirmed:** scope narrowed to *1 exception path* (was *"1 route family"*); the oracle is
+**byte-based** with no render, so `PT-inv-1` holds by construction; and the criterion is **honestly
+declared NOT-YET-RUNNABLE** — the refusal arm is inexpressible until the exception path exists. *A
+criterion that states when it becomes runnable is worth more than one that reads green early.*
+
+## `PT-a-3` — CERTIFIED. ITS TRAP CLAUSE IS THE STRONGEST LINE IN SECTION (a).
+
+> *"adding firm to the cache key partitions **IDENTICAL BYTES** … a correct-looking control over an
+> exposure that does not exist yet, which then does NOTHING about the one that arrives with the
+> Satellites data. **It would be built, read green, and be measured against the wrong era.**"*
+
+⭐ **"Measured against the wrong era" is the sharpest statement of tonight's recurring class.** And the
+measured half turns it into an assignment rather than a warning: the firm-keyed policy **exists and is
+applied — to the scoped S3 behaviours, not to this path. A WIRING question, not a build.**
+
+## ⛔ ONE FINDING — A DEAD FACT, AND THIS IS ITS SECOND CARRIER IN NINETY MINUTES
+
+The alignment row reads **"AE-class. THERE IS NO AE SEAT — measured live, 9 registered agents, zero
+AE."** `0.7.0_AE_CloudOps~Y` was seated ~21:1xZ, delivered `TO-3-AE` ~21:48Z, and closed it out.
+**True when written, false now.**
+
+>> **`0.4.0_DE_ClientPlatform~Y` corrected the IDENTICAL sentence in `ETFS_SATELLITES.TO-4`'s status
+   field at ~21:0xZ. This row was written AFTER that correction and did not inherit it.** <<
+
+⭐ **Two carriers of one fact, one corrected and one not, nothing connecting them** — the same shape as
+`comp-secrets` carrying `49financial` while the commit gate did not. **A correction propagates to the
+carrier someone edits, never to the carriers nobody remembers.** **Not a gate** — an alignment note,
+not a criterion.
+
+---
+
 # AMENDMENT 4 — ~22:2xZ — `PT-a-1` NOW CARRIES THREE DISTINCT STATES. THEY MUST NOT COLLAPSE.
 
 **ANDREW-DIRECT ~22:1xZ, verbatim** (received at `1.0.0_SA_CTO~Z`'s terminal, record `@834bfafebb`):
