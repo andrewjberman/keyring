@@ -193,3 +193,71 @@ internal read falls short.** An authorization is not an instruction to use it.
 
 | A7 | `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ANDREW_DIRECT_20260827_PER_PARTNER_SOURCE_TO_TAXONOMY_MAP.md` @`45dd4294e7` — the per-partner source map VERBATIM (recorded at the DS~Z terminal) | 08-27 ~20:0xZ |
 | A8 | `2.0.0_SA_COO~Z` msg 9943 — the `opal-data-assets` three-scheme partition measurement (`s3api`, COO's own seat) | 08-27 ~20:2xZ |
+
+---
+
+## 7. ⛔ AMENDMENT 2026-08-27 ~21:2xZ — COTTONWOOD "NO SMAs" HAS A MEASURED COUNTER-INSTANCE, AND THE OBVIOUS CHECK CONFIRMS THE WRONG ANSWER
+
+**Measured by `0.4.0_DS_ClientPlatform~Z` (msg 10192), at source, with a negative control on the hash.
+Recorded here because §6.1 of this file carries the "no SMAs" line and this is the carrier agents read.**
+
+### 7.1 THE TWO STATEMENTS, BOTH SOVEREIGN-DERIVED, NEITHER ADJUDICATED HERE
+
+```
+ANDREW ~20:0xZ (this file, s.6.1)   COTTONWOOD: NO SMAs "in the SMAs as a strategy bucket
+                                    which is what we've built here"
+ANDREW ~2026-08-26 17:42/17:45Z     the DIVZ SMA sleeve in Anna *9237 "is an OPAL SMA ->
+  via ruling @9261c99991            SMAs(L0)/DIVZ(L1)"; its prior classification as non-Opal
+  (1.0.0_SA_CTO, 08-26 13:48Z)      "is what routed it into the residual, and that was the defect"
+```
+`build_cottonwood_mdpf_pair.py:103-132` absorbed the 08-26 ruling the same day —
+`OPAL_SMA_LEAF_KEYS = {"DIVZ SMA": "opal_div_sma"}` at `:132`, cot DIVZ leaf model_id at `:114`.
+
+⚠ **THESE MAY BOTH BE TRUE** — a DIVZ *sleeve* classified at SMAs(L0)/DIVZ(L1) is not obviously the
+same thing as a member of *"the SMAs as a strategy bucket which is what we've built here"*, and his
+~20:0xZ qualifier is doing real work. **They may equally conflict. THAT IS HIS TO SETTLE AND IT IS NOT
+SETTLED HERE.** ⛔ Nobody may resolve it by picking the later timestamp: the 08-26 ruling is *already
+built into a producer*, so "the newer word wins" would silently un-build shipped, sovereign-ruled work.
+
+### 7.2 ⛔⛔ THE INSTRUMENT WARNING — THE OBVIOUS RE-MEASURE RETURNS A FALSE NEGATIVE
+
+**Do NOT verify "cottonwood has no SMAs" by reading `by_model` / `sma_aum` / `sma_members_present`.**
+
+The D1 registry infers `sma_members_present` from `sma_aum > 0.0`, and `sma_aum` is accumulated by
+**iterating `by_model`**. Cottonwood's DIVZ SMA is **DELIBERATELY EXCLUDED from `by_model`** — and the
+exclusion is **CORRECT**: `opal_div_sma` is absent from the packaged `GLOBAL_ACCOUNT_DIST_DISPLAY`, and
+`crosswalk:201-203` **raises `UnknownModelError`** on an unmapped key, so keeping SMAs out of `by_model`
+is both the taxonomy-correct placement and the one that does not break global.
+
+>> **SO THE CHECK RETURNS "NO SMAs" FOR A REASON THAT HAS NOTHING TO DO WITH THE QUESTION, AND THE
+   ANSWER LOOKS LIKE CONFIRMATION.** An implementer running it closes the finding. **Two independent
+   defects are stacked: (a) the registry is stale, and (b) even fully updated it reads a dict the fact
+   was deliberately kept out of. FIXING (a) ALONE LEAVES (b) ARMED.** <<
+
+### 7.3 TWO CARRIERS, ONE SOVEREIGN FACT, 27 HOURS APART — AND THE ONE THAT MISSED IT EMITS THE CARD
+
+```
+build_cottonwood_mdpf_pair.py   knows the DIVZ SMA (absorbed 08-26, same day as the ruling)
+data/mdpf/  (the D1 registry)   OPAL_SMA_LEAF_KEYS  -> 0 hits / 67 files
+                                cot DIVZ model_id   -> 0 hits / 67 files   (measured zero, scoped)
+```
+**This file's own §6 records why that matters:** a correction is only as complete as its last surviving
+carrier, and nothing compares two producers holding one fact.
+
+### 7.4 ⭐ AND THE GUARD CANNOT CATCH IT — A FINDING WORTH MORE THAN THIS INCIDENT
+
+Cottonwood's `absent_reason` asserts *"there are no SMA dollars inside Client for this firm to
+extract"* — **false since 2026-08-26** — and the guard **passes it perfectly**, because it checks a
+reason's **PRESENCE, not its CURRENCY**.
+
+>> **A GUARD BUILT TO STOP AN UNEXPLAINED ZERO CANNOT STOP A WRONGLY-EXPLAINED ONE — AND THE SECOND IS
+   WORSE, BECAUSE IT READS AS MEASURED.** *(`0.4.0_DE_ClientPlatform~Z`'s finding, adopted by
+   `0.4.0_DS_ClientPlatform~Z`, recorded here by `1.0.0_SA_CTO~Z`.)* <<
+
+### 7.5 NOT CLAIMED
+
+The DIVZ SMA's **magnitude is unmeasured**, and **no id-level path is known** from the pair builder's
+output to the D1 registry — `OPAL_SMA_LEAF_KEYS` is a KEY-level bucket join and `:114` states the id
+spaces do not meet. ⛔ **INFLECTION is UNVERIFIED, NOT WRONG:** its SMA zero rests on the same 08-25
+sentence, he did not mention inflection at ~20:0xZ, and two lanes declined to extend the finding there.
+**This section extends to Cottonwood only.**
