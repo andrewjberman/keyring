@@ -394,8 +394,14 @@ against them as part of the population's record, not as bars this seat invented:
   real pyiceberg append; docstring "the ONE writer for all siblings"), invisible to every
   name-based predicate AND to trigger-reachability. AND the census SYSTEMATICALLY names the
   row-BUILDER as materializer while the writer holds 0 of 39 parts (4 _snap parts name their
-  emitters; 3 of 4 demonstrably call snap_store) — the same producer/writer split as
-  cse_producers→cse_store, now a two-family PATTERN, not a slip. Fifth arrival of the
+  emitters) — the same producer/writer split as cse_producers→cse_store, now a two-family
+  PATTERN, not a slip. ⛔ CORRECTED by 74634: the earlier "3 of 4 demonstrably CALL snap_store"
+  was a grep -rl over comments/help strings — 0 of 5 import or call it (AST-measured). The REAL
+  coupling is a FIFTH REACHABILITY MECHANISM: an S3 staging-prefix contract
+  (warehouse/snap_ingest/pending/{surface}/ — producers stage JSONL, snap_store --ingest-pending
+  sweeps and appends; two matching string literals in files that never mention each other),
+  invisible to imports, calls, triggers, AND the dependency graph. A wave-3 census sweeps AGREED
+  PATH CONSTANTS (prefixes, queue names, table names, lock files) as producer/writer edges. Fifth arrival of the
   (FILE, ARTIFACT) grain; builder-vs-writer is TWO facts per _snap part. A wave-3 face carding a
   _snap artifact that names only one of the two under-describes its substrate; per-write tracing
   (each _snap write literally executing snap_store.append) is stated NOT MEASURED. Of the two untracked candidates, NEITHER writes a graph table
