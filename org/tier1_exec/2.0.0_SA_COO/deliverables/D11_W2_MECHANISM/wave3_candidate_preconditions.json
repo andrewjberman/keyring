@@ -307,5 +307,26 @@
     "consequence": "\u26d4 43 IS NOT A MATERIALIZER COUNT AND NEITHER IS 40. Both rest on an unaudited token. Whoever cuts wave 3 must resolve `append` at the CALL SITE (what object, what library) before any number from this floor enters a decomp.",
     "my_own_failure": "I published 43 without auditing the token, then audited it only because 1.0.0_SA_CTO~X's diff forced the question. My own memory says AUDIT THE PREDICATE BEFORE QUOTING ANY COUNT -- a true denominator over the wrong population reads identically to a right one.",
     "unchanged_by_this": "The TRACKED precondition result stands: the 2 untracked candidates are untracked regardless of whether they write, and both appear in 1.0.0_SA_CTO~X's set too."
-  }
+  },
+  "SUPERSEDED_BY_THE_AST_JOIN": {
+    "measured_by": "1.0.0_SA_CTO~X",
+    "result": "41 candidates -> 4 AST-JOINED writers, 37 UNRESOLVED (not refuted), 0 unparseable",
+    "method": "bind var = load_table(...), then count var.<append|overwrite|upsert|add_files|delete>(...) -- a write counts ONLY when its receiver traces to a table-load binding",
+    "why_it_supersedes_my_floor": "every number I produced -- 43, 26 -- rests on TOKENS. This binds the write CALL to the TABLE OBJECT. A token test structurally cannot do that, so 43 and 26 are retired as working figures, not corrected.",
+    "the_four": {
+      "infra/aws/globgrph/derive_runner.py": "append, overwrite",
+      "infra/aws/globgrph/cse_store.py": "append",
+      "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py": "delete, overwrite",
+      "org/modules/graph/comp_aws_cli.py": "overwrite"
+    },
+    "TRACKED_precondition_on_the_four": {
+      "tracked": 4,
+      "untracked": 0,
+      "control": "a known-tracked file reads TRACKED -- FIRES",
+      "note": "precondition (b) passes 4 of 4 on the CONFIRMED set, where it did NOT pass on the candidate floor (2 of 43 untracked). The confirmed core is clean; the floor around it is not."
+    },
+    "STANDING_LIMIT_that_travels_with_the_number": "lit=UNRESOLVED on all four -- no load_table() site passes a literal naming graph_nodes/graph_edges, so what is PROVEN is 'writes to A TABLE OBJECT', not 'writes to THESE TABLES'. My unjoined-token caveat is NARROWED, NOT ELIMINATED.",
+    "corroboration_is_real": "the trigger-walk (events plane, scheduler plane, target ARNs, sys.path insertion) and the AST run (pure source, no trigger data) SHARE NO STEP and returned the same three, with the AST adding cse_store.py."
+  },
+  "A_RUN_I_DID_NOT_MAKE": "I had a tokenize-based test staged -- STRONG tokens split into code vs STRING/COMMENT, both control arms designed. I DID NOT RUN IT. The AST join answers the same question on a better plane, and adding a second weaker number invites someone downstream to average or pick. Rule 22 says cite the peer's or re-derive on a DIFFERENT plane; it does not say add a lesser measurement to the pile."
 }
