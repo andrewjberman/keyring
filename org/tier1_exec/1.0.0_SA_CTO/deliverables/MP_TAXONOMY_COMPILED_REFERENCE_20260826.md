@@ -261,3 +261,41 @@ output to the D1 registry — `OPAL_SMA_LEAF_KEYS` is a KEY-level bucket join an
 spaces do not meet. ⛔ **INFLECTION is UNVERIFIED, NOT WRONG:** its SMA zero rests on the same 08-25
 sentence, he did not mention inflection at ~20:0xZ, and two lanes declined to extend the finding there.
 **This section extends to Cottonwood only.**
+
+### 7.6 ⛔ CORRECTION TO §7.1 — THERE ARE **THREE** SOVEREIGN STATEMENTS, NOT TWO, AND THE THIRD SPEAKS TO CURRENCY
+
+**§7.1 above presents this as a two-statement tension. That was a PARTIAL VIEW.** A third exists,
+spoken at the `0.4.0_DE_ClientPlatform~Z` terminal (msg 10214) **during a conversation about the SMAs
+card**, which makes the card the natural referent:
+
+> *"There is a DIVZ SMA with clients at … Cottonwood"*
+> *"they did recently add a DIVZ SMA, **that is the most updated information**"*
+
+>> ⭐ **THAT LAST CLAUSE IS ANDREW ADDRESSING CURRENCY DIRECTLY**, which is the exact axis §7.1 said was
+   unresolved. It does not by itself settle whether the sleeve is a member of *"the SMAs as a strategy
+   bucket"* — existence and card-membership remain two claims — **but it materially strengthens the
+   side of the tension that §7.1 recorded as merely possible.** <<
+
+**REVISED READING OF THE EVIDENCE (still not an adjudication):**
+
+```
+existence of a cottonwood DIVZ SMA    THREE independent supports: the 08-26 ruling @9261c99991,
+                                      the shipped producer that absorbed it, and his words above
+                                      explicitly flagged as "the most updated information"
+membership in the STRATEGY BUCKET     STILL HIS. The ~20:0xZ "no SMAs" qualifier is about the
+  the SMAs card draws                 bucket, and no statement squarely addresses that
+placement of DIVZ under ETF           NOT CONTESTED -- his ETF/ALT ruling names DIVZ in
+  Strategies, once carded             ETF Strategies by name
+```
+
+**CONSEQUENCE FOR THE `0.4.0_DE_ClientPlatform~Z` SMOKE FIXTURE (@`a52c689a`, cottonwood renders an
+SMAs card, one ETF Strategies bucket, DIVZ beneath):** ⛔ **DO NOT relabel it as a bare shape test.**
+That would demote a fixture resting on THREE sovereign supports to the same status as one resting on
+none — and this seat's §7.1 caution, written without knowledge of his words above, is not grounds to
+discount them. **The correct act is to make its BASIS explicit on its face** — cite the words it rests
+on — so a reader can see it is sovereign-founded rather than author-inferred, and can see precisely
+which narrow claim (card membership) remains open.
+
+⚠ **AND THE FIXTURE'S SYNTHETIC MAGNITUDE ($4.00M) IS A FIXTURE NUMBER AND MUST NEVER BE QUOTED AS
+COTTONWOOD'S DIVZ AUM** — the real magnitude is UNMEASURED (§7.5) and a smoke fixture is exactly the
+artifact whose numbers get lifted.
