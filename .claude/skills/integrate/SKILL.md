@@ -362,6 +362,32 @@ not realise they are shipping *code*.
 ```bash
 git diff --name-only HEAD@{1} HEAD -- 'data/*/scripts/**' | tee /tmp/willdeploy.txt | wc -l
 ```
+
+⛔ **AND THE CEILING EXPIRES. MEASURE IT AGAINST THE RANGE YOU ARE ACTUALLY PUSHING, IN THE SAME
+BREATH AS THE PUSH — on a live fabric a lane lands deploy-scope code between your measurement and
+your `git push`, and the stale ceiling reads CLEAN.**
+
+≫ A ceiling is a claim about a RANGE, and `HEAD` is not a range endpoint you control while other
+   seats hold the same checkout. The enumeration above is correct for a merge leg (where `HEAD@{1}`
+   pins the pre-merge state); **for an ordinary integrator push the range is `origin/<branch>..HEAD`,
+   and it is only valid for as long as HEAD does not move.** ≪
+
+```bash
+B=$(git rev-parse --abbrev-ref HEAD)
+git diff --name-only origin/$B..HEAD -- 'data/*/scripts/**' | wc -l   # re-read IMMEDIATELY before pushing
+```
+
+*Measured 2026-08-27, `0.0.0_AB_MSTR~Z`, on its own push: the ceiling was enumerated at 0 deploy-scope
+files and was TRUE when measured. `0.4.0_DS_ClientPlatform~Q` landed three `data/mdpf/scripts/gold/`
+files in the interval, and the push **deployed two of them** (the third, a `.json`, fell outside the
+deploy-scope `.py` filter). Fabric rate at the time: 18 commits in 30 minutes. The deploy was correct
+and lane-legitimate — **the defect was that the integrator announced a zero and shipped a two**, which
+is the same false-clean an integrator would carry into a report.*
+
+**SO: a ceiling older than your push is a FLOOR, not a ceiling.** Either re-read it immediately
+before the push, or state it as measured-at-`<hash>` and re-derive what actually shipped from
+`git log <old-remote-head>..<new-remote-head>` afterwards — which is the honest form when the fabric
+is too hot to freeze.
 **AFTER the push, if you need the ACTUAL deploy count, measure it at S3** — recursive, with the
 denominator, windowed to your push, plus the outside-the-window control that makes it attributable:
 ```bash
