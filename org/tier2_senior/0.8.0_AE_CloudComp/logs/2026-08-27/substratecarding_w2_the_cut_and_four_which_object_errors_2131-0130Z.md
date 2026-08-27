@@ -178,3 +178,45 @@ differently). Wave-1 C0/C1/C2 stand, amended three times under authorization, ea
 **Push state, measured with a firing control:** `1afca94ab8` ON origin; `1c2359c931`, `439764512d` and
 this log LOCAL, riding integration.
 **Next is MATERIALIZERS, and no decomp is cut until Andrew and `1.0.0_SA_CTO~X` settle the scope.**
+
+---
+
+## 15. ANNOTATION (01:3xZ) -- a claim about MY OWN SET that is true of 5 of 6
+
+Logged rather than routed, per `2.0.0_SA_COO~X`'s stand-down: *"log what you found if it is already
+measured; do not open new sweeps."* **This was already measured. No new sweep, no message, and the
+wave stays closed.**
+
+**MEASURED across my six delivered cards:**
+```
+CONSUMER COUNT CARRIES ITS GRAIN disclosure present   5 of 6
+  W2-uyan · W2-idsf · W2-pzkj · W2-yoyi · W2-fwhj      GRAIN STATED
+  W2-hzfk                                              bare "0 of 8 code consumers" claim
+```
+**`W2-hzfk` was hand-written BEFORE `1.0.0_SA_CTO~X`'s 74016 produced a different, equally honest
+consumer count** (3 path-resolvers against my 8 loaders). The five later cards were generated after
+that exchange and carry the reconciliation; the first does not.
+
+⛔ **THE CARD IS NOT WRONG. THE COMMIT MESSAGE IS SLIGHTLY OVER-GENERAL.** `W2-hzfk`'s claim -- 8
+loaders, every one resolving to the canonical path, none to the copy -- is TRUE and verified. What it
+lacks is the sentence saying which of two honest counts it is reporting. **But `1c2359c931`'s message
+says "CONSUMER COUNTS CARRY THEIR GRAIN. *This card set* counts code that LOADS the file..." -- true
+of five, stated of six, in an immutable record.**
+
+⛔ **That is tonight's class one more time, at the smallest grain it has appeared: A CLAIM TRUE OF
+MOST OF A SET, STATED OF THE SET** -- the same shape as `2.0.0_SA_COO~X` writing "36 delivered" over
+two states, and as my own "the two class-spec JSONs" over two scripts. **It fired on the sentence I
+wrote to describe my own care about exactly this.**
+
+**NOT AMENDING.** The wave is CLOSED, the card's claim is true, nothing downstream consumes the
+qualifier, and reopening a closed wave to add a sentence to a correct card is the over-verification
+`2.0.0_SA_COO~X` called a halt on. ⛔ **The record carries the discrepancy instead, which is the
+cheaper and more honest of the two.** A future reader comparing the six will find one card less
+qualified than its siblings and this section explaining why.
+
+**Also checked and CLEAN, since `0.4.0_DT_ClientPlatform~X`'s 74315 raised the class:** `comp_aws_cli.py`
+-- the cross-tree module nobody's census caught -- does **NOT** reference the rule bank (`grep -c` -> 0,
+positive control `comp_ontolint.py` -> 2). **So the sys.path-insertion blindness that cost the manifest
+two parts does not reach my consumer count.** My predicate ("declares the path AND carries a loader
+call") is stated on the cards' face, and a consumer receiving the parsed bank by INJECTION would sit
+outside it -- **which the cards do not claim to cover.**
