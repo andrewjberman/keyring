@@ -171,9 +171,10 @@ def semantic_errors(document: dict) -> list[str]:
         or remediation != {
             "current_pair_role": "pre_remediation_evidence_only",
             "next_step": "dt_receipt_contract_and_control_source_tranche",
-            "shared_schema_step": "coordinated_before_final_emission",
-            "final_pair_step": "new_authorized_run_after_shared_schema_remediation",
-            "release_step": "base_pass_on_final_committed_pair",
+            "final_pair_step": "authorized_v1_emission_then_commit_under_current_schema",
+            "shared_schema_step": "coordinated_after_final_pair_commit_before_release",
+            "release_step": "base_pass_on_committed_pair_under_post_step4_schema",
+            "ordering_evidence": "CTO~X Msg-ID 75948 measured 168 errors for the committed pre-run manifest and zero errors for the emitted worktree manifest under the post-step-4 schema",
         }
     ):
         errors.append("unknown lifecycle and remediation sequence must remain explicit and non-releasing")
@@ -916,6 +917,10 @@ def main() -> int:
     release_before_shared_remediation = copy.deepcopy(document)
     release_before_shared_remediation["post_rerun_base_validation"]["remediation_sequence"]["shared_schema_step"] = "after_release"
     mutants.append(("release-precedes-shared-schema-remediation", release_before_shared_remediation))
+
+    step4_before_pair_commit = copy.deepcopy(document)
+    step4_before_pair_commit["post_rerun_base_validation"]["remediation_sequence"]["shared_schema_step"] = "coordinated_before_final_pair_commit"
+    mutants.append(("step4-precedes-emitted-pair-commit", step4_before_pair_commit))
 
     missing_layer = copy.deepcopy(document)
     missing_layer["layer_contracts"].pop(2)

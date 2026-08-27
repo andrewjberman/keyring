@@ -1113,13 +1113,14 @@
         "remediation_sequence": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["current_pair_role", "next_step", "shared_schema_step", "final_pair_step", "release_step"],
+          "required": ["current_pair_role", "next_step", "final_pair_step", "shared_schema_step", "release_step", "ordering_evidence"],
           "properties": {
             "current_pair_role": {"const": "pre_remediation_evidence_only"},
             "next_step": {"const": "dt_receipt_contract_and_control_source_tranche"},
-            "shared_schema_step": {"const": "coordinated_before_final_emission"},
-            "final_pair_step": {"const": "new_authorized_run_after_shared_schema_remediation"},
-            "release_step": {"const": "base_pass_on_final_committed_pair"}
+            "final_pair_step": {"const": "authorized_v1_emission_then_commit_under_current_schema"},
+            "shared_schema_step": {"const": "coordinated_after_final_pair_commit_before_release"},
+            "release_step": {"const": "base_pass_on_committed_pair_under_post_step4_schema"},
+            "ordering_evidence": {"type": "string", "minLength": 1}
           }
         }
       }
