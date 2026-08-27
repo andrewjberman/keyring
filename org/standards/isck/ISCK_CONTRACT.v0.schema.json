@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opal:standards:isck:contract:v0",
+  "title": "ISCK Identity-State Contract v0 (DRAFT - not frozen; see ISCK_CONTRACT.md)",
+  "oneOf": [
+    {"$ref": "#/$defs/entity"},
+    {"$ref": "#/$defs/entity_binding"},
+    {"$ref": "#/$defs/state_observation"},
+    {"$ref": "#/$defs/identity_relation"},
+    {"$ref": "#/$defs/materializer"},
+    {"$ref": "#/$defs/materializer_version"},
+    {"$ref": "#/$defs/materialization_run"},
+    {"$ref": "#/$defs/source_frontier"},
+    {"$ref": "#/$defs/surface_version"},
+    {"$ref": "#/$defs/coherence_evaluation"}
+  ],
+  "$defs": {
+    "ulid": {"type": "string", "pattern": "^[0-9a-hjkmnp-tv-z]{26}$"},
+    "ent_serial": {"type": "string", "pattern": "^ent:[0-9a-hjkmnp-tv-z]{26}$"},
+    "mat_serial": {"type": "string", "pattern": "^mat:[0-9a-hjkmnp-tv-z]{26}$"},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "iso_ts": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"},
+    "nonempty": {"type": "string", "minLength": 1},
+    "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}},
+    "claim_origin": {"enum": ["producer_declared", "independently_observed", "rule_derived", "model_inferred", "human_adjudicated"]},
+    "verification_standing": {"enum": ["unverified", "corroborated", "contradicted", "superseded"]},
+    "fabric_id": {"$ref": "#/$defs/nonempty"},
+
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "entity_serial", "entity_class", "plane", "entity_grain", "identity_scope", "minted_at", "minting_authority", "identity_policy", "current_status"],
+      "properties": {
+        "record_type": {"const": "entity"},
+        "entity_serial": {"$ref": "#/$defs/ent_serial"},
+        "entity_class": {"$ref": "#/$defs/nonempty"},
+        "plane": {"$ref": "#/$defs/nonempty"},
+        "entity_grain": {"$ref": "#/$defs/nonempty"},
+        "identity_scope": {"enum": ["logical", "fabric_instance", "device_instance", "run_occurrence"]},
+        "minted_at": {"$ref": "#/$defs/iso_ts"},
+        "minting_authority": {"$ref": "#/$defs/nonempty"},
+        "identity_policy": {"$ref": "#/$defs/nonempty"},
+        "current_status": {"enum": ["candidate", "active", "retired", "held"]},
+        "canonicalized_as": {"$ref": "#/$defs/ent_serial"}
+      }
+    },
+
+    "entity_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "binding_id", "entity_serial", "identity_space", "native_key", "fabric_scope", "valid_from", "valid_to", "binding_basis", "status"],
+      "properties": {
+        "record_type": {"const": "entity_binding"},
+        "binding_id": {"type": "string", "pattern": "^bind:[0-9a-hjkmnp-tv-z]{26}$"},
+        "entity_serial": {"$ref": "#/$defs/ent_serial"},
+        "identity_space": {"$ref": "#/$defs/nonempty"},
+        "native_key": {"$ref": "#/$defs/nonempty"},
+        "fabric_scope": {"enum": ["fabric_invariant", "device_local"]},
+        "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "valid_from": {"$ref": "#/$defs/nonempty"},
+        "valid_to": {"oneOf": [{"$ref": "#/$defs/nonempty"}, {"type": "null"}]},
+        "binding_basis": {"$ref": "#/$defs/claim_origin"},
+        "status": {"enum": ["open", "closed", "disputed"]},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      },
+      "if": {"properties": {"fabric_scope": {"const": "device_local"}}},
+      "then": {"required": ["fabric_id"]}
+    },
+
+    "state_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "observation_id", "entity_serial", "identity_space", "source_vintage", "observed_at", "fabric_id", "failure_state"],
+      "properties": {
+        "record_type": {"const": "state_observation"},
+        "observation_id": {"oneOf": [{"type": "string", "pattern": "^obs:[0-9a-hjkmnp-tv-z]{26}$"}, {"$ref": "#/$defs/sha256"}]},
+        "entity_serial": {"$ref": "#/$defs/ent_serial"},
+        "identity_space": {"$ref": "#/$defs/nonempty"},
+        "source_native_key": {"$ref": "#/$defs/nonempty"},
+        "source_vintage": {"$ref": "#/$defs/nonempty"},
+        "observed_at": {"$ref": "#/$defs/iso_ts"},
+        "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "device_id": {"$ref": "#/$defs/nonempty"},
+        "fingerprint": {"$ref": "#/$defs/sha256"},
+        "fingerprint_method": {"$ref": "#/$defs/nonempty"},
+        "normalization_version": {"$ref": "#/$defs/nonempty"},
+        "producer_serial": {"$ref": "#/$defs/nonempty"},
+        "failure_state": {"enum": ["observed", "partial", "substrate_unavailable", "instrument_error", "not_applicable"]},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"failure_state": {"const": "observed"}}},
+          "then": {"required": ["fingerprint", "fingerprint_method", "normalization_version"]}
+        },
+        {
+          "if": {"properties": {"failure_state": {"enum": ["substrate_unavailable", "instrument_error", "not_applicable"]}}},
+          "then": {"not": {"required": ["fingerprint"]}}
+        }
+      ]
+    },
+
+    "identity_relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "relation_id", "relation_type", "subject_serial", "object_serial", "claim_origin", "verification_standing", "asserted_at", "asserted_by"],
+      "properties": {
+        "record_type": {"const": "identity_relation"},
+        "relation_id": {"type": "string", "pattern": "^rel:[0-9a-hjkmnp-tv-z]{26}$"},
+        "relation_type": {"enum": ["candidate_equivalence", "canonicalized_as", "merged_into", "split_from", "successor_of", "replaces", "instance_of"]},
+        "subject_serial": {"$ref": "#/$defs/ent_serial"},
+        "object_serial": {"$ref": "#/$defs/ent_serial"},
+        "claim_origin": {"$ref": "#/$defs/claim_origin"},
+        "verification_standing": {"$ref": "#/$defs/verification_standing"},
+        "asserted_at": {"$ref": "#/$defs/iso_ts"},
+        "asserted_by": {"$ref": "#/$defs/nonempty"},
+        "superseded_by": {"type": "string", "pattern": "^rel:[0-9a-hjkmnp-tv-z]{26}$"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    },
+
+    "materializer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "materializer_serial", "semantic_layer", "canonical_role", "owner", "current_status"],
+      "properties": {
+        "record_type": {"const": "materializer"},
+        "materializer_serial": {"$ref": "#/$defs/mat_serial"},
+        "semantic_layer": {"$ref": "#/$defs/nonempty"},
+        "canonical_role": {"$ref": "#/$defs/nonempty"},
+        "owner": {"$ref": "#/$defs/nonempty"},
+        "current_status": {"enum": ["active", "superseded", "retired", "unknown"]}
+      }
+    },
+
+    "materializer_version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "version_id", "materializer_serial", "bundle_completeness", "bundle_digest", "valid_from"],
+      "properties": {
+        "record_type": {"const": "materializer_version"},
+        "version_id": {"type": "string", "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"},
+        "materializer_serial": {"$ref": "#/$defs/mat_serial"},
+        "source_tree_digest": {"$ref": "#/$defs/sha256"},
+        "dependency_lock_digest": {"$ref": "#/$defs/sha256"},
+        "configuration_digest": {"$ref": "#/$defs/sha256"},
+        "declared_opinions_digest": {"$ref": "#/$defs/sha256"},
+        "normalizer_versions": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}},
+        "runtime_contract_version": {"$ref": "#/$defs/nonempty"},
+        "bundle_completeness": {"enum": ["complete", "partial_legacy"]},
+        "absent_components": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}, "minItems": 1},
+        "bundle_digest": {"$ref": "#/$defs/sha256"},
+        "valid_from": {"$ref": "#/$defs/iso_ts"},
+        "supersedes": {"type": "string", "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"bundle_completeness": {"const": "complete"}}},
+          "then": {"required": ["source_tree_digest", "dependency_lock_digest", "configuration_digest", "declared_opinions_digest", "normalizer_versions", "runtime_contract_version"]}
+        },
+        {
+          "if": {"properties": {"bundle_completeness": {"const": "partial_legacy"}}},
+          "then": {"required": ["absent_components"]}
+        }
+      ]
+    },
+
+    "materialization_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "run_id", "materializer_serial", "materializer_version_id", "source_frontier_id", "fabric_id", "started_at", "run_status", "random_seeds", "output_surface_version_ids"],
+      "properties": {
+        "record_type": {"const": "materialization_run"},
+        "run_id": {"type": "string", "pattern": "^run:[0-9a-hjkmnp-tv-z]{26}$"},
+        "materializer_serial": {"$ref": "#/$defs/mat_serial"},
+        "materializer_version_id": {"type": "string", "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"},
+        "source_frontier_id": {"type": "string", "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"},
+        "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "device_id": {"$ref": "#/$defs/nonempty"},
+        "started_at": {"$ref": "#/$defs/iso_ts"},
+        "completed_at": {"oneOf": [{"$ref": "#/$defs/iso_ts"}, {"type": "null"}]},
+        "parameters_digest": {"$ref": "#/$defs/sha256"},
+        "random_seeds": {"oneOf": [{"type": "array", "items": {"type": "integer"}, "minItems": 1}, {"const": "not_applicable"}]},
+        "run_status": {"enum": ["running", "succeeded", "failed", "partial"]},
+        "output_surface_version_ids": {"type": "array", "items": {"type": "string", "pattern": "^sv:[0-9a-hjkmnp-tv-z]{26}$"}},
+        "run_receipt_digest": {"$ref": "#/$defs/sha256"}
+      }
+    },
+
+    "source_frontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "source_frontier_id", "entries"],
+      "properties": {
+        "record_type": {"const": "source_frontier"},
+        "source_frontier_id": {"type": "string", "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"},
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_serial", "identity_space", "authority_ref", "source_version", "observed_at", "fabric_id"],
+            "properties": {
+              "source_serial": {"$ref": "#/$defs/ent_serial"},
+              "identity_space": {"$ref": "#/$defs/nonempty"},
+              "authority_ref": {"$ref": "#/$defs/nonempty"},
+              "source_version": {"$ref": "#/$defs/nonempty"},
+              "observed_at": {"$ref": "#/$defs/iso_ts"},
+              "fabric_id": {"$ref": "#/$defs/fabric_id"}
+            }
+          }
+        }
+      }
+    },
+
+    "surface_version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "surface_version_id", "logical_surface_serial", "producing_run_id", "content_digest", "fingerprint_method", "normalization_version", "source_frontier_id", "built_at", "fabric_id"],
+      "properties": {
+        "record_type": {"const": "surface_version"},
+        "surface_version_id": {"type": "string", "pattern": "^sv:[0-9a-hjkmnp-tv-z]{26}$"},
+        "logical_surface_serial": {"$ref": "#/$defs/ent_serial"},
+        "physical_instance_serial": {"$ref": "#/$defs/ent_serial"},
+        "producing_run_id": {"type": "string", "pattern": "^run:[0-9a-hjkmnp-tv-z]{26}$"},
+        "content_digest": {"$ref": "#/$defs/sha256"},
+        "fingerprint_method": {"$ref": "#/$defs/nonempty"},
+        "normalization_version": {"$ref": "#/$defs/nonempty"},
+        "source_frontier_id": {"type": "string", "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"},
+        "published_ref": {"oneOf": [{"$ref": "#/$defs/nonempty"}, {"type": "null"}]},
+        "built_at": {"$ref": "#/$defs/iso_ts"},
+        "fabric_id": {"$ref": "#/$defs/fabric_id"}
+      }
+    },
+
+    "coherence_evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_type", "evaluation_id", "subject_ref", "target_policy", "target_ref", "evaluated_at", "evaluator", "fabric_id", "availability", "integrity", "currency", "provenance", "fabric_validity"],
+      "properties": {
+        "record_type": {"const": "coherence_evaluation"},
+        "evaluation_id": {"type": "string", "pattern": "^ce:[0-9a-hjkmnp-tv-z]{26}$"},
+        "subject_ref": {"$ref": "#/$defs/nonempty"},
+        "target_policy": {"enum": ["latest_authority", "declared_release", "as_of_frontier", "historical_replay"]},
+        "target_ref": {"$ref": "#/$defs/nonempty"},
+        "target_source_frontier": {"type": "string", "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"},
+        "evaluated_at": {"$ref": "#/$defs/iso_ts"},
+        "evaluator": {"$ref": "#/$defs/nonempty"},
+        "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "availability": {"enum": ["available", "partial", "unavailable"]},
+        "integrity": {"enum": ["verified", "mismatch", "unverified"]},
+        "currency": {"enum": ["at_target", "behind_target", "ahead_of_target", "unknown"]},
+        "provenance": {"enum": ["complete", "incomplete", "unresolved"]},
+        "fabric_validity": {"enum": ["valid_for_fabric", "foreign_fabric", "unknown"]},
+        "delta_summary": {"$ref": "#/$defs/nonempty"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    }
+  }
+}
