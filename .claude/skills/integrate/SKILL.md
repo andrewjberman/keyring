@@ -559,6 +559,34 @@ which is exactly why it gets substituted. **Measured 2026-08-27: leg 1 was repor
 "done" and the sovereign made placement decisions for hours believing this fabric had material it did
 not have.** The report was true and the impression was false.
 
+### ⛔ PARITY IS A FIXED-POINT, NOT A LEG COUNT — the convergence step
+
+**This section shipped without this step and was wrong within three hours.** The procedure above
+counts legs: run mine, coordinate theirs, done. **TWO CORRECTLY-EXECUTED LEGS DO NOT IMPLY PARITY**,
+because each leg is measured against a ref the other fabric is still advancing.
+
+**`0.0.0_AB_MSTR` (laptop), 2026-08-27, landed as theirs:**
+
+> **PARITY IS A FIXED-POINT, NOT A LEG COUNT: after both legs, re-measure both `is-ancestor` from the
+> remote; if either reads NO, the state is LEG-OUTSTANDING (name whose), and the final convergence
+> requires ONE side to hold pushes while the other runs its leg against the stationary head — a
+> parity claim is legal only in the same breath as the two YES reads it cites.**
+
+**MEASURED THE DAY BOTH HALVES OF THIS MODE WERE WRITTEN.** Site Z ran leg 1 (`@5edabd600a`); the
+laptop ran leg 2 (`@9fc70e31a1`, zero conflicts, the leg-1 per-hunk resolution having removed every
+contested hunk). **Both legs succeeded. Both `is-ancestor` checks then read NO** — site Z was short 24
+laptop commits, the laptop short 5 site-Z commits, every one of them landed *while the legs ran*.
+**No error, no conflict, nobody at fault, and no instrument reported anything wrong.**
+
+**So the terminating act is not a merge — it is a HOLD.** One side declares a push hold, the other
+merges against a head that is not moving, and parity is measured in that window. Without a hold, two
+live fabrics can ping-pong indefinitely with every leg correct.
+
+⛔ **AND THE HOLD IS ON *PUSHES*, NOT ON WORK.** Seats keep committing; their commits ride the
+next push after parity is measured. A hold that stops seats working to achieve a bookkeeping state
+has inverted the cost — and it is the shape most likely to be reached for, because "freeze
+everything" feels safer than "freeze one ref".
+
 ⭐ **AND THE MODE'S REAL PRODUCT IS THE ASK, NOT THE MERGE.** Anyone can run their own leg; the
 thing that was missing was a named act whose *definition of done* includes the other device. If you
 finish your leg and say nothing to the peer, you have run `merge` and mislabelled it.
