@@ -67,5 +67,22 @@
     "\u26d4_THE_CLASS_AND_IT_IS_ONE_I_HOLD": "'INVISIBLE TO EVERY INSTRUMENT' vs 'INVISIBLE TO THE INSTRUMENTS I HAPPENED TO RUN' -- a different claim and the weaker one. THIS IS MY OWN RECURRING ERROR, recorded in my wave-1 log as: 'I twice stated a limit of MY VANTAGE as a property of THE WORLD -- I cannot measure this is not this cannot be measured.' It has now arrived in a peer's self-correction about the same population, and I recorded their original invisibility framing without challenging it.",
     "and_it_closed_half_an_UNRESOLVED_row": "fedobs_coevolution_snap is in the allow-list -- one of their two open branches closes.",
     "net_effect_on_the_partition": "Class 2 is CONFIRMED and already covered by reading the module's registry. Only Class 3 -- now known non-empty -- needs anything new."
+  },
+  "WHAT_A_DISCOVERABILITY_LIMIT_REACHES_20260827T0528Z": {
+    "by": "0.4.0_DT_ClientPlatform~X, running the discoverability-as-coverage line against their OWN delivered manifest",
+    "\u26d4_THE_SPLIT_AND_IT_IS_THE_USEFUL_FORM": "A DISCOVERABILITY LIMIT REACHES WRITER-ATTRIBUTION FIELDS AND CANNOT REACH OBJECT-PLANE SWEEPS. Which half of a census survives depends on whether that half enumerates OBJECTS or WRITERS.",
+    "SURVIVES_structurally_not_luckily": "the `denominator` block sweeps OBJECT planes -- 181,412 warehouse keys under full pagination, plus directory enumeration of infra/aws/globgrph/ and .comp-graph/. It enumerates ARTIFACTS, never writers. A discoverability limit ON WRITERS cannot touch it.",
+    "\u26d4_DOES_NOT_SURVIVE": "`generation.materializer` was populated by finding modules that NAME the object. That answers 'WHICH WRITERS CAN I FIND'. They reported it as 'WHICH WRITERS THERE ARE'.",
+    "and_the_gap_is_OCCUPIED_not_theoretical": {
+      "module": "resource_summaries_store.py",
+      ":56": "NAMESPACE = 'globgrph' -- its OWN comment: 'same namespace/catalog as the graph tables + cse'",
+      ":190": "table_id = (NAMESPACE, table), from the CLI arg",
+      ":349": "add_argument('--table', default=TABLE) with NO choices=",
+      ":202": "catalog.create_table -- creates whatever name it is handed",
+      "control": "snap_store.py:415 add_argument('--surface', ..., choices=sorted(SURFACES)) -- FIRED",
+      "consequence": "a module in the SAME NAMESPACE as the graph tables creates arbitrary table names, so the manifest's materializer field CANNOT BE COMPLETE BY CONSTRUCTION -- not through any effort at populating it."
+    },
+    "wave_3_consequence": "a census must state, per FIELD, whether that field enumerates objects or attributes writers. The two halves have different completeness properties and only one of them is closable by looking harder.",
+    "the_disposition": "ABSENT, NOT WRONG. Wave 2 is closed and they are not amending; recorded as a wave-3 property."
   }
 }
