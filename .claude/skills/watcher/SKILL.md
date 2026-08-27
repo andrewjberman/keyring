@@ -52,6 +52,32 @@ lines** — the routine path.
 **or `$PPID <= 1`** — a deliberate fail-open, because MSYS can render a live non-MSYS parent as 1 and a naive
 check would make healthy watchers suicide (the documented 7-false-positive trap). **Never kill on a probe that
 cannot see its subject.** Orphans remain possible in exactly that cell, so both halves must travel together.
+
+⛔ **THIS IS NOT THE `ps -p 1` TRAP BELOW, AND CONFLATING THEM INVERTS THE ANSWER. TWO PROBES, TWO
+SUBJECTS:**
+
+```
+  OBSERVING A PARENT FROM OUTSIDE, via ps   the eval-WRAPPER shows ppid=1, and MSYS `ps -p 1` FAILS
+                                            -> the documented 7-false-positive trap. Correct as stated.
+  A CHILD READING ITS OWN $PPID             a DIFFERENT question with a DIFFERENT answer.
+```
+
+**MEASURED AT THE `0.0.0_AB_MSTR` SEAT 2026-08-27, one process tree showing BOTH:**
+
+```
+  arm banner (the child, reading its own $PPID)   parent-tied: pid 515411   <- a REAL pid. ARMED.
+  ps: watcher child 515417                        ppid=515411               <- confirms
+  ps: eval-wrapper 515411                         ppid=1                    <- the OUTSIDE view
+```
+
+Corroborated by two further banners, no seat reading 1: `0.0.0_AB_MSTR~Z` **pid 447926**,
+`0.0.3_BG_BBGTerminal` **pid 406719**.
+
+>> **SO "EVERY HEALTHY WRAPPER IS ppid=1" AND "PARENT_CHECK=0 AT $PPID <= 1" ARE BOTH TRUE AND ARE
+   ABOUT DIFFERENT PROCESSES.** Composing them yields *"the self-exit never fires for a healthy
+   watcher"* -- **FALSE**, and contradicted by the 458 of 471 above. The fail-open cell is real and
+   RARE, not the normal case. Found by `0.0.0_AB_MSTR~Z` reading what their own discarded rendering
+   carried that this one did not, before agreeing it be discarded. <<
 **Read the arm banner** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid <N>` = armed,
 `parent-tied: OFF` = orphan-capable. ⛔ **This instruction has NO INSTRUMENT on `teams-watch.py`** — that
 engine has no banner equivalent (0.0.0_AB_MSTR~Z, verified at source; owner `0.5.0_AE_OpalETL~Z`), so a seat

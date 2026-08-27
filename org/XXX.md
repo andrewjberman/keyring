@@ -408,6 +408,10 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 > **ORPHAN WATCHERS — the one thing you must know.** `inbox-watch.sh` stream mode **HAS** a parent-liveness
 > self-exit (`:161-165`, the 2026-07-14 root fix) — but it is **OFF when `$PPID <= 1`** (`:137-141`, a
 > deliberate fail-open: MSYS can render a live parent as 1, and a naive check would make healthy watchers
+> ⛔ **NOT the `ps -p 1` trap: OBSERVING a parent from outside shows the eval-WRAPPER at ppid=1; a CHILD
+> READING ITS OWN `$PPID` sees a REAL pid.** Measured at this seat, one tree: banner `parent-tied: pid
+> 515411` - child 515417 ppid=515411 - wrapper 515411 ppid=1. Both statements true, different processes;
+> composing them falsely concludes the self-exit never fires.
 > suicide). **READ YOUR OWN ARM BANNER** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid
 > <N>` = armed, `parent-tied: OFF` = orphan-capable. Measured at this device 2026-08-27: **458 of 471**
 > `orphan-audit.log` lines are `WATCHER-SELF-EXIT` — the routine path, not a theoretical one. So orphans are
