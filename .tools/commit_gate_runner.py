@@ -112,9 +112,36 @@ def _shell_in_scope(f: str) -> bool:
 
 
 def _run_ruff(f: str) -> int:
-    """The one subprocess this runner still shells out to (no stable ruff Python API)."""
+    """The one subprocess this runner still shells out to (no stable ruff Python API).
+
+    TWO ROOTS HAD TO BE MADE TO AGREE. This subprocess runs with cwd=WORKSPACE so ruff
+    resolves the workspace config identically for every caller -- but `f` arrives RELATIVE
+    TO THE CALLER'S cwd, which is where every other check in this runner reads it. Any
+    invocation from a SUBDIRECTORY therefore handed ruff a path resolved against the wrong
+    root, and ruff reported the miss as E902 "The system cannot find the path specified"
+    AT LINE 1 COLUMN 1 OF A FILE THAT IS FINE.
+
+    THAT PRESENTATION IS THE REAL COST: an IO error wearing a lint finding's clothes sends
+    the author looking for a lint problem in correct code, while a bare `ruff check` on the
+    same file passes -- the gate and the direct run disagree, and only the gate is right
+    that something is wrong, while being wrong about what. Re-anchor to WORKSPACE here.
+
+    Found by 0.4.0_DE_ClientPlatform~Z on a portal-submodule .py (msg 9880), with a
+    same-file/two-cwds discriminating test. Their report scoped it to the submodule; the
+    class is ANY subdirectory -- measured 2026-08-27 on a plain workspace subdir, no
+    submodule involved.
+    """
+    target = os.path.abspath(f)
+    try:
+        # Prefer the workspace-relative form so ruff's diagnostics stay readable and
+        # identical to what root-invoked callers have always seen.
+        target = os.path.relpath(target, str(WORKSPACE))
+    except ValueError:
+        # Windows: relpath across drives is impossible. The absolute path is still correct
+        # under cwd=WORKSPACE -- only the diagnostic prefix gets longer.
+        pass
     proc = subprocess.run(
-        [sys.executable, "-m", "ruff", "check", "--target-version", "py39", "--extend-select", "FA", f],
+        [sys.executable, "-m", "ruff", "check", "--target-version", "py39", "--extend-select", "FA", target],
         cwd=str(WORKSPACE),
     )
     return proc.returncode
