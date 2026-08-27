@@ -473,6 +473,13 @@ against them as part of the population's record, not as bars this seat invented:
   NO. This seat's cert lane therefore spans the arc's decomps under D11 as they cut; CRO~A's
   per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
   without gating the drive.
+- **Arc baseline, measured 05:4xZ (74761):** L0 PARTIAL (schema present, 39 parts, 44 cards, wave-3
+  decomp RUNNING); L1–L4 contract artifacts ZERO (org/standards/ holds exactly four contracts, none
+  above L0). Any layer-boundary progress claim is checked against this baseline. ⛔ HOMONYM TRAP,
+  measured: the existing "identity spine" artifacts (SPEC_IDENTITY_SPINE_FAM_RESOLUTION,
+  IDENTITY_SPINE_ARCHITECTURE_RATIFY, both 2026-08-19) are the PORTFOLIO/ACCOUNT domain (fam 22 /
+  account 20 / graph_nodes 0 / graph_edges 0 by token census) — NOT the graph's L1 Entity Spine. A
+  face or drive report citing "identity spine" progress domain-tests the artifact or over-claims.
   Form interaction priced, not ruled: 4.0.0_SA_CRO~A holds v2 + its 44 live cards FROZEN as
   evidence inputs — measurements port across a contract change, card format does not. The face
   states its form's relationship to that freeze (v2 cards vs (FILE, ARTIFACT) relation evidence);
