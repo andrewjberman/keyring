@@ -96,7 +96,7 @@
     "design_measurements": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline"],
+      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline", "l1_release_baseline"],
       "properties": {
         "cover_partition_baseline": {
           "type": "object",
@@ -158,6 +158,34 @@
                 ]
               }
             }
+          }
+        },
+        "l1_release_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_parts",
+            "stores_exact_count",
+            "grain_lower_bound_count",
+            "key_lower_bound_count",
+            "failure_mode_lower_bound_count",
+            "store_measurement_method",
+            "sparse_axis_measurement_method",
+            "release_condition",
+            "wave3_completion_sufficient",
+            "l1_startable"
+          ],
+          "properties": {
+            "manifest_parts": {"const": 42},
+            "stores_exact_count": {"const": 42},
+            "grain_lower_bound_count": {"const": 7},
+            "key_lower_bound_count": {"const": 6},
+            "failure_mode_lower_bound_count": {"const": 3},
+            "store_measurement_method": {"const": "literal_home_field"},
+            "sparse_axis_measurement_method": {"const": "substring_lower_bound"},
+            "release_condition": {"const": "structured_store_grain_key_failure_mode_complete"},
+            "wave3_completion_sufficient": {"const": false},
+            "l1_startable": {"const": false}
           }
         }
       }
@@ -229,12 +257,12 @@
             "additionalProperties": false,
             "required": ["gap_id", "required_operation", "implementation_present", "task_order_ref", "owner_ref", "blocks_document_kind"],
             "properties": {
-              "gap_id": {"const": "wave3_to_l0_manifest_compilation"},
-              "required_operation": {"const": "compile_admitted_substrate_cards_into_l0_manifest"},
+              "gap_id": {"const": "l0_part_semantics_for_l1"},
+              "required_operation": {"const": "populate_structured_grain_key_failure_mode_for_every_part"},
               "implementation_present": {"const": false},
               "task_order_ref": {"type": "null"},
               "owner_ref": {"type": "null"},
-              "blocks_document_kind": {"const": "l0_substrate_manifest"}
+              "blocks_document_kind": {"const": "l1_entity_spine"}
             }
           }
         }

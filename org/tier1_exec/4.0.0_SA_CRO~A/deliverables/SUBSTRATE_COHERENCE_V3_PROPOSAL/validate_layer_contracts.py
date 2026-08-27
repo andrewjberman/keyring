@@ -58,11 +58,11 @@ def semantic_errors(document: dict) -> list[str]:
                 errors.append(f"{row['layer_id']}: measured starting position is unbuilt with zero operative artifacts")
     l0_measurements = baseline_layers[0]["measurements"]
     if (
-        l0_measurements.get("manifest_parts") != 39
+        l0_measurements.get("manifest_parts") != 42
         or l0_measurements.get("manifest_validation_error_count") != 0
         or l0_measurements.get("manifest_negative_control_error_count", 0) <= 0
     ):
-        errors.append("L0 baseline must preserve the validated populated 39-part manifest and firing negative control")
+        errors.append("L0 baseline must preserve the validated populated 42-part manifest and firing negative control")
     excluded = {row["path"] for row in baseline["homonym_exclusions"]}
     expected_homonyms = {
         "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SPEC_IDENTITY_SPINE_FAM_RESOLUTION_20260819.md",
@@ -94,6 +94,13 @@ def semantic_errors(document: dict) -> list[str]:
         or compile_baseline["compiler_join_requirement"] != "structured_card_artifact_ref_to_exact_part_id"
     ):
         errors.append("indicative substring measurement must not masquerade as the compiler join")
+    release = document["design_measurements"]["l1_release_baseline"]
+    if release["stores_exact_count"] != release["manifest_parts"]:
+        errors.append("L1 release baseline must retain exact 42-of-42 store coverage")
+    if release["sparse_axis_measurement_method"] != "substring_lower_bound":
+        errors.append("grain key and failure-mode substring counts are lower bounds, not exact coverage")
+    if release["wave3_completion_sufficient"] or release["l1_startable"]:
+        errors.append("wave3 completion cannot release L1 while structured part semantics are incomplete")
 
     execution = document["execution_plan"]
     if set(execution["currently_executable_units"]) != EXECUTABLE_NOW:
@@ -118,16 +125,16 @@ def semantic_errors(document: dict) -> list[str]:
         errors.append("L3 and L4 must remain prohibited until the L1 entity spine exists")
     gaps = execution["operational_gaps"]
     if len(gaps) != 1:
-        errors.append("execution plan must carry the one measured wave3-to-L0 compilation gap")
+        errors.append("execution plan must carry the one measured L0-to-L1 semantic gap")
     else:
         gap = gaps[0]
         if (
-            gap["gap_id"] != "wave3_to_l0_manifest_compilation"
+            gap["gap_id"] != "l0_part_semantics_for_l1"
             or gap["implementation_present"]
             or gap["task_order_ref"] is not None
             or gap["owner_ref"] is not None
         ):
-            errors.append("wave3-to-L0 compilation remains absent, unordered, and unowned at this observation")
+            errors.append("structured L0 part semantics for L1 remain absent, unordered, and unowned at this observation")
 
     checkpoints = document["checkpoint_sequence"]
     if [row["checkpoint_id"] for row in checkpoints] != CHECKPOINTS:
@@ -205,6 +212,16 @@ def semantic_errors(document: dict) -> list[str]:
     }
     if actual_l0_compile_rules != required_l0_compile_rules:
         errors.append("L0 compile checkpoint must separate coverage, transformation class, and exact join")
+    l1_release_criterion = next((
+        criterion
+        for criterion in checkpoints[0]["criteria"]
+        if criterion["criterion_id"] == "L0-C09"
+    ), None)
+    if (
+        not l1_release_criterion
+        or l1_release_criterion["predicate"]["compiler_rule"] != "C3M_L0_L1_PRECONDITIONS_COMPLETE"
+    ):
+        errors.append("CP-L0-L1 must require structured store grain key and failure-mode completeness")
 
     if document["shared_root_changes"]["made"] is not False:
         errors.append("proposal must not claim shared-root changes before package validation")
@@ -358,6 +375,26 @@ def main() -> int:
     target["unmeasurable_reason"] = "reopened after ruling"
     target["resolution_owner"] = "1.0.0_SA_CTO~X"
     mutants.append(("ruled-grain-reverted-unmeasurable", grain_reverted_unknown))
+
+    wave3_releases_l1 = copy.deepcopy(document)
+    wave3_releases_l1["design_measurements"]["l1_release_baseline"]["wave3_completion_sufficient"] = True
+    mutants.append(("wave3-completion-releases-l1", wave3_releases_l1))
+
+    sparse_manifest_startable = copy.deepcopy(document)
+    sparse_manifest_startable["design_measurements"]["l1_release_baseline"]["l1_startable"] = True
+    mutants.append(("sparse-manifest-claimed-l1-startable", sparse_manifest_startable))
+
+    lower_bound_claimed_exact = copy.deepcopy(document)
+    lower_bound_claimed_exact["design_measurements"]["l1_release_baseline"]["sparse_axis_measurement_method"] = "exact_structured_field"
+    mutants.append(("substring-floor-claimed-exact", lower_bound_claimed_exact))
+
+    release_criterion_removed = copy.deepcopy(document)
+    release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [
+        criterion
+        for criterion in release_criterion_removed["checkpoint_sequence"][0]["criteria"]
+        if criterion["criterion_id"] != "L0-C09"
+    ]
+    mutants.append(("l1-release-criterion-removed", release_criterion_removed))
 
     for name, mutant in mutants:
         if not validate(mutant):

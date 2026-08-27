@@ -22,7 +22,8 @@
       "CTO~X cover-partition measurement 74805",
       "CTO~X L0 premise correction 74821",
       "CTO~X wave3 compile-shape measurement 74837",
-      "CTO~X identity-grain ruling 74841"
+      "CTO~X identity-grain ruling 74841",
+      "CTO~X L1 release-precondition measurement 74943"
     ]
   },
   "mission": {
@@ -52,7 +53,7 @@
           "manifest_instance_path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
           "manifest_validation_error_count": 0,
           "manifest_negative_control_error_count": 5,
-          "manifest_parts": 39,
+          "manifest_parts": 42,
           "delivered_cards": 44,
           "wave_3_files": 7,
           "wave_3_state": "running"
@@ -101,6 +102,18 @@
         "infra/aws/globgrph/kuzu_stitch_load.py",
         "infra/aws/globgrph/snap_store.py"
       ]
+    },
+    "l1_release_baseline": {
+      "manifest_parts": 42,
+      "stores_exact_count": 42,
+      "grain_lower_bound_count": 7,
+      "key_lower_bound_count": 6,
+      "failure_mode_lower_bound_count": 3,
+      "store_measurement_method": "literal_home_field",
+      "sparse_axis_measurement_method": "substring_lower_bound",
+      "release_condition": "structured_store_grain_key_failure_mode_complete",
+      "wave3_completion_sufficient": false,
+      "l1_startable": false
     }
   },
   "execution_plan": {
@@ -139,12 +152,12 @@
     },
     "operational_gaps": [
       {
-        "gap_id": "wave3_to_l0_manifest_compilation",
-        "required_operation": "compile_admitted_substrate_cards_into_l0_manifest",
+        "gap_id": "l0_part_semantics_for_l1",
+        "required_operation": "populate_structured_grain_key_failure_mode_for_every_part",
         "implementation_present": false,
         "task_order_ref": null,
         "owner_ref": null,
-        "blocks_document_kind": "l0_substrate_manifest"
+        "blocks_document_kind": "l1_entity_spine"
       }
     ]
   },
@@ -170,7 +183,8 @@
         {"field": "lifecycle_axes", "semantic_dimension": "authorship mutation temporal and authority axes", "required": true},
         {"field": "declared_opinions", "semantic_dimension": "enumerated definitional choices or explicit unknown", "required": true},
         {"field": "input_digests", "semantic_dimension": "deterministic source binding", "required": true},
-        {"field": "residue", "semantic_dimension": "known unresolved or unsearched members", "required": true}
+        {"field": "residue", "semantic_dimension": "known unresolved or unsearched members", "required": true},
+        {"field": "l1_precondition_semantics", "semantic_dimension": "structured store grain key and failure-mode declarations for every part", "required": true}
       ],
       "consumer_layers": ["L1"]
     },
@@ -296,7 +310,8 @@
         {"criterion_id": "L0-C05", "claim": "Every materializer exposes declared opinions or an explicit unknown claim status.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["materializer relations with undeclared opinion status"], "threshold": 0, "compiler_rule": "C3M_L0_OPINIONS_DECLARED"}, "controls": {"positive": ["enumerated filter threshold and exclusion"], "negative": ["opinion only in prose or code"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C06", "claim": "Every admitted substrate relation row is consumed by a named deterministic compiler and represented in the L0 manifest or explicit compilation residue.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 admitted file-artifact relation row ids", "compiled manifest relation row ids plus explicit compilation residue row ids"], "threshold": null, "compiler_rule": "C3M_L0_CARDS_COMPILED"}, "controls": {"positive": ["admitted relation row appears in compiler receipt and manifest output"], "negative": ["wave-3 relation row exists with no compiler consumption or residue"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C07", "claim": "Each consumed row has exactly one transformation class: enrich generation on a resolved existing part or add exactly one new part.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 consumed relation row ids", "10 enrichment row ids plus 3 addition row ids"], "threshold": null, "compiler_rule": "C3M_L0_TRANSFORM_EXHAUSTIVE"}, "controls": {"positive": ["snap_store row adds one new part"], "negative": ["one row is both enriched and added or is unclassified"]}, "unmeasurable_reason": null, "resolution_owner": null},
-        {"criterion_id": "L0-C08", "claim": "The compiler joins structured card artifact references to exact part ids and rejects ambiguous missing or substring-only matches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["card artifact refs", "exact manifest part ids"], "threshold": null, "compiler_rule": "C3M_L0_EXACT_PART_JOIN"}, "controls": {"positive": ["derive_runner PATH B resolves only graph_contracts"], "negative": ["substring probe also matches graph_edges"]}, "unmeasurable_reason": null, "resolution_owner": null}
+        {"criterion_id": "L0-C08", "claim": "The compiler joins structured card artifact references to exact part ids and rejects ambiguous missing or substring-only matches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["card artifact refs", "exact manifest part ids"], "threshold": null, "compiler_rule": "C3M_L0_EXACT_PART_JOIN"}, "controls": {"positive": ["derive_runner PATH B resolves only graph_contracts"], "negative": ["substring probe also matches graph_edges"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C09", "claim": "Every manifest part declares structured store grain key and failure-mode semantics before L1 starts.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["manifest parts missing any structured L1 precondition field"], "threshold": 0, "compiler_rule": "C3M_L0_L1_PRECONDITIONS_COMPLETE"}, "controls": {"positive": ["part carries home grain key and typed failure modes"], "negative": ["42-part manifest has only substring floors of 7 grain 6 key and 3 failure-mode matches"]}, "unmeasurable_reason": null, "resolution_owner": null}
       ]
     },
     {
@@ -380,7 +395,8 @@
     "authorized_after_package_validation": [
       "Replace stale provisional directive-home language in the PRD with D11 as the complete L0-through-L4 authority and no mint.",
       "Reference the validated card contract, layer deliverable contracts, and checkpoint sequence from the PRD.",
-      "Issue the pinned PRD and contract package reference to COO~X for its drive loop."
+      "Issue the pinned PRD and contract package reference to COO~X for its drive loop.",
+      "Extend L0_GRAPH_SUBSTRATE_MANIFEST.schema.json so every part declares structured grain, key, and failure-mode semantics before L1 starts."
     ]
   }
 }
