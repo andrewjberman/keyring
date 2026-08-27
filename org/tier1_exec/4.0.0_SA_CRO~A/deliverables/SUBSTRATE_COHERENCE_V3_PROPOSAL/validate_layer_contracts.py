@@ -48,6 +48,7 @@ def semantic_errors(document: dict) -> list[str]:
         "L0-R24-03": "repo_relative_path_rule24_partition",
         "L0-R24-04": "home_space_lifecycle_vocabulary",
         "L0-R24-05": "variant_suffix_source_authority",
+        "L0-R24-06": "generation_materializer_relation_cardinality",
     }
     expected_change_states = {
         "L0-R24-01": "unchanged",
@@ -55,6 +56,7 @@ def semantic_errors(document: dict) -> list[str]:
         "L0-R24-03": "unchanged",
         "L0-R24-04": "unchanged",
         "L0-R24-05": "new",
+        "L0-R24-06": "new",
     }
     expected_rerun_effects = {
         "L0-R24-01": "metadata_only_no_current_emission",
@@ -62,6 +64,7 @@ def semantic_errors(document: dict) -> list[str]:
         "L0-R24-03": "metadata_only_no_current_emission",
         "L0-R24-04": "metadata_only_no_current_emission",
         "L0-R24-05": "emitted_authority_contradiction",
+        "L0-R24-06": "emitted_compound_relation_value",
     }
     if (
         post_rerun_queue["queue_state"] != "open_until_post_rerun_remediation"
@@ -83,6 +86,7 @@ def semantic_errors(document: dict) -> list[str]:
     home_space = base_validation["home_space_measurement"]
     population = base_validation["population_completeness"]
     suffix_authority = base_validation["variant_suffix_authority"]
+    materializer_cardinality = base_validation["generation_materializer_relation_cardinality"]
     lifecycle_coverage = base_validation["lifecycle_axis_coverage"]
     receipt_contract = base_validation["receipt_contract"]
     unknown_lifecycle = base_validation["unknown_lifecycle_expressibility"]
@@ -104,11 +108,9 @@ def semantic_errors(document: dict) -> list[str]:
         or population["registered_part_count"] != 42
         or population["known_unsearched_entry_count"] != 12
         or population["known_unsearched_representation"] != "mixed_prose"
-        or population["known_missing_subject_lower_bound"] < 2
-        or set(population["known_missing_subject_ids"]) != {
-            "org/modules/graph/comp_aws_cli.py",
-            "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py",
-        }
+        or population["missing_subject_claim_state"] != "withdrawn_relation_not_subject"
+        or population["known_missing_subject_lower_bound"] != 0
+        or population["known_missing_subject_ids"] != []
         or population["coverage_fraction_claim_permitted"]
     ):
         errors.append("42-of-42 receiver presence cannot masquerade as complete substrate-population coverage")
@@ -118,6 +120,19 @@ def semantic_errors(document: dict) -> list[str]:
         or suffix_authority["authority_match_state"] != "contradicted"
     ):
         errors.append("removal evidence cannot masquerade as variant minting authority")
+    if (
+        materializer_cardinality["schema_value_cardinality"] != "single"
+        or materializer_cardinality["observed_relation_cardinality"] != "multiple_on_six_parts"
+        or materializer_cardinality["affected_part_count"] != 6
+        or materializer_cardinality["affected_part_ids"] != [
+            "graph_nodes", "graph_edges", "kuzu_nessie_db.local", "cse",
+            "_build_manifest.json.SET", "stitch_graph.json",
+        ]
+        or materializer_cardinality["compound_value_state"] != "writer_lists_and_roles_encoded_in_string"
+        or materializer_cardinality["required_shape"] != "generation_materializers_array_one_entry_per_writer_relation"
+        or materializer_cardinality["release_effect"] != "shared_schema_remediation_required"
+    ):
+        errors.append("single-valued generation.materializer cannot carry multi-writer relation semantics")
     if (
         lifecycle_coverage["manifest_document"] != {
             "authorship_mode_state": "absent", "mutation_policy_state": "absent",
@@ -828,8 +843,18 @@ def main() -> int:
     mutants.append(("freeze-exits-before-42-receivers", freeze_exit_weakened))
 
     emitted_authority_finding_removed = copy.deepcopy(document)
-    emitted_authority_finding_removed["post_rerun_rule24_queue"]["findings"].pop()
+    emitted_authority_finding_removed["post_rerun_rule24_queue"]["findings"] = [
+        finding for finding in emitted_authority_finding_removed["post_rerun_rule24_queue"]["findings"]
+        if finding["finding_id"] != "L0-R24-05"
+    ]
     mutants.append(("emitted-authority-contradiction-removed", emitted_authority_finding_removed))
+
+    compound_materializer_finding_removed = copy.deepcopy(document)
+    compound_materializer_finding_removed["post_rerun_rule24_queue"]["findings"] = [
+        finding for finding in compound_materializer_finding_removed["post_rerun_rule24_queue"]["findings"]
+        if finding["finding_id"] != "L0-R24-06"
+    ]
+    mutants.append(("compound-materializer-cardinality-finding-removed", compound_materializer_finding_removed))
 
     frozen_finding_called_new = copy.deepcopy(document)
     frozen_finding_called_new["post_rerun_rule24_queue"]["findings"][0]["evidence_run_change_state"] = "new"
@@ -855,9 +880,10 @@ def main() -> int:
     known_unsearched_undercounted["post_rerun_base_validation"]["population_completeness"]["known_unsearched_entry_count"] = 11
     mutants.append(("known-unsearched-entry-dropped", known_unsearched_undercounted))
 
-    missing_subject_evidence_dropped = copy.deepcopy(document)
-    missing_subject_evidence_dropped["post_rerun_base_validation"]["population_completeness"]["known_missing_subject_ids"].pop()
-    mutants.append(("known-missing-subject-dropped", missing_subject_evidence_dropped))
+    withdrawn_subject_claim_restored = copy.deepcopy(document)
+    withdrawn_subject_claim_restored["post_rerun_base_validation"]["population_completeness"]["known_missing_subject_lower_bound"] = 2
+    withdrawn_subject_claim_restored["post_rerun_base_validation"]["population_completeness"]["known_missing_subject_ids"] = ["org/modules/graph/comp_aws_cli.py", "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py"]
+    mutants.append(("writer-relations-masquerade-as-missing-subjects", withdrawn_subject_claim_restored))
 
     removal_called_producer = copy.deepcopy(document)
     removal_called_producer["post_rerun_base_validation"]["variant_suffix_authority"]["observed_source_role"] = "minting_producer"
@@ -866,6 +892,10 @@ def main() -> int:
     contradicted_authority_called_match = copy.deepcopy(document)
     contradicted_authority_called_match["post_rerun_base_validation"]["variant_suffix_authority"]["authority_match_state"] = "satisfied"
     mutants.append(("contradicted-authority-called-satisfied", contradicted_authority_called_match))
+
+    compound_writer_list_called_single = copy.deepcopy(document)
+    compound_writer_list_called_single["post_rerun_base_validation"]["generation_materializer_relation_cardinality"]["observed_relation_cardinality"] = "single"
+    mutants.append(("compound-writer-list-called-single-relation", compound_writer_list_called_single))
 
     missing_lifecycle_called_present = copy.deepcopy(document)
     missing_lifecycle_called_present["post_rerun_base_validation"]["lifecycle_axis_coverage"]["manifest_document"]["authorship_mode_state"] = "present"
