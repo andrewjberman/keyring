@@ -18,6 +18,21 @@
     "it_caught_the_finder": "their FIRST PASS set set_by to their own serial. They complied with EVERY ENFORCED constraint in that same file and broke the one carried ONLY IN PROSE -- measured on themselves, in the artifact whose contract they were reading closely. All three ship undecided/null/absent.",
     "b_SOUND_over_inferred": "the top-level allOf blocks SOUND only over 'absent'. The SOUND enum's own words read 'Every row measured'. Both derive_runner cards carry inferred rows and WOULD HAVE PASSED AS SOUND. They ship QUALIFIED because THE ENUM'S WORDS BIND, NOT BECAUSE THE VALIDATOR MADE THEM.",
     "third_measurement_of_the_same_law_tonight": "CLAUDE.md s.4 -- the consuming half is the whole mechanism. Measured on joinable_ref (0 of 16 vs 5 of 39), on the ack instrument, and now on SUBSTRATE_CARD.v2's own prose-only rules. THREE SEATS, THREE CONTRACTS, SAME RESULT.",
+    "⛔_THE_COUNT_ABOVE_IS_STALE_AND_THE_STALENESS_IS_ITS_OWN_FINDING": {
+      "corrected_utc": "20260827T0802Z",
+      "it_said_THREE_and_the_count_is_SIX": "the field name literally reads third_measurement_of_the_same_law_tonight. It was accurate when typed and went stale within the hour, in the record whose own FINDING_4 is about a number going stale beside a derived one. A TYPED COUNT IN A FIELD NAME cannot be regenerated and nobody re-reads it -- worse than a typed count in prose.",
+      "the_six": [
+        "1 joinable_ref -- 0 of 16 defective where the schema REJECTS, 5 of 39 in the neighbouring free-string field carrying the same rule",
+        "2 the ack instrument -- no agent-side signal exists, so every delivery oracle reads TRANSPORT and calls it receipt",
+        "3 SUBSTRATE_CARD.v2's prose-only rules -- forward_disposition has no if/then, so a card naming its own carding lane as set_by VALIDATES; it caught its own finder",
+        "4 artifact.location.home -- unconstrained, so 9 of 13 cards carry prose and the L0 compile step could not derive the card->part join. THE FIRST ONE WITH A VICTIM; the other three were latent",
+        "5 L0_GRAPH_SUBSTRATE_MANIFEST.schema.json -- 'key' and 'failure' at ZERO occurrences over 38 defined field paths. The INVERTED form: the producing half done correctly, the consuming half with no slot at all",
+        "6 the receiver schema @101304be51 -- the REMEDY for 5, landed, and it accepts three semantic mutants: unknown receivers, omitted payloads, and a declared key with ALL-NULL payloads"
+      ],
+      "⛔_why_6_is_the_sharpest": "IT IS THE REMEDY FOR 5 FAILING IN THE SAME WAY AS 5. The fix for 'there is no field' was 'land a field.' The field landed and does not discriminate, so a declared key with all-null payloads validates. LANDING A FIELD IS NOT LANDING A CONTRACT, and the gap between them is invisible to anyone who checks that the field exists.",
+      "found_by": "4.0.0_SA_CRO~A, by MUTANT INJECTION -- both arms reachable from different truths. DT rerun HELD pending CTO amendment plus DURABLE NEGATIVE TESTS, which is the consuming half being built rather than described.",
+      "⛔_the_issuer_could_not_corroborate_it_and_says_so": "I attempted an independent structural read -- constraint-keyword counts over the schema (11 additionalProperties, 19 required, 17 enum, 3 allOf, 10 const). THAT ANSWERS NOTHING: a COUNT of constraints says nothing about their PLACEMENT, and my probe for 'receiver' returned 0 because the receivers are not named that. A token zero against a differently-named field is UNMEASURED, not absent. The finding stands on 4.0.0_SA_CRO~A's mutants alone and I add no weight to it."
+    },
     "routed_to": "the schema owner via 3.0.0_SA_CVO~X. NEITHER PATCHED by the lane -- qualify-do-not-fix held.",
     "expressible_remedy_offered_not_applied": "standing != 'undecided' requires set_by non-null, plus a top-level set_by != carded_by."
   },
