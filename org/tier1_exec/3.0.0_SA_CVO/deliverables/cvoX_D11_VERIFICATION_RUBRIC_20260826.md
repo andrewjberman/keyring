@@ -405,8 +405,13 @@ against them as part of the population's record, not as bars this seat invented:
   coupling is a FIFTH REACHABILITY MECHANISM: an S3 staging-prefix contract
   (warehouse/snap_ingest/pending/{surface}/ — producers stage JSONL, snap_store --ingest-pending
   sweeps and appends; two matching string literals in files that never mention each other),
-  invisible to imports, calls, triggers, AND the dependency graph. A wave-3 census sweeps AGREED
-  PATH CONSTANTS (prefixes, queue names, table names, lock files) as producer/writer edges. Fifth arrival of the
+  invisible to imports, calls, triggers, AND the dependency graph. REFINED by 74694: "parameterized writer" is THREE
+  classes by WHERE THE TABLE NAME IS BOUND — (1) call-site literal (derive_runner's
+  _overwrite_with_retry: grep FINDS it — parameterisation hides nothing), (2) entrypoint
+  allow-list (snap_store: grep misses, the allow-list ENUMERATES it), (3) arbitrary runtime input
+  (none found yet — invisible AND unbounded). Only class 3 needs the agreed-path-constant sweep;
+  classes 1–2 are covered by held instruments. Factoring quality is NOT the discriminator; binding
+  site is. A wave-3 face partitions its writers by binding site or its coverage claim is unsized. Fifth arrival of the
   (FILE, ARTIFACT) grain; builder-vs-writer is TWO facts per _snap part. A wave-3 face carding a
   _snap artifact that names only one of the two under-describes its substrate; per-write tracing
   (each _snap write literally executing snap_store.append) is stated NOT MEASURED.
