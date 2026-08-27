@@ -65,8 +65,19 @@ def _walk_conditionals(node, path, out, unparsed):
         then = node.get("then") or {}
         coupled = _fields_named(then)
         got = False
-        if isinstance(cond, dict) and isinstance(cond.get("properties"), dict):
-            for field, spec in cond["properties"].items():
+        # A DISCRIMINANT MAY BE DISJUNCTIVE. `if: {anyOf: [{properties:{a:...}}, ...]}` keys on
+        # "a OR b", and reading only the top-level `properties` scored the whole arm UNPARSED --
+        # correctly, but it left a real conditional uncounted. Each branch contributes its own
+        # (field, values) pair; the arm reaches a value if ANY branch names it.
+        branches = [cond] if isinstance(cond, dict) else []
+        for key in ("anyOf", "oneOf", "allOf"):
+            for sub in (cond.get(key) or []) if isinstance(cond, dict) else []:
+                if isinstance(sub, dict):
+                    branches.append(sub)
+        for br in branches:
+            if not isinstance(br.get("properties"), dict):
+                continue
+            for field, spec in br["properties"].items():
                 if "const" in spec:
                     out.append((path, field, {spec["const"]}, "if/const", coupled))
                     got = True
@@ -540,6 +551,26 @@ def self_controls(schema, fixtures, verbose=True):
         broken, {"entity": fixtures["entity"]},
         {("entity", "identity_scope", "impossible_scope"): lambda i: i}, verbose=False)
     results.append(("ARM 3 sees a structurally UNSATISFIABLE value", len(dead) == 1, True))
+
+    # ARM 1 REGRESSION CONTROL for the DISJUNCTIVE discriminant. `if: {anyOf: [...]}` was
+    # reported UNPARSED until R2-8's bridge_assertion shipped one; the guard did its job (never
+    # scored as covered) but a real arm went uncounted. This asserts the shape is now PARSED and,
+    # in the other direction, that a genuinely unreadable `if` is STILL reported rather than
+    # silently accepted -- a parser that never says UNPARSED has stopped being a guard.
+    disj = copy.deepcopy(schema)
+    disj["$defs"]["source_frontier"]["allOf"] = [{
+        "if": {"anyOf": [{"properties": {"record_type": {"const": "source_frontier"}},
+                          "required": ["record_type"]}]},
+        "then": {"required": ["entries"]},
+    }]
+    _g, u_disj = arm_coverage(disj, verbose=False)
+    results.append(("ARM 1 PARSES a disjunctive if:{anyOf:[...]} discriminant",
+                    len(u_disj) == 0, True))
+    opaque = copy.deepcopy(schema)
+    opaque["$defs"]["source_frontier"]["allOf"] = [{
+        "if": {"not": {"required": ["entries"]}}, "then": {"required": ["entries"]}}]
+    _g2, u_op = arm_coverage(opaque, verbose=False)
+    results.append(("ARM 1 STILL reports an unreadable if as UNPARSED", len(u_op) == 1, True))
 
     # ARM 4 positive: a planted require-only arm must be caught.
     planted4 = copy.deepcopy(schema)
