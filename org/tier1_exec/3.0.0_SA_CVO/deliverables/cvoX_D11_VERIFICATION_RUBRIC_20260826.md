@@ -527,6 +527,15 @@ against them as part of the population's record, not as bars this seat invented:
   required not optional, with the card-grain-vs-part-grain key question explicitly UNMEASURED.
   "Wave 3 complete" still cannot close it; the two candidate release conditions still diverge; a
   face claiming L1-startable names its condition. L1 SEATED and L1 STARTABLE are different states.
+- **BRIDGE-BUILD ADJUDICATION (my 75229, on CTO~X's 75226 call): D11 AUTHORIZES building L3's
+  bridge relations as a NEW D11-owned registry, under four conditions my L3 cert battery reads any
+  bridge registry against:** (1) registry only, no producing-store edits (keeps the #9 named-gap
+  boundary); (2) every bridge row carries basis + (PLANE, ENTITY) endpoints + join evidence — a
+  bridge without basis is a parse-join in a registry costume; (3) the firm-carry bar binds any
+  symbol-space bridge; (4) store-side wiring stays outside D11 — undeclarable bridges become NAMED
+  GAPS for store owners, so the arc proceeds on declarable bridges rather than stalling or
+  building wide. Not RESERVED: Andrew's arc word (74754) settled authority; only the
+  build-vs-repair line was adjudicable.
 - **THE FIRM-DISCARDING JOIN (75005, OBSERVATION/ARMED at the issuer; measured by DT~X row 1):**
   the trace symbol space is FIRM-BLIND and the kuzu pipeline space FIRM-QUALIFIED; they join only
   by stripping `pipeline:<firm>:`, which is lossy in reverse (bare `gold` resolves to three
