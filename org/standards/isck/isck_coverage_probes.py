@@ -10,7 +10,7 @@ These arms ask the complementary question: "what does the schema NOT constrain a
 A law with no conditional attached has no mutant to write, so it cannot fail the battery.
 DT-1 and DT-7 were both found this way, the second one mechanically, with no human hunting it.
 
-THREE STANDING ARMS, each printing its own denominator, each with self-controls:
+FOUR STANDING ARMS, each printing its own denominator, each with self-controls:
 
   ARM 1  conditional-coverage differencing -- for every value-keyed discriminant, which values
          of its domain does a conditional actually reach? An unreached value is a value whose
@@ -26,6 +26,11 @@ THREE STANDING ARMS, each printing its own denominator, each with self-controls:
   ARM 3  enum-value inhabitability census -- can every enum value appear in a VALID record?
          Carries companion-field repair, and DISTINGUISHES "no repair supplied" from "repair
          tried, still invalid" -- an unrepaired value is an open question, never a verdict.
+  ARM 4  paired-arm coverage -- a conditional that binds VALUE -> FIELD REQUIRED without the
+         complement FIELD PRESENT -> VALUE CONSTRAINED. Five members of that family were found
+         by hand across rounds 1-2 (DT-5, DT-7, DT-R2-1, and two at once in DT-R2-5, which
+         landed in the very batch that adopted the paired-arm rule as doctrine). A sentence in
+         a doctrine did not survive one batch; this arm is the gate that does.
 
 GENERALIZATION: every arm reads the schema OBJECT, not a copy of its rules. ARM 1 survived the
 v0 -> v0.1 rewrite from enumerated if/then arms to dependentRequired without an edit. A construct
@@ -143,7 +148,7 @@ def _leaf_errors(validator, inst):
 def arm_coverage(schema, verbose=True):
     """Report values no VALUE-KEYED conditional reaches.
 
-    ⛔ THE OUTPUT IS A CANDIDATE LIST, NOT A FINDING LIST. Measured against v0.1: of 6 gaps
+    WARN: THE OUTPUT IS A CANDIDATE LIST, NOT A FINDING LIST. Measured against v0.1: of 6 gaps
     reported, 1 was a real defect, 3 were PROTECTED by a mechanism this arm does not count
     (a presence-keyed dependentRequired, or a plain `required` in the base branch), and 2 were
     unconditioned BY DESIGN (a 'null verdict' value legitimately carries no obligation).
@@ -152,7 +157,7 @@ def arm_coverage(schema, verbose=True):
     inverse of the false-green this arm exists to kill, and it fires hardest on a schema that
     has just been improved, because a good fix often uses a mechanism this arm cannot see.
 
-    ⛔ AND THE BLIND SPOT THAT MATTERS MORE: this arm can ONLY find gaps in a record that
+    WARN: AND THE BLIND SPOT THAT MATTERS MORE: this arm can ONLY find gaps in a record that
     ALREADY HAS a discriminant. A record type with ZERO conditionals has zero discriminants,
     therefore zero gaps, and reads IDENTICAL to a fully-covered one. Those records are printed
     below as NOT EXAMINED with their own denominator -- never folded into the clean count.
@@ -363,6 +368,121 @@ def arm_inhabitability(schema, fixtures, repairs, verbose=True):
     return dead, unrepaired
 
 
+# ---------------------------------------------------------------------------- ARM 4
+THEN_KNOWN = {"required", "not", "properties", "allOf", "anyOf", "oneOf", "if", "then", "else",
+              "minItems", "maxItems", "type", "enum", "const", "$ref", "description",
+              "minLength", "format", "items"}
+
+
+def _then_effects(node, out, unparsed, path):
+    """Walk a then-schema for its effects on fields, recursing into nested combinators.
+
+    Three effects count as PAIRING a require arm: REQUIRE (must be present), FORBID (must be
+    absent), CONSTRAIN (value restricted). Missing the nested forms is a FALSE-RED generator --
+    this arm's own v1 read only the top level and scored four correctly-paired R2-1 arms as
+    unpaired, which is why the UNPARSED guard below is not optional.
+    """
+    if not isinstance(node, dict):
+        return
+    for field in node.get("required", []) or []:
+        out.add(("REQUIRE", field))
+    nots = node.get("not")
+    if isinstance(nots, dict):
+        for field in nots.get("required", []) or []:
+            out.add(("FORBID", field))
+        for key in ("allOf", "anyOf", "oneOf"):
+            for sub in nots.get(key, []) or []:
+                _then_effects(sub, out, unparsed, path + ".not." + key)
+    if isinstance(node.get("properties"), dict):
+        for field in node["properties"]:
+            out.add(("CONSTRAIN", field))
+    for key in ("allOf", "anyOf", "oneOf"):
+        for i, sub in enumerate(node.get(key, []) or []):
+            _then_effects(sub, out, unparsed, "%s.%s[%d]" % (path, key, i))
+    for key in ("then", "else"):
+        if key in node:
+            _then_effects(node[key], out, unparsed, path + "." + key)
+    unknown = set(node.keys()) - THEN_KNOWN
+    if unknown:
+        unparsed.append((path, sorted(unknown)))
+
+
+def _conditional_arms(branch, rtype):
+    arms = []
+    unparsed = []
+    for i, sub in enumerate(branch.get("allOf", []) or []):
+        cond = sub.get("if", {})
+        then = sub.get("then")
+        if then is None or not isinstance(cond.get("properties"), dict):
+            continue
+        eff = set()
+        _then_effects(then, eff, unparsed, "%s.allOf[%d].then" % (rtype, i))
+        for disc, spec in cond["properties"].items():
+            vals = {spec["const"]} if "const" in spec else set(spec.get("enum", []))
+            if vals:
+                arms.append((disc, vals, eff))
+    return arms, unparsed
+
+
+def arm_paired(schema, verbose=True):
+    """Report REQUIRE arms with no FORBID/CONSTRAIN partner on the same discriminant.
+
+    WARN: CANDIDATE GENERATOR WITH A MANDATORY ADJUDICATION STEP -- raw precision measured at
+    roughly 4 of 19. The discriminator is SEMANTIC and no schema-reader can compute it:
+      HARMLESS  carrying MORE than required is not a lie. Every evidence_refs row is this --
+                a record over-supplying warrant is fine.
+      A LIE     the field's PRESENCE CONTRADICTS the value (adjudicated_by on an unadjudicated
+                status; a delta_summary on integrity=verified).
+    Judging which is which stays with the adjudicating seat. Standing use: run BEFORE landing a
+    batch, so a require-only arm is visible in seconds instead of surviving to the next attack.
+    """
+    if verbose:
+        print()
+        print("=" * 94)
+        print("ARM 4 -- PAIRED-ARM COVERAGE (candidate generator; ~4 of 19 raw are real)")
+        print("=" * 94)
+    records = _record_defs(schema)
+    total = 0
+    unpaired = []
+    unparsed_all = []
+    for rtype, branch in sorted(records.items()):
+        arms, unparsed = _conditional_arms(branch, rtype)
+        unparsed_all.extend(unparsed)
+        dep = set()
+        for key, vals in (branch.get("dependentRequired") or {}).items():
+            dep.add(key)
+            dep.update(vals)
+        by_disc = {}
+        for disc, _vals, eff in arms:
+            by_disc.setdefault(disc, set()).update(eff)
+        for disc, vals, eff in arms:
+            for kind, field in sorted(eff):
+                if kind != "REQUIRE":
+                    continue
+                total += 1
+                paired = (("FORBID", field) in by_disc.get(disc, set())
+                          or ("CONSTRAIN", field) in by_disc.get(disc, set())
+                          or field in dep)
+                if not paired:
+                    unpaired.append((rtype, disc, sorted(vals), field))
+    if verbose:
+        print("  DENOMINATOR: %d REQUIRE effects across %d record types" % (total, len(records)))
+        print("  REQUIRE-ONLY (no FORBID/CONSTRAIN partner, no dependentRequired): %d"
+              % len(unpaired))
+        for rtype, disc, vals, field in unpaired:
+            print("    %-22s %s=%s -> requires %r" % (rtype, disc, vals, field))
+        if unparsed_all:
+            print("  WARN: %d then-clause(s) carry UNPARSED keywords -- NOT scored as unpaired:"
+                  % len(unparsed_all))
+            for path, keys in unparsed_all:
+                print("        %s -> %s" % (path, keys))
+        else:
+            print("  OK: 0 unparsed then-clauses")
+        print("  ADJUDICATE each row before reporting it: construct the record the missing")
+        print("  partner would forbid and ask whether its presence CONTRADICTS the value.")
+    return unpaired, unparsed_all
+
+
 # ------------------------------------------------------------------------ self-controls
 def self_controls(schema, fixtures, verbose=True):
     """Every arm must be reachable from a DIFFERENT truth -- it must be able to say either thing."""
@@ -421,6 +541,31 @@ def self_controls(schema, fixtures, verbose=True):
         {("entity", "identity_scope", "impossible_scope"): lambda i: i}, verbose=False)
     results.append(("ARM 3 sees a structurally UNSATISFIABLE value", len(dead) == 1, True))
 
+    # ARM 4 positive: a planted require-only arm must be caught.
+    planted4 = copy.deepcopy(schema)
+    planted4["$defs"]["source_frontier"]["allOf"] = [{
+        "if": {"properties": {"record_type": {"const": "source_frontier"}},
+               "required": ["record_type"]},
+        "then": {"required": ["a_planted_require_only_field"]},
+    }]
+    p4, _pu = arm_paired(planted4, verbose=False)
+    results.append(("ARM 4 catches a PLANTED require-only arm",
+                    any(f == "a_planted_require_only_field" for _r, _d, _v, f in p4), True))
+
+    # ARM 4 negative (REGRESSION CONTROL for this arm's own v1 bug): a forbid half expressed
+    # NESTED as then.allOf[].not must be SEEN as pairing. v1 read only the top level and scored
+    # four correctly-paired R2-1 referent_scope arms as REQUIRE-ONLY.
+    nested = copy.deepcopy(schema)
+    nested["$defs"]["source_frontier"]["allOf"] = [{
+        "if": {"properties": {"record_type": {"const": "source_frontier"}},
+               "required": ["record_type"]},
+        "then": {"allOf": [{"required": ["nested_pair_field"]},
+                           {"not": {"required": ["nested_pair_field"]}}]},
+    }]
+    n4, _nu = arm_paired(nested, verbose=False)
+    results.append(("ARM 4 sees a NESTED then.allOf[].not forbid as pairing",
+                    not any(f == "nested_pair_field" for _r, _d, _v, f in n4), True))
+
     ok = True
     for label, got, want in results:
         good = got == want
@@ -460,16 +605,73 @@ def _repairs(V):
             inst.pop(field, None)
         return inst
 
+    def mismatch_evaluation(inst):
+        inst["evidence_refs"] = ["evidence:content_digest_compare"]
+        inst["delta_summary"] = "content_digest differs from target"
+        return inst
+
+    def contested_entity(inst):
+        inst["adjudicated_by"] = "1.0.0_SA_CTO~X"
+        return inst
+
+    def closed_binding(inst):
+        inst["valid_to"] = "commit:ffffffffff"
+        return inst
+
+    def contradicted_relation(inst):
+        inst["evidence_refs"] = ["evidence:counter_observation"]
+        inst["adjudicated_by"] = "1.0.0_SA_CTO~X"
+        return inst
+
+    def superseded_relation(inst):
+        inst["superseded_by"] = "rel:" + ULID_A_OF(V)
+        return inst
+
+    def running_run(inst):
+        inst.pop("completed_at", None)
+        return inst
+
+    def superseded_materializer(inst):
+        inst["superseded_by_version"] = "matv:" + ULID_A_OF(V)
+        return inst
+
     out = {
         ("entity_binding", "fabric_scope", "device_local"): device_local_binding,
         ("materializer_version", "bundle_completeness", "complete"): complete_bundle,
+        # the seven the census carried as OPEN until this commit; all seven CLOSE,
+        # census 66/73 -> 73/73, so the schema has NO structurally dead enum value.
+        ("coherence_evaluation", "integrity", "mismatch"): mismatch_evaluation,
+        ("entity", "current_status", "contested"): contested_entity,
+        ("entity_binding", "status", "closed"): closed_binding,
+        ("identity_relation", "verification_standing", "contradicted"): contradicted_relation,
+        ("identity_relation", "verification_standing", "superseded"): superseded_relation,
+        ("materialization_run", "run_status", "running"): running_run,
+        ("materializer", "current_status", "superseded"): superseded_materializer,
     }
+    def referent_fabric_local(inst):
+        inst["referent_fabric_id"] = "laptop"
+        inst.pop("referent_device_id", None)
+        return inst
+
+    def referent_device_local(inst):
+        inst["referent_fabric_id"] = "laptop"
+        inst["referent_device_id"] = "some-laptop"
+        return inst
+
+    for rtype in ("entity_binding", "state_observation"):
+        out[(rtype, "referent_scope", "fabric_local")] = referent_fabric_local
+        out[(rtype, "referent_scope", "device_local")] = referent_device_local
     for rtype in ("state_observation", "materialization_run"):
         out[(rtype, "fabric_scope", "device_local")] = device_local_generic
         out[(rtype, "fabric_scope", "fabric_invariant")] = invariant
     for value in ("partial", "substrate_unavailable", "instrument_error", "not_applicable"):
         out[("state_observation", "failure_state", value)] = drop_fingerprint
     return out
+
+
+def ULID_A_OF(V):
+    """The battery's canonical test ULID, read from the battery rather than duplicated here."""
+    return V.ULID_A
 
 
 def main():
@@ -482,17 +684,22 @@ def main():
     gaps, unparsed = arm_coverage(schema)
     kw_fail, field_fail, unscoreable = arm_attribution(schema, V.FIXTURES, V._mutants())
     dead, open_values = arm_inhabitability(schema, V.FIXTURES, _repairs(V))
+    unpaired, unpaired_unparsed = arm_paired(schema)
     controls_ok = self_controls(schema, V.FIXTURES)
 
     print()
     print("=" * 94)
-    findings = bool(gaps or unparsed or kw_fail or field_fail or unscoreable or dead)
+    findings = bool(gaps or unparsed or kw_fail or field_fail or unscoreable or dead
+                    or unpaired or unpaired_unparsed)
     print("RESULT: %s" % ("FINDINGS PRESENT" if findings else "CLEAN"))
     print("  ARM 1 coverage gaps       : %d   unparsed constructs: %d" % (len(gaps), len(unparsed)))
     print("  ARM 2 keyword failures    : %d   field failures: %d   unscoreable: %d"
           % (len(kw_fail), len(field_fail), len(unscoreable)))
     print("  ARM 3 unreachable values  : %d   open (no repair): %d" % (len(dead), len(open_values)))
+    print("  ARM 4 require-only arms   : %d   unparsed then-clauses: %d"
+          % (len(unpaired), len(unpaired_unparsed)))
     print("  SELF-CONTROLS             : %s" % ("PASS" if controls_ok else "FAIL"))
+    print("  NOTE: ARM 1 and ARM 4 emit CANDIDATES, not findings -- adjudicate before reporting.")
     print("=" * 94)
     # Findings are the PRODUCT of this tool, not a crash. Only a broken instrument exits non-zero.
     return 0 if controls_ok else 1
