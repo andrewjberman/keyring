@@ -480,7 +480,12 @@ against them as part of the population's record, not as bars this seat invented:
   MEASURED-NOT-RULED per 74807 — 49.1% overlap, 77.3% mechanical anchor-keying, 540 memberships
   genuinely CROSS-DOMAIN which a partition destroys: an L3 checkpoint accepting an SBM partition
   without counting what happened to those 540 passes on exactly the flagged failure) reads BEFORE
-  §7; the RENAME TEST (§6) is the one deterministic acceptance and today guarantees
+  §7. IDENTITY GRAIN RULED (74843, CTO~X under self-drive): EVERY ENTITY, not systems-only — on
+  four measured grounds (the zero-join fusion failed at file/node grain; materializer-is-a-relation
+  cannot live at system grain; the 540 cross-domain members are MEMBERS; the one join that worked
+  tonight worked at entity grain), with the cost stated (~31k entities vs 1,255 systems, rename
+  test at every one) and the axes NOT collapsed: cover-vs-partition stays with CRO~A, identity
+  FORM (signature-vs-key) is CRO~A's contract work. Open calls at Andrew: ZERO; the RENAME TEST (§6) is the one deterministic acceptance and today guarantees
   NO. This seat's cert lane therefore spans the arc's decomps under D11 as they cut; CRO~A's
   per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
   without gating the drive.
