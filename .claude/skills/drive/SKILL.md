@@ -171,7 +171,12 @@ faked by a broken read. `jq` is ABSENT here; python only. Prints its own denomin
 python - <<'PY'
 import json, pathlib, datetime
 now = datetime.datetime.now(datetime.timezone.utc)
-tick = int(open('org/mcp/.last-drive-2.0.0_SA_COO').read().strip() or 0)
+# CURSOR: paired mode NEVER reads the base-keyed marker (rule 5) -- two lanes clobber one
+# file and the failure direction is UNDER-REPORTED movement -> false PARKED. Pass the
+# LOG-DERIVED window in: the ISO time of THIS seat's last SUBSTANTIVE drive log (Step 7),
+# or the newest ledger `consumed` ts, whichever is older. Estate (unpaired) /drive may
+# still read its legacy marker and passes that value here instead.
+tick = TICK_CURSOR_UNIX  # <- substitute the log-derived value; do NOT open a shared marker
 rows = 0
 for f in sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl')):
     last, since = None, 0
@@ -225,7 +230,7 @@ Cross-check with `get_live_agents()` + `get_org_summary()`.
 > **Do NOT "clean up" `flat_orphans`** — they are the only evidence the dispatch path is broken.
 > → `DRIVE.md §4`
 
-**(A) MOVEMENT.** Compare each hot-TO owner against the prior tick (`org/mcp/.last-drive-2.0.0_SA_COO`).
+**(A) MOVEMENT.** Compare each hot-TO owner against the prior tick. **PAIRED MODE: the window is LOG-DERIVED** -- this seat's last SUBSTANTIVE drive log plus the ledger's `consumed` timestamps (rules 5 + Step 7's paired-mode note), NEVER the base-keyed marker, which a second lane clobbers. Estate (unpaired) `/drive` uses its legacy `org/mcp/.last-drive-<base>` marker.
 - **MOVED** (≥1 work-call OR commit since last tick) → ADVANCING; attest with the real timestamps, never the self-report.
 - **NO MOVEMENT** → PARKED, regardless of an "I'm building" summary. Nudge ladder: **tick 1** nudge citing ground truth + ask `(a) quiet / (b) parked / (c) blocked?`; **tick 2** re-dispatch harder or trace the blocker; **tick 3** `[STUCK]` to MSTR.
 - Work-calls flowing + no commit = MOVING. **`0` work-calls across a whole tick is the tell.**
@@ -305,10 +310,13 @@ git merge-base --is-ancestor "$C" origin/CLOUD && echo "landed"
 
 ## Step 8 — Marker + heartbeat
 
+**PAIRED MODE: WRITE NO MARKER.** Rule 5 forbids it, and Step 7's quiet-tick path ("marker + heartbeat only") would otherwise route every quiet paired tick straight into the banned write. A paired tick does `heartbeat(...)` and nothing else; its cursor is the last substantive log.
+
+**ESTATE (unpaired) `/drive` only:**
 ```bash
 date -u +%s > org/mcp/.last-drive-2.0.0_SA_COO
 ```
-Then `heartbeat("2.0.0_SA_COO", summary="<cycle output>")`.
+Then `heartbeat("2.0.0_SA_COO", summary="<cycle output>")` -- both modes heartbeat.
 
 ## Step 9 — Chain-invoke `/allocation`
 
