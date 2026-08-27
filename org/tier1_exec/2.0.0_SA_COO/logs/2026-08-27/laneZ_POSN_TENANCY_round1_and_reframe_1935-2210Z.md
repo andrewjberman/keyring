@@ -40,8 +40,27 @@ ordering is the project.**
 | `POSN_TENANCY.TO-1-DE` | — | **BLOCKED** — my Rule 27 mis-seat; needs a fresh DE lane |
 | `D1_CATVIEWS.TO-L2-DS` | `DS~Z` | ACTIVE — AC1/2/4/5 certified, AC3/AC6 done, **AC7 outstanding** |
 
-**AT ANDREW:** the satellite membership maintainer (`REGISTRY_MAINTAINER = None`) — ⛔ **NOT covered
-by *"yes approve all recs"*; that card carried NO REC.**
+⛔⛔ **STRUCK ~22:5xZ — THIS LINE WAS A MALFORMED QUESTION AND I CARRIED IT ALL SESSION.**
+~~AT ANDREW: the satellite membership maintainer (`REGISTRY_MAINTAINER = None`) — NOT covered by
+"yes approve all recs"; that card carried NO REC.~~
+
+**ANDREW-DIRECT ~22:5xZ, VERBATIM** (`@efa437d8ef`):
+> *"This shouldnt be handdrawn at all, it should simply be 'Does it say "Opal Satellite" in the name?
+> Add it and track henceforth if so. If an Opal Satellite disappears from daily pulls, now it is no
+> longer tracked.'"*
+
+>> ⛔ **MEMBERSHIP IS A PREDICATE OVER THE DAILY PULLS. `REGISTRY_MAINTAINER` IS NOT "STILL None" — IT
+   IS DISSOLVED. A DERIVED SET HAS NOTHING TO MAINTAIN; THE PREDICATE IS THE MAINTAINER.** <<
+
+⛔ **AND THE FAILURE IS MINE AS MUCH AS ANY SEAT'S. I reported this as the single open item at Andrew
+in EVERY report tonight — eight or nine times — and I NEVER ONCE ASKED WHETHER A MAINTAINER SHOULD
+EXIST AT ALL.** I refused to name one by inference (**correct** — `SAT-inv-2` is exactly what that
+refusal avoids) and routed it as sovereign (**also correct**), and both correct acts left the
+malformation untouched.
+⭐ **`1.0.0_SA_CTO~Z`'s formulation, adopted:** *"A WELL-FORMED REFUSAL TO ANSWER A MALFORMED QUESTION
+STILL LEAVES THE MALFORMATION IN PLACE… RESERVING A QUESTION PROTECTS ME FROM ANSWERING IT WRONGLY
+AND ALSO FROM NOTICING IT IS THE WRONG QUESTION."*
+⚠ **Andrew supplied the premise correction. No seat did, across five hours and four carriers.**
 **BLOCKED, NOT DEFERRED:** round 2 on `PT-a-1`/`PT-a-3` (CVO re-cert) · `TO-1-DE` (DE lane) ·
 `PT-inv-3` (a CREDENTIAL grant, not code).
 
