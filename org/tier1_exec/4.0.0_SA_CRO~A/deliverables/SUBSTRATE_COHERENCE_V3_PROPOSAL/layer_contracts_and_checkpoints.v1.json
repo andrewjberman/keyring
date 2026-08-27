@@ -195,14 +195,24 @@
           },
           "resolution_grain": "per_part",
           "prohibited_resolution_proxies": ["part_class", "filesystem_path_exists"],
-          "minimum_partitions_before_wave_cut": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"],
-          "aggregate_rollup_observation": {
-            "home": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}",
-            "expanded_artifact_count": 5,
-            "disposition": "explicit_mapping_residue"
+          "subject_semantic_partitions_required": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"],
+          "resolution_method_partition": {
+            "file_resolves": 21,
+            "remote_uri": 12,
+            "brace_pattern": 3,
+            "unbuilt_future_layer": 3,
+            "path_shaped_but_absent": 0
           },
+          "partition_controls": {"known_present": true, "known_absent": false},
+          "cardable_candidate_total": 36,
+          "unbuilt_future_layer_ids": ["affinity_matrix", "similarity_network_fusion", "identity_and_succession"],
+          "unbuilt_disposition": "exclude_never_manufacture_substrate",
+          "brace_pattern_part_count": 3,
+          "brace_pattern_expanded_artifact_count": 11,
+          "brace_pattern_disposition": "explicit_mapping_residue",
+          "unresolved_cut_preconditions": ["name_remote_uri_instrument", "map_owner_rules_brace_fanout"],
           "wave_cut_ready": false,
-          "evidence": "COO~X 74987"
+          "evidence": "COO~X 74994 supersedes provisional rollup counts in 74987"
         }
       }
     }

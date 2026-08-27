@@ -156,17 +156,27 @@ def semantic_errors(document: dict) -> list[str]:
         errors.append("receiver must land additively before the join while unknown remains non-complete")
     remediation = landing["unknown_remediation_population"]
     class_census = remediation["part_class_census"]
+    resolution_partition = remediation["resolution_method_partition"]
     if (
         remediation["source"] != "manifest_parts_with_unknown_receiver"
         or remediation["total"] != part_population["unknown"]
         or sum(class_census.values()) != remediation["total"]
+        or sum(resolution_partition.values()) != remediation["total"]
         or remediation["resolution_grain"] != "per_part"
         or set(remediation["prohibited_resolution_proxies"]) != {"part_class", "filesystem_path_exists"}
-        or set(remediation["minimum_partitions_before_wave_cut"]) != {"materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"}
-        or remediation["aggregate_rollup_observation"]["disposition"] != "explicit_mapping_residue"
+        or set(remediation["subject_semantic_partitions_required"]) != {"materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"}
+        or resolution_partition != {"file_resolves": 21, "remote_uri": 12, "brace_pattern": 3, "unbuilt_future_layer": 3, "path_shaped_but_absent": 0}
+        or remediation["partition_controls"] != {"known_present": True, "known_absent": False}
+        or remediation["cardable_candidate_total"] != remediation["total"] - resolution_partition["unbuilt_future_layer"]
+        or set(remediation["unbuilt_future_layer_ids"]) != {"affinity_matrix", "similarity_network_fusion", "identity_and_succession"}
+        or remediation["unbuilt_disposition"] != "exclude_never_manufacture_substrate"
+        or remediation["brace_pattern_part_count"] != resolution_partition["brace_pattern"]
+        or remediation["brace_pattern_expanded_artifact_count"] != 11
+        or remediation["brace_pattern_disposition"] != "explicit_mapping_residue"
+        or set(remediation["unresolved_cut_preconditions"]) != {"name_remote_uri_instrument", "map_owner_rules_brace_fanout"}
         or remediation["wave_cut_ready"]
     ):
-        errors.append("39-part remediation must derive from parts and partition per part before wave cut")
+        errors.append("39-part remediation must preserve independent subject and resolution partitions before wave cut")
 
     bridge = document["l0_deliverable_bridge"]
     if bridge["relabel_existing"] or bridge["rehome_existing"] or not bridge["new_target_document_required"]:
@@ -519,12 +529,20 @@ def main() -> int:
     mutants.append(("part-class-used-as-resolution-proxy", class_proxy))
 
     rollup_forced_one_to_one = copy.deepcopy(document)
-    rollup_forced_one_to_one["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["aggregate_rollup_observation"]["disposition"] = "artifact_subject"
+    rollup_forced_one_to_one["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["brace_pattern_disposition"] = "artifact_subject"
     mutants.append(("aggregate-rollup-forced-one-to-one", rollup_forced_one_to_one))
 
     wave_cut_before_partition = copy.deepcopy(document)
     wave_cut_before_partition["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["wave_cut_ready"] = True
     mutants.append(("wave-cut-before-partition", wave_cut_before_partition))
+
+    unbuilt_carded = copy.deepcopy(document)
+    unbuilt_carded["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["unbuilt_disposition"] = "card_as_existing"
+    mutants.append(("unbuilt-layer-manufactured-as-substrate", unbuilt_carded))
+
+    resolution_partition_loses_member = copy.deepcopy(document)
+    resolution_partition_loses_member["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["resolution_method_partition"]["remote_uri"] = 11
+    mutants.append(("resolution-partition-does-not-sum", resolution_partition_loses_member))
 
     release_criterion_removed = copy.deepcopy(document)
     release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [

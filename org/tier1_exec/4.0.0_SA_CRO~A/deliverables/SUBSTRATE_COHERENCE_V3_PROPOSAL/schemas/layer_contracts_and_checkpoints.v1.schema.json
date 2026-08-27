@@ -320,7 +320,7 @@
                 "unknown_remediation_population": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["source", "total", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "minimum_partitions_before_wave_cut", "aggregate_rollup_observation", "wave_cut_ready", "evidence"],
+                  "required": ["source", "total", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "subject_semantic_partitions_required", "resolution_method_partition", "partition_controls", "cardable_candidate_total", "unbuilt_future_layer_ids", "unbuilt_disposition", "brace_pattern_part_count", "brace_pattern_expanded_artifact_count", "brace_pattern_disposition", "unresolved_cut_preconditions", "wave_cut_ready", "evidence"],
                   "properties": {
                     "source": {"const": "manifest_parts_with_unknown_receiver"},
                     "total": {"const": 39},
@@ -344,25 +344,55 @@
                       "uniqueItems": true,
                       "items": {"enum": ["part_class", "filesystem_path_exists"]}
                     },
-                    "minimum_partitions_before_wave_cut": {
+                    "subject_semantic_partitions_required": {
                       "type": "array",
                       "minItems": 3,
                       "maxItems": 3,
                       "uniqueItems": true,
                       "items": {"enum": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"]}
                     },
-                    "aggregate_rollup_observation": {
+                    "resolution_method_partition": {
                       "type": "object",
                       "additionalProperties": false,
-                      "required": ["home", "expanded_artifact_count", "disposition"],
+                      "required": ["file_resolves", "remote_uri", "brace_pattern", "unbuilt_future_layer", "path_shaped_but_absent"],
                       "properties": {
-                        "home": {"const": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}"},
-                        "expanded_artifact_count": {"const": 5},
-                        "disposition": {"const": "explicit_mapping_residue"}
+                        "file_resolves": {"const": 21},
+                        "remote_uri": {"const": 12},
+                        "brace_pattern": {"const": 3},
+                        "unbuilt_future_layer": {"const": 3},
+                        "path_shaped_but_absent": {"const": 0}
                       }
                     },
+                    "partition_controls": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["known_present", "known_absent"],
+                      "properties": {
+                        "known_present": {"const": true},
+                        "known_absent": {"const": false}
+                      }
+                    },
+                    "cardable_candidate_total": {"const": 36},
+                    "unbuilt_future_layer_ids": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "uniqueItems": true,
+                      "items": {"enum": ["affinity_matrix", "similarity_network_fusion", "identity_and_succession"]}
+                    },
+                    "unbuilt_disposition": {"const": "exclude_never_manufacture_substrate"},
+                    "brace_pattern_part_count": {"const": 3},
+                    "brace_pattern_expanded_artifact_count": {"const": 11},
+                    "brace_pattern_disposition": {"const": "explicit_mapping_residue"},
+                    "unresolved_cut_preconditions": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["name_remote_uri_instrument", "map_owner_rules_brace_fanout"]}
+                    },
                     "wave_cut_ready": {"const": false},
-                    "evidence": {"const": "COO~X 74987"}
+                    "evidence": {"type": "string", "minLength": 1}
                   }
                 }
               }
