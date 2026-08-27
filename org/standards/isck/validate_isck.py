@@ -96,6 +96,14 @@ FIXTURES = {
         "asserted_at": TS, "asserted_by": "1.0.0_SA_CTO~X",
         "valid_from": "commit:9fc70e31a1", "valid_to": None,
     },
+    "mint_receipt": {
+        "record_type": "mint_receipt", "receipt_id": f"mr:{ULID_A}",
+        "entity_serial": f"ent:{ULID_A}", "minted_at": TS,
+        "minting_authority": "1.0.0_SA_CTO~X@laptop", "minted_on_fabric": "laptop",
+        "serial_form": "ulid26_lowercase_v1",
+        "collision_preflight": "checked_unique",
+        "evidence_refs": ["ledger-scan:0-collisions@2026-08-27T21Z"],
+    },
     "materializer": {
         "record_type": "materializer", "materializer_serial": f"mat:{ULID_A}",
         "semantic_layer": "C2", "canonical_role": "c2_motif_individuation",
@@ -226,6 +234,9 @@ ATTACK_TARGETS = {
     "bridge.candidate-with-adjudicator": ["adjudicated_by"],
     "bridge.symbol-plane-no-firm-scope": ["firm_scope"],
     "bridge.dead-basis-measured": ["claim_origin"],
+    "mint.checked-no-evidence": ["evidence_refs"],
+    "mint.wrong-serial-form": ["serial_form"],
+    "mint.missing-preflight": ["collision_preflight"],
 }
 
 _DEL = object()
@@ -382,6 +393,10 @@ def _mutants():
         firm_scope=_DEL)
     add("bridge.dead-basis-measured", "bridge_assertion", ["enum"],
         claim_origin="measured")
+    # R2-7 MINT_RECEIPT (LAW 1's compensating control, defined)
+    add("mint.checked-no-evidence", "mint_receipt", ["required"], evidence_refs=_DEL)
+    add("mint.wrong-serial-form", "mint_receipt", ["const"], serial_form="ulid26_uppercase")
+    add("mint.missing-preflight", "mint_receipt", ["required"], collision_preflight=_DEL)
     # enum discipline (F4 renames; dead enums stay dead)
     add("binding.basis-is-dead-enum-measured", "entity_binding", ["enum"],
         binding_basis="measured")
@@ -427,6 +442,7 @@ def _semantic_mutants():
 _ISO_FIELDS = ["minted_at", "observed_at", "asserted_at", "started_at", "completed_at",
                "built_at", "evaluated_at", "valid_from"]
 _PRIMARY_ID = {"entity": "entity_serial", "entity_binding": "binding_id",
+               "mint_receipt": "receipt_id",
                "bridge_assertion": "bridge_id",
                "state_observation": "observation_id", "identity_relation": "relation_id",
                "materializer": "materializer_serial", "materializer_version": "version_id",

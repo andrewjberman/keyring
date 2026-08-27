@@ -57,7 +57,14 @@ closes and the version is pinned.
 `coherence_evaluation` · **`bridge_assertion` (R2-8 — the first load-bearing consumer, landed
 per the ruled either-in-this-boundary-or-freeze-together condition).** Identity mechanisms per the
 ratified table (minted serials for enduring mutables; content-addressing legal for immutable
-observations/versions/receipts). `bridge_assertion` id space: `br:<ulid26>`.
+observations/versions/receipts). `bridge_assertion` id space: `br:<ulid26>`. **`mint_receipt` (R2-7, 12th type)** — LAW 1's
+compensating control DEFINED: every mint emits a receipt carrying `serial_form:
+ulid26_lowercase_v1` (F6's normalization as a const a consumer can reject on),
+`collision_preflight` (`checked_unique -> evidence_refs REQUIRED` | `deferred_to_reconciliation`
+— the ratified cross-fabric provisional path), authority + fabric (execution family). ⚠ HONESTY
+CLAUSE: the record type exists and validates; ENFORCEMENT that every mint actually emits one is
+the ledger's (WP-3) — sec 5/sec 6 limit 1 wording updated to "control DEFINED, enforcement
+deferred", which is a smaller hole than "control undescribed".
 
 **CV-1's CARRIED REQUIREMENT IS LANDED, not carried:** `registry_standing = admitted ->
 evidence_refs` is a schema arm with its mutant — a parse-generated candidate structurally cannot
@@ -278,6 +285,17 @@ record and invisible to the gates — the labels gate's denominator was a mainta
 the moment the enum landed. The structural remedy (gates derive enum censuses FROM THE SCHEMA) is
 routed to the gate owner; this record closes the instance.
 
+### 3.18 `mint_receipt.collision_preflight` — `checked_unique | deferred_to_reconciliation`
+DOMAIN: what the minting authority did about serial collision at mint time. MECE: hunted member —
+checked-and-FOUND-colliding → not a receipt state; a collision aborts the mint (no receipt exists
+for an unminted serial); declared rather than absorbed. GRAIN: one mint. INTENT: one axis —
+preflight disposition. STATE-COHERENCE: `deferred_to_reconciliation` moves by the reconciliation
+running (minting authority of the primary fabric); `checked_unique` is terminal for the receipt
+(append-only). ARM TABLE: `checked_unique -> evidence_refs REQUIRED` (owner: the minting seat —
+a uniqueness claim carries its scan) · `deferred` needs no warrant (the deferral IS the honest
+state, and the reconciliation record carries its own). Born WITH this record — the
+declared_cardinality lesson (CVO~X's CV-1 finding) applied at the next enum's birth.
+
 ## 4. CONDITIONAL REQUIREMENTS (the consuming half — all mechanical)
 
 The full set now spans: three-field fingerprint coupling (every direction, every failure_state) ·
@@ -295,10 +313,11 @@ Primary minting on the LAPTOP fabric. Other fabrics mint `entity.current_status:
 reconciliation is non-destructive via `candidate_equivalence` → (`canonicalized_as` | `merged_into`)
 — historical observations NEVER rewritten. ULID per serial; **the minting act LOWERCASES the ULID
 before prefixing** (F6) — a serial is born lowercase or it was not minted by the authority.
-⛔ **THE COMPENSATING CONTROL FOR LAW 1 IS INCOMPLETE AT v0.1** (CV-2, entry-5 finding): "the
-minting authority and its audit" names no mint-audit artifact, receipt record, or audit owner. The
-MINT RECEIPT lands with WP-3 (the ledger); until then LAW 1's enforcement is the minting seat's
-discipline, and every certification scope must say so.
+⛔ **LAW 1's COMPENSATING CONTROL: DEFINED at R2-7, ENFORCEMENT DEFERRED TO WP-3** (upgrading
+CV-2's entry-5 finding from "undescribed"): the `mint_receipt` record type exists with its
+serial-form const and collision-preflight arms; what WP-3's ledger adds is the guarantee that
+every mint EMITS one. Until then a mint without a receipt is a process violation a certification
+names, not a schema rejection.
 
 ## 6. DECLARED LIMITS — what v0.1 CANNOT enforce, so silence is never read as coverage
 

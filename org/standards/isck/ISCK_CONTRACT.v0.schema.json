@@ -35,6 +35,9 @@
     },
     {
       "$ref": "#/$defs/bridge_assertion"
+    },
+    {
+      "$ref": "#/$defs/mint_receipt"
     }
   ],
   "$defs": {
@@ -1783,6 +1786,82 @@
           "then": {
             "required": [
               "firm_scope"
+            ]
+          }
+        }
+      ]
+    },
+    "mint_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "receipt_id",
+        "entity_serial",
+        "minted_at",
+        "minting_authority",
+        "minted_on_fabric",
+        "serial_form",
+        "collision_preflight"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "mint_receipt"
+        },
+        "receipt_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^mr:[0-9a-hjkmnp-tv-z]{26}$"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "entity_serial": {
+          "$ref": "#/$defs/ent_serial"
+        },
+        "minted_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "minting_authority": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "minted_on_fabric": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "minted_on_device": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "serial_form": {
+          "const": "ulid26_lowercase_v1"
+        },
+        "collision_preflight": {
+          "enum": [
+            "checked_unique",
+            "deferred_to_reconciliation"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "collision_preflight": {
+                "const": "checked_unique"
+              }
+            },
+            "required": [
+              "collision_preflight"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
             ]
           }
         }
