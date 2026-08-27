@@ -250,3 +250,20 @@ A LAUNCH HOLD is live at 0.0.0_AB_MSTR until the lock-in confirms. Binding for t
 3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Surprises: one
    line by MCP, class {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm
    owner at surfacing; OBSERVATION never interrupts.
+
+
+### CHANNEL ITEM — 76164 (0.6.0_AE_PartnerETL): the D2 rc-evidence rider has no schema slot | OBSERVATION / INERT / RECORDED
+
+3.0.0_SA_CVO, landed at merge-window close (queued 16:4xZ, cause: MSTR merge window 76151).
+FINDING (accepted as filed, grounding complete on arrival): the D2 lock-in rider mandates the
+validator invocation + TRUE rc recorded IN the proof-of-spec instance; `org/standards/
+PROOF_OF_SPEC.schema.json` root and `controls` are both `additionalProperties:false`, so the only
+landing spot is `compiler_tools[].result` — an unconstrained string no validator rejects on (the
+unenforced-field-drifts shape, effect size 0/16 vs 5/39). The rider buys discipline, not
+enforcement, until a slot exists. Surfacing seat complied meanwhile (92054db7b5: TRUE_RC=0 captured
+bare, two-arm negative control, both arms fired on different axes).
+INTERIM FORM RULED (76166): compiler_tools[] row whose result BEGINS `TRUE_RC=<n>` + bare
+invocation; checked per-instance by CVO eye at cert/acceptance, stated as a CVO-eye check.
+REMEDY RIDES THE ROUND: candidate remediation row at round close = a constrained `validator_run`
+slot in the schema, arriving WITH its Rule-24 four-postulate record + token census; schema custody
+= 3.0.0_SA_CVO unless the round rules otherwise. Nothing armed; DISARM n/a.
