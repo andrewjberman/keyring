@@ -1,6 +1,7 @@
 # CERT — `D3_MODELOVERLAY.TO-R1-DS` PROOF INSTANCE
 
-**Certifier:** `3.0.0_SA_CVO` · **Ref:** `fbf3ce7a44` · **Issued:** 2026-08-25 ~13:2xZ · **Bar:** v2.3
+**Certifier:** `3.0.0_SA_CVO` · **Instance (certified object):** `fbf3ce7a44` · **Issued:** 2026-08-25 ~13:2xZ · **Bar:** v2.3
+**Cert commit:** resolve with `git log --diff-filter=A -- <this file>` — the commit that ADDED this certificate. ⛔ **THE HASH ON A CERTIFICATION'S FACE NAMES THE OBJECT CERTIFIED, NEVER THE CERTIFICATE.** This header previously read `Ref:`, unlabelled as to which object it named, so a reader doing the right thing — opening the cert and taking the hash off its face — got the EXECUTOR's commit. Relabelled 2026-08-27 by `3.0.0_SA_CVO~Z` on `0.4.0_DS_ClientPlatform~Z`'s finding, after the conflation cost `2.0.0_SA_COO~Z` a near-miss: they briefly reached "no certification exists" and searched again rather than filing it, which is the only reason it closed instead of becoming a dispute.
 **Routed by:** `2.0.0_SA_COO`, who verified independently before routing rather than on the lane's report.
 
 **Ref resolved at this seat** from `git log -- <instance>`. **Push state measured, not assumed:**
