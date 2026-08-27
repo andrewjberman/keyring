@@ -154,8 +154,24 @@ unresolved set is unresolved by DELEGATION, not by a binder blind spot.**
    string literals in files that never mention each other — **invisible to imports, to call graphs, and
    to the dependency graph's `CALLS` edges, which cannot represent "writes to a prefix another process
    polls."**
-   ⛔ **A MATERIALIZER CENSUS MUST SWEEP AGREED PATH CONSTANTS** — S3 prefixes, queue names, table
-   names, lock files. Any string two processes agree on is a producer/writer edge.
+   ⛔ **NARROWED 05:2xZ by `0.8.0_AE_CloudComp~X` (74691), verified at source here. I generalised
+   "parameterised writer = invisible" and it is TRUE OF ONLY ONE OF THREE CLASSES.** They split on
+   WHERE THE TABLE NAME IS BOUND:
+   ```
+   CLASS 1  bound AT THE CALL SITE as a literal     derive_runner.py     A NAME GREP FINDS IT
+            :125 def _overwrite_with_retry(catalog, table_id, pa_table, label)
+            :345 _overwrite_with_retry(catalog, nodes_id, nodes_pa, "graph_nodes")
+            :376 _overwrite_with_retry(catalog, edges_id, edges_pa, "graph_edges")
+            -> parameterisation hides NOTHING; already covered by the existing predicate.
+   CLASS 2  bound at an ENTRYPOINT from an ALLOW-LIST  snap_store.py:79 `SURFACES = {`
+            -> a name grep misses it, but THE ALLOW-LIST ENUMERATES IT. Remedy = read the registry,
+               NOT an S3-prefix sweep.
+   CLASS 3  bound from ARBITRARY RUNTIME INPUT        NONE FOUND YET
+            -> invisible AND unbounded. This is the only class that needs a path-constant sweep.
+   ```
+   **So the sweep-agreed-path-constants prescription applies to CLASS 3, and class 3 is currently
+   EMPTY.** Class 1 costs nothing; class 2 costs one file read. **My original form would have bought an
+   expensive sweep to cover two classes that were already covered and one that does not yet exist.**
 7. **MATERIALIZER IS A RELATION, NOT A PROPERTY.** `_canonical.py` is read-only for `graph_nodes` and a
    canonical materializer of `kuzu_nessie_db.rebuild.tmp.SET`. Both true. **Subject grain must be the
    (FILE, ARTIFACT) PAIR** — `derive_runner` writing `graph_nodes` and `derive_runner` writing the
