@@ -371,10 +371,17 @@ against them as part of the population's record, not as bars this seat invented:
   sys.path-inserted module, strongest single result); TABLE-OBJECT-ONLY = derive_runner (3 real
   writes, targets unresolved by the binder) + cse_store. The 37 are UNRESOLVED, not refuted (the
   binder failed on TWO shapes in one hour — tuple args, read-as-write — so it certifies nothing
-  about absence); bound (74426 re-floor): >=2 by-name, >=4 to-a-table-object, candidate floor 38
-  (was 41 — `to_arrow(` and `load_table(` are READ tokens that sat inside the "strong write"
-  predicate; the AST-confirmed 4 are unaffected because they were never token results), 34
-  UNRESOLVED. Of the two untracked candidates, NEITHER writes a graph table
+  about absence); bound (74426 re-floor, 74433 residual split): >=2 by-name, >=4 to-a-table-object, candidate
+  floor 38 (was 41 — `to_arrow(` and `load_table(` are READ tokens that sat inside the "strong
+  write" predicate; the AST-confirmed 4 are unaffected because they were never token results).
+  The 34 are no longer "UNRESOLVED": MEASURED as containing NO in-file table write (401 write-call
+  sites, 0 table-bound; the non-trivial ones are `setdefault(...).append` Python idiom). The
+  residual is now two named holes, both OUTSIDE single-file analysis: (1) CROSS-MODULE DELEGATION
+  (proven present once: cse_producers_nightly reads, delegates its write to cse_store) — a
+  call-graph question for comp-blast/dependency graph, not another regex; (2) the UPSTREAM
+  POPULATION HOLE — a writer receiving its table as a parameter, never naming graph_nodes in
+  source, was never in ANY of tonight's sets (41/43/38/34). A wave-3 face quoting "4 writers"
+  states both holes or overstates its coverage. Of the two untracked candidates, NEITHER writes a graph table
   (measured at source, my 74430): storage_producer.py's only write is json.dump of the P1-A
   producer JSON at :185-186 — a writer OF THAT ARTIFACT, not of graph_nodes/graph_edges (74426's
   "writer" and 74429's "not a writer candidate" are both right once the artifact is named — the
