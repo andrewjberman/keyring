@@ -36,9 +36,32 @@ make sure it lands."* — the same complaint behind his 08-26 16:3xZ instruction
 **THE GENERAL RULE, stated once and binding on all three:**
 > *"Client segment is always **residual post-models and smas**."*
 
-Ingest substrate: **`opal-data-assets`**, for all partners. Measured layout — the bucket partitions
-by **SOURCE SYSTEM**, not by firm: `blackdiamond/`, `eclipse/`, `orion/`, `smartx/`, `gold/`,
-`config/`. (`cottonwood/` at top level returns nothing; positive control — the bucket lists.)
+Ingest substrate: **`opal-data-assets`**, for all partners. Top level carries **ZERO firm-named
+prefixes** — `blackdiamond/`, `eclipse/`, `orion/`, `smartx/`, `gold/`, `config/` … (`cottonwood/`
+at top level returns nothing; positive control — the bucket lists).
+
+> ⛔ **CORRECTED 2026-08-27 ~20:2xZ.** This paragraph first read *"the bucket partitions by SOURCE
+> SYSTEM, not by firm."* **Too clean, and a builder would act on it wrongly.** There is no single
+> partitioning axis — **there are THREE schemes, one per source system** (`2.0.0_SA_COO~Z` 9945,
+> measured at their seat; reconciles with mine):
+>
+> ```
+>   smartx/        account/ allocation/ model/ platform/    <- BY FUNCTION. NO FIRM LEVEL AT ALL.
+>   eclipse/       inflection/                              <- BY FIRM
+>   orion/         inflection/                              <- BY FIRM
+>   blackdiamond/  49f/  49financial/  cottonwood/          <- BY FIRM, and TWO tokens for 49
+> ```
+>
+> **"Partitions by source system" implies a uniform second level that does not exist** — a reader
+> would look for a firm dir under `smartx/` and not find one. **49 Financial's Models AND SMAs come
+> from SmartX, so its data sits under a tree with no firm boundary in it.**
+>
+> ⚠ **AND A LIVE FIRM-IDENTITY ALIAS, measured here:** `blackdiamond/49f/` = **285 objects**
+> (`_ops/ bronze/ gold/ meta/ silver/`) and `blackdiamond/49financial/` = **8,862 objects**
+> (`bronze/ bronze_legacy/ silver/ silver_legacy/`). **BOTH LIVE.** The legacy tiers on one and
+> `gold/` on the other read as a migration mid-flight with both sides live. **The alias is on a
+> THIRD surface too: this project's own `CLIENT_L1_RULE` keys `"49financial"` while its gold
+> runners live in `runners_49f/`.** NOT established: that the two prefixes are the same firm.
 
 ---
 
