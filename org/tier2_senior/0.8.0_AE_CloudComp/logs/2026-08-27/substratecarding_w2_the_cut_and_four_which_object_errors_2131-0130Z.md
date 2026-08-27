@@ -261,3 +261,40 @@ over: **the line was read correctly and the plane was wrong.**
 carries its controls. **I did NOT measure whether it is invoked on any nightly, or whether a seat reads
 its verdict.** A perfectly controlled harness nobody runs scores nothing. **That question is open and
 is a real wave-3 item; "fails open" was simply not the way to ask it.**
+
+## 17. ANNOTATION (03:5xZ) -- THE LAW VINTAGE THIS SESSION'S WORK WAS PRODUCED UNDER
+
+Recorded because **every card and message from this seat cites "CLAUDE.md Rule 22a / Rule 28", and a
+reader is entitled to know WHICH CLAUDE.md.** Measured by quoting my own loaded system-prompt header
+and diffing it against the file -- the only way a seat can reach this.
+
+⛔ **THIS SESSION LOADED THE PRE-SLIM ~707-LINE CLAUDE.md.** HEAD is 215 lines and structurally a
+different document.
+```
+NOT IN THIS SESSION'S CONTEXT
+  556f45f0cc   the 707 -> 262 LAW INDEX slim + the docs/doctrine/CLAUDE_ANNEX.md pointer
+  bb5032b2cd   262 -> 215; sections 7+8 and the comp-tools table moved to the annex
+  6982e60539   RULE 29 -- "A REPORT IS NOT THE DELIVERABLE WHILE UNBLOCKED WORK REMAINS" (Andrew-direct)
+  690a5d5023 / 6f79cd0df4 / 4424c948f7   three Rule 22a amendments incl. the cherry-picked-pin clause
+  (uncommitted)  the full-serial / no-pronoun rule for agent-to-agent messages
+```
+**My highest rule number is 28. Rule 29 exists and this seat never saw it.**
+
+⛔ **AND THE PROPERTY IS THAT NO SEAT CAN CATCH THIS ALONE.** The law arrives in the system prompt; from
+inside, every version simply reads as *the law*. Reading `CLAUDE.md` does not help -- you read YOURS.
+`git log` does not help -- it reads the RECORD, not your prompt. **It surfaced only because two seats
+quoted their loaded headers to each other and compared against git**: `2.0.0_SA_COO~X` closed
+population 1 (working-tree readers HAVE the uncommitted rule), this seat closed population 3.
+**Irreducibly a cross-seat act** -- the same shape as git-vs-filesystem, where the PAIR is the
+instrument and neither half classifies anything alone.
+
+**COST TO THIS SESSION'S WORK: NOT DEMONSTRATED, and I am not inflating it** (`2.0.0_SA_COO~X` 74485
+sized it the same way and their restraint is the right one). ⚠ **STALE IS NOT FALSE.** Every rule I
+cited was accurate to the text I hold; the three 22a amendments concern build pins and independence,
+neither of which any card of mine invoked. **What is true is narrower and still worth recording: when
+this seat wrote "per CLAUDE.md", it meant a different document than a reader pulling HEAD will find.**
+
+**I did NOT re-read and adopt the current law.** Doing so mid-thread would place this seat under text it
+has not operated under all session, with every prior act taken under the older version -- **a larger act
+than it looks, and not one to take unbidden.** Disposition sits with `1.0.0_SA_CTO~X` (law surface);
+the uncommitted amendment is routed to `0.0.0_AB_MSTR`, who is not live.
