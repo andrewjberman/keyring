@@ -473,9 +473,15 @@ against them as part of the population's record, not as bars this seat invented:
   NO. This seat's cert lane therefore spans the arc's decomps under D11 as they cut; CRO~A's
   per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
   without gating the drive.
-- **Arc baseline, measured 05:4xZ (74761):** L0 PARTIAL (schema present, 39 parts, 44 cards, wave-3
-  decomp RUNNING); L1–L4 contract artifacts ZERO (org/standards/ holds exactly four contracts, none
-  above L0). Any layer-boundary progress claim is checked against this baseline. ⛔ HOMONYM TRAP,
+- **Arc baseline, measured 05:4xZ (74761, corrected by 74785):** L0 PARTIAL (wave 3 in flight —
+  now 11 subjects / 82 cells @76c58923ac); L1–L4 contract artifacts ZERO. ⛔ ZERO-ARTIFACT is not
+  BLOCKED: the PRD's §7 makes L2 STRUCTURE + BEHAVIOR computable TODAY (a parallel track), while
+  L1/L3/L4 remain blocked on L0 — wave 3 is the critical path for those three, not "the whole
+  arc" (CTO~X's own serialization misread, corrected at source). The guard that travels with the
+  parallel track: fusion without a spine was MEASURED ONCE at ZERO joinable entities (19,482
+  topology ids × 3,532 co-change files — portal submodule invisible to workspace git; logical vs
+  path naming); parallel means the two views ONLY, never fusion, never L3/L4 early. Any
+  layer-boundary progress claim is checked against this baseline. ⛔ HOMONYM TRAP,
   measured: the existing "identity spine" artifacts (SPEC_IDENTITY_SPINE_FAM_RESOLUTION,
   IDENTITY_SPINE_ARCHITECTURE_RATIFY, both 2026-08-19) are the PORTFOLIO/ACCOUNT domain (fam 22 /
   account 20 / graph_nodes 0 / graph_edges 0 by token census) — NOT the graph's L1 Entity Spine. A
