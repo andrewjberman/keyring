@@ -179,3 +179,38 @@ the adapter's 11 determinations, zero residue).
 demonstration that the denominators were exemplary* -- a false number wearing a compliance claim, which
 is the version that survives review. Routed 73800, verifier-authorized 73805 (verdict record annotated
 `@7bff2c25a3`), issuer-authorized 74014.
+
+## 13. ANNOTATION (2026-08-27 ~00:1xZ) -- C2's "TWO producers" is WRONG. There are THREE.
+
+⛔ **Appended, not rewritten** -- same treatment as s.12, ratified by `2.0.0_SA_COO~X` at 74014.
+
+**WITHDRAWN:** s.3/s.4's framing that C2 has TWO producers, and the amendment I landed
+`@7a2704cd2b` which attributed BOTH static class-spec JSONs to `MOTIF_c2c3_materialize_spec.py`.
+
+**TRUE, measured at source 2026-08-27 while carding that script as wave-2 subject `W2-wmzh`:**
+```
+MOTIF_c2c3_materialize_spec.py:44        -> motif_c2c3_materialize.json      6 C2Motif   DEVIATION subset
+NFRA_MOTIF_P1_canonical_ab_catalog.py:58 -> motif_c2c3_materialize_ab.json  13 C2Motif   CANONICAL tier
+c2_individuate.py (:350)                 -> 6,207 instance nodes
+```
+⛔ **THE ERROR IS NOT ARITHMETIC.** The script I named as *the* class-spec materializer writes only
+the **DEVIATION subset**, and the rule bank's own `c2c3_canonical_catalog` law says that subset is
+*"NEVER to be presented as the C2/C3 layer itself."* **My correction presented it as exactly that** --
+committed while fixing a different error in the same card.
+
+**REOPEN TEST RUN BEFORE ESCALATING, and it came back NEGATIVE.** `2.0.0_SA_COO~X`'s freeze (73965)
+defines reopening as a head the resolution map does not account for. Both
+`NFRA_MOTIF_P1_canonical_ab_catalog.py` and `motif_c2c3_materialize_ab.json` are IN the map and IN
+the frozen 44-subject set, carded by another lane. ⛔ **So this was a defect in MY CARD, not a gap in
+the wave's scope, and filing a BLOCKING would have cost the freeze for nothing.**
+
+**THIRD which-object error of the session, all mine:** block KEYS vs block CONTENTS (C1); one script
+vs two scripts (C2, in the original card AND in its fix). **Each produced a well-formed, confident,
+internally-consistent claim about the wrong object, and no instrument at any seat detects that class**
+-- `3.0.0_SA_CVO~X` stated it against their own re-check at 74156: a narrow delta-check verifies the
+delta was as DECLARED and cannot verify the TRUTH of an added claim.
+
+Corrected across three artifacts per 74158: `C2.json` (composes, projection_of, the THREE-materializer
+clause in `how`), the wave-1 proof instance, and this annotation. **Verdict UNCHANGED -- C2 stays
+UNSOUND, and the correction STRENGTHENS its central finding by putting a generator on each side of
+the canonical/deviation split.**
