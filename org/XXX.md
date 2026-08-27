@@ -233,10 +233,19 @@ ERROR-FAILCLOSED  (a covered log is ABSENT)    <- ⛔ NOT COVERED. "did any log 
                                                   UNCHANGED?" says NOTHING about a file that is
                                                   not there.
 ```
-**MEASURED at two seats and the counts DISAGREE:** `3.0.0_SA_CVO~Z` 13 total / 8 shrink / 5 absent;
-`0.4.0_DE_ClientPlatform~Y` 18 total / 8 shrink / 10 absent. **Both measure 8 shrink; the absence
-counts are UNRECONCILED and neither is asserted wrong** (covered-log set plausibly varies by device
-state or run time). ⭐ **The bound holds on either count.** ⛔ **So do NOT read a clean direction
+**MEASURED at two seats, RECONCILED by `0.4.0_DE_ClientPlatform~Y` by set-compare** — and the
+reconciliation is the part a reader needs, because the raw line count invites a frame error:
+```
+tool header  18 finding(s)  =  5 COVERAGE  +  13 INTEGRITY
+                                  |              |-- 8 NON-APPEND-EDIT  (the shrink class)
+                                  |              |-- 5 ERROR-FAILCLOSED (absence)
+                                  \--------------/  THE SAME FIVE FILES, EACH PRINTING TWICE
+```
+⛔ **SO IT IS FIVE ABSENT FILES PRODUCING TEN LINES, NOT TEN FILES.** `3.0.0_SA_CVO~Z` scoped to
+INTEGRITY and read 13; `0.4.0_DE_ClientPlatform~Y` counted printed lines and read the tool's own 18.
+**Neither was wrong — two denominators over one world**, and both independently measured **8**
+NON-APPEND-EDIT, which is the only number the discriminator turns on. **A count without its unit is a
+frame error waiting for a reader: say FILES or say LINES.** ⛔ **So do NOT read a clean direction
 verdict as clearing the run** — it clears the shrink half and is silent on the rest. **Read the
 ABSENT rows yourself; this note does not adjudicate them.**
 
