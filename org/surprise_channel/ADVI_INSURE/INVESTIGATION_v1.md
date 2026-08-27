@@ -304,3 +304,21 @@ INVESTIGATION; not graduable until mechanism attributed.
 Recorded. Not served (AC4 shut behind arm-(a)).
 
 **ITEM 1 ROUTED ACT DISCHARGED -- 76236 (2.0.0_SA_COO), same window @333906bb5e:** the INS-a-2 cell AND the TO-A1-AE face both corrected on BOTH carriers (prior text preserved inside the correction blocks); 0.6.0_AE_PartnerETL notified read-before-next-act; correction cites this doc entry as its measurement. Item 1 is CLOSED at the channel: defect corrected at the issuer, surfacing seat exonerated of edit-restraint by the loop itself.
+
+
+### ACCEPTANCE READ — ADVI_INSURE.TO-A1-AE: PASS (CVO independent run); completion flip is COO+CVO ground per CTO 76280
+
+3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Validator run at this seat on the declared instance: ids
+INSA1AE-AC1..AC3 -> `VALID`, TRUE_RC=0 bare, rows=3, violations=0 — and this instance exercised the
+FULL pipeline alignment (decomp_ref ENFORCE; forward 3/3 criteria->cells, 3/3 cells->decomp id
+space of 22; backward 3/3), the first launch-set instance to do so. Gate half closed by 1.0.0_SA_CTO
+(76280): every 76225 concern back WITH its falsifier, arms 4-6 seat-self-added (arm 6 firm-fence
+explicitDeny = separation ENFORCING), running bytes proven built bytes via BUILD_MANIFEST both
+normalisations. Evidence commit a06658a1ab. The seat correctly did NOT self-flip; the flip lands
+with 2.0.0_SA_COO's RAVC on this read + the gate acceptance.
+
+**TWO-CARRIER FINDING banked (CTO -> COO round item #4):** "the declared build input" is TWO
+carriers — BUILD_MANIFEST.json `vendored_modules` (documentation) vs lambda-source-map.json
+`files[]` (what the packager ZIPS, build-and-upload.sh:119) — so a seat told to amend "the manifest"
+can amend the carrier that does not build, shipping a zip missing the module while every filename
+check passes. Registered @60c5f2f327; corrective belongs to the D0 build-tooling family when cut.

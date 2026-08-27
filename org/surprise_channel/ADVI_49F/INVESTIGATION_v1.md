@@ -76,3 +76,31 @@ harness commit), not at this ruling; until then the P2 stands as written.
 ### ACCEPTANCE READ -- ADVI_49F.RPS-CUSTODY: PASS (CVO independent run). TO COMPLETE stands.
 
 3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Run at this seat, not accepted on report: `python .tools/proof-of-spec-check.py <instance> "RPS-1,RPS-1b,RPS-1c,RPS-2,RPS-3,RPS-4,RPS-5"` -> `VALID`, TRUE_RC=0 taken bare, acceptance rows=7, violations=0, alignment frame resolves the governing TO by declared id (scanned 2126) and correctly ANNOUNCES the pre-pipeline basis (no decomp_ref required, CTO ruling 66492). Completion chain: seat flip (76272) -> COO RAVC-4 (76274, APPLIED-layer read on a different instrument, mutant control both-arms, failed validator pass recorded INSIDE the instance) -> this read. Face attribution swap corrected by its author @dab6eda3b3. RESIDUALS AT THEIR OWNERS: Rule-25 marker instrument (COO, round-close queue, WS-E miss as fixture); the 23 served July-23-basis partitions re-emit question = a PRODUCT CALL AT ANDREW, surfaced by COO, not authorized anywhere below him.
+
+
+### ACCEPTANCE READ — ADVI_49F.c01-SIGNFIELD: PASS (CVO independent run). CERT P2: **DISCHARGED** on witnessed evidence @0412a8d6d8.
+
+3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Validator run at this seat: ids C01-1..C01-6 -> `VALID`,
+TRUE_RC=0 bare, rows=6, violations=0. Chain: seat flip + report (76283) -> COO RAVC-4 (76284,
+"strongest of the launch set") -> this read.
+
+**P2 DISCHARGED, act witnessed not expected:** the explicit `nna_headline SUM pre == post` assert is
+IN the harness at @0412a8d6d8 (`ADVI_49F.c01-SIGNFIELD_ACCEPTANCE_HARNESS.py:236-242`, citing CTO
+76200 + the three d-readers by line) and EXERCISED (result JSON `nna_headline_sum` entries; delta
+0.0000 on both dates; COO corroborates). The 76202 landing's condition is met; the cert record
+@958dbfc's P2 observation is closed by mechanism.
+
+**TWO SELF-FOUND INSTRUMENT DEFECTS recorded with the completion (the seat filed them against
+itself; COO banked #5 as a round keeper):** (a) the pre-registered table @e8ccd8eb77 carried ONE
+wrong row (64,841.33 vs measured 87,054.14) with a wrong stated mechanism — both alternative causes
+measured out, originals kept beside corrections; (b) **THE MOVING-BASELINE HARNESS** — the committed
+acceptance artifact pinned its PRE arm to `git show HEAD:` (a moving symbol) while its own docstring
+cited the content-pin rule; the moment the fix landed, both arms read post-fix code and the harness
+could not reproduce its own committed result. Found ONLY because the determinism control ran AFTER
+the commit. Corrective shape @bb48c4ee4c: explicit content pin + a guard REFUSING a baseline already
+carrying the field (exercised rc=1). Keeper class: *a committed acceptance artifact must pin its
+baseline by CONTENT, and its determinism control must run post-commit.*
+
+**SCOPE NOTE carried:** history re-valuation deliberately NOT done — historical partitions keep the
+old sign until P14-VEHICLE runs; c01's loud pre-1.2 refusal makes the gap non-silent in code.
+c02-CFINPUT proceeds per the sequenced GO; P14's gate now waits on c02 alone.
