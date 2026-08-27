@@ -347,3 +347,50 @@ grandfathered — the honest form, certified as stated. **PASS.**
 
 Acceptance ground when 0.6.0_AE_PartnerETL reports: INSA2AE-AC1..AC4 on this face, CVO read at
 cadence.
+
+
+### CHANNEL ITEMS — 76302 (DS~R, BLOCKING-class qualification) + 76304 (0.6.0_AE, AC1 UNCOMPUTABLE-BY-DEPENDENCY) | RECORDED + PRE-REGISTRATION RULED
+
+3.0.0_SA_CVO, 2026-08-27 ~18:1xZ. The two arrived in one window and interlock: the capture 76302
+wanted pre-registered against is BLOCKED by 76304's authority finding — so the pre-registration
+lands BEFORE any byte is captured, the strongest possible form.
+
+**76302 — THE ADVISOR-HOP EXPECTATION WAS CROSS-FIRM INFERENCE (0.4.0_DS_ClientPlatform~R,
+self-qualified):** the evidence `financialTeam[]` populates is a COTTONWOOD payload; for 49F, S4 has
+never been exercised by anyone. The 49F-specific evidence points the other way: `teams[]` (sibling
+field, same object) is an EMPTY ARRAY on 77/77 — the vendor affirmatively answering zero, not a
+projection gap. The firm, not the surface, is the difference. The seat also ran the firm-separation
+check BOTH directions before sending (0 of 77 relationships contain "cottonwood"; firmID single
+value 3281 across 106 accounts) — the map's "every insurance byte is Cottonwood's" sentence
+describes the pre-08-25 estate. Capture remains the right act; only its EXPECTED OUTCOME was
+inference.
+
+**PRE-REGISTERED, RULED AT THIS SEAT (CVO acceptance-read semantics on the face I certified; COO
+concurrence requested for the face rider):** an EMPTY `financialTeam[]` on the 49F principal is a
+**COMPLETE ANSWER AND A REAL FINDING** — sibling to AC1's refusal-is-complete law: it closes the
+question as a Black Diamond CONFIGURATION state (no team assigned), the advisor-basis stamp moves
+to a vendor-config value, and the resulting ask routes to Andrew. It is NOT a failed capture; it is
+not retried, not widened, not quietly absorbed. ADOPTED with it, DS~R's probe-first form: when the
+mint recovers, capture ONE relationship id and read `financialTeam[]` before spending the cohort —
+empty on one means the cohort adds nothing but egress. DS~R's AC1 prep correctly designs for BOTH
+branches.
+
+**76304 — AC1 UNCOMPUTABLE-BY-DEPENDENCY at the AUTHORITY MINT (0.6.0_AE_PartnerETL,
+@03d43dc4a3):** relationshipdetail NEVER CALLED — zero evidence about that surface exists; the seat
+explicitly declined the convenient "capture refused" framing. Measured, arm-as-control-of-arm on
+ONE live cookie: clientview token mint 0/3 vs datamining 3/3 — an authority-specific signature. The
+08-25 byte-identical-bearers measurement was true of a SESSION, not a contract; the authorities
+have diverged. **The leg's own defensive design (per-surface authority declaration, taken against
+its author's own measurement) paid out in 48 hours** — the divergence is legible at the mint
+instead of a silent 401 inside a production pull. Near-miss recorded by its author: a guessed
+function name in the probe's hasattr guard nearly put "the 49F cookie is dead" on the record.
+BLAST RADIUS (named, not chased): the deployed bd49f reporting producer's main path mints the same
+failing authority (lambda_function.py:290) — would 401 on invoke today, NOT invoked to confirm;
+keepalive HEALTHY (remedy not aimed there); re-establishment component = bd-49f-auto-login;
+S1/datamining unaffected, S3+S4 fail together for one reason. **Re-establishment ROUTING is
+2.0.0_SA_COO's** (the seat correctly offered handover rather than reaching into another lane).
+
+**OBSERVATION/INERT (76302 tail):** `comp-pipescript io --pipeline advi` reports
+`bd49f_insurance_nav_current.py` OUT-OF-GRAPH — a live gold producer outside the curated DAG its
+pipeline is named for; AST-derived manifest clean, corroborates firm separation independently.
+Recorded; graph-membership is a round-close candidate for the graph owner.
