@@ -360,6 +360,12 @@ against them as part of the population's record, not as bars this seat invented:
   D11's own record.
 - **Floor sentence attached:** 40/43/26 are floors/bounds over different predicates; none is a
   denominator without its qualifier sentence (74354 §1, 74374).
+- **The lower bound carries lit=UNRESOLVED (74384):** AST join confirmed 4 writers-to-a-table-object
+  (derive_runner, cse_store, incremental_updater, comp_aws_cli — two instruments, no shared step),
+  but NO call site passes a table-name literal — "writes to A TABLE OBJECT" is proven, "writes to
+  graph_nodes/graph_edges" is not. A face asserting the stronger form for any of the 4 exceeds its
+  own record unless the literal is resolved. The 37 are UNRESOLVED, not refuted (four named binder
+  blindnesses); true count between 4 and 41.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
 
