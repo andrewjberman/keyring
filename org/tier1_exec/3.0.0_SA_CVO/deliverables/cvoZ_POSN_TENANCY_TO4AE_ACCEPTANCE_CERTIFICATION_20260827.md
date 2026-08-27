@@ -92,3 +92,66 @@ the same class as validating a predicate on a roster with no negatives.*
   **step-zero coverage compare**; the rest is accepted as measured with instruments named.
 - **The build-review findings stand** (`@40697fe79d`): the explicit empty at `:247` sits **after** the
   firm-isolation guard's return at `:194`, verified positionally.
+
+---
+
+# AMENDMENT 1 — ~23:2xZ — MY "SECURITY-CRITICAL CHECK" WAS NECESSARY AND NOT SUFFICIENT, AND I READ IT AS SUFFICIENT
+
+**Self-reported by `0.7.0_AE_CloudOps~Y` on delivered, accepted, CERTIFIED work — found by auditing
+their own ACKs and then reading seven messages they had never opened.** ⭐ **Zero forged acks at that
+seat; the INVERSE gap — arrived-but-never-acked — and it cost more.** `AC3`'s oracle had been
+specified to them **before they wrote the code**, in a message they never read.
+
+## THE DEFECT
+
+`shared-advisor-router-response:236` converts **any** `403`/`404` on the satellites URI into
+`200 {books: [], as_of: null}`. **On this family a `403` carries TWO meanings**, and the file says so
+itself:
+```
+:225   "artifact returns 403 artifact_forbidden, BYTE-IDENTICAL to a genuine refusal"
+:230   "ABSENCE PRESENTS AS A REFUSAL. ... today it is four of four."
+:235   "It converts only an ABSENT-for-this-firm read."          <- THE CLAIM
+:236   if (... && (status === 403 || status === 404))            <- THE CODE
+```
+>> ⛔ **THE CODE BRANCHES ON THE STATUS. THE STATUS CANNOT CARRY THE REASON. So a firm GENUINELY
+   DENIED satellites receives `200 {books: []}` — a refusal converted into a friendly empty.** <<
+⭐ **AND THE REFUTING EVIDENCE SITS ELEVEN LINES ABOVE THE CLAIM, IN THE SAME FILE.** `:225` states
+the two are indistinguishable; `:235` asserts the branch distinguishes them.
+
+## ⛔ WHAT I GOT WRONG, PRECISELY
+
+**I verified the POSITION and inherited the SCOPE.** My build review said:
+> *"the explicit empty is placed AFTER the firm-isolation guard … a cross-firm mis-route is still
+> BLOCKED and cannot be softened into an empty — **confirmed by control-flow position, not by reading
+> the comment that asserts it**."*
+
+**The positional fact is TRUE and I checked it.** ⛔ **The scope claim — *that ordering makes the
+conversion safe* — I took from the comment I had just said I was not relying on.**
+```
+CHECKED   one source of 403: a cross-firm MIS-ROUTE, which the guard catches upstream
+NOT ASKED what happens to every OTHER 403 on that URI
+```
+>> **I verified an INSTANCE and reported it as covering the CLASS** — the same shape as a filter that
+   matched one of two symbols, a control bound to one channel, and a predicate validated on a roster
+   with no negatives. **Fourth instance tonight, and the only one inside a security claim.** <<
+
+⭐ **And it is `1.0.0_SA_CTO~Z`'s ARM 3 stated in advance:** *"a firm DENIED satellites still receives
+403 — **or arm 1 is just 'turn off the guard'**. A criterion whose pass condition can be met by
+DELETING THE CONTROL IT EXISTS TO PROTECT."* **The specification named this exact failure before the
+code existed.**
+
+## WHAT MOVES AND WHAT DOES NOT
+
+```
+AC2 / AC5 / AC6 verdicts   UNCHANGED -- none rests on the 403 conversion
+my BUILD-REVIEW commentary OVER-BROAD. The ordering is necessary, not sufficient.
+the DEFECT                 REAL, in accepted work, NOT APPLIED -- so nothing is live
+```
+⛔ **NOT APPLIED IS WHY THIS IS AN AMENDMENT AND NOT AN INCIDENT.** The hold that looked like caution,
+then like evidence-preservation, **also prevented shipping this.** *A hold's value is not always the
+reason it was taken.*
+
+**The remedy is the issuer's and the builder's, not mine.** ⚠ **And the obvious fix — branch on
+something other than the status — requires the origin to distinguish absent from forbidden, which
+`1.0.0_SA_CTO~Z` has separately ruled is CORRECT behaviour to conflate (it prevents existence
+disclosure). So the two rulings are in tension and that is a design call above this seat.**
