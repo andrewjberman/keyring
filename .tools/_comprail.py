@@ -356,7 +356,7 @@ def out_of_corpus_count(ws: str, pathspec):
 
 
 def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
-                          corpus: str = "default"):
+                          corpus: str = "default", stats: dict = None):
     """The .gitignore-aware working set across the parent repo AND nested git repos (portal etc.),
     pathspec-filtered, with the section-8 sovereign-held trees EXCLUDED BY DEFAULT (GG1).
 
@@ -375,11 +375,23 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
       * files     -- the working set MINUS held prefixes (unless include_held)."""
     if corpus not in CORPUS_MODES:
         return None, None, "unknown corpus mode %r (valid: %s)" % (corpus, ", ".join(CORPUS_MODES))
+    # THE FLOOR MUST BE COUNTED WHEREVER IT ACTS, NOT ONLY IN --hidden. Measured 2026-08-27, and it
+    # was MY defect in the commit that declared "the floor is PRINTED, never silent": `--corpus
+    # ignored .runtmp` returned `0 hit(s) across 0 file(s)` over a scope holding 326,639 gitignored
+    # files, every one of them floor-excluded and NONE of them mentioned. That is the precise string
+    # Rule 21 teaches means OUT-OF-CORPUS -- emitted for a population the caller had just been told
+    # this mode covers. A floor that is printed in one verb and silent in the search path is not a
+    # printed floor. `stats` carries the count out so the caller can name it on the denominator.
+    if stats is not None:
+        stats["floor"] = 0
     if corpus == "ignored":
         parent, err = _ls_ignored(ws, pathspec)
         if parent is None:
             return None, None, err
-        parent = [f for f in parent if not _is_ephemeral(f)]
+        kept = [f for f in parent if not _is_ephemeral(f)]
+        if stats is not None:
+            stats["floor"] = len(parent) - len(kept)
+        parent = kept
     else:
         parent, err = _ls_files(ws)
         if parent is None:
@@ -393,7 +405,10 @@ def gitignore_aware_files(ws: str, pathspec, include_held: bool = False,
             if ig is None:
                 return None, None, ierr
             if corpus == "all":
-                ig = [f for f in ig if not _is_ephemeral(f)]
+                kept_ig = [f for f in ig if not _is_ephemeral(f)]
+                if stats is not None:
+                    stats["floor"] = len(ig) - len(kept_ig)
+                ig = kept_ig
             seen = set(_norm(f) for f in parent)
             parent = parent + [f for f in ig if _norm(f) not in seen]
     nested = _gitlinks(ws)

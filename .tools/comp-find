@@ -245,9 +245,11 @@ def main() -> int:
               "as LITERAL characters, not alternation/grouping. Use a BARE pipe: 'foo|bar'. A "
               "0-hit result below may be this, not a real absence.")
 
+    corpus_stats = {}
     files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec,
                                                             include_held=include_held,
-                                                            corpus=corpus)
+                                                            corpus=corpus,
+                                                            stats=corpus_stats)
     if files is None:
         print("comp-find: BLOCKED: %s" % err)      # never silently empty
         _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, 'q="%s"' % err)
@@ -348,8 +350,11 @@ def main() -> int:
     # it was drawn from is the defect this extension was commissioned to fix: `0 across 0 file(s)`
     # and `0 across 27370 file(s)` are opposite claims that rendered identically apart from a
     # number nobody was told how to read.
-    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope [corpus=%s]%s%s%s"
+    _floor = corpus_stats.get("floor", 0)
+    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope [corpus=%s]%s%s%s%s"
           % (len(hits), scanned, corpus,
+             (" | %d EPHEMERAL-FLOOR, NOT searched (--corpus raw reads these)" % _floor)
+             if _floor else "",
              (" | %d UNREADABLE, NOT searched" % skipped) if skipped else "",
              (" | %d BINARY, NOT searched" % binary) if binary else "",
              (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
@@ -372,6 +377,10 @@ def main() -> int:
         # ZERO in the default corpus, which is the one result a reader is about to convert into
         # "it is not there". That is where a false absence is manufactured, so that is where the
         # denominator has to name what it could not see. COMP_FIND_NO_HIDDEN_CHECK=1 opts out.
+        if _floor:
+            print("  ^ AND %d ephemeral-floor file(s) in scope were EXCLUDED before the search and "
+                  "never counted above. Your zero does NOT cover them -- --corpus raw reads them."
+                  % _floor)
         if corpus == "default" and not os.environ.get("COMP_FIND_NO_HIDDEN_CHECK"):
             searchable, ephemeral, herr = _comprail.out_of_corpus_count(WS, pathspec)
             if herr:
