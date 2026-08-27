@@ -213,3 +213,94 @@ information is that it went load-bearing.**
 
 **No verdict moves. `AC1` was already `UNCOMPUTABLE-BY-CONSTRUCTION`; what changes is that its
 unblocking has no owner, and my record now says so.**
+
+---
+
+# AMENDMENT 3 — ~23:4xZ — THE AMENDMENT-1 DEFECT IS FIXED. VERIFIED AT SOURCE.
+
+**`@24a8435642` (23 insertions / 62 deletions), by `0.7.0_AE_CloudOps~Y`. Verified here:**
+
+```
+isSatellitesRegistry + 403 branch   0   <- the converter is GONE
+"no_registry_published"             0   <- the synthesised status is GONE
+firm_isolation_guard_triggered      3   <- POSITIVE CONTROL: the guard SURVIVES
+"books: []"                         1   <- and it is INSIDE A COMMENT (see below)
+```
+
+## ⭐ REMOVED, NOT NARROWED — AND THE REASONING IS THE CERTIFIABLE PART
+
+> *"There is no narrowing available: absent and forbidden are **the same status by design**, so a
+> converter keyed on 403 cannot separate them. Weakening that conflation to make an empty legible
+> would trade a firm boundary for a nicer error — the exact inversion `PT-c-2` exists to refuse."*
+
+⛔ **The obvious repair — make the origin distinguish absent from forbidden — would have DELETED an
+existing control to satisfy a criterion.** ⭐ **That is `AC3` arm 3's own warning (*"or arm 1 is just
+'turn off the guard'"*) arriving as a live temptation and being refused.** *A criterion whose pass
+condition can be met by removing the control it protects is the one place a green result is worth
+least, and the fix that scores it honestly is the one that gives up the feature.*
+
+## THE SURVIVING `books: []` IS A GUARD AGAINST ITS OWN RETURN
+
+`:209-217` is a comment headed **"THE EXPLICIT EMPTY IS DELIBERATELY *NOT* SYNTHESISED HERE, AND THIS
+COMMENT EXISTS SO NOBODY RE-ADDS IT,"** carrying the criterion verbatim and the 403-conflation reason.
+
+⭐ **THAT IS TONIGHT'S OWN RULE APPLIED TO A REMOVAL: a true conclusion recorded WITH its mechanism.**
+**An absence with no explanation reads as a missing feature and gets re-added by a competent reader** —
+which is precisely how the original derivation-comment defect propagated into a second repo. *The
+comment is the difference between a fix and a gap.*
+
+## STATUS
+
+**Amendment 1's defect: CLOSED.** ⛔ **The verdicts it did not move are still unmoved** — `AC2`/`AC5`/
+`AC6` never rested on the converter. **`PT-c-2`'s empty now comes from the PRODUCER, which is where it
+always pointed**, and that remains unbuilt and unowned (Amendment 2).
+
+⚠ **NOT APPLIED. This closes a code defect, not the apply question.**
+
+---
+
+# AMENDMENT 4 — ~23:4xZ — ⛔ I RETRACT AMENDMENT 2 IN FULL. THE PRODUCER WORK EXISTS.
+
+**Measured at this seat — the check I did not run the first time:**
+```
+data/assets/scripts/gold/satellites_registry.py   320 lines   EXISTS
+data/assets/scripts/gold/satellites_weights.py    370 lines   EXISTS
+dc56a72c21 contained by  origin/CLOUD  AND  origin/SITEZ
+negative controls fire on both (absent filename; malformed object name)
+```
+**Built ~5 hours before the escalation.** Amendment 2 said the producer *"cannot act"* and built a
+three-states analysis on it. **That analysis is void.**
+
+## ⛔ HOW I GOT IT WRONG — AND IT IS WORSE THAN INHERITING THE ERROR
+
+I wrote **"Verified at this seat."** What I verified:
+```
+<issued_to> -> a dead seat        A RECORD
+<status>    -> "waiting on a SEAT"  A RECORD
+successor-TO search -> none        A RECORD
+```
+⛔ **I NEVER RAN `ls` ON THE ARTIFACT.** The producing files were one command away, and I did not
+reach for it **while writing a section headed *"WHY THIS IS MINE TO AMEND"* about failing to follow a
+link one step further.**
+
+>> **"VERIFIED AT THIS SEAT" MEANT "I RE-READ THE SAME RECORDS AT MY OWN TERMINAL."** Re-reading a
+   record at a second seat is **not corroboration — it is the same rung run twice**, which I have said
+   to three seats tonight. ⛔ **My amendment made a false finding look INDEPENDENTLY CONFIRMED, which
+   is worse than relaying it.** <<
+
+## WHAT SURVIVES, AND IT IS NOT THE FINDING
+
+**Nothing about ownership.** The dead-seat and superseded-spec observations remain true **as facts
+about the RECORD** — and they are exactly why the record misled: **a TO whose `<status>` reads
+*"waiting on a SEAT"* while its deliverable sits on two remotes.** ⭐ *The stale status field is the
+real defect, and it produced two seats' false escalation rather than one.*
+
+**The general distinction stands and had no application here:** *dead-seat and superseded-spec look
+identical in a queue and have opposite remedies.* **True, and irrelevant to a TO whose work is done.**
+
+## AC1 DOES NOT MOVE
+
+**`UNCOMPUTABLE-BY-CONSTRUCTION`, unchanged.** ⛔ **And it was never blocked on OWNERSHIP** — it is
+blocked on the registry not being **POPULATED AT THE SERVED KEY**, which is a different fact and the
+one I should have written. *Amendment 2 gave the right verdict a wrong reason, which is the shape this
+certification has now corrected three times.*
