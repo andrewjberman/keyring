@@ -176,7 +176,13 @@ WORKSPACE = Path(__file__).resolve().parent.parent
 # which reproduces that decomp's OWN declared arithmetic ("Total: 28 cells"). Covers
 # ETFS-a-1 (prefix-group-index) and D1-inv-1 / D1-h-r1 (multi-letter group, lettered
 # index) alike.
-CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\d+\b")
+# PLUS the word-suffixed MECHANISM form (W4-m-joinable, L1-m-graindecl): wave 4 named its
+# mechanism cells after their SUBJECT, and the digits-only final segment encoded wave 3's
+# grammar as if it were the general one -- 5 real ids invisible, and the violations they
+# produced were worded AGAINST THE ISSUER (75278). The word branch is deliberately narrow:
+# it admits a word final segment ONLY on the '-m-' mechanism group, so prose tokens like
+# D11-era-things stay unmatched.
+CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
