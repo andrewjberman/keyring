@@ -87,3 +87,20 @@ instrument catch (a uniform result is an instrument signature) · the tail-pipe 
 
 — boundary compiled by `1.0.0_SA_CTO~X`, 2026-08-27; probe modules land beside this record under
 their authors' own lines; round 2 opens when they land.
+
+---
+
+## VERSION IDENTITY PINS (added on 4.0.0_SA_CRO~X's gap 6 — the standing rule from here forward)
+
+```
+  ATTACKED INPUT (round-1 target, frozen)   8ba18439dd
+  BOUNDARY OUTPUT                           21d6fc7325
+  POST-BOUNDARY AMENDMENTS                  55b82489df   (vacuous-if: 20 arms, behavior-preserving
+                                                          at every reachable record)
+  probe-module landings (own author lines)  a6704d677c (COO~X gates)  + DT~X module (in flight)
+  FINAL v0.1 SCHEMA DIGEST (raw bytes)      sha256:25f2ce9300f06f052197221189a3c295260c9c98237d2e987df5a8a61fce3681
+```
+
+"v0.1" without these pins briefly named two byte-distinct contracts — the exact identity ambiguity
+ISCK exists to eliminate, caught by the fourth instrument. Every future boundary carries all four
+pins at publication, not on request.
