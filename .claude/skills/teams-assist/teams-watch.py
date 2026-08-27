@@ -37,7 +37,43 @@ Auth: PASSIVE token reader. Reads the gateway access token from Claude Code's
 ~/.claude/.credentials.json (mcpOAuth.m365.accessToken) on each poll; Claude Code owns the refresh
 (rotating tokens), so this never refreshes itself -> no refresh-token fight. On a 401 (token lapsed
 while the session was idle) it stays quiet and retries; the next agent MCP call re-freshens it.
-Session-scoped, exactly like inbox-watch.sh: it dies with the Monitor / session.
+Session-scoped: it dies with the Monitor / session.
+
+CORRECTED 2026-08-27 -- this line read "Session-scoped, EXACTLY LIKE INBOX-WATCH.SH: it dies with
+the Monitor / session." That comparison was true when written and INVERTED SILENTLY on 2026-07-14,
+when inbox-watch.sh gained a PARENT-LIVENESS SELF-EXIT (inbox-watch.sh:113 opens it, :161 runs
+kill -0 "$WATCH_PARENT" then exits) and this engine did not. So the sentence had come to name the
+one watcher that DOES self-exit as the model for the one that CANNOT.
+A COMPARATIVE CLAIM GOES STALE WHEN ITS REFERENT MOVES, AND NOTHING TOUCHES THE FILE THAT CARRIES
+IT. Measured at source 2026-08-27: `ppid|getppid` occurrences in this file = 0 (positive control
+`os.environ` = 2, so the search reaches the file); the main loop is `while True:` at :477; all four
+sys.exit calls (:118 :138 :155 :406) are STARTUP token/pin failures and sit BEFORE the loop. There
+is no exit path inside it. This process dies only if something else reaps it.
+
+WHY THAT MATTERS MORE HERE THAN FOR inbox-watch.sh, which is the part not to skim: an orphaned
+inbox watcher `mv`s a file to read/ -- visible, and the message still exists. An orphaned
+teams-watch would hold a live pinned token and ADVANCE THE CURSOR (:544 for DMs and :437 for
+channels, both INSIDE the loop, after the emits) while echoing into a dead pipe. A CURSOR ADVANCE
+IS NOT RECOVERABLE BY INSPECTION: the next legitimate session starts PAST those messages and they
+are never re-emitted. That is silent LOSS, not a duplicate, and it would cover DMs and the
+client-facing channel alike. It compounds with the two-cursor-home divergence (:98 and :101 both
+build from TMPDIR): an orphan can advance one home while a live session reads the other.
+
+NOT ESTABLISHED, AND DELIBERATELY NOT CLAIMED: nobody has measured that teams-watch children
+actually survive session end. Evidence against -- a 2026-08-25 launch found ZERO straggling
+teams-watch processes despite prior sessions arming them. Evidence for risk -- by construction this
+process cannot self-exit, so its survival depends ENTIRELY on whether the harness reaps the child,
+and that is documented as VARIABLE (2026-07-10: wrapper reaped, inbox-watch child survived;
+2026-08-20: TaskStop reaped both). The honest statement is the asymmetry, not an incident:
+INBOX-WATCH.SH NO LONGER DEPENDS ON THAT VARIABILITY. THIS ENGINE STILL DOES, ENTIRELY.
+
+Two OPEN items, both owned by 0.5.0_AE_OpalETL~Z, neither implemented here and neither a gate:
+  (1) port the parent-liveness self-exit (with inbox-watch.sh:139's fail-open when PPID <= 1 --
+      that guard is correct and must travel with it, or healthy watchers suicide under MSYS);
+  (2) there is no arm-banner equivalent to inbox-watch.sh:159, so a seat CANNOT READ its own
+      protection state here -- which is precisely what org/XXX.md now instructs agents to do.
+Found by 0.0.3_BG_BBGTerminal (msg 9123) applying the @073b1679e2 law edit to its other watcher;
+verified at source by 0.0.0_AB_MSTR~Z before this edit. Doc layer corrected; ENGINE UNCHANGED.
 
 READ-ONLY: it only ever READS your own DMs/group chats -- and, with --channels, the CONFIGURED
 Team channels -- via the per-user gateway. It never posts.
