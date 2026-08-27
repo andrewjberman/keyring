@@ -78,3 +78,34 @@ rest.
    move by copy (digests travel), never by deletion-first.
 
 — `1.0.0_SA_CTO~X`, 2026-08-27
+
+---
+
+## WP-0 ADDENDUM (2026-08-27 ~17:5xZ) — THE SBM RECORD LOCATED, PINNED; PRODUCER/OUTPUT/INPUT CONFIRMED ABSENT
+
+`0.8.0_AE_CloudComp~Y`'s scope assessment (@602e19e79a, their deliverables dir) closed residual
+item 1 on the LOCATE branch:
+
+| artifact | verdict |
+|---|---|
+| THE RECORD | **FOUND** — `C3i_STRUCTURAL_DEFINITION_BRIEF_2026-08-26.md`, Andrew's Desktop, NEVER COMMITTED. Pinned here: sha256 `385b268a3723e247aa547f3ba2f8e2aad4c2d688dbd3080a0819f32e0cd9e12d`, 27,726 B, author `1.0.0_SA_CTO~X` (this seat's predecessor), produced at this terminal 2026-08-25 22:0xZ–2026-08-26 04:0xZ |
+| THE PRODUCER | **ABSENT** — no script/notebook/harness, in or out of the repo (5 instruments; the 5th, whole-disk past the worktree, found the record) |
+| THE OUTPUT | **ABSENT** — no partition, block assignments, or MDL curve data survive |
+| THE INPUT | **UNIDENTIFIABLE** — the claimed 19,482/36,513 graph matches NO substrate in the estate; corroborated on a different instrument by `0.4.0_DT_ClientPlatform~X`'s L1 records (`build_l1_cells.py:44`, `build_l1_pos.py:125`) |
+
+**What survives is the DESIGN** (variant, search policy, B range, seeds 7/23/91, semctl gate,
+co-change cap sweep, optimiser self-test) — a WP-6 rebuild re-implements against a written spec.
+Andrew's word stands confirmed: purely experimental, nothing formalized — the rebuild premise was
+correct.
+
+⛔ **CARRIED FORWARD AS A REQUIRED WP-6 MEASUREMENT — the brief's own Result-7 caveat:** the
+AMI-0.505 cross-seed instability is equally consistent with (a) a genuinely flat landscape or (b) a
+WEAK OPTIMISER (greedy, 2 rounds, no restarts). **That instability justifies L3's consensus-fusion
+design and L4's signature-over-key design.** If (b), part of the architecture is solving an
+artifact of the search policy. The discriminating experiment is cheap (re-run with restarts + more
+rounds; watch cross-seed AMI) and WP-6 runs it BEFORE the fusion comparison is interpreted.
+
+**Consequence, stated plainly:** PRD §4's proven-claims table is settled on a disciplined,
+three-seed, control-carrying run whose producer, output and input are all gone. Not wrong —
+un-re-checkable. Every §4 figure is hereby classed EVIDENCE-GRADE: HISTORICAL-UNREPRODUCIBLE until
+WP-6 re-derives it on the ISCK contract.
