@@ -250,7 +250,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "\u26d4 THE SEMANTIC-DEFECT AXIS, AND THE REASON THIS FIELD EXISTS. Every filter, threshold, exclusion, cutoff and definitional choice the materializer makes -- enumerated. A materializer can run this morning and still encode a deprecated opinion, and EVERY freshness instrument (mtime, snapshot id, last-write, a wave as_of) is STRUCTURALLY BLIND to it. No scanner discriminates a bad definition. The only thing that does is REQUIRING THE OPINIONS BE DECLARED RATHER THAN BURIED, so they become reviewable. NULL means the opinions are embedded in code and this part is UNREVIEWABLE ON THE SEMANTIC AXIS -- which is itself the finding, and the honest value."
+              "description": "⛔ THE SEMANTIC-DEFECT AXIS, AND THE REASON THIS FIELD EXISTS. Every filter, threshold, exclusion, cutoff and definitional choice the materializer makes -- enumerated. A materializer can run this morning and still encode a deprecated opinion, and EVERY freshness instrument (mtime, snapshot id, last-write, a wave as_of) is STRUCTURALLY BLIND to it. No scanner discriminates a bad definition. The only thing that does is REQUIRING THE OPINIONS BE DECLARED RATHER THAN BURIED, so they become reviewable. NULL means the opinions are embedded in code and this part is UNREVIEWABLE ON THE SEMANTIC AXIS -- which is itself the finding, and the honest value."
             },
             "cadence": {
               "type": [
@@ -275,7 +275,7 @@
             "orphaned",
             "unknown"
           ],
-          "description": "\u26d4 ADDED ON A LIVE FINDING: two cse_test_* tables were measured sitting in the PRODUCTION warehouse. A test surface indistinguishable from a production one is a substrate defect, not a tidiness issue -- a consumer cannot refuse what it cannot see.",
+          "description": "⛔ ADDED ON A LIVE FINDING: two cse_test_* tables were measured sitting in the PRODUCTION warehouse. A test surface indistinguishable from a production one is a substrate defect, not a tidiness issue -- a consumer cannot refuse what it cannot see.",
           "x-enum-definitions": {
             "production": "Intended to be read by production consumers.",
             "test": "A test/scratch surface. Its presence in a production plane is a FINDING.",
@@ -308,7 +308,7 @@
             "method": {
               "type": "string",
               "minLength": 1,
-              "description": "HOW the vintage was read. \u26d4 A lexicographically-last metadata file is NOT the chronologically newest one, and sort_by on a paginated list-* sorts PER PAGE. State the method so the number can be judged."
+              "description": "HOW the vintage was read. ⛔ A lexicographically-last metadata file is NOT the chronologically newest one, and sort_by on a paginated list-* sorts PER PAGE. State the method so the number can be judged."
             },
             "age_note": {
               "type": [
@@ -365,6 +365,360 @@
           "type": "string",
           "minLength": 1,
           "description": "Who owns the remedy for this part. 'UNOWNED' is legal and loud."
+        },
+        "grain": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource GRAIN. Card /trust qualifies the SUBJECT RESOURCE, not the persisted artifact; projection is EXACT 1:1 card /subject/id -> part /id only.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+            },
+            "unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "measured",
+                "held",
+                "inferred",
+                "absent"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "unit": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "claim_status",
+                  "unit"
+                ],
+                "properties": {
+                  "basis": {
+                    "enum": [
+                      "measured",
+                      "held",
+                      "inferred"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "key": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; an unresolved or non-1:1 relation stays compilation RESIDUE.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+            },
+            "identity_space": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "key_expression": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "key_is_stable": {
+              "enum": [
+                "stable",
+                "unstable",
+                "unknown",
+                null
+              ]
+            },
+            "crosses_spaces": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "declared_mapping": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "measured",
+                "held",
+                "inferred",
+                "absent"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "identity_space": {
+                    "type": "null"
+                  },
+                  "key_expression": {
+                    "type": "null"
+                  },
+                  "key_is_stable": {
+                    "type": "null"
+                  },
+                  "crosses_spaces": {
+                    "type": "null"
+                  },
+                  "declared_mapping": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "claim_status",
+                  "identity_space",
+                  "key_expression"
+                ],
+                "properties": {
+                  "basis": {
+                    "enum": [
+                      "measured",
+                      "held",
+                      "inferred"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "failure_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource FAILURE MODE.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+            },
+            "returns_on_failure": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "distinguishable_from_true_negative": {
+              "enum": [
+                "yes",
+                "no",
+                "unmeasured",
+                null
+              ]
+            },
+            "silent_degrade_paths": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "basis": {
+              "enum": [
+                "measured",
+                "held",
+                "inferred",
+                "absent"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "returns_on_failure": {
+                    "type": "null"
+                  },
+                  "distinguishable_from_true_negative": {
+                    "type": "null"
+                  },
+                  "silent_degrade_paths": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "claim_status",
+                  "returns_on_failure",
+                  "distinguishable_from_true_negative"
+                ],
+                "properties": {
+                  "basis": {
+                    "enum": [
+                      "measured",
+                      "held",
+                      "inferred"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     }
