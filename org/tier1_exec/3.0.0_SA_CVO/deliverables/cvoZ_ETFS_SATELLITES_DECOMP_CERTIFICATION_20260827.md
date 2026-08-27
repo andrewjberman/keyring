@@ -184,3 +184,99 @@ OTHER (16)   Core / Satellite Equity [1] · Core | Satellite 30 [5] 40 [9] 50 [2
 ```
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+# AMENDMENT 1 — 2026-08-27 ~16:5xZ. F1's REMEDY IS FALSIFIED; THE FINDING IS SHARPENED.
+
+**Trigger:** `1.0.0_SA_CTO~Z` (9274) and `2.0.0_SA_COO~Z` (9275) both measured the one thing this
+certification marked **INFERRED** — the `hierarchy.children[]` candidate — and it does not work.
+**Recorded here rather than only in a message: a finding whose remedy has been falsified must not
+be readable in its original form.**
+
+## The measurement — ACCEPTED, NOT RE-DERIVED
+
+`1.0.0_SA_CTO~Z`'s is the load-bearing one:
+
+```
+84 detail files, SYNCED WHOLE (not sampled)   -> the zero is over a denominator
+121 child nodes, MAX DEPTH REACHED = 1        -> the zero covers the whole tree, not the depth
+                                                 the walker happened to reach
+child ids matching the 9 canonical satellites -> 0
+POSITIVE CONTROL: 18 distinct child ids, 18 of 18 resolve to top-level models in the same feed
+hierarchy.components[]                        -> list[0] on every model read
+```
+
+⭐ **The positive control is what makes the zero admissible.** It shows the matcher resolves every
+child it sees and simply never resolves one to a satellite. Without it, the zero is
+indistinguishable from a broken matcher.
+
+⚠ **TWO SEATS, ONE RUNG — recorded so the agreement is not over-read.** `2.0.0_SA_COO~Z` reached the
+same verdict on 4 specimens **by the same method** (a `children[]` walk). That is REPETITION of an
+instrument, not corroboration by a second one. The finding rests on the 84-file run with its control;
+the 4-specimen run adds confidence in that rung and no coverage of any other.
+
+## What it actually showed — this reframes F1 rather than just closing a path
+
+`Opal Sat 50+ 15% cash` composes `Opal Intermediate-Term` 0.5 / `Opal Short-Term` 0.15 /
+`Opal Ultra Short-Term Income` 0.35 — **it never references `Opal Satellite 50`.**
+
+>> **THE BLENDS HOLD THE SATELLITES' INGREDIENTS, NOT THE SATELLITES.** So Andrew's criterion is
+   correct and describes a business fact **this feed does not encode**. IS-A vs HOLDS-A is not
+   evaluable against rebalancer **at any depth** — not on the roster (§2 F1, mine), not on the
+   detail (theirs). That is stronger than "F1 stands." <<
+
+## CERTIFIER RULING — option (a), and it is NOT a compromise
+
+**Ship the DECLARED NINE as data, labelled a declared set with a named owner, and amend `SAT-inv-2`
+to say so on its face.**
+
+⛔ **The reasoning is not "we tried and failed." It is A VALUE MUST CARRY ITS CLAIM, and `held` is a
+legal claim value.** The membership set is `held` — sovereign-declared. **The defect was never that
+the set is a list; it is that `SAT-inv-2` CLAIMS "a declared predicate over the roster" while the
+mechanism IS a list.** That is a value carrying a false claim, fixed by correcting the claim, not by
+manufacturing a predicate to make the claim true. **A fake predicate would be strictly worse than an
+honest list — a `measured` label over a `held` value.**
+
+**`SAT-inv-2`'s PURPOSE SURVIVES INTACT; only its wording bites.** Its stated rationale is *"a hand
+list inherits someone else's omission,"* and its specimen is `Opal Satellite 98` missing from the
+**partner's** table. **An Opal-declared, Opal-owned list is a different object from an inherited
+one.** The invariant was written against *inheriting* a list, not against *holding* one.
+
+### The review trigger — and it must NOT be a monitor
+
+A declared list goes stale the day an `Opal Satellite 55` is created, so the trigger is the
+load-bearing half. ⛔ **The alarm/monitor moratorium binds: no checker is proposed here.** The
+trigger goes **inside `SAT-b-2`'s existing oracle**, which already runs — print the roster rows
+matching the canonical `Opal Satellite <N>` form beside the declared nine, and **fail on any
+symmetric difference in either direction.**
+
+>> **WHY THIS IS NOT THE DISOWNED HEURISTIC RETURNING.** As a MEMBERSHIP PREDICATE the name form is
+   wrong and Andrew ruled it so. As a DRIFT DETECTOR it decides only *"a human must look at this
+   row"* — it never decides membership. **Same expression, different job, different correctness
+   bar:** a false positive costs one question, where under the old use it silently admitted a book. <<
+
+**Test the direction that ADDS rows too** — a new canonical row absent from the declared nine is the
+case that matters, and an undercount announces itself while an overcount never does.
+
+### Routed, not chased
+
+`hierarchy.components[]` empty on every model read goes to the membership TO's owner as a question.
+**UNUSED and UNPOPULATED are byte-identical from an empty array and take different remedies.**
+Neither `1.0.0_SA_CTO~Z` nor this seat asserts a structural source exists elsewhere — one feed, one
+date, and both have said so.
+
+## EFFECT ON THE VERDICT
+
+**CERTIFIED WITH FINDINGS STANDS.** No cell is invalidated; F1 was already P1 and its remedy path
+narrowed. ⛔ **SHARPENED: `SAT-b-2` + `SAT-inv-2` are now BLOCKING FOR TO-MINT ON THE MEMBERSHIP
+SURFACE SPECIFICALLY** — a TO cut against inv-2's current wording would instruct a builder to derive
+something underivable. **The other five surfaces are unaffected and can be cut.**
+
+## A NOTE ON THE MARKING THAT CAUSED THIS
+
+The remedy was marked INFERRED because I had not run it. **That marking is why two seats measured it
+instead of a TO being cut against it.** A remedy shipped inside a finding is still a claim, and it
+inherits the finding's authority unless it is labelled out of it.
+
+-- `3.0.0_SA_CVO~Z`
