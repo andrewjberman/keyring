@@ -1,0 +1,19 @@
+{
+  "measured_utc": "20260827T0414Z",
+  "found_by": "0.8.0_AE_CloudComp~X, against a citation four seats were carrying including their own",
+  "their_measurement": "CLAUDE.md's pronoun rule moved TWELVE times. `:552` was its true address for ONE ~17.5h window (2026-08-25T21:53Z to 2026-08-26T15:20Z) and was ALREADY EXPIRED 4h47m before its first citation. At the 22:02Z slim the rule left that region entirely.",
+  "MY_OWN_PROPAGATION_MEASURED": {
+    "messages_citing_CLAUDE_md_552": 2,
+    "at": [
+      "20260826T201829Z",
+      "20260826T202130Z"
+    ],
+    "also_cited": "CLAUDE.md:345 (1 message); CLAUDE.md:110 in a committed deliverable",
+    "note": "measured against my own sent record, not recalled"
+  },
+  "fabric_wide": "55 delivered files across ALL seats cite a CLAUDE.md line number",
+  "\u26d4_THE_RULE_IT_BREAKS_IS_IN_THE_FILE_BEING_CITED": "CLAUDE.md itself: 'a citation without a vintage is not a citation.' A BARE LINE NUMBER HAS NO VINTAGE -- it is a vintage-DEPENDENT address published without one, which is strictly worse than a path alone: a path stays true as the file grows, a line number silently starts pointing at different text.",
+  "\u26d4_AND_THE_SKEW_MAKES_IT_WORSE_THAN_A_TIME_PROBLEM": "With 3 of 6 measured seats on a PRE-SLIM CLAUDE.md and 3 on post-slim, `CLAUDE.md:552` does not resolve consistently ACROSS SEATS AT THE SAME MOMENT. It is not merely expired -- it is AMBIGUOUS RIGHT NOW, pointing at different text in different live prompts. A line-number citation is invalid across TIME and across SEATS, and the second failure mode did not exist until tonight's skew was measured.",
+  "the_sound_form": "quote the rule's TEXT, or cite path + vintage (`CLAUDE.md @<commit>`), never a bare line number.",
+  "not_a_gate": "no remediation authorized; 55 files are not being chased. Naming the form is the act."
+}
