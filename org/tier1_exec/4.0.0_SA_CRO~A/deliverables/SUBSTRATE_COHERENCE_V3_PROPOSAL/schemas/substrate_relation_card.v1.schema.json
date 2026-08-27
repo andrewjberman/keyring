@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/cro-a/substrate-coherence/substrate_relation_card.v1.schema.json",
+  "title": "Proposed substrate relation card",
+  "x-document-contract": {
+    "document_kind": "json_schema",
+    "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/schemas/substrate_relation_card.v1.schema.json",
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "timeless_definition",
+    "authority_role": "authoritative_source",
+    "source_relationship": [],
+    "projection_relationship": [],
+    "evidence_relationship": []
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_kind",
+    "schema_version",
+    "contract_status",
+    "governing_schema",
+    "exact_home",
+    "document_lifecycle",
+    "relationships",
+    "relation_id",
+    "actor_ref",
+    "artifact_ref",
+    "relation_family",
+    "evidence_planes",
+    "operations",
+    "state_claims",
+    "standing_claims",
+    "artifact_lifecycle",
+    "evidence",
+    "residue"
+  ],
+  "properties": {
+    "document_kind": {"const": "substrate_relation_card"},
+    "schema_version": {"const": "1.0.0-proposed"},
+    "contract_status": {"const": "non_operative_proposal"},
+    "governing_schema": {"const": "../../schemas/substrate_relation_card.v1.schema.json"},
+    "exact_home": {"type": "string", "minLength": 1},
+    "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+    "relationships": {"$ref": "#/$defs/relationships"},
+    "relation_id": {"type": "string", "pattern": "^relation:[a-z0-9._-]+:[a-z0-9._-]+$"},
+    "actor_ref": {"$ref": "#/$defs/registry_ref"},
+    "artifact_ref": {"$ref": "#/$defs/registry_ref"},
+    "relation_family": {"const": "materialization"},
+    "evidence_planes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["repository_worktree", "committed_repository", "deployed_runtime", "persistent_data_plane"]}
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/operation"}
+    },
+    "state_claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["desired", "applied", "exercised"],
+      "properties": {
+        "desired": {"$ref": "#/$defs/desired_claim"},
+        "applied": {"$ref": "#/$defs/applied_claim"},
+        "exercised": {"$ref": "#/$defs/exercised_claim"}
+      }
+    },
+    "standing_claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority_status", "runtime_use_status", "succession_status"],
+      "properties": {
+        "authority_status": {"$ref": "#/$defs/authority_claim"},
+        "runtime_use_status": {"$ref": "#/$defs/runtime_claim"},
+        "succession_status": {"$ref": "#/$defs/succession_claim"}
+      }
+    },
+    "artifact_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/evidence_record"}
+    },
+    "residue": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["residue_id", "unknown", "owner"],
+        "properties": {
+          "residue_id": {"type": "string", "minLength": 1},
+          "unknown": {"type": "string", "minLength": 1},
+          "owner": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "document_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode", "mutation_policy", "temporal_claim", "authority_role"],
+      "properties": {
+        "authorship_mode": {"enum": ["human_authored", "machine_generated", "mixed_origin"]},
+        "mutation_policy": {"enum": ["in_place_mutable", "append_only", "whole_document_replace", "immutable"]},
+        "temporal_claim": {"enum": ["current_at_observation", "historical_snapshot", "timeless_definition"]},
+        "authority_role": {"enum": ["authoritative_source", "derived_projection", "supporting_evidence", "non_authoritative_reference"]}
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "projection", "evidence"],
+      "properties": {
+        "source": {"type": "array", "items": {"type": "string"}},
+        "projection": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "registry_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_interface", "registry_id", "registry_vintage"],
+      "properties": {
+        "registry_interface": {"const": "substrate_entity_registry"},
+        "registry_id": {"type": "string", "pattern": "^(actor|artifact):[a-z0-9._-]+$"},
+        "registry_vintage": {"type": "string", "minLength": 7}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "effect_kind", "mechanism_kind", "target_domain", "binding_origin", "binding_trace", "payload_assembly", "evidence_refs"],
+      "properties": {
+        "operation_id": {"type": "string", "pattern": "^operation:[a-z0-9._-]+$"},
+        "effect_kind": {"enum": ["create_if_absent", "append", "replace", "delete", "stage"]},
+        "mechanism_kind": {"enum": ["direct_api_call", "helper_call", "registry_dispatch", "shared_path_handoff", "poll_and_ingest"]},
+        "target_domain": {"enum": ["closed_enumerated", "open_runtime"]},
+        "binding_origin": {"enum": ["callsite_literal", "allowlist_registry", "runtime_input", "fixed_constant"]},
+        "binding_trace": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"enum": ["literal", "allowlist_member", "runtime_argument", "local_variable", "function_parameter", "table_handle", "shared_storage_path", "api_call"]}
+        },
+        "payload_assembly": {"enum": ["inside_actor", "outside_actor", "not_observed"]},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "claim_base": {
+      "type": "object",
+      "required": ["claim_id", "claim_status", "basis_mode", "evidence_refs", "temporal_claim"],
+      "properties": {
+        "claim_id": {"type": "string", "pattern": "^claim:[a-z0-9._-]+$"},
+        "claim_status": {"enum": ["known", "unknown"]},
+        "basis_mode": {"type": ["string", "null"], "enum": ["observed", "derived", "authority_declaration", null]},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "temporal_claim": {"enum": ["current_at_observation", "historical_snapshot", "timeless_definition"]}
+      }
+    },
+    "desired_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["required", "prohibited", "unspecified", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "applied_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["configured", "not_configured", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "exercised_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["observed", "not_observed", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "authority_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["canonical", "noncanonical", "unassigned", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "runtime_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["active", "inactive", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "succession_claim": {
+      "allOf": [
+        {"$ref": "#/$defs/claim_base"},
+        {"type": "object", "additionalProperties": false, "required": ["claim_id", "claim_status", "value", "basis_mode", "evidence_refs", "temporal_claim"], "properties": {"claim_id": true, "claim_status": true, "value": {"type": ["string", "null"], "enum": ["no_successor", "successor_designated", "successor_in_effect", null]}, "basis_mode": true, "evidence_refs": true, "temporal_claim": true}}
+      ]
+    },
+    "evidence_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "path", "locator", "vintage", "instrument", "positive_control", "negative_control", "claim_ids"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^evidence:[a-z0-9._-]+$"},
+        "path": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "minLength": 7},
+        "instrument": {"type": "string", "minLength": 1},
+        "positive_control": {"type": "string", "minLength": 1},
+        "negative_control": {"type": "string", "minLength": 1},
+        "claim_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  }
+}

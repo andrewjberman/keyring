@@ -1,0 +1,386 @@
+{
+  "document_kind": "c3materialize_layer_contracts_and_checkpoints",
+  "schema_version": "1.0.0-proposed",
+  "governing_schema": "schemas/layer_contracts_and_checkpoints.v1.schema.json",
+  "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/layer_contracts_and_checkpoints.v1.json",
+  "document_lifecycle": {
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "historical_snapshot",
+    "authority_role": "supporting_evidence"
+  },
+  "relationships": {
+    "source": [
+      "docs/architecture/NFRA_C3MATERIALIZE_PRD.md@3d53c48a1b",
+      "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/contract_audit.v1.json"
+    ],
+    "projection": [],
+    "evidence": [
+      "Andrew-direct message 74752",
+      "Andrew-direct message 74755",
+      "CTO~X tranche correction 74748",
+      "CTO~X cover-partition measurement 74805",
+      "CTO~X L0 premise correction 74821",
+      "CTO~X wave3 compile-shape measurement 74837",
+      "CTO~X identity-grain ruling 74841"
+    ]
+  },
+  "mission": {
+    "directive": "D11",
+    "arc": "L0_to_L4",
+    "terminal_result": "validated_identity_layer",
+    "new_directive": false,
+    "project_mint": false,
+    "registration_act": false,
+    "approval_gate": false
+  },
+  "prd_reference": {
+    "path": "docs/architecture/NFRA_C3MATERIALIZE_PRD.md",
+    "vintage": "3d53c48a1b",
+    "sections": ["3", "4", "5", "6", "7", "8", "9"]
+  },
+  "starting_position": {
+    "evidence_message": "1.0.0_SA_CTO~X message 74760",
+    "proposal_classification": "control_plane_spec_not_operative_layer_artifact",
+    "layers": [
+      {
+        "layer_id": "L0",
+        "state": "partial",
+        "operative_contract_artifacts": 4,
+        "measurements": {
+          "present_contracts": ["L0_GRAPH_SUBSTRATE_MANIFEST", "SUBSTRATE_CARD_v1", "SUBSTRATE_CARD_v2", "PROOF_OF_SPEC"],
+          "manifest_instance_path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
+          "manifest_validation_error_count": 0,
+          "manifest_negative_control_error_count": 5,
+          "manifest_parts": 39,
+          "delivered_cards": 44,
+          "wave_3_files": 7,
+          "wave_3_state": "running"
+        }
+      },
+      {"layer_id": "L1", "state": "unbuilt", "operative_contract_artifacts": 0, "measurements": {}},
+      {"layer_id": "L2", "state": "unbuilt", "operative_contract_artifacts": 0, "measurements": {}},
+      {"layer_id": "L3", "state": "unbuilt", "operative_contract_artifacts": 0, "measurements": {}},
+      {"layer_id": "L4", "state": "unbuilt", "operative_contract_artifacts": 0, "measurements": {}}
+    ],
+    "homonym_exclusions": [
+      {
+        "path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SPEC_IDENTITY_SPINE_FAM_RESOLUTION_20260819.md",
+        "actual_domain": "portfolio and account FAM resolution",
+        "excluded_progress_claim": "graph_c3_l1_entity_spine"
+      },
+      {
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IDENTITY_SPINE_ARCHITECTURE_RATIFY_20260819.md",
+        "actual_domain": "portfolio and account FAM resolution ratification",
+        "excluded_progress_claim": "graph_c3_l1_entity_spine"
+      }
+    ]
+  },
+  "design_measurements": {
+    "cover_partition_baseline": {
+      "source_path": "kimi_subdivision_harness/c3_structures.json",
+      "source_artifact_role": "c3_i_cover_output",
+      "total_members": 4857,
+      "single_system_members": 2474,
+      "two_system_members": 645,
+      "three_system_members": 1738,
+      "same_domain_multi_members": 1843,
+      "cross_domain_multi_members": 540
+    },
+    "wave3_manifest_compile_baseline": {
+      "existing_manifest_parts": 39,
+      "card_relation_rows": 13,
+      "card_subjects": 10,
+      "enrich_existing_part_rows": 10,
+      "add_new_part_rows": 3,
+      "relation_grain": "file_artifact_relation",
+      "measurement_join_method": "indicative_substring_probe",
+      "compiler_join_requirement": "structured_card_artifact_ref_to_exact_part_id",
+      "new_part_subject_paths": [
+        "infra/aws/globgrph/kuzu_load.py",
+        "infra/aws/globgrph/kuzu_stitch_load.py",
+        "infra/aws/globgrph/snap_store.py"
+      ]
+    }
+  },
+  "execution_plan": {
+    "currently_executable_units": ["L0", "L2_STRUCTURE", "L2_BEHAVIOR"],
+    "dependency_edges": [
+      {"prerequisite": "L0", "dependent": "L1"},
+      {"prerequisite": "L1", "dependent": "L2_FUSION_ADMISSIBLE"},
+      {"prerequisite": "L1", "dependent": "L3"},
+      {"prerequisite": "L3", "dependent": "L4"}
+    ],
+    "l2_output_stages": [
+      {
+        "stage_id": "raw_view_evidence",
+        "document_kind": "l2_view_evidence",
+        "execution_availability": "available_now",
+        "required_input_document_kinds": ["structure_source", "behavior_source"],
+        "fusion_admissible": false
+      },
+      {
+        "stage_id": "spine_normalized_affinity",
+        "document_kind": "l2_affinity_bundle",
+        "execution_availability": "prerequisite_bound",
+        "required_input_document_kinds": ["l1_entity_spine", "l2_view_evidence"],
+        "fusion_admissible": true
+      }
+    ],
+    "downstream_guard": {
+      "prohibited_units": ["L3", "L4"],
+      "until_document_kind_exists": "l1_entity_spine",
+      "measured_failed_fusion": {
+        "topology_ids": 19482,
+        "cochange_files": 3532,
+        "joinable_entities": 0,
+        "failure_reason": "Topology ids and co-change files did not share a canonical identity space or grain."
+      }
+    },
+    "operational_gaps": [
+      {
+        "gap_id": "wave3_to_l0_manifest_compilation",
+        "required_operation": "compile_admitted_substrate_cards_into_l0_manifest",
+        "implementation_present": false,
+        "task_order_ref": null,
+        "owner_ref": null,
+        "blocks_document_kind": "l0_substrate_manifest"
+      }
+    ]
+  },
+  "layer_contracts": [
+    {
+      "layer_id": "L0",
+      "name": "foundational substrate",
+      "purpose": "Register the physical artifacts and actor-artifact relations on which every higher layer depends.",
+      "input_document_kinds": ["substrate_entity_registry", "substrate_relation_card"],
+      "deliverable": {
+        "document_kind": "l0_substrate_manifest",
+        "governing_schema_target": "schemas/l0_substrate_manifest.v1.schema.json",
+        "exact_home_pattern": "generated/c3materialize/{run_id}/l0_substrate_manifest.json",
+        "document_lifecycle": {"authorship_mode": "machine_generated", "mutation_policy": "whole_document_replace", "temporal_claim": "historical_snapshot", "authority_role": "derived_projection"},
+        "authority": "Compiled projection of registered membership, relation claims, population boundary, and residue; never an authored source.",
+        "generated_source_separation": true
+      },
+      "required_sections": [
+        {"field": "registry_snapshot", "semantic_dimension": "identity membership and registry vintage", "required": true},
+        {"field": "population_denominator", "semantic_dimension": "declared searched and unsearched population", "required": true},
+        {"field": "parts", "semantic_dimension": "registered actor and artifact members", "required": true},
+        {"field": "relations", "semantic_dimension": "one actor-artifact relation per identity pair", "required": true},
+        {"field": "lifecycle_axes", "semantic_dimension": "authorship mutation temporal and authority axes", "required": true},
+        {"field": "declared_opinions", "semantic_dimension": "enumerated definitional choices or explicit unknown", "required": true},
+        {"field": "input_digests", "semantic_dimension": "deterministic source binding", "required": true},
+        {"field": "residue", "semantic_dimension": "known unresolved or unsearched members", "required": true}
+      ],
+      "consumer_layers": ["L1"]
+    },
+    {
+      "layer_id": "L1",
+      "name": "entity spine",
+      "purpose": "Resolve every in-scope reference to a durable identity for every entity, with explicit roll-ups and failure discrimination.",
+      "input_document_kinds": ["l0_substrate_manifest"],
+      "deliverable": {
+        "document_kind": "l1_entity_spine",
+        "governing_schema_target": "schemas/l1_entity_spine.v1.schema.json",
+        "exact_home_pattern": "generated/c3materialize/{run_id}/l1_entity_spine.json",
+        "document_lifecycle": {"authorship_mode": "machine_generated", "mutation_policy": "whole_document_replace", "temporal_claim": "historical_snapshot", "authority_role": "authoritative_source"},
+        "authority": "Canonical entity ids, source-space mappings, declared grain, roll-ups, ambiguity, and unresolved residue for the pinned run.",
+        "generated_source_separation": true
+      },
+      "required_sections": [
+        {"field": "entity_registry", "semantic_dimension": "minted stable entity identities", "required": true},
+        {"field": "identity_spaces", "semantic_dimension": "admitted source identifier domains", "required": true},
+        {"field": "canonical_grain", "semantic_dimension": "one declared comparison grain", "required": true},
+        {"field": "mappings", "semantic_dimension": "source reference to entity relation", "required": true},
+        {"field": "rollups", "semantic_dimension": "cross-grain aggregation relation", "required": true},
+        {"field": "confidence", "semantic_dimension": "mapping confidence only", "required": true},
+        {"field": "failure_discrimination", "semantic_dimension": "substrate absent versus genuinely unaddressed", "required": true},
+        {"field": "coverage", "semantic_dimension": "per-space numerator denominator and explicit exclusions", "required": true},
+        {"field": "cadence_and_owner", "semantic_dimension": "refresh mechanics and remedy ownership", "required": true},
+        {"field": "input_digests", "semantic_dimension": "deterministic L0 binding", "required": true}
+      ],
+      "consumer_layers": ["L2", "L3", "L4"]
+    },
+    {
+      "layer_id": "L2",
+      "name": "multi-view affinity",
+      "purpose": "Emit raw per-view evidence when sources are available, then normalize discriminating affinity matrices over one L1 entity population while preserving missingness as missing rather than zero.",
+      "input_document_kinds": ["l2_view_evidence", "l1_entity_spine"],
+      "deliverable": {
+        "document_kind": "l2_affinity_bundle",
+        "governing_schema_target": "schemas/l2_affinity_bundle.v1.schema.json",
+        "exact_home_pattern": "generated/c3materialize/{run_id}/l2_affinity_bundle.json",
+        "document_lifecycle": {"authorship_mode": "machine_generated", "mutation_policy": "whole_document_replace", "temporal_claim": "historical_snapshot", "authority_role": "derived_projection"},
+        "authority": "Per-view affinity evidence, discrimination receipts, entity ordering, missingness, and coverage; no fusion or identity authority.",
+        "generated_source_separation": true
+      },
+      "required_sections": [
+        {"field": "raw_view_evidence_refs", "semantic_dimension": "source-native structure and behavior evidence available before L1", "required": true},
+        {"field": "entity_spine_ref", "semantic_dimension": "common L1 identity and grain vintage", "required": true},
+        {"field": "view_manifests", "semantic_dimension": "structure flow behavior or semantic view definition", "required": true},
+        {"field": "affinity_matrices", "semantic_dimension": "pairwise affinity values", "required": true},
+        {"field": "missingness_masks", "semantic_dimension": "measured versus absent cells", "required": true},
+        {"field": "discrimination_receipts", "semantic_dimension": "per-view ability to produce a different result", "required": true},
+        {"field": "coverage", "semantic_dimension": "per-view measured population", "required": true},
+        {"field": "input_digests", "semantic_dimension": "deterministic L1 and source binding", "required": true}
+      ],
+      "consumer_layers": ["L3"]
+    },
+    {
+      "layer_id": "L3",
+      "name": "fusion",
+      "purpose": "Fuse two or more independently discriminating views and demonstrate stable structure across controlled runs.",
+      "input_document_kinds": ["l1_entity_spine", "l2_affinity_bundle"],
+      "deliverable": {
+        "document_kind": "l3_fusion_bundle",
+        "governing_schema_target": "schemas/l3_fusion_bundle.v1.schema.json",
+        "exact_home_pattern": "generated/c3materialize/{run_id}/l3_fusion_bundle.json",
+        "document_lifecycle": {"authorship_mode": "machine_generated", "mutation_policy": "whole_document_replace", "temporal_claim": "historical_snapshot", "authority_role": "derived_projection"},
+        "authority": "Fusion results, run ensemble, stability, benchmark comparison, membership model, and residue; no durable identity minting.",
+        "generated_source_separation": true
+      },
+      "required_sections": [
+        {"field": "entity_spine_ref", "semantic_dimension": "common entity identity and grain", "required": true},
+        {"field": "view_refs", "semantic_dimension": "included discriminating views", "required": true},
+        {"field": "algorithm_and_parameters", "semantic_dimension": "fusion method and configuration", "required": true},
+        {"field": "run_ensemble", "semantic_dimension": "controlled repeated executions", "required": true},
+        {"field": "consensus_affinity", "semantic_dimension": "fused pairwise similarity", "required": true},
+        {"field": "membership_model", "semantic_dimension": "cover or partition semantics", "required": true},
+        {"field": "stability_metrics", "semantic_dimension": "cross-run agreement", "required": true},
+        {"field": "benchmark_receipts", "semantic_dimension": "firm separation and algorithm comparison", "required": true},
+        {"field": "missingness_handling", "semantic_dimension": "union and measured-absent semantics", "required": true},
+        {"field": "input_digests", "semantic_dimension": "deterministic L1 and L2 binding", "required": true}
+      ],
+      "consumer_layers": ["L4"]
+    },
+    {
+      "layer_id": "L4",
+      "name": "identity and succession",
+      "purpose": "Mint stable identities once, recompute membership, match signatures, and record birth death split and merge as first-class events.",
+      "input_document_kinds": ["l1_entity_spine", "l3_fusion_bundle"],
+      "deliverable": {
+        "document_kind": "l4_identity_ledger",
+        "governing_schema_target": "schemas/l4_identity_ledger.v1.schema.json",
+        "exact_home_pattern": "generated/c3materialize/{run_id}/l4_identity_ledger.json",
+        "document_lifecycle": {"authorship_mode": "machine_generated", "mutation_policy": "append_only", "temporal_claim": "current_at_observation", "authority_role": "authoritative_source"},
+        "authority": "Minted identity ids, signatures, memberships, matches, and append-only succession events.",
+        "generated_source_separation": true
+      },
+      "required_sections": [
+        {"field": "identity_registry", "semantic_dimension": "minted durable identities", "required": true},
+        {"field": "signatures", "semantic_dimension": "fused-space identity signatures", "required": true},
+        {"field": "membership_snapshots", "semantic_dimension": "recomputed membership by run", "required": true},
+        {"field": "matches", "semantic_dimension": "new signature to prior signature comparison", "required": true},
+        {"field": "succession_events", "semantic_dimension": "birth death split or merge event", "required": true},
+        {"field": "rename_test_receipt", "semantic_dimension": "identity survival under anchor rename", "required": true},
+        {"field": "persistence_metrics", "semantic_dimension": "identity continuity across nightly runs", "required": true},
+        {"field": "portability_receipts", "semantic_dimension": "same code across workspace portal and knowledge planes", "required": true},
+        {"field": "input_digests", "semantic_dimension": "deterministic L1 and L3 binding", "required": true}
+      ],
+      "consumer_layers": ["terminal"]
+    }
+  ],
+  "checkpoint_sequence": [
+    {
+      "checkpoint_id": "CP-L0-L1",
+      "from_layer": "L0",
+      "to_layer": "L1",
+      "approval_gate": false,
+      "transition_rule": "all_required_measurable_criteria_pass",
+      "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
+      "criteria": [
+        {"criterion_id": "L0-C01", "claim": "Compiled member set equals the declared population after explicit exclusions.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["manifest.parts.ids", "population.expected_member_ids"], "threshold": null, "compiler_rule": "C3M_L0_POPULATION_EQUAL"}, "controls": {"positive": ["registered member in declared population"], "negative": ["unsearched member omitted from denominator"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C02", "claim": "Every relation resolves exactly one registered actor and one registered artifact.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["relations.actor_ref", "relations.artifact_ref", "registry_snapshot"], "threshold": null, "compiler_rule": "C3M_L0_ENDPOINTS_RESOLVE"}, "controls": {"positive": ["derive_runner to graph_nodes resolves"], "negative": ["free-text artifact name is rejected"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C03", "claim": "Each actor-artifact pair has one relation identity and no file-grain materializer standing.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "count_equals", "operands": ["distinct actor-artifact pairs", "distinct relation ids"], "threshold": 0, "compiler_rule": "C3M_L0_RELATION_GRAIN"}, "controls": {"positive": ["derive_runner splits to graph_nodes graph_edges and graph_contracts"], "negative": ["single derive_runner materializer row"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C04", "claim": "Every document and artifact relation declares authorship mutation temporal and authority axes independently.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["records missing any lifecycle axis"], "threshold": 0, "compiler_rule": "C3M_L0_LIFECYCLE_COMPLETE"}, "controls": {"positive": ["graph_contracts append-only CVO-authored authority record"], "negative": ["graph_contracts inherits graph_nodes replace policy"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C05", "claim": "Every materializer exposes declared opinions or an explicit unknown claim status.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["materializer relations with undeclared opinion status"], "threshold": 0, "compiler_rule": "C3M_L0_OPINIONS_DECLARED"}, "controls": {"positive": ["enumerated filter threshold and exclusion"], "negative": ["opinion only in prose or code"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C06", "claim": "Every admitted substrate relation row is consumed by a named deterministic compiler and represented in the L0 manifest or explicit compilation residue.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 admitted file-artifact relation row ids", "compiled manifest relation row ids plus explicit compilation residue row ids"], "threshold": null, "compiler_rule": "C3M_L0_CARDS_COMPILED"}, "controls": {"positive": ["admitted relation row appears in compiler receipt and manifest output"], "negative": ["wave-3 relation row exists with no compiler consumption or residue"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C07", "claim": "Each consumed row has exactly one transformation class: enrich generation on a resolved existing part or add exactly one new part.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 consumed relation row ids", "10 enrichment row ids plus 3 addition row ids"], "threshold": null, "compiler_rule": "C3M_L0_TRANSFORM_EXHAUSTIVE"}, "controls": {"positive": ["snap_store row adds one new part"], "negative": ["one row is both enriched and added or is unclassified"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C08", "claim": "The compiler joins structured card artifact references to exact part ids and rejects ambiguous missing or substring-only matches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["card artifact refs", "exact manifest part ids"], "threshold": null, "compiler_rule": "C3M_L0_EXACT_PART_JOIN"}, "controls": {"positive": ["derive_runner PATH B resolves only graph_contracts"], "negative": ["substring probe also matches graph_edges"]}, "unmeasurable_reason": null, "resolution_owner": null}
+      ]
+    },
+    {
+      "checkpoint_id": "CP-L1-L2",
+      "from_layer": "L1",
+      "to_layer": "L2",
+      "approval_gate": false,
+      "transition_rule": "all_required_measurable_criteria_pass",
+      "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
+      "criteria": [
+        {"criterion_id": "L1-C01", "claim": "Every in-scope entity receives a durable identity and every source reference and roll-up resolves within that every-entity grain.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["entity_spine.canonical_grain equals every_entity", "every in-scope entity has durable identity", "rollups resolve within entity registry"], "threshold": true, "compiler_rule": "C3M_L1_GRAIN_COHERENT"}, "controls": {"positive": ["file node member and system identities all resolve"], "negative": ["systems-only registry cannot resolve a file-level join"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C02", "claim": "Every member used by an L2 view resolves or is explicitly excluded with a reason.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["L2 source members", "resolved plus explicitly excluded members"], "threshold": null, "compiler_rule": "C3M_L1_VIEW_INPUT_COVERAGE"}, "controls": {"positive": ["known ARN to entity mapping"], "negative": ["unresolved member silently dropped"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C03", "claim": "SUBSTRATE-ABSENT and GENUINELY-UNADDRESSED return distinguishable structured outcomes.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["failure_discrimination.distinct"], "threshold": true, "compiler_rule": "C3M_L1_FAILURE_DISCRIMINATES"}, "controls": {"positive": ["known mapped reference resolves"], "negative": ["missing substrate and genuine negative fire different codes"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C04", "claim": "Mapping refresh has an exercised cadence and named owner.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["cadence.exercised", "owner.resolves"], "threshold": true, "compiler_rule": "C3M_L1_CADENCE_OWNED"}, "controls": {"positive": ["scheduled mapping refresh with receipt"], "negative": ["declared schedule never exercised"]}, "unmeasurable_reason": null, "resolution_owner": null}
+      ]
+    },
+    {
+      "checkpoint_id": "CP-L2-L3",
+      "from_layer": "L2",
+      "to_layer": "L3",
+      "approval_gate": false,
+      "transition_rule": "all_required_measurable_criteria_pass",
+      "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
+      "criteria": [
+        {"criterion_id": "L2-C01", "claim": "At least two source-independent views pass their declared discrimination tests.", "required": true, "measurement_state_at_design": "currently_unmeasurable", "predicate": {"operator": "count_greater_equal", "operands": ["included independent discrimination-passing views"], "threshold": 2, "compiler_rule": "C3M_L2_TWO_DISCRIMINATING_VIEWS"}, "controls": {"positive": ["structure and behavior known-true boundary controls"], "negative": ["constant affinity matrix and templated semantic similarity"]}, "unmeasurable_reason": "No two current views share an L1 entity population at one declared grain.", "resolution_owner": "D11 drive loop"},
+        {"criterion_id": "L2-C02", "claim": "Every included view passes discrimination and every failed view is excluded with evidence.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["included views discrimination pass", "failed views excluded"], "threshold": true, "compiler_rule": "C3M_L2_DISCRIMINATION_ENFORCED"}, "controls": {"positive": ["shuffled-label control differs"], "negative": ["all pairs receive identical similarity"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L2-C03", "claim": "Missing feature cells are flagged absent and never encoded as numeric zero.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["absent cells encoded as zero"], "threshold": 0, "compiler_rule": "C3M_L2_MISSING_NOT_ZERO"}, "controls": {"positive": ["measured zero with measured flag"], "negative": ["absent pair encoded zero"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L2-C04", "claim": "All matrices bind to the same L1 registry vintage and canonical grain.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["view entity registry vintages", "view canonical grains"], "threshold": null, "compiler_rule": "C3M_L2_COMMON_SPINE"}, "controls": {"positive": ["same entity id ordering across two views"], "negative": ["file ids fused with ARN ids without mapping"]}, "unmeasurable_reason": null, "resolution_owner": null}
+      ]
+    },
+    {
+      "checkpoint_id": "CP-L3-L4",
+      "from_layer": "L3",
+      "to_layer": "L4",
+      "approval_gate": false,
+      "transition_rule": "all_required_measurable_criteria_pass",
+      "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
+      "criteria": [
+        {"criterion_id": "L3-C01", "claim": "Fusion stability across controlled runs meets a threshold declared before execution.", "required": true, "measurement_state_at_design": "currently_unmeasurable", "predicate": {"operator": "metric_greater_equal", "operands": ["fusion cross-run stability metric"], "threshold": null, "compiler_rule": "C3M_L3_STABILITY_THRESHOLD"}, "controls": {"positive": ["identical partition control yields perfect agreement"], "negative": ["measured legacy seeds yield AMI 0.505"]}, "unmeasurable_reason": "The PRD names instability but declares neither the stability metric nor the acceptance threshold.", "resolution_owner": "1.0.0_SA_CTO~X"},
+        {"criterion_id": "L3-C02", "claim": "Fused firm separation is not worse than the best included input view on the same benchmark.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "metric_not_worse_than_max_inputs", "operands": ["fused firm purity", "included input firm purities"], "threshold": null, "compiler_rule": "C3M_L3_FIRM_SEPARATION"}, "controls": {"positive": ["input structure purity 0.989 and behavior purity 0.974"], "negative": ["shuffled firm labels"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L3-C03", "claim": "The membership model is explicitly cover or partition and conforms to a pinned decision about preserving or accepting loss of cross-domain memberships.", "required": true, "measurement_state_at_design": "currently_unmeasurable", "predicate": {"operator": "boolean_true", "operands": ["membership model resolved", "cross-domain preservation decision matched"], "threshold": true, "compiler_rule": "C3M_L3_MEMBERSHIP_MODEL"}, "controls": {"positive": ["chosen model conforms to pinned cross-domain preservation decision"], "negative": ["forced partition silently destroys a cross-domain membership"]}, "unmeasurable_reason": "The overlap size and mechanism are measured, but authority has not decided whether the 540 cross-domain memberships must be preserved or may be represented as counted loss.", "resolution_owner": "1.0.0_SA_CTO~X"},
+        {"criterion_id": "L3-C04", "claim": "SNF is compared with declared alternatives or the absence of comparison remains explicit in the receipt.", "required": true, "measurement_state_at_design": "currently_unmeasurable", "predicate": {"operator": "boolean_true", "operands": ["algorithm comparison completed or bounded out by pinned authority"], "threshold": true, "compiler_rule": "C3M_L3_ALGORITHM_SELECTION"}, "controls": {"positive": ["same input benchmark across candidate algorithms"], "negative": ["algorithm selected only by prose argument"]}, "unmeasurable_reason": "No estate bake-off has been run and no pinned decision bounds it out.", "resolution_owner": "1.0.0_SA_CTO~X"},
+        {"criterion_id": "L3-C05", "claim": "Fusion uses the union with explicit measured-absent flags and preserves L1 identity ordering.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["union semantics", "missingness preserved", "entity ordering preserved"], "threshold": true, "compiler_rule": "C3M_L3_UNION_MISSINGNESS"}, "controls": {"positive": ["entity measured in one view and absent in another"], "negative": ["intersection silently shrinks to narrowest view"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L3-C06", "claim": "Every multiply assigned baseline member has a candidate-output disposition, and all 540 cross-domain memberships are explicitly preserved or counted as loss.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["2,383 baseline multi-system member ids", "candidate preserved plus explicitly lost member ids"], "threshold": null, "compiler_rule": "C3M_L3_OVERLAP_ACCOUNTING"}, "controls": {"positive": ["partition receipt accounts for every cross-domain membership"], "negative": ["single-assignment output omits the displaced memberships"]}, "unmeasurable_reason": null, "resolution_owner": null}
+      ]
+    },
+    {
+      "checkpoint_id": "CP-L4-DONE",
+      "from_layer": "L4",
+      "to_layer": "DONE",
+      "approval_gate": false,
+      "transition_rule": "all_required_measurable_criteria_pass",
+      "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
+      "criteria": [
+        {"criterion_id": "L4-C01", "claim": "Renaming any mutable anchor preserves the same minted identity for every affected entity through signature matching.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "same_identity_after_mutation", "operands": ["all control entity ids", "all corresponding renamed-anchor entity ids"], "threshold": true, "compiler_rule": "C3M_L4_RENAME_SURVIVES"}, "controls": {"positive": ["file node member and system rename fixtures preserve identities"], "negative": ["legacy sha1 anchor id changes on rename"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L4-C02", "claim": "Identity persistence across the declared nightly window meets a predeclared threshold.", "required": true, "measurement_state_at_design": "currently_unmeasurable", "predicate": {"operator": "metric_greater_equal", "operands": ["identity persistence rate over N runs"], "threshold": null, "compiler_rule": "C3M_L4_PERSISTENCE_THRESHOLD"}, "controls": {"positive": ["unchanged fixtures persist"], "negative": ["deliberately permuted signatures break continuity"]}, "unmeasurable_reason": "The PRD declares neither N nor the persistence-rate threshold.", "resolution_owner": "1.0.0_SA_CTO~X"},
+        {"criterion_id": "L4-C03", "claim": "Birth death split and merge are append-only typed events with discriminating fixtures.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "count_equals", "operands": ["event kinds with passing positive and negative fixtures"], "threshold": 4, "compiler_rule": "C3M_L4_SUCCESSION_EVENTS"}, "controls": {"positive": ["one fixture for each birth death split and merge"], "negative": ["membership change without a succession event"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L4-C04", "claim": "The identical pipeline code runs on workspace portal and knowledge planes without special-case branches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "same_code_digest_across_environments", "operands": ["workspace run code digest", "portal run code digest", "knowledge run code digest"], "threshold": true, "compiler_rule": "C3M_L4_PORTABILITY"}, "controls": {"positive": ["environment supplies substrate only"], "negative": ["plane-specific code branch changes digest"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L4-C05", "claim": "Identity ids are minted once and never derived from mutable anchors or list position.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["identity ids derived from mutable inputs"], "threshold": 0, "compiler_rule": "C3M_L4_IDS_MINTED"}, "controls": {"positive": ["minted id retained through membership recompute"], "negative": ["sha1 anchor id and sorted-index id"]}, "unmeasurable_reason": null, "resolution_owner": null}
+      ]
+    }
+  ],
+  "resolved_decisions": [
+    {
+      "decision_id": "DEC-01",
+      "semantic_dimension": "identity_grain",
+      "selected_value": "every_entity",
+      "authority_ref": "1.0.0_SA_CTO~X",
+      "evidence_message": "74841",
+      "not_decided_dimensions": ["membership_model", "identity_form"]
+    }
+  ],
+  "open_decisions": [
+    {"decision_id": "DEC-02", "question": "Must the identity model preserve the measured 540 cross-domain memberships as a cover, or may a partition represent them as explicitly counted loss?", "owner": "1.0.0_SA_CTO~X", "blocks_checkpoint": "CP-L3-L4", "does_not_block_drive": true},
+    {"decision_id": "DEC-03", "question": "Which cross-run stability metric and threshold must fusion meet?", "owner": "1.0.0_SA_CTO~X", "blocks_checkpoint": "CP-L3-L4", "does_not_block_drive": true},
+    {"decision_id": "DEC-04", "question": "Must SNF win an estate bake-off or is a bounded authority decision sufficient?", "owner": "1.0.0_SA_CTO~X", "blocks_checkpoint": "CP-L3-L4", "does_not_block_drive": true},
+    {"decision_id": "DEC-05", "question": "What N-run window and identity-persistence threshold define successful L4 continuity?", "owner": "1.0.0_SA_CTO~X", "blocks_checkpoint": "CP-L4-DONE", "does_not_block_drive": true}
+  ],
+  "shared_root_changes": {
+    "made": false,
+    "authorized_after_package_validation": [
+      "Replace stale provisional directive-home language in the PRD with D11 as the complete L0-through-L4 authority and no mint.",
+      "Reference the validated card contract, layer deliverable contracts, and checkpoint sequence from the PRD.",
+      "Issue the pinned PRD and contract package reference to COO~X for its drive loop."
+    ]
+  }
+}

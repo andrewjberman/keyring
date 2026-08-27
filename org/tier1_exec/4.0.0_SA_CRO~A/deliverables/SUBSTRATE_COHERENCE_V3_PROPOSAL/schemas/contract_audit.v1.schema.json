@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/cro-a/substrate-coherence/contract_audit.v1.schema.json",
+  "title": "Substrate card Rule 24 audit and contract boundary",
+  "x-document-contract": {
+    "document_kind": "json_schema",
+    "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/schemas/contract_audit.v1.schema.json",
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "timeless_definition",
+    "authority_role": "authoritative_source",
+    "source_relationship": [],
+    "projection_relationship": [],
+    "evidence_relationship": []
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_kind",
+    "schema_version",
+    "governing_schema",
+    "exact_home",
+    "document_lifecycle",
+    "relationships",
+    "scope",
+    "evidence_pins",
+    "baseline_validation",
+    "naming_correction",
+    "enum_occurrence_audit",
+    "concept_findings",
+    "normalized_axes",
+    "contract_boundary",
+    "definition_placement",
+    "compiled_process",
+    "required_negative_tests",
+    "shared_root_changes"
+  ],
+  "properties": {
+    "document_kind": {"const": "substrate_contract_rule24_audit"},
+    "schema_version": {"const": "1.0.0-proposed"},
+    "governing_schema": {"const": "schemas/contract_audit.v1.schema.json"},
+    "exact_home": {"type": "string", "minLength": 1},
+    "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+    "relationships": {"$ref": "#/$defs/relationships"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directive", "population_commit", "card_count", "v1_count", "v2_count", "operative_change"],
+      "properties": {
+        "directive": {"const": "D11"},
+        "population_commit": {"type": "string", "pattern": "^[0-9a-f]{10,40}$"},
+        "card_count": {"const": 44},
+        "v1_count": {"const": 8},
+        "v2_count": {"const": 36},
+        "operative_change": {"const": false}
+      }
+    },
+    "evidence_pins": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/evidence_pin"}
+    },
+    "baseline_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_meta_valid", "cards_valid", "cards_total", "property_occurrences", "enum_occurrences"],
+      "properties": {
+        "schema_meta_valid": {"const": 2},
+        "cards_valid": {"const": 44},
+        "cards_total": {"const": 44},
+        "property_occurrences": {"const": 131},
+        "enum_occurrences": {"const": 13}
+      }
+    },
+    "naming_correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantic_invariant", "execution_locality", "prohibited_name"],
+      "properties": {
+        "semantic_invariant": {"const": "Rule 24"},
+        "execution_locality": {"const": "Rule 26"},
+        "prohibited_name": {"const": "Rule-26 coherence process"}
+      }
+    },
+    "enum_occurrence_audit": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {"$ref": "#/$defs/enum_audit"}
+    },
+    "concept_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/concept_finding"}
+    },
+    "normalized_axes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/normalized_axis"}
+    },
+    "contract_boundary": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/document_boundary"}
+    },
+    "definition_placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global_candidates", "schema_local_concepts"],
+      "properties": {
+        "global_candidates": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "schema_local_concepts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "compiled_process": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "stage", "input", "output", "rejects"],
+        "properties": {
+          "ordinal": {"type": "integer", "minimum": 1},
+          "stage": {"type": "string", "minLength": 1},
+          "input": {"type": "array", "items": {"type": "string"}},
+          "output": {"type": "array", "items": {"type": "string"}},
+          "rejects": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "required_negative_tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["test_id", "mutant", "required_result"],
+        "properties": {
+          "test_id": {"type": "string", "pattern": "^NEG-[0-9]{2}$"},
+          "mutant": {"type": "string", "minLength": 1},
+          "required_result": {"const": "reject"}
+        }
+      }
+    },
+    "shared_root_changes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["made", "proposed", "held_decisions"],
+      "properties": {
+        "made": {"const": false},
+        "proposed": {"type": "array", "items": {"type": "string"}},
+        "held_decisions": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "document_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode", "mutation_policy", "temporal_claim", "authority_role"],
+      "properties": {
+        "authorship_mode": {"enum": ["human_authored", "machine_generated", "mixed_origin"]},
+        "mutation_policy": {"enum": ["in_place_mutable", "append_only", "whole_document_replace", "immutable"]},
+        "temporal_claim": {"enum": ["current_at_observation", "historical_snapshot", "timeless_definition"]},
+        "authority_role": {"enum": ["authoritative_source", "derived_projection", "supporting_evidence", "non_authoritative_reference"]}
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "projection", "evidence"],
+      "properties": {
+        "source": {"type": "array", "items": {"type": "string"}},
+        "projection": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence_pin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "path", "vintage", "locator"],
+      "properties": {
+        "claim": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "minLength": 7},
+        "locator": {"type": "string", "minLength": 1}
+      }
+    },
+    "enum_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["occurrence_id", "schema_path", "values", "rule24_verdict", "violations", "resolution"],
+      "properties": {
+        "occurrence_id": {"type": "string", "pattern": "^ENUM-[0-9]{2}$"},
+        "schema_path": {"type": "string", "minLength": 1},
+        "values": {"type": "array", "minItems": 1, "uniqueItems": true},
+        "rule24_verdict": {"enum": ["pass", "fail", "constraint_only"]},
+        "violations": {"type": "array", "items": {"enum": ["multiple_dimensions", "overlap", "not_exhaustive", "lifecycle_incoherent", "synonym_overlap", "epistemic_value_mixed_with_domain", "duplicate_semantics"]}, "uniqueItems": true},
+        "resolution": {"type": "string", "minLength": 1}
+      }
+    },
+    "concept_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finding_id", "concept", "verdict", "evidence", "resolution"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^CONCEPT-[0-9]{2}$"},
+        "concept": {"type": "string", "minLength": 1},
+        "verdict": {"enum": ["retain", "localize", "split", "remove", "rename"]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "resolution": {"type": "string", "minLength": 1}
+      }
+    },
+    "normalized_axis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axis", "dimension", "values", "unknown_representation", "home"],
+      "properties": {
+        "axis": {"type": "string", "minLength": 1},
+        "dimension": {"type": "string", "minLength": 1},
+        "values": {"type": "array", "minItems": 1, "uniqueItems": true},
+        "unknown_representation": {"type": "string", "minLength": 1},
+        "home": {"enum": ["global_definition_candidate", "relation_schema_local", "run_schema_local", "disposition_schema_local"]}
+      }
+    },
+    "document_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document_kind", "purpose", "authority", "prohibited_authority", "authorship_mode"],
+      "properties": {
+        "document_kind": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "authority": {"type": "string", "minLength": 1},
+        "prohibited_authority": {"type": "array", "items": {"type": "string"}},
+        "authorship_mode": {"enum": ["human_authored", "machine_generated"]}
+      }
+    }
+  }
+}

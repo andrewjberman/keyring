@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/cro-a/c3materialize/layer_contracts_and_checkpoints.v1.schema.json",
+  "title": "C3MATERIALIZE L0 through L4 deliverable contracts and checkpoint sequence",
+  "x-document-contract": {
+    "document_kind": "json_schema",
+    "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/schemas/layer_contracts_and_checkpoints.v1.schema.json",
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "timeless_definition",
+    "authority_role": "authoritative_source",
+    "source_relationship": [],
+    "projection_relationship": [],
+    "evidence_relationship": []
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_kind",
+    "schema_version",
+    "governing_schema",
+    "exact_home",
+    "document_lifecycle",
+    "relationships",
+    "mission",
+    "prd_reference",
+    "starting_position",
+    "design_measurements",
+    "execution_plan",
+    "layer_contracts",
+    "checkpoint_sequence",
+    "resolved_decisions",
+    "open_decisions",
+    "shared_root_changes"
+  ],
+  "properties": {
+    "document_kind": {"const": "c3materialize_layer_contracts_and_checkpoints"},
+    "schema_version": {"const": "1.0.0-proposed"},
+    "governing_schema": {"const": "schemas/layer_contracts_and_checkpoints.v1.schema.json"},
+    "exact_home": {"type": "string", "minLength": 1},
+    "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+    "relationships": {"$ref": "#/$defs/relationships"},
+    "mission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directive", "arc", "terminal_result", "new_directive", "project_mint", "registration_act", "approval_gate"],
+      "properties": {
+        "directive": {"const": "D11"},
+        "arc": {"const": "L0_to_L4"},
+        "terminal_result": {"const": "validated_identity_layer"},
+        "new_directive": {"const": false},
+        "project_mint": {"const": false},
+        "registration_act": {"const": false},
+        "approval_gate": {"const": false}
+      }
+    },
+    "prd_reference": {"$ref": "#/$defs/pinned_reference"},
+    "starting_position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_message", "proposal_classification", "layers", "homonym_exclusions"],
+      "properties": {
+        "evidence_message": {"type": "string", "minLength": 1},
+        "proposal_classification": {"const": "control_plane_spec_not_operative_layer_artifact"},
+        "layers": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["layer_id", "state", "operative_contract_artifacts", "measurements"],
+            "properties": {
+              "layer_id": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+              "state": {"enum": ["partial", "unbuilt"]},
+              "operative_contract_artifacts": {"type": "integer", "minimum": 0},
+              "measurements": {"type": "object"}
+            }
+          }
+        },
+        "homonym_exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "actual_domain", "excluded_progress_claim"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "actual_domain": {"type": "string", "minLength": 1},
+              "excluded_progress_claim": {"const": "graph_c3_l1_entity_spine"}
+            }
+          }
+        }
+      }
+    },
+    "design_measurements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline"],
+      "properties": {
+        "cover_partition_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_path",
+            "source_artifact_role",
+            "total_members",
+            "single_system_members",
+            "two_system_members",
+            "three_system_members",
+            "same_domain_multi_members",
+            "cross_domain_multi_members"
+          ],
+          "properties": {
+            "source_path": {"const": "kimi_subdivision_harness/c3_structures.json"},
+            "source_artifact_role": {"const": "c3_i_cover_output"},
+            "total_members": {"const": 4857},
+            "single_system_members": {"const": 2474},
+            "two_system_members": {"const": 645},
+            "three_system_members": {"const": 1738},
+            "same_domain_multi_members": {"const": 1843},
+            "cross_domain_multi_members": {"const": 540}
+          }
+        },
+        "wave3_manifest_compile_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "existing_manifest_parts",
+            "card_relation_rows",
+            "card_subjects",
+            "enrich_existing_part_rows",
+            "add_new_part_rows",
+            "relation_grain",
+            "measurement_join_method",
+            "compiler_join_requirement",
+            "new_part_subject_paths"
+          ],
+          "properties": {
+            "existing_manifest_parts": {"const": 39},
+            "card_relation_rows": {"const": 13},
+            "card_subjects": {"const": 10},
+            "enrich_existing_part_rows": {"const": 10},
+            "add_new_part_rows": {"const": 3},
+            "relation_grain": {"const": "file_artifact_relation"},
+            "measurement_join_method": {"const": "indicative_substring_probe"},
+            "compiler_join_requirement": {"const": "structured_card_artifact_ref_to_exact_part_id"},
+            "new_part_subject_paths": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "infra/aws/globgrph/kuzu_load.py",
+                  "infra/aws/globgrph/kuzu_stitch_load.py",
+                  "infra/aws/globgrph/snap_store.py"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "execution_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currently_executable_units", "dependency_edges", "l2_output_stages", "downstream_guard", "operational_gaps"],
+      "properties": {
+        "currently_executable_units": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"enum": ["L0", "L2_STRUCTURE", "L2_BEHAVIOR"]}
+        },
+        "dependency_edges": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["prerequisite", "dependent"],
+            "properties": {
+              "prerequisite": {"enum": ["L0", "L1", "L3"]},
+              "dependent": {"enum": ["L1", "L2_FUSION_ADMISSIBLE", "L3", "L4"]}
+            }
+          }
+        },
+        "l2_output_stages": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/l2_output_stage"}
+        },
+        "downstream_guard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["prohibited_units", "until_document_kind_exists", "measured_failed_fusion"],
+          "properties": {
+            "prohibited_units": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {"enum": ["L3", "L4"]}
+            },
+            "until_document_kind_exists": {"const": "l1_entity_spine"},
+            "measured_failed_fusion": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["topology_ids", "cochange_files", "joinable_entities", "failure_reason"],
+              "properties": {
+                "topology_ids": {"const": 19482},
+                "cochange_files": {"const": 3532},
+                "joinable_entities": {"const": 0},
+                "failure_reason": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        },
+        "operational_gaps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["gap_id", "required_operation", "implementation_present", "task_order_ref", "owner_ref", "blocks_document_kind"],
+            "properties": {
+              "gap_id": {"const": "wave3_to_l0_manifest_compilation"},
+              "required_operation": {"const": "compile_admitted_substrate_cards_into_l0_manifest"},
+              "implementation_present": {"const": false},
+              "task_order_ref": {"type": "null"},
+              "owner_ref": {"type": "null"},
+              "blocks_document_kind": {"const": "l0_substrate_manifest"}
+            }
+          }
+        }
+      }
+    },
+    "layer_contracts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/layer_contract"}
+    },
+    "checkpoint_sequence": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/checkpoint"}
+    },
+    "resolved_decisions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {"$ref": "#/$defs/resolved_decision"}
+    },
+    "open_decisions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/open_decision"}
+    },
+    "shared_root_changes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["made", "authorized_after_package_validation"],
+      "properties": {
+        "made": {"const": false},
+        "authorized_after_package_validation": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "l2_output_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage_id", "document_kind", "execution_availability", "required_input_document_kinds", "fusion_admissible"],
+      "properties": {
+        "stage_id": {"enum": ["raw_view_evidence", "spine_normalized_affinity"]},
+        "document_kind": {"enum": ["l2_view_evidence", "l2_affinity_bundle"]},
+        "execution_availability": {"enum": ["available_now", "prerequisite_bound"]},
+        "required_input_document_kinds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "fusion_admissible": {"type": "boolean"}
+      }
+    },
+    "document_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode", "mutation_policy", "temporal_claim", "authority_role"],
+      "properties": {
+        "authorship_mode": {"enum": ["human_authored", "machine_generated", "mixed_origin"]},
+        "mutation_policy": {"enum": ["in_place_mutable", "append_only", "whole_document_replace", "immutable"]},
+        "temporal_claim": {"enum": ["current_at_observation", "historical_snapshot", "timeless_definition"]},
+        "authority_role": {"enum": ["authoritative_source", "derived_projection", "supporting_evidence", "non_authoritative_reference"]}
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "projection", "evidence"],
+      "properties": {
+        "source": {"type": "array", "items": {"type": "string"}},
+        "projection": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "pinned_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "vintage", "sections"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "pattern": "^[0-9a-f]{10,40}$"},
+        "sections": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "layer_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layer_id",
+        "name",
+        "purpose",
+        "input_document_kinds",
+        "deliverable",
+        "required_sections",
+        "consumer_layers"
+      ],
+      "properties": {
+        "layer_id": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+        "name": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "input_document_kinds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "deliverable": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_kind", "governing_schema_target", "exact_home_pattern", "document_lifecycle", "authority", "generated_source_separation"],
+          "properties": {
+            "document_kind": {"type": "string", "minLength": 1},
+            "governing_schema_target": {"type": "string", "minLength": 1},
+            "exact_home_pattern": {"type": "string", "minLength": 1},
+            "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+            "authority": {"type": "string", "minLength": 1},
+            "generated_source_separation": {"const": true}
+          }
+        },
+        "required_sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "semantic_dimension", "required"],
+            "properties": {
+              "field": {"type": "string", "minLength": 1},
+              "semantic_dimension": {"type": "string", "minLength": 1},
+              "required": {"type": "boolean"}
+            }
+          }
+        },
+        "consumer_layers": {"type": "array", "items": {"enum": ["L1", "L2", "L3", "L4", "terminal"]}, "uniqueItems": true}
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "from_layer", "to_layer", "approval_gate", "transition_rule", "drive_behavior", "criteria"],
+      "properties": {
+        "checkpoint_id": {"type": "string", "pattern": "^CP-L[0-4]-(L[1-4]|DONE)$"},
+        "from_layer": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+        "to_layer": {"enum": ["L1", "L2", "L3", "L4", "DONE"]},
+        "approval_gate": {"const": false},
+        "transition_rule": {"const": "all_required_measurable_criteria_pass"},
+        "drive_behavior": {"const": "continue_remediation_without_waiting_for_human_approval"},
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/criterion"}
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criterion_id", "claim", "required", "measurement_state_at_design", "predicate", "controls", "unmeasurable_reason", "resolution_owner"],
+      "properties": {
+        "criterion_id": {"type": "string", "pattern": "^L[0-4]-C[0-9]{2}$"},
+        "claim": {"type": "string", "minLength": 1},
+        "required": {"type": "boolean"},
+        "measurement_state_at_design": {"enum": ["measurable", "currently_unmeasurable"]},
+        "predicate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operator", "operands", "threshold", "compiler_rule"],
+          "properties": {
+            "operator": {"enum": ["boolean_true", "count_equals", "count_greater_equal", "zero_count", "set_equality", "all_resolve", "digest_equality", "metric_greater_equal", "metric_not_worse_than_max_inputs", "same_identity_after_mutation", "same_code_digest_across_environments"]},
+            "operands": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "threshold": {"type": ["number", "integer", "string", "boolean", "null"]},
+            "compiler_rule": {"type": "string", "pattern": "^C3M_[A-Z0-9_]+$"}
+          }
+        },
+        "controls": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["positive", "negative"],
+          "properties": {
+            "positive": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "negative": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+          }
+        },
+        "unmeasurable_reason": {"type": ["string", "null"]},
+        "resolution_owner": {"type": ["string", "null"]}
+      }
+    },
+    "open_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "question", "owner", "blocks_checkpoint", "does_not_block_drive"],
+      "properties": {
+        "decision_id": {"type": "string", "pattern": "^DEC-[0-9]{2}$"},
+        "question": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "blocks_checkpoint": {"type": "string", "pattern": "^CP-L[0-4]-(L[1-4]|DONE)$"},
+        "does_not_block_drive": {"const": true}
+      }
+    },
+    "resolved_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "semantic_dimension", "selected_value", "authority_ref", "evidence_message", "not_decided_dimensions"],
+      "properties": {
+        "decision_id": {"const": "DEC-01"},
+        "semantic_dimension": {"const": "identity_grain"},
+        "selected_value": {"const": "every_entity"},
+        "authority_ref": {"const": "1.0.0_SA_CTO~X"},
+        "evidence_message": {"const": "74841"},
+        "not_decided_dimensions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["membership_model", "identity_form"]}
+        }
+      }
+    }
+  }
+}
