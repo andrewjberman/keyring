@@ -11,7 +11,7 @@ verification seat; the pivot to materializers is chartered separately.
 |---|---|---|
 | **VERIFIED PASS, committed** | **23** | DTX2 16 (@76d34b970c/@875dc2d7d2, repinned @b7d9497513, lineage-corrected @5272742719/@006d00376f) · COX2 7 (@03b900a109, repinned @c8b192d364, amended @aa63c3a8b8) — full battery, TO-level gate, alignment both ways |
 | **DELIVERED-UNVERIFIED, committed** | **6** | CCX2 @1c2359c931 — card-level battery green; NO proof-of-spec instance, NONE-OWED ruled (74277): the absent instance is a PROPERTY OF THE CUT, not a gap |
-| **DELIVERED-UNVERIFIED, UNTRACKED** | **7** | CCY2 — on this device's working tree only, card-level battery green, commit requested and pending at close time. **A battery green over an untracked file is a sound measurement of an unretrievable subject** — stated so 29-in-repo vs 36-delivered reads as never-committed, not lost |
+| **DELIVERED-UNVERIFIED, UNTRACKED** | **7** | CCY2 — on this device's working tree only, card-level battery green, commit requested and pending at close time. **A battery green over an untracked file is a sound measurement of an unretrievable subject** — stated so 29-in-repo vs 36-delivered reads as never-committed, not lost. **ANNOTATION 2026-08-27 05:1xZ: RESOLVED — committed @`0f594ab4c1` by 0.8.0_AE_CloudComp~Y (05:09:56Z), all 7 verified TRACKED at this seat per-file (`git ls-files --error-unmatch`, negative control fired; lane's push state self-reported LOCAL, unre-measured here). The three-state split collapses to two: 23 VERIFIED / 13 DELIVERED-committed. Root cause the lane's own (74675): its delivery validator read the WORKING TREE and reported DELIVERED — every pass was true and none was a property of the record; lane-side delivery checks need a TRACKEDNESS arm. The quiet window was a sovereign exchange at Andrew's terminal, not a stall.** |
 | SCOPE-SUPERSEDED | 8 subjects / 56 cells | CCX2 5 (incl. both FRAGMENT-class subjects in that set) + CCY2 3 — superseded by the sovereign re-aim, **never "abandoned"**: superseded work is answered by the re-aimed wave; abandoned work gets re-attempted as-is |
 
 Card-level conformance is UNIFORM over all 36: v2 schema 0 errors, wave-2 anchor `100e7ea130` +
@@ -72,8 +72,8 @@ claim.
 
 ## 5. OPEN AT CLOSE
 
-CCY2's 7-card commit (adjudicated 74301: no issuer override; the lane or its successor commits its
-own work; the record collapses to two states by annotation when it lands) · the wave-3 materializer
+CCY2's 7-card commit — CLOSED 2026-08-27: landed @`0f594ab4c1`, annotated in §1 (adjudication 74301
+held: the lane committed its own work, no override was taken) · the wave-3 materializer
 scope at Andrew/CTO~X (population pre-measured: 42 scripts, 26 reachable, 16 candidate-dormant, two
 census-registered materializers with no trigger, two SUPERSEDED ones on the live nightly, plus the
 initial-population freshness question) · the wave-boundary v2/v3 schema acts (per-field basis
