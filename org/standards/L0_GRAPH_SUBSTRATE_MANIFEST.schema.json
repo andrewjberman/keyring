@@ -44,7 +44,6 @@
       "required": [
         "method",
         "population_searched",
-        "parts_registered",
         "known_unsearched"
       ],
       "description": "A manifest claiming completeness MUST print how it looked and what it could not see. A census without a denominator is a list.",
@@ -59,7 +58,9 @@
         },
         "parts_registered": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "deprecated": true,
+          "description": "DEPRECATED -- retiring. A number a machine can derive must not also be typed: this is len(parts), and JSON Schema cannot enforce the equality, so the two can silently disagree. MIGRATION: optional now; DT removes it from generated inputs; only then is the property removed. Consumers MUST compute len(parts)."
         },
         "known_unsearched": {
           "type": "array",
@@ -782,6 +783,59 @@
               }
             }
           ]
+        },
+        "member_set": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "OPTIONAL. For a part whose id denotes a BRACE FAN-OUT or other multi-artifact set. ONE PART REMAINS ONE PART -- this never silently expands the parts array. CARDINALITY IS NEVER SERIALISED: it is len(members), computed by the consumer. JSON Schema cannot enforce a stored count against the array, so no count is stored.",
+          "required": [
+            "members",
+            "derivation",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "members": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": "The concrete artifacts this part's id denotes. Unique, non-empty."
+            },
+            "derivation": {
+              "const": "length(members)",
+              "description": "Declared intent only. States that cardinality is DERIVED, never stored."
+            },
+            "basis": {
+              "enum": [
+                "measured",
+                "held",
+                "inferred",
+                "absent"
+              ]
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. 'NONE' is the loud value."
+            },
+            "owner": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. 'UNOWNED' is the loud value."
+            }
+          },
+          "x-rule24": {
+            "axis": "the concrete artifact SET a single part id denotes",
+            "grain": "one part; members are artifacts, NOT parts",
+            "intent": "one -- enumerate what the id covers; NOT cardinality, which is derived, and NOT coverage",
+            "mece": "absent = the id denotes exactly one artifact. present = it denotes >1, all enumerated.",
+            "state_coherence": "discovering a further member ADDS to members[]. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set."
+          }
         }
       }
     }
