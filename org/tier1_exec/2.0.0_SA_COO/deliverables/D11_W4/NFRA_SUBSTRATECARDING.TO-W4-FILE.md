@@ -99,6 +99,14 @@ population: 42 manifest parts MINUS 3 resolved by L1's exact join MINUS 3 unbuil
 cell_total: 257
 </proof_of_spec>
 
+<criterion id="c1_cadence" cell_refs="W4-auar-2, W4-docn-2, W4-exje-2, W4-fnak-2, W4-fugn-2, W4-goft-2, W4-jkjr-2, W4-kmiw-2, W4-ngcr-2, W4-nqak-2, W4-nsit-2, W4-nubl-2, W4-oixc-2, W4-oqpa-2, W4-pcuu-2, W4-rybr-2, W4-tkso-2, W4-tztj-2, W4-wced-2, W4-wvkr-2, W4-yijq-2" />
+<criterion id="c2_coverage" cell_refs="W4-auar-5, W4-docn-5, W4-exje-5, W4-fnak-5, W4-fugn-5, W4-goft-5, W4-jkjr-5, W4-kmiw-5, W4-ngcr-5, W4-nqak-5, W4-nsit-5, W4-nubl-5, W4-oixc-5, W4-oqpa-5, W4-pcuu-5, W4-rybr-5, W4-tkso-5, W4-tztj-5, W4-wced-5, W4-wvkr-5, W4-yijq-5" />
+<criterion id="c3_failure_mode" cell_refs="W4-auar-7, W4-docn-7, W4-exje-7, W4-fnak-7, W4-fugn-7, W4-goft-7, W4-jkjr-7, W4-kmiw-7, W4-ngcr-7, W4-nqak-7, W4-nsit-7, W4-nubl-7, W4-oixc-7, W4-oqpa-7, W4-pcuu-7, W4-rybr-7, W4-tkso-7, W4-tztj-7, W4-wced-7, W4-wvkr-7, W4-yijq-7" />
+<criterion id="c4_joinable" cell_refs="W4-m-joinable" />
+<criterion id="c5_key" cell_refs="W4-auar-6, W4-docn-6, W4-exje-6, W4-fnak-6, W4-fugn-6, W4-goft-6, W4-jkjr-6, W4-kmiw-6, W4-ngcr-6, W4-nqak-6, W4-nsit-6, W4-nubl-6, W4-oixc-6, W4-oqpa-6, W4-pcuu-6, W4-rybr-6, W4-tkso-6, W4-tztj-6, W4-wced-6, W4-wvkr-6, W4-yijq-6" />
+<criterion id="c6_location" cell_refs="W4-auar-4, W4-docn-4, W4-exje-4, W4-fnak-4, W4-fugn-4, W4-goft-4, W4-jkjr-4, W4-kmiw-4, W4-ngcr-4, W4-nqak-4, W4-nsit-4, W4-nubl-4, W4-oixc-4, W4-oqpa-4, W4-pcuu-4, W4-rybr-4, W4-tkso-4, W4-tztj-4, W4-wced-4, W4-wvkr-4, W4-yijq-4" />
+<criterion id="c7_methodology" cell_refs="W4-auar-1, W4-docn-1, W4-exje-1, W4-fnak-1, W4-fugn-1, W4-goft-1, W4-jkjr-1, W4-kmiw-1, W4-ngcr-1, W4-nqak-1, W4-nsit-1, W4-nubl-1, W4-oixc-1, W4-oqpa-1, W4-pcuu-1, W4-rybr-1, W4-tkso-1, W4-tztj-1, W4-wced-1, W4-wvkr-1, W4-yijq-1" />
+<criterion id="c8_persistence" cell_refs="W4-auar-3, W4-docn-3, W4-exje-3, W4-fnak-3, W4-fugn-3, W4-goft-3, W4-jkjr-3, W4-kmiw-3, W4-ngcr-3, W4-nqak-3, W4-nsit-3, W4-nubl-3, W4-oixc-3, W4-oqpa-3, W4-pcuu-3, W4-rybr-3, W4-tkso-3, W4-tztj-3, W4-wced-3, W4-wvkr-3, W4-yijq-3" />
 <decomp_ref>
 workflows/atom_decomposition/runs/nfra-substratecarding-w4/DECOMP.md
 vintage_commit: 4ec2452a02

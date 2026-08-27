@@ -97,6 +97,13 @@ population: 42 manifest parts MINUS 3 resolved by L1's exact join MINUS 3 unbuil
 cell_total: 257
 </proof_of_spec>
 
+<criterion id="c1_cadence" cell_refs="W4-dncq-2, W4-lgbr-2, W4-vikb-2" />
+<criterion id="c2_coverage" cell_refs="W4-dncq-5, W4-lgbr-5, W4-vikb-5" />
+<criterion id="c3_failure_mode" cell_refs="W4-dncq-7, W4-lgbr-7, W4-vikb-7" />
+<criterion id="c4_key" cell_refs="W4-dncq-6, W4-lgbr-6, W4-vikb-6" />
+<criterion id="c5_location" cell_refs="W4-dncq-4, W4-lgbr-4, W4-vikb-4" />
+<criterion id="c6_methodology" cell_refs="W4-dncq-1, W4-lgbr-1, W4-vikb-1" />
+<criterion id="c7_persistence" cell_refs="W4-dncq-3, W4-lgbr-3, W4-vikb-3" />
 <decomp_ref>
 workflows/atom_decomposition/runs/nfra-substratecarding-w4/DECOMP.md
 vintage_commit: 4ec2452a02

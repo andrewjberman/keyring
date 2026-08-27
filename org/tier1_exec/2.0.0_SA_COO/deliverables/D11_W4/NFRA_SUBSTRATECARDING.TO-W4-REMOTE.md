@@ -97,6 +97,13 @@ population: 42 manifest parts MINUS 3 resolved by L1's exact join MINUS 3 unbuil
 cell_total: 257
 </proof_of_spec>
 
+<criterion id="c1_cadence" cell_refs="W4-bqrk-2, W4-cjtn-2, W4-dlqq-2, W4-glrp-2, W4-jyvw-2, W4-kjhu-2, W4-kyjs-2, W4-kzhx-2, W4-siwi-2, W4-teha-2, W4-vjfd-2, W4-wvft-2" />
+<criterion id="c2_coverage" cell_refs="W4-bqrk-5, W4-cjtn-5, W4-dlqq-5, W4-glrp-5, W4-jyvw-5, W4-kjhu-5, W4-kyjs-5, W4-kzhx-5, W4-siwi-5, W4-teha-5, W4-vjfd-5, W4-wvft-5" />
+<criterion id="c3_failure_mode" cell_refs="W4-bqrk-7, W4-cjtn-7, W4-dlqq-7, W4-glrp-7, W4-jyvw-7, W4-kjhu-7, W4-kyjs-7, W4-kzhx-7, W4-siwi-7, W4-teha-7, W4-vjfd-7, W4-wvft-7" />
+<criterion id="c4_key" cell_refs="W4-bqrk-6, W4-cjtn-6, W4-dlqq-6, W4-glrp-6, W4-jyvw-6, W4-kjhu-6, W4-kyjs-6, W4-kzhx-6, W4-siwi-6, W4-teha-6, W4-vjfd-6, W4-wvft-6" />
+<criterion id="c5_location" cell_refs="W4-bqrk-4, W4-cjtn-4, W4-dlqq-4, W4-glrp-4, W4-jyvw-4, W4-kjhu-4, W4-kyjs-4, W4-kzhx-4, W4-siwi-4, W4-teha-4, W4-vjfd-4, W4-wvft-4" />
+<criterion id="c6_methodology" cell_refs="W4-bqrk-1, W4-cjtn-1, W4-dlqq-1, W4-glrp-1, W4-jyvw-1, W4-kjhu-1, W4-kyjs-1, W4-kzhx-1, W4-siwi-1, W4-teha-1, W4-vjfd-1, W4-wvft-1" />
+<criterion id="c7_persistence" cell_refs="W4-bqrk-3, W4-cjtn-3, W4-dlqq-3, W4-glrp-3, W4-jyvw-3, W4-kjhu-3, W4-kyjs-3, W4-kzhx-3, W4-siwi-3, W4-teha-3, W4-vjfd-3, W4-wvft-3" />
 <decomp_ref>
 workflows/atom_decomposition/runs/nfra-substratecarding-w4/DECOMP.md
 vintage_commit: 4ec2452a02
