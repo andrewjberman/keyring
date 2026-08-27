@@ -339,6 +339,14 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   non-goal on every run — my battery read past that disclaimer twice in one hour (COX2 by
   inheritance, DTX2 minutes after writing the correction). The check the tool declares out of
   scope is the check this battery owns.
+- **DECLARED FALSIFIERS ARE VERIFIED RUN, NOT DECLARED (added 2026-08-27 after 75144):** on any
+  declaration/keystone cell whose acceptance rests on "falsifiable", the battery records each
+  named falsifier as RUN (with its result) or explicitly OPEN with an owner — never silently
+  satisfied by enumeration. Measured cause: L1-m-graindecl passed cell-level verification carrying
+  a prose defect (PLANE undefined; the more-available reading refuted the declaration) that ONLY
+  its own declared-but-unrun falsifier 2 could reach — the author ran it post-verification and it
+  hit. "A declared-but-unrun falsifier is a promise, not a control; the declaration is the cheap
+  half, running them is the control" — the wrapper class, for controls.
 - **PIN IDENTITY (added 2026-08-27 after 74832): the pin must equal the DECOMP file's OWN last
   commit** — `git log -1 --format=%H -- <DECOMP path>` — or carry a declared delta. Wave 3's
   emitter derived pins from `git rev-parse HEAD` at emit time, structurally ONE COMMIT BEHIND the
