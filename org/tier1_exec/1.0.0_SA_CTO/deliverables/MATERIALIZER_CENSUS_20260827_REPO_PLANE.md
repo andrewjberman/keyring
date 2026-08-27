@@ -107,7 +107,27 @@ unresolved set is unresolved by DELEGATION, not by a binder blind spot.**
    delegation rows (2 were D11 builders). **The carding record is indistinguishable from the carded
    population under any token predicate. Wave 3 must exclude the census from its own population by
    construction.**
-6. **MATERIALIZER IS A RELATION, NOT A PROPERTY.** `_canonical.py` is read-only for `graph_nodes` and a
+6. **A FIFTH REACHABILITY MECHANISM: AN AGREED PATH CONSTANT.** ADDED 04:5xZ after
+   `0.4.0_DT_ClientPlatform~X` (74595) refuted a claim of mine. `infra/aws/globgrph/snap_store.py` is
+   **THE writer for every `{surface}_snap` sibling** and appears in **0 of 39 census parts** — that
+   finding stands. ⛔ **BUT MY STATED MECHANISM WAS WRONG AND I CALLED IT "MEASURED":** I reported
+   three "MEASURED callers" from a `grep -rl`. Verified by AST at both seats: **0 of 5 files import or
+   call it; every token is a COMMENT or help string.**
+   The real coupling:
+   ```
+   snap_store.py:52        PENDING_PREFIX      = "warehouse/snap_ingest/pending/"
+   code_heat_emit.py:241   SNAP_PENDING        = "warehouse/snap_ingest/pending/code_heat_snap/"
+   emit_fedobs_snap.py:41  PENDING             = "warehouse/snap_ingest/pending/"
+   ms_heat_index.py:222    SNAP_PENDING_PREFIX = "warehouse/snap_ingest/pending/ms_heat_snap/"
+   ```
+   **Producers STAGE JSONL to an S3 prefix; `snap_store --ingest-pending` sweeps and appends. Nothing
+   imports anything. Nothing calls anything.** The producer/writer edge exists ONLY as two matching
+   string literals in files that never mention each other — **invisible to imports, to call graphs, and
+   to the dependency graph's `CALLS` edges, which cannot represent "writes to a prefix another process
+   polls."**
+   ⛔ **A MATERIALIZER CENSUS MUST SWEEP AGREED PATH CONSTANTS** — S3 prefixes, queue names, table
+   names, lock files. Any string two processes agree on is a producer/writer edge.
+7. **MATERIALIZER IS A RELATION, NOT A PROPERTY.** `_canonical.py` is read-only for `graph_nodes` and a
    canonical materializer of `kuzu_nessie_db.rebuild.tmp.SET`. Both true. **Subject grain must be the
    (FILE, ARTIFACT) PAIR** — `derive_runner` writing `graph_nodes` and `derive_runner` writing the
    snapshot archive are two substrate facts with different standings, Rule 26 answers and dormancy.
