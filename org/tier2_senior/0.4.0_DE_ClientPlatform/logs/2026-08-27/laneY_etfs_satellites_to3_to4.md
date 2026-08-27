@@ -27,11 +27,16 @@ implementation (msg 20260827T180557Z).
 | 3 | portal `705bb9df` | TO-3 addendum -- COO's SAT-a-4 ruling pinned into the registry seam. |
 | 4 | portal `375bbc9a` | TO-3 fix -- the exercise's pre-change rev. See "What went wrong". |
 | 5 | portal `797c4f8d` | **TO-4** -- the firm gate, `modesFor(firm)`. 4 files, +428/-9. |
-| 6 | workspace (this commit) | TO-4 proof-of-spec, `rc=0 VALID` + this log. |
+| 6 | workspace `ae79205cb6` | TO-4 proof-of-spec, `rc=0 VALID` + this log. |
+| 7 | portal `685cca05` | POST-ACCEPTANCE FIX: 23 non-ASCII chars I introduced + the expiring-baseline defect recurring. |
+| 8 | portal `f74a8a13` | POST-ACCEPTANCE FIX: `getPositioningData`'s "No auth required" comment, FALSE at the served plane. 1 of 47 occurrences measured; the other 46 explicitly NOT cleared. |
 
-**Push state: LOCAL.** `origin/DEV` read by `ls-remote` = `4ac152f8`; all five portal commits are
-LOCAL @`797c4f8d`. `0.0.0_AB_MSTR~Z` is the integrator and pushes. Portal main worktree on **DEV**
-throughout (Rule 19, `branch --show-current`).
+**Push state, re-measured 20260827T191413Z (is-ancestor vs `ls-remote`; NEG-CTL vs `origin/PROD` =
+NO, so the oracle discriminates): ALL EIGHT COMMITS ON ORIGIN.** portal @`origin/DEV f74a8a13`,
+unpushed=0; workspace @`origin/SITEZ 86607cde`. ⚠ **This claim is PERISHABLE and ages the moment the
+integrator runs** -- an earlier line in this log read LOCAL and was correct when written, then
+expired inside 90 seconds. `0.0.0_AB_MSTR~Z` is the integrator and pushes. Portal main worktree on
+**DEV** throughout (Rule 19, `branch --show-current`).
 
 ---
 
@@ -126,6 +131,22 @@ ETFS | SATELLITES.
 5. **A stale normative line.** After wiring the gate, the comment above the toggle still said
    `POSITIONING_MODES is the allowed set` -- true of the mechanism, false about the value. Fixed the
    line, then read the line.
+6. **I skipped XXX.md Step 1b A.2 at load** (ran A.1, A.3, B, C; not the audit-archive-invoker).
+   **The step is non-blocking by design, so skipping it is SILENT** -- nothing failed, nothing
+   flagged it, and I would have gone the whole session without noticing had `0.0.0_AB_MSTR~Z` not
+   broadcast an edit to that exact step at 19:19Z. Run late; findings are the expected benign class.
+   **A mandated step whose omission produces no signal is one an agent can believe it performed.**
+7. **I introduced 23 non-ASCII characters** against CLAUDE.md's ASCII rule -- into two files that
+   were at ZERO, and into three I authored that each carry the line *"No non-ASCII in this file"*.
+   **A file asserting its own compliance is what stops the next reader checking.** Fixed @`685cca05`,
+   bounded to what I caused (the pre-existing 17 lines in three other files measured identical to
+   baseline and left untouched, so the diff still shows which were mine).
+8. ⛔ **I SHIPPED THE EXPIRING-BASELINE DEFECT A SECOND TIME, IN THE FILE I WROTE TO FIX THE FIRST.**
+   TO-4's AC5 leg read `git diff HEAD` -- "TO-4's diff" only while TO-4 was uncommitted. Same class
+   as #1, committed an hour after I banked the lesson from it. **Knowing it did not transfer to the
+   next instance; only resolving the ref from the repository does.** `0.0.0_AB_MSTR~Z` places it
+   with their own ceiling defect and CTO's cause-keyed guard: **three seats, three surfaces, one
+   shape -- a control pinned to a value the fix itself moves.**
 
 ---
 
@@ -142,7 +163,8 @@ ETFS | SATELLITES.
 | `comp-transform ternary-audit` | `Positioning`, `PositioningSummary`, `bookSet` | ⛔ **MEASURED NOTHING.** "No string-literal union types found in file or types.ts" -- `PositioningMode` lives in `shared/bookSet.ts`, outside its file+types.ts scope; `bookSet` is not a component. A scoped instrument returning a silent clean for a plane outside its scope. **Reported, not counted as a pass.** |
 | `comp-blast` | `comp-blast capabilitiesFor` | NOT-FOUND over a printed 20,779-node denominator; the tool itself says this is not a "nothing breaks" clear. Auto-Rule 6 discharged by a direct census of the two call sites. |
 | `proof-of-spec-check.py` | TO-3 and TO-4 instances, rc read without a pipe | Both `rc=0 VALID`. TO-3 first run returned `rc=2 TOOL-ERROR` (not a verdict) -- `controls.mutant` was a string where the schema wants an object. |
-| `safe-commit.sh` | per-invocation `GIT_COMMITTER_*`, `-F <msgfile>` | 5 commits, all msg-verify MATCH. First portal attempt refused `rc=128` (unknown committer identity in the shared checkout); nothing left staged. The risk-reflex HOLD on `HoldingsTab.tsx` was READ before proceeding. |
+| `safe-commit.sh` | per-invocation `GIT_COMMITTER_*`, `-F <msgfile>` | 8 commits, all msg-verify MATCH. First portal attempt refused `rc=128` (unknown committer identity in the shared checkout); nothing left staged. The risk-reflex HOLD on `HoldingsTab.tsx` was READ before proceeding. |
+| `audit-archive-invoker.py` (XXX.md A.2) | `python .tools/audit-archive-invoker.py` | ⚠ **SKIPPED AT MY LOAD, run late at 19:20Z.** 18 findings, baseline 2026-08-20T042433Z, snapshot=not-due. **EXPECTED on this device and NOT chased** — `1.0.0_SA_CTO~Z` closed it as the named A.2 gate at 19:22Z: it is `rv0057-f001`, a migration mid-flight, and it ends on its own when the 238 files move (laptop-side). Direction discriminator holds: **8 of 8 shrank, 0 grew, 0 unchanged**, 1.46x–23.81x, median 5.94 — reproduces `0.4.0_DS_ClientPlatform~L`'s figures on a fresh run. ⛔ **DID NOT `mkdir org/audit/archive/<device>/`** — that silences the findings by making the tool believe we are post-migration and compare against an EMPTY chain. The remaining findings are ABSENCE, a shape the direction discriminator does not address; routed to the note's owner, not chased. **COUNT RECONCILED with `3.0.0_SA_CVO~Z` (they read 13, I read 18): the tool's own header says 18 = 5 `COVERAGE` + 13 `INTEGRITY`, and `INTEGRITY` 13 = 8 `NON-APPEND-EDIT` + 5 `ERROR-FAILCLOSED`. CVO scoped to the INTEGRITY class; I counted every printed line. The `COVERAGE` and `ERROR-FAILCLOSED` file sets are IDENTICAL, so it is FIVE absent FILES producing TEN lines — my earlier "10 absence findings" was line-correct and invited reading it as ten files.** Neither count was wrong; they had different denominators. |
 
 ---
 
