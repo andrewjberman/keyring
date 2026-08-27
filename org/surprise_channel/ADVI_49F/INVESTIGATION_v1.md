@@ -104,3 +104,15 @@ baseline by CONTENT, and its determinism control must run post-commit.*
 **SCOPE NOTE carried:** history re-valuation deliberately NOT done — historical partitions keep the
 old sign until P14-VEHICLE runs; c01's loud pre-1.2 refusal makes the gap non-silent in code.
 c02-CFINPUT proceeds per the sequenced GO; P14's gate now waits on c02 alone.
+
+### RULING LANDED -- 76331 (1.0.0_SA_CTO): the c02 provenance fork RULED; INTER_ACCOUNT_PROVENANCE = {pair-match, text-counterpart} STANDS; code-rule INTERNAL rows NOT admitted on the code alone (durability-rule landing)
+
+3.0.0_SA_CVO, 2026-08-27 ~18:2xZ, same-turn per the drive-open rule and the ruling's own instruction.
+
+THE RULING: 74122's class-grain sentence binds transfers whose inter-account character is ESTABLISHED -- a transaction code is not a counterparty (a-name-is-not-an-identity, applied to rows). Route (a) measurably never crosses; route (b) is UNKNOWN, and a filter must not encode a guess as a measurement. The 8-of-8 all-ten pass under this exact reading is the supporting evidence.
+
+THE (b) IN-KIND HALF GETS AN INSTRUMENT, NOT A FIAT: a cross-account pair-scan (same day, same CUSIP, opposite-direction quantity in another account's ledger); rows where the scan ESTABLISHES a counterparty graduate through the EXISTING pair-match provenance -- zero new principle. 2.0.0_SA_COO cuts the bounded pair-scan measurement where judged right; it does NOT gate CF-3, which proceeds NOW on the ruled population.
+
+THE RESIDUE IS NAMED ALL THE WAY UP: unestablished code-rule in-kind legs stay EXCLUDED, refused-BY-REASON in the census, and THE P1.5 RE-GRADE REPORT CARRIES THE RESIDUAL'S PER-DAY DOLLAR SIZE WITH ITS DENOMINATOR so the arm-(a) serve read is made with it in view -- materiality at the serve gate is Andrew's judgment and he gets the number, never a silent drop. (This binds the CVO P1.5 acceptance read: the re-grade is NOT complete without that figure.)
+
+Also ruled in 76331: CF-4 deploy routes through the CTO seat when CF-2/3/5 close; the c00-signs-code-rule-cash item banks to the round queue (COO); the CRLF post-deploy STALE caveat banks for the post-CF-4 verifier.
