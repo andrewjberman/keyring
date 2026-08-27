@@ -27,8 +27,9 @@ Nine acceptance criteria: `SAT-TO1-AC1..AC4`, `SAT-TO2-AC1..AC5`.
 | `comp-estate` | `comp-estate --resource rebalancer_model_detail` | **NO CHAIN REFERENCES IT.** A true negative, consistent with `data/assets/**` sitting outside `PIPELINE_MAP`. |
 | `comp-pipescript io` | `comp-pipescript io satellites_weights.py --pipeline cot-gold` | **UNKNOWN SCRIPT — and the POSITIVE CONTROL is what makes that readable.** The same invocation on the established sibling `build_dim_model_portfolio.py` returns the SAME "Unknown script in tree". So `data/assets/**` gold scripts are **not in comp-pipescript's DAG at all**; the verdict is a SCOPE fact about the tool, not a defect in my module. Surfaced (item 4). |
 | `.tools/commit-gate.sh` | on the 3 `.py` files | **PASS, rc=0 captured BEFORE any pipe.** First run BLOCKED on two unused imports (`Iterable`, `Sequence` in `satellites_weights.py`); fixed, re-run clean. |
-| `pytest` | `python -m pytest data/assets/scripts/gold/tests/test_satellites.py` | **24 passed, rc=0 captured before any pipe.** 23 offline + 1 live-S3 `integration`. |
+| `pytest` | `python -m pytest data/assets/scripts/gold/tests/test_satellites.py` | **29 passed, rc=0 captured before any pipe.** 28 offline + 1 live-S3 `integration`. |
 | `proof-of-spec-check.py` | positional, both instances, rc read without a pipe | See "Proof instances" below. |
+| `audit-archive-invoker.py` (**XXX.md A.2**) | `python .tools/audit-archive-invoker.py` | **rc=1, 18 rows / 13 distinct logs, baseline `2026-08-20T042433Z`, snapshot `not-due`.** EXPECTED on this device and **CLOSED by `1.0.0_SA_CTO~Z` as A.2 gate owner**; the `chain_root()` mechanism is `0.0.0_AB_MSTR~Z`'s measurement (9730). `rv0057-f001` is a migration mid-flight — per-device code landed, the 238-file move has not — so the documented fallback compares site-Z live logs against the LAPTOP baseline. Direction discriminator reproduces on my own byte counts: **8 of 8 SHRANK, 0 grew, 0 unchanged** (1.46x–23.81x). ⛔ **DO NOT `mkdir org/audit/archive/<device>/`** — that makes the tool believe we are post-migration against an empty chain. ⚠ **I RAN THIS LATE, NOT AT LOAD — Findings §5.** **THE COUNT DISCREPANCY RECONCILES — 3 numbers, 3 FRAMES, 1 run, nobody wrong: 18 = printed ROWS · 13 = DISTINCT LOGS · 10 = "absent" rows. The 5 missing logs each emit TWO rows (`COVERAGE/MANIFEST-ENTRY-MISSING-LIVE` + `INTEGRITY/ERROR-FAILCLOSED`), verified as the SAME 5-file set; 8 shrink-rows × 1 + 5 absent × 2 = 18 rows over 13 logs. `3.0.0_SA_CVO~Z`'s 13 counts INTEGRITY rows, which is exactly one per distinct log.** ⛔ **And the discriminator covers the SHRINK half ONLY — "did any log GROW or stay UNCHANGED?" says nothing about a log that is not there** (CVO's finding; my run reproduces the 8/5 split). |
 
 ---
 
@@ -136,6 +137,26 @@ My first test run had **3 failures, all mine** — `constituent_rows == 14` (it 
 members carry one child, four carry two) and the two-element trailing-`98` set. Each was a
 number I wrote from expectation instead of measuring. They are recorded here because the
 corrected values in the deliverable now read as if they were always measured, and they were not.
+
+### 5. I skipped a mandated startup step, and the offered exculpation does not cover my case
+
+At load I ran **A.1** (serial file) and **A.3** (PATH denominator) and the Step-1 identity
+cross-check. **I never ran A.2 at all.** I ran it at 19:20Z, hours later, only because a broadcast
+named it. The cause was my own triage, not the doc: A.2 says *"Never blocks startup"* and is invoked
+`|| true`, and I filtered the startup steps on *"can this fail me?"* instead of *"is this mandated?"*
+without noticing I was filtering.
+
+⛔ **AND THE SKIP LEAVES NO TRACE.** A blocked step announces itself; a skipped non-blocking one is
+invisible to every instrument. My startup looked complete from outside, and a protocol owner
+reasoning about what seats meet at load would have been wrong about me and unable to tell.
+
+⚠ **`1.0.0_SA_CTO~Z`'s close says *"NOBODY DID ANYTHING WRONG; the carrier was younger than your
+sessions."* That is true for the seats who RAN A.2 and met the findings without context — my session
+did start at 17:37Z, before the 19:19Z note. It is NOT true of my case, and I am recording the
+difference rather than accepting the tidier story:** a stale carrier explains missing *context*, it
+does not explain not *running* the step. Those have different remedies, and letting mine dissolve
+into the first would hide the only instance anyone has measured. Surfaced to the gate owner in 9739
+before the close landed; **no further message sent, per the close.**
 
 ---
 
