@@ -155,9 +155,54 @@ REQUIRES it at the edge is a server-side fact on the AE/serving plane and is UNM
    exposure is the wrong error to make. <<
 
 **REQUIRED IF §4 RESOLVES TO (b) ACCESS — and it is the FIRST act, before any redesign:** measure at
-the EDGE whether `/api/general/positioning/positioning_data.json` requires a bearer. **That is an
-AE/serving-plane read and there is no live AE seat**, which folds it into the same retired-lane class
-already at Andrew. ⚠ **Do NOT let the comment stand in for that measurement in either direction** —
-it is equally capable of being stale-and-wrong about a route that IS protected.
+the EDGE whether `/api/general/positioning/positioning_data.json` requires a bearer. ⚠ **Do NOT let
+the comment stand in for that measurement in either direction** — it is equally capable of being
+stale-and-wrong about a route that IS protected.
+
+---
+
+# AMENDMENT 2 — 19:0xZ. **THE EDGE MEASUREMENT IS IN. MY ORIGINAL CLAIM STANDS; MY AMENDMENT-1 CEILING IS FALSIFIED.**
+
+`0.0.0_AB_MSTR~Z` ran the serving-layer read (their lane) within minutes of Amendment 1 naming it.
+
+```
+NO auth header      -> HTTP 401  {"error":"Missing or invalid Authorization header"}
+VALID RS256 bearer  -> HTTP 200  8088 bytes  application/json
+CONTROL bogus token -> HTTP 401  {"error":"Invalid or expired token"}   <- a DISTINCT message
+CONTROL bad path    -> HTTP 401  (auth enforced BEFORE path resolution)
+```
+
+⭐ **THE TWO 401s DIFFER, AND THAT IS THE LOAD-BEARING DETAIL: the edge distinguishes MISSING from
+INVALID, so it is VALIDATING the token, not merely checking a header exists.** A single
+undifferentiated 401 would have been equally consistent with a dumb presence check.
+
+## WHAT THIS DOES TO MY OWN TWO CLAIMS
+
+| my claim | verdict |
+|---|---|
+| §2: *"`api/general/` = ANY AUTHENTICATED USER"* | ✅ **CONFIRMED — by a DIFFERENT instrument** (live HTTP) than the architecture doc I reasoned from |
+| Amendment 1: *"MAY be anyone at all"* | ❌ **FALSIFIED. The ceiling is NOT "anyone"; it is exactly the floor I first stated.** |
+
+⛔ **AMENDMENT 1 WAS RIGHT TO BOUND THE CLAIM AND WRONG IN ITS SPECULATIVE CEILING.** The edge
+behaviour genuinely was unmeasured and saying so was correct; **inventing a worst case to sit in that
+gap was not, and it is the mirror of the error it was correcting.** Understating exposure and
+overstating it are both mis-sizing a sovereign option. **Recorded as mine.**
+
+**AND THE CODE COMMENT IS FALSE AGAINST THE SERVED ARTIFACT** — `portal-proxy.ts:1090-1097` claims
+*"PUBLIC DATA (DEMO): No auth required"*. It never was true as written: `apiRequest` attaches a
+bearer whenever one exists, and the edge rejects the request without one. ⭐ **`0.4.0_DE_ClientPlatform~Y`
+flagged it and REFUSED to relay it as measured — had it been quoted as evidence, an option in front
+of Andrew would have been sized against a fiction.**
+
+## ⭐ THE CONSEQUENCE FOR §4 — **OPTION (b) IS MATERIALLY SMALLER THAN §4's TABLE IMPLIES**
+
+**There is already a real, token-validating auth boundary at the edge.** So (b) is **NOT** "build
+authentication for this endpoint" — it is **"add FIRM-SCOPING to an endpoint that already
+authenticates"**, i.e. the AdvisorIntelligence pattern applied to an existing protected route:
+`api/scoped/` + firm in the path + firm in the query key.
+
+>> **§4's table stands, but its (b) column was priced too high. The missing control is
+   FIRM-DISCRIMINATION, not AUTHENTICATION — and that is a smaller, better-understood change with a
+   worked example already in the estate.** <<
 
 -- `1.0.0_SA_CTO~Z`
