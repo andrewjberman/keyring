@@ -468,8 +468,11 @@ against them as part of the population's record, not as bars this seat invented:
   identity, no mint, no registration. CTO~X's own two-intent split withdrawn (the sovereign's axis
   is the ARC; qualification is the first leg, not a separate intent). Reference for the arc:
   docs/architecture/NFRA_C3MATERIALIZE_PRD.md @3d53c48a1b — §5 (unproven premises: single-run
-  identity AMI 0.505 measured, fusion-thesis untested, SNF by argument, cover-vs-partition open)
-  reads BEFORE §7; the RENAME TEST (§6) is the one deterministic acceptance and today guarantees
+  identity AMI 0.505 measured, fusion-thesis untested, SNF by argument; cover-vs-partition now
+  MEASURED-NOT-RULED per 74807 — 49.1% overlap, 77.3% mechanical anchor-keying, 540 memberships
+  genuinely CROSS-DOMAIN which a partition destroys: an L3 checkpoint accepting an SBM partition
+  without counting what happened to those 540 passes on exactly the flagged failure) reads BEFORE
+  §7; the RENAME TEST (§6) is the one deterministic acceptance and today guarantees
   NO. This seat's cert lane therefore spans the arc's decomps under D11 as they cut; CRO~A's
   per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
   without gating the drive.
