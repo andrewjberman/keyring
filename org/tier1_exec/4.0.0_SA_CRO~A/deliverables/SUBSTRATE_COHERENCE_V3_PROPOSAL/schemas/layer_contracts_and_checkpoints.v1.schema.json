@@ -24,6 +24,7 @@
     "relationships",
     "contract_status",
     "post_rerun_rule24_queue",
+    "post_rerun_base_validation",
     "mission",
     "prd_reference",
     "starting_position",
@@ -67,22 +68,34 @@
         "promotion_condition": {"const": "evidence_that_finding_changes_an_emitted_value"},
         "findings": {
           "type": "array",
-          "minItems": 4,
-          "maxItems": 4,
+          "minItems": 5,
+          "maxItems": 5,
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["finding_id", "finding_state", "rerun_effect", "semantic_dimension"],
+            "required": ["finding_id", "finding_state", "evidence_run_change_state", "rerun_effect", "semantic_dimension"],
             "properties": {
-              "finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04"]},
+              "finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04", "L0-R24-05"]},
               "finding_state": {"const": "open"},
-              "rerun_effect": {"const": "metadata_only_no_current_emission"},
-              "semantic_dimension": {"enum": ["empty_suffix_enumeration_interpretation", "suffix_completeness_partition", "repo_relative_path_rule24_partition", "home_space_lifecycle_vocabulary"]}
-            }
+              "evidence_run_change_state": {"enum": ["unchanged", "new"]},
+              "rerun_effect": {"enum": ["metadata_only_no_current_emission", "emitted_authority_contradiction"]},
+              "semantic_dimension": {"enum": ["empty_suffix_enumeration_interpretation", "suffix_completeness_partition", "repo_relative_path_rule24_partition", "home_space_lifecycle_vocabulary", "variant_suffix_source_authority"]}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04"]}}},
+                "then": {"properties": {"evidence_run_change_state": {"const": "unchanged"}, "rerun_effect": {"const": "metadata_only_no_current_emission"}}}
+              },
+              {
+                "if": {"properties": {"finding_id": {"const": "L0-R24-05"}}},
+                "then": {"properties": {"evidence_run_change_state": {"const": "new"}, "rerun_effect": {"const": "emitted_authority_contradiction"}, "semantic_dimension": {"const": "variant_suffix_source_authority"}}}
+              }
+            ]
           }
         }
       }
     },
+    "post_rerun_base_validation": {"$ref": "#/$defs/post_rerun_base_validation"},
     "mission": {
       "type": "object",
       "additionalProperties": false,
@@ -420,7 +433,7 @@
                       "properties": {
                         "parent_document_kind": {"const": "l0_graph_substrate_manifest"},
                         "parent_document_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
-                        "parent_sha256": {"const": "5f8aac736ba47855f63c690cc77478c2562bc16ad1dac35eeeba89394236f534"},
+                        "parent_sha256": {"const": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92"},
                         "operation": {"const": "identity"},
                         "excluded_exact_part_ids": {
                           "type": "array",
@@ -923,6 +936,175 @@
     }
   },
   "$defs": {
+    "evidence_file_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["home", "persistence_state", "git_blob", "sha256"],
+      "properties": {
+        "home": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\\\).+$"},
+        "persistence_state": {
+          "enum": ["working_tree_modified_uncommitted", "working_tree_untracked"],
+          "x-enum-definitions": {
+            "working_tree_modified_uncommitted": "The file is tracked but its measured bytes differ from HEAD.",
+            "working_tree_untracked": "The measured file has no admitted Git home at this evidence vintage."
+          },
+          "x-rule24": {"domain": "Git persistence standing of one measured evidence file", "grain": "one evidence file at the validation event", "intent": "separate changed tracked evidence from never-admitted evidence", "mece": "the two values are disjoint for the two measured files", "state_coherence": "a commit creates a new evidence vintage"}
+        },
+        "git_blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "receiver_declaration_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_count", "unknown_count"],
+      "properties": {"declared_count": {"const": 0}, "unknown_count": {"const": 42}}
+    },
+    "document_lifecycle_absence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode_state", "mutation_policy_state", "temporal_claim_state", "authority_role_state"],
+      "properties": {
+        "authorship_mode_state": {"const": "absent"},
+        "mutation_policy_state": {"const": "absent"},
+        "temporal_claim_state": {"const": "absent"},
+        "authority_role_state": {"const": "absent"}
+      }
+    },
+    "post_rerun_base_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_state", "release_gate_state", "evidence_pair", "structural_emission", "declaration_measurement", "home_space_measurement", "population_completeness", "variant_suffix_authority", "lifecycle_axis_coverage", "receipt_contract", "unknown_lifecycle_expressibility", "remediation_sequence"],
+      "properties": {
+        "validation_state": {"const": "failed"},
+        "release_gate_state": {"const": "held"},
+        "evidence_pair": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest", "receipt", "artifact_digest_binding_state", "repository_replayability_state"],
+          "properties": {
+            "manifest": {
+              "allOf": [
+                {"$ref": "#/$defs/evidence_file_record"},
+                {"properties": {"home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"}, "persistence_state": {"const": "working_tree_modified_uncommitted"}, "git_blob": {"const": "db684f932995d519a9087725b2d2539d249ea533"}, "sha256": {"const": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92"}}}
+              ]
+            },
+            "receipt": {
+              "allOf": [
+                {"$ref": "#/$defs/evidence_file_record"},
+                {"properties": {"home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.receipt.json"}, "persistence_state": {"const": "working_tree_untracked"}, "git_blob": {"const": "3da49495aa16c5f92563c9c955bbd888d4f85072"}, "sha256": {"const": "9d0885b467e36430f97b8e004590389c15bdd6cf850b53b540dd19224b3e13c7"}}}
+              ]
+            },
+            "artifact_digest_binding_state": {"const": "verified"},
+            "repository_replayability_state": {"const": "not_replayable_from_committed_pair"}
+          }
+        },
+        "structural_emission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest_part_count", "frozen_schema_validation_error_count", "receiver_presence_count"],
+          "properties": {
+            "manifest_part_count": {"const": 42},
+            "frozen_schema_validation_error_count": {"const": 0},
+            "receiver_presence_count": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["home_space", "grain", "key", "failure_mode"],
+              "properties": {"home_space": {"const": 42}, "grain": {"const": 42}, "key": {"const": 42}, "failure_mode": {"const": 42}}
+            }
+          }
+        },
+        "declaration_measurement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["grain", "key", "failure_mode", "unknown_coherence_state"],
+          "properties": {
+            "grain": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "key": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "failure_mode": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "unknown_coherence_state": {"const": "coherent"}
+          }
+        },
+        "home_space_measurement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repo_path_count", "s3_uri_count", "none_count"],
+          "properties": {"repo_path_count": {"const": 25}, "s3_uri_count": {"const": 14}, "none_count": {"const": 3}}
+        },
+        "population_completeness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["assessment_state", "registered_part_count", "known_unsearched_entry_count", "known_unsearched_representation", "known_missing_subject_lower_bound", "known_missing_subject_ids", "coverage_fraction_claim_permitted"],
+          "properties": {
+            "assessment_state": {"const": "unmeasurable"},
+            "registered_part_count": {"const": 42},
+            "known_unsearched_entry_count": {"const": 12},
+            "known_unsearched_representation": {"const": "mixed_prose"},
+            "known_missing_subject_lower_bound": {"const": 2},
+            "known_missing_subject_ids": {"const": ["org/modules/graph/comp_aws_cli.py", "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py"]},
+            "coverage_fraction_claim_permitted": {"const": false}
+          }
+        },
+        "variant_suffix_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["part_id", "declared_source_home", "declared_source_line", "observed_source_role", "required_source_role", "authority_match_state"],
+          "properties": {
+            "part_id": {"const": "kuzu_nessie_db.rebuild.tmp.SET"},
+            "declared_source_home": {"const": "infra/aws/globgrph/_canonical.py"},
+            "declared_source_line": {"const": 188},
+            "observed_source_role": {"const": "removal_repertoire"},
+            "required_source_role": {"const": "minting_producer"},
+            "authority_match_state": {"const": "contradicted"}
+          }
+        },
+        "lifecycle_axis_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest_document", "receipt_document", "parts"],
+          "properties": {
+            "manifest_document": {"$ref": "#/$defs/document_lifecycle_absence"},
+            "receipt_document": {"$ref": "#/$defs/document_lifecycle_absence"},
+            "parts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["part_count", "authorship_mode_present_count", "mutation_policy_present_count", "temporal_claim_present_count", "authority_role_present_count"],
+              "properties": {"part_count": {"const": 42}, "authorship_mode_present_count": {"const": 0}, "mutation_policy_present_count": {"const": 0}, "temporal_claim_present_count": {"const": 42}, "authority_role_present_count": {"const": 42}}
+            }
+          }
+        },
+        "receipt_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_kind_state", "governing_schema_state", "lifecycle_axes_state", "input_closure_state", "unbound_input_classes"],
+          "properties": {
+            "document_kind_state": {"const": "absent"},
+            "governing_schema_state": {"const": "absent"},
+            "lifecycle_axes_state": {"const": "absent"},
+            "input_closure_state": {"const": "incomplete"},
+            "unbound_input_classes": {"const": ["compiler_commit_and_home", "card_population_registry_blob", "card_population_registry_schema_blob", "base_manifest_blob", "card_to_part_map_blob", "substrate_card_schema_blob", "admitted_card_blobs", "structured_replay_digests"]}
+          }
+        },
+        "unknown_lifecycle_expressibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["claim_status_token", "unknown_lifecycle_axis_state", "terminal_transitional_partition_state"],
+          "properties": {"claim_status_token": {"const": "unknown"}, "unknown_lifecycle_axis_state": {"const": "absent"}, "terminal_transitional_partition_state": {"const": "inexpressible"}}
+        },
+        "remediation_sequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["current_pair_role", "next_step", "shared_schema_step", "final_pair_step", "release_step"],
+          "properties": {
+            "current_pair_role": {"const": "pre_remediation_evidence_only"},
+            "next_step": {"const": "dt_receipt_contract_and_control_source_tranche"},
+            "shared_schema_step": {"const": "coordinated_before_final_emission"},
+            "final_pair_step": {"const": "new_authorized_run_after_shared_schema_remediation"},
+            "release_step": {"const": "base_pass_on_final_committed_pair"}
+          }
+        }
+      }
+    },
     "population_source": {
       "type": "object",
       "additionalProperties": false,

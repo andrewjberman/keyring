@@ -13,6 +13,7 @@ WORKSPACE = Path(__file__).resolve().parents[5]
 SCHEMA = ROOT / "schemas" / "layer_contracts_and_checkpoints.v1.schema.json"
 DOCUMENT = ROOT / "layer_contracts_and_checkpoints.v1.json"
 L0_MANIFEST = WORKSPACE / "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"
+L0_RECEIPT = WORKSPACE / "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.receipt.json"
 LAYERS = ["L0", "L1", "L2", "L3", "L4"]
 CHECKPOINTS = ["CP-L0-L1", "CP-L1-L2", "CP-L2-L3", "CP-L3-L4", "CP-L4-DONE"]
 EXECUTABLE_NOW = {"L0", "L2_STRUCTURE", "L2_BEHAVIOR"}
@@ -46,6 +47,21 @@ def semantic_errors(document: dict) -> list[str]:
         "L0-R24-02": "suffix_completeness_partition",
         "L0-R24-03": "repo_relative_path_rule24_partition",
         "L0-R24-04": "home_space_lifecycle_vocabulary",
+        "L0-R24-05": "variant_suffix_source_authority",
+    }
+    expected_change_states = {
+        "L0-R24-01": "unchanged",
+        "L0-R24-02": "unchanged",
+        "L0-R24-03": "unchanged",
+        "L0-R24-04": "unchanged",
+        "L0-R24-05": "new",
+    }
+    expected_rerun_effects = {
+        "L0-R24-01": "metadata_only_no_current_emission",
+        "L0-R24-02": "metadata_only_no_current_emission",
+        "L0-R24-03": "metadata_only_no_current_emission",
+        "L0-R24-04": "metadata_only_no_current_emission",
+        "L0-R24-05": "emitted_authority_contradiction",
     }
     if (
         post_rerun_queue["queue_state"] != "open_until_post_rerun_remediation"
@@ -54,10 +70,111 @@ def semantic_errors(document: dict) -> list[str]:
         or post_rerun_queue["freeze_exit_condition"] != "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status"
         or post_rerun_queue["promotion_condition"] != "evidence_that_finding_changes_an_emitted_value"
         or {row["finding_id"]: row["semantic_dimension"] for row in queued_findings} != expected_queued_findings
+        or {row["finding_id"]: row["evidence_run_change_state"] for row in queued_findings} != expected_change_states
+        or {row["finding_id"]: row["rerun_effect"] for row in queued_findings} != expected_rerun_effects
         or any(row["finding_state"] != "open" for row in queued_findings)
-        or any(row["rerun_effect"] != "metadata_only_no_current_emission" for row in queued_findings)
     ):
         errors.append("frozen shared-schema Rule 24 findings must remain open in the post-rerun queue")
+
+    base_validation = document["post_rerun_base_validation"]
+    evidence_pair = base_validation["evidence_pair"]
+    structural = base_validation["structural_emission"]
+    declarations = base_validation["declaration_measurement"]
+    home_space = base_validation["home_space_measurement"]
+    population = base_validation["population_completeness"]
+    suffix_authority = base_validation["variant_suffix_authority"]
+    lifecycle_coverage = base_validation["lifecycle_axis_coverage"]
+    receipt_contract = base_validation["receipt_contract"]
+    unknown_lifecycle = base_validation["unknown_lifecycle_expressibility"]
+    remediation = base_validation["remediation_sequence"]
+    if (
+        base_validation["validation_state"] != "failed"
+        or base_validation["release_gate_state"] != "held"
+        or structural["manifest_part_count"] != 42
+        or structural["frozen_schema_validation_error_count"] != 0
+        or any(count != 42 for count in structural["receiver_presence_count"].values())
+        or declarations["unknown_coherence_state"] != "coherent"
+        or any(declarations[receiver] != {"declared_count": 0, "unknown_count": 42} for receiver in ("grain", "key", "failure_mode"))
+        or home_space != {"repo_path_count": 25, "s3_uri_count": 14, "none_count": 3}
+        or sum(home_space.values()) != 42
+    ):
+        errors.append("post-rerun Base record must separate structural emission from declaration and home-space distributions")
+    if (
+        population["assessment_state"] != "unmeasurable"
+        or population["registered_part_count"] != 42
+        or population["known_unsearched_entry_count"] != 12
+        or population["known_unsearched_representation"] != "mixed_prose"
+        or population["known_missing_subject_lower_bound"] < 2
+        or set(population["known_missing_subject_ids"]) != {
+            "org/modules/graph/comp_aws_cli.py",
+            "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py",
+        }
+        or population["coverage_fraction_claim_permitted"]
+    ):
+        errors.append("42-of-42 receiver presence cannot masquerade as complete substrate-population coverage")
+    if (
+        suffix_authority["observed_source_role"] != "removal_repertoire"
+        or suffix_authority["required_source_role"] != "minting_producer"
+        or suffix_authority["authority_match_state"] != "contradicted"
+    ):
+        errors.append("removal evidence cannot masquerade as variant minting authority")
+    if (
+        lifecycle_coverage["manifest_document"] != {
+            "authorship_mode_state": "absent", "mutation_policy_state": "absent",
+            "temporal_claim_state": "absent", "authority_role_state": "absent",
+        }
+        or lifecycle_coverage["receipt_document"] != {
+            "authorship_mode_state": "absent", "mutation_policy_state": "absent",
+            "temporal_claim_state": "absent", "authority_role_state": "absent",
+        }
+        or lifecycle_coverage["parts"] != {
+            "part_count": 42, "authorship_mode_present_count": 0,
+            "mutation_policy_present_count": 0, "temporal_claim_present_count": 42,
+            "authority_role_present_count": 42,
+        }
+    ):
+        errors.append("post-rerun lifecycle-axis coverage must preserve the measured document and part gaps")
+    if (
+        receipt_contract["document_kind_state"] != "absent"
+        or receipt_contract["governing_schema_state"] != "absent"
+        or receipt_contract["lifecycle_axes_state"] != "absent"
+        or receipt_contract["input_closure_state"] != "incomplete"
+        or set(receipt_contract["unbound_input_classes"]) != {
+            "compiler_commit_and_home", "card_population_registry_blob",
+            "card_population_registry_schema_blob", "base_manifest_blob",
+            "card_to_part_map_blob", "substrate_card_schema_blob",
+            "admitted_card_blobs", "structured_replay_digests",
+        }
+    ):
+        errors.append("receipt contract cannot claim schema governance or replayable input closure before remediation")
+    if (
+        unknown_lifecycle != {
+            "claim_status_token": "unknown",
+            "unknown_lifecycle_axis_state": "absent",
+            "terminal_transitional_partition_state": "inexpressible",
+        }
+        or remediation != {
+            "current_pair_role": "pre_remediation_evidence_only",
+            "next_step": "dt_receipt_contract_and_control_source_tranche",
+            "shared_schema_step": "coordinated_before_final_emission",
+            "final_pair_step": "new_authorized_run_after_shared_schema_remediation",
+            "release_step": "base_pass_on_final_committed_pair",
+        }
+    ):
+        errors.append("unknown lifecycle and remediation sequence must remain explicit and non-releasing")
+    for label, path in (("manifest", L0_MANIFEST), ("receipt", L0_RECEIPT)):
+        if not path.is_file():
+            errors.append(f"post-rerun evidence {label} is absent from its exact home")
+            continue
+        raw = path.read_bytes()
+        expected = evidence_pair[label]
+        blob = hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
+        if (
+            hashlib.sha256(raw).hexdigest() != expected["sha256"]
+            or blob != expected["git_blob"]
+            or expected["home"] != path.relative_to(WORKSPACE).as_posix()
+        ):
+            errors.append(f"post-rerun evidence {label} bytes do not match the frozen Base-validation pin")
     mission = document["mission"]
     if any((mission["new_directive"], mission["project_mint"], mission["registration_act"], mission["approval_gate"])):
         errors.append("D11 arc cannot mint, register, or introduce an approval gate")
@@ -709,6 +826,66 @@ def main() -> int:
     freeze_exit_weakened = copy.deepcopy(document)
     freeze_exit_weakened["post_rerun_rule24_queue"]["freeze_exit_condition"] = "contract_stops_changing"
     mutants.append(("freeze-exits-before-42-receivers", freeze_exit_weakened))
+
+    emitted_authority_finding_removed = copy.deepcopy(document)
+    emitted_authority_finding_removed["post_rerun_rule24_queue"]["findings"].pop()
+    mutants.append(("emitted-authority-contradiction-removed", emitted_authority_finding_removed))
+
+    frozen_finding_called_new = copy.deepcopy(document)
+    frozen_finding_called_new["post_rerun_rule24_queue"]["findings"][0]["evidence_run_change_state"] = "new"
+    mutants.append(("unchanged-frozen-finding-masquerades-as-new", frozen_finding_called_new))
+
+    receiver_presence_rounded_up = copy.deepcopy(document)
+    receiver_presence_rounded_up["post_rerun_base_validation"]["structural_emission"]["receiver_presence_count"]["grain"] = 41
+    mutants.append(("receiver-presence-rounded-to-42", receiver_presence_rounded_up))
+
+    declaration_manufactured = copy.deepcopy(document)
+    declaration_manufactured["post_rerun_base_validation"]["declaration_measurement"]["grain"] = {"declared_count": 1, "unknown_count": 41}
+    mutants.append(("unknown-emission-masquerades-as-declaration", declaration_manufactured))
+
+    home_space_partition_broken = copy.deepcopy(document)
+    home_space_partition_broken["post_rerun_base_validation"]["home_space_measurement"]["repo_path_count"] = 24
+    mutants.append(("home-space-counts-do-not-exhaust-parts", home_space_partition_broken))
+
+    open_population_called_complete = copy.deepcopy(document)
+    open_population_called_complete["post_rerun_base_validation"]["population_completeness"]["assessment_state"] = "complete"
+    mutants.append(("open-population-called-complete", open_population_called_complete))
+
+    known_unsearched_undercounted = copy.deepcopy(document)
+    known_unsearched_undercounted["post_rerun_base_validation"]["population_completeness"]["known_unsearched_entry_count"] = 11
+    mutants.append(("known-unsearched-entry-dropped", known_unsearched_undercounted))
+
+    missing_subject_evidence_dropped = copy.deepcopy(document)
+    missing_subject_evidence_dropped["post_rerun_base_validation"]["population_completeness"]["known_missing_subject_ids"].pop()
+    mutants.append(("known-missing-subject-dropped", missing_subject_evidence_dropped))
+
+    removal_called_producer = copy.deepcopy(document)
+    removal_called_producer["post_rerun_base_validation"]["variant_suffix_authority"]["observed_source_role"] = "minting_producer"
+    mutants.append(("removal-repertoire-masquerades-as-producer", removal_called_producer))
+
+    contradicted_authority_called_match = copy.deepcopy(document)
+    contradicted_authority_called_match["post_rerun_base_validation"]["variant_suffix_authority"]["authority_match_state"] = "satisfied"
+    mutants.append(("contradicted-authority-called-satisfied", contradicted_authority_called_match))
+
+    missing_lifecycle_called_present = copy.deepcopy(document)
+    missing_lifecycle_called_present["post_rerun_base_validation"]["lifecycle_axis_coverage"]["manifest_document"]["authorship_mode_state"] = "present"
+    mutants.append(("missing-document-lifecycle-called-present", missing_lifecycle_called_present))
+
+    incomplete_receipt_called_closed = copy.deepcopy(document)
+    incomplete_receipt_called_closed["post_rerun_base_validation"]["receipt_contract"]["input_closure_state"] = "complete"
+    mutants.append(("incomplete-receipt-called-replayable", incomplete_receipt_called_closed))
+
+    untracked_receipt_called_committed = copy.deepcopy(document)
+    untracked_receipt_called_committed["post_rerun_base_validation"]["evidence_pair"]["receipt"]["persistence_state"] = "committed"
+    mutants.append(("untracked-receipt-called-committed", untracked_receipt_called_committed))
+
+    unknown_lifecycle_manufactured = copy.deepcopy(document)
+    unknown_lifecycle_manufactured["post_rerun_base_validation"]["unknown_lifecycle_expressibility"]["terminal_transitional_partition_state"] = "expressible"
+    mutants.append(("inexpressible-unknown-lifecycle-called-expressible", unknown_lifecycle_manufactured))
+
+    release_before_shared_remediation = copy.deepcopy(document)
+    release_before_shared_remediation["post_rerun_base_validation"]["remediation_sequence"]["shared_schema_step"] = "after_release"
+    mutants.append(("release-precedes-shared-schema-remediation", release_before_shared_remediation))
 
     missing_layer = copy.deepcopy(document)
     missing_layer["layer_contracts"].pop(2)

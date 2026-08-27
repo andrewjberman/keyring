@@ -33,7 +33,12 @@
       "CTO~X freeze proposal 75610",
       "COO~X queued-status correction 75628",
       "MSTR emission exit-condition ruling 75636",
-      "CTO~X freeze grant 75639"
+      "CTO~X freeze grant 75639",
+      "DT~X evidence-only compile report 75875",
+      "MSTR cross-axis withdrawal 75890",
+      "CTO~X frozen-pin validation 75879 and digest validation 75895",
+      "CTO~X population-limit measurement 75916",
+      "CRO Base final read-only validation of manifest db684f932995d519a9087725b2d2539d249ea533 and receipt 3da49495aa16c5f92563c9c955bbd888d4f85072"
     ]
   },
   "contract_status": {
@@ -50,11 +55,97 @@
     "freeze_exit_condition": "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status",
     "promotion_condition": "evidence_that_finding_changes_an_emitted_value",
     "findings": [
-      {"finding_id": "L0-R24-01", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "empty_suffix_enumeration_interpretation"},
-      {"finding_id": "L0-R24-02", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "suffix_completeness_partition"},
-      {"finding_id": "L0-R24-03", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "repo_relative_path_rule24_partition"},
-      {"finding_id": "L0-R24-04", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "home_space_lifecycle_vocabulary"}
+      {"finding_id": "L0-R24-01", "finding_state": "open", "evidence_run_change_state": "unchanged", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "empty_suffix_enumeration_interpretation"},
+      {"finding_id": "L0-R24-02", "finding_state": "open", "evidence_run_change_state": "unchanged", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "suffix_completeness_partition"},
+      {"finding_id": "L0-R24-03", "finding_state": "open", "evidence_run_change_state": "unchanged", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "repo_relative_path_rule24_partition"},
+      {"finding_id": "L0-R24-04", "finding_state": "open", "evidence_run_change_state": "unchanged", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "home_space_lifecycle_vocabulary"},
+      {"finding_id": "L0-R24-05", "finding_state": "open", "evidence_run_change_state": "new", "rerun_effect": "emitted_authority_contradiction", "semantic_dimension": "variant_suffix_source_authority"}
     ]
+  },
+  "post_rerun_base_validation": {
+    "validation_state": "failed",
+    "release_gate_state": "held",
+    "evidence_pair": {
+      "manifest": {
+        "home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
+        "persistence_state": "working_tree_modified_uncommitted",
+        "git_blob": "db684f932995d519a9087725b2d2539d249ea533",
+        "sha256": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92"
+      },
+      "receipt": {
+        "home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.receipt.json",
+        "persistence_state": "working_tree_untracked",
+        "git_blob": "3da49495aa16c5f92563c9c955bbd888d4f85072",
+        "sha256": "9d0885b467e36430f97b8e004590389c15bdd6cf850b53b540dd19224b3e13c7"
+      },
+      "artifact_digest_binding_state": "verified",
+      "repository_replayability_state": "not_replayable_from_committed_pair"
+    },
+    "structural_emission": {
+      "manifest_part_count": 42,
+      "frozen_schema_validation_error_count": 0,
+      "receiver_presence_count": {"home_space": 42, "grain": 42, "key": 42, "failure_mode": 42}
+    },
+    "declaration_measurement": {
+      "grain": {"declared_count": 0, "unknown_count": 42},
+      "key": {"declared_count": 0, "unknown_count": 42},
+      "failure_mode": {"declared_count": 0, "unknown_count": 42},
+      "unknown_coherence_state": "coherent"
+    },
+    "home_space_measurement": {"repo_path_count": 25, "s3_uri_count": 14, "none_count": 3},
+    "population_completeness": {
+      "assessment_state": "unmeasurable",
+      "registered_part_count": 42,
+      "known_unsearched_entry_count": 12,
+      "known_unsearched_representation": "mixed_prose",
+      "known_missing_subject_lower_bound": 2,
+      "known_missing_subject_ids": [
+        "org/modules/graph/comp_aws_cli.py",
+        "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py"
+      ],
+      "coverage_fraction_claim_permitted": false
+    },
+    "variant_suffix_authority": {
+      "part_id": "kuzu_nessie_db.rebuild.tmp.SET",
+      "declared_source_home": "infra/aws/globgrph/_canonical.py",
+      "declared_source_line": 188,
+      "observed_source_role": "removal_repertoire",
+      "required_source_role": "minting_producer",
+      "authority_match_state": "contradicted"
+    },
+    "lifecycle_axis_coverage": {
+      "manifest_document": {"authorship_mode_state": "absent", "mutation_policy_state": "absent", "temporal_claim_state": "absent", "authority_role_state": "absent"},
+      "receipt_document": {"authorship_mode_state": "absent", "mutation_policy_state": "absent", "temporal_claim_state": "absent", "authority_role_state": "absent"},
+      "parts": {"part_count": 42, "authorship_mode_present_count": 0, "mutation_policy_present_count": 0, "temporal_claim_present_count": 42, "authority_role_present_count": 42}
+    },
+    "receipt_contract": {
+      "document_kind_state": "absent",
+      "governing_schema_state": "absent",
+      "lifecycle_axes_state": "absent",
+      "input_closure_state": "incomplete",
+      "unbound_input_classes": [
+        "compiler_commit_and_home",
+        "card_population_registry_blob",
+        "card_population_registry_schema_blob",
+        "base_manifest_blob",
+        "card_to_part_map_blob",
+        "substrate_card_schema_blob",
+        "admitted_card_blobs",
+        "structured_replay_digests"
+      ]
+    },
+    "unknown_lifecycle_expressibility": {
+      "claim_status_token": "unknown",
+      "unknown_lifecycle_axis_state": "absent",
+      "terminal_transitional_partition_state": "inexpressible"
+    },
+    "remediation_sequence": {
+      "current_pair_role": "pre_remediation_evidence_only",
+      "next_step": "dt_receipt_contract_and_control_source_tranche",
+      "shared_schema_step": "coordinated_before_final_emission",
+      "final_pair_step": "new_authorized_run_after_shared_schema_remediation",
+      "release_step": "base_pass_on_final_committed_pair"
+    }
   },
   "mission": {
     "directive": "D11",
@@ -267,7 +358,7 @@
           "population_boundary": {
             "parent_document_kind": "l0_graph_substrate_manifest",
             "parent_document_home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
-            "parent_sha256": "5f8aac736ba47855f63c690cc77478c2562bc16ad1dac35eeeba89394236f534",
+            "parent_sha256": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92",
             "operation": "identity",
             "excluded_exact_part_ids": [],
             "exclusion_reason": "no_admitted_wave3_card_subject_id_exactly_matches_a_manifest_part_id"
@@ -804,7 +895,12 @@
       "Reference the validated card contract, layer deliverable contracts, and checkpoint sequence from the PRD.",
       "Issue the pinned PRD and contract package reference to COO~X for its drive loop.",
       "Extend L0_GRAPH_SUBSTRATE_MANIFEST.schema.json so every part declares structured grain, key, and failure-mode semantics before L1 starts.",
-      "Add a schema-governed D11 card population registry with an exact W3 extension population and independent grain, key, and failure-mode receiver-source populations; globs remain candidate discovery only."
+      "Add a schema-governed D11 card population registry with an exact W3 extension population and independent grain, key, and failure-mode receiver-source populations; globs remain candidate discovery only.",
+      "Replace denominator.known_unsearched prose with typed population members, typed exclusions, named search scopes, and an independently measurable expected-member set.",
+      "Separate non-enumerable variant removal evidence from minting-producer authority; removal code cannot authorize a producer repertoire.",
+      "Require independent authorship_mode, mutation_policy, temporal_claim, and authority_role axes on the L0 document and every part.",
+      "Add an independent unknown-lifecycle axis that distinguishes terminal-under-current-contract from transitional-pending-declaration without widening claim_status.",
+      "Land atomic step 4 before the final emission: bind part.basis to basis_present, retire denominator.parts_registered, require home_space/grain/key/failure_mode, and remove compatibility wording."
     ]
   }
 }
