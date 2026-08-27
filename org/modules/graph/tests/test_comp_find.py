@@ -75,7 +75,7 @@ def tree(tmp_path, monkeypatch):
     rels = sorted(_TREE)
     monkeypatch.setattr(F, "WS", str(tmp_path))
     monkeypatch.setattr(F._comprail, "gitignore_aware_files",
-                        lambda ws, pathspec, include_held=False: (list(rels), "", None))
+                        lambda ws, pathspec, include_held=False, corpus="default": (list(rels), "", None))
     monkeypatch.setattr(F._comprail, "systems_context", lambda files: [])
     monkeypatch.setattr(F._comprail, "log_rail", lambda *a, **k: None)
     return tmp_path
@@ -213,7 +213,7 @@ def test_Z_a_blocked_scope_is_loud_and_rc2_never_a_clean_empty(tree, monkeypatch
     """A scope resolution failure must NOT render as zero hits. A blocked search and an empty
     search are the same output right up until you act on it."""
     monkeypatch.setattr(F._comprail, "gitignore_aware_files",
-                        lambda ws, pathspec, include_held=False: (None, "", "bad pathspec"))
+                        lambda ws, pathspec, include_held=False, corpus="default": (None, "", "bad pathspec"))
     rc, out = _run(monkeypatch, capsys, "widget")
     assert rc == 2
     assert "BLOCKED" in out and "bad pathspec" in out
@@ -223,7 +223,7 @@ def test_Z_a_blocked_scope_is_loud_and_rc2_never_a_clean_empty(tree, monkeypatch
 def test_Z_sovereign_held_note_is_surfaced(tree, monkeypatch, capsys):
     """When the rail withholds a firm path, absence is NOT confirmed and the run must say so."""
     monkeypatch.setattr(F._comprail, "gitignore_aware_files",
-                        lambda ws, pathspec, include_held=False:
+                        lambda ws, pathspec, include_held=False, corpus="default":
                         (sorted(_TREE), "HELD: 3 sovereign path(s) excluded", None))
     _rc, out = _run(monkeypatch, capsys, "widget")
     assert "HELD: 3 sovereign path(s) excluded" in out
