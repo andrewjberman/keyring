@@ -370,12 +370,8 @@
           "description": "Known readers. An empty array on a live store is a candidate orphan; null means not measured."
         },
         "basis": {
-          "enum": [
-            "measured",
-            "inferred",
-            "held",
-            "absent"
-          ]
+          "$ref": "#/$defs/basis_full",
+          "description": "Epistemic standing of THIS PART's claim. Bound by $ref so the vocabulary has ONE definition a validator reads, not four prose copies."
         },
         "evidence": {
           "type": "string",
@@ -419,19 +415,8 @@
               ]
             },
             "basis": {
-              "enum": [
-                "measured",
-                "held",
-                "inferred",
-                "absent"
-              ],
-              "x-rule24": {
-                "axis": "the EPISTEMIC STANDING of this receiver's payload",
-                "grain": "one receiver on one part",
-                "intent": "one -- how the value was obtained; NOT how confident anyone is",
-                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
-                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
-              }
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
             },
             "evidence": {
               "type": "string",
@@ -569,19 +554,8 @@
               ]
             },
             "basis": {
-              "enum": [
-                "measured",
-                "held",
-                "inferred",
-                "absent"
-              ],
-              "x-rule24": {
-                "axis": "the EPISTEMIC STANDING of this receiver's payload",
-                "grain": "one receiver on one part",
-                "intent": "one -- how the value was obtained; NOT how confident anyone is",
-                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
-                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
-              }
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
             },
             "evidence": {
               "type": "string",
@@ -787,19 +761,8 @@
               }
             },
             "basis": {
-              "enum": [
-                "measured",
-                "held",
-                "inferred",
-                "absent"
-              ],
-              "x-rule24": {
-                "axis": "the EPISTEMIC STANDING of this receiver's payload",
-                "grain": "one receiver on one part",
-                "intent": "one -- how the value was obtained; NOT how confident anyone is",
-                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
-                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
-              }
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
             },
             "evidence": {
               "type": "string",
@@ -928,7 +891,15 @@
               "type": "string",
               "minLength": 1,
               "pattern": "^\\S+$",
-              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. This replaced a compound `pattern_source` string on 2026-08-27 that promised file:line and enforced only non-blank, so 'p.py', 'source-token', 'p.py:', ':1' and 'p.py:0' were all accepted."
+              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. This replaced a compound `pattern_source` string on 2026-08-27 that promised file:line and enforced only non-blank, so 'p.py', 'source-token', 'p.py:', ':1' and 'p.py:0' were all accepted.",
+              "allOf": [
+                {
+                  "not": {
+                    "pattern": "\\s"
+                  },
+                  "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                }
+              ]
             },
             "pattern_source_line": {
               "type": "integer",
@@ -936,20 +907,8 @@
               "description": "enumerable=false ONLY. 1-BASED line number of the producing statement. Integer, never a string, minimum 1 -- line 0 does not exist and a 0 here was the tell that the compound form was never parsed by anything."
             },
             "basis": {
-              "enum": [
-                "measured",
-                "held",
-                "inferred"
-              ],
-              "description": "How the enumeration OR the pattern was established. 'absent' is NOT a member: a present member_set makes a concrete claim, so no-basis beside it is incoherent. Express no-claim by OMITTING member_set entirely.",
-              "x-rule24": {
-                "axis": "epistemic basis of the member claim",
-                "grain": "one member_set",
-                "intent": "one -- how the claim was established; NOT how good it is, NOT whether it applies",
-                "reuse": "SAME value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis, MINUS 'absent'. One estate vocabulary narrowed by a stated coherence rule, never a local copy.",
-                "mece": "measured | held | inferred spans every way a present claim can be established; the fourth state (no claim) is expressed by OMITTING member_set, not by a fourth value.",
-                "state_coherence": "upgrading held->measured moves ONLY this field: it adds no member, removes none, and does not flip enumerable."
-              }
+              "$ref": "#/$defs/basis_present",
+              "description": "Epistemic standing of the member claim. 'absent' is excluded by the $ref target itself, not by a locally retyped enum."
             },
             "evidence": {
               "type": "string",
@@ -1060,7 +1019,15 @@
           "then": {
             "properties": {
               "home": {
-                "pattern": "^s3://[^\\s]+$"
+                "pattern": "^s3://[^\\s]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
               }
             }
           },
@@ -1080,7 +1047,15 @@
           "then": {
             "properties": {
               "home": {
-                "pattern": "^[A-Za-z0-9_]+\\.[A-Za-z0-9_]+\\.[A-Za-z0-9_]+$"
+                "pattern": "^[A-Za-z0-9_]+\\.[A-Za-z0-9_]+\\.[A-Za-z0-9_]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
               }
             }
           },
@@ -1100,7 +1075,15 @@
           "then": {
             "properties": {
               "home": {
-                "pattern": "^(?!s3://)[^\\s]*[^\\s/][^\\s]*$"
+                "pattern": "^(?!s3://)[^\\s]*[^\\s/][^\\s]*$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
               }
             }
           },
@@ -1120,13 +1103,63 @@
           "then": {
             "properties": {
               "home": {
-                "pattern": "^(?!s3://)[^\\s]+$"
+                "pattern": "^(?!s3://)[^\\s]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
               }
             }
           },
           "$comment": "db_path: not an s3 URI, no whitespace"
         }
       ]
+    },
+    "basis_full": {
+      "$comment": "THE estate epistemic-basis vocabulary, schema-local so a validator can bind it. Same value set and meaning as SUBSTRATE_CARD.v2 trust.*.basis.",
+      "enum": [
+        "measured",
+        "held",
+        "inferred",
+        "absent"
+      ],
+      "x-enum-definitions": {
+        "measured": "DIRECT named observation or execution in the claimed window. The claimer ran the instrument or read the artifact, and names which.",
+        "held": "CARRIED FORWARD from a NAMED authoritative prior value WITHOUT current remeasurement. Distinct from measured by the absence of a current read, and from inferred by having a single named source rather than a derivation.",
+        "inferred": "DERIVED by a NAMED RULE from other facts. No direct read of the subject, no single prior value carried -- a rule plus inputs.",
+        "absent": "NO PAYLOAD CLAIM. Legal ONLY under the outer claim_status=unknown; it is the epistemic standing of a receiver that declines to claim, not a weak claim."
+      },
+      "x-rule24": {
+        "axis": "the EPISTEMIC STANDING of a claimed value",
+        "grain": "one claimed value (a part, a receiver payload, or a member set)",
+        "intent": "one -- HOW the value was obtained; NOT how confident anyone is, NOT how good it is",
+        "mece": "measured | held | inferred | absent exhausts the domain, and the three present values are MUTUALLY EXCLUSIVE by the discriminator stated in each definition: a CURRENT READ (measured), a NAMED PRIOR VALUE (held), a NAMED RULE (inferred). Before 2026-08-27 this enum carried no definitions at all and 'held' was undefined relative to the other two -- a value set whose members cannot be told apart is not MECE, it only looks it.",
+        "state_coherence": "re-measuring moves held|inferred -> measured and moves NOTHING else. NOTHING moves measured -> absent except an explicit retraction that also flips claim_status to unknown."
+      }
+    },
+    "basis_present": {
+      "$comment": "basis_full MINUS 'absent'. For a claim that is PRESENT and concrete, where a declaration of no-basis is incoherent. Express no-claim by omitting the object.",
+      "enum": [
+        "measured",
+        "held",
+        "inferred"
+      ],
+      "x-enum-definitions": {
+        "measured": "DIRECT named observation or execution in the claimed window. The claimer ran the instrument or read the artifact, and names which.",
+        "held": "CARRIED FORWARD from a NAMED authoritative prior value WITHOUT current remeasurement. Distinct from measured by the absence of a current read, and from inferred by having a single named source rather than a derivation.",
+        "inferred": "DERIVED by a NAMED RULE from other facts. No direct read of the subject, no single prior value carried -- a rule plus inputs."
+      },
+      "x-rule24": {
+        "axis": "the EPISTEMIC STANDING of a claimed value",
+        "grain": "one claimed value (a part, a receiver payload, or a member set)",
+        "intent": "one -- HOW the value was obtained; NOT how confident anyone is, NOT how good it is",
+        "mece": "measured | held | inferred | absent exhausts the domain, and the three present values are MUTUALLY EXCLUSIVE by the discriminator stated in each definition: a CURRENT READ (measured), a NAMED PRIOR VALUE (held), a NAMED RULE (inferred). Before 2026-08-27 this enum carried no definitions at all and 'held' was undefined relative to the other two -- a value set whose members cannot be told apart is not MECE, it only looks it. 'absent' is EXCLUDED here: the fourth state is expressed by omitting the whole object, never by a fourth value beside concrete content.",
+        "state_coherence": "re-measuring moves held|inferred -> measured and moves NOTHING else. NOTHING moves measured -> absent except an explicit retraction that also flips claim_status to unknown."
+      }
     }
   }
 }
