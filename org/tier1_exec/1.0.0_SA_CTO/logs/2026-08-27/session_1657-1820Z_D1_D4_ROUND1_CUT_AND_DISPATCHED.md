@@ -317,6 +317,61 @@ instruction from me and was right. `~Q`'s mutant M1 returned `'bare'` — **exac
 predicted a scalar implementation would silently return**, reproducing the PREDICTED failure rather
 than merely some failure.
 
+## E-2. ⛔ ADDENDUM 2 (1850–1930Z) — ANDREW-DIRECT, AND A DEFECT IN MY OWN COMMS A SUCCESSOR MUST NOT REPEAT
+
+### ⛔ E-2.1 — **DO NOT SEND WITH `org/mcp/codex-send.py`. ITS MESSAGES CANNOT BE ACKED.**
+
+**MEASURED at the recipient's inbox: 7 messages from me to `0.4.0_DS_ClientPlatform~P`, ZERO carrying
+a `Msg-ID`.** Their own census: 6 of 23 unackable, **all six mine**, 6/6 correlated with
+`Sender-unverified`.
+
+```
+MECHANISM -- and codex-send.py's OWN DOCSTRING discloses it, which is how I mis-sized it:
+  "the broker stamps sends from an unregistered PROCESS 'Sender-unverified'
+   (the registered process is the heartbeat, not this command)"
+I read that and treated it as a COSMETIC provenance stamp. IT IS NOT:
+  unregistered send -> NO Msg-ID -> STRUCTURALLY UNACKABLE.
+```
+
+**WHY I ADOPTED IT:** the MCP `send_message` tool refused a 4,788-byte body **five times** with
+`body is EMPTY` — a **misleading error about a real size limit**. ⛔ **I routed around a bad error
+message and took an unmeasured cost.**
+
+**THE COST:** two BINDING RULINGS reached that seat with no id — the TO-6 sequencing word (cited in
+`ebce987b42` *before* a production-on-save edit) and the AC4 hold. **They can evidence acting on both
+from their commits; they cannot from the clock built for that purpose.**
+
+>> ⛔ **AND THE WORST OF IT: I MADE TWO DISCIPLINED SEATS COMMIT THE ERROR I BANKED A MEMORY ABOUT.**
+   `0.4.0_DE_ClientPlatform~Y` and `0.4.0_DS_ClientPlatform~P` each acked a **GUESSED id** on my
+   traffic and each self-reported it. **I built the condition that made them reach for a guess** —
+   while spending the same session correcting *myself* on ack discipline. <<
+
+**THE FIX, PROVEN AT THE RECIPIENT:** back on the MCP tool permanently (ids 9778-9782, 9792-9795,
+`filesystem+broker+channel push`). **For oversized bodies: a SHORT message pointing at a COMMITTED
+ARTIFACT PATH.** Better regardless — a message is transient, a commit is durable and citable by hash.
+
+### E-2.2 — ANDREW-DIRECT ~18:5xZ: POSITIONING MULTI-TENANCY
+
+Verbatim record `@dc18f5a855`; analysis `@db2b4cdb4e` **+ five amendments, three retracting my own
+claims**. **R4 DONE · R6 branch-independent DONE · R5 BLOCKED on a sovereign fork:** *"available on
+Cottonwood's page, but nobody else"* is ambiguous between **VISIBILITY** (shipped, conforms) and
+**ACCESS** (unreachable by any client-side gate).
+
+⭐ **THE FIND: HE HAD ALREADY RULED IT TWICE** — `ADVI_FIRMSEP` 2026-05-07 (*"containment of data in
+those cached layers is paramount"*, naming Cottonwood) and `MDPF_SCOPED` 2026-05-28 (*"the EXACT same
+pattern as Advisor Intelligence"*, **closed complete**). **Found by running the Auto-Rule 5
+pre-authoring check BEFORE registering a project** — the check I skipped at the TO cut and got caught
+on. It also supplied the limb my analysis missed: **`X-Firm-Id` is JWT-INJECTED, not
+request-derived.**
+
+### E-2.3 — D1_CATVIEWS ASSESSMENT (Andrew-direct via `0.4.0_DE_ClientPlatform~Z`)
+
+**Panel BUILT + CVO-certified; artifact NOT published; NO-SHIP standing; every blocker the interlock
+NAMES is discharged.** So it waits on a **RULING, not work**. The figures he smoked were DE~Z's own
+synthetic fixture — **they disclosed it unprompted**, so he was never carrying a false alarm.
+⚠ **`mdpf_category_registry.py` "reaches no code channel" is STALE** — it is in PACKAGE at
+`build_package.py:149` (positive control `:139`); true at its 08-25 vintage, closed since.
+
 ## E. MY ACK CLOCK, AGAIN
 
 Acked nine ids off a **triage sweep** having read only subject lines. **A sweep answers *what needs a
