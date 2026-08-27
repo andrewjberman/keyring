@@ -356,8 +356,10 @@ against them as part of the population's record, not as bars this seat invented:
 - **Text-vs-code predicate hygiene (74377):** D11's own artifacts quote materializer headers
   verbatim BY DESIGN, so any TEXT-resolved capability predicate over this estate systematically
   over-selects the carding record itself (build_manifest.py's only `pyiceberg` is a quoted
-  citation). A face population built on a text predicate must state how it excluded or binned
-  D11's own record.
+  citation). ⛔ UPGRADED by 74458's second confirmed instance (10 of 14 "delegation edges" were
+  prose, 2 of the 11 token-only rows D11's own cards + manifest — two fields, four hours apart):
+  census-self-inclusion is a PROPERTY OF DOING THIS WORK, not an accident. A wave-3 predicate
+  excludes the census from its own population BY CONSTRUCTION, not by stated binning.
 - **Floor sentence attached:** 40/43/26 are floors/bounds over different predicates; none is a
   denominator without its qualifier sentence (74354 §1, 74374).
 - **The lower bound, per-subject (74384, amended by 74393):** AST join confirmed 4
@@ -377,8 +379,10 @@ against them as part of the population's record, not as bars this seat invented:
   The 34 are no longer "UNRESOLVED": MEASURED as containing NO in-file table write (401 write-call
   sites, 0 table-bound; the non-trivial ones are `setdefault(...).append` Python idiom). The
   residual is now two named holes, both OUTSIDE single-file analysis: (1) CROSS-MODULE DELEGATION
-  (proven present once: cse_producers_nightly reads, delegates its write to cse_store) — a
-  call-graph question, not another regex. ⛔ AND THE OBVIOUS INSTRUMENT IS CIRCULAR (74436/74439,
+  — REPO PLANE now MEASURED (74458): 4 real import edges into confirmed writers, a CLUSTER (3
+  producers — cse_emit_graphhead, cse_producers_nightly, gen_cse_seed — delegate into cse_store;
+  kimi_harness imports derive_runner); 20 of the 34 have no in-file write AND no repo-plane edge;
+  DEPLOYED-PLANE delegation stays UNMEASURED. ⛔ AND THE OBVIOUS INSTRUMENT IS CIRCULAR (74436/74439,
   adopted): the dependency graph's CALLS edges parse DEPLOYED BYTES ("committed-but-never-deployed
   is invisible to enrichment BY DESIGN"), the graph is derived by the very producers under census,
   and the two untracked candidates are its designed blind spot; comp-blast takes a FUNCTION name —
