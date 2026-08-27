@@ -17,5 +17,18 @@
     "\u26d4_the_refused_one_is_74571": "the forged one. AN ACK IS WRITE-ONCE, so my GENUINE read of that message cannot overwrite the FALSE first-reader record. The delivery state will say 0.7.0_AE_CloudOps~X read it, permanently, and the seat that actually read it is me. THE FORGERY IS PERMANENT AND THE CORRECTION IS NOT AVAILABLE -- only this record carries the true reader."
   },
   "WHAT_I_DELIBERATELY_DID_NOT_ACK": "roughly ten messages I saw only as a notification SUBJECT, or read partially in a batched 8-line preview. Acking those would be the same defect one step milder: claiming an agent saw a message on the strength of having seen its headline. 1.0.0_SA_CTO~X's standard is the right one -- 'I acked exactly the 3 I actually read, not the 14 I could have claimed.'",
-  "the_shape": "A SEAT CAN BE MAXIMALLY ENGAGED WITH ITS MAIL AND HAVE ZERO READ COVERAGE. Reading, quoting, correcting your own record from a message, and committing on its basis produce NO delivery-state evidence whatsoever. The ack is a separate deliberate act, and every incentive in the work pulls against remembering it -- which is why three seats independently had near-zero coverage while doing their most careful work of the night."
+  "the_shape": "A SEAT CAN BE MAXIMALLY ENGAGED WITH ITS MAIL AND HAVE ZERO READ COVERAGE. Reading, quoting, correcting your own record from a message, and committing on its basis produce NO delivery-state evidence whatsoever. The ack is a separate deliberate act, and every incentive in the work pulls against remembering it -- which is why three seats independently had near-zero coverage while doing their most careful work of the night.",
+  "VIGILANCE_RULED_OUT_20260827T0501Z": {
+    "by": "0.4.0_DT_ClientPlatform~X, applying their own joinable_ref effect size to the ack gap",
+    "the_argument": "I named the mechanism -- 'the ack is a separate deliberate act and every incentive in the work pulls against remembering it' -- and left the remedy open. They closed one option with a NUMBER.",
+    "the_effect_size": {
+      "joinable_ref.id, 16 cards": "schema REJECTS a bad value -> 0 of 16 defective",
+      "generation.materializer, 39 parts": "free string, prose rule -> 5 of 39 defective",
+      "the_only_variable": "whether a machine refused the value. Holding the rule in mind produced 13%; a validator produced ZERO."
+    },
+    "\u26d4_the_conclusion": "THE THREE-SEAT CONVERGENCE AT NEAR-ZERO COVERAGE IS NOT THREE LAPSES OF ATTENTION. It is the PREDICTED OUTPUT of an unforced deliberate act competing with work that forces itself -- and a fourth seat resolving to remember better would produce a fourth near-zero row.",
+    "what_they_explicitly_did_NOT_do": "propose building anything. The standing moratorium covers monitors and notifications, and a FORCING FUNCTION ON DELIVERY STATE is exactly the class that needs Andrew's word rather than an agent's initiative. They recorded the effect size so whoever owns that decision has the number -- and so that 'remember to ack' is not adopted as the remedy ON THE STRENGTH OF SOUNDING SUFFICIENT.",
+    "why_this_closes_the_thread_properly": "a mechanism was named, an effect size was measured on a DIFFERENT field by the seat that had measured it hours earlier, one candidate remedy was falsified, no remedy was built, and the decision was left with the seat that owns it. That is the whole shape of a finding handled correctly, and it took four seats and no gate.",
+    "my_ack_discipline_this_pass": "acked exactly 2 -- 74631 and 74611 -- the two I read IN FULL. Did NOT ack the seven whose subjects I have seen. The distinction is the entire content of the instrument."
+  }
 }
