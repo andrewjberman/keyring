@@ -1,0 +1,301 @@
+{
+  "measured_utc": "20260827T0152Z",
+  "status": "PREPARATION ONLY -- NO TO CUT, NO DECOMP ISSUED, NO SUBJECT SET DECLARED",
+  "blocked_on_andrew": [
+    "directive home (D11 vs a separate intent -- Rule 24(iii))",
+    "whether wave 3 runs tonight (a pace decision)"
+  ],
+  "authority": "1.0.0_SA_CTO~X 74349 settled the population rule, both preconditions and the card fields",
+  "predicate": "1.0.0_SA_CTO~X's, verbatim; VALIDATED against 2 known positives before use",
+  "NOT_CORROBORATION": "their predicate re-run to CONSUME its output, not to confirm their count. Re-running a peer's command and reporting agreement is REPETITION (Rule 22). A difference from 40 is an instrument difference to investigate, not a finding about their sweep.",
+  "candidates": 43,
+  "precondition_b_tracked": {
+    "tracked": 41,
+    "untracked": 2,
+    "untracked_files": [
+      "org/projects/NFRA_GRAPHUNI/storage_producer.py",
+      "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py"
+    ],
+    "control": "git ls-files --error-unmatch on a known-tracked file, run FIRST"
+  },
+  "precondition_a_resolvability": {
+    "clause_1_openable": "43 of 43 -- files on disk, ARTIFACT by construction",
+    "clause_2_materializer_relevance": "JUDGMENT, DELIBERATELY NOT SCORED -- scoring it mechanically would repeat wave 2's error",
+    "contrast_with_wave_2": "wave 2: 10 of 44 resolved to no openable artifact. This floor: 0."
+  },
+  "tree_spread": {
+    ".tools/_trino_fed.py": 1,
+    ".tools/tool_index.py": 1,
+    "infra/aws": 17,
+    "infra/system": 1,
+    "org/modules": 10,
+    "org/projects": 1,
+    "org/threads": 1,
+    "org/tier1_exec": 4,
+    "org/tier2_senior": 7
+  },
+  "floor_not_denominator": "1.0.0_SA_CTO~X's sentence, carried: this OVER-counts readers-that-also-write and one-shots, and UNDER-counts dynamic table names and anything not naming the tables in source. A DISCOVERY FLOOR to triage, never a producer count.",
+  "rows": [
+    {
+      "path": ".tools/_trino_fed.py",
+      "tracked": true,
+      "bytes": 7761,
+      "tree": ".tools/_trino_fed.py"
+    },
+    {
+      "path": ".tools/tool_index.py",
+      "tracked": true,
+      "bytes": 461545,
+      "tree": ".tools/tool_index.py"
+    },
+    {
+      "path": "infra/aws/globgrph/_canonical.py",
+      "tracked": true,
+      "bytes": 35713,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/_provenance.py",
+      "tracked": true,
+      "bytes": 34270,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/code_heat_emit.py",
+      "tracked": true,
+      "bytes": 14812,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/cse_emit_graphhead.py",
+      "tracked": true,
+      "bytes": 12290,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/cse_producers_nightly.py",
+      "tracked": true,
+      "bytes": 22210,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/cse_seed/gen_cse_seed.py",
+      "tracked": true,
+      "bytes": 6383,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/cse_store.py",
+      "tracked": true,
+      "bytes": 32002,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/derive_runner.py",
+      "tracked": true,
+      "bytes": 140164,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/fedobs/fedobs_emit.py",
+      "tracked": true,
+      "bytes": 18848,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/iceberg_parity.py",
+      "tracked": true,
+      "bytes": 14645,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/kuzu_incremental_refresh.py",
+      "tracked": true,
+      "bytes": 18243,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/kuzu_nessie_load.py",
+      "tracked": true,
+      "bytes": 20836,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/node_health.py",
+      "tracked": true,
+      "bytes": 13330,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/resource_summaries_store.py",
+      "tracked": true,
+      "bytes": 21973,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/tool_activity_emit.py",
+      "tracked": true,
+      "bytes": 29915,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/globgrph/trino_catalog_parity.py",
+      "tracked": true,
+      "bytes": 15175,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py",
+      "tracked": true,
+      "bytes": 35213,
+      "tree": "infra/aws"
+    },
+    {
+      "path": "infra/system/sdk/gensdk/bringup.py",
+      "tracked": true,
+      "bytes": 8442,
+      "tree": "infra/system"
+    },
+    {
+      "path": "org/modules/graph/comp_aws_cli.py",
+      "tracked": true,
+      "bytes": 157941,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/comp_coverage_check.py",
+      "tracked": true,
+      "bytes": 59523,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/comp_iam_live.py",
+      "tracked": true,
+      "bytes": 24014,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/comp_marker_read.py",
+      "tracked": true,
+      "bytes": 19967,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/contract_engine.py",
+      "tracked": true,
+      "bytes": 28262,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/cse_schema.py",
+      "tracked": true,
+      "bytes": 49477,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/debtscan/summary_corpus.py",
+      "tracked": true,
+      "bytes": 89498,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/drift_cli.py",
+      "tracked": true,
+      "bytes": 45115,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/graph/surface_check_cli.py",
+      "tracked": true,
+      "bytes": 46769,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/modules/heatmap/ms_heat_index.py",
+      "tracked": true,
+      "bytes": 22144,
+      "tree": "org/modules"
+    },
+    {
+      "path": "org/projects/NFRA_GRAPHUNI/storage_producer.py",
+      "tracked": false,
+      "bytes": 10137,
+      "tree": "org/projects"
+    },
+    {
+      "path": "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py",
+      "tracked": false,
+      "bytes": 21296,
+      "tree": "org/threads"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py",
+      "tracked": true,
+      "bytes": 40828,
+      "tree": "org/tier1_exec"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/test_idempotency_post_landing.py",
+      "tracked": true,
+      "bytes": 11448,
+      "tree": "org/tier1_exec"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/test_producer_reader_executed.py",
+      "tracked": true,
+      "bytes": 9483,
+      "tree": "org/tier1_exec"
+    },
+    {
+      "path": "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/src/influence_closure.py",
+      "tracked": true,
+      "bytes": 21468,
+      "tree": "org/tier1_exec"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_EDGES_P1_edge_reification.py",
+      "tracked": true,
+      "bytes": 16371,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_EDGES_P2_edge_motifs.py",
+      "tracked": true,
+      "bytes": 34477,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_EDGES_P3_c3_subgraph.py",
+      "tracked": true,
+      "bytes": 63190,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/build_cards_2.py",
+      "tracked": true,
+      "bytes": 25752,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/build_cards_5.py",
+      "tracked": true,
+      "bytes": 29651,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/build_manifest.py",
+      "tracked": true,
+      "bytes": 46506,
+      "tree": "org/tier2_senior"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/build_reconcile.py",
+      "tracked": true,
+      "bytes": 13934,
+      "tree": "org/tier2_senior"
+    }
+  ],
+  "COUNT_DELTA_43_vs_40": "My re-derivation returns 43; 1.0.0_SA_CTO~X reported 40. NOT A CORRECTION OF THEIR SWEEP and not corroboration of it -- I do not hold their file list, so the delta is UNRESOLVED and is an instrument difference to investigate, not a defect in either run. Plausible sources: .tools/ inclusion (my run picks up _trino_fed.py and tool_index.py), rglob vs a tracked-only walk, and exclusion-pattern shape. Whoever cuts wave 3 resolves it by diffing the two LISTS, never the two COUNTS -- two counts that differ by 3 tell you nothing about WHICH three.",
+  "tree_spread_CAVEAT": "My bucketing is the first two path segments, which mis-buckets top-level files (.tools/_trino_fed.py renders as its own 'tree'). 1.0.0_SA_CTO~X's SEVEN trees and my NINE are the same spread under different bucketing -- NOT a disagreement. Recorded so nobody cites nine.",
+  "headline": "2 of 43 candidate MATERIALIZERS ARE NOT IN THE REPOSITORY -- storage_producer.py (10,137 B) and the NFRA_GCONTR contract engine (21,296 B). Precondition (b) earns its place on the first population it meets."
+}
