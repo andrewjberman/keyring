@@ -182,7 +182,28 @@
         },
         "unknown_satisfies_operative_completeness": false,
         "future_mapping_effect": "unknown_to_declared_enrichment",
-        "ruling_evidence": "CRO~A ruling on CTO~X 74980"
+        "ruling_evidence": "CRO~A ruling on CTO~X 74980",
+        "unknown_remediation_population": {
+          "source": "manifest_parts_with_unknown_receiver",
+          "total": 39,
+          "part_class_census": {
+            "store": 18,
+            "materializer": 7,
+            "output_artifact": 6,
+            "projection": 6,
+            "spec_artifact": 2
+          },
+          "resolution_grain": "per_part",
+          "prohibited_resolution_proxies": ["part_class", "filesystem_path_exists"],
+          "minimum_partitions_before_wave_cut": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"],
+          "aggregate_rollup_observation": {
+            "home": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}",
+            "expanded_artifact_count": 5,
+            "disposition": "explicit_mapping_residue"
+          },
+          "wave_cut_ready": false,
+          "evidence": "COO~X 74987"
+        }
       }
     }
   },

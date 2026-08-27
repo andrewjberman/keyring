@@ -154,6 +154,19 @@ def semantic_errors(document: dict) -> list[str]:
         or landing["future_mapping_effect"] != "unknown_to_declared_enrichment"
     ):
         errors.append("receiver must land additively before the join while unknown remains non-complete")
+    remediation = landing["unknown_remediation_population"]
+    class_census = remediation["part_class_census"]
+    if (
+        remediation["source"] != "manifest_parts_with_unknown_receiver"
+        or remediation["total"] != part_population["unknown"]
+        or sum(class_census.values()) != remediation["total"]
+        or remediation["resolution_grain"] != "per_part"
+        or set(remediation["prohibited_resolution_proxies"]) != {"part_class", "filesystem_path_exists"}
+        or set(remediation["minimum_partitions_before_wave_cut"]) != {"materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"}
+        or remediation["aggregate_rollup_observation"]["disposition"] != "explicit_mapping_residue"
+        or remediation["wave_cut_ready"]
+    ):
+        errors.append("39-part remediation must derive from parts and partition per part before wave cut")
 
     bridge = document["l0_deliverable_bridge"]
     if bridge["relabel_existing"] or bridge["rehome_existing"] or not bridge["new_target_document_required"]:
@@ -500,6 +513,18 @@ def main() -> int:
     join_first = copy.deepcopy(document)
     join_first["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["strategy"] = "join_before_receiver"
     mutants.append(("absent-receiver-delayed-on-join", join_first))
+
+    class_proxy = copy.deepcopy(document)
+    class_proxy["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["resolution_grain"] = "part_class"
+    mutants.append(("part-class-used-as-resolution-proxy", class_proxy))
+
+    rollup_forced_one_to_one = copy.deepcopy(document)
+    rollup_forced_one_to_one["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["aggregate_rollup_observation"]["disposition"] = "artifact_subject"
+    mutants.append(("aggregate-rollup-forced-one-to-one", rollup_forced_one_to_one))
+
+    wave_cut_before_partition = copy.deepcopy(document)
+    wave_cut_before_partition["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["wave_cut_ready"] = True
+    mutants.append(("wave-cut-before-partition", wave_cut_before_partition))
 
     release_criterion_removed = copy.deepcopy(document)
     release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [

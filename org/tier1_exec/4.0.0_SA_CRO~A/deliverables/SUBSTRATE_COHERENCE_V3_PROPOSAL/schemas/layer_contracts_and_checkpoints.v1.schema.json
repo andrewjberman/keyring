@@ -290,7 +290,7 @@
             "landing_sequence": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["strategy", "schema_change", "post_rerun_part_population", "post_rerun_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence"],
+              "required": ["strategy", "schema_change", "post_rerun_part_population", "post_rerun_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "unknown_remediation_population"],
               "properties": {
                 "strategy": {"const": "receiver_before_join"},
                 "schema_change": {"const": "additive_optional"},
@@ -316,7 +316,55 @@
                 },
                 "unknown_satisfies_operative_completeness": {"const": false},
                 "future_mapping_effect": {"const": "unknown_to_declared_enrichment"},
-                "ruling_evidence": {"type": "string", "minLength": 1}
+                "ruling_evidence": {"type": "string", "minLength": 1},
+                "unknown_remediation_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["source", "total", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "minimum_partitions_before_wave_cut", "aggregate_rollup_observation", "wave_cut_ready", "evidence"],
+                  "properties": {
+                    "source": {"const": "manifest_parts_with_unknown_receiver"},
+                    "total": {"const": 39},
+                    "part_class_census": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["store", "materializer", "output_artifact", "projection", "spec_artifact"],
+                      "properties": {
+                        "store": {"const": 18},
+                        "materializer": {"const": 7},
+                        "output_artifact": {"const": 6},
+                        "projection": {"const": 6},
+                        "spec_artifact": {"const": 2}
+                      }
+                    },
+                    "resolution_grain": {"const": "per_part"},
+                    "prohibited_resolution_proxies": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["part_class", "filesystem_path_exists"]}
+                    },
+                    "minimum_partitions_before_wave_cut": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "uniqueItems": true,
+                      "items": {"enum": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"]}
+                    },
+                    "aggregate_rollup_observation": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["home", "expanded_artifact_count", "disposition"],
+                      "properties": {
+                        "home": {"const": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}"},
+                        "expanded_artifact_count": {"const": 5},
+                        "disposition": {"const": "explicit_mapping_residue"}
+                      }
+                    },
+                    "wave_cut_ready": {"const": false},
+                    "evidence": {"const": "COO~X 74987"}
+                  }
+                }
               }
             }
           }
