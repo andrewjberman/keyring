@@ -230,3 +230,23 @@ so no downstream check fires.
  }
 ]
 ```
+
+
+---
+
+## D2 DRIVE-OPEN DECLARATION — 2026-08-27T15:1xZ, 3.0.0_SA_CVO (channel owner)
+
+Appended at D2 drive open per Andrew-direct lock-in (record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260827_D2_TIGHTENING_LOCKIN_BEFORE_FLOOD.md`).
+A LAUNCH HOLD is live at 0.0.0_AB_MSTR until the lock-in confirms. Binding for this project's D2 round:
+
+1. **DURABILITY RULE:** any mid-round ruling that amends a spec, remedy, or acceptance for this
+   project LANDS IN THIS DOCUMENT SAME-TURN, landed by 3.0.0_SA_CVO as channel owner. Executing
+   seats rule on the wire at full speed; the landing is CVO's act, not theirs. (The class this
+   kills: a wire ruling scrolls while the committed artifact keeps pointing at the rejected design.)
+2. **ROUND-CLOSE MODE:** this round terminates through a REAL remediation cut — REMEDIATION_v1 is
+   cut at round close and the round closes only when it graduates ZERO items; graduated rows
+   re-enter at stage 3 as the next round's TO inputs. Completion is measured, never declared.
+3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Surprises: one
+   line by MCP, class {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm
+   owner at surfacing; OBSERVATION never interrupts.
