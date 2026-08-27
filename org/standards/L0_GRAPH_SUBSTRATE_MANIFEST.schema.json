@@ -140,7 +140,6 @@
             "repo_path",
             "s3_uri",
             "iceberg_table",
-            "db_path",
             "none"
           ],
           "description": "WHICH ADDRESS SPACE `home` is rendered in. Without it, `home` is one string carrying four spaces and STRING EQUALITY SPLITS ONE ARTIFACT INTO TWO ROWS: the pyiceberg client addresses the same table as the tuple ('globgrph','cse') while Trino addresses it as 'iceberg.globgrph.cse' (0.7.0_AE_CloudOps~X, cse_schema.py:595). Both are CORRECT addressings of ONE artifact. iceberg_table therefore requires the CANONICAL TRIPLE catalog.namespace.table -- a bare table name is refused, because it is the rendering that cannot be joined.",
@@ -148,9 +147,10 @@
             "axis": "the address space of the home string",
             "grain": "one part",
             "intent": "one -- HOW to parse and normalise `home`; NOT where it is, NOT whether it exists",
-            "mece": "repo_path | s3_uri | iceberg_table | db_path | none spans every home the estate renders today. 'none' is a DECLARED absence of location, not a fifth location.",
+            "mece": "repo_path | s3_uri | iceberg_table | none spans every home the estate renders today. 'none' is a DECLARED absence of location, not a fifth location. `db_path` WAS A MEMBER AND WAS REMOVED 2026-08-27: it is SYNTACTICALLY IDENTICAL to repo_path, so it distinguished what the artifact IS rather than how its address parses -- a second axis inside a one-axis enum, and `part_class` already carries artifact role. Found by 4.0.0_SA_CRO~A asking whether '.comp-graph/db.kuzu' could be BOTH; it could, and that is the Rule 24(iii) failure.",
             "state_coherence": "building an unbuilt part moves home_space none->{repo_path|s3_uri|iceberg_table|db_path} AND home together, and moves population_status separately. Re-rendering the SAME artifact for a different client moves home_space and home and NOTHING ELSE -- it is not a new part.",
-            "reuse": "NEW value set. No estate vocabulary covers address-space-of-a-location; part_class names WHAT a part is, not how its address parses."
+            "reuse": "NEW value set. No estate vocabulary covers address-space-of-a-location; part_class names WHAT a part is, not how its address parses.",
+            "residual_ruled_not_hidden": "A dotted repo filename with no slash ('a.b.c') is syntactically indistinguishable from an iceberg triple. THE PRODUCER DECLARES home_space; the schema checks COHERENCE, it does not INFER the space. Naming this residual is the honest position -- a pattern that claimed to discriminate them would be guessing."
           },
           "x-migration": "OPTIONAL until the generator re-run emits it for all parts. OMISSION IS A COMPATIBILITY STATE, NEVER A THIRD CLAIM -- identical rule to the grain/key/failure_mode receivers. After the re-run this becomes REQUIRED and omission is rejected."
         },
@@ -874,29 +874,12 @@
             },
             "pattern": {
               "type": "string",
-              "minLength": 1,
-              "pattern": "\\S",
-              "description": "enumerable=false ONLY. The producer's name template, verbatim."
+              "pattern": "<[^<>\\s]+>",
+              "description": "enumerable=false ONLY. The producer's name template, verbatim, and it MUST CONTAIN AT LEAST ONE `<placeholder>`. RULED 2026-08-27: a fixed literal pattern denotes exactly ONE artifact, which is not a family at all -- that part carries NO member_set. The placeholder IS the non-enumerability, so a template without one is the enumerable case mislabelled."
             },
             "pattern_source_home": {
-              "type": "string",
-              "minLength": 1,
-              "pattern": "^\\S+$",
-              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. This replaced a compound `pattern_source` string on 2026-08-27 that promised file:line and enforced only non-blank, so 'p.py', 'source-token', 'p.py:', ':1' and 'p.py:0' were all accepted.",
-              "allOf": [
-                {
-                  "not": {
-                    "pattern": "\\s"
-                  },
-                  "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
-                },
-                {
-                  "not": {
-                    "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
-                  },
-                  "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
-                }
-              ]
+              "$ref": "#/$defs/repo_relative_path",
+              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. BOUND, not retyped."
             },
             "pattern_source_line": {
               "type": "integer",
@@ -1072,59 +1055,11 @@
           "then": {
             "properties": {
               "home": {
-                "pattern": "^(?!s3://)[^\\s]*[^\\s/][^\\s]*$",
-                "allOf": [
-                  {
-                    "not": {
-                      "pattern": "\\s"
-                    },
-                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
-                  },
-                  {
-                    "not": {
-                      "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
-                    },
-                    "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
-                  }
-                ]
+                "$ref": "#/$defs/repo_relative_path"
               }
             }
           },
-          "$comment": "repo_path: not an s3 URI, no whitespace"
-        },
-        {
-          "if": {
-            "required": [
-              "home_space"
-            ],
-            "properties": {
-              "home_space": {
-                "const": "db_path"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "home": {
-                "pattern": "^(?!s3://)[^\\s]+$",
-                "allOf": [
-                  {
-                    "not": {
-                      "pattern": "\\s"
-                    },
-                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
-                  },
-                  {
-                    "not": {
-                      "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
-                    },
-                    "$comment": "REJECTS EVERY URI SCHEME, not a named one. The prior guard was `(?!s3://)` -- it excluded the single scheme its author happened to think of, so https://, file://, ftp:// and every other scheme validated as a repo path. Found by 4.0.0_SA_CRO~A Base round 6. A guard enumerating the bad values it imagined is the same defect class as a text predicate over a behavioural fault: it returns a clean, confident, SMALLER population."
-                  }
-                ]
-              }
-            }
-          },
-          "$comment": "db_path: not an s3 URI, no whitespace"
+          "$comment": "repo_path: BOUND to the one owning path contract. Was four inline constraints, one of which was a copy of a guard living at two other sites."
         }
       ]
     },
@@ -1168,6 +1103,44 @@
         "intent": "one -- HOW the value was obtained; NOT how confident anyone is, NOT how good it is",
         "mece": "measured | held | inferred | absent exhausts the domain, and the three present values are MUTUALLY EXCLUSIVE by the discriminator stated in each definition: a CURRENT READ (measured), a NAMED PRIOR VALUE (held), a NAMED RULE (inferred). Before 2026-08-27 this enum carried no definitions at all and 'held' was undefined relative to the other two -- a value set whose members cannot be told apart is not MECE, it only looks it. 'absent' is EXCLUDED here: the fourth state is expressed by omitting the whole object, never by a fourth value beside concrete content.",
         "state_coherence": "re-measuring moves held|inferred -> measured and moves NOTHING else. NOTHING moves measured -> absent except an explicit retraction that also flips claim_status to unknown."
+      }
+    },
+    "repo_relative_path": {
+      "$comment": "THE owning contract for any workspace path in this schema. Localized 2026-08-27 after 4.0.0_SA_CRO~A observed the identical URI guard COPIED at three sites -- in the same commit that eliminated exactly that local-copy defect for `basis`. A rule applied by copy is a rule that cannot move.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "\\s"
+          },
+          "$comment": "no whitespace anywhere, terminator included"
+        },
+        {
+          "not": {
+            "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+          },
+          "$comment": "no URI scheme -- EVERY scheme, not a named one"
+        },
+        {
+          "not": {
+            "pattern": "^(/|[A-Za-z]:[\\\\/]|\\\\\\\\)"
+          },
+          "$comment": "NOT ABSOLUTE. RULED 2026-08-27: a manifest is read on both fabrics, and an absolute path is device-specific by construction -- 'C:/Users/AndrewBerman/...' is unresolvable on site Z and resolves to the WRONG tree wherever it does resolve. The estate rule is DERIVE, never hardcode a device."
+        },
+        {
+          "not": {
+            "pattern": "(^|/)\\.\\.(/|$)"
+          },
+          "$comment": "NO `..` TRAVERSAL. Two spellings of one location are two rows for one artifact, which is the identity-splitting defect home_space exists to prevent."
+        }
+      ],
+      "x-rule24": {
+        "axis": "the SYNTAX of a workspace-relative path",
+        "grain": "one path string",
+        "intent": "one -- can this string be resolved against the repo root on ANY device; NOT what it points at, NOT whether it exists",
+        "mece": "the four negatives partition every way a string fails to be repo-relative: whitespace, a scheme, an absolute root, a traversal.",
+        "state_coherence": "moving a file changes the VALUE and nothing else in this contract."
       }
     }
   }
