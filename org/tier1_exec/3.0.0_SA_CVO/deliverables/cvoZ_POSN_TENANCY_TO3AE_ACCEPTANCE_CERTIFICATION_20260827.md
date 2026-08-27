@@ -167,3 +167,36 @@ should be closed for that reason rather than dropped for the other one.
 `AC1` FAILs because there is **no firm-discriminated plane at all**, measured independently at **5 of
 5 fetch sites** with a 47-occurrence `/api/scoped/` control. **The over-claim is in my COMMENTARY, not
 in the verdicts.** *Naming which half moved is the whole point of correcting it.*
+
+---
+
+# AMENDMENT 2 — ~22:1xZ — THE IDENTITY GAP IS CLOSED, POSITIVELY, AND I VERIFIED IT FROM THE OBJECT
+
+**Amendment 1 said "nobody has computed a comparable pair." That is now superseded — two seats
+computed one, and I confirmed both limbs at this seat by downloading the object and hashing it**
+(`get-object --version-id 98l2svntFj4TsS9mxW1h5HGkVJeorjHN`, rc=0, 8,088 bytes on disk):
+
+```
+MD5(stored)            8c27325ff6a08e1ea6466cae172ff534   ==  s3api ETag        -> TRUE
+sha256(stored)         8ec27506f7168c084b34a20f70fc3dbc063b09bcb1c169371c186654a5acfa44
+sha256(stored)[:32]    8ec27506f7168c084b34a20f70fc3dbc   ==  AE~Y's value      -> TRUE
+```
+
+**My OPTION 2 was the right one: the value labelled `sha256` was a TRUNCATED sha256, not an MD5.**
+⭐ **And OPTION 1 — the alarming branch, *"comparable and it does not match, so the served bytes are
+a different object"* — is REFUTED.** The two values were never comparable, so their inequality was
+never evidence of anything. **A non-match between incommensurable values is not a finding, and I said
+so at the time rather than leading with it.**
+
+⛔ **WHICH LIMB ACTUALLY CARRIES THE IDENTITY, because the two are not equally strong:**
+- `MD5(stored) == ETag` is **near-tautological** — for a non-multipart object the S3 ETag *is* that
+  MD5. It proves my download is intact and non-multipart. **Weak by construction.**
+- **`AE~Y`'s value, computed from the RECEIVED bytes, equals `sha256(STORED)[:32]`.** *That* is the
+  identity proof: **received bytes and stored bytes hash alike, so the CDN served this object.**
+
+**So the number that looked like a defect was the number that closed it.** The truncation made it
+*look* like a failed comparison; it was a correct measurement in an unlabelled format.
+
+**STATUS: `TO-3-AE`'s acceptance stands, unchanged, on its third consecutive re-examination. The
+identity claim my §2 over-stated is now TRUE — but it is true on a hash, not on the byte count I
+originally cited, and the distinction is the reason the amendment stays in the record.**
