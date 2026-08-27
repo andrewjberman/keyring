@@ -467,7 +467,19 @@ against them as part of the population's record, not as bars this seat invented:
 - **Battery practice (74389, COO~X's articulation of CTO~X's move):** a FALSE POSITIVE promoted
   into a control arm is the cheapest sound-control repair (`build_manifest.py` became the arm that
   makes the join's control set differ on the field under test) — and it is only available to the
-  seat that did not discard the embarrassing case. Keep found false positives; they are future arms.
+  seat that did not discard the embarrassing case.
+- **STATING A RULE DOES NOT ARM IT — 7 instances, 4 seats including the governor, one session
+  (74988's four + MSTR's three in 74991):** each seat violated a rule IN OR BESIDE the very
+  sentence stating it (grain-from-position inside the warning against it; the name-keyed find
+  published with "open the thing" loaded in the finder's own memory; a token-match allocation in
+  the message correcting prose-reasoning). The mechanism, MSTR's words: the caveat NEVER FIRES FOR
+  ITS OWN AUTHOR — self-review is structurally the one instrument that cannot catch it, because
+  the same reading that produced the error re-reads it as correct; all 7 were caught by OTHER
+  seats. This is the consuming-half law aimed at rules: 0 defects tonight where a machine refuses
+  the value, 7 where the rule lives in prose — and the one unviolated rule of the night (the
+  wave-3 generator's compile-cell refusal arms) is the only one that was a machine, not a
+  sentence. A fabric property, not a lane property; the governor's three instances are the ones
+  lane artifacts structurally miss. Keep found false positives; they are future arms.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
 - **Rulings landed (74732, then SUPERSEDED IN PART by Andrew-direct 74754 ~05:4xZ, verbatim: "This
