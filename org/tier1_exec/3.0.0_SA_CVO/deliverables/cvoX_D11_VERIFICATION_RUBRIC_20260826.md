@@ -374,9 +374,13 @@ against them as part of the population's record, not as bars this seat invented:
   about absence); bound (74426 re-floor): >=2 by-name, >=4 to-a-table-object, candidate floor 38
   (was 41 — `to_arrow(` and `load_table(` are READ tokens that sat inside the "strong write"
   predicate; the AST-confirmed 4 are unaffected because they were never token results), 34
-  UNRESOLVED. Of the two untracked candidates, only storage_producer.py is still callable a WRITER —
-  contract_engine.NEW.py reads the tables (still untracked, still uncardable; the finding survives,
-  the verb does not). All 4 TRACKED (74389, control fired). ⛔ 74402's own warning travels with this: a TRUE conclusion reached
+  UNRESOLVED. Of the two untracked candidates, NEITHER writes a graph table
+  (measured at source, my 74430): storage_producer.py's only write is json.dump of the P1-A
+  producer JSON at :185-186 — a writer OF THAT ARTIFACT, not of graph_nodes/graph_edges (74426's
+  "writer" and 74429's "not a writer candidate" are both right once the artifact is named — the
+  (FILE, ARTIFACT) grain's fourth arrival, this time on the population record itself);
+  contract_engine.NEW.py reads the tables. Both still untracked, still uncardable; the findings
+  survive, the unqualified verbs do not. All 4 TRACKED (74389, control fired). ⛔ 74402's own warning travels with this: a TRUE conclusion reached
   through FALSE evidence is the variant nobody audits — the census "confirms" it elsewhere and the
   citation is never revisited. When the face cites a writer, my battery checks the CITED LINE for
   the claimed VERB, not merely the conclusion against the census.
