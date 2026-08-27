@@ -95,9 +95,13 @@ finds zero epoch identifiers in the entrypoint, so it *cannot* compute pre-epoch
 
 ## Blockers
 
-**None.** All three remaining items are at other seats by ruling, not by obstruction: CVO's
-completion read on P14-PRECOND, AE_CloudOps~L's SSM half (now unblocked on the applied plane),
-and their 533-date pass under their own gate.
+**None.** Remaining items are at other seats by ruling, not by obstruction: `0.7.0_AE_CloudOps~L`'s
+SSM half (unblocked on the applied plane) and their 533-date pass under their own gate.
+
+*(At window close this section also listed CVO's completion read as outstanding. It closed
+`@d091ce16c6` minutes later, along with the flip. Corrected here because I refreshed Current
+State and Next Steps against that flip and missed this line — a partial refresh leaves exactly
+the kind of stale sentence a reader has no reason to doubt.)*
 
 ## Briefs Written
 
