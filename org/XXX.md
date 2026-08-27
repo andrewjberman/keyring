@@ -333,7 +333,18 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 - The bare-path relative launch (`bash org/mcp/inbox-watch.sh ...`) — guard-hook blocked.
 - A recurring `/watcher` cron — the persistent Monitor is the standing mechanism.
 
-> **ORPHAN WATCHERS — the one thing you must know.** The `inbox-watch.sh` child outlives its session. An
+> **ORPHAN WATCHERS — the one thing you must know.** ⛔ **CORRECTED 2026-08-27: this line read
+> "the `inbox-watch.sh` child outlives its session" FLATLY, and that is FALSE — a PARENT-LIVENESS
+> SELF-EXIT has existed since 2026-07-14** (`org/mcp/inbox-watch.sh:113` opens it, `:161` runs
+> `kill -0 "$WATCH_PARENT"` then exits; **85 of 85 lines in `org/mcp/orphan-audit.log` are
+> `WATCHER-SELF-EXIT`**). **BUT `:139` FAILS OPEN when `$PPID <= 1`** (an MSYS rendering guard, and the
+> correct direction), so the true statement is: **THERE IS A SELF-EXIT AND IT IS OFF WHEN THE PARENT
+> RENDERS AS `PPID <= 1`.** **Your arm banner says which state you are in** — `parent-tied: pid <N>`
+> (armed) vs `parent-tied: OFF` (orphan-capable); read it rather than assume. **NOTHING BELOW ABOUT
+> ORACLES CHANGES** — a narrower birth rate is not a licence to reason from `ps`/`read/`, and the
+> measured 2026-08-27 cost of the stale text was a seat publishing a FALSE orphan-theft claim about a
+> LIVE peer. Depth + the three-carriers lesson: `.claude/skills/watcher/SKILL.md`. **When the check is
+> OFF, everything that follows applies exactly as written.** An
 > orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
 > into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
 > (a process exists; the inbox is empty *because the orphan drained it*).

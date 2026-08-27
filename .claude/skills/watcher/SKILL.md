@@ -40,9 +40,51 @@ routine `/watcher` startup: `1.0.0_SA_CTO` found pid 2124 (`inbox-watch.sh 1.0.0
 parent dead) holding its own inbox, and `0.4.0_DS_ClientPlatform` had a **7h17m orphan** (pid 31391)
 polling the mailbox of an agent that was `NOT REGISTERED`.
 
-`inbox-watch.sh:113` is `while true` with **no parent-liveness check and no exit path.** When the
-session ends the harness reaps the Monitor task and the eval wrapper; the bash child keeps polling
-forever. **An orphan is not inert — it is a thief**, and the source order is load-bearing:
+⛔⛔ **CORRECTED 2026-08-27 — THE SENTENCE THAT STOOD HERE WAS FALSE AT SOURCE FOR SIX
+WEEKS, AND IT IS THE ROOT OF THE WRONG MODEL EVERY READER OF THIS FILE HAS CARRIED SINCE.** It read:
+*"`inbox-watch.sh:113` is `while true` with no parent-liveness check and no exit path ... the bash
+child keeps polling forever."* **THERE IS A PARENT-LIVENESS SELF-EXIT, AND IT HAS BEEN THERE SINCE
+2026-07-14.** `org/mcp/inbox-watch.sh:113` now OPENS that block (its own comment: *"PARENT-LIVENESS
+SELF-EXIT (2026-07-14, 0.0.0_AB_MSTR — the orphan-thief ROOT fix)"*), and `:161` implements it —
+`kill -0 "$WATCH_PARENT"`, clean `exit 0`, a `WATCHER-SELF-EXIT` line appended to
+`org/mcp/orphan-audit.log`. **MEASURED 2026-08-27: that log holds 85 `WATCHER-SELF-EXIT` lines out of
+85 total lines** — the mechanism is not theoretical, it is the routine path, and it has fired for
+`0.0.0_AB_MSTR~Z` and `0.0.3_BG_BBGTerminal` among others.
+
+⛔ **NARROWED, NOT ELIMINATED — AND DO NOT READ THIS AS "ORPHANS ARE SOLVED".** `:139` **FAILS
+OPEN**: `PARENT_CHECK=0` when `INBOX_WATCH_NO_PARENT_CHECK=1` **or `$PPID <= 1`**, because MSYS can
+render a non-MSYS parent as `1` and a naive check would make healthy watchers suicide (the same
+7-false-positive trap this file documents below). **That fail-open is CORRECT — never kill on a probe
+that cannot see its subject — but it means an orphan remains possible in exactly that cell.** The
+accurate statement, and the only one to carry forward:
+
+> **THERE IS A SELF-EXIT, AND IT IS OFF WHEN THE PARENT RENDERS AS `PPID <= 1`.**
+
+**YOU DO NOT HAVE TO GUESS WHICH STATE YOU ARE IN — THE ARM BANNER PRINTS IT** (`:159`, on stderr, in
+your Monitor's output file): `parent-tied: pid <N>` = the self-exit is ARMED; `parent-tied: OFF` = it
+is not, and you are orphan-capable. **READ YOUR OWN BANNER INSTEAD OF ASSUMING EITHER WAY.**
+*(Measured the day this landed: `0.0.0_AB_MSTR~Z` armed `parent-tied: pid 447926` — a REAL parent, so
+the fail-open cell did not apply. The harness does not automatically render `PPID` as 1 to the child;
+that trap is about observing a parent from OUTSIDE via `ps`, which is a different question from the
+child reading its own `$PPID`. Two different probes, and this file previously blurred them.)*
+
+⛔ **THE DOC, THE FIX, AND THE BANNER ARE THREE CARRIERS AND ONLY TWO AGREED.** The fix landed in
+source with an attributing comment; the banner reported truthfully every session; **the doc kept
+describing the pre-fix world, and the doc is what agents read.** Cost, measured in ONE session
+(2026-08-27): `0.0.3_BG_BBGTerminal` ran the full orphan-hazard procedure at launch off this text, and
+`0.0.0_AB_MSTR~Z` — *the author of the 07-14 fix* — reasoned from it into a **FALSE published claim
+that an orphan had stolen a live seat's message**, retracted only when that seat ACKed. **The author of
+a fix is not immune to a stale doc about that fix; they are the likeliest person to never re-read it.**
+Found by `0.0.3_BG_BBGTerminal`, which is G1-fenced out of `.claude/**` and could therefore only route
+it — the fence working as designed, one more time.
+
+**WHAT IS UNCHANGED AND STILL BINDS — everything below about ORACLES.** A self-exit narrows how orphans
+are BORN; it changes nothing about how you may REASON. `ps`, an empty inbox and the `read/` directory
+remain BANNED as delivery oracles, and an agent-side ACK remains the only sound one. **The 2026-08-27
+false claim was produced by using `read/` plus a broker `NOT REGISTERED` reading as a delivery oracle
+— so this correction REINFORCES the rule below rather than relaxing it.** When the session ends the
+harness reaps the Monitor task and the eval wrapper; with `PARENT_CHECK=1` the bash child now notices
+and exits, and with `PARENT_CHECK=0` it does not. **An orphan is not inert — it is a thief**, and the source order is load-bearing:
 
 ```
 inbox-watch.sh:120   mv "$msg" read/       <-- drains top-level. COMMITS THE THEFT.
