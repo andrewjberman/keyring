@@ -61,3 +61,16 @@
   recorded, DRAFT until ratified.
 
 Push state stated in the same-turn broadcast.
+
+## Follow-up word, same terminal (~05:1xZ) — the owned-paths grant
+
+The new `daily_reports/` root matched no path rule; safe-commit refused all 8 files UNDEFINED.
+Per the org/sprints/** precedent (SoD: grantee does not self-land) the grant ask was queued to
+0.0.0_AB_MSTR (dark at the time; inbox 20260827T051442Z). Surfaced to Andrew live. His word,
+VERBATIM: **"you land it, cto should be the writer for this."**
+
+Executed on that word: `daily_reports/**` -> lane `TIER0_TIER1_STARTUP_DOCS` (reused, not minted —
+same runner population as org/sprints/**), landed by 1.0.0_SA_CTO with the SoD set-aside recorded
+in the rule's own comment block; his word also names CTO the WRITER/OWNER of this surface
+(template + schema = CTO design surface; daily data/out = that day's runner). MSTR follow-up sent
+same turn resolving the queued ask.

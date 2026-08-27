@@ -1452,6 +1452,20 @@ paths:
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "/daily-sprint daily status text -- MSTR + every exec may author/commit; MSTR base owns the template + skill"
 
+  # /daily-sprint's VISUAL system (Andrew-direct 2026-08-27, CTO terminal design session): rigid
+  # template + JSON schema + render/census scripts + one data JSON and one rendered html per day,
+  # grouped in a new daily_reports/ root on his word. Same runner population as org/sprints/**
+  # (MSTR-base primary, any exec may run the skill), hence the SAME LANE -- reused, not minted; the
+  # org/sprints precedent above already measured why ANY_EXEC is wrong here (no MSTR). Landed by
+  # 1.0.0_SA_CTO, who is ALSO a grantee: SoD deliberately set aside by Andrew at the live terminal,
+  # VERBATIM: "you land it, cto should be the writer for this" -- his word both authorizes the
+  # self-land and names CTO the writer/owner of this surface (template + schema = CTO design
+  # surface; daily data/ + out/ = that day's runner; README carries the split). The MSTR grant ask
+  # this supersedes: inbox 20260827T051442Z, resolved-by-Andrew follow-up sent same turn.
+  "daily_reports/**":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "/daily-sprint visual system -- schema/template (CTO design surface) + scripts + daily JSONs and rendered outputs (any runner); Andrew-direct 2026-08-27, CTO writer"
+
   "org/templates/**":
     lane: BASE_EXEC
     note: "PRD + session-log templates — CTO/COO authorship (ADHC_COMPIL.003; ADHC_OWNPTH.009)"
