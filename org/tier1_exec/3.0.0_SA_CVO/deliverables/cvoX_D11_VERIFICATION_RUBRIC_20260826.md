@@ -61,6 +61,12 @@ graph_vintage kuzu_nessie_db@2902399899597701830 (edges snapshot 655703827546280
      or a full-pagination read (DT~X 73077: false-absence direction only, it can only hide keys).
      Verification form: the absence evidence must carry a scanned/total denominator consistent with
      the population it claims; a piped-rows count without the totals line is not a denominator.
+   - **The EMPTY-ARRAY inverse hazard (74172/74184, survived two gates and my PASS):** an empty
+     `projection_of: []` is a POSITIVE claim ("derives from nothing") that certifies there is no
+     source so nobody ever asks again — and no instrument distinguishes a measured-empty array from
+     a never-populated one. Verification form: an empty lineage array on any subject with a
+     plausible generator draws the same where-looked/denominator question as an absence row; an
+     unevidenced [] on a generated-looking artifact is a flag, not a pass.
 
 ## Expected passes (do NOT manufacture rework) — CTO~X 72796, adopted verbatim
 
