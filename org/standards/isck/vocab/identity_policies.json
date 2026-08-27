@@ -1,0 +1,4 @@
+{
+  "registry": "isck identity_policy (continuity policy) vocabulary v0.1 -- policy CONTENT is authored per entity class with its own evidence; this registry gives the reference field its referent (CV-2)",
+  "members": ["git_history_v0", "provider_key_v0", "parser_identity_v0", "producer_lineage_v0", "run_scope_v0", "family_plus_occurrence_v0", "fused_signature_succession_v0", "held_for_adjudication"]
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "opal:standards:isck:contract:v0",
-  "title": "ISCK Identity-State Contract v0 (DRAFT - not frozen; see ISCK_CONTRACT.md)",
+  "$id": "opal:standards:isck:contract:v0.1",
+  "title": "ISCK Identity-State Contract v0.1 (DRAFT - boundary revision of the adversarial pass round 1; see ISCK_CONTRACT.md)",
   "oneOf": [
     {"$ref": "#/$defs/entity"},
     {"$ref": "#/$defs/entity_binding"},
@@ -19,13 +19,14 @@
     "ent_serial": {"type": "string", "pattern": "^ent:[0-9a-hjkmnp-tv-z]{26}$"},
     "mat_serial": {"type": "string", "pattern": "^mat:[0-9a-hjkmnp-tv-z]{26}$"},
     "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
-    "iso_ts": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"},
+    "iso_ts": {"type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$"},
     "nonempty": {"type": "string", "minLength": 1},
-    "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}},
+    "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}, "minItems": 1},
     "claim_origin": {"enum": ["producer_declared", "independently_observed", "rule_derived", "model_inferred", "human_adjudicated"]},
     "verification_standing": {"enum": ["unverified", "corroborated", "contradicted", "superseded"]},
-    "registry_standing": {"enum": ["candidate", "admitted", "held", "rejected", "retired"]},
+    "registry_standing": {"enum": ["candidate", "admitted", "held", "rejected", "retired", "inadmissible"]},
     "fabric_id": {"$ref": "#/$defs/nonempty"},
+    "fabric_scope": {"enum": ["fabric_invariant", "device_local"]},
 
     "entity": {
       "type": "object",
@@ -41,7 +42,7 @@
         "minted_at": {"$ref": "#/$defs/iso_ts"},
         "minting_authority": {"$ref": "#/$defs/nonempty"},
         "identity_policy": {"$ref": "#/$defs/nonempty"},
-        "current_status": {"enum": ["candidate", "active", "retired", "held"]},
+        "current_status": {"enum": ["provisional", "active", "retired", "contested"]},
         "canonicalized_as": {"$ref": "#/$defs/ent_serial"}
       }
     },
@@ -56,7 +57,7 @@
         "entity_serial": {"$ref": "#/$defs/ent_serial"},
         "identity_space": {"$ref": "#/$defs/nonempty"},
         "native_key": {"$ref": "#/$defs/nonempty"},
-        "fabric_scope": {"enum": ["fabric_invariant", "device_local"]},
+        "fabric_scope": {"$ref": "#/$defs/fabric_scope"},
         "fabric_id": {"$ref": "#/$defs/fabric_id"},
         "valid_from": {"$ref": "#/$defs/nonempty"},
         "valid_to": {"oneOf": [{"$ref": "#/$defs/nonempty"}, {"type": "null"}]},
@@ -64,14 +65,26 @@
         "status": {"enum": ["open", "closed", "disputed"]},
         "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
       },
-      "if": {"properties": {"fabric_scope": {"const": "device_local"}}},
-      "then": {"required": ["fabric_id"]}
+      "allOf": [
+        {
+          "if": {"properties": {"fabric_scope": {"const": "device_local"}}},
+          "then": {"required": ["fabric_id"]}
+        },
+        {
+          "if": {"properties": {"fabric_scope": {"const": "fabric_invariant"}}},
+          "then": {"not": {"required": ["fabric_id"]}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "closed"}}},
+          "then": {"properties": {"valid_to": {"$ref": "#/$defs/nonempty"}}}
+        }
+      ]
     },
 
     "state_observation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["record_type", "observation_id", "entity_serial", "identity_space", "source_vintage", "observed_at", "fabric_id", "failure_state"],
+      "required": ["record_type", "observation_id", "entity_serial", "identity_space", "source_vintage", "observed_at", "fabric_id", "fabric_scope", "failure_state"],
       "properties": {
         "record_type": {"const": "state_observation"},
         "observation_id": {"oneOf": [{"type": "string", "pattern": "^obs:[0-9a-hjkmnp-tv-z]{26}$"}, {"$ref": "#/$defs/sha256"}]},
@@ -81,6 +94,7 @@
         "source_vintage": {"$ref": "#/$defs/nonempty"},
         "observed_at": {"$ref": "#/$defs/iso_ts"},
         "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "fabric_scope": {"$ref": "#/$defs/fabric_scope"},
         "device_id": {"$ref": "#/$defs/nonempty"},
         "fingerprint": {"$ref": "#/$defs/sha256"},
         "fingerprint_method": {"$ref": "#/$defs/nonempty"},
@@ -89,6 +103,11 @@
         "failure_state": {"enum": ["observed", "partial", "substrate_unavailable", "instrument_error", "not_applicable"]},
         "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
       },
+      "dependentRequired": {
+        "fingerprint": ["fingerprint_method", "normalization_version"],
+        "fingerprint_method": ["fingerprint"],
+        "normalization_version": ["fingerprint"]
+      },
       "allOf": [
         {
           "if": {"properties": {"failure_state": {"const": "observed"}}},
@@ -96,7 +115,15 @@
         },
         {
           "if": {"properties": {"failure_state": {"enum": ["substrate_unavailable", "instrument_error", "not_applicable"]}}},
-          "then": {"not": {"required": ["fingerprint"]}}
+          "then": {"allOf": [{"not": {"required": ["fingerprint"]}}, {"not": {"required": ["fingerprint_method"]}}, {"not": {"required": ["normalization_version"]}}]}
+        },
+        {
+          "if": {"properties": {"fabric_scope": {"const": "device_local"}}},
+          "then": {"required": ["device_id"]}
+        },
+        {
+          "if": {"properties": {"fabric_scope": {"const": "fabric_invariant"}}},
+          "then": {"not": {"required": ["device_id"]}}
         }
       ]
     },
@@ -115,9 +142,28 @@
         "verification_standing": {"$ref": "#/$defs/verification_standing"},
         "asserted_at": {"$ref": "#/$defs/iso_ts"},
         "asserted_by": {"$ref": "#/$defs/nonempty"},
+        "adjudicated_by": {"$ref": "#/$defs/nonempty"},
         "superseded_by": {"type": "string", "pattern": "^rel:[0-9a-hjkmnp-tv-z]{26}$"},
         "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
-      }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"verification_standing": {"enum": ["corroborated", "contradicted"]}}},
+          "then": {"required": ["evidence_refs"]}
+        },
+        {
+          "if": {"properties": {"verification_standing": {"const": "contradicted"}}},
+          "then": {"required": ["adjudicated_by"]}
+        },
+        {
+          "if": {"properties": {"verification_standing": {"const": "superseded"}}},
+          "then": {"required": ["superseded_by"]}
+        },
+        {
+          "if": {"properties": {"claim_origin": {"const": "independently_observed"}}},
+          "then": {"required": ["evidence_refs"]}
+        }
+      ]
     },
 
     "materializer": {
@@ -169,7 +215,7 @@
     "materialization_run": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["record_type", "run_id", "materializer_serial", "materializer_version_id", "source_frontier_id", "fabric_id", "started_at", "run_status", "random_seeds", "output_surface_version_ids"],
+      "required": ["record_type", "run_id", "materializer_serial", "materializer_version_id", "source_frontier_id", "fabric_id", "fabric_scope", "started_at", "run_status", "random_seeds", "output_surface_version_ids"],
       "properties": {
         "record_type": {"const": "materialization_run"},
         "run_id": {"type": "string", "pattern": "^run:[0-9a-hjkmnp-tv-z]{26}$"},
@@ -177,6 +223,7 @@
         "materializer_version_id": {"type": "string", "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"},
         "source_frontier_id": {"type": "string", "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"},
         "fabric_id": {"$ref": "#/$defs/fabric_id"},
+        "fabric_scope": {"$ref": "#/$defs/fabric_scope"},
         "device_id": {"$ref": "#/$defs/nonempty"},
         "started_at": {"$ref": "#/$defs/iso_ts"},
         "completed_at": {"oneOf": [{"$ref": "#/$defs/iso_ts"}, {"type": "null"}]},
@@ -185,7 +232,25 @@
         "run_status": {"enum": ["running", "succeeded", "failed", "partial"]},
         "output_surface_version_ids": {"type": "array", "items": {"type": "string", "pattern": "^sv:[0-9a-hjkmnp-tv-z]{26}$"}},
         "run_receipt_digest": {"$ref": "#/$defs/sha256"}
-      }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"run_status": {"const": "running"}}},
+          "then": {"properties": {"completed_at": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"run_status": {"enum": ["succeeded", "failed", "partial"]}}},
+          "then": {"required": ["completed_at"], "properties": {"completed_at": {"$ref": "#/$defs/iso_ts"}}}
+        },
+        {
+          "if": {"properties": {"fabric_scope": {"const": "device_local"}}},
+          "then": {"required": ["device_id"]}
+        },
+        {
+          "if": {"properties": {"fabric_scope": {"const": "fabric_invariant"}}},
+          "then": {"not": {"required": ["device_id"]}}
+        }
+      ]
     },
 
     "source_frontier": {
@@ -256,7 +321,21 @@
         "fabric_validity": {"enum": ["valid_for_fabric", "foreign_fabric", "unknown"]},
         "delta_summary": {"$ref": "#/$defs/nonempty"},
         "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
-      }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"integrity": {"enum": ["verified", "mismatch"]}}},
+          "then": {"required": ["evidence_refs"]}
+        },
+        {
+          "if": {"properties": {"integrity": {"const": "mismatch"}}},
+          "then": {"required": ["delta_summary"]}
+        },
+        {
+          "if": {"properties": {"currency": {"enum": ["at_target", "behind_target", "ahead_of_target"]}}},
+          "then": {"required": ["evidence_refs"]}
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,4 @@
+{
+  "registry": "isck identity_space vocabulary v0.1 -- additions arrive with a four-postulate record (Rule 24) or they are not additions",
+  "members": ["git", "aws_arn", "iceberg_table", "nessie_ref", "s3_key", "local_path", "kuzu_internal", "dynamo_key", "logical_name"]
+}
