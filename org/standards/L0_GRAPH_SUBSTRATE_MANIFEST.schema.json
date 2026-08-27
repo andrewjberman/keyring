@@ -369,12 +369,13 @@
         "grain": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource GRAIN. Card /trust qualifies the SUBJECT RESOURCE, not the persisted artifact; projection is EXACT 1:1 card /subject/id -> part /id only.",
+          "description": "RECEIVER for a card's subject-resource GRAIN. /trust qualifies the SUBJECT RESOURCE, not the persisted artifact. Projection is EXACT 1:1 card /subject/id -> part /id only.",
           "required": [
             "claim_status",
             "basis",
             "evidence",
-            "owner"
+            "owner",
+            "unit"
           ],
           "properties": {
             "claim_status": {
@@ -382,7 +383,7 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
             },
             "unit": {
               "type": [
@@ -446,11 +447,11 @@
                 ]
               },
               "then": {
-                "required": [
-                  "claim_status",
-                  "unit"
-                ],
                 "properties": {
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "basis": {
                     "enum": [
                       "measured",
@@ -466,12 +467,17 @@
         "key": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; an unresolved or non-1:1 relation stays compilation RESIDUE.",
+          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; unresolved or non-1:1 stays compilation RESIDUE.",
           "required": [
             "claim_status",
             "basis",
             "evidence",
-            "owner"
+            "owner",
+            "identity_space",
+            "key_expression",
+            "key_is_stable",
+            "crosses_spaces",
+            "declared_mapping"
           ],
           "properties": {
             "claim_status": {
@@ -479,7 +485,7 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
             },
             "identity_space": {
               "type": [
@@ -581,12 +587,25 @@
                 ]
               },
               "then": {
-                "required": [
-                  "claim_status",
-                  "identity_space",
-                  "key_expression"
-                ],
                 "properties": {
+                  "identity_space": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "key_expression": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "key_is_stable": {
+                    "enum": [
+                      "stable",
+                      "unstable",
+                      "unknown"
+                    ]
+                  },
+                  "crosses_spaces": {
+                    "type": "boolean"
+                  },
                   "basis": {
                     "enum": [
                       "measured",
@@ -602,12 +621,15 @@
         "failure_mode": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource FAILURE MODE.",
+          "description": "RECEIVER for a card's subject-resource FAILURE MODE. When declared, returns_on_failure is NON-NULL -- 'raises' is a legal value; null would be indistinguishable from unmeasured.",
           "required": [
             "claim_status",
             "basis",
             "evidence",
-            "owner"
+            "owner",
+            "returns_on_failure",
+            "distinguishable_from_true_negative",
+            "silent_degrade_paths"
           ],
           "properties": {
             "claim_status": {
@@ -615,7 +637,7 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
             },
             "returns_on_failure": {
               "type": [
@@ -702,12 +724,24 @@
                 ]
               },
               "then": {
-                "required": [
-                  "claim_status",
-                  "returns_on_failure",
-                  "distinguishable_from_true_negative"
-                ],
                 "properties": {
+                  "returns_on_failure": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "distinguishable_from_true_negative": {
+                    "enum": [
+                      "yes",
+                      "no",
+                      "unmeasured"
+                    ]
+                  },
+                  "silent_degrade_paths": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "basis": {
                     "enum": [
                       "measured",
