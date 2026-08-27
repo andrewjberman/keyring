@@ -408,10 +408,17 @@ against them as part of the population's record, not as bars this seat invented:
   invisible to imports, calls, triggers, AND the dependency graph. REFINED by 74694: "parameterized writer" is THREE
   classes by WHERE THE TABLE NAME IS BOUND — (1) call-site literal (derive_runner's
   _overwrite_with_retry: grep FINDS it — parameterisation hides nothing), (2) entrypoint
-  allow-list (snap_store: grep misses, the allow-list ENUMERATES it), (3) arbitrary runtime input — NOT EMPTY
-  (74700): resource_summaries_store.py's `--table` has NO choices= constraint and :202 CREATES
-  whatever name it is given (negative control: snap_store's `--surface` is choices=-constrained —
-  differs at exactly the field under test). AND the member splits two axes the partition
+  allow-list (snap_store: grep misses, the allow-list ENUMERATES it), (3) arbitrary runtime input — TWO members,
+  RELATED BY DESCENT (74700, 74730): cse_store.py (the PARENT, :581 unconstrained `--table`,
+  :338 create_table, :386 append) + resource_summaries_store.py (descendant, "template =
+  cse_store.py" in its own header). The class PROPAGATES BY TEMPLATING: snap_store (same parent)
+  added `choices=` at :415 and became class 2; the others carried the unconstrained arg forward.
+  The remedy already exists in the sibling — `choices=` on two argparse lines — named, NOT applied
+  (qualify-do-not-fix). Population trap for any class-3 sweep: 46 of 89 load_table/create_table
+  sites in infra/ are VENDORED pyiceberg (52%); a count needs its predicate beside it (69 vs 89 vs
+  97 under three predicates, unreconciled). Swept channel: argparse only — env var, config file,
+  and Lambda EVENT-PAYLOAD binding channels UNSWEPT, and the event channel is where a member would
+  have no argparse to find it by. AND the member splits two axes the partition
   conflated: it is DISCOVERABLE (module-literal default, greppable) yet UNBOUNDED (writes any
   table in the namespace) — discoverability and boundedness are ORTHOGONAL. Sharpened
   discriminator, two questions: WHERE is the name bound (call site | entrypoint allow-list |
