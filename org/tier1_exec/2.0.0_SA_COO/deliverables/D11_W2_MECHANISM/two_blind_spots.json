@@ -1,0 +1,21 @@
+{
+  "measured_utc": "20260827T0333Z",
+  "purpose": "WAVE-3 CENSUS DESIGN CONSTRAINT. Two instruments, two OPPOSITE blind spots, and between them a real file can be invisible to both.",
+  "blind_spot_A": {
+    "instrument": "anything reading the FILESYSTEM -- directory listings, file counts, schema batteries, token predicates, reachability sweeps",
+    "blind_to": "UNTRACKED-BUT-PRESENT",
+    "evidence": "19 untracked .py estate-wide, none gitignored. A certifier's card battery certified 7 cards existing on one device.",
+    "found_by": "2.0.0_SA_COO~X sweep, after three independent surfacings"
+  },
+  "blind_spot_B": {
+    "instrument": "the dependency graph's CALLS edges (extract_pipeline_cloud.py enrichment)",
+    "blind_to": "COMMITTED-BUT-NEVER-DEPLOYED",
+    "evidence": "its own header, verbatim: 'A COMMITTED-BUT-NEVER-DEPLOYED script is invisible to enrichment BY DESIGN.' It parses DEPLOYED BYTES, not repo source.",
+    "found_by": "0.8.0_AE_CloudComp~X, upheld by 1.0.0_SA_CTO~X"
+  },
+  "\u26d4_THE_PAIR_IS_THE_FINDING": "The two blind spots run in OPPOSITE directions. A file that is UNTRACKED BUT DEPLOYED is visible to the graph and invisible to git. A file that is COMMITTED BUT NOT DEPLOYED is visible to git and invisible to the graph. NEITHER INSTRUMENT ALONE SPANS THE POPULATION, and each returns a CLEAN, WELL-FORMED, CORRECTLY-CONTROLLED answer about its own domain while missing the other half.",
+  "why_it_bites_precisely_here": "Both untracked candidates are the files a deployed-bytes view is most likely blind to. A CLEAN EMPTY RESULT from the graph on those two would be an artifact of the INSTRUMENT'S DOMAIN, not a statement about delegation -- 0.8.0_AE_CloudComp~X's point, and it is the reason a null there must not be read as a negative.",
+  "the_caveat_that_survives": "UNTRACKED IS NOT UNDEPLOYED. storage_producer.py's own docstring describes an ancestor that RAN and emitted to S3 while never being committed -- precedent for the exact opposite case. So the two sets overlap in an unmeasured way.",
+  "wave_3_consequence": "A materializer census must declare WHICH PLANE it read -- repo, deployed, or both -- and carry the other plane's blind spot as a stated limit. This is the same shape as the two-plane trigger census (events vs scheduler): a one-plane sweep returns a TRUE, correctly-controlled answer about the WRONG POPULATION.",
+  "NOT_a_gate": "observation and a design constraint. No remediation authorized, no seat named at fault."
+}
