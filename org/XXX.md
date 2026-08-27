@@ -204,6 +204,39 @@ stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; d
 python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
 ```
 
+⛔ **ON SITE Z, EXPECT 12-18 TAMPER-VOCABULARY FINDINGS HERE AND DO NOT CHASE THEM. READ THIS
+BEFORE YOU RUN IT, NOT AFTER.** Three separate seats independently spent a message reaching "surface
+it, do not chase it" — the explanation was real but its only carrier was a broker message id, which
+a fresh seat has no reason to open.
+
+>> **MECHANISM, MEASURED 2026-08-27 at source by `0.0.0_AB_MSTR~Z` (not relayed):**
+   `audit-archive-invoker.py chain_root()` returns `archive/<device>/` **only if that directory
+   exists**; otherwise it falls back to the legacy flat root, and its own docstring says that root
+   **IS THE LAPTOP CHAIN**. `org/audit/archive/` currently holds FLAT timestamp dirs with no
+   `<device>/` level, so **a site-Z seat compares its device-local live logs against the LAPTOP's
+   baseline** — two different files sharing a path. The tool renders that difference in tamper
+   vocabulary because tamper vocabulary is the only vocabulary it has. <<
+
+**THE DISCRIMINATOR IS DIRECTION, NOT MAGNITUDE** (`0.4.0_DS_ClientPlatform~L`, 2026-08-27, correcting
+their own first figure before it propagated):
+```
+DEVICE-AXIS  every covered log SHRINKS, each by its own local activity -> a WIDE SPREAD is expected.
+             MEASURED: 8 of 8 shrank, 0 grew; 1.46x - 23.81x, median 5.96x, only 2 of 8 reach 10x.
+TAMPER       selective truncation of the interesting ones -> a MIXED direction set, some UNCHANGED.
+             0 of 8 unchanged is the observation that argues against it.
+```
+⛔ **ASK "did any log GROW or stay UNCHANGED?", never "did they shrink by a similar amount."**
+A 16x spread is what the benign reading PREDICTS; uniform magnitude would be the surprise. **The
+magnitudes are not written here on purpose** — a number in a durable carrier is wrong by next week,
+and the direction is the invariant.
+
+**THIS IS NOT A DEFECT AND NEEDS NO FIX** — `chain_root()` is transition-safe BY DESIGN so the code
+change and the 238-file migration could land in either order. The code landed; the migration has not.
+⭐ **RESOLUTION CONDITION, so this note retires itself:** once `org/audit/archive/<device>/`
+exists, the fallback stops firing and these findings should clear. **If they persist after that
+directory appears, the device-axis explanation no longer covers them and it IS a finding.**
+Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`. Carrier gap surfaced by `3.0.0_SA_CVO~Z`.
+
 **A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX; CORRECTED 2026-07-25 — see below):** harness
 shells are non-interactive and source NO profile, so `.tools/` is reachable only via the `~/bin` forwarders
 (`b519fb1c2e`). **Print the DENOMINATOR — never a boolean:**
