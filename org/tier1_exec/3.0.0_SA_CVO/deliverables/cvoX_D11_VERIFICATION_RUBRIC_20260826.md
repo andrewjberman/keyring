@@ -339,6 +339,14 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   non-goal on every run — my battery read past that disclaimer twice in one hour (COX2 by
   inheritance, DTX2 minutes after writing the correction). The check the tool declares out of
   scope is the check this battery owns.
+- **PIN IDENTITY (added 2026-08-27 after 74832): the pin must equal the DECOMP file's OWN last
+  commit** — `git log -1 --format=%H -- <DECOMP path>` — or carry a declared delta. Wave 3's
+  emitter derived pins from `git rev-parse HEAD` at emit time, structurally ONE COMMIT BEHIND the
+  decomp it pointed at, on every TO, by construction — and a stale-by-one pin can RESOLVE and
+  CONTAIN whenever the prior commit carries the cells, passing both existing checks. The class is
+  new: a DERIVED value from the WRONG QUESTION ("what is HEAD" vs "when did this file change") —
+  deriving does not make a value right, it makes it consistently whatever the source says, and the
+  trusted mechanism is what hides it.
 
 ## Wave-3 pre-bank (population-record commitments the eventual decomp face is checkable against)
 
