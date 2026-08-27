@@ -38,13 +38,41 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    unedited?** The packet is the GROUNDING, not the prose — translate it, never transcribe it.
 5. **Cross-fabric:** site-Z landings come from ferried records at parity (cite the record/commit);
    the packet's `--all` git census already covers both branches.
-6. **RENDER THE IMAGE — this is the deliverable now (Andrew-direct 2026-08-26 ~23:0xZ):**
-   `python .claude/skills/daily-sprint/render_sprint.py --date <DAY>` writes ONE self-contained
-   `Desktop/Opal_Daily_Sprint.html`; surface it with `SendUserFile` + `display: render` (the
-   `/to-check` + `/registry-check` pattern). **Andrew screenshots it into Teams — the post is an
-   IMAGE, not text.** ⛔ **Read the renderer's per-section counts line**: a section that parses to
-   nothing renders EMPTY, and an empty section is indistinguishable from an absent one.
-7. **Commit** the day's file under your author line (`safe-commit`), then surface the render.
+6. **BUILD THE STRUCTURED JSON + RENDER — the visual deliverable (Andrew-direct 2026-08-27,
+   supersedes the 08-26 `render_sprint.py` step; that renderer is retired):**
+   a. `python daily_reports/scripts/commit_census.py --date <DAY> --json` — measured commits,
+      workers, and by-kind counts (the `commit_kind` author-seat enum; Rule-24 record in
+      `daily_reports/README.md`). by_project is authored from packet knowledge until a measured
+      mapper exists — set each cut's `claim` field honestly (`measured` | `inferred`).
+   b. Write `daily_reports/data/DAILY_REPORT_<DAY>.json` against
+      `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
+      author to the shape checklist below.**
+   c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
+      `daily_reports/out/DAILY_REPORT_<DAY>.html`. **A validation failure is a content defect:
+      fix the JSON, never the template.** Surface the html (`SendUserFile` / open it).
+7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
+
+## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
+
+Template `daily_reports/templates/daily_report_template.html` is the ONE design (CTO surface;
+frozen). A /daily-sprint run AUTHORS, it never styles. What the runner is looking for:
+
+- **HEADLINE — a STANDALONE feature, not a sprint item:** what kind of day it was, carried by
+  the biggest win or an amalgamation (`headline.kind`: biggest_win | amalgamation | day_summary).
+  Never wraps.
+- **SPRINT ITEMS (3–8):** each carries a category (fix/ship/verify/build/scope), a **card
+  headline that fits whole — max 52 chars, no ellipsis ever (hard law, renderer rejects)**, a
+  stage title, **WHO / WHAT / WHERE / WHY** (one short line each; touchpoints a reader knows —
+  firms, platforms, dashboard pages, **B2B only, never an individual investor**), a **viz type**
+  (flow / coverage / tree / screens / link / orbit — vary them; params in JSON), and exactly
+  **3 stat chips**.
+- **TEAM ACTIVITY:** the stable every-day element — a layman verdict line on the day's shape,
+  plus two cuts of ONE commit population (by kind of work, by project; both must sum to
+  `commits` — the renderer asserts it). Colors are stable: project N is always the same color.
+- **PROJECTS:** one card per DIRECTIVES.yaml row, name = the register `title:` verbatim, short
+  subtext against the headliner; `quiet: true` for no-movement rows.
+- **PROCESS / BLOCKED:** the same 1:1 register mapping; blocked = genuine external blocks only.
+- All prose fields obey the FIRST–FOURTH RULES (layman, highlight reel, Andrew's voice, volume).
 
 **SUPERSEDED 2026-08-26 ~23:0xZ — THE DELIVERABLE IS AN IMAGE, NOT TEXT.** Every Teams-text
 formatting workaround (`&nbsp;` gap-holders, `---` rules, spacer bullets carrying a non-breaking
@@ -115,6 +143,8 @@ else.
 
 ## Cross-references
 
-Engine `.tools/daily-sprint.py` · template `org/ref/DAILY_SPRINT_TEMPLATE.md` · first instance
-`org/sprints/DAILY_SPRINT_2026-08-20.md` · siblings `/exec-sum` (card+draw, whole-fabric),
-`/directives-check` (the register dashboard), `/comp-state`.
+Engine `.tools/daily-sprint.py` · text template `org/ref/DAILY_SPRINT_TEMPLATE.md` · **visual
+system `daily_reports/` (README = the law + the commit_kind Rule-24 record; schema, template,
+scripts, data, out)** · first instance `org/sprints/DAILY_SPRINT_2026-08-20.md` · first visual
+instance `daily_reports/out/DAILY_REPORT_2026-08-27.html` · siblings `/exec-sum` (card+draw,
+whole-fabric), `/directives-check` (the register dashboard), `/comp-state`.
