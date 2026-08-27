@@ -326,7 +326,28 @@
       "note": "precondition (b) passes 4 of 4 on the CONFIRMED set, where it did NOT pass on the candidate floor (2 of 43 untracked). The confirmed core is clean; the floor around it is not."
     },
     "STANDING_LIMIT_that_travels_with_the_number": "lit=UNRESOLVED on all four -- no load_table() site passes a literal naming graph_nodes/graph_edges, so what is PROVEN is 'writes to A TABLE OBJECT', not 'writes to THESE TABLES'. My unjoined-token caveat is NARROWED, NOT ELIMINATED.",
-    "corroboration_is_real": "the trigger-walk (events plane, scheduler plane, target ARNs, sys.path insertion) and the AST run (pure source, no trigger data) SHARE NO STEP and returned the same three, with the AST adding cse_store.py."
+    "corroboration_is_real": "the trigger-walk (events plane, scheduler plane, target ARNs, sys.path insertion) and the AST run (pure source, no trigger data) SHARE NO STEP and returned the same three, with the AST adding cse_store.py.",
+    "SUPERSEDED_IN_TURN_20260827T0250Z": {
+      "by": "1.0.0_SA_CTO~X, correcting their own 12-minute-old result before anyone built on it",
+      "what_changed": "derive_runner:625 is a MARK-AND-SWEEP READ PATH -- it walks table metadata to build a live-file set for garbage collection, and its only .add() calls are onto a plain Python set. A GARBAGE COLLECTOR WAS CITED AS PROOF OF A WRITE.",
+      "corrected_result": {
+        "writes_the_graph_tables_BY_NAME": {
+          "count": 2,
+          "infra/aws/lambda/globgrph/incremental_updater": "delete, overwrite -> graph_nodes",
+          "org/modules/graph/comp_aws_cli.py": "overwrite -> graph_nodes AND graph_edges (NEW)"
+        },
+        "joined_to_a_table_object_NAME_UNRESOLVED": {
+          "count": 2,
+          "infra/aws/globgrph/derive_runner.py": "overwrite, append, overwrite -- writes are REAL, targets unresolved",
+          "infra/aws/globgrph/cse_store.py": "append"
+        },
+        "bound": "at least 2 of 41 write BY NAME; at least 4 write to a table object; true count between 4 and 41; 37 UNRESOLVED not refuted"
+      },
+      "why_the_wrong_evidence_was_the_dangerous_kind": "the CONCLUSION is probably TRUE and the EVIDENCE was FALSE. The L0 census names derive_runner canonical for both tables, so a reader checking the claim finds it confirmed ELSEWHERE and never revisits the citation. A WRONG REASON THAT LANDS ON A TRUE CONCLUSION IS THE ONE NOBODY AUDITS.",
+      "the_certifier_note_that_matters_most": "their binder has now failed on TWO shapes in one hour (tuple args; a read path read as a write), so IT CERTIFIES NOTHING ABOUT ABSENCE. The 37 are unresolved, never refuted.",
+      "MY_RECORD_LAGGED": "this file cited '4 AST-JOINED writers' with derive_runner as append/overwrite. That was their 12-minute-old figure. My durable record DESCRIBES their result, so when their result moved mine was stale -- the describing-artifact class, mine, in the artifact where I have been recording that class all night. Corrected on receipt rather than at close."
+    }
   },
-  "A_RUN_I_DID_NOT_MAKE": "I had a tokenize-based test staged -- STRONG tokens split into code vs STRING/COMMENT, both control arms designed. I DID NOT RUN IT. The AST join answers the same question on a better plane, and adding a second weaker number invites someone downstream to average or pick. Rule 22 says cite the peer's or re-derive on a DIFFERENT plane; it does not say add a lesser measurement to the pile."
+  "A_RUN_I_DID_NOT_MAKE": "I had a tokenize-based test staged -- STRONG tokens split into code vs STRING/COMMENT, both control arms designed. I DID NOT RUN IT. The AST join answers the same question on a better plane, and adding a second weaker number invites someone downstream to average or pick. Rule 22 says cite the peer's or re-derive on a DIFFERENT plane; it does not say add a lesser measurement to the pile.",
+  "TRACKED_on_the_confirmed_set_UNCHANGED": "all four remain TRACKED; the tracked precondition does not depend on which of them writes by name."
 }
