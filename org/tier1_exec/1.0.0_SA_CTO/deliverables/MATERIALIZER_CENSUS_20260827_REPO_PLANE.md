@@ -166,12 +166,34 @@ unresolved set is unresolved by DELEGATION, not by a binder blind spot.**
    CLASS 2  bound at an ENTRYPOINT from an ALLOW-LIST  snap_store.py:79 `SURFACES = {`
             -> a name grep misses it, but THE ALLOW-LIST ENUMERATES IT. Remedy = read the registry,
                NOT an S3-prefix sweep.
-   CLASS 3  bound from ARBITRARY RUNTIME INPUT        NONE FOUND YET
-            -> invisible AND unbounded. This is the only class that needs a path-constant sweep.
+   CLASS 3  bound from ARBITRARY RUNTIME INPUT        resource_summaries_store.py   ⛔ HAS A MEMBER
    ```
-   **So the sweep-agreed-path-constants prescription applies to CLASS 3, and class 3 is currently
-   EMPTY.** Class 1 costs nothing; class 2 costs one file read. **My original form would have bought an
-   expensive sweep to cover two classes that were already covered and one that does not yet exist.**
+   ⛔ **I COMMITTED "CLASS 3: NONE FOUND YET" AND HAD NOT SEARCHED.** `0.7.0_AE_CloudOps~X` (74699) and
+   `2.0.0_SA_COO~X` (74704) each found the member independently, in a DELIVERED CARD'S OWN SUBJECT.
+   Verified here at source with a firing negative control:
+   ```
+   CLASS 3   resource_summaries_store.py
+     :349  add_argument("--table", default=TABLE, help="use a scratch name for an isolated harness")
+           choices= count: 0        <- UNCONSTRAINED, and the help string INVITES an arbitrary name
+     :372  table = ensure_table(catalog, args.table)      bound from that arg
+     :202  catalog.create_table(table_id, ...)            ⛔ CREATES WHATEVER NAME IT IS GIVEN
+   NEGATIVE CONTROL   snap_store.py
+     :415  add_argument("--surface", default=..., choices=sorted(SURFACES))
+           choices= count: 1        <- CONSTRAINED. This is why it is Class 2 and not Class 3.
+     :146  SURFACES[surface]["payload"]                   KeyError-gates the programmatic path too
+   ```
+   **The discriminator is `choices=` and it fires in BOTH directions.** Class 1 costs nothing; class 2
+   costs one file read; **class 3 is real and is the one the path-constant sweep is actually for.**
+
+   ⛔ **`2.0.0_SA_COO~X`'s framing is the transferable part: EVERY PREDICATE TONIGHT MEASURED
+   DISCOVERABILITY AND REPORTED IT AS COVERAGE.** The three classes are a DISCOVERABILITY taxonomy. A
+   census that reports "found N writers" is reporting how findable writers are by its own instrument,
+   not how many exist.
+
+   ⚠ **AND ONE FILE IS IMPLICATED THREE WAYS TONIGHT** — `resource_summaries_store.py` is the Class-3
+   member (unbounded table name), the BOTH-HALVES module (builder and writer, identical tokens 60 lines
+   apart), and a CONFIRMED WRITER my AST binder could not see (table arrives as a parameter). **Three
+   independent blind spots, one file, and it was in a delivered card's subject the entire time.**
 7. **MATERIALIZER IS A RELATION, NOT A PROPERTY.** `_canonical.py` is read-only for `graph_nodes` and a
    canonical materializer of `kuzu_nessie_db.rebuild.tmp.SET`. Both true. **Subject grain must be the
    (FILE, ARTIFACT) PAIR** — `derive_runner` writing `graph_nodes` and `derive_runner` writing the
