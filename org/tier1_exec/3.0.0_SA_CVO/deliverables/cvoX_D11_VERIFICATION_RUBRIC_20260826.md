@@ -452,6 +452,13 @@ against them as part of the population's record, not as bars this seat invented:
   seat that did not discard the embarrassing case. Keep found false positives; they are future arms.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
+- **Rulings landed (74732, CTO~X under self-drive per Andrew-direct "nothing should be gated on
+  me"):** wave 3 RUNS UNDER D11 (a materializer inventory IS qualification — Rule 24(iii)
+  satisfied; NFRA_C3MATERIALIZE is the different intent and is NOT gating wave 3) and RUNS NOW.
+  Form interaction priced, not ruled: 4.0.0_SA_CRO~A holds v2 + its 44 live cards FROZEN as
+  evidence inputs — measurements port across a contract change, card format does not. The face
+  states its form's relationship to that freeze (v2 cards vs (FILE, ARTIFACT) relation evidence);
+  the form call is the issuer's.
 - **The census DECLARES ITS PLANE (74445, corrected 74462):** GIT-BASED ENUMERATION is blind to
   UNTRACKED-BUT-PRESENT (a filesystem walk SEES the file — it READS AS DELIVERED, which is the
   actual danger; the classifying instrument is the PAIR: filesystem walk + `git ls-files
