@@ -280,3 +280,97 @@ instead of a TO being cut against it.** A remedy shipped inside a finding is sti
 inherits the finding's authority unless it is labelled out of it.
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 2 — 2026-08-27 ~17:1xZ. **THE TO-MINT BLOCK IS DISCHARGED.** And Amendment 1's row was the split carrier.
+
+Written by the SUCCESSOR `3.0.0_SA_CVO~Z` (launched ~16:55Z). The predecessor closed at 16:52Z.
+
+### 1. THE ROW THAT WAS WRONG WAS MINE
+
+Amendment 1's table carries **`F1 — RULED + REMEDY LANDED`**, evidenced as *"`SAT-inv-2` AMENDED at
+`2758833b9f`"*. **That is TRUE OF s.3a AND FALSE OF THE NORMATIVE LINE.** `2758833b9f` was a **pure
+append at `:170+`; it never touched `:118`**, where `SAT-inv-2` still carried the v1 wording
+*"membership derives from a declared predicate over the roster."*
+
+**No seat misreported anything.** COO~Z's commit subject said *"fix ... s.3a"* — accurate. COO~Z's
+`/log` said *"SAT-inv-2 IS AMENDED"* — true of s.3a. Amendment 1 said *"AMENDED at `2758833b9f`"* —
+true of s.3a. **Three accurate reports over one unmoved normative line.** The defect is the SPLIT
+CARRIER: *an amendment written as an APPEND leaves the original in force, and every report about the
+append is true while the artifact still instructs the opposite.*
+
+⛔ **AND THE ROW WAS THE ONE AN ISSUER WOULD READ AS A DISCHARGE.** `1.0.0_SA_CTO~Z` — the seat that
+cuts the membership TO — did **not** take it on trust; they opened `:118` before cutting (msg
+20260827T170708Z). **That is the only reason a TO instructing a builder to derive an underivable
+predicate was never minted.** The block was never lifted by anyone; this deliverable merely read as
+though it had been. Recorded plainly because a certification deliverable is exactly where a false
+discharge hardens.
+
+### 2. THE DISCHARGE — RULED ON A READ OF THE NORMATIVE LINE, NOT ON A REPORT
+
+`2.0.0_SA_COO~Z` landed the fix at **`936b9ae1e9`** and deliberately did **not** assert the condition
+was met, inviting the read instead. Correct, and the read was done:
+
+```
+git show 936b9ae1e9:<DECOMP.md> | sed -n '113,146p'
+  :118  **`SAT-inv-2` — MEMBERSHIP IS A DECLARED REGISTRY: an explicit, owned, versioned list
+        of the nine members with a named maintainer — NOT an inferred predicate, and NOT an
+        unowned hand list.**   <== AMENDED IN PLACE. The v1 wording is quoted beneath it and
+                                   marked FALSIFIED AND MUST NOT BE BUILT AGAINST.
+push state: 936b9ae1e9 is ON origin/SITEZ (ls-remote read: it IS the head)
+```
+
+⛔ **`SAT-b-2` + `SAT-inv-2` ARE NO LONGER BLOCKING FOR TO-MINT. THE MEMBERSHIP SURFACE IS CUTTABLE.**
+
+The line now carries, in the block a builder actually opens: the amended invariant; an explicit stop
+on the v1 wording; the derivation pointer to s.3a.2; **the price** (a declared registry does not
+self-update — a tenth satellite is a REGISTRY EDIT and a missed edit is a SILENT absence); and the
+**two-part remedy stated as composing, not competing** — registry owns the DECISION, `SAT-b-2`'s
+symmetric-difference oracle catches the DRIFT at build time. A successor reading `:118` alone can no
+longer inherit half a remedy.
+
+### 3. THE UNFILLED MAINTAINER SLOT IS ACCEPTED, AND IT IS NOT A GATE
+
+Both `1.0.0_SA_CTO~Z` and this seat asked that the maintainer be NAMED in the line. `2.0.0_SA_COO~Z`
+deliberately left it unfilled, marked it an **OPEN CALL AT ANDREW in the line itself**, and said so
+up front rather than letting a certifier find it. **This seat accepts that reasoning and adopts it.**
+
+Membership here is a **PRODUCT FACT Andrew himself ruled** — he set the nine and personally disowned
+both heuristic routes. **An owner assigned by inference IS the unowned-list failure this invariant
+exists to refuse, merely with a name on it.** Filling the slot to satisfy the form would have made the
+artifact look complete and be wrong in precisely the way the invariant names.
+
+**A TO may be cut and BUILT against `SAT-inv-2` now.** The constraint is a SHIPPING condition — the
+registry ships with its maintainer named — not a mint condition. **This is not a gate and must not be
+relayed as one.**
+
+### 4. SPLIT-CARRIER SWEEP — RUN, BECAUSE IT IS THE LESSON OF THIS VERY ITEM
+
+Swept the estate for the falsified v1 wording surviving anywhere as if live (positive control: the
+same sweep for the AMENDED wording returns 8 carriers, so the instrument finds what exists).
+
+**No live carrier instructs a builder with the v1 wording.** Every surviving occurrence is one of:
+inbox correspondence (correctly frozen history), the decomp's own quotations at `:121` / `:236`
+(explicitly marked falsified), or **this deliverable at `:236` and the predecessor's session log at
+`:111`** — where the v1 wording is quoted *as the thing being critiqued* by the F1 ruling.
+
+⚠ **Those two are now HISTORICAL, not descriptive.** `:236`'s sentence — *"`SAT-inv-2` CLAIMS 'a
+declared predicate over the roster' while the mechanism IS a list"* — was true when written and no
+longer describes the artifact. **It is left in place rather than rewritten**: it is the reasoning that
+produced the ruling, and a global substitution over one's own retraction is its own failure class.
+This paragraph is the pointer that keeps it readable as history.
+
+### 5. F-ROW STATUS AS OF THIS AMENDMENT
+
+| finding | status | owner |
+|---|---|---|
+| F1 | **CLOSED. Remedy landed ON THE NORMATIVE LINE @`936b9ae1e9`; block DISCHARGED** | — |
+| F2 | LIVE, P1 — four-postulate record for `modesFor(firm)`, correctly deferred behind `SAT-c-1` | `1.0.0_SA_CTO~Z` |
+| F3 | LIVE, P1 — `Opal Satellite 60` named as the resolution-path mutant; **FIXTURE still owed** | DE via the TO cut |
+| F4 | CLOSED (scope column withdrawn, not restated) | — |
+| F5 | CLOSED | — |
+
+**Everything else in this deliverable stands.** No cell verdict is disturbed by this amendment.
+
+— `3.0.0_SA_CVO~Z`
