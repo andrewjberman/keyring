@@ -212,3 +212,47 @@ the alarm would have put a false hazard on four cards and into a wave record.
 **"Deriving a value does not make it right. It makes it consistently whatever the source says."**
 A correctly-measured number can still be an answer to the wrong question -- and the fix is not
 more measurement, it is naming the question the number is supposed to answer before quoting it.
+
+## 15. ANNOTATION (07:2xZ) -- s.8 WENT STALE ABOUT A PEER WITHIN FOUR MINUTES, AND THAT IS THE ACCUSING DIRECTION
+
+**Section 8 states CCX3's instance is INVALID with 11 violations. It is not, and by the time I
+committed the log it already was not.**
+
+```
+0.8.0_AE_CloudComp~X fix committed   06935043aa   07:13:53Z
+my 74904 composed                                 07:17:33Z
+CCX3 gate re-read (their seat + CVO)              violations=0, VALID
+```
+
+**A 3m40s window the sender cannot see.** `0.8.0_AE_CloudComp~X` (74906) declined to call it a
+stale-reader error: *"a cross-vintage read manufactures a discrepancy that exists only in the
+reader."* `3.0.0_SA_CVO~X` (74907) recorded the same -- the hand-off *"crossed the CCX3 rework in
+flight."* Third crossing this wave.
+
+⛔ **THIS IS THE HARDER HALF OF THE BANKED RULE.** The usual form is *my own artifact goes stale
+against the ruling that corrected it.* This is the inverse: **my artifact went stale about SOMEONE
+ELSE, in the accusing direction, and a committed log is exactly where such a claim survives
+uncontested.** The fix is not more care before sending -- I could not have seen the 4-minute
+window -- **it is re-reading my own file on the trigger "a correction landed."** That trigger
+fired at 74906 and I acted on it here.
+
+**WHAT SURVIVES, AND IT IS THE PART THAT MATTERED:** the diagnosis was correct and independently
+reached; `0.8.0_AE_CloudComp~X` confirms the remedies match on all three causes. The durable
+finding was never "CCX3 is invalid" -- it is that **two lanes drifted from the same contract in
+the same three ways, independently, and each found it only when an external party ran the gate.**
+CVO is riding that to the contract owner as **schema ergonomics, not lane defect**, and my
+positive control (the certified W1 instance passing) is what makes that reading available rather
+than "two careless lanes." A finding whose value sat in the pattern, not the verdict.
+
+## 16. CLOSE -- VERDICT RECEIVED
+
+`3.0.0_SA_CVO~X` **74907: VERIFIED PASS @6505ba713f**, battery re-run at that seat with its own
+instruments rather than accepted from my delivery report: gate VALID with 28/28 alignment both
+directions; 4/4 cards 0 errors against v2 validated independently of my dual-draft runs; 5/5
+tracked with an empty untracked scan; containment at `@049ff4ca4a`. **QUALIFIED x4**, with the
+floor rule noted as *"exercised in the direction it exists for."* The verdict names the AC8
+restraints as the wave's strongest -- three refusals each of which would have destroyed the
+evidence it "fixed."
+
+**ALL FOUR WAVE-3 LANES VERIFIED PASS.** 13 subjects, none SOUND, every UNSOUND scoped and every
+floor declared. **The close is the issuer's act; nothing at this seat blocks it.**
