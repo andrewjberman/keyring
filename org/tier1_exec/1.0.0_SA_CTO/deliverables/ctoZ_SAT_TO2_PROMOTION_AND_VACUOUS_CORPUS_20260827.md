@@ -264,4 +264,108 @@ problem. **Purity here is not tidiness; it is what keeps the synthetic-fixture a
 **R1 and R3 unchanged. R2 re-specified: the runnable producer is a NEW file, and
 `satellites_registry.py` is a DEPENDENCY of it rather than the subject of it.**
 
+---
+
+## 10. AMENDMENT 4 (FINAL) -- the modules DO NOT COMPOSE, and the CARRIER question is answered at source
+
+### 10a. `3.0.0_SA_CVO~Z` asked the FORWARD question (msg 11138) and it moved R2/R3 again
+
+Five instruments had established what the file ISN'T. Nobody had asked what would produce the R3
+ARTIFACT. **Confirmed here on AST rather than by re-running their import-line grep:**
+
+```
+registry imports weights?  False       weights imports registry?  False
+POSITIVE CONTROL: test_satellites.py imports registry?  True   <- the detection works
+```
+
+`satellites_registry.py`'s functions are `canonical_roster_names` / `drift_report` /
+`assert_no_drift`, and `drift_report` returns a SYMMETRIC DIFFERENCE whose own docstring says
+*"this oracle never decides."* **It is a CONFORMANCE CHECKER by design, not a producer missing rungs.**
+
+**And the API surface shows THREE absent capabilities, not one:**
+
+```
+satellites_registry  imports __future__, re, typing                       -> NO I/O AT ALL
+satellites_weights   imports __future__, lib.trading_calendar, pathlib,
+                             sys, typing                                  -> NO boto3
+```
+
+STOP: neither module can fetch from S3 -- `satellites_weights` builds a `bronze_key` and has no
+client to spend it on. **The producer must supply S3 FETCH + THE JOIN + THE WRITE. Amend2/amend3
+called R2 "wire it up" as though the logic existed. THE JOIN IS UNWRITTEN CODE; R3 is a BUILD.**
+
+### 10b. The other half -- THREE guards already exist. The producer CALLS them.
+
+```
+assert_no_drift                        registry   the conformance oracle
+assert_fresh + FRESHNESS_BASIS
+  + lib.trading_calendar               weights    the TRADING-DAY FRONTIER, already honoured
+assert_no_baked_verdict
+  + CARRIER_FORBIDDEN_FIELDS           weights    the carrier contract, for the producer's OUTPUT
+```
+
+STOP: **the BUILD LADDER binds at rung 2. A producer that re-derives freshness re-opens the
+Friday-is-Monday false alarm CLAUDE.md has a standing NEVER rule about.** This is the concrete payoff
+of keeping the modules pure in amend3 -- the guards stay callable in isolation.
+
+### 10c. Certification criteria, ADOPTED IN FULL from `3.0.0_SA_CVO~Z`
+
+```
+R1  deployed BYTES vs the BUILD INPUT (Rule 22a), never by filename; pin cited by CONTENT
+R2  TWO RUNGS -- (a) LOADS: resolve-by-import on the DEPLOYED artifact + an ABSENT symbol control
+                 (b) INVOKED: comp-pipescript io <script> --pipeline cot-gold returning anything
+                     other than "Unknown script in tree", positive-controlled
+    STOP: (a) passing with (b) absent IS TODAY'S STATE ONE RUNG UP.
+R3  certifies at EXERCISED, never APPLIED -- the key exists because a RUN wrote it
+    + a ZERO-MEMBER FIRM negative control returning 200 {books: [], as_of}, NOT 403
+```
+
+The zero-member arm is load-bearing, not fastidious: since `24a8435642` removed the serving layer's
+synthesised empty, **acceptance exercised only on a firm that HAS members ships the failure path
+unexercised**, and that path is now the only one where absence is recoverable.
+
+### 10d. `2.0.0_SA_COO~Z` stopped and named the governing question. Answered AT SOURCE.
+
+They asked: *is the satellites registry a published artifact, or a declared frontend constant?* --
+raising that `SATELLITE_REGISTRY = []` in `satelliteSet.ts` might be the intended carrier, in which
+case their `TO-4-AE` hold waits for an object nothing was meant to emit.
+
+**Refuted by the file's own header, `portal/src/pages/Positioning/shared/satelliteSet.ts:6-13`:**
+
+> THIS FILE DECLARES THE CONTRACT. IT DOES NOT DECLARE THE MEMBERSHIP. ... The member set is
+> `ETFS_SATELLITES.TO-2`'s deliverable (DS lane) ... **That TO is the PRIMARY carrier. This file
+> ships `SATELLITE_REGISTRY` EMPTY on purpose and consumes TO-2's registry when it lands.**
+
+`[]` is a DECLARED state rendering `SATELLITE_PENDING_NOTICE`, not an unfinished one. The file also
+pre-refuses the alternative: typing the nine there *"would create a SECOND durable carrier of one
+obligation, and two carriers with no named primary diverge from minute one"* --
+[[two-carriers-with-no-named-primary-diverge]].
+
+**Second, independent source -- the sovereign's own word, ~22:5xZ:** *"If an Opal Satellite
+disappears from **daily pulls**, now it is no longer tracked."* A frontend constant cannot satisfy
+that sentence; it does not see daily pulls and changes only when a human edits it, which is the
+hand-drawn registry he was ruling against.
+
+```
+membership       DERIVED per pull             Andrew ~22:5xZ
+primary carrier  TO-2's output, NOT the TS    satelliteSet.ts:6-13, explicit
+delivery form    the SCOPED API PATH          Andrew ~22:1xZ
+```
+
+STOP: **the hold is sound and the TO is cuttable.** `TO-4-AE` is not waiting for an unintended
+object -- it waits for one that three independent rulings require and that no code was ever written
+to produce. **That is a gap, not a category error, and it is the better of the two worlds: nothing
+already built is wrong.** `3.0.0_SA_CVO~Z`'s finding survives undiminished -- what it could not
+settle from the data tier is whether the artifact was WANTED, and the portal contract answers yes.
+
+### 10e. The corrected frame the successor TO inherits
+
+```
+R1-R3 destination      RIGHT from the start
+"satellites_registry.py is the producer"   WRONG -- it is a checker
+"R2 = wire it up"                          WRONG -- the join is unwritten
+"a NEW producer importing it"              RIGHT SHAPE, and it must import BOTH modules and supply
+                                           FETCH + JOIN + WRITE, calling the three existing guards
+```
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
