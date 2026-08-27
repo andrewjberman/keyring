@@ -233,8 +233,35 @@ LOCALLY TRUE AND GLOBALLY WRONG: neither paragraph is wrong alone, the defect ex
 composition, it is CREATED BY THE FIX, and it is invisible to the author because the author only
 diffs what they wrote.
 
+#### ⛔ WHAT TRIGGERS THAT AUDIT: **DISCLOSE A VINTAGE MOVE. IT IS NOT COURTESY.**
+
+The step above says to audit the loser. It does not, on its own, say what makes you *go back* — and
+**nothing re-opens a settled question by itself.** Once a resolution is agreed, both sides close the
+files and move on; that is the correct behaviour and it is exactly why the discarded content stays
+lost.
+
+**THEREFORE, A HARD OBLIGATION ON THE SIDE THAT MOVES FIRST: if you commit to your side of a
+contested file AFTER the peer's assessment was taken, SAY SO, unprompted, naming the vintage their
+verdict was measured at and the one it now faces.** Frame it as *re-based, not invalidated* when the
+substance is unchanged. The peer then re-verifies at the new vintage — and **the content audit rides
+along with the re-verification, which is the only reason it happens at all.**
+
+*Measured 2026-08-27: `0.0.0_AB_MSTR` disclosed a post-assessment commit as routine bookkeeping,
+expecting nothing from it. That disclosure sent `0.0.0_AB_MSTR~Z` back to files it had already
+conceded and closed; the re-verification carried the content audit; the audit found a false
+conclusion in text both fabrics had just agreed to canonize. **THE VALUE WAS NOT IN THE CONTENT OF
+THE DISCLOSURE — IT WAS IN THE RE-OPENING.** Neither seat intended the thing that mattered, and the
+record does not assign it to one: the audit found the defect, the disclosure caused the audit.*
+
+⛔ **AND DO NOT LET A VERDICT-AT-A-PASSED-VINTAGE BE DISCOVERED LATER.** A peer's "take yours
+wholesale" was measured against a specific ref. Silence after you move it is not neutral — it leaves
+a live verdict pointing at a vintage that no longer exists, and the peer has no signal that anything
+changed. This is the same class as a stale citation, one layer up: **the claim is fine, the thing it
+was measured against moved.**
+
 *Both findings authored by `0.0.0_AB_MSTR~Z` and `0.0.0_AB_MSTR` jointly on the 2026-08-27
-reconcile; the second was surfaced by the losing side auditing its own rendering after conceding.
+reconcile; the second was surfaced by the losing side auditing its own rendering after conceding,
+and the audit itself was caused by the peer's unprompted vintage disclosure.
 Records: LD-0465 + AMENDMENT 2 (CLOUD), @a12b8173fc.*
 
 ## Step 5 — Execute your half
