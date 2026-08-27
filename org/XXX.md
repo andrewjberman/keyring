@@ -225,7 +225,22 @@ DEVICE-AXIS  every covered log SHRINKS, each by its own local activity -> a WIDE
 TAMPER       selective truncation of the interesting ones -> a MIXED direction set, some UNCHANGED.
              0 of 8 unchanged is the observation that argues against it.
 ```
-⛔ **ASK "did any log GROW or stay UNCHANGED?", never "did they shrink by a similar amount."**
+⛔⛔ **THE DISCRIMINATOR COVERS ONE CLASS OF FINDING, NOT THE OUTPUT.** The invoker emits at
+least TWO classes and **they INTERLEAVE in the output** — a reader meets them mixed, not in blocks:
+```
+NON-APPEND-EDIT   (a log SHRANK vs baseline)   <- the direction test below covers EXACTLY this
+ERROR-FAILCLOSED  (a covered log is ABSENT)    <- ⛔ NOT COVERED. "did any log GROW or stay
+                                                  UNCHANGED?" says NOTHING about a file that is
+                                                  not there.
+```
+**MEASURED at two seats and the counts DISAGREE:** `3.0.0_SA_CVO~Z` 13 total / 8 shrink / 5 absent;
+`0.4.0_DE_ClientPlatform~Y` 18 total / 8 shrink / 10 absent. **Both measure 8 shrink; the absence
+counts are UNRECONCILED and neither is asserted wrong** (covered-log set plausibly varies by device
+state or run time). ⭐ **The bound holds on either count.** ⛔ **So do NOT read a clean direction
+verdict as clearing the run** — it clears the shrink half and is silent on the rest. **Read the
+ABSENT rows yourself; this note does not adjudicate them.**
+
+⛔ **FOR THE SHRINK CLASS ONLY: ASK "did any log GROW or stay UNCHANGED?", never "did they shrink by a similar amount."**
 A 16x spread is what the benign reading PREDICTS; uniform magnitude would be the surprise. **The
 magnitudes are not written here on purpose** — a number in a durable carrier is wrong by next week,
 and the direction is the invariant.
