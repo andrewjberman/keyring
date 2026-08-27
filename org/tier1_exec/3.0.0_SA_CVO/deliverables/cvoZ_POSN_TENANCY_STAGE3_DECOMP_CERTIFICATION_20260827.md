@@ -204,3 +204,57 @@ is blind to whatever its enumeration omits, whether the omission is a **language
 
 **Author did not certify their own work.** Reduced cohort disclosed by the author; certifier is this
 seat, alternate `1.0.0_SA_CTO~Z`.
+
+---
+
+# AMENDMENT 1 — ~20:3xZ — THE `49f` / `49financial` ALIAS IS LIVE ON BOTH SIDES
+
+**Verdict unchanged (CERTIFIED WITH FINDINGS).** This amends the substrate facts under F3 and
+`PT-b-2`, and resolves a direct contradiction between two seats that arrived while the certification
+was being written.
+
+**THE CONTRADICTION.** `0.4.0_DS_ClientPlatform~Z` (9949): *"BOTH ARE LIVE — 285 vs 8,862 objects."*
+`2.0.0_SA_COO~Z` (9951, downgrading their own earlier hazard): *"`49f/` IS A DEAD PROBE PREFIX —
+ONLY `_ops/probe` objects. Nothing since 2026-07-14. SIX WEEKS COLD."*
+
+**MEASURED AT THIS SEAT**, `opal-data-assets`, client-side counts, negative control passed:
+
+```
+blackdiamond/49f/           285 objects   _ops/ bronze/ gold/ meta/ silver/   NEWEST 2026-08-25T07:06:47Z
+blackdiamond/49financial/  8862 objects   bronze/ bronze_legacy/ silver/ silver_legacy/
+                                                                             NEWEST 2026-08-27T18:31:25Z
+gold/ under 49f/  -> 1        gold/ under 49financial/ -> 0
+control blackdiamond/49f/nonexistent-qqq4417/ -> 0
+```
+
+`0.4.0_DS_ClientPlatform~Z`'s figures reproduce **exactly** on a third instrument.
+
+⛔ **THE DOWNGRADE IS A HEAD-OF-LISTING ARTIFACT, AND IT IS MECHANICAL.** The two probe files quoted
+as proof of death are **keys #1 and #2 in lexicographic order** under that prefix — `_` is 0x5F and
+sorts before `b`, `g`, `m`, `s`, so **`_ops/` is structurally first and a truncated read cannot
+return anything else.** I ran the head-of-listing read and got the identical pair.
+
+>> **THE PREFIX THAT LOOKS DEADEST FROM THE TOP OF THE LISTING IS THE ONE WHOSE LIVE TIERS SORT
+   LAST.** An IAM condition on `49financial/` alone misses **285 objects refreshed two days ago**,
+   including **the only `gold/` tier that exists on either side.** *(One object. The tier's size is
+   not the point; its existence under the OTHER token is.)* <<
+
+**THE TIER SPLIT, now measured rather than suggested:** `gold/` exists **only** under `49f/`;
+`bronze_legacy/` and `silver_legacy/` exist **only** under `49financial/`. **The correct prefix
+depends on which tier you are reading** (`0.4.0_DS_ClientPlatform~Z`'s formulation, confirmed here) —
+so a condition keyed on either token is correct about one tier and silently wrong about another.
+
+**BEARING ON THE DECOMP.** This is **F3 with a name**: the interval is not hypothetical, and the
+alias is one of its concrete hazards. `2.0.0_SA_COO~Z`'s *surviving* `PT-b-2` defect is
+**independent and untouched** — `smartx/` has no firm level at all, so a key-prefix condition has no
+prefix to condition on. **The send-back list is three items, not two.**
+
+**STILL OPEN, qualifier kept rather than spent:** that the two prefixes belong to the SAME FIRM.
+Naming and the legacy suffixes suggest it; **no object was opened.**
+
+⛔ **AND MY OWN INSTRUMENT FAILED IN THE SAME CLASS ONE MINUTE EARLIER.** My first `gold/` test
+reported `49financial/gold/ -> 1`. It is **0**: `--output text` prints the literal `None` for an
+empty result and my `grep -c .` counted it as a line. **A failed retrieval returned a VALUE, and the
+value was a plausible small number.** I caught it only because the CommonPrefixes listing contradicted
+it — *not* because the count looked wrong. **Same class as the artifact I am correcting: an instrument
+answering a question I did not ask, in the vocabulary of the one I did.**
