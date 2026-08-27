@@ -28,6 +28,38 @@ classify against `REQUEST_CATALOG.md`, and ACT THIS TURN — serve, decline-with
 escalate — then **record to the thread's daily file in the same turn**. No silent
 standing-by, no "I'll get to it".
 
+### Reading the arm banner — WHICH cursor did you arm off? (added 2026-08-25)
+
+**The arm prints one line, and it is the only statement of which cursor you took:**
+`[teams-watch] armed interval=<n>s cursor=<ts> (incoming-only)` (`teams-watch.py:469`).
+**READ IT BEFORE SERVING ANYTHING THE MONITOR EMITS.**
+
+**Why it matters — the cursor's HOME is environment-dependent, so there is more than
+one.** `teams-watch.py:98` (DMs) and `:101` (channels) both build their path from
+`os.environ.get("TMPDIR", "/tmp")`. The harness exports `TEMP` and `TMP` but **not**
+`TMPDIR`, so the fallback wins and native Windows Python resolves `/tmp` to `C:\tmp`;
+a launcher that DOES set `TMPDIR` lands somewhere else entirely. **Both homes exist on
+this box and have diverged in BOTH directions on different days** — measured 2026-08-25:
+at 20:42Z the DM cursor read 08-18 in one home and 08-21 in the other; by 21:11Z the same
+two homes had swapped which one was ahead. **WHICH FILE IS "LIVE" IS NOT A PROPERTY OF
+THE FILE.** **Both cursor files carry this, not just the DM one** — `:101` guards the
+client-facing Opal Client Tickets channel, and its two homes were 5 days apart when measured.
+
+**The consequence: a cursor that moves BACKWARD re-emits already-served history as new
+backlog** — complete, oldest-first, correctly framed `(1 of N)`, carrying the per-chat
+denominator. **It is indistinguishable from a real backlog by SHAPE alone**, which is exactly
+why the shape cannot be your check. Measured 2026-08-25: three of Andrew's 08-20 messages,
+all already served on the 20th, re-emitted at a 20:42Z arm.
+
+**What to do — no engine change is required of you, and none is yours to make:**
+- If the banner's `cursor=` is **older than the newest entry in your thread daily files**,
+  say so in your session log and treat everything that arm emits as SUSPECT-REPLAY until
+  RECALL clears each message individually.
+- **Let RECALL decide what is owed — never the emit** (`/bbg-teams-assist` step 2).
+- **Never write a delay, an age, or an apology into an ack on the strength of an emit.**
+- The engine defect is owned by `0.5.0_AE_OpalETL~Z`. Surface it; do not work around it,
+  and do not hand-edit a cursor file to compensate.
+
 ## Reply norms
 
 - **Every figure carries its vintage and source**: `data_as_of` (or the channel's date
@@ -74,6 +106,17 @@ standing-by, no "I'll get to it".
   questions answered elsewhere (his DM, the board) — or (ii) no *unsolicited* posts, leaving
   in-thread replies to a question about a specific ticket permitted? **Operate under (i).** An
   unsent reply is recoverable; an unwanted post in a client-facing channel is not.
+  ⛔ **SOMETHING ELSE NOW DEPENDS ON THIS ANSWER, AND NOBODY WOULD CONNECT THE TWO — READ THIS
+  BEFORE ACTING ON A REPLY FROM HIM.** The 2026-08-27 cursor-replay disarm (see "Reading the arm
+  banner" above) is bounded on **TWO INDEPENDENT LEGS**: (1) the tenets, which stop a replayed emit
+  from being treated as owed; and (2) **this write-ban**, which stops anything reaching a
+  client-facing surface even if leg 1 failed. **AN ANSWER OF (ii) DELETES LEG 2** — a replayed
+  stale ticket could then reach a client-facing post, and the bound rests on the tenets alone. It
+  still holds; it becomes SINGLE-LEGGED. **So if he answers (ii), that is not only a channel-etiquette
+  change: re-read the arm-banner section and say out loud that the disarm is now single-legged.**
+  *(Raised by `0.0.3_BG_BBGTerminal` msg 9116 against `0.0.0_AB_MSTR~Z`'s own disarm record. It is
+  recorded HERE, at the open question, rather than in a session log, because THIS is the line a
+  future reader opens when he finally answers.)*
 - **KNOWN PRIOR INSTANCE, stated so nobody rediscovers it as a violation:** the inaugural header
   post (2026-08-20 19:26:45Z) predates this ruling, is not a client ticket, and is permanent. Its
   closing promise — *"I watch this thread. Ask me about any ticket here and I will answer

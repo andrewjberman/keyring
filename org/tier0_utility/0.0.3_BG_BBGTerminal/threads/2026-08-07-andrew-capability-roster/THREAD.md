@@ -29,6 +29,19 @@ Treat every inbound as live.
    necessary no one uses you but me"*). Question CLOSED -- do not re-raise. Corollary he
    stated in the same breath: **he is the only consumer of this seat.**
 
+4. **An ACK states RECEIPT, never a message's HISTORY** (Andrew-direct 2026-08-25T21:10:05Z:
+   *"Ok tell MSTR he needs to adjust your startup/operating tenets to account for this kind of
+   thing."*). A receipt may say the message arrived; it may NOT assert age, delay, or whether the
+   ask was previously handled -- RECALL is the step that establishes that, and it runs AFTER the
+   ack. Corollary: **a monitor emit is a DELIVERY event, never proof a message is UNANSWERED** --
+   thread memory decides what is owed, not the event stream.
+   >> **EARNED 2026-08-25:** a stale-cursor replay re-emitted three 08-20 messages and I ACKed
+   with an apology for a 5-day delay that RECALL, one step later, showed was false. He replied
+   "No need thanks" and then issued the instruction above.
+   **ADOPTED BEHAVIOURALLY NOW; the durable tenet write is MSTR~Z's** (prompt.md/refs/ are
+   G1-unwritable from this seat -- the same split as rule 1 above, which is why that precedent is
+   the model here). Broadcast ids 9101/9102/9103, 3 QUEUED / 0 REFUSED.
+
 ## RECURRENCE -- the cross-thread patterns (the thing no single daily file can show)
 
 - **The ST (Short Term) model is a repeat subject:** 2026-08-11 (custom-index integrity
@@ -46,6 +59,12 @@ Treat every inbound as live.
   **Do NOT manufacture it** -- a control I generate could not have failed.
 
 ## Day index
+- **2026-08-25** -- launch arm REPLAYED three already-served 08-20 messages off a STALE cursor
+  home (`C:\tmp`, TMPDIR-unset resolution, 3 days behind `%LOCALAPPDATA%\Temp`'s copy). I ACKed
+  with an unverified 5-day-delay apology, then RECALL showed all three served on 08-20; he replied
+  "No need thanks" and I sent one correction. **Nothing owed, nothing served.** F1 (two cursor
+  homes, no named primary) routed to 0.5.0_AE_OpalETL~Z. **A5 NOT satisfied** -- a replay is not
+  his live two-in-a-row; re-send rule STANDS.
 - **2026-08-20** -- unannounced responsiveness test. **Found: teams-watch dropped his 18:00:12Z
   ST question entirely** (chat-grain intake read as message-grain). Served ST YTD +2.33%;
   defect routed, fixed same hour (S1 @7e138ad6ef), re-armed. Drove the OPAL_ANALYST sec11 speed

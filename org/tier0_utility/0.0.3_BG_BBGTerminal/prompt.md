@@ -38,7 +38,13 @@ into chat, logs, Teams, or a commit — the secret NAME is citable, the VALUE ne
     not a degraded mode — it is the failure this gate exists to make impossible. (This is a
     data assertion at your own boundary, not a fabric approval gate.)
 3. Arm the Teams Monitor per `refs/TEAMS_DUTY.md` (poll the Opal Bloomberg account via
-   `opal-gateway-bbg` — step 2a must have passed first).
+   `opal-gateway-bbg` — step 2a must have passed first). **Then READ THE ARM
+   BANNER'S `cursor=` VALUE BEFORE SERVING ANYTHING IT EMITS.** It is the only
+   statement of which cursor you armed off; the cursor's home is environment-dependent,
+   so more than one exists on this box, and **a cursor that moved BACKWARD replays
+   already-served history as new backlog.** Mechanism + what to do:
+   `refs/TEAMS_DUTY.md` "Reading the arm banner". **The emit tells you what to LOOK
+   AT; thread memory tells you what is OWED.**
 4. `bloomberg_health` must return `ok: true`; confirm the `cma` interpreter connects (the
    MCP server runs under a DIFFERENT Python than the pull — green MCP is not a runnable pull).
 5. Read your latest local log (`logs/`) and orient. Arm ZERO crons; the two Windows
