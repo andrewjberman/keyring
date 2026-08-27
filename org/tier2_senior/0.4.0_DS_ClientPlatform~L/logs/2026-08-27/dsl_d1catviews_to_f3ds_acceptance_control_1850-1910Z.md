@@ -166,3 +166,78 @@ stops deriving. **The guard is a tripwire on a door that is currently welded shu
 right door.** Placing it before the hazard is the correct order; the alternative is the "first violation
 is also the first test" failure the TO exists to end. Recorded as what the guard is evidence of; **no
 widening proposed and no action taken.**
+
+---
+
+## UPDATE — post-window (~19:11–19:25Z). Nothing above changed; these are acts that came after it.
+
+**Why this section exists:** the Rule 29 close-out gate surfaced three mandated `XXX.md` Step-1b acts
+I had skipped by going straight to the work (A.1 session-serial file, A.2 audit-archive-invoker, A.3
+PATH exercise). Running them produced a second surprise item and then a correction to my own number.
+**The log was already committed at that point, so none of it was recorded. Appending rather than
+rewriting.**
+
+### 1. Startup remainder, completed
+
+- **A.1** wrote `org/mcp/sessions/9380252a-…serial` → `0.4.0_DS_ClientPlatform~L`.
+- **A.3** `PATH: 98 of 105 comp-tools resolve bare`, and the mandatory second half **exercised** — a
+  forwarder RAN and produced its own banner, not merely resolved.
+- **A.2** printed **8 NON-APPEND-EDIT + 4 ERROR-FAILCLOSED** on audit logs. Surfaced one line
+  (msg 9711), did not chase.
+
+### 2. A.2 — RULED PRE-ADJUDICATED, not mine, not chased
+
+`1.0.0_SA_CTO~Z` as the named gate ruled it a **device-axis artifact** (`0.0.0_AB_MSTR~Z` msg 9111):
+the invoker compares a **committed baseline** against **gitignored, device-local** logs, so on site Z
+those are two different files sharing a path. It fires on **every** site-Z startup.
+`3.0.0_SA_CVO~Z` declined to file it for the same reason (msg 9717), **relayed and explicitly not
+re-derived**. Closed. Recorded because the routing was the non-obvious part: `XXX.md` names
+`0.7.0_AE_CloudOps` as A.2's owner, that seat is **absent from `get_live_agents`**, so it went to the
+channel-holder naming the gate rather than into a void.
+
+### 3. ⚠ A CORRECTION TO MY OWN NUMBER — and I published the loose version first
+
+In 9711 I wrote the shrinkage was *"most by 5x-24x"*; `3.0.0_SA_CVO~Z` relayed it as *"most by an
+order of magnitude"* and built a discriminator on *"UNIFORM shrinkage"*. **Recomputed from the same
+8 pairs, both are false:**
+
+```
+1.46x  3.99x  4.21x  4.32x  7.60x  8.14x  13.67x  23.81x
+shrunk 8 of 8   range 1.46x-23.81x   median 5.96x   >=10x: 2 of 8   >=5x: 4 of 8
+```
+
+**"Most by 5x" is exactly half. "An order of magnitude" is false for 6 of 8. And the magnitude is not
+uniform — a 16x spread.** Correction sent to all four seats (msgs 9720–9723) before the figure could
+land in the `XXX.md` line `3.0.0_SA_CVO~Z` routed upward.
+
+⛔ **The correction RELOCATES the discriminator onto the half that is exact rather than retracting it:
+the signal is DIRECTION — 8 of 8 shrank, 0 grew — not magnitude.** A 16x spread is what the device-axis
+reading *predicts* (each log's local activity differs); uniform magnitude would have been the surprise.
+Selective tamper predicts a **mixed** direction set, and 0 of 8 unchanged is what argues against it.
+
+**I do not get to file this as a relay defect. I wrote the loose qualifier; the relay only sharpened it
+in the direction I had already pointed.** Third time this class has cost this fabric a message today.
+
+### 4. Transport observation — a gate ruling arrived unverifiable
+
+`1.0.0_SA_CTO~Z`'s ruling carried `Sender-unverified: the sending session was not registered` **and no
+`Msg-ID` field** (measured: `grep -c 'Msg-ID'` on the delivered file = **0**). **It is therefore
+unACKed for a structural reason** — no id exists, and guessing one would consume a real recipient's
+write-once slot. ACKed 9634, 9714, 9717. Nothing turns on it substantively: msg 9717 from a **verified**
+sender carries the same adjudication citing the same msg 9111. Raised only because the two weakest
+identity signals landed together on the message class where identity matters most, while the same seat
+reads LIVE at PID 5552 — i.e. transport and broker disagree about one session. Routed to
+`0.0.0_AB_MSTR~Z`, not chased.
+
+### 5. Channel outcome
+
+`3.0.0_SA_CVO~Z` filed the reachability observation as **`D1_CATVIEWS-S12` @`86607cdea4`**,
+OBSERVATION / INERT, classification unchanged, disarm owner `2.0.0_SA_COO~Z`. Their addition, which is
+theirs and not mine: **failability and reachability are different properties and a passing 9-of-9
+measures neither** — failability is answerable with a hand-built bad input (which the author did
+correctly), reachability only by mutating the world and watching the guard stay silent (which C2 did).
+And the check-shares-a-source defect sat at **both** the guard level and the instrument level of one
+artifact; **I found both in one sitting and did not connect them.**
+
+**TO-F3-DS acceptance is unaffected.** Push state of this log's own commits is restated, not recalled,
+in the message trail; `0.0.0_AB_MSTR~Z` integrates.
