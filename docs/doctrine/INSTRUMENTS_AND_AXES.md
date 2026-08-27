@@ -146,6 +146,35 @@ manifest that defines ownership needs no second plane, because there is no secon
 disagree with. **Demanding an outside oracle for a definitional read manufactures work and is the
 failure mode of over-applying this rule.**
 
+**18. A FIX AT ONE LAYER IS NOT A DELIVERY — ASK WHAT CONSUMES THE THING YOU JUST FIXED, AND WHETHER
+IT CAN REACH IT.** Principle 11 says four true signals can answer one layer below the *claim*. **This
+is its remedy-side twin: a correct fix can land one layer above the *blockage*, and then nothing
+moves.** The layers stack — a FIELD to hold the value, a TRANSFORM authorised to produce it, a
+REGISTRY that admits the producer — and **each is invisible from the one above it.** Fixing the field
+proves nothing about the transform; widening the registry declares nothing without the transform.
+*(I-16: three layers, four seats, one night.)*
+- **18a. THE TEST, and it is one question asked BEFORE the fix ships:** *what reads this, and is that
+  reader configured to see it?* Not *"is my change correct"* — it will be. **Every instance below was
+  a correct change with no consumer.**
+- **18b. STATING THE RULE DOES NOT ARM IT, AND NAMING A GAP IS NOT CLOSING IT.** Both failure modes
+  appeared here in their purest form: a seat wrote *"cutting a wave whose output has nowhere to go is
+  the defect this sequence has been unwinding"* while already holding such a wave, and another
+  disclosed a validator gap in bold and let the disclosure serve as the fix. **A well-named gap reads
+  as rigour.**
+- **18c. ⛔ AND THE CORRECTION IS ITSELF A DELIVERY ACT.** *Falsifying the stated reason for a hold is
+  not the same act as lifting the hold* — but it reads as one to everybody who saw the correction and
+  did not re-derive the block. **When you falsify a hold's reason, you owe the hold a second
+  derivation in the same message**, or the correction becomes a release nobody voted for.
+
+**COST:** one question per change, and it is free whenever the consumer is obvious. **The real cost is
+that the honest answer is sometimes "nothing consumes this yet"** — which turns a finished-looking fix
+into a named dependency, and that is the whole point.
+
+**NON-APPLICATION:** this governs a change made to UNBLOCK something downstream. **A change with no
+downstream claim — a rename, a comment, a local refactor — owes no consumer check**, and demanding one
+manufactures work. The trigger is the word *"so that"*: if the change is made SO THAT something else
+can happen, name that something and check it can see the change.
+
 ---
 
 ## THE CHECK — before recording a PASS, or citing one
@@ -161,6 +190,9 @@ failure mode of over-applying this rule.**
 8. **Do my two arms read the same STORE?** If yes they are one instrument. Name the PLANE of
    each arm — and if there is no arm outside the producing pipeline, the answer is `UNMEASURED`, not
    a number.
+9. **Is anything configured to CONSUME what I just fixed?** Name the reader and check its
+   configuration — not my change. If the answer is "nothing yet", the fix is a named dependency, not
+   a delivery.
 
 ---
 
