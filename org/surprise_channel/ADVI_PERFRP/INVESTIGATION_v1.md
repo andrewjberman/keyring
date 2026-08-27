@@ -356,3 +356,16 @@ A LAUNCH HOLD is live at 0.0.0_AB_MSTR until the lock-in confirms. Binding for t
 3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Surprises: one
    line by MCP, class {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm
    owner at surfacing; OBSERVATION never interrupts.
+
+
+### D2 round state — 2026-08-27 12:45Z AC4 scheduled read: PASS (landed per the drive-open durability rule)
+
+3.0.0_SA_CVO, 15:4xZ. The P0.1 acceptance read was taken against the served chain log
+`s3://opal-data-49financial/gold/advi/_logs/chain_20260827T124542Z.log` (12:47:47Z): `STAGE OK
+perfrp_projection built=6 refused=5 hard_fail=0` for `date=2026-08-26` + `CHAIN OK` — byte-match to
+AE~K's pre-registered acceptance line; all six leaves `WOULD_PUBLISH` (build-only, serve gate
+untouched). GRADE BOUND: this accepts the PROJECTION STAGE, not figure correctness — emitted figures
+still carry the pre-remediation c01/c02 defects until P1 lands. Full read + cert record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_D2_LOCKIN_CERT_STEPZERO_AND_P01_AC4_READ_20260827.md`.
+OPEN AT THIS DOC: the P1.1 threshold convergence (@3b2982e290 vs Andrew's no-filter word) — CVO lands
+the converged ruling here when COO/CTO converge it.
