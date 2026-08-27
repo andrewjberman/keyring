@@ -220,3 +220,44 @@ positive control `comp_ontolint.py` -> 2). **So the sys.path-insertion blindness
 two parts does not reach my consumer count.** My predicate ("declares the path AND carries a loader
 call") is stated on the cards' face, and a consumer receiving the parsed bank by INJECTION would sit
 outside it -- **which the cards do not claim to cover.**
+
+## 16. ANNOTATION (01:4xZ) -- the one correction that went the OTHER way, recorded so this log is not lopsided
+
+Sections 3-5 and 15 record four errors of mine and one I avoided. **Read alone they make this seat look
+like it only ever received corrections. One went outward, and leaving it out would be a false record.**
+
+`1.0.0_SA_CTO~X`'s 74336 Finding 1 called the C2C3 compose probe **"FAILS OPEN"** -- a WARN inside a
+nightly nobody reads -- and said the property *"belongs on the card"*, meaning my C2 card.
+**It is my subject, so I checked before accepting.**
+
+**TRUE AT THE LINE:** `derive_runner.py:1590` prints `C2C3_COMPOSE_UNAVAILABLE ... derive proceeds
+WITHOUT the instance grain` and returns None. Verbatim.
+
+⛔ **REFUTED AT THE SYSTEM.** `c2c3_liveness_acceptance.py` discriminates INSTANCE from CLASS grain
+(`:68-69`, with `GRAIN_CLASS` commented as *the predicate's own positive control*), counts by exact
+grain literal (`:162`), and carries a mutant self-test that **MUST return NOT-LIVE** against the frozen
+layer or *"the harness is broken and no verdict it gives later can be trusted"* (`:29-31`). **A missing
+composition surfaces as NOT-LIVE by design.** Withdrawn in full at 74346, verified independently at
+their seat.
+
+**AND MY CARD WAS ALREADY RIGHT AT A SHARPER GRAIN.** `silent_degrade_paths` #4 says the harness's
+FROZEN_CONTROL is satisfied by the static specs alone -- a statement about the **CONTROL**. Their claim
+was about the **VERDICT**, which does not pass. ⛔ **Two objects in one file; the card named the one it
+measured and the claim named the one it assumed.** No amendment owed and none proposed.
+
+**WHAT MADE IT POSSIBLE IS NOT CARE.** I had read that harness while carding C2 in WAVE 1, so the
+counter-evidence was already in hand. **A seat without that read would have accepted a plausible claim
+about its own artifact from a senior seat** -- which is exactly how a false property enters a record and
+stays. `1.0.0_SA_CTO~X`'s own finding on themselves is sharper than mine and is the keeper:
+
+> ⛔ **The refutation was three lines above the line they quoted -- and the sentence disproving the
+> claim was INSIDE THE EVIDENCE THEY PASTED**, the WARN string ending *"acceptance will read NOT-LIVE,
+> which is correct."*
+
+**A TRUE READ OF ONE LINE, GENERALISED TO A SYSTEM PROPERTY.** Same family as my three, one direction
+over: **the line was read correctly and the plane was wrong.**
+
+⚠ **AND I BOUNDED MY OWN REFUTATION:** I measured that the harness EXISTS, discriminates correctly and
+carries its controls. **I did NOT measure whether it is invoked on any nightly, or whether a seat reads
+its verdict.** A perfectly controlled harness nobody runs scores nothing. **That question is open and
+is a real wave-3 item; "fails open" was simply not the way to ask it.**
