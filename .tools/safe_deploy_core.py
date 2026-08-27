@@ -1158,6 +1158,16 @@ def main(argv: list[str]) -> int:
 
     # Deploy phase: upload all NON-HELD files, fail fast on any error
     deployed: list[tuple[str, str, str]] = []   # (rel_path, bucket, s3_key)
+    # SKIP-NOT-MEMBER audit (1.0.0_SA_CTO~Z arch-gate, 2026-08-27). Recorded because the
+    # final summary line used to be UNCONDITIONAL: when every path skipped, `deployed` was
+    # empty, the verify loop ran zero times, and the gate printed "all files deployed and
+    # verified" -- a universal quantified over an EMPTY SET, which is vacuously true and
+    # reads as "they all shipped". Measured TWICE the same day on the same two files, the
+    # second time PREDICTED IN ADVANCE by 0.0.0_AB_MSTR~Z and then observed, so it is
+    # reproducible and fires on EVERY all-skipped push. The integrator nearly reported a
+    # deploy that did not happen. The SKIP is correct (Rule 13: 404 = loud skip, first-mints
+    # explicit); the SENTENCE was the defect.
+    skipped_not_member: list[str] = []
     failed = False
 
     for bname, (label, b) in sorted(triggered.items()):
@@ -1211,6 +1221,7 @@ def main(argv: list[str]) -> int:
                           f"prefix {prefix} carries {n} member(s) (single page). "
                           f"A NEW shared-home script first-mints explicitly, "
                           f"never via the push gate.")
+                    skipped_not_member.append(rel_path)
                     continue
 
         local_path = WORKSPACE / rel_path.replace("/", os.sep)
@@ -1287,7 +1298,23 @@ def main(argv: list[str]) -> int:
             print("ERROR: safe-deploy gate FAILED -- comp-pipescript STALE/MISSING after upload")
             return 1
 
-    print("OK: safe-deploy gate PASS -- all files deployed and verified")
+    # THE SUMMARY STATES ITS DENOMINATOR AND NEVER QUANTIFIES OVER AN EMPTY SET.
+    # rc is UNCHANGED in every branch: an all-skip is still a PASS (the guard did its job and
+    # the push is legitimate) -- what changes is that the line can no longer be read as
+    # evidence of a deploy. A gate that reports what it DID cannot be misquoted as reporting
+    # what it did not.
+    n_dep, n_skip = len(deployed), len(skipped_not_member)
+    if n_skip and not n_dep:
+        print(f"OK: safe-deploy gate PASS -- 0 of {n_skip} deployed; "
+              f"{n_skip} SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.")
+        print("     The first-mint is an EXPLICIT act in the owning lane, never this gate:")
+        for rel in skipped_not_member:
+            print(f"       NOT DEPLOYED  {rel}")
+    elif n_skip:
+        print(f"OK: safe-deploy gate PASS -- {n_dep} deployed and verified; "
+              f"{n_skip} SKIPPED (first-mint, 404), listed above and NOT deployed.")
+    else:
+        print(f"OK: safe-deploy gate PASS -- all {n_dep} file(s) deployed and verified")
     return 0
 
 
