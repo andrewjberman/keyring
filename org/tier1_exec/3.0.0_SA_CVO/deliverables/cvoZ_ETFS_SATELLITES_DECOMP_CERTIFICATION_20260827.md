@@ -616,3 +616,71 @@ pre-stated consequence, **not by anything in this certification** — which carr
 promote in either direction.
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+# ⛔ CORRECTION — 2026-08-27 ~23:5xZ — MY "VACUOUS CORPUS / THE ANCHORING IS UNSUPPORTED" FINDING IS FALSE. I VARIED THE NOTATION AND HELD THE DISCRIMINATOR CONSTANT.
+
+**Falsified by `2.0.0_SA_COO~Z` (msg 11132). I re-measured at this seat before accepting it, on the
+fixture, and they are right.** The finding was **message-only and had no durable carrier** — this
+section is that carrier, written because a message-borne false claim cannot be corrected by another
+message alone.
+
+## WHAT I CLAIMED
+
+> *On the 65-row roster the anchored regex and a bare substring check admit the IDENTICAL 9 rows, so
+> the measurement cannot support the anchoring; and the adversarial case Andrew named is ABSENT from
+> the fixture.*
+
+## WHAT IS TRUE — `tests/fixtures/satellites/roster_2026-08-27.json`, 65 rows, `pageCount=1`
+
+```
+ANCHORED    ^Opal Satellite (\d+)$        ->  9
+MY CONTROL  "opal satellite" substring    ->  9     ADMITS BEYOND ANCHORED:  0
+TRULY BARE  "satellite" substring         -> 27     ADMITS BEYOND ANCHORED: 18
+TRULY BARE  /sat/i                        -> 30
+'Core | Satellite 98' in corpus: True     'Opal Satellite 98' in corpus: True
+```
+
+**BOTH LIMBS FALSE.** The bare substring admits **27, not 9** — the anchor excludes eighteen rows
+including the entire `Core | Satellite *` family. And the adversarial case is **present**:
+`Core | Satellite 98` sits in the corpus beside `Opal Satellite 98`, which is `SAT-b-4`'s named pair.
+
+## ⛔ THE MECHANISM, AND IT IS THE PRECISE ONE
+
+> ### MY "BARE SUBSTRING" CONTROL CONTAINED THE WORD `Opal` — THE ANCHOR UNDER TEST.
+
+**I varied the NOTATION (regex vs. substring) and held the DISCRIMINATOR (the token `Opal`)
+constant.** Both arms were anchored. A control built that way **cannot** separate the hypotheses, so
+its agreement was guaranteed before I ran it — and I read that guaranteed agreement as *evidence that
+anchoring does no work*. ⛔ **The measured discriminating power of my control was ZERO rows, and zero
+discriminating power is exactly what "the two instruments agree" looks like from inside.**
+
+⛔ **AND THE ABSENCE CLAIM WAS MANUFACTURED BY THE SAME STRING.** I concluded *"the adversarial case
+is absent from the fixture"* from a search whose pattern **structurally excluded** the adversarial
+case. *A search for `opal satellite` cannot find `Core | Satellite 98`, and its silence is not the
+corpus's.*
+
+## WHAT THE PREDICATE ACTUALLY IS — and it was never unvalidated
+
+`satellites_registry.py:213-218` carries `CANONICAL_NAME_FORM = re.compile(r"^Opal Satellite (\d+)$")`
+under a comment naming this exact pair:
+> *"⛔ READ THE ANCHORS. `^...$` is load-bearing twice over: `Core | Satellite 98` does not match …
+> `Opal Satellite 50 Tax-Free`, were it ever minted, would not match either, so it surfaces as DRIFT
+> for a human rather than being silently absorbed as a member."*
+
+**The author anchored it deliberately, against the real mutant, and documented why.** My finding
+implied the anchoring was unjustified decoration. **It is the load-bearing part of the predicate**,
+and `2.0.0_SA_COO~Z` further established the classification is not open at all — Andrew ruled it at
+~16:1xZ (`SAT-b-2`, IS-A vs HOLDS-A), *seven hours before any of us began asking.*
+
+## WHAT MOVES
+
+**`F3` and the "fixture still owed" line stand** — a fixture obligation is untouched by this. **What
+is withdrawn is any suggestion that the membership predicate is unvalidated, that the corpus lacks a
+negative case, or that the classification is an open sovereign question.** All three were mine and
+all three were wrong. **The verdict of this certification does not change; a finding inside it is
+retracted.**
+
+⚠ **Third instance tonight of one class: a control that shares the property under test.** Banked at
+`[[a-control-that-shares-the-property-under-test]]`. *Twice I caught it myself; this time a peer did.*
