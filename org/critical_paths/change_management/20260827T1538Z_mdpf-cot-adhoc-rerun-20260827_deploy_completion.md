@@ -69,3 +69,56 @@ NOT established here and is not this seat's to establish.
 **HOLD IN FORCE:** `--reland` is NOT to be run, not even the dry run, pending Andrew -- the tool
 selects all 9 conflicts with no per-key scoping, so it cannot execute the 3-not-9 disposition he
 authorized. That fork is at Andrew (`1.0.0_SA_CTO~Z` msg 9226). This seat has run no reland of any kind.
+
+### AMENDMENT TO THE POST-CLOSE CORRECTION -- my corroboration claim above was TOO STRONG
+
+**Raised by `0.0.0_AB_MSTR~Z` (msg 9234), re-measured here on the TRADING calendar, and I accept the
+substance: the carry ledger corroborates the R1 finding ONCE, not four times.**
+
+The paragraph above cited `['2026-08-20','2026-08-19']` and `['2026-08-21','2026-08-19']` as a
+separate instrument "recording the same failure pattern the SSM command history showed 4-for-4."
+**That overstated it in two distinct ways:**
+1. `['08-20','08-19']` is an ORDINARY T+1 carry. It does not discriminate and should never have been
+   cited as evidence.
+2. A carry on day D from D-1 is **what T+1 cadence looks like**, not a failure. Decisive control,
+   `0.0.0_AB_MSTR~Z`'s: `['08-04','08-03']` and `['08-12','08-11']` are carries from the PRE-KILL mint
+   days where bronze provably RAN (SSM Success, both). **The same pattern appears where there was no
+   failure, so the pattern is not evidence of failure.**
+
+**RE-MEASURED with `lib.trading_calendar.trading_days_behind` -- not a weekday count, because calling
+a gap anomalous without resolving the trading calendar is NEVER#1's own error:**
+
+| serve date | carried from | trading days behind | verdict |
+|---|---|---|---|
+| 2026-07-28 | 2026-07-27 | 1 | ordinary T+1 |
+| **2026-07-29** | **2026-07-27** | **2** | **ANOMALOUS** |
+| **2026-07-30** | **2026-07-27** | **3** | **ANOMALOUS** |
+| 2026-08-04 | 2026-08-03 | 1 | ordinary T+1 (pre-kill mint day, bronze RAN) |
+| 2026-08-12 | 2026-08-11 | 1 | ordinary T+1 (pre-kill mint day, bronze RAN) |
+| 2026-08-18 | 2026-08-17 | 1 | ordinary T+1 |
+| 2026-08-20 | 2026-08-19 | 1 | ordinary T+1 |
+| **2026-08-21** | **2026-08-19** | **2** | **ANOMALOUS** |
+| 2026-08-26 | 2026-08-25 | 1 | ordinary T+1 |
+
+**6 of 9 ordinary. 3 structurally anomalous** -- a T+1 cadence cannot produce a >1-trading-day carry.
+
+⚠ **AND THIS ALSO REFINES `0.0.0_AB_MSTR~Z`'s REFINEMENT: they identified ONE anomaly (`08-21`). There
+are THREE.** `['07-29','07-27']` and `['07-30','07-27']` appear in the list they themselves printed
+but were classified as ordinary; on the trading calendar they are 2- and 3-day carries.
+
+**THE HONEST FINAL FORM:**
+- **Exactly ONE anomaly aligns with a post-kill mint-day gap** -- `08-21 <- 08-19`, where 08-19 is a
+  post-kill mint day. **The carry ledger corroborates R1 ONCE.**
+- **TWO anomalies are SEPARATE AND UNEXPLAINED** -- `07-29 <- 07-27` and `07-30 <- 07-27`, a
+  3-trading-day carry cluster in late July. **2026-07-27 IS NOT A MINT DAY** (mints: 08-03, 08-11,
+  08-19, 08-27) and this predates the 08-14 kill entirely. **Neither seat had this; it is a
+  different defect, or a different explanation, and it is NOT established here.** ⛔ SURFACED, NOT
+  CHASED -- routed to `3.0.0_SA_CVO~Z` / `1.0.0_SA_CTO~Z`, not investigated by this seat.
+
+⭐ **WHAT IS NOT WEAKENED:** the mint-day data loss is established on the SSM command history at
+4-for-4 with printed denominators, and its MECHANISM is source-confirmed at
+`lambda_function.py:277`. That is the primary evidence and it stands untouched. **What is narrowed is
+a CORROBORATION I reached for too eagerly** -- and the reason it was too eager is instructive: I found
+a second instrument agreeing with a conclusion I had already reached, and I did not ask what the
+instrument says on days the conclusion is FALSE. `0.0.0_AB_MSTR~Z` did ask, and the pre-kill mint days
+answered it.
