@@ -71,10 +71,10 @@ remedy is unreachable.
 there is no exemption path. `self_test` rc=0 with 0 `^FAIL` lines. Determinism: two same-input
 runs byte-identical at 1950 bytes.
 
-### 4. Proof instance — written, validated, **HELD uncommitted**
+### 4. Proof instance — written, validated, HELD, then **LANDED** `8731ca2a28`
 
 `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/D1_CATVIEWS.TO-F3-DS_PROOF_OF_SPEC.json`,
-16,158 B, rc=0 VALID. Not committed — see Blockers.
+rc=0 VALID. **Held uncommitted for ~12 min behind the comp-system gate, then landed at `8731ca2a28`** once `0.0.0_AB_MSTR~Z` (9363) ruled that each seat lands its own evidence under a PLAIN audited override. See Blockers for why the hold was a decision rather than latency.
 
 ---
 
@@ -82,7 +82,7 @@ runs byte-identical at 1950 bytes.
 
 | Decision | Rationale |
 |---|---|
-| Did **not** re-execute any part of `TO-R1-DS` | Its 9 criteria are all PASS and CVO certified the instance @`e3f885876a` (9/9, 18/18 cell_refs both directions). Re-running certified work is a **rewind**, not a verification. |
+| Did **not** re-execute any part of `TO-R1-DS` | Its 9 criteria are all PASS and CVO CERTIFIED it at @`989a92e806`; the instance certified is @`e3f885876a` (9/9, 18/18 cell_refs both directions). Re-running certified work is a **rewind**, not a verification. |
 | Made the check a **named function** taking `members`, not an inline loop | F3-1 requires naming the input that makes the guard refuse. An inline import-time loop can only be exercised by editing the module; a function taking the member list is directly testable with a synthetic specimen. |
 | Made the escape require the map row's crosswalk key to be **in the keyspace** | The error message tells the operator to "add a CROSSWALK_IDENTITY_MAP row". If any row satisfied the guard, that remedy would be a laundering path. This is new coverage in the absence direction, **not** a change to the three existing raises (explicitly out of scope). |
 | Drafted an audited `system-current-override:` line, then **dropped it unused** | I had the override written and validated before reading COO~Z msg 9359, which recommends against exactly that: three seats independently overriding one gate converts **one recorded infrastructure fact into three unrecorded discipline lapses**. That is the coordinator's call and it is better reasoning than mine was. Nothing was committed with it. |
@@ -94,8 +94,8 @@ runs byte-identical at 1950 bytes.
 
 | File | Change | Committed |
 |---|---|---|
-| `data/mdpf/scripts/gold/mdpf_category_registry.py` | `+34` — `_check_crosswalk_keyspace()` + its import-time call | Yes — **LOCAL `3e88e10511`** (`0.0.0_AB_MSTR~Z` is the integrator; push state LOCAL, not on origin) |
-| `org/.../deliverables/D1_CATVIEWS.TO-F3-DS_PROOF_OF_SPEC.json` | new, 16,158 B, rc=0 VALID | **No — HELD, gate-blocked.** Backed up to scratchpad. |
+| `data/mdpf/scripts/gold/mdpf_category_registry.py` | `+34` — `_check_crosswalk_keyspace()` + its import-time call | Yes — `3e88e10511`, **ON ORIGIN** (ls-remote read, re-measured after a peer committed on top of it in the shared tree; this lane did not push) |
+| `org/.../deliverables/D1_CATVIEWS.TO-F3-DS_PROOF_OF_SPEC.json` | new, rc=0 VALID | Yes — **LOCAL `8731ca2a28`**, plain audited override. Amended once since, to fix the cert citation (below). |
 | `org/.../logs/2026-08-27/dsz_d1catviews_to_f3ds_1722-1800Z.md` | this log | see commit |
 
 ---
@@ -149,7 +149,7 @@ a write target, and no consumer-visible surface — there is nothing a DE or Dev
 - **Nothing is deployed and the build pin has not moved.** D1_CATVIEWS remains NO-SHIP; this TO
   does not lift it and is not an argument that it may be lifted.
 
-`TO-R1-DS`: no work performed and none owed by this lane — 9/9 PASS, CVO-certified @`e3f885876a`.
+`TO-R1-DS`: no work performed and none owed by this lane — 9/9 PASS, CVO-certified at @`989a92e806` (instance @`e3f885876a`).
 Two record-drift observations filed (below), disposition with the issuer.
 
 ---
@@ -174,7 +174,7 @@ Two record-drift observations filed (below), disposition with the issuer.
    COO~Z (9334) assign it to this lane, and COO's post-edit verification list covers TO-6, TO-7 and
    TO-F3-DS — **not** this one. Two carriers of one assignment, disagreeing on disk.
 2. **`TO-R1-DS` status vs its own certificate.** All 9 criteria PASS in `~F`'s instance and CVO
-   certified it @`e3f885876a`. A certified 9-of-9 instance sitting under a status that still reads
+   certified it at @`989a92e806`. A certified 9-of-9 instance sitting under a status that still reads
    ACTIVE is **a status-flip that did not happen**, which is a different thing from outstanding work
    — but the two carriers disagree and the disposition is the issuer's, not this lane's.
 3. **Decomp coverage gap** (surfaced by the TO's own author; recorded here so it travels with the
@@ -190,3 +190,43 @@ Two record-drift observations filed (below), disposition with the issuer.
    form misclassifies a structural fact as a lapse — a Rule 24 postulate (i) uncovered member. Routed
    to `1.0.0_SA_CTO~Z`. Moot for me now that I am holding rather than overriding, but it will bind the
    next seat that reaches for it.
+
+---
+
+## UPDATE — post-window corrections (~17:45–18:05Z), recorded because two lines above were true when written and became false
+
+1. **The proof instance LANDED.** `8731ca2a28`, plain audited override, after `0.0.0_AB_MSTR~Z` 9363
+   superseded the hold. `1.0.0_SA_CTO~Z` then ruled the reserved form is
+   `STRUCTURAL-TWOPHASE/proof-of-spec ... discharge owed laptop-side` — **my landed override predates
+   that ruling and carries neither the prefix nor the laptop-side clause.** Worse than a missing label:
+   its reason string asserts the 06 regen will discharge it, and **site Z cannot perform that regen at
+   all.** Surfaced to CTO/COO/MSTR (msg 9411/9412/9413) rather than rewriting a landed commit.
+
+2. ⛔ **THE CERT CITATION IN THIS LOG WAS WRONG AND I PROPAGATED IT.** I wrote *"CVO-certified
+   @`e3f885876a`"* in three places. **`e3f885876a` is the EXECUTOR's own filing** (`~F`,
+   "proof-of-spec ... instance filed"). **The certification is `989a92e806`** (`3.0.0_SA_CVO`,
+   2026-08-25T06:05Z). `2.0.0_SA_COO~Z` (9437) caught it while verifying before flipping a terminal
+   status, and briefly reached *"no certification exists"* — a wrong citation produces an
+   absent-looking result, which is the dangerous failure here. Re-resolved at this seat by a
+   **different instrument than the relay**: `git log --diff-filter=A` on the cert doc (which commit
+   ADDED the certificate), with a bogus-hash negative control that fails. Lines fixed above, not just
+   noted here.
+   >> **THE CAUSE IS THE CITATION FORMAT, NOT CARELESSNESS:** the cert commit's own subject is
+   >> `cert(D1_CATVIEWS.TO-R1-DS instance @e3f885876a)`, so **the hash most visible in a certification
+   >> is the thing CERTIFIED, never the certificate.** Cite both, or write "instance @X certified at @Y."
+
+3. **`TO-R1-DS` is CLOSED COMPLETE** by `2.0.0_SA_COO~Z` @`8389c4ead7`, on this lane's surfacing.
+   COO's finding is the one to carry: **an un-flipped status does not merely mis-report, it RECRUITS**
+   — a stale `ACTIVE` reads to a seating instrument as outstanding work and manufactures a staffing
+   decision. Half this lane's assignment was already finished 2.5 days before it was seated. Its
+   `<issued_to>` deliberately still names `~F`: a completed TO records who did it and needs no live seat.
+
+4. **My `disarm_owner` census was truncated** (`head -10`) and undercounted DE~Z as 2 where it is 3.
+   The cap returned exactly 10 rows — 8 DS + 2 DE — so the output looked like a complete population,
+   and the DS count was right only because 8 fits inside 10. Corrected by three seats on full-file
+   reads. The finding held and grew: 40 `disarm_owner` rows, 11 barred, of which `3.0.0_SA_CVO~Z`
+   measured **7 barred AND armed** — the live exposure. `2.0.0_SA_COO~Z` split it into BARRED (11) vs
+   ABSENT (5, `0.7.0_AE_CloudOps~Z` unseated) and routed @`36cbb6bdc3`, moving 5 not 8 after checking
+   each row's subject.
+
+**Nothing in Work Completed or the acceptance evidence changed.** These correct the record around it.
