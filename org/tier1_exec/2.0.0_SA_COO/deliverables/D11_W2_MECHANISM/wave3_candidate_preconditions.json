@@ -297,5 +297,15 @@
   ],
   "COUNT_DELTA_43_vs_40": "My re-derivation returns 43; 1.0.0_SA_CTO~X reported 40. NOT A CORRECTION OF THEIR SWEEP and not corroboration of it -- I do not hold their file list, so the delta is UNRESOLVED and is an instrument difference to investigate, not a defect in either run. Plausible sources: .tools/ inclusion (my run picks up _trino_fed.py and tool_index.py), rglob vs a tracked-only walk, and exclusion-pattern shape. Whoever cuts wave 3 resolves it by diffing the two LISTS, never the two COUNTS -- two counts that differ by 3 tell you nothing about WHICH three.",
   "tree_spread_CAVEAT": "My bucketing is the first two path segments, which mis-buckets top-level files (.tools/_trino_fed.py renders as its own 'tree'). 1.0.0_SA_CTO~X's SEVEN trees and my NINE are the same spread under different bucketing -- NOT a disagreement. Recorded so nobody cites nine.",
-  "headline": "2 of 43 candidate MATERIALIZERS ARE NOT IN THE REPOSITORY -- storage_producer.py (10,137 B) and the NFRA_GCONTR contract engine (21,296 B). Precondition (b) earns its place on the first population it meets."
+  "headline": "2 of 43 candidate MATERIALIZERS ARE NOT IN THE REPOSITORY -- storage_producer.py (10,137 B) and the NFRA_GCONTR contract engine (21,296 B). Precondition (b) earns its place on the first population it meets.",
+  "PREDICATE_AUDIT_MY_43_IS_NOT_A_MATERIALIZER_COUNT": {
+    "measured_utc": "20260827T0226Z",
+    "finding": "The shared predicate's write-token list contains `append`, which matches PLAIN PYTHON list.append(). 17 of my 43 candidates match on `append` ALONE -- no overwrite/upsert/add_files/to_arrow/write_parquet/put_object/load_table anywhere in the file.",
+    "why_it_is_ambiguous_and_not_simply_wrong": "`.append(` is ALSO the pyiceberg table-write API (table.append(df)). The token cannot be dismissed; it is genuinely two things.",
+    "MY_CLASSIFIER_FAILED_ITS_OWN_CONTROL": "I tried to split them by receiver name (table-shaped vs list-shaped). POSITIVE CONTROL: the KNOWN writer incremental_updater/lambda_function.py has receivers ['_fields','arns','clauses','failed_ids','keys'] -- NONE table-shaped. The control DID NOT FIRE, so the test cannot distinguish a writer from a consumer and ITS OUTPUT IS NOT EVIDENCE. The 14-list/3-table split it produced is DISCARDED, not reported as a result. One of its 3 'table-shaped' hits was `undatable` matching the substring 'tab' -- my own regex, the substring class.",
+    "what_is_actually_measured": "17 of 43 rest on the `append` token alone. How many of those 17 truly write is UNMEASURED.",
+    "consequence": "\u26d4 43 IS NOT A MATERIALIZER COUNT AND NEITHER IS 40. Both rest on an unaudited token. Whoever cuts wave 3 must resolve `append` at the CALL SITE (what object, what library) before any number from this floor enters a decomp.",
+    "my_own_failure": "I published 43 without auditing the token, then audited it only because 1.0.0_SA_CTO~X's diff forced the question. My own memory says AUDIT THE PREDICATE BEFORE QUOTING ANY COUNT -- a true denominator over the wrong population reads identically to a right one.",
+    "unchanged_by_this": "The TRACKED precondition result stands: the 2 untracked candidates are untracked regardless of whether they write, and both appear in 1.0.0_SA_CTO~X's set too."
+  }
 }
