@@ -323,6 +323,13 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
 - **Battery statement amendment (74286, standing): every card-level battery result carries each
   subject's COMMIT STATE (hash or UNTRACKED)** — a sound measurement of an unretrievable subject
   reads identically to a durable green and is not one.
+- **A WITHDRAWAL PROPAGATES ALONG THE CITATION TOPOLOGY, NOT THE ORIGINAL'S DISTRIBUTION LIST**
+  (01:49Z, own instance): I relayed 74334's "fails open" + "IS a production materializer" to base
+  3.0.0_SA_CVO; both were corrected on the wire within minutes (74340 refutation, 74348 withdrawal,
+  74345 first-match narrowing) — but base CVO was on NONE of those distribution lists. The relayer
+  is the only link who can correct their own recipient; a withdrawal that reaches only the original
+  audience leaves every relay holding the retracted claim as current. Standing: on relaying any
+  claim, the relayer owns forwarding its later correction, unprompted.
 
 ## Standing battery amendment (2026-08-26 ~23:5xZ, after the twice-missed pin)
 
