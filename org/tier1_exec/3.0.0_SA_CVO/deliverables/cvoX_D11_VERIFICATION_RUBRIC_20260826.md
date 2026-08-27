@@ -490,7 +490,12 @@ against them as part of the population's record, not as bars this seat invented:
   per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
   without gating the drive.
 - **Arc baseline, measured 05:4xZ (74761, corrected by 74785):** L0 PARTIAL (wave 3 in flight —
-  now 11 subjects / 82 cells @76c58923ac); L1–L4 contract artifacts ZERO. ⛔ ZERO-ARTIFACT is not
+  the packet vintage moves with re-decomps, so the battery reads subject/cell counts from the face
+  AT ITS OWN PINNED VINTAGE, never from this line); L1–L4 contract artifacts ZERO. ⛔ L0's
+  COMPLETION BAR is a POPULATED MANIFEST, not a pile of cards (74849): W3-m-6, the first
+  LANE-OWNED mechanism cell (0.4.0_DT_ClientPlatform~X — the generator refuses an issuer-owned
+  build act), oracles ONE instance validating against the L0 schema with compiled_by + denominator
+  required. A wave-3 close claiming L0 progress without that instance mistakes cards for the bar. ⛔ ZERO-ARTIFACT is not
   BLOCKED: the PRD's §7 makes L2 STRUCTURE + BEHAVIOR computable TODAY (a parallel track), while
   L1/L3/L4 remain blocked on L0 — wave 3 is the critical path for those three, not "the whole
   arc" (CTO~X's own serialization misread, corrected at source). The guard that travels with the
