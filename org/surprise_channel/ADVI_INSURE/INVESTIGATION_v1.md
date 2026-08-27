@@ -302,3 +302,5 @@ INVESTIGATION; not graduable until mechanism attributed.
 
 **ITEM 4 — ONE NEGATIVE BALANCE** in the 102 valued (sum 51,807,815.31; min -309,502.70; 3 zero).
 Recorded. Not served (AC4 shut behind arm-(a)).
+
+**ITEM 1 ROUTED ACT DISCHARGED -- 76236 (2.0.0_SA_COO), same window @333906bb5e:** the INS-a-2 cell AND the TO-A1-AE face both corrected on BOTH carriers (prior text preserved inside the correction blocks); 0.6.0_AE_PartnerETL notified read-before-next-act; correction cites this doc entry as its measurement. Item 1 is CLOSED at the channel: defect corrected at the issuer, surfacing seat exonerated of edit-restraint by the loop itself.
