@@ -1,0 +1,115 @@
+{
+  "measured_utc": "20260827T0143Z",
+  "purpose": "WAVE-3 PRECONDITION. Nobody can card, review, deploy or cite what is not in the repository. Any wave-3 population must state whether its members are tracked, or the census inherits this hole.",
+  "instrument": "git status --porcelain --untracked-files=all, filtered to .py, each checked against git check-ignore",
+  "positive_control": "git ls-files --error-unmatch on a known-tracked file returns 0 -- run FIRST; the sweep aborts if it does not",
+  "control_NOT_claimed": "a git-status check for modified-tracked returned 0, which is consistent with both 'none modified' and 'blind on that arm'. Inconclusive, and not cited as a fired control.",
+  "untracked_py_total": 19,
+  "untracked_by_omission_not_gitignore": 19,
+  "files": [
+    {
+      "path": "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py",
+      "bytes": 21296,
+      "gitignored": false
+    },
+    {
+      "path": "data/etfs/scripts/dedup/inflection_silver_retro_dedup.py",
+      "bytes": 12150,
+      "gitignored": false
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/drafts/serve_gate.py",
+      "bytes": 10517,
+      "gitignored": false
+    },
+    {
+      "path": "org/projects/NFRA_GRAPHUNI/storage_producer.py",
+      "bytes": 10137,
+      "gitignored": false
+    },
+    {
+      "path": "org/tier2_senior/0.5.0_AE_OpalETL/deliverables/scty/gateway_ready/tier.py",
+      "bytes": 6860,
+      "gitignored": false
+    },
+    {
+      "path": "org/tier2_senior/0.6.1_AE_PartnerETL/drafts/serve_gate_skeleton_AEhalf.py",
+      "bytes": 6341,
+      "gitignored": false
+    },
+    {
+      "path": "data/find/dualbiz/scripts/batch_target.py",
+      "bytes": 6267,
+      "gitignored": false
+    },
+    {
+      "path": "data/etfs/scripts/dedup/test_inflection_dedup_fingerprint.py",
+      "bytes": 5475,
+      "gitignored": false
+    },
+    {
+      "path": "infra/aws/ec2/canonical-schwab-si2/schwab_sdd_authprobe.py",
+      "bytes": 5062,
+      "gitignored": false
+    },
+    {
+      "path": "data/etfs/scripts/dedup/run_full_sweep.py",
+      "bytes": 4907,
+      "gitignored": false
+    },
+    {
+      "path": "org/tier2_senior/0.5.0_AE_OpalETL/deliverables/scty/gateway_ready/destructive_ops.py",
+      "bytes": 4898,
+      "gitignored": false
+    },
+    {
+      "path": "infra/aws/ec2/canonical-schwab-si2/schwab_sdd_probe.py",
+      "bytes": 4431,
+      "gitignored": false
+    },
+    {
+      "path": "deck_generation/dev/scripts/ga_prep.py",
+      "bytes": 4097,
+      "gitignored": false
+    },
+    {
+      "path": "deck_generation/dev/scripts/ga_dualbiz_build.py",
+      "bytes": 3940,
+      "gitignored": false
+    },
+    {
+      "path": "infra/aws/ec2/canonical-schwab-si2/schwab_sdd_discover.py",
+      "bytes": 3604,
+      "gitignored": false
+    },
+    {
+      "path": "org/tier2_senior/0.5.0_AE_OpalETL/deliverables/scty/gateway_ready/guard.py",
+      "bytes": 3598,
+      "gitignored": false
+    },
+    {
+      "path": "infra/aws/ec2/canonical-schwab-si2/schwab_dll_scan.py",
+      "bytes": 3554,
+      "gitignored": false
+    },
+    {
+      "path": "data/etfs/scripts/dedup/finalize_and_write_sweep.py",
+      "bytes": 2472,
+      "gitignored": false
+    },
+    {
+      "path": "data/inf/scripts/silver/tests/__init__.py",
+      "bytes": 0,
+      "gitignored": false
+    }
+  ],
+  "third_instance_tonight": [
+    "0.8.0_AE_CloudComp~Y's 7 delivered wave-2 cards",
+    "1.0.0_SA_CTO~X's find: a 21,296 B executable naming itself value-layer never-widen machinery, untracked 10 weeks",
+    "this sweep"
+  ],
+  "why_no_instrument_catches_it": "The files are ON DISK. Every count, directory listing, card battery and reachability sweep reads them as present. UNTRACKED-BUT-PRESENT is invisible to every instrument this wave refined.",
+  "NOT_a_gate": "observation with measurement. No remediation authorized, no seat named as at fault, nothing to chase.",
+  "MY_FIRST_SWEEP_UNDER_COUNTED_BY_12": "My first pass used the pathspec org/**/*.py and returned 7. The estate-wide sweep returns 19 -- the missing 12 are in data/, infra/ and deck_generation/. A TRUE COUNT OVER A NARROWER POPULATION, which is the same defect as the L0 census sweeping one tree for materializers: not wrong as a scope, just never stated as a limit. I caught it only because I widened the pathspec before publishing, and the 7 would have read as a complete answer.",
+  "scope_note": "data/etfs/scripts/dedup/* (4), infra/aws/ec2/canonical-schwab-si2/* (5) and deck_generation/* (2) belong to lanes outside D11. NAMED, NOT CHASED -- this is an observation, not a dispatch, and no seat is asked for anything."
+}
