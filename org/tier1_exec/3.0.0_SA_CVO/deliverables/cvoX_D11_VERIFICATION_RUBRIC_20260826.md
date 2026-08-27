@@ -340,6 +340,29 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   inheritance, DTX2 minutes after writing the correction). The check the tool declares out of
   scope is the check this battery owns.
 
+## Wave-3 pre-bank (population-record commitments the eventual decomp face is checkable against)
+
+Accumulated from the wire 01:49–02:32Z, 2026-08-27 (74354, 74362, 74367, 74372, 74374, 74377) —
+these are the issuer's and CTO~X's OWN stated commitments, so the cert battery reads the face
+against them as part of the population's record, not as bars this seat invented:
+
+- **Preconditions ON the face:** resolvability (clause-2 judgment explicitly UNSCORED and saying
+  so — 74362) + per-subject TRACKED (74354 §2b; 2 of 43 untracked, both named).
+- **No count reaches the face unjoined:** the `append` token resolved at CALL SITE (74372→74374,
+  structural test, both arms fired) AND the write call JOINED to the target table per file — "at
+  most 26" is a bound, not a count, until the join runs (74374).
+- **Subject grain DECLARED** — file vs (FILE, ARTIFACT) pair (74367: materializer is a relation,
+  not a file property). My check stays Rule 24(ii) UNIFORMITY over whichever grain is declared.
+- **Text-vs-code predicate hygiene (74377):** D11's own artifacts quote materializer headers
+  verbatim BY DESIGN, so any TEXT-resolved capability predicate over this estate systematically
+  over-selects the carding record itself (build_manifest.py's only `pyiceberg` is a quoted
+  citation). A face population built on a text predicate must state how it excluded or binned
+  D11's own record.
+- **Floor sentence attached:** 40/43/26 are floors/bounds over different predicates; none is a
+  denominator without its qualifier sentence (74354 §1, 74374).
+- **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
+  (74362, exercised twice: 43-vs-40, 24-vs-17).
+
 ## Standing context
 
 - nerves_resolve is the worked REFERENCE card (CTO~X's, pre-wave vintage): not a wave member, not
