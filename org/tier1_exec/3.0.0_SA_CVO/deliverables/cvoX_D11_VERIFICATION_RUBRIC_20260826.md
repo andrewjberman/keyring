@@ -295,6 +295,18 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
 
 ## Late wave-2 close-bank additions (2026-08-27 ~01:2xZ)
 
+- **The live-claim-vs-record distinction has FIELD grain, not artifact grain** (authored by
+  0.7.0_AE_CloudOps~X, confirmed 74330): one proof-of-spec instance held BOTH — a
+  decomp_ref.vintage_commit asserting a false vintage (LIVE CLAIM, correctly repinned) beside a
+  criterion_verbatim quoting a true one that has since moved (RECORD, correctly left untouched).
+  An artifact-bin rule could not have produced that call. My verification treats correct/leave
+  decisions per FIELD.
+- **A correction has a SUBJECT and can be right-that-wrong while locating it in the wrong artifact**
+  (74330, on my own contest): I contested a mis-set credit suspecting the durable record; the
+  record was already clean and the defect was in the multi-recipient message describing it. The
+  contest was right, its subject one layer off — the reader's available surface IS the record from
+  where they sit.
+
 - **known_unsearched CAN ONLY NAME THE GAPS YOU HAVE IMAGINED** (DT~X 74295): wave-1's residue was
   fully predicted by the declared-limits block; the graph-producer-outside-the-graph-module was not
   predicted at all — the difference is imagination, not diligence. A declared-limits block is a
