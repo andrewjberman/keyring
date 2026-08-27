@@ -97,7 +97,7 @@ DOMAIN: lifecycle position in an admitting registry (bridges first). MECE: `inad
 the boundary (F2) — the structurally-ineligible relation (CVO-75229 condition-4 named gap) was
 received by no value; a deliberate DEVIATION from the ruled five, recorded with this rationale.
 GRAIN: registry row. INTENT: admission lifecycle — NOT epistemic quality (verification_standing)
-and NOT origin (claim_origin). STATE-COHERENCE, per value: `candidate` moves by evidence +
+and NOT origin (claim_origin). STATE-COHERENCE: per value -- `candidate` moves by evidence +
 adjudication (registry); **`held` = ELIGIBLE, adjudication PAUSED on a NAMED item — owner: the
 admitting registry; exits: admitted | rejected when the named item resolves; a held row with no
 named item is malformed** (F1); `rejected` moves only by new evidence (re-candidacy); `retired`
@@ -169,7 +169,9 @@ same obligation: a superseded thing names its successor, in every enum that says
 
 ### 3.9 `run_status` — `running | succeeded | failed | partial`
 DOMAIN: outcome of one execution. MECE: hunted member — cancelled → `failed` with evidence at v0.1
-(declared, not silently folded). GRAIN: run. INTENT: execution outcome.
+(declared, not silently folded). GRAIN: run. INTENT: execution outcome. STATE-COHERENCE: `running`
+moves by the execution completing (executor); `succeeded`/`failed` are terminal for the run record
+(a re-run is a NEW run, never a mutation — LAW 3); `partial` moves only by a successor run.
 ARM TABLE (CV-4): `running -> completed_at null` · `succeeded|failed|partial -> completed_at
 required` (terminal states carry their instant). ⛔ EMISSION POSITION, declared (DT run-status set):
 a `failed` run MAY declare outputs (partial emission is real) and a `succeeded` run MAY declare none
@@ -177,8 +179,11 @@ a `failed` run MAY declare outputs (partial emission is real) and a `succeeded` 
 reads the run receipt, not the status.
 
 ### 3.10 `bundle_completeness` — `complete | partial_legacy`
-DOMAIN: whether a materializer version's execution bundle is fully pinned. GRAIN: version. INTENT:
-pin completeness. STATE-COHERENCE: `partial_legacy` moves by reconstructing the absent components
+DOMAIN: whether a materializer version's execution bundle is fully pinned. MECE: over the declared
+pin-completeness domain — with the CVR2-2 finding CARRIED OPENLY: a future partial-NOT-legacy
+bundle has no honest home in this two-value domain (intent-fusion of degree with cause); the R2-2
+design doc resolves it (complete|partial + cause-in-evidence) rather than this record absorbing it
+silently. GRAIN: version. INTENT: pin completeness. STATE-COHERENCE: `partial_legacy` moves by reconstructing the absent components
 (owner: the pinning seat) — or never, honestly.
 ARM TABLE: `complete -> all six bundle digests required` · `partial_legacy -> absent_components
 required, minItems 1` (honesty is a conditional, not prose). Positive coverage: BOTH arms carry
@@ -190,8 +195,10 @@ account lives in the native key). GRAIN: entity. INTENT: identity locality. STAT
 remedy axis.
 
 ### 3.12 `relation_type` — `candidate_equivalence | canonicalized_as | merged_into | split_from | successor_of | replaces | instance_of`
-DOMAIN: identity-level links. Succession INTERPRETATIONS are DERIVED from predecessor/successor
-cardinality (ruled) — deliberately not an enum, so ambiguity cannot be forced at write time;
+DOMAIN: identity-level links. MECE: over declared link kinds — hunted members: fabric INSTANCE_ON
+(memoranda vocabulary) folds into `instance_of` (the record's fabric lives on the instance entity,
+not the relation); ambiguous continuity is an OPEN `candidate_equivalence`, not a missing value.
+Succession INTERPRETATIONS are DERIVED from predecessor/successor cardinality (ruled) — deliberately not an enum, so ambiguity cannot be forced at write time;
 ambiguous continuity = an open `candidate_equivalence`. GRAIN: serial-pair. INTENT: identity
 topology. STATE-COHERENCE: relations are append-only; `superseded_by` is the only forward pointer.
 ⛔ SELF-LOOPS are rejected by the validator's SEMANTIC arm (DT-2b): a 1→1 self-merge would be READ

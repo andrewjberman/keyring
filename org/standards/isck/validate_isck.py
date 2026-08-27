@@ -129,6 +129,68 @@ FIXTURES = {
     },
 }
 
+
+# ATTACK TARGETS (path-grained assertions, round 2: COO~X 76662 same-keyword-drift closure).
+# Per mutant: the FIELD(s) its rejection must reference. DECLARED here, never derived from the
+# instance -- a drifted instance would contaminate a derived set with its own corruption. A mutant
+# absent from this dict is UNSCOREABLE and FAILS the self-test (the ARM-2 rule).
+ATTACK_TARGETS = {
+    "entity.serial-is-a-path": ["entity_serial"],
+    "entity.serial-is-sha256-shaped": ["entity_serial"],
+    "observation.fingerprint-without-normalization": ["normalization_version"],
+    "observation.fingerprint-without-method": ["fingerprint_method"],
+    "observation.partial-fingerprint-no-method": ["fingerprint_method", "normalization_version"],
+    "observation.method-without-fingerprint": ["fingerprint"],
+    "observation.substrate-unavailable-carries-fingerprint": ["fingerprint"],
+    "observation.invariant-with-referent-fabric": ["referent_fabric_id"],
+    "observation.fabric-local-without-fabric": ["referent_fabric_id"],
+    "observation.fabric-local-with-device": ["referent_device_id"],
+    "observation.device-local-missing-device": ["referent_device_id"],
+    "binding.invariant-with-referent-fabric": ["referent_fabric_id"],
+    "binding.fabric-local-without-fabric": ["referent_fabric_id"],
+    "binding.device-local-missing-both-keys": ["referent_fabric_id", "referent_device_id"],
+    "run.missing-execution-fabric": ["executed_on_fabric"],
+    "binding.missing-valid-from": ["valid_from"],
+    "frontier.empty-entries": ["entries"],
+    "surface.missing-frontier": ["source_frontier_id"],
+    "coherence.missing-target-policy": ["target_policy"],
+    "coherence.verified-no-evidence": ["evidence_refs"],
+    "coherence.mismatch-no-delta": ["delta_summary"],
+    "coherence.currency-verdict-no-evidence": ["evidence_refs"],
+    "relation.corroborated-no-evidence": ["evidence_refs"],
+    "relation.contradicted-no-adjudicator": ["adjudicated_by"],
+    "relation.superseded-no-successor": ["superseded_by"],
+    "relation.evidence-empty-list": ["evidence_refs"],
+    "matversion.partial-legacy-without-absent-components": ["absent_components"],
+    "matversion.complete-without-bundle-fields": ["source_tree_digest", "dependency_lock_digest",
+                                                  "configuration_digest",
+                                                  "declared_opinions_digest",
+                                                  "normalizer_versions",
+                                                  "runtime_contract_version"],
+    "run.seeds-absent": ["random_seeds"],
+    "run.seeds-empty-list": ["random_seeds"],
+    "run.running-with-completed": ["completed_at"],
+    "run.succeeded-without-completed": ["completed_at"],
+    "observation.garbage-timestamp": ["observed_at"],
+    "relation.independently-observed-no-evidence": ["evidence_refs"],
+    "observation.observed-with-nothing": ["fingerprint", "fingerprint_method",
+                                          "normalization_version"],
+    "observation.normalization-alone": ["fingerprint"],
+    "binding.independently-observed-no-evidence": ["evidence_refs"],
+    "materializer.superseded-no-successor": ["superseded_by_version"],
+    "materializer.active-with-successor": ["superseded_by_version"],
+    "entity.contested-no-adjudicator": ["adjudicated_by"],
+    "entity.active-with-adjudicator": ["adjudicated_by"],
+    "relation.unverified-with-adjudicator": ["adjudicated_by"],
+    "relation.rule-derived-no-evidence": ["evidence_refs"],
+    "binding.model-inferred-no-evidence": ["evidence_refs"],
+    "binding.basis-is-dead-enum-measured": ["binding_basis"],
+    "entity.status-dead-value-candidate": ["current_status"],
+    "relation.unknown-type": ["relation_type"],
+    "entity.smuggled-field": ["legacy_name"],
+    "binding.closed-null-valid_to": ["valid_to"],
+}
+
 _DEL = object()
 
 
@@ -497,13 +559,44 @@ def main():
         if not errs:
             neg_bad.append(f"mutant {name} VALIDATED -- hole in the contract")
             continue
-        got = {e.validator for e in errs}
-        if not (got & expected):
-            neg_bad.append(f"mutant {name} rejected for the WRONG reason: got {sorted(got)}, "
-                           f"expected one of {sorted(expected)} (F7 drift)")
+        targets = ATTACK_TARGETS.get(name)
+        if targets is None:
+            neg_bad.append(f"mutant {name} UNSCOREABLE -- no declared attack target (add it to "
+                           "ATTACK_TARGETS; an undeclared mutant cannot dilute the denominator)")
+            continue
+        # PATH-GRAINED (COO~X 76662): the matching-keyword error must REFERENCE a declared
+        # target field -- same-keyword drift at an undeclared field no longer satisfies it.
+        hit = False
+        for e in errs:
+            if e.validator not in expected:
+                continue
+            locus = e.json_path + " " + str(list(e.path)) + " " + e.message
+            if any(t in locus for t in targets):
+                hit = True
+                break
+        if not hit:
+            got = sorted({e.validator for e in errs})
+            neg_bad.append(f"mutant {name} rejected but NOT at its declared target "
+                           f"{targets}: keywords {got} at other loci (same-keyword drift, "
+                           "or the rule moved)")
     print(f"NEGATIVE ARM: {len(muts) - len(neg_bad)} of {len(muts)} mutants reject FOR THEIR "
-          f"NAMED REASON")
+          f"NAMED REASON AT THEIR DECLARED TARGET")
     fails += neg_bad
+
+    # DRIFT META-CONTROL (COO~X 76662's injection, made standing): a record whose ONLY defect is
+    # the drift (corrupt serial, true target intact) must NOT satisfy a target-declared assertion.
+    masked = _mk("state_observation")
+    masked["entity_serial"] = masked["entity_serial"].upper()
+    merrs = _leaf_errors(_branch_validator(schema, "state_observation"), masked)
+    dtargets = ATTACK_TARGETS["observation.fingerprint-without-normalization"]
+    mhit = any(e.validator in {"required", "dependentRequired"} and
+               any(t in (e.json_path + " " + e.message) for t in dtargets) for e in merrs)
+    if merrs and not mhit:
+        print("DRIFT META-CONTROL: a drift-only rejection does NOT satisfy a target-declared "
+              "assertion (the 76662 class is now detectable)")
+    else:
+        fails.append("DRIFT META-CONTROL: a drift-only rejection SATISFIED the assertion -- "
+                     "path-grained scoring is not discriminating")
 
     # SEMANTIC ARM: semantic mutants must each produce >=1 semantic error.
     smuts = _semantic_mutants()
