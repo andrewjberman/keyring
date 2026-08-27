@@ -10,8 +10,8 @@
       "date": "2026-08-20"
     }
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD authored + registered 2026-08-20 (CTO). Source surface RESOLVED by HAR-2 the same session: BD ships a purpose-built insurance application (/insurance/) whose API was exercised live at the CTO seat -- POST /request/api/offline/insurancerelationshiplist returns an ASYNC BULK EXPORT ({exportResultID, resultGuid}, the same run-then-fetch pattern our DataMining ETL already operates), and POST /account-api/query/accountdetailsearch returns per-account detail including insuranceCharacteristics + insuranceCharacteristicsRiders + currentEmv, with alternativeInvestment already a native account field. AUTH IS A SEPARATE AUTHORITY: that surface takes the /session/token bearer, NOT the /Auth/Token bearer used by DataMining and the dashboard (measured: DataMining token -> 401). qt6 'BI Billing' (the documented never-ingested query type) remains the candidate for value at Account x Month grain; the likely final shape is value from qt6/bulk-export joined to characteristics from the insurance API on account number. Awaiting COO decomposition of W1-W6. AMENDED ~1915Z: backend-only scope + the integration spec (PRD sec.4.4) is now the project's central design work.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: PHASE 0 -- PRD authored + registered 2026-08-20 (CTO). Source surface RESOLVED by HAR-2 the same session: BD ships a purpose-built insurance application (/insurance/) whose API was exercised live at the CTO seat -- POST /request/api/offline/insurancerelationshiplist returns an ASYNC BULK EXPORT ({exportResultID, resultGuid}, the same run-then-fetch pattern our DataMining ETL already operates), and POST /account-api/query/accountdetailsearch returns per-account detail including insuranceCharacteristics + insuranceCharacteristicsRiders + currentEmv, with alternativeInvestment already a native account field. AUTH IS A SEPARATE AUTHORITY: that surface takes the /session/token bearer, NOT the /Auth/Token bearer used by DataMining and the dashboard (measured: DataMining token -> 401). qt6 'BI Billing' (the documented never-ingested query type) remains the candidate for value at Account x Month grain; the likely final shape is value from qt6/bulk-export joined to characteristics from the insurance API on account number. Awaiting COO decomposition of W1-W6. AMENDED ~1915Z: backend-only scope + the integration spec (PRD sec.4.4) is now the project's central design work.",
   "blocking": "COO decomposition + GO. One open sovereign decision, deliberately not pre-answered: whether advisor demand justifies the HEAVY route's surfaces (Andrew, Teams 18:53Z -- 'depends on how much advisors care about insurance assets'); W6 prices it. Nothing in W1-W5 becomes waste under either ruling.",
   "created": "2026-08-20",
   "pods": [
@@ -23,5 +23,6 @@
   ],
   "pipeline": "cot (Cottonwood / Black Diamond) -- firm-separated, no bd/49F sharing",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY V1 -- CVO VERIFY: completeness (every tool one home, zero unplaced) + non-redundancy (every overlap declared, zero silent) + tools_index-is-generated-view + seam-IDs-shared-with-COMPDRIFT. The PRD section 8 acceptance/exit.</title>
 <issued_to>3.0.0_SA_CVO (the completeness + non-redundancy verifier -- PRD-named).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project NFRA_COMPUNIFY is complete; this TO was last touched 2026-06-30, predating the project close 2026-06-30. Closed as a record act, not a work verdict. Prior status: staged</status>
 <priority>P-verify -- the acceptance gate. Event-driven on S1 (+ S2/S3) landing; lighter than the build, so CVO can hold it alongside its firefight gates.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S1 (the populated ledger + censuses) is the minimum; S2 (the gate) + S3 (routing) fold in as they land.</dependencies>

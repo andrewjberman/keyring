@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P3 -- D3 retire (per-tool, post-verify) + D4 one-head ASSERTION (generalized COMPDRIFT seam-4, shared seam-ID, wired in the shared API).</title>
 <issued_to>0.8.0_AE_CloudComp~D</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project NFRA_GRAPHUNI is complete; this TO was last touched 2026-06-30, predating the project close 2026-07-01. Closed as a record act, not a work verdict. Prior status: staged</status>
 <priority>P3 -- the closeout. Per-tool retirement ONLY after that tool's P2 no-regression pass.</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>P2 (per-tool re-point + CVO no-regression pass). Cross-macro: COMPDRIFT seam set (drift-topology.yaml) for the shared seam-ID.</dependencies>

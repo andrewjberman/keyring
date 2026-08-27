@@ -80,12 +80,136 @@ expressed: a branch-position hold needs a mechanism, or it needs to be a data-pl
 **THE CALL:** does a sweeping DEV->PROD merge for an unrelated project constitute "promoted to PROD" within
 your condition, and if so do you want the PERFRP files reverted off PROD?
 
-**REC: ACCEPT IT.** The condition's PURPOSE -- no unverified performance numbers in front of anyone -- is
-**intact and measured**: zero leaves, declared-absence faces only. A revert costs a promote cycle to restore
-a letter whose substance already holds. **If you want the letter restored, it is a clean revert and one word.**
+!! **REC REVISED ~07:2xZ -- MY FIRST RECOMMENDATION WAS "ACCEPT IT" AND IT RESTED ON AN INCOMPLETE READ OF
+THE RENDER PLANE. `0.4.0_DE_ClientPlatform~D` 69521 supplied the literal strings and they change the answer.**
+
+**WHAT AN ADVISOR ACTUALLY SEES ON PRODUCTION** (read at `origin/PROD`, from source -- unreadable from the
+minified bundle, which is why it had to come from the author):
+
+| card | subtitle, verbatim |
+|---|---|
+| Activity Summary | *"Beginning value, net additions, gain/loss, ending value"* |
+| Performance | *"Time-weighted return, net of advisory fees"* |
+| Allocation | *"Allocation by class, of total and of level"* |
+| Transactions | *"Per-relationship, paged"* |
+
+*(Gain/Loss is `requiresLeaf:true` and is HIDDEN -- **the one card that is invisible is the only one whose
+absence anyone designed for.**)*
+
+**THESE READ AS FINISHED PRODUCT.** Nothing says provisional, preview, or coming soon -- **on DEV the
+audience was us and no such label was needed.**
+
+!! **AND THE TRANSACTIONS CARD RENDERS INTERNAL TAXONOMY ON ITS FACE, IN AMBER:**
+`Notes -> PII-EXCLUDED-PERMANENT` - `Description -> NO-SOURCE-TODAY`, plus verbatim from `cards.ts`:
+*"Every candidate source is client-sensitive (transaction memo and wire instructions). Deliberately not
+served, and not a gap to be closed later."*
+
+!! **FRAMING CORRECTED ~07:3xZ -- ANDREW HIMSELF RATIFIED THIS COPY, AND I PRESENTED IT AS AN UNNOTICED
+EXPOSURE.** `0.4.0_DE_ClientPlatform~D` 69557 measured the card as put to him at 03:38Z: it carries **BOTH
+LITERAL TOKENS** and the phrase **"THE CARD NAMES BOTH ABSENCES ON ITS OWN FACE"** -- *Notes =
+PII-EXCLUDED-PERMANENT (a boundary, never to be "fixed"), Description = NO-SOURCE-TODAY (an ordinary gap,
+re-openable).* **He was shown the literal strings, told they are face copy, and answered "rec accepted."**
+**SO THE COPY IS RATIFIED, NOT OVERLOOKED. WHAT MOVED IS THE AUDIENCE, NOT THE DECISION** -- and whether his
+ratification reaches a client audience is **HIS** scope call, not a defect anyone introduced.
+*(`3.0.0_SA_CVO` had asserted the tokens were absent from that card and has withdrawn it in full: they quoted
+the CALL line and reasoned about the CARD, when an `/open-calls` card is ONE artifact with the REC beneath an
+internal divider. Their own naming of it is the keeper: **STOPPING AT THE CONFIRMING LINE IS NOT READING THE
+ARTIFACT** -- and both seats argued about a file neither had opened, one hash away, in one of their own
+deliverables. **The dispute is what made both sides sure enough to skip the read.**)*
+
+> **AN ADVISOR ON PRODUCTION READS "PII-EXCLUDED-PERMANENT" AND A SENTENCE ABOUT WIRE INSTRUCTIONS.**
+> **NO CLIENT DATA IS EXPOSED AND NOTHING LEAKS** -- it is **internal engineering vocabulary and internal
+> PII rationale rendered on a client-facing surface.** DE~D wrote those strings deliberately and Andrew
+> ratified the two-state form at 04:00Z; **they are correct FOR AN AUDIENCE OF US.**
+> **THE AUDIENCE CHANGED WITHOUT THE STRINGS CHANGING** -- the same shape as everything else here: nothing
+> became wrong, an environment assumption under it was invalidated by an act in another lane.
+
+**REVISED REC: REVERT THE PERFRP FILES OFF PROD.** Three reasons, and the first is new since my original rec:
+1. **It relocates RATIFIED-FOR-US copy off a client surface without shipping a further change.** *(Restated
+   from "removes the internal-vocabulary exposure" -- the copy is RATIFIED, see above; the issue is the
+   AUDIENCE it now reaches, not that anyone shipped unapproved text.)* Editing the strings is also a DEV
+   change needing its own promote, so it is not faster, and it leaves finished-looking empty cards regardless.
+2. It restores the letter of his condition, not only its substance.
+3. **Four cards with finished product names and no figures is its own poor look on a client surface**,
+   independent of the vocabulary question.
+**IF HE PREFERS TO ACCEPT IT, THE SUBSTANCE STILL HOLDS** -- zero leaves, no wrong number reachable -- and
+that reading remains defensible. The call is his either way; only my recommendation moved.
+
+> **THE HONEST ONE-LINE SUMMARY, AND IT IS DE~D'S:** *four performance cards with finished-looking product
+> names, no figures, and two lines of internal data-governance vocabulary visible on one of them.* **"The
+> code reached PROD" understates it; "wrong figures are showing" overstates it; AND "four empty cards"
+> UNDERSTATES IT TOO** -- which is what my first recommendation rested on.
 
 **CARRIED SEPARATELY AND WORTH MORE THAN THE INSTANCE:** section 4. However you rule here, a branch-position
 hold is not a hold.
+
+## 6b. !! SCOPE WIDENED ~07:2xZ -- THE SAME PROMOTE CARRIED A SECOND LANE, AND ITS FACE IS LOUDER
+
+**THIS IS NOT ONE PROJECT'S SLICE.** `0.4.0_DE_ClientPlatform~C` 69534 measured their own lane against the
+same merge and found **SEVEN OF THEIR NINE COMMITS ON `origin/PROD`**, including **`d1f8f38a`, the commit
+that wires their panel into `ModelPortfolios.tsx`.** Same merge `d9a98bcc`, same mechanism, and **its subject
+named nothing of theirs either.**
+
+**SERVED DATA ABSENT ON EVERY SCOPE, CONTROLLED BOTH WAYS:** `platinum/mdpf/{49financial,inflection,
+cottonwood,global}/` category-views leaves = **0, 0, 0, 0**; positive controls in the same prefixes = **3, 3,
+4 objects present.** Same conclusion as PERFRP -- no wrong number, because there is no number.
+
+!! **BUT THE DECLARED-ABSENCE FACE IS LOUDER THAN PERFRP'S, AND THIS IS THE PART THAT CHANGES THE PICTURE.**
+Their accessor returns `{status:'absent_by_scope'}` on a 404 -- **a TRUTHY object** -- so the mount guard
+`{categoryViews && <CategoryViewTree .../>}` passes and the component renders. What renders is **not a hidden
+card: it is a full `Panel variant="chart"` titled `ASSET CATEGORY VIEWS`, carrying the line "No category view
+tree is published at this scope." On every firm, today.**
+
+> **AN ABSENT CARD READS AS INTENTIONAL; AN EMPTY TITLED PANEL READS AS BROKEN.** PERFRP's absence faces sit
+> inside an existing surface. **This ADDS A NEW TITLED PANEL to a client-facing page that then says it has
+> nothing.**
+
+**AND DE~C'S OWN CODE COMMENT PREDICTED THE MECHANISM AND MISSED THE EXPOSURE:** they had written that a
+stale observation *"goes stale VISIBLY -- the panel starts showing a tree."* Correct. **They never asked
+WHERE that panel would be visible FROM**, because they were reasoning about the DEV surface they were working
+on. *The same audience-changed-without-the-artifact-changing shape as DE~D's strings.*
+
+**THIS STRENGTHENS THE REVISED REC RATHER THAN COMPLICATING IT** -- and it means the revert question is not
+PERFRP-shaped but **promote-shaped.** Whatever else was on DEV at 05:47:35Z rode the same merge, and **only
+two lanes have checked.**
+
+!! **AND THE MECHANISM IS ARMED RIGHT NOW, NOT HISTORICAL** (DE~C 69570, correcting themselves): they had
+reported their two newest commits as *"LOCAL, riding integration."* **MEASURED: all nine are on `origin/DEV`,
+ahead-by-zero.** So `d9e875db` and `1af11910` are **not outside the mechanism -- they are loaded into it**,
+and they ride the NEXT DEV->PROD promote, whoever cuts it and whatever it is named for.
+*(Both are safe on their merits and nobody is asking for a hold. The correction is to the impression that
+anything sits outside the mechanism.)*
+> **THE STRUCTURAL FINDING IS NOT A POSTMORTEM. THE NEXT PROMOTE IS ALREADY CARRYING PASSENGERS.**
+
+!! **AND IT FIRED AGAIN 45 MINUTES LATER, WHICH SETTLES IT** (measured 08:49Z at this seat, `git fetch` first):
+`origin/PROD` moved `d9a98bcc` -> **`a7a7ff16`** at 2026-08-25T08:30Z -- `0.2.0_DT_PortfolioAnalytics~Z`,
+*"merge DEV->PROD: v2.1.166 -- ANDREW-DIRECT 20260825 0730Z DEFECT A: Asset Sub-Categories now render in ETF
+mode"*. **A second promote, for a third unrelated project, on his own defect fix.**
+**SO DE~C's FIGURE ON THE CARD IS SUPERSEDED: 7 of 9 IS NOW 9 of 9.** The two commits they had named as "NOT
+in PROD" (`d9e875db`, `1af11910`) are both ancestors of `a7a7ff16` -- **they rode the very next promote,
+exactly as they predicted when they corrected their push state.** *The prediction held and the state report
+did not, inside an hour.*
+!! **THE DELTA IS IN THE REASSURING DIRECTION AND STILL NEEDED CORRECTING** -- the two additions are a
+citation fix and scope-neutral strings, so the PROD panel no longer says "for this firm" at global scope.
+**A number that moved in our favour is still a number the sovereign would be reading wrong.**
+**TWICE IN 45 MINUTES, TWO DIFFERENT PROJECTS, NEITHER NAMING A PASSENGER.** The branch-position hold is not
+weakly protective; it is not protective.
+
+!! **AND I NEARLY FILED A FALSE ALL-CLEAR ON THIS QUESTION FOR THE SECOND TIME.** My first check of the new
+tip ran `git ls-tree -r origin/PROD -- src/components/_shared/perfrp/` and returned **0**. **THE PATH IS
+`src/pages/AdvisorIntelligence/_shared/perfrp/`** -- I guessed a prefix. Re-run without an assumed path:
+**9 perfrp files on `origin/PROD`, unchanged from `d9a98bcc`**; positive controls on the same ref
+(`AdvisorBookView` 1, `ModelPortfolios` 2, 1,065 files total). **PERFRP IS STILL ON PROD AND THE CARD STANDS.**
+*Same shape as the bundle grep in s.3 -- a confident zero from the wrong location, on the same question,
+within one hour. The control is the only reason both were caught.*
+
+**DE~C'S SELF-CORRECTION CARRIES THE THIRD INSTANCE OF TONIGHT'S META-PATTERN, AND IT IS THE CLEANEST:**
+CLAUDE.md's push-state rule (*"landed LOCAL @hash, rides integration" -- never bare "landed"*) exists to stop
+OVERSTATING. **They UNDERSTATED, and the rule as written does not reach that direction, because it names the
+failure it was written for.** Third rule, third instance, one night -- F-010 (names hashes and counts, not
+ACKs), 22b (names `ps`/`read/`, not a prose claim), now the push-state rule (names overstatement, not
+understatement). **A RULE THAT NAMES ITS SURFACES TEACHES THE MECHANISM ONLY TO WHOEVER READS PAST THE
+EXAMPLES.**
 
 ## 7. INDEPENDENT CONFIRMATION
 

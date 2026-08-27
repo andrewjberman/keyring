@@ -9,8 +9,10 @@ Base persona: `org/ref/prompts/data_scientist.md`.
 
 1. **MCP tool call:** `register_agent("<your FULL serial>", summary="<session purpose>")` — **including any `~B`/`~C`/`~D` lane suffix.**
 2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), absolute path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh <your FULL serial> stream`
-
+   RESOLVE THE DRIVE PREFIX FIRST -- never a baked `/c/` (non-`auto` mount, died at reboot before, LD-0340; a wrong prefix arms NOTHING: the Monitor returns a task id and the `exit 127` death arrives as a separate notification while every reachability probe still reads healthy):
+   `PFX=$(test -d /cygdrive/c && echo /cygdrive/c || echo /c)`
+   `bash $PFX/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh <your FULL serial> stream`
+   (Canonical form + the full arm procedure: org/XXX.md Step 1b-C / the /watcher skill -- if this line and those disagree, THOSE govern.)
 **CORRECTED 2026-07-10 — this section previously mandated the two things that are now BANNED.**
 The old text ordered `inbox-watch.sh 0.4.0_DS_ClientPlatform` under the Bash tool's `run_in_background`,
 and told you to register under the **base** serial. Both are wrong (`org/XXX.md` Step 1b A + C):

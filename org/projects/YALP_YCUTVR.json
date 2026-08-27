@@ -3,13 +3,25 @@
   "macro_code": "YALP",
   "name": "Portal YCharts Production Cutover via Firewalled Parity Fork",
   "description": "Andrew-direct 2026-06-15: realize the YCharts->portal cutover that YALP_MDSRC (complete 2026-05-22) explicitly carved out 'to a future project'. YALP_MDSRC proved 71/71 WS-1 market-data surfaces YCharts-sourceable (61 exact-match + 9 representative + 1 Bloomberg-only Copper HG1 + RSI derived) and built the YCharts credential + pull pipeline DORMANT (ycharts-pipeline-v1.2.1, AC5 zero-prod). This project activates that pipeline as the production source for the portal dashboard pages via a FORKED, DEV-only parity portal (portal-ycharts, own CI, drift-managed from live) that is firewalled from the live portal repo/build, validated PAGE-BY-PAGE against live before any PROD cutover decision. Firewall architecture = forked repo (Andrew call 06-15, over separate-branch and isolated-env options). In-scope pages: MarketOverview (MKTOVR), Factor (FACTOR), Valuation (VALUAT), Correlation (CORREL), Position (POSITN), CMA-sample (CMASMP), Causal (CAUSAL), Attribution (ATTRBN). Macroeconomics (MACROS) DEFERRED (Andrew: decide at its turn after first pages prove parity). PROD cutover itself is a SEPARATE downstream decision gated on proven page-by-page parity.",
-  "prds": [{"path": "docs/architecture/YALP_YCUTVR.md", "label": "YCharts cutover via firewalled parity fork (PRD v0.1)", "date": "2026-06-15"}],
-  "status": "active",
-  "phase": "Phase 0: PRD authoring (CTO). Firewall arch = forked parity portal (portal-ycharts); Macro deferred; activates dormant ycharts-pipeline-v1.2.1 against the fork backend. Compiler-evidence pass (comp-blast/comp-routes/comp-transform on the 8 in-scope pages) pending before PRD finalization.",
+  "prds": [
+    {
+      "path": "docs/architecture/YALP_YCUTVR.md",
+      "label": "YCharts cutover via firewalled parity fork (PRD v0.1)",
+      "date": "2026-06-15"
+    }
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 0: PRD authoring (CTO). Firewall arch = forked parity portal (portal-ycharts); Macro deferred; activates dormant ycharts-pipeline-v1.2.1 against the fork backend. Compiler-evidence pass (comp-blast/comp-routes/comp-transform on the 8 in-scope pages) pending before PRD finalization.",
   "blocking": "PRD authoring in progress (CTO). Not yet decomposed by COO.",
   "created": "2026-06-15",
-  "pods": ["0.1", "0.2", "0.3", "0.4"],
+  "pods": [
+    "0.1",
+    "0.2",
+    "0.3",
+    "0.4"
+  ],
   "pipeline": "ycharts-pipeline + portal",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

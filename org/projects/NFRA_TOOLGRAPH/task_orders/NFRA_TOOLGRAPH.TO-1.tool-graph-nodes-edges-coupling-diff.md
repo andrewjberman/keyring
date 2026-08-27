@@ -4,7 +4,7 @@
 <issued_to>0.8.0_AE_CloudComp (build). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn. **MEASURE-ONLY -- starts on spawn, NOT behind the `.tools/**->BASE_EXEC` daylight hold** (imports-grep + coupling diff are read-only; nothing here edits an enforcer).</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>pending</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: closed WITH its project NFRA_TOOLGRAPH, which was closed the same day for having no directive attachment. Closed as a record act, not a work verdict; the work is recoverable by re-minting the project. Prior status: pending</status>
 <dispatch>DISPATCHED 2026-07-10 by 2.0.0_SA_COO~A -> 0.8.0_AE_CloudComp, on Andrew's DIRECT spawn release ("Unblock immediately"). CTO~A arch-gate PASS on the TO set @ 8dfcf1e75. Agent-queue pointer: org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLGRAPH.TO-1.tool-graph-nodes-edges-coupling-diff.md. Runs IN PARALLEL with PASSCRAFT-TO-1 (needs no ToolAudit). ROUTE EVERY BUILD DIFF back to 1.0.0_SA_CTO~A for the arch-gate before it is treated as landed.</dispatch>
 <priority>P1 -- immediately useful (the real scanner-ripple map) BEFORE any assurance wiring. Standalone: needs no ToolAudit, so it can run IN PARALLEL with PASSCRAFT-P1. The declared-vs-actual coupling diff is the load-bearing move (the hidden ripple `comp-coverage-map.yaml` exists to catch).</priority>
 <project>NFRA_TOOLGRAPH</project>

@@ -1,0 +1,145 @@
+{
+  "purpose": "Evidence for the five wave-2 PROJECT_MECHANISM cells, measured BEFORE certification so discharge is instant and evidenced rather than re-derived under time pressure. STAGED OUTSIDE the run directory ON PURPOSE: the packet is sealed at 7969fd40ca with attempt-4 planted, and three prior plants died because the packet kept moving. This file is not part of the packet.",
+  "measured_at": "20260826T233xZ",
+  "cards_landed": 28,
+  "cards_expected": 44,
+  "COVERAGE_WARNING": "28 of 44 cards. EVERY figure below is a PARTIAL over a moving denominator and NONE is a wave verdict. Re-measure at close.",
+  "W2_m_1": {
+    "status": "SUBSTANCE DISCHARGED on the wave pin. The ORACLE went through THREE forms; the first TWO were mine and wrong.",
+    "why_unsatisfiable": "as_of contains carded_utc, a PER-CARD fact. Byte-identity across cards is achievable only by falsifying the timestamp. The oracle demanded a lie.",
+    "measured": {
+      "carded_utc": "VARIES (8 distinct) -- CORRECT",
+      "commit_ish": "IDENTICAL on all 28",
+      "graph_vintage": "IDENTICAL on all 28"
+    },
+    "corrected_oracle": "commit_ish AND graph_vintage byte-identical across all delivered cards; carded_utc per-card and REQUIRED to vary.",
+    "verdict_against_corrected_oracle": "wave pin holds 28 of 28 on both fields",
+    "sibling": "SC-m-4 (wave 1) -- oracle named 2 store fields when 3 carry store lineage. Second defective oracle this project; both would have discharged MEASURED against themselves.",
+    "oracle_v1_mine_UNSATISFIABLE": "every delivered wave-2 card carries a byte-identical as_of",
+    "oracle_v2_mine_OVER_CORRECTED": {
+      "text": "carded_utc per-card and REQUIRED to vary",
+      "why_wrong": "Falsified by 0.7.0_AE_CloudOps~X against their OWN accepted cards within minutes. It (a) contradicts my OWN wave-1 ruling that three cards written in one pass legitimately share a clock read, (b) fails an honest lane today, and (c) is satisfiable by RITUAL -- a lane stamping cards seconds apart manufactures a pass carrying no information, which is the anti-oracle shape ONE ATTEMPT after we retired a planted tautology from this same cell.",
+      "the_repeated_error": "Twice I specified a VARIANCE axis when the property that matters is HONESTY ABOUT GRAIN. Variance was the nearest measurable proxy, and both times the proxy would have produced a confident wrong verdict against correct work."
+    },
+    "oracle_v3_CERTIFIER_FORM_ADOPTED": {
+      "source": "3.0.0_SA_CVO~X 74031",
+      "a": "commit_ish AND graph_vintage byte-identical across all delivered cards -- the wave pin, the thing the cell exists to protect",
+      "b": "carded_utc = an HONEST clock read at a DECLARED grain (per-card or per-batch, stated which), never estimated, never copied",
+      "why_it_discriminates": "fails a lane that estimates or copies; passes a lane that batch-stamps AND SAYS SO; cannot be satisfied by lying -- which was v2's own goal, and v2 missed it."
+    },
+    "rule_24_iii_violation_in_my_own_cell": "Root of all three forms: 'byte-identical as_of' spans the WHOLE BLOCK and fuses TWO intents into one axis -- the WAVE PIN (is every card on wave 2's vintage, not wave 1's) and TIMESTAMP GRAIN HYGIENE. Rule 24(iii) INTENT COHERENCE, violated in a mechanism cell of the very project that exists to test Rule 24. Split: the wave pin is W2-m-1 and it PASSES; carded_utc grain is a separate observation, NOT a W2-m-1 failure.",
+    "verdict": "WAVE PIN 28 of 28 identical on both load-bearing fields -- measured by the cell owner and independently at the certifier's seat during the attempt-4 battery.",
+    "carded_utc_observation": {
+      "finding": "0.7.0_AE_CloudOps~X: 7 cards, ONE carded_utc, every stamp 27-45 min EARLIER than the card carrying it.",
+      "self_reported": "They ran a single clock read and stamped all seven -- HONEST at a BATCH grain, missing per-card.",
+      "disposition": "RECORDED, NOT REWORKED -- identical to wave-1's carded_utc P2 disposition. No delta requested: back-filling mtimes swaps one wrong grain for another and dresses it as precision.",
+      "found_by": "0.7.0_AE_CloudOps~X, against their own accepted cards, AFTER I told them their cards were correct.",
+      "v3_schema_candidate_for_CTO": "v2 has NO FIELD for declaring carded_utc's grain, so the declaration can only live in prose -- CLAUDE.md s.4's exact defect. A CANDIDATE, not a gate, not a mid-wave change."
+    }
+  },
+  "W2_m_3": {
+    "status": "HOLDING",
+    "measured": "forward_disposition present in 0 of 28 cards (oracle: ZERO)",
+    "note": "Andrew's after-carding sequencing is holding with no lane reminded."
+  },
+  "W2_m_5": {
+    "status": "EXERCISED -- v2 fields fire",
+    "AXIS_WARNING": "DEMOTION rate and NOT-MEASURED rate are DIFFERENT AXES and must never be quoted against each other. Demotion needs what the author ORIGINALLY wrote, which the delivered card no longer carries -- only the author can report it.",
+    "demotion_rate_author_reported": {
+      "0.7.0_AE_CloudOps~X": "21 of 49 = 43%",
+      "wave_1_comparable": "23 of 56 = 41% (author-adjudicated, no floor existed)"
+    },
+    "not_measured_rate_computable_from_cards": {
+      "0.4.0_DT_ClientPlatform": {
+        "rows": 112,
+        "not_measured": 34,
+        "pct": 30,
+        "dist": {
+          "measured": 78,
+          "held": 5,
+          "inferred": 17,
+          "absent": 12
+        }
+      },
+      "0.7.0_AE_CloudOps": {
+        "rows": 49,
+        "not_measured": 24,
+        "pct": 49,
+        "dist": {
+          "inferred": 19,
+          "measured": 25,
+          "absent": 4,
+          "held": 1
+        }
+      },
+      "0.8.0_AE_CloudComp": {
+        "rows": 35,
+        "not_measured": 9,
+        "pct": 26,
+        "dist": {
+          "measured": 26,
+          "inferred": 4,
+          "absent": 4,
+          "held": 1
+        }
+      }
+    },
+    "why_per_lane_never_summed": "the lanes card different populations; a blended rate is a residual-bucket claim, not a measurement."
+  },
+  "W2_m_2": {
+    "status": "MEASURED -- discharged early; this cell never depended on card delivery",
+    "oracle": "TWO denominators, both asserted in code against subjects.json and NEITHER derived by subtraction: (a) 43-head closure; (b) co_resident_stores additions counted separately.",
+    "a_43_head_closure": {
+      "head_43_subjects": 33,
+      "head_collapses": 10,
+      "sum": 43,
+      "verdict": "CLOSED"
+    },
+    "b_non_head_origins": {
+      "co_resident_addition": 8,
+      "compound_split": 2,
+      "dropped_recovery": 1,
+      "sum": 11,
+      "note": "none of these were ever among the 43 -- that is why they are counted separately"
+    },
+    "total": "33 + 11 = 44, matching subjects.json exactly",
+    "collapses": {
+      "head_collapse": 10,
+      "not_a_head": 2,
+      "total": 12
+    },
+    "why_two_denominators": "A single blended total would hide which population each subject came from. That blending is precisely the defect the ATTEMPT-2 PLANT was built from -- a tautological oracle in this very cell -- so the two-denominator form is the fix that plant forced.",
+    "independence": "asserted in the generator's self-test, which refuses to build if the 43-closure breaks"
+  },
+  "W2_m_4": {
+    "status": "PARTIAL -- CLEAN over an OPEN window, and the oracle has a hole I am naming rather than leaving to be found",
+    "oracle": "zero commits by a carding lane touching a subject's own generator during the wave",
+    "window": "2026-08-26 21:00Z -> 00:1xZ (OPEN -- two lanes still carding)",
+    "measured": {
+      "carded_subjects_naming_a_repo_path": "20 of 44 (the rest are S3 objects, warehouse tables or concepts; no commit can touch them)",
+      "0.8.0_AE_CloudComp~X": {
+        "files_touched": 3,
+        "carded_subject_files": 0
+      },
+      "0.8.0_AE_CloudComp~Y": {
+        "files_touched": 0,
+        "carded_subject_files": 0
+      },
+      "0.7.0_AE_CloudOps~X": {
+        "files_touched": 9,
+        "carded_subject_files": 0
+      },
+      "0.4.0_DT_ClientPlatform~X": {
+        "files_touched": 23,
+        "carded_subject_files": 0
+      },
+      "denominator": "35 distinct file-touches across the 4 carding lanes"
+    },
+    "verdict_partial": "CLEAN -- zero carding lanes committed to a subject they card",
+    "zero_that_needed_a_control": "0.8.0_AE_CloudComp~Y read 0 files touched while demonstrably carding, which is the instrument-signature shape. POSITIVE CONTROL RUN: the author predicate resolves (3 commits all-time for that serial), so the zero is a real fact about the window -- their wave-2 work is on disk uncommitted, as lanes commit at the completion flip. The zero is honest; it is NOT evidence of idleness and must not be read as any.",
+    "ORACLE_HOLE_MINE": "\u26d4 THIS CELL'S ORACLE SAYS 'COMMITS'. A carding lane that EDITS a carded generator in its working tree without committing is INVISIBLE to it -- and an uncommitted fix is still a fix, so the cell would discharge CLEAN over a real violation. This is my FOURTH oracle limit this project (SC-m-4's two-of-three fields; W2-m-1's unsatisfiable form; W2-m-1's over-corrected form; now this). Stated BEFORE the discharge rather than after, which is the only part of the pattern I have improved.",
+    "hole_disposition": "NOT closing it mid-wave: closing it requires reading four lanes' working trees, which this seat cannot do and should not. The honest discharge names the hole and scopes the claim to COMMITTED history. A cell that claims more than its instrument reaches is the exact defect this project cards.",
+    "re_run_at_close": "over the full window. A clean partial is byte-identical to a clean whole -- the trap this cell sits inside."
+  },
+  "MY_FALSE_CLAIM_CORRECTED": "In 74021 I wrote 'Every one of the 28 cards is CORRECT.' I had NOT checked the field I was discussing -- I verified the wave pin and generalised to the whole card. The false-attribution-of-a-GOOD-act class: nobody contests being told their work is right, so it is the error that survives. 0.7.0_AE_CloudOps~X contested it anyway, against their own cards."
+}

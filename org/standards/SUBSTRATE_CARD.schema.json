@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/standards/SUBSTRATE_CARD.schema.json",
+  "title": "Substrate Card -- CLAUDE.md Rule 28, THE SUBSTRATE TEST",
+  "description": "The machine-checkable deliverable of a Rule 28 qualification. Seven questions over three DECLARED grains (PROCESS / ARTIFACT / TRUST). Every row carries its own BASIS, EVIDENCE and OWNER, because Rule 24(iv): the values do not move together and neither do their remedies. Shape follows a document-envelope pattern -- a governed document declares how it came to exist, what it claims temporally, where it lives, and what it is a projection of -- extended with the TRUST grain, which describes whether the thing can be STOOD ON rather than merely what it is.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "subject", "as_of", "process", "artifact", "trust", "verdict", "carded_by"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "carded_by": {"type": "string", "minLength": 1, "description": "Seat serial that produced this card."},
+
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "declared_domain"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "description": "The resource being qualified, e.g. 'C2', 'D2', 'nerves_resolve', 'comp-similar'."},
+        "kind": {
+          "enum": ["rung", "rail", "tool", "store", "projection", "script", "artifact", "corpus", "other"],
+          "description": "What class of thing the subject is.",
+          "x-rule24": {
+            "domain": "class of resource being qualified",
+            "grain": "resource",
+            "intent": "route the reader to the right expectations for the rows below",
+            "mece": "'other' closes the population honestly rather than forcing a fit; a value is added only by a naming act",
+            "state_coherence": "kind is stable for the life of the resource; a change of kind is a new resource",
+            "verdict": "pass-with-escape-hatch"
+          }
+        },
+        "declared_domain": {"type": "string", "minLength": 1, "description": "What this resource claims to cover. Rule 24(i) requires the domain be NAMED before coverage can be judged."}
+      }
+    },
+
+    "as_of": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carded_utc", "commit_ish", "graph_vintage"],
+      "description": "CONSISTENT STATE IS NOT OPTIONAL. Cards taken at different vintages are individually correct and jointly meaningless -- a wave declares ONE as_of and every card in it carries that stamp. Measured 2026-08-26: a projection lagged its warehouse by 6,261 nodes, and a two-vintage read rendered as a finding about the estate.",
+      "properties": {
+        "carded_utc": {"type": "string", "minLength": 20, "description": "ISO-8601 UTC, from the clock, never estimated."},
+        "commit_ish": {"type": "string", "minLength": 7},
+        "graph_vintage": {"type": ["string", "null"], "description": "Snapshot id of the graph read, or null with a stated reason if the subject has no graph dependency."}
+      }
+    },
+
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["methodology", "cadence"],
+      "description": "GRAIN 1 -- how the resource comes to exist.",
+      "properties": {
+        "methodology": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["how", "determinism", "composes", "invents", "basis", "evidence", "owner"],
+          "properties": {
+            "how": {"type": "string", "minLength": 1, "description": "How the resource is defined/assembled, in one paragraph."},
+            "determinism": {
+              "enum": ["deterministic", "inferential", "hybrid", "unknown"],
+              "description": "Whether re-running produces the same answer.",
+              "x-enum-definitions": {
+                "deterministic": "Same inputs always produce the same output. Re-running is a control.",
+                "inferential": "Produced by a model or other non-deterministic process. Re-running may differ; failure presents as a PLAUSIBLE WRONG OUTPUT rather than an error.",
+                "hybrid": "A declared deterministic core with named inferential stages; the split MUST be enumerated in inference_detail.",
+                "unknown": "Not yet determined. An HONEST value -- never default to 'deterministic' because it looks that way."
+              },
+              "x-rule24": {
+                "domain": "reproducibility of the process that produces this resource",
+                "grain": "resource",
+                "intent": "tell a consumer whether re-running is a control or a coin flip",
+                "mece": "deterministic / inferential / hybrid partition the reproducibility axis; 'unknown' covers the not-yet-measured member so absence is never rendered as determinism",
+                "state_coherence": "unknown may resolve to any of the other three; deterministic <-> inferential is a real change to the resource, not a re-reading",
+                "verdict": "pass"
+              }
+            },
+            "inference_detail": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "description": "REQUIRED when determinism is inferential or hybrid. Nested model use is tracked because it prices the system as well as qualifying it.",
+              "properties": {
+                "model": {"type": ["string", "null"]},
+                "invocations_per_run": {"type": ["integer", "null"]},
+                "stages_inferential": {"type": ["array", "null"], "items": {"type": "string"}},
+                "stages_deterministic": {"type": ["array", "null"], "items": {"type": "string"}},
+                "failure_is_loud": {"type": ["boolean", "null"], "description": "false means a failed inference returns plausible content rather than an error -- the dangerous case."}
+              }
+            },
+            "composes": {"type": "array", "items": {"type": "string"}, "description": "What it reuses. Empty array is a claim, not a gap."},
+            "invents": {"type": "array", "items": {"type": "string"}, "description": "What it originates. A resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        },
+        "cadence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declared_rhythm", "actual_trigger", "live_matches_declared", "basis", "evidence", "owner"],
+          "properties": {
+            "declared_rhythm": {"type": ["string", "null"], "description": "e.g. 'nightly 02:00Z'. NULL IS A REAL AND COMMON ANSWER -- a resource with no cadence never refreshes on a schedule, which is a defect and not a config gap."},
+            "actual_trigger": {"type": ["string", "null"], "description": "What actually fires it. A resource whose only trigger is another process's success HAS NO SCHEDULE and freezes silently when its upstream breaks."},
+            "live_matches_declared": {
+              "enum": ["yes", "no", "unmeasured", "not_applicable"],
+              "description": "DESIRED vs APPLIED. A declared cadence is not evidence the live instance is fresh."
+            },
+            "live_instance_age": {"type": ["string", "null"], "description": "Measured age of the current instance, if read."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        }
+      }
+    },
+
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["persistence", "location"],
+      "description": "GRAIN 2 -- what the resource leaves behind.",
+      "properties": {
+        "persistence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["persisted", "authority_role", "mutation_policy", "form", "basis", "evidence", "owner"],
+          "properties": {
+            "persisted": {"type": "boolean", "description": "FALSE IS A COMMON AND IMPORTANT ANSWER. A resource that persists nothing has no vintage of its own and inherits the freshness of substrates it does not control."},
+            "authority_role": {
+              "enum": ["source", "projection", "evidence", "reference", "none"],
+              "x-enum-definitions": {
+                "source": "Authoritative for its declared concern.",
+                "projection": "Rebuildable view derived from governed inputs. MUST name projection_of.",
+                "evidence": "An observation or receipt supporting a claim without becoming source configuration.",
+                "reference": "External identity or context that informs without governing.",
+                "none": "Persists nothing; the row exists to say so."
+              },
+              "x-rule24": {
+                "domain": "standing of the persisted artifact relative to truth",
+                "grain": "artifact",
+                "intent": "tell a consumer whether editing this changes the world or gets overwritten",
+                "mece": "'none' covers the unpersisted member, which the other four cannot express",
+                "state_coherence": "a projection promoted to source is a governance act, not a refresh",
+                "verdict": "pass"
+              }
+            },
+            "mutation_policy": {"enum": ["editable", "append_only", "replaceable", "immutable", "not_applicable"]},
+            "form": {"type": ["string", "null"], "description": "e.g. 'Iceberg table', 'JSON on disk', 'in-memory lru_cache only'."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["home", "projection_of", "basis", "evidence", "owner"],
+          "properties": {
+            "home": {"type": ["string", "null"], "description": "EXACT location. 'Iceberg/Nessie table X', 's3://bucket/prefix', a repo path, or NULL meaning NOWHERE."},
+            "projection_of": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "THE GRAPH-OBJECT LINEAGE. What this artifact is derived FROM. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."
+            },
+            "co_resident_stores": {"type": ["array", "null"], "items": {"type": "string"}, "description": "Other stores holding the same or overlapping content -- the duplicate-store census."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        }
+      }
+    },
+
+    "trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage", "key", "failure_mode"],
+      "description": "GRAIN 3 -- whether the resource can be STOOD ON. The PROCESS and ARTIFACT grains describe a resource; only this grain qualifies it. These three are the ones always skipped and the ones that draw blood.",
+      "properties": {
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["universe", "denominator", "explicitly_out", "basis", "evidence", "owner"],
+          "properties": {
+            "universe": {"type": "string", "minLength": 1, "description": "What set the resource actually spans."},
+            "denominator": {"type": ["string", "null"], "description": "PRINT IT. 'N of M' with both numbers named. A count without its denominator cannot be judged."},
+            "explicitly_out": {"type": "array", "items": {"type": "string"}, "description": "What is KNOWN to be outside. Naming the exclusions is what makes a clean zero readable."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        },
+        "key": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["identity_space", "key_is_stable", "crosses_spaces", "basis", "evidence", "owner"],
+          "properties": {
+            "identity_space": {"type": "string", "minLength": 1, "description": "What key identifies a member, e.g. 'ARN', 'repo path', 'sha1 of anchor node id', 'logical pipeline name'."},
+            "key_is_stable": {
+              "enum": ["stable", "unstable", "unknown"],
+              "x-enum-definitions": {
+                "stable": "The key survives ordinary change to the thing it names.",
+                "unstable": "The key is derived from something mutable, so the identity dies when that changes and the successor is unlinked.",
+                "unknown": "Not measured."
+              }
+            },
+            "crosses_spaces": {"type": "boolean", "description": "Whether this key can be joined to other id spaces WITHOUT a hand-written parse. A concept wearing several id spaces with no declared mapping is the estate's most repeated defect."},
+            "declared_mapping": {"type": ["string", "null"], "description": "Where the cross-space mapping is DECLARED, or null if it is only derivable by convention."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        },
+        "failure_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["returns_on_failure", "distinguishable_from_true_negative", "basis", "evidence", "owner"],
+          "properties": {
+            "returns_on_failure": {"type": "string", "minLength": 1, "description": "What the resource actually returns when it CANNOT answer. Exercise it; do not read it from a docstring."},
+            "distinguishable_from_true_negative": {
+              "enum": ["yes", "no", "unmeasured"],
+              "description": "'no' is the dangerous value: a clean zero that looks identical to a genuine negative. The instrument then reads healthiest exactly when it is most wrong."
+            },
+            "silent_degrade_paths": {"type": ["array", "null"], "items": {"type": "string"}, "description": "Named routes by which the resource can answer confidently from a degraded state."},
+            "basis": {"$ref": "#/$defs/basis"},
+            "evidence": {"$ref": "#/$defs/evidence"},
+            "owner": {"$ref": "#/$defs/owner"}
+          }
+        }
+      }
+    },
+
+    "verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standing", "why"],
+      "properties": {
+        "standing": {
+          "enum": ["SOUND", "QUALIFIED", "UNSOUND", "INCOMPLETE"],
+          "x-enum-definitions": {
+            "SOUND": "Every row measured; no defect that blocks load-bearing use.",
+            "QUALIFIED": "Every row measured; defects present, NAMED, and each carrying an owner. Usable within the stated limits.",
+            "UNSOUND": "A measured defect that blocks load-bearing use until remedied.",
+            "INCOMPLETE": "One or more rows unmeasured. THIS IS A VERDICT ABOUT THE CARD, NOT ABOUT THE RESOURCE -- the two are routinely collapsed, and collapsing them turns 'we did not finish looking' into 'it is fine'."
+          },
+          "x-rule24": {
+            "domain": "standing of one resource as load-bearing substrate, as of this card",
+            "grain": "card",
+            "intent": "gate whether work may be built on this resource",
+            "mece": "SOUND/QUALIFIED/UNSOUND partition the measured cases; INCOMPLETE covers the unmeasured member and is deliberately about the CARD rather than the resource",
+            "state_coherence": "INCOMPLETE resolves to one of the other three by measurement; UNSOUND -> QUALIFIED/SOUND requires a REMEDY, not a re-read -- different clocks, which is why the owner column is mandatory",
+            "verdict": "pass"
+          }
+        },
+        "why": {"type": "string", "minLength": 1},
+        "blocking_defects": {"type": ["array", "null"], "items": {"type": "string"}}
+      }
+    }
+  },
+
+  "$defs": {
+    "basis": {
+      "enum": ["measured", "inferred", "held", "absent"],
+      "description": "How this row's answer was arrived at. A VALUE MUST CARRY ITS CLAIM in a field a consumer can reject on -- never in prose, a name, or the reader's memory of how it was produced.",
+      "x-enum-definitions": {
+        "measured": "Read or exercised directly against the thing itself.",
+        "inferred": "Reasoned from adjacent evidence. NON-ACTIONABLE on its own.",
+        "held": "Asserted by a named authority without independent measurement here.",
+        "absent": "No basis exists yet. Honest, and required rather than guessing."
+      },
+      "x-rule24": {
+        "domain": "epistemic standing of one card row",
+        "grain": "row",
+        "intent": "let a consumer REFUSE an unmeasured value",
+        "mece": "measured/inferred/held partition the cases where an answer exists; 'absent' covers the no-answer member",
+        "state_coherence": "absent -> measured is work; inferred -> measured is re-derivation with a different instrument, never a re-run of the same command",
+        "verdict": "pass"
+      }
+    },
+    "evidence": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The grounding: 'file:line @ <commit-ish>', a command exercised with its output, or an explicit 'NONE -- basis is inferred/absent'. A line citation without a vintage is not a citation."
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Serial or role who owns the REMEDY for this row. Rule 24(iv): a stale cache, a missing id grammar and a silent failure mode are three remedies, three owners, three clocks. A card without owners is a wish list. 'UNOWNED' is a legal and loud value."
+    }
+  }
+}

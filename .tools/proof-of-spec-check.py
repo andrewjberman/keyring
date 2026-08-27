@@ -176,7 +176,13 @@ WORKSPACE = Path(__file__).resolve().parent.parent
 # which reproduces that decomp's OWN declared arithmetic ("Total: 28 cells"). Covers
 # ETFS-a-1 (prefix-group-index) and D1-inv-1 / D1-h-r1 (multi-letter group, lettered
 # index) alike.
-CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\d+\b")
+# PLUS the word-suffixed MECHANISM form (W4-m-joinable, L1-m-graindecl): wave 4 named its
+# mechanism cells after their SUBJECT, and the digits-only final segment encoded wave 3's
+# grammar as if it were the general one -- 5 real ids invisible, and the violations they
+# produced were worded AGAINST THE ISSUER (75278). The word branch is deliberately narrow:
+# it admits a word final segment ONLY on the '-m-' mechanism group, so prose tokens like
+# D11-era-things stay unmatched.
+CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
@@ -211,7 +217,19 @@ def _tracked_task_orders() -> set:
 
 
 def _is_tracked(rel: str) -> bool:
-    return rel.replace("\\", "/") in _tracked_task_orders()
+    # Ask git about THE FILE, never about corpus membership. The corpus glob is scoped to
+    # */task_orders/*.md for DISCOVERY; a declared to_ref may legitimately live elsewhere
+    # (wave-4 TOs live in deliverables/D11_W4/), and glob membership answered "is this in my
+    # directory shape", not "is this committed" -- a discriminator on the DIRECTORY that
+    # falsely reported 3 of 3 committed wave-4 TOs UNTRACKED and silently disabled alignment
+    # for the wave (75078). Fail-closed-to-False keeps the documented announce behavior.
+    try:
+        rc = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", rel.replace("\\", "/")],
+            cwd=WORKSPACE, capture_output=True, text=True).returncode
+        return rc == 0
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def _canonical_to_id(raw: str) -> str:
@@ -242,7 +260,16 @@ def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
     DECLARES id="<canonical>", never the file whose NAME looks right (Rule 22a -- a
     filename-resolved check reports drift where there is none and reads CLEAN where two
     copies have silently diverged). An explicit decomp_ref.to_ref wins when present."""
-    declared = str(inst.get("decomp_ref", {}).get("to_ref", "")).strip()
+    _dref = inst.get("decomp_ref", {})
+    if not isinstance(_dref, dict):
+        # SHAPE ERROR, NOT A VERDICT. decomp_ref must be the OBJECT form
+        # ({doc, vintage_commit, to_ref}). A bare string used to reach .get() and raise
+        # AttributeError, which exited rc=1 -- BYTE-IDENTICAL to a legitimate INVALID.
+        # Surfaced by 0.6.0_AE_PartnerETL (71621), reproduced on a committed peer instance.
+        raise TypeError(
+            f"decomp_ref must be an OBJECT (doc/vintage_commit/to_ref), got {type(_dref).__name__}"
+        )
+    declared = str(_dref.get("to_ref", "")).strip()
     if declared:
         p = Path(declared)
         if not p.is_absolute():
@@ -601,6 +628,21 @@ def main() -> int:
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
     for line in align_frames:
         print(f"  {line}")
+    # ALIGNMENT AND SCHEMA ARE DIFFERENT ORACLES, AND THE ALIGNMENT LINES ARE BYTE-IDENTICAL
+    # ON A VALID AND AN INVALID INSTANCE. Measured 2026-08-26 on one real instance: stripping
+    # NINE required properties left forward-1 13/13, forward-2 22/22 and backward 22/22
+    # completely unchanged while the run went rc=0 -> rc=1. So a seat quoting "alignment closes
+    # both directions" states something TRUE that carries ZERO information about structural
+    # validity -- and those sub-lines do get quoted in certs and returns.
+    # The rc and the VALID/INVALID line already discriminate; this annotates the lines that do
+    # not, so the figures cannot be lifted out of an INVALID run and read as reassurance.
+    # Surfaced by 0.4.0_DS_ClientPlatform~Q, who hit it by modelling an instance on a peer's
+    # file instead of on the schema and then READ THE OUTPUT HONESTLY.
+    if align_frames and violations:
+        print("  WARN: alignment above is computed on a STRUCTURALLY INVALID instance. Those "
+              "figures describe the criterion-to-cell MAPPING ONLY and are identical to what a "
+              "VALID instance prints -- they are NOT evidence of validity. Do not quote them "
+              "without the verdict.")
     for line in violations:
         print(f"  VIOLATION: {line}")
     print("VALID" if not violations else "INVALID")
@@ -608,4 +650,23 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # A CRASH IS NOT A VERDICT, AND IT MUST NOT BORROW ONE'S EXIT CODE.
+    # rc=1 means INVALID -- a real adjudication about the caller's instance. rc=2 means
+    # "this tool could not answer" (the existing READ-ERROR convention at main()).
+    # An UNCAUGHT exception used to fall through Python's default rc=1, so a tool crash and
+    # a legitimate INVALID were INDISTINGUISHABLE to a caller checking only the rc -- and
+    # every TO comment in the estate instructs callers to check the rc. That is an
+    # instrument failing in the direction of its own normal-looking output.
+    # Class surfaced by 0.6.0_AE_PartnerETL (71621) on the decomp_ref-as-string case;
+    # this handler closes the CLASS, not that one field.
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        import traceback
+
+        traceback.print_exc()
+        print(f"TOOL-ERROR: {type(exc).__name__}: {exc}")
+        print("NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1).")
+        sys.exit(2)

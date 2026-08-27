@@ -79,6 +79,59 @@ try:
 except Exception:
     _CODE_TREES = None
 
+def classify_digest(local_bytes, s3_etag):
+    """Compare a local file's bytes to an S3 ETag. Returns (status, info_lines).
+
+    PURE and module-level ON PURPOSE: the comparison used to live inside a closure, so the
+    only way to exercise it was a live S3 sweep -- which cannot plant a mutant and therefore
+    could only ever demonstrate the MATCH arm. A fix whose failing arm is unreachable is not
+    verified. tests/test_pipescript_digest.py exercises THIS function, not a copy of it.
+
+    A DIGEST WITHOUT ITS NORMALISATION IS NOT AN IDENTITY. Every verdict prints its basis.
+    """
+    import hashlib as _h
+    local_md5 = _h.md5(local_bytes).hexdigest()
+
+    # RULE 28 Q7 -- what does this return when it CANNOT answer, and is that DISTINGUISHABLE
+    # from a genuine STALE? A multipart-upload ETag is "<md5-of-md5s>-<partcount>" and is NOT
+    # the object's md5, so NO local digest can ever equal it. Comparing anyway renders a
+    # permanent STALE indistinguishable from a real one -- the same defect class this function
+    # exists to remove, one cause over. Say "cannot answer" instead.
+    if "-" in s3_etag:
+        return "ETAG_NOT_COMPARABLE", [
+            "s3 ETag:  %s  (multipart -- NOT an md5 of the object)" % s3_etag,
+            "basis:    NONE -- md5 comparison is undefined for a multipart ETag.",
+            "          This is NOT a staleness verdict.",
+        ]
+
+    if local_md5 == s3_etag:
+        return "MATCH", ["basis:  raw bytes (working tree and S3 object are byte-identical)"]
+
+    # Line-ending normalisation ONLY -- collapses CRLF->LF and nothing else, so a real content
+    # difference still reports STALE. The fix cannot manufacture a false MATCH.
+    lf_bytes = local_bytes.replace(b"\r\n", b"\n")
+    if lf_bytes != local_bytes:
+        lf_md5 = _h.md5(lf_bytes).hexdigest()
+        if lf_md5 == s3_etag:
+            return "MATCH", [
+                "basis:  LF-NORMALISED -- working tree is CRLF, S3 object is LF; content IDENTICAL",
+                "        raw local md5 %s != s3 %s" % (local_md5, s3_etag),
+                "        LF  local md5 %s == s3 %s" % (lf_md5, s3_etag),
+            ]
+        return "STALE", [
+            "local raw: %s" % local_md5,
+            "local LF:  %s" % lf_md5,
+            "s3:        %s" % s3_etag,
+            "basis:     BOTH raw and LF-normalised digests differ from S3 -- a real content difference.",
+        ]
+    return "STALE", [
+        "local:  %s" % local_md5,
+        "s3:     %s" % s3_etag,
+        "basis:  raw bytes; working tree has no CRLF, so normalisation would not change this.",
+    ]
+
+
+
 def resolve_pipeline_from_arg(raw_script: str) -> str:
     """Map a `deployed` filter argument to the pipeline-key whose branch handles it.
 
@@ -1557,16 +1610,28 @@ def cmd_io(args):
         sio = dag.scripts[script_id]
 
     if args.json:
+        # NFRA_COMPTOOLS.PREFIX-READS: the JSON surface gets the prefix edges too. Leaving it
+        # keyed on dag.s3_keys alone would keep every MACHINE consumer blind while the text
+        # output reads complete -- the same silence this TO closes, in the surface where it is
+        # harder to notice. Purely ADDITIVE: existing entries keep their shape, so a consumer
+        # reading `reads` sees more rows, never differently-shaped ones.
+        _lpr = getattr(sio, 'local_prefix_reads', {})
+        _reads = [{"constant": c, "s3_key": dag.s3_keys[c].s3_path,
+                   "kind": "PREFIX" if dag.s3_keys[c].is_prefix else "KEY"}
+                  for c in sio.reads if c in dag.s3_keys]
+        _reads += [{"constant": c, "s3_key": p, "kind": "PREFIX", "source": "local-const"}
+                   for c, p in sorted(_lpr.items()) if p]
         print(json.dumps({
             "script_id": script_id,
             "filename": sio.filename,
             "pipeline": sio.pipeline,
             "group": sio.group,
             "run_order": sio.run_order,
-            "reads": [{"constant": c, "s3_key": dag.s3_keys[c].s3_path}
-                      for c in sio.reads if c in dag.s3_keys],
+            "reads": _reads,
             "writes": [{"constant": c, "s3_key": dag.s3_keys[c].s3_path}
                        for c in sio.writes if c in dag.s3_keys],
+            # NEVER dropped -- an empty list is a measured zero, not an absent field.
+            "unresolved_prefix_reads": sorted(c for c, p in _lpr.items() if not p),
         }, indent=2))
         return
 
@@ -1578,21 +1643,28 @@ def cmd_io(args):
         print(f"  READS ({len(sio.reads)}):")
         for const in sio.reads:
             sk = dag.s3_keys.get(const)
+            # NFRA_COMPTOOLS.PREFIX-READS: a locally-defined prefix constant has no s3_layout
+            # entry, so it resolves from the script's own module scope instead.
+            local_pfx = getattr(sio, 'local_prefix_reads', {}).get(const)
             if sk:
                 key = sk.s3_path
+            elif local_pfx:
+                key = local_pfx
             elif const.startswith('[hardcoded] '):
                 key = const[len('[hardcoded] '):]
             else:
                 key = '?'
-            prefix_tag = " [PREFIX]" if sk and sk.is_prefix else ""
+            is_prefix_row = bool((sk and sk.is_prefix) or local_pfx)
+            prefix_tag = " [PREFIX]" if is_prefix_row else ""
             func_tag = " [FUNC]" if sk and sk.is_function else ""
             hc_tag = " [HARDCODED]" if const.startswith('[hardcoded] ') else ""
+            local_tag = " [LOCAL-CONST]" if local_pfx and not sk else ""
             # Show who writes this key (direct edges)
             writers = dag._writers.get(key, [])
             writers = [w for w in writers if w != script_id]
             # GAP 2: for PREFIX reads, also check implicit FUNC-write providers
             implicit = []
-            if sk and sk.is_prefix:
+            if is_prefix_row:
                 implicit = [w for w in dag._implicit_writers.get(key, [])
                             if w != script_id and w not in writers]
             if writers and implicit:
@@ -1604,9 +1676,20 @@ def cmd_io(args):
             else:
                 writer_str = " <- (external/silver)"
             display_const = key if const.startswith('[hardcoded] ') else const
-            print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{writer_str}")
+            print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{local_tag}{writer_str}")
     else:
         print("  READS: (none detected)")
+
+    # NFRA_COMPTOOLS.PREFIX-READS: a Prefix= argument the extractor could NOT resolve to a
+    # literal. Printed ALWAYS and never folded into the count above, because the whole defect
+    # this closes is an unseeable input reading as no input -- an unresolved prefix must cost
+    # the reader a visible row, not silence. The trace is the bonus; the row is the mechanism.
+    _unresolved_pfx = sorted(k for k, v in getattr(sio, 'local_prefix_reads', {}).items() if not v)
+    if _unresolved_pfx:
+        print()
+        print(f"  UNRESOLVED-PREFIX ({len(_unresolved_pfx)}) -- a paginated read whose Prefix= is dynamic:")
+        for arg in _unresolved_pfx:
+            print(f"    {arg}: <dynamic> [UNRESOLVED-PREFIX] <- (cannot resolve statically; open the script)")
 
     # Bundle item 4 (CTO 20260722T211318Z): monolith silver reads are DYNAMIC-KEY
     # (silver_table(s3, "fact_x", date)), structurally invisible to the path
@@ -2014,7 +2097,6 @@ def cmd_deployed(args):
     Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver] /
     [BRONZE] / [aux:<prefix>] / [mdpf:<layer>].
     Uses S3 ETag (MD5) comparison."""
-    import hashlib
     import shutil
     import subprocess
 
@@ -2131,7 +2213,15 @@ def cmd_deployed(args):
         _checked_s3_keys.add(s3_key)
         if not local_path.exists():
             return "LOCAL_MISSING", []
-        local_md5 = hashlib.md5(local_path.read_bytes()).hexdigest()
+        # A DIGEST WITHOUT ITS NORMALISATION IS NOT AN IDENTITY (2026-08-26, 0.8.0_AE_CloudComp~F,
+        # routed by 0.6.2_AE_PartnerETL~A). This read was raw bytes only: a CRLF working-tree file
+        # against an LF S3 object digests differently FOREVER, so the row reported STALE no matter
+        # how many times it was uploaded -- 16 of 160 tracked .py under the assets/mdpf script trees
+        # are CRLF in the tree. Two harms, and the second is the one that matters: a lane chasing
+        # MATCH re-uploads forever (each a production write), and A VERDICT THAT CAN NEVER TURN
+        # GREEN IS NOT A CHECK, IT IS NOISE WEARING A CHECK'S UNIFORM -- permanent false STALEs
+        # sitting beside real ones train a reader to discount the signal.
+        local_bytes = local_path.read_bytes()
         try:
             result = subprocess.run(
                 [aws_bin, "s3api", "head-object",
@@ -2167,9 +2257,7 @@ def cmd_deployed(args):
                 return "MISSING_ON_S3", [stderr]
             return "MISSING_ON_S3", []
         s3_etag = result.stdout.strip().strip('"')
-        if local_md5 == s3_etag:
-            return "MATCH", []
-        return "STALE", [f"local:  {local_md5}", f"s3:     {s3_etag}"]
+        return classify_digest(local_bytes, s3_etag)
 
     # Header varies by pipeline
     if pipeline == "inf-gold":
@@ -2204,6 +2292,10 @@ def cmd_deployed(args):
     print()
 
     matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
+    # ETAG_NOT_COMPARABLE gets its OWN bucket. The elif chains below carry no else, so an
+    # unrecognised status PRINTS but lands in no tally -- it would vanish from every summary
+    # count while looking handled. A new verdict without a bucket is a silent drop.
+    uncomparable = []
     uncovered = []  # TOOL-03 false-clean guard: tool-blindness, named -- NEVER silent
     aux_drift = []  # TOOL-03 aux CHECK-ONLY drift: visible but NEVER the deploy-gate token
     not_in_tree = []  # SHARED-home non-members: informational, NEVER a defect -- but COUNTED.
@@ -2304,6 +2396,8 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
+                elif status == "ETAG_NOT_COMPARABLE":
+                    uncomparable.append(label)
     elif pipeline == "advi":
         # ADVI (TRUNCLASS PSCRIPT2): the 49F canonical runner chain, CODE_TREES-driven like
         # mdpf -- layers derive from the ONE declaration, never a second dir list. Membership
@@ -2354,6 +2448,8 @@ def cmd_deployed(args):
                         timed_out.append(label)
                     elif status == "AWS_UNREACHABLE":
                         aws_unreach.append(label)
+                    elif status == "ETAG_NOT_COMPARABLE":
+                        uncomparable.append(label)
     elif pipeline in ("inf-gold",):
         # INF gold: check against opal-data-inf/code/gold/
         inf_dag = _build_dag("inf-gold")
@@ -2385,6 +2481,8 @@ def cmd_deployed(args):
                 timed_out.append(label)
             elif status == "AWS_UNREACHABLE":
                 aws_unreach.append(label)
+            elif status == "ETAG_NOT_COMPARABLE":
+                uncomparable.append(label)
     elif pipeline in ("cot-gold", "cot"):
         # cot (Cottonwood): no comp-graph DAG -> direct directory glob (MDPF pattern),
         # standard code/<layer>/ layout against opal-data-cot. gold here; silver by
@@ -2419,6 +2517,8 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
+                elif status == "ETAG_NOT_COMPARABLE":
+                    uncomparable.append(label)
     elif pipeline not in ("bd-silver", "inf-silver", "cot-silver",
                           "bd-bronze", "inf-bronze", "cot-bronze"):
         dag = _build_dag("bd-gold")
@@ -2452,6 +2552,8 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
+                elif status == "ETAG_NOT_COMPARABLE":
+                    uncomparable.append(label)
 
     # ---- SILVER layer (directory-walk-driven) ----
     # MDPF handles all its layers (gold/backfill/feeders/bronze) in the gold-section
@@ -2496,6 +2598,8 @@ def cmd_deployed(args):
                 timed_out.append(label)
             elif status == "AWS_UNREACHABLE":
                 aws_unreach.append(label)
+            elif status == "ETAG_NOT_COMPARABLE":
+                uncomparable.append(label)
 
     # ---- BRONZE layer (NFRA_DEBTSCAN.TOOL-03; directory-walk like silver) ----
     # First-class deploy layer: data/<dir>/scripts/bronze/*.py -> code/bronze/.
@@ -2536,6 +2640,8 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
+                elif status == "ETAG_NOT_COMPARABLE":
+                    uncomparable.append(label)
 
     # ---- AUXILIARY prefixes (NFRA_DEBTSCAN.TOOL-03; CHECK-ONLY, mdpf pattern) ----
     # S3-driven: enumerate what is actually AT the aux prefix and compare each
@@ -2624,6 +2730,8 @@ def cmd_deployed(args):
                     timed_out.append(_row_label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(_row_label)
+                elif status == "ETAG_NOT_COMPARABLE":
+                    uncomparable.append(_row_label)
 
         # Unmapped-prefix enumeration (false-clean guard): any live code/ prefix
         # that is neither a standard deploy layer nor in the aux registry is
@@ -2752,6 +2860,7 @@ def cmd_deployed(args):
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
           f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE, "
+          f"{len(uncomparable)} ETAG_NOT_COMPARABLE, "
           f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT, "
           f"{len(not_in_tree)} NOT-A-MEMBER(no-verdict), {len(s3_only)} S3-ONLY, "
           f"{len(multi_home)} MULTI-HOME, {len(declared_unswept)} DECLARED-UNSWEPT")
@@ -2785,6 +2894,8 @@ def cmd_deployed(args):
         print("  Investigate whether the aux prefix or the repo copy is the stale side before syncing.")
     if aws_unreach:
         print(f"  AWS_UNREACHABLE: {', '.join(aws_unreach)}")
+    if uncomparable:
+        print(f"  ETAG_NOT_COMPARABLE: {', '.join(uncomparable)}")
         print("  AWS credentials/network could not reach S3; MATCH/MISSING is NOT verified.")
         print("  Fix: check AWS_PROFILE / credentials / VPN, then re-run. See `aws sts get-caller-identity` to confirm.")
     if stale:

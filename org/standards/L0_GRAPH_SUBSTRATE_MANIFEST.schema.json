@@ -1,0 +1,1421 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json",
+  "title": "L0 GRAPH SUBSTRATE MANIFEST -- the portable container of every part required to instantiate the graph",
+  "description": "L0 is FOUNDATIONAL SUBSTRATE: the physical stores, the materializers that write them, and the tools that read them. NOTHING ABOVE L0 CAN BE CONTRACTED UNTIL L0'S GROUND TRUTH IS ESTABLISHED -- L1's spine promises to resolve a reference to a canonical entity, and that promise is only as good as the surfaces underneath it. Andrew-direct 2026-08-26: a manifest covering EVERY graph surface, EVERY materializer, EVERY substrate, EVERY operational tool, so there is 'a portable, defined container of the necessary parts for graph instantiation'. Shape follows the document-envelope + execution-receipt pattern: a registered part declares how it came to exist, what it claims temporally, where it lives, what it is a projection of, and WHAT DIGEST PRODUCED IT.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "as_of",
+    "compiled_by",
+    "denominator",
+    "parts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "compiled_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "as_of": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiled_utc",
+        "commit_ish"
+      ],
+      "properties": {
+        "compiled_utc": {
+          "type": "string",
+          "minLength": 20
+        },
+        "commit_ish": {
+          "type": "string",
+          "minLength": 7
+        }
+      }
+    },
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "population_searched",
+        "known_unsearched"
+      ],
+      "description": "A manifest claiming completeness MUST print how it looked and what it could not see. A census without a denominator is a list.",
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "population_searched": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parts_registered": {
+          "type": "integer",
+          "minimum": 0,
+          "deprecated": true,
+          "description": "DEPRECATED -- retiring. A number a machine can derive must not also be typed: this is len(parts), and JSON Schema cannot enforce the equality, so the two can silently disagree. MIGRATION: optional now; DT removes it from generated inputs; only then is the property removed. Consumers MUST compute len(parts)."
+        },
+        "known_unsearched": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Planes deliberately or unavoidably NOT swept. Empty array is a claim of total coverage and had better be true."
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/part"
+      }
+    }
+  },
+  "$defs": {
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "part_class",
+        "home",
+        "authority_role",
+        "temporal_claim",
+        "lineage",
+        "generation",
+        "population_status",
+        "vintage",
+        "basis",
+        "evidence",
+        "owner"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "part_class": {
+          "enum": [
+            "store",
+            "materializer",
+            "projection",
+            "reader_tool",
+            "spec_artifact",
+            "output_artifact",
+            "other"
+          ],
+          "x-enum-definitions": {
+            "store": "A persistent surface holding graph state (Iceberg table, DB, bucket prefix).",
+            "materializer": "Code that WRITES a store or artifact.",
+            "projection": "A rebuildable view derived from a store. MUST name lineage.projection_of.",
+            "reader_tool": "Code that READS graph state without writing it.",
+            "spec_artifact": "A declared input a materializer consumes (a catalog, a motif spec, a rule bank).",
+            "output_artifact": "A file produced by a materializer that is not itself a store.",
+            "other": "Closes the population honestly rather than forcing a fit."
+          },
+          "x-rule24": {
+            "domain": "role a registered part plays in graph instantiation",
+            "grain": "part",
+            "intent": "tell a reader whether this part PRODUCES, HOLDS, DERIVES or CONSUMES graph state",
+            "mece": "'other' covers members the four operative roles cannot express",
+            "state_coherence": "a part's class is stable; a materializer promoted to a store is a new part",
+            "verdict": "pass-with-escape-hatch"
+          }
+        },
+        "home": {
+          "type": "string",
+          "minLength": 1,
+          "description": "EXACT location, rendered in the address space named by `home_space`. ⛔ NEVER A SENTENCE. A part with no location says the literal NONE under home_space='none'; a prose absence ('NOWHERE -- unbuilt; no code, no store, no artifact', found in 3 of 42 parts on 2026-08-27) is loud, human-readable and UNRESOLVABLE, and it duplicates a claim population_status already carries in a value a consumer can branch on."
+        },
+        "home_space": {
+          "enum": [
+            "repo_path",
+            "s3_uri",
+            "iceberg_table",
+            "none"
+          ],
+          "description": "WHICH ADDRESS SPACE `home` is rendered in. Without it, `home` is one string carrying four spaces and STRING EQUALITY SPLITS ONE ARTIFACT INTO TWO ROWS: the pyiceberg client addresses the same table as the tuple ('globgrph','cse') while Trino addresses it as 'iceberg.globgrph.cse' (0.7.0_AE_CloudOps~X, cse_schema.py:595). Both are CORRECT addressings of ONE artifact. iceberg_table therefore requires the CANONICAL TRIPLE catalog.namespace.table -- a bare table name is refused, because it is the rendering that cannot be joined.",
+          "x-rule24": {
+            "axis": "the address space of the home string",
+            "grain": "one part",
+            "intent": "one -- HOW to parse and normalise `home`; NOT where it is, NOT whether it exists",
+            "mece": "repo_path | s3_uri | iceberg_table | none spans every home the estate renders today. 'none' is a DECLARED absence of location, not a fifth location. `db_path` WAS A MEMBER AND WAS REMOVED 2026-08-27: it is SYNTACTICALLY IDENTICAL to repo_path, so it distinguished what the artifact IS rather than how its address parses -- a second axis inside a one-axis enum, and `part_class` already carries artifact role. Found by 4.0.0_SA_CRO~A asking whether '.comp-graph/db.kuzu' could be BOTH; it could, and that is the Rule 24(iii) failure.",
+            "state_coherence": "building an unbuilt part moves home_space none->{repo_path|s3_uri|iceberg_table|db_path} AND home together, and moves population_status separately. Re-rendering the SAME artifact for a different client moves home_space and home and NOTHING ELSE -- it is not a new part.",
+            "reuse": "NEW value set. No estate vocabulary covers address-space-of-a-location; part_class names WHAT a part is, not how its address parses.",
+            "residual_ruled_not_hidden": "A dotted repo filename with no slash ('a.b.c') is syntactically indistinguishable from an iceberg triple. THE PRODUCER DECLARES home_space; the schema checks COHERENCE, it does not INFER the space. Naming this residual is the honest position -- a pattern that claimed to discriminate them would be guessing."
+          },
+          "x-migration": "OPTIONAL until the generator re-run emits it for all parts. OMISSION IS A COMPATIBILITY STATE, NEVER A THIRD CLAIM -- identical rule to the grain/key/failure_mode receivers. After the re-run this becomes REQUIRED and omission is rejected."
+        },
+        "authority_role": {
+          "enum": [
+            "source",
+            "projection",
+            "evidence",
+            "reference",
+            "none"
+          ]
+        },
+        "temporal_claim": {
+          "enum": [
+            "current_state",
+            "point_in_time",
+            "timeless",
+            "unknown"
+          ],
+          "description": "What the part CLAIMS about its own currency. A part claiming current_state while measurably stale is an expressible, testable violation -- which is the point of recording the claim separately from the vintage.",
+          "x-enum-definitions": {
+            "current_state": "Claims to represent the operative state at read time.",
+            "point_in_time": "Claims only to represent state bound to an explicit time or input identity.",
+            "timeless": "Makes no claim of operational currency.",
+            "unknown": "The part's claim has not been DETERMINED. Honest, and never defaulted to current_state because a part looks live."
+          },
+          "x-rule24": {
+            "domain": "the currency claim a registered part makes about ITSELF, AS DETERMINED by this manifest -- deliberately NOT the part's measured age, which is `vintage`",
+            "grain": "part",
+            "intent": "ONE intent: record what the part CLAIMS, separately from what it IS. The separation is the entire value -- a part claiming current_state while measurably stale becomes an EXPRESSIBLE, TESTABLE violation instead of something a reader must notice by hand.",
+            "mece": "current_state / point_in_time / timeless partition the space of currency-claims (claims-to-be-now / claims-to-be-a-specific-then / claims-nothing) over the DETERMINED cases; 'unknown' covers the not-yet-determined member.",
+            "declared_grain_tension": "NAMED RATHER THAN PAPERED OVER: the first three are properties OF THE PART; 'unknown' is a property of OUR MEASUREMENT of the part. That is two grains unless the domain is declared as 'the claim AS DETERMINED', which it is above. Same construction as `materializer_standing` and `basis` in this estate's other schemas; declared here so a future reader sees it was a choice, not an oversight.",
+            "state_coherence": "THE VALUES DO NOT MOVE TOGETHER. unknown -> any is MEASUREMENT. current_state -> point_in_time is a REDESIGN of the part, not a re-reading. And the sharp one: a part whose CLAIM and VINTAGE disagree has TWO available remedies -- refresh the part, or downgrade its claim -- and CHOOSING THE SECOND TO MAKE THE VIOLATION DISAPPEAR is the abuse this field invites. The claim is downgraded only when the part genuinely stops promising currency.",
+            "provenance": "Axis adapted from an external document-envelope pattern which carries three values; the fourth ('unknown') is ADDED HERE by 1.0.0_SA_CTO~X. Adding a value to an axis is itself an enumeration act and is declared as such.",
+            "token_census": "Word-boundary occupancy over the canon + standards + architecture surfaces at 3d53c48a1b: temporal_claim 3, current_state 2, point_in_time 1, timeless 1 -- ALL occurrences are inside this schema itself. No collision with existing estate vocabulary; the axis is newly minted rather than re-coined beside a ratified term.",
+            "record_authored": "2026-08-26, on 2.0.0_SA_COO~X's finding 73226 -- the enum SHIPPED WITHOUT THIS RECORD, in a contract minted for a project whose purpose is finding exactly that. Accepted, not disputed.",
+            "verdict": "pass, with the grain tension declared"
+          }
+        },
+        "lineage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "projection_of",
+            "source_identity"
+          ],
+          "properties": {
+            "projection_of": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What this part is derived FROM. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection."
+            },
+            "source_identity": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The upstream truth this ultimately descends from."
+            }
+          }
+        },
+        "generation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "materializer",
+            "materializer_standing",
+            "declared_opinions",
+            "cadence",
+            "trigger"
+          ],
+          "description": "HOW THIS PART COMES TO EXIST. The receipt half of the manifest.",
+          "properties": {
+            "materializer": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "The code that writes this part. NULL means nothing writes it -- a frozen or orphaned surface, which is a finding."
+            },
+            "materializer_digest": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Digest of the materializer AS IT PRODUCED THIS PART. This is what turns 'is this from a deprecated script' from archaeology into a lookup. Null is honest and loud."
+            },
+            "materializer_standing": {
+              "enum": [
+                "canonical",
+                "historical_in_use",
+                "superseded",
+                "unknown"
+              ],
+              "x-enum-definitions": {
+                "canonical": "The one intended producer for this part going forward.",
+                "historical_in_use": "Predates the canonical intent and is STILL CONSUMED. The most dangerous value -- it works, so nothing surfaces it.",
+                "superseded": "Replaced and no longer consumed.",
+                "unknown": "Currency not measured. HONEST -- never default to canonical because it ran recently."
+              },
+              "x-rule24": {
+                "domain": "standing of the code that produced this part",
+                "grain": "materializer-part pair",
+                "intent": "let a consumer refuse output from a producer that is not the intended one",
+                "mece": "canonical/historical_in_use/superseded partition the measured cases; 'unknown' covers the unmeasured member",
+                "state_coherence": "unknown resolves by measurement; historical_in_use -> superseded requires a MIGRATION, not a re-read -- different clocks",
+                "verdict": "pass"
+              }
+            },
+            "declared_opinions": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "⛔ THE SEMANTIC-DEFECT AXIS, AND THE REASON THIS FIELD EXISTS. Every filter, threshold, exclusion, cutoff and definitional choice the materializer makes -- enumerated. A materializer can run this morning and still encode a deprecated opinion, and EVERY freshness instrument (mtime, snapshot id, last-write, a wave as_of) is STRUCTURALLY BLIND to it. No scanner discriminates a bad definition. The only thing that does is REQUIRING THE OPINIONS BE DECLARED RATHER THAN BURIED, so they become reviewable. NULL means the opinions are embedded in code and this part is UNREVIEWABLE ON THE SEMANTIC AXIS -- which is itself the finding, and the honest value."
+            },
+            "cadence": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "NULL means nothing refreshes it on a rhythm -- a defect, not a config gap."
+            },
+            "trigger": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "What ACTUALLY fires it. A part whose only trigger is another process's success has no schedule and freezes silently when its upstream breaks."
+            }
+          }
+        },
+        "population_status": {
+          "enum": [
+            "production",
+            "test",
+            "orphaned",
+            "unknown"
+          ],
+          "description": "⛔ ADDED ON A LIVE FINDING: two cse_test_* tables were measured sitting in the PRODUCTION warehouse. A test surface indistinguishable from a production one is a substrate defect, not a tidiness issue -- a consumer cannot refuse what it cannot see.",
+          "x-enum-definitions": {
+            "production": "Intended to be read by production consumers.",
+            "test": "A test/scratch surface. Its presence in a production plane is a FINDING.",
+            "orphaned": "No live producer and no known consumer.",
+            "unknown": "Not determined."
+          },
+          "x-rule24": {
+            "domain": "intended operational standing of a registered part",
+            "grain": "part",
+            "intent": "let a consumer refuse a non-production surface",
+            "mece": "production/test/orphaned partition the determined cases; 'unknown' covers the rest",
+            "state_coherence": "test -> production is a promotion act; orphaned -> production requires an owner, not a re-read",
+            "verdict": "pass"
+          }
+        },
+        "vintage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "measured_utc",
+            "method"
+          ],
+          "properties": {
+            "measured_utc": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "type": "string",
+              "minLength": 1,
+              "description": "HOW the vintage was read. ⛔ A lexicographically-last metadata file is NOT the chronologically newest one, and sort_by on a paginated list-* sorts PER PAGE. State the method so the number can be judged."
+            },
+            "age_note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "coverage": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "population": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "denominator": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "consumers": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Known readers. An empty array on a live store is a candidate orphan; null means not measured."
+        },
+        "basis": {
+          "$ref": "#/$defs/basis_full",
+          "description": "Epistemic standing of THIS PART's claim. Bound by $ref so the vocabulary has ONE definition a validator reads, not four prose copies."
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Who owns the remedy for this part. 'UNOWNED' is legal and loud."
+        },
+        "grain": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource GRAIN. /trust qualifies the SUBJECT RESOURCE, not the persisted artifact. Projection is EXACT 1:1 card /subject/id -> part /id only. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner",
+            "unit"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
+            },
+            "unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "basis": {
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
+            },
+            "owner": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "unit": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "basis": {
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "key": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; unresolved or non-1:1 stays compilation RESIDUE. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner",
+            "identity_space",
+            "key_expression",
+            "key_is_stable",
+            "crosses_spaces",
+            "declared_mapping"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
+            },
+            "identity_space": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "key_expression": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "key_is_stable": {
+              "enum": [
+                "stable",
+                "unstable",
+                "unknown",
+                null
+              ],
+              "x-rule24": {
+                "axis": "whether the key expression survives LEGITIMATE change to the subject resource",
+                "grain": "one key on one subject resource",
+                "intent": "one -- stability under change; NOT uniqueness and NOT correctness",
+                "mece": "stable | unstable | unknown exhausts the domain; unknown is the un-measured state, not a third stability.",
+                "state_coherence": "measurement moves unknown -> stable|unstable. A rename or re-key moves stable -> unstable. NO remedy moves unstable -> stable without changing the key EXPRESSION itself.",
+                "null_semantics": "JSON null in this field is STRUCTURAL PAYLOAD ABSENCE, permitted ONLY under receiver claim_status=unknown. It is NOT a semantic member of this enum."
+              }
+            },
+            "crosses_spaces": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "declared_mapping": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "basis": {
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
+            },
+            "owner": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "identity_space": {
+                    "type": "null"
+                  },
+                  "key_expression": {
+                    "type": "null"
+                  },
+                  "key_is_stable": {
+                    "type": "null"
+                  },
+                  "crosses_spaces": {
+                    "type": "null"
+                  },
+                  "declared_mapping": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "identity_space": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "key_expression": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "key_is_stable": {
+                    "enum": [
+                      "stable",
+                      "unstable",
+                      "unknown"
+                    ]
+                  },
+                  "crosses_spaces": {
+                    "type": "boolean"
+                  },
+                  "basis": {
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  },
+                  "crosses_spaces": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "claim_status",
+                  "crosses_spaces"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "declared_mapping": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "declared_mapping"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  },
+                  "crosses_spaces": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "claim_status",
+                  "crosses_spaces"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "declared_mapping": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "failure_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "RECEIVER for a card's subject-resource FAILURE MODE. When declared, returns_on_failure is NON-NULL -- 'raises' is a legal value; null would be indistinguishable from unmeasured. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
+          "required": [
+            "claim_status",
+            "basis",
+            "evidence",
+            "owner",
+            "returns_on_failure",
+            "distinguishable_from_true_negative",
+            "silent_degrade_paths"
+          ],
+          "properties": {
+            "claim_status": {
+              "enum": [
+                "declared",
+                "unknown"
+              ],
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
+            },
+            "returns_on_failure": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "distinguishable_from_true_negative": {
+              "enum": [
+                "yes",
+                "no",
+                "unmeasured",
+                null
+              ],
+              "x-rule24": {
+                "axis": "whether a FAILURE of this subject can be told apart from a genuine ABSENCE",
+                "grain": "one failure mode on one subject resource",
+                "intent": "one -- discriminability of failure from absence; NOT frequency and NOT severity",
+                "mece": "yes | no | unmeasured exhausts; unmeasured is the un-run state.",
+                "state_coherence": "measurement moves unmeasured -> yes|no. A code change can move yes -> no SILENTLY, which is why this receiver exists.",
+                "null_semantics": "JSON null in this field is STRUCTURAL PAYLOAD ABSENCE, permitted ONLY under receiver claim_status=unknown. It is NOT a semantic member of this enum."
+              }
+            },
+            "silent_degrade_paths": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "basis": {
+              "$ref": "#/$defs/basis_full",
+              "description": "Epistemic standing of this receiver's payload. The declared/unknown branches below NARROW this set; they do not redefine it."
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
+            },
+            "owner": {
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "returns_on_failure": {
+                    "type": "null"
+                  },
+                  "distinguishable_from_true_negative": {
+                    "type": "null"
+                  },
+                  "silent_degrade_paths": {
+                    "type": "null"
+                  },
+                  "basis": {
+                    "const": "absent"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  }
+                },
+                "required": [
+                  "claim_status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "returns_on_failure": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "distinguishable_from_true_negative": {
+                    "enum": [
+                      "yes",
+                      "no",
+                      "unmeasured"
+                    ]
+                  },
+                  "silent_degrade_paths": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "basis": {
+                    "$ref": "#/$defs/basis_present",
+                    "$comment": "BOUND, not retyped. This branch carried an inline enum listing the same three values -- a LOCAL COPY that could not move when the vocabulary moved, inside a field whose x-rule24 claimed 'one estate vocabulary, not a local copy'."
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "member_set": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "OPTIONAL. For a part whose id denotes MORE THAN ONE artifact. ONE PART REMAINS ONE PART -- this never expands the parts array. TWO SHAPES, discriminated by `enumerable`, because a brace list and a runtime-named family DO NOT MOVE TOGETHER (Rule 24 iv). NO CARDINALITY IS EVER STORED IN EITHER SHAPE: enumerable=true derives len(members); enumerable=false HAS no cardinality, because membership at an instant is an OBSERVATION and the answer changes between two reads. A `cardinality: null` sentinel is REFUSED -- it mixes APPLICABILITY into a NUMERIC axis, and `enumerable` already carries applicability.",
+          "required": [
+            "enumerable",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "enumerable": {
+              "type": "boolean",
+              "description": "true = the id denotes a FIXED, hand-listable set, every member nameable now. false = a producer-defined FAMILY whose instances are runtime-named (pid/timestamp/counter) and may be garbage-collected.",
+              "x-rule24": {
+                "axis": "whether a durable member LIST can exist at all",
+                "grain": "one member_set",
+                "intent": "one -- expressibility of the set; NOT its size, NOT its basis, NOT its health",
+                "mece": "true | false spans it. There is no third: a set is either nameable now or it is not.",
+                "state_coherence": "flipping enumerable REPLACES the payload branch entirely: true carries `members`; false carries `pattern` + `pattern_source_home` + `pattern_source_line` + `variant_suffixes`. (This line omitted variant_suffixes until 2026-08-27 -- I ADDED A REQUIRED FIELD TO A BRANCH AND LEFT THE RULE-24 RECORD DESCRIBING THE OLD BRANCH, which is the stale-own-artifact defect at the smallest possible scale.) It moves NOTHING in basis/evidence/owner and NOTHING in population_status -- an orphaned family and a live family are both non-enumerable."
+              }
+            },
+            "members": {
+              "type": "array",
+              "minItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "description": "enumerable=true ONLY. The concrete artifacts the id denotes. MINIMUM TWO -- a one-member member_set is the absent case wearing the present case's shape, and it VALIDATED until 2026-08-27 because the >1 rule lived only in prose."
+            },
+            "pattern": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/repo_relative_path",
+                  "$comment": "⛔ BOUND BY $ref. rework13 claimed 'reused, not restated' IN ITS COMMIT MESSAGE and COPIED the clause objects inline -- performing the local-copy defect inside the act of claiming to fix it, for the fifth time tonight. A copy cannot inherit the dot-segment rule added to the definition in this same commit; this $ref does."
+                },
+                {
+                  "pattern": "^[A-Za-z0-9._/\\-]*(?:<[a-z][a-z0-9_]*>[A-Za-z0-9._/\\-]*)+$",
+                  "$comment": "the template grammar itself: literal chars + at least one <token>"
+                }
+              ],
+              "description": "enumerable=false ONLY. A NORMALISED SEMANTIC FAMILY TEMPLATE -- NOT verbatim producer text. ⛔ RULED 2026-08-27 after 4.0.0_SA_CRO~A found the contradiction: this field said 'verbatim' AND required <placeholder> syntax, and the pinned producer at _canonical.py:288 emits an f-string ('{os.getpid()}'), so NO value could satisfy both. THE GRAMMAR IS CLOSED AND POSITIVE, not a list of forbidden syntaxes: a template is a sequence of LITERAL characters [A-Za-z0-9._/-] and PLACEHOLDER tokens <[a-z][a-z0-9_]*>, with AT LEAST ONE token. Nothing else is expressible -- braces, percent-signs, dollar-signs, uppercase tokens and whitespace are all UNREACHABLE rather than enumerated. ⛔ THE PRIOR REVISION USED A LOOSER REGEX AND *NAMED* THE RESULTING GAP ('x.<pid>.{mono} validates') AS A DISCLOSED LIMIT. 4.0.0_SA_CRO~A refused that: the field's own single-representation claim makes the mixed form INVALID, and a closed grammar was always available. DISCLOSING A GAP IS NOT CLOSING IT -- and a well-named gap reads as rigour. Every runtime-varying segment is <name> in lowercase snake naming WHAT VARIES; every literal segment is copied from the producer unchanged. At least one placeholder is REQUIRED -- a template with no varying segment denotes exactly ONE artifact, which is not a family. THE VERBATIM PRODUCER EXPRESSION IS NOT LOST: pattern_source_home + pattern_source_line pin it. This field answers WHAT THE FAMILY IS; those answer WHERE IT IS PRODUCED. ⛔ PLACEHOLDER NAMES NAME THE VARYING QUANTITY, NOT AN ABBREVIATION OF IT: <monotonic_ns>, never <mono>; <uniq>/<counter> for the producer's counter, never <seq> unless the producer calls it a sequence. And the LITERAL SEGMENTS INCLUDE THE PATH -- the template is the family's HOME shape, so dropping the directory prefix changes what the family IS, not merely how it reads. ⛔ AND IT IS A REPO-SHAPED STRING: the SAME negatives that bind $defs/repo_relative_path apply here -- no whitespace or terminator, no URI scheme, not absolute, no `..` traversal, no empty `//` segment. Bound by REUSING that definition's clauses rather than by restating them; 4.0.0_SA_CRO~A found '../x.<pid>', 'dir//x.<pid>' and '/abs/x.<pid>' all validating because this field had a grammar and no path policy.",
+              "examples": [
+                "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>"
+              ],
+              "x-rule24": {
+                "axis": "the NAME SHAPE of a runtime-named family",
+                "grain": "one member_set under enumerable=false",
+                "intent": "one -- WHAT the family's names look like; NOT where the template is produced (pattern_source_*), NOT how many instances exist (undefined by construction)",
+                "mece": "exactly ONE SYNTAX is legal, defined by a CLOSED POSITIVE GRAMMAR (literal chars + <token>, >=1 token) rather than by forbidding syntaxes one at a time. Two unlabelled spellings of one template are two rows for one family. ⛔ THE CLAIM IS NARROWED TO SYNTAX, 2026-08-27: it previously read 'exactly ONE representation', which the grammar DOES NOT deliver -- '<mono>' and '<monotonic_ns>' are two representations of one varying quantity and both are grammar-valid. PLACEHOLDER NAMING IS A PRODUCER-BOUND OBLIGATION, NOT PART OF THIS GUARANTEE (see enforcement_limit). A Rule-24 record that claims more than its validator delivers is the same unenforced-field defect one level up, and this object carried BOTH the false claim and its own refutation.",
+                "state_coherence": "a producer RENAMING its template changes this value and pattern_source_line together; a producer MOVING changes pattern_source_home alone.",
+                "enforcement_limit": "THE GRAMMAR CANNOT CHECK PLACEHOLDER NAMES. '<mono>' and '<seq>' are grammar-valid and producer-semantically WRONG. This is a PRODUCER-BOUND REVIEW obligation, not a validator guarantee, and it is recorded here so nobody cites the schema as rejecting them. The remedy is a MACHINE-READABLE PRODUCER BINDING -- pattern_source_home + pattern_source_line already pin the producing statement, so a compiler CAN check the placeholder names against the producer's own interpolated expressions. That check does not exist yet and is named here as a dependency rather than implied as present."
+              }
+            },
+            "variant_suffixes": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^\\.[A-Za-z0-9]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    }
+                  }
+                ]
+              },
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mint",
+                  "note"
+                ],
+                "properties": {
+                  "mint": {
+                    "enum": [
+                      "always",
+                      "conditional",
+                      "unknown"
+                    ],
+                    "x-enum-definitions": {
+                      "always": "The producer mints this companion with EVERY instance. This is a CLOSURE claim per companion and therefore REQUIRES `evidence` naming where the producer's code makes it unconditional.",
+                      "conditional": "The producer mints it only under a circumstance, WHICH `condition` MUST STATE. An instance may lack it and still be well-formed.",
+                      "unknown": "The producer's rule has not been read. EXPRESSIBLE ABSENCE -- not a weak 'conditional', and never a licence to assume either other value."
+                    },
+                    "x-rule24": {
+                      "axis": "WHEN the producer mints this companion",
+                      "grain": "one companion suffix of one producer",
+                      "intent": "one -- the producer's minting rule; NOT what the companion holds (`note`), NOT whether any instance currently has it (unobservable from here)",
+                      "mece": "always | conditional | unknown spans it: the rule is unconditional, conditional, or unread.",
+                      "state_coherence": "reading the producer moves unknown -> always|conditional and moves NOTHING else. Observing an instance moves NOTHING at all."
+                    }
+                  },
+                  "note": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "What this companion HOLDS -- artifact meaning ONLY. NOT when it is minted (`mint`), NOT under what circumstances (`condition`)."
+                  },
+                  "evidence": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "REQUIRED iff mint=always, PROHIBITED otherwise. Where the producer's code makes it UNCONDITIONAL. Its meaning is specific to the closure claim, so it was incoherent beside `conditional` or `unknown` -- and it validated there."
+                  },
+                  "condition": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "REQUIRED iff mint=conditional, PROHIBITED otherwise. The producer's circumstance under which this companion appears. ⛔ Until 2026-08-27 `conditional` had NOWHERE to state the condition: the enum said note carried it, note said it did not, and {'.wal':{'mint':'conditional','note':'write-ahead log'}} validated while stating no condition at all. TWO DESCRIPTIONS DISAGREEING IS NOT AMBIGUITY -- ONE OF THEM WAS ALWAYS FALSE."
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "required": [
+                        "mint"
+                      ],
+                      "properties": {
+                        "mint": {
+                          "const": "always"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "evidence"
+                      ],
+                      "not": {
+                        "required": [
+                          "condition"
+                        ]
+                      }
+                    },
+                    "$comment": "always: evidence REQUIRED (closure carries its proof), condition FORBIDDEN"
+                  },
+                  {
+                    "if": {
+                      "required": [
+                        "mint"
+                      ],
+                      "properties": {
+                        "mint": {
+                          "const": "conditional"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "condition"
+                      ],
+                      "not": {
+                        "required": [
+                          "evidence"
+                        ]
+                      }
+                    },
+                    "$comment": "conditional: condition REQUIRED, evidence FORBIDDEN"
+                  },
+                  {
+                    "if": {
+                      "required": [
+                        "mint"
+                      ],
+                      "properties": {
+                        "mint": {
+                          "const": "unknown"
+                        }
+                      }
+                    },
+                    "then": {
+                      "allOf": [
+                        {
+                          "not": {
+                            "required": [
+                              "condition"
+                            ]
+                          }
+                        },
+                        {
+                          "not": {
+                            "required": [
+                              "evidence"
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "$comment": "unknown: neither -- an unread rule has no condition and no proof"
+                  }
+                ],
+                "description": "⛔ WAS A FREE STRING UNTIL 2026-08-27 AND IT CARRIED TWO CLAIMS AT ONCE: what the companion IS and WHEN it is minted, in one unparsed line that accepted 'banana'. The suffix KEY already identifies the companion; the value now separates the two axes and binds the minting rule to a schema-local enum a consumer can branch on."
+              },
+              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'this producer mints no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ THESE ARE THE SUFFIXES THE PRODUCER *MAY* MINT, NOT A CLOSED SET AND NOT A PER-INSTANCE GUARANTEE. RULED 2026-08-27 after 4.0.0_SA_CRO~A refused the prior wording: it claimed an EXACT FINITE companion set with per-instance cardinality 1 + keys, while the only available evidence for '.wal' was OBSERVATION of existing homes -- and the producer source `_rm_kuzu` names `.wal`, `.lock`, `.shadow` and `.tmp`. **DERIVING A CLOSED SET FROM OBSERVED ARTIFACTS CANNOT CERTIFY CLOSURE**: it is 'total minus the part I measured' wearing an enumeration's costume. PER-INSTANCE CARDINALITY IS THEREFORE UNDEFINED, exactly as the total is: a given instance may carry any subset of these, and each value must state the CONDITION under which that companion appears. AN OBJECT KEYED BY SUFFIX, not an array: JSON objects carry no SEMANTIC ordering, which is why this is an object and not an array. ⛔ THAT IS THE ONLY GUARANTEE IT BUYS: raw duplicate keys and raw-byte ordering are NOT handled here -- see x-parser-obligations. The sentence that claimed they were sat two lines from the record admitting they were not -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (`pattern`) and this companion axis. TOTAL cardinality stays UNDEFINED -- the instance axis is unbounded and a reaper is running.",
+              "examples": [
+                {
+                  ".wal": {
+                    "mint": "conditional",
+                    "note": "write-ahead log for the rebuild database",
+                    "condition": "present while a rebuild is mid-flight; removed on clean close"
+                  }
+                }
+              ],
+              "x-rule24": {
+                "axis": "the PRODUCER'S REPERTOIRE of companion suffixes it can mint",
+                "grain": "one producer's repertoire, as pinned by variant_suffixes_source_home/_line",
+                "intent": "one -- WHICH companions this producer is capable of minting; NOT what any single instance carries (unobservable from the manifest), NOT how many instances exist (undefined), NOT what an instance is named (`pattern`)",
+                "mece": "{} = this producer mints no companions. A non-empty object enumerates the suffixes it CAN mint. NOT a closure claim over any single instance -- per-instance cardinality is undefined, which is why each entry carries its own `mint` rule. Omission is REJECTED.",
+                "state_coherence": "discovering a further mintable suffix ADDS A KEY and moves NOTHING in `pattern`. Reading the producer moves an entry's `mint` and nothing else. ORDER IS NOT STATE AND CANNOT BE: an object has none.",
+                "x-correction": "axis/grain/intent previously described a PER-INSTANCE companion set while mece/state_coherence described the PRODUCER REPERTOIRE -- one Rule-24 record carrying two different subjects, which is the same two-axes defect it exists to catch."
+              },
+              "x-parser-obligations": {
+                "duplicate_keys": "JSON SCHEMA CANNOT SEE RAW DUPLICATE KEYS -- Python's parser is last-wins, so {'.wal':<invalid>, '.wal':<valid>} validates. The COMPILER must reject duplicate member names AT PARSE TIME, before validation, with an invalid-first/valid-last negative control.",
+                "byte_ordering": "An object removes SEMANTIC ordering, not RAW-BYTE ordering: reversed insertion validates identically and hashes differently. The EMITTER must sort keys canonically during deterministic emission/hashing, with a reversed-order byte-equality control.",
+                "enforcement_limit": "NEITHER of these is enforced by this schema. They are recorded here so no reader cites schema validity as covering them -- the same discipline as the placeholder-name limit on `pattern`."
+              }
+            },
+            "variant_suffixes_completeness": {
+              "enum": [
+                "closed_at_source",
+                "partial",
+                "unknown"
+              ],
+              "x-enum-definitions": {
+                "closed_at_source": "The producer file at variant_suffixes_source_home/_line was READ and these are ALL the suffixes it can mint.",
+                "partial": "The source was read and MORE may exist elsewhere in the producer.",
+                "unknown": "Completeness not established. EXPRESSIBLE ABSENCE."
+              },
+              "description": "REQUIRED under enumerable=false. ⛔ WITHOUT IT, `{}` MEANT TWO THINGS AT ONCE: the description called the repertoire NOT CLOSED while the Rule-24 record said `{}` proves the producer mints none. AN OPEN DISCOVERY SET CANNOT DISTINGUISH 'NONE' FROM 'NONE KNOWN' -- and the contract asserted both readings in one object. `{}` + closed_at_source = mints none; `{}` + unknown = none found yet.",
+              "x-rule24": {
+                "axis": "how COMPLETE the enumerated repertoire is",
+                "grain": "one producer's repertoire",
+                "intent": "one -- completeness of the enumeration; NOT which suffixes (the keys), NOT when each is minted (`mint`)",
+                "mece": "closed_at_source | partial | unknown spans it: the source closes the set, leaves it open, or was not established.",
+                "state_coherence": "reading further producer code moves unknown|partial -> closed_at_source and may ADD KEYS; it moves no existing key's `mint`."
+              }
+            },
+            "variant_suffixes_source_home": {
+              "$ref": "#/$defs/repo_relative_path",
+              "description": "enumerable=false ONLY. Repo path of the file whose code determines WHICH COMPANIONS THIS PRODUCER CAN MINT. ⛔ THIS IS A DIFFERENT AUTHORITY FROM `pattern_source_*`: the kuzu family's name template is produced at `_canonical.py`, and its companion repertoire is named in `_rm_kuzu`. Two axes, two producers, two pins -- BOUND by $ref to the one path contract, never a copy of its clauses."
+            },
+            "variant_suffixes_source_line": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "enumerable=false ONLY. 1-based line in variant_suffixes_source_home. Required even when the object is EMPTY: 'this producer mints no companions' is a CLAIM and needs an authority, and an unsourced empty set is indistinguishable from an unasked question."
+            },
+            "pattern_source_home": {
+              "$ref": "#/$defs/repo_relative_path",
+              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. BOUND, not retyped."
+            },
+            "pattern_source_line": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "enumerable=false ONLY. 1-BASED line number of the producing statement. Integer, never a string, minimum 1 -- line 0 does not exist and a 0 here was the tell that the compound form was never parsed by anything."
+            },
+            "basis": {
+              "$ref": "#/$defs/basis_present",
+              "description": "Epistemic standing of the member claim. 'absent' is excluded by the $ref target itself, not by a locally retyped enum."
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S",
+              "description": "NEVER null. 'NONE' is the loud value."
+            },
+            "owner": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S",
+              "description": "NEVER null. 'UNOWNED' is the loud value."
+            }
+          },
+          "oneOf": [
+            {
+              "properties": {
+                "enumerable": {
+                  "const": true
+                }
+              },
+              "required": [
+                "members"
+              ],
+              "allOf": [
+                {
+                  "not": {
+                    "required": [
+                      "pattern"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "pattern_source_home"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "pattern_source_line"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_source_home"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_source_line"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_completeness"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "properties": {
+                "enumerable": {
+                  "const": false
+                }
+              },
+              "required": [
+                "pattern",
+                "pattern_source_home",
+                "pattern_source_line",
+                "variant_suffixes",
+                "variant_suffixes_source_home",
+                "variant_suffixes_source_line",
+                "variant_suffixes_completeness"
+              ],
+              "not": {
+                "required": [
+                  "members"
+                ]
+              }
+            }
+          ],
+          "x-rule24": {
+            "axis": "the artifact SET a single part id denotes",
+            "grain": "one part; members/instances are ARTIFACTS, not parts",
+            "intent": "one -- WHAT the id covers; NOT cardinality (derived or undefined), NOT coverage",
+            "mece": "OMITTED = the id denotes exactly one artifact. enumerable=true = >=2, all named. enumerable=false = a family, named by template. Three states, no overlap.",
+            "state_coherence": "discovering a further member ADDS to members[] under true and moves NOTHING under false. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set. `derivation` is NO LONGER SERIALISED: it stated schema prose in a field, which is the typed-derivable-value defect this object already refuses for cardinality. A PATTERN'S PROVENANCE IS TWO FIELDS, NOT A PARSED STRING: pattern_source_home + pattern_source_line. A compound 'file:line' is a claim no validator can branch on, which is the same defect as prose in `home` and a stored cardinality -- a value a machine must re-derive at the call site is a value the contract did not actually constrain."
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "const": "NONE"
+              }
+            }
+          },
+          "$comment": "no location: home is the literal NONE, never a sentence"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "s3_uri"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^s3://[^\\s]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
+              }
+            }
+          },
+          "$comment": "s3_uri: home starts s3:// and carries no whitespace"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "iceberg_table"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^[A-Za-z0-9_]+\\.[A-Za-z0-9_]+\\.[A-Za-z0-9_]+$",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "NO WHITESPACE ANYWHERE, INCLUDING A TERMINATOR. An anchored ^...$ is NOT sufficient: in Python re, $ matches BEFORE a final newline, so 'p.py\\n' satisfied ^\\S+$ and 'iceberg.globgrph.cse\\n' satisfied the triple pattern. Found by 4.0.0_SA_CRO~A Base round 5. The negative has NO ANCHOR and therefore no terminator loophole."
+                  }
+                ]
+              }
+            }
+          },
+          "$comment": "iceberg_table: CANONICAL TRIPLE catalog.namespace.table; a bare name or a tuple rendering is refused"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "repo_path"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "$ref": "#/$defs/repo_relative_path"
+              }
+            }
+          },
+          "$comment": "repo_path: BOUND to the one owning path contract. Was four inline constraints, one of which was a copy of a guard living at two other sites."
+        }
+      ]
+    },
+    "basis_full": {
+      "$comment": "THE estate epistemic-basis vocabulary, schema-local so a validator can bind it. Same value set and meaning as SUBSTRATE_CARD.v2 trust.*.basis.",
+      "enum": [
+        "measured",
+        "held",
+        "inferred",
+        "absent"
+      ],
+      "x-enum-definitions": {
+        "measured": "DIRECT named observation or execution in the claimed window. The claimer ran the instrument or read the artifact, and names which.",
+        "held": "CARRIED FORWARD from a NAMED authoritative prior value WITHOUT current remeasurement. Distinct from measured by the absence of a current read, and from inferred by having a single named source rather than a derivation.",
+        "inferred": "DERIVED by a NAMED RULE from other facts. No direct read of the subject, no single prior value carried -- a rule plus inputs.",
+        "absent": "NO PAYLOAD CLAIM. Legal ONLY under the outer claim_status=unknown; it is the epistemic standing of a receiver that declines to claim, not a weak claim."
+      },
+      "x-rule24": {
+        "axis": "the EPISTEMIC STANDING of a claimed value",
+        "grain": "one claimed value (a part, a receiver payload, or a member set)",
+        "intent": "one -- HOW the value was obtained; NOT how confident anyone is, NOT how good it is",
+        "mece": "measured | held | inferred | absent exhausts the domain, and the three present values are MUTUALLY EXCLUSIVE by the discriminator stated in each definition: a CURRENT READ (measured), a NAMED PRIOR VALUE (held), a NAMED RULE (inferred). Before 2026-08-27 this enum carried no definitions at all and 'held' was undefined relative to the other two -- a value set whose members cannot be told apart is not MECE, it only looks it.",
+        "state_coherence": "re-measuring moves held|inferred -> measured and moves NOTHING else. NOTHING moves measured -> absent except an explicit retraction that also flips claim_status to unknown."
+      }
+    },
+    "basis_present": {
+      "$comment": "basis_full MINUS 'absent'. For a claim that is PRESENT and concrete, where a declaration of no-basis is incoherent. Express no-claim by omitting the object.",
+      "enum": [
+        "measured",
+        "held",
+        "inferred"
+      ],
+      "x-enum-definitions": {
+        "measured": "DIRECT named observation or execution in the claimed window. The claimer ran the instrument or read the artifact, and names which.",
+        "held": "CARRIED FORWARD from a NAMED authoritative prior value WITHOUT current remeasurement. Distinct from measured by the absence of a current read, and from inferred by having a single named source rather than a derivation.",
+        "inferred": "DERIVED by a NAMED RULE from other facts. No direct read of the subject, no single prior value carried -- a rule plus inputs."
+      },
+      "x-rule24": {
+        "axis": "the EPISTEMIC STANDING of a claimed value",
+        "grain": "one claimed value (a part, a receiver payload, or a member set)",
+        "intent": "one -- HOW the value was obtained; NOT how confident anyone is, NOT how good it is",
+        "mece": "measured | held | inferred | absent exhausts the domain, and the three present values are MUTUALLY EXCLUSIVE by the discriminator stated in each definition: a CURRENT READ (measured), a NAMED PRIOR VALUE (held), a NAMED RULE (inferred). Before 2026-08-27 this enum carried no definitions at all and 'held' was undefined relative to the other two -- a value set whose members cannot be told apart is not MECE, it only looks it. 'absent' is EXCLUDED here: the fourth state is expressed by omitting the whole object, never by a fourth value beside concrete content.",
+        "state_coherence": "re-measuring moves held|inferred -> measured and moves NOTHING else. NOTHING moves measured -> absent except an explicit retraction that also flips claim_status to unknown."
+      }
+    },
+    "repo_relative_path": {
+      "$comment": "THE owning contract for any workspace path in this schema. Localized 2026-08-27 after 4.0.0_SA_CRO~A observed the identical URI guard COPIED at three sites -- in the same commit that eliminated exactly that local-copy defect for `basis`. A rule applied by copy is a rule that cannot move.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "\\s"
+          },
+          "$comment": "no whitespace anywhere, terminator included"
+        },
+        {
+          "not": {
+            "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+          },
+          "$comment": "no URI scheme -- EVERY scheme, not a named one"
+        },
+        {
+          "not": {
+            "pattern": "^(/|[A-Za-z]:[\\\\/]|\\\\\\\\)"
+          },
+          "$comment": "NOT ABSOLUTE. RULED 2026-08-27: a manifest is read on both fabrics, and an absolute path is device-specific by construction -- 'C:/Users/AndrewBerman/...' is unresolvable on site Z and resolves to the WRONG tree wherever it does resolve. The estate rule is DERIVE, never hardcode a device."
+        },
+        {
+          "not": {
+            "pattern": "(^|/)\\.\\.(/|$)"
+          },
+          "$comment": "NO `..` TRAVERSAL. Two spellings of one location are two rows for one artifact, which is the identity-splitting defect home_space exists to prevent."
+        },
+        {
+          "not": {
+            "pattern": "(^|/)\\.(/|$)"
+          },
+          "$comment": "NO `.` DOT-SEGMENT. 'dir/./x' and 'dir/x' are two spellings of one location -- the same normalisation defect as '..' and '//', and this definition carried the other two while missing this one. Found by 4.0.0_SA_CRO~A against member_set.pattern; FIXED HERE, at the owning definition, so every binder inherits it rather than each patching its own copy."
+        },
+        {
+          "not": {
+            "pattern": "//"
+          },
+          "$comment": "no empty path segment -- moved here from member_set.pattern for the same reason"
+        },
+        {
+          "not": {
+            "pattern": ":"
+          },
+          "$comment": "NO COLON. It is illegal in a Windows path component, and its only observed use here was a COMPOUND PROVENANCE -- 'x/_canonical.py:288' -- smuggling a line number into a path field that has a separate line field beside it. Rejecting it at the OWNING DEFINITION closes it for pattern_source_home, variant_suffixes_source_home, home[repo_path] and every future binder at once."
+        }
+      ],
+      "x-rule24": {
+        "axis": "the SYNTAX of a workspace-relative path",
+        "grain": "one path string",
+        "intent": "one -- can this string be resolved against the repo root on ANY device; NOT what it points at, NOT whether it exists",
+        "mece": "the four negatives partition every way a string fails to be repo-relative: whitespace, a scheme, an absolute root, a traversal.",
+        "state_coherence": "moving a file changes the VALUE and nothing else in this contract."
+      }
+    },
+    "one_line_text": {
+      "$comment": "THE owning contract for any field this schema promises is ONE LINE. Minted 2026-08-27 after 4.0.0_SA_CRO~A found SEVEN promised-one-line values validating: trailing LF, CR, CRLF, and two-line values with each terminator, plus U+2028. `minLength` and a not-all-blank negative say NOTHING about line count -- 'one line' had been enforced entirely by hope.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "[\\r\\n\\u2028\\u2029\\u0085\\u000b\\u000c]"
+          },
+          "$comment": "no line terminator of ANY kind -- CR, LF, CRLF, U+2028 LINE SEPARATOR, U+2029 PARAGRAPH SEPARATOR, U+0085 NEL, vertical tab, form feed. Written as ESCAPES, never as literal characters: a literal U+2028 in a source file is invisible to every reviewer."
+        },
+        {
+          "not": {
+            "pattern": "^\\s*$"
+          },
+          "$comment": "not blank and not whitespace-only"
+        }
+      ]
+    }
+  }
+}

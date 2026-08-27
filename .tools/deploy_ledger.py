@@ -69,8 +69,18 @@ COO_INBOX = WORKSPACE / "org" / "mcp" / "inbox" / "2.0.0_SA_COO"
 LEG_KINDS = {"git", "s3-prefix", "activation", "ec2-baked-asset", "verify", "tf-lambda"}
 DEFAULT_WINDOW_HOURS = 4.0
 
-# HELD / SOVEREIGN-GATED state (CTO-designed 2026-07-09; the dormant-sovereign-hold doctrine encoded
-# into the never-half-land gate). An APPLY/DEPLOY leg is any leg whose work MUTATES state (git push,
+# HELD / SOVEREIGN-GATED state. PROVENANCE, TWO FIELDS ON PURPOSE -- designed by 1.0.0_SA_CTO,
+# AUTHORED by 2.0.0_SA_COO~B @f6f0a543aa3 (2026-07-09), clause (d)+HELD-PAST-REREAD extended by
+# 0.8.0_AE_CloudComp @6fc0b41fb0 (2026-08-26). This line used to read only "CTO-designed 2026-07-09"
+# and that is TRUE-BUT-INCOMPLETE IN A WAY THAT READS AS COMPLETE: 2026-08-26, a seat sourced
+# provenance from it, propagated it into a message CORRECTING an attribution, and dropped the
+# author -- with `git blame` one command away, unrun, BECAUSE THE COMMENT AGREED WITH WHAT THEY
+# ALREADY BELIEVED. A line that confirms you does not feel like a claim under test; it feels like a
+# citation. DESIGNER and AUTHOR are DIFFERENT FIELDS and a record carrying one cannot tell them
+# apart -- CLAUDE.md: a value must carry its claim in a field a consumer can reject on, never in a
+# comment. Amend this block when a name changes; do not let it collapse back to one name.
+# The dormant-sovereign-hold doctrine is encoded
+# into the never-half-land gate. An APPLY/DEPLOY leg is any leg whose work MUTATES state (git push,
 # code landed, TF apply, activation, baked asset); a VERIFY leg is a post-deploy live-state check. The
 # distinction is load-bearing: HELD requires EVERY apply leg proven + ONLY verify legs open, so a real
 # half-landed strand (an open apply leg) can NEVER claim HELD to escape the RED. See _qualifies_as_held.
@@ -79,6 +89,41 @@ GATE_TYPES = {"sovereign", "external"}          # (c) the structured gate class 
 DEFAULT_HELD_STALE_DAYS = 4.0                    # a HELD hold older than this escalates to HELD-STALE
 HELD_STATUS = "HELD-SOVEREIGN-GATED"
 HELD_NUDGE_SUPPRESS_HOURS = 24.0                # re-nudge a HELD-STALE hold at most once/day
+
+# ---------------------------------------------------------------------------
+# NFRA_DEPLOYLEDGER.HELD-STATE (Andrew-approved 2026-08-18 ~1537Z; CTO gates the schema act).
+#
+# THE DEFECT THIS CLOSES, in one line: A HELD DECLARED WHEN TO LOOK AGAIN, AND NOTHING CARRIED IT.
+# `gate.ref` already had to NAME a specific dependency, so the hold-REASON half was real. But the
+# RE-READ half lived in DEFAULT_HELD_STALE_DAYS -- a GLOBAL CONVENTION, identical for every hold --
+# so no consumer could branch on THIS hold's own stated condition. A value and a guess shared one
+# type: "4 days old" and "past the moment its owner said to look again" rendered the same.
+#
+# RULE 24, stated because a schema act requires it (HS-3 also states it in the deliverable):
+#   AXIS + INTENT  -- ONE axis: the ledger's LIFECYCLE state. It does NOT encode disposition,
+#                     severity, or ownership; those are separate axes and mixing them here would
+#                     break the schema foundationally (24-iii).
+#   DOMAIN         -- every sentinel ledger in STATE_DIR.
+#   VALUES (MECE)  -- OPEN (work outstanding) | HELD (deliberate, gated, well-formed) | terminal
+#                     (CLOSED/ROLLBACK/etc). Exhaustive over the domain and mutually exclusive: a
+#                     ledger is in exactly one, and HELD is reachable ONLY through the structural
+#                     guardrails, never by asserting a status string.
+#   SAME GRAIN     -- all three are LEDGER-level. HELD-PAST-REREAD and HELD-STALE are NOT values on
+#                     this axis: they are RE-SURFACE CONDITIONS *of* HELD, reported as their own
+#                     finding classes. Putting them on the lifecycle axis would mix a state with a
+#                     staleness observation -- two grains, one enum (24-ii).
+#   STATE COHERENCE (24-iv) -- the three values move under DIFFERENT remedies and that is the whole
+#                     point: OPEN closes by DOING THE WORK; HELD clears by the NAMED GATE MOVING,
+#                     which is by construction not the ledger owner's act; terminal moves under
+#                     nothing. WARNING: ONE REMEDY DOES NOT MOVE THEM TOGETHER, which is exactly why a
+#                     detector that cannot tell a hold from neglect manufactures the wrong reflex.
+#
+# WARNING: THE EASIEST-PASS ROUTE IS REFUSED BY CONSTRUCTION: labelling neglect "HELD" with no reason and
+# no re-read condition is the cheapest possible escape, so a hold missing EITHER is NOT a valid HELD
+# and stays RED. A state anyone can claim for free is not a state, it is a label.
+REREAD_KINDS = {"date", "event"}   # (d) WHEN to look again: a real date, or a NAMED event
+# An EVENT-gated hold cannot go "past" a date, so it is never HELD-PAST-REREAD; it re-surfaces on the
+# age cadence instead, with its named event printed. Encoded so the two are not silently conflated.
 DRIFT_WARN_SUPPRESS_HOURS = 24.0                # re-warn an entry-vs-sentinel DRIFT at most once/day
 
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
@@ -348,10 +393,26 @@ def cmd_hold(args) -> int:
     if not args.gate_ref.strip():
         sys.exit("ERROR: --gate-ref must NAME the specific dependency (e.g. 'Andrew cross-region PAT'), "
                  "not prose -- a vague 'waiting on something' is refused.")
+    # HS-1: the re-read condition is REQUIRED and EXCLUSIVE -- exactly one of date|event. Refused at
+    # set-time as well as at check-time, so the easiest-pass route never reaches the sentinel at all.
+    if bool(args.reread_date) == bool(args.reread_event):
+        sys.exit("ERROR: setting a hold requires EXACTLY ONE of --reread-date YYYY-MM-DD or "
+                 "--reread-event '<named event>'.\n"
+                 "A hold must say WHEN to look at it again. Without that the only answer available is "
+                 "a global default identical for every hold -- a convention, not THIS hold's claim, "
+                 "and neglect labelled HELD is indistinguishable from a deliberate one.")
+    if args.reread_date:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", args.reread_date.strip()):
+            sys.exit("ERROR: --reread-date must be YYYY-MM-DD (got %r)" % args.reread_date)
+        reread = {"kind": "date", "value": args.reread_date.strip()}
+    else:
+        if not args.reread_event.strip():
+            sys.exit("ERROR: --reread-event must NAME the awaited event, not prose.")
+        reread = {"kind": "event", "value": args.reread_event.strip()}
     # Provisionally attach the gate, THEN verify the conjunction -- REFUSE if an apply leg is open
     # (the anti-escape-hatch, enforced at set-time as well as at check-time).
     trial = dict(state)
-    trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip()}
+    trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip(), "reread": reread}
     ok, reason = _qualifies_as_held(trial)
     if not ok:
         sys.exit(f"REFUSED: cannot HELD '{args.slug}' -- {reason}.\n"
@@ -439,6 +500,15 @@ _STATUS_LINE_PATTERNS = (
     re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(.*?)\*\*", re.IGNORECASE),
     # 3. HEADING form:                                            ## Status: VALUE
     re.compile(r"^\s*#{1,6}\s*status:\s*(.*)$", re.IGNORECASE),
+    # 4. UNTERMINATED bold span (LAST -- it is the loosest, and order is load-bearing:
+    #    patterns 1-3 must get first refusal or this one would swallow their values).
+    #    A hand-authored `**Status: CLOSED ... ` whose bold span runs on for several
+    #    LINES never closes on its own line, so pattern 2's non-greedy `(.*?)\*\*`
+    #    finds no terminator and the whole file reads as having NO status -- measured
+    #    2026-08-26 on a ledger that says CLOSED in its third line and had been
+    #    unreadable for 41 days. Structural, not another enumerated spelling: the value
+    #    is simply "the rest of the line" when the span does not terminate on it.
+    re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(?!.*\*\*)(.*)$", re.IGNORECASE),
 )
 
 # ===========================================================================================
@@ -521,8 +591,12 @@ def _md_status(md_path: Path) -> str | None:
     return None
 
 
+# `**Opened/closed:** <start>-<end>` is the single-leg in-session hand-authored form: it
+# states the close IN THE SAME FIELD as the open, so neither the status patterns nor the
+# close-marker pattern could see it. 8 such ledgers were unreportable (measured 2026-08-26).
 _CLOSE_MARKER_PAT = re.compile(
-    r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|closed):\*\*\s*\S", re.IGNORECASE)
+    r"^\s*(?:[-*+>]\s+)?\*\*(?:date\s+closed|opened\s*/\s*closed|closed):\*\*\s*\S",
+    re.IGNORECASE)
 
 
 def _has_close_marker(md_path: Path) -> bool:
@@ -581,7 +655,15 @@ def _is_terminal_status(status: str) -> bool:
     a value leading with '**', and .lstrip() alone (whitespace-only) left it
     unreadable -- the THIRD spelling variant of the :424 class (COO source-read
     2026-08-11, 4 false REDs); the reader loosens, the records stay untouched."""
-    head = status.upper().lstrip("*_ \t")
+    # STRIP LEADING NON-ALPHANUMERICS, not an enumerated set: a status written
+    # `**Status: [GREEN-CIRCLE] CLOSED ...**` defeated .lstrip("*_ \t") because the
+    # emoji is none of those characters, so a genuinely CLOSED ledger read NON-TERMINAL
+    # and sat unreportable (measured 2026-08-26: GLDRNS_B1_AOR_RELEASE_WINDOW_20260715,
+    # closed 07-16, invisible for 41 days). Enumerating emojis would be the
+    # enumerated-spellings mistake this module already retired once for status lines --
+    # every terminal token begins with a LETTER, so stripping to the first alphanumeric
+    # is structural and cannot manufacture a false terminal from punctuation.
+    head = re.sub(r"^[^0-9A-Z]+", "", status.upper())
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
 
 
@@ -677,8 +759,23 @@ def _qualifies_as_held(state: dict) -> tuple:
         return False, "gate.type must be one of %s (got %r)" % (sorted(GATE_TYPES), gate.get("type"))
     if not (gate.get("ref") or "").strip():
         return False, "gate.ref is empty -- name the SPECIFIC dependency, not prose"
-    return True, ("all apply legs proven; only verify open; structured %s gate (%s)"
-                  % (gate["type"], gate["ref"]))
+    # (d) HS-1: a REQUIRED re-read condition -- WHEN to look at this hold again. Without it the
+    # only answer available is a global default identical for every hold, which is a convention,
+    # not this hold's claim. A hold that cannot say when to revisit it is indistinguishable from
+    # neglect wearing the word HELD, so it does NOT qualify and stays RED.
+    rr = gate.get("reread")
+    if not isinstance(rr, dict):
+        return False, ("no re-read condition (need gate.reread {kind: date|event, value}) -- a hold "
+                       "that cannot say WHEN to look again is indistinguishable from neglect")
+    if rr.get("kind") not in REREAD_KINDS:
+        return False, "gate.reread.kind must be one of %s (got %r)" % (sorted(REREAD_KINDS), rr.get("kind"))
+    rv = (rr.get("value") or "").strip()
+    if not rv:
+        return False, "gate.reread.value is empty -- give a real date or NAME the awaited event"
+    if rr["kind"] == "date" and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", rv):
+        return False, "gate.reread.value must be YYYY-MM-DD for kind=date (got %r)" % rv
+    return True, ("all apply legs proven; only verify open; structured %s gate (%s); re-read %s=%s"
+                  % (gate["type"], gate["ref"], rr["kind"], rv))
 
 
 def _held_age_days(state: dict, now: datetime) -> float | None:
@@ -690,6 +787,114 @@ def _held_age_days(state: dict, now: datetime) -> float | None:
         return (now - datetime.fromisoformat(ha)).total_seconds() / 86400.0
     except (ValueError, TypeError):
         return None
+
+
+# ==========================================================================================
+# HELD-VERIFY-PENDING -- THE THIRD LIFECYCLE STATE (COO ruling @be7d73eb2a, dispatch 72668).
+#
+# THE STATE THE AXIS COULD NOT EXPRESS: apply COMPLETE, but a VERIFY leg pending on a NAMED
+# FUTURE EVENT under a DIFFERENT OWNER. None of the ten TERMINAL_STATUS_TOKENS can say that, so
+# authors reached for prose and each reached for DIFFERENT prose -- the estate carries SIX
+# independent one-off coinages for this one state (HELD-SOVEREIGN-GATED, DEFERRED-TO-POST-
+# CONSOLIDATION, RESOLVED-PARKED, plus three prose forms), each used exactly once. An n=1 value
+# is the signature of a MISSING VOCABULARY, not a careless author.
+#
+# WHY THIS IS NOT THE ENUMERATED-SPELLINGS TREADMILL THIS MODULE ALREADY RETIRED: the treadmill
+# adds SPELLINGS for a state the axis HAS. This adds the STATE.
+#
+# WHY THE TOKEN IS NOT THE OBVIOUS BARE `HELD`: bare HELD has ZERO status-line occupancy (0 of
+# 468) and would be perfectly safe for this status-line-anchored reader -- and that is the trap.
+# It occupies 102 of 551 files as ORDINARY PROSE ("held behind", "held before"), so any future
+# free-text grep or comp-find census over the token returns a confident, well-formed count of
+# something else. THE READER IS NOT THE ONLY CONSUMER OF A STATUS VALUE; THE NEXT AGENT WITH A
+# QUESTION IS. HELD-VERIFY-PENDING has zero occupancy on every probe and composes into the
+# HELD-* family the corpus already started.
+#
+# ⛔ THE CONSUMING HALF IS THE WHOLE MECHANISM -- CLAUDE.md "A VALUE MUST CARRY ITS CLAIM".
+# _qualified_held_verify_pending REFUSES a value that does not carry BOTH an OWNER and a NAMED
+# RE-READ EVENT, and the caller then reports it as OPEN. Without that refusal this becomes the
+# most attractive place in the estate to park anything inconvenient and drifts to unpopulated
+# exactly as `closure_reason` did at 0 of 333 project JSONs. A hold with no named owner and no
+# named event is indistinguishable from an ABANDONMENT and is MORE dangerous than an OPEN,
+# because it reads as deliberate.
+#
+# ⛔ THE UNCOVERED MEMBER, NAMED SO IT IS NOT DISCOVERED LATER AS A GAP: apply-complete with a
+# verify pending on NO NAMED EVENT is NOT this value and stays OPEN. An unnamed re-read event is
+# precisely how a hold becomes permanent.
+#
+# GRAMMAR (both fields REQUIRED, and required IN THE STATUS VALUE ITSELF, not merely somewhere in
+# the file -- a file-wide scan would let an unrelated "owner:" elsewhere qualify a bare hold, and
+# the failure direction of a loose parser here is INVISIBLE PARKING):
+#     **Status:** HELD-VERIFY-PENDING -- owner: <serial> -- re-read: <named event>
+# Field labels accepted: owner|author for the owner; re-read|reread|re-read-event|event for the
+# event. Separator-liberal, field-strict.
+# ==========================================================================================
+HELD_VERIFY_PENDING_TOKEN = "HELD-VERIFY-PENDING"
+_HVP_OWNER_PAT = re.compile(r"\b(?:owner|author)\s*[:=]\s*([^\n]+?)(?=\s+(?:--|\u00b7|\||;)\s+|$)",
+                            re.IGNORECASE)
+_HVP_EVENT_PAT = re.compile(
+    r"\b(?:re-?read(?:-event)?|event)\s*[:=]\s*([^\n]+?)(?=\s+(?:--|\u00b7|\||;)\s+|$)",
+    re.IGNORECASE)
+
+
+def _is_held_verify_pending(status: str) -> bool:
+    """True if the status value LEADS with the HELD-VERIFY-PENDING token. Leading-token match
+    only, mirroring _is_terminal_status, so a mid-string mention cannot claim the state."""
+    if not status:
+        return False
+    head = re.sub(r"^[^0-9A-Z]+", "", status.upper())
+    return head.startswith(HELD_VERIFY_PENDING_TOKEN)
+
+
+def _qualified_held_verify_pending(status: str) -> tuple:
+    """(is_qualified, owner, event) for a HELD-VERIFY-PENDING status.
+
+    REFUSES -- returns is_qualified False -- unless BOTH an owner and a named re-read event are
+    carried in the value. The caller MUST then treat the entry as OPEN. This refusal is half (b)
+    of the ruling and the half that keeps the value honest."""
+    if not _is_held_verify_pending(status):
+        return (False, None, None)
+    o = _HVP_OWNER_PAT.search(status)
+    e = _HVP_EVENT_PAT.search(status)
+    owner = o.group(1).strip().strip("*_ ") if o else None
+    event = e.group(1).strip().strip("*_ ") if e else None
+    return (bool(owner and event), owner or None, event or None)
+
+
+_LEG_TABLE_PAT = re.compile(r"^\|\s*(?:leg|L\d+|id)\s*\|", re.M | re.I)
+_LEDGER_CLASS_PAT = re.compile(r"\*\*Class:\*\*\s*deploy-completion", re.I)
+_MANIFEST_HEAD_PAT = re.compile(r"^#{1,6}\s*Manifest\b", re.M | re.I)
+# A doc whose OWN H1 calls it a deploy(-)completion ledger is one, even when it renders
+# its evidence as free-form tables rather than the canonical `| leg |` manifest. Without
+# this the shape filter silently drops hand-authored ledgers -- trading the filename
+# blind spot for a layout blind spot, which is the same defect one axis over.
+_LEDGER_TITLE_PAT = re.compile(r"^#{1,6}\s*DEPLOY[\s-]*(?:COMPLETION|LEDGER)", re.M | re.I)
+
+
+def _is_deploy_ledger_shaped(md: Path) -> bool:
+    """Is this .md a DEPLOY LEDGER, decided on CONTENT rather than on its filename?
+
+    WHY THIS EXISTS: the scanner used to glob `*_deploy_completion.md`, so its population
+    was a NAMING CONVENTION. Measured 2026-08-26: 122 of 551 entries sat outside that glob
+    and 74 of them were non-terminal, while `check` reported 1 -- and SEVEN differed by a
+    single character (`-deploy_completion.md`, hyphen where the glob wanted an underscore).
+    A detector built to catch false-clean gate-bypasses had one of its own: it printed an
+    honest denominator that certified the SWEEP and never the QUESTION.
+
+    WHY NOT JUST WIDEN THE GLOB: the directory also holds ~51 approval records, plans,
+    scan-findings and event logs that carry no status line and never had legs. Reporting
+    those as "open or malformed" would trade a silent miss for a 51-entry false RED -- the
+    over-reaping inversion. So the population is widened and the FILTER moves to content:
+    a deploy ledger declares its class, renders a leg manifest, or heads a Manifest block.
+    """
+    try:
+        text = md.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    return bool(_LEDGER_CLASS_PAT.search(text)
+                or _LEG_TABLE_PAT.search(text)
+                or _MANIFEST_HEAD_PAT.search(text)
+                or _LEDGER_TITLE_PAT.search(text))
 
 
 def _unindexed_open_ledgers(covered: set) -> list:
@@ -705,7 +910,9 @@ def _unindexed_open_ledgers(covered: set) -> list:
     if not CM_DIR.is_dir():
         return out
     now = _now()
-    for md in sorted(CM_DIR.glob("*_deploy_completion.md")):
+    for md in sorted(CM_DIR.glob("*.md")):
+        if not _is_deploy_ledger_shaped(md):
+            continue  # an approval record / plan / event log is not a deploy ledger
         try:
             if md.resolve() in covered:
                 continue  # tracked by a live sentinel -- already reported above
@@ -719,6 +926,25 @@ def _unindexed_open_ledgers(covered: set) -> list:
         if _has_terminal_status_anywhere(md):
             continue  # CLOSE-BLOCK-at-foot shape: a terminal status line ANYWHERE
             #           in the doc's own status grammar (fix b, CTO GO 144651Z)
+        # HELD-VERIFY-PENDING -- the third lifecycle state. A QUALIFIED one (owner + named
+        # re-read event) is neither terminal nor open: --red must neither fire on it nor
+        # swallow it, so it is skipped here. An UNQUALIFIED one is REFUSED and falls through
+        # to be reported as OPEN, naming the missing field -- half (b) of ruling be7d73eb2a.
+        if status is not None and _is_held_verify_pending(status):
+            ok, owner, event = _qualified_held_verify_pending(status)
+            if ok:
+                continue
+            missing = " and ".join(
+                m for m, v in (("an owner", owner), ("a named re-read event", event)) if not v)
+            reason = (f"REFUSED HELD-VERIFY-PENDING (missing {missing}) -- read as OPEN: "
+                      "a hold without both is indistinguishable from an abandonment")
+            try:
+                mtime = datetime.fromtimestamp(md.stat().st_mtime, timezone.utc)
+                age_h = (now - mtime).total_seconds() / 3600.0
+            except OSError:
+                age_h = -1.0
+            out.append((md, reason, age_h))
+            continue
         if status is None:
             reason = "no **Status:** and no close-date marker (open or malformed)"
         else:
@@ -884,10 +1110,36 @@ def cmd_check(args) -> int:
         if held_ok:
             gate = state["gate"]
             held_days = _held_age_days(state, now)
+            rr = gate.get("reread") or {}
+            # HS-2: a hold past ITS OWN stated re-read date is its own finding class with its own
+            # line vocabulary. It is NEVER merged into an aged OPEN (that would call a deliberate
+            # hold neglect) and never into HELD-STALE (that is the GLOBAL age cadence, a different
+            # claim about a different thing). Checked BEFORE the age cadence so the sharper,
+            # owner-stated condition wins when both would fire.
+            # WARNING: PRINT-ONLY BY CONSTRUCTION -- no nudge, no alert, no inbox write. The notification
+            # moratorium stands and this class deliberately reaches for none: it surfaces in the
+            # existing check output and nothing more.
+            past_reread = False
+            if rr.get("kind") == "date":
+                try:
+                    past_reread = datetime.strptime(rr["value"], "%Y-%m-%d").replace(
+                        tzinfo=timezone.utc) < now
+                except (ValueError, KeyError, TypeError):
+                    past_reread = False   # a malformed date cannot fire the class; (d) already gates it
+            if past_reread:
+                exit_flag = True
+                hd = f"{held_days:.1f}d" if held_days is not None else "?"
+                print(f"HELD-PAST-REREAD: {state['slug']} re-read-due={rr['value']} (stated by the "
+                      f"hold itself) held={hd} gate={gate['type']}/{gate['ref']} "
+                      f"open-verify={open_legs} author={state['author']} "
+                      "-- the hold's OWN re-read date has passed: re-read it, do not treat it as "
+                      "neglect and do not treat it as closed")
+                continue
             if held_days is not None and held_days > stale_days:
                 exit_flag = True    # a legit hold sat too long -> a DISTINCT nudge (not the half-land RED)
                 print(f"HELD-STALE: {state['slug']} held={held_days:.1f}d (>{stale_days}d) "
-                      f"gate={gate['type']}/{gate['ref']} open-verify={open_legs} "
+                      f"gate={gate['type']}/{gate['ref']} "
+                      f"re-read={rr.get('kind')}={rr.get('value')} open-verify={open_legs} "
                       f"author={state['author']} -- nudge the gate or reconsider")
                 if args.red:
                     last = state.get("last_held_nudge_at")
@@ -901,6 +1153,7 @@ def cmd_check(args) -> int:
                 held_count += 1
                 hd = f"{held_days:.1f}d" if held_days is not None else "?"
                 print(f"HELD: {state['slug']} [{HELD_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
+                      f"re-read={rr.get('kind')}={rr.get('value')} "
                       f"open-verify={open_legs} author={state['author']} "
                       "-- apply legs proven, only verify open; tracked-not-stranded")
             continue
@@ -1032,6 +1285,14 @@ def main() -> int:
     p.add_argument("--gate-ref",
                    help="the SPECIFIC named dependency (e.g. 'Andrew cross-region PAT') -- not prose; "
                         "a vague 'waiting on something' is refused")
+    p.add_argument("--reread-date", metavar="YYYY-MM-DD",
+                   help="REQUIRED (or --reread-event): the date to look at this hold again. Past it, "
+                        "the hold re-surfaces as HELD-PAST-REREAD -- its OWN finding class, never an "
+                        "aged OPEN")
+    p.add_argument("--reread-event", metavar="'<named event>'",
+                   help="REQUIRED (or --reread-date): the NAMED event that ends the hold. An "
+                        "event-gated hold cannot go past a date, so it re-surfaces on the age cadence "
+                        "with its event printed -- never silently conflated with a date-gated one")
     p.add_argument("--release", action="store_true", help="clear the hold -> back to OPEN")
     p.set_defaults(fn=cmd_hold)
 

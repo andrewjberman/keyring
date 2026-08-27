@@ -1,8 +1,10 @@
 """PostToolUse hook: SERIAL-SCOPED orphan-watcher cleanup on register_agent.
 
-Invoked after mcp__opal-agent-comms__register_agent. Reads the registering serial
-from stdin JSON (tool_input.agent_serial) and reaps ONLY that EXACT serial's orphan
-watchers via `kill-orphans --serial <S> --force` -- tilde-specific, so an agent's
+Invoked after mcp__opal-agent-comms__register_agent. The Codex seat launcher also
+feeds it the same stdin payload immediately before its duplicate-process assertion,
+because Codex registration does not pass through Claude's PostToolUse runner. It
+reads tool_input.agent_serial and reaps ONLY that EXACT serial's orphan watchers
+via `kill-orphans --serial <S> --force` -- tilde-specific, so an agent's
 registration never touches another serial's (or another lane's) watcher.
 
 REPLACES the prior fabric-wide `kill-orphans --stale --force` hook, which reaped

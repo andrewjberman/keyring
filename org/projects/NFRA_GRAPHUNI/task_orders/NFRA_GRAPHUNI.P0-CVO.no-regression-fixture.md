@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P0 (CVO) -- capture the PRE-DELTA no-regression FIXTURE: snapshot the four structure-tools' current answers BEFORE any re-point. The load-bearing risk control.</title>
 <issued_to>3.0.0_SA_CVO (owns the no-regression fixture + one-head verify)</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>dispatched -- 2026-06-30T20:20Z GO'd to 3.0.0_SA_CVO on CTO decomp-approval. P0 IMMEDIATE, time-critical (pre-delta capture before any P1 mutation). CVO's FIXTURE-LOCKED signal is the HARD GATE that releases ~D's P1 dispatch (COO~B holds P1 on it). Priority over COMPUNIFY V1.</status>
+<status>complete -- SPRING-CLEAN 2026-08-25: project NFRA_GRAPHUNI is complete; this TO was last touched 2026-06-30, predating the project close 2026-07-01. Closed as a record act, not a work verdict. Prior status: dispatched -- 2026-06-30T20:20Z GO'd to 3.0.0_SA_CVO on CTO decomp-approval. P0 IMMEDIATE, time-critical (pre-delta capture before any P1 mutation). CVO's FIXTURE-LOCKED signal is the HARD GATE that releases ~D's P1 dispatch (COO~B holds P1 on it). Priority over COMPUNIFY V1.</status>
 <priority>P0 IMMEDIATE -- the LOAD-BEARING risk control (PRD section 4). TIME-CRITICAL ORDER: this fixture MUST capture answers while the OLD caches are still authoritative -- i.e. BEFORE P1's first derive/mutation. Read-only; runs parallel to ~D's P0 audit.</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>NONE -- captures CURRENT (pre-delta) state. HARD ORDERING: must lock BEFORE NFRA_GRAPHUNI.P1 (the first graph mutation). Pairs with NFRA_GRAPHUNI.P0 (~D's audit).</dependencies>

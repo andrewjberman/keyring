@@ -99,7 +99,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
     description: "Tier-0 + Tier-1 startup-protocol docs — MSTR + ws CTO/COO/CVO + CL CTO/COO/CVO. Per Andrew direct 2026-05-26 (LD-0099 cluster): 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'. Routed to ws CTO for BASE_EXEC lane authorship (MSTR was blocked on BASE_EXEC for the LD-0099 c7dee9cd5 XXX.md edits + had to route them via MSTR [BLOCKED-ASK] ASK 1 cluster 2026-05-26T~13:05Z). Applies to org/XXX.md + org/ref/COO_STARTUP.md + org/ref/RAVC_PROTOCOL.md + org/ref/SESSION_LOG_STANDARD.md + org/ref/TASK_ORDER_PROTOCOL.md + org/ref/PROMPT_CONSTRUCTION_PROCESS.md. Added 2026-05-26 by ws CTO."
@@ -125,7 +124,6 @@ lanes:
   COMP_LEARNS:
     permitted_agents:
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 1.1.0_DS_CompLearns
       - 1.2.0_DS_CompLearns
@@ -140,7 +138,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO
     description: "Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331."
@@ -511,7 +508,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
     description: "Pod 1 + any exec (task_orders/ authoring); DS tilde-lanes ~A-E added 2026-05-26 per Andrew YALP per-page mandate (Wave 1)"
 
@@ -524,7 +520,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
     description: "Pod 2 + any exec (task_orders/ authoring)"
 
@@ -536,7 +531,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
     description: "Pod 3 + any exec (task_orders/ authoring)"
 
@@ -565,7 +559,6 @@ lanes:
       - 1.0.0_SA_CTO~B
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
     description: "Pod 4 + any exec (task_orders/ authoring; underscore + tilde tilde-lane variants both included). 0.4.0_DE_ClientPlatform~B + 1.0.0_SA_CTO~B added 2026-05-21 by CTO~B: Andrew directed CTO~B to dispatch ADHC_VALGATE Phase 2 (Class-D, .004-.006) to DE~B after COO~B was closed -- the ~B C-suite was only ever in ANY_CTO (arch docs), never the task_orders lane. Tilde-lane owned-paths-gap pattern (cf. the 0.5.0/AE 2026-05-21 adds)."
 
@@ -576,7 +569,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
     description: "OpalETL AE + any exec (task_orders/ authoring)"
 
@@ -619,7 +611,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
     description: "Any pod agent + any exec (tier3 task_orders authoring — exec dispatch + RD self-edit; ADHC_OWNPTH 48h scan FP-4 fix 2026-05-04)"
 
   SHARED_PARTNER_ETL_OR_EXEC:
@@ -631,7 +622,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.0.0_SA_CVO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
@@ -645,7 +635,6 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.0.0_SA_CVO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
@@ -664,7 +653,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO
       - 0.0.0_AB_MSTR
@@ -685,7 +673,6 @@ lanes:
       - 3.0.0_SA_CVO
       - 4.0.0_SA_CRO   # Andrew-direct 2026-07-22 "You can register projects yes." -> ~~SCOPED TO PROJECT REGISTRATION~~ **SUPERSEDED 2026-08-12** (Andrew-direct: "CRO needs to be added to any and all EXEC-coded groups", record @32e3d952b8) -- the narrowing below is HISTORICAL ONLY and MUST NOT be read as live scope. It was also prose narrowing an ENUMERATION-based gate that never enforced it (check_agent returns True across the whole lane, measured). Original text follows: SCOPED TO PROJECT REGISTRATION (org/projects/REGISTRY.md + org/projects/*.json). The CRO explicitly did NOT claim the lane's other surfaces (hook-config etc.) and its membership must NOT be read as blanket. Granted by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). LD-0331.
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
@@ -710,7 +697,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
@@ -740,7 +726,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
@@ -764,7 +749,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
@@ -785,7 +769,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.4.0_DS_ClientPlatform
       - 0.4.0_DS_ClientPlatform~A
@@ -803,7 +786,6 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
-      - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
       - 0.8.0_AE_CloudComp
       - 0.4.0_DS_ClientPlatform~B
@@ -1236,6 +1218,10 @@ paths:
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
 
+  "AGENTS.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Repo-root Codex-runtime contract file -- the Codex seats' startup doc, same class as org/XXX.md under Andrew's 2026-05-26 word ('all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Existing lane extended, no new lane minted (build ladder rung 2). GAP CLOSED 2026-08-26: resolve_lane returned UNDEFINED on this path, refusing EVERY agent (LD-0331 title-is-not-a-grant class) -- surfaced by 0.0.0_AB_MSTR 72928 s.2 during the LD-0459 Codex lifecycle repair; MSTR correctly did not self-patch the grants file. Added 2026-08-26 by 1.0.0_SA_CTO as grants owner."
+
   # D0-T1 broker-build window (more-specific paths; override org/mcp/** BASE_EXEC per longest-match-wins; REMOVE at D0-T1 close):
   "org/mcp/server.py":
     lane: D0_T1_BROKER
@@ -1465,6 +1451,20 @@ paths:
   "org/sprints/**":
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "/daily-sprint daily status text -- MSTR + every exec may author/commit; MSTR base owns the template + skill"
+
+  # /daily-sprint's VISUAL system (Andrew-direct 2026-08-27, CTO terminal design session): rigid
+  # template + JSON schema + render/census scripts + one data JSON and one rendered html per day,
+  # grouped in a new daily_reports/ root on his word. Same runner population as org/sprints/**
+  # (MSTR-base primary, any exec may run the skill), hence the SAME LANE -- reused, not minted; the
+  # org/sprints precedent above already measured why ANY_EXEC is wrong here (no MSTR). Landed by
+  # 1.0.0_SA_CTO, who is ALSO a grantee: SoD deliberately set aside by Andrew at the live terminal,
+  # VERBATIM: "you land it, cto should be the writer for this" -- his word both authorizes the
+  # self-land and names CTO the writer/owner of this surface (template + schema = CTO design
+  # surface; daily data/ + out/ = that day's runner; README carries the split). The MSTR grant ask
+  # this supersedes: inbox 20260827T051442Z, resolved-by-Andrew follow-up sent same turn.
+  "daily_reports/**":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "/daily-sprint visual system -- schema/template (CTO design surface) + scripts + daily JSONs and rendered outputs (any runner); Andrew-direct 2026-08-27, CTO writer"
 
   "org/templates/**":
     lane: BASE_EXEC

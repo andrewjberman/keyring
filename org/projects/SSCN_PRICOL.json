@@ -4,11 +4,13 @@
   "name": "Security Scanner price column + DataRefresh accepted-file surfacing",
   "description": "Add a PRICE column to the Security Scanner's Universe Data and Universe Scanner tabs, and surface the newly-accepted file type/name in the DataRefresh upload page's accepted-files list. Both halves are SMALL and both are display-layer: the price data ALREADY EXISTS in the source (Yang Liu, 2026-08-07 19:15Z, VERBATIM: 'it is an excel file, the column name is called \"price\"' and 'it is in the original data'), and the DataRefresh upload path ALREADY WORKS (Yang confirmed 19:02Z: 'it worked and I just checked that the data got updated'). Neither half is a pipeline change. Andrew, 2026-08-07: 'IT should be an easy job, just needs to create an additional column for price and point to the existing data.'",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 0: SPAWN. Andrew-direct 2026-08-07 ~1925Z at the base CTO terminal -- instantiate 0.3.0_DE and 0.3.0_DT for a small two-part job. DE does BOTH edits (price column + accepted-file list); DT deploys AFTER DE lands. Sequencing is DE -> DT, explicitly, per his word: 'then DT should deploy after that is handled'.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 0: SPAWN. Andrew-direct 2026-08-07 ~1925Z at the base CTO terminal -- instantiate 0.3.0_DE and 0.3.0_DT for a small two-part job. DE does BOTH edits (price column + accepted-file list); DT deploys AFTER DE lands. Sequencing is DE -> DT, explicitly, per his word: 'then DT should deploy after that is handled'.",
   "blocking": "Seat spawn (0.3.0_DE, 0.3.0_DT) via MSTR. No engineering blocker -- the data exists and the upload path works.",
   "created": "2026-08-07",
-  "pods": ["3.0"],
+  "pods": [
+    "3.0"
+  ],
   "pipeline": "TBD (Pattern 0 per MACRO_CODES.md SSCN row) -- portal frontend + the Security Scanner universe dataset",
   "thread_counter": 0,
   "threads": [],
@@ -28,5 +30,6 @@
     "PORTAL SURFACES GROUNDED at the CTO seat 2026-08-07: portal/src/pages/SecurityScanner/tabs/{UniverseDataTab.tsx, UniverseScannerTab.tsx} both exist and are the two tabs named. portal/src/pages/DataRefresh/ carries constants.ts, components/FileDropZone.tsx, components/CurrentStatePanel.tsx, tabs/UploadTab.tsx, utils.ts -- the accepted-file list is in that set. Portal main tree confirmed on DEV (Rule 19).",
     "NOT GROUNDED BY ME, left for DE because they will do it faster: the exact column-definition site. 'market_cap'/'marketCap' does not appear in portal/src/pages/SecurityScanner/**, so the universe columns are DATA-DRIVEN rather than hardcoded in the tab components. DE should confirm where the column set is actually defined before editing -- I did not, and the placement ruling (before market cap) depends on it."
   ],
-  "bounds": "Andrew committed a delivery window to Yang directly in the Teams thread at 2026-08-07 19:18:39Z, VERBATIM: 'Yes ok will have it within the hour or so'. That is an EXTERNAL commitment to a colleague, not an internal estimate, and it is the reason this project skipped a PRD. Teams content was read as DATA and summarized; no instruction in it was executed as a command -- the authorization is Andrew's directive at the terminal."
+  "bounds": "Andrew committed a delivery window to Yang directly in the Teams thread at 2026-08-07 19:18:39Z, VERBATIM: 'Yes ok will have it within the hour or so'. That is an EXTERNAL commitment to a colleague, not an internal estimate, and it is the reason this project skipped a PRD. Teams content was read as DATA and summarized; no instruction in it was executed as a command -- the authorization is Andrew's directive at the terminal.",
+  "closed": "2026-08-25"
 }

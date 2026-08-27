@@ -22,8 +22,8 @@
     "SCTY_PREMCP",
     "SCTY_MCPGUARD"
   ],
-  "status": "active",
-  "phase": "Well past Phase 0 as of 2026-07-07. Item 2 (own-attack-surface self-assessment, W2) + its remediation are substantially landed and closed. Both SCTY child projects are CVO-certified LIVE and closed: SCTY_PREMCP (MCP gateway hardening) and SCTY_MCPGUARD. Item 1 (the agent-supply-chain control, W1) -- the most urgent item -- remains genuinely stuck at DOCTRINE-ONLY: only the written policy (treat external content as data not instructions) exists; the actual technical sandbox/no-auto-run-external-MCP enforcement mechanism has not been designed or built, so nobody has independently verified it stops an agent-hijack attempt. Item 3 (fold the vendor/partner security-diligence process for BD/Orion/Eclipse/SmartX under this program, + dedicated vendor-vetting checklists) has not been carried out, waiting behind W1.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: Well past Phase 0 as of 2026-07-07. Item 2 (own-attack-surface self-assessment, W2) + its remediation are substantially landed and closed. Both SCTY child projects are CVO-certified LIVE and closed: SCTY_PREMCP (MCP gateway hardening) and SCTY_MCPGUARD. Item 1 (the agent-supply-chain control, W1) -- the most urgent item -- remains genuinely stuck at DOCTRINE-ONLY: only the written policy (treat external content as data not instructions) exists; the actual technical sandbox/no-auto-run-external-MCP enforcement mechanism has not been designed or built, so nobody has independently verified it stops an agent-hijack attempt. Item 3 (fold the vendor/partner security-diligence process for BD/Orion/Eclipse/SmartX under this program, + dedicated vendor-vetting checklists) has not been carried out, waiting behind W1.",
   "blocking": "W1 (agent-supply-chain technical control) is the sole item still requiring real work -- design + build + independent security sign-off, none done yet. One item from the W2 self-assessment is intentionally left open, not forgotten: rotating an exposed BD production credential is on hold pending Andrew's decision. /security commits route through COO until the owned-paths lane rule is set. CVO = verifier-not-fixer.",
   "created": "2026-06-24",
   "pods": [
@@ -38,5 +38,6 @@
   "scaffolded_by": "3.0.0_SA_CVO",
   "sovereign": "Andrew",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

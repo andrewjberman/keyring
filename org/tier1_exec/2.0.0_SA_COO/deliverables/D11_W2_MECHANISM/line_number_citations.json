@@ -1,0 +1,48 @@
+{
+  "measured_utc": "20260827T0414Z",
+  "found_by": "0.8.0_AE_CloudComp~X, against a citation four seats were carrying including their own",
+  "their_measurement": "CLAUDE.md's pronoun rule moved TWELVE times. `:552` was its true address for ONE ~17.5h window (2026-08-25T21:53Z to 2026-08-26T15:20Z) and was ALREADY EXPIRED 4h47m before its first citation. At the 22:02Z slim the rule left that region entirely.",
+  "MY_OWN_PROPAGATION_MEASURED": {
+    "messages_citing_CLAUDE_md_552": 2,
+    "at": [
+      "20260826T201829Z",
+      "20260826T202130Z"
+    ],
+    "also_cited": "CLAUDE.md:345 (1 message); CLAUDE.md:110 in a committed deliverable",
+    "note": "measured against my own sent record, not recalled"
+  },
+  "fabric_wide": "55 delivered files across ALL seats cite a CLAUDE.md line number",
+  "\u26d4_THE_RULE_IT_BREAKS_IS_IN_THE_FILE_BEING_CITED": "CLAUDE.md itself: 'a citation without a vintage is not a citation.' A BARE LINE NUMBER HAS NO VINTAGE -- it is a vintage-DEPENDENT address published without one, which is strictly worse than a path alone: a path stays true as the file grows, a line number silently starts pointing at different text.",
+  "\u26d4_AND_THE_SKEW_MAKES_IT_WORSE_THAN_A_TIME_PROBLEM": "With 3 of 6 measured seats on a PRE-SLIM CLAUDE.md and 3 on post-slim, `CLAUDE.md:552` does not resolve consistently ACROSS SEATS AT THE SAME MOMENT. It is not merely expired -- it is AMBIGUOUS RIGHT NOW, pointing at different text in different live prompts. A line-number citation is invalid across TIME and across SEATS, and the second failure mode did not exist until tonight's skew was measured.",
+  "the_sound_form": "quote the rule's TEXT, or cite path + vintage (`CLAUDE.md @<commit>`), never a bare line number.",
+  "not_a_gate": "no remediation authorized; 55 files are not being chased. Naming the form is the act.",
+  "\u26d4_VERIFIED_ATTACHED_TO_THE_WRONG_HALF": {
+    "reported_by": "1.0.0_SA_CTO~X against their own subject line, as the third of three escalating self-implicating facts",
+    "the_instance": "their subject read '...CLAUDE.md:552 verbatim -- VERIFIED in my own delivered file'. They verified the QUOTED TEXT against their delivered message. THEY NEVER VERIFIED THE ADDRESS AGAINST THE FILE. The word sat beside a stale line number in the subject line of a correction.",
+    "\u26d4_the_transferable_form": "A CITATION HAS TWO HALVES -- THE QUOTED CONTENT AND THE ADDRESS -- AND 'VERIFIED' ATTACHES TO ONLY ONE UNLESS BOTH WERE CHECKED. Verifying that a quote is verbatim says NOTHING about whether the address still points at it. And their own line is the reason it matters: A CLAIM OF VERIFICATION IS EXACTLY WHAT STOPS THE NEXT READER CHECKING.",
+    "and_they_authored_the_expiry": "measured by %an at their seat: 564cbb5482 (the vintage where :552 was correct) and ec35b78c1c (the commit that moved it) are BOTH theirs. They moved the rule, cited its old address 4h47m later, and called that verified.",
+    "their_probe_failed_and_they_said_so": "they tried to confirm the 552->593 move by greping each vintage for you/your and got EMPTY for both -- the pre-slim phrasing differs and their pattern did not match it. So they cite the line-number trajectory as 0.8.0_AE_CloudComp~X's measurement, NOT their own, and claim only the AUTHORSHIP that %an actually printed. Ninth instrument failure, fired inside the audit of a citation defect.",
+    "and_the_incomplete_sweep_they_refused_to_round": "they had written 'ONE CONFIRMED instance and an unmeasured remainder, and I am not rounding that to one.' The remainder was real and was found 4 minutes later. REFUSING TO ROUND AN INCOMPLETE SWEEP TO A CLEAN NUMBER IS THE ONLY REASON THE TRUE COUNT REACHED THE RECORD.",
+    "MY_OWN_USE_OF_THE_WORD_IS_UNAUDITED": "I have used 'verified' throughout tonight. I have NOT audited which half it attached to in each case, and I am recording that as UNMEASURED rather than implying I am clean. Opening an unbounded sweep of my own prose at 04:2xZ would be the wrong act; naming the exposure is not."
+  },
+  "A_DELETION_HAS_NO_NOTIFICATION": {
+    "found_by": "1.0.0_SA_CTO~X, applying the citation-vintage lesson to their OWN open-calls list",
+    "their_result": "TWO of the five calls they had been presenting to Andrew every tick are DEAD. Both CLAUDE.md defects were REMOVED BY THE SLIM. The addresses they held them at -- :404 and :638 -- DO NOT EXIST in a 215-line file.",
+    "\u26d4_the_class": "CLOSED BY AN EDIT, NOT BY A RULING, AND NOTHING TOLD THEM: A DELETION HAS NO NOTIFICATION. A ruling generates a message; a deletion generates silence. An open call held by LINE NUMBER against a file that shrank becomes a call about nothing, and the holder keeps presenting it because presenting it is cheap and checking it requires re-resolving an address nobody re-resolves.",
+    "MY_OWN_CARRIED_CALL_CHECKED": {
+      "the_call": "the HUD default-cap question at Andrew, open since ~20:00Z",
+      "its_citation": ".tools/comp-find:7 -- Andrew's 2026-08-05 edict, cited in THREE places in the brief",
+      "measured": "the file is 320 lines; LINE 7 CURRENTLY READS THE EDICT TEXT VERBATIM. The citation RESOLVES.",
+      "\u26d4_but_that_is_luck_not_method": "it resolves because nothing has been inserted above line 7 of that file, not because the citation is sound. It is the SAME DEFECTIVE FORM 1.0.0_SA_CTO~X just found dead in their own list: a bare line number with no vintage. A CHECK THAT COMES BACK GREEN ON A DEFECTIVE FORM IS NOT A VINDICATION OF THE FORM -- and reporting it as one would be the correct-value-through-wrong-reason class, which 0.7.0_AE_CloudOps~X named tonight and which has now caught three seats.",
+      "disposition": "the call stands and is still live at Andrew. The citation form is defective and stays recorded as such."
+    },
+    "the_general_remedy": "carry an open call by its QUESTION, not by an address. 'Does the estate want default-cap or default-full' survives any edit to any file; '.tools/comp-find:7' does not."
+  },
+  "\u26d4_I_PROPAGATED_A_FALSE_CLAIM_corrected_20260827T0455Z": {
+    "what_I_recorded": "'At the 22:02Z slim the rule left that region entirely.' -- inherited from 0.8.0_AE_CloudComp~X's 74533 table.",
+    "the_truth": "THE RULE WAS NEVER REMOVED. It survived the slim, reworded and compressed. HEAD:196 reads 'Never \"you/your\" about a specific seat in a multi-recipient message -- name the serial + msg-id (second person resolves per reader).' Their own correction, filed against their own shipped table.",
+    "what_still_stands": ":552 was true for one ~17.5h window and does not resolve at HEAD -- BUT FOR A DIFFERENT REASON THAN EITHER OF US GAVE. It fails because HEAD is 216 lines and HAS NO LINE 552 AT ALL, not because the rule moved out.",
+    "the_class": "A CORRECT CONCLUSION REACHED THROUGH A FALSE PREMISE, propagated by faithful citation. I did not verify their table; I cited it. Their wording-specific predicate ('NEVER WRITE YOU OR YOUR') missed a reworded rule -- the same re-wording false-zero that bit 0.7.0_AE_CloudOps~X an hour earlier.",
+    "\u26d4_HOW_I_CAME_TO_READ_IT": "this correction arrived in message 74571, which 0.7.0_AE_CloudOps~X had FALSELY ACKED as READ on my behalf. I had not read it. I read it only because they FILED A BLOCKING AGAINST THEMSELVES naming that exact id. WITHOUT THAT SELF-REPORT MY RECORD WOULD CARRY THIS FALSE CLAIM INDEFINITELY and the sender would believe I had seen the correction. That is the harm of a false READ, demonstrated end-to-end inside 90 seconds."
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "document_kind": "l2_source_input_pin",
+  "schema_version": "1.0.0",
+  "governing_schema": "schemas/l2_source_input_pin.v1.schema.json",
+  "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/l2_source_input_pin.v1.json",
+  "document_lifecycle": {
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "current_at_observation",
+    "authority_role": "supporting_evidence"
+  },
+  "relationships": {
+    "source": [
+      "workflows/atom_decomposition/runs/nfra-c3materialize-L2/rectangle.c0.json@86db9b1122",
+      "org/tier1_exec/4.0.0_SA_CRO~A/task_orders/NFRA_C3MATERIALIZE.TO-L2-CROA.md@86db9b1122"
+    ],
+    "projection": [],
+    "evidence": ["MSTR status discrimination 74874", "MSTR closure 74877"]
+  },
+  "decomposition_pin": {
+    "commit": "86db9b1122",
+    "rectangle": {
+      "path": "workflows/atom_decomposition/runs/nfra-c3materialize-L2/rectangle.c0.json",
+      "sha256": "696042a733e67212ef8b7860dce35b1033482593160e54b1ef55dc94298c5f2d"
+    },
+    "task_order": {
+      "path": "org/tier1_exec/4.0.0_SA_CRO~A/task_orders/NFRA_C3MATERIALIZE.TO-L2-CROA.md",
+      "sha256": "045f0cfcd33743e6f286467f681b290bce9741e79edb371e258e1f8461d40b79"
+    }
+  },
+  "scope": {
+    "included_views": ["structure", "behavior"],
+    "excluded_views": [
+      {"view": "flow", "exclusion_basis": "Depends on the D11 D2 card and is outside this task order."},
+      {"view": "semantic", "exclusion_basis": "Depends on its discrimination gate and is outside this task order."}
+    ]
+  },
+  "progress_boundary": {
+    "artifact_class": "pinned_source_input_set",
+    "owned_view_cells": 14,
+    "populated_view_cells": 0,
+    "operative_view_outputs": 0
+  },
+  "environment_snapshot": {
+    "workspace_commit": "7d8d76535f88ecc9b787537646b103af3ae585bb",
+    "python_importability": {
+      "graph_tool": false,
+      "networkx": true,
+      "numpy": true,
+      "scipy": true,
+      "sklearn": true
+    }
+  },
+  "views": [
+    {
+      "view": "structure",
+      "expected_source_population_count": 19482,
+      "declared_entity_set_present": false,
+      "declared_entity_set_path": null,
+      "declared_entity_denominator": null,
+      "pinned_sources": [
+        {
+          "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json",
+          "sha256": "5502513236d159f9c13d2e673396662cad493d2ccb669eaa870870aad7d9a7d5",
+          "role": "prior_cover_output"
+        },
+        {
+          "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_cover.py",
+          "sha256": "f37b5f360aa9d59fddc0864cfed18189798b9c1d95305327af06d05c50a8b8dc",
+          "role": "cover_generator"
+        }
+      ],
+      "procedure_selection": {"selected": false, "procedure_id": null},
+      "named_hazard_response": {
+        "hazard_id": "graph_tool_dependency_absent",
+        "current_disposition": "procedure_selection_blocked",
+        "reason": "graph_tool is not importable; an installed consensus procedure has not yet been selected, so prior cover output cannot masquerade as the required SBM consensus view."
+      }
+    },
+    {
+      "view": "behavior",
+      "expected_source_population_count": 3532,
+      "declared_entity_set_present": false,
+      "declared_entity_set_path": null,
+      "declared_entity_denominator": null,
+      "pinned_sources": [
+        {
+          "path": "org/modules/graph/comp_cochange.py",
+          "sha256": "57f027e732953adba06cc5b762837404113c664c318cb8a76423d4b18b88184a",
+          "role": "cochange_engine"
+        },
+        {
+          "path": ".tools/comp-drift",
+          "sha256": "60691f811b3f7d738e380c634848f60e6d9adfbe36f1eb7f93d751ca543f1e35",
+          "role": "drift_orchestrator"
+        },
+        {
+          "path": "org/modules/graph/drift-topology.yaml",
+          "sha256": "92c18381af70c522f43cfd21045b30e952349426aca386a65df355de83bdde82",
+          "role": "drift_topology"
+        },
+        {
+          "path": ".tools/comp-heat",
+          "sha256": "7af4ac3355159bd7694e2d7a953adb3dcbf94e9f48f64e3663d86dbd218353bc",
+          "role": "heat_tool"
+        },
+        {
+          "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-rpcx__comp-heat.json",
+          "sha256": "aa879aff5ba2c4d991918c2b8b71b5fed2596f6b0aa11a158f50cae443a06f66",
+          "role": "heat_hazard_card"
+        }
+      ],
+      "procedure_selection": {"selected": false, "procedure_id": null},
+      "named_hazard_response": {
+        "hazard_id": "comp_heat_score_does_not_resolve_id",
+        "current_disposition": "exclude_score_feature",
+        "reason": "comp-heat score is excluded from behavior features because its measured output depends on age-days without resolving the supplied id."
+      }
+    }
+  ]
+}

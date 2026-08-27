@@ -74,6 +74,50 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 
 contracts:
 
+  comp-atomcheck:
+    coverage: 'One verdict row per product-archetype atom, per product x firm, over the enum CONFORMS /
+      VIOLATES / NOT-CHECKABLE-BY-THIS-RUNNER. v1 checks SIX legs: atom 1 product-root grammar, atom 3
+      manifest coverage (BOTH the partition-local manifest.json and the _manifests/{data-as-of} sidecar
+      conventions, resolved at scope+table+date grain), atom 5 schedule FLOOR only, atom 7 gold SPELLING
+      only, atom 8 lineage-declaration COVERAGE only, atom 9 provenance columns. Read-only by construction:
+      boto3 in-process GET/LIST + describe/list, zero write calls, and never a monitor.'
+    blind_spots:
+      - 'ATOMS 2, 4 and 6 ARE NOT CHECKED AT ALL, and neither are the RESIDUE HALVES of atoms 5
+        (one-producer-per-key / one-runtime) and 7 (serve-only-via-publisher). They render
+        NOT-CHECKABLE-BY-THIS-RUNNER with a stated why and can NEVER render CONFORMS. A NOT-CHECKABLE row
+        is an honest absence, not a pass -- reading it as a pass is the primary way to misuse this tool.'
+      - 'THE RESIDUE DOES NOT MOVE WITH ONE REMEDY (Rule 24(iv)): atoms 2/5/7 share ONE missing instrument
+        (a producer/writer census over code+IAM); atom 8s residue is a DECLARATION artifact awaiting the
+        emitting lane; atoms 4/6 are static-analysis depth. Building any one does not deliver the others.'
+      - 'ATOM 8 CHECKS COVERAGE, NEVER VERACITY. That a served field is DECLARED to trace to an endpoint is
+        checked; that it REALLY does is a human/CVO read this runner cannot make. With no lineage
+        declaration for a family the atom renders NOT-CHECKABLE, never CONFORMS.'
+      - 'PER-LEG DENOMINATORS ARE AT DIFFERENT GRAINS and must never be summed: atoms 1/3 count PARTITIONS
+        and KEYS, atom 8 counts FIELDS, atom 5 counts RULES and SCHEDULES. The declared grain below is the
+        grain of the VERDICT ROW, not of every denominator inside it.'
+      - 'A PRODUCT ROOT UNDER ACTIVE WRITE MOVES BETWEEN READS. Measured 2026-08-25 on the 49F root: the
+        partition denominator moved 2193 -> 5705 -> 8274 -> 8361 across four reads in about eight minutes
+        during a live backfill. Every figure is true of the stamped provenance instant and of nothing else;
+        quoting one as a standing denominator is a defect in the READER, and the header exists to prevent it.'
+      - 'The archetype grammar, declared scopes and floor name-patterns are CONFIG, not discovery. A scope
+        the estate uses but nobody declared renders VIOLATES rather than being absorbed -- deliberately, so
+        that a grammar tuned to the estate it measures cannot silently become one that can never fail.'
+      - 'Only products present in the PRODUCTS registry are analyzable; any other product exits 2 UNCOVERED
+        and is explicitly NOT reported as conforming.'
+    plane: mixed
+    grain: artifact
+    scope: estate
+    vintage: 'live AWS control-plane + live S3 listing at run time, stamped in a UTC provenance header on
+      every run; repo-side declarations (lineage, ratified exceptions, served census) read at HEAD on disk'
+    exit_codes:
+      '2':
+        class: verdict
+        meaning: 'UNCOVERED -- unknown product/firm, or the product root could not be listed. NOT analyzed:
+          not conforming, not violating, UNVERIFIED.'
+    exit_source: 'atomcheck_cli.py main() (2=UNCOVERED). ⛔ THE VERDICT IS IN THE ROWS, NOT THE EXIT CODE:
+      a run that reports VIOLATES still exits 0, so an rc-only consumer reads a clean pass over a violating
+      estate. READ THE ROWS. Same failure shape comp-validate already carries (PASS/WAIVED vs NO_CONFIG).'
+
   comp-lease:
     coverage: 'ONE subject per call. `evaluate <closure.json>`: the full coordinate set (five support-member
       identities + the knowledge basis) is COARSE-INTERSECTED with OVER-inclusion enforced (a declared set

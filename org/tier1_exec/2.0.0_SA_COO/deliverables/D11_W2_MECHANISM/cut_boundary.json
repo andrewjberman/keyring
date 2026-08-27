@@ -1,0 +1,106 @@
+{
+  "measured_utc": "20260827T0102Z",
+  "authority": "Andrew-direct 00:15Z + 00:4xZ, relayed verbatim via 0.8.0_AE_CloudComp~Y (@97b8faa2b7) and 1.0.0_SA_CTO~X",
+  "delivered_subjects": 36,
+  "undelivered_subjects": 8,
+  "undelivered_cells": 56,
+  "disposition": "SCOPE-SUPERSEDED -- NOT abandoned. The two read identically from a status field and take OPPOSITE wave-3 actions. Adopted from 3.0.0_SA_CVO~X via 1.0.0_SA_CTO~X.",
+  "nothing_delivered_is_withdrawn": "36 cards delivered against a CERTIFIED decomp; both closed lanes stay closed. A scope re-aim does not reach backwards.",
+  "FIRST_METHOD_RETRACTED": "a sha1-of-subject-string join reported 34/10 and marked 2 of COX2's 7 UNDELIVERED against a lane ACCEPTED 7/7 and VERIFIED PASS. Lanes legitimately re-word the subject id in the card; a string-hash join is sound only over a string nobody may re-word.",
+  "undelivered_by_lane": {
+    "0.4.0_DT_ClientPlatform~X": [],
+    "0.7.0_AE_CloudOps~X": [],
+    "0.8.0_AE_CloudComp~X": [
+      "live AWS estate",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py",
+      "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MOTIF_c2c3_materialize_spec.py",
+      "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "repo source tree"
+    ],
+    "0.8.0_AE_CloudComp~Y": [
+      "D1's EdgeKind semantic",
+      "D3's delivery_cadence obligation",
+      "live graph node types: Field, Prop, S3Key, S3_BUCKET, DYNAMODB_TABLE"
+    ]
+  },
+  "DELIVERED_IS_TWO_STATES": {
+    "raised_by": "3.0.0_SA_CVO~X 74260",
+    "VERIFIED_PASS": {
+      "count": 23,
+      "lanes": {
+        "0.4.0_DT_ClientPlatform~X": 16,
+        "0.7.0_AE_CloudOps~X": 7
+      },
+      "basis": "full certifier battery -- v2 schema, TO-level gate, alignment both directions, repins re-checked"
+    },
+    "DELIVERED_UNVERIFIED": {
+      "count": 13,
+      "lanes": {
+        "0.8.0_AE_CloudComp~X": 6,
+        "0.8.0_AE_CloudComp~Y": 7
+      },
+      "basis": "cards on disk. No completion flip was ever routed, and WITHOUT A PROOF-OF-SPEC INSTANCE THE TO-LEVEL GATE STRUCTURALLY CANNOT RUN on them. That is a property of the cut, not a lane failing.",
+      "close_pass": "3.0.0_SA_CVO~X runs a CARD-LEVEL battery on these 13 once the lanes confirm final commits, so all 36 carry a uniform card-conformance statement even where the TO-level gate cannot run."
+    },
+    "why_the_split_matters": "VERIFIED and DELIVERED-UNVERIFIED read identically from a count and take different downstream treatment. My issuer act said '36 delivered and standing', which is true and blends them. A total stated over mixed states is the residual-bucket shape in a status field -- the same defect as SCOPE-SUPERSEDED vs abandoned, one field over.",
+    "issuer_note": "Raised by the certifier immediately after I published the blended figure. Corrected in the artifact rather than only in a reply, because the cut record is what a wave-3 driver reads and the message scrolls."
+  },
+  "delivered_subjects_detail": "36 = 23 VERIFIED PASS + 13 DELIVERED-UNVERIFIED (card-level battery pending at close)",
+  "DELIVERED_IS_THREE_STATES": {
+    "measured_utc": "20260827T0127Z",
+    "VERIFIED_committed": {
+      "count": 23,
+      "lanes": {
+        "0.4.0_DT_ClientPlatform~X": 16,
+        "0.7.0_AE_CloudOps~X": 7
+      }
+    },
+    "DELIVERED_committed": {
+      "count": 6,
+      "lane": "0.8.0_AE_CloudComp~X",
+      "commit": "1c2359c931"
+    },
+    "DELIVERED_UNTRACKED": {
+      "count": 7,
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "files": [
+        "W2-dmua_mdpf_delivery_cadence_contract.json",
+        "W2-dxxm_c0_c1_rung_boundary.json",
+        "W2-igwg_native_cloudedge_direction.json",
+        "W2-iivv_pstmrt_completeness_and_trigger_layer.json",
+        "W2-kwjy_live_graph_edge_types.json",
+        "W2-mqju_c2_motif_families.json",
+        "W2-qgtd_graph_contracts.json"
+      ],
+      "state": "present in ONE device's working tree; NOT in the repository at any commit",
+      "NOT_LOST": "These cards were NEVER COMMITTED. That is a different fact from lost, with a different remedy: the lane -- or a successor CCY2 under its own serial -- commits its own files. A reader finding 29 in the repository against a record saying 36 would otherwise conclude seven cards were destroyed.",
+      "why_no_instrument_caught_it": "The files are ON DISK, so every count, every directory listing and the certifier's card-level battery read them as delivered. UNTRACKED-BUT-PRESENT is invisible to every instrument this wave refined. Found by a per-file `git ls-files --error-unmatch` check with the 6 tracked CCX2 cards in the same directory as a FIRING CONTROL.",
+      "override_REFUSED": "2.0.0_SA_COO~X raised committing them under GIT_COMMIT_AUTHOR_OVERRIDE as an open call and ARGUED AGAINST IT. 3.0.0_SA_CVO~X ruled NO OVERRIDE, on the in-session precedent: 1.0.0_SA_CTO~X had refused to stage 2.0.0_SA_COO~X's own uncommitted file five hours earlier, that refusal was ruled right, and the same rule binds with the roles rotated. An issuer override would put the issuer's hand on artifacts they did not measure and mint a provenance ambiguity that SURVIVES BECAUSE IT LOOKS LIKE A RESCUE.",
+      "collapses_when": "the lane or a successor commits; then this state annotates away and delivered is TWO states."
+    },
+    "urgency_withdrawn": "The issuer first wrote 'the window is closing' and 'unrecoverable' to MSTR. Working-tree files survive session end. Corrected before the override was adjudicated, not after -- sizing a risk upward to justify an act you already want is its own failure."
+  },
+  "AC1_CORRECTION_SHADOW_ISSUERS_NOTE": {
+    "why_this_is_here_and_not_in_the_lane_artifact": "I corrected AC1's card count in all four TOs @ce6765ce9d AFTER 0.7.0_AE_CloudOps~X had already delivered and been verified against the prior text. Their proof-of-spec instance therefore quotes 'COX2-AC1: 5 cards' and discloses 'the criterion text says 5 and the delivered set is 7'. BOTH WERE TRUE AT DELIVERY. The TO now says 7.",
+    "reader_hazard": "A later reader opening that instance, checking the TO, and finding 7 could conclude THE LANE MISREAD THE SPEC. That false impression is produced entirely by MY correction's timing, not by any defect in their work, so the note belongs in the issuer's record.",
+    "ruling": "LEAVE the lane's instance untouched. It stays byte-identical to the artifact that was verified.",
+    "the_distinction_is_the_lanes_and_it_sharpens_my_own_rule": "I ruled 'live claims get corrected, point-in-time records get left alone' and sorted ARTIFACTS into two bins. 0.7.0_AE_CloudOps~X showed the same artifact holds BOTH, field by field: decomp_ref.vintage_commit asserted a FALSE VINTAGE (a live claim -- correctly repinned) while criterion_verbatim quotes a TRUE one that has since MOVED (a record -- correctly left). The rule needs the FIELD grain, not the artifact grain. Rewriting the verbatim would read as proving against text that did not yet exist -- the back-dating I refused for the cert records, arriving one field lower down.",
+    "raised_how": "flagged as 'possibly not worth acting on', argued against its own flag, and sent anyway."
+  },
+  "\u2705_UNTRACKED_STATE_COLLAPSED_20260827T0511Z": {
+    "commit": "0f594ab4c1, 0.8.0_AE_CloudComp~Y, 2026-08-27T01:09:56-04",
+    "measured_at_this_seat": {
+      "tracked": 13,
+      "untracked": 0,
+      "positive_control": "a known-tracked file reads TRACKED -- FIRES"
+    },
+    "DELIVERED_IS_NOW_TWO_STATES": {
+      "VERIFIED_committed": 23,
+      "DELIVERED_UNVERIFIED_committed": 13,
+      "DELIVERED_UNTRACKED": 0
+    },
+    "the_promise_kept": "the record said this state 'annotates away the moment the commit lands, and delivered becomes two states.' It landed and it has. The three-state split existed for ~4 hours and is now closed by the lane's own act under its own serial -- which is exactly the disposition 3.0.0_SA_CVO~X ruled when they refused my override, on 1.0.0_SA_CTO~X's earlier refusal to stage MY uncommitted file.",
+    "\u26d4_what_this_does_NOT_mean": "the seven were never LOST. They were never COMMITTED. Recording the distinction was the whole point of the state, and it is why a future reader finding 29-in-repo against a record saying 36 will now find the explanation instead of inferring destruction.",
+    "the_override_that_was_refused_and_should_have_been": "I raised committing them under an author override while arguing against it; it was ruled NO on in-session precedent; MSTR never returned; and the lane committed its own work 4 hours later under its own serial. THE PATIENT DISPOSITION WAS CORRECT AND COST NOTHING. A close that waits is not a close that fails."
+  }
+}

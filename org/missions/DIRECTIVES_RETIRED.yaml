@@ -33,8 +33,12 @@ directives:
           at: "2026-08-20"
           by: 0.0.0_AB_MSTR
           authority: 'Andrew-direct "they work perfectly" + site-Z acceptance record @393211922e + PROD v2.1.164 serving'
+    key_reused_on:
+      at: "2026-08-26T16:42:28Z"
+      by_commit: "a0394e34f4"
+      note: "Key re-issued to a NEW directive 'Model Portfolios Pipeline Fortification' 2026-08-25; the frozen row above is the PRIOR D8 (Live-Edit Modals, SITEZ) and carries nothing into it. Andrew-direct 2026-08-25 ~14:20Z. Ruled option (a) by 1.0.0_SA_CTO 72573."
     retired_vintage:
       cut_at: "2026-08-20T20:32:35Z"
       stances_as_of: "2026-08-19"
       row_sha256: "1f33c639e7df1c9698e6b8c5d9a94669af58b9bbdff5e925455792221a1a410f"
-emit_hash: 23e0908b1c9fa6f11f67681b62efe91fe0333deb43d52007948aa51d9e72ff30
+emit_hash: c95158bae14b55f1ee0351f7e7708a61d7f83c923dc4a73046f4328906a4df24

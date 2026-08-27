@@ -15,8 +15,8 @@
       "date": "2026-07-13"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0 (2 PRDs). PRD-2 LANDED 2026-07-13 (CTO~Z, Andrew-direct): comp-which TOP-K REDESIGN. comp-which fails GREEN -- rc=0 on 9/9 probes, a generated-nonsense query routes CONFIDENTLY (fails the random-input control); source-confirmed at .tools/comp-which:1071-1074 @52d008f4c the live COMPROUTE posterior prints its grep fallback in the SUBJUNCTIVE then returns 0, while the real floor sits DOWNSTREAM+UNREACHABLE at :1212-1281 (6,230/6,308 logged routes took the unfloored path). Measured on RULES(n=46): precision@1=67%, recall@5=75% -- the cheap 'top-k lifts recall' hypothesis was FALSIFIED; the real win is that top-k makes the ZERO-STATE expressible, which argmax cannot do at any k. 5 TOs (TO-1 generated harness FIRST -- measure before fixing). ~Z lane: CTO~Z -> COO~Z.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 0 (2 PRDs). PRD-2 LANDED 2026-07-13 (CTO~Z, Andrew-direct): comp-which TOP-K REDESIGN. comp-which fails GREEN -- rc=0 on 9/9 probes, a generated-nonsense query routes CONFIDENTLY (fails the random-input control); source-confirmed at .tools/comp-which:1071-1074 @52d008f4c the live COMPROUTE posterior prints its grep fallback in the SUBJUNCTIVE then returns 0, while the real floor sits DOWNSTREAM+UNREACHABLE at :1212-1281 (6,230/6,308 logged routes took the unfloored path). Measured on RULES(n=46): precision@1=67%, recall@5=75% -- the cheap 'top-k lifts recall' hypothesis was FALSIFIED; the real win is that top-k makes the ZERO-STATE expressible, which argmax cannot do at any k. 5 TOs (TO-1 generated harness FIRST -- measure before fixing). ~Z lane: CTO~Z -> COO~Z.",
   "blocking": "PRD-2 (comp-which top-k): NOT blocked -- COO~Z decomposing TO-1..TO-5 now. PRD-1 (assurance harness): still COO task-order decomposition. OPEN/ANDREW: does NFRA_COMPROUTE reopen? Its 'complete / DEFAULT-ROUTER LIVE' deliverable IS the defect.",
   "created": "2026-07-10",
   "pods": [
@@ -34,5 +34,6 @@
   ],
   "depends_on_note": "PRODUCTIZES NFRA_TOOLCHECK.P4 (the manual reference audit + the RAIL_SET; P4 is the ground-truth oracle COMPASSURANCE must reproduce, and stays OPEN until it does). CONSUMES NFRA_COMPILERKIT's pipeline-layer taxonomy (the matrix vertical axis) + recognizer SDK; seam is build-vs-assure. BUILDS ON NFRA_COMPRAIL (rail vocabulary). The matrix's HOME is COO's AC-0 predicate JSON (63 rows) -- no second home, per the night's two-homes-drift lesson.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

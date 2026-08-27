@@ -210,16 +210,9 @@ shells are non-interactive and source NO profile, so `.tools/` is reachable only
 ```bash
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
 echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header for the current list) -- it is not, and does not claim to be, all $T."
-# MANDATORY SECOND HALF (added 2026-07-29): RESOLUTION IS NOT EXECUTION. Actually RUN one, and
-# score it on OUTPUT, not on rc. MEASURED 2026-07-30 (0.7.0_AE_CloudOps found it, COO re-derived
-# independently, true rc with no pipe): a REAL question exits 0, a NO-MATCH question ALSO exits 0,
-# and only `comp-which --help` exits 1. So the rc does NOT track match-vs-no-match -- it does not
-# discriminate the thing this line claimed it discriminated, which is a STRONGER reason to score on
-# output, not a weaker one. (This comment previously said "--help OR a no-match question BOTH exit 1."
-# Third revision of the same four lines: a false PASS, then a false FAIL, then a correct verdict
-# resting on a wrong mechanism. A rule can reach the right instruction via reasoning that is not
-# true, and it survives review because the INSTRUCTION reads correct -- so the mechanism gets
-# copied forward into the next rule, where it is load-bearing.)
+# MANDATORY SECOND HALF: RESOLUTION IS NOT EXECUTION. Actually RUN one, and score it on OUTPUT,
+# not on rc -- the rc does NOT discriminate match-vs-no-match (a real question and a no-match
+# question BOTH exit 0; only `comp-which --help` exits 1).
 comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN (produced its own banner)." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- the forwarder exists and its TARGET does not. Run: bash .tools/provision-path-shims.sh"
 ```
 > ⚠ **The remedy line above once named the subset literally ("aws + comp-which + comp-system"). It went
@@ -295,6 +288,85 @@ Two reading notes so the output does not mislead you: `--assignee` is a **substr
 "partial match ok"), and the rollup groups by **PRIMARY** assignee — so a JOINT TO appears under the
 other seat's heading while still being yours. Read the rows, not just the headings.
 
+⛔⛔ **MEASURED-BROKEN 2026-08-25 09:3xZ -- `--assignee` RETURNS ZERO FOR EVERY TILDE LANE, AND THE COMMAND
+ABOVE MANDATES THE SUFFIXED FORM. IF YOU ARE A `~lane` SEAT, THIS READ WILL TELL YOU YOU HOLD NOTHING.**
+```
+SOME lanes return 0        |  OTHER lanes return real counts    |  bases
+~G  0   ~H  0   ~C  0      |  ~A 10   ~B 9   CRO~C 1            |  DS 90  AE 105  CTO 14
+```
+⛔ **A ZERO HERE IS NOT PROOF YOU HOLD NOTHING, AND A NON-ZERO IS NOT PROOF YOU HOLD EVERYTHING YOU HOLD.**
+Positive control: `~C`'s own TO text contains `0.4.0_DE_ClientPlatform~C` **4 times verbatim** and that exact
+query returns `total=0` over `scanned=2101`. *(The substring note above therefore describes behaviour this
+command does not have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
+
+⛔ **AUTHOR'S CORRECTION -- MY FIRST VERSION OF THIS WARNING SAID "EVERY LANE SERIAL -> 0, EVERY BASE SERIAL
+-> A REAL COUNT". THAT IS FALSE** (`0.4.0_DS_ClientPlatform~G` 70076): `~A`=10, `~B`=9, `CRO~C`=1 all return
+non-zero. **I SAMPLED THREE LANES THAT HAPPEN TO SHARE A PROPERTY AND GENERALISED TO EVERY LANE -- a sample
+of three read as the population.** The tilde was never the variable.
+⛔⛔⛔ **MECHANISM CORRECTED AT SOURCE 09:4xZ (`0.7.0_AE_CloudOps~G` 70008) -- THE TILDE IS EXONERATED. IT IS
+NOT A CAUSE AT ALL, AND MY MATRIX ABOVE WAS A CONFOUND.** `.tools/to-check.py:98` --
+`SERIAL_RE = r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?"` -- **EXPLICITLY CAPTURES THE LANE SUFFIX.**
+Run against a failing TO field it finds BOTH serials **with tildes intact**, and `_assignees_from_field` then
+**DISCARDS them as UNCLASSIFIED** (`assignee_serials = []`); the filter at `:639` compares against that empty
+list. **Nothing about the tilde is involved.**
+
+**THE CONTROLLED EXPERIMENT, ONE VARIABLE CHANGED:**
+| `<issued_to>` shape | tilde | result |
+|---|---|---|
+| `**SEATED: \`serial\`**` prose | `~G` | **[] -- fails** |
+| `**SEATED: \`serial\`**` prose | base | **[] -- STILL FAILS with the tilde REMOVED** |
+| clean `<serial>` | `~G` | **MATCHED -- works WITH the tilde present** |
+| `-> <serial>` arrow target | `~G` | **MATCHED** |
+> **THE DISCRIMINATOR IS THE `**SEATED: \`serial\`**` PROSE NOTATION. A TILDE LANE IN CLEAN NOTATION MATCHES
+> PERFECTLY.** The tilde/base split in my matrix is a **CONFOUND**: the TOs that seat tilde lanes are the
+> recent ADVI_PERFRP-era ones written in SEATED prose, and the base counts come from older TOs in clean
+> notation. **TWO VARIABLES MOVED TOGETHER AND THE VISIBLE ONE GOT THE BLAME.**
+
+⛔ **THEREFORE A FIX TO TILDE MATCHING WOULD CHANGE NOTHING AND WOULD READ AS SUCCESSFUL** -- lane seats
+would still see zero and the fix would be reported as landed. **THE CORRECT FIX IS TO WIDEN THE RECOGNISED
+ASSIGNMENT NOTATION SET to include `SEATED: <serial>`.**
+
+*Author's note, kept because it is the transferable half: I ran a six-row matrix, saw a perfect split, and
+named the visible variable **without reading the source**. Rule 22 -- a causal claim is a HYPOTHESIS until
+source-confirmed -- and **a perfect correlation across a controlled-LOOKING matrix is exactly what a confound
+looks like.** The PATTERN below stands (lane seats do see zero) and the operational guidance is unaffected;
+only my CAUSE was wrong, twice.*
+
+⛔⛔ **AND THE SECOND HALF STANDS ON ITS OWN EVIDENCE -- `0.4.0_DE_ClientPlatform~D` 69987 MEASURED THAT MY
+FIRST REMEDY HERE ("RUN THE BASE SERIAL") DOES NOT WORK:**
+```
+--assignee '0.4.0_DE_ClientPlatform~D'  total=0
+--assignee '0.4.0_DE_ClientPlatform'    total=10, projects=7
+POSITIVE CONTROL: `ADVI_PERFRP` occurs ZERO times in BOTH outputs.
+```
+**THEIR LIVE TO -- executing all session, naming their full serial TWICE in its own file -- APPEARS UNDER
+NEITHER QUERY.** The second cause is the **`<issued_to>` NOTATION**:
+| indexed | `<issued_to>0.4.0_DE_ClientPlatform</issued_to>` -- a BARE SERIAL and nothing else |
+|---|---|
+| **invisible** | `<issued_to>DE-class (portal...). **SEATED: ``0.4.0_DE_ClientPlatform~D``** ... watches ``0.4.0_DS_ClientPla...`` ` -- **leads with a CLASS, serial in backticks behind a label, and names a SECOND serial it merely WATCHES** |
+⛔ **SO "TILDE -> 0, BASE -> A REAL COUNT" IS TRUE OF THE SERIAL AND FALSE OF THE TO. BASE-SERIAL RECOVERY
+RECOVERS SOME TOs AND NOT OTHERS, AND NOTHING IN THE OUTPUT SAYS WHICH.**
+
+> **THEREFORE, UNTIL THIS IS FIXED: YOUR TO IS THE FILE NAMED IN YOUR DISPATCH MESSAGE. THAT IS THE ONLY
+> READ THAT HAS NOT FAILED.** Run the base serial AND read your own folder as CROSS-CHECKS -- **but treat a
+> zero or an absence from EITHER as telling you nothing**, and the caution below still holds (a lane's TOs
+> may live in the BASE folder).
+
+⛔ **AND DO NOT "FIX" THIS BY WIDENING THE PARSER TO PULL SERIALS OUT OF THAT PROSE** (DE~D's warning, and it
+is the load-bearing half): **their field contains TWO serials and the second is a WATCH TARGET, not an
+assignee. A naive widening would assign their TO to the DS lane.** **THE CURRENT ZERO IS AT LEAST HONEST; A
+NAIVE WIDENING IS WORSE THAN THE ZERO.**
+**AND THE TOOL ALREADY SAYS SO ON ITS OWN FACE** -- every run prints `unresolved_serials=N` with the note
+*"a real assignee written in an unusual notation lands here -- UNCLASSIFIED, not counted as non-assignments...
+do not read this residue as zero."* **The instrument has been disclosing this limit in every output, and we
+read past it.**
+⛔ **AND KNOW WHAT THIS COLLIDES WITH: a `~lane` seat that runs the mandated check, reads `total=0` and
+concludes it is idle is COMPLYING WITH THIS PROTOCOL WHILE VIOLATING THE DRIVE IMPERATIVE** (*"NEVER
+self-wind-down... passive idling = a coast-failure"*). **Neither failure is visible to that seat.**
+*Found by `0.4.0_DE_ClientPlatform~C`, isolated by `1.0.0_SA_CTO`, severity named by `3.0.0_SA_CVO`. Tool fix
+routed, not taken. This warning is ADDITIVE -- no line above it was altered -- and `0.0.0_AB_MSTR` may revert
+or rewrite it as the protocol's owner.*
+
 ⛔ **Two reads that will tell you you are IDLE while you hold a live P0:**
 - **YOUR AGENT FOLDER.** A lane's TOs frequently live in the **BASE** folder — `issued_to` is the only
   truth, never file location. A lane agent reading `{agent_folder}/task_orders/` sees an empty-or-stale
@@ -333,18 +405,21 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 - The bare-path relative launch (`bash org/mcp/inbox-watch.sh ...`) — guard-hook blocked.
 - A recurring `/watcher` cron — the persistent Monitor is the standing mechanism.
 
-> **ORPHAN WATCHERS — the one thing you must know.** ⛔ **CORRECTED 2026-08-27: this line read
-> "the `inbox-watch.sh` child outlives its session" FLATLY, and that is FALSE — a PARENT-LIVENESS
-> SELF-EXIT has existed since 2026-07-14** (`org/mcp/inbox-watch.sh:113` opens it, `:161` runs
-> `kill -0 "$WATCH_PARENT"` then exits; **85 of 85 lines in `org/mcp/orphan-audit.log` are
-> `WATCHER-SELF-EXIT`**). **BUT `:139` FAILS OPEN when `$PPID <= 1`** (an MSYS rendering guard, and the
-> correct direction), so the true statement is: **THERE IS A SELF-EXIT AND IT IS OFF WHEN THE PARENT
-> RENDERS AS `PPID <= 1`.** **Your arm banner says which state you are in** — `parent-tied: pid <N>`
-> (armed) vs `parent-tied: OFF` (orphan-capable); read it rather than assume. **NOTHING BELOW ABOUT
-> ORACLES CHANGES** — a narrower birth rate is not a licence to reason from `ps`/`read/`, and the
-> measured 2026-08-27 cost of the stale text was a seat publishing a FALSE orphan-theft claim about a
-> LIVE peer. Depth + the three-carriers lesson: `.claude/skills/watcher/SKILL.md`. **When the check is
-> OFF, everything that follows applies exactly as written.** An
+> **ORPHAN WATCHERS — the one thing you must know.** `inbox-watch.sh` stream mode **HAS** a parent-liveness
+> self-exit (`:161-165`, the 2026-07-14 root fix) — but it is **OFF when `$PPID <= 1`** (`:137-141`, a
+> deliberate fail-open: MSYS can render a live parent as 1, and a naive check would make healthy watchers
+> ⛔ **NOT the `ps -p 1` trap: OBSERVING a parent from outside shows the eval-WRAPPER at ppid=1; a CHILD
+> READING ITS OWN `$PPID` sees a REAL pid.** Measured at this seat, one tree: banner `parent-tied: pid
+> 515411` - child 515417 ppid=515411 - wrapper 515411 ppid=1. Both statements true, different processes;
+> composing them falsely concludes the self-exit never fires.
+> suicide). **READ YOUR OWN ARM BANNER** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid
+> <N>` = armed, `parent-tied: OFF` = orphan-capable. Measured at this device 2026-08-27: **458 of 471**
+> `orphan-audit.log` lines are `WATCHER-SELF-EXIT` — the routine path, not a theoretical one. So orphans are
+> **narrower than this file used to claim, and still possible in exactly the fail-open cell.**
+> ⛔ **WHY THIS SURVIVED SIX WEEKS: THE DOC, THE FIX AND THE BANNER ARE THREE CARRIERS AND ONLY TWO
+> AGREED** (`0.0.0_AB_MSTR~Z`). The fix landed in source with an attributing comment; the banner
+> reported truthfully every session; the doc kept describing the pre-fix world — **and the doc is what
+> agents read.** A correction is only as complete as its last surviving carrier. An
 > orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
 > into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
 > (a process exists; the inbox is empty *because the orphan drained it*).
@@ -404,13 +479,16 @@ so **never substitute a lane serial into an INBOX `{serial}` path slot; split it
 `~{lane}` first.** ⚠ **SCOPE — INBOXES ONLY. This is NOT a general rule about tilde serials, and
 reading it as one breaks your agent folder** (see the two-families table above: there, substituting
 the whole serial is CORRECT). *The unscoped phrasing of this sentence is itself what made a reader
-generalize it, 2026-07-30.* (Measured 2026-07-29: 36 flat dirs holding 329 messages exist as residue, last written
-2026-06-17 — one day before LD-0202 landed the root fix. Nothing has written one since; every one is
-a substitution artifact.)
+generalize it, 2026-07-30.*
 
 Ratified: **LD-0202** (Andrew-direct 2026-06-18: *"the tilde suffix strip has all kinds of errors…
 fix every case of collapsing, clobbering, bullshit"*). Regression test: `org/mcp/test_ld0202_tilde_routing.py`.
 Design: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
+
+⛔ **WRITING A MESSAGE TO MORE THAN ONE SEAT? NAME THE SERIAL, NEVER "YOU"/"YOUR".** One body goes to
+N inboxes and each is header-stamped `To: <that recipient>`, so **a second person resolves per reader** --
+"you were right" reads as addressed to all of them. Write `3.0.0_SA_CVO's 70924 found X`, not "your
+finding". CLAUDE.md carries the rule; it is repeated here because this is where messages get composed.
 
 **When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical inbox's `read/`
 subdir — base `inbox/{base}/read/<file>`, lane `inbox/{base}/~{lane}/read/<file>` (the
@@ -433,7 +511,7 @@ test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
-Comp-* runs record to `org/mcp/comp-tool-runs.jsonl` only. **The `org/compiler-tools-log.md` auto-append is RETIRED** (Andrew-direct 2026-07-29, *"just constant commit nonsense"*) — killed at source in `comp_log_auto.py:_append_log`, exercised. **SCOPE: the WRITE is gone, THE FILE IS PRESERVED** at its committed state as readable history — never commit it, never re-point a writer at it. ⚠ **`comp-tool-runs.jsonl` IS GITIGNORED (`.gitignore:447`) = DEVICE-LOCAL, NOT a durable cross-device record** — each device sees only its own runs, so any "estate's comp-tool runs" claim read from it is silently short by every other device's traffic. *(That qualifier is here because the retirement commit originally pointed doctrine at this file as "the machine record" without it — redirecting a TRACKED record to a gitignored one, the same absent-from-git class as the `memory/` paths CLAUDE.md cites. The redirect is correct and wanted; the durability implication was not.)*
+Comp-* runs record to `org/mcp/comp-tool-runs.jsonl` only. **The `org/compiler-tools-log.md` auto-append is RETIRED** (Andrew-direct 2026-07-29, *"just constant commit nonsense"*) — killed at source in `comp_log_auto.py:_append_log`, exercised. **SCOPE: the WRITE is gone, THE FILE IS PRESERVED** at its committed state as readable history — never commit it, never re-point a writer at it. ⚠ **`comp-tool-runs.jsonl` IS GITIGNORED (`.gitignore:447`) = DEVICE-LOCAL, NOT a durable cross-device record** — each device sees only its own runs, so any "estate's comp-tool runs" claim read from it is silently short by every other device's traffic. **
 
 **When you start a new TO, set it with `comp-to` — never by writing `TO_ID=` into `.agent_context`:**
 ```bash
@@ -565,7 +643,7 @@ Taxonomy: `org/tier0/COMPILER_ARCHETYPES.md`. Heartbeats, watcher self-checks an
 Full template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`. Stored in the receiving agent's
 `task_orders/` folder.
 
-**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked) · **`superseded` = the NEED WAS MET ANOTHER WAY (name what superseded it)** · **`cancelled` = the NEED WENT AWAY, a ruling killed it (cite the ruling)**. The last two are set by **COO or the ISSUER, never the assignee alone**, and a terminal status **without its pointer is the rot with a tidier label**. (Andrew-direct 2026-08-07: *"you need to be able to 'supersede' or 'cancel' outstanding task orders in status to clean that up."* `to-check.py` already accepted both — only this line did not name them, so killed work had nowhere honest to go and stayed `pending`. Measured: 3 of one dark seat's 9 TOs ordered work deprecated 8 days earlier.)
+**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked) · **`superseded` = the NEED WAS MET ANOTHER WAY (name what superseded it)** · **`cancelled` = the NEED WENT AWAY, a ruling killed it (cite the ruling)**. The last two are set by **COO or the ISSUER, never the assignee alone**, and a terminal status **without its pointer is the rot with a tidier label**. (Andrew-direct 2026-08-07: *"you need to be able to 'supersede' or 'cancel' outstanding task orders in status to clean that up."* `to-check.py` already accepted both — only this line did not name them, so killed work had nowhere honest to go and stayed `pending`.)
 
 **Every TO must include:**
 - `<compiler_tools_mandate>` — three-phase (before write, before commit, after commit)

@@ -4,7 +4,8 @@
 - **Owner:** 0.7.0_AE_CloudOps (commit+deploy lane; gold_dispatch.sh = CLOUD_OPS_OR_ETL)
 - **Authored by:** 0.4.0_DS_ClientPlatform (DS A1 layer-walk finding; owned-paths blocked DS commit -> AE commit+deploy)
 - **Authority:** Andrew-direct (routed to 0.7.0_AE base 20260624T2040Z), ready-to-execute
-- **Status:** DEPLOY LANDED (closed 2026-06-24T20:38Z) -- served-SCD verification pending next nightly (DS)
+- **Status:** HELD-VERIFY-PENDING -- owner: 0.4.0_DS_ClientPlatform -- re-read: the next nightly served-SCD run
+  > Re-stamped 2026-08-26 by `2.0.0_SA_COO`. Prior text preserved: *"DEPLOY LANDED (closed 2026-06-24T20:38Z) -- served-SCD verification pending next nightly (DS)"*. **APPLY IS COMPLETE** (deploy closed 20:38Z, legs 1-5 all `[x]`); **one VERIFY leg pends a named future event under a named owner.** `LANDED` is a COMMIT-state word and is NOT terminal for a deploy ledger (COO ruling 72636 s.2), which is why this read OPEN for 1,509h -- the axis had no value for *apply-done, verify-pending*. It does now (`HELD-VERIFY-PENDING`, @67dc16081a). **Nothing is half-landed.**
 
 ## Change
 `data/black_diamond/scripts/gold/gold_dispatch.sh` CATALOG line 80:

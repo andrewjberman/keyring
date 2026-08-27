@@ -1,0 +1,20 @@
+{
+  "project_code": "D1_NAMEDISCOVERY",
+  "macro_code": "MDPF",
+  "name": "SMA/ETF constituent-name discovery mechanism -- fuzzy at discovery, exact at the served key",
+  "description": "REGISTERED 2026-08-26 by 0.0.0_AB_MSTR on Andrew-direct 17:56Z + 17:58Z (recorded verbatim by 1.0.0_SA_CTO @195cfbdbe9, org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260826_1756Z_SMA_ETF_CONSTITUENT_NAME_DISCOVERY_MECHANISM.md). Born from the 2026-08-26 DIVZ-SMA incident: partner labeling is unreliable by measurement ('we do not know how these fuckers name these things'), so the Opal-model name scan is NOT ENOUGH. Build a comparable CONSTITUENT-LEVEL discovery mechanism over position/sleeve names: token set DIVZ / PFOE / PFDE / IDVZ / Tax / Muni with a variant grammar per token (bare, '<token> SMA', 'Opal <token>', 'Opal <token> SMA', ETF conjunction forms). TWO BINDING DISCIPLINES FROM THE RULING: (1) common-noun tokens ('Tax', 'Muni') match at word/name boundary ONLY, never substring -- the measured 422-false-violation census class; (2) DISCOVERY SURFACES, NEVER SILENTLY CLASSIFIES -- a matched-but-unregistered name is a surfaced candidate for review (the registry F5 crosswalk-review WARN shape), never an auto-classification into a served bucket; the canonical-key guard stays deliberate (the same day's opal_div_sma-not-'DIVZ' catch is the standing example). Andrew's confirmation verbatim: 'we need to be on the lookout on a fuzzy basis for these things' -- fuzzy at DISCOVERY, exact at the SERVED KEY. ARCHITECTURE (1.0.0_SA_CTO input, 2.0.0_SA_COO endorsed): D1-family placement (the taxonomy/registry owns classification), D8 as the pipeline surface, EXTENDING the existing strategy_id registry anchor (divz/pfoe/muni/tax confirmed; idvz/pfde = Q1) -- never a parallel registry.",
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "phase": "REGISTERED 2026-08-26 ~20:2xZ (Rule 27 step 1). Registration was routed to MSTR at 17:58Z (COO 72849 s.3) and executed at 20:2xZ -- the ~2.5h gap is a register-owner drop, recorded plainly. NEXT: purpose-level PRD (Rule 27 step 2; the @195cfbdbe9 record is s.1-ready per COO) -> COO atom-decomp -> TOs. 3.0.0_SA_CVO's DIVZ forward hazard (canonical_key('DIVZ SMA') RAISES) is routed into this mechanism's PRD and unparks with it. The build clock is Andrew's, not tomorrow's fire (COO 72849 s.3: no seat requested at registration). An immediate read-only SWEEP of current cottonwood constituent names for the token/variant set was dispatched separately (0.6.2_AE_PartnerETL~A) and does not ride this project.",
+  "blocking": "Not blocked. Awaiting purpose-level PRD (step 2) -- author per COO/CTO allocation; the verbatim record @195cfbdbe9 is its s.1.",
+  "completed": null,
+  "prds": [],
+  "pods": [],
+  "pipeline": null,
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-08-26",
+  "related": ["D1_CATVIEWS", "MDPF_COTREMEDIATION"],
+  "thread_counter": 0,
+  "threads": [],
+  "directive": "D1"
+}

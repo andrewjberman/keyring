@@ -1,0 +1,69 @@
+{
+  "measured_utc": "20260827T0229Z",
+  "test": "structural: a file with no pyiceberg/catalog reference cannot hold a Table, so its .append( is not a table-append",
+  "why_not_the_previous_test": "receiver-name shape FAILED its positive control -- the known writer's receivers are all list-shaped",
+  "controls": {
+    "positive_known_writer_capable": true,
+    "negative_known_consumer_capable": false
+  },
+  "denominator": 17,
+  "cannot_be_table_append": [
+    ".tools/_trino_fed.py",
+    "infra/aws/globgrph/node_health.py",
+    "infra/aws/globgrph/tool_activity_emit.py",
+    "infra/aws/globgrph/trino_catalog_parity.py",
+    "infra/system/sdk/gensdk/bringup.py",
+    "org/modules/graph/comp_coverage_check.py",
+    "org/modules/graph/comp_iam_live.py",
+    "org/modules/graph/comp_marker_read.py",
+    "org/modules/graph/cse_schema.py",
+    "org/modules/graph/debtscan/summary_corpus.py",
+    "org/modules/graph/drift_cli.py",
+    "org/modules/graph/surface_check_cli.py",
+    "org/projects/NFRA_GRAPHUNI/storage_producer.py",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py",
+    "org/tier1_exec/4.0.0_SA_CRO~B/deliverables/NFRA_EPISTEMY.C7-CLOSURE/src/influence_closure.py",
+    "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/build_cards_5.py",
+    "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/build_reconcile.py"
+  ],
+  "unresolved_needs_call_site_read": [],
+  "claim_bound": "structural capability is NOT a write. The capable set is UNRESOLVED, not confirmed.",
+  "BOUND_ON_THE_REMAINING_26": "\u26d4 26 IS STILL NOT A MATERIALIZER COUNT. Those 26 carry a STRONG write token (overwrite/upsert/add_files/to_arrow/write_parquet/put_object/load_table) somewhere in the file -- which does NOT establish that the write targets graph_nodes or graph_edges. A file can reference the tables in one place and put_object to an unrelated S3 key in another. The token and the table are not joined by this test and I am not claiming they are.",
+  "what_this_result_IS": "a floor correction, not a producer count: AT LEAST 17 of 43 fall out on a structural impossibility with both control arms firing. The honest statement is 'at most 26 of 43 could be writers of these tables', and the true number is BELOW that by an unmeasured amount.",
+  "next_bounded_task": "join the write CALL to the TABLE for the 26 -- read whether the strong token's target is graph_nodes/graph_edges. Bounded, 26 files, and it is the last step before a number is fit for a decomp face.",
+  "CITATION_FALSE_POSITIVE_found_by_CTO_X": {
+    "mechanism": "`pyiceberg` can appear in a file that NEVER USES IT -- inside a QUOTED CITATION of another file's header. My structural test reads the STRING, so a quotation makes a pure consumer test table-capable. 1.0.0_SA_CTO~X built the same test independently and killed it on this.",
+    "my_controls_cannot_see_it": "Both my arms fired correctly and neither can detect this: the positive control is a real user and the negative control has NO pyiceberg string at all. NEITHER ARM IS A FILE THAT MENTIONS PYICEBERG WITHOUT USING IT -- the control set does not span the failure surface. A control set is sound only when both halves can fail at the field under test.",
+    "measured_across_my_43": {
+      "mentions_pyiceberg_with_NO_import_and_NO_load_table_or_load_catalog": 3,
+      "files": [
+        "infra/aws/globgrph/iceberg_parity.py",
+        "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/build_cards_2.py",
+        "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/build_manifest.py"
+      ],
+      "status": "MARKER FOR READING, NOT A VERDICT -- a file can use iceberg through another API surface"
+    },
+    "the_notable_part": "2 of the 3 are D11's OWN card and manifest builders. THE WAVE'S TOOLING ENTERED THE WAVE'S CENSUS because it quotes source headers as evidence -- the census counting the instrument that produces it.",
+    "DIRECTION_OF_THE_ERROR_leaves_the_17_intact": "This inflates the CAPABLE side, so it can only make 26 too HIGH. The 17 fall-outs had NO pyiceberg string at all, quoted or otherwise, so they are untouched and the 43->26 reduction stands. It confirms the bound's direction rather than breaking it: 'at most 26, and the true number is below that by an unmeasured amount' -- now with one mechanism named."
+  },
+  "TOKEN_LIST_ITSELF_WAS_WRONG_20260827T0323Z": {
+    "found_by": "1.0.0_SA_CTO~X, auditing their own predicate against a census-named canonical materializer",
+    "finding": "TWO OF THE EIGHT 'strong write' tokens ARE READS. `t.scan(...).to_arrow()` is a READ; `load_table(` obtains a handle and is neither a read nor a write. I consumed that token list without auditing it -- the SECOND time tonight I took a peer's predicate on trust (`append` was the first).",
+    "cost_to_MY_floor": {
+      "remaining_was": 26,
+      "kept_only_by_read_tokens": 4,
+      "corrected": 22,
+      "the_four": [
+        "infra/aws/globgrph/cse_emit_graphhead.py",
+        "org/modules/graph/contract_engine.py",
+        "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/test_producer_reader_executed.py"
+      ]
+    },
+    "\u26d4_CORRECTS_MY_OWN_CHARACTERISATION_OF_THE_UNTRACKED_ENGINE": "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py matches on READ TOKENS ONLY -- no overwrite, upsert, add_files, write_parquet or put_object anywhere. I described it as a candidate MATERIALIZER nobody could card. THE UNTRACKED FACT STANDS AND THE WRITER FRAMING DOES NOT: it reads the graph tables. It is still a 21KB untracked executable naming itself value-layer never-widen machinery, which is why it was worth surfacing -- but not as a writer.",
+    "the_other_untracked_one": "org/projects/NFRA_GRAPHUNI/storage_producer.py -- \u26d4 THE VERB IS ONLY MEANINGFUL WITH AN ARTIFACT COLUMN. AT THE GRAPH-TABLE GRAIN: NOT a writer -- zero references that write graph_nodes/graph_edges, every .append( receiver a plain list, correctly fell out in the 17. AT ITS OWN ARTIFACT GRAIN: it IS a writer -- json.dump at :185-186 behind --build --write, targeting producers/graphuni/storage_s3keys.json, the output it exists to produce. Both statements true, different objects. Measured at source by 3.0.0_SA_CVO~X after 1.0.0_SA_CTO~X and I diverged on the bare verb.",
+    "the_repeat": "`append` and now `to_arrow`/`load_table`: twice I built on a token list I had not read against the question. A predicate is an instrument and an unaudited instrument is an unaudited claim.",
+    "FILE_ARTIFACT_GRAIN": "1.0.0_SA_CTO~X's own rule firing on the population record: 'a card that says X is a materializer without naming WHICH artifact is unfalsifiable.' FOURTH arrival of the (FILE, ARTIFACT) grain tonight -- _canonical.py, the L0 free-string materializer field, kuzu_nessie_load, and now this pair. \u26d4 ANY ROW READING 'storage_producer.py: writer' OR 'not a writer' WITHOUT AN ARTIFACT COLUMN HOLDS THE UNFALSIFIABLE FORM -- including the earlier version of this entry, which stated a TOKEN fact that reads as a general verdict.",
+    "tracked_state_unaffected": "UNTRACKED either way; the precondition never depended on the verb."
+  }
+}

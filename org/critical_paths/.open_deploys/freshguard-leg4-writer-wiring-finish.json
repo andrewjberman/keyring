@@ -55,12 +55,17 @@
     "20260710T042550Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200",
     "20260710T050407Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200",
     "20260710T050904Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200",
-    "20260820T143010Z HELD-SOVEREIGN-GATED gate=external/FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 6"
+    "20260820T143010Z HELD-SOVEREIGN-GATED gate=external/FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 6",
+    "20260826T005057Z HELD-SOVEREIGN-GATED gate=external/FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 6"
   ],
   "last_red_at": null,
   "gate": {
     "type": "external",
-    "ref": "FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 63015): L4's recorded FAIL IS the designed verdict; close path = CAS merge fix d27000a68 (dormant, GLOBGRPH_MARKER_CAS=off) behind CTO GO-conditions incl. the 8c0b67afd runtime probe (UNRUN) and a MARKER_CAS_* metric-filter alarm -- alarm-building sits under the Andrew 2026-07-28 moratorium, so this gate needs Andrew's word, then a fresh T_d' cycle. Re-dated deliberately; staleness on this entry is NOT drift."
+    "ref": "FAIL-BY-DESIGN standing state (declared 2026-08-20, 0.7.0_AE_CloudOps per MSTR 63015): L4's recorded FAIL IS the designed verdict; close path = CAS merge fix d27000a68 (dormant, GLOBGRPH_MARKER_CAS=off) behind CTO GO-conditions incl. the 8c0b67afd runtime probe (UNRUN) and a MARKER_CAS_* metric-filter alarm -- alarm-building sits under the Andrew 2026-07-28 moratorium, so this gate needs Andrew's word, then a fresh T_d' cycle. Re-dated deliberately; staleness on this entry is NOT drift.",
+    "reread": {
+      "kind": "event",
+      "value": "Andrew's word on the MARKER_CAS_* metric-filter alarm (blocked by the 2026-07-28 alarm moratorium), then a fresh T_d' cycle -- quoted from this hold's own gate.ref"
+    }
   },
   "held_at": "2026-07-09T13:11:12.866381+00:00",
   "last_held_nudge_at": "2026-08-25T03:46:32.110457+00:00"

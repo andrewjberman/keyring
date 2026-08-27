@@ -15,10 +15,10 @@
       "date": "2026-06-15"
     }
   ],
-  "status": "suspended-indefinite",
+  "status": "closed",
   "suspended": "2026-07-20",
   "suspend_directive": "Andrew-direct, sovereign, 2026-07-20 ~14:35 ET (MSTR session chat), VERBATIM: \"Pause GCONTR we are not addressing htat, it should be rendered as indefinite/suspended i do not want to fucking hear about it again\". Scope recorded as-stated (SURFACE-not-adjudicate). GCONTR is SUSPENDED INDEFINITE: no work, no closeout, no re-surfacing to Andrew. Supersedes the same-day MSTR routing ruling (GCONTR-stays-MAIN, MDPF-gated) -- that ruling is MOOT.",
-  "phase": "SUSPENDED INDEFINITE (Andrew-direct 2026-07-20 ~14:35 ET) -- see suspend_directive. All GCONTR work STOPS; the two signed SEV1 row-loads + all-5-live + closeout are CANCELLED-as-suspended (not pending, not MDPF-gated anymore). Do NOT drive, do NOT surface. --- PRE-SUSPENSION HISTORY (for record only): Phase 1 PRD authored + SCHEMA RATIFIED (§3) + §9 POLICY RESOLVED (Andrew-direct 2026-06-16, PRD v0.2); value-check PASSED 2026-07-17 (CVO independent re-review CONCUR all 4 limbs @38bb33d79); 2 SEV1 rows Andrew-signed @f5cee1a8a; 3/5 rows loaded; the load was externally held to MDPF-done before this suspension.",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: SUSPENDED INDEFINITE (Andrew-direct 2026-07-20 ~14:35 ET) -- see suspend_directive. All GCONTR work STOPS; the two signed SEV1 row-loads + all-5-live + closeout are CANCELLED-as-suspended (not pending, not MDPF-gated anymore). Do NOT drive, do NOT surface. --- PRE-SUSPENSION HISTORY (for record only): Phase 1 PRD authored + SCHEMA RATIFIED (§3) + §9 POLICY RESOLVED (Andrew-direct 2026-06-16, PRD v0.2); value-check PASSED 2026-07-17 (CVO independent re-review CONCUR all 4 limbs @38bb33d79); 2 SEV1 rows Andrew-signed @f5cee1a8a; 3/5 rows loaded; the load was externally held to MDPF-done before this suspension.",
   "blocking": "SUSPENDED per Andrew-direct 2026-07-20 -- INDEFINITE. Not blocked-by-dependency; deliberately stood down by the sovereign. Do not work it, do not raise it. Any GCONTR item in any agent's queue (COO closeout TO, CVO value-check TO-3) is DROPPED-as-suspended.",
   "created": "2026-06-15",
   "pods": [
@@ -31,5 +31,6 @@
   "thread_counter": 0,
   "threads": [],
   "last_drive_touch": "2026-07-17T23:30Z",
-  "gcontr_progress": "SUSPENDED_INDEFINITE_andrew_direct_20260720"
+  "gcontr_progress": "SUSPENDED_INDEFINITE_andrew_direct_20260720",
+  "closed": "2026-08-25"
 }

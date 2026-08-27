@@ -2,7 +2,7 @@
   "project_code": "OPAL_TAXONOMY",
   "macro_code": "OPAL",
   "name": "OPAL Taxonomy - universal naming/structural consistency across the consolidation estate, cloud-first (opal-data-assets) then local (data/assets/) then runners; ABSORBS OPAL_STNDRD",
-  "status": "active",
+  "status": "closed",
   "current_phase": "REGISTERED 2026-07-17 (Andrew-direct, CTO terminal ~18:5xZ). Founding artifact ALREADY IN HAND: the taxonomy standard @cc1cd96dd + the P3-CENSUS v0.1 @68d0d74d4 (14 named deviation classes DC-1..DC-14, both Phase-2 controls PASS). Opening queue = CTO dispositions on the 14 DCs (migrate-now/next-touch/carve-out) -> DC-* lints on existing hooks. Awaiting driver spawn.",
   "owner": "1.0.0_SA_CTO",
   "driver": "0.8.0_AE_CloudComp~B (Andrew-spawned 2026-07-17 ~18:5xZ as the OPAL_TAXONOMY driver; sibling ~C holds the live census it feeds from)",
@@ -14,5 +14,7 @@
     "folded_project": "org/projects/OPAL_STNDRD.json (superseded-into)",
     "folded_brief": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md @20b52be25 (the 6-axis standards library)",
     "master": "org/projects/OPAL_CONSOLIDATION.json"
-  }
+  },
+  "closed": "2026-08-25",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: REGISTERED 2026-07-17 (Andrew-direct, CTO terminal ~18:5xZ). Founding artifact ALREADY IN HAND: the taxonomy standard @cc1cd96dd + the P3-CENSUS v0.1 @68d0d74d4 (14 named deviation classes DC-1..DC-14, both Phase-2 controls PASS). Opening queue = CTO dispositions on the 14 DCs (migrate-now/next-touch/carve-out) -> DC-* lints on existing hooks. Awaiting driver spawn."
 }

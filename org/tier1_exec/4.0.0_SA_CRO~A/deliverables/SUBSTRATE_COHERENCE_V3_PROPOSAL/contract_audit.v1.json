@@ -1,0 +1,388 @@
+{
+  "document_kind": "substrate_contract_rule24_audit",
+  "schema_version": "1.0.0-proposed",
+  "governing_schema": "schemas/contract_audit.v1.schema.json",
+  "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/contract_audit.v1.json",
+  "document_lifecycle": {
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "historical_snapshot",
+    "authority_role": "supporting_evidence"
+  },
+  "relationships": {
+    "source": [
+      "org/standards/SUBSTRATE_CARD.schema.json@944ca89492",
+      "org/standards/SUBSTRATE_CARD.v2.schema.json@e789861948",
+      "docs/doctrine/CLAUDE_ANNEX.md@556f45f0cc",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/MATERIALIZER_CENSUS_20260827_REPO_PLANE.md@20365d2d2cf2",
+      "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json@20365d2d2cf2"
+    ],
+    "projection": [],
+    "evidence": [
+      "44-card schema-validation run on 2026-08-27",
+      "v2 recursive property and enum enumeration on 2026-08-27",
+      "CTO~X messages 74720, 74736, and 74748"
+    ]
+  },
+  "scope": {
+    "directive": "D11",
+    "population_commit": "20365d2d2cf2",
+    "card_count": 44,
+    "v1_count": 8,
+    "v2_count": 36,
+    "operative_change": false
+  },
+  "evidence_pins": [
+    {
+      "claim": "Rule 26 is execution locality, not semantic coherence",
+      "path": "docs/doctrine/CLAUDE_ANNEX.md",
+      "vintage": "556f45f0cc",
+      "locator": "line 465"
+    },
+    {
+      "claim": "v1 card contract",
+      "path": "org/standards/SUBSTRATE_CARD.schema.json",
+      "vintage": "944ca89492",
+      "locator": "whole document"
+    },
+    {
+      "claim": "v2 card contract under audit",
+      "path": "org/standards/SUBSTRATE_CARD.v2.schema.json",
+      "vintage": "e789861948",
+      "locator": "whole document"
+    },
+    {
+      "claim": "frozen live-card population and materializer census",
+      "path": "CLOUD",
+      "vintage": "20365d2d2cf2",
+      "locator": "44 cards in five declared directories; census section 6"
+    },
+    {
+      "claim": "one file has three artifact relations with divergent lifecycle axes",
+      "path": "infra/aws/globgrph/derive_runner.py",
+      "vintage": "20365d2d2cf2",
+      "locator": "lines 139, 197-203, 345, 376, and 1104-1222"
+    },
+    {
+      "claim": "one file exercises open runtime target, parameter-bound writer, and builder-plus-writer",
+      "path": "infra/aws/globgrph/resource_summaries_store.py",
+      "vintage": "20365d2d2cf2",
+      "locator": "lines 168, 202, 222, 228, 349, and 372"
+    }
+  ],
+  "baseline_validation": {
+    "schema_meta_valid": 2,
+    "cards_valid": 44,
+    "cards_total": 44,
+    "property_occurrences": 131,
+    "enum_occurrences": 13
+  },
+  "naming_correction": {
+    "semantic_invariant": "Rule 24",
+    "execution_locality": "Rule 26",
+    "prohibited_name": "Rule-26 coherence process"
+  },
+  "enum_occurrence_audit": [
+    {
+      "occurrence_id": "ENUM-01",
+      "schema_path": "/properties/subject/properties/kind",
+      "values": ["rung", "rail", "tool", "store", "projection", "script", "artifact", "corpus", "other"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "overlap", "not_exhaustive"],
+      "resolution": "Replace the mixed role, implementation-form, and artifact-role enum with registry entity_class plus schema-local role axes; remove other."
+    },
+    {
+      "occurrence_id": "ENUM-02",
+      "schema_path": "/properties/process/properties/methodology/properties/determinism",
+      "values": ["deterministic", "inferential", "hybrid", "unknown"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "overlap", "epistemic_value_mixed_with_domain"],
+      "resolution": "Split inference_usage from reproducibility_result; represent unknown through claim_status rather than a value."
+    },
+    {
+      "occurrence_id": "ENUM-03",
+      "schema_path": "/properties/process/properties/methodology/properties/materializer_standing",
+      "values": ["canonical", "historical_in_use", "superseded", "unknown", "not_applicable"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "overlap", "lifecycle_incoherent", "epistemic_value_mixed_with_domain"],
+      "resolution": "Move to relation grain and split authority_status, runtime_use_status, and succession_status; omit non-applicable relations."
+    },
+    {
+      "occurrence_id": "ENUM-04",
+      "schema_path": "/properties/process/properties/methodology/allOf/0/if/properties/determinism",
+      "values": ["inferential", "hybrid"],
+      "rule24_verdict": "constraint_only",
+      "violations": ["duplicate_semantics"],
+      "resolution": "Remove with the determinism enum; inference detail is controlled by inference_usage in the owning relation schema."
+    },
+    {
+      "occurrence_id": "ENUM-05",
+      "schema_path": "/properties/process/properties/cadence/properties/live_matches_declared",
+      "values": ["yes", "no", "unmeasured", "not_applicable"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "epistemic_value_mixed_with_domain"],
+      "resolution": "Store desired cadence, applied trigger, and exercised cadence independently; compile matches or differs as a generated comparison."
+    },
+    {
+      "occurrence_id": "ENUM-06",
+      "schema_path": "/properties/artifact/properties/persistence/properties/authority_role",
+      "values": ["source", "projection", "evidence", "reference", "none"],
+      "rule24_verdict": "fail",
+      "violations": ["overlap", "not_exhaustive"],
+      "resolution": "Put authority_role on each declared relationship, not on the artifact globally; omit a relationship instead of using none."
+    },
+    {
+      "occurrence_id": "ENUM-07",
+      "schema_path": "/properties/artifact/properties/persistence/properties/mutation_policy",
+      "values": ["editable", "append_only", "replaceable", "immutable", "not_applicable"],
+      "rule24_verdict": "fail",
+      "violations": ["overlap", "epistemic_value_mixed_with_domain"],
+      "resolution": "Use in_place_mutable, append_only, whole_document_replace, or immutable on persisted artifacts; omit non-applicable artifacts."
+    },
+    {
+      "occurrence_id": "ENUM-08",
+      "schema_path": "/properties/trust/properties/key/properties/key_is_stable",
+      "values": ["stable", "unstable", "unknown"],
+      "rule24_verdict": "fail",
+      "violations": ["epistemic_value_mixed_with_domain"],
+      "resolution": "Keep stable versus unstable as the value domain and carry unknown in claim_status."
+    },
+    {
+      "occurrence_id": "ENUM-09",
+      "schema_path": "/properties/trust/properties/failure_mode/properties/distinguishable_from_true_negative",
+      "values": ["yes", "no", "unmeasured"],
+      "rule24_verdict": "fail",
+      "violations": ["epistemic_value_mixed_with_domain"],
+      "resolution": "Use a boolean observed value with independent claim_status and basis_mode."
+    },
+    {
+      "occurrence_id": "ENUM-10",
+      "schema_path": "/properties/verdict/properties/standing",
+      "values": ["SOUND", "QUALIFIED", "UNSOUND", "INCOMPLETE"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "overlap", "lifecycle_incoherent"],
+      "resolution": "Split assessment_completeness from fitness_status; conditions are records, not a QUALIFIED state."
+    },
+    {
+      "occurrence_id": "ENUM-11",
+      "schema_path": "/properties/forward_disposition/properties/standing",
+      "values": ["keep", "replace", "deprecate", "undecided"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "overlap", "lifecycle_incoherent"],
+      "resolution": "Move disposition to its own manifest and split decision_status, retirement_action, and successor_status."
+    },
+    {
+      "occurrence_id": "ENUM-12",
+      "schema_path": "/$defs/basis",
+      "values": ["measured", "inferred", "held", "absent"],
+      "rule24_verdict": "fail",
+      "violations": ["multiple_dimensions", "epistemic_value_mixed_with_domain", "synonym_overlap"],
+      "resolution": "Use basis_mode observed, derived, or authority_declaration; use claim_status unknown instead of absent."
+    },
+    {
+      "occurrence_id": "ENUM-13",
+      "schema_path": "/$defs/basis_by_field/additionalProperties",
+      "values": ["measured", "inferred", "held", "absent"],
+      "rule24_verdict": "fail",
+      "violations": ["duplicate_semantics", "epistemic_value_mixed_with_domain"],
+      "resolution": "Remove row floors and free-key provenance maps; every atomic claim carries its own basis and evidence references."
+    }
+  ],
+  "concept_findings": [
+    {
+      "finding_id": "CONCEPT-01",
+      "concept": "card root grain",
+      "verdict": "split",
+      "evidence": ["One card contains process, artifact, trust, verdict, and disposition authorities."],
+      "resolution": "Separate registry membership, one relation card, disposition, run manifest, and generated receipt."
+    },
+    {
+      "finding_id": "CONCEPT-02",
+      "concept": "subject identity",
+      "verdict": "remove",
+      "evidence": ["subject.id and several lineage fields remain free text; joinable_ref separates note but does not mint identity."],
+      "resolution": "Require registry_ref with minted id and registry vintage."
+    },
+    {
+      "finding_id": "CONCEPT-03",
+      "concept": "materializer",
+      "verdict": "split",
+      "evidence": ["derive_runner.py has graph_nodes, graph_edges, and graph_contracts relations with divergent mutation, authorship, and authority."],
+      "resolution": "One relation card per actor_id plus artifact_id pair; operations may be plural within that pair."
+    },
+    {
+      "finding_id": "CONCEPT-04",
+      "concept": "five writer shapes",
+      "verdict": "split",
+      "evidence": ["resource_summaries_store.py simultaneously exhibits runtime-input, parameter-bound, and builder-plus-writer shapes."],
+      "resolution": "Do not create a writer_shape enum; record target domain, binding origin, binding trace, payload assembly, and persistence effect independently."
+    },
+    {
+      "finding_id": "CONCEPT-05",
+      "concept": "desired applied exercised state",
+      "verdict": "split",
+      "evidence": ["live_matches_declared compares states and the current contract lacks an independent exercised axis."],
+      "resolution": "Author three atomic claims and derive coherence in the compiler."
+    },
+    {
+      "finding_id": "CONCEPT-06",
+      "concept": "coverage denominator",
+      "verdict": "split",
+      "evidence": ["denominator is a string and the census measured discoverability while reporting coverage."],
+      "resolution": "Separate discovery_floor from population_denominator and measured_member_count; forbid coverage without a declared population."
+    },
+    {
+      "finding_id": "CONCEPT-07",
+      "concept": "evidence",
+      "verdict": "split",
+      "evidence": ["Evidence is a prose string and can combine locator, command, output, vintage, and absence."],
+      "resolution": "Use evidence_ref records with locator, vintage, digest, instrument, control result, and claim id."
+    },
+    {
+      "finding_id": "CONCEPT-08",
+      "concept": "forward disposition inside card",
+      "verdict": "remove",
+      "evidence": ["The carder describes the subject while a different authority decides disposition."],
+      "resolution": "Use a separate substrate_disposition_manifest referencing the relation or artifact id."
+    },
+    {
+      "finding_id": "CONCEPT-09",
+      "concept": "document lifecycle and provenance envelope",
+      "verdict": "split",
+      "evidence": ["v2 lacks document_kind, governing_schema, exact_home, authorship_mode, document mutation policy, temporal_claim, and explicit source/projection/evidence relations."],
+      "resolution": "Require the independent lifecycle axes and relationships on every authored or generated document."
+    },
+    {
+      "finding_id": "CONCEPT-10",
+      "concept": "Rule-26 coherence process",
+      "verdict": "rename",
+      "evidence": ["Authoritative Rule 26 is apply locality; Rule 24 defines semantic coherence."],
+      "resolution": "Name the method substrate_coherence; cite Rule 24 as semantic invariant and Rule 26 as execution-locality constraint."
+    }
+  ],
+  "normalized_axes": [
+    {"axis": "authorship_mode", "dimension": "origin of document or artifact content", "values": ["human_authored", "machine_generated", "mixed_origin"], "unknown_representation": "claim_status unknown", "home": "global_definition_candidate"},
+    {"axis": "mutation_policy", "dimension": "permitted mutation form", "values": ["in_place_mutable", "append_only", "whole_document_replace", "immutable"], "unknown_representation": "claim_status unknown", "home": "global_definition_candidate"},
+    {"axis": "temporal_claim", "dimension": "time scope asserted by a document or claim", "values": ["current_at_observation", "historical_snapshot", "timeless_definition"], "unknown_representation": "claim_status unknown", "home": "global_definition_candidate"},
+    {"axis": "authority_role", "dimension": "authority of one declared document relationship", "values": ["authoritative_source", "derived_projection", "supporting_evidence", "non_authoritative_reference"], "unknown_representation": "omit an unestablished relationship", "home": "global_definition_candidate"},
+    {"axis": "claim_status", "dimension": "whether a claim value is established", "values": ["known", "unknown"], "unknown_representation": "the unknown value itself", "home": "global_definition_candidate"},
+    {"axis": "basis_mode", "dimension": "how a known claim was established", "values": ["observed", "derived", "authority_declaration"], "unknown_representation": "basis omitted when claim_status is unknown", "home": "global_definition_candidate"},
+    {"axis": "desired_state", "dimension": "declared intent for one relation", "values": ["required", "prohibited", "unspecified"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "applied_state", "dimension": "configuration present on the measured plane", "values": ["configured", "not_configured"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "exercise_state", "dimension": "execution observed in a declared window", "values": ["observed", "not_observed"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "authority_status", "dimension": "whether the relation is the designated authority", "values": ["canonical", "noncanonical", "unassigned"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "runtime_use_status", "dimension": "whether the relation is used on the measured runtime plane", "values": ["active", "inactive"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "succession_status", "dimension": "relationship to a successor", "values": ["no_successor", "successor_designated", "successor_in_effect"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "target_domain", "dimension": "whether possible artifact targets are bounded before execution", "values": ["closed_enumerated", "open_runtime"], "unknown_representation": "claim_status unknown", "home": "relation_schema_local"},
+    {"axis": "assessment_completeness", "dimension": "completion of the declared assessment frontier", "values": ["complete", "partial"], "unknown_representation": "run remains incomplete with named residue", "home": "run_schema_local"},
+    {"axis": "fitness_status", "dimension": "fitness within the declared purpose and limits", "values": ["fit", "unfit", "undetermined"], "unknown_representation": "undetermined with named missing claims", "home": "run_schema_local"},
+    {"axis": "decision_status", "dimension": "lifecycle of a disposition decision", "values": ["proposed", "approved", "executed", "withdrawn"], "unknown_representation": "no disposition document", "home": "disposition_schema_local"},
+    {"axis": "retirement_action", "dimension": "retirement action selected by authority", "values": ["retain", "deprecate", "retire"], "unknown_representation": "decision_status proposed without an action", "home": "disposition_schema_local"}
+  ],
+  "contract_boundary": [
+    {
+      "document_kind": "substrate_entity_registry",
+      "purpose": "Admit stable actor and artifact identifiers and declare registry boundaries.",
+      "authority": "Membership and identity only.",
+      "prohibited_authority": ["relation behavior", "qualification verdict", "disposition", "operational dependencies"],
+      "authorship_mode": "human_authored"
+    },
+    {
+      "document_kind": "substrate_relation_card",
+      "purpose": "Govern one actor-id plus artifact-id materialization relation and its atomic claims.",
+      "authority": "Observed relation facts and evidence at one declared vintage.",
+      "prohibited_authority": ["registry admission", "future disposition", "generated receipt status"],
+      "authorship_mode": "human_authored"
+    },
+    {
+      "document_kind": "substrate_disposition_manifest",
+      "purpose": "Record an authority-bound decision about retain, deprecate, retire, or successor action.",
+      "authority": "One adjudicated disposition for referenced registered things.",
+      "prohibited_authority": ["measurement claims", "registry membership", "run evidence"],
+      "authorship_mode": "human_authored"
+    },
+    {
+      "document_kind": "substrate_coherence_run_manifest",
+      "purpose": "Declare one bounded qualification run, population, planes, instruments, controls, owning device, and output homes.",
+      "authority": "Run intent and mechanics only.",
+      "prohibited_authority": ["observed result", "registry membership", "disposition"],
+      "authorship_mode": "human_authored"
+    },
+    {
+      "document_kind": "substrate_coherence_receipt",
+      "purpose": "Deterministically report compiled results, rejected states, input digests, relation coverage, and residue.",
+      "authority": "Generated evidence only.",
+      "prohibited_authority": ["authored source claims", "registry admission", "disposition"],
+      "authorship_mode": "machine_generated"
+    }
+  ],
+  "definition_placement": {
+    "global_candidates": [
+      "authorship_mode",
+      "authority_role",
+      "basis_mode",
+      "claim_status",
+      "document_kind",
+      "evidence_ref",
+      "governing_schema",
+      "mutation_policy",
+      "registry_ref",
+      "temporal_claim"
+    ],
+    "schema_local_concepts": [
+      "applied_state",
+      "assessment_completeness",
+      "authority_status",
+      "binding_origin",
+      "binding_trace_step",
+      "desired_state",
+      "discovery_floor",
+      "effect_kind",
+      "exercise_state",
+      "fitness_status",
+      "retirement_action",
+      "runtime_use_status",
+      "succession_status",
+      "target_domain"
+    ]
+  },
+  "compiled_process": [
+    {"ordinal": 1, "stage": "pin_authority_and_locality", "input": ["D11 authority", "Rule 24", "Rule 26", "owning device"], "output": ["pinned run authority", "execution-locality declaration"], "rejects": ["unpinned rule citation", "ferried apply"]},
+    {"ordinal": 2, "stage": "declare_population", "input": ["candidate roots", "planes", "inclusion predicate", "exclusions"], "output": ["population denominator", "self-census exclusion"], "rejects": ["discoverability count presented as coverage", "generated outputs inside candidate population"]},
+    {"ordinal": 3, "stage": "resolve_identities", "input": ["registry vintage", "actor refs", "artifact refs"], "output": ["resolved actor-artifact pairs"], "rejects": ["free-text identity", "unregistered endpoint", "derived id that repoints"]},
+    {"ordinal": 4, "stage": "decompose_relations", "input": ["actor-artifact pairs", "operation evidence"], "output": ["one relation card per pair", "operation records"], "rejects": ["file-grain materializer", "multiple artifacts in one relation identity"]},
+    {"ordinal": 5, "stage": "exercise_instruments", "input": ["instrument matrix", "positive controls", "negative controls", "declared blind spots"], "output": ["controlled observations", "discovery floor"], "rejects": ["token hit treated as operation", "clean zero without firing control", "instrument substrate used as population truth"]},
+    {"ordinal": 6, "stage": "reconcile_planes", "input": ["worktree", "committed repository", "deployed graph", "runtime", "persistent stores"], "output": ["plane-specific claims", "cross-plane differences"], "rejects": ["untracked-present conflated with committed", "committed conflated with deployed", "configured conflated with exercised"]},
+    {"ordinal": 7, "stage": "compile_rule24", "input": ["atomic claims", "normalized axes", "relation identities"], "output": ["coherence verdict", "named residue"], "rejects": ["overlapping enum", "unknown mixed into value domain", "missing evidence for known claim", "row-level basis floor"]},
+    {"ordinal": 8, "stage": "generate_receipt", "input": ["validated run manifest", "validated relation cards", "input digests"], "output": ["deterministic generated receipt"], "rejects": ["generated output presented as authored source", "nondeterministic ordering", "stale input digest"]}
+  ],
+  "required_negative_tests": [
+    {"test_id": "NEG-01", "mutant": "one relation card names both graph_nodes and graph_edges", "required_result": "reject"},
+    {"test_id": "NEG-02", "mutant": "one file-level materializer_standing is asserted for derive_runner.py", "required_result": "reject"},
+    {"test_id": "NEG-03", "mutant": "graph_contracts inherits graph_nodes mutation policy", "required_result": "reject"},
+    {"test_id": "NEG-04", "mutant": "desired state is copied into applied state without independent evidence", "required_result": "reject"},
+    {"test_id": "NEG-05", "mutant": "configured state is copied into exercised state without an observation window", "required_result": "reject"},
+    {"test_id": "NEG-06", "mutant": "unknown appears inside a factual value enum", "required_result": "reject"},
+    {"test_id": "NEG-07", "mutant": "runtime-input target is declared closed_enumerated", "required_result": "reject"},
+    {"test_id": "NEG-08", "mutant": "allow-list target has no registry or choices evidence", "required_result": "reject"},
+    {"test_id": "NEG-09", "mutant": "function parameter is treated as binding origin rather than a binding-trace step", "required_result": "reject"},
+    {"test_id": "NEG-10", "mutant": "citation-only token match is accepted as a write operation", "required_result": "reject"},
+    {"test_id": "NEG-11", "mutant": "discovery floor is published as a population denominator", "required_result": "reject"},
+    {"test_id": "NEG-12", "mutant": "generated census outputs are included in their own candidate population", "required_result": "reject"},
+    {"test_id": "NEG-13", "mutant": "relation endpoint is a free-text name rather than a registry ref", "required_result": "reject"},
+    {"test_id": "NEG-14", "mutant": "carder writes a forward disposition into the relation card", "required_result": "reject"},
+    {"test_id": "NEG-15", "mutant": "generated receipt declares human_authored", "required_result": "reject"},
+    {"test_id": "NEG-16", "mutant": "execution device differs from owning device for an apply", "required_result": "reject"}
+  ],
+  "shared_root_changes": {
+    "made": false,
+    "proposed": [
+      "Replace the operative card only after a v3 schema, semantic compiler, migration projection, and negative suite pass against all 44 frozen cards.",
+      "Add only the ten globally reusable definition candidates after root-owner coordination.",
+      "Keep all relation-effect, binding, state, standing, fitness, and disposition vocabulary in the owning schemas."
+    ],
+    "held_decisions": [
+      "Whether the 39-part L0 manifest adopts the substrate_entity_registry interface."
+    ]
+  }
+}

@@ -10,11 +10,16 @@
       "date": "2026-08-07"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0: PRD v1.0 complete and AUTHORIZED (Andrew-direct 2026-08-07, VERBATIM: 'Yeah i want the python data tracing'; consumer + use case supplied by him -- 'The consumer would be the comp-tools, it will be comp-pipescript' and 'when we do migrations it will be essential to be able to track field dependencies in pipelines'). Awaiting COO decomposition into task orders. SEQUENCING IS LOAD-BEARING AND NOT THE OBVIOUS ONE: TO-0 is establishing the COLUMN DENOMINATOR (hand-classified systematic sample), NOT the extractor -- Q2 measured that no column denominator exists, so no acceptance bar can be stated until one does, and building first ships a mechanism nobody can score.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 0: PRD v1.0 complete and AUTHORIZED (Andrew-direct 2026-08-07, VERBATIM: 'Yeah i want the python data tracing'; consumer + use case supplied by him -- 'The consumer would be the comp-tools, it will be comp-pipescript' and 'when we do migrations it will be essential to be able to track field dependencies in pipelines'). Awaiting COO decomposition into task orders. SEQUENCING IS LOAD-BEARING AND NOT THE OBVIOUS ONE: TO-0 is establishing the COLUMN DENOMINATOR (hand-classified systematic sample), NOT the extractor -- Q2 measured that no column denominator exists, so no acceptance bar can be stated until one does, and building first ships a mechanism nobody can score.",
   "blocking": "COO task order issuance (PRD ready to decompose). No engineering blocker.",
   "created": "2026-08-07",
-  "pods": ["1.0", "4.0", "3.0", "0.8"],
+  "pods": [
+    "1.0",
+    "4.0",
+    "3.0",
+    "0.8"
+  ],
   "pipeline": "comp-tools / globgrph",
   "thread_counter": 0,
   "threads": [],
@@ -32,5 +37,6 @@
     "COVERAGE UNIVERSE of the consumer tools: _PIPELINE_CHOICES (pipeline_cli.py:46) is a hand-written 15-tuple. 194 gold scripts on disk; assets (7) and etfs (2) have NO ROUTE. Containment is real -- argparse rejects an off-universe --pipeline BEFORE the dispatcher, so it fails LOUD (the 2026-07-30 --pipeline-required ruling working).",
     "SOURCE-READ, NOT EXERCISED, flagged not claimed: build_firm_gold_dag ends 'return build_pipeline_dag(workspace_root)  # bd (default)' and FIRM_ALIAS contains only 49financial/bd/inflection/inf/cottonwood/cot. mdpf is a valid --firm choice but absent from FIRM_ALIAS, so FIRM_ALIAS.get('mdpf','bd') READS AS 'bd' -- routing mdpf to the Black Diamond tree. The function's own docstring says this exact firm-blind mis-attribution is what it was written to fix. NEEDS AN EXERCISE before anyone treats it as a defect."
   ],
-  "bounds": "Every figure in the PRD carries its scope. Trees swept: data/inf/scripts/gold + data/assets/scripts/gold (re-derived at the CTO~D seat); CRO additionally swept etfs + find. bd/cot/mdpf and the assets monolith UNSWEPT. Graph figures are a CENSUS of FLOWS_TO + PROP_PASSES; RENDERS (2447), READS_FIELD (2110), HAS_FIELD (4269) UNSWEPT -- so 95.2% is a FLOWS_TO figure and 41% is FLOWS_TO+PROP_PASSES, and NEITHER is an estate figure. NOTHING is exercised at either recognizer-SDK address; resolved-tier passability is OPEN. CRO's probes are scratchpad-only, unreviewed and uncommitted; the inf+assets subscript figures ARE re-derived independently, the etfs+find figures are NOT."
+  "bounds": "Every figure in the PRD carries its scope. Trees swept: data/inf/scripts/gold + data/assets/scripts/gold (re-derived at the CTO~D seat); CRO additionally swept etfs + find. bd/cot/mdpf and the assets monolith UNSWEPT. Graph figures are a CENSUS of FLOWS_TO + PROP_PASSES; RENDERS (2447), READS_FIELD (2110), HAS_FIELD (4269) UNSWEPT -- so 95.2% is a FLOWS_TO figure and 41% is FLOWS_TO+PROP_PASSES, and NEITHER is an estate figure. NOTHING is exercised at either recognizer-SDK address; resolved-tier passability is OPEN. CRO's probes are scratchpad-only, unreviewed and uncommitted; the inf+assets subscript figures ARE re-derived independently, the etfs+find figures are NOT.",
+  "closed": "2026-08-25"
 }

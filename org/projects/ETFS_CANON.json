@@ -37,5 +37,6 @@
       "by": "0.0.0_AB_MSTR",
       "note": "Closeout-drift advisory finding (COO~Z, review-by 08-08) ADJUDICATED OVERTAKEN per the D4/ETFS_CANON gate ruling @6d62143d2d -- the owner seat is retired and the ruling supersedes the review ask (CTO instruction 202850Z). NOT a status flip; the PROJECT record (this file) is the correct referent per the two-referents memory (the 08-12 LOCATION ruling is a different thing)."
     }
-  ]
+  ],
+  "directive": "D4"
 }

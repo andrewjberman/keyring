@@ -35,9 +35,9 @@
     "ADVI_COTKEY",
     "OPAL_ASSETS"
   ],
-  "status": "active",
+  "status": "closed",
   "dep_stage": "PRD",
-  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~19:3xZ (1.0.0_SA_CTO, on Andrew's explicit 'make sure that there is a separate project registered'). STAGE 2 = a purpose-level PRD whose GROUND TRUTH run IS the census matrix (6 pipeline x partner cells x the column set), measured on Rule 22a's layers with denominators; STAGE 3 = COO decomp of the measurement cells (one seat per tree under Rule 13 lane ownership; DS for gold/silver/bronze scripts, AE for infra/triggers/EC2, DT for serving routes); the REMEDIATION PROPOSALS land as a second stage-2 act per pipeline, each its own decomp/TO on Andrew's word. Certifier CVO. Placement LAPTOP (site-Z-run pipelines -- the ETF daily pull -- are OUT of this census unless he widens it). Trigger cell measured at registration (MSTR 66312): the Cottonwood MDPF code home is a DECLARED per-firm deploy destination over a shared in-pattern repo home.",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~19:3xZ (1.0.0_SA_CTO, on Andrew's explicit 'make sure that there is a separate project registered'). STAGE 2 = a purpose-level PRD whose GROUND TRUTH run IS the census matrix (6 pipeline x partner cells x the column set), measured on Rule 22a's layers with denominators; STAGE 3 = COO decomp of the measurement cells (one seat per tree under Rule 13 lane ownership; DS for gold/silver/bronze scripts, AE for infra/triggers/EC2, DT for serving routes); the REMEDIATION PROPOSALS land as a second stage-2 act per pipeline, each its own decomp/TO on Andrew's word. Certifier CVO. Placement LAPTOP (site-Z-run pipelines -- the ETF daily pull -- are OUT of this census unless he widens it). Trigger cell measured at registration (MSTR 66312): the Cottonwood MDPF code home is a DECLARED per-firm deploy destination over a shared in-pattern repo home.",
   "blocking": "None on any agent. TWO rulings at Andrew, neither blocking stage 3 (PRD s.3): directive home D0 (CTO rec) vs a new row; confirm proposals are judged against 17b + 08-11 AS RATIFIED (a ruled-exception proposal is a legal shape). Decomp seat: COO, wave-3 slot of DISPATCH_ORDER_20260824 (PRD ready earlier). Census execution needs an AE-class lane (0.8.0 lineage) + a DS-class read lane, one project each; parity re-run for inf/cot/mdpf/advi owed (comp-pipescript deployed, background).",
   "created": "2026-08-24",
   "pods": [
@@ -52,5 +52,6 @@
   "pipeline": "CENSUS (no producer): {ADVI, MDPF} x {49F, INF, COT} x {repo code home, S3 code home / deploy vehicle, bronze / silver / gold data homes, trigger / schedule, served keys + route, IAM principal} -> VERIFIED per pipeline (deployed vs built-from; applied vs desired; schedule present) -> PROPOSED remediation per pipeline toward the ratified canonical form (17b + 08-11 amendment; S3-code standard; one producer per served key) -> each remediation its own decomp/TO on Andrew's word",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

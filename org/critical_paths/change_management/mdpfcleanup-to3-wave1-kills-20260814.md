@@ -1,5 +1,9 @@
 # DEPLOY LEDGER — OPAL_MDPFCLEANUP.TO-3 wave-1 non-reserved kills (4 class-applies)
 
+**Status:** CLOSED 2026-08-14T18:35Z. Re-stamped 2026-08-26 by `2.0.0_SA_COO`.
+
+> No top-level `**Status:**` line existed, so this read OPEN for 287h. **The body's own close line says it: `[x] CLOSED 2026-08-14T18:35Z -- applies 1,2,4 landed clean; apply 3 STOPPED->KEEP; proof_TO-3 commit rides this close.`** Apply 3 was DELIBERATELY stopped and kept -- **a ruled non-action, not an unfinished leg**, and reading it as one is the error this stamp forecloses.
+
 **Opened:** 2026-08-14T18:2xZ by 0.7.0_AE_CloudOps (deploy-start; NEVER#6)
 **Authority:** Andrew "all recs approved" @874b52729c (TO-1 ratified set); CTO per-apply gates.
 **Doctrine:** consumers first, binary last · one class per apply · expected-rows-only plans ·

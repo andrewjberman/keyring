@@ -37,7 +37,12 @@ param(
 # --- Tier-2 model/effort DERIVED DEFAULT (Andrew-direct 2026-08-24) ---------
 # VERBATIM: "For future reference, tier2 agents should always be instantiated
 # with opus 5 model on extra high effort."
-# Tier 2 (Senior) is the serial grammar 0.Y.0 where Y > 0 (org/ORG_CHART.md:13).
+# Tier 2 (Senior) is 0.Y.0 where Y > 0; Tier 3 (Junior) is 0.Y.Z where Y > 0, Z > 0
+# (org/ORG_CHART.md:13-14). BOTH are covered as of 2026-08-26.
+# EXTENDED TO TIER 3 -- Andrew-direct 2026-08-26 ~15:0xZ, asked and answered explicitly
+# after 0.6.2_AE_PartnerETL~A (a Tier-3 serial) spawned WITHOUT the default while its four
+# Tier-2 peers got it, and had to be killed and respawned by hand to match. Hand-passing
+# the flags per spawn is the stale-hand-copied-list failure the derived form exists to kill.
 # A ~lane suffix is an instance marker, not a tier -- 0.4.0_DS_X~G is Tier 2.
 #
 # DERIVED, NEVER HARDCODED PER CALL. "Always" is a property of the SPAWN PATH,
@@ -48,7 +53,7 @@ param(
 # An EXPLICIT -Model/-Effort ALWAYS WINS -- this only fills an unset flag, so
 # it is a default, not an override, and never a gate on anyone's choice.
 $tierDefaulted = @()
-if ($Serial -match '^0\.([0-9]+)\.0_' -and [int]$Matches[1] -gt 0) {
+if ($Serial -match '^0\.([0-9]+)\.[0-9]+_' -and [int]$Matches[1] -gt 0) {
     if (-not $Model)  { $Model  = 'claude-opus-5'; $tierDefaulted += 'model=claude-opus-5' }
     if (-not $Effort) { $Effort = 'xhigh';         $tierDefaulted += 'effort=xhigh' }
 }

@@ -40,51 +40,59 @@ routine `/watcher` startup: `1.0.0_SA_CTO` found pid 2124 (`inbox-watch.sh 1.0.0
 parent dead) holding its own inbox, and `0.4.0_DS_ClientPlatform` had a **7h17m orphan** (pid 31391)
 polling the mailbox of an agent that was `NOT REGISTERED`.
 
-⛔⛔ **CORRECTED 2026-08-27 — THE SENTENCE THAT STOOD HERE WAS FALSE AT SOURCE FOR SIX
-WEEKS, AND IT IS THE ROOT OF THE WRONG MODEL EVERY READER OF THIS FILE HAS CARRIED SINCE.** It read:
-*"`inbox-watch.sh:113` is `while true` with no parent-liveness check and no exit path ... the bash
-child keeps polling forever."* **THERE IS A PARENT-LIVENESS SELF-EXIT, AND IT HAS BEEN THERE SINCE
-2026-07-14.** `org/mcp/inbox-watch.sh:113` now OPENS that block (its own comment: *"PARENT-LIVENESS
-SELF-EXIT (2026-07-14, 0.0.0_AB_MSTR — the orphan-thief ROOT fix)"*), and `:161` implements it —
-`kill -0 "$WATCH_PARENT"`, clean `exit 0`, a `WATCHER-SELF-EXIT` line appended to
-`org/mcp/orphan-audit.log`. **MEASURED 2026-08-27: that log holds 85 `WATCHER-SELF-EXIT` lines out of
-85 total lines** — the mechanism is not theoretical, it is the routine path, and it has fired for
-`0.0.0_AB_MSTR~Z` and `0.0.3_BG_BBGTerminal` among others.
+⛔ **THE MECHANISM SENTENCE THAT STOOD HERE WAS FALSE FOR SIX WEEKS, AND IT WAS FALSE ABOUT A FIX THIS
+SEAT AUTHORED.** It read: *"`inbox-watch.sh:113` is `while true` with no parent-liveness check and no exit
+path ... the bash child keeps polling forever."* **Corrected 2026-08-27, every line read at source:**
+`:112-120` names the block *PARENT-LIVENESS SELF-EXIT (2026-07-14, 0.0.0_AB_MSTR -- the orphan-thief ROOT
+fix)*; `:161-165` tests `kill -0 "$WATCH_PARENT"`, appends `WATCHER-SELF-EXIT` to `orphan-audit.log`, and
+`exit 0`s. **There IS an exit path.** `orphan-audit.log` at this device: **458 `WATCHER-SELF-EXIT` of 471
+lines** — the routine path.
 
-⛔ **NARROWED, NOT ELIMINATED — AND DO NOT READ THIS AS "ORPHANS ARE SOLVED".** `:139` **FAILS
-OPEN**: `PARENT_CHECK=0` when `INBOX_WATCH_NO_PARENT_CHECK=1` **or `$PPID <= 1`**, because MSYS can
-render a non-MSYS parent as `1` and a naive check would make healthy watchers suicide (the same
-7-false-positive trap this file documents below). **That fail-open is CORRECT — never kill on a probe
-that cannot see its subject — but it means an orphan remains possible in exactly that cell.** The
-accurate statement, and the only one to carry forward:
+⚠ **NOT "orphans are solved."** `:137-141` sets `PARENT_CHECK=0` when `INBOX_WATCH_NO_PARENT_CHECK` is set
+**or `$PPID <= 1`** — a deliberate fail-open, because MSYS can render a live non-MSYS parent as 1 and a naive
+check would make healthy watchers suicide (the documented 7-false-positive trap). **Never kill on a probe that
+cannot see its subject.** Orphans remain possible in exactly that cell, so both halves must travel together.
 
-> **THERE IS A SELF-EXIT, AND IT IS OFF WHEN THE PARENT RENDERS AS `PPID <= 1`.**
+⛔ **THIS IS NOT THE `ps -p 1` TRAP BELOW, AND CONFLATING THEM INVERTS THE ANSWER. TWO PROBES, TWO
+SUBJECTS:**
 
-**YOU DO NOT HAVE TO GUESS WHICH STATE YOU ARE IN — THE ARM BANNER PRINTS IT** (`:159`, on stderr, in
-your Monitor's output file): `parent-tied: pid <N>` = the self-exit is ARMED; `parent-tied: OFF` = it
-is not, and you are orphan-capable. **READ YOUR OWN BANNER INSTEAD OF ASSUMING EITHER WAY.**
-*(Measured the day this landed: `0.0.0_AB_MSTR~Z` armed `parent-tied: pid 447926` — a REAL parent, so
-the fail-open cell did not apply. The harness does not automatically render `PPID` as 1 to the child;
-that trap is about observing a parent from OUTSIDE via `ps`, which is a different question from the
-child reading its own `$PPID`. Two different probes, and this file previously blurred them.)*
+```
+  OBSERVING A PARENT FROM OUTSIDE, via ps   the eval-WRAPPER shows ppid=1, and MSYS `ps -p 1` FAILS
+                                            -> the documented 7-false-positive trap. Correct as stated.
+  A CHILD READING ITS OWN $PPID             a DIFFERENT question with a DIFFERENT answer.
+```
 
-⛔ **THE DOC, THE FIX, AND THE BANNER ARE THREE CARRIERS AND ONLY TWO AGREED.** The fix landed in
-source with an attributing comment; the banner reported truthfully every session; **the doc kept
-describing the pre-fix world, and the doc is what agents read.** Cost, measured in ONE session
-(2026-08-27): `0.0.3_BG_BBGTerminal` ran the full orphan-hazard procedure at launch off this text, and
-`0.0.0_AB_MSTR~Z` — *the author of the 07-14 fix* — reasoned from it into a **FALSE published claim
-that an orphan had stolen a live seat's message**, retracted only when that seat ACKed. **The author of
-a fix is not immune to a stale doc about that fix; they are the likeliest person to never re-read it.**
-Found by `0.0.3_BG_BBGTerminal`, which is G1-fenced out of `.claude/**` and could therefore only route
-it — the fence working as designed, one more time.
+**MEASURED AT THE `0.0.0_AB_MSTR` SEAT 2026-08-27, one process tree showing BOTH:**
 
-**WHAT IS UNCHANGED AND STILL BINDS — everything below about ORACLES.** A self-exit narrows how orphans
-are BORN; it changes nothing about how you may REASON. `ps`, an empty inbox and the `read/` directory
-remain BANNED as delivery oracles, and an agent-side ACK remains the only sound one. **The 2026-08-27
-false claim was produced by using `read/` plus a broker `NOT REGISTERED` reading as a delivery oracle
-— so this correction REINFORCES the rule below rather than relaxing it.** When the session ends the
-harness reaps the Monitor task and the eval wrapper; with `PARENT_CHECK=1` the bash child now notices
-and exits, and with `PARENT_CHECK=0` it does not. **An orphan is not inert — it is a thief**, and the source order is load-bearing:
+```
+  arm banner (the child, reading its own $PPID)   parent-tied: pid 515411   <- a REAL pid. ARMED.
+  ps: watcher child 515417                        ppid=515411               <- confirms
+  ps: eval-wrapper 515411                         ppid=1                    <- the OUTSIDE view
+```
+
+Corroborated by two further banners, no seat reading 1: `0.0.0_AB_MSTR~Z` **pid 447926**,
+`0.0.3_BG_BBGTerminal` **pid 406719**.
+
+>> **SO "EVERY HEALTHY WRAPPER IS ppid=1" AND "PARENT_CHECK=0 AT $PPID <= 1" ARE BOTH TRUE AND ARE
+   ABOUT DIFFERENT PROCESSES.** Composing them yields *"the self-exit never fires for a healthy
+   watcher"* -- **FALSE**, and contradicted by the 458 of 471 above. The fail-open cell is real and
+   RARE, not the normal case. Found by `0.0.0_AB_MSTR~Z` reading what their own discarded rendering
+   carried that this one did not, before agreeing it be discarded. <<
+**Read the arm banner** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid <N>` = armed,
+`parent-tied: OFF` = orphan-capable. ⛔ **This instruction has NO INSTRUMENT on `teams-watch.py`** — that
+engine has no banner equivalent (0.0.0_AB_MSTR~Z, verified at source; owner `0.5.0_AE_OpalETL~Z`), so a seat
+arming it cannot read its protection state and the honest answer is *unknown, and it cannot self-exit*.
+
+⛔ **WHY IT SURVIVED SIX WEEKS -- THE DOC, THE FIX AND THE BANNER ARE THREE CARRIERS AND ONLY TWO
+AGREED** (`0.0.0_AB_MSTR~Z`, who corrected the same two files independently on the other fabric). The
+fix landed in source carrying an attributing comment. The banner reported truthfully every single
+session. **The doc kept describing the pre-fix world -- and the doc is the carrier agents actually
+read at session start.** Neither of the two truthful carriers could correct the third, because nothing
+compares them. **A correction is only as complete as its last surviving carrier.**
+
+⛔ **NOTHING ABOUT ORACLES CHANGES, AND THIS ARGUES THE OTHER WAY.** A self-exit narrows how orphans are
+BORN; it changes nothing about how you may REASON. Do not read "orphans are rarer" as licence to infer
+delivery from a drained inbox. When an orphan DOES exist, the source order below is still load-bearing: **An orphan is not inert — it is a thief**, and the source order is load-bearing:
 
 ```
 inbox-watch.sh:120   mv "$msg" read/       <-- drains top-level. COMMITS THE THEFT.

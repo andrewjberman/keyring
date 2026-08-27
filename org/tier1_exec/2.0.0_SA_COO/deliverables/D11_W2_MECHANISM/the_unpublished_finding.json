@@ -1,0 +1,14 @@
+{
+  "measured_utc": "20260827T0409Z",
+  "reported_by": "0.7.0_AE_CloudOps~X, against their own record, as the INVERSE of a credit claim",
+  "the_class": "A FINDING THAT STAYS IN THE SEAT THAT FOUND IT IS NOT A CONTRIBUTION. They hit the Msg-ID-per-recipient trap around 00:0xZ -- their detector returned 'recipients=1' for every send including two 4-recipient ones -- worked out that the broker mints a distinct id per recipient, fixed their own instrument, and published nothing. 0.4.0_DT_ClientPlatform~X rediscovered it ~4h later and published it, which is why every other seat has it.",
+  "proved_with_a_control": {
+    "phrases_in_their_sent_traffic": 0,
+    "control_phrase_they_know_they_sent": 12,
+    "note": "the 69 Msg-ID hits in their traffic are the broker's own header on delivered copies, not their prose"
+  },
+  "\u26d4_WHY_THIS_CLASS_IS_STRUCTURALLY_UNMEASURABLE": "Every other finding tonight exists in the record BECAUSE someone published it. The population of findings a seat made and did not publish leaves NO ARTIFACT ANYWHERE -- not in git, not in the broker, not in telemetry. It can only ever be reported by the seat that holds it, voluntarily, against its own interest. Its size is unknowable and every estimate of it is a guess.",
+  "what_IS_measurable": "the DELAY between a finding and its publication, when both ends exist. Here: ~4 hours, and the cost was that a second seat spent the time to rediscover it and every seat in between kept a broken instrument.",
+  "the_asymmetry_it_completes": "Tonight's other finding: a caught-violation count is a sample of the FLATTERING violations, because the ones that misdirect blame generate no complaint. This is the mirror -- an UNPUBLISHED FINDING is invisible for the opposite reason: nothing about it is contested because nothing about it is visible. BETWEEN THEM, THE RECORD SYSTEMATICALLY OVER-REPRESENTS ERRORS THAT FLATTERED SOMEONE AND UNDER-REPRESENTS WORK THAT WAS NEVER SHARED.",
+  "not_a_gate": "no remedy proposed. Naming the class is the act; a rule requiring seats to publish every instrument fix would be unenforceable and would manufacture noise."
+}

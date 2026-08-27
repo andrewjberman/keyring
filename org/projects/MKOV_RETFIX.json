@@ -3,12 +3,22 @@
   "macro_code": "MKOV",
   "name": "Market Overview Return Accuracy -- TR source, annualization, data-date anchoring, residual-bps reconciliation",
   "description": "Andrew-direct P0 2026-07-07 (via 0.2.0_DS_PortfolioAnalytics relay, trigger: Wayne Wicker advisory-board Bloomberg fact-check). IndexPerformanceModal.tsx computes its return stat from a price-level series (ex-dividend) instead of the already-served total-return period_returns field -- reads 1.4-2.8pt low. Fix: read the served TR field, annualize multi-year periods (3Y/5Y), confirm data-date anchoring (backend already correct, frontend was today-anchored). Also mandates a residual-bps reconciliation (6-32bp gap vs Bloomberg on IDENTICAL underlying tickers, not tracking error -- DS forensic already ruled out precision/compounding and daily-vs-monthly frequency as causes; leading cause is a Yang-computed-gross-TR vs Bloomberg-published-TR methodology delta, needs a terminal series-vs-series diff to close). EAFE gross-vs-net dividend convention routed to Yang/investment-committee as a separate data-governance decision, not a bug. Chart-line TR (vs stat-only TR) is a deferred decision, not built in this PRD. PRD docs/architecture/MKOV_RETFIX_PRD.md.",
-  "prds": [{"path": "docs/architecture/MKOV_RETFIX_PRD.md", "label": "MKOV_RETFIX PRD (CTO-authored, Andrew-direct P0)", "date": "2026-07-07"}],
-  "status": "active",
-  "phase": "Both TO-1 and TO-2 CLOSED same-day (2026-07-07). TO-1 (frontend fix, 0.1.0_DE_MarketIntelligence): fully complete, promoted to PROD (tag portal-v2.1.132, commit f3ce600c, CI SUCCESS), all 7 acceptance criteria met including an Andrew-added trailing-period-capping guard, independently verified across desired/applied/served layers (not self-report). TO-2 (residual-bps reconciliation, 0.2.0_DS_PortfolioAnalytics): closed-to-the-access-gate -- the mechanism was isolated (Yang's smoothed continuous dividend-yield TR calc vs Bloomberg's discrete ex-date reinvestment TR), but exact bp-level confirmation needs a Bloomberg terminal pull the assigned team member doesn't have; flagged to Andrew as an open item, not silently dropped. TO-2's PRD-candidate follow-on (source published Bloomberg TR indices directly) spun out as MKOV_TRSRCE, already revised to v1.1 (narrower, EAFE-only scope) same day.",
+  "prds": [
+    {
+      "path": "docs/architecture/MKOV_RETFIX_PRD.md",
+      "label": "MKOV_RETFIX PRD (CTO-authored, Andrew-direct P0)",
+      "date": "2026-07-07"
+    }
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Both TO-1 and TO-2 CLOSED same-day (2026-07-07). TO-1 (frontend fix, 0.1.0_DE_MarketIntelligence): fully complete, promoted to PROD (tag portal-v2.1.132, commit f3ce600c, CI SUCCESS), all 7 acceptance criteria met including an Andrew-added trailing-period-capping guard, independently verified across desired/applied/served layers (not self-report). TO-2 (residual-bps reconciliation, 0.2.0_DS_PortfolioAnalytics): closed-to-the-access-gate -- the mechanism was isolated (Yang's smoothed continuous dividend-yield TR calc vs Bloomberg's discrete ex-date reinvestment TR), but exact bp-level confirmation needs a Bloomberg terminal pull the assigned team member doesn't have; flagged to Andrew as an open item, not silently dropped. TO-2's PRD-candidate follow-on (source published Bloomberg TR indices directly) spun out as MKOV_TRSRCE, already revised to v1.1 (narrower, EAFE-only scope) same day.",
   "blocking": "None -- project is essentially complete. Residual: the Bloomberg-terminal bp-confirmation gate (tracked under the separate MKOV_TRSRCE project, not blocking this project's closure). TO-3 (chart-line TR) and TO-4 (EAFE convention) remain deferred decision points, not dispatched.",
   "created": "2026-07-07",
-  "pods": ["0.1", "0.2"],
+  "pods": [
+    "0.1",
+    "0.2"
+  ],
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

@@ -1,6 +1,35 @@
-# OPEN CALL AT ANDREW — PERFRP'S RENDERER IS ON PROD
+# OPEN CALL AT ANDREW — TWO HELD PROJECTS' RENDERERS ARE ON PROD
 
-**raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · **status: CARD FOR HIS NEXT TERMINAL. Not escalated at 03:20 local — reasoning in §5.**
+⛔⛔ **CLOSED BY ANDREW-DIRECT, 2026-08-25 ~08:5xZ, base CTO terminal. VERBATIM:**
+
+> ### *"I'm fine with it on PROD, let's just get the data part sorted"*
+
+**THE REVERT QUESTION IS ANSWERED: ACCEPT. NO REVERT.** Nobody reverts, nobody holds, and
+`0.2.0_DT_PortfolioAnalytics~Z` owed nothing then and owes nothing now. `1.0.0_SA_CTO`'s REC was REVERT; he ruled the
+other way, and that is the end of it.
+
+⛔ **HIS CONDITION HAD TWO HALVES AND HE RELEASED ONE. DO NOT READ THIS AS A GENERAL LIFT.** The original was
+*"stay on the DEV branch not promoted to PROD **UNTIL WE KNOW THE DATA PIPELINE AND ALL UNDERLYING DATA IS VERIFIED
+END TO END**."* **The BRANCH half is released. The DATA half is not — and "let's just get the data part sorted" says
+plainly that the data is NOT sorted.**
+> **THE PUBLISH GATE STANDS. ZERO PERFRP LEAVES SERVED IS STILL THE CORRECT STATE.**
+Widening this into a publish lift would be the inversion of what he said: **he removed the half that was protecting
+nothing and kept the half that was doing the work.**
+
+⛔ **AND HIS RULING CONFIRMS THIS CARD'S STRUCTURAL FINDING RATHER THAN OVERRIDING IT.** The measured fact was that
+branch position protected nothing — two promotes in 45 minutes, two unrelated projects, neither naming a passenger,
+while the DATA gate held throughout. **His sentence says the same thing in one line: the branch was never the thing he
+cared about; the data is.** *The finding was right; the recommendation attached to it was aimed at the wrong half.*
+
+**WHERE "THE DATA PART" POINTS — both already in flight, neither newly gated by this:**
+1. **`twr_daily`, the 12:45Z SCHEDULED run** — `GLD-f-1` at `0.4.0_DS_ClientPlatform~G`, harness built, reader seated.
+   An ad-hoc run is a QA instrument and never production evidence; nobody accelerates it.
+2. **Cottonwood's ingest gap** — `MODEL_DETAIL_SCOPE=all` at `WSE_COTMDL`, authorized, forward-only, **still unseated.
+   This is the item his sentence points at most directly, and seating it is mine.**
+
+---
+
+**raised:** `2.0.0_SA_COO` · **2026-08-25 ~07:20Z** · ⛔ **status: FIRST ITEM AT HIS NEXT TERMINAL — SEVERITY RAISED at ~07:25Z: this is CLIENT-VISIBLE, not latent. Still not a 03:2x-local wake-up; reasoning in §5.**
 **CONFIRMED INDEPENDENTLY AT THREE SEATS**, each with a positive or negative control: `0.4.0_DE_ClientPlatform~D`,
 `0.7.0_AE_CloudOps~G`, `3.0.0_SA_CVO`.
 
@@ -28,6 +57,59 @@ test discriminates rather than saying yes to everything.
 
 ---
 
+## 1b. ⛔ THE EXTENT: **TWO** HELD PROJECTS, ONE PROMOTE, AND ITS SUBJECT NAMED NEITHER
+
+**`0.4.0_DE_ClientPlatform~C` measured their own lane on the structural finding and sent it BEFORE this routed — so the
+extent is here, not one project's slice.**
+```
+SAME PROMOTE d9a98bcc carried 7 of DE~C's 9 commits to PROD:
+
+⛔ **AMENDED 08-25 ~08:5xZ — THE FIGURE IS NOW `9 OF 9`, AND `origin/PROD` HAS MOVED AGAIN WHILE THIS CALL SITS
+UNANSWERED.** Re-derived by `0.4.0_DE_ClientPlatform~C` against their own commits and INDEPENDENTLY VERIFIED at this
+seat with a discriminating negative control:
+```
+origin/PROD  d9a98bcc  (05:47Z, when this card was written)  ->  a7a7ff16  (08:30Z, v2.1.166)
+DE~C's nine commits on origin/PROD                           ->  9 of 9      (was 7 of 9)
+NEG CONTROL: held commit a239e4a9 on origin/PROD             ->  NO         (the test discriminates)
+local PROD vs origin/PROD                                    ->  1 / 35     (was 1 / 29)
+```
+**THE TWO COMMITS PREVIOUSLY REPORTED AS OUTSIDE THE MECHANISM RODE THE NEXT PROMOTE — exactly as DE~C predicted when
+they corrected their own push state.** The delta moves in the LESS reassuring direction and is corrected here for that
+reason.
+
+>> ⛔ **AND THIS IS THE SHARPEST FACT ON THE CARD, BECAUSE IT IS ABOUT THE CALL ITSELF: A SECOND PROMOTE LANDED WHILE
+>> THE CALL WAS OPEN. THE THING THE CALL ASKS ABOUT KEEPS HAPPENING WHILE THE CALL WAITS.** A per-project hold
+>> expressed as a branch position is not merely unenforceable — **it decays further with every unrelated release**, and
+>> nobody has to make a mistake for that to happen. *Neither promote was wrong; neither promoting seat did anything
+>> improper.* <<
+
+**WHAT THIS DOES NOT CHANGE — stated so the escalation is not read as growing on its own:** both surfaces still render
+with ZERO served data, so there is still no client-visible wrong number, and the de-escalation recorded above stands.
+**More of the code is exposed; the exposure is still not a wrong answer to a client.**
+  IN PROD      760504f0 4034239c d1f8f38a cd2f059c 7def244d 7dfa1e38 8ecb6b68
+  NOT IN PROD  d9e875db 1af11910   (committed after the promote)
+  d1f8f38a IS THE COMMIT THAT WIRES THE D1 PANEL INTO ModelPortfolios.tsx -> a TITLED panel renders.
+
+SERVED DATA, controlled BOTH WAYS:
+  platinum/mdpf/{49financial,inflection,cottonwood,global}/ category-views leaves:  0, 0, 0, 0
+  POSITIVE CONTROL, same prefixes:                                                  3, 3, 4 objects present
+```
+⛔⛔ **AND THE MECHANISM IS STILL ARMED, NOT MERELY HISTORICAL (`DE~C` 69571, correcting themselves):** the two commits
+they reported as *"NOT in PROD"* are **ON `origin/DEV` RIGHT NOW — ahead-by-zero, all nine pushed — SO THEY RIDE THE
+NEXT DEV→PROD PROMOTE, whoever cuts it and whatever it is named for.** *(They are safe on their merits — a comment-only
+citation fix and two scope-neutral strings, typecheck rc=0 — and DE~C is NOT asking for them to be held. The point is
+that they sit INSIDE the mechanism, not outside it.)*
+> **SO THIS IS NOT A POST-MORTEM. THE NEXT PROMOTE, FOR ANY REASON, CARRIES WHATEVER IS ON DEV — AND A DECISION THAT
+> ONLY ADDRESSES WHAT ALREADY SHIPPED LEAVES THE MECHANISM LOADED.**
+
+> **SO IT IS NOT PERFRP. IT IS PERFRP *AND* D1_CATVIEWS — TWO HELD PROJECTS, ONE WHOLE-BRANCH PROMOTE, AND THE MERGE
+> SUBJECT NAMED NEITHER OF THEM.**
+**That is what turns CVO's structural point from an argument into a demonstration: ONE project on a promote is bad luck;
+TWO, neither named, is the mechanism.** **Both surfaces render; both have ZERO served data** — nobody is seeing a wrong
+number, **for the same reason in both cases: there is no number to see.**
+
+---
+
 ## 2. ⛔ NOBODY PROMOTED PERFRP — AND THAT IS THE FINDING, NOT AN EXCUSE
 
 **The promote's own subject names its purpose: ETFS_POSITIONING.** A promote is a **whole-branch merge**, so it carried
@@ -41,8 +123,26 @@ everything on DEV. **PERFRP went to PROD as a passenger of another project's rel
 > **A HOLD WHOSE ENFORCEMENT DEPENDS ON EVERY OTHER LANE KNOWING ABOUT IT IS NOT A CONTROL, IT IS A HOPE.**
 
 *"Stay on DEV, not promoted to PROD"* is a perfectly clear instruction **that one project cannot honour by itself** —
-the next promote of that branch, for any reason, discharges it. **The DT seat did not need to know about the hold and may
-not have. That is the defect, not their act.**
+the next promote of that branch, for any reason, discharges it.
+
+⛔ **AMENDED 08-25 ~08:2xZ — MY PRIOR TEXT READ *"the DT seat did not need to know about the hold and may not have,"*
+AND IT UNDERSTATED THEM. `3.0.0_SA_CVO` corrected their own "invisible sweep" framing after going and reading the
+artifact (69696), and the measured facts are better than either of our characterisations:**
+
+> **THE PROMOTE WAS LEDGERED. The deploy-completion entry
+> `20260825T0543Z_etfs-positioning-prod-promote-v2-1-165-sitez_deploy_completion.md` names `perfrp` 3 times and the
+> promote hash 7 times, and the promoting seat wrote, verbatim: *"the promote carried another fabric's ADVI feature to
+> production as a PASSENGER … it shipped without anyone on this fabric reviewing it, AND THE PASSENGER WAS ONLY
+> VISIBLE BECAUSE SOMETHING ABOUT IT HAPPENED TO BE RED."*** **It mentions the HOLD zero times** (`hold` / `DEV-only`
+> = 0 occurrences).
+
+**SO THE GAP IS NARROWER AND SHARPER THAN "NOBODY NOTICED": THE SEAT WHO NOTICED HAD NO WAY TO CONNECT WHAT THEY SAW TO
+A HOLD THEY HAD NEVER BEEN TOLD ABOUT.** The ledger entry is proof they were looking — carefully enough to name the
+passenger unprompted — **and a hold that lives in messages and rulings is invisible to a seat reading a branch.**
+**That is the defect, and it is a fabric defect, not their act.** Their own line is better than mine:
+*"A PROMOTE FROM A REF FIVE DAYS BEHIND HAS PASSENGERS BY CONSTRUCTION; THE ESLINT FAILURE IS THE ONLY REASON WE CAN
+NAME THIS ONE."* **They did not find the passenger by diligence — they found it because it was RED, and they wrote
+that down rather than taking credit for it.**
 
 **`0.7.0_AE_CloudOps~G`'s companion finding, on the other axis:** Andrew ratified that PERFRP keys publish *"never as a
 side effect of someone activating the publisher's schedule."* **THE SAME SIDE-EFFECT MECHANISM HAS NOW OPERATED ON THE
@@ -71,8 +171,55 @@ is the ASKER'S job, not his.**
   *(My §1 recorded only that it reached the PROD BRANCH. It reached the SERVED BUNDLE — I understated it.)*
 - ✅ **AND THE DATA IS NOT THERE, WHICH IS THE HALF THAT DECIDES SEVERITY: `platinum/advi/49financial/` → **0 perfrp
   leaves**, positive control 12 objects present at the same prefix.**
-> **SCAFFOLDING SHIPPED. NUMBERS DID NOT.** The exposure is **LATENT — CONFIRMED ON THE DECIDING PLANE**, not inferred:
-> the code is live and **has nothing to fetch.** `0.7.0_AE_CloudOps~G`'s start condition is UNMET.
+⛔⛔ **AND "LATENT" IS TOO GENEROUS — DE~D READ THE LITERAL STRINGS AT `origin/PROD` (69522) AND FOUR CARDS RENDER AS
+FINISHED PRODUCT:**
+```
+Activity Summary   "Beginning value, net additions, gain/loss, ending value"
+Performance        "Time-weighted return, net of advisory fees"
+Allocation         "Allocation by class, of total and of level"
+Transactions       "Per-relationship, paged"      <- ALSO RENDERS INTERNAL TAXONOMY, IN AMBER, ON ITS FACE
+Gain/Loss          requiresLeaf:true -> HIDDEN     <- the ONE invisible card is the only one whose absence was designed for
+```
+**NOTHING ON ANY FACE SAYS PROVISIONAL, PREVIEW, OR COMING SOON — because on DEV the audience was us and no such label was
+needed.** The slot is passed **UNCONDITIONALLY**; no branch renders nothing (DE~D, mutant-proven).
+> **A 49F ADVISOR ON PROD TODAY SEES FOUR EMPTY PERFORMANCE-CARD SHELLS THAT READ AS FINISHED PRODUCT, ONE OF THEM
+> SHOWING INTERNAL TAXONOMY IN AMBER. THE SCAFFOLDING SHIPPED; THE NUMBERS DID NOT.**
+**So this is CLIENT-VISIBLE, not latent.** What is latent is only the *data*; the *surface* is live.
+
+⛔⛔ **AND THE WORST STRING IS NOT "EMPTY" — IT IS OUR INTERNAL TAXONOMY, IN AMBER, ON AN ADVISOR'S SCREEN
+(`3.0.0_SA_CVO` 69532, CORRECTING THEIR OWN EARLIER "honest absence text", WHICH THEY SAY UNDERSTATES):**
+```
+Notes        PII-EXCLUDED-PERMANENT
+Description  NO-SOURCE-TODAY
+```
+⛔⛔ **CORRECTED AT ~07:30Z — I CARRIED A FALSE CLAIM ABOUT WHAT ANDREW APPROVED, IN AN ESCALATION TO HIM. HE WAS SHOWN
+THESE EXACT STRINGS AND HE RATIFIED THEM AS THE CARD'S FACE.** The `/open-calls` card put to him at 03:38Z carries **BOTH
+TOKENS AND THE PHRASE "ON ITS OWN FACE"**, verbatim: *"THE CARD NAMES BOTH ABSENCES ON ITS OWN FACE with DISTINCT
+reasons — Notes = PII-EXCLUDED-PERMANENT (a boundary, never to be 'fixed'), Description = NO-SOURCE-TODAY (an ordinary
+gap, re-openable)."* **His answer: *"rec accepted."*** Token census over the call+REC block: **2.**
+**A `/open-calls` CARD IS ONE ARTIFACT — the CALL on top, the REC beneath an internal divider — SO THE REC HALF IS PART
+OF WHAT HE READ.** *(Measured by `0.4.0_DE_ClientPlatform~D` from their own record; `3.0.0_SA_CVO`, whose claim it was,
+has WITHDRAWN IT IN FULL.)*
+> ⛔ **SO THE DISPLAY COPY IS RATIFIED, NOT ACCIDENTAL — AND THIS SUBSTANTIALLY DE-ESCALATES THE ITEM. The strings on
+> those faces are HIS CHOICE. What reached PROD early is the SURFACE, not unapproved copy.**
+**PRIOR TEXT, NOW FALSE AND STRUCK: *"nobody ratified them as display copy, and that conversation was explicitly about
+the spec's enumeration, not the card's face."* I did not verify it before putting it in a card FOR HIM about HIS OWN
+DECISION — the one claim in this document I was least entitled to carry second-hand.**
+*(`3.0.0_SA_CVO`'s reading — that to an advisor `PII-EXCLUDED-PERMANENT` reads as a statement about client data handling
+rather than an internal state name — **is preserved as a CONCERN worth his attention, NOT as an unapproved-copy claim.
+He chose it with the strings in front of him.**)*
+
+⛔ **AND NO LEVER ANYONE CURRENTLY HOLDS REMOVES IT (`0.7.0_AE_CloudOps~G` 69525, killing a false comfort they were
+uniquely placed to see):** the shells render on `availableLeaves` being **EMPTY — which is the state their restraint
+MAINTAINS.** **Publishing would REPLACE some shells with figures; NOT publishing KEEPS THE SHELLS UP.** *Neither act
+removes the internal vocabulary from a client-facing surface.* **NOBODY SHOULD READ "THE PUBLISH LEVER IS HELD" AS
+CONTAINMENT: it contains the FIGURES, not the TEXT — and the text is the part an advisor can read today.**
+⛔ **AND THE ONE PLANE NOBODY HAS MEASURED IS NAMED HERE RATHER THAN FILLED IN (CVO 69518): WHETHER ANY HUMAN HAS
+ACTUALLY LOADED IT. *"Four cards render"* and *"four cards have been SEEN"* are different facts and only the first is
+measured. BOTH AVAILABLE ENDINGS ARE WRONG — "so clients have seen it" overstates, "so nobody saw it" is an absence
+nobody measured. THE HONEST STATE IS `NOT MEASURED`, and that is stronger than a number nobody trusts.**
+*(CVO's certifier call: FOUR PLANES, FOUR SEATS, FOUR METHODS, CONVERGING — **stop measuring. A fifth pass is cost
+without discrimination.**)*
 ⛔ **AND TWO ZEROS IN THAT MEASUREMENT MUST NEVER BE QUOTED AS EVIDENCE:** `PerfrpCardGrid` / `PerfrpBookView` /
   `PerfrpTable` read ZERO **because the bundle is minified and class names are mangled — that is not absence.**
   **CTO's FIRST SWEEP READ `perfrp` = 0 AND WAS ONE SENTENCE FROM "NOT IN THE BUNDLE"** — caught only because its

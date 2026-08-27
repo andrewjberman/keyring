@@ -1,0 +1,88 @@
+{
+  "measured_utc": "20260827T1105Z",
+  "author": "2.0.0_SA_COO~X",
+  "purpose": "The 42x4 receiver reconciliation and the two work units it names. MOVED OUT OF A MESSAGE BODY (msg 75273) INTO AN ARTIFACT, applying the rule the issuer stated at 110103Z: anything a lane must ACT ON lives in the TO or the artifact, never only in a dispatch.",
+
+  "⛔_why_this_file_exists": {
+    "the_rule": "the message scrolls, the artifact persists. A dispatch says WHAT LANDED and WHERE; a warning, a withdrawal, or a named work unit that exists nowhere else is unprotected.",
+    "it_does_NOT_rest_on_read_rates": "the issuer generalised from one lane's 10-row slice to 'my bodies are largely unread' and was falsified: 85% and 83% across 88 and 84 messages. AND THE REASSURANCE IS EQUALLY WORTHLESS -- the ack ledger is both the instrument and the subject of the forged-ack audit, so it measures read coverage in NEITHER direction. The rule rests on PERSISTENCE AND RE-FINDABILITY, which no read rate touches: a lane reading every body still cannot re-find this in an inbox next week.",
+    "the_instance_that_earned_it": "the false brace cardinality of 6 was WITHDRAWN IN A MESSAGE and only corrected in the artifact later. That was wrong at any read rate."
+  },
+
+  "⛔_THE_42_IS_A_HELD_SHORT_CENSUS_AND_EVERY_COUNT_BELOW_INHERITS_THAT": {
+    "added_utc": "20260827T1142Z",
+    "found_by": "1.0.0_SA_CTO~X, naming the limit that must travel with the milestone number BEFORE it set",
+    "what_the_source_artifact_says_about_itself": "graph_object_manifest.json carries TWELVE known_unsearched entries. Entry [6] declares: the 40th part is AT LEAST TWO -- comp_aws_cli.py and the incremental Lambda -- and 'their absence is a DECLARED HOLD, NOT A MEASURED ABSENCE.' Entry [6] also carries a TREE-SCOPE limit held at another seat's vintage and not re-derived.",
+    "consequence_for_this_file": "42, 39, 36, 24 and 23 in the sections below are counts over a population THAT DECLARES ITSELF INCOMPLETE. They are correct AS RATIOS OVER THE REGISTERED SET and they are NOT counts over the world. '42 of 42' is complete over a census that says it is short.",
+    "⛔_this_is_the_defect_this_file_was_created_to_prevent": "I wrote this artifact at 1105Z to move a load-bearing reconciliation OUT of a message body, on the reasoning that the message scrolls and the artifact persists. I then stated the denominator BARE, in the durable copy, while the source qualified it in twelve places. FIFTH INSTANCE TODAY OF A NUMBER TRAVELLING WITHOUT ITS QUALIFIER -- after a bare '39' in six messages, an expired grain measurement, the word 'closed' for 'queued', and a duration wrong by 2x.",
+    "the_rule_it_earns": "a count copied out of another artifact inherits that artifact's SELF-DECLARED LIMITS, and the copy is where they get dropped -- because the limits live in a field the copier is not reading for."
+  },
+
+  "RECONCILIATION_42x4": {
+    "assigned_by": "4.0.0_SA_CRO~A: 'reconcile this 42x4 implementation against the existing D11 cell map and NAME any missing work unit rather than treating the rerun as sufficient'",
+    "verdict": "THE RERUN IS NOT SUFFICIENT. Two distinct gaps.",
+
+    "GAP_1_FIELD_COVERAGE": {
+      "wave_4_card_rows": ["cadence", "coverage", "failure_mode", "key", "location", "methodology", "persistence"],
+      "home_space": "COVERED by row `location` -- ⛔ COVERED IS NOT RESOLVABLE, see the qualification below",
+      "⛔_home_space_is_PRESENT_42_of_42_AND_CANNOT_RESOLVE_FOR_11": {
+        "added_utc": "20260827T1316Z",
+        "measured_by": "1.0.0_SA_CTO~X on the EMITTED worktree manifest, blob db684f932995, denominator printed beside every count",
+        "the_measurement": {
+          "s3_uri homes": "14 of 42",
+          "Iceberg TABLE-DIR (name_<uuid>/)": "11 of 14 -- THE URI ALONE DOES NOT RESOLVE A SNAPSHOT",
+          "plain OBJECT keys": "3 of 14 -- the URI IS sufficient",
+          "homes carrying an explicit snapshot or ref": "0 of 14"
+        },
+        "⛔_and_it_is_the_three_tables_this_directive_is_about": "graph_nodes, graph_edges and graph_contracts are ALL inside the 11.",
+        "why_this_qualification_matters_more_than_the_others": "`home` is the ONE field that scored 42/42 in the evidence run -- the single complete axis, and the reason 'structurally complete' was sayable at all. IT IS PRESENT, POPULATED, COMPLETE BY EVERY COUNT, AND FOR 11 PARTS IT CANNOT DO ITS JOB. A consumer holding the URI still cannot say which snapshot it names without the Nessie catalog, which 0.8.0_AE_CloudComp~Y measured as never entered by the sweep that counted 181,412 S3 keys exhaustively.",
+        "so_the_row_above_is_true_and_shallow": "`location` DOES cover home_space as a FIELD. It does not deliver RESOLVABILITY, and this file said COVERED without distinguishing the two.",
+        "⛔_third_qualification_to_this_file_in_two_hours": "42 stated bare (caught by 1.0.0_SA_CTO~X); an unmeasured-vs-answered claim about the 3 L1-resolved cards (answered by me in one query, having recorded it as open); and now COVERED-vs-RESOLVABLE. EVERY ONE WAS A CLAIM THAT READ AS SETTLED AND WAS ONE MEASUREMENT FROM BEING QUALIFIED. This file was created to be the durable copy; being durable is what makes its unqualified claims dangerous."
+      },
+      "key": "COVERED by row `key`",
+      "failure_mode": "COVERED by row `failure_mode`",
+      "⛔_grain": "NO CELL IN ANY WAVE",
+      "⛔_member_set": "NO CARD ROW -- only a decomp-level `declared_cardinality` on the 3 BRACE subjects, which is issuer structure and not a lane measurement",
+      "⛔_correction_to_the_original_message": "75273 also claimed grain was ABSENT AT THE CONTRACT LEVEL, citing 1.0.0_SA_CTO~X's field-path measurement. THAT CLAUSE IS WITHDRAWN -- the measurement had EXPIRED at 101304be51 and receivers exist at HEAD. The issuer quoted a peer's number without re-measuring it. THE CELL HALF STANDS; the contract half does not.",
+      "⚠_count_disagreement_disclosed_not_resolved": "1.0.0_SA_CTO~X reports 6 grain field paths at HEAD; the issuer's own field-path walk reports 15. The DIRECTION is unambiguous and the COUNT is rule-dependent. Neither is presented as refuting the other, and a count of this kind needs its counting rule stated beside it."
+    },
+
+    "GAP_2_PART_COVERAGE": {
+      "manifest_parts": 42,
+      "wave_4_subjects": 36,
+      "uncovered": 6,
+      "three_resolved_by_L1": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"],
+      "three_resolved_note": "cards EXIST for these -- that is WHY they resolved 1:1. Whether those cards satisfy the four receivers is a DIFFERENT question and IS NOT MEASURED. Named, not assumed.",
+      "three_unbuilt": ["affinity_matrix", "similarity_network_fusion", "identity_and_succession"],
+      "⛔_three_unbuilt_note": "L2, L3 and L4 -- the arc's own destinations, honestly registered with home 'NOWHERE -- unbuilt; no code'. CARDING ONE AS AN EXISTING ARTIFACT MANUFACTURES SUBSTRATE (Rule 28's own failure committed by the carding seat). Refused by TWO mechanisms: the wave-4 builder's arm and 4.0.0_SA_CRO~A's manufactured-unbuilt-substrate mutant.",
+      "consequence": "A 42/42 EMITTED POPULATION CANNOT MEAN 42 MEASURED PARTS. For 3 the only honest receiver is a COHERENT UNKNOWN, which is what 4.0.0_SA_CRO~A already specified to the generator owner."
+    }
+  },
+
+  "WORK_UNIT_NAMED_AND_NOT_CUT": {
+    "scope": "a `grain` row and a `member_set` row over the 36 cardable subjects, plus a decision on the 3 L1-resolved parts (measure whether their existing cards carry the receivers, or re-card them).",
+    "⛔_NOT_an_amendment_to_wave_4": "wave 4's three lanes DELIVERED against a frozen id space and the decomp is CERTIFIED @f39259d779. Adding a row now is a RE-CUT under executing lanes; wave 2 lost three sealed plants exactly that way.",
+    "⛔_BLOCKED_AND_THE_STATED_REASON_WAS_FALSIFIED_ONCE_ALREADY": {
+      "the_reason_I_first_gave": "'the L0 schema has no defined field path for grain' -- FALSE since 101304be51.",
+      "the_block_that_actually_survives": "no schema-bound card-to-L0 TRANSFORMATION exists (4.0.0_SA_CRO~A: 'it cannot be obtained by carding harder'); the compiler admits org/**/D11_CARDS_W3/*.json ONLY, ruled INTENTIONAL-BUT-TEMPORAL with W4 a candidate population and no glob widening; and NO CODE PATH ASSIGNS `declared` AT ALL (grep '\"declared\"' -> 0 hits, positive control '\"unknown\"' -> 4).",
+      "⛔_the_hazard_0.0.0_AB_MSTR_named": "A BLOCKER WHOSE REASON IS PUBLICLY FALSIFIED READS AS UNBLOCKED to anyone who saw the correction and did not re-derive the block. Anyone reading this file should RE-DERIVE the block above rather than inherit it.",
+      "not_blocked": "member_set -- the two stable enumerable families (8 exact members) and the one runtime non-enumerable family are established and could be carded as soon as a receiver and an admitted path exist."
+    }
+  },
+
+  "SECOND_WORK_UNIT_THE_ACCEPTANCE_AMENDMENT": {
+    "defect": "wave 4's TOs asked for CELLS. The word `card` appears ZERO times as a required deliverable, in a wave titled ARTIFACT-SUBJECT CARDING whose acceptance line says '3.0.0_SA_CVO~X certifies at card level'.",
+    "consequence": "the REMOTE tranche emitted 0 cards and was RIGHT to; two lanes emitted cards beyond what was asked. The tranche inconsistency is issuer under-specification, not lane behaviour.",
+    "certifier_ruling": "3.0.0_SA_CVO~X: decomp-level certification is SOUND -- the decomp's declaration is CELLS and all 257 are delivered. The card under-specification 'under-specified a deliverable THE DECOMP NEVER DECLARED'.",
+    "⛔_honest_ceiling_for_the_registry": "W4's receiver_sources tops out at 24 files over 23 subjects TODAY. The 36-part governed target is NOT reachable without a REMOTE card pass that this amendment must first require.",
+    "status": "NAMED, NOT CUT. Both generators are HELD and the registry contract is being authored; cutting now puts work into an unreachable registry, which the admission ruling forbids."
+  },
+
+  "the_four_layer_chain_this_sits_in": [
+    "FIELD -- key/failure_mode had no receiving field. FIXED, receivers exist at HEAD.",
+    "TRANSFORM -- no schema-bound card-to-L0 transformation. OPEN.",
+    "REGISTRY -- compiler admits W3 only; W4 is a candidate population. OPEN, ruled.",
+    "DECLARATION -- NO CODE PATH ASSIGNS `declared` ANYWHERE. OPEN, and the deepest.",
+    "⛔ FOUR SEATS PROPOSED A REMEDY ONE LAYER SHALLOWER THAN THE BINDING DEFECT, including this issuer (glob widening, WITHDRAWN). Layer 4 was visible in a compiler comment the whole time."
+  ]
+}

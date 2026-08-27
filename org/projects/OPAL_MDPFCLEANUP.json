@@ -10,8 +10,8 @@
       "date": "2026-08-14"
     }
   ],
-  "status": "active",
-  "phase": "Phase 3 (2026-08-18): WAVE-1 CLOSED 08-14 (21 destroys; 2 bd K1 rows falsified-live -> KEEP). TO-2 dim re-home STAMPED ACCEPT by CTO @9f287b5d14 (3 unattended canonical floor cycles; value tie). K3 REDUCED KILL DONE @120a822241 (10 destroys, sha 8a18ba8a45a9ed9f, ledger closed in-session, tag mdpf-pipeline-v2.1.6); runner EC2 + shared DLQ + DLQ-depth alarm KEEP-UNTIL-REHOMED (accrual-bridge :113 / scheduled-floor :155 edges falsified them as K3) -- two dated re-home items on the wrap record. TO-4: condition (iii) WITHDRAWN as unsatisfiable AND insufficient (no access-log instrument on portal-v2; the CANONICAL mdpf-gold-lambda reads json/mdpf/49financial/aggregate-aua-timeseries.json daily, FLAG-2 count carry, fail-loud -- verified at executing bytes); TO-4 lands PASS_WITH_DISCLOSURE, served-key DELETE leg HELD on the FLAG-2 re-point (MDPF_PROVENANCE T-B, DS, 08-19); Andrew card = CF logging yes/no (MSTR carries); runner stop/terminate word RETRACTED (premise falsified). TO-5 consumer-exercise pre-registered 08-19 13:30Z floor mint with no 12:4xZ legacy write -> combined read -> TO-5 -> CTO close RAVC. Wrap calendar re-dated 08-18/19 @62bd311d16 (nothing past 08-19). Ruling record: docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md @fc74f8f6b4.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: Phase 3 (2026-08-18): WAVE-1 CLOSED 08-14 (21 destroys; 2 bd K1 rows falsified-live -> KEEP). TO-2 dim re-home STAMPED ACCEPT by CTO @9f287b5d14 (3 unattended canonical floor cycles; value tie). K3 REDUCED KILL DONE @120a822241 (10 destroys, sha 8a18ba8a45a9ed9f, ledger closed in-session, tag mdpf-pipeline-v2.1.6); runner EC2 + shared DLQ + DLQ-depth alarm KEEP-UNTIL-REHOMED (accrual-bridge :113 / scheduled-floor :155 edges falsified them as K3) -- two dated re-home items on the wrap record. TO-4: condition (iii) WITHDRAWN as unsatisfiable AND insufficient (no access-log instrument on portal-v2; the CANONICAL mdpf-gold-lambda reads json/mdpf/49financial/aggregate-aua-timeseries.json daily, FLAG-2 count carry, fail-loud -- verified at executing bytes); TO-4 lands PASS_WITH_DISCLOSURE, served-key DELETE leg HELD on the FLAG-2 re-point (MDPF_PROVENANCE T-B, DS, 08-19); Andrew card = CF logging yes/no (MSTR carries); runner stop/terminate word RETRACTED (premise falsified). TO-5 consumer-exercise pre-registered 08-19 13:30Z floor mint with no 12:4xZ legacy write -> combined read -> TO-5 -> CTO close RAVC. Wrap calendar re-dated 08-18/19 @62bd311d16 (nothing past 08-19). Ruling record: docs/architecture/MDPF_PROVENANCE_CANONICAL_FORM_RULING_20260818.md @fc74f8f6b4.",
   "blocking": "Served-key delete leg HELD on the FLAG-2 count-carry re-point (T-B, 08-19) + Andrew's card; everything else live at COO/AE",
   "created": "2026-08-14",
   "pods": [
@@ -21,5 +21,6 @@
   ],
   "pipeline": "mdpf + opal-assets + smartx + bd/cot legacy chains",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

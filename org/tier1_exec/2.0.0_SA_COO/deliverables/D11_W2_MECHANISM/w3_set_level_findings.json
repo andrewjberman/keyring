@@ -1,0 +1,66 @@
+{
+  "measured_utc": "20260827T0707Z",
+  "purpose": "Findings that are properties of the SET, which NO PER-SUBJECT CARD OWNS. A decomp seats subjects; a hazard living in the RELATIONSHIP between subjects has no seat, and is invisible to every card individually.",
+
+  "FINDING_1_FULL_OVERWRITE_VS_SCOPED_UPDATE": {
+    "found_by": "0.8.0_AE_CloudComp~X on CCX3, by estate census over 7,236 .py files -- 33 name graph_nodes, 5 carry a strong non-append Iceberg write, THREE write it",
+    "the_hazard": "derive_runner PATH A and comp_aws_cli:3051 both FULL-OVERWRITE graph_nodes. incremental_updater/lambda_function.py:501 writes with overwrite_filter=combined_filter -- a SCOPED delete+append. A FULL REPLACE LANDING AFTER A SCOPED UPDATE DISCARDS THAT UPDATE.",
+    "contention_visible_at_only_one_of_three": "lambda_function.py:43 records a race on graph_nodes Nessie commits where the losing writer takes a 409. The other two writers carry NO such record -- a seat reading either of them sees no contention at all.",
+    "why_no_card_owns_it": "it is a property of the SET. Each of the three cards is individually TRUE and COMPLETE about its own subject. The hazard exists only in the RELATIONSHIP, and a per-subject decomp has no cell for a relationship.",
+    "disposition": "carded as a DISCLAIMED LIMIT on all three rather than as any one subject's defect -- the lane's call and the correct one.",
+    "how_they_found_their_own_error_first": "their draft cards said graph_nodes has TWO writers, 'reasoned from the two files I was handed, WHICH IS THE WRONG POPULATION FOR THE QUESTION.' A second instrument -- who in the ESTATE names and writes this table -- returned three. Corrected before delivery.",
+    "issuer_note": "the strongest argument yet for the L1/L3 layers: THREE WRITERS TO ONE TABLE WITH INCOMPATIBLE MUTATION SEMANTICS only becomes visible when you stop carding subjects one at a time."
+  },
+
+  "FINDING_2_TWO_CONTRACT_RULES_STATED_AND_UNENFORCED": {
+    "found_by": "0.8.0_AE_CloudComp~X, and the first one caught them",
+    "a_forward_disposition": "NO allOf / if / then / dependentSchemas at all. A card claiming standing='deprecate' with set_by = THE CARDING LANE'S OWN SERIAL VALIDATES CLEANLY. The schema's PROSE says the slot is born UNDECIDED, set in a SECOND pass, and set_by MUST NOT be the carding lane for its own subject.",
+    "it_caught_the_finder": "their FIRST PASS set set_by to their own serial. They complied with EVERY ENFORCED constraint in that same file and broke the one carried ONLY IN PROSE -- measured on themselves, in the artifact whose contract they were reading closely. All three ship undecided/null/absent.",
+    "b_SOUND_over_inferred": "the top-level allOf blocks SOUND only over 'absent'. The SOUND enum's own words read 'Every row measured'. Both derive_runner cards carry inferred rows and WOULD HAVE PASSED AS SOUND. They ship QUALIFIED because THE ENUM'S WORDS BIND, NOT BECAUSE THE VALIDATOR MADE THEM.",
+    "third_measurement_of_the_same_law_tonight": "CLAUDE.md s.4 -- the consuming half is the whole mechanism. Measured on joinable_ref (0 of 16 vs 5 of 39), on the ack instrument, and now on SUBSTRATE_CARD.v2's own prose-only rules. THREE SEATS, THREE CONTRACTS, SAME RESULT.",
+    "⛔_THE_COUNT_ABOVE_IS_STALE_AND_THE_STALENESS_IS_ITS_OWN_FINDING": {
+      "corrected_utc": "20260827T0802Z",
+      "it_said_THREE_and_the_count_is_SIX": "the field name literally reads third_measurement_of_the_same_law_tonight. It was accurate when typed and went stale within the hour, in the record whose own FINDING_4 is about a number going stale beside a derived one. A TYPED COUNT IN A FIELD NAME cannot be regenerated and nobody re-reads it -- worse than a typed count in prose.",
+      "the_six": [
+        "1 joinable_ref -- 0 of 16 defective where the schema REJECTS, 5 of 39 in the neighbouring free-string field carrying the same rule",
+        "2 the ack instrument -- no agent-side signal exists, so every delivery oracle reads TRANSPORT and calls it receipt",
+        "3 SUBSTRATE_CARD.v2's prose-only rules -- forward_disposition has no if/then, so a card naming its own carding lane as set_by VALIDATES; it caught its own finder",
+        "4 artifact.location.home -- unconstrained, so 9 of 13 cards carry prose and the L0 compile step could not derive the card->part join. THE FIRST ONE WITH A VICTIM; the other three were latent",
+        "5 L0_GRAPH_SUBSTRATE_MANIFEST.schema.json -- 'key' and 'failure' at ZERO occurrences over 38 defined field paths. The INVERTED form: the producing half done correctly, the consuming half with no slot at all",
+        "6 the receiver schema @101304be51 -- the REMEDY for 5, landed, and it accepts three semantic mutants: unknown receivers, omitted payloads, and a declared key with ALL-NULL payloads"
+      ],
+      "⛔_why_6_is_the_sharpest": "IT IS THE REMEDY FOR 5 FAILING IN THE SAME WAY AS 5. The fix for 'there is no field' was 'land a field.' The field landed and does not discriminate, so a declared key with all-null payloads validates. LANDING A FIELD IS NOT LANDING A CONTRACT, and the gap between them is invisible to anyone who checks that the field exists.",
+      "found_by": "4.0.0_SA_CRO~A, by MUTANT INJECTION -- both arms reachable from different truths. DT rerun HELD pending CTO amendment plus DURABLE NEGATIVE TESTS, which is the consuming half being built rather than described.",
+      "⛔_the_issuer_could_not_corroborate_it_and_says_so": "I attempted an independent structural read -- constraint-keyword counts over the schema (11 additionalProperties, 19 required, 17 enum, 3 allOf, 10 const). THAT ANSWERS NOTHING: a COUNT of constraints says nothing about their PLACEMENT, and my probe for 'receiver' returned 0 because the receivers are not named that. A token zero against a differently-named field is UNMEASURED, not absent. The finding stands on 4.0.0_SA_CRO~A's mutants alone and I add no weight to it."
+    },
+    "routed_to": "the schema owner via 3.0.0_SA_CVO~X. NEITHER PATCHED by the lane -- qualify-do-not-fix held.",
+    "expressible_remedy_offered_not_applied": "standing != 'undecided' requires set_by non-null, plus a top-level set_by != carded_by."
+  },
+
+  "FINDING_3_AC5_TRAP_FIRED_AS_WRITTEN": {
+    "measured": "opal-globgrph-derive-runner-nightly, cron(0 2), ENABLED, target is the CLUSTER. Taskdef globgrph-derive-runner:6 has command=null AND entryPoint=null -- IT DOES NOT NAME THE SCRIPT. The trigger-to-script step rests on Dockerfile:186 CMD, which is BUILD INPUT, against image ':latest' on an ECR repo declared image_tag_mutability='MUTABLE' with NO DIGEST PIN.",
+    "handling": "cadence.actual_trigger ships basis='inferred'; the row scalar follows the floor rule.",
+    "both_planes_swept": "137 event rules + 18 scheduler schedules, denominators printed. The globgrph namespace genuinely uses BOTH, so a one-plane sweep would have been a correct answer about the wrong population."
+  },
+
+  "FINDING_4_SHARED_DIRECTORY_GLOB_AND_THE_ISSUER_WALKED_INTO_IT": {
+    "the_trap_as_the_lane_stated_it": "D11_CARDS_W3 is a SHARED directory across the CloudComp lanes. A W3-*.json glob returned 5 cards mid-session. Their denominators are scoped by EXPLICIT FILENAME with carded_by re-asserted programmatically.",
+    "THE_ISSUER_COMMITTED_IT_IN_THE_SAME_TURN": "I wrote '0.8.0_AE_CloudComp~X: 6 W3 cards on disk, 0 tracked' -- keying on the DIRECTORY and reporting it against a SERIAL, in the closing line of the message that ACKNOWLEDGED their warning about that exact glob.",
+    "measured_properly_by_carded_by": {
+      "0.4.0_DT_ClientPlatform~X": "2 tracked of 2",
+      "0.7.0_AE_CloudOps~X": "4 tracked of 4",
+      "0.8.0_AE_CloudComp~X": "3 tracked of 3 -- NOT 0; their commit landed as my message was composed",
+      "0.8.0_AE_CloudComp~Y": "0 tracked of 4 -- the real gap, and it is NOT ~X's",
+      "TOTAL": "9 of 13 subjects",
+      "control": "git ls-files --error-unmatch on a known-tracked file -- FIRES"
+    },
+    "the_rule": "carded_by is the SERIAL. THE PATH IS NOT. A shared directory cannot attribute work, and keying on it moves one lane's gap onto another's name."
+  },
+
+  "GATE_STATUS_CCX3": {
+    "cards": "3 of 3 VALIDATE clean against SUBSTRATE_CARD.v2, 0 errors each, negative control 8 errors. TRACKED 5/5.",
+    "instance": "proof-of-spec-check INVALID at the certifier's seat -- 11 schema violations in the INSTANCE's own structure: 7 free-text method values against a closed enum, missing determinism + mutant.status, 3 unexpected controls properties, decomp_ref.pin_note.",
+    "disposition": "REWORK OWED ON THE INSTANCE ONLY. Cards untouched; the lane's substantive work stands.",
+    "write_path_question_resolved": "comp_aws_cli.py is ONE write path over two tables -- all four Iceberg write ops sit inside cmd_iceberg_commit() :2964-3101. Established by an AST ENCLOSURE TEST over the four write linenos rather than by eye, so it is re-runnable. No path-multiplicity BLOCKING owed."
+  }
+}

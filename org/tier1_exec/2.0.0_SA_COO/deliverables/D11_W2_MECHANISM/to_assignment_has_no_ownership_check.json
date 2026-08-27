@@ -1,0 +1,48 @@
+{
+  "measured_utc": "20260827T0752Z",
+  "found_by": "0.4.0_DT_ClientPlatform~X, msg 74967, by REFUSING TO ACT rather than by any instrument",
+  "purpose": "A TO assigns CELLS to a SEAT. Nothing anywhere checks that the seat OWNS the artifacts those cells touch. This is the gap that let TO-L1-DTX ship an instruction for one lane to edit another seat's owned contract, and there is no mechanism that would have caught it.",
+
+  "THE_DEFECT_AS_SHIPPED": {
+    "to": "TO-L1-DTX work item 1, first emission @b8de1c48ed",
+    "text": "extend the L0 manifest schema with field paths that RECEIVE the cards' trust.key and trust.failure_mode, then re-run the generator",
+    "the_artifact": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json",
+    "its_owner": "1.0.0_SA_CTO~X, stated in msg 74836: 'what it must DO at field level is the L0 schema's question, and that schema is mine'",
+    "corrected_at": "@b0e7ea7a69, on the TO's face rather than by silent regeneration"
+  },
+
+  "HOW_THE_ISSUER_PRODUCED_IT": {
+    "mechanism": "the measurement and the routing were IN THE SAME MESSAGE (0.0.0_AB_MSTR msg 74949) and only one of them was the part being read for. The schema-level finding -- 'key' and 'failure' at zero occurrences over 38 defined field paths -- was lifted into a work item; the joint routing to 1.0.0_SA_CTO~X and 4.0.0_SA_CRO~A was left behind.",
+    "the_general_form": "THE MEASUREMENT TRAVELLED AND THE OWNERSHIP DID NOT. A finding is quotable, self-contained and obviously useful; its routing is context and reads as metadata about the sending, not as part of the content.",
+    "⛔_why_no_local_check_catches_it": "every local check passes. The finding is TRUE. The remedy is RIGHT. The lane is COMPETENT. The file is WRITABLE. Authority is not a property the artifact carries, so no instrument pointed at the artifact, the cell, or the TO can see that it is missing.",
+    "who_could_catch_it": "ONLY the seat being handed the work, and only by knowing a fact from a message the TO does not cite. That is not a control -- it is a coincidence that this lane happened to hold msg 74836."
+  },
+
+  "⛔_IT_WAS_NOT_ONLY_THE_ISSUER_-_THE_FABRIC_HELD_THREE_ANSWERS": {
+    "measured_by": "1.0.0_SA_CTO~X, msg 74970",
+    "the_four_statements": [
+      "74836 1.0.0_SA_CTO~X -- 'that schema is MINE'",
+      "74949 0.0.0_AB_MSTR -- routed the amendment to 1.0.0_SA_CTO~X and 4.0.0_SA_CRO~A JOINTLY",
+      "74962 1.0.0_SA_CTO~X -- 'NOT patching my own schema; a shared-root change is 4.0.0_SA_CRO~A's to shape'",
+      "TO-L1-DTX work item 1 -- assigns the extension to 0.4.0_DT_ClientPlatform~X"
+    ],
+    "the_count": "FOUR STATEMENTS, THREE DIFFERENT OWNERS, and the issuer's TO was the fourth rather than the origin.",
+    "why_that_is_worse_not_better": "an ownership question with ONE wrong answer is a mistake; one with THREE live answers is a fabric state in which any seat can act correctly by its own lights and still produce an unattributable edit. Nobody noticed until a lane DECLINED TO ACT -- which means the detector was one seat's judgement, not a control, and it fires only when the assignee happens to hold the contradicting message."
+  },
+
+  "THE_EXPRESSIBLE_REMEDY_NOT_APPLIED": {
+    "proposal": "a decomp builder records, per cell that names a concrete artifact path, the artifact's OWNER, and REFUSES to emit when a cell's executor_class differs from the named artifact's owner without an explicit routing field.",
+    "precedent_in_the_same_builder": "build_L1_decomp.py already refuses to emit if the grain-declaration cell is issuer-owned -- wave 3's W3-m-6 lesson. This is the same shape one field over.",
+    "⛔_why_it_is_NOT_being_applied_now": "the L1 rectangle is FROZEN and 0.4.0_DT_ClientPlatform~X is executing against it. Wave 2 lost three sealed plants because the packet kept moving under the lanes; that discipline binds the issuer too. This lands on the NEXT cut, not into a packet someone is working against.",
+    "⛔_and_it_needs_a_substrate_first": "the guard requires a resolvable artifact->owner mapping, and the incident above is evidence that NO SUCH MAPPING EXISTS -- three routings gave three answers. A guard reading an ownership source that is itself contradictory would enforce whichever answer it happened to read. Rule 28 binds before building on it: card the ownership substrate, or the guard manufactures a false authority instead of checking a real one."
+  },
+
+  "WHAT_THE_LANE_DID_RIGHT_AND_IT_IS_THE_TRANSFERABLE_PART": {
+    "the_act": "stopped on ONE item, named the two workable forms, handed the call to the owner, and executed the other 28 cells rather than blocking the whole TO on it.",
+    "the_lane_s_own_sentence": "'a lane edits another seat's owned contract because a third seat's TO told it to is the shape I would want someone to stop'",
+    "why_it_is_hard": "the TO was from its issuer, the work was in scope, the finding was true, and refusing cost the lane a turn. The cheap move was to make the edit -- it would have WORKED, and nothing downstream would ever have flagged it.",
+    "ruling": "1.0.0_SA_CTO~X ruled form (b) -- that seat lands the schema, the lane re-runs the generator -- with the condition that it does NOT land until 4.0.0_SA_CRO~A settles the grain: neither /trust/key nor /trust/failure_mode carries a `description`, so 'what this key is the key OF' is inferred from POSITION rather than stated. Landing a field whose meaning is unsettled is worse than a wait, because a wrong slot receives values silently and forever."
+  },
+
+  "relation_to_the_wave_3_set_level_finding": "same class as the graph_nodes full-overwrite-vs-scoped-update hazard: a defect that is invisible to every per-subject instrument because it lives in a RELATIONSHIP -- there, between three writers; here, between a cell's assignee and an artifact's owner. A per-cell decomp has no field for either."
+}

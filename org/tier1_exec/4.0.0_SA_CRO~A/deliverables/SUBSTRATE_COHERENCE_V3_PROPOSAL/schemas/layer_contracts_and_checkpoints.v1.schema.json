@@ -1,0 +1,1420 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/cro-a/c3materialize/layer_contracts_and_checkpoints.v1.schema.json",
+  "title": "C3MATERIALIZE L0 through L4 deliverable contracts and checkpoint sequence",
+  "x-document-contract": {
+    "document_kind": "json_schema",
+    "exact_home": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/SUBSTRATE_COHERENCE_V3_PROPOSAL/schemas/layer_contracts_and_checkpoints.v1.schema.json",
+    "authorship_mode": "human_authored",
+    "mutation_policy": "whole_document_replace",
+    "temporal_claim": "timeless_definition",
+    "authority_role": "authoritative_source",
+    "source_relationship": [],
+    "projection_relationship": [],
+    "evidence_relationship": []
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_kind",
+    "schema_version",
+    "governing_schema",
+    "exact_home",
+    "document_lifecycle",
+    "relationships",
+    "contract_status",
+    "post_rerun_rule24_queue",
+    "post_rerun_base_validation",
+    "mission",
+    "prd_reference",
+    "starting_position",
+    "l0_deliverable_bridge",
+    "design_measurements",
+    "execution_plan",
+    "layer_contracts",
+    "checkpoint_sequence",
+    "resolved_decisions",
+    "open_decisions",
+    "shared_root_changes"
+  ],
+  "properties": {
+    "document_kind": {"const": "c3materialize_layer_contracts_and_checkpoints"},
+    "schema_version": {"const": "1.0.0-proposed"},
+    "governing_schema": {"const": "schemas/layer_contracts_and_checkpoints.v1.schema.json"},
+    "exact_home": {"type": "string", "minLength": 1},
+    "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+    "relationships": {"$ref": "#/$defs/relationships"},
+    "contract_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adoption_state", "operative_gate", "work_start_effect", "l1_work_startable", "operative_transition_ready"],
+      "properties": {
+        "adoption_state": {"const": "proposed"},
+        "operative_gate": {"const": false},
+        "work_start_effect": {"const": "non_blocking_design_constraint"},
+        "l1_work_startable": {"const": true},
+        "operative_transition_ready": {"const": false}
+      }
+    },
+    "post_rerun_rule24_queue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queue_state", "frozen_schema_commit", "frozen_schema_blob", "freeze_exit_condition", "promotion_condition", "findings"],
+      "properties": {
+        "queue_state": {"const": "open_until_post_rerun_remediation"},
+        "frozen_schema_commit": {"const": "a767d213921dfa013eed546b39c27f73712e0ec6"},
+        "frozen_schema_blob": {"const": "e6cba54189f9a6a14db6d6a47a8954135a74f142"},
+        "freeze_exit_condition": {"const": "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status"},
+        "promotion_condition": {"const": "evidence_that_finding_changes_an_emitted_value"},
+        "findings": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["finding_id", "finding_state", "evidence_run_change_state", "rerun_effect", "semantic_dimension"],
+            "properties": {
+              "finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04", "L0-R24-05", "L0-R24-06"]},
+              "finding_state": {"const": "open"},
+              "evidence_run_change_state": {"enum": ["unchanged", "new"]},
+              "rerun_effect": {"enum": ["metadata_only_no_current_emission", "emitted_authority_contradiction", "emitted_compound_relation_value"]},
+              "semantic_dimension": {"enum": ["empty_suffix_enumeration_interpretation", "suffix_completeness_partition", "repo_relative_path_rule24_partition", "home_space_lifecycle_vocabulary", "variant_suffix_source_authority", "generation_materializer_relation_cardinality"]}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04"]}}},
+                "then": {"properties": {"evidence_run_change_state": {"const": "unchanged"}, "rerun_effect": {"const": "metadata_only_no_current_emission"}}}
+              },
+              {
+                "if": {"properties": {"finding_id": {"const": "L0-R24-05"}}},
+                "then": {"properties": {"evidence_run_change_state": {"const": "new"}, "rerun_effect": {"const": "emitted_authority_contradiction"}, "semantic_dimension": {"const": "variant_suffix_source_authority"}}}
+              },
+              {
+                "if": {"properties": {"finding_id": {"const": "L0-R24-06"}}},
+                "then": {"properties": {"evidence_run_change_state": {"const": "new"}, "rerun_effect": {"const": "emitted_compound_relation_value"}, "semantic_dimension": {"const": "generation_materializer_relation_cardinality"}}}
+              }
+            ]
+          }
+        }
+      }
+    },
+    "post_rerun_base_validation": {"$ref": "#/$defs/post_rerun_base_validation"},
+    "mission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directive", "arc", "terminal_result", "new_directive", "project_mint", "registration_act", "approval_gate"],
+      "properties": {
+        "directive": {"const": "D11"},
+        "arc": {"const": "L0_to_L4"},
+        "terminal_result": {"const": "validated_identity_layer"},
+        "new_directive": {"const": false},
+        "project_mint": {"const": false},
+        "registration_act": {"const": false},
+        "approval_gate": {"const": false}
+      }
+    },
+    "prd_reference": {"$ref": "#/$defs/pinned_reference"},
+    "starting_position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_message", "proposal_classification", "layers", "homonym_exclusions"],
+      "properties": {
+        "evidence_message": {"type": "string", "minLength": 1},
+        "proposal_classification": {"const": "control_plane_spec_not_operative_layer_artifact"},
+        "layers": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["layer_id", "state", "operative_contract_artifacts", "measurements"],
+            "properties": {
+              "layer_id": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+              "state": {"enum": ["partial", "unbuilt"]},
+              "operative_contract_artifacts": {"type": "integer", "minimum": 0},
+              "measurements": {"type": "object"}
+            }
+          }
+        },
+        "homonym_exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "actual_domain", "excluded_progress_claim"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "actual_domain": {"type": "string", "minLength": 1},
+              "excluded_progress_claim": {"const": "graph_c3_l1_entity_spine"}
+            }
+          }
+        }
+      }
+    },
+    "l0_deliverable_bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "existing_document_kind",
+        "existing_home",
+        "existing_governing_schema",
+        "target_document_kind",
+        "target_governing_schema",
+        "target_home_pattern",
+        "relationship",
+        "relabel_existing",
+        "rehome_existing",
+        "new_target_document_required",
+        "target_required_section_count",
+        "existing_target_sections_satisfied"
+      ],
+      "properties": {
+        "existing_document_kind": {"const": "l0_graph_substrate_manifest"},
+        "existing_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+        "existing_governing_schema": {"const": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json"},
+        "target_document_kind": {"const": "l0_substrate_manifest"},
+        "target_governing_schema": {"const": "schemas/l0_substrate_manifest.v1.schema.json"},
+        "target_home_pattern": {"const": "generated/c3materialize/{run_id}/l0_substrate_manifest.json"},
+        "relationship": {"const": "source_input_to_new_projection"},
+        "relabel_existing": {"const": false},
+        "rehome_existing": {"const": false},
+        "new_target_document_required": {"const": true},
+        "target_required_section_count": {"const": 9},
+        "existing_target_sections_satisfied": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"const": "parts"}
+        }
+      }
+    },
+    "design_measurements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline", "l1_release_baseline", "card_to_part_receiver_grain", "l1_identity_and_population_baseline"],
+      "properties": {
+        "cover_partition_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_path",
+            "source_artifact_role",
+            "total_members",
+            "single_system_members",
+            "two_system_members",
+            "three_system_members",
+            "same_domain_multi_members",
+            "cross_domain_multi_members"
+          ],
+          "properties": {
+            "source_path": {"const": "kimi_subdivision_harness/c3_structures.json"},
+            "source_artifact_role": {"const": "c3_i_cover_output"},
+            "total_members": {"const": 4857},
+            "single_system_members": {"const": 2474},
+            "two_system_members": {"const": 645},
+            "three_system_members": {"const": 1738},
+            "same_domain_multi_members": {"const": 1843},
+            "cross_domain_multi_members": {"const": 540}
+          }
+        },
+        "wave3_manifest_compile_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "existing_manifest_parts",
+            "card_relation_rows",
+            "card_subjects",
+            "enrich_existing_part_rows",
+            "add_new_part_rows",
+            "relation_grain",
+            "measurement_join_method",
+            "compiler_join_requirement",
+            "new_part_subject_paths"
+          ],
+          "properties": {
+            "existing_manifest_parts": {"const": 39},
+            "card_relation_rows": {"const": 13},
+            "card_subjects": {"const": 10},
+            "enrich_existing_part_rows": {"const": 10},
+            "add_new_part_rows": {"const": 3},
+            "relation_grain": {"const": "file_artifact_relation"},
+            "measurement_join_method": {"const": "indicative_substring_probe"},
+            "compiler_join_requirement": {"const": "structured_card_artifact_ref_to_exact_part_id"},
+            "new_part_subject_paths": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "infra/aws/globgrph/kuzu_load.py",
+                  "infra/aws/globgrph/kuzu_stitch_load.py",
+                  "infra/aws/globgrph/snap_store.py"
+                ]
+              }
+            }
+          }
+        },
+        "l1_release_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_parts",
+            "stores_exact_count",
+            "grain_prose_substring_count",
+            "key_prose_substring_count",
+            "failure_mode_prose_substring_count",
+            "store_measurement_method",
+            "prose_measurement_method",
+            "operative_schema_field_paths_before_amendment",
+            "release_condition",
+            "wave3_completion_sufficient",
+            "l1_work_startable",
+            "operative_transition_ready"
+          ],
+          "properties": {
+            "manifest_parts": {"const": 42},
+            "stores_exact_count": {"const": 42},
+            "grain_prose_substring_count": {"const": 7},
+            "key_prose_substring_count": {"const": 6},
+            "failure_mode_prose_substring_count": {"const": 3},
+            "store_measurement_method": {"const": "literal_home_field"},
+            "prose_measurement_method": {"const": "substring_count_not_semantic_coverage"},
+            "operative_schema_field_paths_before_amendment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schema_path", "measurement_method", "grain", "key", "failure_mode"],
+              "properties": {
+                "schema_path": {"const": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json"},
+                "measurement_method": {"const": "defined_property_path_extraction"},
+                "grain": {"const": 0},
+                "key": {"const": 0},
+                "failure_mode": {"const": 0}
+              }
+            },
+            "release_condition": {"const": "structured_store_grain_key_failure_mode_complete"},
+            "wave3_completion_sufficient": {"const": false},
+            "l1_work_startable": {"const": true},
+            "operative_transition_ready": {"const": false}
+          }
+        },
+        "card_to_part_receiver_grain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["card_trust_qualifies", "does_not_qualify", "part_projection_relation", "ambiguous_missing_or_substring_relation", "grain_settled", "ruling_evidence", "landing_sequence"],
+          "properties": {
+            "card_trust_qualifies": {"const": "subject_resource"},
+            "does_not_qualify": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {"enum": ["card_document", "persisted_artifact_universally"]}
+            },
+            "part_projection_relation": {"const": "exact_one_to_one_subject_id_to_part_id"},
+            "ambiguous_missing_or_substring_relation": {"const": "explicit_compilation_residue"},
+            "grain_settled": {"const": true},
+            "ruling_evidence": {"type": "string", "minLength": 1},
+            "landing_sequence": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["strategy", "schema_change", "parts_registered_retirement_sequence", "post_rerun_receiver_population", "receiver_readiness_axes", "admitted_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "completion_populations", "unknown_remediation_population"],
+              "properties": {
+                "strategy": {"const": "receiver_before_join"},
+                "schema_change": {"const": "additive_optional"},
+                "parts_registered_retirement_sequence": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["generator_write_sites_removed", "committed_manifest_field_present", "shared_schema_property_present", "next_required_act", "final_required_act", "hand_edit_manifest_prohibited"],
+                  "properties": {
+                    "generator_write_sites_removed": {"const": true},
+                    "committed_manifest_field_present": {"const": true},
+                    "shared_schema_property_present": {"const": true},
+                    "next_required_act": {"const": "generator_rerun_after_shared_schema_pass"},
+                    "final_required_act": {"const": "remove_schema_property_after_emitted_manifest_validation"},
+                    "hand_edit_manifest_prohibited": {"const": true}
+                  }
+                },
+                "post_rerun_receiver_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["total_parts", "admitted_exact_subject_matches", "home_space", "grain", "key", "failure_mode", "summation_across_receivers_prohibited"],
+                  "properties": {
+                    "total_parts": {"const": 42},
+                    "admitted_exact_subject_matches": {"const": 0},
+                    "home_space": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["emitted", "declared", "unknown"],
+                      "properties": {"emitted": {"const": 42}, "declared": {"const": 42}, "unknown": {"const": 0}}
+                    },
+                    "grain": {"$ref": "#/$defs/current_receiver_population"},
+                    "key": {"$ref": "#/$defs/current_receiver_population"},
+                    "failure_mode": {"$ref": "#/$defs/current_receiver_population"},
+                    "summation_across_receivers_prohibited": {"const": true}
+                  },
+                  "x-rule24": {"domain": "emission and declaration populations for each receiver field after the deterministic rerun", "grain": "one receiver field across 42 manifest parts", "intent": "report home_space, grain, key, and failure_mode independently; never sum receiver counts into a progress numerator", "mece": "within each receiver, declared plus unknown equals 42 and emitted equals 42; summation across receivers is explicitly prohibited", "state_coherence": "a source, admission, or transformation change may move only the receiver fields whose independent readiness axes become satisfied"}
+                },
+                "receiver_readiness_axes": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["candidate_population", "home_space", "failure_mode", "key", "grain"],
+                  "properties": {
+                    "candidate_population": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["home", "admission_state", "candidate_json_file_count", "valid_card_document_count", "non_card_document_count", "excluded_non_card_home", "exact_subject_match_count"],
+                      "properties": {
+                        "home": {"const": "org/**/D11_CARDS_W4/*.json"},
+                        "admission_state": {"const": "not_admitted"},
+                        "candidate_json_file_count": {"const": 24},
+                        "valid_card_document_count": {"const": 23},
+                        "non_card_document_count": {"const": 1},
+                        "excluded_non_card_home": {"const": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json"},
+                        "exact_subject_match_count": {"const": 23}
+                      }
+                    },
+                    "home_space": {"$ref": "#/$defs/home_space_readiness"},
+                    "failure_mode": {"$ref": "#/$defs/failure_mode_readiness"},
+                    "key": {"$ref": "#/$defs/key_readiness"},
+                    "grain": {"$ref": "#/$defs/grain_readiness"}
+                  },
+                  "x-rule24": {"domain": "independent preconditions for moving one receiver from unknown to declared", "grain": "one receiver over the exact 23-card W4 candidate population", "intent": "separate source-payload completeness, registry admission, schema-bound transformation authority, and compiler implementation readiness", "mece": "each axis has its own exhaustive state vocabulary; multiple axes may be blocked simultaneously and no single fate-class value hides that conjunction", "state_coherence": "admitting cards changes only registry_admission_state; authoring a source field changes only source_payload_state; governing a transform changes only transformation_state; implementing its execution changes only compiler_implementation_state"}
+                },
+                "admitted_card_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["source_glob", "total", "exact_subject_matches", "receiver_residue"],
+                  "properties": {
+                    "source_glob": {"const": "org/**/D11_CARDS_W3/*.json"},
+                    "total": {"const": 13},
+                    "exact_subject_matches": {"const": 0},
+                    "receiver_residue": {"const": 13}
+                  }
+                },
+                "unknown_satisfies_operative_completeness": {"const": false},
+                "future_mapping_effect": {"const": "unknown_to_declared_enrichment"},
+                "ruling_evidence": {"type": "string", "minLength": 1},
+                "completion_populations": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["cardable", "unbuilt", "l1_resolved"],
+                  "properties": {
+                    "cardable": {"type": "object", "additionalProperties": false, "required": ["part_count", "terminal_claim_status", "current_terminal_count"], "properties": {"part_count": {"const": 36}, "terminal_claim_status": {"const": "declared"}, "current_terminal_count": {"const": 0}}},
+                    "unbuilt": {"type": "object", "additionalProperties": false, "required": ["part_count", "terminal_claim_status_under_current_directive", "becomes_declarable_when"], "properties": {"part_count": {"const": 3}, "terminal_claim_status_under_current_directive": {"const": "unknown"}, "becomes_declarable_when": {"const": "part_is_built"}}},
+                    "l1_resolved": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["part_count", "measurement_state", "complete_four_receiver_source_count", "exact_part_ids", "home_space_present_count", "grain_receiver_present_count", "key_expression_present_count", "failure_mode_present_basis_count", "card_sha256"],
+                      "properties": {
+                        "part_count": {"const": 3},
+                        "measurement_state": {"const": "completed"},
+                        "complete_four_receiver_source_count": {"const": 0},
+                        "exact_part_ids": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"]}},
+                        "home_space_present_count": {"const": 0},
+                        "grain_receiver_present_count": {"const": 0},
+                        "key_expression_present_count": {"const": 0},
+                        "failure_mode_present_basis_count": {"const": 2},
+                        "card_sha256": {"type": "object", "additionalProperties": false, "required": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"], "properties": {".comp-graph/graph.json": {"const": "28bda7703368e49d01ebe196cb56d42b3b000cd66ce740df93deb314e750e84f"}, "graph_contracts": {"const": "f117ac55c1a7ac1afd5b7ef64cd8871c8cf479eee653ddf06d99a89b31c83195"}, "resource_summaries": {"const": "448147530d445b06c11f7d95c49906805ac94731a151e195e1223bf0fca2106d"}}}
+                      }
+                    }
+                  },
+                  "x-rule24": {"domain": "terminal declaration treatment of the 42-part manifest population", "grain": "one mutually exclusive part population", "intent": "separate current-directive terminal unknown from remediable unknown and already-carded-but-incomplete inputs", "mece": "36 cardable plus 3 unbuilt plus 3 L1-resolved equals 42 with no overlap", "state_coherence": "unbuilt moves to cardable only when the part is built; L1-resolved moves to declared only after complete admitted receiver inputs and a schema-bound transformation exist"}
+                },
+                "unknown_remediation_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["source", "total", "population_boundary", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "subject_semantic_partitions_required", "operational_queue_classifier", "partition_controls", "remote_uri_denominators", "remote_uri_instrument", "cardable_candidate_total", "unbuilt_future_layer_ids", "unbuilt_disposition", "brace_pattern_part_count", "brace_pattern_syntactic_expansion_count", "brace_pattern_syntactic_expansion_role", "brace_part_census", "enumerated_member_evidence", "brace_correction_evidence", "brace_pattern_disposition", "runtime_named_family_contract", "member_set_contract", "resolved_preconditions", "unresolved_preconditions", "remaining_contract_gaps", "wave_cut_ready", "evidence"],
+                  "properties": {
+                    "source": {"const": "manifest_parts_with_unknown_receiver"},
+                    "total": {"const": 42},
+                    "population_boundary": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["parent_document_kind", "parent_document_home", "parent_sha256", "operation", "excluded_exact_part_ids", "exclusion_reason"],
+                      "properties": {
+                        "parent_document_kind": {"const": "l0_graph_substrate_manifest"},
+                        "parent_document_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+                        "parent_sha256": {"const": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92"},
+                        "operation": {"const": "identity"},
+                        "excluded_exact_part_ids": {
+                          "type": "array",
+                          "maxItems": 0
+                        },
+                        "exclusion_reason": {"const": "no_admitted_wave3_card_subject_id_exactly_matches_a_manifest_part_id"}
+                      }
+                    },
+                    "part_class_census": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["store", "materializer", "output_artifact", "projection", "spec_artifact"],
+                      "properties": {
+                        "store": {"const": 21},
+                        "materializer": {"const": 7},
+                        "output_artifact": {"const": 6},
+                        "projection": {"const": 6},
+                        "spec_artifact": {"const": 2}
+                      }
+                    },
+                    "resolution_grain": {"const": "per_part"},
+                    "prohibited_resolution_proxies": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["part_class", "filesystem_path_exists"]}
+                    },
+                    "subject_semantic_partitions_required": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "uniqueItems": true,
+                      "items": {"enum": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"]}
+                    },
+                    "operational_queue_classifier": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["precedence", "assignment_rule", "required_independent_axes", "queue_partition"],
+                      "properties": {
+                        "precedence": {"type": "array", "prefixItems": [{"const": "unbuilt_future_layer"}, {"const": "brace_expression"}, {"const": "remote_s3_uri"}, {"const": "local_file_path"}, {"const": "path_shaped_absent"}], "items": false, "minItems": 5, "maxItems": 5},
+                        "assignment_rule": {"const": "first_matching_class_only"},
+                        "required_independent_axes": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["locator_form", "realization_state", "enumerability_state"]}},
+                        "queue_partition": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["file_resolves", "remote_uri", "brace_pattern", "unbuilt_future_layer", "path_shaped_but_absent"],
+                          "properties": {"file_resolves": {"const": 22}, "remote_uri": {"const": 14}, "brace_pattern": {"const": 3}, "unbuilt_future_layer": {"const": 3}, "path_shaped_but_absent": {"const": 0}}
+                        }
+                      }
+                    },
+                    "partition_controls": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["known_present", "known_absent"],
+                      "properties": {
+                        "known_present": {"const": true},
+                        "known_absent": {"const": false}
+                      }
+                    },
+                    "remote_uri_denominators": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["predicate", "remote_uri_manifest_part_ids", "residue_remote_uri_part_ids", "arn_scheme_part_ids"],
+                      "properties": {
+                        "predicate": {"const": "home_starts_s3_scheme"},
+                        "remote_uri_manifest_part_ids": {
+                          "type": "array",
+                          "minItems": 14,
+                          "maxItems": 14,
+                          "uniqueItems": true,
+                          "items": {"enum": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"]}
+                        },
+                        "residue_remote_uri_part_ids": {"type": "array", "minItems": 14, "maxItems": 14, "uniqueItems": true, "items": {"enum": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"]}},
+                        "arn_scheme_part_ids": {"type": "array", "maxItems": 0}
+                      }
+                    },
+                    "remote_uri_instrument": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["command_shape", "result_field", "same_bucket_positive_control_required", "head_object_alone_prohibited", "execution_state"],
+                      "properties": {
+                        "command_shape": {"const": "aws s3api list-objects-v2 --bucket <bucket> --prefix <key> --max-keys 1"},
+                        "result_field": {"const": "KeyCount"},
+                        "same_bucket_positive_control_required": {"const": true},
+                        "head_object_alone_prohibited": {"const": true},
+                        "execution_state": {"const": "not_run", "x-rule24": {"domain": "one remote-object probe execution", "grain": "one probe attempt", "intent": "separate execution standing from object existence verdict", "mece": "not_run, completed, and failed cover execution outcomes; this proposal snapshot is not_run", "state_coherence": "an attempt moves not_run to completed or failed; a retry creates new evidence"}}
+                      }
+                    },
+                    "cardable_candidate_total": {"const": 39},
+                    "unbuilt_future_layer_ids": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 3,
+                      "uniqueItems": true,
+                      "items": {"enum": ["affinity_matrix", "similarity_network_fusion", "identity_and_succession"]}
+                    },
+                    "unbuilt_disposition": {"const": "exclude_never_manufacture_substrate"},
+                    "brace_pattern_part_count": {"const": 3},
+                    "brace_pattern_syntactic_expansion_count": {"const": 14},
+                    "brace_pattern_syntactic_expansion_role": {"const": "parser_control_not_population"},
+                    "brace_part_census": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["stable_enumerable", "runtime_named_non_enumerable"],
+                      "properties": {
+                        "stable_enumerable": {"const": 2},
+                        "runtime_named_non_enumerable": {"const": 1}
+                      }
+                    },
+                    "enumerated_member_evidence": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["source_manifest", "stable_families"],
+                      "properties": {
+                        "source_manifest": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["home", "git_commit", "git_blob"],
+                          "properties": {
+                            "home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+                            "git_commit": {"const": "94efcda69cf00db573866174b110a0bcbe39a42b"},
+                            "git_blob": {"const": "3f7bd6ee2251891bc05d57ba6b9b2e889a9f8431"}
+                          }
+                        },
+                        "stable_families": {
+                          "type": "array",
+                          "minItems": 2,
+                          "maxItems": 2,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["part_id", "home_expression", "members"],
+                            "properties": {
+                              "part_id": {"enum": [".comp-graph/platinum.CACHE_SET", "_build_manifest.json.SET"]},
+                              "home_expression": {"type": "string", "minLength": 1},
+                              "members": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "brace_correction_evidence": {"type": "object", "additionalProperties": false, "required": ["withdrawn_syntactic_member_claim_count", "reason"], "properties": {"withdrawn_syntactic_member_claim_count": {"const": 6}, "reason": {"const": "runtime_named_instances_do_not_form_a_durable_member_population"}}},
+                    "brace_pattern_disposition": {"const": "split_by_enumerability"},
+                    "runtime_named_family_contract": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["part_id", "disposition", "population_status", "pattern_representation", "normalized_pattern", "pattern_source_home", "pattern_source_line", "pattern_source_git_commit", "pattern_source_git_blob", "pattern_source_sha256", "observation_count_is_population"],
+                      "properties": {
+                        "part_id": {"const": "kuzu_nessie_db.rebuild.tmp.SET"},
+                        "disposition": {"const": "declared_pattern_non_enumerable"},
+                        "population_status": {"const": "orphaned"},
+                        "pattern_representation": {"const": "normalized_semantic_family_template"},
+                        "normalized_pattern": {"const": "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>"},
+                        "pattern_source_home": {"const": "infra/aws/globgrph/_canonical.py"},
+                        "pattern_source_line": {"const": 288},
+                        "pattern_source_git_commit": {"const": "17eb3fa310ae04b7cb8ca55cfde8f801f34e8c04"},
+                        "pattern_source_git_blob": {"const": "7867f1a0a88dab0c9e1e273d794e5901d0aade48"},
+                        "pattern_source_sha256": {"const": "edaa00ae4617f06b07932f8706c20fbbe0482ee610f8854ac1f7d591a1dd601c"},
+                        "observation_count_is_population": {"const": false}
+                      }
+                    },
+                    "member_set_contract": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["enumerability_axis_required", "stored_cardinality_prohibited", "enumerable_shape", "non_enumerable_shape", "shared_schema_receiver_present", "shared_schema_validation_state", "interim_prose_is_complete"],
+                      "properties": {
+                        "enumerability_axis_required": {"const": true},
+                        "stored_cardinality_prohibited": {"const": true},
+                        "enumerable_shape": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["members_required", "minimum_members", "cardinality_derivation", "recursive_expansion_required"],
+                          "properties": {
+                            "members_required": {"const": true},
+                            "minimum_members": {"const": 2},
+                            "cardinality_derivation": {"const": "length(members)"},
+                            "recursive_expansion_required": {"const": true}
+                          }
+                        },
+                        "non_enumerable_shape": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["pattern_required", "pattern_source_home_required", "pattern_source_line_required", "members_field_prohibited", "cardinality_field_prohibited"],
+                          "properties": {
+                            "pattern_required": {"const": true},
+                            "pattern_source_home_required": {"const": true},
+                            "pattern_source_line_required": {"const": true},
+                            "members_field_prohibited": {"const": true},
+                            "cardinality_field_prohibited": {"const": true}
+                          }
+                        },
+                        "shared_schema_receiver_present": {"const": true},
+                        "shared_schema_validation_state": {"enum": ["not_run", "failed", "passed"], "x-enum-definitions": {"not_run": "No validation has run against the current shared-schema bytes.", "failed": "Validation ran and at least one binding condition failed.", "passed": "The complete declared validation suite passed against the pinned shared-schema bytes."}, "x-rule24": {"domain": "shared-schema validation execution and verdict", "grain": "one schema byte identity and validation-suite version", "intent": "avoid conflating not-run with failed", "mece": "not_run, failed, and passed are disjoint and exhaustive", "state_coherence": "schema byte or suite changes reset to not_run; execution moves to failed or passed"}},
+                        "interim_prose_is_complete": {"const": false}
+                      }
+                    },
+                    "resolved_preconditions": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["remote_uri_instrument_named", "map_owner_runtime_family_disposition"]}
+                    },
+                    "unresolved_preconditions": {
+                      "type": "array",
+                      "maxItems": 0
+                    },
+                    "remaining_contract_gaps": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["shared_schema_validation", "compiler_validation"]}
+                    },
+                    "wave_cut_ready": {"const": false},
+                    "evidence": {"type": "string", "minLength": 1}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "l1_identity_and_population_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["firm_qualified_symbol_identity", "population_basis", "coverage_discrimination", "lane_delivery", "evidence"],
+          "properties": {
+            "firm_qualified_symbol_identity": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["trace_symbols", "raw_join_count", "lossy_parse_join_count", "lossy_parse_join_percent", "parse", "firm_values", "bare_gold_target_count", "firm_must_remain_in_identity"],
+              "properties": {
+                "trace_symbols": {"const": 2249},
+                "raw_join_count": {"const": 0},
+                "lossy_parse_join_count": {"const": 1331},
+                "lossy_parse_join_percent": {"const": 59.2},
+                "parse": {"const": "strip_pipeline_firm_prefix"},
+                "firm_values": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["bd", "inf", "mdpf"]}},
+                "bare_gold_target_count": {"const": 3},
+                "firm_must_remain_in_identity": {"const": true}
+              }
+            },
+            "population_basis": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["prd_claimed_is_denominator", "single_substrate_sweep_signatures", "observed_cross_store_union_counts", "symbol_prd_claimed_count", "symbol_prd_provenance", "file_prd_claimed_count", "file_prd_claim_source", "measurement_evidence", "denominator_contracts"],
+              "properties": {
+                "prd_claimed_is_denominator": {"const": false},
+                "single_substrate_sweep_signatures": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["arn_resource", "chain_motif"],
+                  "properties": {
+                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["prd_claimed_count", "matching_substrate", "matching_substrate_count", "signature_present"], "properties": {"prd_claimed_count": {"const": 1851}, "matching_substrate": {"const": "kuzu"}, "matching_substrate_count": {"const": 1851}, "signature_present": {"const": true}}},
+                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["prd_claimed_count", "matching_substrate", "matching_substrate_count", "signature_present"], "properties": {"prd_claimed_count": {"const": 6207}, "matching_substrate": {"const": "semctl"}, "matching_substrate_count": {"const": 6207}, "signature_present": {"const": true}}}
+                  }
+                },
+                "observed_cross_store_union_counts": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["arn_resource", "chain_motif", "symbol", "semantic_role"],
+                  "properties": {
+                    "arn_resource": {"const": 1970},
+                    "chain_motif": {"const": 6255},
+                    "symbol": {"const": 14447},
+                    "semantic_role": {"const": "evidence_only_not_population_denominator"}
+                  }
+                },
+                "symbol_prd_claimed_count": {"const": 19482},
+                "symbol_prd_provenance": {"const": "unresolved"},
+                "file_prd_claimed_count": {"const": 3532},
+                "file_prd_claim_source": {"const": "co_change_corpus"},
+                "measurement_evidence": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["home", "git_commit", "git_blob", "cell_pointers"],
+                  "properties": {
+                    "home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_L1/L1_CELLS.json"},
+                    "git_commit": {"const": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a"},
+                    "git_blob": {"const": "29cb90710e445f915c09bdac9717976c6752fbe9"},
+                    "cell_pointers": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["chain_motif", "symbol", "file", "arn_resource"],
+                      "properties": {
+                        "chain_motif": {"const": "/cells/1"},
+                        "symbol": {"const": "/cells/8"},
+                        "file": {"const": "/cells/16"},
+                        "arn_resource": {"const": "/cells/23"}
+                      }
+                    }
+                  }
+                },
+                "denominator_contracts": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["file", "chain_motif", "symbol", "arn_resource"],
+                  "x-rule24": {"domain": "coverage denominator adjudication", "grain": "one identity space and evidence vintage", "intent": "separate observed counts from defensible denominators", "mece": "adjudicated means a scoped denominator exists; unresolved means a named discriminator blocks it", "state_coherence": "new external evidence may move unresolved to adjudicated without changing prior observations"},
+                  "properties": {
+                    "file": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "committed_same_vintage_member_set"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "comparable_graph_vintage_and_declared_scope"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "symbol": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "external_coverage_oracle"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "declared_scan_scope"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}}
+                  }
+                }
+              }
+            },
+            "coverage_discrimination": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["file", "chain_motif", "symbol", "arn_resource"],
+              "x-rule24": {
+                "semantic_dimension": "coverage adjudication under available discriminators",
+                "values": ["measured_snapshot", "blocked_missing_discriminator"],
+                "mutually_exclusive": true,
+                "collectively_exhaustive": true,
+                "measured_snapshot_requires": "two observed source populations at one measurement event, including an oracle outside the producing pipeline",
+                "blocked_requires": "the missing discriminator is named"
+              },
+              "properties": {
+                "file": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "oracle", "observed_filesystem_count", "observed_kuzu_portal_module_count", "observed_shared_count", "observed_filesystem_only_count", "observed_kuzu_only_count", "observed_union_count"], "properties": {"coverage_adjudication": {"const": "measured_snapshot"}, "oracle": {"const": "filesystem"}, "observed_filesystem_count": {"const": 429}, "observed_kuzu_portal_module_count": {"const": 374}, "observed_shared_count": {"const": 373}, "observed_filesystem_only_count": {"const": 56}, "observed_kuzu_only_count": {"const": 1}, "observed_union_count": {"const": 430}}},
+                "chain_motif": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "comparable_graph_vintage_and_declared_scope"}, "observed_union_count": {"const": 6255}, "nonresolving_count": {"const": 165}}},
+                "symbol": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_trace_symbol_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "external_coverage_oracle"}, "observed_trace_symbol_count": {"const": 2249}, "nonresolving_count": {"const": 918}}},
+                "arn_resource": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "declared_scan_scope"}, "observed_union_count": {"const": 1970}, "nonresolving_count": {"const": 278}}}
+              }
+            },
+            "lane_delivery": {"type": "object", "additionalProperties": false, "required": ["commit", "cell_total", "measured", "unmeasured", "acceptance_criteria_met", "acceptance_criteria_total", "ac7_state", "operative_effect"], "properties": {"commit": {"const": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a"}, "cell_total": {"const": 29}, "measured": {"const": 26}, "unmeasured": {"const": 3}, "acceptance_criteria_met": {"const": 6}, "acceptance_criteria_total": {"const": 7}, "ac7_state": {"const": "unmet"}, "operative_effect": {"const": "none"}}},
+            "evidence": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "execution_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currently_executable_units", "dependency_edges", "l2_output_stages", "downstream_guard", "operational_gaps"],
+      "properties": {
+        "currently_executable_units": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"enum": ["L0", "L2_STRUCTURE", "L2_BEHAVIOR"]}
+        },
+        "dependency_edges": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["prerequisite", "dependent"],
+            "properties": {
+              "prerequisite": {"enum": ["L0", "L1", "L3"]},
+              "dependent": {"enum": ["L1", "L2_FUSION_ADMISSIBLE", "L3", "L4"]}
+            }
+          }
+        },
+        "l2_output_stages": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/l2_output_stage"}
+        },
+        "downstream_guard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["prohibited_units", "until_document_kind_exists", "measured_failed_fusion"],
+          "properties": {
+            "prohibited_units": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {"enum": ["L3", "L4"]}
+            },
+            "until_document_kind_exists": {"const": "l1_entity_spine"},
+            "measured_failed_fusion": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["topology_ids", "cochange_files", "joinable_entities", "failure_reason"],
+              "properties": {
+                "topology_ids": {"const": 19482},
+                "cochange_files": {"const": 3532},
+                "joinable_entities": {"const": 0},
+                "failure_reason": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        },
+        "operational_gaps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["gap_id", "required_operation", "grain_contract_settled", "receiver_schema_extension_present", "receiver_semantics_validated", "w3_extension_boundary_state", "receiver_source_registry_present", "candidate_glob_expands_authority", "required_registry_home", "required_registry_populations", "w4_candidate_ceiling", "grain_contract_owner", "schema_extension_owner", "receiver_source_registry_owner", "compiler_task_ref", "prevents_operative_transition"],
+            "properties": {
+              "gap_id": {"const": "l0_part_semantics_for_l1"},
+              "required_operation": {"const": "populate_structured_grain_key_failure_mode_for_every_part"},
+              "grain_contract_settled": {"const": true},
+              "receiver_schema_extension_present": {"const": true},
+              "receiver_semantics_validated": {"const": true},
+              "w3_extension_boundary_state": {"const": "intentional_temporal"},
+              "receiver_source_registry_present": {"const": false},
+              "candidate_glob_expands_authority": {"const": false},
+              "required_registry_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json"},
+              "required_registry_populations": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["extension_population", "receiver_source_populations"],
+                "properties": {
+                  "extension_population": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["current_member_count", "consumer_scope"],
+                    "properties": {"current_member_count": {"const": 13}, "consumer_scope": {"const": "existing_w3_map_enrichment_only"}}
+                  },
+                  "receiver_source_populations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["grain", "key", "failure_mode"],
+                    "properties": {
+                      "grain": {"$ref": "#/$defs/empty_grain_receiver_population"},
+                      "key": {"$ref": "#/$defs/empty_key_receiver_population"},
+                      "failure_mode": {"$ref": "#/$defs/empty_failure_mode_receiver_population"}
+                    }
+                  }
+                },
+                "x-rule24": {"domain": "card admission populations consumed by distinct compiler operations", "grain": "one governed card population", "intent": "keep W3 map enrichment admission independent from each receiver-source admission", "mece": "extension, grain, key, and failure_mode are separate named populations; membership may overlap across populations because consumers are independent", "state_coherence": "a card enters only the population whose exact completeness predicate and transform pin pass; no directory discovery mutates any population"}
+              },
+              "w4_candidate_ceiling": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["candidate_json_file_count", "valid_card_document_count", "non_card_document_count", "excluded_non_card_home", "exact_subject_count", "governed_cardable_part_count", "task_order_card_requirement_state", "task_order_card_schema_binding_state", "produced_card_schema", "produced_card_schema_selection_authority", "produced_card_schema_validation_state", "title_acceptance_surprise_state", "remote_missing_card_count", "remote_card_delivery_obligation_state", "issuer_work_unit_state"],
+                "properties": {
+                  "candidate_json_file_count": {"const": 24},
+                  "valid_card_document_count": {"const": 23},
+                  "non_card_document_count": {"const": 1},
+                  "excluded_non_card_home": {"const": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json"},
+                  "exact_subject_count": {"const": 23},
+                  "governed_cardable_part_count": {"const": 36},
+                  "task_order_card_requirement_state": {"const": "absent_all_three_tranches"},
+                  "task_order_card_schema_binding_state": {"const": "absent_all_three_tranches"},
+                  "produced_card_schema": {"const": "org/standards/SUBSTRATE_CARD.v2.schema.json"},
+                  "produced_card_schema_selection_authority": {"const": "lane_selected"},
+                  "produced_card_schema_validation_state": {"const": "passed"},
+                  "title_acceptance_surprise_state": {"const": "not_raised_before_execution"},
+                  "remote_missing_card_count": {"const": 12},
+                  "remote_card_delivery_obligation_state": {"const": "not_issued"},
+                  "issuer_work_unit_state": {"const": "not_cut_until_registry_exists"}
+                },
+                "x-rule24": {"domain": "current W4 card candidate ceiling and its warrant", "grain": "one W4 candidate population", "intent": "separate observed files and subjects from governed target, issued deliverable requirement, issued schema binding, lane-selected validation, surprise-channel handling, and future issuer work", "mece": "each field is one independently measured dimension; a passed lane-selected schema validation does not manufacture an issued card requirement or registry admission", "state_coherence": "a future TO changes requirement and schema-binding states only; producing missing cards changes counts only; registry admission is outside this candidate record"}
+              },
+              "grain_contract_owner": {"const": "4.0.0_SA_CRO~A"},
+              "schema_extension_owner": {"const": "1.0.0_SA_CTO~X"},
+              "receiver_source_registry_owner": {"const": "0.4.0_DT_ClientPlatform~X"},
+              "compiler_task_ref": {"const": "TO-L1-DTX work item 1"},
+              "prevents_operative_transition": {"const": true}
+            }
+          }
+        }
+      }
+    },
+    "layer_contracts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/layer_contract"}
+    },
+    "checkpoint_sequence": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/checkpoint"}
+    },
+    "resolved_decisions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {"$ref": "#/$defs/resolved_decision"}
+    },
+    "open_decisions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/open_decision"}
+    },
+    "shared_root_changes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["made", "authorized_after_package_validation"],
+      "properties": {
+        "made": {"const": false},
+        "authorized_after_package_validation": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "evidence_file_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["home", "persistence_state", "git_blob", "sha256"],
+      "properties": {
+        "home": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\\\).+$"},
+        "persistence_state": {
+          "enum": ["working_tree_modified_uncommitted", "working_tree_untracked"],
+          "x-enum-definitions": {
+            "working_tree_modified_uncommitted": "The file is tracked but its measured bytes differ from HEAD.",
+            "working_tree_untracked": "The measured file has no admitted Git home at this evidence vintage."
+          },
+          "x-rule24": {"domain": "Git persistence standing of one measured evidence file", "grain": "one evidence file at the validation event", "intent": "separate changed tracked evidence from never-admitted evidence", "mece": "the two values are disjoint for the two measured files", "state_coherence": "a commit creates a new evidence vintage"}
+        },
+        "git_blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "receiver_declaration_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_count", "unknown_count"],
+      "properties": {"declared_count": {"const": 0}, "unknown_count": {"const": 42}}
+    },
+    "document_lifecycle_absence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode_state", "mutation_policy_state", "temporal_claim_state", "authority_role_state"],
+      "properties": {
+        "authorship_mode_state": {"const": "absent"},
+        "mutation_policy_state": {"const": "absent"},
+        "temporal_claim_state": {"const": "absent"},
+        "authority_role_state": {"const": "absent"}
+      }
+    },
+    "post_rerun_base_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_state", "release_gate_state", "evidence_pair", "structural_emission", "declaration_measurement", "home_space_measurement", "population_completeness", "variant_suffix_authority", "generation_materializer_relation_cardinality", "lifecycle_axis_coverage", "receipt_contract", "unknown_lifecycle_expressibility", "remediation_sequence"],
+      "properties": {
+        "validation_state": {"const": "failed"},
+        "release_gate_state": {"const": "held"},
+        "evidence_pair": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest", "receipt", "artifact_digest_binding_state", "repository_replayability_state"],
+          "properties": {
+            "manifest": {
+              "allOf": [
+                {"$ref": "#/$defs/evidence_file_record"},
+                {"properties": {"home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"}, "persistence_state": {"const": "working_tree_modified_uncommitted"}, "git_blob": {"const": "db684f932995d519a9087725b2d2539d249ea533"}, "sha256": {"const": "47f583e6ffcd6863540183f473cee02eb37e6f929c2a20eae42902dc90df0f92"}}}
+              ]
+            },
+            "receipt": {
+              "allOf": [
+                {"$ref": "#/$defs/evidence_file_record"},
+                {"properties": {"home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.receipt.json"}, "persistence_state": {"const": "working_tree_untracked"}, "git_blob": {"const": "3da49495aa16c5f92563c9c955bbd888d4f85072"}, "sha256": {"const": "9d0885b467e36430f97b8e004590389c15bdd6cf850b53b540dd19224b3e13c7"}}}
+              ]
+            },
+            "artifact_digest_binding_state": {"const": "verified"},
+            "repository_replayability_state": {"const": "not_replayable_from_committed_pair"}
+          }
+        },
+        "structural_emission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest_part_count", "frozen_schema_validation_error_count", "receiver_presence_count"],
+          "properties": {
+            "manifest_part_count": {"const": 42},
+            "frozen_schema_validation_error_count": {"const": 0},
+            "receiver_presence_count": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["home_space", "grain", "key", "failure_mode"],
+              "properties": {"home_space": {"const": 42}, "grain": {"const": 42}, "key": {"const": 42}, "failure_mode": {"const": 42}}
+            }
+          }
+        },
+        "declaration_measurement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["grain", "key", "failure_mode", "unknown_coherence_state"],
+          "properties": {
+            "grain": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "key": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "failure_mode": {"$ref": "#/$defs/receiver_declaration_measurement"},
+            "unknown_coherence_state": {"const": "coherent"}
+          }
+        },
+        "home_space_measurement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repo_path_count", "s3_uri_count", "none_count"],
+          "properties": {"repo_path_count": {"const": 25}, "s3_uri_count": {"const": 14}, "none_count": {"const": 3}}
+        },
+        "population_completeness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["assessment_state", "registered_part_count", "known_unsearched_entry_count", "known_unsearched_representation", "missing_subject_claim_state", "known_missing_subject_lower_bound", "known_missing_subject_ids", "coverage_fraction_claim_permitted"],
+          "properties": {
+            "assessment_state": {"const": "unmeasurable"},
+            "registered_part_count": {"const": 42},
+            "known_unsearched_entry_count": {"const": 12},
+            "known_unsearched_representation": {"const": "mixed_prose"},
+            "missing_subject_claim_state": {"const": "withdrawn_relation_not_subject"},
+            "known_missing_subject_lower_bound": {"const": 0},
+            "known_missing_subject_ids": {"const": []},
+            "coverage_fraction_claim_permitted": {"const": false}
+          }
+        },
+        "variant_suffix_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["part_id", "declared_source_home", "declared_source_line", "observed_source_role", "required_source_role", "authority_match_state"],
+          "properties": {
+            "part_id": {"const": "kuzu_nessie_db.rebuild.tmp.SET"},
+            "declared_source_home": {"const": "infra/aws/globgrph/_canonical.py"},
+            "declared_source_line": {"const": 188},
+            "observed_source_role": {"const": "removal_repertoire"},
+            "required_source_role": {"const": "minting_producer"},
+            "authority_match_state": {"const": "contradicted"}
+          }
+        },
+        "generation_materializer_relation_cardinality": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_value_cardinality", "observed_relation_cardinality", "affected_part_count", "affected_part_ids", "compound_value_state", "required_shape", "release_effect"],
+          "properties": {
+            "schema_value_cardinality": {"const": "single"},
+            "observed_relation_cardinality": {"const": "multiple_on_six_parts"},
+            "affected_part_count": {"const": 6},
+            "affected_part_ids": {"const": ["graph_nodes", "graph_edges", "kuzu_nessie_db.local", "cse", "_build_manifest.json.SET", "stitch_graph.json"]},
+            "compound_value_state": {"const": "writer_lists_and_roles_encoded_in_string"},
+            "required_shape": {"const": "generation_materializers_array_one_entry_per_writer_relation"},
+            "release_effect": {"const": "shared_schema_remediation_required"}
+          }
+        },
+        "lifecycle_axis_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest_document", "receipt_document", "parts"],
+          "properties": {
+            "manifest_document": {"$ref": "#/$defs/document_lifecycle_absence"},
+            "receipt_document": {"$ref": "#/$defs/document_lifecycle_absence"},
+            "parts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["part_count", "authorship_mode_present_count", "mutation_policy_present_count", "temporal_claim_present_count", "authority_role_present_count"],
+              "properties": {"part_count": {"const": 42}, "authorship_mode_present_count": {"const": 0}, "mutation_policy_present_count": {"const": 0}, "temporal_claim_present_count": {"const": 42}, "authority_role_present_count": {"const": 42}}
+            }
+          }
+        },
+        "receipt_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_kind_state", "governing_schema_state", "lifecycle_axes_state", "input_closure_state", "unbound_input_classes"],
+          "properties": {
+            "document_kind_state": {"const": "absent"},
+            "governing_schema_state": {"const": "absent"},
+            "lifecycle_axes_state": {"const": "absent"},
+            "input_closure_state": {"const": "incomplete"},
+            "unbound_input_classes": {"const": ["compiler_commit_and_home", "card_population_registry_blob", "card_population_registry_schema_blob", "base_manifest_blob", "card_to_part_map_blob", "substrate_card_schema_blob", "admitted_card_blobs", "structured_replay_digests"]}
+          }
+        },
+        "unknown_lifecycle_expressibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["claim_status_token", "unknown_lifecycle_axis_state", "terminal_transitional_partition_state"],
+          "properties": {"claim_status_token": {"const": "unknown"}, "unknown_lifecycle_axis_state": {"const": "absent"}, "terminal_transitional_partition_state": {"const": "inexpressible"}}
+        },
+        "remediation_sequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["current_pair_role", "next_step", "final_pair_step", "shared_schema_step", "release_step", "ordering_evidence"],
+          "properties": {
+            "current_pair_role": {"const": "pre_remediation_evidence_only"},
+            "next_step": {"const": "dt_receipt_contract_and_control_source_tranche"},
+            "final_pair_step": {"const": "authorized_v1_emission_then_commit_under_current_schema"},
+            "shared_schema_step": {"const": "coordinated_after_final_pair_commit_before_release"},
+            "release_step": {"const": "base_pass_on_committed_pair_under_post_step4_schema"},
+            "ordering_evidence": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "population_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "source_home", "selector", "source_persistence", "observed_member_count", "semantic_vintage", "replayability_state"],
+      "properties": {
+        "source_id": {"enum": ["portal_filesystem", "kuzu_portal_module", "c2_chain_instances", "kuzu_semctl", "trace_graph_symbols", "kuzu_portal_nonmodule", "kuzu_pipeline_symbols", "kuzu_arn", "stitch_arn"]},
+        "source_home": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\\\).+$"},
+        "selector": {"type": "string", "minLength": 1},
+        "source_persistence": {
+          "enum": ["working_tree_filesystem_view", "working_tree_untracked", "ignored_device_local"],
+          "x-enum-definitions": {
+            "working_tree_filesystem_view": "The source is a live filesystem enumeration whose exact member set was not serialized.",
+            "working_tree_untracked": "The source artifact existed in the working tree but was not admitted to Git authority.",
+            "ignored_device_local": "The source artifact was intentionally excluded from Git and existed only on the measuring device."
+          },
+          "x-rule24": {"domain": "persistence standing of one measured source population", "grain": "one source artifact at the measurement event", "intent": "separate live enumeration, untracked artifact, and intentionally ignored device-local evidence", "mece": "each source has exactly one persistence standing at the measurement event", "state_coherence": "admission to Git creates a new source-evidence vintage rather than rewriting the historical standing"}
+        },
+        "observed_member_count": {"type": "integer", "minimum": 0},
+        "semantic_vintage": {"type": ["string", "null"]},
+        "replayability_state": {"const": "not_replayable_from_tracked_evidence"}
+      }
+    },
+    "current_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["emitted", "declared", "unknown"],
+      "properties": {
+        "emitted": {"const": 42},
+        "declared": {"const": 0},
+        "unknown": {"const": 42}
+      }
+    },
+    "home_space_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "not_required"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "not_required"},
+        "transformation_state": {"const": "implemented_fail_closed"},
+        "compiler_implementation_state": {"const": "implemented_fail_closed"}
+      }
+    },
+    "failure_mode_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "complete"},
+        "source_complete_candidate_count": {"const": 23},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "key_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "incomplete"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "grain_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "absent"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "empty_grain_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_grain_branch_complete"},
+        "transform_required": {"const": true}
+      }
+    },
+    "empty_key_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_key_branch_complete"},
+        "transform_required": {"const": true}
+      }
+    },
+    "empty_failure_mode_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_failure_mode_branch_complete"},
+        "transform_required": {"const": true}
+      }
+    },
+    "l2_output_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage_id", "document_kind", "execution_availability", "required_input_document_kinds", "fusion_admissible"],
+      "properties": {
+        "stage_id": {"enum": ["raw_view_evidence", "spine_normalized_affinity"]},
+        "document_kind": {"enum": ["l2_view_evidence", "l2_affinity_bundle"]},
+        "execution_availability": {"enum": ["available_now", "prerequisite_bound"]},
+        "required_input_document_kinds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "fusion_admissible": {"type": "boolean"}
+      }
+    },
+    "document_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorship_mode", "mutation_policy", "temporal_claim", "authority_role"],
+      "properties": {
+        "authorship_mode": {"enum": ["human_authored", "machine_generated", "mixed_origin"]},
+        "mutation_policy": {"enum": ["in_place_mutable", "append_only", "whole_document_replace", "immutable"]},
+        "temporal_claim": {"enum": ["current_at_observation", "historical_snapshot", "timeless_definition"]},
+        "authority_role": {"enum": ["authoritative_source", "derived_projection", "supporting_evidence", "non_authoritative_reference"]}
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "projection", "evidence"],
+      "properties": {
+        "source": {"type": "array", "items": {"type": "string"}},
+        "projection": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "pinned_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "vintage", "sections"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "vintage": {"type": "string", "pattern": "^[0-9a-f]{10,40}$"},
+        "sections": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "layer_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layer_id",
+        "name",
+        "purpose",
+        "input_document_kinds",
+        "deliverable",
+        "required_sections",
+        "consumer_layers"
+      ],
+      "properties": {
+        "layer_id": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+        "name": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "input_document_kinds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "deliverable": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_kind", "governing_schema_target", "exact_home_pattern", "document_lifecycle", "authority", "generated_source_separation"],
+          "properties": {
+            "document_kind": {"type": "string", "minLength": 1},
+            "governing_schema_target": {"type": "string", "minLength": 1},
+            "exact_home_pattern": {"type": "string", "minLength": 1},
+            "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
+            "authority": {"type": "string", "minLength": 1},
+            "generated_source_separation": {"const": true}
+          }
+        },
+        "required_sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "semantic_dimension", "required"],
+            "properties": {
+              "field": {"type": "string", "minLength": 1},
+              "semantic_dimension": {"type": "string", "minLength": 1},
+              "required": {"type": "boolean"}
+            }
+          }
+        },
+        "consumer_layers": {"type": "array", "items": {"enum": ["L1", "L2", "L3", "L4", "terminal"]}, "uniqueItems": true}
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "from_layer", "to_layer", "approval_gate", "transition_rule", "drive_behavior", "criteria"],
+      "properties": {
+        "checkpoint_id": {"type": "string", "pattern": "^CP-L[0-4]-(L[1-4]|DONE)$"},
+        "from_layer": {"enum": ["L0", "L1", "L2", "L3", "L4"]},
+        "to_layer": {"enum": ["L1", "L2", "L3", "L4", "DONE"]},
+        "approval_gate": {"const": false},
+        "transition_rule": {"const": "all_required_measurable_criteria_pass"},
+        "drive_behavior": {"const": "continue_remediation_without_waiting_for_human_approval"},
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/criterion"}
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criterion_id", "claim", "required", "measurement_state_at_design", "predicate", "controls", "unmeasurable_reason", "resolution_owner"],
+      "properties": {
+        "criterion_id": {"type": "string", "pattern": "^L[0-4]-C[0-9]{2}$"},
+        "claim": {"type": "string", "minLength": 1},
+        "required": {"type": "boolean"},
+        "measurement_state_at_design": {"enum": ["measurable", "currently_unmeasurable"]},
+        "predicate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operator", "operands", "threshold", "compiler_rule"],
+          "properties": {
+            "operator": {"enum": ["boolean_true", "count_equals", "count_greater_equal", "zero_count", "set_equality", "all_resolve", "digest_equality", "metric_greater_equal", "metric_not_worse_than_max_inputs", "same_identity_after_mutation", "same_code_digest_across_environments"]},
+            "operands": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "threshold": {"type": ["number", "integer", "string", "boolean", "null"]},
+            "compiler_rule": {"type": "string", "pattern": "^C3M_[A-Z0-9_]+$"}
+          }
+        },
+        "controls": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["positive", "negative"],
+          "properties": {
+            "positive": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "negative": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+          }
+        },
+        "unmeasurable_reason": {"type": ["string", "null"]},
+        "resolution_owner": {"type": ["string", "null"]}
+      }
+    },
+    "open_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "question", "owner", "blocks_checkpoint", "does_not_block_drive"],
+      "properties": {
+        "decision_id": {"type": "string", "pattern": "^DEC-[0-9]{2}$"},
+        "question": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "blocks_checkpoint": {"type": "string", "pattern": "^CP-L[0-4]-(L[1-4]|DONE)$"},
+        "does_not_block_drive": {"const": true}
+      }
+    },
+    "resolved_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "semantic_dimension", "selected_value", "identity_scope", "canonical_coordinate", "cross_plane_comparison", "cross_plane_comparison_demand", "declared_bridge_pair_count", "authority_ref", "evidence_message", "not_decided_dimensions"],
+      "properties": {
+        "decision_id": {"const": "DEC-01"},
+        "semantic_dimension": {"const": "identity_grain"},
+        "selected_value": {"const": "every_entity"},
+        "identity_scope": {"const": "plane_qualified"},
+        "canonical_coordinate": {"const": "ordered_pair_plane_entity"},
+        "cross_plane_comparison": {"const": "explicit_bridge_only"},
+        "cross_plane_comparison_demand": {"const": "none_measured"},
+        "declared_bridge_pair_count": {"const": 0},
+        "authority_ref": {"const": "1.0.0_SA_CTO~X"},
+        "evidence_message": {"type": "string", "minLength": 1},
+        "not_decided_dimensions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["membership_model", "identifier_encoding_and_minting"]}
+        }
+      }
+    }
+  }
+}

@@ -49,5 +49,6 @@
   "pipeline": "MDPF feeder contract model_aua_positions/{firm} (49F SmartX; INF Eclipse/Orion; COT via a new WS-A feeder) + each firm's ADVI spine dims -> additive gold runner per firm tree (rows: level x level_key x model_key x as_of) -> platinum/advi/{firm}/model_overlay_* via the publisher -> Books L2/L3/L4 + advisorpublicprofile Book view; firm rollup ties to MDPF aum-metrics.by_model",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D3"
 }

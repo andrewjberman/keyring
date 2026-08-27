@@ -58,5 +58,6 @@
   "pipeline": "etfs",
   "coo_lane": "2.0.0_SA_COO~Z",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D4"
 }

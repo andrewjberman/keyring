@@ -1,0 +1,19 @@
+#!/bin/bash
+# comp-surprise -- the SURPRISE CHANNEL rollup (CLAUDE.md Rule 27, stage 5 of the Directive
+# Execution Pipeline). Every item across every project in ONE list, with denominators.
+#
+#   comp-surprise                  open items, grouped, denominators printed
+#   comp-surprise --armed          ARMED only -- can cause harm while unattended
+#   comp-surprise --project CODE   one project in full
+#   comp-surprise --all            include GRADUATED / DISMISSED
+#   comp-surprise --json           machine rows
+#
+# THE GAP IT CLOSES: the protocol writes ONE file PER PROJECT and nothing read them together, so
+# an item could be filed and invisible at the same time -- which is where the investigate ->
+# graduate -> remediate cycle stalls. READ-ONLY: it reports; the channel is CVO's surface.
+# Rule-16 clean: cd / dirname / pwd / python only.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/.tools/comp-surprise.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-surprise" "$*" $_exit 2>/dev/null
+exit $_exit

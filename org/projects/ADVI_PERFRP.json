@@ -57,5 +57,6 @@
   "pipeline": "49F canonical spine (opal-data-49financial/gold/advi/{dimensions: account -> relationship -> advisor -> firm; canonical: twr_daily, nna_canonical, flow_ledger, canonical_valuation ...}) + ADVI_INSURE current-state (separate, never blended) + ADVI_STITCH stitched history (SI, closed-period) -> per-client performance attribution + reporting artifacts under platinum/advi/49financial/ -> portal Advisor Intelligence Books tab + advisorpublicprofile Book toggle view ONLY (interface comparable to the BD Performance Reporting dashboard; BD = reference, not dependency)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "directive": "D2"
 }

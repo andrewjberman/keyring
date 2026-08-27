@@ -1,0 +1,23 @@
+{
+  "measured_utc": "20260827T0333Z",
+  "purpose": "WAVE-3 CENSUS DESIGN CONSTRAINT. Two instruments, two OPPOSITE blind spots, and between them a real file can be invisible to both.",
+  "blind_spot_A": {
+    "instrument": "GIT-BASED ENUMERATION -- `git ls-files`, a tracked-corpus walk, anything whose population is 'what git knows' (proof-of-spec-check.py's corpus is built this way and its header says so)",
+    "blind_to": "UNTRACKED-BUT-PRESENT -- these files are NOT IN ITS POPULATION AT ALL",
+    "\u26d4_CORRECTED_20260827T0336Z": "I first labelled this 'filesystem instruments'. WRONG, and wrong in a way that would send a wave-3 seat to the wrong tool. A FILESYSTEM WALK SEES UNTRACKED FILES -- IT IS HOW EVERY ONE OF THEM WAS FOUND TONIGHT. Corrected by 0.8.0_AE_CloudComp~X.",
+    "the_precise_shape": "filesystem walk: SEES the file, cannot tell you its status -- so it counts it as PRESENT/delivered. git enumeration: does not see it at all. THE PAIR IS THE INSTRUMENT: enumerate the filesystem, then test each member with `git ls-files --error-unmatch` and a firing positive control. Neither half classifies anything alone.",
+    "evidence": "19 untracked .py estate-wide, none gitignored; a certifier's card battery certified 7 cards existing on one device",
+    "found_by": "filesystem enumeration measured AGAINST git -- 0.4.0_DT_ClientPlatform~X's sweep, 0.8.0_AE_CloudComp~X's card-dir check, 1.0.0_SA_CTO~X's two writers, and my own"
+  },
+  "blind_spot_B": {
+    "instrument": "the dependency graph's CALLS edges (extract_pipeline_cloud.py enrichment)",
+    "blind_to": "COMMITTED-BUT-NEVER-DEPLOYED",
+    "evidence": "its own header, verbatim: 'A COMMITTED-BUT-NEVER-DEPLOYED script is invisible to enrichment BY DESIGN.' It parses DEPLOYED BYTES, not repo source.",
+    "found_by": "0.8.0_AE_CloudComp~X, upheld by 1.0.0_SA_CTO~X"
+  },
+  "\u26d4_THE_PAIR_IS_THE_FINDING": "The two blind spots run in OPPOSITE directions. A file that is UNTRACKED BUT DEPLOYED is visible to the graph and to a filesystem walk, and invisible to GIT ENUMERATION. A file that is COMMITTED BUT NOT DEPLOYED is visible to git and invisible to the graph. NEITHER INSTRUMENT ALONE SPANS THE POPULATION, and each returns a CLEAN, WELL-FORMED, CORRECTLY-CONTROLLED answer about its own domain while missing the other half.",
+  "why_it_bites_precisely_here": "Both untracked candidates are the files a deployed-bytes view is most likely blind to. A CLEAN EMPTY RESULT from the graph on those two would be an artifact of the INSTRUMENT'S DOMAIN, not a statement about delegation -- 0.8.0_AE_CloudComp~X's point, and it is the reason a null there must not be read as a negative.",
+  "the_caveat_that_survives": "UNTRACKED IS NOT UNDEPLOYED. storage_producer.py's own docstring describes an ancestor that RAN and emitted to S3 while never being committed -- precedent for the exact opposite case. So the two sets overlap in an unmeasured way.",
+  "wave_3_consequence": "A materializer census must declare WHICH PLANE it read -- repo, deployed, or both -- and carry the other plane's blind spot as a stated limit. This is the same shape as the two-plane trigger census (events vs scheduler): a one-plane sweep returns a TRUE, correctly-controlled answer about the WRONG POPULATION.",
+  "NOT_a_gate": "observation and a design constraint. No remediation authorized, no seat named at fault."
+}

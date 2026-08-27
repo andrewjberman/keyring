@@ -4,16 +4,33 @@
   "name": "The front-pass scaffolding + emission layer (assurance-scaffolding, never verdict)",
   "description": "Andrew-direct via CTO~A (the mechanical front of the tool-check generalization). Turns the hand-run front pass from a per-tool re-derivation that dead-ends in prose into a repeatable, evidence-emitting procedure, so tools 4->62 are faster than 1->3 and every pass FEEDS the graph (a ToolAudit CSE per tool) instead of evaporating. THREE deliverables: (a) the recon-scaffolding SDK (the 8 fixed opening moves + the 12-shape failure taxonomy as a hunt-order + the archetype->probe map) plus a `comp-passcraft recon <tool>` helper that runs ONLY the mechanical moves and STOPS at the verdict door; (b) the ToolAudit CSE emission schema; (c) the accuracy fixes routed to CVO as rulings. LOAD-BEARING INVARIANT (sec.0): PASSCRAFT templates the SCAFFOLDING and the emission SCHEMA and NOTHING ELSE -- the verdict stays hand-run; a component that could emit a pass/fail has become the harness it replaced. AC1/AC4 exist to stop that shipping green. Consumes NFRA_TOOLPASS (the doctrine, CVO-owned) + NFRA_CSE (the emission contract); FEEDS NFRA_TOOLGRAPH (the ToolAudit stream is its node/edge source). Supersedes NFRA_COMPASSURANCE's *harness* (there is no harness -- TOOLPASS sec.0); builds the layer that was actually missing between the doctrine and the killed harness. Runs in PARALLEL with base-CTO's live hand-run pass -- it is that pass's scaffolding, not its replacement.",
   "prds": [
-    {"path": "docs/architecture/NFRA_PASSCRAFT_PRD.md", "label": "PASSCRAFT PRD v0.1 (CTO~A-authored, Andrew-direct)", "date": "2026-07-10", "commit": "362272cce"}
+    {
+      "path": "docs/architecture/NFRA_PASSCRAFT_PRD.md",
+      "label": "PASSCRAFT PRD v0.1 (CTO~A-authored, Andrew-direct)",
+      "date": "2026-07-10",
+      "commit": "362272cce"
+    }
   ],
-  "related": ["NFRA_TOOLGRAPH", "NFRA_COMPLEARN", "NFRA_COMPASSURANCE", "NFRA_TOOLCHECK", "NFRA_TOOLHEALTH"],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD v0.1 COMPLETE (CTO~A-authored 2026-07-10, 362272cce). DECOMPOSED by COO~A 2026-07-10 into 4 STAGED TOs (org/projects/NFRA_PASSCRAFT/task_orders/): TO-1 recon-scaffolding SDK + `comp-passcraft recon` mechanical helper (AC1/AC4 anti-harness, 0.8.0_AE_CloudComp, NOT daylight-held -- new tool); TO-2 the ToolAudit CSE schema+emitter (AC2/AC3, 0.8.0, R0 fold deferred to TO-R0); TO-3 backfill the 3 completed tool-passes (comp-portal-thread/comp-aws/comp-blast) as CSEs to seed TOOLGRAPH; TO-R0 the CVO R0 ruling (classify the QUESTION before the CLAIM; is R0 a new rail or R1-read-correctly) + CVO owns the RAIL_SET. ALL TOs STAGED, NOT DISPATCHED -- returned to CTO~A for the single arch-gate pass. Build dispatch is Andrew-gated on the 0.8.0_AE_CloudComp spawn (unregistered). base-CTO consumes TO-1's reference immediately for his live hand-run pass.",
+  "related": [
+    "NFRA_TOOLGRAPH",
+    "NFRA_COMPLEARN",
+    "NFRA_COMPASSURANCE",
+    "NFRA_TOOLCHECK",
+    "NFRA_TOOLHEALTH"
+  ],
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z + ~18:4xZ: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor named; superseded requires one). NOT a work verdict. Recovery is explicit: \"we can reinvent a project\". Selected on MEMBERSHIP, not age. Its open task orders were closed IN THE SAME ACT. Prior phase: PHASE 0 -- PRD v0.1 COMPLETE (CTO~A-authored 2026-07-10, 362272cce). DECOMPOSED by COO~A 2026-07-10 into 4 STAGED TOs (org/projects/NFRA_PASSCRAFT/task_orders/): TO-1 recon-scaffolding SDK + `comp-passcraft recon` mechanical helper (AC1/AC4 anti-harness, 0.8.0_AE_CloudComp, NOT daylight-held -- new tool); TO-2 the ToolAudit CSE schema+emitter (AC2/AC3, 0.8.0, R0 fold deferred to TO-R0); TO-3 backfill the 3 completed tool-passes (comp-portal-thread/comp-aws/comp-blast) as CSEs to seed TOOLGRAPH; TO-R0 the CVO R0 ruling (classify the QUESTION before the CLAIM; is R0 a new rail or R1-read-correctly) + CVO owns the RAIL_SET. ALL TOs STAGED, NOT DISPATCHED -- returned to CTO~A for the single arch-gate pass. Build dispatch is Andrew-gated on the 0.8.0_AE_CloudComp spawn (unregistered). base-CTO consumes TO-1's reference immediately for his live hand-run pass.",
   "blocking": "PHASE-0 -> arch-gate. (1) CTO~A single arch-gate pass on the TO SET (the sec.0 anti-harness invariant is the arch-gate -- no TO may spec a verdict-computing component). (2) Andrew builder spawn: 0.8.0_AE_CloudComp is UNREGISTERED -- no build dispatch until Andrew spawns it. (3) TO-R0 (CVO R0 ruling) gates TO-2's R0 fold ONLY; the rest of PASSCRAFT does not block on it. `.tools/comp-passcraft` is a NEW tool, NOT an edit to an enforcer, so it does NOT inherit the `.tools/**->BASE_EXEC` daylight hold. SoD: CVO certifies (owns R0 + the RAIL_SET) independent of the design so the grader stays independent of the graded. BOUNDARY (sovereign): no bd/49F/Schwab read or target; comp-blast cache = names only.",
   "created": "2026-07-10",
-  "pods": ["1.0", "3.0", "2.0", "0.8"],
+  "pods": [
+    "1.0",
+    "3.0",
+    "2.0",
+    "0.8"
+  ],
   "pipeline": "NFRA (comp-tool assurance-scaffolding -- no data pipeline)",
   "coo_lane": "COO~A (scoped EXCLUSIVELY to CTO~A's incoming PRDs, Andrew-direct 2026-07-10). Decompose + register + RETURN the TO set to CTO~A for the arch-gate; do NOT dispatch (builders unspawned + Andrew-gated).",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

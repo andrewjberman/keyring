@@ -1,0 +1,87 @@
+{
+  "project_code": "MDPF_COTREMEDIATION",
+  "macro_code": "MDPF",
+  "name": "Cottonwood + Global Model Portfolios remediation -- the served aggregate-aua frontier frozen at 2026-08-19 while 49financial and inflection read 2026-08-24, with the served objects rewritten daily so every object-mtime freshness instrument reads HEALTHY",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-08-25",
+  "directive": "D8",
+  "pipeline": "mdpf",
+  "pods": [
+    "PORTAL.MODEL_PORTFOLIOS"
+  ],
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_COTREMEDIATION_PRD.md",
+      "version": "1.0",
+      "note": "project PRD, Rule 27 stage 2 -- purpose-level; COO atom-decomp of the operative surfaces is stage 3 and precedes any TO"
+    },
+    {
+      "path": "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md",
+      "version": "1.0",
+      "note": "DIRECTIVE PRD -- this path is the D8 tag (Andrew-direct ~14:12Z: a project minted while working a directive function is tagged to that directive AT CREATION)"
+    }
+  ],
+  "description": "Directive D8 -- Model Portfolios Pipeline Fortification (RE-MINTED 2026-08-25; the prior D8 'Philosophy + benchmark modal live-edit' was CUT to DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one). Authority: Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260825_D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_AND_THE_COT_GLOBAL_0819_FREEZE.md @903f6c8512, verbatim: 'we fucked up cottonwood's model portfolios ingestion (on august 20 or so I'd guess) and as a result their model portfolios and Global are now stuck on august 19. That needs to get fixed immediately'. MEASURED AT THE CTO SEAT 2026-08-25 ~14:2xZ on s3://opal-data-portal-v2/platinum/mdpf/{partner}/aggregate-aua-timeseries.json field as_of_last: 49financial 2026-08-24 (correct T-1), inflection 2026-08-24 (correct T-1), cottonwood 2026-08-19 FROZEN, global 2026-08-19 FROZEN. NEVER#1 discharged FIRST -- expected_last_trading_day(2026-08-25) = 2026-08-25 via lib/trading_calendar, so 08-19 is FOUR TRADING DAYS behind and this is not a weekend. THE STRUCTURAL FINDING: all four served objects were REWRITTEN 2026-08-25T13:50:49-51Z, so the publisher runs, emits and succeeds and the staleness is INSIDE THE PAYLOAD -- every object-mtime freshness instrument (comp-freshness, s3 ls age, head-object LastModified) reports these HEALTHY and each is CORRECT ABOUT THE FILE. A served key rewritten daily with frozen contents passes every instrument this estate owns, which is why a four-day client-facing freeze was found by Andrew rather than by us.",
+  "phase": "PRD v1.0. ROOT CAUSE OVERTURNED 2026-08-25 ~16:0xZ (1.0.0_SA_CTO, on Andrew's ordered re-verify \"CHeck and make sure that is the issue first\"; MSTR re-verified at the commit before landing this). THE PRIOR 'VENDOR DRIFT' STORY IS FALSE -- BLACK DIAMOND CHANGED NOTHING. WE DID THIS: @17c38a26f2, author 0.6.2_AE_PartnerETL, 2026-08-20T17:56:24Z (git shows 13:56:24-04:00), amended BD persisted template 226355 ('Assets_Dim') IN PLACE per a CTO pin, adding exactly 'Account Supervised' (id 33, level 7) + 'Holding Supervised' (id 45, level 9), 15->17 dims. CONFIRMED AT THREE INDEPENDENT LAYERS WITH NO SHARED INSTRUMENT: (1) the vendor artifact itself -- openpyxl row-1 read of both xlsx, 19 cols vs 21; (2) runtime -- live CloudWatch on opal-assets-silver-blackdiamond, observed=21 / declared=19; (3) our own git history -- the amendment commit, pre/post template images at org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_SUPERVISED/. TIMELINE, ALL UTC: 08-20T11:45:54Z last good export (19 cols, silver date=2026-08-19) -> 08-20T17:56:24Z OUR amendment -> 08-21T11:45:54Z first export carrying 21 cols, REFUSED, and every holdings file since. The first export AFTER our own change is the first failure: no gap, no second condition. THEREFORE THIS IS NOT A VENDOR SURPRISE -- IT IS AN INTERNAL BRONZE-SHAPE CHANGE SHIPPED WITH NO SEQUENCED SILVER-CONTRACT LEG. @d4a86a84e1 (same lane, same day) correctly forecast the Friday fire and correctly refused to treat the ad-hoc QA export as acceptance; the bronze leg validated its own leg TRUTHFULLY ('QA export PASS 21 cols') and nobody told the silver contract. BLAST RADIUS BOUNDED STRUCTURALLY, NOT EMPIRICALLY: holdings/ exists under blackdiamond/cottonwood/ and NOT under blackdiamond/49f/, so only cottonwood CAN be hit -- 49financial and inflection reading 08-24 is EXPECTED, not luck. REMEDY UNCHANGED BY THE OVERTURN: declare the two columns Rule-17 passthrough and re-run THREE partitions (2026-08-20, 08-21, 08-24 -- three, not five; weekend). THE CONTRACT HAS TWO HOMES (Rule 22a two-homes hazard): data/assets/scripts/silver/mirror_schemas.py:460 AND infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/mirror_schemas.py:460 -- MSTR-verified byte-IDENTICAL 2026-08-25T16:1xZ, so both must move together or they silently diverge. NEXT: COO atom-decomp (Rule 27 stage 3).",
+  "blocking": "Nothing blocked. Awaiting COO atom-decomp (Rule 27 stage 3). The fabric was wound down by Andrew ~14:3xZ for a device reboot; this project is registered so it survives the restart.",
+  "leads": [
+    "L1+L2 SUPERSEDED BY THE ROOT CAUSE AS OVERTURNED 2026-08-25 (an internal template amendment, NOT vendor drift -- see root_cause). The null-filled dates array and the forward-fill signature are DOWNSTREAM ARTEFACTS of a silver layer that stopped at 08-19; whether either needs its own explanation is an AC5 question against a known cause, not an open lead. NOTE the earlier wording of this lead carried the false 'VendorDriftError' attribution as though it were the established cause.",
+    "L3 global is a ROLLUP INCLUDING cottonwood, so one root cause plausibly explains both -- do NOT treat them as two defects until proven.",
+    "L4 dim_mdpf_account_distribution.py:328 COTTONWOOD_UNITS_KEY = 'gold/mdpf_revamp/cottonwood/account_units.json' + _cottonwood_sidecar() :331 -- a Cottonwood-ONLY sidecar on an mdpf_revamp/ prefix, while data/served_freshness_config.yaml:174 points the served config at portal/gold/mdpf/cottonwood/. A real special case, UNREAD.",
+    "L5 0.4.0_DS_ClientPlatform~I at 14:14Z independently: served surface at data_as_of 08-24 while D_05 is BYTE-IDENTICAL at data_as_of 08-19, AC4 vintage gap widened 2d->5d. Same freeze, different artifact, found by a seat looking at something else -- and FILED AS AN OBSERVATION. The signal existed before Andrew reported it."
+  ],
+  "producer_facts": [
+    "Cottonwood MDPF code lives WITH every other partner's, contrary to an assertion the CTO made and Andrew corrected: data/mdpf/scripts/gold/mdpf_gold_consolidator.py:92 SCOPES=('49financial','inflection','cottonwood','global'), :860 run_cottonwood_family(); build_mdpf_spine.py:56 FIRMS=(same four); dim_mdpf_aggregate_aua_timeseries.py:1915 load_cottonwood_slice().",
+    "data/cot/scripts/gold/ is Cottonwood's ADVI pipeline, NOT its MDPF pipeline. The CTO cited it as evidence of a divergent MDPF code layout; Andrew corrected it as a category error -- different PRODUCT. Recorded because the false version flattered a hypothesis he had already voiced, which is the class of claim that receives the least scrutiny."
+  ],
+  "acceptance_summary": "AC1 root cause at source (file:line @ commit) as a MECHANISM not a symptom; AC2 cottonwood as_of_last at correct T-1 read on the PAYLOAD; AC3 global likewise WITH its relationship to cottonwood proven (one cause or two); AC4 49financial + inflection UNCHANGED, byte-compared -- a fix that moves a healthy partner is a defect; AC5 the null-filled dates array EXPLAINED, not merely absent; AC6 verified on a SCHEDULED run, never ad-hoc; AC7 a payload-frontier READ demonstrated to FAIL against the frozen state and PASS against the good one. NO CRITERION IS DISCHARGED BY AN OBJECT TIMESTAMP. AC7 IS NOT A MONITOR -- the alarm/SES moratorium stands.",
+  "trap_recorded_before_decomp": "The reflex remedy for a frozen partner is a backfill or a re-run. A RE-RUN THAT PRODUCES CORRECT DATA DOES NOT ESTABLISH THE CAUSE -- it establishes that the producer works when run today. L1's null-filled array is the discriminator: if a re-run yields good data and nobody can say why the array was null-filled, AC1 and AC5 are UNMET and the defect recurs on whatever condition caused it. Same shape as the a06 weekend outage ruled 2026-08-25 ~11:5xZ, where the obvious fix would have inverted the map/chain ordering and broken the four working days.",
+  "related": [
+    "MDPF_3FIRMS",
+    "MDPF_GLOBAL",
+    "MDPF_CANPLAT",
+    "WSE_COTMDL",
+    "COT_CANON458"
+  ],
+  "threads": [],
+  "thread_counter": 0,
+  "root_cause_localized": {
+    "measured_at": "2026-08-25T15:0xZ, CTO seat, live S3",
+    "chain": [
+      "blackdiamond/cottonwood/bronze/  -> NEWEST OBJECT 2026-08-25T11:45:54Z (holdings/_complete/2026-08-24.json). VENDOR FEED IS LIVE AND ARRIVING DAILY.",
+      "blackdiamond/cottonwood/silver/fact_holdings/ -> NEWEST OBJECT 2026-08-20T11:46:11Z. LAST PARTITION date=2026-08-19. THE TRANSFORM HAS NOT RUN IN 5 DAYS. <<< THE BREAK",
+      "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py reads blackdiamond/cottonwood/silver/fact_holdings/date={d}/data.parquet (:339,:393,:400) -> emits gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json",
+      "that slice: OBJECT WRITTEN 2026-08-25T13:30:46Z (fresh) but CONTENT frozen -- dates LAST 2026-08-19, meta.covered_dates LAST 2026-08-19 (n=17), cohort_provenance measured LAST 2026-08-19",
+      "dim_mdpf_aggregate_aua_timeseries.py:1915 load_cottonwood_slice() reads it -> platinum/mdpf/cottonwood + global, as_of_last 2026-08-19"
+    ],
+    "why_no_gate_fired": "load_cottonwood_slice() is aggressively FAIL-CLOSED with four SystemExit paths -- artifact absent/unreadable, lacks dates/by_model, meta.composed_backfill absent (un-composed), and covered_dates != cohort_provenance measured (scope-consistency). ALL FOUR WERE MEASURED AND ALL FOUR PASS: readable, has dates/by_model, composed_backfill True, covered==measured True. EVERY GATE CHECKS STRUCTURE; NONE CHECKS FRONTIER. A frozen-but-well-formed upstream satisfies the entire contract. Its own docstring says 'the refusal IS the outage signal' -- and the only outage it can signal is structural, never temporal.",
+    "andrew_guess_confirmed": "He said 'on august 20 or so I'd guess'. The last silver write is 2026-08-20T11:46:11Z. Exact.",
+    "control_that_did_NOT_discriminate": "A cross-partner control on blackdiamond/{49financial,inflection}/silver/fact_holdings/ returned None -- those partners are NOT in that tree (they run on the MDPF feeder contract s3://opal-data-mdpf/mdpf/feeds/model_aua_positions/). The control tells us the tree is cottonwood-specific; it is NOT evidence the other partners are healthy and was not used as such.",
+    "still_unknown": "WHY the silver transform stopped. That is one hop: the runner/schedule/trigger behind blackdiamond/cottonwood/silver/fact_holdings. NOT YET READ. Bronze writes ~11:45Z daily and silver's last write was 11:46:11Z, so it ran one minute behind bronze until it stopped -- consistent with an event-trigger or a scheduled job, and NOT yet distinguished between them.",
+    "CONFIRMED_ROOT_CAUSE": {
+      "error": "VendorDriftError: blackdiamond/holdings: xlsx header DRIFT",
+      "source": "mirror_conversion.py:899 run_event -> RuntimeError; raised from the family converter's declared-header check",
+      "lambda": "opal-assets-silver-blackdiamond (Active, code LastModified 2026-07-23T14:47:39Z -- THE CODE DID NOT CHANGE; THE VENDOR DID)",
+      "trigger": "S3 ObjectCreated on opal-data-assets, Prefix=blackdiamond/cottonwood/bronze/, Suffix=.xlsx -- FIRING NORMALLY, 10 invocations/day",
+      "cloudwatch": "Invocations 10/day steady; Errors 0,0,0 then 3,3,3,3,3 per day beginning 2026-08-21 -- the error onset matches the last silver write (2026-08-20T11:46:11Z) exactly",
+      "observed_21_cols": "Market Value, Units, Unaccrued Market Value, Accrual, Relationship ID, PortfolioID, AccountID, Account Number, ACCOUNT SUPERVISED, AssetID, Asset Name, Asset Display Name, Original Asset Name, Last Dividend, Symbol, Ticker, CUSIP, Alternative Identifier, Expense Ratio, Cash Equivalent, HOLDING SUPERVISED",
+      "declared_19_cols": "the same list WITHOUT 'Account Supervised' and WITHOUT 'Holding Supervised'",
+      "the_two_new_columns": "'Account Supervised' and 'Holding Supervised'",
+      "the_guard_worked": "This is NOT a broken converter. The declared-header contract detected a real vendor schema change and REFUSED to ingest it rather than silently absorbing new columns -- exactly what Rule 17 asks of silver. THE DEFECT IS NOT THE REFUSAL; IT IS THAT A LOUD, CORRECT, DAILY-REPEATING REFUSAL REACHED NOBODY FOR FOUR TRADING DAYS while every downstream structural gate passed on the last good data.",
+      "the_convergence_worth_naming": "The two columns Black Diamond added are 'Account Supervised' and 'Holding Supervised' -- the exact supervised-status fields that 0.4.0_DS_ClientPlatform~F's SPEC_COT_OPAL_SUPERVISION_PREDICATE was written about on 2026-08-25, and that Andrew ruled on at ~14:05Z (whole book default; Cottonwood's supervised-only view is a partner request). THE VENDOR SHIPPED THE FIELD THE BUSINESS WAS ASKING FOR, AND OUR DRIFT GUARD CONVERTED IT INTO A FOUR-DAY OUTAGE.",
+      "remedy_shape_NOT_AUTHORIZED_HERE": "Declare the two columns in the blackdiamond/holdings silver header contract (Rule 17: silver is dedup + dtype only -- ADD the passthrough columns, NEVER slim or filter), then re-run 2026-08-20..2026-08-24 (bronze .xlsx for all five tables is on disk). DS lane owns silver scripts per Rule 13. COO seats it from the decomp. NOT DONE BY THIS SEAT."
+    }
+  },
+  "root_cause": {
+    "verdict": "INTERNAL CHANGE WITH AN UNSEQUENCED DOWNSTREAM LEG -- not vendor drift",
+    "acting_commit": "17c38a26f2be5a73af73f550163578789fb737d7",
+    "acting_author": "0.6.2_AE_PartnerETL",
+    "acted_at_utc": "2026-08-20T17:56:24Z",
+    "authority_for_the_act": "a CTO pin (B) -- the act itself was authorised and is not the defect",
+    "grounding": "3 layers, no shared instrument: vendor xlsx read (openpyxl) + live CloudWatch runtime + our own git history. MSTR independently re-read the commit at 2026-08-25T16:1xZ.",
+    "supersedes": "079b1b770e 'ROOT CAUSE CONFIRMED -- VendorDriftError. Black Diamond ADDED ...' -- FALSE ATTRIBUTION, do not carry forward",
+    "why_it_survived": "The exception class is named VendorDriftError. IT NAMES AN ATTRIBUTION, NOT A CONDITION -- the condition it detects is 'observed header != declared header', which is agnostic about who moved. The name handed every reader a causal story for free, and the seat that read it was the same seat whose pin authorised the amendment. Rename candidate: HeaderContractMismatch. Filed by CTO to the CVO surprise channel as OBSERVATION/INERT."
+  },
+  "decomp_input_added": "ADD A CELL (CTO 70742, MSTR concurs and carries it): WHY DID A BRONZE-SHAPE CHANGE SHIP WITH NO SILVER-CONTRACT STEP? That is the generalisable defect and it is a PROCESS defect, not a code one -- the code remedy (Rule-17 passthrough + re-run) closes this instance and closes nothing about the next one. This cell is the D8 fortification's real subject."
+}

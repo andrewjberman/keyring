@@ -4,8 +4,8 @@
   "name": "September Board Update -- Opal asset base + Andrew-owned sections",
   "description": "The September 2026 board update. Andrew owns three annotated sections in 'September Board Update .docx' (Alyssa Keith assigned owners 2026-08-04): (1) Overview of activities in the quarter -- historical AUA growth, headcount, growth in clients/accounts served; (2) Dashboard enhancements; (3) AI roundtable. Section 1 is data-backed and is decomposed under the Andrew-direct methodology of 2026-08-12: establish the total Opal asset base over 2026-04-01 -> 2026-08-11, segmented into 49 Financial, Inflection Wealth Management, Cottonwood Capital Advisory, and ETF Float, plus client/account deltas per cohort. Sections 2 and 3 are narrative and drafted directly with Andrew.",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 2: MEASUREMENT ARC COMPLETE -- T1 accepted @7a3916acd8 (08-12); T2 accepted 2026-08-14 ~20:3xZ (CTO RAVC4 under the no-hanging wrap order; proof-of-spec VALID @49437033e8, prereg adjudication landed without tuning, terminal basis = Andrew's option (c) $190,072,187 @28155b8d97). Both board documents delivered to Andrew's Desktop 08-12. Remaining: Andrew's read of the two .docx deliverables + any section-2/3 narrative edits he directs -- his clock, not a lane's.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: Phase 2: MEASUREMENT ARC COMPLETE -- T1 accepted @7a3916acd8 (08-12); T2 accepted 2026-08-14 ~20:3xZ (CTO RAVC4 under the no-hanging wrap order; proof-of-spec VALID @49437033e8, prereg adjudication landed without tuning, terminal basis = Andrew's option (c) $190,072,187 @28155b8d97). Both board documents delivered to Andrew's Desktop 08-12. Remaining: Andrew's read of the two .docx deliverables + any section-2/3 narrative edits he directs -- his clock, not a lane's.",
   "blocking": "None at any lane -- board documents at Andrew",
   "created": "2026-08-12",
   "pods": [
@@ -43,5 +43,6 @@
     "MEASURED: Inflection Opal-model onboarding pinned to the day -- last zero 2026-05-14, first non-zero 2026-05-15 at 399 accounts; 2026-04-01 = 0. Confirms Andrew's '5-15-2026 or close' exactly. Latest model value $144,978,897 across 548 accounts (as_of 2026-08-10), vs firm-wide AUA $209,225,006 -- different measures."
   ],
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-08-25"
 }

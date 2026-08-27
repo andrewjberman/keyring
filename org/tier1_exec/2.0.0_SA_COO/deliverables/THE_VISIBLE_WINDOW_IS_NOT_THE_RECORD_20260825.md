@@ -2,7 +2,7 @@
 
 **author:** `2.0.0_SA_COO` · **2026-08-25 ~06:40Z** · **status: RECORD. Found against myself, measured.** ⛔ **THE REMEDY IS NOT UNIVERSAL AND CARRIES A MANDATORY CONTROL — see below; this line read "the remedy is one command" until DE~C tried to run it and could not.**
 Sibling of `MOMENT_ENCODED_AS_MECHANISM_20260825.md` (tense) and `FAULT_FRAMED_ENUMERATION_OMITS_THE_ENTITLED_20260825.md`
-(who gets enumerated). **This one is about HOW MUCH OF YOUR OWN HISTORY YOU CAN SEE.**
+(who gets enumerated). **This one is about THE WINDOW YOU REASON FROM — the compaction summary of your own history, and the retrieval window you choose one command at a time. SAME MECHANISM, FOUR SURFACES -- the window you INHERIT (compaction), the window you CHOOSE (a pipe), the FRAME YOU SUPPLY (a file, a field, a path), and the INSTRUMENT'S OWN DOMAIN (a different service, runtime, or granularity -- the one no way of calling it differently can fix).**
 
 ---
 
@@ -66,6 +66,121 @@ mention ack calls. I reasoned from the window I could SEE and treated it as the 
 ⛔ **AND I DID IT IN THE MESSAGE WHERE I WROTE THAT *a claim about my own record is the one population no external check
 covers* — WHILE OFFERING A CONTROL THAT COULD NOT COVER IT.** That sentence was itself false: **the transcript is exactly
 such a check. I had simply not looked for one.**
+
+---
+
+## ⛔ THE SECOND SURFACE, SAME MECHANISM: A RETRIEVAL WINDOW THAT CANNOT CONTAIN THE ANSWER
+
+**The compaction case is one surface. The other is a window you CHOOSE, one command at a time — and it is the same
+mechanism: reasoning over what the window held, as if the window were the record.**
+
+**MEASURED AT THIS SEAT, THREE IN ONE INVESTIGATION, ALL IN THE FLATTERING DIRECTION:**
+
+| the window | what it excluded | what it returned instead |
+|---|---|---|
+| `\| tail -4` on a commit | the `[CLOUD <hash>]` line and `[msg-verify] MATCH` — **the wrapper emits its risk-reflex block AFTER the result** | *"REFLEX CLEAN — a MEASURED result"* — **a DIFFERENT check's PASS, reading as success** |
+| `\| grep -E "^\[CLOUD\|error\|fatal"` | the failure, which matched **none** of those patterns | **empty — indistinguishable from a clean run** |
+| **`$?` AFTER A PIPE** | the wrapper's exit code | **`head`'s exit code — `0` where the truth was `1`** |
+
+> ⛔ **I ANNOUNCED A TASK ORDER AS CUT, TO FIVE SEATS, ON A COMMIT THAT HAD REFUSED WITH rc=1 AND EMPTY stderr.** A peer
+> measured `rc=1` correctly while I was still reporting `0`.
+
+**THE `$?`-AFTER-A-PIPE CASE IS THE SHARPEST, BECAUSE IT LOOKS LIKE THE CONTROL:** reaching for an exit code IS the
+correct instinct after a suspected silent failure — **and through a pipe it measures the wrong process, returns a
+plausible number, and retires the doubt that prompted it.**
+
+**AND THE TOOL SIDE COMPOUNDED IT: a silent refusal (rc=1, ZERO stderr) whose stdout ENDS on another check's PASS.**
+When the artifact volunteers nothing, **the window you choose is the whole of your evidence.**
+
+**THIS IS CLAUDE.md's OWN RETRIEVAL-CONTROL LAW** — *put the control on the RETRIEVAL, not the pattern; a retrieval
+FAILURE RETURNS A VALUE* — **and I broke it three times in one investigation while enforcing it elsewhere all night.**
+**REMEDY: for any command whose result you will ASSERT, read it UNPIPED, or capture `>out 2>err` and read the exit code
+BEFORE any pipe.**
+
+---
+
+## ⛔ THIRD SURFACE, ADDED 08-25 ~08:5xZ: THE FRAME. THREE SEATS, THREE SHAPES, ONE PROPERTY, NINETY MINUTES
+
+The first two surfaces are about a window you inherit (compaction) and a window you choose (a pipe). **This one is
+about the FRAME YOU SUPPLY WITH THE QUESTION** — a file, a field, a path. It is the same mechanism and it produced
+five instances across three seats in ninety minutes, **every one of them failing in the reassuring direction.**
+
+| seat | the supplied frame | what came back | the truth |
+|---|---|---|---|
+| `0.4.0_DE_ClientPlatform~C` | the wrong **FILE** (`git-author-override-audit.log`, 2.2MB) | "no override row exists" — **with a positive control proving that file exists** | the row is in `to-pos-override-audit.log`, 498 B |
+| `2.0.0_SA_COO` (me) | the right file, the wrong **FIELD** | a serial, read as "who did this" | the column is `git var GIT_AUTHOR_IDENT` — the AUTHOR, never the caller; it returns `Andrew Berman` by default |
+| `1.0.0_SA_CTO` ×3 | an assumed **PATH / CHUNK** | `0`, `0`, `0` | code-split bundle; the real path was `src/pages/AdvisorIntelligence/_shared/perfrp/` — 9 files, present the whole time |
+
+> ⛔ **THE PROPERTY: A ZERO MEASURED INSIDE AN ASSUMED FRAME IS A MEASUREMENT OF THE FRAME, NOT OF THE QUESTION** —
+> and it is WELL-FORMED, so nothing in the output says which one it is.
+
+**WHY A POSITIVE CONTROL DOES NOT SAVE YOU HERE, AND THIS IS THE HALF THAT SURPRISED ALL THREE OF US:** DE~C ran one.
+It fired GREEN. **A control confirms the INSTRUMENT; it says nothing about whether the instrument is pointed at the
+question.** A control on the wrong frame is strictly more convincing than no control at all.
+
+**THE REMEDY IS NOT "CHECK YOUR PATHS" — IT IS TO STOP SUPPLYING THE FRAME.** CTO's adopted form, stated so they can
+be held to it: *on this question I no longer pass a path prefix at all* — `git ls-tree -r --name-only <ref> | grep -i
+perfrp` finds it wherever it lives. **Search the widest frame you can afford, then narrow with what comes back.**
+The field version: before reading a column as an answer, read what WRITES it.
+
+⛔ **THE PRIMARY REMEDY IS `3.0.0_SA_CVO`'s, NOT MINE, AND IT IS THE ONE THAT WORKS WHEN YOU MUST SUPPLY A FRAME:**
+
+> **PUT THE PATH, REF, OR FIELD IN THE CLAIM ITSELF — NOT IN THE DESCRIPTION OF THE SEARCH.**
+> `"I searched the override log"` — **UNCHECKABLE by a reader.**
+> `"0 hits in org/to-pos-override-audit.log, field 2"` — **CHECKABLE, and its wrongness is VISIBLE.**
+
+**It moves the subject out of the searcher's head and into the sentence, where a second reader can catch it.** No tool,
+no gate, no care required. *"Stop supplying the frame" is the stronger move where it is available; this is the one that
+survives the cases where a frame is unavoidable — which is most of them.*
+
+⛔ **AND THE RATE IS FABRIC-WIDE, NOT PERSONAL.** CVO's census: **five seats** produced wrong-location or wrong-subject
+zeros in one night — CTO 3, CVO 4, DE~C 1, MSTR 1, and me. **When one seat does this it is carelessness; when five do
+it in one night it is a property of the environment** — an estate holding many near-identically-named artifacts
+(`account_units`/`account-units`, two override logs, two `PROD`s, two homes for one TO).
+*Correcting my own row upward: I am **2**, not 1 — the machine-churn misclassification CVO counted, plus the wrong-FIELD
+attribution in this table. A self-count is the one population no external check covers, and it fails low.*
+
+**AND THE SEQUENCING COROLLARY, earned by my correcting a true claim:** DE~C's verdict was TRUE IN SUBSTANCE and false
+in form; mine was FALSE IN SUBSTANCE and true in form. **Bad evidence for a true claim is not a false claim, and
+treating it as one is how correct findings get retracted.**
+
+---
+
+## ⛔ FOURTH SURFACE — THE INSTRUMENT'S DOMAIN. AND IT TAKES THE OPPOSITE REMEDY TO THE THIRD.
+
+The third surface is a frame you SUPPLY — a file, a field, a path. **Its remedy is to call the instrument
+differently.** This one is not that, and confusing the two sends you at the wrong fix:
+
+> **THE INSTRUMENT WAS CALLED CORRECTLY, RETURNED A COMPLETE AND TRUE ANSWER, AND ITS DOMAIN SIMPLY DOES NOT CONTAIN
+> THE QUESTION'S POPULATION. NO WAY OF CALLING IT DIFFERENTLY FIXES THAT.**
+
+**THREE, MEASURED IN NINETY MINUTES, THREE DIFFERENT INSTRUMENTS:**
+
+| the instrument | its answer | the plane it cannot see |
+|---|---|---|
+| `aws events list-rules` — **137 rules, positive control firing, denominator printed** | `cron at 12:45 = 0` | **EventBridge Scheduler is a DIFFERENT AWS SERVICE.** The schedule was `ENABLED` the whole time |
+| S3 **object count** as an emptiness check | `1 object` — for the healthy day **and both known-failing days** | **the emptiness is ROW-LEVEL.** *An instrument returning the same value for both states it is being used to separate* |
+| `Get-Process -Name claude` | `12` | **14 `codex.exe` agent processes.** True total **26** |
+
+**THE DISCRIMINATING QUESTION, and it is cheap to ask:**
+> **Can I fix this by calling the same instrument differently? If YES, it is a supplied frame. If the fix requires a
+> DIFFERENT SERVICE, RUNTIME, OR GRANULARITY, the instrument's DOMAIN is the limit — and the only remedy is
+> corroboration OUTSIDE it.**
+
+⛔ **WHY THIS ONE DEFEATS THE USUAL CONTROLS: all three answers were COMPLETE, CORRECTLY PAGINATED, POSITIVE-CONTROLLED
+AND TRUE.** A denominator does not help — **137 was the right count of the wrong population.** A positive control does
+not help — **it fires inside the same domain.** *Rule 22b already names this shape (an instrument whose clean answer is
+strongest exactly when the failure is total); these are three fresh specimens of it.*
+
+**AND NONE WAS CAUGHT BY RE-RUNNING THE ORIGINAL PROBE MORE CAREFULLY.** Each was caught by someone **enumerating a
+different plane** — reading the TF resource TYPE, running the negative arm, counting a second process name.
+**Care operates inside the domain. Only corroboration crosses it.**
+
+⛔ **THE COROLLARY THAT COST ME SOMETHING TODAY: `0.0.0_AB_MSTR`'s "not saturated" verdict was RIGHT, and the RAM
+figure they quoted beside it was a PARTIAL measure that silently excluded ~1 GB of codex. Their DISCRIMINATOR — the
+pagefile at 7%, because a saturated box SWAPS — was immune to the blind spot. I reversed a seating deferral on that
+verdict and my stated reason was the RAM figure.** **A VERDICT IS ONLY AS SOUND AS ITS DISCRIMINATOR, NOT AS THE
+NUMBER QUOTED BESIDE IT — and I got the right answer off the weaker limb.**
 
 ---
 

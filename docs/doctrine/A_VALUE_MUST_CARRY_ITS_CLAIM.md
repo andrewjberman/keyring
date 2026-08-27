@@ -81,6 +81,27 @@ freshness check — these leave **no trace**.
    can reach and carry a control per scope. An un-exercised scope is named **UNCOVERED**, never
    silently passed.
 
+## 6 — The consumer-side form: the field cannot express what the prose beside it says
+
+**The producer can be honest and complete and the defect still holds** — when the field a consumer
+BRANCHES ON cannot express a distinction the same artifact's own prose makes plainly. The information
+is not missing; it is *present and unreachable*, because consumers branch on the typed field and
+nobody branches on prose.
+
+**Test (audits the FIELD, not the producer):** for each field a consumer branches on, ask — *can this
+field's value set express every distinction the consumer's decision needs?* A green status-shaped
+value beside an honest `errors{}` block, one return code for "checked and passed" and "could not
+check," one identifier slot holding both declared and reader-manufactured values — each passes every
+producer-side audit, because the producer dropped nothing. **Audit the branch field's expressiveness,
+not only whether provenance is populated.**
+
+*(Instances: four in one day, 2026-08-26, every producer honest, three found while investigating
+something else — [`A_VALUE_MUST_CARRY_ITS_CLAIM_INSTANCES_20260724.md`](../references/A_VALUE_MUST_CARRY_ITS_CLAIM_INSTANCES_20260724.md)
+**§V-6** (2026-08-26; appended to the existing corpus rather than minted as a new file): the gold manifest's
+`reconciliation: PASS` beside `errors{}`; `proof-of-spec-check` rc=0 spanning ENFORCED-and-passed and
+could-not-check; `parse_to_file`'s `to_id` fusing declared with filename-derived; the first-draft
+`<delivery>` axis mixing derived and asserted values.)*
+
 ---
 
 **Related:** [`CONTROLS_OVER_CARE.md`](CONTROLS_OVER_CARE.md) ·

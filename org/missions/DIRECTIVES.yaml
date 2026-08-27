@@ -31,30 +31,30 @@ as_of: "2026-08-19"  # stance cells D4/D7/D9 event-refreshed 20:3xZ per CTO vali
 
 directives:
   D0:
-    title: "Infrastructure (ongoing)"
+    title: "Agent Infrastructure (Process Management)"
     directive: "docs/architecture/D0_INFRA_TIGHTENING_PRD.md"
-    placement: "LAPTOP -- RULED (criterion b: ontology/infra local). The T1/kill-fix EXERCISE legs run on BOTH fabrics as small ferried verification kickoffs post-build, never as moved builds. Ontology lock-down tranche (T6/T7/T8, s3 set, T12) pinned LOCAL as a class."
+    placement: "LAPTOP -- RULED (criterion b: ontology/infra local). The T1/kill-fix EXERCISE legs run on BOTH fabrics as small ferried verification kickoffs post-build, never as moved builds. Ontology lock-down tranche (T6/T7/T8, s3 set, T12) pinned LOCAL as a class. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [INFRASTRUCTURE.TOOLS, INFRASTRUCTURE.GRAPH, INFRASTRUCTURE.DEBT]
-      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS]
+      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS, NFRA_TORECORD]
     stance: "Ongoing, laptop. Live legs: T1 broker primitives (design->0.8.0 build), T2 stamps,
       T4 two-homes declarations, REG-SCAN-ATOMCHECK + J3 (08-20, REQUIRED before INF binds),
       LD-0424 kill-instrument self-exclusion fix, GLDRNS wrapper disambiguation (08-25),
       the CRO-led infra-graph program."
   D1:
-    title: "MDPF asset-category views (~2wks)"
+    title: "Model Portfolios: Asset-Category Views"
     directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a: oversight-heavy MP/ADVI primary work)."
+    placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D1 is 'all model portfolio stuff' (CATVIEWS + NAMEDISCOVERY). SEQUENCING (1.0.0_SA_CTO, inside his 'can push'): work IN FLIGHT completes under its CURRENT laptop seat per Rule 27's scope clause; NEW D1 TOs cut at sitez. Rule 26 rides every move -- no ferried applies. This row is the DIRECTIVE-OWNERSHIP fact; it creates ZERO spawns (MSTR allocation freeze)."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: []
+      projects: [D1_CATVIEWS, D1_NAMEDISCOVERY]
     stance: "Laptop. CTO taxonomy gate (Rule-24 declaration) -> category registry -> DE portal
       build -> Cottonwood display acceptance (~$7M Custom + ~$30M Client Advised/Residual) = DONE.
       Independent of R and of Friday."
   D2:
-    title: "ADVI 49F end-to-end (Fri PM target)"
+    title: "Advisor Intelligence"
     directive: "docs/architecture/D2_ADVI_49F_E2E_PRD.md"
-    placement: "LAPTOP -- RULED, whole item incl. parity harness/analytics (Andrew, both consoles: 'D2 is certainly laptop fabric' / 'sitez does not work on advi, D2'); supersedes @a02f9ff5a4's D2-analytics-sitez row; sitez 0.8.0~Z spawn cancelled."
+    placement: "LAPTOP -- RULED, whole item incl. parity harness/analytics (Andrew, both consoles: 'D2 is certainly laptop fabric' / 'sitez does not work on advi, D2'); supersedes @a02f9ff5a4's D2-analytics-sitez row; sitez 0.8.0~Z spawn cancelled. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [PORTAL.ADVISOR_INTELLIGENCE, EXTERNAL.49FINANCIAL]
       projects: [OPAL_ADVIPOINTERS, ADVI_BDPLAT_RESTORE, ADVI_49FSRC, ADVI_INSURE, ADVI_STITCH, ADVI_PERFRP, ADVI_COTKEY]
@@ -66,16 +66,16 @@ directives:
       then the parity program (census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green,
       COT third. FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
   D3:
-    title: "Account-level model overlay (~6-7wks, pends D1+D2)"
+    title: "Account-Level Model Overlay"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a)."
+    placement: "LAPTOP -- RULED (criterion a). CONFIRMED 2026-08-27 ~00:02Z, Andrew-direct, VERBATIM: 'account letl model overlay we can keep' -- answering the one-line ask on whether D3 fell inside his ~23:52Z 'all model portfolio stuff' move. IT DOES NOT: D3 STAYS LAPTOP while D1 and D8 go to SITEZ. Recorded because the ambiguity was real and a later reader would otherwise re-derive it from the same words. Record @f20a3ac5c6 (1.0.0_SA_CTO 74127). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [D3_MODELOVERLAY]
     stance: "CTO writes the PRD now (Mike-call user story verbatim); the SmartX<->BD/Schwab
       EXACT-JOIN spec is the early-startable precondition; build launches the day D1+D2 clear."
   D4:
-    title: "ETF positioning variant (3-8wks, behind D1)"
+    title: 'Satellites "Positioning" Variant'
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
     placement: "SITEZ -- UNTIL THE PROJECT IS DONE (Andrew-direct 2026-08-24, MSTR~Z terminal,
       relayed by 0.0.0_AB_MSTR~Z, brief laneZ_ANDREW_DIRECT_20260824_NO_BQL_ETF_CONSTITUENT_PIPELINE_HANDOFF_TO_CTOZ.md
@@ -138,7 +138,7 @@ directives:
       subgroup or its other parents, in EITHER direction."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST]
+      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST, ETFS_SATELLITES]
       members_note: "ETFS_INGEST ADDED 2026-08-24 by 0.0.0_AB_MSTR (register owner) on the routing of
         1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z, who correctly DECLINED the edit rather than making it:
         org/missions/ declares its owner twice (file header + .register-owner owner_hostname = the
@@ -149,7 +149,9 @@ directives:
         NOT A DEFECT. MEASURED at the edit: org/projects/ETFS_INGEST.json EXISTS on origin/SITEZ (7
         ETFS_* project files) and is ABSENT on origin/CLOUD (6) -- the project was registered on the
         site-Z fabric this session. directives-check.py resolves a missing member file to a labelled
-        [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json];
+        [no-json] and does NOT fail (live precedent on the same run: D9's PFMG_TAXSMA[no-json] -- THAT PRECEDENT IS SPENT, resolved
+        2026-08-25 by 0.0.0_AB_MSTR: PFMG_TAXSMA was not an unregistered project but a SUPERSEDED
+        CODE (-> OPAL_TAXSMA, 2026-07-14), so the label was pointing at a rename, not at an absence;
         malformed=0 across all 9 live rows).
         THE ORDERING WAS CHECKED BEFORE WRITING: a MEMBER ROW pointing at an absent project is
         VISIBLE and labelled, and the label expires on its own when the json arrives with
@@ -287,16 +289,16 @@ directives:
       at this row's git history + PRD s.3.3. ETFS_CANON design gate RULED @6d62143d2d; the four
       ETFs join D1's taxonomy as SMA-category members -- one registry serves both."
   D5:
-    title: "Alt research (ongoing)"
+    title: "Alt Research"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
-    placement: "LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop)."
+    placement: "LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: []
       projects: []
     stance: "CRO ingest lane continues; the build queue activates on Andrew's prioritization word.
       No register home yet -- an empty member set is honest where a plausible one is not."
   D6:
-    title: "Opal Analyst + partner GraphQL (v0 ~2wks; SITEZ box legs + laptop cloud)"
+    title: "Opal Analyst"
     directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
     placement: "SITEZ -- RULED (Andrew): TO-C SharePoint binding + TO-D BBG standing read (sitez-only identity opal-gateway-bbg); LAPTOP: the GraphQL query layer. Kickoff ferries on CVO clearance."
     members:
@@ -312,7 +314,7 @@ directives:
       memory/thread persistence, perpetual-operator frame. NOT a retire candidate. Member set to be
       refreshed as successor projects register (the closed member is the v0 project only)."
   D7:
-    title: "Ticketing intake (THIS WEEK; SITEZ intake + laptop serve)"
+    title: "Opal Ticketing"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
     placement: "SITEZ -- RULED (Andrew): TO-A + TO-C one workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A DELIVERED same evening); LAPTOP: TO-B (real build per the CVO-P0 verdict, intake identity opalsupport@opalinvest.com per Andrew ~19:4xZ) + TO-D."
     members:
@@ -322,16 +324,155 @@ directives:
       RESULTS IN (49@opalinvest.com + inflection@opalinvest.com FOUND; Cottonwood NONE -- at Andrew;
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
       (m365 gateway, laptop), Analyst-agent intake + Teams buzz w/ portal link (SITEZ), SLA log,
-      2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution."
+      2PM-ET cutoff stands. No register subgroup yet; the portal P0 rides PORTAL attribution.
+      ANDREW-DIRECT 2026-08-25 ~16:2xZ at the CTO terminal, VERBATIM: 'D7 is effectively on hold,
+      however with that said, I want the Submit a Ticket sidebar item pulled off dashboard. That
+      whole functionality is broken and shouldnt even be on the dashboard.' (relayed 1.0.0_SA_CTO
+      70751; recorded by 0.0.0_AB_MSTR, register owner.) D7 IS ON HOLD AND ITS CLIENT-FACING SURFACE
+      IS BEING REMOVED -- 0.3.0_DT_TradingOperations spawned 16:3xZ on his word to pull the nav item
+      and /prod-deploy. NOTE THE LABEL, it matters: he said Submit a Ticket and THAT STRING DOES NOT
+      EXIST in portal (measured zero over 1,088 files). The item is 'Submit a Request',
+      portal/src/App.tsx:122, live on PROD and allowlisted to 49financial + cottonwood + demo
+      (inflection deliberately not) -- so a broken client-facing form was reachable by three partner
+      tenants.
+      THE NO-MEMBERS STATE ON THIS ROW IS NOW READ DIFFERENTLY: CTO 70746 flagged it as the SHARP
+      membership defect -- live legs, zero registered projects, the opposite condition to D5's honest
+      empty set. ON HOLD does not make the empty set correct; it makes it NON-URGENT, because there
+      is no longer active work whose record is missing. The defect stands as a REGISTER item, not a
+      staffing one, and it must NOT be closed by minting a project for held work. Contrast D5
+      (LD-0454), whose empty set is correct on its own terms. || CADENCE, ANDREW-AUTHORED
+      2026-08-26 (his own words in the day's operating report, routed by 1.0.0_SA_CTO 74029):
+      'AJ and I have set up a recurring weekly meeting to drive this project forward.'
+      D7 therefore has a STANDING HUMAN CADENCE and its quiet weeks are EXPECTED, not
+      stalled -- do not read low activity here as a staffing gap. No work created by this."
+  D8:
+    title: "Model Portfolios Pipeline Fortification"
+    directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
+    placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D8 is named EXPLICITLY in his words. ⛔ NOTHING SERVING MOVES MID-SERVE (1.0.0_SA_CTO sequencing): the 08-27 13:30Z fire COMPLETES on the laptop-applied chain under his 20:15Z arm-(a) word; the DIRECTIVE transfers on the register NOW and the fire's ACCEPTANCE READ re-routes to the sitez CVO seat with it. Work in flight completes under its current seat; NEW D8 TOs cut at sitez. Rule 26 rides; no ferried applies. ZERO spawns."
+    members:
+      subgroups: [PORTAL.MODEL_PORTFOLIOS]
+      projects: [MDPF_COTREMEDIATION]
+    stance: "RE-MINT, not an edit: the prior D8 ('Philosophy + benchmark modal live-edit') was CUT to
+      DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one -- the code is
+      reused, the directive is new. Authority Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal
+      (record ANDREW_DIRECT_20260825_D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_AND_THE_COT_GLOBAL_0819_FREEZE.md
+      @903f6c8512). MEASURED: cottonwood + global served as_of_last = 2026-08-19 while 49financial +
+      inflection read 2026-08-24 -- FOUR TRADING DAYS (NEVER#1 discharged: expected frontier 08-25).
+      The served objects are REWRITTEN DAILY (all four within 2s at 13:50:49-51Z), so the publisher
+      succeeds and the staleness is INSIDE THE PAYLOAD -- every object-mtime freshness instrument
+      reads HEALTHY and is correct about the FILE. That blindness is the condition D8 exists to end.
+      TWO HALVES, DELIBERATELY SEPARATE PROJECTS: MDPF_COTREMEDIATION runs on the OUTAGE's clock
+      (his 'fixed immediately'); the pattern-conformance census and the gold-bucket architecture run
+      on D8's ('take this as an opportunity'). The conformance axis is NOT inherited -- D8 establishes
+      it, and that enumeration is a Rule 24 authoring act. His target architecture (ALL ingestion
+      bronze+silver in opal-data-assets; GOLD in a purpose-specific bucket per product; platinum in
+      opal-data-portal-v2) is RECORDED AS DIRECTION in the PRD s.3 -- it diverges from CLAUDE.md
+      Rule 17b, and NEITHER the law amendment NOR any migration is authorized by it."
   D9:
-    title: "Tax SMA ops (NEW; assess-first)"
+    title: "Tax SMA Ops + YCharts"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
     placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
     members:
       subgroups: []
-      projects: [PFMG_TAXSMA]
+      projects: [OPAL_TAXSMA]
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
       -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427
       (Andrew's ruling-8 YES executed 08-19; workflow-as-designed source now in-tree, ferried to the
-      sitez assessment seat)."
+      sitez assessment seat).
+      MEMBER CODE CORRECTED 2026-08-25 by 0.0.0_AB_MSTR (register owner): was [PFMG_TAXSMA],
+      which rendered [no-json]. NOT a missing project -- a SUPERSEDED CODE (lineage
+      ADVI_TAXSMA -> PFMG_TAXSMA -> OPAL_TAXSMA, per OPAL_TAXSMA.json renamed_from). Grounding,
+      the Rule-25 ABANDONED-vs-KEY-MIGRATED discriminator, and the OPEN CALL on whether
+      OPAL_TAXSMA_PT2 + OPAL_TAXSMA_REGISTRY also join D9: LD-0454. || SCOPE, ANDREW-AUTHORED
+      2026-08-26: he retitled this directive 'Tax SMA Ops + YCharts' in the day's operating
+      report -- YCharts FOLDS INTO D9 rather than carrying a directive or project of its own.
+      His timing words: 'YCharts I figure we will have time to discuss later next week.'
+      So YCharts is IN SCOPE and DEFERRED, which are TWO DIFFERENT FACTS: it needs no register
+      home, and its lack of movement this week is deliberate rather than a gap. The Tax half's
+      gating dependency is unchanged (the meeting with Yang and Alyssa)."
+  D10:
+    title: "Global Pipeline Structure"
+    directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
+    placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree. CONFIRMED 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('global pipeline' named). Resting per his products-first word; placement is unaffected by rest. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
+    members:
+      subgroups: []
+      projects: []
+    stance: "MINTED BY ANDREW HIMSELF 2026-08-25 ~18:4xZ at the CTO terminal (relayed 1.0.0_SA_CTO
+      71188; PRD @afcac062ce). VERBATIM: 'Ok let''s create this under Directive 10, this will be
+      Global Pipeline Structure. The premise is canonizing how things are ingested, taxonomy of
+      ingestion/bucket structure/naming, bronze always raw, silver always event triggered typed
+      parquet, both of which are staying in opal-data-assets. gold is always a per product or per
+      firm bucket depending (i will define which case), lambda pull from silver to gold unless its
+      really obnoxious/heavy and needs ec2, gold stays in parquet form. From here, there is a portal
+      publisher that pulls these things into platinum serving layer in opal-data-portal-v2, this
+      will be a json serving file format. I want to essentially go pipeline by pipeline, terraform
+      by terraform, and canonize every single thing, in this exact pattern. If there are exceptions,
+      then I will acknowledge what those are and we keep some kind of record of that with details.'
+      And, widening it himself: 'It''s actually bigger than gold, its a global taxonomy and structure
+      directive.'
+      MEMBER SET IS EMPTY AND THAT IS CORRECT, NOT A DEFECT. D10 is a MACRO -- several projects, one
+      per pipeline family -- and the first cannot be scoped until he answers D10-1. This row follows
+      the D5 precedent ruled today (LD-0454): an empty member set is honest where a plausible one is
+      not, and it must NOT be filled to make the row look complete.
+      THREE OPEN SOVEREIGN ITEMS, all reserved to him and none inferable:
+        D10-1  which scopes are PRODUCT-shaped vs FIRM-shaped. He reserved it in the same breath --
+               'i will define which case'. Nothing registers under D10 until this lands.
+        D10-2  the legacy bd / cot / inf disposition. Each carries a COMPLETE five-tier stack
+               (measured), so this is a real migration question and not a cleanup.
+        D10-3  the measurable threshold for 'really obnoxious/heavy' that sends a silver->gold pull
+               to EC2 rather than lambda.
+      ROW MINTED BEFORE ANY MEMBER BY DESIGN. Under his ~18:24Z membership ruling a project not
+      attached to this file is closed; a D10 project minted before this row existed would have been
+      swept on day one. Row first, projects second -- CTO flagged the ordering and it is the reason
+      this landed ahead of any decomposition.
+      MDPF_GLOBAL COUPLING, RECORDED SO THE AUTHORITY SURVIVES: MDPF_GLOBAL carries the
+      Andrew-ratified and explicitly UN-GATED T1-T5 plan from the 2026-08-03 voice memo (route and
+      trigger canon, ONE synchronized daily schedule across all four scopes, CloudFront/cache
+      census, MDPF silver dedup verification, legacy decommission gated on T1-T3). ALL FIVE SIT
+      INSIDE D10. MDPF_GLOBAL was HELD OUT of the 2026-08-25 spring-clean sweep (0.0.0_AB_MSTR
+      71098: live P0 subject, 0.4.0_DS_ClientPlatform~N investigating during a four-trading-day
+      client-facing outage) and is still active/untagged. WHETHER IT JOINS D10 AS A MEMBER OR ITS
+      T1-T5 ARE ABSORBED IS AN OPEN CALL, and the two are one decision: if it is ever closed without
+      the absorption recorded, the 08-03 sovereign authority is lost at the moment it is finally
+      being acted on.
+      RULE 17b RELATIONSHIP, stated because D8's row already flags the divergence: this directive is
+      the vehicle for the gold-home question CLAUDE.md Rule 17b currently answers differently. The
+      PRD isolates the amendment to ONE clause -- gold's HOME and gold's CODE-HOME -- and everything
+      else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
+      Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
+  D11:
+    title: "Substrate/Tooling Enhancements"
+    directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
+    placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator. CONFIRMED UNCONDITIONAL 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('substrate' named). The D11 group is one of the two seat-sets Andrew kept live in the same-night drawdown. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
+    members:
+      subgroups: [INFRASTRUCTURE.GRAPH]
+      projects: [NFRA_SUBSTRATECARDING]
+    stance: "MINTED BY ANDREW 2026-08-26 at the CTO~X terminal. VERBATIM: 'I would put this as
+      Directive 11, Substrate Analysis, and register a project beneath it called NFRA_SUBSTRATECARDING.'
+      SCOPE, his words: 'we need to follow this substrate identification process on c0 c1 c2 on d1 d2
+      d3 we need to do it on any underlying functions ... there is a lot of graph like physical graph
+      substrate and the scripts that generate it which are involved here and we need a canonical
+      understanding of what various graph scripts and persisted artifacts underlie these things'.
+      THE BINDING CONSTRAINT, also his: 'not only do we need a consistent grain to be doing these
+      identifications but we need consistent state'. A wave therefore declares ONE as_of and every
+      card in it carries that stamp; cards taken at different vintages are individually correct and
+      jointly meaningless.
+      WHY IT EXISTS -- THE END GOAL IS NOT THE CARDS: 'the end goal is to basically develop a
+      mechanical process around the materialization and tracking of c3.i'. The four-stage identity
+      pipeline (affinity compilation -> similarity network fusion -> identity -> succession) cannot
+      be built on substrate whose grain, state, coverage, key space and failure modes are unknown.
+      D11 is the ground truth that pipeline stands on, and it is scaffolding for C3.i rather than an
+      end in itself.
+      MECHANISM: CLAUDE.md Rule 28 (THE SUBSTRATE TEST, landed @ec35b78c1c) -- seven questions over
+      three DECLARED grains, PROCESS (methodology, cadence) / ARTIFACT (persistence, location) /
+      TRUST (coverage, key, failure mode), every row carrying its own basis, evidence and OWNER
+      because Rule 24(iv) says the remedies do not move together. Deliverable contract:
+      org/standards/SUBSTRATE_CARD.schema.json -- machine-checkable, so proof-of-spec runs against a
+      schema rather than against prose.
+      ORDERING NOTE CARRIED FROM HIS DICTATION: D3 sits between C2 and C3, so it cannot be COMPLETED
+      before C3.i exists -- but it is still carded, because an EMPTY card (persistence NONE, location
+      NOWHERE) is a finding and skipping it loses the baseline. Same for the current anchor-catalog
+      C3.i: carding it is what the replacement has to beat.
+      ROW MINTED WITH ITS FIRST MEMBER, unlike D10 -- the project is named in the same sovereign
+      breath as the directive, so the D10 row-first/members-second sequencing does not apply here."

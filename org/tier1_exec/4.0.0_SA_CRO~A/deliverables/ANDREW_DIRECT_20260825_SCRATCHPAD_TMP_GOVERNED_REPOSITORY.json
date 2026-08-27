@@ -1,0 +1,21 @@
+{
+  "document_kind": "andrew_direct_instruction_record",
+  "record_id": "ANDREW_DIRECT_20260825_SCRATCHPAD_TMP_GOVERNED_REPOSITORY",
+  "governing_contract": "org/XXX.md#andrew-direct-instructions-record-and-broadcast-same-turn",
+  "authorship_mode": "human_direct",
+  "mutation_policy": "append_only_correction_by_new_record",
+  "temporal_claim": "instruction_received_at_recorded_time",
+  "authority_role": "sovereign",
+  "source_relationship": {
+    "relationship_kind": "source",
+    "source_channel": "direct_user_message_to_4.0.0_SA_CRO~A",
+    "received_at": "2026-08-25T16:50:00-04:00"
+  },
+  "projection_relationship": null,
+  "evidence_relationship": {
+    "relationship_kind": "verbatim_transcription",
+    "evidence": "active Codex conversation turn"
+  },
+  "execution_state": "awaiting_assigned_folder_clarification",
+  "instruction_verbatim": "We are establishing Downloads\\scratchpad_tmp as a strictly governed,\nmachine-readable repository. Work on your assigned folder only; do not\nalter another agent’s folder or shared root contracts without\ncoordinating first.\n\nFor the assigned folder:\n\n1. Explain its purpose, boundary, permitted contents, prohibited\n   contents, naming rules, lifecycle rules, and relationship to\n   parent/child registries.\n\n2. Audit every concept and enum using Rule 24: one semantic dimension\n   per field, mutually exclusive values, collectively exhaustive for\n   the actual domain, coherent lifecycle states, and no overlapping\n   synonyms.\n\n3. Keep globally reusable concepts in the root\n   systems_definitions.v1.json. Keep field-level and enum-value\n   semantics in the owning JSON Schema. Do not inflate global\n   definitions with schema-local vocabulary.\n\n4. Every document must declare independent lifecycle axes:\n    - authorship_mode\n    - mutation_policy\n    - temporal_claim\n    - authority_role\n\n5. Use only structured JSON or schema-bound XML. Never create\n   Markdown.\n\n6. Every file must have one exact home, an explicit document kind, a\n   governing schema, and a declared source/projection/evidence\n   relationship. Generated files must never masquerade as authored\n   sources.\n\n7. Registries identify admitted members and boundaries. Manifests\n   govern individual things. Dependency registries record operational\n   dependencies. Do not duplicate the same authority across them.\n\n8. Update compiler validation and negative tests alongside every\n   contract change. The repository must compile from the start, reject\n   invalid states, and regenerate projections deterministically.\n\n9. Do not add logs, inbox data, transient runtime state, caches, or\n   historical debris. /org contains mechanics and runtime\n   functionality only.\n\n10. Before handoff, run compile, compiled-output consistency check,\n    tests, legacy-term search, and diff validation.\n\nReturn:\n\n- what was overlapping or indulgent;\n- what was removed, renamed, split, or localized;\n- any shared-root contract changes you believe are necessary but did\n  not make;\n\n- compile and test results;\n- exact files changed.\n\nOptimize for the smallest complete semantic system—not the most\ndocumentation."
+}

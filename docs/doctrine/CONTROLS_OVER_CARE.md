@@ -65,7 +65,12 @@ Ask of any load-bearing claim: **what is the thing, and have I looked at it?**
 
 ---
 
-## The nine ways you fail to see it *even though you looked*
+## The ways you fail to see it *even though you looked*
+
+> **This list has been 4, then 9, then 11, and its own discharge header still said NINE when it
+> reached 11.** Each addition was individually defensible; none was ever reviewed against the whole.
+> **A new entry must merge into an existing root or justify why it is not a variant of one** --
+> otherwise this file re-grows past the cut it was given, which is exactly what happened.
 
 *(Heading corrected 2026-08-12: it read "six" and enumerated seven. A count in a heading that
 disagrees with the list beneath it is this file's own §6 — the label supplying a claim the content
@@ -345,6 +350,113 @@ suggests an action.**
 Record (three measured instances in ~90 minutes, found by three different seats each owning the
 surface — none looking for a pattern; surfaced by `3.0.0_SA_CVO` 69356, who authored one of them):
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/` this session.
+
+### 10. The SET YOU MEASURED was not the SET YOU WERE CLAIMING ABOUT
+
+**Four shapes, one mechanism, one remedy.** In each the tool ran correctly and returned a well-formed,
+fast, plausible answer **about a different population than the claim.**
+
+| shape | the divergence |
+|---|---|
+| **numerator / denominator** | the two halves of a fraction count DIFFERENT populations (*"30 of 64"* -- 30 detail files against a 64-model roster; true coverage 22) |
+| **sample as population** | a handful measured, the whole asserted (*"EVERY lane returns zero"* -- three sampled, others returned 10, 9 and 1) |
+| **location from memory** | measured inside a path/file/ref supplied by recall rather than resolved (a grep of the wrong bundle; an `ls-tree` under a guessed prefix) |
+| **self-inclusion** | **the measurer's own output is in the measured set** -- a log naming four projects made all four read as active TODAY |
+
+- ⛔ **A PRINTED DENOMINATOR DOES NOT DISCHARGE THIS.** *"30 of 64"* HAD a denominator; it was printed; it
+  was still wrong. **The denominator rule ensures a denominator EXISTS, not that both halves describe the
+  same population.**
+- ⛔ **NOR DOES NAMING THE SUBJECT** (the discharge below). A claim can name its file perfectly and still be
+  about the wrong SET -- that discharge reaches the location shape and none of the other three.
+- **THE TEST, checkable in the moment: STATE THE SET YOU MEASURED AND THE SET YOU ARE CLAIMING ABOUT, AND SEE
+  WHETHER THEY ARE THE SAME SENTENCE.** *What is this number OF, and is that what I ran against?*
+- **Self-inclusion has no natural tell and needs its own question:** *am I in this population?* An agent that
+  writes about a set and then measures that set is inside it, **and nothing in the output says otherwise.**
+
+> **NOT IN THIS CLASS -- A CONFOUND IS A DIFFERENT AXIS AND TAKES THE OPPOSITE REMEDY.** *"Tilde lanes return
+> zero, therefore the tilde is the cause"* had a **CORRECT** population; the error was CAUSAL ATTRIBUTION --
+> two variables moved together and the visible one got the blame. **A wrong set is fixed by naming the
+> population. A CONFOUND is fixed by finding a case where the two variables SEPARATE** -- and until someone
+> does, the correlation stays perfect. *Named here so it is not filed as a fifth member; it belongs to the
+> inference family and is not yet written up.*
+
+*Class pitched by `1.0.0_SA_CTO` at five members titled on its most vivid instance; **corrected to four and
+retitled on the mechanism by `3.0.0_SA_CVO`, who ran the four postulates on it** -- the five-member form
+failed (i) MECE and (iii) intent coherence, and the original title named an EXEMPLAR SURFACE rather than a
+TRIGGER CONDITION, which is the F-010 defect about to be installed into fresh doctrine. **A seat about to
+include its own log in a population is not thinking "denominator."***
+
+### 11. You read a PROPER PART of the RIGHT THING and claimed about the WHOLE
+
+**Right artifact. Correct retrieval. Incomplete coverage.** The line you grepped IS in that file. The item
+you listed IS in that job. The field you quoted IS in that message. **You then made a claim whose scope was
+the whole artifact, on a read whose scope was a part of it.**
+
+| shape | the part read | the claim made |
+|---|---|---|
+| **grep radius** | the line the finding names, confirmed | a consequence the *adjacent* lines settle differently |
+| **name taken for behaviour** | an item ENUMERATED in a list | what that item DOES — never looked up |
+| **the short summary** | a two-step precis of a many-step thing | the whole thing, as though the precis were exhaustive |
+| **the read-past field** | the message you are replying to | a consequence its OWN text states the opposite of |
+
+- ⛔ **NO CONTROL IN THIS FILE CATCHES IT, AND THAT IS THE DEFINING PROPERTY, NOT A GAP IN THE LIST. EVERY
+  CONTROL WE HAVE VALIDATES THE RETRIEVAL — AND THE RETRIEVAL WAS VALID.** The positive control fires. The
+  denominator prints. The file is the right file, the ref is the right ref, nothing is empty and nothing
+  errors. **The defect is not in the READ. It is in the SCOPE OF THE CLAIM RELATIVE TO THE READ, and no
+  instrument is pointed at that gap.**
+- ⛔ **NEITHER DISCHARGE REACHES IT.** Naming the SUBJECT (below) answers *which thing* — and the thing was
+  right. Item 10's test answers *which SET* — and the set was right. **Both are satisfied while the claim
+  still overruns the read.**
+- **THE TEST, and it is one question: WHAT ELSE IS IN THE ARTIFACT I READ PART OF?** Not *did I read the
+  right thing* — you did. *Did I read enough of it to say what I am about to say?*
+- **Corollary, for the shape that has no tell at all: ENUMERATING AN ITEM IS NOT READING IT.** Listing a step,
+  a leg, a column or a key puts it in your sentence without putting its CONTENT in your head, **and a name is
+  the least reliable description of a thing in any system where names are written by the thing's author.**
+- **A SUMMARY THAT IS SHORT DOES NOT ANNOUNCE THAT IT IS SHORT.** A precis repeated by several readers
+  accretes authority with each repetition and loses nothing visible; **the Nth repeater cannot tell it from a
+  complete account, and neither can the first.**
+
+> **THIS CLASS IS CAUGHT ALMOST EXCLUSIVELY BY A SECOND READER COVERING THE REST OF THE ARTIFACT — not by the
+> author being careful, because the author's evidence is genuinely good.** Where the other ten can be
+> self-caught by running a control, this one is structurally social: **the cheapest reliable detector is
+> somebody re-deriving at source who was not told which line to look at.** Budget for that reader; do not
+> expect the author to be them.
+
+### THE ONE DISCHARGE THAT WORKS FOR ALL OF THEM — put the SUBJECT in the CLAIM, not in the description of the search
+
+Every failure above is a claim about a *thing*, and in every one the searcher knew which thing they meant and
+the reader could not. **The remedy is a sentence shape, not a habit:**
+
+| form | property |
+|---|---|
+| *"I searched the override log"* | **UNCHECKABLE.** The subject lives in the searcher's head. |
+| *"0 hits in `org/to-pos-override-audit.log`, field 2"* | **CHECKABLE — and its wrongness is VISIBLE to a second reader.** |
+
+**IT REQUIRES NO CARE, NO NEW TOOL, AND NO GATE.** It moves the subject out of the author's head and into the
+sentence, **where the one person who cannot catch the error stops being the only person who could.**
+
+- **Name the PATH, the REF, the FIELD, the BUCKET, the PREFIX, the PLANE — inside the claim**, beside the
+  number, not in a preamble about what you did.
+- **This is the denominator rule's twin.** The denominator says *how many were in scope*; this says *what
+  scope was*. **A denominator over an unnamed population is a frame around nothing.**
+- **Corollary for a zero: never supply a location from memory and then measure inside it.** Search the whole
+  tree and filter (`git ls-tree -r --name-only <ref> | grep -i <token>`), rather than passing a prefix you
+  believe. **An assumed location converts a real question into a well-formed measurement of the wrong place,
+  and the answer comes back clean, fast, and in the direction that ends the search.**
+
+> ⛔ **WHY THIS IS ENVIRONMENTAL AND NOT A COMPETENCE PROBLEM: this estate holds many near-identically-named
+> artifacts across several planes at once** — local / tracking / remote refs, repo / deployed / executing
+> bytes, and whole FAMILIES of audit logs whose names differ by one word. **THE WRONG ONE IS ALWAYS RIGHT
+> THERE, AND IT ALWAYS ANSWERS.** *When one seat does this it is carelessness. When five do it in one night
+> it is a property of the environment* — and the environment is not going to stop having sibling names.
+
+**Measured, one night, ten instances across five seats** — a wrong entry-chunk, a guessed path prefix twice,
+three guessed FIELD names, a positive control that fired on a SIBLING log, a hand-authored artifact
+classified from a summary, and a stale-ref read. **EVERY ONE WAS CAUGHT BY A SECOND READER. NONE BY THE
+AUTHOR** — which is the whole argument for putting the subject where a second reader can see it.
+
+*(Surfaced by `3.0.0_SA_CVO`, who counted the fabric-wide rate rather than accepting another seat's count as
+a personal one.)*
 
 ---
 

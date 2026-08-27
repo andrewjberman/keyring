@@ -1,6 +1,6 @@
 ---
 name: daily-sprint
-description: Rewrite Andrew's DAILY SPRINT text (Today Sprint / Projects Item 0-9 / Process Item 0-9 / Blocks) for the day, grounded on a compiled packet -- comp-state (self-test gated), the git census across BOTH fabrics since 00:00Z, the directives dashboard, open-TO totals, the day's Andrew-direct records, projects closed, ledger entries -- then rewrite yesterday's file into today's in the FIXED template (org/ref/DAILY_SPRINT_TEMPLATE.md) at org/sprints/DAILY_SPRINT_YYYY-MM-DD.md and print it. Bare `/daily-sprint` = today; `/daily-sprint --date YYYY-MM-DD`; `/daily-sprint --packet` = packet only, no rewrite. Andrew-commissioned 2026-08-20 because "we are going to be doing it every single day." Engine `.tools/daily-sprint.py`; MSTR-base primary, any exec may run it.
+description: Rewrite Andrew's DAILY SPRINT text (Today Sprint / Projects Item 0-9 / Process Item 0-9 / Blocks) for the day. THE DELIVERABLE IS A HIGHLIGHT REEL, NOT A CHANGE LOG (Andrew-direct 2026-08-26) -- a fix is a WIN and reads like one ("do not narrate the bug, claim the fix"), a build is a WIN, no pedantry (no internal counts, sequencing, lane attribution or partner-irrelevant caveats), and every line ties to the directive's HEADLINER (`title:` in org/missions/DIRECTIVES.yaml) as progress against it -- "for the most part", so a genuine win with no directive to hang on still goes in. Register only, never content: never invent a win; nothing shipped = say so in one line. Grounded on a compiled packet -- comp-state (self-test gated), the git census across BOTH fabrics since 00:00Z, the directives dashboard, open-TO totals, the day's Andrew-direct records, projects closed, ledger entries -- then rewrite yesterday's file into today's in the FIXED template (org/ref/DAILY_SPRINT_TEMPLATE.md) at org/sprints/DAILY_SPRINT_YYYY-MM-DD.md and print it. Bare `/daily-sprint` = today; `/daily-sprint --date YYYY-MM-DD`; `/daily-sprint --packet` = packet only, no rewrite. Andrew-commissioned 2026-08-20 because "we are going to be doing it every single day." Engine `.tools/daily-sprint.py`; MSTR-base primary, any exec may run it.
 ---
 
 # /daily-sprint — the day's status text, rewritten against a grounded packet
@@ -23,8 +23,11 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    live/retired with per-row freshness + flags, open-TO totals, the day's Andrew-direct records,
    projects closed, ledger entries. These are the numbers the text may quote.
 3. **Read yesterday's file** (the packet names it). Today's text is a REWRITE of it, not an append:
-   every Item line is re-stated against today's evidence; "no movement today" is a legitimate and
-   preferred line over invented progress (a directive row whose `Last` is yesterday did not move).
+   every Item line is re-stated against today's evidence. **"No movement today" is legitimate and
+   is always better than invented progress** (a directive row whose `Last` is yesterday did not
+   move) — **but it is the fallback, NOT the target. Look for the win first.** If the day held a
+   fix, a build, a decision or a number that got better, **that is the line**; a quiet item gets
+   one short sentence and the space goes to the items that moved.
 4. **Rewrite today's file in the template's exact shape** — headings, `Item N – Name – text`
    grammar, terse register, Today-Sprint bullets highest-consequence first, Blocks = genuine
    external blocks or human-only acts (an inter-item dependency is Process, not a Block).
@@ -35,10 +38,50 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    unedited?** The packet is the GROUNDING, not the prose — translate it, never transcribe it.
 5. **Cross-fabric:** site-Z landings come from ferried records at parity (cite the record/commit);
    the packet's `--all` git census already covers both branches.
-6. **Commit** the day's file under your author line (`safe-commit`), then **print the text** in
-   the terminal — Andrew copies it into the Opal Teams channel.
+6. **BUILD THE STRUCTURED JSON + RENDER — the visual deliverable (Andrew-direct 2026-08-27,
+   supersedes the 08-26 `render_sprint.py` step; that renderer is retired):**
+   a. `python daily_reports/scripts/commit_census.py --date <DAY> --json` — measured commits,
+      workers, and by-kind counts (the `commit_kind` author-seat enum; Rule-24 record in
+      `daily_reports/README.md`). by_project is authored from packet knowledge until a measured
+      mapper exists — set each cut's `claim` field honestly (`measured` | `inferred`).
+   b. Write `daily_reports/data/DAILY_REPORT_<DAY>.json` against
+      `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
+      author to the shape checklist below.**
+   c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
+      `daily_reports/out/DAILY_REPORT_<DAY>.html`. **A validation failure is a content defect:
+      fix the JSON, never the template.** Surface the html (`SendUserFile` / open it).
+7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
 
-**TEXT ONLY, by design (Andrew-direct ~2105Z, VERBATIM):** *"there are two skills involved here.
+## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
+
+Template `daily_reports/templates/daily_report_template.html` is the ONE design (CTO surface;
+frozen). A /daily-sprint run AUTHORS, it never styles. What the runner is looking for:
+
+- **HEADLINE — a STANDALONE feature, not a sprint item:** what kind of day it was, carried by
+  the biggest win or an amalgamation (`headline.kind`: biggest_win | amalgamation | day_summary).
+  Never wraps.
+- **SPRINT ITEMS (3–8):** each carries a category (fix/ship/verify/build/scope), a **card
+  headline that fits whole — max 52 chars, no ellipsis ever (hard law, renderer rejects)**, a
+  stage title, **WHO / WHAT / WHERE / WHY** (one short line each; touchpoints a reader knows —
+  firms, platforms, dashboard pages, **B2B only, never an individual investor**), a **viz type**
+  (flow / coverage / tree / screens / link / orbit — vary them; params in JSON), and exactly
+  **3 stat chips**.
+- **TEAM ACTIVITY:** the stable every-day element — a layman verdict line on the day's shape,
+  plus two cuts of ONE commit population (by kind of work, by project; both must sum to
+  `commits` — the renderer asserts it). Colors are stable: project N is always the same color.
+- **PROJECTS:** one card per DIRECTIVES.yaml row, name = the register `title:` verbatim, short
+  subtext against the headliner; `quiet: true` for no-movement rows.
+- **PROCESS / BLOCKED:** the same 1:1 register mapping; blocked = genuine external blocks only.
+- All prose fields obey the FIRST–FOURTH RULES (layman, highlight reel, Andrew's voice, volume).
+
+**SUPERSEDED 2026-08-26 ~23:0xZ — THE DELIVERABLE IS AN IMAGE, NOT TEXT.** Every Teams-text
+formatting workaround (`&nbsp;` gap-holders, `---` rules, spacer bullets carrying a non-breaking
+space, the no-heading rule, the PROCESS table) is RETIRED: presentation moved out of prose and into
+`render_sprint.py`, where a reader cannot tidy it away by accident. The clause below is preserved
+for the division-of-labour half, which still binds — the visual dashboard is `/directives-check`,
+this skill produces the day's report:
+
+**(prior text-only clause, Andrew-direct ~2105Z, VERBATIM):** *"there are two skills involved here.
 /directives-check which is for me internally and shows the current state of directives + creates a
 render for visible analysis. Then there should also be /daily-sprint which essentially is just a
 formatted text version i can copy/paste of directives-check for the Opal teams channel."* The
@@ -55,15 +98,53 @@ else.
 
 ## Discipline
 
+- **WRITTEN IN ANDREW'S VOICE (Andrew-direct 2026-08-26 ~21:2xZ, VERBATIM):** *"These have to be
+  written in my voice, do not refer to me as im the one who is allegedly saying these things."*
+  He pastes the text as HIS OWN channel message — **never write "Andrew ruled/approved/set…"**;
+  decisions render as bare outcomes ("Ruled: …", "Approved: …", "Target moved to today") or first
+  person where ownership is the point, and a "For Andrew" block renders "**Pending my call:** …".
+  The test: read every line as if you are Andrew posting it. Full form + before/after table: the
+  template's **THIRD RULE**.
+- **HIGHLIGHTS, AND MAKE IT SOUND GOOD (Andrew-direct 2026-08-26).** *"if we fix a bug that sounds
+  good, if we build something that sounds good, we do not want pedantic stuff, and we want to tie
+  it back to directives.yaml headliner items for the most part."*
+  **DO NOT NARRATE THE BUG — DO CLAIM THE FIX.** A repair is delivery and reads as a win; the
+  mechanism that produced it does not appear. Confident, plain, active register.
+  ⛔ **Register only, never content: NEVER invent a win.** Nothing shipped on an item = say so in
+  one line. The rule bites the other way — **when there IS a win, do not bury it in hedging or in
+  the machinery behind it.**
+  **NO PEDANTRY:** internal counts, sequencing, lane attribution, caveats a partner would not act
+  on. Precision lives in the logs and certs; this text is the highlight reel.
+  Full rule + worked before/after table: the template's **SECOND RULE, AMENDED**.
+- **THE VOLUME LINE CLOSES `TODAY SPRINT` (Andrew-direct 2026-08-26 ~21:5xZ):** *"how many commits
+  over how many agents today? i think that should be the final line of the 'Sprint' section."*
+  **Always last, always present, bare and flat:** `• N commits across M agents today.`
+  `git log --all --since='<DAY>T00:00:00Z'` — **`--all` is load-bearing (both fabrics, every ref)**;
+  commits = `| wc -l`, agents = `--pretty='%an' | sort -u | wc -l`.
+  ⛔ **NARROWS the 08-25 cut, does not reverse it** — ONE line, LAST, in TODAY SPRINT only; never in
+  an Item line, PROCESS, BLOCKS, or as a lead bullet, and **a count never stands in for a highlight.**
+  ⚠ **M is DISTINCT AUTHOR IDENTITIES, not a headcount** — lanes committing under a base author line
+  are invisible to `%an` (measured 08-26: one base serial showed 62 commits of which that seat wrote
+  10). **Write "across M agents", never "M agents were running."** Full rule: the template's
+  **FOURTH RULE**.
+- **Tie each line to the directive's HEADLINER** — its `title:` in `org/missions/DIRECTIVES.yaml`
+  (*"MDPF asset-category views"*, *"ADVI 49F end-to-end"*, *"Model Portfolios Pipeline
+  Fortification"*…). Write the day as **progress against that headline**, in its own words where
+  they fit. **"For the most part" is deliberate: a genuine win with no directive to hang on still
+  goes in.** The tie is the default, not a filter.
 - The packet gates the prose; never write a number the packet or a cited read does not carry.
-- Items map 1:1 to `org/missions/DIRECTIVES.yaml` D0-D9; a RETIRED directive keeps its Item line
-  marked DONE/RETIRED until Andrew drops it from the text.
+- **Items map 1:1 to `org/missions/DIRECTIVES.yaml` D0-D11, and the item NAME IS THE DIRECTIVE
+  `title:` VERBATIM** — since 2026-08-26 the register's titles ARE Andrew's operating-report names,
+  so the tie-to-the-headliner rule is a STRING MATCH, not a paraphrase. A mismatch means one of the
+  two is wrong. A RETIRED directive keeps its Item line marked DONE/RETIRED until Andrew drops it.
 - Yesterday's file is never edited; today's is the snapshot.
 - Compiler Tools line in your session log: `comp-state` (self-test N/N) + `directives-check` +
   `to-check` via the packet.
 
 ## Cross-references
 
-Engine `.tools/daily-sprint.py` · template `org/ref/DAILY_SPRINT_TEMPLATE.md` · first instance
-`org/sprints/DAILY_SPRINT_2026-08-20.md` · siblings `/exec-sum` (card+draw, whole-fabric),
-`/directives-check` (the register dashboard), `/comp-state`.
+Engine `.tools/daily-sprint.py` · text template `org/ref/DAILY_SPRINT_TEMPLATE.md` · **visual
+system `daily_reports/` (README = the law + the commit_kind Rule-24 record; schema, template,
+scripts, data, out)** · first instance `org/sprints/DAILY_SPRINT_2026-08-20.md` · first visual
+instance `daily_reports/out/DAILY_REPORT_2026-08-27.html` · siblings `/exec-sum` (card+draw,
+whole-fabric), `/directives-check` (the register dashboard), `/comp-state`.

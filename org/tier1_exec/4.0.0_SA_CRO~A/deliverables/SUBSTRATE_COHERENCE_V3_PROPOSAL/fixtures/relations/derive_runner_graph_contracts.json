@@ -1,0 +1,36 @@
+{
+  "document_kind": "substrate_relation_card",
+  "schema_version": "1.0.0-proposed",
+  "contract_status": "non_operative_proposal",
+  "governing_schema": "../../schemas/substrate_relation_card.v1.schema.json",
+  "exact_home": "fixtures/relations/derive_runner_graph_contracts.json",
+  "document_lifecycle": {"authorship_mode": "human_authored", "mutation_policy": "whole_document_replace", "temporal_claim": "historical_snapshot", "authority_role": "supporting_evidence"},
+  "relationships": {"source": ["infra/aws/globgrph/derive_runner.py@20365d2d2cf2"], "projection": [], "evidence": ["evidence:ensure", "evidence:append"]},
+  "relation_id": "relation:derive_runner:graph_contracts",
+  "actor_ref": {"registry_interface": "substrate_entity_registry", "registry_id": "actor:derive_runner", "registry_vintage": "proposal@20365d2d2cf2"},
+  "artifact_ref": {"registry_interface": "substrate_entity_registry", "registry_id": "artifact:graph_contracts", "registry_vintage": "proposal@20365d2d2cf2"},
+  "relation_family": "materialization",
+  "evidence_planes": ["committed_repository"],
+  "operations": [
+    {"operation_id": "operation:create", "effect_kind": "create_if_absent", "mechanism_kind": "helper_call", "target_domain": "closed_enumerated", "binding_origin": "fixed_constant", "binding_trace": ["literal", "table_handle", "api_call"], "payload_assembly": "outside_actor", "evidence_refs": ["evidence:ensure"]},
+    {"operation_id": "operation:append", "effect_kind": "append", "mechanism_kind": "direct_api_call", "target_domain": "closed_enumerated", "binding_origin": "fixed_constant", "binding_trace": ["literal", "table_handle", "api_call"], "payload_assembly": "inside_actor", "evidence_refs": ["evidence:append"]}
+  ],
+  "state_claims": {
+    "desired": {"claim_id": "claim:desired", "claim_status": "known", "value": "required", "basis_mode": "authority_declaration", "evidence_refs": ["evidence:append"], "temporal_claim": "historical_snapshot"},
+    "applied": {"claim_id": "claim:applied", "claim_status": "known", "value": "configured", "basis_mode": "observed", "evidence_refs": ["evidence:ensure", "evidence:append"], "temporal_claim": "historical_snapshot"},
+    "exercised": {"claim_id": "claim:exercised", "claim_status": "unknown", "value": null, "basis_mode": null, "evidence_refs": [], "temporal_claim": "historical_snapshot"}
+  },
+  "standing_claims": {
+    "authority_status": {"claim_id": "claim:authority", "claim_status": "unknown", "value": null, "basis_mode": null, "evidence_refs": [], "temporal_claim": "historical_snapshot"},
+    "runtime_use_status": {"claim_id": "claim:runtime", "claim_status": "unknown", "value": null, "basis_mode": null, "evidence_refs": [], "temporal_claim": "historical_snapshot"},
+    "succession_status": {"claim_id": "claim:succession", "claim_status": "unknown", "value": null, "basis_mode": null, "evidence_refs": [], "temporal_claim": "historical_snapshot"}
+  },
+  "artifact_lifecycle": {"authorship_mode": "mixed_origin", "mutation_policy": "append_only", "temporal_claim": "current_at_observation", "authority_role": "authoritative_source"},
+  "evidence": [
+    {"evidence_id": "evidence:ensure", "path": "infra/aws/globgrph/derive_runner.py", "locator": "197-203", "vintage": "20365d2d2cf2", "instrument": "source read", "positive_control": "ensure_graph_contracts_table calls create-if-absent helper", "negative_control": "overwrite helper path is distinct", "claim_ids": ["operation:create", "claim:applied"]},
+    {"evidence_id": "evidence:append", "path": "infra/aws/globgrph/derive_runner.py", "locator": "1104-1222", "vintage": "20365d2d2cf2", "instrument": "source read", "positive_control": "load-contracts appends CVO-authored rows", "negative_control": "graph_nodes overwrite path does not satisfy append-only invariant", "claim_ids": ["operation:append", "claim:desired", "claim:applied"]}
+  ],
+  "residue": [
+    {"residue_id": "residue:exercise", "unknown": "The supplied evidence proves a code path, not that graph_contracts append executed in the measured runtime.", "owner": "D11 drive loop"}
+  ]
+}

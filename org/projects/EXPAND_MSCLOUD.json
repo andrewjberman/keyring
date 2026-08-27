@@ -20,13 +20,14 @@
     "NFRA_GLOBGRPH",
     "NFRA_OPLMCP"
   ],
-  "status": "scoping",
-  "phase": "RE-HOMED into NFRA_MSGRAPH 2026-06-26 (Andrew-direct 'elevate MS to its own macro' 15:09Z) -- this MS SP/OneDrive ingestion is now Component-1 of the first-class NFRA_MSGRAPH macro (joined by an MS heat-map + a NEW MS comp-tools/index layer), NO LONGER NFRA_EXPAND Strand A. The scope/guardrails here (SharePoint+OneDrive ONLY; Outlook+personal-comms OFF-graph; structure/metadata/activity-only never content; access-topology retained; single AWS Nessie graph) + the 5 open design-Qs carry forward verbatim into the NFRA_MSGRAPH PRD (CTO carving it from NFRA_EXPAND_PRD). Track NFRA_MSGRAPH for the live decomposition; this entry preserved as the source scoping. [PRIOR] SCOPING (PRD drafted) -- NFRA_EXPAND Strand A, PHASE 2 (the major expansion). Resolve the 5 PRD design Q's before build. Prereq for Strand C-global.",
+  "status": "closed",
+  "phase": "closed 2026-08-25 -- SPRING CLEAN, Andrew-direct ~18:24Z: a project not attached to org/missions/DIRECTIVES.yaml is closed rather than left floating unaddressed as live. NOT superseded (no successor is named, and superseded requires one). NOT a work verdict. Recovery is explicit in his ruling: \"we can reinvent a project\". Selected on MEMBERSHIP, not age; carried ZERO open task orders at close. Prior phase: RE-HOMED into NFRA_MSGRAPH 2026-06-26 (Andrew-direct 'elevate MS to its own macro' 15:09Z) -- this MS SP/OneDrive ingestion is now Component-1 of the first-class NFRA_MSGRAPH macro (joined by an MS heat-map + a NEW MS comp-tools/index layer), NO LONGER NFRA_EXPAND Strand A. The scope/guardrails here (SharePoint+OneDrive ONLY; Outlook+personal-comms OFF-graph; structure/metadata/activity-only never content; access-topology retained; single AWS Nessie graph) + the 5 open design-Qs carry forward verbatim into the NFRA_MSGRAPH PRD (CTO carving it from NFRA_EXPAND_PRD). Track NFRA_MSGRAPH for the live decomposition; this entry preserved as the source scoping. [PRIOR] SCOPING (PRD drafted) -- NFRA_EXPAND Strand A, PHASE 2 (the major expansion). Resolve the 5 PRD design Q's before build. Prereq for Strand C-global.",
   "blocking": "None hard -- scoping. The big build; sequences as the major expansion. Depends on the m365 gateway Graph API (live) + the globgrph derive pipeline.",
   "created": "2026-06-25",
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
   "threads": [],
-  "lane": "AE-cloud + m365-gateway owner"
+  "lane": "AE-cloud + m365-gateway owner",
+  "closed": "2026-08-25"
 }

@@ -1,12 +1,12 @@
 <task_order>
 <metadata>
   <to_id>PORTAL_AUTHHARD.WS2b</to_id>
-  <project>PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Hardening)</project>
+  <project>PORTAL_AUTHHARD</project>
   <title>Session revocation primitive -- a token version/generation claim so disable / password-reset / "revoke all sessions" invalidates LIVE tokens. DESIGN-FIRST (touches BOTH verifiers + the mint) -> CTO~B arch-gate -> build+exercise. Wave 2.</title>
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>ACTIVE -- GO on the DESIGN (this dispatch). NO build/apply before CTO~B arch-gates the design (it touches both JWT verifiers + the token mint -- a claim only one verifier checks is a bypass).</status>
+  <status>complete -- SPRING-CLEAN 2026-08-25 (S2): <project> field repaired from "PORTAL_AUTHHARD (Portal Auth/Authz + Abuse-Resistance Harden" to PORTAL_AUTHHARD, which is closed. Closed as a record act, not a work verdict. Prior status: ACTIVE -- GO on the DESIGN (this dispatch). NO build/apply before CTO~B arch-gates the design (it touches both JWT verifiers + the token mint -- a claim only one verifier checks is a bypass).</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH -- Wave 2, first (completes WS-2: WS-2a closed the acute disabled-user case; WS-2b generalizes revocation).</priority>
   <references>
