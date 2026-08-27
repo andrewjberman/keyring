@@ -924,11 +924,16 @@
               "pattern": "\\S",
               "description": "enumerable=false ONLY. The producer's name template, verbatim."
             },
-            "pattern_source": {
+            "pattern_source_home": {
               "type": "string",
               "minLength": 1,
-              "pattern": "\\S",
-              "description": "enumerable=false ONLY. file:line where the template is produced. A pattern without its producing line is a guess about a name shape."
+              "pattern": "^\\S+$",
+              "description": "enumerable=false ONLY. Repo path of the file that PRODUCES the template. Path only -- the line is a separate field. This replaced a compound `pattern_source` string on 2026-08-27 that promised file:line and enforced only non-blank, so 'p.py', 'source-token', 'p.py:', ':1' and 'p.py:0' were all accepted."
+            },
+            "pattern_source_line": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "enumerable=false ONLY. 1-BASED line number of the producing statement. Integer, never a string, minimum 1 -- line 0 does not exist and a 0 here was the tell that the compound form was never parsed by anything."
             },
             "basis": {
               "enum": [
@@ -980,7 +985,14 @@
                 {
                   "not": {
                     "required": [
-                      "pattern_source"
+                      "pattern_source_home"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "pattern_source_line"
                     ]
                   }
                 }
@@ -994,7 +1006,8 @@
               },
               "required": [
                 "pattern",
-                "pattern_source"
+                "pattern_source_home",
+                "pattern_source_line"
               ],
               "not": {
                 "required": [
@@ -1008,7 +1021,7 @@
             "grain": "one part; members/instances are ARTIFACTS, not parts",
             "intent": "one -- WHAT the id covers; NOT cardinality (derived or undefined), NOT coverage",
             "mece": "OMITTED = the id denotes exactly one artifact. enumerable=true = >=2, all named. enumerable=false = a family, named by template. Three states, no overlap.",
-            "state_coherence": "discovering a further member ADDS to members[] under true and moves NOTHING under false. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set. `derivation` is NO LONGER SERIALISED: it stated schema prose in a field, which is the typed-derivable-value defect this object already refuses for cardinality."
+            "state_coherence": "discovering a further member ADDS to members[] under true and moves NOTHING under false. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set. `derivation` is NO LONGER SERIALISED: it stated schema prose in a field, which is the typed-derivable-value defect this object already refuses for cardinality. A PATTERN'S PROVENANCE IS TWO FIELDS, NOT A PARSED STRING: pattern_source_home + pattern_source_line. A compound 'file:line' is a claim no validator can branch on, which is the same defect as prose in `home` and a stored cardinality -- a value a machine must re-derive at the call site is a value the contract did not actually constrain."
           }
         }
       },
