@@ -1,6 +1,6 @@
 ---
 name: self-drive
-description: Drive ONE scope of the directive register to completion on a self-ending loop -- `/self-drive D4`, `/self-drive ETFS_INGEST`, `/self-drive sitez directives`, `/self-drive laptop directives`. Each tick runs /open-calls RESTRICTED to the scope, PITCHES every adjudicable call WITH THIS SEAT'S REC to the fabric's CVO lane to adjudicate, then PROCEEDS on the verdicts received. The loop PERSISTS UNTIL THE SCOPE IS DONE (read from the register, never declared), then TURNS ITSELF OFF; the driver writes a self-drive log at completion or every 2 ticks, whichever comes first. While armed, the scope is the ONLY work the driver's fabric does. Operator-initiated (never armed at launch); NOT /drive -- it dispatches nothing on a timer. Andrew-direct 2026-08-24 at the CTO~Z terminal.
+description: Drive ONE scope of the directive register to completion on a self-ending loop -- `/self-drive D4`, `/self-drive ETFS_INGEST`, `/self-drive sitez directives`, `/self-drive laptop directives`. Each tick runs /open-calls RESTRICTED to the scope, PITCHES every adjudicable call WITH THIS SEAT'S REC to the fabric's CVO lane to adjudicate, then PROCEEDS on the verdicts received. The loop PERSISTS UNTIL THE SCOPE IS DONE (read from the register, never declared), then TURNS ITSELF OFF; the log is DELTA-DRIVEN (completion / substantive delta / a 6-tick floor -- quiet ticks write and commit NOTHING; Andrew-amended 2026-08-27, retiring the every-2-ticks form). While armed, the scope is the ONLY work the driver's fabric does. Operator-initiated (never armed at launch); NOT /drive -- it dispatches nothing on a timer. Andrew-direct 2026-08-24 at the CTO~Z terminal.
 ---
 
 # /self-drive — drive a DIRECTIVES.yaml scope to DONE: open-calls -> CVO adjudicates -> proceed, on a loop that ends itself
@@ -89,7 +89,22 @@ On DONE: write the final log (§5, `state: DONE`), `CronDelete` the job, strike 
 
 ## Step 5 — The log cadence + the durable carrier (BUILT IN)
 
-**Log:** at COMPLETION or EVERY 2 TICKS, whichever comes first, write `org/{tier}/{base_serial}/logs/{YYYY-MM-DD}/{lane_prefix}self_drive_{scope}_tick{N}.md` (lane logs live in the BASE folder, lane-prefixed — the site-Z owned-paths rule) and commit it via `safe-commit` under the driver's own author line. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; RESERVED cards still at Andrew; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
+**Log — DELTA-DRIVEN, not per-tick (AMENDED 2026-08-27 ~22:1xZ, Andrew-direct at the base CTO
+terminal, VERBATIM: "we do not need a committed log with every tick" — amending his own word (3)
+cadence; the every-2-ticks form is retired).** Write + commit
+`org/{tier}/{base_serial}/logs/{YYYY-MM-DD}/{lane_prefix}self_drive_{scope}_tick{N}.md` (lane logs
+in the BASE folder, lane-prefixed — the site-Z owned-paths rule) via `safe-commit` under the
+driver's own author line **ONLY when one of these holds:**
+- **COMPLETION / HELD-AT-STOP / STOPPED-BY-OPERATOR** (the final log, always);
+- **SUBSTANTIVE DELTA since the last log** — a call pitched, a verdict landed, a driver act taken,
+  a scope/member change, an UNREACHABLE classification, or new ledger rows (the ledger commits
+  WITH this log; a joint-decision half may still commit immediately at the driver's judgment —
+  session-death on an uncommitted verdict is the loss the ledger exists to close);
+- **the FLOOR: 6 ticks (~3h) since the last log** even if quiet, so a long-armed loop never goes
+  unrecorded past one working block.
+**A quiet tick writes NOTHING and commits NOTHING** — the tick output in the terminal is its whole
+record, exactly the /log skill's own skip-silently-on-no-delta pattern. The tick counter still
+advances in scratchpad state; the next written log names the ticks it covers. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; RESERVED cards still at Andrew; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
 
 **Tick state** between logs lives in the session scratchpad (`self-drive.<scope>.json`: cron id, armed_at, tick, last_log_tick) — never in the shared working tree (site Z loses uncommitted work). Lost state is re-derived from the latest committed self-drive log for the scope.
 
