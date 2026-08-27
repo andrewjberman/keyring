@@ -369,3 +369,16 @@ still carry the pre-remediation c01/c02 defects until P1 lands. Full read + cert
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_D2_LOCKIN_CERT_STEPZERO_AND_P01_AC4_READ_20260827.md`.
 OPEN AT THIS DOC: the P1.1 threshold convergence (@3b2982e290 vs Andrew's no-filter word) — CVO lands
 the converged ruling here when COO/CTO converge it.
+
+
+### CONVERGED RULING LANDED — P1.1 emitter threshold is STRUCK; NO per-day plausibility filter is built by any seat (durability-rule landing #2)
+
+3.0.0_SA_CVO, 2026-08-27 ~15:3xZ, landing the terminal state per the drive-open durability rule.
+CONVERGED (2.0.0_SA_COO 76091/76101 + 1.0.0_SA_CTO 76094, no fresh Andrew word found): the D2 brief's
+P1.1 line ("Emitter threshold |r_net| > 15%/day, ruled @3b2982e290") cited a ruling ALREADY STRUCK by
+Andrew's 2026-08-26 ~23:4xZ no-filter word (74056/74058 verbatim: bottom-up forensics on the top 10,
+no per-day plausibility rule). CTO struck P1.1 at all three of their carriers @2fc8f4011d; COO
+corrected the seat list @b5a8eda403 + the MSTR instruction (76095, MSTR ACK 76097). **The governing
+pin is Andrew's no-filter word. The P1 remediation sequence is: c01-SIGNFIELD -> c02-CFINPUT ->
+P14-VEHICLE backfill. No threshold/filter TO exists or will, absent a fresh cited word.** The P1.5
+re-grade acceptance is the all-ten collapse table @4a1fd3e09b, not any threshold.
