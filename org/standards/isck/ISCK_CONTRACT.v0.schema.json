@@ -1501,7 +1501,10 @@
           "if": {
             "properties": {
               "integrity": {
-                "const": "verified"
+                "enum": [
+                  "verified",
+                  "unverified"
+                ]
               }
             },
             "required": [

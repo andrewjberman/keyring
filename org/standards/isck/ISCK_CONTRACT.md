@@ -47,8 +47,10 @@ closes and the version is pinned.
 5. **PROVENANCE IS A FRONTIER; COHERENCE VERDICTS CARRY THEIR WARRANT.** Every run consumes a
    `source_frontier`; every surface version pins frontier + materializer version. A coherence
    evaluation asserting `verified`/`mismatch`/a currency verdict REQUIRES evidence; `mismatch`
-   REQUIRES its delta (CV-3). `unknown`/`unverified` stay free — the remedy that moves `verified`
-   must not punish honesty about not knowing.
+   REQUIRES its delta (CV-3). `unknown`/`unverified` stay free OF REQUIRED WARRANTS — the remedy
+   that moves `verified` must not punish honesty about not knowing. Free of warrants is not free
+   of contradiction: a `delta_summary` PRESUPPOSES a comparison and `unverified` asserts none ran,
+   so it is FORBIDDEN there (ARM-4 CUT #4; the F5 shape — a value with nothing behind it).
 
 ## 2. RECORD CATALOG (11 types)
 
@@ -243,7 +245,10 @@ re-materialization — producer) · `currency` `at_target|behind_target|ahead_of
 `fabric_validity` `valid_for_fabric|foreign_fabric|unknown` (remedy: re-derive on the owning fabric
 — Rule 26). ARM TABLE (CV-3): `integrity verified|mismatch -> evidence_refs required` · `mismatch
 -> delta_summary required` · `currency at_target|behind_target|ahead_of_target -> evidence_refs
-required`. `unknown`/`unverified` FREE by design.
+required`. `unknown`/`unverified` FREE OF REQUIRED WARRANTS by design — no arm may DEMAND evidence
+or a delta from a seat that has not checked. FORBID (ARM-4 CUT #4): `integrity verified|unverified
+-> delta_summary forbidden` — a delta is the product of the check; `verified` denies a delta and
+`unverified` denies the check (its remedy column: "run the check").
 
 ### 3.15 Registered vocabularies — `entity_class`, `identity_space`, `identity_policy` (DT-3)
 NOT closed enums. ⛔ OPENNESS IS DECLARED (it was previously only implied): the schema accepts any
