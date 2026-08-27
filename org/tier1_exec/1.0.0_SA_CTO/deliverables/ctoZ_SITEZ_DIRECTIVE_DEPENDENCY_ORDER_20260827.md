@@ -175,7 +175,57 @@ cadence one and worth naming separately.
    D7 ------------------------------ HELD by his word. Nothing to force.
 ```
 
-**⛔ REVISED 14:03Z after the E3 retraction. This table is the OPERATIVE order.**
+## ⛔ SUPERSEDED 14:0xZ BY ANDREW-DIRECT -- READ THIS BEFORE THE TABLE BELOW
+
+**ANDREW-DIRECT, 2026-08-27 ~14:0xZ at the `2.0.0_SA_COO~Z` terminal, four messages, VERBATIM
+(typos his):**
+1. *"Lets discuss first before you start making allocations and so on, i want to make sure we lockk in on that which is highest priority"*
+2. *"for example, D9 doesnt matter right now"*
+3. *"D7 which I beleive is ticket system and D6 which is oPal analyst also dont have any pressing work to address"*
+4. *"the highest priorities are the work on Model Portfolios, those directives, but i want to organize and assess with you first to that end so we can make sure to address"*
+
+**HIS PRIORITY SET IS MODEL PORTFOLIOS.** `members.subgroups == ['PORTAL.MODEL_PORTFOLIOS']` resolves
+at `origin/CLOUD` to exactly **D1, D4, D8** -- all SITEZ, and the exact complement of the three he
+stood down. *(Register fact, measured. "Those directives" is his phrase and its breadth is HIS -- he
+asked to assess it with COO~Z, and that question is not resolved here.)*
+
+**ACTED:** D9 TO-A NOT issued and never written to a `task_orders/` dir (no TO exists). Nothing
+allocated, minted, seated, or armed.
+
+**SCOPE NOT WIDENED:** his (1) was said at COO~Z's terminal about ALLOCATIONS, a COO act. Per the
+2026-08-04 no-inferred-gates rule his word binds the ADDRESSED seat at verbatim scope -- **it is
+COO~Z's hold and must not be converted into a fabric-wide stop.** (2)(3)(4) are PRIORITY FACTS and
+are acted on as such.
+
+### ⭐ THE PAYOFF -- E1 ALREADY ORDERS HIS PRIORITY SET, AND IT IS NOT IN THE REGISTER HE WILL READ
+
+**D1 BEFORE D4** is the recovered edge, corroborated from both ends, and **it survived the E3
+retraction untouched** -- it never depended on the cottonwood reading. Within his Model Portfolios
+set the internal order is therefore *determined, not a judgement call*:
+
+> **D1 FIRST** -- it gates D4's taxonomy layer (E1) **and** the laptop's D3 (E2).
+> **D4's INGEST legs run in parallel from minute one** -- E1 binds the taxonomy/canon layer ONLY.
+> **D8** -- the conformance census, on its own clock, no live defect.
+
+⛔ **AND THE RENAME DELETED THE SENTENCE THAT CARRIES IT.** A grep for "D1" inside D4's row returns
+HITS -- both about ADJACENCY, not order. **If he opens the register during that assessment, the one
+constraint that orders his highest priority is not in it, and the search that would look for it
+returns a confident false positive.**
+
+### OPERATIVE RANK, POST-DIRECT
+
+| rank | directive | basis |
+|---|---|---|
+| **1** | **D1** | His top set; gates D4 (E1) + laptop D3 (E2); only outbound cross-fabric consequence in the set |
+| **2** | **D4** | His top set; ingest legs parallel to D1, taxonomy join behind it; holds 8 of 8 open TOs |
+| **3** | **D8** | His top set; census on D8's own clock; no live defect |
+| -- | D6 · D7 · D9 | **STOOD DOWN by his words (2) and (3).** Not ranked. |
+
+---
+
+*The pre-direct table below is preserved for provenance. **Ranks 1/4/6 are superseded; the EDGES are not.***
+
+**⛔ REVISED 14:03Z after the E3 retraction.**
 
 | rank | directive | why here |
 |---|---|---|
@@ -203,6 +253,63 @@ directive; 2 are unassigned.
 
 **A fabric with three Tier-0/Tier-1 seats and zero worker seats cannot execute any of this.**
 That is a fact about the fabric, not a caveat on the plan. **The order is correct and inert until seats exist.**
+
+## s.5a -- THE GENERAL FORM EARNED BY THE E3 RETRACTION
+
+> ### **NEVER#1 IS A CADENCE RULE, NOT ONLY A CALENDAR RULE.**
+> **The calendar is only HALF the frontier. The other half is per-partner, per-FEED, and DECLARED.**
+
+Resolving weekends and holidays is necessary and **not sufficient**. A pipeline's expected frontier is
+`expected_last_trading_day` **minus its own declared cadence offset**, and that offset lives in a
+config file the producer imports by name -- not in the calendar, not in the object, not in the clock.
+
+Three corollaries, each earned:
+
+1. **A PARTNER-TO-PARTNER COMPARISON IS VOID ACROSS DIFFERENT DECLARED CADENCES.** It *feels* like the
+   rigorous control -- same instrument, same instant, no wall-clock age anywhere -- and it **could not
+   have returned "healthy" for a D+2 partner.** An instrument that could not have said otherwise
+   (Rule 22a). The rigour is real and aimed at the wrong axis.
+2. **A SPECIAL CASE IN THE PRODUCER IS A DECLARATION OF WHAT IS RIGHT, NOT EVIDENCE OF WHAT IS WRONG.**
+   `_cot_carry_policy` and *"Cottonwood sidecar VINTAGE gate"* were read as symptoms. They were the spec.
+3. **CADENCE HANGS OFF THE FEED, NOT THE PARTNER** (roster `cadence_is_per_feed`): partner frontier =
+   **MIN** over feeds, partner lag = **MAX** over feeds. So a frontier reading confirms the *slowest*
+   feed and is **SILENT** on the others -- cottonwood's 08-25 verifies its D+2 holdings feed and says
+   nothing about its same-day model roster. **An all-clear derived from a MIN must travel with that limit.**
+
+*Verified independently by `0.0.0_AB_MSTR~Z` on a different instrument (calendar directly, not frontier
+re-reads): lag 0 against the declared D+2, and the raw 2-trading-day figure sits inside the roster's
+3-day tolerance. **Healthy twice over.** The 08-19 freeze reproduces at 6 trading days = lag 4, so the
+original outage was real and today's reading is not.*
+
+## s.5b -- ANDREW RULINGS, 2026-08-27 ~15:2xZ (`/open-calls` at the CTO~Z terminal)
+
+Both calls put to him as cards with recs; ruled **VERBATIM: *"recs approved"***. Recorded here per
+the record+broadcast law; broadcast same turn to MSTR~Z, COO~Z and the live AE seat.
+
+**RULING 1 -- `/self-drive D4` clause STRUCK from `org/XXX.md` Step 1b-F.** Executed same turn
+(strikethrough + discharge note preserving the clause verbatim for provenance). **NOT the clause's
+own stop-condition -- D4 is not done.** It is discharged by a LATER, WIDER sovereign word: the
+08-27 six-directive placement plus the Model Portfolios priority ruling supersede *"the only work
+your fabric should be doing this session"*, which its own words scoped to *"this session"* anyway.
+**A successor must not re-arm off the struck clause.** D4 stays rank 2 and is worked directly.
+
+**RULING 2 -- D8's target architecture stays PARKED**; revisit after the conformance census. His
+08-25 gold-into-per-purpose-buckets statement remains DIRECTION, **Rule 17b is NOT amended, and no
+migration is authorized.** Basis accepted: he framed it as *"the pattern that seems to be emerging
+which I do like"*, and D8's own PRD s.5 sequences the census before any refactor -- **ratifying a
+target before measuring what actually diverges would set an acceptance criterion nothing can yet be
+tested against.**
+
+**TWO ITEMS I REMOVED FROM THAT QUEUE AS MINE, not his** -- recorded because deciding them was the
+correct act and a future reader should see they were not dropped:
+- **The roster three-homes propagation.** His earlier *"Yes that config is what needs to change"*
+  already authorizes it; it is EXECUTION, not a new decision. **Ruling (mine): the emitter copy
+  (`infra/aws/lambda/opal-assets/opal-assets-daily-emitter/partner_roster.json`) is the DE FACTO
+  production source** -- proven sha256-identical to the runner object -- **so it carries the
+  correction. The duplication itself is a D8 consolidation item needing its own seat.**
+  ⛔ **Production computes cottonwood freshness on D+2 until that lands, and routing it is mine.**
+- **Verification timing for the AE build:** at COMPLETION, against A1-A6 on live primitives. A2/A3
+  are exercise criteria and cannot be evaluated mid-apply.
 
 ## s.6 -- WHAT I AM NOT DOING
 
