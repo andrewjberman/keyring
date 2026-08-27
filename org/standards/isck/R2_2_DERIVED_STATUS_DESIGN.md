@@ -33,10 +33,19 @@ abolition.
 
 ## 2. THE MECHANISM AT EACH VERSION
 
-- **v0.x (NOW):** status fields stay AS WRITTEN by the author, but each carrying record gains
-  `status_basis: authored` — an honest label that the projection is a CLAIM, not a derivation.
-  (One field, enum `authored | derived`; `derived` ILLEGAL until the ledger exists — a derivation
-  claim without a derivable substrate would be the F5 defect.)
+- **v0.x (NOW):** status fields stay AS WRITTEN by the author, but each carrying record gains a
+  **FIELD-SCOPED** `status_basis` map — `{<axis>: authored | derived}` — an honest label per axis
+  that the projection is a CLAIM, not a derivation. (`derived` ILLEGAL until the ledger exists — a
+  derivation claim without a derivable substrate would be the F5 defect.)
+  **THE DENOMINATOR, ENUMERATED (CRO input 1 — the draft's "four records" was WRONG, it is FIVE
+  records / SIX axes):** `entity.current_status` · `entity_binding.status` ·
+  `identity_relation.verification_standing` · `materializer.current_status` ·
+  `bridge_assertion.verification_standing` AND `bridge_assertion.registry_standing`.
+  **FIELD-SCOPED IS THE RULING on CRO input 2:** bridge_assertion is the forcing case — its
+  verification axis is event/evidence-derivable while its adjudication values may stay authored
+  indefinitely; a record-level flag would either lie about one axis or freeze both. Atomic
+  whole-record transition is REJECTED (it holds the derivable axis hostage), and derived-illegal-
+  for-the-record is REJECTED (it wastes the derivable half). Per-axis basis, per-axis transition.
 - **WP-3 (the ledger):** the derivation rules land as CODE beside the ledger; `status_basis:
   derived` becomes legal and REQUIRED for ledger-resident records; a status disagreeing with its
   derivation is a REJECTED WRITE, which is LAW 3's enforcement plane arriving (closes §6 limit 6
@@ -52,13 +61,21 @@ is CARRIED BY `superseded_by` (presence = superseded), so `corroborated`-then-su
 `contradicted`-then-superseded are EXPRESSIBLE — the epistemic history survives the temporal
 event, and `contradicted -> superseded` can no longer launder a contradiction out of the
 current-value view. MIGRATION: existing `superseded` values rewrite to their pre-supersession
-standing where recoverable, else `unverified` + `superseded_by` (honest floor). The warrant arm
+standing where recoverable, else `unverified` + `superseded_by` (honest floor) — **and per CRO's
+migration input, EVERY rewrite emits an APPEND-ONLY MIGRATION RECEIPT preserving the source value,
+the target, and the recoverability decision with its evidence: a migration that erases what a
+value used to say is the laundering defect performed by the remedy, and the receipt is what makes
+the rewrite auditable instead of trusted.** The warrant arm
 moves from the value to the field: `superseded_by present -> no further standing changes on THIS
 record` (append-only; a new assertion carries the new standing).
 
-**3b. CONTESTED/DISPUTED OVERLAYS.** Under the two layers: a CONTEST is an EVENT
-(identity_relation `candidate_equivalence` with `contest: true`, or a binding-dispute record),
-never a lifecycle value that displaces the interval truth. `entity.current_status.contested` and
+**3b. CONTESTED/DISPUTED OVERLAYS.** Under the two layers: a CONTEST is an EVENT — and per CRO
+input 3, the event vocabulary must be TOTAL AND REPLAYABLE before the projection can be: the
+implementing boundary adds typed `contest_opened` (subject, contest_id, basis, evidence) and
+`contest_resolved` (same contest_id, outcome `upheld | dismissed | merged`, `adjudicated_by`
+REQUIRED) relation kinds. The projection rule is then a pure fold: contested iff an opened
+contest_id has no resolved partner. A contest without a stable id is not replayable and does not
+project. Never a lifecycle value that displaces the interval truth. `entity.current_status.contested` and
 `binding.status.disputed` become PROJECTIONS (contest event open => projection shows contested/
 disputed) — the 3.5 carve-out (`disputed` MAY carry `valid_to: null`) stops being a smuggling
 route because the interval fields never stopped carrying interval truth.
@@ -73,9 +90,12 @@ the partial-NOT-legacy member gets its honest home with NO new value. The `parti
 retires at the same boundary (migration: `partial_legacy -> partial` + cause preserved).
 
 **3e. RETIREMENT REASON (the routed design question).** Confirmed at design: the reason lives on
-the SUCCESSION EVENT (`identity_relation` `successor_of`/`replaces`, or a terminal relation with
-`evidence_refs`), never as prose on the entity — `retired` is a projection of a retirement event,
-and an event can honestly say "ceased, no successor."
+the SUCCESSION EVENT, never as prose on the entity. **CRO input 4 names the missing shape and the
+implementing boundary adds it: relation kind `retirement`, with `object_serial` FORBIDDEN for that
+kind (a two-directional conditional in the existing idiom) — the terminal event with no successor
+finally has a legal form that is not a banned self-loop and not a manufactured successor.**
+`retired` derives from `retirement` OR from being the subject of `merged_into`/`replaces`; both
+paths carry `evidence_refs`.
 
 ## 4. WHAT CHANGES NOW vs AT THE LEDGER (so nobody lands the future early)
 
