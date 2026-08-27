@@ -370,7 +370,7 @@
         "grain": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource GRAIN. /trust qualifies the SUBJECT RESOURCE, not the persisted artifact. Projection is EXACT 1:1 card /subject/id -> part /id only.",
+          "description": "RECEIVER for a card's subject-resource GRAIN. /trust qualifies the SUBJECT RESOURCE, not the persisted artifact. Projection is EXACT 1:1 card /subject/id -> part /id only. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
           "required": [
             "claim_status",
             "basis",
@@ -405,17 +405,26 @@
                 "held",
                 "inferred",
                 "absent"
-              ]
+              ],
+              "x-rule24": {
+                "axis": "the EPISTEMIC STANDING of this receiver's payload",
+                "grain": "one receiver on one part",
+                "intent": "one -- how the value was obtained; NOT how confident anyone is",
+                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
+                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
+              }
             },
             "evidence": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
             },
             "owner": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
             }
           },
           "allOf": [
@@ -473,7 +482,7 @@
         "key": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; unresolved or non-1:1 stays compilation RESIDUE.",
+          "description": "RECEIVER for a card's subject-resource KEY. No field-position inference, no substring join; unresolved or non-1:1 stays compilation RESIDUE. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
           "required": [
             "claim_status",
             "basis",
@@ -524,7 +533,8 @@
                 "grain": "one key on one subject resource",
                 "intent": "one -- stability under change; NOT uniqueness and NOT correctness",
                 "mece": "stable | unstable | unknown exhausts the domain; unknown is the un-measured state, not a third stability.",
-                "state_coherence": "measurement moves unknown -> stable|unstable. A rename or re-key moves stable -> unstable. NO remedy moves unstable -> stable without changing the key EXPRESSION itself."
+                "state_coherence": "measurement moves unknown -> stable|unstable. A rename or re-key moves stable -> unstable. NO remedy moves unstable -> stable without changing the key EXPRESSION itself.",
+                "null_semantics": "JSON null in this field is STRUCTURAL PAYLOAD ABSENCE, permitted ONLY under receiver claim_status=unknown. It is NOT a semantic member of this enum."
               }
             },
             "crosses_spaces": {
@@ -545,17 +555,26 @@
                 "held",
                 "inferred",
                 "absent"
-              ]
+              ],
+              "x-rule24": {
+                "axis": "the EPISTEMIC STANDING of this receiver's payload",
+                "grain": "one receiver on one part",
+                "intent": "one -- how the value was obtained; NOT how confident anyone is",
+                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
+                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
+              }
             },
             "evidence": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
             },
             "owner": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
             }
           },
           "allOf": [
@@ -633,13 +652,64 @@
                   }
                 }
               }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  },
+                  "crosses_spaces": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "claim_status",
+                  "crosses_spaces"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "declared_mapping": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "declared_mapping"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "claim_status": {
+                    "const": "declared"
+                  },
+                  "crosses_spaces": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "claim_status",
+                  "crosses_spaces"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "declared_mapping": {
+                    "type": "null"
+                  }
+                }
+              }
             }
           ]
         },
         "failure_mode": {
           "type": "object",
           "additionalProperties": false,
-          "description": "RECEIVER for a card's subject-resource FAILURE MODE. When declared, returns_on_failure is NON-NULL -- 'raises' is a legal value; null would be indistinguishable from unmeasured.",
+          "description": "RECEIVER for a card's subject-resource FAILURE MODE. When declared, returns_on_failure is NON-NULL -- 'raises' is a legal value; null would be indistinguishable from unmeasured. ⛔ OMISSION OF THIS RECEIVER IS A COMPATIBILITY-ONLY PRE-RERUN STATE, NEVER A THIRD SEMANTIC CLAIM. After DT emits all 42 receivers, these become REQUIRED and omission is rejected.",
           "required": [
             "claim_status",
             "basis",
@@ -682,7 +752,8 @@
                 "grain": "one failure mode on one subject resource",
                 "intent": "one -- discriminability of failure from absence; NOT frequency and NOT severity",
                 "mece": "yes | no | unmeasured exhausts; unmeasured is the un-run state.",
-                "state_coherence": "measurement moves unmeasured -> yes|no. A code change can move yes -> no SILENTLY, which is why this receiver exists."
+                "state_coherence": "measurement moves unmeasured -> yes|no. A code change can move yes -> no SILENTLY, which is why this receiver exists.",
+                "null_semantics": "JSON null in this field is STRUCTURAL PAYLOAD ABSENCE, permitted ONLY under receiver claim_status=unknown. It is NOT a semantic member of this enum."
               }
             },
             "silent_degrade_paths": {
@@ -691,7 +762,9 @@
                 "null"
               ],
               "items": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
               }
             },
             "basis": {
@@ -700,17 +773,26 @@
                 "held",
                 "inferred",
                 "absent"
-              ]
+              ],
+              "x-rule24": {
+                "axis": "the EPISTEMIC STANDING of this receiver's payload",
+                "grain": "one receiver on one part",
+                "intent": "one -- how the value was obtained; NOT how confident anyone is",
+                "mece": "measured | held | inferred | absent exhausts. REUSE POINTER: same value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis -- one estate vocabulary, not a local copy.",
+                "state_coherence": "absent is legal ONLY under claim_status=unknown. Re-measuring moves inferred|held -> measured; NOTHING moves measured -> absent except retraction of the receiver."
+              }
             },
             "evidence": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence.",
+              "pattern": "\\S"
             },
             "owner": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER.",
+              "pattern": "\\S"
             }
           },
           "allOf": [
@@ -802,7 +884,8 @@
               "uniqueItems": true,
               "items": {
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "pattern": "\\S"
               },
               "description": "The concrete artifacts this part's id denotes. Unique, non-empty."
             },
@@ -821,12 +904,14 @@
             "evidence": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. 'NONE' is the loud value."
+              "description": "NEVER null. 'NONE' is the loud value.",
+              "pattern": "\\S"
             },
             "owner": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. 'UNOWNED' is the loud value."
+              "description": "NEVER null. 'UNOWNED' is the loud value.",
+              "pattern": "\\S"
             }
           },
           "x-rule24": {
