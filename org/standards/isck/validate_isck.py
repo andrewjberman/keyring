@@ -64,6 +64,15 @@ FIXTURES = {
         "fingerprint": SHA, "fingerprint_method": "sha256_raw_bytes",
         "normalization_version": "none_raw_v0",
     },
+    "state_observation_absence": {
+        "record_type": "state_observation", "observation_id": f"obs:{ULID_B}",
+        "entity_serial": f"ent:{ULID_A}", "identity_space": "s3_key",
+        "source_native_key": "warehouse/_branch_head.dev.json",
+        "source_vintage": "list-objects-v2:2026-08-27T21:26Z", "observed_at": TS2,
+        "observed_on_fabric": "laptop", "referent_scope": "fabric_invariant",
+        "failure_state": "observed_absent",
+        "evidence_refs": ["obs:" + ULID_A],
+    },
     "identity_relation": {
         "record_type": "identity_relation", "relation_id": f"rel:{ULID_A}",
         "relation_type": "candidate_equivalence",
@@ -142,6 +151,8 @@ ATTACK_TARGETS = {
     "observation.partial-fingerprint-no-method": ["fingerprint_method", "normalization_version"],
     "observation.method-without-fingerprint": ["fingerprint"],
     "observation.substrate-unavailable-carries-fingerprint": ["fingerprint"],
+    "observation.absent-carries-fingerprint": ["fingerprint"],
+    "observation.absent-no-warrant": ["evidence_refs"],
     "observation.invariant-with-referent-fabric": ["referent_fabric_id"],
     "observation.fabric-local-without-fabric": ["referent_fabric_id"],
     "observation.fabric-local-with-device": ["referent_device_id"],
@@ -227,6 +238,12 @@ def _mutants():
         normalization_version=_DEL)
     add("observation.substrate-unavailable-carries-fingerprint", "state_observation",
         ["not"], failure_state="substrate_unavailable")
+    # R2-5 absence cell (round-2 charter; the GPT review's item)
+    add("observation.absent-carries-fingerprint", "state_observation", ["not"],
+        failure_state="observed_absent", evidence_refs=["obs:" + ULID_A])
+    add("observation.absent-no-warrant", "state_observation", ["required"],
+        failure_state="observed_absent", fingerprint=_DEL, fingerprint_method=_DEL,
+        normalization_version=_DEL)
     # R2-1 referent family, two-directional BY IDIOM on both carrying records
     add("observation.invariant-with-referent-fabric", "state_observation", ["not"],
         referent_fabric_id="laptop")

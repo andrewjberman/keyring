@@ -464,6 +464,7 @@
         "failure_state": {
           "enum": [
             "observed",
+            "observed_absent",
             "partial",
             "substrate_unavailable",
             "instrument_error",
@@ -635,6 +636,48 @@
             "required": [
               "referent_fabric_id",
               "referent_device_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_state": {
+                "const": "observed_absent"
+              }
+            },
+            "required": [
+              "failure_state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "fingerprint"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "fingerprint_method"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "normalization_version"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "evidence_refs"
+                ]
+              }
             ]
           }
         }

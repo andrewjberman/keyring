@@ -132,18 +132,25 @@ rebind/disappearance (observer); `disputed` moves by adjudication; `disputed` MA
 ARM TABLE: `closed -> valid_to nonempty` (DT-4; owner: the closer — a close without an instant is
 the mutation LAW 3 forbids wearing the close's label).
 
-### 3.6 `observation_failure_state` — `observed | partial | substrate_unavailable | instrument_error | not_applicable`
-DOMAIN: what the instrument could see. MECE: `substrate_unavailable` DISTINCT from a true negative
-by construction (the nerves_resolve repair, WP-4's contract). GRAIN: observation. INTENT: instrument
+### 3.6 `observation_failure_state` — `observed | observed_absent | partial | substrate_unavailable | instrument_error | not_applicable`
+DOMAIN: what the instrument could see. MECE — `observed_absent` ADDED at R2-5 (the GPT review's
+item): a SUCCESSFUL observation whose finding is ABSENCE, distinct by construction from
+`substrate_unavailable` (could not look) and from `not_applicable` (no question) — the
+nerves_resolve two-state collapse closed on its THIRD face; a resolver's honest "I looked and it
+is not there" finally has a first-class cell. GRAIN: observation. INTENT: instrument
 outcome. STATE-COHERENCE: `substrate_unavailable` moved by repairing SUBSTRATE (store owner);
 `instrument_error` by repairing the INSTRUMENT (tool owner); `partial` by widening the observation
-(observer); different owners, named.
+(observer); `observed_absent` moved only by the referent APPEARING (a NEW observation — the record
+itself is terminal, LAW 3); different owners, named.
 ARM TABLE (DT-1 closed the `partial` hole): `observed -> all three fingerprint fields required`
 (owner: observer) · `substrate_unavailable|instrument_error|not_applicable -> ALL THREE fingerprint
 fields FORBIDDEN` (DT-5 — a failed instrument may not carry a value OR the metadata claiming a
 method ran) · `partial -> fingerprint OPTIONAL but the three-field coupling binds via
 dependentRequired` (partial legitimately fingerprints what it could see — WITH its method and
-normalization, per the CRLF law).
+normalization, per the CRLF law) · `observed_absent -> fingerprint triple FORBIDDEN (nothing to
+hash) + evidence_refs REQUIRED` (owner: observer — an absence claim carries the warrant of WHERE
+it looked, because absence-without-warrant is exactly the unfalsifiable cell every census defect
+this directive found has hidden in).
 
 ### 3.7 `referent_scope` — `fabric_invariant | fabric_local | device_local` (R2-1; supersedes `fabric_scope`)
 DOMAIN: the locality the REFERENCED STATE claims (never where the act ran — that is the execution
