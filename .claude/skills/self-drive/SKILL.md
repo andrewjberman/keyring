@@ -53,18 +53,46 @@ A selector that resolves to ZERO projects is not an error — it is an UNMEASURA
 
 Run the `/open-calls` sweep exactly as that skill specifies (own record only, verify each candidate is still open, card format), **filtered to calls whose project is in the scope.** Then classify each open call on ONE axis — *who may close it*:
 
+**⛔ RESTRUCTURED 2026-08-27 ~22:2xZ, ANDREW-DIRECT AT THE BASE CTO TERMINAL — THE OVER-RESERVATION
+DEFECT (his words, VERBATIM: "something that has been happening a lot lately is the issue whereby
+somehow every single open call falls under 'reserved' versus adjudicable which needs to be assessed
+better because it renders the skill useless if it cant get calls adjudicated... make it definitive
+on moving things forward. In almost every single case i have ever seen i agreed with the rec
+outright. I think having CVO come in to help should make it absolutley clear."). THE LEAK, measured
+on the skill's own runs: the old RESERVED hook "anything a ruling explicitly carried 'to Andrew'"
+catches EVERY card ever surfaced to him — surfacing a call once made it RESERVED forever, the class
+devoured the queue, and ticks classified zero adjudicable while he approved every rec outright.**
+
 | value | definition | disposition |
 |---|---|---|
-| **ADJUDICABLE** | a judgment call the driver carried upward: scope reading, design fork, sequencing, route/home choice, a vocabulary or shape ruling, a member-set edit | **PITCHED to the fabric's CVO with the driver's REC** (§2) |
-| **RESERVED** | a decision LAW or a PRIOR ANDREW RULING names as his: never-widen sign-off on served output (NEVER#3), vendor egress beyond his stated word, spend / contracts / entitlements, a hold-lift BY NAME, anything a ruling explicitly carried "to Andrew" | **NOT pitched.** Stays a card at Andrew, printed in the tick output under `RESERVED (at Andrew)` |
+| **ADJUDICABLE — THE DEFAULT** | every open call in scope, unless the RESERVED test below passes | **PITCHED to the fabric's CVO with the driver's REC** (§2) |
+| **RESERVED — the CITED exception** | ONLY a call whose closure a **NEVER-class LAW LINE or a VERBATIM STANDING ANDREW HOLD names by decision class**, with the citation ON THE CARD: served-output never-widen (NEVER#1/#3), vendor egress beyond his stated word, spend / contracts / entitlements, a hold-lift he named BY NAME. **"A ruling once carried it to Andrew" / "he was asked before" / "it feels sovereign" are NOT reservations — that a call was SURFACED to him does not reserve its CLASS.** No citation line on the card = ADJUDICABLE by definition. | Pitched to CVO **AS A RESERVED CLAIM** for validation (§2); stays a card at Andrew meanwhile |
 
-*Rule-24 record for this enum (it is a value set and so it takes the test):* axis = closure authority of an open sovereign call; grain = one call; intent = one (who may close it); MECE — RESERVED is enumerated by citation (a law line or a ruling), ADJUDICABLE is the remainder over the declared layer (open sovereign-class calls at this lane); state frame — both values move on a verdict, from different seats. Andrew's word (1) delegates the ADJUDICABLE class to CVO; nothing in it lifts a NEVER, so RESERVED is not a widening, it is the part of the layer the delegation cannot reach.
+**Three mechanics that make it definitive:**
+1. **The citation IS the test.** A RESERVED card carries the law line or the verbatim hold it rests
+   on, quoted. The driver who cannot produce the quote has classified the call ADJUDICABLE.
+2. **CVO VALIDATES THE RESERVATIONS — his "CVO come in to help" mechanism.** Every tick's pitch
+   carries BOTH lists: the ADJUDICABLE cards for verdicts, and the RESERVED cards **for
+   classification review**. A RESERVED whose citation CVO reads as not naming the decision class is
+   RE-CLASSED ADJUDICABLE and adjudicated in the same reply. Over-reservation cannot survive a tick,
+   because a second seat reads every citation.
+3. **THE ALL-RESERVED TELL:** a tick that classifies EVERY call RESERVED is PRESUMPTIVELY
+   MISCLASSIFIED — re-run the citation test before printing, and say in the tick output that the
+   tell fired. The measured base rate (he agreed with the rec outright in almost every case) says a
+   uniformly-RESERVED queue is an instrument artifact, not a sovereign workload.
+
+*Rule-24 record for this enum (updated with the restructure):* axis = closure authority; grain = one
+call; intent = one (who may close it); MECE — RESERVED is enumerated by CITATION (a NEVER law line
+or a verbatim standing hold, quoted on the card), ADJUDICABLE is the remainder and the DEFAULT;
+state frame — both move on a verdict; the classification itself is now CVO-checked per tick, so a
+misclassification is a one-tick state, never a standing one. His word (1) delegates ADJUDICABLE to
+CVO; nothing here lifts a NEVER — it stops calls from being COSTUMED as NEVERs.
 
 **Zero calls in scope:** print `No open calls in scope <selector> (tick N).` and continue to §3 (verdicts may still be pending) — do NOT message the CVO an empty pitch.
 
 ## Step 2 — Pitch to the fabric's CVO lane
 
-`send_message` to THIS fabric's CVO: site Z → `3.0.0_SA_CVO~Z`; laptop → `3.0.0_SA_CVO`. Subject `[SELF-DRIVE <scope> tick N] <k> call(s) for adjudication`. Body = the ADJUDICABLE cards VERBATIM (call on top, divider, REC beneath, the one-sentence why, what each call gates, the citation for any prior Andrew anchor). RAVC: this is a REQUEST — ack expected, verdict expected by MCP; the driver validates the verdict cites its grounding (Rule 22 — a verdict resting on a causal claim cites `file:line @ commit` or a tool + output) before acting on it.
+`send_message` to THIS fabric's CVO: site Z → `3.0.0_SA_CVO~Z`; laptop → `3.0.0_SA_CVO`. Subject `[SELF-DRIVE <scope> tick N] <k> call(s) for adjudication + <r> reserved claim(s) for review`. Body = BOTH lists (the 2026-08-27 restructure): the ADJUDICABLE cards VERBATIM (call on top, divider, REC beneath, the one-sentence why, what each call gates, the citation for any prior Andrew anchor) **and the RESERVED cards with their quoted citations, marked FOR CLASSIFICATION REVIEW — CVO confirms each citation names the decision class, or RE-CLASSES the call ADJUDICABLE and adjudicates it in the same reply.** RAVC: this is a REQUEST — ack expected, verdict expected by MCP; the driver validates the verdict cites its grounding (Rule 22 — a verdict resting on a causal claim cites `file:line @ commit` or a tool + output) before acting on it. A CVO re-class is executed like any verdict; the tick output states the re-class count so over-reservation is visible the tick it happens.
 
 **CVO lane dark** (not LIVE on the broker, no fresh heartbeat): the pitch is NOT sent into a dead inbox. Route the spawn ask to THIS fabric's MSTR same-turn (a seating obligation, not a discovery), print `CVO DARK — <k> call(s) held, spawn asked`, and carry the calls to the next tick. Never proceed on an absent verdict. **The held calls are ALSO appended to the verdict ledger as `state: HELD` rows** (§3.2's ledger, `org/ref/DRIVE_PAIR_PROTOCOL.md`) — a respawned CVO reads its backlog from the artifact, never from a scrolled message.
 
