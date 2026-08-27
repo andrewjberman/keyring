@@ -39,6 +39,25 @@ def semantic_errors(document: dict) -> list[str]:
         or contract_status["operative_transition_ready"]
     ):
         errors.append("proposed contract cannot gate work or claim an operative transition")
+    post_rerun_queue = document["post_rerun_rule24_queue"]
+    queued_findings = post_rerun_queue["findings"]
+    expected_queued_findings = {
+        "L0-R24-01": "empty_suffix_enumeration_interpretation",
+        "L0-R24-02": "suffix_completeness_partition",
+        "L0-R24-03": "repo_relative_path_rule24_partition",
+        "L0-R24-04": "home_space_lifecycle_vocabulary",
+    }
+    if (
+        post_rerun_queue["queue_state"] != "open_until_post_rerun_remediation"
+        or post_rerun_queue["frozen_schema_commit"] != "a767d213921dfa013eed546b39c27f73712e0ec6"
+        or post_rerun_queue["frozen_schema_blob"] != "e6cba54189f9a6a14db6d6a47a8954135a74f142"
+        or post_rerun_queue["freeze_exit_condition"] != "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status"
+        or post_rerun_queue["promotion_condition"] != "evidence_that_finding_changes_an_emitted_value"
+        or {row["finding_id"]: row["semantic_dimension"] for row in queued_findings} != expected_queued_findings
+        or any(row["finding_state"] != "open" for row in queued_findings)
+        or any(row["rerun_effect"] != "metadata_only_no_current_emission" for row in queued_findings)
+    ):
+        errors.append("frozen shared-schema Rule 24 findings must remain open in the post-rerun queue")
     mission = document["mission"]
     if any((mission["new_directive"], mission["project_mint"], mission["registration_act"], mission["approval_gate"])):
         errors.append("D11 arc cannot mint, register, or introduce an approval gate")
@@ -271,6 +290,7 @@ def semantic_errors(document: dict) -> list[str]:
     remote_instrument = remediation["remote_uri_instrument"]
     member_set = remediation["member_set_contract"]
     brace_census = remediation["brace_part_census"]
+    enumerated_evidence = remediation["enumerated_member_evidence"]
     runtime_family = remediation["runtime_named_family_contract"]
     parent_manifest = load(L0_MANIFEST)
     parent_ids = {part["id"] for part in parent_manifest["parts"]}
@@ -279,6 +299,28 @@ def semantic_errors(document: dict) -> list[str]:
     remote_manifest_ids = set(remote["remote_uri_manifest_part_ids"])
     remote_residue_ids = set(remote["residue_remote_uri_part_ids"])
     actual_remote_ids = {part["id"] for part in parent_manifest["parts"] if part["home"].startswith("s3://")}
+    expected_stable_families = [
+        {
+            "part_id": ".comp-graph/platinum.CACHE_SET",
+            "home_expression": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}.cache",
+            "members": [
+                ".comp-graph/platinum.dag.bd.cache",
+                ".comp-graph/platinum.dag.cot.cache",
+                ".comp-graph/platinum.dag.inf.cache",
+                ".comp-graph/platinum.dataflows.cache",
+                ".comp-graph/platinum.routing.cache",
+            ],
+        },
+        {
+            "part_id": "_build_manifest.json.SET",
+            "home_expression": "infra/aws/globgrph/{kuzu_nessie_db,kuzu_db,kuzu_stitch_db}._build_manifest.json",
+            "members": [
+                "infra/aws/globgrph/kuzu_nessie_db._build_manifest.json",
+                "infra/aws/globgrph/kuzu_db._build_manifest.json",
+                "infra/aws/globgrph/kuzu_stitch_db._build_manifest.json",
+            ],
+        },
+    ]
     if (
         remediation["source"] != "manifest_parts_with_unknown_receiver"
         or remediation["total"] != receiver_population["grain"]["unknown"]
@@ -315,7 +357,9 @@ def semantic_errors(document: dict) -> list[str]:
         or remediation["brace_pattern_syntactic_expansion_role"] != "parser_control_not_population"
         or brace_census != {"stable_enumerable": 2, "runtime_named_non_enumerable": 1}
         or sum(brace_census.values()) != remediation["brace_pattern_part_count"]
-        or remediation["enumerated_member_evidence"] != {"stable_family_member_count": 8}
+        or enumerated_evidence["source_manifest"] != {"home": L0_MANIFEST.relative_to(WORKSPACE).as_posix(), "git_commit": "94efcda69cf00db573866174b110a0bcbe39a42b", "git_blob": "3f7bd6ee2251891bc05d57ba6b9b2e889a9f8431"}
+        or enumerated_evidence["stable_families"] != expected_stable_families
+        or sum(len(family["members"]) for family in enumerated_evidence["stable_families"]) != 8
         or remediation["brace_correction_evidence"] != {"withdrawn_syntactic_member_claim_count": 6, "reason": "runtime_named_instances_do_not_form_a_durable_member_population"}
         or remediation["brace_pattern_disposition"] != "split_by_enumerability"
         or runtime_family != {"part_id": "kuzu_nessie_db.rebuild.tmp.SET", "disposition": "declared_pattern_non_enumerable", "population_status": "orphaned", "pattern_representation": "normalized_semantic_family_template", "normalized_pattern": "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>", "pattern_source_home": "infra/aws/globgrph/_canonical.py", "pattern_source_line": 288, "pattern_source_git_commit": "17eb3fa310ae04b7cb8ca55cfde8f801f34e8c04", "pattern_source_git_blob": "7867f1a0a88dab0c9e1e273d794e5901d0aade48", "pattern_source_sha256": "edaa00ae4617f06b07932f8706c20fbbe0482ee610f8854ac1f7d591a1dd601c", "observation_count_is_population": False}
@@ -354,6 +398,18 @@ def semantic_errors(document: dict) -> list[str]:
     discrimination = l1_baseline["coverage_discrimination"]
     denominators = population_basis["denominator_contracts"]
     lane_delivery = l1_baseline["lane_delivery"]
+    expected_source_ids = {
+        "file": {"portal_filesystem", "kuzu_portal_module"},
+        "chain_motif": {"c2_chain_instances", "kuzu_semctl"},
+        "symbol": {"trace_graph_symbols", "kuzu_portal_nonmodule", "kuzu_pipeline_symbols"},
+        "arn_resource": {"kuzu_arn", "stitch_arn"},
+    }
+    expected_discriminators = {
+        "file": "committed_same_vintage_member_set",
+        "chain_motif": "comparable_graph_vintage_and_declared_scope",
+        "symbol": "external_coverage_oracle",
+        "arn_resource": "declared_scan_scope",
+    }
     if (
         firm_identity["raw_join_count"] != 0
         or firm_identity["lossy_parse_join_count"] != 1331
@@ -373,23 +429,31 @@ def semantic_errors(document: dict) -> list[str]:
         != "evidence_only_not_population_denominator"
         or population_basis["symbol_prd_provenance"] != "unresolved"
         or population_basis["file_prd_claim_source"] != "co_change_corpus"
-        or denominators["file"] != {"denominator_status": "adjudicated", "count": 374, "source_population_refs": ["filesystem_sweep"], "exclusions": []}
-        or any(denominators[space]["denominator_status"] != "unresolved" for space in ("chain_motif", "symbol", "arn_resource"))
-        or any("count" in denominators[space] for space in ("chain_motif", "symbol", "arn_resource"))
-        or any(not denominators[space]["source_population_refs"] or "missing_discriminator" not in denominators[space] for space in ("chain_motif", "symbol", "arn_resource"))
+        or population_basis["measurement_evidence"] != {"home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_L1/L1_CELLS.json", "git_commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a", "git_blob": "29cb90710e445f915c09bdac9717976c6752fbe9", "cell_pointers": {"chain_motif": "/cells/1", "symbol": "/cells/8", "file": "/cells/16", "arn_resource": "/cells/23"}}
+        or any(denominators[space]["denominator_status"] != "unresolved" for space in expected_source_ids)
+        or any("count" in denominators[space] for space in expected_source_ids)
+        or any(denominators[space]["exclusion_status"] != "unresolved" for space in expected_source_ids)
+        or any(denominators[space]["missing_discriminator"] != expected_discriminators[space] for space in expected_source_ids)
+        or any({source["source_id"] for source in denominators[space]["source_populations"]} != expected_source_ids[space] for space in expected_source_ids)
+        or any(source["replayability_state"] != "not_replayable_from_tracked_evidence" for space in expected_source_ids for source in denominators[space]["source_populations"])
+        or any(not source["selector"] or not source["source_home"] for space in expected_source_ids for source in denominators[space]["source_populations"])
     ):
         errors.append("L1 population basis must preserve single-substrate sweep signatures without promoting observed unions to denominators")
+    file_coverage = discrimination["file"]
     if (
-        discrimination["file"] != {"coverage_adjudication": "adjudicated", "oracle": "filesystem", "observed_population_count": 374, "nonresolving_count": 1}
+        file_coverage != {"coverage_adjudication": "measured_snapshot", "oracle": "filesystem", "observed_filesystem_count": 429, "observed_kuzu_portal_module_count": 374, "observed_shared_count": 373, "observed_filesystem_only_count": 56, "observed_kuzu_only_count": 1, "observed_union_count": 430}
+        or file_coverage["observed_filesystem_count"] != file_coverage["observed_shared_count"] + file_coverage["observed_filesystem_only_count"]
+        or file_coverage["observed_kuzu_portal_module_count"] != file_coverage["observed_shared_count"] + file_coverage["observed_kuzu_only_count"]
+        or file_coverage["observed_union_count"] != file_coverage["observed_shared_count"] + file_coverage["observed_filesystem_only_count"] + file_coverage["observed_kuzu_only_count"]
         or discrimination["chain_motif"]["coverage_adjudication"] != "blocked_missing_discriminator"
-        or discrimination["chain_motif"]["missing_discriminator"] != "comparable_graph_vintage"
+        or discrimination["chain_motif"]["missing_discriminator"] != "comparable_graph_vintage_and_declared_scope"
         or discrimination["symbol"]["coverage_adjudication"] != "blocked_missing_discriminator"
-        or discrimination["symbol"]["missing_discriminator"] != "external_oracle"
+        or discrimination["symbol"]["missing_discriminator"] != "external_coverage_oracle"
         or discrimination["symbol"]["observed_trace_symbol_count"] != 2249
         or discrimination["arn_resource"]["coverage_adjudication"] != "blocked_missing_discriminator"
-        or discrimination["arn_resource"]["missing_discriminator"] != "scan_scope"
+        or discrimination["arn_resource"]["missing_discriminator"] != "declared_scan_scope"
     ):
-        errors.append("L1 coverage must be unmeasured when the discriminator cannot separate absent from unaddressed")
+        errors.append("L1 coverage must distinguish measured snapshot discrimination from unresolved population denominators")
     if lane_delivery != {"commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a", "cell_total": 29, "measured": 26, "unmeasured": 3, "acceptance_criteria_met": 6, "acceptance_criteria_total": 7, "ac7_state": "unmet", "operative_effect": "none"}:
         errors.append("L1 lane delivery must preserve 29-cell evidence without manufacturing AC7 or operative release")
 
@@ -637,6 +701,14 @@ def main() -> int:
         return 1
 
     mutants: list[tuple[str, dict]] = []
+
+    queued_finding_closed = copy.deepcopy(document)
+    queued_finding_closed["post_rerun_rule24_queue"]["findings"][0]["finding_state"] = "closed"
+    mutants.append(("open-post-rerun-finding-masquerades-as-closed", queued_finding_closed))
+
+    freeze_exit_weakened = copy.deepcopy(document)
+    freeze_exit_weakened["post_rerun_rule24_queue"]["freeze_exit_condition"] = "contract_stops_changing"
+    mutants.append(("freeze-exits-before-42-receivers", freeze_exit_weakened))
 
     missing_layer = copy.deepcopy(document)
     missing_layer["layer_contracts"].pop(2)
@@ -904,7 +976,7 @@ def main() -> int:
     mutants.append(("syntactic-expansion-masquerades-as-population", syntactic_expansion_as_population))
 
     fictional_runtime_members = copy.deepcopy(document)
-    fictional_runtime_members["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["enumerated_member_evidence"]["stable_family_member_count"] = 14
+    fictional_runtime_members["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["enumerated_member_evidence"]["stable_families"][0]["members"][0] = ".comp-graph/platinum.fictional.cache"
     mutants.append(("runtime-named-family-fictionally-enumerated", fictional_runtime_members))
 
     runtime_family_as_unsearched = copy.deepcopy(document)
@@ -931,21 +1003,43 @@ def main() -> int:
     observed_union_as_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["observed_cross_store_union_counts"]["semantic_role"] = "population_denominator"
     mutants.append(("observed-union-masquerades-as-population", observed_union_as_denominator))
 
+    measurement_cell_swapped = copy.deepcopy(document)
+    measurement_cell_swapped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["measurement_evidence"]["cell_pointers"]["file"] = "/cells/8"
+    mutants.append(("file-census-pinned-to-symbol-cell", measurement_cell_swapped))
+
     missing_discriminator_dropped = copy.deepcopy(document)
     del missing_discriminator_dropped["design_measurements"]["l1_identity_and_population_baseline"]["coverage_discrimination"]["chain_motif"]["missing_discriminator"]
     mutants.append(("unmeasured-coverage-without-missing-discriminator", missing_discriminator_dropped))
 
     denominator_source_dropped = copy.deepcopy(document)
-    denominator_source_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["arn_resource"]["source_population_refs"] = []
+    denominator_source_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["arn_resource"]["source_populations"] = []
     mutants.append(("denominator-without-source-population", denominator_source_dropped))
 
     denominator_exclusions_dropped = copy.deepcopy(document)
-    del denominator_exclusions_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["file"]["exclusions"]
+    del denominator_exclusions_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["file"]["exclusion_status"]
     mutants.append(("denominator-without-explicit-exclusions", denominator_exclusions_dropped))
 
     count_on_unresolved_denominator = copy.deepcopy(document)
     count_on_unresolved_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["symbol"]["count"] = 2249
     mutants.append(("count-attached-to-unresolved-denominator", count_on_unresolved_denominator))
+
+    kuzu_count_as_file_denominator = copy.deepcopy(document)
+    file_denominator = kuzu_count_as_file_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["file"]
+    file_denominator["denominator_status"] = "adjudicated"
+    file_denominator["count"] = 374
+    mutants.append(("kuzu-module-count-masquerades-as-file-denominator", kuzu_count_as_file_denominator))
+
+    derived_union_as_primitive_source = copy.deepcopy(document)
+    derived_union_as_primitive_source["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["symbol"]["source_populations"][0]["source_id"] = "measured_union_space"
+    mutants.append(("derived-union-masquerades-as-primitive-source", derived_union_as_primitive_source))
+
+    unresolved_exclusions_called_none = copy.deepcopy(document)
+    unresolved_exclusions_called_none["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["file"]["exclusion_status"] = "none"
+    mutants.append(("unresolved-exclusions-masquerade-as-none", unresolved_exclusions_called_none))
+
+    source_selector_dropped = copy.deepcopy(document)
+    del source_selector_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["arn_resource"]["source_populations"][0]["selector"]
+    mutants.append(("source-population-without-selector", source_selector_dropped))
 
     release_criterion_removed = copy.deepcopy(document)
     release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [

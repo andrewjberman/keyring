@@ -23,6 +23,7 @@
     "document_lifecycle",
     "relationships",
     "contract_status",
+    "post_rerun_rule24_queue",
     "mission",
     "prd_reference",
     "starting_position",
@@ -52,6 +53,34 @@
         "work_start_effect": {"const": "non_blocking_design_constraint"},
         "l1_work_startable": {"const": true},
         "operative_transition_ready": {"const": false}
+      }
+    },
+    "post_rerun_rule24_queue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["queue_state", "frozen_schema_commit", "frozen_schema_blob", "freeze_exit_condition", "promotion_condition", "findings"],
+      "properties": {
+        "queue_state": {"const": "open_until_post_rerun_remediation"},
+        "frozen_schema_commit": {"const": "a767d213921dfa013eed546b39c27f73712e0ec6"},
+        "frozen_schema_blob": {"const": "e6cba54189f9a6a14db6d6a47a8954135a74f142"},
+        "freeze_exit_condition": {"const": "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status"},
+        "promotion_condition": {"const": "evidence_that_finding_changes_an_emitted_value"},
+        "findings": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["finding_id", "finding_state", "rerun_effect", "semantic_dimension"],
+            "properties": {
+              "finding_id": {"enum": ["L0-R24-01", "L0-R24-02", "L0-R24-03", "L0-R24-04"]},
+              "finding_state": {"const": "open"},
+              "rerun_effect": {"const": "metadata_only_no_current_emission"},
+              "semantic_dimension": {"enum": ["empty_suffix_enumeration_interpretation", "suffix_completeness_partition", "repo_relative_path_rule24_partition", "home_space_lifecycle_vocabulary"]}
+            }
+          }
+        }
       }
     },
     "mission": {
@@ -502,7 +531,38 @@
                         "runtime_named_non_enumerable": {"const": 1}
                       }
                     },
-                    "enumerated_member_evidence": {"type": "object", "additionalProperties": false, "required": ["stable_family_member_count"], "properties": {"stable_family_member_count": {"const": 8}}},
+                    "enumerated_member_evidence": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["source_manifest", "stable_families"],
+                      "properties": {
+                        "source_manifest": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["home", "git_commit", "git_blob"],
+                          "properties": {
+                            "home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+                            "git_commit": {"const": "94efcda69cf00db573866174b110a0bcbe39a42b"},
+                            "git_blob": {"const": "3f7bd6ee2251891bc05d57ba6b9b2e889a9f8431"}
+                          }
+                        },
+                        "stable_families": {
+                          "type": "array",
+                          "minItems": 2,
+                          "maxItems": 2,
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["part_id", "home_expression", "members"],
+                            "properties": {
+                              "part_id": {"enum": [".comp-graph/platinum.CACHE_SET", "_build_manifest.json.SET"]},
+                              "home_expression": {"type": "string", "minLength": 1},
+                              "members": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+                            }
+                          }
+                        }
+                      }
+                    },
                     "brace_correction_evidence": {"type": "object", "additionalProperties": false, "required": ["withdrawn_syntactic_member_claim_count", "reason"], "properties": {"withdrawn_syntactic_member_claim_count": {"const": 6}, "reason": {"const": "runtime_named_instances_do_not_form_a_durable_member_population"}}},
                     "brace_pattern_disposition": {"const": "split_by_enumerability"},
                     "runtime_named_family_contract": {
@@ -607,7 +667,7 @@
             "population_basis": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["prd_claimed_is_denominator", "single_substrate_sweep_signatures", "observed_cross_store_union_counts", "symbol_prd_claimed_count", "symbol_prd_provenance", "file_prd_claimed_count", "file_prd_claim_source", "denominator_contracts"],
+              "required": ["prd_claimed_is_denominator", "single_substrate_sweep_signatures", "observed_cross_store_union_counts", "symbol_prd_claimed_count", "symbol_prd_provenance", "file_prd_claimed_count", "file_prd_claim_source", "measurement_evidence", "denominator_contracts"],
               "properties": {
                 "prd_claimed_is_denominator": {"const": false},
                 "single_substrate_sweep_signatures": {
@@ -634,16 +694,37 @@
                 "symbol_prd_provenance": {"const": "unresolved"},
                 "file_prd_claimed_count": {"const": 3532},
                 "file_prd_claim_source": {"const": "co_change_corpus"},
+                "measurement_evidence": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["home", "git_commit", "git_blob", "cell_pointers"],
+                  "properties": {
+                    "home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_L1/L1_CELLS.json"},
+                    "git_commit": {"const": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a"},
+                    "git_blob": {"const": "29cb90710e445f915c09bdac9717976c6752fbe9"},
+                    "cell_pointers": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["chain_motif", "symbol", "file", "arn_resource"],
+                      "properties": {
+                        "chain_motif": {"const": "/cells/1"},
+                        "symbol": {"const": "/cells/8"},
+                        "file": {"const": "/cells/16"},
+                        "arn_resource": {"const": "/cells/23"}
+                      }
+                    }
+                  }
+                },
                 "denominator_contracts": {
                   "type": "object",
                   "additionalProperties": false,
                   "required": ["file", "chain_motif", "symbol", "arn_resource"],
                   "x-rule24": {"domain": "coverage denominator adjudication", "grain": "one identity space and evidence vintage", "intent": "separate observed counts from defensible denominators", "mece": "adjudicated means a scoped denominator exists; unresolved means a named discriminator blocks it", "state_coherence": "new external evidence may move unresolved to adjudicated without changing prior observations"},
                   "properties": {
-                    "file": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "count", "source_population_refs", "exclusions"], "properties": {"denominator_status": {"const": "adjudicated"}, "count": {"const": 374}, "source_population_refs": {"type": "array", "prefixItems": [{"const": "filesystem_sweep"}], "items": false, "minItems": 1, "maxItems": 1}, "exclusions": {"type": "array", "maxItems": 0}}},
-                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["semctl", "kuzu"]}}, "missing_discriminator": {"const": "comparable_graph_vintage"}, "exclusions": {"type": "array", "maxItems": 0}}},
-                    "symbol": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["trace_symbol_space", "measured_union_space"]}}, "missing_discriminator": {"const": "external_oracle"}, "exclusions": {"type": "array", "maxItems": 0}}},
-                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["kuzu", "stitch"]}}, "missing_discriminator": {"const": "scan_scope"}, "exclusions": {"type": "array", "maxItems": 0}}}
+                    "file": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "committed_same_vintage_member_set"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "comparable_graph_vintage_and_declared_scope"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "symbol": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "external_coverage_oracle"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/population_source"}}}},
+                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "missing_discriminator", "exclusion_status", "source_populations"], "properties": {"denominator_status": {"const": "unresolved"}, "missing_discriminator": {"const": "declared_scan_scope"}, "exclusion_status": {"const": "unresolved"}, "source_populations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/population_source"}}}}
                   }
                 }
               }
@@ -654,17 +735,17 @@
               "required": ["file", "chain_motif", "symbol", "arn_resource"],
               "x-rule24": {
                 "semantic_dimension": "coverage adjudication under available discriminators",
-                "values": ["adjudicated", "blocked_missing_discriminator"],
+                "values": ["measured_snapshot", "blocked_missing_discriminator"],
                 "mutually_exclusive": true,
                 "collectively_exhaustive": true,
-                "adjudicated_requires": "an oracle outside the producing pipeline",
+                "measured_snapshot_requires": "two observed source populations at one measurement event, including an oracle outside the producing pipeline",
                 "blocked_requires": "the missing discriminator is named"
               },
               "properties": {
-                "file": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "oracle", "observed_population_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "adjudicated"}, "oracle": {"const": "filesystem"}, "observed_population_count": {"const": 374}, "nonresolving_count": {"const": 1}}},
-                "chain_motif": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "comparable_graph_vintage"}, "observed_union_count": {"const": 6255}, "nonresolving_count": {"const": 165}}},
-                "symbol": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_trace_symbol_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "external_oracle"}, "observed_trace_symbol_count": {"const": 2249}, "nonresolving_count": {"const": 918}}},
-                "arn_resource": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "scan_scope"}, "observed_union_count": {"const": 1970}, "nonresolving_count": {"const": 278}}}
+                "file": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "oracle", "observed_filesystem_count", "observed_kuzu_portal_module_count", "observed_shared_count", "observed_filesystem_only_count", "observed_kuzu_only_count", "observed_union_count"], "properties": {"coverage_adjudication": {"const": "measured_snapshot"}, "oracle": {"const": "filesystem"}, "observed_filesystem_count": {"const": 429}, "observed_kuzu_portal_module_count": {"const": 374}, "observed_shared_count": {"const": 373}, "observed_filesystem_only_count": {"const": 56}, "observed_kuzu_only_count": {"const": 1}, "observed_union_count": {"const": 430}}},
+                "chain_motif": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "comparable_graph_vintage_and_declared_scope"}, "observed_union_count": {"const": 6255}, "nonresolving_count": {"const": 165}}},
+                "symbol": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_trace_symbol_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "external_coverage_oracle"}, "observed_trace_symbol_count": {"const": 2249}, "nonresolving_count": {"const": 918}}},
+                "arn_resource": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "declared_scan_scope"}, "observed_union_count": {"const": 1970}, "nonresolving_count": {"const": 278}}}
               }
             },
             "lane_delivery": {"type": "object", "additionalProperties": false, "required": ["commit", "cell_total", "measured", "unmeasured", "acceptance_criteria_met", "acceptance_criteria_total", "ac7_state", "operative_effect"], "properties": {"commit": {"const": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a"}, "cell_total": {"const": 29}, "measured": {"const": 26}, "unmeasured": {"const": 3}, "acceptance_criteria_met": {"const": 6}, "acceptance_criteria_total": {"const": 7}, "ac7_state": {"const": "unmet"}, "operative_effect": {"const": "none"}}},
@@ -842,6 +923,28 @@
     }
   },
   "$defs": {
+    "population_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "source_home", "selector", "source_persistence", "observed_member_count", "semantic_vintage", "replayability_state"],
+      "properties": {
+        "source_id": {"enum": ["portal_filesystem", "kuzu_portal_module", "c2_chain_instances", "kuzu_semctl", "trace_graph_symbols", "kuzu_portal_nonmodule", "kuzu_pipeline_symbols", "kuzu_arn", "stitch_arn"]},
+        "source_home": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\\\).+$"},
+        "selector": {"type": "string", "minLength": 1},
+        "source_persistence": {
+          "enum": ["working_tree_filesystem_view", "working_tree_untracked", "ignored_device_local"],
+          "x-enum-definitions": {
+            "working_tree_filesystem_view": "The source is a live filesystem enumeration whose exact member set was not serialized.",
+            "working_tree_untracked": "The source artifact existed in the working tree but was not admitted to Git authority.",
+            "ignored_device_local": "The source artifact was intentionally excluded from Git and existed only on the measuring device."
+          },
+          "x-rule24": {"domain": "persistence standing of one measured source population", "grain": "one source artifact at the measurement event", "intent": "separate live enumeration, untracked artifact, and intentionally ignored device-local evidence", "mece": "each source has exactly one persistence standing at the measurement event", "state_coherence": "admission to Git creates a new source-evidence vintage rather than rewriting the historical standing"}
+        },
+        "observed_member_count": {"type": "integer", "minimum": 0},
+        "semantic_vintage": {"type": ["string", "null"]},
+        "replayability_state": {"const": "not_replayable_from_tracked_evidence"}
+      }
+    },
     "current_receiver_population": {
       "type": "object",
       "additionalProperties": false,

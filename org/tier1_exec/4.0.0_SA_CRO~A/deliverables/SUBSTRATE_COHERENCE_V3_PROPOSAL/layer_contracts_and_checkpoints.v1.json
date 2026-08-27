@@ -28,7 +28,12 @@
       "MSTR operative-schema mismatch 74950",
       "COO~X operative-status question 74953",
       "MSTR three-finding scope 74960",
-      "CTO~X operative-schema mismatch verification 74963"
+      "CTO~X operative-schema mismatch verification 74963",
+      "CRO Base rework18 read-only validation at a767d213921dfa013eed546b39c27f73712e0ec6",
+      "CTO~X freeze proposal 75610",
+      "COO~X queued-status correction 75628",
+      "MSTR emission exit-condition ruling 75636",
+      "CTO~X freeze grant 75639"
     ]
   },
   "contract_status": {
@@ -37,6 +42,19 @@
     "work_start_effect": "non_blocking_design_constraint",
     "l1_work_startable": true,
     "operative_transition_ready": false
+  },
+  "post_rerun_rule24_queue": {
+    "queue_state": "open_until_post_rerun_remediation",
+    "frozen_schema_commit": "a767d213921dfa013eed546b39c27f73712e0ec6",
+    "frozen_schema_blob": "e6cba54189f9a6a14db6d6a47a8954135a74f142",
+    "freeze_exit_condition": "coordinated_rerun_emits_42_of_42_receivers_with_coherent_claim_status",
+    "promotion_condition": "evidence_that_finding_changes_an_emitted_value",
+    "findings": [
+      {"finding_id": "L0-R24-01", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "empty_suffix_enumeration_interpretation"},
+      {"finding_id": "L0-R24-02", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "suffix_completeness_partition"},
+      {"finding_id": "L0-R24-03", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "repo_relative_path_rule24_partition"},
+      {"finding_id": "L0-R24-04", "finding_state": "open", "rerun_effect": "metadata_only_no_current_emission", "semantic_dimension": "home_space_lifecycle_vocabulary"}
+    ]
   },
   "mission": {
     "directive": "D11",
@@ -301,7 +319,33 @@
             "runtime_named_non_enumerable": 1
           },
           "enumerated_member_evidence": {
-            "stable_family_member_count": 8
+            "source_manifest": {
+              "home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
+              "git_commit": "94efcda69cf00db573866174b110a0bcbe39a42b",
+              "git_blob": "3f7bd6ee2251891bc05d57ba6b9b2e889a9f8431"
+            },
+            "stable_families": [
+              {
+                "part_id": ".comp-graph/platinum.CACHE_SET",
+                "home_expression": ".comp-graph/platinum.{dag.bd,dag.cot,dag.inf,dataflows,routing}.cache",
+                "members": [
+                  ".comp-graph/platinum.dag.bd.cache",
+                  ".comp-graph/platinum.dag.cot.cache",
+                  ".comp-graph/platinum.dag.inf.cache",
+                  ".comp-graph/platinum.dataflows.cache",
+                  ".comp-graph/platinum.routing.cache"
+                ]
+              },
+              {
+                "part_id": "_build_manifest.json.SET",
+                "home_expression": "infra/aws/globgrph/{kuzu_nessie_db,kuzu_db,kuzu_stitch_db}._build_manifest.json",
+                "members": [
+                  "infra/aws/globgrph/kuzu_nessie_db._build_manifest.json",
+                  "infra/aws/globgrph/kuzu_db._build_manifest.json",
+                  "infra/aws/globgrph/kuzu_stitch_db._build_manifest.json"
+                ]
+              }
+            ]
           },
           "brace_correction_evidence": {
             "withdrawn_syntactic_member_claim_count": 6,
@@ -376,18 +420,62 @@
         "symbol_prd_provenance": "unresolved",
         "file_prd_claimed_count": 3532,
         "file_prd_claim_source": "co_change_corpus",
+        "measurement_evidence": {
+          "home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_L1/L1_CELLS.json",
+          "git_commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a",
+          "git_blob": "29cb90710e445f915c09bdac9717976c6752fbe9",
+          "cell_pointers": {
+            "chain_motif": "/cells/1",
+            "symbol": "/cells/8",
+            "file": "/cells/16",
+            "arn_resource": "/cells/23"
+          }
+        },
         "denominator_contracts": {
-          "file": {"denominator_status": "adjudicated", "count": 374, "source_population_refs": ["filesystem_sweep"], "exclusions": []},
-          "chain_motif": {"denominator_status": "unresolved", "source_population_refs": ["semctl", "kuzu"], "missing_discriminator": "comparable_graph_vintage", "exclusions": []},
-          "symbol": {"denominator_status": "unresolved", "source_population_refs": ["trace_symbol_space", "measured_union_space"], "missing_discriminator": "external_oracle", "exclusions": []},
-          "arn_resource": {"denominator_status": "unresolved", "source_population_refs": ["kuzu", "stitch"], "missing_discriminator": "scan_scope", "exclusions": []}
+          "file": {
+            "denominator_status": "unresolved",
+            "missing_discriminator": "committed_same_vintage_member_set",
+            "exclusion_status": "unresolved",
+            "source_populations": [
+              {"source_id": "portal_filesystem", "source_home": "portal/src", "selector": "recursive_file_member_set", "source_persistence": "working_tree_filesystem_view", "observed_member_count": 429, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"},
+              {"source_id": "kuzu_portal_module", "source_home": "infra/aws/globgrph/kuzu_db", "selector": "portal.Module", "source_persistence": "ignored_device_local", "observed_member_count": 374, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"}
+            ]
+          },
+          "chain_motif": {
+            "denominator_status": "unresolved",
+            "missing_discriminator": "comparable_graph_vintage_and_declared_scope",
+            "exclusion_status": "unresolved",
+            "source_populations": [
+              {"source_id": "c2_chain_instances", "source_home": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json", "selector": "chain_motif_instance_ids", "source_persistence": "working_tree_untracked", "observed_member_count": 6138, "semantic_vintage": "8601547680771488785@2026-08-07", "replayability_state": "not_replayable_from_tracked_evidence"},
+              {"source_id": "kuzu_semctl", "source_home": "infra/aws/globgrph/kuzu_db", "selector": "semctl.instance_id", "source_persistence": "ignored_device_local", "observed_member_count": 6207, "semantic_vintage": "2902399899597701830@2026-08-26", "replayability_state": "not_replayable_from_tracked_evidence"}
+            ]
+          },
+          "symbol": {
+            "denominator_status": "unresolved",
+            "missing_discriminator": "external_coverage_oracle",
+            "exclusion_status": "unresolved",
+            "source_populations": [
+              {"source_id": "trace_graph_symbols", "source_home": ".comp-graph/graph.json", "selector": "symbol_ids", "source_persistence": "ignored_device_local", "observed_member_count": 2249, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"},
+              {"source_id": "kuzu_portal_nonmodule", "source_home": "infra/aws/globgrph/kuzu_db", "selector": "portal.non_Module", "source_persistence": "ignored_device_local", "observed_member_count": 10964, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"},
+              {"source_id": "kuzu_pipeline_symbols", "source_home": "infra/aws/globgrph/kuzu_db", "selector": "pipeline.symbol_id", "source_persistence": "ignored_device_local", "observed_member_count": 1337, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"}
+            ]
+          },
+          "arn_resource": {
+            "denominator_status": "unresolved",
+            "missing_discriminator": "declared_scan_scope",
+            "exclusion_status": "unresolved",
+            "source_populations": [
+              {"source_id": "kuzu_arn", "source_home": "infra/aws/globgrph/kuzu_nessie_db", "selector": "nonempty_arn", "source_persistence": "ignored_device_local", "observed_member_count": 1851, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"},
+              {"source_id": "stitch_arn", "source_home": "infra/aws/globgrph/stitch_graph.json", "selector": "nonempty_arn", "source_persistence": "ignored_device_local", "observed_member_count": 1811, "semantic_vintage": null, "replayability_state": "not_replayable_from_tracked_evidence"}
+            ]
+          }
         }
       },
       "coverage_discrimination": {
-        "file": {"coverage_adjudication": "adjudicated", "oracle": "filesystem", "observed_population_count": 374, "nonresolving_count": 1},
-        "chain_motif": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "comparable_graph_vintage", "observed_union_count": 6255, "nonresolving_count": 165},
-        "symbol": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "external_oracle", "observed_trace_symbol_count": 2249, "nonresolving_count": 918},
-        "arn_resource": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "scan_scope", "observed_union_count": 1970, "nonresolving_count": 278}
+        "file": {"coverage_adjudication": "measured_snapshot", "oracle": "filesystem", "observed_filesystem_count": 429, "observed_kuzu_portal_module_count": 374, "observed_shared_count": 373, "observed_filesystem_only_count": 56, "observed_kuzu_only_count": 1, "observed_union_count": 430},
+        "chain_motif": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "comparable_graph_vintage_and_declared_scope", "observed_union_count": 6255, "nonresolving_count": 165},
+        "symbol": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "external_coverage_oracle", "observed_trace_symbol_count": 2249, "nonresolving_count": 918},
+        "arn_resource": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "declared_scan_scope", "observed_union_count": 1970, "nonresolving_count": 278}
       },
       "lane_delivery": {"commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a", "cell_total": 29, "measured": 26, "unmeasured": 3, "acceptance_criteria_met": 6, "acceptance_criteria_total": 7, "ac7_state": "unmet", "operative_effect": "none"},
       "evidence": "COO~X 75008 relaying DT~X 74999; COO~X correction 75056 relaying DT~X 75052"
