@@ -858,7 +858,7 @@
                 "grain": "one member_set",
                 "intent": "one -- expressibility of the set; NOT its size, NOT its basis, NOT its health",
                 "mece": "true | false spans it. There is no third: a set is either nameable now or it is not.",
-                "state_coherence": "flipping enumerable REPLACES the payload branch entirely (members <-> pattern+pattern_source). It moves NOTHING in basis/evidence/owner and NOTHING in population_status -- an orphaned family and a live family are both non-enumerable."
+                "state_coherence": "flipping enumerable REPLACES the payload branch entirely: true carries `members`; false carries `pattern` + `pattern_source_home` + `pattern_source_line` + `variant_suffixes`. (This line omitted variant_suffixes until 2026-08-27 -- I ADDED A REQUIRED FIELD TO A BRANCH AND LEFT THE RULE-24 RECORD DESCRIBING THE OLD BRANCH, which is the stale-own-artifact defect at the smallest possible scale.) It moves NOTHING in basis/evidence/owner and NOTHING in population_status -- an orphaned family and a live family are both non-enumerable."
               }
             },
             "members": {
@@ -880,10 +880,34 @@
                   "not": {
                     "pattern": "\\s"
                   },
-                  "$comment": "belt-and-braces: the positive grammar already excludes whitespace"
+                  "$comment": "no whitespace anywhere, terminator included"
+                },
+                {
+                  "not": {
+                    "pattern": "^[A-Za-z][A-Za-z0-9+.\\-]*://"
+                  },
+                  "$comment": "no URI scheme -- EVERY scheme, not a named one"
+                },
+                {
+                  "not": {
+                    "pattern": "^(/|[A-Za-z]:[\\\\/]|\\\\\\\\)"
+                  },
+                  "$comment": "NOT ABSOLUTE. RULED 2026-08-27: a manifest is read on both fabrics, and an absolute path is device-specific by construction -- 'C:/Users/AndrewBerman/...' is unresolvable on site Z and resolves to the WRONG tree wherever it does resolve. The estate rule is DERIVE, never hardcode a device."
+                },
+                {
+                  "not": {
+                    "pattern": "(^|/)\\.\\.(/|$)"
+                  },
+                  "$comment": "NO `..` TRAVERSAL. Two spellings of one location are two rows for one artifact, which is the identity-splitting defect home_space exists to prevent."
+                },
+                {
+                  "not": {
+                    "pattern": "//"
+                  },
+                  "$comment": "no empty path segment -- 'dir//x' and 'dir/x' are two spellings of one location, which is the identity split this whole layer exists to prevent"
                 }
               ],
-              "description": "enumerable=false ONLY. A NORMALISED SEMANTIC FAMILY TEMPLATE -- NOT verbatim producer text. ⛔ RULED 2026-08-27 after 4.0.0_SA_CRO~A found the contradiction: this field said 'verbatim' AND required <placeholder> syntax, and the pinned producer at _canonical.py:288 emits an f-string ('{os.getpid()}'), so NO value could satisfy both. THE GRAMMAR IS CLOSED AND POSITIVE, not a list of forbidden syntaxes: a template is a sequence of LITERAL characters [A-Za-z0-9._/-] and PLACEHOLDER tokens <[a-z][a-z0-9_]*>, with AT LEAST ONE token. Nothing else is expressible -- braces, percent-signs, dollar-signs, uppercase tokens and whitespace are all UNREACHABLE rather than enumerated. ⛔ THE PRIOR REVISION USED A LOOSER REGEX AND *NAMED* THE RESULTING GAP ('x.<pid>.{mono} validates') AS A DISCLOSED LIMIT. 4.0.0_SA_CRO~A refused that: the field's own single-representation claim makes the mixed form INVALID, and a closed grammar was always available. DISCLOSING A GAP IS NOT CLOSING IT -- and a well-named gap reads as rigour. Every runtime-varying segment is <name> in lowercase snake naming WHAT VARIES; every literal segment is copied from the producer unchanged. At least one placeholder is REQUIRED -- a template with no varying segment denotes exactly ONE artifact, which is not a family. THE VERBATIM PRODUCER EXPRESSION IS NOT LOST: pattern_source_home + pattern_source_line pin it. This field answers WHAT THE FAMILY IS; those answer WHERE IT IS PRODUCED. ⛔ PLACEHOLDER NAMES NAME THE VARYING QUANTITY, NOT AN ABBREVIATION OF IT: <monotonic_ns>, never <mono>; <uniq>/<counter> for the producer's counter, never <seq> unless the producer calls it a sequence. And the LITERAL SEGMENTS INCLUDE THE PATH -- the template is the family's HOME shape, so dropping the directory prefix changes what the family IS, not merely how it reads.",
+              "description": "enumerable=false ONLY. A NORMALISED SEMANTIC FAMILY TEMPLATE -- NOT verbatim producer text. ⛔ RULED 2026-08-27 after 4.0.0_SA_CRO~A found the contradiction: this field said 'verbatim' AND required <placeholder> syntax, and the pinned producer at _canonical.py:288 emits an f-string ('{os.getpid()}'), so NO value could satisfy both. THE GRAMMAR IS CLOSED AND POSITIVE, not a list of forbidden syntaxes: a template is a sequence of LITERAL characters [A-Za-z0-9._/-] and PLACEHOLDER tokens <[a-z][a-z0-9_]*>, with AT LEAST ONE token. Nothing else is expressible -- braces, percent-signs, dollar-signs, uppercase tokens and whitespace are all UNREACHABLE rather than enumerated. ⛔ THE PRIOR REVISION USED A LOOSER REGEX AND *NAMED* THE RESULTING GAP ('x.<pid>.{mono} validates') AS A DISCLOSED LIMIT. 4.0.0_SA_CRO~A refused that: the field's own single-representation claim makes the mixed form INVALID, and a closed grammar was always available. DISCLOSING A GAP IS NOT CLOSING IT -- and a well-named gap reads as rigour. Every runtime-varying segment is <name> in lowercase snake naming WHAT VARIES; every literal segment is copied from the producer unchanged. At least one placeholder is REQUIRED -- a template with no varying segment denotes exactly ONE artifact, which is not a family. THE VERBATIM PRODUCER EXPRESSION IS NOT LOST: pattern_source_home + pattern_source_line pin it. This field answers WHAT THE FAMILY IS; those answer WHERE IT IS PRODUCED. ⛔ PLACEHOLDER NAMES NAME THE VARYING QUANTITY, NOT AN ABBREVIATION OF IT: <monotonic_ns>, never <mono>; <uniq>/<counter> for the producer's counter, never <seq> unless the producer calls it a sequence. And the LITERAL SEGMENTS INCLUDE THE PATH -- the template is the family's HOME shape, so dropping the directory prefix changes what the family IS, not merely how it reads. ⛔ AND IT IS A REPO-SHAPED STRING: the SAME negatives that bind $defs/repo_relative_path apply here -- no whitespace or terminator, no URI scheme, not absolute, no `..` traversal, no empty `//` segment. Bound by REUSING that definition's clauses rather than by restating them; 4.0.0_SA_CRO~A found '../x.<pid>', 'dir//x.<pid>' and '/abs/x.<pid>' all validating because this field had a grammar and no path policy.",
               "examples": [
                 "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>"
               ],
@@ -892,7 +916,8 @@
                 "grain": "one member_set under enumerable=false",
                 "intent": "one -- WHAT the family's names look like; NOT where the template is produced (pattern_source_*), NOT how many instances exist (undefined by construction)",
                 "mece": "exactly ONE representation is legal, and it is defined by a CLOSED POSITIVE GRAMMAR (literal chars + <token>, >=1 token) rather than by forbidding syntaxes one at a time. Two unlabelled spellings of one template are two rows for one family -- the same identity split home_space exists to prevent -- and a grammar that merely REQUIRES a token while TOLERATING foreign interpolation admits exactly that.",
-                "state_coherence": "a producer RENAMING its template changes this value and pattern_source_line together; a producer MOVING changes pattern_source_home alone."
+                "state_coherence": "a producer RENAMING its template changes this value and pattern_source_line together; a producer MOVING changes pattern_source_home alone.",
+                "enforcement_limit": "THE GRAMMAR CANNOT CHECK PLACEHOLDER NAMES. '<mono>' and '<seq>' are grammar-valid and producer-semantically WRONG. This is a PRODUCER-BOUND REVIEW obligation, not a validator guarantee, and it is recorded here so nobody cites the schema as rejecting them."
               }
             },
             "variant_suffixes": {
@@ -901,15 +926,23 @@
               "items": {
                 "type": "string",
                 "pattern": "^\\.[A-Za-z0-9]+$",
-                "description": "A real filename suffix, leading dot, no whitespace."
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "\\s"
+                    },
+                    "$comment": "⛔ THE TERMINATOR LOOPHOLE, ON A FIELD ADDED TWO HOURS AFTER IT WAS FIXED IN FIVE OTHERS. '.wal\\n' satisfied ^\\.[A-Za-z0-9]+$ because Python's $ matches before a final newline. The unanchored negative was already in this file, four fields over, and I wrote a fresh anchored pattern without reusing it."
+                  }
+                ],
+                "description": "A real filename suffix: leading dot, alphanumerics, no whitespace anywhere."
               },
-              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY ARRAY is the claim 'no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ RULED 2026-08-27: a runtime family can have TWO INDEPENDENT AXES -- an UNBOUNDED instance identity (<pid>.<monotonic_ns>...) and a FINITE, KNOWN companion set (kuzu writes each rebuild tmp plus a .wal sibling). They are NOT the same axis and must not share a field: spelling '.wal' as another <placeholder> would make a CLOSED, ENUMERABLE set look like an unbounded runtime variable, which is the same two-axes-in-one-field defect that removed `db_path` from home_space. The PRIMARY artifact is the pattern itself and is NEVER listed here; this array holds only the ADDITIONAL companions minted alongside each instance. PER-INSTANCE cardinality is therefore 1 + length(variant_suffixes) -- DERIVED, never stored. TOTAL cardinality stays UNDEFINED, because the instance axis is unbounded and a reaper is running.",
+              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY ARRAY is the claim 'no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ RULED 2026-08-27: a runtime family can have TWO INDEPENDENT AXES -- an UNBOUNDED instance identity (<pid>.<monotonic_ns>...) and a FINITE, KNOWN companion set (kuzu writes each rebuild tmp plus a .wal sibling). They are NOT the same axis and must not share a field: spelling '.wal' as another <placeholder> would make a CLOSED, ENUMERABLE set look like an unbounded runtime variable, which is the same two-axes-in-one-field defect that removed `db_path` from home_space. The PRIMARY artifact is the pattern itself and is NEVER listed here; this array holds only the ADDITIONAL companions minted alongside each instance. PER-INSTANCE cardinality is therefore 1 + length(variant_suffixes) -- DERIVED, never stored. TOTAL cardinality stays UNDEFINED, because the instance axis is unbounded and a reaper is running. ⛔ ORDER CARRIES NO MEANING, RULED 2026-08-27: `uniqueItems` makes this a SET, and ['.lock','.wal'] and ['.wal','.lock'] are THE SAME CLAIM, not two spellings of it. JSON Schema cannot enforce sortedness, and the alternative -- declaring a canonical order the validator cannot check -- is an UNENFORCED FIELD, which this contract has refused four times tonight. So the obligation moves to where it can be met: A CONSUMER COMPARING TWO variant_suffixes SETS MUST SORT FIRST. Same rule as cardinality: never store a canonicalisation the consumer can derive.",
               "x-rule24": {
                 "axis": "the FINITE companion set minted alongside each instance",
                 "grain": "one member_set under enumerable=false",
                 "intent": "one -- WHICH extra artifacts accompany each instance; NOT how many instances exist (undefined), NOT what an instance is named (pattern)",
                 "mece": "[] = no companions. A non-empty array enumerates them exactly. There is no third state -- omission is REJECTED rather than interpreted.",
-                "state_coherence": "discovering a further companion APPENDS here and moves NOTHING in `pattern`; the producer renaming its template moves `pattern` and moves NOTHING here."
+                "state_coherence": "discovering a further companion APPENDS here and moves NOTHING in `pattern`; the producer renaming its template moves `pattern` and moves NOTHING here. ORDER IS NOT STATE: reordering the array changes nothing, because the value is a SET."
               }
             },
             "pattern_source_home": {
