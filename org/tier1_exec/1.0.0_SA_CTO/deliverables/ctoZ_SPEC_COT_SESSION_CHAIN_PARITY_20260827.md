@@ -267,6 +267,31 @@ be shown to *exclude* has not been tested.
 
 - **Do NOT change `MAX_SESSION_AGE_DAYS`.** Whether a daily cron makes the 7d bound redundant is a
   live design question (cadence-vs-tolerance) and it is Andrew's, not this build's.
+
+  ⛔ **AMENDED 2026-08-27 ~16:0xZ BY ANDREW-DIRECT, and it corrects how THIS DOCUMENT reads.**
+  VERBATIM (relayed by `0.7.0_AE_CloudOps~Z` at his instruction *"confirm that back to CTO~Z so it's
+  on the record"*; durable record `aeZ_ANDREW_DIRECT_20260827_NO_DAILY_MINT_7D_IS_A_REFRESH_SCHEDULE_NOT_A_NECESSITY.md`):
+  > *"we do not need a daily mint, the cookie works fine without daily mint. **we do not even know if
+  > the cookie would ever die**, we simply just set a 1x every 7 days process **in the interest of
+  > keeping a refresh schedule**."*
+
+  >> **`MAX_SESSION_AGE_DAYS = 7` IS A POLICY CHOICE, NOT A MEASURED COOKIE LIFETIME. NOBODY MAY CITE
+  >> 7d AS EVIDENCE ABOUT HOW LONG A BD COOKIE LIVES.** <<
+
+  **WHY THIS AMENDS THE SPEC RATHER THAN MERELY ADDING TO IT:** s.3's *"NOTE THE ORIGIN"* explains the
+  bound as the WS-1 remedy for refresh-only-at-death. That is correct about its **PURPOSE** and silent
+  about its **VALUE** — and a reader tracing a real 7-day expiry through this document would come away
+  believing the 7 was measured. **It was not.** Both facts are true; the second is the one that gets
+  misread, and my own framing invited the misreading. *(This spec elsewhere insists a declared value is
+  not a measurement — and then leaned on a declared value as though it were one. Same class, my own document.)*
+
+  **CONSEQUENCE, STATED SO NOBODY RE-DERIVES IT:** the R1 restore is **NEUTRAL TO THE BOUND.** Widen it
+  to 14d/30d, or drop it so the mint runs only on real cookie failure — the mint simply gets rarer and
+  `cot-session-complete` fires less often. **Nothing in the restore locks in a weekly mint.** The daily
+  Scheduler entry fires `mode=session-refresh`, and **that mode name is misleading: it does not mean
+  "mint"** — Lever A skips the OIDC mint on a positive-live cookie and dispatches the pull directly.
+  Measured over 07-27..08-27: **mint 4 scheduled runs (~8d apart); pull 30 of 32 days.** The daily thing
+  is the PULL. Credit: `0.7.0_AE_CloudOps~Z`, who measured it rather than asserting it.
 - **`partner_roster.json` -- READ THIS, IT IS NOT "ALREADY HANDLED".** The cottonwood cadence was
   corrected today (`D+2` -> `T-1`) under its own Andrew-direct authorization, **but the correction
   reached ONE OF THREE HOMES and NOT the one production reads.** Measured 2026-08-27 ~14:5xZ:
