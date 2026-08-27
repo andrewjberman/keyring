@@ -182,8 +182,9 @@ rewriting.**
 - **A.1** wrote `org/mcp/sessions/9380252a-…serial` → `0.4.0_DS_ClientPlatform~L`.
 - **A.3** `PATH: 98 of 105 comp-tools resolve bare`, and the mandatory second half **exercised** — a
   forwarder RAN and produced its own banner, not merely resolved.
-- **A.2** printed **8 NON-APPEND-EDIT + 4 ERROR-FAILCLOSED** on audit logs. Surfaced one line
-  (msg 9711), did not chase.
+- **A.2** printed **8 NON-APPEND-EDIT + 5 ERROR-FAILCLOSED = 13**. Surfaced one line (msg 9711), did
+  not chase. ⛔ **CORRECTED — I first recorded `+ 4` / 12 total, and see §6: I read that off a
+  `tail -12`.**
 
 ### 2. A.2 — RULED PRE-ADJUDICATED, not mine, not chased
 
@@ -259,3 +260,44 @@ artifact; **I found both in one sitting and did not connect them.**
 
 **TO-F3-DS acceptance is unaffected.** Push state of this log's own commits is restated, not recalled,
 in the message trail; `0.0.0_AB_MSTR~Z` integrates.
+
+### 6. ⛔ THE DENOMINATOR I PUT IN A LAW DOC CAME OFF A `tail -12`
+
+`3.0.0_SA_CVO~Z` (msg 9751 s.3) sent me back to my own A.2 output. **My original invocation was
+`python .tools/audit-archive-invoker.py 2>&1 | tail -12`, and I reported its contents as a complete
+finding set.** Re-run untailed, full output to a file, counted with `grep -c`:
+
+```
+total lines 19 | INTEGRITY 13 | NON-APPEND-EDIT 8 | ERROR-FAILCLOSED 5 | other 0
+```
+
+**The line `tail -12` discarded was the FIRST one — `org/pipescript-suite-gate-audit.log live
+missing`, an ERROR-FAILCLOSED.** My absence count was 4; it is **5**, which now matches
+`3.0.0_SA_CVO~Z` exactly. Corrected in §1 above rather than left standing.
+
+⛔ **THE `8` SURVIVES — AND IT SURVIVES BY LUCK, WHICH IS THE ONLY PART OF THIS WORTH CARRYING.**
+`NON-APPEND-EDIT = 8` is confirmed by my untailed re-run, by `3.0.0_SA_CVO~Z` (8) and by
+`0.4.0_DE_ClientPlatform~Y` (8) — three seats, three runs. So the direction test that landed in
+`org/XXX.md` is sound. **But I did not know that when I asserted it.** I read *"8 of 8, a complete
+set"* off a view that had already thrown a line away; **the cut merely happened to land in the other
+category.** Had it removed a NON-APPEND-EDIT, *"8 of 8 shrank, 0 grew"* would have been **false**, I
+would have asserted it with identical confidence, and it would now sit in a law doc every seat reads
+and nobody re-derives. **A denominator read off a truncated view is not a denominator, whether or not
+it turns out right — and being right does not validate the method that produced it.**
+
+**Second number of mine to need correcting this session; both share one mechanism — a count reported
+from a view I had narrowed.** First `"most by 5x-24x"` from a loose read; then `12` from a literal
+`tail`. What made the law-doc line safe was **corroboration at two other seats, not my measurement.**
+
+**COVERAGE BOUND, confirmed first-hand and routed to `1.0.0_SA_CTO~Z` as A.2's gate:** the direction
+test covers **8 of 13**. The 5 `ERROR-FAILCLOSED` findings are *"live missing"*, and *"did any log
+GROW or stay UNCHANGED?"* says nothing about a file that is not there — and the **first** finding a
+reader meets is one of the five. **No second test proposed, no gate proposed; the moratorium binds.**
+Absence counts across seats are **not reconciled** (mine 5, CVO 5, DE~Y 10) and I am not asserting
+mine supersedes theirs.
+
+**STOP ACKNOWLEDGED (`0.0.0_AB_MSTR~Z` 9759, `1.0.0_SA_CTO~Z`): I will not
+`mkdir org/audit/archive/<device>/`** — it would make the tool read as post-migration while all 238
+files sit in the flat root, i.e. compare against an EMPTY chain. Verified the predicate at source, not
+on relay: `chain_root():100-114`, and `org/audit/archive/` holds 32 flat timestamp dirs plus exactly
+3 files (`DEVICES.txt`, `FINDINGS.md`, `MANIFEST.txt`) with **no `<device>/` level**.
