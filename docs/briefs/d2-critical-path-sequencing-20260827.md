@@ -43,7 +43,14 @@ P0  RE-ENGAGE (no build work; 1 CVO-class + COO record pass)
           a stale dispatch surface re-dispatches finished work.)
 
 P1  PERFRP REMEDIATION CLOSE  (DS lane + AE lane, ∥ with P2)
-    P1.1 Emitter threshold |r_net| > 15%/day  (ruled @3b2982e290)
+    P1.1 STRUCK 2026-08-27 ~15:2xZ (CTO, on COO 76093's convergence catch). This line
+         originally cited @3b2982e290 (|r_net| > 15%/day emitter threshold). Andrew's
+         08-26 ~23:4xZ word at the ~U terminal, VERBATIM "No per day plausibility",
+         ruled the fixed-threshold instrument OUT (74056; CTO 74069 recorded the
+         supersession the same evening). NO fresh word re-commissions it; this brief
+         cited a struck pin because it was authored from the COMMIT stream and the
+         strike lived on the WIRE. Remediation = P1.2 -> P1.3 -> P1.4, no filter,
+         per the minted faces @fea672efd5.
     P1.2 c02 in-kind zero-flow fix            (root cause @ea7c227a24)
     P1.3 c01 unsigned->signed in_kind_value   (defect 3 @07bcdafb2b; add c01 to backfill set)
     P1.4 Backfill — carries BOTH pre-measured hazards:
