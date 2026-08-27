@@ -164,6 +164,19 @@ records; the 3a domain change + migration; the 3d split. AT WP-3: derivation rul
 **NOT PROPOSED: removing any status field.** Consumers keep their query surface; what changes is
 that the contract stops pretending authored claims are derivations.
 
+**LANDING CHECKLIST (the implementing commit carries every line or it is not the landing):**
+(a) `superseded` leaves both `verification_standing` domains + migration receipts emitted;
+(b) the `superseded -> superseded_by` REQUIRE arms on bridge_assertion and identity_relation are
+REMOVED — and per `3.0.0_SA_CVO~X` 77022, ANY residual `superseded_by`-only-on-`superseded`
+mirror left behind flips from ARM-4's adjudicated-NO (DEFERRED BY LANDED DESIGN, class D) to a
+LIVE DEFECT the moment the cert battery reads `corroborated` + `superseded_by` as desired — the
+ARM4_ADJUDICATION.md class-D rows are re-adjudicated CLOSED in the same commit; (c) contest
+record shape + typed target; (d) `retirement` relation kind with object forbidden; (e) direction
+table into ISCK_CONTRACT.md §3.12 as a closed row-per-kind; (f) `status_basis` exact-key maps
+REQUIRED on all six axes' records + the migration manifest cut at the boundary commit; (g)
+`partial_legacy -> partial` + receipts; (h) `2.0.0_SA_COO~X`'s superseded-consumer census cited
+as the pre-landing gate that was MET. Attack-dry state at cut: CVO~X DRY @5b15802d0f (77022).
+
 ## 5. FOUR-POSTULATE IMPACT (records to be cut with the implementing boundary)
 
 `verification_standing` (3-value form) — re-recorded; `status_basis` — new 2-value enum, record
