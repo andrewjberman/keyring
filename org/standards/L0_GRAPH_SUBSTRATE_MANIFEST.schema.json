@@ -924,7 +924,7 @@
                     ],
                     "x-enum-definitions": {
                       "always": "The producer mints this companion with EVERY instance. This is a CLOSURE claim per companion and therefore REQUIRES `evidence` naming where the producer's code makes it unconditional.",
-                      "conditional": "The producer mints it only under a condition; `note` states which. An instance may lack it and still be well-formed.",
+                      "conditional": "The producer mints it only under a circumstance, WHICH `condition` MUST STATE. An instance may lack it and still be well-formed.",
                       "unknown": "The producer's rule has not been read. EXPRESSIBLE ABSENCE -- not a weak 'conditional', and never a licence to assume either other value."
                     },
                     "x-rule24": {
@@ -937,39 +937,106 @@
                   },
                   "note": {
                     "$ref": "#/$defs/one_line_text",
-                    "description": "What this companion HOLDS, one line. NOT when it is minted -- that is `mint`."
+                    "description": "What this companion HOLDS -- artifact meaning ONLY. NOT when it is minted (`mint`), NOT under what circumstances (`condition`)."
                   },
                   "evidence": {
                     "$ref": "#/$defs/one_line_text",
-                    "description": "REQUIRED when mint=always: where the producer's code makes it unconditional. A closure claim carries its proof or it is not made."
+                    "description": "REQUIRED iff mint=always, PROHIBITED otherwise. Where the producer's code makes it UNCONDITIONAL. Its meaning is specific to the closure claim, so it was incoherent beside `conditional` or `unknown` -- and it validated there."
+                  },
+                  "condition": {
+                    "$ref": "#/$defs/one_line_text",
+                    "description": "REQUIRED iff mint=conditional, PROHIBITED otherwise. The producer's circumstance under which this companion appears. ⛔ Until 2026-08-27 `conditional` had NOWHERE to state the condition: the enum said note carried it, note said it did not, and {'.wal':{'mint':'conditional','note':'write-ahead log'}} validated while stating no condition at all. TWO DESCRIPTIONS DISAGREEING IS NOT AMBIGUITY -- ONE OF THEM WAS ALWAYS FALSE."
                   }
                 },
                 "allOf": [
                   {
                     "if": {
+                      "required": [
+                        "mint"
+                      ],
                       "properties": {
                         "mint": {
                           "const": "always"
                         }
-                      },
-                      "required": [
-                        "mint"
-                      ]
+                      }
                     },
                     "then": {
                       "required": [
                         "evidence"
+                      ],
+                      "not": {
+                        "required": [
+                          "condition"
+                        ]
+                      }
+                    },
+                    "$comment": "always: evidence REQUIRED (closure carries its proof), condition FORBIDDEN"
+                  },
+                  {
+                    "if": {
+                      "required": [
+                        "mint"
+                      ],
+                      "properties": {
+                        "mint": {
+                          "const": "conditional"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "condition"
+                      ],
+                      "not": {
+                        "required": [
+                          "evidence"
+                        ]
+                      }
+                    },
+                    "$comment": "conditional: condition REQUIRED, evidence FORBIDDEN"
+                  },
+                  {
+                    "if": {
+                      "required": [
+                        "mint"
+                      ],
+                      "properties": {
+                        "mint": {
+                          "const": "unknown"
+                        }
+                      }
+                    },
+                    "then": {
+                      "allOf": [
+                        {
+                          "not": {
+                            "required": [
+                              "condition"
+                            ]
+                          }
+                        },
+                        {
+                          "not": {
+                            "required": [
+                              "evidence"
+                            ]
+                          }
+                        }
                       ]
                     },
-                    "$comment": "⛔ `always` IS THE CLOSURE CLAIM THIS FIELD WITHDREW AT THE SET LEVEL. It is still expressible PER COMPANION -- but only with evidence, because the reason the set-level claim fell was that observation cannot certify closure."
+                    "$comment": "unknown: neither -- an unread rule has no condition and no proof"
                   }
                 ],
                 "description": "⛔ WAS A FREE STRING UNTIL 2026-08-27 AND IT CARRIED TWO CLAIMS AT ONCE: what the companion IS and WHEN it is minted, in one unparsed line that accepted 'banana'. The suffix KEY already identifies the companion; the value now separates the two axes and binds the minting rule to a schema-local enum a consumer can branch on."
               },
-              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'this producer mints no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ THESE ARE THE SUFFIXES THE PRODUCER *MAY* MINT, NOT A CLOSED SET AND NOT A PER-INSTANCE GUARANTEE. RULED 2026-08-27 after 4.0.0_SA_CRO~A refused the prior wording: it claimed an EXACT FINITE companion set with per-instance cardinality 1 + keys, while the only available evidence for '.wal' was OBSERVATION of existing homes -- and the producer source `_rm_kuzu` names `.wal`, `.lock`, `.shadow` and `.tmp`. **DERIVING A CLOSED SET FROM OBSERVED ARTIFACTS CANNOT CERTIFY CLOSURE**: it is 'total minus the part I measured' wearing an enumeration's costume. PER-INSTANCE CARDINALITY IS THEREFORE UNDEFINED, exactly as the total is: a given instance may carry any subset of these, and each value must state the CONDITION under which that companion appears. AN OBJECT KEYED BY SUFFIX, not an array: JSON objects are unordered by specification and duplicate keys are impossible, so no canonicalisation is left for anyone to forget -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (`pattern`) and this companion axis. TOTAL cardinality stays UNDEFINED -- the instance axis is unbounded and a reaper is running.",
+              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'this producer mints no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ THESE ARE THE SUFFIXES THE PRODUCER *MAY* MINT, NOT A CLOSED SET AND NOT A PER-INSTANCE GUARANTEE. RULED 2026-08-27 after 4.0.0_SA_CRO~A refused the prior wording: it claimed an EXACT FINITE companion set with per-instance cardinality 1 + keys, while the only available evidence for '.wal' was OBSERVATION of existing homes -- and the producer source `_rm_kuzu` names `.wal`, `.lock`, `.shadow` and `.tmp`. **DERIVING A CLOSED SET FROM OBSERVED ARTIFACTS CANNOT CERTIFY CLOSURE**: it is 'total minus the part I measured' wearing an enumeration's costume. PER-INSTANCE CARDINALITY IS THEREFORE UNDEFINED, exactly as the total is: a given instance may carry any subset of these, and each value must state the CONDITION under which that companion appears. AN OBJECT KEYED BY SUFFIX, not an array: JSON objects carry no SEMANTIC ordering, which is why this is an object and not an array. ⛔ THAT IS THE ONLY GUARANTEE IT BUYS: raw duplicate keys and raw-byte ordering are NOT handled here -- see x-parser-obligations. The sentence that claimed they were sat two lines from the record admitting they were not -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (`pattern`) and this companion axis. TOTAL cardinality stays UNDEFINED -- the instance axis is unbounded and a reaper is running.",
               "examples": [
                 {
-                  ".wal": "write-ahead log; present while a rebuild is mid-flight, absent after a clean close (producer: _rm_kuzu)"
+                  ".wal": {
+                    "mint": "conditional",
+                    "note": "write-ahead log for the rebuild database",
+                    "condition": "present while a rebuild is mid-flight; removed on clean close"
+                  }
                 }
               ],
               "x-rule24": {
@@ -984,6 +1051,26 @@
                 "duplicate_keys": "JSON SCHEMA CANNOT SEE RAW DUPLICATE KEYS -- Python's parser is last-wins, so {'.wal':<invalid>, '.wal':<valid>} validates. The COMPILER must reject duplicate member names AT PARSE TIME, before validation, with an invalid-first/valid-last negative control.",
                 "byte_ordering": "An object removes SEMANTIC ordering, not RAW-BYTE ordering: reversed insertion validates identically and hashes differently. The EMITTER must sort keys canonically during deterministic emission/hashing, with a reversed-order byte-equality control.",
                 "enforcement_limit": "NEITHER of these is enforced by this schema. They are recorded here so no reader cites schema validity as covering them -- the same discipline as the placeholder-name limit on `pattern`."
+              }
+            },
+            "variant_suffixes_completeness": {
+              "enum": [
+                "closed_at_source",
+                "partial",
+                "unknown"
+              ],
+              "x-enum-definitions": {
+                "closed_at_source": "The producer file at variant_suffixes_source_home/_line was READ and these are ALL the suffixes it can mint.",
+                "partial": "The source was read and MORE may exist elsewhere in the producer.",
+                "unknown": "Completeness not established. EXPRESSIBLE ABSENCE."
+              },
+              "description": "REQUIRED under enumerable=false. ⛔ WITHOUT IT, `{}` MEANT TWO THINGS AT ONCE: the description called the repertoire NOT CLOSED while the Rule-24 record said `{}` proves the producer mints none. AN OPEN DISCOVERY SET CANNOT DISTINGUISH 'NONE' FROM 'NONE KNOWN' -- and the contract asserted both readings in one object. `{}` + closed_at_source = mints none; `{}` + unknown = none found yet.",
+              "x-rule24": {
+                "axis": "how COMPLETE the enumerated repertoire is",
+                "grain": "one producer's repertoire",
+                "intent": "one -- completeness of the enumeration; NOT which suffixes (the keys), NOT when each is minted (`mint`)",
+                "mece": "closed_at_source | partial | unknown spans it: the source closes the set, leaves it open, or was not established.",
+                "state_coherence": "reading further producer code moves unknown|partial -> closed_at_source and may ADD KEYS; it moves no existing key's `mint`."
               }
             },
             "variant_suffixes_source_home": {
@@ -1073,6 +1160,13 @@
                       "variant_suffixes_source_line"
                     ]
                   }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_completeness"
+                    ]
+                  }
                 }
               ]
             },
@@ -1088,7 +1182,8 @@
                 "pattern_source_line",
                 "variant_suffixes",
                 "variant_suffixes_source_home",
-                "variant_suffixes_source_line"
+                "variant_suffixes_source_line",
+                "variant_suffixes_completeness"
               ],
               "not": {
                 "required": [
@@ -1287,6 +1382,12 @@
             "pattern": "//"
           },
           "$comment": "no empty path segment -- moved here from member_set.pattern for the same reason"
+        },
+        {
+          "not": {
+            "pattern": ":"
+          },
+          "$comment": "NO COLON. It is illegal in a Windows path component, and its only observed use here was a COMPOUND PROVENANCE -- 'x/_canonical.py:288' -- smuggling a line number into a path field that has a separate line field beside it. Rejecting it at the OWNING DEFINITION closes it for pattern_source_home, variant_suffixes_source_home, home[repo_path] and every future binder at once."
         }
       ],
       "x-rule24": {
