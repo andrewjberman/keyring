@@ -114,6 +114,38 @@ if [ $SEEN_DOUBLEDASH -eq 0 ] || [ ${#PATHSPEC[@]} -eq 0 ]; then
   exit 2
 fi
 
+# ----------------------------------------------------------------------------
+# MESSAGE-FLAG GATE (2026-08-27, Andrew-direct at the COO terminal after the
+# 19:34Z index.lock outage). A safe-commit invoked with NO message flag used to
+# pass straight through to `git commit`, which opened $EDITOR and waited on a
+# human forever -- holding .git/index.lock and blocking EVERY seat on the shared
+# worktree (measured cost: one flag omission = a fabric-wide write outage; the
+# holder was a live process that could never finish). This script's message code
+# was all CONSUMING gates (scan/override/verify) that yield "" on an absent flag
+# -- no arm ever REQUIRED one. Rule 14a's -F imperative is now mechanical here.
+# Satisfying flags: -F/--file (the lawful form), -m/--message (deprecated but
+# legal), -C/--reuse-message (carries a message without an editor). -c and
+# --reedit-message do NOT satisfy it: they reach an editor BY DESIGN and a
+# headless session cannot answer one.
+# ----------------------------------------------------------------------------
+_HAS_MSG_FLAG=0
+_mfi=0
+while [ $_mfi -lt ${#COMMIT_ARGS[@]} ]; do
+  case "${COMMIT_ARGS[$_mfi]}" in
+    -m|--message|-F|--file|-C|--reuse-message) _HAS_MSG_FLAG=1; break ;;
+    -m=*|--message=*|-F=*|--file=*|-C=*|--reuse-message=*) _HAS_MSG_FLAG=1; break ;;
+  esac
+  _mfi=$((_mfi + 1))
+done
+if [ "$_HAS_MSG_FLAG" -eq 0 ]; then
+  echo "ERROR: no commit-message flag (-F <file> / -m / -C). REFUSED before any staging." >&2
+  echo "  A message-less commit sends git to an interactive \$EDITOR no headless session" >&2
+  echo "  can answer -- it hangs holding .git/index.lock and blocks EVERY seat" >&2
+  echo "  (2026-08-27 19:34Z outage). Rule 14a: write the message with a NON-SHELL writer" >&2
+  echo "  and pass it via -F <msgfile>. -m is deprecated for bodies with special chars." >&2
+  exit 2
+fi
+
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
   echo "ERROR: not inside a git repository." >&2
   exit 2
@@ -737,7 +769,14 @@ fi
 # BOTH ARMS EXERCISED 2026-08-25 (1.0.0_SA_CTO), one variable changed: the fragile form loses the
 # text and dies; this form captures rc, prints the text, and reaches `exit $_commit_rc` at :end.
 # Symptom reported by 2.0.0_SA_COO (71511); `set -e` mechanism found by 3.0.0_SA_CVO (71562).
-_commit_out="$(git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)" && _commit_rc=0 || _commit_rc=$?
+# GIT_EDITOR=false belt behind the message-flag gate: if ANY residual path still
+# reaches git without a message (a hook, a template, a future arg the gate does
+# not know), git runs `false` as the editor and ABORTS LOUDLY instead of hanging
+# on an editor no headless session can answer. An abort lands in the rc!=0
+# cleanup below; a hang holds index.lock fabric-wide. Belt, not the gate --
+# deliberately unexercised (exercising it requires a bare message-less git
+# commit, which is itself banned); its failure mode is a visible refusal.
+_commit_out="$(GIT_EDITOR=false git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)" && _commit_rc=0 || _commit_rc=$?
 printf '%s
 ' "$_commit_out"
 
