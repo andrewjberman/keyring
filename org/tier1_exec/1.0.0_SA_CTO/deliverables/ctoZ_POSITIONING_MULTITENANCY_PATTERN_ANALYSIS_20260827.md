@@ -265,4 +265,49 @@ ruling inherits its document's scope, and I am carrying the scope with it.
 layers is paramount"* is not a UI-visibility sentiment. **But §4 remains HIS to settle**, because the
 one thing neither precedent establishes is whether the Positioning payload is in the class he meant.
 
+---
+
+# AMENDMENT 4 — R6 BLAST RADIUS. ⛔ **`positioning_data.json` IS NOT A POSITIONING-PAGE ARTIFACT, AND THIS PARTLY OFFSETS AMENDMENT 2.**
+
+**MEASURED — the `['positioning-data']` React Query key is SHARED BY FOUR CONSUMERS:**
+
+```
+src/pages/Positioning/Positioning.tsx:188         the Positioning page
+src/pages/Attribution/Attribution.tsx:35          THE ATTRIBUTION PAGE          <- a different page
+src/components/ModelPortfolioModal.tsx:133        A SHARED MODAL                <- reused surface
+src/pages/DataRefresh/rollbackInvalidation.ts:58  THE CACHE-INVALIDATION LIST   <- hardcoded copy
+```
+**Artifact consumers: 7 files.** **Firms reaching `/positioning` today: 4 of 4 partners** —
+`49financial`, `inflection`, `cottonwood`, `demo` (+ internal).
+
+## WHAT THIS DOES TO OPTION (b), HONESTLY IN BOTH DIRECTIONS
+
+⚠ **AMENDMENT 2 SAID (b) WAS "MATERIALLY SMALLER" BECAUSE AUTH ALREADY EXISTS. THAT REMAINS TRUE AND
+IS NOW ONLY HALF THE PICTURE.** The AUTH work is small; **the BLAST RADIUS is wider than the
+Positioning page**, and I would have under-priced (b) in the opposite direction had I stopped at
+Amendment 2.
+
+1. ⛔ **MOVING THE ARTIFACT TOUCHES ATTRIBUTION AND A SHARED MODAL, NOT JUST POSITIONING.** Any
+   `api/scoped/{firm}/` move is a **three-surface change**, and Attribution was never in scope of
+   Andrew's sentence.
+2. ⛔ **THE SHARED KEY IS A LIVE COUPLING, NOT A FUTURE HAZARD.** §5.1 framed the cache key as a risk
+   *if* (b) is built. **It is worse: because four consumers share ONE key, scoping Positioning's
+   fetch without scoping Attribution's would put two different payloads under one key** — a
+   cross-page collision, not merely a cross-firm one.
+3. ⛔ **`rollbackInvalidation.ts:58` HARDCODES `['positioning-data']`.** If the key gains a firm
+   dimension and that list is not updated, **invalidation silently stops matching** — and a cache
+   that never invalidates is exactly how stale cross-firm data would persist. **The invalidation
+   list is a SECOND CARRIER of the key**, and this session has now found four instances of one
+   obligation living in two carriers.
+4. **All four partner firms reach `/positioning` today**, so a scoped artifact is needed **per firm**,
+   not just for Cottonwood — or the other three lose the page.
+
+>> **NET: (b)'s AUTH limb is small; its BLAST-RADIUS limb is larger than the page Andrew named. Both
+   corrections are mine and they run in opposite directions — I am stating them together rather than
+   letting the flattering one stand alone.** <<
+
+**BRANCH-INDEPENDENT VALUE:** items 2 and 3 are **defects today**, regardless of how §4 resolves. A
+shared cache key across four consumers with a hardcoded duplicate in the invalidation list is worth
+recording whether or not anything is ever firm-scoped.
+
 -- `1.0.0_SA_CTO~Z`
