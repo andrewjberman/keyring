@@ -1303,11 +1303,21 @@ def main(argv: list[str]) -> int:
     # the push is legitimate) -- what changes is that the line can no longer be read as
     # evidence of a deploy. A gate that reports what it DID cannot be misquoted as reporting
     # what it did not.
+    # STOP: KEYED ON THE OUTCOME (`n_dep`), NEVER ON THE ENUMERATED CAUSES.
+    # CORRECTED 2026-08-27 by 1.0.0_SA_CTO~Z on 0.4.0_DS_ClientPlatform~W, who read this fix at
+    # SOURCE rather than trusting the author's claim that it worked. MY FIRST VERSION GATED ON
+    # `n_skip` -- i.e. on the ONE skip reason I had just fixed -- so a run where nothing deployed
+    # for ANY OTHER REASON still reached the else-branch and printed "all 0 file(s) deployed and
+    # verified": THE SAME VACUOUS UNIVERSAL, ONE BUCKET OVER. Other paths reach it -- `target is
+    # None` (:1192), SKIP-SECOND-TARGET-ABSENT (:1258), and the SERVE-HELD sentinel family.
+    # Enumerating skip reasons is the six-sites-when-there-are-eight error; `n_dep == 0` is true
+    # of every present and future one.
     n_dep, n_skip = len(deployed), len(skipped_not_member)
-    if n_skip and not n_dep:
-        print(f"OK: safe-deploy gate PASS -- 0 of {n_skip} deployed; "
-              f"{n_skip} SKIPPED (first-mint, 404). NOTHING WAS DEPLOYED.")
-        print("     The first-mint is an EXPLICIT act in the owning lane, never this gate:")
+    if not n_dep:
+        detail = f"; {n_skip} SKIPPED (first-mint, 404)" if n_skip else ""
+        print(f"OK: safe-deploy gate PASS -- 0 file(s) deployed{detail}. NOTHING WAS DEPLOYED.")
+        print("     This line is NOT evidence of a deploy. A first-mint is an EXPLICIT act in the")
+        print("     owning lane, never this gate. Measure the artifact, not this sentence.")
         for rel in skipped_not_member:
             print(f"       NOT DEPLOYED  {rel}")
     elif n_skip:
