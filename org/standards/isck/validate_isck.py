@@ -50,7 +50,7 @@ FIXTURES = {
     "entity_binding": {
         "record_type": "entity_binding", "binding_id": f"bind:{ULID_A}",
         "entity_serial": f"ent:{ULID_A}", "identity_space": "git",
-        "native_key": "portal/src/App.tsx", "fabric_scope": "fabric_invariant",
+        "native_key": "portal/src/App.tsx", "referent_scope": "fabric_invariant",
         "valid_from": "commit:9fc70e31a1", "valid_to": None,
         "binding_basis": "independently_observed", "status": "open",
         "evidence_refs": [f"obs:{ULID_A}"],
@@ -59,7 +59,7 @@ FIXTURES = {
         "record_type": "state_observation", "observation_id": f"obs:{ULID_A}",
         "entity_serial": f"ent:{ULID_A}", "identity_space": "git",
         "source_vintage": "commit:9fc70e31a1", "observed_at": TS,
-        "fabric_id": "laptop", "fabric_scope": "fabric_invariant",
+        "observed_on_fabric": "laptop", "referent_scope": "fabric_invariant",
         "failure_state": "observed",
         "fingerprint": SHA, "fingerprint_method": "sha256_raw_bytes",
         "normalization_version": "none_raw_v0",
@@ -96,8 +96,7 @@ FIXTURES = {
     "materialization_run": {
         "record_type": "materialization_run", "run_id": f"run:{ULID_A}",
         "materializer_serial": f"mat:{ULID_A}", "materializer_version_id": f"matv:{ULID_A}",
-        "source_frontier_id": f"sf:{ULID_A}", "fabric_id": "laptop",
-        "fabric_scope": "fabric_invariant",
+        "source_frontier_id": f"sf:{ULID_A}", "executed_on_fabric": "laptop",
         "started_at": TS, "completed_at": TS2, "run_status": "succeeded",
         "random_seeds": "not_applicable",
         "output_surface_version_ids": [f"sv:{ULID_A}"],
@@ -107,7 +106,7 @@ FIXTURES = {
         "entries": [{
             "source_serial": f"ent:{ULID_A}", "identity_space": "iceberg_table",
             "authority_ref": "nessie:main", "source_version": "snapshot:8601547680771488785",
-            "observed_at": TS, "fabric_id": "laptop",
+            "observed_at": TS, "observed_on_fabric": "laptop",
         }],
     },
     "surface_version": {
@@ -116,14 +115,14 @@ FIXTURES = {
         "content_digest": SHA, "fingerprint_method": "sha256_raw_bytes",
         "normalization_version": "none_raw_v0",
         "source_frontier_id": f"sf:{ULID_A}", "published_ref": None,
-        "built_at": TS, "fabric_id": "laptop",
+        "built_at": TS, "built_on_fabric": "laptop",
     },
     "coherence_evaluation": {
         "record_type": "coherence_evaluation", "evaluation_id": f"ce:{ULID_A}",
         "subject_ref": f"sv:{ULID_A}", "target_policy": "declared_release",
         "target_ref": "nessie:refs/tags/audit-baseline-2026-06-17",
         "evaluated_at": TS, "evaluator": "1.0.0_SA_CTO~X",
-        "fabric_id": "laptop", "availability": "available", "integrity": "verified",
+        "evaluated_on_fabric": "laptop", "availability": "available", "integrity": "verified",
         "currency": "at_target", "provenance": "complete",
         "fabric_validity": "valid_for_fabric",
         "evidence_refs": ["obs:" + ULID_A],
@@ -166,18 +165,26 @@ def _mutants():
         normalization_version=_DEL)
     add("observation.substrate-unavailable-carries-fingerprint", "state_observation",
         ["not"], failure_state="substrate_unavailable")
+    # R2-1 referent family, two-directional BY IDIOM on both carrying records
+    add("observation.invariant-with-referent-fabric", "state_observation", ["not"],
+        referent_fabric_id="laptop")
+    add("observation.fabric-local-without-fabric", "state_observation", ["required"],
+        referent_scope="fabric_local")
+    add("observation.fabric-local-with-device", "state_observation", ["not"],
+        referent_scope="fabric_local", referent_fabric_id="laptop",
+        referent_device_id="some-laptop")
+    add("observation.device-local-missing-device", "state_observation", ["required"],
+        referent_scope="device_local", referent_fabric_id="laptop")
+    add("binding.invariant-with-referent-fabric", "entity_binding", ["not"],
+        referent_fabric_id="laptop")
+    add("binding.fabric-local-without-fabric", "entity_binding", ["required"],
+        referent_scope="fabric_local")
+    add("run.missing-execution-fabric", "materialization_run", ["required"],
+        executed_on_fabric=_DEL)
     # LAW 3 intervals (DT-4)
     add("binding.missing-valid-from", "entity_binding", ["required"], valid_from=_DEL)
     add("binding.closed-null-valid_to", "entity_binding", ["type"], status="closed")
     # LAW 4 locality (DT-7 / DT-8)
-    add("binding.device-local-without-fabric", "entity_binding", ["required"],
-        fabric_scope="device_local")
-    add("binding.invariant-with-fabric", "entity_binding", ["not"], fabric_id="laptop")
-    add("observation.invariant-with-device", "state_observation", ["not"], device_id="some-laptop")
-    add("observation.missing-fabric", "state_observation", ["required"], fabric_id=_DEL)
-    add("run.missing-fabric", "materialization_run", ["required"], fabric_id=_DEL)
-    add("run.device-local-without-device", "materialization_run", ["required"],
-        fabric_scope="device_local")
     # LAW 5 frontier + coherence warrants (CV-3)
     add("frontier.empty-entries", "source_frontier", ["minItems"], entries=[])
     add("surface.missing-frontier", "surface_version", ["required"], source_frontier_id=_DEL)
@@ -219,11 +226,8 @@ def _mutants():
     # each built so ONLY its rule catches it, making every arm ablation-visible)
     add("relation.independently-observed-no-evidence", "identity_relation", ["required"],
         claim_origin="independently_observed", evidence_refs=_DEL)
-    add("run.invariant-with-device", "materialization_run", ["not"], device_id="some-laptop")
     add("observation.observed-with-nothing", "state_observation", ["required"],
         fingerprint=_DEL, fingerprint_method=_DEL, normalization_version=_DEL)
-    add("observation.device-local-without-device", "state_observation", ["required"],
-        fabric_scope="device_local", fabric_id="laptop")
     add("observation.normalization-alone", "state_observation", ["dependentRequired"],
         failure_state="partial", fingerprint=_DEL, fingerprint_method=_DEL)
     # R2-3 warrants (round-2 batch 1: CRO~X gap 2 + COO~X 76588)
@@ -451,7 +455,7 @@ def main():
 
     # AXIS ARM (76257): the ruled axes exist as $defs with exact closed domains.
     axes = {"claim_origin": 5, "verification_standing": 4, "registry_standing": 6,
-            "fabric_scope": 2}
+            "referent_scope": 3}
     axis_bad = []
     for axis, n in axes.items():
         d = schema.get("$defs", {}).get(axis)

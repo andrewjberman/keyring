@@ -93,15 +93,6 @@
         "inadmissible"
       ]
     },
-    "fabric_id": {
-      "$ref": "#/$defs/nonempty"
-    },
-    "fabric_scope": {
-      "enum": [
-        "fabric_invariant",
-        "device_local"
-      ]
-    },
     "entity": {
       "type": "object",
       "additionalProperties": false,
@@ -197,11 +188,11 @@
         "entity_serial",
         "identity_space",
         "native_key",
-        "fabric_scope",
         "valid_from",
         "valid_to",
         "binding_basis",
-        "status"
+        "status",
+        "referent_scope"
       ],
       "properties": {
         "record_type": {
@@ -219,12 +210,6 @@
         },
         "native_key": {
           "$ref": "#/$defs/nonempty"
-        },
-        "fabric_scope": {
-          "$ref": "#/$defs/fabric_scope"
-        },
-        "fabric_id": {
-          "$ref": "#/$defs/fabric_id"
         },
         "valid_from": {
           "$ref": "#/$defs/nonempty"
@@ -251,45 +236,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "referent_scope": {
+          "$ref": "#/$defs/referent_scope"
+        },
+        "referent_fabric_id": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "referent_device_id": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "allOf": [
-        {
-          "if": {
-            "properties": {
-              "fabric_scope": {
-                "const": "device_local"
-              }
-            },
-            "required": [
-              "fabric_scope"
-            ]
-          },
-          "then": {
-            "required": [
-              "fabric_id"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "fabric_scope": {
-                "const": "fabric_invariant"
-              }
-            },
-            "required": [
-              "fabric_scope"
-            ]
-          },
-          "then": {
-            "not": {
-              "required": [
-                "fabric_id"
-              ]
-            }
-          }
-        },
         {
           "if": {
             "properties": {
@@ -345,6 +303,82 @@
               "evidence_refs"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "referent_scope": {
+                "const": "fabric_invariant"
+              }
+            },
+            "required": [
+              "referent_scope"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "referent_fabric_id"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "referent_device_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "referent_scope": {
+                "const": "fabric_local"
+              }
+            },
+            "required": [
+              "referent_scope"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "referent_fabric_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "referent_device_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "referent_scope": {
+                "const": "device_local"
+              }
+            },
+            "required": [
+              "referent_scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "referent_fabric_id",
+              "referent_device_id"
+            ]
+          }
         }
       ]
     },
@@ -358,9 +392,9 @@
         "identity_space",
         "source_vintage",
         "observed_at",
-        "fabric_id",
-        "fabric_scope",
-        "failure_state"
+        "failure_state",
+        "observed_on_fabric",
+        "referent_scope"
       ],
       "properties": {
         "record_type": {
@@ -392,15 +426,6 @@
         "observed_at": {
           "$ref": "#/$defs/iso_ts"
         },
-        "fabric_id": {
-          "$ref": "#/$defs/fabric_id"
-        },
-        "fabric_scope": {
-          "$ref": "#/$defs/fabric_scope"
-        },
-        "device_id": {
-          "$ref": "#/$defs/nonempty"
-        },
         "fingerprint": {
           "$ref": "#/$defs/sha256"
         },
@@ -424,6 +449,21 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "observed_on_fabric": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "observed_on_device": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "referent_scope": {
+          "$ref": "#/$defs/referent_scope"
+        },
+        "referent_fabric_id": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "referent_device_id": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "dependentRequired": {
@@ -502,37 +542,77 @@
         {
           "if": {
             "properties": {
-              "fabric_scope": {
-                "const": "device_local"
+              "referent_scope": {
+                "const": "fabric_invariant"
               }
             },
             "required": [
-              "fabric_scope"
+              "referent_scope"
             ]
           },
           "then": {
-            "required": [
-              "device_id"
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "referent_fabric_id"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "referent_device_id"
+                  ]
+                }
+              }
             ]
           }
         },
         {
           "if": {
             "properties": {
-              "fabric_scope": {
-                "const": "fabric_invariant"
+              "referent_scope": {
+                "const": "fabric_local"
               }
             },
             "required": [
-              "fabric_scope"
+              "referent_scope"
             ]
           },
           "then": {
-            "not": {
-              "required": [
-                "device_id"
-              ]
-            }
+            "allOf": [
+              {
+                "required": [
+                  "referent_fabric_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "referent_device_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "referent_scope": {
+                "const": "device_local"
+              }
+            },
+            "required": [
+              "referent_scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "referent_fabric_id",
+              "referent_device_id"
+            ]
           }
         }
       ]
@@ -896,12 +976,11 @@
         "materializer_serial",
         "materializer_version_id",
         "source_frontier_id",
-        "fabric_id",
-        "fabric_scope",
         "started_at",
         "run_status",
         "random_seeds",
-        "output_surface_version_ids"
+        "output_surface_version_ids",
+        "executed_on_fabric"
       ],
       "properties": {
         "record_type": {
@@ -921,15 +1000,6 @@
         "source_frontier_id": {
           "type": "string",
           "pattern": "^sf:[0-9a-hjkmnp-tv-z]{26}$"
-        },
-        "fabric_id": {
-          "$ref": "#/$defs/fabric_id"
-        },
-        "fabric_scope": {
-          "$ref": "#/$defs/fabric_scope"
-        },
-        "device_id": {
-          "$ref": "#/$defs/nonempty"
         },
         "started_at": {
           "$ref": "#/$defs/iso_ts"
@@ -978,6 +1048,12 @@
         },
         "run_receipt_digest": {
           "$ref": "#/$defs/sha256"
+        },
+        "executed_on_fabric": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "executed_on_device": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "allOf": [
@@ -1025,42 +1101,6 @@
               }
             }
           }
-        },
-        {
-          "if": {
-            "properties": {
-              "fabric_scope": {
-                "const": "device_local"
-              }
-            },
-            "required": [
-              "fabric_scope"
-            ]
-          },
-          "then": {
-            "required": [
-              "device_id"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "fabric_scope": {
-                "const": "fabric_invariant"
-              }
-            },
-            "required": [
-              "fabric_scope"
-            ]
-          },
-          "then": {
-            "not": {
-              "required": [
-                "device_id"
-              ]
-            }
-          }
         }
       ]
     },
@@ -1092,7 +1132,7 @@
               "authority_ref",
               "source_version",
               "observed_at",
-              "fabric_id"
+              "observed_on_fabric"
             ],
             "properties": {
               "source_serial": {
@@ -1110,8 +1150,8 @@
               "observed_at": {
                 "$ref": "#/$defs/iso_ts"
               },
-              "fabric_id": {
-                "$ref": "#/$defs/fabric_id"
+              "observed_on_fabric": {
+                "$ref": "#/$defs/nonempty"
               }
             }
           }
@@ -1131,7 +1171,7 @@
         "normalization_version",
         "source_frontier_id",
         "built_at",
-        "fabric_id"
+        "built_on_fabric"
       ],
       "properties": {
         "record_type": {
@@ -1177,8 +1217,8 @@
         "built_at": {
           "$ref": "#/$defs/iso_ts"
         },
-        "fabric_id": {
-          "$ref": "#/$defs/fabric_id"
+        "built_on_fabric": {
+          "$ref": "#/$defs/nonempty"
         }
       }
     },
@@ -1193,7 +1233,7 @@
         "target_ref",
         "evaluated_at",
         "evaluator",
-        "fabric_id",
+        "evaluated_on_fabric",
         "availability",
         "integrity",
         "currency",
@@ -1231,9 +1271,6 @@
         },
         "evaluator": {
           "$ref": "#/$defs/nonempty"
-        },
-        "fabric_id": {
-          "$ref": "#/$defs/fabric_id"
         },
         "availability": {
           "enum": [
@@ -1276,6 +1313,9 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "evaluated_on_fabric": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "allOf": [
@@ -1337,6 +1377,13 @@
             ]
           }
         }
+      ]
+    },
+    "referent_scope": {
+      "enum": [
+        "fabric_invariant",
+        "fabric_local",
+        "device_local"
       ]
     }
   }

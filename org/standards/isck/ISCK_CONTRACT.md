@@ -30,10 +30,20 @@ closes and the version is pinned.
    carry validity intervals; `closed` requires a close instant (DT-4). ⛔ **APPEND-ONLY HAS NO
    ENFORCEMENT PLANE AT v0.1** (CV-2): the validator is stateless and cannot see mutation — see §6
    limit 6. Succession/reconciliation relations carry warrant conditionals (F5).
-4. **RULE 26 IS METADATA, ONE MODEL, THREE RECORDS.** `fabric_scope` is the SAME discriminant on
-   entity_binding, state_observation, and materialization_run (DT-8): `device_local` requires the
-   device/fabric key; `fabric_invariant` FORBIDS it (DT-7) — a record may not claim
-   fabric-invariance and name a fabric in the same breath.
+4. **RULE 26 IS METADATA, AND LOCATION IS TWO FAMILIES, NOT ONE FIELD** (R2-1, the convergent
+   round-2 finding — GPT + CRO~X gap 1, independent instruments). **EXECUTION family**:
+   `observed_on_fabric` / `executed_on_fabric` / `built_on_fabric` / `evaluated_on_fabric`
+   (+ optional `*_device`) — where the act happened; always concrete, always legal to state.
+   **REFERENT family**: `referent_scope` (`fabric_invariant | fabric_local | device_local`,
+   `fabric_local` NEW) + `referent_fabric_id` / `referent_device_id` — what locality the
+   REFERENCED STATE claims; constrained TWO-DIRECTIONALLY BY THE IDIOM (every require arm ships
+   with its forbid mirror — the DT-R2-1 family rule): invariant forbids both keys, fabric_local
+   requires the fabric and forbids the device, device_local requires both. A run is an EVENT at a
+   location and carries execution only — its inputs carry their own scopes, and reconciling the
+   two is 3B's fabric_validity axis. The old single `fabric_id` could not say "observed on the
+   laptop, about a fabric-invariant referent" without lying in one direction (the round-1
+   invariant fixtures did exactly that — the positive battery enshrined the contradiction, both
+   reviews' words).
 5. **PROVENANCE IS A FRONTIER; COHERENCE VERDICTS CARRY THEIR WARRANT.** Every run consumes a
    `source_frontier`; every surface version pins frontier + materializer version. A coherence
    evaluation asserting `verified`/`mismatch`/a currency verdict REQUIRES evidence; `mismatch`
@@ -106,6 +116,12 @@ member — merged-away → `retired` + `canonicalized_as` set. GRAIN: entity. IN
 lifecycle. STATE-COHERENCE: `provisional` moves by reconciliation (minting authority);
 `contested` moves by adjudication (named adjudicator); `retired` terminal; `active` degrades only
 via succession relations.
+ARM TABLE (batch 2; CRO~X synchronization finding): `contested -> adjudicated_by REQUIRED` (owner:
+the adjudicator; the record carries WHO is adjudicating, and SHOULD carry `evidence_refs` for the
+contest basis — evidence is recommended, not arm-required, because a contest can open before its
+evidence is assembled and forcing it would manufacture prose). Cross-field semantic arm:
+`canonicalized_as` set -> status must be `retired | contested` (a canonicalized entity is never
+active/provisional).
 
 ### 3.5 `entity_binding.status` — `open | closed | disputed`
 DOMAIN: whether a source-native reference currently denotes the entity. MECE: hunted member —
@@ -129,13 +145,17 @@ method ran) · `partial -> fingerprint OPTIONAL but the three-field coupling bin
 dependentRequired` (partial legitimately fingerprints what it could see — WITH its method and
 normalization, per the CRLF law).
 
-### 3.7 `fabric_scope` — `fabric_invariant | device_local` (shared discriminant, three records — DT-8)
-DOMAIN: whether the referenced state/reference is bound to one device or holds fabric-wide. MECE
-over locality; hunted member — fabric-scoped-but-multi-device (e.g. shared NAS) → out of scope at
-v0.1, declared here rather than silently absorbed. GRAIN: per record. INTENT: Rule 26 locality.
-STATE-COHERENCE: not a state axis (structural classification).
-ARM TABLE: `device_local -> fabric_id/device_id required` (owner: writer) · `fabric_invariant ->
-that key FORBIDDEN` (DT-7 — invariant-with-a-fabric is a contradiction wearing valid syntax).
+### 3.7 `referent_scope` — `fabric_invariant | fabric_local | device_local` (R2-1; supersedes `fabric_scope`)
+DOMAIN: the locality the REFERENCED STATE claims (never where the act ran — that is the execution
+family). MECE: `fabric_local` ADDED (GPT review) — the round-1 hunted member
+"fabric-scoped-but-multi-device" now has its cell instead of an out-of-scope note. GRAIN:
+referent, per record (entity_binding + state_observation; runs carry NO referent scope — an event
+has a location, not a locality claim). INTENT: Rule 26 locality of the referent, one axis.
+STATE-COHERENCE: structural classification, no remedy axis.
+ARM TABLE (two-directional BY IDIOM): `fabric_invariant -> referent_fabric_id AND
+referent_device_id FORBIDDEN` · `fabric_local -> referent_fabric_id REQUIRED, referent_device_id
+FORBIDDEN` · `device_local -> both REQUIRED` (owner: the writer; a scope claim carries exactly the
+keys its locality needs, no more).
 
 ### 3.8 `materializer.current_status` — `active | superseded | retired | unknown`
 DOMAIN: standing of a logical process identity. MECE: `unknown` is the honest cell (L0's own
