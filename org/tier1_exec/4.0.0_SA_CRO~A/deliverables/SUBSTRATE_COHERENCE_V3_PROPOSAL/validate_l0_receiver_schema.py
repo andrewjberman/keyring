@@ -30,27 +30,65 @@ def rejected(validator: Draft202012Validator, document: dict) -> bool:
     return bool(list(validator.iter_errors(document)))
 
 
+def resolve_local_ref(schema: dict, node: dict) -> dict:
+    """Resolve the schema-local $defs references used by enum contracts."""
+    ref = node.get("$ref")
+    if ref is None:
+        return node
+    prefix = "#/$defs/"
+    if not ref.startswith(prefix) or "/" in ref[len(prefix):]:
+        raise ValueError(f"unsupported enum contract reference: {ref}")
+    return schema["$defs"][ref[len(prefix):]]
+
+
+def count_pattern(schema_fragment: object, pattern: str) -> int:
+    if isinstance(schema_fragment, dict):
+        own = int(schema_fragment.get("pattern") == pattern)
+        return own + sum(count_pattern(value, pattern) for value in schema_fragment.values())
+    if isinstance(schema_fragment, list):
+        return sum(count_pattern(value, pattern) for value in schema_fragment)
+    return 0
+
+
 def enum_contract_errors(schema: dict) -> list[str]:
     errors: list[str] = []
     properties = schema["$defs"]["part"]["properties"]
     enum_paths = {
         "grain.claim_status": properties["grain"]["properties"]["claim_status"],
+        "grain.basis": properties["grain"]["properties"]["basis"],
         "key.claim_status": properties["key"]["properties"]["claim_status"],
         "key.key_is_stable": properties["key"]["properties"]["key_is_stable"],
+        "key.basis": properties["key"]["properties"]["basis"],
         "failure_mode.claim_status": properties["failure_mode"]["properties"]["claim_status"],
         "failure_mode.distinguishable_from_true_negative": properties["failure_mode"]["properties"]["distinguishable_from_true_negative"],
+        "failure_mode.basis": properties["failure_mode"]["properties"]["basis"],
+        "member_set.basis": properties["member_set"]["properties"]["basis"],
     }
     for path, node in enum_paths.items():
-        if "x-rule24" not in node and "x-rule24-record-at" not in node:
+        try:
+            contract = resolve_local_ref(schema, node)
+        except (KeyError, ValueError) as exc:
+            errors.append(f"{path}: unresolved enum contract reference: {exc}")
+            continue
+        if "x-rule24" not in contract and "x-rule24-record-at" not in contract:
             errors.append(f"{path}: missing Rule-24 record or reuse pointer")
             continue
         audit_text = json.dumps(
-            {"description": node.get("description"), "x-rule24": node.get("x-rule24")},
+            {
+                "description": node.get("description"),
+                "x-enum-definitions": contract.get("x-enum-definitions"),
+                "x-rule24": contract.get("x-rule24"),
+            },
             sort_keys=True,
         )
-        for value in node["enum"]:
+        definitions = contract.get("x-enum-definitions", {})
+        for value in contract["enum"]:
             if isinstance(value, str) and value not in audit_text:
                 errors.append(f"{path}: value {value!r} has no schema-local semantics")
+            if isinstance(value, str) and "$ref" in node and not isinstance(definitions.get(value), str):
+                errors.append(f"{path}: value {value!r} lacks an x-enum-definitions entry")
+            if value is None and "null_semantics" not in contract.get("x-rule24", {}):
+                errors.append(f"{path}: admitted null lacks explicit structural-sentinel semantics")
     return errors
 
 
@@ -63,6 +101,58 @@ def main() -> int:
     failures: list[str] = []
     if rejected(validator, manifest):
         failures.append("current 42-part manifest rejected")
+
+    expected_held_unbuilt_parts = {
+        "affinity_matrix",
+        "identity_and_succession",
+        "similarity_network_fusion",
+    }
+    unbuilt_parts = {part["id"]: part for part in manifest["parts"] if part["id"] in expected_held_unbuilt_parts}
+    if set(unbuilt_parts) != expected_held_unbuilt_parts:
+        failures.append("current manifest does not contain the exact three governed unbuilt parts")
+    for part_id, part in unbuilt_parts.items():
+        if part.get("basis") != "held":
+            failures.append(f"live unbuilt part {part_id} does not use held basis")
+        if part.get("home_space") != "none" or part.get("home") != "NONE":
+            failures.append(f"live unbuilt part {part_id} does not carry home_space=none and home=NONE")
+    absent_part = copy.deepcopy(manifest)
+    absent_part["parts"][0]["basis"] = "absent"
+    if not rejected(validator, absent_part):
+        failures.append("production part accepted absent basis without an outer unknown claim")
+
+    final_receiver_fields = {"home_space", "grain", "key", "failure_mode"}
+    part_contract = schema["$defs"]["part"]
+    missing_required = final_receiver_fields - set(part_contract["required"])
+    if missing_required:
+        failures.append(f"final part contract does not require {sorted(missing_required)}")
+    missing_by_field = {
+        field: [part["id"] for part in manifest["parts"] if field not in part]
+        for field in sorted(final_receiver_fields)
+    }
+    for field, part_ids in missing_by_field.items():
+        if part_ids:
+            sample = part_ids[:5]
+            failures.append(
+                f"final manifest lacks {field} on {len(part_ids)} part(s); "
+                f"sample={sample}"
+            )
+    if part_contract["properties"]["basis"].get("$ref") != "#/$defs/basis_present":
+        failures.append("part.basis is not mechanically bound to basis_present")
+    denominator_contract = schema["properties"]["denominator"]
+    if "parts_registered" in manifest["denominator"]:
+        failures.append("current manifest still carries retired parts_registered")
+    if "parts_registered" in denominator_contract.get("properties", {}):
+        failures.append("shared schema still admits retired parts_registered")
+
+    legacy_denominator_phrases = (
+        "3 are SET rows covering 14 member objects",
+        "47 DISTINCT OBJECTS",
+        "6-member SET row",
+    )
+    denominator_method = manifest["denominator"]["method"]
+    for phrase in legacy_denominator_phrases:
+        if phrase in denominator_method:
+            failures.append(f"denominator method retains withdrawn population claim {phrase!r}")
 
     unknown = {
         "grain": {
@@ -126,11 +216,16 @@ def main() -> int:
             failures.append(f"declared {receiver} accepted absent basis")
 
         for metadata_field in ("evidence", "owner"):
-            for invalid_value in (None, ""):
+            for invalid_value in (None, "", " ", "\t"):
                 bad_metadata = copy.deepcopy(declared[receiver])
                 bad_metadata[metadata_field] = invalid_value
                 if not rejected(validator, receiver_document(manifest, receiver, bad_metadata)):
                     failures.append(f"declared {receiver} accepted {metadata_field}={invalid_value!r}")
+
+                bad_unknown_metadata = copy.deepcopy(unknown[receiver])
+                bad_unknown_metadata[metadata_field] = invalid_value
+                if not rejected(validator, receiver_document(manifest, receiver, bad_unknown_metadata)):
+                    failures.append(f"unknown {receiver} accepted {metadata_field}={invalid_value!r}")
 
         extra = copy.deepcopy(declared[receiver])
         extra["undeclared_semantic"] = True
@@ -149,7 +244,129 @@ def main() -> int:
             if not rejected(validator, receiver_document(manifest, receiver, bad)):
                 failures.append(f"declared {receiver} accepted null {field}")
 
+    for invalid_mapping in (None, "", " ", "\t"):
+        bad_cross_space_mapping = copy.deepcopy(declared["key"])
+        bad_cross_space_mapping["crosses_spaces"] = True
+        bad_cross_space_mapping["declared_mapping"] = invalid_mapping
+        if not rejected(validator, receiver_document(manifest, "key", bad_cross_space_mapping)):
+            failures.append(f"declared cross-space key accepted mapping={invalid_mapping!r}")
+    for invalid_same_space_mapping in ("map", "", " "):
+        bad_same_space_mapping = copy.deepcopy(declared["key"])
+        bad_same_space_mapping["crosses_spaces"] = False
+        bad_same_space_mapping["declared_mapping"] = invalid_same_space_mapping
+        if not rejected(validator, receiver_document(manifest, "key", bad_same_space_mapping)):
+            failures.append(f"declared same-space key accepted mapping={invalid_same_space_mapping!r}")
+
+    for invalid_path in ("", " ", "\t"):
+        bad_silent_path = copy.deepcopy(declared["failure_mode"])
+        bad_silent_path["silent_degrade_paths"] = [invalid_path]
+        if not rejected(validator, receiver_document(manifest, "failure_mode", bad_silent_path)):
+            failures.append(f"declared failure mode accepted silent path={invalid_path!r}")
+
+    legal_member_set = {
+        "enumerable": True,
+        "members": ["artifact:a", "artifact:b"],
+        "basis": "measured",
+        "evidence": "fixture:member-set",
+        "owner": "4.0.0_SA_CRO~A",
+    }
+    if rejected(validator, receiver_document(manifest, "member_set", legal_member_set)):
+        failures.append("legal two-member member_set rejected")
+    legal_runtime_family = {
+        "enumerable": False,
+        "pattern": "artifact.tmp.<pid>.<monotonic_ns>.<counter>",
+        "pattern_source_home": "producer.py",
+        "pattern_source_line": 42,
+        "basis": "measured",
+        "evidence": "fixture:runtime-family",
+        "owner": "4.0.0_SA_CRO~A",
+    }
+    if rejected(validator, receiver_document(manifest, "member_set", legal_runtime_family)):
+        failures.append("legal runtime-pattern member_set rejected")
+    member_set_mutants = {
+        "one member": {**legal_member_set, "members": ["artifact:a"]},
+        "absent basis": {**legal_member_set, "basis": "absent"},
+        "whitespace evidence": {**legal_member_set, "evidence": " "},
+        "whitespace owner": {**legal_member_set, "owner": "\t"},
+        "empty members": {**legal_member_set, "members": []},
+        "duplicate members": {**legal_member_set, "members": ["artifact:a", "artifact:a"]},
+        "stored cardinality": {**legal_member_set, "cardinality": 2},
+        "stored null cardinality": {**legal_runtime_family, "cardinality": None},
+        "stored derivation": {**legal_member_set, "derivation": "length(members)"},
+        "stored count": {**legal_member_set, "count": 2},
+        "pattern in enumerable branch": {**legal_member_set, "pattern": "artifact.*", "pattern_source_home": "producer.py", "pattern_source_line": 42},
+        "members in runtime branch": {**legal_runtime_family, "members": ["artifact:a", "artifact:b"]},
+        "runtime absent basis": {**legal_runtime_family, "basis": "absent"},
+        "runtime whitespace pattern": {**legal_runtime_family, "pattern": " "},
+        "runtime mixed normalized and f-string pattern": {**legal_runtime_family, "pattern": "x.<pid>.{mono}"},
+        "runtime whitespace source home": {**legal_runtime_family, "pattern_source_home": "\t"},
+        "runtime embedded-space source home": {**legal_runtime_family, "pattern_source_home": "producer file.py"},
+        "runtime trailing-LF source home": {**legal_runtime_family, "pattern_source_home": "producer.py\n"},
+        "runtime trailing-CR source home": {**legal_runtime_family, "pattern_source_home": "producer.py\r"},
+        "runtime trailing-CRLF source home": {**legal_runtime_family, "pattern_source_home": "producer.py\r\n"},
+        "runtime S3 source home": {**legal_runtime_family, "pattern_source_home": "s3://bucket/producer.py"},
+        "runtime HTTPS source home": {**legal_runtime_family, "pattern_source_home": "https://example/producer.py"},
+        "runtime zero source line": {**legal_runtime_family, "pattern_source_line": 0},
+        "runtime negative source line": {**legal_runtime_family, "pattern_source_line": -1},
+        "runtime string source line": {**legal_runtime_family, "pattern_source_line": "42"},
+        "runtime fractional source line": {**legal_runtime_family, "pattern_source_line": 1.5},
+        "retired compound source": {**legal_runtime_family, "pattern_source": "producer.py:42"},
+    }
+    for mutant_name, mutant in member_set_mutants.items():
+        if not rejected(validator, receiver_document(manifest, "member_set", mutant)):
+            failures.append(f"member_set accepted {mutant_name}")
+    for required_field in ("enumerable", "pattern", "pattern_source_home", "pattern_source_line", "basis", "evidence", "owner"):
+        missing = copy.deepcopy(legal_runtime_family)
+        missing.pop(required_field)
+        if not rejected(validator, receiver_document(manifest, "member_set", missing)):
+            failures.append(f"runtime member_set accepted omitted {required_field}")
+    colon_in_home = copy.deepcopy(legal_runtime_family)
+    colon_in_home["pattern_source_home"] = "_canonical.py:288"
+    if rejected(validator, receiver_document(manifest, "member_set", colon_in_home)):
+        failures.append("runtime member_set rejected legitimate colon in source home")
+
+    for home_space in ("repo_path", "db_path"):
+        https_home = copy.deepcopy(manifest)
+        https_home["parts"][0]["home_space"] = home_space
+        https_home["parts"][0]["home"] = "https://example/x"
+        if not rejected(validator, https_home):
+            failures.append(f"{home_space} accepted HTTPS URI home")
+    uri_scheme_pattern = r"^[A-Za-z][A-Za-z0-9+.\-]*://"
+    uri_scheme_authority_count = count_pattern(schema, uri_scheme_pattern)
+    if uri_scheme_authority_count != 1:
+        failures.append(
+            "URI-scheme exclusion is not localized to one schema authority "
+            f"(found {uri_scheme_authority_count})"
+        )
+
+    basis_drift_schema = copy.deepcopy(schema)
+    basis_drift_schema["$defs"]["basis_present"]["enum"] = ["measured", "inferred"]
+    basis_drift_schema["$defs"]["basis_present"]["x-enum-definitions"].pop("held")
+    basis_drift_validator = Draft202012Validator(basis_drift_schema)
+    for receiver, value in declared.items():
+        held_value = copy.deepcopy(value)
+        held_value["basis"] = "held"
+        if not rejected(basis_drift_validator, receiver_document(manifest, receiver, held_value)):
+            failures.append(f"declared {receiver} did not follow narrowed basis_present reference")
+    held_member_set = copy.deepcopy(legal_member_set)
+    held_member_set["basis"] = "held"
+    if not rejected(basis_drift_validator, receiver_document(manifest, "member_set", held_member_set)):
+        failures.append("member_set did not follow narrowed basis_present reference")
+
     failures.extend(enum_contract_errors(schema))
+    rule24_mutants = {}
+    missing_rule24 = copy.deepcopy(schema)
+    missing_rule24["$defs"]["basis_full"].pop("x-rule24")
+    rule24_mutants["basis_full without Rule-24 record"] = missing_rule24
+    missing_definition = copy.deepcopy(schema)
+    missing_definition["$defs"]["basis_full"]["x-enum-definitions"].pop("held")
+    rule24_mutants["basis_full without held definition"] = missing_definition
+    broken_ref = copy.deepcopy(schema)
+    broken_ref["$defs"]["part"]["properties"]["member_set"]["properties"]["basis"]["$ref"] = "#/$defs/missing_basis"
+    rule24_mutants["member_set with unresolved basis reference"] = broken_ref
+    for mutant_name, mutant_schema in rule24_mutants.items():
+        if not enum_contract_errors(mutant_schema):
+            failures.append(f"Rule-24 audit accepted {mutant_name}")
     descriptions = " ".join(
         schema["$defs"]["part"]["properties"][name].get("description", "")
         for name in ("grain", "key", "failure_mode")
@@ -164,6 +381,8 @@ def main() -> int:
         return 1
     print("PASS: L0 receiver schema compatibility and adversarial controls")
     print("PASS: declared/unknown presence, value, metadata, exact-closure, and Rule-24 enum controls")
+    print(f"PASS: Rule-24 audit mutants rejected {len(rule24_mutants)}/{len(rule24_mutants)}")
+    print("PASS: Base round-6 part-basis, address-space, and mechanical-drift controls")
     return 0
 
 

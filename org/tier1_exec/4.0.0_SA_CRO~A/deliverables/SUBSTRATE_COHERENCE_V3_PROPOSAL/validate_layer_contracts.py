@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 
@@ -8,8 +9,10 @@ import jsonschema
 
 
 ROOT = Path(__file__).resolve().parent
+WORKSPACE = Path(__file__).resolve().parents[5]
 SCHEMA = ROOT / "schemas" / "layer_contracts_and_checkpoints.v1.schema.json"
 DOCUMENT = ROOT / "layer_contracts_and_checkpoints.v1.json"
+L0_MANIFEST = WORKSPACE / "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"
 LAYERS = ["L0", "L1", "L2", "L3", "L4"]
 CHECKPOINTS = ["CP-L0-L1", "CP-L1-L2", "CP-L2-L3", "CP-L3-L4", "CP-L4-DONE"]
 EXECUTABLE_NOW = {"L0", "L2_STRUCTURE", "L2_BEHAVIOR"}
@@ -131,52 +134,172 @@ def semantic_errors(document: dict) -> list[str]:
         or not receiver_grain["grain_settled"]
     ):
         errors.append("card trust may reach PART only through exact subject-resource identity")
-    projection = receiver_grain["measured_projection_baseline"]
-    if (
-        projection["trust_cards"] != 51
-        or projection["manifest_parts"] != 42
-        or projection["raw_exact_subject_id_matches"] != 5
-        or projection["cards_rejected_as_ambiguous"] != 2
-        or projection["unambiguous_projected_parts"] != 3
-        or projection["card_residue"] != 48
-        or projection["unambiguous_projected_parts"] + projection["card_residue"] != projection["trust_cards"]
-    ):
-        errors.append("exact receiver projection must report the 3 populated and 48 residue cards together")
     landing = receiver_grain["landing_sequence"]
-    part_population = landing["post_rerun_part_population"]
-    card_population = landing["post_rerun_card_population"]
+    retirement = landing["parts_registered_retirement_sequence"]
+    receiver_population = landing["post_rerun_receiver_population"]
+    card_population = landing["admitted_card_population"]
     if (
         landing["strategy"] != "receiver_before_join"
         or landing["schema_change"] != "additive_optional"
-        or part_population["declared"] + part_population["unknown"] != part_population["total"]
-        or card_population["projected"] + card_population["residue"] != card_population["total"]
+        or retirement != {
+            "generator_write_sites_removed": True,
+            "committed_manifest_field_present": True,
+            "shared_schema_property_present": True,
+            "next_required_act": "generator_rerun_after_shared_schema_pass",
+            "final_required_act": "remove_schema_property_after_emitted_manifest_validation",
+            "hand_edit_manifest_prohibited": True,
+        }
+        or receiver_population["total_parts"] != 42
+        or receiver_population["admitted_exact_subject_matches"] != 0
+        or any(
+            receiver_population[field]["declared"] + receiver_population[field]["unknown"]
+            != receiver_population["total_parts"]
+            for field in ("grain", "key", "failure_mode")
+        )
+        or any(
+            receiver_population[field] != {"declared": 0, "unknown": 42}
+            for field in ("grain", "key", "failure_mode")
+        )
+        or card_population != {
+            "source_glob": "org/**/D11_CARDS_W3/*.json",
+            "total": 13,
+            "exact_subject_matches": 0,
+            "receiver_residue": 13,
+        }
         or landing["unknown_satisfies_operative_completeness"]
         or landing["future_mapping_effect"] != "unknown_to_declared_enrichment"
     ):
         errors.append("receiver must land additively before the join while unknown remains non-complete")
     remediation = landing["unknown_remediation_population"]
     class_census = remediation["part_class_census"]
-    resolution_partition = remediation["resolution_method_partition"]
+    queue_classifier = remediation["operational_queue_classifier"]
+    queue_partition = queue_classifier["queue_partition"]
+    boundary = remediation["population_boundary"]
+    remote = remediation["remote_uri_denominators"]
+    remote_instrument = remediation["remote_uri_instrument"]
+    member_set = remediation["member_set_contract"]
+    brace_census = remediation["brace_part_census"]
+    runtime_family = remediation["runtime_named_family_contract"]
+    parent_manifest = load(L0_MANIFEST)
+    parent_ids = {part["id"] for part in parent_manifest["parts"]}
+    parent_sha256 = hashlib.sha256(L0_MANIFEST.read_bytes()).hexdigest()
+    excluded_ids = set(boundary["excluded_exact_part_ids"])
+    remote_manifest_ids = set(remote["remote_uri_manifest_part_ids"])
+    remote_residue_ids = set(remote["residue_remote_uri_part_ids"])
+    actual_remote_ids = {part["id"] for part in parent_manifest["parts"] if part["home"].startswith("s3://")}
     if (
         remediation["source"] != "manifest_parts_with_unknown_receiver"
-        or remediation["total"] != part_population["unknown"]
+        or remediation["total"] != receiver_population["grain"]["unknown"]
+        or boundary["parent_document_home"] != L0_MANIFEST.relative_to(WORKSPACE).as_posix()
+        or boundary["parent_sha256"] != parent_sha256
+        or excluded_ids
+        or not excluded_ids <= parent_ids
+        or len(parent_ids) != remediation["total"]
+        or boundary["operation"] != "identity"
         or sum(class_census.values()) != remediation["total"]
-        or sum(resolution_partition.values()) != remediation["total"]
+        or sum(queue_partition.values()) != remediation["total"]
         or remediation["resolution_grain"] != "per_part"
         or set(remediation["prohibited_resolution_proxies"]) != {"part_class", "filesystem_path_exists"}
         or set(remediation["subject_semantic_partitions_required"]) != {"materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"}
-        or resolution_partition != {"file_resolves": 21, "remote_uri": 12, "brace_pattern": 3, "unbuilt_future_layer": 3, "path_shaped_but_absent": 0}
+        or queue_classifier["precedence"] != ["unbuilt_future_layer", "brace_expression", "remote_s3_uri", "local_file_path", "path_shaped_absent"]
+        or queue_classifier["assignment_rule"] != "first_matching_class_only"
+        or set(queue_classifier["required_independent_axes"]) != {"locator_form", "realization_state", "enumerability_state"}
+        or queue_partition != {"file_resolves": 22, "remote_uri": 14, "brace_pattern": 3, "unbuilt_future_layer": 3, "path_shaped_but_absent": 0}
         or remediation["partition_controls"] != {"known_present": True, "known_absent": False}
-        or remediation["cardable_candidate_total"] != remediation["total"] - resolution_partition["unbuilt_future_layer"]
+        or remote_manifest_ids != actual_remote_ids
+        or remote_residue_ids != actual_remote_ids - excluded_ids
+        or len(remote_residue_ids) != queue_partition["remote_uri"]
+        or remote["arn_scheme_part_ids"] != []
+        or remote["predicate"] != "home_starts_s3_scheme"
+        or remote_instrument["result_field"] != "KeyCount"
+        or not remote_instrument["same_bucket_positive_control_required"]
+        or not remote_instrument["head_object_alone_prohibited"]
+        or remote_instrument["execution_state"] != "not_run"
+        or remediation["cardable_candidate_total"] != remediation["total"] - queue_partition["unbuilt_future_layer"]
         or set(remediation["unbuilt_future_layer_ids"]) != {"affinity_matrix", "similarity_network_fusion", "identity_and_succession"}
         or remediation["unbuilt_disposition"] != "exclude_never_manufacture_substrate"
-        or remediation["brace_pattern_part_count"] != resolution_partition["brace_pattern"]
-        or remediation["brace_pattern_expanded_artifact_count"] != 11
-        or remediation["brace_pattern_disposition"] != "explicit_mapping_residue"
-        or set(remediation["unresolved_cut_preconditions"]) != {"name_remote_uri_instrument", "map_owner_rules_brace_fanout"}
+        or remediation["brace_pattern_part_count"] != queue_partition["brace_pattern"]
+        or remediation["brace_pattern_syntactic_expansion_count"] != 14
+        or remediation["brace_pattern_syntactic_expansion_role"] != "parser_control_not_population"
+        or brace_census != {"stable_enumerable": 2, "runtime_named_non_enumerable": 1}
+        or sum(brace_census.values()) != remediation["brace_pattern_part_count"]
+        or remediation["enumerated_member_evidence"] != {"stable_family_member_count": 8}
+        or remediation["brace_correction_evidence"] != {"withdrawn_syntactic_member_claim_count": 6, "reason": "runtime_named_instances_do_not_form_a_durable_member_population"}
+        or remediation["brace_pattern_disposition"] != "split_by_enumerability"
+        or runtime_family != {"part_id": "kuzu_nessie_db.rebuild.tmp.SET", "disposition": "declared_pattern_non_enumerable", "population_status": "orphaned", "pattern_representation": "normalized_semantic_family_template", "normalized_pattern": "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>", "pattern_source_home": "infra/aws/globgrph/_canonical.py", "pattern_source_line": 288, "pattern_source_git_commit": "17eb3fa310ae04b7cb8ca55cfde8f801f34e8c04", "pattern_source_git_blob": "7867f1a0a88dab0c9e1e273d794e5901d0aade48", "pattern_source_sha256": "edaa00ae4617f06b07932f8706c20fbbe0482ee610f8854ac1f7d591a1dd601c", "observation_count_is_population": False}
+        or not member_set["enumerability_axis_required"]
+        or not member_set["stored_cardinality_prohibited"]
+        or member_set["enumerable_shape"] != {"members_required": True, "minimum_members": 2, "cardinality_derivation": "length(members)", "recursive_expansion_required": True}
+        or member_set["non_enumerable_shape"] != {"pattern_required": True, "pattern_source_home_required": True, "pattern_source_line_required": True, "members_field_prohibited": True, "cardinality_field_prohibited": True}
+        or not member_set["shared_schema_receiver_present"]
+        or member_set["shared_schema_validation_state"] not in {"not_run", "failed", "passed"}
+        or member_set["interim_prose_is_complete"]
+        or set(remediation["resolved_preconditions"]) != {"remote_uri_instrument_named", "map_owner_runtime_family_disposition"}
+        or remediation["unresolved_preconditions"] != []
+        or set(remediation["remaining_contract_gaps"]) != {"shared_schema_validation", "compiler_validation"}
         or remediation["wave_cut_ready"]
     ):
-        errors.append("39-part remediation must preserve independent subject and resolution partitions before wave cut")
+        errors.append("42-part unknown-receiver population must preserve independent field, subject, and resolution partitions before wave cut")
+
+    pattern_source = WORKSPACE / runtime_family["pattern_source_home"]
+    pattern_source_bytes = pattern_source.read_bytes()
+    git_blob_digest = hashlib.sha1(
+        b"blob " + str(len(pattern_source_bytes)).encode("ascii") + b"\0" + pattern_source_bytes
+    ).hexdigest()
+    source_lines = pattern_source_bytes.decode("utf-8").splitlines()
+    source_line = source_lines[runtime_family["pattern_source_line"] - 1].strip()
+    if (
+        hashlib.sha256(pattern_source_bytes).hexdigest() != runtime_family["pattern_source_sha256"]
+        or git_blob_digest != runtime_family["pattern_source_git_blob"]
+        or source_line
+        != 'return f"{base}.rebuild.tmp.{os.getpid()}.{time.monotonic_ns()}.{next(_UNIQ)}"'
+    ):
+        errors.append("runtime family normalized pattern must remain bound to the pinned producer bytes and line")
+
+    l1_baseline = document["design_measurements"]["l1_identity_and_population_baseline"]
+    firm_identity = l1_baseline["firm_qualified_symbol_identity"]
+    population_basis = l1_baseline["population_basis"]
+    discrimination = l1_baseline["coverage_discrimination"]
+    denominators = population_basis["denominator_contracts"]
+    lane_delivery = l1_baseline["lane_delivery"]
+    if (
+        firm_identity["raw_join_count"] != 0
+        or firm_identity["lossy_parse_join_count"] != 1331
+        or firm_identity["parse"] != "strip_pipeline_firm_prefix"
+        or set(firm_identity["firm_values"]) != {"bd", "inf", "mdpf"}
+        or firm_identity["bare_gold_target_count"] != 3
+        or not firm_identity["firm_must_remain_in_identity"]
+    ):
+        errors.append("firm-qualified symbol identity must reject lossy prefix-strip canonicalization")
+    if (
+        population_basis["prd_claimed_is_denominator"]
+        or population_basis["single_substrate_sweep_signatures"]["arn_resource"]["prd_claimed_count"]
+        != population_basis["single_substrate_sweep_signatures"]["arn_resource"]["matching_substrate_count"]
+        or population_basis["single_substrate_sweep_signatures"]["chain_motif"]["prd_claimed_count"]
+        != population_basis["single_substrate_sweep_signatures"]["chain_motif"]["matching_substrate_count"]
+        or population_basis["observed_cross_store_union_counts"]["semantic_role"]
+        != "evidence_only_not_population_denominator"
+        or population_basis["symbol_prd_provenance"] != "unresolved"
+        or population_basis["file_prd_claim_source"] != "co_change_corpus"
+        or denominators["file"] != {"denominator_status": "adjudicated", "count": 374, "source_population_refs": ["filesystem_sweep"], "exclusions": []}
+        or any(denominators[space]["denominator_status"] != "unresolved" for space in ("chain_motif", "symbol", "arn_resource"))
+        or any("count" in denominators[space] for space in ("chain_motif", "symbol", "arn_resource"))
+        or any(not denominators[space]["source_population_refs"] or "missing_discriminator" not in denominators[space] for space in ("chain_motif", "symbol", "arn_resource"))
+    ):
+        errors.append("L1 population basis must preserve single-substrate sweep signatures without promoting observed unions to denominators")
+    if (
+        discrimination["file"] != {"coverage_adjudication": "adjudicated", "oracle": "filesystem", "observed_population_count": 374, "nonresolving_count": 1}
+        or discrimination["chain_motif"]["coverage_adjudication"] != "blocked_missing_discriminator"
+        or discrimination["chain_motif"]["missing_discriminator"] != "comparable_graph_vintage"
+        or discrimination["symbol"]["coverage_adjudication"] != "blocked_missing_discriminator"
+        or discrimination["symbol"]["missing_discriminator"] != "external_oracle"
+        or discrimination["symbol"]["observed_trace_symbol_count"] != 2249
+        or discrimination["arn_resource"]["coverage_adjudication"] != "blocked_missing_discriminator"
+        or discrimination["arn_resource"]["missing_discriminator"] != "scan_scope"
+    ):
+        errors.append("L1 coverage must be unmeasured when the discriminator cannot separate absent from unaddressed")
+    if lane_delivery != {"commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a", "cell_total": 29, "measured": 26, "unmeasured": 3, "acceptance_criteria_met": 6, "acceptance_criteria_total": 7, "ac7_state": "unmet", "operative_effect": "none"}:
+        errors.append("L1 lane delivery must preserve 29-cell evidence without manufacturing AC7 or operative release")
 
     bridge = document["l0_deliverable_bridge"]
     if bridge["relabel_existing"] or bridge["rehome_existing"] or not bridge["new_target_document_required"]:
@@ -221,7 +344,8 @@ def semantic_errors(document: dict) -> list[str]:
         if (
             gap["gap_id"] != "l0_part_semantics_for_l1"
             or not gap["grain_contract_settled"]
-            or gap["schema_extension_present"]
+            or not gap["receiver_schema_extension_present"]
+            or not gap["receiver_semantics_validated"]
             or gap["compiler_population_present"]
             or gap["grain_contract_owner"] != "4.0.0_SA_CRO~A"
             or gap["schema_extension_owner"] != "1.0.0_SA_CTO~X"
@@ -251,10 +375,18 @@ def semantic_errors(document: dict) -> list[str]:
     if len(criterion_ids) != len(set(criterion_ids)):
         errors.append("checkpoint criterion ids must be globally unique")
     resolved = document["resolved_decisions"]
-    if len(resolved) != 1 or resolved[0]["selected_value"] != "every_entity":
-        errors.append("DEC-01 must resolve identity grain to every_entity")
-    elif set(resolved[0]["not_decided_dimensions"]) != {"membership_model", "identity_form"}:
-        errors.append("identity-grain ruling must not decide membership model or identity form")
+    if (
+        len(resolved) != 1
+        or resolved[0]["selected_value"] != "every_entity"
+        or resolved[0]["identity_scope"] != "plane_qualified"
+        or resolved[0]["canonical_coordinate"] != "ordered_pair_plane_entity"
+        or resolved[0]["cross_plane_comparison"] != "explicit_bridge_only"
+        or resolved[0]["cross_plane_comparison_demand"] != "none_measured"
+        or resolved[0]["declared_bridge_pair_count"] != 0
+    ):
+        errors.append("DEC-01 must resolve plane-qualified every-entity identity with explicit cross-plane bridges")
+    elif set(resolved[0]["not_decided_dimensions"]) != {"membership_model", "identifier_encoding_and_minting"}:
+        errors.append("identity-grain ruling must not decide membership model or identifier encoding and minting")
     open_ids = {decision["decision_id"] for decision in document["open_decisions"]}
     if open_ids != {"DEC-02", "DEC-03", "DEC-04", "DEC-05"}:
         errors.append("only DEC-02 through DEC-05 remain open")
@@ -326,6 +458,15 @@ def semantic_errors(document: dict) -> list[str]:
         or target_instance_criterion["predicate"]["compiler_rule"] != "C3M_L0_TARGET_INSTANCE_EXISTS"
     ):
         errors.append("proposed CP-L0-L1 must require a distinct target projection instance")
+    member_set_criterion = next((criterion for criterion in checkpoints[0]["criteria"] if criterion["criterion_id"] == "L0-C11"), None)
+    if not member_set_criterion or member_set_criterion["predicate"]["compiler_rule"] != "C3M_L0_MEMBER_SET_COMPLETE":
+        errors.append("CP-L0-L1 must preserve aggregate member sets without stored cardinality")
+    firm_criterion = next((criterion for criterion in checkpoints[1]["criteria"] if criterion["criterion_id"] == "L1-C05"), None)
+    population_criterion = next((criterion for criterion in checkpoints[1]["criteria"] if criterion["criterion_id"] == "L1-C06"), None)
+    if not firm_criterion or firm_criterion["predicate"]["compiler_rule"] != "C3M_L1_FIRM_IDENTITY_PRESERVED":
+        errors.append("CP-L1-L2 must reject cross-firm identity merges")
+    if not population_criterion or population_criterion["predicate"]["compiler_rule"] != "C3M_L1_POPULATION_BASIS":
+        errors.append("CP-L1-L2 must reject PRD or single-substrate counts as denominators")
 
     if document["shared_root_changes"]["made"] is not False:
         errors.append("proposal must not claim shared-root changes before package validation")
@@ -512,9 +653,13 @@ def main() -> int:
     joint_owner["execution_plan"]["operational_gaps"][0]["schema_extension_owner"] = "1.0.0_SA_CTO~X+4.0.0_SA_CRO~A"
     mutants.append(("shared-schema-act-jointly-owned", joint_owner))
 
-    clean_three_claimed_complete = copy.deepcopy(document)
-    clean_three_claimed_complete["design_measurements"]["card_to_part_receiver_grain"]["measured_projection_baseline"]["card_residue"] = 0
-    mutants.append(("clean-three-masquerades-as-population-coverage", clean_three_claimed_complete))
+    crossed_compiler_boundary = copy.deepcopy(document)
+    crossed_compiler_boundary["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["admitted_card_population"]["source_glob"] = "org/**/D11_CARDS_W*.json"
+    mutants.append(("estate-wide-cards-masquerade-as-admitted-input", crossed_compiler_boundary))
+
+    receiver_axes_collapsed = copy.deepcopy(document)
+    receiver_axes_collapsed["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["post_rerun_receiver_population"]["key"] = {"declared": 3, "unknown": 39}
+    mutants.append(("independent-receiver-states-collapsed-to-stale-three", receiver_axes_collapsed))
 
     unknown_claimed_complete = copy.deepcopy(document)
     unknown_claimed_complete["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_satisfies_operative_completeness"] = True
@@ -541,8 +686,68 @@ def main() -> int:
     mutants.append(("unbuilt-layer-manufactured-as-substrate", unbuilt_carded))
 
     resolution_partition_loses_member = copy.deepcopy(document)
-    resolution_partition_loses_member["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["resolution_method_partition"]["remote_uri"] = 11
+    resolution_partition_loses_member["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["operational_queue_classifier"]["queue_partition"]["remote_uri"] = 11
     mutants.append(("resolution-partition-does-not-sum", resolution_partition_loses_member))
+
+    population_qualifier_lost = copy.deepcopy(document)
+    population_qualifier_lost["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["population_boundary"]["excluded_exact_part_ids"] = ["cse_test_24458e6c", "cse_test_bb57a916", ".comp-graph/graph.json"]
+    mutants.append(("same-count-wrong-population-exclusions", population_qualifier_lost))
+
+    remote_manifest_count_as_residue = copy.deepcopy(document)
+    remote_manifest_count_as_residue["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["remote_uri_denominators"]["residue_remote_uri_part_ids"][0] = "graph_contracts"
+    mutants.append(("all-manifest-remote-count-masquerades-as-residue", remote_manifest_count_as_residue))
+
+    stale_brace_fanout = copy.deepcopy(document)
+    stale_brace_fanout["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["brace_pattern_syntactic_expansion_count"] = 11
+    mutants.append(("single-brace-parser-undercount", stale_brace_fanout))
+
+    syntactic_expansion_as_population = copy.deepcopy(document)
+    syntactic_expansion_as_population["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["brace_pattern_syntactic_expansion_role"] = "artifact_population"
+    mutants.append(("syntactic-expansion-masquerades-as-population", syntactic_expansion_as_population))
+
+    fictional_runtime_members = copy.deepcopy(document)
+    fictional_runtime_members["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["enumerated_member_evidence"]["stable_family_member_count"] = 14
+    mutants.append(("runtime-named-family-fictionally-enumerated", fictional_runtime_members))
+
+    runtime_family_as_unsearched = copy.deepcopy(document)
+    runtime_family_as_unsearched["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["runtime_named_family_contract"]["disposition"] = "known_unsearched"
+    mutants.append(("producer-defined-runtime-family-called-unsearched", runtime_family_as_unsearched))
+
+    runtime_members_admitted = copy.deepcopy(document)
+    runtime_members_admitted["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["member_set_contract"]["non_enumerable_shape"]["members_field_prohibited"] = False
+    mutants.append(("runtime-family-admits-snapshot-members", runtime_members_admitted))
+
+    stored_cardinality = copy.deepcopy(document)
+    stored_cardinality["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_remediation_population"]["member_set_contract"]["stored_cardinality_prohibited"] = False
+    mutants.append(("derived-cardinality-serialized", stored_cardinality))
+
+    firm_stripped = copy.deepcopy(document)
+    firm_stripped["design_measurements"]["l1_identity_and_population_baseline"]["firm_qualified_symbol_identity"]["firm_must_remain_in_identity"] = False
+    mutants.append(("cross-firm-prefix-stripped", firm_stripped))
+
+    prd_as_denominator = copy.deepcopy(document)
+    prd_as_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["prd_claimed_is_denominator"] = True
+    mutants.append(("prd-count-masquerades-as-population", prd_as_denominator))
+
+    observed_union_as_denominator = copy.deepcopy(document)
+    observed_union_as_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["observed_cross_store_union_counts"]["semantic_role"] = "population_denominator"
+    mutants.append(("observed-union-masquerades-as-population", observed_union_as_denominator))
+
+    missing_discriminator_dropped = copy.deepcopy(document)
+    del missing_discriminator_dropped["design_measurements"]["l1_identity_and_population_baseline"]["coverage_discrimination"]["chain_motif"]["missing_discriminator"]
+    mutants.append(("unmeasured-coverage-without-missing-discriminator", missing_discriminator_dropped))
+
+    denominator_source_dropped = copy.deepcopy(document)
+    denominator_source_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["arn_resource"]["source_population_refs"] = []
+    mutants.append(("denominator-without-source-population", denominator_source_dropped))
+
+    denominator_exclusions_dropped = copy.deepcopy(document)
+    del denominator_exclusions_dropped["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["file"]["exclusions"]
+    mutants.append(("denominator-without-explicit-exclusions", denominator_exclusions_dropped))
+
+    count_on_unresolved_denominator = copy.deepcopy(document)
+    count_on_unresolved_denominator["design_measurements"]["l1_identity_and_population_baseline"]["population_basis"]["denominator_contracts"]["symbol"]["count"] = 2249
+    mutants.append(("count-attached-to-unresolved-denominator", count_on_unresolved_denominator))
 
     release_criterion_removed = copy.deepcopy(document)
     release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [

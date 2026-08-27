@@ -147,7 +147,7 @@
     "design_measurements": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline", "l1_release_baseline"],
+      "required": ["cover_partition_baseline", "wave3_manifest_compile_baseline", "l1_release_baseline", "card_to_part_receiver_grain", "l1_identity_and_population_baseline"],
       "properties": {
         "cover_partition_baseline": {
           "type": "object",
@@ -257,7 +257,7 @@
         "card_to_part_receiver_grain": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["card_trust_qualifies", "does_not_qualify", "part_projection_relation", "ambiguous_missing_or_substring_relation", "grain_settled", "ruling_evidence", "measured_projection_baseline", "landing_sequence"],
+          "required": ["card_trust_qualifies", "does_not_qualify", "part_projection_relation", "ambiguous_missing_or_substring_relation", "grain_settled", "ruling_evidence", "landing_sequence"],
           "properties": {
             "card_trust_qualifies": {"const": "subject_resource"},
             "does_not_qualify": {
@@ -271,47 +271,48 @@
             "ambiguous_missing_or_substring_relation": {"const": "explicit_compilation_residue"},
             "grain_settled": {"const": true},
             "ruling_evidence": {"type": "string", "minLength": 1},
-            "measured_projection_baseline": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["trust_cards", "manifest_parts", "raw_exact_subject_id_matches", "ambiguous_target_parts", "cards_rejected_as_ambiguous", "unambiguous_projected_parts", "card_residue", "positive_control", "evidence"],
-              "properties": {
-                "trust_cards": {"const": 51},
-                "manifest_parts": {"const": 42},
-                "raw_exact_subject_id_matches": {"const": 5},
-                "ambiguous_target_parts": {"const": 1},
-                "cards_rejected_as_ambiguous": {"const": 2},
-                "unambiguous_projected_parts": {"const": 3},
-                "card_residue": {"const": 48},
-                "positive_control": {"type": "string", "minLength": 1},
-                "evidence": {"const": "DT~X 74978"}
-              }
-            },
             "landing_sequence": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["strategy", "schema_change", "post_rerun_part_population", "post_rerun_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "unknown_remediation_population"],
+              "required": ["strategy", "schema_change", "parts_registered_retirement_sequence", "post_rerun_receiver_population", "admitted_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "unknown_remediation_population"],
               "properties": {
                 "strategy": {"const": "receiver_before_join"},
                 "schema_change": {"const": "additive_optional"},
-                "post_rerun_part_population": {
+                "parts_registered_retirement_sequence": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["total", "declared", "unknown"],
+                  "required": ["generator_write_sites_removed", "committed_manifest_field_present", "shared_schema_property_present", "next_required_act", "final_required_act", "hand_edit_manifest_prohibited"],
                   "properties": {
-                    "total": {"const": 42},
-                    "declared": {"const": 3},
-                    "unknown": {"const": 39}
+                    "generator_write_sites_removed": {"const": true},
+                    "committed_manifest_field_present": {"const": true},
+                    "shared_schema_property_present": {"const": true},
+                    "next_required_act": {"const": "generator_rerun_after_shared_schema_pass"},
+                    "final_required_act": {"const": "remove_schema_property_after_emitted_manifest_validation"},
+                    "hand_edit_manifest_prohibited": {"const": true}
                   }
                 },
-                "post_rerun_card_population": {
+                "post_rerun_receiver_population": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["total", "projected", "residue"],
+                  "required": ["total_parts", "admitted_exact_subject_matches", "grain", "key", "failure_mode"],
                   "properties": {
-                    "total": {"const": 51},
-                    "projected": {"const": 3},
-                    "residue": {"const": 48}
+                    "total_parts": {"const": 42},
+                    "admitted_exact_subject_matches": {"const": 0},
+                    "grain": {"$ref": "#/$defs/current_receiver_population"},
+                    "key": {"$ref": "#/$defs/current_receiver_population"},
+                    "failure_mode": {"$ref": "#/$defs/current_receiver_population"}
+                  },
+                  "x-rule24": {"domain": "claim-status population for each receiver field after the deterministic rerun", "grain": "one receiver field across 42 manifest parts", "intent": "keep grain, key, and failure_mode claim states independent; never collapse them into one part-level declared count", "mece": "within each receiver, declared plus unknown equals 42; the current admitted Wave-3 card population has zero exact subject-id matches, so all three independently resolve to 0 declared and 42 unknown", "state_coherence": "adding an admitted exact-card projection may move only the receiver fields it actually populates from unknown to declared"}
+                },
+                "admitted_card_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["source_glob", "total", "exact_subject_matches", "receiver_residue"],
+                  "properties": {
+                    "source_glob": {"const": "org/**/D11_CARDS_W3/*.json"},
+                    "total": {"const": 13},
+                    "exact_subject_matches": {"const": 0},
+                    "receiver_residue": {"const": 13}
                   }
                 },
                 "unknown_satisfies_operative_completeness": {"const": false},
@@ -320,16 +321,32 @@
                 "unknown_remediation_population": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["source", "total", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "subject_semantic_partitions_required", "resolution_method_partition", "partition_controls", "cardable_candidate_total", "unbuilt_future_layer_ids", "unbuilt_disposition", "brace_pattern_part_count", "brace_pattern_expanded_artifact_count", "brace_pattern_disposition", "unresolved_cut_preconditions", "wave_cut_ready", "evidence"],
+                  "required": ["source", "total", "population_boundary", "part_class_census", "resolution_grain", "prohibited_resolution_proxies", "subject_semantic_partitions_required", "operational_queue_classifier", "partition_controls", "remote_uri_denominators", "remote_uri_instrument", "cardable_candidate_total", "unbuilt_future_layer_ids", "unbuilt_disposition", "brace_pattern_part_count", "brace_pattern_syntactic_expansion_count", "brace_pattern_syntactic_expansion_role", "brace_part_census", "enumerated_member_evidence", "brace_correction_evidence", "brace_pattern_disposition", "runtime_named_family_contract", "member_set_contract", "resolved_preconditions", "unresolved_preconditions", "remaining_contract_gaps", "wave_cut_ready", "evidence"],
                   "properties": {
                     "source": {"const": "manifest_parts_with_unknown_receiver"},
-                    "total": {"const": 39},
+                    "total": {"const": 42},
+                    "population_boundary": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["parent_document_kind", "parent_document_home", "parent_sha256", "operation", "excluded_exact_part_ids", "exclusion_reason"],
+                      "properties": {
+                        "parent_document_kind": {"const": "l0_graph_substrate_manifest"},
+                        "parent_document_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+                        "parent_sha256": {"const": "5f8aac736ba47855f63c690cc77478c2562bc16ad1dac35eeeba89394236f534"},
+                        "operation": {"const": "identity"},
+                        "excluded_exact_part_ids": {
+                          "type": "array",
+                          "maxItems": 0
+                        },
+                        "exclusion_reason": {"const": "no_admitted_wave3_card_subject_id_exactly_matches_a_manifest_part_id"}
+                      }
+                    },
                     "part_class_census": {
                       "type": "object",
                       "additionalProperties": false,
                       "required": ["store", "materializer", "output_artifact", "projection", "spec_artifact"],
                       "properties": {
-                        "store": {"const": 18},
+                        "store": {"const": 21},
                         "materializer": {"const": 7},
                         "output_artifact": {"const": 6},
                         "projection": {"const": 6},
@@ -351,16 +368,20 @@
                       "uniqueItems": true,
                       "items": {"enum": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"]}
                     },
-                    "resolution_method_partition": {
+                    "operational_queue_classifier": {
                       "type": "object",
                       "additionalProperties": false,
-                      "required": ["file_resolves", "remote_uri", "brace_pattern", "unbuilt_future_layer", "path_shaped_but_absent"],
+                      "required": ["precedence", "assignment_rule", "required_independent_axes", "queue_partition"],
                       "properties": {
-                        "file_resolves": {"const": 21},
-                        "remote_uri": {"const": 12},
-                        "brace_pattern": {"const": 3},
-                        "unbuilt_future_layer": {"const": 3},
-                        "path_shaped_but_absent": {"const": 0}
+                        "precedence": {"type": "array", "prefixItems": [{"const": "unbuilt_future_layer"}, {"const": "brace_expression"}, {"const": "remote_s3_uri"}, {"const": "local_file_path"}, {"const": "path_shaped_absent"}], "items": false, "minItems": 5, "maxItems": 5},
+                        "assignment_rule": {"const": "first_matching_class_only"},
+                        "required_independent_axes": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["locator_form", "realization_state", "enumerability_state"]}},
+                        "queue_partition": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["file_resolves", "remote_uri", "brace_pattern", "unbuilt_future_layer", "path_shaped_but_absent"],
+                          "properties": {"file_resolves": {"const": 22}, "remote_uri": {"const": 14}, "brace_pattern": {"const": 3}, "unbuilt_future_layer": {"const": 3}, "path_shaped_but_absent": {"const": 0}}
+                        }
                       }
                     },
                     "partition_controls": {
@@ -372,7 +393,36 @@
                         "known_absent": {"const": false}
                       }
                     },
-                    "cardable_candidate_total": {"const": 36},
+                    "remote_uri_denominators": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["predicate", "remote_uri_manifest_part_ids", "residue_remote_uri_part_ids", "arn_scheme_part_ids"],
+                      "properties": {
+                        "predicate": {"const": "home_starts_s3_scheme"},
+                        "remote_uri_manifest_part_ids": {
+                          "type": "array",
+                          "minItems": 14,
+                          "maxItems": 14,
+                          "uniqueItems": true,
+                          "items": {"enum": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"]}
+                        },
+                        "residue_remote_uri_part_ids": {"type": "array", "minItems": 14, "maxItems": 14, "uniqueItems": true, "items": {"enum": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"]}},
+                        "arn_scheme_part_ids": {"type": "array", "maxItems": 0}
+                      }
+                    },
+                    "remote_uri_instrument": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["command_shape", "result_field", "same_bucket_positive_control_required", "head_object_alone_prohibited", "execution_state"],
+                      "properties": {
+                        "command_shape": {"const": "aws s3api list-objects-v2 --bucket <bucket> --prefix <key> --max-keys 1"},
+                        "result_field": {"const": "KeyCount"},
+                        "same_bucket_positive_control_required": {"const": true},
+                        "head_object_alone_prohibited": {"const": true},
+                        "execution_state": {"const": "not_run", "x-rule24": {"domain": "one remote-object probe execution", "grain": "one probe attempt", "intent": "separate execution standing from object existence verdict", "mece": "not_run, completed, and failed cover execution outcomes; this proposal snapshot is not_run", "state_coherence": "an attempt moves not_run to completed or failed; a retry creates new evidence"}}
+                      }
+                    },
+                    "cardable_candidate_total": {"const": 39},
                     "unbuilt_future_layer_ids": {
                       "type": "array",
                       "minItems": 3,
@@ -382,14 +432,90 @@
                     },
                     "unbuilt_disposition": {"const": "exclude_never_manufacture_substrate"},
                     "brace_pattern_part_count": {"const": 3},
-                    "brace_pattern_expanded_artifact_count": {"const": 11},
-                    "brace_pattern_disposition": {"const": "explicit_mapping_residue"},
-                    "unresolved_cut_preconditions": {
+                    "brace_pattern_syntactic_expansion_count": {"const": 14},
+                    "brace_pattern_syntactic_expansion_role": {"const": "parser_control_not_population"},
+                    "brace_part_census": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["stable_enumerable", "runtime_named_non_enumerable"],
+                      "properties": {
+                        "stable_enumerable": {"const": 2},
+                        "runtime_named_non_enumerable": {"const": 1}
+                      }
+                    },
+                    "enumerated_member_evidence": {"type": "object", "additionalProperties": false, "required": ["stable_family_member_count"], "properties": {"stable_family_member_count": {"const": 8}}},
+                    "brace_correction_evidence": {"type": "object", "additionalProperties": false, "required": ["withdrawn_syntactic_member_claim_count", "reason"], "properties": {"withdrawn_syntactic_member_claim_count": {"const": 6}, "reason": {"const": "runtime_named_instances_do_not_form_a_durable_member_population"}}},
+                    "brace_pattern_disposition": {"const": "split_by_enumerability"},
+                    "runtime_named_family_contract": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["part_id", "disposition", "population_status", "pattern_representation", "normalized_pattern", "pattern_source_home", "pattern_source_line", "pattern_source_git_commit", "pattern_source_git_blob", "pattern_source_sha256", "observation_count_is_population"],
+                      "properties": {
+                        "part_id": {"const": "kuzu_nessie_db.rebuild.tmp.SET"},
+                        "disposition": {"const": "declared_pattern_non_enumerable"},
+                        "population_status": {"const": "orphaned"},
+                        "pattern_representation": {"const": "normalized_semantic_family_template"},
+                        "normalized_pattern": {"const": "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>"},
+                        "pattern_source_home": {"const": "infra/aws/globgrph/_canonical.py"},
+                        "pattern_source_line": {"const": 288},
+                        "pattern_source_git_commit": {"const": "17eb3fa310ae04b7cb8ca55cfde8f801f34e8c04"},
+                        "pattern_source_git_blob": {"const": "7867f1a0a88dab0c9e1e273d794e5901d0aade48"},
+                        "pattern_source_sha256": {"const": "edaa00ae4617f06b07932f8706c20fbbe0482ee610f8854ac1f7d591a1dd601c"},
+                        "observation_count_is_population": {"const": false}
+                      }
+                    },
+                    "member_set_contract": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["enumerability_axis_required", "stored_cardinality_prohibited", "enumerable_shape", "non_enumerable_shape", "shared_schema_receiver_present", "shared_schema_validation_state", "interim_prose_is_complete"],
+                      "properties": {
+                        "enumerability_axis_required": {"const": true},
+                        "stored_cardinality_prohibited": {"const": true},
+                        "enumerable_shape": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["members_required", "minimum_members", "cardinality_derivation", "recursive_expansion_required"],
+                          "properties": {
+                            "members_required": {"const": true},
+                            "minimum_members": {"const": 2},
+                            "cardinality_derivation": {"const": "length(members)"},
+                            "recursive_expansion_required": {"const": true}
+                          }
+                        },
+                        "non_enumerable_shape": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["pattern_required", "pattern_source_home_required", "pattern_source_line_required", "members_field_prohibited", "cardinality_field_prohibited"],
+                          "properties": {
+                            "pattern_required": {"const": true},
+                            "pattern_source_home_required": {"const": true},
+                            "pattern_source_line_required": {"const": true},
+                            "members_field_prohibited": {"const": true},
+                            "cardinality_field_prohibited": {"const": true}
+                          }
+                        },
+                        "shared_schema_receiver_present": {"const": true},
+                        "shared_schema_validation_state": {"enum": ["not_run", "failed", "passed"], "x-enum-definitions": {"not_run": "No validation has run against the current shared-schema bytes.", "failed": "Validation ran and at least one binding condition failed.", "passed": "The complete declared validation suite passed against the pinned shared-schema bytes."}, "x-rule24": {"domain": "shared-schema validation execution and verdict", "grain": "one schema byte identity and validation-suite version", "intent": "avoid conflating not-run with failed", "mece": "not_run, failed, and passed are disjoint and exhaustive", "state_coherence": "schema byte or suite changes reset to not_run; execution moves to failed or passed"}},
+                        "interim_prose_is_complete": {"const": false}
+                      }
+                    },
+                    "resolved_preconditions": {
                       "type": "array",
                       "minItems": 2,
                       "maxItems": 2,
                       "uniqueItems": true,
-                      "items": {"enum": ["name_remote_uri_instrument", "map_owner_rules_brace_fanout"]}
+                      "items": {"enum": ["remote_uri_instrument_named", "map_owner_runtime_family_disposition"]}
+                    },
+                    "unresolved_preconditions": {
+                      "type": "array",
+                      "maxItems": 0
+                    },
+                    "remaining_contract_gaps": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {"enum": ["shared_schema_validation", "compiler_validation"]}
                     },
                     "wave_cut_ready": {"const": false},
                     "evidence": {"type": "string", "minLength": 1}
@@ -397,6 +523,93 @@
                 }
               }
             }
+          }
+        },
+        "l1_identity_and_population_baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["firm_qualified_symbol_identity", "population_basis", "coverage_discrimination", "lane_delivery", "evidence"],
+          "properties": {
+            "firm_qualified_symbol_identity": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["trace_symbols", "raw_join_count", "lossy_parse_join_count", "lossy_parse_join_percent", "parse", "firm_values", "bare_gold_target_count", "firm_must_remain_in_identity"],
+              "properties": {
+                "trace_symbols": {"const": 2249},
+                "raw_join_count": {"const": 0},
+                "lossy_parse_join_count": {"const": 1331},
+                "lossy_parse_join_percent": {"const": 59.2},
+                "parse": {"const": "strip_pipeline_firm_prefix"},
+                "firm_values": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["bd", "inf", "mdpf"]}},
+                "bare_gold_target_count": {"const": 3},
+                "firm_must_remain_in_identity": {"const": true}
+              }
+            },
+            "population_basis": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["prd_claimed_is_denominator", "single_substrate_sweep_signatures", "observed_cross_store_union_counts", "symbol_prd_claimed_count", "symbol_prd_provenance", "file_prd_claimed_count", "file_prd_claim_source", "denominator_contracts"],
+              "properties": {
+                "prd_claimed_is_denominator": {"const": false},
+                "single_substrate_sweep_signatures": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["arn_resource", "chain_motif"],
+                  "properties": {
+                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["prd_claimed_count", "matching_substrate", "matching_substrate_count", "signature_present"], "properties": {"prd_claimed_count": {"const": 1851}, "matching_substrate": {"const": "kuzu"}, "matching_substrate_count": {"const": 1851}, "signature_present": {"const": true}}},
+                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["prd_claimed_count", "matching_substrate", "matching_substrate_count", "signature_present"], "properties": {"prd_claimed_count": {"const": 6207}, "matching_substrate": {"const": "semctl"}, "matching_substrate_count": {"const": 6207}, "signature_present": {"const": true}}}
+                  }
+                },
+                "observed_cross_store_union_counts": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["arn_resource", "chain_motif", "symbol", "semantic_role"],
+                  "properties": {
+                    "arn_resource": {"const": 1970},
+                    "chain_motif": {"const": 6255},
+                    "symbol": {"const": 14447},
+                    "semantic_role": {"const": "evidence_only_not_population_denominator"}
+                  }
+                },
+                "symbol_prd_claimed_count": {"const": 19482},
+                "symbol_prd_provenance": {"const": "unresolved"},
+                "file_prd_claimed_count": {"const": 3532},
+                "file_prd_claim_source": {"const": "co_change_corpus"},
+                "denominator_contracts": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["file", "chain_motif", "symbol", "arn_resource"],
+                  "x-rule24": {"domain": "coverage denominator adjudication", "grain": "one identity space and evidence vintage", "intent": "separate observed counts from defensible denominators", "mece": "adjudicated means a scoped denominator exists; unresolved means a named discriminator blocks it", "state_coherence": "new external evidence may move unresolved to adjudicated without changing prior observations"},
+                  "properties": {
+                    "file": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "count", "source_population_refs", "exclusions"], "properties": {"denominator_status": {"const": "adjudicated"}, "count": {"const": 374}, "source_population_refs": {"type": "array", "prefixItems": [{"const": "filesystem_sweep"}], "items": false, "minItems": 1, "maxItems": 1}, "exclusions": {"type": "array", "maxItems": 0}}},
+                    "chain_motif": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["semctl", "kuzu"]}}, "missing_discriminator": {"const": "comparable_graph_vintage"}, "exclusions": {"type": "array", "maxItems": 0}}},
+                    "symbol": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["trace_symbol_space", "measured_union_space"]}}, "missing_discriminator": {"const": "external_oracle"}, "exclusions": {"type": "array", "maxItems": 0}}},
+                    "arn_resource": {"type": "object", "additionalProperties": false, "required": ["denominator_status", "source_population_refs", "missing_discriminator", "exclusions"], "properties": {"denominator_status": {"const": "unresolved"}, "source_population_refs": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["kuzu", "stitch"]}}, "missing_discriminator": {"const": "scan_scope"}, "exclusions": {"type": "array", "maxItems": 0}}}
+                  }
+                }
+              }
+            },
+            "coverage_discrimination": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["file", "chain_motif", "symbol", "arn_resource"],
+              "x-rule24": {
+                "semantic_dimension": "coverage adjudication under available discriminators",
+                "values": ["adjudicated", "blocked_missing_discriminator"],
+                "mutually_exclusive": true,
+                "collectively_exhaustive": true,
+                "adjudicated_requires": "an oracle outside the producing pipeline",
+                "blocked_requires": "the missing discriminator is named"
+              },
+              "properties": {
+                "file": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "oracle", "observed_population_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "adjudicated"}, "oracle": {"const": "filesystem"}, "observed_population_count": {"const": 374}, "nonresolving_count": {"const": 1}}},
+                "chain_motif": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "comparable_graph_vintage"}, "observed_union_count": {"const": 6255}, "nonresolving_count": {"const": 165}}},
+                "symbol": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_trace_symbol_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "external_oracle"}, "observed_trace_symbol_count": {"const": 2249}, "nonresolving_count": {"const": 918}}},
+                "arn_resource": {"type": "object", "additionalProperties": false, "required": ["coverage_adjudication", "missing_discriminator", "observed_union_count", "nonresolving_count"], "properties": {"coverage_adjudication": {"const": "blocked_missing_discriminator"}, "missing_discriminator": {"const": "scan_scope"}, "observed_union_count": {"const": 1970}, "nonresolving_count": {"const": 278}}}
+              }
+            },
+            "lane_delivery": {"type": "object", "additionalProperties": false, "required": ["commit", "cell_total", "measured", "unmeasured", "acceptance_criteria_met", "acceptance_criteria_total", "ac7_state", "operative_effect"], "properties": {"commit": {"const": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a"}, "cell_total": {"const": 29}, "measured": {"const": 26}, "unmeasured": {"const": 3}, "acceptance_criteria_met": {"const": 6}, "acceptance_criteria_total": {"const": 7}, "ac7_state": {"const": "unmet"}, "operative_effect": {"const": "none"}}},
+            "evidence": {"type": "string", "minLength": 1}
           }
         }
       }
@@ -466,12 +679,13 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["gap_id", "required_operation", "grain_contract_settled", "schema_extension_present", "compiler_population_present", "grain_contract_owner", "schema_extension_owner", "compiler_population_owner", "compiler_task_ref", "prevents_operative_transition"],
+            "required": ["gap_id", "required_operation", "grain_contract_settled", "receiver_schema_extension_present", "receiver_semantics_validated", "compiler_population_present", "grain_contract_owner", "schema_extension_owner", "compiler_population_owner", "compiler_task_ref", "prevents_operative_transition"],
             "properties": {
               "gap_id": {"const": "l0_part_semantics_for_l1"},
               "required_operation": {"const": "populate_structured_grain_key_failure_mode_for_every_part"},
               "grain_contract_settled": {"const": true},
-              "schema_extension_present": {"const": false},
+              "receiver_schema_extension_present": {"const": true},
+              "receiver_semantics_validated": {"const": true},
               "compiler_population_present": {"const": false},
               "grain_contract_owner": {"const": "4.0.0_SA_CRO~A"},
               "schema_extension_owner": {"const": "1.0.0_SA_CTO~X"},
@@ -519,6 +733,15 @@
     }
   },
   "$defs": {
+    "current_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared", "unknown"],
+      "properties": {
+        "declared": {"const": 0},
+        "unknown": {"const": 42}
+      }
+    },
     "l2_output_stage": {
       "type": "object",
       "additionalProperties": false,
@@ -679,19 +902,24 @@
     "resolved_decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["decision_id", "semantic_dimension", "selected_value", "authority_ref", "evidence_message", "not_decided_dimensions"],
+      "required": ["decision_id", "semantic_dimension", "selected_value", "identity_scope", "canonical_coordinate", "cross_plane_comparison", "cross_plane_comparison_demand", "declared_bridge_pair_count", "authority_ref", "evidence_message", "not_decided_dimensions"],
       "properties": {
         "decision_id": {"const": "DEC-01"},
         "semantic_dimension": {"const": "identity_grain"},
         "selected_value": {"const": "every_entity"},
+        "identity_scope": {"const": "plane_qualified"},
+        "canonical_coordinate": {"const": "ordered_pair_plane_entity"},
+        "cross_plane_comparison": {"const": "explicit_bridge_only"},
+        "cross_plane_comparison_demand": {"const": "none_measured"},
+        "declared_bridge_pair_count": {"const": 0},
         "authority_ref": {"const": "1.0.0_SA_CTO~X"},
-        "evidence_message": {"const": "74841"},
+        "evidence_message": {"type": "string", "minLength": 1},
         "not_decided_dimensions": {
           "type": "array",
           "minItems": 2,
           "maxItems": 2,
           "uniqueItems": true,
-          "items": {"enum": ["membership_model", "identity_form"]}
+          "items": {"enum": ["membership_model", "identifier_encoding_and_minting"]}
         }
       }
     }

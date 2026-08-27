@@ -156,38 +156,46 @@
       "ambiguous_missing_or_substring_relation": "explicit_compilation_residue",
       "grain_settled": true,
       "ruling_evidence": "CTO~X 74971; CRO~A contract reading and ruling 20260827T075153Z",
-      "measured_projection_baseline": {
-        "trust_cards": 51,
-        "manifest_parts": 42,
-        "raw_exact_subject_id_matches": 5,
-        "ambiguous_target_parts": 1,
-        "cards_rejected_as_ambiguous": 2,
-        "unambiguous_projected_parts": 3,
-        "card_residue": 48,
-        "positive_control": ".comp-graph/baseline.json present in part ids",
-        "evidence": "DT~X 74978"
-      },
       "landing_sequence": {
         "strategy": "receiver_before_join",
         "schema_change": "additive_optional",
-        "post_rerun_part_population": {
-          "total": 42,
-          "declared": 3,
-          "unknown": 39
+        "parts_registered_retirement_sequence": {
+          "generator_write_sites_removed": true,
+          "committed_manifest_field_present": true,
+          "shared_schema_property_present": true,
+          "next_required_act": "generator_rerun_after_shared_schema_pass",
+          "final_required_act": "remove_schema_property_after_emitted_manifest_validation",
+          "hand_edit_manifest_prohibited": true
         },
-        "post_rerun_card_population": {
-          "total": 51,
-          "projected": 3,
-          "residue": 48
+        "post_rerun_receiver_population": {
+          "total_parts": 42,
+          "admitted_exact_subject_matches": 0,
+          "grain": {"declared": 0, "unknown": 42},
+          "key": {"declared": 0, "unknown": 42},
+          "failure_mode": {"declared": 0, "unknown": 42}
+        },
+        "admitted_card_population": {
+          "source_glob": "org/**/D11_CARDS_W3/*.json",
+          "total": 13,
+          "exact_subject_matches": 0,
+          "receiver_residue": 13
         },
         "unknown_satisfies_operative_completeness": false,
         "future_mapping_effect": "unknown_to_declared_enrichment",
         "ruling_evidence": "CRO~A ruling on CTO~X 74980",
         "unknown_remediation_population": {
           "source": "manifest_parts_with_unknown_receiver",
-          "total": 39,
+          "total": 42,
+          "population_boundary": {
+            "parent_document_kind": "l0_graph_substrate_manifest",
+            "parent_document_home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
+            "parent_sha256": "5f8aac736ba47855f63c690cc77478c2562bc16ad1dac35eeeba89394236f534",
+            "operation": "identity",
+            "excluded_exact_part_ids": [],
+            "exclusion_reason": "no_admitted_wave3_card_subject_id_exactly_matches_a_manifest_part_id"
+          },
           "part_class_census": {
-            "store": 18,
+            "store": 21,
             "materializer": 7,
             "output_artifact": 6,
             "projection": 6,
@@ -196,25 +204,133 @@
           "resolution_grain": "per_part",
           "prohibited_resolution_proxies": ["part_class", "filesystem_path_exists"],
           "subject_semantic_partitions_required": ["materializer_subject", "non_materializer_resource_subject", "aggregate_rollup_relation"],
-          "resolution_method_partition": {
-            "file_resolves": 21,
-            "remote_uri": 12,
+          "operational_queue_classifier": {
+            "precedence": ["unbuilt_future_layer", "brace_expression", "remote_s3_uri", "local_file_path", "path_shaped_absent"],
+            "assignment_rule": "first_matching_class_only",
+            "required_independent_axes": ["locator_form", "realization_state", "enumerability_state"],
+            "queue_partition": {
+            "file_resolves": 22,
+            "remote_uri": 14,
             "brace_pattern": 3,
             "unbuilt_future_layer": 3,
             "path_shaped_but_absent": 0
+            }
           },
           "partition_controls": {"known_present": true, "known_absent": false},
-          "cardable_candidate_total": 36,
+          "remote_uri_denominators": {
+            "predicate": "home_starts_s3_scheme",
+            "remote_uri_manifest_part_ids": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"],
+            "residue_remote_uri_part_ids": ["_branch_head.main.json", "code_heat_snap", "cse", "cse_producer_markers/frontend_coevolution.json", "cse_test_24458e6c", "cse_test_bb57a916", "fedobs_coevolution_snap", "fedobs_coverage_snap", "graph_contracts", "graph_edges", "graph_nodes", "kuzu_nessie_db.s3", "ms_heat_snap", "resource_summaries"],
+            "arn_scheme_part_ids": []
+          },
+          "remote_uri_instrument": {
+            "command_shape": "aws s3api list-objects-v2 --bucket <bucket> --prefix <key> --max-keys 1",
+            "result_field": "KeyCount",
+            "same_bucket_positive_control_required": true,
+            "head_object_alone_prohibited": true,
+            "execution_state": "not_run"
+          },
+          "cardable_candidate_total": 39,
           "unbuilt_future_layer_ids": ["affinity_matrix", "similarity_network_fusion", "identity_and_succession"],
           "unbuilt_disposition": "exclude_never_manufacture_substrate",
           "brace_pattern_part_count": 3,
-          "brace_pattern_expanded_artifact_count": 11,
-          "brace_pattern_disposition": "explicit_mapping_residue",
-          "unresolved_cut_preconditions": ["name_remote_uri_instrument", "map_owner_rules_brace_fanout"],
+          "brace_pattern_syntactic_expansion_count": 14,
+          "brace_pattern_syntactic_expansion_role": "parser_control_not_population",
+          "brace_part_census": {
+            "stable_enumerable": 2,
+            "runtime_named_non_enumerable": 1
+          },
+          "enumerated_member_evidence": {
+            "stable_family_member_count": 8
+          },
+          "brace_correction_evidence": {
+            "withdrawn_syntactic_member_claim_count": 6,
+            "reason": "runtime_named_instances_do_not_form_a_durable_member_population"
+          },
+          "brace_pattern_disposition": "split_by_enumerability",
+          "runtime_named_family_contract": {
+            "part_id": "kuzu_nessie_db.rebuild.tmp.SET",
+            "disposition": "declared_pattern_non_enumerable",
+            "population_status": "orphaned",
+            "pattern_representation": "normalized_semantic_family_template",
+            "normalized_pattern": "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>",
+            "pattern_source_home": "infra/aws/globgrph/_canonical.py",
+            "pattern_source_line": 288,
+            "pattern_source_git_commit": "17eb3fa310ae04b7cb8ca55cfde8f801f34e8c04",
+            "pattern_source_git_blob": "7867f1a0a88dab0c9e1e273d794e5901d0aade48",
+            "pattern_source_sha256": "edaa00ae4617f06b07932f8706c20fbbe0482ee610f8854ac1f7d591a1dd601c",
+            "observation_count_is_population": false
+          },
+          "member_set_contract": {
+            "enumerability_axis_required": true,
+            "stored_cardinality_prohibited": true,
+            "enumerable_shape": {
+              "members_required": true,
+              "minimum_members": 2,
+              "cardinality_derivation": "length(members)",
+              "recursive_expansion_required": true
+            },
+            "non_enumerable_shape": {
+              "pattern_required": true,
+              "pattern_source_home_required": true,
+              "pattern_source_line_required": true,
+              "members_field_prohibited": true,
+              "cardinality_field_prohibited": true
+            },
+            "shared_schema_receiver_present": true,
+            "shared_schema_validation_state": "not_run",
+            "interim_prose_is_complete": false
+          },
+          "resolved_preconditions": ["remote_uri_instrument_named", "map_owner_runtime_family_disposition"],
+          "unresolved_preconditions": [],
+          "remaining_contract_gaps": ["shared_schema_validation", "compiler_validation"],
           "wave_cut_ready": false,
-          "evidence": "COO~X 74994 supersedes provisional rollup counts in 74987"
+          "evidence": "COO~X 74994, 75026, and correction 75070; AE~X 75013, 75022, 75034; DT~X 75010 and map-owner ruling 75073; CTO~X 75029"
         }
       }
+    },
+    "l1_identity_and_population_baseline": {
+      "firm_qualified_symbol_identity": {
+        "trace_symbols": 2249,
+        "raw_join_count": 0,
+        "lossy_parse_join_count": 1331,
+        "lossy_parse_join_percent": 59.2,
+        "parse": "strip_pipeline_firm_prefix",
+        "firm_values": ["bd", "inf", "mdpf"],
+        "bare_gold_target_count": 3,
+        "firm_must_remain_in_identity": true
+      },
+      "population_basis": {
+        "prd_claimed_is_denominator": false,
+        "single_substrate_sweep_signatures": {
+          "arn_resource": {"prd_claimed_count": 1851, "matching_substrate": "kuzu", "matching_substrate_count": 1851, "signature_present": true},
+          "chain_motif": {"prd_claimed_count": 6207, "matching_substrate": "semctl", "matching_substrate_count": 6207, "signature_present": true}
+        },
+        "observed_cross_store_union_counts": {
+          "arn_resource": 1970,
+          "chain_motif": 6255,
+          "symbol": 14447,
+          "semantic_role": "evidence_only_not_population_denominator"
+        },
+        "symbol_prd_claimed_count": 19482,
+        "symbol_prd_provenance": "unresolved",
+        "file_prd_claimed_count": 3532,
+        "file_prd_claim_source": "co_change_corpus",
+        "denominator_contracts": {
+          "file": {"denominator_status": "adjudicated", "count": 374, "source_population_refs": ["filesystem_sweep"], "exclusions": []},
+          "chain_motif": {"denominator_status": "unresolved", "source_population_refs": ["semctl", "kuzu"], "missing_discriminator": "comparable_graph_vintage", "exclusions": []},
+          "symbol": {"denominator_status": "unresolved", "source_population_refs": ["trace_symbol_space", "measured_union_space"], "missing_discriminator": "external_oracle", "exclusions": []},
+          "arn_resource": {"denominator_status": "unresolved", "source_population_refs": ["kuzu", "stitch"], "missing_discriminator": "scan_scope", "exclusions": []}
+        }
+      },
+      "coverage_discrimination": {
+        "file": {"coverage_adjudication": "adjudicated", "oracle": "filesystem", "observed_population_count": 374, "nonresolving_count": 1},
+        "chain_motif": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "comparable_graph_vintage", "observed_union_count": 6255, "nonresolving_count": 165},
+        "symbol": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "external_oracle", "observed_trace_symbol_count": 2249, "nonresolving_count": 918},
+        "arn_resource": {"coverage_adjudication": "blocked_missing_discriminator", "missing_discriminator": "scan_scope", "observed_union_count": 1970, "nonresolving_count": 278}
+      },
+      "lane_delivery": {"commit": "c0ccc0de3183cc839b4b60e25b4adb0c3472fa5a", "cell_total": 29, "measured": 26, "unmeasured": 3, "acceptance_criteria_met": 6, "acceptance_criteria_total": 7, "ac7_state": "unmet", "operative_effect": "none"},
+      "evidence": "COO~X 75008 relaying DT~X 74999; COO~X correction 75056 relaying DT~X 75052"
     }
   },
   "execution_plan": {
@@ -256,7 +372,8 @@
         "gap_id": "l0_part_semantics_for_l1",
         "required_operation": "populate_structured_grain_key_failure_mode_for_every_part",
         "grain_contract_settled": true,
-        "schema_extension_present": false,
+        "receiver_schema_extension_present": true,
+        "receiver_semantics_validated": true,
         "compiler_population_present": false,
         "grain_contract_owner": "4.0.0_SA_CRO~A",
         "schema_extension_owner": "1.0.0_SA_CTO~X",
@@ -417,7 +534,8 @@
         {"criterion_id": "L0-C07", "claim": "Each consumed row has exactly one transformation class: enrich generation on a resolved existing part or add exactly one new part.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 consumed relation row ids", "10 enrichment row ids plus 3 addition row ids"], "threshold": null, "compiler_rule": "C3M_L0_TRANSFORM_EXHAUSTIVE"}, "controls": {"positive": ["snap_store row adds one new part"], "negative": ["one row is both enriched and added or is unclassified"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C08", "claim": "The compiler joins structured card artifact references to exact part ids and rejects ambiguous missing or substring-only matches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["card artifact refs", "exact manifest part ids"], "threshold": null, "compiler_rule": "C3M_L0_EXACT_PART_JOIN"}, "controls": {"positive": ["derive_runner PATH B resolves only graph_contracts"], "negative": ["substring probe also matches graph_edges"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C09", "claim": "Every source-manifest part declares structured store grain key and failure-mode semantics before an operative L0-to-L1 transition is claimed.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["manifest parts missing any structured L1 precondition field"], "threshold": 0, "compiler_rule": "C3M_L0_L1_PRECONDITIONS_COMPLETE"}, "controls": {"positive": ["part carries home grain key and typed failure modes"], "negative": ["operative schema has zero grain key and failure-mode field paths"]}, "unmeasurable_reason": null, "resolution_owner": null},
-        {"criterion_id": "L0-C10", "claim": "A new nine-section l0_substrate_manifest validates its owning schema at its exact generated home and declares the existing 42-part graph manifest as a source input.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["target instance exists", "target schema validation passes", "source relationship resolves", "exact home matches"], "threshold": true, "compiler_rule": "C3M_L0_TARGET_INSTANCE_EXISTS"}, "controls": {"positive": ["new projection references graph_object_manifest.json as source"], "negative": ["existing graph manifest is relabelled or re-homed as target"]}, "unmeasurable_reason": null, "resolution_owner": null}
+        {"criterion_id": "L0-C10", "claim": "A new nine-section l0_substrate_manifest validates its owning schema at its exact generated home and declares the existing 42-part graph manifest as a source input.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["target instance exists", "target schema validation passes", "source relationship resolves", "exact home matches"], "threshold": true, "compiler_rule": "C3M_L0_TARGET_INSTANCE_EXISTS"}, "controls": {"positive": ["new projection references graph_object_manifest.json as source"], "negative": ["existing graph manifest is relabelled or re-homed as target"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C11", "claim": "Every stable enumerable aggregate part retains one part identity and an enumerated unique member set; runtime-named non-enumerable families declare their separate map-owner disposition; cardinality is computed from members and never serialized independently.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["stable enumerable aggregate parts carry member_set.members", "runtime-named families do not carry fictional member lists", "no stored cardinality field", "no silent part expansion"], "threshold": true, "compiler_rule": "C3M_L0_MEMBER_SET_COMPLETE"}, "controls": {"positive": ["two stable brace-pattern parts enumerate eight verified members"], "negative": ["syntactic expansion count used as artifact population", "runtime-named family assigned six fictional members", "typed cardinality disagrees with members"]}, "unmeasurable_reason": null, "resolution_owner": null}
       ]
     },
     {
@@ -428,10 +546,12 @@
       "transition_rule": "all_required_measurable_criteria_pass",
       "drive_behavior": "continue_remediation_without_waiting_for_human_approval",
       "criteria": [
-        {"criterion_id": "L1-C01", "claim": "Every in-scope entity receives a durable identity and every source reference and roll-up resolves within that every-entity grain.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["entity_spine.canonical_grain equals every_entity", "every in-scope entity has durable identity", "rollups resolve within entity registry"], "threshold": true, "compiler_rule": "C3M_L1_GRAIN_COHERENT"}, "controls": {"positive": ["file node member and system identities all resolve"], "negative": ["systems-only registry cannot resolve a file-level join"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C01", "claim": "Every in-scope entity receives a durable plane-qualified identity; each id space declares its entity grain and roll-up, and cross-plane comparison uses an explicit bridge.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["entity_spine.canonical_coordinate equals ordered_pair_plane_entity", "every in-scope entity has durable identity", "each roll-up is declared rather than parsed", "every cross-plane comparison resolves an explicit bridge"], "threshold": true, "compiler_rule": "C3M_L1_GRAIN_COHERENT"}, "controls": {"positive": ["within-plane entities compare through declared roll-up"], "negative": ["systems-only registry cannot resolve a file-level join", "shared token or prefix parse used as cross-plane bridge"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L1-C02", "claim": "Every member used by an L2 view resolves or is explicitly excluded with a reason.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["L2 source members", "resolved plus explicitly excluded members"], "threshold": null, "compiler_rule": "C3M_L1_VIEW_INPUT_COVERAGE"}, "controls": {"positive": ["known ARN to entity mapping"], "negative": ["unresolved member silently dropped"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L1-C03", "claim": "SUBSTRATE-ABSENT and GENUINELY-UNADDRESSED return distinguishable structured outcomes.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["failure_discrimination.distinct"], "threshold": true, "compiler_rule": "C3M_L1_FAILURE_DISCRIMINATES"}, "controls": {"positive": ["known mapped reference resolves"], "negative": ["missing substrate and genuine negative fire different codes"]}, "unmeasurable_reason": null, "resolution_owner": null},
-        {"criterion_id": "L1-C04", "claim": "Mapping refresh has an exercised cadence and named owner.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["cadence.exercised", "owner.resolves"], "threshold": true, "compiler_rule": "C3M_L1_CADENCE_OWNED"}, "controls": {"positive": ["scheduled mapping refresh with receipt"], "negative": ["declared schedule never exercised"]}, "unmeasurable_reason": null, "resolution_owner": null}
+        {"criterion_id": "L1-C04", "claim": "Mapping refresh has an exercised cadence and named owner.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["cadence.exercised", "owner.resolves"], "threshold": true, "compiler_rule": "C3M_L1_CADENCE_OWNED"}, "controls": {"positive": ["scheduled mapping refresh with receipt"], "negative": ["declared schedule never exercised"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C05", "claim": "Firm-qualified symbol identities retain firm through canonical roll-up; a lossy prefix strip cannot merge entities across firms.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["cross-firm canonical identity collisions after roll-up"], "threshold": 0, "compiler_rule": "C3M_L1_FIRM_IDENTITY_PRESERVED"}, "controls": {"positive": ["pipeline:bd:gold and pipeline:inf:gold remain distinct"], "negative": ["bare gold resolves to three firm pipelines after prefix strip"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L1-C06", "claim": "Each identity space has either an adjudicated scoped denominator or an unresolved denominator with its missing discriminator named; observed unions, PRD counts, and single-substrate counts cannot masquerade as the entity population.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["denominator_status is adjudicated or unresolved", "adjudicated carries count sources and exclusions", "unresolved carries sources missing discriminator and no count"], "threshold": true, "compiler_rule": "C3M_L1_POPULATION_BASIS"}, "controls": {"positive": ["file denominator 374 scoped to filesystem sweep", "arn and chain motif observations remain unresolved denominators"], "negative": ["prd 1851 accepted because one substrate also has 1851", "count attached to unresolved symbol denominator", "denominator missing source or exclusions"]}, "unmeasurable_reason": null, "resolution_owner": null}
       ]
     },
     {
@@ -485,9 +605,14 @@
       "decision_id": "DEC-01",
       "semantic_dimension": "identity_grain",
       "selected_value": "every_entity",
+      "identity_scope": "plane_qualified",
+      "canonical_coordinate": "ordered_pair_plane_entity",
+      "cross_plane_comparison": "explicit_bridge_only",
+      "cross_plane_comparison_demand": "none_measured",
+      "declared_bridge_pair_count": 0,
       "authority_ref": "1.0.0_SA_CTO~X",
-      "evidence_message": "74841",
-      "not_decided_dimensions": ["membership_model", "identity_form"]
+      "evidence_message": "74841 refined by DT~X 75039 at 16cd74c870",
+      "not_decided_dimensions": ["membership_model", "identifier_encoding_and_minting"]
     }
   ],
   "open_decisions": [
