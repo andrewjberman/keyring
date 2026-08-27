@@ -27,3 +27,45 @@
 - 20260827T154430Z LEG L4 closed: Fired via /mdpf-refresh gold (the SKILL, per issuer correction msg 9218 [STOP HAND-INVOKING] -- Build Ladder rung 2), NO
 - 20260827T154430Z LEG L5 closed: SERVED ARTIFACT CARRIES 08-26, READ FROM THE PAYLOAD BYTES NOT THE KEY NAME (D8's thesis). Downloaded s3://opal-data-por
 - 20260827T154430Z CLOSED -- all 5 legs proven
+
+---
+
+## POST-CLOSE CORRECTION -- 2026-08-27, `0.7.0_AE_CloudOps~Z`
+
+**L5's proof said "All four scopes PASS at target 2026-08-26." That is TRUE and INCOMPLETE, and the
+incompleteness is on the client-facing surface, so it is corrected here rather than left to stand.**
+
+`PASS` is a verdict about `as_of_last` + write freshness. It says nothing about whether the
+underlying contribution is REAL or CARRIED. Verified on the SERVED bytes after
+`1.0.0_SA_CTO~Z`'s conflict investigation:
+
+    platinum/mdpf/global/aggregate-aua-timeseries.json  (written 2026-08-27T15:42:49Z)
+      as_of_last                = 2026-08-26                      <- why it reads PASS
+      cohort_provenance[-1]     = date=2026-08-26,
+                                  cottonwood="carried_at_declared_cadence(as_of=2026-08-25)"
+      meta.cottonwood_carry     = n_carried: 9,
+                                  carried[-1] = ['2026-08-26','2026-08-25']
+
+**So the served `global` aggregate carries cottonwood from 08-25 while reporting as-of 08-26.** The
+accurate recomputation exists but is one of the 3 CONFLICT-HELD `global` gold keys, so the guard is
+serving the carried version and holding the accurate one. That is the guard behaving correctly; it
+is not a defect introduced by this run.
+
+⛔ **SCOPE OF THE CORRECTION, because the tempting overstatement is wrong: COTTONWOOD'S OWN SCOPE IS
+ACCURATE.** `platinum/mdpf/cottonwood/` was independently verified to carry REAL 08-26 data
+(`as_of_last=2026-08-26`, `dates[]` ending 08-21/08-24/08-25/08-26). Andrew's ask is satisfied. Only
+the firm-level `global` aggregate carries.
+
+**INDEPENDENT CORROBORATION OF THE R1 FINDING, from an artifact nobody built for that purpose:** the
+same carry ledger records `['2026-08-20','2026-08-19']` and `['2026-08-21','2026-08-19']` --
+cottonwood carried from 08-19 on the days following the OTHER post-kill mint-day gap. **A completely
+separate instrument, on a different plane, records the same failure pattern the SSM command history
+showed 4-for-4.** Neither was built to detect it.
+
+⚠ **SURFACED, NOT CHASED:** `n_carried: 9` means the carry mechanism has fired nine times, which is
+more than the two post-kill mint-day gaps account for. Whether the other seven have the same cause is
+NOT established here and is not this seat's to establish.
+
+**HOLD IN FORCE:** `--reland` is NOT to be run, not even the dry run, pending Andrew -- the tool
+selects all 9 conflicts with no per-key scoping, so it cannot execute the 3-not-9 disposition he
+authorized. That fork is at Andrew (`1.0.0_SA_CTO~Z` msg 9226). This seat has run no reland of any kind.
