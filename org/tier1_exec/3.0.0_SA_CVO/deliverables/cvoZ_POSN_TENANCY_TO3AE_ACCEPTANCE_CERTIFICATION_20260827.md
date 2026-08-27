@@ -115,3 +115,55 @@ grains and adjudicate neither.
 - **I did not re-run the AWS or edge measurements.** I re-derived the **serving-path** claim at source
   and added the `/api/scoped/` control; the rest is accepted as measured with the instruments named.
 - **`718fa3d3de` is LOCAL** and `0.0.0_AB_MSTR~Z` integrates (LD-0367).
+
+---
+
+# AMENDMENT 1 — ~22:0xZ — I OVER-CLAIMED ON THE BYTE COUNT. VERDICTS UNCHANGED.
+
+**§2 above says the 8,088-byte figure is *"the discriminator, not a summary"* and that *"the artifact
+exhibits its own plane."* That is wrong, and both measuring seats saw it before I did.**
+
+`0.7.0_AE_CloudOps~Y`: *"My s.1 claim that the served bytes ARE that key rested on a byte COUNT. **A
+count is a weak identity.**"* · `0.4.0_DS_ClientPlatform~L`: *"**a size match is a coincidence
+candidate, an ETag match is not.**"*
+
+>> ⛔ **A MATCHING LENGTH IS NOT A MATCHING OBJECT. I took two seats independently reporting 8,088 as
+   CORROBORATION when it is ONE WEAK PROPERTY MEASURED TWICE** — the exact *N-seats-one-rung* failure
+   I cited to three seats tonight, committed inside a certification. <<
+
+## AND THE PROPOSED UPGRADE DOES NOT CLOSE IT — THE VALUES ARE NOT COMPARABLE
+
+```
+AE~Y measurement :77   "sha256 8ec27506f7168c084b34a20f70fc3dbc"   32 hex = 128 bits
+DS~L s3api ETag         "8c27325ff6a08e1ea6466cae172ff534"          32 hex = 128 bits
+A REAL sha256 IS 64 HEX CHARS.       MATCH? No.
+```
+
+**Exactly one of three is true and NONE establishes identity:** the label is wrong and it is an MD5
+(→ comparable, and it **does not match**); the label is right and the value is **truncated**
+(→ not comparable); or it hashes a **different representation** — decompressed body vs stored gzip
+(8,088 B stored / 73,424 uncompressed) (→ not comparable).
+
+⛔ **Option 3 is likeliest AND is the trap: an ETag is MD5 of the bytes AS STORED; a client hash is of
+the bytes AS RECEIVED. Through a CDN that may decompress, those differ BY CONSTRUCTION — so the
+obvious comparison is unsound even when both values really are MD5.**
+
+**NOBODY HAS COMPUTED A COMPARABLE PAIR.** A reader of *"the identity evidence was upgraded"* would
+conclude the question is settled. **It is not** — **an upgrade was offered in a currency the other
+measurement was not denominated in.** *What would close it: MD5 of the received bytes in their stored
+form, against the ETag, with the `VersionId` pinned.*
+
+## PROPORTION, AND WHAT SURVIVES
+
+⚠ **Andrew ~21:52Z — *"all of Positioning is general, it was always meant to be a general page"* —
+means the served object's identity no longer decides whether there is a leak.** It mattered when the
+question was *"did a Cottonwood user receive someone else's bytes."* **The answer is now: everyone
+receives the same general page BY DESIGN.** The identity question is now **evidence hygiene**, and
+should be closed for that reason rather than dropped for the other one.
+
+## SCOPE OF THIS AMENDMENT
+
+⛔ **THE ACCEPTANCE STANDS AND NOT ONE VERDICT MOVES.** No criterion rests on the identity claim —
+`AC1` FAILs because there is **no firm-discriminated plane at all**, measured independently at **5 of
+5 fetch sites** with a 47-occurrence `/api/scoped/` control. **The over-claim is in my COMMENTARY, not
+in the verdicts.** *Naming which half moved is the whole point of correcting it.*
