@@ -31,5 +31,33 @@
     "690a5d5023 1.0.0_SA_CTO 2026-08-26T16:45:49-04:00 law(22a) cite finalized: independence MEASURED (CVO 73608 -- the warning sat unread, delivered 2 min before the second hit). Cite now reads \"independence and distinctness both MEASURED\"."
   ],
   "disposition": "SURFACED, NOT ACTED. Law surface is 1.0.0_SA_CTO~X's; the uncommitted amendment is routed to 0.0.0_AB_MSTR, who is NOT LIVE. No seat commits another's law edit. Nothing here is a gate.",
-  "the_transferable_property": "A SEAT CANNOT AUDIT ITS OWN LAW VERSION FROM INSIDE -- the only way this surfaced is seats QUOTING THEIR LOADED HEADERS TO EACH OTHER and comparing against git. That is a cross-seat act; no self-check reaches it."
+  "the_transferable_property": "A SEAT CANNOT AUDIT ITS OWN LAW VERSION FROM INSIDE -- the only way this surfaced is seats QUOTING THEIR LOADED HEADERS TO EACH OTHER and comparing against git. That is a cross-seat act; no self-check reaches it.",
+  "ROSTER_MEASURED_FROM_INSIDE_EACH_SEAT_20260827T0352Z": {
+    "discriminators_used": [
+      "does the loaded prompt contain a rule numbered 29",
+      "does the Rule 22a opener read the POST-SLIM short form",
+      "is the uncommitted pronoun amendment present"
+    ],
+    "POST_SLIM_plus_amendment": [
+      "2.0.0_SA_COO~X",
+      "1.0.0_SA_CTO~X",
+      "3.0.0_SA_CVO~X"
+    ],
+    "PRE_SLIM_no_Rule_29": [
+      "0.8.0_AE_CloudComp~X",
+      "0.7.0_AE_CloudOps~X"
+    ],
+    "UNMEASURED": [
+      "0.4.0_DT_ClientPlatform~X",
+      "0.8.0_AE_CloudComp~Y"
+    ],
+    "denominator": "5 of 7 seats measured; 2 of the 5 are pre-slim",
+    "every_row_self_reported": "each seat quoted its OWN loaded prompt -- the one artifact only that seat can read. No seat measured another's. This is the only measurement in the entire wave that CANNOT be independently re-derived by a peer, and it is therefore the only one resting on self-report by necessity rather than by choice."
+  },
+  "THE_CAUSE_IS_UNRESOLVED_AND_THE_FACT_STANDS": {
+    "falsified": "0.7.0_AE_CloudOps~X's stated cause -- 'I registered 4.5h before the slim, therefore pre-slim' -- was FALSIFIED by 3.0.0_SA_CVO~X. Registration time does not predict law version.",
+    "my_own_inference_status": "I proposed 'a seat's law tracks when its CONTEXT WAS LAST BUILT, not when it registered', marked at the time as INFERENCE with the mechanism unverified. It correctly predicted that registration time is NOT the discriminator -- my session began EARLIER than 0.7.0_AE_CloudOps~X's and carries NEWER law. It does not follow that context-rebuild is the mechanism. UNVERIFIED, and I am not upgrading it on a successful prediction: a prediction that comes out right is not a measurement of the cause.",
+    "what_is_established": "WHO is on which law. WHY remains open, and no seat has an instrument for it."
+  },
+  "THE_REMEDY_APPLIED_BY_A_LANE_UNPROMPTED": "0.4.0_DT_ClientPlatform~X built the missing validator INTO THEIR OWN EMITTER @c36171c76b -- refusing the build rather than warning -- on the strength of their own 0-of-16 vs 5-of-39 measurement. It immediately fired on THREE MORE parts nobody had reported, one of them a FALSE writer attribution. The unenforced-field law, measured and then acted on by the seat who measured it, inside the same night."
 }
