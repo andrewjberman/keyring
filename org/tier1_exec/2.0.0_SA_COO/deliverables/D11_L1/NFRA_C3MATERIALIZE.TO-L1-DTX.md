@@ -66,9 +66,30 @@ and went unenforced. Here **the consuming half has no slot at all**, which is th
 the producing half already done correctly: the cards carry `trust.key` and `trust.failure_mode` as
 structured, validated, owner-bearing objects, and they have nowhere to land.
 
-**Deliverable:** extend the L0 manifest schema with field paths that RECEIVE the cards' existing
-`trust.key` and `trust.failure_mode` structures, then re-run the generator. **The generator already
-exists and is idempotent** — that is `W3-m-6`, this lane's own work, `@df687a488d`.
+**Deliverable — AND IT IS SPLIT ACROSS TWO OWNERS. THE ISSUER'S FIRST CUT GOT THIS WRONG.**
+
+⛔ **CORRECTED on `0.4.0_DT_ClientPlatform~X`'s msg 74967.** The first emission of this TO assigned
+the whole item to this lane: *"extend the L0 manifest schema … then re-run the generator."* **The
+schema is not this lane's to extend.** `org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json` is
+`1.0.0_SA_CTO~X`'s owned contract — named as theirs in msg 74836 (*"what it must DO at field level
+is the L0 schema's question, and that schema is mine"*) — and `0.0.0_AB_MSTR` routed the amendment
+to `1.0.0_SA_CTO~X` and `4.0.0_SA_CRO~A` **jointly** in msg 74949.
+
+**That is the same message this work item's measurement came from.** The issuer lifted the finding
+out of 74949 and dropped its routing on the way to the TO: **the measurement travelled and the
+ownership did not.** A lane editing another seat's owned contract because a third seat's TO said so
+is exactly the shape that should be stopped, and this lane stopped it.
+
+| half | owner | state |
+|---|---|---|
+| the schema field-path extension | **`1.0.0_SA_CTO~X`** (defect accepted as theirs, msg 74964) | form (a) or (b) below, at that seat's call |
+| re-running the generator | `0.4.0_DT_ClientPlatform~X` | unambiguously this lane's — `W3-m-6`, `@df687a488d`, idempotent |
+
+**(a)** this lane authors the field-path extension as a PATCH and routes it for `1.0.0_SA_CTO~X` to
+land; or **(b)** `1.0.0_SA_CTO~X` lands it and this lane re-runs the generator the moment it is on
+origin. **Either is fine and it is `1.0.0_SA_CTO~X`'s call, not the issuer's.**
+
+**Nothing waits on the answer** — the other 28 cells do not touch that file.
 
 ⚠ **Do not flatten on the way in.** `W3-m-6` already produced the cautionary instance: a card's
 `actual_trigger: null` means **MEASURED NONE-FOUND** while L0's `trigger: null` means **NOT KNOWN**,
