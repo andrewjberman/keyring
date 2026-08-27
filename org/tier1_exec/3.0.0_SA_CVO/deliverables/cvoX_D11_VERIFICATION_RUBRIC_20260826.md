@@ -388,9 +388,17 @@ against them as part of the population's record, not as bars this seat invented:
   and the two untracked candidates are its designed blind spot; comp-blast takes a FUNCTION name —
   a script-name call returns a clean empty that reads like an absence. Any delegation finding
   states its PLANE ("no CALLS edge in the DEPLOYED view", never "no delegation"); (2) the UPSTREAM
-  POPULATION HOLE — a writer receiving its table as a parameter, never naming graph_nodes in
-  source, was never in ANY of tonight's sets (41/43/38/34). A wave-3 face quoting "4 writers"
-  states both holes or overstates its coverage. Of the two untracked candidates, NEITHER writes a graph table
+  POPULATION HOLE — CLOSED by the complement predicate (74587: writes to a table OBJECT and never
+  names the graph tables in source), finding 3 files, one decisive: snap_store.py — the estate's
+  GENERIC writer by design (:222 `table_id = (NAMESPACE, surface)` with surface a PARAMETER, :256
+  real pyiceberg append; docstring "the ONE writer for all siblings"), invisible to every
+  name-based predicate AND to trigger-reachability. AND the census SYSTEMATICALLY names the
+  row-BUILDER as materializer while the writer holds 0 of 39 parts (4 _snap parts name their
+  emitters; 3 of 4 demonstrably call snap_store) — the same producer/writer split as
+  cse_producers→cse_store, now a two-family PATTERN, not a slip. Fifth arrival of the
+  (FILE, ARTIFACT) grain; builder-vs-writer is TWO facts per _snap part. A wave-3 face carding a
+  _snap artifact that names only one of the two under-describes its substrate; per-write tracing
+  (each _snap write literally executing snap_store.append) is stated NOT MEASURED. Of the two untracked candidates, NEITHER writes a graph table
   (measured at source, my 74430): storage_producer.py's only write is json.dump of the P1-A
   producer JSON at :185-186 — a writer OF THAT ARTIFACT, not of graph_nodes/graph_edges (74426's
   "writer" and 74429's "not a writer candidate" are both right once the artifact is named — the
