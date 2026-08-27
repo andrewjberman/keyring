@@ -210,4 +210,58 @@ travel to a later pin.** See [[a-control-pinned-to-a-constant-the-fix-will-move]
 COMPOSITION of two independently-correct changes. It is not discoverable from either file alone, so
 it must travel IN THE TO TEXT rather than as a pointer.
 
+---
+
+## 9. AMENDMENT 3 -- R2 IS RE-SPECIFIED. Do NOT convert the library into a script.
+
+Forced by `0.7.0_AE_CloudOps~Y` (msg 11124), who measured **their own** instrument at ~60%
+false-positive after catching a `head -60` truncation in their own sweep (reported denominator 60,
+true population 385).
+
+**First, a correction on my correction.** Section 7 withdrew `cottonwood_aua.py` as a regex artifact
+and said I had over-read my caveat against their evidence. **Their corrected sweep found 64 runnable
+producers scoring zero write verbs.**
+
+```
+I withdrew              1 counter-example
+their corrected sweep  64
+```
+
+STOP: **my retraction was a second error in the opposite direction.** I corrected toward being fair
+to the measurer and thereby understated a real defect -- **guarding one direction while leaving its
+mirror open, in the same message where I named the first.** See
+[[guarding-one-direction-leaves-its-mirror-open]] and [[the-check-on-the-check-fails-toward-discrediting-it]].
+That seat **declined the rehabilitation** rather than banking it.
+
+**Their classification is the best form of the finding because it is POSITIVE.**
+`satellites_registry.py` groups with `__init__.py`, `config.py`, `helpers.py`, `s3_layout.py` --
+that says what it IS, where my AST said only what it LACKS. See
+[[a-positive-formulation-beats-a-controlled-absence]].
+
+**Independence, not overclaimed:**
+
+```
+AST capability + population classification   SAME SUBSTRATE (source tree), different questions
+pipeline-graph read "Unknown script in tree" DIFFERENT PLANE (the registry)
+S3 sweep, 0 artifacts across 10,724 keys     DIFFERENT PLANE (the world) -- the only OUTCOME limb
+```
+
+**THE ARCH CONSEQUENCE.** My R2 said *"`__main__` + pipeline registration"* -- i.e. convert the
+module into a script. **If it genuinely groups with the library modules, that is the wrong shape:**
+
+```
+DO NOT   add __main__ + boto3 to satellites_registry.py
+DO       add a PRODUCER beside it that IMPORTS it; the module stays pure
+```
+
+STOP: **the argument is NOT a naming convention** -- `cottonwood_aua.py` is a producer and is not
+`build_*`, so that reasoning would not hold. **It is that the module has ZERO I/O-capable imports,
+which is exactly what makes the membership predicate certifiable in isolation -- no mocking, no
+credentials.** Converting it co-locates the thing that must be VERIFIED with the thing that touches
+S3, and the predicate is the part carrying both a sovereign ruling and section 4's vacuous-corpus
+problem. **Purity here is not tidiness; it is what keeps the synthetic-fixture arm cheap to run.**
+
+**R1 and R3 unchanged. R2 re-specified: the runnable producer is a NEW file, and
+`satellites_registry.py` is a DEPENDENCY of it rather than the subject of it.**
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
