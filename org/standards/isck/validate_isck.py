@@ -216,6 +216,10 @@ ATTACK_TARGETS = {
     "entity.smuggled-field": ["legacy_name"],
     "binding.closed-null-valid_to": ["valid_to"],
     "bridge.admitted-no-evidence": ["evidence_refs"],
+    "bridge.origin-no-evidence": ["evidence_refs"],
+    "bridge.corroborated-no-evidence": ["evidence_refs"],
+    "bridge.contradicted-no-adjudicator": ["adjudicated_by"],
+    "bridge.superseded-no-successor": ["superseded_by"],
     "bridge.held-no-named-item": ["held_on"],
     "bridge.inadmissible-no-owner": ["store_owner"],
     "bridge.rejected-no-adjudicator": ["adjudicated_by"],
@@ -353,8 +357,19 @@ def _mutants():
         binding_basis="model_inferred", evidence_refs=_DEL)
     # R2-8 BRIDGE_ASSERTION (the first load-bearing consumer; CV-1's carried requirement lands)
     add("bridge.admitted-no-evidence", "bridge_assertion", ["required"],
-        registry_standing="admitted", verification_standing="corroborated",
-        adjudicated_by="3.0.0_SA_CVO~X", evidence_refs=_DEL)
+        registry_standing="admitted", claim_origin="producer_declared",
+        verification_standing="unverified", evidence_refs=_DEL)
+    add("bridge.origin-no-evidence", "bridge_assertion", ["required"],
+        evidence_refs=_DEL)
+    add("bridge.corroborated-no-evidence", "bridge_assertion", ["required"],
+        verification_standing="corroborated", claim_origin="producer_declared",
+        evidence_refs=_DEL)
+    add("bridge.contradicted-no-adjudicator", "bridge_assertion", ["required"],
+        verification_standing="contradicted", registry_standing="held",
+        held_on="pending-contest-evidence")
+    add("bridge.superseded-no-successor", "bridge_assertion", ["required"],
+        verification_standing="superseded", claim_origin="producer_declared",
+        evidence_refs=_DEL, registry_standing="retired")
     add("bridge.held-no-named-item", "bridge_assertion", ["required"],
         registry_standing="held")
     add("bridge.inadmissible-no-owner", "bridge_assertion", ["required"],
