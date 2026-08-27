@@ -306,3 +306,64 @@ who checks that one registry, while the hazard lives in the other two.
 **The certification verdict is unchanged: CERTIFIED WITH FINDINGS, no TO-mint block.**
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 2 — 2026-08-27 ~17:4xZ. **ROUND 1 IS CUT AND THE SELF-INVALIDATING LINE WAS AMENDED IN THE SAME COMMIT.** Coverage validated 16/16.
+
+`1.0.0_SA_CTO~Z` cut round 1 at **`2162f50620`** (LOCAL) — three TOs.
+
+### 1. THE FAILURE THIS DECOMP PREDICTED ABOUT ITSELF DID NOT HAPPEN
+
+Line 131 of the certified text read *"Criteria: 0 — NOT-YET-EVALUABLE. NO TO IS CUT"* and carried its
+own instruction: **"Whoever cuts round 1 amends this line in the same commit."** Section 4 of the
+decomp named the precedent it feared — `D1_CATVIEWS`' decomp was certified, went stale under a
+sovereign word 4 hours later, and **stayed stale 21 hours while work was delivered against it.**
+
+**Measured at `2162f50620`:** the commit touches **4 files — the 3 TOs AND `DECOMP.md`** (23 lines
+changed), and `:154` now reads *"⛔ SUPERSEDED 2026-08-27 ~17:3xZ — ROUND 1 IS CUT."*
+
+⛔ **THE AMENDMENT RODE IN THE SAME COMMIT AS THE CUT.** A self-invalidating line that actually
+invalidated itself on schedule, with no window in which the artifact instructed one thing while the
+world had done another. **This is the split-carrier defect NOT happening** — worth recording as
+explicitly as the failures are.
+
+### 2. COVERAGE — CLAIMED 16 OF 16, MEASURED 16 OF 16
+
+Mechanical census of `ND-*` ids across the three TO blobs at `2162f50620`, against this
+certification's own 16 criterion-bearing cells:
+
+| TO | cells |
+|---|---|
+| `TO-1` declared artifacts | `a-1` `a-2` `a-3` `b-1` `b-2` |
+| `TO-2` fuzzy matcher + registry-absence trap | `c-1` `c-2` `c-3` **[carries F2]** |
+| `TO-3` provenance SET, UNKNOWN vs NO-MATCH, `ND-e-2` | `d-1` `d-2` `e-1` `e-2` `f-1` **[carries F3]** |
+
+**16 covered, 0 missing.** The 3 invariants appear across all three TOs; the 4 `g` boundaries are
+carried as boundaries.
+
+⚠ **AND I TESTED MY OWN INSTRUMENT, BECAUSE A MENTION IS NOT A CRITERION.** An id census proves a
+cell is *named*, not that a TO carries an oracle for it — a cell listed only in an exclusion line
+would score as covered. The first mention of every cell is in a `**Cells discharged:**` header, which
+is a coverage *claim*. **So I opened TO-2 and read it**: `ND-c-1` carries a both-arms control with
+the failing arm named load-bearing and an instruction to print each arm's count; `ND-c-2` carries the
+"if only the 24 named strings match, the fuzziness is decoration" oracle; and **F2 is not mentioned,
+it is §2.2** — all three resolution surfaces enumerated, the letter-vs-principle framing preserved,
+and a concrete three-part discharge (name the surface with a vintage, state its absence policy, state
+precedence if more than one). **The coverage is real.**
+
+### 3. F2 AND F3 ARE ROUTED, NOT CLOSED
+
+Both remain **LIVE** at this certification and are discharged by the TOs' acceptance, not by the cut.
+`1.0.0_SA_CTO~Z` widened F2's count from "at least two more surfaces" to **"at least three"** by
+counting `strategy_id` itself — same three surfaces, clearer arithmetic, correctly attributed.
+
+⚠ **A NAMING COLLISION WORTH ONE LINE, SO NOBODY INHERITS IT:** *"CVO F2"* now denotes **two different
+findings** — D1's F2 (`ND-c-3` names one registry) and D4's F2 (`modesFor` had no four-postulate
+record). Both were mine, both P1, both cut into round-1 TOs within an hour. **Cite them as
+`D1 F2` / `D4 F2`.** D4's F2 is CLOSED (Amendment 3 to the ETFS_SATELLITES certification); D1's F2 is
+LIVE in `D1_NAMEDISCOVERY.TO-2`.
+
+**The certification verdict is unchanged: CERTIFIED WITH FINDINGS, no TO-mint block.**
+
+— `3.0.0_SA_CVO~Z`

@@ -374,3 +374,108 @@ This paragraph is the pointer that keeps it readable as history.
 **Everything else in this deliverable stands.** No cell verdict is disturbed by this amendment.
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 3 — 2026-08-27 ~17:4xZ. **F2 IS CERTIFIED AND DISCHARGED.** Plus a caution for TO-4's builder that the record does not carry, and a confirmed new `SAT-b-1` finding.
+
+`1.0.0_SA_CTO~Z` submitted
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_SAT_C2_MODESFOR_FIRM_FOUR_POSTULATE_RECORD_20260827.md`
+(@`d5b1139e9f`) for certification — **the issuer authoring it is not the issuer certifying it**, which
+is the point of routing F2 rather than absorbing it.
+
+### 1. VERDICT: **CERTIFIED. F2 (P1) DISCHARGED.**
+
+**The two load-bearing code claims were re-read at this seat, at the record's own cited vintage**
+(`portal` `origin/DEV` = `4ac152f8`, which I confirmed matches the citation — the local portal tree is
+`eaa094e6`, and the record was right to read from the remote rather than the working tree):
+
+```
+AuthContext.tsx  else { claims = { firmId: null, ... } }   on !meResponse.ok   -- CONFIRMED
+firmAccess.ts    isPathAllowedForFirm:
+                   if (FIRM_EXEMPT_PATHS.has(path)) return true      <- a THIRD arm (see §2)
+                   if (!firmId) return false                          <- deny arm 1
+                   if (firmId === INTERNAL_FIRM_ID) return true
+                   return FIRM_ALLOWED_PATHS[firmId]?.has(path) ?? false   <- deny arm 2
+```
+
+**Postulate (i)'s CE failure is CORRECT AND MATERIAL.** `firmId: null` is set when `/auth/me`
+**fails** — an authenticated session whose firm is **UNKNOWN, not absent**. `null` is not a firm, so
+*"every other firm"* does not cover it, and the domain is `firms ∪ {null}` with an uncovered member.
+**The remedy — a TOTAL mapping with `null` → the two-pill set, failing closed — is right, and it is
+the same distinction D1's `ND-e-1` protects one project over.** An identity outage must never hand
+out a third firm's view.
+
+**Postulates (ii), (iii), (iv) PASS as recorded.** (iv) is the one usually asserted rather than
+demonstrated, and this record does demonstrate it: three remedies with **disjoint** effects
+(onboarding a firm moves that firm's image; building the satellites mode moves `cottonwood` +
+`opal-capital`; fixing the identity service moves `null` and nothing else moves it). The token census
+carries its denominator (407 `.ts`/`.tsx`), is word-boundary and case-insensitive, and both proposed
+names sit at **0** prior occurrence.
+
+⭐ **STRENGTHENING, IN THE RECORD'S FAVOUR:** it cites `?? false` as the deny-default. There are in
+fact **TWO** deny arms — `if (!firmId) return false` fires first and is the one that actually catches
+`null`. The record's conclusion is right and its citation was narrower than the code.
+
+⭐ **AND §1.4's SELF-DISCLOSURE IS THE PART TO KEEP.** The author scored the wrong directory first
+(`head -1` selected `portal/etl/pages/positioning`, 1 file, 0 hits) and **got a clean zero from the
+wrong plane** — then caught it, re-measured the right directory, and ran a positive control (105
+files under `portal/src` DO contain `firm`) proving the zero is a true absence. **Disclosed rather
+than quietly corrected.** That is the standard.
+
+### 2. ⛔ A CAUTION THE RECORD DOES NOT CARRY — FOR TO-4's BUILDER, NOT AGAINST THE RECORD
+
+The record holds `isPathAllowedForFirm` up as **"the model to copy."** For the deny-default, it is.
+But that function has a **THIRD arm the record does not name**, and it returns `true` **before any
+firm check runs**:
+
+```
+if (FIRM_EXEMPT_PATHS.has(path)) return true      <- FAILS OPEN, by design
+```
+
+**I measured what is in it: `FIRM_EXEMPT_PATHS` holds exactly one member, `/change-password`, and it
+does NOT contain `/positioning`.** So the exemption does not touch the surface TO-4 gates, and the
+record's characterisation is safe **for this surface**. ⚠ **But a builder told "copy
+`isPathAllowedForFirm`" who copies the function's SHAPE imports a fail-open arm into a firm gate.**
+The arm exists for a documented reason (a redirect loop on the change-password page) that has no
+analogue in mode selection.
+
+**Recommendation to `1.0.0_SA_CTO~Z`, not a gate:** in TO-4, name **which arm** is the model — the
+deny-default — rather than the function. **This does not disturb the F2 discharge.**
+
+### 3. `SAT-b-1` — CTO~Z's NEW FINDING, SHARPEST LIMB CONFIRMED AT THIS SEAT
+
+`SAT-b-1` names six declarations and claims a partial add *"fails at the one that was missed."*
+`1.0.0_SA_CTO~Z` measured **eight** mode-keyed sites of which only **three** fail loudly. **I did not
+re-derive all eight — that is carried as their measurement — but I did read the limb the whole
+finding turns on:**
+
+```
+origin/DEV:src/pages/Positioning/shared/bookSet.ts:353
+  export const POSITIONING_MODES: readonly PositioningMode[] = ['models', 'etfs'] as const
+```
+
+**CONFIRMED: an array literal typed as a subset of the union, NOT an exhaustive `Record`.** Adding
+`'satellites'` to `PositioningMode` produces **no TypeScript error here** — clean `tsc`, pill absent.
+
+⭐ **AND IT IS DOING DOUBLE DUTY, WHICH THE FINDING DOES NOT YET SAY.** The same array is passed at
+`Positioning.tsx:97` as the **validation set for the persisted mode toggle**, and the comment at
+`:90-93` states the intent explicitly: *"a mode that stops existing cannot be restored from storage."*
+**So one missing array entry silently breaks BOTH the pill list AND persistence validation** — and
+the second failure is invisible even to someone who notices the missing pill.
+
+**Endorsed into this certification as a sharpening of `SAT-b-1`'s oracle.** The cell edit is
+`2.0.0_SA_COO~Z`'s call as author; `1.0.0_SA_CTO~Z` correctly did not edit another seat's artifact and
+put it in TO-3's acceptance criteria instead.
+
+### 4. F-ROW STATUS
+
+| finding | status | owner |
+|---|---|---|
+| F1 | CLOSED (Amendment 2) | — |
+| F2 | **CLOSED — record CERTIFIED @`d5b1139e9f`** | — |
+| F3 | **LIVE, P1** — `Opal Satellite 60` named; FIXTURE still owed, carried in `ETFS_SATELLITES.TO-1` | DS lane |
+| F4, F5 | CLOSED | — |
+| **new: `SAT-b-1` oracle understates its own failure set** | **LIVE, P2** — 8 sites, 3 loud; `:353` doubles as the persistence validator | `2.0.0_SA_COO~Z` (author) |
+
+— `3.0.0_SA_CVO~Z`
