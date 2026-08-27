@@ -23,8 +23,20 @@
       "CTO~X L0 premise correction 74821",
       "CTO~X wave3 compile-shape measurement 74837",
       "CTO~X identity-grain ruling 74841",
-      "CTO~X L1 release-precondition measurement 74943"
+      "CTO~X L1 release-precondition measurement 74943",
+      "DT~X L0 document-kind discrimination 74946",
+      "MSTR operative-schema mismatch 74950",
+      "COO~X operative-status question 74953",
+      "MSTR three-finding scope 74960",
+      "CTO~X operative-schema mismatch verification 74963"
     ]
+  },
+  "contract_status": {
+    "adoption_state": "proposed",
+    "operative_gate": false,
+    "work_start_effect": "non_blocking_design_constraint",
+    "l1_work_startable": true,
+    "operative_transition_ready": false
   },
   "mission": {
     "directive": "D11",
@@ -77,6 +89,20 @@
       }
     ]
   },
+  "l0_deliverable_bridge": {
+    "existing_document_kind": "l0_graph_substrate_manifest",
+    "existing_home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json",
+    "existing_governing_schema": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json",
+    "target_document_kind": "l0_substrate_manifest",
+    "target_governing_schema": "schemas/l0_substrate_manifest.v1.schema.json",
+    "target_home_pattern": "generated/c3materialize/{run_id}/l0_substrate_manifest.json",
+    "relationship": "source_input_to_new_projection",
+    "relabel_existing": false,
+    "rehome_existing": false,
+    "new_target_document_required": true,
+    "target_required_section_count": 9,
+    "existing_target_sections_satisfied": ["parts"]
+  },
   "design_measurements": {
     "cover_partition_baseline": {
       "source_path": "kimi_subdivision_harness/c3_structures.json",
@@ -106,14 +132,58 @@
     "l1_release_baseline": {
       "manifest_parts": 42,
       "stores_exact_count": 42,
-      "grain_lower_bound_count": 7,
-      "key_lower_bound_count": 6,
-      "failure_mode_lower_bound_count": 3,
+      "grain_prose_substring_count": 7,
+      "key_prose_substring_count": 6,
+      "failure_mode_prose_substring_count": 3,
       "store_measurement_method": "literal_home_field",
-      "sparse_axis_measurement_method": "substring_lower_bound",
+      "prose_measurement_method": "substring_count_not_semantic_coverage",
+      "operative_schema_field_paths_before_amendment": {
+        "schema_path": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json",
+        "measurement_method": "defined_property_path_extraction",
+        "grain": 0,
+        "key": 0,
+        "failure_mode": 0
+      },
       "release_condition": "structured_store_grain_key_failure_mode_complete",
       "wave3_completion_sufficient": false,
-      "l1_startable": false
+      "l1_work_startable": true,
+      "operative_transition_ready": false
+    },
+    "card_to_part_receiver_grain": {
+      "card_trust_qualifies": "subject_resource",
+      "does_not_qualify": ["card_document", "persisted_artifact_universally"],
+      "part_projection_relation": "exact_one_to_one_subject_id_to_part_id",
+      "ambiguous_missing_or_substring_relation": "explicit_compilation_residue",
+      "grain_settled": true,
+      "ruling_evidence": "CTO~X 74971; CRO~A contract reading and ruling 20260827T075153Z",
+      "measured_projection_baseline": {
+        "trust_cards": 51,
+        "manifest_parts": 42,
+        "raw_exact_subject_id_matches": 5,
+        "ambiguous_target_parts": 1,
+        "cards_rejected_as_ambiguous": 2,
+        "unambiguous_projected_parts": 3,
+        "card_residue": 48,
+        "positive_control": ".comp-graph/baseline.json present in part ids",
+        "evidence": "DT~X 74978"
+      },
+      "landing_sequence": {
+        "strategy": "receiver_before_join",
+        "schema_change": "additive_optional",
+        "post_rerun_part_population": {
+          "total": 42,
+          "declared": 3,
+          "unknown": 39
+        },
+        "post_rerun_card_population": {
+          "total": 51,
+          "projected": 3,
+          "residue": 48
+        },
+        "unknown_satisfies_operative_completeness": false,
+        "future_mapping_effect": "unknown_to_declared_enrichment",
+        "ruling_evidence": "CRO~A ruling on CTO~X 74980"
+      }
     }
   },
   "execution_plan": {
@@ -154,10 +224,14 @@
       {
         "gap_id": "l0_part_semantics_for_l1",
         "required_operation": "populate_structured_grain_key_failure_mode_for_every_part",
-        "implementation_present": false,
-        "task_order_ref": null,
-        "owner_ref": null,
-        "blocks_document_kind": "l1_entity_spine"
+        "grain_contract_settled": true,
+        "schema_extension_present": false,
+        "compiler_population_present": false,
+        "grain_contract_owner": "4.0.0_SA_CRO~A",
+        "schema_extension_owner": "1.0.0_SA_CTO~X",
+        "compiler_population_owner": "0.4.0_DT_ClientPlatform~X",
+        "compiler_task_ref": "TO-L1-DTX work item 1",
+        "prevents_operative_transition": true
       }
     ]
   },
@@ -166,7 +240,7 @@
       "layer_id": "L0",
       "name": "foundational substrate",
       "purpose": "Register the physical artifacts and actor-artifact relations on which every higher layer depends.",
-      "input_document_kinds": ["substrate_entity_registry", "substrate_relation_card"],
+      "input_document_kinds": ["l0_graph_substrate_manifest", "substrate_entity_registry", "substrate_relation_card"],
       "deliverable": {
         "document_kind": "l0_substrate_manifest",
         "governing_schema_target": "schemas/l0_substrate_manifest.v1.schema.json",
@@ -311,7 +385,8 @@
         {"criterion_id": "L0-C06", "claim": "Every admitted substrate relation row is consumed by a named deterministic compiler and represented in the L0 manifest or explicit compilation residue.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 admitted file-artifact relation row ids", "compiled manifest relation row ids plus explicit compilation residue row ids"], "threshold": null, "compiler_rule": "C3M_L0_CARDS_COMPILED"}, "controls": {"positive": ["admitted relation row appears in compiler receipt and manifest output"], "negative": ["wave-3 relation row exists with no compiler consumption or residue"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C07", "claim": "Each consumed row has exactly one transformation class: enrich generation on a resolved existing part or add exactly one new part.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "set_equality", "operands": ["13 consumed relation row ids", "10 enrichment row ids plus 3 addition row ids"], "threshold": null, "compiler_rule": "C3M_L0_TRANSFORM_EXHAUSTIVE"}, "controls": {"positive": ["snap_store row adds one new part"], "negative": ["one row is both enriched and added or is unclassified"]}, "unmeasurable_reason": null, "resolution_owner": null},
         {"criterion_id": "L0-C08", "claim": "The compiler joins structured card artifact references to exact part ids and rejects ambiguous missing or substring-only matches.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "all_resolve", "operands": ["card artifact refs", "exact manifest part ids"], "threshold": null, "compiler_rule": "C3M_L0_EXACT_PART_JOIN"}, "controls": {"positive": ["derive_runner PATH B resolves only graph_contracts"], "negative": ["substring probe also matches graph_edges"]}, "unmeasurable_reason": null, "resolution_owner": null},
-        {"criterion_id": "L0-C09", "claim": "Every manifest part declares structured store grain key and failure-mode semantics before L1 starts.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["manifest parts missing any structured L1 precondition field"], "threshold": 0, "compiler_rule": "C3M_L0_L1_PRECONDITIONS_COMPLETE"}, "controls": {"positive": ["part carries home grain key and typed failure modes"], "negative": ["42-part manifest has only substring floors of 7 grain 6 key and 3 failure-mode matches"]}, "unmeasurable_reason": null, "resolution_owner": null}
+        {"criterion_id": "L0-C09", "claim": "Every source-manifest part declares structured store grain key and failure-mode semantics before an operative L0-to-L1 transition is claimed.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "zero_count", "operands": ["manifest parts missing any structured L1 precondition field"], "threshold": 0, "compiler_rule": "C3M_L0_L1_PRECONDITIONS_COMPLETE"}, "controls": {"positive": ["part carries home grain key and typed failure modes"], "negative": ["operative schema has zero grain key and failure-mode field paths"]}, "unmeasurable_reason": null, "resolution_owner": null},
+        {"criterion_id": "L0-C10", "claim": "A new nine-section l0_substrate_manifest validates its owning schema at its exact generated home and declares the existing 42-part graph manifest as a source input.", "required": true, "measurement_state_at_design": "measurable", "predicate": {"operator": "boolean_true", "operands": ["target instance exists", "target schema validation passes", "source relationship resolves", "exact home matches"], "threshold": true, "compiler_rule": "C3M_L0_TARGET_INSTANCE_EXISTS"}, "controls": {"positive": ["new projection references graph_object_manifest.json as source"], "negative": ["existing graph manifest is relabelled or re-homed as target"]}, "unmeasurable_reason": null, "resolution_owner": null}
       ]
     },
     {

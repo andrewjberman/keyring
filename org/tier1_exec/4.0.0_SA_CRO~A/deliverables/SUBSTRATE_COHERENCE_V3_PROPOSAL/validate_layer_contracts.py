@@ -27,6 +27,15 @@ def load(path: Path) -> dict:
 
 def semantic_errors(document: dict) -> list[str]:
     errors: list[str] = []
+    contract_status = document["contract_status"]
+    if (
+        contract_status["adoption_state"] != "proposed"
+        or contract_status["operative_gate"]
+        or contract_status["work_start_effect"] != "non_blocking_design_constraint"
+        or not contract_status["l1_work_startable"]
+        or contract_status["operative_transition_ready"]
+    ):
+        errors.append("proposed contract cannot gate work or claim an operative transition")
     mission = document["mission"]
     if any((mission["new_directive"], mission["project_mint"], mission["registration_act"], mission["approval_gate"])):
         errors.append("D11 arc cannot mint, register, or introduce an approval gate")
@@ -97,10 +106,68 @@ def semantic_errors(document: dict) -> list[str]:
     release = document["design_measurements"]["l1_release_baseline"]
     if release["stores_exact_count"] != release["manifest_parts"]:
         errors.append("L1 release baseline must retain exact 42-of-42 store coverage")
-    if release["sparse_axis_measurement_method"] != "substring_lower_bound":
-        errors.append("grain key and failure-mode substring counts are lower bounds, not exact coverage")
-    if release["wave3_completion_sufficient"] or release["l1_startable"]:
-        errors.append("wave3 completion cannot release L1 while structured part semantics are incomplete")
+    prose_counts = (
+        release["grain_prose_substring_count"],
+        release["key_prose_substring_count"],
+        release["failure_mode_prose_substring_count"],
+    )
+    field_paths = release["operative_schema_field_paths_before_amendment"]
+    if prose_counts != (7, 6, 3) or release["prose_measurement_method"] != "substring_count_not_semantic_coverage":
+        errors.append("7/6/3 must remain labelled as prose counts, never semantic coverage")
+    if (
+        field_paths["measurement_method"] != "defined_property_path_extraction"
+        or any(field_paths[field] != 0 for field in ("grain", "key", "failure_mode"))
+    ):
+        errors.append("operative schema structurally had zero grain key and failure-mode receiver paths")
+    if release["wave3_completion_sufficient"] or not release["l1_work_startable"] or release["operative_transition_ready"]:
+        errors.append("L1 work may start, but wave3 completion cannot establish operative transition readiness")
+
+    receiver_grain = document["design_measurements"]["card_to_part_receiver_grain"]
+    if (
+        receiver_grain["card_trust_qualifies"] != "subject_resource"
+        or set(receiver_grain["does_not_qualify"]) != {"card_document", "persisted_artifact_universally"}
+        or receiver_grain["part_projection_relation"] != "exact_one_to_one_subject_id_to_part_id"
+        or receiver_grain["ambiguous_missing_or_substring_relation"] != "explicit_compilation_residue"
+        or not receiver_grain["grain_settled"]
+    ):
+        errors.append("card trust may reach PART only through exact subject-resource identity")
+    projection = receiver_grain["measured_projection_baseline"]
+    if (
+        projection["trust_cards"] != 51
+        or projection["manifest_parts"] != 42
+        or projection["raw_exact_subject_id_matches"] != 5
+        or projection["cards_rejected_as_ambiguous"] != 2
+        or projection["unambiguous_projected_parts"] != 3
+        or projection["card_residue"] != 48
+        or projection["unambiguous_projected_parts"] + projection["card_residue"] != projection["trust_cards"]
+    ):
+        errors.append("exact receiver projection must report the 3 populated and 48 residue cards together")
+    landing = receiver_grain["landing_sequence"]
+    part_population = landing["post_rerun_part_population"]
+    card_population = landing["post_rerun_card_population"]
+    if (
+        landing["strategy"] != "receiver_before_join"
+        or landing["schema_change"] != "additive_optional"
+        or part_population["declared"] + part_population["unknown"] != part_population["total"]
+        or card_population["projected"] + card_population["residue"] != card_population["total"]
+        or landing["unknown_satisfies_operative_completeness"]
+        or landing["future_mapping_effect"] != "unknown_to_declared_enrichment"
+    ):
+        errors.append("receiver must land additively before the join while unknown remains non-complete")
+
+    bridge = document["l0_deliverable_bridge"]
+    if bridge["relabel_existing"] or bridge["rehome_existing"] or not bridge["new_target_document_required"]:
+        errors.append("existing graph manifest must remain at home as source to a new target projection")
+    if bridge["existing_document_kind"] == bridge["target_document_kind"]:
+        errors.append("existing graph manifest and target projection must remain distinct document kinds")
+    if bridge["target_required_section_count"] != 9 or bridge["existing_target_sections_satisfied"] != ["parts"]:
+        errors.append("existing graph manifest satisfies only parts of the nine-section proposed target")
+    l0_contract = layers[0]
+    if "l0_graph_substrate_manifest" not in l0_contract["input_document_kinds"]:
+        errors.append("L0 target projection must declare the existing graph manifest as a source input")
+    required_l0_sections = {section["field"] for section in l0_contract["required_sections"]}
+    if len(required_l0_sections) != bridge["target_required_section_count"]:
+        errors.append("L0 bridge section count must equal the target deliverable contract")
 
     execution = document["execution_plan"]
     if set(execution["currently_executable_units"]) != EXECUTABLE_NOW:
@@ -130,11 +197,15 @@ def semantic_errors(document: dict) -> list[str]:
         gap = gaps[0]
         if (
             gap["gap_id"] != "l0_part_semantics_for_l1"
-            or gap["implementation_present"]
-            or gap["task_order_ref"] is not None
-            or gap["owner_ref"] is not None
+            or not gap["grain_contract_settled"]
+            or gap["schema_extension_present"]
+            or gap["compiler_population_present"]
+            or gap["grain_contract_owner"] != "4.0.0_SA_CRO~A"
+            or gap["schema_extension_owner"] != "1.0.0_SA_CTO~X"
+            or gap["compiler_population_owner"] != "0.4.0_DT_ClientPlatform~X"
+            or not gap["prevents_operative_transition"]
         ):
-            errors.append("structured L0 part semantics for L1 remain absent, unordered, and unowned at this observation")
+            errors.append("structured L0 part semantics must preserve settled grain and one owner per remaining act")
 
     checkpoints = document["checkpoint_sequence"]
     if [row["checkpoint_id"] for row in checkpoints] != CHECKPOINTS:
@@ -222,6 +293,16 @@ def semantic_errors(document: dict) -> list[str]:
         or l1_release_criterion["predicate"]["compiler_rule"] != "C3M_L0_L1_PRECONDITIONS_COMPLETE"
     ):
         errors.append("CP-L0-L1 must require structured store grain key and failure-mode completeness")
+    target_instance_criterion = next((
+        criterion
+        for criterion in checkpoints[0]["criteria"]
+        if criterion["criterion_id"] == "L0-C10"
+    ), None)
+    if (
+        not target_instance_criterion
+        or target_instance_criterion["predicate"]["compiler_rule"] != "C3M_L0_TARGET_INSTANCE_EXISTS"
+    ):
+        errors.append("proposed CP-L0-L1 must require a distinct target projection instance")
 
     if document["shared_root_changes"]["made"] is not False:
         errors.append("proposal must not claim shared-root changes before package validation")
@@ -380,13 +461,45 @@ def main() -> int:
     wave3_releases_l1["design_measurements"]["l1_release_baseline"]["wave3_completion_sufficient"] = True
     mutants.append(("wave3-completion-releases-l1", wave3_releases_l1))
 
-    sparse_manifest_startable = copy.deepcopy(document)
-    sparse_manifest_startable["design_measurements"]["l1_release_baseline"]["l1_startable"] = True
-    mutants.append(("sparse-manifest-claimed-l1-startable", sparse_manifest_startable))
+    proposed_contract_blocks_work = copy.deepcopy(document)
+    proposed_contract_blocks_work["contract_status"]["l1_work_startable"] = False
+    mutants.append(("proposed-contract-blocks-l1-work", proposed_contract_blocks_work))
+
+    sparse_manifest_transition_ready = copy.deepcopy(document)
+    sparse_manifest_transition_ready["design_measurements"]["l1_release_baseline"]["operative_transition_ready"] = True
+    mutants.append(("sparse-manifest-claimed-transition-ready", sparse_manifest_transition_ready))
 
     lower_bound_claimed_exact = copy.deepcopy(document)
-    lower_bound_claimed_exact["design_measurements"]["l1_release_baseline"]["sparse_axis_measurement_method"] = "exact_structured_field"
-    mutants.append(("substring-floor-claimed-exact", lower_bound_claimed_exact))
+    lower_bound_claimed_exact["design_measurements"]["l1_release_baseline"]["prose_measurement_method"] = "exact_structured_field"
+    mutants.append(("prose-count-claimed-semantic", lower_bound_claimed_exact))
+
+    prose_promoted_to_field_paths = copy.deepcopy(document)
+    prose_promoted_to_field_paths["design_measurements"]["l1_release_baseline"]["operative_schema_field_paths_before_amendment"]["grain"] = 7
+    mutants.append(("prose-count-promoted-to-field-path", prose_promoted_to_field_paths))
+
+    card_document_key = copy.deepcopy(document)
+    card_document_key["design_measurements"]["card_to_part_receiver_grain"]["card_trust_qualifies"] = "card_document"
+    mutants.append(("card-document-key-projected-to-part", card_document_key))
+
+    substring_relation = copy.deepcopy(document)
+    substring_relation["design_measurements"]["card_to_part_receiver_grain"]["part_projection_relation"] = "substring_match"
+    mutants.append(("substring-relation-admitted", substring_relation))
+
+    joint_owner = copy.deepcopy(document)
+    joint_owner["execution_plan"]["operational_gaps"][0]["schema_extension_owner"] = "1.0.0_SA_CTO~X+4.0.0_SA_CRO~A"
+    mutants.append(("shared-schema-act-jointly-owned", joint_owner))
+
+    clean_three_claimed_complete = copy.deepcopy(document)
+    clean_three_claimed_complete["design_measurements"]["card_to_part_receiver_grain"]["measured_projection_baseline"]["card_residue"] = 0
+    mutants.append(("clean-three-masquerades-as-population-coverage", clean_three_claimed_complete))
+
+    unknown_claimed_complete = copy.deepcopy(document)
+    unknown_claimed_complete["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_satisfies_operative_completeness"] = True
+    mutants.append(("unknown-receiver-claimed-operative-complete", unknown_claimed_complete))
+
+    join_first = copy.deepcopy(document)
+    join_first["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["strategy"] = "join_before_receiver"
+    mutants.append(("absent-receiver-delayed-on-join", join_first))
 
     release_criterion_removed = copy.deepcopy(document)
     release_criterion_removed["checkpoint_sequence"][0]["criteria"] = [
@@ -395,6 +508,22 @@ def main() -> int:
         if criterion["criterion_id"] != "L0-C09"
     ]
     mutants.append(("l1-release-criterion-removed", release_criterion_removed))
+
+    proposed_contract_claims_gate = copy.deepcopy(document)
+    proposed_contract_claims_gate["contract_status"]["operative_gate"] = True
+    mutants.append(("proposed-contract-claims-operative-gate", proposed_contract_claims_gate))
+
+    relabel_existing = copy.deepcopy(document)
+    relabel_existing["l0_deliverable_bridge"]["relabel_existing"] = True
+    mutants.append(("existing-manifest-relabelled-as-target", relabel_existing))
+
+    target_criterion_removed = copy.deepcopy(document)
+    target_criterion_removed["checkpoint_sequence"][0]["criteria"] = [
+        criterion
+        for criterion in target_criterion_removed["checkpoint_sequence"][0]["criteria"]
+        if criterion["criterion_id"] != "L0-C10"
+    ]
+    mutants.append(("distinct-target-instance-unchecked", target_criterion_removed))
 
     for name, mutant in mutants:
         if not validate(mutant):

@@ -22,9 +22,11 @@
     "exact_home",
     "document_lifecycle",
     "relationships",
+    "contract_status",
     "mission",
     "prd_reference",
     "starting_position",
+    "l0_deliverable_bridge",
     "design_measurements",
     "execution_plan",
     "layer_contracts",
@@ -40,6 +42,18 @@
     "exact_home": {"type": "string", "minLength": 1},
     "document_lifecycle": {"$ref": "#/$defs/document_lifecycle"},
     "relationships": {"$ref": "#/$defs/relationships"},
+    "contract_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adoption_state", "operative_gate", "work_start_effect", "l1_work_startable", "operative_transition_ready"],
+      "properties": {
+        "adoption_state": {"const": "proposed"},
+        "operative_gate": {"const": false},
+        "work_start_effect": {"const": "non_blocking_design_constraint"},
+        "l1_work_startable": {"const": true},
+        "operative_transition_ready": {"const": false}
+      }
+    },
     "mission": {
       "type": "object",
       "additionalProperties": false,
@@ -90,6 +104,43 @@
               "excluded_progress_claim": {"const": "graph_c3_l1_entity_spine"}
             }
           }
+        }
+      }
+    },
+    "l0_deliverable_bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "existing_document_kind",
+        "existing_home",
+        "existing_governing_schema",
+        "target_document_kind",
+        "target_governing_schema",
+        "target_home_pattern",
+        "relationship",
+        "relabel_existing",
+        "rehome_existing",
+        "new_target_document_required",
+        "target_required_section_count",
+        "existing_target_sections_satisfied"
+      ],
+      "properties": {
+        "existing_document_kind": {"const": "l0_graph_substrate_manifest"},
+        "existing_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.json"},
+        "existing_governing_schema": {"const": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json"},
+        "target_document_kind": {"const": "l0_substrate_manifest"},
+        "target_governing_schema": {"const": "schemas/l0_substrate_manifest.v1.schema.json"},
+        "target_home_pattern": {"const": "generated/c3materialize/{run_id}/l0_substrate_manifest.json"},
+        "relationship": {"const": "source_input_to_new_projection"},
+        "relabel_existing": {"const": false},
+        "rehome_existing": {"const": false},
+        "new_target_document_required": {"const": true},
+        "target_required_section_count": {"const": 9},
+        "existing_target_sections_satisfied": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"const": "parts"}
         }
       }
     },
@@ -166,26 +217,108 @@
           "required": [
             "manifest_parts",
             "stores_exact_count",
-            "grain_lower_bound_count",
-            "key_lower_bound_count",
-            "failure_mode_lower_bound_count",
+            "grain_prose_substring_count",
+            "key_prose_substring_count",
+            "failure_mode_prose_substring_count",
             "store_measurement_method",
-            "sparse_axis_measurement_method",
+            "prose_measurement_method",
+            "operative_schema_field_paths_before_amendment",
             "release_condition",
             "wave3_completion_sufficient",
-            "l1_startable"
+            "l1_work_startable",
+            "operative_transition_ready"
           ],
           "properties": {
             "manifest_parts": {"const": 42},
             "stores_exact_count": {"const": 42},
-            "grain_lower_bound_count": {"const": 7},
-            "key_lower_bound_count": {"const": 6},
-            "failure_mode_lower_bound_count": {"const": 3},
+            "grain_prose_substring_count": {"const": 7},
+            "key_prose_substring_count": {"const": 6},
+            "failure_mode_prose_substring_count": {"const": 3},
             "store_measurement_method": {"const": "literal_home_field"},
-            "sparse_axis_measurement_method": {"const": "substring_lower_bound"},
+            "prose_measurement_method": {"const": "substring_count_not_semantic_coverage"},
+            "operative_schema_field_paths_before_amendment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schema_path", "measurement_method", "grain", "key", "failure_mode"],
+              "properties": {
+                "schema_path": {"const": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json"},
+                "measurement_method": {"const": "defined_property_path_extraction"},
+                "grain": {"const": 0},
+                "key": {"const": 0},
+                "failure_mode": {"const": 0}
+              }
+            },
             "release_condition": {"const": "structured_store_grain_key_failure_mode_complete"},
             "wave3_completion_sufficient": {"const": false},
-            "l1_startable": {"const": false}
+            "l1_work_startable": {"const": true},
+            "operative_transition_ready": {"const": false}
+          }
+        },
+        "card_to_part_receiver_grain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["card_trust_qualifies", "does_not_qualify", "part_projection_relation", "ambiguous_missing_or_substring_relation", "grain_settled", "ruling_evidence", "measured_projection_baseline", "landing_sequence"],
+          "properties": {
+            "card_trust_qualifies": {"const": "subject_resource"},
+            "does_not_qualify": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {"enum": ["card_document", "persisted_artifact_universally"]}
+            },
+            "part_projection_relation": {"const": "exact_one_to_one_subject_id_to_part_id"},
+            "ambiguous_missing_or_substring_relation": {"const": "explicit_compilation_residue"},
+            "grain_settled": {"const": true},
+            "ruling_evidence": {"type": "string", "minLength": 1},
+            "measured_projection_baseline": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["trust_cards", "manifest_parts", "raw_exact_subject_id_matches", "ambiguous_target_parts", "cards_rejected_as_ambiguous", "unambiguous_projected_parts", "card_residue", "positive_control", "evidence"],
+              "properties": {
+                "trust_cards": {"const": 51},
+                "manifest_parts": {"const": 42},
+                "raw_exact_subject_id_matches": {"const": 5},
+                "ambiguous_target_parts": {"const": 1},
+                "cards_rejected_as_ambiguous": {"const": 2},
+                "unambiguous_projected_parts": {"const": 3},
+                "card_residue": {"const": 48},
+                "positive_control": {"type": "string", "minLength": 1},
+                "evidence": {"const": "DT~X 74978"}
+              }
+            },
+            "landing_sequence": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["strategy", "schema_change", "post_rerun_part_population", "post_rerun_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence"],
+              "properties": {
+                "strategy": {"const": "receiver_before_join"},
+                "schema_change": {"const": "additive_optional"},
+                "post_rerun_part_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["total", "declared", "unknown"],
+                  "properties": {
+                    "total": {"const": 42},
+                    "declared": {"const": 3},
+                    "unknown": {"const": 39}
+                  }
+                },
+                "post_rerun_card_population": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["total", "projected", "residue"],
+                  "properties": {
+                    "total": {"const": 51},
+                    "projected": {"const": 3},
+                    "residue": {"const": 48}
+                  }
+                },
+                "unknown_satisfies_operative_completeness": {"const": false},
+                "future_mapping_effect": {"const": "unknown_to_declared_enrichment"},
+                "ruling_evidence": {"type": "string", "minLength": 1}
+              }
+            }
           }
         }
       }
@@ -255,14 +388,18 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["gap_id", "required_operation", "implementation_present", "task_order_ref", "owner_ref", "blocks_document_kind"],
+            "required": ["gap_id", "required_operation", "grain_contract_settled", "schema_extension_present", "compiler_population_present", "grain_contract_owner", "schema_extension_owner", "compiler_population_owner", "compiler_task_ref", "prevents_operative_transition"],
             "properties": {
               "gap_id": {"const": "l0_part_semantics_for_l1"},
               "required_operation": {"const": "populate_structured_grain_key_failure_mode_for_every_part"},
-              "implementation_present": {"const": false},
-              "task_order_ref": {"type": "null"},
-              "owner_ref": {"type": "null"},
-              "blocks_document_kind": {"const": "l1_entity_spine"}
+              "grain_contract_settled": {"const": true},
+              "schema_extension_present": {"const": false},
+              "compiler_population_present": {"const": false},
+              "grain_contract_owner": {"const": "4.0.0_SA_CRO~A"},
+              "schema_extension_owner": {"const": "1.0.0_SA_CTO~X"},
+              "compiler_population_owner": {"const": "0.4.0_DT_ClientPlatform~X"},
+              "compiler_task_ref": {"const": "TO-L1-DTX work item 1"},
+              "prevents_operative_transition": {"const": true}
             }
           }
         }
