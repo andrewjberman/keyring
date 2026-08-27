@@ -1,7 +1,9 @@
 # DEPLOY LEDGER — ADVI_49F.RPS-CUSTODY: WS-E custody-basis repoint to the 08242234 successor
 
-**Opened:** 2026-08-27T17:1xZ by `0.4.0_DS_ClientPlatform` (deploy-start; NEVER#6)
-**Status:** **OPEN**
+**Opened:** 2026-08-27T17:12Z by `0.4.0_DS_ClientPlatform` (deploy-start; NEVER#6)
+**Status:** **CLOSED 2026-08-27T17:33Z** -- all 7 legs landed, nothing stranded. Deployed and
+verified on the DEPLOYED BYTES (not rc), emitted row carries the stated basis, proof instance VALID
+rc=0. Closed in the same session it was opened.
 **TO:** `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_49F.RPS-CUSTODY.stale-basis-materiality-then-repoint.md` (RPS-3)
 **Authority:** `2.0.0_SA_COO` GO 76140 (2026-08-27T16:13Z) + target ruling **76210** (17:00:26Z —
 target CONFIRMED `08242234`, `08335338` DISOWNED as an issuer name-is-not-identity defect) + 76212
@@ -49,10 +51,10 @@ diverges by +$55,083,179.72 at the 07-23 vintage. **Never repoint to 08335338 un
 | 1 | RPS-1 / 1b / 1c materiality prints | DONE (pre-deploy) |
 | 2 | Code change + gates (py_compile, ruff) | DONE (pre-deploy) |
 | 3 | Ad-hoc QA dry-run through the production entry point | DONE (pre-deploy) — TRUE rc=0 |
-| 4 | `safe-commit` the code change | OPEN |
-| 5 | `safe-deploy.sh` — S3 cp + SHA verify | OPEN |
-| 6 | APPLIED-layer verification on the SERVED/stored artifact (Rule 22a), never rc=0 | OPEN |
-| 7 | RPS-4 basis stated in the emitted row; RPS-5 proof instance VALID by TRUE rc | OPEN |
+| 4 | `safe-commit` the code change | **DONE** @`d5fd2e4c79` — commit-gate clean (py_compile + ds-precommit + ruff py39), risk-reflex CLEAN vs 1,891 danger nodes, msg-verify MATCH |
+| 5 | `safe-deploy.sh` — S3 cp + SHA verify | **DONE** — gate PASS, TRUE rc=0 unpiped. First attempt fail-closed rc=3 on IDENTITY UNRESOLVED; resolved by writing the sanctioned session serial file, **not** by overriding |
+| 6 | APPLIED-layer verification on the SERVED/stored artifact (Rule 22a), never rc=0 | **DONE** — deployed object read back, LF-normalised sha256 `b6c8a6ac…c0c51c6af` == local; 7/7 positive probes PRESENT, 3/3 negative controls ABSENT, control-of-the-control fires. Different instrument from the gate's `comp-pipescript` |
+| 7 | RPS-4 basis stated in the emitted row; RPS-5 proof instance VALID by TRUE rc | **DONE** — emitted `custody_scope=schwab_native_rps_assets_only_08242234_fact_rps`, schema unchanged (11/11 cols); proof instance VALID TRUE rc=0 (pass 1 was rc=1 INVALID on 3 wrapper-structural violations — recorded in the instance) |
 
 ## RPS-4 — how the basis becomes visible downstream
 
