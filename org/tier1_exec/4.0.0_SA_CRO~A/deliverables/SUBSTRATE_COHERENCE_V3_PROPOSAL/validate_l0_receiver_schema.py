@@ -278,8 +278,12 @@ def main() -> int:
         "pattern_source_home": "producer.py",
         "pattern_source_line": 42,
         "variant_suffixes": {
-            ".wal": "present while the producer has an open write-ahead transaction",
+            ".wal": {
+                "mint": "unknown",
+                "note": "write-ahead log companion",
+            },
         },
+        "variant_suffixes_completeness": "partial",
         "variant_suffixes_source_home": "producer.py",
         "variant_suffixes_source_line": 43,
         "basis": "measured",
@@ -316,17 +320,42 @@ def main() -> int:
         "runtime string source line": {**legal_runtime_family, "pattern_source_line": "42"},
         "runtime fractional source line": {**legal_runtime_family, "pattern_source_line": 1.5},
         "runtime compound source home": {**legal_runtime_family, "pattern_source_home": "_canonical.py:288"},
-        "runtime suffix condition trailing LF": {
+        "runtime suffix note trailing LF": {
             **legal_runtime_family,
-            "variant_suffixes": {".wal": "condition\n"},
+            "variant_suffixes": {".wal": {"mint": "unknown", "note": "condition\n"}},
         },
-        "runtime suffix condition trailing CR": {
+        "runtime suffix note trailing CR": {
             **legal_runtime_family,
-            "variant_suffixes": {".wal": "condition\r"},
+            "variant_suffixes": {".wal": {"mint": "unknown", "note": "condition\r"}},
         },
-        "runtime suffix condition line separator": {
+        "runtime suffix note line separator": {
             **legal_runtime_family,
-            "variant_suffixes": {".wal": "condition\u2028second"},
+            "variant_suffixes": {".wal": {"mint": "unknown", "note": "condition\u2028second"}},
+        },
+        "runtime conditional suffix without condition": {
+            **legal_runtime_family,
+            "variant_suffixes": {".wal": {"mint": "conditional", "note": "write-ahead log companion"}},
+        },
+        "runtime conditional suffix with unconditional evidence": {
+            **legal_runtime_family,
+            "variant_suffixes": {
+                ".wal": {
+                    "mint": "conditional",
+                    "note": "write-ahead log companion",
+                    "condition": "while an open transaction exists",
+                    "evidence": "producer makes this unconditional",
+                }
+            },
+        },
+        "runtime unknown suffix with unconditional evidence": {
+            **legal_runtime_family,
+            "variant_suffixes": {
+                ".wal": {
+                    "mint": "unknown",
+                    "note": "write-ahead log companion",
+                    "evidence": "producer makes this unconditional",
+                }
+            },
         },
         "retired compound source": {**legal_runtime_family, "pattern_source": "producer.py:42"},
     }
@@ -339,6 +368,7 @@ def main() -> int:
         "pattern_source_home",
         "pattern_source_line",
         "variant_suffixes",
+        "variant_suffixes_completeness",
         "variant_suffixes_source_home",
         "variant_suffixes_source_line",
         "basis",
@@ -349,6 +379,12 @@ def main() -> int:
         missing.pop(required_field)
         if not rejected(validator, receiver_document(manifest, "member_set", missing)):
             failures.append(f"runtime member_set accepted omitted {required_field}")
+    variant_schema = schema["$defs"]["part"]["properties"]["member_set"]["properties"]["variant_suffixes"]
+    for example_index, example in enumerate(variant_schema.get("examples", [])):
+        example_member_set = copy.deepcopy(legal_runtime_family)
+        example_member_set["variant_suffixes"] = example
+        if rejected(validator, receiver_document(manifest, "member_set", example_member_set)):
+            failures.append(f"variant_suffixes schema example {example_index} fails its own contract")
 
     for home_space in ("repo_path", "db_path"):
         https_home = copy.deepcopy(manifest)
