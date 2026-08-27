@@ -1,0 +1,279 @@
+{
+  "andrew_direct_utc": "20260827T0015Z",
+  "denominator": 44,
+  "counts": {
+    "ARTIFACT": 25,
+    "ADDRESSED": 7,
+    "FRAGMENT": 12
+  },
+  "openable_artifact_plus_addressed": 32,
+  "FIRST_PREDICATE_RETRACTED": "a bare-path test scored 21 of 44 unresolvable; it marked file#block regions, kuzu_nessie_db and comp-heat as unresolvable. Retracted before the number left this seat.",
+  "measured_half": "resolvability ONLY",
+  "judgment_half_NOT_SCORED": "whether a resolvable subject is a CRUCIAL DEPENDENCY for a materializer",
+  "rows": [
+    {
+      "verdict": "ARTIFACT",
+      "subject": ".comp-graph/graph.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: .comp-graph/graph.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": ".tools/comp-debris",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "file exists on disk: .tools/comp-debris"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "ANCHOR_CATALOG + HUB_TYPES read at runtime from org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_canonical_ab_catalog.py",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "no openable referent found"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "D1's EdgeKind semantic",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "D3's delivery_cadence obligation",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_C2C3_CANONICAL.yaml#c2_motif_families",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "named region `c2_motif_families` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#c1_frontend_adapter",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `c1_frontend_adapter` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#node_bindings",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `node_bindings` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#non_relation_edges",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `non_relation_edges` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#relation_composites",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `relation_composites` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#relations",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `relations` inside a named file"
+    },
+    {
+      "verdict": "ADDRESSED",
+      "subject": "NFRA_ONTOLOGY_RULE_BANK.yaml#roles",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "named region `roles` inside a named file"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "PSTMRT's completeness axis and TRIGGER_LAYER doctrine, named as proto-D3 obligations",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "no openable referent found"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "comp-heat",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "a registered comp-tool with a resolvable implementation"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "data/firm_registry.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: data/firm_registry.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "graph_contracts",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "a named store, carded as such by its lane"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: infra/system/ontology/SYSTEM_DEFINITIONS.yaml"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "kuzu_nessie_db",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "the kuzu database -- the wave's own graph_vintage pin"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "live AWS estate",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "live graph edge types: FLOWS_TO, READS_FIELD, HAS_FIELD, PROP_PASSES, WRITES, READS, WRITES_S3, READS_S3",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "live graph node types: Field, Prop, S3Key, S3_BUCKET, DYNAMODB_TABLE",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "native CloudEdge direction",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/comp_ladder.py",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "file exists on disk: org/modules/graph/comp_ladder.py"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/debtscan/dup_scan.py",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "file exists on disk: org/modules/graph/debtscan/dup_scan.py"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/debtscan/summary_corpus.py",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "file exists on disk: org/modules/graph/debtscan/summary_corpus.py"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/keep-dormant.yaml",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/modules/graph/keep-dormant.yaml"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/nerves-edges.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/modules/graph/nerves-edges.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/modules/graph/nerves-risk-edges.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/modules/graph/nerves-risk-edges.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "file exists on disk: org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_individuate.py"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MOTIF_c2c3_materialize_spec.py",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "file exists on disk: org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MOTIF_c2c3_materialize_spec.py"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "file exists on disk: org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BANK.yaml",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "file exists on disk: org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BANK.yaml"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "repo source tree",
+      "lane": "0.8.0_AE_CloudComp~X",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_edges_6629328d-a582-46d2-80bc-5059de1a77ce",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "S3 object / warehouse table"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "S3 object / warehouse table"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "s3://opal-313476888478-globgrph/warehouse/globgrph/resource_summaries_b38ddc35-944f-4dd4",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "S3 object / warehouse table"
+    },
+    {
+      "verdict": "ARTIFACT",
+      "subject": "s3://opal-estate-report/kuzu_nessie_db",
+      "lane": "0.4.0_DT_ClientPlatform~X",
+      "why": "S3 object / warehouse table"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "the C0/C1 rung boundary",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "the MDPF delivery-cadence contract",
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "why": "concept / property / enum member / prose-described population"
+    },
+    {
+      "verdict": "FRAGMENT",
+      "subject": "the two BAKED STATIC SPEC LAYERS folded by ingest_c2c3_motif_producer",
+      "lane": "0.7.0_AE_CloudOps~X",
+      "why": "concept / property / enum member / prose-described population"
+    }
+  ]
+}
