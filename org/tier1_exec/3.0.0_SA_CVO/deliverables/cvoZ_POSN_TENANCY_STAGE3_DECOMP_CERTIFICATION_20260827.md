@@ -350,6 +350,59 @@ which cell.** The scoping is the only part I am changing.
 
 ---
 
+# AMENDMENT 4 — ~22:2xZ — `PT-a-1` NOW CARRIES THREE DISTINCT STATES. THEY MUST NOT COLLAPSE.
+
+**ANDREW-DIRECT ~22:1xZ, verbatim** (received at `1.0.0_SA_CTO~Z`'s terminal, record `@834bfafebb`):
+
+> *"I think it is better to just do a scoped api path for the satellites, that way we dont have to mess
+> with the rest of the plumbing of the page and it is inobtrusive + if we decide later that it makes
+> more sense to just handle this elsewhere, then doing so is not a massive effort. also agreed on call 2"*
+
+**Ruled:** a **new firm-scoped API path for Satellites only**. `positioning_data.json` stays general,
+on `/api/general/`, serving four firms. Models and ETFs untouched. **No re-plumbing, no migration.**
+
+## THE THREE STATES, AND WHY KEEPING THEM APART IS THE WHOLE POINT
+
+```
+1  CERTIFIED         the cell was WELL-FORMED at pin @07de844b12 -- scoped, oracled, laned.
+                     STILL TRUE. A certification is of the ARTIFACT AT ITS VINTAGE.
+2  PREMISE FALSIFIED TO-3-AE measured Positioning on /api/general/, 5 of 5 sites, /api/scoped/
+                     control 47. "IS served through /api/scoped/" was never true.
+3  SUBJECT SUPERSEDED the sovereign ruling changes WHAT SHOULD BE BUILT: the artifact does not
+                     move; a new path is created BESIDE it.
+```
+
+⛔ **THESE ARE THREE DIFFERENT THINGS AND ONLY THE FIRST IS MINE TO DEFEND.** A cell can be correctly
+certified, factually wrong about the world, **and** overtaken by a ruling — **simultaneously, with no
+contradiction.** Collapsing them produces one of two errors: *"the certification was wrong"* (it was
+not) or *"the cell still stands"* (it does not).
+
+⭐ **SAME FRAME AS `D1-h-r3`, WHICH I AFFIRMED THREE HOURS AGO AND NOW APPLIES TO MY OWN WORK:** a
+certified measurement **does not become an error by being overtaken.** `PT-a-1` needs **amendment
+descending from a ruling** — not a re-cut, and not a re-certification of the original.
+
+## WHAT IS UNAFFECTED
+
+**`PT-a-2` and `PT-a-3` bind HARDER, not less.** A new scoped path is a new serving surface: the
+JWT-injection invariant and the cache-key requirement apply to it **on day one**, with no legacy to
+migrate. **My standing criterion is satisfied by construction under this ruling** — the scoped path
+*is* the scoping, and Satellites *is* the firm-specific content, so **building the path before or with
+the payload is now the natural order rather than a constraint imposed on it.**
+
+## ⭐ THE SELECTION CRITERION HE USED, WORTH MORE THAN THE DECISION
+
+*"if we decide later that it makes more sense to just handle this elsewhere, then doing so is not a
+massive effort."* **He priced REVERSIBILITY — not which design is most correct today, but which is
+cheapest to be wrong about.**
+
+⛔ **And `1.0.0_SA_CTO~Z`'s own comparison is the part to carry:** their recommendation reached the
+same branch **from a measurement** (positioning_data.json is Opal-common, so models/etfs have no firm
+dimension to discriminate on). **Both reach (a). HIS REASON SURVIVES A WORLD IN WHICH THE MEASUREMENT
+IS WRONG; THEIRS DOES NOT.** *Two arguments agreeing on an answer are not equally good arguments, and
+the one that survives its own premise failing is the one to keep.*
+
+---
+
 # AMENDMENT 3 — ~20:4xZ — DOES A v1.3 CORRECTION CARRY THE v1.2 CERTIFICATION?
 
 `2.0.0_SA_COO~Z` stopped before cutting and put a one-line question: **my ruling said "TOs may be cut
