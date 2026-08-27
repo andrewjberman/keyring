@@ -176,8 +176,25 @@ be shown to *exclude* has not been tested.
 
 - **Do NOT change `MAX_SESSION_AGE_DAYS`.** Whether a daily cron makes the 7d bound redundant is a
   live design question (cadence-vs-tolerance) and it is Andrew's, not this build's.
-- **Do NOT touch `partner_roster.json`.** Its cottonwood cadence was corrected separately today
-  (`D+2` -> `T-1`) under its own Andrew-direct authorization.
+- **`partner_roster.json` -- READ THIS, IT IS NOT "ALREADY HANDLED".** The cottonwood cadence was
+  corrected today (`D+2` -> `T-1`) under its own Andrew-direct authorization, **but the correction
+  reached ONE OF THREE HOMES and NOT the one production reads.** Measured 2026-08-27 ~14:5xZ:
+
+  | home | bytes | cottonwood value feeds | sha256 |
+  |---|---|---|---|
+  | `data/mdpf/config/partner_roster.json` | 27,433 | **T-1** (corrected) | `e86e4631…` (pre-edit) |
+  | `infra/aws/lambda/opal-assets/opal-assets-daily-emitter/partner_roster.json` | 22,725 | **D+2** | `af44aaad…` |
+  | `s3://opal-data-mdpf/code/scripts/gold/partner_roster.json` (runner) | 22,725 | **D+2** | `af44aaad…` |
+
+  **The S3 runner copy is BYTE-IDENTICAL to the LAMBDA copy, not the config copy** -- so the emitter
+  directory is the de facto publish source and `data/mdpf/config/` is a diverged sibling.
+  `_load_partner_roster`'s docstring asserts *"ONE committed authority in two locations of the same
+  file -- NEVER an S3-read fallback and NEVER a vendored copy (the duplicate-authority defect the
+  accrual F-3 note names)."* **That is the defect it names, present in the file that denies it.**
+  ⛔ **NOT AUTHORIZED BY THIS SPEC AND NOT THIS PROJECT** -- it is D8/MDPF-side, it is a separate
+  Andrew call, and propagating a cadence value across diverged homes without first ruling WHICH home
+  is authoritative would cement the duplication rather than fix it. **Recorded here so nobody reads
+  "corrected today" as "correct in production."** Routed to Andrew.
 - **Do NOT backfill 2026-08-26.** BD's rolling ~14-day export window is expected to re-cover it on
   the next successful run; two prior instances self-healed this way (08-18+08-19 landed together on
   08-20; 08-04+08-05 on 08-06). Observe, do not intervene.
