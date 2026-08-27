@@ -22,5 +22,28 @@
       "D3's delivery_cadence obligation",
       "live graph node types: Field, Prop, S3Key, S3_BUCKET, DYNAMODB_TABLE"
     ]
-  }
+  },
+  "DELIVERED_IS_TWO_STATES": {
+    "raised_by": "3.0.0_SA_CVO~X 74260",
+    "VERIFIED_PASS": {
+      "count": 23,
+      "lanes": {
+        "0.4.0_DT_ClientPlatform~X": 16,
+        "0.7.0_AE_CloudOps~X": 7
+      },
+      "basis": "full certifier battery -- v2 schema, TO-level gate, alignment both directions, repins re-checked"
+    },
+    "DELIVERED_UNVERIFIED": {
+      "count": 13,
+      "lanes": {
+        "0.8.0_AE_CloudComp~X": 6,
+        "0.8.0_AE_CloudComp~Y": 7
+      },
+      "basis": "cards on disk. No completion flip was ever routed, and WITHOUT A PROOF-OF-SPEC INSTANCE THE TO-LEVEL GATE STRUCTURALLY CANNOT RUN on them. That is a property of the cut, not a lane failing.",
+      "close_pass": "3.0.0_SA_CVO~X runs a CARD-LEVEL battery on these 13 once the lanes confirm final commits, so all 36 carry a uniform card-conformance statement even where the TO-level gate cannot run."
+    },
+    "why_the_split_matters": "VERIFIED and DELIVERED-UNVERIFIED read identically from a count and take different downstream treatment. My issuer act said '36 delivered and standing', which is true and blends them. A total stated over mixed states is the residual-bucket shape in a status field -- the same defect as SCOPE-SUPERSEDED vs abandoned, one field over.",
+    "issuer_note": "Raised by the certifier immediately after I published the blended figure. Corrected in the artifact rather than only in a reply, because the cut record is what a wave-3 driver reads and the message scrolls."
+  },
+  "delivered_subjects_detail": "36 = 23 VERIFIED PASS + 13 DELIVERED-UNVERIFIED (card-level battery pending at close)"
 }
