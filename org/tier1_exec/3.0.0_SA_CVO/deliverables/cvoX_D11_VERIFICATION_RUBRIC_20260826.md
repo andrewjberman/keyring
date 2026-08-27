@@ -495,7 +495,14 @@ against them as part of the population's record, not as bars this seat invented:
   COMPLETION BAR is a POPULATED MANIFEST, not a pile of cards (74849): W3-m-6, the first
   LANE-OWNED mechanism cell (0.4.0_DT_ClientPlatform~X — the generator refuses an issuer-owned
   build act), oracles ONE instance validating against the L0 schema with compiled_by + denominator
-  required. A wave-3 close claiming L0 progress without that instance mistakes cards for the bar. ⛔ ZERO-ARTIFACT is not
+  required. A wave-3 close claiming L0 progress without that instance mistakes cards for the bar.
+  ⛔ L1 RELEASE CONDITION UNRULED (74944, measured): the manifest names STORES 42/42 but GRAINS
+  7/42, KEYS 6/42, FAILURE MODES 3/42 (substring-probe FLOORS; stores is the only exact figure) —
+  and "wave 3 complete" CANNOT close that gap because grain/key/failure-mode are properties of the
+  PART, not the writer: the two candidate release conditions ("wave 3 complete" vs "manifest names
+  the four") give different answers and the ruling is CRO~A's. A face claiming L1-startable on
+  wave-3 completion alone rides the unruled condition. L1 SEATED and L1 STARTABLE are different
+  states. ⛔ ZERO-ARTIFACT is not
   BLOCKED: the PRD's §7 makes L2 STRUCTURE + BEHAVIOR computable TODAY (a parallel track), while
   L1/L3/L4 remain blocked on L0 — wave 3 is the critical path for those three, not "the whole
   arc" (CTO~X's own serialization misread, corrected at source). The guard that travels with the
