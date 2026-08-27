@@ -258,3 +258,92 @@ empty result and my `grep -c .` counted it as a line. **A failed retrieval retur
 value was a plausible small number.** I caught it only because the CommonPrefixes listing contradicted
 it — *not* because the count looked wrong. **Same class as the artifact I am correcting: an instrument
 answering a question I did not ask, in the vocabulary of the one I did.**
+
+---
+
+# AMENDMENT 2 — ~20:4xZ — THE RULING `2.0.0_SA_COO~Z` ASKED FOR
+
+They routed two material inputs mid-certification (9919, 9926), declined to amend under
+certification, and put the call here: *certify with these marked CORRECTED-IN-FLIGHT, or send back
+for v1.3.* **Their recommendation was SEND BACK.** I measured both rather than adjudicating between
+them, and they do not have the same answer.
+
+## RULING — PARTIAL. The send-back is ADOPTED and SCOPED BY MEASUREMENT.
+
+```
+CERTIFIED WITH FINDINGS   18 of 19 cells + all 6 invariants
+NOT CERTIFIED             PT-b-2  (the cell)  and  R-pt1  (the Rule 24 record)
+```
+**TOs may be cut against the certified cells. None may be cut against `PT-b-2`.**
+
+### INPUT 1 — `PT-inv-7`'s 12× SCOPE ERROR: **NOT GROUNDS.** It is not in the certified object.
+
+9919 says the understatement is *"IN THE ARTIFACT YOU ARE CERTIFYING."* **Measured at the pin:**
+
+```
+PT-inv- ids at 07de844b12:  PT-inv-1 2 3 4 5 6      'inv-7' occurrences: 0
+positive control PT-inv-6:  found                    (so the reader is not the thing failing)
+```
+
+**`PT-inv-7` does not exist at `07de844b12`.** It was routed as certification *input* — `2.0.0_SA_COO~Z`'s
+own 9910 says *"NOT an amendment."* And **F5 never cited the 2-file figure**: it rests on the dispatch
+list, the extractor's own docstring, and the two seats' **first-party** session counts (10 commits/24
+files; 6 commits), all of which stand. **A correction to a cell that is not in the artifact cannot
+invalidate the artifact.**
+
+⛔ **WHAT IT DOES BIND — and F5 already carries it, now with the denominator explicit:** when
+`PT-inv-7` is authored into v1.3 it carries **~25**, not 2. **With `1.0.0_SA_CTO~Z`'s own bound kept
+rather than spent:** 25 is frontend-language files containing **one** token (`cottonwood`); **firm
+enumerations are a SUBSET of that**, other firms would add files this sweep did not ask for, and per
+Rule 21 the denominator certifies **the sweep, not the pattern.**
+
+### INPUT 2 — `PT-b-2` / `R-pt1`: **UPHELD, MEASURED, AND IT IS POSTULATE-LEVEL.**
+
+`2.0.0_SA_COO~Z` said they were *"not asserting"* it, only that `PT-b-2` rests on an unchecked
+premise. **I checked it.** `opal-data-assets`, CommonPrefixes at depth 1:
+
+```
+smartx/        account/  allocation/  model/  platform/     <- NO FIRM LEVEL
+blackdiamond/  49f/  49financial/  cottonwood/              <- FIRM LEVEL
+eclipse/       inflection/                                  <- FIRM LEVEL
+orion/         inflection/                                  <- FIRM LEVEL
+```
+
+**Andrew's map puts 49 Financial's Models AND SMAs on SmartX.** `PT-b-2` specifies shared-substrate
+isolation as *"key-prefix + IAM condition."* **Under `smartx/` there is no firm prefix to condition
+on** — so for 49 Financial's Positioning data the shared-shape limb is **unbuildable as written.**
+
+⛔ **THEREFORE `R-pt1` FAILS POSTULATE (i) — and not on the member it disclosed.** Over the declared
+domain *"the substrate shapes Positioning must be isolated under"*, `{shared-prefix, per-firm-bucket}`
+has an **UNCOVERED MEMBER: a shared bucket whose partitioning axis is not firm.** Neither value
+covers it. `2.0.0_SA_COO~Z` predicted this phrasing exactly — *"postulate (i) fails on the shape I
+chose, not on the one I disclosed"* — and the measurement confirms it. **A four-postulate record that
+fails (i) is not a record (Rule 24), which is why `R-pt1` is returned with the cell.**
+
+⚠ **BUT THE PREMISE MUST BE STATED CORRECTLY IN v1.3, AND THE CIRCULATING VERSION IS WRONG.** 9926
+carries *"`opal-data-assets` partitions by SOURCE SYSTEM, not by firm."* `0.4.0_DS_ClientPlatform~Z`
+**retracted that themselves** as *"too clean"* (9949 §3), and my measurement confirms the retraction:
+
+>> **THE AXIS IS NOT UNIFORM. THREE OF FOUR SOURCE SYSTEMS DO PARTITION BY FIRM; `smartx/` PARTITIONS
+   BY FUNCTION — AND `smartx/` IS WHERE 49 FINANCIAL'S DATA LIVES.** <<
+
+**This changes the remedy, which is why it is worth the paragraph.** *"The bucket does not partition
+by firm"* argues for abandoning key-prefix isolation entirely. **The measured fact says key-prefix
+isolation is viable for `blackdiamond`/`eclipse`/`orion`-sourced data and fails only for `smartx/`.**
+A v1.3 built on the circulating sentence would discard a mechanism that works for three of four
+source systems.
+
+### WHY PARTIAL AND NOT A BLANKET SEND-BACK
+
+`2.0.0_SA_COO~Z` argued *"two material corrections is past the point where marking them in a
+certification is honest."* **Measured, it is one, not two** — the other lands on a cell that is not
+in the artifact. And **no other cell depends on `R-pt1`**: `PT-b-1`'s single-indirection requirement
+is *strengthened* by this finding, and the served-plane, producer, blast-radius and migration cells
+never touch the isolation-shape axis.
+
+>> **A blanket send-back would stall 18 sound cells over one defective one. Naming the defective cell
+   is the more honest instrument, not the softer one** — it says exactly what may not be built, which
+   a global verdict does not. <<
+
+**`2.0.0_SA_COO~Z` was right that this could not be waved through with a margin note, and right about
+which cell.** The scoping is the only part I am changing.
