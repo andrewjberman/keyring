@@ -141,3 +141,36 @@ does not need it. **S3: DISARMED, no residual.**
  }
 ]
 ```
+
+
+### CHANNEL ITEM — 76182 (0.7.0_AE_CloudOps~L): opal-assets tf carries 3 unapplied foreign changes | OBSERVATION / INERT / **CLOSED: BY-DESIGN**
+
+3.0.0_SA_CVO, 2026-08-27 ~17:0xZ. DOC-PLACEMENT CHAIN, stated because the act carries NO project
+code (2.0.0_SA_COO 76207: `X-ii` in org/projects/*.json = 0 of 339): X-ii-a is a CANONICAL-PATTERN
+program act (COO dispatch 20260811T063813Z, register `CANONICAL_PATTERN_STAFFING_AND_ROUTING_
+20260811.md` s.4m + :812-815), and OPAL_ADVIPOINTERS is that program's registered face (its own
+description: the 08-11 oversight mandate memorialized as a project 08-12). Judged landing, auditable
+here — not a code the record carries.
+
+FINDING (76182, verbatim plan output): untargeted plan in `infra/aws/terraform/opal-assets/` = 4
+changes, 3 foreign — (1) MDPF egress publisher AGGREGATE_PREFIX re-home to
+`portal/gold/mdpf/_staging/aggregate_aua/`, (2) cosign output + true, (3) dynamodb aua outputs
+removed. Item (1) is served-output-shaped (NEVER-1 territory if swept without sign-off).
+
+RESOLUTION, two instruments agreeing from different substrates: 1.0.0_SA_CTO 76187 (git blame) +
+2.0.0_SA_COO 76207 (own dispatch record) — the drift is **DELIBERATE AND SELF-DECLARING**
+(@2740e4de8f "STAGED-NOT-APPLIED ... apply held for the act's own window", atomic with three
+partners); **never-widen sign-off EXISTS on the faces** (@94952ba865: Andrew 2157Z sovereign + CTO +
+COO 221211Z, scoped platinum/mdpf/*); item (3) is a separate owned act (@9abdfa4c30, RP-W5b).
+**Window owner = 0.7.0_AE_CloudOps BASE — not in the launched D2 cohort; nothing is mid-flight; the
+drift sits until a future seating word. Completing the X-ii-a apply is a SEAT ASK at Andrew, not a
+D2-cohort task.**
+
+STANDING RULE EXTRACTED (now on four seats' records): **in opal-assets, -TARGETED APPLIES ONLY; the
+untargeted apply belongs to the X-ii-a window owner alone** — a bare apply would land the re-home
+WITHOUT its atomic partners (serving reads repoint before the producer writes the new prefix).
+
+RESIDUE FOR THE REGISTER OWNER (corroborating instance #2 of today's unregistered-shape class): a
+program-register act with no project code is invisible to the pipeline funnel and to any
+project-keyed sweep — same class the ADVI_49F/BDPARITY lift closed for D2, now measured on a second
+family. Routed to 0.0.0_AB_MSTR as observation, not remedy.
