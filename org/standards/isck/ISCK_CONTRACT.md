@@ -247,6 +247,7 @@ four-postulate record — the Rule 24 gate now has a diffable mechanical half. `
 joined this remedy at CV-2 (a reference field with no referent artifact is "a value needs a whole
 PATH, not a slot").
 
+
 ### 3.16 Cross-enum token collisions — the ALLOWED list and its gate (F4 + COO~X probe 2)
 The collision census runs over ALL 18 enum domains (3 hoisted + 15 inline — round 1's census of 10
 had the WRONG DENOMINATOR, found by its own author's tool). A collision passes ONLY via the
@@ -254,12 +255,28 @@ ALLOWED list with a stated same-sense reason. ALLOWED at v0.1: `retired` (same s
 `partial` (same sense — "some, not all, of the expected whole" — applied to instrument/run/surface;
 the REMEDIES differ per §3.6/3.9/3.14 arm tables, which is where the difference belongs);
 `unknown`, `active`, `superseded`, `complete`, `unverified` (same epistemic/lifecycle sense per
-pair; remedy divergence lives in each enum's state-coherence record — and per CVR2-2, `unknown`'s
+pair — `unknown`'s entry now spans THREE domains with declared_cardinality added, same sense in
+all; remedy divergence lives in each enum's state-coherence record — and per CVR2-2, `unknown`'s
 entry carries a grain note: same sense, DIFFERENT grain-legitimacy — observer-state is coherent at
 observer grain (coherence axes) and mixed at subject grain (materializer status); the subject-grain
 use dissolves under R2-2's derived-status work). ELIMINATED rather than
 allowed: `candidate`, `held` (different meanings — renamed out at F4). The gate REFUSES any new
 collision not on the list.
+
+### 3.17 `declared_cardinality` — `function | cover | partial_function | unknown`
+DOMAIN: the cardinality shape a bridge CLAIMS for its relation (one-to-one-parent vs overlapping
+vs partial vs undetermined). MECE: hunted member — many-to-many → this is TWO bridges (one per
+direction), declared rather than absorbed; `unknown` is the honest undetermined cell. GRAIN:
+bridge assertion. INTENT: one axis — claimed relation shape (never VERIFIED shape: that is
+`observed_cardinality`, a free measurement field beside it, and the pair is deliberately
+typed-beside-measured with the CLAIM constrained and the OBSERVATION free). STATE-COHERENCE:
+`unknown` moves by MEASURING (the asserting seat); a declared shape moves only by a SUPERSEDING
+assertion (append-only, LAW 3); no single remedy moves all four — named. ⛔ FEEDS DEC-02: the
+function-vs-cover census over admitted bridges is the evidence the 540 decision waits on.
+NOTE (CVO~X certification finding, the record's own provenance): this enum was BORN WITHOUT this
+record and invisible to the gates — the labels gate's denominator was a maintained count, stale
+the moment the enum landed. The structural remedy (gates derive enum censuses FROM THE SCHEMA) is
+routed to the gate owner; this record closes the instance.
 
 ## 4. CONDITIONAL REQUIREMENTS (the consuming half — all mechanical)
 
