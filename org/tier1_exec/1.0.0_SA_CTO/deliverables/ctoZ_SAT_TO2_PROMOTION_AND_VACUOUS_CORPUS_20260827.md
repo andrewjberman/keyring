@@ -111,4 +111,68 @@ the list does not contain can separate them.
   MEMBERSHIP REGISTRY?"* -- **DISSOLVED** by the ~22:5xZ derived ruling. A derived set has no
   maintainer; the predicate is the maintainer. That field is the last carrier still showing it open.
 
+---
+
+## 7. AMENDMENT 1 (same session, ~23:5xZ) -- A SUCCESSOR TO **IS** REQUIRED. I ruled the predicate and never ruled the PUBLISH rung.
+
+Raised by `0.7.0_AE_CloudOps~Y` (msg 11088). **Upheld, and re-derived on a different instrument than
+theirs, which made the finding larger.**
+
+STOP: **section 1's "no successor TO is needed" is true of BUILDING THE PREDICATE and false as a
+disposition.** The publish rung was already in my carried record as DS-lane and unowned, and I did
+not rule it.
+
+**The warning that came with it is the durable half:** the gap was invisible an hour earlier because
+a STATUS FIELD said `waiting on a seat`; it can go invisible again because a RETRACTION says
+`built and on origin` -- and the second is harder to see, **because the fabric has just corrected
+itself toward "done".** A correction opens a new blind spot on its own far side.
+
+**Re-derived by asking "is it wired to RUN?" rather than "does it write?":**
+
+```
+                                    __main__   write-verbs
+build_dim_model_portfolio.py            1          2       <- POSITIVE CONTROL
+build_dim_taxsma_report.py              1          3       <- POSITIVE CONTROL
+cottonwood_aua.py                       1          0       <- see the caveat below
+satellites_registry.py                  0          0
+satellites_weights.py                   0          0
+comp-pipescript io satellites_registry --pipeline cot-gold  ->  "Unknown script in tree"
+only non-doc/test reference in the estate: test_satellites.py:24 `import satellites_registry`
+```
+
+> **No entrypoint, in no pipeline graph, imported only by its own test. That is a LIBRARY, not a
+> producer with a missing step.** Every sibling is an imperative `build_*`; this one is a noun.
+
+STOP: **the ORDER is load-bearing. Adding a write verb to a module nothing invokes ships a file that
+still never runs -- and the write-verb census would go GREEN.**
+
+**Caveat owed on the evidence, against the raising seat's own headline:** `cottonwood_aua.py` is a
+real sibling producer and **also scores zero write verbs** on that pattern, so *"zero write verbs in
+320 lines"* has a demonstrated false-negative and cannot carry the claim. The finding is unaffected
+and better supported -- **the load-bearing limbs are the ENTRYPOINT absence and the PIPELINE-GRAPH
+absence, both positively controlled**, plus their S3 outcome sweep (4,125 + 6,599 keys,
+`IsTruncated=None`, zero hits).
+
+**Ruling -- three rungs, ordered, all DS-lane (Rule 13):**
+
+```
+R1  CODE FIRST-MINT   s3://opal-data-mdpf/code/scripts/assets_gold/ -- named OUTSTANDING in TO-1's
+                      own proof instance. The script is committed, not deployed.
+R2  RUNNABILITY       __main__ + registration in the cot-gold pipeline graph.
+R3  PUBLISH           platinum/satellites/registry.json in the FIRM'S bucket (opal-data-cot for
+                      Cottonwood). NO firm segment in the key -- the firm IS the bucket.
+                      PUBLISH EMPTY, NEVER DELETE. Artifact carries its own as_of (SAT-a-4).
+```
+
+STOP: **R3's empty-publish is newly load-bearing through a composition nobody designed.**
+`0.7.0_AE_CloudOps~Y` removed the serving layer's synthesised empty @`24a8435642` (it failed AC3
+arm 3), so a missing key is now a 403 carrying no reason. **That change and my "publish empty, never
+delete" constraint were made independently; together they make the producer's empty write the only
+thing between a zero-member firm and an unrecoverable absence.** Neither seat could see it from its
+own side -- see [[discharging-one-hazard-can-arm-another]].
+
+**Disposition as amended:** TO-1/TO-2 remain DELIVERED **as a computation**. A successor TO is
+required, its subject is R1-R3 rather than the predicate, `2.0.0_SA_COO~Z` cuts it, and the
+oracle->predicate promotion of section 2 rides in the same act on the same file.
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
