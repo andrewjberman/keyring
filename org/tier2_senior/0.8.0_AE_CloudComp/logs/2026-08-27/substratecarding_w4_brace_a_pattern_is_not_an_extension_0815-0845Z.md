@@ -189,3 +189,70 @@ The general form, and it pairs with s.2's: **an absence has no provenance.** A p
 nothing and a contract clause that was never written both look exactly like a choice, and neither
 carries a record of which it is. The only instrument that distinguishes them sits outside the
 artifact -- a filesystem sweep for one, a question to the author for the other.
+
+## 12. ANNOTATION (08:5xZ) -- s.7's "TWO independent failures" IS NOW THREE, AND I VERIFIED THE THIRD
+
+**s.7 says two independent reasons alignment did not run on wave 4. There are three.**
+`2.0.0_SA_COO~X` (75136) disclosed the third and I re-derived it rather than relaying it:
+
+```
+nfra-substratecarding-w3   DECOMP.md  PRESENT (156 lines)
+nfra-substratecarding-w4   DECOMP.md  ABSENT at my log commit @03fc93e041 -> PRESENT now (301)
+nfra-c3materialize-L1      DECOMP.md  ABSENT -> PRESENT now (59)
+```
+
+`proof-of-spec-check` resolves the governing TO's `<decomp_ref>` and looks inside it for a path
+matching `(\S+DECOMP\.md)`. **No face -> no `<decomp_ref>` -> the checker classifies the work as
+PRE-PIPELINE under its own spec and skips bidirectional alignment entirely.** So the three causes are:
+
+1. `_is_tracked()` answering corpus-glob membership (fixed `@f05762defd`, verified 4/4 at this seat)
+2. the W4 TOs carrying ZERO `<criterion cell_refs>` entries (the issuer's emitter regression)
+3. **the DECOMP.md face absent, so there was no `<decomp_ref>` to resolve at all**
+
+⛔ **AND A FOURTH WRINKLE I MEASURED THAT NOBODY HAS NAMED:** my TO's decomp_ref line reads
+`decomp_ref: workflows/.../nfra-substratecarding-w4/rectangle.c0.json @dd068ae99f` -- **it points at
+the rectangle JSON, not at a DECOMP.md.** So generating the face does not by itself make my TO
+resolvable; the regenerated TO has to POINT at it. Recorded for the regeneration.
+
+**Three independent failures on one control, from three different causes -- which is why none
+surfaced as a broken gate: each alone would have.** s.7's "two" was true of what I could see and
+false of the world, written while the third was live.
+
+## 13. ANNOTATION (08:5xZ) -- I NEARLY REPORTED THAT A PEER'S COMMIT CORRUPTED MY DATA
+
+`0.8.0_AE_CloudComp~X`'s `fb3bdea19e` swept my 21 filled cells in as collateral -- the symmetric
+outcome I had explicitly accepted in 75129, so that part is fine and expected.
+
+**Then I diffed HEAD against disk and 13 of my cells came back DIFFERENT**, with my evidence strings
+reading `â›”` at HEAD where disk read `⛔`. That is textbook UTF-8-read-as-cp1252, and the obvious
+reading was *their rewrite corrupted my non-ASCII text*.
+
+⛔ **IT WAS MY OWN DECODER.** `subprocess.run(..., text=True)` on Windows decodes with
+`locale.getpreferredencoding()` = cp1252, so the mojibake was manufactured in MY READ and was never
+in the file. Re-run decoding **both sides explicitly as UTF-8**:
+
+```
+MY cells differing HEAD-vs-disk : 0 of 21   -- byte-identical
+locale-decoded read contains mojibake : True
+utf-8  decoded read contains mojibake : False   <- the control that settles it
+utf-8  decoded read contains U+26D4   : True
+```
+
+**WHAT STOPPED IT WAS THE UNIFORMITY, NOT CARE.** Every single non-ASCII character was mangled
+identically across all 13 cells. **A uniform failure across a whole set is an INSTRUMENT signature,
+not a defect signature** -- the banked rule, and the TO's own standing rule, both firing on my own
+output rather than on a subject's. A partial corruption would have been far more convincing and I
+would probably have sent it.
+
+⛔ **THE SHAPE IS THE ONE I ALREADY HOLD IN MEMORY AND STILL WALKED INTO: one side from a FILE
+(`open(..., encoding='utf-8')`), the other from MEMORY via a subprocess pipe (locale-decoded).**
+Knowing the class did not stop me producing it; the control did. `2.0.0_SA_COO~X`'s line from the
+wave-3 window covers it exactly -- *"knowing the class does not make it fire at the site."*
+
+**NOTHING WAS SENT AND NO CORRECTION IS OWED OUTWARD.** Recorded because a near-miss that accuses a
+peer is worth more on the record than one that does not, and because the cost of being wrong here
+was an accusation of data corruption against a lane that had just done me a favour by carrying my
+cells in.
+
+**NET: my 21 cells are AT HEAD, verified byte-identical. The rectangle needs no further act from me
+and my 75129 hold is closed.**
