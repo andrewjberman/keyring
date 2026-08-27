@@ -87,10 +87,59 @@
     "why_per_lane_never_summed": "the lanes card different populations; a blended rate is a residual-bucket claim, not a measurement."
   },
   "W2_m_2": {
-    "status": "PENDING -- discharge at close against the frozen two-denominator oracle"
+    "status": "MEASURED -- discharged early; this cell never depended on card delivery",
+    "oracle": "TWO denominators, both asserted in code against subjects.json and NEITHER derived by subtraction: (a) 43-head closure; (b) co_resident_stores additions counted separately.",
+    "a_43_head_closure": {
+      "head_43_subjects": 33,
+      "head_collapses": 10,
+      "sum": 43,
+      "verdict": "CLOSED"
+    },
+    "b_non_head_origins": {
+      "co_resident_addition": 8,
+      "compound_split": 2,
+      "dropped_recovery": 1,
+      "sum": 11,
+      "note": "none of these were ever among the 43 -- that is why they are counted separately"
+    },
+    "total": "33 + 11 = 44, matching subjects.json exactly",
+    "collapses": {
+      "head_collapse": 10,
+      "not_a_head": 2,
+      "total": 12
+    },
+    "why_two_denominators": "A single blended total would hide which population each subject came from. That blending is precisely the defect the ATTEMPT-2 PLANT was built from -- a tautological oracle in this very cell -- so the two-denominator form is the fix that plant forced.",
+    "independence": "asserted in the generator's self-test, which refuses to build if the 43-closure breaks"
   },
   "W2_m_4": {
-    "status": "PENDING -- needs a git sweep for carding-lane commits touching a carded subject's generator; run at close over the whole wave window, not now (a partial window would under-report and read as a pass)"
+    "status": "PARTIAL -- CLEAN over an OPEN window, and the oracle has a hole I am naming rather than leaving to be found",
+    "oracle": "zero commits by a carding lane touching a subject's own generator during the wave",
+    "window": "2026-08-26 21:00Z -> 00:1xZ (OPEN -- two lanes still carding)",
+    "measured": {
+      "carded_subjects_naming_a_repo_path": "20 of 44 (the rest are S3 objects, warehouse tables or concepts; no commit can touch them)",
+      "0.8.0_AE_CloudComp~X": {
+        "files_touched": 3,
+        "carded_subject_files": 0
+      },
+      "0.8.0_AE_CloudComp~Y": {
+        "files_touched": 0,
+        "carded_subject_files": 0
+      },
+      "0.7.0_AE_CloudOps~X": {
+        "files_touched": 9,
+        "carded_subject_files": 0
+      },
+      "0.4.0_DT_ClientPlatform~X": {
+        "files_touched": 23,
+        "carded_subject_files": 0
+      },
+      "denominator": "35 distinct file-touches across the 4 carding lanes"
+    },
+    "verdict_partial": "CLEAN -- zero carding lanes committed to a subject they card",
+    "zero_that_needed_a_control": "0.8.0_AE_CloudComp~Y read 0 files touched while demonstrably carding, which is the instrument-signature shape. POSITIVE CONTROL RUN: the author predicate resolves (3 commits all-time for that serial), so the zero is a real fact about the window -- their wave-2 work is on disk uncommitted, as lanes commit at the completion flip. The zero is honest; it is NOT evidence of idleness and must not be read as any.",
+    "ORACLE_HOLE_MINE": "\u26d4 THIS CELL'S ORACLE SAYS 'COMMITS'. A carding lane that EDITS a carded generator in its working tree without committing is INVISIBLE to it -- and an uncommitted fix is still a fix, so the cell would discharge CLEAN over a real violation. This is my FOURTH oracle limit this project (SC-m-4's two-of-three fields; W2-m-1's unsatisfiable form; W2-m-1's over-corrected form; now this). Stated BEFORE the discharge rather than after, which is the only part of the pattern I have improved.",
+    "hole_disposition": "NOT closing it mid-wave: closing it requires reading four lanes' working trees, which this seat cannot do and should not. The honest discharge names the hole and scopes the claim to COMMITTED history. A cell that claims more than its instrument reaches is the exact defect this project cards.",
+    "re_run_at_close": "over the full window. A clean partial is byte-identical to a clean whole -- the trap this cell sits inside."
   },
   "MY_FALSE_CLAIM_CORRECTED": "In 74021 I wrote 'Every one of the 28 cards is CORRECT.' I had NOT checked the field I was discussing -- I verified the wave pin and generalised to the whole card. The false-attribution-of-a-GOOD-act class: nobody contests being told their work is right, so it is the error that survives. 0.7.0_AE_CloudOps~X contested it anyway, against their own cards."
 }
