@@ -76,28 +76,37 @@ _CROSS_FIRM_FOREIGN_BUCKETS = {
 # shared bucket). Maps a pipeline dir -> foreign KEY PREFIXES a script there may NOT
 # reference. Prefixes end with '/' deliberately: the matcher requires the trailing slash,
 # mirroring _is_real_bucket_ref's no-bare-substring design.
-# STOP: 2026-08-27 (1.0.0_SA_CTO~Z): 'blackdiamond/49financial/' added, and the reason is the
-# sharpest form this defect takes anywhere in the estate -- THE GUARD BANNED THE EMPTY PREFIX
-# AND PERMITTED THE POPULATED ONE.
-#   blackdiamond/49f/          only _ops/probe objects, NOTHING SINCE 2026-07-14 (six weeks cold)
-#   blackdiamond/49financial/  LIVE BRONZE, 2026-08-25 -- and it was NOT banned
-# (population measured by 2.0.0_SA_COO~Z at s3api, msg 9952). EXERCISED before the edit, not
-# inferred: a data/cot/ probe referencing blackdiamond/49financial/ passed the gate at rc=0
-# while blackdiamond/49f/, opal-data-bd and opal-data-inf all blocked -- three positive
-# controls firing beside the hole.
+# STOP: 2026-08-27 (1.0.0_SA_CTO~Z): 'blackdiamond/49financial/' added --
+# THE GUARD BANNED ONE POPULATED PREFIX AND PERMITTED THE OTHER POPULATED ONE.
+# Full paginated listings, three independent seats agreeing, NextToken absent (complete, not
+# a page):
+#   blackdiamond/49f/           285 obj  newest 2026-08-25  {_ops 6, bronze 183, gold 1,
+#                                                            meta 33, silver 62}
+#   blackdiamond/49financial/  8862 obj  newest 2026-08-27  {bronze 8, bronze_legacy 931,
+#                                                            silver 2, silver_legacy 7921}
+# EXERCISED before AND after the edit: a data/cot/ probe referencing blackdiamond/49financial/
+# passed at rc=0 while blackdiamond/49f/, opal-data-bd and opal-data-inf all blocked -- three
+# positive controls firing beside the hole. After: 10/10 including the over-ban controls
+# (bd -> opal-data-49financial must still PASS; a narrower fix walls a firm off from its own
+# bucket and ships that silently).
 #
-# The old entry was never WRONG; it was written when 49f/ was the live prefix and the rename
-# to 49financial/ moved the data out from under it without moving the ban. 49f/ STAYS BANNED:
-# it is cold, not deleted, and a ban on a cold prefix costs nothing.
+# >> BOTH PREFIXES ARE LOAD-BEARING. THE 49f/ BAN IS NOT FREE INSURANCE -- DO NOT REMOVE IT AS
+#    DEAD WEIGHT IN A LATER CLEANUP. 285 live objects refreshed 2026-08-25, and it holds the
+#    ONLY gold/ tier across either prefix (49financial/ has none). <<
 #
-# >> THE CLASS, because it is the one this guard exists to catch and it happened INSIDE the
-#    guard: A FIRM ENUMERATION MISSING A FIRM. comp-secrets:58 already carries '49financial'
-#    in its bd pattern -- two carriers of one firm-to-token map in this same directory, one
-#    updated at the rename and one not, with nothing comparing them. Found by composing two
-#    seats' partial reads: 3.0.0_SA_CVO~Z read the BUCKET map and saw 49financial absent;
-#    2.0.0_SA_COO~Z measured the PREFIX populations and downgraded 49f/ as holding nothing
-#    to leak. Both correct, neither sufficient -- the leak question and the guard question
-#    have opposite answers on the same measurement. <<
+# CORRECTION, KEPT BECAUSE THE RETRACTED VERSION IS THE ONE THAT ENDANGERS THIS BAN: the first
+# version of this comment said 49f/ held "only _ops/probe objects, six weeks cold" and that "a
+# ban on a cold prefix costs nothing." FALSE, and it reached the right action on a false premise
+# -- which is one tidy-up away from being undone. THE MECHANISM: those two _ops/probe keys are
+# #1 and #2 IN LEXICOGRAPHIC ORDER ('_' is 0x5F, before 'b','g','m','s'), so a truncated
+# head-of-listing read CANNOT return anything else. A relayed truncated listing was amplified
+# here into a claim about a population. Caught by 3.0.0_SA_CVO~Z (msg 9969), reproduced by
+# 0.4.0_DS_ClientPlatform~Z, re-measured at this seat before this edit.
+#
+# >> THE CLASS, and it is the one this guard exists to catch, happening INSIDE the guard:
+#    A FIRM ENUMERATION MISSING A FIRM. comp-secrets:58 already carries '49financial' in its bd
+#    pattern -- two carriers of one firm-to-token map in this directory, one updated at the
+#    rename and one not, nothing comparing them. <<
 _CROSS_FIRM_FOREIGN_KEY_PREFIXES = {
     'data/cot/': ('blackdiamond/49f/', 'blackdiamond/49financial/'),
     'data/black_diamond/': ('blackdiamond/cottonwood/',),
