@@ -211,7 +211,19 @@ def _tracked_task_orders() -> set:
 
 
 def _is_tracked(rel: str) -> bool:
-    return rel.replace("\\", "/") in _tracked_task_orders()
+    # Ask git about THE FILE, never about corpus membership. The corpus glob is scoped to
+    # */task_orders/*.md for DISCOVERY; a declared to_ref may legitimately live elsewhere
+    # (wave-4 TOs live in deliverables/D11_W4/), and glob membership answered "is this in my
+    # directory shape", not "is this committed" -- a discriminator on the DIRECTORY that
+    # falsely reported 3 of 3 committed wave-4 TOs UNTRACKED and silently disabled alignment
+    # for the wave (75078). Fail-closed-to-False keeps the documented announce behavior.
+    try:
+        rc = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", rel.replace("\\", "/")],
+            cwd=WORKSPACE, capture_output=True, text=True).returncode
+        return rc == 0
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def _canonical_to_id(raw: str) -> str:
