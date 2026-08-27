@@ -277,6 +277,11 @@ def main() -> int:
         "pattern": "artifact.tmp.<pid>.<monotonic_ns>.<counter>",
         "pattern_source_home": "producer.py",
         "pattern_source_line": 42,
+        "variant_suffixes": {
+            ".wal": "present while the producer has an open write-ahead transaction",
+        },
+        "variant_suffixes_source_home": "producer.py",
+        "variant_suffixes_source_line": 43,
         "basis": "measured",
         "evidence": "fixture:runtime-family",
         "owner": "4.0.0_SA_CRO~A",
@@ -310,20 +315,40 @@ def main() -> int:
         "runtime negative source line": {**legal_runtime_family, "pattern_source_line": -1},
         "runtime string source line": {**legal_runtime_family, "pattern_source_line": "42"},
         "runtime fractional source line": {**legal_runtime_family, "pattern_source_line": 1.5},
+        "runtime compound source home": {**legal_runtime_family, "pattern_source_home": "_canonical.py:288"},
+        "runtime suffix condition trailing LF": {
+            **legal_runtime_family,
+            "variant_suffixes": {".wal": "condition\n"},
+        },
+        "runtime suffix condition trailing CR": {
+            **legal_runtime_family,
+            "variant_suffixes": {".wal": "condition\r"},
+        },
+        "runtime suffix condition line separator": {
+            **legal_runtime_family,
+            "variant_suffixes": {".wal": "condition\u2028second"},
+        },
         "retired compound source": {**legal_runtime_family, "pattern_source": "producer.py:42"},
     }
     for mutant_name, mutant in member_set_mutants.items():
         if not rejected(validator, receiver_document(manifest, "member_set", mutant)):
             failures.append(f"member_set accepted {mutant_name}")
-    for required_field in ("enumerable", "pattern", "pattern_source_home", "pattern_source_line", "basis", "evidence", "owner"):
+    for required_field in (
+        "enumerable",
+        "pattern",
+        "pattern_source_home",
+        "pattern_source_line",
+        "variant_suffixes",
+        "variant_suffixes_source_home",
+        "variant_suffixes_source_line",
+        "basis",
+        "evidence",
+        "owner",
+    ):
         missing = copy.deepcopy(legal_runtime_family)
         missing.pop(required_field)
         if not rejected(validator, receiver_document(manifest, "member_set", missing)):
             failures.append(f"runtime member_set accepted omitted {required_field}")
-    colon_in_home = copy.deepcopy(legal_runtime_family)
-    colon_in_home["pattern_source_home"] = "_canonical.py:288"
-    if rejected(validator, receiver_document(manifest, "member_set", colon_in_home)):
-        failures.append("runtime member_set rejected legitimate colon in source home")
 
     for home_space in ("repo_path", "db_path"):
         https_home = copy.deepcopy(manifest)

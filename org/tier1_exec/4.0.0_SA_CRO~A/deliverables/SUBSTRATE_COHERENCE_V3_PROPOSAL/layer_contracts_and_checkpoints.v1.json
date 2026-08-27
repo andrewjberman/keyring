@@ -170,9 +170,50 @@
         "post_rerun_receiver_population": {
           "total_parts": 42,
           "admitted_exact_subject_matches": 0,
-          "grain": {"declared": 0, "unknown": 42},
-          "key": {"declared": 0, "unknown": 42},
-          "failure_mode": {"declared": 0, "unknown": 42}
+          "home_space": {"emitted": 42, "declared": 42, "unknown": 0},
+          "grain": {"emitted": 42, "declared": 0, "unknown": 42},
+          "key": {"emitted": 42, "declared": 0, "unknown": 42},
+          "failure_mode": {"emitted": 42, "declared": 0, "unknown": 42},
+          "summation_across_receivers_prohibited": true
+        },
+        "receiver_readiness_axes": {
+          "candidate_population": {
+            "home": "org/**/D11_CARDS_W4/*.json",
+            "admission_state": "not_admitted",
+            "candidate_json_file_count": 24,
+            "valid_card_document_count": 23,
+            "non_card_document_count": 1,
+            "excluded_non_card_home": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+            "exact_subject_match_count": 23
+          },
+          "home_space": {
+            "source_payload_state": "not_required",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "not_required",
+            "transformation_state": "implemented_fail_closed",
+            "compiler_implementation_state": "implemented_fail_closed"
+          },
+          "failure_mode": {
+            "source_payload_state": "complete",
+            "source_complete_candidate_count": 23,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent"
+          },
+          "key": {
+            "source_payload_state": "incomplete",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent"
+          },
+          "grain": {
+            "source_payload_state": "absent",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent"
+          }
         },
         "admitted_card_population": {
           "source_glob": "org/**/D11_CARDS_W3/*.json",
@@ -183,6 +224,25 @@
         "unknown_satisfies_operative_completeness": false,
         "future_mapping_effect": "unknown_to_declared_enrichment",
         "ruling_evidence": "CRO~A ruling on CTO~X 74980",
+        "completion_populations": {
+          "cardable": {"part_count": 36, "terminal_claim_status": "declared", "current_terminal_count": 0},
+          "unbuilt": {"part_count": 3, "terminal_claim_status_under_current_directive": "unknown", "becomes_declarable_when": "part_is_built"},
+          "l1_resolved": {
+            "part_count": 3,
+            "measurement_state": "completed",
+            "complete_four_receiver_source_count": 0,
+            "exact_part_ids": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"],
+            "home_space_present_count": 0,
+            "grain_receiver_present_count": 0,
+            "key_expression_present_count": 0,
+            "failure_mode_present_basis_count": 2,
+            "card_sha256": {
+              ".comp-graph/graph.json": "28bda7703368e49d01ebe196cb56d42b3b000cd66ce740df93deb314e750e84f",
+              "graph_contracts": "f117ac55c1a7ac1afd5b7ef64cd8871c8cf479eee653ddf06d99a89b31c83195",
+              "resource_summaries": "448147530d445b06c11f7d95c49906805ac94731a151e195e1223bf0fca2106d"
+            }
+          }
+        },
         "unknown_remediation_population": {
           "source": "manifest_parts_with_unknown_receiver",
           "total": 42,
@@ -374,10 +434,38 @@
         "grain_contract_settled": true,
         "receiver_schema_extension_present": true,
         "receiver_semantics_validated": true,
-        "compiler_population_present": false,
+        "w3_extension_boundary_state": "intentional_temporal",
+        "receiver_source_registry_present": false,
+        "candidate_glob_expands_authority": false,
+        "required_registry_home": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json",
+        "required_registry_populations": {
+          "extension_population": {"current_member_count": 13, "consumer_scope": "existing_w3_map_enrichment_only"},
+          "receiver_source_populations": {
+            "grain": {"current_member_count": 0, "admission_predicate": "declared_grain_branch_complete", "transform_required": true},
+            "key": {"current_member_count": 0, "admission_predicate": "declared_key_branch_complete", "transform_required": true},
+            "failure_mode": {"current_member_count": 0, "admission_predicate": "declared_failure_mode_branch_complete", "transform_required": true}
+          }
+        },
+        "w4_candidate_ceiling": {
+          "candidate_json_file_count": 24,
+          "valid_card_document_count": 23,
+          "non_card_document_count": 1,
+          "excluded_non_card_home": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+          "exact_subject_count": 23,
+          "governed_cardable_part_count": 36,
+          "task_order_card_requirement_state": "absent_all_three_tranches",
+          "task_order_card_schema_binding_state": "absent_all_three_tranches",
+          "produced_card_schema": "org/standards/SUBSTRATE_CARD.v2.schema.json",
+          "produced_card_schema_selection_authority": "lane_selected",
+          "produced_card_schema_validation_state": "passed",
+          "title_acceptance_surprise_state": "not_raised_before_execution",
+          "remote_missing_card_count": 12,
+          "remote_card_delivery_obligation_state": "not_issued",
+          "issuer_work_unit_state": "not_cut_until_registry_exists"
+        },
         "grain_contract_owner": "4.0.0_SA_CRO~A",
         "schema_extension_owner": "1.0.0_SA_CTO~X",
-        "compiler_population_owner": "0.4.0_DT_ClientPlatform~X",
+        "receiver_source_registry_owner": "0.4.0_DT_ClientPlatform~X",
         "compiler_task_ref": "TO-L1-DTX work item 1",
         "prevents_operative_transition": true
       }
@@ -627,7 +715,8 @@
       "Replace stale provisional directive-home language in the PRD with D11 as the complete L0-through-L4 authority and no mint.",
       "Reference the validated card contract, layer deliverable contracts, and checkpoint sequence from the PRD.",
       "Issue the pinned PRD and contract package reference to COO~X for its drive loop.",
-      "Extend L0_GRAPH_SUBSTRATE_MANIFEST.schema.json so every part declares structured grain, key, and failure-mode semantics before L1 starts."
+      "Extend L0_GRAPH_SUBSTRATE_MANIFEST.schema.json so every part declares structured grain, key, and failure-mode semantics before L1 starts.",
+      "Add a schema-governed D11 card population registry with an exact W3 extension population and independent grain, key, and failure-mode receiver-source populations; globs remain candidate discovery only."
     ]
   }
 }

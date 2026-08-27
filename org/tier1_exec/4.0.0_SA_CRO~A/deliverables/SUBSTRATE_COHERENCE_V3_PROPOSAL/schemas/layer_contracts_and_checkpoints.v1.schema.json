@@ -274,7 +274,7 @@
             "landing_sequence": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["strategy", "schema_change", "parts_registered_retirement_sequence", "post_rerun_receiver_population", "admitted_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "unknown_remediation_population"],
+              "required": ["strategy", "schema_change", "parts_registered_retirement_sequence", "post_rerun_receiver_population", "receiver_readiness_axes", "admitted_card_population", "unknown_satisfies_operative_completeness", "future_mapping_effect", "ruling_evidence", "completion_populations", "unknown_remediation_population"],
               "properties": {
                 "strategy": {"const": "receiver_before_join"},
                 "schema_change": {"const": "additive_optional"},
@@ -294,15 +294,48 @@
                 "post_rerun_receiver_population": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["total_parts", "admitted_exact_subject_matches", "grain", "key", "failure_mode"],
+                  "required": ["total_parts", "admitted_exact_subject_matches", "home_space", "grain", "key", "failure_mode", "summation_across_receivers_prohibited"],
                   "properties": {
                     "total_parts": {"const": 42},
                     "admitted_exact_subject_matches": {"const": 0},
+                    "home_space": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["emitted", "declared", "unknown"],
+                      "properties": {"emitted": {"const": 42}, "declared": {"const": 42}, "unknown": {"const": 0}}
+                    },
                     "grain": {"$ref": "#/$defs/current_receiver_population"},
                     "key": {"$ref": "#/$defs/current_receiver_population"},
-                    "failure_mode": {"$ref": "#/$defs/current_receiver_population"}
+                    "failure_mode": {"$ref": "#/$defs/current_receiver_population"},
+                    "summation_across_receivers_prohibited": {"const": true}
                   },
-                  "x-rule24": {"domain": "claim-status population for each receiver field after the deterministic rerun", "grain": "one receiver field across 42 manifest parts", "intent": "keep grain, key, and failure_mode claim states independent; never collapse them into one part-level declared count", "mece": "within each receiver, declared plus unknown equals 42; the current admitted Wave-3 card population has zero exact subject-id matches, so all three independently resolve to 0 declared and 42 unknown", "state_coherence": "adding an admitted exact-card projection may move only the receiver fields it actually populates from unknown to declared"}
+                  "x-rule24": {"domain": "emission and declaration populations for each receiver field after the deterministic rerun", "grain": "one receiver field across 42 manifest parts", "intent": "report home_space, grain, key, and failure_mode independently; never sum receiver counts into a progress numerator", "mece": "within each receiver, declared plus unknown equals 42 and emitted equals 42; summation across receivers is explicitly prohibited", "state_coherence": "a source, admission, or transformation change may move only the receiver fields whose independent readiness axes become satisfied"}
+                },
+                "receiver_readiness_axes": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["candidate_population", "home_space", "failure_mode", "key", "grain"],
+                  "properties": {
+                    "candidate_population": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["home", "admission_state", "candidate_json_file_count", "valid_card_document_count", "non_card_document_count", "excluded_non_card_home", "exact_subject_match_count"],
+                      "properties": {
+                        "home": {"const": "org/**/D11_CARDS_W4/*.json"},
+                        "admission_state": {"const": "not_admitted"},
+                        "candidate_json_file_count": {"const": 24},
+                        "valid_card_document_count": {"const": 23},
+                        "non_card_document_count": {"const": 1},
+                        "excluded_non_card_home": {"const": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json"},
+                        "exact_subject_match_count": {"const": 23}
+                      }
+                    },
+                    "home_space": {"$ref": "#/$defs/home_space_readiness"},
+                    "failure_mode": {"$ref": "#/$defs/failure_mode_readiness"},
+                    "key": {"$ref": "#/$defs/key_readiness"},
+                    "grain": {"$ref": "#/$defs/grain_readiness"}
+                  },
+                  "x-rule24": {"domain": "independent preconditions for moving one receiver from unknown to declared", "grain": "one receiver over the exact 23-card W4 candidate population", "intent": "separate source-payload completeness, registry admission, schema-bound transformation authority, and compiler implementation readiness", "mece": "each axis has its own exhaustive state vocabulary; multiple axes may be blocked simultaneously and no single fate-class value hides that conjunction", "state_coherence": "admitting cards changes only registry_admission_state; authoring a source field changes only source_payload_state; governing a transform changes only transformation_state; implementing its execution changes only compiler_implementation_state"}
                 },
                 "admitted_card_population": {
                   "type": "object",
@@ -318,6 +351,32 @@
                 "unknown_satisfies_operative_completeness": {"const": false},
                 "future_mapping_effect": {"const": "unknown_to_declared_enrichment"},
                 "ruling_evidence": {"type": "string", "minLength": 1},
+                "completion_populations": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["cardable", "unbuilt", "l1_resolved"],
+                  "properties": {
+                    "cardable": {"type": "object", "additionalProperties": false, "required": ["part_count", "terminal_claim_status", "current_terminal_count"], "properties": {"part_count": {"const": 36}, "terminal_claim_status": {"const": "declared"}, "current_terminal_count": {"const": 0}}},
+                    "unbuilt": {"type": "object", "additionalProperties": false, "required": ["part_count", "terminal_claim_status_under_current_directive", "becomes_declarable_when"], "properties": {"part_count": {"const": 3}, "terminal_claim_status_under_current_directive": {"const": "unknown"}, "becomes_declarable_when": {"const": "part_is_built"}}},
+                    "l1_resolved": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["part_count", "measurement_state", "complete_four_receiver_source_count", "exact_part_ids", "home_space_present_count", "grain_receiver_present_count", "key_expression_present_count", "failure_mode_present_basis_count", "card_sha256"],
+                      "properties": {
+                        "part_count": {"const": 3},
+                        "measurement_state": {"const": "completed"},
+                        "complete_four_receiver_source_count": {"const": 0},
+                        "exact_part_ids": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"]}},
+                        "home_space_present_count": {"const": 0},
+                        "grain_receiver_present_count": {"const": 0},
+                        "key_expression_present_count": {"const": 0},
+                        "failure_mode_present_basis_count": {"const": 2},
+                        "card_sha256": {"type": "object", "additionalProperties": false, "required": [".comp-graph/graph.json", "graph_contracts", "resource_summaries"], "properties": {".comp-graph/graph.json": {"const": "28bda7703368e49d01ebe196cb56d42b3b000cd66ce740df93deb314e750e84f"}, "graph_contracts": {"const": "f117ac55c1a7ac1afd5b7ef64cd8871c8cf479eee653ddf06d99a89b31c83195"}, "resource_summaries": {"const": "448147530d445b06c11f7d95c49906805ac94731a151e195e1223bf0fca2106d"}}}
+                      }
+                    }
+                  },
+                  "x-rule24": {"domain": "terminal declaration treatment of the 42-part manifest population", "grain": "one mutually exclusive part population", "intent": "separate current-directive terminal unknown from remediable unknown and already-carded-but-incomplete inputs", "mece": "36 cardable plus 3 unbuilt plus 3 L1-resolved equals 42 with no overlap", "state_coherence": "unbuilt moves to cardable only when the part is built; L1-resolved moves to declared only after complete admitted receiver inputs and a schema-bound transformation exist"}
+                },
                 "unknown_remediation_population": {
                   "type": "object",
                   "additionalProperties": false,
@@ -679,17 +738,67 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["gap_id", "required_operation", "grain_contract_settled", "receiver_schema_extension_present", "receiver_semantics_validated", "compiler_population_present", "grain_contract_owner", "schema_extension_owner", "compiler_population_owner", "compiler_task_ref", "prevents_operative_transition"],
+            "required": ["gap_id", "required_operation", "grain_contract_settled", "receiver_schema_extension_present", "receiver_semantics_validated", "w3_extension_boundary_state", "receiver_source_registry_present", "candidate_glob_expands_authority", "required_registry_home", "required_registry_populations", "w4_candidate_ceiling", "grain_contract_owner", "schema_extension_owner", "receiver_source_registry_owner", "compiler_task_ref", "prevents_operative_transition"],
             "properties": {
               "gap_id": {"const": "l0_part_semantics_for_l1"},
               "required_operation": {"const": "populate_structured_grain_key_failure_mode_for_every_part"},
               "grain_contract_settled": {"const": true},
               "receiver_schema_extension_present": {"const": true},
               "receiver_semantics_validated": {"const": true},
-              "compiler_population_present": {"const": false},
+              "w3_extension_boundary_state": {"const": "intentional_temporal"},
+              "receiver_source_registry_present": {"const": false},
+              "candidate_glob_expands_authority": {"const": false},
+              "required_registry_home": {"const": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json"},
+              "required_registry_populations": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["extension_population", "receiver_source_populations"],
+                "properties": {
+                  "extension_population": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["current_member_count", "consumer_scope"],
+                    "properties": {"current_member_count": {"const": 13}, "consumer_scope": {"const": "existing_w3_map_enrichment_only"}}
+                  },
+                  "receiver_source_populations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["grain", "key", "failure_mode"],
+                    "properties": {
+                      "grain": {"$ref": "#/$defs/empty_grain_receiver_population"},
+                      "key": {"$ref": "#/$defs/empty_key_receiver_population"},
+                      "failure_mode": {"$ref": "#/$defs/empty_failure_mode_receiver_population"}
+                    }
+                  }
+                },
+                "x-rule24": {"domain": "card admission populations consumed by distinct compiler operations", "grain": "one governed card population", "intent": "keep W3 map enrichment admission independent from each receiver-source admission", "mece": "extension, grain, key, and failure_mode are separate named populations; membership may overlap across populations because consumers are independent", "state_coherence": "a card enters only the population whose exact completeness predicate and transform pin pass; no directory discovery mutates any population"}
+              },
+              "w4_candidate_ceiling": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["candidate_json_file_count", "valid_card_document_count", "non_card_document_count", "excluded_non_card_home", "exact_subject_count", "governed_cardable_part_count", "task_order_card_requirement_state", "task_order_card_schema_binding_state", "produced_card_schema", "produced_card_schema_selection_authority", "produced_card_schema_validation_state", "title_acceptance_surprise_state", "remote_missing_card_count", "remote_card_delivery_obligation_state", "issuer_work_unit_state"],
+                "properties": {
+                  "candidate_json_file_count": {"const": 24},
+                  "valid_card_document_count": {"const": 23},
+                  "non_card_document_count": {"const": 1},
+                  "excluded_non_card_home": {"const": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json"},
+                  "exact_subject_count": {"const": 23},
+                  "governed_cardable_part_count": {"const": 36},
+                  "task_order_card_requirement_state": {"const": "absent_all_three_tranches"},
+                  "task_order_card_schema_binding_state": {"const": "absent_all_three_tranches"},
+                  "produced_card_schema": {"const": "org/standards/SUBSTRATE_CARD.v2.schema.json"},
+                  "produced_card_schema_selection_authority": {"const": "lane_selected"},
+                  "produced_card_schema_validation_state": {"const": "passed"},
+                  "title_acceptance_surprise_state": {"const": "not_raised_before_execution"},
+                  "remote_missing_card_count": {"const": 12},
+                  "remote_card_delivery_obligation_state": {"const": "not_issued"},
+                  "issuer_work_unit_state": {"const": "not_cut_until_registry_exists"}
+                },
+                "x-rule24": {"domain": "current W4 card candidate ceiling and its warrant", "grain": "one W4 candidate population", "intent": "separate observed files and subjects from governed target, issued deliverable requirement, issued schema binding, lane-selected validation, surprise-channel handling, and future issuer work", "mece": "each field is one independently measured dimension; a passed lane-selected schema validation does not manufacture an issued card requirement or registry admission", "state_coherence": "a future TO changes requirement and schema-binding states only; producing missing cards changes counts only; registry admission is outside this candidate record"}
+              },
               "grain_contract_owner": {"const": "4.0.0_SA_CRO~A"},
               "schema_extension_owner": {"const": "1.0.0_SA_CTO~X"},
-              "compiler_population_owner": {"const": "0.4.0_DT_ClientPlatform~X"},
+              "receiver_source_registry_owner": {"const": "0.4.0_DT_ClientPlatform~X"},
               "compiler_task_ref": {"const": "TO-L1-DTX work item 1"},
               "prevents_operative_transition": {"const": true}
             }
@@ -736,10 +845,89 @@
     "current_receiver_population": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["declared", "unknown"],
+      "required": ["emitted", "declared", "unknown"],
       "properties": {
+        "emitted": {"const": 42},
         "declared": {"const": 0},
         "unknown": {"const": 42}
+      }
+    },
+    "home_space_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "not_required"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "not_required"},
+        "transformation_state": {"const": "implemented_fail_closed"},
+        "compiler_implementation_state": {"const": "implemented_fail_closed"}
+      }
+    },
+    "failure_mode_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "complete"},
+        "source_complete_candidate_count": {"const": 23},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "key_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "incomplete"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "grain_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_payload_state", "source_complete_candidate_count", "registry_admission_state", "transformation_state", "compiler_implementation_state"],
+      "properties": {
+        "source_payload_state": {"const": "absent"},
+        "source_complete_candidate_count": {"const": 0},
+        "registry_admission_state": {"const": "blocked"},
+        "transformation_state": {"const": "absent"},
+        "compiler_implementation_state": {"const": "absent"}
+      }
+    },
+    "empty_grain_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_grain_branch_complete"},
+        "transform_required": {"const": true}
+      }
+    },
+    "empty_key_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_key_branch_complete"},
+        "transform_required": {"const": true}
+      }
+    },
+    "empty_failure_mode_receiver_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_member_count", "admission_predicate", "transform_required"],
+      "properties": {
+        "current_member_count": {"const": 0},
+        "admission_predicate": {"const": "declared_failure_mode_branch_complete"},
+        "transform_required": {"const": true}
       }
     },
     "l2_output_stage": {

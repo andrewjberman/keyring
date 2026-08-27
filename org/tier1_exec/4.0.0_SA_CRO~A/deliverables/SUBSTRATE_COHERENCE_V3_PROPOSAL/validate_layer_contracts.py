@@ -137,6 +137,7 @@ def semantic_errors(document: dict) -> list[str]:
     landing = receiver_grain["landing_sequence"]
     retirement = landing["parts_registered_retirement_sequence"]
     receiver_population = landing["post_rerun_receiver_population"]
+    readiness = landing["receiver_readiness_axes"]
     card_population = landing["admitted_card_population"]
     if (
         landing["strategy"] != "receiver_before_join"
@@ -154,12 +155,14 @@ def semantic_errors(document: dict) -> list[str]:
         or any(
             receiver_population[field]["declared"] + receiver_population[field]["unknown"]
             != receiver_population["total_parts"]
-            for field in ("grain", "key", "failure_mode")
+            for field in ("home_space", "grain", "key", "failure_mode")
         )
+        or receiver_population["home_space"] != {"emitted": 42, "declared": 42, "unknown": 0}
         or any(
-            receiver_population[field] != {"declared": 0, "unknown": 42}
+            receiver_population[field] != {"emitted": 42, "declared": 0, "unknown": 42}
             for field in ("grain", "key", "failure_mode")
         )
+        or not receiver_population["summation_across_receivers_prohibited"]
         or card_population != {
             "source_glob": "org/**/D11_CARDS_W3/*.json",
             "total": 13,
@@ -170,6 +173,95 @@ def semantic_errors(document: dict) -> list[str]:
         or landing["future_mapping_effect"] != "unknown_to_declared_enrichment"
     ):
         errors.append("receiver must land additively before the join while unknown remains non-complete")
+    expected_readiness = {
+        "candidate_population": {
+            "home": "org/**/D11_CARDS_W4/*.json",
+            "admission_state": "not_admitted",
+            "candidate_json_file_count": 24,
+            "valid_card_document_count": 23,
+            "non_card_document_count": 1,
+            "excluded_non_card_home": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+            "exact_subject_match_count": 23,
+        },
+        "home_space": {
+            "source_payload_state": "not_required",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "not_required",
+            "transformation_state": "implemented_fail_closed",
+            "compiler_implementation_state": "implemented_fail_closed",
+        },
+        "failure_mode": {
+            "source_payload_state": "complete",
+            "source_complete_candidate_count": 23,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent",
+        },
+        "key": {
+            "source_payload_state": "incomplete",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent",
+        },
+        "grain": {
+            "source_payload_state": "absent",
+            "source_complete_candidate_count": 0,
+            "registry_admission_state": "blocked",
+            "transformation_state": "absent",
+            "compiler_implementation_state": "absent",
+        },
+    }
+    if readiness != expected_readiness:
+        errors.append("receiver readiness must keep source, admission, transform authority, and compiler implementation independent")
+    completion = landing["completion_populations"]
+    cardable = completion["cardable"]
+    unbuilt = completion["unbuilt"]
+    l1_resolved = completion["l1_resolved"]
+    if (
+        cardable != {"part_count": 36, "terminal_claim_status": "declared", "current_terminal_count": 0}
+        or unbuilt != {
+            "part_count": 3,
+            "terminal_claim_status_under_current_directive": "unknown",
+            "becomes_declarable_when": "part_is_built",
+        }
+        or cardable["part_count"] + unbuilt["part_count"] + l1_resolved["part_count"] != 42
+        or l1_resolved["measurement_state"] != "completed"
+        or l1_resolved["complete_four_receiver_source_count"] != 0
+        or set(l1_resolved["exact_part_ids"])
+        != {".comp-graph/graph.json", "graph_contracts", "resource_summaries"}
+        or l1_resolved["home_space_present_count"] != 0
+        or l1_resolved["grain_receiver_present_count"] != 0
+        or l1_resolved["key_expression_present_count"] != 0
+        or l1_resolved["failure_mode_present_basis_count"] != 2
+    ):
+        errors.append("completion bar must print 42/42 emission separately from the three terminal declaration populations")
+
+    l1_card_paths = {
+        ".comp-graph/graph.json": WORKSPACE / "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-lqzx__.comp-graph_graph.json.json",
+        "graph_contracts": WORKSPACE / "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-qgtd_graph_contracts.json",
+        "resource_summaries": WORKSPACE / "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/resource_summaries.json",
+    }
+    measured_home_space = measured_grain = measured_key_expression = measured_failure_present = 0
+    for part_id, card_path in l1_card_paths.items():
+        card_bytes = card_path.read_bytes()
+        card = json.loads(card_bytes)
+        if card["subject"]["id"] != part_id:
+            errors.append(f"L1-resolved card subject does not exactly equal part id: {part_id}")
+        if hashlib.sha256(card_bytes).hexdigest() != l1_resolved["card_sha256"][part_id]:
+            errors.append(f"L1-resolved card bytes drifted from measured pin: {part_id}")
+        measured_home_space += int("home_space" in card["artifact"]["location"])
+        measured_grain += int("grain" in card)
+        measured_key_expression += int("key_expression" in card["trust"]["key"])
+        measured_failure_present += int(card["trust"]["failure_mode"]["basis"] != "absent")
+    if (
+        measured_home_space != l1_resolved["home_space_present_count"]
+        or measured_grain != l1_resolved["grain_receiver_present_count"]
+        or measured_key_expression != l1_resolved["key_expression_present_count"]
+        or measured_failure_present != l1_resolved["failure_mode_present_basis_count"]
+    ):
+        errors.append("L1-resolved three-card receiver measurement does not match pinned source bytes")
+
     remediation = landing["unknown_remediation_population"]
     class_census = remediation["part_class_census"]
     queue_classifier = remediation["operational_queue_classifier"]
@@ -346,13 +438,64 @@ def semantic_errors(document: dict) -> list[str]:
             or not gap["grain_contract_settled"]
             or not gap["receiver_schema_extension_present"]
             or not gap["receiver_semantics_validated"]
-            or gap["compiler_population_present"]
+            or gap["w3_extension_boundary_state"] != "intentional_temporal"
+            or gap["receiver_source_registry_present"]
+            or gap["candidate_glob_expands_authority"]
+            or gap["required_registry_home"] != "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json"
+            or gap["required_registry_populations"] != {
+                "extension_population": {"current_member_count": 13, "consumer_scope": "existing_w3_map_enrichment_only"},
+                "receiver_source_populations": {
+                    "grain": {"current_member_count": 0, "admission_predicate": "declared_grain_branch_complete", "transform_required": True},
+                    "key": {"current_member_count": 0, "admission_predicate": "declared_key_branch_complete", "transform_required": True},
+                    "failure_mode": {"current_member_count": 0, "admission_predicate": "declared_failure_mode_branch_complete", "transform_required": True},
+                },
+            }
+            or gap["w4_candidate_ceiling"] != {
+                "candidate_json_file_count": 24,
+                "valid_card_document_count": 23,
+                "non_card_document_count": 1,
+                "excluded_non_card_home": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+                "exact_subject_count": 23,
+                "governed_cardable_part_count": 36,
+                "task_order_card_requirement_state": "absent_all_three_tranches",
+                "task_order_card_schema_binding_state": "absent_all_three_tranches",
+                "produced_card_schema": "org/standards/SUBSTRATE_CARD.v2.schema.json",
+                "produced_card_schema_selection_authority": "lane_selected",
+                "produced_card_schema_validation_state": "passed",
+                "title_acceptance_surprise_state": "not_raised_before_execution",
+                "remote_missing_card_count": 12,
+                "remote_card_delivery_obligation_state": "not_issued",
+                "issuer_work_unit_state": "not_cut_until_registry_exists",
+            }
             or gap["grain_contract_owner"] != "4.0.0_SA_CRO~A"
             or gap["schema_extension_owner"] != "1.0.0_SA_CTO~X"
-            or gap["compiler_population_owner"] != "0.4.0_DT_ClientPlatform~X"
+            or gap["receiver_source_registry_owner"] != "0.4.0_DT_ClientPlatform~X"
             or not gap["prevents_operative_transition"]
         ):
             errors.append("structured L0 part semantics must preserve settled grain and one owner per remaining act")
+        w4_paths = sorted(WORKSPACE.glob("org/**/D11_CARDS_W4/*.json"))
+        w4_cards: list[tuple[Path, dict]] = []
+        w4_non_cards: list[Path] = []
+        for path in w4_paths:
+            value = load(path)
+            if isinstance(value.get("subject"), dict) and value["subject"].get("id"):
+                w4_cards.append((path, value))
+            else:
+                w4_non_cards.append(path)
+        card_schema = load(WORKSPACE / "org/standards/SUBSTRATE_CARD.v2.schema.json")
+        card_validator = jsonschema.Draft202012Validator(card_schema)
+        invalid_w4_cards = [path for path, value in w4_cards if list(card_validator.iter_errors(value))]
+        relative_non_cards = {path.relative_to(WORKSPACE).as_posix() for path in w4_non_cards}
+        measured_subjects = {value["subject"]["id"] for _, value in w4_cards}
+        if (
+            len(w4_paths) != 24
+            or len(w4_cards) != 23
+            or len(w4_non_cards) != 1
+            or len(measured_subjects) != 23
+            or invalid_w4_cards
+            or relative_non_cards != {gap["w4_candidate_ceiling"]["excluded_non_card_home"]}
+        ):
+            errors.append("W4 ceiling must distinguish candidate JSON files, valid cards, exact subjects, and the excluded cells document")
 
     checkpoints = document["checkpoint_sequence"]
     if [row["checkpoint_id"] for row in checkpoints] != CHECKPOINTS:
@@ -657,9 +800,64 @@ def main() -> int:
     crossed_compiler_boundary["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["admitted_card_population"]["source_glob"] = "org/**/D11_CARDS_W*.json"
     mutants.append(("estate-wide-cards-masquerade-as-admitted-input", crossed_compiler_boundary))
 
+    discovery_promoted_to_authority = copy.deepcopy(document)
+    discovery_promoted_to_authority["execution_plan"]["operational_gaps"][0]["candidate_glob_expands_authority"] = True
+    mutants.append(("candidate-glob-promoted-to-admission-authority", discovery_promoted_to_authority))
+
+    failure_candidates_preadmitted = copy.deepcopy(document)
+    failure_candidates_preadmitted["execution_plan"]["operational_gaps"][0]["required_registry_populations"]["receiver_source_populations"]["failure_mode"]["current_member_count"] = 23
+    mutants.append(("source-complete-failure-candidates-admitted-without-transform", failure_candidates_preadmitted))
+
+    lane_schema_promoted_to_issued_authority = copy.deepcopy(document)
+    lane_schema_promoted_to_issued_authority["execution_plan"]["operational_gaps"][0]["w4_candidate_ceiling"]["produced_card_schema_selection_authority"] = "task_order_bound"
+    mutants.append(("lane-selected-card-schema-masquerades-as-issued-authority", lane_schema_promoted_to_issued_authority))
+
+    remote_retroactive_debt = copy.deepcopy(document)
+    remote_retroactive_debt["execution_plan"]["operational_gaps"][0]["w4_candidate_ceiling"]["remote_card_delivery_obligation_state"] = "issued"
+    mutants.append(("unissued-remote-cards-masquerade-as-lane-debt", remote_retroactive_debt))
+
+    cells_document_counted_as_card = copy.deepcopy(document)
+    cells_document_counted_as_card["execution_plan"]["operational_gaps"][0]["w4_candidate_ceiling"]["valid_card_document_count"] = 24
+    cells_document_counted_as_card["execution_plan"]["operational_gaps"][0]["w4_candidate_ceiling"]["non_card_document_count"] = 0
+    mutants.append(("w4-cells-document-counted-as-card", cells_document_counted_as_card))
+
+    readiness_cells_document_counted_as_card = copy.deepcopy(document)
+    readiness_candidate = readiness_cells_document_counted_as_card["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["receiver_readiness_axes"]["candidate_population"]
+    readiness_candidate["valid_card_document_count"] = 24
+    readiness_candidate["non_card_document_count"] = 0
+    mutants.append(("receiver-readiness-cells-document-counted-as-card", readiness_cells_document_counted_as_card))
+
     receiver_axes_collapsed = copy.deepcopy(document)
-    receiver_axes_collapsed["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["post_rerun_receiver_population"]["key"] = {"declared": 3, "unknown": 39}
+    receiver_axes_collapsed["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["post_rerun_receiver_population"]["key"] = {"emitted": 42, "declared": 3, "unknown": 39}
     mutants.append(("independent-receiver-states-collapsed-to-stale-three", receiver_axes_collapsed))
+
+    receiver_counts_summed = copy.deepcopy(document)
+    receiver_counts_summed["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["post_rerun_receiver_population"]["summation_across_receivers_prohibited"] = False
+    mutants.append(("receiver-declaration-counts-summed-as-progress", receiver_counts_summed))
+
+    failure_admission_manufactured = copy.deepcopy(document)
+    failure_admission_manufactured["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["receiver_readiness_axes"]["failure_mode"]["registry_admission_state"] = "admitted"
+    mutants.append(("failure-payload-availability-masquerades-as-registry-admission", failure_admission_manufactured))
+
+    failure_transform_manufactured = copy.deepcopy(document)
+    failure_transform_manufactured["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["receiver_readiness_axes"]["failure_mode"]["transformation_state"] = "implemented_fail_closed"
+    mutants.append(("reachable-failure-payload-masquerades-as-governed-transform", failure_transform_manufactured))
+
+    failure_compiler_path_manufactured = copy.deepcopy(document)
+    failure_compiler_path_manufactured["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["receiver_readiness_axes"]["failure_mode"]["compiler_implementation_state"] = "implemented_fail_closed"
+    mutants.append(("absent-declaration-code-path-masquerades-as-implemented", failure_compiler_path_manufactured))
+
+    key_source_manufactured = copy.deepcopy(document)
+    key_source_manufactured["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["receiver_readiness_axes"]["key"]["source_payload_state"] = "complete"
+    mutants.append(("key-properties-masquerade-as-key-expression-source", key_source_manufactured))
+
+    emission_claimed_from_declaration = copy.deepcopy(document)
+    emission_claimed_from_declaration["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["post_rerun_receiver_population"]["grain"]["emitted"] = 0
+    mutants.append(("emission-count-collapsed-into-declaration-count", emission_claimed_from_declaration))
+
+    unbuilt_manufactured_declared = copy.deepcopy(document)
+    unbuilt_manufactured_declared["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["completion_populations"]["unbuilt"]["terminal_claim_status_under_current_directive"] = "declared"
+    mutants.append(("unbuilt-terminal-unknown-misreported-declared", unbuilt_manufactured_declared))
 
     unknown_claimed_complete = copy.deepcopy(document)
     unknown_claimed_complete["design_measurements"]["card_to_part_receiver_grain"]["landing_sequence"]["unknown_satisfies_operative_completeness"] = True
