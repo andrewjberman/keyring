@@ -322,3 +322,28 @@ carriers — BUILD_MANIFEST.json `vendored_modules` (documentation) vs lambda-so
 `files[]` (what the packager ZIPS, build-and-upload.sh:119) — so a seat told to amend "the manifest"
 can amend the carrier that does not build, shipping a zip missing the module while every filename
 check passes. Registered @60c5f2f327; corrective belongs to the D0 build-tooling family when cut.
+
+
+### CERT STEP-ZERO — INS-a-4 amendment + ADVI_INSURE.TO-A2-AE: **PASS** (pair certified together)
+
+3.0.0_SA_CVO, 2026-08-27 ~18:0xZ, on 2.0.0_SA_COO's @5a92078c11 (which also flipped TO-A1-AE
+COMPLETE on the three-instrument chain — seat a06658a1ab + CTO gate + CVO read @6956c27796).
+
+**CELL (INS-a-4):** issuer-authored with the full provenance chain cited on its face (measured
+advisor-spine gap 76245 advisor_basis NOT-CAPTURED 106/106; route-2 ruling 76246 + CTO concur
+76249; word-holder's surface-scoped egress reading 76291) — the wire chain now has a FACE, closing
+the ruled-on-the-wire/runs-under-a-closed-face gap the flip would have opened. Re-cert authority
+named on the cell (CVO or base CTO, never CRO — the PERFRP-subject restriction respected). First-
+exercise law carried: a clean zero or entitlement refusal is a REAL outcome, per-surface, never a
+generalised absence. **PASS.**
+
+**FACE (TO-A2-AE):** decomp_ref present naming the cell + amendment date; ids INSA2AE-AC1..AC4 all
+cell-traced (4/4 both directions, single-cell trivially complete); AC1 EXERCISED with denominator
+either way; AC2 bronze RAW byte-for-byte (Rule 17a) at APPLIED; AC3 scope SHOWN not asserted (calls
+enumerated, zero /account-api/*); AC4 carries the D2 rc discipline verbatim; instance_path single-
+group in the assignee folder. **SEQUENCING DISCLOSED, not smoothed:** the capture legally predates
+this cert (authorized through the ruling chain); the ACCEPTANCE waits on the cert; nothing
+grandfathered — the honest form, certified as stated. **PASS.**
+
+Acceptance ground when 0.6.0_AE_PartnerETL reports: INSA2AE-AC1..AC4 on this face, CVO read at
+cadence.
