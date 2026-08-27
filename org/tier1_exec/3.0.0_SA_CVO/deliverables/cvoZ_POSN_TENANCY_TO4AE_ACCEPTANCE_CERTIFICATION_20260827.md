@@ -87,6 +87,7 @@ the same class as validating a predicate on a roster with no negatives.*
 
 - ⛔ **NO CELL IS DISCHARGED.** `PT-a-1`'s positive arm remains blocked on the registry's named
   producer (`ETFS_SATELLITES.TO-2`); `PT-a-3` needs the apply.
+  ⚠ **SEE AMENDMENT 2 — that producer is measured to be unownable, and this line understates it.**
 - **NOT APPLIED**, and this certification does not authorise it. `2.0.0_SA_COO~Z` holds that call.
 - **I did not re-run the AWS sweeps or the edge measurements.** I re-ran the **checker** and the
   **step-zero coverage compare**; the rest is accepted as measured with instruments named.
@@ -155,3 +156,60 @@ reason it was taken.*
 something other than the status — requires the origin to distinguish absent from forbidden, which
 `1.0.0_SA_CTO~Z` has separately ruled is CORRECT behaviour to conflate (it prevents existence
 disclosure). So the two rulings are in tension and that is a design call above this seat.**
+
+---
+
+# AMENDMENT 2 — ~23:3xZ — "BLOCKED ON ITS NAMED PRODUCER" UNDERSTATES IT. THE PRODUCER CANNOT ACT.
+
+**Surfaced by `2.0.0_SA_COO~Z` (msg 10926) as a measured state change, not a re-escalation.**
+**Verified at this seat.**
+
+## THE CHAIN, FROM MY OWN CERTIFICATION OUTWARD
+
+My §6 reads: *"`PT-a-1`'s positive arm remains blocked on the registry's named producer
+(`ETFS_SATELLITES.TO-2`)."* **True, and its implication is wrong.** Measured:
+
+```
+ETFS_SATELLITES.TO-2   <issued_to>  0.4.0_DS_ClientPlatform~W   -> SEAT DIED TONIGHT
+                       <status>     "ACTIVE -- unblocked; waiting on a SEAT."
+                       title        the-declared-membership-registry-NINE-MEMBERS
+                                    -> a HAND-DRAWN list, SUPERSEDED by Andrew's ~22:5xZ
+                                       DERIVED-predicate ruling
+successor TO for the derived predicate                          -> NONE EXISTS
+```
+
+## ⛔ THREE STATES, AND ONLY THE THIRD IS TRUE — THE DISTINCTION IS THE WHOLE FINDING
+
+```
+1  "waiting on a seat"                  <- what the TO's own status field says
+2  "waiting on a seat that is dead"     <- true, and the remedy would be RE-SEATING
+3  "waiting on a TO THAT DOES NOT EXIST YET"   <- the actual state
+```
+>> ⛔ **SEATING `TO-2` WOULD NOT HELP — IT WOULD BUILD THE HAND-DRAWN NINE-MEMBER REGISTRY THAT THE
+   SOVEREIGN RETIRED.** So the remedy is **not "assign someone"; it is "cut a re-scoped TO."** ⭐ **A
+   dead-seat item and a superseded-spec item look identical in a queue and have OPPOSITE remedies —
+   and doing the first to this one ships the wrong thing with a live owner's name on it.** <<
+
+**My record said state 1 by implication. The measured state is 3.**
+
+## WHY THIS IS MINE TO AMEND
+
+**I recorded the blocker by NAME and did not follow it one link further.** *Is the named producer
+owned? Is its spec still current?* ⛔ **Neither question was asked, and both were cheap.** *Same shape
+as the rest of tonight: a true fact whose consequence I inherited rather than checked — the "named
+producer" phrasing carries an assumption that a name implies an actor.*
+
+## WHAT IT DOES TO THE PROJECT, STATED PLAINLY
+
+⛔ **This is now the critical path of a build Andrew commissioned at ~22:1xZ.** `TO-4-AE`'s apply is
+held on the empty registry; **the registry's producer is this work; and it has no owner for three
+independent reasons, each sufficient alone.**
+
+⚠ **NOT A NEW GATE AND NOT AN ESCALATION FROM THIS SEAT.** `1.0.0_SA_CTO~Z` holds the disposition and
+has acknowledged it; `2.0.0_SA_COO~Z` seats. ⭐ **And the surfacing discipline is worth recording: they
+checked for NEW INFORMATION before re-sending, against their own banked rule that an item reported
+twice without new information is a candidate for being MALFORMED rather than escalated. The new
+information is that it went load-bearing.**
+
+**No verdict moves. `AC1` was already `UNCOMPUTABLE-BY-CONSTRUCTION`; what changes is that its
+unblocking has no owner, and my record now says so.**
