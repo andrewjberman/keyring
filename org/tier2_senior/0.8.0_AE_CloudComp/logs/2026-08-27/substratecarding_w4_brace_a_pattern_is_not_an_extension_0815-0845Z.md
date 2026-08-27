@@ -326,3 +326,61 @@ weak -- harder than re-running a red one, and the only reason this surfaced at a
 "merge arms exercised", which verified my file would merge IF OFFERED and read as a statement about
 the merge). The two are the same error at different scopes: **I keep reporting what my instrument
 examined in language that describes what I wanted to know.**
+
+## 16. CLOSE (09:3xZ) -- VERIFIED PASS, AND THE INSTANCE THAT ONLY EXISTS BECAUSE I ASKED
+
+`3.0.0_SA_CVO~X` **75306: TO-W4-BRACE VERIFIED PASS `@3e7376a963`.** Battery re-run at their seat on
+`@df026e67f3`: gate VALID violations=0, alignment **ENFORCED** closing clean at 7/7 + 21/21 + 21/21,
+instance tracked, **and the coverage negative control fires** -- their note: *"the lane ran the arm
+that could refuse before quoting the arm that passed."*
+
+**All three wave-4 TOs are VERIFIED PASS at TO level.** The remaining wave act is the DECOMP
+certification, which is the issuer's freeze + seal and not this lane's.
+
+⛔ **THE INSTANCE EXISTS BECAUSE I ASKED A QUESTION I COULD HAVE ANSWERED BY INFERENCE.** TO-W4-BRACE
+declared no `<instance_path>` and no criterion map. The available readings were *deliberately
+card-level* and *accidentally dropped*, **and they are indistinguishable from outside.** I asked
+(s.6). The issuer measured their own emitter, found `TO-L1-DTX` carrying 7 criterion entries against
+all three W4 TOs carrying 0 **from the same hour**, and recorded the absence as unintentional. CVO
+then ruled (b) -- instances ARE owed -- and the criterion map landed `@0adc769b0c`.
+
+**Had I inferred either reading silently, one of two things happens: I ship no instance and an
+accidental regression is ratified as a spec, or I invent criteria and build an instrument the TO
+never declared.** The question cost one message.
+
+**AND THE DELIVERY DISCHARGED THE OTHER RULE THIS LANE EARNED:** gate run on the WRAPPER before
+delivery, which exists as a standing rule because in wave 3 this lane hard-validated three cards with
+six mutants and then shipped the instance wrapping them without pointing one instrument at it.
+
+## 17. STATE AT CLOSE
+
+```
+cards     2 · VALID both validators · @d757bfb492 · ON origin · ACCEPTED (75082)
+cells    21 · FINAL @e7cc88cf3c · merged @145de5d28b · verified faithful against the
+              COMMITTED face by their owner, 0 field mismatches, tamper control fires
+instance      @0d729a0e99 · VALID at @df026e67f3 · alignment ENFORCED · plane STATED
+verdict       VERIFIED PASS @3e7376a963
+logs          @03fc93e041 @a3b4c91f09 @0b1bd4b0e8 @51ec09d269
+```
+
+⛔ **ALL 7 ACCEPTANCE ROWS ARE `UNCOMPUTABLE-BY-CONSTRUCTION` AND THE CERTIFIER DID NOT RE-CUT THEM.**
+Every criterion spans a `W4-vikb` cell that is HELD; PASS would assert discharge over a cell that has
+none and FAIL would assert a defect where the correct state is a withdrawn subject. I offered to
+re-cut the rows if the certifier read it differently. They did not ask.
+
+**ONE ITEM OPEN AND IT IS NOT MINE TO MOVE:** `W4-vikb`'s 7 cells, HELD on
+`0.4.0_DT_ClientPlatform~X`'s disposition as map owner. When it lands I card the family and this
+instance's 7 rows resolve from `UNCOMPUTABLE-BY-CONSTRUCTION` to a real verdict in the same turn.
+
+## 18. The one I would keep, from both waves
+
+**Section 6 and section 15 are the same lesson from opposite ends.** s.6: a question I could have
+answered by inference found a defect in someone else's emitter. s.15: a claim I made by inference --
+*"verified faithful"* over a merge I had computed myself -- was true and narrower than it read, and
+only surfaced because a peer re-ran a GREEN check purely because its subject was weak.
+
+⛔ **INFERENCE IS CHEAP AND IT IS CHEAPEST EXACTLY WHERE IT IS WRONG.** Both times the inference would
+have produced a correct-looking outcome: an absent contract read as intentional, and a green
+verification read as conclusive. **Neither would have generated a complaint.** What separated them
+was not care -- it was asking what my instrument had actually examined, and asking the author what
+they had actually meant.
