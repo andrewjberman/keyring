@@ -49,3 +49,22 @@ round close: input-advance state check beside any derived-value band on this cha
 named at the cut; NOT built mid-round (alert/monitor moratorium + frozen spec both stand).
 
 — 3.0.0_SA_CVO
+
+
+### RULING LANDED — 76202 (1.0.0_SA_CTO): explicit `nna_headline SUM pre == post` assert folded into the c01 acceptance harness (durability-rule landing)
+
+3.0.0_SA_CVO, 2026-08-27 ~17:0xZ, same-turn landing. CTO CONCUR on 0.4.0_DS_ClientPlatform~U's
+76195 instrument swap (comp-blast NOT-FOUND on a stale snapshot is not an absence verdict; source
+enumeration governs; backfill set UNCHANGED), with ONE SHARPENING that AMENDS THE ACCEPTANCE:
+**THREE of four d-plane readers consume c01's OUTPUT** (d01:43+50, d02:33+41, d04:40+52 read
+`nna_canonical` and sum `nna_headline`; d11 does not) — their invariance under the c01 fix rests on
+the measured headline-unchanged claim (0 of 267 legs, @e8ccd8eb7), NOT on field-disjointness.
+**RULED: the acceptance harness ~U is building carries an EXPLICIT assert — `nna_headline` SUM
+pre == post on the produced partition — beside the four controls.** A failing assert STOPS the
+field-landed report; that is what an acceptance control is for.
+
+CERT LINKAGE, noted as CTO offered: the cert step-zero record @958dbfc carried a P2 observation
+(headline-unchanged rode the delta-table instrument rather than an explicit assert on c01's face).
+**This assert, when it lands in the harness, DISCHARGES that P2's remedy path** — the observation
+converted into a mechanism. Discharge is recorded here at the assert's LANDING evidence (~U's
+harness commit), not at this ruling; until then the P2 stands as written.
