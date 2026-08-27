@@ -383,7 +383,14 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
             },
             "unit": {
               "type": [
@@ -400,16 +407,14 @@
               ]
             },
             "evidence": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
             },
             "owner": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
             }
           },
           "allOf": [
@@ -485,7 +490,14 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
             },
             "identity_space": {
               "type": [
@@ -505,7 +517,14 @@
                 "unstable",
                 "unknown",
                 null
-              ]
+              ],
+              "x-rule24": {
+                "axis": "whether the key expression survives LEGITIMATE change to the subject resource",
+                "grain": "one key on one subject resource",
+                "intent": "one -- stability under change; NOT uniqueness and NOT correctness",
+                "mece": "stable | unstable | unknown exhausts the domain; unknown is the un-measured state, not a third stability.",
+                "state_coherence": "measurement moves unknown -> stable|unstable. A rename or re-key moves stable -> unstable. NO remedy moves unstable -> stable without changing the key EXPRESSION itself."
+              }
             },
             "crosses_spaces": {
               "type": [
@@ -528,16 +547,14 @@
               ]
             },
             "evidence": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
             },
             "owner": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
             }
           },
           "allOf": [
@@ -637,7 +654,14 @@
                 "declared",
                 "unknown"
               ],
-              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness."
+              "description": "declared = a card resolved 1:1 and its payload is present. unknown = EXPRESSIBLE ABSENCE, never completeness, never operative-transition readiness.",
+              "x-rule24": {
+                "axis": "whether an EXACT 1:1 card->part projection resolved AND populated this receiver",
+                "grain": "one receiver on one part",
+                "intent": "one -- did a card land here; NOT whether the underlying fact is known to anyone",
+                "mece": "declared = resolved and populated. unknown = every other state (no card, ambiguous card, non-1:1, residue). Exhaustive over the declared domain: a receiver either received or did not.",
+                "state_coherence": "a later declared card-subject-to-part mapping moves unknown -> declared. NOTHING moves declared -> unknown except an explicit retraction. unknown is EXPRESSIBLE ABSENCE, never completeness and never operative-transition readiness."
+              }
             },
             "returns_on_failure": {
               "type": [
@@ -651,7 +675,14 @@
                 "no",
                 "unmeasured",
                 null
-              ]
+              ],
+              "x-rule24": {
+                "axis": "whether a FAILURE of this subject can be told apart from a genuine ABSENCE",
+                "grain": "one failure mode on one subject resource",
+                "intent": "one -- discriminability of failure from absence; NOT frequency and NOT severity",
+                "mece": "yes | no | unmeasured exhausts; unmeasured is the un-run state.",
+                "state_coherence": "measurement moves unmeasured -> yes|no. A code change can move yes -> no SILENTLY, which is why this receiver exists."
+              }
             },
             "silent_degrade_paths": {
               "type": [
@@ -671,16 +702,14 @@
               ]
             },
             "evidence": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unevidenced receiver says the literal 'NONE' -- a loud value, not an absence."
             },
             "owner": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string",
+              "minLength": 1,
+              "description": "NEVER null. An unowned receiver says the literal 'UNOWNED'. Rule 28: every row carries its OWNER."
             }
           },
           "allOf": [
