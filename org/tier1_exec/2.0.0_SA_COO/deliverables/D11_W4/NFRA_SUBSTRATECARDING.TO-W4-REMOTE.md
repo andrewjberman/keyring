@@ -53,10 +53,7 @@ both in the excluded set. **Both counts were correct over different populations.
 ## WHY THIS WAVE EXISTS
 
 Wave 3 carded **materializers** — writers, at (FILE, WRITE PATH) grain. The manifest describes
-**artifacts**. Under the settled exact-1:1 rule only **3 of 42** parts resolve and **48 of 51** cards
-fall to residue. The populations are near-disjoint, so the remedy is a different population — not a
-looser join. A substring join would be *worse* than no join: the part id `cse` substring-matches any
-prose containing those letters.
+**artifacts**. In the compiler's OWN ADMITTED SCOPE (`org/**/D11_CARDS_W3/*.json`, 13 cards) **ZERO of 42** parts resolve under the settled exact-1:1 rule — the populations are not merely near-disjoint, they are **DISJOINT**. ⛔ SCOPE IS LOAD-BEARING AND MUST TRAVEL WITH THE CLAIM: estate-wide over the 73 cards carrying a trust block, 27 resolve (~37%), which is NOT near-disjoint by any reading. This wave's population choice stands on the COMPILER-SCOPE figure and on no other. An earlier issuance of this TO quoted "3 of 42 resolve / 48 of 51 residue" — WITHDRAWN by its author 2026-08-27: it moved 3→27 while the compiler's answer stayed 0, proving it measured whichever cards existed estate-wide rather than the compiler. A substring join would still be *worse* than no join: the part id `cse` substring-matches any prose containing those letters.
 
 ## ⛔ W4-m-joinable — THE ROW THIS WAVE EXISTS FOR
 
