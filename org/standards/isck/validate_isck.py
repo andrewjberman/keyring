@@ -212,6 +212,17 @@ def _mutants():
     # timestamps (CV-4)
     add("observation.garbage-timestamp", "state_observation", ["pattern"],
         observed_at="2026-13-45T99:99:99Z")
+    # ABLATION COVERAGE (COO~X 76625: 5 conditional rules no mutant depended on -- one per rule,
+    # each built so ONLY its rule catches it, making every arm ablation-visible)
+    add("relation.independently-observed-no-evidence", "identity_relation", ["required"],
+        claim_origin="independently_observed")
+    add("run.invariant-with-device", "materialization_run", ["not"], device_id="some-laptop")
+    add("observation.observed-with-nothing", "state_observation", ["required"],
+        fingerprint=_DEL, fingerprint_method=_DEL, normalization_version=_DEL)
+    add("observation.device-local-without-device", "state_observation", ["required"],
+        fabric_scope="device_local", fabric_id="laptop")
+    add("observation.normalization-alone", "state_observation", ["dependentRequired"],
+        failure_state="partial", fingerprint=_DEL, fingerprint_method=_DEL)
     # R2-3 warrants (round-2 batch 1: CRO~X gap 2 + COO~X 76588)
     add("binding.independently-observed-no-evidence", "entity_binding", ["required"],
         evidence_refs=_DEL)
