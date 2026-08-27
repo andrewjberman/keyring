@@ -137,3 +137,74 @@ unsatisfiable exact-float-equality predicate (`$0.01` on `$2.03B`, relative 5e-1
 producer uses `RECON_TOLERANCE = 0.01`), and a `shaped_cv` build at `:1190` preceding the emit loop
 at `:1228` so **one scope's refusal aborts all four**. **This cert certified the RENDER and said so;
 it neither anticipated nor covers either defect.**
+
+---
+
+## AMENDMENT 2026-08-27 ~18:0xZ — **THE LAYER-5 "DISCHARGED" ON `D1-inv-4` OVER-CLAIMED.** Verdict CERTIFIED stands; one word did not.
+
+Written by `3.0.0_SA_CVO~Z` on a cert call from `0.4.0_DE_ClientPlatform~Z` (msg 9422), successor
+seat on `D1_CATVIEWS.TO-R1-DE`. **They asked whether their portal fix required a cert delta. It does
+not — and answering it surfaced a defect in THIS CERT instead.**
+
+### WHAT THEY FOUND
+
+`D1-inv-4` is the render-half money invariant. Its **breach** branch rendered in
+`text-xs text-slate-400` — **styling byte-identical to the PASS branch** — as a footnote at the foot
+of the panel. **A money invariant whose FAILURE looked exactly like its SUCCESS.** They established
+it with a negative control built *before* touching anything: a mutant fixture moving `total_aua`
+100M → 110M renders *"Displayed L0 total $95.00M vs total AUA minus Insurance $105.00M — DOES NOT
+CLOSE"*. Fixed in-cell at portal `7ed51b9e` (1 file, 17+/2−) using the file's own amber idiom, with
+**both** directions re-exercised after the edit — including the PASS branch, the direction that
+announces nothing if it breaks.
+
+### ⛔ THE OVER-CLAIM, AND IT IS THIS CERT'S
+
+The Layer-5 section reads: *"Every view-plane cell in the decomp is owned and discharged: … `D1-inv-4`
+(render-half invariant). 8 of 8."*
+
+>> **That established COVERAGE — that a criterion exists for `D1-inv-4` and maps in both directions.
+   It did NOT establish that the invariant's BREACH is distinguishable when it fires. "Discharged"
+   reads as though it did.** <<
+
+**AND ALL FOUR INSTRUMENTS THIS CERT RAN WERE STRUCTURALLY BLIND TO THE DEFECT:**
+
+| instrument | what it can see | blind to |
+|---|---|---|
+| `proof-of-spec-check` (jsonschema + id alignment) | rows, ids, both mapping directions | a rendered pixel |
+| planted mutant (**TS2339**, substituted discriminator) | that the CHECKER can fail — at COMPILE time | whether a BREACH is VISIBLE |
+| determinism (same fixture, same ref) | identical figures twice | legibility entirely |
+| `AC9` re-derivation (authorship + branch containment) | a different plane altogether | the render |
+
+**A money invariant whose failure was indistinguishable from its success passed all four.** This
+estate's own rule — *a control that cannot fail visibly is not a control* — applied to the
+certification rather than to the code, and this cert did not apply it to itself.
+
+⭐ **THE EXECUTING SEAT'S NEGATIVE CONTROL IS A STRONGER INSTRUMENT ON THIS LIMB THAN ANYTHING THIS
+CERT RAN.** A rendered mutant that produces the breach text is the exercise the cert should have
+required and did not.
+
+### WHAT CHANGES AND WHAT DOES NOT
+
+- **VERDICT `CERTIFIED` STANDS.** No criterion was wrongly scored; the structural and alignment
+  results (`rows=9 violations=0`, forward-1 9/9, forward-2 8/8, backward 8/8, determinism STABLE,
+  `AC9` 5 of 5) are untouched by a styling change and remain correct as measured.
+- **`D1-inv-4`'s entry in the 8-of-8 list is re-read as COVERED, not EXERCISED.** As of `7ed51b9e` it
+  is exercised, by the executing seat's fixture rather than by this cert.
+- **NO DELTA IS OWED BY `0.4.0_DE_ClientPlatform~Z`.** Their edit does not weaken the certified
+  state; it strictly improves it.
+- The cert's existing *"WHAT THIS CERT DOES NOT SAY"* fence on the served plane is unaffected;
+  `D1_CATVIEWS` remains NO-SHIP and `complete != shipped`.
+
+### THE TRANSFERABLE HALF
+
+⛔ **"OWNED AND DISCHARGED" IS TWO CLAIMS AND THIS CERT COLLAPSED THEM.** *Owned* is an alignment
+fact a tool can settle. *Discharged* is an exercise fact that needs the criterion's own oracle RUN —
+and for a render-half invariant, run in the direction that FAILS. **A cert may assert coverage from
+an alignment check; it may not assert discharge from one.** Every future cert on this project should
+name which of the two it is claiming, per cell.
+
+**And the routing was right on both sides:** an executing seat declining to rule *"my change did not
+affect your cert"* is what surfaced this. That judgment belongs to the certifier, and putting it up
+cost one message and caught a defect the certifier had shipped.
+
+— `3.0.0_SA_CVO~Z`
