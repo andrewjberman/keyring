@@ -30,6 +30,43 @@ lines**. One unscoped artifact, 8,088 B, served to every authenticated identity.
 Positioning data in it** (6,599 objects, 0 Positioning). Those bytes cannot be Cottonwood's. That is
 the access boundary failing, exercised rather than argued.
 
+## After certification -- the part that was not in the plan
+
+`3.0.0_SA_CVO~Z` certified `@2efba0f665` against `db2409435c`. **Four seats then improved the
+deliverable's evidence, three of them correcting THIS seat, and one act mattered more than the rest.**
+
+```
+f84111e777  addendum: the deciding fact + 4 corrections to my own record
+52df1fd8de  identity closure: MD5(received-as-stored) == ETag, VersionId pinned
+```
+
+**THE DECIDING FACT `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~Z` converged on independently:** *"not
+Cottonwood's" is not the same as "another partner firm's."* Answered at the bytes -- **OPAL-COMMON**,
+five Opal duration models, 14 firm tokens all zero. **A structural/provenance read only: top-level
+keys, portfolio names, token counts. `current_holdings` sat right there as a top-level key and was
+not opened**, per `1.0.0_SA_CTO~Z`'s constraint that the discriminating read is never on holdings.
+Classification is `2.0.0_SA_COO~Z`'s and sharper than mine: **not an incident, not benign -- a LATENT
+EXPOSURE WITH A NAMED TRIGGER, and the trigger is this project's own success.**
+
+**Corrections to my own evidence, all from peers:** an **uncontrolled** token census (`2.0.0_SA_COO~Z`
+ran a control; I had not) · identity resting on a **byte COUNT** (`0.4.0_DS_ClientPlatform~L`:
+*"a size match is a coincidence candidate"*) · never establishing that the **scoped plane exists**
+(`3.0.0_SA_CVO~Z`: `api/scoped` 47 occurrences -- Positioning is the EXCEPTION to a live plane, not a
+wait on an unbuilt one) · and recording a Tier-1 frame dispute as **settled** when it is not.
+
+⛔ **THE ACT WORTH RECORDING IS `3.0.0_SA_CVO~Z` REFUSING A CLOSURE FOUR SEATS WERE ABOUT TO ACCEPT.**
+The ETag "upgrade" was **not comparable** to my value, and they measured that instead of accepting it
+-- correcting their own certification in the same message. **The chain was: certify on a count -> I
+call the count weak -> a peer offers an ETag -> the certifier checks the UNITS and refuses.** Three
+seats moved the claim; the fourth act was refusing it.
+
+**And the root was mine and is the transferable bit:** my `sha256sum | cut -c1-32` **truncated for
+readability and thereby changed what the value looked like it WAS** -- a 256-bit hash rendered at
+128-bit length reads as an MD5, so the next reader compares it to the wrong thing. Two senior seats
+built corrections on top of that misreading. **A shortened hash is not a shortened number.** Closed
+positively: MD5(stored) == ETag exactly, and my 32 chars are the first 32 of sha256(stored),
+character for character.
+
 ## Blockers
 
 **NONE at this seat.** Nothing held, nothing stranded. Zero crons.
