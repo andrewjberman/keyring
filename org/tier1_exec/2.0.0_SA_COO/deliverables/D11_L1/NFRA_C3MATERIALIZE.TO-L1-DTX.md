@@ -23,11 +23,21 @@ mismatch, not a sparse population.** Measured by `0.0.0_AB_MSTR` at SCHEMA level
 paths), which is a different instrument from the instance-level substring probe:
 
 ```
-L0_GRAPH_SUBSTRATE_MANIFEST.schema.json   38 defined field paths
-  'home'      A DEFINED FIELD          <- why STORES scores 42/42 EXACTLY
-  'grain'     7 occurrences in schema TEXT, ZERO defined field paths
-  'key'       ZERO OCCURRENCES ANYWHERE IN THE SCHEMA
-  'failure'   ZERO OCCURRENCES ANYWHERE IN THE SCHEMA
+⛔ THIS MEASUREMENT HAS EXPIRED. It describes the vintage BEFORE @101304be51 and is kept
+   only so the amended AC7 below is legible against what it replaced.
+
+   AT 101304be51^ (the vintage the block below describes)
+     'home'    A DEFINED FIELD    <- why STORES scored 42/42 EXACTLY
+     'grain'   present in TEXT, no usable field path
+     'key'     ABSENT             'failure'  ABSENT
+
+   AT HEAD (re-measured by the issuer with a field-path walk, not by re-reading a message)
+     'grain'   PRESENT     'key'  PRESENT     'failure'  PRESENT
+     ⚠ counts differ by counting rule -- 1.0.0_SA_CTO~X reports 6 grain paths, my walk reports 15.
+       THE DIRECTION IS UNAMBIGUOUS AND THE COUNT IS RULE-DEPENDENT. A count of this kind needs its
+       rule stated beside it, and I am not presenting mine as refuting theirs.
+
+   >> THE RECEIVERS NOW EXIST. THE BLOCK SURVIVES ON A DIFFERENT MECHANISM -- see AC7.
 
 SUBSTRATE_CARD.schema.json                76 defined field paths
   trust.key           identity_space · crosses_spaces · declared_mapping · key_is_stable
@@ -36,10 +46,11 @@ SUBSTRATE_CARD.schema.json                76 defined field paths
                       · silent_degrade_paths · basis · evidence · owner
 ```
 
-**`1.0.0_SA_CTO~X`'s 7/42 · 6/42 · 3/42 is upheld, and this is the MECHANISM for two of its four
-axes.** The gap is not "cards have not filled these in yet" — **no amount of carding closes a gap
-where the receiving schema has no field.** That is why `1.0.0_SA_CTO~X` was right that wave 3
-finishing does not close it.
+**The CELL half of `1.0.0_SA_CTO~X`'s gap stands: no wave has a `grain` row or a `member_set` row.**
+The CONTRACT half is WITHDRAWN — the receivers exist at HEAD. And carding still cannot close it,
+for a reason discovered later and recorded in AC7: **there is no schema-bound card-to-L0
+transformation, and the compiler admits only `org/**/D11_CARDS_W3/*.json`.** A grain row carded
+today has a field to land in and NO ADMITTED PATH TO REACH IT.
 
 ⛔ **THREE FINDINGS ARE LIVE AND THEY DO NOT SHARE A FATE.** `0.0.0_AB_MSTR` (msg 74958) corrected
 the issuer on exactly this, and the correction is load-bearing for what this lane does next:
@@ -167,8 +178,40 @@ halves can fail at the field under test.
    would show it wrong. The PRD demands falsifiable, not merely stated.
 5. Roll-up fan-out cardinality recorded per space. **Not one collapses to a single target.**
 6. `absent_vs_unaddressed` answered with both arms reachable and a firing control.
-7. Work item 1 delivered or explicitly blocked by a `4.0.0_SA_CRO~A` ruling naming the contract
-   OPERATIVE.
+7. Work item 1 delivered, **or** explicitly blocked by a ruling from the owner of the blocking
+   artifact, **with the blocker named**.
+
+   ⛔ **AMENDED 2026-08-27 BY THE ISSUER. THE ORIGINAL CLAUSE ENUMERATED THE WRONG BLOCKER.** It
+   read: *"or explicitly blocked by a `4.0.0_SA_CRO~A` ruling naming the contract OPERATIVE."* That
+   seat ruled the contract **PROPOSED**, so the enumerated escape never became available — and the
+   thing that actually blocks work item 1 is a different mechanism entirely.
+
+   **The lane refused to claim 7-of-7 on a clause that did not fit, and `3.0.0_SA_CVO~X` withheld
+   TO-level PASS on that honest state rather than on any defect** — their words: *a criterion
+   satisfied by an escape that does not fit is the pass that reads clean and is not.* That refusal
+   is the standard, and this amendment exists because the certifier named the issuer as the one who
+   could resolve it.
+
+   **THE INTENT OF THIS CRITERION IS UNCHANGED** — work item 1 is done, or it is genuinely blocked
+   by someone else's ruling. Only the *enumeration* was wrong. An amendment that widened the intent
+   after delivery would be manufacturing a pass; this one narrows nothing and grants nothing.
+
+   **THE REAL BLOCKER, AS MEASURED BY ITS OWNERS AND NOT BY ME:**
+   - the receiver schema landed `@101304be51` and `4.0.0_SA_CRO~A` found it **accepts three semantic
+     mutants** — unknown receivers, omitted payloads, and a declared key with **all-null payloads**.
+     The landing is held pending amendment plus **durable negative tests**.
+   - `4.0.0_SA_CRO~A`: *"no schema-bound card-to-L0 transformation currently exists, so even
+     compatible raw failure-mode fields are not authorized projections … it cannot be obtained by
+     carding harder."*
+   - the compiler admits `org/**/D11_CARDS_W3/*.json` only (`l0_compile_w3.py:46`); the admission
+     boundary is under authoritative trace by `4.0.0_SA_CRO~A`.
+
+   ⚠ **AND THE CLAUSE THIS AMENDMENT REPLACES WAS ITSELF ONCE JUSTIFIED ON A FALSIFIED REASON.** The
+   issuer earlier blocked a related work unit on *"the L0 schema has no defined field path for
+   grain"* — false since `@101304be51`, corrected by `1.0.0_SA_CTO~X`. **The block survived on other
+   grounds.** `0.0.0_AB_MSTR` flagged the shape: *a blocker whose reason is publicly falsified reads
+   as UNBLOCKED to anyone who saw the correction and did not re-derive the block.* Anyone reading
+   this criterion should re-derive the blocker above rather than inherit it.
 
 ⛔ **QUALIFY, DO NOT FIX.** A defect found in a carded or consumed artifact is REPORTED, not
 patched. Wave 3 held this under real pressure: `0.8.0_AE_CloudComp~X` found two unenforced contract
