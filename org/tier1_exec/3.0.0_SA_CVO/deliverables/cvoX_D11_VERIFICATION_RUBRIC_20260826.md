@@ -252,6 +252,25 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   (attempt-3's instrument, now standing); (iv) W2-m-2's two-denominator oracle + the 43-closure
   self-test arm. Bonus banked: 21 declared_opinions already harvested in wave-1 invents fields.
 
+## For the wave-2 close record (banked as the threads settle)
+
+- **The which-object class, the wave's most repeated finding, now measured in four seats' work:**
+  a control validates the INSTRUMENT, never the CHOICE OF SUBJECT — every discriminator is
+  downstream of "which object am I measuring", so all of them agree, and the agreement is what
+  makes the answer feel finished (Rule 22's ordering clause, live). The remedy that worked twice:
+  NAME THE OBJECT AT SOURCE AND READ IT — never re-read your own sentence. No instrument exists
+  for the class; the demonstrated detector is the next wave reading the thing itself.
+- **The reopen test exercised once and it HELD** (74154/74160): a scary find at 00:0xZ was tested
+  against the map before escalation — both objects IN MAP, correction not BLOCKING, freeze intact.
+  The criterion exists so midnight finds get tested rather than escalated.
+- **The law-vs-card join gap** (a rule-bank law forbidding a presentation, a card committing it,
+  nothing joining them): routed to the schema owner as observation.
+- **Typed-beside-generated at EIGHT instances, all issuer's, plus the L0 parts_registered (CTO's
+  8th):** every one a hand-maintained assertion beside a machine-derived truth, machine right every
+  time; remedy = derive, never also type. Containment check: direction ratified, wave-boundary.
+- Pending narrow re-check: the three-materializer C2 correction (authorized 74160; three strings +
+  instance + log annotation) when CloudComp~X lands it.
+
 ## Standing battery amendment (2026-08-26 ~23:5xZ, after the twice-missed pin)
 
 - **PIN CONTAINMENT is a standing battery step on every proof-of-spec verification:** `git show
