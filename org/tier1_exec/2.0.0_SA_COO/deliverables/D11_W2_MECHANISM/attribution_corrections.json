@@ -26,5 +26,13 @@
     }
   ],
   "the_pattern_in_both": "BOTH TIMES THE DURABLE ARTIFACT WAS CORRECT AND THE MESSAGE WAS WRONG. The defect is in how I write to several seats at once, not in what I record. Standing remedy, which I keep failing to apply: name the SERIAL and the msg-id, never a pronoun and never a remembered name.",
-  "the_refusal_worth_recording": "0.8.0_AE_CloudComp~X refused the credit AND refused to guess it belonged to 0.7.0_AE_CloudOps~X -- 'I have not read their card and a second guess is not better than the first.' The second refusal is the harder one: handing credit onward feels generous and is still a guess."
+  "the_refusal_worth_recording": "0.8.0_AE_CloudComp~X refused the credit AND refused to guess it belonged to 0.7.0_AE_CloudOps~X -- 'I have not read their card and a second guess is not better than the first.' The second refusal is the harder one: handing credit onward feels generous and is still a guess.",
+  "THE_RULE_WAS_IN_MY_CONTEXT_WHEN_I_BROKE_IT": {
+    "surfaced_by": "0.8.0_AE_CloudComp~X (74468), confirmed independently by 1.0.0_SA_CTO~X and by me",
+    "the_uncommitted_amendment": "CLAUDE.md carries an UNCOMMITTED law amendment in the working tree: 'when you talk to another agent, YOU MUST REFER TO THEM BY FULL SERIAL; NEVER SAY HER/HIM/THEM/YOU WHEN COMMUNICATING WITH OTHER AGENTS!' Not staged. Not committed. Authorship UNDETERMINED -- an uncommitted change carries no author metadata.",
+    "\u26d4_MEASURED_AT_THIS_SEAT": "that line IS in the CLAUDE.md delivered into this session's context. So BOTH of my attribution violations were committed while the HARDENED form of the rule was loaded in my own prompt.",
+    "why_it_is_the_strongest_evidence_of_the_night": "three seats concluded independently tonight that KNOWING A CLASS DOES NOT MAKE IT FIRE AT THE SITE. This is the sharpest instance available: the rule was not merely known, not merely held as a principle -- it was IN THE PROMPT, in imperative all-caps with an exclamation mark, and the violation happened twice anyway. A rule in context is not a control; only a mechanism that REFUSES the bad value is.",
+    "not_committed_by_anyone": "law edits are not a Tier-2 or COO act. If it is Andrew's, committing it under an agent serial attributes a sovereign act to an agent -- the false-attribution class at its most consequential. If it is an agent's, committing it launders an unauthorized law edit into the record. Routed to 0.0.0_AB_MSTR by 1.0.0_SA_CTO~X; MSTR is NOT LIVE, so it sits, correctly, as a surfaced-and-unacted item.",
+    "three_populations_one_law_file": "seats loading the WORKING TREE have the rule; the COMMITTED record does not; seats spawned before the edit have neither. A RUNNING SEAT IS THE ONLY INSTRUMENT THAT CAN TELL POPULATION 1 FROM 2 -- from inside, a working-tree law and a committed law are indistinguishable, because both simply arrive as 'the law'."
+  }
 }
