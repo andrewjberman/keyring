@@ -286,3 +286,53 @@ Ordered for the successor:
 5. **[0.0.0_AB_MSTR~Z]** End-of-session CLOUD<->SITEZ convergence, per Andrew. Blocks nothing here.
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## 11. AMENDMENT 1 -- 1655Z. SECTION 3a's FINDING TABLE WAS STALE WHEN COMMITTED. MY ERROR.
+
+**Two rows above are wrong and this is the correction.** `2.0.0_SA_COO~Z` landed the remedies at
+`2758833b9f` (2026-08-27 16:41:02Z) -- **NINE MINUTES BEFORE I committed this log.** I did not carry
+them because I had read that message with `sed -n '1,20p'` and written from the first 20 lines of a
+68-line message. **The estate's own banked rule is "never head OR tail a search -- or a MESSAGE",
+and I did exactly that, in the artifact a zero-context successor inherits.** Verified the commit
+contents rather than trusting the claim before writing this.
+
+| finding | status as of 1655Z | evidence |
+|---|---|---|
+| F1 | **RULED + REMEDY LANDED** | `SAT-inv-2` AMENDED at `2758833b9f`: membership is a DECLARED REGISTRY -- explicit, owned, versioned, named maintainer -- NOT an inferred predicate and NOT an unowned hand list |
+| F4 | **CLOSED** | `SAT-b-4`'s scope column **WITHDRAWN, not restated**. The cell never depended on the count |
+| F3 | **LIVE, fixture now named** | `Opal Satellite 60` recorded in the decomp as the named mutant for the RESOLUTION path |
+| F2 | **LIVE, ROUTED not absorbed** | four-postulate record owed at `SAT-c-2`'s TO |
+
+**F1 CONVERGED INDEPENDENTLY, which is worth more than either version alone.** I ruled "ship the
+declared nine as `held`, with a named owner"; `2.0.0_SA_COO~Z` reached "declared registry with a
+named maintainer" from their own measurement. Same destination, two seats, neither copying the other.
+
+>> **AND THE TWO HALVES COMPOSE -- DO NOT READ THEM AS COMPETING REMEDIES.** `2.0.0_SA_COO~Z` names
+   the honest cost: *a declared registry does not self-update; a tenth satellite launching is a
+   REGISTRY EDIT, and if nobody makes it the new book is SILENTLY ABSENT from the display.* **My
+   drift-detector is the mechanism that prevents exactly that failure** -- `SAT-b-2`'s existing
+   oracle prints roster rows matching canonical `Opal Satellite <N>` beside the declared nine and
+   fails on any symmetric difference. The registry owns the DECISION; the oracle catches the DRIFT
+   at build time and is not a monitor. Neither alone is sufficient. <<
+
+**`SAT-b-5`'s "does a 0-account book render?" belongs to the same maintainer** (`2.0.0_SA_COO~Z`).
+
+**F2's routing carries a reason worth keeping:** the four-postulate record is NOT authored yet
+because the firm axis needs its viewer-firm source named first (`SAT-c-1`) -- **a postulate record
+over an unnamed source is the untestable-criterion shape this decomp already refuses.** That is a
+correct deferral, not an omission.
+
+### A CONTRADICTION BETWEEN TWO MESSAGES, NAMED SO IT IS NOT RE-INHERITED
+
+`0.0.0_AB_MSTR~Z` msg **9280** (16:41:59Z) says *"D1/D4 start remains gated on parity being
+REPORTED... Nothing about that is yours to work around."* Msg **9286** (16:43:33Z) says **"D1 AND D4
+ARE NOT GATED ON PARITY. They never were."**
+
+**9286 GOVERNS -- it is later and it is an explicit retraction of the gate 9280 still carried.** A
+successor reading 9280 without 9286 inherits a withdrawn gate with a Tier-0 seat's name on it. That
+seat said it themselves: *"the retraction has to travel the same channel the error did."* It did;
+this row is so the record cannot lose the ordering.
+
+-- `3.0.0_SA_CVO~Z`
