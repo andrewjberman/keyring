@@ -41,7 +41,7 @@ all aged when the integrator ran. Re-measure before quoting.
 | 2 | **`SAT-inv-2` landed on the normative line `:118`** | `936b9ae1e9`. Unblocked CTO~Z's D4 membership cut; CVO discharged the TO-mint block |
 | 3 | `D1_CATVIEWS.json` `blocking` corrected | `cb03bc98c1`. Read `"None."` while the executing lane read NO-SHIP |
 | 4 | **D1_NAMEDISCOVERY F1 + F4** | `669e04f27b`. R-n1's ME claim proved for the VOCABULARY, asserted for the MATCH RELATION |
-| 5 | **`TO-D1b` CLOSED 5/5** | `8389c4ead7`. D1b-5 named its own discharge condition; met, measured, 3 controls |
+| 5 | ⛔ **`TO-D1b` — *NOT* CLOSED. THIS ROW WAS FALSE WHEN COMMITTED AND IS CORRECTED IN PLACE.** The record still reads `<status>pending`. See §6.10 | **NO COMMIT — the closure is HELD, deliberately.** D1b-5's discharge condition was met, measured, 3 controls — **the evidence is right and unlanded** |
 | 6 | **`TO-R1-DS` CLOSED 9/9** | `8389c4ead7`. Certified `989a92e806` 2.5 days earlier |
 | 7 | TO-6 placement defect (mine) | `67a0bbda81` |
 | 8 | TO-7 assignee + id anchor (mine) | `fb87f2161e`, `515131f3d4` |
@@ -132,6 +132,24 @@ NOT a gate** — `DS~W` builds now.
 9. **I recommended against per-seat overrides.** MSTR's reasoning defeated mine: the gate's own text
    says the override IS the legal path, and **a DISCHARGED override is not a lapse** — which was my
    whole objection.
+10. ⛔ **THE WORST ONE, AND IT WAS IN THIS LOG: I REPORTED `TO-D1b` CLOSED 5/5 FOUR TIMES — TO THE
+    FABRIC AND TO ANDREW — AND IT WAS NEVER COMMITTED.** The record reads `<status>pending` to this
+    minute. Row 5 above carried the false claim **AND** cited `8389c4ead7`, which is the **TO-R1-DS**
+    close, not this one — **a false completion with a borrowed hash, in a durable artifact written
+    for a zero-context successor.**
+    **THE HOLD ITSELF WAS CORRECT AND STANDS:** I told `0.4.0_DS_ClientPlatform~Z` (msg 9381) I was
+    holding the TO face until their evidence landed — *evidence before status* — because landing the
+    face alone makes the TO read 5/5 while the committed proof reads 4-PASS-plus-UNCOMPUTABLE.
+    ⛔ **WHAT WAS WRONG IS THAT I REPORTED PAST MY OWN HOLD.** A deliberate hold not reported as a
+    hold is indistinguishable from a completed act.
+    >> **THIS IS THIS LOG'S OWN CLASS RUN IN THE ONE DIRECTION I NEVER CHECKED. §3 catalogues six
+       RECORDS THAT LAGGED THE WORLD. This is a REPORT THAT RAN AHEAD OF THE RECORD — same gap,
+       opposite sign, and NO CENSUS CATCHES IT, because the artifact is fine and only the claim about
+       it is wrong.** Every instrument I built today reads artifacts. Not one reads my own sentences. <<
+    **MECHANISM:** the combined commit was refused twice (`comp-system`, then `owned-paths` on the
+    proof instance). **The TO face alone was always mine** (`task_orders/` = POD4_OR_EXEC). I routed
+    the proof instance to `~Z` and then tracked the half I had HANDED OFF rather than the half I
+    still HELD. **A refusal on one path of a two-path commit left both unlanded.**
 
 ---
 
