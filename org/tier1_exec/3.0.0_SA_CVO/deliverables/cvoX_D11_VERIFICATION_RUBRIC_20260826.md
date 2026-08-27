@@ -365,11 +365,17 @@ against them as part of the population's record, not as bars this seat invented:
   instruments, no shared step). The original blanket lit=UNRESOLVED collapsed on CloudComp~X's
   tuple hypothesis: the extractor tested `ast.Constant` and the identifiers are `ast.Tuple`
   literals — UNRESOLVED reported the SHAPE OF THE TEST, not the absence of a literal. Current
-  per-subject state: derive_runner + incremental_updater BY-NAME confirmed (tuple loads at source);
-  cse_store + comp_aws_cli literals present, BINDINGS UNTRACED — the stronger claim does not extend
-  to them. The 37 are UNRESOLVED, not refuted (a predicate that just failed on one shape has no
-  standing to certify absence on others); bound: >=2 by-name, >=4 to-a-table-object, true count in
-  [4, 41]. All 4 TRACKED (74389, control fired).
+  per-subject state (74402 correction — the 74393 derive_runner:625 cite was a MARK-AND-SWEEP READ
+  PATH, a garbage collector cited as proof of a write; right file/table/tuple-shape, wrong VERB):
+  BY-NAME = incremental_updater (graph_nodes) + comp_aws_cli (BOTH tables — the cross-tree
+  sys.path-inserted module, strongest single result); TABLE-OBJECT-ONLY = derive_runner (3 real
+  writes, targets unresolved by the binder) + cse_store. The 37 are UNRESOLVED, not refuted (the
+  binder failed on TWO shapes in one hour — tuple args, read-as-write — so it certifies nothing
+  about absence); bound: >=2 by-name, >=4 to-a-table-object, true count in [4, 41]. All 4 TRACKED
+  (74389, control fired). ⛔ 74402's own warning travels with this: a TRUE conclusion reached
+  through FALSE evidence is the variant nobody audits — the census "confirms" it elsewhere and the
+  citation is never revisited. When the face cites a writer, my battery checks the CITED LINE for
+  the claimed VERB, not merely the conclusion against the census.
 - **Battery practice (74389, COO~X's articulation of CTO~X's move):** a FALSE POSITIVE promoted
   into a control arm is the cheapest sound-control repair (`build_manifest.py` became the arm that
   makes the join's control set differ on the field under test) — and it is only available to the
