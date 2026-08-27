@@ -1,6 +1,6 @@
 ---
 name: integrate
-description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. RUNS AT MSTR LAUNCH as the joint fabric parity assessment, replacing the old blind `/git-pull once` step (Andrew-direct 2026-08-12) -- and it ABSORBS that pull as Step 1b rather than dropping it, since a parity assessment off a stale local ref is wrong the same way a shallow clone is wrong. TWO MODES: bare `/integrate` is ASSESS-ONLY (the default -- measures and reports, merges nothing, pushes nothing), and `/integrate merge` is assess-and-proceed (the full reconcile incl. merge + push). Also use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
+description: Reconcile the two fabrics' branches (CLOUD <-> SITEZ) so each can read the other's work -- the MSTR-to-MSTR cross-device merge protocol. Measures true divergence and the OVERLAP SET (the only thing that can conflict), computes conflicts without touching a working tree, agrees ONE resolution across both fabrics rather than two, merges (NEVER rebases), and verifies from the remote. RUNS AT MSTR LAUNCH as the joint fabric parity assessment, replacing the old blind `/git-pull once` step (Andrew-direct 2026-08-12) -- and it ABSORBS that pull as Step 1b rather than dropping it, since a parity assessment off a stale local ref is wrong the same way a shallow clone is wrong. THREE MODES: bare `/integrate` is ASSESS-ONLY (the default -- measures and reports, merges nothing, pushes nothing); `/integrate merge` is assess-and-proceed for YOUR OWN LEG (merge + push, one-sided, silent about the other direction); and `/integrate parity` (Andrew-direct 2026-08-27) DRIVES BOTH LEGS to a measured terminal state -- it runs your leg, COORDINATES the peer's, and terminates only at PARITY (both is-ancestor checks pass, read from the remote) or LEG-OUTSTANDING (yours landed, theirs named and dated). Parity is the only mode whose definition of done includes the other device, and a single leg is NEVER reported as parity. Also use when both fabrics are quiet, before a device reboot or a long dark window, when a citation from one fabric does not resolve on the other, or when either MSTR asks to integrate. Parity is maintained "to the extent convenient/relevant" (Andrew) -- the fabrics deliberately work separate projects, so a healthy overlap is ~1% and a LARGE overlap is itself the finding.
 ---
 
 # /integrate — the cross-fabric reconcile (CLOUD <-> SITEZ)
@@ -504,12 +504,72 @@ Say plainly if it is not urgent — a nudge that manufactures false urgency gets
 
 ---
 
+## Step 8 — `/integrate parity`: DRIVE BOTH LEGS TO A MEASURED TERMINAL STATE
+
+**Andrew-direct 2026-08-27, VERBATIM:** *"i want a function that explicitly is an instruction to work
+with the other fabric and bring both devices to parity with remote."*
+
+⛔ **`merge` AND `parity` ARE MATERIALLY DIFFERENT AND THE DIFFERENCE IS WHO CAN FINISH THEM.**
+
+| | `/integrate merge` | `/integrate parity` |
+|---|---|---|
+| scope | **MY leg** | **the joint objective** |
+| terminates when | my push lands | **BOTH `is-ancestor` checks pass, read FROM THE REMOTE** |
+| can I finish it alone? | **yes** | **NO — the second leg belongs to a party I cannot command** |
+| silent about | the other direction | nothing |
+
+**MEASURED THE DAY THIS WAS COMMISSIONED:** site Z ran `merge`, leg 1 landed clean at `@5edabd600a`,
+and **the fabrics were still not at parity six hours later** — because leg 2 belongs to the laptop and
+`merge` has no slot for a second party. *A mode that terminates on its own success cannot deliver an
+objective that requires someone else's.*
+
+### The procedure
+
+1. **MEASURE BOTH DIRECTIONS FIRST.** This decides what the run even is:
+   ```bash
+   git fetch origin
+   git merge-base --is-ancestor origin/CLOUD origin/SITEZ   # leg 1: CLOUD in SITEZ?
+   git merge-base --is-ancestor origin/SITEZ origin/CLOUD   # leg 2: SITEZ in CLOUD?
+   ```
+   Both rc=0 — **ALREADY AT PARITY. Report and stop.** Do not merge to prove it.
+2. **RUN MY OUTSTANDING LEG** via Steps 0—7 (merge window, index control, per-hunk resolution, push,
+   remote verify). If my leg is already in, skip.
+3. **COORDINATE THE PEER'S LEG.** Send them, in one message: the measured both-direction state, what
+   their leg carries (commit count + per-author breakdown), **their deploy ceiling — the second pusher
+   ships**, every resolution already agreed, and any per-hunk trap. Ask them to name their count when
+   they run it. ⛔ **The nudge goes over the agentbus — never a second channel** (Step 6b).
+4. **RE-MEASURE FROM THE REMOTE.** Never from their push receipt, never from their report.
+5. **REPORT THE TERMINAL STATE, WHICH IS ONE OF TWO — AND BOTH ARE LEGITIMATE ENDS OF THE RUN.**
+
+### ⛔ The two terminal states, and the second is NOT a failure
+
+```
+PARITY        both is-ancestor checks pass, read from the remote. Name both heads.
+LEG-OUTSTANDING   my leg landed @<hash>; peer leg asked at <ts>, MessageId <id>, unACKed.
+```
+**`LEG-OUTSTANDING` IS A SUCCESSFUL RUN OF THIS MODE.** The peer may be mid-wave, drawn down, or
+asleep; their gate is theirs. **What the mode buys is that the outstanding leg is a NAMED, DATED,
+ADDRESSED open item instead of a silent one.** Do not loop, do not chase, do not re-send, and **do
+not build a route around a quiet consumer** — a queued bus message is waiting, not lost (14d FIFO
+retention).
+
+⛔⛔ **NEVER REPORT A SINGLE LEG AS PARITY.** *"I merged"* and *"we are at parity"* are
+different claims with different truth conditions, and the first is the one you can verify alone —
+which is exactly why it gets substituted. **Measured 2026-08-27: leg 1 was reported as the pull being
+"done" and the sovereign made placement decisions for hours believing this fabric had material it did
+not have.** The report was true and the impression was false.
+
+⭐ **AND THE MODE'S REAL PRODUCT IS THE ASK, NOT THE MERGE.** Anyone can run their own leg; the
+thing that was missing was a named act whose *definition of done* includes the other device. If you
+finish your leg and say nothing to the peer, you have run `merge` and mislabelled it.
+
 ## Invocation forms
 
 | form | behavior |
 |---|---|
 | **`/integrate`** | **ASSESSMENT — THE DEFAULT.** Steps 0→4: clone check, **local-ref currency (1b)**, divergence, overlap set, conflict dry-run + per-file classification, report. **Merges nothing, pushes nothing, resolves nothing.** May send the peer its findings. |
 | **`/integrate merge`** | **ASSESS AND PROCEED.** The full protocol, Steps 0→7 — everything the assessment does, then the peer-agreed resolution, the merge, the push, and remote verification. |
+| **`/integrate parity`** | **DRIVE BOTH LEGS.** Step 8. Measures both directions, runs MY outstanding leg via 0—7, COORDINATES the peer's, re-measures from the remote, and terminates in exactly one of two named states: **PARITY** (both `is-ancestor` pass) or **LEG-OUTSTANDING** (mine landed, theirs asked-and-named). **The only form whose definition of done includes the other device.** Never reports one leg as parity. |
 | `/integrate status` | Alias of the default assessment, minus the peer send. Changes nothing, sends nothing. |
 | `/integrate execute` | Steps 5-6 only — **only after a peer-agreed resolution already exists.** Never the first call. |
 
