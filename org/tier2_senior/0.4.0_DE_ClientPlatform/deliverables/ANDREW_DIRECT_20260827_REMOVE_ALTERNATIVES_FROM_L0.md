@@ -46,12 +46,28 @@ frontend. **Hardcoding the removal in the component would make the renderer disa
 block**, which is the exact defect the append-unlisted behaviour exists to prevent. The taxonomy is
 the registry's to state.
 
-## ⚠ STILL OPEN — HIS PHRASE, NOT ANSWERED BY THIS WORD
+## ✅ CLOSED ~21:4xZ — HIS PHRASE, ANSWERED
 
-**Does "etf based smas" mean `idvz` and `pfde` belong INSIDE `ETF Strategies`?** He answered the
-naming collision, not this. The registry calls all four ETFs SMA-view members with `idvz`/`pfde` as
-*"ETF-product members pending strategy registration"* (`mdpf_category_registry.py:33-35`), which
-reads toward YES — but `1.0.0_SA_CTO~Z` priced the same census and explicitly declined to resolve
-his wording, having been wrong twice in one evening doing exactly that. **This seat's fixture
-currently places them OUTSIDE both buckets, in the un-noded disclosure. That is a choice this lane
-made without noticing it was a choice, and it is disclosed rather than defended.**
+**Did "etf based smas" mean `idvz` and `pfde` belong INSIDE `ETF Strategies`? YES.** Andrew approved
+it ~21:4xZ — *"yes approve all recs"*, relayed by `1.0.0_SA_CTO~Z` @10295 against their
+`/open-calls` card 1. **SMA L1 = {ETF Strategies, ALT Strategies}**, with
+**ETF = {pfoe, divz, idvz, pfde}** and **ALT = {tax, muni}**: 4 + 2 over a 6-member domain, MECE
+closing with no uncovered member. Landed in the smoke fixture at portal `853c0a38`
+(**LOCAL** — `origin/DEV` reads `60226c3209` by `ls-remote`).
+
+⛔ **THIS SECTION WAS REWRITTEN IN PLACE, NOT APPENDED TO.** What stood here said the fixture
+*"places them OUTSIDE both buckets, in the un-noded disclosure"* — now **false of the fixture**. An
+append would have left the false sentence standing as the block a reader opens first, which is the
+two-carriers defect committed against a single carrier.
+
+⭐ **AND THE DISCLOSURE IS WHY THE ANSWER ARRIVED.** This section previously recorded the placement
+as *"a choice this lane made without noticing it was a choice … disclosed rather than defended"*.
+Naming it as an unresolved choice is what put it on a card he could rule on. `3.0.0_SA_CVO~Z`
+confirmed the hunt was not vacuous: under the rival reading it was **4 of 6 with `idvz`/`pfde`
+uncovered and postulate (i) FAILING** — *"the sovereign answer closed that branch; the arithmetic
+did not."*
+
+⛔ **`un_noded_members` IS DISSOLVED, NOT EMPTIED.** The category no longer exists; the two members
+were **re-homed**, not dropped. Retiring the field from the schema is the producer's act
+(`data/mdpf/scripts/gold/`) and is **NOT** done here — the fixture carries it empty so it does not
+disagree with the type.

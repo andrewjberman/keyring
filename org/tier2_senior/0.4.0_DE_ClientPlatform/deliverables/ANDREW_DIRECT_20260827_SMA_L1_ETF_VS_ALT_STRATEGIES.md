@@ -121,12 +121,27 @@ Client   L1 Opal Supervised | Opal Unsupervised
 structure he named is not expressible in shape A, and that is a measured property of the two shapes
 rather than a preference.
 
-## ⚠ ONE VOCABULARY COLLISION, SURFACED
+## ✅ ONE VOCABULARY COLLISION — SURFACED HERE, CLOSED BY HIM ~21:1xZ
 
 **"ALT Strategies" (an L1 bucket under SMAs) and "Alternatives" (an L0 node in the persisted
-five-peer set) are different things at different levels.** They may read as the same word to a
-future builder or to a consumer of the served block. Naming is his; flagging that the two live in
-one tree and one of them is currently un-drawn (Alternatives renders no card at zero AUM).
+five-peer set) are different things at different levels**, and surfacing that is what produced the
+ruling. Andrew removed the L0 node:
+
+> *"We can just get rid of Alternatives at L0, they are differnet things but if its confusing easier
+> to just get rid of it"*
+
+Verbatim record: `ANDREW_DIRECT_20260827_REMOVE_ALTERNATIVES_FROM_L0.md`. **The rendered L0 set is
+Models · SMAs · Client.** He CONFIRMED the two are different things and removed the node anyway —
+the ruling is priced on **cost, not semantics**.
+
+⛔ **MY RECOMMENDATION ON THIS WAS WRONG AND THE ERROR IS THE REUSABLE PART.** I argued to KEEP the
+node because a zero-AUM node renders nothing, therefore costs nothing. **I priced RENDERING cost; he
+priced a VOCABULARY COLLISION in a tree a human reads.** A node that renders nothing still occupies
+a name.
+
+⛔ **The registry change is DS-class and NOT performed by this lane**
+(`data/mdpf/scripts/gold/mdpf_category_registry.py` VIEW_TREE). Only the smoke fixture and these
+records moved.
 
 ## RENDERER IMPACT — measured, not estimated
 
