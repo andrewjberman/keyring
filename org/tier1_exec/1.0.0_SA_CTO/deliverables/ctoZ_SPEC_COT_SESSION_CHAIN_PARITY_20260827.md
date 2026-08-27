@@ -31,7 +31,52 @@ downstream of the stage that never ran.
 
 ---
 
+## ⛔ s.2-PRE -- AMENDMENT 1, 2026-08-27 ~15:1xZ: **THE CENSUS BELOW IS MEASURED ON ONE OF TWO PLANES**
+
+**R2 IS ALREADY BUILT. DO NOT BUILD IT.** Found by `0.7.0_AE_CloudOps~Z` on its grounding pass
+(BLOCKING surprise, msg 9173), independently confirmed by me and by `0.0.0_AB_MSTR~Z`.
+
+**EventBridge has TWO planes with TWO APIs and they do not overlap.** `aws events list-rules`
+enumerates **Rules**. `aws scheduler list-schedules` enumerates **Schedules**. My census called only
+the first. Verified live on the second:
+
+```
+aws scheduler get-schedule --name cot-bd-session-daily-et
+  State                       ENABLED
+  ScheduleExpression          cron(30 7 * * ? *)
+  ScheduleExpressionTimezone  America/New_York        <-- 07:30 ET == the observed 11:30Z
+  Target.Arn                  ...function:cot-bd-session-trigger
+  Target.Input                {"mode":"session-refresh"}
+```
+DENOMINATOR: 18 schedules on the Scheduler plane, 7 matching cot/49f/bd. The 137-rule census was
+**correct and complete on its own plane** (I re-ran it; `bd-cot-session-daily` is genuinely absent
+there) **and structurally blind to these 18.** A clean, confident, well-formed zero about the plane
+the answer does not live on.
+
+⛔ **BUILDING R2 WOULD BE ACTIVELY HARMFUL, on the exact axis caution (2) exists to protect:**
+- **DUAL TRIGGER.** Two heads would both fire `session-refresh`. `cot-pipeline/eventbridge.tf`
+  records that the old `cron(0 2)`Z Rule was deleted **in the same change** as the Scheduler
+  precisely so there is *"no dual-trigger window."*
+- **DST DRIFT -- the thing the Scheduler exists to prevent.** Andrew-direct 2026-07-29 chose
+  Scheduler over a Rule because *"a Rule is UTC-only and a hardcoded UTC cron drifts an hour at DST,
+  firing BEFORE market close come November."* **A UTC `cron(30 11)` satisfies caution (2) today and
+  violates it on 2026-11-01.** My own spec would have re-introduced the defect it was written to avoid.
+- The live tz-pinned Scheduler already preserves the ET-boundary landing, which is **strictly better
+  than any UTC cron I could have specified.**
+
+**R2 IS AMENDED TO: RATIFY WHAT EXISTS. Build nothing.** A4 discharges on the `get-schedule` output
+plus the ET-boundary write-up. **This also answers a question I had left open as unresolved --
+what fires the chain at ~11:30 daily. It is this Scheduler entry** (and
+`opal-assets-ingest-mirror-cot-daily-et` is the 11:45 mirror). The COT chain was never
+scheduleless; it was scheduled where I did not look.
+
+---
+
 ## s.2 -- MEASURED PARITY CENSUS (2026-08-27 ~14:3xZ, `aws events describe-rule` / `list-targets-by-rule`)
+
+> ⚠ **READ s.2-PRE FIRST. This table is TRUE WITHIN THE RULES PLANE AND INCOMPLETE OVERALL.**
+> Its `bd-49f-session-daily` / COT-ABSENT row is superseded: COT's scheduled head exists on the
+> Scheduler plane. The `bd-49f-session-complete` / COT-ABSENT row **stands and is confirmed.**
 
 | 49F (working) | schedule / pattern | target | COT equivalent |
 |---|---|---|---|
@@ -43,6 +88,52 @@ downstream of the stage that never ran.
 
 **THE DELTA IS EXACTLY TWO RULES.** Everything else -- the trigger Lambda, its modes, the EC2, the
 SSM documents, the keepalive, the S3 sentinel chain -- already exists on the COT side.
+
+---
+
+## ⛔ s.3-PRE -- AMENDMENT 2: **R1 WAS KILLED, NOT NEVER-BUILT -- AND THE KILL'S OWN REASONING IS INVERTED**
+
+The spec said the rule *"does not exist"* / *"was never built."* **It existed and was deliberately
+deleted.** Found by `0.7.0_AE_CloudOps~Z`, confirmed by me on `aws ssm list-commands`.
+
+```
+5b989deb27  kill(OPAL_MDPFCLEANUP.TO-3 apply-2): remove cot-session-complete set
+            (K2 dead event leg, Andrew-ratified @874b52729c)
+```
+Its surviving comment in `cot-pipeline/eventbridge.tf` states the reasoning verbatim:
+> *"fired 1x/7d while the chain completed DAILY without it -- the session-refresh mode dispatches
+> bronze directly ... so the chain's daily completion IS the consumer-exercise proving no live
+> dependency."*
+
+⛔ **THAT REASONING IS INVERTED, AND THE INVERSION IS THE ENTIRE INCIDENT.** The rule fired 1x/7d
+**because that is the mint day -- the one day it carries anything.** The *"chain completed daily
+without it"* observation is the **6-of-7 SKIP days**, which never needed it and structurally could
+not have exercised it. **The kill measured the days the rule is silent BY DESIGN and concluded it
+had no consumer.** An instrument that could not have said otherwise (Rule 22a).
+
+**FALSIFIED 4-FOR-4** (`aws ssm list-commands`, materialised, verified independently by me):
+
+| mint day | bronze-run that day | `cot-session-complete` alive |
+|---|---|---|
+| 2026-08-03 | Success | YES (pre-kill) |
+| 2026-08-11 | Success | YES (pre-kill) |
+| **2026-08-19** | **NONE** | NO (post-kill) |
+| **2026-08-27** | **NONE** | NO (post-kill, today) |
+
+Over 08-06..08-26 bronze-run is missing on **exactly one day, 08-19** -- a mint day -- plus today.
+Both pre-kill mint days kept their bronze run. The mint timestamps corroborate the migration:
+08-03 at 22:00 ET and 08-11 at 16:31 ET (pre-Scheduler), then 08-19 and 08-27 both at **07:30 ET**.
+
+**SEVERITY -- MEASURED, and it is narrower than "data loss":** the next successful run recovers the
+gap through BD's rolling ~14-day export window. Natural experiment, 08-19:
+`bronze/holdings/_complete/2026-08-18.json` **and** `2026-08-19.json` were **both written
+2026-08-20T11:45:54Z**. So the true impact is **served data one day staler than it should be for
+~24h on each mint day (~1 in 7), then self-healing** -- not permanent loss. **Real defect, not an
+emergency.** State it this way; do not inflate it.
+
+⚠ **08-19 IS NEW INFORMATION.** The spec was written believing today was a first occurrence. It is
+the **second**, and 08-19 went unnoticed for 8 days. **REPORT, DO NOT CHASE:** no backfill of 08-19
+or 08-26 is authorized here.
 
 ---
 
