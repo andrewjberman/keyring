@@ -162,6 +162,19 @@ has never reaped or it never writes the line, **and those are byte-identical in 
 
 ## §5 — Verification discipline (the rules that cost the most to learn)
 
+- **Substantive-tick logging (Andrew-direct 2026-08-27 ~22:1xZ at the COO terminal, verbatim: "we
+  do not need a committed log with every tick").** The why: on the first paired-drive evening, the
+  wire outran the loop on every tick — tick 3's committed log recorded "all rows consumed, 0
+  dispatches" as a full findings file, and each such file costs a shared-tree commit slot on a
+  worktree where lock contention was already producing rc=128 retries between four seats. The
+  log's VALUE is entirely in its deltas (dispatches, consumptions, class changes, findings); a
+  no-delta file is commit noise wearing a record's clothing. The guardrails that keep the trim
+  from becoming blindness: every substantive log's delta line COVERS the quiet ticks since the
+  last one (gapless record, fewer files); a PARKED conviction or [STUCK] escalation still
+  requires a logged tick (convictions never rest on unlogged windows); and the paired-mode
+  log-derived cursor (@46f4a0563e) tolerates the widened window because over-inclusion errs
+  toward ACTIVE — the safe direction — and can never manufacture a PARKED. CTO applied the same
+  word to /self-drive's every-2-ticks form the same window.
 - **A citation without a vintage is not a citation.** `file:line` resolves at every commit, to different code. Cite `file:line @ <commit-ish>` or `@ working-tree`.
 - **Put the control on the RETRIEVAL, not the pattern.** `git show <bad-ref> | grep -c foo` prints `0` — grep counted zero matches *in an error message*. Print the denominator of every scan you reason from.
 - **A truncation is not biased toward comfort; it is biased toward whatever is off-screen.** A `head -9` once nearly destroyed a *true* finding three execs had adopted. A negative control cannot catch it — the control runs inside the same truncated window. **Only the denominator can.**

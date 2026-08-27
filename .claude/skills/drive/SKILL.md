@@ -287,9 +287,13 @@ Fire every classified action via `mcp__opal-agent-comms__send_message` **this cy
 
 **Re-attesting the same self-resolvable gate across ≥2 cycles is THE coast-failure.** 3 consecutive gate-failures ⇒ surface to MSTR.
 
-## Step 7 — Log
+## Step 7 — Log (SUBSTANTIVE ticks only — Andrew-direct 2026-08-27 ~22:1xZ at the COO terminal, verbatim: "we do not need a committed log with every tick")
 
-Write `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`: a findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>`.
+**A committed drive log is written ONLY on a SUBSTANTIVE tick:** ≥1 dispatch fired, a ledger row newly consumed, a classification CHANGED (a seat entering/leaving PARKED/STUCK, a project changing class), or a finding surfaced. **A quiet tick writes NO file** — marker + heartbeat only (Step 8), the `/log` no-delta precedent. Each substantive log's delta line covers the quiet ticks since the last one, so the record stays gapless without the noise files. Gate: a `[STUCK]` escalation or a PARKED conviction still requires a logged tick — convictions never rest on an unlogged window. → `DRIVE.md §5`
+
+When a log IS written: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md` — findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
+
+**Paired-mode cursor note (composes with rule 5 @46f4a0563e):** with quiet ticks unlogged, the movement window derives from the LAST SUBSTANTIVE log + the ledger's consumed timestamps; a widened window over-includes movement, which errs toward ACTIVE — the safe direction. It can never manufacture a PARKED.
 
 **Verify the pathspec is clean before handing it to the wrapper** — `safe-commit` commits the files you NAME, not the files you CHANGED, and returns `rc=0` either way.
 **Then verify YOUR commit landed, by hash — not by `HEAD` and not by a push range** (the tree is shared; `HEAD` drifts):
