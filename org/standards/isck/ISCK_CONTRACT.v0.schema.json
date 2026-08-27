@@ -1059,6 +1059,25 @@
               "absent_components"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "bundle_completeness": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "bundle_completeness"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "absent_components"
+              ]
+            }
+          }
         }
       ]
     },
@@ -1477,6 +1496,28 @@
               "evidence_refs"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "integrity": {
+                "enum": [
+                  "verified",
+                  "unverified"
+                ]
+              }
+            },
+            "required": [
+              "integrity"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "delta_summary"
+              ]
+            }
+          }
         }
       ]
     },
@@ -1787,6 +1828,56 @@
             "required": [
               "firm_scope"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "enum": [
+                  "candidate",
+                  "admitted",
+                  "rejected",
+                  "retired",
+                  "inadmissible"
+                ]
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "held_on"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "enum": [
+                  "candidate",
+                  "admitted",
+                  "held",
+                  "rejected",
+                  "retired"
+                ]
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "store_owner"
+              ]
+            }
           }
         }
       ]

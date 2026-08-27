@@ -234,6 +234,10 @@ ATTACK_TARGETS = {
     "bridge.candidate-with-adjudicator": ["adjudicated_by"],
     "bridge.symbol-plane-no-firm-scope": ["firm_scope"],
     "bridge.dead-basis-measured": ["claim_origin"],
+    "bridge.held_on-outside-held": ["held_on"],
+    "bridge.store_owner-outside-inadmissible": ["store_owner"],
+    "mv.complete-with-absent-components": ["absent_components"],
+    "ce.delta-summary-on-verified": ["delta_summary"],
     "mint.checked-no-evidence": ["evidence_refs"],
     "mint.wrong-serial-form": ["serial_form"],
     "mint.missing-preflight": ["collision_preflight"],
@@ -397,6 +401,17 @@ def _mutants():
     add("mint.checked-no-evidence", "mint_receipt", ["required"], evidence_refs=_DEL)
     add("mint.wrong-serial-form", "mint_receipt", ["const"], serial_form="ulid26_uppercase")
     add("mint.missing-preflight", "mint_receipt", ["required"], collision_preflight=_DEL)
+    # ARM-4 adjudication: the four upheld forbid-mirrors (21 candidates ruled NO with reasons)
+    add("bridge.held_on-outside-held", "bridge_assertion", ["not"], held_on="LD-0999")
+    add("bridge.store_owner-outside-inadmissible", "bridge_assertion", ["not"],
+        store_owner="0.8.0_AE_CloudComp")
+    add("mv.complete-with-absent-components", "materializer_version", ["not"],
+        bundle_completeness="complete", configuration_digest=SHA,
+        declared_opinions_digest=SHA, dependency_lock_digest=SHA,
+        normalizer_versions=["norm-v1"], runtime_contract_version="rc-1",
+        source_tree_digest=SHA)
+    add("ce.delta-summary-on-verified", "coherence_evaluation", ["not"],
+        delta_summary="3 axes moved")
     # enum discipline (F4 renames; dead enums stay dead)
     add("binding.basis-is-dead-enum-measured", "entity_binding", ["enum"],
         binding_basis="measured")
