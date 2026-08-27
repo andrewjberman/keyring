@@ -157,13 +157,62 @@ corrected values in the deliverable now read as if they were always measured, an
 
 **None.** Nothing in either TO was blocked, and nothing was waited on.
 
-⚠ **One DEPENDENCY that is not a blocker: `SAT-a-4` (delivery form) is `2.0.0_SA_COO~Z`'s unmade
-call.** TO-1 §4 says *"do not pick the form yourself; if it is unmade when you need it, ask, do
-not assume."* I did not need it: the derivation is written **indifferent to the carrier** — it
-returns a value, it does not choose a delivery mechanism. **But it constrains whoever picks:** a
-build-time constant would carry the vintage of the BUILD rather than of the data, so `vintage()`
-would be measuring the wrong clock while still returning FRESH. That residual is stated in the
-module and in the proof instance, and the staleness arm must be re-exercised at that boundary.
+⚠ **`SAT-a-4` (delivery form) WAS a dependency and is now RULED — this line is corrected in place,
+not appended to.** At 18:21Z `2.0.0_SA_COO~Z` ruled the **build-time-constant class OUT**, adopting
+my own constraint as the ruling, and **delegated the FORM to this seat**: *"the derivation being
+indifferent to the carrier is precisely why the person holding the code should choose it."* Built —
+see §5 below. What remains outside this lane is the TRANSPORT, and the contract is deliberately
+form-agnostic so that choice cannot reintroduce the ruled-out class.
+
+---
+
+## 5. The carrier (SAT-a-4), built after the ruling
+
+⛔ **THE RULED-OUT CLASS IS WIDER THAN THE NAMED FORM, and that is the whole design.** A served
+block that stamps `state: FRESH` at PRODUCE time fails **identically** to a build-time constant —
+true when written, ageing silently, so tomorrow's reader sees yesterday's verdict rendered as
+today's. COO named this in advance: *"the same defect wearing a different hat."*
+
+```
+THE ARTIFACT CARRIES  as_of              a FACT about the data. claim `measured`. it does not age.
+THE READER COMPUTES   vintage(as_of,now) a verdict is a function of the data AND THE MOMENT,
+                                         and a field can only hold the first.
+```
+
+`payload()` emits facts only; `assert_no_baked_verdict()` **refuses** a payload carrying one, so
+the defect is **inexpressible rather than discouraged** — the same move as declaring `NAME_TO_BOOK`
+against the artifact's real name form and asserting the broken keys are ABSENT.
+
+**THE DISCRIMINATING TEST** (COO: *"the carrier is exactly what the test was not varying"* — it is
+now varied): ONE set of stored bytes, `now` moved and nothing else. `read(block, 08-27)` → FRESH/0;
+`read(block, 08-31)` → STALE/2; `as_of` and `rows` asserted **identical** across both. A build-time
+constant and a stamped block both return the same verdict forever; this asserts the opposite
+property, so if anyone later bakes `state` in, **that test fails** rather than a style review
+catching it. The guard is made to fail on demand on three fields, on two call paths, against a
+clean positive control.
+
+Suite: **29 passed** (was 24), including the live-bytes arm.
+
+---
+
+## 6. The S3 first-mint — measured, and DELIBERATELY NOT DONE
+
+`0.0.0_AB_MSTR~Z` measured all three files ABSENT from
+`s3://opal-data-mdpf/code/scripts/assets_gold/` and correctly called the safe-deploy **success
+line** a defect (it printed *"all files deployed and verified"* after skipping all three). The
+measurement is right. **The mint is still wrong, and I measured why rather than complying or
+refusing on instinct:**
+
+| | measured |
+|---|---|
+| **the test file** | this estate deploys **ZERO** gold tests — **6** in `data/assets/scripts/gold/tests/`, **0** on S3, against a positive control showing the parent prefix reachable with exactly **4** producer members. Minting `tests/` would **start** a practice, not catch one up. |
+| **the two modules** | **nothing imports them** — the only estate-wide references are inside `test_satellites.py` itself. |
+| **where it would land** | `mdpf-daily-dispatch.sh:125` syncs `code/scripts/` onto the **production** MDPF runner with `--delete`, and `:538-546` puts `assets_gold` on the nightly chain's PYTHONPATH. A mint puts three unused files — one a pytest module importing boto3 and reaching live S3 — into a production runtime tree for no consumer. |
+
+Rule 13's *"first-mints explicit"* makes a mint a **deliberate named act**; the membership guard
+skipping a non-member is that rule working, not failing. **The mint becomes correct when a consumer
+exists** — and under the SAT-a-4 contract the consumer is the carrier's transport, not yet chosen.
+Routed with the denominators; not self-approved silently.
 
 ---
 
