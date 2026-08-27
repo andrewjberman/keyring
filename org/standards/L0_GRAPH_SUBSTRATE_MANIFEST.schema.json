@@ -918,21 +918,30 @@
                     }
                   }
                 ],
-                "description": "What this companion IS, in one line. A bare suffix with no statement of what it holds is the loud-but-unresolvable class."
+                "description": "What this companion IS **and under what CONDITION it is minted**, in one line. A suffix with no condition asserts always-present, which is the closure claim this field no longer makes."
               },
-              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ WAS AN ARRAY UNTIL 2026-08-27 AND THAT WAS WRONG. I declared 'uniqueItems makes it a SET, order carries no meaning' and moved the obligation to sort onto future consumers. 4.0.0_SA_CRO~A refused it: A JSON ARRAY'S ORDER IS DATA. ['.lock','.wal'] and ['.wal','.lock'] are byte-distinct, schema-distinct, digest-distinct, and NO consumer sorts them. A prose obligation on a future reader IS AN UNENFORCED FIELD -- the exact thing this contract had refused four times, created inside the ruling that cited refusing it. AN OBJECT KEYED BY SUFFIX MAKES THE AMBIGUITY INEXPRESSIBLE: JSON objects are unordered by specification, duplicate keys are impossible, and no canonicalisation is left for anyone to forget. Same remedy as the closed grammar -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (the pattern) and this FINITE companion set. Per-instance cardinality is 1 + the number of keys -- DERIVED. TOTAL cardinality stays UNDEFINED: the instance axis is unbounded and a reaper is running.",
+              "description": "enumerable=false ONLY, and REQUIRED there -- an EMPTY OBJECT is the claim 'this producer mints no companions', which a consumer can branch on; OMISSION would be a silent third state. ⛔ THESE ARE THE SUFFIXES THE PRODUCER *MAY* MINT, NOT A CLOSED SET AND NOT A PER-INSTANCE GUARANTEE. RULED 2026-08-27 after 4.0.0_SA_CRO~A refused the prior wording: it claimed an EXACT FINITE companion set with per-instance cardinality 1 + keys, while the only available evidence for '.wal' was OBSERVATION of existing homes -- and the producer source `_rm_kuzu` names `.wal`, `.lock`, `.shadow` and `.tmp`. **DERIVING A CLOSED SET FROM OBSERVED ARTIFACTS CANNOT CERTIFY CLOSURE**: it is 'total minus the part I measured' wearing an enumeration's costume. PER-INSTANCE CARDINALITY IS THEREFORE UNDEFINED, exactly as the total is: a given instance may carry any subset of these, and each value must state the CONDITION under which that companion appears. AN OBJECT KEYED BY SUFFIX, not an array: JSON objects are unordered by specification and duplicate keys are impossible, so no canonicalisation is left for anyone to forget -- forbid by construction, never by instruction. A runtime family has TWO INDEPENDENT AXES: an UNBOUNDED instance identity (`pattern`) and this companion axis. TOTAL cardinality stays UNDEFINED -- the instance axis is unbounded and a reaper is running.",
               "examples": [
                 {
-                  ".wal": "write-ahead log minted beside each rebuild tmp by the kuzu writer"
+                  ".wal": "write-ahead log; present while a rebuild is mid-flight, absent after a clean close (producer: _rm_kuzu)"
                 }
               ],
               "x-rule24": {
                 "axis": "the FINITE companion set minted alongside each instance",
                 "grain": "one member_set under enumerable=false",
                 "intent": "one -- WHICH extra artifacts accompany each instance; NOT how many instances exist (undefined), NOT what an instance is named (pattern)",
-                "mece": "{} = no companions. A non-empty object enumerates them exactly, keyed by suffix. No third state -- omission is REJECTED rather than interpreted.",
-                "state_coherence": "discovering a further companion ADDS A KEY and moves NOTHING in `pattern`. ORDER IS NOT STATE AND CANNOT BE: an object has none."
+                "mece": "{} = this producer mints no companions. A non-empty object enumerates the suffixes it CAN mint, keyed by suffix. ⛔ NOT A CLOSURE CLAIM over any single instance -- that is why per-instance cardinality is undefined rather than derived. No third state: omission is REJECTED.",
+                "state_coherence": "discovering a further mintable suffix ADDS A KEY and moves NOTHING in `pattern`. ORDER IS NOT STATE AND CANNOT BE: an object has none. Observing that an instance lacks a companion moves NOTHING here -- this field is about the PRODUCER's repertoire, not about any instance."
               }
+            },
+            "variant_suffixes_source_home": {
+              "$ref": "#/$defs/repo_relative_path",
+              "description": "enumerable=false ONLY. Repo path of the file whose code determines WHICH COMPANIONS THIS PRODUCER CAN MINT. ⛔ THIS IS A DIFFERENT AUTHORITY FROM `pattern_source_*`: the kuzu family's name template is produced at `_canonical.py`, and its companion repertoire is named in `_rm_kuzu`. Two axes, two producers, two pins -- BOUND by $ref to the one path contract, never a copy of its clauses."
+            },
+            "variant_suffixes_source_line": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "enumerable=false ONLY. 1-based line in variant_suffixes_source_home. Required even when the object is EMPTY: 'this producer mints no companions' is a CLAIM and needs an authority, and an unsourced empty set is indistinguishable from an unasked question."
             },
             "pattern_source_home": {
               "$ref": "#/$defs/repo_relative_path",
@@ -998,6 +1007,20 @@
                       "variant_suffixes"
                     ]
                   }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_source_home"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "variant_suffixes_source_line"
+                    ]
+                  }
                 }
               ]
             },
@@ -1011,7 +1034,9 @@
                 "pattern",
                 "pattern_source_home",
                 "pattern_source_line",
-                "variant_suffixes"
+                "variant_suffixes",
+                "variant_suffixes_source_home",
+                "variant_suffixes_source_line"
               ],
               "not": {
                 "required": [
