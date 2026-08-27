@@ -205,4 +205,64 @@ authenticates"**, i.e. the AdvisorIntelligence pattern applied to an existing pr
    FIRM-DISCRIMINATION, not AUTHENTICATION — and that is a smaller, better-understood change with a
    worked example already in the estate.** <<
 
+---
+
+# AMENDMENT 3 — 19:0xZ. ⭐ **ANDREW HAS RULED ON THIS QUESTION TWICE BEFORE. HIS OWN WORDS ARE THE BEST EVIDENCE IN THIS DOCUMENT.**
+
+Found by running the **Auto-Rule 5 pre-authoring check before registering a new project** — *does this
+already exist?* **It nearly did.** Three candidate projects existed; none is a duplicate, and **two
+are directly-on-point sovereign precedent I had not consulted.**
+
+## A. `ADVI_FIRMSEP` — **ANDREW-DIRECT 2026-05-07, VERBATIM**
+
+> *"I want to make sure that we are properly splitting these based on firm-id... **containment of
+> data in those cached layers is paramount**"*
+> *"third partner **Cottonwood** coming in sooner than later, these kind of fixes should be handled
+> the sooner the better."*
+
+**AND THE AUDIT UNDER IT NAMES THE FULL PATTERN — this is the answer to R4, in the estate's own
+record:**
+
+```
+/api/scoped/advisor-intelligence/*  cache policy `opal_scoped_advisor_by_firm`
+  - firm QUERY STRING in the cache key
+  - X-Firm-Id HEADER in the cache key
+  - >> X-Firm-Id IS JWT-INJECTED, NOT REQUEST-DERIVED <<   <- the security-critical property
+```
+
+⭐ **THAT THIRD LINE IS THE ONE MY §3 WAS MISSING.** The pattern is not merely "firm in the path +
+firm in the query key" — it is **firm in the CDN cache key, sourced from the JWT so the client cannot
+assert it.** A client-supplied firm would make the whole structure decorative.
+
+⚠ **`ADVI_FIRMSEP` is INACTIVE / ON HOLD, and its Phase 3 is "Cottonwood live ship, gated on
+Cottonwood credentials + bucket creation."** **Cottonwood is now live** — it holds a firm id and is
+in `FIRM_ALLOWED_PATHS`. **That hold may be dischargeable, and nobody has looked.** Surfaced, not
+chased.
+
+## B. `MDPF_SCOPED` — **ANDREW-DIRECT 2026-05-28, and it is CLOSED COMPLETE**
+
+> *"split Model Portfolios apart by partner using **the EXACT same pattern as Advisor Intelligence**"*
+
+**A sibling page, the same problem, ruled the same way, SHIPPED and closed 2026-06-03.**
+
+>> **SO: MY §3 CONCLUSION — "AdvisorIntelligence is the governing pattern" — WAS REACHED
+   INDEPENDENTLY FROM SOURCE, AND HE HAD ALREADY RULED IT TWICE.** That is corroboration of the
+   analysis by the strongest available authority, and I should have found it FIRST rather than
+   re-deriving it. <<
+
+## C. ⛔ WHAT THIS IS AND IS NOT EVIDENCE OF — THE LINE MATTERS
+
+**IT IS:** strong evidence of standing intent — he has twice chosen served-plane firm scoping, once
+using the words *"containment of data ... is paramount"*, once naming **Cottonwood** specifically as
+the reason to act early.
+
+⛔ **IT IS NOT a ruling on Positioning.** `ADVI_FIRMSEP` governs the **ADVI** surface and its cached
+layers; `MDPF_SCOPED` governs **Model Portfolios**. **Neither names the Positioning page, and
+relaying them as though they did would be exactly the widening this estate forbids** — a relayed
+ruling inherits its document's scope, and I am carrying the scope with it.
+
+**BEARING ON §4:** the precedent leans toward **(b) ACCESS** — *"containment of data in those cached
+layers is paramount"* is not a UI-visibility sentiment. **But §4 remains HIS to settle**, because the
+one thing neither precedent establishes is whether the Positioning payload is in the class he meant.
+
 -- `1.0.0_SA_CTO~Z`
