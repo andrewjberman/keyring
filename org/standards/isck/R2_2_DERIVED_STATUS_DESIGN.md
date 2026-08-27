@@ -44,7 +44,15 @@ abolition.
   **AT-2, ACCEPTED — pre-ledger honesty, restated:** with `derived` illegal, `authored` is a
   ONE-VALUE enum and fails DISCRIMINATION by construction; pre-WP-3 the field is a **RESERVED
   DISCRIMINATOR whose only live bit is VINTAGE** — absence = pre-R2-2 record, presence = post —
-  and the certification bridge binds on ABSENCE (checkable today), not on the value. The Rule-24
+  and the certification bridge binds on ABSENCE (checkable today), not on the value. **RA-4
+  tightening — absence is NOT self-authenticating as vintage: the post-R2-2 schema REQUIRES the
+  `status_basis` map on every status-bearing record, so a post-boundary record without it is
+  INVALID, never "legacy"; PRE-boundary records are identified by the MIGRATION MANIFEST (a
+  complete enumeration cut at the boundary commit), not by absence — vintage is a lookup against
+  the manifest, and certification REFUSES any absent-map record not in it.** **Implementation arm
+  (CRO): the map's key set is EXACT per record — all and only that record's status axes,
+  `additionalProperties: false` + every axis key required — a partial map that labels one axis
+  while omitting another is the same silent hole this field exists to close.** The Rule-24
   uncovered member is housed: a MIGRATED value is `authored` + migration-receipt ref in
   `evidence_refs` — no third enum value; the receipt is the discriminator.
   **FIELD-SCOPED IS THE RULING on CRO input 2:** bridge_assertion is the forcing case — its
@@ -52,6 +60,19 @@ abolition.
   indefinitely; a record-level flag would either lie about one axis or freeze both. Atomic
   whole-record transition is REJECTED (it holds the derivable axis hostage), and derived-illegal-
   for-the-record is REJECTED (it wastes the derivable half). Per-axis basis, per-axis transition.
+  **AT-5's TWO DECLARED CLASSES — the table (landed here on CVO~X RE-1's measurement: the prior
+  disposition CLAIMED this split while the doc carried zero tokens of it — the cite-the-act-
+  witnessed failure, mine, in a design doc about honest provenance):**
+  | axis | class | path to `derived` |
+  |---|---|---|
+  | `entity.current_status` | DERIVABLE-AT-WP-3 | fold over mint/retirement/succession + contest events |
+  | `materializer.current_status` | DERIVABLE-AT-WP-3 | fold over receipts + version supersessions |
+  | `entity_binding.status` | DERIVABLE-AT-WP-3 | fold over binding open/close + contest events with `target_kind: binding` — the carrier RA-1 adds; WITHOUT it this axis has NO event source and its row would be a lie |
+  | `identity_relation.verification_standing` | DERIVABLE-AT-WP-3 | fold over evidence/corroboration events |
+  | `bridge_assertion.verification_standing` | DERIVABLE-AT-WP-3 | same fold, bridge-scoped |
+  | `bridge_assertion.registry_standing` | **ADJUDICATION-CARRIED** | admission/rejection/hold values move ONLY on an adjudication event carrying `adjudicated_by` (the human_adjudicated carry generalized); until that event vocabulary lands, PERMANENT-AUTHORED, declared |
+  Every DERIVABLE row names its fold's event source; the ADJUDICATION-CARRIED row names why
+  `authored` cannot become its standing excuse — the event, not the ledger, is its gate.
 - **WP-3 (the ledger):** the derivation rules land as CODE beside the ledger; `status_basis:
   derived` becomes legal and REQUIRED for ledger-resident records; a status disagreeing with its
   derivation is a REJECTED WRITE, which is LAW 3's enforcement plane arriving (closes §6 limit 6
@@ -83,11 +104,19 @@ NO enforcement plane pre-WP-3; it is DECLARED as such in §6 beside limit 6, not
 
 **3b. CONTESTED/DISPUTED OVERLAYS.** Under the two layers: a CONTEST is an EVENT — and per CRO
 input 3, the event vocabulary must be TOTAL AND REPLAYABLE before the projection can be: the
-implementing boundary adds typed `contest_opened` (subject, contest_id, basis, evidence) and
+implementing boundary adds typed `contest_opened` (contest_id, basis, evidence) and
 `contest_resolved` (same contest_id, outcome `upheld | dismissed | merged`, `adjudicated_by`
-REQUIRED) relation kinds. The projection rule is then a pure fold: contested iff an opened
-contest_id has no resolved partner. A contest without a stable id is not replayable and does not
-project. Never a lifecycle value that displaces the interval truth. `entity.current_status.contested` and
+REQUIRED) events — **and per RA-1, each carries a TYPED TARGET, not a serial pair:
+`target_kind: entity | binding` with exactly ONE of `target_entity_serial` / `target_binding_id`
+(two-directional arms: kind requires its ref AND forbids the other) — the identity_relation grain
+is serial-pair and CANNOT name a binding, so contests are their own record shape, not a relation
+kind; the projection fold keys on (target_kind, ref).** The projection rule is then a pure fold: contested iff an opened
+contest_id has no resolved partner — **amended per RA-2: `outcome: upheld` REQUIRES
+`consequence_refs` naming the consequential event(s) (canonicalized_as / merged_into / binding
+close-rebind), and the fold keeps the subject CONTESTED until the referenced consequence EXISTS —
+an upheld challenge without its consequence is a promise, and a projection that clears on a
+promise re-opens the laundering cell at the contest door.** A contest without a stable id is not
+replayable and does not project. Never a lifecycle value that displaces the interval truth. `entity.current_status.contested` and
 `binding.status.disputed` become PROJECTIONS (contest event open => projection shows contested/
 disputed) — the 3.5 carve-out (`disputed` MAY carry `valid_to: null`) stops being a smuggling
 route because the interval fields never stopped carrying interval truth.
@@ -110,8 +139,14 @@ the SUCCESSION EVENT, never as prose on the entity. **CRO input 4 names the miss
 implementing boundary adds it: relation kind `retirement`, with `object_serial` FORBIDDEN for that
 kind (a two-directional conditional in the existing idiom) — the terminal event with no successor
 finally has a legal form that is not a banned self-loop and not a manufactured successor.**
-`retired` derives from `retirement` OR from being the subject of `merged_into`/`replaces`; both
-paths carry `evidence_refs`.
+**RA-3's direction table, RULED (a blanket subject-rule was WRONG — `replaces` retires the
+OBJECT):** the party that ceases per relation kind is — `merged_into`: SUBJECT (A merged into B
+retires A) · `replaces`: OBJECT (A replaces B retires B) · `successor_of`: OBJECT (A successor-of
+B retires B) · `canonicalized_as`: NEITHER (the subject persists, non-canonical) ·
+`split_from` / `instance_of` / `candidate_equivalence`: NEITHER. `retired` derives from
+`retirement` OR from occupying the RULED CEASING ENDPOINT of a directional relation; both paths
+carry `evidence_refs`. The table is CLOSED over the relation vocabulary — a new relation kind
+lands WITH its direction row or it does not land.
 
 ## 4. WHAT CHANGES NOW vs AT THE LEDGER (so nobody lands the future early)
 
