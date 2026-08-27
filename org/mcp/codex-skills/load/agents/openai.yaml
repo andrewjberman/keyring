@@ -1,0 +1,4 @@
+interface:
+  display_name: "Load Codex Seat"
+  short_description: "Initialize one exact Codex agent seat"
+  default_prompt: "Use $load to initialize a Codex seat from its full serial."

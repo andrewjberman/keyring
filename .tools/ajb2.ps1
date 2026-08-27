@@ -160,6 +160,9 @@ function ajb2 {
         "[ajb2] detector:       org\mcp\codex-inbox-monitor.py (bridge-owned, non-consuming, exactly one)",
         "[ajb2] inbox:          $inboxRelative",
         "[ajb2] runtime logs:   $runtimeRelative",
+        "[ajb2] load skill:     org\mcp\codex-skills\load (canonical source; installed before app-server)",
+        "[ajb2] seat context:   org\mcp\codex-seat-load.py (exact serial/path derivation)",
+        "[ajb2] startup input:  automatic `$load $Serial prompt; no manual load command required",
         "[ajb2] handoff:        org\mcp\handoff-codex-seat.ps1 (already-open embedded sessions)",
         "[ajb2] contract:       AGENTS.md -> org\XXX.md Step 1b -> org\mcp\CODEX_INBOX_MONITOR.md",
         "[ajb2] authority:      repository-local only; zero web research and zero inferred setup",
@@ -208,14 +211,10 @@ function ajb2 {
     if ($Port -gt 0) { $splat['Port'] = $Port }
 
     Write-Host "[ajb2] codex seat $Serial  (root: $root)" -ForegroundColor Cyan
-    Write-Host $launchInfo[1] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[2] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[3] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[4] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[5] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[6] -ForegroundColor DarkCyan
-    Write-Host $launchInfo[10] -ForegroundColor Yellow
-    Write-Host $launchInfo[11] -ForegroundColor Yellow
+    $launchInfo | Select-Object -Skip 1 | ForEach-Object {
+        $color = if ($_ -match 'authority:|prohibited:') { 'Yellow' } else { 'DarkCyan' }
+        Write-Host $_ -ForegroundColor $color
+    }
 
     # Same truecolor signal used by ajb for raw-commandline WT tabs.
     $env:FORCE_COLOR = '3'

@@ -90,6 +90,44 @@ else {
     $Workspace = (Resolve-Path -LiteralPath $Workspace).Path
 }
 
+# The full launcher serial is the process identity for ajb2, direct starts,
+# and handoffs alike. Downstream startup checks must never infer it elsewhere.
+$env:OPAL_AGENT_SERIAL = $Serial
+
+# Install the checked-in skill projection before the app-server starts so the
+# TUI's first model context can discover $load. Then render the startup prompt
+# from the exact launcher serial. Neither step consults the network.
+$loadSkillInstaller = Join-Path $Workspace 'org\mcp\install-codex-load-skill.py'
+$seatLoadRenderer = Join-Path $Workspace 'org\mcp\codex-seat-load.py'
+foreach ($requiredLoadHelper in @($loadSkillInstaller, $seatLoadRenderer)) {
+    if (-not (Test-Path -LiteralPath $requiredLoadHelper)) {
+        throw "Codex seat load helper not found: $requiredLoadHelper"
+    }
+}
+
+$skillInstallOutput = @(
+    & python -u $loadSkillInstaller --workspace $Workspace --format quiet 2>&1
+)
+$skillInstallExitCode = $LASTEXITCODE
+if ($skillInstallExitCode -ne 0) {
+    $detail = ($skillInstallOutput | ForEach-Object { [string]$_ }) -join "`n"
+    throw "Codex load skill installation failed (exit $skillInstallExitCode): $detail"
+}
+
+$startupPromptOutput = @(
+    & python -u $seatLoadRenderer --workspace $Workspace --serial $Serial `
+      --format prompt 2>&1
+)
+$startupPromptExitCode = $LASTEXITCODE
+if ($startupPromptExitCode -ne 0) {
+    $detail = ($startupPromptOutput | ForEach-Object { [string]$_ }) -join "`n"
+    throw "Codex seat startup context failed (exit $startupPromptExitCode): $detail"
+}
+$startupPrompt = (($startupPromptOutput | ForEach-Object { [string]$_ }) -join "`n").Trim()
+if ([string]::IsNullOrWhiteSpace($startupPrompt)) {
+    throw 'Codex seat startup context produced an empty prompt.'
+}
+
 Set-CodexSeatTitle -SeatSerial $Serial
 
 # Reuse the estate's serial-scoped registration cleanup before asserting that
@@ -170,6 +208,12 @@ if ($Port -eq 0) {
 $endpoint = "ws://127.0.0.1:$Port"
 $runtimeDir = Join-Path $Workspace ('.runtime\codex-seats\' + ($Serial -replace '[^A-Za-z0-9_.~-]', '_'))
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
+$startupPromptPath = Join-Path $runtimeDir 'startup-prompt.txt'
+[System.IO.File]::WriteAllText(
+    $startupPromptPath,
+    $startupPrompt + [Environment]::NewLine,
+    [System.Text.UTF8Encoding]::new($false)
+)
 
 # A stale binding record from a prior session would be read by the NEW
 # heartbeat as current state -- delete it BEFORE anything registers, so the
@@ -340,6 +384,7 @@ Preflight detail: $detail
     Write-Host "Codex seat host: $Serial"
     Write-Host "Shared app-server: $endpoint"
     Write-Host "Runtime logs: $runtimeDir"
+    Write-Host "Startup load prompt: $startupPromptPath"
     Write-Host ("Bridge: supervising thread discovery (binds when the TUI " +
       "thread persists; waits indefinitely -- this is normal on a fresh seat)")
     Write-Host ("READINESS IS MEASURED, NOT ANNOUNCED: run " +
@@ -350,10 +395,11 @@ Preflight detail: $detail
     Set-CodexSeatTitle -SeatSerial $Serial
 
     if ($ThreadId) {
-        & codex @codexPermissionArgs resume --remote $endpoint -C $Workspace $ThreadId
+        & codex @codexPermissionArgs resume --remote $endpoint -C $Workspace `
+          $ThreadId $startupPrompt
     }
     else {
-        & codex @codexPermissionArgs --remote $endpoint -C $Workspace
+        & codex @codexPermissionArgs --remote $endpoint -C $Workspace $startupPrompt
     }
 }
 finally {
