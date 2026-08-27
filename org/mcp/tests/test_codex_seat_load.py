@@ -39,14 +39,11 @@ class WorkspaceFixture:
             path.write_text(relative, encoding="utf-8")
 
         self.base_home = root / "org" / "tier1_exec" / "4.0.0_SA_CRO"
-        self.lane_home = root / "org" / "tier1_exec" / "4.0.0_SA_CRO~A"
         self.base_home.mkdir(parents=True)
-        self.lane_home.mkdir(parents=True)
         (self.base_home / "README.md").write_text("role", encoding="utf-8")
         (self.base_home / "prompt.md").write_text("prompt", encoding="utf-8")
-        for home in (self.base_home, self.lane_home):
-            for child in ("task_orders", "logs", "deliverables"):
-                (home / child).mkdir()
+        for child in ("task_orders", "logs", "deliverables"):
+            (self.base_home / child).mkdir()
 
 
 class SeatContextTests(unittest.TestCase):
@@ -60,16 +57,22 @@ class SeatContextTests(unittest.TestCase):
         self.assertEqual(context["seat_home"], context["role_home"])
         self.assertEqual(context["inbox"], "org/mcp/inbox/4.0.0_SA_CRO")
 
-    def test_suffixed_serial_preserves_exact_lane_and_nested_inbox(self):
+    def test_suffixed_serial_reuses_base_home_and_preserves_runtime_identity(self):
         with tempfile.TemporaryDirectory() as temporary:
             fixture = WorkspaceFixture(Path(temporary))
             context = seat_load.build_context(fixture.root, "4.0.0_SA_CRO~A")
 
         self.assertEqual(context["base_serial"], "4.0.0_SA_CRO")
         self.assertEqual(context["lane"], "A")
-        self.assertEqual(context["seat_home"], "org/tier1_exec/4.0.0_SA_CRO~A")
+        self.assertEqual(context["role_home"], "org/tier1_exec/4.0.0_SA_CRO")
+        self.assertEqual(context["seat_home"], context["role_home"])
+        self.assertEqual(context["task_orders"], "org/tier1_exec/4.0.0_SA_CRO/task_orders")
+        self.assertEqual(context["logs"], "org/tier1_exec/4.0.0_SA_CRO/logs")
+        self.assertEqual(context["deliverables"], "org/tier1_exec/4.0.0_SA_CRO/deliverables")
         self.assertEqual(context["inbox"], "org/mcp/inbox/4.0.0_SA_CRO/~A")
         self.assertNotIn("4.0.0_SA_CRO~A", context["inbox"])
+        self.assertEqual(context["runtime"], ".runtime/codex-seats/4.0.0_SA_CRO~A")
+        self.assertIn("4.0.0_SA_CRO~A", context["status_command"])
         self.assertEqual(
             context["role_files"],
             [
@@ -84,11 +87,13 @@ class SeatContextTests(unittest.TestCase):
             with self.assertRaises(seat_load.SeatLoadError):
                 seat_load.build_context(fixture.root, "CRO~A")
 
-    def test_missing_exact_lane_home_rejected(self):
+    def test_exact_lane_home_is_not_required(self):
         with tempfile.TemporaryDirectory() as temporary:
             fixture = WorkspaceFixture(Path(temporary))
-            with self.assertRaisesRegex(seat_load.SeatLoadError, "exact seat"):
-                seat_load.build_context(fixture.root, "4.0.0_SA_CRO~B")
+            context = seat_load.build_context(fixture.root, "4.0.0_SA_CRO~B")
+
+        self.assertEqual(context["seat_home"], "org/tier1_exec/4.0.0_SA_CRO")
+        self.assertEqual(context["inbox"], "org/mcp/inbox/4.0.0_SA_CRO/~B")
 
     def test_ambiguous_role_home_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:

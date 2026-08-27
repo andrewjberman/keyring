@@ -75,7 +75,12 @@ def build_context(workspace: Path, serial: str) -> dict[str, object]:
         raise SeatLoadError("missing required contract(s): " + ", ".join(missing))
 
     role_home = _one_home(workspace, base, "base role")
-    seat_home = _one_home(workspace, serial, "exact seat") if lane else role_home
+    # A tilde suffix is an additive runtime/registration identity used to
+    # parallelize one agent role. It does not mint a second repository home.
+    # Suffixed seats therefore share the base role's logs, task orders, and
+    # deliverables while retaining their exact serial everywhere runtime
+    # identity matters (registration, inbox routing, status, and runtime dir).
+    seat_home = role_home
     inbox = workspace / "org" / "mcp" / "inbox" / base
     if lane:
         inbox = inbox / f"~{lane}"

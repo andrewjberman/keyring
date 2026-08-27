@@ -27,8 +27,11 @@ Use the full serial literally. Never drop, add, or infer a `~Lane` suffix.
    - `org/mcp/CODEX_INBOX_MONITOR.md`
 
 4. From the generated context, read every `role_files` entry in the stated
-   order. Use `seat_home` for the lane's logs, task orders, and deliverables;
-   use `role_home` for base role definitions. Do not write into another lane.
+   order. A `~Lane` suffix is additive runtime and registration identity only;
+   it does not create a separate repository home. For a suffixed seat,
+   `seat_home` and `role_home` intentionally resolve to the same base role
+   directory, while `serial`, runtime state, readiness, and the nested inbox
+   retain the exact suffix. Never invent or require an exact-suffix role home.
 
 5. Verify the launcher-owned runtime with:
 
