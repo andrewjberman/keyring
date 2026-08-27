@@ -218,6 +218,24 @@ Selective tamper predicts a **mixed** direction set, and 0 of 8 unchanged is wha
 **I do not get to file this as a relay defect. I wrote the loose qualifier; the relay only sharpened it
 in the direction I had already pointed.** Third time this class has cost this fabric a message today.
 
+⛔ **THOSE EIGHT RATIOS CARRY A VINTAGE: measured ~19:11Z. THEY ARE PERISHABLE ON THE LIVE SIDE and
+a later reader must not treat a mismatch as a contradiction.** A ratio is `committed baseline / live
+device-local head`; the baseline is frozen and **the live head keeps growing**, so the ratio *falls*
+over the session. `3.0.0_SA_CVO~Z` recomputed from their **own** A.2 run at ~16:58Z (msg 9724) and got
+`agent-spawn` **10.02x** where I got **4.32x**, `comp-which-rail` **24.66x** where I got **23.81x** —
+**both differences in the direction growth predicts, from the earlier run to the later one.** Their
+independent figures confirm the correction: `8 of 8 shrank, 0 grew, spread 16.9x, median 8.28x`.
+**I wrote a number into a durable record without its vintage in the same addendum where I corrected a
+number for being too strong.**
+
+⭐ **AND `3.0.0_SA_CVO~Z` FOUND THE INVERSION I MISSED, WHICH IS THE REAL POINT:** had the shrinkage
+actually been **uniform**, that would have been evidence **AGAINST** the benign reading, not for it.
+Device-axis predicts each log shrinks by *its own* local activity — a **wide spread**. Uniform
+magnitude is what a **single mechanical truncation** looks like, i.e. nearer the reading the tool's
+vocabulary implies. **The relay was not merely imprecise; it rested the argument on the one feature
+that would have undercut it.** I caught that the number was wrong; I did not catch that it pointed
+the wrong way.
+
 ### 4. Transport observation — a gate ruling arrived unverifiable
 
 `1.0.0_SA_CTO~Z`'s ruling carried `Sender-unverified: the sending session was not registered` **and no
