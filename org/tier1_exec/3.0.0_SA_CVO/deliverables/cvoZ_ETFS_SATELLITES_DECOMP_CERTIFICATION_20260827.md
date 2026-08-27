@@ -566,3 +566,53 @@ sovereign question — visibility or access — is Andrew's. `1.0.0_SA_CTO~Z` pu
 answering it in either direction.**
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 5 — 2026-08-27 ~19:5xZ. **THE FORK AMENDMENT 4 DECLINED TO ANSWER IS ANSWERED: (b) ACCESS.** One line, because a certification that says "this is open" when it is closed is the same stale-carrier shape.
+
+Andrew-direct ~1946Z, *"recs approved"*, recorded by `1.0.0_SA_CTO~Z` @`5f60dd944a`. **CALL 1 —
+*"nobody else": visibility or access?* — settled as ACCESS.**
+
+### What this closes in this certification
+
+Amendment 4 stated: *"the sovereign question — visibility or access — is Andrew's … this seat is not
+answering it in either direction."* **That was correct then and is now resolved.** The consequence
+Amendment 4 predicted is the operative one:
+
+>> **THE `modesFor` FOUR-POSTULATE RECORD MUST BE RE-AUTHORED AGAINST AN ACCESS DOMAIN FOR R5, NEVER
+   RE-CITED.** Its declared domain is *"the viewer-firm identities this application can **PRESENT** a
+   Positioning page to."* **The fork settled the way that voids the transfer**, and Rule 24 postulates
+   are scored against the declared domain and nowhere else. A record still declaring "present" would
+   **pass its own test and answer the wrong question.** <<
+
+### `SAT-c-3` is NOT falsified, and the distinction is exact
+
+`0.4.0_DE_ClientPlatform~Y` drew it at source and this seat adopts it rather than re-deriving:
+
+| | |
+|---|---|
+| **STILL TRUE** | the gate **is** a visibility gate, is **not** an authorization boundary, and **cannot be made into one** — a property of running client-side, not a design choice |
+| **NOW WRONG** | reading it as the **whole** control. **Necessary and not sufficient**: it hides the pill and refuses the persisted-toggle tamper, and it does **not** withhold the bytes |
+
+**So `SAT-c-3` remains accurate about what was built. What it lost is an implicit adequacy claim it
+never stated.** ⭐ **Nothing `0.4.0_DE_ClientPlatform~Y` built is invalidated** — it is one layer of a
+two-layer control.
+
+### ⭐ AND THE CARRIER SHAPE THEY NAMED IS WORTH KEEPING
+
+`modeAccess.ts` reserved the other reading as a **conditional** — *"IF this is ever meant to be an
+authorization boundary…"* — written as a precaution against drift, and then answered.
+
+>> **A COUNTERFACTUAL CONDITIONAL ABOUT A SETTLED QUESTION IS A STALE CARRIER: every word in it stays
+   true, and the reader draws the wrong conclusion because the world moved underneath it.** Worse
+   here than usual, because R5's implementer opens that file **first** — `1.0.0_SA_CTO~Z`'s R4 names
+   it as the artifact that *"may save the spec a step"* — **so the stale reading would have been found
+   by exactly the person it would mislead.** <<
+
+**Verdict unchanged: CERTIFIED WITH FINDINGS.** Round 1 remains certified and closed; the
+`ETFS_SATELLITES` PROD promote is held by Andrew's ruling flowing through `1.0.0_SA_CTO~Z`'s
+pre-stated consequence, **not by anything in this certification** — which carries no support for a
+promote in either direction.
+
+— `3.0.0_SA_CVO~Z`
