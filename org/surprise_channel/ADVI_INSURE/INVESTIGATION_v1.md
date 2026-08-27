@@ -230,3 +230,203 @@ so no downstream check fires.
  }
 ]
 ```
+
+
+---
+
+## D2 DRIVE-OPEN DECLARATION — 2026-08-27T15:1xZ, 3.0.0_SA_CVO (channel owner)
+
+Appended at D2 drive open per Andrew-direct lock-in (record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260827_D2_TIGHTENING_LOCKIN_BEFORE_FLOOD.md`).
+A LAUNCH HOLD is live at 0.0.0_AB_MSTR until the lock-in confirms. Binding for this project's D2 round:
+
+1. **DURABILITY RULE:** any mid-round ruling that amends a spec, remedy, or acceptance for this
+   project LANDS IN THIS DOCUMENT SAME-TURN, landed by 3.0.0_SA_CVO as channel owner. Executing
+   seats rule on the wire at full speed; the landing is CVO's act, not theirs. (The class this
+   kills: a wire ruling scrolls while the committed artifact keeps pointing at the rejected design.)
+2. **ROUND-CLOSE MODE:** this round terminates through a REAL remediation cut — REMEDIATION_v1 is
+   cut at round close and the round closes only when it graduates ZERO items; graduated rows
+   re-enter at stage 3 as the next round's TO inputs. Completion is measured, never declared.
+3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Surprises: one
+   line by MCP, class {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm
+   owner at surfacing; OBSERVATION never interrupts.
+
+
+### CHANNEL ITEM — 76164 (0.6.0_AE_PartnerETL): the D2 rc-evidence rider has no schema slot | OBSERVATION / INERT / RECORDED
+
+3.0.0_SA_CVO, landed at merge-window close (queued 16:4xZ, cause: MSTR merge window 76151).
+FINDING (accepted as filed, grounding complete on arrival): the D2 lock-in rider mandates the
+validator invocation + TRUE rc recorded IN the proof-of-spec instance; `org/standards/
+PROOF_OF_SPEC.schema.json` root and `controls` are both `additionalProperties:false`, so the only
+landing spot is `compiler_tools[].result` — an unconstrained string no validator rejects on (the
+unenforced-field-drifts shape, effect size 0/16 vs 5/39). The rider buys discipline, not
+enforcement, until a slot exists. Surfacing seat complied meanwhile (92054db7b5: TRUE_RC=0 captured
+bare, two-arm negative control, both arms fired on different axes).
+INTERIM FORM RULED (76166): compiler_tools[] row whose result BEGINS `TRUE_RC=<n>` + bare
+invocation; checked per-instance by CVO eye at cert/acceptance, stated as a CVO-eye check.
+REMEDY RIDES THE ROUND: candidate remediation row at round close = a constrained `validator_run`
+slot in the schema, arriving WITH its Rule-24 four-postulate record + token census; schema custody
+= 3.0.0_SA_CVO unless the round rules otherwise. Nothing armed; DISARM n/a.
+
+
+### CHANNEL ITEMS — 76222 (0.4.0_DS_ClientPlatform~R, S4, TO-R1-DS a-2 census @f05d754d43): FOUR OBSERVATION/INERT | RECORDED; item 1 ROUTED to the decomp owner
+
+3.0.0_SA_CVO, 2026-08-27 ~17:1xZ. Filing quality noted for the record: both control arms fired
+(NEG insuranceCharacteristics 106/106 MISSING matching the egress refusal; POS accountNumber
+106/106), carrier-vs-instrument distinction applied (AE proof instance correctly NOT used as
+corroboration — same 08-25 measurement, two carriers), per-use grant boundary honored (no vendor
+call; would have routed BLOCKING), and a self-correction carried (MISSING vs NULL — different
+consumer code implied).
+
+**ITEM 1 — DECOMP FACE NAMES THE WRONG CALL. ROUTED to 2.0.0_SA_COO (decomp owner) same-turn.**
+INS-a-2 face says `accountdetailsearch` supplies the v1 fields; measured in landed bytes, all 8
+come from `relationshipaccountdetailsearch` (sanctioned), while the short-named surface is
+EGRESS-REFUSED (insurance_leg.py:78-89, OPAL_TAXSMA gate) and supplies only the Ruling-6-deferred
+characteristics. The face is the LIVE dispatch surface for INS-a-1..3 at 0.6.0_AE_PartnerETL (S5,
+seated). CVO second read (asked for by the surfacing seat): the defect is real per the measurement;
+INERT is the RIGHT standing because the mis-reach FAILS CLOSED — a literal reader hits a loud
+egress refusal, so the exposure is wasted motion and confusion, never silently wrong data. NOT
+decomp-invalidating (the cell's surface is enumerated; its NAME is wrong — a face correction, not a
+stage-3 reopen). Correction is the ISSUER'S act; the surfacing seat correctly declined to edit or
+to message S5 directly.
+
+**ITEM 2 — DUPLICATE BRONZE CAPTURE** (page0 byte-deep duplicate of offset0, superseded by the
+offset0/offset50 pair): a prefix-globbing consumer double-counts 50 of 77 relationships. Nothing
+consumes it today. Remediation candidate at round close: supersede/dedupe the stale capture,
+DS-lane owner named at the cut.
+
+**ITEM 3 — FOUR LIVE ACCOUNTS, NULL currentEmv, asOfDate 2025-11-17** (2 Allianz, 2 Vanguard).
+Cause UNESTABLISHED and correctly not chased (closedDate null on all 106 — does not discriminate;
+two stale-dated accounts DO carry emv — no non-null check separates them). Stays UNDER
+INVESTIGATION; not graduable until mechanism attributed.
+
+**ITEM 4 — ONE NEGATIVE BALANCE** in the 102 valued (sum 51,807,815.31; min -309,502.70; 3 zero).
+Recorded. Not served (AC4 shut behind arm-(a)).
+
+**ITEM 1 ROUTED ACT DISCHARGED -- 76236 (2.0.0_SA_COO), same window @333906bb5e:** the INS-a-2 cell AND the TO-A1-AE face both corrected on BOTH carriers (prior text preserved inside the correction blocks); 0.6.0_AE_PartnerETL notified read-before-next-act; correction cites this doc entry as its measurement. Item 1 is CLOSED at the channel: defect corrected at the issuer, surfacing seat exonerated of edit-restraint by the loop itself.
+
+
+### ACCEPTANCE READ — ADVI_INSURE.TO-A1-AE: PASS (CVO independent run); completion flip is COO+CVO ground per CTO 76280
+
+3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Validator run at this seat on the declared instance: ids
+INSA1AE-AC1..AC3 -> `VALID`, TRUE_RC=0 bare, rows=3, violations=0 — and this instance exercised the
+FULL pipeline alignment (decomp_ref ENFORCE; forward 3/3 criteria->cells, 3/3 cells->decomp id
+space of 22; backward 3/3), the first launch-set instance to do so. Gate half closed by 1.0.0_SA_CTO
+(76280): every 76225 concern back WITH its falsifier, arms 4-6 seat-self-added (arm 6 firm-fence
+explicitDeny = separation ENFORCING), running bytes proven built bytes via BUILD_MANIFEST both
+normalisations. Evidence commit a06658a1ab. The seat correctly did NOT self-flip; the flip lands
+with 2.0.0_SA_COO's RAVC on this read + the gate acceptance.
+
+**TWO-CARRIER FINDING banked (CTO -> COO round item #4):** "the declared build input" is TWO
+carriers — BUILD_MANIFEST.json `vendored_modules` (documentation) vs lambda-source-map.json
+`files[]` (what the packager ZIPS, build-and-upload.sh:119) — so a seat told to amend "the manifest"
+can amend the carrier that does not build, shipping a zip missing the module while every filename
+check passes. Registered @60c5f2f327; corrective belongs to the D0 build-tooling family when cut.
+
+
+### CERT STEP-ZERO — INS-a-4 amendment + ADVI_INSURE.TO-A2-AE: **PASS** (pair certified together)
+
+3.0.0_SA_CVO, 2026-08-27 ~18:0xZ, on 2.0.0_SA_COO's @5a92078c11 (which also flipped TO-A1-AE
+COMPLETE on the three-instrument chain — seat a06658a1ab + CTO gate + CVO read @6956c27796).
+
+**CELL (INS-a-4):** issuer-authored with the full provenance chain cited on its face (measured
+advisor-spine gap 76245 advisor_basis NOT-CAPTURED 106/106; route-2 ruling 76246 + CTO concur
+76249; word-holder's surface-scoped egress reading 76291) — the wire chain now has a FACE, closing
+the ruled-on-the-wire/runs-under-a-closed-face gap the flip would have opened. Re-cert authority
+named on the cell (CVO or base CTO, never CRO — the PERFRP-subject restriction respected). First-
+exercise law carried: a clean zero or entitlement refusal is a REAL outcome, per-surface, never a
+generalised absence. **PASS.**
+
+**FACE (TO-A2-AE):** decomp_ref present naming the cell + amendment date; ids INSA2AE-AC1..AC4 all
+cell-traced (4/4 both directions, single-cell trivially complete); AC1 EXERCISED with denominator
+either way; AC2 bronze RAW byte-for-byte (Rule 17a) at APPLIED; AC3 scope SHOWN not asserted (calls
+enumerated, zero /account-api/*); AC4 carries the D2 rc discipline verbatim; instance_path single-
+group in the assignee folder. **SEQUENCING DISCLOSED, not smoothed:** the capture legally predates
+this cert (authorized through the ruling chain); the ACCEPTANCE waits on the cert; nothing
+grandfathered — the honest form, certified as stated. **PASS.**
+
+Acceptance ground when 0.6.0_AE_PartnerETL reports: INSA2AE-AC1..AC4 on this face, CVO read at
+cadence.
+
+
+### CHANNEL ITEMS — 76302 (DS~R, BLOCKING-class qualification) + 76304 (0.6.0_AE, AC1 UNCOMPUTABLE-BY-DEPENDENCY) | RECORDED + PRE-REGISTRATION RULED
+
+3.0.0_SA_CVO, 2026-08-27 ~18:1xZ. The two arrived in one window and interlock: the capture 76302
+wanted pre-registered against is BLOCKED by 76304's authority finding — so the pre-registration
+lands BEFORE any byte is captured, the strongest possible form.
+
+**76302 — THE ADVISOR-HOP EXPECTATION WAS CROSS-FIRM INFERENCE (0.4.0_DS_ClientPlatform~R,
+self-qualified):** the evidence `financialTeam[]` populates is a COTTONWOOD payload; for 49F, S4 has
+never been exercised by anyone. The 49F-specific evidence points the other way: `teams[]` (sibling
+field, same object) is an EMPTY ARRAY on 77/77 — the vendor affirmatively answering zero, not a
+projection gap. The firm, not the surface, is the difference. The seat also ran the firm-separation
+check BOTH directions before sending (0 of 77 relationships contain "cottonwood"; firmID single
+value 3281 across 106 accounts) — the map's "every insurance byte is Cottonwood's" sentence
+describes the pre-08-25 estate. Capture remains the right act; only its EXPECTED OUTCOME was
+inference.
+
+**PRE-REGISTERED, RULED AT THIS SEAT (CVO acceptance-read semantics on the face I certified; COO
+concurrence requested for the face rider):** an EMPTY `financialTeam[]` on the 49F principal is a
+**COMPLETE ANSWER AND A REAL FINDING** — sibling to AC1's refusal-is-complete law: it closes the
+question as a Black Diamond CONFIGURATION state (no team assigned), the advisor-basis stamp moves
+to a vendor-config value, and the resulting ask routes to Andrew. It is NOT a failed capture; it is
+not retried, not widened, not quietly absorbed. ADOPTED with it, DS~R's probe-first form: when the
+mint recovers, capture ONE relationship id and read `financialTeam[]` before spending the cohort —
+empty on one means the cohort adds nothing but egress. DS~R's AC1 prep correctly designs for BOTH
+branches.
+
+**76304 — AC1 UNCOMPUTABLE-BY-DEPENDENCY at the AUTHORITY MINT (0.6.0_AE_PartnerETL,
+@03d43dc4a3):** relationshipdetail NEVER CALLED — zero evidence about that surface exists; the seat
+explicitly declined the convenient "capture refused" framing. Measured, arm-as-control-of-arm on
+ONE live cookie: clientview token mint 0/3 vs datamining 3/3 — an authority-specific signature. The
+08-25 byte-identical-bearers measurement was true of a SESSION, not a contract; the authorities
+have diverged. **The leg's own defensive design (per-surface authority declaration, taken against
+its author's own measurement) paid out in 48 hours** — the divergence is legible at the mint
+instead of a silent 401 inside a production pull. Near-miss recorded by its author: a guessed
+function name in the probe's hasattr guard nearly put "the 49F cookie is dead" on the record.
+BLAST RADIUS (named, not chased): the deployed bd49f reporting producer's main path mints the same
+failing authority (lambda_function.py:290) — would 401 on invoke today, NOT invoked to confirm;
+keepalive HEALTHY (remedy not aimed there); re-establishment component = bd-49f-auto-login;
+S1/datamining unaffected, S3+S4 fail together for one reason. **Re-establishment ROUTING is
+2.0.0_SA_COO's** (the seat correctly offered handover rather than reaching into another lane).
+
+**OBSERVATION/INERT (76302 tail):** `comp-pipescript io --pipeline advi` reports
+`bd49f_insurance_nav_current.py` OUT-OF-GRAPH — a live gold producer outside the curated DAG its
+pipeline is named for; AST-derived manifest clean, corroborates firm separation independently.
+Recorded; graph-membership is a round-close candidate for the graph owner.
+
+**76312 ADOPTION LANDED (2.0.0_SA_COO): all three halves ruled** -- (1) the pre-registration EXTENDED to the full three-outcome set: EMPTY / REFUSED / POPULATED are THREE different findings, each pre-registered COMPLETE (empty = vendor-config state, BASIS-axis stamp moves to the declared-but-unused arm DS~R preserved for exactly this case, ask routes to Andrew); (2) probe-first binds TO-A2-AE execution; (3) capture HOLDS until the ClientView mint is restored -- re-establishment routed to 0.7.0_AE_CloudOps~L (76305, owning family, single bounded act, mint-verified both arms). CVO CALL ON THE FACE (76312 asked): the empty-semantics half GOES ON THE FACE -- the banked law is that a protection existing only as a description is not a protection, and the face is what the executing seat reads at pickup; COO amends, CVO delta-certs the rider on landing. OUT-OF-GRAPH observation = round keeper #8 at the graph owner.
+
+**DELTA-CERT on the AC1 rider @34edfe3e53: PASS.** Read at the face: the three-outcome set is complete on the criterion itself (landing / per-surface refusal / EMPTY-as-vendor-config-finding, each COMPLETE), the pre-registration timing is stated on the face (BEFORE any byte captured), the stamp-movement + Andrew routing are named, probe-first BINDS execution, and the id set is unchanged (still AC1..AC4 -- a rider, not a widening, so no expected_criteria delta). The 76312/76307 concurrence chain is cited. The empty-semantics now lives on the artifact the executing seat reads at pickup; the wire and this doc carry its provenance. Nothing further open on the 76302/76304 pair at any seat -- awaiting mint-restoration -> probe -> per its result.
+
+**MINT RESTORED -- 76343/76349: the ClientView authority block is CLOSED as a bounded act.** Validated by COO on every bound: one sanctioned-wrapper invocation; mint-only PROVEN by a MEASURED ZERO (zero chain-Lambda invocations over the window, the 24h scheduled fires as the positive control that makes the zero a measurement); both verify arms 3/3 with the guard run BEFORE any status interpretation (the manufactured-401 near-miss carried, not repeated); box at resting state. The 00:00 scheduled fire stays the end-to-end acceptance. The pre-registered probe chain now runs at 0.6.0_AE_PartnerETL.
+
+**CHANNEL ITEM (routed via COO, keeper candidate #11) -- THE MINT SUCCEEDED ON ITS FALLBACK | OBSERVATION / INERT / RECORDED:** kimiVision timed out on BOTH attempts; the DOM fallback carried the run; rc=0. The component holds ONE working classifier where it was built to have TWO -- and a green rc is exactly what that degradation looks like from outside. The anti-correlation class: the cleaner the pass, the less visible the loss of redundancy (kin to the orphan-watcher REACHABLE and the A.3 forwarder 93-of-93). Evidence: CommandId 36a927c5, on-box classify lines in 76343. INERT, moratorium stands; the round decides whether the kimi-timeout gets an owner.
+
+### CAPTURE COMPLETE -- 76383 (0.6.0_AE_PartnerETL, @113354aa60): THE PRE-REGISTERED EMPTY OUTCOME FIRED. VENDOR-CONFIG FINDING; THE ASK ROUTES TO ANDREW.
+
+3.0.0_SA_CVO, ~18:4xZ. relationshipdetail on 49F z08117302 -> HTTP-200, financialTeam KEY PRESENT type=list len=0 -- AFFIRMATIVELY EMPTY, not absent, not null. THE DISTINCTION WAS MUTATED, NOT ASSERTED: sealed planted mutant, four states -> four distinct verdicts (unmutated/key-removed/populated/null); determinism 2/2. PROBE-FIRST HONOURED: 1 of 50 ids spent; the cohort is a DECLARED EXCLUSION (adds vendor egress, zero information, per the pre-registration). Denominator honesty: 1 of 77 measured DIRECTLY; corroborated at own hand on a DIFFERENT page (50/50 teams empty, reproducing the 77/77 prior); raising the direct denominator is a widening needing a word, correctly not taken. PER THE PRE-REGISTRATION: advisor_basis moves to the vendor-config value (DS~R's EMPTY branch executes); the remedy ask -- assign teams in Black Diamond, or accept the advisor hop as unavailable for 49F -- IS ANDREW'S with 49F/Mike, routed via the CVO terminal.
+
+SCORING on the certified face: AC1 PASS (empty-rider closed as MEASURED) / AC2 PASS (bronze raw, 0 parquet of 8) / AC4 PASS (instance VALID TRUE_RC=0, interim form) / **AC3 FAIL, DELIBERATE -- A CLAUSE-WORDING DEFECT, NOT A BREACH:** the S3 id-source call is STRUCTURALLY NECESSARY (S4's path needs an id; S3 is the sanctioned source in the certified map); every breach-guarding clause holds (49F only, read-only, ZERO /account-api/*). The seat REFUSED to score PASS against a false clause -- the sibling of INSA1AE-AC1's honest FAIL. AMENDMENT REQUESTED at 2.0.0_SA_COO ("relationshipdetail plus its structurally-required id source and the authority mints, no other surface"); CVO delta-certs on landing; the complete flip waits on it.
+
+ALSO DISCLOSED (surfaced, not chased): landed objects carry to=ADVI_INSURE.TO-A1-AE in S3 metadata -- hardcoded in the deployed leg, minted before this face existed. Bytes untouched; the provenance stamp names the wrong TO. Round-queue candidate (code change + redeploy, not authorized mid-round). Restoration held: no 401 recurred.
+
+**DELTA-CERT -- AC3 amendment @1b3a7817e7: PASS.** The clause is now true to the certified map (S3 named as the sanctioned id source, mints included, no-other-surface + all breach guards retained); the amendment note credits the deliberate-FAIL form and states why the original was false; id set unchanged; alignment_denominators added on the element (4 criteria / 1 cell / 0 unmapped / 0 untraceable). The seat re-scores AC3 against the amended clause and the COMPLETE flip proceeds on the full chain (COO RAVC-4 76395 + this cert + the seat re-score).
+
+**TO-A2-AE ACCEPTANCE READ (final, post-re-score): PASS -- CVO independent validator run on the 4/4 instance: VALID, TRUE_RC=0 bare, full decomp_ref alignment (1 cell, 4 criteria, both directions). The seat's re-score disclosure is on the record as the model form: the verdict moved because the CRITERION changed, not the evidence -- byte-identical enumeration @113354aa60, no vendor call re-run, no denominator moved. Flip is COO ground on the complete chain; nothing at the channel blocks it.**
+
+**TO-A2-AE FLIPPED COMPLETE (@5b250bffae) -- acceptance record final:** flip cites the two CVO reads (@5681c08447 cert + @432218b939 final read); the preserved AC3 FAIL travels in the flip's status text as criterion-corrected-forward, so the record teaches the honest-FAIL form. Both 0.6.0_AE_PartnerETL TOs closed; seat disposition at Andrew.
+
+**KEEPER #8 GAINS A SECOND LIMB (DS~R 76430):** the insurance gold producer sits outside the curated advi DAG AND `comp-pipescript postdeps` returns rc=2 on all four firm trees (data/assets/ is not among them) -- TWO of three DS gold gates STRUCTURALLY CANNOT SEE this producer, and the tool's own TOOL-02 guard names the rule: blindness is not cleanliness. Also banked with the c02 face fix (@5b250bffae): **a RESTRICTIVE stale face is the arm nobody notices** -- holding always looks like discipline; pairs with the dep-block finding as one class, two arms, at the round.
+
+### BRANCH B COMPLETE -- 76483 (0.4.0_DS_ClientPlatform~R): the vendor-config finding is IN THE GOLD CONTRACT; keeper #8 now has THREE MEASURED LIMBS
+
+3.0.0_SA_CVO, ~19:1xZ. RE-EMIT with negative control: EXACTLY ONE FIELD MOVED (advisor_basis NOT-CAPTURED-PENDING-SURFACE -> NOT-DERIVABLE-UPSTREAM), 13 columns byte-unchanged, invariants held, pre-write falsifiers fired clean. Producer @f4836ad706 ON ORIGIN; axis amendment @36e59823f4.
+
+TWO CONTRACT-RECORD GAINS: (1) **THE BOUNDARY IS NOW STATED IN THE SPEC:** NOT-DERIVABLE-UPSTREAM vs UNOBSERVED-CONTAINER -- byte-identical payloads, different epistemic states (observation of absence vs absence of observation), different remedies; the whole advisor finding turned on exactly that difference, worked example carried. (2) A stale-carrier pointer fixed at s.1 -- the line moved twice today and ENDED ON THE SAME STRING, the most dangerous stale shape because the outcome flags nothing; prior text preserved, forward pointer added.
+
+**KEEPER #8, THIRD LIMB MEASURED (was predicted):** ALL THREE DS gold gates are structurally blind to this producer, run BEFORE the emit -- (1) curated advi DAG: OUT-OF-GRAPH; (2) postdeps: rc=2 all four firm trees; (3) deployed-bytes sweep: **rc=0 with a clean 70-MATCH/0-STALE summary OVER A POPULATION THAT DOES NOT CONTAIN THE SUBJECT** -- not even a no-verdict line, just silence where the subject should be. >> A CLEAN SUMMARY THAT DOES NOT CONTAIN YOUR SUBJECT IS NOT A PASS << -- the clean-metrics shape with no failure line to sit above. Reported BLIND, never PASSED, per the tool's own TOOL-02 guard. For the graph owner at the cut: a live gold producer emitting to a firm bucket, invisible to all three gates simultaneously -- each gate individually reasonable, the intersection a producer nothing watches.
+
+TO-R1-DS state as filed: AC1 DISTINGUISHED/APPLIED-GATED, AC2 DESIGN-COMPLETE (named exception CLOSED by the vendor-config resolution), AC3 clean, AC4 SHUT, AC5+AC6 SATISFIED. THE ANDREW ASK (assign financial teams to 49F relationships in Black Diamond) is ROUTED VIA THE CVO TERMINAL -- surfaced there 18:4xZ and standing; DS~R correctly wrote it nowhere it could read as already-asked.
+
+**BANKED FOR THE ROUND (76487/76489) -- THE ACK-CLOCK IDENTIFIER TRAP, with corrective:** a guessed identifier poisons the READ clock as thoroughly as a forger would -- the clock's whole value is that no PROCESS can forge it, so its integrity rests entirely on writer discipline. THE TRAP: a message's SUBJECT carries the id being REPLIED TO while its Msg-ID field carries its own -- two plausible numbers in one neighbourhood. THE MECHANICAL CORRECTIVE: read Msg-ID FROM THE BODY, never infer an id from a filename or subject. The false entry (76486 acked-unread, nil exposure, positive-controlled before reporting) stands annotated -- the clock is append-only and the honest annotation IS the correction. Round note: the fabric-wide prompt-ack habit is what made one guessed id stand out to its own author. DS~R's day closed at seven defects found, SIX in their own instruments or entries -- the ratio is the discipline working, on the record.

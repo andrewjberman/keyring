@@ -39,7 +39,9 @@
       "CTO~X frozen-pin validation 75879 and digest validation 75895",
       "CTO~X population-limit measurement 75916",
       "CTO~X materializer-relation cardinality ruling 75939",
-      "CRO Base final read-only validation of manifest db684f932995d519a9087725b2d2539d249ea533 and receipt 3da49495aa16c5f92563c9c955bbd888d4f85072"
+      "CRO Base final read-only validation of manifest db684f932995d519a9087725b2d2539d249ea533 and receipt 3da49495aa16c5f92563c9c955bbd888d4f85072",
+      "3.0.0_SA_CVO~X v1-emission-authorizer verdict Msg-ID 76780",
+      "2.0.0_SA_COO~X governed-amendment dispatch Msg-ID 76823"
     ]
   },
   "contract_status": {
@@ -147,6 +149,15 @@
       "claim_status_token": "unknown",
       "unknown_lifecycle_axis_state": "absent",
       "terminal_transitional_partition_state": "inexpressible"
+    },
+    "v1_emission_authority": {
+      "authorizer_seat_family": "4.0.0_SA_CRO",
+      "authorizer_serial_pattern": "^4[.]0[.]0_SA_CRO(?:~[A-Z])?$",
+      "authorization_scope": "l0_v1_emission",
+      "emission_gate_consumer": "validate_layer_contracts.py --emission-gate-authorizer <serial>",
+      "per_emission_authorization_required": true,
+      "amendment_effect": "names_authorizer_only_no_emission_go",
+      "governing_verdict": "3.0.0_SA_CVO~X Msg-ID 76780"
     },
     "remediation_sequence": {
       "current_pair_role": "pre_remediation_evidence_only",

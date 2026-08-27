@@ -581,4 +581,18 @@ against them as part of the population's record, not as bars this seat invented:
 - This seat is a VERIFICATION lane, not an approval gate (stated in 72792, agreed by CTO~X 72796).
   Nothing waits on this seat except where TASK_ORDER_PROTOCOL already binds the complete flip.
 
+## ISCK rubric carries (2026-08-27, round-2 batch 2 @5ffb98936c)
+
+- **`human_adjudicated` WARRANT CHECK IS THIS SEAT'S BY NAME** (76641; batch-2 commit body): the
+  other claim_origin values got mechanical evidence arms (`independently_observed`,
+  `model_inferred` -> evidence_refs REQUIRED; `producer_declared` free by definition);
+  `human_adjudicated` cannot be mechanically warranted the same way, so any ISCK/L3 cert at this
+  seat verifies a `human_adjudicated` claim TRACES TO AN ACTUAL ADJUDICATION ACT (who ruled, where
+  recorded, cite the record) -- the same duty class as the narrowed evidence-independence limit's
+  semantic core (@27f97ac4fd CVR2-1): the mechanical half is the validator's, the tracing half is
+  this rubric's, and the cert record must say which half it exercised.
+- **Self-citation semantic arm is LANDED and verified at this seat** (batch 2: A1/A2/A3 flip 0->1
+  semantic error, negative control clean) -- cert batteries may cite the arm for the syntactic
+  half; the alias/mirror residual stays a Rule 22 read.
+
 — 3.0.0_SA_CVO

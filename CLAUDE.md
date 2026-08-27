@@ -3,7 +3,8 @@
 **HOW WE WORK and HOW TO THINK: fast and accurate, in that order.** Read sections 1–3 before acting.
 This is the LAW INDEX: every rule = imperative + mechanism + pointer. The full annotated text behind
 every rule (incidents, measured numbers, history) is `docs/doctrine/CLAUDE_ANNEX.md` — cite it when
-a rule's reasoning is contested. Startup mechanics: `org/XXX.md`.
+a rule's reasoning is contested. Startup mechanics: `org/XXX.md`. Also when you talk to another agent,
+*YOU MUST REFER TO THEM BY FULL SERIAL; NEVER SAY HER/HIM/THEM/YOU WHEN COMMUNICATING WITH OTHER AGENTS!*
 
 ⛔ **RULE NUMBERS ARE STABLE IDs, NOT READING ORDER** — the list has gaps; sections carry the order.
 Rules 4–12, 18 live in `/cloud-ops`; rules **15, 17, 17a, 17b** (data architecture) and **19, 23,
@@ -66,6 +67,13 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     ⛔ **Never pipe `comp-find` through `head`** — use `--band HEAD/DEF`, `--files`, `--limit/--page`,
     `--all`, and `-i` for any token census. ⛔ **A PAGE IS NOT AN ANSWER; never conclude from page 1.**
     ⛔ **Do not stop at the first plausible hit** — an early stop and a true absence read identically.
+    ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f): the corpus is `.gitignore`-BOUNDED, NOT
+    tracked-only** — `--corpus default` = tracked + untracked-not-ignored; `all` = + gitignored minus a
+    PRINTED ephemeral floor; `ignored` = only-gitignored MINUS the same printed floor; `raw` =
+    everything (an every-file denominator uses `raw` — `all` AND `ignored` understate by the floor,
+    now disclosed on their own denominator lines). **`--hidden <path>` is the census verb: run it before
+    converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.**
+    Log: `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-08-27/` @592e0255b1.
 20. **Check the dependency graph BEFORE any cloud/infra/data change and before frontend commits** — pick
     from `org/modules/graph/graph-call-manifest.yaml`; QUERY, never rebuild; read the provenance header;
     verify your OWN fresh change against live artifacts, never the graph. `comp-surface-check` is RETIRED

@@ -336,3 +336,49 @@ in the message that carried it.
  }
 ]
 ```
+
+
+---
+
+## D2 DRIVE-OPEN DECLARATION — 2026-08-27T15:1xZ, 3.0.0_SA_CVO (channel owner)
+
+Appended at D2 drive open per Andrew-direct lock-in (record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260827_D2_TIGHTENING_LOCKIN_BEFORE_FLOOD.md`).
+A LAUNCH HOLD is live at 0.0.0_AB_MSTR until the lock-in confirms. Binding for this project's D2 round:
+
+1. **DURABILITY RULE:** any mid-round ruling that amends a spec, remedy, or acceptance for this
+   project LANDS IN THIS DOCUMENT SAME-TURN, landed by 3.0.0_SA_CVO as channel owner. Executing
+   seats rule on the wire at full speed; the landing is CVO's act, not theirs. (The class this
+   kills: a wire ruling scrolls while the committed artifact keeps pointing at the rejected design.)
+2. **ROUND-CLOSE MODE:** this round terminates through a REAL remediation cut — REMEDIATION_v1 is
+   cut at round close and the round closes only when it graduates ZERO items; graduated rows
+   re-enter at stage 3 as the next round's TO inputs. Completion is measured, never declared.
+3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Surprises: one
+   line by MCP, class {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm
+   owner at surfacing; OBSERVATION never interrupts.
+
+
+### D2 round state — 2026-08-27 12:45Z AC4 scheduled read: PASS (landed per the drive-open durability rule)
+
+3.0.0_SA_CVO, 15:4xZ. The P0.1 acceptance read was taken against the served chain log
+`s3://opal-data-49financial/gold/advi/_logs/chain_20260827T124542Z.log` (12:47:47Z): `STAGE OK
+perfrp_projection built=6 refused=5 hard_fail=0` for `date=2026-08-26` + `CHAIN OK` — byte-match to
+AE~K's pre-registered acceptance line; all six leaves `WOULD_PUBLISH` (build-only, serve gate
+untouched). GRADE BOUND: this accepts the PROJECTION STAGE, not figure correctness — emitted figures
+still carry the pre-remediation c01/c02 defects until P1 lands. Full read + cert record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_D2_LOCKIN_CERT_STEPZERO_AND_P01_AC4_READ_20260827.md`.
+OPEN AT THIS DOC: the P1.1 threshold convergence (@3b2982e290 vs Andrew's no-filter word) — CVO lands
+the converged ruling here when COO/CTO converge it.
+
+
+### CONVERGED RULING LANDED — P1.1 emitter threshold is STRUCK; NO per-day plausibility filter is built by any seat (durability-rule landing #2)
+
+3.0.0_SA_CVO, 2026-08-27 ~15:3xZ, landing the terminal state per the drive-open durability rule.
+CONVERGED (2.0.0_SA_COO 76091/76101 + 1.0.0_SA_CTO 76094, no fresh Andrew word found): the D2 brief's
+P1.1 line ("Emitter threshold |r_net| > 15%/day, ruled @3b2982e290") cited a ruling ALREADY STRUCK by
+Andrew's 2026-08-26 ~23:4xZ no-filter word (74056/74058 verbatim: bottom-up forensics on the top 10,
+no per-day plausibility rule). CTO struck P1.1 at all three of their carriers @2fc8f4011d; COO
+corrected the seat list @b5a8eda403 + the MSTR instruction (76095, MSTR ACK 76097). **The governing
+pin is Andrew's no-filter word. The P1 remediation sequence is: c01-SIGNFIELD -> c02-CFINPUT ->
+P14-VEHICLE backfill. No threshold/filter TO exists or will, absent a fresh cited word.** The P1.5
+re-grade acceptance is the all-ten collapse table @4a1fd3e09b, not any threshold.

@@ -978,7 +978,7 @@
     "post_rerun_base_validation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["validation_state", "release_gate_state", "evidence_pair", "structural_emission", "declaration_measurement", "home_space_measurement", "population_completeness", "variant_suffix_authority", "generation_materializer_relation_cardinality", "lifecycle_axis_coverage", "receipt_contract", "unknown_lifecycle_expressibility", "remediation_sequence"],
+      "required": ["validation_state", "release_gate_state", "evidence_pair", "structural_emission", "declaration_measurement", "home_space_measurement", "population_completeness", "variant_suffix_authority", "generation_materializer_relation_cardinality", "lifecycle_axis_coverage", "receipt_contract", "unknown_lifecycle_expressibility", "v1_emission_authority", "remediation_sequence"],
       "properties": {
         "validation_state": {"const": "failed"},
         "release_gate_state": {"const": "held"},
@@ -1109,6 +1109,20 @@
           "additionalProperties": false,
           "required": ["claim_status_token", "unknown_lifecycle_axis_state", "terminal_transitional_partition_state"],
           "properties": {"claim_status_token": {"const": "unknown"}, "unknown_lifecycle_axis_state": {"const": "absent"}, "terminal_transitional_partition_state": {"const": "inexpressible"}}
+        },
+        "v1_emission_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["authorizer_seat_family", "authorizer_serial_pattern", "authorization_scope", "emission_gate_consumer", "per_emission_authorization_required", "amendment_effect", "governing_verdict"],
+          "properties": {
+            "authorizer_seat_family": {"const": "4.0.0_SA_CRO"},
+            "authorizer_serial_pattern": {"const": "^4[.]0[.]0_SA_CRO(?:~[A-Z])?$"},
+            "authorization_scope": {"const": "l0_v1_emission"},
+            "emission_gate_consumer": {"const": "validate_layer_contracts.py --emission-gate-authorizer <serial>"},
+            "per_emission_authorization_required": {"const": true},
+            "amendment_effect": {"const": "names_authorizer_only_no_emission_go"},
+            "governing_verdict": {"const": "3.0.0_SA_CVO~X Msg-ID 76780"}
+          }
         },
         "remediation_sequence": {
           "type": "object",

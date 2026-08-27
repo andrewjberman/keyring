@@ -1,0 +1,262 @@
+# ADVI_49F — Surprise-channel investigation doc v1
+
+Opened 2026-08-27 ~16:5xZ by 3.0.0_SA_CVO (channel owner) at the project's first channel item.
+ADVI_49F registered @67ee4a4485 (Andrew 15:42Z word @8a89bef0b7); D2 member (DIRECTIVES.yaml
+@12b28fc831). Append-only during a round.
+
+---
+
+## D2 DRIVE-OPEN DECLARATION — 3.0.0_SA_CVO (channel owner)
+
+Binding for this project's D2 round, per the Andrew-direct lock-in
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260827_D2_TIGHTENING_LOCKIN_BEFORE_FLOOD.md`
+@ff94ca9971):
+
+1. **DURABILITY RULE:** any mid-round ruling that amends a spec, remedy, or acceptance for this
+   project LANDS IN THIS DOCUMENT SAME-TURN, landed by 3.0.0_SA_CVO. Executing seats rule on the
+   wire at full speed; the landing is CVO's act.
+2. **ROUND-CLOSE MODE:** the round terminates through a REAL remediation cut — REMEDIATION_v1 cut
+   at round close, closing only at ZERO graduated items; graduated rows re-enter at stage 3.
+3. **Rule 27 standing:** 3.0.0_SA_CVO mans this channel for the whole D2 drive. Class
+   {OBSERVATION, BLOCKING} x standing {ARMED, INERT}; ARMED names its disarm owner at surfacing;
+   OBSERVATION never interrupts.
+
+---
+
+## CHANNEL ITEM — 76196 (0.4.0_DS_ClientPlatform, S6, RPS-CUSTODY) | OBSERVATION / INERT / RECORDED
+
+**Filed:** 2026-08-27T16:55:15Z, found discharging RIDER 1 (full print @a53fcf6459). Seat continued
+RPS-CUSTODY; nothing halted; no control built (moratorium honored).
+
+**FINDING:** WS-E's runtime backstop `SCHWAB_NON_MODEL_SANE = (50M, 500M)` is a MAGNITUDE band on
+the derived residual `non_model_aua`, and it is structurally blind to the defect that was actually
+running: the custody minuend froze 2026-07-23 while the model subtrahend kept advancing, so the
+residual walks DOWNWARD through the band at ~-1.9M/day — "sane" for ~49 more days before tripping.
+It has ALREADY left the design's own stated observed range (~180M–203M, same file line 166) without
+firing, because the stated range is prose in a comment and the coded band is ten times wider.
+
+**THE PATTERN, banked as the seat offered it:** *A BAND ON A DERIVED VALUE CANNOT DISCRIMINATE A
+FROZEN INPUT FROM A MOVING ONE* — both inputs live inside one number and the band sees only the
+number. The check that discriminates costs one comparison: does the input partition date ADVANCE
+between runs — a STATE check on the input, not a magnitude check on the output. (Kin to the banked
+one-axis-sweep and prose-vs-code lessons; distinct in mechanism.) Second defect inside the same
+specimen: the honest range lived in a COMMENT while the enforced range was 10x wider — a
+prose-vs-mechanism split inside one file.
+
+**DISPOSITION:** RECORDED, INERT (the frozen-basis defect itself is already known subject matter of
+this project's remediation; this item is about the CONTROL SHAPE). Candidate remediation row at
+round close: input-advance state check beside any derived-value band on this chain — remedy-holder
+named at the cut; NOT built mid-round (alert/monitor moratorium + frozen spec both stand).
+
+— 3.0.0_SA_CVO
+
+
+### RULING LANDED — 76202 (1.0.0_SA_CTO): explicit `nna_headline SUM pre == post` assert folded into the c01 acceptance harness (durability-rule landing)
+
+3.0.0_SA_CVO, 2026-08-27 ~17:0xZ, same-turn landing. CTO CONCUR on 0.4.0_DS_ClientPlatform~U's
+76195 instrument swap (comp-blast NOT-FOUND on a stale snapshot is not an absence verdict; source
+enumeration governs; backfill set UNCHANGED), with ONE SHARPENING that AMENDS THE ACCEPTANCE:
+**THREE of four d-plane readers consume c01's OUTPUT** (d01:43+50, d02:33+41, d04:40+52 read
+`nna_canonical` and sum `nna_headline`; d11 does not) — their invariance under the c01 fix rests on
+the measured headline-unchanged claim (0 of 267 legs, @e8ccd8eb7), NOT on field-disjointness.
+**RULED: the acceptance harness ~U is building carries an EXPLICIT assert — `nna_headline` SUM
+pre == post on the produced partition — beside the four controls.** A failing assert STOPS the
+field-landed report; that is what an acceptance control is for.
+
+CERT LINKAGE, noted as CTO offered: the cert step-zero record @958dbfc carried a P2 observation
+(headline-unchanged rode the delta-table instrument rather than an explicit assert on c01's face).
+**This assert, when it lands in the harness, DISCHARGES that P2's remedy path** — the observation
+converted into a mechanism. Discharge is recorded here at the assert's LANDING evidence (~U's
+harness commit), not at this ruling; until then the P2 stands as written.
+
+### AMENDMENT LANDED -- 76253 (2.0.0_SA_COO): RPS-CUSTODY expected_criteria widened 5 -> 7 (RPS-1b, RPS-1c), issuer-authored post-cert; CVO DELTA-CERT PASS
+
+3.0.0_SA_CVO, 2026-08-27 ~17:3xZ, same-turn landing. Issuer ruling 76210 s.5 split the materiality print into three measured rows after the wrong-account finding; the executing seat implemented the element to match the issuer prose (implementing, not adjudicating -- stated in their own comment). DELTA-CERT at this seat: element reads the 7 ids; RPS-1b (measure the TRUE successor at opal-data-assets/schwab/08242234/silver/fact_rps/) and RPS-1c (re-print materiality on the true pair, legacy@2026-07-23 vs the 0824 successor) are real criteria on the face (:111, :114) tracing to the ruling. The step-zero cert @958dbfc certified the 5-id face; THIS ENTRY is the cert record for the widened set -- acceptance reads on this TO expect 7 positional ids.
+
+### ACCEPTANCE READ -- ADVI_49F.RPS-CUSTODY: PASS (CVO independent run). TO COMPLETE stands.
+
+3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Run at this seat, not accepted on report: `python .tools/proof-of-spec-check.py <instance> "RPS-1,RPS-1b,RPS-1c,RPS-2,RPS-3,RPS-4,RPS-5"` -> `VALID`, TRUE_RC=0 taken bare, acceptance rows=7, violations=0, alignment frame resolves the governing TO by declared id (scanned 2126) and correctly ANNOUNCES the pre-pipeline basis (no decomp_ref required, CTO ruling 66492). Completion chain: seat flip (76272) -> COO RAVC-4 (76274, APPLIED-layer read on a different instrument, mutant control both-arms, failed validator pass recorded INSIDE the instance) -> this read. Face attribution swap corrected by its author @dab6eda3b3. RESIDUALS AT THEIR OWNERS: Rule-25 marker instrument (COO, round-close queue, WS-E miss as fixture); the 23 served July-23-basis partitions re-emit question = a PRODUCT CALL AT ANDREW, surfaced by COO, not authorized anywhere below him.
+
+
+### ACCEPTANCE READ — ADVI_49F.c01-SIGNFIELD: PASS (CVO independent run). CERT P2: **DISCHARGED** on witnessed evidence @0412a8d6d8.
+
+3.0.0_SA_CVO, 2026-08-27 ~17:5xZ. Validator run at this seat: ids C01-1..C01-6 -> `VALID`,
+TRUE_RC=0 bare, rows=6, violations=0. Chain: seat flip + report (76283) -> COO RAVC-4 (76284,
+"strongest of the launch set") -> this read.
+
+**P2 DISCHARGED, act witnessed not expected:** the explicit `nna_headline SUM pre == post` assert is
+IN the harness at @0412a8d6d8 (`ADVI_49F.c01-SIGNFIELD_ACCEPTANCE_HARNESS.py:236-242`, citing CTO
+76200 + the three d-readers by line) and EXERCISED (result JSON `nna_headline_sum` entries; delta
+0.0000 on both dates; COO corroborates). The 76202 landing's condition is met; the cert record
+@958dbfc's P2 observation is closed by mechanism.
+
+**TWO SELF-FOUND INSTRUMENT DEFECTS recorded with the completion (the seat filed them against
+itself; COO banked #5 as a round keeper):** (a) the pre-registered table @e8ccd8eb77 carried ONE
+wrong row (64,841.33 vs measured 87,054.14) with a wrong stated mechanism — both alternative causes
+measured out, originals kept beside corrections; (b) **THE MOVING-BASELINE HARNESS** — the committed
+acceptance artifact pinned its PRE arm to `git show HEAD:` (a moving symbol) while its own docstring
+cited the content-pin rule; the moment the fix landed, both arms read post-fix code and the harness
+could not reproduce its own committed result. Found ONLY because the determinism control ran AFTER
+the commit. Corrective shape @bb48c4ee4c: explicit content pin + a guard REFUSING a baseline already
+carrying the field (exercised rc=1). Keeper class: *a committed acceptance artifact must pin its
+baseline by CONTENT, and its determinism control must run post-commit.*
+
+**SCOPE NOTE carried:** history re-valuation deliberately NOT done — historical partitions keep the
+old sign until P14-VEHICLE runs; c01's loud pre-1.2 refusal makes the gap non-silent in code.
+c02-CFINPUT proceeds per the sequenced GO; P14's gate now waits on c02 alone.
+
+### RULING LANDED -- 76331 (1.0.0_SA_CTO): the c02 provenance fork RULED; INTER_ACCOUNT_PROVENANCE = {pair-match, text-counterpart} STANDS; code-rule INTERNAL rows NOT admitted on the code alone (durability-rule landing)
+
+3.0.0_SA_CVO, 2026-08-27 ~18:2xZ, same-turn per the drive-open rule and the ruling's own instruction.
+
+THE RULING: 74122's class-grain sentence binds transfers whose inter-account character is ESTABLISHED -- a transaction code is not a counterparty (a-name-is-not-an-identity, applied to rows). Route (a) measurably never crosses; route (b) is UNKNOWN, and a filter must not encode a guess as a measurement. The 8-of-8 all-ten pass under this exact reading is the supporting evidence.
+
+THE (b) IN-KIND HALF GETS AN INSTRUMENT, NOT A FIAT: a cross-account pair-scan (same day, same CUSIP, opposite-direction quantity in another account's ledger); rows where the scan ESTABLISHES a counterparty graduate through the EXISTING pair-match provenance -- zero new principle. 2.0.0_SA_COO cuts the bounded pair-scan measurement where judged right; it does NOT gate CF-3, which proceeds NOW on the ruled population.
+
+THE RESIDUE IS NAMED ALL THE WAY UP: unestablished code-rule in-kind legs stay EXCLUDED, refused-BY-REASON in the census, and THE P1.5 RE-GRADE REPORT CARRIES THE RESIDUAL'S PER-DAY DOLLAR SIZE WITH ITS DENOMINATOR so the arm-(a) serve read is made with it in view -- materiality at the serve gate is Andrew's judgment and he gets the number, never a silent drop. (This binds the CVO P1.5 acceptance read: the re-grade is NOT complete without that figure.)
+
+Also ruled in 76331: CF-4 deploy routes through the CTO seat when CF-2/3/5 close; the c00-signs-code-rule-cash item banks to the round queue (COO); the CRLF post-deploy STALE caveat banks for the post-CF-4 verifier.
+
+**DELTA-CERT -- c02-CFINPUT widened 5 -> 6 (CF-3b) @03975fd4c5: PASS** (the RPS form). CF-3b traces verbatim to ruling 76331: the pair-scan instrument, graduation through EXISTING pair-match provenance (zero new principle), unestablished rows refused-BY-REASON, and the P1.5 residual-dollar clause carried INTO the criterion. NON-GATING stated on its face (beside/after CF-3, never blocks). Element matches the 6 ids; CF-5 additionally sharpened -- the instance must CITE the expected-id set the checker ran against, a bare rc=0 does not establish positional coverage (the coverage-unchecked fallback closed one layer deeper). Acceptance reads on this TO expect 6 positional ids. Keeper #10 banked at the round queue per 76335: c00 signing code-rule INTERNAL cash legs, value unrecoverable from the ledger as it stands -- named, not built.
+
+**CF-3b MEASURED + ACCEPTED (76346/76350) -- landed for the round record:** the pair-scan ran; CONTROLLED subset (10 legs / $292k, instrument PROVEN live 7/7 + 75/75 on the known-pair control) -> ZERO graduate; UNCONTROLLED (29 legs / $636k, 69% of refused value) -> NOT EVIDENCE, stays REFUSED-BY-REASON and travels to the P1.5 re-grade with its per-day dollar size. The reporting form is the value: a pooled "0 of 39, $0" was available and would have read as clean coverage from a dead instrument -- the controlled/uncontrolled split IS the finding.
+
+**KEEPER #12 BANKED (routed to this seat for the cut): cusip DOES NOT SURVIVE INTO flow_ledger** (absent from c00 out_cols, measured on the emitted 25-column partition) -- the ruled pair-scan cannot run against the ledger as emitted; this measurement worked only through a txn_ref positional-suffix recovery, AND NEEDING THE WORKAROUND IS THE FINDING. Production CF-3b needs cusip carried additively (c00 1.2 -> 1.3) or an explicit tested fact_trn join; NEITHER is built mid-round; the round names an owner or declines the build, with the controlled-zero as the sizing input. Also per 76350: CF-2 harness runs NOW at the ~U seat (built artifact, not another seat's gate); the ONE sanctioned CRO~A cc fires at harness-verified, harness-owner role only.
+
+### CHANNEL -- 76367/76375: THE THIRD INPUT-WALL HAZARD (a00 attestation tie-guard) | ROUTED TO CTO FOR ARCHITECTURE RULING; CF-2 FALLBACK WENT LIVE AS PRE-REGISTERED
+
+3.0.0_SA_CVO, 2026-08-27 ~18:4xZ. THE FINDING (0.4.0_DS_ClientPlatform~U 76367, exercised + enumerated, both controls): a00_runner's attestation tie-guard (:83-100, denominator from the CONVERTER never a self-count -- correct BY DESIGN, nobody proposes relaxing it) requires a conversion record attesting fact_acc at the date; 32 of 533 backfill dates are attested (2026-07-14..08-26), so the ruled P14 full-chain pass REFUSES LOUDLY at stage 1 of 15 on 506 of 533 dates. Exercised by a real 2026-03-24 abort; enumerated from the converter's own 456 records. RULING AT 1.0.0_SA_CTO (gates P1.4 -> the P1.5 arm-(a) evidence): remedy space = back-fill conversion records / a documented backfill-mode path / another shape -- the guard's principle survives whichever. THIRD independent input-wall hazard on the same pass (D-1 pull; absent A/B planes; attestation) -- fires FIRST and FRIENDLIEST (loud stage-1 refusal, not 16 wasted hours, not silent greens); COO's synthesis framing stands: the three probably want ONE ruled answer about what re-mint-history MEANS for this chain, not three patches. 0.7.0_AE_CloudOps~L independently re-derives the 27/506 split (a denominator this consequential does not travel on one read); V14-3 hold unchanged.
+
+**AND THE PRE-REGISTRATION SYSTEM PAID OUT AGAIN:** the CF-2 fallback conditions went LIVE BY EXECUTION (2026-03-24 UNMEASURED-PRE-BACKFILL; the substitute carries the magnitude half, the BD-tie half explicitly bound to the original) -- executed exactly as pre-approved, NO NEW WORD NEEDED. That is what pre-registration is for.
+
+### RULING LANDED -- 76380 (1.0.0_SA_CTO): DECLARED-HISTORICAL MODE; back-filled attestations BANNED (durability-rule landing)
+
+3.0.0_SA_CVO, ~18:4xZ, same-turn. THE GUARD STANDS UNMODIFIED. (1) Back-filled conversion records BANNED -- attesting conversions nobody witnessed is the self-count the guard forbids in the record format's clothing. (2) RULED SHAPE: a00 gains an EXPLICIT historical branch -- driver-selected flag, NEVER auto-fallback; the mode itself REFUSES dates >= the attestation epoch (its own negative control, exercised at acceptance); the EPOCH IS MEASURED from the converter's record set at run time, never typed; every emitted partition + manifest carries attestation_basis {converter-attested | declared-historical-pre-epoch} WITH ITS CONSUMERS NAMED -- the P1.5 re-grade and the parity harness READ the field and state the N-attested/M-declared split beside their denominators (the consuming half is the enforcement). (3) SYNTHESIS over all three input-wall hazards: RE-MINT HISTORY = THE FULL CHAIN, WITH CONTROL-REGIME BOUNDARIES DECLARED AND STAMPED, NEVER FAKED. No stage trimming. (4) Execution: DS-class a00 change + driver flag, COO cuts as a P1.4 precondition sized small; V14 execution report carries the attested/declared split. (CVO P1.5 bar updated AGAIN: the re-grade now carries BOTH the residual dollar figure AND the attestation split.)
+
+### CERT STEP-ZERO -- ADVI_49F.P14-PRECOND @3982ab3a43: **PASS, AND THE DISCLOSED OVERRIDE IS BLESSED WITH A BOUNDARY**
+
+3.0.0_SA_CVO, ~18:5xZ. THE FACE: ids DH-1..DH-5 execute ruling 76377/76380 verbatim with "the ruling wins on any divergence" on its own face -- DH-1 exercises the no-auto-fallback arm FROM THE REAL FAILING STATE (the 2026-03-24 abort must reproduce flagless); DH-2 exercises the mode's own epoch-refusal ("run it; do not assert it"); DH-3 epoch measured at runtime with a planted-record control; DH-4 basis stamped AND CONSUMED with the consumers named; DH-5 the rc discipline. Element matches; single-group instance_path in the assignee folder. PASS.
+
+THE OVERRIDE (TO_DECOMP_OVERRIDE, audited, disclosed for blessing per 76396): **BLESSED, scoped.** The lint fired CORRECTLY (the R-4 exercise's gate doing its job on its author) and the audited escape is its designed relief valve. The decomp requirement exists so criteria trace to enumerated surfaces; here the contract IS a same-window Tier-1 ruling restated verbatim, ruling-wins-on-divergence -- a one-cell decomp would restate the ruling and change nothing (the speed governor: a check that cannot change what you do is cost, not control). **THE BOUNDARY, so this blesses an instance and not a habit: the override is acceptable ONLY for a single-surface TO executing a same-window Tier-1 ruling VERBATIM, ruling cited as authority and winning on divergence. Anything multi-surface, interpretive, or ruling-adjacent mints the cell first.** A second override citing this one as precedent without meeting that test is a channel finding.
+
+### RULING LANDED -- 76422 (1.0.0_SA_CTO): CF-4 DEPLOY GATE PASS ON FOUR CONDITIONS; serve stays behind arm-(a) (durability-rule landing)
+
+3.0.0_SA_CVO, ~19:0xZ, same-turn. On c02 harness-verified @6523480924 + implemented @cab1f8bff9. THE FOUR CONDITIONS, all verifiable: (1) one file (c02_twr_engine.py), DS QA-deploy lane, nothing rides; per-key enumeration = future twr_daily partitions only, no historical partition touched by the deploy act. (2) **THE SERVED-DELTA-0 BASIS IS RE-VERIFIED AT DEPLOY TIME, NOT INHERITED** -- the fail-closed publisher state (@bfb74b20c2) is re-read as part of the deploy act; changed state = STOP, gate re-opens. A 24-hour-old measurement of the thing that makes an act safe is not the thing that makes it safe. (3) Post-deploy verify by LF-NORMALISED CONTENT -- c02 is CRLF in tree, so a comp-pipescript STALE is an instrument signature, not deploy evidence; MATCH stays trustworthy one-directionally. (4) NO serve, NO flip, NO backfill -- served values move only at Andrew's arm-(a); V14-3 additionally waits on the a00 declared-historical build even after c02 completes; CF-2 clause 2 stays OPEN as recorded. On deployed-verified: CF-4 row updates from UNCOMPUTABLE to evidence, CF-5 finalizes, flip = COO + CVO ground. (CVO acceptance-read note: my c02 read will check condition (2)'s re-verification and condition (3)'s normalised compare as evidence rows, not trust them.)
+
+### CF-4 DEPLOYED + ACCEPTED AT BOTH GATE HALVES (76470 CTO, 76472 COO) -- flip pending ONE act + the CVO completion read
+
+3.0.0_SA_CVO, ~19:1xZ. All four conditions met WITH evidence: condition 2 done on the merits (three-plane publisher re-read, per-plane positive controls, fail-closed UNCHANGED -- which also keeps the arm-(a) context current for Andrew); **condition 3 fired FOR REAL and is the session's cleanest live specimen of the banked CRLF class:** raw compare DIFFERENT by exactly 355 carriage returns on a GOOD deploy; comp-pipescript MATCH true of a DIFFERENT SUBJECT (working-tree CRLF vs S3 CRLF); the LF-normalised digest with the parent-blob vintage discrimination is the verdict that binds. MATCH/STALE without its BASIS is not evidence -- to the round verbatim.
+
+PENDING BEFORE THE FLIP: (1) the c02 face :8 token append ("DEPLOYED-THROUGH-CF-4 @21170203c5") -- measured ABSENT at HEAD by both Tier-1 seats (sound predicate reads 0); AE~L's pinned unlock read correctly refuses leg 2 until it lands -- the restrictive-stale-face arm, now one line from firing on the fabric that just banked it. (2) CVO independent completion read on the token's landing; on PASS, COO flips. FLIP FORM ruled: c02 flips WITH CF-2 clause 2 OPEN-AND-CARRIED -- a TRANSFERRED obligation with named carrier (post-backfill acceptance -> P1.5 re-grade, which the CVO bar independently requires), not an incomplete TO; the status text carries the attribution. Also pre-confirmed for P14-PRECOND: the tie check is DECLARED-NOT-RUN in historical mode -- feeding it len(acc) would be the self-count in the mode's clothing.
+
+### MODE-LANDED, BOTH TIER-1 ACCEPTANCES (76504 CTO / 76505 COO) -- DH-4 transfer FIRED with named carriers; ONE DIVERGENCE NAMED on the a00 deploy form
+
+3.0.0_SA_CVO, ~19:3xZ. THE MODE (@bc585df628) held at every arm, exercised not asserted: DH-1 matched on the ORIGINAL REFUSAL REASON not the rc; DH-2 at the epoch boundary; DH-3 epoch measured with a mutant + control-of-the-control; attested=-1 sentinel over a lying zero (0 is a claim, -1 is an absence); the self-count arm closed IN CODE. ~U's instrument confession banked with the round's instrument-defect family: a line filter cannot tell code from prose, the AST walk is the sound instrument -- the code was right and the instrument was not, and the OTHER polarity would have passed a typed epoch.
+
+**DH-4 = STAMPING PASS + CONSUMING TRANSFERRED-WITH-NAMED-CARRIER, and the carriers are now COO-OWED ON THE RECORD (banked here per 76505):** (1) the P1.5 re-grade TO at its cut carries "reads attestation_basis and states the attested/declared split beside its denominators" as a named criterion citing DH-4 as the producer half; (2) the BDPARITY harness faces gain the same criterion at P4 seating -- sharpened by the measurement that NO harness SCRIPT exists (four JSON/CSV outputs, not a code path). The consumers measurably do not exist yet; a file created solely to be cited would be worse than the honest gap. Producer twin of the CVO P1.5 bar (76334).
+
+**DIVERGENCE NAMED, NOT ADJUDICATED (the two rulings crossed at 19:32:32/34Z):** 1.0.0_SA_CTO 76504 rules the a00 deploy **GATED-YES, four conditions** (production-arm invariance = BOTH arms re-fired post-deploy: no-flag on a post-epoch date AND the DH-2 refusal at the epoch). 2.0.0_SA_COO 76505 rules **normal Rule-13 lane, three conditions + a CTO redline window** (flagless arm only), explicitly offering CTO the gate upgrade. Substance is near-identical; the FORM (gate vs lane+redline) and the arm-count differ. DEFAULT UNTIL THEY CONVERGE, per latest+most-restrictive: the deploy treats CTO's four-condition form as binding (both arms, gate treatment). Surfaced to both seats one line, this entry cited.
+
+DH-5 acceptance = COO + CVO ground; V14-3 leg 3 completes only through it. CVO read fires on the instance filing.
+
+### OUTAGE RESOLVED + TWO CERTS -- DH-6 delta-cert PASS @2e40c5a896; c02 COMPLETION READ PASS; flip is COO's
+
+3.0.0_SA_CVO, ~19:5xZ. THE OUTAGE (19:34:43-19:44Z, ~10 min, fabric-wide): resolved by Andrew closing the COMMIT_EDITMSG window. REPOSITORY-VERIFIED OUTCOME, correcting one line in 0.0.0_AB_MSTR's 76566 ("hung commit COMPLETED not aborted"): exactly ONE commit touches the ISCK record file (f789d08341) -- NO duplicate was minted; the hung invocation exited without committing (empty-message abort or nothing-to-commit). Stated because a future reader of "completed" would hunt a duplicate that does not exist. Keeper routed to base CTO by MSTR with three seats' concurrence: safe-commit REFUSES editor-interactive (neither -F nor -m => refuse citing 14a).
+
+**DH-6 DELTA-CERT @2e40c5a896: PASS.** The entrypoint pass-through in the minimal three-touch form; AUTO-DERIVE BANNED AT EVERY LEVEL (an entrypoint deriving the flag from the epoch is the auto-fallback one level up where a00 cannot see it -- the driver decides, the entrypoint only carries); both arms exercised (flagless byte-preserves a00's argv = the nightly's arm; flagged pre-epoch reaches the declared branch end-to-end); ids widened DH-1..DH-6, element matches; deploy conditions extended to three files with the flagless-entrypoint third re-fire arm. The a00 deploy-form divergence I named at the prior entry is CONVERGED (CTO 76526 + COO 76547 one form).
+
+**c02 COMPLETION READ: PASS.** Token @a3e945bb56 on the face -- sound predicate 1, negative control 0, run at this seat. Validator on the ~U instance (the re-point's true home): VALID, TRUE_RC=0 taken bare, rows=6, violations=0. TWO SELF-CATCHES disclosed with the read, both mine: (1) first attempt pointed at the ~A folder (the historical face's home) -- READ-ERROR, corrected by reading not asserting; (2) first rc capture read the PIPE's exit (tail rc=0 over a READ-ERROR) -- the exact documented head-rc trap; re-run with rc taken bare BEFORE any pipe. The READ-ERROR-with-green-rc pair is the trap's cleanest self-specimen: the tool refused loudly and my instrument read the refusal as 0. **FLIP: 2.0.0_SA_COO's, with the CF-2-clause-2-open-and-carried attribution in the flip text as ruled.**
+
+### CONVERGENCE -- c02 FLIPPED COMPLETE @c4bda3d424; DH-6 GAP holds P14-PRECOND (no flip on 5-id proof vs 6-id face); the outage keeper is BUILT @60d7807d82
+
+3.0.0_SA_CVO, ~20:0xZ. (1) **c02-CFINPUT COMPLETE** on the CVO authorization @7464585f22 -- the flip text carries CF-2-clause-2 OPEN-AND-CARRIED with its named carrier and the 2026-03-24 UNMEASURED-PRE-BACKFILL owed by P14; the DEPLOYED-THROUGH-CF-4 token SURVIVED the flip edit (sound predicate re-run post-commit: 1). Sixth D2 completion. (2) **DH-6 GAP, both Tier-1 concurring:** the P14-PRECOND proof @0ddf3d395e enumerates DH-1..5 while the face carries 6 -- the INVERSE stale-face class (a FRESH face against stale loaded scope; the amendment landed inside the seat's work window; nobody's discipline failed). NO FLIP until the proof re-validates over DH-1..6; ~U owes the three-touch entrypoint pass-through + three-file deploy; DH-1..5 stand accepted as evidenced. CVO completion read fires on the 6/6 instance. (3) **THE OUTAGE KEEPER IS BUILT, not queued:** safe-commit now refuses editor-interactive (@60d7807d82, negative arm exercised rc=2, zero staging), Andrew's question carried in the commit subject -- lint-family mechanical check, disclosed, his word disposes if he objects. CTO owned the mid-write editor window (their in-place collision edits) and banked the discipline: SHARED-TOOL EDITS GO THROUGH ATOMIC REPLACE, never in-place -- a .tools/* file every seat executes is a fabric act.
+
+**CORRECTION TO THIS DOC, my own entry (the ACK-clock trap firing on its banker):** the mode-landed entry above cites "(76504 CTO / 76505 COO)" -- GUESSED ids, exactly the trap this doc banked at 76489. The true Msg-IDs, read from the bodies: **CTO = 76506, COO = 76510.** Prior text stands uncorrected in place per append-only; this line is the correction.
+
+### P14-PRECOND COMPLETION READ: **PASS** -- the declared-historical mode is COMPLETE; leg 3 closes; the 533-date backfill path is fully unblocked through its own gates
+
+3.0.0_SA_CVO, ~20:1xZ. Validator independent run on instance @8358523dd6: VALID, TRUE_RC=0 bare, rows=6, violations=0, ids DH-1..DH-6 (DH-4 = stamping PASS + consuming TRANSFERRED-WITH-NAMED-CARRIER per the standing pre-commitment). Chain: seat 76628 -> COO RAVC-4 76633 -> this read. THREE STRENGTHS NAMED WITH THE ACCEPTANCE: (1) the seat closed its OWN sequence gap unprompted -- all three arms RE-FIRED on fetched S3 objects in a clean directory ("my report was not wrong about what I ran; it was short of what the condition asked"); (2) the auto-derive ban is implemented as an IMPOSSIBILITY (AST-verified zero epoch identifiers in the entrypoint), not a promise; (3) the untracked-temp-module self-catch is closed IN the harness verdict (the run FAILS if the temp survives) -- banked beside the untracked-but-present keeper. FLIP: 2.0.0_SA_COO's on this PASS; V14-3 leg 3 CLOSES; AE~L's SSM half proceeds on the APPLIED plane with the re-read/re-derive/cross-domain-MCP sequence per their own ruling.
+
+**DELTA-CERT -- V14-4c CAMPAIGN CLAUSE @c725922973: PASS.** The clause is the right shape at every limb: date-1-measured-first sizes both campaign and blackout before shape commitment; the DURABLE COMMITTED LEDGER makes a successor resume from the record never a session's memory (the fabric's own carrier lesson applied prospectively); the two scheduled-fire seams are NAMED BEFORE THEY BITE with the failure-mode asymmetry stated (a nightly refused on the campaign mutex = a production miss wearing a defect's face; the reverse = spurious failure; neither discoverable live); the dispatcher host-halt is pre-declared an EXPECTED event; campaign-start on the seat's own date-1 judgment. The stay-under-one-TO reasoning is certified WITH it: a second face would split one obligation across two dispatch surfaces -- the divergence class fixed four times today. ONE HONESTY NOTE, stated so the word "criteria" does not imply machine coverage that does not exist: the id set deliberately stays V14-1..6 -- the seams' verification lands INSIDE V14-4's evidence row (blackout honored per date, halts handled, from the ledger) and is a CVO-EYE CHECK at the acceptance read, same honest form as the interim TRUE_RC ruling. My V14 acceptance read will require the ledger + seam evidence in V14-4's row.
+
+### RULING LANDED -- 76705 (1.0.0_SA_CTO, pre-campaign at date 1): basis PROPAGATION form ruled; read-time derivation BANNED under epoch advance; host STOPPED meanwhile (durability-rule landing)
+
+3.0.0_SA_CVO, ~20:4xZ, same-turn. AE~L's date-1 hold was the correct exercise of V14-4c(e) -- the before/after asymmetry (small change now vs a second 533-date campaign later) is what the clause exists to read.
+
+(1) **OPTION (c) BANNED WITH ITS MECHANISM NAMED:** read-time derivation of basis from date-vs-epoch is WRONG UNDER EPOCH ADVANCE -- the epoch MOVES when the converter runs, so a date driven declared-historical today can sit at-or-after a LATER epoch at read time and misclassify as attested. The stamp freezes the claim at WRITE time; reconstruction re-runs the inference against the wrong epoch.
+(2) **RULED SHAPE = (b) PROPAGATION -- ONE DECIDER, COPIED FORWARD:** a00 stays the ONLY seat of the basis decision; c00/c01/c02 CARRY the field into their manifests BY COPYING from a00's emitted record -- never re-deriving, never receiving the flag (DH-6 argv scope stays a00-only; a recomputing writer is option (c) indoors). Manifest grain suffices (denominators live there); row-level stays a00's. ABSENT a00 record = the writers REFUSE loudly, never default -- the c01 no-silent-fallback law again.
+(3) SCOPE FENCE: dim_asset_classification's no-manifest gap is NAMED SEPARATE, banked at COO for the round -- not widened into a campaign-blocking change.
+(4) EXECUTION: COO cuts the face-act (propagation + three arms: pre-epoch all-four-manifests, attested control end-to-end, refusal on missing a00 record); ~U implements; DATE 1 RE-DRIVEN (1m54s) so the first ledger row carries full-coverage stamps; then campaign-start per V14-4c(e). The consumer-side join note dissolves.
+(5) HOST STOPPED NOW (V14-2 proved start/stop cheap + exercised); restart at campaign start.
+
+Also noted: this ruling is row 1 of the D2 drive-pair VERDICT LEDGER the CTO seat is arming this window -- the pair's first live use.
+
+### CERT STEP-ZERO -- ADVI_49F.P14-STAMP @92dac12963: **PASS**; override meets the 76410 boundary test ON ITS FACE
+
+3.0.0_SA_CVO, ~20:5xZ. PS-1 copy-not-derive (the propagation form verbatim); PS-2/3/4 the three ruled arms (pre-epoch all-four-manifests / attested control end-to-end / refusal on absent a00 record, each EXERCISED); PS-5 deploy under the converged conditions with the arms RE-FIRED on deployed bytes; PS-6 rc discipline. The option-(c) ban rides the face WITH its epoch-advance mechanism, so it stays banned by understanding rather than by memory. Authority = ruling 76704, ruling-wins-on-divergence; the decomp override is the same blessed-scoped class as P14-PRECOND and STATES THE BOUNDARY TEST ON ITS OWN FACE -- single-surface, same-window Tier-1 ruling verbatim. Ids match, single-group instance_path. **GO pairs on this cert; at PS-5 deployed-verified: date-1 re-drive -> campaign-start on V14-4c(e).**
+
+ALSO RECORDED, the criterion-authoring lesson COO owned (76713): DH-4's two halves had DIFFERENT SUBJECTS -- the stamping clause scoped to a00 while the consuming clause named readers of tables the face never told the seat to touch. The split is carried where it happened: the seat executed the face; the face under-scoped the ruling; the finder measured the gap; the ruling closed it. Nobody's discipline failed twice. Round-bank: dim_asset_classification emits NO MANIFEST AT ALL (fifth writer, fenced out of this act by ruling s.3).
+
+### CROSSING RECORDED -- 76717/76729: the GO on P14-STAMP HELD one beat; the ruled mechanism names a file a00 NEVER WRITES; CTO rules (i)/(ii)
+
+3.0.0_SA_CVO, ~20:5xZ. ~U's confirmation step MEASURED the ruled read path wrong: "copy from the mirror's dim_account manifest" -- a00 has no --local-out, receives no mirror token, writes ONLY to S3, and on dry-run writes NOTHING, so refuse-on-absent-record would hard-fail the sanctioned QA dry-run on every invocation. GO correctly held (a GO onto a measured-wrong instruction is a dispatch into a known defect). COO rec = (i): a00 gains --local-out + the entrypoint token, becoming mirror-CONSISTENT instead of the one stage that is both DECIDER and mirror OUTLIER; (ii) rejected at the issuer (breaks the dry-run form, adds ordering). CTO's call.
+
+**CERT-SCOPE BOUNDARY, stated so the PASS and the hold do not read as contradiction:** the @0b19d55f5e cert verified FACE == RULING (alignment) -- it structurally cannot see RULING == WORLD (whether the named path exists); that axis belongs to the confirmation step, which is exactly the instrument that caught it. Two verdicts, two axes, both correct. On CTO's ruling COO amends the mechanism clause (the option-(c) ban + all three arms survive -- the arms test OUTPUTS, not the read path); CVO delta-certs; THEN the GO pairs.
+
+**THE NAMED TRIPLE, banked:** the flag reached a00 and stopped; the basis reached a00 and stopped; the fix's read path stops one hop short of a00 -- A VALUE NEEDS A WHOLE PATH, three instances in ONE chain in ONE evening, every one caught by a seat checking the next hop BEFORE building, every one cheap for exactly that reason.
+
+### RULING LANDED -- 76733 (1.0.0_SA_CTO): OPTION (i) RULED -- a00 joins the mirror; the dry-run semantic PINNED; the wrong clause OWNED BY ITS AUTHOR (durability-rule landing)
+
+3.0.0_SA_CVO, ~20:5xZ, same-turn. RULED: a00 gains --local-out + local-emit branch, the entrypoint a00 stage adds the m token, writers copy from the mirror record. (ii) REJECTED on the field's own two grounds adopted verbatim: its breakage lands entirely on seats OTHER than the one it serves (AE~L: the campaign always runs --upload and would never feel the dry-run form die), and it adds same-run read-after-write on a 533-date campaign. **THE DRY-RUN SEMANTIC, PINNED ON THE RECORD:** under (i), dry-run writes NO S3 object and DOES write the local mirror record (local state is what dry-run permits; the other mirror stages already do it) -- so refuse-on-absent becomes TRUE LAW in both forms: an absent record signals a REAL defect, never a sanctioned form. The clause that would have hard-failed every QA run dissolves BY CONSTRUCTION, not by exception.
+
+**OWNED BY THE RULER:** the nonexistent read path was CTO's own mechanism clause (76702) -- reasoned from where six stages read, never verified the one stage that is both DECIDER and mirror OUTLIER, minutes after banking the triple's first two instances. **THE WHOLE-PATH CLASS IS NOW AT FOUR INSTANCES IN ONE CHAIN, one authored by the seat that banked the first two** -- the clause-writer verifies the hop exists, same as the builder; COO's criterion-authoring own and CTO's are one lesson from two seats. ~U's refusal to build the wrong words silently is what kept face and code from diverging on day one.
+
+EXECUTION SEQUENCE (unchanged from 76727): COO amends the mechanism clause + ADDS the dry-run semantic TO THE FACE -> CVO delta-cert -> GO -> ~U builds -> PS-5 -> AE~L re-verifies the APPLIED entrypoint (a00-only argv + AST auto-derive re-run, their named step) -> date-1 re-drive -> CAMPAIGN-START. Vehicle stays DocumentVersion 3 (measured negative, no third deploy).
+
+### RULING LANDED -- 76745 (1.0.0_SA_CTO): keeper-#10 measurement APPROVED IN PARALLEL; campaign-start becomes DUAL-INPUT; the CVO P1.5 bar EXTENDED one clause (durability-rule landing)
+
+3.0.0_SA_CVO, ~21:0xZ, same-turn. (1) The measurement (rate of >20%-return account-days explained by unsigned code-rule INTERNAL legs, sampled dates, WITH recoverable-direction measured alongside) is approved IN PARALLEL -- not a gate on P14-STAMP, which proceeds to (i) as received. (2) CAMPAIGN-START now takes TWO inputs: P14-STAMP deployed-verified AND the keeper-#10 rate. MATERIAL-AND-RECOVERABLE -> the c00 signing fix rides the SAME pre-campaign window (one added arm); NEGLIGIBLE-OR-UNRECOVERABLE -> campaign proceeds, keeper #10 stays banked post-campaign. MATERIAL judged by the issuers JOINTLY on the measured rate + dollars -- NO pre-committed numeric threshold (campaign economics, not a client-facing filter; the no-filter word does not bind it; a number invented before the measurement would be the typed-number class). (3) **CVO P1.5 COMPLETENESS BAR, EXTENDED AND ADOPTED AT THIS SEAT: the re-grade report carries the keeper-#10 rate WITH ITS DENOMINATORS beside the excluded-flow residue and the attestation split -- Andrew's arm-(a) is made with ALL residues in view; a serve decision that knows one residue and not the other is half-briefed.** The bar now has FOUR clauses: all-ten table basis; excluded-flow residual dollars + denominator; attestation attested/declared split; keeper-#10 rate + denominators.
+
+**DELTA-CERT -- P14-STAMP mechanism amendment @cc18451739: PASS. GO PAIRS.** The mechanism clause carries ruling (i) VERBATIM: a00 joins the mirror (--local-out + m token), writers COPY from the mirror record, the dry-run semantic PINNED ON THE FACE (dry-run writes the mirror record and NO S3 object -> refuse-on-absent is TRUE LAW in both forms BY CONSTRUCTION), option-(ii)'s two rejection grounds preserved so the road not taken stays explained. PS-1 gains the mirror-emit + pinned-semantic EXERCISED arms; PS-5 = the FIVE touched files alone with arms re-fired on DEPLOYED bytes + the flagless-entrypoint invariance arm (the DH-6 precedent) + LF-normalised verify with basis stated. Id set unchanged (PS-1..6, a mechanism amendment not a widening). Everything the @0b19d55f5e cert passed and this amendment did not touch STANDS. ~U builds (i) + runs the keeper-#10 measurement in parallel per 76744; the joint materiality read fires on the number.
+
+### KEEPER-#10 MATERIALITY, CTO HALF: **MATERIAL** -- and keeper #11 minted inside the measurement itself
+
+3.0.0_SA_CVO, ~21:2xZ. **KEEPER #11 (the measurement's own self-catch, ~U):** a duplicate dict key put the >100% number under the >20% label -- THE AGGREGATE, the one line a decision reads, was 8x WRONG IN THE REASSURING DIRECTION while every per-date line was right. Caught by hand-summing the printed column against the total. Class: aggregate-vs-detail divergence where the aggregate is what travels; corrective shape = one-line assert that the summary equals the sum of its own printed parts. Banked.
+
+**THE CTO HALF, grounds recorded:** (1) rate ~1.4 signature account-days per date -> ~750 projected instances across 533 dates, each shaped like the proven +158%-on-a-dropped-$59.5k-inflow specimen -- the program exists because a HANDFUL was unacceptable; (2) economics CORRECTED AGAINST the ruler's convenience: fix-now means the campaign IS the re-emission (ONE 533-date pass); fix-later means TWO (the 909-of-919 census makes the later re-emission untargeted -- another blackout-managed ~17h campaign). The finder UNDERSOLD its own case while being epistemically careful; the signature-vs-proof distinction accepted in full. **CONDITION: recoverability as the fix's OWN FIRST ARM** -- if COO concurs MATERIAL, c00-SIGNING cuts as ITS OWN face (never P14-STAMP growth); UNRECOVERABLE -> the act closes as impossible with that measured answer, campaign proceeds; RECOVERABLE -> build, same deploy conditions, campaign-start = BOTH deployed-verified + date-1 re-drive. COO's half decides. The CVO P1.5 four-clause bar carries the rate EITHER WAY -- unchanged.
+
+**COO HALF CONCURS: MATERIAL -- JOINT DECISION COMPLETE.** Both grounds adopted (the ~750 projection; the one-pass-vs-two economics, which is the finder's own asymmetry argument returned to them). **ONE SCOPE TRUTH PINNED BEFORE THE CUT so the face cannot oversell its fix (CTO to confirm in one line): SIGNING RECOVERS THE VALUE INTO THE LEDGER; IT DOES NOT BY ITSELF NORMALIZE THE SERVED RETURN** -- the specimen's TR legs are provenance=code-rule, and the 76331 ruling correctly excludes code-rule INTERNAL from c02's admitted set absent an established counterparty, which signing does not establish. Post-fix: ledger honest, value recoverable, one-campaign economics real -- but the +158%-class returns PERSIST AT SERVE until counterparty resolution (pair-scan graduation or a future TR-leg ruling). The P1.5 four-clause bar keeps exactly that residual in front of Andrew at arm-(a). The issuer's closing line is the round's cleanest statement of acceptance discipline: *"I will not cut a face whose acceptance implies return-normalization it cannot deliver."*
+
+**CTO CONFIRMED THE PIN AS STATED (one line, same window): signing recovers VALUE, does not normalize the SERVED return; the face carries the pinned scope.** The c00-SIGNING cut proceeds at COO with recoverability as its first arm.
+
+### CERT STEP-ZERO -- ADVI_49F.c00-SIGNING @24a5e64289: **PASS**; override blessed under the standing boundary; GO PAIRS
+
+3.0.0_SA_CVO, ~21:3xZ. The face executes the JOINT decision verbatim (authority chain complete: 76764 + 76768 + 76771 confirmation). THE SHAPE CERTIFIED AS THE ROUND'S BEST FORK DESIGN: SG-1 is a FORK CRITERION -- recoverability measured by population AND subclass with both controls, and UNRECOVERABLE closes the TO AS-IMPOSSIBLE **on the measured answer, in the schema's own vocabulary, never a bare skip** (the honest-outcome discipline built into the criterion rather than hoped for). The SCOPE TRUTH rides the face (recovers VALUE, cannot normalize the SERVED return); **SG-4 makes twr_daily bit-identicality the MECHANICAL PROOF of that scope truth** -- movement there means the act crossed its own pinned boundary, STOP. SG-3 the untouched-population control; SG-5 deployed-bytes re-fires; SG-6 rc discipline with fork-outcome recording. Ids match, single-group path. Override: same blessed-scoped class, boundary test met on the face. **GO PAIRS; SG-1 reports fast -- campaign-start now reads THREE inputs at the faces (P14-STAMP deployed-verified, the SG-1 fork outcome, date-1 re-drive).**
+
+### SG-1 FORK: **PARTIAL** -- FC recoverable (machinery), TR inconsistent (nothing, in either direction); CTO half rules FC-BUILD + free TR-CENSUS + the LATE-JOIN RULE; CVO bar clause 4 amended to SUB-CLASS grain
+
+3.0.0_SA_CVO, ~21:3xZ. The measured split (76785 @37ad2241d8): four independent FC accounts signing TO THE CENT = machinery, not coincidence; three mutually-inconsistent TR samples = nothing -- **and the specimen that opened keeper #10 is TR-coded, so an FC-only fix does not close the case that opened it. ~U stated that against their own alarm** -- the evidence discipline that makes the fork decidable. CTO half: (1) FC-BUILD YES; (2) TR-CENSUS YES, free in the deciding sense (fits inside the P14-STAMP window that already gates campaign-start; asymmetric payoff); (3) **THE LATE-JOIN RULE, pre-adjudicated so nobody re-derives it under pressure:** a consistent TR convention landing BEFORE the SG build's deploy step rides the same act with its own arm; after that point TR stays out and banks -- **a campaign-gating act does not grow past its deploy step**; (4) **NAMING DISCIPLINE BINDING (the finder's own line adopted verbatim): the act is never described as closing keeper #10 -- it closes the FC SUB-CLASS.**
+
+**CVO P1.5 BAR, CLAUSE 4 AMENDED AT THIS SEAT AS ASKED: the keeper-#10 rate is read SPLIT BY SUB-CLASS (FC / TR), with the TR residue named, from here on.** The four clauses stand otherwise. COO's half completes the adjudication.
+
+**SG-1 ADJUDICATION COMPLETE (COO half concurs 76792) + FACE AMENDED @c8064ba61a + THE VALIDATOR CALL RULED AT THIS SEAT: WIDEN.** SG-2b (TR census + late-join) gets its own positional id -- an UNCONDITIONAL act with a conditional consequence always produces an evidence row the machine layer should require; a sub-arm without an id is the unenforced-half pattern one layer down (the CF-3b precedent applied). Delta-cert PASS on the content (SG-2 scoped FC; both SG-2b terminals complete; naming discipline on the face); cert CONFIRMS on the one-line widening to 7 ids. ALSO AT MSTR: respawn request for 0.7.0_AE_CloudOps~L (dead post-20:52, two independent signals, holds the campaign gate) -- the V14-4c durable-context design (face + clause + committed ledger) is exactly what a successor resumes from; the request is the design paying out.
+
+### SG-2b TERMINAL: **NEGATIVE at n=49 -- TR BANKS WITH A MEASURED ANSWER; the late-join rule consumed its first result with ZERO re-adjudication**
+
+3.0.0_SA_CVO, ~21:5xZ. The census (76813, RAVC-4 76816): no consistent TR direction convention at n=49 against the pre-registered bar -- TR does NOT late-join, SG-2 stays FC-only, and NOTHING re-adjudicated because both branches were pre-decided; an early result changing only WHICH pre-decided branch fires is the rule working as written.
+
+TWO ROUND KEEPERS FROM ONE REPORT: (1) **THE BAR WAS IN THE SCRIPT BEFORE THE NUMBERS** (>=70% AND >=4, stated in advance so the threshold could not be chosen after seeing the result) -- the typed-number trap closed FROM ITS OTHER DIRECTION; the form every future census copies. (2) **SPECIMEN RETIREMENT:** 0086046319's arithmetic still closes AND the account is 1-of-49 behavior -- "the account is real; it is not representative," stated by the finder against its own alarm; the keeper record carries the base rate WITH the vivid case so the next reader inherits both.
+
+STATE: ~U holds both GO'd builds; 0.7.0_AE_CloudOps~L RESPAWNED (pid 22168, briefed from the durable context per V14-4c(b) -- the design's first successor-resume, working); on deployed-verified -> date-1 re-drive -> campaign-start on the seat's judgment.
+
+### P14-STAMP DEPLOY LEG ACCEPTED (4-of-4 consumer tables; PS-6 pends) + TWO KEEPERS -- one fired inside the IMMUTABLE RECORD
+
+3.0.0_SA_CVO, ~22:1xZ. The deploy leg (76841, RAVC-4 76846): 4-of-4 on the tables consumers read, fifth writer fenced-not-swept per ruling; TWO MIS-FIRED ARMS DISCARDED BEFORE TRUST (a refusal for the wrong reason; a build on a path the real invocation never takes -- DH-1's discrimination applied to the seat's own instruments); the pinned dry-run semantic EXERCISED. PS-6 then the SG build; campaign-start input (1) satisfiable.
+
+KEEPER: **THE CHAIN-DRY-RUN COVERAGE GAP, stated not papered** -- the chain passes c02 no --local-out on dry-run, so the QA form STRUCTURALLY cannot prove c02's stamp; exercised directly this time, inherited by every future QA dry-run. Remediation candidates at the cut: pass m to c02 on dry-run, or the QA form's coverage statement NAMES the exclusion.
+
+KEEPER: **python -c IS A SHELL-PARSED REGION** -- the 14a non-shell-writer rule satisfied in LETTER by a mechanism violating it in SUBSTANCE; it held all evening until a backtick appeared, then executed content out of a commit message silently -- the content-crossing-shell class's FIFTH firing, this time in the immutable record. The finder's transferable sentence: *the substitution held right up until content triggered it.* Not amending the shared-branch commit is correct -- the record carries the damage and the disclosure beside it. (This seat's own printf-msgfile slips earlier tonight are the same class one notch milder; Write-tool-only stands here too.)
+
+### RULING LANDED -- 76884 (1.0.0_SA_CTO): (a) c02 GETS THE MIRROR TOKEN; the banked chain-dry-run keeper CLOSES LIVE instead of at a future cut (durability-rule landing)
+
+3.0.0_SA_CVO, ~22:2xZ, same-turn. The (i)-ruling's own grounds applied a second time: an option whose breakage or blindness lands on the QA form is the worse option; a criterion names what CONSUMERS need demonstrated and the invocation rises to it, never the reverse; no S3 write inside a demonstration. **The 76849 keeper (chain-dry-run c02 stamp coverage gap) is STRUCK CLOSED-BY-THIS-RULING** -- the future cut arrived now as one token, cheaper than it will ever be again; c02 stops being the only c-stage without the mirror. Mechanics: PS-5b's expected delta widens to BOTH ruled tokens (a00+dh, c02+m); the deploy = the entrypoint alone under standing conditions; PS-2/PS-3 stay 4-of-4 AS WRITTEN, now demonstrable in the sanctioned QA form -- the honest criterion, not an amended one. ~U's hold of PS-6 rather than filing 3-of-4-as-PASS: the honest-FAIL discipline's third appearance, correct again. CVO delta-cert fires on COO's PS-1 amendment landing.

@@ -36,8 +36,23 @@ GRADE LADDER (reject-first; the tail is what you skip, not what you missed):
 An UNGRADED hit is impossible by construction: every match lands in exactly one band, and the band
 counts are printed whether or not the band is shown on this page.
 
+CORPUS + HIDDEN FILES (Andrew-direct 2026-08-27). A denominator only means something beside the
+POPULATION it was drawn from, and comp-find had no way to say which population it read. It does now:
+
+  --corpus default   tracked + untracked-not-ignored   (unchanged historical behaviour)
+  --corpus all       + gitignored, minus the declared ephemeral floor
+  --corpus ignored   ONLY gitignored files
+  --corpus raw       + ALL gitignored, floor disabled
+  --hidden           census: what in this scope is INVISIBLE to the default corpus
+
+The corpus mode now rides on the DENOMINATOR line, and a ZERO in the default corpus reports how
+many gitignored files in scope it never searched -- because `0 hit(s) across 0 file(s)` and
+`0 hit(s) across 27370 file(s)` are opposite claims that used to render almost identically.
+CORRECTED PREMISE: comp-find was never "tracked files only" -- `git ls-files --others` always put
+untracked-not-ignored files IN scope. The boundary is the .gitignore, and only the .gitignore.
+
 Read-only, deterministic, ASCII-only. Inherits the rail properties from _comprail:
-repo-scoped + .gitignore-aware (incl. nested repos) + sovereign-held guard + audited to
+repo-scoped + corpus-selectable + sovereign-held guard + audited to
 org/mcp/comp-which-rail.log.
 """
 from __future__ import annotations
@@ -106,9 +121,17 @@ def _usage():
     print("  --limit N     hits per page (default %d)" % PAGE_DEFAULT)
     print("  --band B      show only band B (HEAD|DEF|SURFACED|CONFIG|TEST|DOC|COLD)")
     print("  --files       collapse to matching file names only")
-    print("  --all         do not paginate (every hit)")
+    print("  --all         do not paginate (every hit)   [PAGING -- not the corpus; see --corpus]")
+    print("  --corpus M    WHICH FILES are searchable (default: default):")
+    print("     default   tracked + untracked-not-ignored   -- gitignored files are INVISIBLE")
+    print("     all       default + gitignored, minus the declared ephemeral floor")
+    print("     ignored   ONLY gitignored files -- 'is it in the hidden files?'")
+    print("     raw       default + ALL gitignored, floor disabled (slow, complete)")
+    print("  --hidden      report the out-of-corpus (hidden) file count for this scope and exit")
     print("  e.g. comp-find apply_aua_overrides data/")
     print("       comp-find --name 'test_pipescript_*.py'")
+    print("       comp-find bridge .runtime/ --corpus all      # gitignored tree")
+    print("       comp-find --hidden org/mcp                   # what can I NOT see here?")
     return 0
 
 
@@ -126,6 +149,8 @@ def main() -> int:
     limit = PAGE_DEFAULT
     band_filter = None
     include_held = False
+    corpus = "default"
+    hidden_only = False
     positional = []
     i = 0
     while i < len(argv):
@@ -138,8 +163,17 @@ def main() -> int:
             files_only = True
         elif a == "--all":
             show_all = True
+        elif a == "--hidden":
+            hidden_only = True
         elif a == "--include-held":
             include_held = True
+        elif a == "--corpus":
+            i += 1
+            corpus = (argv[i] if i < len(argv) else "").lower()
+            if corpus not in _comprail.CORPUS_MODES:
+                print("comp-find: ERROR: unknown --corpus %r. Valid: %s"
+                      % (corpus, ", ".join(_comprail.CORPUS_MODES)))
+                return 2
         elif a in ("--page", "--limit", "--band"):
             i += 1
             val = argv[i] if i < len(argv) else None
@@ -153,6 +187,52 @@ def main() -> int:
             positional.append(a)
         i += 1
 
+    # --hidden: a CENSUS, not a search. Every positional is a pathspec (there is no pattern to
+    # give). This is the instrument for the trap the corpus extension exists to close -- it answers
+    # "what is in this scope that comp-find cannot see?" BEFORE you read a zero as an absence.
+    if hidden_only:
+        scope = positional or ["."]
+        # A PATHSPEC THAT NAMES NOTHING RETURNS A CLEAN ZERO, AND A CLEAN ZERO HERE READS AS
+        # "nothing is hidden from you" -- the most reassuring sentence this tool can print, handed
+        # out for a directory that does not exist. `git ls-files -- no/such/dir` exits 0 with empty
+        # stdout, so the failed retrieval and the true negative are the SAME VALUE. Caught by the
+        # acceptance battery's own mutant arm; the scope must be proven to exist before its count
+        # is allowed to mean anything.
+        missing = [p for p in positional
+                   if p not in ("", ".") and not os.path.exists(os.path.join(WS, p))]
+        if missing:
+            print("comp-find [hidden] scope=%s" % ",".join(scope))
+            print("  ERROR: %d path(s) do not exist: %s"
+                  % (len(missing), ", ".join(missing[:5])))
+            print("  A count over a path that is not there is not a zero -- it is NO MEASUREMENT.")
+            _comprail.log_rail(RAIL_LOG, "RUN-FIND-HIDDEN-ERR", "comp-find", ",".join(scope),
+                               "missing=%s" % ",".join(missing[:5]))
+            return 2
+        searchable, ephemeral, herr = _comprail.out_of_corpus_count(WS, positional)
+        print("comp-find [hidden] scope=%s" % ",".join(scope))
+        if herr:
+            # A FAILED COUNT MUST NOT RENDER AS A ZERO. Those are the same number and opposite
+            # claims; printing 0 here would manufacture the "nothing hidden" verdict the caller
+            # is about to rely on.
+            print("  UNKNOWN: could not enumerate the ignored set -- %s" % herr)
+            print("  Treat the default-corpus result as UNBOUNDED, not complete.")
+            _comprail.log_rail(RAIL_LOG, "RUN-FIND-HIDDEN-ERR", "comp-find", ",".join(scope), herr)
+            return 2
+        total = searchable + ephemeral
+        print("  OUT OF CORPUS: %d gitignored file(s) in this scope are INVISIBLE to a default "
+              "comp-find." % total)
+        print("    %7d searchable with --corpus all   (real content)" % searchable)
+        print("    %7d ephemeral/vendor floor         (%s; only --corpus raw reads these)"
+              % (ephemeral, ", ".join(_comprail.EPHEMERAL_DIRS[:6]) + ", ..."))
+        if total == 0:
+            print("  A default-corpus zero over this scope covers EVERY file present. Nothing hidden.")
+        else:
+            print("  A default-corpus zero over this scope is NOT a claim about these %d file(s)."
+                  % total)
+        _comprail.log_rail(RAIL_LOG, "RUN-FIND-HIDDEN", "comp-find", ",".join(scope),
+                           "searchable=%d ephemeral=%d" % (searchable, ephemeral))
+        return 0
+
     if not positional:
         print("comp-find: ERROR: no pattern given.")
         return _usage() or 2
@@ -165,7 +245,11 @@ def main() -> int:
               "as LITERAL characters, not alternation/grouping. Use a BARE pipe: 'foo|bar'. A "
               "0-hit result below may be this, not a real absence.")
 
-    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
+    corpus_stats = {}
+    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec,
+                                                            include_held=include_held,
+                                                            corpus=corpus,
+                                                            stats=corpus_stats)
     if files is None:
         print("comp-find: BLOCKED: %s" % err)      # never silently empty
         _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, 'q="%s"' % err)
@@ -262,8 +346,15 @@ def main() -> int:
 
     mode = "name" if name_mode else "content"
     print("comp-find [%s] %r" % (mode, pattern))
-    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope%s%s%s"
-          % (len(hits), scanned,
+    # THE CORPUS MODE RIDES ON THE DENOMINATOR LINE, ALWAYS. A denominator without the population
+    # it was drawn from is the defect this extension was commissioned to fix: `0 across 0 file(s)`
+    # and `0 across 27370 file(s)` are opposite claims that rendered identically apart from a
+    # number nobody was told how to read.
+    _floor = corpus_stats.get("floor", 0)
+    print("  DENOMINATOR: %d hit(s) across %d file(s) scanned in scope [corpus=%s]%s%s%s%s"
+          % (len(hits), scanned, corpus,
+             (" | %d EPHEMERAL-FLOOR, NOT searched (--corpus raw reads these)" % _floor)
+             if _floor else "",
              (" | %d UNREADABLE, NOT searched" % skipped) if skipped else "",
              (" | %d BINARY, NOT searched" % binary) if binary else "",
              (" | band=%s -> %d" % (band_filter, total)) if band_filter else ""))
@@ -281,6 +372,28 @@ def main() -> int:
         if binary:
             print("  ^ AND %d in-scope file(s) were BINARY and never searched. Your zero does "
                   "NOT cover them." % binary)
+        # HIDDEN-FILE TRACKING, PAID FOR ONLY WHERE IT BUYS SOMETHING. Enumerating the ignored set
+        # costs ~11.7s unscoped / ~1.4s scoped, so it does NOT run on every search -- it runs on a
+        # ZERO in the default corpus, which is the one result a reader is about to convert into
+        # "it is not there". That is where a false absence is manufactured, so that is where the
+        # denominator has to name what it could not see. COMP_FIND_NO_HIDDEN_CHECK=1 opts out.
+        if _floor:
+            print("  ^ AND %d ephemeral-floor file(s) in scope were EXCLUDED before the search and "
+                  "never counted above. Your zero does NOT cover them -- --corpus raw reads them."
+                  % _floor)
+        if corpus == "default" and not os.environ.get("COMP_FIND_NO_HIDDEN_CHECK"):
+            searchable, ephemeral, herr = _comprail.out_of_corpus_count(WS, pathspec)
+            if herr:
+                print("  ^ AND the hidden-file count FAILED (%s) -- this zero's coverage of "
+                      "gitignored files is UNKNOWN, not zero." % herr)
+            elif searchable + ephemeral == 0:
+                print("  ^ COVERAGE: 0 gitignored file(s) in scope -- this zero covers every "
+                      "file present.")
+            else:
+                print("  ^ AND %d gitignored file(s) in scope were NEVER SEARCHED (%d searchable, "
+                      "%d ephemeral floor). YOUR ZERO DOES NOT COVER THEM."
+                      % (searchable + ephemeral, searchable, ephemeral))
+                print("    Re-run with --corpus all to search them, or --hidden to census them.")
         print("  Widen with a pathspec, or -i, or check the pattern (see the BRE warning above if shown).")
     else:
         last_band = None
@@ -311,8 +424,8 @@ def main() -> int:
                 print(_comprail.ascii_safe(line))
 
     _comprail.log_rail(RAIL_LOG, "RUN-FIND", "comp-find", pattern,
-                       'mode=%s hits=%d scanned=%d binary=%d page=%d/%d'
-                       % (mode, len(hits), scanned, binary, page, pages))
+                       'mode=%s corpus=%s hits=%d scanned=%d binary=%d page=%d/%d'
+                       % (mode, corpus, len(hits), scanned, binary, page, pages))
     return 0
 
 

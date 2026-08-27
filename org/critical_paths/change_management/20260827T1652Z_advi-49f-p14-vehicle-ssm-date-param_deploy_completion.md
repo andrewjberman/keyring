@@ -1,0 +1,24 @@
+# Deploy Completion Record
+**Date opened:** 2026-08-27T16:52:06.735853+00:00
+**Status:** OPEN
+**Deploy:** ADVI_49F.P14-VEHICLE V14-1: parameterize SSM document advi-49f-chain-dispatch with a Date parameter so a historical run renders --date {{ Date }} --upload. Empty Date = the scheduled production path unchanged (--production, T-1 from the trading calendar). allowedPattern ^$|^[0-9]{4}-[0-9]{2}-[0-9]{2}$ is the injection control on a value substituted into a runShellScript body. Targeted apply: the opal-assets tree carries 3 unapplied FOREIGN changes (CVO 76182/76186) that a bare untargeted apply would sweep in.
+**Authored by:** 0.7.0_AE_CloudOps~L
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | verify | targeted terraform apply of aws_ssm_document.advi_49f_chain_dispatch | post-apply targeted re-plan reads 0-diff | APPLIED via .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply advi49f_v14_198.tfplan, HALT_ACK=1 after reviewing all 5 pending messages (none STOP/HALT class, all 1d old and addressed to the BASE serial from a dead session). TARGETED DELIBERATELY: the untargeted plan reads 4 changes, 3 of them FOREIGN to this seat (MDPF egress AGGREGATE_PREFIX move + 2 output changes) -- filed to the surprise channel as 76182, CVO-accepted 76186. POST-APPLY RE-PLAN, same binary, same -target: 'No changes. Your infrastructure matches the configuration.' = 0-diff. BINARY TRAP RECORDED: the first plan was cut by PATH terraform v1.14.5 while safe-apply resolves the sibling .tools/terraform.exe v1.9.8; the apply REFUSED the cross-version plan file ('plan files cannot be transferred between different Terraform versions') rather than mis-applying it. Re-init+re-plan on 1.9.8 before the real apply. No shared damage: git status showed only advi_49f_floor.tf modified, .terraform.lock.hcl untouched. TOMBSTONE GAP CLOSED BY HAND: safe-apply printed 'tombstone gate could NOT plan this tree, so it checked NOTHING -- this is a GAP, not a pass'; verified manually against a printed denominator of 7 tombstoned resources (6 aws_s3_bucket + 1 aws_dynamodb_table), zero matching name 'advi-49f-chain-dispatch', and the plan is 0-to-add so the gate's blocking condition (a CREATE of a listed resource) is structurally unreachable. | CLOSED 20260827T170715Z |
+| L2 | verify | LIVE SSM document advi-49f-chain-dispatch (APPLIED plane) | aws ssm get-document read showing the Date parameter WITH allowedPattern and the rendered --date {{ Date }} --upload; DESIRED tf is not APPLIED | LIVE APPLIED-plane read, aws ssm get-document --name advi-49f-chain-dispatch (no comp-tool reads live SSM document content; rail-checked). DocumentVersion 1 -> 2, Status Active. PARAMETERS on the live document: Date {type String, default '', allowedPattern '^$\|^[0-9]{4}-[0-9]{2}-[0-9]{2}$'} alongside the pre-existing StartedByDispatcher {default 'false'}. RENDERED runCommand on the live document carries the historical branch VERBATIM: 'python3 chain_49f_entrypoint.py --date {{ Date }} --upload'. --production SURVIVES ONLY inside the empty-Date branch (if [ -z "${DATE_ARG}" ]), so it is unreachable on any historical run -- which is the point: chain_49f_entrypoint.py:411-415 derives date=prev_trading_day under --production and would otherwise run the SAME date for all 531 iterations, every one green. allowedPattern is the INJECTION CONTROL on a value substituted into a runShellScript body, not decoration. SCHEDULED PATH PRESERVED: Date defaults to empty, so the nightly fire renders the identical --production command it rendered at version 1; the existing dispatcher Lambda passes no Date and needs no change. | CLOSED 20260827T170716Z |
+| L3 | git | CLOUD commit of infra/aws/terraform/opal-assets/advi_49f_floor.tf | commit hash + push state MEASURED by ls-remote |  | OPEN |
+| L4 | verify | V14-2 halt-trap ruled out by exercise | >=2 consecutive direct ssm send-command with StartedByDispatcher OMITTED; host still running read from INSTANCE STATE, never send rc |  | OPEN |
+
+## Log
+
+- 20260827T165206Z OPENED by 0.7.0_AE_CloudOps~L with 4 leg(s)
+- 20260827T170715Z LEG L1 closed: APPLIED via .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply advi49f_v14_198.tfplan, HALT_ACK=1 after r
+- 20260827T170716Z LEG L2 closed: LIVE APPLIED-plane read, aws ssm get-document --name advi-49f-chain-dispatch (no comp-tool reads live SSM document conte

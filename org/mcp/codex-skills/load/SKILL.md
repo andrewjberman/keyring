@@ -1,0 +1,62 @@
+---
+name: load
+description: "Initialize one exact Codex agent seat from its full serial using only repository-local contracts and canonical Codex runtime helpers. Use when the user invokes `$load FULL_SERIAL`, writes `/load FULL_SERIAL`, asks to load or register a Codex seat, or when the ajb2 launcher supplies its automatic startup prompt."
+---
+
+# Load a Codex seat
+
+Use the full serial literally. Never drop, add, or infer a `~Lane` suffix.
+
+1. Resolve the workspace root from the current repository and run:
+
+   ```powershell
+   python org/mcp/codex-seat-load.py --serial <FULL_SERIAL> --format json
+   ```
+
+   Stop if it exits nonzero. Its output is the canonical, mechanically derived
+   seat context. Do not search the web or invent alternate paths.
+
+2. Confirm `OPAL_AGENT_SERIAL`, when present, equals the requested full serial.
+   A mismatch is an identity defect: stop and report both values. Never use
+   `.comp-graph/.agent_context` as identity; it is shared task-order context.
+
+3. Read these contracts completely, in this order:
+
+   - `AGENTS.md`
+   - `org/XXX.md`
+   - `org/mcp/CODEX_INBOX_MONITOR.md`
+
+4. From the generated context, read every `role_files` entry in the stated
+   order. A `~Lane` suffix is additive runtime and registration identity only;
+   it does not create a separate repository home. For a suffixed seat,
+   `seat_home` and `role_home` intentionally resolve to the same base role
+   directory, while `serial`, runtime state, readiness, and the nested inbox
+   retain the exact suffix. Never invent or require an exact-suffix role home.
+
+5. Verify the launcher-owned runtime with:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File org/mcp/codex-seat-status.ps1 -Serial <FULL_SERIAL>
+   ```
+
+   The first turn can race the bridge's initial thread binding. Retry this same
+   read-only probe at one-second intervals for at most ten seconds. Exit 0 is
+   the only ready state; after ten nonzero results, stop and report the failed
+   readiness arms. The launcher owns exactly one heartbeat and one turn bridge;
+   the bridge owns exactly one non-consuming detector. Do not start another
+   helper. Never substitute `inbox-watch.sh`, `check-inbox.sh`,
+   `agent-poller.py`, or the retired model-side `notify()` bridge.
+
+6. Sweep only the generated `inbox` root for unread regular files. For each
+   exact filename: read it, ACK its content when required, begin and perform
+   the first required action, and only after acting move that exact file into
+   the generated `read_inbox`. If the exact file is absent, treat the event as
+   a stale duplicate; never substitute another filename.
+
+7. State the exact serial, seat home, inbox, and measured readiness. Then
+   continue with the assigned work. Repeat the root-level inbox sweep at the
+   beginning of every active turn; do not launch a second monitor.
+
+For an already-open embedded session, migration is not an improvised startup.
+Use `org/mcp/handoff-codex-seat.ps1` from a separate PowerShell as specified by
+the canonical monitor guide.

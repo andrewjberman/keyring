@@ -1,0 +1,4 @@
+{
+  "registry": "isck entity_class vocabulary v0.1 -- additions arrive with a four-postulate record (Rule 24) or they are not additions",
+  "members": ["file", "symbol", "arn_resource", "chain_motif", "store", "graph_surface", "materializer", "discovered_system", "physical_instance", "runtime_family", "runtime_occurrence", "part"]
+}

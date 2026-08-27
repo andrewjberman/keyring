@@ -1,0 +1,42 @@
+{
+  "project_code": "ADVI_49F",
+  "macro_code": "ADVI",
+  "name": "49 Financial canonical runner chain (c-series) -- TWR-engine defect remediation on the account spine: the in-kind zero-flow root cause (c00/c02), the c01 NNA sign fix, the P14 backfill vehicle, and the RPS custody repoint",
+  "description": "REGISTERED 2026-08-27 ~15:5xZ by 1.0.0_SA_CTO on Andrew-direct 15:42Z at the MSTR terminal (record @8a89bef0b7, VERBATIM: 'Tell CTO and CVO that is a proper approach, they need to be registered under D2. Once that is done and validated, we may lift the hold and proceed with D2 agent instantiation.') -- the registration closes the layer-2 lint scope-blindness seam (3.0.0_SA_CVO 76099 item 4: an unregistered project is invisible to the pipeline's one commit gate). THE PROJECT CODE PREDATES ITS REGISTRATION: TOs minted under ADVI_49F from 2026-08-19 (2.0.0_SA_COO) against the live 49F canonical chain (opal-data-49financial/gold/advi/canonical/ -- 8 tables, twr_daily 9 cols). CREATED date below = the first TO cut, not this registration; basis stated so the two dates cannot be conflated. WORK COVERED AT REGISTRATION: c00-FIX COMPLETE (fix @89204884d7; census + C00-4 acceptance @a971c03dd2 -- affected universe 1,728 TWR-material accounts; proof VALID @4c1a9e8169/@e78c96132f; face flipped @6e13cba4ee). Root cause of the in-kind class @ea7c227a24 (in-kind securities transfers reach the TWR return as ZERO FLOW; Andrew's hypothesis, proven -- all ten worst returns collapse under the fix @4a1fd3e09b). GOVERNING PIN: Andrew's 08-26 ~23:4xZ no-filter word at the ~U terminal (74056, 'No per day plausibility') -- NO threshold/filter builds; the struck @3b2982e290 rule-shape pin stays struck (CTO 74069; convergence @2fc8f4011d). Remediation faces minted @fea672efd5, cert step-zero PASS @958dbfc: c01-SIGNFIELD (DS~U -- new signed field + defect-3 NNA sign fix @07bcdafb2b, nna_headline unaffected @e8ccd8eb7), c02-CFINPUT (re-based; in_kind_value keeps its unsigned contract), P14-VEHICLE (AE~L -- the SSM --date parameter, the ruled backfill's missing vehicle @4da71d969b; no-stage-scoping hazard @f62e93b9bb). RPS-CUSTODY stands (client-facing; Rider-1 materiality print BEFORE any repoint). DISTRIBUTION RESTRICTION inherited from the D2 sub-program (Andrew ~16:1xZ 08-24): nothing on this subject to 4.0.0_SA_CRO.",
+  "prds": [
+    {
+      "path": "docs/architecture/D2_ADVI_49F_E2E_PRD.md",
+      "label": "Parent directive PRD (D2) -- the 49F E2E program this chain serves",
+      "date": "2026-08-19"
+    },
+    {
+      "path": "docs/briefs/d2-critical-path-sequencing-20260827.md",
+      "label": "D2 critical path -- this project carries P1 (remediation close) via S2/S3/S6 of the held launch set",
+      "date": "2026-08-27"
+    }
+  ],
+  "related": [
+    "ADVI_PERFRP",
+    "ADVI_BDPARITY",
+    "ADVI_INSURE",
+    "ADVI_STITCH",
+    "ADVI_49FSRC"
+  ],
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "phase": "TO set at registration (2.0.0_SA_COO 76115, the custody holder): c00-FIX COMPLETE (@6e13cba4ee face, evidence in description); c01-SIGNFIELD (staged, DS~U folder) + c02-CFINPUT (staged, re-based + re-pointed to ~U -- file lives in the ~A folder as historical face, the issued_to block is the truth) + P14-VEHICLE (staged, AE~L folder; vehicle ungated, execution dep-gated on c01+c02) minted @fea672efd5, CVO cert step-zero PASS @958dbfc, GO-pairing armed pending the MSTR launch-hold lift; RPS-CUSTODY staged at DS base since 08-19, riders intact (client-facing, S6). Remediation order per the converged ruling @c8d8d02d35: c01-SIGNFIELD -> c02-CFINPUT -> P14-VEHICLE backfill; NO threshold (P1.1 struck @2fc8f4011d). Seats: S2 0.4.0_DS_ClientPlatform~U / S3 0.7.0_AE_CloudOps~L / S6 0.4.0_DS_ClientPlatform base, per the held five-seat list (76082 as corrected by 76095). NOTE ON PIPELINE POSITION: these TOs predate the strict per-project decomp discipline; a NEW ADVI_49F TO now requires <decomp_ref> at the commit gate (@77935eb308) -- decomp before TOs binds forward from this registration.",
+  "blocking": "The MSTR launch hold -- lift condition is THIS registration validated (Andrew 15:42Z @8a89bef0b7). Serve rides the shared arm-(a) sovereign gate (@7a843d25da, @8155516dbd).",
+  "created": "2026-08-19",
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4",
+    "0.7"
+  ],
+  "pipeline": "opal-data-49financial/gold/advi/canonical/ c-series (twr_daily, nna_canonical, flow_ledger, canonical_valuation, nna_atomic, accrual_materiality, valuation_integrity, canonical_positions) on the scheduled 49F chain (chain_49f_entrypoint) -> perfrp projection -> ADVI publisher (activation NOT BUILT, fail-closed by design @bfb74b20c2) -> platinum/advi/49financial/",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "directive": "D2"
+}

@@ -34,6 +34,48 @@ Cadence: **20m while ACTIVE > 0; 30m when ACTIVE = 1-2 and all advancing; 60m on
 
 ---
 
+## PAIRED MODE — `/drive <scope>`: the ACTUATE half of a DRIVE PAIR (Andrew-ratified 2026-08-27)
+
+**Contract + row schema: `org/ref/DRIVE_PAIR_PROTOCOL.md`. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260827_DRIVE_PAIR_SETUP.md`
+(his word: engaging `/self-drive` on CTO means instituting `/drive` on COO tied to the SAME target).**
+
+`/drive <scope>` armed as a pair-half differs from estate `/drive` in exactly four ways:
+
+1. **SCOPE = the pair's register predicate**, re-resolved each tick exactly as the CTO half resolves
+   it (never a pinned list). Step 2's hot-registry read FILTERS to it.
+2. **THE OBLIGATION IS SCOPED — and an empty tick is LEGAL.** Each tick: (a) read the pair's verdict
+   ledger since the cursor (`org/{tier}/{driver_base}/drive_pairs/<scope>/VERDICTS.jsonl`) and
+   convert each unconsumed `unblocks` row into its dispatch (GO pairing, TO cut FROM DECOMP CELLS,
+   re-seat ask via MSTR), writing the `consumed` field with the receipt; (b) run the drive imperative
+   over measured in-scope blocks ONLY. **Empty ledger + no in-scope blocks = a legal no-op tick** —
+   the deliberate, DESIGNED exception to the all-standing-by-is-failure gate, and the reason a paired
+   `/drive` cannot break a hold on a timer (the @014de1937 class this skill's OFF-by-default exists
+   to prevent). Outside a pair, nothing here changes: bare estate `/drive` keeps its standing rules
+   and its standing OFF.
+3. **CADENCE: the pair's offset** — this half ticks +15m after the CTO half (30m default each, off
+   the :00/:30 fleet marks) so verdicts land before the sweep reads them.
+4. **CARRIER + STOP: the SHARED clause** in the arming driver's XXX.md row (`paired_with:` names this
+   half). This half arms on the SAME operator word as the CTO half, never separately; a struck clause
+   read at tick-top stands this half down (final log, CronDelete, done). The cursor lives in this
+   seat's own drive log; lost state re-derives from the ledger's `consumed` fields.
+
+5. **NO SHARED MARKER — the cursor and the movement window are LOG-DERIVED, per lane (2026-08-27,
+   CTO fix on COO~X's tick-2 finding @506d7744d9, MSTR-concurred).** A paired tick neither WRITES nor
+   READS the base-keyed `org/mcp/.last-drive-<base>` marker: two lanes running paired drives (base +
+   ~X, measured live) clobber one base-keyed file, and the failure direction is UNDER-REPORTED
+   movement -> PARKED -> nudge ladder -> a false [STUCK] conviction manufactured on a timer. The
+   movement window for 2b.2a classification derives from the seat's OWN latest drive log + the
+   ledger's `consumed` timestamps — lane-scoped by construction, survives session loss. Estate
+   (unpaired) `/drive` keeps its legacy marker untouched. Any [STUCK] escalation states its window's
+   PROVENANCE (log-derived vs marker-derived); marker-derived windows are untrustworthy by
+   measurement while two lanes are live.
+
+**Everything else is unchanged /drive law:** resolve-don't-attest within scope, completing-worker
+alive, Rule 27 (TOs from decomp cells only, seats via MSTR), identity gate, RAVC on every dispatch.
+
+---
+
 ## Step 0 — Identity gate
 
 Scoped to **`2.0.0_SA_COO`**. Any other serial halts with:
@@ -129,7 +171,12 @@ faked by a broken read. `jq` is ABSENT here; python only. Prints its own denomin
 python - <<'PY'
 import json, pathlib, datetime
 now = datetime.datetime.now(datetime.timezone.utc)
-tick = int(open('org/mcp/.last-drive-2.0.0_SA_COO').read().strip() or 0)
+# CURSOR: paired mode NEVER reads the base-keyed marker (rule 5) -- two lanes clobber one
+# file and the failure direction is UNDER-REPORTED movement -> false PARKED. Pass the
+# LOG-DERIVED window in: the ISO time of THIS seat's last SUBSTANTIVE drive log (Step 7),
+# or the newest ledger `consumed` ts, whichever is older. Estate (unpaired) /drive may
+# still read its legacy marker and passes that value here instead.
+tick = TICK_CURSOR_UNIX  # <- substitute the log-derived value; do NOT open a shared marker
 rows = 0
 for f in sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl')):
     last, since = None, 0
@@ -183,7 +230,7 @@ Cross-check with `get_live_agents()` + `get_org_summary()`.
 > **Do NOT "clean up" `flat_orphans`** — they are the only evidence the dispatch path is broken.
 > → `DRIVE.md §4`
 
-**(A) MOVEMENT.** Compare each hot-TO owner against the prior tick (`org/mcp/.last-drive-2.0.0_SA_COO`).
+**(A) MOVEMENT.** Compare each hot-TO owner against the prior tick. **PAIRED MODE: the window is LOG-DERIVED** -- this seat's last SUBSTANTIVE drive log plus the ledger's `consumed` timestamps (rules 5 + Step 7's paired-mode note), NEVER the base-keyed marker, which a second lane clobbers. Estate (unpaired) `/drive` uses its legacy `org/mcp/.last-drive-<base>` marker.
 - **MOVED** (≥1 work-call OR commit since last tick) → ADVANCING; attest with the real timestamps, never the self-report.
 - **NO MOVEMENT** → PARKED, regardless of an "I'm building" summary. Nudge ladder: **tick 1** nudge citing ground truth + ask `(a) quiet / (b) parked / (c) blocked?`; **tick 2** re-dispatch harder or trace the blocker; **tick 3** `[STUCK]` to MSTR.
 - Work-calls flowing + no commit = MOVING. **`0` work-calls across a whole tick is the tell.**
@@ -245,9 +292,13 @@ Fire every classified action via `mcp__opal-agent-comms__send_message` **this cy
 
 **Re-attesting the same self-resolvable gate across ≥2 cycles is THE coast-failure.** 3 consecutive gate-failures ⇒ surface to MSTR.
 
-## Step 7 — Log
+## Step 7 — Log (SUBSTANTIVE ticks only — Andrew-direct 2026-08-27 ~22:1xZ at the COO terminal, verbatim: "we do not need a committed log with every tick")
 
-Write `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`: a findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>`.
+**A committed drive log is written ONLY on a SUBSTANTIVE tick:** ≥1 dispatch fired, a ledger row **WITH AN `unblocks` PAYLOAD** newly consumed (a closure/bookkeeping row — no `unblocks` key — is consumed silently and rides the next substantive log's delta line; COO ruling on COO~X's 76915 edge, 2026-08-27), a classification CHANGED (a seat entering/leaving PARKED/STUCK, a project changing class), or a finding surfaced. **A quiet tick writes NO file** — Step 8 close only (heartbeat; marker only in ESTATE mode per Step 8's branch), the `/log` no-delta precedent. Each substantive log's delta line covers the quiet ticks since the last one, so the record stays gapless without the noise files. Gate: a `[STUCK]` escalation or a PARKED conviction still requires a logged tick — convictions never rest on an unlogged window. → `DRIVE.md §5`
+
+When a log IS written: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md` — findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
+
+**Paired-mode cursor note (composes with rule 5 @46f4a0563e):** with quiet ticks unlogged, the movement window derives from the LAST SUBSTANTIVE log + the ledger's consumed timestamps; a widened window over-includes movement, which errs toward ACTIVE — the safe direction. It can never manufacture a PARKED.
 
 **Verify the pathspec is clean before handing it to the wrapper** — `safe-commit` commits the files you NAME, not the files you CHANGED, and returns `rc=0` either way.
 **Then verify YOUR commit landed, by hash — not by `HEAD` and not by a push range** (the tree is shared; `HEAD` drifts):
@@ -259,10 +310,13 @@ git merge-base --is-ancestor "$C" origin/CLOUD && echo "landed"
 
 ## Step 8 — Marker + heartbeat
 
+**PAIRED MODE: WRITE NO MARKER.** Rule 5 forbids it, and Step 7's quiet-tick path ("marker + heartbeat only") would otherwise route every quiet paired tick straight into the banned write. A paired tick does `heartbeat(...)` and nothing else; its cursor is the last substantive log.
+
+**ESTATE (unpaired) `/drive` only:**
 ```bash
 date -u +%s > org/mcp/.last-drive-2.0.0_SA_COO
 ```
-Then `heartbeat("2.0.0_SA_COO", summary="<cycle output>")`.
+Then `heartbeat("2.0.0_SA_COO", summary="<cycle output>")` -- both modes heartbeat.
 
 ## Step 9 — Chain-invoke `/allocation`
 
