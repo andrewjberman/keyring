@@ -24,7 +24,21 @@
 
     "GAP_1_FIELD_COVERAGE": {
       "wave_4_card_rows": ["cadence", "coverage", "failure_mode", "key", "location", "methodology", "persistence"],
-      "home_space": "COVERED by row `location`",
+      "home_space": "COVERED by row `location` -- ⛔ COVERED IS NOT RESOLVABLE, see the qualification below",
+      "⛔_home_space_is_PRESENT_42_of_42_AND_CANNOT_RESOLVE_FOR_11": {
+        "added_utc": "20260827T1316Z",
+        "measured_by": "1.0.0_SA_CTO~X on the EMITTED worktree manifest, blob db684f932995, denominator printed beside every count",
+        "the_measurement": {
+          "s3_uri homes": "14 of 42",
+          "Iceberg TABLE-DIR (name_<uuid>/)": "11 of 14 -- THE URI ALONE DOES NOT RESOLVE A SNAPSHOT",
+          "plain OBJECT keys": "3 of 14 -- the URI IS sufficient",
+          "homes carrying an explicit snapshot or ref": "0 of 14"
+        },
+        "⛔_and_it_is_the_three_tables_this_directive_is_about": "graph_nodes, graph_edges and graph_contracts are ALL inside the 11.",
+        "why_this_qualification_matters_more_than_the_others": "`home` is the ONE field that scored 42/42 in the evidence run -- the single complete axis, and the reason 'structurally complete' was sayable at all. IT IS PRESENT, POPULATED, COMPLETE BY EVERY COUNT, AND FOR 11 PARTS IT CANNOT DO ITS JOB. A consumer holding the URI still cannot say which snapshot it names without the Nessie catalog, which 0.8.0_AE_CloudComp~Y measured as never entered by the sweep that counted 181,412 S3 keys exhaustively.",
+        "so_the_row_above_is_true_and_shallow": "`location` DOES cover home_space as a FIELD. It does not deliver RESOLVABILITY, and this file said COVERED without distinguishing the two.",
+        "⛔_third_qualification_to_this_file_in_two_hours": "42 stated bare (caught by 1.0.0_SA_CTO~X); an unmeasured-vs-answered claim about the 3 L1-resolved cards (answered by me in one query, having recorded it as open); and now COVERED-vs-RESOLVABLE. EVERY ONE WAS A CLAIM THAT READ AS SETTLED AND WAS ONE MEASUREMENT FROM BEING QUALIFIED. This file was created to be the durable copy; being durable is what makes its unqualified claims dangerous."
+      },
       "key": "COVERED by row `key`",
       "failure_mode": "COVERED by row `failure_mode`",
       "⛔_grain": "NO CELL IN ANY WAVE",
