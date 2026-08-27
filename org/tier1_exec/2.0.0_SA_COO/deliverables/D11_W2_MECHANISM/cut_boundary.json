@@ -45,5 +45,39 @@
     "why_the_split_matters": "VERIFIED and DELIVERED-UNVERIFIED read identically from a count and take different downstream treatment. My issuer act said '36 delivered and standing', which is true and blends them. A total stated over mixed states is the residual-bucket shape in a status field -- the same defect as SCOPE-SUPERSEDED vs abandoned, one field over.",
     "issuer_note": "Raised by the certifier immediately after I published the blended figure. Corrected in the artifact rather than only in a reply, because the cut record is what a wave-3 driver reads and the message scrolls."
   },
-  "delivered_subjects_detail": "36 = 23 VERIFIED PASS + 13 DELIVERED-UNVERIFIED (card-level battery pending at close)"
+  "delivered_subjects_detail": "36 = 23 VERIFIED PASS + 13 DELIVERED-UNVERIFIED (card-level battery pending at close)",
+  "DELIVERED_IS_THREE_STATES": {
+    "measured_utc": "20260827T0127Z",
+    "VERIFIED_committed": {
+      "count": 23,
+      "lanes": {
+        "0.4.0_DT_ClientPlatform~X": 16,
+        "0.7.0_AE_CloudOps~X": 7
+      }
+    },
+    "DELIVERED_committed": {
+      "count": 6,
+      "lane": "0.8.0_AE_CloudComp~X",
+      "commit": "1c2359c931"
+    },
+    "DELIVERED_UNTRACKED": {
+      "count": 7,
+      "lane": "0.8.0_AE_CloudComp~Y",
+      "files": [
+        "W2-dmua_mdpf_delivery_cadence_contract.json",
+        "W2-dxxm_c0_c1_rung_boundary.json",
+        "W2-igwg_native_cloudedge_direction.json",
+        "W2-iivv_pstmrt_completeness_and_trigger_layer.json",
+        "W2-kwjy_live_graph_edge_types.json",
+        "W2-mqju_c2_motif_families.json",
+        "W2-qgtd_graph_contracts.json"
+      ],
+      "state": "present in ONE device's working tree; NOT in the repository at any commit",
+      "NOT_LOST": "These cards were NEVER COMMITTED. That is a different fact from lost, with a different remedy: the lane -- or a successor CCY2 under its own serial -- commits its own files. A reader finding 29 in the repository against a record saying 36 would otherwise conclude seven cards were destroyed.",
+      "why_no_instrument_caught_it": "The files are ON DISK, so every count, every directory listing and the certifier's card-level battery read them as delivered. UNTRACKED-BUT-PRESENT is invisible to every instrument this wave refined. Found by a per-file `git ls-files --error-unmatch` check with the 6 tracked CCX2 cards in the same directory as a FIRING CONTROL.",
+      "override_REFUSED": "2.0.0_SA_COO~X raised committing them under GIT_COMMIT_AUTHOR_OVERRIDE as an open call and ARGUED AGAINST IT. 3.0.0_SA_CVO~X ruled NO OVERRIDE, on the in-session precedent: 1.0.0_SA_CTO~X had refused to stage 2.0.0_SA_COO~X's own uncommitted file five hours earlier, that refusal was ruled right, and the same rule binds with the roles rotated. An issuer override would put the issuer's hand on artifacts they did not measure and mint a provenance ambiguity that SURVIVES BECAUSE IT LOOKS LIKE A RESCUE.",
+      "collapses_when": "the lane or a successor commits; then this state annotates away and delivered is TWO states."
+    },
+    "urgency_withdrawn": "The issuer first wrote 'the window is closing' and 'unrecoverable' to MSTR. Working-tree files survive session end. Corrected before the override was adjudicated, not after -- sizing a risk upward to justify an act you already want is its own failure."
+  }
 }
