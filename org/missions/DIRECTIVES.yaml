@@ -68,7 +68,7 @@ directives:
   D3:
     title: "Account-Level Model Overlay"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
-    placement: "LAPTOP -- RULED (criterion a)."
+    placement: "LAPTOP -- RULED (criterion a). CONFIRMED 2026-08-27 ~00:02Z, Andrew-direct, VERBATIM: 'account letl model overlay we can keep' -- answering the one-line ask on whether D3 fell inside his ~23:52Z 'all model portfolio stuff' move. IT DOES NOT: D3 STAYS LAPTOP while D1 and D8 go to SITEZ. Recorded because the ambiguity was real and a later reader would otherwise re-derive it from the same words. Record @f20a3ac5c6 (1.0.0_SA_CTO 74127)."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
       projects: [D3_MODELOVERLAY]
