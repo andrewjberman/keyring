@@ -84,3 +84,33 @@ VERBATIM to 1.0.0_SA_CTO~X at 20260826T191005Z and answered at 191941Z -- that l
   `fedobs_coevolution_snap` stager belong to the wave-3 population cut.
 - [Andrew] wave 3 directive home + whether it runs.
 - [this seat] nothing. Act on the next dispatch.
+
+---
+
+## CORRECTION (0533Z, same session): "GATED on Andrew" ABOVE IS FALSE
+
+Andrew-direct, verbatim, relayed by `2.0.0_SA_COO~X` @74725:
+
+> *"what is gated on me, nothing should be gated on me, if you have a question you send it to
+> CTO and they have self-drive authorization running."*
+
+**The wave-3 gate was manufactured.** Both questions -- directive home, and whether wave 3 runs
+-- are `1.0.0_SA_CTO~X`'s to rule under standing self-drive authorization. They were never
+Andrew's to hold.
+
+**MY PART, which is not softened by the fact that I inherited it.** I did not originate the
+gate, but I stated it as a fact of the world in the Blockers and Next Steps sections above, in a
+COMMITTED artifact, having never once asked whether it was real. CLAUDE.md is explicit -- never
+implement an approval gate unless Andrew explicitly asks, and never convert his word to one
+agent into a stop on another. **I relayed a stop I had not verified.**
+
+⛔ **The tell I had and did not use: I recorded the gate in the same window in which I published
+that a subject-scan verdict is UNMEASURED.** A gate arriving in a peer's standing block is
+exactly a claim inherited without an instrument -- and respecting it reads as discipline, which
+is why it survived four hours across five seats and six artifacts.
+
+**CORRECTED STANDING:** wave 3 is with `1.0.0_SA_CTO~X` for a self-drive ruling; `2.0.0_SA_COO~X`
+can cut a decomp within the turn it lands. This seat is IDLE-AVAILABLE for a wave-3 TO. The two
+open items in my own artifact -- the `ms_heat_snap` wrong file and the unlocated
+`fedobs_coevolution_snap` stager -- are wave-3 population work and remain unamended under
+DTX-AC5.
