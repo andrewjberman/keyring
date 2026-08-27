@@ -115,7 +115,9 @@ contest_id has no resolved partner — **amended per RA-2: `outcome: upheld` REQ
 `consequence_refs` naming the consequential event(s) (canonicalized_as / merged_into / binding
 close-rebind), and the fold keeps the subject CONTESTED until the referenced consequence EXISTS —
 an upheld challenge without its consequence is a promise, and a projection that clears on a
-promise re-opens the laundering cell at the contest door.** A contest without a stable id is not
+promise re-opens the laundering cell at the contest door. Binding rule (CRO implementation
+carry): the referenced consequence must be an event on the SAME typed target, dated AFTER the
+contest opened — an unrelated consequence event is not satisfaction.** A contest without a stable id is not
 replayable and does not project. Never a lifecycle value that displaces the interval truth. `entity.current_status.contested` and
 `binding.status.disputed` become PROJECTIONS (contest event open => projection shows contested/
 disputed) — the 3.5 carve-out (`disputed` MAY carry `valid_to: null`) stops being a smuggling
@@ -142,8 +144,14 @@ finally has a legal form that is not a banned self-loop and not a manufactured s
 **RA-3's direction table, RULED (a blanket subject-rule was WRONG — `replaces` retires the
 OBJECT):** the party that ceases per relation kind is — `merged_into`: SUBJECT (A merged into B
 retires A) · `replaces`: OBJECT (A replaces B retires B) · `successor_of`: OBJECT (A successor-of
-B retires B) · `canonicalized_as`: NEITHER (the subject persists, non-canonical) ·
-`split_from` / `instance_of` / `candidate_equivalence`: NEITHER. `retired` derives from
+B retires B) · `canonicalized_as`: SUBJECT — **RA-5's catch: my first row said NEITHER, which
+CONTRADICTED the live contract's own semantic arm (§3.4: canonicalized_as set -> current_status
+retired|contested, carried by the validator) — the CONTRACT's position is the ruled one: a
+canonicalized entity is never active/provisional; after adjudication the subject RETIRES into the
+canonical target (`contested` only while a contest is open), its serial persisting as a resolvable
+alias per the non-destruction law, never as an active identity. The relation kind and the entity
+field share one token BECAUSE they are one reconciliation path (§5) — one event, one projection,
+NOT two unrelated names** · `split_from` / `instance_of` / `candidate_equivalence`: NEITHER. `retired` derives from
 `retirement` OR from occupying the RULED CEASING ENDPOINT of a directional relation; both paths
 carry `evidence_refs`. The table is CLOSED over the relation vocabulary — a new relation kind
 lands WITH its direction row or it does not land.
