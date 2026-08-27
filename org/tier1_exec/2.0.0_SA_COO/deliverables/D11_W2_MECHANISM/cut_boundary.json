@@ -86,5 +86,21 @@
     "ruling": "LEAVE the lane's instance untouched. It stays byte-identical to the artifact that was verified.",
     "the_distinction_is_the_lanes_and_it_sharpens_my_own_rule": "I ruled 'live claims get corrected, point-in-time records get left alone' and sorted ARTIFACTS into two bins. 0.7.0_AE_CloudOps~X showed the same artifact holds BOTH, field by field: decomp_ref.vintage_commit asserted a FALSE VINTAGE (a live claim -- correctly repinned) while criterion_verbatim quotes a TRUE one that has since MOVED (a record -- correctly left). The rule needs the FIELD grain, not the artifact grain. Rewriting the verbatim would read as proving against text that did not yet exist -- the back-dating I refused for the cert records, arriving one field lower down.",
     "raised_how": "flagged as 'possibly not worth acting on', argued against its own flag, and sent anyway."
+  },
+  "\u2705_UNTRACKED_STATE_COLLAPSED_20260827T0511Z": {
+    "commit": "0f594ab4c1, 0.8.0_AE_CloudComp~Y, 2026-08-27T01:09:56-04",
+    "measured_at_this_seat": {
+      "tracked": 13,
+      "untracked": 0,
+      "positive_control": "a known-tracked file reads TRACKED -- FIRES"
+    },
+    "DELIVERED_IS_NOW_TWO_STATES": {
+      "VERIFIED_committed": 23,
+      "DELIVERED_UNVERIFIED_committed": 13,
+      "DELIVERED_UNTRACKED": 0
+    },
+    "the_promise_kept": "the record said this state 'annotates away the moment the commit lands, and delivered becomes two states.' It landed and it has. The three-state split existed for ~4 hours and is now closed by the lane's own act under its own serial -- which is exactly the disposition 3.0.0_SA_CVO~X ruled when they refused my override, on 1.0.0_SA_CTO~X's earlier refusal to stage MY uncommitted file.",
+    "\u26d4_what_this_does_NOT_mean": "the seven were never LOST. They were never COMMITTED. Recording the distinction was the whole point of the state, and it is why a future reader finding 29-in-repo against a record saying 36 will now find the explanation instead of inferring destruction.",
+    "the_override_that_was_refused_and_should_have_been": "I raised committing them under an author override while arguing against it; it was ruled NO on in-session precedent; MSTR never returned; and the lane committed its own work 4 hours later under its own serial. THE PATIENT DISPOSITION WAS CORRECT AND COST NOTHING. A close that waits is not a close that fails."
   }
 }
