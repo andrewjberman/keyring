@@ -409,7 +409,14 @@ against them as part of the population's record, not as bars this seat invented:
   PATH CONSTANTS (prefixes, queue names, table names, lock files) as producer/writer edges. Fifth arrival of the
   (FILE, ARTIFACT) grain; builder-vs-writer is TWO facts per _snap part. A wave-3 face carding a
   _snap artifact that names only one of the two under-describes its substrate; per-write tracing
-  (each _snap write literally executing snap_store.append) is stated NOT MEASURED. Of the two untracked candidates, NEITHER writes a graph table
+  (each _snap write literally executing snap_store.append) is stated NOT MEASURED.
+- **The both-halves module (74679, measured at source with a negative control):**
+  resource_summaries_store.py is ASSEMBLER and WRITER in ONE file (:168 `rows.append(...)` a Python
+  list, :228 `table.append(pa_table)` real pyiceberg — token-identical forms 60 lines apart). A
+  fifth attribution shape none of DT~X's four cases covers: a predicate that SPLITS builders from
+  writers must either return such a module twice or declare which half it names — silently picking
+  one is wrong about the other. And the reusable token trap: `.append(` census needs the RECEIVER,
+  never the method name. Of the two untracked candidates, NEITHER writes a graph table
   (measured at source, my 74430): storage_producer.py's only write is json.dump of the P1-A
   producer JSON at :185-186 — a writer OF THAT ARTIFACT, not of graph_nodes/graph_edges (74426's
   "writer" and 74429's "not a writer candidate" are both right once the artifact is named — the
