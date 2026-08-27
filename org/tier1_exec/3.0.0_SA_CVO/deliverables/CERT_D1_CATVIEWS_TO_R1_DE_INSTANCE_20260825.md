@@ -208,3 +208,77 @@ affect your cert"* is what surfaced this. That judgment belongs to the certifier
 cost one message and caught a defect the certifier had shipped.
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 2 — 2026-08-27 ~19:3xZ. **THE LAYER-5 FINDING'S SECOND LIMB IS NOW STALE.** Both limbs are closed; this certification said neither.
+
+Triggered by an Andrew-direct assessment of `D1_CATVIEWS` relayed through `1.0.0_SA_CTO~Z`, who
+measured the claim this cert carries. **Verified independently at this seat before amending.**
+
+### 1. WHAT THIS CERT SAID
+
+The Layer-5 section carries two limbs:
+
+1. **`D1-i-1` IS CARRIED BY NO TO** — an orphaned cell.
+2. **"AND THE DEFECT IT WAS WRITTEN TO CATCH HAS NOW LANDED"** — citing
+   `0.4.0_DS_ClientPlatform~N` (71414), that `mdpf_category_registry.py` *"reaches **NO** channel:
+   absent from `build_package.py`'s PACKAGE list (grep 0, positive control 1)."*
+
+### 2. ⛔ BOTH ARE NOW CLOSED, AND NEITHER CLOSURE IS VISIBLE FROM THIS DOCUMENT
+
+**LIMB 1 — DISCHARGED.** `2.0.0_SA_COO~Z` (msg 9437): `D1-i-1` is now carried by
+`D1_CATVIEWS.TO-I1-DS`. ⭐ And `0.4.0_DS_ClientPlatform~Z` independently checked that the discharge
+does **not** rest on that TO's proof instance — which is structurally invalid (`D1_CATVIEWS-S11`) —
+but on the TO's own face at `:12` and `:123-124`. **The discharge survives the invalid instance, and
+somebody verified that rather than assuming it.**
+
+**LIMB 2 — STALE.** Measured at HEAD at this seat:
+
+```
+build_package.py:149   ("mdpf_category_registry.py", "data/mdpf/scripts/gold/mdpf_category_registry.py")
+POSITIVE CONTROL :139  ("mdpf_aggregate_aua.py", ...)          -- a module certainly in PACKAGE
+NEGATIVE CONTROL       fabricated token -> 0                    -- see §3, the first one was poisoned
+:180                   describes the gap in the PAST TENSE: "while the module was in no PACKAGE entry"
+```
+
+**IT IS IN PACKAGE.** ⚠ **`0.4.0_DS_ClientPlatform~N`'s measurement was TRUE AT ITS VINTAGE
+(2026-08-25) and this certification was accurate when written.** Neither is an error. **What is wrong
+is that a reader today takes *"reaches NO channel"* as current, because a certification carries no
+forward-reference to its own supersession.**
+
+>> **THIS IS THE THIRD TIME TODAY THIS EXACT SHAPE HAS COST SOMETHING** — `SAT-inv-2`'s amendment
+   landing where a reader does not look, eleven `disarm_owner` rows naming a re-scoped lane, and now
+   a cert limb that was true for two days. **A record accurate at its vintage, read as current.** <<
+
+### 3. ⛔ AND MY NEGATIVE CONTROL WAS POISONED BY A PREVIOUS SEAT'S NEGATIVE CONTROL
+
+My first fabricated token returned **1**, not 0 — which would have invalidated every reading above
+had I not chased it. The cause:
+
+```
+build_package.py:393    # negative control zzz_no_such_module_9999 absent).
+```
+
+**A previous seat used the same fabricated token, then wrote a comment into the file DOCUMENTING
+their control — and my control matched their record of a control.** A second, unused token returns 0
+and the reads stand.
+
+⭐ **This is the estate's banked *a corpus that records its own tests* hazard, encountered live:**
+banking a control's token verbatim into the corpus **poisons that token for every future control over
+the same corpus.** The transferable form: **a negative-control token must be generated fresh, never
+reused from a record — and a control that returns non-zero is a fact about the control until proven
+otherwise.** I nearly discarded a correct measurement over it.
+
+### 4. WHAT CHANGES AND WHAT DOES NOT
+
+- **The VERDICT stands: CERTIFIED.** No criterion was wrongly scored; the Layer-5 section is
+  commentary on project-wide coverage, not an acceptance judgement on this instance.
+- **Limb 1 → DISCHARGED. Limb 2 → STALE, superseded at HEAD.** Both recorded here so the next reader
+  does not re-derive a closed orphan or act on a closed packaging gap.
+- **No claim about `D1_CATVIEWS`'s NO-SHIP.** `1.0.0_SA_CTO~Z` measured that every blocker the
+  interlock NAMES is discharged and stated the bound plainly — *"these four no longer block" is not
+  "nothing blocks"* — and explicitly did not lift it. **A lift is a named act by `2.0.0_SA_COO~Z` or
+  Andrew, and nothing in this certification is available as support for one.**
+
+— `3.0.0_SA_CVO~Z`
