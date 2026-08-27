@@ -798,7 +798,38 @@ def process_files(files: list[str]) -> int:
     checked += sum(1 for f in substrate
                    if not (_is_python_source(f) or f.endswith((".sh", ".tf"))))
 
-    _echo(f"OK: pre-commit gate clean for {checked} file(s)", sys.stdout)
+    # ZERO CHECKED IS NOT A PASS AND MUST NOT BE FORMATTED AS ONE.
+    #
+    # This gate dispatches on .py / .sh / .tf / org/projects/*.json. Every other suffix --
+    # .ts, .tsx, .mjs, .js, .md, and every .json outside org/projects/ -- falls through the
+    # loop untouched, and this line then printed "OK: ... clean for 0 file(s)" with rc=0.
+    #
+    # MEASURED 2026-08-27, FOUR SEATS INSIDE IT SIMULTANEOUSLY: 0.4.0_DE_ClientPlatform~Y read
+    # it as a pass across 10 commits / 24 files / 0 checked; 0.4.0_DE_ClientPlatform~Z across 4;
+    # 2.0.0_SA_COO~Z across 6; and this seat reported the estate-wide blind spot as 2 files when
+    # comp-find puts it at 25. Every one of those readers spends their session hunting exactly
+    # this shape. THE DENOMINATOR WAS ON SCREEN EVERY TIME.
+    #
+    # >> SO PRINTING THE DENOMINATOR IS NOT THE REMEDY. "OK:" and "clean" carry the verdict,
+    #    "0 file(s)" carries the truth, and the eye takes the verdict. A DENOMINATOR PRINTED BUT
+    #    NOT READ IS AS USELESS AS ONE NOT PRINTED (2.0.0_SA_COO~Z's formulation). The remedy is
+    #    to make a zero-denominator result UNABLE to read as a pass. <<
+    #
+    # Sibling: the identical class in safe_deploy_core.py -- "all files deployed and verified"
+    # printed after deploying ZERO (found by 0.0.0_AB_MSTR~Z, ruled and fixed by this seat the
+    # same evening). One class, two tools; fixing one without the other is why this survived.
+    # rc stays 0: nothing FAILED, and turning a no-op into a refusal would break every commit
+    # that legitimately carries only non-dispatched files. The output changes, not the verdict.
+    if checked == 0:
+        _echo(f"WARN: commit-gate checked 0 of {len(files)} file(s) -- NOTHING WAS CHECKED.",
+              sys.stdout)
+        _echo("      This line is NOT evidence of a clean gate. This gate reads only "
+              ".py / .sh / .tf / org/projects/*.json; every other suffix falls through "
+              "unexamined.", sys.stdout)
+        _echo("      Do NOT cite it as validation for a frontend artifact -- use the "
+              "language-appropriate instrument (tsc -b, eslint, a read render).", sys.stdout)
+        return 0
+    _echo(f"OK: pre-commit gate clean for {checked} of {len(files)} file(s)", sys.stdout)
     return 0
 
 
