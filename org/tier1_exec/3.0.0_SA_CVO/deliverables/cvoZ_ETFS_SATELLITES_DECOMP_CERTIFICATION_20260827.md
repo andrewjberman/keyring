@@ -479,3 +479,90 @@ put it in TO-3's acceptance criteria instead.
 | **new: `SAT-b-1` oracle understates its own failure set** | **LIVE, P2** — 8 sites, 3 loud; `:353` doubles as the persistence validator | `2.0.0_SA_COO~Z` (author) |
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+## AMENDMENT 4 — 2026-08-27 ~19:0xZ. **SCOPE FENCE against the ANDREW-DIRECT ~18:5xZ**, plus the measurement that settles the FACTUAL half of his fork.
+
+Andrew ruled (recorded verbatim by `1.0.0_SA_CTO~Z` @`dc18f5a855`): *"we have to sort out
+multi-tenant functionality for the 'Positioning' page … the patterns that govern these things need to
+be deeply analyzed and an implementation spec designed and rigorously validated for potential
+breakages."*
+
+That is a **NEW PROJECT under Rule 27**, not an amendment to `ETFS_SATELLITES`. **This amendment adds
+no verdict and re-opens nothing.** It exists because the new project's spec will reach for the
+nearest certified artifacts, and **two of them are mine.**
+
+### 1. ⛔ THE `modesFor` RECORD IS SCOPED TO A **PRESENTATION** DOMAIN AND DOES NOT TRANSFER
+
+I certified `ctoZ_SAT_C2_MODESFOR_FIRM_FOUR_POSTULATE_RECORD_20260827.md` (Amendment 3). Its own
+declared-domain line reads:
+
+> **DECLARED DOMAIN:** *the viewer-firm identities this application can **present** a Positioning page to*
+
+⛔ **RULE 24 POSTULATES ARE SCORED AGAINST THE DECLARED DOMAIN AND NOWHERE ELSE.** That record is
+valid for **which firms may SEE which pills** — and it is **not** evidence about which firms may
+RECEIVE which data. **If Andrew's *"nobody else"* means a data-access boundary, the domain changes,
+and the record must be RE-AUTHORED against the new domain, not re-cited.** A four-postulate record
+carried across a domain change is the untestable-criterion shape this project already refuses.
+
+### 2. THIS CERTIFICATION MAKES **NO** AUTHORIZATION CLAIM — MEASURED, NOT ASSERTED
+
+Sweep of this deliverable for `authoriz*` / `access boundary` / `served-artifact`: **zero matches**
+before this amendment. **Nothing in it supports either reading of "nobody else", and nothing in it
+supports a PROD promote.** `1.0.0_SA_CTO~Z` flagged the promote tension without treating it as a
+ruling; **this seat adds only that no certification of mine is available as support for one.**
+
+### 3. `SAT-c-3`'s GROUND IS **MEASURED AT THE CLIENT PLANE** — AND I DID NOT INSPECT IT WHEN I CERTIFIED IT
+
+`SAT-c-3` declares the built gate a VISIBILITY gate rather than an authorization boundary, resting on
+*"the underlying models payload is **already served to this viewer**; satellites are arithmetic over
+it."* ⚠ **I certified the decomp containing that cell and did not inspect its ground.** I was drafting
+this amendment to record the premise as *asserted, not measured* — **and that would have been wrong,
+because `0.4.0_DE_ClientPlatform~Y` measured it at source (portal `797c4f8d`) before I committed:**
+
+```
+1  /positioning ALLOWLISTED FOR ALL FOUR PARTNER FIRMS (49financial · inflection · cottonwood ·
+   demo, + opal-capital internal). Denominator 4 of 4.       [independently matches my own read]
+2  SATELLITES IS ARITHMETIC OVER THE ALREADY-FETCHED MODELS PAYLOAD -- satelliteAdapter consumes
+   the same positioningData the page already holds; Positioning.tsx adds NO query for satellites.
+3  THEREFORE THE GATE REMOVES THE PILL AND THE MODE, NOT THE BYTES.
+```
+
+>> **SO `SAT-c-3`'s GROUND HOLDS, AND THE FORK'S FACTUAL HALF IS SETTLED AT THE CLIENT PLANE: a
+   non-Cottonwood viewer's browser ALREADY HOLDS the constituent data. If *"nobody else"* is a
+   UI-VISIBILITY statement, the shipped gate satisfies it today. If it is a DATA-ACCESS boundary, the
+   shipped gate CANNOT satisfy it and CANNOT BE MADE TO client-side — the work moves server-side and
+   becomes a security review.** <<
+
+⛔ **WHAT REMAINS UNMEASURED IS THE *EDGE* PLANE, AND THE MEASURING SEAT FENCED IT THEMSELVES.**
+`getPositioningData` carries a comment reading *"DEMO: Using public endpoint (no auth)"*, and
+`0.4.0_DE_ClientPlatform~Y` **explicitly refused to relay it as measured** — recording only what they
+did read at source, that `apiRequest` attaches a bearer whenever a token exists, so the **client**
+always sends one. ⭐ **Whether the served route REQUIRES it at the edge is a serving-plane fact nobody
+has measured, and a comment is a claim about a vintage, not about the running system.** **If the fork
+settles as ACCESS, that edge posture is the first thing needing measurement — and it needs measuring
+rather than reading.**
+
+⛔ **I am not taking that measurement**: it is a serving-plane act outside this seat, and the standing
+refusal holds — **nobody goes credential-hunting; if a bearer legitimately exists for this purpose,
+the seat that holds it says so.**
+
+### 4. ⭐ ONE ARTIFACT ALREADY CARRIES THE RESERVED QUESTION
+
+`modeAccess.ts` states **on its own face** that the gate is a visibility gate and not an authorization
+boundary, **with the reason** (*a client-side decision cannot be an authorization boundary, because
+the bundle ships to the viewer; authorization lives at the API boundary*) **and with what would be
+required if the intent were the other reading** — instructing a successor **not to "strengthen" the
+file into a boundary but to MOVE the decision.** **A file that tells the next author which of two
+designs it is NOT, and where the other one would live, is the shape that survives a scope change.**
+
+### 5. WHAT IS UNCHANGED
+
+**Every verdict in this certification stands.** Round 1 is certified and closed; F1/F2/F4/F5 closed,
+F3's fixture owed at the DS lane, the `SAT-b-1` oracle finding LIVE with `2.0.0_SA_COO~Z`. ⛔ **The
+sovereign question — visibility or access — is Andrew's. `1.0.0_SA_CTO~Z` put it to him correctly,
+`0.4.0_DE_ClientPlatform~Y` supplied its facts without adjudicating it, and this seat is not
+answering it in either direction.**
+
+— `3.0.0_SA_CVO~Z`
