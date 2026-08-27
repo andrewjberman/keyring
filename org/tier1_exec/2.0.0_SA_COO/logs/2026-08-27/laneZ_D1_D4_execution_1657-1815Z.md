@@ -41,7 +41,7 @@ all aged when the integrator ran. Re-measure before quoting.
 | 2 | **`SAT-inv-2` landed on the normative line `:118`** | `936b9ae1e9`. Unblocked CTO~Z's D4 membership cut; CVO discharged the TO-mint block |
 | 3 | `D1_CATVIEWS.json` `blocking` corrected | `cb03bc98c1`. Read `"None."` while the executing lane read NO-SHIP |
 | 4 | **D1_NAMEDISCOVERY F1 + F4** | `669e04f27b`. R-n1's ME claim proved for the VOCABULARY, asserted for the MATCH RELATION |
-| 5 | ⛔ **`TO-D1b` — *NOT* CLOSED. THIS ROW WAS FALSE WHEN COMMITTED AND IS CORRECTED IN PLACE.** The record still reads `<status>pending`. See §6.10 | **NO COMMIT — the closure is HELD, deliberately.** D1b-5's discharge condition was met, measured, 3 controls — **the evidence is right and unlanded** |
+| 5 | **`TO-D1b` CLOSED 5/5 — but read §6.10 before quoting this row: it has now been WRONG IN BOTH DIRECTIONS.** Committed FALSE as closed (it was held), corrected to NOT-CLOSED, and **that correction went stale in 20 minutes** when the hold's condition was met. | Face `c4b9757d5b`; evidence `f1b79041bd` (`0.4.0_DS_ClientPlatform~Z`, their author line, verified at source — 4 checks incl. WHICH coverage limb carries the pass). ⛔ Does **NOT** lift the NO-SHIP and does **NOT** close the tool-gap class (1 of 2 instances re-measured) |
 | 6 | **`TO-R1-DS` CLOSED 9/9** | `8389c4ead7`. Certified `989a92e806` 2.5 days earlier |
 | 7 | TO-6 placement defect (mine) | `67a0bbda81` |
 | 8 | TO-7 assignee + id anchor (mine) | `fb87f2161e`, `515131f3d4` |
@@ -146,6 +146,13 @@ NOT a gate** — `DS~W` builds now.
        RECORDS THAT LAGGED THE WORLD. This is a REPORT THAT RAN AHEAD OF THE RECORD — same gap,
        opposite sign, and NO CENSUS CATCHES IT, because the artifact is fine and only the claim about
        it is wrong.** Every instrument I built today reads artifacts. Not one reads my own sentences. <<
+    ⚠ **AND THIS ENTRY WENT STALE IN 20 MINUTES.** I corrected row 5 to *NOT CLOSED* at ~18:35Z;
+    `0.4.0_DS_ClientPlatform~Z` landed the evidence at `f1b79041bd` and I closed the face at
+    `c4b9757d5b`. **So this row has now been wrong in BOTH directions inside one hour** — first a
+    report ahead of the record, then a correction behind it. ⛔ **A CORRECTION IS A CLAIM WITH A
+    VINTAGE LIKE ANY OTHER, and on a fabric moving this fast the fix ages as readily as the
+    defect.** Section 3's whole class is that records lag the world; **a correction is a record.**
+
     **MECHANISM:** the combined commit was refused twice (`comp-system`, then `owned-paths` on the
     proof instance). **The TO face alone was always mine** (`task_orders/` = POD4_OR_EXEC). I routed
     the proof instance to `~Z` and then tracked the half I had HANDED OFF rather than the half I
