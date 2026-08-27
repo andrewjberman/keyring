@@ -462,9 +462,17 @@ against them as part of the population's record, not as bars this seat invented:
   seat that did not discard the embarrassing case. Keep found false positives; they are future arms.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
-- **Rulings landed (74732, CTO~X under self-drive per Andrew-direct "nothing should be gated on
-  me"):** wave 3 RUNS UNDER D11 (a materializer inventory IS qualification — Rule 24(iii)
-  satisfied; NFRA_C3MATERIALIZE is the different intent and is NOT gating wave 3) and RUNS NOW.
+- **Rulings landed (74732, then SUPERSEDED IN PART by Andrew-direct 74754 ~05:4xZ, verbatim: "This
+  whole project is under D11, just drive it"):** wave 3 runs under D11 and runs NOW — and there is
+  NO separate directive for NFRA_C3MATERIALIZE: D11 carries the WHOLE ARC, L0 substrate through L4
+  identity, no mint, no registration. CTO~X's own two-intent split withdrawn (the sovereign's axis
+  is the ARC; qualification is the first leg, not a separate intent). Reference for the arc:
+  docs/architecture/NFRA_C3MATERIALIZE_PRD.md @3d53c48a1b — §5 (unproven premises: single-run
+  identity AMI 0.505 measured, fusion-thesis untested, SNF by argument, cover-vs-partition open)
+  reads BEFORE §7; the RENAME TEST (§6) is the one deterministic acceptance and today guarantees
+  NO. This seat's cert lane therefore spans the arc's decomps under D11 as they cut; CRO~A's
+  per-layer deliverable contracts and checkpoint sequence arrive later and sharpen boundaries
+  without gating the drive.
   Form interaction priced, not ruled: 4.0.0_SA_CRO~A holds v2 + its 44 live cards FROZEN as
   evidence inputs — measurements port across a contract change, card format does not. The face
   states its form's relationship to that freeze (v2 cards vs (FILE, ARTIFACT) relation evidence);
