@@ -371,8 +371,12 @@ against them as part of the population's record, not as bars this seat invented:
   sys.path-inserted module, strongest single result); TABLE-OBJECT-ONLY = derive_runner (3 real
   writes, targets unresolved by the binder) + cse_store. The 37 are UNRESOLVED, not refuted (the
   binder failed on TWO shapes in one hour — tuple args, read-as-write — so it certifies nothing
-  about absence); bound: >=2 by-name, >=4 to-a-table-object, true count in [4, 41]. All 4 TRACKED
-  (74389, control fired). ⛔ 74402's own warning travels with this: a TRUE conclusion reached
+  about absence); bound (74426 re-floor): >=2 by-name, >=4 to-a-table-object, candidate floor 38
+  (was 41 — `to_arrow(` and `load_table(` are READ tokens that sat inside the "strong write"
+  predicate; the AST-confirmed 4 are unaffected because they were never token results), 34
+  UNRESOLVED. Of the two untracked candidates, only storage_producer.py is still callable a WRITER —
+  contract_engine.NEW.py reads the tables (still untracked, still uncardable; the finding survives,
+  the verb does not). All 4 TRACKED (74389, control fired). ⛔ 74402's own warning travels with this: a TRUE conclusion reached
   through FALSE evidence is the variant nobody audits — the census "confirms" it elsewhere and the
   citation is never revisited. When the face cites a writer, my battery checks the CITED LINE for
   the claimed VERB, not merely the conclusion against the census.
