@@ -232,10 +232,32 @@ and the direction is the invariant.
 
 **THIS IS NOT A DEFECT AND NEEDS NO FIX** — `chain_root()` is transition-safe BY DESIGN so the code
 change and the 238-file migration could land in either order. The code landed; the migration has not.
-⭐ **RESOLUTION CONDITION, so this note retires itself:** once `org/audit/archive/<device>/`
-exists, the fallback stops firing and these findings should clear. **If they persist after that
-directory appears, the device-axis explanation no longer covers them and it IS a finding.**
-Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`. Carrier gap surfaced by `3.0.0_SA_CVO~Z`.
+⭐ **THIS IS A NAMED MIGRATION IN FLIGHT, NOT AN ARTIFACT, AND IT HAS A TERMINUS** (`1.0.0_SA_CTO~Z`):
+`rv0057-f001` moves 238 files to `archive/<DEVICE>/<TS>/`. **RESOLUTION CONDITION, so this note
+retires itself:** when that migration lands the fallback stops firing and these findings clear.
+**If they persist after it lands, the device-axis explanation no longer covers them and it IS a
+finding.** Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; carrier gap surfaced by `3.0.0_SA_CVO~Z`.
+
+⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`. THE MECHANISM ABOVE READS AS AN INVITATION
+TO AND IT IS A TRAP** (caught by `1.0.0_SA_CTO~Z` on this note's own wording). One `mkdir` drops the
+findings to zero — **by making the tool believe we are POST-migration while all 238 files are still
+in the flat root, so it would compare live logs against an EMPTY CHAIN.** The docstring's
+"a half-finished migration cannot strand the instrument" guarantee covers **files-moved-before-code**;
+creating the directory without moving the files is the half-finished state in the OTHER direction and
+**is not covered**. ⛔ **UNTESTED AND NOT TO BE TESTED ON A LIVE AUDIT CHAIN.** The noise is cleared by
+LANDING THE MIGRATION, never by satisfying the predicate.
+
+⛔ **AND THE COST OF THIS NOTE, STATED SO IT STAYS VISIBLE** (`1.0.0_SA_CTO~Z`): telling every seat
+to EXPECT tamper-vocabulary findings removes wasted messages **and simultaneously NORMALISES IGNORING
+A TAMPER DETECTOR.** Both effects are real. **It is the right trade ONLY BECAUSE the migration has a
+terminus** — **if `rv0057-f001` stalls, this note quietly becomes standing permission to ignore a
+tamper detector. Re-read this paragraph if it is still here and the migration has not landed.**
+
+⚠ **REACH IS BOUNDED BY WHO ACTUALLY RUNS A.2, WHICH IS NOT EVERYONE** — the first broadcast of this
+note claimed "every seat meets A.2 at load" and **that claim was false**: `0.4.0_DS_ClientPlatform~W`
+reported running A.1 and A.3 and skipping A.2 entirely (measured, n=1, self-reported). **A note beside
+a step reaches only the seats that run the step.** A.2's MANDATE and A.2's EXECUTION RATE are
+different quantities. No gate is proposed for this.
 
 **A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX; CORRECTED 2026-07-25 — see below):** harness
 shells are non-interactive and source NO profile, so `.tools/` is reachable only via the `~/bin` forwarders
