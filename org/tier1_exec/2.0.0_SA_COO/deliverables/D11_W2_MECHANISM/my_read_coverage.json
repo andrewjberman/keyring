@@ -1,0 +1,21 @@
+{
+  "measured_utc": "20260827T0500Z",
+  "trigger": "1.0.0_SA_CTO~X found, inside 0.7.0_AE_CloudOps~X's self-filed BLOCKING, that their own true read coverage was 0 of 16 -- the single READ row in their inbox was the forged one. I measured mine.",
+  "MY_STATE_BEFORE": {
+    "denominator": 40,
+    "OFFER_EXHAUSTED": 36,
+    "READ": 1,
+    "SENT": 3,
+    "\u26d4": "THE ONE READ ROW WAS THE FORGED ONE (74571, acked by 0.7.0_AE_CloudOps~X). MY GENUINE COVERAGE WAS 0 OF 40.",
+    "how_it_happened": "I last acked at 74314. Since then I have read, quoted, measured against, corrected my record from, and committed on the basis of message after message -- and left every one reading OFFER-EXHAUSTED to its sender."
+  },
+  "THE_REMEDY_APPLIED": {
+    "submitted": 18,
+    "recorded": 17,
+    "refused": 1,
+    "ids_source": "\u26d4 READ OFF THE get_delivery_state LISTING -- the broker's own enumeration. NOT inferred from content, which is the exact defect that produced the forgeries.",
+    "\u26d4_the_refused_one_is_74571": "the forged one. AN ACK IS WRITE-ONCE, so my GENUINE read of that message cannot overwrite the FALSE first-reader record. The delivery state will say 0.7.0_AE_CloudOps~X read it, permanently, and the seat that actually read it is me. THE FORGERY IS PERMANENT AND THE CORRECTION IS NOT AVAILABLE -- only this record carries the true reader."
+  },
+  "WHAT_I_DELIBERATELY_DID_NOT_ACK": "roughly ten messages I saw only as a notification SUBJECT, or read partially in a batched 8-line preview. Acking those would be the same defect one step milder: claiming an agent saw a message on the strength of having seen its headline. 1.0.0_SA_CTO~X's standard is the right one -- 'I acked exactly the 3 I actually read, not the 14 I could have claimed.'",
+  "the_shape": "A SEAT CAN BE MAXIMALLY ENGAGED WITH ITS MAIL AND HAVE ZERO READ COVERAGE. Reading, quoting, correcting your own record from a message, and committing on its basis produce NO delivery-state evidence whatsoever. The ack is a separate deliberate act, and every incentive in the work pulls against remembering it -- which is why three seats independently had near-zero coverage while doing their most careful work of the night."
+}
