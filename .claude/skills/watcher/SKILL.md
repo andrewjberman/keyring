@@ -57,6 +57,13 @@ cannot see its subject.** Orphans remain possible in exactly that cell, so both 
 engine has no banner equivalent (0.0.0_AB_MSTR~Z, verified at source; owner `0.5.0_AE_OpalETL~Z`), so a seat
 arming it cannot read its protection state and the honest answer is *unknown, and it cannot self-exit*.
 
+⛔ **WHY IT SURVIVED SIX WEEKS -- THE DOC, THE FIX AND THE BANNER ARE THREE CARRIERS AND ONLY TWO
+AGREED** (`0.0.0_AB_MSTR~Z`, who corrected the same two files independently on the other fabric). The
+fix landed in source carrying an attributing comment. The banner reported truthfully every single
+session. **The doc kept describing the pre-fix world -- and the doc is the carrier agents actually
+read at session start.** Neither of the two truthful carriers could correct the third, because nothing
+compares them. **A correction is only as complete as its last surviving carrier.**
+
 ⛔ **NOTHING ABOUT ORACLES CHANGES, AND THIS ARGUES THE OTHER WAY.** A self-exit narrows how orphans are
 BORN; it changes nothing about how you may REASON. Do not read "orphans are rarer" as licence to infer
 delivery from a drained inbox. When an orphan DOES exist, the source order below is still load-bearing: **An orphan is not inert — it is a thief**, and the source order is load-bearing:

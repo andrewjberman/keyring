@@ -411,7 +411,11 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 > suicide). **READ YOUR OWN ARM BANNER** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid
 > <N>` = armed, `parent-tied: OFF` = orphan-capable. Measured at this device 2026-08-27: **458 of 471**
 > `orphan-audit.log` lines are `WATCHER-SELF-EXIT` — the routine path, not a theoretical one. So orphans are
-> **narrower than this file used to claim, and still possible in exactly the fail-open cell.** An
+> **narrower than this file used to claim, and still possible in exactly the fail-open cell.**
+> ⛔ **WHY THIS SURVIVED SIX WEEKS: THE DOC, THE FIX AND THE BANNER ARE THREE CARRIERS AND ONLY TWO
+> AGREED** (`0.0.0_AB_MSTR~Z`). The fix landed in source with an attributing comment; the banner
+> reported truthfully every session; the doc kept describing the pre-fix world — **and the doc is what
+> agents read.** A correction is only as complete as its last surviving carrier. An
 > orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
 > into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
 > (a process exists; the inbox is empty *because the orphan drained it*).
