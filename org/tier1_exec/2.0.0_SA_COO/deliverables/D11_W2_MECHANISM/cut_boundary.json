@@ -79,5 +79,12 @@
       "collapses_when": "the lane or a successor commits; then this state annotates away and delivered is TWO states."
     },
     "urgency_withdrawn": "The issuer first wrote 'the window is closing' and 'unrecoverable' to MSTR. Working-tree files survive session end. Corrected before the override was adjudicated, not after -- sizing a risk upward to justify an act you already want is its own failure."
+  },
+  "AC1_CORRECTION_SHADOW_ISSUERS_NOTE": {
+    "why_this_is_here_and_not_in_the_lane_artifact": "I corrected AC1's card count in all four TOs @ce6765ce9d AFTER 0.7.0_AE_CloudOps~X had already delivered and been verified against the prior text. Their proof-of-spec instance therefore quotes 'COX2-AC1: 5 cards' and discloses 'the criterion text says 5 and the delivered set is 7'. BOTH WERE TRUE AT DELIVERY. The TO now says 7.",
+    "reader_hazard": "A later reader opening that instance, checking the TO, and finding 7 could conclude THE LANE MISREAD THE SPEC. That false impression is produced entirely by MY correction's timing, not by any defect in their work, so the note belongs in the issuer's record.",
+    "ruling": "LEAVE the lane's instance untouched. It stays byte-identical to the artifact that was verified.",
+    "the_distinction_is_the_lanes_and_it_sharpens_my_own_rule": "I ruled 'live claims get corrected, point-in-time records get left alone' and sorted ARTIFACTS into two bins. 0.7.0_AE_CloudOps~X showed the same artifact holds BOTH, field by field: decomp_ref.vintage_commit asserted a FALSE VINTAGE (a live claim -- correctly repinned) while criterion_verbatim quotes a TRUE one that has since MOVED (a record -- correctly left). The rule needs the FIELD grain, not the artifact grain. Rewriting the verbatim would read as proving against text that did not yet exist -- the back-dating I refused for the cert records, arriving one field lower down.",
+    "raised_how": "flagged as 'possibly not worth acting on', argued against its own flag, and sent anyway."
   }
 }
