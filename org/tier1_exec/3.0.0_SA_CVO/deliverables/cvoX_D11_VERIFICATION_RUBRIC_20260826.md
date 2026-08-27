@@ -496,13 +496,17 @@ against them as part of the population's record, not as bars this seat invented:
   LANE-OWNED mechanism cell (0.4.0_DT_ClientPlatform~X — the generator refuses an issuer-owned
   build act), oracles ONE instance validating against the L0 schema with compiled_by + denominator
   required. A wave-3 close claiming L0 progress without that instance mistakes cards for the bar.
-  ⛔ L1 RELEASE CONDITION UNRULED (74944, measured): the manifest names STORES 42/42 but GRAINS
-  7/42, KEYS 6/42, FAILURE MODES 3/42 (substring-probe FLOORS; stores is the only exact figure) —
-  and "wave 3 complete" CANNOT close that gap because grain/key/failure-mode are properties of the
-  PART, not the writer: the two candidate release conditions ("wave 3 complete" vs "manifest names
-  the four") give different answers and the ruling is CRO~A's. A face claiming L1-startable on
-  wave-3 completion alone rides the unruled condition. L1 SEATED and L1 STARTABLE are different
-  states. ⛔ ZERO-ARTIFACT is not
+  ⛔ L1 RELEASE CONDITION UNRULED — and the gap is ABSENT, not sparse (74944, corrected by 74966
+  field-path extraction): the L0 manifest schema has ZERO field paths for `key` and
+  `failure_mode` (grain: prose only; the earlier 7/6/3 counted incidental prose — a floor that
+  CONCEALED a structural zero; STORES 42/42 is exact because `home` is a real field). Sparse is
+  fixed by carding more; AN ABSENT FIELD CANNOT BE CARDED SHUT — a lane has nowhere to put the
+  value, and the compile step maps card values (/trust/key, /trust/failure_mode exist in v2) into
+  manifest slots that do not exist. Two same-session documents by one author contradict (PRD:253's
+  precondition vs the schema beside it); the schema remedy is CRO~A's as owner, structurally
+  required not optional, with the card-grain-vs-part-grain key question explicitly UNMEASURED.
+  "Wave 3 complete" still cannot close it; the two candidate release conditions still diverge; a
+  face claiming L1-startable names its condition. L1 SEATED and L1 STARTABLE are different states. ⛔ ZERO-ARTIFACT is not
   BLOCKED: the PRD's §7 makes L2 STRUCTURE + BEHAVIOR computable TODAY (a parallel track), while
   L1/L3/L4 remain blocked on L0 — wave 3 is the critical path for those three, not "the whole
   arc" (CTO~X's own serialization misread, corrected at source). The guard that travels with the
