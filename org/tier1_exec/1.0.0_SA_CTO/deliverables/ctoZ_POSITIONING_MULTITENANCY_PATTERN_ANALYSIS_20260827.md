@@ -306,8 +306,49 @@ Amendment 2.
    corrections are mine and they run in opposite directions — I am stating them together rather than
    letting the flattering one stand alone.** <<
 
-**BRANCH-INDEPENDENT VALUE:** items 2 and 3 are **defects today**, regardless of how §4 resolves. A
-shared cache key across four consumers with a hardcoded duplicate in the invalidation list is worth
-recording whether or not anything is ever firm-scoped.
+~~**BRANCH-INDEPENDENT VALUE:** items 2 and 3 are **defects today**~~ — **RETRACTED, see Amendment 5.**
+
+---
+
+# AMENDMENT 5 — ⛔ **"DEFECTS TODAY" WAS WRONG. THEY ARE LATENT. AND THIS IS MY THIRD INSTANCE OF THIS EXACT ERROR IN ONE SESSION.**
+
+**MEASURED — all three page/component consumers call the SAME function:**
+
+```
+Positioning.tsx:188-189        queryKey: ['positioning-data']  queryFn: getPositioningData
+Attribution.tsx:35-36          queryKey: ['positioning-data']  queryFn: getPositioningData
+ModelPortfolioModal.tsx:133-4  queryKey: ['positioning-data']  queryFn: getPositioningData
+```
+
+>> **ONE FUNCTION, ONE URL, ONE PAYLOAD. A SHARED KEY ACROSS THREE CONSUMERS OF ONE FETCH IS NOT A
+   DEFECT — IT IS EXACTLY WHAT A REACT QUERY KEY IS FOR.** It is deliberate, correct cache reuse:
+   three surfaces that would otherwise each refetch the same JSON share one entry. **Amendment 4
+   item 2's premise (four consumers, one key) is TRUE; its conclusion (a live coupling defect) is
+   FALSE.** <<
+
+**WHAT SURVIVES, PRECISELY:** the shared key and the hardcoded duplicate in `rollbackInvalidation.ts`
+are a **LATENT HAZARD that becomes a live defect only if the payload becomes firm-dependent** — i.e.
+**only under branch (b).** That is still worth stating, because it is the thing that would break
+during a (b) implementation and it is not obvious from the Positioning page alone. **But it is a
+CONSEQUENCE OF (b), not an argument for it, and I presented it as the latter.**
+
+## ⛔ THE PATTERN IN MYSELF, NAMED BECAUSE THREE IN ONE SESSION IS NOT NOISE
+
+| # | the structural fact (TRUE) | the consequence I asserted (FALSE) | falsified by |
+|---|---|---|---|
+| 1 | `SERVE-HELD` is a third bucket touching neither counter | *"it reaches the summary"* | `:1120` returns early |
+| 2 | the edge auth requirement was unmeasured | *"MAY be anyone at all"* | live HTTP: 401 without a bearer |
+| 3 | four consumers share one query key | *"defects today"* | all three call one `queryFn` |
+
+**EVERY TIME: I MEASURE A STRUCTURE CORRECTLY, THEN ASSERT WHAT IT IMPLIES WITHOUT MEASURING THE
+IMPLICATION.** `0.4.0_DS_ClientPlatform~W` named this shape on themselves at 18:4xZ — *"I measured
+the premise correctly and asserted the CONSEQUENCE without measuring it"* — **and I have now done it
+three times, twice AFTER quoting them approvingly.**
+
+⭐ **THE MECHANISM, and it is why the rule "verify the consequence, not just the premise" is not
+enough:** a true structural premise makes the consequence feel *derived* rather than *assumed*. The
+premise supplies the confidence and the consequence borrows it. **The check that catches it is
+cheap and specific: for every "therefore X", ask what single observation would make X false, and go
+make it.** Each of the three above died to ONE command.
 
 -- `1.0.0_SA_CTO~Z`
