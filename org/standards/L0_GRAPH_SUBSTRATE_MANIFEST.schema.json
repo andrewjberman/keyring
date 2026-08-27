@@ -133,7 +133,26 @@
         "home": {
           "type": "string",
           "minLength": 1,
-          "description": "EXACT location. Iceberg table name, s3 URI, repo path, DB path."
+          "description": "EXACT location, rendered in the address space named by `home_space`. ⛔ NEVER A SENTENCE. A part with no location says the literal NONE under home_space='none'; a prose absence ('NOWHERE -- unbuilt; no code, no store, no artifact', found in 3 of 42 parts on 2026-08-27) is loud, human-readable and UNRESOLVABLE, and it duplicates a claim population_status already carries in a value a consumer can branch on."
+        },
+        "home_space": {
+          "enum": [
+            "repo_path",
+            "s3_uri",
+            "iceberg_table",
+            "db_path",
+            "none"
+          ],
+          "description": "WHICH ADDRESS SPACE `home` is rendered in. Without it, `home` is one string carrying four spaces and STRING EQUALITY SPLITS ONE ARTIFACT INTO TWO ROWS: the pyiceberg client addresses the same table as the tuple ('globgrph','cse') while Trino addresses it as 'iceberg.globgrph.cse' (0.7.0_AE_CloudOps~X, cse_schema.py:595). Both are CORRECT addressings of ONE artifact. iceberg_table therefore requires the CANONICAL TRIPLE catalog.namespace.table -- a bare table name is refused, because it is the rendering that cannot be joined.",
+          "x-rule24": {
+            "axis": "the address space of the home string",
+            "grain": "one part",
+            "intent": "one -- HOW to parse and normalise `home`; NOT where it is, NOT whether it exists",
+            "mece": "repo_path | s3_uri | iceberg_table | db_path | none spans every home the estate renders today. 'none' is a DECLARED absence of location, not a fifth location.",
+            "state_coherence": "building an unbuilt part moves home_space none->{repo_path|s3_uri|iceberg_table|db_path} AND home together, and moves population_status separately. Re-rendering the SAME artifact for a different client moves home_space and home and NOTHING ELSE -- it is not a new part.",
+            "reuse": "NEW value set. No estate vocabulary covers address-space-of-a-location; part_class names WHAT a part is, not how its address parses."
+          },
+          "x-migration": "OPTIONAL until the generator re-run emits it for all parts. OMISSION IS A COMPATIBILITY STATE, NEVER A THIRD CLAIM -- identical rule to the grain/key/failure_mode receivers. After the re-run this becomes REQUIRED and omission is rejected."
         },
         "authority_role": {
           "enum": [
@@ -992,7 +1011,109 @@
             "state_coherence": "discovering a further member ADDS to members[] under true and moves NOTHING under false. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set. `derivation` is NO LONGER SERIALISED: it stated schema prose in a field, which is the typed-derivable-value defect this object already refuses for cardinality."
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "const": "NONE"
+              }
+            }
+          },
+          "$comment": "no location: home is the literal NONE, never a sentence"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "s3_uri"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^s3://[^\\s]+$"
+              }
+            }
+          },
+          "$comment": "s3_uri: home starts s3:// and carries no whitespace"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "iceberg_table"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^[A-Za-z0-9_]+\\.[A-Za-z0-9_]+\\.[A-Za-z0-9_]+$"
+              }
+            }
+          },
+          "$comment": "iceberg_table: CANONICAL TRIPLE catalog.namespace.table; a bare name or a tuple rendering is refused"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "repo_path"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^(?!s3://)[^\\s]*[^\\s/][^\\s]*$"
+              }
+            }
+          },
+          "$comment": "repo_path: not an s3 URI, no whitespace"
+        },
+        {
+          "if": {
+            "required": [
+              "home_space"
+            ],
+            "properties": {
+              "home_space": {
+                "const": "db_path"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "home": {
+                "pattern": "^(?!s3://)[^\\s]+$"
+              }
+            }
+          },
+          "$comment": "db_path: not an s3 URI, no whitespace"
+        }
+      ]
     }
   }
 }
