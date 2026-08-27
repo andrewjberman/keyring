@@ -32,6 +32,35 @@ CONTROLS   incremental_updater (known writer)   JOINED    <- positive
 chain found by **walking triggers** (events plane + scheduler plane + target ARNs + sys.path
 insertion). The AST run used no trigger data and *added* `cse_store.py`.
 
+### ⛔ A FIFTH CONFIRMED WRITER, AND MY METHOD STRUCTURALLY COULD NOT SEE IT
+
+ADDED 05:1xZ from `0.7.0_AE_CloudOps~X` (74677), verified at source here.
+
+```
+infra/aws/globgrph/resource_summaries_store.py
+  :159 def build_rows(...)     :168 rows.append(summarydoc_to_row(...))   ASSEMBLES -- a python list
+  :222 def append_rows(table)  :228 table.append(pa_table)                WRITES -- real pyiceberg
+  the two `.append(` forms are TOKEN-IDENTICAL and sit 60 lines apart IN ONE FILE.
+```
+
+⛔ **MY AST BINDER SCORES `:228` AS `param/other`, NOT TABLE-BOUND** — the table arrives as a FUNCTION
+PARAMETER, not a local `load_table` binding. **That is why this file sat in the 34 "no in-file table
+write" set. It is a writer. My method cannot see writers that receive the table as an argument** —
+i.e. **the cleanest possible factoring.**
+
+**So `>= 4` is provably low: this is a fifth, and it was found by a peer reading source, not by any
+predicate here.**
+
+⛔ **AND IT IS A FIFTH SHAPE FOR THE WAVE-3 PREDICATE.** `0.4.0_DT_ClientPlatform~X`'s four cases were
+2 correct · 1 naming a file that stages nothing · 1 stager unnamed. **This module is BOTH HALVES IN ONE
+FILE** — the builder/writer distinction DISSOLVES. **A predicate that SPLITS builders from writers must
+return this file TWICE or pick one half and be silently wrong about the other.** It belongs in the
+predicate's test set as the both-halves case.
+
+> **"THE BETTER THE FACTORING, THE MORE INVISIBLE THE WRITER"** (`2.0.0_SA_COO~X`, 74590) — now measured
+> TWICE: `snap_store.py` parameterises the table NAME, `resource_summaries_store.py` parameterises the
+> table OBJECT. **Both are good engineering. Both are invisible to a census.**
+
 ## 2. THE DELEGATION CLUSTER — repo plane
 
 ```
