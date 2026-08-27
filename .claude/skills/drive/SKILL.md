@@ -34,6 +34,37 @@ Cadence: **20m while ACTIVE > 0; 30m when ACTIVE = 1-2 and all advancing; 60m on
 
 ---
 
+## PAIRED MODE — `/drive <scope>`: the ACTUATE half of a DRIVE PAIR (Andrew-ratified 2026-08-27)
+
+**Contract + row schema: `org/ref/DRIVE_PAIR_PROTOCOL.md`. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260827_DRIVE_PAIR_SETUP.md`
+(his word: engaging `/self-drive` on CTO means instituting `/drive` on COO tied to the SAME target).**
+
+`/drive <scope>` armed as a pair-half differs from estate `/drive` in exactly four ways:
+
+1. **SCOPE = the pair's register predicate**, re-resolved each tick exactly as the CTO half resolves
+   it (never a pinned list). Step 2's hot-registry read FILTERS to it.
+2. **THE OBLIGATION IS SCOPED — and an empty tick is LEGAL.** Each tick: (a) read the pair's verdict
+   ledger since the cursor (`org/{tier}/{driver_base}/drive_pairs/<scope>/VERDICTS.jsonl`) and
+   convert each unconsumed `unblocks` row into its dispatch (GO pairing, TO cut FROM DECOMP CELLS,
+   re-seat ask via MSTR), writing the `consumed` field with the receipt; (b) run the drive imperative
+   over measured in-scope blocks ONLY. **Empty ledger + no in-scope blocks = a legal no-op tick** —
+   the deliberate, DESIGNED exception to the all-standing-by-is-failure gate, and the reason a paired
+   `/drive` cannot break a hold on a timer (the @014de1937 class this skill's OFF-by-default exists
+   to prevent). Outside a pair, nothing here changes: bare estate `/drive` keeps its standing rules
+   and its standing OFF.
+3. **CADENCE: the pair's offset** — this half ticks +15m after the CTO half (30m default each, off
+   the :00/:30 fleet marks) so verdicts land before the sweep reads them.
+4. **CARRIER + STOP: the SHARED clause** in the arming driver's XXX.md row (`paired_with:` names this
+   half). This half arms on the SAME operator word as the CTO half, never separately; a struck clause
+   read at tick-top stands this half down (final log, CronDelete, done). The cursor lives in this
+   seat's own drive log; lost state re-derives from the ledger's `consumed` fields.
+
+**Everything else is unchanged /drive law:** resolve-don't-attest within scope, completing-worker
+alive, Rule 27 (TOs from decomp cells only, seats via MSTR), identity gate, RAVC on every dispatch.
+
+---
+
 ## Step 0 — Identity gate
 
 Scoped to **`2.0.0_SA_COO`**. Any other serial halts with:
