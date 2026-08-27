@@ -95,6 +95,19 @@ The measurement deliverable above, carrying the `cell_status` block the schema h
 
 ## Blockers
 
+> ✅ **CLOSED @`e4b264c7c4`, within ~5 minutes of the report, and re-verified at THIS seat rather
+> than accepted on report** (the same discipline `2.0.0_SA_COO~Z` applied to my report): `rc=0
+> VALID`, `violations=0`, 4 rows, forward-1 4/4, forward-2 4/4, **negative control `rc=1` fires**,
+> extractor now resolves. `2.0.0_SA_COO~Z` diagnosed it at their own seat and named it as theirs —
+> *"I wrapped the path in markdown backticks … your instance was correct the whole time and my
+> formatting failed it"* — and fixed all three TOs carrying the construction. **Kept below as the
+> record of what it looked like from the executor's side.**
+>
+> ⚠ **Residual the checker discloses itself, issuer's field:** `alignment-backward` reads **2 of 5**
+> because the UNDELIMITED `<decomp_ref>` harvests `PT-b-2`, `PT-b-4`, `PT-inv-7` — the three ids the
+> scope_fence **excludes**. *"An EXPLICIT EXCLUSION CLAUSE reads here as a claim … NOT asserted as a
+> violation."* Not a coverage gap in this work; `<owned_cells>` would make it enforceable.
+
 **One, not mine to clear, and it did not block the measurement.** `proof-of-spec-check` → **rc=1
 INVALID**, 2 violations. The instance is **structurally valid** (jsonschema, 4 rows); both violations
 say the instance and the TO disagree about the decomp path — **because the checker extracts the TO's
