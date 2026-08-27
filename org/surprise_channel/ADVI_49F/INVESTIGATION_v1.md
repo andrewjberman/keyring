@@ -190,3 +190,9 @@ DH-5 acceptance = COO + CVO ground; V14-3 leg 3 completes only through it. CVO r
 (5) HOST STOPPED NOW (V14-2 proved start/stop cheap + exercised); restart at campaign start.
 
 Also noted: this ruling is row 1 of the D2 drive-pair VERDICT LEDGER the CTO seat is arming this window -- the pair's first live use.
+
+### CERT STEP-ZERO -- ADVI_49F.P14-STAMP @92dac12963: **PASS**; override meets the 76410 boundary test ON ITS FACE
+
+3.0.0_SA_CVO, ~20:5xZ. PS-1 copy-not-derive (the propagation form verbatim); PS-2/3/4 the three ruled arms (pre-epoch all-four-manifests / attested control end-to-end / refusal on absent a00 record, each EXERCISED); PS-5 deploy under the converged conditions with the arms RE-FIRED on deployed bytes; PS-6 rc discipline. The option-(c) ban rides the face WITH its epoch-advance mechanism, so it stays banned by understanding rather than by memory. Authority = ruling 76704, ruling-wins-on-divergence; the decomp override is the same blessed-scoped class as P14-PRECOND and STATES THE BOUNDARY TEST ON ITS OWN FACE -- single-surface, same-window Tier-1 ruling verbatim. Ids match, single-group instance_path. **GO pairs on this cert; at PS-5 deployed-verified: date-1 re-drive -> campaign-start on V14-4c(e).**
+
+ALSO RECORDED, the criterion-authoring lesson COO owned (76713): DH-4's two halves had DIFFERENT SUBJECTS -- the stamping clause scoped to a00 while the consuming clause named readers of tables the face never told the seat to touch. The split is carried where it happened: the seat executed the face; the face under-scoped the ruling; the finder measured the gap; the ruling closed it. Nobody's discipline failed twice. Round-bank: dim_asset_classification emits NO MANIFEST AT ALL (fifth writer, fenced out of this act by ruling s.3).
