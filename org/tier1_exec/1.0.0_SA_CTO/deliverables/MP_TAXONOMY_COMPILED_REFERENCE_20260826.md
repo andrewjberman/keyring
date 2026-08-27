@@ -106,3 +106,90 @@ $147.0M vs dim $190.7M (delta $43.7M; 483 vs 489 accounts). Resolved same hour:
 
 Directive homes: **D1** (the taxonomy + views: `D1_CATVIEWS`, active, decomp v2 28→31 cells);
 **D8** (the pipeline fortification the served plane rides). Register rows carry both.
+
+---
+
+## 6. AMENDMENT 2026-08-27 ~20:0xZ — THE PER-PARTNER SOURCE MAP, AND WHY THIS AMENDMENT EXISTS AT ALL
+
+**Provenance, stated because it is not first-hand:** Andrew spoke these words at the
+`0.4.0_DS_ClientPlatform~Z` terminal, not this one. Recorded verbatim by that seat at
+`org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ANDREW_DIRECT_20260827_PER_PARTNER_SOURCE_TO_TAXONOMY_MAP.md`
+**@`45dd4294e7`** and relayed as msg 9923. **This section is a RELAY of a verbatim record, not a
+transcription of words this seat heard.** Anyone acting on a fine distinction here reads A7 at source.
+
+### ⛔ HIS PREFACE IS THE MOST IMPORTANT LINE IN IT, AND IT IS A FINDING ABOUT THIS FILE
+
+> *"I have gone through this countless times but I'm going to do it again just to make sure it lands"*
+
+**That is the same complaint behind his 08-26 instruction to `1.0.0_SA_CTO` to compile all of this —
+the instruction that produced this document.** So the compiled reference already existed, was already
+correct, and he still had to say it again. ⛔ **THE REPETITION IS THE FINDING: this content keeps
+failing to persist, and a second correct copy is not the remedy.**
+
+**What is measured, not guessed, about why:** `0.4.0_DS_ClientPlatform~Z` *did* find this file, by
+`comp-find`, and confirmed today's words match it on **every overlapping point** — near-verbatim on the
+Cottonwood predicate and on the L1 SMA members. **So the failure is NOT discovery and NOT accuracy.**
+The content was here, findable, and right. **What this file could never do is tell ANDREW that it was
+here** — his only instrument for "did it land" is to say it again and watch what happens. A carrier the
+sovereign cannot query is a carrier he must re-send. *(Naming the mechanism; the remedy is a routed
+question below, not an edit this seat makes unilaterally.)*
+
+### 6.1 THE MAP — the three partners, source system to taxonomy
+
+```
+49 FINANCIAL   Models AND SMAs BOTH from SmartX -- PFOE, DIVZ, + "a handful of tax accounts"
+               ("egress permitted" -- his explicit per-use word, for finding those accounts)
+               Client = ALL Opal-Supervised, scoped to "the 0824 schwab account which is what
+               feeds the portal"
+INFLECTION     Models from Eclipse, "already handled on logic".  NO SMAs.
+               "any balance is Client Opal-Unsupervised"
+COTTONWOOD     Models from Rebalancer (primary/custom established; Opal Fixed Income = custom)
+               NO SMAs "in the SMAs as a strategy bucket which is what we've built here"
+               Client DERIVED: any portfolio holding an Opal model has its residual as Client
+               Opal Supervised; everything else Opal Unsupervised AS THE BOOK-WIDE PLUG FIGURE
+```
+
+>> **THE GENERAL RULE, BINDING ALL THREE:** *"Client segment is always **residual post-models and
+   smas**."* This is the invariant; the three per-firm rules above are its instances, not exceptions
+   to it. <<
+
+### 6.2 ⭐ ALREADY ENCODED CORRECTLY — DO NOT RE-DO THIS WORK
+
+`CLIENT_L1_RULE = {49financial: ALL_SUPERVISED, inflection: ALL_UNSUPERVISED, cottonwood: DERIVED}`
+is an **exact match** to his three rules (measured by `0.4.0_DS_ClientPlatform~Z`). **NO REGISTRY EDIT
+IS IMPLIED.** ⛔ Second sovereign statement in two turns that CONFIRMS the shipped shape — and **the
+available error is to read a confirmation as a change order and re-do encoded work.**
+
+### 6.3 ⛔ THE SUBSTRATE COLLISION HIS MAP CREATES — measured by `2.0.0_SA_COO~Z` at `s3api`, msg 9943
+
+`opal-data-assets` partitions by **SOURCE SYSTEM**, not by firm — and the source systems do **not agree
+with each other**:
+
+```
+smartx/        account/ allocation/ model/ platform/     <- BY FUNCTION. NO FIRM PREFIX AT ALL.
+eclipse/       inflection/                               <- BY FIRM
+blackdiamond/  49f/  49financial/  cottonwood/           <- BY FIRM, and BOTH 49f/ AND 49financial/
+```
+
+>> ⛔ **HIS MAP PUTS 49 FINANCIAL'S MODELS *AND* SMAs IN SMARTX, AND `smartx/` HAS NO FIRM BOUNDARY IN
+   ITS PREFIX TREE. A KEY-PREFIX IAM CONDITION CANNOT ISOLATE WHAT HAS NO PREFIX TO CONDITION ON.** <<
+
+**This corrects a claim `1.0.0_SA_CTO~Z` made to Andrew ~20:1xZ.** That claim said the `CLAUDE.md`
+NEVER rule's bucket-scoped Deny fails on a shared substrate because isolation becomes a *key-prefix +
+IAM-condition* problem. **The diagnosis was right and the named remedy is UNBUILDABLE FOR AT LEAST ONE
+FIRM** — the one whose data is most spread. **THREE PARTITION SCHEMES IS NOT ONE SUBSTRATE WITH A
+MOVING SHAPE; IT IS THREE SHAPES ALREADY.** `POSN_TENANCY`'s "do not couple to the substrate's current
+shape" therefore binds harder than its author knew when he wrote it: there is no single current shape
+to couple to.
+
+### 6.4 EGRESS — AUTHORIZED, PROBABLY UNNEEDED
+
+*"(egress permitted)"* is his explicit per-use word for locating the 49F tax accounts. **But SmartX is
+already landed in our own S3** (`smartx/platform/silver/fact_allocation_account_map/`, read by
+`runners_49f/a00_runner.py:55`). **Prefer the landed artifact; keep the grant unspent unless the
+internal read falls short.** An authorization is not an instruction to use it.
+
+### 6.5 SOURCE INDEX ADDITION
+
+| A7 | `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ANDREW_DIRECT_20260827_PER_PARTNER_SOURCE_TO_TAXONOMY_MAP.md` @`45dd4294e7` — the per-partner source map VERBATIM (recorded at the DS~Z terminal) | 08-27 ~20:0xZ |
+| A8 | `2.0.0_SA_COO~Z` msg 9943 — the `opal-data-assets` three-scheme partition measurement (`s3api`, COO's own seat) | 08-27 ~20:2xZ |
