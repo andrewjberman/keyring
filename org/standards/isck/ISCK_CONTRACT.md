@@ -114,7 +114,7 @@ hunt result) · **grain** · **intent** · **state-coherence** (which values one
   deterministic and unrecorded are distinguishable.
 - `source_frontier.entries` minItems 1 — an empty frontier is not a frontier.
 
-## 5. MINTING AUTHORITY (DRAFT — open item at Andrew, encoded as the working default)
+## 5. MINTING AUTHORITY (RATIFIED — Andrew-direct 2026-08-27 ~18:4xZ, "Recs approved")
 
 Primary minting on the LAPTOP fabric (substrate majority + integrator residence). Any other fabric
 mints with `entity_status: candidate`; reconciliation is non-destructive via `candidate_equivalence`

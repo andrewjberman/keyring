@@ -61,12 +61,25 @@ GPT assistance on Andrew's instruction; the RULING authority is Andrew's word at
 | Resolver failure semantics | **RESOLVED:** RESOLVED/AMBIGUOUS/GENUINELY_UNADDRESSED/SUBSTRATE_UNAVAILABLE/NOT_APPLICABLE — the two-state collapse in nerves_resolve is to be repaired |
 | Monitoring mode | on-demand / at-build-time by default, per the standing moratorium — continuous watching only on Andrew's explicit word |
 
-## WHAT REMAINS OPEN AT ANDREW (memoranda Appendix B.1, carried, not decided here)
+## WHAT REMAINED OPEN AT ANDREW — ALL FOUR RESOLVED 2026-08-27 ~18:4xZ
 
-1. Explicit PRD ratification (and whether the earlier D11 arc word already constituted it).
-2. Product semantics of the 540 cross-domain memberships (persistence stays cover-capable regardless).
-3. Canonical identity-minting authority + cross-fabric collision/reconciliation policy approval.
-4. Retention/storage policy for immutable evidence bundles and run receipts.
+**Andrew-direct at the CTO~X terminal, verbatim:** *"Recs approved, including call 6. I want to
+better understand that but that is a matter to discuss with CTO Base, your job here should be
+focused solely on D11."* Ruled against the six /open-calls cards of 18:35Z; the recs ruled are:
+
+1. **PRD ratification — RATIFIED** as amended (WP-1 CLOSED; PRD Status line updated same commit).
+2. **540 product semantics — DEFERRED TO WP-6** by decision, not by default: the fusion experiment
+   reports the 540 cohort's fate (with the Result-7 optimiser discriminator) before the product
+   question is answered. Persistence stays cover-capable meanwhile.
+3. **Minting authority — RATIFIED as §5 of the ISCK contract:** laptop-primary; other fabrics mint
+   `candidate` serials; non-destructive reconciliation via the identity-relation ladder.
+4. **Retention policy — RATIFIED:** git for evidence bundles <50MB, S3 pinned keys above, run
+   receipts always committed. (WP-0's de-facto application is thereby confirmed.)
+
+**Also ruled on the same word:** fabric release for the ISCK v0 ADVERSARIAL PASS — `2.0.0_SA_COO~X`
++ `0.4.0_DT_ClientPlatform~X` + `3.0.0_SA_CVO~X`, SCOPED TO THE PASS; everything else stays held.
+And /open-calls CALL 6 (MDPF_CANON §7.2, ruled (c) split) — **routed to `1.0.0_SA_CTO` base, NOT
+worked at this seat: this seat's job is solely D11, Andrew-direct.**
 
 ## EFFECTS ON STANDING DECISIONS AND HOLDS AT THIS SEAT
 
