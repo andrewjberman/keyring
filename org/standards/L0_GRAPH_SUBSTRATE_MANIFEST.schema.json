@@ -869,57 +869,127 @@
         "member_set": {
           "type": "object",
           "additionalProperties": false,
-          "description": "OPTIONAL. For a part whose id denotes a BRACE FAN-OUT or other multi-artifact set. ONE PART REMAINS ONE PART -- this never silently expands the parts array. CARDINALITY IS NEVER SERIALISED: it is len(members), computed by the consumer. JSON Schema cannot enforce a stored count against the array, so no count is stored.",
+          "description": "OPTIONAL. For a part whose id denotes MORE THAN ONE artifact. ONE PART REMAINS ONE PART -- this never expands the parts array. TWO SHAPES, discriminated by `enumerable`, because a brace list and a runtime-named family DO NOT MOVE TOGETHER (Rule 24 iv). NO CARDINALITY IS EVER STORED IN EITHER SHAPE: enumerable=true derives len(members); enumerable=false HAS no cardinality, because membership at an instant is an OBSERVATION and the answer changes between two reads. A `cardinality: null` sentinel is REFUSED -- it mixes APPLICABILITY into a NUMERIC axis, and `enumerable` already carries applicability.",
           "required": [
-            "members",
-            "derivation",
+            "enumerable",
             "basis",
             "evidence",
             "owner"
           ],
           "properties": {
+            "enumerable": {
+              "type": "boolean",
+              "description": "true = the id denotes a FIXED, hand-listable set, every member nameable now. false = a producer-defined FAMILY whose instances are runtime-named (pid/timestamp/counter) and may be garbage-collected.",
+              "x-rule24": {
+                "axis": "whether a durable member LIST can exist at all",
+                "grain": "one member_set",
+                "intent": "one -- expressibility of the set; NOT its size, NOT its basis, NOT its health",
+                "mece": "true | false spans it. There is no third: a set is either nameable now or it is not.",
+                "state_coherence": "flipping enumerable REPLACES the payload branch entirely (members <-> pattern+pattern_source). It moves NOTHING in basis/evidence/owner and NOTHING in population_status -- an orphaned family and a live family are both non-enumerable."
+              }
+            },
             "members": {
               "type": "array",
-              "minItems": 1,
+              "minItems": 2,
               "uniqueItems": true,
               "items": {
                 "type": "string",
                 "minLength": 1,
                 "pattern": "\\S"
               },
-              "description": "The concrete artifacts this part's id denotes. Unique, non-empty."
+              "description": "enumerable=true ONLY. The concrete artifacts the id denotes. MINIMUM TWO -- a one-member member_set is the absent case wearing the present case's shape, and it VALIDATED until 2026-08-27 because the >1 rule lived only in prose."
             },
-            "derivation": {
-              "const": "length(members)",
-              "description": "Declared intent only. States that cardinality is DERIVED, never stored."
+            "pattern": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S",
+              "description": "enumerable=false ONLY. The producer's name template, verbatim."
+            },
+            "pattern_source": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S",
+              "description": "enumerable=false ONLY. file:line where the template is produced. A pattern without its producing line is a guess about a name shape."
             },
             "basis": {
               "enum": [
                 "measured",
                 "held",
-                "inferred",
-                "absent"
-              ]
+                "inferred"
+              ],
+              "description": "How the enumeration OR the pattern was established. 'absent' is NOT a member: a present member_set makes a concrete claim, so no-basis beside it is incoherent. Express no-claim by OMITTING member_set entirely.",
+              "x-rule24": {
+                "axis": "epistemic basis of the member claim",
+                "grain": "one member_set",
+                "intent": "one -- how the claim was established; NOT how good it is, NOT whether it applies",
+                "reuse": "SAME value set and meaning as part.basis and SUBSTRATE_CARD.v2 trust.*.basis, MINUS 'absent'. One estate vocabulary narrowed by a stated coherence rule, never a local copy.",
+                "mece": "measured | held | inferred spans every way a present claim can be established; the fourth state (no claim) is expressed by OMITTING member_set, not by a fourth value.",
+                "state_coherence": "upgrading held->measured moves ONLY this field: it adds no member, removes none, and does not flip enumerable."
+              }
             },
             "evidence": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. 'NONE' is the loud value.",
-              "pattern": "\\S"
+              "pattern": "\\S",
+              "description": "NEVER null. 'NONE' is the loud value."
             },
             "owner": {
               "type": "string",
               "minLength": 1,
-              "description": "NEVER null. 'UNOWNED' is the loud value.",
-              "pattern": "\\S"
+              "pattern": "\\S",
+              "description": "NEVER null. 'UNOWNED' is the loud value."
             }
           },
+          "oneOf": [
+            {
+              "properties": {
+                "enumerable": {
+                  "const": true
+                }
+              },
+              "required": [
+                "members"
+              ],
+              "allOf": [
+                {
+                  "not": {
+                    "required": [
+                      "pattern"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "required": [
+                      "pattern_source"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "properties": {
+                "enumerable": {
+                  "const": false
+                }
+              },
+              "required": [
+                "pattern",
+                "pattern_source"
+              ],
+              "not": {
+                "required": [
+                  "members"
+                ]
+              }
+            }
+          ],
           "x-rule24": {
-            "axis": "the concrete artifact SET a single part id denotes",
-            "grain": "one part; members are artifacts, NOT parts",
-            "intent": "one -- enumerate what the id covers; NOT cardinality, which is derived, and NOT coverage",
-            "mece": "absent = the id denotes exactly one artifact. present = it denotes >1, all enumerated.",
-            "state_coherence": "discovering a further member ADDS to members[]. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set."
+            "axis": "the artifact SET a single part id denotes",
+            "grain": "one part; members/instances are ARTIFACTS, not parts",
+            "intent": "one -- WHAT the id covers; NOT cardinality (derived or undefined), NOT coverage",
+            "mece": "OMITTED = the id denotes exactly one artifact. enumerable=true = >=2, all named. enumerable=false = a family, named by template. Three states, no overlap.",
+            "state_coherence": "discovering a further member ADDS to members[] under true and moves NOTHING under false. NOTHING derives a member from the id pattern alone -- a brace pattern is a CLAIM about a set, not the set. `derivation` is NO LONGER SERIALISED: it stated schema prose in a field, which is the typed-derivable-value defect this object already refuses for cardinality."
           }
         }
       }
