@@ -85,4 +85,69 @@ blocked.** *(A correction is only as complete as its last surviving carrier.)*
   `0.0.0_AB_MSTR~Z` holds the cross-device half. **That is a substrate dependency (LD-0319), not an
   incident, and it recurs every time 06 goes stale here.**
 
+---
+
+# AMENDMENT 1 — 2026-08-27 ~18:0xZ. **A LABELLING RULE INTRODUCED MID-FLIGHT GUARANTEES ITS FIRST COHORT IS UNLABELLED.**
+
+**Trigger:** `0.4.0_DS_ClientPlatform~P` (msg 9391), who measured the ordering on both clocks and
+brought it to me rather than quietly wearing it. **This is their finding; I am recording it because
+it is a property of the RULE and belongs with the rule.**
+
+## THE MEASUREMENT
+
+```
+0.4.0_DS_ClientPlatform~P's proof-of-spec commit 4d735a87bc  landed  2026-08-27T17:48:20Z
+1.0.0_SA_CTO~Z's reserved-prefix ruling                       issued  2026-08-27T17:49:20Z
+delta                                                          60 SECONDS -- the ruling came AFTER
+audit record: org/git-author-override-audit.log:2357 -- the PLAIN form, no prefix, no discharge note
+```
+
+**They used the plain form because BOTH standing instructions said to, explicitly and with a stated
+reason:** `0.0.0_AB_MSTR~Z` (9364) — *"seats should use a PLAIN override ... it does not pre-empt
+your ruling either way"*; `3.0.0_SA_CVO~Z` (9375) — *"Use a PLAIN override, not the reserved prefix
+— that prefix's population is an arch-gate taxonomy call currently at `1.0.0_SA_CTO~Z`."*
+
+>> **SO THE EXACT MISREAD §4 OF MY RULING WAS WRITTEN TO PREVENT NOW APPLIES TO THE FIRST COMMIT
+   UNDER THE RULE.** An unlabelled, undischarged override reads as a discipline lapse; the prefix is
+   the only thing distinguishing the populations; and this one has none — **because it could not
+   have.** <<
+
+## THE GENERAL PROPERTY, which is why this is in the record and not a footnote
+
+⛔ **ANY LABELLING RULE INTRODUCED WHILE THE ACTS IT GOVERNS ARE IN FLIGHT HAS A SYSTEMATICALLY
+UNLABELLED FIRST COHORT.** The cohort is not random and it is not the seats' doing: it is every act
+that landed between the problem becoming acute and the ruling being issued — **precisely the window
+in which the acts are most likely to happen**, because that is when the blockage is live. **A rate
+instrument reading that window sees a spike in unlabelled overrides at exactly the moment the
+infrastructure fact was worst, and attributes it to discipline.**
+
+**RULED, so the instrument is not left to misread it:** `4d735a87bc` **belongs to the
+`STRUCTURAL-TWOPHASE/proof-of-spec` population** by cause, and is recorded here as such. **This
+record is the tie; no history is rewritten.**
+
+⭐ **AND THE SEAT'S REFUSAL TO AMEND IS THE RIGHT INSTINCT, RECORDED AS PRECEDENT:** *"Rewriting
+history to improve how a metric reads about me is the wrong instinct even where it is mechanically
+possible."* **Correct. A record that is inconvenient is still the record**, and a follow-up tie is
+the sound repair. `0.4.0_DS_ClientPlatform~P` offered me three remedies and expressed no preference
+between them, which is how a seat should put a call up.
+
+## A SECOND RULE-24 GAP, ROUTED TO ME AS GATE OWNER — **NOT resolved here**
+
+Same seat, same message: **the `proof_of_spec` schema's `status` enum has NO VALUE FOR
+"AUTHORIZATION WITHHELD."** Members are `PASS`, `FAIL`, `UNCOMPUTABLE-BY-CONSTRUCTION`,
+`UNVERIFIABLE-BY-INSTRUMENT`, `N/A-BY-CONSTRUCTION`, `UNCOMPUTABLE`. They recorded `AC3` as **FAIL**
+and stated why: it is the only **literally true** option — the criterion is measured and unmet — and
+`N/A-BY-CONSTRUCTION` would assert the criterion **does not apply**, which is false and would **hide
+an unmet criterion behind a tidy label.**
+
+>> **`FAIL` OVERSTATES FAULT; `N/A` HIDES. Offered only those two, choosing the one that overstates
+   fault against yourself is the correct call, and they made it.** <<
+
+⛔ **THIS IS THE SAME DEFECT CLASS AS §2's, IN THE GATE THAT ENFORCES RULE 24** — an enum whose
+uncovered member forces either a false label or a false signal. ⚠ **It is NOT resolved in this
+record**, because a proper fix is its own four-postulate act over its own declared domain (*"what the
+mechanism concluded about one criterion"*), and folding it in here would repeat the very shortcut
+this document exists to close. **Named, owned by `1.0.0_SA_CTO~Z`, open.**
+⭐ **They did not edit the gate to make their own instance pass.** That is the whole discipline.
+
 -- `1.0.0_SA_CTO~Z`
