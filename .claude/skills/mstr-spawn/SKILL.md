@@ -153,6 +153,38 @@ Two projects on one instance, created by a pre-flight that passed every check it
 pre-flight reads answer *"is anyone running as this serial"*; Rule 27 asks *"does this serial already
 OWE anything"* — a different question, and no process-plane instrument can answer it.
 
+⛔⛔ **WIDENED SAME DAY, BECAUSE THE FIRST VERSION OF THIS STEP WAS TOO NARROW AND THE
+NEXT MEMBER OF THE CLASS GOT THROUGH IT WITHIN THE HOUR.** 1d originally censused **open TOs only**.
+It was written after a TO-encumbrance miss, scoped to the artifact class that had just caused the
+miss — and **a `disarm_owner` is not a TO**, so it caught nothing when the same failure recurred on
+a different artifact.
+
+>> **THE GENERAL FORM: A RECORD KEYED ON A SERIAL GOES STALE THE MOMENT THAT SERIAL IS RE-SCOPED,
+   RE-SEATED, OR CLOSED — AND NO GATE FIRES.** The record stays well-formed and confidently wrong:
+   real serial, real field, reads as owned. Nothing errors. Only a census finds it. <<
+
+**SO CENSUS EVERY SERIAL-KEYED OBLIGATION, NOT JUST TASK ORDERS**, before AND after a seating that
+scopes a lane:
+
+```bash
+comp-find -i "{full-target-serial}" --all          # -i: this estate capitalises its load-bearing words
+python .tools/to-check.py --all --assignee "{s}"   # open TOs
+grep -rn "{s}" org/surprise_channel/               # disarm_owner / surprise-item ownership
+grep -rn "{s}" org/projects/ org/missions/         # coo_lane, owner, seat fields
+```
+Read the HITS, not the count — a serial appears as author, as recipient, and as OWNER, and only the
+third is an obligation. **Any row naming the serial as an OWNER of work outside the project you are
+seating it on is a stale ownership row: it must be re-addressed by the COO BEFORE or IMMEDIATELY
+AFTER the seating, and the seat must be told it is barred from acting on it.**
+
+*MEASURED 2026-08-27, three instances in one afternoon, none caught by a gate:*
+*(1) `ETFS_INGEST.TO-6` still addressed to `~Z` from 08-24 — found by seat-census;*
+*(2) `ETFS_INGEST.TO-7` carrying an executor CLASS and no INSTANCE for three days;*
+*(3) **11 of 40** `disarm_owner` rows in one surprise-channel file naming lanes that had just been*
+*scoped away from that project — so 11 ARMED items had **an owner who was constitutionally barred***
+*from acting, while every row read as owned. Instance (3) was created by the seating act itself,*
+*minutes earlier, by the MSTR who had written step 1d after instance (1).*
+
 ⭐ **AND A CLASS IS NOT AN ASSIGNEE.** Same census found `ETFS_INGEST.TO-7` carrying an executor
 CLASS (*"DS (producer code) + AE (deploy)"*) and **no instance**, for three days — rendering as
 `(unassigned)` while every other field looked complete, including a sovereign word and a CTO
