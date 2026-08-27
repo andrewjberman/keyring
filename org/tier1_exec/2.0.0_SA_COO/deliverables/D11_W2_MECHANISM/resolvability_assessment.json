@@ -2,11 +2,11 @@
   "andrew_direct_utc": "20260827T0015Z",
   "denominator": 44,
   "counts": {
-    "ARTIFACT": 25,
-    "ADDRESSED": 7,
-    "FRAGMENT": 12
+    "ARTIFACT": 26,
+    "ADDRESSED": 8,
+    "FRAGMENT": 10
   },
-  "openable_artifact_plus_addressed": 32,
+  "openable_artifact_plus_addressed": 34,
   "FIRST_PREDICATE_RETRACTED": "a bare-path test scored 21 of 44 unresolvable; it marked file#block regions, kuzu_nessie_db and comp-heat as unresolvable. Retracted before the number left this seat.",
   "measured_half": "resolvability ONLY",
   "judgment_half_NOT_SCORED": "whether a resolvable subject is a CRUCIAL DEPENDENCY for a materializer",
@@ -24,10 +24,10 @@
       "why": "file exists on disk: .tools/comp-debris"
     },
     {
-      "verdict": "FRAGMENT",
+      "verdict": "ADDRESSED",
       "subject": "ANCHOR_CATALOG + HUB_TYPES read at runtime from org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_canonical_ab_catalog.py",
       "lane": "0.7.0_AE_CloudOps~X",
-      "why": "no openable referent found"
+      "why": "NFRA_MOTIF_P1_canonical_ab_catalog.py opens (36,921 B, tracked); named regions at :307 ANCHOR_CATALOG and :314 HUB_TYPES  [AUTHOR RE-SCORE by 0.7.0_AE_CloudOps~X, measured, negative control fired]"
     },
     {
       "verdict": "FRAGMENT",
@@ -270,10 +270,25 @@
       "why": "concept / property / enum member / prose-described population"
     },
     {
-      "verdict": "FRAGMENT",
+      "verdict": "ARTIFACT",
       "subject": "the two BAKED STATIC SPEC LAYERS folded by ingest_c2c3_motif_producer",
       "lane": "0.7.0_AE_CloudOps~X",
-      "why": "concept / property / enum member / prose-described population"
+      "why": "motif_c2c3_materialize.json (15,255 B) + motif_c2c3_materialize_ab.json (1,141,941 B), both tracked, both with NAMED GENERATORS  [AUTHOR RE-SCORE by 0.7.0_AE_CloudOps~X, measured, negative control fired]"
     }
-  ]
+  ],
+  "AUTHOR_RESCORE_20260827T0056Z": {
+    "by": "0.7.0_AE_CloudOps~X",
+    "moved": [
+      {
+        "subject": "ANCHOR_CATALOG + HUB_TYPES read at runtime from org/tier2_se",
+        "to": "ADDRESSED"
+      },
+      {
+        "subject": "the two BAKED STATIC SPEC LAYERS folded by ingest_c2c3_motif",
+        "to": "ARTIFACT"
+      }
+    ],
+    "effect": "FRAGMENT 12 -> 10; OPENABLE 34 of 44",
+    "why_the_lane_and_not_the_issuer": "The issuer flagged both as likely over-called and declined to re-score another lane's subjects. The lane measured its own and moved them. An author adjudicating their own subjects AGAINST the issuer's under-count is the direction that costs them nothing to leave alone."
+  }
 }
