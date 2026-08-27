@@ -116,6 +116,36 @@ not the direction. *(I-14.)*
 **16. A CONDITION STATED BEFORE THE WORK IS A SPEC; SPRUNG AT THE GATE IT IS A HOLD.** Publish
 sign-off terms in advance.
 
+**17. INDEPENDENCE IS WHAT AN INSTRUMENT PHYSICALLY READS, NOT WHAT IT IS CALLED.** Rule 22 already
+says a second seat's confirmation *via the first seat's method* is REPETITION. **The sharper form is
+about SUBSTRATE, and it does not need a second seat at all:** two differently-named instruments that
+read the same store are ONE instrument, and they agree because they are the same measurement twice.
+**Therefore a discrimination gate needs an ORACLE OUTSIDE THE PIPELINE THAT PRODUCED THE DATA.**
+Where no such oracle exists, coverage is **UNMEASURED, not LOW** — and those are different claims of
+which only one is true. *(I-15: one session, four grains — INSTRUMENT, PARSER, SUBSTRATE, PROPOSAL.)*
+- **17a. The test is a PHYSICAL question, and it is cheap: what bytes does each arm read?** Two arms
+  on one store fail it however different their code is. One arm on the filesystem and one on a graph
+  pass it however similar. **Name the plane of each arm, not the name of each tool.**
+- **17b. A SET DIFFERENCE BETWEEN TWO STORES IS NOT A POPULATION FACT** without recorded scan scope
+  or matching vintages. "Present in A and not in B" and "B never swept it" are the same observation.
+  This is the residual-bucket law on a set operation rather than an arithmetic one.
+- **17c. AND THE ORACLE MUST SIT OUTSIDE THE PROPOSAL, NOT ONLY OUTSIDE THE PIPELINE.** A seat
+  verifying its own sequencing proposal validated a shape it had built in memory — the post-change
+  state — never the committed artifact, which was the only state the proposal put at risk. **A
+  control on the wrong subject looks exactly like rigour:** it had two numbers, a firing negative
+  control, and a stated conclusion.
+
+**COST, stated because a verification rule that hides its cost only ratchets:** naming the plane of
+each arm is one sentence per gate, and it is free when the arms differ. **The real cost lands where
+NO outside oracle exists** — the honest output is then `UNMEASURED` with the missing discriminator
+NAMED, which is less quotable than a percentage and is the whole point.
+
+**NON-APPLICATION:** this governs DISCRIMINATION — telling absent from unaddressed, real from
+artifact. It does NOT bind a plain reading of a single authoritative record: reading `owner` off the
+manifest that defines ownership needs no second plane, because there is no second truth for it to
+disagree with. **Demanding an outside oracle for a definitional read manufactures work and is the
+failure mode of over-applying this rule.**
+
 ---
 
 ## THE CHECK — before recording a PASS, or citing one
@@ -128,6 +158,9 @@ sign-off terms in advance.
 5. **Does my evidence come from the thing under suspicion?**
 6. **A "works" claim — did I exercise the path, or observe that an artifact exists?**
 7. **A debt — is the record where the actor will be standing when it fires?**
+8. **Do my two arms read the same STORE?** If yes they are one instrument. Name the PLANE of
+   each arm — and if there is no arm outside the producing pipeline, the answer is `UNMEASURED`, not
+   a number.
 
 ---
 
