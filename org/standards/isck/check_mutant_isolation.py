@@ -100,21 +100,38 @@ def main():
         print("ERROR: zero mutants isolated -- suspect this harness, not the battery.")
         return 2
 
+    # DEMOTED TO DIAGNOSTIC 2026-08-27 on 0.4.0_DT_ClientPlatform~X's probe-swap finding DT-R2-4,
+    # accepted by this file's author. THE OLD PREDICATE WAS WRONG: a mutant tripping two rules is
+    # usually a record that violates two INDEPENDENT LAWS at once -- redundant protection, which is
+    # the thing you want -- and scoring that as a failure makes this gate permanently red. A
+    # permanently-red gate stops being read, which costs you the day it turns red for a real reason.
+    # The property this was proxying for ("every rule has a mutant that would detect its deletion")
+    # is measured DIRECTLY by check_rule_ablation.py; where the two disagree, believe ablation.
+    # WHAT STILL FAILS HERE: a mutant that VALIDATES (a real hole) or names an unknown record type.
+    # Non-isolation now prints as INFO with its diagnosis.
     rc = 0
+    if bad_multi:
+        print("")
+        print("INFO: %d mutant(s) trip more than one rule. NOT a failure -- these are records that"
+              % len(bad_multi))
+        print("      violate several laws at once (redundant protection). Cross-check with")
+        print("      check_rule_ablation.py: if a rule has NO dependent mutant there, the")
+        print("      redundancy is hiding an untested arm and a mutant per arm is owed.")
+        for name, kws in bad_multi:
+            print("      - %-46s trips %s" % (name, kws))
+
     for name, rt in bad_norec:
         print("FAIL: %-46s unknown record_type %r" % (name, rt))
         rc = 1
     for name in bad_valid:
         print("FAIL: %-46s VALIDATES against its own $def" % name)
         rc = 1
-    for name, kws in bad_multi:
-        print("FAIL: %-46s trips %d rules %s -- delete the rule it names and it still rejects"
-              % (name, len(kws), kws))
-        rc = 1
-
     if rc == 0:
-        print("OK: every mutant trips exactly one rule. The negative arm can fail at the field")
-        print("    under test. NOTE: isolation is not attribution -- run the attribution probe too.")
+        print("OK: no mutant validates and every record_type resolves.")
+        print("    NOTE: isolation is a DIAGNOSTIC, not the coverage gate -- check_rule_ablation.py")
+        print("    measures rule coverage directly. And neither catches SAME-KEYWORD drift: a")
+        print("    mutant corrupted in a way that trips the rule it already names is invisible to")
+        print("    this gate, to ablation, AND to the expected-reason assertions (measured).")
     return rc
 
 

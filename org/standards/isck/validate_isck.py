@@ -179,6 +179,8 @@ def _mutants():
         referent_fabric_id="laptop")
     add("binding.fabric-local-without-fabric", "entity_binding", ["required"],
         referent_scope="fabric_local")
+    add("binding.device-local-missing-both-keys", "entity_binding", ["required"],
+        referent_scope="device_local")
     add("run.missing-execution-fabric", "materialization_run", ["required"],
         executed_on_fabric=_DEL)
     # LAW 3 intervals (DT-4)

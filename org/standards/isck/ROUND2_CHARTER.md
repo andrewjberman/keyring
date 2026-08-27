@@ -86,7 +86,12 @@ exists to kill does not get to live in ISCK's own version history.
 
 **SCHEMA FREEZE ≠ LEDGER-BACKED PRODUCTION CERTIFICATION.** Round 2 exits when:
 1. R2-1 through R2-10 are resolved or explicitly carried with owners;
-2. every declared gate passes from a CLEAN CLONE;
+2. every declared gate passes via `run_gates.sh <tip>` — an ATOMIC GIT-ARCHIVE EXTRACT of the
+   cited commit (DT-R2-3: a live working tree is not atomic; a gate run during any landing samples
+   a torn state and fakes either colour) — AND, at exit time, that cited tip is ON ORIGIN, so the
+   extract reproduces from a true clone (COO~X: the file-copy and git-clone readings of
+   "clean clone" disagree whenever commits are local; the exit gate takes the stricter one, and
+   the integration window is therefore part of the exit path);
 3. **the VERTICAL-SLICE END-TO-END BATTERY passes** (GPT, the operational gate): one flow covering
    minting → binding → RENAME (serial survives) → state observation → DUPLICATE PROVISIONAL
    RECONCILIATION (non-destructive) → materialization from a source frontier → NESSIE AUTHORITY
