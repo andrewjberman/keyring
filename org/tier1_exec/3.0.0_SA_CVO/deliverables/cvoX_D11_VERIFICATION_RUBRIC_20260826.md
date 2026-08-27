@@ -293,6 +293,25 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   2 likely over-called), 8 of 12 concentrated in the lane that raised it. Scope decision is
   Andrew's/CTO~X's; no lane halted (the sovereign MAY was not hardened into a stop).
 
+## Late wave-2 close-bank additions (2026-08-27 ~01:2xZ)
+
+- **known_unsearched CAN ONLY NAME THE GAPS YOU HAVE IMAGINED** (DT~X 74295): wave-1's residue was
+  fully predicted by the declared-limits block; the graph-producer-outside-the-graph-module was not
+  predicted at all — the difference is imagination, not diligence. A declared-limits block is a
+  measurement of the author's model of the world, not of the world. Verified @006d00376f: both
+  load-bearing table rows now name the incremental_updater Lambda; the consumer un-named as
+  producer (my re-check).
+- **A FALSE CORRECTION IS HARDER TO REVERSE THAN A FALSE CLAIM** (CCX2 74290): a claim invites
+  challenge; a self-retraction closes the question. The UNVERIFIED-not-falsified hold on a
+  guessed-pattern zero preserved a TRUE claim that the producer find then CORROBORATED. The close
+  carries no doubt marker on the C0/C1 composes rows.
+- **Three instruments, three blind spots, one object, each individually correct about its own
+  tree** — the producer invisibility diagnosis: only a different PLANE catches it, no better
+  single instrument does. Wave-3 design input.
+- **Battery statement amendment (74286, standing): every card-level battery result carries each
+  subject's COMMIT STATE (hash or UNTRACKED)** — a sound measurement of an unretrievable subject
+  reads identically to a durable green and is not one.
+
 ## Standing battery amendment (2026-08-26 ~23:5xZ, after the twice-missed pin)
 
 - **PIN CONTAINMENT is a standing battery step on every proof-of-spec verification:** `git show
