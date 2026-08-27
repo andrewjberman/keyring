@@ -24,5 +24,18 @@
     "their_probe_failed_and_they_said_so": "they tried to confirm the 552->593 move by greping each vintage for you/your and got EMPTY for both -- the pre-slim phrasing differs and their pattern did not match it. So they cite the line-number trajectory as 0.8.0_AE_CloudComp~X's measurement, NOT their own, and claim only the AUTHORSHIP that %an actually printed. Ninth instrument failure, fired inside the audit of a citation defect.",
     "and_the_incomplete_sweep_they_refused_to_round": "they had written 'ONE CONFIRMED instance and an unmeasured remainder, and I am not rounding that to one.' The remainder was real and was found 4 minutes later. REFUSING TO ROUND AN INCOMPLETE SWEEP TO A CLEAN NUMBER IS THE ONLY REASON THE TRUE COUNT REACHED THE RECORD.",
     "MY_OWN_USE_OF_THE_WORD_IS_UNAUDITED": "I have used 'verified' throughout tonight. I have NOT audited which half it attached to in each case, and I am recording that as UNMEASURED rather than implying I am clean. Opening an unbounded sweep of my own prose at 04:2xZ would be the wrong act; naming the exposure is not."
+  },
+  "A_DELETION_HAS_NO_NOTIFICATION": {
+    "found_by": "1.0.0_SA_CTO~X, applying the citation-vintage lesson to their OWN open-calls list",
+    "their_result": "TWO of the five calls they had been presenting to Andrew every tick are DEAD. Both CLAUDE.md defects were REMOVED BY THE SLIM. The addresses they held them at -- :404 and :638 -- DO NOT EXIST in a 215-line file.",
+    "\u26d4_the_class": "CLOSED BY AN EDIT, NOT BY A RULING, AND NOTHING TOLD THEM: A DELETION HAS NO NOTIFICATION. A ruling generates a message; a deletion generates silence. An open call held by LINE NUMBER against a file that shrank becomes a call about nothing, and the holder keeps presenting it because presenting it is cheap and checking it requires re-resolving an address nobody re-resolves.",
+    "MY_OWN_CARRIED_CALL_CHECKED": {
+      "the_call": "the HUD default-cap question at Andrew, open since ~20:00Z",
+      "its_citation": ".tools/comp-find:7 -- Andrew's 2026-08-05 edict, cited in THREE places in the brief",
+      "measured": "the file is 320 lines; LINE 7 CURRENTLY READS THE EDICT TEXT VERBATIM. The citation RESOLVES.",
+      "\u26d4_but_that_is_luck_not_method": "it resolves because nothing has been inserted above line 7 of that file, not because the citation is sound. It is the SAME DEFECTIVE FORM 1.0.0_SA_CTO~X just found dead in their own list: a bare line number with no vintage. A CHECK THAT COMES BACK GREEN ON A DEFECTIVE FORM IS NOT A VINDICATION OF THE FORM -- and reporting it as one would be the correct-value-through-wrong-reason class, which 0.7.0_AE_CloudOps~X named tonight and which has now caught three seats.",
+      "disposition": "the call stands and is still live at Andrew. The citation form is defective and stays recorded as such."
+    },
+    "the_general_remedy": "carry an open call by its QUESTION, not by an address. 'Does the estate want default-cap or default-full' survives any edit to any file; '.tools/comp-find:7' does not."
   }
 }
