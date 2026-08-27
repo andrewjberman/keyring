@@ -67,7 +67,10 @@ DOMAIN: how an assertion entered the record. MECE: hunted members — store-decl
 assertion. INTENT: origin only — never quality (that is verification_standing; the split is the
 point). STATE-COHERENCE: origin is immutable; no remedy moves it.
 ARM TABLE: `independently_observed -> evidence_refs required` (owner: the asserting seat; remedy:
-supply the observation refs or do not claim independence).
+supply the observation refs or do not claim independence). **R2-3: this arm now binds EVERY
+consumer of the enum** -- identity_relation AND entity_binding (`binding_basis`); an arm that binds
+one consumer of a shared enum and not another is the obligation-propagation gap COO~X named at
+76588.
 
 ### 3.2 `verification_standing` — `unverified | corroborated | contradicted | superseded`
 DOMAIN: epistemic standing of an assertion. MECE over check-states; hunted member: partially-checked
@@ -140,6 +143,9 @@ DOMAIN: standing of a logical process identity. MECE: `unknown` is the honest ce
 status; the consumer relation is WP-3's). GRAIN: materializer. INTENT: process lifecycle.
 STATE-COHERENCE: `unknown` moves by READING THE CODE (any seat); `superseded` by a successor version
 landing (owner); `retired` by decommission (owner) — named per L0's postulate-(iv) critique.
+ARM TABLE (R2-3, COO~X 76588): `superseded -> superseded_by_version REQUIRED` (matv id, new field)
+— the 3.16 allowlist admits the `superseded` collision as SAME SENSE, and same sense carries the
+same obligation: a superseded thing names its successor, in every enum that says the word.
 
 ### 3.9 `run_status` — `running | succeeded | failed | partial`
 DOMAIN: outcome of one execution. MECE: hunted member — cancelled → `failed` with evidence at v0.1

@@ -283,6 +283,23 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding_basis": {
+                "const": "independently_observed"
+              }
+            },
+            "required": [
+              "binding_basis"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
         }
       ]
     },
@@ -645,8 +662,34 @@
             "retired",
             "unknown"
           ]
+        },
+        "superseded_by_version": {
+          "type": "string",
+          "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "current_status": {
+                "const": "superseded"
+              }
+            },
+            "required": [
+              "current_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "superseded_by_version"
+            ]
+          }
+        }
+      ]
     },
     "materializer_version": {
       "type": "object",

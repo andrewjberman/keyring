@@ -53,6 +53,7 @@ FIXTURES = {
         "native_key": "portal/src/App.tsx", "fabric_scope": "fabric_invariant",
         "valid_from": "commit:9fc70e31a1", "valid_to": None,
         "binding_basis": "independently_observed", "status": "open",
+        "evidence_refs": [f"obs:{ULID_A}"],
     },
     "state_observation": {
         "record_type": "state_observation", "observation_id": f"obs:{ULID_A}",
@@ -211,6 +212,11 @@ def _mutants():
     # timestamps (CV-4)
     add("observation.garbage-timestamp", "state_observation", ["pattern"],
         observed_at="2026-13-45T99:99:99Z")
+    # R2-3 warrants (round-2 batch 1: CRO~X gap 2 + COO~X 76588)
+    add("binding.independently-observed-no-evidence", "entity_binding", ["required"],
+        evidence_refs=_DEL)
+    add("materializer.superseded-no-successor", "materializer", ["required"],
+        current_status="superseded")
     # enum discipline (F4 renames; dead enums stay dead)
     add("binding.basis-is-dead-enum-measured", "entity_binding", ["enum"],
         binding_basis="measured")
@@ -235,6 +241,14 @@ def _semantic_mutants():
          _mk("state_observation", observed_at="2026-02-30T10:00:00Z")),
         ("sem.batch-duplicate-serial",
          [_mk("entity"), _mk("entity", entity_class="symbol", plane="symbol")]),
+        ("sem.entity-active-canonicalized",
+         _mk("entity", canonicalized_as=f"ent:{ULID_B}")),
+        ("sem.frontier-duplicate-coordinate",
+         _mk("source_frontier", entries=[
+             FIXTURES["source_frontier"]["entries"][0],
+             dict(FIXTURES["source_frontier"]["entries"][0],
+                  source_version="snapshot:9999999999999999999"),
+         ])),
     ]
 
 
@@ -278,6 +292,27 @@ def semantic_errors(instances):
         if rt == "entity" and inst.get("canonicalized_as") == inst.get("entity_serial") \
                 and inst.get("canonicalized_as") is not None:
             errs.append(f"[{i}] entity: canonicalized_as itself")
+        # R2-3: active-but-canonicalized contradiction (COO~X 76588 R2-5)
+        if rt == "entity" and inst.get("canonicalized_as") is not None \
+                and inst.get("canonicalized_as") != inst.get("entity_serial") \
+                and inst.get("current_status") not in ("retired", "contested"):
+            errs.append(f"[{i}] entity: canonicalized_as set while current_status="
+                        f"{inst.get('current_status')} -- a canonicalized entity is retired or "
+                        "contested, never active/provisional (sec 3.4)")
+        # R2-6: frontier coordinate uniqueness (CRO~X gap 4 + COO~X 76588 R2-6, convergent)
+        if rt == "source_frontier":
+            coords = {}
+            for j, e in enumerate(inst.get("entries", [])):
+                if not isinstance(e, dict):
+                    continue
+                key = (e.get("source_serial"), e.get("identity_space"),
+                       e.get("authority_ref"), e.get("fabric_id"))
+                if key in coords:
+                    errs.append(f"[{i}] source_frontier: entries [{coords[key]}] and [{j}] pin "
+                                f"the SAME source coordinate {key} -- a frontier is a vector, one "
+                                "version per coordinate (sec 6 / R2-6)")
+                else:
+                    coords[key] = j
         if rt == "materializer_version" and inst.get("supersedes") == inst.get("version_id") \
                 and inst.get("supersedes") is not None:
             errs.append(f"[{i}] materializer_version: supersedes itself")
