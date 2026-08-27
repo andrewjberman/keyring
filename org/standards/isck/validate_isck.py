@@ -182,6 +182,25 @@ def main():
         return 1 if errs else 0
 
     # --- self-test ---
+    # AXIS-PRESENCE ARM (added on 2.0.0_SA_COO~X finding 76257: registry_standing was in the
+    # doctrine and the ruling and ABSENT from the schema -- two of three axes is not two-thirds
+    # of a contract). The three ruled axes must exist as $defs with their exact closed domains.
+    AXES = {
+        "claim_origin": 5,
+        "verification_standing": 4,
+        "registry_standing": 5,
+    }
+    axis_fail = []
+    for axis, n in AXES.items():
+        d = schema.get("$defs", {}).get(axis)
+        if d is None:
+            axis_fail.append(f"{axis}: ABSENT from $defs")
+        elif len(d.get("enum", [])) != n:
+            axis_fail.append(f"{axis}: {len(d.get('enum', []))} values, expected {n}")
+    print(f"AXIS ARM: {len(AXES) - len(axis_fail)} of {len(AXES)} ruled axes present with exact domains")
+    for msg in axis_fail:
+        print(f"  ERROR: {msg}")
+
     pos_fail = []
     for name, inst in FIXTURES.items():
         errs = list(validator.iter_errors(inst))
@@ -199,10 +218,10 @@ def main():
     print(f"NEGATIVE ARM: {len(muts) - len(neg_fail)} of {len(muts)} mutants REJECT")
     for name in neg_fail:
         print(f"  ERROR: mutant {name} VALIDATED -- hole in the contract")
-    if pos_fail or neg_fail:
+    if pos_fail or neg_fail or axis_fail:
         print("FAIL")
         return 1
-    print(f"PASS: {len(FIXTURES)}/{len(FIXTURES)} positive + {len(muts)}/{len(muts)} negative")
+    print(f"PASS: {len(AXES)}/{len(AXES)} axes + {len(FIXTURES)}/{len(FIXTURES)} positive + {len(muts)}/{len(muts)} negative")
     return 0
 
 

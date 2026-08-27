@@ -24,6 +24,7 @@
     "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}},
     "claim_origin": {"enum": ["producer_declared", "independently_observed", "rule_derived", "model_inferred", "human_adjudicated"]},
     "verification_standing": {"enum": ["unverified", "corroborated", "contradicted", "superseded"]},
+    "registry_standing": {"enum": ["candidate", "admitted", "held", "rejected", "retired"]},
     "fabric_id": {"$ref": "#/$defs/nonempty"},
 
     "entity": {
