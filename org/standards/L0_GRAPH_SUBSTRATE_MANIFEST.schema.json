@@ -874,8 +874,26 @@
             },
             "pattern": {
               "type": "string",
-              "pattern": "<[^<>\\s]+>",
-              "description": "enumerable=false ONLY. The producer's name template, verbatim, and it MUST CONTAIN AT LEAST ONE `<placeholder>`. RULED 2026-08-27: a fixed literal pattern denotes exactly ONE artifact, which is not a family at all -- that part carries NO member_set. The placeholder IS the non-enumerability, so a template without one is the enumerable case mislabelled."
+              "pattern": "^[^\\s]*<[a-z][a-z0-9_]*>[^\\s]*$",
+              "allOf": [
+                {
+                  "not": {
+                    "pattern": "\\s"
+                  },
+                  "$comment": "no whitespace anywhere, terminator included"
+                }
+              ],
+              "description": "enumerable=false ONLY. A NORMALISED SEMANTIC FAMILY TEMPLATE -- NOT verbatim producer text. ⛔ RULED 2026-08-27 after 4.0.0_SA_CRO~A found the contradiction: this field said 'verbatim' AND required <placeholder> syntax, and the pinned producer at _canonical.py:288 emits an f-string ('{os.getpid()}'), so NO value could satisfy both. A stored value cannot be verbatim and normalised at once. THE NORMALISATION, defined once: every runtime-varying segment is written <name> in lowercase snake_case naming WHAT VARIES (<pid>, <monotonic_ns>, <uniq>), and every literal segment is copied from the producer unchanged. At least one placeholder is REQUIRED -- a template with no varying segment denotes exactly ONE artifact, which is not a family, and that part carries no member_set at all. THE VERBATIM PRODUCER EXPRESSION IS NOT LOST: it is pinned by pattern_source_home + pattern_source_line, which is where a reader goes for the lexical truth. This field answers WHAT THE FAMILY IS; those fields answer WHERE IT IS PRODUCED. Two questions, two places, and conflating them is what produced the contradiction.",
+              "examples": [
+                "<base>.rebuild.tmp.<pid>.<monotonic_ns>.<uniq>"
+              ],
+              "x-rule24": {
+                "axis": "the NAME SHAPE of a runtime-named family",
+                "grain": "one member_set under enumerable=false",
+                "intent": "one -- WHAT the family's names look like; NOT where the template is produced (pattern_source_*), NOT how many instances exist (undefined by construction)",
+                "mece": "exactly ONE representation is legal -- the normalised <name> form. The regex is NOT broadened to admit f-string or printf syntax as alternatives: two unlabelled spellings of one template are two rows for one family, the same identity split home_space exists to prevent.",
+                "state_coherence": "a producer RENAMING its template changes this value and pattern_source_line together; a producer MOVING changes pattern_source_home alone."
+              }
             },
             "pattern_source_home": {
               "$ref": "#/$defs/repo_relative_path",
