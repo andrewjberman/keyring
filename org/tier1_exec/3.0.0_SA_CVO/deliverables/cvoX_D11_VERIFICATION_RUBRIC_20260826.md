@@ -371,7 +371,17 @@ against them as part of the population's record, not as bars this seat invented:
   PATH, a garbage collector cited as proof of a write; right file/table/tuple-shape, wrong VERB):
   BY-NAME = incremental_updater (graph_nodes) + comp_aws_cli (BOTH tables — the cross-tree
   sys.path-inserted module, strongest single result); TABLE-OBJECT-ONLY = derive_runner (3 real
-  writes, targets unresolved by the binder) + cse_store. The 37 are UNRESOLVED, not refuted (the
+  writes, targets unresolved by the binder) + cse_store. ⛔ derive_runner RESOLVED by 74746
+  (source-read at the carrying seat, upheld by the row's author): THREE (FILE, ARTIFACT) relations
+  under TWO mechanisms — (derive_runner, graph_nodes) + (derive_runner, graph_edges) via
+  _overwrite_with_retry with CALL-SITE LITERALS at :345/:376 (class 1, enumerable, 2 sites — so
+  by-name after all, via the helper) and (derive_runner, graph_contracts) via a SEPARATE
+  create-if-absent append-only mechanism carrying a MUST-NOT-TOUCH invariant, CVO-authored rows.
+  Same file: different mutation policy, authorship mode, authority role — a single file-grain
+  standing cannot express it. FACE COMMITMENT: tranche rows at RELATION grain; "5 writers" is a
+  FILE count masquerading as a relation count (the discoverability-as-coverage error one grain
+  down), and every tranche-1 row is expected to decompose the same way (snap_store writes every
+  {surface}_snap; resource_summaries_store an unbounded set). The 37 are UNRESOLVED, not refuted (the
   binder failed on TWO shapes in one hour — tuple args, read-as-write — so it certifies nothing
   about absence); bound (74426 re-floor, 74433 residual split): >=2 by-name, >=4 to-a-table-object, candidate
   floor 38 (was 41 — `to_arrow(` and `load_table(` are READ tokens that sat inside the "strong
