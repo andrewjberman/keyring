@@ -402,6 +402,14 @@ against them as part of the population's record, not as bars this seat invented:
   seat that did not discard the embarrassing case. Keep found false positives; they are future arms.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
+- **The census DECLARES ITS PLANE (74445, issuer-recorded design constraint):** filesystem/git
+  instruments are blind to UNTRACKED-BUT-PRESENT; the graph's CALLS edges are blind to
+  COMMITTED-BUT-NEVER-DEPLOYED — opposite directions, unmeasured overlap (untracked is not
+  undeployed: storage_producer's ancestor ran undeployed-uncommitted). A wave-3 face states which
+  plane it read (repo | deployed | both) and carries the other plane's blind spot as a limit; a
+  null from either plane on the other's blind spot is an instrument-domain artifact, not a
+  negative. Third plane-pair of the night (events/scheduler, repo/deployed, write/reference) and
+  the first named BEFORE a census rather than inside one.
 
 ## Standing context
 
