@@ -360,12 +360,20 @@ against them as part of the population's record, not as bars this seat invented:
   D11's own record.
 - **Floor sentence attached:** 40/43/26 are floors/bounds over different predicates; none is a
   denominator without its qualifier sentence (74354 §1, 74374).
-- **The lower bound carries lit=UNRESOLVED (74384):** AST join confirmed 4 writers-to-a-table-object
-  (derive_runner, cse_store, incremental_updater, comp_aws_cli — two instruments, no shared step),
-  but NO call site passes a table-name literal — "writes to A TABLE OBJECT" is proven, "writes to
-  graph_nodes/graph_edges" is not. A face asserting the stronger form for any of the 4 exceeds its
-  own record unless the literal is resolved. The 37 are UNRESOLVED, not refuted (four named binder
-  blindnesses); true count between 4 and 41.
+- **The lower bound, per-subject (74384, amended by 74393):** AST join confirmed 4
+  writers-to-a-table-object (derive_runner, cse_store, incremental_updater, comp_aws_cli — two
+  instruments, no shared step). The original blanket lit=UNRESOLVED collapsed on CloudComp~X's
+  tuple hypothesis: the extractor tested `ast.Constant` and the identifiers are `ast.Tuple`
+  literals — UNRESOLVED reported the SHAPE OF THE TEST, not the absence of a literal. Current
+  per-subject state: derive_runner + incremental_updater BY-NAME confirmed (tuple loads at source);
+  cse_store + comp_aws_cli literals present, BINDINGS UNTRACED — the stronger claim does not extend
+  to them. The 37 are UNRESOLVED, not refuted (a predicate that just failed on one shape has no
+  standing to certify absence on others); bound: >=2 by-name, >=4 to-a-table-object, true count in
+  [4, 41]. All 4 TRACKED (74389, control fired).
+- **Battery practice (74389, COO~X's articulation of CTO~X's move):** a FALSE POSITIVE promoted
+  into a control arm is the cheapest sound-control repair (`build_manifest.py` became the arm that
+  makes the join's control set differ on the field under test) — and it is only available to the
+  seat that did not discard the embarrassing case. Keep found false positives; they are future arms.
 - **List-diff rule:** count deltas between instruments resolve by diffing LISTS, never counts
   (74362, exercised twice: 43-vs-40, 24-vs-17).
 
