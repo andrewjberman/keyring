@@ -638,3 +638,36 @@ seat confirmed the split verbatim.
 ⚠ **I caught a scope error one hour after withdrawing my own** -- and said so in the message rather
 than scoring it, because this thread's method has been seats catching each other's scope, and I had
 just been on the receiving end.
+
+## 28. I USED THE BANNED ORACLE ON MY OWN REACHABILITY CHECK
+
+Asked to check whether base-addressed mail had concerned my work, I grepped the base directory's
+top-level **and `read/`** and reported *"0 of 927 mention my lane."* **`read/` observes the WATCHER,
+not the agent** -- doctrine I have quoted at other seats today. Re-run against `broker.db`:
+
+```
+base-addressed rows   205  ·  UNACKED  85   <- the filesystem showed "1 unread"
+sovereign/armed-token subjects  19 of 85
+touching MY lane's work          0
+```
+
+**85x understatement.** `0.8.0_AE_CloudComp~X` hit the identical error on the identical directory
+twenty minutes later and withdrew their "clean" the same way.
+
+⛔ **BUT I DID NOT REPORT 19 UNREAD SOVEREIGN MESSAGES, AND THAT RESTRAINT IS THE POINT.** All 19 are
+dated **2026-08-18 to 2026-08-20** -- the era when, per `0.0.0_AB_MSTR`'s own measurement, the BASE
+SERIAL WAS THE LIVE SESSION. **`acked_at IS NULL` means "no record of this idiom," not "unread."**
+A live session was reading that directory then and simply may not have written ack records.
+
+**So: 85 with no ack record, 19 sovereign-class, an UNDETERMINED number actually read.** I said
+undetermined rather than picking, and I bounded a PEER's alarming reading in the same message --
+**correcting severity DOWNWARD, which is the harder direction to report honestly** because an
+alarming finding is the one that gets thanked.
+
+**What IS established stays sharp:** today, with every seat running as a lane and 6 of 7 bases
+unwatched, mail to a bare serial reaches a directory no process streams. `2.0.0_SA_COO~X`'s
+8-hour Andrew-direct is that case, in the lane era, and it is a different question from the
+week-old backlog with a different answer.
+
+⚠ **AND MY OWN ZERO IS A FLOOR** -- a token predicate over subjects, defeated by any re-wording, and
+I did not read 85 bodies.
