@@ -176,6 +176,29 @@
               "adjudicated_by"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "current_status": {
+                "enum": [
+                  "provisional",
+                  "active",
+                  "retired"
+                ]
+              }
+            },
+            "required": [
+              "current_status"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "adjudicated_by"
+              ]
+            }
+          }
         }
       ]
     },
@@ -769,6 +792,29 @@
             "required": [
               "evidence_refs"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_standing": {
+                "enum": [
+                  "unverified",
+                  "corroborated",
+                  "superseded"
+                ]
+              }
+            },
+            "required": [
+              "verification_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "adjudicated_by"
+              ]
+            }
           }
         }
       ]

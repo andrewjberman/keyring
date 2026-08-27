@@ -242,6 +242,10 @@ def _mutants():
         superseded_by_version=f"matv:{ULID_B}")
     add("entity.contested-no-adjudicator", "entity", ["required"],
         current_status="contested")
+    add("entity.active-with-adjudicator", "entity", ["not"],
+        adjudicated_by="1.0.0_SA_CTO~X")
+    add("relation.unverified-with-adjudicator", "identity_relation", ["not"],
+        adjudicated_by="3.0.0_SA_CVO~X")
     add("relation.rule-derived-no-evidence", "identity_relation", ["required"],
         evidence_refs=_DEL)
     add("binding.model-inferred-no-evidence", "entity_binding", ["required"],
