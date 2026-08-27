@@ -241,4 +241,86 @@ negative controls), so it is a seating question now.
 **None.** Every open item has a named owner. `D1-i-2` hold **NOT lifted** — a green run cannot
 distinguish *someone made the reviewed edit* from *the input changed shape*.
 
+---
+
+# ADDENDUM — 1820–1850Z. ALL THREE DIRECTIVES CERTIFIED, AND A P1 I FIXED THREE TIMES
+
+**The log above closed at the cut. Everything below happened after it and a successor needs it.**
+
+## A. THE PRIORITY SET IS DELIVERED THROUGH THE FULL PIPELINE
+
+| | |
+|---|---|
+| **D1_NAMEDISCOVERY** | round 1 built, **15/15**, 3 instances rc=0 VALID, **4 planted mutants fired** — CERTIFIED |
+| **D4 / ETFS_SATELLITES** | TO-1+TO-2 **9/9** (`~W`); TO-3 then TO-4 **delivered as separate commits, split held** (`~Y`) — CERTIFIED |
+| **D8 / MDPF_COTREMEDIATION** | **BOTH** certifications closed |
+
+⛔ **THE ONE LIVE CONSTRAINT: THE PROD PROMOTE MUST CARRY TO-3 AND TO-4 TOGETHER.** Both are on
+`origin/DEV` together so DEV has no ungated window. **TO-3 alone on PROD is an ungated declared set —
+every firm sees the satellites pill.** DT lane, Andrew's word. Reached independently by `~Y` (commit
+topology) and this seat (declared-vs-visible split).
+
+## B. THE `safe-deploy` P1 — AND I GOT IT WRONG TWICE ON THE WAY TO RIGHT
+
+**THE LIVE DEFECT (real, measured twice, predicted-then-observed by `0.0.0_AB_MSTR~Z`):** the gate
+printed `OK: safe-deploy gate PASS -- all files deployed and verified` **after deploying ZERO**, on
+an all-`SKIP-NOT-MEMBER` push. `:1209` skips and `continue`s without recording, so `deployed` stayed
+empty, the verify loop ran zero times, and `:1290`'s success line was **unconditional**. **A universal
+quantified over an EMPTY SET.** The SKIP is correct per Rule 13; the SENTENCE was the defect.
+
+```
+69dec13d13  fix       -- gated the honest branch on n_skip
+5b864516c2  amend 1   -- REGATED ON n_dep == 0 after 0.4.0_DS_ClientPlatform~W read it at SOURCE
+b24376707c  amend 2   -- my JUSTIFICATION overclaimed; all 3 "reachable" paths are not
+40db8b8f3a  EXERCISED on a live push -- predicted verbatim, falsifier ABSENT
+```
+
+⛔ **MY TWO ERRORS, both of a shape already in this log:**
+1. **amend 1** — I gated on `n_skip`, **the one skip reason I had just instrumented**, leaving
+   `"all 0 file(s) deployed and verified"` one bucket over. **ENUMERATING THE CAUSES IS THE
+   SIX-SITES-WHEN-THERE-ARE-EIGHT ERROR AND I MADE IT TWICE IN ONE SESSION** (§3a is the other).
+   **KEY ON THE OUTCOME, NOT ON THE ENUMERATED CAUSES.**
+2. **amend 2** — I then named three *"reachable"* paths to that branch and **all three fail**:
+   SERVE-HELD is **FALSE** (`:1120` returns early); `target is None` is **LATENT**
+   (`detect_script_files` admits on the identical PURE predicate); `SKIP-SECOND-TARGET` **cannot give
+   `n_dep==0` alone** (its loop is inside the deploy loop, after the primary append).
+   ⛔ **So that branch is UNREACHABLE today and my fix for it is DEFENSIVE — I had presented it as a
+   live-defect fix.** `0.4.0_DS_ClientPlatform~W` retracted the SERVE-HELD limb saying *"I measured
+   the premise correctly and asserted the CONSEQUENCE without measuring it"* — **and I had already
+   inherited that exact limb into my commit message without checking for a guard either. Mine is the
+   worse instance: theirs was a fresh trace, mine was an ungrounded relay.**
+   **Corrected IN THE CODE COMMENT, not only the commit message** — the `SAT-inv-2`:118 lesson
+   applied to my own work eleven commits later.
+
+⭐ **THE ACCEPTANCE IS SOUND BECAUSE OF ITS SHAPE, NOT ITS RESULT:** the exact output was **published
+by a NON-AUTHOR BEFORE the push**, naming the string that would mean failure; it was observed
+verbatim on a real push; the falsifier was absent. **I could not have fitted it afterwards.**
+
+## C. TWO MORE CRITERIA OF MINE THAT SCORED SHAPE, NOT EFFECT
+
+- **`ND-TO1-AC3`** — a PLACEMENT test. `0.4.0_DS_ClientPlatform~Q` satisfied it perfectly with a
+  discriminator that **could never fire** (the matcher normalised the NAME, not the PHRASE).
+  ⭐ **"A presence check cannot tell a live predicate from a dead one."**
+- **`comp-transform ternary-audit`**, which I MANDATED in TO-3 Phase 1 as *"the fix list"*,
+  **measures NOTHING on the Positioning plane** — a clean result that is out-of-scope SILENCE.
+  **I named an instrument instead of naming what it must be able to FAIL on.**
+- And `0.4.0_DE_ClientPlatform~Y` measured **20** mode-keyed sites to my 8 — **all eight of mine were
+  in the two DECLARATION files, none in a CONSUMER.** `grep PositioningMode` is structurally blind to
+  `const isEtfs = mode === 'etfs'`: **a two-valued boolean over a three-valued axis, fanning to SEVEN
+  consumption points from one line.**
+
+## D. SEATS OUTBUILT THEIR SPECS — RECORDED BECAUSE IT IS THE POINT
+
+`~Y` replaced my **exercise** with a **mechanism** (`POSITIONING_MODES` derived from the
+compiler-enforced `MODE_LABELS`, so omission is impossible not merely unlikely). `~W` refused an
+instruction from me and was right. `~Q`'s mutant M1 returned `'bare'` — **exactly the value CVO F1
+predicted a scalar implementation would silently return**, reproducing the PREDICTED failure rather
+than merely some failure.
+
+## E. MY ACK CLOCK, AGAIN
+
+Acked nine ids off a **triage sweep** having read only subject lines. **A sweep answers *what needs a
+ruling*, never *what has been READ*.** Rule adopted and applied since: **one batch per READING pass.**
+`0.4.0_DE_ClientPlatform~Y` self-reported a sibling (an ACK on a GUESSED id) the same evening.
+
 -- `1.0.0_SA_CTO~Z`
