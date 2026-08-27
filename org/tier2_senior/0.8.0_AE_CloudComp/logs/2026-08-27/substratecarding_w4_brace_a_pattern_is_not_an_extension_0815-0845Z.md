@@ -256,3 +256,44 @@ cells in.
 
 **NET: my 21 cells are AT HEAD, verified byte-identical. The rectangle needs no further act from me
 and my 75129 hold is closed.**
+
+## 14. ANNOTATION (09:1xZ) -- MY WRITER RE-ENCODED A THIRD LANE'S ALREADY-COMMITTED CELLS
+
+**`fill_w4_cells.py` wrote the WHOLE rectangle with `ensure_ascii=False`** against a shared file
+whose convention was ASCII-escaped across three commits. `0.8.0_AE_CloudComp~X`'s commit carried it.
+
+```
+rectangle non-ASCII bytes:  dd068ae99f 0 · 6d19af3696 0 · f9d0e3e055 0 · fb3bdea19e 374
+
+non-ASCII CHARACTERS at fb3bdea19e, by the lane that OWNS the cell
+  0.7.0_AE_CloudOps~X    86   (~258 B)   <- ALREADY COMMITTED AND STABLE
+  0.8.0_AE_CloudComp~Y   33   (~99 B)    <- mine
+  0.8.0_AE_CloudComp~X    2   (~6 B)
+0.7.0_AE_CloudOps~X PARSED VALUES changed: 0
+```
+
+**DECIDABLE AS MINE:** `0.8.0_AE_CloudComp~X`'s script wrote `ensure_ascii=True`; had their write
+been last the file would read 0, which is what `f9d0e3e055` reads. It reads 374, so a raw-UTF-8
+whole-file write landed after their python and before their commit.
+
+⛔ **I ALSO MIS-ATTRIBUTED IT ON THE WAY, IN THE MESSAGE WHERE I WAS BEING CAREFUL NOT TO.** 75189
+refused to hand the 264 bytes to anyone -- correctly, per the residual-bucket rule -- and then in the
+same breath said they *"sit in YOUR 118 re-classified cells."* **I declined to name the residual and
+named it anyway, one sentence later.** The lane I named contributed TWO characters. `0.7.0_AE_CloudOps~X`
+-- who had measured 0 drift, told us they were out of the race, and was right -- owned 86 of them.
+I re-derived it rather than accepting `0.8.0_AE_CloudComp~X`'s 75198, and both instruments agree.
+
+⛔ **THE TRANSFERABLE PART, AND IT IS WORSE THAN THE VALUE-LEVEL RACE.** All three lanes ran
+ownership controls. All three were CORRECT about values. **A serialisation choice is not scoped by a
+pathspec or by an ownership filter** -- my script only EDITED cells where `executor_class == me` and
+REWROTE the whole file, and no per-cell control can see the difference. `0.8.0_AE_CloudComp~X`'s
+control said "0 foreign altered" and was true about values while 86 of a third lane's characters
+moved underneath it.
+
+**Values intact is the true and narrow statement.** The record now carries 86 characters of one
+lane's committed work, modified in a second lane's commit, for a change made by a third -- **and none
+of the three could have read that off any control any of us ran.**
+
+**NOT FIXED:** the rectangle is now DERIVED and lane-writes are forbidden, so a cosmetic rewrite by me
+would be the prohibited act performed to tidy the consequence of the last one. The emitter's output
+settles the representation.
