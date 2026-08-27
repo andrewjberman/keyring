@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import argparse
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import jsonschema
@@ -27,6 +29,32 @@ DEPENDENCY_EDGES = {
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def emission_authorizer_errors(document: dict, authorizer_serial: str) -> list[str]:
+    """The v1 emission gate's authorizer leg.
+
+    This consumes the governed field from the contract.  It names who MAY issue a
+    per-emission authorization; passing this leg is not itself an emission grant.
+    """
+    authority = document.get("post_rerun_base_validation", {}).get("v1_emission_authority")
+    if not isinstance(authority, dict):
+        return ["v1 emission authority field is absent"]
+    family = authority.get("authorizer_seat_family")
+    pattern = authority.get("authorizer_serial_pattern")
+    if family != "4.0.0_SA_CRO" or not isinstance(pattern, str):
+        return ["v1 emission authority field does not name the governed CRO seat family"]
+    try:
+        matches = re.fullmatch(pattern, authorizer_serial) is not None
+    except re.error as error:
+        return [f"v1 emission authority serial pattern is invalid: {error}"]
+    if not matches:
+        return [f"v1 emission authorizer {authorizer_serial!r} is outside seat family {family}"]
+    if authority.get("emission_gate_consumer") != "validate_layer_contracts.py --emission-gate-authorizer <serial>":
+        return ["v1 emission authority field does not bind this consumer gate"]
+    if authority.get("per_emission_authorization_required") is not True:
+        return ["v1 emission authority field cannot waive the separate per-emission authorization act"]
+    return []
 
 
 def semantic_errors(document: dict) -> list[str]:
@@ -90,6 +118,7 @@ def semantic_errors(document: dict) -> list[str]:
     lifecycle_coverage = base_validation["lifecycle_axis_coverage"]
     receipt_contract = base_validation["receipt_contract"]
     unknown_lifecycle = base_validation["unknown_lifecycle_expressibility"]
+    emission_authority = base_validation["v1_emission_authority"]
     remediation = base_validation["remediation_sequence"]
     if (
         base_validation["validation_state"] != "failed"
@@ -167,6 +196,15 @@ def semantic_errors(document: dict) -> list[str]:
             "claim_status_token": "unknown",
             "unknown_lifecycle_axis_state": "absent",
             "terminal_transitional_partition_state": "inexpressible",
+        }
+        or emission_authority != {
+            "authorizer_seat_family": "4.0.0_SA_CRO",
+            "authorizer_serial_pattern": "^4[.]0[.]0_SA_CRO(?:~[A-Z])?$",
+            "authorization_scope": "l0_v1_emission",
+            "emission_gate_consumer": "validate_layer_contracts.py --emission-gate-authorizer <serial>",
+            "per_emission_authorization_required": True,
+            "amendment_effect": "names_authorizer_only_no_emission_go",
+            "governing_verdict": "3.0.0_SA_CVO~X Msg-ID 76780",
         }
         or remediation != {
             "current_pair_role": "pre_remediation_evidence_only",
@@ -826,12 +864,29 @@ def validate(document: dict) -> list[str]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Validate the C3MATERIALIZE layer contract package")
+    parser.add_argument(
+        "--emission-gate-authorizer",
+        metavar="SERIAL",
+        help="consume the governed v1-emission-authorizer field for one asserted authorizer serial",
+    )
+    args = parser.parse_args()
     document = load(DOCUMENT)
     errors = validate(document)
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
+
+    if args.emission_gate_authorizer is not None:
+        gate_errors = emission_authorizer_errors(document, args.emission_gate_authorizer)
+        if gate_errors:
+            for error in gate_errors:
+                print(f"ERROR: {error}")
+            return 1
+        print(f"PASS: v1 emission authorizer belongs to {document['post_rerun_base_validation']['v1_emission_authority']['authorizer_seat_family']}")
+        print("NOTE: authorizer identity passed; a separate per-emission authorization act is still required")
+        return 0
 
     mutants: list[tuple[str, dict]] = []
 
@@ -921,6 +976,18 @@ def main() -> int:
     step4_before_pair_commit = copy.deepcopy(document)
     step4_before_pair_commit["post_rerun_base_validation"]["remediation_sequence"]["shared_schema_step"] = "coordinated_before_final_pair_commit"
     mutants.append(("step4-precedes-emitted-pair-commit", step4_before_pair_commit))
+
+    emission_authorizer_missing = copy.deepcopy(document)
+    del emission_authorizer_missing["post_rerun_base_validation"]["v1_emission_authority"]
+    mutants.append(("v1-emission-authorizer-field-absent", emission_authorizer_missing))
+
+    emission_authorizer_wrong_family = copy.deepcopy(document)
+    emission_authorizer_wrong_family["post_rerun_base_validation"]["v1_emission_authority"]["authorizer_seat_family"] = "1.0.0_SA_CTO"
+    mutants.append(("v1-emission-authorizer-wrong-family", emission_authorizer_wrong_family))
+
+    emission_gate_consumer_dropped = copy.deepcopy(document)
+    emission_gate_consumer_dropped["post_rerun_base_validation"]["v1_emission_authority"]["emission_gate_consumer"] = "not_consumed"
+    mutants.append(("v1-emission-authorizer-unconsumed-decoration", emission_gate_consumer_dropped))
 
     missing_layer = copy.deepcopy(document)
     missing_layer["layer_contracts"].pop(2)
@@ -1282,6 +1349,19 @@ def main() -> int:
             print(f"ERROR: mutant accepted: {name}")
             return 1
         print(f"PASS: mutant rejected: {name}")
+
+    allowed_authorizers = ["4.0.0_SA_CRO", "4.0.0_SA_CRO~A", "4.0.0_SA_CRO~X"]
+    denied_authorizers = ["1.0.0_SA_CTO~X", "4.0.0_SA_CRO~XX", "4.0.0_SA_CRO_A"]
+    for serial in allowed_authorizers:
+        if emission_authorizer_errors(document, serial):
+            print(f"ERROR: governed CRO-family authorizer rejected: {serial}")
+            return 1
+        print(f"PASS: governed CRO-family authorizer accepted: {serial}")
+    for serial in denied_authorizers:
+        if not emission_authorizer_errors(document, serial):
+            print(f"ERROR: out-of-family emission authorizer accepted: {serial}")
+            return 1
+        print(f"PASS: out-of-family emission authorizer rejected: {serial}")
 
     print("PASS: L0-L4 deliverable contracts and checkpoint sequence")
     print(f"PASS: negative controls {len(mutants)}/{len(mutants)}")
