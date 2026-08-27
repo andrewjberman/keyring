@@ -45,5 +45,23 @@
     },
     "the_notable_part": "2 of the 3 are D11's OWN card and manifest builders. THE WAVE'S TOOLING ENTERED THE WAVE'S CENSUS because it quotes source headers as evidence -- the census counting the instrument that produces it.",
     "DIRECTION_OF_THE_ERROR_leaves_the_17_intact": "This inflates the CAPABLE side, so it can only make 26 too HIGH. The 17 fall-outs had NO pyiceberg string at all, quoted or otherwise, so they are untouched and the 43->26 reduction stands. It confirms the bound's direction rather than breaking it: 'at most 26, and the true number is below that by an unmeasured amount' -- now with one mechanism named."
+  },
+  "TOKEN_LIST_ITSELF_WAS_WRONG_20260827T0323Z": {
+    "found_by": "1.0.0_SA_CTO~X, auditing their own predicate against a census-named canonical materializer",
+    "finding": "TWO OF THE EIGHT 'strong write' tokens ARE READS. `t.scan(...).to_arrow()` is a READ; `load_table(` obtains a handle and is neither a read nor a write. I consumed that token list without auditing it -- the SECOND time tonight I took a peer's predicate on trust (`append` was the first).",
+    "cost_to_MY_floor": {
+      "remaining_was": 26,
+      "kept_only_by_read_tokens": 4,
+      "corrected": 22,
+      "the_four": [
+        "infra/aws/globgrph/cse_emit_graphhead.py",
+        "org/modules/graph/contract_engine.py",
+        "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/test_producer_reader_executed.py"
+      ]
+    },
+    "\u26d4_CORRECTS_MY_OWN_CHARACTERISATION_OF_THE_UNTRACKED_ENGINE": "org/threads/handoff/NFRA_GCONTR.TO-2_contract_engine.NEW.py matches on READ TOKENS ONLY -- no overwrite, upsert, add_files, write_parquet or put_object anywhere. I described it as a candidate MATERIALIZER nobody could card. THE UNTRACKED FACT STANDS AND THE WRITER FRAMING DOES NOT: it reads the graph tables. It is still a 21KB untracked executable naming itself value-layer never-widen machinery, which is why it was worth surfacing -- but not as a writer.",
+    "the_other_untracked_one": "org/projects/NFRA_GRAPHUNI/storage_producer.py matches NEITHER a true-write nor a read token; it entered the floor purely on a bare list `.append(` and already fell out in the 17.",
+    "the_repeat": "`append` and now `to_arrow`/`load_table`: twice I built on a token list I had not read against the question. A predicate is an instrument and an unaudited instrument is an unaudited claim."
   }
 }
