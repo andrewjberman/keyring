@@ -81,6 +81,21 @@ FIXTURES = {
         "asserted_at": TS, "asserted_by": "1.0.0_SA_CTO~X",
         "evidence_refs": ["migration-map:kimi_to_isck_v0"],
     },
+    "bridge_assertion": {
+        "record_type": "bridge_assertion", "bridge_id": f"br:{ULID_A}",
+        "relation_kind": "containment",
+        "subject_entity_serial": f"ent:{ULID_A}", "subject_plane": "symbol",
+        "subject_grain": "parser_symbol",
+        "object_entity_serial": f"ent:{ULID_B}", "object_plane": "file",
+        "object_grain": "repo_path_file",
+        "claim_origin": "rule_derived", "verification_standing": "unverified",
+        "registry_standing": "candidate",
+        "declared_cardinality": "function",
+        "firm_scope": "opal",
+        "evidence_refs": ["parser:source-span portal/src/App.tsx:12-40"],
+        "asserted_at": TS, "asserted_by": "1.0.0_SA_CTO~X",
+        "valid_from": "commit:9fc70e31a1", "valid_to": None,
+    },
     "materializer": {
         "record_type": "materializer", "materializer_serial": f"mat:{ULID_A}",
         "semantic_layer": "C2", "canonical_role": "c2_motif_individuation",
@@ -200,6 +215,13 @@ ATTACK_TARGETS = {
     "relation.unknown-type": ["relation_type"],
     "entity.smuggled-field": ["legacy_name"],
     "binding.closed-null-valid_to": ["valid_to"],
+    "bridge.admitted-no-evidence": ["evidence_refs"],
+    "bridge.held-no-named-item": ["held_on"],
+    "bridge.inadmissible-no-owner": ["store_owner"],
+    "bridge.rejected-no-adjudicator": ["adjudicated_by"],
+    "bridge.candidate-with-adjudicator": ["adjudicated_by"],
+    "bridge.symbol-plane-no-firm-scope": ["firm_scope"],
+    "bridge.dead-basis-measured": ["claim_origin"],
 }
 
 _DEL = object()
@@ -329,6 +351,22 @@ def _mutants():
         evidence_refs=_DEL)
     add("binding.model-inferred-no-evidence", "entity_binding", ["required"],
         binding_basis="model_inferred", evidence_refs=_DEL)
+    # R2-8 BRIDGE_ASSERTION (the first load-bearing consumer; CV-1's carried requirement lands)
+    add("bridge.admitted-no-evidence", "bridge_assertion", ["required"],
+        registry_standing="admitted", verification_standing="corroborated",
+        adjudicated_by="3.0.0_SA_CVO~X", evidence_refs=_DEL)
+    add("bridge.held-no-named-item", "bridge_assertion", ["required"],
+        registry_standing="held")
+    add("bridge.inadmissible-no-owner", "bridge_assertion", ["required"],
+        registry_standing="inadmissible")
+    add("bridge.rejected-no-adjudicator", "bridge_assertion", ["required"],
+        registry_standing="rejected")
+    add("bridge.candidate-with-adjudicator", "bridge_assertion", ["not"],
+        adjudicated_by="3.0.0_SA_CVO~X")
+    add("bridge.symbol-plane-no-firm-scope", "bridge_assertion", ["required"],
+        firm_scope=_DEL)
+    add("bridge.dead-basis-measured", "bridge_assertion", ["enum"],
+        claim_origin="measured")
     # enum discipline (F4 renames; dead enums stay dead)
     add("binding.basis-is-dead-enum-measured", "entity_binding", ["enum"],
         binding_basis="measured")
@@ -355,6 +393,8 @@ def _semantic_mutants():
          [_mk("entity"), _mk("entity", entity_class="symbol", plane="symbol")]),
         ("sem.entity-active-canonicalized",
          _mk("entity", canonicalized_as=f"ent:{ULID_B}")),
+        ("sem.bridge-self-loop",
+         _mk("bridge_assertion", object_entity_serial=f"ent:{ULID_A}")),
         ("sem.relation-entirely-self-cited",
          _mk("identity_relation", verification_standing="corroborated",
              claim_origin="producer_declared", evidence_refs=[f"rel:{ULID_A}"])),
@@ -372,6 +412,7 @@ def _semantic_mutants():
 _ISO_FIELDS = ["minted_at", "observed_at", "asserted_at", "started_at", "completed_at",
                "built_at", "evaluated_at", "valid_from"]
 _PRIMARY_ID = {"entity": "entity_serial", "entity_binding": "binding_id",
+               "bridge_assertion": "bridge_id",
                "state_observation": "observation_id", "identity_relation": "relation_id",
                "materializer": "materializer_serial", "materializer_version": "version_id",
                "materialization_run": "run_id", "source_frontier": "source_frontier_id",
@@ -402,6 +443,10 @@ def semantic_errors(instances):
                 if "T" in v:
                     errs.append(f"[{i}] {rt}.{f}: not a real calendar instant: {v}")
         # field-pair comparisons
+        if rt == "bridge_assertion" and inst.get("subject_entity_serial") == inst.get("object_entity_serial"):
+            errs.append(f"[{i}] bridge_assertion: SELF-BRIDGE "
+                        f"{inst.get('subject_entity_serial')} -- an entity bridged to itself "
+                        "asserts nothing (sec 3.12's self-loop class, bridge form)")
         if rt == "identity_relation" and inst.get("subject_serial") == inst.get("object_serial"):
             errs.append(f"[{i}] identity_relation: SELF-LOOP {inst.get('subject_serial')} "
                         f"({inst.get('relation_type')}) -- cardinality 1->1 would read as a "

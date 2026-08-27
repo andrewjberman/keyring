@@ -32,6 +32,9 @@
     },
     {
       "$ref": "#/$defs/coherence_evaluation"
+    },
+    {
+      "$ref": "#/$defs/bridge_assertion"
     }
   ],
   "$defs": {
@@ -1479,6 +1482,310 @@
         "fabric_invariant",
         "fabric_local",
         "device_local"
+      ]
+    },
+    "bridge_assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "bridge_id",
+        "relation_kind",
+        "subject_entity_serial",
+        "subject_plane",
+        "subject_grain",
+        "object_entity_serial",
+        "object_plane",
+        "object_grain",
+        "claim_origin",
+        "verification_standing",
+        "registry_standing",
+        "declared_cardinality",
+        "asserted_at",
+        "asserted_by"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "bridge_assertion"
+        },
+        "bridge_id": {
+          "type": "string",
+          "pattern": "^br:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "relation_kind": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "subject_entity_serial": {
+          "$ref": "#/$defs/ent_serial"
+        },
+        "subject_plane": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "subject_grain": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "object_entity_serial": {
+          "$ref": "#/$defs/ent_serial"
+        },
+        "object_plane": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "object_grain": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "claim_origin": {
+          "$ref": "#/$defs/claim_origin"
+        },
+        "verification_standing": {
+          "$ref": "#/$defs/verification_standing"
+        },
+        "registry_standing": {
+          "$ref": "#/$defs/registry_standing"
+        },
+        "declared_cardinality": {
+          "enum": [
+            "function",
+            "cover",
+            "partial_function",
+            "unknown"
+          ]
+        },
+        "observed_cardinality": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "firm_scope": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "held_on": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "store_owner": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "adjudicated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "superseded_by": {
+          "type": "string",
+          "pattern": "^br:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        },
+        "asserted_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "asserted_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "valid_from": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "valid_to": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/nonempty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "const": "admitted"
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "const": "held"
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "held_on"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "const": "inadmissible"
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "store_owner"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "adjudicated_by"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "const": "candidate"
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "adjudicated_by"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "claim_origin": {
+                "enum": [
+                  "independently_observed",
+                  "rule_derived",
+                  "model_inferred"
+                ]
+              }
+            },
+            "required": [
+              "claim_origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_standing": {
+                "enum": [
+                  "corroborated",
+                  "contradicted"
+                ]
+              }
+            },
+            "required": [
+              "verification_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_standing": {
+                "const": "contradicted"
+              }
+            },
+            "required": [
+              "verification_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "adjudicated_by"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_standing": {
+                "const": "superseded"
+              }
+            },
+            "required": [
+              "verification_standing"
+            ]
+          },
+          "then": {
+            "required": [
+              "superseded_by"
+            ]
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "subject_plane": {
+                    "const": "symbol"
+                  }
+                },
+                "required": [
+                  "subject_plane"
+                ]
+              },
+              {
+                "properties": {
+                  "object_plane": {
+                    "const": "symbol"
+                  }
+                },
+                "required": [
+                  "object_plane"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "firm_scope"
+            ]
+          }
+        }
       ]
     }
   }

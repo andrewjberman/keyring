@@ -50,18 +50,28 @@ closes and the version is pinned.
    REQUIRES its delta (CV-3). `unknown`/`unverified` stay free — the remedy that moves `verified`
    must not punish honesty about not knowing.
 
-## 2. RECORD CATALOG (10 types — unchanged roster, see schema for the field law)
+## 2. RECORD CATALOG (11 types)
 
 `entity` · `entity_binding` · `state_observation` · `identity_relation` · `materializer` ·
 `materializer_version` · `materialization_run` · `source_frontier` · `surface_version` ·
-`coherence_evaluation`. Identity mechanisms per the ratified table (minted serials for enduring
-mutables; content-addressing legal for immutable observations/versions/receipts).
+`coherence_evaluation` · **`bridge_assertion` (R2-8 — the first load-bearing consumer, landed
+per the ruled either-in-this-boundary-or-freeze-together condition).** Identity mechanisms per the
+ratified table (minted serials for enduring mutables; content-addressing legal for immutable
+observations/versions/receipts). `bridge_assertion` id space: `br:<ulid26>`.
 
-⛔ **CARRIED REQUIREMENT for the future BRIDGE_ASSERTION record (CV-1, binding on its author):**
-`registry_standing = admitted -> evidence_refs minItems 1`, or the three-axis split is WEAKER than
-the old basis bar in exactly the cell that matters. §3's "candidate never admitted without
-evidence" gets its consuming half the day the record exists. `3.0.0_SA_CVO~X`'s L3 certification
-bar reads for that conditional's existence.
+**CV-1's CARRIED REQUIREMENT IS LANDED, not carried:** `registry_standing = admitted ->
+evidence_refs` is a schema arm with its mutant — a parse-generated candidate structurally cannot
+reach `admitted` without evidence. The record also lands, AT BIRTH rather than by retrofit: F1's
+held-names-its-item (`held -> held_on`), F2's value-carries-its-owner (`inadmissible ->
+store_owner`), the rejection warrant (`rejected -> adjudicated_by`) with its candidate forbid
+mirror, DT-R2-2's shared-enum propagation (three claim_origin values -> evidence on THIS consumer
+too), the verification warrant set, CVO-75229 condition 3's schema-expressible half (a
+symbol-plane bridge REQUIRES firm_scope), `declared_cardinality`
+(`function|cover|partial_function|unknown` — DEC-02's evidence field), and the self-bridge
+semantic arm. UNREACHED VALUES, deliberate and adjudicated at the ARM-4 pre-landing run:
+`retired` (terminal, no obligations), `producer_declared` (needs no external warrant by
+definition), `human_adjudicated` (traced by the CVO rubric per the standing carry, not by schema),
+`unverified` (the honest free cell).
 
 ## 3. ENUM RECORDS — full five-label form (F3), with CONDITIONAL-ARM TABLES where arms exist (CV-6)
 
