@@ -138,7 +138,13 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 - **NEVER** bare `terraform apply` (use `safe-apply`), bare `git commit` (use `safe-commit.sh`), or
   `aws lambda update-function-code` (Terraform only). ⛔ Only the terraform limb is mechanically gated —
   the other two are imperatives enforced by nobody. Annex §NEVER-9.
-- **NEVER** reference another firm's bucket from a pipeline tree (bd/cot/inf) — commit-gated + IAM Deny.
+- **NEVER** reference another firm's data from a pipeline tree — **BUCKET *or* KEY-PREFIX**. ⛔ **THE
+  MECHANISM IS SUBSTRATE-SHAPED AND BOTH SHAPES ARE LIVE:** shared bucket → key-prefix + IAM condition;
+  per-firm buckets → bucket-scoped Deny. **An enumerated ban list lapses SILENTLY when a name changes** —
+  the cot guard banned `blackdiamond/49f/` (285 obj) while `49financial/` (8,862, live) went unbanned
+  until 2026-08-27 @`7b777cf0a0`. Gate: `.tools/ds-precommit-check.py`
+  `_CROSS_FIRM_FOREIGN_{BUCKETS,KEY_PREFIXES}` — **the guard is only as wide as its enumeration, so a
+  new firm name is a GATE EDIT, not just an infra act.** ⚠ IAM limb: **DESIRED, apply UNVERIFIED**.
 
 ## 6. LANE + COMMIT MECHANICS
 

@@ -362,6 +362,32 @@ not realise they are shipping *code*.
 ```bash
 git diff --name-only HEAD@{1} HEAD -- 'data/*/scripts/**' | tee /tmp/willdeploy.txt | wc -l
 ```
+
+⛔ **AND THE CEILING EXPIRES. MEASURE IT AGAINST THE RANGE YOU ARE ACTUALLY PUSHING, IN THE SAME
+BREATH AS THE PUSH — on a live fabric a lane lands deploy-scope code between your measurement and
+your `git push`, and the stale ceiling reads CLEAN.**
+
+≫ A ceiling is a claim about a RANGE, and `HEAD` is not a range endpoint you control while other
+   seats hold the same checkout. The enumeration above is correct for a merge leg (where `HEAD@{1}`
+   pins the pre-merge state); **for an ordinary integrator push the range is `origin/<branch>..HEAD`,
+   and it is only valid for as long as HEAD does not move.** ≪
+
+```bash
+B=$(git rev-parse --abbrev-ref HEAD)
+git diff --name-only origin/$B..HEAD -- 'data/*/scripts/**' | wc -l   # re-read IMMEDIATELY before pushing
+```
+
+*Measured 2026-08-27, `0.0.0_AB_MSTR~Z`, on its own push: the ceiling was enumerated at 0 deploy-scope
+files and was TRUE when measured. `0.4.0_DS_ClientPlatform~Q` landed three `data/mdpf/scripts/gold/`
+files in the interval, and the push **deployed two of them** (the third, a `.json`, fell outside the
+deploy-scope `.py` filter). Fabric rate at the time: 18 commits in 30 minutes. The deploy was correct
+and lane-legitimate — **the defect was that the integrator announced a zero and shipped a two**, which
+is the same false-clean an integrator would carry into a report.*
+
+**SO: a ceiling older than your push is a FLOOR, not a ceiling.** Either re-read it immediately
+before the push, or state it as measured-at-`<hash>` and re-derive what actually shipped from
+`git log <old-remote-head>..<new-remote-head>` afterwards — which is the honest form when the fabric
+is too hot to freeze.
 **AFTER the push, if you need the ACTUAL deploy count, measure it at S3** — recursive, with the
 denominator, windowed to your push, plus the outside-the-window control that makes it attributable:
 ```bash
@@ -558,6 +584,34 @@ different claims with different truth conditions, and the first is the one you c
 which is exactly why it gets substituted. **Measured 2026-08-27: leg 1 was reported as the pull being
 "done" and the sovereign made placement decisions for hours believing this fabric had material it did
 not have.** The report was true and the impression was false.
+
+### ⛔ PARITY IS A FIXED-POINT, NOT A LEG COUNT — the convergence step
+
+**This section shipped without this step and was wrong within three hours.** The procedure above
+counts legs: run mine, coordinate theirs, done. **TWO CORRECTLY-EXECUTED LEGS DO NOT IMPLY PARITY**,
+because each leg is measured against a ref the other fabric is still advancing.
+
+**`0.0.0_AB_MSTR` (laptop), 2026-08-27, landed as theirs:**
+
+> **PARITY IS A FIXED-POINT, NOT A LEG COUNT: after both legs, re-measure both `is-ancestor` from the
+> remote; if either reads NO, the state is LEG-OUTSTANDING (name whose), and the final convergence
+> requires ONE side to hold pushes while the other runs its leg against the stationary head — a
+> parity claim is legal only in the same breath as the two YES reads it cites.**
+
+**MEASURED THE DAY BOTH HALVES OF THIS MODE WERE WRITTEN.** Site Z ran leg 1 (`@5edabd600a`); the
+laptop ran leg 2 (`@9fc70e31a1`, zero conflicts, the leg-1 per-hunk resolution having removed every
+contested hunk). **Both legs succeeded. Both `is-ancestor` checks then read NO** — site Z was short 24
+laptop commits, the laptop short 5 site-Z commits, every one of them landed *while the legs ran*.
+**No error, no conflict, nobody at fault, and no instrument reported anything wrong.**
+
+**So the terminating act is not a merge — it is a HOLD.** One side declares a push hold, the other
+merges against a head that is not moving, and parity is measured in that window. Without a hold, two
+live fabrics can ping-pong indefinitely with every leg correct.
+
+⛔ **AND THE HOLD IS ON *PUSHES*, NOT ON WORK.** Seats keep committing; their commits ride the
+next push after parity is measured. A hold that stops seats working to achieve a bookkeeping state
+has inverted the cost — and it is the shape most likely to be reached for, because "freeze
+everything" feels safer than "freeze one ref".
 
 ⭐ **AND THE MODE'S REAL PRODUCT IS THE ASK, NOT THE MERGE.** Anyone can run their own leg; the
 thing that was missing was a named act whose *definition of done* includes the other device. If you

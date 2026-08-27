@@ -204,6 +204,85 @@ stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; d
 python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
 ```
 
+⛔ **ON SITE Z, EXPECT 12-18 TAMPER-VOCABULARY FINDINGS HERE AND DO NOT CHASE THEM. READ THIS
+BEFORE YOU RUN IT, NOT AFTER.** Three separate seats independently spent a message reaching "surface
+it, do not chase it" — the explanation was real but its only carrier was a broker message id, which
+a fresh seat has no reason to open.
+
+>> **MECHANISM, MEASURED 2026-08-27 at source by `0.0.0_AB_MSTR~Z` (not relayed):**
+   `audit-archive-invoker.py chain_root()` returns `archive/<device>/` **only if that directory
+   exists**; otherwise it falls back to the legacy flat root, and its own docstring says that root
+   **IS THE LAPTOP CHAIN**. `org/audit/archive/` currently holds FLAT timestamp dirs with no
+   `<device>/` level, so **a site-Z seat compares its device-local live logs against the LAPTOP's
+   baseline** — two different files sharing a path. The tool renders that difference in tamper
+   vocabulary because tamper vocabulary is the only vocabulary it has. <<
+
+**THE DISCRIMINATOR IS DIRECTION, NOT MAGNITUDE** (`0.4.0_DS_ClientPlatform~L`, 2026-08-27, correcting
+their own first figure before it propagated):
+```
+DEVICE-AXIS  every covered log SHRINKS, each by its own local activity -> a WIDE SPREAD is expected.
+             MEASURED: 8 of 8 shrank, 0 grew; 1.46x - 23.81x, median 5.96x, only 2 of 8 reach 10x.
+TAMPER       selective truncation of the interesting ones -> a MIXED direction set, some UNCHANGED.
+             0 of 8 unchanged is the observation that argues against it.
+```
+⛔⛔ **THE DISCRIMINATOR COVERS ONE CLASS OF FINDING, NOT THE OUTPUT.** The invoker emits at
+least TWO classes and **they INTERLEAVE in the output** — a reader meets them mixed, not in blocks:
+```
+NON-APPEND-EDIT   (a log SHRANK vs baseline)   <- the direction test below covers EXACTLY this
+ERROR-FAILCLOSED  (a covered log is ABSENT)    <- ⛔ NOT COVERED. "did any log GROW or stay
+                                                  UNCHANGED?" says NOTHING about a file that is
+                                                  not there.
+```
+**MEASURED at two seats, RECONCILED by `0.4.0_DE_ClientPlatform~Y` by set-compare** — and the
+reconciliation is the part a reader needs, because the raw line count invites a frame error:
+```
+tool header  18 finding(s)  =  5 COVERAGE  +  13 INTEGRITY
+                                  |              |-- 8 NON-APPEND-EDIT  (the shrink class)
+                                  |              |-- 5 ERROR-FAILCLOSED (absence)
+                                  \--------------/  THE SAME FIVE FILES, EACH PRINTING TWICE
+```
+⛔ **SO IT IS FIVE ABSENT FILES PRODUCING TEN LINES, NOT TEN FILES.** `3.0.0_SA_CVO~Z` scoped to
+INTEGRITY and read 13; `0.4.0_DE_ClientPlatform~Y` counted printed lines and read the tool's own 18.
+**Neither was wrong — two denominators over one world**, and both independently measured **8**
+NON-APPEND-EDIT, which is the only number the discriminator turns on. **A count without its unit is a
+frame error waiting for a reader: say FILES or say LINES.** ⛔ **So do NOT read a clean direction
+verdict as clearing the run** — it clears the shrink half and is silent on the rest. **Read the
+ABSENT rows yourself; this note does not adjudicate them.**
+
+⛔ **FOR THE SHRINK CLASS ONLY: ASK "did any log GROW or stay UNCHANGED?", never "did they shrink by a similar amount."**
+A 16x spread is what the benign reading PREDICTS; uniform magnitude would be the surprise. **The
+magnitudes are not written here on purpose** — a number in a durable carrier is wrong by next week,
+and the direction is the invariant.
+
+**THIS IS NOT A DEFECT AND NEEDS NO FIX** — `chain_root()` is transition-safe BY DESIGN so the code
+change and the 238-file migration could land in either order. The code landed; the migration has not.
+⭐ **THIS IS A NAMED MIGRATION IN FLIGHT, NOT AN ARTIFACT, AND IT HAS A TERMINUS** (`1.0.0_SA_CTO~Z`):
+`rv0057-f001` moves 238 files to `archive/<DEVICE>/<TS>/`. **RESOLUTION CONDITION, so this note
+retires itself:** when that migration lands the fallback stops firing and these findings clear.
+**If they persist after it lands, the device-axis explanation no longer covers them and it IS a
+finding.** Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; carrier gap surfaced by `3.0.0_SA_CVO~Z`.
+
+⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`. THE MECHANISM ABOVE READS AS AN INVITATION
+TO AND IT IS A TRAP** (caught by `1.0.0_SA_CTO~Z` on this note's own wording). One `mkdir` drops the
+findings to zero — **by making the tool believe we are POST-migration while all 238 files are still
+in the flat root, so it would compare live logs against an EMPTY CHAIN.** The docstring's
+"a half-finished migration cannot strand the instrument" guarantee covers **files-moved-before-code**;
+creating the directory without moving the files is the half-finished state in the OTHER direction and
+**is not covered**. ⛔ **UNTESTED AND NOT TO BE TESTED ON A LIVE AUDIT CHAIN.** The noise is cleared by
+LANDING THE MIGRATION, never by satisfying the predicate.
+
+⛔ **AND THE COST OF THIS NOTE, STATED SO IT STAYS VISIBLE** (`1.0.0_SA_CTO~Z`): telling every seat
+to EXPECT tamper-vocabulary findings removes wasted messages **and simultaneously NORMALISES IGNORING
+A TAMPER DETECTOR.** Both effects are real. **It is the right trade ONLY BECAUSE the migration has a
+terminus** — **if `rv0057-f001` stalls, this note quietly becomes standing permission to ignore a
+tamper detector. Re-read this paragraph if it is still here and the migration has not landed.**
+
+⚠ **REACH IS BOUNDED BY WHO ACTUALLY RUNS A.2, WHICH IS NOT EVERYONE** — the first broadcast of this
+note claimed "every seat meets A.2 at load" and **that claim was false**: `0.4.0_DS_ClientPlatform~W`
+reported running A.1 and A.3 and skipping A.2 entirely (measured, n=1, self-reported). **A note beside
+a step reaches only the seats that run the step.** A.2's MANDATE and A.2's EXECUTION RATE are
+different quantities. No gate is proposed for this.
+
 **A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX; CORRECTED 2026-07-25 — see below):** harness
 shells are non-interactive and source NO profile, so `.tools/` is reachable only via the `~/bin` forwarders
 (`b519fb1c2e`). **Print the DENOMINATOR — never a boolean:**

@@ -122,6 +122,75 @@ The audited `--force "intentional-duplicate <reason>"` bypass remains for rare c
 
 **Scanner-self false-positive (empirical 2026-05-26).** The `$_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1: {serial}*"` pattern matches the scanner's OWN PowerShell process because the search-pattern literal is embedded in the scanner's CommandLine. Without the `$_.ProcessId -ne $selfPid` exclusion above, every fresh-spawn pre-check returns count=1 (the scanner itself) → false-positive refuse. The `$PID` exclusion eliminates the self-hit. **Diagnostic fallback if a count still surfaces:** inspect each hit's `ProcessId` + `CreationDate` + `CommandLine` — a legitimate spawn-marker window is a long-lived `powershell.exe -NoProfile -NoExit -Command "$Host.UI.RawUI.WindowTitle = '{serial}'; ..."` whose command line ENDS with the marker; a one-shot scanner is short-lived + has the marker EMBEDDED IN ITS Where-Object filter argument. Sister-pattern to memory `feedback_b_lane_orders_only_from_b_agents` family of "structural-self vs other distinction" empirics.
 
+### ⛔ 1d — TO-ENCUMBRANCE: is the lane already holding a DIFFERENT project's open TO?
+
+**RUN THIS FOR ANY TIER-2 SPAWN. Every check above reads a PROCESS or a BROKER RECORD, and NONE of
+them can see an open TO addressed to a lane.** A lane letter can be free on process truth, free of
+markers, and NOT REGISTERED on the broker — and still be **encumbered by an open task order**, which
+is a **Rule 27 one-project-per-instance collision at seating time**.
+
+```bash
+python .tools/to-check.py --all --assignee "{full-target-serial}"
+```
+
+- **0 open TOs** — the lane is genuinely free. Proceed.
+- **Open TOs on the project you are about to seat** — fine, that is continuity.
+- **Open TOs on a DIFFERENT project** — ⛔ **DO NOT SEAT.** Either pick another letter, or have the
+  COO re-address the encumbering TO FIRST. Seating over it silently creates the exact violation.
+- **`--all` IS LOAD-BEARING** (the default view scopes to PRDs <=14d old, so a stale-PRD project's
+  open TO is invisible), and `--assignee` is a SUBSTRING match, so read the rows rather than the count.
+
+⭐ **ALSO CHECK THE BASE SERIAL, NOT ONLY THE LANE.** A TO addressed to the bare base
+(`0.4.0_DS_ClientPlatform`, no suffix) belongs to no lane and will collide with whichever instance
+someone reads it onto.
+
+*MEASURED 2026-08-27, and this step exists because the spawn that needed it was mine.* Seating three
+Tier-2 lanes for D1/D4, I ran 1pt/1a/1b/1c, got a clean read on `0.4.0_DS_ClientPlatform~Z`, and
+seated it on D1_CATVIEWS — **while it still held `ETFS_INGEST.TO-6`, addressed to it since 08-24.**
+Two projects on one instance, created by a pre-flight that passed every check it had.
+`2.0.0_SA_COO~Z` caught it in a seat-census minutes later and re-addressed TO-6 to `~P`.
+**A LANE LETTER FREE ON PROCESS TRUTH CAN STILL BE ENCUMBERED BY AN OPEN TO.** The planes the
+pre-flight reads answer *"is anyone running as this serial"*; Rule 27 asks *"does this serial already
+OWE anything"* — a different question, and no process-plane instrument can answer it.
+
+⛔⛔ **WIDENED SAME DAY, BECAUSE THE FIRST VERSION OF THIS STEP WAS TOO NARROW AND THE
+NEXT MEMBER OF THE CLASS GOT THROUGH IT WITHIN THE HOUR.** 1d originally censused **open TOs only**.
+It was written after a TO-encumbrance miss, scoped to the artifact class that had just caused the
+miss — and **a `disarm_owner` is not a TO**, so it caught nothing when the same failure recurred on
+a different artifact.
+
+>> **THE GENERAL FORM: A RECORD KEYED ON A SERIAL GOES STALE THE MOMENT THAT SERIAL IS RE-SCOPED,
+   RE-SEATED, OR CLOSED — AND NO GATE FIRES.** The record stays well-formed and confidently wrong:
+   real serial, real field, reads as owned. Nothing errors. Only a census finds it. <<
+
+**SO CENSUS EVERY SERIAL-KEYED OBLIGATION, NOT JUST TASK ORDERS**, before AND after a seating that
+scopes a lane:
+
+```bash
+comp-find -i "{full-target-serial}" --all          # -i: this estate capitalises its load-bearing words
+python .tools/to-check.py --all --assignee "{s}"   # open TOs
+grep -rn "{s}" org/surprise_channel/               # disarm_owner / surprise-item ownership
+grep -rn "{s}" org/projects/ org/missions/         # coo_lane, owner, seat fields
+```
+Read the HITS, not the count — a serial appears as author, as recipient, and as OWNER, and only the
+third is an obligation. **Any row naming the serial as an OWNER of work outside the project you are
+seating it on is a stale ownership row: it must be re-addressed by the COO BEFORE or IMMEDIATELY
+AFTER the seating, and the seat must be told it is barred from acting on it.**
+
+*MEASURED 2026-08-27, three instances in one afternoon, none caught by a gate:*
+*(1) `ETFS_INGEST.TO-6` still addressed to `~Z` from 08-24 — found by seat-census;*
+*(2) `ETFS_INGEST.TO-7` carrying an executor CLASS and no INSTANCE for three days;*
+*(3) **11 of 40** `disarm_owner` rows in one surprise-channel file naming lanes that had just been*
+*scoped away from that project — so 11 ARMED items had **an owner who was constitutionally barred***
+*from acting, while every row read as owned. Instance (3) was created by the seating act itself,*
+*minutes earlier, by the MSTR who had written step 1d after instance (1).*
+
+⭐ **AND A CLASS IS NOT AN ASSIGNEE.** Same census found `ETFS_INGEST.TO-7` carrying an executor
+CLASS (*"DS (producer code) + AE (deploy)"*) and **no instance**, for three days — rendering as
+`(unassigned)` while every other field looked complete, including a sovereign word and a CTO
+sequencing ruling naming it FIRST. **A TO with a class and no instance READS AS ISSUED AND IS HELD BY
+NOBODY.** When you seat a lane, check that the TOs you are handing it name an INSTANCE.
+
 ### 1c — Concurrency-cap headroom (informational; spawn-agent.ps1 enforces)
 
 ```powershell

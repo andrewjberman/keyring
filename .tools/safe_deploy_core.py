@@ -1158,6 +1158,16 @@ def main(argv: list[str]) -> int:
 
     # Deploy phase: upload all NON-HELD files, fail fast on any error
     deployed: list[tuple[str, str, str]] = []   # (rel_path, bucket, s3_key)
+    # SKIP-NOT-MEMBER audit (1.0.0_SA_CTO~Z arch-gate, 2026-08-27). Recorded because the
+    # final summary line used to be UNCONDITIONAL: when every path skipped, `deployed` was
+    # empty, the verify loop ran zero times, and the gate printed "all files deployed and
+    # verified" -- a universal quantified over an EMPTY SET, which is vacuously true and
+    # reads as "they all shipped". Measured TWICE the same day on the same two files, the
+    # second time PREDICTED IN ADVANCE by 0.0.0_AB_MSTR~Z and then observed, so it is
+    # reproducible and fires on EVERY all-skipped push. The integrator nearly reported a
+    # deploy that did not happen. The SKIP is correct (Rule 13: 404 = loud skip, first-mints
+    # explicit); the SENTENCE was the defect.
+    skipped_not_member: list[str] = []
     failed = False
 
     for bname, (label, b) in sorted(triggered.items()):
@@ -1211,6 +1221,7 @@ def main(argv: list[str]) -> int:
                           f"prefix {prefix} carries {n} member(s) (single page). "
                           f"A NEW shared-home script first-mints explicitly, "
                           f"never via the push gate.")
+                    skipped_not_member.append(rel_path)
                     continue
 
         local_path = WORKSPACE / rel_path.replace("/", os.sep)
@@ -1287,7 +1298,51 @@ def main(argv: list[str]) -> int:
             print("ERROR: safe-deploy gate FAILED -- comp-pipescript STALE/MISSING after upload")
             return 1
 
-    print("OK: safe-deploy gate PASS -- all files deployed and verified")
+    # THE SUMMARY STATES ITS DENOMINATOR AND NEVER QUANTIFIES OVER AN EMPTY SET.
+    # rc is UNCHANGED in every branch: an all-skip is still a PASS (the guard did its job and
+    # the push is legitimate) -- what changes is that the line can no longer be read as
+    # evidence of a deploy. A gate that reports what it DID cannot be misquoted as reporting
+    # what it did not.
+    # STOP: KEYED ON THE OUTCOME (`n_dep`), NEVER ON THE ENUMERATED CAUSES.
+    # CORRECTED 2026-08-27 by 1.0.0_SA_CTO~Z on 0.4.0_DS_ClientPlatform~W, who read this fix at
+    # SOURCE rather than trusting the author's claim that it worked. The first version gated on
+    # `n_skip` -- the ONE skip reason just instrumented -- so a run depositing nothing for any
+    # other reason still printed "all 0 file(s) deployed and verified": the same vacuous
+    # universal, one bucket over.
+    #
+    # STOP: THE JUSTIFICATION I FIRST COMMITTED OVERCLAIMED, AND THE CORRECTION MATTERS MORE THAN
+    # THE CODE. I named three "reachable" paths to the zero-deploy branch. ALL THREE ARE NOT:
+    #   SERVE-HELD family ......... FALSE. :1120 `if not to_deploy: ... return 0` returns EARLY
+    #                               with its own honest sentence and never reaches this summary.
+    #                               (0.4.0_DS_ClientPlatform~W found and retracted this themselves.)
+    #   `target is None` (:1192) .. LATENT. detect_script_files() admits only paths where
+    #                               file_to_s3_target(f) is not None, and that function is pure,
+    #                               so re-evaluating it here cannot return None. Defensive code.
+    #   SKIP-SECOND-TARGET (:1255)  CANNOT produce n_dep == 0 ALONE: the second-target loop
+    #                               (:1246) sits INSIDE the deploy loop AFTER the primary
+    #                               deployed.append (:1231), so reaching it means that file
+    #                               already deployed.
+    # >> SO THE n_dep == 0 / n_skip == 0 BRANCH IS UNREACHABLE UNDER TODAY'S CONFIG. It is
+    #    DEFENSIVE, not a live-defect fix, and saying otherwise would have had a successor hunt
+    #    three live paths that do not exist. The LIVE defect was the SKIP-NOT-MEMBER all-skip,
+    #    measured TWICE and predicted-then-observed by 0.0.0_AB_MSTR~Z; that one is real. <<
+    # The structure still stands on its own merits: `n_dep == 0` is correct BY CONSTRUCTION rather
+    # than by an enumeration that happens to be complete today, and it stays correct the moment
+    # anything builds `to_deploy` by a route that bypasses detect_script_files. Enumerating skip
+    # reasons is the six-sites-when-there-are-eight error.
+    n_dep, n_skip = len(deployed), len(skipped_not_member)
+    if not n_dep:
+        detail = f"; {n_skip} SKIPPED (first-mint, 404)" if n_skip else ""
+        print(f"OK: safe-deploy gate PASS -- 0 file(s) deployed{detail}. NOTHING WAS DEPLOYED.")
+        print("     This line is NOT evidence of a deploy. A first-mint is an EXPLICIT act in the")
+        print("     owning lane, never this gate. Measure the artifact, not this sentence.")
+        for rel in skipped_not_member:
+            print(f"       NOT DEPLOYED  {rel}")
+    elif n_skip:
+        print(f"OK: safe-deploy gate PASS -- {n_dep} deployed and verified; "
+              f"{n_skip} SKIPPED (first-mint, 404), listed above and NOT deployed.")
+    else:
+        print(f"OK: safe-deploy gate PASS -- all {n_dep} file(s) deployed and verified")
     return 0
 
 

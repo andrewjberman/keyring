@@ -61,6 +61,28 @@ fired on time. The blocker underneath them is a data-shape change -- a Cottonwoo
 canonical by_model key -- and two guards that refused to publish rather than serve a wrong Global
 union. Those refusals were correct and are not filed as findings.
 
+### Round addendum 3 -- 2026-08-27 16:2xZ, filed by 3.0.0_SA_CVO~Z (channel owner, site-Z seat)
+
+S18 and S19 arrive from `0.7.0_AE_CloudOps~Z` during the R1/R2 cottonwood mint-day round. **D8 is
+placed at SITEZ** (DIRECTIVES.yaml D8 placement, Andrew-direct 2026-08-26 ~23:52Z), and this is the
+first filing into this doc from the site-Z CVO seat. **It is appended here rather than into a
+`INVESTIGATION_v1.Z.md` sibling on purpose:** the `.Z` split elsewhere in this tree exists for
+projects worked on BOTH fabrics at once, and D8 moved wholly. A second home for one round would mint
+exactly the two-independently-editable-halves divergence this protocol's section 0 refuses.
+
+**NEITHER ITEM IS RE-MEASURED BY THE FILER, AND THAT IS DELIBERATE.** Re-running
+`aws scheduler get-schedule` or `trading_days_behind` would be the SAME instrument a second time --
+repetition, not corroboration (CLAUDE.md Rule 22). Both items are carried as
+`0.7.0_AE_CloudOps~Z`'s measurements, attributed to that seat, and the filing act is not counted as
+a second confirmation.
+
+⛔ **S18 IS THE ONLY `BLOCKING` ITEM THIS ROUND, AND IT WAS DISARMED BEFORE IT REACHED ME.** The
+surfacing seat built nothing, applied nothing, and held R2 pending the issuer's word -- Rule 27's
+same-turn disarm working exactly as written. **DISARMED IS NOT REMEDIATED:** the spec text still
+instructs a successor to build R2, so the hazard returns the moment a fresh seat reads the spec
+without this item beside it.
+
+
 ```json
 [
  {
@@ -407,9 +429,53 @@ union. Those refusals were correct and are not filed as findings.
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "PRE-REGISTERED AND THEN OBSERVED. 2.0.0_SA_COO's 72152 s.4 named this exact case in advance as the one that looks most like success -- and the estate's own prior CVO record (72147) put it the other way round, as_of_last advancing while written_at does not. TODAY IT CAME OUT THE OPPOSITE WAY: written_at advanced and as_of_last did not. Both halves of the pair are now observed, which is why the bar has to be BOTH-AND and never either-or. NOTE WHAT THE REPUBLISH COST: before 13:50Z global and cottonwood carried a written_at of 2026-08-25T19:46Z, visibly a day old, which would have made a reader ask. After it they carry today's timestamp on the same bytes. The republish did not corrupt the data and it did not fix it -- it removed the only surface signal that anything was wrong. That is the estate's own recorded principle in a new place: a missing marker makes a reader ask, a false one makes them stop asking. Two of four partner surfaces are in that state now and stay there until the D8 cottonwood key lands."
+ },
+ {
+ "id": "MDPF_COTREMEDIATION-S18",
+ "surfaced_by": "0.7.0_AE_CloudOps~Z, msg 9174, routed SAME-TURN to the spec issuer 1.0.0_SA_CTO~Z with this seat cc'd as channel owner (Rule 27 BLOCKING routing, correctly executed)",
+ "surfaced_at": "2026-08-27T15:08Z",
+ "one_line": "R2 IS ALREADY BUILT -- on the EventBridge SCHEDULER plane, which `aws events list-rules` structurally cannot enumerate: `cot-bd-session-daily-et` is ENABLED, `cron(30 7 * * ? *)` pinned to America/New_York, targeting `cot-bd-session-trigger` with `{\"mode\":\"session-refresh\"}`, so building R2 as specified would land a DUAL TRIGGER and re-introduce the exact DST drift the Scheduler was chosen to prevent.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO~Z as the spec issuer. DISARMED SAME-TURN by the surfacing seat itself -- 0.7.0_AE_CloudOps~Z built nothing, applied nothing, and held R2 pending amendment, while proceeding on R1 which the spec authorises independently. ⛔ DISARM IS NOT REMEDIATION: the spec's line 'the COT chain currently has no schedule of its own' is still on the page, and it is TRUE within the Rules plane, so a successor re-reading it re-arms the hazard with a correct-looking citation. Remediation is the spec amendment (recommendation on the table: 'already satisfied by cot-bd-session-daily-et; verify + document, build nothing'), and it is NOT authorized by this item.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "0.7.0_AE_CloudOps~Z, live primitive `aws scheduler get-schedule --name cot-bd-session-daily-et` (not a config read, not Terraform): State ENABLED, ScheduleExpression cron(30 7 * * ? *), ScheduleExpressionTimezone America/New_York, Target.Arn arn:aws:lambda:us-east-1:313476888478:function:cot-bd-session-trigger, Target.Input {\"mode\":\"session-refresh\"}",
+   "DENOMINATOR PRINTED BY THE SURFACING SEAT: 18 schedules materialised account-wide; cot-bd-session-daily-et is one of them",
+   "NEGATIVE CONTROL ON THE OTHER PLANE, re-run by the surfacing seat and reproducing the issuer's census EXACTLY: 137 rules total, 17 matching cot/49f, `cot-bd-session-daily` and `bd-cot-session-daily` both genuinely ABSENT. The issuer's census was correct and complete ON ITS OWN PLANE.",
+   "infra/aws/terraform/cot-pipeline/eventbridge.tf records the old cron(0 2)Z Rule deleted IN THE SAME CHANGE as the Scheduler was created, explicitly so there is 'no dual-trigger window'",
+   "Andrew-direct 2026-07-29 chose Scheduler over a Rule because a Rule is UTC-only and a hardcoded UTC cron drifts an hour at DST, firing BEFORE market close come November",
+   "FILER DID NOT RE-DERIVE. Re-running get-schedule would be the same instrument twice; this item carries 0.7.0_AE_CloudOps~Z's measurement as that seat's, per the Rule 22 repetition-is-not-corroboration clause."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "THIS IS THE WRONG-PLANE CLASS, AND IT IS THE HIGH-QUALITY VARIANT: a clean, confident, well-formed ZERO about the plane the answer does not live on. EventBridge exposes two non-overlapping APIs -- `events list-rules` enumerates RULES, `scheduler list-schedules` enumerates SCHEDULES -- and a census over either is silent about the other while printing a denominator that LOOKS total. The issuer's 137-rule sweep was not careless; it was correct, complete, and unable to contain the answer. ⛔ THE CONTROL THAT WOULD HAVE CAUGHT IT IS NAMING THE QUESTION'S PLANE BEFORE THE SWEEP'S -- no control placed inside the wrong plane catches a wrong-plane error, which is CLAUDE.md's own retrieval law. WHAT MAKES IT WORTH A ROW RATHER THAN A CORRECTION: the caution the spec attached to R2 (preserve the ~11:30Z landing because ET-boundary timing is a DATA-CORRECTNESS parameter) is SATISFIED BY THE LIVE SCHEDULER AND WOULD HAVE BEEN VIOLATED BY THE BUILD -- a UTC cron(30 11) meets it today and breaks it on 2026-11-01. The spec's own protective clause was the thing the spec's own remedy would have broken, and only a read on the other plane can see that."
+ },
+ {
+ "id": "MDPF_COTREMEDIATION-S19",
+ "surfaced_by": "0.7.0_AE_CloudOps~Z, msg 9242, explicitly SURFACED-NOT-CHASED with this seat named as channel filer and 1.0.0_SA_CTO~Z as D8 owner",
+ "surfaced_at": "2026-08-27T16:09Z",
+ "one_line": "TWO CARRIES ON THE SERVED `global` AGGREGATE THAT NO HYPOTHESIS ON THE BOARD EXPLAINS: `2026-07-29 <- 2026-07-27` (2 trading days) and `2026-07-30 <- 2026-07-27` (3 trading days), both PREDATING the 2026-08-14 kill and neither landing on a mint day, so the mint-day chain break cannot be their cause -- and a 3-trading-day carry on a client-facing aggregate is a shape a T+1 cadence cannot produce.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO~Z as D8 owner. ⛔ NOT DISARMED AT FILING, and the filer is stating the BASIS of the ARMED call rather than leaving it to read as measured: ARMED rests on the mechanism being UNKNOWN, not on a demonstrated live one. INERT would assert that normal operation is safe, which nothing here establishes either. THE MEASUREMENT THAT MOVES IT: re-run `lib.trading_calendar.trading_days_behind` over the ~20 trading days since 2026-07-30 -- a clean run with no further anomaly makes the condition expired-or-historical and the item INERT; a recurrence makes it live and re-classes it. That measurement is the channel's, not the D8 owner's, and this seat holds it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "0.7.0_AE_CloudOps~Z resolved the gaps with `lib.trading_calendar.trading_days_behind` rather than a weekday count -- calling a gap anomalous without resolving the trading calendar is NEVER#1's own error, and the trading-calendar resolution is what turned two ordinary-looking rows into anomalies",
+   "MEASURED SPLIT WITH ITS DENOMINATOR: of 9 carries examined, 3 are anomalous (07-29<-07-27 = 2 td; 07-30<-07-27 = 3 td; 08-21<-08-19 = 2 td) and the other 6 are ordinary T+1",
+   "DISCRIMINATING CONTROL, supplied by 0.0.0_AB_MSTR~Z and accepted by the surfacing seat: ['08-04','08-03'] and ['08-12','08-11'] carry from PRE-KILL mint days where bronze provably RAN (SSM Success, both) -- the same pattern appears where there was no failure, which killed the original 4-for-4 corroboration claim outright",
+   "2026-07-27 IS NOT A MINT DAY (mints: 08-03, 08-11, 08-19, 08-27) and both carries PREDATE the 2026-08-14 kill, so the R1 mechanism is excluded by construction rather than by argument",
+   "NEGATIVE SPACE NAMED BY THE SURFACING SEAT: 07-29 and 07-30 appear in the list 0.0.0_AB_MSTR~Z printed in msg 9234 and were classified there as ORDINARY -- they were in front of two seats and read as unremarkable until the calendar was resolved",
+   "FILER DID NOT RE-DERIVE. Carried as 0.7.0_AE_CloudOps~Z's measurement; the filing is not a second instrument."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "⛔ THE OBSERVATION IS GROUNDED AND THE MECHANISM IS ABSENT, AND PROTOCOL SECTION 2 KEEPS THOSE APART: the anomaly graduates nothing until a mechanism is attributed at source, so this row CANNOT seed a remediation and is not a backlog item anyone works. WHY IT IS FILED RATHER THAN DROPPED: it survives the only two explanations on the board. It is not R1 (predates the kill, not a mint day) and it is not the ordinary cadence (2 and 3 trading days). An anomaly that outlives every live hypothesis is the one worth a durable row, because the next seat to meet it will otherwise meet it as a first observation. WHAT IT INHERITS FROM S16/S17: the reporting gap is the same one this round keeps finding -- a PASS verdict is about `as_of_last` and write freshness and is SILENT on whether a contribution is REAL or CARRIED, and no instrument in the chain reports the difference; you have to open the payload and read `cohort_provenance`. So a carry of any length is invisible to every automated surface, which is precisely why two of them sat unnoticed for a month in a list two seats had already read. ⚠ PROVENANCE OF THE ROUND ITSELF, recorded because it bears on how much weight this row can take: the surfacing seat reached this by RE-MEASURING after a challenge falsified its previous corroboration, and it named its own error mechanism -- looking for a second instrument only AFTER being convinced, and never asking what that instrument says on days the conclusion is false. The retraction and this finding arrived in the same message; the retraction does not weaken the finding, and the finding does not rehabilitate the retraction. || \u26d4 MEASUREMENT RUN 2026-08-27 ~17:2xZ BY 3.0.0_SA_CVO~Z, THE CHANNEL SEAT THAT HELD IT. RESULT: NO NEW ANOMALY. Recommend INERT; the DISARM ACT remains 1.0.0_SA_CTO~Z's as D8 owner -- this seat ran the measurement the item names and does not self-disarm. || WINDOW: exactly 20 trading days 2026-07-30..2026-08-26 (the item's '~20'), measured on the SERVED object portal/gold/mdpf/global/aggregate-aua-timeseries/2026-08-26.json. IN-WINDOW: 5 carries, 1 anomalous (2026-08-21 <- 2026-08-19 = 2 td) -- AND THAT ROW WAS ALREADY IN THIS ITEM'S OWN RECORDED EVIDENCE AT FILING. ZERO anomalies newer than the filing. || POSITIVE CONTROL: the same instrument reproduced the two known anomalies exactly (07-29 <- 07-27 = 2 td; 07-30 <- 07-27 = 3 td), so the clean window is a MEASURED NEGATIVE, not a dead instrument -- a run that found nothing anywhere would have been indistinguishable from a broken one. || TWO DISCRIMINATORS AGREE on the carry set: (a) as_of_by_partner < row date, (b) the claim string starting 'carried'. Both return the SAME 8 rows, so neither a silent None nor a mislabelled row is hiding a carry. Claim vocabulary censused: cottonwood {absent 391, interpolated_estimate 44, measured 20, carried_at_declared_cadence 8}. || \u26d4 THE 9-vs-8 APPARENT DISCREPANCY WITH 0.7.0_AE_CloudOps~Z IS RESOLVED AND IS NOT A CONFLICT -- IT IS TWO VINTAGES OF ONE KEY, AND NEITHER SEAT WAS WRONG. The served key carries TWO versions: 13:31:13Z (311519 B) and 16:27:52Z (311363 B). The surfacing seat observed at 16:09Z, i.e. THE 13:31 BYTES; this run first read the 16:27 bytes. Re-measured on THEIR version: 9 carries / 3 anomalous -- EXACTLY their figures. The single delta is 2026-08-26 cottonwood as_of=2026-08-25, an ORDINARY T+1 carry on the HEAD row that healed when the day's real data landed. NO ANOMALY WAS HEALED; all three persist in both versions. Their count was right for their vintage and this one is right for its own. THE TRANSFERABLE HALF: a served key is not a plane until you name its VERSION -- an 18-minute gap between two seats' reads turned two correct counts into a clean-looking numeric contradiction. || \u26d4 AND THE DISARM CRITERION AS WORDED CANNOT PASS ON A LITERAL READING. The window 'since 2026-07-30' CONTAINS 08-21, which this item's OWN evidence already classifies anomalous. Read literally ('no anomaly in the window') the criterion could never return clean no matter what the world did; read as written ('no FURTHER anomaly') it passes. The intended reading is the second -- the filer knew of 08-21 and chose the window anyway -- and it is recorded here so a successor does not re-run this measurement forever against a criterion that structurally cannot discharge. || ONE SUBSTANTIVE DISTINCTION THE ITEM DID NOT DRAW, AND IT IS WHY THE IN-WINDOW ANOMALY IS NOT A RECURRENCE: 2026-08-19 IS A MINT DAY (mints 08-03, 08-11, 08-19, 08-27) while 2026-07-27 IS NOT. So 08-21 <- 08-19 carries FROM a mint day and HAS a live candidate mechanism in the mint-day chain break; the 07-27 pair has none, which is precisely what made them the unexplained ones. The in-window anomaly is therefore a DIFFERENT SHAPE, not a repeat of the shape this item was opened for. || INSTRUMENT: lib.trading_calendar.trading_days_behind, calendar source NYSE/hardcoded-fallback-2024-2027. DENOMINATOR: 463 cohort_provenance rows x 3 partners = 1389 (row,partner) cells."
  }
-]
-```
+ ]
+ ```
 
 ## Open at this seat, NOT a channel item
 

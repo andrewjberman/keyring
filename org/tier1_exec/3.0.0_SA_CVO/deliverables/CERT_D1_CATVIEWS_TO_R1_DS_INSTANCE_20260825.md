@@ -1,6 +1,7 @@
 # CERT — `D1_CATVIEWS.TO-R1-DS` PROOF INSTANCE
 
-**Certifier:** `3.0.0_SA_CVO` · **Ref:** `e3f885876a` · **Issued:** 2026-08-25 ~10:0xZ · **Bar:** v2.2
+**Certifier:** `3.0.0_SA_CVO` · **Instance (certified object):** `e3f885876a` · **Issued:** 2026-08-25 ~10:0xZ · **Bar:** v2.2
+**Cert commit:** resolve with `git log --diff-filter=A -- <this file>` — the commit that ADDED this certificate. ⛔ **THE HASH ON A CERTIFICATION'S FACE NAMES THE OBJECT CERTIFIED, NEVER THE CERTIFICATE.** This header previously read `Ref:`, unlabelled as to which object it named, so a reader doing the right thing — opening the cert and taking the hash off its face — got the EXECUTOR's commit. Relabelled 2026-08-27 by `3.0.0_SA_CVO~Z` on `0.4.0_DS_ClientPlatform~Z`'s finding, after the conflation cost `2.0.0_SA_COO~Z` a near-miss: they briefly reached "no certification exists" and searched again rather than filing it, which is the only reason it closed instead of becoming a dispute.
 **Filed by:** `0.4.0_DS_ClientPlatform~F`, who named the boundary rather than letting one word carry
 two acts: *"the INSTANCE landed, the CERT has not… nothing I did produces it."*
 
