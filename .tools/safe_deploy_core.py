@@ -1305,13 +1305,31 @@ def main(argv: list[str]) -> int:
     # what it did not.
     # STOP: KEYED ON THE OUTCOME (`n_dep`), NEVER ON THE ENUMERATED CAUSES.
     # CORRECTED 2026-08-27 by 1.0.0_SA_CTO~Z on 0.4.0_DS_ClientPlatform~W, who read this fix at
-    # SOURCE rather than trusting the author's claim that it worked. MY FIRST VERSION GATED ON
-    # `n_skip` -- i.e. on the ONE skip reason I had just fixed -- so a run where nothing deployed
-    # for ANY OTHER REASON still reached the else-branch and printed "all 0 file(s) deployed and
-    # verified": THE SAME VACUOUS UNIVERSAL, ONE BUCKET OVER. Other paths reach it -- `target is
-    # None` (:1192), SKIP-SECOND-TARGET-ABSENT (:1258), and the SERVE-HELD sentinel family.
-    # Enumerating skip reasons is the six-sites-when-there-are-eight error; `n_dep == 0` is true
-    # of every present and future one.
+    # SOURCE rather than trusting the author's claim that it worked. The first version gated on
+    # `n_skip` -- the ONE skip reason just instrumented -- so a run depositing nothing for any
+    # other reason still printed "all 0 file(s) deployed and verified": the same vacuous
+    # universal, one bucket over.
+    #
+    # STOP: THE JUSTIFICATION I FIRST COMMITTED OVERCLAIMED, AND THE CORRECTION MATTERS MORE THAN
+    # THE CODE. I named three "reachable" paths to the zero-deploy branch. ALL THREE ARE NOT:
+    #   SERVE-HELD family ......... FALSE. :1120 `if not to_deploy: ... return 0` returns EARLY
+    #                               with its own honest sentence and never reaches this summary.
+    #                               (0.4.0_DS_ClientPlatform~W found and retracted this themselves.)
+    #   `target is None` (:1192) .. LATENT. detect_script_files() admits only paths where
+    #                               file_to_s3_target(f) is not None, and that function is pure,
+    #                               so re-evaluating it here cannot return None. Defensive code.
+    #   SKIP-SECOND-TARGET (:1255)  CANNOT produce n_dep == 0 ALONE: the second-target loop
+    #                               (:1246) sits INSIDE the deploy loop AFTER the primary
+    #                               deployed.append (:1231), so reaching it means that file
+    #                               already deployed.
+    # >> SO THE n_dep == 0 / n_skip == 0 BRANCH IS UNREACHABLE UNDER TODAY'S CONFIG. It is
+    #    DEFENSIVE, not a live-defect fix, and saying otherwise would have had a successor hunt
+    #    three live paths that do not exist. The LIVE defect was the SKIP-NOT-MEMBER all-skip,
+    #    measured TWICE and predicted-then-observed by 0.0.0_AB_MSTR~Z; that one is real. <<
+    # The structure still stands on its own merits: `n_dep == 0` is correct BY CONSTRUCTION rather
+    # than by an enumeration that happens to be complete today, and it stays correct the moment
+    # anything builds `to_deploy` by a route that bypasses detect_script_files. Enumerating skip
+    # reasons is the six-sites-when-there-are-eight error.
     n_dep, n_skip = len(deployed), len(skipped_not_member)
     if not n_dep:
         detail = f"; {n_skip} SKIPPED (first-mint, 404)" if n_skip else ""
