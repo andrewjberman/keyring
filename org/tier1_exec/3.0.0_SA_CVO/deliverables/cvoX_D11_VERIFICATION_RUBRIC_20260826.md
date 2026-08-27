@@ -408,10 +408,18 @@ against them as part of the population's record, not as bars this seat invented:
   invisible to imports, calls, triggers, AND the dependency graph. REFINED by 74694: "parameterized writer" is THREE
   classes by WHERE THE TABLE NAME IS BOUND — (1) call-site literal (derive_runner's
   _overwrite_with_retry: grep FINDS it — parameterisation hides nothing), (2) entrypoint
-  allow-list (snap_store: grep misses, the allow-list ENUMERATES it), (3) arbitrary runtime input
-  (none found yet — invisible AND unbounded). Only class 3 needs the agreed-path-constant sweep;
-  classes 1–2 are covered by held instruments. Factoring quality is NOT the discriminator; binding
-  site is. A wave-3 face partitions its writers by binding site or its coverage claim is unsized. Fifth arrival of the
+  allow-list (snap_store: grep misses, the allow-list ENUMERATES it), (3) arbitrary runtime input — NOT EMPTY
+  (74700): resource_summaries_store.py's `--table` has NO choices= constraint and :202 CREATES
+  whatever name it is given (negative control: snap_store's `--surface` is choices=-constrained —
+  differs at exactly the field under test). AND the member splits two axes the partition
+  conflated: it is DISCOVERABLE (module-literal default, greppable) yet UNBOUNDED (writes any
+  table in the namespace) — discoverability and boundedness are ORTHOGONAL. Sharpened
+  discriminator, two questions: WHERE is the name bound (call site | entrypoint allow-list |
+  runtime), and is the bound set ENUMERABLE (choices=/allow-list present or absent). Only
+  runtime+non-enumerable needs the agreed-path-constant sweep; a predicate treating
+  "has a literal default" as boundedness evidence errs in the safe-looking direction. Factoring
+  quality is NOT the discriminator; binding site + enumerability are. A wave-3 face partitions
+  its writers on both questions or its coverage claim is unsized. Fifth arrival of the
   (FILE, ARTIFACT) grain; builder-vs-writer is TWO facts per _snap part. A wave-3 face carding a
   _snap artifact that names only one of the two under-describes its substrate; per-write tracing
   (each _snap write literally executing snap_store.append) is stated NOT MEASURED.
