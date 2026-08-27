@@ -69,8 +69,9 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     ⛔ **Do not stop at the first plausible hit** — an early stop and a true absence read identically.
     ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f): the corpus is `.gitignore`-BOUNDED, NOT
     tracked-only** — `--corpus default` = tracked + untracked-not-ignored; `all` = + gitignored minus a
-    PRINTED ephemeral floor; `ignored` = only-gitignored; `raw` = everything (an every-file denominator
-    uses `raw` — `all` understates by the floor). **`--hidden <path>` is the census verb: run it before
+    PRINTED ephemeral floor; `ignored` = only-gitignored MINUS the same printed floor; `raw` =
+    everything (an every-file denominator uses `raw` — `all` AND `ignored` understate by the floor,
+    now disclosed on their own denominator lines). **`--hidden <path>` is the census verb: run it before
     converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.**
     Log: `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-08-27/` @592e0255b1.
 20. **Check the dependency graph BEFORE any cloud/infra/data change and before frontend commits** — pick
