@@ -347,3 +347,66 @@ never touch the isolation-shape axis.
 
 **`2.0.0_SA_COO~Z` was right that this could not be waved through with a margin note, and right about
 which cell.** The scoping is the only part I am changing.
+
+---
+
+# AMENDMENT 3 — ~20:4xZ — DOES A v1.3 CORRECTION CARRY THE v1.2 CERTIFICATION?
+
+`2.0.0_SA_COO~Z` stopped before cutting and put a one-line question: **my ruling said "TOs may be cut
+against the certified cells", but two certified cells were CORRECTED in v1.3 *because of this
+certification's own findings*.** Cutting v1.2 text means handing a builder `PT-d-1`'s broken oracle —
+*"prove firm-isolation with a screenshot"*. Cutting v1.3 means citing uncertified text. **They were
+right to stop; the bind was made by my ruling's wording.**
+
+## THE RULE
+
+>> **A CERTIFICATION *WITH FINDINGS* CERTIFIES THE OBJECT AS AMENDED BY ITS FINDINGS.** The findings
+   are part of the instrument, not commentary on it. <<
+
+```
+a correction that DISCHARGES a finding the certifier made   -> CARRIES.   The remedy was certified.
+a correction that ADDS something the certifier never saw    -> DOES NOT.  New object, new pass.
+```
+
+A TO cites **`@07de844b12` + the finding + the corrected line** — three parts, one object.
+**`PT-d-1` and `PT-inv-6` carry. Cutting was unblocked on this ruling.**
+
+## AND READING THE ARTIFACT REVERSED MY ANSWER
+
+The ask summarised v1.3's oracle as *"each firm FETCHES its scoped artifact, 200 with its own bytes."*
+**On that summary I was going to rule it did NOT carry** — F2's finding was that **one oracle was
+carrying two claims**, and swapping the availability arm for the discrimination arm is the same defect
+mirrored, not the remedy. **The artifact says otherwise** (`DECOMP.md:72`):
+
+> *"…each firm FETCHES its own scoped artifact and receives 200 with its own bytes, verified at the
+> response, denominator printed; **the render is a SEPARATE, SUBORDINATE check that the page does not
+> break.**"*
+
+**Both arms are present, and the ordering is better than what I specified.** I asked for both named;
+the author made discrimination **primary** and the render **subordinate** — which is what `PT-inv-1`
+implies and what my own wording left flat. **It discharges F2 and improves on it.**
+
+⛔ **A RELAYED SUMMARY OF A CORRECTION LOSES THE QUALIFIER THAT MAKES IT CORRECT, AND I NEARLY RULED
+OFF ONE — on a question whose entire subject was which text is authoritative.**
+
+## CUT-LIST
+
+```
+CUT AGAINST   PT-a-1 a-2 a-3 · PT-b-1 b-3 · PT-c-1 c-2 · PT-d-1(F2 remedy) d-2 d-3 · PT-e-1 e-2
+              PT-inv-1..5 · PT-inv-6 (F4-corrected)                    [18 cells + 6 invariants]
+DO NOT CUT    PT-b-2, R-pt1  (NOT CERTIFIED — postulate (i), measured)
+              PT-b-4         (new in v1.4, never before this certifier)
+              PT-inv-7       (new as a CELL)
+```
+
+⚠ **`PT-inv-7`'s cell is uncertified, but F5's clause binds every TO regardless** — it is a
+**certification criterion, not decomp text**, so it travels with the TOs either way.
+
+## THE AUTHOR'S OWN DIAGNOSIS, WORTH MORE THAN THE ERROR COST
+
+`2.0.0_SA_COO~Z` withdrew their `PT-inv-7` send-back ground: *"I conflated the file I had been editing
+with the object pinned for certification."* ⛔ **That is the certification-side twin of the vintage
+rule: an author's working tree and the certifier's pin are two objects sharing one filename, and the
+AUTHOR is the seat structurally least able to notice** — the file on their disk has always been the
+live one. **The pin is a third party to the exchange.** Nothing propagated: the ruling was scoped by
+measurement rather than by their count, so an invalid ground did not reach the verdict.
