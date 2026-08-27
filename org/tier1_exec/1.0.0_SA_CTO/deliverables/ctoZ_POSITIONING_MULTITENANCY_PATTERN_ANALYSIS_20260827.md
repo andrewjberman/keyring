@@ -108,4 +108,56 @@ settle it.**
 - **Not amending `ETFS_SATELLITES`.** Its round 1 is certified and closed; this is a new project
   under Rule 27.
 
+---
+
+# AMENDMENT 1 — 19:0xZ. TWO FACTS FROM `0.4.0_DE_ClientPlatform~Y`, ONE OF WHICH **BOUNDS A CLAIM I MADE**
+
+Supplied by the seat that BUILT the gate, explicitly **not** adjudicating §4 and **not** claiming
+R4/R5/R6 — *"those are a CTO act ... these facts are cheaper to hand over than to re-derive."*
+**Correct routing, and both facts change this document.**
+
+## A. THE PAGE IS SHARED BY ALL FOUR PARTNER FIRMS — THIS SHARPENS THE PROBLEM STATEMENT
+
+```
+FIRM_ALLOWED_PATHS -- /positioning is ALLOWLISTED FOR:
+  49financial YES · inflection YES · cottonwood YES · demo YES   (+ opal-capital, internal)
+  DENOMINATOR: 4 of 4 partner firms.
+```
+
+>> **SO THE PAGE IS NOT COTTONWOOD'S — ONLY THE FEATURE IS.** Andrew's *"available on Cottonwood's
+   page"* describes **a shared page carrying a firm-specific feature**, which is precisely the
+   multi-tenancy problem he asked to be sorted out. **Pattern A (route gating) cannot express this at
+   all** — it is page-grained, and the page is deliberately shared. **That is why Pattern D had to be
+   invented, and it is the structural argument for treating D as a first-class estate pattern rather
+   than a satellites one-off.** <<
+
+## B. INDEPENDENT CONFIRMATION OF §2, BY A DIFFERENT ROUTE
+
+They measured that **satellites is arithmetic over the already-fetched models payload — no separate
+fetch**; `satelliteAdapter` consumes the `positioningData` the page already holds. **I reached the
+same conclusion from the ENDPOINT PLANE (`api/general/` + no firm in any query key); they reached it
+from the ADAPTER.** Two instruments, one verdict — corroboration, not repetition.
+
+## C. ⛔ AND THE BOUND ON MY OWN §2 — I ASSERTED "ANY AUTHENTICATED USER" FROM A CONVENTION
+
+My §2 reads *"`api/general/` = ANY AUTHENTICATED USER"*, resting on the 2026-02-25 architecture
+decision. **`0.4.0_DE_ClientPlatform~Y` flags a comment on `getPositioningData` reading
+*"DEMO: Using public endpoint (no auth)"* — and REFUSES to relay it as measured**, which is right:
+*"a comment is a claim about a vintage, not about the running system."*
+
+**What they DID read at source:** `apiRequest` (`api-client.ts`) attaches `Authorization: Bearer`
+**whenever an access token exists**, so the CLIENT always sends one. **Whether the SERVED ROUTE
+REQUIRES it at the edge is a server-side fact on the AE/serving plane and is UNMEASURED.**
+
+>> ⛔ **THEREFORE MY §2 IS BOUNDED, AND IN THE UNSAFE DIRECTION: the exposure is AT LEAST
+   "every authenticated user of every firm" and MAY be "anyone at all". I stated the floor as though
+   it were the ceiling.** For a question that may resolve into a security review, understating the
+   exposure is the wrong error to make. <<
+
+**REQUIRED IF §4 RESOLVES TO (b) ACCESS — and it is the FIRST act, before any redesign:** measure at
+the EDGE whether `/api/general/positioning/positioning_data.json` requires a bearer. **That is an
+AE/serving-plane read and there is no live AE seat**, which folds it into the same retired-lane class
+already at Andrew. ⚠ **Do NOT let the comment stand in for that measurement in either direction** —
+it is equally capable of being stale-and-wrong about a route that IS protected.
+
 -- `1.0.0_SA_CTO~Z`
