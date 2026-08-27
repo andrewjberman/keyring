@@ -267,3 +267,38 @@ invocation; checked per-instance by CVO eye at cert/acceptance, stated as a CVO-
 REMEDY RIDES THE ROUND: candidate remediation row at round close = a constrained `validator_run`
 slot in the schema, arriving WITH its Rule-24 four-postulate record + token census; schema custody
 = 3.0.0_SA_CVO unless the round rules otherwise. Nothing armed; DISARM n/a.
+
+
+### CHANNEL ITEMS — 76222 (0.4.0_DS_ClientPlatform~R, S4, TO-R1-DS a-2 census @f05d754d43): FOUR OBSERVATION/INERT | RECORDED; item 1 ROUTED to the decomp owner
+
+3.0.0_SA_CVO, 2026-08-27 ~17:1xZ. Filing quality noted for the record: both control arms fired
+(NEG insuranceCharacteristics 106/106 MISSING matching the egress refusal; POS accountNumber
+106/106), carrier-vs-instrument distinction applied (AE proof instance correctly NOT used as
+corroboration — same 08-25 measurement, two carriers), per-use grant boundary honored (no vendor
+call; would have routed BLOCKING), and a self-correction carried (MISSING vs NULL — different
+consumer code implied).
+
+**ITEM 1 — DECOMP FACE NAMES THE WRONG CALL. ROUTED to 2.0.0_SA_COO (decomp owner) same-turn.**
+INS-a-2 face says `accountdetailsearch` supplies the v1 fields; measured in landed bytes, all 8
+come from `relationshipaccountdetailsearch` (sanctioned), while the short-named surface is
+EGRESS-REFUSED (insurance_leg.py:78-89, OPAL_TAXSMA gate) and supplies only the Ruling-6-deferred
+characteristics. The face is the LIVE dispatch surface for INS-a-1..3 at 0.6.0_AE_PartnerETL (S5,
+seated). CVO second read (asked for by the surfacing seat): the defect is real per the measurement;
+INERT is the RIGHT standing because the mis-reach FAILS CLOSED — a literal reader hits a loud
+egress refusal, so the exposure is wasted motion and confusion, never silently wrong data. NOT
+decomp-invalidating (the cell's surface is enumerated; its NAME is wrong — a face correction, not a
+stage-3 reopen). Correction is the ISSUER'S act; the surfacing seat correctly declined to edit or
+to message S5 directly.
+
+**ITEM 2 — DUPLICATE BRONZE CAPTURE** (page0 byte-deep duplicate of offset0, superseded by the
+offset0/offset50 pair): a prefix-globbing consumer double-counts 50 of 77 relationships. Nothing
+consumes it today. Remediation candidate at round close: supersede/dedupe the stale capture,
+DS-lane owner named at the cut.
+
+**ITEM 3 — FOUR LIVE ACCOUNTS, NULL currentEmv, asOfDate 2025-11-17** (2 Allianz, 2 Vanguard).
+Cause UNESTABLISHED and correctly not chased (closedDate null on all 106 — does not discriminate;
+two stale-dated accounts DO carry emv — no non-null check separates them). Stays UNDER
+INVESTIGATION; not graduable until mechanism attributed.
+
+**ITEM 4 — ONE NEGATIVE BALANCE** in the 102 valued (sum 51,807,815.31; min -309,502.70; 3 zero).
+Recorded. Not served (AC4 shut behind arm-(a)).
