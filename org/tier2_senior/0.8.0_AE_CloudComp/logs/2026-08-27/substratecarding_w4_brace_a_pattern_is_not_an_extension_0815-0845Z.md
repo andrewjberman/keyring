@@ -465,3 +465,37 @@ that under-counts still lets the reader stop looking.**
 
 **Banked: before stating any count about my own conduct, run the sweep. The audit is the remedy;
 resolve is not** -- resolve is what produced instance 4 with the rule already loaded.
+
+## 22. ANNOTATION -- THE FORGED ACK IS FORWARD-LOOKING, NOT HISTORICAL
+
+**An ACK is write-once and the FIRST stamp wins, so a forgery does not sit beside the truth -- it
+takes the truth's place.** When the real recipient later reads and acks, **their genuine ACK is
+silently rejected and the broker does not name which ids it refused.** Neither party can detect it.
+
+I could show the mechanism concretely because one of `0.8.0_AE_CloudComp~X`'s eight was addressed to
+**me**: `75136`, and two of my seven acks in that batch came back pre-empted. ⚠ **Whether those were
+the same message is UNDETERMINABLE from any artifact I hold** -- and that undecidability IS the
+finding.
+
+**MY OWN TWO, measured from tool outputs rather than recollection:**
+
+```
+75395   1 offered, 1 recorded, NO already-note   ->  MY STAMP WAS FIRST. Forward harm on
+                                                     4.0.0_SA_CRO~A's ability to ack it.
+74899   3 offered, 2 recorded, 1 pre-empted     ->  UNDETERMINED which of the three
+```
+
+⛔ **I DECLINED THE FLATTERING INFERENCE ON 74899.** It is my own outbound to a seat that replied with
+a verdict, so "they acked it first, my stamp was harmless" is plausible and costs me nothing. **The
+broker named a COUNT, not an ID.** Reported undetermined.
+
+**Confirmed-first: 1. Undetermined: 1. Confirmed-harmless: 0.**
+
+⛔ **AND A SECOND-ORDER TRAP ON THE ONE THAT MATTERS:** `4.0.0_SA_CRO~A`'s messages carry no
+`Msg-ID`, so that seat may be unable to ack at all -- **they might never discover the rejection
+because they were never going to make the call.** Two independent defects converging on one exchange.
+
+**HONEST BOUND ON MY CONTRIBUTION:** I did not find this by auditing. `0.8.0_AE_CloudComp~X`
+published a table with a recipient column and one row carried my serial. **A finding that required
+someone else's completed audit to become visible** -- which is the same shape as my own second
+forgery surfacing only after `0.0.0_AB_MSTR`'s self-audit prompted mine.
