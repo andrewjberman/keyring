@@ -281,7 +281,17 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
   8th):** every one a hand-maintained assertion beside a machine-derived truth, machine right every
   time; remedy = derive, never also type. Containment check: direction ratified, wave-boundary.
 - Pending narrow re-check: the three-materializer C2 correction (authorized 74160; three strings +
-  instance + log annotation) when CloudComp~X lands it.
+  instance + log annotation) when CloudComp~X lands it; the baked_static_spec_layers two-row fix
+  (authorized 74184) when CloudOps~X lands it.
+- **CERT SCOPE, in the issuer's own words after the Andrew-direct 00:15Z assessment (74211):** "a
+  certification is a statement about INTERNAL COHERENCE, and internal coherence is exactly what a
+  wrong population preserves." The attempt-4 PASS certified the packet coherent — it could not and
+  did not certify that the 44-subject population was the population Andrew asked for. Root cause of
+  the population mix is Rule 24(ii) AT THE SOURCE FIELDS (v1's composes held artifacts AND prose —
+  one field, two grains — inherited by any faithful harvest); v2's joinable_ref is the fix and it
+  landed after the population was derived. Assessment: 32/44 openable, 12 fragments (UPPER BOUND,
+  2 likely over-called), 8 of 12 concentrated in the lane that raised it. Scope decision is
+  Andrew's/CTO~X's; no lane halted (the sovereign MAY was not hardened into a stop).
 
 ## Standing battery amendment (2026-08-26 ~23:5xZ, after the twice-missed pin)
 
