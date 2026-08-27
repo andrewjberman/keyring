@@ -518,7 +518,16 @@ against them as part of the population's record, not as bars this seat invented:
   precondition vs the schema beside it); the schema remedy is CRO~A's as owner, structurally
   required not optional, with the card-grain-vs-part-grain key question explicitly UNMEASURED.
   "Wave 3 complete" still cannot close it; the two candidate release conditions still diverge; a
-  face claiming L1-startable names its condition. L1 SEATED and L1 STARTABLE are different states. ⛔ ZERO-ARTIFACT is not
+  face claiming L1-startable names its condition. L1 SEATED and L1 STARTABLE are different states.
+- **THE FIRM-DISCARDING JOIN (75005, OBSERVATION/ARMED at the issuer; measured by DT~X row 1):**
+  the trace symbol space is FIRM-BLIND and the kuzu pipeline space FIRM-QUALIFIED; they join only
+  by stripping `pipeline:<firm>:`, which is lossy in reverse (bare `gold` resolves to three
+  firms' pipelines). This is the NEVER-cross-firms hard stop arriving through the ID-SPACE door —
+  an identity merge, not a path or an access, so the commit gate (greps paths) and the IAM Deny
+  (refuses access) both pass it cleanly forever. Nothing is built on it yet — measured BEFORE the
+  spine by design. CERT BAR for any L1/spine face: a canonical-entity declaration over symbol
+  spaces SHOWS THE FIRM CARRIED through the join, or it merges bd/inf/mdpf (and with more force,
+  cot) silently past both existing controls. ⛔ ZERO-ARTIFACT is not
   BLOCKED: the PRD's §7 makes L2 STRUCTURE + BEHAVIOR computable TODAY (a parallel track), while
   L1/L3/L4 remain blocked on L0 — wave 3 is the critical path for those three, not "the whole
   arc" (CTO~X's own serialization misread, corrected at source). The guard that travels with the
