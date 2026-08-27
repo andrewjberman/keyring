@@ -263,8 +263,14 @@ delivered AFTER 19:07Z; CCX (delivered 19:06Z) judged against the prior bar
 - **The reopen test exercised once and it HELD** (74154/74160): a scary find at 00:0xZ was tested
   against the map before escalation — both objects IN MAP, correction not BLOCKING, freeze intact.
   The criterion exists so midnight finds get tested rather than escalated.
-- **The law-vs-card join gap** (a rule-bank law forbidding a presentation, a card committing it,
-  nothing joining them): routed to the schema owner as observation.
+- **The law-vs-card join gap, UPGRADED (CTO~X 74169, measured):** the violated prohibition exists in
+  ONLY ONE of the two rule banks (live :693; July copy ZERO, control firing) — a seat working from
+  the July copy did not miss the law, IT STRUCTURALLY DOES NOT EXIST for them. The join is
+  CONDITIONAL ON WHICH FILE YOU OPENED and nothing in either file says it is one of two. Direction
+  ratified, wave-boundary; **prerequisite named: the estate must DECLARE WHICH RULE BANK IS
+  CANONICAL before any join is built** — a joiner over an undeclared two-copy source is the
+  derived-identity class again. Subject #44 is thereby the MECHANISM of tonight's law violation,
+  not bookkeeping.
 - **Typed-beside-generated at EIGHT instances, all issuer's, plus the L0 parts_registered (CTO's
   8th):** every one a hand-maintained assertion beside a machine-derived truth, machine right every
   time; remedy = derive, never also type. Containment check: direction ratified, wave-boundary.
