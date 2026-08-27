@@ -182,6 +182,61 @@ across two fabrics is NEVER#7 and a non-conflicting rebase result is luck, not c
 ⛔ **NEVER resolve another fabric's law text unilaterally.** Union what composes; route genuine
 same-row collisions to the law owners with both versions quoted.
 
+### ⛔ IDENTICAL BASE-SIDE RANGES = ONE DEFECT CORRECTED TWICE. **PICK, NEVER UNION.**
+
+The classification table above splits conflicts into *disjoint ranges -> mechanical union* and
+*overlapping -> read the content*. **There is a third case it did not name, and the union default
+produces VISIBLE GARBAGE on it.** When both sides' `--unified=0` BASE-side ranges are not merely
+overlapping but **IDENTICAL**, the two fabrics did not add rules blind to each other — **they
+independently CORRECTED THE SAME SENTENCE.** Union stacks two corrections of one defect.
+
+**And it usually needs NO law-owner adjudication**, which the bullet above would otherwise send it
+to: there is no disagreement about substance, only two renderings. **Read both, pick the better one
+whole, discard the other, and say which you took.** Escalate only if the two texts actually disagree.
+
+*Measured 2026-08-27, CLOUD<->SITEZ: `org/XXX.md` (line 336 both sides) and
+`.claude/skills/watcher/SKILL.md` ((43,3) both sides) — both fabrics had independently corrected
+the same false orphan-watcher mechanism within hours. Overlap 5 of 1254 = 0.40%. Resolution was one
+line long ("take CLOUD wholesale") and needed no owner.*
+
+### ⛔⛔ AFTER PICKING A WINNER, AUDIT THE **LOSING** RENDERING FOR CONTENT — THIS STEP IS MANDATORY AND NOTHING ELSE IN THIS PROTOCOL ASKS FOR IT
+
+**A WHOLESALE TAKE-ONE-SIDE RESOLUTION SILENTLY DISCARDS WHATEVER ONLY THE OTHER SIDE KNEW, AND
+NOBODY IS ASSIGNED TO LOOK FOR IT — BECAUSE THE QUESTION FEELS SETTLED THE MOMENT A WINNER IS
+NAMED.** Every incentive points the wrong way: the side that conceded has moved on, and the side
+that won has no reason to read the text it beat. **The loss is silent by construction** — a
+discarded rendering leaves no conflict, no error, and no diff to review.
+
+**Do this, and do it AFTER conceding, not instead of conceding:** diff the two renderings for
+CONCEPTS, not wording — `grep -c` a handful of distinctive phrases from the losing side against
+the winner. Anything present only in the loser is either (a) genuinely redundant, or (b) **content
+the winner is about to lose.** Route (b) as a one-paragraph fold-in, never as a competing text.
+
+**AUDIT THE LOSER FOR CONTENT; DO NOT DEFEND IT FOR PREFERENCE.** The distinction is the whole
+discipline: you already conceded, so this is not re-litigation — if the only thing you find is
+that you liked your phrasing better, you have found nothing, and say so.
+
+*Measured on the same 2026-08-27 reconcile, and it caught a live defect in the text both fabrics had
+just agreed was canonical: the winning rendering's NEW paragraph (`PARENT_CHECK=0` at `$PPID <= 1`)
+composed with TWO OLD untouched paragraphs ("every healthy wrapper is `ppid=1`") into the false
+conclusion that the self-exit never fires — contradicting the winner's own measurement three
+paragraphs above, and failing toward "I am orphan-capable, the banner instruction is theatre." The
+losing rendering carried the separation that dissolves it: `ppid=1` is the **OUTSIDE** `ps` view of
+the WRAPPER; a CHILD reading its own `$PPID` gets a real pid. Demonstrated in ONE process tree
+(wrapper 515411 `ppid=1`; child 515417 `ppid=515411`; banner `parent-tied: pid 515411`), corroborated
+at three seats with zero 1s. Fixed @a12b8173fc.*
+
+⛔ **THE GENERAL FORM, which is why this sits in the protocol and not in a postmortem: WHEN YOU
+CORRECT A MECHANISM, RE-READ EVERY OTHER PARAGRAPH THAT MENTIONS ITS VARIABLES. YOUR DIFF IS NOT
+YOUR BLAST RADIUS, AND THE UNIT UNDER TEST IS THE DOCUMENT, NOT THE EDIT.** A correction can be
+LOCALLY TRUE AND GLOBALLY WRONG: neither paragraph is wrong alone, the defect exists only in their
+composition, it is CREATED BY THE FIX, and it is invisible to the author because the author only
+diffs what they wrote.
+
+*Both findings authored by `0.0.0_AB_MSTR~Z` and `0.0.0_AB_MSTR` jointly on the 2026-08-27
+reconcile; the second was surfaced by the losing side auditing its own rendering after conceding.
+Records: LD-0465 + AMENDMENT 2 (CLOUD), @a12b8173fc.*
+
 ## Step 5 — Execute your half
 
 ```bash
