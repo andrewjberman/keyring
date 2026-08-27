@@ -43,10 +43,20 @@
     "THE_THREE_CLASSES": {
       "CLASS_1_bound_at_the_CALL_SITE_as_a_literal": "derive_runner.py -- grep FINDS it; already covered by the census predicate",
       "CLASS_2_bound_at_an_ENTRYPOINT_from_an_allow_list": "snap_store.py -- grep misses it, but the allow-list ENUMERATES it; covered by reading the module's registry",
-      "CLASS_3_bound_from_ARBITRARY_RUNTIME_INPUT": "NONE FOUND YET -- invisible AND unbounded"
+      "CLASS_3_bound_from_ARBITRARY_RUNTIME_INPUT": "\u26d4 NOT EMPTY. infra/aws/globgrph/resource_summaries_store.py -- found by 0.7.0_AE_CloudOps~X in their OWN carded subject, as a Rule 24 postulate-(i) check (hunt the uncovered member). :349 ap.add_argument('--table', default=TABLE) with NO choices= constraint; :372 bound from that arg; :190 table_id built with no membership deref; :202 catalog.create_table CREATES WHATEVER NAME IT IS GIVEN, in the globgrph namespace."
     },
     "\u26d4_the_sizing_error_it_exposes": "ONLY CLASS 3 NEEDS THE S3-PREFIX SWEEP. Classes 1 and 2 are already covered by instruments we hold. 'Parameterized writer' was carrying all three, and THE REMEDY PROPOSED FOR THE CLASS WAS SIZED FOR THE MEMBER NOBODY HAS FOUND.",
     "wave_3_consequence": "the predicate discriminator is not 'does the writer name a table' but 'WHERE IS THE TABLE NAME BOUND' -- call site, entrypoint allow-list, or runtime. Checkable per module, partitions cleanly. A property to settle before the cut.",
-    "superseded_text": "a well-factored estate CONCENTRATES writes into one generic module, and concentration is exactly what makes the writer un-nameable by a name-keyed predicate. THE BETTER THE FACTORING, THE MORE INVISIBLE THE WRITER. Every predicate tonight would have performed BETTER against a badly-factored estate."
+    "superseded_text": "a well-factored estate CONCENTRATES writes into one generic module, and concentration is exactly what makes the writer un-nameable by a name-keyed predicate. THE BETTER THE FACTORING, THE MORE INVISIBLE THE WRITER. Every predicate tonight would have performed BETTER against a badly-factored estate.",
+    "\u26d4_TWO_AXES_THE_PARTITION_CONFLATED": {
+      "found_by": "0.7.0_AE_CloudOps~X",
+      "the_conflation": "Class 3 was defined as 'invisible AND unbounded' -- one label over two orthogonal properties.",
+      "DISCOVERABILITY": "can a name-keyed census FIND the module? resource_summaries_store: YES -- :57 TABLE = 'resource_summaries' is a module literal.",
+      "BOUNDEDNESS": "can you ENUMERATE which tables it writes? resource_summaries_store: NO -- the answer is 'any table in globgrph'.",
+      "\u26d4_the_case_that_separates_them": "DISCOVERABLE AND UNBOUNDED. A census finds the module and learns that it exists; it learns NOTHING about which tables it can write. Every predicate tonight measured discoverability and reported it as coverage.",
+      "the_negative_control_that_fired": "snap_store.py is Class 2 and NOT this: :415 choices=sorted(SURFACES) constrains the CLI to 4, and :146 SURFACES[surface]['payload'] gates the programmatic path with a KeyError. resource_summaries_store has NEITHER. The two modules differ at exactly the field under test.",
+      "sharpened_discriminator": "TWO questions, not one: (a) where is the name BOUND, and (b) is the bound set ENUMERABLE."
+    },
+    "my_none_found_yet_was_wrong": "I recorded Class 3 as 'none found yet -- invisible AND unbounded' and wrote that the remedy 'is sized for the member nobody has found.' THE MEMBER EXISTS, was in a delivered card's subject the whole time, and is not invisible -- which is why nobody looked for it in the invisible-writer sweep."
   }
 }
