@@ -512,51 +512,67 @@ def _repo_root():
         return None
 
 
-def _record_text(path):
-    """(text, state) for the record NAMED BY record_ref, read from the artifact under gate.
+_RECORD_CACHE = {}
 
-    R3-DT-4 rev 2. Rev 1 resolved this through `git show <ruled_at>:<path>` and that was WRONG
-    FOR THE ONLY SANCTIONED RUN MODE: run_gates.sh:16-19 gates an ATOMIC `git archive` EXTRACT in
-    a temp dir and cds into it, so neither HERE nor CWD is a checkout, every entry read
-    UNRESOLVED, and the gate suppressed NOTHING (32 open candidates, 8 controls failed at
-    8a9ad0644e). It passed in my working tree because a working tree IS a repo -- I validated in
-    an environment the gate never runs in.
 
-    The record file travels INSIDE the extract, so reading it locally needs no git AND is the
-    right vintage by construction: it is the record as of the very commit being gated.
+def _repo_root():
+    """The trusted repo root: ISCK_REPO_ROOT first, then --show-toplevel, else None.
+
+    R3-CRO-15's CONTRACT (1.0.0_SA_CTO~X 77275). run_gates.sh:24 exports ISCK_REPO_ROOT because
+    the canonical gate runs inside an ATOMIC EXTRACT that is not a checkout -- my 8a9ad0644e
+    resolved from the extract and turned the gate into a no-op, and my 82efe0bb27 hotfix fixed
+    that by open()ing the record out of the extract, which CRO~X correctly names a CONTAMINATION
+    path: in a WORKING TREE that reads the dirty file instead of the pinned one. Object database
+    only, from a root the RUNNER names.
     """
-    full = os.path.join(HERE, os.path.basename(path))
+    env = os.environ.get("ISCK_REPO_ROOT")
+    if env and os.path.isdir(env):
+        return env
     try:
-        with open(full, "r", encoding="utf-8") as handle:
-            return handle.read(), "OK"
-    except OSError:
-        return None, "NO_FILE"
-
-
-def _commit_exists(ruled_at):
-    """OK | NO_COMMIT | UNCHECKABLE. UNCHECKABLE is NOT a pass and NOT a failure -- it is the
-    honest third answer when there is no object store to ask, and it must be printed, never
-    silently folded into either."""
-    try:
-        root = subprocess.check_output(["git", "rev-parse", "--show-toplevel"],
+        return subprocess.check_output(["git", "rev-parse", "--show-toplevel"],
                                        cwd=HERE, stderr=subprocess.PIPE).decode().strip()
     except (OSError, subprocess.CalledProcessError):
-        return "UNCHECKABLE"
-    try:
-        subprocess.check_output(["git", "cat-file", "-e", "%s^{commit}" % ruled_at],
-                                cwd=root, stderr=subprocess.PIPE)
-        return "OK"
-    except (OSError, subprocess.CalledProcessError):
-        return "NO_COMMIT"
+        return None
+
+
+def _record_blob(ruled_at, path):
+    """(text, state) via `git -C <root> show <ruled_at>:<path>`. NEVER open() a working tree.
+
+    state: OK | NO_ROOT | NO_COMMIT | NO_FILE. Stderr is CAPTURED, never discarded -- a swallowed
+    git error would make a broken instrument read identically to a real absence, and NO_ROOT
+    (nowhere to ask) must never read as NO_COMMIT (asked, and it is not there).
+    """
+    key = (ruled_at, path)
+    if key in _RECORD_CACHE:
+        return _RECORD_CACHE[key]
+    root = _repo_root()
+    if root is None:
+        out = (None, "NO_ROOT")
+    else:
+        try:
+            subprocess.check_output(["git", "-C", root, "cat-file", "-e",
+                                     "%s^{commit}" % ruled_at], stderr=subprocess.PIPE)
+        except (OSError, subprocess.CalledProcessError):
+            out = (None, "NO_COMMIT")
+        else:
+            try:
+                blob = subprocess.check_output(["git", "-C", root, "show",
+                                                "%s:%s" % (ruled_at, path)],
+                                               stderr=subprocess.PIPE)
+                out = (blob.decode("utf-8", "replace"), "OK")
+            except (OSError, subprocess.CalledProcessError):
+                out = (None, "NO_FILE")
+    _RECORD_CACHE[key] = out
+    return out
 
 
 def _anchor_present(text, anchor):
     """Does the record actually CARRY the ruling this entry points at?
 
-    Two anchor shapes, because the two records adjudicate differently and one shape would be
-    vacuous for the other: ARM 1 rules ROW BY ROW (`#rows-4,5` -> those numbered table rows must
-    be present); ARM 4 rules BY CLASS and says so in its own heading -- "the reason IS the
-    record" -- so `#class-A` resolves to its CLASS A section. No anchor at all is not resolvable.
+    Two shapes, because the two records ADJUDICATE differently and one shape would be vacuous for
+    the other: ARM 1 rules ROW BY ROW (`#rows-4,5` -> those numbered table rows), ARM 4 rules BY
+    CLASS and says so in its own heading -- "the reason IS the record" -- so `#class-A` resolves
+    to its CLASS A section. No anchor at all is not resolvable.
     """
     if anchor.startswith("rows-"):
         rows = [r for r in anchor[len("rows-"):].split(",") if r]
@@ -567,26 +583,21 @@ def _anchor_present(text, anchor):
 
 
 def _resolve_state(entry):
-    """RESOLVED | NO_ANCHOR | NO_FILE | NO_ANCHOR_IN_RECORD | NO_COMMIT.
+    """RESOLVED | NO_ANCHOR | UNRESOLVED | NO_COMMIT | NO_FILE | NO_ANCHOR_IN_RECORD.
 
-    THE SUBSTANTIVE LIMB IS THE ANCHOR: the named record must exist and must carry this ruling.
-    The ruled_at commit check is CORROBORATING -- it runs when an object store is reachable and
-    returns UNCHECKABLE when one is not. DISCLOSED LIMIT: inside an atomic extract a forged
-    ruled_at beside a TRUE anchor is not caught, because there is nothing to ask. The anchor is
-    what carries the claim; ruled_at dates it.
+    Read entirely from the object database at the entry's OWN ruled_at, so what the working tree
+    currently says about a record cannot change a verdict at a pin.
     """
     ref = entry.get("record_ref") or ""
     if "#" not in ref:
         return "NO_ANCHOR"
     path, anchor = ref.split("#", 1)
-    text, state = _record_text(path)
+    text, state = _record_blob(entry.get("ruled_at") or "", path)
+    if state == "NO_ROOT":
+        return "UNRESOLVED"
     if state != "OK":
         return state
-    if not _anchor_present(text, anchor):
-        return "NO_ANCHOR_IN_RECORD"
-    if _commit_exists(entry.get("ruled_at") or "") == "NO_COMMIT":
-        return "NO_COMMIT"
-    return "RESOLVED"
+    return "RESOLVED" if _anchor_present(text, anchor) else "NO_ANCHOR_IN_RECORD"
 
 
 def _link_state(entry, computed):
@@ -600,7 +611,12 @@ def _link_state(entry, computed):
         return "ORPHAN"
     if computed is not None and entry.get("arm_digest") != computed:
         return "STALE"
-    if _resolve_state(entry) != "RESOLVED":
+    resolved = _resolve_state(entry)
+    if resolved == "UNRESOLVED":
+        # No trusted root anywhere. UNRESOLVED IS ITS OWN NAMED STATE and never LINKS: the gate
+        # declines to suppress and says why, rather than trusting a ruling it cannot open.
+        return "UNRESOLVED"
+    if resolved != "RESOLVED":
         return "ORPHAN"
     return "LINKED"
 
@@ -1181,18 +1197,11 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
         results.append(("RESOLVER refuses CVO~X's exhibit: true digest, forged ref AND commit",
                         _link_state(dict(_real, record_ref="not-a-record-or-anchor",
                                          ruled_at="not-a-commit"), _dg) == "ORPHAN", True))
-        # ENVIRONMENT-DEPENDENT BY NATURE, so it asserts the TRUTH OF ITS OWN ENVIRONMENT rather
-        # than a fixed verdict -- and it PRINTS which branch ran, so the disclosed limit is visible
-        # in the output instead of living only in a docstring. A control that silently skips where
-        # it does not apply is how a limit stops being read.
-        _forged_commit = _link_state(dict(_real, ruled_at="0" * 40), _dg)
-        if _commit_exists("HEAD") == "UNCHECKABLE":
-            results.append(("RESOLVER: no object store here, so a forged ruled_at is NOT caught "
-                            "-- DISCLOSED LIMIT, the anchor is what carries the claim",
-                            _forged_commit == "LINKED", True))
-        else:
-            results.append(("RESOLVER refuses a ruled_at that is not a commit (object store "
-                            "reachable)", _forged_commit == "ORPHAN", True))
+        # (b) forged commit. Unconditional now: the runner names a trusted root, so the object
+        # database is reachable in the canonical gate too -- no environment-dependent branch and
+        # no disclosed hole, which is the whole point of R3-CRO-15's contract.
+        results.append(("(b) RESOLVER refuses a ruled_at that is not a commit",
+                        _link_state(dict(_real, ruled_at="0" * 40), _dg) == "ORPHAN", True))
         results.append(("RESOLVER refuses a record_ref naming a file absent at ruled_at",
                         _link_state(dict(_real, record_ref="org/standards/isck/NOPE.md#rows-4,5"),
                                     _dg) == "ORPHAN", True))
@@ -1204,24 +1213,28 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
                         _link_state(dict(_real,
                                          record_ref="org/standards/isck/ARM1_ADJUDICATION.md"),
                                     _dg) == "ORPHAN", True))
-        # THE ARM THAT 8a9ad0644e LACKED, and it is the reason that commit failed its own gate:
-        # the gate's ONLY sanctioned run mode is an ATOMIC EXTRACT with no object store, so the
-        # resolver must stay functional when the commit cannot be checked. Rev 1 turned the whole
-        # gate into a no-op there. Simulated by forcing the UNCHECKABLE branch.
-        _saved_ce = _commit_exists
+        # (a) the REAL sidecars must resolve LINKED -- asserted first, as the non-vacuity arm:
+        # if it fails, every refusal below is meaningless and the gate merely stopped suppressing.
+        # R3-CRO-15 CONTRACT CONTROLS (a)-(d), 1.0.0_SA_CTO~X 77275.
+        # (d) CONTAMINATION -- the sharpest of the four. A path that EXISTS IN THE WORKING TREE
+        # but is ABSENT at the entry's own ruled_at must NOT resolve. If this ever passes, the
+        # resolver has gone back to reading the tree and every verdict at a pin is contaminated.
+        results.append(("(d) CONTAMINATION: a record present in the WORKING TREE but absent at "
+                        "ruled_at does NOT resolve",
+                        _link_state(dict(_real,
+                                         record_ref="org/standards/isck/"
+                                                    "ROUND3_CHARTER.md#rows-4,5"),
+                                    _dg) == "ORPHAN", True))
+        # (c) no trusted root at all -> UNRESOLVED, NAMED, never LINKED.
+        _saved_root = _repo_root
         try:
-            globals()["_commit_exists"] = lambda _r: "UNCHECKABLE"
-            results.append(("RESOLVER still LINKS a real entry when the commit is UNCHECKABLE "
-                            "(atomic-extract mode -- the anchor carries the claim)",
-                            _link_state(_real, _dg) == "LINKED", True))
-            results.append(("RESOLVER still REFUSES a bad anchor when the commit is UNCHECKABLE "
-                            "(extract mode keeps its teeth)",
-                            _link_state(dict(_real,
-                                             record_ref="org/standards/isck/"
-                                                        "ARM1_ADJUDICATION.md#rows-999"),
-                                        _dg) == "ORPHAN", True))
+            globals()["_repo_root"] = lambda: None
+            _RECORD_CACHE.clear()
+            results.append(("(c) no ISCK_REPO_ROOT and no checkout -> UNRESOLVED, never LINKED",
+                            _link_state(_real, _dg) == "UNRESOLVED", True))
         finally:
-            globals()["_commit_exists"] = _saved_ce
+            globals()["_repo_root"] = _saved_root
+            _RECORD_CACHE.clear()
         # field-presence arms, each ONE mutation of the same real entry that LINKS above
         for _f in LINK_FIELDS:
             _o = dict(_real)
@@ -1394,6 +1407,23 @@ def _repairs(V):
         return inst
 
     out[("identity_relation", "relation_type", "retirement")] = relation_retirement
+    def coherence_latest_authority(inst):
+        # sec 3.13: latest_authority is the only policy that RESOLVES at read time, so it owes the
+        # head it resolved to; the three pinned policies forbid these fields.
+        inst["resolved_target_ref"] = "nessie:main"
+        inst["resolved_target_version"] = "snapshot:8601547680771488785"
+        return inst
+
+    def surface_published(inst):
+        # sec 3.26: published is a PROMOTION claim -- it owes where, when, by whom, and evidence.
+        inst["published_ref"] = "kuzu:prod/current"
+        inst["published_at"] = V.TS2
+        inst["promoted_by"] = "0.7.0_AE_CloudOps"
+        inst["promotion_evidence_refs"] = ["deploy:kuzu-prod@" + V.TS2]
+        return inst
+
+    out[("coherence_evaluation", "target_policy", "latest_authority")] = coherence_latest_authority
+    out[("surface_version", "publication_state", "published")] = surface_published
     out[("bridge_assertion", "registry_standing", "held")] = bridge_held
     out[("bridge_assertion", "registry_standing", "inadmissible")] = bridge_inadmissible
     out[("bridge_assertion", "registry_standing", "rejected")] = bridge_rejected
