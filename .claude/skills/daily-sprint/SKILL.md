@@ -52,8 +52,11 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
    c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
-      `daily_reports/out/DAILY_REPORT_<DAY>.html`. **A validation failure is a content defect:
-      fix the JSON, never the template.** Surface the html (`SendUserFile` / open it).
+      **BOTH** `daily_reports/out/DAILY_REPORT_<DAY>.html` (desktop) and
+      `daily_reports/out/DAILY_REPORT_<DAY>_mobile.html` (mobile; Andrew-direct 2026-08-28: every
+      render produces both). Same JSON, one shared grammar (`templates/_shared_viz.js`). **A
+      validation failure is a content defect: fix the JSON, never the template.** Surface both
+      pages (open them); the mobile one is what he reads on a phone.
 7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
 
 ## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)

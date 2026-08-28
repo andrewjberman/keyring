@@ -83,4 +83,19 @@ Successor's first act: read ~L's V14-2 result + (e) judgment from the inbox; the
 Tick 8 log @6062b28375. This device REBOOTS after this stand-down; local tails ride the first
 post-reboot integration window.
 
+UPDATE 00:52Z: **CAMPAIGN STARTED** (~L 77170, @3fa0cc63c7). V14-4c(e) judged AFFIRMATIVE and FINAL
+after V14-2 was restored on the runner (subject control; 2 sends with StartedByDispatcher OMITTED;
+host 'running' across 3 ec2 reads; conditional-halt arm REFUSED to stop the shared box). 532 of 533
+remaining, mean wall 115.8s (~17.1h). EXPECTED SHAPE: the driver is strictly sequential and PAUSES
+ITSELF at the pre-fire blackout ahead of the 12:45Z nightly (~371 dates in), then needs
+RE-INVOCATION by ~L and will not resume until the nightly's own artifact is read -- a pause at
+~12:2xZ is the design, not a stall. Reporting per 100 dates or session boundary; a HARD-STOP row
+stops the pass for operator judgment. Only the structurally-impossible arm gates (code-rule reaching
+the admission vocabulary); everything else records. After the campaign: P1.5 re-grade (rate split
+FC/TR) -> Andrew's arm-(a) serve read; the base 0.7.0 re-seat window carries the post-campaign cuts.
+
+MOBILE RENDER (Andrew-direct ~00:5xZ): every /daily-sprint render now produces BOTH
+daily_reports/out/DAILY_REPORT_<date>.html and DAILY_REPORT_<date>_mobile.html from one JSON and
+one shared grammar (templates/_shared_viz.js). Renderer default --variant both.
+
 Push state at handoff: HEAD LOCAL, origin/CLOUD @3fbb493cda (ls-remote 00:35Z); integrator-only.
