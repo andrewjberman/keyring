@@ -142,3 +142,46 @@ seated on the work; a certifier who ran their own tool two ways and noticed the 
 is clean, MECE, three-valued and asserts its own totals per date. Wired to the wrong node it would
 reconcile, render, and pass every control it carries. **A high-quality artifact in the wrong slot
 defeats more controls than a broken one, because a broken one fails something.**
+
+---
+
+## AMENDMENT 23:1xZ -- `global.Client` RESOLVED AT THE PRODUCER, AND IT SUPERSEDES TWO EARLIER LOGS
+
+**THREE WRONG POSITIONS ON ONE NODE IN ONE NIGHT, ALL MINE, IN THREE DIRECTIONS:**
+```
+  1  ctoZ_post_reboot_resume_1628-1650Z.md:22   "aggregates ONE of three firms, understating by
+                                                 $359,773,356.74"           WRONG (a defect claim)
+  2  ctoZ_ship_lifted_..._1650-1755Z.md:34      "the hold works as designed" WRONG (over-retraction)
+  3  msg 14624                                  "inflection's $64,867,579.31 is UNDECLARED"
+                                                                            WRONG (it is RULED)
+```
+⛔ **BOTH EARLIER LOGS ARE SUPERSEDED ON THIS POINT AND NEITHER IS BEING REWRITTEN** -- a log records
+what a window believed, and the 1650-1755Z entry is the more dangerous of the two because **the wrong
+reading sits in a CORRECTIONS TABLE**, which is where a reader goes to find the settled answer.
+
+**THE ANSWER, from `0.4.0_DS_ClientPlatform~Z` 14640 at
+`dim_mdpf_aggregate_aua_timeseries.py:2194-2216`:**
+```
+  non_model_aua            = 49F non_model ONLY -- ANDREW-DIRECT 2026-07-22, basis B,
+                             "EXCLUDE consistently", rebased so the headline identity holds
+  inflection_non_model_aua = carried SEPARATELY as the Cohort-2b audit field, NEVER summed
+  consolidator:590         non_model = _last(...);  client_aum = non_model - sma_aum
+```
+**`global.Client` IS 49F-ONLY BY CONSTRUCTION ON A RULED BASIS.** Not an under-fold. And **"fixing" it
+would RE-OPEN THE P0 THAT RULING CLOSED** -- a seat acting on position 1 or 3 would have broken a
+closed sovereign decision to satisfy a finding that was wrong.
+⚠ **SCOPE OF THIS AMENDMENT, stated so it is not itself over-read:** 14640 is a **CODE READ of the
+declared contract, ZERO S3 reads.** *The contract says 49F-only* is established. *The served body
+matches its contract* is NOT -- my `global.Client == 49financial.Client` measurement is CONSISTENT
+with it but was never designed to test it. Nobody may record this as a served-plane verification.
+
+>> **WHY I READ THE OBJECT THREE TIMES AND GOT THREE WRONG ANSWERS: THE OBJECT CANNOT SAY WHY IT IS
+   SHAPED THAT WAY.** The answer was never in the artifact -- it is in a producer contract citing a
+   ruling five weeks old. Reading more carefully produced a *different* wrong answer each time, not a
+   convergent one. **Care does not substitute for provenance.**
+⭐ AND `held_constituents` IS NOT INCOMPLETE: it answers *which constituent is held by a PREDICATE*.
+Inflection is excluded **by ruling** -- a different concept the field was never built to carry.
+**FOURTH instance today of a real, populated, correct field answering a question ADJACENT to the one
+asked** (Firm-vs-Opal supervised · `issue_type` as membership · `in_0833_universe` as supervision ·
+`held_constituents` as completeness). **That is the night's dominant failure mode and it is not a
+tooling problem -- every one of those fields is doing its own job correctly.**
