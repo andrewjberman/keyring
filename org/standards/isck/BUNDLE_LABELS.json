@@ -11,5 +11,10 @@
       "round_3_boundary_commit": "1a05bfb3e4ff278388a67e1ebe986607ed3cc4d1",
       "scope": "schema-only"
     }
+  },
+  "v0.3-candidate+10": {
+    "contract_bundle_id": "bundle:sha256:b8cdc95a5e78513b19d4e95934d5005fabe4062fd0f4bfe6d7befa53399c817a",
+    "derived_at_commit": "32c9e67e263f0611cf6326f48514df9c6b831a4b",
+    "supersedes_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7"
   }
 }
