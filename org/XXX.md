@@ -277,6 +277,16 @@ A TAMPER DETECTOR.** Both effects are real. **It is the right trade ONLY BECAUSE
 terminus** — **if `rv0057-f001` stalls, this note quietly becomes standing permission to ignore a
 tamper detector. Re-read this paragraph if it is still here and the migration has not landed.**
 
+⭐ **TWO MORE FINDINGS THIS NOTE DID NOT COVER, NOW OWNED (2026-08-28, `1.0.0_SA_CTO`, after three seats
+re-filed them in one day):** `[LIVENESS/STALE-BASELINE]` (baseline 2026-08-20T042433Z ageing past 24h with
+an uncaptured tail) and `[COVERAGE/UNCOVERED-AUDIT-LOG] org/to-pos-override-audit.log` are NOT the
+device-axis tamper-vocabulary class above — they are a stale baseline + one uncovered file, and both
+are **OWNED-UNTIL-rv0057-f001**: the exec A.2 ALSO defers (`snapshot=deferred: DEVICE-CHAIN-PENDING`,
+measured at three seats), so no seat archives on this device until that migration lands; the MANIFEST
+add rides the same sitting (owner `0.7.0_AE_CloudOps` base, gate `1.0.0_SA_CTO`; COO carrier
+`D2_CUT_TIME_OBLIGATIONS_20260827.md` row 3 items d+e; re-raise trigger 2026-08-30). **If you see these
+two at A.2, they are known: do not re-file them; surface only a THIRD finding or a shrink/absence row.**
+
 ⚠ **REACH IS BOUNDED BY WHO ACTUALLY RUNS A.2, WHICH IS NOT EVERYONE** — the first broadcast of this
 note claimed "every seat meets A.2 at load" and **that claim was false**: `0.4.0_DS_ClientPlatform~W`
 reported running A.1 and A.3 and skipping A.2 entirely (measured, n=1, self-reported). **A note beside
