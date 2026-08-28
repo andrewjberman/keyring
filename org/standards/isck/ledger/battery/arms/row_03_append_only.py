@@ -30,10 +30,10 @@ def superseded_by_written(store):
     fx.bootstrap(store, "ent:beta", receipt="mr:2")
     store.admit([{"record_type": "identity_relation", "relation_id": "rel:1",
                   "subject_serial": "ent:alpha", "object_serial": "ent:beta",
-                  "relation_kind": "canonicalization"}])
+                  "relation_type": "canonicalized_as"}])
     store.admit([{"record_type": "identity_relation", "relation_id": "rel:1",
                   "subject_serial": "ent:alpha", "object_serial": "ent:beta",
-                  "relation_kind": "canonicalization", "superseded_by": "rel:1"}])
+                  "relation_type": "canonicalized_as", "superseded_by": "rel:1"}])
 
 
 @arm("L-03-superseded-by-version-written")

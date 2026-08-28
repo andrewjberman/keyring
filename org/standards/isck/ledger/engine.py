@@ -45,6 +45,7 @@ import os
 import re
 import sqlite3
 
+from . import lineage
 from . import machines
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -132,6 +133,23 @@ def reference_fields():
     return out
 
 
+def enum_values(record_type_def, field):
+    """An enum read FROM THE FROZEN SCHEMA. A legal-values list typed into the ledger would drift
+    from the contract silently, and the drift would look like a correct refusal."""
+    spec = (_load_schema().get("$defs") or {}).get(record_type_def) or {}
+    return tuple(((spec.get("properties") or {}).get(field) or {}).get("enum") or ())
+
+
+def enum_fields(record_type_def):
+    """{field: (legal values)} for one record def, read from the frozen schema."""
+    spec = (_load_schema().get("$defs") or {}).get(record_type_def) or {}
+    out = {}
+    for name, prop in (spec.get("properties") or {}).items():
+        if isinstance(prop, dict) and prop.get("enum"):
+            out[name] = tuple(prop["enum"])
+    return out
+
+
 def canonical(record):
     """Byte identity of a record. Sorted keys, LF, no spaces -- a digest needs its normalisation."""
     return json.dumps(record, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -153,6 +171,7 @@ class Store:
         self.db.commit()
         self.primary = primary_id_fields()
         self.refs = reference_fields()
+        self.relation_types = enum_values("identity_relation", "relation_type")
 
     # -- reads -------------------------------------------------------------------------------
     def get(self, record_id):
@@ -319,6 +338,19 @@ class Store:
         machines.check_epoch_actor(list(batch.values()), actor, _reject)
         machines.check_epoch_machine(final, self._primary_of, seqs, _reject)
         machines.check_mint(final, list(batch.values()), self._primary_of, seqs, _reject)
+        lineage.check_relations(final, self.relation_types, _reject)
+        lineage.check_supersedes(final, "bridge_assertion", None, self._primary_of, _reject,
+                                 {"fork": "L-07-branching-supersession-rejected",
+                                  "cycle": "L-07-cycle-assertion-supersedes-rejected",
+                                  "cross": "L-07-cross-materializer-supersedes-rejected"})
+        lineage.check_supersedes(final, "materializer_version", "materializer_serial",
+                                 self._primary_of, _reject,
+                                 {"fork": "L-07-fork-materializer-version-rejected",
+                                  "cycle": "L-07-cycle-version-supersedes-rejected",
+                                  "cross": "L-07-cross-materializer-supersedes-rejected",
+                                  "second_root": "L-07-second-root-rejected"})
+        lineage.check_lifecycle_machine(final, list(batch.values()), self._primary_of, seqs,
+                                        _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))

@@ -35,9 +35,15 @@ SEED = {
     "authority_epoch_event": "aep:seed",
 }
 DANGLING = dict((cls, sid.split(":")[0] + ":never-admitted") for cls, sid in SEED.items())
+# A TERMINAL second seed per class. Without it a seed's SAME-CLASS reference points at itself --
+# `matv:seed supersedes matv:seed` -- which resolved cleanly and dangled nothing until row 7 could
+# see it, and then read as a supersedes cycle with zero heads. The seed chain is therefore
+# seed -> seed2, and an ARM record points at `seed` (the HEAD), so it extends the chain instead of
+# forking it. Every one of those three positions is load-bearing.
+SEED2 = dict((cls, sid + "2") for cls, sid in SEED.items())
 
 
-def _base(store, record_type, primary_value):
+def _base(store, record_type, primary_value, same_class=None):
     """A minimally-admissible record of `record_type`: primary id plus EVERY sec 2d reference."""
     field = store.primary[record_type]
     rec = {"record_type": record_type, field: primary_value}
@@ -45,7 +51,12 @@ def _base(store, record_type, primary_value):
         if rec_t != record_type:
             continue
         cls = TARGETS.get((rec_t, fld), "entity")
-        value = SEED[cls]
+        if cls == record_type:
+            if same_class is None:
+                continue                      # a TERMINAL seed carries no same-class reference
+            value = same_class[cls]
+        else:
+            value = SEED[cls]
         if "[]." in fld:
             container, sub = fld.split("[].", 1)
             rec.setdefault(container, []).append({sub: value})
@@ -53,6 +64,12 @@ def _base(store, record_type, primary_value):
             rec[fld[:-2]] = [value]
         else:
             rec[fld] = value
+    from ledger import engine as _eng
+    for field, values in sorted(_eng.enum_fields(record_type).items()):
+        # A record built to test a REFERENCE must be legal in every OTHER respect, or its arm is
+        # refused by whichever rule it violates instead. Enum fields take their first schema value
+        # -- derived, so a contract change moves the fixtures with it rather than stranding them.
+        rec.setdefault(field, values[0])
     if record_type in ("entity", "mint_receipt"):
         # row 6 -- an entity's mint facts must EQUAL its receipt's, so both sides of every
         # generated pair carry the SAME ones. Before this, a row-2 arm about a reference field
@@ -62,11 +79,26 @@ def _base(store, record_type, primary_value):
     return rec
 
 
+def _terminal(store, cls, sid):
+    """The end of every same-class chain: legal, referenced, and referring to no sibling."""
+    rec = _base(store, cls, sid)
+    if cls == "mint_receipt":
+        rec["entity_serial"] = SEED2["entity"]
+    if cls == "authority_epoch_event":
+        # a DISTINCT authority: two `opened` events on one authority are overlapping intervals,
+        # which row 6 refuses -- the terminal seed exists to be referenced, not to re-open ROOT
+        rec.update({"authority_id": "auth:terminal", "event_kind": "opened", "actor": fx.ROOT,
+                    "occurred_at": "2019-01-01T00:00:00Z"})
+    return rec
+
+
 def build_universe(store):
     """Every seed record, admitted as ONE atomic batch -- the cycles resolve at final state."""
     batch = []
+    for cls, sid in sorted(SEED2.items()):
+        batch.append(_terminal(store, cls, sid))
     for cls, sid in sorted(SEED.items()):
-        rec = _base(store, cls, sid)
+        rec = _base(store, cls, sid, same_class=SEED2)
         if cls == "mint_receipt":
             rec["entity_serial"] = SEED["entity"]
             rec["minting_authority"] = fx.ROOT
@@ -128,7 +160,7 @@ def _register_pair(record_type, field, policy):
                  minted `ent:seed`. When the field RESOLVES it mints a fresh entity in the same
                  batch -- the sec 2c bootstrap pair, which is the legal shape.
         """
-        rec = _base(store, record_type, rid)
+        rec = _base(store, record_type, rid, same_class=SEED)
         if "[]." in field:
             container, sub = field.split("[].", 1)
             rec[container] = [{sub: value}]
