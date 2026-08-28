@@ -142,9 +142,22 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     if plane != "gold":
         return client_aum, sma_aum
     if post_reland:
-        out.append(("%s trigger == adhoc (honest reland provenance)" % p,
-                    isinstance(trig, str) and "adhoc" in trig,
-                    "trigger=%r -- a scheduled claim here would be FORGED" % (trig,)))
+        # ⛔ CORRECTED MID-RATIFICATION, and it was a GRAIN error of mine. I asserted
+        # `"adhoc" in trigger` against the ARTIFACT. Measured at source, TWO OBJECTS CARRY
+        # TWO SHAPES (0.7.0_AE_CloudOps~Z, msg 14329, confirmed independently here):
+        #   :1148 RUN MANIFEST  "trigger": trigger            <- the whole dict; 'adhoc' IS here
+        #   :1398 ARTIFACT      "trigger": trigger.get("kind") <- KIND ONLY
+        # and :1469-70 fixes the kind vocabulary to EXACTLY three values:
+        #   kind = "scheduled" if src == "aws.events" else ("s3-marker" if Records else "manual")
+        # `adhoc` is the SOURCE, and source is the field that never reaches the artifact.
+        # So 'adhoc' is UNEMITTABLE here: I required a value the producer cannot produce, which
+        # is a criterion a correct build cannot satisfy. The PROPOSITION was always "the
+        # provenance is honest, not forged as scheduled" -- asserted against the real enum now.
+        HONEST_RELAND_KINDS = ("manual", "s3-marker")
+        out.append(("%s trigger NOT forged-scheduled (artifact kind enum)" % p,
+                    trig in HONEST_RELAND_KINDS,
+                    "trigger=%r -- 'scheduled' here would be FORGED; 'adhoc' is the MANIFEST's "
+                    "source field and is unemittable on the artifact" % (trig,)))
     else:
         print("  INFO %-58s trigger=%r" % ("%s provenance (not scored pre-reland)" % p, trig))
     return client_aum, sma_aum
