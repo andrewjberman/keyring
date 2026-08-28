@@ -388,7 +388,10 @@ declared_cardinality lesson (CVO~X's CV-1 finding) applied at the next enum's bi
 DOMAIN: the two events of a contest's life; a contest is an EVENT PAIR keyed by `contest_id`, never
 a lifecycle value that displaces the interval truth (3b). MECE: hunted member — withdrawn → a
 `resolved` with `outcome: dismissed` (the opener's withdrawal is a dismissal on the record, not a
-third kind); re-opened → a NEW `contest_id` (append-only; a contest is never re-mutated). GRAIN:
+third kind); re-opened → a NEW `contest_id` (append-only; a contest is never re-mutated — and a
+dismissal followed by a NEW, successful challenge on the same event target is LEGAL: the
+one-per-target slot is consumed only by a CORRECTIVE outcome, `upheld` | `nullified`, never by
+`dismissed` or `merged`; R4-CVO-4). GRAIN:
 one event. INTENT: one axis — which half of the pair. STATE-COHERENCE: `opened` is terminal for
 its record; the contest MOVES by a `resolved` event with the same `contest_id` (owner: the
 adjudicator) — the projection rule is a pure fold (contested/disputed iff an opened id has no
@@ -449,6 +452,11 @@ FORBIDDEN` (a dismissed challenge has no consequence and no survivor to name) ·
 evidence_refs REQUIRED; consequence_refs, surviving_contest_id FORBIDDEN; target_kind ∈ the three
 event kinds` (the resolution is the consequence; an entity/binding target with `nullified` is
 rejected) · `opened -> surviving_contest_id FORBIDDEN` (with the other resolution fields, §3.19).
+RACE (validator `_contest_conflict_errors`, ledger row 13): at most ONE admitted CORRECTIVE
+outcome — `upheld` | `nullified` — per event target; a second is rejected (replace + annul, two
+replaces, two annuls). `dismissed` and `merged` consume no slot (a merge resolves the loser while
+its survivor resolves later on the same target; R4-CVO-4 corrected the first, blanket form of this
+guard, which rejected a dismissal followed by a new challenge).
 Mutants: `contest.merged-without-survivor`, `contest.merged-with-consequence`,
 `contest.upheld-with-survivor`, `contest.survivor-not-a-contest-id`,
 `contest.nullified-with-consequence`, `contest.nullified-with-survivor`,

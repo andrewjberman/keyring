@@ -41,6 +41,7 @@ ULID_E = "01jprt1a10000000000000000e"[:26]
 ULID_F = "01jprt1a10000000000000000f"[:26]
 ULID_G = "01jprt1a10000000000000000g"[:26]
 ULID_H = "01jprt1a10000000000000000h"[:26]
+ULID_J = "01jprt1a10000000000000000j"[:26]
 TS = "2026-08-27T17:30:00Z"
 TS2 = "2026-08-27T18:30:00Z"
 TS3 = "2026-08-27T19:00:00Z"
@@ -373,6 +374,17 @@ FIXTURES = {
         "occurred_at": "2026-08-27T19:30:00Z", "actor": "3.0.0_SA_CVO~X",
         "outcome": "nullified", "adjudicated_by": "3.0.0_SA_CVO~X",
         "evidence_refs": ["LD-0461#decommission-filed-against-the-wrong-serial"],
+    },
+    # R4-CVO-4: a DISMISSED challenge followed by a NEW, successful one on the same event is legal
+    # (sec 3.19: re-opened -> a new contest_id) -- the corrective slot is consumed only by
+    # upheld/nullified; this fixture sits before contest_event_nullified on lce:B
+    "contest_event_dismissed_prior": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_J}",
+        "contest_id": f"ct:{ULID_J}", "event_kind": "resolved",
+        "target_kind": "lifecycle_event", "target_event_id": f"lce:{ULID_B}",
+        "occurred_at": "2026-08-27T19:15:00Z", "actor": "3.0.0_SA_CVO~X",
+        "outcome": "dismissed", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#first-challenge-lacked-the-serial-evidence"],
     },
     # CVO~X 060659Z controls: an annulled close leaves the binding OPEN; an annulled epoch-open
     # leaves the authority CLOSED -- each nullifies the REPLACEMENT event of its carrier, so the
@@ -1010,6 +1022,12 @@ def _semantic_mutants():
         ("sem.contest-replace-and-annul-same-event",
          [_mk("contest_event_lifecycle"), _mk("lifecycle_event"), _mk("lifecycle_event_replacement"),
           _mk("contest_event_nullified", target_event_id=f"lce:{ULID_A}")]),
+        # R4-CVO-4: two annuls on one event still race (the slot is corrective outcomes, not
+        # resolutions -- the committed fixture batch's dismissed -> nullified on lce:B is the accept)
+        ("sem.contest-two-annuls-same-event",
+         [_mk("lifecycle_event_decommissioned"), _mk("contest_event_nullified"),
+          _mk("contest_event_nullified", event_id=f"ctev:{ULID_J}", contest_id=f"ct:{ULID_J}",
+              occurred_at="2026-08-27T19:45:00Z")]),
     ]
 
 
@@ -1119,19 +1137,23 @@ def _materializer_machine_errors(instances):
 
 
 def _contest_conflict_errors(instances):
-    """CVO~X 060659Z (mixed / race): ONE admitted resolution per event target -- an event targeted
-    by two resolved contests (replace + annul, or two of either) has two answers; the second is
-    rejected. Batch-scope; the ledger runs the same rule over store U batch (WP3 row 13)."""
+    """CVO~X 060659Z (mixed / race), corrected by R4-CVO-4: ONE admitted CORRECTIVE outcome
+    ({upheld, nullified}) per event target -- replace + annul, two replaces or two annuls on one
+    event have two answers and the second is rejected. `dismissed` and `merged` consume no slot:
+    sec 3.19 makes a dismissal followed by a NEW contest legal, and a merge resolves the loser
+    while its survivor resolves later on the same target. Batch-scope; the ledger runs the same
+    rule over store U batch (WP3 row 13)."""
     errs = []
     seen = {}
     for i, o in enumerate(instances):
         if isinstance(o, dict) and o.get("record_type") == "contest_event" \
-                and o.get("event_kind") == "resolved" and o.get("target_kind") in _EVENT_KEY:
+                and o.get("event_kind") == "resolved" and o.get("target_kind") in _EVENT_KEY \
+                and o.get("outcome") in ("upheld", "nullified"):
             t = o.get("target_event_id")
             if t in seen:
-                errs.append(f"[{i}] contest_event: SECOND resolution on {t} (first at [{seen[t]}]) -- "
-                            "one admitted resolution per event target; replace and annul cannot "
-                            "both stand (R4-CRO-7 race control)")
+                errs.append(f"[{i}] contest_event: SECOND corrective outcome on {t} (first at "
+                            f"[{seen[t]}]) -- one admitted replace-or-annul per event target "
+                            "(R4-CRO-7 race control / R4-CVO-4)")
             else:
                 seen[t] = i
     return errs

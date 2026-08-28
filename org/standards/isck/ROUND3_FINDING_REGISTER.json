@@ -898,6 +898,32 @@
    "fix_commit": "(this commit -- the third round-4 pin; also the design's sixth pin)",
    "verification_ref": "CRO~X replay of its finite-chain proof at the third pin: a nullified decommission leaves NO effective decommission and the machine/fold fall through; CVO~X (060659Z UPHELD R4-CRO-7 and withdrew its DRY declarations) replay of the Rule-24 record for 3.21",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- filed AFTER the first cut, before the freeze"
+  },
+  {
+   "finding_id": "R4-CVO-4",
+   "round": 4,
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T062259Z",
+   "finding_class": "CONTRACT",
+   "claim": "the race guard _contest_conflict_errors (third pin) rejects ANY second resolved contest on one event target regardless of outcome: a dismissed contest followed by a distinct nullified contest on the same event is schema-valid and semantically rejected, although sec 3.19 makes re-opened -> a NEW contest_id legal; the blanket rule also breaks merge by construction (the loser resolves merged, the survivor resolves later on the same target)",
+   "disposition": "FIXED",
+   "disposition_basis": "FILED AT THE THIRD PIN a5ea1dd9ea -- held per charter sec 11 until CRO~X and DT~X declare there. Remedy adopted, in the tree: the slot is consumed only by a CORRECTIVE outcome (upheld | nullified); dismissed and merged consume none; fixture contest_event_dismissed_prior (dismissed on lce:B before the nullify -- the fixture batch IS the dismissed -> nullified accept); semantic mutant sem.contest-two-annuls-same-event (two annuls still race); sem.contest-replace-and-annul-same-event retained; sec 3.19 / 3.21 / WP3 row 13 (L-13-second-corrective-outcome-rejected; accepts L-13-dismissed-then-new-challenge-accepted, L-13-merge-survivor-resolves-later-accepted) || LANDED at the fourth pin; CRO~X 062719Z corroborated the finding at a5ea1dd9ea with two batches (dismissed->nullified, merged->survivor-nullified)",
+   "fix_commit": "(this commit -- round 4's FOURTH pin, on top of bd22c2e6ad; the freeze target)",
+   "verification_ref": "CVO~X + CRO~X replay of both batches at the fourth pin (clean) and the retained race rejects",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
+  },
+  {
+   "finding_id": "R4-DT-2",
+   "round": 4,
+   "source_seat": "0.4.0_DT_ClientPlatform~X",
+   "source_ref": "77554",
+   "finding_class": "PROCESS",
+   "claim": "'the probe module is not a bundle member' -- written by 1.0.0_SA_CTO~X in three override grants (77481, 77491, 77535) and repeated by DT~X in three commit bodies (e7e199c28a, 52c6c0be86, bd22c2e6ad) -- is FALSE at source: bundle_identity.py GATES lists isck_coverage_probes.py AND both adjudication sidecars (R3-CRO-13), so each repair commit silently minted an unbound candidate (+13, +17, +26); the pins attackers declared at (+15 @b8961d2e39, +24 @a5ea1dd9ea) are not the hashes the repairs live at, and a freeze on +24 would bind a gate suite one commit behind the one every seat declared green (ARM 3 reads 1 open at a5ea1dd9ea, 0 at bd22c2e6ad). Caught by COO~X 77552 reading the artifact; filed BLOCKING before any freeze",
+   "disposition": "FIXED",
+   "disposition_basis": "the round-4 pin RE-PINS at this commit, on top of bd22c2e6ad, so the label the freeze binds carries DT~X's third repair (ARM 3 117 of 117) and the R4-CVO-4 fix; the three repair hashes stay UNBOUND candidates by design (a repair-only commit is not a pin; --write is the integrator's act at a pin). The false claim is corrected on the record at 77558 and here; no commit body is rewritten. Rule banked at this seat: a scope assurance in a grant is an ASSERTION, and the relayer who repeats it into a commit body owns it too (DT~X's own words) -- the member list is read from bundle_identity.py, never from memory",
+   "fix_commit": "(this commit -- round 4's FOURTH pin, on top of bd22c2e6ad; the freeze target)",
+   "verification_ref": "COO~X / DT~X: bundle_identity.py <fourth pin> --check OK and the label's gate_suite_blobs carries bd22c2e6ad's probe blob",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   }
  ],
  "not_rows": {
