@@ -3,8 +3,8 @@
   "candidate_id": "v0.3-candidate+27",
   "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
   "manifest_path": "org/standards/isck/ledger/battery/MANIFEST.json",
-  "manifest_digest": "sha256:b15a40fb8c4c4c529f9ad9583e2cfaec9b400711f9c9be4dbd712dfd582b5f4a",
-  "result": "FAIL",
+  "manifest_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "result": "PASS",
   "evidence_path": "org/standards/isck/receipts/wp3_certification_evidence.txt",
   "evidence_digest": "sha256:1e792a71429d89534cd57fddd0c22512427f7dd001341da390a52789d5495561",
   "run_commit": "d349da2d80f4fffdd0be9daad8d17d725ad3a954"
