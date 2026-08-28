@@ -246,7 +246,7 @@ widened contest target, `supersedes` on assertions, the typed unions), else **PL
 | row 4 | `entity_binding`, `binding_event`, `contest_event` (the void) | V03_CARRIER_REQUIRED |
 | row 5 | the five status-bearing `+38` records AND the fold inputs — `binding_event`, `lifecycle_event`, `contest_event[nullified]` (`L-05-voided-decommission-does-not-retire-accepted` constructs a nullified lifecycle contest) | V03_CARRIER_REQUIRED |
 | row 6 | `entity`, `mint_receipt`, `authority_epoch_event` | V03_CARRIER_REQUIRED |
-| row 7 | `identity_relation` / `bridge_assertion` (with `supersedes`), `materializer`, `materializer_version`, `lifecycle_event`, `contest_event[upheld\|nullified]` | V03_CARRIER_REQUIRED |
+| row 7 | `identity_relation` / `bridge_assertion` (with `supersedes`), `materializer`, `materializer_version`, `lifecycle_event`, `contest_event` (outcome upheld or nullified) | V03_CARRIER_REQUIRED |
 | row 8 | `source_frontier`, `materialization_run` | PLUS38_ONLY |
 | row 9 | `materialization_run`, `surface_version`, `source_frontier`, `materializer_version` | PLUS38_ONLY |
 | row 10 | `surface_version`, `materialization_run` | PLUS38_ONLY |
