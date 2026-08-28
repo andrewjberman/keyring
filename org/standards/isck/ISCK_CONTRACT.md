@@ -399,21 +399,27 @@ to this table at R3-CVO-3 — the schema forbade it from REWORK-2, the table had
 `resolved -> outcome + adjudicated_by REQUIRED`
 (owner: the adjudicator; `basis` may be restated — harmless surplus, class A).
 
-### 3.20 `contest_event.target_kind` — `entity | binding | lifecycle_event` (R2-2 LANDED, RA-1; `lifecycle_event` ADDED round 4 item 8, R3-CVO-12)
-DOMAIN: what a contest is ABOUT. MECE: the two mutable identity carriers, plus the one EVENT class
-that is otherwise uncorrectable — a mis-typed process supersession would force a rewrite, the one
-thing the ledger never does; an assertion is NEVER a target (assertions are left by supersession
-on their own chain — §3.2, `supersedes` since round 4); a surface contest → out of scope at v0.3
-(declared, not absorbed). GRAIN: one event. INTENT: one axis — target type. STATE-COHERENCE:
-structural; no remedy moves it.
-ARM TABLE (three-directional, exactly-one target field): `entity -> target_entity_serial REQUIRED;
+### 3.20 `contest_event.target_kind` — `entity | binding | lifecycle_event | binding_event | authority_epoch_event` (R2-2 LANDED, RA-1; `lifecycle_event` ADDED round 4 item 8, R3-CVO-12; `binding_event`, `authority_epoch_event` ADDED at round 4's second pin, R4-CRO-2)
+DOMAIN: what a contest is ABOUT. MECE: the two mutable identity carriers, plus EVERY event carrier
+the round introduced — each is terminal and authoritative, and a mis-typed event on any of them
+would force a rewrite, the one thing the ledger never does (R4-CRO-2 closed the doctrine over all
+three; a carrier that could not be contested was the hunted member); an assertion is NEVER a target
+(assertions are left by supersession on their own chain — §3.2, `supersedes` since round 4); a
+surface contest → out of scope at v0.3 (declared, not absorbed). GRAIN: one event. INTENT: one
+axis — target type. STATE-COHERENCE: structural; no remedy moves it.
+ARM TABLE (five-directional, exactly-one target field): `entity -> target_entity_serial REQUIRED;
 target_binding_id, target_event_id FORBIDDEN` · `binding -> target_binding_id REQUIRED;
-target_entity_serial, target_event_id FORBIDDEN` · `lifecycle_event -> target_event_id REQUIRED;
+target_entity_serial, target_event_id FORBIDDEN` · `lifecycle_event | binding_event |
+authority_epoch_event -> target_event_id REQUIRED with the kind's prefix (`lce:` | `bev:` | `aep:`);
 target_entity_serial, target_binding_id FORBIDDEN` (owner: the writer — the identity_relation
 grain is a serial PAIR and cannot name a binding or an event, which is why contests are their own
-record shape). An `upheld` contest on a lifecycle event names exactly ONE replacement event of the
-same `event_kind` and `materializer_serial` with a NEW id (validator semantic arm, batch-scope;
-ledger row 7/13 beyond it); VOIDED is derived only from that.
+record shape). An `upheld` contest on an event names exactly ONE replacement (schema: `maxItems 1`,
+the kind's prefix) of the same `event_kind` and the same CARRIER KEY — `materializer_serial` |
+`binding_id` | `authority_id` — with a NEW id (validator semantic arm, batch-scope; ledger rows
+4/6/7/13 beyond it); VOIDED is derived only from that, and a voided event advances no machine and
+feeds no fold. CHRONOLOGY (R4-CRO-5): `opened` < `resolved` for one `contest_id`, and the target
+event < the `opened` that challenges it, in the order `(occurred_at, commit_seq, id)` — a same-instant
+pair is decided by the id, deterministically.
 
 ### 3.21 `contest_event.outcome` — `upheld | dismissed | merged` (R2-2 LANDED, RA-2)
 DOMAIN: how a contest resolved. MECE: the challenge stood (`upheld`), fell (`dismissed`), or was
@@ -522,7 +528,11 @@ decommission is terminal); a correction of a wrong event → a `contest_event` o
 second event. GRAIN: one event. INTENT: one axis — which transition. STATE-COHERENCE: each event
 is terminal for its record; the materializer's `current_status` is a FOLD over its effective
 events (`WP3_LEDGER_DESIGN.md` §4) — `retired` outranks `superseded`; the remedy for a wrong
-event is the contest (owner: the adjudicator), for a wrong fold the ledger (owner: WP-3).
+event is the contest (owner: the adjudicator), for a wrong fold the ledger (owner: WP-3). **THE
+MACHINE (R4-CRO-4), over EFFECTIVE events per `materializer_serial`:** at most ONE decommission;
+NO effective transition ordered after it (decommission is TERMINAL); `superseded ->
+decommissioned` is LEGAL; a voided event advances nothing and its upheld replacement takes its
+position. Validator semantic arm in-batch (`_materializer_machine_errors`), ledger row 7 beyond.
 ARM TABLE (two-directional): `materializer_superseded -> superseding_version_id REQUIRED` (a
 `matv:` of ANOTHER materializer — same-materializer is rejected by the validator semantic arm
 in-batch and by the ledger beyond) · `materializer_decommissioned -> superseding_version_id
@@ -537,7 +547,13 @@ GRAIN: one event. INTENT: one axis — which half. STATE-COHERENCE: `entity_bind
 FOLD (`closed` iff a `closed` event exists for the id; `disputed` iff an open contest; else
 `open`) — the row's authored `status` / `valid_to` must AGREE with the fold or the write is
 rejected (WP3 row 5; owner: the writer for the row, the ledger for the fold). `opened` and
-`closed` share the token sense of §3.29 (ALLOWED, §3.16). `evidence_refs` REQUIRED.
+`closed` share the token sense of §3.29 (ALLOWED, §3.16). `evidence_refs` REQUIRED. **THE
+MACHINE (R4-CRO-3), over EFFECTIVE events per `binding_id`:** the `entity_binding` ROW is the
+initial open fact; an `opened` event is legal at most ONCE; a `closed` at most ONCE; no `opened`
+ordered after a `closed` (the forbidden re-open on the same id — re-opening is a NEW
+`binding_id`). A wrong event is corrected by a contest on it (§3.20), never by a second event;
+its replacement carries the same `binding_id`. Validator semantic arm in-batch
+(`_binding_machine_errors`), ledger row 4 beyond.
 
 ### 3.29 `authority_epoch_event.event_kind` — `opened | closed` (round 4 item 5, R3-CRO-30 / R3-CRO-34)
 DOMAIN: the two transitions of a minting authority's epoch — the source of truth §5's audit and
@@ -548,7 +564,18 @@ event. INTENT: one axis — which transition. STATE-COHERENCE: a TOTAL machine p
 — start CLOSED; `opened` legal only from CLOSED, `closed` only from OPEN; ordered by
 `(occurred_at, commit_seq, event id)`; mint AUTHORIZATION is evaluated at the mint batch's own
 `commit_seq` and never re-opened by a backfilled event (WP3 row 6; owner: the ledger; the writer
-owns the event's warrant). `evidence_refs` REQUIRED.
+owns the event's warrant). `evidence_refs` REQUIRED. **THE TRUST ROOT (R4-CRO-6, adjudicated
+`3.0.0_SA_CVO~X` 20260828T054009Z): who may open or close an epoch is pinned IN THIS CONTRACT at
+seat-FAMILY grain — `actor` matches `^(0\.0\.0_AB_MSTR|1\.0\.0_SA_CTO)(~[A-Z])?$` (the registry
+owner and the contract author; a root rotation is a contract amendment = a new candidate_id with
+`supersedes_bundle_id`, replayable through `BUNDLE_LABELS.json`, no new bundle member). That
+regex is the STRUCTURAL half only — `actor` is authored data and a spoofed root string passes it;
+the ledger binds `actor` EXACTLY to the AUTHENTICATED submitting principal and only then applies
+the family predicate (WP3 row 6: `L-06-unauthorized-epoch-transition-rejected` and
+`L-06-epoch-actor-spoof-rejected`; the accepts are the MSTR genesis-open and a CTO close /
+re-open with actor == the authenticated writer). Declared here, enforced by the ledger; §6.** A
+wrong epoch event is corrected by a contest on it (§3.20); its replacement carries the same
+`authority_id`.
 
 ## 4. CONDITIONAL REQUIREMENTS (the consuming half — all mechanical)
 
@@ -568,7 +595,12 @@ field, §3.20) · `lifecycle_event` kind arms (`materializer_superseded -> super
 require / `materializer_decommissioned` forbid, §3.27) · `evidence_refs` REQUIRED on all three
 event records · `consequence_refs[]` items pattern-typed (record-id union, minItems 1) ·
 `migrated_record_ref` pattern-typed over the catalog · `supersedes` pattern-typed per assertion
-record (`rel:` / `br:`).
+record (`rel:` / `br:`) · **round 4, second pin:** contest target arms FIVE-directional with a
+per-kind `target_event_id` prefix (§3.20) · `upheld` on an event → `consequence_refs` exactly one,
+the kind's prefix · `migrated_record_ref` also admits `sha256:<64hex>` (the two content-addressed
+primary ids, R4-CRO-1) · `authority_epoch_event.actor` pattern = the root families (§3.29) ·
+validator semantic machines: binding (§3.28), materializer lifecycle (§3.27), contest chronology
+(§3.20), replacement same-carrier-key — all over EFFECTIVE (non-voided) events.
 
 ## 5. MINTING AUTHORITY (RATIFIED — Andrew-direct 2026-08-27 ~18:4xZ, "Recs approved")
 

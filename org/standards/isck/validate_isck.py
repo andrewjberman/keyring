@@ -36,8 +36,11 @@ VOCAB = {
 ULID_A = "01jabcde0123456789abcdefgh"[:26]
 ULID_B = "01jzyxwv9876543210zyxwvtsr"[:26]
 ULID_C = "01jprt1a10000000000000000c"[:26]
+ULID_D = "01jprt1a10000000000000000d"[:26]
+ULID_E = "01jprt1a10000000000000000e"[:26]
 TS = "2026-08-27T17:30:00Z"
 TS2 = "2026-08-27T18:30:00Z"
+TS3 = "2026-08-27T19:00:00Z"
 SHA = "sha256:" + "ab" * 32
 
 FIXTURES = {
@@ -276,7 +279,9 @@ FIXTURES = {
     "lifecycle_event_decommissioned": {
         "record_type": "lifecycle_event", "event_id": f"lce:{ULID_B}",
         "event_kind": "materializer_decommissioned", "materializer_serial": f"mat:{ULID_A}",
-        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        # TS3: the decommission is the LAST effective transition of mat:A (superseded at TS2 ->
+        # decommissioned at TS3 is the legal order; R4-CRO-4's machine rejects anything after it)
+        "occurred_at": TS3, "actor": "3.0.0_SA_CVO~X",
         "evidence_refs": ["LD-0461#materializer-decommission"],
     },
     "binding_event": {
@@ -322,6 +327,69 @@ FIXTURES = {
         "asserted_at": TS2, "asserted_by": "4.0.0_SA_CRO~X",
         "supersedes": f"rel:{ULID_A}",
         "evidence_refs": ["obs:" + ULID_B],
+    },
+    # R4-CRO-2: the correction doctrine closes over ALL THREE event carriers -- an upheld contest
+    # on a binding_event / authority_epoch_event names exactly one replacement of the same carrier
+    "contest_event_binding_event": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_D}",
+        "contest_id": f"ct:{ULID_D}", "event_kind": "resolved",
+        "target_kind": "binding_event", "target_event_id": f"bev:{ULID_A}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "upheld", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "consequence_refs": [f"bev:{ULID_B}"],
+        "evidence_refs": ["commit:9fc70e31a1#the-close-was-dated-wrong"],
+    },
+    "binding_event_replacement": {
+        "record_type": "binding_event", "event_id": f"bev:{ULID_B}",
+        "event_kind": "closed", "binding_id": f"bind:{ULID_A}",
+        "occurred_at": TS2, "actor": "1.0.0_SA_CTO~X",
+        "evidence_refs": ["commit:9fc70e31a1#rename portal/src/App.tsx", f"ctev:{ULID_D}"],
+    },
+    "contest_event_authority_event": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_E}",
+        "contest_id": f"ct:{ULID_E}", "event_kind": "resolved",
+        "target_kind": "authority_epoch_event", "target_event_id": f"aep:{ULID_A}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "upheld", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "consequence_refs": [f"aep:{ULID_B}"],
+        "evidence_refs": ["ISCK_CONTRACT.md#sec-5-minting-authority", "LD-0461#epoch-opened-a-day-early"],
+    },
+    "authority_epoch_event_replacement": {
+        "record_type": "authority_epoch_event", "event_id": f"aep:{ULID_B}",
+        "event_kind": "opened", "authority_id": "1.0.0_SA_CTO~X@laptop",
+        "occurred_at": TS2, "actor": "0.0.0_AB_MSTR",
+        "evidence_refs": ["ISCK_CONTRACT.md#sec-5-minting-authority", f"ctev:{ULID_E}"],
+    },
+    # R4-DT-1: the bridge_assertion twin of the backward link -- the reject mutant
+    # bridge.supersedes-wrong-shape had no accept sibling (the R3-DT-7 vacuity, one field wide)
+    "bridge_assertion_superseding": {
+        "record_type": "bridge_assertion", "bridge_id": f"br:{ULID_B}",
+        "relation_kind": "containment",
+        "subject_entity_serial": f"ent:{ULID_A}", "subject_plane": "symbol",
+        "subject_grain": "parser_symbol",
+        "object_entity_serial": f"ent:{ULID_B}", "object_plane": "file",
+        "object_grain": "repo_path_file",
+        "claim_origin": "independently_observed", "verification_standing": "corroborated",
+        "registry_standing": "candidate",
+        "status_basis": {"verification_standing": "authored", "registry_standing": "authored"},
+        "declared_cardinality": "function",
+        "firm_scope": "opal",
+        "evidence_refs": ["parser:source-span portal/src/App.tsx:12-40@9fc70e31a1", "obs:" + ULID_B],
+        "asserted_at": TS2, "asserted_by": "4.0.0_SA_CRO~X",
+        "supersedes": f"br:{ULID_A}",
+        "valid_from": "commit:9fc70e31a1", "valid_to": None,
+    },
+    # R4-CRO-1: a migration of a CONTENT-ADDRESSED record (observation_id / receipt_id admit the
+    # sha256: form) -- the migration union must admit that primary-id shape or the mandatory
+    # receipt for such a rewrite cannot be appended
+    "migration_receipt_sha256": {
+        "record_type": "migration_receipt", "receipt_id": f"mig:{ULID_B}",
+        "migrated_record_ref": SHA, "field": "failure_state",
+        "source_value": "observed_missing", "target_value": "observed_absent",
+        "recoverability": "recovered",
+        "migration_map": "migration/R2_2_MIGRATION_MANIFEST.json",
+        "migrated_at": TS2, "migrated_by": "1.0.0_SA_CTO~X",
+        "evidence_refs": ["R2_2_DERIVED_STATUS_DESIGN.md#3d"],
     },
 }
 
@@ -458,6 +526,15 @@ ATTACK_TARGETS = {
     "mig.ref-not-a-record-id": ["migrated_record_ref"],
     "relation.supersedes-wrong-shape": ["supersedes"],
     "bridge.supersedes-wrong-shape": ["supersedes"],
+    "contest.lifecycle-upheld-consequence-not-lce": ["consequence_refs"],
+    "contest.lifecycle-upheld-two-consequences": ["consequence_refs"],
+    "mig.ref-malformed-sha": ["migrated_record_ref"],
+    "contest.binding-event-kind-wrong-prefix": ["target_event_id"],
+    "contest.authority-event-upheld-consequence-wrong-prefix": ["consequence_refs"],
+    "contest.binding-event-kind-without-event-ref": ["target_event_id"],
+    "contest.authority-event-kind-with-binding-ref": ["target_binding_id"],
+    "aep.actor-not-root": ["actor"],
+    "aep.actor-root-family-wrong-suffix-shape": ["actor"],
 }
 
 _DEL = object()
@@ -744,6 +821,29 @@ def _mutants():
         supersedes=f"br:{ULID_A}")
     add("bridge.supersedes-wrong-shape", "bridge_assertion", ["pattern"],
         supersedes=f"rel:{ULID_A}")
+    # ROUND 4, second pin: R4-CVO-1 (exactly one lce: consequence under lifecycle_event + upheld)
+    # and R4-CRO-1 (the migration union admits sha256: -- and rejects a malformed one)
+    add("contest.lifecycle-upheld-consequence-not-lce", "contest_event_lifecycle", ["pattern"],
+        consequence_refs=[f"rel:{ULID_A}"])
+    add("contest.lifecycle-upheld-two-consequences", "contest_event_lifecycle", ["maxItems"],
+        consequence_refs=[f"lce:{ULID_B}", f"lce:{ULID_C}"])
+    add("mig.ref-malformed-sha", "migration_receipt_sha256", ["pattern"],
+        migrated_record_ref="sha256:" + "ab" * 31 + "a")
+    # R4-CRO-2: the widened event targets -- per-kind prefix on the target, per-kind prefix on the
+    # sole upheld consequence, the exactly-one target field
+    add("contest.binding-event-kind-wrong-prefix", "contest_event_binding_event", ["pattern"],
+        target_event_id=f"lce:{ULID_A}")
+    add("contest.authority-event-upheld-consequence-wrong-prefix", "contest_event_authority_event",
+        ["pattern"], consequence_refs=[f"lce:{ULID_B}"])
+    add("contest.binding-event-kind-without-event-ref", "contest_event_binding_event", ["required"],
+        target_event_id=_DEL)
+    add("contest.authority-event-kind-with-binding-ref", "contest_event_authority_event", ["not"],
+        target_binding_id=f"bind:{ULID_A}")
+    # R4-CRO-6 (CVO~X 054009Z): the STRUCTURAL half of the trust root -- the actor must be one of
+    # the two ratified seat families (the authenticated-principal half is the ledger's, WP3 row 6)
+    add("aep.actor-not-root", "authority_epoch_event", ["pattern"], actor="UNTRUSTED_WRITER@laptop")
+    add("aep.actor-root-family-wrong-suffix-shape", "authority_epoch_event", ["pattern"],
+        actor="0.0.0_AB_MSTR~laptop")
     return m
 
 
@@ -822,6 +922,39 @@ def _semantic_mutants():
           _mk("lifecycle_event_decommissioned")]),
         ("sem.lifecycle-contest-replacement-is-target",
          [_mk("contest_event_lifecycle", consequence_refs=[f"lce:{ULID_A}"]), _mk("lifecycle_event")]),
+        # R4-CRO-2: the same-carrier-key rule on the other two event carriers
+        ("sem.binding-contest-replacement-other-binding",
+         [_mk("contest_event_binding_event"), _mk("binding_event"),
+          _mk("binding_event_replacement", binding_id=f"bind:{ULID_B}")]),
+        ("sem.authority-contest-replacement-other-authority",
+         [_mk("contest_event_authority_event"), _mk("authority_epoch_event"),
+          _mk("authority_epoch_event_replacement", authority_id="4.0.0_SA_CRO~X@laptop")]),
+        # R4-CRO-3: the binding machine over EFFECTIVE events (no contest voids anything here)
+        ("sem.binding-two-closes",
+         [_mk("binding_event"), _mk("binding_event_replacement")]),
+        ("sem.binding-open-after-close",
+         [_mk("binding_event"), _mk("binding_event_replacement", event_kind="opened",
+                                    occurred_at="2026-08-27T19:30:00Z")]),
+        ("sem.binding-two-opens",
+         [_mk("binding_event", event_kind="opened", occurred_at=TS),
+          _mk("binding_event_replacement", event_kind="opened", occurred_at=TS)]),
+        # R4-CRO-4: the materializer machine over EFFECTIVE events
+        ("sem.materializer-two-decommissions",
+         [_mk("lifecycle_event_decommissioned"),
+          _mk("lifecycle_event_decommissioned", event_id=f"lce:{ULID_C}", occurred_at="2026-08-27T20:00:00Z")]),
+        ("sem.materializer-superseded-after-decommission",
+         [_mk("lifecycle_event_decommissioned"),
+          _mk("lifecycle_event", occurred_at="2026-08-27T20:00:00Z")]),
+        # R4-CRO-5: contest chronology
+        ("sem.contest-resolved-before-opened",
+         [_mk("contest_event", occurred_at=TS2),
+          _mk("contest_event", event_id=f"ctev:{ULID_D}", event_kind="resolved", occurred_at=TS,
+              outcome="dismissed", adjudicated_by="3.0.0_SA_CVO~X", basis=_DEL)]),
+        ("sem.contest-opened-before-target-event",
+         [_mk("lifecycle_event"),
+          _mk("contest_event", event_id=f"ctev:{ULID_E}", contest_id=f"ct:{ULID_E}",
+              target_kind="lifecycle_event", target_event_id=f"lce:{ULID_A}",
+              target_entity_serial=_DEL, occurred_at=TS)]),
     ]
 
 
@@ -837,6 +970,118 @@ _PRIMARY_ID = {"entity": "entity_serial", "entity_binding": "binding_id",
                "materializer": "materializer_serial", "materializer_version": "version_id",
                "materialization_run": "run_id", "source_frontier": "source_frontier_id",
                "surface_version": "surface_version_id", "coherence_evaluation": "evaluation_id"}
+
+
+# R4-CRO-2: the carrier KEY per event record -- an upheld contest's replacement must match it
+_EVENT_KEY = {"lifecycle_event": "materializer_serial", "binding_event": "binding_id",
+              "authority_epoch_event": "authority_id"}
+
+
+def _voided_event_ids(instances):
+    """Event ids VOIDED in this batch: the target of an admitted upheld event contest whose sole
+    consequence is a replacement present in the batch (R3-CVO-12 c5 -- opened/dismissed/merged
+    void nothing; an upheld contest whose replacement is absent voids nothing HERE, the ledger
+    decides at final state)."""
+    ids = {o.get("event_id") for o in instances if isinstance(o, dict)
+           and o.get("record_type") in _EVENT_KEY}
+    voided = set()
+    for o in instances:
+        if isinstance(o, dict) and o.get("record_type") == "contest_event" \
+                and o.get("target_kind") in _EVENT_KEY and o.get("outcome") == "upheld":
+            cons = o.get("consequence_refs") or []
+            if len(cons) == 1 and cons[0] in ids and o.get("target_event_id") in ids:
+                voided.add(o["target_event_id"])
+    return voided
+
+
+def _binding_machine_errors(instances):
+    """R4-CRO-3: a binding's EFFECTIVE (not voided) events form a machine per binding_id --
+    at most one opened, at most one closed, and no opened dated after a closed (re-opening is a
+    NEW binding_id, sec 3.28). Batch-scope; the ledger runs the same machine over store U batch
+    (WP3 row 4)."""
+    errs = []
+    voided = _voided_event_ids(instances)
+    per = {}
+    for i, o in enumerate(instances):
+        if isinstance(o, dict) and o.get("record_type") == "binding_event" \
+                and o.get("event_id") not in voided:
+            per.setdefault(o.get("binding_id"), []).append((i, o))
+    for bid, evs in per.items():
+        opened = [(i, o) for i, o in evs if o.get("event_kind") == "opened"]
+        closed = [(i, o) for i, o in evs if o.get("event_kind") == "closed"]
+        if len(opened) > 1:
+            errs.append(f"[{opened[1][0]}] binding_event: SECOND opened for {bid} (first at "
+                        f"[{opened[0][0]}]) -- one open per interval; re-opening mints a new "
+                        "binding_id (R4-CRO-3 / sec 3.28)")
+        if len(closed) > 1:
+            errs.append(f"[{closed[1][0]}] binding_event: SECOND closed for {bid} (first at "
+                        f"[{closed[0][0]}]) -- two closure times for one interval (R4-CRO-3)")
+        if opened and closed:
+            c_at = min(o.get("occurred_at", "") for _, o in closed)
+            for i, o in opened:
+                if o.get("occurred_at", "") > c_at:
+                    errs.append(f"[{i}] binding_event: opened {o.get('occurred_at')} AFTER the "
+                                f"close {c_at} of {bid} -- the forbidden re-open on the same "
+                                "interval id (R4-CRO-3 / sec 3.28)")
+    return errs
+
+
+def _order(o):
+    """The in-batch event order (occurred_at, event id) -- the ledger's tuple is
+    (occurred_at, commit_seq, id); inside one batch commit_seq is shared, so the id decides."""
+    return (o.get("occurred_at") or "", o.get("event_id") or "")
+
+
+def _materializer_machine_errors(instances):
+    """R4-CRO-4: a materializer's EFFECTIVE lifecycle events form a machine -- at most one
+    decommission, and no effective transition ordered after it (decommission is TERMINAL;
+    superseded -> decommissioned is LEGAL; re-activation is a NEW serial, sec 3.27)."""
+    errs = []
+    voided = _voided_event_ids(instances)
+    per = {}
+    for i, o in enumerate(instances):
+        if isinstance(o, dict) and o.get("record_type") == "lifecycle_event" \
+                and o.get("event_id") not in voided:
+            per.setdefault(o.get("materializer_serial"), []).append((i, o))
+    for ms, evs in per.items():
+        dec = sorted([(i, o) for i, o in evs if o.get("event_kind") == "materializer_decommissioned"],
+                     key=lambda t: _order(t[1]))
+        if len(dec) > 1:
+            errs.append(f"[{dec[1][0]}] lifecycle_event: SECOND decommission of {ms} (first at "
+                        f"[{dec[0][0]}]) -- two terminal dates for one process (R4-CRO-4)")
+        if dec:
+            d_ord = _order(dec[0][1])
+            for i, o in evs:
+                if o is not dec[0][1] and _order(o) > d_ord:
+                    errs.append(f"[{i}] lifecycle_event: {o.get('event_kind')} of {ms} ordered AFTER "
+                                f"its decommission at [{dec[0][0]}] -- decommission is terminal "
+                                "(R4-CRO-4 / sec 3.27)")
+    return errs
+
+
+def _contest_chronology_errors(instances):
+    """R4-CRO-5: opened < resolved for one contest_id; for an event target present in the batch,
+    the target event < the opened contest. Order = (occurred_at, id); same instant is decided by
+    the id, deterministically."""
+    errs = []
+    by_contest = {}
+    events = {o.get("event_id"): o for o in instances if isinstance(o, dict)
+              and o.get("record_type") in _EVENT_KEY}
+    for i, o in enumerate(instances):
+        if isinstance(o, dict) and o.get("record_type") == "contest_event":
+            by_contest.setdefault(o.get("contest_id"), {})[o.get("event_kind")] = (i, o)
+    for cid, kinds in by_contest.items():
+        op, rs = kinds.get("opened"), kinds.get("resolved")
+        if op and rs and not (_order(op[1]) < _order(rs[1])):
+            errs.append(f"[{rs[0]}] contest_event: resolved {rs[1].get('occurred_at')} is not AFTER its "
+                        f"opened [{op[0]}] {op[1].get('occurred_at')} for {cid} (R4-CRO-5)")
+        if op and op[1].get("target_kind") in _EVENT_KEY:
+            tgt = events.get(op[1].get("target_event_id"))
+            if tgt is not None and not (_order(tgt) < _order(op[1])):
+                errs.append(f"[{op[0]}] contest_event: opened {op[1].get('occurred_at')} against "
+                            f"{op[1].get('target_event_id')} which occurs at {tgt.get('occurred_at')} -- "
+                            "a challenge to a transition that has not happened yet (R4-CRO-5)")
+    return errs
 
 
 def _parse_iso(v):
@@ -904,7 +1149,8 @@ def semantic_errors(instances):
         raise TypeError("semantic_errors takes a LIST of record dicts; got %s -- wrap a single "
                         "record as [record] (R3-CRO-16: a dict iterates its keys and returns a "
                         "clean [])" % type(instances).__name__)
-    errs = _batch_provenance_errors(instances)
+    errs = (_batch_provenance_errors(instances) + _binding_machine_errors(instances)
+            + _materializer_machine_errors(instances) + _contest_chronology_errors(instances))
     seen = {}
     for i, inst in enumerate(instances):
         if not isinstance(inst, dict):
@@ -1007,24 +1253,31 @@ def semantic_errors(instances):
                                 "the SAME materializer -- that is a version succession "
                                 "(materializer_version.supersedes), not a process supersession "
                                 "(round 4 item 4)")
-        # ROUND 4 item 8 (R3-CVO-12 condition 3): an upheld contest on a lifecycle event names
-        # exactly ONE replacement of the same event_kind and materializer_serial; decidable
-        # in-batch when the target and the replacement are present
-        if rt == "contest_event" and inst.get("target_kind") == "lifecycle_event" \
+        # ROUND 4 item 8 (R3-CVO-12 condition 3), closed over ALL THREE event carriers (R4-CRO-2):
+        # an upheld contest on an event names exactly ONE replacement of the same event_kind and
+        # the same CARRIER KEY (materializer_serial | binding_id | authority_id); decidable in-batch
+        # when the target and the replacement are present. R4-CVO-1: the non-event-consequence
+        # hole is closed by the SCHEMA arm (per kind: exactly one item, the kind's prefix) -- no
+        # valid record of another type can carry that prefix, so a semantic "resolves to another
+        # type" branch would be reachable only from an invalid fixture and is deliberately NOT
+        # added; an id absent from the batch stays ledger-scope (sec 6 limit 3) like every reference
+        if rt == "contest_event" and inst.get("target_kind") in _EVENT_KEY \
                 and inst.get("outcome") == "upheld":
+            kind = inst.get("target_kind")
+            key = _EVENT_KEY[kind]
             cons = inst.get("consequence_refs") or []
             if len(cons) != 1:
-                errs.append(f"[{i}] contest_event: upheld on a lifecycle event names {len(cons)} "
+                errs.append(f"[{i}] contest_event: upheld on a {kind} names {len(cons)} "
                             "consequences -- exactly ONE replacement event (R3-CVO-12 c3)")
             by_id = {o.get("event_id"): o for o in instances
-                     if isinstance(o, dict) and o.get("record_type") == "lifecycle_event"}
+                     if isinstance(o, dict) and o.get("record_type") == kind}
             tgt = by_id.get(inst.get("target_event_id"))
             for c in cons:
                 rep = by_id.get(c)
                 if tgt and rep and (rep.get("event_kind") != tgt.get("event_kind")
-                                    or rep.get("materializer_serial") != tgt.get("materializer_serial")):
+                                    or rep.get(key) != tgt.get(key)):
                     errs.append(f"[{i}] contest_event: replacement {c} differs from the contested "
-                                "event in event_kind or materializer_serial (R3-CVO-12 c3)")
+                                f"{kind} in event_kind or {key} (R3-CVO-12 c3 / R4-CRO-2)")
                 if rep is not None and c == inst.get("target_event_id"):
                     errs.append(f"[{i}] contest_event: the replacement IS the contested event "
                                 "(R3-CVO-12 c3 -- a new event id)")

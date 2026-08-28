@@ -2404,7 +2404,9 @@
           "enum": [
             "entity",
             "binding",
-            "lifecycle_event"
+            "lifecycle_event",
+            "binding_event",
+            "authority_epoch_event"
           ]
         },
         "target_entity_serial": {
@@ -2438,7 +2440,7 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "pattern": "^(rel|bind|bev|ctev|lce):[0-9a-hjkmnp-tv-z]{26}$"
+            "pattern": "^(rel|bind|bev|ctev|lce|aep):[0-9a-hjkmnp-tv-z]{26}$"
           }
         },
         "evidence_refs": {
@@ -2450,7 +2452,7 @@
         },
         "target_event_id": {
           "type": "string",
-          "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+          "pattern": "^(lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "required": [
@@ -2564,8 +2566,186 @@
                     "target_binding_id"
                   ]
                 }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
               }
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "lifecycle_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "authority_epoch_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "authority_epoch_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
           }
         },
         {
@@ -2737,7 +2917,7 @@
         },
         "migrated_record_ref": {
           "type": "string",
-          "pattern": "^(ent|mat|matv|run|sf|sv|bind|ctev|rel|br|obs|mr|mig|ce|lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}$"
+          "pattern": "^((ent|mat|matv|run|sf|sv|bind|ctev|rel|br|obs|mr|mig|ce|lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}|sha256:[0-9a-f]{64})$"
         },
         "field": {
           "$ref": "#/$defs/nonempty"
@@ -2948,7 +3128,8 @@
           "$ref": "#/$defs/iso_ts"
         },
         "actor": {
-          "$ref": "#/$defs/nonempty"
+          "type": "string",
+          "pattern": "^(0\\.0\\.0_AB_MSTR|1\\.0\\.0_SA_CTO)(~[A-Z])?$"
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
