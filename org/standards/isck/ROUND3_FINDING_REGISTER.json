@@ -19,7 +19,8 @@
     "AMENDED-RECORD": "the governed record was amended (first-printed value kept beside the measured one)",
     "REFUTED": "the finding was refuted by the named rule/evidence (disposition_basis names it)",
     "DISCLOSED-NO-CHANGE": "disclosed on the record; no artifact change was the right remedy",
-    "OPEN": "filed, not yet disposed"
+    "OPEN": "filed, not yet disposed",
+    "ROUTED-NEW-CANDIDATE": "a defect in the FROZEN contract surfaced by a design; lands as a new candidate_id (never a mutation of the frozen label), attacked and frozen before dependent code"
   },
   "findings": [
     {
@@ -405,6 +406,90 @@
       "fix_commit": "(this commit)",
       "verification_ref": "OPEN-CITATION: DT~X re-parse at the citation (ids per row, accept-shaped count = rows)",
       "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack; round-3 register continues)"
+    },
+    {
+      "finding_id": "R3-CRO-18",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T041852Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "mint bootstrap DEADLOCK: responsibility 2 rejects a receipt whose entity_serial does not yet resolve; responsibility 6 rejects an entity with no preceding receipt; no legal write order",
+      "disposition": "FIXED",
+      "disposition_basis": "sec 2c ADMISSION MODEL: a write is an atomic BATCH validated at its FINAL state against (store ∪ batch); ordering inside a batch is irrelevant; the bootstrap pair is one batch; tests L-06-bootstrap-pair-accepted / L-06-orphan-entity-rejected / L-02-forward-ref-within-batch-accepted / L-02-unresolved-at-final-state-rejected",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CVO-7",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T041910Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "admission cycle / false reference denominator: row 2 as written rejects primary-id-shaped fields; receipt must precede entity but references it; neither ordering can succeed",
+      "disposition": "FIXED",
+      "disposition_basis": "same remedy as R3-CRO-18 (convergent, independent): atomic batch + final-state validation; primary-id fields explicitly NOT reference fields (row 2's enumeration excludes them, stated)",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CRO-19",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T041852Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "the authoritative event carriers the design folds over (binding open/close events; materializer decommission) do not exist in the frozen 14-type catalog, and existing-id-different-bytes is rejected so the transitions cannot be encoded by mutation either -- the design claimed to implement the frozen model and cannot",
+      "disposition": "ROUTED-NEW-CANDIDATE",
+      "disposition_basis": "sec 2b: three carriers named with exact shape -- backward `supersedes` on the NEW assertion (superseded_by becomes derived), `binding_event` {opened|closed}, `lifecycle_event` materializer_decommissioned -- land as v0.3-candidate, attacked in one bounded round, frozen BEFORE ledger code (sec 7 sequence amended); +38 untouched",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CVO-6",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T041910Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "derivation carriers impossible under the frozen pin: no binding/decommission events, AND the standing folds use FORWARD superseded_by on the OLD record, which is either a mutation (resp. 3) or a forward reference to a record that does not exist (resp. 2) -- four of five declared derivable axes cannot transition append-only",
+      "disposition": "ROUTED-NEW-CANDIDATE",
+      "disposition_basis": "the sharpest form of R3-CRO-19: the frozen contract's own superseded_by shape contradicts LAW 3 under enforcement. sec 2b routes the backward link (`supersedes` on the new assertion) to the new candidate; the frozen field is refused on post-creation writes and populated only as a derived projection; sec 4's chain fold rewritten over the backward link and declared NOT BUILDABLE until v0.3-candidate is frozen",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CRO-20",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T041852Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "derivation folds neither total nor single-valued: overlapping iff predicates with no precedence (provisional+contested, retired+contested, closed+disputed); materializer had no active fallback and a circular 'points past the current'",
+      "disposition": "FIXED",
+      "disposition_basis": "sec 4 rewritten as DECISION TABLES per axis: top-down precedence, a total default row, the event-order rule stated once, pairwise-overlap controls + no-condition controls per axis; materializer's circularity replaced by the frozen superseded_by_version field resolving to another materializer's version, with `active` as the >=1-version row",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CVO-8",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T041910Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "derivation rules are not functions: deferred mint stated provisional but the else-branch returns active; open+disputed and contested+retired both satisfiable",
+      "disposition": "FIXED",
+      "disposition_basis": "same remedy as R3-CRO-20 (convergent, independent): the tables; provisional is row 3 keyed on the receipt's deferred_to_reconciliation with no resolving relation, outranked by retired and contested",
+      "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
+      "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+    },
+    {
+      "finding_id": "R3-CRO-21",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T041959Z",
+      "finding_class": "RECORD",
+      "claim": "the R3-DT-7 repair's claimed 90-arm battery is false of the repaired table: mechanical parse at bec797df5f gives rows 1/3-12 = 27 reject + 22 accept = 49 (not 24+24=48) + row 2's 42 = 91",
+      "disposition": "AMENDED-RECORD",
+      "disposition_basis": "the sentence now carries the per-row breakdown (2R+2A, 2+2, 2+2, 5+5, 2+2, 3+2, 3+1, 3+2, 1+1, 2+1) and 91; the runner counts the ids it ran and never reads the sentence -- the fifth typed-beside-derived instance at this seat tonight, in the same paragraph that forbade it",
+      "fix_commit": "(this commit)",
+      "verification_ref": "CRO~X's own parse is the corrected figure; DT~X re-parse at the citation",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
     }
   ],
   "not_rows": {

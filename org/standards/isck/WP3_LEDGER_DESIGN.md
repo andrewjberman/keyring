@@ -49,6 +49,38 @@ authored status disagrees with the derivation is a **REJECTED WRITE** — LAW 3'
 arriving. `bridge_assertion.registry_standing` stays ADJUDICATION-CARRIED (`authored`) until an
 adjudication-event vocabulary exists (declared, not absorbed).
 
+## 2b. WHAT THE FROZEN CONTRACT CANNOT CARRY — routed to a NEW CANDIDATE, never a mutation of +38
+(R3-CRO-19 / R3-CVO-6, the design attack's central result)
+
+The frozen catalog has 14 record types. Three transitions this design must derive have NO
+append-only carrier in it:
+
+| transition | what the frozen contract offers | why it cannot work append-only | carrier required (new candidate) |
+|---|---|---|---|
+| supersession of an assertion (`identity_relation`, `bridge_assertion`) | `superseded_by` on the OLD record | setting it after the old record exists is an in-place mutation (responsibility 3 rejects; LAW 3); setting it at creation requires a forward reference to a record that does not yet exist (responsibility 2 rejects) | **backward link:** `supersedes` on the NEW assertion (already the shape on `materializer_version.supersedes`); `superseded_by` becomes derived, never written |
+| binding close (and open as an event) | `entity_binding.valid_to` + `status` on the row | a close is a mutation of the open row, or a second row with no link to the first | **`binding_event`** `{opened \| closed}` with `binding_id`, `occurred_at`, `actor`, `evidence_refs` — or `lifecycle_event` generalizing `contest_event` |
+| materializer decommission | nothing (`retired` is authored) | no event to fold over | **`lifecycle_event` `materializer_decommissioned`** with `materializer_serial`, `occurred_at`, `actor`, `evidence_refs` |
+
+**Ruling (C5's last sentence, applied):** these are CONTRACT defects surfaced by the enforcement
+design. They land as **`v0.3-candidate`** — a new `candidate_id`, attacked (one bounded round on the
+three carriers + their folds), then frozen — BEFORE any ledger code. The frozen `+38` is not touched;
+`superseded_by` stays in it as a field the ledger REFUSES to accept on a write after creation
+(§3 responsibility 3) and populates only as a derived projection. WP-3's §7 sequence gains this
+step first. Until the new candidate is frozen, §4's folds for those axes are DECLARED, not buildable.
+
+## 2c. ADMISSION MODEL — atomic batches, final-state validation (R3-CRO-18 / R3-CVO-7: the mint bootstrap deadlock)
+
+A ledger WRITE is a **batch** (one or more records) admitted ATOMICALLY: every reference in the
+batch must resolve against **(store ∪ batch)** at the batch's FINAL state, and the whole batch is
+rejected if any does. Ordering inside a batch is irrelevant; there is no "receipt-first vs
+entity-first" — the bootstrap pair `{mint_receipt, entity}` is one batch whose two references
+resolve against each other. **Primary-id fields are NOT reference fields** (row 2's enumeration
+already excludes them; stated so nobody re-adds them). A batch containing an `entity` with no
+`mint_receipt` in (store ∪ batch) is REJECTED (responsibility 6); a batch containing a receipt whose
+`entity_serial` never appears is REJECTED (responsibility 2, final state). Tests:
+`L-06-bootstrap-pair-accepted`, `L-06-orphan-entity-rejected`, `L-02-forward-ref-within-batch-accepted`,
+`L-02-unresolved-at-final-state-rejected` (either ordering).
+
 ## 3. THE TWELVE ENFORCEMENT RESPONSIBILITIES (memo §8, each with its rejection and its test)
 
 | # | responsibility | REJECT when | REJECT arm ids | ACCEPT arm ids (the sibling that proves the reject is not "reject everything") |
@@ -80,9 +112,11 @@ as a guess):** `entity.canonicalized_as` · `entity_binding.entity_serial` ·
 `coherence_evaluation.target_source_frontier`, `migration_receipt.migrated_record_ref` and
 `source_frontier.entries[].source_serial`, which are reference-SHAPED but resolve to records the
 ledger may not hold yet — **6 declared as "resolve-if-present"**, tested by `L-02-resolved-<field>`
-only). Battery size, derived: 24 reject + 24 accept on rows 1/3–12 (with row 5's five axes
-expanded) + 18 + 18 on row 2 + 6 resolve-if-present = **90 arms** — the number a runner must print
-beside its colour.
+only). Battery size, PARSED per row (R3-CRO-21 — my first sentence here typed "24 + 24 = 48" on
+rows 1/3–12; the table itself reads 2R+2A · 2+2 · 2+2 · 5+5 · 2+2 · 3+2 · 3+1 · 3+2 · 1+1 · 2+1 = **27
+reject + 22 accept = 49**) + row 2's 18 + 18 + 6 resolve-if-present = 42 → **91 arms**. The runner
+prints this number by COUNTING the ids it ran, never by reading this sentence; if the two disagree the
+sentence is the stale one.
 
 **Completion evidence (memo §8):** WP-3 completes on this battery passing from a clean clone of
 the pinned commit, not on code delivery. ⛔ **INSTRUCTION, not description (R3-DT-7, `0.4.0_DT_
@@ -91,22 +125,66 @@ sentence claiming both directions — a battery built from it could only ever sa
 this table the battery's source. Every row now names its sibling accept arm(s); the battery is NOT
 complete until every id in both columns exists and the runner prints the 90-arm denominator.**
 
-## 4. DERIVATION RULES (one per derivable axis; the projection is a pure fold over events)
+## 4. DERIVATION RULES — DECISION TABLES (R3-CRO-20 / R3-CVO-8: a fold is a FUNCTION — exactly one value for every reachable record set)
 
-- `entity.current_status`: `provisional` at mint unless the receipt is `checked_unique` (→ `active`);
-  `contested` iff an opened `contest_event` (target entity) has no resolved partner OR an upheld
-  resolution's `consequence_refs` do not yet exist; `retired` iff a `retirement` relation exists OR the
-  entity occupies the ceasing endpoint of a directional relation (§3.12 table); else `active`.
-- `entity_binding.status`: `open` iff no close event and no `valid_to`; `closed` iff a close event;
-  `disputed` iff an open contest with `target_kind: binding` names it (the R2-2 carrier for the one
-  deferred ARM-1 value — it closes here).
-- `identity_relation.verification_standing` and `bridge_assertion.verification_standing`: the head
-  of the assertion chain (`superseded_by` links); a `contradicted` assertion is left only by a new
-  assertion superseding it.
-- `materializer.current_status`: `superseded` iff a `materializer_version` with `supersedes` points
-  past the current; `retired` by decommission event; `unknown` iff zero observations.
-- `bridge_assertion.registry_standing`: ADJUDICATION-CARRIED — authored; the ledger stores it and
-  refuses a change without an `adjudicated_by` (the event vocabulary is a later candidate).
+**Event-order rule, once:** every fold consumes the axis's records ordered by
+`(occurred_at | asserted_at | minted_at, primary_id)`; a record written LATER but dated EARLIER is
+folded at its date (append-only, replayable — responsibility 12). **Precedence is top-down: the
+FIRST row whose condition holds wins; the last row is the total-coverage default.** Each table
+has a pairwise-overlap control (`L-05-<axis>-overlap-<a>-<b>`) proving the precedence picks one
+value, and a no-condition control proving the default fires.
+
+**`entity.current_status`** (records: `mint_receipt`, `identity_relation`, `contest_event[target_kind=entity]`)
+
+| # | condition (evaluated in order) | value |
+|---|---|---|
+| 1 | a `retirement` relation with this subject exists, OR the entity occupies the CEASING endpoint of a directional relation (§3.12 table) | `retired` |
+| 2 | an opened contest targeting this entity has no `resolved` partner, OR its `upheld` resolution's `consequence_refs` do not all resolve | `contested` |
+| 3 | its `mint_receipt.collision_preflight == deferred_to_reconciliation` AND no `canonicalized_as`/`merged_into` relation has resolved it | `provisional` |
+| 4 | (default) | `active` |
+
+A contest opened against a RETIRED entity is admitted (append-only) and never changes the value
+(row 1 outranks row 2) — the contest's own record carries it. Overlap controls: retired×contested,
+contested×provisional, provisional×retired; default control: one receipted `checked_unique` mint,
+no relations, no contests → `active`.
+
+**`entity_binding.status`** (records: `binding_event` — NEW CANDIDATE, §2b; `contest_event[target_kind=binding]`)
+
+| # | condition | value |
+|---|---|---|
+| 1 | a `closed` binding_event exists for this `binding_id` | `closed` |
+| 2 | an opened contest targeting this binding has no resolved partner | `disputed` |
+| 3 | (default: an `opened` event, or the row itself with `valid_to: null`) | `open` |
+
+A contest on a closed binding leaves it `closed` (row 1 outranks row 2). **Buildable only after the
+new candidate carries `binding_event`** (§2b); until then this axis is authored.
+
+**`identity_relation.verification_standing` / `bridge_assertion.verification_standing`**
+(records: the assertion chain via the BACKWARD `supersedes` link — NEW CANDIDATE, §2b)
+
+| # | condition | value |
+|---|---|---|
+| 1 | this assertion is `supersedes`-targeted by a later assertion | (not current — the HEAD's value is the projection; the old record keeps its own authored standing, never rewritten) |
+| 2 | the chain head's authored standing | that value (`unverified` \| `corroborated` \| `contradicted`) |
+
+Single-valued by construction: exactly one head per chain (a second assertion superseding the same
+target is REJECTED — responsibility 7's cycle/branch rule extended to chains; test
+`L-07-branching-supersession-rejected`). **Buildable only after the new candidate** (§2b).
+
+**`materializer.current_status`** (records: `materializer_version`, `lifecycle_event[materializer_decommissioned]` — NEW CANDIDATE for the event)
+
+| # | condition | value |
+|---|---|---|
+| 1 | a `materializer_decommissioned` event exists | `retired` |
+| 2 | `materializer.superseded_by_version` resolves to a version of ANOTHER materializer (the frozen field is the carrier for process-level supersession; "points past the current" was circular and is gone) | `superseded` |
+| 3 | at least one `materializer_version` for this serial exists | `active` |
+| 4 | (default: zero versions) | `unknown` |
+
+Overlap controls: retired×superseded, superseded×active; default control: zero versions → `unknown`.
+
+**`bridge_assertion.registry_standing`**: ADJUDICATION-CARRIED — authored; the ledger stores it and
+REFUSES a change without `adjudicated_by` (the adjudication-event vocabulary is a later candidate).
+Declared, not folded; no table.
 
 ## 5. THE SIX MINIMUM QUERY SURFACES (memo §8) — each with its evidence shape
 
@@ -130,7 +208,8 @@ complete until every id in both columns exists and the runner prints the 90-arm 
 
 ## 7. LANDING SEQUENCE
 
-design attacked-dry → engine chosen by ONE stated criterion (Rule-26 locality of the store) →
+design attacked-dry → **`v0.3-candidate`: the three carriers of §2b land in the contract as a NEW
+candidate_id, attacked in one bounded round, frozen** → engine chosen by ONE stated criterion (Rule-26 locality of the store) →
 battery written FIRST from §3 (both arms per row) → ledger code until the battery passes from a
 clean clone → `wp3_certification_receipt` set on the frozen bundle (NOT a new candidate_id: the
 contract did not change) → the live vertical slice (charter exit condition 3) begins.
