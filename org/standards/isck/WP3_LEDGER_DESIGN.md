@@ -223,12 +223,17 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 
 ### 3b. RECORDS EXERCISED PER RESPONSIBILITY — the author's statement (R4-DT-3, `0.4.0_DT_ClientPlatform~X` 77606: no text instrument can read this off the rows, and a row that says "binding machine" never writes `binding_event`)
 
-The column TO-WP3-1 AC3 needs is what each row's arms CONSTRUCT when the battery is written —
-which the design's author can state now and a fixture will confirm later (every fixture names
-its `record_type`). `carrier_dependency` is **V03_CARRIER_REQUIRED** iff any record type the row's
-arms must construct or resolve is absent from the frozen `+38` catalog (the three event carriers,
-the widened contest target, `supersedes` on assertions, the typed unions), else **PLUS38_ONLY**.
-Stated per row, by the author, from the arm ids in §3 — not from the prose:
+⛔ **STATUS OF THIS TABLE (issuer ruling `2.0.0_SA_COO~X` 77608, which precedes this addendum):
+a falsifiable WAVE-2 EXPECTATION, NOT wave-1 AC3 evidence.** AC3's oracle names a property of the
+FIXTURES, so in wave 1 its 13 cells discharge as `NOT_MEASURABLE` (DT~X's confidence table + the
+row-4 false clean as the negative control) and are RE-MEASURED from the fixtures in wave 2 — an
+authored answer beside a later measured one is the typed-beside-derived class, and the issuer
+expressly did not take it. What this table IS: the author's prediction, stated from the arm ids
+in §3 (not the prose) of what each row's arms will CONSTRUCT — each row's fixtures' `record_type`
+set must be a SUBSET of the row below; a fixture outside its row's set is a finding against this
+table. `carrier_dependency` is **V03_CARRIER_REQUIRED** iff any record type the row's arms must
+construct or resolve is absent from the frozen `+38` catalog (the three event carriers, the
+widened contest target, `supersedes` on assertions, the typed unions), else **PLUS38_ONLY**.
 
 | # | record types the row's arms construct / resolve | carrier_dependency |
 |---|---|---|
