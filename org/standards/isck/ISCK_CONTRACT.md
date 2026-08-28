@@ -106,14 +106,17 @@ DOMAIN: epistemic standing of an assertion. MECE over check-states; hunted membe
 → stays `unverified` (a partial check that upgrades standing is the F5 defect). GRAIN: assertion.
 INTENT: one axis — has a check run and what did it say. STATE-COHERENCE: `unverified→corroborated`
 moves by RUNNING A CHECK (asserting seat); `contradicted` is ENTERED on evidence (checker) and
-LEFT only by ADJUDICATION (adjudicator) — the exit is a registry/contest act carried by the R2-2
-`contest_resolved` event, never by a field on the contradicted record (DT-R2-6: the field form
-made candidate x contradicted uninhabitable on bridge_assertion); `superseded` moves by a NEW
-assertion (any seat) — three acts, three owners.
+LEFT only by SUPERSESSION — a NEW assertion carrying its own standing, evidence and `asserted_by`,
+with `superseded_by` set on the old one; the contradicted record itself never changes (R2-2's
+append-only path; DT-R2-6: the field form made candidate x contradicted uninhabitable on
+bridge_assertion, and `4.0.0_SA_CRO~X` caught that the first re-recording cited `contest_resolved`,
+whose targets are entities/bindings, never assertions — an impossible carrier); `superseded` moves
+by that same NEW assertion (any seat) — two acts (check, supersede), two owners.
 ARM TABLE (F5): `corroborated|contradicted -> evidence_refs required` (owner: checker) ·
 `superseded -> superseded_by required` (owner: superseding author). RETIRED (DT-R2-6, both
-consumers at once per DT-R2-2's shared-enum rule): `contradicted -> adjudicated_by` — the
-adjudicator lives on the resolution event, where R2-2 already put it. ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
+consumers at once per DT-R2-2's shared-enum rule): `contradicted -> adjudicated_by` — who
+overturned a contradiction is the `asserted_by` of the superseding assertion, carried on the
+append-only path, not a field on the record it overturns. ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
 
 ### 3.3 `registry_standing` — `candidate | admitted | held | rejected | retired | inadmissible`
 DOMAIN: lifecycle position in an admitting registry (bridges first). MECE: `inadmissible` ADDED at
