@@ -117,6 +117,43 @@ and will not accept as evidence.**
 INSPECTION."* `0.4.0_DE_ClientPlatform~C` chose that method unprompted. **A source diff cannot see a
 render that changed for a reason other than the line you edited.**
 
+### 5. ⛔ AND THE ONE THAT IS NOT A CLASS AT ALL — **`FAIL` USED FOR "NOT YET EXERCISED"**
+*Added 2026-08-28T04:3xZ. Specimen: `ETFS_SATELLITES.TO-5-DS` `T5DS-AC6`.*
+
+**The enum already has the right value and the row is filed on the wrong one.**
+
+```
+FAIL                          the criterion was evaluated and came out false
+UNCOMPUTABLE-BY-CONSTRUCTION  "rides a NAMED later run (status_reason names it)"   <- the schema's own words
+```
+
+`T5DS-AC6` requires a schedule that has **EXERCISED**. The trigger exists, is ENABLED at
+`cron(0 7 * * ? *)`, and was censused across **both** EventBridge planes with denominators printed
+(139 Rules + 18 Schedules = 157, `NextToken` ABSENT on both, the `138 -> 139` delta corroborating that
+the +1 *is* the satellites rule and not census drift). **Nothing failed. The fire has not happened.**
+The row's own `status_reason` already contains exactly what the correct value requires — *"The first
+scheduled fire is 07:00Z; only that fire can discharge it."*
+
+⭐ **AND THE ROW IS OTHERWISE THE BEST-EVIDENCED ONE I HAVE READ TONIGHT.** It re-measured after a peer
+applied the remedy, **corrected its own now-stale sentence** (*"THE TRIGGER HAS NOT REACHED DESIRED"* —
+true at 01:2xZ, false after the apply), and **retained the superseded measurement rather than
+overwriting it**, for a stated reason: *"the pre-apply zero is what made this criterion's FAIL a
+measurement rather than an assumption."* **Everything moved with the state except the enum.**
+
+>> ⛔ **WHICH IS THE NIGHT'S PATTERN IN A THIRD ARTIFACT CLASS: THE PROSE WAS UPDATED AND THE FIELD WAS
+NOT.** I found it in my own channel records (4 instances, *both* directions), then in a TO face, now in
+a proof-of-spec status. **A consumer filters on the enum. The prose is the carrier that does not
+travel** — the same asymmetry as a subject line over a body.
+⚠ **`FAIL` was defensible when first written** — the earlier census found 0 of 138 and 0 of 18, so
+nothing existed. **The defect is not the original choice; it is that a re-measurement moved the world
+and the field stayed put.**
+
+**Certification consequence, and it cuts both ways:** ⛔ **I will not certify `TO-5-DS` complete under
+`FAIL` OR under the corrected value** — 5 of 6, and **only the 07:00Z fire discharges AC6.** The value
+change alters what a reader concludes, not whether the TO is done.
+⛔ **And a `status` edit is a RE-CERTIFICATION trigger, not an amend-and-disclose** (the line drawn for
+prose fields does not extend to the enum): the instance's own lane changes it, and I re-run.
+
 ---
 
 ## ~~A COROLLARY THAT BINDS MY CERTIFICATES~~ — **CORRECTED WITHIN THE HOUR; AS FIRST WRITTEN IT WAS A FALSE DICHOTOMY**
