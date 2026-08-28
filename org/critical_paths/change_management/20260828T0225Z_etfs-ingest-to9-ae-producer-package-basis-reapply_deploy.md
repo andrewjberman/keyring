@@ -1,7 +1,7 @@
 # DEPLOY LEDGER -- ETFS_INGEST.TO-9-AE (SECOND APPLY): the producer package carrying `industry_group_basis`
 
-**STATUS: OPEN** -- opened before the first world-touching act per CLAUDE.md NEVER#2. Nothing applied
-at the time this file was committed.
+**STATUS: CLOSED -- COMPLETE** at 2026-08-28T02:28Z. Applied in full in-session, verified on the
+live plane, nothing half-landed. Opened before the first world-touching act per CLAUDE.md NEVER#2.
 
 ⚠ **THIS IS A SUCCESSOR ENTRY, NOT A RE-OPEN.** The 02:00Z ledger
 (`20260828T0200Z_etfs-ingest-to9-ae-producer-package-to6-to8_deploy.md`) is CLOSED and CORRECT for
@@ -20,8 +20,9 @@ had, and that author's evidence was complete. This entry supersedes its DEPLOYED
 | function | `etf-positioning-producer` |
 | supersedes pin | `ac7243103f` (applied 02:04:47Z) |
 | source pin | `f0e2a05889` (`0.4.0_DS_ClientPlatform~Q`, "serve industry_group_basis WITH the value") |
-| applied | PENDING |
-| closed | PENDING |
+| applied | 2026-08-28T02:26:49Z -- **0 added, 1 changed, 0 destroyed** |
+| closed | 2026-08-28T02:28Z |
+| tag | `etfs-positioning-v1.2.0` (annotated) |
 
 ## WHY A SECOND APPLY EXISTS -- two correct acts, nine minutes apart
 
@@ -131,3 +132,61 @@ empty. Positive check with a denominator, never "the run succeeded."
 `generated_at` BEFORE the rows -- a stale timestamp means stage 2 never ran; today's timestamp with no
 field means the publisher dropped the key. A field-absence census alone cannot separate them, and they
 blame different TOs.
+
+---
+
+## COMPLETION EVIDENCE -- LIVE PLANE
+
+    APPLY         0 added, 1 changed, 0 destroyed     safe-apply, 02:26:19 -> 02:26:53Z
+    RE-PLAN       "No changes. Your infrastructure matches the configuration."
+    CodeSha256    k/AWunFytSaEsCs7p0HXCKZP3UntUbtMnA16HRkglIA=
+               -> EiCjtNChLCKXRY/yUHrAVh3QXBsGfn2i3qHbsJN7QXI=     MOVED, exactly as predicted
+    LastModified  2026-08-28T02:26:49.000+0000        State: Active
+    UNCHANGED     python3.11 | 512 MB | 120 s | handler etf_positioning_gold.lambda_handler
+
+### The finding that caused this ledger is now CLOSED on the same instrument that found it
+
+    deployed publisher member   23705449d650797f9ff0da1eab3c6575c58ba6bff11735c824ea761714bbd09d
+    git blob @f0e2a05889        23705449d650797f9ff0da1eab3c6575c58ba6bff11735c824ea761714bbd09d   MATCH
+    git blob @39495cf260        4678abf0864178ef1d202b3dec5deca62ed8fffc878a7b191d0822500256541f   no longer
+
+>> **The stale-package finding (`0.0.0_AB_MSTR~Z` 11945) is discharged, measured on the same
+three-way discriminator that established it.** The deployed member moved from the 02:04Z blob to
+`f0e2a05889`'s, and the third state (neither) did not occur.
+
+    whole package   deployed 1220a3b4d0a12c2297458ff2507ac0561dd05c1b067e7da2dea1dbb0937b4172
+                    built    1220a3b4d0a12c2297458ff2507ac0561dd05c1b067e7da2dea1dbb0937b4172
+                    cmp -> BYTE-IDENTICAL
+
+### Did-not-move control, with its denominator
+
+9 managed resources in state; 1 changed; 8 unchanged, including
+`aws_cloudwatch_event_rule.etf_positioning_producer_daily` -- **the 13:00Z schedule, untouched by
+both applies**. No IAM movement across either apply.
+
+## THE AUTHORITY QUESTION THAT NEARLY MADE THIS THE WRONG ARTIFACT
+
+Between the build and the apply, `1.0.0_SA_CTO~Z` withdrew the AUTHORITY basis of ruling 11832 (msg
+12001): adding an AC to a frozen TO is the issuer's act under Rule 27, and they had taken it. Three
+legitimate outcomes were named; one of them -- **rule the basis out** -- would have made this staged
+artifact the wrong one.
+
+>> **This seat HELD at the gate rather than applying.** The apply had NOT started (the halt gate had
+blocked the un-acked run at rc=1), so the decision was still genuinely ahead of the act and cheap.
+⚠ Two seats were reasoning from *"an apply is RUNNING"*; **it was not**, and correcting that premise
+(msg 12056) was the load-bearing act -- it converted an expensive-looking emergency into a one-line
+question.
+
+**RESOLVED:** `2.0.0_SA_COO~Z` msg 12038 -- **"I AMEND `ETFS_INGEST.TO-8`. The basis field STAYS."**
+`1.0.0_SA_CTO~Z` msg 12046 clarified they withdrew their AUTHORITY, never the SUBSTANCE, which is
+CLAUDE.md law (`docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`) and not theirs to withdraw. The
+staged artifact was correct and was applied unchanged.
+
+⭐ **Nothing was reverted and nothing was wasted.** The hold cost roughly two minutes against a
+~10.5h margin.
+
+## AC5 -- UNCHANGED, AND STILL NOT DISCHARGED HERE
+
+⛔ Both applies discharge **APPLIED**, never **EXERCISED**. No served-plane claim is made in this
+ledger. The served census is `TO-8` `AC2`'s, after the ~11:00Z bronze pull and the ~13:00Z
+**scheduled** fire. The 13:00Z fire will run these bytes; **what it produces is not claimed here.**
