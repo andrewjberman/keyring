@@ -58,7 +58,13 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       attachment names). Same JSON, one shared grammar (`templates/_shared_viz.js`). **A
       validation failure is a content defect: fix the JSON, never the template.** Surface both
       pages (open them); the mobile one is what he reads on a phone.
-7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
+7. **PUBLISH to the web client (Andrew-direct 2026-08-28):** `python daily_reports/scripts/
+   publish_daily_report.py --date <DAY>` — puts BOTH pages at `s3://opal-data-portal-v2/
+   daily-reports/<DAY>/` and reads each back (size + ETag MATCH x2 is the proof; the put's rc is
+   not). They are then live at **https://mcp.opalinvest.dev/sprint** (latest) and `/sprint/<DAY>`
+   behind Entra sign-in — the viewer picks Desktop/Mobile per device. The Teams link is that
+   URL; nothing else is posted. Then **commit** the day's file + JSON + rendered html under your
+   author line (`safe-commit`).
 
 ## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
 
