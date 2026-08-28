@@ -106,6 +106,53 @@ it is narrower than "7/7 PASS" reads, and this addendum is the proof: `AC2`'s ex
 strengthened *after* I certified it, by a measurement I had not seen. **A reader must not take this
 certificate as an audit of every row's substance.**
 
+## 3c. ⛔ ADDENDUM 03:03Z — `T7AE-AC1`'s DENOMINATOR IS BLIND TO IN-PLACE CHANGE. VERDICT UNCHANGED; THE QUALIFIER LIVES HERE.
+
+`0.7.0_AE_CloudOps~Y` verified the apply with the **same instrument and argv** as their pre-apply read
+— which is what makes the two comparable — and found:
+
+> *"'Exactly one added' and 'four re-pointed' were BOTH TRUE OF THE SAME APPLY. The counting control
+> could not have seen the re-point."*
+
+`AC1`'s denominator reads **27 behaviors post-apply vs 26 pre = exactly 1 added of 1 intended.** True
+about **ADDITIONS**, and **structurally blind to an in-place change**: four existing behaviors moved
+`:24 -> :25` and a cardinality check cannot see it. **A reader could take "exactly one added" as
+"nothing else changed." It does not say that, and it cannot — a cardinality check answers HOW MANY,
+never WHICH ONES.**
+
+### THE VERDICT DOES NOT CHANGE, AND I AM NOT RE-OPENING THE INSTANCE
+`AC1` is PASS **on its own subject** — the route exists, is scoped, and the MODELS/ETFS payloads did
+not move. Nothing is mis-scored, the denominator was never wrong, and the four re-points were
+**disclosed PROSPECTIVELY** in the deploy ledger, which states the apply *"ADDS the behavior **and
+re-pins existing behaviors to the new qualified_arn**"* and pre-explains the `lambda_arn "...:24" ->
+null` lines so nobody reads them as unwiring. The prediction was written before the act and the
+verification confirms it exactly. **Re-opening a certified artifact to widen a denominator that was
+never wrong is churn against a live "pure execution" instruction.**
+
+### ⛔ BUT THE QUALIFIER DOES NOT BELONG IN A BROKER MESSAGE, AND THAT IS MY CORRECTION TO THE DISPOSITION
+`0.7.0_AE_CloudOps~S` proposed *"this message is the carrier for the qualifier."* **A broker message is
+the weakest durable carrier this estate has, and tonight's whole catalogue is stale carriers.** The
+disclosure lives in the ledger; the blind denominator lives in the certified instance; **the two are
+different documents and the shorter one is what gets quoted.**
+>> **SO THE QUALIFIER GOES HERE, IN THE CERTIFICATE** — the artifact a later reader consults for the
+verdict. Amending my own record costs nothing, reaches the right reader, and requires the executor to
+re-open nothing. **The asymmetry is the point: the certifier can carry a bound the executor would have
+to churn to carry.**
+
+### ⭐ AND THE SIBLING ARM IS THE STRONGER EVIDENCE, AND IT IS NOT MINE
+`shared-advisor-router-response` **gained the association and HELD AT `:5`** — it did not republish.
+That is the positive control on *"only the changed artifact republishes."* The executor's own evidence
+showed the satellites router moved, **which is consistent with EVERYTHING republishing**; this shows a
+sibling that did **not**. Without that arm, "Terraform deploys the artifact, not the source" is an
+argument; with it, it is a measurement.
+
+### ⚠ AND MY OWN FRAMING PROPAGATED AN ERROR
+I called the cottonwood call *"the last unexercised rung of Andrew's item 2."* What was actually
+unexercised was **the HAPPY PATH**, with the security-relevant direction already measured — and
+`0.7.0_AE_CloudOps~S` reports inheriting that framing and repeating it into their own record.
+**A certifier's phrasing is adopted downstream faster than a certifier's caveats**, which is the
+second time tonight this seat has watched a headline outrun its qualifier.
+
 ## 4. WHAT THIS CERTIFICATION DOES NOT DO
 
 - Does **NOT** close `ETFS_POSITIONING-Z-S16` — staff still see a pill that 400s. The remedy fork spans
