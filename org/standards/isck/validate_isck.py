@@ -178,13 +178,36 @@ FIXTURES = {
         "source_frontier_id": f"sf:{ULID_A}", "executed_on_fabric": "laptop",
         "started_at": TS, "completed_at": TS2, "run_status": "succeeded",
         "random_seeds": "not_applicable",
-        "output_surface_version_ids": [f"sv:{ULID_A}"],
+        "output_surface_version_ids": [f"sv:{ULID_A}", f"sv:{ULID_B}"],
     },
     "source_frontier": {
         "record_type": "source_frontier", "source_frontier_id": f"sf:{ULID_A}",
+        "normalization_version": "coord_v1", "completeness": "complete", "expected_count": 1,
         "entries": [{
             "source_serial": f"ent:{ULID_A}", "identity_space": "iceberg_table",
             "authority_ref": "nessie:main", "source_version": "snapshot:8601547680771488785",
+            "canonical_key": "nessie:main/iceberg_table/ent:" + ULID_A,
+            "availability": "available", "referent_scope": "fabric_invariant",
+            "observed_at": TS, "observed_on_fabric": "laptop",
+        }],
+    },
+    # R3-CRO-8: a PARTIAL frontier keeps its unavailable source PRESENT, with the warrant of absence
+    "source_frontier_partial": {
+        "record_type": "source_frontier", "source_frontier_id": f"sf:{ULID_B}",
+        "normalization_version": "coord_v1", "completeness": "partial", "expected_count": 2,
+        "entries": [{
+            "source_serial": f"ent:{ULID_A}", "identity_space": "iceberg_table",
+            "authority_ref": "nessie:main", "source_version": "snapshot:8601547680771488785",
+            "canonical_key": "nessie:main/iceberg_table/ent:" + ULID_A,
+            "availability": "available", "referent_scope": "fabric_invariant",
+            "observed_at": TS, "observed_on_fabric": "laptop",
+        }, {
+            "source_serial": f"ent:{ULID_B}", "identity_space": "device_local_path",
+            "authority_ref": "file", "source_version": "unavailable",
+            "canonical_key": "file/C:/warehouse/catalog.db",
+            "availability": "unavailable", "absence_evidence": "probe:ENOENT@laptop",
+            "referent_scope": "device_local", "referent_fabric_id": "laptop",
+            "referent_device_id": "some-laptop",
             "observed_at": TS, "observed_on_fabric": "laptop",
         }],
     },
@@ -194,6 +217,18 @@ FIXTURES = {
         "content_digest": SHA, "fingerprint_method": "sha256_raw_bytes",
         "normalization_version": "none_raw_v0",
         "source_frontier_id": f"sf:{ULID_A}", "published_ref": None,
+        "publication_state": "unpublished",
+        "built_at": TS, "built_on_fabric": "laptop",
+    },
+    # R3-CRO-10: publication is a STATE with its receipt, never a bare ref
+    "surface_version_published": {
+        "record_type": "surface_version", "surface_version_id": f"sv:{ULID_B}",
+        "logical_surface_serial": f"ent:{ULID_A}", "producing_run_id": f"run:{ULID_A}",
+        "content_digest": SHA, "fingerprint_method": "sha256_raw_bytes",
+        "normalization_version": "none_raw_v0",
+        "source_frontier_id": f"sf:{ULID_A}", "published_ref": "kuzu:prod/current",
+        "publication_state": "published", "published_at": TS2,
+        "promoted_by": "0.7.0_AE_CloudOps", "promotion_evidence_refs": ["deploy:kuzu-prod@" + TS2],
         "built_at": TS, "built_on_fabric": "laptop",
     },
     "coherence_evaluation": {
@@ -205,6 +240,17 @@ FIXTURES = {
         "currency": "at_target", "provenance": "complete",
         "fabric_validity": "valid_for_fabric",
         "evidence_refs": ["obs:" + ULID_A],
+    },
+    # R3-CRO-11: latest_authority carries the head it RESOLVED to, or the verdict is not reproducible
+    "coherence_evaluation_latest": {
+        "record_type": "coherence_evaluation", "evaluation_id": f"ce:{ULID_B}",
+        "subject_ref": f"sv:{ULID_A}", "target_policy": "latest_authority",
+        "target_ref": "nessie:main", "resolved_target_ref": "nessie:main",
+        "resolved_target_version": "snapshot:8601547680771488785",
+        "evaluated_at": TS2, "evaluator": "1.0.0_SA_CTO~X",
+        "evaluated_on_fabric": "laptop", "availability": "available", "integrity": "unverified",
+        "currency": "unknown", "provenance": "complete",
+        "fabric_validity": "valid_for_fabric",
     },
 }
 
@@ -259,6 +305,18 @@ ATTACK_TARGETS = {
     "contest.survivor-not-a-contest-id": ["surviving_contest_id"],
     "relation.retirement-without-evidence": ["evidence_refs"],
     "mig.missing-evidence": ["evidence_refs"],
+    "frontier.missing-expected-count": ["expected_count"],
+    "frontier.entry-missing-canonical-key": ["canonical_key"],
+    "frontier.entry-unavailable-without-absence-evidence": ["absence_evidence"],
+    "frontier.entry-available-with-absence-evidence": ["absence_evidence"],
+    "frontier.entry-device-local-without-device": ["referent_device_id"],
+    "frontier.entry-invariant-with-fabric": ["referent_fabric_id"],
+    "surface.published-without-published-at": ["published_at"],
+    "surface.unpublished-with-published-at": ["published_at"],
+    "surface.unpublished-with-published-ref": ["published_ref"],
+    "surface.published-with-null-ref": ["published_ref"],
+    "coherence.latest-without-resolved-head": ["resolved_target_ref"],
+    "coherence.declared-release-with-resolved-head": ["resolved_target_ref"],
     "relation.evidence-empty-list": ["evidence_refs"],
     "matversion.partial-without-absent-components": ["absent_components"],
     "matversion.complete-without-bundle-fields": ["source_tree_digest", "dependency_lock_digest",
@@ -444,6 +502,31 @@ def _mutants():
         evidence_refs=_DEL)
     # (a) migration receipt: a rewrite without its evidence is the laundering defect by the remedy
     add("mig.missing-evidence", "migration_receipt", ["required"], evidence_refs=_DEL)
+    # ROUND 3 R3-CRO-5/6/8/10/11 (CRO~X at 36a5514df8): frontier completeness + locality +
+    # availability, surface publication state, coherence target resolution
+    add("frontier.missing-expected-count", "source_frontier", ["required"], expected_count=_DEL)
+    _e = copy.deepcopy(FIXTURES["source_frontier"]["entries"][0])
+    add("frontier.entry-missing-canonical-key", "source_frontier", ["required"],
+        entries=[{k: x for k, x in _e.items() if k != "canonical_key"}])
+    add("frontier.entry-unavailable-without-absence-evidence", "source_frontier", ["required"],
+        entries=[dict(_e, availability="unavailable")])
+    add("frontier.entry-available-with-absence-evidence", "source_frontier", ["not"],
+        entries=[dict(_e, absence_evidence="probe:ENOENT")])
+    add("frontier.entry-device-local-without-device", "source_frontier", ["required"],
+        entries=[dict(_e, referent_scope="device_local", referent_fabric_id="laptop")])
+    add("frontier.entry-invariant-with-fabric", "source_frontier", ["not"],
+        entries=[dict(_e, referent_fabric_id="laptop")])
+    add("surface.published-without-published-at", "surface_version_published", ["required"],
+        published_at=_DEL)
+    add("surface.unpublished-with-published-at", "surface_version", ["not"], published_at=TS2)
+    add("surface.unpublished-with-published-ref", "surface_version", ["type"],
+        published_ref="kuzu:prod/current")
+    add("surface.published-with-null-ref", "surface_version_published", ["type"],
+        published_ref=None)
+    add("coherence.latest-without-resolved-head", "coherence_evaluation_latest", ["required"],
+        resolved_target_ref=_DEL)
+    add("coherence.declared-release-with-resolved-head", "coherence_evaluation", ["not"],
+        resolved_target_ref="nessie:main")
     # honesty conditionals
     add("matversion.partial-without-absent-components", "materializer_version",
         ["required"], absent_components=_DEL)
@@ -555,6 +638,32 @@ def _semantic_mutants():
              claim_origin="producer_declared", evidence_refs=[f"rel:{ULID_A}"])),
         ("sem.observation-cites-own-vintage",
          _mk("state_observation", evidence_refs=["commit:9fc70e31a1"])),
+        ("sem.frontier-noncanonical-key",
+         _mk("source_frontier", entries=[dict(FIXTURES["source_frontier"]["entries"][0],
+                                              canonical_key="file/C:/warehouse/tmp/../catalog.db")])),
+        ("sem.frontier-same-canonical-key-two-versions",
+         _mk("source_frontier", completeness="partial", entries=[
+             FIXTURES["source_frontier"]["entries"][0],
+             dict(FIXTURES["source_frontier"]["entries"][0], source_serial=f"ent:{ULID_B}",
+                  source_version="snapshot:1")])),
+        ("sem.frontier-complete-count-mismatch",
+         _mk("source_frontier", expected_count=2)),
+        ("sem.frontier-complete-with-unavailable",
+         _mk("source_frontier", entries=[dict(FIXTURES["source_frontier"]["entries"][0],
+                                              availability="unavailable",
+                                              absence_evidence="probe:ENOENT")])),
+        ("sem.frontier-observed-after-run-start",
+         [_mk("source_frontier", entries=[dict(FIXTURES["source_frontier"]["entries"][0],
+                                               observed_at="2026-08-27T19:30:00Z")]),
+          _mk("materialization_run")]),
+        ("sem.surface-not-in-run-outputs",
+         [_mk("surface_version", surface_version_id=f"sv:{ULID_C}"), _mk("materialization_run")]),
+        ("sem.surface-frontier-disagrees-with-run",
+         [_mk("surface_version", source_frontier_id=f"sf:{ULID_B}"), _mk("materialization_run")]),
+        ("sem.published-from-failed-run",
+         [_mk("surface_version_published"), _mk("materialization_run", run_status="failed")]),
+        ("sem.published-before-run-completed",
+         [_mk("surface_version_published", published_at=TS), _mk("materialization_run")]),
         ("sem.frontier-duplicate-coordinate",
          _mk("source_frontier", entries=[
              FIXTURES["source_frontier"]["entries"][0],
@@ -584,9 +693,55 @@ def _parse_iso(v):
         return False
 
 
+def _batch_provenance_errors(instances):
+    """R3-CRO-7/9/10: cross-record checks that are decidable when BOTH records are in the batch
+    (frontier <-> run temporal order; surface <-> run membership + frontier identity; publication
+    only from a SUCCEEDED run and never before it completed). Beyond the batch: ledger, sec 6."""
+    errs = []
+    by_id = {}
+    for i, inst in enumerate(instances):
+        if isinstance(inst, dict):
+            pid = _PRIMARY_ID.get(inst.get("record_type"))
+            if pid and inst.get(pid):
+                by_id[inst[pid]] = (i, inst)
+    for i, inst in enumerate(instances):
+        if not isinstance(inst, dict):
+            continue
+        rt = inst.get("record_type")
+        if rt == "materialization_run":
+            sf = by_id.get(inst.get("source_frontier_id"))
+            if sf:
+                latest = max((e.get("observed_at", "") for e in sf[1].get("entries", [])
+                              if isinstance(e, dict)), default="")
+                if latest and isinstance(inst.get("started_at"), str) and latest > inst["started_at"]:
+                    errs.append(f"[{i}] materialization_run: consumes frontier [{sf[0]}] whose latest "
+                                f"observation {latest} is AFTER started_at {inst['started_at']} -- "
+                                "temporal impossibility (R3-CRO-7)")
+        if rt == "surface_version":
+            run = by_id.get(inst.get("producing_run_id"))
+            if run:
+                r = run[1]
+                if inst.get("surface_version_id") not in (r.get("output_surface_version_ids") or []):
+                    errs.append(f"[{i}] surface_version: names producing_run_id {r.get('run_id')} whose "
+                                "output_surface_version_ids does NOT include this surface (R3-CRO-9)")
+                if inst.get("source_frontier_id") != r.get("source_frontier_id"):
+                    errs.append(f"[{i}] surface_version: source_frontier_id {inst.get('source_frontier_id')} "
+                                f"DISAGREES with its producing run's {r.get('source_frontier_id')} (R3-CRO-9)")
+                if inst.get("publication_state") == "published":
+                    if r.get("run_status") != "succeeded":
+                        errs.append(f"[{i}] surface_version: PUBLISHED from a run with run_status="
+                                    f"{r.get('run_status')} -- only a succeeded run's output may become "
+                                    "authority (R3-CRO-10)")
+                    c = r.get("completed_at")
+                    if isinstance(c, str) and isinstance(inst.get("published_at"), str) and inst["published_at"] < c:
+                        errs.append(f"[{i}] surface_version: published_at {inst['published_at']} precedes "
+                                    f"the producing run's completed_at {c} (R3-CRO-10)")
+    return errs
+
+
 def semantic_errors(instances):
     """Field-pair, calendar, and batch checks the schema cannot express (sec 6 items 4/5/7)."""
-    errs = []
+    errs = _batch_provenance_errors(instances)
     seen = {}
     for i, inst in enumerate(instances):
         if not isinstance(inst, dict):
@@ -620,18 +775,41 @@ def semantic_errors(instances):
                         "contested, never active/provisional (sec 3.4)")
         # R2-6: frontier coordinate uniqueness (CRO~X gap 4 + COO~X 76588 R2-6, convergent)
         if rt == "source_frontier":
+            # R3-CRO-6: the coordinate key reads only schema-reachable fields (the old key read a
+            # dead `fabric_id`); R3-CRO-5: uniqueness ALSO runs on the declared canonical_key, and
+            # an obviously non-canonical key is rejected (the mechanical half; sec 6 limit 12)
             coords = {}
-            for j, e in enumerate(inst.get("entries", [])):
-                if not isinstance(e, dict):
-                    continue
-                key = (e.get("source_serial"), e.get("identity_space"),
-                       e.get("authority_ref"), e.get("fabric_id"))
+            canon = {}
+            entries = [e for e in inst.get("entries", []) if isinstance(e, dict)]
+            for j, e in enumerate(entries):
+                key = (e.get("source_serial"), e.get("identity_space"), e.get("authority_ref"),
+                       e.get("referent_fabric_id"), e.get("referent_device_id"))
                 if key in coords:
                     errs.append(f"[{i}] source_frontier: entries [{coords[key]}] and [{j}] pin "
                                 f"the SAME source coordinate {key} -- a frontier is a vector, one "
                                 "version per coordinate (sec 6 / R2-6)")
                 else:
                     coords[key] = j
+                ck = e.get("canonical_key")
+                if isinstance(ck, str):
+                    if "/../" in ck or "/./" in ck or "//" in ck or ck.endswith("/"):
+                        errs.append(f"[{i}] source_frontier: entry [{j}] canonical_key {ck!r} is "
+                                    "NOT canonical (dot-segments / empty segments / trailing "
+                                    "slash) -- normalize under normalization_version (R3-CRO-5)")
+                    prev = canon.get(ck)
+                    if prev is not None and entries[prev].get("source_version") != e.get("source_version"):
+                        errs.append(f"[{i}] source_frontier: entries [{prev}] and [{j}] share "
+                                    f"canonical_key {ck!r} with DIFFERENT source_version -- one "
+                                    "semantic coordinate double-counted (R3-CRO-5)")
+                    canon.setdefault(ck, j)
+            # R3-CRO-8: completeness is a CLAIM with a denominator, never an adjective
+            if inst.get("completeness") == "complete":
+                if inst.get("expected_count") != len(entries):
+                    errs.append(f"[{i}] source_frontier: completeness=complete but expected_count="
+                                f"{inst.get('expected_count')} vs {len(entries)} entries (R3-CRO-8)")
+                if any(e.get("availability") == "unavailable" for e in entries):
+                    errs.append(f"[{i}] source_frontier: completeness=complete with an UNAVAILABLE "
+                                "entry -- a complete frontier has no absent source (R3-CRO-8)")
         if rt == "materializer_version" and inst.get("supersedes") == inst.get("version_id") \
                 and inst.get("supersedes") is not None:
             errs.append(f"[{i}] materializer_version: supersedes itself")

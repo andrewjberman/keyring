@@ -87,9 +87,9 @@
       "source_ref": "20260828T025313Z",
       "finding_class": "BATTERY",
       "claim": "ARM-4 consume gate (_dispose, isck_coverage_probes.py:540-567 @36a5514df8): a structurally valid ORPHAN sidecar entry -- no ruling reason, no record link, no ruled_by/source ref, no bundle/rule digest -- suppresses a brand-new live arm as ADJUDICATED (exhibit: 0/0/0/1 -> 1/0/0/0 by swapping only the consumed JSON); _validate_entries ACCEPTS it. A hand/sweep insertion or a stale same-key ruling can hide a live arm while the gate prints disposed/auditable (charter scope item 3)",
-      "disposition": "FIXED",
-      "disposition_basis": "ROUTED to the module owner 0.4.0_DT_ClientPlatform~X (scoped override for the pathspec; CTO~X integrates at the citation). Remedy spec: every sidecar entry (ARM-4 AND the new ARM-1 sidecar) carries record_ref (the adjudication .md anchor), ruled_at (commit), and arm_digest (sha256 of the normalized then-clause + value set at adjudication); the loader IGNORES an entry missing any -> the row prints NEW + WARN (fail-open-to-NEW); digest mismatch -> LAPSE (the value-set lapse generalized); both-direction self-controls (orphan rejected; linked ruling accepted; stale-digest lapses; a legitimate current entry still suppresses). Same class as R3-DT-1's lesson: the artifact whose only job is to be trusted must prove its own provenance",
-      "fix_commit": "9b27b8c41e (DT~X, scoped override, 77235 authorization; lock announced 77241, released 20260828T030428Z)",
+      "disposition": "OPEN",
+      "disposition_basis": "ROUTED to the module owner 0.4.0_DT_ClientPlatform~X (scoped override for the pathspec; CTO~X integrates at the citation). Remedy spec: every sidecar entry (ARM-4 AND the new ARM-1 sidecar) carries record_ref (the adjudication .md anchor), ruled_at (commit), and arm_digest (sha256 of the normalized then-clause + value set at adjudication); the loader IGNORES an entry missing any -> the row prints NEW + WARN (fail-open-to-NEW); digest mismatch -> LAPSE (the value-set lapse generalized); both-direction self-controls (orphan rejected; linked ruling accepted; stale-digest lapses; a legitimate current entry still suppresses). Same class as R3-DT-1's lesson: the artifact whose only job is to be trusted must prove its own provenance || RE-ATTACK at 9b27b8c41e FAILED (CVO~X 20260828T030707Z; converged independently with DT~X R3-DT-4): record_ref/ruled_at were presence-checked, never RESOLVED -- a forged entry with the true arm_digest suppresses. DT~X building the resolution half (ruled_at resolves as a commit; record_ref exists AT ruled_at and contains the key; UNRESOLVED its own printed state; four controls incl. a historical linked-ruling ACCEPTANCE) under a second SINGULAR override (authorized 20260828T030xZ, msgs 77267-77270). The two ARM_ABSENT class-D rows are the RETAINED self-control fixture -- KEEP (COO~X audit rec, ruled).",
+      "fix_commit": "9b27b8c41e (partial: digest half) -> resolution half PENDING (DT~X)",
       "verification_ref": "OPEN-CITATION: CVO~X finder re-attack at 9b27b8c41e; CRO~X corroborates by construction",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
@@ -114,7 +114,7 @@
       "disposition": "FIXED",
       "disposition_basis": "3.21 MECE re-worded to the typed field; 3.19 opened arm table lists surviving_contest_id FORBIDDEN -- both carriers now agree with the schema. R3-CRO-3 stays AMENDED-RECORD but its amendment was PARTIAL until this row (recorded, not hidden)",
       "fix_commit": "(this commit; cited after landing)",
-      "verification_ref": "CVO~X Rule-24 re-certification of 3.19/3.21 at the citation",
+      "verification_ref": "CVO~X paired re-verify PASS at 130e3afb1b (20260828T030757Z) -- CLOSED",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -126,7 +126,7 @@
       "disposition": "FIXED",
       "disposition_basis": "run_gates.sh parses the GAPS consume line like the REQUIRE-ONLY one: open = N - adjudicated; a missing line renders UNREAD, never the raw count",
       "fix_commit": "(this commit)",
-      "verification_ref": "OPEN-CITATION (any seat: run_gates.sh at the citation prints ARM1 1 of 8 undisposed)",
+      "verification_ref": "COO~X CLOSED at citation 130e3afb1b (20260828T030754Z)",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -135,10 +135,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "source_frontier coordinate normalization absent: raw-string uniqueness lets file:C:/warehouse/catalog.db and file:C:/warehouse/tmp/../catalog.db with conflicting versions pass (schema 0 / semantic 0) while the identical-string duplicate rejects (control semantic 1) -- one semantic coordinate double-counted",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner 1.0.0_SA_CTO~X: declared coordinate canonicalization (normalization_version on the frontier + a canonical_key the semantic arm keys on); non-canonical or colliding normalized keys REJECT/HOLD; mutant + control",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -147,10 +147,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "frontier entry locality is unrepresentable (entry schema exposes no referent_scope / fabric / device) and the validator's coordinate key reads a DEAD field e.get('fabric_id'); device_local_path + file:C:/... with no device key validates",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: referent_scope on frontier entries with the two-directional fabric/device arms (the R2-1 idiom); validator keys only schema-reachable fields; mutants both directions",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -159,10 +159,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "temporal impossibility accepted: frontier observed_at 19:30Z consumed by a run started 17:30Z / completed 18:30Z -- every record schema-valid, batch semantic 0",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: batch semantic arm -- max frontier observed_at must not exceed the consuming run's started_at (the consumption instant made explicit); ledger scope declared for cross-batch",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -171,10 +171,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "completeness/absence denominator missing on source_frontier: no expected-coordinate set/count, no available/unavailable state; source_version=unavailable passes as an ordinary version; the coherence fixture asserts provenance=complete against such a frontier -- an unavailable expected source can silently disappear",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: expected_coordinates (set or count) + per-entry availability {available|unavailable}; provenance=complete REQUIRES an accounted-for denominator; unavailable stays PRESENT with evidence; mutants per arm",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -183,10 +183,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "surface provenance joins disagree while every referent exists: run consumes sf:A / surface claims sf:B (both present) -> 0/0; surface.producing_run_id=run:A while run:A.output_surface_version_ids names sv:B not sv:A -> 0/0. NOT the nonexistent-ref limit-3 exhibit",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: batch semantic arm -- bidirectional run<->output membership and frontier/materializer provenance identity when both records are in the batch; ledger scope declared beyond the batch",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -195,10 +195,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "publication has no guard: a FAILED run's emitted surface with published_ref=kuzu:prod/current validates; surface_version has no published_at, no promotion state/evidence -- publication-before-completion is unrepresentable (failed-with-outputs itself stays legal per 3.9; the cut is promotion)",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: typed publication/promotion receipt (published_at, source run + output, promoter, evidence) or equivalent fields on surface_version; reject failed/unpromoted authority and temporal inversion; arm table + mutants",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -207,10 +207,10 @@
       "source_ref": "20260828T025832Z (REWORK 77218, R3-CRO-5..13)",
       "finding_class": "CONTRACT",
       "claim": "latest_authority target need not resolve: coherence_evaluation target_policy=latest_authority with target_ref='latest' validates (target_ref is only nonempty) -- the verdict has no concrete reproducible head",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner CTO~X: latest_authority REQUIRES a resolved immutable head (ref + version/digest) recorded beside the request; two-directional arm; mutants",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "(this commit -- R3-CRO-5..11 landing)",
+      "verification_ref": "OPEN-CITATION: CRO~X re-attack at the landing citation",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -259,6 +259,30 @@
       "disposition_basis": "OPEN-SUBSUMED by R3-CVO-2: arm_digest (normalized then-clause) makes two same-key arms carry different digests so at most one entry matches; close on the R3-CVO-2 landing, not separately",
       "fix_commit": "9b27b8c41e (with R3-CVO-2: arm_digest makes two same-key arms carry different digests)",
       "verification_ref": "closes on CVO~X's R3-CVO-2 re-attack",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-DT-4",
+      "source_seat": "0.4.0_DT_ClientPlatform~X",
+      "source_ref": "20260828T030705Z (self-found, against its own 9b27b8c41e)",
+      "finding_class": "BATTERY",
+      "claim": "of the three link fields only arm_digest has teeth: record_ref and ruled_at are presence-checked and never resolved (source census: each occurs in 3 non-comment places, none opens/resolves it) -- an entry proves a MATCHING ARM EXISTS, not that a RULING WAS MADE; a forged pair beside the true digest is LINKED and suppresses. Converged with CVO~X's re-attack within ~2 minutes by a different route. Transferable half: a control set built by perturbing what the guard READS cannot find what the guard does not read",
+      "disposition": "OPEN",
+      "disposition_basis": "merged into R3-CVO-2's resolution half (same root, same fix); closes with it",
+      "fix_commit": "OPEN (with R3-CVO-2)",
+      "verification_ref": "CVO~X finder re-attack at DT~X's next hash",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CRO-14",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T030954Z",
+      "finding_class": "RECORD",
+      "claim": "broadcast 77251 said 'derive at HEAD -> +15'; exact derivation at the cited commit 130e3afb1b is +17 (post_boundary_amendments = 17). Same tree-scoped-number travel class as R3-CRO-4",
+      "disposition": "AMENDED-RECORD",
+      "disposition_basis": "the +15 was derived when HEAD was e29ac3ab23 (three commits earlier) and quoted as 'HEAD' without its hash -- a HEAD-relative figure is a tree-scoped number; corrected here: +15 @e29ac3ab23, +17 @130e3afb1b. Rule from here: a derived count is quoted WITH the commit it was derived at, never as 'HEAD'",
+      "fix_commit": "(this commit)",
+      "verification_ref": "CRO~X's own exact derivation (the source of the corrected figure); second seat = anyone re-running bundle_identity.py at both commits",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],

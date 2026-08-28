@@ -204,8 +204,10 @@ this directive found has hidden in).
 DOMAIN: the locality the REFERENCED STATE claims (never where the act ran — that is the execution
 family). MECE: `fabric_local` ADDED (GPT review) — the round-1 hunted member
 "fabric-scoped-but-multi-device" now has its cell instead of an out-of-scope note. GRAIN:
-referent, per record (entity_binding + state_observation; runs carry NO referent scope — an event
-has a location, not a locality claim). INTENT: Rule 26 locality of the referent, one axis.
+referent, per record (entity_binding + state_observation + **every `source_frontier` entry** —
+round 3 R3-CRO-6: a consumed device-local source that cannot name its device is the Rule-26 hole at
+the frontier grain; runs carry NO referent scope — an event has a location, not a locality claim).
+INTENT: Rule 26 locality of the referent, one axis.
 STATE-COHERENCE: structural classification, no remedy axis.
 ARM TABLE (two-directional BY IDIOM): `fabric_invariant -> referent_fabric_id AND
 referent_device_id FORBIDDEN` · `fabric_local -> referent_fabric_id REQUIRED, referent_device_id
@@ -282,7 +284,13 @@ topology. STATE-COHERENCE: relations are append-only; `superseded_by` is the onl
 AS A CONTINUATION by the ruling's own cardinality derivation — a lying record the architecture
 itself would interpret; the schema cannot compare two fields, the validator can and does.
 
-### 3.13 `target_policy` — `latest_authority | declared_release | as_of_frontier | historical_replay`
+### 3.13 `target_policy` — `latest_authority | declared_release | as_of_frontier | historical_replay` (round 3, R3-CRO-11: `latest_authority` RESOLVES)
+ARM TABLE (two-directional, added R3-CRO-11): `latest_authority -> resolved_target_ref +
+resolved_target_version REQUIRED` (the head the evaluation actually compared against — a verdict
+against "latest" with no resolved head is not reproducible) · `declared_release | as_of_frontier |
+historical_replay -> both FORBIDDEN` (the target IS the ref; a resolution field on a pinned target
+is a second carrier that drifts). Mutants `coherence.latest-without-resolved-head`,
+`coherence.declared-release-with-resolved-head`; fixture `coherence_evaluation_latest`.
 DOMAIN: what a coherence evaluation compares against. MECE over target choices; kills the
 false-stale class ("behind" exists only relative to a DECLARED target). GRAIN: evaluation. INTENT:
 comparison frame. STATE: structural.
@@ -434,6 +442,43 @@ a-change-is-an-observation, so a rewritten standing carries `claim_origin: rule_
 map in `evidence_refs` (AT-1), making a migrated value DISCRIMINABLE from a virgin one. ARM TABLE:
 no conditional — every field REQUIRED (`evidence_refs` included: mutant `mig.missing-evidence`).
 
+### 3.24 `source_frontier.completeness` — `complete | partial` (round 3, R3-CRO-8)
+DOMAIN: whether the frontier accounts for every source the run EXPECTED. MECE: a frontier either
+carries every expected coordinate (`complete`) or fewer (`partial`); the denominator is
+`expected_count` (REQUIRED on both values — a partial frontier that cannot say how partial is the
+adjective this record exists to retire). Hunted member — "unknown expectation" → the writer names
+the count it ran with; a run with no expectation is a run with no frontier. GRAIN: one frontier.
+INTENT: one axis — accounting completeness (never data quality). STATE-COHERENCE: `partial ->
+complete` moves by a NEW frontier (append-only; LAW 5) when the absent source appears — owner: the
+frontier writer (the run's executor). ARM TABLE: none conditional (`expected_count` unconditional);
+SEMANTIC: `complete` REQUIRES `expected_count == len(entries)` AND no `unavailable` entry
+(`sem.frontier-complete-count-mismatch`, `sem.frontier-complete-with-unavailable`).
+
+### 3.25 `source_frontier.entries[].availability` — `available | unavailable` (round 3, R3-CRO-8)
+DOMAIN: whether the source at this coordinate could be read when the frontier was compiled. MECE:
+read (`available`, carries `source_version`) or not (`unavailable`, PRESENT with its
+`absence_evidence` — the source does not disappear from the vector, R2-5's rule at the frontier
+grain). Hunted member — partially readable → `available` with the partial version named; the
+degree lives on the observation, not here. GRAIN: one entry. INTENT: one axis — readability at
+compile time. STATE-COHERENCE: `unavailable -> available` moves by a NEW frontier (owner: the
+writer). ARM TABLE (two-directional, entry-level — invisible to ARM 1/4, which read record-level
+arms only; declared): `unavailable -> absence_evidence REQUIRED` · `available -> absence_evidence
+FORBIDDEN`. Entry locality (R3-CRO-6): every entry carries `referent_scope` with the §3.7
+two-directional fabric/device arms — a device-local path with no device key is unrepresentable.
+
+### 3.26 `surface_version.publication_state` — `unpublished | published` (round 3, R3-CRO-10)
+DOMAIN: whether this immutable surface has been PROMOTED to an authority ref. MECE: a surface is
+built (always) and either promoted or not; `published_ref` alone was a bare string that could be
+set on a failed run's output (CRO's exhibit). Hunted member — "promoted then withdrawn" → a NEW
+surface_version or a retirement on the authority, never a mutation (LAW 3). GRAIN: one surface
+version. INTENT: one axis — promotion state. STATE-COHERENCE: `unpublished -> published` moves by
+the PROMOTER (owner: the authority holder, e.g. the deploy lane) with a receipt. ARM TABLE
+(two-directional): `published -> published_ref (nonempty) + published_at + promoted_by +
+promotion_evidence_refs REQUIRED` · `unpublished -> published_ref null, the three FORBIDDEN`.
+SEMANTIC (batch): a published surface's producing run must be `succeeded` and `published_at >=
+run.completed_at` (`sem.published-from-failed-run`, `sem.published-before-run-completed`).
+Failed-with-outputs stays legal (§3.9); what is guarded is PROMOTION.
+
 ## 4. CONDITIONAL REQUIREMENTS (the consuming half — all mechanical)
 
 The full set now spans: three-field fingerprint coupling (every direction, every failure_state) ·
@@ -503,6 +548,15 @@ Classified per DT-2's taxonomy (genuinely-inexpressible vs deferred vs process-n
     grain (limit 3's class); (iii) a `resolved` event's `contest_id` must match an `opened` one —
     batch-scope at best. All three become REJECTED-WRITE rules when the ledger lands; until then a
     certification touching them names the exclusion.
+12. **FRONTIER CANONICALIZATION — declared, PARTIALLY MECHANICAL (round 3, R3-CRO-5):** the writer
+    supplies `canonical_key` under the frontier's `normalization_version`; the validator rejects an
+    OBVIOUSLY non-canonical key (dot-segments, empty segments, trailing slash) and two entries
+    sharing a `canonical_key` with different `source_version`. It CANNOT prove two syntactically
+    different keys are the same source (that needs the normalizer itself, WP-3) — a mis-canonicalized
+    key that happens to be well-formed passes. **Cross-batch provenance (R3-CRO-7/9/10)** — frontier
+    observed-before-run-start, run<->surface membership + frontier identity, publication only from a
+    succeeded run and after it completed — is enforced WITHIN A BATCH by `_batch_provenance_errors`
+    and is ledger-scope beyond it (limit 3's class).
 
 ## 7. CHANGELOG v0 → v0.1 (finding → fix; full tally in BOUNDARY_ROUND1.md)
 
@@ -548,3 +602,18 @@ commit):** REWORK-1 `retirement -> evidence_refs REQUIRED` (§3.12; the reason s
 REWORK-2 `merged -> surviving_contest_id` typed `ct:` REQUIRED + `consequence_refs` FORBIDDEN;
 `upheld` forbids the survivor; `dismissed` forbids both (§3.21 arm table re-recorded — it had
 omitted `merged`). Register: `ROUND3_FINDING_REGISTER.json` R3-CRO-1..4, R3-CVO-1.
+
+**Round-3 REWORK 5–11 (`4.0.0_SA_CRO~X` at 36a5514df8; landed as one commit):** `source_frontier`
+gains `normalization_version`, `completeness` (§3.24) + `expected_count`; every entry gains
+`canonical_key`, `availability` (§3.25) + `absence_evidence`, and `referent_scope` with the §3.7
+fabric/device arms; the validator's coordinate key reads only schema-reachable fields (it read a
+dead `fabric_id`); semantic: non-canonical keys, same-key-two-versions, complete-count mismatch,
+complete-with-unavailable · `surface_version` gains `publication_state` (§3.26) with the
+publication receipt fields · `coherence_evaluation` gains `resolved_target_ref/version` on
+`latest_authority` (§3.13) · batch provenance: frontier observed-after-run-start, surface not in
+run outputs, surface/run frontier disagreement, published-from-failed-run,
+published-before-completion (`_batch_provenance_errors`; §6 limit 12). Battery: 21 fixtures ·
+99 mutants · 20 semantic · 23 enum records. ARM 3 prints two OPEN companion repairs
+(`latest_authority`, `published`) until `0.4.0_DT_ClientPlatform~X`'s next consume-gate commit
+carries them (the probe module was under DT~X's announced lock at this landing — declared, not
+hidden).

@@ -1335,7 +1335,10 @@
       "required": [
         "record_type",
         "source_frontier_id",
-        "entries"
+        "entries",
+        "normalization_version",
+        "completeness",
+        "expected_count"
       ],
       "properties": {
         "record_type": {
@@ -1357,7 +1360,10 @@
               "authority_ref",
               "source_version",
               "observed_at",
-              "observed_on_fabric"
+              "observed_on_fabric",
+              "canonical_key",
+              "availability",
+              "referent_scope"
             ],
             "properties": {
               "source_serial": {
@@ -1377,9 +1383,157 @@
               },
               "observed_on_fabric": {
                 "$ref": "#/$defs/nonempty"
+              },
+              "canonical_key": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "availability": {
+                "enum": [
+                  "available",
+                  "unavailable"
+                ]
+              },
+              "absence_evidence": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "referent_scope": {
+                "$ref": "#/$defs/referent_scope"
+              },
+              "referent_fabric_id": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "referent_device_id": {
+                "$ref": "#/$defs/nonempty"
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "availability": {
+                      "const": "unavailable"
+                    }
+                  },
+                  "required": [
+                    "availability"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "absence_evidence"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "availability": {
+                      "const": "available"
+                    }
+                  },
+                  "required": [
+                    "availability"
+                  ]
+                },
+                "then": {
+                  "not": {
+                    "required": [
+                      "absence_evidence"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "fabric_invariant"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "not": {
+                        "required": [
+                          "referent_fabric_id"
+                        ]
+                      }
+                    },
+                    {
+                      "not": {
+                        "required": [
+                          "referent_device_id"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "fabric_local"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "required": [
+                        "referent_fabric_id"
+                      ]
+                    },
+                    {
+                      "not": {
+                        "required": [
+                          "referent_device_id"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "device_local"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "referent_fabric_id",
+                    "referent_device_id"
+                  ]
+                }
+              }
+            ]
           }
+        },
+        "normalization_version": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "completeness": {
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "expected_count": {
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
@@ -1396,7 +1550,8 @@
         "normalization_version",
         "source_frontier_id",
         "built_at",
-        "built_on_fabric"
+        "built_on_fabric",
+        "publication_state"
       ],
       "properties": {
         "record_type": {
@@ -1447,8 +1602,100 @@
         },
         "built_on_device": {
           "$ref": "#/$defs/nonempty"
+        },
+        "publication_state": {
+          "enum": [
+            "unpublished",
+            "published"
+          ]
+        },
+        "published_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "promoted_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "promotion_evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "publication_state": {
+                "const": "published"
+              }
+            },
+            "required": [
+              "publication_state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "published_ref",
+                  "published_at",
+                  "promoted_by",
+                  "promotion_evidence_refs"
+                ]
+              },
+              {
+                "properties": {
+                  "published_ref": {
+                    "$ref": "#/$defs/nonempty"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication_state": {
+                "const": "unpublished"
+              }
+            },
+            "required": [
+              "publication_state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "properties": {
+                  "published_ref": {
+                    "type": "null"
+                  }
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "published_at"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "promoted_by"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "promotion_evidence_refs"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
     },
     "coherence_evaluation": {
       "type": "object",
@@ -1547,6 +1794,12 @@
         },
         "evaluated_on_device": {
           "$ref": "#/$defs/nonempty"
+        },
+        "resolved_target_ref": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "resolved_target_version": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "allOf": [
@@ -1628,6 +1881,58 @@
                 "delta_summary"
               ]
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_policy": {
+                "const": "latest_authority"
+              }
+            },
+            "required": [
+              "target_policy"
+            ]
+          },
+          "then": {
+            "required": [
+              "resolved_target_ref",
+              "resolved_target_version"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_policy": {
+                "enum": [
+                  "declared_release",
+                  "as_of_frontier",
+                  "historical_replay"
+                ]
+              }
+            },
+            "required": [
+              "target_policy"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "resolved_target_ref"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "resolved_target_version"
+                  ]
+                }
+              }
+            ]
           }
         }
       ]
