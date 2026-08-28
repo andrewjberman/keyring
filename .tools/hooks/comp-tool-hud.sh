@@ -116,7 +116,13 @@ if [ "$tool" = Bash ] && ! printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_-])(g
 fi
 if [ "$tool" = Bash ] && [ "$_search_shape" != none ]; then
   if printf '%s' "$query" | grep -qE '\|[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag)([[:space:]]|$)'; then _pipe_receiver=1; fi
-  _segs="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E 's/&&|\|\||;/\n/g')"
+  # QUOTED STRINGS ARE OPAQUE. A `|`, `;` or `&&` INSIDE a quoted pattern (`grep -n 'a\|b' f.py`) is
+  # not a pipe or a separator; masking quoted bodies to Q before the split keeps the first stage and
+  # the segment boundaries honest. Measured 2026-08-28 on this seat: the unmasked splitter cut
+  # `grep -n '^def \|^X' .tools/_comprail.py | head` at the pattern's `\|` and DENIED a single-file
+  # grep as "directory" -- a false deny the FP test now carries.
+  _masked="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g")"
+  _segs="$(printf '%s' "$_masked" | sed -E 's/&&|\|\||;/\n/g')"
   while IFS= read -r _s; do
     _s="$(printf '%s' "$_s" | sed -E 's/^[[:space:]]*//; s/^(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|env|sudo|time|nice)[[:space:]]+)*//; s/#.*$//')"
     [ -z "$_s" ] && continue

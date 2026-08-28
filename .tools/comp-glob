@@ -1,136 +1,67 @@
 #!/usr/bin/env python3
-"""comp-glob [glob-pattern] [pathspec ...] -- the ON-RAILS .gitignore-aware file finder
-(NFRA_COMPRAIL TO-2, Andrew-direct: "build comp-grep and comp-glob" 2026-06-22).
+"""comp-glob -- RETIRED NAME, now a forwarder onto `comp-find --name` (Andrew-direct 2026-08-28,
+"how it ties into comp-grep/glob as a forwarder"; brief docs/architecture/COMP_FIND_MECHANICS.md).
 
-THE ROLE: the never-dead-end primitive for "find/list files" intents -- the on-rails
-counterpart to the native Glob tool. Same .gitignore-aware working set as comp-grep
-(shared _comprail.gitignore_aware_files, which RECURSES nested git repos like portal),
-so it NEVER lists node_modules/.terraform/build artifacts and is repo-scoped by construction.
+comp-find --name is the graded, paged, corpus-aware file finder (same enumerator, printed
+denominator, HEAD band for filename hits). This forwarder maps the 2026-06-22 comp-glob surface onto
+it and prints ONE WARN line so the habit corrects itself. The original body is in git history
+(`git show a13f7445a5:.tools/comp-glob`).
 
-THE INTERPLAY (Andrew-direct 2026-06-22 -- grep/glob flexibility + systems understanding):
-glob stays fully flexible (any pattern, any pathspec), but the result arrives WITH a
-SYSTEMS CONTEXT block mapping the system-significant files found to the comp-tool that
-explains their dependencies -- so an agent finding e.g. a gold script also sees
-`comp-pipescript io <it>`, and doesn't treat the file as isolated text. Every run logs a
-parseable line to org/mcp/comp-which-rail.log (the TO-5 coverage-audit feed).
-
-HONEST TRADEOFF: for a quick known-dir listing, native Glob is faster and fine (unguarded).
-comp-glob is the rail for the gated case + comp-which's run-the-primitive branch + when you
-want the dependency context alongside the file list.
-
-Read-only, deterministic, ASCII-only.
+Flag map:  <glob> [pathspec ...] -> --name '<glob>' [pathspec ...]
+           --glob P -> --name P   |   --max N -> --limit N   |   --include-held -> passthrough
+           no pattern, one existing path -> --name '*' <path>   (list everything under it)
 """
 from __future__ import annotations
 
-import fnmatch
 import os
+import subprocess
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _comprail  # noqa: E402
 
-WS = _comprail.repo_root()
-RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
-MAX_LIST_DEFAULT = 500
-
-
-def _looks_glob(s: str) -> bool:
-    return any(ch in s for ch in "*?[")
+def _looks_like_glob(s: str) -> bool:
+    return any(c in s for c in "*?[")
 
 
 def main() -> int:
-    _comprail.harden_stdout()
     argv = sys.argv[1:]
+    here = os.path.dirname(os.path.abspath(__file__))
+    target = os.path.join(here, "comp-find")
+    ws = os.path.dirname(here)
     if argv and argv[0] in ("-h", "--help"):
-        print('comp-glob [glob-pattern] [pathspec ...] [--max N]  -- on-rails, .gitignore-aware file find.')
-        print('  e.g. comp-glob "*.deck.md"')
-        print('       comp-glob "*Advisor*.tsx" portal/src')
-        print('       comp-glob data/cot/scripts/gold        (no pattern = list everything under the pathspec)')
+        print("comp-glob is RETIRED -> forwards to comp-find --name. Use: comp-find --name '<glob>' [pathspec ...]")
+        print("  (comp-find --help for the graded/paged/corpus flags)")
         return 0
-
-    glob_pat = None
-    include_held = False
-    max_list = MAX_LIST_DEFAULT
-    pathspec = []
+    pattern = None
+    passthrough: list[str] = []
+    positional: list[str] = []
     i = 0
     while i < len(argv):
         a = argv[i]
         if a == "--glob":
             i += 1
-            glob_pat = argv[i] if i < len(argv) else None
-        elif a == "--include-held":
-            include_held = True  # audited directed override of the sovereign-held guard (GG1)
+            pattern = argv[i] if i < len(argv) else None
         elif a == "--max":
             i += 1
-            try:
-                max_list = int(argv[i])
-            except Exception:
-                max_list = MAX_LIST_DEFAULT
-        elif glob_pat is None and (_looks_glob(a) or not os.path.exists(os.path.join(WS, a))):
-            # First glob-looking positional = the pattern (native-Glob ergonomics). ALSO: a bare
-            # positional that is not an existing path is a BASENAME pattern, not a pathspec.
-            # Before this, `comp-glob comp_ladder.py` (no metachar) was consumed as a PATHSPEC,
-            # the pathspec did not exist, and the tool printed "OK: comp-glob -- 0 file(s)" -- a
-            # CONFIDENT WRONG ANSWER about a git-tracked file, i.e. exactly the silent dead-end
-            # Rule 21 promises comp-glob never produces. The basename fnmatch below then makes
-            # `comp_ladder.py` behave as `**/comp_ladder.py`, which is what an agent typing it means.
-            # (DS~B, NFRA_EDGES P2, routed via COO~B 2026-07-09.)
-            glob_pat = a
+            passthrough.extend(["--limit", argv[i] if i < len(argv) else "25"])
+        elif a.startswith("-"):
+            passthrough.append(a)
         else:
-            pathspec.append(a)
+            positional.append(a)
         i += 1
-
-    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
-    if files is None:
-        print("comp-glob: BLOCKED: %s" % err)
-        _comprail.log_rail(RAIL_LOG, "RUN-GLOB-ERR", "comp-glob", glob_pat or (",".join(pathspec) or "."),
-                           'q="%s"' % err)
+    if pattern is None and positional:
+        first = positional[0]
+        if _looks_like_glob(first) or not os.path.exists(os.path.join(ws, first)):
+            pattern = positional.pop(0)      # native-Glob ergonomics: first glob-looking positional = the pattern
+    if pattern is None:
+        pattern = "*"                         # no pattern = list everything under the pathspec(s)
+    out = ["--name", pattern, *positional, *passthrough]
+    print("WARN: comp-glob is retired (2026-08-28); forwarding to: comp-find " + " ".join(out), file=sys.stderr)
+    try:
+        return subprocess.call([sys.executable, target, *out])
+    except OSError as e:
+        print(f"ERROR: could not run comp-find at {target}: {e}", file=sys.stderr)
         return 2
-
-    if glob_pat:
-        files = [f for f in files
-                 if fnmatch.fnmatch(f, glob_pat) or fnmatch.fnmatch(os.path.basename(f), glob_pat)]
-
-    files.sort()
-    total = len(files)
-    truncated = total > max_list
-    shown = files[:max_list]
-    for f in shown:
-        print(_comprail.ascii_safe(f))
-
-    print("")
-    if held_note:
-        # sovereign-held guard (GG1): LOUD -- excluded held paths are NOT 'confirmed absent'
-        print("comp-glob: %s" % held_note)
-    if total == 0:
-        # NEVER "OK: 0 file(s)" -- that reads as "confirmed absent" and is the confident-wrong
-        # answer the rail exists to prevent. 0 hits is an honest NOT-FOUND-HERE, with the next
-        # move stated (Rule 21: never a dead-end).
-        print("NO MATCH: comp-glob -- 0 file(s) for pattern=%s pathspec=%s"
-              % (glob_pat or "-", ",".join(pathspec) or "."))
-        print("  This is NOT a confirmation the file is absent -- it is 0 hits in the")
-        print("  .gitignore-aware working set. Next: widen the pattern (`%s*`), search content"
-              % (glob_pat or "name"))
-        print("  instead (`comp-grep <text>`), or check whether the path is gitignored")
-        print("  (`git check-ignore -v <path>`) -- 16 of the .tools/comp-* files are.")
-        _comprail.log_rail(RAIL_LOG, "RUN-GLOB", "comp-glob", glob_pat or (",".join(pathspec) or "."),
-                           "count=0 pattern=%s" % (glob_pat or "-"))
-        return 0
-    foot = "OK: comp-glob -- %d file(s)" % total
-    if truncated:
-        foot += " [showing first %d; --max to raise or narrow the pathspec/pattern]" % max_list
-    print(foot)
-    print("  (on-rails: repo-scoped + .gitignore-aware [incl. nested repos] + logged to org/mcp/comp-which-rail.log)")
-
-    # SYSTEMS UNDERSTANDING (the interplay): annotate the system-significant files found with the
-    # comp-tool that explains their dependencies -- so a file-find is dependency-aware, not flat.
-    for line in _comprail.systems_context(shown):
-        print(line)
-
-    _comprail.log_rail(RAIL_LOG, "RUN-GLOB", "comp-glob", glob_pat or (",".join(pathspec) or "."),
-                       "count=%d path=%s pattern=%s" % (total, ",".join(pathspec) or ".", glob_pat or "-"))
-    return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())
