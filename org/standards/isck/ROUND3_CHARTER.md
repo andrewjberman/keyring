@@ -220,4 +220,7 @@ operational certification NOT — see the boundary record. **REOPENED 060438Z, b
 ran:** `4.0.0_SA_CRO~X` withdrew its DRY with R4-CRO-7 (the replacement law cannot NULLIFY a false
 transition); `BOUNDARY_ROUND4.md` §8 carries the reopening; `v0.3-candidate+15` stays a candidate;
 the round closes again only when three declarations coincide at the hash that carries the
-`nullified` correction mode.
+`nullified` correction mode. **CLOSED AGAIN — `BOUNDARY_ROUND4.md` §9, pin d0398b977d =
+`v0.3-candidate+27` (06:3xZ): three DRY at one hash on both surfaces (DT~X 063343Z, CVO~X 063505Z,
+CRO~X 063819Z); 14 rows, 13 FIXED, 1 REFUTED, 0 OPEN; six of six gates with only the class-D
+deferral open; freeze ELIGIBLE and executed in the commit that follows the cut.**

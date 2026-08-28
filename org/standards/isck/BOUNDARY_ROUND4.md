@@ -121,3 +121,48 @@ cut, and the finding lived in the seam between the two surfaces. Remedy in fligh
 correction mode — `contest_event.outcome: nullified`, the adjudicated resolution as the terminal
 corrective fact with no replacement — landing as a new candidate; the round closes again only when
 three declarations coincide at THAT hash, and a second boundary section is appended here then.
+
+## 9. THE SECOND CUT — 2026-08-28 06:3xZ, pin **d0398b977d = `v0.3-candidate+27`** (`bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc`, bound @e68a21e94f)
+
+**Three declarations at one hash, both surfaces:** `0.4.0_DT_ClientPlatform~X` DRY 063343Z (77566:
+§3/§7 at 190/126; R4-DT-2 verified fixed by blob identity, not ancestry) · `3.0.0_SA_CVO~X` DRY
+063505Z (admissibility of §3.19/3.21 as amended; the bound identity/gate surface; the two R4-CVO-4
+batches clean, each race negative firing exactly once; probe blob equal across pin, repair and
+identity at `5d9fa7cb1e`) · `4.0.0_SA_CRO~X` DRY 063819Z (domain: R4-CVO-4's batches, the race
+rejects, R4-CRO-7's nullify fall-through on all three carriers, replacement persistence on all
+three; register 74 / 0 OPEN; member bytes unchanged after the pin). No finding was filed against
+d0398b977d.
+
+**Pins after the reopening:** f8b9c6c497 / a5ea1dd9ea (`+22` / `+24`: `nullified`, one resolution
+per event target, the class-A ARM-4 disposition) → **d0398b977d** (`+27`, on top of DT~X's third
+repair bd22c2e6ad: R4-CVO-4 — the corrective slot is `upheld` | `nullified` only — and R4-DT-2, the
+identity re-pin). The label the freeze binds carries the gate suite every seat declared against
+(the probe blob measured equal to bd22c2e6ad's); the three repair-only commits (+13/+17/+26) stay
+unbound by design.
+
+**Register, round 4 at the cut:** **14 rows** (register total 74; round 3's 60 untouched) — **13
+FIXED, 1 REFUTED, 0 OPEN.** By class: CONTRACT 10 · BATTERY 1 · DESIGN-INPUT 2 · PROCESS 1. By
+seat: CRO~X 7 · CVO~X 4 · DT~X 2 · CTO~X 1 (the planted claim, §4 — its measurement stands).
+
+**Gates at the pin** (`run_gates.sh d0398b977d`, atomic extract; CRO~X and COO~X the same runner at
+their seats): six of six exit 0 | overall exit 0 | **1 open = ARM 1's class-D `disputed` deferral**
+(closed by WP-3 itself); ARM 3 117 of 117; ARM 4 23 of 23 disposed. Self-test at the pin: **4/4 axes
+· 39/39 fixtures · 135/135 reason-asserted mutants · 39/39 semantic · 3/3 container · meta-control**
+(three seats reproduced the denominators). `bundle_identity.py d0398b977d --check` OK;
+`verify_seal.py --round 4` MATCH at the tree and at a19437ccb9.
+
+**Exit criteria (§8) — MET at d0398b977d:** unique ids + auditable dispositions 14 of 14 · gates
+from a clean extract six of six · immutable identity `+27` · no open candidate blocks WP-3
+semantics (0 OPEN; the one deferral is WP-3's own closure) · the sealed claim refuted for its
+expected reason. **`v0.3-candidate+27` is ELIGIBLE FOR CANDIDATE FREEZE**; `bundle_identity.py
+d0398b977d --freeze --boundary <this commit>` follows in the next commit. **NOT operationally
+certified** — the WP-3 ledger, the live vertical slice and historical replay remain unbuilt; the
+three receipts stay null until each lands through the registry-side carrier. Ledger code begins
+as a `2.0.0_SA_COO~X` Rule-27 decomp question once the freeze lands (the design is dry at the
+same hash — both gates of ledger row 12).
+
+**Rules banked between the cuts:** the member list is read from `bundle_identity.py`, never from
+memory (the probe module and both sidecars are members — three grants and six commit bodies said
+otherwise); a companion-repair spec must satisfy every arm the record's other values trigger; a
+disclosure that includes a test names where the failing subject lives; an accept arm that is
+wrong certifies silently (DT~X's retired heuristic, R4-CRO-7 as the counterexample).
