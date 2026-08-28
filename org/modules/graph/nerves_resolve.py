@@ -35,6 +35,7 @@ Author: 1.0.0_SA_CTO~Z (NFRA_NERVES L2). 2026-07-14.
 from __future__ import annotations
 
 import functools
+import json
 import os
 import re
 import subprocess
@@ -138,6 +139,22 @@ class Resolution:
 
     @property
     def substrate_unavailable(self) -> tuple:
+        """The tiers that made THIS result SUBSTRATE_UNAVAILABLE -- empty in every other state.
+
+        It must agree with `state` by construction. An earlier cut returned every dead tier
+        regardless of whether it was consulted, so a GENUINELY_UNADDRESSED result also reported a
+        non-empty substrate_unavailable -- and a consumer branching on the property got a different
+        answer from one branching on the state. Two views of one fact that can disagree is the
+        collapse again, wearing the opposite coat.
+        """
+        if self.state != "SUBSTRATE_UNAVAILABLE":
+            return ()
+        return tuple(t for t in self.tiers if not t.available)
+
+    @property
+    def dead_tiers_all(self) -> tuple:
+        """Every unavailable tier, consulted or not -- the raw view, for an operator asking about
+        the ESTATE rather than about this ref."""
         return tuple(t for t in self.tiers if not t.available)
 
     def as_dict(self) -> dict:
@@ -345,7 +362,7 @@ def _tier_statuses() -> tuple:
     (which is a VIEW of trace_graph and carries its status), repo_basenames, tools_on_disk.
     """
     return (_trace_graph_t()[1], _pydeps_t()[2], _graph_index_t()[1], _repo_basenames_t()[1],
-            _tools_on_disk_t()[1])
+            _tools_on_disk_t()[1], _ledger_t()[1])
 
 
 def _norm(ref: str) -> str:
@@ -507,19 +524,56 @@ def resolve(ref: str) -> Resolution:
                           state="NOT_APPLICABLE", tiers=tiers, candidates=(), fabric=foreign,
                           evidence=evidence)
 
+    # A REF THAT PARSES AS A RECORD ID IS RESOLVED STRICT, AND IS NEVER BASENAME-FUZZED (AC2).
+    # `ent:0.4.0-dt-clientplatform` is an IDENTITY, not a filename: if the ledger does not carry it,
+    # the honest answer is "no such record", never "here are three files whose basename looks a bit
+    # like it". Fuzzing a parsed id is how a resolver answers an identity question with a filesystem
+    # coincidence -- and the caller cannot tell the two apart from the outside.
+    inner = _FABRIC_RX.match(r).group(2) if _FABRIC_RX.match(r) else r
+    if _RECORD_ID_RX.match(inner):
+        rows, lst = _ledger_t()
+        if rows is None:
+            return Resolution(ref, [], "UNADDRESSED", "NONE", "ledger.strict",
+                              state="SUBSTRATE_UNAVAILABLE", tiers=tiers, fabric=THIS_FABRIC,
+                              evidence=evidence, policy="STRICT")
+        if not ledger_has(inner):
+            return Resolution(ref, [], "UNADDRESSED", "NONE", "ledger.strict",
+                              state="GENUINELY_UNADDRESSED", tiers=tiers, fabric=THIS_FABRIC,
+                              evidence=evidence, policy="STRICT")
+        canon, why = canonical_serial(inner)
+        return Resolution(ref, [canon or inner], "LEDGER", "EXACT", "ledger.canonical",
+                          state="RESOLVED", tiers=tiers,
+                          candidates=(Candidate(canon or inner, "identity_relation fold: " + why,
+                                                canon or inner),),
+                          fabric=THIS_FABRIC, evidence=evidence, policy="STRICT")
+
     # An IN-fabric qualifier is stripped before the chain sees it: "CLOUD::CLAUDE.md" names this
     # fabric and must resolve exactly as "CLAUDE.md" does. Leaving the prefix on would make an
     # explicitly-correct ref read as a miss -- the qualifier would punish the caller for using it.
     m = _FABRIC_RX.match(r)
     base = _resolve_chain(m.group(2) if m else ref)
-    cands = tuple(Candidate(nid, base.source or "chain") for nid in base.node_ids)
+    cands = []
+    for nid in base.node_ids:
+        canon = ""
+        if _RECORD_ID_RX.match(nid) and _ledger_t()[0] is not None:
+            canon = canonical_serial(nid)[0] or ""
+        cands.append(Candidate(nid, base.source or "chain", canon))
+    cands = tuple(cands)
 
     if len(cands) == 1:
         state = "RESOLVED"
     elif len(cands) > 1:
         state = "AMBIGUOUS"
     else:
-        dead = [t for t in tiers if not t.available]
+        # ONLY TIERS THAT COULD HAVE ANSWERED THIS REF COUNT, and getting this wrong once already
+        # cost me the opposite of the original defect. The first cut read "any tier unavailable ->
+        # SUBSTRATE_UNAVAILABLE" over ALL tiers -- so with no ledger configured (the normal case:
+        # the ledger is a published snapshot named by $NERVES_LEDGER, usually unset) EVERY genuine
+        # miss reported SUBSTRATE_UNAVAILABLE. That is a permanent false alarm, and a false alarm
+        # everywhere is the same disease as a collapse everywhere: the state stops carrying
+        # information. A dead LEDGER cannot make a FILENAME unknowable -- the file tiers all
+        # answered, and none of them knew it.
+        dead = [t for t in tiers if not t.available and _tier_consulted(t.tier, inner)]
         state = "SUBSTRATE_UNAVAILABLE" if dead else "GENUINELY_UNADDRESSED"
 
     return Resolution(ref, list(base.node_ids), base.kind, base.confidence, base.source,
@@ -527,12 +581,132 @@ def resolve(ref: str) -> Resolution:
                       evidence=evidence, policy=base.policy)
 
 
+# -- AC2: THE LEDGER SPINE, READ-ONLY -------------------------------------------------------------
+#
+# The resolver READS the ISCK ledger and never writes to it. That is not a promise in a docstring:
+# `no_ledger_writes()` below is an AST sweep of this module for admit/mint/write calls, and it is an
+# arm of the battery. A resolver that could mint would be able to answer a question by CREATING its
+# answer, which is the one failure mode a keystone must not have.
+#
+# WHY A SERIAL AND NOT A NODE ID. A node id names WHERE something is (a path, a graph node); a
+# minted `ent:` serial names WHAT it is, across renames and rebuilds. The legacy node_ids stay
+# exactly as they were -- the canonical serial travels BESIDE them, never instead of them.
+LEDGER_ENV = "NERVES_LEDGER"
+# `canonicalized_as` and `merged_into` are CORRECTIVE identity: they say this serial IS that one.
+# `candidate_equivalence` is a PROPOSAL that two serials might be the same subject -- following it
+# would report a guess as an identity, which is exactly what AC2 forbids ("candidate-only serials
+# are never reported canonical"). The exclusion is by ENUMERATION of what canonicalises, so a new
+# relation_type added to the contract is non-canonicalising until someone decides otherwise, rather
+# than silently joining the fold.
+CANONICALIZING = ("canonicalized_as", "merged_into")
+_RECORD_ID_RX = re.compile(r"^(ent|mat|matv|run|sf|sv|rel|rcpt|obs|lce|bind):[A-Za-z0-9_.:-]+$")
+
+
+@functools.lru_cache(maxsize=1)
+def _ledger_t():
+    """The ledger read surface, WITH liveness. Returns (records_or_None, TierStatus).
+
+    Substrate: a PUBLISHED snapshot named by $NERVES_LEDGER. There is deliberately no default path
+    that silently resolves to nothing -- an unset variable is reported UNAVAILABLE with that as the
+    reason, so "no ledger configured here" and "the ledger is empty" stay different answers. That
+    distinction is the whole subject of this TO.
+    """
+    path = os.environ.get(LEDGER_ENV, "").strip()
+    if not path:
+        return None, TierStatus("ledger", False, "$%s is not set" % LEDGER_ENV, "KeyError", "")
+    vintage = _vintage_of(path)
+    if not os.path.exists(path):
+        return None, TierStatus("ledger", False, "ledger snapshot absent at %s" % path,
+                                "FileNotFoundError", vintage)
+    try:
+        import sqlite3
+        con = sqlite3.connect("file:%s?mode=ro" % path.replace(chr(92), "/"), uri=True)
+        try:
+            rows = [json.loads(b) for (b,) in con.execute("SELECT body FROM records")]
+        finally:
+            con.close()
+        return rows, TierStatus("ledger", True, "", "", vintage)
+    except (sqlite3.Error, ValueError, OSError) as exc:
+        return None, TierStatus("ledger", False, "ledger snapshot unreadable",
+                                type(exc).__name__, vintage)
+
+
+def canonical_serial(serial: str):
+    """The canonical serial for any serial, via the identity_relation fold. Returns (serial, why).
+
+    RETIRED -> CANONICAL, CANONICAL -> ITSELF (AC4). Followed transitively with a seen-set, because
+    a chain a->b->c must land on c and a CYCLE must not hang the keystone -- a resolver that loops
+    on bad data is worse than one that answers wrongly, because nothing downstream ever gets to
+    disagree with it.
+    """
+    rows, status = _ledger_t()
+    if rows is None:
+        return None, "ledger UNAVAILABLE (%s)" % status.reason
+    rel = [r for r in rows if r.get("record_type") == "identity_relation"]
+    seen, cur = {serial}, serial
+    hops = []
+    while True:
+        nxt = None
+        for r in rel:
+            if r.get("relation_type") in CANONICALIZING and r.get("subject_serial") == cur:
+                nxt = r.get("object_serial")
+                hops.append("%s --%s--> %s" % (cur, r.get("relation_type"), nxt))
+                break
+        if not nxt or nxt in seen:
+            break
+        seen.add(nxt)
+        cur = nxt
+    return cur, (" ; ".join(hops) if hops else "canonical is itself")
+
+
+def ledger_has(serial: str) -> bool:
+    rows, _st = _ledger_t()
+    if not rows:
+        return False
+    for r in rows:
+        for k, v in r.items():
+            if (k.endswith("_serial") or k.endswith("_id")) and v == serial:
+                return True
+    return False
+
+
+def no_ledger_writes(path=None) -> tuple:
+    """AC2's NEGATIVE ARM, in the module it polices: this resolver must contain NO write call.
+
+    An AST sweep, not a grep: a grep for "admit" matches the word in this very comment, and a
+    control a comment can flip is not a control. Returns (ok, findings).
+    """
+    import ast
+    path = path or os.path.abspath(__file__)
+    tree = ast.parse(io_open_text(path))
+    banned = {"admit", "mint", "write", "write_text", "commit", "execute", "executemany"}
+    allow_execute_on = {"con", "cursor", "db"}          # read-only SELECT through a ro: URI
+    findings = []
+    for n in ast.walk(tree):
+        if not isinstance(n, ast.Call) or not isinstance(n.func, ast.Attribute):
+            continue
+        name = n.func.attr
+        if name not in banned:
+            continue
+        recv = getattr(n.func.value, "id", "")
+        if name in ("execute", "executemany") and recv in allow_execute_on:
+            continue
+        findings.append("%s(...) at line %d" % (name, n.lineno))
+    return (not findings), findings
+
+
+def io_open_text(path: str) -> str:
+    with open(path, "r", encoding="utf-8") as fh:
+        return fh.read()
+
+
 def _cache_clear():
     """Drop every memoised tier and result. Needed by the arm below, which must observe the SAME
     ref against a DIFFERENT substrate -- an lru_cache would otherwise hand back the answer computed
     while the substrate was alive, and the arm would pass by remembering rather than by measuring."""
     for fn in (_trace_graph_t, _pydeps_t, _graph_index_t, _repo_basenames_t, _tools_on_disk_t,
-               _graph_index, _tools_on_disk, _resolve_chain, resolve, _resolver_version):
+               _graph_index, _tools_on_disk, _resolve_chain, resolve, _resolver_version,
+               _ledger_t):
         try:
             fn.cache_clear()
         except AttributeError:
@@ -569,6 +743,18 @@ def substrate_arm(ref: str) -> dict:
             "stripped_is_substrate_unavailable": stripped.state == "SUBSTRATE_UNAVAILABLE",
             "dead_tiers": dead, "why": why_unavailable(stripped),
             "byte_identical": live.as_dict() == stripped.as_dict()}
+
+
+# Which tiers a ref of this shape is actually ASKED. The ledger answers identities; the file and
+# graph tiers answer names and paths. A tier that was never going to be consulted cannot be the
+# reason a ref went unanswered.
+_LEDGER_ONLY = ("ledger",)
+
+
+def _tier_consulted(tier: str, ref: str) -> bool:
+    if tier in _LEDGER_ONLY:
+        return bool(_RECORD_ID_RX.match(ref or ""))
+    return True
 
 
 def why_unavailable(res: Resolution) -> str:
