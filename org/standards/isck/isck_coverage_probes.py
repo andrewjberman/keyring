@@ -1486,6 +1486,29 @@ def _repairs(V):
             return inst
         return repair
 
+    def contest_nullified(inst):
+        # R4-CRO-7: `nullified` is VOID beside `upheld`'s REPLACE -- the adjudicated resolution IS
+        # the terminal corrective fact, so it owes its warrant (evidence_refs REQUIRED) and carries
+        # NO consequence: no replacement event (consequence_refs) and no merge survivor
+        # (surviving_contest_id), both FORBIDDEN. It is legal only on the three EVENT target kinds,
+        # so the entity/binding targets go with them.
+        inst["event_kind"] = "resolved"
+        inst["outcome"] = "nullified"
+        inst["target_kind"] = "lifecycle_event"
+        inst["target_event_id"] = "lce:" + ULID_A_OF(V)
+        inst.pop("target_entity_serial", None)
+        inst.pop("target_binding_id", None)
+        inst.pop("consequence_refs", None)
+        inst.pop("surviving_contest_id", None)
+        inst.setdefault("evidence_refs", ["obs:" + ULID_A_OF(V)])
+        # NOT in the routed spec, found by reading the rejection: `resolved` independently REQUIRES
+        # adjudicated_by (allOf[9]) -- a resolution owes its adjudicator whatever its outcome. The
+        # nullified arm's own limbs are necessary, not sufficient; the record must satisfy every
+        # arm its OTHER field values trigger.
+        inst.setdefault("adjudicated_by", "3.0.0_SA_CVO~X")
+        return inst
+
+    out[("contest_event", "outcome", "nullified")] = contest_nullified
     out[("contest_event", "target_kind", "binding_event")] = _contest_event_target("bev:")
     out[("contest_event", "target_kind", "authority_epoch_event")] = _contest_event_target("aep:")
     out[("contest_event", "target_kind", "lifecycle_event")] = contest_lifecycle_target
