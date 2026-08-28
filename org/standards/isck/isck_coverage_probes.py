@@ -438,6 +438,32 @@ def _conditional_arms(branch, rtype):
 ADJUDICATION_PATH = os.path.join(HERE, "ARM4_ADJUDICATION.json")
 
 
+def _no_dupes(pairs):
+    """Refuse a duplicate JSON object key. Same shape as verify_receipt.py:31/:45.
+
+    WARN: I SHIPPED THIS GATE WITHOUT THE GUARD AND THE ESTATE ALREADY HAD IT. Plain `json.load`
+    is LAST-WINS, so a sidecar carrying one key twice collapses silently and the survivor is
+    whichever was written last. In the direction that matters, an entry ruled class A (SUPPRESSED)
+    and one ruled class D (NEVER SUPPRESSED) sharing a key means one ruling ceases to exist -- and
+    if the A survives, A DEFERRED ROW IS SUPPRESSED, the precise outcome the class-D control was
+    written to make impossible. THAT CONTROL STILL PASSES: it tests the disposition LOGIC while
+    the corruption happens in the LOADER upstream of it.
+    AND THE GENERATOR CANNOT COVER THIS. Its 20-in/20-out assertion runs at GENERATION; this
+    loader runs at CONSUMPTION, and a later hand-edit, merge artifact or concatenation is read
+    with no assertion in front of it. GENERATED-TODAY IS NOT TRUSTWORTHY-TOMORROW.
+    The guard exists in verify_receipt.py BECAUSE this class bit the receipt contract -- an
+    invalid-first/valid-last duplicate collapsed and the verifier returned zero findings on a
+    document carrying a forgery. Same defect, in a gate written after that lesson, by the seat
+    that banked it.
+    """
+    seen = set()
+    for key, _value in pairs:
+        if key in seen:
+            raise ValueError("REFUSING TO PARSE -- duplicate JSON object key %r" % key)
+        seen.add(key)
+    return dict(pairs)
+
+
 def _dispose(unpaired):
     """Split ARM 4's rows against the ruled adjudication record.
 
@@ -460,9 +486,10 @@ def _dispose(unpaired):
     """
     try:
         with open(ADJUDICATION_PATH, "r", encoding="utf-8") as handle:
-            record = json.load(handle).get("entries", {})
-    except (OSError, ValueError):
-        print("  WARN: ARM4_ADJUDICATION.json UNREADABLE -- suppressing NOTHING, every row reported")
+            record = json.load(handle, object_pairs_hook=_no_dupes).get("entries", {})
+    except (OSError, ValueError) as exc:
+        print("  WARN: ARM4_ADJUDICATION.json UNREADABLE (%s) -- suppressing NOTHING, every row "
+              "reported" % str(exc)[:70])
         return [], [], [], list(unpaired)
     by_triple = {}
     for key, val in record.items():
@@ -683,6 +710,24 @@ def self_controls(schema, fixtures, verbose=True):
     _adj4, _def4, _lap4, _new4 = _dispose([_exact])
     results.append(("ARM 4 DOES suppress an exactly-ruled row (else the lapse arm is vacuous)",
                     len(_adj4) == 1 and not _lap4 and not _new4, True))
+
+    # ---- LOADER GUARD, both directions. The duplicate-key vector reaches _dispose UPSTREAM of
+    # every disposition control, so it needs its own arm at the loader, not at the logic.
+    _dup = '{"entries": {"k|k|k|k": {"class": "A"}, "k|k|k|k": {"class": "D"}}}'
+    try:
+        json.loads(_dup, object_pairs_hook=_no_dupes)
+        _refused = False
+    except ValueError:
+        _refused = True
+    results.append(("LOADER REFUSES a duplicate sidecar key (A+D would collapse last-wins)",
+                    _refused, True))
+    _clean = '{"entries": {"a|b|c|d": {"class": "A", "values_at_adjudication": ["x"]}}}'
+    try:
+        _ok_load = json.loads(_clean, object_pairs_hook=_no_dupes)["entries"]["a|b|c|d"]["class"]
+    except ValueError:
+        _ok_load = None
+    results.append(("LOADER still ACCEPTS a clean sidecar (else the refusal arm is vacuous)",
+                    _ok_load == "A", True))
 
     ok = True
     for label, got, want in results:
