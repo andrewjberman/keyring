@@ -11,6 +11,16 @@ pre-reland plane it MUST report FAIL. An instrument that passes on the broken
 world is the defect this whole session is about, so its refusal is exercised
 first and its pass is only meaningful afterwards.
 
+⛔ INVOCATION DISCIPLINE -- READ THIS BEFORE QUOTING AN rc.
+   `python ratify_sma_live.py | tail` REPORTS THE PIPE'S EXIT STATUS, NOT THIS SCRIPT'S.
+   Measured 2026-08-28 at this seat: the run printed NOT RATIFIED and `$?` read 0, because
+   `$?` after a pipeline is `tail`'s. At the acceptance moment that is a FALSE RATIFIED.
+       WRONG   python ratify_sma_live.py | tail -14 ; rc=$?      <- rc is tail's. Always 0.
+       RIGHT   python ratify_sma_live.py > out.txt 2>&1 ; rc=$?  <- capture BEFORE any pipe
+   Then CROSS-CHECK the rc against the printed VERDICT line; if they disagree, trust NEITHER
+   until resolved. The verdict text is authoritative and greppable:
+       VERDICT: RATIFIED | VERDICT: NOT RATIFIED | VERDICT: INDETERMINATE
+
 Usage:
   python ratify_sma_live.py            # gold + platinum, all scopes
   python ratify_sma_live.py --expect-fail   # negative-control mode: rc=0 iff it FAILS
@@ -194,6 +204,7 @@ def main():
         print()
         print("  INDETERMINATE -- %d object(s) UNREADABLE. This is NOT a refusal and NOT"
               " a pass; the instrument did not see the artifact." % len(unreadable))
+        print("VERDICT: INDETERMINATE")
         return 2
     ratified = not failed
     if a.expect_fail:
@@ -206,7 +217,7 @@ def main():
         print("  pass is informative rather than automatic.")
         return 0
     print()
-    print("  RATIFIED" if ratified else "  NOT RATIFIED")
+    print("VERDICT: RATIFIED" if ratified else "VERDICT: NOT RATIFIED")
     return 0 if ratified else 1
 
 
