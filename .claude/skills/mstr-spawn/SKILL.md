@@ -191,6 +191,42 @@ CLASS (*"DS (producer code) + AE (deploy)"*) and **no instance**, for three days
 sequencing ruling naming it FIRST. **A TO with a class and no instance READS AS ISSUED AND IS HELD BY
 NOBODY.** When you seat a lane, check that the TOs you are handing it name an INSTANCE.
 
+### ⛔ 1d-ii — THE COMPLETION LIMB: an `[ACTIVE]` TO is not evidence of UNFINISHED WORK
+
+**1d above answers *"does this serial already OWE anything"*. IT CANNOT ANSWER *"is that work still
+UNDONE"*, and the two look identical in the output.** Closing a TO face is the ISSUER's act and
+nothing closes it automatically, so a face outlives its work indefinitely.
+
+```
+encumbered by OPEN work            [ACTIVE]  -> do not seat
+a STALE FACE over FINISHED work    [ACTIVE]  -> seating is pointless; the work is DONE
+```
+
+**SO, WHENEVER YOU SEAT A LANE ON TOs THAT ALREADY EXIST (every RESUME / re-seat / continuity case),
+MEASURE THE ARTIFACT, NOT THE FACE:**
+```bash
+git log --oneline <the TO's build commits>              # do they exist?
+git merge-base --is-ancestor <sha> origin/<branch>      # are they ON ORIGIN?
+```
+plus look for an acceptance / certification record. **World-done -> route to the ISSUER to CLOSE the
+face. Never seat, never re-execute** — a re-execute of an accepted round is a REWIND (CLAUDE.md
+NEVER-2, which already says measure the artifact before acting on an open entry; **a TO face IS an
+open entry**).
+
+⛔ **AND DO NOT WRITE A WORK-STATE ASSERTION INTO A `--say` HINT YOU HAVE NOT MEASURED.** The hint is
+read by the seat as fact.
+
+*MEASURED 2026-08-28, and the dispatch was mine. `0.4.0_DS_ClientPlatform~Q` was seated to "RESUME
+D1_NAMEDISCOVERY TO-1/TO-2/TO-3 ... blocked on NOTHING, take them in order." All three were built,
+ACCEPTED 15/15, CERTIFIED and ON ORIGIN (`fd15cd5cf3`, `b0ea4d8ff7`, `20dda51bd3`) ~7h earlier. 1d
+passed it as clean continuity. The seat refused to execute and was right to.*
+⚠ **THE DETAIL THAT MAKES THIS WORSE THAN THE BANKED FALSE-ZERO:** the query returned
+`total=3 ... unresolved_serials=0`. **The lane-blindness false zero did NOT fire — the count was
+TRUSTWORTHY AND WRONG ABOUT THE WORLD, and nothing in the output flags that.** A false zero
+eventually announces itself; a true count of stale faces never does.
+**COST:** one whole spawn. **COST OF THE CHECK:** two git commands, and only on re-seats — it does
+not apply to a lane being seated on a NEW TO, which is the common case.
+
 ### 1c — Concurrency-cap headroom (informational; spawn-agent.ps1 enforces)
 
 ```powershell
