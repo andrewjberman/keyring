@@ -50,43 +50,188 @@ _S3_RX = re.compile(r"^s3://([^/]+)/?(.*)$")
 _CLOUDNAME_RX = re.compile(r"^[a-z0-9]+(-[a-z0-9]+){2,}$")
 
 
+# THE FIVE STATES (RULING.md:61 -- "the two-state collapse in nerves_resolve is to be repaired").
+#
+# The collapse, stated exactly: every failure returned kind=UNADDRESSED / confidence=NONE /
+# node_ids=[], byte-identical, whether the trace-graph cache was missing, git had failed, the ref
+# belonged to another fabric, or the ref genuinely has no address in this estate. One answer for
+# four questions, and the three that are INSTRUMENT failures were being read as findings about the
+# world. `nerves_resolve.card.json` v1 records it: "an absent substrate returns UNADDRESSED / NONE /
+# [] byte-identical to a genuine miss".
+#
+# These five are MECE over "what happened to this ref" (Rule 24, one axis, one intent):
+#   RESOLVED               exactly one address, and it is named
+#   AMBIGUOUS              several candidates; ALL are returned and none is picked
+#   GENUINELY_UNADDRESSED  every tier was ALIVE and none knew this ref -- a real finding
+#   SUBSTRATE_UNAVAILABLE  a tier could not answer; the tier and its exception class are named
+#   NOT_APPLICABLE         the ref belongs to another fabric/plane; the fabric is named
+#
+# CONFIDENCE IS KEPT AND IS ORTHOGONAL. It answers "how sure is this address", not "what happened":
+# a RESOLVED can be EXACT or STRONG, and an AMBIGUOUS is WEAK. Folding them into one axis is what
+# produced the collapse in the first place.
+STATES = ("RESOLVED", "AMBIGUOUS", "GENUINELY_UNADDRESSED", "SUBSTRATE_UNAVAILABLE",
+          "NOT_APPLICABLE")
+
+
+@dataclass(frozen=True)
+class TierStatus:
+    """One composed tier's liveness AND vintage, per call.
+
+    `vintage` is what makes staleness readable (W4-nerves_resolve.card.json v3: "staleness is
+    silent"). An available tier answering from a six-week-old graph cache is not the same fact as an
+    available tier answering from a fresh one, and before this the result could not tell them apart.
+    """
+    tier: str
+    available: bool
+    reason: str = ""
+    exception_class: str = ""
+    vintage: str = ""
+
+    def as_dict(self) -> dict:
+        return {"tier": self.tier, "available": self.available, "reason": self.reason,
+                "exception_class": self.exception_class, "vintage": self.vintage}
+
+
+@dataclass(frozen=True)
+class Candidate:
+    """One address, WITH the evidence that produced it. AMBIGUOUS returns every one of these."""
+    node_id: str
+    evidence: str = ""
+    canonical_serial: str = ""
+
+    def as_dict(self) -> dict:
+        return {"node_id": self.node_id, "evidence": self.evidence,
+                "canonical_serial": self.canonical_serial}
+
+
 @dataclass
 class Resolution:
+    # -- the legacy surface, UNCHANGED and still positional (3 caller files, 5 call sites) --------
     ref: str
     node_ids: list = field(default_factory=list)
     kind: str = "UNADDRESSED"      # GRAPH | COMPILER | REPO_PATH | CLOUD | UNADDRESSED
     confidence: str = "NONE"       # EXACT | STRONG | WEAK | NONE
     source: str = ""               # which resolver answered
+    # -- ADDITIVE (AC1). Defaults keep every existing Resolution(...) construction valid ----------
+    state: str = "GENUINELY_UNADDRESSED"
+    tiers: tuple = ()              # TierStatus per composed tier, this call
+    candidates: tuple = ()         # Candidate, plural, each with its evidence
+    fabric: str = "CLOUD"          # the fabric this resolution is FOR
+    evidence: tuple = ()           # refs to the artifacts consulted
+    policy: str = ""               # STRICT when the ref parsed as a record id
+
+    def __post_init__(self):
+        # ENFORCED BY THE RESULT TYPE, per AC1. A state outside the five is a programming error in
+        # the resolver, and the resolver is the thing under repair -- so it raises here rather than
+        # travelling as a sixth de-facto state that no consumer knows to branch on.
+        if self.state not in STATES:
+            raise ValueError("state %r is not one of %s" % (self.state, ", ".join(STATES)))
 
     @property
     def addressed(self) -> bool:
         return bool(self.node_ids)
 
+    @property
+    def resolver_version(self) -> str:
+        """This file's own digest -- on every result, per the memo."""
+        return _resolver_version()
+
+    @property
+    def substrate_unavailable(self) -> tuple:
+        return tuple(t for t in self.tiers if not t.available)
+
+    def as_dict(self) -> dict:
+        return {"ref": self.ref, "state": self.state, "kind": self.kind,
+                "confidence": self.confidence, "source": self.source, "fabric": self.fabric,
+                "policy": self.policy, "node_ids": list(self.node_ids),
+                "candidates": [c.as_dict() for c in self.candidates],
+                "tiers": [t.as_dict() for t in self.tiers], "evidence": list(self.evidence),
+                "resolver_version": self.resolver_version}
+
 
 @functools.lru_cache(maxsize=1)
-def _trace_graph():
-    """The structural spine. None if the cache is absent (resolver degrades, never crashes)."""
+def _resolver_version() -> str:
+    """sha256 of this file's own bytes, LF-normalised.
+
+    LF-normalised because a CRLF checkout and an LF blob are the same source and different bytes; a
+    version that moves with the checkout names the checkout, not the resolver.
+    """
+    import hashlib
+    try:
+        with open(os.path.abspath(__file__), "rb") as fh:
+            return "sha256:" + hashlib.sha256(fh.read().replace(b"\r\n", b"\n")).hexdigest()[:16]
+    except OSError as exc:
+        return "unreadable:" + type(exc).__name__
+
+
+def _vintage_of(path) -> str:
+    """artifact path + mtime, so a stale substrate is READABLE on the result."""
+    try:
+        import datetime
+        mt = os.path.getmtime(path)
+        stamp = datetime.datetime.fromtimestamp(mt, datetime.timezone.utc)
+        return "%s @%sZ" % (path, stamp.strftime("%Y-%m-%dT%H:%M:%S"))
+    except OSError:
+        return "%s @absent" % path
+
+
+@functools.lru_cache(maxsize=1)
+def _trace_graph_t():
+    """The structural spine, WITH its liveness. Returns (graph_or_None, TierStatus).
+
+    THE BROAD `except Exception: return None` THAT STOOD HERE could not be told apart from "the
+    cache file does not exist", and neither could be told apart from "the ref is not in the graph".
+    Three different facts, one return value. The exception classes are now named and CAUGHT BY TYPE:
+    ImportError (the module is not importable here), OSError (the cache cannot be read), ValueError
+    (it is not loadable JSON). Anything else is NOT swallowed -- an unanticipated failure inside the
+    resolver should surface, not be laundered into a clean miss.
+    """
+    cache = os.path.join(_WS, ".comp-graph", "graph.json")
+    vintage = _vintage_of(cache)
     try:
         sys.path.insert(0, _WS)
         from pathlib import Path
         from org.modules.graph.trace_graph import TraceGraph
-        cache = Path(_WS) / ".comp-graph" / "graph.json"
-        return TraceGraph.load(cache) if cache.exists() else None
-    except Exception:  # noqa: BLE001
-        return None
+    except ImportError as exc:
+        return None, TierStatus("trace_graph", False, "trace_graph module not importable",
+                                type(exc).__name__, vintage)
+    if not os.path.exists(cache):
+        return None, TierStatus("trace_graph", False, "graph cache absent", "FileNotFoundError",
+                                vintage)
+    try:
+        return TraceGraph.load(Path(cache)), TierStatus("trace_graph", True, "", "", vintage)
+    except (OSError, ValueError) as exc:
+        return None, TierStatus("trace_graph", False, "graph cache unreadable",
+                                type(exc).__name__, vintage)
+
+
+def _trace_graph():
+    """Legacy shape, kept: the graph or None. Callers inside this module use _trace_graph_t()."""
+    return _trace_graph_t()[0]
 
 
 @functools.lru_cache(maxsize=1)
-def _pydeps():
-    """The compiler layer (F-5 closure). None if absent."""
+def _pydeps_t():
+    """The compiler layer (F-5 closure), WITH its liveness. Returns (mod, payload, TierStatus)."""
+    src = os.path.join(_HERE, "comp_pydeps.py")
+    vintage = _vintage_of(src)
+    if not os.path.exists(src):
+        return None, None, TierStatus("comp_pydeps", False, "comp_pydeps.py absent",
+                                      "FileNotFoundError", vintage)
     try:
         import importlib.util as ilu
-        spec = ilu.spec_from_file_location("comp_pydeps", os.path.join(_HERE, "comp_pydeps.py"))
+        spec = ilu.spec_from_file_location("comp_pydeps", src)
         mod = ilu.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        return mod, mod._load()
-    except Exception:  # noqa: BLE001
-        return None, None
+        return mod, mod._load(), TierStatus("comp_pydeps", True, "", "", vintage)
+    except (ImportError, AttributeError, OSError, ValueError) as exc:
+        return None, None, TierStatus("comp_pydeps", False, "comp_pydeps did not load",
+                                      type(exc).__name__, vintage)
+
+
+def _pydeps():
+    m, p, _t = _pydeps_t()
+    return m, p
 
 
 @functools.lru_cache(maxsize=1)
@@ -99,7 +244,7 @@ def _graph_index():
                ("build_dashboard" -> gold:INF_D_04.client_portal_summary:build_dashboard, x78
                unaddressed) and a bare ARTIFACT key ("canonical_prices.parquet", x75) -- neither of
                which has a file_path basename to match on."""
-    g = _trace_graph()
+    g = _trace_graph_t()[0]
     by_path, by_base, by_leaf = {}, {}, {}
     if not g:
         return by_path, by_base, by_leaf
@@ -116,27 +261,41 @@ def _graph_index():
 
 
 @functools.lru_cache(maxsize=1)
-def _repo_basenames():
-    """{basename -> [repo-relative path]} over every TRACKED file.
+def _repo_basenames_t():
+    """{basename -> [repo-relative path]} over every TRACKED file, WITH liveness.
 
     Found by the L3b acceptance FAILING (not by guessing): `build_assets_dim.py` -- one of the THREE
     FROZEN FILES -- was UNADDRESSED. The REPO_PATH fallback only matched a FULL path, so a bare
     filename resolved to nothing, and the most dangerous file in the estate had no address. A file
     the repo tracks is a node whether or not a higher graph models it (the silver tier is not in the
-    trace graph at all). git ls-files = tracked truth, gitignore-aware, one call."""
+    trace graph at all). git ls-files = tracked truth, gitignore-aware, one call.
+
+    A git FAILURE HERE USED TO RETURN {} -- the same value as "the repo tracks no file by that
+    name". Under that return an entire tier could be dead and every ref through it read as a clean
+    miss. The rc!=0 case is now UNAVAILABLE and carries git's own stderr.
+    """
+    vintage = _vintage_of(os.path.join(_WS, ".git", "index"))
     try:
         out = subprocess.run(["git", "-C", _WS, "ls-files"], capture_output=True, text=True,
                              timeout=60, errors="replace")
-        if out.returncode != 0:
-            return {}
-    except Exception:  # noqa: BLE001
-        return {}
+    except (OSError, subprocess.SubprocessError) as exc:
+        return {}, TierStatus("repo_basenames", False, "git ls-files did not run",
+                              type(exc).__name__, vintage)
+    if out.returncode != 0:
+        return {}, TierStatus("repo_basenames", False,
+                              "git ls-files rc=%d: %s" % (out.returncode,
+                                                          (out.stderr or "").strip()[:120]),
+                              "CalledProcessError", vintage)
     idx = {}
     for p in out.stdout.splitlines():
         p = p.strip().replace("\\", "/")
         if p:
             idx.setdefault(os.path.basename(p).lower(), []).append(p)
-    return idx
+    return idx, TierStatus("repo_basenames", True, "", "", vintage)
+
+
+def _repo_basenames():
+    return _repo_basenames_t()[0]
 
 
 @functools.lru_cache(maxsize=1)
@@ -152,14 +311,77 @@ def _tools_on_disk():
                      if os.path.isfile(os.path.join(d, f)) and "." not in f)
 
 
+@functools.lru_cache(maxsize=1)
+def _tools_on_disk_t():
+    d = os.path.join(_WS, ".tools")
+    vintage = _vintage_of(d)
+    if not os.path.isdir(d):
+        return frozenset(), TierStatus("tools_on_disk", False, ".tools directory absent",
+                                       "NotADirectoryError", vintage)
+    try:
+        return _tools_on_disk(), TierStatus("tools_on_disk", True, "", "", vintage)
+    except OSError as exc:
+        return frozenset(), TierStatus("tools_on_disk", False, ".tools not listable",
+                                       type(exc).__name__, vintage)
+
+
+@functools.lru_cache(maxsize=1)
+def _graph_index_t():
+    """The three indices. A VIEW of trace_graph, so it INHERITS that tier's liveness -- but it is
+    reported under its OWN name, because a reader must be able to see which of the five tiers is
+    down without knowing which are views of which. Reporting it as "trace_graph" twice would make
+    the five-tier list read as four tiers and a duplicate."""
+    base = _trace_graph_t()[1]
+    return _graph_index(), TierStatus("graph_index", base.available,
+                                      base.reason and "derived from trace_graph: " + base.reason,
+                                      base.exception_class, base.vintage)
+
+
+def _tier_statuses() -> tuple:
+    """Every composed tier's liveness for THIS call, in precedence order.
+
+    DERIVED, never typed: the count is len() of this tuple. The TO's face says 5 composed tiers and
+    that number is re-derived here rather than asserted -- trace_graph, comp_pydeps, graph_index
+    (which is a VIEW of trace_graph and carries its status), repo_basenames, tools_on_disk.
+    """
+    return (_trace_graph_t()[1], _pydeps_t()[2], _graph_index_t()[1], _repo_basenames_t()[1],
+            _tools_on_disk_t()[1])
+
+
 def _norm(ref: str) -> str:
     return (ref or "").strip().replace("\\", "/")
 
 
+# THIS FABRIC. `executed_on_fabric` in the frozen contract is `$ref nonempty` -- a free string with
+# NO vocabulary and no basis slot, exactly the shape CTO~X ruled ABSENT for semantic_layer in WP-3b.
+# So this resolver does NOT classify fabrics: it declares the one it can address, and NOT_APPLICABLE
+# fires ONLY on a ref that EXPLICITLY qualifies itself with a different one. Inventing a fabric
+# taxonomy here to make the state reachable would be the costume that ruling refused.
+THIS_FABRIC = "CLOUD"
+# `fabric::ref`. DOUBLE colon deliberately: every existing id shape in this estate is single-colon
+# (gold:, lambda:, s3:, arn:, tool:, file:, ent:), so no ref that resolves today can become
+# NOT_APPLICABLE by accident. Compatibility is a property of the SEPARATOR CHOICE, not of care.
+_FABRIC_RX = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*)::(.+)$")
+
+
+def _foreign_fabric(r: str) -> str:
+    """The fabric this ref names, if it names one that is not ours. Empty when in-fabric."""
+    m = _FABRIC_RX.match(r or "")
+    if not m:
+        return ""
+    named = m.group(1).upper()
+    return "" if named == THIS_FABRIC.upper() else named
+
+
 @functools.lru_cache(maxsize=20000)
-def resolve(ref: str) -> Resolution:
-    """The ONE resolver. Precedence: graph-id -> graph-path -> compiler layer -> repo path -> cloud.
-    Never raises; an unresolvable ref returns kind=UNADDRESSED (a FINDING, not a drop)."""
+def _resolve_chain(ref: str) -> Resolution:
+    """The ONE resolver's PRECEDENCE CHAIN, unchanged: graph-id -> graph-path -> compiler layer ->
+    repo path -> cloud. Its verdict is an ADDRESS; the five-state classification is resolve()'s.
+
+    Kept as its own function so the repair adds a contract WITHOUT touching precedence logic that
+    was each earned by a live failure (the vendored-fork shadowing, the bash shim, the bare function
+    name, the frozen-three basename). Rewriting those while changing the result type would have made
+    a regression in either indistinguishable from a regression in the other."""
     r = _norm(ref)
     if not r or len(r) < 2:
         return Resolution(ref=ref)
@@ -257,6 +479,108 @@ def resolve(ref: str) -> Resolution:
     return Resolution(ref=ref)
 
 
+@functools.lru_cache(maxsize=20000)
+def resolve(ref: str) -> Resolution:
+    """The ONE resolver. Returns exactly one of the five states, enforced by the result type.
+
+    THE REPAIR, in one sentence: the chain answers "what address does this ref have", and this
+    function answers "what HAPPENED to this ref" -- and before the repair the second question had
+    only two answers for four different worlds.
+
+    THE ORDER OF THE CLASSIFICATION IS THE MECHANISM:
+      1. NOT_APPLICABLE first -- a ref for another fabric is not a miss in ours, and asking the
+         tiers about it would let a coincidence of NAME resolve it (AC4 names that arm).
+      2. the chain runs.
+      3. one candidate -> RESOLVED; several -> AMBIGUOUS, ALL returned, none picked.
+      4. NO candidate, and the decision that this whole TO exists for:
+            any tier UNAVAILABLE -> SUBSTRATE_UNAVAILABLE, naming the tier and its exception class
+            every tier ALIVE     -> GENUINELY_UNADDRESSED, a real finding about the estate
+         Those two were byte-identical before. A dead tier now cannot be reported as a clean miss.
+    """
+    r = _norm(ref)
+    tiers = _tier_statuses()
+    evidence = tuple(t.vintage for t in tiers if t.vintage)
+
+    foreign = _foreign_fabric(r)
+    if foreign:
+        return Resolution(ref, [], "UNADDRESSED", "NONE", "fabric.qualified",
+                          state="NOT_APPLICABLE", tiers=tiers, candidates=(), fabric=foreign,
+                          evidence=evidence)
+
+    # An IN-fabric qualifier is stripped before the chain sees it: "CLOUD::CLAUDE.md" names this
+    # fabric and must resolve exactly as "CLAUDE.md" does. Leaving the prefix on would make an
+    # explicitly-correct ref read as a miss -- the qualifier would punish the caller for using it.
+    m = _FABRIC_RX.match(r)
+    base = _resolve_chain(m.group(2) if m else ref)
+    cands = tuple(Candidate(nid, base.source or "chain") for nid in base.node_ids)
+
+    if len(cands) == 1:
+        state = "RESOLVED"
+    elif len(cands) > 1:
+        state = "AMBIGUOUS"
+    else:
+        dead = [t for t in tiers if not t.available]
+        state = "SUBSTRATE_UNAVAILABLE" if dead else "GENUINELY_UNADDRESSED"
+
+    return Resolution(ref, list(base.node_ids), base.kind, base.confidence, base.source,
+                      state=state, tiers=tiers, candidates=cands, fabric=THIS_FABRIC,
+                      evidence=evidence, policy=base.policy)
+
+
+def _cache_clear():
+    """Drop every memoised tier and result. Needed by the arm below, which must observe the SAME
+    ref against a DIFFERENT substrate -- an lru_cache would otherwise hand back the answer computed
+    while the substrate was alive, and the arm would pass by remembering rather than by measuring."""
+    for fn in (_trace_graph_t, _pydeps_t, _graph_index_t, _repo_basenames_t, _tools_on_disk_t,
+               _graph_index, _tools_on_disk, _resolve_chain, resolve, _resolver_version):
+        try:
+            fn.cache_clear()
+        except AttributeError:
+            pass
+
+
+def substrate_arm(ref: str) -> dict:
+    """AC1's REQUIRED ARM: remove one tier's substrate and the SAME ref must FLIP state.
+
+    This is the arm that proves the repair is real rather than cosmetic. Before it, a dead substrate
+    and a genuine miss were byte-identical; the only way to show they no longer are is to take the
+    identical ref, run it against a live estate and against a stripped one, and read two DIFFERENT
+    states out. If both arms returned GENUINELY_UNADDRESSED the five states would be decoration.
+
+    Non-destructive by construction: it points the resolver at an EMPTY TEMPORARY directory and puts
+    _WS back. It never touches .comp-graph, .tools or the repo -- a control that has to damage the
+    estate to prove a point is not a control anybody will run twice.
+    """
+    global _WS
+    import tempfile
+    _cache_clear()
+    live = resolve(ref)
+    saved = _WS
+    try:
+        _WS = tempfile.mkdtemp(prefix="nerves-no-substrate-")
+        _cache_clear()
+        stripped = resolve(ref)
+        dead = [t.tier for t in stripped.tiers if not t.available]
+    finally:
+        _WS = saved
+        _cache_clear()
+    return {"ref": ref, "live_state": live.state, "stripped_state": stripped.state,
+            "flipped": live.state != stripped.state,
+            "stripped_is_substrate_unavailable": stripped.state == "SUBSTRATE_UNAVAILABLE",
+            "dead_tiers": dead, "why": why_unavailable(stripped),
+            "byte_identical": live.as_dict() == stripped.as_dict()}
+
+
+def why_unavailable(res: Resolution) -> str:
+    """One line naming every dead tier and its exception class -- the sentence AC1 requires
+    SUBSTRATE_UNAVAILABLE to be able to say, and which a clean miss can never produce."""
+    dead = res.substrate_unavailable
+    if not dead:
+        return ""
+    return "; ".join("%s UNAVAILABLE (%s: %s)" % (t.tier, t.exception_class or "no exception",
+                                                  t.reason or "no reason given") for t in dead)
+
+
 def resolve_many(refs) -> tuple:
     """-> (resolutions, stats). stats ALWAYS carries the denominator (NERVES: print the denominator
     of every scan you reason from)."""
@@ -267,12 +591,21 @@ def resolve_many(refs) -> tuple:
     for x in res:
         by_kind[x.kind] = by_kind.get(x.kind, 0) + 1
         by_conf[x.confidence] = by_conf.get(x.confidence, 0) + 1
+    by_state = {}
+    for x in res:
+        by_state[x.state] = by_state.get(x.state, 0) + 1
     stats = {
         "refs_total": n,                       # THE DENOMINATOR
         "addressed": len(addressed),
         "unaddressed": n - len(addressed),
         "hit_rate_pct": round(100.0 * len(addressed) / n, 1) if n else 0.0,
         "by_kind": by_kind, "by_confidence": by_conf,
+        # ADDITIVE. `unaddressed` above is now a SUM over three different worlds, so a reader who
+        # reasons from it alone is reasoning from the collapse this repair removed. by_state splits
+        # it; both are printed so no existing consumer breaks and no new one is misled.
+        "by_state": by_state,
+        "substrate_unavailable": by_state.get("SUBSTRATE_UNAVAILABLE", 0),
+        "resolver_version": _resolver_version(),
     }
     return res, stats
 
@@ -302,9 +635,28 @@ def _self_test() -> int:
     ck("cloud.s3_uri", r4.addressed and r4.kind == "CLOUD", f"{r4.node_ids}")
 
     # THE TWO GAPS THE FIRST LIVE RUN FOUND (found by reading the UNADDRESSED band, not by guessing):
-    r6 = resolve("comp-surface-check")      # a BASH shim -- comp-pydeps indexes python only (x133 miss)
+    #
+    # THIS CASE HAS BEEN FAILING SINCE 2026-08-06 AND NOT BECAUSE OF THIS REPAIR. Its subject was
+    # `comp-surface-check`, deleted at 1a962886be when the tool was retired (CLAUDE.md rule 20 says
+    # so in words: "comp-surface-check is RETIRED"). The case asserted a retired tool still
+    # resolves, so it went red the day the tool went away and stayed red for 22 days -- a test
+    # measuring an estate that no longer exists.
+    #
+    # It is RE-POINTED, not weakened: `comp-aws` is a live bash shim, so the case still tests the
+    # exact property it was written for -- that a NON-PYTHON tool is addressable, which comp-pydeps
+    # (python-only, shebang-sniffed) cannot do alone.
+    r6 = resolve("comp-aws")                # a BASH shim -- comp-pydeps indexes python only (x133 miss)
     ck("gap1.bash_shim_addressable", r6.addressed and r6.kind == "COMPILER",
        f"{r6.kind}/{r6.source} -> {r6.node_ids}")
+
+    # AND THE RETIREMENT BECOMES ITS OWN CASE, which is only expressible now: a tool that was
+    # removed from the estate must read GENUINELY_UNADDRESSED (every tier alive, nobody knows it),
+    # never SUBSTRATE_UNAVAILABLE. Under the old two-state contract these were the same answer, so
+    # "the tool was retired" and "the tool index is broken" could not be told apart.
+    r6b = resolve("comp-surface-check")
+    ck("gap1b.retired_tool_is_a_genuine_miss_not_a_dead_substrate",
+       r6b.state == "GENUINELY_UNADDRESSED" and not r6b.substrate_unavailable,
+       f"{r6b.state}")
     r7 = resolve("build_dashboard")         # a bare FUNCTION name -> a node-id LEAF (x78 miss)
     ck("gap2.bare_function_addressable", r7.addressed and "build_dashboard" in str(r7.node_ids),
        f"{r7.source} -> {r7.node_ids[:1]}")
