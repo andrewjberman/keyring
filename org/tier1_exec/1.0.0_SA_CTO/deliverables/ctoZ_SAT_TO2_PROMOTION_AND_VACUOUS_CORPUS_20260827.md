@@ -28,7 +28,7 @@ the current state; the sections below are the reasoning and the history.
 | 8 | **`SatelliteBook.code` = the CANONICAL NAME** verbatim; `model_id` rejected on grain mismatch | §12c | — |
 | 9 | `AC4` = **three rows**: real `Core \| Satellite 98` REJECT, synthetic `Opal Satellite 50 + 15% cash` REJECT, synthetic `Opal Satellite 55` **ADMIT** | §4 / §11 | — |
 | 10 | **PUBLISH EMPTY, NEVER DELETE.** Since @`24a8435642` there is **no fallback beneath the producer** | §7 / §10c | — |
-| 11 | Strike the module's 40-line **"WHY THERE IS NO PREDICATE"** section -- unowned, author's lane dead | §2 | — |
+| 11 | **AMENDED 2026-08-28 ~01:3xZ -- DO *NOT* STRIKE THE SECTION.** Strike its **TITLE** and its **CONCLUSION**; **KEEP the measured sweep** (roster 21 fields; detail 84 files / 121 child nodes / 0 matches / **18 of 18 positive controls resolving**) -- that evidence is what makes Andrew's name-route ruling legible, and a blanket strike destroys it. ⛔ **`:54-58` is ACTIVELY INVERTED against his ~22:5xZ word** ("the canonical name form is wrong and Andrew ruled it so") and must be corrected in the same edit -- a strike would have removed it without anyone noticing it had been wrong. Remedy narrowed because the original row was written before the section was read at line level. Ruling msg 11583, supersession msg 11588. | §2 | supersedes this row's own "Strike" remedy |
 
 **WITHDRAWN, do not cite:** section 3's *"a green run certifies nothing about the design"* (§11 --
 the token IS exercised, +18 rows; only the anchors are not) · any sentence of mine calling the
