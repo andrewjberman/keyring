@@ -93,6 +93,35 @@ def fetch(bucket, key):
             pass
 
 
+# ---------------------------------------------------------------------------
+# PROSE CONSISTENCY (added 2026-08-28 ~23:2xZ, after a served FALSEHOOD passed a
+# 28/28 ratification). This artifact family carries PROSE IN THE PAYLOAD by design,
+# and a criterion set that enumerates VALUES cannot see a wrong SENTENCE beside them.
+# Measured instance: the global object's own `scope_note` reads "The global scope
+# carries NO category-views object -- absent, not empty" while carrying 5 populated
+# nodes. Nobody had named it, so nothing scored it.
+# Each rule is (field, contradicting-substring, predicate-that-makes-it-false).
+PROSE_CONTRADICTIONS = (
+    ("scope_note", "carries NO category-views object",
+     lambda d: bool(d.get("nodes"))),
+    ("scope_note", "absent, not empty",
+     lambda d: bool(d.get("nodes"))),
+)
+
+
+def check_prose(doc, scope, plane, out):
+    """A served prose field must not contradict the object's own data."""
+    for field, phrase, is_contradicted_by in PROSE_CONTRADICTIONS:
+        text = doc.get(field)
+        if not isinstance(text, str):
+            continue
+        bad = phrase.lower() in text.lower() and is_contradicted_by(doc)
+        out.append(("%s/%s %s does not contradict the data" % (plane, scope, field),
+                    not bad,
+                    "carries %r while nodes=%d" % (phrase, len(doc.get("nodes") or {}))
+                    if bad else "no contradiction found"))
+
+
 def check_scope(doc, scope, plane, out, post_reland, as_of):
     """AC1/AC2 assertions for one scope. Appends (label, ok, detail) to out."""
     if plane == "platinum":
@@ -183,6 +212,7 @@ def main():
                 unreadable.append("%s s3://%s/%s: %s" % (plane, bucket, key, err))
                 continue
             client_aum, sma_aum = check_scope(doc, scope, plane, rows, a.post_reland, a.as_of)
+            check_prose(doc, scope, plane, rows)
             if plane == "gold" and scope == "global" and None not in (client_aum, sma_aum):
                 ok = abs((client_aum + sma_aum) - CONSERVATION) < CENT
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
