@@ -16,7 +16,8 @@ AC6 — `run_battery.py` on a fresh clone printing `ran N of N` by counting, exi
 
 **`ran 188 of 188 -- COUNTED`, exit 0, from a clean clone of `91f38fb966`.** 0 wrong, 0 errored,
 0 unimplemented, reconciliation printed. Proof-of-spec instance VALID, 9/9 criteria, 130/130 cells
-forward and backward. Thirteen commits, all under the lane row `f94ef2f3d1`, no override used.
+forward and backward, all nine criteria PASS. 25 commits at this seat since the pin, under the lane
+rows `f94ef2f3d1` (ledger/**) and `5bde064942` (receipts/**); no override used at any point.
 
 ## Compiler Tools
 
@@ -83,8 +84,10 @@ Per-unit, in the rectangle's dependency order, each with its own commit and its 
 - **Stop tuning the AC7 instrument.** After removing universal scaffold mechanically I was adding a
   discriminator per pass until the number looked right. That is tuning toward a preferred answer.
   Stopped, reported both readings and the instrument's own non-decisiveness.
-- **Do not fire `--receipt` for AC8.** The precondition is measured as unsatisfiable and a receipt
-  slot is set once; firing it would be a risk, not a control.
+- **Do not fire `--receipt` for AC8** while its precondition was unsatisfiable — a receipt slot is
+  set once, so firing it against a measured-impossible precondition is a risk, not a control.
+  SUPERSEDED once the design owner cleared the precondition at `bd4bea5b2a`: the accept was then
+  fired, and the registry act itself belongs to the exec lane (`a8982310d8`), not to this seat.
 
 ## Findings Filed
 
