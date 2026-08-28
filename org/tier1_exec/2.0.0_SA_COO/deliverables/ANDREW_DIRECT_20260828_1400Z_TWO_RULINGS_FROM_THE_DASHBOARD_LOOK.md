@@ -39,10 +39,38 @@ smoke fixture         NODE + peer entry removed              DE lane, DONE @77d1
 Insurance      STAYS in the node set; DISPLAY-ONLY; node, members and gold partition share UNCHANGED.
 Alternatives   LEAVES the declared L0 node set AT THE REGISTRY. peers stopping is a CONSEQUENCE.
 ```
-⚠ **`2.0.0_SA_COO~Z` GOT THIS WRONG ONCE ALREADY** — specified the Insurance pattern one paragraph
-after quoting the table above. Corrected @`f82463700c`. **Data cost is nil either way today
-(`aum 0.0, members 0` on all four scopes), which is exactly why nothing in the numbers would have
-caught the substitution.**
+### ⚠ ATTRIBUTION OF THE WRONG REMEDY — CORRECTED ON `1.0.0_SA_CTO~Z`'s OWN INSISTENCE (msg 13182)
+
+**The Insurance-pattern remedy ORIGINATED IN `1.0.0_SA_CTO~Z` msg 13168 §3, verbatim:**
+> *"`Alternatives` MOVES FROM `peers` TO `excluded`, WITH HIS 08-27 RULING QUOTED, EXACTLY AS INSURANCE
+> IS DONE."*
+
+Published to three seats as a ⭐-marked recommendation from the architecture gate. `2.0.0_SA_COO~Z`
+adopted it into the disarm. Six minutes later 13174 §3 wrote the opposite — *"a DIFFERENT treatment
+from Insurance's ... do not collapse them"* — and this seat filed the contradiction as its own defect.
+**That seat asked for the attribution to be corrected and asked specifically that it NOT be softened to
+"jointly held". It is not softened here.**
+
+⛔ **BUT THESE ARE TWO DISTINCT ERRORS IN SEQUENCE, NOT ONE SHARED ERROR, AND COLLAPSING THEM THE OTHER
+WAY WOULD BE ITS OWN INACCURACY:**
+```
+1.0.0_SA_CTO~Z   AUTHORED a wrong remedy from the nearest structure in context, NOT holding the
+                 08-27 table at all.
+2.0.0_SA_COO~Z   ADOPTED it WHILE HOLDING THE AUTHORITY -- the table was pasted ONE PARAGRAPH ABOVE
+                 in the same block -- and did not check the remedy against it.
+```
+**The second is not merely "relaying in good faith."** A remedy adopted from a peer, in a block that
+already quotes the governing record, gets checked against that record. **That failure is this seat's
+and it stays here.** What is corrected is the ORIGIN, which was misattributed.
+
+⭐ **THE MECHANISM `1.0.0_SA_CTO~Z` NAMED IS WORTH MORE THAN EITHER INSTANCE: PROXIMITY BEATS
+AUTHORITY.** A structurally-similar pattern you have JUST READ supplies a remedy faster than the
+governing record does, **and it arrives feeling like recall rather than invention.** Two seats, twenty
+minutes, one artifact — the `view_plane.excluded` block for Insurance was the freshest structure in
+both contexts.
+⛔ **AND NOTHING IN THE DATA COULD EVER HAVE CAUGHT IT:** `Alternatives` is `aum 0.0, members 0` on all
+four scopes, so **both mechanisms produce an identical page. A substitution invisible in the output has
+to be caught at the authority or not at all.**
 
 ### OWED CUT 1 — DS-class, `mdpf_category_registry.py`. Never cut. **That is this seat's failure.**
 The 08-27 record NAMED the owner. `0.4.0_DE_ClientPlatform~Z` did its half and correctly flagged the
@@ -64,21 +92,47 @@ map and the issuer.
 empty one* — down to L1 and L2. Same instinct as Ruling 1 ten minutes earlier: **he does not want to
 look at categories that are not his.**
 
-### ⛔ THE LIMB A NAIVE IMPLEMENTATION GETS WRONG (`1.0.0_SA_CTO~Z` ruling, 13177 §3)
->> **SUPPRESS ON *MEASURED ZERO*. NEVER ON *FALSY*.** Three states reach this predicate; one is his:
+### ⛔⛔ ANDREW OVERRULED THE MEASURED-ZERO LIMB. **AT THE RENDER, A NULL AND A ZERO BOTH SUPPRESS.**
+
+⚠ **THIS SECTION PREVIOUSLY RECORDED THE OPPOSITE AS "the load-bearing part". IT IS STRUCK.** Anyone
+building from the earlier text would have shipped the component's literal
+`"Fee split unavailable at this scope"` to a client whose only "defect" is not owning the product.
+
+> ⛔ **VERBATIM. Typos are his and are preserved.**
+> *"A null is a 0 in this case, if only practically, think about the end user. There may be a null
+> because that model doesnt exist for them, so if your solution to this is throw a noisey
+> client-facing error about Type 2 errors and unknown denominators, as a non-technical audient and
+> also human being, that would be massive inapproprirate"*
+
+>> **THE RULE: a named L1/L2 constituent with null OR zero AUM simply IS NOT THERE. No card, no badge,
+   no `unavailable` treatment, no explanatory text.** That is the whole product ruling.
+
+### ⭐ WHY THE EARLIER RULING WAS WRONG, AND IT IS NOT A DETAIL (`1.0.0_SA_CTO~Z` self-correction, 13185)
+It was protecting a REAL property — *a data defect must not hide behind a product rule* — **on the
+wrong surface.** It asked *"could an engineer detect a defect here?"* about a page **whose reader is a
+client**, and never asked who reads it.
+>> ⛔ **HIS DOMINANT CAUSE WAS TREATED AS THE EXCEPTION.** *"There may be a null because that model
+   doesnt exist for them."* On this surface a null is overwhelmingly **ABSENCE OF THE PRODUCT**, not
+   absence of the measurement — so the "unknown" branch being guarded is the RARE case, and the
+   treatment was sized for it.
+⭐ **THE DISTINCTION DOES NOT DISAPPEAR — IT MOVES TO WHERE ITS READER IS.** Null-vs-zero belongs in
+the ARTIFACT and the run's own counts, where an engineer looks. **It does not belong in the DOM.**
+`industry_group_basis` is this estate's own pattern done right: **every null carries its reason IN THE
+DATA, and the page renders none of it.**
+
+### WHAT SURVIVES — smaller than what was first written
 ```
-aum MEASURED and == 0            -> SUPPRESS.  His rule.
-aum ABSENT / null / UNKNOWN      -> RENDER, in the `predicate === 'unavailable'` treatment. NOT his rule.
-member absent from client data   -> nothing to suppress; it was never a node.
+RENDER            suppress on null OR zero. Andrew's rule, unqualified. The whole product ruling.
+PRODUCER/TELEMETRY keep the suppression reason where the PIPELINE records it, never on the page.
+SUM-PRESERVING TEST  survives as an INTERNAL QA CHECK ONLY -- if a parent stops reconciling after
+                  suppression, something non-zero was suppressed. A pipeline signal for us,
+                  INVISIBLE to the client. ⛔ It must NEVER become a client-facing banner.
+                  (sums reconcile today at 481,690,858.04 for cottonwood.)
 ```
-⛔ **`if (!node.aum)` COLLAPSES ALL THREE.** A null AUM is not a zero AUM, and suppressing on falsy
-makes **a data defect and a legitimate empty look identical to the client** — the page renders
-correctly while silently hiding the broken thing. The component **already has** an `unavailable`
-treatment; the rule must route TO it, not around it.
-⭐ **THE MECHANICAL TEST: SUPPRESSING A TRUE ZERO IS SUM-PRESERVING; SUPPRESSING AN UNKNOWN IS NOT.**
-If the parent total stops reconciling after suppression, something that was not a zero was suppressed.
-The existing `sums` block supports this check — `gold_plane` / `view_plane` / `total_aua` reconcile
-today at **481,690,858.04** for cottonwood.
+⛔ **STANDING CAUTION, and it generalises past this ruling: BEFORE RULING ON ANYTHING RENDERED, NAME
+THE READER FIRST.** This estate's idiom — name the null, carry the reason, never conflate absence with
+zero — is correct FOR OUR RECORDS. **Exported reflexively to a client-facing surface it produces a
+technically-honest screen that is unusable, and in Andrew's word inappropriate.**
 
 ### OWED CUT 2 — `D1_CATVIEWS`, plane UNDETERMINED
 ⚠ **WHICH PLANE IS AN OPEN QUESTION AND IT IS NOT ANSWERED HERE.** L0 exclusions run PRODUCER-side
