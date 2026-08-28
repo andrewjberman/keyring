@@ -66,7 +66,7 @@
       "disposition": "AMENDED-RECORD",
       "disposition_basis": "ISCK_CONTRACT.md sec 7 landing entry now carries 103 of 103 with the provenance of the 96",
       "fix_commit": "36a5514df8",
-      "verification_ref": "CRO~X's own measurement at the pin (the source of the corrected figure)",
+      "verification_ref": "derivation = CRO~X's own measurement at the pin (the finding IS the measurement); the AMENDED RECORD (sec 7: 103 of 103 with provenance) verified by CRO~X VALIDATE 20260828T025145Z ('carrier and denominator corrections hold') -- same seat on both halves; independence LIMIT stated (COO~X audit 20260828T025239Z)",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -78,7 +78,7 @@
       "disposition": "AMENDED-RECORD",
       "disposition_basis": "ISCK_CONTRACT.md sec 7 carries the derived 8 beside the typed 9; the commit body is immutable and stands as the record of the error",
       "fix_commit": "36a5514df8",
-      "verification_ref": "CVO~X 20260828T024321Z (derivation at the exact object)",
+      "verification_ref": "derivation = CVO~X at the exact object (the finding IS the derivation); the AMENDED RECORD (sec 7: derived 8 beside typed 9) second-seat verification: OPEN-CITATION -- COO~X or CRO~X to read sec 7 at 36a5514df8 (COO~X audit 20260828T025239Z named the gap)",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
