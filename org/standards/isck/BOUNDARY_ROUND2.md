@@ -161,7 +161,7 @@ and silence is what I then misread as refutation."*
 | condition | state |
 |---|---|
 | 1. R2-1..R2-10 resolved or carried with owners | **MET** — §3; two carries (R2-2 landing; ARM-1's 9), both owned by this seat |
-| 2. every gate passes at a cited tip that is ON ORIGIN | **MET (amended 00:3xZ)** — six of six exit 0 at the ATOMIC EXTRACT of 9760630ae7 (§1), and 9760630ae7 is ON ORIGIN: `git merge-base --is-ancestor 9760630ae7 origin/CLOUD` = YES at origin/CLOUD @3fbb493cda after a fresh fetch (this seat's read; MSTR 77126 concurs). A git-archive extract at an on-origin hash is byte-identical to a true-clone extract by hash identity, so the stricter reading holds. Was HALF at cut (tip LOCAL) — the amendment is the record, not a rewrite |
+| 2. every gate passes at a cited tip that is ON ORIGIN | **MET (amended 00:3xZ)** — six of six exit 0 at the ATOMIC EXTRACT of 9760630ae7 (§1), and 9760630ae7 is ON ORIGIN: `git merge-base --is-ancestor 9760630ae7 origin/CLOUD` = YES at origin/CLOUD @3fbb493cda after a fresh fetch (this seat's read; MSTR 77126 concurs). A git-archive extract at an on-origin hash is byte-identical to a true-clone extract by hash identity — and, so that this is EXERCISED rather than argued (DT~X 77140's caveat: "on origin now" ≠ "re-run since"), `run_gates.sh 9760630ae7` was RE-RUN at 00:39Z after the fetch that read it on origin: six of six exit 0 \| 11 open candidates, identical. Was HALF at cut (tip LOCAL) — the amendment is the record, not a rewrite |
 | 3. the VERTICAL-SLICE END-TO-END BATTERY passes | **NOT RUN, NOT BUILT** — mint → bind → rename → observe → reconcile → materialize-from-frontier → Nessie advance → Kuzu dislocation → history preservation. It needs the WP-3 ledger and live substrates. **ROUND 2 DOES NOT EXIT TO OPERATIONAL USE ON THIS RECORD.** |
 
 **What this boundary therefore certifies:** the attack round is closed dry at the cited tips; the
@@ -173,7 +173,7 @@ sixth-override loader guard @6245dc0a3d — **AMENDED: INSIDE the pinned package
 CRO~X re-verify). It is post-DRY and outside the attacked set, which is a different claim. **The true
 first post-boundary amendment is DT~X's entry guard @bb7444a08e** (is-ancestor NO; cures CRO~X's
 superset-values FAIL: payload value set must EQUAL the key's, mismatch → suppress none + WARN, six
-controls, five refusing one accepting) — CRO~X's three-vector regression at that citation pending; ARM-1's 9 adjudicated (mine); the R2-2 landing at WP-3 with its
+controls, five refusing one accepting) — CRO~X's three-vector regression at that citation COMPLETE and ACCEPTED (00:38Z, after @8bce3fa495): duplicate-key WARN/0 suppressed/NEW; renamed class-D NEW/non-suppressed; widened payload DISAGREES/WARN/NEW; exact key adjudicated exactly one; six atomic gates exit 0; 18 adjudicated / 2 deferred / 0 NEW; ARM-1's 9 adjudicated (mine); the R2-2 landing at WP-3 with its
 checklist; the on-origin amendment to condition 2.
 
 ## 8. WHAT THE ROUND TAUGHT THAT THE CONTRACT NOW CARRIES (beyond the findings)
