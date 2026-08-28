@@ -760,11 +760,22 @@ def _batch_provenance_errors(instances):
 
 
 def semantic_errors(instances):
-    """Field-pair, calendar, and batch checks the schema cannot express (sec 6 items 4/5/7)."""
+    """Field-pair, calendar, and batch checks the schema cannot express (sec 6 items 4/5/7).
+
+    R3-CRO-16: the input is a LIST of records and nothing else. A dict passed here used to be
+    iterated over its KEYS, every key skipped as a non-dict, and the clean shape [] returned -- a
+    wrong-container misuse read as a validator PASS (it nearly upheld a planted claim). A non-list
+    RAISES; a non-dict member is an ERROR entry, never a silent skip."""
+    if not isinstance(instances, list):
+        raise TypeError("semantic_errors takes a LIST of record dicts; got %s -- wrap a single "
+                        "record as [record] (R3-CRO-16: a dict iterates its keys and returns a "
+                        "clean [])" % type(instances).__name__)
     errs = _batch_provenance_errors(instances)
     seen = {}
     for i, inst in enumerate(instances):
         if not isinstance(inst, dict):
+            errs.append(f"[{i}] NOT A RECORD: batch member is {type(inst).__name__}, not an object "
+                        "(R3-CRO-16 -- a member the checks cannot read is an error, not a skip)")
             continue
         rt = inst.get("record_type", "?")
         # calendar validity past the pattern
@@ -1036,6 +1047,22 @@ def main():
             sem_bad.append(f"semantic mutant {name} produced 0 errors")
     print(f"SEMANTIC ARM: {len(smuts) - len(sem_bad)} of {len(smuts)} semantic mutants FIRE")
     fails += sem_bad
+
+    # R3-CRO-16 CONTAINER CONTROLS: the arm above only proves the LIST path fires. The misuse
+    # path (a dict) must RAISE, a non-dict member must ERROR, and the valid list must stay clean.
+    api_bad = []
+    try:
+        semantic_errors(_mk("state_observation"))
+        api_bad.append("semantic_errors ACCEPTED a dict and returned silently (R3-CRO-16)")
+    except TypeError:
+        pass
+    if not any("NOT A RECORD" in e for e in semantic_errors([_mk("entity"), "not-a-record"])):
+        api_bad.append("semantic_errors SKIPPED a non-dict batch member silently (R3-CRO-16)")
+    if semantic_errors([_mk("entity")]):
+        api_bad.append("semantic_errors errored on a valid single-record list (control broken)")
+    print(f"CONTAINER CONTROLS: {3 - len(api_bad)} of 3 (dict RAISES / non-dict member ERRORS / "
+          "valid list clean)")
+    fails += api_bad
 
     # META-CONTROL (F7): gut LAW 2 from a COPY; the coupling mutant must then VALIDATE,
     # proving the battery notices a deleted law (because this self-test would then FAIL).
