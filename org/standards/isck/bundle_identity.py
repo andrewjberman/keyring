@@ -258,6 +258,17 @@ def main():
             sys.exit(f"REFUSED: {rec['candidate_id']} is not bound to {rec['contract_bundle_id']} in the registry; --write it first")
         if bound.get("frozen"):
             sys.exit(f"REFUSED: {rec['candidate_id']} is already frozen at {bound['frozen']['frozen_at']}")
+        # R4-DT-10 (DT~X 77766): the +27 freeze commit wrote its own freeze entry into DOCTRINE, a
+        # MEMBER, and moved the bundle it was freezing (87ed7080 -> 103cfd6c); receipt_problem's
+        # run_commit binding was then unsatisfiable at every commit with an engine. A freeze's own
+        # record lives in BUNDLE_LABELS.json (facts) and FREEZE_LOG.md (prose), never in a member:
+        # REFUSE when the working-tree DOCTRINE differs from the DOCTRINE blob at the commit being
+        # frozen -- the act that carries this freeze must not also edit the contract's prose.
+        wt_doctrine = git("hash-object", str(ROOT / DOCTRINE))
+        if wt_doctrine != blob(commit, DOCTRINE):
+            sys.exit(f"REFUSED: working-tree {DOCTRINE} ({wt_doctrine[:10]}) differs from its blob at {commit[:10]} "
+                     f"({blob(commit, DOCTRINE)[:10]}); a freeze's own record never lives inside a member -- "
+                     f"write the prose to FREEZE_LOG.md and freeze from a commit whose DOCTRINE you did not edit")
         try:
             boundary = sys.argv[sys.argv.index("--boundary") + 1]
         except (ValueError, IndexError):

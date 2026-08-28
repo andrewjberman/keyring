@@ -801,20 +801,4 @@ ledger code only after that AND the design's dry. **Round-4 pins:** 32c9e67e26 (
 `+10`) → b8961d2e39 (second, `+15`: R4-CVO-1, R4-DT-1, R4-CRO-1..6 — contest targets over all
 three carriers, four EFFECTIVE-event machines, the epoch trust root) → **REOPENED at the cut**
 (`BOUNDARY_ROUND4.md` §8: R4-CRO-7 withdrew a DRY; the freeze did not run) → the third pin
-(`nullified`, §3.21: VOID beside REPLACE — the only way a false transition is undone) → the fourth
-pin d0398b977d (`+27`, on top of DT~X's last probe repair: R4-CVO-4 the corrective-only race
-slot; R4-DT-2 the identity re-pin).
-
-**SCHEMA-ONLY FREEZE — `v0.3-candidate+27` FROZEN (2026-08-28 06:40:18Z):** `bundle_identity.py
-d0398b977d --freeze --boundary abcb491373` (the second cut, `BOUNDARY_ROUND4.md` §9) records
-`frozen_at` + the boundary in `BUNDLE_LABELS.json`; `BUNDLE_IDENTITY.json` reads `status: frozen`,
-`freeze_scope: schema-only`; `supersedes_bundle_id` → the frozen `+38`, which stays frozen and
-immutable beside it. **The three operational receipts stay null BY DEFINITION** — NOT
-operationally certified; each lands through the registry-side carrier (`--receipt`, structured and
-bound, R3-CRO-28/31/33/36). Naming debt, disclosed: `derive()`'s boundary field is spelled
-`round_3_boundary_commit` and carries the ROUND-4 boundary for this label — the value is right,
-the key name is the round-3 one; a rename is a script change (not a member) and is not made under
-the freeze. **The frozen label is immutable:** any member byte change derives a NEW candidate; the
-contract is never mutated under `+27`. The freeze lifts ledger CODE (both gates of self-drive D11
-ledger row 12 — the design is dry at the same hash); production population and the L3 cells stay
-HELD.
+(`nullified`, §3.21: VOID beside REPLACE — the only way a false transition is undone).
