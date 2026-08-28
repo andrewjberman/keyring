@@ -123,3 +123,17 @@ so the 824 habitual runs land on the graded tool without breaking anyone.
 
 (a) T1 as written -- go/no-go. (b) T2 single-file greps -- now / after a week of ALLOW-SEARCH data / never.
 (c) Native Grep/Glob -- keep nudge-only (06-22 ruling) or flip to deny.
+
+## 7. RULED -- Andrew-direct 2026-08-28 ~19:5xZ, CTO~D terminal, on the /open-calls cards (VERBATIM: "All approved")
+
+Six cards, six recs, all approved as recommended:
+1. **T1 -- BLOCK.** Every standalone repo search in Bash (grep/rg/egrep/fgrep/findstr/ack/ag/find as a
+   segment's leading command, any path, any lead verb, a pipe elsewhere or not) -> DENY, routed to
+   comp-find. Pipe-receiver grep, `# rail-checked:`, /freeform unchanged. Every allow logged (ALLOW-SEARCH).
+2. **comp-find default corpus -> `all`** (gitignored content included; the vendor floor stays out, `raw` opt-in).
+3. **One law-edit broadcast from this seat** to COO+CTO+MSTR, same turn as the commit.
+4. **T2 single-file greps -- after a week** of ALLOW-SEARCH data (exempt + logged until then).
+5. **Native Grep/Glob -- keep nudge-and-proceed**; revisit with T2.
+6. **`comp-grep` -> forwarder onto comp-find** (one WARN line).
+Earlier the same session: comp-find stays REPO-ONLY (out-of-worktree walk dropped); an AWS-substrate
+`--corpus aws` is a proposal to write, not a build.
