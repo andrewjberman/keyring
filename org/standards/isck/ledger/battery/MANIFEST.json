@@ -488,7 +488,7 @@
         "5"
       ]
     },
-    "L-05-bridge_assertion.verification_standingauthored-vs-derived": {
+    "L-05-bridge_assertion.verification_standing-authored-vs-derived": {
       "kind": "reject",
       "rows": [
         "5"
@@ -512,7 +512,7 @@
         "5"
       ]
     },
-    "L-05-entity_binding.statusauthored-vs-derived": {
+    "L-05-entity_binding.status-authored-vs-derived": {
       "kind": "reject",
       "rows": [
         "5"
@@ -530,7 +530,7 @@
         "5"
       ]
     },
-    "L-05-identity_relation.verification_standingauthored-vs-derived": {
+    "L-05-identity_relation.verification_standing-authored-vs-derived": {
       "kind": "reject",
       "rows": [
         "5"
@@ -542,7 +542,7 @@
         "5"
       ]
     },
-    "L-05-materializer.current_statusauthored-vs-derived": {
+    "L-05-materializer.current_status-authored-vs-derived": {
       "kind": "reject",
       "rows": [
         "5"

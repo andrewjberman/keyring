@@ -62,6 +62,9 @@ TICKED = re.compile('`([^`]+)`')
 REF_TEMPLATE = re.compile(r'^L-02-(unresolved|resolved)-<record>\.<field>')
 AXIS_TEMPLATE = "L-05-<axis>-authored-agrees-accepted"
 AXIS_FROM_ID = re.compile(r'^L-05-([a-z_]+\.[a-z_]+)-')
+# The design at the PIN elides four row-5 reject ids; this commit spells them out. U5 reads the
+# spelled form from the design's own text at the reference below rather than trusting the expansion.
+SPELLED_REF = "a44a6acb19"
 
 
 def _blob(commit, path):
@@ -110,18 +113,26 @@ def derivable_axes(reject_ids):
 
 
 def elision_suffix(reject_ids):
-    """The suffix the design ELIDES, proven by the one member that spells it out."""
+    """The suffix the design ELIDES, proven by the one member that spells it out.
+
+    Sliced from the END OF THE AXIS GROUP, not from the end of the whole match: the pattern's match
+    includes the separator hyphen, so slicing at `m.end(0)` silently eats it and every expanded id
+    comes out fused (`...statusauthored-vs-derived`). That is the defect CVO~X found at 112046Z --
+    and U1-U4 were all blind to it, because a fused id is still unique, still ASCII and still
+    template-free. The separator is part of the suffix; U5 below checks the result against the
+    design's spelled text rather than against my own arithmetic.
+    """
     for i in reject_ids:
         m = AXIS_FROM_ID.match(i)
         if m and i.isascii():
-            return i[len(m.group(0)):]
+            return i[m.end(1):]
     return None
 
 
 def expand(census, commit):
     """Every template expanded from the design's own tables at `commit`. Returns citations."""
     refs = reference_rows_at(commit)
-    citations, notes = [], {"reference_rows": len(refs), "expansions": {}}
+    citations, notes = [], {"reference_rows": len(refs), "expansions": {}, "elided": []}
     for row, v in sorted(census["rows"].items(), key=lambda kv: int(kv[0])):
         axes = derivable_axes(v["reject_ids"])
         suffix = elision_suffix(v["reject_ids"])
@@ -143,7 +154,9 @@ def expand(census, commit):
                     notes["expansions"]["row%s.%s.axis" % (row, kind)] = len(axes)
                 elif not arm.isascii() and suffix:
                     m2 = AXIS_FROM_ID.match(arm)
-                    out.append(("elided", "L-05-%s%s" % (m2.group(1), suffix)))
+                    expanded = "L-05-%s%s" % (m2.group(1), suffix)
+                    out.append(("elided", expanded))
+                    notes["elided"].append(expanded)
                     notes["expansions"].setdefault("row%s.%s.elided" % (row, kind), 0)
                     notes["expansions"]["row%s.%s.elided" % (row, kind)] += 1
                 else:
@@ -152,9 +165,17 @@ def expand(census, commit):
     return citations, notes
 
 
-def controls(citations):
-    """U1-U4. Each returns a list of violations; each can fail."""
-    seen_row, kinds, bad = {}, {}, {"U1": [], "U2": [], "U3": [], "U4": []}
+def spelled_l_tokens(commit):
+    """Every backticked L- token in sec 3 of the design at `commit` -- the SPELLED reference."""
+    text = _blob(commit, DESIGN)
+    body = text.split("## 3.")[1]
+    cut = re.search(r'\n#{2,} ', body)
+    return set(re.findall(r'`(L-[^`]+)`', body[:cut.start()] if cut else body))
+
+
+def controls(citations, elided=(), spelled=None):
+    """U1-U5. Each returns a list of violations; each can fail."""
+    seen_row, kinds, bad = {}, {}, {"U1": [], "U2": [], "U3": [], "U4": [], "U5": []}
     for arm_id, row, kind in citations:
         key = (arm_id, row)
         if key in seen_row:
@@ -167,6 +188,11 @@ def controls(citations):
             bad["U3"].append(arm_id)
         if not arm_id.isascii():
             bad["U4"].append(arm_id)
+    if spelled is not None:
+        for arm_id in sorted(set(elided)):
+            if arm_id not in spelled:
+                bad["U5"].append("%s is not the design's spelled id at %s"
+                                 % (arm_id, SPELLED_REF))
     return bad
 
 
@@ -182,7 +208,13 @@ def assemble(citations):
 
 
 def report(citations, notes, label):
-    bad = controls(citations)
+    try:
+        spelled = spelled_l_tokens(SPELLED_REF)
+    except Exception:                                                  # noqa: BLE001
+        spelled = None
+        print("   U5 UNAVAILABLE: could not read the spelled design at %s -- reported, never "
+              "silently skipped" % SPELLED_REF)
+    bad = controls(citations, notes.get("elided", ()), spelled)
     arms = assemble(citations)
     shared = {i: a["rows"] for i, a in arms.items() if len(a["rows"]) > 1}
     print("%s -- COUNTED %d distinct arms / %d row citations (%d arms cited by 2 rows)"
@@ -192,13 +224,14 @@ def report(citations, notes, label):
     for i, rows in sorted(shared.items()):
         print("   SHARED ARM (one test, two responsibilities): %s -> rows %s" % (i, ",".join(rows)))
     ok = True
-    for c in ("U1", "U2", "U3", "U4"):
+    for c in ("U1", "U2", "U3", "U4", "U5"):
         if bad[c]:
             ok = False
             for v in bad[c]:
                 print("   %s VIOLATION: %s" % (c, v))
     print("   controls U1 duplicate-citation, U2 kind-collision, U3 unexpanded-template, "
-          "U4 non-ascii: %s" % ("all clear" if ok else "FAILED"))
+          "U4 non-ascii, U5 elision-matches-the-design's-spelled-id (%d checked): %s"
+          % (len(set(notes.get("elided", ()))), "all clear" if ok else "FAILED"))
     return ok, arms
 
 
@@ -228,11 +261,19 @@ def build(commit):
     return True
 
 
+_PLANT = {}
+
+
 def check(plant_duplicate=None):
     with open(MANIFEST, "r", encoding="utf-8") as fh:
         doc = json.load(fh)
     commit = doc["derived_at"]
     citations, notes = expand(census_at(commit), commit)
+    if _PLANT.get("sep"):
+        victim = _PLANT["sep"]
+        fused = victim.replace("-authored", "authored")
+        citations = [(fused if a == victim else a, r, k) for a, r, k in citations]
+        notes["elided"] = [fused if e == victim else e for e in notes.get("elided", [])]
     if plant_duplicate:
         row = doc["arms"][plant_duplicate]["rows"][0]
         kind = doc["arms"][plant_duplicate]["kind"]
@@ -252,6 +293,12 @@ def check(plant_duplicate=None):
 def main():
     if "--check" in sys.argv:
         plant = None
+        if "--plant-separator-drop" in sys.argv:
+            victim = sys.argv[sys.argv.index("--plant-separator-drop") + 1]
+            print("NEGATIVE CONTROL: dropping the separator from %r -- U5 MUST report INVALID; "
+                  "U1-U4 will all still pass, which is the whole point (a fused id is unique, "
+                  "ASCII and template-free)." % victim)
+            _PLANT["sep"] = victim
         if "--plant-duplicate" in sys.argv:
             plant = sys.argv[sys.argv.index("--plant-duplicate") + 1]
             print("NEGATIVE CONTROL: citing %r twice from one row -- U1 MUST report INVALID, or "
