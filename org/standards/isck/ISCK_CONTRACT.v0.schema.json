@@ -2429,7 +2429,8 @@
           "enum": [
             "upheld",
             "dismissed",
-            "merged"
+            "merged",
+            "nullified"
           ]
         },
         "adjudicated_by": {
@@ -2897,6 +2898,52 @@
                   "required": [
                     "surviving_contest_id"
                   ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "nullified"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "evidence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_kind": {
+                    "enum": [
+                      "lifecycle_event",
+                      "binding_event",
+                      "authority_epoch_event"
+                    ]
+                  }
                 }
               }
             ]

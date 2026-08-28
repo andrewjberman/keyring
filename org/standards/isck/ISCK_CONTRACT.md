@@ -416,19 +416,28 @@ grain is a serial PAIR and cannot name a binding or an event, which is why conte
 record shape). An `upheld` contest on an event names exactly ONE replacement (schema: `maxItems 1`,
 the kind's prefix) of the same `event_kind` and the same CARRIER KEY — `materializer_serial` |
 `binding_id` | `authority_id` — with a NEW id (validator semantic arm, batch-scope; ledger rows
-4/6/7/13 beyond it); VOIDED is derived only from that, and a voided event advances no machine and
-feeds no fold. CHRONOLOGY (R4-CRO-5): `opened` < `resolved` for one `contest_id`, and the target
+4/6/7/13 beyond it) — that is REPLACE; a `nullified` contest on an event needs NO replacement —
+that is VOID (§3.21, R4-CRO-7: the only way a FALSE transition is ever undone). VOIDED is derived
+only from those two, and a voided event advances no machine and feeds no fold. CHRONOLOGY (R4-CRO-5): `opened` < `resolved` for one `contest_id`, and the target
 event < the `opened` that challenges it, in the order `(occurred_at, commit_seq, id)` — a same-instant
 pair is decided by the id, deterministically.
 
-### 3.21 `contest_event.outcome` — `upheld | dismissed | merged` (R2-2 LANDED, RA-2)
-DOMAIN: how a contest resolved. MECE: the challenge stood (`upheld`), fell (`dismissed`), or was
-absorbed into another contest (`merged` — the survivor named by the typed `surviving_contest_id`
-field, NEVER in `consequence_refs`; R3-CVO-3 caught this sentence still carrying the pre-REWORK-2
-form beside a schema that forbids it). GRAIN:
-one resolution. INTENT: one axis — verdict. STATE-COHERENCE: terminal for the event; `upheld`
-moves the SUBJECT only when its referenced consequence exists (owner: whoever cuts the
-consequence event — canonicalized_as / merged_into / binding close-rebind).
+### 3.21 `contest_event.outcome` — `upheld | dismissed | merged | nullified` (R2-2 LANDED, RA-2; `nullified` ADDED round 4, R4-CRO-7)
+DOMAIN: what the adjudication DOES to the target. MECE: the challenge stood and the target is
+REPLACED (`upheld` — exactly one consequence), stood and the target is simply VOID (`nullified` —
+the admitted resolution IS the terminal corrective fact; no replacement, because the hunted member
+was a false TRANSITION: under the same-kind/key replacement law, voiding a false decommission
+required another decommission, so a false transition, a wrong kind or a wrong key could never be
+corrected — R4-CRO-7's finite-chain proof), fell (`dismissed`), or was absorbed into another
+contest (`merged` — the survivor named by the typed `surviving_contest_id` field, NEVER in
+`consequence_refs`; R3-CVO-3 caught this sentence still carrying the pre-REWORK-2 form beside a
+schema that forbids it). Reclassify (change the kind or key in place) is deliberately NOT a value:
+a wrong kind is nullified and re-asserted as a NEW event, which append-only already permits. GRAIN:
+one resolution. INTENT: one axis — the adjudication's effect. STATE-COHERENCE: terminal for the
+event; `upheld` moves the SUBJECT only when its referenced consequence exists (owner: whoever
+cuts the consequence event); `nullified` moves it at admission — the voided event feeds no fold
+and advances no machine (owner: the adjudicator; legal ONLY on an EVENT target, the three carriers
+of §3.20 — an entity or binding is never nullified, it is retired or closed by its own carrier).
 ARM TABLE (two-directional per value — round-3 REWORK-2, `4.0.0_SA_CRO~X` at bf6fbe53d9: the
 first table omitted `merged` while the schema required an UNTYPED consequence for it, so a
 survivor could be `not-a-contest-id`): `upheld -> consequence_refs REQUIRED, surviving_contest_id
@@ -436,10 +445,14 @@ FORBIDDEN` (RA-2: an upheld challenge without its consequence is a promise, and 
 clears on a promise re-opens the laundering cell at the contest door) · `merged ->
 surviving_contest_id REQUIRED (typed `ct:<ulid26>`), consequence_refs FORBIDDEN` (the survivor
 carries the consequences; a merge names exactly one surviving contest) · `dismissed -> BOTH
-FORBIDDEN` (a dismissed challenge has no consequence and no survivor to name) · `opened ->
-surviving_contest_id FORBIDDEN` (with the other resolution fields, §3.19). Mutants:
-`contest.merged-without-survivor`, `contest.merged-with-consequence`,
-`contest.upheld-with-survivor`, `contest.survivor-not-a-contest-id`. ⛔ DECLARED LIMIT (§6 limit 11): that the consequence is an event on the SAME
+FORBIDDEN` (a dismissed challenge has no consequence and no survivor to name) · `nullified ->
+evidence_refs REQUIRED; consequence_refs, surviving_contest_id FORBIDDEN; target_kind ∈ the three
+event kinds` (the resolution is the consequence; an entity/binding target with `nullified` is
+rejected) · `opened -> surviving_contest_id FORBIDDEN` (with the other resolution fields, §3.19).
+Mutants: `contest.merged-without-survivor`, `contest.merged-with-consequence`,
+`contest.upheld-with-survivor`, `contest.survivor-not-a-contest-id`,
+`contest.nullified-with-consequence`, `contest.nullified-with-survivor`,
+`contest.nullified-on-entity-target`, `contest.nullified-without-evidence`. ⛔ DECLARED LIMIT (§6 limit 11): that the consequence is an event on the SAME
 typed target dated AFTER the opening is a LEDGER check, not a schema arm.
 
 ### 3.22 `status_basis` — `authored | derived` (R2-2 LANDED, sec 2 / AT-2 / RA-4 / CRO input 2)
@@ -600,7 +613,10 @@ per-kind `target_event_id` prefix (§3.20) · `upheld` on an event → `conseque
 the kind's prefix · `migrated_record_ref` also admits `sha256:<64hex>` (the two content-addressed
 primary ids, R4-CRO-1) · `authority_epoch_event.actor` pattern = the root families (§3.29) ·
 validator semantic machines: binding (§3.28), materializer lifecycle (§3.27), contest chronology
-(§3.20), replacement same-carrier-key — all over EFFECTIVE (non-voided) events.
+(§3.20), replacement same-carrier-key — all over EFFECTIVE (non-voided) events · **round 4, third
+pin (R4-CRO-7):** `outcome=nullified -> evidence_refs REQUIRED; consequence_refs,
+surviving_contest_id FORBIDDEN; target_kind ∈ the three event kinds` — VOID as a first-class
+adjudication; `_voided_event_ids` counts a nullified target as voided with no replacement.
 
 ## 5. MINTING AUTHORITY (RATIFIED — Andrew-direct 2026-08-27 ~18:4xZ, "Recs approved")
 
@@ -773,4 +789,8 @@ round-3 boundary) with `supersedes_bundle_id` → the `+38` bundle; a bound bund
 denominators (never typed here); §3.16 ALLOWED gains `opened`, `closed`. **Round 4 rules:** §11 of
 the charter — `R4-<seat>-<n>` ids, `round: 4` rows in `ROUND3_FINDING_REGISTER.json`, PINNED
 declarations, the quiet pin. **Exit:** `BOUNDARY_ROUND4.md` + `--freeze` on the native label;
-ledger code only after that AND the design's dry.
+ledger code only after that AND the design's dry. **Round-4 pins:** 32c9e67e26 (opening,
+`+10`) → b8961d2e39 (second, `+15`: R4-CVO-1, R4-DT-1, R4-CRO-1..6 — contest targets over all
+three carriers, four EFFECTIVE-event machines, the epoch trust root) → **REOPENED at the cut**
+(`BOUNDARY_ROUND4.md` §8: R4-CRO-7 withdrew a DRY; the freeze did not run) → the third pin
+(`nullified`, §3.21: VOID beside REPLACE — the only way a false transition is undone).

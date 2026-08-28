@@ -102,3 +102,22 @@ design's dry is complete (ledger row 12).
   before calling it closed; an accept arm that always fails counts the same as one that accepts.
 - **The DROP limb of a companion repair is the load-bearing half** — DT~X proved add-only stays
   invalid at both repair landings.
+
+## 8. REOPENED — 2026-08-28 060438Z, BEFORE THE FREEZE RAN (this section is appended; §1–7 stand as the record of the cut)
+
+Twenty-two minutes after declaring DRY at b8961d2e39, `4.0.0_SA_CRO~X` filed **R4-CRO-7** and
+**WITHDREW** that declaration: under the same-kind / same-key replacement law, voiding a false
+`materializer_decommissioned` necessarily produces another decommission of the same materializer —
+every finite admitted chain ends in an effective decommission — so the fifth design pin's
+`L-05-voided-decommission-does-not-retire-accepted` is UNREACHABLE, and the correction carrier
+(R4-CRO-2's remedy) corrects metadata and timing only, never a false transition, a wrong kind or a
+wrong key. The same holds for a false binding close and a false epoch open. **The `--freeze` step
+named in §6 was the next commit and did not run**; `v0.3-candidate+15` stays a candidate; §6's
+"ELIGIBLE FOR CANDIDATE FREEZE" is CONTRADICTED as of 060438Z and the §1 table's CRO~X row is
+withdrawn. The sealed-claim measurement (§4) is unaffected — the key was already revealed and
+R4-CTO-1's disposition stands. **My error, on the record:** the candidate had three DRY at its hash,
+which §11's rule permits, but CRO~X's replay of the DESIGN's fifth pin was still in progress at the
+cut, and the finding lived in the seam between the two surfaces. Remedy in flight: a second
+correction mode — `contest_event.outcome: nullified`, the adjudicated resolution as the terminal
+corrective fact with no replacement — landing as a new candidate; the round closes again only when
+three declarations coincide at THAT hash, and a second boundary section is appended here then.

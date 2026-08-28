@@ -38,6 +38,9 @@ ULID_B = "01jzyxwv9876543210zyxwvtsr"[:26]
 ULID_C = "01jprt1a10000000000000000c"[:26]
 ULID_D = "01jprt1a10000000000000000d"[:26]
 ULID_E = "01jprt1a10000000000000000e"[:26]
+ULID_F = "01jprt1a10000000000000000f"[:26]
+ULID_G = "01jprt1a10000000000000000g"[:26]
+ULID_H = "01jprt1a10000000000000000h"[:26]
 TS = "2026-08-27T17:30:00Z"
 TS2 = "2026-08-27T18:30:00Z"
 TS3 = "2026-08-27T19:00:00Z"
@@ -360,6 +363,36 @@ FIXTURES = {
         "occurred_at": TS2, "actor": "0.0.0_AB_MSTR",
         "evidence_refs": ["ISCK_CONTRACT.md#sec-5-minting-authority", f"ctev:{ULID_E}"],
     },
+    # R4-CRO-7: NULLIFY -- the adjudicated resolution is the terminal corrective fact; a false
+    # decommission is voided with NO replacement (the replacement law could only ever swap one
+    # decommission for another), so the materializer machine sees no effective decommission
+    "contest_event_nullified": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_F}",
+        "contest_id": f"ct:{ULID_F}", "event_kind": "resolved",
+        "target_kind": "lifecycle_event", "target_event_id": f"lce:{ULID_B}",
+        "occurred_at": "2026-08-27T19:30:00Z", "actor": "3.0.0_SA_CVO~X",
+        "outcome": "nullified", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#decommission-filed-against-the-wrong-serial"],
+    },
+    # CVO~X 060659Z controls: an annulled close leaves the binding OPEN; an annulled epoch-open
+    # leaves the authority CLOSED -- each nullifies the REPLACEMENT event of its carrier, so the
+    # carrier is left with NO effective event of that kind in this batch
+    "contest_event_nullified_close": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_G}",
+        "contest_id": f"ct:{ULID_G}", "event_kind": "resolved",
+        "target_kind": "binding_event", "target_event_id": f"bev:{ULID_B}",
+        "occurred_at": TS3, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "nullified", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["commit:9fc70e31a1#the-file-was-never-renamed"],
+    },
+    "contest_event_nullified_epoch_open": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_H}",
+        "contest_id": f"ct:{ULID_H}", "event_kind": "resolved",
+        "target_kind": "authority_epoch_event", "target_event_id": f"aep:{ULID_B}",
+        "occurred_at": TS3, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "nullified", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#epoch-reopened-without-ratification"],
+    },
     # R4-DT-1: the bridge_assertion twin of the backward link -- the reject mutant
     # bridge.supersedes-wrong-shape had no accept sibling (the R3-DT-7 vacuity, one field wide)
     "bridge_assertion_superseding": {
@@ -536,6 +569,10 @@ ATTACK_TARGETS = {
     "contest.binding-event-upheld-consequence-wrong-prefix": ["consequence_refs"],
     "aep.actor-not-root": ["actor"],
     "aep.actor-root-family-wrong-suffix-shape": ["actor"],
+    "contest.nullified-with-consequence": ["consequence_refs"],
+    "contest.nullified-with-survivor": ["surviving_contest_id"],
+    "contest.nullified-on-entity-target": ["target_kind"],
+    "contest.nullified-without-evidence": ["evidence_refs"],
 }
 
 _DEL = object()
@@ -846,6 +883,15 @@ def _mutants():
         ["pattern"], consequence_refs=[f"aep:{ULID_B}"])
     # R4-CRO-6 (CVO~X 054009Z): the STRUCTURAL half of the trust root -- the actor must be one of
     # the two ratified seat families (the authenticated-principal half is the ledger's, WP3 row 6)
+    # R4-CRO-7: nullified is the VOID mode -- no consequence, no survivor, event targets only
+    add("contest.nullified-with-consequence", "contest_event_nullified", ["not"],
+        consequence_refs=[f"lce:{ULID_C}"])
+    add("contest.nullified-with-survivor", "contest_event_nullified", ["not"],
+        surviving_contest_id=f"ct:{ULID_A}")
+    add("contest.nullified-on-entity-target", "contest_event_nullified", ["enum"],
+        target_kind="entity", target_event_id=_DEL, target_entity_serial=f"ent:{ULID_A}")
+    add("contest.nullified-without-evidence", "contest_event_nullified", ["required"],
+        evidence_refs=_DEL)
     add("aep.actor-not-root", "authority_epoch_event", ["pattern"], actor="UNTRUSTED_WRITER@laptop")
     add("aep.actor-root-family-wrong-suffix-shape", "authority_epoch_event", ["pattern"],
         actor="0.0.0_AB_MSTR~laptop")
@@ -960,6 +1006,10 @@ def _semantic_mutants():
           _mk("contest_event", event_id=f"ctev:{ULID_E}", contest_id=f"ct:{ULID_E}",
               target_kind="lifecycle_event", target_event_id=f"lce:{ULID_A}",
               target_entity_serial=_DEL, occurred_at=TS)]),
+        # R4-CRO-7 race control: replace AND annul on one event -- two answers, the second rejected
+        ("sem.contest-replace-and-annul-same-event",
+         [_mk("contest_event_lifecycle"), _mk("lifecycle_event"), _mk("lifecycle_event_replacement"),
+          _mk("contest_event_nullified", target_event_id=f"lce:{ULID_A}")]),
     ]
 
 
@@ -984,17 +1034,21 @@ _EVENT_KEY = {"lifecycle_event": "materializer_serial", "binding_event": "bindin
 
 def _voided_event_ids(instances):
     """Event ids VOIDED in this batch: the target of an admitted upheld event contest whose sole
-    consequence is a replacement present in the batch (R3-CVO-12 c5 -- opened/dismissed/merged
-    void nothing; an upheld contest whose replacement is absent voids nothing HERE, the ledger
-    decides at final state)."""
+    consequence is a replacement present in the batch (R3-CVO-12 c5 -- REPLACE), OR the target
+    of an admitted NULLIFIED event contest (R4-CRO-7 -- VOID: the resolution is the terminal
+    corrective fact, no replacement). opened/dismissed/merged void nothing; an upheld contest
+    whose replacement is absent voids nothing HERE, the ledger decides at final state."""
     ids = {o.get("event_id") for o in instances if isinstance(o, dict)
            and o.get("record_type") in _EVENT_KEY}
     voided = set()
     for o in instances:
         if isinstance(o, dict) and o.get("record_type") == "contest_event" \
-                and o.get("target_kind") in _EVENT_KEY and o.get("outcome") == "upheld":
-            cons = o.get("consequence_refs") or []
-            if len(cons) == 1 and cons[0] in ids and o.get("target_event_id") in ids:
+                and o.get("target_kind") in _EVENT_KEY:
+            if o.get("outcome") == "upheld":
+                cons = o.get("consequence_refs") or []
+                if len(cons) == 1 and cons[0] in ids and o.get("target_event_id") in ids:
+                    voided.add(o["target_event_id"])
+            elif o.get("outcome") == "nullified" and o.get("target_event_id") in ids:
                 voided.add(o["target_event_id"])
     return voided
 
@@ -1061,6 +1115,25 @@ def _materializer_machine_errors(instances):
                     errs.append(f"[{i}] lifecycle_event: {o.get('event_kind')} of {ms} ordered AFTER "
                                 f"its decommission at [{dec[0][0]}] -- decommission is terminal "
                                 "(R4-CRO-4 / sec 3.27)")
+    return errs
+
+
+def _contest_conflict_errors(instances):
+    """CVO~X 060659Z (mixed / race): ONE admitted resolution per event target -- an event targeted
+    by two resolved contests (replace + annul, or two of either) has two answers; the second is
+    rejected. Batch-scope; the ledger runs the same rule over store U batch (WP3 row 13)."""
+    errs = []
+    seen = {}
+    for i, o in enumerate(instances):
+        if isinstance(o, dict) and o.get("record_type") == "contest_event" \
+                and o.get("event_kind") == "resolved" and o.get("target_kind") in _EVENT_KEY:
+            t = o.get("target_event_id")
+            if t in seen:
+                errs.append(f"[{i}] contest_event: SECOND resolution on {t} (first at [{seen[t]}]) -- "
+                            "one admitted resolution per event target; replace and annul cannot "
+                            "both stand (R4-CRO-7 race control)")
+            else:
+                seen[t] = i
     return errs
 
 
@@ -1155,7 +1228,8 @@ def semantic_errors(instances):
                         "record as [record] (R3-CRO-16: a dict iterates its keys and returns a "
                         "clean [])" % type(instances).__name__)
     errs = (_batch_provenance_errors(instances) + _binding_machine_errors(instances)
-            + _materializer_machine_errors(instances) + _contest_chronology_errors(instances))
+            + _materializer_machine_errors(instances) + _contest_chronology_errors(instances)
+            + _contest_conflict_errors(instances))
     seen = {}
     for i, inst in enumerate(instances):
         if not isinstance(inst, dict):

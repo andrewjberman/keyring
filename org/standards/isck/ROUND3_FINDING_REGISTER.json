@@ -1,5 +1,5 @@
 {
- "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged. || DECLARATIONS at b8961d2e39: CRO~X DRY 055643Z (round-4 domain axis); DT~X DRY 77512 (design sec 3/7, 181/119; testability); CVO~X NOT DRY 055423Z on R4-CVO-2/3 (design text) -- three coincided, the fifth design pin carries both.",
+ "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged. || DECLARATIONS at b8961d2e39: CRO~X DRY 055643Z (round-4 domain axis); DT~X DRY 77512 (design sec 3/7, 181/119; testability); CVO~X NOT DRY 055423Z on R4-CVO-2/3 (design text) -- three coincided, the fifth design pin carries both. || REOPENED 060438Z: CRO~X withdrew its DRY at b8961d2e39 with R4-CRO-7; the freeze did not run; BOUNDARY_ROUND4.md sec 8.",
  "round": 3,
  "attacked_input": "bf6fbe53d9",
  "charter": "51e789ddfb",
@@ -885,6 +885,19 @@
    "fix_commit": "(this commit -- the design's FIFTH pin; the round-4 contract pin stays b8961d2e39, no bundle member moved)",
    "verification_ref": "CVO~X replay of the voided-decommission construction at the fifth design pin",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
+  },
+  {
+   "finding_id": "R4-CRO-7",
+   "round": 4,
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T060438Z",
+   "finding_class": "CONTRACT",
+   "claim": "the replacement law cannot NULLIFY a false transition: an event is voided only by an upheld contest whose replacement has the same event_kind + carrier key, so voiding a false materializer_decommissioned(mat:A) necessarily produces another decommission of mat:A -- every finite admitted chain ends in an effective decommission; the fifth design pin's L-05-voided-decommission-does-not-retire-accepted is UNREACHABLE; R4-CRO-2's remedy corrects metadata/timing only, never a false transition, a wrong kind or a wrong key (same for a false close and a false epoch open). CRO~X WITHDREW its 055643Z DRY at b8961d2e39; the boundary cut @a19437ccb9 was reopened before the freeze ran",
+   "disposition": "FIXED",
+   "disposition_basis": "REPLACE vs NULLIFY, as CRO~X proposed: contest_event.outcome gains `nullified` (sec 3.21, four values; Rule-24 record: what the adjudication DOES to the target -- replace / void / dismiss / merge; reclassify deliberately not a value: a wrong kind is nullified and re-asserted as a new event) -- schema arm: nullified -> evidence_refs REQUIRED, consequence_refs + surviving_contest_id FORBIDDEN, target_kind in the three event kinds; VOIDED (validator _voided_event_ids, design sec 2b/rows 7/13) = the target of an admitted upheld-with-present-replacement OR of an admitted nullified; fixture contest_event_nullified (a nullified decommission -- the fixture batch's materializer then has NO effective decommission, the reachable path to L-05-voided-decommission-does-not-retire-accepted); mutants nullified-with-consequence / -with-survivor / -on-entity-target / -without-evidence; design row 13 gains L-13-nullified-on-non-event-rejected, L-13-nullified-with-consequence-rejected, L-13-event-nullified-accepted; charter item 8 and the round-4 pin line amended; BOUNDARY_ROUND4.md sec 8 REOPENED (sec 1-7 stand as the record of the cut). Landed as the THIRD round-4 pin (schema + validator moved -> a new v0.3-candidate+N)",
+   "fix_commit": "(this commit -- the third round-4 pin; also the design's sixth pin)",
+   "verification_ref": "CRO~X replay of its finite-chain proof at the third pin: a nullified decommission leaves NO effective decommission and the machine/fold fall through; CVO~X (060659Z UPHELD R4-CRO-7 and withdrew its DRY declarations) replay of the Rule-24 record for 3.21",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- filed AFTER the first cut, before the freeze"
   }
  ],
  "not_rows": {
