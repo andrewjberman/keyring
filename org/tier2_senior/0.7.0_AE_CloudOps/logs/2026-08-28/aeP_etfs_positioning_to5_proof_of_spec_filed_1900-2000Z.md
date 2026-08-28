@@ -162,3 +162,95 @@ fired cleanly 4 of 4 times.
 ## Next Steps
 
 - RAVC to `2.0.0_SA_COO~Z` -- filed + VALID + the AC4 wording defect, once.
+
+---
+
+## DELTA 19:22-19:30Z -- the issuer re-cut AC4, and the instance was re-filed against it
+
+**Commit:** `1ff7f9fa60` -- **LOCAL (ls-remote read; `origin/SITEZ` at `a951b1bd21`)**.
+
+`2.0.0_SA_COO~Z` **RE-CUT `ETFS-TO5-AC4` on the face @`b0f6b4f937`** (13766), striking the original in
+place rather than deleting it, and ratified the handling: *"a build that PASSED my criterion would have
+shipped a guard that can never fire."* **AS IT NOW BINDS:** the run derives `as_of` from the DATA and
+reconciles it against the calendar, computing and stamping `trading_days_behind` as a small
+non-negative integer, never wall-clock. Only the false equality is gone.
+
+**The consequence that landed on my artifact, and why I did not fix it immediately.** The re-cut made my
+`criterion_verbatim` quote superseded text. Two things had to be measured before acting:
+
+```
+  IS IT A MECHANICAL FAILURE?   NO. `criterion_verbatim` is in PROOF_OF_SPEC.schema.json and NOWHERE
+                                in proof-of-spec-check.py -- no rc can ever detect this. The CERTIFIER
+                                is the only reader who would meet it. So: raise before certification.
+  CAN I RE-FILE YET?            NO. The re-cut face was UNCOMMITTED (` M`). Filing then would have
+                                pinned vintage_commit 2566025e4d to text that vintage does not contain
+                                -- A CITATION WHOSE OWN VINTAGE DISPROVES IT.
+```
+
+So I surfaced it as an A-or-B call with a rec and named the face landing as my own trigger, rather than
+either churning against a working tree or sitting on it. The face landed at `b0f6b4f937` (verified: tree
+clean, `git show` positive-controlled at 358 lines); `2.0.0_SA_COO~Z` ruled **option A** at 13779.
+
+**What changed: three text/vintage fields and one surprise disposition. `1 file changed, 6 insertions,
+6 deletions.`**
+
+| field | change |
+|---|---|
+| `criterion_verbatim` | original equality wording -> the criterion as it now binds |
+| `spec_ref.vintage_commit` | `2566025e4d` -> `b0f6b4f937` (the vintage that CONTAINS the quote) |
+| `status_reason` | reframed -- the defect lives on the face now, so the row stops re-deriving it |
+| `surprises[0]` | `OBSERVATION x ARMED` -> **DISARMED AND REMEDIATED**, disposition recorded |
+
+⛔ **status PASS, denominator and every line of measured evidence are byte-identical to the original
+filing.** No re-measurement was performed and none was needed -- the re-cut describes what the deployed
+run already does on all five limbs. **A re-file that moved a number would have been a different act than
+the one authorised**, and the 6/6 line diff is the evidence that none moved. Re-validated: rc=0 VALID,
+6/6, alignment 6/6 forward / 2/2 resolve / 1/1 backward.
+
+⚠ **VINTAGE ON MY OWN VERDICT, per 13779 s.3:** this rc=0 is true at **LOCAL HEAD**. The checker fix
+`87c5761e9e`/`d4da9da939` is not on origin, so a seat re-running against `origin/SITEZ` may read
+differently -- **an unpushed checker, not a bad instance**. `ETFS_POSITIONING` alignment was clean
+independently of that fix, so the caveat is about reproducibility of the run, not a dependency.
+
+## Also this window
+
+- **Corrected a peer's claim about my own artifact.** `0.4.0_DS_ClientPlatform~P` (13763) warned my
+  filing would hit the comp-system gate and stated my file was one of three counted in the 247->250
+  drift. It was not, and it could not be: `safe-commit.sh:612`'s pre-check is a **hardcoded three-entry
+  path enumeration** naming `0.4.0_DS_ClientPlatform/deliverables/` and not mine, and `comp-system`
+  itself returns *"no comp-system `_SOURCE` in the changeset -- gate n/a, open"* for my exact path
+  (positive control: the DS path fires **BLOCKED-ON-PEER-LANDING**). Two instruments agreeing.
+  **I therefore did NOT write a `system-current-override:` line** -- for a gate that never evaluated the
+  commit that would be a false correctness signal in the audit log. That seat re-derived the correction
+  at source and carried it to `2.0.0_SA_COO~Z` themselves, where the wrong set-size was heading into the
+  `STRUCTURAL-TWOPHASE/proof-of-spec` adjudication.
+- **The generalisable half, surfaced not adjudicated:** the gate's trigger surface names ONE seat's
+  deliverables dir, so two proof-of-spec instances of the same kind filed the same hour meet different
+  gates. The "a guard is only as wide as its enumeration" shape. It also means that deadlock is
+  **seat-scoped, not fabric-wide**.
+
+## Blockers (delta)
+
+**None. Seat IDLE.** Nothing half-landed, no ledger open, no override written, nothing outstanding to
+any seat. Both commits await the integrator's push.
+
+## CERTIFIED 19:28Z
+
+`3.0.0_SA_CVO~Z` certified **TO-5 rc=0 VALID, 6 rows, 0 violations, coverage 6/6** at cert
+`@b5b9f8ae6e` (13787), with its own **negative control** -- the same instance plus one bogus id
+returns rc=1, so the check discriminates -- and the 3-arg form throughout, since the 2-arg form
+returns a clean rc=0 that says COVERAGE UNCHECKED. **`ETFS-TO5-AC4` was certified on the RE-CUT, not
+the original.** The certifier independently reached the same reading of the original defect: *"a build
+that PASSED it would have shipped a guard that can never fire."* `ETFS-TO5-AC6`'s absence was checked
+rather than assumed and survives because the face declares it.
+
+⚠ **ONE CITATION HAZARD I INTRODUCED AND HAVE ROUTED.** The cert names the instance at `f32d343133`;
+the instance is now `1ff7f9fa60` (the AC4 re-file, ~1 minute earlier). **The certification's substance
+is unaffected** -- the delta is `criterion_verbatim`, `spec_ref.vintage_commit`, `status_reason` and
+one surprise disposition, with status, denominator and every measurement byte-identical. But a later
+reader diffing the cert's cited hash against the instance at HEAD would meet a divergence, which is the
+same class I raised to the issuer an hour earlier about my own `criterion_verbatim`. Surfaced to
+`3.0.0_SA_CVO~Z` to re-point or ratify; **not my call to edit a certificate.**
+
+⛔ Certification does NOT close `ETFS_POSITIONING` or D4 -- Andrew ruled *"D4 is done"* a READ, and the
+register act travels through his channel.
