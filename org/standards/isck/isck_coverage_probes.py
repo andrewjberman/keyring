@@ -626,7 +626,37 @@ def arm_paired(schema, verbose=True):
 
 
 # ------------------------------------------------------------------------ self-controls
-def self_controls(schema, fixtures, verbose=True):
+def _battery_contradictions(schema, fixtures, repairs):
+    """Values a VALIDATING fixture actually carries that ARM 3 nonetheless calls dead.
+
+    ARM 3 synthesises from ONE base fixture per record type and repairs its way to each
+    value; the POSITIVE battery holds VARIANT fixtures that already exhibit those values
+    and the synthesis never sees them. When the two disagree the battery wins -- it
+    EXHIBITS a real record -- and ARM 3's verdict is a FALSE UNREACHABLE.
+    """
+    validator = jsonschema.Draft202012Validator(schema)
+    dead, _open = arm_inhabitability(schema, fixtures, repairs, verbose=False)
+    dead_set = set(dead)
+    contradictions = []
+    for name, inst in sorted(fixtures.items()):
+        if not isinstance(inst, dict):
+            continue
+        rtype = inst.get("record_type")
+        branch = schema.get("$defs", {}).get(rtype)
+        if not branch or list(validator.iter_errors(inst)):
+            continue
+        for field, value in sorted(inst.items()):
+            if not isinstance(value, str):
+                continue
+            domain = _enum_of(schema, branch, field)
+            if domain and value in domain:
+                row = "%s.%s=%s" % (rtype, field, value)
+                if row in dead_set:
+                    contradictions.append("%s (exhibited by fixture %s)" % (row, name))
+    return contradictions
+
+
+def self_controls(schema, fixtures, repairs=None, verbose=True):
     """Every arm must be reachable from a DIFFERENT truth -- it must be able to say either thing."""
     if verbose:
         print()
@@ -682,6 +712,25 @@ def self_controls(schema, fixtures, verbose=True):
         broken, {"entity": fixtures["entity"]},
         {("entity", "identity_scope", "impossible_scope"): lambda i: i}, verbose=False)
     results.append(("ARM 3 sees a structurally UNSATISFIABLE value", len(dead) == 1, True))
+
+    # ARM 3 CROSS-ARM CONTROL. Nothing in this tool compared ARM 3's verdict against the
+    # POSITIVE battery, so a repair going stale against a newly-landed conditional made two
+    # arms of ONE instrument disagree in the SAME run with no arm to notice. MEASURED at
+    # 9869831971: R2-2's `partial -> evidence_refs` cut left the shared drop_fingerprint
+    # repair short of the warrant; ARM 3 printed UNREACHABLE for `partial` while fixture
+    # state_observation_partial validated in the positive arm 15 of 15.
+    if repairs is not None:
+        results.append(("ARM 3 agrees with the POSITIVE battery on every exhibited value",
+                        len(_battery_contradictions(schema, fixtures, repairs)) == 0, True))
+        # ...and it must FIRE on a stale repair, or the arm above is vacuous. Both halves are
+        # reachable from a DIFFERENT truth: the schema is fixed, only the repair moves.
+        stale = dict(repairs)
+        stale[("state_observation", "failure_state", "partial")] = (
+            lambda i: dict((k, v) for k, v in i.items()
+                           if k not in ("fingerprint", "fingerprint_method",
+                                        "normalization_version", "evidence_refs")))
+        results.append(("ARM 3 cross-arm control FIRES on a deliberately stale repair",
+                        len(_battery_contradictions(schema, fixtures, stale)) > 0, True))
 
     # ARM 1 REGRESSION CONTROL for the DISJUNCTIVE discriminant. `if: {anyOf: [...]}` was
     # reported UNPARSED until R2-8's bridge_assertion shipped one; the guard did its job (never
@@ -924,6 +973,16 @@ def _repairs(V):
         inst["evidence_refs"] = ["evidence:absence_probe"]
         return inst
 
+    def observation_partial(inst):
+        # partial asserts "I could not see all of it", so R2-2's cut makes it carry its warrant
+        # (evidence_refs) exactly as observed_absent does -- R2-5's cell one step over. Without
+        # this the shared drop_fingerprint repair leaves the warrant unsupplied and ARM 3 prints
+        # a FALSE UNREACHABLE -- the precise error its own closing note exists to prevent.
+        for field in ("fingerprint", "fingerprint_method", "normalization_version"):
+            inst.pop(field, None)
+        inst["evidence_refs"] = ["evidence:partial_read_warrant"]
+        return inst
+
     out[("bridge_assertion", "registry_standing", "held")] = bridge_held
     out[("bridge_assertion", "registry_standing", "inadmissible")] = bridge_inadmissible
     out[("bridge_assertion", "registry_standing", "rejected")] = bridge_rejected
@@ -936,7 +995,8 @@ def _repairs(V):
     for rtype in ("state_observation", "materialization_run"):
         out[(rtype, "fabric_scope", "device_local")] = device_local_generic
         out[(rtype, "fabric_scope", "fabric_invariant")] = invariant
-    for value in ("partial", "substrate_unavailable", "instrument_error", "not_applicable"):
+    out[("state_observation", "failure_state", "partial")] = observation_partial
+    for value in ("substrate_unavailable", "instrument_error", "not_applicable"):
         out[("state_observation", "failure_state", value)] = drop_fingerprint
     return out
 
@@ -957,7 +1017,7 @@ def main():
     kw_fail, field_fail, unscoreable = arm_attribution(schema, V.FIXTURES, V._mutants())
     dead, open_values = arm_inhabitability(schema, V.FIXTURES, _repairs(V))
     unpaired, unpaired_unparsed = arm_paired(schema)
-    controls_ok = self_controls(schema, V.FIXTURES)
+    controls_ok = self_controls(schema, V.FIXTURES, _repairs(V))
 
     print()
     print("=" * 94)
