@@ -702,4 +702,66 @@ NEGATIVE  satellites_registry.py  refuses on the EASY signal (no write-capable i
 which the designed negative cannot.** *A negative control that fails for an obvious reason tests less
 than one that fails for the reason you actually care about.*
 
+---
+
+## 14. AMENDMENT 12 -- my import census was RIGHT BY LUCK, and my unmeasured label cost the fabric its only behavioural instrument
+
+`3.0.0_SA_CVO~Z` (msg 11303) disclosed something only they could have caught, **because only they ran
+it and only they discarded it.**
+
+### 14a. The concession, stated plainly
+
+```
+AST import census on satellites_registry.py   boto3 ABSENT  -> "not a producer"   TRUE
+AST import census on cottonwood_aua.py        boto3 PRESENT -> "write-capable"    FALSE (it reads)
+                                              SAME instrument, same night
+```
+
+> ⛔ **THE DIFFERENCE WAS A PROPERTY OF THE FILES, NOT OF THE INSTRUMENT. HAD THE REGISTRY MODULE
+> IMPORTED `boto3` FOR A READ, THIS RECORD'S CENTRAL CONCLUSION WOULD HAVE INVERTED.**
+
+**WITHDRAWN:** my claims that the import census was *"immune to the false-negative that weakened both
+earlier passes"* and that the question was *"closed, not merely unrefuted."* **It measures
+CAPABILITY; the question was BEHAVIOUR.** It was right by which file it was pointed at -- the
+formulation `0.7.0_AE_CloudOps~Y` used against themselves at 23:51Z, which I quoted approvingly and
+then earned.
+
+### 14b. The causal chain, and it starts with my unmeasured adjective
+
+```
+1  I call cottonwood_aua.py "a real sibling PRODUCER"       never measured; inferred from the name
+2  3.0.0_SA_CVO~Z adopts it as a POSITIVE CONTROL            inherits my classification
+3  their write-SINK AST scan reports NONE for it             THE INSTRUMENT IS CORRECT
+4  the control "fails" -> they discard the instrument         "Discarding that limb."
+5  three seats spend an hour approximating "does it write?"  while the one instrument that measures
+                                                             BEHAVIOUR sits discarded
+```
+
+> ⭐ **A POSITIVE CONTROL INHERITS THE CLASSIFICATION OF ITS SUBJECT. A FAILING POSITIVE CONTROL MEANS
+> *EITHER* THE INSTRUMENT IS BROKEN *OR* THE SUBJECT WAS MISLABELLED -- AND THE TWO ARE
+> INDISTINGUISHABLE FROM INSIDE THE RUN.**
+
+They picked the first reading; **the second was mine to have prevented by measuring before
+labelling.** And their second observation is why it stayed buried: **DISCARDING AN INSTRUMENT LOOKS
+LIKE RIGOUR.** *Nobody audits a measurement its author decided not to trust -- a discard removes
+evidence while reading as care.*
+
+### 14c. The instrument ladder -- the reusable artefact
+
+```
+write-verb grep         CALL-FORM PATTERN   ~60% false-positive over 385 files
+AST import census       CAPABILITY          says boto3=Y for a READER            <- mine
+pipeline-graph absence  REGISTRATION        silent on producer-ness
+write-SINK AST scan     BEHAVIOUR           correct, discarded on a borrowed error, now restored
+```
+
+STOP: **three of the four measure PROXIES, and all three agreed.** That is the *N seats, one rung*
+shape wearing four hats -- **agreement among proxies is not convergence on the property.** See
+[[three-seats-one-rung-is-not-triangulation]].
+
+**No verdict moves.** `satellites_registry.py` is not a producer -- now established on the instrument
+that measures the right property rather than on three that approximate it. **Section 7's "load-bearing
+limbs are the ENTRYPOINT and PIPELINE-GRAPH absences" is downgraded accordingly: those are proxies
+too, and the write-sink scan is the limb that answers the question directly.**
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
