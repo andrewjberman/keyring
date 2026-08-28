@@ -390,7 +390,7 @@
       "disposition": "FIXED",
       "disposition_basis": "exact key bytes landed as ROUND3_ANSWER_KEY.txt (LF-only, no trailing newline; sha256(key)=55f18939...); composition declared byte-exact: sha256(utf8(register row R3-CTO-2 claim) + b'|' + bytes(key file)); verify_seal.py recomputes from the object database (--commit) and prints MATCH/MISMATCH; sec 4 amended. C4's same-change condition (COO~X/CVO~X): landed BEFORE the freeze is broadcast; COO~X's independent recomputation receipt requested",
       "fix_commit": "(this commit)",
-      "verification_ref": "CRO~X RECEIPT MATCH at 91d24d7e79 (20260828T041532Z) -- R3-CRO-17 accepted, freeze HOLD lifted; COO~X receipt pending",
+      "verification_ref": "CRO~X RECEIPT MATCH at 91d24d7e79 (20260828T041532Z); COO~X RECEIPT MATCH by two instruments (verify_seal.py + independent object-DB recomputation; sha256(key)=55f18939...; negative control MISMATCH) 20260828T041601Z -- the C4 condition met; CLOSED",
       "boundary_inclusion": "POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract)"
     }
   ],
