@@ -40,6 +40,7 @@ scored as covered is precisely the false-green these arms exist to kill.
 Run:  python isck_coverage_probes.py          (self-test; exit 0 unless a self-control fails)
 """
 import copy
+import hashlib
 import json
 import os
 import sys
@@ -480,6 +481,37 @@ def _no_dupes(pairs):
 
 PERMITTED_CLASSES = {"A", "B", "C", "D"}
 
+# R3-CVO-2 (3.0.0_SA_CVO~X's orphan-sidecar exhibit, routed to this seat 77231). A sidecar entry
+# used to need only a structurally valid EXACT KEY to suppress a live row -- so an entry that
+# corresponds to NO ruling, or to a ruling whose arm has since changed underneath it, suppressed
+# exactly as well as a real one. The key proved the SHAPE of a ruling and never its EXISTENCE.
+LINK_FIELDS = ("record_ref", "ruled_at", "arm_digest")
+
+
+def _arm_digest(payload):
+    """sha256 over the arm's NORMALIZED content -- what was ruled on, not how it was written.
+
+    Normalized means the PARSED effect set / domain, never the raw JSON text: a reformat, a key
+    reorder or a comment must not read as a moved arm, and a real change to what the arm requires
+    must. json.dumps(sort_keys) over parsed structures gives exactly that.
+    """
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _link_state(entry, computed):
+    """LINKED | ORPHAN (a link field missing) | STALE (the arm moved under the ruling).
+
+    ORPHAN fails open to NEW, never to suppressed: an entry that cannot prove it descends from a
+    ruling is worth exactly as much as no entry at all, and the row must come back. STALE is the
+    value-set lapse generalized -- the ruling was real, its subject moved.
+    """
+    if any(entry.get(f) in (None, "") for f in LINK_FIELDS):
+        return "ORPHAN"
+    if computed is not None and entry.get("arm_digest") != computed:
+        return "STALE"
+    return "LINKED"
+
 
 def _validate_entries(record):
     """Every entry must be STRUCTURALLY SOUND AT CONSUMPTION, or nothing is suppressed.
@@ -517,7 +549,7 @@ def _validate_entries(record):
                              % (key, payload, parts[3]))
 
 
-def _dispose(unpaired):
+def _dispose(unpaired, digests=None):
     """Split ARM 4's rows against the ruled adjudication record.
 
     THE GATE CONSUMES THE RULING, BUT NEVER BY LABEL. Key = record_type|discriminant|field|values.
@@ -551,6 +583,7 @@ def _dispose(unpaired):
         if len(parts) == 4:
             by_triple.setdefault(tuple(parts[:3]), []).append(val)
     adjudicated, deferred, lapsed, fresh = [], [], [], []
+    orphans, stale = [], []
     for rtype, disc, vals, field in unpaired:
         key = "%s|%s|%s|%s" % (rtype, disc, field, ",".join(sorted(vals)))
         entry = record.get(key)
@@ -561,10 +594,24 @@ def _dispose(unpaired):
                                sorted({v for p in prior for v in p["values_at_adjudication"]})))
             else:
                 fresh.append((rtype, disc, vals, field))
+            continue
+        state = _link_state(entry, (digests or {}).get(key))
+        if state == "ORPHAN":
+            orphans.append(key)
+            fresh.append((rtype, disc, vals, field))
+        elif state == "STALE":
+            stale.append(key)
+            lapsed.append((rtype, disc, vals, field, entry.get("values_at_adjudication", [])))
         elif entry.get("class") == "D":
             deferred.append((rtype, disc, vals, field))
         else:
             adjudicated.append((rtype, disc, vals, field))
+    for key in orphans:
+        print("  WARN: sidecar entry %r is an ORPHAN (missing %s) -- IGNORED, row reported NEW"
+              % (key, "/".join(LINK_FIELDS)))
+    for key in stale:
+        print("  WARN: sidecar entry %r arm_digest MISMATCH -- the arm moved under the ruling; "
+              "row reported RE-ADJUDICATION" % key)
     return adjudicated, deferred, lapsed, fresh
 
 
@@ -625,6 +672,7 @@ def _dispose_arm1(gaps):
         if len(parts) == 3:
             by_pair.setdefault(tuple(parts[:2]), []).append(val)
     adjudicated, deferred, lapsed, fresh = [], [], [], []
+    orphans, stale = [], []
     for rtype, field, missing, domain in gaps:
         key = "%s|%s|%s" % (rtype, field, ",".join(sorted(missing)))
         entry = record.get(key)
@@ -635,10 +683,29 @@ def _dispose_arm1(gaps):
                                sorted({v for p in prior for v in p["values_at_adjudication"]})))
             else:
                 fresh.append((rtype, field, missing, domain))
+            continue
+        # ARM 1's arm is the FIELD'S DOMAIN plus the unreached set: a ruling that these values are
+        # legitimately free has the domain as its PREMISE, so a domain that grows or shrinks under
+        # the ruling must lapse it even when the unreached set happens to be unchanged.
+        computed = _arm_digest({"domain": list(domain), "unreached": sorted(missing)})
+        state = _link_state(entry, computed)
+        if state == "ORPHAN":
+            orphans.append(key)
+            fresh.append((rtype, field, missing, domain))
+        elif state == "STALE":
+            stale.append(key)
+            lapsed.append((rtype, field, missing, domain,
+                           entry.get("values_at_adjudication", [])))
         elif entry.get("class") == "D":
             deferred.append((rtype, field, missing, domain, entry.get("reversal_trigger", "")))
         else:
             adjudicated.append((rtype, field, missing, domain))
+    for key in orphans:
+        print("  WARN: sidecar entry %r is an ORPHAN (missing %s) -- IGNORED, row reported NEW"
+              % (key, "/".join(LINK_FIELDS)))
+    for key in stale:
+        print("  WARN: sidecar entry %r arm_digest MISMATCH -- the domain or unreached set moved "
+              "under the ruling; row reported RE-ADJUDICATION" % key)
     return adjudicated, deferred, lapsed, fresh
 
 
@@ -662,6 +729,7 @@ def arm_paired(schema, verbose=True):
     records = _record_defs(schema)
     total = 0
     unpaired = []
+    digests = {}
     unparsed_all = []
     for rtype, branch in sorted(records.items()):
         arms, unparsed = _conditional_arms(branch, rtype)
@@ -683,7 +751,11 @@ def arm_paired(schema, verbose=True):
                           or field in dep)
                 if not paired:
                     unpaired.append((rtype, disc, sorted(vals), field))
-    adjudicated, deferred, lapsed, fresh = _dispose(unpaired)
+                    dkey = "%s|%s|%s|%s" % (rtype, disc, field, ",".join(sorted(vals)))
+                    digests[dkey] = _arm_digest(
+                        {"values": sorted(vals),
+                         "effects": sorted([list(e) for e in eff])})
+    adjudicated, deferred, lapsed, fresh = _dispose(unpaired, digests)
     if verbose:
         print("  DENOMINATOR: %d REQUIRE effects across %d record types" % (total, len(records)))
         print("  REQUIRE-ONLY: %d  (%d adjudicated, %d deferred, %d NEW, %d re-adjudication)"
@@ -985,6 +1057,39 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
                     _rejects1({"r|d|f|x": {"class": "A", "values_at_adjudication": ["x"]}}), True))
     results.append(("ARM-4 GUARD refuses an ARM-1 shaped 3-part key",
                     _rejects({"r|f|x": {"class": "A", "values_at_adjudication": ["x"]}}), True))
+
+    # ---- R3-CVO-2 LINK GUARD (3.0.0_SA_CVO~X's orphan-sidecar exhibit). _link_state is the whole
+    # remedy in one pure function, so it is controlled directly and in BOTH directions. The
+    # LINKED arm is listed FIRST on purpose: if it ever fails, every refusal below is vacuous
+    # and the gate would be suppressing nothing at all rather than suppressing correctly.
+    _linked = {"class": "A", "values_at_adjudication": ["x"],
+               "record_ref": "r.md", "ruled_at": "abc123", "arm_digest": "DIGEST"}
+    results.append(("LINK GUARD calls a complete, digest-matching entry LINKED",
+                    _link_state(_linked, "DIGEST") == "LINKED", True))
+    for _f in LINK_FIELDS:
+        _o = dict(_linked)
+        _o.pop(_f)
+        results.append(("LINK GUARD calls an entry missing %s an ORPHAN" % _f,
+                        _link_state(_o, "DIGEST") == "ORPHAN", True))
+    _blank = dict(_linked)
+    _blank["record_ref"] = ""
+    results.append(("LINK GUARD treats an EMPTY link field as missing, not as present",
+                    _link_state(_blank, "DIGEST") == "ORPHAN", True))
+    results.append(("LINK GUARD calls a moved arm STALE (the value-set lapse generalized)",
+                    _link_state(_linked, "A_DIFFERENT_DIGEST") == "STALE", True))
+    results.append(("LINK GUARD cannot call a DEAD-ARM entry LINKED against a real digest",
+                    _link_state(dict(_linked, arm_digest="ARM_ABSENT"), "DIGEST") == "STALE", True))
+    # ORPHAN outranks STALE: an entry that cannot prove it descends from a ruling must fail open to
+    # NEW even when its digest also disagrees -- NEW is the louder, safer of the two verdicts.
+    _op = dict(_linked)
+    _op.pop("ruled_at")
+    results.append(("LINK GUARD reports ORPHAN, not STALE, when an entry is both",
+                    _link_state(_op, "A_DIFFERENT_DIGEST") == "ORPHAN", True))
+    # And the digest itself must discriminate: same content -> same digest, moved content -> not.
+    results.append(("ARM DIGEST is stable on identical normalized content",
+                    _arm_digest({"a": [1, 2]}) == _arm_digest({"a": [1, 2]}), True))
+    results.append(("ARM DIGEST MOVES when the arm's content moves (else it certifies nothing)",
+                    _arm_digest({"a": [1, 2]}) != _arm_digest({"a": [1, 3]}), True))
 
     ok = True
     for label, got, want in results:
