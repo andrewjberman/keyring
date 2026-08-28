@@ -39,13 +39,18 @@ partial would punish partial bundles for documenting themselves, inverting the i
 completeness axis exists to create. Presence contradicts nothing; absence of the ABSENT ones is
 already the `absent_components` carrier's job (and its inverse is CUT #3).
 
-**CLASS C — cross-axis shared field, forbid is UNSATISFIABLE (1 candidate: bridge_assertion
-`contradicted` -> `adjudicated_by`).** `adjudicated_by` is shared between the verification axis
-(`contradicted` requires it) and the registry axis (`rejected` requires it). A forbid keyed on
-`verification_standing != contradicted` would make the LEGAL combination
-`registry_standing: rejected` + `verification_standing: unverified` unsatisfiable — the ARM-3
-structural-unsatisfiability class, manufactured by the mirror itself. The candidate-forbid arm
-already covers the one cell where presence truly contradicts (a not-yet-adjudicated candidate).
+**CLASS C — RE-RULED on DT-R2-6 (1 candidate: bridge_assertion `contradicted` ->
+`adjudicated_by`).** My first row declined the mirror because it would "manufacture" ARM-3
+unsatisfiability. `0.4.0_DT_ClientPlatform~X` showed the unsatisfiability ALREADY EXISTED —
+allOf[4] (candidate forbids adjudicated_by) x allOf[7] (contradicted requires it) made
+candidate x contradicted UNINHABITABLE, with a positive control (admitted x contradicted VALID) —
+so the reason given did not distinguish the mirror from the status quo. Re-ruling: candidate x
+contradicted SHOULD be expressible (a parse-derived candidate contradicted on evidence before any
+registry act is a real state). Contradiction is EVIDENTIAL; adjudication is a registry/contest
+act — the `contradicted -> adjudicated_by` REQUIRE was the wrong arm and is RETIRED on BOTH
+consumers (DT-R2-2's shared-enum rule; `3.0.0_SA_CVO~X` 77053 caught the bridge-only draft),
+with §3.2 re-recorded (enter on evidence, leave by adjudication via `contest_resolved`). The
+candidate is therefore MOOT, not NO: no require arm remains to mirror.
 
 **CLASS D — DEFERRED BY LANDED DESIGN (2 candidates: `superseded` -> `superseded_by` on
 bridge_assertion and identity_relation).** The attacked-dry R2-2 design makes `superseded_by`

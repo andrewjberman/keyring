@@ -192,7 +192,6 @@ ATTACK_TARGETS = {
     "coherence.mismatch-no-delta": ["delta_summary"],
     "coherence.currency-verdict-no-evidence": ["evidence_refs"],
     "relation.corroborated-no-evidence": ["evidence_refs"],
-    "relation.contradicted-no-adjudicator": ["adjudicated_by"],
     "relation.superseded-no-successor": ["superseded_by"],
     "relation.evidence-empty-list": ["evidence_refs"],
     "matversion.partial-legacy-without-absent-components": ["absent_components"],
@@ -226,7 +225,6 @@ ATTACK_TARGETS = {
     "bridge.admitted-no-evidence": ["evidence_refs"],
     "bridge.origin-no-evidence": ["evidence_refs"],
     "bridge.corroborated-no-evidence": ["evidence_refs"],
-    "bridge.contradicted-no-adjudicator": ["adjudicated_by"],
     "bridge.superseded-no-successor": ["superseded_by"],
     "bridge.held-no-named-item": ["held_on"],
     "bridge.inadmissible-no-owner": ["store_owner"],
@@ -322,8 +320,6 @@ def _mutants():
     add("relation.corroborated-no-evidence", "identity_relation", ["required"],
         verification_standing="corroborated", claim_origin="producer_declared",
         evidence_refs=_DEL)
-    add("relation.contradicted-no-adjudicator", "identity_relation", ["required"],
-        verification_standing="contradicted", evidence_refs=["obs:" + ULID_A])
     add("relation.superseded-no-successor", "identity_relation", ["required"],
         verification_standing="superseded", claim_origin="producer_declared",
         evidence_refs=_DEL)
@@ -379,9 +375,6 @@ def _mutants():
     add("bridge.corroborated-no-evidence", "bridge_assertion", ["required"],
         verification_standing="corroborated", claim_origin="producer_declared",
         evidence_refs=_DEL)
-    add("bridge.contradicted-no-adjudicator", "bridge_assertion", ["required"],
-        verification_standing="contradicted", registry_standing="held",
-        held_on="pending-contest-evidence")
     add("bridge.superseded-no-successor", "bridge_assertion", ["required"],
         verification_standing="superseded", claim_origin="producer_declared",
         evidence_refs=_DEL, registry_standing="retired")

@@ -105,11 +105,15 @@ one consumer of a shared enum and not another is the obligation-propagation gap 
 DOMAIN: epistemic standing of an assertion. MECE over check-states; hunted member: partially-checked
 → stays `unverified` (a partial check that upgrades standing is the F5 defect). GRAIN: assertion.
 INTENT: one axis — has a check run and what did it say. STATE-COHERENCE: `unverified→corroborated`
-moves by RUNNING A CHECK (asserting seat); `contradicted` moves only by ADJUDICATION (adjudicator);
-`superseded` moves by a NEW assertion (any seat) — three acts, three owners.
+moves by RUNNING A CHECK (asserting seat); `contradicted` is ENTERED on evidence (checker) and
+LEFT only by ADJUDICATION (adjudicator) — the exit is a registry/contest act carried by the R2-2
+`contest_resolved` event, never by a field on the contradicted record (DT-R2-6: the field form
+made candidate x contradicted uninhabitable on bridge_assertion); `superseded` moves by a NEW
+assertion (any seat) — three acts, three owners.
 ARM TABLE (F5): `corroborated|contradicted -> evidence_refs required` (owner: checker) ·
-`contradicted -> adjudicated_by required` (owner: adjudicator) · `superseded -> superseded_by
-required` (owner: superseding author). ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
+`superseded -> superseded_by required` (owner: superseding author). RETIRED (DT-R2-6, both
+consumers at once per DT-R2-2's shared-enum rule): `contradicted -> adjudicated_by` — the
+adjudicator lives on the resolution event, where R2-2 already put it. ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
 
 ### 3.3 `registry_standing` — `candidate | admitted | held | rejected | retired | inadmissible`
 DOMAIN: lifecycle position in an admitting registry (bridges first). MECE: `inadmissible` ADDED at

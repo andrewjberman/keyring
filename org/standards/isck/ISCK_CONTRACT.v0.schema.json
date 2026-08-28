@@ -776,23 +776,6 @@
           "if": {
             "properties": {
               "verification_standing": {
-                "const": "contradicted"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "adjudicated_by"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
                 "const": "superseded"
               }
             },
@@ -1762,23 +1745,6 @@
           "then": {
             "required": [
               "evidence_refs"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "contradicted"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "adjudicated_by"
             ]
           }
         },
