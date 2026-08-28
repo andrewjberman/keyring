@@ -22,8 +22,10 @@ that has not been run, and this record says so rather than letting a green suite
   VALIDATOR validate_isck.py                   blob 418ad2b96d7c
   R2-2 DESIGN (attacked-dry, NOT LANDED)        blob 41cacec709b8   @7c093caff5
   ARM-4 RECORD                                 blob 5892013077d3   @05086d045c (+ class C MOOT @2795145b63)
-  PUSH STATE AT CUT                            LOCAL -- origin/CLOUD @c29f17b5c9 (ls-remote read 00:18Z) carries 2795145b63 and earlier;
-                                               d144e7937c / 7c093caff5 / db4062c3a7 / 9fb81b743a / 9760630ae7 ride the next integration window
+  PUSH STATE AT CUT                            LOCAL -- origin/CLOUD @c29f17b5c9 (ls-remote read 00:18Z) carries 2795145b63 and earlier
+  PUSH STATE, AMENDED 00:3xZ                   ON ORIGIN -- origin/CLOUD @3fbb493cdafd584209a10c6353794667e5507b98 (fresh fetch, this seat):
+                                               merge-base --is-ancestor YES for 9760630ae7 (package tip), ece1ac0f41 (this record), 6245dc0a3d
+                                               (first amendment); integrator 0.0.0_AB_MSTR 77126 read the same, independently
 ```
 
 **Gates at the boundary tip, ATOMIC EXTRACT of 9760630ae7 (run_gates.sh, this seat, 00:25Z):**
@@ -150,7 +152,7 @@ and silence is what I then misread as refutation."*
 | condition | state |
 |---|---|
 | 1. R2-1..R2-10 resolved or carried with owners | **MET** — §3; two carries (R2-2 landing; ARM-1's 9), both owned by this seat |
-| 2. every gate passes at a cited tip that is ON ORIGIN | **HALF** — six of six exit 0 at the ATOMIC EXTRACT of 9760630ae7 (§1); the tip is **LOCAL**; the stricter clean-clone reading is OWED at the next integration window and this record will be amended with the on-origin hash when `git merge-base --is-ancestor 9760630ae7 origin/CLOUD` reads true |
+| 2. every gate passes at a cited tip that is ON ORIGIN | **MET (amended 00:3xZ)** — six of six exit 0 at the ATOMIC EXTRACT of 9760630ae7 (§1), and 9760630ae7 is ON ORIGIN: `git merge-base --is-ancestor 9760630ae7 origin/CLOUD` = YES at origin/CLOUD @3fbb493cda after a fresh fetch (this seat's read; MSTR 77126 concurs). A git-archive extract at an on-origin hash is byte-identical to a true-clone extract by hash identity, so the stricter reading holds. Was HALF at cut (tip LOCAL) — the amendment is the record, not a rewrite |
 | 3. the VERTICAL-SLICE END-TO-END BATTERY passes | **NOT RUN, NOT BUILT** — mint → bind → rename → observe → reconcile → materialize-from-frontier → Nessie advance → Kuzu dislocation → history preservation. It needs the WP-3 ledger and live substrates. **ROUND 2 DOES NOT EXIT TO OPERATIONAL USE ON THIS RECORD.** |
 
 **What this boundary therefore certifies:** the attack round is closed dry at the cited tips; the
