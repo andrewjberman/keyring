@@ -100,15 +100,21 @@ def main():
         c["seen"] += 1
         sv = card.get("schema_version")
         owner = str(card.get("carded_by", "?"))
-        if sv == 3.1:
+        # SETTLED RECEIPT (2026-08-28 23:5xZ, the last re-stamp @cf66984cfc): an already-3.1 card is NOT skipped --
+        # it is validated AS v3.1 and runs the same three findings (LIVE / understates / unbased), so the receipt
+        # issued AT the settled pin measures the bar on the stamped cards rather than reporting a count of them.
+        # A skip here would have printed "already v3.1 72" with three zeros that were never computed. Never stamped
+        # again (no byte under --apply).
+        settled = sv == 3.1
+        if settled:
             c["already_v3.1"] += 1
             per_owner[owner]["already"] += 1
-            continue
-        if sv != 3:
+        elif sv != 3:
             c["not_v3"] += 1
             per_owner[owner]["not_v3"] += 1
             continue
-        c["v3"] += 1
+        else:
+            c["v3"] += 1
         key = card.get("trust", {}).get("key", {})
         ke = key.get("key_expression")
         ev = str(key.get("evidence", ""))
@@ -159,7 +165,7 @@ def main():
             findings.append((owner, str(f), f"{status}: {errs[0].message[:140]}"))
         prose_word = 'LIVE' if stale else ('disch' if discharged else ('clean' if ke is not None else 'n/a'))
         print(f"{status:14s} prose={prose_word:5s} floor={'lowered' if lowered else 'ok':7s} {owner:28s} {f}")
-        if apply and not errs:
+        if apply and not errs and not settled:
             f.write_text(json.dumps(trial, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
             c["restamped"] += 1
     print("\nRECEIPT: seen %d | v3 %d | already v3.1 %d | not v3 %d | PASS %d | REFUSED-enum %d | REFUSED-other %d | delta prose present %d (discharged in place %d, LIVE false claim %d) | scalar UNDERSTATES true-MIN floor %d | unbased valued sub-claim %d%s"
