@@ -62,4 +62,30 @@ cannot pick one yet and picking one now would be wrong:**
   credentials + login-constitution) and was **deliberately NOT consumed**: TTL is 900s, so
   mint-then-render is ONE act, performed at ratification.
 
+## ⭐ AMENDMENT ~22:3xZ -- THE CONTENT MARKER, MEASURED ON THE SERVED BYTES
+
+The marker slot deliberately left open above is now filled, and filling it caught a defect in the
+first candidate offered.
+
+**SWEEP:** 44 route chunks enumerated from the entry bundle (they are named INSIDE it -- the page is
+lazy-loaded), 3,923,360 bytes of served JS.
+
+```
+  REJECTED  "A fee-split breakdown is not available for this view"   SERVED BUNDLE = 0 ALREADY
+            Its proposed pass condition (discriminator ABSENT + control PRESENT) was therefore
+            SATISFIED BEFORE THE PROMOTE. Cause: it was measured OLD=origin/DEV 4dde6df344, but
+            PROD serves 2858e7f5ff. The string went 0 -> 1 -> 0 and NEVER REACHED PROD.
+  REJECTED  `git grep -c "Fee split unavailable"` = 1 file at ALL THREE vintages -> reads UNCHANGED.
+            It is not: at db3df0b2 it survives ONLY as a comment (CategoryViewTree.tsx:290), the
+            JSX having been deleted. A FILE COUNT CONCEALS A REAL TRANSITION IN SHIPPED OUTPUT.
+
+  ADOPTED, measured on the SERVED bundle 2026-08-28 ~22:3xZ:
+    DISCRIMINATOR  "Fee split unavailable"     = 1   MUST become 0
+    POSITIVE CTRL  "Asset Category Views"      = 1   MUST stay 1
+    NEGATIVE CTRL  bogus token                 = 0
+```
+⚠ **BOUND:** the content leg assumes minification strips comments -- standard, and the BEFORE arm is
+measured, but it IS an inference. **The entry-chunk-hash test assumes nothing and is what the verdict
+rests on;** the content leg rides beside it as corroboration.
+
 -- `3.0.0_SA_CVO~Z`
