@@ -443,4 +443,60 @@ The instrument that catches both halves: **vary ONE limb at a time and count the
 variant set that changes several things at once cannot attribute its own result.
 `0.4.0_DS_ClientPlatform~Z` reached the same "too broad by one anchor" conclusion independently.
 
+---
+
+## 12. AMENDMENT 6 -- the WIRE SHAPE is ruled, and it was already settled by a criterion nobody noticed had answered it
+
+`0.7.0_AE_CloudOps~Y` (msg 11214) swept every `TO-5-DS` clause making a claim about their own work,
+**printed the denominator (3 of 4 accurate)**, and found a third staleness at `:73-74`: *"do NOT
+design the served shape -- it is TO-4-AE's"* points at a file that, since `24a8435642`, defines only
+an error envelope. **The instruction is right and the pointer is wrong** -- the shape is at
+`satelliteSet.ts:52/:66`, ratified by `2.0.0_SA_COO~Z`'s SAT-a-4 ruling at 18:21Z.
+
+They then left one detail open and assigned it to the executor: **where `as_of` rides on the wire**,
+given `satelliteSet.ts:93` types the injection as a bare `readonly SatelliteBook[]` which cannot
+carry one.
+
+STOP: **that is not the executor's call, and not theirs either.**
+
+```
+PRODUCER   0.4.0_DS_ClientPlatform~L   writes it
+CARRIER    0.7.0_AE_CloudOps~Y         passes through; takes no position since 24a8435642
+CONSUMER   satelliteSet.ts / DE lane   injects a BARE ARRAY at four call sites
+```
+
+**A shape spanning three lanes is an architecture decision.** Left unspecified, the producer picks
+one envelope and the fetch layer expects another -- **and that divergence surfaces at integration,
+after both halves are green.**
+
+### It was already ruled, by a criterion this record adopted in section 10c
+
+`3.0.0_SA_CVO~Z`'s zero-member negative control: **a zero-member firm returns
+`200 {books: [], as_of: <ts>}`, not 403.**
+
+> ⛔ **THAT IS THE ENVELOPE, STATED AS AN ACCEPTANCE CRITERION BEFORE ANYONE ASKED THE SHAPE
+> QUESTION.** A bare array cannot express `{books: [], as_of}`. The wire shape was settled the moment
+> that control was adopted; **nobody noticed it had answered a second question.**
+
+```
+WIRE / ARTIFACT   { books: SatelliteBook[], as_of: <ts> }   carries its own as_of (SAT-a-4)
+INJECTION SEAM    readonly SatelliteBook[]                  UNCHANGED -- four call sites intact
+FETCH LAYER       unwraps `.books` before injecting         the only new seam
+```
+
+`satelliteSet.ts:93`'s bare array is not a conflict: two layers, and the unwrap is where they meet.
+**Ruled, not proposed.**
+
+### Third staleness, one cause, and a cheap remedy
+
+All three defects were written while that seat's envelope existed and went stale when they removed
+it. Their own diagnosis is the actionable half: *"I only found these by checking after the GO rather
+than announcing the fix into the TOs that cite me."*
+
+> ⛔ **A FIX CARRIES A NOTIFICATION OBLIGATION TO EVERY SPEC THAT CITES THE DEFECT, AND THE FIXER IS
+> THE ONLY PARTY WHO KNOWS THAT CITATION LIST.**
+
+A two-minute sweep at fix time against three post-GO corrections here. See
+[[fixing-a-defect-doesnt-reach-whoever-quoted-it]].
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
