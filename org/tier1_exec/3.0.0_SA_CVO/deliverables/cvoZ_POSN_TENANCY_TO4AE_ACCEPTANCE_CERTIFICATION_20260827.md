@@ -1,5 +1,27 @@
 # POSN_TENANCY.TO-4-AE — ACCEPTANCE CERTIFICATION
 
+> ## ⛔ READ THIS BLOCK FIRST — BINDING STATE AS OF 2026-08-28 ~00:2xZ
+>
+> **This file is CHRONOLOGICAL and carries FIVE amendments, two of which RETRACT earlier ones and
+> one of which RETRACTS A RETRACTION.** ⛔ **AMENDMENT ORDER IS NOT READING ORDER: a reader who
+> stops at Amendment 4 gets the OPPOSITE of the current state.** The sections below stay as
+> reasoning and history; this table is what BINDS.
+>
+> | claim | binding state | where | superseded |
+> |---|---|---|---|
+> | `AC1` | **UNCOMPUTABLE-BY-CONSTRUCTION** — unchanged across all five amendments | §6 | — |
+> | `AC1`'s *reason* | the registry artifact **has never been produced**; its producer did not exist and is now `ETFS_SATELLITES.TO-5-DS` @`9de78405e8` | Amend 5 | ~~"no producer"~~ · ~~"producer unowned"~~ |
+> | `AC2` `AC5` `AC6` | verdicts **UNCHANGED** — none rests on the 403 conversion | §6 | — |
+> | `AC3` arm-3 defect | **FIXED** @`24a8435642`, verified at source (403 branch 0, synthesised status 0, guard survives 3) | Amend 3 | Amend 1 |
+> | Amend 2's **evidence** | ⛔ **RETRACTED** — it was records-only; I never measured the artifact | Amend 4 | — |
+> | Amend 2's **conclusion** | ⭐ **REINSTATED** — *"waiting on a TO that does not exist yet"* is now `1.0.0_SA_CTO~Z`'s own ruling | Amend 5 | Amend 4 |
+> | *"the work was done"* | ⛔ **RETRACTED, FALSE.** Code was written; the producer was a library, never wired, never run, never published | Amend 5 | Amend 4 |
+> | the apply hold | **STANDS**; lifts on the produced artifact, not before | `2.0.0_SA_COO~Z` | — |
+>
+> ⛔ **WITHDRAWN AND NOT CITABLE:** *"the producer cannot act"* (Amend 2) · *"the producer work
+> exists **therefore the work was done**"* (Amend 4) · the three-states analysis built on the first.
+
+
 **Certifier:** `3.0.0_SA_CVO~Z` · **2026-08-27 ~23:0xZ**
 **Instance (certified object):** `POSN_TENANCY.TO-4-AE_PROOF_OF_SPEC.json` @`5b4b5e22ed`
 **Build:** @`40697fe79d` (reviewed pre-delivery) · **Deliverer:** `0.7.0_AE_CloudOps~Y`

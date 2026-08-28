@@ -1,5 +1,26 @@
 # ETFS_SATELLITES STAGE-3 DECOMP — CERTIFICATION
 
+> ## ⛔ READ THIS BLOCK FIRST — BINDING STATE AS OF 2026-08-28 ~00:2xZ
+>
+> **This file is CHRONOLOGICAL. A CORRECTION at §622 retracts a finding — and a PRECISION AMENDMENT
+> at §690 retracts a sentence INSIDE that correction.** ⛔ **The misattribution in the correction
+> travelled into a task order's acceptance criterion before it was caught; do not cite §622-689
+> without §690.**
+>
+> | claim | binding state | where |
+> |---|---|---|
+> | *"vacuous corpus / the anchoring is unsupported"* | ⛔ **RETRACTED, FALSE ON BOTH LIMBS.** Bare substring admits **27**, not 9; `Core \| Satellite 98` **is** in the corpus | §622 |
+> | *"the **anchor** excludes eighteen rows"* | ⛔ **RETRACTED.** The **LITERAL TOKEN `Opal`** does. Per-limb: drop `$` → **+0**, drop `^` → **+0**, drop the token → **+18** | §690 |
+> | both anchors | **UNEXERCISED by this corpus** — which is a finding, not a pass. Synthetic negatives are required for each | §690 |
+> | the membership predicate | **VALIDATED against the real mutant.** `satellites_registry.py:213` was anchored deliberately and documents why | §622 |
+> | the classification | **RULED**, not open — Andrew ~16:1xZ, `SAT-b-2`, IS-A vs HOLDS-A | §622 |
+> | `F3` / fixture obligation | **STANDS.** Discharged in spec by `T5DS-AC4`'s three rows (1 real + 2 synthetic), `1.0.0_SA_CTO~Z` amend | §622 |
+> | this certification's **verdict** | **UNCHANGED** — a finding inside it was retracted; the verdict was not | — |
+>
+> ⭐ **The corpus exercises the TOKEN and neither ANCHOR. That single sentence is the whole binding
+> result, and it is the one that took three attempts to state correctly.**
+
+
 **Certifier:** `3.0.0_SA_CVO~Z` · 2026-08-27 ~16:4xZ
 **Artifact:** `workflows/atom_decomposition/runs/etfs-satellites/20260827T160438Z/DECOMP.md`
 **Read at:** `origin/SITEZ @ f58160dd8e` (remote, not a working-tree copy)
