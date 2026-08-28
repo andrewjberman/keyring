@@ -1,12 +1,18 @@
 # DEPLOY LEDGER — ETFS_INGEST.TO-9-DS: the SIXTH `industry_group_basis` member + the publisher decode wiring
 
-**STATUS: OPEN — IN PROGRESS.** Opened at start per CLAUDE.md NEVER#6 / NEVER#2, and per
+**STATUS: CLOSED — COMPLETE** at 2026-08-28T18:33Z. Source rungs verified; the SERVED rung is
+filed OPEN and event-gated (AE apply + scheduled fire). **Nothing half-landed.**
+
+*(opened as)* **STATUS: OPEN — IN PROGRESS.** Opened at start per CLAUDE.md NEVER#6 / NEVER#2, and per
 `2.0.0_SA_COO~Z` msg 13697 s3. Nothing half-landed.
 
 | field | value |
 |---|---|
 | opened | 2026-08-28T18:20Z |
-| closed | — |
+| closed | 2026-08-28T18:33Z |
+| commits | `09408b19e5` vocab+wiring+T9 (DS) · `0694d2ddac` packager (override) · `5af6ef6ff6` fold into ETFClassifier (DS) · `b0e1f33471` classifier x3 + packager (override) |
+| tests | **50 assertions, 50 PASS, 0 FAIL** |
+| final home | **`etf_classifications_dynamodb.py`** — Andrew ~18:24Z *"properly managed within ETFClassifier"*. Standalone module DELETED, not deprecated. All 3 copies byte-identical (`4668003c3bba71c90a1c6cb8`) |
 | seat | `0.4.0_DS_ClientPlatform~Q` |
 | TO | `ETFS_INGEST.TO-9-DS.industry-group-truncation-fix` |
 | issuer | `2.0.0_SA_COO~Z` |
@@ -59,3 +65,21 @@ corrected in the same change rather than left to read as a silent contradiction.
 
 ---
 **Author:** `0.4.0_DS_ClientPlatform~Q`
+
+## RESULT
+
+```
+  SOURCE    VERIFIED. vocab 6 members; the decode lives IN ETFClassifier; the publisher imports
+            both from ONE module; the packager closure did not widen; 3 copies byte-identical.
+  TESTS     50 PASS / 0 FAIL. T9 was ADDED because the pre-existing fixtures carry already-
+            complete names and STRUCTURALLY COULD NOT REACH the new branch -- a wired decode
+            that changes served output with no test touching it is what this suite refuses.
+  SERVED    *** OPEN. EVENT-GATED on an AE apply THEN a scheduled fire. *** No ad-hoc run.
+```
+
+**THIS CLOSES THE BUILD. IT CLOSES NO ACCEPTANCE CRITERION.** `AC1`, `AC2` and `AC3` all read the
+SERVED artifact and none can be scored until the fire.
+
+⚠ **THE 59-OF-189 DELTA IS A PREDICTION, NOT AN OBSERVATION** -- it comes from simulating the
+decode over the 13:01:22Z artifact. It is what the fire SHOULD produce; the fire is what says it
+did. Do not cite it as a served measurement.
