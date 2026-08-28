@@ -43,7 +43,7 @@ is now correctly allocated, served on both data planes, and RENDERED on PROD.** 
   ATTEMPTS: AC1/AC2 two (criterion changed -- see s.3) . AC3 one . AC5 one. NO invalidation.
 ```
 
-## 3. ⛔ SEVEN DEFECTS IN MY OWN RATIFIER, ALL FOUND BY EXERCISING IT
+## 3. STOP: SEVEN DEFECTS IN MY OWN RATIFIER, ALL FOUND BY EXERCISING IT
 
 None was visible from reading the code. **Every one would have fired at acceptance.**
 
@@ -62,7 +62,7 @@ None was visible from reading the code. **Every one would have fired at acceptan
 6. **AN UNGATED DATE-SCOPED LITERAL.** The SMA figure is market-valued (`opal_div_sma` +
    `opal_growth_sma`, ~$170-250k/trading-day drift) and I asserted it unconditionally. **I had
    ACCEPTED that finding from `0.4.0_DS_ClientPlatform~Z` five hours earlier and authored past it.**
-7. ⭐ **A PIPED `$?` REPORTED rc=0 ON A NOT-RATIFIED RUN.** `| tail` then `rc=$?` reads tail's status.
+7. NOTE: **A PIPED `$?` REPORTED rc=0 ON A NOT-RATIFIED RUN.** `| tail` then `rc=$?` reads tail's status.
    **A correct instrument, a correct verdict, and the operator reading a different number than the
    one it produced.** `1.0.0_SA_CTO~Z` made un-piped capture BINDING on every step-5 run.
 
@@ -98,7 +98,7 @@ re-scoring still refuses `scheduled`, `aws.events`, `None`.
   there is no residual for Tax SMA to move into. `0.7.0_AE_CloudOps~Z` resolved it **ADDITIVE**
   (0 of 5 enrolled accounts in the 0824 base, denominator 7,282). **The headline AUA MOVES when it
   lands.**
-- ⭐ **THE COLLISION DISSOLVED.** `in_0833_universe` was being read as "in the group Andrew excluded".
+- NOTE: **THE COLLISION DISSOLVED.** `in_0833_universe` was being read as "in the group Andrew excluded".
   Read at source it is a **CROSSWALK COVERAGE flag** -- `read_universe()` `:557` *"the ship-gate
   denominator"*, keyed on `schwab/08335338/silver/fact_acc/`. **ORTHOGONAL to supervision.** True on
   **5,310 of 6,201**; if True meant excluded, 86% of 49F would be. **A sovereign question was four
@@ -133,9 +133,9 @@ vintage where a JSX string was replaced by a COMMENT, concealing a real transiti
 - **PROD:** `origin/PROD 1b91b19729`, bundle `index-BMmU0cpj.js` @22:29:35Z. Gold+platinum
   `category-views` correct at 4 scopes, `as_of 2026-08-27`, `trigger = manual` (HONEST and REQUIRED).
 - **`HEAD == origin/SITEZ == 2c17973bcf`** -- everything at this seat is PUSHED.
-- ⛔ **"THE SCHEDULED PIPELINE PRODUCES THIS" IS NOT RATIFIED.** An ad-hoc artifact is never
+- STOP: **"THE SCHEDULED PIPELINE PRODUCES THIS" IS NOT RATIFIED.** An ad-hoc artifact is never
   production evidence (CLAUDE.md:139).
-- ⛔ **THE PROMOTE IS NOT CERTIFIED.** 16 commits, 4 ours; the other 12 are **UNVERIFIED BY ME --
+- STOP: **THE PROMOTE IS NOT CERTIFIED.** 16 commits, 4 ours; the other 12 are **UNVERIFIED BY ME --
   which is NOT doubted.** I did not look.
 
 ## 10. NEXT STEPS
