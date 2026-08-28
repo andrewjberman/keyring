@@ -1436,6 +1436,14 @@ paths:
   "org/standards/isck/ledger/**":
     lane: ISCK_LEDGER_BUILD
 
+  # Same lane, same expiry (added 2026-08-28 12:2xZ, DT~X 77782): bundle_identity.py's RECEIPT_PATH is
+  # org/standards/isck/receipts/<kind>.json -- a SIBLING of ledger/, not a child -- so the receipt
+  # FILES (structured receipt + captured run stdout) land here under the build lane. The REGISTRY act
+  # (`--receipt`, which rewrites BUNDLE_LABELS.json / BUNDLE_IDENTITY.json) stays ANY_EXEC by design:
+  # the label owner performs it on the certifier's replay. Strike with the lane on TO completion.
+  "org/standards/isck/receipts/**":
+    lane: ISCK_LEDGER_BUILD
+
   "org/seams/**":
     lane: ANY
     note: "Durable /seams verified-knowledge records -- knowledge-accrual path (same posture as logs/memory + org/threads + org/daily_log): ANY agent writes its own seam record, no exclusive lane. CTO/CVO request 2026-06-17. CORRECTED 2026-06-17 ANY_EXEC -> ANY by 0.7.0_AE_CloudOps: ANY_EXEC is exec-tier-only and excluded AEs/pods, contradicting the 'any agent writes its own' intent + the /seams skill ('any agent may run it'); caught when 0.7.0_AE (an AE) ran /seams on its own work and the gate blocked its OWN seam record. org/threads + org/daily_log use ANY for the same all-agents reason."
