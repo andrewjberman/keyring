@@ -24,7 +24,7 @@
   "status": "active",
   "dep_stage": "EXECUTING",
   "phase": "TOs cut 2026-08-19, all five staged, never seated -- staged/awaiting-trigger, not stalled (2.0.0_SA_COO 76115). Sequencing on the faces: P1-PROBE -> P2-CENSUS -> P3-EXACT (DS base); T1-ORACLE + T2-DIMS (DS~B) BUILD-ONLY on the s.9-Q3 word. NOTE ON PIPELINE POSITION: these TOs were cut from D2 PRD s.4a directly, predating the per-project decomp discipline -- dep_stage EXECUTING encodes the enum's 'TOs cut' position (DEP_STAGE_ENUM_RULE24_RECORD_20260821.md); a NEW ADVI_BDPARITY TO now requires <decomp_ref> at the commit gate (@77935eb308), so decomp-before-TOs binds forward from this registration.",
-  "blocking": "ARMS AT FIRST PERFRP EMISSION by design (PRD s.11) -- a condition, not a stall; the project does not change stage while it waits (enum rule). T1/T2 served consumption additionally gated on the s.9-Q3 book-definition word at Andrew.",
+  "blocking": "ARMS AT FIRST PERFRP EMISSION by design (PRD s.11) -- a condition, not a stall; the project does not change stage while it waits (enum rule). T1/T2 served consumption's s.9-Q3 book-definition word was RULED by Andrew 2026-08-19 (#2 of ten: (a) GROUP-based for served figures, primary group partitions, role attribution as an attribute view; record deliverables/ANDREW_RULED_20260819_OPEN_CALLS_ALL_TEN_APPROVED.md) -- no word open at Andrew (stale line corrected 2026-08-28 by 1.0.0_SA_CTO at /open-calls).",
   "created": "2026-08-19",
   "pods": [
     "1.0",

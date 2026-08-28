@@ -56,6 +56,7 @@ import argparse
 import importlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -101,11 +102,15 @@ def choose_clone_dir(explicit, build):
     Explicit dir: used as given, and refused by clean_clone if it exists -- never mutated.
     Default: a NEWLY ALLOCATED unique parent, so two concurrent invocations cannot collide and
     nothing pre-existing is ever a candidate.
+
+    Returns (dest, owned_parent). `owned_parent` is non-None ONLY for a directory this function
+    ALLOCATED on this run -- it is the sole thing the runner may later remove, and an explicit
+    --clone-dir always yields None so a verifier's named directory can never be a deletion target.
     """
     if explicit:
-        return explicit
+        return explicit, None
     parent = tempfile.mkdtemp(prefix="wp3-battery-%s-" % build[:10])
-    return os.path.join(parent, "clone")
+    return os.path.join(parent, "clone"), parent
 
 
 def clean_clone(commit, dest, root):
@@ -260,6 +265,9 @@ def main():
                     help="where to clone. The FRESH-DIR refusal applies to whatever is named -- "
                          "the rule is kept, the shared-host collision is removed. Default is "
                          "per (run-commit, pid) so two seats on one workstation cannot collide.")
+    ap.add_argument("--keep-clone", action="store_true",
+                    help="keep the extract this run allocated (default: release it; an explicit "
+                         "--clone-dir is never removed either way)")
     ap.add_argument("--manifest-only", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -284,7 +292,7 @@ def main():
               "a pass (0)" % (FAIL_CLOSED, NOT_EXERCISABLE))
         return FAIL_CLOSED
 
-    dest = choose_clone_dir(args.clone_dir, build)
+    dest, owned_parent = choose_clone_dir(args.clone_dir, build)
     clone = clean_clone(build, dest, root)
     print("CLEAN CLONE of BUILD commit %s -> %s" % (build, clone))
     print("MANIFEST census vintage %s (the denominator's provenance; NOT the clone)"
@@ -298,9 +306,66 @@ def main():
 
     stores = os.path.join(clone, "_stores")
     os.makedirs(stores, exist_ok=True)
-    factory = lambda arm_id: engine.Store(os.path.join(stores, "%s.sqlite" % arm_id))  # noqa: E731
-    ran, wrong, unimplemented, errored = execute(registry, arms, engine.Rejected, factory)
-    return report(arms, ran, wrong, unimplemented, errored)
+    made = []
+
+    def factory(arm_id):
+        st = engine.Store(os.path.join(stores, "%s.sqlite" % arm_id))
+        made.append(st)
+        return st
+
+    try:
+        ran, wrong, unimplemented, errored = execute(registry, arms, engine.Rejected, factory)
+        return report(arms, ran, wrong, unimplemented, errored)
+    finally:
+        # CLOSE BEFORE RELEASING. Every arm's store is an open sqlite handle INSIDE the extract, and
+        # on Windows an open handle keeps the file and its directory. The first release printed
+        # `removed: False` and left 0.96 GB behind -- caught only because the release VERIFIES the
+        # removal instead of trusting rmtree, which had been told to ignore_errors.
+        for st in made:
+            st.close()
+        release_clone(owned_parent, args.keep_clone)
+
+
+def release_clone(owned_parent, keep):
+    """Remove ONLY the parent this run allocated. Never an explicit --clone-dir. Always says which.
+
+    MEASURED ROOT CAUSE (0.0.0_AB_MSTR 164131Z, device C: at 0.2 GB free of 255): each run leaves a
+    ~1.01 GB extract in %TEMP% and ~25 of them accumulated in a single day -- 24.8 GB, alongside
+    3 GB of replay extracts. The device filled, an Azure CLI install failed with MSI 1307, and this
+    seat's own AC6 clean-clone run died on "No space left on device". The runner that produced the
+    garbage is the right place to collect it.
+
+    IT DELETES ONLY WHAT IT CREATED, and that narrowness is the whole design. The wave-1 runner
+    deleted its destination BEFORE cloning, which both made the fresh-dir refusal unreachable and
+    would have silently destroyed whatever a verifier named with --clone-dir (CVO~X 115527Z). So an
+    explicit --clone-dir yields owned_parent=None here and is never a candidate; --keep-clone keeps
+    even an allocated one, for the forensic case where the extract IS the evidence.
+    """
+    if owned_parent is None:
+        print("CLONE          kept: not allocated by this run (explicit --clone-dir is never "
+              "removed by the runner)")
+        return
+    if keep:
+        print("CLONE          kept at %s (--keep-clone)" % owned_parent)
+        return
+    try:
+        size = sum(os.path.getsize(os.path.join(dp, f))
+                   for dp, _dn, fn in os.walk(owned_parent) for f in fn
+                   if os.path.exists(os.path.join(dp, f)))
+    except OSError:
+        size = 0
+    # ignore_errors=True was hiding the reason: the first run reported removed: False with nothing
+    # to say about why. A cleanup failure must never flip the RUN's verdict, but it must be legible.
+    problems = []
+    shutil.rmtree(owned_parent, onerror=lambda fn, path, exc: problems.append((path, exc[1])))
+    gone = not os.path.exists(owned_parent)
+    print("CLONE          released %s (%.2f GB) -- removed: %s" % (owned_parent,
+                                                                   size / 1024.0 ** 3, gone))
+    for path, exc in problems[:3]:
+        print("               COULD NOT REMOVE %s -- %s: %s" % (path, type(exc).__name__, exc))
+    if problems:
+        print("               %d path(s) held; the extract is NOT released and will accumulate"
+              % len(problems))
 
 
 if __name__ == "__main__":

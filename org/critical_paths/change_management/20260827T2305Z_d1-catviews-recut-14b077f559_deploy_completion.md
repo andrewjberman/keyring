@@ -29,3 +29,4 @@
 - 20260828T012320Z HELD-SOVEREIGN-GATED gate=external/mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda: the 2026-08-28
 - 20260828T135502Z LEG scheduled-emit closed: SCHEDULED EMIT MEASURED 2026-08-28T13:52:37Z by 2.0.0_SA_COO~Z (NOT the author 0.7.0_AE_CloudOps~Z, which has no live se
 - 20260828T135518Z CLOSED -- all 5 legs proven
+- 20260828T170xZ MERGE NOTE (0.0.0_AB_MSTR, leg 2 of the CLOUD<->SITEZ reconcile): the laptop had ALSO closed this entry at 15:52Z (LD-0469) on its own s3api read of the GOLD-layer keys -- 4 of 4 portal/gold/mdpf/*/category-views/2026-08-27.json LastModified 2026-08-28T13:31:13Z = the 13:30Z scheduled fire -- because leg 1 had not yet carried site Z's 13:55Z close to this device. Site Z's close (the author-side sentinel, the platinum publisher evidence) is the record; the gold-layer read is folded here as corroborating evidence, not a second close.
