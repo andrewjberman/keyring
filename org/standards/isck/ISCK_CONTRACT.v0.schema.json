@@ -38,6 +38,21 @@
     },
     {
       "$ref": "#/$defs/mint_receipt"
+    },
+    {
+      "$ref": "#/$defs/contest_event"
+    },
+    {
+      "$ref": "#/$defs/migration_receipt"
+    },
+    {
+      "$ref": "#/$defs/lifecycle_event"
+    },
+    {
+      "$ref": "#/$defs/binding_event"
+    },
+    {
+      "$ref": "#/$defs/authority_epoch_event"
     }
   ],
   "$defs": {
@@ -85,8 +100,7 @@
       "enum": [
         "unverified",
         "corroborated",
-        "contradicted",
-        "superseded"
+        "contradicted"
       ]
     },
     "registry_standing": {
@@ -112,7 +126,8 @@
         "minted_at",
         "minting_authority",
         "identity_policy",
-        "current_status"
+        "current_status",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -163,6 +178,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "current_status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "current_status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -221,7 +248,8 @@
         "valid_to",
         "binding_basis",
         "status",
-        "referent_scope"
+        "referent_scope",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -274,6 +302,18 @@
         },
         "referent_device_id": {
           "$ref": "#/$defs/nonempty"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -407,6 +447,25 @@
               "referent_fabric_id",
               "referent_device_id"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "open"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valid_to": {
+                "type": "null"
+              }
+            }
           }
         }
       ]
@@ -686,6 +745,23 @@
               }
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_state": {
+                "const": "partial"
+              }
+            },
+            "required": [
+              "failure_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
+            ]
+          }
         }
       ]
     },
@@ -697,11 +773,11 @@
         "relation_id",
         "relation_type",
         "subject_serial",
-        "object_serial",
         "claim_origin",
         "verification_standing",
         "asserted_at",
-        "asserted_by"
+        "asserted_by",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -719,7 +795,8 @@
             "split_from",
             "successor_of",
             "replaces",
-            "instance_of"
+            "instance_of",
+            "retirement"
           ]
         },
         "subject_serial": {
@@ -749,6 +826,22 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "verification_standing": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "verification_standing"
+          ],
+          "additionalProperties": false
+        },
+        "supersedes": {
+          "type": "string",
+          "pattern": "^rel:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "allOf": [
@@ -769,40 +862,6 @@
           "then": {
             "required": [
               "evidence_refs"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "contradicted"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "adjudicated_by"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "superseded"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "superseded_by"
             ]
           }
         },
@@ -849,8 +908,7 @@
               "verification_standing": {
                 "enum": [
                   "unverified",
-                  "corroborated",
-                  "superseded"
+                  "corroborated"
                 ]
               }
             },
@@ -865,6 +923,59 @@
               ]
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "relation_type": {
+                "const": "retirement"
+              }
+            },
+            "required": [
+              "relation_type"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "object_serial"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "evidence_refs"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "relation_type": {
+                "enum": [
+                  "candidate_equivalence",
+                  "canonicalized_as",
+                  "merged_into",
+                  "split_from",
+                  "successor_of",
+                  "replaces",
+                  "instance_of"
+                ]
+              }
+            },
+            "required": [
+              "relation_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_serial"
+            ]
+          }
         }
       ]
     },
@@ -877,7 +988,8 @@
         "semantic_layer",
         "canonical_role",
         "owner",
-        "current_status"
+        "current_status",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -909,6 +1021,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "current_status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "current_status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -999,7 +1123,7 @@
         "bundle_completeness": {
           "enum": [
             "complete",
-            "partial_legacy"
+            "partial"
           ]
         },
         "absent_components": {
@@ -1047,7 +1171,7 @@
           "if": {
             "properties": {
               "bundle_completeness": {
-                "const": "partial_legacy"
+                "const": "partial"
               }
             },
             "required": [
@@ -1058,6 +1182,25 @@
             "required": [
               "absent_components"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "bundle_completeness": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "bundle_completeness"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "absent_components"
+              ]
+            }
           }
         }
       ]
@@ -1205,7 +1348,10 @@
       "required": [
         "record_type",
         "source_frontier_id",
-        "entries"
+        "entries",
+        "normalization_version",
+        "completeness",
+        "expected_count"
       ],
       "properties": {
         "record_type": {
@@ -1227,7 +1373,10 @@
               "authority_ref",
               "source_version",
               "observed_at",
-              "observed_on_fabric"
+              "observed_on_fabric",
+              "canonical_key",
+              "availability",
+              "referent_scope"
             ],
             "properties": {
               "source_serial": {
@@ -1247,9 +1396,157 @@
               },
               "observed_on_fabric": {
                 "$ref": "#/$defs/nonempty"
+              },
+              "canonical_key": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "availability": {
+                "enum": [
+                  "available",
+                  "unavailable"
+                ]
+              },
+              "absence_evidence": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "referent_scope": {
+                "$ref": "#/$defs/referent_scope"
+              },
+              "referent_fabric_id": {
+                "$ref": "#/$defs/nonempty"
+              },
+              "referent_device_id": {
+                "$ref": "#/$defs/nonempty"
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "availability": {
+                      "const": "unavailable"
+                    }
+                  },
+                  "required": [
+                    "availability"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "absence_evidence"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "availability": {
+                      "const": "available"
+                    }
+                  },
+                  "required": [
+                    "availability"
+                  ]
+                },
+                "then": {
+                  "not": {
+                    "required": [
+                      "absence_evidence"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "fabric_invariant"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "not": {
+                        "required": [
+                          "referent_fabric_id"
+                        ]
+                      }
+                    },
+                    {
+                      "not": {
+                        "required": [
+                          "referent_device_id"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "fabric_local"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "required": [
+                        "referent_fabric_id"
+                      ]
+                    },
+                    {
+                      "not": {
+                        "required": [
+                          "referent_device_id"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "referent_scope": {
+                      "const": "device_local"
+                    }
+                  },
+                  "required": [
+                    "referent_scope"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "referent_fabric_id",
+                    "referent_device_id"
+                  ]
+                }
+              }
+            ]
           }
+        },
+        "normalization_version": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "completeness": {
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "expected_count": {
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
@@ -1266,7 +1563,8 @@
         "normalization_version",
         "source_frontier_id",
         "built_at",
-        "built_on_fabric"
+        "built_on_fabric",
+        "publication_state"
       ],
       "properties": {
         "record_type": {
@@ -1317,8 +1615,105 @@
         },
         "built_on_device": {
           "$ref": "#/$defs/nonempty"
+        },
+        "publication_state": {
+          "enum": [
+            "unpublished",
+            "published"
+          ]
+        },
+        "published_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "promoted_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "promotion_evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "publication_state": {
+                "const": "published"
+              }
+            },
+            "required": [
+              "publication_state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "published_ref",
+                  "published_at",
+                  "promoted_by",
+                  "promotion_evidence_refs"
+                ]
+              },
+              {
+                "properties": {
+                  "published_ref": {
+                    "$ref": "#/$defs/nonempty"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication_state": {
+                "const": "unpublished"
+              }
+            },
+            "required": [
+              "publication_state"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "published_ref"
+                ]
+              },
+              {
+                "properties": {
+                  "published_ref": {
+                    "type": "null"
+                  }
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "published_at"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "promoted_by"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "promotion_evidence_refs"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
     },
     "coherence_evaluation": {
       "type": "object",
@@ -1417,6 +1812,12 @@
         },
         "evaluated_on_device": {
           "$ref": "#/$defs/nonempty"
+        },
+        "resolved_target_ref": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "resolved_target_version": {
+          "$ref": "#/$defs/nonempty"
         }
       },
       "allOf": [
@@ -1477,6 +1878,80 @@
               "evidence_refs"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "integrity": {
+                "enum": [
+                  "verified",
+                  "unverified"
+                ]
+              }
+            },
+            "required": [
+              "integrity"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "delta_summary"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_policy": {
+                "const": "latest_authority"
+              }
+            },
+            "required": [
+              "target_policy"
+            ]
+          },
+          "then": {
+            "required": [
+              "resolved_target_ref",
+              "resolved_target_version"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_policy": {
+                "enum": [
+                  "declared_release",
+                  "as_of_frontier",
+                  "historical_replay"
+                ]
+              }
+            },
+            "required": [
+              "target_policy"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "resolved_target_ref"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "resolved_target_version"
+                  ]
+                }
+              }
+            ]
+          }
         }
       ]
     },
@@ -1505,7 +1980,8 @@
         "registry_standing",
         "declared_cardinality",
         "asserted_at",
-        "asserted_by"
+        "asserted_by",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -1593,6 +2069,26 @@
               "type": "null"
             }
           ]
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "verification_standing": {
+              "const": "authored"
+            },
+            "registry_standing": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "verification_standing",
+            "registry_standing"
+          ],
+          "additionalProperties": false
+        },
+        "supersedes": {
+          "type": "string",
+          "pattern": "^br:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "allOf": [
@@ -1726,40 +2222,6 @@
         },
         {
           "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "contradicted"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "adjudicated_by"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "superseded"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "superseded_by"
-            ]
-          }
-        },
-        {
-          "if": {
             "anyOf": [
               {
                 "properties": {
@@ -1787,6 +2249,56 @@
             "required": [
               "firm_scope"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "enum": [
+                  "candidate",
+                  "admitted",
+                  "rejected",
+                  "retired",
+                  "inadmissible"
+                ]
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "held_on"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "registry_standing": {
+                "enum": [
+                  "candidate",
+                  "admitted",
+                  "held",
+                  "rejected",
+                  "retired"
+                ]
+              }
+            },
+            "required": [
+              "registry_standing"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "store_owner"
+              ]
+            }
           }
         }
       ]
@@ -1866,6 +2378,810 @@
           }
         }
       ]
+    },
+    "contest_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {
+          "const": "contest_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^ctev:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "contest_id": {
+          "type": "string",
+          "pattern": "^ct:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "resolved"
+          ]
+        },
+        "target_kind": {
+          "enum": [
+            "entity",
+            "binding",
+            "lifecycle_event",
+            "binding_event",
+            "authority_epoch_event"
+          ]
+        },
+        "target_entity_serial": {
+          "$ref": "#/$defs/ent_serial"
+        },
+        "target_binding_id": {
+          "type": "string",
+          "pattern": "^bind:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "basis": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "outcome": {
+          "enum": [
+            "upheld",
+            "dismissed",
+            "merged",
+            "nullified"
+          ]
+        },
+        "adjudicated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "consequence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(rel|bind|bev|ctev|lce|aep):[0-9a-hjkmnp-tv-z]{26}$"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        },
+        "surviving_contest_id": {
+          "type": "string",
+          "pattern": "^ct:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "target_event_id": {
+          "type": "string",
+          "pattern": "^(lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}$"
+        }
+      },
+      "required": [
+        "record_type",
+        "event_id",
+        "contest_id",
+        "event_kind",
+        "target_kind",
+        "occurred_at",
+        "actor"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "entity"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_entity_serial"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_event_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_binding_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_event_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "lifecycle_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "lifecycle_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "authority_epoch_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_event_id": {
+                    "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "authority_epoch_event"
+              },
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "target_kind",
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "consequence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "opened"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "basis",
+                  "evidence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "adjudicated_by"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "resolved"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "outcome",
+              "adjudicated_by"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "upheld"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "consequence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "merged"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "surviving_contest_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "dismissed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "nullified"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "evidence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "target_kind": {
+                    "enum": [
+                      "lifecycle_event",
+                      "binding_event",
+                      "authority_epoch_event"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "migration_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {
+          "const": "migration_receipt"
+        },
+        "receipt_id": {
+          "type": "string",
+          "pattern": "^mig:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "migrated_record_ref": {
+          "type": "string",
+          "pattern": "^((ent|mat|matv|run|sf|sv|bind|ctev|rel|br|obs|mr|mig|ce|lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}|sha256:[0-9a-f]{64})$"
+        },
+        "field": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "source_value": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "target_value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/nonempty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recoverability": {
+          "enum": [
+            "recovered",
+            "floor"
+          ]
+        },
+        "migration_map": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "migrated_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "migrated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "required": [
+        "record_type",
+        "receipt_id",
+        "migrated_record_ref",
+        "field",
+        "source_value",
+        "target_value",
+        "recoverability",
+        "migration_map",
+        "migrated_at",
+        "migrated_by",
+        "evidence_refs"
+      ]
+    },
+    "lifecycle_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "materializer_serial",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "lifecycle_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "materializer_decommissioned",
+            "materializer_superseded"
+          ]
+        },
+        "materializer_serial": {
+          "$ref": "#/$defs/mat_serial"
+        },
+        "superseding_version_id": {
+          "type": "string",
+          "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "materializer_superseded"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "superseding_version_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "materializer_decommissioned"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "superseding_version_id"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "binding_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "binding_id",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "binding_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "closed"
+          ]
+        },
+        "binding_id": {
+          "type": "string",
+          "pattern": "^bind:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
+    },
+    "authority_epoch_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "authority_id",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "authority_epoch_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "closed"
+          ]
+        },
+        "authority_id": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "type": "string",
+          "pattern": "^(0\\.0\\.0_AB_MSTR|1\\.0\\.0_SA_CTO)(~[A-Z])?$"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
     }
   }
 }

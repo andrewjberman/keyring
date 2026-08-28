@@ -159,6 +159,33 @@ class SkillInstallTests(unittest.TestCase):
             with self.assertRaisesRegex(skill_install.InstallError, "unexpected"):
                 skill_install.install(REPO_ROOT, codex_home)
 
+    def test_install_all_projects_load_and_log_byte_exactly(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            codex_home = Path(temporary) / "codex-home"
+            first = skill_install.install_all(REPO_ROOT, codex_home)
+            second = skill_install.install_all(REPO_ROOT, codex_home)
+
+            self.assertEqual(
+                [item["skill"] for item in first["skills"]], ["load", "log"]
+            )
+            for name, receipt in zip(
+                skill_install.CANONICAL_SKILLS, first["skills"], strict=True
+            ):
+                self.assertEqual(
+                    receipt["changed"], ["SKILL.md", "agents/openai.yaml"]
+                )
+                self.assertEqual(second["skills"][["load", "log"].index(name)]["changed"], [])
+                for relative in skill_install.EXPECTED_FILES:
+                    self.assertEqual(
+                        (codex_home / "skills" / name / relative).read_bytes(),
+                        (
+                            REPO_ROOT
+                            / "org/mcp/codex-skills"
+                            / name
+                            / relative
+                        ).read_bytes(),
+                    )
+
 
 class LauncherIntegrationTests(unittest.TestCase):
     def test_host_installs_skill_and_injects_prompt_for_new_and_resume(self):
@@ -166,6 +193,7 @@ class LauncherIntegrationTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("install-codex-load-skill.py", source)
+        self.assertIn("$load and $log", source)
         self.assertIn("codex-seat-load.py", source)
         self.assertIn("$env:OPAL_AGENT_SERIAL = $Serial", source)
         self.assertIn("--format prompt", source)
@@ -175,7 +203,7 @@ class LauncherIntegrationTests(unittest.TestCase):
 
     def test_ajb2_exposes_automatic_load_topology(self):
         source = (REPO_ROOT / ".tools/ajb2.ps1").read_text(encoding="utf-8")
-        self.assertIn("org\\mcp\\codex-skills\\load", source)
+        self.assertIn("org\\mcp\\codex-skills\\{load,log}", source)
         self.assertIn("org\\mcp\\codex-seat-load.py", source)
         self.assertIn("automatic `$load $Serial prompt", source)
 

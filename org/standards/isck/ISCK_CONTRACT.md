@@ -47,14 +47,37 @@ closes and the version is pinned.
 5. **PROVENANCE IS A FRONTIER; COHERENCE VERDICTS CARRY THEIR WARRANT.** Every run consumes a
    `source_frontier`; every surface version pins frontier + materializer version. A coherence
    evaluation asserting `verified`/`mismatch`/a currency verdict REQUIRES evidence; `mismatch`
-   REQUIRES its delta (CV-3). `unknown`/`unverified` stay free — the remedy that moves `verified`
-   must not punish honesty about not knowing.
+   REQUIRES its delta (CV-3). `unknown`/`unverified` stay free OF REQUIRED WARRANTS — the remedy
+   that moves `verified` must not punish honesty about not knowing. Free of warrants is not free
+   of contradiction: a `delta_summary` PRESUPPOSES a comparison and `unverified` asserts none ran,
+   so it is FORBIDDEN there (ARM-4 CUT #4; the F5 shape — a value with nothing behind it).
 
-## 2. RECORD CATALOG (11 types)
+## 2. RECORD CATALOG (17 types — 11 at v0.1; +`bridge_assertion` R2-8, +`mint_receipt` R2-7; +`contest_event`, +`migration_receipt` at the R2-2 landing; +`lifecycle_event`, +`binding_event`, +`authority_epoch_event` at the round-4 / `v0.3-candidate` landing)
+
+**ROUND 4 — `v0.3-candidate` (ROUND3_CHARTER.md §11, eight items; `WP3_LEDGER_DESIGN.md` §2b):**
+the frozen `+38` could not carry five facts append-only and left two references untyped; the
+enforcement design routed them here rather than working around them. **`lifecycle_event`**
+(`lce:<ulid26>`; §3.27 — `materializer_decommissioned` | `materializer_superseded`, the latter
+with `superseding_version_id` naming a version of ANOTHER materializer; one EFFECTIVE supersession
+per materializer, ledger-enforced) · **`binding_event`** (`bev:<ulid26>`; §3.28 — `opened` |
+`closed` on a `binding_id`: a close is an EVENT, never a mutation of the row) ·
+**`authority_epoch_event`** (`aep:<ulid26>`; §3.29 — `opened` | `closed` per `authority_id`, a
+TOTAL state machine; the source of truth §5's audit lacked) · **`supersedes`** (backward) on
+`identity_relation` and `bridge_assertion` — the new head names its predecessor; `superseded_by`
+stays in the catalog as a field the ledger REFUSES on any write after creation and populates only
+as a derived projection (likewise `materializer.superseded_by_version`) · **`contest_event.target_kind`
+widened to `lifecycle_event`** with `target_event_id` (§3.20; the correction path for a mis-typed
+process supersession — an `upheld` contest names exactly ONE replacement of the same kind and
+serial, R3-CVO-12) · **`consequence_refs[]` TYPED** as a record-id union (`rel` | `bind` | `bev` |
+`ctev` | `lce`) · **`migrated_record_ref` TYPED** over the whole catalog's id prefixes.
 
 `entity` · `entity_binding` · `state_observation` · `identity_relation` · `materializer` ·
 `materializer_version` · `materialization_run` · `source_frontier` · `surface_version` ·
-`coherence_evaluation` · **`bridge_assertion` (R2-8 — the first load-bearing consumer, landed
+`coherence_evaluation` · **`contest_event` (R2-2 3b/RA-1 — contests are their own record with a
+TYPED target, an `opened`/`resolved` pair keyed by `contest_id`; §3.19–3.21; id space
+`ctev:<ulid26>`, contest id `ct:<ulid26>`)** · **`migration_receipt` (R2-2 3a / CRO input 5 /
+AT-1 — the append-only carrier of every vocabulary rewrite; §3.23; id space `mig:<ulid26>`)** ·
+**`bridge_assertion` (R2-8 — the first load-bearing consumer, landed
 per the ruled either-in-this-boundary-or-freeze-together condition).** Identity mechanisms per the
 ratified table (minted serials for enduring mutables; content-addressing legal for immutable
 observations/versions/receipts). `bridge_assertion` id space: `br:<ulid26>`. **`mint_receipt` (R2-7, 12th type)** — LAW 1's
@@ -78,7 +101,9 @@ symbol-plane bridge REQUIRES firm_scope), `declared_cardinality`
 semantic arm. UNREACHED VALUES, deliberate and adjudicated at the ARM-4 pre-landing run:
 `retired` (terminal, no obligations), `producer_declared` (needs no external warrant by
 definition), `human_adjudicated` (traced by the CVO rubric per the standing carry, not by schema),
-`unverified` (the honest free cell).
+`unverified` (the honest free cell). **Every ARM-1 candidate at the round-2 boundary (13 values
+across 9 fields) is disposed by id in `ARM1_ADJUDICATION.md`** — 2 CUT (§3.5 `open`, §3.6
+`partial`), 1 DEFERRED BY LANDED DESIGN (§3.5 `disputed`), 10 NO with the citation each rests on.
 
 ## 3. ENUM RECORDS — full five-label form (F3), with CONDITIONAL-ARM TABLES where arms exist (CV-6)
 
@@ -99,15 +124,32 @@ consumer of the enum** -- identity_relation AND entity_binding (`binding_basis`)
 one consumer of a shared enum and not another is the obligation-propagation gap COO~X named at
 76588.
 
-### 3.2 `verification_standing` — `unverified | corroborated | contradicted | superseded`
-DOMAIN: epistemic standing of an assertion. MECE over check-states; hunted member: partially-checked
-→ stays `unverified` (a partial check that upgrades standing is the F5 defect). GRAIN: assertion.
+### 3.2 `verification_standing` — `unverified | corroborated | contradicted` (R2-2 LANDED: `superseded` LEFT the axis)
+DOMAIN: epistemic standing of an assertion — the PURE epistemic axis. MECE over check-states; hunted
+members: partially-checked → stays `unverified` (a partial check that upgrades standing is the F5
+defect); superseded → NOT A VALUE: supersession is TEMPORAL and is carried by `superseded_by`
+PRESENCE on the old record (CVR2-2's laundering cell: as a value, `contradicted -> superseded`
+erased the contradiction from the current-value view; as a field, `contradicted` + `superseded_by`
+is EXPRESSIBLE and the epistemic history survives the temporal event). GRAIN: assertion.
 INTENT: one axis — has a check run and what did it say. STATE-COHERENCE: `unverified→corroborated`
-moves by RUNNING A CHECK (asserting seat); `contradicted` moves only by ADJUDICATION (adjudicator);
-`superseded` moves by a NEW assertion (any seat) — three acts, three owners.
-ARM TABLE (F5): `corroborated|contradicted -> evidence_refs required` (owner: checker) ·
-`contradicted -> adjudicated_by required` (owner: adjudicator) · `superseded -> superseded_by
-required` (owner: superseding author). ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
+moves by RUNNING A CHECK (asserting seat); `contradicted` is ENTERED on evidence (checker) and
+LEFT only by SUPERSESSION — a NEW assertion carrying its own standing, evidence and `asserted_by`,
+with `superseded_by` set on the old one; the contradicted record itself never changes (R2-2's
+append-only path; DT-R2-6: the field form made candidate x contradicted uninhabitable on
+bridge_assertion, and `4.0.0_SA_CRO~X` caught that the first re-recording cited `contest_resolved`,
+whose targets are entities/bindings, never assertions — an impossible carrier). Under R2-2 this
+axis is DERIVABLE-AT-WP-3 on both consumers (fold over the assertion chain; `status_basis`
+declares it `authored` until then, §3.22).
+ARM TABLE (F5): `corroborated|contradicted -> evidence_refs required` (owner: checker).
+REMOVED at the R2-2 landing (checklist b): `superseded -> superseded_by required` on BOTH
+consumers — the value is gone; the field stays; `superseded_by present -> no further standing
+changes on THIS record` is DECLARED UNENFORCED pre-WP-3 (§6 limit 11). The identity_relation
+`adjudicated_by` forbid arm SHRANK from {unverified, corroborated, superseded} to {unverified,
+corroborated} with an explicit post-reduction mutant (`relation.corroborated-with-adjudicator`,
+COO~X 77156's named trap). RETIRED (DT-R2-6, both consumers at once per DT-R2-2's shared-enum
+rule): `contradicted -> adjudicated_by` — who overturned a contradiction is the `asserted_by` of
+the superseding assertion, carried on the append-only path, not a field on the record it
+overturns. ⛔ Evidence INDEPENDENCE is not schema-checkable — §6 limit 2.
 
 ### 3.3 `registry_standing` — `candidate | admitted | held | rejected | retired | inadmissible`
 DOMAIN: lifecycle position in an admitting registry (bridges first). MECE: `inadmissible` ADDED at
@@ -147,7 +189,10 @@ GRAIN: binding row. INTENT: interval state. STATE-COHERENCE: `open→closed` mov
 rebind/disappearance (observer); `disputed` moves by adjudication; `disputed` MAY carry
 `valid_to: null` (still open, contested) — deliberately unconstrained (DT-4 carve-out).
 ARM TABLE: `closed -> valid_to nonempty` (DT-4; owner: the closer — a close without an instant is
-the mutation LAW 3 forbids wearing the close's label).
+the mutation LAW 3 forbids wearing the close's label) · `open -> valid_to null` (ARM-1 cut 1,
+`ARM1_ADJUDICATION.md`; owner: the writer — an open binding carrying an end instant is a closed
+binding wearing open's label, the mirror of DT-4; `disputed` deliberately unconstrained, its
+overlay dissolves into the typed contest record at the R2-2 landing).
 
 ### 3.6 `observation_failure_state` — `observed | observed_absent | partial | substrate_unavailable | instrument_error | not_applicable`
 DOMAIN: what the instrument could see. MECE — `observed_absent` ADDED at R2-5 (the GPT review's
@@ -164,7 +209,10 @@ ARM TABLE (DT-1 closed the `partial` hole): `observed -> all three fingerprint f
 fields FORBIDDEN` (DT-5 — a failed instrument may not carry a value OR the metadata claiming a
 method ran) · `partial -> fingerprint OPTIONAL but the three-field coupling binds via
 dependentRequired` (partial legitimately fingerprints what it could see — WITH its method and
-normalization, per the CRLF law) · `observed_absent -> fingerprint triple FORBIDDEN (nothing to
+normalization, per the CRLF law) **+ `evidence_refs` REQUIRED** (ARM-1 cut 2,
+`ARM1_ADJUDICATION.md`; owner: observer — a partial observation names what it could NOT see;
+partial-without-warrant is indistinguishable from `observed` with a field missing, the same
+unfalsifiable cell `observed_absent` was given a warrant for) · `observed_absent -> fingerprint triple FORBIDDEN (nothing to
 hash) + evidence_refs REQUIRED` (owner: observer — an absence claim carries the warrant of WHERE
 it looked, because absence-without-warrant is exactly the unfalsifiable cell every census defect
 this directive found has hidden in).
@@ -173,8 +221,10 @@ this directive found has hidden in).
 DOMAIN: the locality the REFERENCED STATE claims (never where the act ran — that is the execution
 family). MECE: `fabric_local` ADDED (GPT review) — the round-1 hunted member
 "fabric-scoped-but-multi-device" now has its cell instead of an out-of-scope note. GRAIN:
-referent, per record (entity_binding + state_observation; runs carry NO referent scope — an event
-has a location, not a locality claim). INTENT: Rule 26 locality of the referent, one axis.
+referent, per record (entity_binding + state_observation + **every `source_frontier` entry** —
+round 3 R3-CRO-6: a consumed device-local source that cannot name its device is the Rule-26 hole at
+the frontier grain; runs carry NO referent scope — an event has a location, not a locality claim).
+INTENT: Rule 26 locality of the referent, one axis.
 STATE-COHERENCE: structural classification, no remedy axis.
 ARM TABLE (two-directional BY IDIOM): `fabric_invariant -> referent_fabric_id AND
 referent_device_id FORBIDDEN` · `fabric_local -> referent_fabric_id REQUIRED, referent_device_id
@@ -202,26 +252,48 @@ a `failed` run MAY declare outputs (partial emission is real) and a `succeeded` 
 (a verified no-op is real) — DELIBERATELY unconstrained; a consumer needing emission guarantees
 reads the run receipt, not the status.
 
-### 3.10 `bundle_completeness` — `complete | partial_legacy`
-DOMAIN: whether a materializer version's execution bundle is fully pinned. MECE: over the declared
-pin-completeness domain — with the CVR2-2 finding CARRIED OPENLY: a future partial-NOT-legacy
-bundle has no honest home in this two-value domain (intent-fusion of degree with cause); the R2-2
-design doc resolves it (complete|partial + cause-in-evidence) rather than this record absorbing it
-silently. GRAIN: version. INTENT: pin completeness. STATE-COHERENCE: `partial_legacy` moves by reconstructing the absent components
-(owner: the pinning seat) — or never, honestly.
-ARM TABLE: `complete -> all six bundle digests required` · `partial_legacy -> absent_components
-required, minItems 1` (honesty is a conditional, not prose). Positive coverage: BOTH arms carry
-fixtures (DT-6 closed the complete-arm zero-coverage hole).
+### 3.10 `bundle_completeness` — `complete | partial` (R2-2 LANDED: `partial_legacy` RETIRED, 3d split)
+DOMAIN: DEGREE of pin completeness of a materializer version's execution bundle — degree ONLY.
+MECE: complete | partial spans the degree axis; the CAUSE of partiality (legacy or otherwise) is
+NOT a value here (CVR2-2's intent fusion, Rule 24(iii)): the WHAT lives on `absent_components[]`
++ `evidence_refs`; the legacy WHY is PROVENANCE, an event-layer fact carried by the
+`migration_receipt` that rewrote `partial_legacy -> partial` (source value preserved verbatim
+there — AT-6's "cause preserved" has its slot, and it is not on this record by design). GRAIN:
+version. INTENT: pin completeness (degree). STATE-COHERENCE: `partial` moves by reconstructing
+the absent components (owner: the pinning seat) — or never, honestly.
+ARM TABLE: `complete -> all six bundle digests required` · `partial -> absent_components
+required, minItems 1` (honesty is a conditional, not prose) · FORBID `absent_components` on
+`complete` (ARM-4 cut 3). Positive coverage: BOTH arms carry fixtures (DT-6 closed the
+complete-arm zero-coverage hole); the rewrite carries fixture `migration_receipt`.
 
 ### 3.11 `identity_scope` — `logical | fabric_instance | device_instance | run_occurrence`
 DOMAIN: the scope at which an identity claims uniqueness. MECE: account-scoped → `logical` (the
 account lives in the native key). GRAIN: entity. INTENT: identity locality. STATE: structural, no
 remedy axis.
 
-### 3.12 `relation_type` — `candidate_equivalence | canonicalized_as | merged_into | split_from | successor_of | replaces | instance_of`
+### 3.12 `relation_type` — `candidate_equivalence | canonicalized_as | merged_into | split_from | successor_of | replaces | instance_of | retirement` (R2-2 LANDED: `retirement` ADDED, direction table CLOSED)
 DOMAIN: identity-level links. MECE: over declared link kinds — hunted members: fabric INSTANCE_ON
 (memoranda vocabulary) folds into `instance_of` (the record's fabric lives on the instance entity,
-not the relation); ambiguous continuity is an OPEN `candidate_equivalence`, not a missing value.
+not the relation); ambiguous continuity is an OPEN `candidate_equivalence`, not a missing value;
+ceased-with-no-successor (CRO input 4 / CVO AT-4) → `retirement`, a ONE-endpoint terminal event —
+`object_serial` FORBIDDEN for that kind and REQUIRED for every other (two-directional; the
+retirement REASON lives on this event's `evidence_refs`, never as prose on the entity — 3e —
+**and the schema now says so: `retirement -> evidence_refs REQUIRED`** (round-3 REWORK-1,
+`4.0.0_SA_CRO~X` at bf6fbe53d9: a `producer_declared` retirement with no evidence validated while
+this sentence said both paths carry evidence — the sentence was prose; mutant
+`relation.retirement-without-evidence`).
+**DIRECTION TABLE (RA-3, RA-5 — CLOSED over the vocabulary; a new kind lands WITH its row or it
+does not land):** which party CEASES per kind —
+| kind | ceases | why |
+|---|---|---|
+| `merged_into` | SUBJECT | A merged into B retires A |
+| `replaces` | OBJECT | A replaces B retires B |
+| `successor_of` | OBJECT | A successor-of B retires B |
+| `canonicalized_as` | SUBJECT | the contract's own semantic arm (§3.4: canonicalized_as set -> retired\|contested): after adjudication the subject RETIRES into the canonical target, its serial persisting as a resolvable alias (non-destruction law), never as an active identity — RA-5 overturned the draft's NEITHER |
+| `retirement` | SUBJECT | the one-endpoint terminal event |
+| `split_from` · `instance_of` · `candidate_equivalence` | NEITHER | topology, not succession |
+`retired` (entity) derives from `retirement` OR from occupying the ruled CEASING endpoint of a
+directional relation; both paths carry `evidence_refs` (DERIVABLE-AT-WP-3; `authored` until then).
 Succession INTERPRETATIONS are DERIVED from predecessor/successor cardinality (ruled) — deliberately not an enum, so ambiguity cannot be forced at write time;
 ambiguous continuity = an open `candidate_equivalence`. GRAIN: serial-pair. INTENT: identity
 topology. STATE-COHERENCE: relations are append-only; `superseded_by` is the only forward pointer.
@@ -229,7 +301,13 @@ topology. STATE-COHERENCE: relations are append-only; `superseded_by` is the onl
 AS A CONTINUATION by the ruling's own cardinality derivation — a lying record the architecture
 itself would interpret; the schema cannot compare two fields, the validator can and does.
 
-### 3.13 `target_policy` — `latest_authority | declared_release | as_of_frontier | historical_replay`
+### 3.13 `target_policy` — `latest_authority | declared_release | as_of_frontier | historical_replay` (round 3, R3-CRO-11: `latest_authority` RESOLVES)
+ARM TABLE (two-directional, added R3-CRO-11): `latest_authority -> resolved_target_ref +
+resolved_target_version REQUIRED` (the head the evaluation actually compared against — a verdict
+against "latest" with no resolved head is not reproducible) · `declared_release | as_of_frontier |
+historical_replay -> both FORBIDDEN` (the target IS the ref; a resolution field on a pinned target
+is a second carrier that drifts). Mutants `coherence.latest-without-resolved-head`,
+`coherence.declared-release-with-resolved-head`; fixture `coherence_evaluation_latest`.
 DOMAIN: what a coherence evaluation compares against. MECE over target choices; kills the
 false-stale class ("behind" exists only relative to a DECLARED target). GRAIN: evaluation. INTENT:
 comparison frame. STATE: structural.
@@ -243,7 +321,10 @@ re-materialization — producer) · `currency` `at_target|behind_target|ahead_of
 `fabric_validity` `valid_for_fabric|foreign_fabric|unknown` (remedy: re-derive on the owning fabric
 — Rule 26). ARM TABLE (CV-3): `integrity verified|mismatch -> evidence_refs required` · `mismatch
 -> delta_summary required` · `currency at_target|behind_target|ahead_of_target -> evidence_refs
-required`. `unknown`/`unverified` FREE by design.
+required`. `unknown`/`unverified` FREE OF REQUIRED WARRANTS by design — no arm may DEMAND evidence
+or a delta from a seat that has not checked. FORBID (ARM-4 CUT #4): `integrity verified|unverified
+-> delta_summary forbidden` — a delta is the product of the check; `verified` denies a delta and
+`unverified` denies the check (its remedy column: "run the check").
 
 ### 3.15 Registered vocabularies — `entity_class`, `identity_space`, `identity_policy` (DT-3)
 NOT closed enums. ⛔ OPENNESS IS DECLARED (it was previously only implied): the schema accepts any
@@ -261,9 +342,16 @@ had the WRONG DENOMINATOR, found by its own author's tool). A collision passes O
 ALLOWED list with a stated same-sense reason. ALLOWED at v0.1: `retired` (same sense, ruled at F4);
 `partial` (same sense — "some, not all, of the expected whole" — applied to instrument/run/surface;
 the REMEDIES differ per §3.6/3.9/3.14 arm tables, which is where the difference belongs);
-`unknown`, `active`, `superseded`, `complete`, `unverified` (same epistemic/lifecycle sense per
+`unknown`, `active`, `complete`, `unverified` (same epistemic/lifecycle sense per
 pair — `unknown`'s entry now spans THREE domains with declared_cardinality added, same sense in
-all; remedy divergence lives in each enum's state-coherence record — and per CVR2-2, `unknown`'s
+all; **`superseded` LEFT the list at the R2-2 landing: it now lives in ONE domain only
+(`materializer.current_status`), so it no longer collides — the census reads 6 collisions, 6
+allowed, down from 7; `partial` gained `bundle_completeness` as a fourth same-sense domain when
+`partial_legacy` retired; **`opened`, `closed` ADDED at round 4 / `v0.3-candidate`: the same
+event-pair sense — the two halves of an interval's life — in `contest_event.event_kind`
+(`opened | resolved`, one shared token), `binding_event.event_kind` and
+`authority_epoch_event.event_kind` (`opened | closed`); the REMEDIES differ per §3.19/3.28/3.29
+owner rows, which is where the difference belongs;** remedy divergence lives in each enum's state-coherence record — and per CVR2-2, `unknown`'s
 entry carries a grain note: same sense, DIFFERENT grain-legitimacy — observer-state is coherent at
 observer grain (coherence axes) and mixed at subject grain (materializer status); the subject-grain
 use dissolves under R2-2's derived-status work). ELIMINATED rather than
@@ -296,6 +384,220 @@ a uniqueness claim carries its scan) · `deferred` needs no warrant (the deferra
 state, and the reconciliation record carries its own). Born WITH this record — the
 declared_cardinality lesson (CVO~X's CV-1 finding) applied at the next enum's birth.
 
+### 3.19 `contest_event.event_kind` — `opened | resolved` (R2-2 LANDED, 3b)
+DOMAIN: the two events of a contest's life; a contest is an EVENT PAIR keyed by `contest_id`, never
+a lifecycle value that displaces the interval truth (3b). MECE: hunted member — withdrawn → a
+`resolved` with `outcome: dismissed` (the opener's withdrawal is a dismissal on the record, not a
+third kind); re-opened → a NEW `contest_id` (append-only; a contest is never re-mutated — and a
+dismissal followed by a NEW, successful challenge on the same event target is LEGAL: the
+one-per-target slot is consumed only by a CORRECTIVE outcome, `upheld` | `nullified`, never by
+`dismissed` or `merged`; R4-CVO-4). GRAIN:
+one event. INTENT: one axis — which half of the pair. STATE-COHERENCE: `opened` is terminal for
+its record; the contest MOVES by a `resolved` event with the same `contest_id` (owner: the
+adjudicator) — the projection rule is a pure fold (contested/disputed iff an opened id has no
+resolved partner; `upheld` keeps the subject contested until its `consequence_refs` EXIST).
+ARM TABLE (two-directional): `opened -> basis + evidence_refs REQUIRED; outcome, adjudicated_by,
+consequence_refs, surviving_contest_id FORBIDDEN` (owner: the opener; `surviving_contest_id` added
+to this table at R3-CVO-3 — the schema forbade it from REWORK-2, the table had not said so) ·
+`resolved -> outcome + adjudicated_by REQUIRED`
+(owner: the adjudicator; `basis` may be restated — harmless surplus, class A).
+
+### 3.20 `contest_event.target_kind` — `entity | binding | lifecycle_event | binding_event | authority_epoch_event` (R2-2 LANDED, RA-1; `lifecycle_event` ADDED round 4 item 8, R3-CVO-12; `binding_event`, `authority_epoch_event` ADDED at round 4's second pin, R4-CRO-2)
+DOMAIN: what a contest is ABOUT. MECE: the two mutable identity carriers, plus EVERY event carrier
+the round introduced — each is terminal and authoritative, and a mis-typed event on any of them
+would force a rewrite, the one thing the ledger never does (R4-CRO-2 closed the doctrine over all
+three; a carrier that could not be contested was the hunted member); an assertion is NEVER a target
+(assertions are left by supersession on their own chain — §3.2, `supersedes` since round 4); a
+surface contest → out of scope at v0.3 (declared, not absorbed). GRAIN: one event. INTENT: one
+axis — target type. STATE-COHERENCE: structural; no remedy moves it.
+ARM TABLE (five-directional, exactly-one target field): `entity -> target_entity_serial REQUIRED;
+target_binding_id, target_event_id FORBIDDEN` · `binding -> target_binding_id REQUIRED;
+target_entity_serial, target_event_id FORBIDDEN` · `lifecycle_event | binding_event |
+authority_epoch_event -> target_event_id REQUIRED with the kind's prefix (`lce:` | `bev:` | `aep:`);
+target_entity_serial, target_binding_id FORBIDDEN` (owner: the writer — the identity_relation
+grain is a serial PAIR and cannot name a binding or an event, which is why contests are their own
+record shape). An `upheld` contest on an event names exactly ONE replacement (schema: `maxItems 1`,
+the kind's prefix) of the same `event_kind` and the same CARRIER KEY — `materializer_serial` |
+`binding_id` | `authority_id` — with a NEW id (validator semantic arm, batch-scope; ledger rows
+4/6/7/13 beyond it) — that is REPLACE; a `nullified` contest on an event needs NO replacement —
+that is VOID (§3.21, R4-CRO-7: the only way a FALSE transition is ever undone). VOIDED is derived
+only from those two, and a voided event advances no machine and feeds no fold. CHRONOLOGY (R4-CRO-5): `opened` < `resolved` for one `contest_id`, and the target
+event < the `opened` that challenges it, in the order `(occurred_at, commit_seq, id)` — a same-instant
+pair is decided by the id, deterministically.
+
+### 3.21 `contest_event.outcome` — `upheld | dismissed | merged | nullified` (R2-2 LANDED, RA-2; `nullified` ADDED round 4, R4-CRO-7)
+DOMAIN: what the adjudication DOES to the target. MECE: the challenge stood and the target is
+REPLACED (`upheld` — exactly one consequence), stood and the target is simply VOID (`nullified` —
+the admitted resolution IS the terminal corrective fact; no replacement, because the hunted member
+was a false TRANSITION: under the same-kind/key replacement law, voiding a false decommission
+required another decommission, so a false transition, a wrong kind or a wrong key could never be
+corrected — R4-CRO-7's finite-chain proof), fell (`dismissed`), or was absorbed into another
+contest (`merged` — the survivor named by the typed `surviving_contest_id` field, NEVER in
+`consequence_refs`; R3-CVO-3 caught this sentence still carrying the pre-REWORK-2 form beside a
+schema that forbids it). Reclassify (change the kind or key in place) is deliberately NOT a value:
+a wrong kind is nullified and re-asserted as a NEW event, which append-only already permits. GRAIN:
+one resolution. INTENT: one axis — the adjudication's effect. STATE-COHERENCE: terminal for the
+event; `upheld` moves the SUBJECT only when its referenced consequence exists (owner: whoever
+cuts the consequence event); `nullified` moves it at admission — the voided event feeds no fold
+and advances no machine (owner: the adjudicator; legal ONLY on an EVENT target, the three carriers
+of §3.20 — an entity or binding is never nullified, it is retired or closed by its own carrier).
+ARM TABLE (two-directional per value — round-3 REWORK-2, `4.0.0_SA_CRO~X` at bf6fbe53d9: the
+first table omitted `merged` while the schema required an UNTYPED consequence for it, so a
+survivor could be `not-a-contest-id`): `upheld -> consequence_refs REQUIRED, surviving_contest_id
+FORBIDDEN` (RA-2: an upheld challenge without its consequence is a promise, and a projection that
+clears on a promise re-opens the laundering cell at the contest door) · `merged ->
+surviving_contest_id REQUIRED (typed `ct:<ulid26>`), consequence_refs FORBIDDEN` (the survivor
+carries the consequences; a merge names exactly one surviving contest) · `dismissed -> BOTH
+FORBIDDEN` (a dismissed challenge has no consequence and no survivor to name) · `nullified ->
+evidence_refs REQUIRED; consequence_refs, surviving_contest_id FORBIDDEN; target_kind ∈ the three
+event kinds` (the resolution is the consequence; an entity/binding target with `nullified` is
+rejected) · `opened -> surviving_contest_id FORBIDDEN` (with the other resolution fields, §3.19).
+RACE (validator `_contest_conflict_errors`, ledger row 13): at most ONE admitted CORRECTIVE
+outcome — `upheld` | `nullified` — per event target; a second is rejected (replace + annul, two
+replaces, two annuls). `dismissed` and `merged` consume no slot (a merge resolves the loser while
+its survivor resolves later on the same target; R4-CVO-4 corrected the first, blanket form of this
+guard, which rejected a dismissal followed by a new challenge).
+Mutants: `contest.merged-without-survivor`, `contest.merged-with-consequence`,
+`contest.upheld-with-survivor`, `contest.survivor-not-a-contest-id`,
+`contest.nullified-with-consequence`, `contest.nullified-with-survivor`,
+`contest.nullified-on-entity-target`, `contest.nullified-without-evidence`. ⛔ DECLARED LIMIT (§6 limit 11): that the consequence is an event on the SAME
+typed target dated AFTER the opening is a LEDGER check, not a schema arm.
+
+### 3.22 `status_basis` — `authored | derived` (R2-2 LANDED, sec 2 / AT-2 / RA-4 / CRO input 2)
+DOMAIN: the basis of ONE projected status axis on ONE record — a FIELD-SCOPED, EXACT-KEY map
+(`additionalProperties: false`, every axis key REQUIRED) on the five status-bearing records / six
+axes: `entity.current_status` · `entity_binding.status` · `identity_relation.verification_standing`
+· `materializer.current_status` · `bridge_assertion.verification_standing` AND
+`bridge_assertion.registry_standing`. MECE: a status is either a CLAIM by its author or a
+DERIVATION from the event layer; hunted member — MIGRATED is `authored` + a `migration_receipt`
+ref in `evidence_refs`, no third value (the receipt is the discriminator). GRAIN: one axis on one
+record. INTENT: one axis — provenance of the projection. STATE-COHERENCE: `authored -> derived`
+moves ONLY when WP-3's derivation rule for that axis lands as code (owner: the ledger) — ⛔
+`derived` is ILLEGAL pre-WP-3 and the schema says so (`const: authored` per key): a one-value enum
+by construction (AT-2), whose live bit is VINTAGE — and vintage is NOT inferred from absence
+(RA-4): post-landing a record WITHOUT the map is INVALID, and a pre-landing record is one the
+MIGRATION MANIFEST enumerates (`migration/R2_2_MIGRATION_MANIFEST.json`, cut at this landing:
+0 production records, 1 fixture rewrite). Two declared axis classes (AT-5): five DERIVABLE-AT-WP-3;
+`bridge_assertion.registry_standing` ADJUDICATION-CARRIED (moves only on an adjudication event
+carrying `adjudicated_by`; permanent-authored until that event vocabulary lands, declared).
+ARM TABLE: the map is REQUIRED on all five records (mutant `entity.no-status-basis`), exact-keyed
+(`bridge.status-basis-partial-map`, `binding.status-basis-extra-key`), authored-only
+(`entity.status-basis-derived`).
+
+### 3.23 `migration_receipt.recoverability` — `recovered | floor` (R2-2 LANDED, 3a / CRO input 5 / AT-1)
+DOMAIN: what a vocabulary rewrite could recover. MECE: the pre-rewrite meaning was recoverable and
+the target carries it (`recovered`), or it was not and the target is the declared honest floor
+(`floor` — e.g. `superseded -> unverified + superseded_by`). GRAIN: one rewrite of one field on one
+record. INTENT: one axis — recoverability. STATE-COHERENCE: append-only, terminal; a second
+migration is a second receipt. The receipt preserves `source_value`, `target_value`, the map and
+its evidence — a migration that erases what a value used to say is the laundering defect performed
+by the remedy (CRO input 5); and the rewrite IS a status change in a kernel whose thesis is
+a-change-is-an-observation, so a rewritten standing carries `claim_origin: rule_derived` with the
+map in `evidence_refs` (AT-1), making a migrated value DISCRIMINABLE from a virgin one. ARM TABLE:
+no conditional — every field REQUIRED (`evidence_refs` included: mutant `mig.missing-evidence`).
+
+### 3.24 `source_frontier.completeness` — `complete | partial` (round 3, R3-CRO-8)
+DOMAIN: whether the frontier accounts for every source the run EXPECTED. MECE: a frontier either
+carries every expected coordinate (`complete`) or fewer (`partial`); the denominator is
+`expected_count` (REQUIRED on both values — a partial frontier that cannot say how partial is the
+adjective this record exists to retire). Hunted member — "unknown expectation" → the writer names
+the count it ran with; a run with no expectation is a run with no frontier. GRAIN: one frontier.
+INTENT: one axis — accounting completeness (never data quality). STATE-COHERENCE: `partial ->
+complete` moves by a NEW frontier (append-only; LAW 5) when the absent source appears — owner: the
+frontier writer (the run's executor). ARM TABLE: none conditional (`expected_count` unconditional);
+SEMANTIC, BOTH DIRECTIONS (R3-CVO-4 caught the first cut constraining `complete` only — `partial`
+was a costume state): every frontier REQUIRES `expected_count >= len(entries)`
+(`sem.frontier-overfull-denominator`) · `complete` REQUIRES `expected_count == len(entries)` AND no
+`unavailable` entry (`sem.frontier-complete-count-mismatch`, `sem.frontier-complete-with-unavailable`)
+· `partial` REQUIRES something to be missing: `expected_count > len(entries)` OR at least one
+`unavailable` entry (`sem.frontier-partial-costume`); positive controls: `source_frontier_partial`
+(absent by unavailability), `source_frontier_partial_short` (absent by count).
+
+### 3.25 `source_frontier.entries.availability` — `available | unavailable` (round 3, R3-CRO-8; the entry-level field `availability` — named without `[]` because the labels gate's header regex `[a-z_.]+` cannot see brackets, which made this record INVISIBLE to the gate at c3ead58283 while the commit body claimed "23 of 23": the gate's blind spot and the typed number, both on the record)
+DOMAIN: whether the source at this coordinate could be read when the frontier was compiled. MECE:
+read (`available`, carries `source_version`) or not (`unavailable`, PRESENT with its
+`absence_evidence` — the source does not disappear from the vector, R2-5's rule at the frontier
+grain). Hunted member — partially readable → `available` with the partial version named; the
+degree lives on the observation, not here. GRAIN: one entry. INTENT: one axis — readability at
+compile time. STATE-COHERENCE: `unavailable -> available` moves by a NEW frontier (owner: the
+writer). ARM TABLE (two-directional, entry-level — invisible to ARM 1/4, which read record-level
+arms only; declared): `unavailable -> absence_evidence REQUIRED` · `available -> absence_evidence
+FORBIDDEN`. Entry locality (R3-CRO-6): every entry carries `referent_scope` with the §3.7
+two-directional fabric/device arms — a device-local path with no device key is unrepresentable.
+
+### 3.26 `surface_version.publication_state` — `unpublished | published` (round 3, R3-CRO-10)
+DOMAIN: whether this immutable surface has been PROMOTED to an authority ref. MECE: a surface is
+built (always) and either promoted or not; `published_ref` alone was a bare string that could be
+set on a failed run's output (CRO's exhibit). Hunted member — "promoted then withdrawn" → a NEW
+surface_version or a retirement on the authority, never a mutation (LAW 3). GRAIN: one surface
+version. INTENT: one axis — promotion state. STATE-COHERENCE: `unpublished -> published` moves by
+the PROMOTER (owner: the authority holder, e.g. the deploy lane) with a receipt. ARM TABLE
+(two-directional): `published -> published_ref (nonempty) + published_at + promoted_by +
+promotion_evidence_refs REQUIRED` · `unpublished -> published_ref REQUIRED AND null, the three
+FORBIDDEN` (R3-CVO-5: the first cut pinned `published_ref` to null only IF PRESENT, so the declared
+null carrier could vanish; mutant `surface.unpublished-without-published-ref`).
+SEMANTIC (batch): a published surface's producing run must be `succeeded` and `published_at >=
+run.completed_at` (`sem.published-from-failed-run`, `sem.published-before-run-completed`).
+Failed-with-outputs stays legal (§3.9); what is guarded is PROMOTION.
+
+### 3.27 `lifecycle_event.event_kind` — `materializer_decommissioned | materializer_superseded` (round 4 items 3 + 4, R3-CRO-19 / R3-CVO-6)
+DOMAIN: the two process-level transitions of a materializer that `+38` could only AUTHOR (§3.8
+`retired`, `superseded` were authored values with no event to fold over). MECE: hunted members —
+a version succession is NOT a lifecycle event (it is `materializer_version.supersedes`, same
+materializer); a re-activation after decommission → a NEW materializer serial (append-only; a
+decommission is terminal); a correction of a wrong event → a `contest_event` on it (§3.20), never a
+second event. GRAIN: one event. INTENT: one axis — which transition. STATE-COHERENCE: each event
+is terminal for its record; the materializer's `current_status` is a FOLD over its effective
+events (`WP3_LEDGER_DESIGN.md` §4) — `retired` outranks `superseded`; the remedy for a wrong
+event is the contest (owner: the adjudicator), for a wrong fold the ledger (owner: WP-3). **THE
+MACHINE (R4-CRO-4), over EFFECTIVE events per `materializer_serial`:** at most ONE decommission;
+NO effective transition ordered after it (decommission is TERMINAL); `superseded ->
+decommissioned` is LEGAL; a voided event advances nothing and its upheld replacement takes its
+position. Validator semantic arm in-batch (`_materializer_machine_errors`), ledger row 7 beyond.
+ARM TABLE (two-directional): `materializer_superseded -> superseding_version_id REQUIRED` (a
+`matv:` of ANOTHER materializer — same-materializer is rejected by the validator semantic arm
+in-batch and by the ledger beyond) · `materializer_decommissioned -> superseding_version_id
+FORBIDDEN` (owner: the writer). `evidence_refs` REQUIRED on both (an event with no warrant is an
+opinion).
+
+### 3.28 `binding_event.event_kind` — `opened | closed` (round 4 item 2, R3-CRO-19 / R3-CVO-6)
+DOMAIN: the two halves of a binding interval's life, carried as EVENTS so a close never mutates
+the `entity_binding` row (LAW 3). MECE: hunted members — disputed is NOT an event kind (it is a
+contest on the binding, §3.20); re-opened → a NEW `binding_id` (the interval is a new assertion).
+GRAIN: one event. INTENT: one axis — which half. STATE-COHERENCE: `entity_binding.status` is a
+FOLD (`closed` iff a `closed` event exists for the id; `disputed` iff an open contest; else
+`open`) — the row's authored `status` / `valid_to` must AGREE with the fold or the write is
+rejected (WP3 row 5; owner: the writer for the row, the ledger for the fold). `opened` and
+`closed` share the token sense of §3.29 (ALLOWED, §3.16). `evidence_refs` REQUIRED. **THE
+MACHINE (R4-CRO-3), over EFFECTIVE events per `binding_id`:** the `entity_binding` ROW is the
+initial open fact; an `opened` event is legal at most ONCE; a `closed` at most ONCE; no `opened`
+ordered after a `closed` (the forbidden re-open on the same id — re-opening is a NEW
+`binding_id`). A wrong event is corrected by a contest on it (§3.20), never by a second event;
+its replacement carries the same `binding_id`. Validator semantic arm in-batch
+(`_binding_machine_errors`), ledger row 4 beyond.
+
+### 3.29 `authority_epoch_event.event_kind` — `opened | closed` (round 4 item 5, R3-CRO-30 / R3-CRO-34)
+DOMAIN: the two transitions of a minting authority's epoch — the source of truth §5's audit and
+§6 limit 1 lacked. MECE: hunted members — revoked IS `closed` (a revocation is a close with its
+evidence); suspended → `closed` then `opened` (two intervals; reopening is legal); a rename of an
+authority → a new `authority_id` (the id is the `minting_authority` string, verbatim). GRAIN: one
+event. INTENT: one axis — which transition. STATE-COHERENCE: a TOTAL machine per `authority_id`
+— start CLOSED; `opened` legal only from CLOSED, `closed` only from OPEN; ordered by
+`(occurred_at, commit_seq, event id)`; mint AUTHORIZATION is evaluated at the mint batch's own
+`commit_seq` and never re-opened by a backfilled event (WP3 row 6; owner: the ledger; the writer
+owns the event's warrant). `evidence_refs` REQUIRED. **THE TRUST ROOT (R4-CRO-6, adjudicated
+`3.0.0_SA_CVO~X` 20260828T054009Z): who may open or close an epoch is pinned IN THIS CONTRACT at
+seat-FAMILY grain — `actor` matches `^(0\.0\.0_AB_MSTR|1\.0\.0_SA_CTO)(~[A-Z])?$` (the registry
+owner and the contract author; a root rotation is a contract amendment = a new candidate_id with
+`supersedes_bundle_id`, replayable through `BUNDLE_LABELS.json`, no new bundle member). That
+regex is the STRUCTURAL half only — `actor` is authored data and a spoofed root string passes it;
+the ledger binds `actor` EXACTLY to the AUTHENTICATED submitting principal and only then applies
+the family predicate (WP3 row 6: `L-06-unauthorized-epoch-transition-rejected` and
+`L-06-epoch-actor-spoof-rejected`; the accepts are the MSTR genesis-open and a CTO close /
+re-open with actor == the authenticated writer). Declared here, enforced by the ledger; §6.** A
+wrong epoch event is corrected by a contest on it (§3.20); its replacement carries the same
+`authority_id`.
+
 ## 4. CONDITIONAL REQUIREMENTS (the consuming half — all mechanical)
 
 The full set now spans: three-field fingerprint coupling (every direction, every failure_state) ·
@@ -305,7 +607,24 @@ warrant conditionals on identity_relation (evidence/adjudicator/successor) · ru
 completed_at arms · bundle_completeness both arms · coherence evidence/delta arms ·
 `evidence_refs` minItems 1 ON THE $def (CV-5 — present means non-empty, no future conditional can
 forget it) · `random_seeds` = non-empty list or literal `"not_applicable"` · frontier minItems 1 ·
-iso_ts range-checked fields (CV-4; calendar validity beyond ranges: validator semantic arm, §6).
+iso_ts range-checked fields (CV-4; calendar validity beyond ranges: validator semantic arm, §6) ·
+**R2-2:** `status_basis` exact-key maps REQUIRED on five records (`const: authored`) · contest
+target-kind arms (both directions) + event-kind arms + outcome arms · `retirement` object_serial
+forbid / other-kind require · `open -> valid_to null` + `partial -> evidence_refs` (ARM-1) ·
+**round 4 / `v0.3-candidate`:** contest target-kind arms THREE-directional (exactly-one target
+field, §3.20) · `lifecycle_event` kind arms (`materializer_superseded -> superseding_version_id`
+require / `materializer_decommissioned` forbid, §3.27) · `evidence_refs` REQUIRED on all three
+event records · `consequence_refs[]` items pattern-typed (record-id union, minItems 1) ·
+`migrated_record_ref` pattern-typed over the catalog · `supersedes` pattern-typed per assertion
+record (`rel:` / `br:`) · **round 4, second pin:** contest target arms FIVE-directional with a
+per-kind `target_event_id` prefix (§3.20) · `upheld` on an event → `consequence_refs` exactly one,
+the kind's prefix · `migrated_record_ref` also admits `sha256:<64hex>` (the two content-addressed
+primary ids, R4-CRO-1) · `authority_epoch_event.actor` pattern = the root families (§3.29) ·
+validator semantic machines: binding (§3.28), materializer lifecycle (§3.27), contest chronology
+(§3.20), replacement same-carrier-key — all over EFFECTIVE (non-voided) events · **round 4, third
+pin (R4-CRO-7):** `outcome=nullified -> evidence_refs REQUIRED; consequence_refs,
+surviving_contest_id FORBIDDEN; target_kind ∈ the three event kinds` — VOID as a first-class
+adjudication; `_voided_event_ids` counts a nullified target as voided with no replacement.
 
 ## 5. MINTING AUTHORITY (RATIFIED — Andrew-direct 2026-08-27 ~18:4xZ, "Recs approved")
 
@@ -355,6 +674,28 @@ Classified per DT-2's taxonomy (genuinely-inexpressible vs deferred vs process-n
    succeeded-with-none are legal; the receipt carries emission truth.
 10. **Rule 24 records are AUTHOR-side until certified** — PROCESS NOTE, not a limit (CV-2 entry-4
     reclassification): the adversarial pass + CVO certification are the check.
+11. **R2-2's CROSS-RECORD PROMISES — NO ENFORCEMENT PLANE pre-WP-3, DECLARED (AT-1, RA-2 carry):**
+    (i) `superseded_by present -> no further standing changes on THIS record` — a stateless
+    validator cannot see a cross-version write; (ii) an `upheld` contest's `consequence_refs` must
+    name an event on the SAME typed target dated AFTER the opening — referential + temporal, ledger
+    grain (limit 3's class); (iii) a `resolved` event's `contest_id` must match an `opened` one —
+    batch-scope at best. All three become REJECTED-WRITE rules when the ledger lands; until then a
+    certification touching them names the exclusion. **Round 4 / `v0.3-candidate`:** (i) is now
+    carried the other way round — the NEW assertion's `supersedes` (backward, resolvable at
+    creation) is the authored fact and `superseded_by` is ledger-derived; (ii)/(iii) gain their
+    carriers' typing (`consequence_refs[]` record-id union; `contest_id` semantics unchanged) and a
+    third target kind (`lifecycle_event`, §3.20) whose upheld consequence is ONE replacement of the
+    same kind + serial (validator semantic arm in-batch). The ledger-scope halves are `WP3_LEDGER_DESIGN.md`
+    rows 7 and 13 — still declared here, not enforced by this validator.
+12. **FRONTIER CANONICALIZATION — declared, PARTIALLY MECHANICAL (round 3, R3-CRO-5):** the writer
+    supplies `canonical_key` under the frontier's `normalization_version`; the validator rejects an
+    OBVIOUSLY non-canonical key (dot-segments, empty segments, trailing slash) and two entries
+    sharing a `canonical_key` with different `source_version`. It CANNOT prove two syntactically
+    different keys are the same source (that needs the normalizer itself, WP-3) — a mis-canonicalized
+    key that happens to be well-formed passes. **Cross-batch provenance (R3-CRO-7/9/10)** — frontier
+    observed-before-run-start, run<->surface membership + frontier identity, publication only from a
+    succeeded run and after it completed — is enforced WITHIN A BATCH by `_batch_provenance_errors`
+    and is ledger-scope beyond it (limit 3's class).
 
 ## 7. CHANGELOG v0 → v0.1 (finding → fix; full tally in BOUNDARY_ROUND1.md)
 
@@ -370,3 +711,94 @@ fixture · DT-7 invariant-with-fabric → forbid arm · DT-8 three models of loc
 `fabric_scope` on three records · CV-1 → §2 carried requirement · CV-2 → §5 control-incomplete +
 §6 items 6/10 + identity_policy into §3.15 · CV-3 → coherence warrant arms · CV-4 → iso_ts ranges +
 terminal-completed_at arm · CV-5 → minItems on the $def · CV-6 → arm tables throughout §3.
+
+**v0.2-candidate, post-round-2-boundary (2026-08-28):** ARM-1 adjudication (`ARM1_ADJUDICATION.md`,
+13 of 13 candidates disposed) → §3.5 `open -> valid_to null` arm + mutant `binding.open-with-valid_to`
+· §3.6 `partial -> evidence_refs REQUIRED` arm + mutant `observation.partial-no-warrant` + 15th
+fixture `state_observation_partial` · the new require-only arm is ruled class A in
+`ARM4_ADJUDICATION.md` (26 of 26). Schema `$id` stays `v0.1` until the bundle-identity record
+(Round 3 target) mints the candidate identifier — the label/bundle split is deliberate, not drift.
+
+**R2-2 LANDED (2026-08-28, one commit; design @7c093caff5 attacked-dry; gate = COO~X census
+77156; cut authorized by CVO~X's C2 verdict after ARM-1 @9869831971) — checklist (a)–(h):**
+(a) `superseded` leaves `verification_standing` (§3.2, 3-value); `migration_receipt` record type
+(§3.23) + `migration/R2_2_MIGRATION_MANIFEST.json` (0 production records, 1 fixture rewrite) ·
+(b) both `superseded -> superseded_by` REQUIRE arms REMOVED; the identity_relation enum-set forbid
+SHRANK with an explicit mutant (`relation.corroborated-with-adjudicator`); ARM-4 class-D rows
+CLOSED · (c) `contest_event` record, typed target, total vocabulary (§3.19–3.21; 8 mutants) · (d)
+`retirement` relation kind, `object_serial` forbidden for it / required otherwise (§3.12) · (e)
+direction table CLOSED into §3.12 · (f) `status_basis` exact-key maps REQUIRED on five records /
+six axes, `const: authored` (§3.22; 4 mutants) · (g) `partial_legacy -> partial` (§3.10) with its
+receipt as fixture `migration_receipt` · (h) COO~X 77156 cited as the pre-landing gate that was
+MET. Battery at the landing: 18 fixtures · 83 reason-asserted mutants (8 of them contest_event —
+the commit body's "9" was a typed number, corrected by `3.0.0_SA_CVO~X`'s derivation) · 20 enum
+records · collisions 6/6 allowed · ARM 4 21 live require-only, 0 NEW · ARM 3 103 of 103 inhabitable
+(`4.0.0_SA_CRO~X` at the pin; the landing log's "96" was a pre-landing tree figure). §6 limit 11
+declares the three cross-record promises the ledger must enforce.
+
+**Round-3 REWORK at bf6fbe53d9 (`4.0.0_SA_CRO~X`, 20260828T024424Z; landed as the first round-3
+commit):** REWORK-1 `retirement -> evidence_refs REQUIRED` (§3.12; the reason sentence was prose) ·
+REWORK-2 `merged -> surviving_contest_id` typed `ct:` REQUIRED + `consequence_refs` FORBIDDEN;
+`upheld` forbids the survivor; `dismissed` forbids both (§3.21 arm table re-recorded — it had
+omitted `merged`). Register: `ROUND3_FINDING_REGISTER.json` R3-CRO-1..4, R3-CVO-1.
+
+**SCHEMA-ONLY FREEZE — `v0.2-candidate+38` FROZEN (C4, `3.0.0_SA_CVO~X` 20260828T040820Z):**
+`bundle_identity.py dcbe214a44 --freeze --boundary <BOUNDARY_ROUND3.md commit>` records
+`frozen_at` + the round-3 boundary in `BUNDLE_LABELS.json`; `BUNDLE_IDENTITY.json` reads
+`status: frozen`, `freeze_scope: schema-only`. **The three operational receipts stay null BY
+DEFINITION** — that is "not operationally certified", not a contradiction (the record's earlier
+comment said otherwise and was corrected in the same change). **The frozen label is immutable:**
+any byte change on the package path derives a NEW `candidate_id`; the contract is never mutated
+under `+38`. The freeze lifts ONLY WP-3 implementation start (`WP3_LEDGER_DESIGN.md`, design-first,
+C5); production population and the 56 L3 cells stay HELD.
+
+**ROUND 3 CLOSED — `BOUNDARY_ROUND3.md`, 2026-08-28 04:0xZ, boundary pin dcbe214a44 =
+`v0.2-candidate+38` (`bundle:sha256:617fd9a1…`, `BUNDLE_LABELS.json`).** 30 findings registered
+(`ROUND3_FINDING_REGISTER.json`), 21 FIXED, 7 AMENDED-RECORD, 2 REFUTED by named rule — one of them the
+pre-declared planted claim (R3-CTO-2), refuted by the EXPECTED rule (CVR2-1) by two attackers
+independently; specificity MEASURED, the margin (one first pass UPHELD on an instrument misuse, now
+R3-CRO-16) on the record. Both attackers DRY. Gates at the pin: six of six exit 0 | 1 open (the class-D
+`disputed` projection). **The contract is ELIGIBLE FOR CANDIDATE FREEZE** (memo §10 candidate-freeze
+column met); **NOT operationally certified** — WP-3 ledger, live vertical slice, historical replay
+remain. Later-round landings after the REWORK 5–11 entry below: R3-CVO-4/5 @ab052139a8 (partial
+frontier both directions; unpublished requires the null carrier) · R3-CRO-16 @393c248a09 (validator
+fails fast on a non-list) · consume-gate resolution arc @9b27b8c41e → f98f2d020b → 74671f0911 →
+ea64a64850 (DT~X) · labels gate census @e54c9a0b9e (COO~X) · runner `ISCK_REPO_ROOT` @454781703a.
+
+**Round-3 REWORK 5–11 (`4.0.0_SA_CRO~X` at 36a5514df8; landed as one commit):** `source_frontier`
+gains `normalization_version`, `completeness` (§3.24) + `expected_count`; every entry gains
+`canonical_key`, `availability` (§3.25) + `absence_evidence`, and `referent_scope` with the §3.7
+fabric/device arms; the validator's coordinate key reads only schema-reachable fields (it read a
+dead `fabric_id`); semantic: non-canonical keys, same-key-two-versions, complete-count mismatch,
+complete-with-unavailable · `surface_version` gains `publication_state` (§3.26) with the
+publication receipt fields · `coherence_evaluation` gains `resolved_target_ref/version` on
+`latest_authority` (§3.13) · batch provenance: frontier observed-after-run-start, surface not in
+run outputs, surface/run frontier disagreement, published-from-failed-run,
+published-before-completion (`_batch_provenance_errors`; §6 limit 12). Battery: 21 fixtures ·
+99 mutants · 20 semantic · 23 enum records. ARM 3 prints two OPEN companion repairs
+(`latest_authority`, `published`) until `0.4.0_DT_ClientPlatform~X`'s next consume-gate commit
+carries them (the probe module was under DT~X's announced lock at this landing — declared, not
+hidden).
+
+## 8. CHANGELOG `v0.2-candidate+38` → `v0.3-candidate` (ROUND 4 — chartered `ROUND3_CHARTER.md` §11 on `3.0.0_SA_CVO~X` 20260828T043852Z, self-drive D11 ledger row 12)
+
+**Why:** the WP-3 enforcement design (`WP3_LEDGER_DESIGN.md`, attacked to its second quiet pin
+30d9186e3b by CRO~X / CVO~X / DT~X) found five facts the frozen `+38` cannot carry append-only and
+two references it left untyped (§2b there; R3-CRO-19, R3-CVO-6, R3-CRO-22, R3-CRO-30, R3-CVO-12).
+Per C5's last sentence they land as a NEW candidate in a NEW family — `+38` is untouched.
+**What (eight items):** (1) `supersedes` on `identity_relation` + `bridge_assertion` (§2; the head
+names its predecessor) · (2) `binding_event` (§3.28) · (3)+(4) `lifecycle_event` (§3.27) · (5)
+`authority_epoch_event` (§3.29) · (6) `consequence_refs[]` typed (§4) · (7) `migrated_record_ref`
+typed (§4) · (8) `contest_event.target_kind` + `lifecycle_event` with `target_event_id` (§3.20).
+**Identity:** `bundle_identity.py`'s family rule (ledger row 12) — a bundle whose schema blob
+differs from the frozen `+38` schema derives `v0.3-candidate+N` (N = package-path commits since the
+round-3 boundary) with `supersedes_bundle_id` → the `+38` bundle; a bound bundle keeps its label.
+**Battery at the opening commit:** fixtures, mutants and semantic arms per the self-test's printed
+denominators (never typed here); §3.16 ALLOWED gains `opened`, `closed`. **Round 4 rules:** §11 of
+the charter — `R4-<seat>-<n>` ids, `round: 4` rows in `ROUND3_FINDING_REGISTER.json`, PINNED
+declarations, the quiet pin. **Exit:** `BOUNDARY_ROUND4.md` + `--freeze` on the native label;
+ledger code only after that AND the design's dry. **Round-4 pins:** 32c9e67e26 (opening,
+`+10`) → b8961d2e39 (second, `+15`: R4-CVO-1, R4-DT-1, R4-CRO-1..6 — contest targets over all
+three carriers, four EFFECTIVE-event machines, the epoch trust root) → **REOPENED at the cut**
+(`BOUNDARY_ROUND4.md` §8: R4-CRO-7 withdrew a DRY; the freeze did not run) → the third pin
+(`nullified`, §3.21: VOID beside REPLACE — the only way a false transition is undone).

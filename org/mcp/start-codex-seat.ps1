@@ -94,8 +94,8 @@ else {
 # and handoffs alike. Downstream startup checks must never infer it elsewhere.
 $env:OPAL_AGENT_SERIAL = $Serial
 
-# Install the checked-in skill projection before the app-server starts so the
-# TUI's first model context can discover $load. Then render the startup prompt
+# Install the checked-in skill projections before the app-server starts so the
+# TUI's first model context can discover $load and $log. Then render the startup prompt
 # from the exact launcher serial. Neither step consults the network.
 $loadSkillInstaller = Join-Path $Workspace 'org\mcp\install-codex-load-skill.py'
 $seatLoadRenderer = Join-Path $Workspace 'org\mcp\codex-seat-load.py'
@@ -111,7 +111,7 @@ $skillInstallOutput = @(
 $skillInstallExitCode = $LASTEXITCODE
 if ($skillInstallExitCode -ne 0) {
     $detail = ($skillInstallOutput | ForEach-Object { [string]$_ }) -join "`n"
-    throw "Codex load skill installation failed (exit $skillInstallExitCode): $detail"
+    throw "Codex skill installation failed (exit $skillInstallExitCode): $detail"
 }
 
 $startupPromptOutput = @(

@@ -1,0 +1,114 @@
+{
+  "_class_D": "DEFERRED BY LANDED DESIGN, never suppressed -- printed every run with its reversal trigger so it returns by construction rather than by anyone remembering.",
+  "_generated": "DERIVED from ARM 1's own output at the adjudicated tip bf6fbe53d9 -- never hand-listed, so it cannot drift from the arm it disposes. Consume half + sidecar authored by 0.4.0_DT_ClientPlatform~X under the scoped GIT_COMMIT_AUTHOR_OVERRIDE authorized in 77215.",
+  "_key": "record_type|field|unreached-value-set -- THE UNREACHED SET IS PART OF THE ROW'S IDENTITY. A ruling that two values are legitimately free does not survive the enum growing a third, nor a cut closing one: either moves the set and the suppression LAPSES.",
+  "_lapse": "If a (record_type, field) exists here with a DIFFERENT unreached set, the suppression LAPSES and the row is reported RE-ADJUDICATION REQUIRED naming both sets. A row absent entirely is reported NEW. Neither is ever silent.",
+  "_link": "R3-CVO-2: every entry carries record_ref + ruled_at + arm_digest. An entry missing any is an ORPHAN -> IGNORED -> the row prints NEW + WARN (fail-open-to-NEW, never to suppressed). A digest that no longer matches the live arm is STALE -> RE-ADJUDICATION.",
+  "_record": "org/standards/isck/ARM1_ADJUDICATION.md",
+  "_ruled_by": "1.0.0_SA_CTO~X (rows 3-13 in ARM1_ADJUDICATION.md; 13 of 13 values disposed)",
+  "entries": {
+    "bridge_assertion|claim_origin|human_adjudicated,producer_declared": {
+      "arm_digest": "07a4d30f7be9eaa256a8283c00415ece0a0f46b73ad65e119f0eb65fbc374e76",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-4,5",
+      "rows": [
+        4,
+        5
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "bridge_assertion|verification_standing|unverified": {
+      "arm_digest": "56e8e606aef276bc2b196f0f719653b52b2183356803ebd13e59e6571fc3a10e",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-6",
+      "rows": [
+        6
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "unverified"
+      ]
+    },
+    "coherence_evaluation|currency|unknown": {
+      "arm_digest": "1b72cf1f770a52ffadc18f7a801ee702ee86dcd0039115e204221fe1eef797ff",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-7",
+      "rows": [
+        7
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "unknown"
+      ]
+    },
+    "entity_binding|binding_basis|human_adjudicated,producer_declared": {
+      "arm_digest": "07a4d30f7be9eaa256a8283c00415ece0a0f46b73ad65e119f0eb65fbc374e76",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-8,9",
+      "rows": [
+        8,
+        9
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "entity_binding|status|disputed": {
+      "arm_digest": "8e564da8665818098a870133bf45cccea2b2d2de39497eb52e5af17a0dfca8b5",
+      "class": "D",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-3",
+      "reversal_trigger": "the R2-2 contest_event landing dissolves the `disputed` overlay on the binding status axis; re-adjudicate iff that design is reversed",
+      "rows": [
+        3
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "disputed"
+      ]
+    },
+    "identity_relation|claim_origin|human_adjudicated,producer_declared": {
+      "arm_digest": "07a4d30f7be9eaa256a8283c00415ece0a0f46b73ad65e119f0eb65fbc374e76",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-10,11",
+      "rows": [
+        10,
+        11
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "materializer|current_status|retired": {
+      "arm_digest": "a8da00c7f2a714b32ecdf0aa237c9277400875e83e1c8bfde611709d77739c8a",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-12",
+      "rows": [
+        12
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "retired"
+      ]
+    },
+    "mint_receipt|collision_preflight|deferred_to_reconciliation": {
+      "arm_digest": "912b525f1eac7fd23d8995992decbaebbff012684812b7de4404573c935ae059",
+      "class": "A",
+      "record_ref": "org/standards/isck/ARM1_ADJUDICATION.md#rows-13",
+      "rows": [
+        13
+      ],
+      "ruled_at": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+      "values_at_adjudication": [
+        "deferred_to_reconciliation"
+      ]
+    }
+  }
+}

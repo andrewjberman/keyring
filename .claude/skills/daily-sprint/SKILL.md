@@ -40,16 +40,24 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    the packet's `--all` git census already covers both branches.
 6. **BUILD THE STRUCTURED JSON + RENDER — the visual deliverable (Andrew-direct 2026-08-27,
    supersedes the 08-26 `render_sprint.py` step; that renderer is retired):**
-   a. `python daily_reports/scripts/commit_census.py --date <DAY> --json` — measured commits,
-      workers, and by-kind counts (the `commit_kind` author-seat enum; Rule-24 record in
-      `daily_reports/README.md`). by_project is authored from packet knowledge until a measured
-      mapper exists — set each cut's `claim` field honestly (`measured` | `inferred`).
+   a. `python daily_reports/scripts/commit_census.py --date <DAY> --window et --json` — the
+      by-author-seat cut (the `commit_kind` enum, a declared PROXY for kind of work; Rule-24
+      record in `daily_reports/README.md`) **and** `python daily_reports/scripts/project_census.py
+      --date <DAY> --window et --json` — the by-directive cut from the FILES each commit touched,
+      with its residual NAMED as `unattributed` (never parked on a row). Both emit a `timeline`
+      (00:00 Eastern → now, 30-min bins) for the page's stacked area charts; merge both into
+      `team_activity` verbatim — the renderer asserts every series sums to its count. `--window
+      et` is the page's population (Andrew's day); the TEXT volume line keeps its UTC rule.
    b. Write `daily_reports/data/DAILY_REPORT_<DAY>.json` against
       `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
    c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
-      `daily_reports/out/DAILY_REPORT_<DAY>.html`. **A validation failure is a content defect:
-      fix the JSON, never the template.** Surface the html (`SendUserFile` / open it).
+      **BOTH** `daily_reports/out/Desktop_DAILY_REPORT_<DAY>.html` and
+      `daily_reports/out/Mobile_DAILY_REPORT_<DAY>.html` (Andrew-direct 2026-08-28: every render
+      produces both, and the FIRST word of the filename names the variant because Teams truncates
+      attachment names). Same JSON, one shared grammar (`templates/_shared_viz.js`). **A
+      validation failure is a content defect: fix the JSON, never the template.** Surface both
+      pages (open them); the mobile one is what he reads on a phone.
 7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
 
 ## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
@@ -60,12 +68,18 @@ frozen). A /daily-sprint run AUTHORS, it never styles. What the runner is lookin
 - **HEADLINE — a STANDALONE feature, not a sprint item:** what kind of day it was, carried by
   the biggest win or an amalgamation (`headline.kind`: biggest_win | amalgamation | day_summary).
   Never wraps.
-- **SPRINT ITEMS (3–8):** each carries a category (fix/ship/verify/build/scope), a **card
-  headline that fits whole — max 52 chars, no ellipsis ever (hard law, renderer rejects)**, a
-  stage title, **WHO / WHAT / WHERE / WHY** (one short line each; touchpoints a reader knows —
-  firms, platforms, dashboard pages, **B2B only, never an individual investor**), a **viz type**
-  (flow / coverage / tree / screens / link / orbit — vary them; params in JSON), and exactly
-  **3 stat chips**.
+- **SPRINT ITEMS (3–8), IN FIXED CATEGORY ORDER: build → ship → fix → verify → scope**
+  (Andrew-direct 2026-08-27 ~23:4xZ, verbatim: *"always lead with built, then serving, then
+  fixed, then verified, then scoped"*; the renderer rejects an out-of-order JSON; highest
+  consequence first within a category; `hero` marks the biggest item where it falls). Each
+  carries a category (build/ship/fix/verify/scope), a **card headline that fits whole — max 52
+  chars, no ellipsis ever (hard law, renderer rejects)**, a stage title, **WHO / WHAT / WHERE /
+  WHY** (one short line each; touchpoints a reader knows — firms, platforms, dashboard pages,
+  **B2B only, never an individual investor**), a **viz type** (flow / coverage / tree / screens /
+  link / orbit — **the shape that tells the item's REAL story, filled with measured facts**: a
+  fix = flow with the break where it actually was, a who-sees-what build = tree, a connection =
+  link, a completion = coverage over its true denominator; a generic shape with placeholder
+  nodes is a content defect; params in JSON), and exactly **3 stat chips**.
 - **TEAM ACTIVITY:** the stable every-day element — a layman verdict line on the day's shape,
   plus two cuts of ONE commit population (by kind of work, by project; both must sum to
   `commits` — the renderer asserts it). Colors are stable: project N is always the same color.
@@ -146,5 +160,5 @@ else.
 Engine `.tools/daily-sprint.py` · text template `org/ref/DAILY_SPRINT_TEMPLATE.md` · **visual
 system `daily_reports/` (README = the law + the commit_kind Rule-24 record; schema, template,
 scripts, data, out)** · first instance `org/sprints/DAILY_SPRINT_2026-08-20.md` · first visual
-instance `daily_reports/out/DAILY_REPORT_2026-08-27.html` · siblings `/exec-sum` (card+draw,
+instance `daily_reports/out/Desktop_DAILY_REPORT_2026-08-27.html` (+ `Mobile_...`) · siblings `/exec-sum` (card+draw,
 whole-fabric), `/directives-check` (the register dashboard), `/comp-state`.

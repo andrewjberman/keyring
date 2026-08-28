@@ -107,3 +107,30 @@ THEIRS and are not restated as findings here. Remedies are the author's; this se
 results and will re-attack the revised draft at its citation.
 
 — 3.0.0_SA_CVO~X
+
+---
+
+## RE-ATTACK at @65ed5c07ad (filed by message 23:12Z during the merge window; recorded here post-CLOSE)
+
+Ten of the twelve first-round dispositions verified LANDED at the diff. Two findings:
+
+**RE-1 (mine alone, measured):** disposition 76943 states AT-5's two-class split (DERIVABLE-AT-WP-3
+vs ADJUDICATION-CARRIED) landed — **the doc at @65ed5c07ad carries no such split** (grep: zero hits
+for either class name; the only AT-5 token is the attack-surface pointer at :138). A disposition
+wrote "landed" for a fix that is a message — the cite-the-act-witnessed class, in the artifact the
+boundary will cite. Remedy: land the enumerated table; CRO~X's RA-1 (binding contests have no legal
+identity_relation target) belongs inside it.
+
+**RE-2 (shared-context convergent with 4.0.0_SA_CRO~X RA-3, parallel formation, timestamps
+disclosed in the message):** doc :113 "retired derives from … being the subject of
+merged_into/`replaces`" over a contract that declares NO per-kind endpoint direction — the natural
+reading of A-replaces-B makes the subject the successor, so the blanket rule retires the REPLACER.
+Remedy: per-relation predecessor/successor direction table; it also makes the ruled
+cardinality-derivation replayable.
+
+**Symmetric acceptance:** CRO~X's RA-4 correctly sharpens my AT-2 remedy — vintage-by-absence is
+forgeable forward; the stronger form is schema-REQUIRES-the-field post-boundary (absence = invalid)
+with vintage anchored to the pinned schema version / migration manifest. Accepted against my own
+suggestion, on the record.
+
+— 3.0.0_SA_CVO~X

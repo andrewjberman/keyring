@@ -142,6 +142,58 @@ lanes:
       - 4.0.0_SA_CRO
     description: "Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331."
 
+  # ISCK_LEDGER_BUILD (2026-08-28 10:47Z-12:47Z) STRUCK by its grantor 1.0.0_SA_CTO~X on the issuer's
+  # completion flip of TO NFRA_C3MATERIALIZE.TO-WP3-2-DTX @33074c3e0d: ANY_EXEC + 0.4.0_DT_ClientPlatform~X
+  # on org/standards/isck/ledger/** (@f94ef2f3d1) and receipts/** (@5bde064942) for the TO's life; used
+  # across 26 wave-2 commits with no override; org/standards/isck/** is ANY_EXEC in full again. The
+  # grant's face said it would expire; it did. A future build wave gets its own scoped lane the same way.
+
+  # D11_CARDS_DELTA_COX / _CCX (2026-08-28 14:3xZ, ~6 minutes) STRUCK by the grantor 1.0.0_SA_CTO~X on
+  # 0.4.0_DT_ClientPlatform~X's landing report 77966: ONE mechanical migrate_substrate_card_v2_to_v3.py pass
+  # over the two dark AE seats' delivered cards, landed @d3d3f23050 (0.7.0: seen 13 | migrated 11 | refused 2)
+  # and @7441f16f18 (0.8.0: seen 49 | migrated 43 | refused 6) -- the tool's own lines; the 8 refusals are the
+  # wave-1 v1 cards, under the v1 freeze by the issuer's call. The directories fall back to SHARED_CLOUD_OPS /
+  # CLOUD_COMP_TESTER exactly as before. Grant @c03a3ca27e; the same shape serves the next one-pass need.
+
+  # ISCK WP-3b BUILD lane (added 2026-08-28 14:5xZ by 1.0.0_SA_CTO~X as GRANTOR, lane owner of
+  # org/standards/isck; grantee 0.4.0_DT_ClientPlatform~X did NOT self-land). TO NFRA_C3MATERIALIZE.TO-WP3b-DTX
+  # @608ba6b3d6 (first real-substrate admission, cut from the CERTIFIED WP-3b rectangle @73f74a2798), whose LANE
+  # clause names org/standards/isck/ledger/** (slice runner, translator, fixtures/flags) and
+  # org/standards/isck/receipts/** (evidence + receipt files). The same shape as ISCK_LEDGER_BUILD (10:47Z-12:47Z,
+  # struck on its TO's flip) -- ANY_EXEC's six + the grantee, ~X enumerated exactly. The contract package's
+  # bundle members one level up stay ANY_EXEC; the REGISTRY act (--receipt on BUNDLE_LABELS/IDENTITY) stays
+  # ANY_EXEC and is the label owner's (the TO's three receipt cells). EXPIRY: struck on the issuer's completion
+  # flip of TO-WP3b-DTX (lane owner strikes).
+  ISCK_WP3B_BUILD:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 3.1.0_SA_CVO
+      - 4.0.0_SA_CRO
+      - 0.4.0_DT_ClientPlatform~X
+    description: "ANY_EXEC + 0.4.0_DT_ClientPlatform~X on org/standards/isck/ledger/** and org/standards/isck/receipts/** for the life of TO NFRA_C3MATERIALIZE.TO-WP3b-DTX @608ba6b3d6 (grantor 1.0.0_SA_CTO~X 2026-08-28). Strike on the TO's completion flip."
+
+  # WP-4 RESOLVER REPAIR lane (added 2026-08-28 15:0xZ by 1.0.0_SA_CTO~X as GRANTOR on the issuer's cut
+  # 2.0.0_SA_COO~X 78070; grantee 0.4.0_DT_ClientPlatform~X did NOT self-land). TO NFRA_C3MATERIALIZE.TO-WP4-DTX
+  # @adb1a27130 (resolver repair: nerves_resolve's two-state collapse -> the ruling's five resolver states), whose
+  # LANE clause names the SUBJECT file org/modules/graph/nerves_resolve.py (an exact-file row -- one file, not the
+  # module) and its battery path (proposed on the face: org/modules/graph/tests/nerves_resolve_battery/**; DT~X names
+  # it on its first report -- if it differs, this row moves with it). org/modules/** stays ANY_EXEC around them. The
+  # resolver READS the ledger, never writes it -- no isck/** row here. EXPIRY: struck on the issuer's completion flip
+  # of TO-WP4-DTX (lane owner strikes).
+  WP4_RESOLVER_BUILD:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 3.1.0_SA_CVO
+      - 4.0.0_SA_CRO
+      - 0.4.0_DT_ClientPlatform~X
+    description: "ANY_EXEC + 0.4.0_DT_ClientPlatform~X on org/modules/graph/nerves_resolve.py (exact file) and org/modules/graph/tests/nerves_resolve_battery/** for the life of TO NFRA_C3MATERIALIZE.TO-WP4-DTX @adb1a27130 (grantor 1.0.0_SA_CTO~X 2026-08-28). Strike on the TO's completion flip."
+
   ANY_CTO:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -1406,8 +1458,24 @@ paths:
   "org/modules/**":
     lane: ANY_EXEC
 
+  # WP-4 resolver repair (2026-08-28, grantor CTO~X on COO~X 78070): longest-match over org/modules/** for the
+  # subject file and its battery path only; see the WP4_RESOLVER_BUILD lane note. Struck with the lane on the flip.
+  "org/modules/graph/nerves_resolve.py":
+    lane: WP4_RESOLVER_BUILD
+  "org/modules/graph/tests/nerves_resolve_battery/**":
+    lane: WP4_RESOLVER_BUILD
+
   "org/standards/**":
     lane: ANY_EXEC
+
+  # Longest-match over org/standards/** for TO-WP3b-DTX's two subtrees only; see the ISCK_WP3B_BUILD lane note.
+  # Struck with the lane on the TO's completion flip.
+  "org/standards/isck/ledger/**":
+    lane: ISCK_WP3B_BUILD
+  "org/standards/isck/receipts/**":
+    lane: ISCK_WP3B_BUILD
+
+
 
   "org/seams/**":
     lane: ANY

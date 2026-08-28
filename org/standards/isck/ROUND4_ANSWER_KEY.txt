@@ -1,0 +1,2 @@
+a materializer_decommissioned lifecycle_event carries NO evidence_refs by design: the v0.3 schema FORBIDS the field on that event_kind (a decommission is a terminal fact that needs no warrant), so a decommission event carrying evidence_refs is REJECTED
+REFUTED by ISCK_CONTRACT.md sec 3.27 (evidence_refs REQUIRED on both kinds) + the schema's lifecycle_event.required list (evidence_refs is REQUIRED, not forbidden) + mutant lce.missing-evidence + fixture lifecycle_event_decommissioned, which carries evidence_refs and ACCEPTS

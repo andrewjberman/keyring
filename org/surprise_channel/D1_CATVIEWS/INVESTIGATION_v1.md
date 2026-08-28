@@ -420,3 +420,7 @@ reached INERT (66521).
  }
 ]
 ```
+
+### ROUND KEEPER (cross-fabric) -- 77027/COO 77030: **A TOOL-MINTED SENTINEL LEFT UNCOMMITTED AT THE AUTHORING DEVICE READS STRANDED ON EVERY OTHER DEVICE**
+
+3.0.0_SA_CVO, ~23:4xZ, banked at the instance's home. THE INSTANCE: COO's tick-6 scan flagged site Z's d1-catviews-recut-14b077f559 deploy ledger as sentinel-less; MSTR measured the boundary -- the sentinel EXISTS at ~Z's tree (tool-minted 23:05Z, 3,857 B) but was NEVER COMMITTED (tracked 0 at origin/CLOUD AND origin/SITEZ; positive control: 2 other sentinels tracked). The .md record travelled on the merge; its index entry did not. COO's finding: TRUE about this tree, FALSE about the entry -- re-home withdrawn (would mint a duplicate); remedy = one commit at ~Z over the bus. THE CLASS: the cross-fabric form of "untracked-but-present is invisible to every instrument" -- the gate-bypass scan's STRANDED verdict is a property of THIS DEVICE'S TREE, not of the entry, and diverges for any entry authored on the other fabric whenever a mint is left uncommitted; it lands as a RECOGNISED defect pattern ("no sentinel"), which is what makes it credible. CANDIDATE REMEDY (MSTR's, tool owner at the cut): the scan hedges "sentinel absent HERE -- may be uncommitted at the authoring device" for other-fabric author suffixes, naming the origin-tracked check as the discriminator. Sits beside the hand-authored-ledgers keeper: same gate, opposite failure direction.

@@ -1,0 +1,508 @@
+D11 / C3MATERIALIZE
+Title| ISCK Status Assessment
+Subtitle| From Contract Truth to Operational Truth
+Feedback on the D11 / ISCK status report at reboot (2026-08-28 00:45Z), with a sequenced path to v0.2 freeze, WP-3 enforcement, and the live mint-to-Nessie-to-Kuzu proof.
+ARCHITECTUREAPPROVE
+CONTRACTCANDIDATE
+FREEZEHOLD
+NEXT PROOFLEDGER + LIVE SLICE
+PREPARED FOR
+Andrew Berman
+PREPARED ON
+August 28, 2026
+PRIMARY SOURCE
+D11_ISCK_STATUS_REPORT_20260828_0045Z.md
+DECISION POSTURE
+Continue D11; do not freeze, populate, or open the 56 L3 bridge cells until the operational proof closes.
+CONTROLLING JUDGMENT  The architecture is substantially settled. The critical path is now to land the append-only semantics, implement the ledger that can enforce them, and prove the mechanism against live state transitions.
+CONFIDENTIAL WORKING MEMORANDUM
+Heading1| Purpose and Source Basis
+This memorandum converts the status report and the accompanying architectural record into an executive technical assessment and an implementable instruction set. It does not replace the status report. It distinguishes what the report proves, what remains only designed, what must be attacked next, and what evidence should be required before the identity-state substrate is allowed to govern production records.
+The analysis preserves the project’s own terminology: ISCK, Issue 3A/3B, Rule 26, source_frontier, surface_version, WP-3, mint_receipt, bridge_assertion, Nessie authority, Kuzu projection, the six-gate suite, ARM candidates, and the 56 L3 bridge cells. Where this memorandum recommends a change, it is framed as a next-step governance or implementation decision rather than silently rewritten into the source record.
+Heading2| Epistemic status
+ListBullet| Directly supported by the status report: the package is a v0.2 candidate, has survived two adversarial rounds, remains attacked rather than frozen, and has not completed the end-to-end vertical slice.
+ListBullet| Architectural inference: the remaining load-bearing risk has shifted from the identity doctrine to the temporal enforcement and live-substrate execution plane.
+ListBullet| Recommendation: approve the direction, hold production population, land the R2-2 event model, execute a bounded Round 3, implement WP-3, and treat the live vertical slice as the operational release gate.
+SourceNote| Source anchor: D11_ISCK_STATUS_REPORT_20260828_0045Z.md, §0, lines 13–30.
+Heading2| Contents
+ListBullet| 1. Executive Judgment
+ListBullet| 2. What Changed Since the Prior Review
+ListBullet| 3. What Is Strong Now
+ListBullet| 4. What Is Not Closed
+ListBullet| 5. Contract Truth versus Operational Truth
+ListBullet| 6. Recommended Immediate Sequence
+ListBullet| 7. Bounded Round 3 Charter
+ListBullet| 8. WP-3 Ledger Scope
+ListBullet| 9. Live Vertical-Slice Battery
+ListBullet| 10. Freeze and Release Criteria
+ListBullet| 11. Governance and Self-Drive Feedback
+ListBullet| 12. Decision Register
+ListBullet| 13. Copy-Ready Direction to CTO~X
+ListBullet| Appendix A. Evidence Anchors
+ListBullet| Appendix B. Round 2 Closure Checklist
+ListBullet| Appendix C. Contract Bundle Identity Record
+Heading1| 1. Executive Judgment
+DECISION  Approve the current architecture and continue D11. Do not freeze, populate, or begin the 56 bridge cells yet.
+The current status is a strong and materially improved stopping point. The earlier conceptual issues were converted into executable contract changes, the validation estate now has credible adversarial depth, and the report is disciplined about separating designed from landed, attacked from frozen, and schema-valid from operationally certified.
+The main conclusion is that the identity-state architecture is no longer the central uncertainty. The kernel now has the correct doctrine: opaque minted serials for enduring mutable entities; hashes for immutable observations, versions, and receipts; temporal bindings; versioned fingerprints; append-only succession and reconciliation; explicit source frontiers; and version-pinned surface projections. The open question is whether that doctrine can survive actual state transition and cross-surface execution.
+The immediate risk would be to mistake a sophisticated contract and test harness for a completed identity substrate. The report itself avoids that mistake. It explicitly states that the package is attacked but not frozen and that the vertical-slice battery has not been built because it requires WP-3 and live Nessie/Kuzu substrates.
+SourceNote| Source anchor: Status Report §0: v0.2 candidate, attacked not frozen, and operational exit blocked on the unbuilt vertical slice.
+Heading2| Disposition by workstream
+Workstream
+Current judgment
+Required next move
+Identity doctrine / Issue 3A
+Substantially settled
+Land the R2-2 event-authoritative revision as the pinned v0.2 candidate.
+Adversarial contract testing
+Strong, but closure accounting remains open
+Dispose candidate findings and finish the deduplicated finding register.
+Source frontier / surface version
+Load-bearing and under-attacked
+Run one narrow Round 3 focused on provenance and publication semantics.
+Ledger / WP-3
+Not implemented
+Build the cross-record enforcement plane against the landed contract.
+Operational proof
+Not started
+Execute the live mint-to-Nessie-to-Kuzu state transition and historical replay.
+L0 migration / bridge population
+Correctly held
+Begin only after contract freeze and operational certification.
+Heading2| The one-sentence assessment
+Land the temporal semantics, attack the two provenance records, build the ledger, exercise the live state transition, freeze, and only then bridge.
+Heading1| 2. What Changed Since the Prior Review
+The status report demonstrates that prior feedback was not treated as commentary. It was converted into contract structure, executable conditions, new records, better test isolation, and a cleaner boundary discipline. That is the most important sign of maturity in the work.
+Heading2| Prior defects converted into contract changes
+Earlier concern
+Current response
+Assessment
+Fabric semantics conflated state scope with execution location
+R2-1 separated execution-family and referent-family fields.
+Correct architectural repair; removes the overloaded fabric_id defect.
+Warrant arms were incomplete or one-sided
+R2-3 applied paired require-and-forbid conditionals.
+Stronger than presence-only validation and less vulnerable to contradictory payloads.
+Successful absence was not representable
+R2-5 introduced observed_absent.
+Closes the true-negative versus unavailable-substrate hole.
+Law 1 lacked a compensating mint control
+R2-7 added mint_receipt.
+Necessary bridge from doctrine to auditability.
+Bridge assertion was only a future prose requirement
+R2-8 made bridge_assertion a real record.
+Allows the first load-bearing consumer to inherit ISCK’s evidence rules.
+Source frontier could contradict itself
+R2-6 added frontier uniqueness.
+Correctly treats a frontier as a coherent version vector rather than a list.
+Dirty-working-tree gates could masquerade as reproducible
+R2-9 runs gates against an atomic Git archive.
+Major reproducibility improvement.
+Green status hid unresolved candidates
+Runner summary now prints the candidate denominator.
+Important epistemic correction: gate health and closure are separate.
+SourceNote| Source anchor: Status Report §1.3, lines 59–107.
+Heading2| Meaning of the change
+The work has crossed an important threshold. The project is no longer mainly arguing about the right ontology for identity and state. It is now testing whether its own contracts can distinguish the states they claim to govern. That shift should influence how the next work is managed: the emphasis should move from expanding doctrine to implementing enforcement and exercising real state transitions.
+Heading1| 3. What Is Strong Now
+Heading2| 3.1 External feedback was structurally consumed
+The strongest signal in the report is that criticism produced changes in the governed artifacts. The project did not merely add explanatory prose around defects; it changed field semantics, conditional arms, record catalogs, gate execution, and candidate accounting. This is exactly how an executable architecture should learn.
+Heading2| 3.2 R2-2 is the right append-only architecture
+The R2-2 design resolves the deepest contradiction in v0.1: the contract declared append-only truth while carrying mutable current-status fields and interval endpoints as if they were authoritative facts. R2-2 correctly makes events authoritative and status a derived projection. It adds field-scoped status_basis, typed contest records, unary retirement, a closed direction table for relation kinds, and migration receipts for changed vocabulary.
+CodeBlock| AUTHORITATIVE: append-only events, bindings, observations, relations, receiptsDERIVED:       current_status, open/closed interval projection, retirement standingWARRANT:       status_basis maps each projected field to the exact facts that produce it
+This architecture should be landed before WP-3 begins. The ledger should enforce a pinned semantic model; it should not be the place where that model is still being invented.
+SourceNote| Source anchor: Status Report §1.3, R2-2 at lines 73–86; §4, landing checklist at lines 188–194.
+Heading2| 3.3 The testing estate is now credible
+The package now carries multiple forms of adversarial pressure: axis checks, positive fixtures, reason-and-path asserted mutants, semantic tests, drift controls, a gutted-schema meta-control, rule ablation, enum-collision analysis, mutant isolation, postulate labeling, coverage probes, and an atomic-extract runner. That is materially more credible than a validator that merely accepts known-good records and rejects a few obvious negatives.
+The key quality is not the raw number of tests. It is the attempt to prove which rule rejected which mutant, to detect redundant enforcement, and to ensure the gate suite itself can be reconstructed from a cited commit.
+Heading2| 3.4 Denominator discipline improved
+The runner originally appeared all-green while carrying open candidates. The response was to print the candidate denominator beside the color. This is a small implementation change with large epistemic value: it prevents “the machinery executed” from being misread as “the artifact is closed.”
+PRINCIPLE  A green gate without its denominator describes tool health, not release readiness.
+Heading2| 3.5 The record catalog now reaches its first real consumers
+Adding mint_receipt and bridge_assertion moves the contract beyond abstract identity description. The kernel can now represent how identity was minted and how evidence-bearing cross-plane relations enter a registry. That is the correct bridge from Issue 3A into the spine and L3 work.
+Heading2| 3.6 The self-drive loop showed real value
+The completed self-drive cycle—gap, CVO verdict, governed amendment, certified exercise, ledger closure—demonstrates the operational learning loop you have been designing. It also captured an operator correction and turned it into skill law. That is meaningful evidence that the governance system can improve itself without erasing provenance.
+The caution is that governance machinery has now earned its keep. The next increment should be ledger behavior, not another general process layer.
+Heading1| 4. What Is Not Closed
+Heading2| 4.1 R2-2 is still design, not the active contract
+This is the controlling open item. The status report labels R2-2 “DESIGN, attacked-dry, NOT landed.” The work has completed four attack rounds and a consumer census, and the landing gate is described as met. That is enough to land the semantics as the v0.2 candidate. It is not enough to treat those semantics as already governing the current schema.
+REQUIRED ACTION  Cut R2-2 as the pinned v0.2-candidate contract before WP-3 implementation begins.
+Heading2| 4.2 Exit 0 does not mean adversarial closure
+At the boundary pin, all six gate programs exit successfully. The same output reports eleven open candidates: nine in ARM-1 and two undisposed in ARM-4. That is an acceptable state for an attacked candidate. It is not a freeze state.
+Dimension
+Current result
+Release interpretation
+Mechanical gate health
+PASS
+The test estate executes against the cited commit.
+Adversarial candidate closure
+OPEN: 11 candidates
+The contract still has unresolved coverage or disposition work.
+Operational proof
+NOT STARTED
+No ledger-backed live state transition has been demonstrated.
+SourceNote| Source anchor: Status Report §3, lines 162–171.
+The runner should retain a normal development mode that can exit 0 while showing open candidates. A release or freeze mode should fail if any required candidate remains undisposed.
+Heading2| 4.3 The Round 2 finding register is owed
+The report correctly refuses to quote “0 refuted” as a rate until the denominator is auditable. The current tally mixes actual findings, review inputs, acceptances, and census work. A deduplicated register—one record per real finding, with source, disposition, fixing commit, and verification commit—is required before any executive metric is published.
+CodeBlock| finding_idfinding_sourcefinding_classclaimdispositiondisposition_basisfix_commitverification_commitboundary_inclusion
+SourceNote| Source anchor: Status Report §4, lines 174–180.
+Heading2| 4.4 source_frontier and surface_version remain under-attacked
+These are the records that carry Issue 3B. A source_frontier declares what state was consumed. A surface_version declares what immutable result was produced, through which materializer version, and against which frontier. If these records are weak, the ledger can preserve perfect identity history while attaching it to the wrong source state.
+The report itself names a possible Round 3 focused on these records and on the consume gate. I would make that round required, narrow, and explicitly non-philosophical: do not reopen minted identity versus derived identity; attack the provenance and publication semantics that remain.
+SourceNote| Source anchor: Status Report §5, lines 207–212.
+Heading2| 4.5 The vertical slice remains the actual proof
+The third exit condition is not merely another test battery. It is the first proof that minted identity, temporal binding, state observation, duplicate-mint reconciliation, materialization provenance, Nessie authority, Kuzu projection, dislocation detection, rebuild, and history preservation operate together across time.
+Until this exists, the package can truthfully say that its schema describes the intended architecture. It cannot yet say that the system preserves structural truth through change.
+Heading2| 4.6 Contract version identity needs a final clean resolution
+The report calls the package a v0.2 candidate while the schema still carries a v0.1 identifier and a stable v0 filename. That is understandable during amendment accumulation. It must not survive into freeze. The final candidate should be represented as an immutable bundle with a unique contract version, doctrine commit, schema digest, validator commit, gate-suite commit, vocabulary digests, boundary pins, and post-boundary amendments.
+Heading2| 4.7 The Git-state handoff contains a small temporal ambiguity
+The report first says origin carries the boundary pin and boundary record, then later lists those commits under a heading describing commits local at writing while again stating that origin carries them. This may reflect origin advancing during report composition, but it is exactly the class of ambiguity ISCK is meant to eliminate.
+Replace prose descriptions of remote reachability with a generated commit-state table that records whether each commit is an ancestor of local HEAD, origin/CLOUD, and the declared boundary.
+SourceNote| Source anchor: Status Report opening push state at lines 5–7; §7 at lines 224–230.
+Heading1| 5. Contract Truth versus Operational Truth
+The project now needs to preserve a three-layer distinction. Conflating these layers would create false confidence even if every individual artifact appears green.
+Layer of truth
+What it proves
+What it cannot prove by itself
+Record contract
+A single record is structurally and semantically well formed under the pinned vocabulary and conditionals.
+Cross-batch uniqueness, append-only history, referential integrity, temporal continuity, or live substrate alignment.
+Ledger enforcement
+Records form a coherent append-only history; references resolve; projections derive from admissible facts; cycles and illegal mutations are rejected.
+That the external substrates, authority heads, and physical projections actually behaved as claimed.
+Live vertical slice
+The full mechanism survives real state change across Git, the identity ledger, materialization, Nessie/Iceberg authority, and Kuzu projection.
+Universal correctness beyond the tested estate and scenarios.
+Heading2| The operational truth chain
+CodeBlock| MINT ENTITY  -&gt; OPEN TEMPORAL BINDING  -&gt; OBSERVE STATE WITH METHOD + NORMALIZATION  -&gt; RECONCILE DUPLICATE OR SUCCESSOR CLAIMS  -&gt; COMPILE A SOURCE FRONTIER  -&gt; RUN A PINNED MATERIALIZER VERSION  -&gt; PUBLISH AN IMMUTABLE SURFACE VERSION  -&gt; ADVANCE NESSIE AUTHORITY  -&gt; COMPARE KUZU PROJECTION PIN TO TARGET  -&gt; DETECT DISLOCATION  -&gt; REBUILD  -&gt; PRESERVE ALL PRIOR HISTORY
+The contract supplies the nouns and local constraints. WP-3 supplies the cross-record mechanics. The vertical slice supplies the evidence that those mechanics remain true under actual change.
+Heading2| Why the sequence matters
+Starting bridge population before this chain is proven would create high-value registry rows against an identity and provenance substrate that is still changing. Starting WP-3 before R2-2 lands would force the ledger to implement mutable-status semantics and event-authoritative semantics at the same time. Freezing before Round 3 would allow the provenance core to inherit less adversarial pressure than the surrounding vocabulary. The recommended sequence is therefore a dependency structure, not a preference.
+Heading1| 6. Recommended Immediate Sequence
+CRITICAL PATH  Repository normalization → candidate closure → R2-2 landing → bounded Round 3 → WP-3 → live slice → freeze → L0 migration and bridge population.
+ListNumber| Normalize and pin repository state. Push the intended amendments, generate a machine-readable local/origin reachability report, run the six-gate suite from a clean clone of the exact commit, and record the bundle digest.
+ListNumber| Complete Round 2 closure accounting. Build the deduplicated finding register, dispose the nine ARM-1 candidates, dispose or formally defer the two remaining ARM-4 candidates, and compile all published statistics from the register.
+ListNumber| Land R2-2 as v0.2-candidate semantics. Make events authoritative, statuses derived, status_basis required, contests typed, retirement unary, relation directions closed, and vocabulary migration explicit.
+ListNumber| Run one bounded Round 3. Attack source_frontier, surface_version, consume-gate suppression, acceptance-refutation specificity, and immutable contract-bundle identity. Do not reopen the settled identity doctrine.
+ListNumber| Implement WP-3. Create the append-only ledger and derived read models that enforce cross-record uniqueness, integrity, provenance, temporal ordering, and projection consistency.
+ListNumber| Execute the live vertical slice. Use real Git, Nessie/Iceberg, Kuzu, and at least one device-local substrate; prove rename survival, dislocation detection, rebuild, reconciliation, and historical replay.
+ListNumber| Freeze only after repeatability. Require clean-clone reconstruction, closed candidates, Round 3 closure, ledger tests, live slice, and historical replay against the pinned bundle.
+ListNumber| Then migrate L0 and populate bridges. Assign serials, register Nessie authority parts, convert semantic slugs into bindings, preserve digest identities for immutables, and fill the 56 L3 cells against admitted serial-based relations.
+Heading2| Work that should remain held
+ListBullet| Production record population under ISCK.
+ListBullet| The 56 L3 bridge cells.
+ListBullet| Fusion threshold execution before DEC-02 through DEC-05 are predeclared and the carrier population is serial-backed.
+ListBullet| Any L2 release currently held by Andrew’s explicit word.
+Heading1| 7. Bounded Round 3 Charter
+Round 3 should be narrow enough to finish and deep enough to attack the two records that make Issue 3B real. It should not reopen the already settled minted-identity architecture or expand the general governance system.
+Heading2| Objective
+Prove that the contract can represent one coherent consumed state, one immutable produced state, one admissible publication path, and one reproducible evaluation target—while rejecting contradictory or suppressive alternatives.
+Heading2| In scope
+ListBullet| source_frontier coordinate identity, uniqueness, completeness, locality, and time ordering.
+ListBullet| surface_version links to frontier, materializer version, run, logical surface, physical instance, and authority publication.
+ListBullet| Consume-gate behavior as a possible suppression mechanism.
+ListBullet| At least one adversarial claim that appears persuasive but must be refuted, proving specificity rather than only sensitivity.
+ListBullet| Immutable identity for the contract bundle itself.
+Heading2| Explicitly out of scope
+ListBullet| Reopening opaque minted serials versus hash-derived identity.
+ListBullet| Reopening the binding/fingerprint split.
+ListBullet| Designing the fusion algorithm or filling the bridge registry.
+ListBullet| Adding a new governance mechanism unless an uncovered Round 3 defect cannot be expressed by the current machinery.
+Heading2| Required attack matrix
+Target
+Attack
+Expected result
+source_frontier
+Same semantic coordinate appears twice with conflicting source_version values.
+Reject as contradictory.
+source_frontier
+Same source is represented through syntactically different but equivalent coordinates.
+Normalize or hold; never silently double-count.
+source_frontier
+A device-local source omits owning fabric/device.
+Reject or mark frontier incomplete.
+source_frontier
+Observation timestamp is later than the run that claims to consume it.
+Reject temporal impossibility.
+source_frontier
+Completeness is claimed without a declared expected-source denominator.
+Reject unsupported completeness.
+source_frontier
+Unavailable source is omitted rather than represented.
+Reject or downgrade provenance; no silent disappearance.
+surface_version
+References a nonexistent frontier, materializer version, or run.
+Reject at ledger scope.
+surface_version
+Failed run output becomes current authority without an explicit admissible promotion.
+Reject publication.
+surface_version
+Publication timestamp precedes run completion.
+Reject temporal impossibility.
+surface_version
+Physical Kuzu instance claims a logical source version it was not built from.
+Detect integrity/provenance mismatch.
+coherence target
+latest_authority lacks the concrete authority head resolved at evaluation time.
+Reject non-reproducible evaluation.
+consume gate
+A missing or suppressed line is interpreted as zero candidates.
+Return UNREAD, never zero.
+adversarial process
+A plausible external “finding” is intentionally false.
+Refute it with evidence and record the refutation.
+bundle identity
+One semantic version label maps to two byte-distinct contract bundles.
+Reject or require distinct candidate identifiers.
+Heading2| Exit criteria
+ListBullet| All Round 3 findings have unique IDs and auditable dispositions.
+ListBullet| Required mutants and counterexamples pass from a clean clone of the pinned candidate commit.
+ListBullet| The contract bundle has an immutable candidate identity and digest manifest.
+ListBullet| No new open candidate blocks WP-3 semantics.
+ListBullet| At least one false acceptance is successfully refuted.
+Heading1| 8. WP-3 Ledger Scope
+WP-3 is the enforcement plane missing from v0.1 and still absent from the v0.2 candidate. It should implement the landed contract, not revise it by accident. The ledger should preserve authoritative events, produce derived current projections, and expose evidence for every projection.
+Heading2| Core enforcement responsibilities
+ListBullet| Global serial uniqueness across batches and fabrics.
+ListBullet| Referential integrity for every *_serial, *_id, frontier entry, surface pin, run, and materializer version.
+ListBullet| Append-only retention: no record deletion or in-place semantic mutation.
+ListBullet| Binding open/close semantics through events or successor assertions rather than row mutation.
+ListBullet| Event-to-status projection with exact status_basis for every derived field.
+ListBullet| Mint-receipt authentication and mint-authority epoch tracking.
+ListBullet| Identity relation direction rules and cycle rejection for canonicalization, succession, replacement, and merge relations.
+ListBullet| Source-frontier coordinate uniqueness and temporal consistency.
+ListBullet| Run/frontier/materializer-version/surface-version consistency.
+ListBullet| Authority publication rules: failed or partial outputs cannot silently become current.
+ListBullet| Current read projections for entities, bindings, materializers, surfaces, and coherence status.
+ListBullet| Historical replay that reproduces the state visible as of any admissible frontier or publication point.
+Heading2| Recommended ledger object model
+Object class
+Authoritative records
+Derived read model
+Entity identity
+entity, mint_receipt, identity_relation, contest event
+current entity standing and canonical serial
+Bindings
+binding opened, closed, disputed, adjudicated events
+current bindings by identity space and substrate key
+State
+state_observation and negative observation records
+latest admissible state by serial, space, fabric, and method
+Materializers
+materializer, materializer_version, run receipts
+current version, current lifecycle standing, consumers
+Provenance
+source_frontier entries and frontier identity
+resolved consumed-state vector
+Surfaces
+surface_version and publication events
+current authority version and current physical projections
+Coherence
+coherence_evaluation records
+current alignment status by target policy and fabric
+Heading2| Minimum query surfaces
+ListBullet| Resolve a raw substrate reference to zero, one, or many canonical serial candidates with explicit evidence and failure state.
+ListBullet| Show the complete binding history of an entity, including renames and disputed intervals.
+ListBullet| Show the exact source frontier and materializer bundle that produced a surface version.
+ListBullet| Show why a projected status has its current value by returning status_basis records.
+ListBullet| Compare a physical projection pin with a declared target and return separated availability, integrity, currency, provenance, and fabric-validity axes.
+ListBullet| Replay the estate as of a historical frontier or authority publication.
+Heading2| WP-3 completion evidence
+WP-3 should not complete on code delivery alone. It should complete on a ledger test battery that demonstrates rejection of illegal mutation, broken references, duplicate serials, direction cycles, contradictory frontiers, impossible timestamps, unsupported status projections, and inadmissible surface promotion.
+Heading1| 9. Live Vertical-Slice Battery
+The vertical slice is the operational exit condition. It should be treated as one state-transition narrative with complete receipts, not as disconnected unit tests. The sequence below should run against actual Git, Nessie/Iceberg, Kuzu, and at least one device-local substrate.
+Heading2| Positive-path sequence
+1.  Mint a logical entity serial through the designated minting authority.
+2.  Emit and retain the immutable mint receipt, including authority epoch and fabric.
+3.  Open a temporal Git-path binding for the entity.
+4.  Observe the entity’s state with fingerprint, method, normalization version, source vintage, and observation location.
+5.  Rename the path in Git.
+6.  Close the old binding through an append-only event rather than editing the original binding record.
+7.  Open the new binding and preserve the same entity serial.
+8.  Prove that the rename changed the binding and fingerprint state without replacing the enduring identity.
+9.  Produce a second fabric’s provisional serial for the same logical entity.
+10.  Reconcile the two serials non-destructively and preserve both histories through canonicalization or merge relations.
+11.  Construct a source frontier containing the exact Git, cloud, warehouse, and local observations consumed.
+12.  Execute a pinned materializer version with a complete bundle digest and run receipt.
+13.  Publish an immutable graph surface version bound to the frontier, materializer version, run, and logical surface.
+14.  Advance the Nessie authority head to a newer graph version.
+15.  Evaluate the existing Kuzu projection against latest_authority and report behind_target rather than generic stale.
+16.  Rebuild Kuzu on the owning fabric against the new graph version.
+17.  Re-evaluate and return the projection to at_target with verified provenance and fabric validity.
+18.  Replay the ledger and prove that every prior binding, observation, mint, reconciliation, frontier, surface version, evaluation, and publication remains queryable.
+Heading2| Negative controls
+ListBullet| A contradictory source-frontier coordinate is rejected.
+ListBullet| A failed run cannot promote its output to current authority without an explicit admissible process.
+ListBullet| A mutable status edit without a source event is rejected.
+ListBullet| A renamed path does not mint a new identity.
+ListBullet| A genuinely replaced cloud resource does mint a new identity and records succession or replacement as appropriate.
+ListBullet| A foreign-fabric device-local surface cannot silently enter a run.
+ListBullet| A healthy observed-absent result remains structurally distinct from substrate_unavailable.
+ListBullet| A Kuzu projection with a valid historical pin is not called stale when the target policy is historical_replay or declared_release.
+ListBullet| An unsupported current-status projection cannot exist without status_basis.
+ListBullet| A canonicalization, merge, or succession cycle is rejected.
+Heading2| Pass criteria
+Criterion
+Required evidence
+Identity survival
+Same canonical serial before and after rename; distinct temporal bindings; complete history.
+Distributed reconciliation
+Both provisional histories preserved; one canonical read projection; no destructive rewrite.
+Reproducible materialization
+Pinned frontier, materializer bundle, run receipt, output digest, and authority publication.
+Dislocation detection
+Kuzu reports behind_target only after Nessie advances and returns at_target after rebuild.
+Rule 26 compliance
+Execution location and referent locality are explicit; device-local derivation occurs on the owning fabric.
+Historical replay
+All prior states and decisions reconstruct from append-only records.
+Negative discrimination
+Each control rejects or downgrades for the named reason, not merely any reason.
+Heading1| 10. Freeze and Release Criteria
+Schema freeze and operational certification should remain separate gates. A record vocabulary may be stable enough for dependent code before the ledger and live substrates are certified. Production population requires both.
+Heading2| Contract freeze
+ListBullet| R2-2 semantics are landed and version-pinned.
+ListBullet| The deduplicated Round 2 register is complete and required candidates are disposed.
+ListBullet| Bounded Round 3 is closed.
+ListBullet| The immutable contract bundle has a unique candidate version and digest manifest.
+ListBullet| All required gates pass from a clean clone of the cited commit.
+Heading2| Operational certification
+ListBullet| WP-3 ledger invariants pass cross-record and historical tests.
+ListBullet| The live vertical slice passes end to end.
+ListBullet| Historical replay reproduces prior states and decisions.
+ListBullet| Rule 26 locality is proven on actual device-local inputs.
+ListBullet| The current authority and projection pins can be queried and reconciled mechanically.
+Heading2| Release matrix
+Gate
+Candidate freeze
+Production population
+Bridge-cell population
+Clean-clone gate suite
+Required
+Required
+Required
+Round 2 register / candidate closure
+Required
+Required
+Required
+Bounded Round 3
+Required
+Required
+Required
+WP-3 ledger
+Design may be pending only if freeze is schema-only
+Required
+Required
+Live vertical slice
+Not required for schema-only candidate label
+Required
+Required
+Historical replay
+Not required for schema-only candidate label
+Required
+Required
+Pinned identity bundle
+Required
+Required
+Required
+FREEZE RULE  The first production record should not be written under a contract that cannot prove its own bundle identity, ledger history, and live projection coherence.
+Heading1| 11. Governance and Self-Drive Feedback
+Heading2| What to preserve
+ListBullet| The artifact-first discipline: the message scrolls; the governed record persists.
+ListBullet| Every claim of “landed” tied to a commit, blob, grep count, or executable gate.
+ListBullet| Denominator-bearing verification and explicit partial verification.
+ListBullet| The ability to represent HELD, UNMEASURED, rejected, refuted, and deferred states without forcing completion theater.
+ListBullet| Operator corrections recorded as provenance rather than silently absorbed.
+Heading2| What to constrain now
+The contract phase has justifiably produced substantial procedural machinery: seats, boundaries, candidate arms, consume gates, ablation controls, adjudication sidecars, self-drive ticks, and override records. That machinery has paid for itself by finding real defects. The next risk is allowing further governance refinement to become a substitute for the first operational implementation.
+OPERATING PRINCIPLE  No new general governance mechanism unless the vertical slice exposes a defect that the current machinery cannot express.
+Heading2| Recommended operating cadence
+ListBullet| Use the existing self-drive loop to close the defined sequence, not to expand scope.
+ListBullet| Require every work package to change one of three things: contract semantics, ledger enforcement, or live proof evidence.
+ListBullet| Treat process-only work as justified only when it repairs a measured blind spot in those three layers.
+ListBullet| Keep executive updates centered on state transitions and release gates rather than raw counts of findings, seats, or commits.
+Heading1| 12. Decision Register
+Decision
+Disposition
+Rationale
+Continue D11 / ISCK
+APPROVE
+Architecture is coherent and the remaining path is well defined.
+Freeze current boundary
+HOLD
+R2-2 is not landed; candidates remain; provenance records are under-attacked; no live slice.
+Populate production records
+HOLD
+No ledger-backed operational certification.
+Populate 56 L3 bridge cells
+HOLD
+Identity/provenance substrate must freeze first.
+Land R2-2 before WP-3
+REQUIRED
+Ledger implementation needs a pinned event-authoritative contract.
+Open bounded Round 3
+REQUIRED
+source_frontier and surface_version carry the Issue 3B risk.
+Implement WP-3 next
+REQUIRED AFTER R2-2 / ROUND 3
+Cross-record enforcement is the missing plane.
+Use live vertical slice as exit gate
+REQUIRED
+Only end-to-end state transition proves operational truth.
+Add more general governance machinery
+PRESUMPTIVELY NO
+Only justified by a measured defect the current process cannot express.
+Migrate L0 and bridge after freeze
+APPROVE SEQUENCE
+Avoids serial and provenance migration while the kernel is still moving.
+Heading2| Decisions that remain intentionally open
+ListBullet| The exact persistence engine and API form of WP-3, provided the required ledger invariants are met.
+ListBullet| The exact Round 3 seat allocation, provided attack independence and clean-clone reproducibility are preserved.
+ListBullet| The timing of a schema-only v0.2 candidate label versus full operational v0.2 freeze; the distinction must be explicit.
+ListBullet| The later L3 fusion method and thresholds, which remain downstream of serial-backed bridges and predeclared DEC-02 through DEC-05.
+Heading1| 13. Copy-Ready Direction to CTO~X
+INSTRUCTION  Use the text below as the controlling next-step direction.
+Approve the Round 2 architecture and continue D11, but do not freeze or populate ISCK. The work has reached a credible v0.2-candidate boundary; it has not reached operational certification.
+First normalize the repository boundary, complete the deduplicated Round 2 finding register, and dispose the remaining ARM-1 and ARM-4 candidates. Published Round 2 outcome statistics must compile from that register rather than from mixed counts of findings, inputs, acceptances, and censuses.
+Land R2-2 as the pinned v0.2-candidate contract before WP-3 begins. Events are authoritative; status fields are derived projections; status_basis is required at field grain; contests are typed records; retirement may be unary; relation direction is closed by kind; and vocabulary changes carry migration receipts. WP-3 is to implement these semantics, not decide them while coding the ledger.
+Open one bounded Round 3 covering source_frontier, surface_version, consume-gate suppression, acceptance-refutation specificity, and immutable contract-bundle identity. Do not reopen the settled mint/binding/fingerprint doctrine or expand the general governance system.
+WP-3 then implements the append-only ledger and current projections: global serial uniqueness, referential integrity, no in-place semantic mutation, event-to-status projection, binding close-without-mutation, mint-receipt authentication, relation-cycle rejection, frontier uniqueness, surface/run/frontier consistency, admissible publication, and historical replay.
+The live mint-to-Nessie-to-Kuzu vertical slice is the operational exit gate. It must prove minting, binding, rename survival, observation, cross-fabric provisional reconciliation, materialization from a pinned source frontier, immutable surface publication, Nessie authority advancement, Kuzu dislocation detection, rebuild, and preservation of complete prior history. Negative controls must reject contradictory frontiers, unsupported status edits, foreign-fabric inputs, inadmissible output promotion, and false equivalence between observed absence and unavailable substrate.
+Only after the candidate closes from a clean clone, the ledger passes, the live slice passes, and historical replay passes may the contract freeze, production population begin, L0 migrate, and the 56 L3 bridge cells populate. Until then, the correct state is attacked, advancing, and held from operational use.
+Heading2| Closing formulation
+The spine establishes who or what persists. The materializer topology establishes which process transformed which source frontier into which version. The coherence kernel proves that every published and projected surface is traceable to those identities, states, processes, authorities, and fabrics.
+Heading1| Appendix A. Evidence Anchors
+Source location
+What it supports
+Status Report §0, lines 13–30
+v0.2-candidate status; attacked not frozen; vertical slice not built; L0 and self-drive parallel progress.
+Status Report §1.3, lines 59–107
+Round 2 changes, R2-2 design, gate maturation, ARM adjudication, and boundary state.
+Status Report §2, lines 134–160
+Current package artifacts, schema identifier, test inventory, evidence pins.
+Status Report §3, lines 162–171
+Six-gate exit state and eleven open candidates.
+Status Report §4, lines 174–203
+Owned next actions: finding register, candidate disposal, R2-2 landing, vertical slice, WP-3, bridge hold.
+Status Report §5, lines 207–212
+Round 3 requires fresh authorization and names the proposed targets.
+Status Report §7, lines 224–230
+Local/origin commit-state ambiguity requiring a generated reachability report.
+Status Report §8, lines 232–244
+Reusable process lessons: artifact persistence, denominators, class naming, warrant semantics, field-intent separation.
+Heading1| Appendix B. Round 2 Closure Checklist
+☐  Generate one deduplicated record per actual Round 2 finding.
+☐  Attach source, finding class, claim, disposition, basis, fix commit, and verification commit.
+☐  Dispose the nine ARM-1 candidates individually.
+☐  Dispose or formally defer the two remaining ARM-4 candidates.
+☐  Regenerate Round 2 statistics from the register.
+☐  Run the complete suite against an atomic archive of the candidate commit.
+☐  Record exact schema, doctrine, validator, gate, vocabulary, and boundary digests.
+☐  Land R2-2 and repeat candidate/coverage analysis after the vocabulary and conditional changes.
+☐  Declare whether the resulting label is schema-only v0.2-candidate or operational v0.2; do not collapse them.
+Heading1| Appendix C. Contract Bundle Identity Record
+The contract should identify itself with the same rigor it requires of other immutable versions. The following fields should be generated for every candidate and freeze boundary.
+CodeBlock| contract_bundle_idsemantic_versionstatus: candidate | frozen | retireddoctrine_commitdoctrine_blob_shaschema_commitschema_sha256validator_commitgate_suite_commitvocabulary_digests[]round_1_boundary_commitround_2_boundary_commitround_3_boundary_commitpost_boundary_amendments[]clean_clone_gate_receiptwp3_certification_receiptvertical_slice_receiptfrozen_atsupersedes_bundle_id
+A human-readable label such as “v0.2” should resolve to exactly one immutable bundle. Any later amendment should receive a new candidate identifier even when the high-level doctrine is behaviorally unchanged.
+END OF MEMORANDUM

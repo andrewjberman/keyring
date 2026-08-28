@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Install the repository-owned load skill as a Codex personal projection."""
+"""Install repository-owned Codex skills as byte-exact personal projections.
+
+The filename is retained for launcher and operator compatibility. The CLI installs every
+canonical skill; the public ``install`` function still defaults to ``load`` for callers that
+exercise one projection directly.
+"""
 
 from __future__ import annotations
 
@@ -13,6 +18,7 @@ from pathlib import Path
 
 
 EXPECTED_FILES = (Path("SKILL.md"), Path("agents/openai.yaml"))
+CANONICAL_SKILLS = ("load", "log")
 
 
 class InstallError(ValueError):
@@ -23,10 +29,14 @@ def _digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def install(workspace: Path, codex_home: Path) -> dict[str, object]:
+def install(
+    workspace: Path, codex_home: Path, skill_name: str = "load"
+) -> dict[str, object]:
     workspace = workspace.resolve()
-    source = workspace / "org" / "mcp" / "codex-skills" / "load"
-    target = codex_home.expanduser().resolve() / "skills" / "load"
+    if skill_name not in CANONICAL_SKILLS:
+        raise InstallError(f"unknown canonical skill: {skill_name}")
+    source = workspace / "org" / "mcp" / "codex-skills" / skill_name
+    target = codex_home.expanduser().resolve() / "skills" / skill_name
 
     missing = [str(item) for item in EXPECTED_FILES if not (source / item).is_file()]
     if missing:
@@ -52,7 +62,7 @@ def install(workspace: Path, codex_home: Path) -> dict[str, object]:
     unexpected = sorted(str(item) for item in target_files - expected)
     if unexpected:
         raise InstallError(
-            "refusing to overwrite a load skill with unexpected files: "
+            f"refusing to overwrite the {skill_name} skill with unexpected files: "
             + ", ".join(unexpected)
         )
 
@@ -76,6 +86,7 @@ def install(workspace: Path, codex_home: Path) -> dict[str, object]:
 
     return {
         "document_kind": "codex_skill_install_receipt",
+        "skill": skill_name,
         "source": str(source),
         "target": str(target),
         "changed": changed,
@@ -83,6 +94,14 @@ def install(workspace: Path, codex_home: Path) -> dict[str, object]:
             relative.as_posix(): _digest(target / relative)
             for relative in EXPECTED_FILES
         },
+    }
+
+
+def install_all(workspace: Path, codex_home: Path) -> dict[str, object]:
+    receipts = [install(workspace, codex_home, name) for name in CANONICAL_SKILLS]
+    return {
+        "document_kind": "codex_skill_install_set_receipt",
+        "skills": receipts,
     }
 
 
@@ -96,9 +115,9 @@ def main(argv: list[str] | None = None) -> int:
     configured_home = args.codex_home or os.environ.get("CODEX_HOME")
     codex_home = Path(configured_home) if configured_home else Path.home() / ".codex"
     try:
-        receipt = install(Path(args.workspace), codex_home)
+        receipt = install_all(Path(args.workspace), codex_home)
     except (OSError, InstallError) as exc:
-        print(f"install-codex-load-skill: {exc}", file=sys.stderr)
+        print(f"install-codex-skills: {exc}", file=sys.stderr)
         return 2
     if args.format == "json":
         print(json.dumps(receipt, indent=2, sort_keys=True))

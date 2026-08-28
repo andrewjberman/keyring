@@ -1,16 +1,27 @@
 ---
 name: mstr-spawn
-description: MSTR-only event-triggered skill — provision a new agent session by serial via spawn-agent.ps1, with concurrency-cap pre-check, optional first-message direction, broker-registration verification, and audited bypass for legitimate overflow. Sibling to /mstr-kill.
+description: MSTR + COO event-triggered skill — provision a new agent session by serial via spawn-agent.ps1, with concurrency-cap pre-check, optional first-message direction, broker-registration verification, and audited bypass for legitimate overflow. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane) — a COO function in addition to MSTR since Andrew-direct 2026-08-28. Sibling to /mstr-kill.
 ---
 
 # /mstr-spawn — provision an agent session
 
-MSTR's structural mechanism for **population creation**. The invocation
+The fabric's structural mechanism for **population creation**. The invocation
 `/mstr-spawn {serial}` IS the per-instance authorization within skill body for
 spawning a session; `/mstr-spawn {serial} --force "<reason>"` is the
 charter-blanket authorization for the audited concurrency-cap overflow path
-(parallel to /mstr-kill's blanket force-kill authorization). Only `0.0.0_AB_MSTR`
-invokes it.
+(parallel to /mstr-kill's blanket force-kill authorization).
+
+**Invokers: `0.0.0_AB_MSTR` and `2.0.0_SA_COO`, each with or without a `~lane` suffix.**
+Andrew-direct 2026-08-28 ~15:32Z at the `1.0.0_SA_CTO` terminal, VERBATIM: *"/mstr-spawn and
+/mstr-kill should be a COO function in addition to 0.0.0_AB_MSTR, I think it is a natural fit for
+them to handle these things directly rather than having to coordinate through another agent. MSTR
+should just be online as a device/fabric infra manager as well as handling cross-device
+cross-fabric comms and so on."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260828_1532Z_D2D3_RESUME_AND_SPAWN_KILL_TO_COO.md`.
+The skill keeps its `mstr-` name so every existing citation still resolves; the name is a stable
+id, not an ownership claim. **A COO seat spawns directly — it no longer files a spawn request with
+MSTR.** MSTR retains the primitive for device/fabric infra work (respawn after a device reboot,
+fleet relaunch, cross-fabric seats).
 
 > **Spawn != dispatch** (Constitution Art. VI). This skill provisions the
 > session. Direction still flows through Tier 1. A first-message hint via
@@ -21,8 +32,9 @@ invokes it.
 ## When to invoke
 
 - Andrew direct: `/mstr-spawn {full-agent-serial}` — symmetric to `/mstr-kill`; covers initial provisioning + respawn after kill.
-- MSTR autonomous: population action arising from `/mstr-review` scan (unaddressed work surface, wrong-mix swap, FORK-STALLED SPAWN-WITH-DIRECTION fallback per /govern Step 4 table) — LD-charter governs; ledger LD-NNNN before invocation per Stakes Matrix (spawn is S1 per spawn-agent.ps1 line 19).
-- Never invoked by any agent other than `0.0.0_AB_MSTR`.
+- COO (`2.0.0_SA_COO` base or lane): seating a lane for a decomp cell / TO that has no live instance, a `/drive` or `/allocation` finding that a class is needed and no seat holds it, respawning a dead lane whose open TO is still live. The COO still authors the TO (spawn != dispatch); it now also provisions the seat that will hold it, in the same turn.
+- MSTR autonomous: device/fabric infrastructure population action — respawn after a device reboot or fleet relaunch, cross-fabric / cross-device seats, `/mstr-review` scan findings (unaddressed work surface, wrong-mix swap, FORK-STALLED SPAWN-WITH-DIRECTION fallback per /govern Step 4 table) — LD-charter governs; ledger LD-NNNN before invocation per Stakes Matrix (spawn is S1 per spawn-agent.ps1 line 19).
+- Never invoked by any seat outside `{0.0.0_AB_MSTR, 2.0.0_SA_COO}` (+ lanes). A CTO / Tier-2 / CVO seat that needs a session asks its COO (or MSTR for infra-class spawns).
 
 ---
 
@@ -35,7 +47,7 @@ Parse the argument:
   - `--say "<text>"` → first-message hint appended to ajb invocation (SPAWN-WITH-DIRECTION pattern; max ~200 chars to keep CommandLine sane).
   - `--force "<reason>"` → audited concurrency-cap bypass; mandatory reason string.
 
-**Identity gate:** confirm caller is `0.0.0_AB_MSTR` (`$env:OPAL_AGENT_SERIAL` / `.comp-graph/.agent_context`). Non-MSTR invocation halts here with an error.
+**Identity gate:** confirm the caller serial is `0.0.0_AB_MSTR` or `2.0.0_SA_COO`, either with an optional `~lane` suffix — read `$env:OPAL_AGENT_SERIAL` (per-process) or the session serial file `org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial`; **never `.comp-graph/.agent_context`** (shared, last-writer-wins — not an identity source, `org/XXX.md` Step 1). Any other invoker halts here with an error. The caller serial is what `spawn-agent.ps1` writes into the audit line (`by <serial>`) and what the rate cap is keyed on.
 
 ## Step 1 — Pre-flight checks
 
@@ -260,7 +272,7 @@ $env:FORCE_SPAWN = $null
 
 The script:
 - Loose serial sanity check (regex match).
-- Concurrency rate cap (3/spawner/60s, 5/global/60s) — only enforced when `$env:OPAL_AGENT_SERIAL` is set (MSTR-as-spawner case — that IS this skill's case).
+- Concurrency rate cap (3/spawner/60s, 5/global/60s) — only enforced when `$env:OPAL_AGENT_SERIAL` is set (the agent-as-spawner case — every invocation of this skill, MSTR or COO; the per-spawner cap is keyed on the caller serial).
 - Live-window cap (16 simultaneous).
 - Both caps bypassable via `FORCE_SPAWN` env var with reason → writes `FORCE-SPAWN` line to audit log.
 - Opens new detached PowerShell window via `Start-Process powershell -NoProfile -NoExit`.
@@ -297,8 +309,8 @@ If `--say "<text>"` was passed AND the agent registered LIVE, send the directing
 ```
 mcp__opal-agent-comms__send_message(
   to="{serial}",
-  from="0.0.0_AB_MSTR",
-  subject="[MSTR-DIRECT] startup hint",
+  from="{caller-serial}",            # 0.0.0_AB_MSTR or 2.0.0_SA_COO[~lane] -- whoever invoked the skill
+  subject="[SPAWN-DIRECT] startup hint",
   body="<text>"
 )
 ```
@@ -348,7 +360,8 @@ Then surface any population-context the spawn affects — concurrency count afte
 - **Spawn != dispatch.** Constitution Art. VI: MSTR provisions the session; TO authoring and direction flow through Tier 1. `--say "<text>"` is a startup-orient hint (the SPAWN-WITH-DIRECTION pattern when the direction is already worked out — e.g., a CORROBORATE/COUNTER verdict to execute), not a TO body. Substantive direction at agent-startup should be a Tier-1-authored TO/inbox message; `--say` is the bootstrap hint that tells the agent which TO to read first.
 - **Already-live default = refuse.** Avoids double-provisioning the same serial which would create a marker-collision and confuse `/mstr-kill` and the concurrency cap. Override via `--force "intentional-duplicate"` if a duplicate is genuinely needed (rare; e.g., a tilde-lane spawn under a different lane suffix is the normal pattern instead).
 - **Registration timing.** ~30-45s is normal first-time spawn latency. Do not retry-spawn before 60s — the first attempt may still register. Premature retry is how cap exhaustion happens.
-- **Self-spawn.** MSTR spawning MSTR (`/mstr-spawn 0.0.0_AB_MSTR`) is legitimate (e.g., after a self-kill or a crashed prior session); no `--self-ack` flag needed for spawn (the symmetry with `/mstr-kill --self-ack` is intentional — kill ends a session, spawn creates one, only the destructive direction needs the extra confirmation).
+- **Self-spawn.** A seat spawning its own serial (MSTR respawning `0.0.0_AB_MSTR`, a COO respawning `2.0.0_SA_COO~<lane>`) is legitimate (e.g., after a self-kill or a crashed prior session); no `--self-ack` flag needed for spawn (the symmetry with `/mstr-kill --self-ack` is intentional — kill ends a session, spawn creates one, only the destructive direction needs the extra confirmation). Step 1pt/1a/1b still run: a self-spawn over a live incumbent is the dual-COO collision class.
+- **Who spawns what (division of the primitive, Andrew-direct 2026-08-28).** COO: work-population seats (lanes for TOs / decomp cells, respawns of dead lanes holding live TOs). MSTR: infrastructure population (device reboot / fleet relaunch respawns, cross-fabric and cross-device seats, `/mstr-review` mix corrections). Overlap is legal — the audit line records who acted — but a COO does not need MSTR's coordination to seat a lane, and MSTR does not route a COO's seating need back through Tier 1.
 
 ## Cross-references
 
@@ -361,7 +374,7 @@ Then surface any population-context the spawn affects — concurrency count afte
 - LD-0075 (`/mstr-kill` skill scribe; this skill mirrors its structural pattern).
 - Memory `feedback_spawn_drop_dev_channels_flag` (the `-Headless` flag rationale — silent-ignore push mechanism per server.py).
 - Memory `feedback_spawn_with_direction_fast_orient_pattern` (SPAWN-WITH-DIRECTION canonical anchor; the `--say` flag use case).
-- Memory `feedback_mstr_creator_destroyer_coo_coordinator` (supply-side authority: MSTR is the fabric's creator and destroyer; spawn/kill are MSTR's primitives).
+- Memory `feedback_mstr_creator_destroyer_coo_coordinator` (the 2026-05-22 supply/demand split — **SUPERSEDED 2026-08-28**: the COO invokes spawn/kill directly; MSTR is the device/fabric infra + cross-device comms manager).
 - Memory `feedback_concurrency_cap_ceiling_not_target` (cap = ceiling not target; reallocate before overflow-bypass).
 - Memory `reference_agent_spawn_kill_methodology` (canonical methodology; this skill is the structural channel for it).
 - CLAUDE.md "Agent Autonomy" + concurrency-cap discipline.

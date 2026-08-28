@@ -1,0 +1,146 @@
+# The ledger, until the battery passed — and the four controls that could not fire — 0.4.0_DT_ClientPlatform~X
+
+**Date:** 2026-08-28
+**Task Order:** NFRA_C3MATERIALIZE.TO-WP3-2-DTX (WP-3 ledger build, wave 2)
+**Status:** COMPLETE. AC8 was blocked upstream mid-session and cleared; see Blockers.
+**Window:** 10:44–12:15Z
+**Archetype:** BUILDER-UNDER-A-FROZEN-SPEC
+
+## Objective
+
+Build the WP-3 identity ledger until the battery passes from a clean clone: 130 cells, 9 acceptance
+criteria, in the rectangle's `depends_on` order, committing per unit. The completion evidence is
+AC6 — `run_battery.py` on a fresh clone printing `ran N of N` by counting, exit 0.
+
+## Outcome
+
+**`ran 188 of 188 -- COUNTED`, exit 0, from a clean clone of `91f38fb966`.** 0 wrong, 0 errored,
+0 unimplemented, reconciliation printed. Proof-of-spec instance VALID, 9/9 criteria, 130/130 cells
+forward and backward, all nine criteria PASS. 25 commits at this seat since the pin, under the lane
+rows `f94ef2f3d1` (ledger/**) and `5bde064942` (receipts/**); no override used at any point.
+
+## Compiler Tools
+
+`run_battery.py` (rewritten this wave), `build_manifest.py` (rewritten), `controls.py` and
+`carrier_measure.py` (new), `bundle_identity.py` (read and derived, never written),
+`.tools/proof-of-spec-check.py`, `git` object-database reads for every measurement.
+
+**What worked:** mutating the ledger's own rules one at a time and printing *which* arms turned. It
+found more real defects than any review did, and it is the only technique here that distinguishes
+"this arm passes" from "this arm tests what its id says". It caught: five row-13 arms refused by
+other rows; the load-bearingness of the VOIDED derivation; and the fact that a wrong ORDER in the
+actor check is invisible to every arm but one.
+
+**What failed:** my own instruments, repeatedly, and always by *validating the wrong property*.
+
+## The through-line: four controls that could not fire
+
+This is the wave's finding, and every instance is mine.
+
+1. **The runner's execution loop** appended every arm id unconditionally. An empty `engine.py`
+   would have printed a green `190 of 190`. Its docstring hunted three false-pass shapes and all
+   three held; the shape it missed was *numerator real, denominator real, arms never executed*.
+2. **It was unreachable anyway** — `clean_clone` was passed the manifest's *census* vintage, which
+   predates all ledger code, so the branch could never run. Two defects, the second hiding the
+   first. Found by `3.0.0_SA_CVO~X`.
+3. **The manifest's uniqueness controls U1–U4** proved uniqueness, single-kindedness,
+   template-freedom and ASCII. A separator my elision expansion ate produced four *fused* ids —
+   unique, single-kinded, template-free, ASCII. Every control passed a defect they were structurally
+   blind to. U5 now compares against the design's spelled text, which is the property that matters.
+4. **The fresh-clone-dir refusal** was preceded by an unconditional delete of that directory. The
+   advertised control was dead code, and my first repair kept the delete while adding a
+   `--clone-dir` a verifier would name — which would have silently deleted their directory.
+
+Underneath all four: **I wrote the control set and the thing it controls in the same sitting, so the
+controls cover the shapes I was already thinking about.** The defect is never in that set.
+
+## Work Completed
+
+Per-unit, in the rectangle's dependency order, each with its own commit and its own mutation:
+
+| unit | commit | arms |
+|---|---|---|
+| manifest expansion (61 templates → ids) | `33ec669780` | denominator 188 / 190 citations |
+| runner repair + unit 1 (store, admission, envelope, anchors) | `4c3dbd0309` | 16 |
+| resolver — sec 2d's 30 reference rows, arms GENERATED | `d6ed40dc6e` | 77 |
+| stored wrong-class control (correcting a commit body) | `94c7a674ba` | — |
+| row 4 binding machine + VOIDED | `f4d5d524e9` | 86 |
+| separator repair + U5 | `cf87ed220a` | — |
+| row 6 mint + authority epoch | `df73fa3fc4` | 105 |
+| row 7 lineage, cycles, forks, lifecycle | `7bfbf40640` | 127 |
+| rows 8–11 surfaces | `f45c3dee06` | 145 |
+| row 5 folds | `d7456b969a` | 159 |
+| row 13 contests | `1df65cb07c` | 188 |
+| runner never deletes its destination | `91f38fb966` | 188, exit 0 |
+| AC7 carrier measurement | `67f320c4c2` | 13 of 13 |
+
+## Decisions Made
+
+- **Generate the 61 resolver arms rather than hand-write them.** Sixty near-identical fixtures
+  differing in one field is where a transcription slip yields a *green* arm. Generating them from
+  the table the resolver itself reads means an arm cannot disagree with the policy it tests.
+- **Make each generated reject arm assert WHICH refusal it got.** Immediately caught a row-2 arm
+  being refused by row 6 — right verdict, wrong rule, and a pass either way without the assertion.
+- **Stop tuning the AC7 instrument.** After removing universal scaffold mechanically I was adding a
+  discriminator per pass until the number looked right. That is tuning toward a preferred answer.
+  Stopped, reported both readings and the instrument's own non-decisiveness.
+- **Do not fire `--receipt` for AC8** while its precondition was unsatisfiable — a receipt slot is
+  set once, so firing it against a measured-impossible precondition is a risk, not a control.
+  SUPERSEDED once the design owner cleared the precondition at `bd4bea5b2a`: the accept was then
+  fired, and the registry act itself belongs to the exec lane (`a8982310d8`), not to this seat.
+
+## Findings Filed
+
+| id | class | substance |
+|---|---|---|
+| 77685 | OBSERVATION/ARMED | the runner's stub loop would have faked AC6; disarmed same-turn |
+| 77691 | BLOCKING | 61 of 190 manifest arms were unexpanded templates, unaddressable by id |
+| 77720 | OBSERVATION | sec 2d's STRICT has a CLASS half no row-2 arm can express; implemented, controlled in-commit, arm landed at HEAD for the next pin |
+| — | OBSERVATION | `L-13-consequence-unresolved` cannot be attributed to row 13: sec 2d and row 13 state one rule and the resolver runs first |
+| — | OBSERVATION | AC7's subset test is not decisive as specified; the carrier half is, and agrees 13/13 |
+| 77766 | BLOCKING | the freeze commit wrote its freeze entry into `ISCK_CONTRACT.md`, a bundle member, so no post-freeze commit derives the frozen bundle and AC8's receipt is unobtainable |
+
+## Blockers
+
+**None remaining. AC8 was blocked and is cleared** — recorded because the shape is worth keeping.
+
+`derive(7a44b65f50~1)` = the frozen `+27` bundle; `derive(7a44b65f50)` = a different one; exactly
+1 of 14 members differed across that commit and 0 of 14 from there to HEAD. The freeze commit had
+written its own freeze entry into `ISCK_CONTRACT.md`, a bundle member, so no post-freeze commit
+derived the frozen bundle — and the ledger code exists only post-freeze. Three correct decisions
+composing into an unobtainable receipt, none visible from inside the others. Routed (77766), fixed
+by the design owner at `bd4bea5b2a` (member restored byte-for-byte, freeze entry relocated to a
+non-member carrier, and a guard added that would have caught it).
+
+Then **two defects of mine were caught before acceptance, each by an instrument I was not watching**:
+
+- the carrier's own `evidence_digest` check refused the receipt — I hashed the working tree (890
+  bytes, 5 CR), it hashes the blob (885, 0). Git had normalised CRLF→LF and warned; I read the
+  warning as noise. That check exists because those fields used to be decorative; its first live
+  firing was against its author.
+- `3.0.0_SA_CVO~X`, reading the receipt **against its evidence** rather than against the validator,
+  found `run_commit` had drifted with HEAD to `c557006b0b` while the evidence named `d11c341f79` in
+  three places. My shell recomputed `RUNC=$(git rev-parse HEAD)` on each rebuild. **The bundle
+  binding could not see it** — both commits derive the identical bundle, because no member changed
+  between them, which is the very invariant this wave established. A check bound to the wrong
+  invariant returns the shape of a pass on a wrong value.
+
+Corrected at `eb15d30b6b`; tool limb added at `0430c4617d`; the prematurely accepted `e8d3326bd5`
+was discarded **uncommitted**, so nothing wrong ever became a registry fact. Registry act
+`a8982310d8`.
+
+## Current State
+
+`ran 188 of 188`, exit 0; instance VALID with all nine criteria PASS; the certification receipt `eb15d30b6b` recorded on the frozen `v0.3-candidate+27` label at `a8982310d8`; AC9 evidenced with both denominators and a positive control. My 15 commits since the pin touch **0 of the 14 bundle members** and nothing
+outside `ledger/` and my own deliverables. Push state MEASURED: **LOCAL** — `origin/CLOUD`
+`540503df0a`; every wave-2 commit is local-only.
+
+## The transferable half
+
+A control validates a *property*. Four times this wave I built a control set that validated a
+property the defect satisfied — uniqueness where the defect was a fused separator, three false-pass
+shapes where the defect was a fourth, a refusal preceded by a delete. Each set was internally
+sound. **The question that would have caught all four is not "is this control correct?" but "what
+would this control still say if the thing it guards were broken in a way I have not imagined?"** —
+and the only way I found to ask it mechanically is to break the thing and watch, one rule at a time,
+printing *which* arms turn rather than how many.
