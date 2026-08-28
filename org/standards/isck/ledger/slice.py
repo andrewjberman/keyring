@@ -435,9 +435,11 @@ def no_synthetic_defaults(path=None):
 
 CRLF, LF = bytes([13, 10]), bytes([10])
 DIGEST_METHOD = "sha256-over-declared-canonical-tree-inventory-v1"
-DIGEST_NORMALIZATION = ("inventory lines '<sha256-hex>  <posix-relpath>', sorted by relpath, "
-                        "LF-joined with a trailing LF, UTF-8; each file's bytes taken AS COMMITTED "
-                        "at the run pin via `git show <pin>:<path>`, never the working tree")
+DIGEST_NORMALIZATION = ("each member's bytes LF-NORMALISED (CRLF -> LF) then sha256; inventory "
+                        "lines '<sha256-hex>  <posix-relpath>', sorted by relpath, LF-joined with a "
+                        "trailing LF, UTF-8, then sha256. Bytes are read at the pin -- via `git "
+                        "show <pin>:<path>` in a repo, or from the extracted pin tree under AC6 -- "
+                        "never from an unpinned working tree")
 # The runner's materializer is the code that actually RUNS the slice: the ledger modules the run
 # imports plus the runner itself. Naming the set explicitly is the point -- a digest over "whatever
 # was in the directory" is not a declared input, and `$ref sha256` is satisfied by 64 hex, never by
@@ -458,39 +460,62 @@ RUNNER_MEMBERS = [
 def tree_digest(paths, pin):
     """64-hex SHA-256 over a DECLARED canonical tree inventory. Returns (digest, report).
 
-    Every member is read at the pin. A member that is absent or UNCOMMITTED at the pin is NOT
-    silently dropped -- it is reported, because a digest over a subset of its declared inventory
-    is a different digest wearing the same name.
+    TWO SOURCES, ONE NUMBER. In the repo the bytes come from `git show <pin>:<path>`. Under AC6 the
+    runner executes inside an extracted `git archive` of the pin, which has NO .git at all -- there
+    the extracted tree IS the pin, by construction, and the bytes are read from disk. The digest
+    must be identical either way or the clean-clone evidence binds to nothing.
+
+    SO EVERY MEMBER IS LF-NORMALISED BEFORE HASHING, AND THAT IS DECLARED. This is the defect class
+    that has bitten this seat four times in this TO: a CRLF checkout and an LF blob are the same
+    source and different bytes, and a digest that does not say which it took is not an identity. It
+    is the checkout's EOL policy that must not move the number, so the normalisation is part of the
+    method rather than a property of where the code happens to be sitting.
+
+    A member absent, or DIRTY against the pin, is reported beside the digest and never folded into
+    it -- a digest cannot detect that it describes bytes which did not run.
     """
-    # THE DIRTY CHECK IS THE WHOLE POINT OF PINNING. Reading members at a pin while the code that
-    # actually ran is an uncommitted working tree produces a digest over bytes that DID NOT RUN --
-    # the identical shape of the run_commit drift CVO~X caught on this seat's AC8 receipt, where a
-    # receipt named a commit at which no run happened and the bundle binding could not see it
-    # because both commits derived the same bundle. A digest cannot detect that about itself, so it
-    # is reported beside the digest and never folded into it.
     lines, missing, dirty = [], [], []
+    src = "git show <pin>:<path>"
+    have_git = os.path.isdir(os.path.join(REPO_ROOT, ".git"))
+    if not have_git:
+        src = "extracted pin tree (git archive; no .git present, the tree IS the pin)"
     for rel in sorted(paths):
-        try:
-            raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, rel)], cwd=REPO_ROOT,
-                                          stderr=subprocess.PIPE)
-        except subprocess.CalledProcessError:
-            missing.append(rel)
-            continue
-        lines.append("%s  %s" % (hashlib.sha256(raw).hexdigest(), rel))
-        try:
-            with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
-                wt = fh.read()
-            # compare LF-normalised: a CRLF checkout is not a source edit (banked, this TO)
-            if wt.replace(CRLF, LF) != raw.replace(CRLF, LF):
-                dirty.append(rel)
-        except IOError:
-            dirty.append(rel + " (absent in working tree)")
-    inventory = ("\n".join(lines) + "\n").encode("utf-8")
+        raw = None
+        if have_git:
+            try:
+                raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, rel)], cwd=REPO_ROOT,
+                                              stderr=subprocess.PIPE)
+            except subprocess.CalledProcessError:
+                missing.append(rel)
+                continue
+        else:
+            try:
+                with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
+                    raw = fh.read()
+            except IOError:
+                missing.append(rel)
+                continue
+        norm = raw.replace(CRLF, LF)
+        lines.append("%s  %s" % (hashlib.sha256(norm).hexdigest(), rel))
+        if have_git:
+            # THE DIRTY CHECK IS THE WHOLE POINT OF PINNING. Reading members at a pin while the code
+            # that actually ran is an uncommitted working tree produces a digest over bytes that DID
+            # NOT RUN -- the shape of the run_commit drift CVO~X caught on this seat's AC8 receipt,
+            # where a receipt named a commit at which no run happened and the bundle binding could
+            # not see it because both commits derived the same bundle.
+            try:
+                with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
+                    wt = fh.read()
+                if wt.replace(CRLF, LF) != norm:
+                    dirty.append(rel)
+            except IOError:
+                dirty.append(rel + " (absent in working tree)")
+    inventory = (LF.decode().join(lines) + LF.decode()).encode("utf-8")
     return ("sha256:" + hashlib.sha256(inventory).hexdigest(),
             {"members_declared": len(paths), "members_hashed": len(lines),
              "members_absent_at_pin": missing, "members_DIRTY_vs_worktree": dirty,
              "digest_describes_the_code_that_ran": not dirty and not missing,
-             "method": DIGEST_METHOD,
+             "byte_source": src, "method": DIGEST_METHOD,
              "normalization": DIGEST_NORMALIZATION})
 
 
