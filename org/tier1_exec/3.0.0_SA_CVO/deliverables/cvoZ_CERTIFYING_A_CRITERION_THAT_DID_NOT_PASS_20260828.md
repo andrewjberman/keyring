@@ -21,13 +21,19 @@ individual review catches it and why the rule has to attach at *retirement time*
 
 ---
 
-## THE THREE CLASSES
+## THE CLASSES — three chosen, one that happens to you
 
 | class | has an owner? | has a clock? | will it ever be met? |
 |---|---|---|---|
 | **WITHHELD** | no | no | **No — by ruling** |
 | **RELOCATED** | yes | yes | **Yes — elsewhere** |
 | **RETIRED-UNREACHABLE** | not yet | not yet | **Only if a named event occurs** |
+| **VACATED** *(added 04:2xZ)* | n/a | n/a | ⛔ **It already "passes" — and that is the defect** |
+
+⛔ **The first three are DISPOSITIONS A SEAT CHOOSES. The fourth is not chosen and nothing announces
+it** — an unrelated lane refactors away the construct a criterion names, and the criterion silently
+stops being able to fail. **It is listed here because a certifier meets it in exactly the same place:
+a row that is not a real PASS.**
 
 ### 1. WITHHELD — the path is closed by ruling
 *Specimen: `ETFS_INGEST.TO-7` `AC3`, terminal-withheld 2026-08-28T03:32Z.*
@@ -71,6 +77,45 @@ and the retirement is false**, but it still reads CLOSED.*
 **Cost:** one clause at retirement time, written by the seat that already knows the condition.
 **Non-application:** a criterion unreachable **BY CONSTRUCTION** needs no event **and should say so
 explicitly** — the explicit "never liftable" is what distinguishes it from an omission.
+
+### 4. ⛔ VACATED — the criterion's SUBJECT ceased to exist, and it now passes trivially
+*Added 2026-08-28T04:2xZ. Specimen: `ETFS_POSITIONING` `POS-TO7-AC5`, found by
+`0.4.0_DE_ClientPlatform~C` and routed to this seat **before** certification rather than after.*
+
+**This is not one of the three above, and I did not have it.** The other three are all *dispositions a
+seat CHOOSES*. This one **happens to a criterion while nobody is looking.**
+
+`POS-TO7-AC5` reads: *"The `isEtfs ? null : dataAsOf` ternary is in the mode switch — the Models branch
+must be provably untouched."* **That ternary no longer exists.** It was added at `ee90fa8e`
+(`ETFS_POSITIONING.TO-3`) and removed at `7ebe38b0` (`ETFS_SATELLITES TO-3`), and the replacement is
+strictly better — a mode-TOTAL `Record<PositioningMode, boolean>` that forces every future mode to
+declare, where the two-way ternary would have silently bound satellites to the `else` branch.
+
+```
+comp-find 'isEtfs ? null : dataAsOf'   ->  0 hit(s) across 27546 files
+```
+
+>> ⛔ **AND ZERO IS WHAT A PASS LOOKS LIKE.** A criterion checked by the *absence* of a named construct
+cannot distinguish **"the Models branch is untouched"** (intended) from **"the construct was refactored
+away"** (actual) from **"someone deleted the file"**. **The criterion did not become FALSE when its
+subject died — it became VACUOUS, and vacuous scores as PASS.**
+
+⭐ **THE GENERAL FORM, WHICH IS THE PART WORTH KEEPING: A CRITERION THAT NAMES A SPECIFIC CONSTRUCT
+BINDS ITSELF TO THAT CONSTRUCT'S LIFETIME.** A legitimate refactor by an unrelated lane silently
+converts it from *testable* to *un-failable*, **with no edit to the criterion and no signal to anyone.**
+This is the third ground-expiry on this record tonight and the first where the expiry makes the
+criterion **easier** to pass.
+
+**Certification rule:** ⛔ **I will not certify `POS-TO7-AC5` — or any criterion — on a zero-hit search
+for a named construct.** A zero is evidence the construct is absent and **nothing else**.
+**The remedy is RE-GROUNDING, not weakening, and the distinction matters:** `AC5`'s intent is fully
+intact and fully testable — `REGISTERS_YANG_AS_OF.models === true` **IS** the Models branch, and it is a
+*stronger* subject than the ternary was. **Text is `2.0.0_SA_COO~Z`'s to change; I am naming what I will
+and will not accept as evidence.**
+⭐ **And the right instrument is already precedented by the commit that CREATED the dead ternary** —
+`ee90fa8e`'s own subject reads *"Models mode proven byte-identical by a RENDERED-DOM DIFF, NOT BY
+INSPECTION."* `0.4.0_DE_ClientPlatform~C` chose that method unprompted. **A source diff cannot see a
+render that changed for a reason other than the line you edited.**
 
 ---
 
