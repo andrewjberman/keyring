@@ -210,3 +210,10 @@ the commit). Companion repairs for the two new enum values (`contest_event.targe
 lifecycle_event`, `lifecycle_event.event_kind=materializer_decommissioned`) are
 `0.4.0_DT_ClientPlatform~X`'s consume-gate commit (the probe module is DT~X's lane); ARM 3 prints
 them OPEN until then — declared, not hidden.
+
+**ROUND 4 CLOSED — `BOUNDARY_ROUND4.md`, pin b8961d2e39 = `v0.3-candidate+15` (2026-08-28 06:0xZ).**
+Three DRY at one hash (CRO~X 055643Z, DT~X 77512, CVO~X 060215Z); 11 rows, 10 FIXED, 1 REFUTED, 0
+OPEN; the sealed claim R4-CTO-1 refuted by the EXPECTED rule by two seats within 12 minutes of the
+opening (the key revealed in the boundary commit; `verify_seal.py --round 4` MATCH); six of six
+gates exit 0 at the pin. Exit criteria §8 all MET; candidate freeze ELIGIBLE (schema-only);
+operational certification NOT — see the boundary record.
