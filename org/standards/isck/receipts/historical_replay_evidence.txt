@@ -1,13 +1,13 @@
-WP-3b HISTORICAL REPLAY -- second independent clean extract of ab5dc4e62c7b59efeec77881e4224bb6f47c20c8
+WP-3b HISTORICAL REPLAY -- second independent clean extract of 8a9d265ba926d10d2e07b42a6a9517991447efb7
 The replay claim: both AC4 anchors resolve and agree, sec 2e holds in BOTH directions,
 an unbindable anchor is refused, and the whole run reproduces from a fresh extract.
 
-DETERMINISM ACROSS TWO INDEPENDENT EXTRACTS OF ab5dc4e62c
+DETERMINISM ACROSS TWO INDEPENDENT EXTRACTS OF 8a9d265ba9
 compared 19 substantive line(s); EXCLUDED by name: the extract's temp path and
 the AC5 published-artifact byte digest (both vary per run by construction)
 VERDICT: IDENTICAL
 
-AC6 CLEAN EXTRACT of BUILD commit ab5dc4e62c7b59efeec77881e4224bb6f47c20c8 -> C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-ab5dc4e62c-928d2rpa\clone
+AC6 CLEAN EXTRACT of BUILD commit 8a9d265ba926d10d2e07b42a6a9517991447efb7 -> C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-8a9d265ba9-jfj68g91\clone
 WP-3b SLICE -- both pins on every count
    pin 1 preservation copy  @057220cca9
    pin 2 declared manifest  @06a5ae751c
@@ -32,10 +32,10 @@ AC3 admission    admitted 42 | refused 0 | errored 0 | translator-errored 0
                  reconciliation 42 + 0 + 0 + 0 = 42 of 42
 AC3 falsifier    one binding -> a missing entity              admitted 41 refused 1 -> PASS
 AC3 falsifier    one binding -> a mint_receipt (wrong CLASS)  admitted 41 refused 1 -> PASS
-AC2 provenance   run pin ab5dc4e62c (--pin argument)
-AC2 provenance   ADMITTED: materializer mat:wp3b-slice-runner | version matv:59f886a88a74
-                 bundle_digest sha256:59f886a88a74caed205d4f8d40820f0151a4f57eaf2191e20930d676b66f5148 (64 hex)
-                 inventory 9 members declared | 9 hashed at run pin ab5dc4e62c | absent none
+AC2 provenance   run pin 8a9d265ba9 (--pin argument)
+AC2 provenance   ADMITTED: materializer mat:wp3b-slice-runner | version matv:4d2fd87ea30e
+                 bundle_digest sha256:4d2fd87ea30e544a0d669cfee1552f3344d9f4573412bb6dabcc109b7182ed71 (64 hex)
+                 inventory 9 members declared | 9 hashed at run pin 8a9d265ba9 | absent none
                  byte source extracted pin tree (git archive; no .git present, the tree IS the pin)
                  normalization each member's bytes LF-NORMALISED (CRLF -> LF) then sha256; inventory lines '<sha256-hex>  <posix-relpath>', sorted by relpath, LF-joined with a trailing LF, UTF-8, then sha256. Bytes are read at the pin -- via `git show <pin>:<path>` in a repo, or from the extracted pin tree under AC6 -- never from an unpinned working tree
                  DIGEST DESCRIBES THE CODE THAT RAN: True
@@ -46,9 +46,11 @@ AC4 agreement    both anchors resolve to the same commit_seq and the same estate
 AC4 sec-2e A     before: a claim that the backfill is inside anchor 44 is REFUSED as L-12-replay-mismatch
 AC4 sec-2e B     after:  INCLUDED at anchor 45, and it sits at position 0 of 86 among event-timed records -- its EVENT-TIME position (2019), not its admission position (newest of 132). PASS
 AC4 falsifier    unbindable frontier anchor REFUSED as L-12-replay-frontier
-AC5 snapshot     via vacuum_into | 86016 bytes | sha256:dbb733ab957a7b4d2c6c65ef9bacc5e14
+AC5 snapshot     via vacuum_into | 86016 bytes | sha256:75ea32caac2997b8b4d08aa670c3c5dae
                  fingerprint_method sha256-over-published-artifact-bytes | normalization_version v1-vacuum-into-single-file
                  POSITIVE {"rows": 132, "anchor_commit_seq": 45, "rows_match": true, "anchor_match": true, "verdict": "PASS"}
                  NEGATIVE {"verdict": "PASS-AS-A-CONTROL", "rows": null, "note": "failed to open at all: OperationalError"}
 AC5 verdict      PASS
-CLONE          released C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-ab5dc4e62c-928d2rpa (0.97 GB) -- removed: True
+AC4 snapshot     opened ALONE 132 ids @ anchor 45 | independent load 132 ids @ anchor 45
+AC4 set equality record-id SETS EQUAL
+CLONE          released C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-8a9d265ba9-jfj68g91 (0.97 GB) -- removed: True

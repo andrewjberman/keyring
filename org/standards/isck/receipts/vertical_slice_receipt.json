@@ -1,11 +1,11 @@
 {
   "candidate_id": "v0.3-candidate+27",
   "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
-  "evidence_digest": "sha256:b9d331a16e2a18fcfbdd2ddb042094a8f365a2b4f73d354781e5ca509fd6d8fa",
+  "evidence_digest": "sha256:1d9d4f959535f4cb0a6094d3de3c763540e4ea038ae632fa4f678481521c98a6",
   "evidence_path": "org/standards/isck/receipts/vertical_slice_evidence.txt",
   "kind": "vertical_slice_receipt",
   "manifest_digest": "sha256:e840260d7f6376c2e28c011e85c2236ca60dd7731181beb8e9fcdae669377c69",
   "manifest_path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.declared.json",
   "result": "PASS",
-  "run_commit": "ab5dc4e62c7b59efeec77881e4224bb6f47c20c8"
+  "run_commit": "8a9d265ba926d10d2e07b42a6a9517991447efb7"
 }
