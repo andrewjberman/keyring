@@ -1,0 +1,139 @@
+{
+  "_class_D": "DEFERRED BY LANDED DESIGN, never suppressed -- printed every run with its reversal trigger (R2-2's landing makes corroborated + superseded_by the desired expressible state) so it returns by construction rather than by anyone remembering.",
+  "_generated": "DERIVED from ARM 4's own output at the adjudicated tip -- never hand-listed, so it cannot drift from the arm it disposes.",
+  "_key": "record_type|discriminant|field|value-set  -- THE VALUE SET IS PART OF THE ARM'S IDENTITY. A (record_type, discriminant, field) TRIPLE IS NOT UNIQUE: entity_binding.binding_basis and identity_relation.claim_origin each carry TWO arms requiring evidence_refs on DIFFERENT value sets, and a triple key silently collapsed 20 rows to 18 -- suppressing an arm nobody ruled on. Found by generating the sidecar, not by designing it.",
+  "_lapse": "If a (record_type, discriminant, field) exists here but with a DIFFERENT value set, the suppression LAPSES and the row is reported RE-ADJUDICATION REQUIRED, naming both sets. A ruling about a 4-value enum does not survive it becoming 5. An arm absent entirely is reported NEW. Neither is ever silently suppressed.",
+  "_record": "org/standards/isck/ARM4_ADJUDICATION.md",
+  "_ruled_by": "1.0.0_SA_CTO~X (77047 concur; rulings in ARM4_ADJUDICATION.md)",
+  "entries": {
+    "bridge_assertion|claim_origin|evidence_refs|independently_observed,model_inferred,rule_derived": {
+      "class": "A",
+      "values_at_adjudication": [
+        "independently_observed",
+        "model_inferred",
+        "rule_derived"
+      ]
+    },
+    "bridge_assertion|registry_standing|evidence_refs|admitted": {
+      "class": "A",
+      "values_at_adjudication": [
+        "admitted"
+      ]
+    },
+    "bridge_assertion|verification_standing|evidence_refs|contradicted,corroborated": {
+      "class": "A",
+      "values_at_adjudication": [
+        "contradicted",
+        "corroborated"
+      ]
+    },
+    "bridge_assertion|verification_standing|superseded_by|superseded": {
+      "class": "D",
+      "values_at_adjudication": [
+        "superseded"
+      ]
+    },
+    "coherence_evaluation|currency|evidence_refs|ahead_of_target,at_target,behind_target": {
+      "class": "A",
+      "values_at_adjudication": [
+        "ahead_of_target",
+        "at_target",
+        "behind_target"
+      ]
+    },
+    "coherence_evaluation|integrity|evidence_refs|mismatch,verified": {
+      "class": "A",
+      "values_at_adjudication": [
+        "mismatch",
+        "verified"
+      ]
+    },
+    "entity_binding|binding_basis|evidence_refs|independently_observed": {
+      "class": "A",
+      "values_at_adjudication": [
+        "independently_observed"
+      ]
+    },
+    "entity_binding|binding_basis|evidence_refs|model_inferred,rule_derived": {
+      "class": "A",
+      "values_at_adjudication": [
+        "model_inferred",
+        "rule_derived"
+      ]
+    },
+    "identity_relation|claim_origin|evidence_refs|independently_observed": {
+      "class": "A",
+      "values_at_adjudication": [
+        "independently_observed"
+      ]
+    },
+    "identity_relation|claim_origin|evidence_refs|model_inferred,rule_derived": {
+      "class": "A",
+      "values_at_adjudication": [
+        "model_inferred",
+        "rule_derived"
+      ]
+    },
+    "identity_relation|verification_standing|evidence_refs|contradicted,corroborated": {
+      "class": "A",
+      "values_at_adjudication": [
+        "contradicted",
+        "corroborated"
+      ]
+    },
+    "identity_relation|verification_standing|superseded_by|superseded": {
+      "class": "D",
+      "values_at_adjudication": [
+        "superseded"
+      ]
+    },
+    "materializer_version|bundle_completeness|configuration_digest|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "materializer_version|bundle_completeness|declared_opinions_digest|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "materializer_version|bundle_completeness|dependency_lock_digest|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "materializer_version|bundle_completeness|normalizer_versions|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "materializer_version|bundle_completeness|runtime_contract_version|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "materializer_version|bundle_completeness|source_tree_digest|complete": {
+      "class": "B",
+      "values_at_adjudication": [
+        "complete"
+      ]
+    },
+    "mint_receipt|collision_preflight|evidence_refs|checked_unique": {
+      "class": "A",
+      "values_at_adjudication": [
+        "checked_unique"
+      ]
+    },
+    "state_observation|failure_state|evidence_refs|observed_absent": {
+      "class": "A",
+      "values_at_adjudication": [
+        "observed_absent"
+      ]
+    }
+  }
+}

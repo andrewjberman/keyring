@@ -435,6 +435,58 @@ def _conditional_arms(branch, rtype):
     return arms, unparsed
 
 
+ADJUDICATION_PATH = os.path.join(HERE, "ARM4_ADJUDICATION.json")
+
+
+def _dispose(unpaired):
+    """Split ARM 4's rows against the ruled adjudication record.
+
+    THE GATE CONSUMES THE RULING, BUT NEVER BY LABEL. Key = record_type|discriminant|field|values.
+    WARN: A (record_type, discriminant, field) TRIPLE IS NOT UNIQUE -- entity_binding.binding_basis
+    and identity_relation.claim_origin each carry TWO arms requiring evidence_refs on DIFFERENT
+    value sets. A triple key silently collapsed 20 rows to 18, which would have SUPPRESSED AN ARM
+    NOBODY RULED ON. The value set is part of the arm's identity. Found by generating the sidecar,
+    not by designing it -- which is why the sidecar is DERIVED from ARM 4's own output.
+
+    Four outcomes, and only the first is suppressed:
+      ADJUDICATED  exact key present    -> suppressed, counted, auditable in the record
+      DEFERRED     class D              -> NEVER suppressed; printed with its reversal trigger
+      RE-ADJUDICATE same triple, different value set -> the ruling's premise MOVED. A ruling about
+                   a 4-value enum does not survive it becoming 5.
+      NEW          no entry at all      -> reported as it always was
+    A missing or unreadable record suppresses NOTHING and says so: a gate that silently falls back
+    to "suppress none" is honest, but one that silently falls back to "suppress all" is the failure
+    this whole arm exists to prevent, and the difference must not be a comment.
+    """
+    try:
+        with open(ADJUDICATION_PATH, "r", encoding="utf-8") as handle:
+            record = json.load(handle).get("entries", {})
+    except (OSError, ValueError):
+        print("  WARN: ARM4_ADJUDICATION.json UNREADABLE -- suppressing NOTHING, every row reported")
+        return [], [], [], list(unpaired)
+    by_triple = {}
+    for key, val in record.items():
+        parts = key.split("|")
+        if len(parts) == 4:
+            by_triple.setdefault(tuple(parts[:3]), []).append(val)
+    adjudicated, deferred, lapsed, fresh = [], [], [], []
+    for rtype, disc, vals, field in unpaired:
+        key = "%s|%s|%s|%s" % (rtype, disc, field, ",".join(sorted(vals)))
+        entry = record.get(key)
+        if entry is None:
+            prior = by_triple.get((rtype, disc, field))
+            if prior:
+                lapsed.append((rtype, disc, vals, field,
+                               sorted({v for p in prior for v in p["values_at_adjudication"]})))
+            else:
+                fresh.append((rtype, disc, vals, field))
+        elif entry.get("class") == "D":
+            deferred.append((rtype, disc, vals, field))
+        else:
+            adjudicated.append((rtype, disc, vals, field))
+    return adjudicated, deferred, lapsed, fresh
+
+
 def arm_paired(schema, verbose=True):
     """Report REQUIRE arms with no FORBID/CONSTRAIN partner on the same discriminant.
 
@@ -476,12 +528,24 @@ def arm_paired(schema, verbose=True):
                           or field in dep)
                 if not paired:
                     unpaired.append((rtype, disc, sorted(vals), field))
+    adjudicated, deferred, lapsed, fresh = _dispose(unpaired)
     if verbose:
         print("  DENOMINATOR: %d REQUIRE effects across %d record types" % (total, len(records)))
-        print("  REQUIRE-ONLY (no FORBID/CONSTRAIN partner, no dependentRequired): %d"
-              % len(unpaired))
-        for rtype, disc, vals, field in unpaired:
-            print("    %-22s %s=%s -> requires %r" % (rtype, disc, vals, field))
+        print("  REQUIRE-ONLY: %d  (%d adjudicated, %d deferred, %d NEW, %d re-adjudication)"
+              % (len(unpaired), len(adjudicated), len(deferred), len(fresh), len(lapsed)))
+        for rtype, disc, vals, field in fresh:
+            print("    NEW           %-22s %s=%s -> requires %r" % (rtype, disc, vals, field))
+        for rtype, disc, vals, field, was in lapsed:
+            print("    RE-ADJUDICATE %-22s %s=%s -> requires %r" % (rtype, disc, vals, field))
+            print("                  ruled at values %s, schema now has %s -- the ruling's premise "
+                  "moved" % (was, vals))
+        for rtype, disc, vals, field in deferred:
+            print("    DEFERRED      %-22s %s=%s -> requires %r" % (rtype, disc, vals, field))
+            print("                  class D: reversed at R2-2's landing (corroborated + "
+                  "superseded_by becomes the desired expressible state). NEVER suppressed.")
+        if adjudicated and not (fresh or lapsed):
+            print("    %d row(s) suppressed by ARM4_ADJUDICATION.json -- disposed by the record, "
+                  "auditable there, not invisible" % len(adjudicated))
         if unparsed_all:
             print("  WARN: %d then-clause(s) carry UNPARSED keywords -- NOT scored as unpaired:"
                   % len(unparsed_all))
@@ -596,6 +660,29 @@ def self_controls(schema, fixtures, verbose=True):
     n4, _nu = arm_paired(nested, verbose=False)
     results.append(("ARM 4 sees a NESTED then.allOf[].not forbid as pairing",
                     not any(f == "nested_pair_field" for _r, _d, _v, f in n4), True))
+
+    # ---- ARM 4 CONSUME CONTROLS. A suppression mechanism is the one addition that can make this
+    # gate LIE, so every path that must NOT suppress gets an arm. Synthetic rows are fed straight
+    # to _dispose() -- no schema mutation, no file writes.
+    _row = ("bridge_assertion", "verification_standing", ["superseded"], "superseded_by")
+    _adj, _def, _lap, _new = _dispose([_row])
+    results.append(("ARM 4 NEVER suppresses a class-D deferred row",
+                    len(_def) == 1 and not _adj, True))
+    _unknown = ("no_such_record", "no_such_field", ["x"], "no_such_target")
+    _adj2, _def2, _lap2, _new2 = _dispose([_unknown])
+    results.append(("ARM 4 reports an UNRULED row as NEW, never suppressed",
+                    len(_new2) == 1 and not _adj2, True))
+    # the lapse: a ruled triple whose VALUE SET has moved must return for re-adjudication
+    _moved = ("identity_relation", "claim_origin", ["independently_observed", "human_adjudicated"],
+              "evidence_refs")
+    _adj3, _def3, _lap3, _new3 = _dispose([_moved])
+    results.append(("ARM 4 LAPSES a suppression when the discriminant's value set moved",
+                    len(_lap3) == 1 and not _adj3, True))
+    # and the suppression must still actually FIRE on an exact match, or the arm above is vacuous
+    _exact = ("identity_relation", "claim_origin", ["independently_observed"], "evidence_refs")
+    _adj4, _def4, _lap4, _new4 = _dispose([_exact])
+    results.append(("ARM 4 DOES suppress an exactly-ruled row (else the lapse arm is vacuous)",
+                    len(_adj4) == 1 and not _lap4 and not _new4, True))
 
     ok = True
     for label, got, want in results:
