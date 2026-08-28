@@ -1,0 +1,10 @@
+WP-3 CERTIFICATION EVIDENCE -- the battery passing from a clean clone
+run_commit: d11c341f7915b05556648d69eebfafa8bec8ee08
+produced by: python org/standards/isck/ledger/battery/run_battery.py --run-commit d11c341f7915b05556648d69eebfafa8bec8ee08
+---
+CLEAN CLONE of BUILD commit d11c341f7915b05556648d69eebfafa8bec8ee08 -> C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-d11c341f79-ucepfbro\clone
+MANIFEST census vintage d0398b977d (the denominator's provenance; NOT the clone)
+IMPORTED ledger from C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-d11c341f79-ucepfbro\clone\org\standards\isck\ledger\__init__.py (provenance asserted inside the clone)
+ran 188 of 188 -- COUNTED (numerator: arms executed whose verdict matched their declared kind; denominator: distinct arm ids in the manifest)
+   reconciliation: 188 matched + 0 wrong + 0 unimplemented + 0 errored = 188 of 188
+exit: 0

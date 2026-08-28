@@ -1,0 +1,11 @@
+{
+  "kind": "wp3_certification_receipt",
+  "candidate_id": "v0.3-candidate+27",
+  "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+  "manifest_path": "org/standards/isck/ledger/battery/MANIFEST.json",
+  "manifest_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "result": "PASS",
+  "evidence_path": "org/standards/isck/receipts/wp3_certification_evidence.txt",
+  "evidence_digest": "sha256:1e792a71429d89534cd57fddd0c22512427f7dd001341da390a52789d5495561",
+  "run_commit": "5bde064942406b9e6a21687a194ba63323e685c1"
+}
