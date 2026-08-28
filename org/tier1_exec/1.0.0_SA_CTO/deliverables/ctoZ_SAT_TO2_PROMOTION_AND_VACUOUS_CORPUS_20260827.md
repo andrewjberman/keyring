@@ -576,4 +576,47 @@ live carrier -- the code is gone and the example is not.*
 genuinely unwanted and deletion is available, prefer it -- **the residue of a narrowing is a
 precedent, and precedents get lifted by readers who never read the narrowing condition.**
 
+### 12c. `SatelliteBook.code` IS THE CANONICAL NAME -- non-collision PROVABLE, not conventional
+
+Raised by `0.4.0_DS_ClientPlatform~L`: `satelliteSet.ts:66` requires `code: string` and calls it
+*"the column identity (never the display name)"*, but **no file in the consumer defines its form** --
+every hit consumes a code, none specifies one.
+
+```
+SatelliteBook.code         =  the CANONICAL NAME, verbatim     e.g. "Opal Satellite 50"
+SatelliteBook.displayName  =  free to differ; unconstrained by this ruling
+```
+
+**Three reasons, strongest first:**
+
+```
+1 PROVABLE NON-COLLISION  MODEL_BOOKS = UST/ST/INT/LT/ULT ; ETF books DIVZ/IDVZ/PFDE/PFOE.
+                          NONE matches ^Opal Satellite \d+$ -- measured, positive control passing.
+                          A 3-5 char mnemonic CANNOT equal an anchored three-token form.
+2 IT IS ALREADY THE KEY   MEMBER_NAMES is a frozenset of exactly these and the predicate matches
+                          on this field. Any other choice creates a SECOND identity space plus a
+                          mapping -- see [[two-carriers-with-no-named-primary-diverge]].
+3 NO NEW TABLE            build ladder rung 1/2: a convention is code nobody has to write.
+```
+
+STOP: **`model_id` REJECTED on a GRAIN MISMATCH, not taste** -- a book would be a MEMBER by NAME but
+KEYED by an id the membership predicate never validated. **The value that decides membership and the
+value that identifies the column must be the same, or a book can pass one test and be absent from the
+other.** Numeric suffix rejected: it discards the anchor protection reason 1 rests on.
+
+**Premise correction owed to the raiser, which does not touch the correctness of raising it.** Both
+hazards they cited are already closed: `bookSet.ts:167`'s model-notes collision is guarded by
+`HEADER_TRIGGER.satellites = 'none'`, and `:131`'s models-keyed-feed defect by
+`SUBCATEGORY_SOURCE.satellites = 'current_holdings'`. **Both comments describe what the OLD TERNARY
+did; the MODE-TOTAL declarations beside them are the remedy.** ⭐ **The escalation was still correct
+on their SECOND ground -- the choice binds producer, adapter, grid and a fourth namespace, and that
+reason survives intact.** *Reading a comment that describes a pre-fix world as live is the exact
+stale-carrier class this record has hit four times; it was the reasonable act, not an error.*
+
+**`AC4`/`AC5` accepted at the gate:** 9 of 65 derived, `derived == declared` with both difference
+directions empty, `Opal Ultra Short Term` correctly excluded, all five blends rejected, all three
+amended `AC4` rows green -- and **the per-limb ablation RE-DERIVED rather than quoted.** That is
+corroboration rather than repetition, and reusing `CANONICAL_NAME_FORM` instead of reimplementing it
+is the build ladder applied correctly.
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
