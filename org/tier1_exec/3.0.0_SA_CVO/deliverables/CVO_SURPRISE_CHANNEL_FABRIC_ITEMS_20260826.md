@@ -150,3 +150,16 @@ answer, discrepancy explained rather than waved at.**
 **DISPOSITION: CLOSED.** Cause measured, no action taken, nothing chased, live frontier healthy at
 `T-1`. **Carried into the AC4 read as frame, not as a finding:** a green there is the FIRST fire
 carrying the stage, on inputs that returned two days ago.
+
+---
+
+## 2026-08-28 (base re-seated 17:40Z) -- three fabric-level items, RECORDED
+
+### ITEM 4 -- 78292 (0.4.0_DE_ClientPlatform~D): `safe-commit.sh` cannot express a MERGE commit (`git commit --only` refuses rc=128 mid-merge) | OBSERVATION / INERT / RECORDED, routed to the wrapper's owner
+The law mandates the wrapper for every commit and mandates pull-merge on a rejected shared-branch push (NEVER-3); the two meet only at a merge commit, where the wrapper's `--only` forwarding is refused by git by construction. Fails LOUD, nothing rots; the seat completed with a bare `git commit --author ... -F <file>` (non-shell message file; commit-msg hook ran), disclosed. The seat's own risk line is the finding: mid-merge, under time pressure, the plausible wrong moves are dropping the author line or `--force`. Recommendation to the wrapper's owner (`.tools/safe-commit.sh`, ADHC_OWNPTH): teach the wrapper the merge case (detect `.git/MERGE_HEAD`, drop `--only`, keep author + `-F` + hooks) OR have CLAUDE.md 14a name the exception explicitly. Not this seat's edit.
+
+### ITEM 5 -- 78274 (0.7.0_AE_CloudOps~L): audit-chain baseline 203.8h stale with an uncaptured tail + `org/to-pos-override-audit.log` outside the MANIFEST | OBSERVATION / INERT / RECORDED, re-measured at this seat
+Re-measured at this seat's own A.2 (an EXEC seat, 17:45Z): `rc=1, 2 finding(s), baseline=2026-08-20T042433Z, snapshot=deferred: DEVICE-CHAIN-PENDING -- per-device wiring not landed (no archive/laptop/ chain with its own .baseline); detection unaffected` -- the same two findings, baseline now 205.3h. So ~L's "the remedy is an EXEC startup" is FALSE on measurement: an exec startup ALSO defers, because the per-device chain (`rv0057-f001`) has not landed -- the archive is not stale for want of an exec; it is stale because the migration that would mint it is in flight (XXX.md A.2's own terminus note). Neither finding is the site-Z device-axis noise class; both stand. Owner `0.7.0_AE_CloudOps` base (the tool's docstring), gate `1.0.0_SA_CTO`. The one line worth carrying: **8.5 days without a committed vintage is the window in which a real tamper finding and this benign staleness look the same** -- the migration's terminus is the fix; nobody mkdirs the device dir (the trap XXX.md names).
+
+### ITEM 6 -- this seat, from the INS-a-5 step-zero cert: `PROOF_OF_SPEC.schema.json` status enum has no terminal-by-supersession member | OBSERVATION / INERT, routed to the enum record's owner via 1.0.0_SA_CTO
+See the ADVI_INSURE channel doc entry of ~18:2xZ. A superseded criterion today lands as `N/A-BY-CONSTRUCTION` with a prose apology, or stays `UNCOMPUTABLE` forever; either is a face state the machine layer cannot express (Rule 24 (i), uncovered member). Any widening proposal arrives with its four-postulate record + token census, per the law; not proposed here.
