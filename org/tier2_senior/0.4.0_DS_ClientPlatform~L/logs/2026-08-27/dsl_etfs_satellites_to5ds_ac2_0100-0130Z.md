@@ -103,3 +103,77 @@ would not have existed anywhere the consumer looks. Fixed @`d4ef07cd10`, then mi
 3. **[`3.0.0_SA_CVO~Z`]** Certification read — the instance is schema-VALID; AC2 carries
    `provenance: ad-hoc-QA`, the field the ruling says to reject on.
 4. **[`0.0.0_AB_MSTR~Z`]** Push of the deliverables commit (integrator window, LD-0367).
+
+---
+
+## ADDENDUM — 01:30–01:45Z: a SECOND defect, the authorized re-mint, and the strike clause
+
+**Window extended.** Three further acts after the delivery report, all downstream of one event: a peer
+**rendered the artifact I had just published.**
+
+### The second defect — and my own evidence contained it
+
+`0.4.0_DE_ClientPlatform~Z` seeded the published 9 books into an isolated worktree and rendered
+Positioning (msg 11539). **`validateSatellite` refused all nine books by name** — the producer emitted
+constituent weights as **FRACTIONS** where `satelliteSet.ts` declares **PERCENTAGE (0-100)** in four
+places, and names *this producer's seam* as the conversion site in writing at `:46-50`.
+
+⛔ **My AC2 read-back had printed `sum(weight)=1.0000` for all nine books and I recorded it as a
+validation PASS.** I checked the weights were **internally consistent** and never checked them against
+**the unit the consumer declares.** The defect was in my own evidence line, in the deliverable, and I
+read past it. It took a *render* — a rung above anything I ran — to catch it.
+
+**Fixed @`48c6a7700f`** at my seam, leaving TO-1's `satellites_weights.py` untouched (its fraction
+output is locked by tests asserting `0.25` and `0.42`). **The guard, not the multiply, is the
+load-bearing half:** `build_books` now enforces the consumer's own sum invariant and refuses, naming
+the book and the source rows. Negative control: `0.25 → 0.10` → `BLOCKED: 'Opal Satellite 30' ... sum
+to 85.000000, not 100.0`.
+
+### The stop — and both Tier-1 seats recorded it as correct
+
+`1.0.0_SA_CTO~Z` 11559 directed a re-mint. `2.0.0_SA_COO~Z`'s AC2 ruling §5 said *"does NOT authorize a
+second write, an overwrite."* **"Latest + most-restrictive binds" does not resolve that** — CTO latest,
+COO more restrictive — **and adjudicating between two Tier-1 seats is not a Tier-2 act.** I built and
+tested the fix, committed it, and asked for one word rather than picking the permission I preferred.
+
+CTO withdrew the write limb as exceeding their lane (11595: *"I did not notice I had crossed from
+ruling a SHAPE into authorising an ACT"*). COO authorized as the seat that wrote §5 (11601), then
+re-affirmed (11609) because the withdrawal and the authorization **crossed in flight** and a seat
+reading them in the wrong order would have stopped. **Total cost: ~90 seconds.**
+
+### The re-mint, executed and measured
+
+`2196 B` · ETag `c056874e69aa048a616f4e21100cf74a` · VersionId `xLcuAW7VMbGyF.0kpt2LQ9Wb24WVnQaS` ·
+`2026-08-28T01:38:46+00:00`. **9 of 9 SERVED books now pass the consumer's SUM check (was 0 of 9).**
+⭐ **`list-object-versions` returns exactly 2 versions, 0 delete markers** — that is the discriminating
+evidence the authorized scope was honoured; a second unauthorized write would show a third version.
+
+### The strike clause — ruled, superseded, executed
+
+CTO 11583 ruled **do NOT strike**; 11588 recorded that it **supersedes row 11 of that seat's own ruling
+record**, which had said strike. Four edits: retitle, supersede the conclusion (keeping the 84-file /
+0-match sweep and its 18-of-18 control), reframe the "price" section, and **correct `:54-58`, which
+asserted the opposite of Andrew's latest word on his authority.** TO-2 suite: **29 passed.**
+
+⚠ **A fifth instance found and NOT touched:** the opening block carries the same inversion but is
+**locked by `test_satellites.py:346-347`**, which asserts the exact string in `__doc__`. A TO-2
+decision with a test to move, outside what 11583 ruled — surfaced to CTO, not adjudicated.
+
+### Compiler tools, addendum
+
+| tool | result |
+|---|---|
+| `pytest data/assets/scripts/gold/tests/test_satellites.py` | **29 passed** after the docstring edit — the check that made the edit safe to ship. |
+| `s3api list-object-versions` | The instrument that proves *how many* writes happened, not just that one did. 2 versions / 0 delete markers. Nothing else I ran could have distinguished one overwrite from three. |
+| `.tools/proof-of-spec-check.py` | Re-run after the AC2 re-take: **VALID**. |
+
+### What I got wrong, addendum
+
+**I read my own measurement and scored it on the wrong axis.** `sum(weight)=1.0000` is exactly the
+defect, printed in my own deliverable, and I filed it as evidence of correctness. The lesson is not
+"check sums" — it is that a self-authored evidence line gets read for *whether it is consistent*, never
+for *whether it matches the contract someone else declared.*
+
+**Also:** two heredoc failures on non-ASCII in `bytes` literals, and one on an unterminated quote. Both
+are the ASCII rule and the "don't build files with the shell" rule arriving as syntax errors rather
+than as bad output — a cheap failure mode, and the right one.
