@@ -36,5 +36,10 @@
     "contract_bundle_id": "bundle:sha256:7226466de2f94a824ca7603546ab0cc10ebd5f5da0d444a12cd633386719367b",
     "derived_at_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
     "supersedes_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7"
+  },
+  "v0.3-candidate+27": {
+    "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+    "derived_at_commit": "d0398b977db3b010756bf1d407d73b8e456f729b",
+    "supersedes_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7"
   }
 }
