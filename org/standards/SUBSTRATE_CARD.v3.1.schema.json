@@ -1,0 +1,1226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opal.local/standards/SUBSTRATE_CARD.v3.1.schema.json",
+  "title": "Substrate Card v3.1 -- v3 + the key expression's basis may not be inferred",
+  "description": "SUPERSEDES v3 AT THE WAVE BOUNDARY the issuer named (after the fourth KEYFILL fill flips), NOT MID-FILL. v3 stays the freeze for the four fill faces and their verdicts are never re-read under v3.1. ONE change: trust.key.basis_by_field.key_expression is narrowed to measured | held | absent -- 'inferred' is refused by the contract (v3 accepted it; 0.8.0_AE_CloudComp~X mutant M6, 2026-08-28). Everything else is v3 byte-for-byte. Cards re-stamp schema_version 3 -> 3.1 only when they PASS the narrowed enum; a card that fails is a FINDING to its owner, never silently edited. SUPERSEDES v2 AT THE WAVE BOUNDARY, NOT MID-WAVE (the same rule v2 stated for v1). v2 stays the freeze for waves 1-3 of NFRA_SUBSTRATECARDING; every delivered v2 card stays valid under v2. v3 exists because the L0 manifest's `key` RECEIVER (L0_GRAPH_SUBSTRATE_MANIFEST.schema.json #/$defs/part/properties/key) REQUIRES a `key_expression` and v2's trust.key row had no slot for it -- the card could name a key's SPACE, stability and cross-space standing but not the EXPRESSION that yields a member's key, so no card population could ever satisfy the manifest's EMISSION gate (D11_SUBSTRATE_ANALYSIS_PRD.md sec 10.2: 0 of 42 parts carrying all four receivers; a SOURCE gap that 'card harder' cannot close). ONE field added, in the receiver's own vocabulary (read from the manifest schema by build_substrate_card_v3.py, never retyped): trust.key.key_expression. Absence is EXPRESSIBLE, never silent: null is legal ONLY with basis_by_field.key_expression = 'absent' (and therefore the row's floor basis is not 'measured'). Everything else is v2 verbatim. || SUPERSEDES v1 AT THE WAVE BOUNDARY, NOT MID-WAVE. v1 is the FREEZE for wave 1 of NFRA_SUBSTRATECARDING and stays operative there; four TOs and a staged verifier harness reference it, and Rule 27 holds the spec frozen mid-round. v2 exists because 2.0.0_SA_COO~X exercised v1 during the decomp (72935) and found THREE requirements that lived in prose a validator cannot branch on -- the exact CLAUDE.md section-4 defect this project exists to measure, committed inside the project's own contract. In v1 those three are carried as TO acceptance criteria (AC3/AC4/AC5); here they are carried by the schema, so wave 2 does not depend on anyone remembering. The machine-checkable deliverable of a Rule 28 qualification. Seven questions over three DECLARED grains (PROCESS / ARTIFACT / TRUST). Every row carries its own BASIS, EVIDENCE and OWNER, because Rule 24(iv): the values do not move together and neither do their remedies. Shape follows a document-envelope pattern -- a governed document declares how it came to exist, what it claims temporally, where it lives, and what it is a projection of -- extended with the TRUST grain, which describes whether the thing can be STOOD ON rather than merely what it is.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "subject",
+    "as_of",
+    "process",
+    "artifact",
+    "trust",
+    "verdict",
+    "carded_by"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 3.1
+    },
+    "carded_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Seat serial that produced this card."
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "declared_domain"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The resource being qualified, e.g. 'C2', 'D2', 'nerves_resolve', 'comp-similar'."
+        },
+        "kind": {
+          "enum": [
+            "rung",
+            "rail",
+            "tool",
+            "store",
+            "projection",
+            "script",
+            "artifact",
+            "corpus",
+            "other"
+          ],
+          "description": "What class of thing the subject is.",
+          "x-rule24": {
+            "domain": "class of resource being qualified",
+            "grain": "resource",
+            "intent": "route the reader to the right expectations for the rows below",
+            "mece": "'other' closes the population honestly rather than forcing a fit; a value is added only by a naming act",
+            "state_coherence": "kind is stable for the life of the resource; a change of kind is a new resource",
+            "verdict": "pass-with-escape-hatch"
+          }
+        },
+        "declared_domain": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What this resource claims to cover. Rule 24(i) requires the domain be NAMED before coverage can be judged."
+        }
+      }
+    },
+    "as_of": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carded_utc",
+        "commit_ish",
+        "graph_vintage"
+      ],
+      "description": "CONSISTENT STATE IS NOT OPTIONAL. Cards taken at different vintages are individually correct and jointly meaningless -- a wave declares ONE as_of and every card in it carries that stamp. Measured 2026-08-26: a projection lagged its warehouse by 6,261 nodes, and a two-vintage read rendered as a finding about the estate.",
+      "properties": {
+        "carded_utc": {
+          "type": "string",
+          "minLength": 20,
+          "description": "ISO-8601 UTC, from the clock, never estimated."
+        },
+        "commit_ish": {
+          "type": "string",
+          "minLength": 7
+        },
+        "graph_vintage": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Snapshot id of the graph read, or null with a stated reason if the subject has no graph dependency."
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "methodology",
+        "cadence"
+      ],
+      "description": "GRAIN 1 -- how the resource comes to exist.",
+      "properties": {
+        "methodology": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "basis",
+            "composes",
+            "determinism",
+            "evidence",
+            "how",
+            "invents",
+            "materializer_standing",
+            "owner"
+          ],
+          "properties": {
+            "how": {
+              "type": "string",
+              "minLength": 1,
+              "description": "How the resource is defined/assembled, in one paragraph."
+            },
+            "determinism": {
+              "enum": [
+                "deterministic",
+                "inferential",
+                "hybrid",
+                "unknown"
+              ],
+              "description": "Whether re-running produces the same answer.",
+              "x-enum-definitions": {
+                "deterministic": "Same inputs always produce the same output. Re-running is a control.",
+                "inferential": "Produced by a model or other non-deterministic process. Re-running may differ; failure presents as a PLAUSIBLE WRONG OUTPUT rather than an error.",
+                "hybrid": "A declared deterministic core with named inferential stages; the split MUST be enumerated in inference_detail.",
+                "unknown": "Not yet determined. An HONEST value -- never default to 'deterministic' because it looks that way."
+              },
+              "x-rule24": {
+                "domain": "reproducibility of the process that produces this resource",
+                "grain": "resource",
+                "intent": "tell a consumer whether re-running is a control or a coin flip",
+                "mece": "deterministic / inferential / hybrid partition the reproducibility axis; 'unknown' covers the not-yet-measured member so absence is never rendered as determinism",
+                "state_coherence": "unknown may resolve to any of the other three; deterministic <-> inferential is a real change to the resource, not a re-reading",
+                "verdict": "pass"
+              }
+            },
+            "inference_detail": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "description": "REQUIRED when determinism is inferential or hybrid. Nested model use is tracked because it prices the system as well as qualifying it. v2: enforced by if/then, not by this sentence.",
+              "properties": {
+                "model": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "invocations_per_run": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "stages_inferential": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "stages_deterministic": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "failure_is_loud": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ],
+                  "description": "false means a failed inference returns plausible content rather than an error -- the dangerous case."
+                }
+              }
+            },
+            "composes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/joinable_ref"
+              },
+              "description": "What it reuses. Empty array is a claim, not a gap. || x-names-parts: TRUE. ⛔ THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
+            },
+            "invents": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/joinable_ref"
+              },
+              "description": "What it ORIGINATES. ⛔ x-names-parts DELIBERATELY NOT SET, and the removal is MEASURED not reasoned: I marked this field as part-naming when adding the class marker, then enumerated wave-1's 8 delivered cards and found 21 heads via `invents`, ALL 21 UNIQUE to it and ZERO of them a store. Every one is a DEFINITION, THRESHOLD or CLASSIFICATION -- 'the >=2-member domain-promotion threshold', 'SIM_TWIN = 0.60', \"the 'orphan' motif classification\", 'the THIN/UNKNOWN blind-row band', 'the lifecycle_class enum (7 values)'. A parts-derivation reading this field would enumerate 21 CONCEPTS as if they were STORES and try to card them, which is the CARRIER-3 error ('a population is not a store') at 21x scale. ⛔ AND THE REAL FINDING: THIS IS declared_opinions CONTENT. Wave-1 lanes recorded the semantic-defect axis here because it was the only slot that fit, BEFORE declared_opinions existed. So 21 opinions are already harvested from wave 1 at zero cost and belong in methodology.declared_opinions going forward. ORIGINAL INTENT RETAINED: a resource that INVENTS what it should COMPOSE is a duplicate waiting to diverge -- if a lane ever names an actual PART here, that is a duplicate-implementation signal and a finding in its own right, not a subject for a parts sweep."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "materializer_standing": {
+              "enum": [
+                "canonical",
+                "historical_in_use",
+                "superseded",
+                "unknown",
+                "not_applicable"
+              ],
+              "description": "THE GENERATOR-CURRENCY CLAIM, AS A FIELD A CONSUMER CAN REJECT ON. v2 ADDITION, on 2.0.0_SA_COO~X's finding 73259: their wave-1 ruling had to carry this as PROSE inside `evidence` because v1's blocks are additionalProperties:false and no field existed -- which is finding F-2's shape (a requirement living where a validator cannot branch on it) reproduced inside the remedy for a missing-currency claim. VOCABULARY REUSED, NOT RE-COINED: identical values and identical meaning to `generation.materializer_standing` in L0_GRAPH_SUBSTRATE_MANIFEST.schema.json, where the four-postulate x-rule24 record lives. Naming it `generator_currency` here and `materializer_standing` there would have been one concept in two id spaces -- this estate's most repeated defect, inside my own two contracts. 'not_applicable' covers a subject that no materializer produces.",
+              "x-rule24-record-at": "L0_GRAPH_SUBSTRATE_MANIFEST.schema.json#/$defs/part/properties/generation/properties/materializer_standing -- legitimate reuse with the record at source, same pattern as authority_role and basis."
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            },
+            "declared_opinions": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "THE SEMANTIC-DEFECT AXIS. Every filter, threshold, exclusion, cutoff and definitional choice this subject's producer makes -- ENUMERATED. ⛔ ADDED MID-WAVE-2 AND OPTIONAL BY DESIGN: 2.0.0_SA_COO~X dispatched wave 2 with a KNOWN CONTRACT GAP on every TO face -- the field existed in L0_GRAPH_SUBSTRATE_MANIFEST.schema.json but NOT here, though it is the ONE field the canonical-materializer consumer reads, so lanes were told to put it in methodology.how as PROSE and disclose the reason in evidence. That is knowingly the F-2 shape: a claim living where a validator cannot branch on it. The gap is mine. NULL IS LEGAL AND LOUD -- it means the producer's opinions are BURIED IN CODE and this subject is UNREVIEWABLE on the semantic axis, which is itself the finding. OMITTING the field entirely is ALSO CONFORMING, because wave-2 lanes were dispatched against the contract without it and no in-flight card may be invalidated by an additive change. Why a contract and not a scanner: a producer can have run this morning and still encode a deprecated opinion, and every freshness instrument -- mtime, snapshot id, last-write, a wave as_of -- is STRUCTURALLY BLIND to it. No instrument in this estate discriminates a bad definition. The only thing that makes one reviewable is REQUIRING IT BE DECLARED RATHER THAN BURIED, because the defect is not 'wrong opinion', it is 'opinion that cannot be found'."
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "determinism": {
+                    "enum": [
+                      "inferential",
+                      "hybrid"
+                    ]
+                  }
+                },
+                "required": [
+                  "determinism"
+                ]
+              },
+              "then": {
+                "required": [
+                  "inference_detail"
+                ],
+                "properties": {
+                  "inference_detail": {
+                    "type": "object",
+                    "required": [
+                      "model",
+                      "invocations_per_run",
+                      "failure_is_loud"
+                    ],
+                    "description": "MECHANICAL as of v2. invocations_per_run is a COST figure, not a curiosity -- it is how a nested model implementation gets priced when the system is operated."
+                  }
+                }
+              }
+            },
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "cadence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "declared_rhythm",
+            "actual_trigger",
+            "live_matches_declared",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "declared_rhythm": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "e.g. 'nightly 02:00Z'. NULL IS A REAL AND COMMON ANSWER -- a resource with no cadence never refreshes on a schedule, which is a defect and not a config gap."
+            },
+            "actual_trigger": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "What actually fires it. A resource whose only trigger is another process's success HAS NO SCHEDULE and freezes silently when its upstream breaks."
+            },
+            "live_matches_declared": {
+              "enum": [
+                "yes",
+                "no",
+                "unmeasured",
+                "not_applicable"
+              ],
+              "description": "DESIRED vs APPLIED. A declared cadence is not evidence the live instance is fresh."
+            },
+            "live_instance_age": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Measured age of the current instance, if read."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persistence",
+        "location"
+      ],
+      "description": "GRAIN 2 -- what the resource leaves behind.",
+      "properties": {
+        "persistence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "persisted",
+            "authority_role",
+            "mutation_policy",
+            "form",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "persisted": {
+              "type": "boolean",
+              "description": "FALSE IS A COMMON AND IMPORTANT ANSWER. A resource that persists nothing has no vintage of its own and inherits the freshness of substrates it does not control."
+            },
+            "authority_role": {
+              "enum": [
+                "source",
+                "projection",
+                "evidence",
+                "reference",
+                "none"
+              ],
+              "x-enum-definitions": {
+                "source": "Authoritative for its declared concern.",
+                "projection": "Rebuildable view derived from governed inputs. MUST name projection_of.",
+                "evidence": "An observation or receipt supporting a claim without becoming source configuration.",
+                "reference": "External identity or context that informs without governing.",
+                "none": "Persists nothing; the row exists to say so."
+              },
+              "x-rule24": {
+                "domain": "standing of the persisted artifact relative to truth",
+                "grain": "artifact",
+                "intent": "tell a consumer whether editing this changes the world or gets overwritten",
+                "mece": "'none' covers the unpersisted member, which the other four cannot express",
+                "state_coherence": "a projection promoted to source is a governance act, not a refresh",
+                "verdict": "pass"
+              }
+            },
+            "mutation_policy": {
+              "enum": [
+                "editable",
+                "append_only",
+                "replaceable",
+                "immutable",
+                "not_applicable"
+              ]
+            },
+            "form": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "e.g. 'Iceberg table', 'JSON on disk', 'in-memory lru_cache only'."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "home",
+            "projection_of",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "home": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "EXACT location. 'Iceberg/Nessie table X', 's3://bucket/prefix', a repo path, or NULL meaning NOWHERE."
+            },
+            "projection_of": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/joinable_ref"
+              },
+              "description": "THE LINEAGE, AND THE MANIFEST CONSUMES IT. A projection that cannot name its source cannot be checked for lag, and lag is invisible from inside the projection. || x-names-parts: TRUE. ⛔ THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
+            },
+            "co_resident_stores": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/$defs/joinable_ref"
+              },
+              "description": "Other stores holding the same or overlapping content -- the duplicate-store census. || x-names-parts: TRUE. ⛔ THIS FIELD NAMES OTHER PARTS OF THE ESTATE, and any derivation over cards MUST enumerate EVERY field carrying this marker rather than a remembered subset. Added on 2.0.0_SA_COO~X's 73934: the wave-2 subject derivation read composes + projection_of and NEVER READ co_resident_stores -- 13 heads, 12 named ONLY there -- and what went missing included '.comp-graph/graph.json', THE C3 CHAIN'S OWN STAGE-1 SUBSTRATE, from a wave whose purpose is qualifying what C3.i stands on. THE ROOT IS SCHEMA DESIGN, NOT THE DERIVATION: I authored FOUR fields that name parts and marked NONE of them as a class, so the only way to know the set was to remember it -- and SC-m-4's oracle ('reconstructible from composes + projection_of ALONE') froze a remembered subset into an accepted oracle, which I reviewed and did not catch either. A consumer reading a SUBSET of a class it cannot enumerate produces a clean, complete-looking, INCOMPLETE answer -- the coverage axis failing at design time rather than at read time.",
+              "x-names-parts": true
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coverage",
+        "key",
+        "failure_mode"
+      ],
+      "description": "GRAIN 3 -- whether the resource can be STOOD ON. The PROCESS and ARTIFACT grains describe a resource; only this grain qualifies it. These three are the ones always skipped and the ones that draw blood.",
+      "properties": {
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "universe",
+            "denominator",
+            "explicitly_out",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "universe": {
+              "type": "string",
+              "minLength": 1,
+              "description": "What set the resource actually spans."
+            },
+            "denominator": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "PRINT IT. 'N of M' with both numbers named. A count without its denominator cannot be judged."
+            },
+            "explicitly_out": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What is KNOWN to be outside. Naming the exclusions is what makes a clean zero readable."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "denominator_absent_reason": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "REQUIRED when denominator is null. 'Print the denominator' has exactly one lawful exception: a stated reason why the population is not countable. A bare null is the omission Rule 28 q5 exists to forbid."
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "denominator": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "denominator"
+                ]
+              },
+              "then": {
+                "required": [
+                  "denominator_absent_reason"
+                ],
+                "properties": {
+                  "denominator_absent_reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "key": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "identity_space",
+            "key_is_stable",
+            "crosses_spaces",
+            "key_expression",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "identity_space": {
+              "type": "string",
+              "minLength": 1,
+              "description": "What key identifies a member, e.g. 'ARN', 'repo path', 'sha1 of anchor node id', 'logical pipeline name'."
+            },
+            "key_expression": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "THE EXPRESSION THAT YIELDS A MEMBER'S KEY IN identity_space -- what the L0 manifest's `key` receiver consumes (same name, same type, same null semantics as L0_GRAPH_SUBSTRATE_MANIFEST.schema.json #/$defs/part/properties/key/properties/key_expression; read from there at build time). A path grammar, a column, a derivation ('sha1 of anchor node id'), a declared parse -- stated so a consumer can COMPUTE the key, not merely name its space. NULL is STRUCTURAL PAYLOAD ABSENCE, legal only when basis_by_field.key_expression is 'absent' -- and then the row cannot read basis 'measured'. A card whose key row is 'measured' with a null expression is the contradiction v3 exists to make unrepresentable.",
+              "x-rule24-record-at": "L0_GRAPH_SUBSTRATE_MANIFEST.schema.json#/$defs/part/properties/key -- legitimate reuse with the record at source, the same pattern as materializer_standing / authority_role / basis."
+            },
+            "key_is_stable": {
+              "enum": [
+                "stable",
+                "unstable",
+                "unknown"
+              ],
+              "x-enum-definitions": {
+                "stable": "The key survives ordinary change to the thing it names.",
+                "unstable": "The key is derived from something mutable, so the identity dies when that changes and the successor is unlinked.",
+                "unknown": "Not measured."
+              }
+            },
+            "crosses_spaces": {
+              "type": "boolean",
+              "description": "Whether this key can be joined to other id spaces WITHOUT a hand-written parse. A concept wearing several id spaces with no declared mapping is the estate's most repeated defect."
+            },
+            "declared_mapping": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Where the cross-space mapping is DECLARED, or null if it is only derivable by convention."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis_by_field"
+                },
+                {
+                  "description": "v3.1: the key EXPRESSION's own basis may not be 'inferred' -- a key a consumer must be able to COMPUTE is measured (exercised on a real member), held (declared by the owner, unexercised) or absent (null). A reasoned guess about identity is not a basis for a key. Every other sub-claim keeps the shared enum.",
+                  "properties": {
+                    "key_expression": {
+                      "enum": [
+                        "measured",
+                        "held",
+                        "absent"
+                      ]
+                    }
+                  },
+                  "x-rule24": {
+                    "domain": "the basis a key expression rests on",
+                    "grain": "one card's key row",
+                    "intent": "one: how the expression was arrived at",
+                    "mece": "measured (exercised) / held (declared) / absent (null) partition the domain; 'inferred' has no member -- an inferred key is not computable by the field's own definition",
+                    "state_coherence": "each value moves by exactly one act (exercise, declare, remove); none moves with another",
+                    "census_at_narrowing": "'inferred' on this field: 0 of 72 v3 cards (four lanes' arm-2 assertions) -- the narrowing refuses a value nobody wrote and stops anyone writing it",
+                    "verdict": "pass"
+                  }
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "v3: a null key_expression is EXPRESSIBLE ABSENCE -- it requires basis_by_field.key_expression = 'absent' and forbids the row's floor basis 'measured'.",
+              "if": {
+                "properties": {
+                  "key_expression": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "key_expression"
+                ]
+              },
+              "then": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "measured"
+                    }
+                  },
+                  "basis_by_field": {
+                    "required": [
+                      "key_expression"
+                    ],
+                    "properties": {
+                      "key_expression": {
+                        "const": "absent"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "v3: a present key_expression is a non-empty string.",
+              "if": {
+                "properties": {
+                  "key_expression": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "key_expression"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "key_expression": {
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "failure_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "returns_on_failure",
+            "distinguishable_from_true_negative",
+            "basis",
+            "evidence",
+            "owner"
+          ],
+          "properties": {
+            "returns_on_failure": {
+              "type": "string",
+              "minLength": 1,
+              "description": "What the resource actually returns when it CANNOT answer. Exercise it; do not read it from a docstring."
+            },
+            "distinguishable_from_true_negative": {
+              "enum": [
+                "yes",
+                "no",
+                "unmeasured"
+              ],
+              "description": "'no' is the dangerous value: a clean zero that looks identical to a genuine negative. The instrument then reads healthiest exactly when it is most wrong."
+            },
+            "silent_degrade_paths": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "description": "Named routes by which the resource can answer confidently from a degraded state."
+            },
+            "basis": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis"
+                }
+              ],
+              "description": "How this row's answer was arrived at. THIS SCALAR IS THE FLOOR -- the WEAKEST claim across the row's sub-claims, never the mode and never the best. Ordering strongest to weakest: measured > held > inferred > absent ('held' outranks 'inferred' because a named authority DID measure it, just not here). If ANY part of the row is held or inferred, THE ROW IS NOT 'measured'. A scalar reporting the BEST sub-claim over-promises a consumer BY THE SCHEMA'S OWN HAND, which is worse than the gap it replaces."
+            },
+            "evidence": {
+              "$ref": "#/$defs/evidence"
+            },
+            "owner": {
+              "$ref": "#/$defs/owner"
+            },
+            "basis_by_field": {
+              "$ref": "#/$defs/basis_by_field"
+            }
+          },
+          "allOf": [
+            {
+              "description": "THE ENFORCEABLE HALF OF THE FLOOR RULE: a row may not claim basis='measured' while any of its own sub-claims is weaker. The FULL floor (scalar = MIN over the map) is NOT fully machine-enforceable in JSON Schema -- ordering comparisons are not expressible -- so it is STATED in the scalar's description and the 'measured' case, which is the one that over-promises a consumer, is ENFORCED here. Stating the limit because a fix believed total is worse than one known partial.",
+              "if": {
+                "required": [
+                  "basis_by_field"
+                ],
+                "properties": {
+                  "basis": {
+                    "const": "measured"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "basis_by_field": {
+                    "additionalProperties": {
+                      "const": "measured"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standing",
+        "why"
+      ],
+      "properties": {
+        "standing": {
+          "enum": [
+            "SOUND",
+            "QUALIFIED",
+            "UNSOUND",
+            "INCOMPLETE"
+          ],
+          "x-enum-definitions": {
+            "SOUND": "Every row measured; no defect that blocks load-bearing use.",
+            "QUALIFIED": "Every row measured; defects present, NAMED, and each carrying an owner. Usable within the stated limits.",
+            "UNSOUND": "A measured defect that blocks load-bearing use until remedied.",
+            "INCOMPLETE": "One or more rows unmeasured. THIS IS A VERDICT ABOUT THE CARD, NOT ABOUT THE RESOURCE -- the two are routinely collapsed, and collapsing them turns 'we did not finish looking' into 'it is fine'."
+          },
+          "x-rule24": {
+            "domain": "standing of one resource as load-bearing substrate, as of this card",
+            "grain": "card",
+            "intent": "gate whether work may be built on this resource",
+            "mece": "SOUND/QUALIFIED/UNSOUND partition the measured cases; INCOMPLETE covers the unmeasured member and is deliberately about the CARD rather than the resource",
+            "state_coherence": "INCOMPLETE resolves to one of the other three by measurement; UNSOUND -> QUALIFIED/SOUND requires a REMEDY, not a re-read -- different clocks, which is why the owner column is mandatory",
+            "verdict": "pass"
+          }
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocking_defects": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "forward_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standing",
+        "set_by",
+        "basis"
+      ],
+      "description": "WHAT BECOMES OF THIS SUBJECT IN THE CANONICAL REBUILD. Andrew-direct 2026-08-26, VERBATIM: 'do a wave 2 substrate carding to get all the definitions of these things as they stand currently, but some of them i think we can safely say will be deprecated, and we will want to go through and identify and mark those cards with some kind of deprecation tag AFTER carding.' ⛔ THE WORD 'AFTER' IS THE DESIGN. A card DESCRIBES what is; a disposition DECIDES what should be. Mixing them would be Rule 24(iii) intent incoherence -- and worse, a lane that carded and dispositioned in one pass would be adjudicating its own subject. Born UNDECIDED and set in a SECOND pass by a seat with the authority to retire something.\n\nNAMED forward_disposition, NOT 'disposition': that token already carries a DIFFERENT meaning in this project (0.4.0_DT_ClientPlatform~X's manifest reconcile, where a 'disposition' is how a residue item was classified to sum to 42). One word, two meanings, is the estate's most repeated defect and it would have been minted here on the day this project measured it five times.",
+      "properties": {
+        "standing": {
+          "enum": [
+            "keep",
+            "replace",
+            "deprecate",
+            "undecided"
+          ],
+          "x-enum-definitions": {
+            "keep": "Survives the canonical rebuild substantially as-is.",
+            "replace": "A canonical agnostic materializer supersedes it; the FUNCTION continues, this IMPLEMENTATION does not.",
+            "deprecate": "Retired, and nothing replaces it -- the need itself is gone or was never real.",
+            "undecided": "THE BORN STATE. Not yet adjudicated. Never defaulted to 'keep' because a thing currently runs."
+          },
+          "x-rule24": {
+            "domain": "what becomes of one carded subject in the canonical rebuild",
+            "grain": "subject (one card)",
+            "intent": "ONE intent -- decide the subject's forward fate. Deliberately NOT what the card's other rows do, which is DESCRIBE its present state.",
+            "mece": "keep / replace / deprecate partition the decided cases (survives · function survives but implementation does not · nothing survives); 'undecided' covers the not-yet-adjudicated member, which is the state EVERY card is born in per the 'after carding' instruction.",
+            "state_coherence": "THE VALUES DO NOT MOVE TOGETHER. undecided -> any is an ADJUDICATION. keep -> deprecate is a RETIREMENT DECISION with an owner and a blast radius, never a re-reading. replace -> keep means the canonical materializer FAILED to cover the case, which is a finding about the rebuild and not about this subject.",
+            "token_census": "word-boundary occupancy at 275fe497c7 over org/standards + the D11 PRD + the rule bank: disposition 2 (DIFFERENT meaning, see description), deprecate 0, deprecated 2, replace 1, retire 2, supersede 0. 'forward_disposition' 0 -- no collision.",
+            "verdict": "pass"
+          }
+        },
+        "set_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Serial of the seat that adjudicated. NULL while undecided. ⛔ MUST NOT be the carding lane for its own subject -- describing and deciding are different acts and the carding seat has a stake in the second."
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        },
+        "evidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decided_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "basis": {
+      "enum": [
+        "measured",
+        "inferred",
+        "held",
+        "absent"
+      ],
+      "description": "How this row's answer was arrived at. A VALUE MUST CARRY ITS CLAIM in a field a consumer can reject on -- never in prose, a name, or the reader's memory of how it was produced.",
+      "x-enum-definitions": {
+        "measured": "Read or exercised directly against the thing itself.",
+        "inferred": "Reasoned from adjacent evidence. NON-ACTIONABLE on its own.",
+        "held": "Asserted by a named authority without independent measurement here.",
+        "absent": "No basis exists yet. Honest, and required rather than guessing."
+      },
+      "x-rule24": {
+        "domain": "epistemic standing of one card row",
+        "grain": "row",
+        "intent": "let a consumer REFUSE an unmeasured value",
+        "mece": "measured/inferred/held partition the cases where an answer exists; 'absent' covers the no-answer member",
+        "state_coherence": "absent -> measured is work; inferred -> measured is re-derivation with a different instrument, never a re-run of the same command",
+        "verdict": "pass"
+      }
+    },
+    "evidence": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The grounding: 'file:line @ <commit-ish>', a command exercised with its output, or an explicit 'NONE -- basis is inferred/absent'. A line citation without a vintage is not a citation."
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Serial or role who owns the REMEDY for this row. Rule 24(iv): a stale cache, a missing id grammar and a silent failure mode are three remedies, three owners, three clocks. A card without owners is a wish list. 'UNOWNED' is a legal and loud value."
+    },
+    "joinable_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id"
+      ],
+      "description": "⛔ AN IDENTITY AND A DESCRIPTION ARE TWO FIELDS, NOT ONE STRING. v2 addition on 2.0.0_SA_COO~X's finding 73294: with these arrays typed as bare strings, lanes correctly wrote entries like 'kuzu_nessie_db -- EMBEDDED COUNT SURFACES ONLY (...)' -- individually more informative than a bare id, and jointly UNJOINABLE. Measured across 8 wave-1 cards: 51 raw entries, 43 distinct subjects, 6 subjects carrying MULTIPLE SPELLINGS, and a consumer taking them at face value would enumerate 51 parts where 43 exist -- AN OVER-COUNT THAT LOOKS LIKE THOROUGHNESS, the most dangerous shape a census error can take. NO LANE COULD HAVE AVOIDED IT WHILE FOLLOWING THE SCHEMA; the defect was the field type.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "THE JOINABLE IDENTITY, and nothing else. A bare identifier a consumer matches on WITHOUT parsing prose. No ' -- ', no parentheticals, no qualification. ENFORCED, not merely asked: an id containing ' -- ' or ' (' is REJECTED. Those are the exact two prose markers 2.0.0_SA_COO~X's dedup heuristic had to key on across 8 cards, which is the measurement that says they are the shapes that actually occur. Without this the fix separates the SLOTS and lets the prose walk straight back into the identity -- a fix that looks applied and is not.",
+          "not": {
+            "pattern": " -- | \\("
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The qualification that would otherwise be jammed into the id. Free prose, never joined on, and its presence is why the id can stay clean."
+        }
+      }
+    },
+    "basis_by_field": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "enum": [
+          "measured",
+          "inferred",
+          "held",
+          "absent"
+        ]
+      },
+      "description": "PER-SUB-CLAIM PROVENANCE, keyed by the field it covers. v2 addition on the P1 class measured across TWO contracts and THREE instances by 0.4.0_DT_ClientPlatform~X, 0.8.0_AE_CloudComp~X and 2.0.0_SA_COO~X: one enum over a unit containing mixed-provenance parts forces a single value, and the truth survives only as prose in `evidence`, where no validator can branch on it. MEASURED CONSEQUENCE: 4 of 21 rows in ACCEPTED, VERIFIED cards read basis='measured' while carrying a HELD sub-claim. THE CARDS WERE NOT AT FAULT -- every one disclosed the held part in prose. The contract had nowhere to put the truth."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "properties": {
+              "standing": {
+                "const": "SOUND"
+              }
+            },
+            "required": [
+              "standing"
+            ]
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "description": "SOUND asserts EVERY ROW MEASURED. A row at basis 'absent' contradicts that, and the PRD's own warning is that 'we did not finish looking' ships as 'it is fine'. v2 makes the contradiction unrepresentable.",
+        "properties": {
+          "process": {
+            "properties": {
+              "methodology": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              },
+              "cadence": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "artifact": {
+            "properties": {
+              "persistence": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              },
+              "location": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "trust": {
+            "properties": {
+              "coverage": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              },
+              "key": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              },
+              "failure_mode": {
+                "properties": {
+                  "basis": {
+                    "not": {
+                      "const": "absent"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
