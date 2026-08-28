@@ -1,244 +1,253 @@
 {
-  "_anchor": "record_ref carries an ANCHOR the resolver opens at ruled_at: #class-X for ARM 4 (this record rules BY CLASS -- 'the reason IS the record'), #rows-N,M for ARM 1 (that record rules row by row). An entry whose anchor is absent from the record at its own ruled_at is an ORPHAN. RESIDUAL: class anchoring is COARSER than row anchoring -- it proves a ruling section covering this class exists at a real commit, not that this exact arm was itemised. Closing that needs the record to itemise 24 rows, which is an ADJUDICATION act, not the gate's.",
-  "_class_D": "DEFERRED BY LANDED DESIGN, never suppressed -- printed every run with its reversal trigger (R2-2's landing makes corroborated + superseded_by the desired expressible state) so it returns by construction rather than by anyone remembering.",
-  "_dead_arms": "An entry whose arm no longer exists carries arm_digest ARM_ABSENT + arm_absent_at. It suppresses nothing (no live row can key to it) and cannot be revived silently.",
-  "_generated": "DERIVED from ARM 4's own output at the adjudicated tip -- never hand-listed, so it cannot drift from the arm it disposes.",
-  "_key": "record_type|discriminant|field|value-set  -- THE VALUE SET IS PART OF THE ARM'S IDENTITY. A (record_type, discriminant, field) TRIPLE IS NOT UNIQUE: entity_binding.binding_basis and identity_relation.claim_origin each carry TWO arms requiring evidence_refs on DIFFERENT value sets, and a triple key silently collapsed 20 rows to 18 -- suppressing an arm nobody ruled on. Found by generating the sidecar, not by designing it.",
-  "_lapse": "If a (record_type, discriminant, field) exists here but with a DIFFERENT value set, the suppression LAPSES and the row is reported RE-ADJUDICATION REQUIRED, naming both sets. A ruling about a 4-value enum does not survive it becoming 5. An arm absent entirely is reported NEW. Neither is ever silently suppressed.",
-  "_link": "R3-CVO-2: every entry carries record_ref + ruled_at + arm_digest. An entry missing any is an ORPHAN -> IGNORED -> the row prints NEW + WARN (fail-open-to-NEW, never to suppressed). A digest that no longer matches the live arm is STALE -> RE-ADJUDICATION.",
-  "_record": "org/standards/isck/ARM4_ADJUDICATION.md",
-  "_ruled_by": "1.0.0_SA_CTO~X (77047 concur; rulings in ARM4_ADJUDICATION.md)",
-  "entries": {
-    "bridge_assertion|claim_origin|evidence_refs|independently_observed,model_inferred,rule_derived": {
-      "arm_digest": "7f0d9e2f6e4d52bab4666aff34fe71c19a3fdd7a9ea062da5b92015e1d9a16e6",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "independently_observed",
-        "model_inferred",
-        "rule_derived"
-      ]
-    },
-    "bridge_assertion|registry_standing|evidence_refs|admitted": {
-      "arm_digest": "4a10c940e821f3af9d533cb3f4a900167b2fb74ba206337cb6190ce6ba11096e",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "admitted"
-      ]
-    },
-    "bridge_assertion|verification_standing|evidence_refs|contradicted,corroborated": {
-      "arm_digest": "c187b299e9fa27a12f60d20266b3ce00b8d8c4fd42990519da99ed21c8934a58",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "contradicted",
-        "corroborated"
-      ]
-    },
-    "bridge_assertion|verification_standing|superseded_by|superseded": {
-      "arm_absent_at": "e29ac3ab23f62a44b35741ca635b7b2039aa8dec",
-      "arm_digest": "ARM_ABSENT",
-      "class": "D",
-      "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone",
-      "note": "the R2-2 landing REMOVED this REQUIRE arm (superseded no longer requires superseded_by), so this ruling has no live subject. Kept, not deleted: deleting a ruling is an adjudication act. If the arm returns, ARM_ABSENT cannot match a real digest, so it lapses to RE-ADJUDICATION rather than silently suppressing.",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-D",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "superseded"
-      ]
-    },
-    "coherence_evaluation|currency|evidence_refs|ahead_of_target,at_target,behind_target": {
-      "arm_digest": "48c0a7017e414929d4326295529841b45c06d050c89f2aa9b83e858813a8b0cf",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "ahead_of_target",
-        "at_target",
-        "behind_target"
-      ]
-    },
-    "coherence_evaluation|integrity|evidence_refs|mismatch,verified": {
-      "arm_digest": "bea4a48bab6480c51c9c799f2ad4fbab4a712d624188a526a23fb81fd4762660",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "mismatch",
-        "verified"
-      ]
-    },
-    "contest_event|event_kind|basis|opened": {
-      "arm_digest": "759959590cb4584893c1b6dcb8909eee60d7a76b4287689c2cfeda41cafe4a27",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "opened"
-      ]
-    },
-    "contest_event|event_kind|evidence_refs|opened": {
-      "arm_digest": "759959590cb4584893c1b6dcb8909eee60d7a76b4287689c2cfeda41cafe4a27",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "opened"
-      ]
-    },
-    "entity_binding|binding_basis|evidence_refs|independently_observed": {
-      "arm_digest": "df875e99aa697b7288de645f7185674140164db4c9d9f5984912edbf8badf859",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "independently_observed"
-      ]
-    },
-    "entity_binding|binding_basis|evidence_refs|model_inferred,rule_derived": {
-      "arm_digest": "02dcade2490fe0692f7cce3e92071384a259571879811abf46fc21779250726d",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "model_inferred",
-        "rule_derived"
-      ]
-    },
-    "identity_relation|claim_origin|evidence_refs|independently_observed": {
-      "arm_digest": "df875e99aa697b7288de645f7185674140164db4c9d9f5984912edbf8badf859",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "independently_observed"
-      ]
-    },
-    "identity_relation|claim_origin|evidence_refs|model_inferred,rule_derived": {
-      "arm_digest": "02dcade2490fe0692f7cce3e92071384a259571879811abf46fc21779250726d",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "model_inferred",
-        "rule_derived"
-      ]
-    },
-    "identity_relation|relation_type|evidence_refs|retirement": {
-      "arm_digest": "28bb7bb93cd4511f8d2eb890195584e65b17eb91315071723fb35fc3081f405c",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "retirement"
-      ]
-    },
-    "identity_relation|verification_standing|evidence_refs|contradicted,corroborated": {
-      "arm_digest": "c187b299e9fa27a12f60d20266b3ce00b8d8c4fd42990519da99ed21c8934a58",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "contradicted",
-        "corroborated"
-      ]
-    },
-    "identity_relation|verification_standing|superseded_by|superseded": {
-      "arm_absent_at": "e29ac3ab23f62a44b35741ca635b7b2039aa8dec",
-      "arm_digest": "ARM_ABSENT",
-      "class": "D",
-      "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone",
-      "note": "the R2-2 landing REMOVED this REQUIRE arm (superseded no longer requires superseded_by), so this ruling has no live subject. Kept, not deleted: deleting a ruling is an adjudication act. If the arm returns, ARM_ABSENT cannot match a real digest, so it lapses to RE-ADJUDICATION rather than silently suppressing.",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-D",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "superseded"
-      ]
-    },
-    "materializer_version|bundle_completeness|configuration_digest|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "materializer_version|bundle_completeness|declared_opinions_digest|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "materializer_version|bundle_completeness|dependency_lock_digest|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "materializer_version|bundle_completeness|normalizer_versions|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "materializer_version|bundle_completeness|runtime_contract_version|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "materializer_version|bundle_completeness|source_tree_digest|complete": {
-      "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
-      "class": "B",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "complete"
-      ]
-    },
-    "mint_receipt|collision_preflight|evidence_refs|checked_unique": {
-      "arm_digest": "a586d2a8ca6d5b3427823905ab3c4ce98d41dae1d77136b16af0c5370f18aad8",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "checked_unique"
-      ]
-    },
-    "state_observation|failure_state|evidence_refs|observed_absent": {
-      "arm_digest": "fd15ed696d02eac3b146605669d97bf5be0476fc895dcdeb51d149566f5ae4f1",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "observed_absent"
-      ]
-    },
-    "state_observation|failure_state|evidence_refs|partial": {
-      "arm_digest": "dcea3428bc73f6b64b7a56970a2adaeca8169256ebcd8855a30dccff2aa4e07b",
-      "class": "A",
-      "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
-      "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
-      "values_at_adjudication": [
-        "partial"
-      ]
-    }
+ "_anchor": "record_ref carries an ANCHOR the resolver opens at ruled_at: #class-X for ARM 4 (this record rules BY CLASS -- 'the reason IS the record'), #rows-N,M for ARM 1 (that record rules row by row). An entry whose anchor is absent from the record at its own ruled_at is an ORPHAN. RESIDUAL: class anchoring is COARSER than row anchoring -- it proves a ruling section covering this class exists at a real commit, not that this exact arm was itemised. Closing that needs the record to itemise 24 rows, which is an ADJUDICATION act, not the gate's.",
+ "_class_D": "DEFERRED BY LANDED DESIGN, never suppressed -- printed every run with its reversal trigger (R2-2's landing makes corroborated + superseded_by the desired expressible state) so it returns by construction rather than by anyone remembering.",
+ "_dead_arms": "An entry whose arm no longer exists carries arm_digest ARM_ABSENT + arm_absent_at. It suppresses nothing (no live row can key to it) and cannot be revived silently.",
+ "_generated": "DERIVED from ARM 4's own output at the adjudicated tip -- never hand-listed, so it cannot drift from the arm it disposes.",
+ "_key": "record_type|discriminant|field|value-set  -- THE VALUE SET IS PART OF THE ARM'S IDENTITY. A (record_type, discriminant, field) TRIPLE IS NOT UNIQUE: entity_binding.binding_basis and identity_relation.claim_origin each carry TWO arms requiring evidence_refs on DIFFERENT value sets, and a triple key silently collapsed 20 rows to 18 -- suppressing an arm nobody ruled on. Found by generating the sidecar, not by designing it.",
+ "_lapse": "If a (record_type, discriminant, field) exists here but with a DIFFERENT value set, the suppression LAPSES and the row is reported RE-ADJUDICATION REQUIRED, naming both sets. A ruling about a 4-value enum does not survive it becoming 5. An arm absent entirely is reported NEW. Neither is ever silently suppressed.",
+ "_link": "R3-CVO-2: every entry carries record_ref + ruled_at + arm_digest. An entry missing any is an ORPHAN -> IGNORED -> the row prints NEW + WARN (fail-open-to-NEW, never to suppressed). A digest that no longer matches the live arm is STALE -> RE-ADJUDICATION.",
+ "_record": "org/standards/isck/ARM4_ADJUDICATION.md",
+ "_ruled_by": "1.0.0_SA_CTO~X (77047 concur; rulings in ARM4_ADJUDICATION.md)",
+ "entries": {
+  "bridge_assertion|claim_origin|evidence_refs|independently_observed,model_inferred,rule_derived": {
+   "arm_digest": "7f0d9e2f6e4d52bab4666aff34fe71c19a3fdd7a9ea062da5b92015e1d9a16e6",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "independently_observed",
+    "model_inferred",
+    "rule_derived"
+   ]
+  },
+  "bridge_assertion|registry_standing|evidence_refs|admitted": {
+   "arm_digest": "4a10c940e821f3af9d533cb3f4a900167b2fb74ba206337cb6190ce6ba11096e",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "admitted"
+   ]
+  },
+  "bridge_assertion|verification_standing|evidence_refs|contradicted,corroborated": {
+   "arm_digest": "c187b299e9fa27a12f60d20266b3ce00b8d8c4fd42990519da99ed21c8934a58",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "contradicted",
+    "corroborated"
+   ]
+  },
+  "bridge_assertion|verification_standing|superseded_by|superseded": {
+   "arm_absent_at": "e29ac3ab23f62a44b35741ca635b7b2039aa8dec",
+   "arm_digest": "ARM_ABSENT",
+   "class": "D",
+   "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone",
+   "note": "the R2-2 landing REMOVED this REQUIRE arm (superseded no longer requires superseded_by), so this ruling has no live subject. Kept, not deleted: deleting a ruling is an adjudication act. If the arm returns, ARM_ABSENT cannot match a real digest, so it lapses to RE-ADJUDICATION rather than silently suppressing.",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-D",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "superseded"
+   ]
+  },
+  "coherence_evaluation|currency|evidence_refs|ahead_of_target,at_target,behind_target": {
+   "arm_digest": "48c0a7017e414929d4326295529841b45c06d050c89f2aa9b83e858813a8b0cf",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "ahead_of_target",
+    "at_target",
+    "behind_target"
+   ]
+  },
+  "coherence_evaluation|integrity|evidence_refs|mismatch,verified": {
+   "arm_digest": "bea4a48bab6480c51c9c799f2ad4fbab4a712d624188a526a23fb81fd4762660",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "mismatch",
+    "verified"
+   ]
+  },
+  "contest_event|event_kind|basis|opened": {
+   "arm_digest": "759959590cb4584893c1b6dcb8909eee60d7a76b4287689c2cfeda41cafe4a27",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "opened"
+   ]
+  },
+  "contest_event|event_kind|evidence_refs|opened": {
+   "arm_digest": "759959590cb4584893c1b6dcb8909eee60d7a76b4287689c2cfeda41cafe4a27",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "opened"
+   ]
+  },
+  "entity_binding|binding_basis|evidence_refs|independently_observed": {
+   "arm_digest": "df875e99aa697b7288de645f7185674140164db4c9d9f5984912edbf8badf859",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "independently_observed"
+   ]
+  },
+  "entity_binding|binding_basis|evidence_refs|model_inferred,rule_derived": {
+   "arm_digest": "02dcade2490fe0692f7cce3e92071384a259571879811abf46fc21779250726d",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "model_inferred",
+    "rule_derived"
+   ]
+  },
+  "identity_relation|claim_origin|evidence_refs|independently_observed": {
+   "arm_digest": "df875e99aa697b7288de645f7185674140164db4c9d9f5984912edbf8badf859",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "independently_observed"
+   ]
+  },
+  "identity_relation|claim_origin|evidence_refs|model_inferred,rule_derived": {
+   "arm_digest": "02dcade2490fe0692f7cce3e92071384a259571879811abf46fc21779250726d",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "model_inferred",
+    "rule_derived"
+   ]
+  },
+  "identity_relation|relation_type|evidence_refs|retirement": {
+   "arm_digest": "28bb7bb93cd4511f8d2eb890195584e65b17eb91315071723fb35fc3081f405c",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "retirement"
+   ]
+  },
+  "identity_relation|verification_standing|evidence_refs|contradicted,corroborated": {
+   "arm_digest": "c187b299e9fa27a12f60d20266b3ce00b8d8c4fd42990519da99ed21c8934a58",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "contradicted",
+    "corroborated"
+   ]
+  },
+  "identity_relation|verification_standing|superseded_by|superseded": {
+   "arm_absent_at": "e29ac3ab23f62a44b35741ca635b7b2039aa8dec",
+   "arm_digest": "ARM_ABSENT",
+   "class": "D",
+   "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone",
+   "note": "the R2-2 landing REMOVED this REQUIRE arm (superseded no longer requires superseded_by), so this ruling has no live subject. Kept, not deleted: deleting a ruling is an adjudication act. If the arm returns, ARM_ABSENT cannot match a real digest, so it lapses to RE-ADJUDICATION rather than silently suppressing.",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-D",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "superseded"
+   ]
+  },
+  "materializer_version|bundle_completeness|configuration_digest|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "materializer_version|bundle_completeness|declared_opinions_digest|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "materializer_version|bundle_completeness|dependency_lock_digest|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "materializer_version|bundle_completeness|normalizer_versions|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "materializer_version|bundle_completeness|runtime_contract_version|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "materializer_version|bundle_completeness|source_tree_digest|complete": {
+   "arm_digest": "767ae3253c8ef498a6c72269585f6fe5982e1ac503b7807e6fd3fffd37373d27",
+   "class": "B",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-B",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "complete"
+   ]
+  },
+  "mint_receipt|collision_preflight|evidence_refs|checked_unique": {
+   "arm_digest": "a586d2a8ca6d5b3427823905ab3c4ce98d41dae1d77136b16af0c5370f18aad8",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "checked_unique"
+   ]
+  },
+  "state_observation|failure_state|evidence_refs|observed_absent": {
+   "arm_digest": "fd15ed696d02eac3b146605669d97bf5be0476fc895dcdeb51d149566f5ae4f1",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "observed_absent"
+   ]
+  },
+  "state_observation|failure_state|evidence_refs|partial": {
+   "arm_digest": "dcea3428bc73f6b64b7a56970a2adaeca8169256ebcd8855a30dccff2aa4e07b",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "36a5514df84ad5a5dac0f5274c79c4a0da8384b5",
+   "values_at_adjudication": [
+    "partial"
+   ]
+  },
+  "contest_event|outcome|evidence_refs|nullified": {
+   "arm_digest": "db11db665aea692d0557af61c93728c5104ecb49eeee15e970955a7a62143c48",
+   "class": "A",
+   "record_ref": "org/standards/isck/ARM4_ADJUDICATION.md#class-A",
+   "ruled_at": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+   "values_at_adjudication": [
+    "nullified"
+   ]
   }
+ }
 }

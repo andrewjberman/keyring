@@ -22,6 +22,12 @@ re-open it.**
 
 ## NO — 21 candidates, by class (the reason IS the record)
 
+**ROUND 4 (third pin f8b9c6c497, R4-CRO-7): +1 class A — `contest_event` `outcome=nullified ->
+evidence_refs REQUIRED`.** Evidence is monotone here as everywhere: no outcome FORBIDS evidence,
+so the require has no mirror to cut; the arm's own forbids (`consequence_refs`,
+`surviving_contest_id`) are paired on their own fields. Sidecar entry
+`contest_event|outcome|evidence_refs|nullified`, digest from ARM 4's own map at the pin.
+
 **CLASS A — evidence is MONOTONE (15 candidates: every `-> evidence_refs` arm across
 bridge_assertion, coherence_evaluation, entity_binding, identity_relation, mint_receipt,
 state_observation — the 13th is `state_observation` `partial -> evidence_refs`, born at ARM-1
