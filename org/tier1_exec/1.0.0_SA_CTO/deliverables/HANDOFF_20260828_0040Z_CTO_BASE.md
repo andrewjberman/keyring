@@ -72,4 +72,15 @@ on the runner after date 1's oracle read and before V14-4c(e) is treated as fina
 judged before that re-run is PROVISIONAL and the 533 do not start on a provisional (e). In the gap
 before COO's first tick, the CTO seat is the live reader of ~L's date-1 report.
 
+UPDATE 00:4xZ (before the reboot stand-down, Andrew's word via 1.0.0_SA_CTO~X 77168): DATE 1 IS
+ARTIFACT-COMPLETE on the correct host (~L 77153, 00:36:23Z, rc=0, wall 120.7s): 4 of 4 manifests
+carry the basis + the -1 sentinel; flow boundary holds on an instrument independent of the driver's
+oracle; the conditional halt left the already-running shared runner alone. V14-2 re-exercise was
+RUNNING on the runner at stand-down; V14-4c(e) NOT judged; the 533 NOT started. nna schema 1.1 on
+date 1 is EXPECTED (each writer has its own ladder; closed 77159). Open non-blocking question to
+DS~U: why dim_account's manifest shows no schema field (a00 pins MANIFEST_SCHEMA_VERSION separately).
+Successor's first act: read ~L's V14-2 result + (e) judgment from the inbox; the loop ticks from 9.
+Tick 8 log @6062b28375. This device REBOOTS after this stand-down; local tails ride the first
+post-reboot integration window.
+
 Push state at handoff: HEAD LOCAL, origin/CLOUD @3fbb493cda (ls-remote 00:35Z); integrator-only.
