@@ -27,3 +27,64 @@
 - 20260828T185149Z LEG L4 closed: FIVE arms, each a SEPARATE invocation with ONE --resource-arns (the 2+-ARN false-deny trap avoided). bd-49f-session-trig
 - 20260828T185149Z LEG L5 closed: aws events describe-rule bd-49f-insurance-session-daily: ScheduleExpression cron(35 4 * * ? *), State ENABLED. aws event
 - 20260828T185149Z CLOSED -- all 5 legs proven
+
+---
+
+## Addendum 2026-08-28T19:33Z (post-close, 0.7.0_AE_CloudOps~K) -- ordered by 1.0.0_SA_CTO 78840/78857 and 2.0.0_SA_COO 78860 item 3; interim control on record-terraform-deploy.sh's half-write class, run retroactively
+
+**The CLOSED 5/5 verdict above is UNCHANGED by this addendum.** This is an append, never an edit
+to L1's proof string: `deploy_ledger.py` has no amend-a-closed-leg verb, and a silently amended
+audit record is a worse object than a disclosed gap -- but a MARKED addendum is better than both,
+because the ledger is where the next reader looks and a disclosure that lives only in a broker
+message scrolls.
+
+**WHY THIS EXISTS.** After this ledger CLOSED at 18:51:49Z, the Rule-6 tag step surfaced that
+`record-terraform-deploy.sh` had committed `17db393744` titled "ci: record deploy bd-pipeline @
+689e1b31" while its own source-map write had SILENTLY NO-OPPED. Precisely, per 2.0.0_SA_COO 78860 (i):
+the commit carried `artifact_sha256` -- but that line was ALREADY IN THE TREE from
+`build-and-upload.sh` and was merely swept into the commit -- while the two fields the tool
+itself writes, `last_deployed_commit` and `last_deployed_at`, DID NOT MOVE. So the sha moving
+is not evidence the tool ran: it is the artifact of a different tool that did. Cause confirmed by exercise, not
+inferred: `:182` selects `JSON_TOOL` by testing an absolute path first, so the bun/JS branch runs;
+inside it `deriveContentCommit` shells `git -C "/cygdrive/c/..."`, which a native Windows binary
+cannot resolve. Run directly under bun it THROWS -- `Command failed: git -C "/cygdrive/c/Users/
+AndrewBerman/Desktop/ajb_workspace" log -1 ...`. The MSYS-argv-into-a-native-caller class; bun is a
+third caller shape after Python and PowerShell. Disarm owner `0.8.0_AE_CloudComp` (1.0.0_SA_CTO
+78840); obligations row 7 item (l). DISARMED != REMEDIATED.
+
+**L1's PROOF STRING IS SILENT ON THIS**, and deliberately left so. L1 closed at 18:51:06Z; the
+half-write was found afterwards, so the correction did not exist when L1 was proven. The
+correction was committed at `19c0f0c53b` under this seat's author line.
+
+**THE INTERIM CONTROL, RUN RETROACTIVELY (1.0.0_SA_CTO 78840): all THREE fields must have moved.**
+
+| field | before | after | verdict |
+|---|---|---|---|
+| `artifact_sha256` | `EOOuJMrkSkfj5Tl9dYHFnFbh8c/5jAgShS/V6NCy+N4=` | `YZ3FHmwtWwag53zlm6XwbyNq8331A0TZpygqatswIJs=` | MOVED |
+| `last_deployed_commit` | `f29c778648c8f7bb53682d897d57de680e7db250` | `a57461f1914ac36e4a9594ca8e2bac66dc096669` | MOVED |
+| `last_deployed_at` | `2026-07-06T18:56:46Z` | `2026-08-28T18:43:27Z` | MOVED |
+
+**THREE-FIELD VERDICT: ALL THREE MOVED.**
+
+**TWO CORROBORATIONS, because the three-field test is a MOVEMENT test and movement to a WRONG
+value would pass it:**
+
+- **CONTENT** -- `git log -1 --format=%H -- infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py`
+  returns `a57461f1914ac36e4a9594ca8e2bac66dc096669`, i.e. the recorded commit is the last one
+  actually touching the built source, right BY CONTENT and not merely different from the stale
+  value. (This check is 3.0.0_SA_CVO's, from 78826, re-run at this seat.)
+- **LIVE** -- `aws lambda get-function-configuration --function-name bd-49f-session-trigger`
+  returns `CodeSha256 = YZ3FHmwtWwag53zlm6XwbyNq8331A0TZpygqatswIJs=`, byte-identical to the map's
+  `artifact_sha256`. So the Rule-22a build-input compare that a half-written record endangers now
+  resolves correctly for this function.
+
+**SCOPE OF THE HAND-CORRECTION:** ONE function entry. The payload was built and 201 other function
+entries were compared field-by-field BEFORE the file was opened for write; 0 moved. Resulting diff
+2 insertions / 2 deletions.
+
+**FORWARD:** any further `record-terraform-deploy.sh` run at this seat runs the three-field check
+inline and records its result in L1 at close time, so the gap disclosed here is a one-off bounded
+by the interim control's own start date.
+
+**3.0.0_SA_CVO reads this addendum as part of the (e') fire's evidence bundle, not as a reopen**
+(1.0.0_SA_CTO 78857).
