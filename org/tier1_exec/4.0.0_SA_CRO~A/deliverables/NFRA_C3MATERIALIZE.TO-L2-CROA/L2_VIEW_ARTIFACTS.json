@@ -8,7 +8,7 @@
     {
       "view_id": "STRUCTURE",
       "signal": "who connects to whom",
-      "delivery_status": "DELIVERED-BLOCKED",
+      "delivery_status": "DELIVERED-MEASURED",
       "entity_set": {
         "definition": "Every edge-incident CloudNode in the current device-local Kuzu graph whose layer is not semctl; semctl is excluded to prevent inference from prior C2/C3 output, and isolated nodes carry no topology signal so are outside this view's entity set.",
         "denominator": 19482,
@@ -175371,74 +175371,69 @@
         }
       },
       "matrix": {
-        "status": "ABSENT-NOT-ZERO",
+        "status": "MEASURED",
         "pairs": [],
-        "default_for_unlisted_pair": "ABSENT",
-        "reason": "No conforming graph-tool-class SBM inference implementation is installed or repository-local; a different community algorithm is not represented as SBM."
+        "carrier": "FACTORIZED-SERVED-REFERENCE",
+        "served_artifact": {
+          "build_id": "eb009c01-c27e-46b3-af85-eb22dbfba01a",
+          "running_image_digest": "sha256:17fdebd7a31c10b60e96018639cd6f37728e649d926469e37e603073fb9996c6",
+          "records": {
+            "uri": "s3://opal-313476888478-globgrph/c3materialize-b4/out/eb009c01-c27e-46b3-af85-eb22dbfba01a-b4231e6374ce/SBM_RUN_RECORDS.json",
+            "sha256": "73dad5d29ec803c71c5213ca2d56cade093d8bc7effa4467619d710b88e3df23",
+            "size_bytes": 2868507
+          },
+          "factorized_W": {
+            "uri": "s3://opal-313476888478-globgrph/c3materialize-b4/out/eb009c01-c27e-46b3-af85-eb22dbfba01a-b4231e6374ce/W_STRUCTURE_FACTORIZED.json",
+            "sha256": "e91d69910fc9d4eabb58eedb8a73165476225ab838977e8d6c16604af3f5e19a",
+            "size_bytes": 2662267
+          }
+        },
+        "evaluator": "W_STRUCTURE(i,j) = numerator(i,j) / 25 for every unordered pair {i,j} with 0 <= i < j < 19482",
+        "pair_domain": 189764421,
+        "denominator": 25,
+        "consumer_contract": "Resolve the immutable factorized_W URI, verify its sha256, and reconstruct W through the carried evaluator and partitions; pairs remains empty because no pair rows are embedded in this view."
       },
       "computation": {
         "requested": "degree-corrected SBM runs followed by pair co-assignment frequency over N runs",
-        "executed": "Kuzu topology census only; inference refused before run 1",
-        "input_digest": "a323f598e82eed9a694e808c5a14877727c699a3c8aa3ce9daac64f09dc361e4",
+        "executed": "25 graph-tool degree-corrected SBM runs; the complete consensus is served through the immutable factorized artifact reference",
         "input_rows": {
           "nodes_scanned": 20805,
           "edge_incident_entities": 19482,
           "directed_edges": 36549
         },
         "installed": {
-          "graph_tool": false,
-          "numpy": true,
-          "scipy": true,
-          "networkx": true
+          "graph_tool": "2.68 (commit 318a7c03)"
         },
-        "historical_run_status": "HISTORICAL-UNREPRODUCIBLE: its producer, output, and 19,482/36,513 input are absent; not reused as current evidence"
+        "coassignment_mass": 151588768,
+        "published_equals_recomputed": true
       },
       "reproducibility": {
         "N_requested": 25,
-        "N_executed": 0,
-        "seed_policy": "seed_i = first 64 bits of sha256(<git_anchor>:STRUCTURE:<zero-based-run-index>)",
-        "seeds_requested": [
-          11284868843452828917,
-          5075270632046806682,
-          13686292143241046120,
-          15597861202820837515,
-          3486012351794005015,
-          6721980933964625084,
-          3584038169737975412,
-          2139935406018282822,
-          5484899870490013053,
-          1310184860320038145,
-          12044094596476128357,
-          7345340417532409835,
-          10261307640075820778,
-          1702120525980633064,
-          7619283844953230536,
-          6708812720807326435,
-          17053633050954296439,
-          9050374920031556969,
-          16678601187169425364,
-          6352370543983202106,
-          9237064739681585952,
-          5380177228512795676,
-          13256259227400796326,
-          12219396382330092655,
-          16048400562678707331
-        ],
-        "per_run_record": "Would record seed, partition assignment, objective, iteration count, convergence state, and input digest; no run record exists because the dependency gate failed before run 1.",
-        "consensus_definition": "W_STRUCTURE(i,j) = runs placing i and j in the same block / N; this consensus, not a selected partition, is the intended view."
+        "N_executed": 25,
+        "seed_policy": "anchor-derived; requested and effective seeds are carried per run in the immutable records artifact",
+        "per_run_record": "The immutable records artifact carries 25 distinct seeds, 25 full 19,482-node partitions, objective, iteration count, convergence state, input digest, implementation version, and running-image digest.",
+        "consensus_definition": "W_STRUCTURE(i,j) = runs placing i and j in the same block / 25; this consensus, not a selected partition, is the measured view."
       },
       "discrimination_gate": {
-        "status": "FAIL",
+        "status": "PASS",
         "could_have_differed": true,
-        "observed": "No measured affinities; zero bits admitted to downstream fusion.",
+        "observed": "The full 189,764,421-pair domain has 26 distinct affinity values; the matrix is neither uniformly zero nor uniformly one.",
         "rule": "PASS only if N runs complete and the consensus matrix contains at least two affinity values with neither all-pair 0 nor all-pair 1."
       },
       "failure_mode": {
-        "mode": "Missing conforming inference engine/producer prevents the view from being measured.",
+        "mode": "NONE",
         "distinguishable_from_genuine_low_affinity": true,
-        "distinction": "Dependency absence emits ABSENT-NOT-ZERO and zero measured pairs; genuine low affinity requires a completed run record and measured numeric affinities near zero."
+        "distinction": "The completed run records and numeric factorized consensus distinguish measured low affinity from missing evidence."
       },
-      "named_hazard_answer": "graph_tool is absent. NumPy/SciPy/NetworkX presence is not treated as proof of an equivalent SBM. The gap is BLOCKING for STRUCTURE affinity and is carried as a failed delivered view."
+      "named_hazard_answer": "The accepted digest-addressed image ran graph-tool 2.68 and emitted 25 complete, converged, independently checked partitions; no substitute community algorithm is credited.",
+      "re_delivery": {
+        "transition": "DELIVERED-BLOCKED -> DELIVERED-MEASURED",
+        "verdict": "STRUCTURE CONFORMS",
+        "verdict_author": "4.0.0_SA_CRO~X",
+        "verdict_message": "20260828T212818Z_4.0.0_SA_CRO_X_SOVEREIGN_VERDICT__B4_L2_STRUCTURE_CONFORMS",
+        "verdict_time": "2026-08-28T21:28:18Z",
+        "scope": "STRUCTURE only; BEHAVIOR is untouched"
+      }
     },
     {
       "view_id": "BEHAVIOR",
