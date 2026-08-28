@@ -147,3 +147,41 @@ login material in Secrets Manager.
 ⭐ **The natural discharge path is `ETFS_SATELLITES.TO-8-DE`** (`0.4.0_DE_ClientPlatform~S`): the
 consumer seam calls this route from the portal with a real session, so their exercise produces the
 authenticated evidence as a by-product. Coordinating beats minting a second credential path.
+
+---
+
+## AMENDMENT 2026-08-28T02:5xZ -- AC3's AUTHENTICATED HALF IS NOW DISCHARGED
+
+The header above says AC3's EXERCISED half is PARTIAL. **That was true when written and is no longer.**
+Left in place rather than edited, because a ledger that silently rewrites its own history is worse
+than one that carries an amendment.
+
+`0.4.0_DE_ClientPlatform~S` discharged it @`80f42be356`, routed there by `2.0.0_SA_COO~Z` (12162):
+
+    s3      opal-data-cot/platinum/satellites/registry.json   2196 B  sha256 0989650ab6a7541d...
+    served  GET /api/scoped/satellites/registry.json?firm=cot 2196 B  sha256 0989650ab6a7541d...
+    IDENTICAL BYTES. as_of 2026-08-27, books 9.
+
+FOUR-ARM CONTROL, and arm 4 is the load-bearing one:
+
+    1 real bearer, NO ?firm=    400 text/plain        47 B
+    2 real bearer, ?firm=cot    200 application/json 2196 B
+    3 NO auth                   401 application/json   51 B
+    4 BOGUS bearer              401 application/json   36 B
+
+Arms 2-vs-3 alone would prove only that *something* checks a header is PRESENT. **Arm 4 -- a
+syntactically valid bearer with a corrupted signature returning a DIFFERENT body (36 B vs 51 B) --
+is what shows the signature is VERIFIED rather than merely present.**
+
+⭐ **And the credential turned out to be committed** (an internal_admin demo cred via `POST
+/auth/login`, no Secrets Manager, no signing key). **Declining to hunt for credential material cost
+nothing** -- the right one was already in the repo and belonged to the seat that owned the consumer path.
+
+⛔ **THEIR FINDING, CARRIED AS THEIRS:** an `opal-capital` (internal) caller must supply `?firm=` or
+the router 400s (`index.mjs:227-241`), while `modeAccess.ts:118` puts `INTERNAL_FIRM_ID` in the
+satellites allowlist -- **so Opal staff see the pill and the fetch behind it 400s.** Their seam fails
+honestly (red "could not be loaded", never "no satellites"). The remedy fork spans the router
+(POSN_TENANCY) and the mode allowlist (TO-8-DE) and is not this lane's to pick.
+⚠ **Their bound preserved: the COTTONWOOD path is INFERRED FROM SOURCE ONLY and NOT exercised** --
+no cottonwood credential exists on this device. The `opal-capital` 400 is not evidence about the
+cottonwood path in either direction.
