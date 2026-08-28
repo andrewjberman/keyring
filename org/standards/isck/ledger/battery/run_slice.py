@@ -279,7 +279,21 @@ def main():
     print("                 POSITIVE %s" % json.dumps(r5["positive"]))
     print("                 NEGATIVE %s" % json.dumps(r5["negative"]))
     print("AC5 verdict      %s" % ("PASS" if ok5 else "FAIL"))
-    return 0 if (adm == den and ok5 and two_e_a and two_e_b) else 1
+
+    # AC4's LAST LIMB: the snapshot opened ALONE must equal an INDEPENDENT LOAD by record-id SET,
+    # not by count. Equal sizes and equal anchors are satisfiable by two different memberships, and
+    # a count check passes on both -- the set is the question the criterion actually asks.
+    snap_ids, snap_anchor = snapshot.record_ids_alone(pub)
+    live_ids = set(store._primary_of(r) for r in store.estate_records())         if hasattr(store, "estate_records") else set(
+            store._primary_of(r) for r, _s in store.estate())
+    same_set = snap_ids == live_ids
+    print("AC4 snapshot     opened ALONE %d ids @ anchor %d | independent load %d ids @ anchor %d"
+          % (len(snap_ids), snap_anchor, len(live_ids), store.head_commit_seq()))
+    print("AC4 set equality %s%s"
+          % ("record-id SETS EQUAL" if same_set else "SETS DIFFER",
+             "" if same_set else "  only-in-snapshot %s | only-in-live %s"
+             % (sorted(snap_ids - live_ids)[:3], sorted(live_ids - snap_ids)[:3])))
+    return 0 if (adm == den and ok5 and two_e_a and two_e_b and same_set) else 1
 
 
 if __name__ == "__main__":
