@@ -121,6 +121,147 @@ def _terms(pattern):
     return [t for t in re.split(r"[^A-Za-z0-9_]+", pattern.lower()) if len(t) > 2]
 
 
+def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_all, page, limit,
+                band_filter):
+    """--corpus aws (Andrew-direct 2026-08-28, "based off of the comp-kuzu surface ... the easiest way
+    to have fast scan access to aws cloud"): the LIVE AWS plane as a search corpus.
+
+    Source = the GLOBGRPH Kuzu DB (infra/aws/globgrph/kuzu_cli.py), whose aws layer is produced by the
+    02:00Z full re-derive + the CloudTrail-driven incremental -- NOT parsed Terraform. Every aws
+    CloudNode carries name / arn / node_type / drift_class / source / snapshot_ts + a props JSON
+    (runtime, handler, role, env keys, tf provenance ...). One Cypher pull, then the SAME in-process
+    regex the repo corpus uses, over `name + arn + props` (or name + arn only under --name).
+    Pathspecs are node_type filters (case-insensitive: lambda == LAMBDA). Bands = node_type.
+    DENOMINATOR = nodes scanned; VINTAGE = the DB's own provenance header (built: ... age ...);
+    drift_class rides every hit -- the "exists in AWS but not in the repo" case is a labelled column.
+    A FAILED pull is printed as a failure, never as a zero.
+    """
+    import json
+    import subprocess
+
+    cli = os.path.join(WS, "infra", "aws", "globgrph", "kuzu_cli.py")
+    if not os.path.isfile(cli):
+        print("comp-find [aws] %r" % pattern)
+        print("  BLOCKED: %s is absent -- no AWS corpus on this device (not a zero)." % cli)
+        return 2
+    types = [t.upper() for t in pathspec]
+    where = "n.layer='aws'"
+    if types:
+        where += " AND n.node_type IN [%s]" % ",".join("'%s'" % t.replace("'", "") for t in types)
+    cypher = ("MATCH (n:CloudNode) WHERE %s RETURN n.node_type AS t, n.name AS name, n.arn AS arn, "
+              "n.drift_class AS drift, n.source AS src, n.snapshot_ts AS ts, n.props AS props "
+              "LIMIT 1000000" % where)
+    env = dict(os.environ)
+    env.setdefault("GLOBGRPH_KUZU_INCREMENTAL_REFRESH", "1")
+    try:
+        proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
+                              capture_output=True, text=True, timeout=600, env=env, cwd=WS)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        print("comp-find [aws] %r" % pattern)
+        print("  BLOCKED: comp-kuzu pull failed (%s) -- NO MEASUREMENT, not a zero." % exc)
+        _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, "corpus=aws err=%s" % exc)
+        return 2
+    vintage = [ln.strip() for ln in (proc.stderr or "").splitlines()
+               if ln.strip().startswith(("built:", "Nessie HEAD:", "DB:"))]
+    body = proc.stdout or ""
+    start = body.find("[")
+    try:
+        rows = json.loads(body[start:]) if start != -1 else []
+    except ValueError:
+        rows = None
+    if proc.returncode != 0 or rows is None:
+        print("comp-find [aws] %r" % pattern)
+        print("  BLOCKED: comp-kuzu returned rc=%s / unparseable JSON -- NO MEASUREMENT, not a zero."
+              % proc.returncode)
+        tail = (proc.stderr or "").strip().splitlines()[-3:]
+        for ln in tail:
+            print("    " + ln[:200])
+        _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern,
+                           "corpus=aws rc=%s" % proc.returncode)
+        return 2
+
+    flags = re.IGNORECASE if ignore_case else 0
+    try:
+        rx = re.compile(pattern, flags)
+    except re.error as exc:
+        print("comp-find: WARNING: %r is not a valid regex (%s). Searched for it as a LITERAL string."
+              % (pattern, exc))
+        rx = re.compile(re.escape(pattern), flags)
+
+    hits = []          # (node_type, name, arn, drift, src, fragment)
+    scanned = 0
+    drift_census = {}
+    for r in rows:
+        scanned += 1
+        t = str(r.get("t") or "")
+        name = str(r.get("name") or "")
+        arn = str(r.get("arn") or "")
+        drift = str(r.get("drift") or "")
+        drift_census[drift] = drift_census.get(drift, 0) + 1
+        props = "" if name_mode else str(r.get("props") or "")
+        hay = name + " " + arn + (" " + props if props else "")
+        m = rx.search(hay)
+        if not m:
+            continue
+        lo = max(0, m.start() - 60)
+        frag = hay[lo:m.end() + 100].replace("\n", " ")
+        hits.append((t, name, arn, drift, str(r.get("src") or ""), frag))
+
+    by_type = {}
+    for h in hits:
+        by_type.setdefault(h[0], []).append(h)
+    ordered = [h for t in sorted(by_type) for h in sorted(by_type[t], key=lambda x: x[1])]
+    if band_filter:
+        ordered = [h for h in ordered if h[0] == band_filter.upper()]
+    if files_only:
+        seen, collapsed = set(), []
+        for h in ordered:
+            if h[2] not in seen:
+                seen.add(h[2])
+                collapsed.append(h)
+        ordered = collapsed
+    total = len(ordered)
+    if show_all:
+        start_i, end_i, page, pages = 0, total, 1, 1
+    else:
+        pages = max(1, (total + limit - 1) // limit)
+        page = min(page, pages)
+        start_i, end_i = (page - 1) * limit, min((page - 1) * limit + limit, total)
+
+    print("comp-find [aws %s] %r" % ("name" if name_mode else "content", pattern))
+    print("  DENOMINATOR: %d hit(s) across %d aws node(s) scanned [corpus=aws%s]%s"
+          % (len(hits), scanned, (" types=" + ",".join(types)) if types else "",
+             (" | band=%s -> %d" % (band_filter.upper(), total)) if band_filter else ""))
+    print("  VINTAGE: %s" % ("  ".join(vintage) if vintage else "UNREAD (no provenance header on stderr)"))
+    print("  DRIFT (scanned): %s" % (" ".join("%s=%d" % (k or "unset", v)
+                                              for k, v in sorted(drift_census.items())) or "none"))
+    counts = " ".join("%s=%d" % (t, len(by_type[t])) for t in sorted(by_type))
+    print("  BANDS = node_type (true totals, not this page): %s" % (counts or "none"))
+    print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, max(0, end_i - start_i), total))
+    print()
+    if total == 0:
+        print("  NO HITS. This is a MEASURED zero over %d aws node(s) in the graph -- not a claim the "
+              "term is absent from AWS: only what the graph MODELS can match (comp-kuzu --schema for "
+              "the classes; an unmodeled resource class returns 0 identically)." % scanned)
+    else:
+        cur = None
+        for t, name, arn, drift, src, frag in ordered[start_i:end_i]:
+            if t != cur:
+                cur = t
+                print("  [%s]" % t)
+            print("    %s  drift=%s src=%s" % (name, drift or "unset", src or "unset"))
+            print("      %s" % arn)
+            if not name_mode and frag and frag.strip() not in (name, arn):
+                print("      ...%s..." % frag.strip()[:200])
+        if end_i < total:
+            print("  MORE: %d hit(s) not shown. Next: --page %d   (or --all)" % (total - end_i, page + 1))
+    _comprail.log_rail(RAIL_LOG, "RUN-FIND", "comp-find", pattern,
+                       "mode=%s corpus=aws hits=%d scanned=%d types=%s page=%d/%d"
+                       % ("name" if name_mode else "content", len(hits), scanned,
+                          ",".join(types) or "*", page, pages))
+    return 0
+
+
 def _usage():
     print("comp-find <pattern> [pathspec ...]     -- graded content search (replaces comp-grep)")
     print("comp-find --name <glob> [pathspec ...] -- graded filename search (replaces comp-glob)")
@@ -135,6 +276,11 @@ def _usage():
     print("     all       default + gitignored, minus the declared ephemeral floor   [THE DEFAULT]")
     print("     ignored   ONLY gitignored files -- 'is it in the hidden files?'")
     print("     raw       default + ALL gitignored, floor disabled (slow, complete)")
+    print("     aws       THE LIVE AWS PLANE via comp-kuzu (Andrew-direct 2026-08-28): regex over every")
+    print("               aws CloudNode's name + arn + props; pathspecs = node_type filters (LAMBDA,")
+    print("               IAM_ROLE, S3_BUCKET, ...); --name = name/arn only; drift_class per hit;")
+    print("               denominator = nodes scanned; vintage = the DB's own built: line.")
+    print("               e.g. comp-find --corpus aws opal-gateway | comp-find --corpus aws 'python3\\.9' LAMBDA")
     print("  --hidden      report the out-of-corpus (hidden) file count for this scope and exit")
     print("  e.g. comp-find apply_aua_overrides data/")
     print("       comp-find --name 'test_pipescript_*.py'")
@@ -178,7 +324,7 @@ def main() -> int:
         elif a == "--corpus":
             i += 1
             corpus = (argv[i] if i < len(argv) else "").lower()
-            if corpus not in _comprail.CORPUS_MODES:
+            if corpus != "aws" and corpus not in _comprail.CORPUS_MODES:
                 print("comp-find: ERROR: unknown --corpus %r. Valid: %s"
                       % (corpus, ", ".join(_comprail.CORPUS_MODES)))
                 return 2
@@ -245,6 +391,11 @@ def main() -> int:
         print("comp-find: ERROR: no pattern given.")
         return _usage() or 2
     pattern, pathspec = positional[0], positional[1:]
+
+    if corpus == "aws":
+        return _aws_corpus(pattern, pathspec, ignore_case=ignore_case, name_mode=name_mode,
+                           files_only=files_only, show_all=show_all, page=page, limit=limit,
+                           band_filter=band_filter)
 
     # Same BRE-vs-ERE footgun guard comp-grep carries: python `re` treats \| \( \) as LITERALS, so
     # a BRE-muscle-memory pattern silently matches nothing and "0 hits" reads as confirmed absence.

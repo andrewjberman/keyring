@@ -136,4 +136,35 @@ Six cards, six recs, all approved as recommended:
 5. **Native Grep/Glob -- keep nudge-and-proceed**; revisit with T2.
 6. **`comp-grep` -> forwarder onto comp-find** (one WARN line).
 Earlier the same session: comp-find stays REPO-ONLY (out-of-worktree walk dropped); an AWS-substrate
-`--corpus aws` is a proposal to write, not a build.
+`--corpus aws` is a proposal to write, not a build. LATER (~20:2xZ): Andrew steered the substrate to the
+comp-kuzu surface ("based off of the comp-kuzu surface ... the easiest way to have fast scan access to
+aws cloud") -- measured: the graph's aws layer is the LIVE plane (02:00Z full re-derive + CloudTrail
+incremental; 27,054 nodes; every node carries name/arn/node_type/drift_class/source/snapshot_ts +
+a props JSON), so `--corpus aws` = one Cypher pull + the same in-process regex, bands by node_type,
+denominator = node count, vintage = the DB's `built:` line, drift_class per hit.
+
+## 8. LANDED (2026-08-28 ~20:3xZ)
+
+- Law: CLAUDE.md Rule 21 @9ed33c473e (T1 + cost/non-application clause; corpus default flip; repo-only).
+- Mechanism: @32d5967277 -- `.tools/hooks/comp-tool-hud.sh` (per-segment rail, emit_deny, fast path,
+  ALLOW-SEARCH rows), `.tools/comprail-gate1-fptest.sh` (43 cases; RED 25/43 vs the pre-T1 hook, GREEN
+  43/43; saves+restores the live marker; `COMPRAIL_HOOK=` control), `.tools/comp-find` default `all`,
+  `.tools/comp-grep` forwarder, regenerated `infra/system/06_current_state.{md,json}` (comp-system gate).
+- Broadcast: one MCP to 2.0.0_SA_COO / 1.0.0_SA_CTO / 0.0.0_AB_MSTR (card 3), push state LOCAL at send.
+- Measured cost after the fast path (3 samples, MSYS): `git status` 1.8-2.5 s (pre-T1 single sample
+  1.5 s), `python x && echo` 1.5-2.5 s, `grep -rn foo org/` 3.0-4.6 s (DENY path), `cd && aws iam` 5.1-5.6 s
+  (DENY path; pre-T1 0.98 s because it EXITED at the lead verb -- the hole). The fixed cost is jq +
+  bash startup; the search-token path pays the segment loop.
+- `comp-find --corpus aws` BUILT (~20:4xZ, `.tools/comp-find::_aws_corpus`): one `kuzu_cli.py --json`
+  pull of `n.layer='aws'` (2,089 nodes), the same in-process regex over name+arn+props; pathspecs =
+  node_type filters (case-insensitive); `--name` = name/arn only; bands = node_type; `--band`,
+  `--files`, paging as the repo corpus; DENOMINATOR = nodes scanned; VINTAGE = the DB's provenance
+  header (built/age/Nessie HEAD) captured from stderr; DRIFT census printed on every run (measured
+  2026-08-28: DECLARED=1501, LIVE-no-DECLARED=320, AWS_MANAGED=33, LIVE-INCREMENTAL=3, unset=232). A
+  failed pull is BLOCKED, never a zero; the zero text names the graph's modelling as the boundary.
+  Exercised: `opal-gateway` 33 hits/14 types; `python3\.9 lambda` 3/198; `--name daily --files`;
+  `zzz-no-such` zero arm; `portal --band S3_BUCKET` 2. Repo-only ruling otherwise unchanged.
+- Landing friction (each a pre-existing gate, none about the change): comp-system 06 STALE (regenerated,
+  staged with the commit); pipescript-suite gate RED on `test_pipescript_digest::test_all_arms_pass`
+  -- discriminated pre-existing (identical failure with the committed comp-find restored) -> landed
+  under the audited `PIPESCRIPT_SUITE_SKIP`, finding routed to COO in the broadcast.

@@ -86,7 +86,10 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     `ignored` = only-gitignored MINUS the same printed floor; `raw` = everything (an every-file
     denominator uses `raw` — `all` AND `ignored` understate by the floor, disclosed on their own
     denominator lines). comp-find is REPO-ONLY by ruling (a pathspec outside the worktree is not a
-    zero, it is `git rc=128`). **`--hidden <path>` is the census verb: run it before
+    zero, it is `git rc=128`) — **except `--corpus aws` (2026-08-28, Andrew-direct "based off of the
+    comp-kuzu surface"): the LIVE AWS plane** — regex over every aws CloudNode's name+arn+props,
+    pathspecs = node_type filters, `drift_class` per hit (`LIVE-no-DECLARED` = in AWS, not in the
+    repo), denominator = nodes scanned, vintage = the DB's own `built:` line. **`--hidden <path>` is the census verb: run it before
     converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.**
     Log: `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-08-27/` @592e0255b1.
 20. **Check the dependency graph BEFORE any cloud/infra/data change and before frontend commits** — pick
