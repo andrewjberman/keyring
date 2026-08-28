@@ -1,0 +1,136 @@
+#!/usr/bin/env python
+"""WP-3b -- THE SLICE RUNNER. The first real substrate admission, end to end, with both pins printed.
+
+Runs the whole slice against the REAL declared population and prints every number it counted:
+  AC1  the population, declared -- both pins, never a typed size
+  AC2  the translator -- claims carried, nothing fabricated
+  AC3  admission through sec 2c -- admitted + refused + errored == the denominator
+  AC4  replay at named anchors, with an unbindable anchor refused
+  AC5  the snapshot as a SURFACE -- VACUUM INTO, positive and negative controls
+
+TWO PINS ON EVERY COUNT, because this population has two and conflating them is how a slice ends up
+describing an artifact nobody can find:
+  pin 1  the committed immutable PRESERVATION COPY -- the generator's last RATIFIED output
+  pin 2  the DECLARED manifest -- pin 1 plus `part.identity` from the design lane's ruled mapping
+
+THE VINTAGE CAVEAT TRAVELS WITH THE RESULT. l0_compile_w3.py REFUSES to re-emit ("the candidate set
+has CHANGED since ratification -- pinned d86a59514ec3, now 87528e2a6d89"). This slice admits the
+RATIFIED set at its ratified vintage. The generator is neither invoked nor bypassed; the moved set is
+the next vintage's population and the re-read is the ratification owner's act.
+
+AND THE FALSIFIERS RUN BESIDE THE RESULT, not instead of it. A run that admits 42 of 42 and refuses
+nothing is indistinguishable, on its face, from a ledger that admits anything -- so the same real
+records are re-admitted with ONE reference broken two different ways, and each must refuse exactly
+one part. Without those arms "42 admitted, 0 refused" is a number, not evidence.
+"""
+import collections
+import json
+import os
+import sys
+import tempfile
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ISCK = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(0, ISCK)
+
+from ledger import engine, slice as sl, snapshot            # noqa: E402
+from ledger.battery.arms import fixtures as fx              # noqa: E402
+
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(ISCK)))
+DECLARED = os.path.join(ROOT, "org", "tier2_senior", "0.4.0_DT_ClientPlatform", "deliverables",
+                        "D11_MANIFEST", "graph_object_manifest.declared.json")
+PIN_PRESERVED = "057220cca9"
+PIN_DECLARED = "06a5ae751c"
+RATIFIED_VINTAGE = "d86a59514ec3"
+MOVED_SET = "87528e2a6d89"
+
+
+def admit_all(batches, tmp, tag, mutate=None):
+    """Admit every part's batch. `mutate` breaks ONE reference to prove refusal is reachable."""
+    store = engine.Store(os.path.join(tmp, "slice-%s.sqlite" % tag))
+    fx.open_authority(store)
+    admitted, refused, errored, refusals = 0, 0, 0, []
+    for i, (pid, records) in enumerate(batches):
+        recs = [dict(r) for r in records]
+        if mutate and i == 0:
+            for r in recs:
+                if r["record_type"] == "entity_binding":
+                    r["entity_serial"] = ("ent:does-not-exist" if mutate == "dangling"
+                                          else recs[0]["receipt_id"])
+        try:
+            store.admit(recs, actor=fx.ROOT)
+            admitted += 1
+        except engine.Rejected as exc:
+            refused += 1
+            refusals.append((pid, exc.rule, str(exc)))
+        except Exception as exc:                                     # noqa: BLE001
+            errored += 1
+            refusals.append((pid, "ERROR:" + type(exc).__name__, str(exc)))
+    return store, admitted, refused, errored, refusals
+
+
+def main():
+    manifest = json.load(open(DECLARED, encoding="utf-8"))
+    parts = manifest["parts"]
+    print("WP-3b SLICE -- both pins on every count")
+    print("   pin 1 preservation copy  @%s" % PIN_PRESERVED)
+    print("   pin 2 declared manifest  @%s" % PIN_DECLARED)
+    print("   VINTAGE CAVEAT: admits the RATIFIED candidate set at %s; the set has since moved to "
+          "%s and the generator REFUSES to re-emit until the ratification is re-read. Neither "
+          "invoked nor bypassed." % (RATIFIED_VINTAGE, MOVED_SET))
+
+    observers = [p for p in parts if "/deliverables/" in (p.get("home") or "")]
+    print("AC1 population   COUNTED %d parts | observers %d (D11's own deliverables, admitted "
+          "knowingly and flagged)" % (len(parts), len(observers)))
+
+    batches, errors, census = sl.translate_population(manifest)
+    print("AC2 translator   translated %d | errored %d | census %s"
+          % (len(batches), len(errors), json.dumps(census, sort_keys=True)))
+    if errors:
+        c = collections.Counter(f for e in errors for f in e.fields)
+        print("                 fields the substrate could not supply: %s" % json.dumps(dict(c)))
+
+    tmp = tempfile.mkdtemp()
+    store, adm, ref, err, refusals = admit_all(batches, tmp, "clean")
+    den = len(parts)
+    print("AC3 admission    admitted %d | refused %d | errored %d | translator-errored %d"
+          % (adm, ref, err, len(errors)))
+    print("                 reconciliation %d + %d + %d + %d = %d of %d"
+          % (adm, ref, err, len(errors), adm + ref + err + len(errors), den))
+    for pid, rule, msg in refusals[:10]:
+        print("                 REFUSED %s -> %s" % (pid[:44], msg[:110]))
+
+    for tag, label in (("dangling", "one binding -> a missing entity"),
+                       ("wrongclass", "one binding -> a mint_receipt (wrong CLASS)")):
+        _s, a2, r2, e2, _rf = admit_all(batches, tmp, tag, mutate=tag)
+        ok = (r2 + e2) == 1
+        print("AC3 falsifier    %-44s admitted %d refused %d -> %s"
+              % (label, a2, r2 + e2, "PASS" if ok else "DID NOT REFUSE -- the admission path is blind"))
+
+    head = store.head_commit_seq()
+    rep = store.replay("commit_seq", head)
+    print("AC4 replay       as_of commit_seq %d -> anchor_commit_seq %d | estate counted %d"
+          % (head, rep["anchor_commit_seq"], rep["counted"]))
+    try:
+        store.replay("frontier", "sf:never-admitted")
+        print("AC4 falsifier    unbindable anchor ADMITTED -- the anchor path is blind")
+    except engine.Rejected as exc:
+        print("AC4 falsifier    unbindable frontier anchor REFUSED as %s" % exc.rule)
+
+    pub = os.path.join(tmp, "published.sqlite")
+    naive = os.path.join(tmp, "naive.sqlite")
+    _p, method, digest, nbytes = snapshot.publish(store.path, pub)
+    snapshot.naive_main_file_copy(store.path, naive)
+    rows = len(store.estate())
+    ok5, r5 = snapshot.controls(store.path, pub, naive, rows, head)
+    print("AC5 snapshot     via %s | %d bytes | %s" % (method, nbytes, digest[:40]))
+    print("                 fingerprint_method %s | normalization_version %s"
+          % (snapshot.FINGERPRINT_METHOD, snapshot.NORMALIZATION_VERSION))
+    print("                 POSITIVE %s" % json.dumps(r5["positive"]))
+    print("                 NEGATIVE %s" % json.dumps(r5["negative"]))
+    print("AC5 verdict      %s" % ("PASS" if ok5 else "FAIL"))
+    return 0 if (adm == den and ok5) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

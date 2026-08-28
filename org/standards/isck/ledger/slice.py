@@ -146,7 +146,17 @@ def translate_part(part, authority, minted_at):
     pid = part.get("id")
     serial = "ent:" + _slug(pid)
 
-    # -- the entity's identity vocabulary. The manifest carries NONE of these; each is named.
+    # -- THE IDENTITY VOCABULARY now arrives DECLARED, in `part.identity`, written by the
+    # declaration pass from the design lane's ruled mapping (l0_declare_identity.py; mapping v0.1
+    # @b3aeaf7b4f; receiver-validated @8607debb64). The translator READS a declaration; it still
+    # does not make one. A part whose identity is `unknown`, or absent entirely, errors exactly as
+    # before -- the ruling supplied the values, it did not weaken the refusal.
+    ident = part.get("identity")
+    if isinstance(ident, dict) and ident.get("claim_status") == "declared":
+        part = dict(part)
+        for f in ("entity_class", "plane", "entity_grain", "identity_scope", "identity_policy"):
+            if ident.get(f) is not None:
+                part[f] = ident[f]
     missing = []
     for field, why in (
         ("entity_class", "the manifest carries `part_class` (store/materializer/projection/"
