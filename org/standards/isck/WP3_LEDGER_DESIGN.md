@@ -224,8 +224,11 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 ### 3b. RECORDS EXERCISED PER RESPONSIBILITY — the author's statement (R4-DT-3, `0.4.0_DT_ClientPlatform~X` 77606: no text instrument can read this off the rows, and a row that says "binding machine" never writes `binding_event`)
 
 ⛔ **STATUS OF THIS TABLE (issuer ruling `2.0.0_SA_COO~X` 77608, AMENDED by 77618 after this
-addendum landed): the WAVE-1 AC3 VALUE with package status `INFERRED` — promote-or-kill per row
-from the fixtures in wave 2.** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
+addendum landed): the WAVE-1 AC3 VALUE, package status now `MEASURED` — the wave-2 fixtures ran
+the promote-or-kill and PROMOTED 13 of 13 rows (`0.4.0_DT_ClientPlatform~X` 77756, AC7 at
+91f38fb966: every arm run against a store that records the `record_type` of everything admission
+is asked to admit, accepted or refused — a different instrument from wave 1's prose classifier, and
+the two agree on every row; no KILL; CVO~X verification of AC7 pending at this edit).** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
 authored answer as typed-beside-derived; 77618 distinguishes that class (a value with NO falsifier
 beside a later measured one) from this table, which carries its falsifier: each row's fixtures'
 `record_type` set must be a SUBSET of the row below — a fixture outside its row's set is a KILL,
