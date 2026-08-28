@@ -1,0 +1,83 @@
+{
+  "schema": "nfra-c3materialize.structure-population-carrier-validation/1.0",
+  "status": "PASS",
+  "carrier": {
+    "path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/STRUCTURE_POPULATION_CARRIER.json",
+    "bytes": 8946077,
+    "sha256": "b4231e6374ce4360c05fed99a527eaec9e00be23c4858369148869c7ff044dfd",
+    "git_anchor": "bb01a202721f9c3a719a3a662319cebc194a1720",
+    "source_input_digest": "a323f598e82eed9a694e808c5a14877727c699a3c8aa3ce9daac64f09dc361e4",
+    "object_read_counts": {
+      "edge_incident_non_semctl_nodes": 19482,
+      "directed_non_semctl_edge_rows": 36549,
+      "unique_projected_source_target_type_tuples": 36548,
+      "duplicate_projected_tuple_count": 1,
+      "duplicate_projected_row_count": 1
+    },
+    "normalization": {
+      "encoding": "UTF-8",
+      "line_endings": "LF",
+      "serialization": "json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False) followed by one LF byte",
+      "node_order": "ascending node_id from the held Kuzu query",
+      "edge_order": "ascending source_id, target_id, edge_type from the held Kuzu query",
+      "directed_edge_tuple_fields": [
+        "source_id",
+        "target_id",
+        "edge_type"
+      ]
+    }
+  },
+  "source_gate": {
+    "status": "PASS",
+    "rule": "The producer refuses before output unless the original ordered Kuzu node and edge rows reproduce the held computation input digest and the exact 19,482/36,549 counts.",
+    "held_digest_matched": true,
+    "l2_entity_order_matched": true,
+    "all_edge_endpoints_in_population": true
+  },
+  "determinism": {
+    "status": "PASS",
+    "complete_runs": 2,
+    "run_1_sha256": "b4231e6374ce4360c05fed99a527eaec9e00be23c4858369148869c7ff044dfd",
+    "run_2_sha256": "b4231e6374ce4360c05fed99a527eaec9e00be23c4858369148869c7ff044dfd"
+  },
+  "positive_control": {
+    "status": "PASS",
+    "expected_sha256": "b4231e6374ce4360c05fed99a527eaec9e00be23c4858369148869c7ff044dfd",
+    "exit_code": 0,
+    "checks": [
+      "object digest before parse",
+      "canonical byte round-trip",
+      "schema and anchor",
+      "held source digest",
+      "node and edge counts",
+      "unique sorted node IDs",
+      "sorted directed edge tuples",
+      "edge endpoint closure",
+      "parallel-edge row multiplicity and duplicate counts",
+      "declared counts equal object-read counts",
+      "one-object/no-Kuzu-rebuild/mismatch-refusal contract",
+      "directed-multigraph/no-dedup/no-simple-graph-collapse contract"
+    ]
+  },
+  "negative_control": {
+    "status": "PASS",
+    "supplied_expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "exit_code": 1,
+    "observed": "REFUSED: object SHA-256 mismatch",
+    "refused_before_parse": true
+  },
+  "scope": {
+    "face_amendment": "23427bb261d25eff145abc45820fc2bb4f6f3799",
+    "oracle": "b4caea27f0aae893f5381a07483176af72a7ef3d",
+    "oracle_changed": false,
+    "fusion_or_l2_rewrite": false,
+    "consumer_rebuilds_kuzu": false
+  },
+  "multiedge_semantics": {
+    "status": "PASS",
+    "evidence_path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/STRUCTURE_POPULATION_MULTIEDGE_EVIDENCE.json",
+    "source_identity": "source_id + target_id + edge_type + props",
+    "projected_identity": "source_id + target_id + edge_type",
+    "consumer_rule": "Preserve one parallel directed graph edge per carrier row; set conversion, deduplication, and simple-graph collapse are forbidden."
+  }
+}

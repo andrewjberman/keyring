@@ -1,0 +1,35 @@
+{
+  "schema": "nfra-c3materialize.structure-population-multiedge-evidence/1.0",
+  "query": "MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.layer <> 'semctl' AND b.layer <> 'semctl' RETURN a.node_id,b.node_id,e.edge_type,e.props,e.layer,e.snapshot_ts ORDER BY a.node_id,b.node_id,e.edge_type,e.props,e.layer,e.snapshot_ts",
+  "source_edge_rows": 36549,
+  "unique_projected_tuples": 36548,
+  "duplicate_projected_tuple_count": 1,
+  "duplicate_projected_row_count": 1,
+  "duplicates": [
+    {
+      "projected_tuple": [
+        "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-allocation-summary",
+        "INVOKES"
+      ],
+      "row_count": 2,
+      "distinct_full_identity_count": 2,
+      "variants": [
+        {
+          "props": "{\"state_name\": \"GenerateAllocationSummary\"}",
+          "props_sha256": "d10d0b20c73200f24c89092793a592e5d6a873b317a3e183dede3c80c36a93bb",
+          "layer": "aws",
+          "snapshot_ts": 1787709622900
+        },
+        {
+          "props": "{\"state_name\": \"GenerateAllocationSummaryAfterAttribution\"}",
+          "props_sha256": "b83b12753372f8abb2f856e1fa9bd03d16b1f98b39ae5dfef4c82a30ab461916",
+          "layer": "aws",
+          "snapshot_ts": 1787709622900
+        }
+      ]
+    }
+  ],
+  "source_identity_rule": "CloudEdge loader identity is source_id + target_id + edge_type + props; the B4 topology projection omits properties but preserves one graph edge per source row.",
+  "consumer_rule": "Preserve row multiplicity as parallel directed edges. Never convert the edge rows to a set and never silently deduplicate projected tuples."
+}
