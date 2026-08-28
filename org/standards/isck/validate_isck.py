@@ -191,6 +191,18 @@ FIXTURES = {
             "observed_at": TS, "observed_on_fabric": "laptop",
         }],
     },
+    # R3-CVO-4: the OTHER legitimate partial -- fewer entries than expected, all of them available
+    "source_frontier_partial_short": {
+        "record_type": "source_frontier", "source_frontier_id": f"sf:{ULID_C}",
+        "normalization_version": "coord_v1", "completeness": "partial", "expected_count": 2,
+        "entries": [{
+            "source_serial": f"ent:{ULID_A}", "identity_space": "iceberg_table",
+            "authority_ref": "nessie:main", "source_version": "snapshot:8601547680771488785",
+            "canonical_key": "nessie:main/iceberg_table/ent:" + ULID_A,
+            "availability": "available", "referent_scope": "fabric_invariant",
+            "observed_at": TS, "observed_on_fabric": "laptop",
+        }],
+    },
     # R3-CRO-8: a PARTIAL frontier keeps its unavailable source PRESENT, with the warrant of absence
     "source_frontier_partial": {
         "record_type": "source_frontier", "source_frontier_id": f"sf:{ULID_B}",
@@ -315,6 +327,7 @@ ATTACK_TARGETS = {
     "surface.unpublished-with-published-at": ["published_at"],
     "surface.unpublished-with-published-ref": ["published_ref"],
     "surface.published-with-null-ref": ["published_ref"],
+    "surface.unpublished-without-published-ref": ["published_ref"],
     "coherence.latest-without-resolved-head": ["resolved_target_ref"],
     "coherence.declared-release-with-resolved-head": ["resolved_target_ref"],
     "relation.evidence-empty-list": ["evidence_refs"],
@@ -523,6 +536,9 @@ def _mutants():
         published_ref="kuzu:prod/current")
     add("surface.published-with-null-ref", "surface_version_published", ["type"],
         published_ref=None)
+    # R3-CVO-5: the declared null carrier must be PRESENT, not merely null-if-present
+    add("surface.unpublished-without-published-ref", "surface_version", ["required"],
+        published_ref=_DEL)
     add("coherence.latest-without-resolved-head", "coherence_evaluation_latest", ["required"],
         resolved_target_ref=_DEL)
     add("coherence.declared-release-with-resolved-head", "coherence_evaluation", ["not"],
@@ -648,6 +664,10 @@ def _semantic_mutants():
                   source_version="snapshot:1")])),
         ("sem.frontier-complete-count-mismatch",
          _mk("source_frontier", expected_count=2)),
+        ("sem.frontier-partial-costume",
+         _mk("source_frontier", completeness="partial")),
+        ("sem.frontier-overfull-denominator",
+         _mk("source_frontier_partial", expected_count=1)),
         ("sem.frontier-complete-with-unavailable",
          _mk("source_frontier", entries=[dict(FIXTURES["source_frontier"]["entries"][0],
                                               availability="unavailable",
@@ -802,7 +822,19 @@ def semantic_errors(instances):
                                     f"canonical_key {ck!r} with DIFFERENT source_version -- one "
                                     "semantic coordinate double-counted (R3-CRO-5)")
                     canon.setdefault(ck, j)
-            # R3-CRO-8: completeness is a CLAIM with a denominator, never an adjective
+            # R3-CRO-8 / R3-CVO-4: completeness is a CLAIM with a denominator, never an adjective --
+            # and BOTH values are constrained (partial is not the free cell)
+            n_exp = inst.get("expected_count")
+            if isinstance(n_exp, int) and n_exp < len(entries):
+                errs.append(f"[{i}] source_frontier: {len(entries)} entries exceed expected_count="
+                            f"{n_exp} -- a frontier cannot carry more sources than it expected (R3-CVO-4)")
+            if inst.get("completeness") == "partial" and isinstance(n_exp, int):
+                short = n_exp > len(entries)
+                absent = any(e.get("availability") == "unavailable" for e in entries)
+                if not short and not absent:
+                    errs.append(f"[{i}] source_frontier: completeness=partial with expected_count == "
+                                f"{len(entries)} entries and none unavailable -- nothing is missing; "
+                                "partial is a costume on a complete frontier (R3-CVO-4)")
             if inst.get("completeness") == "complete":
                 if inst.get("expected_count") != len(entries):
                     errs.append(f"[{i}] source_frontier: completeness=complete but expected_count="

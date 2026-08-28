@@ -1665,6 +1665,11 @@
           "then": {
             "allOf": [
               {
+                "required": [
+                  "published_ref"
+                ]
+              },
+              {
                 "properties": {
                   "published_ref": {
                     "type": "null"

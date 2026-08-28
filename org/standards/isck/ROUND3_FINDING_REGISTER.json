@@ -296,6 +296,30 @@
       "fix_commit": "(this commit)",
       "verification_ref": "check_postulate_labels.py at the citation prints 23 of 23",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CVO-4",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T031947Z",
+      "finding_class": "CONTRACT",
+      "claim": "at 51aa748203 source_frontier partial is an unconstrained costume state: (A) the complete fixture relabelled partial with expected_count=1, one available entry -> 0/0/0; (B) partial with 2 entries and expected_count=1 -> 0/0/0. Only completeness=complete was enforced (validate_isck.py:805-812)",
+      "disposition": "FIXED",
+      "disposition_basis": "semantic both directions: expected_count >= len(entries) for all; partial requires expected_count > len(entries) OR an unavailable entry; complete unchanged. Mutants sem.frontier-partial-costume, sem.frontier-overfull-denominator; positive controls source_frontier_partial (absent by unavailability) + source_frontier_partial_short (absent by count). sec 3.24 re-recorded",
+      "fix_commit": "(this commit)",
+      "verification_ref": "OPEN-CITATION: CVO~X re-certification of sec 3.24 at the citation",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CVO-5",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T031947Z",
+      "finding_class": "CONTRACT",
+      "claim": "at 51aa748203 removing published_ref from the accepted unpublished surface_version fixture -> 0/0/0: the unpublished arm constrained published_ref to null IF PRESENT (properties) but never required it, so the declared null carrier could vanish while sec 3.26 says 'published_ref null'",
+      "disposition": "FIXED",
+      "disposition_basis": "unpublished then-clause now REQUIRES published_ref (and keeps type null + the three forbids); mutant surface.unpublished-without-published-ref; the explicit-null fixture is the positive control; sec 3.26 re-recorded",
+      "fix_commit": "(this commit)",
+      "verification_ref": "OPEN-CITATION: CVO~X re-certification of sec 3.26 at the citation",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
   "not_rows": {

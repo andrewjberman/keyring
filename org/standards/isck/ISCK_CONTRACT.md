@@ -451,8 +451,13 @@ the count it ran with; a run with no expectation is a run with no frontier. GRAI
 INTENT: one axis — accounting completeness (never data quality). STATE-COHERENCE: `partial ->
 complete` moves by a NEW frontier (append-only; LAW 5) when the absent source appears — owner: the
 frontier writer (the run's executor). ARM TABLE: none conditional (`expected_count` unconditional);
-SEMANTIC: `complete` REQUIRES `expected_count == len(entries)` AND no `unavailable` entry
-(`sem.frontier-complete-count-mismatch`, `sem.frontier-complete-with-unavailable`).
+SEMANTIC, BOTH DIRECTIONS (R3-CVO-4 caught the first cut constraining `complete` only — `partial`
+was a costume state): every frontier REQUIRES `expected_count >= len(entries)`
+(`sem.frontier-overfull-denominator`) · `complete` REQUIRES `expected_count == len(entries)` AND no
+`unavailable` entry (`sem.frontier-complete-count-mismatch`, `sem.frontier-complete-with-unavailable`)
+· `partial` REQUIRES something to be missing: `expected_count > len(entries)` OR at least one
+`unavailable` entry (`sem.frontier-partial-costume`); positive controls: `source_frontier_partial`
+(absent by unavailability), `source_frontier_partial_short` (absent by count).
 
 ### 3.25 `source_frontier.entries.availability` — `available | unavailable` (round 3, R3-CRO-8; the entry-level field `availability` — named without `[]` because the labels gate's header regex `[a-z_.]+` cannot see brackets, which made this record INVISIBLE to the gate at c3ead58283 while the commit body claimed "23 of 23": the gate's blind spot and the typed number, both on the record)
 DOMAIN: whether the source at this coordinate could be read when the frontier was compiled. MECE:
@@ -474,7 +479,9 @@ surface_version or a retirement on the authority, never a mutation (LAW 3). GRAI
 version. INTENT: one axis — promotion state. STATE-COHERENCE: `unpublished -> published` moves by
 the PROMOTER (owner: the authority holder, e.g. the deploy lane) with a receipt. ARM TABLE
 (two-directional): `published -> published_ref (nonempty) + published_at + promoted_by +
-promotion_evidence_refs REQUIRED` · `unpublished -> published_ref null, the three FORBIDDEN`.
+promotion_evidence_refs REQUIRED` · `unpublished -> published_ref REQUIRED AND null, the three
+FORBIDDEN` (R3-CVO-5: the first cut pinned `published_ref` to null only IF PRESENT, so the declared
+null carrier could vanish; mutant `surface.unpublished-without-published-ref`).
 SEMANTIC (batch): a published surface's producing run must be `succeeded` and `published_at >=
 run.completed_at` (`sem.published-from-failed-run`, `sem.published-before-run-completed`).
 Failed-with-outputs stays legal (§3.9); what is guarded is PROMOTION.

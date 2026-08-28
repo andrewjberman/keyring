@@ -4,15 +4,15 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 
 ## 0. STATISTICS (every number below is derived from the rows by render_round2_register.py)
 
-- **Rows (one id per finding): 23.** The boundary record's "~40 listed contributions" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded.
-- **Substantive findings (excluding verifier self-corrections and self-refuted claims): 22.** Upheld: 22.
-- **Refuted: 1 of 23 claims filed (R3-DT-2).** A refutation rate is quotable only from this line.
+- **Rows (one id per finding): 25.** The boundary record's "~40 listed contributions" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded.
+- **Substantive findings (excluding verifier self-corrections and self-refuted claims): 24.** Upheld: 24.
+- **Refuted: 1 of 25 claims filed (R3-DT-2).** A refutation rate is quotable only from this line.
 - **Verifier self-corrections on the record: 0** ().
-- **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: 8 of 23** (R3-CVO-2, R3-CRO-5, R3-CRO-6, R3-CRO-7, R3-CRO-8, R3-CRO-9, R3-CRO-10, R3-CRO-11) -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit.
-- By seat: `0.4.0_DT_ClientPlatform~X` 4 · `1.0.0_SA_CTO~X` 1 · `2.0.0_SA_COO~X` 1 · `3.0.0_SA_CVO~X` 3 · `4.0.0_SA_CRO~X` 14
-- By class: BATTERY 7 · CONTRACT 9 · RECORD 7
-- By disposition: AMENDED-RECORD 6 · FIXED 13 · OPEN 3 · REFUTED 1
-- By boundary inclusion: PRE-BOUNDARY (round 3 open) 23
+- **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: 10 of 25** (R3-CVO-2, R3-CRO-5, R3-CRO-6, R3-CRO-7, R3-CRO-8, R3-CRO-9, R3-CRO-10, R3-CRO-11, R3-CVO-4, R3-CVO-5) -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit.
+- By seat: `0.4.0_DT_ClientPlatform~X` 4 · `1.0.0_SA_CTO~X` 1 · `2.0.0_SA_COO~X` 1 · `3.0.0_SA_CVO~X` 5 · `4.0.0_SA_CRO~X` 14
+- By class: BATTERY 7 · CONTRACT 11 · RECORD 7
+- By disposition: AMENDED-RECORD 6 · FIXED 15 · OPEN 3 · REFUTED 1
+- By boundary inclusion: PRE-BOUNDARY (round 3 open) 25
 
 ## 1. CLASSES AND DISPOSITIONS (the closed vocabularies)
 
@@ -56,6 +56,8 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 | R3-DT-4 | `0.4.0_DT_ClientPlatform~X` | 20260828T030705Z (self-found, against its own 9b27b8c41e) | BATTERY | of the three link fields only arm_digest has teeth: record_ref and ruled_at are presence-checked and never resolved (source census: each occurs in 3 non-comment places, none opens/resolves it) -- an entry proves a MATCHING ARM EXISTS, not that a RULING WAS MADE; a forged pair beside the true digest is LINKED and suppresses. Converged with CVO~X's re-attack within ~2 minutes by a different route. Transferable half: a control set built by perturbing what the guard READS cannot find what the guard does not read | OPEN | merged into R3-CVO-2's resolution half (same root, same fix); closes with it | OPEN (with R3-CVO-2) | CVO~X finder re-attack at DT~X's next hash | PRE-BOUNDARY (round 3 open) |
 | R3-CRO-14 | `4.0.0_SA_CRO~X` | 20260828T030954Z | RECORD | broadcast 77251 said 'derive at HEAD -> +15'; exact derivation at the cited commit 130e3afb1b is +17 (post_boundary_amendments = 17). Same tree-scoped-number travel class as R3-CRO-4 | AMENDED-RECORD | the +15 was derived when HEAD was e29ac3ab23 (three commits earlier) and quoted as 'HEAD' without its hash -- a HEAD-relative figure is a tree-scoped number; corrected here: +15 @e29ac3ab23, +17 @130e3afb1b. Rule from here: a derived count is quoted WITH the commit it was derived at, never as 'HEAD' | (this commit) | CRO~X's own exact derivation (the source of the corrected figure); second seat = anyone re-running bundle_identity.py at both commits | PRE-BOUNDARY (round 3 open) |
 | R3-CTO-1 | `1.0.0_SA_CTO~X` | self-found at c3ead58283 (post-commit gate read) | RECORD | c3ead58283's commit body said 'labels 23 of 23' (typed); check_postulate_labels.py at that commit parsed 22 of 22 (derived) because the sec 3.25 record name `source_frontier.entries[].availability` falls outside the gate's header regex `[a-z_.]+` -- the record was SILENTLY ABSENT from the gate's denominator while the gate printed a clean pass (the declared_cardinality class, CVO~X 76840, one shape over) | AMENDED-RECORD | record renamed `source_frontier.entries.availability` (parseable) with the blind spot named in its own header; the commit body is immutable and stands as the record of the typed number. ROUTED to the gate's owner (2.0.0_SA_COO~X): derive the record census from the SCHEMA's enums (CVO~X's standing remedy) or at least widen the header regex and print a WARN for a `### 3.N` header the regex does not capture | (this commit) | check_postulate_labels.py at the citation prints 23 of 23 | PRE-BOUNDARY (round 3 open) |
+| R3-CVO-4 | `3.0.0_SA_CVO~X` | 20260828T031947Z | CONTRACT | at 51aa748203 source_frontier partial is an unconstrained costume state: (A) the complete fixture relabelled partial with expected_count=1, one available entry -> 0/0/0; (B) partial with 2 entries and expected_count=1 -> 0/0/0. Only completeness=complete was enforced (validate_isck.py:805-812) | FIXED | semantic both directions: expected_count >= len(entries) for all; partial requires expected_count > len(entries) OR an unavailable entry; complete unchanged. Mutants sem.frontier-partial-costume, sem.frontier-overfull-denominator; positive controls source_frontier_partial (absent by unavailability) + source_frontier_partial_short (absent by count). sec 3.24 re-recorded | (this commit) | OPEN-CITATION: CVO~X re-certification of sec 3.24 at the citation | PRE-BOUNDARY (round 3 open) |
+| R3-CVO-5 | `3.0.0_SA_CVO~X` | 20260828T031947Z | CONTRACT | at 51aa748203 removing published_ref from the accepted unpublished surface_version fixture -> 0/0/0: the unpublished arm constrained published_ref to null IF PRESENT (properties) but never required it, so the declared null carrier could vanish while sec 3.26 says 'published_ref null' | FIXED | unpublished then-clause now REQUIRES published_ref (and keeps type null + the three forbids); mutant surface.unpublished-without-published-ref; the explicit-null fixture is the positive control; sec 3.26 re-recorded | (this commit) | OPEN-CITATION: CVO~X re-certification of sec 3.26 at the citation | PRE-BOUNDARY (round 3 open) |
 
 ## 3. OPEN GAPS IN THIS REGISTER (a register that hides its own holes is the tally it replaces)
 
@@ -67,6 +69,8 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 - **R3-CRO-9** -- verification_ref: OPEN-CITATION: CRO~X re-attack at the landing citation
 - **R3-CRO-10** -- verification_ref: OPEN-CITATION: CRO~X re-attack at the landing citation
 - **R3-CRO-11** -- verification_ref: OPEN-CITATION: CRO~X re-attack at the landing citation
+- **R3-CVO-4** -- verification_ref: OPEN-CITATION: CVO~X re-certification of sec 3.24 at the citation
+- **R3-CVO-5** -- verification_ref: OPEN-CITATION: CVO~X re-certification of sec 3.26 at the citation
 
 ## 4. NOT ROWS (counted by the boundary tally, excluded here, so the exclusion is visible)
 
