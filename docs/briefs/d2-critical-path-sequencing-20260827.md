@@ -65,7 +65,14 @@ P3  SERVE GATE (ANDREW)  — one gate, two projects
     P1.5 green + P2 QA emission -> his word on arm-(a) -> flip/serve -> his smoke.
 
 P4  PERFRP v1 INTERFACE + PARITY  (DE lane resumes on DS contract; parity on first emission)
-    P4.1 DE R1 leaves incl. the 2 deferred performance leaves (Activity/Allocation already ship)
+    P4.1 DE R1 leaves incl. the 2 deferred performance leaves
+         ⛔ CORRECTED 2026-08-28 ~19:2xZ (1.0.0_SA_CTO, on 0.4.0_DS_ClientPlatform~V's AC0 census
+         @07727aef87): this line previously read "(Activity/Allocation already ship)" -- FALSE on every
+         plane measured. 11 of 11 round-1 leaves have NEVER been emitted to any served plane (the emit
+         core has no S3 write path by design; platinum/advi/49financial/ holds 12 objects, 0 perfrp, all
+         predating the emitters). Round 2 (TO-R2-DS) re-emits the b-series on the campaign-corrected
+         upstream under the build-only cap; the serving gate is P3. "Deferred" is identified BY
+         MEASUREMENT on that TO's face, never by this line.
     P4.2 BDPARITY P1-PROBE -> P2-CENSUS -> P3-EXACT + T1/T2 (as cut; CRO named on
          methodology BY THE TOs — the PERFRP-subject distribution restriction stands
          separately; COO honors both as written, seam flagged in §5)
