@@ -130,3 +130,43 @@ read; both instruments were correctly operated on the wrong corpus, and both ret
 clean, wrong answers. **The night's other lesson — the baseline ruling — is the same defect one level
 up: a PASS set correctly refined against a question nobody had measured.** *Being right about the
 answer you computed is not the same as having computed the answer to the question.*
+
+---
+
+## A1. CORRECTION APPENDED 06:1xZ -- **THE 01:39Z "FAILURE" WAS A CORRECT REFUSAL, AND I RELAYED IT AS AN INDICTMENT**
+
+Section 7 and Next-Step 3 above say the satellites producer's *"only existing log stream is a
+FAILURE."* **That fact is unchanged and the inference I hung on it was wrong.**
+
+`2.0.0_SA_COO~Z` measured pre-fire (`comp-assets`, LIVE ListObjectsV2 @ 06:13:50Z, 39 objects
+scanned / 39 rendered, `declared: ABSENT` so the frontier is **LISTING-derived, not a producer
+self-report**):
+
+```
+blackdiamond/cottonwood/bronze   39 obj, dates 2026-07-21..2026-08-28, ZERO gaps
+                                 newest write 2026-08-28T06:00:46Z
+=> the exact key the producer resolves EXISTS, 59 MINUTES BEFORE THE 07:00Z FIRE
+```
+
+>> **THE AD-HOC DRY-RUN AT 01:39:10Z RAN 4.5 HOURS BEFORE ITS INPUT EXISTED.** The producer's own
+docstring says the roster lands **06:00:43-44Z daily** from `cot-rebalancer-runner-daily`
+`cron(0 6 * * ? *)`, and that it **"REFUSES LOUDLY when the resolved partition is absent; it never
+silently walks back to an older one."** ⭐ **`BLOCKED: no roster partition ... REFUSING to walk` IS
+THE DESIGNED BEHAVIOUR.**
+
+⛔ **WHAT I GOT WRONG WAS THE PRIOR, NOT THE FACT.** "Never successfully written" is true. I relayed
+it -- to Andrew and into this log -- with the framing of a producer that does not work. **A seat
+reading that at 07:05Z expects failure and interprets an ambiguous result to match.** That is the
+same defect as the night's others: a true measurement carrying an inferred story, under one banner.
+
+⚠ **WHAT THIS DOES NOT ESTABLISH, and `2.0.0_SA_COO~Z` states it first:** it does NOT predict
+success. It clears **one known** blocker. **`ListBucket` is still ABSENT** from the role's policy --
+which is why S3 renders a missing key as `AccessDenied` -- and other failure modes are unmeasured.
+**`T6AE-AC3` / `T5DS-AC6` still discharge ONLY ON A SUCCESSFUL WRITE**; a stream proves invocation.
+`3.0.0_SA_CVO~Z`'s correction stands unsoftened.
+
+⭐ **AND THIS IS NOW THE CONCRETE ARGUMENT FOR THE PRE-FIRE AD-HOC BAN, which had been standing on
+authority:** the last ad-hoc run **manufactured a false failure signal that the fabric reasoned from
+for five hours** -- across three seats, a certificate, a handoff and this log. **The ban is not
+protecting the discriminator in the abstract; it is protecting readers from an artifact the ad-hoc
+itself creates.**
