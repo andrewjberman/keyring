@@ -21,7 +21,7 @@ invocation — QA evidence, never production. No trigger existed on any plane.
 | (a) handler event-dispatch + the paged run path | **DONE** `@d0f9a8f7e4` | 5/5 arms then, 6/6 after (c') |
 | (b) package rebuild + deploy | **DONE** | NEVER#6 ledger `20260828T1725Z` CLOSED 5/5; CodeSha256 `JyQp8pRO…` |
 | (c) `aws_scheduler_schedule` | **CANCELLED** | Andrew-direct 17:40Z; CTO ruling 78512 |
-| (c') `INSURANCE_EGRESS` + `.tf` TRIGGERS comment + 2 provenance fixes | **BUILT, commit HELD** | 6/6 arms; MSTR window 16 |
+| (c') `INSURANCE_EGRESS` + `.tf` TRIGGERS comment + 2 provenance fixes | **DONE** `@52ffb6c8a3` | 6/6 arms; ledger `20260828T1807Z` CLOSED 5/5; flag LIVE 18:09:29Z |
 | (d) AC4 scheduled half | **MOVED** | now the first chain fire, TO-A4-AEC's wiring |
 | proof-of-spec instance | **DONE** `@22d029d7c8` | VALID, rows=5, violations=0, rc=0 |
 
@@ -110,16 +110,45 @@ it needed a ledger at all.
 
 ## Open / handed off
 
-- **Commit of (c') is HELD** by MSTR integration window 16 (18:01Z, msg 78555). The artifact builder
-  gates on a clean source tree, so the deploy cannot start until the CLOSE. Nothing else is in front
-  of it.
-- **`INSURANCE_EGRESS` is NOT live yet** — measured on the live function, not assumed. Ordering
-  dependency sent to `0.7.0_AE_CloudOps~K` + COO (78560/78561) in its NOT-YET state, because silence
-  on a one-directional dependency reads the same as readiness. If a chain fire lands first it
-  refuses fail-closed — a clean negative control of the wiring, but it spends the fire that is
-  supposed to be the acceptance.
+- **(c') DELIVERED** `@52ffb6c8a3`; ledger `20260828T1807Z` CLOSED 5/5. `INSURANCE_EGRESS` is
+  **LIVE = "1"** at function LastModified 2026-08-28T18:09:29Z, read from `get-function-configuration`
+  at 18:10:06Z — deliberately from the live primitive, not from the apply's rc. Ordering handshake
+  discharged to `0.7.0_AE_CloudOps~K` + COO (78560/78561 in the NOT-YET state, 78588–78590 on GREEN),
+  because silence on a one-directional dependency reads the same as readiness.
+- **Seat RELEASED (reversible)** by COO 78594. TO stays `pending` on its face — a released seat is not
+  a closed TO. Re-seat trigger: a refused first fire (RequestId in hand), or the DS silver-stage build
+  needing a Lambda-side act.
 - **AC4 acceptance** is now the first chain fire with `runner=insurance` (2026-08-29T04:35Z if both
   lanes land today) — `0.7.0_AE_CloudOps~K`'s TO-A4-AEC wiring, under CTO's plan-gate.
+
+## Round-bank lines (added at release, COO 78594)
+
+**1. The unreachable-leg class.** A module can be PRESENT in a deployed artifact and unreachable from
+the configured entrypoint, and every presence-shaped check passes anyway: the member list showed
+`insurance_leg.py` in the package, `BUILD_MANIFEST` declared it, the deploy ledger closed 7/7. None
+of that is reachability. The acceptance row that read a MEMBER LIST accepted presence where the
+criterion needed *reachability from the configured entrypoint* — and the gap survived a full,
+correctly-executed deploy. Ask what CALLS it, not what SHIPS with it.
+
+**2. The discarded total.** `_denominator_for` already read the vendor's `total` and printed
+"a PAGE IS NOT A TOTAL" into a log line nothing consumed. The completeness datum was never missing;
+the **consuming half** was. This is one step past the usual provenance failure: an *unenforced*
+field drifts to unpopulated, but an *unconsumed* one keeps printing correctly forever while nothing
+acts on it — it looks healthier than the thing it fails to prevent.
+
+**3. The two-chokepoint switch.** `INSURANCE_EGRESS` gates `call_surface`, which covers every
+surface call whatever the caller — and that was **not enough**. `mint_both_authorities` reaches
+`veh._request` directly, bypassing `call_surface` entirely, so a single-site gate would have left
+the token mint as live vendor egress *behind a closed gate*. Found by asking which vendor calls do
+NOT pass the chokepoint, rather than confirming that the chokepoint works. RED ARM 2 asserts
+`http calls made == 0`, not merely that a refusal was raised.
+
+**4. Push state is perishable and I got it wrong.** I reported both commits LOCAL, quoting an
+`ls-remote` taken at 18:04:12Z. An integrator ran in between; by 18:12:50Z `22d029d7c8` was ON
+ORIGIN. The claim was labelled MEASURED and was actually REMEMBERED. Corrected within two minutes
+(78591/78592/78593). The rule already says to state push state as a measured value — the failure
+mode is subtler: re-using a *genuinely measured* reading a few minutes later, without re-measuring,
+across an event that is exactly what changes it.
 
 ## Compiler Tools
 
