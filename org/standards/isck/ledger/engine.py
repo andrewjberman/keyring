@@ -46,6 +46,7 @@ import re
 import sqlite3
 
 from . import lineage
+from . import surfaces
 from . import machines
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -351,6 +352,9 @@ class Store:
                                   "second_root": "L-07-second-root-rejected"})
         lineage.check_lifecycle_machine(final, list(batch.values()), self._primary_of, seqs,
                                         _reject)
+        surfaces.check_frontier(final, list(batch.values()), self._primary_of, _reject)
+        surfaces.check_run_consistency(final, list(batch.values()), self._primary_of, _reject)
+        surfaces.check_publication(final, list(batch.values()), self._primary_of, _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))
@@ -366,6 +370,14 @@ class Store:
         return seq
 
     # -- anchors and replay (sec 2e) ---------------------------------------------------------
+    def head(self, logical_surface):
+        """The single authoritative published surface version, with the field that broke its tie."""
+        final, seqs = [], {}
+        for rec, seq in self.estate():
+            final.append(rec)
+            seqs[id(rec)] = seq
+        return surfaces.surface_authority_head(final, logical_surface, self._primary_of, seqs)
+
     def anchor(self, kind, value):
         """Bind an anchor to a commit_seq. Every form reduces to `commit_seq <= N`."""
         if kind == "commit_seq":

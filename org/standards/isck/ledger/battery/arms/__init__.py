@@ -36,5 +36,6 @@ def load_all():
     from . import row_04_binding         # noqa: F401
     from . import row_06_mint_epoch      # noqa: F401
     from . import row_07_lineage         # noqa: F401
+    from . import rows_08_11_surfaces    # noqa: F401
     from . import row_12_replay          # noqa: F401
     return REGISTRY

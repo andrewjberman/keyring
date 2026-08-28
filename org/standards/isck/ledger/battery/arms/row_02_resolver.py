@@ -84,6 +84,11 @@ def _terminal(store, cls, sid):
     rec = _base(store, cls, sid)
     if cls == "mint_receipt":
         rec["entity_serial"] = SEED2["entity"]
+    if cls == "materialization_run":
+        # `output_surface_version_ids` is optional in +38 ("items when present"). The SEED run does
+        # not claim any: two seed surfaces name it as producer, and a run that lists one of them
+        # makes the other a row-9 membership violation. The seeds exist to be REFERENCED.
+        rec.pop("output_surface_version_ids", None)
     if cls == "authority_epoch_event":
         # a DISTINCT authority: two `opened` events on one authority are overlapping intervals,
         # which row 6 refuses -- the terminal seed exists to be referenced, not to re-open ROOT
@@ -106,6 +111,8 @@ def build_universe(store):
         if cls == "entity":
             rec["minted_at"] = "2026-01-01T00:00:00Z"
             rec["minting_authority"] = fx.ROOT
+        if cls == "materialization_run":
+            rec.pop("output_surface_version_ids", None)
         if cls == "authority_epoch_event":
             # the universe registers its own minting authority, in the SAME batch as the mint it
             # authorises -- sec 2c resolves the pair at final state, so no ordering is implied
