@@ -7,6 +7,10 @@ WHAT IT DOES
      tree is not atomic, and a battery that reads one measures whatever another seat is mid-landing)
   2. imports the ledger and the arm registry FROM THAT CLONE, and proves it did (see the
      provenance control below)
+  2b. clones into a dir unique to (run-commit, pid), or to `--clone-dir` when one is named. The
+     fresh-dir refusal applies either way. A dir keyed only by commit collides between two seats on
+     one workstation, and the seat that arrives second cannot replay at all -- which turns a
+     completion claim into a self-report with a control standing in front of it (issuer 115237Z).
   3. runs every manifest arm as write-then-query, comparing the OBSERVED verdict against the
      manifest's DECLARED kind
   4. prints `ran N of N` where both numbers are COUNTED at run time -- never a literal
@@ -52,7 +56,6 @@ import argparse
 import importlib
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -84,6 +87,25 @@ def resolve_commit(commit, root):
     except subprocess.CalledProcessError:
         raise FailClosed("run-commit %r does not resolve to a commit in this repository" % commit)
     return out.decode().strip()
+
+
+def choose_clone_dir(explicit, build):
+    """Pick a destination WITHOUT EVER DELETING ANYTHING.
+
+    The wave-1 runner computed a deterministic path and then deleted it before cloning,
+    which made the advertised fresh-dir refusal UNREACHABLE -- a control that cannot fire -- and
+    would have silently deleted whatever a verifier named with --clone-dir. Both halves are
+    defects and the second is destructive (CVO~X 115527Z; issuer 115237Z on the shared-host
+    collision that surfaced it).
+
+    Explicit dir: used as given, and refused by clean_clone if it exists -- never mutated.
+    Default: a NEWLY ALLOCATED unique parent, so two concurrent invocations cannot collide and
+    nothing pre-existing is ever a candidate.
+    """
+    if explicit:
+        return explicit
+    parent = tempfile.mkdtemp(prefix="wp3-battery-%s-" % build[:10])
+    return os.path.join(parent, "clone")
 
 
 def clean_clone(commit, dest, root):
@@ -234,6 +256,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-commit", default=None,
                     help="the BUILD commit under test (NOT the manifest's census vintage)")
+    ap.add_argument("--clone-dir", default=None,
+                    help="where to clone. The FRESH-DIR refusal applies to whatever is named -- "
+                         "the rule is kept, the shared-host collision is removed. Default is "
+                         "per (run-commit, pid) so two seats on one workstation cannot collide.")
     ap.add_argument("--manifest-only", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -258,8 +284,7 @@ def main():
               "a pass (0)" % (FAIL_CLOSED, NOT_EXERCISABLE))
         return FAIL_CLOSED
 
-    dest = os.path.join(tempfile.gettempdir(), "wp3-battery-%s" % build[:10])
-    shutil.rmtree(dest, ignore_errors=True)
+    dest = choose_clone_dir(args.clone_dir, build)
     clone = clean_clone(build, dest, root)
     print("CLEAN CLONE of BUILD commit %s -> %s" % (build, clone))
     print("MANIFEST census vintage %s (the denominator's provenance; NOT the clone)"
