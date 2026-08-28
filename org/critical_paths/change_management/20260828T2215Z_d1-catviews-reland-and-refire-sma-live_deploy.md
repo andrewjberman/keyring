@@ -1,7 +1,8 @@
 # DEPLOY LEDGER -- D1_CATVIEWS reland + refire (chain steps 2 and 3)
 
-**Status:** OPEN
+**Status:** CLOSED -- COMPLETE, ACCEPT
 **Opened:** 2026-08-28T22:15Z
+**Closed:** 2026-08-28T22:19Z
 **Executor:** `0.7.0_AE_CloudOps~Z`
 **TO:** `D1_CATVIEWS.TO-R1-AE`
 **Authority:** Andrew-direct verbatim *"yes reland once all fixes are in"* (relayed `1.0.0_SA_CTO~Z`
@@ -74,7 +75,70 @@ All 16 relanded objects will carry `_provenance.trigger` = **adhoc**. That is HO
 Forging `{"source":"aws.events"}` is forbidden (`1.0.0_SA_CTO~Z` 14134, `3.0.0_SA_CVO~Z` 14150 s3 --
 refusal of ratification outright). This entry records the ad-hoc stamp as expected, not as a defect.
 
-## CLOSE-OUT
+## CLOSE-OUT -- 2026-08-28T22:19Z
 
-_(completed at close: reland result, floor/publisher result, acceptance verdict per scope, and the
-window open/close times.)_
+### The window, measured
+
+```
+  OPEN    22:16:5xZ   16 dated gold keys DELETED
+  CLOSED  22:17:37Z   floor rebuilt them -- green, a4_objects_built 16, conflicts=0
+  duration ~40s. Nothing scored inside it by this seat.
+```
+
+### Step 2 -- the delete
+
+16 keys deleted, identical to the pre-fire authorized set (manifest match + `diff -u` identical,
+zero added, zero removed). The authorized enumeration and the live resolution were the same object
+AT THE MOMENT OF THE ACT.
+
+### Step 3 -- rebuild and publish
+
+```
+  22:17:37Z  mdpf-gold-lambda      {"status":"green","errors":[],"a4_objects_built":16}
+             manifest ...20260828T221739Z.json   conflicts=0
+  22:17:40Z  mdpf-accrual-trigger  SSM 9124d754 -> Success
+  22:17:55Z  publisher             published 18, unchanged 0, failed [], missing_pairs []
+```
+
+The publisher still reports `unexpected_pairs: [all four category-views]` -- EXPECTED. The
+`CATVP-c` enumeration fix is committed (`84fda0fd04`) and deliberately NOT applied per 14197, so
+the live function is still the 2026-08-07 build and still blind to the 4th type. It served them
+regardless, which is the narrowed behaviour.
+
+### Acceptance -- VERDICT: ACCEPT
+
+```
+  SCORED 11 PASS / 0 FAIL over 11 assertion(s); 0 NA_BY_DATE; 0 INDETERMINATE
+
+  global       SMA.aum 22794766.25          absent_reason ABSENT   Client.aum 267632047.22
+  49financial  SMA.aum 22794766.252499998   absent_reason ABSENT
+  cottonwood   SMA.aum 0.0                  absent_reason PRESENT      <- Direction B intact
+  inflection   SMA.aum 0.0                  absent_reason PRESENT      <- Direction B intact
+  L2 members carrying aum: 8 of 15   (0 of 15 pre-reland)
+  CONTROL conservation 267,632,047.22 + 22,794,766.25 = 290,426,813.47 -- PRINTED, NOT SCORED
+```
+
+Body `as_of` 2026-08-27 on all four, read from the BYTES (platinum keys are undated).
+NOT cited as acceptance: `mdpf_refresh`'s VERIFY block (it printed PASS x4; it reads 1 artifact type
+of 4 on timestamps only) and `LastModified` (already advanced tonight for an unrelated reason).
+
+### Stop conditions -- all four checked, none tripped
+
+```
+  gold SMA.aum > 0 at global + 49financial       MET
+  gold vs platinum disagreement after publisher  NONE -- both 22,794,766.25
+  cottonwood/inflection gained a non-zero SMA    NO
+  bundle filename                                0.4.0_DT_ClientPlatform~Z's leg, not this one
+```
+
+### Provenance -- honest, and NOT what was predicted
+
+All four relanded objects carry `_provenance.trigger = "manual"`, not `"adhoc"`. Confirmed at
+source: `mdpf_gold_consolidator.py:1398` writes `trigger.get("kind")` into the ARTIFACT, while
+`:1148` writes the whole dict into the RUN MANIFEST -- so `detail.source = "adhoc"` lives in the
+manifest and never reaches the artifact. `manual` is the honest kind for a hand-invoked run and is
+not `scheduled`, which is the claim that was forbidden. Nothing forged. Surfaced as 14329 because a
+ratifier asserting `"adhoc" in trigger` against the artifact would refuse a correct reland.
+
+**NOTHING HALF-LANDED.** Both steps completed; gold and platinum agree; the ledger closes on a
+measured acceptance, not on rc=0.
