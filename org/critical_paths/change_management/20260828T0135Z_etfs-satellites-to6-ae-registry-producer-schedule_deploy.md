@@ -67,13 +67,37 @@ future reader would work from and it under-counts by one.
 
 ## AC3 BASELINE -- CAPTURED BEFORE THE FIRST SCHEDULED FIRE, AND IT IS PERISHABLE
 
-The discriminator between the ad-hoc QA write and a scheduled fire:
+⛔ **CORRECTED 2026-08-28T01:46Z -- THE BASELINE MOVED, AND THE INSTRUMENT I FIRST CHOSE WAS
+UNSOUND. BOTH HALVES MATTER.**
 
-    VersionId      D1iVAJ4LJOqx1BDPMLmcEXLOUJvcP7wb
-    LastModified   2026-08-28T01:09:51+00:00
-    ETag           64e7420ba23cbeb9b277ad45062bf67b
-    Size           2182
-    versions at the key: 1 (denominator, s3api list-object-versions)
+    2026-08-28T01:09:51Z  2182 B  D1iVAJ4LJOqx1BDPMLmcEXLOUJvcP7wb  the ad-hoc QA write
+    2026-08-28T01:38:46Z  2196 B  xLcuAW7VMbGyF.0kpt2LQ9Wb24WVnQaS  ANOTHER SEAT'S WRITE <- CURRENT BASELINE
+    versions at the key: 2 (denominator, s3api list-object-versions)
+
+**(a) THE BASELINE.** Compare a scheduled fire against `xLcuAW7VMbGyF...`, not against the QA
+write. A certifier working from the original figure would compare against a version that was
+already superseded before this ledger was committed.
+
+**(b) THE INSTRUMENT -- the part worth keeping.** I first armed a watch that fired on ANY new
+VersionId at this key. **It fired within 90 seconds, on that 01:38:46Z write, which is not mine:**
+this function's own log group carries exactly ONE invocation (01:39:10Z, the dry-run) and it wrote
+nothing, raising on the roster read before reaching `publish()`.
+
+>> **VersionId-delta answers "did the key change", NOT "did MY SCHEDULE fire" -- and any seat's
+>> ad-hoc run satisfies it.** The TO requires evidence distinguishing a scheduled fire from a
+>> manual one, and that instrument structurally cannot. **It was caught only because the timestamp
+>> was impossible: had the cron been 01:40Z rather than 07:00Z, another seat's write would have
+>> been accepted as this TO's acceptance evidence.**
+
+**THE SOUND ORACLE, now armed instead:** `/aws/lambda/cot-satellites-registry-producer`'s own log
+group, watched for its `OK: wrote s3://...` line from a start-time onward. That line is emitted by
+the function under test only on a completed write, cannot be produced by another seat running the
+same producer elsewhere, and the only other route into that log group is a manual invoke of this
+function -- which is under this seat's control and will not be used.
+
+This is the same lesson as the artifact's missing `provenance` field, one turn later and sharper:
+**an oracle produced by the system under test, or by anything that shares its output surface, is
+not a discriminator.**
 
 WARNING: durability has a SECOND half in a DIFFERENT API call, and it bites here.
 `get-bucket-versioning` says `Status: Enabled`, but `get-bucket-lifecycle-configuration` carries
