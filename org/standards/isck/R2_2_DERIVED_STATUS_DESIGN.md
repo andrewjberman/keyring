@@ -68,8 +68,8 @@ abolition.
   | `entity.current_status` | DERIVABLE-AT-WP-3 | fold over mint/retirement/succession + contest events |
   | `materializer.current_status` | DERIVABLE-AT-WP-3 | fold over receipts + version supersessions |
   | `entity_binding.status` | DERIVABLE-AT-WP-3 | fold over binding open/close + contest events with `target_kind: binding` — the carrier RA-1 adds; WITHOUT it this axis has NO event source and its row would be a lie |
-  | `identity_relation.verification_standing` | DERIVABLE-AT-WP-3 | fold over evidence/corroboration events |
-  | `bridge_assertion.verification_standing` | DERIVABLE-AT-WP-3 | same fold, bridge-scoped |
+  | `identity_relation.verification_standing` | DERIVABLE-AT-WP-3 | fold over the ASSERTION CHAIN: each assertion carries its own standing + evidence; `superseded_by` links the chain; the current standing is the chain head's. A `contradicted` assertion is LEFT only by a NEW assertion superseding it (`claim_origin: human_adjudicated` + adjudication evidence when the exit IS an adjudication) — the contradicted record never changes. NOT via contest events: their targets are entities/bindings, never assertions (CRO~X's carrier finding at @2795145b63; ISCK_CONTRACT §3.2 re-recorded @d144e7937c) |
+  | `bridge_assertion.verification_standing` | DERIVABLE-AT-WP-3 | same chain fold, bridge-scoped (`br:` supersession) |
   | `bridge_assertion.registry_standing` | **ADJUDICATION-CARRIED** | admission/rejection/hold values move ONLY on an adjudication event carrying `adjudicated_by` (the human_adjudicated carry generalized); until that event vocabulary lands, PERMANENT-AUTHORED, declared |
   Every DERIVABLE row names its fold's event source; the ADJUDICATION-CARRIED row names why
   `authored` cannot become its standing excuse — the event, not the ledger, is its gate.
