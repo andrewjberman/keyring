@@ -54,10 +54,27 @@ the **0833** unsupervised group is not in scope. *"maybe we do that later"* — 
 `Client - Opal Unsupervised = 0.0` as likely wrong, because the registry says *"NEVER Unsupervised
 = 0"*. **Under (a) that 0.0 is CORRECT.** It stayed a question instead of becoming a filed finding
 only because it went to Andrew rather than into the record.
-⚠ **UNVERIFIED, stated at its real strength:** `comp-find` puts `0824`/`0833` on Schwab surfaces
-(`schwab-0824-silver-rollforward`, `canonical-schwab-si2/migrate-0833-to-canonical.py`), so they read
-as Schwab account/rep codes. **Nobody has confirmed those are the same identifiers Andrew means.**
-The ruling is authoritative; the identifier mapping is a LEAD.
+### 3a. THE 0824/0833 MAPPING -- RESOLVED AT SOURCE 22:56Z, AND IT CORRECTS THIS DELIVERABLE
+
+My first pass called the mapping an UNVERIFIED LEAD and described 0833 as though it were "the
+unsupervised group's account." **It is not.** Found by `3.0.0_SA_CVO~Z` (14510), verified
+independently at this seat:
+```
+  w4_0824_column_census.py:32-33   0824 -> 08242234   |   0833 -> 08335338
+  a00_runner.py:47   SCOPE = 'schwab/08335338'   # firm/master scope -- DO NOT re-point
+  bd49f_dim_conversion.py:305  out["in_0833_universe"] = schwab_account_id.isin(universe)
+                          :557  "The 0833 acc universe of the build day (the ship-gate denominator)"
+                          :21   "The SHIP GATE prints coverage against the full 0833 acc universe"
+```
+>> **0833 IS THE FIRM/MASTER SCOPE THE ENTIRE 49F PIPELINE RUNS UNDER. It contains BOTH supervised
+   and unsupervised accounts.** Andrew's *"the Unsupervised group FROM 0833"* names a SUBSET WITHIN
+   the master scope -- not a separate account, and not a synonym for 0833.
+⛔ **THEREFORE `in_0833_universe` MUST NOT BE USED TO IMPLEMENT RULING (a).** It is a CROSSWALK
+COVERAGE flag -- "was this account found in 49F's Schwab master feed" -- and it is ORTHOGONAL to
+supervision. True on **5,310 of 6,201**. Filtering on it would drop ~891 accounts for a
+data-coverage reason while appearing to honour a supervision ruling: **a plausible number, produced
+by the wrong predicate, that no sum check can catch.** Third instance in this increment alone of a
+well-formed field that answers a different question than the one being asked.
 
 ## 4. ⛔ WHY NO VALUE-BASED CRITERION CAN CATCH A VIOLATION (`3.0.0_SA_CVO~Z`, msg 14452)
 
