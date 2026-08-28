@@ -37,6 +37,14 @@ GOLD = "portal/gold/mdpf/{scope}/category-views/{as_of}.json"
 # analogy that made the B0 sibling-copy wrong.
 PLAT = "platinum/mdpf/{scope}/category-views.json"
 
+# ⛔ THESE LITERALS ARE TRUE ONLY AT as_of 2026-08-27. 0.4.0_DS_ClientPlatform~Z measured
+# why (D1_CATVIEWS.TM1-AC1_TON1-AC3-AC7_score_served.py:27-33): the figure is the sum of two
+# MARKET-VALUED balances, opal_div_sma 18,783,379.81 + opal_growth_sma 4,011,386.44, which
+# move ~$170k-$250k per TRADING DAY across the 455-date series. Applying the literal to a
+# later artifact returns FAIL ON A CORRECT FIX. Scored only at LITERAL_AS_OF; otherwise
+# NA_BY_DATE -- never PASS, never FAIL. Adopting that seat's two-track design rather than
+# re-inventing it.
+LITERAL_AS_OF = "2026-08-27"
 SMA_EXPECTED = 22794766.25
 CLIENT_EXPECTED = 267632047.22
 CONSERVATION = 290426813.47
@@ -90,7 +98,12 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     has_reason = "absent_reason" in sma
     p = "%s/%s" % (plane, scope)
 
-    if scope in SMA_SCOPES:
+    literal_ok = (as_of == LITERAL_AS_OF)
+    if scope in SMA_SCOPES and not literal_ok:
+        out.append(("%s SMA literals NA_BY_DATE (as_of %s != %s)" % (p, as_of, LITERAL_AS_OF),
+                    None,
+                    "market-valued, moves ~$170k-250k/trading day -- NOT scored, never FAIL"))
+    elif scope in SMA_SCOPES:
         out.append(("%s SMA.aum == %.2f" % (p, SMA_EXPECTED),
                     sma_aum is not None and abs(sma_aum - SMA_EXPECTED) < CENT,
                     "read %r" % (sma_aum,)))
@@ -152,18 +165,24 @@ def main():
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
                              ok, "PASSES PRE-FIX TOO -- evidences nothing alone (14091)"))
 
-    scored = [r for r in rows if not r[0].startswith("[CONTROL ONLY]")]
+    na = [r for r in rows if r[1] is None]
+    scored = [r for r in rows
+              if not r[0].startswith("[CONTROL ONLY]") and r[1] is not None]
     passed = [r for r in scored if r[1]]
     failed = [r for r in scored if not r[1]]
 
     print("== D1_CATVIEWS_SMA_LIVE ratification -- as_of %s ==" % a.as_of)
     for label, ok, detail in rows:
-        print("  %-4s %-58s %s" % ("OK:" if ok else "FAIL", label, detail))
+        tag = "NA:" if ok is None else ("OK:" if ok else "FAIL")
+        print("  %-4s %-58s %s" % (tag, label, detail))
     print()
     print("  DENOMINATOR: %d scored assertions across %d planes x %d scopes"
           % (len(scored), 2, len(ALL_SCOPES)))
     print("  PASS %d / FAIL %d   (controls excluded from scoring: %d)"
-          % (len(passed), len(failed), len(rows) - len(scored)))
+          % (len(passed), len(failed), len(rows) - len(scored) - len(na)))
+    if na:
+        print("  NA_BY_DATE %d row(s): date-scoped literals not applicable at this as_of"
+              % len(na))
     if unreadable:
         print("  UNREADABLE OBJECTS (a failed retrieval returns a VALUE -- not an absence):")
         for u in unreadable:
