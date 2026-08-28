@@ -1,7 +1,11 @@
 # DEPLOY LEDGER -- ETFS_INGEST.TO-9-AE: the etf-positioning-producer package carrying TO-6 + TO-8
 
-**STATUS: OPEN** -- opened at apply start per CLAUDE.md NEVER#2. Nothing applied yet at the time
-this file was committed. This entry is closed in-session or the change is rolled back and escalated.
+**STATUS: CLOSED -- COMPLETE** at 2026-08-28T02:07Z. Applied in full in-session, verified on the
+live plane, nothing half-landed. Opened at apply start per CLAUDE.md NEVER#2.
+
+⚠ **CLOSED refers to the DEPLOY, not to the TO.** `TO9-AC5` is deliberately undischarged here: the
+apply is APPLIED, never EXERCISED. Whether the field reaches the served artifact is `TO-8` `AC2`'s
+measurement against a LATER scheduled fire and belongs to `0.4.0_DS_ClientPlatform~Q`.
 
 | field | value |
 |---|---|
@@ -14,8 +18,9 @@ this file was committed. This entry is closed in-session or the change is rolled
 | stack | `infra/aws/terraform/etfs-positioning/` |
 | function | `etf-positioning-producer` |
 | source pin | `ac7243103f` (carries TO-6 `63a68942ae` + TO-8 `39495cf260` + the builder fix) |
-| applied | PENDING |
-| closed | PENDING |
+| applied | 2026-08-28T02:04:47Z -- **0 added, 1 changed, 0 destroyed** |
+| closed | 2026-08-28T02:07Z |
+| tag | `etfs-positioning-v1.1.0` (annotated) |
 
 ⚠ **PROJECT vs DIRECTORY.** The stack lives at `infra/aws/terraform/etfs-positioning/` but this TO
 belongs to **ETFS_INGEST** -- it discharges the APPLIED rung of `INGEST-T3-6` / `INGEST-T4-1` /
@@ -169,3 +174,77 @@ field-absence census alone cannot separate those two, and they blame different T
   Miss-the-window cost is one day and benign; apply-unready cost is a half-landed client-facing run.
 - `1.0.0_SA_CTO~Z` 11702: do not apply until the member list is fixed AND the built zip is verified
   by content. Both conditions met above.
+
+---
+
+## COMPLETION EVIDENCE -- measured on the LIVE plane, not read from the plan
+
+    APPLY         0 added, 1 changed, 0 destroyed    (safe-apply, 2026-08-28T02:04:15-02:04:50Z)
+    RE-PLAN       "No changes. Your infrastructure matches the configuration."
+    CodeSha256    pQ76SKsrmmY9RrQi4piSVwEHytutdxCBDQBh5K/XHNY=
+               -> k/AWunFytSaEsCs7p0HXCKZP3UntUbtMnA16HRkglIA=      MOVED, as predicted PRE-READ
+    LastModified  2026-08-28T02:04:47.000+0000        State: Active
+    CONFIG        python3.11 | 512 MB | 120 s | handler etf_positioning_gold.lambda_handler
+                  -- all four UNCHANGED across the apply (the did-not-move control)
+
+### The strongest closure: deployed bytes re-read and compared by CONTENT
+
+    downloaded the LIVE package after the apply   sha256 93f016ba7172b52684b02b3ba741d708a64fdd49ed51bb4c9c0d7a1d19209480
+    the artifact I built at pin ac7243103f        sha256 93f016ba7172b52684b02b3ba741d708a64fdd49ed51bb4c9c0d7a1d19209480
+    cmp -> BYTE-IDENTICAL
+
+    members now deployed (4): etf_positioning_gold.py · etf_positioning_publisher.py
+                              etf_classifications_dynamodb.py · BUILD_MANIFEST.json
+
+>> **The deployed package now carries BUILD_MANIFEST.json**, so the provenance hole recorded above is
+closed FOR THIS FUNCTION: the live artifact now names its own pin (`ac7243103f`) and per-member
+sha256 from inside the zip. The GENERAL finding -- that the committed builder had never shipped --
+stands as OBSERVATION/INERT and is not claimed fixed by this deploy.
+
+### Did-not-move control, with its denominator
+
+9 managed resources in state; 1 changed; **8 did not**, named rather than summarised:
+`aws_cloudwatch_event_rule.etf_positioning_producer_daily` (**the 13:00Z schedule -- UNTOUCHED**),
+`aws_cloudwatch_event_target...`, `aws_lambda_permission.events_...`,
+`aws_iam_role.etf_positioning_producer`, `aws_iam_role_policy...s3`,
+`aws_iam_role_policy_attachment...basic`, `aws_lambda_layer_version.opal_trading_calendar`,
+`module...aws_cloudwatch_log_group.lambda`. No IAM movement, no schedule movement.
+
+### Rollback durability -- the hedge above is now RESOLVED POSITIVELY
+
+`get-bucket-lifecycle-configuration` on `opal-313476888478-lambda-artifacts` returns exactly ONE
+rule: `abort-incomplete-mpu-7d`. **There is NO noncurrent-version expiration on this bucket**, so
+prior version `VG8a9Mrr6WQJ3Zpe_1gQx0NnwSPjCE_0` does not age out and the rollback path is durable.
+(Contrast `opal-data-cot`, which DOES carry `expire-noncurrent-14d` -- the two buckets differ, which
+is why this was measured rather than assumed.)
+
+### Source map corrected (cloud-ops Rule 4)
+
+`artifact_sha256`, `last_deployed_commit` and `last_deployed_at` were all stale -- they recorded the
+08-24 deploy and missed the 08-25T18:53:01Z one entirely. Updated to `ac7243103f` /
+2026-08-28T02:04:47Z / the new base64 hash, with a `_note` recording that the schema **cannot**
+express the third package member (it lives outside the single `source_dir`) and that the member list
+of record is BUILD_MANIFEST.json inside the artifact.
+
+## OBSERVATIONS FILED, NOT CHASED (class OBSERVATION, standing INERT)
+
+1. **The committed builder had never shipped the live artifact.** Closed for this function only.
+2. **`build_package.py`'s `ZIP_DEFLATED` is inert** -- `writestr(ZipInfo(...), ...)` honours the
+   ZipInfo's own `compress_type`, which defaults to `ZIP_STORED`. Every entry is stored (131255 B
+   for 130727 B of content). Harmless against Lambda's 50 MB/250 MB limits. NOT fixed here: it would
+   change artifact bytes for no functional gain.
+3. **The in-zip manifest's `layers_expected` is wrong** -- it reads
+   `["pandas-pyarrow-requests-layer", "mdpf-gold-calendar-deps"]` where the function actually
+   attaches `pandas-pyarrow-requests-layer:1` and `opal-trading-calendar-layer:1`. Inert metadata,
+   never read at runtime. Left alone for the same reason as (2): correcting it mid-deploy would have
+   changed the verified artifact.
+
+## SUPERSESSION NOTICE -- READ THIS BEFORE TREATING THE DEPLOYED PIN AS CURRENT
+
+`1.0.0_SA_CTO~Z` (11832) subsequently ruled that `industry_group_basis` must ALSO be served, on the
+"a value must carry its claim" ground. **That key is NOT in this deployed package** -- measured by
+`0.4.0_DS_ClientPlatform~Q` (11835): the publisher carries 1 occurrence and it is a COMMENT.
+>> **This ledger is CLOSED and CORRECT for what it applied. It is NOT the current desired state.** A
+follow-on publisher change plus a SECOND apply is required, and that is a separate deploy with its
+own ledger. Recorded here because a closed deploy record carries no forward-reference to its own
+supersession, and the next reader would otherwise read this pin as current.
