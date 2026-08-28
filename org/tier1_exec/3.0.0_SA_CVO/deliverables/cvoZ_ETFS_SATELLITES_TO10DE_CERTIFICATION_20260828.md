@@ -1,4 +1,53 @@
-# `ETFS_SATELLITES.TO-10-DE` — CERTIFIED 8 of 9. AC3 NOT SCOREABLE pending Andrew's acceptance viewport.
+# `ETFS_SATELLITES.TO-10-DE` — ~~CERTIFIED 8 of 9~~ → **SUPERSEDED: CERTIFIED 9 of 9**
+
+> ## ⭐ SUPERSEDED WITHIN THE HOUR — AND BY THE EVENT THIS CERTIFICATE WAS WAITING FOR
+>
+> **The 8-of-9 certificate below is CORRECT AS OF ITS TIMESTAMP and is retained verbatim.** Andrew
+> ruled *"shrink the text and bars"*, `1.0.0_SA_CTO~Z` named the acceptance width **`1440px`**, and
+> **AC3's free variable closed.** The criterion became scoreable, the shrink was built, and it was
+> measured.
+>
+> ```
+> RE-RUN  python .tools/proof-of-spec-check.py <instance> <TO's expected_criteria>
+>         rc=0  VALID  acceptance rows=9  violations=0   STEP ZERO 9-for-9, set-for-set
+> STATUSES  9 PASS  (AC3 moved UNCOMPUTABLE -> PASS, status_reason correctly null on a PASS)
+> AT 1440 AFTER THE SHRINK  8 bars; all 8 VALUE labels in full (82.6 ... 8.1, 17.4 ... 91.9);
+>         all 8 BOOK labels in full; NO scrollbar; NO arrows. Before the shrink 1440 CLIPPED OUTRIGHT.
+> ```
+>
+> >> **`T10DE-AC3` IS MET AT THE RULED WIDTH. `TO-10-DE` IS 9 OF 9.** The bare `UNCOMPUTABLE` value I
+> flagged as deprecated is gone with it — the row is now `PASS`, so that defect is retired by the same
+> event rather than needing a fix.
+>
+> ### ⭐ TWO THINGS I CHECKED BEFORE RE-CERTIFYING, BECAUSE A SHRINK IS A SHARED-GRID CHANGE
+>
+> **(1) Did the shrink regress `models` / `etfs`?** `AC8`/`AC9` were measured at `5a4349a5`, *before*
+> the shrink — citing them unchanged would answer a different question. **It was measured post-shrink
+> and it holds:** a models capture at the same 1440 was *rendered and read* — wide bars, `text-xl`
+> value labels, full padding, original 5-stop palette, **visually unchanged**. And `AC9` is
+> **arithmetic, not visual** (`bookColorRamp(n)` vs the pre-change `BOOK_COLOR_CYCLE[i % len]`), so it
+> is width-independent by construction.
+> ⭐ **`compactColumns = books.length >= 6` keys on the COUNT, not the mode** — with the reason stated:
+> *"keying on 'satellites' goes silently wrong the day a sixth model book is added."* Same shape as the
+> mode-TOTAL `Record<PositioningMode, boolean>` finding on the other page tonight, and it means
+> `POS-TO7-AC5` (Models header byte-identical) is preserved **by construction**: five books never reach
+> the compact branch. **That is a cross-TO consequence the lane tracked unprompted.**
+>
+> **(2) ⚠ ONE COVERAGE GAP, FLAGGED AND NOT BLOCKING.** `AC3`'s criterion text says **"Re-exhibit at
+> `1440` AND at `1840`."** The instance exhibits **1440 post-shrink** and carries 1840 only in the
+> *"earlier width sweep retained for provenance"* — **which is the PRE-shrink reading.** So the second
+> exhibit the criterion names has not been performed.
+> ⭐ **It is very likely fine and I will say why: the compact branch keys on book COUNT, so 1840 takes
+> the same branch as 1440 with more room.** ⛔ **But that is a monotonicity assumption, and I spent this
+> hour arguing that layout is a step function you do not interpolate** — a `min-width` breakpoint above
+> 1440 would falsify it silently. **One render closes it.** I am not withholding certification for it;
+> I am refusing to let "1440 clean" quietly read as "1440 AND 1840 clean."
+>
+> **Everything below stands as written at 04:5xZ.**
+
+---
+
+# ~~`ETFS_SATELLITES.TO-10-DE` — CERTIFIED 8 of 9. AC3 NOT SCOREABLE pending Andrew's acceptance viewport.~~
 
 **Author:** `3.0.0_SA_CVO~Z` · **2026-08-28T04:5xZ** · **Instance:**
 `org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/ETFS_SATELLITES.TO-10-DE_PROOF_OF_SPEC.json`
