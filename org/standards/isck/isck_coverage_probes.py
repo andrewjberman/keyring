@@ -983,6 +983,15 @@ def _repairs(V):
         inst["evidence_refs"] = ["evidence:partial_read_warrant"]
         return inst
 
+    def relation_retirement(inst):
+        # R2-2's `retirement` is a UNARY relation -- it retires its subject and has no object,
+        # so the arm FORBIDS object_serial rather than requiring a partner. The base fixture is
+        # a binary candidate_equivalence and carries one; dropping it is the whole repair.
+        # evidence_refs stays: claim_origin `rule_derived` still owes its warrant.
+        inst.pop("object_serial", None)
+        return inst
+
+    out[("identity_relation", "relation_type", "retirement")] = relation_retirement
     out[("bridge_assertion", "registry_standing", "held")] = bridge_held
     out[("bridge_assertion", "registry_standing", "inadmissible")] = bridge_inadmissible
     out[("bridge_assertion", "registry_standing", "rejected")] = bridge_rejected
@@ -998,6 +1007,34 @@ def _repairs(V):
     out[("state_observation", "failure_state", "partial")] = observation_partial
     for value in ("substrate_unavailable", "instrument_error", "not_applicable"):
         out[("state_observation", "failure_state", value)] = drop_fingerprint
+
+    # R2-2 (c): contest_event's base fixture is the OPENED half (entity target); every other
+    # value is reached by moving to the resolved half or the binding target
+    def contest_resolved(inst):
+        # setdefault, never assign: ARM 3 has already placed the value under test on `outcome`,
+        # and a repair that overwrote it would test `dismissed` three times and call
+        # upheld/merged dead -- the cross-arm control above FIRED on exactly that draft
+        inst["event_kind"] = "resolved"
+        inst.setdefault("outcome", "dismissed")
+        inst["adjudicated_by"] = "3.0.0_SA_CVO~X"
+        inst.pop("consequence_refs", None)
+        return inst
+
+    def contest_with_consequence(inst):
+        inst = contest_resolved(inst)
+        inst["consequence_refs"] = ["rel:" + ULID_A_OF(V)]
+        return inst
+
+    def contest_binding_target(inst):
+        inst["target_binding_id"] = "bind:" + ULID_A_OF(V)
+        inst.pop("target_entity_serial", None)
+        return inst
+
+    out[("contest_event", "event_kind", "resolved")] = contest_resolved
+    out[("contest_event", "outcome", "dismissed")] = contest_resolved
+    for value in ("upheld", "merged"):
+        out[("contest_event", "outcome", value)] = contest_with_consequence
+    out[("contest_event", "target_kind", "binding")] = contest_binding_target
     return out
 
 

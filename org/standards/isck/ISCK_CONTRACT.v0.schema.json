@@ -38,6 +38,12 @@
     },
     {
       "$ref": "#/$defs/mint_receipt"
+    },
+    {
+      "$ref": "#/$defs/contest_event"
+    },
+    {
+      "$ref": "#/$defs/migration_receipt"
     }
   ],
   "$defs": {
@@ -85,8 +91,7 @@
       "enum": [
         "unverified",
         "corroborated",
-        "contradicted",
-        "superseded"
+        "contradicted"
       ]
     },
     "registry_standing": {
@@ -112,7 +117,8 @@
         "minted_at",
         "minting_authority",
         "identity_policy",
-        "current_status"
+        "current_status",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -163,6 +169,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "current_status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "current_status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -221,7 +239,8 @@
         "valid_to",
         "binding_basis",
         "status",
-        "referent_scope"
+        "referent_scope",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -274,6 +293,18 @@
         },
         "referent_device_id": {
           "$ref": "#/$defs/nonempty"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -733,11 +764,11 @@
         "relation_id",
         "relation_type",
         "subject_serial",
-        "object_serial",
         "claim_origin",
         "verification_standing",
         "asserted_at",
-        "asserted_by"
+        "asserted_by",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -755,7 +786,8 @@
             "split_from",
             "successor_of",
             "replaces",
-            "instance_of"
+            "instance_of",
+            "retirement"
           ]
         },
         "subject_serial": {
@@ -785,6 +817,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "verification_standing": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "verification_standing"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -805,23 +849,6 @@
           "then": {
             "required": [
               "evidence_refs"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "superseded"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "superseded_by"
             ]
           }
         },
@@ -868,8 +895,7 @@
               "verification_standing": {
                 "enum": [
                   "unverified",
-                  "corroborated",
-                  "superseded"
+                  "corroborated"
                 ]
               }
             },
@@ -884,6 +910,50 @@
               ]
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "relation_type": {
+                "const": "retirement"
+              }
+            },
+            "required": [
+              "relation_type"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "object_serial"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "relation_type": {
+                "enum": [
+                  "candidate_equivalence",
+                  "canonicalized_as",
+                  "merged_into",
+                  "split_from",
+                  "successor_of",
+                  "replaces",
+                  "instance_of"
+                ]
+              }
+            },
+            "required": [
+              "relation_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_serial"
+            ]
+          }
         }
       ]
     },
@@ -896,7 +966,8 @@
         "semantic_layer",
         "canonical_role",
         "owner",
-        "current_status"
+        "current_status",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -928,6 +999,18 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "current_status": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "current_status"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -1018,7 +1101,7 @@
         "bundle_completeness": {
           "enum": [
             "complete",
-            "partial_legacy"
+            "partial"
           ]
         },
         "absent_components": {
@@ -1066,7 +1149,7 @@
           "if": {
             "properties": {
               "bundle_completeness": {
-                "const": "partial_legacy"
+                "const": "partial"
               }
             },
             "required": [
@@ -1565,7 +1648,8 @@
         "registry_standing",
         "declared_cardinality",
         "asserted_at",
-        "asserted_by"
+        "asserted_by",
+        "status_basis"
       ],
       "properties": {
         "record_type": {
@@ -1653,6 +1737,22 @@
               "type": "null"
             }
           ]
+        },
+        "status_basis": {
+          "type": "object",
+          "properties": {
+            "verification_standing": {
+              "const": "authored"
+            },
+            "registry_standing": {
+              "const": "authored"
+            }
+          },
+          "required": [
+            "verification_standing",
+            "registry_standing"
+          ],
+          "additionalProperties": false
         }
       },
       "allOf": [
@@ -1781,23 +1881,6 @@
           "then": {
             "required": [
               "evidence_refs"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "verification_standing": {
-                "const": "superseded"
-              }
-            },
-            "required": [
-              "verification_standing"
-            ]
-          },
-          "then": {
-            "required": [
-              "superseded_by"
             ]
           }
         },
@@ -1958,6 +2041,301 @@
             ]
           }
         }
+      ]
+    },
+    "contest_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {
+          "const": "contest_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^ctev:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "contest_id": {
+          "type": "string",
+          "pattern": "^ct:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "resolved"
+          ]
+        },
+        "target_kind": {
+          "enum": [
+            "entity",
+            "binding"
+          ]
+        },
+        "target_entity_serial": {
+          "$ref": "#/$defs/ent_serial"
+        },
+        "target_binding_id": {
+          "type": "string",
+          "pattern": "^bind:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "basis": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "outcome": {
+          "enum": [
+            "upheld",
+            "dismissed",
+            "merged"
+          ]
+        },
+        "adjudicated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "consequence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonempty"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "required": [
+        "record_type",
+        "event_id",
+        "contest_id",
+        "event_kind",
+        "target_kind",
+        "occurred_at",
+        "actor"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "entity"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_entity_serial"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "binding"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_binding_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "opened"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "basis",
+                  "evidence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "adjudicated_by"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "resolved"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "outcome",
+              "adjudicated_by"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "upheld",
+                  "merged"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "required": [
+              "consequence_refs"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "dismissed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "consequence_refs"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "migration_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {
+          "const": "migration_receipt"
+        },
+        "receipt_id": {
+          "type": "string",
+          "pattern": "^mig:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "migrated_record_ref": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "field": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "source_value": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "target_value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/nonempty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recoverability": {
+          "enum": [
+            "recovered",
+            "floor"
+          ]
+        },
+        "migration_map": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "migrated_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "migrated_by": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "required": [
+        "record_type",
+        "receipt_id",
+        "migrated_record_ref",
+        "field",
+        "source_value",
+        "target_value",
+        "recoverability",
+        "migration_map",
+        "migrated_at",
+        "migrated_by",
+        "evidence_refs"
       ]
     }
   }

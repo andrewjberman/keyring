@@ -50,6 +50,17 @@ citation is the disposal the probe asks for).**
 | 12 | `materializer.current_status` `retired` | NO. §3.8 :198 "`retired` by decommission (owner)" — terminal, no successor obligation (a retired materializer has NO successor version by definition, so neither `superseded_by_version` REQUIRED nor FORBIDDEN is a lying-record test: DT~X 76651 rated retired-with-successor "arguably coherent (retired for one reason, replaced by another)" and kept it BY DESIGN). Under R2-2, `current_status` becomes a projection of lifecycle events; `retired` is then derived, not asserted, and the arm question moves to the ledger. |
 | 13 | `mint_receipt.collision_preflight` `deferred_to_reconciliation` | NO. §3.18 :307 verbatim: "`deferred` needs no warrant (the deferral IS the honest state, and the reconciliation record carries its own)". The forbid direction (no evidence on a deferral) is class-A anti-law. |
 
+## Post-R2-2 landing re-run (2026-08-28, same day)
+
+ARM 1 at the landing tree: **8 gap fields, the same eight** (rows 4–13 above; `entity_binding.status`
+now 2 of 3 reached with `disputed` the deferred remainder). The landing's new enums arrive with
+their conditionals reaching EVERY value by construction — `event_kind` 2 of 2, `target_kind` 2 of
+2, `outcome` 3 of 3 (`merged` REQUIRES `consequence_refs` like `upheld`, per §3.21's own sentence
+— caught by this re-run as a 9th gap and cut in the landing commit, mutant
+`contest.merged-without-consequence`); `recoverability` and `status_basis` carry no conditional and
+are NOT EXAMINED by ARM 1 (declared, §6 — `status_basis` is a `const`, not a discriminant). No new
+candidate survives.
+
 ## What this record does NOT claim
 
 - It does not claim the 8 fields ARM 1 will keep printing are "covered" — they are UNREACHED BY

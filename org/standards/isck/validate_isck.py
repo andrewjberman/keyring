@@ -47,6 +47,7 @@ FIXTURES = {
         "identity_scope": "logical", "minted_at": TS,
         "minting_authority": "1.0.0_SA_CTO~X@laptop", "identity_policy": "git_history_v0",
         "current_status": "active",
+        "status_basis": {"current_status": "authored"},
     },
     "entity_binding": {
         "record_type": "entity_binding", "binding_id": f"bind:{ULID_A}",
@@ -54,6 +55,7 @@ FIXTURES = {
         "native_key": "portal/src/App.tsx", "referent_scope": "fabric_invariant",
         "valid_from": "commit:9fc70e31a1", "valid_to": None,
         "binding_basis": "independently_observed", "status": "open",
+        "status_basis": {"status": "authored"},
         "evidence_refs": [f"obs:{ULID_A}"],
     },
     "state_observation": {
@@ -89,6 +91,7 @@ FIXTURES = {
         "relation_type": "candidate_equivalence",
         "subject_serial": f"ent:{ULID_A}", "object_serial": f"ent:{ULID_B}",
         "claim_origin": "rule_derived", "verification_standing": "unverified",
+        "status_basis": {"verification_standing": "authored"},
         "asserted_at": TS, "asserted_by": "1.0.0_SA_CTO~X",
         "evidence_refs": ["migration-map:kimi_to_isck_v0"],
     },
@@ -101,6 +104,7 @@ FIXTURES = {
         "object_grain": "repo_path_file",
         "claim_origin": "rule_derived", "verification_standing": "unverified",
         "registry_standing": "candidate",
+        "status_basis": {"verification_standing": "authored", "registry_standing": "authored"},
         "declared_cardinality": "function",
         "firm_scope": "opal",
         "evidence_refs": ["parser:source-span portal/src/App.tsx:12-40"],
@@ -119,13 +123,45 @@ FIXTURES = {
         "record_type": "materializer", "materializer_serial": f"mat:{ULID_A}",
         "semantic_layer": "C2", "canonical_role": "c2_motif_individuation",
         "owner": "3.0.0_SA_CVO", "current_status": "active",
+        "status_basis": {"current_status": "authored"},
     },
     "materializer_version": {
         "record_type": "materializer_version", "version_id": f"matv:{ULID_A}",
         "materializer_serial": f"mat:{ULID_A}",
-        "bundle_completeness": "partial_legacy",
+        "bundle_completeness": "partial",
         "absent_components": ["dependency_lock", "declared_opinions"],
         "bundle_digest": SHA, "valid_from": TS,
+    },
+    # R2-2 (c): contests are their own record with a TYPED target -- one opened (entity), one
+    # resolved (binding), two contest ids, so both target kinds and both event kinds have positive
+    # coverage
+    "contest_event": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_A}",
+        "contest_id": f"ct:{ULID_A}", "event_kind": "opened",
+        "target_kind": "entity", "target_entity_serial": f"ent:{ULID_A}",
+        "occurred_at": TS, "actor": "3.0.0_SA_CVO~X",
+        "basis": "two provisional serials claim one logical entity across fabrics",
+        "evidence_refs": [f"mr:{ULID_A}", f"mr:{ULID_B}"],
+    },
+    "contest_event_resolved": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_B}",
+        "contest_id": f"ct:{ULID_B}", "event_kind": "resolved",
+        "target_kind": "binding", "target_binding_id": f"bind:{ULID_A}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "upheld", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "consequence_refs": [f"bind:{ULID_B}"],
+        "evidence_refs": [f"obs:{ULID_B}"],
+    },
+    # R2-2 (a)/(g): the append-only carrier of a vocabulary rewrite -- this instance IS the receipt
+    # for the fixture rewrite partial_legacy -> partial (migration/R2_2_MIGRATION_MANIFEST.json)
+    "migration_receipt": {
+        "record_type": "migration_receipt", "receipt_id": f"mig:{ULID_A}",
+        "migrated_record_ref": f"matv:{ULID_A}", "field": "bundle_completeness",
+        "source_value": "partial_legacy", "target_value": "partial",
+        "recoverability": "recovered",
+        "migration_map": "migration/R2_2_MIGRATION_MANIFEST.json",
+        "migrated_at": TS2, "migrated_by": "1.0.0_SA_CTO~X",
+        "evidence_refs": ["R2_2_DERIVED_STATUS_DESIGN.md#3d"],
     },
     "materializer_version_complete": {
         "record_type": "materializer_version", "version_id": f"matv:{ULID_B}",
@@ -203,9 +239,24 @@ ATTACK_TARGETS = {
     "coherence.mismatch-no-delta": ["delta_summary"],
     "coherence.currency-verdict-no-evidence": ["evidence_refs"],
     "relation.corroborated-no-evidence": ["evidence_refs"],
-    "relation.superseded-no-successor": ["superseded_by"],
+    "relation.corroborated-with-adjudicator": ["adjudicated_by"],
+    "relation.retirement-with-object": ["object_serial"],
+    "relation.non-retirement-without-object": ["object_serial"],
+    "entity.no-status-basis": ["status_basis"],
+    "entity.status-basis-derived": ["status_basis"],
+    "bridge.status-basis-partial-map": ["status_basis"],
+    "binding.status-basis-extra-key": ["status_basis"],
+    "contest.entity-kind-with-binding-ref": ["target_binding_id"],
+    "contest.binding-kind-without-ref": ["target_binding_id"],
+    "contest.opened-without-basis": ["basis"],
+    "contest.opened-with-outcome": ["outcome"],
+    "contest.resolved-without-adjudicator": ["adjudicated_by"],
+    "contest.upheld-without-consequence": ["consequence_refs"],
+    "contest.dismissed-with-consequence": ["consequence_refs"],
+    "contest.merged-without-consequence": ["consequence_refs"],
+    "mig.missing-evidence": ["evidence_refs"],
     "relation.evidence-empty-list": ["evidence_refs"],
-    "matversion.partial-legacy-without-absent-components": ["absent_components"],
+    "matversion.partial-without-absent-components": ["absent_components"],
     "matversion.complete-without-bundle-fields": ["source_tree_digest", "dependency_lock_digest",
                                                   "configuration_digest",
                                                   "declared_opinions_digest",
@@ -238,7 +289,6 @@ ATTACK_TARGETS = {
     "bridge.admitted-no-evidence": ["evidence_refs"],
     "bridge.origin-no-evidence": ["evidence_refs"],
     "bridge.corroborated-no-evidence": ["evidence_refs"],
-    "bridge.superseded-no-successor": ["superseded_by"],
     "bridge.held-no-named-item": ["held_on"],
     "bridge.inadmissible-no-owner": ["store_owner"],
     "bridge.rejected-no-adjudicator": ["adjudicated_by"],
@@ -341,13 +391,44 @@ def _mutants():
     add("relation.corroborated-no-evidence", "identity_relation", ["required"],
         verification_standing="corroborated", claim_origin="producer_declared",
         evidence_refs=_DEL)
-    add("relation.superseded-no-successor", "identity_relation", ["required"],
-        verification_standing="superseded", claim_origin="producer_declared",
-        evidence_refs=_DEL)
     add("relation.evidence-empty-list", "identity_relation", ["minItems"],
         verification_standing="corroborated", evidence_refs=[])
+    # R2-2 LANDING. (b) the enum-set forbid arm SHRANK when superseded left the axis -- COO~X 77156
+    # asked for an explicit mutant on the narrowed set rather than trust the diff
+    add("relation.corroborated-with-adjudicator", "identity_relation", ["not"],
+        verification_standing="corroborated", adjudicated_by="3.0.0_SA_CVO~X")
+    # (d) retirement: the terminal event with no successor, two-directional
+    add("relation.retirement-with-object", "identity_relation", ["not"],
+        relation_type="retirement")
+    add("relation.non-retirement-without-object", "identity_relation", ["required"],
+        object_serial=_DEL)
+    # (f) status_basis: REQUIRED, exact-key, authored-only pre-WP-3
+    add("entity.no-status-basis", "entity", ["required"], status_basis=_DEL)
+    add("entity.status-basis-derived", "entity", ["const"],
+        status_basis={"current_status": "derived"})
+    add("bridge.status-basis-partial-map", "bridge_assertion", ["required"],
+        status_basis={"verification_standing": "authored"})
+    add("binding.status-basis-extra-key", "entity_binding", ["additionalProperties"],
+        status_basis={"status": "authored", "valid_to": "authored"})
+    # (c) contest_event: typed target + total event vocabulary, every arm two-directional or ruled
+    add("contest.entity-kind-with-binding-ref", "contest_event", ["not"],
+        target_binding_id=f"bind:{ULID_A}")
+    add("contest.binding-kind-without-ref", "contest_event", ["required"],
+        target_kind="binding", target_entity_serial=_DEL)
+    add("contest.opened-without-basis", "contest_event", ["required"], basis=_DEL)
+    add("contest.opened-with-outcome", "contest_event", ["not"], outcome="dismissed")
+    add("contest.resolved-without-adjudicator", "contest_event_resolved", ["required"],
+        adjudicated_by=_DEL)
+    add("contest.upheld-without-consequence", "contest_event_resolved", ["required"],
+        consequence_refs=_DEL)
+    add("contest.dismissed-with-consequence", "contest_event_resolved", ["not"],
+        outcome="dismissed")
+    add("contest.merged-without-consequence", "contest_event_resolved", ["required"],
+        outcome="merged", consequence_refs=_DEL)
+    # (a) migration receipt: a rewrite without its evidence is the laundering defect by the remedy
+    add("mig.missing-evidence", "migration_receipt", ["required"], evidence_refs=_DEL)
     # honesty conditionals
-    add("matversion.partial-legacy-without-absent-components", "materializer_version",
+    add("matversion.partial-without-absent-components", "materializer_version",
         ["required"], absent_components=_DEL)
     add("matversion.complete-without-bundle-fields", "materializer_version", ["required"],
         bundle_completeness="complete", absent_components=_DEL)
@@ -397,9 +478,6 @@ def _mutants():
     add("bridge.corroborated-no-evidence", "bridge_assertion", ["required"],
         verification_standing="corroborated", claim_origin="producer_declared",
         evidence_refs=_DEL)
-    add("bridge.superseded-no-successor", "bridge_assertion", ["required"],
-        verification_standing="superseded", claim_origin="producer_declared",
-        evidence_refs=_DEL, registry_standing="retired")
     add("bridge.held-no-named-item", "bridge_assertion", ["required"],
         registry_standing="held")
     add("bridge.inadmissible-no-owner", "bridge_assertion", ["required"],
@@ -472,7 +550,8 @@ def _semantic_mutants():
 _ISO_FIELDS = ["minted_at", "observed_at", "asserted_at", "started_at", "completed_at",
                "built_at", "evaluated_at", "valid_from"]
 _PRIMARY_ID = {"entity": "entity_serial", "entity_binding": "binding_id",
-               "mint_receipt": "receipt_id",
+               "mint_receipt": "receipt_id", "contest_event": "event_id",
+               "migration_receipt": "receipt_id",
                "bridge_assertion": "bridge_id",
                "state_observation": "observation_id", "identity_relation": "relation_id",
                "materializer": "materializer_serial", "materializer_version": "version_id",
@@ -645,7 +724,7 @@ def main():
     fails = []
 
     # AXIS ARM (76257): the ruled axes exist as $defs with exact closed domains.
-    axes = {"claim_origin": 5, "verification_standing": 4, "registry_standing": 6,
+    axes = {"claim_origin": 5, "verification_standing": 3, "registry_standing": 6,
             "referent_scope": 3}
     axis_bad = []
     for axis, n in axes.items():

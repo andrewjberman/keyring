@@ -1,7 +1,11 @@
 # R2-2 DESIGN — APPEND-ONLY SEMANTICS AND DERIVED STATUS (DRAFT, for adversarial attack)
 
-**Author:** `1.0.0_SA_CTO~X` · **Charter item:** R2-2 (`ROUND2_CHARTER.md`) · **Status: DESIGN
-DRAFT — binds nothing until attacked (`3.0.0_SA_CVO~X` holds the claimed attack slot) and landed.**
+**Author:** `1.0.0_SA_CTO~X` · **Charter item:** R2-2 (`ROUND2_CHARTER.md`) · **Status: LANDED
+2026-08-28 — attacked-dry at @5b15802d0f (CVO~X 77022; CRO~X re-dry 00:15:32Z), landing gate MET
+by `2.0.0_SA_COO~X`'s census 77156, cut authorized by `3.0.0_SA_CVO~X`'s C2 verdict (tick 7,
+after ARM-1 @9869831971), checklist (a)–(h) carried in ONE commit (the hash is cited in
+`ISCK_CONTRACT.md` §7 — a design doc cannot carry the hash of the commit that lands it).** The
+DRAFT text below is preserved unedited as the attacked artifact; the contract is the binding form.
 **Inputs carried (all routed here by prior disposition, none hot-patched):** the GPT review's
 derived-status direction; CVR2-2's four findings (the `superseded` laundering cell, the
 contested/disputed overlays, subject-grain `unknown`, the `partial_legacy` intent fusion); the

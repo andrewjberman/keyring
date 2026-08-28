@@ -31,7 +31,8 @@
       "class": "D",
       "values_at_adjudication": [
         "superseded"
-      ]
+      ],
+      "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone"
     },
     "coherence_evaluation|currency|evidence_refs|ahead_of_target,at_target,behind_target": {
       "class": "A",
@@ -85,7 +86,8 @@
       "class": "D",
       "values_at_adjudication": [
         "superseded"
-      ]
+      ],
+      "closed_at_landing": "R2-2 landing 2026-08-28: the superseded -> superseded_by REQUIRE arm no longer exists on this consumer (checklist b); row retained as the consume gate's class-D self-control fixture, never printed because its arm is gone"
     },
     "materializer_version|bundle_completeness|configuration_digest|complete": {
       "class": "B",
@@ -139,6 +141,18 @@
       "class": "A",
       "values_at_adjudication": [
         "partial"
+      ]
+    },
+    "contest_event|event_kind|basis|opened": {
+      "class": "A",
+      "values_at_adjudication": [
+        "opened"
+      ]
+    },
+    "contest_event|event_kind|evidence_refs|opened": {
+      "class": "A",
+      "values_at_adjudication": [
+        "opened"
       ]
     }
   }

@@ -1,0 +1,27 @@
+{
+  "$comment": "R2-2 MIGRATION MANIFEST -- the complete enumeration of PRE-boundary records, cut at the R2-2 landing (R2_2_DERIVED_STATUS_DESIGN.md sec 2, RA-4: vintage is a LOOKUP against this manifest, never an inference from an absent status_basis map; certification REFUSES any absent-map record not listed here). Author 1.0.0_SA_CTO~X, 2026-08-28.",
+  "cut_at": "R2-2 landing, 2026-08-28 (the landing commit is cited in ISCK_CONTRACT.md sec 7; a manifest cannot carry its own commit hash)",
+  "design_pin": "7c093caff5",
+  "pre_landing_gate": "2.0.0_SA_COO~X census 77156 (17 package files; 3 arms + 2 mutants + 1 probe row break; materializer pair must survive)",
+  "population": "ISCK is v0.2-candidate and UNPOPULATED: no production record exists under the contract. The only records carrying pre-boundary vocabulary are the validator's own FIXTURES.",
+  "denominator": {
+    "production_records_pre_boundary": 0,
+    "fixture_records_rewritten": 1
+  },
+  "records": [],
+  "fixture_rewrites": [
+    {
+      "fixture": "validate_isck.py FIXTURES['materializer_version']",
+      "field": "bundle_completeness",
+      "source_value": "partial_legacy",
+      "target_value": "partial",
+      "recoverability": "recovered",
+      "receipt": "FIXTURES['migration_receipt'] (the 16th positive fixture carries this rewrite as its own record)"
+    }
+  ],
+  "verification_standing_superseded_pre_boundary": {
+    "fixtures": 0,
+    "production": 0,
+    "note": "no record carried superseded; the domain narrows with nothing to rewrite, so the 3a rewrite floor (unverified + superseded_by) is DECLARED and UNEXERCISED at this landing -- the first real migration exercises it, not this one"
+  }
+}

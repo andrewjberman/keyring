@@ -1,4 +1,4 @@
-# ARM-4 ADJUDICATION — 26 require-only candidates: 4 forbid-mirrors CUT, 22 ruled NO with reasons (25 at the round-2 boundary; +1 class A 2026-08-28)
+# ARM-4 ADJUDICATION — 28 require-only candidates over the record's life: 4 forbid-mirrors CUT, 22 ruled NO with reasons, 2 CLOSED at the R2-2 landing (25 at the round-2 boundary; +1 class A with ARM-1; +2 class A at R2-2)
 
 **Adjudicator:** `1.0.0_SA_CTO~X` (the forbid-mirror decision is this seat's, per the ARM-4
 routing) · **Instrument:** `isck_coverage_probes.py` ARM 4 (`0.4.0_DT_ClientPlatform~X`'s gate),
@@ -22,10 +22,13 @@ re-open it.**
 
 ## NO — 21 candidates, by class (the reason IS the record)
 
-**CLASS A — evidence is MONOTONE (13 candidates: every `-> evidence_refs` arm across
+**CLASS A — evidence is MONOTONE (15 candidates: every `-> evidence_refs` arm across
 bridge_assertion, coherence_evaluation, entity_binding, identity_relation, mint_receipt,
 state_observation — the 13th is `state_observation` `partial -> evidence_refs`, born at ARM-1
-cut 2 on 2026-08-28 and ruled here in the same commit so it never prints NEW).** Evidence presence contradicts NO status value: an `unverified` record MAY
+cut 2 on 2026-08-28 and ruled here in the same commit so it never prints NEW; the 14th and 15th
+are `contest_event` `opened -> basis` and `opened -> evidence_refs`, born at the R2-2 landing
+(§3.19): a `resolved` event restating the basis or carrying evidence is harmless surplus, and a
+forbid would ban the adjudicator from documenting the resolution — ruled in the landing commit).** Evidence presence contradicts NO status value: an `unverified` record MAY
 carry evidence that exists but has not been weighed; a `candidate` MAY carry the evidence it will
 be adjudicated on; `declared_by_author` origin MAY still attach substantiation. A forbid here
 would BAN documentation on exactly the records that most need to accumulate it before their next
@@ -53,12 +56,15 @@ consumers (DT-R2-2's shared-enum rule; `3.0.0_SA_CVO~X` 77053 caught the bridge-
 with §3.2 re-recorded (enter on evidence, leave by adjudication via `contest_resolved`). The
 candidate is therefore MOOT, not NO: no require arm remains to mirror.
 
-**CLASS D — DEFERRED BY LANDED DESIGN (2 candidates: `superseded` -> `superseded_by` on
-bridge_assertion and identity_relation).** The attacked-dry R2-2 design makes `superseded_by`
-PRESENCE the supersession carrier and `corroborated` + `superseded_by` the desired, expressible
-state — a forbid-mirror cut today ("superseded_by only on superseded") would be REVERSED at the
-R2-2 landing, and the require arm itself dies there (`superseded` leaves the axis). Cutting a
-control scheduled for reversal is churn, not coverage. Re-adjudicate iff R2-2 fails to land.
+**CLASS D — DEFERRED BY LANDED DESIGN → CLOSED AT THE R2-2 LANDING, 2026-08-28 (2 candidates:
+`superseded` -> `superseded_by` on bridge_assertion and identity_relation).** The attacked-dry
+R2-2 design made `superseded_by` PRESENCE the supersession carrier and `corroborated` +
+`superseded_by` the desired, expressible state — so a forbid-mirror was never cut, and at the
+landing (checklist line b) the REQUIRE arm itself was REMOVED on both consumers: `superseded`
+left `verification_standing`. **Neither arm exists any more; the two sidecar rows are RETAINED
+with a `closed_at_landing` note solely as the consume gate's class-D self-control fixture — they
+can never print, because ARM 4 only disposes arms it finds.** Nothing to re-adjudicate.
 
-**Coverage check: 4 + 13 + 6 + 1 + 2 = 26** (was 25 at the round-2 boundary; +1 class A on
-2026-08-28 with ARM-1 cut 2; the 2 class-D rows close at the R2-2 landing, checklist line b).
+**Coverage check: 4 + 15 + 6 + 1 + 2(closed) = 28 candidates over the record's life** (25 at
+the round-2 boundary; +1 class A with ARM-1 cut 2; +2 class A at the R2-2 landing; 2 class D
+CLOSED there). Live require-only arms at the landing: 21, all adjudicated, 0 NEW, 0 deferred.
