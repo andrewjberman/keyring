@@ -84,16 +84,24 @@ def clone_and_run(commit, keep):
     kept is PRINTED. Only a directory allocated here is ever a removal candidate.
     """
     from ledger.battery import run_battery as rb
+    # The FULL 40-hex, resolved here and printed. The receipt validator binds run_commit to the
+    # evidence by requiring the evidence to NAME it (R4-CVO-5) -- a receipt whose evidence never
+    # mentions its run_commit is a claim, not a run. An abbreviation is not the identity.
+    commit = subprocess.check_output(["git", "rev-parse", "--verify", "%s^{commit}" % commit],
+                                     cwd=sl.REPO_ROOT).decode().strip()
     dest, owned_parent = rb.choose_clone_dir(None, commit)
     clone = rb.clean_clone(commit, dest, sl.REPO_ROOT)
-    print("AC6 CLEAN EXTRACT of %s -> %s" % (commit, clone))
+    print("AC6 CLEAN EXTRACT of BUILD commit %s -> %s" % (commit, clone))
     try:
         child = subprocess.run(
             [sys.executable, os.path.join(clone, "org", "standards", "isck", "ledger", "battery",
                                           "run_slice.py"), "--pin", commit],
             cwd=os.path.join(clone, "org", "standards", "isck"),
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        sys.stdout.write(child.stdout.decode("utf-8", "replace"))
+        # Normalise the child line endings BEFORE handing them to our own stdout, which translates
+        # again on Windows. Without this a child line reaches a capturing parent as CR CR LF and
+        # every downstream consumer inherits a CR nobody wrote.
+        sys.stdout.write(child.stdout.decode("utf-8", "replace").replace(chr(13), ""))
         return child.returncode
     finally:
         rb.release_clone(owned_parent, keep)
