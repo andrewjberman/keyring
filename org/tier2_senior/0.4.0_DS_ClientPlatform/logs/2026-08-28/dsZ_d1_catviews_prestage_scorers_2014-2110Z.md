@@ -123,7 +123,27 @@ source the verdict is now **UNSCOREABLE**, never a vacuous PASS. The mutant is r
 | tool | result | note |
 |---|---|---|
 | `comp-which "where is the served platinum category-views object…"` | near-tie, 3 candidates of 80 | **Did not take rank 1** — the router prints "TOP SCORES ARE TIED, the order is not a ranking." Routed to `comp-find`, which answered. |
-| `comp-find 'category-views' --files` | 183 hits / 27,870 files scanned, bands printed | Located producers *and* surfaced `3.0.0_SA_CVO`'s pre-deploy baseline — the control the whole build then pinned to. Denominator printed, not `head`-ed. |
+| `comp-find 'category-views' --files` | 183 hits / **27,870 files** scanned, bands printed | Located producers *and* surfaced `3.0.0_SA_CVO`'s pre-deploy baseline — the control the whole build then pinned to. Denominator printed, not `head`-ed. **⚠ VINTAGE — see the corpus note below; this number will not reproduce.** |
+
+> **⚠ THE 27,870 DENOMINATOR IS VINTAGED AND WILL NOT REPRODUCE.** It was measured under
+> `corpus=default` **as that word was defined on `origin/SITEZ` during this session**. Rule 21 gained a
+> T1 the same day (Andrew-direct "All approved", landed `9ed33c473e` on `origin/CLOUD`, relayed here as
+> msg 13972) which **redefines comp-find's DEFAULT corpus to `all`** — tracked + untracked + gitignored
+> minus a printed ephemeral floor, some **168,349 gitignored files at the root** that the old default
+> missed. `default` is now the OLD population and `raw` is the only every-file denominator.
+> **MEASURED at this seat: `9ed33c473e` is NOT contained in `origin/SITEZ`**, so a re-run on this fabric
+> today still returns 27,870 — and a re-run *after* the merge will not, for a reason that has nothing to
+> do with the estate changing. A denominator is an artifact, not a summary: this one now carries its
+> vintage rather than inviting a false drift reading. Nothing in the scorer depends on it (it reads S3
+> via boto3 and the control via `git show`).
+
+> **⛔ RULE 21 T1 ALSO BANS RAW `grep`/`find` IN BASH, AND IT BINDS HERE WITH NO GATE TO ENFORCE IT.**
+> `.tools/hooks/comp-tool-hud.sh` @`32d5967277` is on CLOUD only — **nothing on site Z will refuse a raw
+> grep**, which is exactly the *"imperative enforced by nobody"* cell Rule 21 already names for raw-`aws`.
+> **Do not infer permission from the absence of a refusal.** For the record of what this session ran
+> *before* the relay landed: the directory-scoped `grep -rn "platinum" data/mdpf/scripts/` would be
+> DENIED under T1 and should have been `comp-find`; the consolidator probe was a **single-file** grep,
+> which T1 explicitly leaves ungated (T2, revisit ~09-04). Stating both rather than only the exonerating one.
 | `.tools/commit-gate.sh` | **PASS** (py_compile + ds-precommit + ruff py39) | Run twice — the second after stripping 6 non-ASCII bytes, because **an edit after a green run invalidates the run**. |
 | `.tools/safe-commit.sh` | rc=0, `d6ef49905f`, `[msg-verify] MATCH len=6280` | `-F` msgfile written by the Write tool (non-shell), unique scratchpad name — not a shared `/tmp` name. |
 | risk-reflex (`comp-pulse diff`) | REFLEX CLEAN, 1 file vs 1,417 danger nodes | Fired inside safe-commit; danger map 8.4h old, disclosed. |
