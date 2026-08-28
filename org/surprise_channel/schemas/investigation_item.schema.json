@@ -95,7 +95,10 @@
      "disposition": {
       "const": "GRADUATED"
      }
-    }
+    },
+    "required": [
+     "disposition"
+    ]
    },
    "then": {
     "properties": {
@@ -119,7 +122,10 @@
      "disposition": {
       "const": "DISMISSED_WITH_REASON"
      }
-    }
+    },
+    "required": [
+     "disposition"
+    ]
    },
    "then": {
     "required": [
