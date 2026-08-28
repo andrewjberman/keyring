@@ -1457,6 +1457,25 @@ def _repairs(V):
 
     out[("coherence_evaluation", "target_policy", "latest_authority")] = coherence_latest_authority
     out[("surface_version", "publication_state", "published")] = surface_published
+    def contest_lifecycle_target(inst):
+        # R4: contest_event's target is a TYPED one-of. The lifecycle_event kind owes
+        # target_event_id and FORBIDS the entity/binding targets -- a contest that names two
+        # targets names none, so the repair must drop the base fixture's entity target rather
+        # than merely add the event one.
+        inst["target_event_id"] = "lce:" + ULID_A_OF(V)
+        inst.pop("target_entity_serial", None)
+        inst.pop("target_binding_id", None)
+        return inst
+
+    def lifecycle_decommissioned(inst):
+        # R4: a decommission is TERMINAL -- there is no successor version by definition, so
+        # superseding_version_id is forbidden. Mirrors materializer.current_status=retired,
+        # which carries no successor obligation for the same reason.
+        inst.pop("superseding_version_id", None)
+        return inst
+
+    out[("contest_event", "target_kind", "lifecycle_event")] = contest_lifecycle_target
+    out[("lifecycle_event", "event_kind", "materializer_decommissioned")] = lifecycle_decommissioned
     out[("bridge_assertion", "registry_standing", "held")] = bridge_held
     out[("bridge_assertion", "registry_standing", "inadmissible")] = bridge_inadmissible
     out[("bridge_assertion", "registry_standing", "rejected")] = bridge_rejected
