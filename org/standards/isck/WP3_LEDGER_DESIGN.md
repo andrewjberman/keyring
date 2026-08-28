@@ -223,15 +223,18 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 
 ### 3b. RECORDS EXERCISED PER RESPONSIBILITY — the author's statement (R4-DT-3, `0.4.0_DT_ClientPlatform~X` 77606: no text instrument can read this off the rows, and a row that says "binding machine" never writes `binding_event`)
 
-⛔ **STATUS OF THIS TABLE (issuer ruling `2.0.0_SA_COO~X` 77608, which precedes this addendum):
-a falsifiable WAVE-2 EXPECTATION, NOT wave-1 AC3 evidence.** AC3's oracle names a property of the
-FIXTURES, so in wave 1 its 13 cells discharge as `NOT_MEASURABLE` (DT~X's confidence table + the
-row-4 false clean as the negative control) and are RE-MEASURED from the fixtures in wave 2 — an
-authored answer beside a later measured one is the typed-beside-derived class, and the issuer
-expressly did not take it. What this table IS: the author's prediction, stated from the arm ids
-in §3 (not the prose) of what each row's arms will CONSTRUCT — each row's fixtures' `record_type`
-set must be a SUBSET of the row below; a fixture outside its row's set is a finding against this
-table. `carrier_dependency` is **V03_CARRIER_REQUIRED** iff any record type the row's arms must
+⛔ **STATUS OF THIS TABLE (issuer ruling `2.0.0_SA_COO~X` 77608, AMENDED by 77618 after this
+addendum landed): the WAVE-1 AC3 VALUE with package status `INFERRED` — promote-or-kill per row
+from the fixtures in wave 2.** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
+authored answer as typed-beside-derived; 77618 distinguishes that class (a value with NO falsifier
+beside a later measured one) from this table, which carries its falsifier: each row's fixtures'
+`record_type` set must be a SUBSET of the row below — a fixture outside its row's set is a KILL,
+a finding against this table routed to the author; the cell's domain is unchanged either way.
+AC3's evidence cites this section at its landing hash; every other AC stays at d0398b977d (the
+decomp's design pin stands — this addendum moves no section a cell cites). What this table IS:
+the author's prediction, stated from the arm ids in §3 (not the prose), of what each row's arms
+will CONSTRUCT. It agrees with DT~X's confidence table (77605) on every UNAMBIGUOUS row (6, 7, 13)
+and every PLUS38-by-absence row; the text scan understated rows 4 and 5. `carrier_dependency` is **V03_CARRIER_REQUIRED** iff any record type the row's arms must
 construct or resolve is absent from the frozen `+38` catalog (the three event carriers, the
 widened contest target, `supersedes` on assertions, the typed unions), else **PLUS38_ONLY**.
 
