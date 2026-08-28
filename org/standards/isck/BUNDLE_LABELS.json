@@ -45,6 +45,13 @@
       "frozen_at": "2026-08-28T06:40:18Z",
       "round_3_boundary_commit": "abcb491373cbe4e1ff06924ed3924ebbf21a7001",
       "scope": "schema-only"
+    },
+    "receipts": {
+      "wp3_certification_receipt": {
+        "value": "eb15d30b6b3eaf9d79392bed1f6b73ba1daeabe2",
+        "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+        "recorded_at": "2026-08-28T12:40:17Z"
+      }
     }
   }
 }
