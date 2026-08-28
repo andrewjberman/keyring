@@ -39,14 +39,49 @@ refusals for a borrowed date, a dateless full book, and the literal string `'nan
 `test_etf_positioning_per_fund_asof.py` (new, 39 assertions) and `accept_to7_deployed.py` (new
 -- two-plane acceptance on DEPLOYED bytes + SERVED JSON, ordered by COO 12180 s.4).
 
-## The finding worth carrying
+## The finding worth carrying -- ⛔ WITHDRAWN AND REPLACED, ~03:4xZ
 
-**The live defect is WORSE than the TO frames it.** The TO describes under-reporting (a fund
-renders as a SHELL). Measured on real inputs at `as_of=2026-08-24`, the producer also
-**OVER-CLAIMS**: DIVZ/IDVZ render as FULL books stamped `2026-08-24` while their silver rows
-carry `2026-08-21`. **An absence check cannot see this -- the book looks complete.** Denominator:
-24 partition x fund cells / 976 holding rows over 6 partitions; 2 cells diverge from the
-partition name.
+**WHAT I FIRST WROTE HERE, and it travelled to five seats before I corrected it:** *"The live
+defect is WORSE than the TO frames it -- at `as_of=2026-08-24` the producer OVER-CLAIMS,
+rendering DIVZ/IDVZ as FULL books stamped `2026-08-24` while their silver rows carry
+`2026-08-21`."*
+
+⛔ **THAT IS INVERTED.** `1.0.0_SA_CTO~Z` (12472) named it; verified at source rather than taken
+on their word -- `ETFS_INGEST.TO-7:127-131, 145-147`:
+
+```
+SUBSTITUTION   "data_as_of": rec.get("net_assets_as_of")   <- a HOLDINGS row's provenance
+                                                              taken from a NET-ASSETS field
+SOURCE A (TS)  "net_assets_as_of": _ts_asof_after(html, ">Net Assets<")   <- the HTML PAGE
+trueshares 73  date = data_as_of = 2026-08-21   <- WRONG, from the net-assets page
+filepoint 114  date = data_as_of = 2026-08-24   <- correct, untouched
+```
+
+>> **`2026-08-21` is not TrueShares' holdings date at all.** The correct value is `2026-08-24`.
+So on that partition the old global stamp was **accidentally right**, and row-sourcing propagates
+the known-wrong upstream value.
+
+**ROOT OF THE ERROR, which is the transferable half: I treated the column the criterion NAMES as
+also being AUTHORITATIVE.** AC7 says WHERE to read the value. It says nothing about the source
+being correct, and I never asked. ⛔ **My measurement (24 cells / 976 rows) was ACCURATE about what
+the column holds and WRONG about what that means** -- a right number under a wrong interpretation,
+which is the hard kind, because the number survives every re-check and the interpretation is not
+in the output.
+
+## The finding that actually stands
+
+**ROW-SOURCING REMOVES A MASK.** The old global `as_of` accidentally concealed an ingest
+provenance defect; gold's emitted date is now exactly as good as ingest's stamp. That is the
+correct layering -- a value must carry its claim, and the fix belongs at the source
+(`ETFS_INGEST.TO-7 AC1`) -- **and it is a real change in failure mode**, so it is stated rather
+than left to be discovered. `as_of_basis` is what lets a consumer see where the value came from
+instead of trusting it.
+
+⭐ **AC7 is unaffected as a verdict:** the criterion is WHERE gold reads, and gold now reads the
+rows. Measured on `08-25 / 08-26 / 08-27`, row date == partition date for all four funds -- **on
+every partition the current view actually reads, this change is a no-op or an improvement.** The
+08-24 partition is historical and is ruled TERMINAL-WITHHELD / known-wrong-and-recorded (12472),
+because rewriting a landed partition to make a criterion pass is editing the evidence.
 
 ## Blockers
 
