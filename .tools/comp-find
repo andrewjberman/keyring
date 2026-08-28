@@ -39,11 +39,19 @@ counts are printed whether or not the band is shown on this page.
 CORPUS + HIDDEN FILES (Andrew-direct 2026-08-27). A denominator only means something beside the
 POPULATION it was drawn from, and comp-find had no way to say which population it read. It does now:
 
-  --corpus default   tracked + untracked-not-ignored   (unchanged historical behaviour)
-  --corpus all       + gitignored, minus the declared ephemeral floor
+  --corpus default   tracked + untracked-not-ignored   (the historical behaviour; NO LONGER THE DEFAULT)
+  --corpus all       + gitignored, minus the declared ephemeral floor   <- THE DEFAULT since 2026-08-28
   --corpus ignored   ONLY gitignored files
   --corpus raw       + ALL gitignored, floor disabled
-  --hidden           census: what in this scope is INVISIBLE to the default corpus
+  --hidden           census: what in this scope is INVISIBLE to `--corpus default`
+
+DEFAULT FLIPPED TO `all` 2026-08-28 (Andrew-direct at the CTO~D terminal, "All approved" on the
+/open-calls cards; audit org/tier1_exec/1.0.0_SA_CTO/deliverables/COMPRAIL_GREP_GATE_AUDIT_20260828.md):
+with raw grep DENIED in Bash (T1), the rail's reflex form must see what grep saw -- 168,349 gitignored
+files at the workspace root were invisible to a default run (97,060 real content). The vendor floor
+(node_modules, __pycache__, .venv, .git, .runtmp...) stays out and is disclosed on the denominator
+line; `--corpus raw` reads it. Cost: a ROOT-wide scan touches ~97k more files; scoped searches are
+unaffected. `--corpus default` still exists for the old population.
 
 The corpus mode now rides on the DENOMINATOR line, and a ZERO in the default corpus reports how
 many gitignored files in scope it never searched -- because `0 hit(s) across 0 file(s)` and
@@ -122,9 +130,9 @@ def _usage():
     print("  --band B      show only band B (HEAD|DEF|SURFACED|CONFIG|TEST|DOC|COLD)")
     print("  --files       collapse to matching file names only")
     print("  --all         do not paginate (every hit)   [PAGING -- not the corpus; see --corpus]")
-    print("  --corpus M    WHICH FILES are searchable (default: default):")
-    print("     default   tracked + untracked-not-ignored   -- gitignored files are INVISIBLE")
-    print("     all       default + gitignored, minus the declared ephemeral floor")
+    print("  --corpus M    WHICH FILES are searchable (default: all, since 2026-08-28):")
+    print("     default   tracked + untracked-not-ignored   -- gitignored files are INVISIBLE (the OLD default)")
+    print("     all       default + gitignored, minus the declared ephemeral floor   [THE DEFAULT]")
     print("     ignored   ONLY gitignored files -- 'is it in the hidden files?'")
     print("     raw       default + ALL gitignored, floor disabled (slow, complete)")
     print("  --hidden      report the out-of-corpus (hidden) file count for this scope and exit")
@@ -149,7 +157,7 @@ def main() -> int:
     limit = PAGE_DEFAULT
     band_filter = None
     include_held = False
-    corpus = "default"
+    corpus = "all"   # Andrew-direct 2026-08-28: gitignored content searchable by default (floor still out)
     hidden_only = False
     positional = []
     i = 0
