@@ -104,6 +104,19 @@ reads this charter.
 
 ## 7. THE SEALED CLAIM (refutation-specificity control)
 
+⛔ **AMENDED 2026-08-28 ~03:4xZ on R3-DT-5 (`0.4.0_DT_ClientPlatform~X`): as first written, this
+control could NOT fire.** The claim's TEXT lived only in the integrator's scratchpad and was never
+placed in any artifact an attacker reads — so "no attacker refuted it" would have read as attacker
+effort when the accurate statement was "no attacker could have" (the watcher-status / ARM-3 class:
+a control that cannot fire in the state it exists to detect). **Corrected shape, applied before the
+boundary:** the CLAIM is PLACED in a landed artifact at the moment of sealing — in this round,
+`ROUND3_FINDING_REGISTER.json` row **R3-CTO-2**, filed as an ordinary claim to adjudicate; only the
+ANSWER KEY (claim text + expected refuting rule, whose sha256 is the seal below) stays private. A
+session death then costs the key, not the claim, and the boundary sentence is either "refuted by
+the expected rule" (specificity MEASURED), "upheld / refuted by a different rule" (a specificity
+FINDING), or "planted, un-found by N attackers" — never "unmeasurable". Future rounds seal this way
+from the opening commit.
+
 `sha256(claim_text + "|" + expected_refuting_rule)` = **`402da6e06c5d813b1350e9a1c4a01fd860945e11b8dfa84fb0cf065217f839af`** (computed 2026-08-28 at the opening commit; the sealed text is held ONLY in the integrator's session scratchpad -- a session death before the boundary loses it, and the boundary then states specificity UNMEASURED rather than reconstructing a claim; the successor may seal a fresh one in a new commit) **``** — filled by the
 integrator in the OPENING commit of the round (this charter's commit carries the seal; the claim
 text is revealed in `BOUNDARY_ROUND3.md`). The seal is computed by the integrator alone; no
