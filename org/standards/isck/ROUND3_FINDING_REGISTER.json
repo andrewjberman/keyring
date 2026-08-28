@@ -766,7 +766,7 @@
    "disposition": "FIXED",
    "disposition_basis": "FILED AT THE ROUND-4 OPENING PIN 32c9e67e26 -- held per charter sec 11 (declarations coincide at one hash; one revision per pin). Remedy adopted for the next pin: (a) schema arm under target_kind=lifecycle_event + outcome=upheld: consequence_refs maxItems 1 with items pattern ^lce:; (b) semantic arm: when the sole consequence RESOLVES in the batch to a record that is not a lifecycle_event -> reject; kind/serial/new-id compared as now. DISCLOSED, not absorbed: 'reject when the sole consequence does not resolve in the submitted set' would make THIS field the only reference the stateless validator requires to resolve in-batch (contest_event_resolved's bind: consequence and every other reference are ledger-scope, sec 6 limit 3); the schema refinement closes the wrong-TYPE hole completely, the unresolved-lce case stays limit-3 class for the ledger's row 2/13 -- CVO~X may contest that reading at the next pin || LANDED: schema arm under target_kind=lifecycle_event + outcome=upheld -> consequence_refs minItems 1, maxItems 1, items ^lce:; mutants contest.lifecycle-upheld-consequence-not-lce (pattern) + contest.lifecycle-upheld-two-consequences (maxItems); the committed accept contest_event_lifecycle stands. A semantic 'resolves in-batch to another type' branch was written, then REMOVED before commit: no valid record other than a lifecycle_event can carry an lce: id, so that branch is reachable only from an invalid fixture (the non-conforming-fixture control class) -- the schema arm plus the existing kind/serial/new-id checks are the whole honest remedy; the unresolved-in-batch case stays sec 6 limit 3 (ledger row 2/13)",
    "fix_commit": "(this commit -- round 4's SECOND pin; all three attackers declared at 32c9e67e26: CVO~X R4-CVO-1, DT~X R4-DT-1, CRO~X R4-CRO-1)",
-   "verification_ref": "CVO~X replay of the two mutants + the accept at the second round-4 pin; CVO~X may contest the limit-3 reading",
+   "verification_ref": "CVO~X 055423Z at b8961d2e39: PASS (the rel: witness now fails schema; per-kind exactly-one/prefix arms); the limit-3 reading of unresolved same-prefix consequences ACCEPTED as declared scope",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -779,7 +779,7 @@
    "disposition": "FIXED",
    "disposition_basis": "FILED AT THE ROUND-4 OPENING PIN 32c9e67e26 -- held per charter sec 11. Remedy adopted for the next pin: fixture bridge_assertion_superseding mirroring identity_relation_superseding (one entry; the round-4 delta was 7 fixtures / 21 mutants and DT~X's by-name count MATCHES the declaration). DT~X's disclosed instrument error (a positive control built from the record's OWN id read as 'unreachable' for a minute -- the self-supersession arm doing its job) recorded here as the class it names || LANDED: fixture bridge_assertion_superseding (supersedes br:<a different bridge>, corroborated, independently_observed with evidence) -- the accept sibling of bridge.supersedes-wrong-shape; fixtures 29 -> 31 with R4-CRO-1's",
    "fix_commit": "(this commit -- round 4's SECOND pin; all three attackers declared at 32c9e67e26: CVO~X R4-CVO-1, DT~X R4-DT-1, CRO~X R4-CRO-1)",
-   "verification_ref": "DT~X re-count at the second pin (fixtures by name; both supersedes arms paired)",
+   "verification_ref": "DT~X 77495 at 4d808e9740: VERIFIED CLOSED on evidence -- fixtures 29 -> 35, both record types carry supersedes, the bridge fixture EXERCISED (distinct predecessor br:01jabcde..., schema valid, semantic clean; a self-supersedes value would have parsed as an accept and been rejected -- the vacuous-accept shape it was checked against); COO~X 77479 second instrument",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -857,7 +857,33 @@
    "disposition": "FIXED",
    "disposition_basis": "PITCHED to 3.0.0_SA_CVO~X 053857Z (self-drive D11 tick-15 supplement; ledger row 14) and ADJUDICATED 054009Z: root set UPHELD at seat-FAMILY grain (0.0.0_AB_MSTR | 1.0.0_SA_CTO; rotation only through a superseding candidate); the claim that a schema regex ALONE closes it REFUTED -- actor is authored data, a spoofed root string passes the regex. Landed as two halves: STRUCTURAL (this commit): authority_epoch_event.actor pattern ^(0\\.0\\.0_AB_MSTR|1\\.0\\.0_SA_CTO)(~[A-Z])?$ in the schema (a bundle member -- rotation = new candidate_id with supersedes_bundle_id, replayable, no new member file); mutants aep.actor-not-root (UNTRUSTED_WRITER) + aep.actor-root-family-wrong-suffix-shape; the committed fixtures are the MSTR genesis-open and the authorized re-open accepts; sec 3.29 states both halves. LEDGER (WP3 row 6, declared): actor bound EXACTLY to the authenticated submitting principal BEFORE the family predicate -- L-06-unauthorized-epoch-transition-rejected + L-06-epoch-actor-spoof-rejected, accepts L-06-mstr-genesis-open-accepted + L-06-cto-close-reopen-as-authenticated-writer-accepted. The authenticated-principal half is ledger-scope by construction (a stateless validator has no principal) -- sec 6",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CVO~X read of sec 3.29 + WP3 row 6 for both halves; CRO~X replay of the self-grant batch (schema half: actor UNTRUSTED_WRITER rejected)",
+   "verification_ref": "CVO~X read of sec 3.29 + WP3 row 6 for both halves; CRO~X replay of the self-grant batch (schema half: actor UNTRUSTED_WRITER rejected) | CVO~X 055423Z at b8961d2e39: both halves STATED",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
+  },
+  {
+   "finding_id": "R4-CVO-2",
+   "round": 4,
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T055423Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "WP3 sec 2d's consequence_refs[] authoritative union still reads identity_relation | binding_event | contest_event | entity_binding | lifecycle_event and omits authority_epoch_event, although sec 2b and the schema (rel|bind|bev|ctev|lce|aep) now require aep replacement consequences",
+   "disposition": "OPEN",
+   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11 (the design's fourth pin awaits DT~X and CRO~X). Remedy adopted for the next pin: add authority_epoch_event / aep to that one union; denominator unchanged (30)",
+   "fix_commit": "OPEN-CITATION (the next design pin)",
+   "verification_ref": "CVO~X read of sec 2d at the next pin",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
+  },
+  {
+   "finding_id": "R4-CVO-3",
+   "round": 4,
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T055423Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "WP3 sec 4 materializer.current_status row 1 still says ANY materializer_decommissioned event => retired, not an EFFECTIVE (admitted, non-voided) one -- an upheld contest can void a bad decommission and the fold would still return retired, contradicting sec 2b's 'VOIDED feeds no fold' and R4-CRO-2",
+   "disposition": "OPEN",
+   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11. Remedy adopted for the next pin: row 1 filters EFFECTIVE decommission events; status_basis cites contest + replacement across correction chains; control L-05-voided-decommission-does-not-retire-accepted (the validator's _materializer_machine_errors already runs over effective events -- the design row lagged the arm)",
+   "fix_commit": "OPEN-CITATION (the next design pin)",
+   "verification_ref": "CVO~X replay of the voided-decommission construction at the next pin",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   }
  ],
