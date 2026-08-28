@@ -163,7 +163,7 @@ C5's last sentence and §2b's ruling, those land as a NEW candidate — never a 
 | 3 | materializer decommission | `lifecycle_event materializer_decommissioned` |
 | 4 | materializer process supersession | `lifecycle_event materializer_superseded` with `superseding_version_id`; `superseded_by_version` becomes derived (refused on write); ONE per materializer |
 | 5 | mint-authority epochs | `authority_epoch_event {opened \| closed}` with `authority_id`; overlap rejected, reopening legal |
-| 6 | `contest_event.consequence_refs[]` | typed: record-id union (`rel:` \| `bind:` \| `ctev:` \| the binding_event id) |
+| 6 | `contest_event.consequence_refs[]` | typed: record-id union `rel:` \| `bind:` \| `bev:` \| `ctev:` \| `lce:` — the ONE authoritative union (R3-CVO-13; item 8 no longer "gains" it, this row IS it) |
 | 7 | `migration_receipt.migrated_record_ref` | typed: record-id union over the catalog |
 | 8 | lifecycle-event correction (R3-CVO-12, adjudicated `3.0.0_SA_CVO~X` 20260828T050018Z, ledger row 13 — six conditions verbatim there) | `contest_event.target_kind` gains `lifecycle_event` with STRICT exactly-one `target_event_id`; item 6's union gains lifecycle-event ids; an `upheld` lifecycle-event contest names exactly one replacement event (same `event_kind` + `materializer_serial`, new id, validates independently); VOIDED derives only from that; at most one EFFECTIVE `materializer_superseded` per materializer over store ∪ batch |
 
@@ -195,3 +195,18 @@ is placed in the register at the opening commit of the round.
 **Exit:** §8 verbatim, with `BOUNDARY_ROUND4.md` and the v0.3 label frozen schema-only. **Then and
 only then** ledger code (ledger row 12: "held until the amended design and v0.3 candidate are each
 attacked-dry/frozen").
+
+**OPENING (the round-4 opening commit — the contract change itself):** the eight items land in
+`ISCK_CONTRACT.md` §2/§3.20/§3.27–3.29/§4/§6/§8, the schema (17-type catalog) and
+`validate_isck.py` (self-test denominators printed by the battery, never typed here). **The sealed
+claim is PLACED, corrected shape (§7):** register row **R4-CTO-1**, filed as an ordinary claim to
+adjudicate; the ANSWER KEY (claim text + `\n` + expected refuting rule, LF, no trailing newline)
+stays in the integrator's scratchpad; **seal = sha256(utf8(row R4-CTO-1 claim) + `|` + bytes(key))
+= `e092b98a74019218325ec8cc97c74bb9a59ac3ccdc4cb548e1febe4a3144d3d1`**; sha256(key) =
+`c38105c9606a97635550508d8e42bdbd6bf4c2bcc33c56a0548a0ddbbcc3d8af`. The key lands as
+`ROUND4_ANSWER_KEY.txt` in the boundary commit and `verify_seal.py` gains a `--round 4` form there.
+First attacks cite the opening commit's hash (named in the broadcast, never typed here ahead of
+the commit). Companion repairs for the two new enum values (`contest_event.target_kind=
+lifecycle_event`, `lifecycle_event.event_kind=materializer_decommissioned`) are
+`0.4.0_DT_ClientPlatform~X`'s consume-gate commit (the probe module is DT~X's lane); ARM 3 prints
+them OPEN until then — declared, not hidden.

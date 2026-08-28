@@ -44,6 +44,15 @@
     },
     {
       "$ref": "#/$defs/migration_receipt"
+    },
+    {
+      "$ref": "#/$defs/lifecycle_event"
+    },
+    {
+      "$ref": "#/$defs/binding_event"
+    },
+    {
+      "$ref": "#/$defs/authority_epoch_event"
     }
   ],
   "$defs": {
@@ -829,6 +838,10 @@
             "verification_standing"
           ],
           "additionalProperties": false
+        },
+        "supersedes": {
+          "type": "string",
+          "pattern": "^rel:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "allOf": [
@@ -2072,6 +2085,10 @@
             "registry_standing"
           ],
           "additionalProperties": false
+        },
+        "supersedes": {
+          "type": "string",
+          "pattern": "^br:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "allOf": [
@@ -2386,7 +2403,8 @@
         "target_kind": {
           "enum": [
             "entity",
-            "binding"
+            "binding",
+            "lifecycle_event"
           ]
         },
         "target_entity_serial": {
@@ -2419,7 +2437,8 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "$ref": "#/$defs/nonempty"
+            "type": "string",
+            "pattern": "^(rel|bind|bev|ctev|lce):[0-9a-hjkmnp-tv-z]{26}$"
           }
         },
         "evidence_refs": {
@@ -2428,6 +2447,10 @@
         "surviving_contest_id": {
           "type": "string",
           "pattern": "^ct:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "target_event_id": {
+          "type": "string",
+          "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "required": [
@@ -2464,6 +2487,13 @@
                     "target_binding_id"
                   ]
                 }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_event_id"
+                  ]
+                }
               }
             ]
           }
@@ -2490,6 +2520,48 @@
                 "not": {
                   "required": [
                     "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_event_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "lifecycle_event"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "target_event_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_entity_serial"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "target_binding_id"
                   ]
                 }
               }
@@ -2664,7 +2736,8 @@
           "pattern": "^mig:[0-9a-hjkmnp-tv-z]{26}$"
         },
         "migrated_record_ref": {
-          "$ref": "#/$defs/nonempty"
+          "type": "string",
+          "pattern": "^(ent|mat|matv|run|sf|sv|bind|ctev|rel|br|obs|mr|mig|ce|lce|bev|aep):[0-9a-hjkmnp-tv-z]{26}$"
         },
         "field": {
           "$ref": "#/$defs/nonempty"
@@ -2714,6 +2787,173 @@
         "migrated_by",
         "evidence_refs"
       ]
+    },
+    "lifecycle_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "materializer_serial",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "lifecycle_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^lce:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "materializer_decommissioned",
+            "materializer_superseded"
+          ]
+        },
+        "materializer_serial": {
+          "$ref": "#/$defs/mat_serial"
+        },
+        "superseding_version_id": {
+          "type": "string",
+          "pattern": "^matv:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "materializer_superseded"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "superseding_version_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_kind": {
+                "const": "materializer_decommissioned"
+              }
+            },
+            "required": [
+              "event_kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "superseding_version_id"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "binding_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "binding_id",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "binding_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^bev:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "closed"
+          ]
+        },
+        "binding_id": {
+          "type": "string",
+          "pattern": "^bind:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
+    },
+    "authority_epoch_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "event_id",
+        "event_kind",
+        "authority_id",
+        "occurred_at",
+        "actor",
+        "evidence_refs"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "authority_epoch_event"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^aep:[0-9a-hjkmnp-tv-z]{26}$"
+        },
+        "event_kind": {
+          "enum": [
+            "opened",
+            "closed"
+          ]
+        },
+        "authority_id": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/iso_ts"
+        },
+        "actor": {
+          "$ref": "#/$defs/nonempty"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
     }
   }
 }

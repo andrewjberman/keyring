@@ -264,6 +264,65 @@ FIXTURES = {
         "currency": "unknown", "provenance": "complete",
         "fabric_validity": "valid_for_fabric",
     },
+    # ROUND 4 / v0.3-candidate (ROUND3_CHARTER.md sec 11, eight items): the append-only carriers the
+    # WP-3 design could not derive from +38, each with positive coverage of every conditional arm
+    "lifecycle_event": {
+        "record_type": "lifecycle_event", "event_id": f"lce:{ULID_A}",
+        "event_kind": "materializer_superseded", "materializer_serial": f"mat:{ULID_A}",
+        "superseding_version_id": f"matv:{ULID_C}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#materializer-succession"],
+    },
+    "lifecycle_event_decommissioned": {
+        "record_type": "lifecycle_event", "event_id": f"lce:{ULID_B}",
+        "event_kind": "materializer_decommissioned", "materializer_serial": f"mat:{ULID_A}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#materializer-decommission"],
+    },
+    "binding_event": {
+        "record_type": "binding_event", "event_id": f"bev:{ULID_A}",
+        "event_kind": "closed", "binding_id": f"bind:{ULID_A}",
+        "occurred_at": TS2, "actor": "1.0.0_SA_CTO~X",
+        "evidence_refs": ["commit:9fc70e31a1#rename portal/src/App.tsx"],
+    },
+    "authority_epoch_event": {
+        "record_type": "authority_epoch_event", "event_id": f"aep:{ULID_A}",
+        "event_kind": "opened", "authority_id": "1.0.0_SA_CTO~X@laptop",
+        "occurred_at": TS, "actor": "0.0.0_AB_MSTR",
+        "evidence_refs": ["ISCK_CONTRACT.md#sec-5-minting-authority"],
+    },
+    # item 8: a contest whose TARGET is a lifecycle event (the correction path for a mis-typed
+    # process supersession); resolved+upheld names exactly one replacement event
+    "contest_event_lifecycle": {
+        "record_type": "contest_event", "event_id": f"ctev:{ULID_C}",
+        "contest_id": f"ct:{ULID_C}", "event_kind": "resolved",
+        "target_kind": "lifecycle_event", "target_event_id": f"lce:{ULID_A}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "outcome": "upheld", "adjudicated_by": "3.0.0_SA_CVO~X",
+        "consequence_refs": [f"lce:{ULID_C}"],
+        "evidence_refs": ["LD-0461#wrong-successor-version"],
+    },
+    # the REPLACEMENT the upheld contest names: same event_kind + materializer_serial, NEW id
+    # (R3-CVO-12 c3) -- the first draft of this fixture set named the decommission event as the
+    # replacement and the semantic arm rejected its own author's fixture, which is the arm working
+    "lifecycle_event_replacement": {
+        "record_type": "lifecycle_event", "event_id": f"lce:{ULID_C}",
+        "event_kind": "materializer_superseded", "materializer_serial": f"mat:{ULID_A}",
+        "superseding_version_id": f"matv:{ULID_C}",
+        "occurred_at": TS2, "actor": "3.0.0_SA_CVO~X",
+        "evidence_refs": ["LD-0461#materializer-succession", f"ctev:{ULID_C}"],
+    },
+    # item 1: the backward supersession link on an assertion (the new head names its predecessor)
+    "identity_relation_superseding": {
+        "record_type": "identity_relation", "relation_id": f"rel:{ULID_B}",
+        "relation_type": "candidate_equivalence",
+        "subject_serial": f"ent:{ULID_A}", "object_serial": f"ent:{ULID_B}",
+        "claim_origin": "independently_observed", "verification_standing": "corroborated",
+        "status_basis": {"verification_standing": "authored"},
+        "asserted_at": TS2, "asserted_by": "4.0.0_SA_CRO~X",
+        "supersedes": f"rel:{ULID_A}",
+        "evidence_refs": ["obs:" + ULID_B],
+    },
 }
 
 
@@ -377,6 +436,28 @@ ATTACK_TARGETS = {
     "mint.checked-no-evidence": ["evidence_refs"],
     "mint.wrong-serial-form": ["serial_form"],
     "mint.missing-preflight": ["collision_preflight"],
+    # ROUND 4 / v0.3-candidate
+    "lce.superseded-without-successor": ["superseding_version_id"],
+    "lce.decommissioned-with-successor": ["superseding_version_id"],
+    "lce.missing-evidence": ["evidence_refs"],
+    "lce.unknown-kind": ["event_kind"],
+    "lce.successor-not-a-version-id": ["superseding_version_id"],
+    "bev.unknown-kind": ["event_kind"],
+    "bev.binding-ref-wrong-shape": ["binding_id"],
+    "bev.missing-actor": ["actor"],
+    "aep.missing-authority": ["authority_id"],
+    "aep.empty-authority": ["authority_id"],
+    "aep.unknown-kind": ["event_kind"],
+    "contest.lifecycle-kind-without-event-ref": ["target_event_id"],
+    "contest.lifecycle-kind-with-entity-ref": ["target_entity_serial"],
+    "contest.entity-kind-with-event-ref": ["target_event_id"],
+    "contest.binding-kind-with-event-ref": ["target_event_id"],
+    "contest.event-ref-wrong-shape": ["target_event_id"],
+    "contest.consequence-not-a-record-id": ["consequence_refs"],
+    "contest.consequence-empty-list": ["consequence_refs"],
+    "mig.ref-not-a-record-id": ["migrated_record_ref"],
+    "relation.supersedes-wrong-shape": ["supersedes"],
+    "bridge.supersedes-wrong-shape": ["supersedes"],
 }
 
 _DEL = object()
@@ -627,6 +708,42 @@ def _mutants():
     add("entity.status-dead-value-candidate", "entity", ["enum"], current_status="candidate")
     add("relation.unknown-type", "identity_relation", ["enum"], relation_type="same_as")
     add("entity.smuggled-field", "entity", ["additionalProperties"], legacy_name="c2_instances")
+    # ROUND 4 / v0.3-candidate -- one negative per then-arm of the three new carriers, the widened
+    # contest target (every direction), the two typings, and the backward supersedes shape
+    add("lce.superseded-without-successor", "lifecycle_event", ["required"],
+        superseding_version_id=_DEL)
+    add("lce.decommissioned-with-successor", "lifecycle_event", ["not"],
+        event_kind="materializer_decommissioned")
+    add("lce.missing-evidence", "lifecycle_event", ["required"], evidence_refs=_DEL)
+    add("lce.unknown-kind", "lifecycle_event", ["enum"], event_kind="materializer_retired")
+    add("lce.successor-not-a-version-id", "lifecycle_event", ["pattern"],
+        superseding_version_id=f"mat:{ULID_C}")
+    add("bev.unknown-kind", "binding_event", ["enum"], event_kind="disputed")
+    add("bev.binding-ref-wrong-shape", "binding_event", ["pattern"], binding_id=f"ent:{ULID_A}")
+    add("bev.missing-actor", "binding_event", ["required"], actor=_DEL)
+    add("aep.missing-authority", "authority_epoch_event", ["required"], authority_id=_DEL)
+    add("aep.empty-authority", "authority_epoch_event", ["minLength"], authority_id="")
+    add("aep.unknown-kind", "authority_epoch_event", ["enum"], event_kind="revoked")
+    add("contest.lifecycle-kind-without-event-ref", "contest_event_lifecycle", ["required"],
+        target_event_id=_DEL)
+    add("contest.lifecycle-kind-with-entity-ref", "contest_event_lifecycle", ["not"],
+        target_entity_serial=f"ent:{ULID_A}")
+    add("contest.entity-kind-with-event-ref", "contest_event", ["not"],
+        target_event_id=f"lce:{ULID_A}")
+    add("contest.binding-kind-with-event-ref", "contest_event_resolved", ["not"],
+        target_event_id=f"lce:{ULID_A}")
+    add("contest.event-ref-wrong-shape", "contest_event_lifecycle", ["pattern"],
+        target_event_id=f"ctev:{ULID_A}")
+    add("contest.consequence-not-a-record-id", "contest_event_resolved", ["pattern"],
+        consequence_refs=["see the ticket"])
+    add("contest.consequence-empty-list", "contest_event_resolved", ["minItems"],
+        consequence_refs=[])
+    add("mig.ref-not-a-record-id", "migration_receipt", ["pattern"],
+        migrated_record_ref="materializer_version#partial_legacy")
+    add("relation.supersedes-wrong-shape", "identity_relation_superseding", ["pattern"],
+        supersedes=f"br:{ULID_A}")
+    add("bridge.supersedes-wrong-shape", "bridge_assertion", ["pattern"],
+        supersedes=f"rel:{ULID_A}")
     return m
 
 
@@ -690,14 +807,31 @@ def _semantic_mutants():
              dict(FIXTURES["source_frontier"]["entries"][0],
                   source_version="snapshot:9999999999999999999"),
          ])),
+        # ROUND 4 / v0.3-candidate
+        ("sem.relation-supersedes-self",
+         _mk("identity_relation_superseding", supersedes=f"rel:{ULID_B}")),
+        ("sem.bridge-supersedes-self",
+         _mk("bridge_assertion", supersedes=f"br:{ULID_A}")),
+        ("sem.lifecycle-superseded-by-own-version",
+         [_mk("lifecycle_event", superseding_version_id=f"matv:{ULID_B}"),
+          _mk("materializer_version_complete")]),
+        ("sem.lifecycle-contest-two-replacements",
+         _mk("contest_event_lifecycle", consequence_refs=[f"lce:{ULID_B}", f"lce:{ULID_C}"])),
+        ("sem.lifecycle-contest-replacement-wrong-kind",
+         [_mk("contest_event_lifecycle", consequence_refs=[f"lce:{ULID_B}"]), _mk("lifecycle_event"),
+          _mk("lifecycle_event_decommissioned")]),
+        ("sem.lifecycle-contest-replacement-is-target",
+         [_mk("contest_event_lifecycle", consequence_refs=[f"lce:{ULID_A}"]), _mk("lifecycle_event")]),
     ]
 
 
 _ISO_FIELDS = ["minted_at", "observed_at", "asserted_at", "started_at", "completed_at",
-               "built_at", "evaluated_at", "valid_from"]
+               "built_at", "evaluated_at", "valid_from", "occurred_at"]
 _PRIMARY_ID = {"entity": "entity_serial", "entity_binding": "binding_id",
                "mint_receipt": "receipt_id", "contest_event": "event_id",
                "migration_receipt": "receipt_id",
+               "lifecycle_event": "event_id", "binding_event": "event_id",
+               "authority_epoch_event": "event_id",
                "bridge_assertion": "bridge_id",
                "state_observation": "observation_id", "identity_relation": "relation_id",
                "materializer": "materializer_serial", "materializer_version": "version_id",
@@ -856,6 +990,44 @@ def semantic_errors(instances):
         if rt == "materializer_version" and inst.get("supersedes") == inst.get("version_id") \
                 and inst.get("supersedes") is not None:
             errs.append(f"[{i}] materializer_version: supersedes itself")
+        # ROUND 4 item 1: the backward link on an assertion is a different record, never itself
+        if rt in ("identity_relation", "bridge_assertion") and inst.get("supersedes") is not None \
+                and inst.get("supersedes") == inst.get(_PRIMARY_ID[rt]):
+            errs.append(f"[{i}] {rt}: supersedes itself (round 4 item 1 -- the head of a chain "
+                        "names its PREDECESSOR)")
+        # ROUND 4 item 4: process-level supersession points at a version of ANOTHER materializer;
+        # decidable in-batch when the version record is present (beyond the batch: the ledger,
+        # WP3 row 7 L-07-cross-materializer-supersedes-rejected)
+        if rt == "lifecycle_event" and inst.get("event_kind") == "materializer_superseded":
+            for j, other in enumerate(instances):
+                if isinstance(other, dict) and other.get("record_type") == "materializer_version" \
+                        and other.get("version_id") == inst.get("superseding_version_id") \
+                        and other.get("materializer_serial") == inst.get("materializer_serial"):
+                    errs.append(f"[{i}] lifecycle_event: materializer_superseded by version [{j}] of "
+                                "the SAME materializer -- that is a version succession "
+                                "(materializer_version.supersedes), not a process supersession "
+                                "(round 4 item 4)")
+        # ROUND 4 item 8 (R3-CVO-12 condition 3): an upheld contest on a lifecycle event names
+        # exactly ONE replacement of the same event_kind and materializer_serial; decidable
+        # in-batch when the target and the replacement are present
+        if rt == "contest_event" and inst.get("target_kind") == "lifecycle_event" \
+                and inst.get("outcome") == "upheld":
+            cons = inst.get("consequence_refs") or []
+            if len(cons) != 1:
+                errs.append(f"[{i}] contest_event: upheld on a lifecycle event names {len(cons)} "
+                            "consequences -- exactly ONE replacement event (R3-CVO-12 c3)")
+            by_id = {o.get("event_id"): o for o in instances
+                     if isinstance(o, dict) and o.get("record_type") == "lifecycle_event"}
+            tgt = by_id.get(inst.get("target_event_id"))
+            for c in cons:
+                rep = by_id.get(c)
+                if tgt and rep and (rep.get("event_kind") != tgt.get("event_kind")
+                                    or rep.get("materializer_serial") != tgt.get("materializer_serial")):
+                    errs.append(f"[{i}] contest_event: replacement {c} differs from the contested "
+                                "event in event_kind or materializer_serial (R3-CVO-12 c3)")
+                if rep is not None and c == inst.get("target_event_id"):
+                    errs.append(f"[{i}] contest_event: the replacement IS the contested event "
+                                "(R3-CVO-12 c3 -- a new event id)")
         if rt == "materialization_run":
             s, c = inst.get("started_at"), inst.get("completed_at")
             if isinstance(s, str) and isinstance(c, str) and _parse_iso(s) and _parse_iso(c):

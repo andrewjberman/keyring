@@ -137,7 +137,7 @@ locations, substrate keys, published locations); never resolved; listed so the e
 | `contest_event` | `target_entity_serial` | `entity` | STRICT | conditional (`target_kind=entity`) |
 | `contest_event` | `target_binding_id` | `entity_binding` | STRICT | conditional (`target_kind=binding`) |
 | `contest_event` | `target_event_id` (v0.3, item 8) | `lifecycle_event` | STRICT | conditional (`target_kind=lifecycle_event`) — not in `+38`; listed so the round-4 arms `L-02-unresolved/resolved-contest_event.target_event_id` exist from the first draft |
-| `contest_event` | `consequence_refs[]` | `identity_relation` \| `binding_event` (v0.3) \| `contest_event` \| `entity_binding` | PARSE-STRICT (row 13: each item MUST parse and resolve) | conditional (`outcome=upheld`) |
+| `contest_event` | `consequence_refs[]` | `identity_relation` \| `binding_event` (v0.3) \| `contest_event` \| `entity_binding` \| `lifecycle_event` (v0.3, item 8 — R3-CVO-13: the ONE authoritative union; the schema pattern is `rel\|bind\|bev\|ctev\|lce`) | PARSE-STRICT (row 13: each item MUST parse and resolve) | conditional (`outcome=upheld`) |
 | `entity` | `canonicalized_as` | `entity` | STRICT | no |
 | `entity_binding` | `entity_serial` | `entity` | STRICT | yes |
 | `identity_relation` | `subject_serial` | `entity` | STRICT | yes |

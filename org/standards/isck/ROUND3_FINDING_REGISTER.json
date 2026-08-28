@@ -1,5 +1,5 @@
 {
- "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps.",
+ "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged.",
  "round": 3,
  "attacked_input": "bf6fbe53d9",
  "charter": "51e789ddfb",
@@ -716,7 +716,7 @@
    "disposition": "FIXED",
    "disposition_basis": "FILED AT THE QUIET PIN bf9d4e5eeb -- registered without touching the held design (charter sec 11 rule). Remedy ADJUDICATED (CVO~X 20260828T050018Z, self-drive D11 ledger row 13): option A UPHELD = round-4 ITEM 8, a lifecycle-event contest target, under six conditions: (1) target_kind adds lifecycle_event with STRICT exactly-one target_event_id; (2) consequence_refs union adds lifecycle_event ids; (3) an upheld lifecycle-event contest names exactly one replacement event of the same event_kind + materializer_serial with a new id that validates independently; (4) row 7 enforces at most one EFFECTIVE (not voided) materializer_superseded per materializer and admits the otherwise-second event only as that upheld consequence, over store + batch; (5) VOIDED derives only from an admitted upheld contest with the valid replacement; (6) the fold ignores the voided event and cites contest + replacement; two effective successors rejected incl. same-batch races. Lands at the NEXT PIN (design rows 7 / sec 2b / sec 2d / sec 4 + charter item 8) after 4.0.0_SA_CRO~X declares at bf9d4e5eeb; schema arms in round-4 authoring || LANDED AT THE SECOND PIN (this commit, all three declarations at bf9d4e5eeb in hand: DT~X DRY 045649Z, CVO~X finding 045732Z, CRO~X finding 050119Z): sec 2b gains the item-8 carrier row (target_kind + lifecycle_event, STRICT exactly-one target_event_id, consequence union, single same-kind same-serial replacement); sec 2d gains the target_event_id row (row 2's template expands over 30); row 7 rewritten on EFFECTIVE = admitted and not VOIDED, VOIDED only from an admitted upheld lifecycle-event contest with exactly one valid replacement, replacement admitted only as that consequence, two effective successors incl. same-batch races rejected (L-07-two-effective-successors-same-batch-rejected, L-07-replacement-without-upheld-contest-rejected, accept L-07-voided-then-replacement-accepted); row 13 gains the lifecycle-upheld arms (single replacement of same kind + serial; accept); sec 4 materializer row 2 folds only the effective event and cites contest + replacement; charter sec 11 item 8 (eight items, closed)",
    "fix_commit": "(this commit -- the second quiet pin)",
-   "verification_ref": "CVO~X replay of the six conditions at the second pin (asked)",
+   "verification_ref": "CVO~X replay 20260828T050804Z at 30d9186e3b: conditions 1, 3-6 EMBODIED; condition 2 FAILS at the pinned bytes -> R3-CVO-13",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -730,6 +730,31 @@
    "fix_commit": "(this commit -- bundle_identity.py; the second quiet pin)",
    "verification_ref": "CRO~X re-runs its forgery and the bound-receipt accept against a scratch copy at the second pin",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CVO-13",
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T050804Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "R3-CVO-12 condition 2 is not embodied at 30d9186e3b: sec 2b and the register say consequence_refs[] gains lifecycle-event ids, but the authoritative sec 2d reference row still reads identity_relation | binding_event (v0.3) | contest_event | entity_binding and omits lifecycle_event; charter item 6 prints the old union while item 8 only says the union gains lifecycle-event ids -- the replacement rows 7/13 require is not in the declared PARSE-STRICT target union, so the correction path can be rejected or omitted during schema authoring",
+   "disposition": "FIXED",
+   "disposition_basis": "FILED AT THE SECOND PIN 30d9186e3b -- registered without touching the held design (charter sec 11). Remedy (CVO~X's, adopted): add lifecycle_event explicitly to the sec 2d consequence_refs[] target union and to charter item 6 (one authoritative union, item 8 no longer 'gains'); same single reference row, same denominator; lands at the THIRD pin once 4.0.0_SA_CRO~X declares at 30d9186e3b. Round-4 schema authoring writes the consequence_refs items pattern union WITH lce: from the first draft, so the authoring cannot omit it while the design text catches up || LANDED AT THE THIRD PIN (this commit; declarations at 30d9186e3b: DT~X DRY 050742Z, CRO~X DRY 051322Z, CVO~X finding 050804Z): sec 2d consequence_refs[] union now names lifecycle_event explicitly as the ONE authoritative union (schema pattern rel|bind|bev|ctev|lce); charter item 6 carries the same union and item 8 no longer 'gains' it; same single reference row, denominator unchanged (30); the round-4 schema writes the union with lce: from its first draft",
+   "fix_commit": "(this commit -- the third quiet pin = the round-4 opening commit)",
+   "verification_ref": "CVO~X read of sec 2d + charter item 6 + the schema pattern at the third pin (asked)",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R4-CTO-1",
+   "round": 4,
+   "source_seat": "1.0.0_SA_CTO~X",
+   "source_ref": "(the round-4 opening commit)",
+   "finding_class": "CONTRACT",
+   "claim": "a materializer_decommissioned lifecycle_event carries NO evidence_refs by design: the v0.3 schema FORBIDS the field on that event_kind (a decommission is a terminal fact that needs no warrant), so a decommission event carrying evidence_refs is REJECTED",
+   "disposition": "OPEN",
+   "disposition_basis": "filed at the round-4 opening as an ordinary claim for the attackers to adjudicate (charter sec 7 corrected shape / sec 11 OPENING); the integrator issues no refutation of its own rows",
+   "fix_commit": "OPEN-CITATION",
+   "verification_ref": "OPEN-CITATION",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   }
  ],
  "not_rows": {
