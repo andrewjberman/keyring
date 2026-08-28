@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-28
 **Task Order:** NFRA_C3MATERIALIZE.TO-WP3-2-DTX (WP-3 ledger build, wave 2)
-**Status:** COMPLETE except AC8, which is BLOCKED upstream by a measured, routed defect
+**Status:** COMPLETE. AC8 was blocked upstream mid-session and cleared; see Blockers.
 **Window:** 10:44–12:15Z
 **Archetype:** BUILDER-UNDER-A-FROZEN-SPEC
 
@@ -99,17 +99,36 @@ Per-unit, in the rectangle's dependency order, each with its own commit and its 
 
 ## Blockers
 
-**AC8 only.** `derive(7a44b65f50~1)` = the frozen `+27` bundle; `derive(7a44b65f50)` = a different
-one; exactly 1 of 14 members differs across that commit and 0 of 14 from there to HEAD. The ledger
-code exists only after the freeze, so no satisfiable `run_commit` exists. Three correct decisions —
-the freeze entry belonging in sec 8, the member list predating it, and R3-CRO-36's run binding added
-later — compose into an unobtainable receipt, and none is visible from inside the others. Routed;
-not worked around.
+**None remaining. AC8 was blocked and is cleared** — recorded because the shape is worth keeping.
+
+`derive(7a44b65f50~1)` = the frozen `+27` bundle; `derive(7a44b65f50)` = a different one; exactly
+1 of 14 members differed across that commit and 0 of 14 from there to HEAD. The freeze commit had
+written its own freeze entry into `ISCK_CONTRACT.md`, a bundle member, so no post-freeze commit
+derived the frozen bundle — and the ledger code exists only post-freeze. Three correct decisions
+composing into an unobtainable receipt, none visible from inside the others. Routed (77766), fixed
+by the design owner at `bd4bea5b2a` (member restored byte-for-byte, freeze entry relocated to a
+non-member carrier, and a guard added that would have caught it).
+
+Then **two defects of mine were caught before acceptance, each by an instrument I was not watching**:
+
+- the carrier's own `evidence_digest` check refused the receipt — I hashed the working tree (890
+  bytes, 5 CR), it hashes the blob (885, 0). Git had normalised CRLF→LF and warned; I read the
+  warning as noise. That check exists because those fields used to be decorative; its first live
+  firing was against its author.
+- `3.0.0_SA_CVO~X`, reading the receipt **against its evidence** rather than against the validator,
+  found `run_commit` had drifted with HEAD to `c557006b0b` while the evidence named `d11c341f79` in
+  three places. My shell recomputed `RUNC=$(git rev-parse HEAD)` on each rebuild. **The bundle
+  binding could not see it** — both commits derive the identical bundle, because no member changed
+  between them, which is the very invariant this wave established. A check bound to the wrong
+  invariant returns the shape of a pass on a wrong value.
+
+Corrected at `eb15d30b6b`; tool limb added at `0430c4617d`; the prematurely accepted `e8d3326bd5`
+was discarded **uncommitted**, so nothing wrong ever became a registry fact. Registry act
+`a8982310d8`.
 
 ## Current State
 
-`ran 188 of 188`, exit 0, at `91f38fb966`; instance VALID; AC9 evidenced with both denominators and
-a positive control. My 15 commits since the pin touch **0 of the 14 bundle members** and nothing
+`ran 188 of 188`, exit 0; instance VALID with all nine criteria PASS; the certification receipt `eb15d30b6b` recorded on the frozen `v0.3-candidate+27` label at `a8982310d8`; AC9 evidenced with both denominators and a positive control. My 15 commits since the pin touch **0 of the 14 bundle members** and nothing
 outside `ledger/` and my own deliverables. Push state MEASURED: **LOCAL** — `origin/CLOUD`
 `540503df0a`; every wave-2 commit is local-only.
 
