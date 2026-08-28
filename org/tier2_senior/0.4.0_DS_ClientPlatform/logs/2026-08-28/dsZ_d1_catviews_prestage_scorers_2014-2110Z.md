@@ -78,6 +78,35 @@ seat's own reading, had said "tomorrow's fire" without naming the day. `3.0.0_SA
 that scores tomorrow — recorded that it holds CLAUDE.md's trading-calendar NEVER, cites it at other
 seats, and had not applied it to its own plan.
 
+> ### ⛔ SUPERSEDED SAME SESSION — THE LIFT IS **MONDAY 2026-08-31**, AND THIS FALSIFIES MY OWN PREDICTION
+> I wrote to three seats (13879/13880/13881 s.2): *"Saturday's run should carry `as_of 2026-08-28`
+> **if** Friday's custody data lands overnight — UNMEASURED at this seat."* The qualifier was right and
+> **the prediction was wrong**, for a reason unrelated to the feed. `3.0.0_SA_CVO~Z` reached MONDAY
+> independently (14025); measured here on a **different instrument** — artifact `LastModified` rather
+> than the manifest key, so this is corroboration, not repetition:
+>
+> | plane | measurement | denominator |
+> |---|---|---|
+> | manifest (run-date → `as_of`) | **4 of 4** weekend runs NO-ADVANCE (repeat the preceding **Thursday**); **2 of 2** Monday runs ADVANCE to the preceding Friday | 18 scheduled 13:31Z runs of 42 manifests |
+> | artifact (`LastModified`) | **0 objects** carry a Sat/Sun write. `…/2026-08-14.json` (Fri `as_of`) written **Mon 08-17**, gap 3d; `…/2026-08-21.json` written **Mon 08-24**, gap 3d | 63 gold objects, 49financial |
+>
+> **The weekend run EXECUTES — it writes a manifest — and writes NO ARTIFACT.** So Sat 08-29 and Sun
+> 08-30 leave the served object pre-fix; **Mon 2026-08-31 carries `as_of 2026-08-28` and is the lift.**
+>
+> ⚠ **THE WORDING THAT PRODUCED MY ERROR:** "weekend runs compute the preceding FRIDAY's `as_of`" is
+> correct read as *"the `as_of` the preceding Friday's RUN produced"* (= Thursday), and yields the
+> **opposite** answer read as *"the preceding Friday DATE"* (= 08-28, which would advance). I drew the
+> second reading before measuring. A schedule other seats plan against should not turn on which reading
+> a reader picks.
+>
+> ⭐ **CHANGES NOTHING IN THE TOOL, WHICH IS THE DESIGN PAYING OFF.** `gate_scoreable` keys on the
+> artifact's own `written_by`/`written_at` versus the deploy, never on a calendar — so across the
+> weekend it returns BLOCKED rc=3 and scores nothing (correct behaviour, not a failure), and opens on
+> Monday. **No edit was needed and none was made.** One consequence stated now rather than discovered
+> Monday: Monday's artifact carries `as_of 2026-08-28`, so **AC3's LITERAL track reports `NA_BY_DATE`**
+> and the structural A/B/C limbs carry the verdict. The literal constants can now only ever reproduce
+> against the pre-fix control — which is what `bc9d11dd8e` is for.
+
 **Remedy adopted verbatim by the issuer:** A/B/C exact-to-the-cent on any `as_of`; D scores the
 literal constants only at `as_of 2026-08-27` and reports **`NA_BY_DATE` — never PASS, never FAIL**
 — otherwise. Nothing relaxed to "approximately"; what changed is what it is exact *against*.
@@ -167,6 +196,8 @@ source the verdict is now **UNSCOREABLE**, never a vacuous PASS. The mutant is r
 
 1. **[`3.0.0_SA_CVO~Z`]** score after ~13:50Z. The tool refuses on its own if handed a pre-fix or
    gold-rung object, so a wrong invocation cannot silently produce a wrong verdict.
-2. **[whoever reads the fire tomorrow]** count trading days before calling anything broken —
-   **2026-08-29 is a Saturday** and Friday is Monday's answer.
+2. **[whoever reports status upward]** carry **MONDAY 2026-08-31**, not "tomorrow." Measured on two
+   instruments (above): the weekend runs write no artifact, so the served object cannot advance before
+   Monday. The build is done and on origin; the **acceptance** is a calendar fact with no seat to chase
+   and no ad-hoc route — an ad-hoc run would destroy `TP1AE-AC4`'s discriminator permanently.
 3. **[this seat]** nothing unblocked. Available for re-pointing.
