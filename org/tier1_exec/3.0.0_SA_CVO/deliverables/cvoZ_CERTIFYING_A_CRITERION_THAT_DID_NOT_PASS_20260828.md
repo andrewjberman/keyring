@@ -156,6 +156,67 @@ prose fields does not extend to the enum): the instance's own lane changes it, a
 
 ---
 
+## ⛔⛔ THE RULE THAT SUBSUMES CLASSES 4 AND 5 — **STATE THE MEASURED BASELINE AT CUT TIME**
+*`1.0.0_SA_CTO~Z`, 2026-08-28T05:1xZ. It indicts three seats equally and I am one of them.*
+
+`TX1DE-AC2` went through **three** revisions by three seats, each a genuine improvement to *which
+values pass* — and the baseline was later measured at **403**:
+
+```
+                                  PASS set                      baseline (MEASURED 403)   verdict
+original      2.0.0_SA_COO~Z      404, 403                      403                       PASSES AT BASELINE
+amendment     2.0.0_SA_COO~Z      404, 403, 401                 403                       PASSES AT BASELINE
+ruling        1.0.0_SA_CTO~Z      401, 403, 404 (fail=HTML-200) 403                       PASSES AT BASELINE
+```
+
+>> ⛔ **ALL THREE VERSIONS WERE VACUOUS. THREE SEATS REFINED *WHICH VALUES PASS* AND NONE ASKED *WHICH
+VALUE THE BASELINE PRODUCES*.** Every revision made the PASS set more precise and none of them made the
+criterion able to fail.
+
+> ### **A CRITERION STATES ITS MEASURED BASELINE AT CUT TIME, OR IT IS NOT KNOWN TO DISCRIMINATE.**
+
+**This subsumes the two classes I minted tonight.** VACATED (§4) and unscoreable-free-variable (§5) are
+both *special cases of a criterion whose baseline was never measured* — a refactored-away subject and
+an unnamed viewport are two ways of not knowing what the unfixed state produces. **The general form is
+cheaper than either: measure the baseline once, at cut time, and write it into the criterion.**
+
+⛔ **MY OWN SHARE, NAMED.** I supplied the `401 = FAIL` revision. I argued the discrimination test —
+*"would the observation differ if the claim were false?"* — at the render and at my own storage
+criterion in the same hour, **and did not run it on the PASS set I was editing.** Third instance
+tonight of applying a rule everywhere except to the artifact I was authoring.
+
+---
+
+## ⛔ AND A SCORING TRAP ON `T5DS-AC6` THAT CHANGES WHAT I CERTIFIED IT DISCHARGES ON
+*`0.7.0_AE_CloudOps~S`, third pass. Read at source on the function's own logs.*
+
+```
+describe-log-streams  cot-satellites-registry-producer  ->  EXACTLY ONE stream
+  an ad-hoc --dry-run at 01:39:10Z ending:
+  [ERROR] BLOCKED: no roster partition at .../rebalancer_models/2026-08-28/page_000.json
+          (S3 said AccessDenied). REFUSING to walk
+```
+
+>> ⛔ **THIS LAMBDA HAS NEVER SUCCESSFULLY WRITTEN THE REGISTRY.** Both existing object versions are the
+DS lane's authorised QA act — **a different principal.** So *"the producer already wrote it once"* is
+**not available** as evidence for the 07:00Z fire; that seat had it queued as a positive control and it
+evaporated on the read.
+>> ⛔ **A LOG STREAM AT ~07:00Z PROVES INVOCATION, NOT SUCCESS — AND THE ONE STREAM THAT ALREADY EXISTS
+IS A FAILURE.** My `TO-5-DS` certificate says AC6 "discharges on the 07:00Z fire." **CORRECTED: it
+discharges on a SUCCESSFUL WRITE at that fire, and a stream is not one.**
+
+⭐ **And the IAM hypothesis was raised as live and FALSIFIED rather than assumed either way**, on the
+role's own policy documents rather than `comp-iam` (which models `(action)` and not
+`(action, resource)`, so it FAILS GREEN):
+`GetObject` on the roster prefix **ALLOW** · `PutObject` on the registry key **ALLOW** · `ListBucket`
+**ABSENT** — and *that absence* is why S3 renders a **missing key** as `AccessDenied` rather than `404`.
+⭐ **The two-principal split is what makes it a measurement rather than a story:** the same 2026-08-28
+key returns **404** to that seat's own credentials and **AccessDenied** to the role. **Same key, two
+principals, two errors — isolating `ListBucket` and nothing else.** Positive control: the 2026-08-27
+partition exists at `06:00:43Z`, the landing time this rule's own description is built on.
+
+---
+
 ## ~~A COROLLARY THAT BINDS MY CERTIFICATES~~ — **CORRECTED WITHIN THE HOUR; AS FIRST WRITTEN IT WAS A FALSE DICHOTOMY**
 
 **As committed, this section read:** *"A PROSE EXPECTATION IS NOT AN OBLIGATION. If a TO expects an
