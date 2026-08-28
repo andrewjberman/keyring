@@ -1,0 +1,54 @@
+WP-3b HISTORICAL REPLAY -- second independent clean extract of ab5dc4e62c7b59efeec77881e4224bb6f47c20c8
+The replay claim: both AC4 anchors resolve and agree, sec 2e holds in BOTH directions,
+an unbindable anchor is refused, and the whole run reproduces from a fresh extract.
+
+DETERMINISM ACROSS TWO INDEPENDENT EXTRACTS OF ab5dc4e62c
+compared 19 substantive line(s); EXCLUDED by name: the extract's temp path and
+the AC5 published-artifact byte digest (both vary per run by construction)
+VERDICT: IDENTICAL
+
+AC6 CLEAN EXTRACT of BUILD commit ab5dc4e62c7b59efeec77881e4224bb6f47c20c8 -> C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-ab5dc4e62c-928d2rpa\clone
+WP-3b SLICE -- both pins on every count
+   pin 1 preservation copy  @057220cca9
+   pin 2 declared manifest  @06a5ae751c
+   VINTAGE CAVEAT: admits the RATIFIED candidate set at d86a59514ec3; the set has since moved to 87528e2a6d89 and the generator REFUSES to re-emit until the ratification is re-read. Neither invoked nor bypassed.
+AC1 population   COUNTED 42 parts | observers 4 (D11's own deliverables, admitted knowingly and flagged)
+AC2 translator   translated 42 | errored 0 | census {"entity": 42, "entity_binding": 42, "mint_receipt": 42}
+AC2 census       seven families, each against its own denominator:
+   mint_receipt          emitted 42 | errored  0 | out-of-reach  0  of 42  OK
+   entity                emitted 42 | errored  0 | out-of-reach  0  of 42  OK
+   entity_binding        emitted 42 | errored  0 | out-of-reach  0  of 42  OK
+   materializer          emitted  0 | errored 28 | out-of-reach 14  of 42  OK  {"declaration_gap": 28, "no_named_materializer": 14}
+   materializer_version  emitted  0 | errored 14 | out-of-reach 28  of 42  OK  {"materializer_not_a_single_artifact": 14, "no_named_materializer": 14, "parent_materializer_errored_declaration_gap": 14}
+   source_frontier       emitted  1 | errored  0 | out-of-reach  0  of  1  OK
+   materialization_run   emitted  1 | errored  0 | out-of-reach  0  of  1  OK
+AC2 generation   42 of 42 carry a generation object | NO NAMED materializer 14 | named 28 = 14 repo paths (bytes at the pin, digest COMPUTABLE) + 14 PROSE (materializer_not_a_single_artifact)
+                 semantic_layer + canonical_role: declared ABSENT domain-wide by ruled mapping v0.2 @df73332fb2 -- 28 named-materializer parts ERROR reason-class declaration_gap citing v0.2. An AUTHORED absence, not a silent omission; values are the materializer OWNERS' to declare under a vocabulary the contract does not yet carry.
+                 digest sha256:9d8f69d8e61e0bcf...  infra/aws/globgrph/code_heat_emit.py
+                 digest sha256:6cd5388a6eb12e19...  infra/aws/globgrph/cse_emit_frontend_coevolution.py
+                 digest sha256:94691a7ce3fddac7...  infra/aws/globgrph/emit_fedobs_snap.py
+                 method sha256-over-declared-canonical-tree-inventory-v1
+AC3 admission    admitted 42 | refused 0 | errored 0 | translator-errored 0
+                 reconciliation 42 + 0 + 0 + 0 = 42 of 42
+AC3 falsifier    one binding -> a missing entity              admitted 41 refused 1 -> PASS
+AC3 falsifier    one binding -> a mint_receipt (wrong CLASS)  admitted 41 refused 1 -> PASS
+AC2 provenance   run pin ab5dc4e62c (--pin argument)
+AC2 provenance   ADMITTED: materializer mat:wp3b-slice-runner | version matv:59f886a88a74
+                 bundle_digest sha256:59f886a88a74caed205d4f8d40820f0151a4f57eaf2191e20930d676b66f5148 (64 hex)
+                 inventory 9 members declared | 9 hashed at run pin ab5dc4e62c | absent none
+                 byte source extracted pin tree (git archive; no .git present, the tree IS the pin)
+                 normalization each member's bytes LF-NORMALISED (CRLF -> LF) then sha256; inventory lines '<sha256-hex>  <posix-relpath>', sorted by relpath, LF-joined with a trailing LF, UTF-8, then sha256. Bytes are read at the pin -- via `git show <pin>:<path>` in a repo, or from the extracted pin tree under AC6 -- never from an unpinned working tree
+                 DIGEST DESCRIBES THE CODE THAT RAN: True
+                 source_frontier sf:wp3b-06a5ae751c: 42 entries | 6 carry NO parseable observed_at (explicit absence, never coerced)
+AC4 replay       as_of commit_seq 44 -> anchor_commit_seq 44 | estate counted 131
+AC4 replay       as_of frontier sf:wp3b-06a5ae751c -> anchor_commit_seq 44 | estate counted 131
+AC4 agreement    both anchors resolve to the same commit_seq and the same estate: True
+AC4 sec-2e A     before: a claim that the backfill is inside anchor 44 is REFUSED as L-12-replay-mismatch
+AC4 sec-2e B     after:  INCLUDED at anchor 45, and it sits at position 0 of 86 among event-timed records -- its EVENT-TIME position (2019), not its admission position (newest of 132). PASS
+AC4 falsifier    unbindable frontier anchor REFUSED as L-12-replay-frontier
+AC5 snapshot     via vacuum_into | 86016 bytes | sha256:dbb733ab957a7b4d2c6c65ef9bacc5e14
+                 fingerprint_method sha256-over-published-artifact-bytes | normalization_version v1-vacuum-into-single-file
+                 POSITIVE {"rows": 132, "anchor_commit_seq": 45, "rows_match": true, "anchor_match": true, "verdict": "PASS"}
+                 NEGATIVE {"verdict": "PASS-AS-A-CONTROL", "rows": null, "note": "failed to open at all: OperationalError"}
+AC5 verdict      PASS
+CLONE          released C:\Users\ANDREW~1\AppData\Local\Temp\wp3-battery-ab5dc4e62c-928d2rpa (0.97 GB) -- removed: True
