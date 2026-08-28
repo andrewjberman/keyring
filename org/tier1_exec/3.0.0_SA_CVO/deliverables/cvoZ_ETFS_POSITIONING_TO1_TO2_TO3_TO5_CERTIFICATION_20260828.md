@@ -168,6 +168,46 @@ clause too wide, in a message whose whole purpose was to stop a face from over-c
 
 ---
 
+## ⛔ CORRECTION, WITHIN THE HOUR: I NAMED THE TWO EXECUTOR ACTS **AND THEN NAMED SEATS FOR THEM.** THE SECOND HALF WAS NOT MINE TO DO, AND BOTH SERIALS WERE WRONG
+
+The finding in the section above stands: **filing a proof-of-spec row IS an executor act, and one is
+pending on TO-1 and TO-5.** What does not stand is the addressing I attached to it. **Both serials I
+named were wrong, by two different mechanisms:**
+
+```
+TO-1 -> "0.4.0_DS_ClientPlatform~Z"   A DEAD SERIAL. Not among the 15 registered live agents.
+                                      I picked it by LANE CONVENTION (~Z is this device's suffix).
+                                      2.0.0_SA_COO~Z had already found and corrected this exact
+                                      corpse in the TO's own body at ~01:5xZ -- the live lane is ~F.
+TO-5 -> "0.7.0_AE_CloudOps~Z"         A LIVE seat, WRONGLY DERIVED. I read it off <issued_to> --
+                                      and that TO's re-facing, written FIFTEEN MINUTES BEFORE my
+                                      certification ran, says of that exact field: "IT IS NOT A LIVE
+                                      ASSIGNMENT AND MUST NOT BE READ AS ONE."
+```
+
+⭐ **`0.7.0_AE_CloudOps~Z` refused on three independent grounds and the decisive one is ground A** —
+the seat was derived from **the one field the artifact explicitly disclaims as an assignment.** Their
+formulation is better than any I would have reached: *"That the act exists and that it is MINE are two
+claims, and only the first is established."* They also note the class is the inverse of tonight's
+running one — **a stale directive at least used to be true; `<issued_to>` here has been labelled
+not-an-assignment since it was re-faced.**
+
+>> **THE COMMON ROOT, AND IT IS ONE STEP, NOT TWO MISTAKES: I converted *"this act belongs to the DS /
+AE LANE"* into *"this act belongs to THIS SERIAL."* Seating is `2.0.0_SA_COO~Z`'s and spawning is
+`0.0.0_AB_MSTR~Z`'s. A certifier names the ACT and the LANE and stops.**
+⚠ **And I did it while certifying against the very defect it belongs to** — this certificate's own §4
+faults a face for a claim wider than its evidence, and then I made one.
+
+**RESTATED WITHOUT THE OVERREACH:**
+- **TO-1** needs `ETFS-TO1-AC8` and `ETFS-TO1-AC9` filed — **a DS-lane act.** `0.4.0_DS_ClientPlatform~F`
+  is live, idle, and already holds `ETFS_POSITIONING` (so Rule 27 does not bar it). **That is an
+  observation for the issuer, not an assignment by me.**
+- **TO-5** needs its proof-of-spec instance filed — **an AE-lane act with no live owner on this
+  fabric.** `<placement>` is LAPTOP (Rule 26). `0.7.0_AE_CloudOps~I` performed the three
+  etf-positioning-producer applies tonight, all live-verified with ledgers closed, and filed no
+  instance — **again an observation, not a dispatch.**
+>> **`2.0.0_SA_COO~Z` seats both. I am not asking for either tonight and neither is in D1/D4 scope.**
+
 ## WHAT I AM NOT CLAIMING
 
 - **Not smoke-tested.** Nothing here is `D4`'s completion bar. `D4` closes on Andrew's smoke test only,

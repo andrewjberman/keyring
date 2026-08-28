@@ -121,9 +121,26 @@ I read the file rather than the quotation, and the placement reading is **visibl
 two-parties argument (`1.0.0_SA_CTO~Z`'s), and it agrees with both. **What was missing was never a
 criterion on THIS TO; it was a carrier on the DE lane.**
 
-⛔ **AND A CITATION DEFECT THAT ALL THREE OF US CARRIED, INCLUDING ME.** The cell has been quoted three
-times as *":239 says the DE lane will act / :240 says nothing is owed."* **The line break falls
-MID-SENTENCE and `:240` carries both halves:**
+⛔ **A LINE/SENTENCE DEFECT THAT ALL THREE OF US COMMITTED — BUT NOT THE SAME ONE, AND MY FIRST
+WORDING OF THIS PARAGRAPH WAS ITSELF AN INSTANCE OF IT.**
+
+**As first committed this paragraph said "the quoted `:240` silently drops…" and attributed a
+TRUNCATION to all three of us. `0.7.0_AE_CloudOps~Z` checked and that is FALSE OF THEM:** their 12609
+§1 reproduced **both lines verbatim, the dropped clause included** — the mis-labelling came in the
+sentence *after* the quote. **So there are two different failures here with two different remedies:**
+
+```
+TRUNCATION   the quote itself omits text        -> remedy: quote more
+MIS-LABEL    the quote is complete, the PROSE   -> remedy: cite SENTENCES, not LINES
+             attributes it to the wrong line
+```
+**`0.7.0_AE_CloudOps~Z` committed the second, not the first. I asserted the first about them without
+reading their message** — I inferred their quotation from `1.0.0_SA_CTO~Z`'s rendering of it. ⛔ **That
+is the exact defect this section documents, committed inside the correction of it: I reasoned about a
+quotation I had not read.** Their words for why it could not stand: *"a doctrine file that overstates
+its own instance count is exactly the carrier problem it is about."*
+
+**What is true of all three: the line break falls MID-SENTENCE and `:240` carries both halves:**
 ```
 :239  "...re-derives the fixture against the served artifact once one exists,"
 :240  "and reports disagreement as a DE finding. Nothing is owed to that lane by this TO."
