@@ -1,7 +1,7 @@
 {
-  "kind": "clean_clone_gate_receipt",
-  "candidate_id": "v0.3-candidate+27",
-  "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+  "kind": "wp3_certification_receipt",
+  "candidate_id": "v0.3-candidate+58",
+  "contract_bundle_id": "bundle:sha256:103cfd6cab178fac07190000000000000000000000000000000000000000000",
   "manifest_path": "org/standards/isck/ledger/battery/MANIFEST.json",
   "manifest_digest": "sha256:b15a40fb8c4c4c529f9ad9583e2cfaec9b400711f9c9be4dbd712dfd582b5f4a",
   "result": "PASS",
