@@ -74,7 +74,7 @@ def sha256_at(commit, path):
 
 RECEIPT_PATH = f"{REL}/receipts/{{kind}}.json"
 RECEIPT_FIELDS = ("kind", "candidate_id", "contract_bundle_id", "manifest_path", "manifest_digest", "result",
-                  "evidence_digest", "run_commit")
+                  "evidence_path", "evidence_digest", "run_commit")
 
 
 def receipt_problem(commit, kind, rec):
@@ -110,6 +110,23 @@ def receipt_problem(commit, kind, rec):
         return f"receipt manifest_path {r['manifest_path']!r} is absent at {commit[:10]}"
     if "sha256:" + hashlib.sha256(manifest).hexdigest() != r["manifest_digest"]:
         return "receipt manifest_digest does not recompute from the manifest at the same commit"
+    # R3-CRO-36: the two load-bearing evidence fields were decorative -- presence and syntax only.
+    # run_commit BINDS: it must resolve, and the bundle DERIVED AT run_commit must be the very bundle
+    # this receipt certifies (the run certified these bytes, not some bytes). evidence RECOMPUTES:
+    # evidence_path must exist at the receipt commit and hash to evidence_digest.
+    try:
+        run_full = git("rev-parse", "--verify", "-q", f"{r['run_commit']}^{{commit}}")
+    except subprocess.CalledProcessError:
+        return f"receipt run_commit {r['run_commit']!r} does not resolve to a commit"
+    if derive(run_full)["contract_bundle_id"] != rec["contract_bundle_id"]:
+        return f"receipt run_commit {run_full[:10]} derives a different bundle than the one certified ({rec['contract_bundle_id'][:24]}...)"
+    try:
+        evidence = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{commit}:{r['evidence_path']}"],
+                                           stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        return f"receipt evidence_path {r['evidence_path']!r} is absent at {commit[:10]}"
+    if "sha256:" + hashlib.sha256(evidence).hexdigest() != r["evidence_digest"]:
+        return "receipt evidence_digest does not recompute from the evidence at the same commit"
     return None
 
 

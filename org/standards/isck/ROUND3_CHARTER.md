@@ -165,10 +165,11 @@ C5's last sentence and §2b's ruling, those land as a NEW candidate — never a 
 | 5 | mint-authority epochs | `authority_epoch_event {opened \| closed}` with `authority_id`; overlap rejected, reopening legal |
 | 6 | `contest_event.consequence_refs[]` | typed: record-id union (`rel:` \| `bind:` \| `ctev:` \| the binding_event id) |
 | 7 | `migration_receipt.migrated_record_ref` | typed: record-id union over the catalog |
+| 8 | lifecycle-event correction (R3-CVO-12, adjudicated `3.0.0_SA_CVO~X` 20260828T050018Z, ledger row 13 — six conditions verbatim there) | `contest_event.target_kind` gains `lifecycle_event` with STRICT exactly-one `target_event_id`; item 6's union gains lifecycle-event ids; an `upheld` lifecycle-event contest names exactly one replacement event (same `event_kind` + `materializer_serial`, new id, validates independently); VOIDED derives only from that; at most one EFFECTIVE `materializer_superseded` per materializer over store ∪ batch |
 
-Each item lands with its schema conditionals, fixtures, mutants (both arms per then-arm) and the
-fold it feeds in `WP3_LEDGER_DESIGN.md` §4. **Out of scope:** anything in `+38` the design did not
-route; the ledger engine; the battery runner.
+**Eight items, closed.** Each lands with its schema conditionals, fixtures, mutants (both arms per
+then-arm) and the fold it feeds in `WP3_LEDGER_DESIGN.md` §4. **Out of scope:** anything in `+38`
+the design did not route; the ledger engine; the battery runner.
 
 **Identity.** The family rule in `bundle_identity.py` (amended on ledger row 12): a bundle whose
 schema blob differs from the frozen `+38` schema derives a NATIVE label `v0.3-candidate+N` (N =

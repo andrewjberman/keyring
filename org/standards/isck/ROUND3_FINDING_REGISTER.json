@@ -668,7 +668,7 @@
    "disposition": "FIXED",
    "disposition_basis": "row 7: a SECOND materializer_superseded event for one materializer_serial in (store U batch) is REJECTED -- process-level supersession is one event per materializer, a correction is a v0.3 contest on the event, never a second event; arms L-07-second-process-supersession-rejected / L-07-single-process-supersession-accepted; charter round-4 item 4 says ONE per materializer",
    "fix_commit": "(this commit -- design amendment; the QUIET PIN)",
-   "verification_ref": "CVO~X replay at the quiet pin (asked)",
+   "verification_ref": "CVO~X 20260828T045732Z at bf9d4e5eeb: PASS",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -680,7 +680,7 @@
    "disposition": "FIXED",
    "disposition_basis": "bundle_identity.py receipt_problem(): the value commit must CONTAIN org/standards/isck/receipts/<kind>.json (read from the object database) with kind == asked kind, candidate_id + contract_bundle_id == the label's, result == PASS, sha256-form manifest_digest + evidence_digest, and manifest_digest == sha256(git show <commit>:<manifest_path>); every check runs BEFORE the registry is touched. Exercised on a scratch registry with DANGLING commit-tree objects built for the test (no branch touched): existing-commit-no-receipt (dcbe214a44) REFUSED, wrong-kind REFUSED, wrong-bundle REFUSED, FAIL-result REFUSED, manifest-digest-mismatch REFUSED, valid structured receipt OK -- sha of the scratch registry unchanged on every reject (output in the commit body). The receipt shape is now the CONTRACT the battery runner must emit",
    "fix_commit": "(this commit -- bundle_identity.py)",
-   "verification_ref": "CRO~X re-runs the six arms against a scratch copy at the quiet pin",
+   "verification_ref": "CRO~X 20260828T050119Z at bf9d4e5eeb: PARTIALLY closed -- the structural checks hold; the run_commit / evidence_digest residual is R3-CRO-36",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -692,7 +692,7 @@
    "disposition": "FIXED",
    "disposition_basis": "sec 2b carrier row + row 6: start state CLOSED; opened only from CLOSED, closed only from OPEN; events ordered (occurred_at, commit_seq, event id); mint AUTHORIZATION is an ADMISSION-TIME fact evaluated as of the mint batch's own commit_seq (replayable at its own anchor per sec 2e) and never re-opened by a backfilled event -- the history question 'which authorities were open at t' is a different query answered by event time; arms L-06-close-without-open-rejected, L-06-duplicate-close-rejected, accepts L-06-same-time-open-close-ordered-accepted, L-06-backfilled-close-leaves-admitted-mint-accepted (+ the existing reopen accept). CRO~X offered two remedies; anchoring was chosen over rejecting the backfill because rejecting a true later-dated fact to protect an earlier verdict is the append-only violation in another coat",
    "fix_commit": "(this commit -- design amendment; the QUIET PIN)",
-   "verification_ref": "CRO~X replay of the five constructions at the quiet pin (asked); the carrier itself is attacked in round 4",
+   "verification_ref": "CRO~X 20260828T050119Z at bf9d4e5eeb: semantic counterexamples CLOSED at the pin",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -704,7 +704,31 @@
    "disposition": "FIXED",
    "disposition_basis": "row 13: the survivor must be OPEN at the merge (no admitted resolved), share target_kind + target id, and the merge edge must not close a cycle over (store U batch); arms L-13-merged-into-resolved-rejected, L-13-merged-cross-target-rejected, L-13-merge-cycle-rejected; accept L-13-merged-into-open-same-target-accepted (replaces L-13-merged-into-opened-accepted)",
    "fix_commit": "(this commit -- design amendment; the QUIET PIN)",
-   "verification_ref": "CRO~X replay of the three counterexamples at the quiet pin (asked)",
+   "verification_ref": "CRO~X 20260828T050119Z at bf9d4e5eeb: semantic counterexamples CLOSED at the pin",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CVO-12",
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T045732Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "row 7 says a bad materializer_superseded event is corrected by a v0.3 contest on the event, but frozen contest_event.target_kind is entity | binding only and the closed seven-item round-4 scope adds no lifecycle-event contest target or correction carrier -- the named correction path cannot validate and an erroneous process-supersession event is effectively irreversible",
+   "disposition": "FIXED",
+   "disposition_basis": "FILED AT THE QUIET PIN bf9d4e5eeb -- registered without touching the held design (charter sec 11 rule). Remedy ADJUDICATED (CVO~X 20260828T050018Z, self-drive D11 ledger row 13): option A UPHELD = round-4 ITEM 8, a lifecycle-event contest target, under six conditions: (1) target_kind adds lifecycle_event with STRICT exactly-one target_event_id; (2) consequence_refs union adds lifecycle_event ids; (3) an upheld lifecycle-event contest names exactly one replacement event of the same event_kind + materializer_serial with a new id that validates independently; (4) row 7 enforces at most one EFFECTIVE (not voided) materializer_superseded per materializer and admits the otherwise-second event only as that upheld consequence, over store + batch; (5) VOIDED derives only from an admitted upheld contest with the valid replacement; (6) the fold ignores the voided event and cites contest + replacement; two effective successors rejected incl. same-batch races. Lands at the NEXT PIN (design rows 7 / sec 2b / sec 2d / sec 4 + charter item 8) after 4.0.0_SA_CRO~X declares at bf9d4e5eeb; schema arms in round-4 authoring || LANDED AT THE SECOND PIN (this commit, all three declarations at bf9d4e5eeb in hand: DT~X DRY 045649Z, CVO~X finding 045732Z, CRO~X finding 050119Z): sec 2b gains the item-8 carrier row (target_kind + lifecycle_event, STRICT exactly-one target_event_id, consequence union, single same-kind same-serial replacement); sec 2d gains the target_event_id row (row 2's template expands over 30); row 7 rewritten on EFFECTIVE = admitted and not VOIDED, VOIDED only from an admitted upheld lifecycle-event contest with exactly one valid replacement, replacement admitted only as that consequence, two effective successors incl. same-batch races rejected (L-07-two-effective-successors-same-batch-rejected, L-07-replacement-without-upheld-contest-rejected, accept L-07-voided-then-replacement-accepted); row 13 gains the lifecycle-upheld arms (single replacement of same kind + serial; accept); sec 4 materializer row 2 folds only the effective event and cites contest + replacement; charter sec 11 item 8 (eight items, closed)",
+   "fix_commit": "(this commit -- the second quiet pin)",
+   "verification_ref": "CVO~X replay of the six conditions at the second pin (asked)",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CRO-36",
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T050119Z",
+   "finding_class": "BATTERY",
+   "claim": "the structured receipt is still semantically forgeable: a receipt commit with run_commit=NOT_A_COMMIT and evidence_digest=sha256:000...0 and no evidence carrier was ACCEPTED (scratch, detached clone) -- receipt_problem() checked run_commit for presence only and evidence_digest for syntax only; the two load-bearing evidence fields were decorative",
+   "disposition": "FIXED",
+   "disposition_basis": "bundle_identity.py receipt_problem(): run_commit must RESOLVE and BIND -- derive(run_commit).contract_bundle_id must equal the bundle the receipt certifies (the run certified these bytes); the receipt gains evidence_path, which must exist at the receipt commit and hash to evidence_digest (recomputed, like the manifest). Exercised on a scratch registry with dangling commit objects: CRO~X's exact forgery (run_commit NOT_A_COMMIT, all-zero evidence digest, no carrier) REFUSED; run_commit resolving but deriving a DIFFERENT bundle REFUSED; evidence_path absent REFUSED; evidence digest mismatch REFUSED; the fully bound receipt OK -- registry sha unchanged on every reject (output in the commit body). Filed at the pin, landed at the second pin",
+   "fix_commit": "(this commit -- bundle_identity.py; the second quiet pin)",
+   "verification_ref": "CRO~X re-runs its forgery and the bound-receipt accept against a scratch copy at the second pin",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   }
  ],
