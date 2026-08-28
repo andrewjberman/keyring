@@ -1,5 +1,13 @@
 # ETFS_SATELLITES.TO-2 -- ISSUER'S DISPOSITION, and the measurement that moved the evidence bar
 
+> ⚠ **THIS FILE'S NAME CONTAINS `VACUOUS_CORPUS`, AND THAT CLAIM IS WITHDRAWN AS OVER-BROAD --
+> SEE SECTION 11.** The corpus is NOT vacuous: the predicate's `Opal` token discriminates 18 rows.
+> Only the two ANCHORS are unexercised. **NOT RENAMED DELIBERATELY:** this path is cited by commit
+> hash in six broadcasts and in `2.0.0_SA_COO~Z`'s and `3.0.0_SA_CVO~Z`'s records, and a rename
+> would trade one stale carrier for a set of dangling citations. **A filename is a carrier that
+> cannot be amended in place -- which is an argument for naming records after their SUBJECT rather
+> than after their FINDING.**
+
 `1.0.0_SA_CTO~Z`, 2026-08-27 ~23:4xZ. Arch-gate ruling. Two broadcasts: msg 11054 (disposition),
 msg 11078 (the correction to my own 11054 section 4.1).
 
@@ -58,7 +66,12 @@ SUBSTRING (naive)    /opal satellite/i       ->  9 matches, 0 false admits   <- 
 ```
 
 STOP: **every variant scores identically, including the one the sovereign explicitly rejected.**
-A green run certifies nothing about the design.
+
+> ⛔ **THE SENTENCE THAT STOOD HERE -- *"a green run certifies nothing about the design"* -- IS
+> WITHDRAWN AS OVER-BROAD. SEE SECTION 11.** The five variants above all contain the token `Opal`, so
+> their agreement was guaranteed before the run. Per-limb: the TOKEN is EXERCISED (+18 rows), and only
+> the two ANCHORS are unexercised (+0). **The numbers in this table are correct; the generalisation
+> drawn from them was not.**
 
 **Why, and it is subtler than "the blend row is missing":** the blend rows ARE present --
 `Blended Opal / Satellite 50`, `Opal - Cash + Satellite 50`, `Opal Sat 50+ 15% cash`,
@@ -367,5 +380,67 @@ R1-R3 destination      RIGHT from the start
 "a NEW producer importing it"              RIGHT SHAPE, and it must import BOTH modules and supply
                                            FETCH + JOIN + WRITE, calling the three existing guards
 ```
+
+---
+
+## 11. AMENDMENT 5 -- section 3's INTERPRETATION is withdrawn. The predicate IS validated; only the ANCHORS are unexercised.
+
+`3.0.0_SA_CVO~Z` retracted a finding of their own (msg 11175, durable @`e021e23f0a`) after
+`2.0.0_SA_COO~Z` falsified it, and **their diagnosis convicts this record's section 3 too.**
+
+Their mechanism, verbatim: *"I VARIED THE NOTATION AND HELD THE DISCRIMINATOR (the token `Opal`)
+CONSTANT. Both arms were anchored … its agreement was GUARANTEED BEFORE I RAN IT."*
+
+STOP: **all five variants in section 3 contain `Opal`.** The uniform "9" was guaranteed before the
+run, for exactly that reason. Section 3's numbers are right; **its generalisation -- *"the corpus
+cannot tell the careful rule from the careless one"* -- was too broad and was published as the
+headline.** See [[a-guards-corroborating-surfaces-share-its-author]] and
+[[a-quantity-both-hypotheses-predict-is-not-evidence]].
+
+### The per-limb measurement neither seat had run -- drop ONE limb, count EXTRA admits
+
+```
+drop the token `Opal`   -> /satellite/i          admits +18   EXERCISED
+drop leading anchor ^   -> Opal Satellite \d+$   admits  +0   UNEXERCISED
+drop trailing anchor $  -> ^Opal Satellite \d+   admits  +0   UNEXERCISED
+```
+
+**`3.0.0_SA_CVO~Z` is right and their apology to `0.4.0_DS_ClientPlatform~W` is warranted:** the
+predicate does real work -- 18 rows, the entire `Core | Satellite *` family, and `Core | Satellite 98`
+sits in the corpus beside `Opal Satellite 98`, which is `SAT-b-4`'s adversarial pair. The module's
+author had already done the thing both of us implied was undone.
+
+### But their §5 withdrawal is one step too broad, and it would retire a live gate
+
+They withdrew *"any suggestion that … the corpus lacks a negative case."*
+
+STOP: **the corpus lacks a negative case FOR THE TRAILING ANCHOR -- measured +0 -- and that is the
+limb guarding the exact hazard Andrew named** (*"if it says 'opal satellite with some other shit'
+that is not acceptable"*; *"they may do some stupid shit like that again"*).
+
+```
+Opal Satellite 50 + 15% cash   in corpus? NO   shipped REJECTS   no-$ ADMITS  <- the only separator
+Opal Satellite 50 Tax-Free     in corpus? NO   shipped REJECTS   no-$ ADMITS
+```
+
+**The corrected statement, narrower than mine AND than their withdrawal:**
+
+```
+the PREDICATE        VALIDATED  -- the token carries 18 rows of discrimination  (their correction)
+the TRAILING ANCHOR  UNEXERCISED -- +0 rows, and it guards the named future     (STANDS)
+```
+
+**Section 4's binding synthetic-fixture criterion STANDS unchanged**, and `Opal Satellite 55`
+(MUST ADMIT) stands with it -- no negative separates a derived predicate from the declared list it
+replaces.
+
+### The class, and it is the new one
+
+> ⛔ **A RETRACTION CASCADE CAN RETIRE A VALID CRITERION, and it is harder to catch than the false
+> finding was -- a withdrawal reads as humility, so nobody audits its SCOPE.**
+
+The instrument that catches both halves: **vary ONE limb at a time and count the rows it moves.** A
+variant set that changes several things at once cannot attribute its own result.
+`0.4.0_DS_ClientPlatform~Z` reached the same "too broad by one anchor" conclusion independently.
 
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
