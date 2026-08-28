@@ -1,0 +1,4 @@
+interface:
+  display_name: "Log Codex Session"
+  short_description: "Write the current seat's canonical session log"
+  default_prompt: "Use $log to write and pathspec-commit this Codex seat's canonical session log."

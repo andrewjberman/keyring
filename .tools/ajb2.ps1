@@ -160,7 +160,7 @@ function ajb2 {
         "[ajb2] detector:       org\mcp\codex-inbox-monitor.py (bridge-owned, non-consuming, exactly one)",
         "[ajb2] inbox:          $inboxRelative",
         "[ajb2] runtime logs:   $runtimeRelative",
-        "[ajb2] load skill:     org\mcp\codex-skills\load (canonical source; installed before app-server)",
+        "[ajb2] Codex skills:   org\mcp\codex-skills\{load,log} (canonical sources; installed before app-server)",
         "[ajb2] seat context:   org\mcp\codex-seat-load.py (exact serial/path derivation)",
         "[ajb2] startup input:  automatic `$load $Serial prompt; no manual load command required",
         "[ajb2] handoff:        org\mcp\handoff-codex-seat.ps1 (already-open embedded sessions)",
