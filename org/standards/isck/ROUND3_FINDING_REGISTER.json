@@ -1,5 +1,5 @@
 {
- "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged.",
+ "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged. || DECLARATIONS at b8961d2e39: CRO~X DRY 055643Z (round-4 domain axis); DT~X DRY 77512 (design sec 3/7, 181/119; testability); CVO~X NOT DRY 055423Z on R4-CVO-2/3 (design text) -- three coincided, the fifth design pin carries both.",
  "round": 3,
  "attacked_input": "bf6fbe53d9",
  "charter": "51e789ddfb",
@@ -792,7 +792,7 @@
    "disposition": "FIXED",
    "disposition_basis": "migrated_record_ref pattern = the 17 prefixed ULIDs OR sha256:[0-9a-f]{64}; fixture migration_receipt_sha256 (a migration of a content-addressed observation, the shared shape); mutant mig.ref-malformed-sha (63 hex + a) rejects by pattern; the existing mig.ref-not-a-record-id still rejects. Ledger resolution stays against an actually present primary id (WP3 row 2, PARSE-STRICT)",
    "fix_commit": "(this commit -- round 4's SECOND pin; all three attackers declared at 32c9e67e26: CVO~X R4-CVO-1, DT~X R4-DT-1, CRO~X R4-CRO-1)",
-   "verification_ref": "CRO~X replay of its three-step counterexample at the second pin (step 3 now 0 errors) + the malformed reject",
+   "verification_ref": "CRO~X replay of its three-step counterexample at the second pin (step 3 now 0 errors) + the malformed reject | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -805,7 +805,7 @@
    "disposition": "FIXED",
    "disposition_basis": "remedy A, generalized: contest_event.target_kind gains binding_event + authority_epoch_event; target_event_id is the typed union ^(lce|bev|aep): with a per-kind prefix arm; an upheld EVENT contest names exactly one replacement of the same carrier (per-kind prefix + maxItems 1 in the schema; same event_kind + same CARRIER KEY -- materializer_serial | binding_id | authority_id -- in the semantic arm); consequence_refs union gains aep; VOIDED events (the target of an admitted upheld contest whose replacement is present) are excluded from EVERY fold and machine (binding status, epoch machine, materializer lifecycle); fixtures contest_event_binding_event + binding_event_replacement + contest_event_authority_event + authority_epoch_event_replacement; 4 mutants; 2 semantic mutants (replacement on another binding / another authority). This is ALSO CRO~X's declaration (a finding) at the third design pin 32c9e67e26 -- WP3 sec 2b item-8 row, sec 2d, rows 4/6/7/13 and the sec 4 folds generalized in the same commit = the design's fourth pin",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CRO~X replay of its closure check (bev:/aep: targets now validate; supersedes still additionalProperties on the two events -- correction is by contest, never by a backward link on an event) at the second round-4 pin",
+   "verification_ref": "CRO~X replay of its closure check (bev:/aep: targets now validate; supersedes still additionalProperties on the two events -- correction is by contest, never by a backward link on an event) at the second round-4 pin | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -818,7 +818,7 @@
    "disposition": "FIXED",
    "disposition_basis": "validator _binding_machine_errors over EFFECTIVE (not voided) events per binding_id: at most one opened, at most one closed, no opened ordered after a closed (order = (occurred_at, event id); the ledger's tuple adds commit_seq); the entity_binding ROW is the initial open fact and an opened event is legal at most once; re-opening is a NEW binding_id (sec 3.28). Semantic mutants sem.binding-two-closes / -open-after-close / -two-opens; the committed fixture batch (two closes on bind:A, one voided by the upheld contest) is the accept -- it passes ONLY because the void is honoured, which exercises R4-CRO-2's fold rule in the same breath. WP3 row 4 rewritten as the machine",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CRO~X replay of both counterexamples at the second round-4 pin",
+   "verification_ref": "CRO~X replay of both counterexamples at the second round-4 pin | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -831,7 +831,7 @@
    "disposition": "FIXED",
    "disposition_basis": "validator _materializer_machine_errors over EFFECTIVE lifecycle events per materializer_serial: at most one decommission; no effective event ordered after it (decommission is TERMINAL; superseded -> decommissioned is LEGAL and stated; re-activation is a new serial, sec 3.27); voided events do not advance the machine and an upheld replacement takes the voided event's position. Fixture lifecycle_event_decommissioned moved to TS3 so the legal order (superseded TS2 -> decommissioned TS3) is explicit rather than lucky; semantic mutants sem.materializer-two-decommissions / -superseded-after-decommission. WP3 row 7 gains the machine",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CRO~X replay of counterexamples A and B at the second round-4 pin",
+   "verification_ref": "CRO~X replay of counterexamples A and B at the second round-4 pin | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -844,7 +844,7 @@
    "disposition": "FIXED",
    "disposition_basis": "validator _contest_chronology_errors: for one contest_id, order(opened) < order(resolved); for an event target present in the batch, order(target) < order(opened); order = (occurred_at, event id) -- a same-instant pair is decided by the id deterministically (the ledger's tuple inserts commit_seq). Semantic mutants sem.contest-resolved-before-opened / sem.contest-opened-before-target-event. WP3 row 13 gains both edges with the tuple named",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CRO~X replay of counterexamples A and B at the second round-4 pin",
+   "verification_ref": "CRO~X replay of counterexamples A and B at the second round-4 pin | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -857,7 +857,7 @@
    "disposition": "FIXED",
    "disposition_basis": "PITCHED to 3.0.0_SA_CVO~X 053857Z (self-drive D11 tick-15 supplement; ledger row 14) and ADJUDICATED 054009Z: root set UPHELD at seat-FAMILY grain (0.0.0_AB_MSTR | 1.0.0_SA_CTO; rotation only through a superseding candidate); the claim that a schema regex ALONE closes it REFUTED -- actor is authored data, a spoofed root string passes the regex. Landed as two halves: STRUCTURAL (this commit): authority_epoch_event.actor pattern ^(0\\.0\\.0_AB_MSTR|1\\.0\\.0_SA_CTO)(~[A-Z])?$ in the schema (a bundle member -- rotation = new candidate_id with supersedes_bundle_id, replayable, no new member file); mutants aep.actor-not-root (UNTRUSTED_WRITER) + aep.actor-root-family-wrong-suffix-shape; the committed fixtures are the MSTR genesis-open and the authorized re-open accepts; sec 3.29 states both halves. LEDGER (WP3 row 6, declared): actor bound EXACTLY to the authenticated submitting principal BEFORE the family predicate -- L-06-unauthorized-epoch-transition-rejected + L-06-epoch-actor-spoof-rejected, accepts L-06-mstr-genesis-open-accepted + L-06-cto-close-reopen-as-authenticated-writer-accepted. The authenticated-principal half is ledger-scope by construction (a stateless validator has no principal) -- sec 6",
    "fix_commit": "(this commit -- round 4's SECOND pin = the design's FOURTH pin)",
-   "verification_ref": "CVO~X read of sec 3.29 + WP3 row 6 for both halves; CRO~X replay of the self-grant batch (schema half: actor UNTRUSTED_WRITER rejected) | CVO~X 055423Z at b8961d2e39: both halves STATED",
+   "verification_ref": "CVO~X read of sec 3.29 + WP3 row 6 for both halves; CRO~X replay of the self-grant batch (schema half: actor UNTRUSTED_WRITER rejected) | CVO~X 055423Z at b8961d2e39: both halves STATED | CRO~X 055643Z at b8961d2e39: CLOSED, re-executed from the pin's blobs (DRY on the domain axis)",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -867,10 +867,10 @@
    "source_ref": "20260828T055423Z",
    "finding_class": "DESIGN-INPUT",
    "claim": "WP3 sec 2d's consequence_refs[] authoritative union still reads identity_relation | binding_event | contest_event | entity_binding | lifecycle_event and omits authority_epoch_event, although sec 2b and the schema (rel|bind|bev|ctev|lce|aep) now require aep replacement consequences",
-   "disposition": "OPEN",
-   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11 (the design's fourth pin awaits DT~X and CRO~X). Remedy adopted for the next pin: add authority_epoch_event / aep to that one union; denominator unchanged (30)",
-   "fix_commit": "OPEN-CITATION (the next design pin)",
-   "verification_ref": "CVO~X read of sec 2d at the next pin",
+   "disposition": "FIXED",
+   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11 (the design's fourth pin awaits DT~X and CRO~X). Remedy adopted for the next pin: add authority_epoch_event / aep to that one union; denominator unchanged (30) || LANDED: sec 2d consequence_refs[] union names authority_epoch_event (aep) explicitly; denominator unchanged (30)",
+   "fix_commit": "(this commit -- the design's FIFTH pin; the round-4 contract pin stays b8961d2e39, no bundle member moved)",
+   "verification_ref": "CVO~X read of sec 2d at the fifth design pin",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   },
   {
@@ -880,10 +880,10 @@
    "source_ref": "20260828T055423Z",
    "finding_class": "DESIGN-INPUT",
    "claim": "WP3 sec 4 materializer.current_status row 1 still says ANY materializer_decommissioned event => retired, not an EFFECTIVE (admitted, non-voided) one -- an upheld contest can void a bad decommission and the fold would still return retired, contradicting sec 2b's 'VOIDED feeds no fold' and R4-CRO-2",
-   "disposition": "OPEN",
-   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11. Remedy adopted for the next pin: row 1 filters EFFECTIVE decommission events; status_basis cites contest + replacement across correction chains; control L-05-voided-decommission-does-not-retire-accepted (the validator's _materializer_machine_errors already runs over effective events -- the design row lagged the arm)",
-   "fix_commit": "OPEN-CITATION (the next design pin)",
-   "verification_ref": "CVO~X replay of the voided-decommission construction at the next pin",
+   "disposition": "FIXED",
+   "disposition_basis": "FILED AT THE SECOND PIN b8961d2e39 -- held per charter sec 11. Remedy adopted for the next pin: row 1 filters EFFECTIVE decommission events; status_basis cites contest + replacement across correction chains; control L-05-voided-decommission-does-not-retire-accepted (the validator's _materializer_machine_errors already runs over effective events -- the design row lagged the arm) || LANDED: sec 4 materializer row 1 reads 'an EFFECTIVE (admitted, not VOIDED) materializer_decommissioned event exists -- at most one can (row 7's machine); an upheld contest on a bad decommission voids it and the fold falls through, its status_basis citing the contest and the replacement across the whole correction chain'; row 5 gains the control L-05-voided-decommission-does-not-retire-accepted",
+   "fix_commit": "(this commit -- the design's FIFTH pin; the round-4 contract pin stays b8961d2e39, no bundle member moved)",
+   "verification_ref": "CVO~X replay of the voided-decommission construction at the fifth design pin",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
   }
  ],
