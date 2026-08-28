@@ -140,7 +140,10 @@ def scan(max_edges_per_node: int = 6):
                 if not r.addressed:
                     continue
                 kind = _classify(line, rel, default_kind)
-                ambiguous = len(r.node_ids) > 2
+                # > 1, not > 2: several candidates IS ambiguous (nerves_resolve.py AMBIGUOUS state, WP-4 ruling);
+                # at > 2 a two-way ambiguous DOCTRINE/RISK ref was KEPT as a claim, against the split below.
+                # (1.0.0_SA_CTO~X 2026-08-28 on 0.4.0_DT_ClientPlatform~X 78718.)
+                ambiguous = len(r.node_ids) > 1
                 # THE PRECISION/SAFETY SPLIT -- the two errors are NOT symmetric:
                 #   DOCTRINE/RISK on an ambiguous ref -> DROP. A false claim here is pure noise, and
                 #     a danger map with false claims trains agents to IGNORE the warning.
