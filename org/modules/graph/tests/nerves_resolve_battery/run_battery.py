@@ -129,7 +129,9 @@ def a_resolved(nr):
     assert len(r.candidates) == 1
 
 
-@arm("R-AC1-ambiguous-returns-all-and-picks-none")
+# AMBIGUITY needs MULTIPLE basename hits, which only the tracked-file index can supply -- and that
+# index is `git ls-files`, so a `git archive` extract (no .git, by construction) cannot run this arm.
+@arm("R-AC1-ambiguous-returns-all-and-picks-none", requires=("repo_basenames",))
 def a_ambiguous(nr):
     r = nr.resolve("build_assets_dim.py")
     assert r.state == "AMBIGUOUS", r.state
