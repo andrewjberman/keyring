@@ -120,3 +120,82 @@ answered at 49financial; reading all four scopes was the denominator discipline,
 the extra three scopes are where the $359M sat. ⭐ **The coverage rung is not bookkeeping. It is
 where the unasked question gets answered**, and the two seats who had already measured this surface
 correctly and independently both stopped at the scope they were asked about.
+
+---
+
+# ⛔ AMENDMENT BLOCK -- appended 2026-08-28 ~17:3xZ by `1.0.0_SA_CTO~Z`
+
+## A1. THE HEADLINE FINDING OF THIS LOG IS RETRACTED. THE MECHANISM WAS MINE AND IT WAS FALSE.
+
+Sections 1, 2, 3, 7 and 9 above assert that `global.Client` **aggregates over ONE of three firms and
+understates by $359,773,356.74**. **THAT MECHANISM IS WITHDRAWN.** It is amended here rather than
+edited out, per this estate's convention of recording retirements -- and because HOW IT SURVIVED is
+worth more than the finding ever was.
+
+**MEASURED ON THE SERVED OBJECT, the full Client node I never opened:**
+```
+  "predicate":         "unavailable"
+  "held_constituents": ["cottonwood"]
+  "children":          {}
+  "declared_rule":     null
+  "aum":               290426813.47
+  "predicate_reason":  "global AGGREGATES its constituents and is held while ANY is held.
+                        HELD BY: ['cottonwood']. It unholds BY ITSELF when the last constituent
+                        clears -- there is no edit to make here"
+```
+⛔ **THE PRODUCER IS WORKING AS DESIGNED.** `mdpf_gold_consolidator.py:143-160`: `global` has no
+entry in `CLIENT_L1_RULE`, the three firm rules "differ IN KIND so there is no obvious composition
+into a fourth", `client_l1_split('global')` RAISES deliberately, and global "EMITS BUT ITS CLIENT L1
+IS HELD ... unholds BY ITSELF when cottonwood clears." **The served object does exactly that.**
+
+**CORRECTED, and it is smaller and two-sided:** a RESIDUAL `aum` on a node declared `unavailable`
+(should be `null`), plus `CategoryCard` gating CHILDREN on the predicate while printing the HEADLINE
+unconditionally -- so the page shows a dollar figure above a panel saying that figure is unavailable.
+Renderer half GO'd into the R1/R2/R3 batch; producer half is data hygiene at `2.0.0_SA_COO~Z`.
+
+## A2. WHAT SURVIVES, SO THE RETRACTION IS NOT READ WIDER THAN IT IS
+- The **49financial SMA defect** stands as found. **The ship decision, the pin choice, the exposure
+  sizing (7 files / 2,521 ins; drift 1,381 over 6 modules) and the four-arm acceptance predicate are
+  all untouched.** Andrew's ruling is not re-opened.
+- **Section 3's structural point stands**: `total_aua` = `Client` + `Models` exactly because it was
+  computed FROM that value, so a recon predicate PASSES. A derived total agreeing with its own input
+  is arithmetic, not evidence.
+- The arithmetic (the gap equals cottonwood+inflection to the cent, invariant under the fix) is REAL.
+  **"Understated" is what falls** -- it implies the node purported to be a complete total. It did not.
+- ⚠ The exact match to the cent is **UNEXPLAINED and must stay that way.** "Happens to equal" is not
+  an explanation of an exact equality, and the producer fix (`aum: null`) ERASES the evidence -- so
+  the origin gets recorded before it is nulled.
+
+## A3. ⭐ HOW IT SURVIVED -- THE ONLY PART WORTH CARRYING
+**I built a mechanism from TWO numeric fields while the object carried an explicit self-description
+three keys away.** Then **four seats corroborated it from three genuinely different instruments
+(s3api, the served edge bytes, independent arithmetic) -- and every corroboration was of the
+MAGNITUDE, never of the CLAIM the node made about itself.** Nobody read `predicate` for ~40 minutes,
+by which time it had reached Andrew, a TO face, an Andrew-direct ruling record, a baseline README's
+control set, a signed certificate, and a product card built on it.
+
+⛔ **AND IT SURVIVED BECAUSE IT PREDICTED SOMETHING TRUE.** The gap equalled cottonwood+inflection
+exactly and was invariant under the pending fix -- a relation the sloppier "global copies 49f" wording
+could not have predicted. A landed prediction is normally strong evidence; here it confirmed only the
+coincidence.
+
+>> **SO "CORROBORATION, NOT REPETITION" -- which I invoked FOUR TIMES this session to license
+   upgrades -- IS A TEST OF INDEPENDENCE, NOT OF TRUTH.** It certifies two confirmations are not one
+   counted twice. It says nothing about whether both sit on the same RUNG. `s3api` and the served
+   edge are different instruments that both answer *what is the value*; neither answers *what does
+   the node claim about itself*. **Independence and rung-coverage are ORTHOGONAL.**
+
+## A4. THE SECOND-ORDER ERROR, WHICH IS THE WORSE ONE
+Having built the wrong mechanism, **I then designed an experiment to CONFIRM it** ("does global.Client
+move with the ship?") and **pushed that experiment into a LIVE INSTRUMENT other seats would run** --
+`3.0.0_SA_CVO~Z`'s baseline README control set. It was retracted from there at `@f8f1162560`.
+**A false premise does not only produce a wrong claim; it produces wrong INSTRUMENTS, and those
+outlive the claim because they look like rigour.** `global` is now in NEITHER column of that diff:
+recorded, not scored.
+
+## A5. SECTIONS SUPERSEDED BY THIS BLOCK
+Section 1 bullet 2 · Section 2 row 1 · Section 3 in full · Section 7 bullet 3's global clause ·
+Section 8 item 3 · Section 9's "the extra three scopes are where the $359M sat". **Section 9's actual
+claim -- that COVERAGE is where the unasked question gets answered -- still holds: reading all four
+scopes IS what surfaced this. It surfaced a real defect and I mis-diagnosed it.**
+
