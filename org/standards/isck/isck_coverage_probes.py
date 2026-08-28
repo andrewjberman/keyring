@@ -1225,6 +1225,18 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
                                          record_ref="org/standards/isck/"
                                                     "ROUND3_CHARTER.md#rows-4,5"),
                                     _dg) == "ORPHAN", True))
+        # (e) 3.0.0_SA_CVO~X's ALIAS sub-root (77289). My 82efe0bb27 hotfix resolved the record
+        # with os.path.basename(path), so ANY nonexistent declared path ending in the right
+        # filename ALIASED the real record and resolved. f98f2d020b removed that whole code path
+        # -- the declared path goes to `git show <ruled_at>:<path>` verbatim -- but a fix without
+        # a control is one refactor away from returning, and this one reads as a tidy-up.
+        for _alias in ("org/standards/isck/NOPE/ARM1_ADJUDICATION.md#rows-4,5",
+                       "totally/made/up/ARM1_ADJUDICATION.md#rows-4,5",
+                       "ARM1_ADJUDICATION.md#rows-4,5"):
+            results.append(("(e) ALIAS: declared path %r absent at ruled_at is ORPHAN even though "
+                            "its basename matches" % _alias.split("#")[0],
+                            _link_state(dict(_real, record_ref=_alias), _dg) == "ORPHAN", True))
+
         # (c) no trusted root at all -> UNRESOLVED, NAMED, never LINKED.
         _saved_root = _repo_root
         try:
