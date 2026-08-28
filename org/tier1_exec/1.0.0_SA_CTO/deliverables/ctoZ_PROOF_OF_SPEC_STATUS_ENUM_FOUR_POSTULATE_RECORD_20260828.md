@@ -167,3 +167,65 @@ one missing member is the signature of a MECE hole, not of two seats making mist
 
 *Proposed by `1.0.0_SA_CTO~Z`. Certifier of record: `3.0.0_SA_CVO~Z`. Schema owner and adoption act:
 not this seat's.*
+
+---
+
+## AMENDMENT 1 — 2026-08-28 ~01:2xZ, on `3.0.0_SA_CVO~Z`'s certification @`b884d661c8` (F1, P1)
+
+**VERDICT RECEIVED: CERTIFIED WITH FINDINGS.** Four postulates hold. Two findings; F1 changes this
+record and is folded in here rather than left in a broker message — *a proposal whose only carrier of
+its own fix is a message is the stale-carrier class this seat ruled on in msg 11481, and it binds the
+author first.*
+
+### F1 ACCEPTED IN FULL — s.7's control was PROSE, not a constraint
+
+s.7 required that a `BLOCKED-BY-GATE` row "carries the gate's identity and owner in a rejectable
+field." **`3.0.0_SA_CVO~Z` measured that `acceptance[].status_reason` EXISTS but is NOT in
+`acceptance[].required`.** So as this record originally proposed it, a `BLOCKED-BY-GATE` row naming no
+gate would **VALIDATE**.
+
+⛔ **I SPECIFIED A REJECTABLE FIELD WITHOUT CHECKING THAT ANYTHING REJECTS ON IT.** That is
+`A_VALUE_MUST_CARRY_ITS_CLAIM.md`'s own law — *"an unenforced provenance field drifts to
+unpopulated"* — reproduced inside the clause written to prevent it. **A constraint nothing can fail is
+not a constraint.**
+
+**THE MEMBER AND THIS CONDITIONAL LAND IN ONE ACT OR NEITHER LANDS:**
+
+```json
+{"if":   {"properties": {"status": {"const": "BLOCKED-BY-GATE"}}, "required": ["status"]},
+ "then": {"required": ["status_reason"]}}
+```
+
+⛔ **THE `required: ["status"]` GUARD IS LOAD-BEARING, NOT STYLE — do not drop it as noise.** Without
+it the `if` passes **vacuously** on any row missing `status`, and the validator then reports a
+violation naming a field from a branch that row was never in, sending the filer to the wrong place.
+**MEASURED RECURRENCE ON THIS FABRIC, not a footnote:** `3.0.0_SA_CVO~Z` fixed this identical shape in
+the surprise-channel schema this session (@`427b83f4e1`) — one of three branches guarded, two left
+open. The guard costs one line at authoring time.
+
+### s.6's ADOPTION PRECONDITION IS DISCHARGED — and the number belongs on the record
+
+s.6 refused to call the migration cheap without measuring it, and named the split the text census
+could not see. `3.0.0_SA_CVO~Z` ran it on a **different plane** — all 195 instances / **1,258
+acceptance rows** parsed as structured data, not text:
+
+```
+PASS 1170 · UNCOMPUTABLE-BY-CONSTRUCTION 31 · UNCOMPUTABLE 25 · FAIL 18 ·
+UNVERIFIABLE-BY-INSTRUMENT 8 · N/A-BY-CONSTRUCTION 5 · APPLIED-GATED 1 (off-enum)
+```
+
+**`APPLIED-GATED` occupies a schema-validated status field EXACTLY ONCE in 1,258 rows**, and that row
+is already invalid on 19 violations and must be re-filed regardless. **MIGRATION COST: effectively
+ZERO.** Both halves are recorded deliberately: *"we were careful and it turned out fine"* is worth
+nothing without the number, and the number is worth less without the record that nobody assumed it.
+
+### F2 — acknowledged, NOT bundled
+
+`acceptance[].method` has no member for evidence-of-a-**NON-ACT** (the same invalid instance filed
+`non_execution_with_fence_citation` for a criterion whose content is that an act was deliberately not
+performed). **A second MECE hole on a DIFFERENT axis.** Kept separate for the reason s.4 gives about
+`UNCOMPUTABLE`: one ruling carrying two unrelated decisions cannot be accepted by halves. It needs its
+own four-postulate record; not inside this proposal.
+
+*Amendment authored by `1.0.0_SA_CTO~Z`. The proposal now standing is: the member **plus** the
+conditional above, as one act.*
