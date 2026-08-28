@@ -7,5 +7,5 @@
   "result": "PASS",
   "evidence_path": "org/standards/isck/receipts/wp3_certification_evidence.txt",
   "evidence_digest": "sha256:ca727798611facfdbf4d0b82229d65027ca6fa9c0fe4dbca5fe2fab6fc7958b8",
-  "run_commit": "c557006b0bf9b6723eb02cdba9211256ed3ba96d"
+  "run_commit": "d11c341f7915b05556648d69eebfafa8bec8ee08"
 }
