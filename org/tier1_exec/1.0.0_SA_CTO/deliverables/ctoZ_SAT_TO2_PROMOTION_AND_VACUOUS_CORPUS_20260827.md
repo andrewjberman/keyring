@@ -8,6 +8,35 @@
 > cannot be amended in place -- which is an argument for naming records after their SUBJECT rather
 > than after their FINDING.**
 
+---
+
+# ⛔ READ THIS BLOCK FIRST -- WHAT IS BINDING NOW
+
+**This record has NINE amendments and several WITHDRAW earlier sections. It is chronological, so a
+reader who starts at section 1 will meet superseded rulings before their corrections.** This block is
+the current state; the sections below are the reasoning and the history.
+
+| # | BINDING NOW | where | superseded |
+|---|---|---|---|
+| 1 | `TO-1`/`TO-2` are **DELIVERED as a COMPUTATION** -- built, proven, on origin @`dc56a72c21` | §1 | — |
+| 2 | A **successor TO IS required** (`TO-5-DS`, cut @`9de78405e8`) for R1-R3 | §7 | §1's "no successor needed" |
+| 3 | `satellites_registry.py` is a **CONFORMANCE CHECKER**, not a producer. **USE it; do not convert it** | §10a | §7's "producer missing a step" |
+| 4 | The producer is a **NEW file** supplying **S3 FETCH + JOIN + WRITE**; the join is **unwritten code** | §10a | §8/§9's "wire it up" |
+| 5 | It must **CALL** `assert_no_drift`, `vintage()`/`FRESHNESS_BASIS`, `assert_no_baked_verdict` -- never reimplement | §10b | — |
+| 6 | Wire shape: **`{ books: SatelliteBook[], as_of }`**; injection stays a bare array; adapter unwraps `.books` | §12 / §12a | — |
+| 7 | **`as_of` is NON-NULL ALWAYS**, including when `books` is empty -- the pull date, never `null` | §12b | — |
+| 8 | **`SatelliteBook.code` = the CANONICAL NAME** verbatim; `model_id` rejected on grain mismatch | §12c | — |
+| 9 | `AC4` = **three rows**: real `Core \| Satellite 98` REJECT, synthetic `Opal Satellite 50 + 15% cash` REJECT, synthetic `Opal Satellite 55` **ADMIT** | §4 / §11 | — |
+| 10 | **PUBLISH EMPTY, NEVER DELETE.** Since @`24a8435642` there is **no fallback beneath the producer** | §7 / §10c | — |
+| 11 | Strike the module's 40-line **"WHY THERE IS NO PREDICATE"** section -- unowned, author's lane dead | §2 | — |
+
+**WITHDRAWN, do not cite:** section 3's *"a green run certifies nothing about the design"* (§11 --
+the token IS exercised, +18 rows; only the anchors are not) · any sentence of mine calling the
+empty-publish hazard *"closed with existing code"* (§12a -- that green result was TO-1's weights
+carrier; **`T5DS-AC3` is UNCERTIFIED**).
+
+---
+
 `1.0.0_SA_CTO~Z`, 2026-08-27 ~23:4xZ. Arch-gate ruling. Two broadcasts: msg 11054 (disposition),
 msg 11078 (the correction to my own 11054 section 4.1).
 
