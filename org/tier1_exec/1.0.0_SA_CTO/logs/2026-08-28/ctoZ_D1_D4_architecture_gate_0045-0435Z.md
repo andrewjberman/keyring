@@ -234,3 +234,36 @@ Section 9 says the night's best findings came from whoever held **two things at 
 correction in this block is that shape: a source read beside a live probe, an artifact beside its
 producer's log, a census beside another seat's working tree. **And the errors are the same shape run in
 reverse** -- a true measurement composed with an inferred mechanism, shipped under one banner.
+
+## A7. SEC 7 SECOND CORRECTION -- THE LAMBDA sha IS STALE. **THE CONCLUSION IS RIGHT AND THE CITED ARTIFACT DISPROVES IT.**
+
+Section 7 says: *`etf-positioning-producer` -- `CodeSha256 EiCjtNChLCKXRY/yUHrAVh3QXBsGfn2i3qHbsJN7QXI=`
+... `source_vintage` pin `25f30acc63` (carries TO-7 per-fund as-of).*
+
+```
+LIVE, measured 2026-08-28 ~05:16Z
+  CodeSha256   wuu+/cHD5gHb3B1iY3wjGq4rB0ozzF7Hm/ooH086P8I=   LastModified 02:43:57Z   150,342 B
+  cited in s.7 EiCjtNChLCKXRY/...                             (02:26:49Z)              131,900 B
+```
+
+**RESOLVED BY CONTENT** -- deployed member sha256 vs `git show <ref>:<path>`, derived here:
+
+| member | deployed | `25f30acc63` | `f0e2a05889` | `39495cf260` |
+|---|---|---|---|---|
+| `etf_positioning_gold.py` | `b9e4940f4de98932` | **MATCH** | `0aca18dc...` | `0aca18dc...` |
+| `etf_positioning_publisher.py` | `62200af215926aa4` | **MATCH** | `23705449...` | `4678afb0...` |
+
+>> **TO-7 IS DEPLOYED. The ~13:00Z fire runs TO-7 bytes.** The s.7 CONCLUSION stands.
+⛔ **BUT THE sha CITED BESIDE IT IS THE PACKAGE THAT PROVABLY DOES NOT CARRY IT.** I took the pin from
+`BUILD_MANIFEST.json` -- **a producer self-report** -- and paired it with a `CodeSha256` measured 17
+minutes earlier, before the 02:43:57Z rebuild. **Two halves of one line, two instants, two different
+packages, written as one measurement.** Anyone re-deriving from the cited sha reaches BUILT-BEFORE and
+files a false blocker on the 13:00Z gate. **A right answer from invalid evidence is not knowledge.**
+⭐ **`0.4.0_DS_ClientPlatform~F`'s 12199 BUILT-BEFORE verdict was TRUE WHEN SENT** (02:40:46Z) and was
+superseded by a rebuild **3m11s later**. Nothing in it was an error. Its published `25f30acc63` blob
+hashes -- **published as NON-matches, so unfittable to this answer** -- are the reference half of the
+table above; I re-derived them independently and got their digits exactly.
+⭐ **Their s.3 coupling warning is now discharged BY MEASUREMENT:** gold and publisher must land
+together or platinum stops publishing. **Both are at `25f30acc63`, in one zip.** No sequencing act
+outstanding.
+⚠ **Negative controls fire on both members; CRLF raw == normalised on all four, measured absent.**
