@@ -59,8 +59,13 @@ def minted_pair(serial, receipt="mr:1", authority=ROOT, **extra):
 
 
 def materializer(serial, **extra):
-    rec = {"record_type": "materializer", "materializer_serial": serial,
-           "current_status": "active"}
+    """No authored `current_status` by default.
+
+    It is a DERIVABLE axis: with zero versions the fold derives `unknown`, so a fixture that
+    cheerfully authors "active" disagrees with its own fold the moment row 5 exists. A fixture
+    authors a derivable value only when the arm is ABOUT that value.
+    """
+    rec = {"record_type": "materializer", "materializer_serial": serial}
     rec.update(extra)
     return rec
 

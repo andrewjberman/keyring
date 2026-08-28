@@ -45,6 +45,7 @@ import os
 import re
 import sqlite3
 
+from . import folds
 from . import lineage
 from . import surfaces
 from . import machines
@@ -196,8 +197,10 @@ class Store:
     def _primary_of(self, record):
         rt = record.get("record_type")
         if rt not in self.primary:
-            raise Rejected("not-a-record", "record_type %r is not in the frozen catalog -- a "
-                                           "projection is NOT a record (sec 2)" % rt)
+            raise Rejected("L-05-projection-submitted-as-record-rejected",
+                           "record_type %r is not in the frozen catalog. A PROJECTION is not a "
+                           "record we chose not to store -- it fails to BE a record, by "
+                           "construction (sec 2, sec 3 row 5)" % rt)
         field = self.primary[rt]
         value = record.get(field)
         if not value:
@@ -355,6 +358,8 @@ class Store:
         surfaces.check_frontier(final, list(batch.values()), self._primary_of, _reject)
         surfaces.check_run_consistency(final, list(batch.values()), self._primary_of, _reject)
         surfaces.check_publication(final, list(batch.values()), self._primary_of, _reject)
+        folds.check_authored_vs_derived(final, list(batch.values()), self._primary_of, seqs,
+                                        _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))

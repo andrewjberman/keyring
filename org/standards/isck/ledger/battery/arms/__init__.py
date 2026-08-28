@@ -34,6 +34,7 @@ def load_all():
     from . import row_02_resolver        # noqa: F401
     from . import row_03_append_only     # noqa: F401
     from . import row_04_binding         # noqa: F401
+    from . import row_05_folds           # noqa: F401
     from . import row_06_mint_epoch      # noqa: F401
     from . import row_07_lineage         # noqa: F401
     from . import rows_08_11_surfaces    # noqa: F401

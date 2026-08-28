@@ -65,7 +65,14 @@ def _base(store, record_type, primary_value, same_class=None):
         else:
             rec[fld] = value
     from ledger import engine as _eng
+    from ledger import folds as _folds
+    derivable = _folds.DERIVABLE_AXES.get(record_type)
     for field, values in sorted(_eng.enum_fields(record_type).items()):
+        if field == derivable:
+            # NEVER blind-fill a DERIVABLE axis. The first enum value is not "a legal value" here --
+            # it is a CLAIM about the estate, and row 5 refuses one that disagrees with the fold.
+            # An absent field authors nothing; the arm is about a REFERENCE, not about a status.
+            continue
         # A record built to test a REFERENCE must be legal in every OTHER respect, or its arm is
         # refused by whichever rule it violates instead. Enum fields take their first schema value
         # -- derived, so a contract change moves the fixtures with it rather than stranding them.
