@@ -454,7 +454,7 @@ frontier writer (the run's executor). ARM TABLE: none conditional (`expected_cou
 SEMANTIC: `complete` REQUIRES `expected_count == len(entries)` AND no `unavailable` entry
 (`sem.frontier-complete-count-mismatch`, `sem.frontier-complete-with-unavailable`).
 
-### 3.25 `source_frontier.entries[].availability` — `available | unavailable` (round 3, R3-CRO-8)
+### 3.25 `source_frontier.entries.availability` — `available | unavailable` (round 3, R3-CRO-8; the entry-level field `availability` — named without `[]` because the labels gate's header regex `[a-z_.]+` cannot see brackets, which made this record INVISIBLE to the gate at c3ead58283 while the commit body claimed "23 of 23": the gate's blind spot and the typed number, both on the record)
 DOMAIN: whether the source at this coordinate could be read when the frontier was compiled. MECE:
 read (`available`, carries `source_version`) or not (`unavailable`, PRESENT with its
 `absence_evidence` — the source does not disappear from the vector, R2-5's rule at the frontier

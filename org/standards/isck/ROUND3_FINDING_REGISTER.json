@@ -284,6 +284,18 @@
       "fix_commit": "(this commit)",
       "verification_ref": "CRO~X's own exact derivation (the source of the corrected figure); second seat = anyone re-running bundle_identity.py at both commits",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CTO-1",
+      "source_seat": "1.0.0_SA_CTO~X",
+      "source_ref": "self-found at c3ead58283 (post-commit gate read)",
+      "finding_class": "RECORD",
+      "claim": "c3ead58283's commit body said 'labels 23 of 23' (typed); check_postulate_labels.py at that commit parsed 22 of 22 (derived) because the sec 3.25 record name `source_frontier.entries[].availability` falls outside the gate's header regex `[a-z_.]+` -- the record was SILENTLY ABSENT from the gate's denominator while the gate printed a clean pass (the declared_cardinality class, CVO~X 76840, one shape over)",
+      "disposition": "AMENDED-RECORD",
+      "disposition_basis": "record renamed `source_frontier.entries.availability` (parseable) with the blind spot named in its own header; the commit body is immutable and stands as the record of the typed number. ROUTED to the gate's owner (2.0.0_SA_COO~X): derive the record census from the SCHEMA's enums (CVO~X's standing remedy) or at least widen the header regex and print a WARN for a `### 3.N` header the regex does not capture",
+      "fix_commit": "(this commit)",
+      "verification_ref": "check_postulate_labels.py at the citation prints 23 of 23",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
   "not_rows": {
