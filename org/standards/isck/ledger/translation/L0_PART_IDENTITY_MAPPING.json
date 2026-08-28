@@ -1,0 +1,57 @@
+{
+  "$schema_note": "DECLARED MAPPING from the L0 graph-substrate manifest's part vocabulary to the ISCK entity contract's five identity fields. RULED by the design lane (1.0.0_SA_CTO~X, 2026-08-28 15:1xZ) on the WP-3b finding 0.4.0_DT_ClientPlatform~X 78074 (uniform gap: entity_class / plane / entity_grain / identity_scope / identity_policy missing on 42 of 42 parts -- two schemas never joined). This file is the translator's DECLARED INPUT: every value it yields carries basis 'held' with this file's path @commit as the evidence, never 'measured'. It is NOT a bundle member (bundle_identity.py's member list governs); the contract (v0.3-candidate+27) does not move. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/D11_RULING_20260828_L0_PART_TO_ISCK_ENTITY_MAPPING.md.",
+  "mapping_version": "v0",
+  "ruled_by": "1.0.0_SA_CTO~X",
+  "ruled_at": "2026-08-28T15:1xZ",
+  "sources": {
+    "entity_class_registry": "org/standards/isck/vocab/entity_classes.json (members incl. 'part', 'store', 'materializer')",
+    "identity_policy_registry": "org/standards/isck/vocab/identity_policies.json (8 members)",
+    "identity_scope_enum": "org/standards/isck/ISCK_CONTRACT.v0.schema.json #/$defs/entity/properties/identity_scope (logical | fabric_instance | device_instance | run_occurrence)",
+    "planes": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_L1/L1_CANONICAL_GRAIN_DECLARATION.md @16cd74c870 -- FOUR canonical grains, one per plane: symbol, file, arn_resource, chain_motif",
+    "manifest_vocabulary": "org/standards/L0_GRAPH_SUBSTRATE_MANIFEST.schema.json #/$defs/part (part_class enum: store | materializer | projection | reader_tool | spec_artifact | output_artifact | other; home_space enum: repo_path | s3_uri | iceberg_table | none)"
+  },
+  "rules": {
+    "entity_class": {
+      "value": "part",
+      "why": "A manifest part is an L0 REGISTRY object -- the entity class the ISCK registry already carries for exactly this ('part'). The manifest's part_class (store / materializer / projection / ...) is a GRAPH-OBJECT taxonomy, not the identity taxonomy: mapping it onto entity_class because both end in 'class' is the substitution DT~X refused (78074) and this ruling refuses. The part_class travels on the entity_binding's native key context and on the manifest itself; a finer entity class for a part (e.g. 'store' for a store part) is a LATER declaration act with its own evidence, never this mapping's default.",
+      "uniform": true
+    },
+    "entity_grain": {
+      "value": "part",
+      "why": "The L0 registry's own grain. L1's per-plane grains (symbol / file / arn_resource / chain_motif) apply to the parts' MEMBERS (member_set), which this slice does not admit. A part admitted at grain 'part' makes no claim about its members' identities.",
+      "uniform": true
+    },
+    "identity_scope": {
+      "value": "logical",
+      "why": "A registry part is a logical object; its fabric/device/run instances are surface_versions and materialization_runs, which carry their own scopes. Closed enum satisfied.",
+      "uniform": true
+    },
+    "plane": {
+      "by": "home_space",
+      "table": {
+        "repo_path": "file",
+        "s3_uri": "arn_resource",
+        "iceberg_table": "arn_resource",
+        "none": "unplaced"
+      },
+      "why": "A part's plane is the plane of its HOME: a repo path lives in L1's file plane; an S3 object and an Iceberg/Nessie table are cloud resources (L1: 'arn_resource -- a cloud resource'). A part with NO home fits none of L1's four planes and is NOT forced into one: it is carried under the declared token 'unplaced' (a NEW token, census 0 at ruling time) and, by the identity_policy rule below, admitted as held_for_adjudication -- comparable within no plane until a later declaration places it. That is the L1 declaration's own posture: cross-plane comparison only through a declared bridge, never a parse or a guess."
+    },
+    "identity_policy": {
+      "by": "home_space",
+      "table": {
+        "repo_path": "git_history_v0",
+        "s3_uri": "provider_key_v0",
+        "iceberg_table": "provider_key_v0",
+        "none": "held_for_adjudication"
+      },
+      "why": "The identity of a repo-homed part follows the repository's history; the identity of a cloud-homed part follows the provider's key (bucket/key; table identifier); a part with no home has no key space to follow and is held for adjudication -- the registry's own value for exactly this. All four values are registered identity policies; none is minted here."
+    },
+    "basis_and_evidence": {
+      "basis": "held",
+      "evidence": "this file's path @ the commit that lands it, plus the ruling record; the translator prints, per admitted part, the five values and this file's digest; a part admitted under held_for_adjudication prints as such and counts in the ADMITTED denominator with its policy named -- never silently as 'resolved'",
+      "status_basis_on_the_entity": "authored (the values are declared, not derived by a fold)"
+    }
+  },
+  "denominators_at_ruling": "printed in the ruling record from the pinned manifest (parts by part_class x home_space); the translator re-derives them at run time and prints its own line -- a typed count on this file is not the number",
+  "contestable": "every value here is a claim a later contest_event can target (the contract's own mechanism); a KILL of a row is a finding against this file routed to the design lane, and moves mapping_version"
+}
