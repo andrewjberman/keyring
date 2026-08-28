@@ -63,8 +63,12 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    daily-reports/<DAY>/` and reads each back (size + ETag MATCH x2 is the proof; the put's rc is
    not). They are then live at **https://mcp.opalinvest.dev/sprint** (latest) and `/sprint/<DAY>`
    behind Entra sign-in — the viewer picks Desktop/Mobile per device. The Teams link is that
-   URL; nothing else is posted. Then **commit** the day's file + JSON + rendered html under your
-   author line (`safe-commit`).
+   URL; nothing else is posted. **UNTIL LDT fixes the App-1 redirect URI (IT_REQUEST.md Incident
+   #3), add `--presign`** (Andrew-direct 2026-08-28, "option 1 works here. go"): it also writes
+   `daily-reports/latest/` + a chooser page and prints a 7-day no-login presigned link — the
+   TEAMS LINK line is what goes in the post; it keeps serving each day's overwrite until it
+   expires. Then **commit** the day's file + JSON + rendered html under your author line
+   (`safe-commit`).
 
 ## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
 
