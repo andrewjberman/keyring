@@ -43,6 +43,7 @@ import copy
 import hashlib
 import json
 import os
+import subprocess
 import sys
 
 import jsonschema
@@ -499,6 +500,80 @@ def _arm_digest(payload):
         json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+_RECORD_CACHE = {}
+
+
+def _repo_root():
+    try:
+        out = subprocess.check_output(["git", "rev-parse", "--show-toplevel"],
+                                      cwd=HERE, stderr=subprocess.PIPE)
+        return out.decode("utf-8").strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+
+def _record_blob(ruled_at, path):
+    """(text, state) for `path` at commit `ruled_at`. state in OK/NO_GIT/NO_COMMIT/NO_FILE.
+
+    R3-DT-4 / 3.0.0_SA_CVO~X's re-attack: presence is not resolution. This is the half that
+    actually opens the claimed ruling. Stderr is CAPTURED, never discarded -- an error swallowed
+    here would make a broken instrument indistinguishable from a real absence, and NO_GIT (this
+    is not a checkout) must never read the same as NO_COMMIT (the commit does not exist).
+    """
+    key = (ruled_at, path)
+    if key in _RECORD_CACHE:
+        return _RECORD_CACHE[key]
+    root = _repo_root()
+    if root is None:
+        out = (None, "NO_GIT")
+    else:
+        try:
+            subprocess.check_output(["git", "cat-file", "-e", "%s^{commit}" % ruled_at],
+                                    cwd=root, stderr=subprocess.PIPE)
+        except (OSError, subprocess.CalledProcessError):
+            out = (None, "NO_COMMIT")
+        else:
+            try:
+                blob = subprocess.check_output(["git", "show", "%s:%s" % (ruled_at, path)],
+                                               cwd=root, stderr=subprocess.PIPE)
+                out = (blob.decode("utf-8", "replace"), "OK")
+            except (OSError, subprocess.CalledProcessError):
+                out = (None, "NO_FILE")
+    _RECORD_CACHE[key] = out
+    return out
+
+
+def _anchor_present(text, anchor):
+    """Does the record actually CARRY the ruling this entry points at?
+
+    Two anchor shapes, because the two records adjudicate differently and a single shape would
+    be vacuous for one of them: ARM 1 rules ROW BY ROW (`#rows-4,5` -> the numbered table rows
+    must be there); ARM 4 rules BY CLASS and says so in its own heading -- "the reason IS the
+    record" -- so `#class-A` resolves to its CLASS A section. An entry with no anchor at all is
+    NOT resolvable and must not pass.
+    """
+    if anchor.startswith("rows-"):
+        rows = [r for r in anchor[len("rows-"):].split(",") if r]
+        return bool(rows) and all(("| %s |" % r) in text for r in rows)
+    if anchor.startswith("class-"):
+        return ("CLASS %s " % anchor[len("class-"):]) in text
+    return False
+
+
+def _resolve_state(entry):
+    """RESOLVED | NO_ANCHOR | NO_COMMIT | NO_FILE | NO_ANCHOR_IN_RECORD | UNRESOLVED."""
+    ref = entry.get("record_ref") or ""
+    if "#" not in ref:
+        return "NO_ANCHOR"
+    path, anchor = ref.split("#", 1)
+    text, state = _record_blob(entry.get("ruled_at") or "", path)
+    if state == "NO_GIT":
+        return "UNRESOLVED"
+    if state != "OK":
+        return state
+    return "RESOLVED" if _anchor_present(text, anchor) else "NO_ANCHOR_IN_RECORD"
+
+
 def _link_state(entry, computed):
     """LINKED | ORPHAN (a link field missing) | STALE (the arm moved under the ruling).
 
@@ -510,6 +585,13 @@ def _link_state(entry, computed):
         return "ORPHAN"
     if computed is not None and entry.get("arm_digest") != computed:
         return "STALE"
+    resolved = _resolve_state(entry)
+    if resolved == "UNRESOLVED":
+        # Not a checkout. UNRESOLVED IS ITS OWN STATE and must never read as LINKED: the caller
+        # declines to suppress and says why, rather than trusting a claim it cannot open.
+        return "UNRESOLVED"
+    if resolved != "RESOLVED":
+        return "ORPHAN"
     return "LINKED"
 
 
@@ -583,7 +665,7 @@ def _dispose(unpaired, digests=None):
         if len(parts) == 4:
             by_triple.setdefault(tuple(parts[:3]), []).append(val)
     adjudicated, deferred, lapsed, fresh = [], [], [], []
-    orphans, stale = [], []
+    orphans, stale, unresolved = [], [], []
     for rtype, disc, vals, field in unpaired:
         key = "%s|%s|%s|%s" % (rtype, disc, field, ",".join(sorted(vals)))
         entry = record.get(key)
@@ -596,8 +678,8 @@ def _dispose(unpaired, digests=None):
                 fresh.append((rtype, disc, vals, field))
             continue
         state = _link_state(entry, (digests or {}).get(key))
-        if state == "ORPHAN":
-            orphans.append(key)
+        if state in ("ORPHAN", "UNRESOLVED"):
+            (orphans if state == "ORPHAN" else unresolved).append(key)
             fresh.append((rtype, disc, vals, field))
         elif state == "STALE":
             stale.append(key)
@@ -612,6 +694,9 @@ def _dispose(unpaired, digests=None):
     for key in stale:
         print("  WARN: sidecar entry %r arm_digest MISMATCH -- the arm moved under the ruling; "
               "row reported RE-ADJUDICATION" % key)
+    for key in unresolved:
+        print("  WARN: sidecar entry %r UNRESOLVED (not a git checkout) -- the ruling could not "
+              "be OPENED, so it is not trusted; row reported NEW" % key)
     return adjudicated, deferred, lapsed, fresh
 
 
@@ -672,7 +757,7 @@ def _dispose_arm1(gaps):
         if len(parts) == 3:
             by_pair.setdefault(tuple(parts[:2]), []).append(val)
     adjudicated, deferred, lapsed, fresh = [], [], [], []
-    orphans, stale = [], []
+    orphans, stale, unresolved = [], [], []
     for rtype, field, missing, domain in gaps:
         key = "%s|%s|%s" % (rtype, field, ",".join(sorted(missing)))
         entry = record.get(key)
@@ -689,8 +774,8 @@ def _dispose_arm1(gaps):
         # the ruling must lapse it even when the unreached set happens to be unchanged.
         computed = _arm_digest({"domain": list(domain), "unreached": sorted(missing)})
         state = _link_state(entry, computed)
-        if state == "ORPHAN":
-            orphans.append(key)
+        if state in ("ORPHAN", "UNRESOLVED"):
+            (orphans if state == "ORPHAN" else unresolved).append(key)
             fresh.append((rtype, field, missing, domain))
         elif state == "STALE":
             stale.append(key)
@@ -706,6 +791,9 @@ def _dispose_arm1(gaps):
     for key in stale:
         print("  WARN: sidecar entry %r arm_digest MISMATCH -- the domain or unreached set moved "
               "under the ruling; row reported RE-ADJUDICATION" % key)
+    for key in unresolved:
+        print("  WARN: sidecar entry %r UNRESOLVED (not a git checkout) -- the ruling could not "
+              "be OPENED, so it is not trusted; row reported NEW" % key)
     return adjudicated, deferred, lapsed, fresh
 
 
@@ -1058,33 +1146,76 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
     results.append(("ARM-4 GUARD refuses an ARM-1 shaped 3-part key",
                     _rejects({"r|f|x": {"class": "A", "values_at_adjudication": ["x"]}}), True))
 
-    # ---- R3-CVO-2 LINK GUARD (3.0.0_SA_CVO~X's orphan-sidecar exhibit). _link_state is the whole
-    # remedy in one pure function, so it is controlled directly and in BOTH directions. The
-    # LINKED arm is listed FIRST on purpose: if it ever fails, every refusal below is vacuous
-    # and the gate would be suppressing nothing at all rather than suppressing correctly.
-    _linked = {"class": "A", "values_at_adjudication": ["x"],
-               "record_ref": "r.md", "ruled_at": "abc123", "arm_digest": "DIGEST"}
-    results.append(("LINK GUARD calls a complete, digest-matching entry LINKED",
-                    _link_state(_linked, "DIGEST") == "LINKED", True))
-    for _f in LINK_FIELDS:
-        _o = dict(_linked)
-        _o.pop(_f)
-        results.append(("LINK GUARD calls an entry missing %s an ORPHAN" % _f,
-                        _link_state(_o, "DIGEST") == "ORPHAN", True))
-    _blank = dict(_linked)
-    _blank["record_ref"] = ""
-    results.append(("LINK GUARD treats an EMPTY link field as missing, not as present",
-                    _link_state(_blank, "DIGEST") == "ORPHAN", True))
-    results.append(("LINK GUARD calls a moved arm STALE (the value-set lapse generalized)",
-                    _link_state(_linked, "A_DIFFERENT_DIGEST") == "STALE", True))
-    results.append(("LINK GUARD cannot call a DEAD-ARM entry LINKED against a real digest",
-                    _link_state(dict(_linked, arm_digest="ARM_ABSENT"), "DIGEST") == "STALE", True))
-    # ORPHAN outranks STALE: an entry that cannot prove it descends from a ruling must fail open to
-    # NEW even when its digest also disagrees -- NEW is the louder, safer of the two verdicts.
-    _op = dict(_linked)
-    _op.pop("ruled_at")
-    results.append(("LINK GUARD reports ORPHAN, not STALE, when an entry is both",
-                    _link_state(_op, "A_DIFFERENT_DIGEST") == "ORPHAN", True))
+    # ---- R3-CVO-2 LINK GUARD. EVERY arm is built by mutating ONE FIELD of a REAL, currently
+    # LINKED entry, never from a synthetic dict. Synthetic fixtures were the first version and
+    # R3-DT-4's resolver broke them: with resolution enforced, an invented entry can no longer be
+    # LINKED, so the "missing field -> ORPHAN" arms would have kept passing FOR THE WRONG REASON
+    # (unresolvable, not field-missing) and the LINKED arm became unreachable. A control whose
+    # baseline cannot reach the state under test measures nothing. The real entry is loaded in the
+    # R3-DT-4 block below and reused here, so each arm isolates exactly its own variable.
+    # ---- R3-DT-4 / 3.0.0_SA_CVO~X's CLOSURE-FAIL re-attack. The three link fields used to be
+    # PRESENCE-checked; record_ref and ruled_at resolved to nothing, so a true digest beside two
+    # invented strings suppressed a live row. These arms drive the RESOLVER against the real
+    # records. CVO~X's acceptance bar, adopted verbatim: "Refutation must name code that resolves
+    # the claimed record/commit; nonempty-field checks do not" -- _resolve_state + _record_blob.
+    try:
+        with open(ARM1_ADJUDICATION_PATH, "r", encoding="utf-8") as _fh:
+            _a1 = json.load(_fh, object_pairs_hook=_no_dupes)["entries"]
+        _rk = sorted(k for k in _a1 if _a1[k].get("class") == "A")[0]
+        _real = _a1[_rk]
+        _dg = _real["arm_digest"]
+        # NON-VACUITY FIRST: if a real, current entry stops resolving, every refusal below is
+        # meaningless and the gate has simply stopped suppressing.
+        results.append(("RESOLVER accepts a REAL entry against the real record (non-vacuity)",
+                        _link_state(_real, _dg) == "LINKED", True))
+        results.append(("RESOLVER refuses CVO~X's exhibit: true digest, forged ref AND commit",
+                        _link_state(dict(_real, record_ref="not-a-record-or-anchor",
+                                         ruled_at="not-a-commit"), _dg) == "ORPHAN", True))
+        results.append(("RESOLVER refuses a ruled_at that is not a commit",
+                        _link_state(dict(_real, ruled_at="0" * 40), _dg) == "ORPHAN", True))
+        results.append(("RESOLVER refuses a record_ref naming a file absent at ruled_at",
+                        _link_state(dict(_real, record_ref="org/standards/isck/NOPE.md#rows-4,5"),
+                                    _dg) == "ORPHAN", True))
+        results.append(("RESOLVER refuses an anchor ABSENT from the record it names",
+                        _link_state(dict(_real,
+                                         record_ref="org/standards/isck/ARM1_ADJUDICATION.md"
+                                                    "#rows-999"), _dg) == "ORPHAN", True))
+        results.append(("RESOLVER refuses a record_ref carrying NO anchor at all",
+                        _link_state(dict(_real,
+                                         record_ref="org/standards/isck/ARM1_ADJUDICATION.md"),
+                                    _dg) == "ORPHAN", True))
+        # UNRESOLVED is its OWN state: outside a checkout the gate declines to suppress and says
+        # so. It must never collapse into LINKED (would suppress on an unopenable claim) and the
+        # arm must be reachable, or the not-a-repo path is untested.
+        _saved = _repo_root
+        try:
+            globals()["_repo_root"] = lambda: None
+            _RECORD_CACHE.clear()
+            results.append(("RESOLVER reports UNRESOLVED, never LINKED, outside a git checkout",
+                            _link_state(_real, _dg) == "UNRESOLVED", True))
+        finally:
+            globals()["_repo_root"] = _saved
+            _RECORD_CACHE.clear()
+        # field-presence arms, each ONE mutation of the same real entry that LINKS above
+        for _f in LINK_FIELDS:
+            _o = dict(_real)
+            _o.pop(_f)
+            results.append(("LINK GUARD calls a real entry missing %s an ORPHAN" % _f,
+                            _link_state(_o, _dg) == "ORPHAN", True))
+        results.append(("LINK GUARD treats an EMPTY link field as missing, not as present",
+                        _link_state(dict(_real, record_ref=""), _dg) == "ORPHAN", True))
+        results.append(("LINK GUARD calls a moved arm STALE (the value-set lapse generalized)",
+                        _link_state(_real, "A_DIFFERENT_DIGEST") == "STALE", True))
+        results.append(("LINK GUARD cannot call a DEAD-ARM entry LINKED against a real digest",
+                        _link_state(dict(_real, arm_digest="ARM_ABSENT"), _dg) == "STALE", True))
+        _op = dict(_real)
+        _op.pop("ruled_at")
+        results.append(("LINK GUARD reports ORPHAN, not STALE, when an entry is both",
+                        _link_state(_op, "A_DIFFERENT_DIGEST") == "ORPHAN", True))
+    except (OSError, ValueError, IndexError, KeyError) as exc:
+        results.append(("RESOLVER arms are RUNNABLE (sidecar readable: %s)" % str(exc)[:40],
+                        False, True))
+
     # And the digest itself must discriminate: same content -> same digest, moved content -> not.
     results.append(("ARM DIGEST is stable on identical normalized content",
                     _arm_digest({"a": [1, 2]}) == _arm_digest({"a": [1, 2]}), True))
