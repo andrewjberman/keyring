@@ -1,5 +1,26 @@
 # ETFS_SATELLITES STAGE-3 DECOMP — CERTIFICATION
 
+> ## ⛔ READ THIS BLOCK FIRST — BINDING STATE AS OF 2026-08-28 ~00:2xZ
+>
+> **This file is CHRONOLOGICAL. A CORRECTION at §622 retracts a finding — and a PRECISION AMENDMENT
+> at §690 retracts a sentence INSIDE that correction.** ⛔ **The misattribution in the correction
+> travelled into a task order's acceptance criterion before it was caught; do not cite §622-689
+> without §690.**
+>
+> | claim | binding state | where |
+> |---|---|---|
+> | *"vacuous corpus / the anchoring is unsupported"* | ⛔ **RETRACTED, FALSE ON BOTH LIMBS.** Bare substring admits **27**, not 9; `Core \| Satellite 98` **is** in the corpus | §622 |
+> | *"the **anchor** excludes eighteen rows"* | ⛔ **RETRACTED.** The **LITERAL TOKEN `Opal`** does. Per-limb: drop `$` → **+0**, drop `^` → **+0**, drop the token → **+18** | §690 |
+> | both anchors | **UNEXERCISED by this corpus** — which is a finding, not a pass. Synthetic negatives are required for each | §690 |
+> | the membership predicate | **VALIDATED against the real mutant.** `satellites_registry.py:213` was anchored deliberately and documents why | §622 |
+> | the classification | **RULED**, not open — Andrew ~16:1xZ, `SAT-b-2`, IS-A vs HOLDS-A | §622 |
+> | `F3` / fixture obligation | **STANDS.** Discharged in spec by `T5DS-AC4`'s three rows (1 real + 2 synthetic), `1.0.0_SA_CTO~Z` amend | §622 |
+> | this certification's **verdict** | **UNCHANGED** — a finding inside it was retracted; the verdict was not | — |
+>
+> ⭐ **The corpus exercises the TOKEN and neither ANCHOR. That single sentence is the whole binding
+> result, and it is the one that took three attempts to state correctly.**
+
+
 **Certifier:** `3.0.0_SA_CVO~Z` · 2026-08-27 ~16:4xZ
 **Artifact:** `workflows/atom_decomposition/runs/etfs-satellites/20260827T160438Z/DECOMP.md`
 **Read at:** `origin/SITEZ @ f58160dd8e` (remote, not a working-tree copy)
@@ -616,3 +637,118 @@ pre-stated consequence, **not by anything in this certification** — which carr
 promote in either direction.
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+# ⛔ CORRECTION — 2026-08-27 ~23:5xZ — MY "VACUOUS CORPUS / THE ANCHORING IS UNSUPPORTED" FINDING IS FALSE. I VARIED THE NOTATION AND HELD THE DISCRIMINATOR CONSTANT.
+
+**Falsified by `2.0.0_SA_COO~Z` (msg 11132). I re-measured at this seat before accepting it, on the
+fixture, and they are right.** The finding was **message-only and had no durable carrier** — this
+section is that carrier, written because a message-borne false claim cannot be corrected by another
+message alone.
+
+## WHAT I CLAIMED
+
+> *On the 65-row roster the anchored regex and a bare substring check admit the IDENTICAL 9 rows, so
+> the measurement cannot support the anchoring; and the adversarial case Andrew named is ABSENT from
+> the fixture.*
+
+## WHAT IS TRUE — `tests/fixtures/satellites/roster_2026-08-27.json`, 65 rows, `pageCount=1`
+
+```
+ANCHORED    ^Opal Satellite (\d+)$        ->  9
+MY CONTROL  "opal satellite" substring    ->  9     ADMITS BEYOND ANCHORED:  0
+TRULY BARE  "satellite" substring         -> 27     ADMITS BEYOND ANCHORED: 18
+TRULY BARE  /sat/i                        -> 30
+'Core | Satellite 98' in corpus: True     'Opal Satellite 98' in corpus: True
+```
+
+**BOTH LIMBS FALSE.** The bare substring admits **27, not 9** — the anchor excludes eighteen rows
+including the entire `Core | Satellite *` family. And the adversarial case is **present**:
+`Core | Satellite 98` sits in the corpus beside `Opal Satellite 98`, which is `SAT-b-4`'s named pair.
+
+## ⛔ THE MECHANISM, AND IT IS THE PRECISE ONE
+
+> ### MY "BARE SUBSTRING" CONTROL CONTAINED THE WORD `Opal` — THE ANCHOR UNDER TEST.
+
+**I varied the NOTATION (regex vs. substring) and held the DISCRIMINATOR (the token `Opal`)
+constant.** Both arms were anchored. A control built that way **cannot** separate the hypotheses, so
+its agreement was guaranteed before I ran it — and I read that guaranteed agreement as *evidence that
+anchoring does no work*. ⛔ **The measured discriminating power of my control was ZERO rows, and zero
+discriminating power is exactly what "the two instruments agree" looks like from inside.**
+
+⛔ **AND THE ABSENCE CLAIM WAS MANUFACTURED BY THE SAME STRING.** I concluded *"the adversarial case
+is absent from the fixture"* from a search whose pattern **structurally excluded** the adversarial
+case. *A search for `opal satellite` cannot find `Core | Satellite 98`, and its silence is not the
+corpus's.*
+
+## WHAT THE PREDICATE ACTUALLY IS — and it was never unvalidated
+
+`satellites_registry.py:213-218` carries `CANONICAL_NAME_FORM = re.compile(r"^Opal Satellite (\d+)$")`
+under a comment naming this exact pair:
+> *"⛔ READ THE ANCHORS. `^...$` is load-bearing twice over: `Core | Satellite 98` does not match …
+> `Opal Satellite 50 Tax-Free`, were it ever minted, would not match either, so it surfaces as DRIFT
+> for a human rather than being silently absorbed as a member."*
+
+**The author anchored it deliberately, against the real mutant, and documented why.** My finding
+implied the anchoring was unjustified decoration. **It is the load-bearing part of the predicate**,
+and `2.0.0_SA_COO~Z` further established the classification is not open at all — Andrew ruled it at
+~16:1xZ (`SAT-b-2`, IS-A vs HOLDS-A), *seven hours before any of us began asking.*
+
+## WHAT MOVES
+
+**`F3` and the "fixture still owed" line stand** — a fixture obligation is untouched by this. **What
+is withdrawn is any suggestion that the membership predicate is unvalidated, that the corpus lacks a
+negative case, or that the classification is an open sovereign question.** All three were mine and
+all three were wrong. **The verdict of this certification does not change; a finding inside it is
+retracted.**
+
+⚠ **Third instance tonight of one class: a control that shares the property under test.** Banked at
+`[[a-control-that-shares-the-property-under-test]]`. *Twice I caught it myself; this time a peer did.*
+
+---
+
+## ⛔ PRECISION AMENDMENT TO THE CORRECTION ABOVE — 2026-08-28 ~00:0xZ — "THE ANCHOR EXCLUDES 18 ROWS" IS ITSELF A MISATTRIBUTION. THE TOKEN DOES. BOTH ANCHORS MEASURE +0.
+
+**The correction above is right that my original finding was false. Its ATTRIBUTION is wrong, and
+the wrong attribution is what travelled.** Raised by `0.4.0_DS_ClientPlatform~Z` (11185), who then
+self-corrected the same misattribution (11194); independently measured here by one-limb ablation.
+
+```
+ABLATION -- drop EXACTLY ONE component, hold the rest (65-row roster)
+  FULL          ^Opal Satellite (\d+)$      ->  9
+  drop  $       ^Opal Satellite (\d+)       ->  9    extra admits: +0   UNEXERCISED
+  drop  ^        Opal Satellite (\d+)$      ->  9    extra admits: +0   UNEXERCISED
+  drop  `Opal`  ^Satellite (\d+)$           ->  0    disagreement: 9    <- THE TOKEN CARRIES IT
+  bare  /satellite/i                        -> 27    extra admits: +18  <- Core | Satellite 98 lives HERE
+POSITIVE CONTROL (2 synthetic rows appended, engine demonstrably fires):
+  + "Opal Satellite 50 Aggressive"  -> exercises the TRAILING $   (+1)
+  + "Legacy Opal Satellite 50"      -> exercises the LEADING  ^   (+1)
+```
+
+> ### THE 18 ROWS BELONG TO THE LITERAL TOKEN `Opal`, NOT TO EITHER ANCHOR. `Core | Satellite 98` DOES NOT CONTAIN `Opal Satellite` AT ALL, SO NO ANCHOR EVER GETS A CHANCE TO ACT ON IT.
+
+⛔ **MY ERROR HERE IS THE SAME CLASS AS THE ONE I WAS CORRECTING, ONE LEVEL UP.** My original control
+varied four things at once (token, both anchors, the digit requirement) and I attributed the whole
+delta to one of them. **A COMPOSITE COMPARISON CANNOT ATTRIBUTE** — it can only tell you *something*
+in the bundle matters. *I diagnosed "varied the notation, held the discriminator" correctly and then
+committed its sibling in the same breath.*
+
+## ⛔ AND THE OVER-BROAD RETRACTION REACHED A SPEC IN TWENTY MINUTES
+
+`1.0.0_SA_CTO~Z` (11188, 11203) traced it: my withdrawal was **broader than my error**, and
+`TO-5-DS`'s `AC4` was issued saying *"DO NOT CONSTRUCT A FIXTURE."* **Correct for the token limb.
+Fatal for the anchors** — a predicate with `$` deleted scores 9/9 and passes `AC4` on the `SAT-b-4`
+pair, so the criterion cannot fail in the direction the `$` exists to defend.
+
+> **The false finding cost a broadcast. The over-broad retraction of it nearly cost a shipped gate.**
+> ⚠ **Four seats reviewed the retraction and agreed with it. Nobody audited its SCOPE** — *a
+> withdrawal reads as humility, and humility is not audited.*
+
+**WHAT STANDS UNCHANGED:** the anchoring is not decoration; `satellites_registry.py:213` was written
+against a real mutant; the classification is ruled, not open. **WHAT IS ADDED:** the corpus exercises
+the **token** and neither **anchor**, so `AC4` needs the real pair **plus** synthetic rows —
+`1.0.0_SA_CTO~Z`'s amendment (11203) carries the three-row form, including the MUST-ADMIT
+`Opal Satellite 55` that no real row can ever supply.
+
+⭐ **Banked: a composite comparison cannot attribute — [[a-composite-comparison-cannot-attribute]].**

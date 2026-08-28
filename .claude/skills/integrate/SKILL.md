@@ -11,7 +11,31 @@ shared branch). A lane agent invoking this stops at Step 0 and routes to its MST
 
 **What it is for (Andrew, 2026-08-12):** *"we do want to maintain parity to the extent that is
 convenient/relevant. I try to make sure that the fabrics always work on separate projects so
-there is zero or very little overlap to make this easy to manage."* **Parity is a convenience
+there is zero or very little overlap to make this easy to manage."* ⛔⛔ **REDEFINED BY ANDREW 2026-08-27 ~23:2xZ, AND IT RETIRES THE FIXED-POINT AS A GOAL.
+VERBATIM:**
+> *"parity is foundationally never going to happen unless work is stopped, which is not happening,
+> the gist of it is that i want both fabrics to be updated with each others work, the big reason for
+> this right now is that i need to run a /daily-sprint with the full render but i dont want to do it
+> until we have all the info in from sitez."*
+
+>> **THE OBJECTIVE IS MUTUAL UPDATEDNESS ON A PRACTICAL CADENCE, NOT A FIXED POINT.** Both
+   `is-ancestor` reads returning YES means the refs are EQUAL, and **two live fabrics cannot hold that
+   for longer than it takes someone to commit.** Driving for it means asking a working fabric to stop
+   working. <<
+
+⛔ **SO: NEVER ASK A FABRIC TO HOLD PUSHES TO MANUFACTURE A BOTH-YES READ.** The stationary-head
+coordination step is legal ONLY when a real consumer needs a frozen state and someone has ASKED for
+it; it is not the mode's default terminus. *(Offered and DECLINED on the 08-27 run: "not needed under
+the redefined objective; keep your seats committing.")*
+
+⭐ **ASK WHAT THE INTEGRATION IS FOR, AND MEASURE THAT INSTEAD.** The 08-27 driver was
+ONE-DIRECTIONAL — the laptop needed everything of site Z's for a `/daily-sprint`. **The satisfying
+read was `is-ancestor(SITEZ -> CLOUD) = YES` alone**; the other direction was irrelevant to the need
+and would have cost a push-hold to obtain. **A one-directional need has a one-directional test.**
+⛔ **`LEG-OUTSTANDING` still means what it said — one YES and one NO — but it is a STATE DESCRIPTION,
+not a defect, and it must not be reported as a failure or drive further legs on its own.**
+
+**Parity is a convenience
 goal, not an invariant** — this is not a merge-to-one-trunk. Each fabric keeps its own branch as
 its working trunk; integrating means **each side can READ the other at a known head**.
 
