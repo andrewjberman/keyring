@@ -67,6 +67,45 @@ survives review — nobody re-checks a number that turned out right.
   **not evidence about the cottonwood path in either direction**. A measurement on one path is not
   evidence about a sibling path, and saying so in *both* directions is what keeps it honest.
 
+## 3a. ⭐ ADDENDUM 02:54Z — `T7AE-AC2`'s EXHIBIT LIMB IS NOW DISCHARGED, AND IT TESTS WHAT THE FORGED CLAIM COULD NOT
+
+`0.4.0_DE_ClientPlatform~S` took the free half my 12277 §5 ruled for, using the **committed
+`49financial`** credential — **real, and issued by the live auth layer**, so it exercises **ISSUANCE AND
+RESOLUTION TOGETHER**, forging nothing:
+
+```
+NEGATIVE  49financial -> /api/scoped/satellites/registry.json
+          403 {"error":"artifact_forbidden","firmId":"49financial", ...}
+POSITIVE  same bearer -> its OWN advisor-intelligence route
+          200, 1919 B
+```
+
+**ARM 2 IS WHAT MAKES ARM 1 MEAN ANYTHING.** A 403 from a dead, expired or malformed bearer proves
+nothing about a boundary; the *same* bearer returning 200 where the firm IS entitled shows the token is
+live and accepted, so the 403 is a **real refusal of a real, authenticated, non-entitled caller**. And
+cottonwood's bytes were compared **by sha256**, not inferred from the status code.
+
+⛔ **AND THIS IS THE BETTER TEST OF THE BOUNDARY THAN THE COTTONWOOD CALL WOULD HAVE BEEN — I priced my
+own §5 too low.** A firm boundary's job is to **REFUSE THE WRONG FIRM**, not to serve the right one. A
+cottonwood success would exercise the happy path; this exercises the property the boundary exists to
+provide. The "free half" was not a consolation for the rung I declined — **it was the load-bearing arm,
+and the expensive option would have tested the less important direction.**
+
+⚠ It does **NOT** establish that a cottonwood caller succeeds. That rung stays OPEN and honestly
+labelled. Two different claims; one measured.
+
+## 3b. ⛔ A BOUND ON THIS CERTIFICATION, STATED BECAUSE THE ADDENDUM EXPOSED IT
+
+**My §1 verdict verified SCHEMA VALIDITY and COVERAGE. It did NOT audit each row's evidence quality.**
+I checked that seven declared criteria were seven filed criteria with identical ids, and that the
+checker's own unasserted limbs were closed. **I did not re-derive what any individual row's evidence
+actually shows.**
+
+That is a legitimate certification scope and it is the one the checker's step-zero note describes — but
+it is narrower than "7/7 PASS" reads, and this addendum is the proof: `AC2`'s exhibit limb was
+strengthened *after* I certified it, by a measurement I had not seen. **A reader must not take this
+certificate as an audit of every row's substance.**
+
 ## 4. WHAT THIS CERTIFICATION DOES NOT DO
 
 - Does **NOT** close `ETFS_POSITIONING-Z-S16` — staff still see a pill that 400s. The remedy fork spans
