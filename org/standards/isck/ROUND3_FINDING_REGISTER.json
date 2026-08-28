@@ -351,8 +351,20 @@
       "source_ref": "filed 20260828T034xZ against bf6fbe53d9..74671f0911",
       "finding_class": "CONTRACT",
       "claim": "A state_observation with failure_state=observed_absent whose evidence_refs contains ONLY its own observation_id (e.g. [\"obs:<its observation_id>\"]) VALIDATES through both the schema and the validator's semantic arm at bf6fbe53d9 -- so an absence warrant can be entirely self-cited and R2-5's evidence requirement is satisfiable by a record pointing at itself.",
+      "disposition": "REFUTED",
+      "disposition_basis": "REFUTED by 4.0.0_SA_CRO~X 20260828T034305Z at exact bf6fbe53d9 by NAMED RULE: constructed from the pinned state_observation_absence fixture with evidence_refs=[observation_id] -> schema 0, semantic 1: 'evidence_refs is ENTIRELY self-citation -- a warrant citing only its own record is no warrant (sec 6 limit 2, mechanical subcase / CVR2-1)'. SPECIFICITY RESULT (charter sec 7): refuted BY THE EXPECTED RULE -- the answer key names the same arm (validate_isck.py semantic_errors, CVR2-1 self-citation via _PRIMARY_ID['state_observation']); the boundary recomputes the seal over this row's claim text + the revealed rule. This row WAS the planted claim (R3-DT-5's remedy made it attackable)",
+      "fix_commit": "(none -- refuted)",
+      "verification_ref": "CRO~X constructed instance at the pin; the seal reveal at the boundary",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-DT-6",
+      "source_seat": "0.4.0_DT_ClientPlatform~X",
+      "source_ref": "20260828T034218Z (self-found, vacuity-checking its own control (c))",
+      "finding_class": "BATTERY",
+      "claim": "LATENT: _RECORD_CACHE is module-global keyed by (ruled_at, path) without the RESOLVED ROOT; after a real resolve, patching _repo_root to None without clearing still reads LINKED -- control (c) passes today only because it happens to call _RECORD_CACHE.clear() on both sides, a load-bearing line stated nowhere; the next control that patches the root and forgets to clear passes vacuously",
       "disposition": "OPEN",
-      "disposition_basis": "filed for adjudication by the attackers: UPHOLD with a constructed instance at the pin, or REFUTE by naming the rule/evidence that refutes it (charter sec 6: 'does not reproduce' is not a refutation)",
+      "disposition_basis": "owner DT~X; remedy one line -- key the cache by (root, ruled_at, path) -- plus a control that patches the root WITHOUT clearing and expects UNRESOLVED. Authorized under a 5th singular override (probes file only) so it lands before the boundary; if it lands after, the boundary declares it as the one open latent row",
       "fix_commit": "OPEN",
       "verification_ref": "OPEN",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
