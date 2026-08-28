@@ -307,10 +307,30 @@ def main():
         return
     rec = derive(commit)
     if "--check" in sys.argv:
+        # R4-CTO-4 (1.0.0_SA_CTO~X 2026-08-28 18:5xZ, on DT~X 78718 / WP-4 AC2): this compared the WHOLE record,
+        # provenance pointers included, so it read STALE at every commit except the one the record was derived
+        # at -- a check that can pass at exactly one commit says nothing about the bundle, and its STALE was
+        # indistinguishable from a real member change (measured: HEAD STALE, 7a44b65f50 STALE, same word).
+        # The record is derive(<pin>) by construction (--write / --receipt), so the pointers are EXPECTED to
+        # differ from HEAD's. IDENTITY fields decide the verdict; pointer deltas print as INFO, never as a verdict.
+        # post_boundary_amendments = rev-list <round-2 boundary>..<commit> -- org/standards/isck: the package-path
+        # commit list at that vintage, which grows with every isck commit (registers, receipts, this tool) while
+        # the bundle stands still -- provenance, not identity (a bound bundle's candidate_id is the registry's).
+        POINTERS = ("derived_at_commit", "doctrine_commit", "schema_commit", "validator_commit", "gate_suite_commit",
+                    "post_boundary_amendments")
         cur = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
-        same = {k: v for k, v in cur.items() if k != "$comment"} == {k: v for k, v in rec.items() if k != "$comment"}
-        print(("OK" if same else "STALE") + f": {OUT.name} vs derivation at {rec['derived_at_commit'][:10]}")
-        sys.exit(0 if same else 1)
+        def ident(d):
+            return {k: v for k, v in d.items() if k != "$comment" and k not in POINTERS}
+        cur_i, rec_i = ident(cur), ident(rec)
+        diff = sorted(k for k in set(cur_i) | set(rec_i) if cur_i.get(k) != rec_i.get(k))
+        moved = [k for k in POINTERS if cur.get(k) != rec.get(k)]
+        if diff:
+            print(f"STALE: {OUT.name} identity differs from the derivation at {rec['derived_at_commit'][:10]} on {diff}")
+            sys.exit(1)
+        print(f"MATCH: {OUT.name} identity == derivation at {rec['derived_at_commit'][:10]} "
+              f"(bundle {rec['contract_bundle_id'][:24]}..., {rec['candidate_id']})"
+              + (f"; INFO pointers differ {moved} -- the record is derived at its pin, not at this commit" if moved else ""))
+        sys.exit(0)
     text = json.dumps(rec, indent=2) + "\n"
     if "--write" in sys.argv:
         labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}

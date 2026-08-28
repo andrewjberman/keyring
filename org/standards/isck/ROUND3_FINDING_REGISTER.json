@@ -1067,6 +1067,19 @@
       "fix_commit": "this commit (bundle_identity.py RECEIPT_KINDS + receipt_problem kind gate; this row)",
       "verification_ref": "filing-script assertions (above); DT~X's two negative controls at e83bd49f21 (ab5dc4e62c; mismatched contract_bundle_id) reproduce at this seat; the one-shot registry write for both kinds fires AFTER 3.0.0_SA_CVO~X's face verdict on TO-WP3b-DTX, as at AC8",
       "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-3b AC6"
+    },
+    {
+      "finding_id": "R4-CTO-4",
+      "round": 4,
+      "source_seat": "1.0.0_SA_CTO~X",
+      "source_ref": "DT~X 78718 (TO-WP4-DTX complete: 'bundle_identity.py HEAD --check reports STALE both before and after my change' -- AC2's bundle clause declared an exclusion, invariant measured by hand); issuer 78726 read the clause as the invariant",
+      "finding_class": "CONTRACT-TOOLING",
+      "claim": "`--check` compared the whole derived record INCLUDING the provenance pointers (derived_at_commit, doctrine_commit, schema_commit, validator_commit, gate_suite_commit) against BUNDLE_IDENTITY.json, which is derive(<pin>) by construction of --write/--receipt. So at every commit other than the pin it printed STALE -- the same word it prints for a real member change (measured pre-fix: HEAD STALE, 7a44b65f50 STALE, pin OK). A check that can pass at exactly one commit certifies nothing about the bundle, and a face that cites it (WP-4 AC2) wrote a criterion no executor could satisfy",
+      "disposition": "FIXED",
+      "disposition_basis": "this commit (non-member tool; the frozen label does not move): --check decides on IDENTITY fields only (bundle id, candidate, member blobs, vocab digests, status/receipts) and prints the pointer delta as INFO. RULING carried with it: BUNDLE_IDENTITY.json's pointers STAND at the pin; the record is NOT regenerated at HEAD (the issuer's question (a) in 78726). Arms run by the filing script after the fix: HEAD -> MATCH + INFO pointers differ (rc 0); d0398b977d -> MATCH, no INFO (rc 0); 7a44b65f50 (bundle 103cfd6c...) -> STALE on contract_bundle_id (rc 1) -- the negative arm fires on a real identity difference with no file mutated",
+      "fix_commit": "this commit (bundle_identity.py --check; this row)",
+      "verification_ref": "filing-script assertions on the three arms; WP-4 AC2's clause is now satisfiable as written (MATCH before and after a non-member change) -- the issuer's invariant reading and the tool's verdict coincide",
+      "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-4 AC2"
     }
   ],
   "not_rows": {
