@@ -684,3 +684,50 @@ retracted.**
 
 ⚠ **Third instance tonight of one class: a control that shares the property under test.** Banked at
 `[[a-control-that-shares-the-property-under-test]]`. *Twice I caught it myself; this time a peer did.*
+
+---
+
+## ⛔ PRECISION AMENDMENT TO THE CORRECTION ABOVE — 2026-08-28 ~00:0xZ — "THE ANCHOR EXCLUDES 18 ROWS" IS ITSELF A MISATTRIBUTION. THE TOKEN DOES. BOTH ANCHORS MEASURE +0.
+
+**The correction above is right that my original finding was false. Its ATTRIBUTION is wrong, and
+the wrong attribution is what travelled.** Raised by `0.4.0_DS_ClientPlatform~Z` (11185), who then
+self-corrected the same misattribution (11194); independently measured here by one-limb ablation.
+
+```
+ABLATION -- drop EXACTLY ONE component, hold the rest (65-row roster)
+  FULL          ^Opal Satellite (\d+)$      ->  9
+  drop  $       ^Opal Satellite (\d+)       ->  9    extra admits: +0   UNEXERCISED
+  drop  ^        Opal Satellite (\d+)$      ->  9    extra admits: +0   UNEXERCISED
+  drop  `Opal`  ^Satellite (\d+)$           ->  0    disagreement: 9    <- THE TOKEN CARRIES IT
+  bare  /satellite/i                        -> 27    extra admits: +18  <- Core | Satellite 98 lives HERE
+POSITIVE CONTROL (2 synthetic rows appended, engine demonstrably fires):
+  + "Opal Satellite 50 Aggressive"  -> exercises the TRAILING $   (+1)
+  + "Legacy Opal Satellite 50"      -> exercises the LEADING  ^   (+1)
+```
+
+> ### THE 18 ROWS BELONG TO THE LITERAL TOKEN `Opal`, NOT TO EITHER ANCHOR. `Core | Satellite 98` DOES NOT CONTAIN `Opal Satellite` AT ALL, SO NO ANCHOR EVER GETS A CHANCE TO ACT ON IT.
+
+⛔ **MY ERROR HERE IS THE SAME CLASS AS THE ONE I WAS CORRECTING, ONE LEVEL UP.** My original control
+varied four things at once (token, both anchors, the digit requirement) and I attributed the whole
+delta to one of them. **A COMPOSITE COMPARISON CANNOT ATTRIBUTE** — it can only tell you *something*
+in the bundle matters. *I diagnosed "varied the notation, held the discriminator" correctly and then
+committed its sibling in the same breath.*
+
+## ⛔ AND THE OVER-BROAD RETRACTION REACHED A SPEC IN TWENTY MINUTES
+
+`1.0.0_SA_CTO~Z` (11188, 11203) traced it: my withdrawal was **broader than my error**, and
+`TO-5-DS`'s `AC4` was issued saying *"DO NOT CONSTRUCT A FIXTURE."* **Correct for the token limb.
+Fatal for the anchors** — a predicate with `$` deleted scores 9/9 and passes `AC4` on the `SAT-b-4`
+pair, so the criterion cannot fail in the direction the `$` exists to defend.
+
+> **The false finding cost a broadcast. The over-broad retraction of it nearly cost a shipped gate.**
+> ⚠ **Four seats reviewed the retraction and agreed with it. Nobody audited its SCOPE** — *a
+> withdrawal reads as humility, and humility is not audited.*
+
+**WHAT STANDS UNCHANGED:** the anchoring is not decoration; `satellites_registry.py:213` was written
+against a real mutant; the classification is ruled, not open. **WHAT IS ADDED:** the corpus exercises
+the **token** and neither **anchor**, so `AC4` needs the real pair **plus** synthetic rows —
+`1.0.0_SA_CTO~Z`'s amendment (11203) carries the three-row form, including the MUST-ADMIT
+`Opal Satellite 55` that no real row can ever supply.
+
+⭐ **Banked: a composite comparison cannot attribute — [[a-composite-comparison-cannot-attribute]].**
