@@ -45,8 +45,12 @@ if [ -s "$TMP/probes.out" ]; then
   a1=$(sed -n 's/^ *ARM 1 coverage gaps *: *\([0-9]*\).*/\1/p' "$TMP/probes.out" | tail -1)
   a3=$(sed -n 's/^ *ARM 3 unreachable values *: *[0-9]* *open (no repair): *\([0-9]*\).*/\1/p' "$TMP/probes.out" | tail -1)
   a4=$(sed -n 's/^ *ARM 4 require-only arms *: *\([0-9]*\).*/\1/p' "$TMP/probes.out" | tail -1)
+  # ARM 4 consume gate (DT~X @9fb81b743a): the UNDISPOSED residual is what stays open --
+  # "REQUIRE-ONLY: N (A adjudicated, D deferred, K NEW, R re-adjudication)" -> open = N - A
+  a4adj=$(sed -n 's/^ *REQUIRE-ONLY: *[0-9]* *(\([0-9]*\) adjudicated.*/\1/p' "$TMP/probes.out" | tail -1)
+  if [ -n "$a4" ] && [ -n "$a4adj" ]; then a4open=$((a4 - a4adj)); a4note="ARM4 $a4open of $a4 undisposed"; else a4open="$a4"; a4note="ARM4 $a4 (consume line UNREAD)"; fi
   if [ -n "$a1" ] && [ -n "$a3" ] && [ -n "$a4" ]; then
-    CAND="$((a1 + a3 + a4)) open candidates (ARM1 $a1, ARM3 $a3, ARM4 $a4 -- adjudication records, not colour, dispose them)"
+    CAND="$((a1 + a3 + a4open)) open candidates (ARM1 $a1, ARM3 $a3, $a4note -- adjudication records, not colour, dispose them)"
   else
     CAND="probe counts UNPARSED (format drift -- read the gate output above)"
   fi
