@@ -166,6 +166,35 @@ def main():
     print("AC4 agreement    both anchors resolve to the same commit_seq and the same estate: %s"
           % (repf["anchor_commit_seq"] == rep["anchor_commit_seq"]
              and repf["counted"] == rep["counted"]))
+    # -- sec 2e, BOTH DIRECTIONS, on the real slice ----------------------------------------------
+    # A backfill is a TRUE fact that arrives late. sec 2e's rule is not "reject it" -- rejecting a
+    # later-dated fact to protect an earlier verdict is the append-only violation in another coat
+    # (R3-CRO-34). It is: EXCLUDED from an anchor that predates its admission, INCLUDED at its
+    # EVENT-TIME position after. Both directions are shown because either alone is satisfiable by a
+    # ledger that is simply wrong in one direction.
+    anchor_before = store.head_commit_seq()
+    real_entity = "ent:" + sl._slug(parts[0]["id"])
+    bf = "obs:wp3b-backfill"
+    store.admit([fx.state_observation(bf, real_entity, "2019-01-01T00:00:00Z")])
+    try:
+        store.replay_expecting("commit_seq", anchor_before, [bf])
+        print("AC4 sec-2e A     BACKFILL WAS INSIDE A PRE-ADMISSION ANCHOR -- the anchor is blind")
+        two_e_a = False
+    except engine.Rejected as exc:
+        print("AC4 sec-2e A     before: a claim that the backfill is inside anchor %d is REFUSED "
+              "as %s" % (anchor_before, exc.rule))
+        two_e_a = True
+
+    after = store.replay_expecting("commit_seq", store.head_commit_seq(), [bf])
+    timed = [(engine.event_time(r), store._primary_of(r)) for r in after["estate"]
+             if engine.event_time(r)]
+    pos = [i for i, (_t, pid) in enumerate(timed) if pid == bf]
+    two_e_b = bool(pos) and pos[0] == 0
+    print("AC4 sec-2e B     after:  INCLUDED at anchor %d, and it sits at position %d of %d among "
+          "event-timed records -- its EVENT-TIME position (2019), not its admission position "
+          "(newest of %d). %s" % (after["anchor_commit_seq"], pos[0] if pos else -1, len(timed),
+                                  after["counted"], "PASS" if two_e_b else "WRONG POSITION"))
+
     try:
         store.replay("frontier", "sf:never-admitted")
         print("AC4 falsifier    unbindable anchor ADMITTED -- the anchor path is blind")
@@ -176,15 +205,20 @@ def main():
     naive = os.path.join(tmp, "naive.sqlite")
     _p, method, digest, nbytes = snapshot.publish(store.path, pub)
     snapshot.naive_main_file_copy(store.path, naive)
+    # AC5 publishes the store AS IT IS AT PUBLICATION, and its expectation is read at that moment.
+    # It first failed here for the right reason: the sec-2e backfill above moved the estate after
+    # `head` was taken, and the anchor check refused the mismatch rather than reporting a pass on a
+    # stale expectation. That is the control doing its job on its author, again.
     rows = len(store.estate())
-    ok5, r5 = snapshot.controls(store.path, pub, naive, rows, head)
+    head_at_publish = store.head_commit_seq()
+    ok5, r5 = snapshot.controls(store.path, pub, naive, rows, head_at_publish)
     print("AC5 snapshot     via %s | %d bytes | %s" % (method, nbytes, digest[:40]))
     print("                 fingerprint_method %s | normalization_version %s"
           % (snapshot.FINGERPRINT_METHOD, snapshot.NORMALIZATION_VERSION))
     print("                 POSITIVE %s" % json.dumps(r5["positive"]))
     print("                 NEGATIVE %s" % json.dumps(r5["negative"]))
     print("AC5 verdict      %s" % ("PASS" if ok5 else "FAIL"))
-    return 0 if (adm == den and ok5) else 1
+    return 0 if (adm == den and ok5 and two_e_a and two_e_b) else 1
 
 
 if __name__ == "__main__":
