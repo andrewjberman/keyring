@@ -1,4 +1,4 @@
-# ARM-4 ADJUDICATION — 28 require-only candidates over the record's life: 4 forbid-mirrors CUT, 22 ruled NO with reasons, 2 CLOSED at the R2-2 landing (25 at the round-2 boundary; +1 class A with ARM-1; +2 class A at R2-2)
+# ARM-4 ADJUDICATION — 29 require-only candidates over the record's life: 4 forbid-mirrors CUT, 23 ruled NO with reasons, 2 CLOSED at the R2-2 landing (25 at the round-2 boundary; +1 class A with ARM-1; +2 class A at R2-2; +1 class A at round-3 REWORK-1)
 
 **Adjudicator:** `1.0.0_SA_CTO~X` (the forbid-mirror decision is this seat's, per the ARM-4
 routing) · **Instrument:** `isck_coverage_probes.py` ARM 4 (`0.4.0_DT_ClientPlatform~X`'s gate),
@@ -28,7 +28,10 @@ state_observation — the 13th is `state_observation` `partial -> evidence_refs`
 cut 2 on 2026-08-28 and ruled here in the same commit so it never prints NEW; the 14th and 15th
 are `contest_event` `opened -> basis` and `opened -> evidence_refs`, born at the R2-2 landing
 (§3.19): a `resolved` event restating the basis or carrying evidence is harmless surplus, and a
-forbid would ban the adjudicator from documenting the resolution — ruled in the landing commit).** Evidence presence contradicts NO status value: an `unverified` record MAY
+forbid would ban the adjudicator from documenting the resolution — ruled in the landing commit; the
+16th is `identity_relation` `retirement -> evidence_refs`, born at round-3 REWORK-1 (R3-CRO-1):
+evidence on a non-retirement relation is the monotone case this class exists for — ruled in the
+rework commit).** Evidence presence contradicts NO status value: an `unverified` record MAY
 carry evidence that exists but has not been weighed; a `candidate` MAY carry the evidence it will
 be adjudicated on; `declared_by_author` origin MAY still attach substantiation. A forbid here
 would BAN documentation on exactly the records that most need to accumulate it before their next
@@ -65,6 +68,7 @@ left `verification_standing`. **Neither arm exists any more; the two sidecar row
 with a `closed_at_landing` note solely as the consume gate's class-D self-control fixture — they
 can never print, because ARM 4 only disposes arms it finds.** Nothing to re-adjudicate.
 
-**Coverage check: 4 + 15 + 6 + 1 + 2(closed) = 28 candidates over the record's life** (25 at
+**Coverage check: 4 + 16 + 6 + 1 + 2(closed) = 29 candidates over the record's life** (25 at
 the round-2 boundary; +1 class A with ARM-1 cut 2; +2 class A at the R2-2 landing; 2 class D
-CLOSED there). Live require-only arms at the landing: 21, all adjudicated, 0 NEW, 0 deferred.
+CLOSED there; +1 class A at round-3 REWORK-1). Live require-only arms after the rework: 22, all
+adjudicated, 0 NEW, 0 deferred.

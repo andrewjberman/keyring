@@ -154,6 +154,12 @@
       "values_at_adjudication": [
         "opened"
       ]
+    },
+    "identity_relation|relation_type|evidence_refs|retirement": {
+      "class": "A",
+      "values_at_adjudication": [
+        "retirement"
+      ]
     }
   }
 }

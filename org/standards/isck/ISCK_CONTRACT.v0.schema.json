@@ -923,11 +923,20 @@
             ]
           },
           "then": {
-            "not": {
-              "required": [
-                "object_serial"
-              ]
-            }
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "object_serial"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "evidence_refs"
+                ]
+              }
+            ]
           }
         },
         {
@@ -2105,6 +2114,10 @@
         },
         "evidence_refs": {
           "$ref": "#/$defs/evidence_refs"
+        },
+        "surviving_contest_id": {
+          "type": "string",
+          "pattern": "^ct:[0-9a-hjkmnp-tv-z]{26}$"
         }
       },
       "required": [
@@ -2212,6 +2225,13 @@
                     "consequence_refs"
                   ]
                 }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
               }
             ]
           }
@@ -2238,10 +2258,7 @@
           "if": {
             "properties": {
               "outcome": {
-                "enum": [
-                  "upheld",
-                  "merged"
-                ]
+                "const": "upheld"
               }
             },
             "required": [
@@ -2249,8 +2266,47 @@
             ]
           },
           "then": {
+            "allOf": [
+              {
+                "required": [
+                  "consequence_refs"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "merged"
+              }
+            },
             "required": [
-              "consequence_refs"
+              "outcome"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "required": [
+                  "surviving_contest_id"
+                ]
+              },
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              }
             ]
           }
         },
@@ -2266,11 +2322,22 @@
             ]
           },
           "then": {
-            "not": {
-              "required": [
-                "consequence_refs"
-              ]
-            }
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "consequence_refs"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "surviving_contest_id"
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

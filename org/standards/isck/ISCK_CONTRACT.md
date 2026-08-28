@@ -258,7 +258,11 @@ DOMAIN: identity-level links. MECE: over declared link kinds — hunted members:
 not the relation); ambiguous continuity is an OPEN `candidate_equivalence`, not a missing value;
 ceased-with-no-successor (CRO input 4 / CVO AT-4) → `retirement`, a ONE-endpoint terminal event —
 `object_serial` FORBIDDEN for that kind and REQUIRED for every other (two-directional; the
-retirement REASON lives on this event's `evidence_refs`, never as prose on the entity — 3e).
+retirement REASON lives on this event's `evidence_refs`, never as prose on the entity — 3e —
+**and the schema now says so: `retirement -> evidence_refs REQUIRED`** (round-3 REWORK-1,
+`4.0.0_SA_CRO~X` at bf6fbe53d9: a `producer_declared` retirement with no evidence validated while
+this sentence said both paths carry evidence — the sentence was prose; mutant
+`relation.retirement-without-evidence`).
 **DIRECTION TABLE (RA-3, RA-5 — CLOSED over the vocabulary; a new kind lands WITH its row or it
 does not land):** which party CEASES per kind —
 | kind | ceases | why |
@@ -380,10 +384,17 @@ absorbed into another contest (`merged` — the surviving contest id in `consequ
 one resolution. INTENT: one axis — verdict. STATE-COHERENCE: terminal for the event; `upheld`
 moves the SUBJECT only when its referenced consequence exists (owner: whoever cuts the
 consequence event — canonicalized_as / merged_into / binding close-rebind).
-ARM TABLE: `upheld -> consequence_refs REQUIRED` (RA-2: an upheld challenge without its
-consequence is a promise, and a projection that clears on a promise re-opens the laundering cell at
-the contest door) · `dismissed -> consequence_refs FORBIDDEN` (a dismissed challenge has no
-consequence to name). ⛔ DECLARED LIMIT (§6 limit 11): that the consequence is an event on the SAME
+ARM TABLE (two-directional per value — round-3 REWORK-2, `4.0.0_SA_CRO~X` at bf6fbe53d9: the
+first table omitted `merged` while the schema required an UNTYPED consequence for it, so a
+survivor could be `not-a-contest-id`): `upheld -> consequence_refs REQUIRED, surviving_contest_id
+FORBIDDEN` (RA-2: an upheld challenge without its consequence is a promise, and a projection that
+clears on a promise re-opens the laundering cell at the contest door) · `merged ->
+surviving_contest_id REQUIRED (typed `ct:<ulid26>`), consequence_refs FORBIDDEN` (the survivor
+carries the consequences; a merge names exactly one surviving contest) · `dismissed -> BOTH
+FORBIDDEN` (a dismissed challenge has no consequence and no survivor to name) · `opened ->
+surviving_contest_id FORBIDDEN` (with the other resolution fields, §3.19). Mutants:
+`contest.merged-without-survivor`, `contest.merged-with-consequence`,
+`contest.upheld-with-survivor`, `contest.survivor-not-a-contest-id`. ⛔ DECLARED LIMIT (§6 limit 11): that the consequence is an event on the SAME
 typed target dated AFTER the opening is a LEDGER check, not a schema arm.
 
 ### 3.22 `status_basis` — `authored | derived` (R2-2 LANDED, sec 2 / AT-2 / RA-4 / CRO input 2)
@@ -522,6 +533,14 @@ CLOSED · (c) `contest_event` record, typed target, total vocabulary (§3.19–3
 direction table CLOSED into §3.12 · (f) `status_basis` exact-key maps REQUIRED on five records /
 six axes, `const: authored` (§3.22; 4 mutants) · (g) `partial_legacy -> partial` (§3.10) with its
 receipt as fixture `migration_receipt` · (h) COO~X 77156 cited as the pre-landing gate that was
-MET. Battery at the landing: 18 fixtures · 83 reason-asserted mutants · 20 enum records ·
-collisions 6/6 allowed · ARM 4 21 live require-only, 0 NEW. §6 limit 11 declares the three
-cross-record promises the ledger must enforce.
+MET. Battery at the landing: 18 fixtures · 83 reason-asserted mutants (8 of them contest_event —
+the commit body's "9" was a typed number, corrected by `3.0.0_SA_CVO~X`'s derivation) · 20 enum
+records · collisions 6/6 allowed · ARM 4 21 live require-only, 0 NEW · ARM 3 103 of 103 inhabitable
+(`4.0.0_SA_CRO~X` at the pin; the landing log's "96" was a pre-landing tree figure). §6 limit 11
+declares the three cross-record promises the ledger must enforce.
+
+**Round-3 REWORK at bf6fbe53d9 (`4.0.0_SA_CRO~X`, 20260828T024424Z; landed as the first round-3
+commit):** REWORK-1 `retirement -> evidence_refs REQUIRED` (§3.12; the reason sentence was prose) ·
+REWORK-2 `merged -> surviving_contest_id` typed `ct:` REQUIRED + `consequence_refs` FORBIDDEN;
+`upheld` forbids the survivor; `dismissed` forbids both (§3.21 arm table re-recorded — it had
+omitted `merged`). Register: `ROUND3_FINDING_REGISTER.json` R3-CRO-1..4, R3-CVO-1.

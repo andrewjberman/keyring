@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render ROUND2_FINDING_REGISTER.md from ROUND2_FINDING_REGISTER.json.
+"""Render ROUND{N}_FINDING_REGISTER.md from ROUND{N}_FINDING_REGISTER.json (default round 2; --round 3 ...).
 
 Every statistic in the rendered file is DERIVED here from the rows; none is typed. Run:
     python org/standards/isck/render_round2_register.py            # writes the .md
@@ -11,8 +11,9 @@ from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SRC = HERE / "ROUND2_FINDING_REGISTER.json"
-OUT = HERE / "ROUND2_FINDING_REGISTER.md"
+ROUND = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else "2"
+SRC = HERE / f"ROUND{ROUND}_FINDING_REGISTER.json"
+OUT = HERE / f"ROUND{ROUND}_FINDING_REGISTER.md"
 OPEN_MARKERS = ("OPEN-CITATION", "OPEN-CLAIM-TEXT")
 
 
@@ -26,21 +27,22 @@ def render(reg):
     by_class = Counter(r["finding_class"] for r in rows)
     by_disp = Counter(r["disposition"] for r in rows)
     by_incl = Counter(r["boundary_inclusion"] for r in rows)
-    refuted = [r for r in rows if r["disposition"] == "SELF-REFUTED"]
+    refuted = [r for r in rows if r["disposition"] in ("SELF-REFUTED", "REFUTED")]
     verifier_self = [r for r in rows if r["finding_class"] == "VERIFIER-SELF"]
     open_rows = [r for r in rows if any(m in (r["fix_commit"] + r["verification_ref"] + r["claim"] + r["disposition"]) for m in OPEN_MARKERS)]
-    substantive = [r for r in rows if r["finding_class"] != "VERIFIER-SELF" and r["disposition"] != "SELF-REFUTED"]
+    substantive = [r for r in rows if r["finding_class"] != "VERIFIER-SELF" and r["disposition"] not in ("SELF-REFUTED", "REFUTED")]
     upheld = [r for r in substantive if r["disposition"] not in ("OPEN-CITATION",)]
 
     L = []
-    L.append("# ISCK ROUND-2 FINDING REGISTER (rendered -- do not edit; source is ROUND2_FINDING_REGISTER.json)\n")
+    L.append("# ISCK ROUND-%d FINDING REGISTER (rendered -- do not edit; source is %s)\n" % (reg["round"], SRC.name))
     L.append("Round %d · attacked input `%s` · charter `%s` · boundary pin `%s` · boundary record `%s`\n"
-             % (reg["round"], reg["attacked_input"], reg["charter"], reg["boundary_pin"], reg["boundary_record"]))
+             % (reg["round"], reg["attacked_input"], reg["charter"],
+                reg.get("boundary_pin") or "(round open)", reg.get("boundary_record") or "(round open)"))
     L.append("## 0. STATISTICS (every number below is derived from the rows by render_round2_register.py)\n")
     L.append("- **Rows (one id per finding): %d.** The boundary record's \"~40 listed contributions\" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded." % len(rows))
     L.append("- **Substantive findings (excluding verifier self-corrections and self-refuted claims): %d.** Upheld: %d." % (len(substantive), len(upheld)))
-    L.append("- **Refuted: %d of %d claims filed -- BOTH self-refuted by the attacker at filing (%s).** So the boundary's \"zero refutations\" is true only as \"zero refuted BY THE AUTHOR\"; as a rate of claims filed it is %d of %d."
-             % (len(refuted), len(substantive) + len(refuted), ", ".join(r["finding_id"] for r in refuted), len(refuted), len(substantive) + len(refuted)))
+    L.append("- **Refuted: %d of %d claims filed (%s).** A refutation rate is quotable only from this line."
+             % (len(refuted), len(substantive) + len(refuted), ", ".join(r["finding_id"] for r in refuted) or "none"))
     L.append("- **Verifier self-corrections on the record: %d** (%s)." % (len(verifier_self), ", ".join(r["finding_id"] for r in verifier_self)))
     L.append("- **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: %d of %d** (%s) -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit."
              % (len(open_rows), len(rows), ", ".join(r["finding_id"] for r in open_rows)))

@@ -253,7 +253,11 @@ ATTACK_TARGETS = {
     "contest.resolved-without-adjudicator": ["adjudicated_by"],
     "contest.upheld-without-consequence": ["consequence_refs"],
     "contest.dismissed-with-consequence": ["consequence_refs"],
-    "contest.merged-without-consequence": ["consequence_refs"],
+    "contest.merged-without-survivor": ["surviving_contest_id"],
+    "contest.merged-with-consequence": ["consequence_refs"],
+    "contest.upheld-with-survivor": ["surviving_contest_id"],
+    "contest.survivor-not-a-contest-id": ["surviving_contest_id"],
+    "relation.retirement-without-evidence": ["evidence_refs"],
     "mig.missing-evidence": ["evidence_refs"],
     "relation.evidence-empty-list": ["evidence_refs"],
     "matversion.partial-without-absent-components": ["absent_components"],
@@ -423,8 +427,21 @@ def _mutants():
         consequence_refs=_DEL)
     add("contest.dismissed-with-consequence", "contest_event_resolved", ["not"],
         outcome="dismissed")
-    add("contest.merged-without-consequence", "contest_event_resolved", ["required"],
+    # ROUND 3 REWORK-2 (CRO~X at bf6fbe53d9): merged names its SURVIVOR by a typed field, never
+    # an untyped ref in consequence_refs -- two-directional against upheld
+    add("contest.merged-without-survivor", "contest_event_resolved", ["required"],
         outcome="merged", consequence_refs=_DEL)
+    add("contest.merged-with-consequence", "contest_event_resolved", ["not"],
+        outcome="merged", surviving_contest_id=f"ct:{ULID_C}")
+    add("contest.upheld-with-survivor", "contest_event_resolved", ["not"],
+        surviving_contest_id=f"ct:{ULID_C}")
+    add("contest.survivor-not-a-contest-id", "contest_event_resolved", ["pattern"],
+        outcome="merged", consequence_refs=_DEL, surviving_contest_id=f"rel:{ULID_C}")
+    # ROUND 3 REWORK-1 (CRO~X): the retirement REASON lives on evidence_refs (sec 3.12) -- a
+    # producer-declared retirement with no evidence validated
+    add("relation.retirement-without-evidence", "identity_relation", ["required"],
+        relation_type="retirement", object_serial=_DEL, claim_origin="producer_declared",
+        evidence_refs=_DEL)
     # (a) migration receipt: a rewrite without its evidence is the laundering defect by the remedy
     add("mig.missing-evidence", "migration_receipt", ["required"], evidence_refs=_DEL)
     # honesty conditionals

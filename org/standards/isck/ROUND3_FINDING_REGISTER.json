@@ -1,0 +1,35 @@
+{
+  "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps.",
+  "round": 3,
+  "attacked_input": "bf6fbe53d9",
+  "charter": "51e789ddfb",
+  "boundary_pin": null,
+  "boundary_record": null,
+  "classes": {
+    "CONTRACT": "a defect in ISCK_CONTRACT.md / the schema / the validator at a cited tip",
+    "BATTERY": "a defect in the gate suite / probes / runner",
+    "RECORD": "a false or unauditable claim in a governed record (commit body, log, disposition)",
+    "PROCESS": "a defect in how the round is run",
+    "VERIFIER-SELF": "a verifier's own false verdict, self-corrected on the record",
+    "PLANTED": "the sealed deliberately-false claim (ROUND3_CHARTER.md sec 7), when revealed"
+  },
+  "dispositions": {
+    "FIXED": "artifact changed at fix_commit; verification_ref names the second seat's read",
+    "AMENDED-RECORD": "the governed record was amended (first-printed value kept beside the measured one)",
+    "REFUTED": "the finding was refuted by the named rule/evidence (refuting_rule field)",
+    "DISCLOSED-NO-CHANGE": "disclosed on the record; no artifact change was the right remedy",
+    "OPEN": "filed, not yet disposed"
+  },
+  "findings": [
+    {"finding_id":"R3-CRO-1","source_seat":"4.0.0_SA_CRO~X","source_ref":"20260828T024424Z (REWORK 77213)","finding_class":"CONTRACT","claim":"identity_relation relation_type=retirement, claim_origin=producer_declared, no object_serial, NO evidence_refs -> schema_errors=0, semantic_errors=0, while sec 3.12 says the retirement reason lives on this event's evidence_refs and both retirement paths carry evidence (the sentence was prose)","disposition":"FIXED","disposition_basis":"retirement -> evidence_refs REQUIRED (schema arm) + mutant relation.retirement-without-evidence; sec 3.12 re-recorded","fix_commit":"(the round-3 rework commit; cited in sec 7 after landing)","verification_ref":"OPEN-CITATION (CRO~X re-attack at the rework citation)","boundary_inclusion":"PRE-BOUNDARY (round 3 open)"},
+    {"finding_id":"R3-CRO-2","source_seat":"4.0.0_SA_CRO~X","source_ref":"20260828T024424Z (REWORK 77213)","finding_class":"CONTRACT","claim":"resolved contest outcome=merged with consequence_refs=['not-a-contest-id'] validates (schema 0, semantic 0); sec 3.21 defines the reference as the surviving contest_id but nothing types it","disposition":"FIXED","disposition_basis":"dedicated surviving_contest_id (pattern ^ct:<ulid26>$) REQUIRED on merged with consequence_refs FORBIDDEN; upheld forbids the survivor; dismissed forbids both; opened forbids the survivor. Mutants contest.merged-without-survivor / merged-with-consequence / upheld-with-survivor / survivor-not-a-contest-id","fix_commit":"(the round-3 rework commit)","verification_ref":"OPEN-CITATION","boundary_inclusion":"PRE-BOUNDARY (round 3 open)"},
+    {"finding_id":"R3-CRO-3","source_seat":"4.0.0_SA_CRO~X","source_ref":"20260828T024424Z (REWORK 77213)","finding_class":"RECORD","claim":"CARRIER DRIFT: sec 3.21 ARM TABLE omitted merged -> consequence_refs while schema + mutant implemented the require -- the Rule-24 record was behind its own schema","disposition":"AMENDED-RECORD","disposition_basis":"sec 3.21 arm table re-recorded per value, two-directional, with the REWORK-2 shape","fix_commit":"(the round-3 rework commit)","verification_ref":"OPEN-CITATION","boundary_inclusion":"PRE-BOUNDARY (round 3 open)"},
+    {"finding_id":"R3-CRO-4","source_seat":"4.0.0_SA_CRO~X","source_ref":"20260828T024424Z (REWORK 77213)","finding_class":"RECORD","claim":"ARM 3 at bf6fbe53d9 is 103 of 103 inhabitable, NOT 96 of 96 as the landing broadcast/log carried (a pre-landing tree figure from DT~X 77209 travelled into the landing's record); the +7 is contest_event event_kind 2 + target_kind 2 + outcome 3","disposition":"AMENDED-RECORD","disposition_basis":"ISCK_CONTRACT.md sec 7 landing entry now carries 103 of 103 with the provenance of the 96","fix_commit":"(the round-3 rework commit)","verification_ref":"CRO~X's own measurement at the pin (the source of the corrected figure)","boundary_inclusion":"PRE-BOUNDARY (round 3 open)"},
+    {"finding_id":"R3-CVO-1","source_seat":"3.0.0_SA_CVO~X","source_ref":"20260828T024321Z (REVERIFY bf6fbe53d9)","finding_class":"RECORD","claim":"the R2-2 landing commit body says contest_event has 9 mutants; the pinned _mutants() derives 8 contest mutants (83 total) -- a typed number beside a derived one, in the body of the commit that landed the typed-beside-derived law into the schema","disposition":"AMENDED-RECORD","disposition_basis":"ISCK_CONTRACT.md sec 7 carries the derived 8 beside the typed 9; the commit body is immutable and stands as the record of the error","fix_commit":"(the round-3 rework commit)","verification_ref":"CVO~X 20260828T024321Z (derivation at the exact object)","boundary_inclusion":"PRE-BOUNDARY (round 3 open)"}
+  ],
+  "not_rows": {
+    "$comment": "contributions that are not findings, listed so the exclusion is visible",
+    "acceptances": ["CVO~X REVERIFY bf6fbe53d9 checklist (a)-(h) PASS, Rule-24 3.19-3.23 PASS, manifest denominator PASS (20260828T024321Z)", "CRO~X PASS surfaces at bf6fbe53d9: validate self-test, 14/14 targeted mutants (retirement direction, status_basis, contest arms), ARM 3 103/103 (20260828T024424Z)"],
+    "declared_limits_not_scored": ["cross-record opened/resolved matching and upheld same-target-after-open -- CRO~X read them as honestly declared in sec 6 limit 11 and did not score them as schema holes"]
+  }
+}

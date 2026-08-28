@@ -6,7 +6,7 @@ Round 2 · attacked input `21d6fc7325` · charter `14e6bcc50d` · boundary pin `
 
 - **Rows (one id per finding): 63.** The boundary record's "~40 listed contributions" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded.
 - **Substantive findings (excluding verifier self-corrections and self-refuted claims): 58.** Upheld: 57.
-- **Refuted: 2 of 60 claims filed -- BOTH self-refuted by the attacker at filing (COO-SR1, COO-SR2).** So the boundary's "zero refutations" is true only as "zero refuted BY THE AUTHOR"; as a rate of claims filed it is 2 of 60.
+- **Refuted: 2 of 60 claims filed (COO-SR1, COO-SR2).** A refutation rate is quotable only from this line.
 - **Verifier self-corrections on the record: 3** (CVO-ES1, CVO-ES2, DT-PR1).
 - **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: 11 of 63** (CRO-G2, CRO-B2-1, CRO-RA1, CRO-RA2, CVO-CVR2-2c, CVO-AT6, DT-R2-4, DT-R2-5, DT-SF1, COO-LB1, COO-DQ1) -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit.
 - By seat: `0.4.0_DT_ClientPlatform~X` 10 · `2.0.0_SA_COO~X` 11 · `3.0.0_SA_CVO~X` 16 · `4.0.0_SA_CRO~X` 26
