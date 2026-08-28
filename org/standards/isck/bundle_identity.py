@@ -31,7 +31,11 @@ SCHEMA = f"{REL}/ISCK_CONTRACT.v0.schema.json"
 VALIDATOR = f"{REL}/validate_isck.py"
 GATES = [f"{REL}/run_gates.sh", f"{REL}/check_rule_ablation.py", f"{REL}/check_enum_collisions.py",
          f"{REL}/check_mutant_isolation.py", f"{REL}/check_postulate_labels.py",
-         f"{REL}/isck_coverage_probes.py", f"{REL}/ARM4_ADJUDICATION.json"]
+         f"{REL}/isck_coverage_probes.py", f"{REL}/ARM4_ADJUDICATION.json",
+         # R3-CRO-13: a sidecar that changes probe disposition is a bundle member, or the trust
+         # decision moves without entering the hash
+         f"{REL}/ARM1_ADJUDICATION.json"]
+LABELS = HERE / "BUNDLE_LABELS.json"
 VOCAB = [f"{REL}/vocab/entity_classes.json", f"{REL}/vocab/identity_spaces.json",
          f"{REL}/vocab/identity_policies.json"]
 BOUNDARIES = {"round_1_boundary_commit": "21d6fc7325", "round_2_boundary_commit": "ece1ac0f41",
@@ -43,7 +47,12 @@ def git(*args):
 
 
 def blob(commit, path):
-    return git("rev-parse", f"{commit}:{path}")
+    # a member ABSENT at the cited commit is part of the bundle's identity (R3-CRO-13: the member
+    # set is fixed by this script, not by what happened to exist) -- never a crash, never skipped
+    try:
+        return git("rev-parse", "--verify", "-q", f"{commit}:{path}")
+    except subprocess.CalledProcessError:
+        return "ABSENT"
 
 
 def sha256_at(commit, path):
@@ -59,9 +68,15 @@ def derive(commit):
     schema_text = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{full}:{SCHEMA}"])
     schema_id = json.loads(schema_text).get("$id")
     post_boundary = git("rev-list", "--reverse", f"{BOUNDARIES['round_2_boundary_commit']}..{full}", "--", REL).split()
+    # R3-CRO-12: the human label must resolve to exactly one bundle. The FAMILY label stays
+    # semantic_version; the injective handle is candidate_id = family + the post-boundary amendment
+    # count on the package path (monotone along the path, so two byte-distinct bundles never share
+    # it), and BUNDLE_LABELS.json records every binding -- a rebinding is a failure, not an update.
+    candidate_id = f"v0.2-candidate+{len(post_boundary)}"
     return {
         "contract_bundle_id": bundle_id,
         "semantic_version": "v0.2-candidate",
+        "candidate_id": candidate_id,
         "schema_$id": schema_id,
         "status": "candidate",
         "derived_at_commit": full,
@@ -93,8 +108,16 @@ def main():
         sys.exit(0 if same else 1)
     text = json.dumps(rec, indent=2) + "\n"
     if "--write" in sys.argv:
+        labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
+        bound = labels.get(rec["candidate_id"])
+        if bound and bound["contract_bundle_id"] != rec["contract_bundle_id"]:
+            sys.exit(f"REFUSED: label {rec['candidate_id']} is already bound to {bound['contract_bundle_id']} "
+                     f"@ {bound['derived_at_commit'][:10]}; a byte-distinct bundle needs a new label (R3-CRO-12)")
+        labels[rec["candidate_id"]] = {"contract_bundle_id": rec["contract_bundle_id"],
+                                       "derived_at_commit": rec["derived_at_commit"]}
+        LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
         OUT.write_text(text, encoding="utf-8", newline="\n")
-        print(f"wrote {OUT.name}: {rec['contract_bundle_id']} @ {rec['derived_at_commit'][:10]}")
+        print(f"wrote {OUT.name}: {rec['candidate_id']} = {rec['contract_bundle_id']} @ {rec['derived_at_commit'][:10]}")
     else:
         print(text)
 

@@ -1,6 +1,7 @@
 {
-  "contract_bundle_id": "bundle:sha256:0291e2ac0d2f25c0a8e209233d8bf4a7e3f9380a648640b866bb05b0c8b72bc9",
+  "contract_bundle_id": "bundle:sha256:2d2a2d9e6bc2e3706dd44f59792b2e908d271201766cbaa550144f8924b6e1b5",
   "semantic_version": "v0.2-candidate",
+  "candidate_id": "v0.2-candidate+8",
   "schema_$id": "opal:standards:isck:contract:v0.1",
   "status": "candidate",
   "derived_at_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
@@ -19,7 +20,8 @@
     "org/standards/isck/check_mutant_isolation.py": "f658bd2abb9e43775f2b0c8e192087d5208a3884",
     "org/standards/isck/check_postulate_labels.py": "335381fc8883b668ea01ddb9de24853b48cc3ae6",
     "org/standards/isck/isck_coverage_probes.py": "0245b0b7a788e49938b3752e77ba708e980882bc",
-    "org/standards/isck/ARM4_ADJUDICATION.json": "89d60ecce30e57f2f119215d31bcc258dba4d4cb"
+    "org/standards/isck/ARM4_ADJUDICATION.json": "89d60ecce30e57f2f119215d31bcc258dba4d4cb",
+    "org/standards/isck/ARM1_ADJUDICATION.json": "ABSENT"
   },
   "vocabulary_digests": {
     "org/standards/isck/vocab/entity_classes.json": "454ee6d03df6d936ffa9ebaf2349adc211e996deeceb4ca9f716357f5743ed48",

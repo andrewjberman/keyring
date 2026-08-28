@@ -365,7 +365,9 @@ its record; the contest MOVES by a `resolved` event with the same `contest_id` (
 adjudicator) — the projection rule is a pure fold (contested/disputed iff an opened id has no
 resolved partner; `upheld` keeps the subject contested until its `consequence_refs` EXIST).
 ARM TABLE (two-directional): `opened -> basis + evidence_refs REQUIRED; outcome, adjudicated_by,
-consequence_refs FORBIDDEN` (owner: the opener) · `resolved -> outcome + adjudicated_by REQUIRED`
+consequence_refs, surviving_contest_id FORBIDDEN` (owner: the opener; `surviving_contest_id` added
+to this table at R3-CVO-3 — the schema forbade it from REWORK-2, the table had not said so) ·
+`resolved -> outcome + adjudicated_by REQUIRED`
 (owner: the adjudicator; `basis` may be restated — harmless surplus, class A).
 
 ### 3.20 `contest_event.target_kind` — `entity | binding` (R2-2 LANDED, RA-1)
@@ -380,7 +382,9 @@ contests are their own record shape).
 
 ### 3.21 `contest_event.outcome` — `upheld | dismissed | merged` (R2-2 LANDED, RA-2)
 DOMAIN: how a contest resolved. MECE: the challenge stood (`upheld`), fell (`dismissed`), or was
-absorbed into another contest (`merged` — the surviving contest id in `consequence_refs`). GRAIN:
+absorbed into another contest (`merged` — the survivor named by the typed `surviving_contest_id`
+field, NEVER in `consequence_refs`; R3-CVO-3 caught this sentence still carrying the pre-REWORK-2
+form beside a schema that forbids it). GRAIN:
 one resolution. INTENT: one axis — verdict. STATE-COHERENCE: terminal for the event; `upheld`
 moves the SUBJECT only when its referenced consequence exists (owner: whoever cuts the
 consequence event — canonicalized_as / merged_into / binding close-rebind).
