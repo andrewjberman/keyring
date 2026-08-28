@@ -253,20 +253,19 @@ def translate_generation(part, authority, pin=None):
 def classify_materializer(name, pin=None):
     """Is the named materializer ONE ARTIFACT whose bytes exist at the pin? Returns (kind, digest).
 
-    Amendment 2 item 2's method, applied where it CAN apply. The digest is sha256 over the bytes as
-    COMMITTED at the pin (`git show <pin>:<path>`), never the working tree -- a CRLF/LF split moved a
-    hash under this seat earlier in this TO and a working-tree read would reopen it.
+    THREE OUTCOMES, AND THE THIRD IS NOT THE SECOND. `prose` is a claim about the DATA: the field
+    carries a sentence, so there is no single artifact to hash. `bytes_absent_at_pin` is a claim
+    about the READ: the value is a path and the bytes could not be obtained. Collapsing them lets an
+    instrument failure be reported as a finding about the population -- which is what the first
+    clean-clone run did, turning 14 readable repo paths into 14 "prose" the moment .git was absent.
     """
     if not isinstance(name, str) or not MATERIALIZER_PATH.match(name.strip()):
         return "prose_not_a_single_artifact", None
-    path = name.strip()
     if pin is None:
         return "repo_path", None
-    try:
-        raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, path)], cwd=REPO_ROOT,
-                                      stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError:
-        return "repo_path_absent_at_pin", None
+    raw = read_at_pin(name.strip(), pin)
+    if raw is None:
+        return "repo_path_bytes_absent_at_pin", None
     return "repo_path", "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
@@ -328,7 +327,7 @@ def family_census(manifest, pin=None):
         if kind == "repo_path" and digest:
             digests["computable"] += 1
             digests["values"][name] = digest
-        elif kind == "repo_path_absent_at_pin":
+        elif kind == "repo_path_bytes_absent_at_pin":
             digests["absent_at_pin"] += 1
         else:
             digests["prose"] += 1
@@ -348,6 +347,9 @@ def family_census(manifest, pin=None):
         if kind == "repo_path" and digest:
             cen["materializer_version"]["errored"] += 1
             _reason(cen["materializer_version"], "parent_materializer_errored_declaration_gap")
+        elif kind == "repo_path_bytes_absent_at_pin":
+            cen["materializer_version"]["out_of_reach"] += 1
+            _reason(cen["materializer_version"], "materializer_bytes_absent_at_pin")
         else:
             cen["materializer_version"]["out_of_reach"] += 1
             _reason(cen["materializer_version"], "materializer_not_a_single_artifact")
@@ -457,6 +459,35 @@ RUNNER_MEMBERS = [
 ]
 
 
+def read_at_pin(rel, pin):
+    """The ONE way this module reads a pinned file. Returns LF-normalised bytes, or None.
+
+    Two byte sources, one number: `git show <pin>:<path>` in a repo, and the extracted tree under
+    AC6, which IS the pin by construction and has no .git at all. Every caller goes through here so
+    the repo run and the clean-clone run cannot silently answer differently -- which they DID: the
+    first clean-clone run labelled 14 repo-path materializers `materializer_not_a_single_artifact`
+    because `git show` failed with no .git, and a read failure wore the costume of a data verdict.
+    """
+    if os.path.isdir(os.path.join(REPO_ROOT, ".git")):
+        try:
+            raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, rel)], cwd=REPO_ROOT,
+                                          stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError:
+            return None
+    else:
+        try:
+            with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
+                raw = fh.read()
+        except IOError:
+            return None
+    return raw.replace(CRLF, LF)
+
+
+def byte_source():
+    return ("git show <pin>:<path>" if os.path.isdir(os.path.join(REPO_ROOT, ".git"))
+            else "extracted pin tree (git archive; no .git present, the tree IS the pin)")
+
+
 def tree_digest(paths, pin):
     """64-hex SHA-256 over a DECLARED canonical tree inventory. Returns (digest, report).
 
@@ -475,39 +506,22 @@ def tree_digest(paths, pin):
     it -- a digest cannot detect that it describes bytes which did not run.
     """
     lines, missing, dirty = [], [], []
-    src = "git show <pin>:<path>"
+    src = byte_source()
     have_git = os.path.isdir(os.path.join(REPO_ROOT, ".git"))
-    if not have_git:
-        src = "extracted pin tree (git archive; no .git present, the tree IS the pin)"
     for rel in sorted(paths):
-        raw = None
-        if have_git:
-            try:
-                raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, rel)], cwd=REPO_ROOT,
-                                              stderr=subprocess.PIPE)
-            except subprocess.CalledProcessError:
-                missing.append(rel)
-                continue
-        else:
-            try:
-                with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
-                    raw = fh.read()
-            except IOError:
-                missing.append(rel)
-                continue
-        norm = raw.replace(CRLF, LF)
+        norm = read_at_pin(rel, pin)
+        if norm is None:
+            missing.append(rel)
+            continue
         lines.append("%s  %s" % (hashlib.sha256(norm).hexdigest(), rel))
         if have_git:
-            # THE DIRTY CHECK IS THE WHOLE POINT OF PINNING. Reading members at a pin while the code
-            # that actually ran is an uncommitted working tree produces a digest over bytes that DID
-            # NOT RUN -- the shape of the run_commit drift CVO~X caught on this seat's AC8 receipt,
-            # where a receipt named a commit at which no run happened and the bundle binding could
-            # not see it because both commits derived the same bundle.
+            # THE DIRTY CHECK IS THE WHOLE POINT OF PINNING: a digest read at a pin while the code
+            # that ran is an uncommitted working tree names bytes that DID NOT RUN. In the archive
+            # there is no second copy to disagree, so the check does not run and does not claim to.
             try:
                 with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
-                    wt = fh.read()
-                if wt.replace(CRLF, LF) != norm:
-                    dirty.append(rel)
+                    if fh.read().replace(CRLF, LF) != norm:
+                        dirty.append(rel)
             except IOError:
                 dirty.append(rel + " (absent in working tree)")
     inventory = (LF.decode().join(lines) + LF.decode()).encode("utf-8")

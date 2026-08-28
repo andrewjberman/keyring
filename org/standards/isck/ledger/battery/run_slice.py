@@ -132,13 +132,30 @@ def main():
     # SLICE RUNNER, emitted as its own materializer + materializer_version, never borrowed from a
     # part. Its bundle_digest is a 64-hex SHA-256 over a DECLARED canonical tree inventory at the
     # run pin -- a git object id is SHA-1 and does not satisfy `$ref sha256` (CVO item 4).
-    run_pin = subprocess.check_output(["git", "rev-parse", "HEAD"],
-                                      cwd=sl.REPO_ROOT).decode().strip()
+    # THE RUN PIN IS AN INPUT UNDER AC6, NOT A DERIVATION. An extracted `git archive` has no .git,
+    # so `git rev-parse HEAD` exits 128 there -- the runner must be TOLD which pin it is running,
+    # and it prints which way it learned. Deriving it silently is how a receipt ends up naming a
+    # commit at which no run happened.
+    run_pin, pin_source = None, None
+    for i, a in enumerate(sys.argv):
+        if a == "--pin" and i + 1 < len(sys.argv):
+            run_pin, pin_source = sys.argv[i + 1], "--pin argument"
+    if run_pin is None:
+        try:
+            run_pin = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=sl.REPO_ROOT,
+                                              stderr=subprocess.PIPE).decode().strip()
+            pin_source = "git rev-parse HEAD in the repo"
+        except (subprocess.CalledProcessError, OSError):
+            print("AC6 REFUSING    no .git here and no --pin given: the run pin cannot be derived "
+                  "from an extracted archive, and a digest over an unnamed pin is not evidence. "
+                  "Re-run with --pin <commit>.")
+            return 2
     prov, pids = sl.slice_provenance(manifest, {"declared": PIN_DECLARED,
                                                 "preserved": PIN_PRESERVED},
                                      run_pin, STARTED_AT)
     store.admit(prov, actor=fx.ROOT)
     dr = pids["digest_report"]
+    print("AC2 provenance   run pin %s (%s)" % (run_pin[:10], pin_source))
     print("AC2 provenance   ADMITTED: materializer %s | version %s" % (pids["materializer"],
                                                                        pids["version"]))
     print("                 bundle_digest %s (%d hex)"
@@ -146,6 +163,7 @@ def main():
     print("                 inventory %d members declared | %d hashed at run pin %s | absent %s"
           % (dr["members_declared"], dr["members_hashed"], run_pin[:10],
              dr["members_absent_at_pin"] or "none"))
+    print("                 byte source %s" % dr["byte_source"])
     print("                 normalization %s" % dr["normalization"])
     print("                 DIGEST DESCRIBES THE CODE THAT RAN: %s%s"
           % (dr["digest_describes_the_code_that_ran"],
