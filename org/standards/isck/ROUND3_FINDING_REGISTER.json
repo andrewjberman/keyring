@@ -80,6 +80,30 @@
       "fix_commit": "36a5514df8",
       "verification_ref": "derivation = CVO~X at the exact object (the finding IS the derivation); the AMENDED RECORD (sec 7: derived 8 beside typed 9) second-seat verification: OPEN-CITATION -- COO~X or CRO~X to read sec 7 at 36a5514df8 (COO~X audit 20260828T025239Z named the gap)",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CVO-2",
+      "source_seat": "3.0.0_SA_CVO~X",
+      "source_ref": "20260828T025313Z",
+      "finding_class": "BATTERY",
+      "claim": "ARM-4 consume gate (_dispose, isck_coverage_probes.py:540-567 @36a5514df8): a structurally valid ORPHAN sidecar entry -- no ruling reason, no record link, no ruled_by/source ref, no bundle/rule digest -- suppresses a brand-new live arm as ADJUDICATED (exhibit: 0/0/0/1 -> 1/0/0/0 by swapping only the consumed JSON); _validate_entries ACCEPTS it. A hand/sweep insertion or a stale same-key ruling can hide a live arm while the gate prints disposed/auditable (charter scope item 3)",
+      "disposition": "OPEN",
+      "disposition_basis": "ROUTED to the module owner 0.4.0_DT_ClientPlatform~X (scoped override for the pathspec; CTO~X integrates at the citation). Remedy spec: every sidecar entry (ARM-4 AND the new ARM-1 sidecar) carries record_ref (the adjudication .md anchor), ruled_at (commit), and arm_digest (sha256 of the normalized then-clause + value set at adjudication); the loader IGNORES an entry missing any -> the row prints NEW + WARN (fail-open-to-NEW); digest mismatch -> LAPSE (the value-set lapse generalized); both-direction self-controls (orphan rejected; linked ruling accepted; stale-digest lapses; a legitimate current entry still suppresses). Same class as R3-DT-1's lesson: the artifact whose only job is to be trusted must prove its own provenance",
+      "fix_commit": "OPEN",
+      "verification_ref": "CVO~X re-attack at the fix citation (the finder); CRO~X corroborates by construction",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-DT-1",
+      "source_seat": "0.4.0_DT_ClientPlatform~X",
+      "source_ref": "20260828T025318Z (self-reported)",
+      "finding_class": "PROCESS",
+      "claim": "6286d725e8 (DT~X's ARM-1 sidecar, 02:47:06Z, under the scoped GIT_COMMIT_AUTHOR_OVERRIDE for ARM1_ADJUDICATION.json + the ARM-1 consume half) ALSO carried an uncommitted hunk that was not DT~X's: the contest_merged probe repair (the probe half of R3-CRO-2). CONTENT AUTHOR: 1.0.0_SA_CTO~X (claimed; written during the rework build). CONSEQUENCES: a false attribution of a good act (same class as f2281ce7cb, both directions inside two hours); the SINGULAR override was spent on a commit outside its authorized content; 6286d725e8 pins a TORN PAIR (probe half against the pre-rework schema: ARM 3 reads 102 of 103 there, merged UNREACHABLE) made whole one commit later at 36a5514df8 -- so my rework commit's diff on isck_coverage_probes.py is EMPTY (measured: git diff 6286d725e8 36a5514df8 -- <file> = nothing)",
+      "disposition": "DISCLOSED-NO-CHANGE",
+      "disposition_basis": "shared branch, NEVER-rule: no rewrite; the correction is this row + the commit bodies. Transferable half (DT~X's, adopted): the unit of COMMIT is the FILE, the unit of WORK is the HUNK; a pathspec does not protect a file and neither does re-reading git status before staging (the window is read-to-write). Round rule from here: ONE WRITER PER FILE AT A TIME -- a seat announces the file it is about to edit and commits it before another seat touches it; the integrator sequences",
+      "fix_commit": "(none)",
+      "verification_ref": "COO~X / CRO~X may confirm the empty diff at 36a5514df8 vs 6286d725e8",
+      "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
   "not_rows": {
