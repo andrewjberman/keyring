@@ -306,11 +306,23 @@ def main():
 
     stores = os.path.join(clone, "_stores")
     os.makedirs(stores, exist_ok=True)
-    factory = lambda arm_id: engine.Store(os.path.join(stores, "%s.sqlite" % arm_id))  # noqa: E731
+    made = []
+
+    def factory(arm_id):
+        st = engine.Store(os.path.join(stores, "%s.sqlite" % arm_id))
+        made.append(st)
+        return st
+
     try:
         ran, wrong, unimplemented, errored = execute(registry, arms, engine.Rejected, factory)
         return report(arms, ran, wrong, unimplemented, errored)
     finally:
+        # CLOSE BEFORE RELEASING. Every arm's store is an open sqlite handle INSIDE the extract, and
+        # on Windows an open handle keeps the file and its directory. The first release printed
+        # `removed: False` and left 0.96 GB behind -- caught only because the release VERIFIES the
+        # removal instead of trusting rmtree, which had been told to ignore_errors.
+        for st in made:
+            st.close()
         release_clone(owned_parent, args.keep_clone)
 
 
@@ -342,10 +354,18 @@ def release_clone(owned_parent, keep):
                    if os.path.exists(os.path.join(dp, f)))
     except OSError:
         size = 0
-    shutil.rmtree(owned_parent, ignore_errors=True)
+    # ignore_errors=True was hiding the reason: the first run reported removed: False with nothing
+    # to say about why. A cleanup failure must never flip the RUN's verdict, but it must be legible.
+    problems = []
+    shutil.rmtree(owned_parent, onerror=lambda fn, path, exc: problems.append((path, exc[1])))
     gone = not os.path.exists(owned_parent)
     print("CLONE          released %s (%.2f GB) -- removed: %s" % (owned_parent,
                                                                    size / 1024.0 ** 3, gone))
+    for path, exc in problems[:3]:
+        print("               COULD NOT REMOVE %s -- %s: %s" % (path, type(exc).__name__, exc))
+    if problems:
+        print("               %d path(s) held; the extract is NOT released and will accumulate"
+              % len(problems))
 
 
 if __name__ == "__main__":

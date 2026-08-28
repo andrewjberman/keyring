@@ -177,6 +177,16 @@ class Store:
         self.relation_types = enum_values("identity_relation", "relation_type")
 
     # -- reads -------------------------------------------------------------------------------
+
+    def close(self):
+        """Release the connection. On Windows an open sqlite handle KEEPS THE FILE, and with it the
+        directory it sits in -- the battery's 188 stores live inside the clean-clone extract, so a
+        cleanup that runs while they are open cannot remove the extract it just made. Measured: the
+        first release printed `removed: False` and 0.96 GB stayed behind."""
+        try:
+            self.db.close()
+        except Exception:                                                # noqa: BLE001
+            pass
     def get(self, record_id):
         row = self.db.execute("SELECT body FROM records WHERE record_id=?", (record_id,)).fetchone()
         return json.loads(row[0]) if row else None
