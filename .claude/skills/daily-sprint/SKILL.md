@@ -40,10 +40,14 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    the packet's `--all` git census already covers both branches.
 6. **BUILD THE STRUCTURED JSON + RENDER — the visual deliverable (Andrew-direct 2026-08-27,
    supersedes the 08-26 `render_sprint.py` step; that renderer is retired):**
-   a. `python daily_reports/scripts/commit_census.py --date <DAY> --json` — measured commits,
-      workers, and by-kind counts (the `commit_kind` author-seat enum; Rule-24 record in
-      `daily_reports/README.md`). by_project is authored from packet knowledge until a measured
-      mapper exists — set each cut's `claim` field honestly (`measured` | `inferred`).
+   a. `python daily_reports/scripts/commit_census.py --date <DAY> --window et --json` — the
+      by-author-seat cut (the `commit_kind` enum, a declared PROXY for kind of work; Rule-24
+      record in `daily_reports/README.md`) **and** `python daily_reports/scripts/project_census.py
+      --date <DAY> --window et --json` — the by-directive cut from the FILES each commit touched,
+      with its residual NAMED as `unattributed` (never parked on a row). Both emit a `timeline`
+      (00:00 Eastern → now, 30-min bins) for the page's stacked area charts; merge both into
+      `team_activity` verbatim — the renderer asserts every series sums to its count. `--window
+      et` is the page's population (Andrew's day); the TEXT volume line keeps its UTC rule.
    b. Write `daily_reports/data/DAILY_REPORT_<DAY>.json` against
       `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
