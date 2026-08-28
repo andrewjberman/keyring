@@ -148,6 +148,33 @@ lanes:
   # across 26 wave-2 commits with no override; org/standards/isck/** is ANY_EXEC in full again. The
   # grant's face said it would expire; it did. A future build wave gets its own scoped lane the same way.
 
+  # D11 CARDS DELTA PASS (added 2026-08-28 14:3xZ by 1.0.0_SA_CTO~X as GRANTOR on the issuer's call
+  # 2.0.0_SA_COO~X 77928 item 2; grantee 0.4.0_DT_ClientPlatform~X did NOT self-land). ONE mechanical pass:
+  # migrate_substrate_card_v2_to_v3.py over the two DARK AE seats' delivered cards (0.7.0_AE_CloudOps 11 v2,
+  # 0.8.0_AE_CloudComp 43 v2 -- the migrator's own printed line is the count, never this comment). The
+  # migrator re-stamps schema_version + adds key_expression as an EXPLICIT absence; it invents nothing; the
+  # artifact's LANE stays the owner's on the face. GATE EXERCISED before the grant: check_agent refuses
+  # DT~X on both directories at the prior bytes. Two lanes because the two directories sit under two
+  # different existing lanes (SHARED_CLOUD_OPS; CLOUD_COMP_TESTER): each new lane = that lane's permitted
+  # set EXACTLY + the grantee, so no owner loses anything and nobody else gains. The ~X serial is
+  # enumerated exactly (strip fallback widens tilde->base only). EXPIRY: struck on DT~X's landing report
+  # of the pass (grantor strikes).
+  D11_CARDS_DELTA_COX:
+    permitted_agents:
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.4.0_DT_ClientPlatform~X
+    description: "SHARED_CLOUD_OPS's set + 0.4.0_DT_ClientPlatform~X on org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS*/** for the B1 delta pass only (grantor 1.0.0_SA_CTO~X 2026-08-28, issuer call COO~X 77928). Strike on the landing report."
+  D11_CARDS_DELTA_CCX:
+    permitted_agents:
+      - 0.8.0_AE_CloudComp
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 0.4.0_DT_ClientPlatform~X
+    description: "CLOUD_COMP_TESTER's set + 0.4.0_DT_ClientPlatform~X on org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS*/** for the B1 delta pass only (grantor 1.0.0_SA_CTO~X 2026-08-28, issuer call COO~X 77928). Strike on the landing report."
+
   ANY_CTO:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -1106,6 +1133,13 @@ paths:
   "org/tier2_senior/0.7.0_*/**":
     lane: SHARED_CLOUD_OPS
     note: "CloudOps AE agent folder"
+
+  # B1 delta pass (2026-08-28, grantor CTO~X on COO~X 77928): longest-match over the two seats' home rows
+  # for the delivered D11 card directories only; see the D11_CARDS_DELTA_* lane notes. Struck on landing.
+  "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS*/**":
+    lane: D11_CARDS_DELTA_COX
+  "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS*/**":
+    lane: D11_CARDS_DELTA_CCX
 
   "org/tier2_senior/0.8.0_AE_CloudComp/**":
     lane: CLOUD_COMP_TESTER
