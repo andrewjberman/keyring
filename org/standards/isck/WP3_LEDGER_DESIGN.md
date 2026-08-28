@@ -225,14 +225,23 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 
 ⛔ **STATUS OF THIS TABLE (issuer ruling `2.0.0_SA_COO~X` 77608, AMENDED by 77618 after this
 addendum landed): the WAVE-1 AC3 VALUE, package status now `MEASURED` — the wave-2 fixtures ran
-the promote-or-kill and PROMOTED 13 of 13 rows (`0.4.0_DT_ClientPlatform~X` 77756, AC7 at
-91f38fb966: every arm run against a store that records the `record_type` of everything admission
-is asked to admit, accepted or refused — a different instrument from wave 1's prose classifier, and
-the two agree on every row; no KILL; CVO~X verification of AC7 pending at this edit).** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
+the promote-or-kill and PROMOTED 13 of 13 rows (`0.4.0_DT_ClientPlatform~X` 77756; AC7's
+instrument `ledger/battery/carrier_measure.py` @67f320c4c2: every arm run against a store that
+records the `record_type` of everything admission is asked to admit, accepted or refused, read
+per row against this table's CARRIER VERDICT — a different instrument from wave 1's prose
+classifier, and the two agree on every row; no KILL; CVO~X's independent carrier replay PENDING
+at this edit, so the promotion is the issuer's ruling `77758`/`77759` on DT~X's measurement, not
+yet a certified value).** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
 authored answer as typed-beside-derived; 77618 distinguishes that class (a value with NO falsifier
-beside a later measured one) from this table, which carries its falsifier: each row's fixtures'
-`record_type` set must be a SUBSET of the row below — a fixture outside its row's set is a KILL,
-a finding against this table routed to the author; the cell's domain is unchanged either way.
+beside a later measured one) from this table, which carries its falsifier — AS RULED IN WAVE 2:
+the falsifier is each row's CARRIER VERDICT measured from what the row's arms actually put through
+admission, and a measured verdict that disagrees with the row is a KILL routed to the author. The
+literal form 77618 first wrote — "each row's fixtures' `record_type` set must be a SUBSET of the
+row below" — was RETIRED by the issuer (77758/77759, the TO's own criterion defect): it compares
+what a fixture CONSTRUCTS (scaffold: an epoch, a receipted entity, a materializer + version) with
+what a row is ABOUT, killed 12 of 13 as a property of the predicate, and is non-decisive; if a
+subset form is wanted at a later pin this table needs a second column (types a row constructs as
+scaffold vs types it is about). The cell's domain is unchanged either way.
 AC3's evidence cites this section at its landing hash; every other AC stays at d0398b977d (the
 decomp's design pin stands — this addendum moves no section a cell cites). What this table IS:
 the author's prediction, stated from the arm ids in §3 (not the prose), of what each row's arms
