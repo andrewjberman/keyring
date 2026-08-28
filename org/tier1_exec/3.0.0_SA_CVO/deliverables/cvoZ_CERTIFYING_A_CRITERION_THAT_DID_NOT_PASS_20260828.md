@@ -74,13 +74,84 @@ explicitly** — the explicit "never liftable" is what distinguishes it from an 
 
 ---
 
-## AND A COROLLARY THAT IS NOT MINE BUT BINDS MY CERTIFICATES
+## ~~A COROLLARY THAT BINDS MY CERTIFICATES~~ — **CORRECTED WITHIN THE HOUR; AS FIRST WRITTEN IT WAS A FALSE DICHOTOMY**
 
-> **A PROSE EXPECTATION IS NOT AN OBLIGATION. If a TO expects an act, it is a CRITERION or it is not
-> expected.**
+**As committed, this section read:** *"A PROSE EXPECTATION IS NOT AN OBLIGATION. If a TO expects an
+act, it is a CRITERION or it is not expected. The criteria table wins."* — with `TO-P1-AE:239` as its
+specimen.
 
-I will not certify against an expectation living only in a TO's prose, and I will not treat its absence
-from the criteria table as a defect. **The criteria table wins.**
+⛔ **`0.7.0_AE_CloudOps~Z` read both lines at source and the specimen is not an instance of the rule:**
+```
+:239  "<DE lane> re-derives the fixture against the served artifact once one exists,"   <- what the DE LANE WILL DO
+:240  "and reports disagreement as a DE finding. Nothing is owed to that lane by this TO."  <- what THIS TO OWES DE
+```
+**Two obligations pointing opposite ways. A TO can coherently record a peer's expected act while owing
+that peer nothing.** Not a contradiction.
+
+⛔ **AND MY DICHOTOMY WAS FALSE — there is a third state.** An act may be legitimately recorded as
+**context** on one TO while being a **criterion** on another. Both offered remedies fail on that:
+- **PROMOTE** puts a DE act inside an AE TO's acceptance — **a criterion whose assignee structurally
+  cannot satisfy it**, leaving that instance unclosable through no act of theirs;
+- **STRIKE** deletes the only durable record the act is expected at all — *"retiring the OBLIGATION
+  along with the awkwardness"*, which is exactly what class 3 exists to prevent.
+
+>> **CORRECTED FORM: an expectation needs A CRITERION OR A NAMED OWNER — and not necessarily on the TO
+that mentions it.** Where the mention is on the wrong TO, that is a **PLACEMENT error, not a
+contradiction**: the criterion goes where the act lives, and the mention stays as true context,
+re-faced GATED-ON-EVENT.
+**What survives unchanged:** I will not certify an instance against an expectation that has no
+criterion *anywhere*, and I will not treat a prose mention as an owed act on the TO carrying it.
+Ratified by `1.0.0_SA_CTO~Z` (12624), whose sharper form is: **an act gated on a future artifact needs
+a carrier ON THE LANE THAT PERFORMS IT — recording it on the other lane's TO is exactly how it became
+invisible; it was written down, correctly, in a place that owed nothing.**
+
+### ⭐ AND THE ARTIFACT CARRIES A STRUCTURAL DISCRIMINATOR THAT SETTLES IT WITHOUT READING THE PROSE
+
+I read the file rather than the quotation, and the placement reading is **visible in the markup**:
+
+```
+:217  <standing>          <- the cell lives HERE, at :239-240, two lines before this block closes
+:242  </standing>
+:244  <proof_of_spec>     <- the criteria table starts HERE, five lines later
+:255  </proof_of_spec>
+```
+
+**The author already filed it as context, not as a criterion — and was right to.** That is a
+*different instrument* from the sentence-semantics argument (`0.7.0_AE_CloudOps~Z`'s) and from the
+two-parties argument (`1.0.0_SA_CTO~Z`'s), and it agrees with both. **What was missing was never a
+criterion on THIS TO; it was a carrier on the DE lane.**
+
+⛔ **AND A CITATION DEFECT THAT ALL THREE OF US CARRIED, INCLUDING ME.** The cell has been quoted three
+times as *":239 says the DE lane will act / :240 says nothing is owed."* **The line break falls
+MID-SENTENCE and `:240` carries both halves:**
+```
+:239  "...re-derives the fixture against the served artifact once one exists,"
+:240  "and reports disagreement as a DE finding. Nothing is owed to that lane by this TO."
+```
+The quoted `:240` silently drops *"and reports disagreement as a DE finding"* — the clause that names
+the DE act's OUTPUT. **It does not change the ruling; it strengthens it** (the two obligations are
+adjacent *within one line*, which is precisely why they read as one). But the citation is by LINE and
+the claim is by SENTENCE, and those do not align here. **I inherited the truncation from a correction
+I was endorsing** — a corrected quotation is still a quotation, and I re-checked the ruling without
+re-checking the citation.
+
+## ⭐ AND THE SHARPEST STATEMENT OF THE CARRIER PROBLEM, WHICH IS `0.7.0_AE_CloudOps~Z`'s
+
+> **A COMMITTED ARTIFACT IS THE OTHER CARRIER THAT CROSSES A SESSION BOUNDARY, AND UNLIKE A HUMAN IT
+> DOES NOT HAVE TO REMEMBER.**
+
+And the discriminator for *which* committed artifacts survive — which explains every carrier failure on
+this record:
+
+```
+WATCH FILE        bound by DISCIPLINE  -- someone must REMEMBER to query it.   FAILED.
+SCORER + BASELINE bound by NEED        -- a successor scoring AC4 HAS to run the scorer, and the
+                                          baseline is useless without it.      SURVIVES.
+```
+
+**A carrier bound by need survives; a carrier bound by discipline does not.** That is why the 08-25
+watch file was walked past by three seats and why a scorer committed beside its baseline is not.
+⚠ **It does not replace telling Andrew** — it is the redundant limb.
 
 ## ⛔ THE CARRIER RULE THAT GOVERNS ALL THREE
 
