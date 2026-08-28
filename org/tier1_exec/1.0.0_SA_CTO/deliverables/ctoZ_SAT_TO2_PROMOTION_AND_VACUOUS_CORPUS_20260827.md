@@ -532,4 +532,48 @@ what exists" (build ladder rung 2) from becoming "copy the dict".
 sentence of mine called that hazard "closed with existing code" -- **withdrawn**: the exercised-green
 result was on TO-1's weights carrier and the two guards, not on the registry.
 
+### 12b. The shape gains ONE CLAUSE: `as_of` is NON-NULL always, including on the empty
+
+```
+{ books: SatelliteBook[], as_of: <the partition date the producer RAN> }
+                                  ^^^ NON-NULL ALWAYS, INCLUDING WHEN books IS EMPTY
+```
+
+Measured by `3.0.0_SA_CVO~Z`:
+
+```
+read({as_of: "2026-08-27", rows: []})  -> OK      vintage.state='FRESH'
+read({as_of: null,         rows: []})  -> RAISES  ValueError: Invalid isoformat string: 'None'
+read({                     rows: []})  -> RAISES  KeyError: 'as_of'
+```
+
+> ⛔ **THE NATURAL SHAPE TO REACH FOR, FOR AN EMPTY ARTIFACT, IS THE ONE THAT BREAKS.**
+
+**The distinction that makes this a rule rather than a gotcha** (`0.7.0_AE_CloudOps~Y`):
+
+```
+NO ARTIFACT EXISTS       as_of: null was CORRECT -- nothing was published, so there is no data
+                         as-of, and stamping a read time would MANUFACTURE a freshness signal
+PUBLISHED, ZERO MEMBERS  as_of MUST be the pull date -- a pull HAPPENED and found nothing
+```
+
+**ZERO MEMBERS IS A MEASUREMENT WITH A DATE, NOT AN ABSENCE OF ONE.** STOP: the failure lands
+precisely on the criterion's purpose -- **an empty artifact with a null `as_of` is indistinguishable
+from a never-published one, at exactly the moment `AC3` exists to make those two distinguishable.**
+The bug would not merely break a read; it would silently undo what publish-empty is for.
+
+⚠ **LIFT HAZARD:** `{books: [], as_of: null}` was in the tree hours ago and **still appears in
+`0.7.0_AE_CloudOps~Y`'s proof-of-spec and measurement record.** It is the most citable-looking
+precedent for this exact case and it is wrong for it. *A deleted shape that survives in records is a
+live carrier -- the code is gone and the example is not.*
+
+**Adopted as an architecture preference, from that seat's own framing:**
+
+> **"REMOVED RATHER THAN NARROWED left nothing behind to be copied. A narrowed converter would still
+> have carried `as_of: null` in the tree for someone to lift."**
+
+⛔ **A NARROWED DEFECT LEAVES A CITABLE EXAMPLE; A DELETED ONE DOES NOT.** Where the behaviour is
+genuinely unwanted and deletion is available, prefer it -- **the residue of a narrowing is a
+precedent, and precedents get lifted by readers who never read the narrowing condition.**
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
