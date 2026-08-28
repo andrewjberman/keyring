@@ -51,7 +51,17 @@ BOUNDARIES = {"round_1_boundary_commit": "21d6fc7325", "round_2_boundary_commit"
 # R3-CRO-28: the operational receipts are REGISTRY facts on the frozen label (append-only, keyed by
 # the immutable candidate_id + bundle id), never a member byte -- so recording one is not a new
 # candidate. Each kind is set at most once; a second, different value is a conflict, not an update.
-RECEIPT_KINDS = ("clean_clone_gate_receipt", "wp3_certification_receipt", "vertical_slice_receipt")
+# R4-CTO-3 (1.0.0_SA_CTO~X 2026-08-28 18:0xZ, on DT~X 78538): the doctrine's $comment names THREE operational
+# receipts -- WP-3 ledger, live vertical slice, HISTORICAL REPLAY -- and the WP-3b decomp/TO (11 tracked files)
+# cut a `historical_replay_receipt` cell on that reading, but this tuple never carried the kind: the CLI refused it
+# by enum while receipt_problem() returned None for it (the kind gate lived only in main()). APPEND, never remove
+# (R3-CRO-31: a slot is set once; `clean_clone_gate_receipt` stays as the declared slot it is, consumer or not).
+# Rule-24 record: domain = operational receipt kinds appended to a FROZEN label's registry entry; grain = one kind,
+# one slot; intent = one (which certification a value attests); MECE over the doctrine's three named receipts +
+# the pre-existing gate slot; state = each slot moves once, independently. Word-boundary census at the edit:
+# `historical_replay_receipt` 11 tracked files (all WP-3b), 0 in this tool or the doctrine.
+RECEIPT_KINDS = ("clean_clone_gate_receipt", "wp3_certification_receipt", "vertical_slice_receipt",
+                 "historical_replay_receipt")
 
 
 def git(*args):
@@ -81,6 +91,10 @@ def receipt_problem(commit, kind, rec):
     """Return None when <commit> carries a valid structured receipt of <kind> for <rec>'s label, else
     the first problem as text. Reads ONLY the object database at <commit> (never the working tree)."""
     import re
+    # R4-CTO-3: the kind gate lived only in main(), so a Python-level call returned None for a kind the CLI
+    # refuses -- a wrong-type call returning the expected shape. Gate here too, so both arms agree.
+    if kind not in RECEIPT_KINDS:
+        return f"receipt kind {kind!r} is not one of {RECEIPT_KINDS} (a receipt of an unregistered kind certifies nothing)"
     path = RECEIPT_PATH.format(kind=kind)
     try:
         raw = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{commit}:{path}"],

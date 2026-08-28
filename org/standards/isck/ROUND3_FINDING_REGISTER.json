@@ -1054,6 +1054,19 @@
       "fix_commit": "none on +27 (frozen); in-slice carrier df73332fb2 (mapping v0.2, explicit absence)",
       "verification_ref": "schema read at source (this seat; CRO~X as contract owner independently); pin census 06a5ae751c 42 = 14 null / 14 repo path / 14 prose, reproduced independently by CVO~X 155951Z (its own git show + count -- a second instrument on the same pinned object)",
       "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-3b (the first real-substrate slice); routed to the next candidate's register"
+    },
+    {
+      "finding_id": "R4-CTO-3",
+      "round": 4,
+      "source_seat": "1.0.0_SA_CTO~X",
+      "source_ref": "own read on DT~X 78538 (TO-WP3b-DTX complete, 'receipt_problem() is None for BOTH kinds'); the AC6 registry act",
+      "finding_class": "CONTRACT-TOOLING",
+      "claim": "bundle_identity.py's RECEIPT_KINDS never carried `historical_replay_receipt` -- the doctrine's own $comment names three operational receipts (WP-3 ledger, live vertical slice, historical replay) and the WP-3b decomp/TO cut a receipt cell on that name (11 tracked files), while the tuple held clean_clone_gate_receipt / wp3_certification_receipt / vertical_slice_receipt. Two defects in one: (1) the registry could not record the second WP-3b receipt at all (main() refuses an unknown kind); (2) receipt_problem() did NOT gate on the kind -- it compared the receipt's kind to the ASKED kind -- so a Python-level call returned None for a kind the CLI refuses, and the executor's 'None for both kinds' was true and the CLI would still have refused: a wrong-type call returning the expected shape. clean_clone_gate_receipt has no doctrine, design or register mention (an orphan slot, left in place)",
+      "disposition": "FIXED",
+      "disposition_basis": "this commit (non-member tool; the frozen +27 label does not move -- derive(d0398b977d) asserted equal before filing): RECEIPT_KINDS APPENDED with historical_replay_receipt (never removed -- R3-CRO-31 slots are set once), Rule-24 record on the tuple; receipt_problem() gains the kind gate as its first limb so both arms agree. Controls run by the filing script: POS vertical_slice_receipt / historical_replay_receipt at e83bd49f21 -> None; NEG bogus kind -> refused on the new limb; NEG ab5dc4e62c -> 'carries no' receipt; the label's bundle id unchanged",
+      "fix_commit": "this commit (bundle_identity.py RECEIPT_KINDS + receipt_problem kind gate; this row)",
+      "verification_ref": "filing-script assertions (above); DT~X's two negative controls at e83bd49f21 (ab5dc4e62c; mismatched contract_bundle_id) reproduce at this seat; the one-shot registry write for both kinds fires AFTER 3.0.0_SA_CVO~X's face verdict on TO-WP3b-DTX, as at AC8",
+      "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-3b AC6"
     }
   ],
   "not_rows": {
