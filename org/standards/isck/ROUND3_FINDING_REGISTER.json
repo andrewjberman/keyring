@@ -354,7 +354,7 @@
       "disposition": "REFUTED",
       "disposition_basis": "REFUTED by 4.0.0_SA_CRO~X 20260828T034305Z at exact bf6fbe53d9 by NAMED RULE: constructed from the pinned state_observation_absence fixture with evidence_refs=[observation_id] -> schema 0, semantic 1: 'evidence_refs is ENTIRELY self-citation -- a warrant citing only its own record is no warrant (sec 6 limit 2, mechanical subcase / CVR2-1)'. SPECIFICITY RESULT (charter sec 7): refuted BY THE EXPECTED RULE -- the answer key names the same arm (validate_isck.py semantic_errors, CVR2-1 self-citation via _PRIMARY_ID['state_observation']); the boundary recomputes the seal over this row's claim text + the revealed rule. This row WAS the planted claim (R3-DT-5's remedy made it attackable)",
       "fix_commit": "(none -- refuted)",
-      "verification_ref": "CRO~X constructed instance at the pin; the seal reveal at the boundary",
+      "verification_ref": "TWO independent refutations by the expected rule: CRO~X 20260828T034305Z (constructed instance, semantic 1) and DT~X 20260828T034529Z (independent run, unread of the other; schema arm TRUE / semantic arm FALSE -- the claim asserted the half that is false); the seal reveal at the boundary closes it",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
