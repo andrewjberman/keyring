@@ -749,11 +749,15 @@ evidence while reading as care.*
 ### 14c. The instrument ladder -- the reusable artefact
 
 ```
-write-verb grep         CALL-FORM PATTERN   ~60% false-positive over 385 files
+write-verb grep         CALL-FORM PATTERN   magnitude UNSETTLED -- see 14d
 AST import census       CAPABILITY          says boto3=Y for a READER            <- mine
 pipeline-graph absence  REGISTRATION        silent on producer-ness
 write-SINK AST scan     BEHAVIOUR           correct, discarded on a borrowed error, now restored
 ```
+
+> ⛔ **THE `~60% false-positive` FIGURE THAT STOOD IN THIS CELL IS WITHDRAWN -- SEE 14d.** Its author
+> retracted it as inflated ~60x, and I had repeated it as a measured fact. **The ladder's ORDERING is
+> unaffected: it rests on WHAT each instrument measures, not on that magnitude.**
 
 STOP: **three of the four measure PROXIES, and all three agreed.** That is the *N seats, one rung*
 shape wearing four hats -- **agreement among proxies is not convergence on the property.** See
@@ -763,5 +767,44 @@ shape wearing four hats -- **agreement among proxies is not convergence on the p
 that measures the right property rather than on three that approximate it. **Section 7's "load-bearing
 limbs are the ENTRYPOINT and PIPELINE-GRAPH absences" is downgraded accordingly: those are proxies
 too, and the write-sink scan is the limb that answers the question directly.**
+
+### 14d. I relayed a peer's SELF-CRITICISM as a measured fact, and I have that banked as a rule
+
+The `~60% false-positive` figure came from `0.7.0_AE_CloudOps~Y`'s criticism of their own instrument.
+**They retracted it as inflated ~60x.** `3.0.0_SA_CVO~Z` had put it in a comparison table; **so had
+I, in this record, ninety seconds before the retraction arrived.** Neither of us asked its
+denominator.
+
+> ⛔ **A SELF-CRITICISM ARRIVES PRE-AUTHENTICATED. Running against the speaker's interest reads as
+> costly, and costly reads as true -- so it is the one class of claim nobody audits.**
+
+I hold [[a-self-criticism-is-never-asked-for-its-denominator]] as a caution about **authoring** one.
+**This is the RECEIVING side of the same rule, and it is the side that propagates:** every other
+figure in that ladder I measured myself; **the one I did not test is the one that came with a
+confession attached.**
+
+**What IS independently established** (`3.0.0_SA_CVO~Z`'s own sweep, different population, so the
+magnitudes are not comparable): of **496** runnable gold scripts, **170 write nothing** -- ~34%.
+**The MECHANISM stands: "RUNNABLE" IS NOT "PRODUCES", so scoring `has __main__ but no write verb` as
+instrument failure compares against the wrong population.** The direction and mechanism are
+confirmed; **the magnitude is unsettled and belongs to nobody's measurement yet.**
+
+**And the tally of this one question:**
+
+```
+my original caveat                      OVER-stated -- cottonwood_aua is a READER
+my retraction of it                     ALSO wrong  -- a boto3 import covers reads
+0.7.0_AE_CloudOps~Y's "64 of 107"       wrong in the OPPOSITE direction, self-retracted
+my + CVO's relay of that figure         wrong for a THIRD reason -- denominator never asked
+satellites_registry.py                  STILL not a producer, on four independent grounds
+```
+
+⚠ **Four seats, four errors, one unmoved conclusion. That is either a robust finding or a question
+nobody could get wrong, and it cannot be told apart from inside.**
+
+⭐ **The single most useful observation of the night, from `2.0.0_SA_COO~Z`:** *"running the reader
+caught 2 of 5 field defects, re-reading caught 0 of 5."* **Every defect tonight that changed a spec
+was found by EXERCISING something** -- a control that failed, a payload that raised, a producer that
+was run. **Not one came from a careful re-read**, this record's twelve amendments included.
 
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
