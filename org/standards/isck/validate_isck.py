@@ -533,6 +533,7 @@ ATTACK_TARGETS = {
     "contest.authority-event-upheld-consequence-wrong-prefix": ["consequence_refs"],
     "contest.binding-event-kind-without-event-ref": ["target_event_id"],
     "contest.authority-event-kind-with-binding-ref": ["target_binding_id"],
+    "contest.binding-event-upheld-consequence-wrong-prefix": ["consequence_refs"],
     "aep.actor-not-root": ["actor"],
     "aep.actor-root-family-wrong-suffix-shape": ["actor"],
 }
@@ -839,6 +840,10 @@ def _mutants():
         target_event_id=_DEL)
     add("contest.authority-event-kind-with-binding-ref", "contest_event_authority_event", ["not"],
         target_binding_id=f"bind:{ULID_A}")
+    # check_rule_ablation at 4d808e9740: contest_event.allOf[5] (binding_event + upheld) carried no
+    # dependent mutant -- the per-kind consequence arm needs a mutant PER KIND, not per idea
+    add("contest.binding-event-upheld-consequence-wrong-prefix", "contest_event_binding_event",
+        ["pattern"], consequence_refs=[f"aep:{ULID_B}"])
     # R4-CRO-6 (CVO~X 054009Z): the STRUCTURAL half of the trust root -- the actor must be one of
     # the two ratified seat families (the authenticated-principal half is the ledger's, WP3 row 6)
     add("aep.actor-not-root", "authority_epoch_event", ["pattern"], actor="UNTRUSTED_WRITER@laptop")
