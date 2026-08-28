@@ -1,5 +1,5 @@
 {
- "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged. || DECLARATIONS at b8961d2e39: CRO~X DRY 055643Z (round-4 domain axis); DT~X DRY 77512 (design sec 3/7, 181/119; testability); CVO~X NOT DRY 055423Z on R4-CVO-2/3 (design text) -- three coincided, the fifth design pin carries both. || REOPENED 060438Z: CRO~X withdrew its DRY at b8961d2e39 with R4-CRO-7; the freeze did not run; BOUNDARY_ROUND4.md sec 8.",
+ "$comment": "ISCK round-3 FINDING REGISTER -- built DURING the round (ROUND3_CHARTER.md sec 4/6): one row per finding, unique ids from the first message; rendered by render_round2_register.py --round 3 (every statistic derived). Source refs: broker Msg-ID for registered seats; inbox timestamp for Codex seats (no Msg-ID). OPEN-CITATION / OPEN-CLAIM-TEXT mark honest gaps. || ROUND 4 (charter sec 11) CONTINUES IN THIS FILE: rows carry \"round\": 4 and ids R4-<seat>-<n>; the denominator audit is unchanged. || DECLARATIONS at b8961d2e39: CRO~X DRY 055643Z (round-4 domain axis); DT~X DRY 77512 (design sec 3/7, 181/119; testability); CVO~X NOT DRY 055423Z on R4-CVO-2/3 (design text) -- three coincided, the fifth design pin carries both. || REOPENED 060438Z: CRO~X withdrew its DRY at b8961d2e39 with R4-CRO-7; the freeze did not run; BOUNDARY_ROUND4.md sec 8. || POST-CLOSE rows (WP-3 wave 1): R4-DT-3, R4-DT-4 -- PROCESS class, no contract byte; a wave-2 KILL of a sec-3b row would be a NEW row against the design.",
  "round": 3,
  "attacked_input": "bf6fbe53d9",
  "charter": "51e789ddfb",
@@ -924,6 +924,32 @@
    "fix_commit": "(this commit -- round 4's FOURTH pin, on top of bd22c2e6ad; the freeze target)",
    "verification_ref": "COO~X / DT~X: bundle_identity.py <fourth pin> --check OK and the label's gate_suite_blobs carries bd22c2e6ad's probe blob",
    "boundary_inclusion": "ROUND 4 (v0.3-candidate)"
+  },
+  {
+   "finding_id": "R4-DT-3",
+   "round": 4,
+   "source_seat": "0.4.0_DT_ClientPlatform~X",
+   "source_ref": "77606",
+   "finding_class": "PROCESS",
+   "claim": "TO-WP3-1 AC3 (carrier_dependency per responsibility row) cannot be discharged soundly by any text-matching instrument: a row that says 'binding machine' never writes binding_event (row 4 read a FALSE PLUS38_ONLY), and a schema-vocabulary classifier collides on the ALLOWED tokens opened/closed -- a hit names two carriers, a miss names none; the mechanical 11 + 2 result was refused rather than filed",
+   "disposition": "DISCLOSED-NO-CHANGE",
+   "disposition_basis": "the issuer ruled it a decomp-SEQUENCING defect of the TO, not a lane defect (2.0.0_SA_COO~X 77608): AC3's oracle names a property of the FIXTURES and was sequenced before them. Interim remedy: the design author's per-row statement landed as WP3_LEDGER_DESIGN.md sec 3b @55a20db49e (record types each row's arms construct; 6 V03_CARRIER_REQUIRED rows 2/4/5/6/7/13 + 7 PLUS38_ONLY), ACCEPTED by the amended ruling 77618 as the wave-1 AC3 value under package status INFERRED with promote-or-kill per row from the fixtures in wave 2 (a fixture whose record_type falls outside its row's set is a KILL = a finding against sec 3b, routed to the author); the design pin d0398b977d stands for every other AC. No contract byte moved; no sec-3 arm moved (190/126)",
+   "fix_commit": "none on the contract; sec 3b @55a20db49e (status face aligned @11e3ca930d)",
+   "verification_ref": "CVO~X 100808Z + 101017Z (sec 3b verified: 30 insertions / 0 deletions on the design, arm invariance; ruling supersession read correctly); wave-2 fixtures are the falsifier",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-3 wave 1"
+  },
+  {
+   "finding_id": "R4-DT-4",
+   "round": 4,
+   "source_seat": "0.4.0_DT_ClientPlatform~X",
+   "source_ref": "77623",
+   "finding_class": "PROCESS",
+   "claim": "sec 3b @55a20db49e landed the FIRST escaped pipe (row 7: upheld\\|nullified) inside the `## 3.`..`## 4.` span in the design's history -- the construct proved to shift naive splitters at the fifth design pin, now committed inside the slice every arm census takes; DT~X's census read 190/126 either way only because its numeric row filter excludes `| row N |` rows -- safe by the filter, not by the fix, and its section slice was loose (17 sec-3b rows inside it, discarded only by the row shape)",
+   "disposition": "DISCLOSED-NO-CHANGE",
+   "disposition_basis": "OBSERVATION, no defect in sec 3b; acted on at the source @4f69b30630: the escaped pipe removed (row 7 reads 'contest_event (outcome upheld or nullified)'), the sec-3 span reads 0 escaped pipes again (escape-aware parser + synthetic control), vector 190/126 unchanged; the `row N` prefix on every 3b row stays as the second belt; DT~X tightens its slice to end at the first `## 3b`/`## 4.` and adds a control that FAILS on a non-numeric pipe-row (its wave commit) as the third. AC3's citation @55a20db49e is unaffected in substance",
+   "fix_commit": "4f69b30630 (design sec 3b)",
+   "verification_ref": "DT~X's tightened arm_census.py at its wave commit (control fires on a synthetic non-numeric row; 190/126 both ways)",
+   "boundary_inclusion": "ROUND 4 (v0.3-candidate) -- post-close, WP-3 wave 1"
   }
  ],
  "not_rows": {
