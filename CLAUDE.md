@@ -59,13 +59,18 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
 ## 3. FINDING THINGS FAST
 
 21. **`comp-which "<plain-English question>"` is the reflex; a comp-tool is the DEFAULT for search +
-    inspection, raw grep the exception** (text-local, connection-blind). Live hard-deny: raw-`aws`
-    INSPECTION + `infra/*.tf` grep without `# rail-checked: <why>`; estate-scoped broad Bash grep DENIES;
+    inspection, raw grep the exception** (text-local, connection-blind). ⛔ **MEASURED 2026-08-28: of the
+    two limbs called "live hard-deny", only `infra/*.tf` grep without `# rail-checked: <why>` ACTUALLY
+    DENIES — raw-`aws` INSPECTION DID NOT FIRE for 2 seats on 2 command shapes.** It is an imperative
+    enforced by nobody: comply with the RULE, never with the gate. Estate-scoped broad Bash grep DENIES;
     native `Grep`/`Glob` nudge-and-proceed; `Read` + operational `aws` free. `/freeform` stands the rail
     down. Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
     the pattern): `docs/architecture/NFRA_COMPRAIL_PRD.md`.
-    ⛔ **Never pipe `comp-find` through `head`** — use `--band HEAD/DEF`, `--files`, `--limit/--page`,
-    `--all`, and `-i` for any token census. ⛔ **A PAGE IS NOT AN ANSWER; never conclude from page 1.**
+    ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Scoping this to comp-find is what let 3
+    seats truncate a grep of ONE file within one hour (2026-08-28); a catch-all 4 lines from the bottom
+    survived all three, and each census was pattern- and control-correct. Use `--band HEAD/DEF`,
+    `--files`, `--limit/--page`, `--all`, and `-i` for any token census.
+    ⛔ **A PAGE IS NOT AN ANSWER; never conclude from page 1.**
     ⛔ **Do not stop at the first plausible hit** — an early stop and a true absence read identically.
     ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f): the corpus is `.gitignore`-BOUNDED, NOT
     tracked-only** — `--corpus default` = tracked + untracked-not-ignored; `all` = + gitignored minus a
