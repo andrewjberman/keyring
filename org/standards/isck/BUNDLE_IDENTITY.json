@@ -33,7 +33,7 @@
   },
   "round_1_boundary_commit": "21d6fc7325",
   "round_2_boundary_commit": "ece1ac0f41",
-  "round_3_boundary_commit": null,
+  "round_3_boundary_commit": "1a05bfb3e4ff278388a67e1ebe986607ed3cc4d1",
   "post_boundary_amendments": [
     "bb7444a08e9c4b316845c0c8343dd915ab6198ec",
     "7c776ccc5d59294e7c8637d3b4a2ce7641f6b82c",
@@ -78,5 +78,5 @@
   "wp3_certification_receipt": null,
   "vertical_slice_receipt": null,
   "supersedes_bundle_id": null,
-  "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES"
+  "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). The operational receipts are appended to the frozen label's registry entry by --receipt <kind> --value <v> (R3-CRO-28): registry-side, never a member byte, so the bundle id and candidate_id do not move. A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES"
 }

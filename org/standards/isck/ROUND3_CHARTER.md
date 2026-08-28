@@ -147,3 +147,50 @@ operational certification NOT — see the boundary record.
 Seats live at cut (broker read 02:3xZ): CRO~X, CVO~X, DT~X, COO~X — 4 of 4. Round OPENS on this
 charter's commit; first attacks cite `bf6fbe53d9`. The integrator's first act after the cut: the
 bundle-identity record + the sealed claim (same turn, next commit).
+
+## 11. ADDENDUM — ROUND 4: `v0.3-candidate` (chartered 2026-08-28 04:5xZ on `3.0.0_SA_CVO~X` 20260828T043852Z, self-drive D11 ledger row 12)
+
+**Why a round 4 exists.** The WP-3 design attack (`WP3_LEDGER_DESIGN.md` §2b) found that the FROZEN
+`v0.2-candidate+38` cannot carry five facts append-only and leaves two reference fields untyped. Per
+C5's last sentence and §2b's ruling, those land as a NEW candidate — never a mutation of `+38`.
+
+**Scope — seven items, closed (a finding outside them routes to the surprise channel):**
+
+| # | item | carrier / change |
+|---|---|---|
+| 1 | assertion supersession | `supersedes` (backward) on `identity_relation` + `bridge_assertion`; `superseded_by` becomes derived (refused on write) |
+| 2 | binding open/close | `binding_event {opened \| closed}` with `binding_id`, `occurred_at`, `actor`, `evidence_refs` |
+| 3 | materializer decommission | `lifecycle_event materializer_decommissioned` |
+| 4 | materializer process supersession | `lifecycle_event materializer_superseded` with `superseding_version_id`; `superseded_by_version` becomes derived (refused on write); ONE per materializer |
+| 5 | mint-authority epochs | `authority_epoch_event {opened \| closed}` with `authority_id`; overlap rejected, reopening legal |
+| 6 | `contest_event.consequence_refs[]` | typed: record-id union (`rel:` \| `bind:` \| `ctev:` \| the binding_event id) |
+| 7 | `migration_receipt.migrated_record_ref` | typed: record-id union over the catalog |
+
+Each item lands with its schema conditionals, fixtures, mutants (both arms per then-arm) and the
+fold it feeds in `WP3_LEDGER_DESIGN.md` §4. **Out of scope:** anything in `+38` the design did not
+route; the ledger engine; the battery runner.
+
+**Identity.** The family rule in `bundle_identity.py` (amended on ledger row 12): a bundle whose
+schema blob differs from the frozen `+38` schema derives a NATIVE label `v0.3-candidate+N` (N =
+package-path commits since the round-3 boundary) with `supersedes_bundle_id` = the `+38` bundle id;
+a bundle id already bound in the registry keeps its label (no second alias, ever). `+38` stays
+immutable; `BOUNDARY_ROUND4.md` cites the pin; `--write` then `--freeze --boundary` operate on the
+native v0.3 label.
+
+**Seats and axes — unchanged from §5:** `4.0.0_SA_CRO~X` domain (carrier semantics, folds,
+reference closure), `3.0.0_SA_CVO~X` admissibility (a carrier that can return two answers; Rule-24
+on every new enum), `0.4.0_DT_ClientPlatform~X` testability (both arms, gates at the atomic
+extract), `2.0.0_SA_COO~X` gates + register audit, `1.0.0_SA_CTO~X` author of the bounded change and
+integrator; issues no refutation of its own findings.
+
+**Rules — §6 in full, plus:** finding ids `R4-<seat>-<n>` from the first message; rows land in
+`ROUND3_FINDING_REGISTER.json` with `"round": 4` (one register, one renderer, the denominator
+audit unchanged); **declarations are PINNED** — a dry is a measurement at a named hash and never
+carries forward (DT~X 77413); the round is dry when all three declarations coincide at ONE pin,
+and the integrator names a QUIET PIN and holds the attacked surface still there until they do
+(COO~X 77407 / CVO~X 044801Z / DT~X 77413, adopted). The sealed-claim control (§7, corrected shape)
+is placed in the register at the opening commit of the round.
+
+**Exit:** §8 verbatim, with `BOUNDARY_ROUND4.md` and the v0.3 label frozen schema-only. **Then and
+only then** ledger code (ledger row 12: "held until the amended design and v0.3 candidate are each
+attacked-dry/frozen").

@@ -72,6 +72,47 @@ def sha256_at(commit, path):
     return hashlib.sha256(data).hexdigest()
 
 
+RECEIPT_PATH = f"{REL}/receipts/{{kind}}.json"
+RECEIPT_FIELDS = ("kind", "candidate_id", "contract_bundle_id", "manifest_path", "manifest_digest", "result",
+                  "evidence_digest", "run_commit")
+
+
+def receipt_problem(commit, kind, rec):
+    """Return None when <commit> carries a valid structured receipt of <kind> for <rec>'s label, else
+    the first problem as text. Reads ONLY the object database at <commit> (never the working tree)."""
+    import re
+    path = RECEIPT_PATH.format(kind=kind)
+    try:
+        raw = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{commit}:{path}"],
+                                      stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        return f"commit {commit[:10]} carries no {path} (a commit that exists is not a certification)"
+    try:
+        r = json.loads(raw)
+    except ValueError:
+        return f"{path} at {commit[:10]} is not JSON"
+    missing = [f for f in RECEIPT_FIELDS if f not in r]
+    if missing:
+        return f"{path} at {commit[:10]} lacks {missing}"
+    if r["kind"] != kind:
+        return f"receipt kind is {r['kind']!r}, asked {kind!r}"
+    if r["candidate_id"] != rec["candidate_id"] or r["contract_bundle_id"] != rec["contract_bundle_id"]:
+        return f"receipt names {r['candidate_id']} / {r['contract_bundle_id'][:24]}..., label is {rec['candidate_id']} / {rec['contract_bundle_id'][:24]}..."
+    if r["result"] != "PASS":
+        return f"receipt result is {r['result']!r}, not PASS"
+    for f in ("manifest_digest", "evidence_digest"):
+        if not re.fullmatch(r"sha256:[0-9a-f]{64}", str(r[f])):
+            return f"receipt {f} is not a sha256: string"
+    try:
+        manifest = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{commit}:{r['manifest_path']}"],
+                                           stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        return f"receipt manifest_path {r['manifest_path']!r} is absent at {commit[:10]}"
+    if "sha256:" + hashlib.sha256(manifest).hexdigest() != r["manifest_digest"]:
+        return "receipt manifest_digest does not recompute from the manifest at the same commit"
+    return None
+
+
 def derive(commit):
     full = git("rev-parse", f"{commit}^{{commit}}")
     members = [DOCTRINE, SCHEMA, VALIDATOR, *GATES, *VOCAB]
@@ -79,22 +120,47 @@ def derive(commit):
     bundle_id = "bundle:sha256:" + hashlib.sha256("\n".join(f"{p} {b}" for p, b in pairs).encode()).hexdigest()
     schema_text = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{full}:{SCHEMA}"])
     schema_id = json.loads(schema_text).get("$id")
+    labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
+    # R3-CRO-12: the human label must resolve to exactly one bundle -- and (CVO~X 20260828T043852Z,
+    # self-drive D11 ledger row 12) one bundle resolves to exactly one label: a bundle id ALREADY
+    # BOUND in the registry keeps its label (content-addressed identity; a second alias on the same
+    # bytes is refused by construction), and only an UNBOUND bundle derives a fresh label.
+    # FAMILY RULE for an unbound bundle: the +38 freeze is SCHEMA-ONLY, so the family is decided by
+    # the SCHEMA blob -- equal to the frozen +38 schema -> still the v0.2-candidate family (a
+    # gate-only amendment), N = package-path commits since the round-2 boundary; different -> the
+    # v0.3-candidate family, N = package-path commits since the round-3 boundary, and
+    # supersedes_bundle_id = the frozen +38 bundle. Never a v0.3 label bound as an alias of a
+    # v0.2-candidate+N record. Both counts are monotone along the path (injective handles).
+    frozen_38 = next(((k, v) for k, v in labels.items() if (v.get("frozen") or {}).get("scope") == "schema-only"), (None, {}))
+    frozen_label, frozen_entry = frozen_38
+    round_3_boundary = (frozen_entry.get("frozen") or {}).get("round_3_boundary_commit") or BOUNDARIES["round_3_boundary_commit"]
+    schema_blob = blob(full, SCHEMA)
+    frozen_schema_blob = blob(frozen_entry["derived_at_commit"], SCHEMA) if frozen_entry else None
+    bound = next((k for k, v in labels.items() if v.get("contract_bundle_id") == bundle_id), None)
+    supersedes_bundle_id = None
+    if bound:
+        candidate_id = bound
+        family = candidate_id.rsplit("+", 1)[0]
+        supersedes_bundle_id = labels[bound].get("supersedes_bundle_id")
+    elif frozen_entry and schema_blob != frozen_schema_blob:
+        family = "v0.3-candidate"
+        since_3 = git("rev-list", "--reverse", f"{round_3_boundary}..{full}", "--", REL).split()
+        candidate_id = f"{family}+{len(since_3)}"
+        supersedes_bundle_id = frozen_entry["contract_bundle_id"]
+    else:
+        family = "v0.2-candidate"
+        post_boundary = git("rev-list", "--reverse", f"{BOUNDARIES['round_2_boundary_commit']}..{full}", "--", REL).split()
+        candidate_id = f"{family}+{len(post_boundary)}"
     post_boundary = git("rev-list", "--reverse", f"{BOUNDARIES['round_2_boundary_commit']}..{full}", "--", REL).split()
-    # R3-CRO-12: the human label must resolve to exactly one bundle. The FAMILY label stays
-    # semantic_version; the injective handle is candidate_id = family + the post-boundary amendment
-    # count on the package path (monotone along the path, so two byte-distinct bundles never share
-    # it), and BUNDLE_LABELS.json records every binding -- a rebinding is a failure, not an update.
-    candidate_id = f"v0.2-candidate+{len(post_boundary)}"
     # C4 (CVO~X 20260828T040820Z): a FREEZE is a registry fact, so it is derived here like every
     # other field -- the label's registry entry carries frozen_at + round_3_boundary_commit; a frozen
     # label emits status=frozen and --check stays deterministic. The freeze is SCHEMA-ONLY: the three
     # operational receipts stay null BY DEFINITION until WP-3 / the live slice / replay land.
-    labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
     fz = labels.get(candidate_id, {}).get("frozen") or {}
     receipts = labels.get(candidate_id, {}).get("receipts") or {}
     return {
         "contract_bundle_id": bundle_id,
-        "semantic_version": "v0.2-candidate",
+        "semantic_version": family,
         "candidate_id": candidate_id,
         "schema_$id": schema_id,
         "status": "frozen" if fz else "candidate",
@@ -107,10 +173,10 @@ def derive(commit):
         "validator_commit": full, "validator_blob_sha": blob(full, VALIDATOR),
         "gate_suite_commit": full, "gate_suite_blobs": {p: blob(full, p) for p in GATES},
         "vocabulary_digests": {p: sha256_at(full, p) for p in VOCAB},
-        **BOUNDARIES,
+        **{**BOUNDARIES, "round_3_boundary_commit": round_3_boundary},
         "post_boundary_amendments": post_boundary,
         **{k: receipts.get(k) for k in RECEIPT_KINDS},
-        "supersedes_bundle_id": None,
+        "supersedes_bundle_id": supersedes_bundle_id,
         "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). The operational receipts are appended to the frozen label's registry entry by --receipt <kind> --value <v> (R3-CRO-28): registry-side, never a member byte, so the bundle id and candidate_id do not move. A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES",
     }
 
@@ -145,6 +211,13 @@ def main():
             sys.exit(f"REFUSED: {rec['candidate_id']} is not bound to {rec['contract_bundle_id']} in the registry")
         if not bound.get("frozen"):
             sys.exit(f"REFUSED: {rec['candidate_id']} is not frozen; a receipt certifies a FROZEN bundle")
+        # R3-CRO-33: a commit that EXISTS is not a certification -- the pre-ledger +38 pin itself
+        # was accepted as a wp3_certification_receipt. The value must CONTAIN a structured receipt
+        # of this kind, for this label and bundle, whose manifest digest recomputes from the same
+        # commit and whose result is PASS. Everything is checked before the registry is touched.
+        problem = receipt_problem(value, kind, rec)
+        if problem:
+            sys.exit(f"REFUSED: {problem}; nothing written")
         receipts = bound.setdefault("receipts", {})
         if kind in receipts and receipts[kind]["value"] != value:
             sys.exit(f"REFUSED: {kind} already recorded as {receipts[kind]['value']!r} at {receipts[kind]['recorded_at']}; "
@@ -201,6 +274,9 @@ def main():
             # 2026-08-28 04:1xZ: record said frozen, registry said candidate, --check said STALE)
             labels[rec["candidate_id"]] = {"contract_bundle_id": rec["contract_bundle_id"],
                                            "derived_at_commit": rec["derived_at_commit"]}
+            if rec["supersedes_bundle_id"]:
+                # a v0.3-family binding records the frozen bundle it supersedes (CVO~X row 12)
+                labels[rec["candidate_id"]]["supersedes_bundle_id"] = rec["supersedes_bundle_id"]
             LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
         OUT.write_text(text, encoding="utf-8", newline="\n")
         print(f"wrote {OUT.name}: {rec['candidate_id']} = {rec['contract_bundle_id']} @ {rec['derived_at_commit'][:10]}")
