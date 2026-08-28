@@ -142,27 +142,11 @@ lanes:
       - 4.0.0_SA_CRO
     description: "Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331."
 
-  # ISCK ledger BUILD lane (added 2026-08-28 by 1.0.0_SA_CTO~X as GRANTOR, lane owner of
-  # org/standards/isck; grantee 0.4.0_DT_ClientPlatform~X did NOT self-land). Issuer ask:
-  # 2.0.0_SA_COO~X msg 77679 for TO NFRA_C3MATERIALIZE.TO-WP3-2-DTX @1112106718 (wave 2, ledger
-  # code until the battery passes from a clean clone; commit per unit). GATE EXERCISED before the
-  # grant: a real BLOCK at 2026-08-28T10:31:52Z (org/git-author-override-audit.log:24003) and one
-  # audited singular override @8a01dda9ba (line 24007) -- a per-unit build wave under per-commit
-  # singular asks is the toll this row retires. SCOPE: org/standards/isck/ledger/** ONLY (incl.
-  # ledger/receipts/); the contract package's bundle members one level up stay ANY_EXEC. The ~X
-  # serial is enumerated EXACTLY: the validator's strip fallback widens tilde->base, never
-  # base->tilde, so the base DT seat gains nothing here. EXPIRY: the TO's life -- strike this lane
-  # and its path row when TO-WP3-2-DTX reads complete (issuer flips the TO; lane owner strikes).
-  ISCK_LEDGER_BUILD:
-    permitted_agents:
-      - 1.0.0_SA_CTO
-      - 2.0.0_SA_COO
-      - 3.0.0_SA_CVO
-      - 1.1.0_SA_CTO
-      - 3.1.0_SA_CVO
-      - 4.0.0_SA_CRO
-      - 0.4.0_DT_ClientPlatform~X
-    description: "ANY_EXEC + 0.4.0_DT_ClientPlatform~X on org/standards/isck/ledger/** for the life of TO NFRA_C3MATERIALIZE.TO-WP3-2-DTX (grantor 1.0.0_SA_CTO~X 2026-08-28, issuer ask COO~X 77679). Strike on TO completion."
+  # ISCK_LEDGER_BUILD (2026-08-28 10:47Z-12:47Z) STRUCK by its grantor 1.0.0_SA_CTO~X on the issuer's
+  # completion flip of TO NFRA_C3MATERIALIZE.TO-WP3-2-DTX @33074c3e0d: ANY_EXEC + 0.4.0_DT_ClientPlatform~X
+  # on org/standards/isck/ledger/** (@f94ef2f3d1) and receipts/** (@5bde064942) for the TO's life; used
+  # across 26 wave-2 commits with no override; org/standards/isck/** is ANY_EXEC in full again. The
+  # grant's face said it would expire; it did. A future build wave gets its own scoped lane the same way.
 
   ANY_CTO:
     permitted_agents:
@@ -1431,18 +1415,7 @@ paths:
   "org/standards/**":
     lane: ANY_EXEC
 
-  # Longest-match-wins over org/standards/** for the WP-3 ledger build subtree only; see the
-  # ISCK_LEDGER_BUILD lane note (grantor CTO~X 2026-08-28, TO-WP3-2-DTX, strike on completion).
-  "org/standards/isck/ledger/**":
-    lane: ISCK_LEDGER_BUILD
 
-  # Same lane, same expiry (added 2026-08-28 12:2xZ, DT~X 77782): bundle_identity.py's RECEIPT_PATH is
-  # org/standards/isck/receipts/<kind>.json -- a SIBLING of ledger/, not a child -- so the receipt
-  # FILES (structured receipt + captured run stdout) land here under the build lane. The REGISTRY act
-  # (`--receipt`, which rewrites BUNDLE_LABELS.json / BUNDLE_IDENTITY.json) stays ANY_EXEC by design:
-  # the label owner performs it on the certifier's replay. Strike with the lane on TO completion.
-  "org/standards/isck/receipts/**":
-    lane: ISCK_LEDGER_BUILD
 
   "org/seams/**":
     lane: ANY
