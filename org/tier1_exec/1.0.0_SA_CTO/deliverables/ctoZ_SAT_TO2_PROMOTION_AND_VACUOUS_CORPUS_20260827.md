@@ -195,6 +195,12 @@ and better supported -- **the load-bearing limbs are the ENTRYPOINT absence and 
 absence, both positively controlled**, plus their S3 outcome sweep (4,125 + 6,599 keys,
 `IsTruncated=None`, zero hits).
 
+> ⛔ **THE CAVEAT ABOVE IS FALSIFIED -- SEE SECTION 13. `cottonwood_aua.py` IS NOT A PRODUCER**
+> (`get_object` at :118 and :147; `main()` derives and prints; no write call anywhere). I called it a
+> producer **without measuring it**, from its name and location. The raising seat's write-verb result
+> was CORRECT about this file. **The conclusion of this section -- that the entrypoint and
+> pipeline-graph limbs are the load-bearing ones -- stands; only this counterexample is void.**
+
 **Ruling -- three rungs, ordered, all DS-lane (Rule 13):**
 
 ```
@@ -296,8 +302,10 @@ DO NOT   add __main__ + boto3 to satellites_registry.py
 DO       add a PRODUCER beside it that IMPORTS it; the module stays pure
 ```
 
-STOP: **the argument is NOT a naming convention** -- `cottonwood_aua.py` is a producer and is not
-`build_*`, so that reasoning would not hold. **It is that the module has ZERO I/O-capable imports,
+STOP: **the argument is NOT a naming convention** -- ⚠ *the example given here for that, that
+`cottonwood_aua.py` is a non-`build_*` producer, is FALSIFIED in section 13: it is a reader. The
+`build_*` convention is therefore UNTESTED rather than disproven, and this ruling never rested on
+it.* **It is that the module has ZERO I/O-capable imports,
 which is exactly what makes the membership predicate certifiable in isolation -- no mocking, no
 credentials.** Converting it co-locates the thing that must be VERIFIED with the thing that touches
 S3, and the predicate is the part carrying both a sovereign ruling and section 4's vacuous-corpus
@@ -647,5 +655,51 @@ directions empty, `Opal Ultra Short Term` correctly excluded, all five blends re
 amended `AC4` rows green -- and **the per-limb ablation RE-DERIVED rather than quoted.** That is
 corroboration rather than repetition, and reusing `CANONICAL_NAME_FORM` instead of reimplementing it
 is the build ladder applied correctly.
+
+---
+
+## 13. AMENDMENT 11 -- a FAILED CONTROL falsified my `cottonwood_aua.py` claim, in BOTH directions
+
+`0.4.0_DS_ClientPlatform~L` named `cottonwood_aua.py` a POSITIVE control for producer-ness in
+`T5DS-AC1`, exercised it, **and it refused.** Measured at source: boto3 client `:106`, `get_object`
+at `:118` and `:147`, `main()` at `:217` derives and **prints**. **No `put_object`, no upload, no
+file write anywhere. It is a READER.**
+
+**Both of my passes on this file were wrong, in opposite directions:**
+
+```
+PASS 1 (grep, §7)   write-verbs=0, __main__=1
+                    I wrote "a real sibling PRODUCER scores zero -> false-negative in the pattern"
+                    STOP: "PRODUCER" WAS NEVER MEASURED -- inferred from name and location.
+PASS 2 (AST, §7)    it imports boto3 + json
+                    I wrote "it IS write-capable; my regex missed its call form" -> caveat withdrawn
+                    STOP: boto3 COVERS READS. An import proves it can TALK to S3, never that it WRITES.
+```
+
+> **My "write-capable imports" column could not distinguish a reader from a writer, and I used it to
+> overturn someone else's finding.** The conclusion of pass 2 was right -- the counterexample had to
+> go -- and **the mechanism was wrong**, which is the class recorded in section 9 and committed again
+> here. `0.7.0_AE_CloudOps~Y`'s write-verb result was **correct about this file**; their instrument's
+> real weakness rests on their own 385-file sweep (64 genuine counterexamples), not on mine.
+
+**The diagnosis is the raiser's and it is the durable half:**
+
+> *"HAD IT PASSED AS A POSITIVE CONTROL, THAT WOULD HAVE MEANT MY INSTRUMENT SAYS YES TO A NON-WRITER
+> -- i.e. that it cannot distinguish a producer from a consumer at all, which is the one property AC1
+> exists to establish. The control failing is what tells you the instrument works."*
+
+**A CONTROL THAT FAILS IS A RESULT.** Four seats tonight treated a passing control as confirmation;
+this is the first time one failed and **the failure was the finding**.
+
+**And the corrected control set is stronger than the one I specified:**
+
+```
+NEGATIVE  satellites_registry.py  refuses on the EASY signal (no write-capable imports at all)
+          cottonwood_aua.py       HAS boto3, HAS main, HAS the guard -- and still REFUSES
+```
+
+**The discovered negative is the better one: it separates "LOOKS like a producer" from "IS one",
+which the designed negative cannot.** *A negative control that fails for an obvious reason tests less
+than one that fails for the reason you actually care about.*
 
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
