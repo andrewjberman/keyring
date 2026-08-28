@@ -161,9 +161,38 @@ that zero was a true absence rather than a broken matcher.
 - It does **not** authorise `TO-S1-DE`, which is blocked on this TO by its own face.
 - It does **not** bear on the ship-lift decision. That is a NEVER#1 never-widen call at Andrew, and a
   certificate is not a sign-off.
-- ⚠ **Related but NOT part of this TO:** the served `global` scope understates `Client` by
-  **$359,773,356.74** (measured this session on the served plane; the portal does pass `'global'` and
-  the edge serves it 200). **The pin advance does NOT fix that** — it is a separate, unfixed producer
-  defect. Recorded here so no reader treats a lifted AC1 as clearing it.
+- ⚠ **Related but NOT part of this TO — AMENDED 2026-08-28T~17:3xZ, AND THE ORIGINAL WORDING IS
+  RETRACTED.** This certificate first said *"the served `global` scope understates `Client` by
+  $359,773,356.74 — a separate, unfixed producer defect."* **THE ARITHMETIC IS REAL; THE
+  CHARACTERISATION WAS WRONG AND I AM WITHDRAWING IT.**
+
+  Measured in this seat's own pinned baseline (`bc9d11dd8e`), `global.Client` carries
+  `predicate: "unavailable"`, `held_constituents: ["cottonwood"]`, `children: {}` — against
+  `49financial.Client`'s `predicate: "available"`, `held_constituents: null`. **The node DECLARES
+  ITSELF HELD and names its holder;** `mdpf_gold_consolidator.py:143-160` specifies exactly that
+  (`global` has no `CLIENT_L1_RULE` entry, `client_l1_split('global')` raises deliberately, global
+  unholds by itself when cottonwood clears). **The hold is working as designed.**
+  So: *"understated"* implies the node purports to be a complete total. **It does not.** What exists
+  is a **RESIDUAL `aum` on a HELD node** — a value that should be `null` — plus a renderer that
+  prints a headline the data has already marked unavailable. Smaller, two-sided, and NOT a $359M
+  aggregation defect.
+
+  ⛔ **HOW I GOT IT WRONG, since a certificate that hides its own correction is worth less than one
+  that shows it:** the originating characterisation was `1.0.0_SA_CTO~Z`'s and that seat retracted it
+  itself — but **I printed `predicate: "unavailable"` in my own measurement output and filed a
+  "self-contradiction" anyway.** I quoted half of `predicate_reason` (*"global AGGREGATES its
+  constituents"*) as contradicting the value while **the other half of the same sentence** (*"and is
+  held while ANY is held"*) explained it. Aggregates-in-principle and held-in-fact are coherent
+  together. **I had the disconfirming field in hand and did not use it.**
+  ⭐ It survived because it PREDICTED A TRUE ARITHMETIC RELATION — the gap really is
+  cottonwood+inflection to the cent — and being right about the arithmetic felt like being right
+  about the cause. Two peers independently corroborated the *arithmetic*; nobody re-derived the
+  *mechanism*.
+  ⚠ **AND DO NOT SWAP IN A SECOND UNMEASURED STORY:** the residual equals 49financial's Client
+  **to the cent**. "Happens to equal" is not an explanation of an exact match. **UNEXPLAINED**, and
+  it should stay that way until someone measures what computes it.
+
+  **WHAT SURVIVES UNCHANGED:** the pin advance still does not touch this, so a lifted AC1 must not be
+  read as clearing it — which was this note's only load-bearing purpose.
 
 — `3.0.0_SA_CVO~Z`

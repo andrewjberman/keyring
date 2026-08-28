@@ -82,30 +82,61 @@ all scopes   nodes/Models/... L2 member `aum` values populate where they were nu
 either moves a money field, that is drift from the 1,381 un-reviewed lines and it is the thing this
 baseline exists to catch.
 
-⛔ **`global` IS NOT A CONTROL. IT IS PREDICTED TO MOVE, AND SCORING IT AS A CONTROL INVERTS THE
-RESULT.** (Refinement from `1.0.0_SA_CTO~Z` 13518; this file's first cut predicted the move further
-down but left it out of the control block, where a reader scanning for controls would miss it — and an
-instrument that needs careful reading to avoid firing on its own prediction is badly built.)
-`global.Client` is currently **byte-identical** to `49financial.Client` (290,426,813.47), so if global
-tracks one firm's Client it **must** follow it to 267,632,047.22. A seat holding global as a control
-would see a money field move on a "control" scope and raise the un-reviewed-drift alarm **on the one
-change that was fully expected.**
+⛔ **`global` IS NOT A CONTROL — BUT NOT FOR THE REASON THIS FILE FIRST GAVE. DO NOT SCORE IT AT ALL;
+RECORD IT.**
 
-⭐ **AND THE INVERSE IS THE MORE VALUABLE HALF — THIS IS A REAL EXPERIMENT, SO SCORE IT.** The
-invariance Andrew is holding ("the ship cannot move the $359,773,356.74 by any amount") is *algebraic
-given a premise* — that global aggregates `Client` over a single firm. **That premise has never been
-tested.** It was inferred from a byte-identical value at one vintage. The deploy produces the decisive
-observation for free, whether or not anyone looks:
+The first cut said global was "PREDICTED TO MOVE" because it tracks one firm's Client. **That reason
+was wrong** (see the retraction immediately below). The conclusion that it is not a control survives,
+on a different and weaker footing: **`global.Client` is a RESIDUAL on a node the producer has already
+declared `predicate: "unavailable"`, so nobody has established what it does across a fire.**
 
 ```
-global.Client -> 267,632,047.22   PREMISE HOLDS. Understatement stays 359,773,356.74
-                                  (the gap is cottonwood+inflection; 49financial cancels).
-                                  Prediction confirmed; nothing to revise.
-global.Client UNCHANGED           ⛔ THE PREMISE IS FALSE. global.Client is not tracking
-                                  49financial, the "one firm of three" mechanism is wrong, and
-                                  the $359,773,356.74 figure Andrew is holding MUST BE RE-DERIVED
-                                  before anyone acts on it.
+DO NOT put global in the control column  -- its behaviour is UNKNOWN, so an unexpected value
+                                            there is not evidence of drift
+DO NOT put global in the expected column -- nobody has measured what moves this residual
+DO           write down what it does, unscored
 ```
+Controls remain **cottonwood + inflection ONLY**.
+
+⛔ **RETRACTED 2026-08-28T~17:3xZ — THIS BLOCK PREVIOUSLY FRAMED A "FREE EXPERIMENT" ON A PREMISE
+THAT IS NOW KNOWN FALSE. READ THIS INSTEAD.**
+
+The earlier text said the invariance rested on an untested premise — "global aggregates `Client` over a
+single firm" — and told a post-deploy seat to score whether `global.Client` moves as the decisive test
+of it. **That premise was never true, and the served object said so all along.** `1.0.0_SA_CTO~Z`
+retracted its own originating characterisation (and I had the disconfirming field in my own output and
+did not use it). Measured in THIS baseline's own bytes:
+
+```
+global.Client   predicate "unavailable"   held_constituents ["cottonwood"]   children {}   aum 290,426,813.47
+49f.Client      predicate "available"     held_constituents null
+```
+
+**The node DECLARES ITSELF HELD and names the holder.** `mdpf_gold_consolidator.py:143-160` specifies
+exactly this: `global` has no entry in `CLIENT_L1_RULE`, the three firm rules differ in kind,
+`client_l1_split('global')` raises deliberately, and global unholds by itself when cottonwood clears.
+**The hold is working as designed.**
+
+**SO THE CORRECT CHARACTERISATION:**
+- "global aggregates Client over one firm of three" — **FALSE.** It never claimed to aggregate.
+- "understated by $359,773,356.74" — **RETRACTED AS A CHARACTERISATION.** The arithmetic is real, but
+  *understated* implies the node purports to be a complete total. It does not. It is a **RESIDUAL
+  `aum` on a HELD node**, not a shortfall in a claimed sum.
+- "the ship moves it by 0.00" — the **conclusion survives**, but it was reasoned from the wrong
+  mechanism and must not be re-quoted with the old framing attached.
+
+**WHAT TO ACTUALLY RECORD ABOUT `global.Client` AFTER THE FIRE** — an observation, NOT a test of a
+premise, and it is worth much less than the retracted text claimed:
+```
+whatever global.Client does, WRITE IT DOWN. It is a value that should not exist at all
+(a held node should carry aum: null), so it is a curiosity about a residual, not evidence
+about an aggregation mechanism.
+```
+⚠ **AND DO NOT REPLACE ONE UNMEASURED MECHANISM WITH ANOTHER.** The residual equals 49financial's
+Client **to the cent**. That has been described as "happens to equal" — an exact match to the cent is
+not a coincidence and nobody has measured what computes it. **Leave it as UNEXPLAINED rather than
+attaching a second story to it.** The first story survived forty minutes and four seats precisely
+because it predicted a true arithmetic relation.
 
 ⚠ **NOT PREDICTED — record it, do not score it.** Whether `global.SMA` also picks up the
 22,794,766.25, and therefore whether `global.total_aua` holds at 2,094,351,300.67 or drops by that
