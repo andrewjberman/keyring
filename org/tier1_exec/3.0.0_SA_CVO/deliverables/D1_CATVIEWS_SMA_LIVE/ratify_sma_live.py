@@ -111,7 +111,13 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     # HONEST scheduled stamp -- a blacklist where a positive expectation belongs.
     # Only AFTER the reland is `adhoc` the required value; a `scheduled` claim on a
     # relanded object is the forgery, and that is the only case worth refusing.
+    # TRIGGER IS A GOLD-PLANE FACT. Measured: gold carries trigger='scheduled';
+    # platinum carries NO trigger at all (None on all 4 scopes). Asserting it on
+    # platinum would raise a FALSE FAILURE on a correct republish -- caught by
+    # running the instrument, which is the fourth defect exercising has found in it.
     trig = doc.get("_provenance", {}).get("trigger")
+    if plane != "gold":
+        return client_aum, sma_aum
     if post_reland:
         out.append(("%s trigger == adhoc (honest reland provenance)" % p,
                     isinstance(trig, str) and "adhoc" in trig,
