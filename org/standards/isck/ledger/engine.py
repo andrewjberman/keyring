@@ -45,6 +45,8 @@ import os
 import re
 import sqlite3
 
+from . import machines
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ISCK = os.path.dirname(HERE)          # the ledger lives one level below the contract + design
 SCHEMA_PATH = os.path.join(ISCK, "ISCK_CONTRACT.v0.schema.json")
@@ -293,6 +295,27 @@ class Store:
                                    "resolves to the WRONG CLASS is not resolved -- it is a "
                                    "dangling reference wearing a valid id"
                                    % (value, target.get("record_type"), " | ".join(classes)))
+
+        # -- MACHINES over the FINAL STATE (sec 3 rows 4, 6, 7, 13)
+        # Evaluated here, after every per-record rule and BEFORE the seq is consumed, because a
+        # machine question ("is this a SECOND open?") is about the estate the batch produces --
+        # including a same-batch race, where neither of two arriving opens is "second" by order.
+        final, seqs = [], {}
+        for rec, seq in self.estate():
+            final.append(rec)
+            seqs[id(rec)] = seq
+        next_seq = self.head_commit_seq() + 1
+        for rid, record in batch.items():
+            if self.get(rid) is None:
+                final.append(record)
+                seqs[id(record)] = next_seq
+        stored_before = dict((rid, self.get(rid)) for rid in batch)
+
+        def _reject(rule, reason):
+            raise Rejected(rule, reason)
+
+        machines.check_binding_rows(list(batch.values()), stored_before, self._primary_of, _reject)
+        machines.check_binding_machine(final, self._primary_of, seqs, _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))
