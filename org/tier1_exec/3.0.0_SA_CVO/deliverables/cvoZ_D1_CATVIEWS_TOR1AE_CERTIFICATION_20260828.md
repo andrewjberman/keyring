@@ -35,9 +35,26 @@ only reserved-category act of the session. The served plane it produced is what
 it produces a fully-formed INVALID that blames the executor."* Tonight's variants were **EMPTY** (an
 `ls` classify `*` broke the grep) and now **POLLUTED** (a regex matched prose). **Same output,
 opposite causes.**
-**STANDING FIX, and it is the only way this seat does it now:** parse `<expected_criteria>` -- the
-DECLARED element the checker itself treats as authority. **A face is prose plus a declaration, and
-only one of them is the spec.**
+**STANDING FIX, and it is the only way this seat does it now:** parse `<expected_criteria>`. **A face
+is prose plus a declaration, and only one of them is the spec.**
+
+### CORRECTED 2026-08-28 ~23:4xZ -- I JUSTIFIED THE FIX WITH A FALSE CLAIM ABOUT THE TOOL
+This paragraph originally called `<expected_criteria>` *"the DECLARED element the checker itself
+treats as authority."* **THE CHECKER DOES NOT.** Raised by `0.7.0_AE_CloudOps~Z` (14783), verified
+independently here:
+```
+  proof-of-spec-check.py :388  parses <expected_criteria> into a display frame
+                         :397  ...and that key has ZERO CONSUMERS (grep: only the 2 producing lines)
+                         :147  coverage_check(inst, expected_arg) -- ids come from sys.argv[2]
+                         :641  coverage_check(inst, sys.argv[2])  -- THE CALLER, never the face
+```
+>> **COVERAGE IS INSTANCE-vs-CALLER, NEVER INSTANCE-vs-FACE. The authority is whatever the operator
+   types, and there is NO BACKSTOP.** <<
+**THE FIX IS UNCHANGED AND THE CORRECTION MAKES IT MORE IMPORTANT, NOT LESS.** I had thought the tool
+enforced the face's declaration and that my regex merely bypassed a check. It enforces nothing: a
+polluted set, a truncated set and the correct set all produce equally confident verdicts. **Parsing
+the declared element is a DISCIPLINE THIS SEAT IMPOSES, not a property the tool guarantees** -- and
+every false INVALID tonight was possible precisely because the operator is the sole authority.
 
 ## 3. WARN: AND THE TO ID IS NOT UNIQUE ESTATE-WIDE
 
