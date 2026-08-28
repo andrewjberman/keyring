@@ -363,10 +363,10 @@
       "source_ref": "20260828T034218Z (self-found, vacuity-checking its own control (c))",
       "finding_class": "BATTERY",
       "claim": "LATENT: _RECORD_CACHE is module-global keyed by (ruled_at, path) without the RESOLVED ROOT; after a real resolve, patching _repo_root to None without clearing still reads LINKED -- control (c) passes today only because it happens to call _RECORD_CACHE.clear() on both sides, a load-bearing line stated nowhere; the next control that patches the root and forgets to clear passes vacuously",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "owner DT~X; remedy one line -- key the cache by (root, ruled_at, path) -- plus a control that patches the root WITHOUT clearing and expects UNRESOLVED. Authorized under a 5th singular override (probes file only) so it lands before the boundary; if it lands after, the boundary declares it as the one open latent row",
-      "fix_commit": "OPEN",
-      "verification_ref": "OPEN",
+      "fix_commit": "ea64a64850 (DT~X, 5th singular override 77323): _RECORD_CACHE keyed by (root, ruled_at, path) + a control that patches the root WITHOUT clearing and expects UNRESOLVED",
+      "verification_ref": "OPEN-CITATION: CRO~X (upheld it at 74671f0911) re-runs its discriminating pair at ea64a64850",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
