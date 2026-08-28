@@ -542,10 +542,15 @@ def _record_blob(ruled_at, path):
     git error would make a broken instrument read identically to a real absence, and NO_ROOT
     (nowhere to ask) must never read as NO_COMMIT (asked, and it is not there).
     """
-    key = (ruled_at, path)
+    # R3-DT-6: the RESOLVED ROOT is part of the key. Keyed on (ruled_at, path) alone, a cache
+    # populated under one root answered for a DIFFERENT root -- so a control that swapped the root
+    # without clearing got the stale verdict and passed vacuously, green. Control (c) was correct
+    # only because it happened to call clear() on both sides, a line whose load-bearing role was
+    # declared NOWHERE. Keying by root retires that dependency instead of documenting it.
+    root = _repo_root()
+    key = (root, ruled_at, path)
     if key in _RECORD_CACHE:
         return _RECORD_CACHE[key]
-    root = _repo_root()
     if root is None:
         out = (None, "NO_ROOT")
     else:
@@ -1236,6 +1241,22 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
             results.append(("(e) ALIAS: declared path %r absent at ruled_at is ORPHAN even though "
                             "its basename matches" % _alias.split("#")[0],
                             _link_state(dict(_real, record_ref=_alias), _dg) == "ORPHAN", True))
+
+        # (c-bis) R3-DT-6's arm: swap the root WITHOUT clearing the cache and the verdict must
+        # STILL be UNRESOLVED. Before the (root, ...) key this returned LINKED off the stale entry
+        # -- a control passing on a cached answer to a question it never re-asked. Deliberately
+        # populates the cache FIRST so the arm is reachable from the failing state.
+        _saved_root_b = _repo_root
+        try:
+            _RECORD_CACHE.clear()
+            _link_state(_real, _dg)                      # populate under the REAL root
+            globals()["_repo_root"] = lambda: None       # swap root, DO NOT clear
+            results.append(("(c-bis) a swapped root is NOT answered from the cache -- still "
+                            "UNRESOLVED without an explicit clear()",
+                            _link_state(_real, _dg) == "UNRESOLVED", True))
+        finally:
+            globals()["_repo_root"] = _saved_root_b
+            _RECORD_CACHE.clear()
 
         # (c) no trusted root at all -> UNRESOLVED, NAMED, never LINKED.
         _saved_root = _repo_root
