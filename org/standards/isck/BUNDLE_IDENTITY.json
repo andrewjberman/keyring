@@ -108,7 +108,16 @@
     "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
     "recorded_at": "2026-08-28T12:40:17Z"
   },
-  "vertical_slice_receipt": null,
+  "vertical_slice_receipt": {
+    "value": "e83bd49f21f46a157d31d2744c9876bd05259da5",
+    "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+    "recorded_at": "2026-08-28T18:08:48Z"
+  },
+  "historical_replay_receipt": {
+    "value": "e83bd49f21f46a157d31d2744c9876bd05259da5",
+    "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+    "recorded_at": "2026-08-28T18:09:03Z"
+  },
   "supersedes_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7",
   "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). The operational receipts are appended to the frozen label's registry entry by --receipt <kind> --value <v> (R3-CRO-28): registry-side, never a member byte, so the bundle id and candidate_id do not move. A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES"
 }

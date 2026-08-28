@@ -51,6 +51,16 @@
         "value": "eb15d30b6b3eaf9d79392bed1f6b73ba1daeabe2",
         "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
         "recorded_at": "2026-08-28T12:40:17Z"
+      },
+      "vertical_slice_receipt": {
+        "value": "e83bd49f21f46a157d31d2744c9876bd05259da5",
+        "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+        "recorded_at": "2026-08-28T18:08:48Z"
+      },
+      "historical_replay_receipt": {
+        "value": "e83bd49f21f46a157d31d2744c9876bd05259da5",
+        "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+        "recorded_at": "2026-08-28T18:09:03Z"
       }
     }
   }
