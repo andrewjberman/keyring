@@ -51,24 +51,45 @@ adjudication-event vocabulary exists (declared, not absorbed).
 
 ## 3. THE TWELVE ENFORCEMENT RESPONSIBILITIES (memo §8, each with its rejection and its test)
 
-| # | responsibility | REJECT when | battery test id |
-|---|---|---|---|
-| 1 | global serial uniqueness across batches + fabrics | a mint for a serial already minted (any fabric) — the second fabric's serial must be `provisional` and reconciled by relation | `L-01-dup-serial-cross-batch`, `L-01-dup-serial-cross-fabric` |
-| 2 | referential integrity for every reference field | any `*_serial`/`*_id`/frontier entry/surface pin/run/version that does not resolve in the store | `L-02-unresolved-ref` × one per reference field (denominator printed) |
-| 3 | append-only retention | delete; or a write with an existing primary id and different bytes | `L-03-delete`, `L-03-inplace-mutation` |
-| 4 | binding open/close by event, never mutation | a binding row whose `valid_to` changed in place; a close with no event | `L-04-close-by-mutation`, `L-04-close-event-accepted` |
-| 5 | event→status projection with exact `status_basis` | an authored status on a derivable axis that disagrees with the fold | `L-05-<axis>-authored-vs-derived` × 5 |
-| 6 | mint-receipt authentication + authority epoch | an `entity` with no preceding `mint_receipt`; a receipt from an authority outside its epoch | `L-06-entity-without-receipt`, `L-06-authority-out-of-epoch` |
-| 7 | relation direction rules + cycle rejection | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12 | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind` |
-| 8 | frontier coordinate uniqueness + temporal consistency | two entries normalizing to one canonical key with different versions (the NORMALIZER, per `normalization_version`); an observation after the consuming run's start | `L-08-normalized-collision` (the case the contract's shape check cannot see), `L-08-observed-after-start` |
-| 9 | run / frontier / materializer-version / surface consistency | surface not in run outputs; frontier disagreement; version not the run's | `L-09-membership`, `L-09-frontier-disagree`, `L-09-version-disagree` |
-| 10 | admissible publication | `published` from a non-succeeded run; before completion; without a promoter | `L-10-publish-from-failed`, `L-10-publish-before-complete`, `L-10-no-promoter` |
-| 11 | current read projections | a projection that cannot show its `status_basis` records | `L-11-projection-without-basis` |
-| 12 | historical replay | a replay as of frontier F or publication P that differs from the state recorded then | `L-12-replay-frontier`, `L-12-replay-publication` |
+| # | responsibility | REJECT when | REJECT arm ids | ACCEPT arm ids (the sibling that proves the reject is not "reject everything") |
+|---|---|---|---|---|
+| 1 | global serial uniqueness across batches + fabrics | a mint for a serial already minted (any fabric) — the second fabric's serial must be `provisional` and reconciled by relation | `L-01-dup-serial-cross-batch`, `L-01-dup-serial-cross-fabric` | `L-01-distinct-serials-accepted`, `L-01-provisional-pair-reconciled-accepted` |
+| 2 | referential integrity for every reference field | any reference that does not resolve in the store | `L-02-unresolved-<field>` × the 18 reference fields enumerated below | `L-02-resolved-<field>` × the same 18 (a resolving reference is accepted) |
+| 3 | append-only retention | delete; or a write with an existing primary id and different bytes | `L-03-delete`, `L-03-inplace-mutation` | `L-03-append-accepted`, `L-03-idempotent-rewrite-accepted` (same id, same bytes) |
+| 4 | binding open/close by event, never mutation | a binding row whose `valid_to` changed in place; a close with no event | `L-04-close-by-mutation`, `L-04-close-without-event` | `L-04-close-event-accepted`, `L-04-open-accepted` |
+| 5 | event→status projection with exact `status_basis` | an authored status on a derivable axis that disagrees with the fold | `L-05-entity.current_status-authored-vs-derived`, `L-05-entity_binding.status-…`, `L-05-identity_relation.verification_standing-…`, `L-05-materializer.current_status-…`, `L-05-bridge_assertion.verification_standing-…` (the five DERIVABLE-AT-WP-3 axes; `bridge_assertion.registry_standing` is ADJUDICATION-CARRIED and has no fold — declared, not tested) | `L-05-<axis>-derived-agrees-accepted` × the same five |
+| 6 | mint-receipt authentication + authority epoch | an `entity` with no preceding `mint_receipt`; a receipt from an authority outside its epoch | `L-06-entity-without-receipt`, `L-06-authority-out-of-epoch` | `L-06-receipted-mint-accepted`, `L-06-authority-in-epoch-accepted` |
+| 7 | relation direction rules + cycle rejection | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12 | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind` | `L-07-acyclic-chain-accepted`, `L-07-retirement-accepted` |
+| 8 | frontier coordinate uniqueness + temporal consistency | two entries normalizing to one canonical key with different versions (the NORMALIZER, per `normalization_version`); an observation after the consuming run's start | `L-08-normalized-collision` (the case the contract's shape check cannot see), `L-08-observed-after-start` | `L-08-distinct-normalized-keys-accepted`, `L-08-observed-before-start-accepted` |
+| 9 | run / frontier / materializer-version / surface consistency | surface not in run outputs; frontier disagreement; version not the run's | `L-09-membership`, `L-09-frontier-disagree`, `L-09-version-disagree` | `L-09-consistent-triple-accepted` |
+| 10 | admissible publication | `published` from a non-succeeded run; before completion; without a promoter | `L-10-publish-from-failed`, `L-10-publish-before-complete`, `L-10-no-promoter` | `L-10-publish-after-succeeded-accepted`, `L-10-unpublished-accepted` |
+| 11 | current read projections | a projection that cannot show its `status_basis` records | `L-11-projection-without-basis` | `L-11-projection-with-basis-accepted` |
+| 12 | historical replay | a replay as of frontier F or publication P that differs from the state recorded then | `L-12-replay-frontier`, `L-12-replay-publication` | `L-12-replay-matches-recorded-accepted` |
+
+**Row 2's denominator, enumerated from the frozen schema (so "N reference fields" is never quoted
+as a guess):** `entity.canonicalized_as` · `entity_binding.entity_serial` ·
+`state_observation.entity_serial` · `identity_relation.subject_serial` ·
+`identity_relation.object_serial` · `identity_relation.superseded_by` ·
+`bridge_assertion.subject_entity_serial` · `bridge_assertion.object_entity_serial` ·
+`bridge_assertion.superseded_by` · `mint_receipt.entity_serial` ·
+`materializer_version.materializer_serial` · `materializer_version.supersedes` ·
+`materialization_run.materializer_serial` · `materialization_run.materializer_version_id` ·
+`materialization_run.source_frontier_id` · `materialization_run.output_surface_version_ids[]` ·
+`surface_version.producing_run_id` · `surface_version.source_frontier_id` — **18** (plus
+`contest_event.target_entity_serial` / `target_binding_id` / `surviving_contest_id`,
+`coherence_evaluation.target_source_frontier`, `migration_receipt.migrated_record_ref` and
+`source_frontier.entries[].source_serial`, which are reference-SHAPED but resolve to records the
+ledger may not hold yet — **6 declared as "resolve-if-present"**, tested by `L-02-resolved-<field>`
+only). Battery size, derived: 24 reject + 24 accept on rows 1/3–12 (with row 5's five axes
+expanded) + 18 + 18 on row 2 + 6 resolve-if-present = **90 arms** — the number a runner must print
+beside its colour.
 
 **Completion evidence (memo §8):** WP-3 completes on this battery passing from a clean clone of
-the pinned commit, not on code delivery. Every row above has BOTH arms (the reject AND the sibling
-accept), the round-2 both-direction rule applied to the ledger.
+the pinned commit, not on code delivery. ⛔ **INSTRUCTION, not description (R3-DT-7, `0.4.0_DT_
+ClientPlatform~X`): the first draft of this table named 23 reject arms and ONE accept arm beneath a
+sentence claiming both directions — a battery built from it could only ever say NO, and §7 makes
+this table the battery's source. Every row now names its sibling accept arm(s); the battery is NOT
+complete until every id in both columns exists and the runner prints the 90-arm denominator.**
 
 ## 4. DERIVATION RULES (one per derivable axis; the projection is a pure fold over events)
 

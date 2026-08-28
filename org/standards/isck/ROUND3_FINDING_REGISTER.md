@@ -4,15 +4,15 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 
 ## 0. STATISTICS (every number below is derived from the rows by render_round2_register.py)
 
-- **Rows (one id per finding): 31.** The boundary record's "~40 listed contributions" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded.
-- **Substantive findings (excluding verifier self-corrections and self-refuted claims): 29.** Upheld: 29.
-- **Refuted: 2 of 31 claims filed (R3-DT-2, R3-CTO-2).** A refutation rate is quotable only from this line.
+- **Rows (one id per finding): 32.** The boundary record's "~40 listed contributions" is NOT this number; acceptances, inputs, corroborations and censuses are listed in `not_rows` and excluded.
+- **Substantive findings (excluding verifier self-corrections and self-refuted claims): 30.** Upheld: 30.
+- **Refuted: 2 of 32 claims filed (R3-DT-2, R3-CTO-2).** A refutation rate is quotable only from this line.
 - **Verifier self-corrections on the record: 0** ().
-- **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: 0 of 31** () -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit.
-- By seat: `0.4.0_DT_ClientPlatform~X` 6 · `1.0.0_SA_CTO~X` 2 · `2.0.0_SA_COO~X` 1 · `3.0.0_SA_CVO~X` 5 · `4.0.0_SA_CRO~X` 17
-- By class: BATTERY 10 · CONTRACT 12 · PROCESS 1 · RECORD 8
-- By disposition: AMENDED-RECORD 7 · FIXED 22 · REFUTED 2
-- By boundary inclusion: POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract) 1 · PRE-BOUNDARY (round 3 open) 30
+- **Rows with an OPEN-CITATION or OPEN-CLAIM-TEXT gap: 1 of 32** (R3-DT-7) -- honest gaps, listed in sec 3, to be closed by re-reading the origin message / re-deriving the commit.
+- By seat: `0.4.0_DT_ClientPlatform~X` 7 · `1.0.0_SA_CTO~X` 2 · `2.0.0_SA_COO~X` 1 · `3.0.0_SA_CVO~X` 5 · `4.0.0_SA_CRO~X` 17
+- By class: BATTERY 10 · CONTRACT 12 · DESIGN-INPUT 1 · PROCESS 1 · RECORD 8
+- By disposition: AMENDED-RECORD 7 · FIXED 23 · REFUTED 2
+- By boundary inclusion: POST-BOUNDARY (WP-3 design attack; round-3 register continues) 1 · POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract) 1 · PRE-BOUNDARY (round 3 open) 30
 
 ## 1. CLASSES AND DISPOSITIONS (the closed vocabularies)
 
@@ -22,6 +22,7 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 - **PROCESS** -- a defect in how the round is run
 - **VERIFIER-SELF** -- a verifier's own false verdict, self-corrected on the record
 - **PLANTED** -- the sealed deliberately-false claim (ROUND3_CHARTER.md sec 7), when revealed
+- **DESIGN-INPUT** -- a defect or required input against a DESIGN under attack (WP3_LEDGER_DESIGN.md)
 
 - **FIXED** -- artifact changed at fix_commit; verification_ref names the second seat's read
 - **AMENDED-RECORD** -- the governed record was amended (first-printed value kept beside the measured one)
@@ -64,9 +65,11 @@ Round 3 · attacked input `bf6fbe53d9` · charter `51e789ddfb` · boundary pin `
 | R3-DT-6 | `0.4.0_DT_ClientPlatform~X` | 20260828T034218Z (self-found, vacuity-checking its own control (c)) | BATTERY | LATENT: _RECORD_CACHE is module-global keyed by (ruled_at, path) without the RESOLVED ROOT; after a real resolve, patching _repo_root to None without clearing still reads LINKED -- control (c) passes today only because it happens to call _RECORD_CACHE.clear() on both sides, a load-bearing line stated nowhere; the next control that patches the root and forgets to clear passes vacuously | FIXED | owner DT~X; remedy one line -- key the cache by (root, ruled_at, path) -- plus a control that patches the root WITHOUT clearing and expects UNRESOLVED. Authorized under a 5th singular override (probes file only) so it lands before the boundary; if it lands after, the boundary declares it as the one open latent row | ea64a64850 (DT~X, 5th singular override 77323): _RECORD_CACHE keyed by (root, ruled_at, path) + a control that patches the root WITHOUT clearing and expects UNRESOLVED | CRO~X targeted replay at ea64a64850 (VALIDATED FIXED, 20260828T035216Z) + COO~X invariant diff (package figures identical to 74671f0911) -- CLOSED | PRE-BOUNDARY (round 3 open) |
 | R3-CRO-16 | `4.0.0_SA_CRO~X` | 20260828T034622Z (from DT~X's 77329 disclosure; CRO reproduced at bf6fbe53d9: MISUSE_RETURNS_CLEAN=True) | BATTERY | validate_isck.semantic_errors silently accepts a MAPPING as its top-level instances input, iterates its string keys, skips each as non-dict, and returns the clean-result shape [] -- wrong-container misuse becomes a false validator PASS (selfcite dict -> []; selfcite list -> one CVR2-1 error) | FIXED | owner CTO~X (validate_isck.py): fail fast -- a non-list top-level container raises TypeError naming the misuse; a non-dict member is an ERROR entry, never a silent skip; paired controls: dict raises / valid list still evaluates clean / self-cite list still fires / non-dict member errors -- LANDED: semantic_errors raises TypeError on a non-list; a non-dict member yields a "[i] NOT A RECORD" error entry; CONTAINER CONTROLS 3 of 3 in the self-test (dict RAISES / non-dict member ERRORS / valid list clean); the CLI already wrapped a single instance as [data] (validate_isck.py:942) | 393c248a09 | CRO~X VALIDATE 20260828T035216Z at 393c248a09 -- CLOSED | PRE-BOUNDARY (round 3 open) |
 | R3-CRO-17 | `4.0.0_SA_CRO~X` | 20260828T041133Z (convergent with COO~X 77360 20260828T040937Z and CVO~X's C4 condition 20260828T041031Z) | RECORD | BOUNDARY_ROUND3.md sec 4 says 'any seat can recompute sha256(row.claim\|key)' but the answer key is prose-wrapped markdown with no canonical byte string, separator or normalization -- three seats could not reproduce 402da6e0... (COO~X tried 36 variants); the proof was sealer-verified only | FIXED | exact key bytes landed as ROUND3_ANSWER_KEY.txt (LF-only, no trailing newline; sha256(key)=55f18939...); composition declared byte-exact: sha256(utf8(register row R3-CTO-2 claim) + b'\|' + bytes(key file)); verify_seal.py recomputes from the object database (--commit) and prints MATCH/MISMATCH; sec 4 amended. C4's same-change condition (COO~X/CVO~X): landed BEFORE the freeze is broadcast; COO~X's independent recomputation receipt requested | (this commit) | CRO~X RECEIPT MATCH at 91d24d7e79 (20260828T041532Z); COO~X RECEIPT MATCH by two instruments (verify_seal.py + independent object-DB recomputation; sha256(key)=55f18939...; negative control MISMATCH) 20260828T041601Z -- the C4 condition met; CLOSED | POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract) |
+| R3-DT-7 | `0.4.0_DT_ClientPlatform~X` | 20260828T041713Z | DESIGN-INPUT | WP3_LEDGER_DESIGN.md sec 3 at 91d24d7e79: 'Every row above has BOTH arms' is FALSE of the table it describes -- 12 rows, 24 ids, 23 reject-shaped + 1 accept-shaped (L-04-close-event-accepted); rows 2 and 5 parameterized with no enumerated denominator. Load-bearing because sec 7 makes sec 3 the battery's source: a battery built from it can only say NO, and WP-3's completion evidence is that battery passing -- the vacuity would be certified | FIXED | remedy (a): every row names its sibling accept arm id(s) in a fifth column; row 5's five DERIVABLE axes enumerated (registry_standing declared untested, adjudication-carried); row 2's reference fields enumerated from the frozen schema (18 must-resolve + 6 resolve-if-present); battery size derived = 90 arms, the denominator a runner must print; the sentence changed from DESCRIPTION to INSTRUCTION | (this commit) | OPEN-CITATION: DT~X re-parse at the citation (ids per row, accept-shaped count = rows) | POST-BOUNDARY (WP-3 design attack; round-3 register continues) |
 
 ## 3. OPEN GAPS IN THIS REGISTER (a register that hides its own holes is the tally it replaces)
 
+- **R3-DT-7** -- verification_ref: OPEN-CITATION: DT~X re-parse at the citation (ids per row, accept-shaped count = rows)
 
 ## 4. NOT ROWS (counted by the boundary tally, excluded here, so the exclusion is visible)
 

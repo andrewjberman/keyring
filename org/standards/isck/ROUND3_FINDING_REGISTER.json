@@ -11,7 +11,8 @@
     "RECORD": "a false or unauditable claim in a governed record (commit body, log, disposition)",
     "PROCESS": "a defect in how the round is run",
     "VERIFIER-SELF": "a verifier's own false verdict, self-corrected on the record",
-    "PLANTED": "the sealed deliberately-false claim (ROUND3_CHARTER.md sec 7), when revealed"
+    "PLANTED": "the sealed deliberately-false claim (ROUND3_CHARTER.md sec 7), when revealed",
+    "DESIGN-INPUT": "a defect or required input against a DESIGN under attack (WP3_LEDGER_DESIGN.md)"
   },
   "dispositions": {
     "FIXED": "artifact changed at fix_commit; verification_ref names the second seat's read",
@@ -392,6 +393,18 @@
       "fix_commit": "(this commit)",
       "verification_ref": "CRO~X RECEIPT MATCH at 91d24d7e79 (20260828T041532Z); COO~X RECEIPT MATCH by two instruments (verify_seal.py + independent object-DB recomputation; sha256(key)=55f18939...; negative control MISMATCH) 20260828T041601Z -- the C4 condition met; CLOSED",
       "boundary_inclusion": "POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract)"
+    },
+    {
+      "finding_id": "R3-DT-7",
+      "source_seat": "0.4.0_DT_ClientPlatform~X",
+      "source_ref": "20260828T041713Z",
+      "finding_class": "DESIGN-INPUT",
+      "claim": "WP3_LEDGER_DESIGN.md sec 3 at 91d24d7e79: 'Every row above has BOTH arms' is FALSE of the table it describes -- 12 rows, 24 ids, 23 reject-shaped + 1 accept-shaped (L-04-close-event-accepted); rows 2 and 5 parameterized with no enumerated denominator. Load-bearing because sec 7 makes sec 3 the battery's source: a battery built from it can only say NO, and WP-3's completion evidence is that battery passing -- the vacuity would be certified",
+      "disposition": "FIXED",
+      "disposition_basis": "remedy (a): every row names its sibling accept arm id(s) in a fifth column; row 5's five DERIVABLE axes enumerated (registry_standing declared untested, adjudication-carried); row 2's reference fields enumerated from the frozen schema (18 must-resolve + 6 resolve-if-present); battery size derived = 90 arms, the denominator a runner must print; the sentence changed from DESCRIPTION to INSTRUCTION",
+      "fix_commit": "(this commit)",
+      "verification_ref": "OPEN-CITATION: DT~X re-parse at the citation (ids per row, accept-shaped count = rows)",
+      "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack; round-3 register continues)"
     }
   ],
   "not_rows": {
