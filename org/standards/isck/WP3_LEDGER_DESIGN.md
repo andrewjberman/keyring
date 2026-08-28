@@ -229,9 +229,9 @@ the promote-or-kill and PROMOTED 13 of 13 rows (`0.4.0_DT_ClientPlatform~X` 7775
 instrument `ledger/battery/carrier_measure.py` @67f320c4c2: every arm run against a store that
 records the `record_type` of everything admission is asked to admit, accepted or refused, read
 per row against this table's CARRIER VERDICT — a different instrument from wave 1's prose
-classifier, and the two agree on every row; no KILL; CVO~X's independent carrier replay PENDING
-at this edit, so the promotion is the issuer's ruling `77758`/`77759` on DT~X's measurement, not
-yet a certified value).** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
+classifier, and the two agree on every row; no KILL; promotion ruled by the issuer `77758`/`77759`
+and CERTIFIED by `3.0.0_SA_CVO~X` 121429Z — the carrier_measure.py blob at the working tree equals
+the 67f320c4c2 blob, replay exit 0, 13 of 13).** 77608 had discharged AC3 as `NOT_MEASURABLE` and rejected an
 authored answer as typed-beside-derived; 77618 distinguishes that class (a value with NO falsifier
 beside a later measured one) from this table, which carries its falsifier — AS RULED IN WAVE 2:
 the falsifier is each row's CARRIER VERDICT measured from what the row's arms actually put through
