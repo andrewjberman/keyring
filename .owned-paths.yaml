@@ -160,24 +160,10 @@ lanes:
   # 1.0.0_SA_CTO~X on the issuer's completion flip @e608d8a553 (CVO PASS 180502Z; receipts recorded @c73e9ce055).
   # Both subtrees fall back to org/standards/** ANY_EXEC. Same lifecycle as ISCK_LEDGER_BUILD before it.
 
-  # WP-4 RESOLVER REPAIR lane (added 2026-08-28 15:0xZ by 1.0.0_SA_CTO~X as GRANTOR on the issuer's cut
-  # 2.0.0_SA_COO~X 78070; grantee 0.4.0_DT_ClientPlatform~X did NOT self-land). TO NFRA_C3MATERIALIZE.TO-WP4-DTX
-  # @adb1a27130 (resolver repair: nerves_resolve's two-state collapse -> the ruling's five resolver states), whose
-  # LANE clause names the SUBJECT file org/modules/graph/nerves_resolve.py (an exact-file row -- one file, not the
-  # module) and its battery path (proposed on the face: org/modules/graph/tests/nerves_resolve_battery/**; DT~X names
-  # it on its first report -- if it differs, this row moves with it). org/modules/** stays ANY_EXEC around them. The
-  # resolver READS the ledger, never writes it -- no isck/** row here. EXPIRY: struck on the issuer's completion flip
-  # of TO-WP4-DTX (lane owner strikes).
-  WP4_RESOLVER_BUILD:
-    permitted_agents:
-      - 1.0.0_SA_CTO
-      - 2.0.0_SA_COO
-      - 3.0.0_SA_CVO
-      - 1.1.0_SA_CTO
-      - 3.1.0_SA_CVO
-      - 4.0.0_SA_CRO
-      - 0.4.0_DT_ClientPlatform~X
-    description: "ANY_EXEC + 0.4.0_DT_ClientPlatform~X on org/modules/graph/nerves_resolve.py (exact file) and org/modules/graph/tests/nerves_resolve_battery/** for the life of TO NFRA_C3MATERIALIZE.TO-WP4-DTX @adb1a27130 (grantor 1.0.0_SA_CTO~X 2026-08-28). Strike on the TO's completion flip."
+  # WP4_RESOLVER_BUILD (2026-08-28 15:0xZ-19:0xZ): ANY_EXEC's six + 0.4.0_DT_ClientPlatform~X on the exact file
+  # org/modules/graph/nerves_resolve.py + org/modules/graph/tests/nerves_resolve_battery/** for TO
+  # NFRA_C3MATERIALIZE.TO-WP4-DTX @adb1a27130 -- STRUCK by the lane owner 1.0.0_SA_CTO~X on the issuer's completion
+  # flip @5d9531729b (CVO CERTIFY 6/6 190036Z). Both paths fall back to org/modules/** ANY_EXEC.
 
   ANY_CTO:
     permitted_agents:
@@ -1442,13 +1428,6 @@ paths:
 
   "org/modules/**":
     lane: ANY_EXEC
-
-  # WP-4 resolver repair (2026-08-28, grantor CTO~X on COO~X 78070): longest-match over org/modules/** for the
-  # subject file and its battery path only; see the WP4_RESOLVER_BUILD lane note. Struck with the lane on the flip.
-  "org/modules/graph/nerves_resolve.py":
-    lane: WP4_RESOLVER_BUILD
-  "org/modules/graph/tests/nerves_resolve_battery/**":
-    lane: WP4_RESOLVER_BUILD
 
   "org/standards/**":
     lane: ANY_EXEC
