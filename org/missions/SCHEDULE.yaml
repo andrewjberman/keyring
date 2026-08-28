@@ -1,0 +1,59 @@
+# SCHEDULE.yaml -- declared intent for scheduled jobs. EXCEPTIONS ONLY.
+#
+# Read by `.tools/schedule-check.py` (slash: schedule-check), which COMPILES THE TIMETABLE AT
+# VIEW TIME from the live AWS APIs. There is no generated artifact anywhere and that is the point:
+# nothing here can go stale, because nothing here is a copy of anything.
+#
+# ============================================================================================
+# THE ONE RULE FOR THIS FILE
+# ============================================================================================
+# PUT NOTHING HERE THAT AN API CAN ANSWER.
+#
+# No cron expressions. No enabled/disabled. No targets. No last-run. All of those are read live,
+# every render. Writing a queryable value down creates a SECOND CARRIER, and two carriers of one
+# fact diverge from minute one -- which is the exact disease this tool was built to cure. If you
+# find yourself adding a field that schedule-check could have read itself, delete it instead.
+#
+# What belongs here is the residue: things NO API knows.
+#   - WHY a job is deliberately off        (the API says DISABLED; it cannot say "on purpose")
+#   - WHO owns it
+#   - WHICH directive/project it serves
+#
+# ============================================================================================
+# WHY "EXCEPTIONS ONLY" AND NOT A ROW PER JOB
+# ============================================================================================
+# Measured 2026-08-28 across both planes: 157 jobs, of which 18 are not ENABLED.
+# So `expect` DEFAULTS TO ENABLED and this file records only the departures -- ~18 rows instead
+# of 157. A row-per-job file would be 157 hand-written entries that rot the moment the estate
+# changes; this one shrinks as things get cleaned up rather than growing as the estate grows.
+#
+# A job absent from this file is asserted to be: expected ENABLED, and drift is real if it isn't.
+#
+# ============================================================================================
+# HOW TO USE THE DRIFT LIST
+# ============================================================================================
+# `schedule-check.py` prints DRIFT for every job whose live state differs from its expectation.
+# On the first run that was 18 rows, all UNDECLARED -- correctly so. UNDECLARED does not mean
+# broken; it means NOBODY HAS SAID WHETHER THIS IS DELIBERATE, which is a true statement about
+# our records rather than about the job.
+#
+# Do NOT bulk-annotate the list to make it go quiet. An `expect: DISABLED` written without
+# knowing why is worse than the empty row it replaced: it converts an honest open question into
+# a false answer, and nothing will ever re-open it. Annotate one when you actually know.
+#
+# ============================================================================================
+
+exceptions: []
+
+# Shape, for when the first real one is added. `id` is the live resource name and is the join
+# key -- it must match the API exactly, since that is what the compiler matches on.
+#
+# exceptions:
+#   - id: bd-49f-runner-daily          # EventBridge Rule or Scheduler name, verbatim
+#     expect: DISABLED                 # ENABLED | DISABLED -- what we INTEND, not what is live
+#     owner: 0.7.0_AE_CloudOps         # serial, or a human name
+#     directive: D4_ETFPOS             # optional, links to org/missions/DIRECTIVES.yaml
+#     note: "superseded by the consolidation runner; kept for rollback until <date>"
+#
+# The `note` is the field that earns this file's existence. It is the only place the reason
+# survives after the person who turned the job off has moved on.
