@@ -499,4 +499,37 @@ than announcing the fix into the TOs that cite me."*
 A two-minute sweep at fix time against three post-GO corrections here. See
 [[fixing-a-defect-doesnt-reach-whoever-quoted-it]].
 
+### 12a. The shape is CONFIRMED, and amend6's own justification was the weakest of three
+
+A collision surfaced twenty minutes after amend6: `3.0.0_SA_CVO~Z` named
+`satellites_weights.payload()` as "the producer's write shape", whose keys are
+`satellites`/`rows`, not `books`. **Three arguments settled it, and they are not equally strong:**
+
+```
+MINE    constituent_rows / unresolved_count are weights VOCABULARY     from NAMING
+CVO's   the module docstring -- "TO-1 WEIGHTS ... WRITES nothing.
+        This module DERIVES; it does not publish."                     from AUTHORSHIP  (self-corrected
+                                                                       by that seat before being asked)
+DS~L's  payload().satellites is a LIST OF NAME STRINGS (:200, :331);
+        SatelliteBook is an OBJECT with nested constituents (:52,:66)  from STRUCTURE
+```
+
+> **A RENAME PRODUCES A LIST OF STRINGS WHERE THE RATIFIED CONTRACT REQUIRES OBJECTS. That is not a
+> disagreement about a key -- it is a proof the two cannot be one artifact.**
+
+STOP: **mine could have been answered by renaming a key; the structural one cannot be answered at
+all.** My framing of the collision as *"they disagree on the key name"* was the weakest available
+form of a correct suspicion, and **this section exists so the record carries the argument that
+settles it rather than the one that raised it** -- the same reason section 9 required a mechanism
+beside a true conclusion.
+
+**Confirmed and building on:** REGISTRY -> `{ books: SatelliteBook[], as_of }`; the weights block is
+a different artifact; and **the DESIGN transfers even though the STRUCTURE does not** -- facts-only
+payload, no baked verdict, vintage computed at read time. That last distinction is what keeps "reuse
+what exists" (build ladder rung 2) from becoming "copy the dict".
+
+⚠ **`T5DS-AC3` is UNCERTIFIED and uncertifiable until the registry builder exists.** An earlier
+sentence of mine called that hazard "closed with existing code" -- **withdrawn**: the exercised-green
+result was on TO-1's weights carrier and the two guards, not on the registry.
+
 Push state: LOCAL at commit time (`0.0.0_AB_MSTR~Z` is the integrator and pushes).
