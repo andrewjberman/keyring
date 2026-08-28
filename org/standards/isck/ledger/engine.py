@@ -45,6 +45,7 @@ import os
 import re
 import sqlite3
 
+from . import contests
 from . import folds
 from . import lineage
 from . import surfaces
@@ -360,6 +361,7 @@ class Store:
         surfaces.check_publication(final, list(batch.values()), self._primary_of, _reject)
         folds.check_authored_vs_derived(final, list(batch.values()), self._primary_of, seqs,
                                         _reject)
+        contests.check_contests(final, list(batch.values()), self._primary_of, seqs, _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))
