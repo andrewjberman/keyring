@@ -136,6 +136,10 @@ def _build(ws: Path, *, decomp_ref_line: str, criteria: str, dep_stage: bool = T
     dec = ws / "workflows" / "runs" / "fixture"
     dec.mkdir(parents=True, exist_ok=True)
     (dec / "DECOMP.md").write_text(DECOMP, encoding="utf-8")
+    (dec / "rectangle.final.certified.json").write_text(json.dumps({"cells": [
+        {"cell_id": "FIX-a-1"}, {"cell_id": "FIX-a-2"},
+        {"cell_id": "FIX-b-1"}, {"cell_id": "FIX-b-2"},
+    ]}), encoding="utf-8")
     tod = ws / "org" / "tier2_senior" / "0.8.0_AE_CloudComp" / "task_orders"
     tod.mkdir(parents=True, exist_ok=True)
     to = tod / "FIX_PROJ.TO-1.fixture.md"
@@ -167,9 +171,15 @@ def _init_repo(ws: Path) -> None:
 
 
 DECOMP_REL = "workflows/runs/fixture/DECOMP.md"
+CELL_DOC_REL = "workflows/runs/fixture/rectangle.final.certified.json"
 TO_REL = "org/tier2_senior/0.8.0_AE_CloudComp/task_orders/FIX_PROJ.TO-1.fixture.md"
 CONFORMANT_REF = (
     f"<decomp_ref>{DECOMP_REL} -- cells FIX-a-1, FIX-a-2, FIX-b-1</decomp_ref>")
+PARENTHESIZED_REF = (
+    f"<decomp_ref>({DECOMP_REL}) -- cells FIX-a-1, FIX-a-2, FIX-b-1</decomp_ref>")
+EXPLICIT_CELL_DOC_REF = (
+    f"<decomp_ref><decomp_doc>{CELL_DOC_REL}</decomp_doc>"
+    f"<owned_cells>FIX-a-1, FIX-a-2, FIX-b-1</owned_cells></decomp_ref>")
 
 # PRODUCTION-SHAPED FIXTURES. Modelled on the real ADVI_PERFRP round-1 TOs as they stood
 # BEFORE COO's relocation fix @249e0687c8: owned cells, a READ-DEPENDENCY clause and an
@@ -225,6 +235,26 @@ def main() -> int:
               "3/3 distinct cell_ref" in _frame(f, "forward-2"), _frame(f, "forward-2"))
         check("conformant: backward = 3/3",
               "3/3 cell(s) declared" in _frame(f, "backward"), _frame(f, "backward"))
+
+    # ---- ARM 1b: R4-DT-6 recurrence -- punctuation is not part of a legacy path ----
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=PARENTHESIZED_REF, criteria=CONFORMANT_CRITERIA)
+        v, f = _run(mod, ws, _instance(DECOMP_REL, TO_REL))
+        check("parenthesized legacy path: delimiter excluded and join VALID", not v, str(v))
+        check("parenthesized legacy path: full 4-cell doc resolved",
+              "= 4 distinct cell id(s)" in _frame(f, "decomp id space"),
+              _frame(f, "decomp id space"))
+
+    # ---- ARM 1c: explicit cell-bearing artifact, not a narrative-only face ----
+    with tempfile.TemporaryDirectory() as d:
+        ws = Path(d)
+        _build(ws, decomp_ref_line=EXPLICIT_CELL_DOC_REF, criteria=CONFORMANT_CRITERIA)
+        v, f = _run(mod, ws, _instance(CELL_DOC_REL, TO_REL))
+        check("explicit decomp_doc JSON: no violations", not v, str(v))
+        check("explicit decomp_doc JSON: 4-cell id space resolved",
+              "= 4 distinct cell id(s)" in _frame(f, "decomp id space"),
+              _frame(f, "decomp id space"))
 
     # ---- ARM 2: MUTANT -- drop decomp_ref from the instance ----
     with tempfile.TemporaryDirectory() as d:

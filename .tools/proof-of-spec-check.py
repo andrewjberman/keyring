@@ -40,6 +40,13 @@ from pathlib import Path
 
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "org" / "standards" / "PROOF_OF_SPEC.schema.json"
 
+# A TO may name the cell-bearing run artifact explicitly.  The legacy form predates the
+# tag and discovers DECOMP.md in prose, so keep it as a compatibility path -- but never
+# let punctuation become part of the path (R4-DT-6: ``\S+`` swallowed an opening paren).
+DECOMP_DOC_TAG_RE = re.compile(r"<decomp_doc>\s*([^<]+?)\s*</decomp_doc>", re.S)
+DECOMP_DOC_VALUE_RE = re.compile(r"[\w./~-]+")
+LEGACY_DECOMP_DOC_RE = re.compile(r"([\w./~-]+DECOMP\.md)")
+
 
 def conditional_checks(inst: dict) -> list[str]:
     """The rules draft-07 can't carry. Each violation is one printed line."""
@@ -314,8 +321,15 @@ def _parse_to(text: str) -> dict:
     blob = m.group(1) if m else None
     doc = ""
     if blob:
-        d = re.search(r"(\S+DECOMP\.md)", blob)
-        doc = d.group(1) if d else ""
+        explicit = DECOMP_DOC_TAG_RE.search(blob)
+        if explicit:
+            candidate = explicit.group(1).strip()
+            # Explicit but malformed is a broken declaration, never a reason to fall
+            # back to some other path mentioned in prose inside the same element.
+            doc = candidate if DECOMP_DOC_VALUE_RE.fullmatch(candidate) else ""
+        else:
+            d = LEGACY_DECOMP_DOC_RE.search(blob)
+            doc = d.group(1) if d else ""
     # THE DELIMITED OWNED-CELLS CLAUSE (CTO 66893). WHY IT EXISTS: the wide harvest read
     # EVERY cell id in the whole <decomp_ref> element as a cell the TO CLAIMS, so a
     # READ-DEPENDENCY became an unclaimed claim and -- the inversion AE~G named -- an
@@ -363,16 +377,16 @@ def _parse_to(text: str) -> dict:
 def _decomp_cell_ids(rel_or_abs: str) -> tuple[set, str]:
     """(ids, error). The id space the decomp actually declares."""
     if not rel_or_abs:
-        return set(), "no DECOMP.md path found in the TO's <decomp_ref>"
+        return set(), "no valid decomp artifact path found in the TO's <decomp_ref>"
     p = Path(rel_or_abs)
     if not p.is_absolute():
         p = WORKSPACE / rel_or_abs
     if not p.is_file():
-        return set(), f"decomp doc '{rel_or_abs}' does not resolve to a file"
+        return set(), f"decomp artifact '{rel_or_abs}' does not resolve to a file"
     try:
         return set(CELL_ID_RE.findall(p.read_text(encoding="utf-8", errors="replace"))), ""
     except Exception as exc:  # noqa: BLE001
-        return set(), f"decomp doc unreadable: {exc}"
+        return set(), f"decomp artifact unreadable: {exc}"
 
 
 def _vintage_resolves(vintage: str) -> bool:
