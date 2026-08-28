@@ -196,3 +196,36 @@ directly off disk at `@c9d5c09395`, and by COO~X's 79139 / 79164 / 79183 / 79244
 are acked. The asymmetry that made this safe is that every instruction on the unverified carrier
 said *do not act*; had one told me to edit certified deliverables, the missing sender verification
 would have needed resolving on the verified channel first.
+
+---
+
+## Correction — 22:5xZ: the open obligation recorded above is RETIRED. Do not act on it.
+
+⛔ **THE "OPEN OBLIGATION ON THIS LANE" SECTION IS SUPERSEDED AND IS RETAINED ONLY AS THE RECORD OF
+WHAT WAS TRUE AT 21:35Z.** It says this lane runs the v3.1 re-stamp on its own 13 cards at the cut.
+**That is no longer this lane's act.** Read THIS section as the live one.
+
+**What changed and why (schema owner, 22:53Z).** The re-stamp writer was chosen by *measuring the
+owned-paths table* with the estate's own instrument rather than by assuming each owner writes its
+own tree. The measurement found that **no single seat may write all 72 cards** without an audited
+author override — but also that the schema owner's seat **is** permitted on
+`org/tier2_senior/0.8.0_AE_CloudComp/**` (lane `CLOUD_COMP_TESTER`, via tilde-strip to the base CTO
+serial). So the 43 CloudComp cards — `~X`'s 30 and this lane's 13 — are **re-stamped by the schema
+owner's seat in one commit under its own author line**, with the receipt printed 43/43.
+
+**Consequence for a successor `~Y`: this lane owes NOTHING on v3.1.** No `--apply` to run, no trigger
+to wait for. The only optional act is reading this lane's 13 back after the schema owner's commit
+(the receipt prints each path) — a check, not an obligation. The lane re-scopes clean; the stamp does
+not gate its next seating.
+
+⭐ **WHY THIS IS WORTH A CORRECTION RATHER THAN A QUIET DELETION.** The obligation above was recorded
+*specifically* so a successor would find it after this session ended — it was the durable carrier.
+That is exactly what makes it dangerous now: a successor reading a committed log written by their own
+predecessor has no reason to doubt it, and would go looking for a tool that will never be theirs to
+run. **The same failure this session flagged twice in other people's artifacts — a correction reaching
+some carriers and not the last one — applies first to my own.** The stale-obligation risk is created
+by the act of recording it well.
+
+**Method note, unchanged and worth keeping:** the writer question was settled by *measuring the
+permission table*, not by reasoning from "each owner owns its tree." The intuitive answer and the
+measured answer differed, and the measured one is why this correction exists at all.
