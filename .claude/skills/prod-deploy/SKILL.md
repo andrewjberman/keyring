@@ -21,7 +21,15 @@ incident anchors are cited inline. Design history: `docs/briefs/portal-main-tree
 
 - **DT-only check:** if your serial is not a `0.x.0_DT_*` (or explicitly Andrew-directed), HALT —
   route to the pod DT.
-- Anchor: `cd /c/Users/AndrewBerman/Desktop/ajb_workspace`.
+- **Anchor — DERIVE the workspace root; never type a device path** (CLAUDE.md NEVER: *derive, don't
+  hardcode*). This procedure runs on more than one device and their roots differ; at least one
+  contains a **SPACE**, so quote every expansion or word-splitting silently truncates the path:
+  ```bash
+  WS="$(git rev-parse --show-toplevel)" && cd "$WS"
+  ```
+  `$WS` is reused in Steps 4, 6 and 7. **Re-derive it in any new shell — but only while standing at
+  the workspace root.** From inside the Step-4 worktree `--show-toplevel` returns THE WORKTREE, so
+  carry the value forward rather than recomputing it there.
 - Pull inbox (`check-inbox` + `get_agent_status`) — a pending `[STOP]`/`[HALT]` blocks the promote.
 - **Declare the freeze window:** MCP COO that a promote is staged. The promote merges LIVE
   `origin/DEV` at GO time — it is NOT a frozen snapshot; any DEV commit pushed during the window
@@ -80,12 +88,18 @@ v2.1.114 stale 47b3d5d7). Step 3 is mandatory on EVERY promote, not just after k
 ## Step 4 — Merge forward to PROD in an EPHEMERAL worktree
 
 ```bash
-WORKTREE=/c/Users/AndrewBerman/Desktop/ajb_workspace/.runtmp/portal-promote-$(date -u +%Y%m%dT%H%M%SZ)
-git -C /c/Users/AndrewBerman/Desktop/ajb_workspace/portal worktree add "$WORKTREE" PROD
+WS="$(git rev-parse --show-toplevel)"        # re-derive; do not assume Step 0's shell
+WORKTREE="$WS/.runtmp/portal-promote-$(date -u +%Y%m%dT%H%M%SZ)"
+git -C "$WS/portal" worktree add "$WORKTREE" PROD
 cd "$WORKTREE"
 
-# bun install FOREGROUND — node_modules required for the pre-push tsc gate
-/c/Users/AndrewBerman/.bun/bin/bun install
+# bun install FOREGROUND — node_modules required for the pre-push tsc gate.
+# RESOLVE bun from PATH; NEVER a baked path (CLAUDE.md Portal: "resolve bun via profile, don't bake
+# a path"). A device-specific path fails HERE — after the worktree exists — which is a half-landed
+# promote (NEVER#2), and it fails looking like an environment problem rather than a procedure bug.
+BUN="$(command -v bun)" || { echo "BLOCKED: bun not on PATH — resolve it BEFORE promoting"; exit 1; }
+echo "OK: bun -> $BUN ($("$BUN" --version))"   # corruption oracle: echo the resolved path back
+"$BUN" install
 
 # Explicit --no-ff with a descriptive message encoding rollback SHA
 PROD_BASE=$(git rev-parse origin/PROD)
@@ -135,13 +149,30 @@ alive-but-idle). Without it the pre-push hook fails with `tsc: command not found
 The PROD push triggers `deploy.yml`: build → deploy to the server → annotated tag `portal-vX.Y.Z`.
 
 ```bash
-gh run list --branch PROD --limit 1                 # grab the run id
-gh run view <run-id> --json conclusion,status       # THE verification
+gh -R Opal-Capital/portal run list --branch PROD --limit 1              # grab the run id
+gh -R Opal-Capital/portal run view <run-id> --json conclusion,status    # THE verification
 ```
+⛔ **`-R` IS LOAD-BEARING, NOT TIDINESS. `gh` RESOLVES THE REPO FROM CWD, AND THE WORKSPACE ROOT IS A
+DIFFERENT GITHUB REPO THAN `portal/`.** Run bare at the workspace root — where Steps 6 and 7 put you —
+these query `Opal-Capital/ajb_workspace`, which **has no PROD branch, so they return `[]` with no
+error**:
+```
+at ajb_workspace root :  gh run list --branch PROD -> []        gh repo view -> Opal-Capital/ajb_workspace
+inside portal/        :  gh run list --branch PROD -> 3 runs    gh repo view -> Opal-Capital/portal
+```
+**`conclusion: "success"` is the gate, and an empty list yields no conclusion at all — so a wrong-repo
+read is INDISTINGUISHABLE from "still building", on the one step that verifies the promote.** The
+failure is silent in both directions: a green promote that never verifies, or a wait for a run that
+already succeeded in a namespace you are not reading. Same class as org/XXX.md Step 1a's bare
+`git log` inside `portal/`. **Positive-control any empty `gh` result** by dropping the filter and
+running `gh repo view --json nameWithOwner` before you conclude anything from a zero.
+*(Measured with that positive control 2026-08-28 by 0.4.0_DT_ClientPlatform~Z while loading this
+procedure; ruled in by 1.0.0_SA_CTO~Z + 2.0.0_SA_COO~Z.)*
 - **A "CI green" claim ENUMERATES WORKFLOWS, listed by headSha — never the branch badge or a
   single run** (CTO-banked near-miss law, 2026-08-04). Multiple workflows run per push
-  (`gh run list --json databaseId,headSha,workflowName,status,conclusion` filtered to the exact
-  sha); one can be green while another is red on the SAME commit. Incident-as-fixture: on
+  (`gh -R Opal-Capital/portal run list --json databaseId,headSha,workflowName,status,conclusion`
+  filtered to the exact sha — `-R` here for the same reason as above); one can be green while
+  another is red on the SAME commit. Incident-as-fixture: on
   `7d544d27`, `CI - Build & Validate` was SUCCESS while the `Surface-Check Gate` was FAILURE
   (runs 30880062803 / 30880062845) — a promote verified on the first workflow alone would have
   launched past a red non-bypassable backstop; it was caught only by listing runs by headSha.
@@ -159,7 +190,11 @@ gh run view <run-id> --json conclusion,status       # THE verification
 ## Step 6 — Workspace submodule pointer (CLOUD)
 
 ```bash
-cd /c/Users/AndrewBerman/Desktop/ajb_workspace
+cd "$WS"    # the value derived at Step 0/4 — quoted (the path may contain a space)
+# ⛔ Do NOT re-derive with `git rev-parse --show-toplevel` HERE. Step 4 left you inside $WORKTREE,
+#    which is its own git worktree, so --show-toplevel returns THE WORKTREE, not the workspace root.
+#    Derive $WS while standing at the workspace root; carry the value. If $WS is empty (new shell),
+#    cd to the workspace root by hand first, then re-derive.
 # Main tree should still be on DEV — verify, do NOT checkout (it never left)
 git -C portal branch --show-current   # expect: DEV
 .tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
@@ -174,7 +209,7 @@ for traceability — see session logs for examples.)
 ## Step 7 — Teardown + flip back to DEV (the conclusion Andrew named)
 
 ```bash
-cd /c/Users/AndrewBerman/Desktop/ajb_workspace
+cd "$WS"    # same caveat as Step 6 — carry the value, do not re-derive from inside the worktree
 git -C portal worktree remove "$WORKTREE" 2>/dev/null || true
 git -C portal worktree prune   # cleans git's internal tracking regardless of physical outcome
 git -C portal branch --show-current   # MUST print DEV
