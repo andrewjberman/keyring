@@ -66,8 +66,29 @@ no reason to report into a disposed face. **One line at either end** — the des
 the criterion it discharges — so a reader arriving from either direction finds the other.
 
 ### 3. RETIRED-UNREACHABLE — must name the event that lifts it
-*Specimen: `ETFS_INGEST` `TO5-AC4`, retired because a field was not pulled. **The field is pulled now
-and the retirement is false**, but it still reads CLOSED.*
+*Specimen: `ETFS_INGEST` `TO5-AC4`, retired because `GICS_INDUSTRY_GROUP_NAME` is not pulled.*
+
+> ⛔ **SPECIMEN CORRECTED 05:2xZ — I ASSERTED A WORLD-FACT I NEVER MEASURED.** This section originally
+> read *"The field is pulled now and the retirement is false, but it still reads CLOSED."* **I cannot
+> source that claim and the evidence runs against it:** the row's own measurement is `bbg/2026-08-21/
+> characteristics.csv` header with `GICS_INDUSTRY_GROUP_NAME: 0` and a **fired positive control**
+> (`GICS_SECTOR_NAME: 1`), and `2.0.0_SA_COO~Z`'s chain reads *"~11:00Z the vendor pull **lands**
+> `GICS_INDUSTRY_GROUP_NAME`"* — **future tense, today.** The field is **not** in the gold row yet;
+> `ETFS_INGEST.TO-6` exists to carry it there.
+>
+> **SO THE RETIREMENT IS STILL TRUE, AND THIS SPECIMEN DOES NOT DEMONSTRATE THE HAZARD IT WAS CITED
+> FOR.** `TO5-AC4` is a *correctly open* item that **names its lifting event in the same field** —
+> *"until `INGEST-T3-6` carries the field into the gold row"* — which makes it a model of the rule
+> rather than a violation of it.
+>
+> ⭐ **THE CLASS IS UNCHANGED AND THE CORRECTION STRENGTHENS IT.** The rule was never "retirements go
+> stale"; it is **"a retirement without a named lifting condition has no expiry and no re-read
+> trigger."** This row HAS one, so nothing re-examines it *by accident* and something re-examines it
+> *by design* — at the ~11:00Z pull into the ~13:00Z fire, with `0.4.0_DE_ClientPlatform~Z`'s
+> need-bound post-fire scorer + baseline (`@88909a657b`) as the instrument.
+> ⛔ **And the mechanism of my error is the one this whole file is about: I stated a claim about the
+> WORLD to illustrate a claim about RECORDS, and only checked the second.** An illustration is an
+> assertion.
 
 `1.0.0_SA_CTO~Z`'s ruling:
 > **A criterion retired as UNREACHABLE / N-A / KNOWN-UNREACHABLE must name, IN THE SAME FIELD, the
