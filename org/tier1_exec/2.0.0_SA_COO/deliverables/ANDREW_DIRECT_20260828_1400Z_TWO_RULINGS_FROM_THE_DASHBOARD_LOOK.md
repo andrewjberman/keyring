@@ -155,6 +155,38 @@ pattern we cited as self-securing is merely unrendered. **Carrying the reason in
 while no consumer prints that field — which is a property of the CONSUMER, not of the producer's
 design, and therefore not something the producer can rely on.**
 
+### ⭐ THE DENOMINATOR — 1 OF 4 SCOPES, AND IT IS **NOT** CROSS-FIRM (`1.0.0_SA_CTO~Z`, 13198)
+```
+cottonwood    predicate_reason len 888   internal-token leak TRUE
+global        predicate_reason len 221   leak FALSE
+49financial   no predicate_reason        leak FALSE
+inflection    no predicate_reason        leak FALSE
+>> 1 OF 4 SCOPES.
+```
+⛔ **IT IS COTTONWOOD'S OWN DATA IN COTTONWOOD'S OWN ARTIFACT. NO FIRM'S INFORMATION APPEARS IN
+ANOTHER FIRM'S FILE.** That is the NEVER#8 cross-firm class and **THIS IS NOT IT.** Stated plainly so
+nobody escalates it as one. **A denominator was the missing input to severity, and it cuts it down.**
+⚠ **THE PATTERN IS SYSTEMIC EVEN WHERE THE LEAK IS NOT:** `Insurance.view_plane_excluded_reason` (380)
+and `SMA.absent_reason` (221-226) carry prose on **all four** scopes — **but those carry ANDREW'S OWN
+RULINGS, not internals.** Only cottonwood's `predicate_reason` carries source paths, routing codes and
+figures.
+⛔ **AND IT IS IN THE SERVED JSON, NOT THE DOM — SO THE UI CANNOT CONTAIN IT.** Anyone who can fetch
+`/api/general/mdpf/cottonwood/category-views.json` gets the 888 characters whatever the page draws.
+
+### ⛔⛔ THE FORK THE SEVERITY TURNS ON — A ONE-WORD SOVEREIGN CALL, NOT A MEASUREMENT
+The string reads, verbatim: *"42 models carry no constituent data, including both Anna strategies — the
+firm's two LARGEST accounts, $46,436,739.80."*
+```
+ADVISOR-ONLY audience  -> a cottonwood advisor reads their own book.  LOW. Ugly, not exposing.
+END-CLIENT audience    -> one cottonwood client reads ANOTHER client's named strategies and total.
+                          A REAL EXPOSURE, and it changes the priority entirely.
+```
+**MEASURED: `/portfolios` is wrapped in `<ProtectedRoute>` (`App.tsx:411-416`) — AUTHENTICATION IS
+REQUIRED.** ⛔ **WHO MAY AUTHENTICATE IS NOT ANSWERABLE FROM THE ROUTES**, and two seats reached that
+same wall independently with different instruments (`comp-routes`; the render source).
+⭐ **BOTH LIMBS ARE COHERENT AND NEITHER SEAT WILL GUESS.** No remedy is sized until the answer comes
+back — sizing it now would price a fix against an unknown audience.
+
 ### AUDIENCE GATING — PARTIALLY ANSWERED, DELIBERATELY SPLIT
 ```
 /api/general/mdpf/cottonwood/category-views.json -> S3 opal-data-portal-v2
