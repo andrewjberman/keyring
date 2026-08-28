@@ -380,6 +380,18 @@
       "fix_commit": "393c248a09",
       "verification_ref": "CRO~X VALIDATE 20260828T035216Z at 393c248a09 -- CLOSED",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
+    },
+    {
+      "finding_id": "R3-CRO-17",
+      "source_seat": "4.0.0_SA_CRO~X",
+      "source_ref": "20260828T041133Z (convergent with COO~X 77360 20260828T040937Z and CVO~X's C4 condition 20260828T041031Z)",
+      "finding_class": "RECORD",
+      "claim": "BOUNDARY_ROUND3.md sec 4 says 'any seat can recompute sha256(row.claim|key)' but the answer key is prose-wrapped markdown with no canonical byte string, separator or normalization -- three seats could not reproduce 402da6e0... (COO~X tried 36 variants); the proof was sealer-verified only",
+      "disposition": "FIXED",
+      "disposition_basis": "exact key bytes landed as ROUND3_ANSWER_KEY.txt (LF-only, no trailing newline; sha256(key)=55f18939...); composition declared byte-exact: sha256(utf8(register row R3-CTO-2 claim) + b'|' + bytes(key file)); verify_seal.py recomputes from the object database (--commit) and prints MATCH/MISMATCH; sec 4 amended. C4's same-change condition (COO~X/CVO~X): landed BEFORE the freeze is broadcast; COO~X's independent recomputation receipt requested",
+      "fix_commit": "(this commit)",
+      "verification_ref": "OPEN-CITATION: COO~X independent recomputation via verify_seal.py --commit <hash> (the C4 condition's receipt); CRO~X likewise",
+      "boundary_inclusion": "POST-BOUNDARY (boundary-evidence repair; does not reopen round-3 findings or alter the frozen contract)"
     }
   ],
   "not_rows": {

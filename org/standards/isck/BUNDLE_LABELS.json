@@ -5,6 +5,11 @@
   },
   "v0.2-candidate+38": {
     "contract_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7",
-    "derived_at_commit": "dcbe214a44630b8bcaed211c47ec62b45cd2a146"
+    "derived_at_commit": "dcbe214a44630b8bcaed211c47ec62b45cd2a146",
+    "frozen": {
+      "frozen_at": "2026-08-28T04:14:06Z",
+      "round_3_boundary_commit": "1a05bfb3e4ff278388a67e1ebe986607ed3cc4d1",
+      "scope": "schema-only"
+    }
   }
 }

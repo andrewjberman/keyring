@@ -610,6 +610,16 @@ REWORK-2 `merged -> surviving_contest_id` typed `ct:` REQUIRED + `consequence_re
 `upheld` forbids the survivor; `dismissed` forbids both (§3.21 arm table re-recorded — it had
 omitted `merged`). Register: `ROUND3_FINDING_REGISTER.json` R3-CRO-1..4, R3-CVO-1.
 
+**SCHEMA-ONLY FREEZE — `v0.2-candidate+38` FROZEN (C4, `3.0.0_SA_CVO~X` 20260828T040820Z):**
+`bundle_identity.py dcbe214a44 --freeze --boundary <BOUNDARY_ROUND3.md commit>` records
+`frozen_at` + the round-3 boundary in `BUNDLE_LABELS.json`; `BUNDLE_IDENTITY.json` reads
+`status: frozen`, `freeze_scope: schema-only`. **The three operational receipts stay null BY
+DEFINITION** — that is "not operationally certified", not a contradiction (the record's earlier
+comment said otherwise and was corrected in the same change). **The frozen label is immutable:**
+any byte change on the package path derives a NEW `candidate_id`; the contract is never mutated
+under `+38`. The freeze lifts ONLY WP-3 implementation start (`WP3_LEDGER_DESIGN.md`, design-first,
+C5); production population and the 56 L3 cells stay HELD.
+
 **ROUND 3 CLOSED — `BOUNDARY_ROUND3.md`, 2026-08-28 04:0xZ, boundary pin dcbe214a44 =
 `v0.2-candidate+38` (`bundle:sha256:617fd9a1…`, `BUNDLE_LABELS.json`).** 30 findings registered
 (`ROUND3_FINDING_REGISTER.json`), 21 FIXED, 7 AMENDED-RECORD, 2 REFUTED by named rule — one of them the

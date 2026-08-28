@@ -95,7 +95,11 @@ ENTIRELY self-citation raises `[i] state_observation: evidence_refs is ENTIRELY 
 (sec 6 limit 2, mechanical subcase), rc=1. The claim is false because the schema half is not the
 gate; schema + semantic is the gate (COO-SR1's own lesson, round 2)."*
 
-**Proof it was pre-declared:** `sha256(row.claim + "|" + answer_key)` =
+**Proof it was pre-declared — byte-exact (COO~X 77360 / CVO~X's C4 condition: the prose above is
+not a recomputable key):** the key's EXACT bytes are `ROUND3_ANSWER_KEY.txt` (LF-only, no trailing
+newline); the composition is `sha256(utf8(register row R3-CTO-2 "claim") + b"|" +
+bytes(ROUND3_ANSWER_KEY.txt))`; `python org/standards/isck/verify_seal.py [--commit <sha>]`
+recomputes it from the object database and prints MATCH/MISMATCH. `sha256(row.claim + "|" + answer_key)` =
 `402da6e06c5d813b1350e9a1c4a01fd860945e11b8dfa84fb0cf065217f839af` — the seal carried in
 `ROUND3_CHARTER.md` §7 since the opening commit 51e789ddfb. Recomputed at the cut over the register
 row's text; any seat can repeat it.

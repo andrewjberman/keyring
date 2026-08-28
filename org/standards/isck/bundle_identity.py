@@ -9,6 +9,9 @@ gets a new candidate id even when the doctrine is behaviourally unchanged.
     python org/standards/isck/bundle_identity.py <commit> [--write]   # print (or write) the record
     python org/standards/isck/bundle_identity.py <commit> --check     # exit 1 if the written record
                                                                       # does not match the derivation
+    python org/standards/isck/bundle_identity.py <commit> --freeze --boundary <commit>
+                                                    # SCHEMA-ONLY freeze of the label derived at <commit>
+                                                    # (C4); recorded in BUNDLE_LABELS.json; immutable after
 
 Bundle id = sha256 over the sorted (path, blob) pairs of the bundle's member files at the commit
 (content-addressed: a bundle at a commit is IMMUTABLE, so LAW 1's hashes-for-immutables rule
@@ -73,12 +76,21 @@ def derive(commit):
     # count on the package path (monotone along the path, so two byte-distinct bundles never share
     # it), and BUNDLE_LABELS.json records every binding -- a rebinding is a failure, not an update.
     candidate_id = f"v0.2-candidate+{len(post_boundary)}"
+    # C4 (CVO~X 20260828T040820Z): a FREEZE is a registry fact, so it is derived here like every
+    # other field -- the label's registry entry carries frozen_at + round_3_boundary_commit; a frozen
+    # label emits status=frozen and --check stays deterministic. The freeze is SCHEMA-ONLY: the three
+    # operational receipts stay null BY DEFINITION until WP-3 / the live slice / replay land.
+    labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
+    fz = labels.get(candidate_id, {}).get("frozen") or {}
     return {
         "contract_bundle_id": bundle_id,
         "semantic_version": "v0.2-candidate",
         "candidate_id": candidate_id,
         "schema_$id": schema_id,
-        "status": "candidate",
+        "status": "frozen" if fz else "candidate",
+        "freeze_scope": "schema-only (contract vocabulary + conditionals + battery); operational certification is a SEPARATE gate and its receipts are null" if fz else None,
+        "frozen_at": fz.get("frozen_at"),
+        "round_3_boundary_commit_frozen": fz.get("round_3_boundary_commit"),
         "derived_at_commit": full,
         "doctrine_commit": full, "doctrine_blob_sha": blob(full, DOCTRINE),
         "schema_commit": full, "schema_blob_sha": blob(full, SCHEMA), "schema_sha256": sha256_at(full, SCHEMA),
@@ -90,9 +102,8 @@ def derive(commit):
         "clean_clone_gate_receipt": None,
         "wp3_certification_receipt": None,
         "vertical_slice_receipt": None,
-        "frozen_at": None,
         "supersedes_bundle_id": None,
-        "$comment": "status moves candidate -> frozen only when the three receipts are non-null and round 3 is closed; every field is derived by bundle_identity.py -- re-run it, never edit it",
+        "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES",
     }
 
 
@@ -100,6 +111,30 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     commit = sys.argv[1]
+    if "--freeze" in sys.argv:
+        # freeze the label derived at <commit>, citing the round-3 boundary record commit; refuses
+        # unless the label is bound in the registry to exactly this bundle (no freezing a stranger)
+        rec = derive(commit)
+        labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
+        bound = labels.get(rec["candidate_id"])
+        if not bound or bound["contract_bundle_id"] != rec["contract_bundle_id"]:
+            sys.exit(f"REFUSED: {rec['candidate_id']} is not bound to {rec['contract_bundle_id']} in the registry; --write it first")
+        if bound.get("frozen"):
+            sys.exit(f"REFUSED: {rec['candidate_id']} is already frozen at {bound['frozen']['frozen_at']}")
+        try:
+            boundary = sys.argv[sys.argv.index("--boundary") + 1]
+        except (ValueError, IndexError):
+            sys.exit("REFUSED: --freeze needs --boundary <commit of BOUNDARY_ROUND3.md>")
+        git("rev-parse", "--verify", "-q", f"{boundary}^{{commit}}")
+        import datetime
+        bound["frozen"] = {"frozen_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                           "round_3_boundary_commit": git("rev-parse", f"{boundary}^{{commit}}"),
+                           "scope": "schema-only"}
+        LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
+        rec = derive(commit)
+        OUT.write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8", newline="\n")
+        print(f"FROZEN (schema-only): {rec['candidate_id']} = {rec['contract_bundle_id']} @ {rec['derived_at_commit'][:10]}, boundary {bound['frozen']['round_3_boundary_commit'][:10]}")
+        return
     rec = derive(commit)
     if "--check" in sys.argv:
         cur = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
@@ -113,9 +148,13 @@ def main():
         if bound and bound["contract_bundle_id"] != rec["contract_bundle_id"]:
             sys.exit(f"REFUSED: label {rec['candidate_id']} is already bound to {bound['contract_bundle_id']} "
                      f"@ {bound['derived_at_commit'][:10]}; a byte-distinct bundle needs a new label (R3-CRO-12)")
-        labels[rec["candidate_id"]] = {"contract_bundle_id": rec["contract_bundle_id"],
-                                       "derived_at_commit": rec["derived_at_commit"]}
-        LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
+        if not bound:
+            # a NEW binding only; an existing (matching) entry is left untouched -- rewriting it
+            # dropped the `frozen` sub-record on the first --write after --freeze (measured
+            # 2026-08-28 04:1xZ: record said frozen, registry said candidate, --check said STALE)
+            labels[rec["candidate_id"]] = {"contract_bundle_id": rec["contract_bundle_id"],
+                                           "derived_at_commit": rec["derived_at_commit"]}
+            LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
         OUT.write_text(text, encoding="utf-8", newline="\n")
         print(f"wrote {OUT.name}: {rec['candidate_id']} = {rec['contract_bundle_id']} @ {rec['derived_at_commit'][:10]}")
     else:

@@ -3,7 +3,10 @@
   "semantic_version": "v0.2-candidate",
   "candidate_id": "v0.2-candidate+38",
   "schema_$id": "opal:standards:isck:contract:v0.1",
-  "status": "candidate",
+  "status": "frozen",
+  "freeze_scope": "schema-only (contract vocabulary + conditionals + battery); operational certification is a SEPARATE gate and its receipts are null",
+  "frozen_at": "2026-08-28T04:14:06Z",
+  "round_3_boundary_commit_frozen": "1a05bfb3e4ff278388a67e1ebe986607ed3cc4d1",
   "derived_at_commit": "dcbe214a44630b8bcaed211c47ec62b45cd2a146",
   "doctrine_commit": "dcbe214a44630b8bcaed211c47ec62b45cd2a146",
   "doctrine_blob_sha": "78147f04e3d317cdf538e25204b2ca509a00ab17",
@@ -74,7 +77,6 @@
   "clean_clone_gate_receipt": null,
   "wp3_certification_receipt": null,
   "vertical_slice_receipt": null,
-  "frozen_at": null,
   "supersedes_bundle_id": null,
-  "$comment": "status moves candidate -> frozen only when the three receipts are non-null and round 3 is closed; every field is derived by bundle_identity.py -- re-run it, never edit it"
+  "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES"
 }
