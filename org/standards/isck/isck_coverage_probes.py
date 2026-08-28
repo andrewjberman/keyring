@@ -1474,6 +1474,20 @@ def _repairs(V):
         inst.pop("superseding_version_id", None)
         return inst
 
+    def _contest_event_target(prefix):
+        # R4-CRO-2 widened target_kind to five values. The three EVENT kinds share one shape --
+        # require target_event_id, forbid the entity AND binding targets -- but each constrains
+        # the id to its OWN prefix (lce: / bev: / aep:), so a single generic repair would satisfy
+        # the require limb and fail the pattern. The prefix is the arm's identity, not decoration.
+        def repair(inst):
+            inst["target_event_id"] = prefix + ULID_A_OF(V)
+            inst.pop("target_entity_serial", None)
+            inst.pop("target_binding_id", None)
+            return inst
+        return repair
+
+    out[("contest_event", "target_kind", "binding_event")] = _contest_event_target("bev:")
+    out[("contest_event", "target_kind", "authority_epoch_event")] = _contest_event_target("aep:")
     out[("contest_event", "target_kind", "lifecycle_event")] = contest_lifecycle_target
     out[("lifecycle_event", "event_kind", "materializer_decommissioned")] = lifecycle_decommissioned
     out[("bridge_assertion", "registry_standing", "held")] = bridge_held
