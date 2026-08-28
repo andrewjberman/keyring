@@ -14,14 +14,17 @@ that has not been run, and this record says so rather than letting a green suite
 ```
   ATTACKED INPUT (round-1 output, frozen)      21d6fc7325
   ROUND-2 CHARTER                              14e6bcc50d
-  BOUNDARY OUTPUT (package tip at cut)         9760630ae7      35 package commits since input (git log --oneline 21d6fc7325..9fb81b743a -- org/standards/isck)
+  BOUNDARY OUTPUT (package tip at cut)         9760630ae7      37 package commits since input (git rev-list --count 21d6fc7325..9760630ae7 -- org/standards/isck)
+                                               [AMENDED: the record first printed 35, the count through 9fb81b743a, beside the 9760630ae7 pin --
+                                                a typed number beside a derived one; CRO~X re-verify]
   LAST SCHEMA-CHANGING COMMIT                  2795145b63      (DT-R2-6; d144e7937c / 7c093caff5 / 9760630ae7 are prose + runner, diff on schema+validator EMPTY -- CVO~X 77074 read)
   SCHEMA  ISCK_CONTRACT.v0.schema.json         blob b2e3c3683e15   sha256 586bf52cf3171cdf361d6ed3fdb37e0c0cfa7f0b91d23bb3b4f1d48146360859
                                                (method: `git show <tip>:<path> | sha256sum` -- LF as stored; a CRLF working-tree read gives a DIFFERENT digest and is not this pin)
   CONTRACT ISCK_CONTRACT.md                    blob d1506ca0944e
   VALIDATOR validate_isck.py                   blob 418ad2b96d7c
   R2-2 DESIGN (attacked-dry, NOT LANDED)        blob 41cacec709b8   @7c093caff5
-  ARM-4 RECORD                                 blob 5892013077d3   @05086d045c (+ class C MOOT @2795145b63)
+  ARM-4 RECORD                                 blob 5892013077d3   AT THE TIP 9760630ae7 (base @05086d045c = blob f85d4b24a6e6; class C rewritten MOOT @2795145b63)
+                                               [AMENDED: first printed "5892... @05086d045c", false as an object-at-commit assertion; CRO~X re-verify]
   PUSH STATE AT CUT                            LOCAL -- origin/CLOUD @c29f17b5c9 (ls-remote read 00:18Z) carries 2795145b63 and earlier
   PUSH STATE, AMENDED 00:3xZ                   ON ORIGIN -- origin/CLOUD @3fbb493cdafd584209a10c6353794667e5507b98 (fresh fetch, this seat):
                                                merge-base --is-ancestor YES for 9760630ae7 (package tip), ece1ac0f41 (this record), 6245dc0a3d
@@ -39,7 +42,13 @@ framing, adopted verbatim): ARM4's 20 became visible when the summary learned to
 ARM3 went 6 → 0 on DT~X's repairs, ARM4 went 20 → 2 when the consume gate disposed 18 by record.
 **Ablation 47 → 45 is two WRONG arms retired (DT-R2-6), every remaining rule mutant-covered.**
 
-## 2. TALLY — every round-2 finding UPHELD; refutations this round: ZERO
+## 2. TALLY — every LISTED finding UPHELD; refutations this round: ZERO — **denominator NOT YET AUDITABLE**
+
+**AMENDED on CRO~X's re-verify:** the cells below mix findings with inputs, verified-accepts,
+confirmations, censuses, fixes and owed work, and carry no unique finding ids — so "~40 findings" is
+not reproducible from this table. The honest claim is **~40 LISTED CONTRIBUTIONS**; a deduplicated
+FINDING REGISTER (one id per finding, source, disposition, commit) is OWED by `1.0.0_SA_CTO~X` before
+the zero-refuted statistic may be attacked or quoted as a rate.
 
 | seat | findings (all upheld) | the one that cost the most |
 |---|---|---|
@@ -51,7 +60,7 @@ ARM3 went 6 → 0 on DT~X's repairs, ARM4 went 20 → 2 when the consume gate di
 | `1.0.0_SA_CTO~X` (author) | 0 refutations issued. Named against myself, all caught by a second seat, none by me: RE-1 (silent-no-op patch reporting success), RA-5, CUT-4 (uncited premise: "unverified means the check did not run" — the citation EXISTED at §3.14's remedy column and I had not read it), the CARRIER (cited an event whose targets can never be an assertion, one commit after landing the design that makes it impossible), class C (DT-R2-6). Instrument slips: a `\1` eaten as an octal escape; a stray `cat` blocking stdin | the pattern: every one was a claim about an artifact I had not re-read at the cited vintage |
 
 **Zero refutations is a statistic, not a compliment.** Round 1 refuted 3 of 24. Round 2 refuted 0
-of ~40. Either the attackers were more precise on a harder target (their findings were narrower and
+of a not-yet-registered denominator (~40 listed contributions). Either the attackers were more precise on a harder target (their findings were narrower and
 came with constructed instances), or the author accepted too readily. Both readings are recorded;
 the next round's attackers should try to refute an ACCEPTANCE.
 
@@ -158,8 +167,13 @@ and silence is what I then misread as refutation."*
 **What this boundary therefore certifies:** the attack round is closed dry at the cited tips; the
 contract is `v0.2-candidate` — attacked, not frozen (GPT's freeze ≠ certification distinction,
 adopted at the charter). **Post-boundary amendments expected and pinned when they land:** DT~X's
-sixth-override loader guard (LANDED @6245dc0a3d at 00:26Z, one minute after this pin — the first
-post-boundary amendment, `object_pairs_hook` refusal, end-to-end tested against the real sidecar); ARM-1's 9 adjudicated (mine); the R2-2 landing at WP-3 with its
+sixth-override loader guard @6245dc0a3d — **AMENDED: INSIDE the pinned package, not post-boundary**
+(`git merge-base --is-ancestor 6245dc0a3d 9760630ae7` = YES; the shared worktree committed it at
+00:23:31, before the runner commit; I had classified it by message-arrival time, not by the DAG —
+CRO~X re-verify). It is post-DRY and outside the attacked set, which is a different claim. **The true
+first post-boundary amendment is DT~X's entry guard @bb7444a08e** (is-ancestor NO; cures CRO~X's
+superset-values FAIL: payload value set must EQUAL the key's, mismatch → suppress none + WARN, six
+controls, five refusing one accepting) — CRO~X's three-vector regression at that citation pending; ARM-1's 9 adjudicated (mine); the R2-2 landing at WP-3 with its
 checklist; the on-origin amendment to condition 2.
 
 ## 8. WHAT THE ROUND TAUGHT THAT THE CONTRACT NOW CARRIES (beyond the findings)
