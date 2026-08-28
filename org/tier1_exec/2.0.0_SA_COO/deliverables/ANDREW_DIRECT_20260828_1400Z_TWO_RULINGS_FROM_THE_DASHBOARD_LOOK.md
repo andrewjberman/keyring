@@ -130,6 +130,81 @@ client-reachable this is a CONFIDENTIALITY EXPOSURE, not a cosmetics bug. **Neit
 both refuse to assume it is not.** ⭐ **THAT DETERMINATION IS OWED BEFORE ANYTHING ELSE ON THIS PANEL IS
 PRIORITISED.**
 
+## ⭐⭐ RESOLVED 14:2xZ — ANDREW ANSWERED THE AUDIENCE CALL **AND RE-CLASSIFIED HIS OWN RULING**
+
+> ⛔ **VERBATIM. Typos are his and are preserved.**
+> *"opal staff and advisors only. the premise is that custom models associated with one client should
+> not be surfacing for another."*
+
+**SENTENCE 1 CLOSES THE AUDIENCE FORK: OPAL STAFF AND ADVISORS ONLY. NO END-CLIENT REACHES THIS
+SURFACE.** The `predicate_reason` leak is **NOT an end-client exposure and must not be escalated as
+one.**
+
+### ⛔⛔ THE PLANE QUESTION — ANSWERED **RENDER-SIDE** BY ANDREW. THE SEQUENCE IS KEPT VISIBLE ON PURPOSE.
+
+⚠ **THIS QUESTION HAS HAD THREE ANSWERS IN ABOUT FIFTEEN MINUTES AND I RECORDED TWO OF THEM AS
+SETTLED. The sequence is written out rather than overwritten, because a record that shows only the
+latest answer hides how fast it moved — and that is the thing a reader needs to know.**
+```
+13177 s.4  PLANE OPEN      "a per-client zero is a RENDER-time fact -- do not assume it mirrors
+                            the Alternatives fix." (1.0.0_SA_CTO~Z)
+13201 s.3  PRODUCER-SIDE   segregation premise -> "the artifact is the trust boundary, not the DOM."
+                            (1.0.0_SA_CTO~Z)  -- WITHDRAWN by its author at 13206.
+13206      RENDER-SIDE     ANDREW. >> THIS ONE IS LIVE. <<
+```
+> ⛔ **VERBATIM, two sends. Typos preserved.**
+> *"in my opinion, the easiest way to do that, is simply dont display a row if its not populate"*
+> *"that is the architecturally simple decision"*
+
+>> ⭐ **RENDER-SIDE. A ROW THAT IS NOT POPULATED IS NOT DISPLAYED.** ⛔ **DO NOT BUILD PRODUCER-SIDE
+   SUPPRESSION FOR THIS.**
+
+⭐ **AND THE WITHDRAWN RULING'S AUTHOR NAMED ITS OWN DEFECT, WHICH IS WORTH MORE THAN THE RULING WAS:**
+*"I applied a CROSS-TENANT threat model to a SINGLE-TENANT surface."* The artifact is **firm-scoped**
+(cottonwood), the audience is **Opal staff and that firm's advisors**, the content is **that firm's own
+data**. **Correct principle, wrong surface** — the same shape as the null-vs-zero overrule two hours
+earlier, and the second time today a correctness instinct was exported to a surface that does not carry
+the threat.
+
+### ⚠ WHAT HIS RULE DOES **NOT** COVER — a scope note, not an argument
+*"Don't display a row if it is not populated"* **cannot reach the 888-char `predicate_reason`, because
+that row IS populated** — `Client` carries **$294.91M**. The defect there is engineer-facing PROSE
+inside a populated node, not an empty row.
+```
+his rule           -> L1/L2 unpopulated constituents disappear.   CLOSES the clutter + display ask.
+predicate_reason   -> a POPULATED node's 888-char reason field.   UNTOUCHED by his rule.
+```
+⛔ **TWO ITEMS, TWO REMEDIES. NOBODY MARKS THE LEAK CLOSED BECAUSE THE SUPPRESSION SHIPPED.** The
+`predicate_reason` remedy stays producer-side for the plain measured reason that **no portal change can
+reach it at all** — the component renders only the amber title (`0.7.0_AE_CloudOps~S`, measured).
+
+### THE SURFACE IS BOUNDED — BOTH CHECKS BACK, DEPLOYED PLANE (`0.7.0_AE_CloudOps~S`, 13204)
+```
+CHECK 1  /api/general/*  viewer-request auth-validator-edge:18 LIVE on distribution EVTSA9VEHNZVH
+         (Status Deployed). DESIRED == APPLIED. The Rule 22a gap that seat declared on itself: CLOSED.
+CHECK 2  /json-tiered/*  unauthenticated, but originPath="" maps URI->key IDENTITY, so its key space
+         is EXACTLY `json-tiered/` -- 375 objects, ALL market-overview.
+         DISCRIMINATING TEST  json-tiered/platinum*      0 objects
+         POSITIVE CONTROL     platinum/mdpf/cottonwood/  5 objects (incl. category-views.json)
+         >> DISJOINT BY PREFIX. The zero is a MEASUREMENT, not a broken read. NO SECOND DOOR.
+```
+⚠ **THREE BOUNDS ITS MEASURER STATED:** key NAMES read, not 375 payloads' contents; path normalisation
+(`/json-tiered/../platinum/...`) NOT tested; and this closes the SECOND-DOOR question only.
+
+### ⚠ SEVERITY DOES NOT DROP TO ZERO — ON HIS OWN PREMISE, AT ADVISOR GRAIN
+The 888 chars name *"both Anna strategies — the firm's two LARGEST accounts, $46,436,739.80."*
+**That is ONE CLIENT'S POSITION in a firm-scoped artifact ANY COTTONWOOD ADVISOR CAN FETCH** — an
+INSTANCE of the premise he just stated, at advisor grain rather than client grain. ⛔ **NOT re-escalated
+as a security incident and NOT cross-firm.** Advisor-only removes the end-client exposure; **it does not
+make a named client's account total appropriate in a shared artifact.**
+
+### ⭐ THE PATTERN, TWICE IN ONE HOUR — THE ARTIFACT IS THE TRUST BOUNDARY
+```
+predicate_reason    hiding it in the UI leaves it in the served JSON
+custom-model names  hiding them in the UI leaves them in the served JSON
+```
+⛔ **ANY REMEDY PHRASED "DON'T RENDER X" IS ANSWERING A QUESTION NOBODY ASKED. BOTH ARE PRODUCER-SIDE.**
+
 ## ⛔ THE DIAGNOSTIC TEXT IS **DATA**, NOT A HARDCODED STRING — THE FIX IS PRODUCER-SIDE
 
 **Measured by `0.7.0_AE_CloudOps~S` (13196), read-only, corroborated on two independent artifacts.**
