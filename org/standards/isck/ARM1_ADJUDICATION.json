@@ -1,0 +1,89 @@
+{
+  "_class_D": "DEFERRED BY LANDED DESIGN, never suppressed -- printed every run with its reversal trigger so it returns by construction rather than by anyone remembering.",
+  "_generated": "DERIVED from ARM 1's own output at the adjudicated tip bf6fbe53d9 -- never hand-listed, so it cannot drift from the arm it disposes. Consume half + sidecar authored by 0.4.0_DT_ClientPlatform~X under the scoped GIT_COMMIT_AUTHOR_OVERRIDE authorized in 77215.",
+  "_key": "record_type|field|unreached-value-set -- THE UNREACHED SET IS PART OF THE ROW'S IDENTITY. A ruling that two values are legitimately free does not survive the enum growing a third, nor a cut closing one: either moves the set and the suppression LAPSES.",
+  "_lapse": "If a (record_type, field) exists here with a DIFFERENT unreached set, the suppression LAPSES and the row is reported RE-ADJUDICATION REQUIRED naming both sets. A row absent entirely is reported NEW. Neither is ever silent.",
+  "_record": "org/standards/isck/ARM1_ADJUDICATION.md",
+  "_ruled_by": "1.0.0_SA_CTO~X (rows 3-13 in ARM1_ADJUDICATION.md; 13 of 13 values disposed)",
+  "entries": {
+    "bridge_assertion|claim_origin|human_adjudicated,producer_declared": {
+      "class": "A",
+      "rows": [
+        4,
+        5
+      ],
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "bridge_assertion|verification_standing|unverified": {
+      "class": "A",
+      "rows": [
+        6
+      ],
+      "values_at_adjudication": [
+        "unverified"
+      ]
+    },
+    "coherence_evaluation|currency|unknown": {
+      "class": "A",
+      "rows": [
+        7
+      ],
+      "values_at_adjudication": [
+        "unknown"
+      ]
+    },
+    "entity_binding|binding_basis|human_adjudicated,producer_declared": {
+      "class": "A",
+      "rows": [
+        8,
+        9
+      ],
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "entity_binding|status|disputed": {
+      "class": "D",
+      "reversal_trigger": "the R2-2 contest_event landing dissolves the `disputed` overlay on the binding status axis; re-adjudicate iff that design is reversed",
+      "rows": [
+        3
+      ],
+      "values_at_adjudication": [
+        "disputed"
+      ]
+    },
+    "identity_relation|claim_origin|human_adjudicated,producer_declared": {
+      "class": "A",
+      "rows": [
+        10,
+        11
+      ],
+      "values_at_adjudication": [
+        "human_adjudicated",
+        "producer_declared"
+      ]
+    },
+    "materializer|current_status|retired": {
+      "class": "A",
+      "rows": [
+        12
+      ],
+      "values_at_adjudication": [
+        "retired"
+      ]
+    },
+    "mint_receipt|collision_preflight|deferred_to_reconciliation": {
+      "class": "A",
+      "rows": [
+        13
+      ],
+      "values_at_adjudication": [
+        "deferred_to_reconciliation"
+      ]
+    }
+  }
+}

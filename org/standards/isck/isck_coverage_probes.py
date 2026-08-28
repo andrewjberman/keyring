@@ -224,6 +224,20 @@ def arm_coverage(schema, verbose=True):
               % (checked, len(_record_defs(schema))))
         print("  RESULT: %d candidate gap(s) -- each needs the construct-the-lying-record test"
               % len(gaps))
+        a1_adj, a1_def, a1_lapse, a1_new = _dispose_arm1(gaps)
+        print("  GAPS: %d  (%d adjudicated, %d deferred, %d NEW, %d re-adjudication)"
+              % (len(gaps), len(a1_adj), len(a1_def), len(a1_new), len(a1_lapse)))
+        for rtype, field, missing, _dom, trigger in a1_def:
+            print("    DEFERRED      %-22s %s=%s" % (rtype, field, sorted(missing)))
+            print("                  class D: %s NEVER suppressed." % trigger)
+        for rtype, field, missing, _dom, prior in a1_lapse:
+            print("    RE-ADJUDICATION REQUIRED  %s.%s -- ruled on %s, now %s"
+                  % (rtype, field, prior, sorted(missing)))
+        for rtype, field, missing, _dom in a1_new:
+            print("    NEW           %-22s %s=%s -- UNRULED" % (rtype, field, sorted(missing)))
+        if a1_adj:
+            print("    %d row(s) suppressed by ARM1_ADJUDICATION.json -- disposed by the record, "
+                  "auditable there, not invisible" % len(a1_adj))
         if unexamined:
             print("  NOT EXAMINED: %d of %d record types have NO value-keyed discriminant, so this"
                   % (len(unexamined), len(_record_defs(schema))))
@@ -554,6 +568,80 @@ def _dispose(unpaired):
     return adjudicated, deferred, lapsed, fresh
 
 
+ARM1_ADJUDICATION_PATH = os.path.join(HERE, "ARM1_ADJUDICATION.json")
+
+
+def _validate_arm1_entries(record):
+    """Entry guard for the ARM-1 sidecar. Mirrors ARM 4's, with a THREE-part key.
+
+    ARM 4's key is record_type|discriminant|field|values because a triple was not unique there.
+    ARM 1 has no discriminant column -- one field carries one domain -- so the key is
+    record_type|field|unreached-values and the guard MUST check 3, not 4. Reusing ARM 4's
+    four-part guard here would reject every well-formed ARM-1 entry, and reusing ARM 1's on
+    ARM 4 would accept a key that collapses two arms. The arity IS the arm's identity.
+    """
+    for key, value in sorted(record.items()):
+        parts = key.split("|")
+        if len(parts) != 3:
+            raise ValueError("entry %r key must be record_type|field|value-set (3 parts)" % key)
+        if not isinstance(value, dict) or value.get("class") not in PERMITTED_CLASSES:
+            raise ValueError("entry %r carries no permitted class" % key)
+        payload = value.get("values_at_adjudication")
+        if not isinstance(payload, list) or not payload:
+            raise ValueError("entry %r has no values_at_adjudication" % key)
+        if payload != sorted(set(payload)):
+            raise ValueError("entry %r values_at_adjudication is unsorted or has duplicates" % key)
+        if payload != [v for v in parts[2].split(",") if v]:
+            raise ValueError("entry %r payload %s DISAGREES with its own key's value set %s"
+                             % (key, payload, parts[2]))
+
+
+def _dispose_arm1(gaps):
+    """Split ARM 1's gap fields against the ruled adjudication record.
+
+    ARM 1 emits CANDIDATES and says so; ARM1_ADJUDICATION.md disposes all 13 values by id, but
+    until this gate existed the runner could not subtract them, so eight adjudicated rows printed
+    every run forever. A standing list of rows everyone knows are fine is how a real one stops
+    being read -- the same argument that earned ARM 4 its sidecar.
+
+    Four outcomes, and only the first is suppressed:
+      ADJUDICATED   exact key present  -> suppressed, counted, auditable in the record
+      DEFERRED      class D            -> NEVER suppressed; printed with its reversal trigger
+      RE-ADJUDICATE same (record_type, field), DIFFERENT unreached set -> the premise MOVED
+      NEW           no entry at all    -> reported as it always was
+    A missing or unreadable record suppresses NOTHING and says so.
+    """
+    try:
+        with open(ARM1_ADJUDICATION_PATH, "r", encoding="utf-8") as handle:
+            record = json.load(handle, object_pairs_hook=_no_dupes).get("entries", {})
+        _validate_arm1_entries(record)
+    except (OSError, ValueError) as exc:
+        print("  WARN: ARM1_ADJUDICATION.json UNREADABLE (%s) -- suppressing NOTHING, every row "
+              "reported" % str(exc)[:70])
+        return [], [], [], list(gaps)
+    by_pair = {}
+    for key, val in record.items():
+        parts = key.split("|")
+        if len(parts) == 3:
+            by_pair.setdefault(tuple(parts[:2]), []).append(val)
+    adjudicated, deferred, lapsed, fresh = [], [], [], []
+    for rtype, field, missing, domain in gaps:
+        key = "%s|%s|%s" % (rtype, field, ",".join(sorted(missing)))
+        entry = record.get(key)
+        if entry is None:
+            prior = by_pair.get((rtype, field))
+            if prior:
+                lapsed.append((rtype, field, missing, domain,
+                               sorted({v for p in prior for v in p["values_at_adjudication"]})))
+            else:
+                fresh.append((rtype, field, missing, domain))
+        elif entry.get("class") == "D":
+            deferred.append((rtype, field, missing, domain, entry.get("reversal_trigger", "")))
+        else:
+            adjudicated.append((rtype, field, missing, domain))
+    return adjudicated, deferred, lapsed, fresh
+
+
 def arm_paired(schema, verbose=True):
     """Report REQUIRE arms with no FORBID/CONSTRAIN partner on the same discriminant.
 
@@ -846,6 +934,58 @@ def self_controls(schema, fixtures, repairs=None, verbose=True):
     results.append(("ENTRY GUARD ACCEPTS a sound entry (else every arm above is vacuous)",
                     not _rejects(_good), True))
 
+    # ---- ARM-1 SIDECAR (0.4.0_DT_ClientPlatform~X). Same four outcomes as ARM 4, one column
+    # narrower, so every arm is re-derived against the 3-part key rather than assumed to carry
+    # over. Each disposition arm is paired with the arm that makes it non-vacuous.
+    _a1_d = ("entity_binding", "status", ["disputed"], ["open", "closed", "disputed"])
+    _adjD, _defD, _lapD, _newD = _dispose_arm1([_a1_d])
+    results.append(("ARM 1 NEVER suppresses a class-D deferred row",
+                    len(_defD) == 1 and not _adjD, True))
+    _a1_exact = ("materializer", "current_status", ["retired"],
+                 ["active", "superseded", "retired", "unknown"])
+    _adjE, _defE, _lapE, _newE = _dispose_arm1([_a1_exact])
+    results.append(("ARM 1 DOES suppress an exactly-ruled row (else every arm here is vacuous)",
+                    len(_adjE) == 1 and not _lapE and not _newE, True))
+    _a1_moved = ("materializer", "current_status", ["retired", "active"],
+                 ["active", "superseded", "retired", "unknown"])
+    _adjL, _defL, _lapL, _newL = _dispose_arm1([_a1_moved])
+    results.append(("ARM 1 LAPSES a suppression when the UNREACHED set moved",
+                    len(_lapL) == 1 and not _adjL, True))
+    _a1_new = ("no_such_record", "no_such_field", ["x"], ["x"])
+    _adjN, _defN, _lapN, _newN = _dispose_arm1([_a1_new])
+    results.append(("ARM 1 reports an UNRULED row as NEW, never suppressed",
+                    len(_newN) == 1 and not _adjN, True))
+
+    def _rejects1(entries):
+        try:
+            _validate_arm1_entries(entries)
+            return False
+        except ValueError:
+            return True
+
+    _good1 = {"r|f|admitted": {"class": "A", "values_at_adjudication": ["admitted"]}}
+    results.append(("ARM-1 GUARD refuses a SUPERSET payload",
+                    _rejects1({"r|f|admitted":
+                               {"class": "A",
+                                "values_at_adjudication": ["admitted", "candidate"]}}), True))
+    results.append(("ARM-1 GUARD refuses a SUBSET payload",
+                    _rejects1({"r|f|admitted,candidate":
+                               {"class": "A", "values_at_adjudication": ["admitted"]}}), True))
+    results.append(("ARM-1 GUARD refuses an unpermitted class",
+                    _rejects1({"r|f|x": {"class": "Z", "values_at_adjudication": ["x"]}}), True))
+    results.append(("ARM-1 GUARD refuses an unsorted/duplicated payload",
+                    _rejects1({"r|f|a,a": {"class": "A", "values_at_adjudication": ["a", "a"]}}),
+                    True))
+    results.append(("ARM-1 GUARD ACCEPTS a sound 3-part entry (else every arm above is vacuous)",
+                    not _rejects1(_good1), True))
+    # ARITY IS THE ARM'S IDENTITY, both directions. A 4-part key in ARM 1's sidecar would silently
+    # carry a discriminant column ARM 1 does not have; a 3-part key in ARM 4's would collapse two
+    # arms onto one ruling. Neither guard may accept the other's shape.
+    results.append(("ARM-1 GUARD refuses an ARM-4 shaped 4-part key",
+                    _rejects1({"r|d|f|x": {"class": "A", "values_at_adjudication": ["x"]}}), True))
+    results.append(("ARM-4 GUARD refuses an ARM-1 shaped 3-part key",
+                    _rejects({"r|f|x": {"class": "A", "values_at_adjudication": ["x"]}}), True))
+
     ok = True
     for label, got, want in results:
         good = got == want
@@ -1025,6 +1165,13 @@ def _repairs(V):
         inst["consequence_refs"] = ["rel:" + ULID_A_OF(V)]
         return inst
 
+    def contest_merged(inst):
+        # round-3 REWORK-2: a merge names its SURVIVOR by a typed field, and carries no
+        # consequence of its own (the survivor does)
+        inst = contest_resolved(inst)
+        inst["surviving_contest_id"] = "ct:" + ULID_A_OF(V)
+        return inst
+
     def contest_binding_target(inst):
         inst["target_binding_id"] = "bind:" + ULID_A_OF(V)
         inst.pop("target_entity_serial", None)
@@ -1032,8 +1179,8 @@ def _repairs(V):
 
     out[("contest_event", "event_kind", "resolved")] = contest_resolved
     out[("contest_event", "outcome", "dismissed")] = contest_resolved
-    for value in ("upheld", "merged"):
-        out[("contest_event", "outcome", value)] = contest_with_consequence
+    out[("contest_event", "outcome", "upheld")] = contest_with_consequence
+    out[("contest_event", "outcome", "merged")] = contest_merged
     out[("contest_event", "target_kind", "binding")] = contest_binding_target
     return out
 
