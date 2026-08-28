@@ -19,6 +19,12 @@
 - CronCreate `4,24,44 * * * *` -> `/drive NFRA_C3MATERIALIZE` (20m cadence per the skill table for ACTIVE > 0; minutes off the :00/:30 fleet marks, off the D11 pair's :26/:56, off CTO~X's :11/:41 and the D2-D3 pair's :07/:37). Session-only, 7-day auto-expire; THIS RECORD + the XXX.md COO-row clause (added the same turn) are the durable carriers -- a successor re-arms from them while the scope is not DONE.
 - STOP-CONDITION: `org/projects/NFRA_C3MATERIALIZE.json` reads `status: complete` (the closure discipline's 2-step atomic close), or Andrew stands it down -> CronDelete + strike the clause.
 
+## Second instruction, same terminal, ~05:08Z (after the first read found no project record)
+
+Verbatim: "it needs to have one, register it and get it locked in, it should be attached to D11 in directives.yaml"
+
+Scope as received: register `NFRA_C3MATERIALIZE` as its own project (`org/projects/NFRA_C3MATERIALIZE.json` + REGISTRY Active row), commit it ("locked in"), and attach it to D11 in `org/missions/DIRECTIVES.yaml` (`projects: [NFRA_SUBSTRATECARDING, NFRA_C3MATERIALIZE]`). This is NEWER than his 2026-08-27 word at the CTO~X terminal ("This whole project is under D11, just drive it", relayed 1.0.0_SA_CTO~X 77456) and supersedes it on REGISTRATION only; the two agree that the project is under D11 (the directive attachment carries that). Registered by `2.0.0_SA_COO~X` on his word at this terminal; the registry row is a base-exec surface and is broadcast to `1.0.0_SA_CTO~X` the same turn.
+
 ## Broadcast (same turn)
 
 `1.0.0_SA_CTO~X` + `0.0.0_AB_MSTR` by MCP, this record cited; push state stated in the broadcast.
