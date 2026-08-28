@@ -175359,10 +175359,21 @@
           "absent": 0,
           "denominator": 19482
         },
-        "consensus_affinity": {
+        "consensus_affinity_node_annotation": {
           "measured": 0,
           "absent": 19482,
-          "denominator": 19482
+          "denominator": 19482,
+          "semantics": "Entity features retain consensus_affinity=ABSENT because no node-level scalar affinity is defined; this is not pairwise W coverage and must not be used to infer missing pair measurements."
+        },
+        "pairwise_consensus_affinity": {
+          "status": "MEASURED-BY-SERVED-REFERENCE",
+          "entities_covered": 19482,
+          "entities_absent": 0,
+          "entity_denominator": 19482,
+          "pairs_covered": 189764421,
+          "pairs_absent": 0,
+          "pair_denominator": 189764421,
+          "semantics": "Every unordered entity pair is defined by the immutable factorized W carrier and evaluator in STRUCTURE.matrix; no pair rows are embedded here."
         },
         "directed_edge_rows": 36549,
         "source_census": {
@@ -175391,7 +175402,7 @@
         "evaluator": "W_STRUCTURE(i,j) = numerator(i,j) / 25 for every unordered pair {i,j} with 0 <= i < j < 19482",
         "pair_domain": 189764421,
         "denominator": 25,
-        "consumer_contract": "Resolve the immutable factorized_W URI, verify its sha256, and reconstruct W through the carried evaluator and partitions; pairs remains empty because no pair rows are embedded in this view."
+        "consumer_contract": "Resolve the immutable factorized_W URI, verify its sha256, and reconstruct W through the carried evaluator and partitions; pairs remains empty because no pair rows are embedded in this view. Entity features.consensus_affinity=ABSENT denotes only the intentionally undefined node-level scalar annotation; pairwise consensus coverage is complete and separately measured in coverage.pairwise_consensus_affinity."
       },
       "computation": {
         "requested": "degree-corrected SBM runs followed by pair co-assignment frequency over N runs",
