@@ -1,0 +1,48 @@
+{
+  "contract_bundle_id": "bundle:sha256:0291e2ac0d2f25c0a8e209233d8bf4a7e3f9380a648640b866bb05b0c8b72bc9",
+  "semantic_version": "v0.2-candidate",
+  "schema_$id": "opal:standards:isck:contract:v0.1",
+  "status": "candidate",
+  "derived_at_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+  "doctrine_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+  "doctrine_blob_sha": "c1311963f1c28ad18fcea132f87689b70c512ca6",
+  "schema_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+  "schema_blob_sha": "93871b72d4e6013721c815559d9f94914bca1ad5",
+  "schema_sha256": "0ab7bf605485e260db408ff887135b49fda6f5d72ddd222dcb18736d09ee11c3",
+  "validator_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+  "validator_blob_sha": "b172cf54d0819b499bb9146e893125a181e37da2",
+  "gate_suite_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87",
+  "gate_suite_blobs": {
+    "org/standards/isck/run_gates.sh": "90746a6351ca8f8c7373b1f0d87a8718530cc93a",
+    "org/standards/isck/check_rule_ablation.py": "8350e31732d0357f39554583b62ffe6abcc4c1e9",
+    "org/standards/isck/check_enum_collisions.py": "01263486f3fd75cb3d9fa27eb5a85677b425fb0a",
+    "org/standards/isck/check_mutant_isolation.py": "f658bd2abb9e43775f2b0c8e192087d5208a3884",
+    "org/standards/isck/check_postulate_labels.py": "335381fc8883b668ea01ddb9de24853b48cc3ae6",
+    "org/standards/isck/isck_coverage_probes.py": "0245b0b7a788e49938b3752e77ba708e980882bc",
+    "org/standards/isck/ARM4_ADJUDICATION.json": "89d60ecce30e57f2f119215d31bcc258dba4d4cb"
+  },
+  "vocabulary_digests": {
+    "org/standards/isck/vocab/entity_classes.json": "454ee6d03df6d936ffa9ebaf2349adc211e996deeceb4ca9f716357f5743ed48",
+    "org/standards/isck/vocab/identity_spaces.json": "399a26a2732c3d5951422a69d8981640eda9a8ff81ea86a7b2f0f6905fe790df",
+    "org/standards/isck/vocab/identity_policies.json": "833c1988c1a34592ccba2969cf7322055e704f1712524af0d5769e451cbbb433"
+  },
+  "round_1_boundary_commit": "21d6fc7325",
+  "round_2_boundary_commit": "ece1ac0f41",
+  "round_3_boundary_commit": null,
+  "post_boundary_amendments": [
+    "bb7444a08e9c4b316845c0c8343dd915ab6198ec",
+    "7c776ccc5d59294e7c8637d3b4a2ce7641f6b82c",
+    "8bce3fa49599d57a1633008666eeeaa361cc1998",
+    "f6269a9a827288128a3dfb2a04a69f8e52c7d402",
+    "cf42d5f02b6a095d23cb8372e184ac5f8744e313",
+    "98698319719d00f4b1fe8875c13d956fe8d57a54",
+    "f2281ce7cb56260a8800db9fe3c6d2699a9040ec",
+    "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87"
+  ],
+  "clean_clone_gate_receipt": null,
+  "wp3_certification_receipt": null,
+  "vertical_slice_receipt": null,
+  "frozen_at": null,
+  "supersedes_bundle_id": null,
+  "$comment": "status moves candidate -> frozen only when the three receipts are non-null and round 3 is closed; every field is derived by bundle_identity.py -- re-run it, never edit it"
+}
