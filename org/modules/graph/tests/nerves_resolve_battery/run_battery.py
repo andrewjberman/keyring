@@ -36,9 +36,20 @@ NOT_EXERCISABLE = 3
 ARMS = []
 
 
-def arm(arm_id):
+def arm(arm_id, requires=()):
+    """`requires` names the TIERS this arm needs ALIVE to mean anything.
+
+    THIS EXISTS BECAUSE THE CLEAN CLONE CAUGHT ME COMMITTING THE VERY CONFLATION THIS TO REPAIRS.
+    `.comp-graph/graph.json` is GITIGNORED, so a clean clone has no trace graph at all. Arms that
+    need it were reporting FAILED there -- which says "the resolver is broken" when the truth is
+    "this environment cannot exercise this arm". That is a dead substrate reported as a finding,
+    the exact defect the five states exist to end, reproduced inside the battery that tests them.
+
+    An arm whose substrate is absent is NOT_EXERCISABLE (exit 3), never a pass and never a fail.
+    A green that required a missing substrate would be the worse error of the two.
+    """
     def deco(fn):
-        ARMS.append((arm_id, fn))
+        ARMS.append((arm_id, fn, tuple(requires)))
         return fn
     return deco
 
@@ -128,7 +139,7 @@ def a_ambiguous(nr):
         assert c.evidence, "every candidate carries its evidence"
 
 
-@arm("R-AC1-genuinely-unaddressed")
+@arm("R-AC1-genuinely-unaddressed", requires=("trace_graph",))
 def a_genuine(nr):
     r = nr.resolve("zzz_not_a_thing_anywhere_xyz")
     assert r.state == "GENUINELY_UNADDRESSED", r.state
@@ -143,7 +154,7 @@ def a_na(nr):
     assert not r.node_ids, "a cross-fabric ref must NOT resolve by coincidence of name"
 
 
-@arm("R-AC1-substrate-unavailable-flips-the-same-ref")
+@arm("R-AC1-substrate-unavailable-flips-the-same-ref", requires=("trace_graph",))
 def a_flip(nr):
     a = nr.substrate_arm("CLAUDE.md")
     assert a["live_state"] == "RESOLVED", a
@@ -152,7 +163,8 @@ def a_flip(nr):
     assert a["dead_tiers"], "SUBSTRATE_UNAVAILABLE must NAME the tiers"
 
 
-@arm("R-AC1-substrate-unavailable-never-identical-to-a-genuine-miss")
+@arm("R-AC1-substrate-unavailable-never-identical-to-a-genuine-miss",
+     requires=("trace_graph",))
 def a_not_identical(nr):
     """THE defect, stated as an arm: both sides return ZERO candidates and must still differ."""
     a = nr.substrate_arm("zzz_not_a_thing_anywhere_xyz")
@@ -213,7 +225,8 @@ def a_known(nr):
     assert r.candidates[0].canonical_serial == "ent:canonical-one"
 
 
-@arm("R-AC1-a-dead-IRRELEVANT-tier-does-not-make-a-filename-unknowable")
+@arm("R-AC1-a-dead-IRRELEVANT-tier-does-not-make-a-filename-unknowable",
+     requires=("trace_graph",))
 def a_irrelevant_tier(nr):
     """THE FALSE-ALARM GUARD, and the mutation proof is why it exists.
 
@@ -269,7 +282,7 @@ def a_vintage(nr):
     assert r.evidence, "no substrate vintage on the result -- staleness would be silent"
 
 
-@arm("R-AC3-one-tier-down-is-not-a-clean-miss")
+@arm("R-AC3-one-tier-down-is-not-a-clean-miss", requires=("trace_graph",))
 def a_notclean(nr):
     a = nr.substrate_arm("CLAUDE.md")
     assert a["stripped_state"] != "GENUINELY_UNADDRESSED", \
@@ -343,7 +356,7 @@ def a_legacy(nr):
     assert isinstance(r.addressed, bool)
 
 
-@arm("R-AC5-self-test-passes")
+@arm("R-AC5-self-test-passes", requires=("trace_graph",))
 def a_selftest(nr):
     out = subprocess.run([sys.executable, nr.__file__, "--self-test"],
                          cwd=os.path.dirname(nr.__file__),
@@ -416,8 +429,14 @@ def _closed_bindings_answer_too(nr):
 
 
 def run_arms(nr):
-    passed, failed = 0, []
-    for arm_id, fn in ARMS:
+    """Returns (passed, failed, skipped). A skipped arm names the substrate it lacked."""
+    live = {t.tier for t in nr._tier_statuses() if t.available}
+    passed, failed, skipped = 0, [], []
+    for arm_id, fn, requires in ARMS:
+        missing = [t for t in requires if t not in live]
+        if missing:
+            skipped.append((arm_id, ", ".join(missing)))
+            continue
         try:
             fn(nr)
             passed += 1
@@ -425,7 +444,7 @@ def run_arms(nr):
             failed.append((arm_id, str(exc)[:200]))
         except Exception as exc:                                      # noqa: BLE001
             failed.append((arm_id, "%s: %s" % (type(exc).__name__, str(exc)[:180])))
-    return passed, failed
+    return passed, failed, skipped
 
 
 def mutation_proof(nr, baseline_failed):
@@ -439,7 +458,7 @@ def mutation_proof(nr, baseline_failed):
         module._cache_clear()
         apply_mutation(module)
         module._cache_clear()
-        _p, failed = run_arms(module)
+        _p, failed, _sk = run_arms(module)
         turned = [a for a, _w in failed if a not in baseline_failed]
         caught = bool(turned)
         all_caught = all_caught and caught
@@ -500,7 +519,7 @@ def main():
     print("   ledger        %s" % snap)
     print("   tiers         %s" % ", ".join(t.tier for t in nr._tier_statuses()))
 
-    passed, failed = run_arms(nr)
+    passed, failed, skipped = run_arms(nr)
 
     print("\nran %d of %d -- COUNTED (denominator = len(ARMS), ids counted not typed)"
           % (passed + len(failed), len(ARMS)))
@@ -508,10 +527,22 @@ def main():
     for arm_id, why in failed:
         print("   FAILED %s -- %s" % (arm_id, why))
 
-    proved = mutation_proof(nr, {a for a, _w in failed}) if "--no-mutate" not in sys.argv else True
+    # A mutation cannot be proved against arms that could not run, so the proof is only demanded
+    # when the substrate they need is present. Claiming "every rule is load-bearing" from a run
+    # that skipped the arms proving it would be the same false comfort as a green on absent data.
+    proved = True
+    if "--no-mutate" not in sys.argv and not skipped:
+        proved = mutation_proof(nr, {a for a, _w in failed})
+    elif skipped:
+        print("\nMUTATION PROOF SKIPPED -- %d arm(s) could not be exercised here, so the proof would be measuring a subset and reporting it as the whole."
+              % len(skipped))
     if not proved:
         print("\nA RULE IS NOT LOAD-BEARING: some mutation turned no arm. Green above is not evidence.")
-    return 0 if (not failed and proved) else 1
+    if failed:
+        return 1
+    if skipped:
+        return NOT_EXERCISABLE
+    return 0 if proved else 1
 
 
 if __name__ == "__main__":
