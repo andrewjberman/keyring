@@ -17,6 +17,11 @@ TMP="$(mktemp -d)" || exit 2
 trap 'rm -rf "$TMP"' EXIT
 git -C "$ROOT" archive "$FULL" org/standards/isck | tar -x -C "$TMP" || { echo "ERROR: archive/extract failed"; exit 2; }
 cd "$TMP/org/standards/isck" || exit 2
+# R3-CRO-15: the extract is atomic but is NOT a git checkout, so the sidecar link resolver would read
+# UNRESOLVED and suppress nothing (exit 1 | 32 open at ab052139a8). Hand the gate the TRUSTED repo
+# root -- the resolver reads commits/blobs from its OBJECT DATABASE (git cat-file / git show <commit>:<path>),
+# never from the working tree, so the pin cannot be contaminated by later tree bytes.
+export ISCK_REPO_ROOT="$ROOT"
 
 echo "PROVENANCE: gates running against ATOMIC extract of $FULL"
 echo "            (working-tree state is irrelevant to every number below)"
