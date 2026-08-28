@@ -16,7 +16,7 @@
     "author": "3.0.0_SA_CVO~Z",
     "date": "2026-08-07",
     "rule": "A value-diff vs the pinned baseline is excused ONLY by a matching entry in 'exemptions'. Entries in 'decision_pending' and 'path_pending' excuse NOTHING. A diff not excused is a REGRESSION.",
-    "amendment_protocol": "This list re-derives ONLY from an amended CONTRACT section B; each derivation is a new commit, cited in every comparator report."
+    "amendment_protocol": "This list re-derives ONLY from an amended CONTRACT section B; each derivation is a new commit, cited in every comparator report. ⛔ EVERY artifact_types ENTRY MUST CARRY BOTH 'exemptions' AND 'process_time_exemptions' KEYS, even when empty. r7_comparator.py:284 reads ['exemptions'] with an UNGUARDED SUBSCRIPT and :139 subscripts ['artifact_types'][atype] the same way -- a missing type key, or a present type missing 'exemptions', RAISES KeyError ON THE WRITE PATH and kills the run. This is not hypothetical: category-views existed in S3 from 2026-08-28T13:31Z while undeclared here, and the 13:30Z gold run would have crashed on it (fixed @7604f2b4bd, deployed 21:10:26Z). ⛔ AND DO NOT COPY A SIBLING'S process_time_exemptions: the three 2026-08-07 entries were derived against PLATINUM publish instants and exempt _provenance.written_at, which THE GOLD PLANE NEVER EMITS (measured 0 at 4 of 4 scopes). A sibling-copied entry stops the crash and returns a FALSE conflict on every same-as_of run forever. MEASURE the provenance fields on the artifact you are actually declaring, and EXERCISE the new entry with the sibling pattern as a negative arm -- if the two agree, one of them has learned nothing."
   },
   "scopes": ["global", "49financial", "inflection", "cottonwood"],
   "artifact_types": {
