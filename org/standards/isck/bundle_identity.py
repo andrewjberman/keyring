@@ -127,6 +127,14 @@ def receipt_problem(commit, kind, rec):
         return f"receipt evidence_path {r['evidence_path']!r} is absent at {commit[:10]}"
     if "sha256:" + hashlib.sha256(evidence).hexdigest() != r["evidence_digest"]:
         return "receipt evidence_digest does not recompute from the evidence at the same commit"
+    # R4-CVO-5 (3.0.0_SA_CVO~X 123534Z): run_commit was bound to the BUNDLE (derive) and to nothing
+    # else -- a receipt could name any commit deriving the label while its evidence witnessed a
+    # different run. The evidence is the runner's own stdout and prints the full clone commit
+    # ("CLEAN CLONE of BUILD commit <40 hex>"), so the binding is: the evidence must NAME run_commit.
+    # Negative control at the fix: e8d3326bd5 (run_commit c557006b0b, evidence naming d11c341f79)
+    # is REFUSED here and nowhere above.
+    if run_full.encode() not in evidence and run_full[:10].encode() not in evidence:
+        return f"receipt evidence does not witness run_commit {run_full[:10]} (the runner's own line names the clone commit; a run_commit the evidence never mentions is a claim, not a run)"
     return None
 
 
