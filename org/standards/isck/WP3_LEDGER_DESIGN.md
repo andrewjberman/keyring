@@ -63,7 +63,7 @@ rule and is withdrawn.
 ## 2b. WHAT THE FROZEN CONTRACT CANNOT CARRY — routed to a NEW CANDIDATE, never a mutation of +38
 (R3-CRO-19 / R3-CVO-6, the design attack's central result)
 
-The frozen catalog has 14 record types. Three transitions this design must derive have NO
+The frozen catalog has 14 record types. Five facts this design must derive or enforce have NO
 append-only carrier in it:
 
 | transition | what the frozen contract offers | why it cannot work append-only | carrier required (new candidate) |
@@ -71,6 +71,8 @@ append-only carrier in it:
 | supersession of an assertion (`identity_relation`, `bridge_assertion`) | `superseded_by` on the OLD record | setting it after the old record exists is an in-place mutation (responsibility 3 rejects; LAW 3); setting it at creation requires a forward reference to a record that does not yet exist (responsibility 2 rejects) | **backward link:** `supersedes` on the NEW assertion (already the shape on `materializer_version.supersedes`); `superseded_by` becomes derived, never written |
 | binding close (and open as an event) | `entity_binding.valid_to` + `status` on the row | a close is a mutation of the open row, or a second row with no link to the first | **`binding_event`** `{opened \| closed}` with `binding_id`, `occurred_at`, `actor`, `evidence_refs` — or `lifecycle_event` generalizing `contest_event` |
 | materializer decommission | nothing (`retired` is authored) | no event to fold over | **`lifecycle_event` `materializer_decommissioned`** with `materializer_serial`, `occurred_at`, `actor`, `evidence_refs` |
+| mint-authority registration + epoch (R3-CRO-30; the R3-CRO-19 residual) | nothing — `minting_authority` is a `nonempty` string on `entity` and `mint_receipt`; row 6's in/out-of-epoch arms had no source of truth and replay could not reconstruct which epoch applied | an external registry is not in the replay set and not anchored by `commit_seq` | **`authority_epoch_event`** `{opened \| closed}` with `authority_id` (= the `minting_authority` string), `occurred_at`, `actor`, `evidence_refs` — an epoch is the interval between an `opened` and its `closed`; overlap rejected, reopening legal (row 6) |
+| materializer process-level supersession (R3-CVO-6 residual limb, replay 20260828T043700Z) | `superseded_by_version` on the OLD `materializer` | the same shape as `superseded_by`: set after the successor version exists it is an in-place mutation of the old record; set at creation it is a forward reference to a version that does not yet exist | **`lifecycle_event` `materializer_superseded`** with `materializer_serial`, `superseding_version_id` (a `matv:` of ANOTHER materializer), `occurred_at`, `actor`, `evidence_refs`; `superseded_by_version` becomes derived, never written (REFUSED after creation, row 3) |
 
 **Two typing gaps ride the same candidate (R3-CRO-22 / R3-CRO-25):** `contest_event.consequence_refs`
 (items) and `migration_receipt.migrated_record_ref` are `nonempty` free strings in `+38` although
@@ -78,10 +80,13 @@ the ledger must RESOLVE them (§2d, §3 row 13). Until typed, the ledger applies
 policy to them (§2d); the new candidate types them as record-id unions.
 
 **Ruling (C5's last sentence, applied):** these are CONTRACT defects surfaced by the enforcement
-design. They land as **`v0.3-candidate`** — a new `candidate_id`, attacked (one bounded round on the
-three carriers + the two typings + their folds), then frozen — BEFORE any ledger code. The frozen
-`+38` is not touched; `superseded_by` stays in it as a field the ledger REFUSES to accept on a write
-after creation (§3 responsibility 3) and populates only as a derived projection. WP-3's §7 sequence
+design. They land as **`v0.3-candidate`** — a NATIVE label in a new family (`v0.3-candidate+N`,
+`supersedes_bundle_id` → the frozen `+38`; never a second alias on a `v0.2-candidate+N` record —
+CVO~X 20260828T043852Z, ledger row 12), attacked (one bounded round on the five carriers + the two
+typings + their folds), then frozen — BEFORE any ledger code. The frozen
+`+38` is not touched; `superseded_by` and `materializer.superseded_by_version` stay in it as fields
+the ledger REFUSES to accept on a write after creation (§3 responsibility 3) and populates only as
+derived projections. WP-3's §7 sequence
 gains this step first. Until the new candidate is frozen, §4's folds for those axes are DECLARED,
 not buildable.
 
@@ -155,8 +160,10 @@ locations, substrate keys, published locations); never resolved; listed so the e
 27 are typed by pattern in `+38` and 2 (`consequence_refs[]`, `migrated_record_ref`) are free strings
 the ledger parses. **There is no "resolve-if-present" class**: a present reference resolves or the
 batch is rejected. `state_observation.producer_serial` is `nonempty` in `+38` and names a PRODUCER,
-not a ledger record — EXTERNAL; if it must resolve to a `materializer`, that is a `v0.3-candidate`
-typing, filed alongside the two above.
+not a ledger record — EXTERNAL, RULED (CVO~X 20260828T043852Z, ledger row 11): a producer may be a
+probe, a validator invocation or a human seat; it is NOT typed in `v0.3-candidate`; a future join
+adds an explicit `producer_kind` + typed `producer_ref` in a later candidate rather than overloading
+this field.
 
 **EXTERNAL (21, never resolved):** `evidence_refs` on `entity`, `entity_binding`,
 `state_observation`, `identity_relation`, `materializer`, `coherence_evaluation`, `bridge_assertion`,
@@ -198,18 +205,18 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 | # | responsibility | REJECT when | REJECT arm ids | ACCEPT arm ids (the sibling that proves the reject is not "reject everything") |
 |---|---|---|---|---|
 | 1 | global serial uniqueness across batches + fabrics | a mint for a serial already minted (any fabric) — the second fabric's serial must be `provisional` and reconciled by relation | `L-01-dup-serial-cross-batch`, `L-01-dup-serial-cross-fabric` | `L-01-distinct-serials-accepted`, `L-01-provisional-pair-reconciled-accepted` |
-| 2 | referential integrity for every reference in §2d | any STRICT / STRICT-CONDITIONAL / parsed PARSE-STRICT reference that does not resolve in (store ∪ batch) at final state | `L-02-unresolved-<record>.<field>` × 29 (the rows of §2d) | `L-02-resolved-<record>.<field>` × 29, plus `L-02-opaque-migration-ref-accepted` |
-| 3 | append-only retention | delete; or a write with an existing primary id and different bytes; or `superseded_by` populated on any write after creation | `L-03-delete`, `L-03-inplace-mutation`, `L-03-superseded-by-written` | `L-03-append-accepted`, `L-03-idempotent-rewrite-accepted` (same id, same bytes) |
+| 2 | referential integrity for every reference in §2d | any STRICT / STRICT-CONDITIONAL / parsed PARSE-STRICT reference that does not resolve in (store ∪ batch) at final state | `L-02-unresolved-<record>.<field>` × 29 (the rows of §2d) | `L-02-resolved-<record>.<field>-accepted` × 29, plus `L-02-opaque-migration-ref-accepted` (every accept id carries the `accepted` token — `2.0.0_SA_COO~X` 77377 residual) |
+| 3 | append-only retention | delete; or a write with an existing primary id and different bytes; or `superseded_by` / `materializer.superseded_by_version` populated on any write after creation | `L-03-delete`, `L-03-inplace-mutation`, `L-03-superseded-by-written`, `L-03-superseded-by-version-written` | `L-03-append-accepted`, `L-03-idempotent-rewrite-accepted` (same id, same bytes) |
 | 4 | binding open/close by event, never mutation | a binding row whose `valid_to` changed in place; a close with no event | `L-04-close-by-mutation`, `L-04-close-without-event` | `L-04-close-event-accepted`, `L-04-open-accepted` |
 | 5 | event→status projection with exact `status_basis` (authoritative records stay `authored`; §2) | an authored status on a derivable axis that disagrees with the fold; a projection submitted as a record | `L-05-entity.current_status-authored-vs-derived`, `L-05-entity_binding.status-…`, `L-05-identity_relation.verification_standing-…`, `L-05-materializer.current_status-…`, `L-05-bridge_assertion.verification_standing-…` (the five DERIVABLE-AT-WP-3 axes; `bridge_assertion.registry_standing` is ADJUDICATION-CARRIED and has no fold — declared, not tested), `L-05-projection-submitted-as-record-rejected` | `L-05-<axis>-authored-agrees-accepted` × 5 (the same five axes), `L-05-frozen-authored-record-validates`, `L-05-projection-not-mistakable-for-record` |
-| 6 | mint-receipt authentication + authority epoch + mint-fact equality (R3-CRO-27) | an `entity` with no preceding `mint_receipt`; a receipt from an authority outside its epoch; `entity.minted_at ≠ receipt.minted_at`; `entity.minting_authority ≠ receipt.minting_authority`; a SECOND receipt for one `entity_serial` | `L-06-entity-without-receipt`, `L-06-authority-out-of-epoch`, `L-06-minted-at-mismatch`, `L-06-authority-mismatch`, `L-06-second-receipt-for-serial` | `L-06-receipted-mint-accepted`, `L-06-authority-in-epoch-accepted`, `L-06-mint-facts-equal-accepted` |
-| 7 | relation direction rules + cycle AND fork rejection (R3-CRO-24) | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12; a second assertion `supersedes`-targeting the same prior; a second `materializer_version` `supersedes`-targeting the same prior version | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind`, `L-07-branching-supersession-rejected`, `L-07-fork-materializer-version-rejected` | `L-07-acyclic-chain-accepted`, `L-07-retirement-accepted`, `L-07-linear-version-chain-accepted` |
+| 6 | mint-receipt authentication + authority epoch + mint-fact equality (R3-CRO-27; the epoch's SOURCE OF TRUTH is the `authority_epoch_event` carrier of §2b — R3-CRO-30 — so the epoch arms are DECLARED until `v0.3-candidate` freezes) | an `entity` with no preceding `mint_receipt`; a receipt whose `minting_authority` has no `opened` epoch event at or before `minted_at` (event time, §2e) that is not `closed` before it; a second `opened` for an authority whose epoch is still open (overlap); `entity.minted_at ≠ receipt.minted_at`; `entity.minting_authority ≠ receipt.minting_authority`; a SECOND receipt for one `entity_serial` | `L-06-entity-without-receipt`, `L-06-authority-unregistered`, `L-06-authority-closed-before-mint`, `L-06-overlapping-epoch-rejected`, `L-06-minted-at-mismatch`, `L-06-authority-mismatch`, `L-06-second-receipt-for-serial` | `L-06-receipted-mint-accepted`, `L-06-authority-in-epoch-accepted`, `L-06-reopened-authority-accepted` (closed then opened again: two intervals, no overlap), `L-06-mint-facts-equal-accepted` |
+| 7 | relation direction rules + cycle AND fork rejection on EVERY chain (R3-CRO-24; R3-CVO-8 residual: the `supersedes` chains too) | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12; a second assertion `supersedes`-targeting the same prior; a second `materializer_version` `supersedes`-targeting the same prior version; a CYCLE in an assertion `supersedes` chain or a `materializer_version.supersedes` chain (the atomic batch `{A supersedes B, B supersedes A}` resolves every reference, forks nothing, and has ZERO heads — cycle detection runs on (store ∪ batch) at final state, §2c) ; a SECOND ROOT — a `materializer_version` with `supersedes` absent when a version for that `materializer_serial` already exists in (store ∪ batch) (R3-CRO-29: two roots resolve everything, fork nothing, and are both heads); a `supersedes` whose target belongs to a DIFFERENT `materializer_serial` (lineage contamination); a `supersedes` whose target is not that materializer's current head | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind`, `L-07-branching-supersession-rejected`, `L-07-fork-materializer-version-rejected`, `L-07-cycle-assertion-supersedes-rejected`, `L-07-cycle-version-supersedes-rejected`, `L-07-second-root-rejected`, `L-07-cross-materializer-supersedes-rejected` | `L-07-acyclic-chain-accepted`, `L-07-retirement-accepted`, `L-07-linear-version-chain-accepted`, `L-07-linear-assertion-chain-in-one-batch-accepted`, `L-07-single-root-accepted` |
 | 8 | frontier coordinate uniqueness + temporal consistency | two entries normalizing to one canonical key with different versions (the NORMALIZER, per `normalization_version`); an observation after the consuming run's start | `L-08-normalized-collision` (the case the contract's shape check cannot see), `L-08-observed-after-start` | `L-08-distinct-normalized-keys-accepted`, `L-08-observed-before-start-accepted` |
 | 9 | run / frontier / materializer-version / surface consistency | surface not in run outputs; frontier disagreement; version not the run's | `L-09-membership`, `L-09-frontier-disagree`, `L-09-version-disagree` | `L-09-consistent-triple-accepted` |
 | 10 | admissible publication | `published` from a non-succeeded run; before completion; without a promoter | `L-10-publish-from-failed`, `L-10-publish-before-complete`, `L-10-no-promoter` | `L-10-publish-after-succeeded-accepted`, `L-10-unpublished-accepted` |
-| 11 | current read projections — single-valued HEADs (R3-CRO-24) | a projection that cannot show its `status_basis` records; a HEAD query that would return two values (impossible after row 7 + the §4 head rules — the arm proves it) | `L-11-projection-without-basis`, `L-11-two-heads` | `L-11-projection-with-basis-accepted`, `L-11-tied-publication-head-deterministic` |
+| 11 | current read projections — single-valued HEADs (R3-CRO-24) | a projection that cannot show its `status_basis` records; a HEAD query that would return two values (impossible after row 7 + the §4 head rules — the arm proves it) | `L-11-projection-without-basis`, `L-11-two-heads` | `L-11-projection-with-basis-accepted`, `L-11-tied-publication-head-deterministic`, `L-11-same-batch-tie-broken-by-id` (R3-CVO-10) |
 | 12 | historical replay (anchored by `commit_seq`, §2e) | a replay as of an anchor that differs from the state recorded at that `commit_seq` | `L-12-replay-frontier`, `L-12-replay-publication`, `L-12-backfill-before-anchor-excluded` | `L-12-replay-matches-recorded-accepted`, `L-12-backfill-after-anchor-included-at-event-time`, `L-12-anchor-commit-seq-printed` |
-| 13 | cross-record contest integrity (the three limit-11 promises as REJECTED WRITES) | a `resolved` event whose `contest_id` has no admitted `opened` event; a second `opened` for one `contest_id`; a `resolved` whose typed target differs from its `opened`; an `upheld` resolution any of whose `consequence_refs` does not parse, does not resolve, targets a different typed target, or is dated at/before the opening's `occurred_at`; a `merged` whose `surviving_contest_id` is not an admitted `opened` | `L-13-resolved-without-opened`, `L-13-duplicate-opened`, `L-13-resolved-target-differs`, `L-13-consequence-unparsable`, `L-13-consequence-unresolved`, `L-13-consequence-wrong-target`, `L-13-consequence-predates-opening`, `L-13-merged-into-unopened` | `L-13-opened-then-resolved-accepted`, `L-13-upheld-with-later-same-target-consequence-accepted`, `L-13-merged-into-opened-accepted`, `L-13-dismissed-accepted` |
+| 13 | cross-record contest integrity (the three limit-11 promises as REJECTED WRITES) | a `resolved` event whose `contest_id` has no admitted `opened` event; a second `opened` for one `contest_id`; a `resolved` whose typed target differs from its `opened`; an `upheld` resolution any of whose `consequence_refs` does not parse, does not resolve, targets a different typed target, or is dated at/before the opening's `occurred_at`; a `merged` whose `surviving_contest_id` is not an admitted `opened`; a SECOND `resolved` for one `contest_id` (two admitted resolutions with different outcomes would make the fold ambiguous — R3-CVO-9 residual); a `merged` whose `surviving_contest_id` equals its own `contest_id` | `L-13-resolved-without-opened`, `L-13-duplicate-opened`, `L-13-duplicate-resolved`, `L-13-resolved-target-differs`, `L-13-consequence-unparsable`, `L-13-consequence-unresolved`, `L-13-consequence-wrong-target`, `L-13-consequence-predates-opening`, `L-13-merged-into-unopened`, `L-13-merged-into-self` | `L-13-opened-then-resolved-accepted`, `L-13-upheld-with-later-same-target-consequence-accepted`, `L-13-merged-into-opened-accepted`, `L-13-dismissed-accepted` |
 
 **Battery size is DERIVED, never typed (R3-CRO-21 / R3-DT-8 — the one typed number whose whole job
 was to be checked was wrong twice).** The runner prints the denominator by COUNTING the ids it ran;
@@ -275,16 +282,17 @@ Single-valued by construction: exactly one head per chain (a second assertion su
 target is REJECTED — row 7, `L-07-branching-supersession-rejected`). **Buildable only after the new
 candidate** (§2b).
 
-**`materializer.current_status`** (records: `materializer_version`, `lifecycle_event[materializer_decommissioned]` — NEW CANDIDATE for the event)
+**`materializer.current_status`** (records: `materializer_version`, `lifecycle_event[materializer_decommissioned | materializer_superseded]` — NEW CANDIDATE for both events, §2b)
 
 | # | condition | value |
 |---|---|---|
 | 1 | a `materializer_decommissioned` event exists | `retired` |
-| 2 | `materializer.superseded_by_version` resolves to a version of ANOTHER materializer (the frozen field is the carrier for process-level supersession; "points past the current" was circular and is gone) | `superseded` |
+| 2 | a `materializer_superseded` event exists whose `superseding_version_id` resolves to a version of ANOTHER materializer (R3-CVO-6 residual: the frozen `superseded_by_version` field on the OLD record was the same forbidden shape as `superseded_by`; it is now derived from the event and REFUSED on a write — row 3) | `superseded` |
 | 3 | at least one `materializer_version` for this serial exists | `active` |
 | 4 | (default: zero versions) | `unknown` |
 
 Overlap controls: retired×superseded, superseded×active; default control: zero versions → `unknown`.
+**Buildable only after the new candidate carries both events**; until then rows 1–2 are authored.
 
 **`bridge_assertion.registry_standing`**: ADJUDICATION-CARRIED — authored; the ledger stores it and
 REFUSES a change without `adjudicated_by` (the adjudication-event vocabulary is a later candidate).
@@ -300,10 +308,13 @@ at write, not at read.
 
 *current authority version of a logical surface*: among admitted `surface_version` records with this
 `logical_surface_serial` and `publication_state=published`, order by `(published_at DESC,
-commit_seq DESC)` and take the first. `commit_seq` is total, so a tie on `published_at` (two
-publications in one second, or two records with one `published_ref` and different content) is
-broken deterministically and the projection reports `tie_broken_by: commit_seq` beside the value
-(`L-11-tied-publication-head-deterministic`). Zero published versions → `failure_state:
+commit_seq DESC, surface_version_id DESC)` and take the first. `commit_seq` is total ACROSS batches
+but every member of one atomic batch shares it (R3-CVO-10), so the tertiary key is the primary id
+— unique by row 1/row 3, lexically total — and a tie on `published_at` (two publications in one
+second, two records with one `published_ref` and different content, or two published versions of
+one surface in ONE batch) is broken deterministically; the projection reports `tie_broken_by:
+commit_seq | surface_version_id` beside the value (`L-11-tied-publication-head-deterministic`,
+`L-11-same-batch-tie-broken-by-id`). Zero published versions → `failure_state:
 none_published`. A second published version at the same `published_ref` is a rebuild in place and is
 ADMITTED (append-only); the earlier one is history, visible through `replay`.
 
@@ -332,8 +343,11 @@ ADMITTED (append-only); the earlier one is history, visible through `replay`.
 
 ## 7. LANDING SEQUENCE
 
-design attacked-dry → **`v0.3-candidate`: the three carriers + two typings of §2b land in the
-contract as a NEW candidate_id, attacked in one bounded round, frozen** → engine chosen by ONE
+design attacked-dry → **`v0.3-candidate`: the five carriers + two typings of §2b land in the
+contract as a NEW candidate_id in a native family (`bundle_identity.py` family rule amended:
+`v0.3-candidate+N`, `supersedes_bundle_id` → +38), attacked in one bounded round (round 4:
+`ROUND3_CHARTER.md` addendum, `R4-<seat>-<n>` ids, `round: 4` rows in the continued register,
+`BOUNDARY_ROUND4.md`), frozen** → engine chosen by ONE
 stated criterion (Rule-26 locality of the store) → battery written FIRST from §3 (both arms per
 row; the manifest is the denominator) → ledger code until the battery passes from a clean clone →
 **`wp3_certification_receipt` recorded on the frozen label through the REGISTRY-SIDE receipt

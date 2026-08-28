@@ -404,7 +404,7 @@
    "disposition": "FIXED",
    "disposition_basis": "remedy (a): every row names its sibling accept arm id(s) in a fifth column; row 5's five DERIVABLE axes enumerated (registry_standing declared untested, adjudication-carried); row 2's reference fields enumerated from the frozen schema (18 must-resolve + 6 resolve-if-present); battery size derived = 90 arms, the denominator a runner must print; the sentence changed from DESCRIPTION to INSTRUCTION",
    "fix_commit": "(this commit)",
-   "verification_ref": "OPEN-CITATION: DT~X re-parse at the citation (ids per row, accept-shaped count = rows)",
+   "verification_ref": "COO~X 77377 at bec797df5f: 12 of 12 rows carry both arms by column position; DT~X 77379/77382: VERIFIED structurally; DT~X 77399 at 39e7c981cb: both columns populated 13 of 13, accept column carries the literal token 13 of 13 (COO~X's naming residual CLOSED)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack; round-3 register continues)"
   },
   {
@@ -428,7 +428,7 @@
    "disposition": "FIXED",
    "disposition_basis": "same remedy as R3-CRO-18 (convergent, independent): atomic batch + final-state validation; primary-id fields explicitly NOT reference fields (row 2's enumeration excludes them, stated)",
    "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
-   "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+   "verification_ref": "CVO~X replay 20260828T043700Z at 39e7c981cb: PASS (sec 2c atomic final-state batches, primary-id exclusion, bootstrap/order controls close the deadlock)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -450,9 +450,9 @@
    "finding_class": "DESIGN-INPUT",
    "claim": "derivation carriers impossible under the frozen pin: no binding/decommission events, AND the standing folds use FORWARD superseded_by on the OLD record, which is either a mutation (resp. 3) or a forward reference to a record that does not exist (resp. 2) -- four of five declared derivable axes cannot transition append-only",
    "disposition": "ROUTED-NEW-CANDIDATE",
-   "disposition_basis": "the sharpest form of R3-CRO-19: the frozen contract's own superseded_by shape contradicts LAW 3 under enforcement. sec 2b routes the backward link (`supersedes` on the new assertion) to the new candidate; the frozen field is refused on post-creation writes and populated only as a derived projection; sec 4's chain fold rewritten over the backward link and declared NOT BUILDABLE until v0.3-candidate is frozen",
+   "disposition_basis": "the sharpest form of R3-CRO-19: the frozen contract's own superseded_by shape contradicts LAW 3 under enforcement. sec 2b routes the backward link (`supersedes` on the new assertion) to the new candidate; the frozen field is refused on post-creation writes and populated only as a derived projection; sec 4's chain fold rewritten over the backward link and declared NOT BUILDABLE until v0.3-candidate is frozen | RESIDUAL LIMB (CVO~X replay 20260828T043700Z at 39e7c981cb): sec 4 still derived `superseded` from materializer.superseded_by_version on the OLD materializer -- the same forbidden shape as superseded_by. Fixed (this commit): sec 2b gains a FOURTH carrier, lifecycle_event materializer_superseded {materializer_serial, superseding_version_id, ...}; superseded_by_version becomes derived and REFUSED on a write (L-03-superseded-by-version-written); sec 4's materializer table row 2 folds the event; v0.3-candidate = four carriers + two typings",
    "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
-   "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+   "verification_ref": "CVO~X replay of the fourth carrier at the citing commit (asked)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -474,9 +474,9 @@
    "finding_class": "DESIGN-INPUT",
    "claim": "derivation rules are not functions: deferred mint stated provisional but the else-branch returns active; open+disputed and contested+retired both satisfiable",
    "disposition": "FIXED",
-   "disposition_basis": "same remedy as R3-CRO-20 (convergent, independent): the tables; provisional is row 3 keyed on the receipt's deferred_to_reconciliation with no resolving relation, outranked by retired and contested",
+   "disposition_basis": "same remedy as R3-CRO-20 (convergent, independent): the tables; provisional is row 3 keyed on the receipt's deferred_to_reconciliation with no resolving relation, outranked by retired and contested | RESIDUAL LIMB (CVO~X replay 20260828T043700Z): row 7 rejected forks but not CYCLES in the new assertion `supersedes` chain or the materializer_version.supersedes chain -- the atomic batch {A supersedes B, B supersedes A} resolves every reference, forks nothing, and has ZERO heads. Fixed (this commit): L-07-cycle-assertion-supersedes-rejected, L-07-cycle-version-supersedes-rejected, accept L-07-linear-assertion-chain-in-one-batch-accepted; cycle detection stated to run on (store U batch) at final state",
    "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
-   "verification_ref": "OPEN-CITATION: the finder's replay at the amended design's citation",
+   "verification_ref": "CVO~X replay of row 7's chain-cycle arms at the citing commit (asked)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -486,9 +486,9 @@
    "finding_class": "RECORD",
    "claim": "the R3-DT-7 repair's claimed 90-arm battery is false of the repaired table: mechanical parse at bec797df5f gives rows 1/3-12 = 27 reject + 22 accept = 49 (not 24+24=48) + row 2's 42 = 91",
    "disposition": "AMENDED-RECORD",
-   "disposition_basis": "the sentence now carries the per-row breakdown (2R+2A, 2+2, 2+2, 5+5, 2+2, 3+2, 3+1, 3+2, 1+1, 2+1) and 91; the runner counts the ids it ran and never reads the sentence -- the fifth typed-beside-derived instance at this seat tonight, in the same paragraph that forbade it",
-   "fix_commit": "(this commit)",
-   "verification_ref": "CRO~X's own parse is the corrected figure; DT~X re-parse at the citation",
+   "disposition_basis": "PHASE 1 @2f1fdc4c18: the sentence carried the per-row breakdown (2R+2A, 2+2, 2+2, 5+5, 2+2, 3+2, 3+1, 3+2, 1+1, 2+1) and the typed 91 -- the fifth typed-beside-derived instance at this seat tonight, in the same paragraph that forbade it. SUPERSEDED @39e7c981cb (R3-DT-8): the typed total is gone entirely; the denominator is DERIVED by a stated predicate and the vector lives only in commit bodies by hash (R3-CRO-32 corrected this row, whose earlier text still said 'now carries ... 91' with fix_commit '(this commit)' at a commit that contained no 91)",
+   "fix_commit": "2f1fdc4c18 (the 91), superseded by 39e7c981cb (derive-not-type)",
+   "verification_ref": "DT~X 77399 + COO~X 77392 + CRO~X 044058Z: the vector re-derives identically at 39e7c981cb (136, 13 of 13)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -500,7 +500,7 @@
    "disposition": "FIXED",
    "disposition_basis": "sec 2d lands a TYPED reference table derived MECHANICALLY from the frozen schema at dcbe214a44 ($ref ent_serial/mat_serial or a record-id-prefix pattern, primary ids excluded; every other $ref in the schema shown to target a non-record def): 29 rows = 26 STRICT + 1 STRICT-CONDITIONAL (contest_id on resolved) + 2 PARSE-STRICT (consequence_refs[], migrated_record_ref -- nonempty strings in +38, typed in v0.3-candidate), every one with BOTH arms; the 'resolve-if-present' class is abolished; producer_serial is nonempty in +38 and names a producer, not a record -- EXTERNAL, with its typing filed to v0.3; the 21 EXTERNAL fields listed so the exclusion is visible",
    "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
-   "verification_ref": "the derivation script's output (27 pattern-typed refs) printed in the commit body; a second seat re-derives from the schema, not from the table",
+   "verification_ref": "DT~X 77394 independent re-derivation from the frozen schema at dcbe214a44 implementing sec 2d :102-107 as written: raw 31, every delta traced to DT~X's own hand-written primary-id map (5) and the two free-string rows a pattern census structurally cannot see (2) -> CORROBORATES 29; CRO~X's own re-derivation still asked",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -534,9 +534,9 @@
    "finding_class": "DESIGN-INPUT",
    "claim": "sec 1's three limit-11 promises are PROJECTED (sec 4 keeps a subject contested) rather than ENFORCED: no rejection row or arms for resolved-without-opened, missing / wrong-target / too-early upheld consequence -- an illegal write becomes a projection state, contrary to the stated enforcement plane",
    "disposition": "FIXED",
-   "disposition_basis": "responsibility 13 (cross-record contest integrity) added with 8 reject arms (resolved-without-opened, duplicate-opened, resolved-target-differs, consequence-unparsable / -unresolved / -wrong-target / -predates-opening, merged-into-unopened) and 4 accept arms; sec 4's folds now consume ONLY admitted event sets and the entity/binding 'contested' rows lose their consequence_refs-do-not-exist branch (row 13 refused it at write); consequence_refs is PARSE-STRICT under sec 2d and typed in v0.3-candidate; sec 1 limit-11 row says 'each a REJECTED-WRITE rule, never a projection state'",
+   "disposition_basis": "responsibility 13 (cross-record contest integrity) added with 8 reject arms (resolved-without-opened, duplicate-opened, resolved-target-differs, consequence-unparsable / -unresolved / -wrong-target / -predates-opening, merged-into-unopened) and 4 accept arms; sec 4's folds now consume ONLY admitted event sets and the entity/binding 'contested' rows lose their consequence_refs-do-not-exist branch (row 13 refused it at write); consequence_refs is PARSE-STRICT under sec 2d and typed in v0.3-candidate; sec 1 limit-11 row says 'each a REJECTED-WRITE rule, never a projection state' | RESIDUAL LIMB (CVO~X replay 20260828T043700Z): row 13 rejected a duplicate OPENED but not a second RESOLVED for one contest_id (two admitted resolutions with different outcomes make the fold ambiguous), and did not reject merged surviving_contest_id == own contest_id. Fixed (this commit): L-13-duplicate-resolved, L-13-merged-into-self",
    "fix_commit": "(this commit -- design amendment; the new candidate is a later commit)",
-   "verification_ref": "CVO~X replay of row 13 + sec 4 against the four constructions it named",
+   "verification_ref": "CVO~X replay of row 13's two new rejects at the citing commit (asked)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -584,7 +584,7 @@
    "disposition": "FIXED",
    "disposition_basis": "bundle_identity.py --receipt <kind> --value <v> <commit> appends the receipt to the FROZEN label's BUNDLE_LABELS.json entry (registry-side, keyed by candidate_id + contract_bundle_id + recorded_at); derive() exposes the three kinds from the registry; REFUSED unless frozen, REFUSED on an unknown kind, idempotent on the same value, REFUSED on a conflicting value; exercised on a SCRATCH copy of the registry (5 arms, output in the commit body) with the bundle id provably unchanged; the real registry untouched and --check still OK; sec 7 rewritten to name the carrier; bundle_identity.py is not a bundle member, so this change is not a byte of +38",
    "fix_commit": "(this commit -- bundle_identity.py + design sec 7)",
-   "verification_ref": "COO~X or CRO~X re-runs the five arms against a scratch registry copy",
+   "verification_ref": "COO~X 77392 replay at 39e7c981cb: 8 of 8 arms on a SCRATCH registry (own harness; arms 6-8 added: bundle id before == after, scratch carries the value, CONTAMINATION CONTROL sha256 of the real BUNDLE_LABELS.json + BUNDLE_IDENTITY.json equal before/after, git status clean, --check OK 04:36:33Z)",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   },
   {
@@ -596,7 +596,67 @@
    "disposition": "AMENDED-RECORD",
    "disposition_basis": "filed against bec797df5f; the 24->27 / 90->91 correction had ALREADY landed one commit later at 2f1fdc4c18 as R3-CRO-21 (convergent) -- but that commit left ':126 the runner prints the 90-arm denominator' typed in the completion paragraph, which this commit removes: the completion condition now reads 'the denominator it counted', the denominator is declared DERIVED (predicate stated: backtick tokens beginning L-, `x N` templates expand, a twice-cited token is one arm) and the per-row vector for THIS revision is printed only in the commit body, by hash; DT~X's parser-fix confession ([^`]+ between backticks) adopted as the stated predicate",
    "fix_commit": "2f1fdc4c18 (the 91) + (this commit -- the residual typed 90 at :126 removed)",
-   "verification_ref": "CVO~X 20260828T042448Z UPHELD (91 at bec797df5f); this revision's vector re-derivable by the same predicate",
+   "verification_ref": "CVO~X 20260828T042448Z UPHELD (91 at bec797df5f); DT~X 77394 + 77399 at 39e7c981cb: occurrences of '90' = 0 and '91' = 0 in the file (class retired, both numbers checked), the 136 vector reproduced 13 of 13 by DT~X's own predicate; COO~X 77392 third seat, per-row IDENTICAL 13 of 13",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CVO-10",
+   "source_seat": "3.0.0_SA_CVO~X",
+   "source_ref": "20260828T043700Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "surface HEAD orders only (published_at DESC, commit_seq DESC) and claims commit_seq makes ties total; atomic batches give every member the SAME commit_seq, so two published versions for one logical surface in one batch can share published_at -- a true tie, two heads",
+   "disposition": "FIXED",
+   "disposition_basis": "sec 4 surface head order gains the tertiary key surface_version_id DESC (the primary id: unique by rows 1/3, lexically total); the projection reports tie_broken_by: commit_seq | surface_version_id; row 11 gains L-11-same-batch-tie-broken-by-id; sec 2e's 'commit_seq is total' is qualified: total ACROSS batches, shared WITHIN one",
+   "fix_commit": "(this commit -- design amendment)",
+   "verification_ref": "CVO~X replay of the same-batch construction at the citing commit (asked)",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CRO-29",
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T044058Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "materializer HEAD still not single-valued: row 7 rejects two versions superseding the SAME prior only; V1(M) and V2(M) both with supersedes absent are two legal roots and two heads; V2(M2).supersedes -> V1(M1) is legal (target class checked, materializer_serial never required equal) and contaminates two lineages",
+   "disposition": "FIXED",
+   "disposition_basis": "row 7 rejects a SECOND ROOT (supersedes absent while a version for that materializer_serial exists in store U batch), a cross-materializer supersedes target, and a supersedes target that is not that materializer's current head; arms L-07-second-root-rejected, L-07-cross-materializer-supersedes-rejected, accept L-07-single-root-accepted; sec 4's 'linear chain' now has exactly one root by construction",
+   "fix_commit": "(this commit -- design amendment)",
+   "verification_ref": "CRO~X replay of the two-root and cross-lineage constructions at the citing commit (asked)",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CRO-30",
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T044058Z",
+   "finding_class": "DESIGN-INPUT",
+   "claim": "authority-epoch enforcement has no source of truth (the R3-CRO-19 residual): row 6 names in/out-of-epoch arms but no carrier in the frozen catalog, sec 2, sec 2b or the envelope defines authority registration/epochs; the expected verdict is unknowable and replay cannot reconstruct which epoch applied",
+   "disposition": "ROUTED-NEW-CANDIDATE",
+   "disposition_basis": "sec 2b gains a FIFTH carrier for v0.3-candidate: authority_epoch_event {opened|closed} with authority_id (= the minting_authority string), occurred_at, actor, evidence_refs -- an epoch is the interval between an opened and its closed, anchored by commit_seq like every record; row 6 rewritten on it (unregistered / closed-before-mint / overlapping-epoch rejects; in-epoch + reopened accepts) and DECLARED not buildable until v0.3 freezes; an external registry was rejected because it is not in the replay set",
+   "fix_commit": "(this commit -- design amendment)",
+   "verification_ref": "CRO~X replay of row 6 + the carrier row at the citing commit (asked); the carrier itself is attacked in round 4",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CRO-31",
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T044058Z",
+   "finding_class": "BATTERY",
+   "claim": "receipt slots accept semantically empty or arbitrary values and are permanently poisonable: at 39e7c981cb --receipt vertical_slice_receipt --value NOT_A_COMMIT_OR_RECEIPT -> OK and --value '' -> OK; because a conflicting second value is refused, an invalid first write blocks the real certification forever; code validates neither nonempty nor commit shape",
+   "disposition": "FIXED",
+   "disposition_basis": "bundle_identity.py validates BEFORE any mutation: the value must match [0-9a-f]{7,40} AND resolve via git rev-parse --verify <v>^{commit}; the stored value is the resolved full hash; empty, malformed and nonexistent-commit values are REFUSED with nothing written (exercised on a scratch registry: 3 rejects with registry sha unchanged + 1 valid-commit accept; output in the commit body). The structured receipt CRO~X prefers (run commit + manifest digest + result + evidence digest) is the shape the battery runner will emit; the carrier's value grows to it when the runner exists -- declared, not built",
+   "fix_commit": "(this commit -- bundle_identity.py)",
+   "verification_ref": "CRO~X re-runs the empty / malformed / nonexistent / valid arms against a scratch copy at the citing commit",
+   "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
+  },
+  {
+   "finding_id": "R3-CRO-32",
+   "source_seat": "4.0.0_SA_CRO~X",
+   "source_ref": "20260828T044058Z",
+   "finding_class": "RECORD",
+   "claim": "register row R3-CRO-21's disposition is stale at its own citation: at 39e7c981cb it says the sentence 'now carries ... 91' with fix_commit '(this commit)', but that commit contains no typed 91 (R3-DT-8 derived the denominator)",
+   "disposition": "AMENDED-RECORD",
+   "disposition_basis": "R3-CRO-21's basis now names phase 1 @2f1fdc4c18 (the typed 91) and its supersession @39e7c981cb (derive-not-type), fix_commit cites both hashes",
+   "fix_commit": "(this commit -- design amendment)",
+   "verification_ref": "CRO~X read of the amended row",
    "boundary_inclusion": "POST-BOUNDARY (WP-3 design attack)"
   }
  ],

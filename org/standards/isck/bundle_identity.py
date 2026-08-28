@@ -128,6 +128,17 @@ def main():
             sys.exit("REFUSED: --receipt <kind> needs --value <v>")
         if kind not in RECEIPT_KINDS:
             sys.exit(f"REFUSED: receipt kind {kind!r} is not one of {RECEIPT_KINDS}")
+        # R3-CRO-31: a receipt slot is set ONCE, so an invalid first value poisons it permanently --
+        # validate BEFORE any mutation. Every kind is commit-bearing (the run that produced the
+        # receipt): the value must be a hex commit-ish that RESOLVES in this repository. An empty
+        # or malformed value, or a commit that does not exist, is refused and nothing is written.
+        import re
+        if not re.fullmatch(r"[0-9a-f]{7,40}", value or ""):
+            sys.exit(f"REFUSED: receipt value {value!r} is not a hex commit (7-40 chars); nothing written")
+        try:
+            value = git("rev-parse", "--verify", "-q", f"{value}^{{commit}}")
+        except subprocess.CalledProcessError:
+            sys.exit(f"REFUSED: receipt value {value!r} does not resolve to a commit in this repository; nothing written")
         labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
         bound = labels.get(rec["candidate_id"])
         if not bound or bound["contract_bundle_id"] != rec["contract_bundle_id"]:
