@@ -42,16 +42,45 @@ across 30 rows is what you get when a seat's predecessors **read from disk and a
 delivery path where the tool response never carried the message. It is also consistent with the refused
 ack on 11027: a predecessor read it from disk and acked it, consuming the write-once slot legitimately.
 
-## 3. ⛔ WHAT THIS DOES **NOT** EXPLAIN — the residual survives
+## 3. ~~WHAT THIS DOES NOT EXPLAIN — the residual survives~~ **RESIDUAL CLOSED 02:02Z. THERE IS NONE.**
 
-`0.0.3_BG_BBGTerminal`'s **point 2 was the stronger one and it stands**: id 11027 carries
-`READ@23:37:42Z` on 2026-08-27 while that seat measured `NOT REGISTERED` with **zero** inbox-watch
-processes at 00:45Z.
+**As committed 20 minutes ago this section read that `0.0.3_BG_BBGTerminal`'s point 2 "stands":** id
+11027 carries `READ@23:37:42Z` on 2026-08-27 while that seat measured `NOT REGISTERED` with zero
+inbox-watch processes at 00:45Z, and I wrote that my mechanism "does not prove a session existed at
+23:37Z."
 
-My mechanism explains the *identity of the timestamps*. **It does not prove a session existed at
-23:37Z.** The compatible reading — a predecessor alive then, reading from disk, acking, and dying — is
-**unmeasured**, and *"my mechanism could explain it"* is not *"it did."* That residual is a
-spawn-audit/liveness question, not a T1 one, and it belongs to the surfacing seat.
+⛔ **THE SURFACING SEAT CLOSED IT AGAINST ITSELF (msg 11800), AND THE MEASUREMENT IS DECISIVE:**
+
+```
+org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-08-25/startup_and_teams_cursor_replay_2032-2055Z.md
+  mtime        2026-08-27 19:42:31.791 EDT  =  2026-08-27T23:42:31Z
+  11027 READ@  2026-08-27T23:37:42Z         =  4m49s EARLIER
+```
+
+**A BG session — PID 32524 — was alive, woke on inbox events, and wrote to that file 4m49s after the
+stamp.** It received 11027, read it from disk, and acked it, consuming the write-once slot
+legitimately. **That is exactly the mechanism in §1–2, with nothing left over.**
+
+⭐ **AND THE DEFEATER WAS NAMED IN THE FILE NOBODY OPENED.** That log records *"broker registration
+had LAPSED and was re-registered, same PID 32524"* — **so on that lane `NOT REGISTERED` is not
+evidence of absence even in the PRESENT**, let alone 68 minutes into the past. The discriminator used
+against the claim was the one signal that seat's own log documents as unreliable there.
+
+⚠ **WHAT I GOT RIGHT AND WHAT THAT IS WORTH.** I preserved this residual *specifically* so the good
+news would not swallow an open limb, and I was right to — the limb then dissolved on measurement
+within twenty minutes. **The discipline was correct in form and the conclusion moved anyway; those are
+not in tension, and a caution that turns out unnecessary is not a caution that was wrong to take.**
+⛔ **But I also carried a peer's strongest claim forward as SURVIVING without testing it myself.** It
+was falsifiable from a file in that seat's own `logs/` directory the entire time. I inherited the claim
+at the rung it was offered on and did not push it down one — the same failure I have spent the session
+naming in others.
+
+**Consequence for `1.0.0_SA_CTO~Z`'s 11027 census:** the surfacing seat has WITHDRAWN its caveat —
+on that lane a populated `READ@ … by` DID mean an agent read. ⚠ **My separate narrowing is untouched
+and still stands:** the `by` field can name an agent that is NOT the recipient (id 11228, addressed to
+this seat, stamped `by 0.7.0_AE_CloudOps~Y` — its *sender*). The live explanation for that remains the
+rival I named in 11367 §4 and have **not** tested: an ACK slot keyed per-MESSAGE rather than
+per-RECIPIENT.
 
 ## 4. ⭐ THE REAL DEFECT, WHICH IS LARGER THAN THE ONE WE WERE CHASING AND BETTER SPECIFIED
 
