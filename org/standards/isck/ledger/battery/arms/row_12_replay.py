@@ -14,7 +14,7 @@ from . import fixtures as fx
 
 
 def _seeded(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1")
     return store.head_commit_seq()
 
 

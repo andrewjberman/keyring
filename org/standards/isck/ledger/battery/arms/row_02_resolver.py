@@ -53,6 +53,12 @@ def _base(store, record_type, primary_value):
             rec[fld[:-2]] = [value]
         else:
             rec[fld] = value
+    if record_type in ("entity", "mint_receipt"):
+        # row 6 -- an entity's mint facts must EQUAL its receipt's, so both sides of every
+        # generated pair carry the SAME ones. Before this, a row-2 arm about a reference field
+        # was being refused by L-06-minted-at-mismatch: the right verdict for the wrong rule.
+        rec["minting_authority"] = fx.ROOT
+        rec["minted_at"] = "2026-01-01T00:00:00Z"
     return rec
 
 
@@ -63,10 +69,20 @@ def build_universe(store):
         rec = _base(store, cls, sid)
         if cls == "mint_receipt":
             rec["entity_serial"] = SEED["entity"]
+            rec["minting_authority"] = fx.ROOT
+            rec["minted_at"] = "2026-01-01T00:00:00Z"
         if cls == "entity":
             rec["minted_at"] = "2026-01-01T00:00:00Z"
+            rec["minting_authority"] = fx.ROOT
+        if cls == "authority_epoch_event":
+            # the universe registers its own minting authority, in the SAME batch as the mint it
+            # authorises -- sec 2c resolves the pair at final state, so no ordering is implied
+            rec["authority_id"] = fx.ROOT
+            rec["event_kind"] = "opened"
+            rec["actor"] = fx.ROOT
+            rec["occurred_at"] = "2020-01-01T00:00:00Z"
         batch.append(rec)
-    store.admit(batch)
+    store.admit(batch, actor=fx.ROOT)
     return store
 
 

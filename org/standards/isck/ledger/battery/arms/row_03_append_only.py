@@ -14,20 +14,20 @@ from . import fixtures as fx
 
 @arm("L-03-delete")
 def delete_refused(store):
-    store.admit(fx.minted_pair("ent:alpha"))
+    fx.bootstrap(store, "ent:alpha")
     store.delete("ent:alpha")
 
 
 @arm("L-03-inplace-mutation")
 def inplace_mutation(store):
-    store.admit(fx.minted_pair("ent:alpha"))
+    fx.bootstrap(store, "ent:alpha")
     store.admit([fx.entity("ent:alpha", minted_at="2099-12-31T00:00:00Z")])   # same id, new bytes
 
 
 @arm("L-03-superseded-by-written")
 def superseded_by_written(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1"))
-    store.admit(fx.minted_pair("ent:beta", receipt="mr:2"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1")
+    fx.bootstrap(store, "ent:beta", receipt="mr:2")
     store.admit([{"record_type": "identity_relation", "relation_id": "rel:1",
                   "subject_serial": "ent:alpha", "object_serial": "ent:beta",
                   "relation_kind": "canonicalization"}])
@@ -45,13 +45,14 @@ def superseded_by_version_written(store):
 
 @arm("L-03-append-accepted")
 def append_accepted(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1"))
-    store.admit(fx.minted_pair("ent:beta", receipt="mr:2"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1")
+    fx.bootstrap(store, "ent:beta", receipt="mr:2")
 
 
 @arm("L-03-idempotent-rewrite-accepted")
 def idempotent_rewrite(store):
     """SAME id, SAME bytes -- a repeat delivery is not a mutation and must not be refused."""
+    fx.open_authority(store)
     pair = fx.minted_pair("ent:alpha")
     store.admit(pair)
     store.admit([dict(r) for r in pair])

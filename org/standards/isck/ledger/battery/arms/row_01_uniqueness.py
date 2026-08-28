@@ -11,26 +11,26 @@ from . import fixtures as fx
 
 @arm("L-01-dup-serial-cross-batch")
 def dup_serial_cross_batch(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1")
     store.admit([fx.mint_receipt("mr:2", "ent:alpha")])          # a SECOND mint, later batch
 
 
 @arm("L-01-dup-serial-cross-fabric")
 def dup_serial_cross_fabric(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1", origin_fabric_id="fabric-a"))
-    store.admit([fx.mint_receipt("mr:2", "ent:alpha", authority="1.0.0_SA_CTO")])
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1", origin_fabric_id="fabric-a")
+    fx.open_authority(store, fx.CTO, actor=fx.CTO)
+    store.admit([fx.mint_receipt("mr:2", "ent:alpha", authority=fx.CTO)])
 
 
 @arm("L-01-distinct-serials-accepted")
 def distinct_serials(store):
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1"))
-    store.admit(fx.minted_pair("ent:beta", receipt="mr:2"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1")
+    fx.bootstrap(store, "ent:beta", receipt="mr:2")
 
 
 @arm("L-01-provisional-pair-reconciled-accepted")
 def provisional_pair_reconciled(store):
     """The legal cross-fabric path: a provisional serial of its own, canonicalized to the first."""
-    store.admit(fx.minted_pair("ent:alpha", receipt="mr:1", origin_fabric_id="fabric-a"))
-    store.admit(fx.minted_pair("ent:alpha-prov", receipt="mr:2",
-                               origin_fabric_id="fabric-b",
-                               provisional=True, canonicalized_as="ent:alpha"))
+    fx.bootstrap(store, "ent:alpha", receipt="mr:1", origin_fabric_id="fabric-a")
+    fx.bootstrap(store, "ent:alpha-prov", receipt="mr:2", origin_fabric_id="fabric-b",
+                 provisional=True, canonicalized_as="ent:alpha")

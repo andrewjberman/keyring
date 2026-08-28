@@ -30,7 +30,7 @@ def _event(event_id, kind, binding_id=BINDING, occurred_at="2026-02-01T00:00:00Z
 
 
 def _seed(store):
-    store.admit(fx.minted_pair("ent:alpha"))
+    fx.bootstrap(store, "ent:alpha")
     return store
 
 

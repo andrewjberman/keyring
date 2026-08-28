@@ -316,6 +316,9 @@ class Store:
 
         machines.check_binding_rows(list(batch.values()), stored_before, self._primary_of, _reject)
         machines.check_binding_machine(final, self._primary_of, seqs, _reject)
+        machines.check_epoch_actor(list(batch.values()), actor, _reject)
+        machines.check_epoch_machine(final, self._primary_of, seqs, _reject)
+        machines.check_mint(final, list(batch.values()), self._primary_of, seqs, _reject)
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))
