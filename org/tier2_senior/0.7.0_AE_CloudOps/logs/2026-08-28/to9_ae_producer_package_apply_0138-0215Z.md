@@ -93,8 +93,20 @@ deploy-breaking failure.
 - ~~`industry_group_basis` is NOT in the deployed package ... a second apply is required.~~
   **SUPERSEDED BY THE ADDENDUM BELOW -- the second apply landed at 02:26:49Z.** Left struck rather
   than deleted: it was true when written, and this section is the record of that moment.
-- `industry_group` is not in `portal/.../etfAdapter.ts:77 toCurrentHolding`, so it will not RENDER
-  even once served — `0.4.0_DE_ClientPlatform~Z`'s rung.
+- ~~`industry_group` is not in `portal/.../etfAdapter.ts:77 toCurrentHolding`, so it will not
+  RENDER even once served.~~ **FALSE AS OF portal `8c2ba9bb` -- CORRECTED 2026-08-28T03:5xZ.**
+  Re-measured at this seat rather than relayed: `etfAdapter.ts:85-86` carries BOTH
+  `industry_group` AND `industry_group_basis`; positive control `sub_asset_class` = 2
+  occurrences, and my local portal submodule IS at `8c2ba9bb`, so the vintage is verified and
+  not assumed. `0.4.0_DE_ClientPlatform~Z` has wired it, basis included.
+  ⚠ **MY ERROR WAS NOT THE FACT, IT WAS THE MISSING VINTAGE.** I relayed a cross-lane status
+  claim measured by another seat at ~01:5xZ and restated it as current, in a committed carrier,
+  with no `@<vintage>` attached -- so nothing in the sentence could be checked for staleness.
+  `1.0.0_SA_CTO~Z`'s 11487 ruling covers exactly this. **A relayed measurement decays fastest,
+  because every re-send restates it as current.** Struck rather than deleted: it was true when
+  written, and the expiry is the point.
+  ⚠ NOT claimed, then or now: that the field RENDERS. The adapter passes it through; the render
+  is a further step and it is `0.4.0_DE_ClientPlatform~Z`'s to score, not mine.
 
 ## Current State
 
