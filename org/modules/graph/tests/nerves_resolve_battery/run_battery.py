@@ -45,11 +45,15 @@ def arm(arm_id):
 
 # -- the ledger fixture ---------------------------------------------------------------------------
 
-def _rel_id(n):
-    """relation_id must match ^rel:[0-9a-hjkmnp-tv-z]{26}$ -- Crockford base32, exactly 26."""
+def _ulid(prefix, n):
+    """<prefix>:[0-9a-hjkmnp-tv-z]{26} -- Crockford base32, exactly 26. The contract enforces the
+    shape, so the fixture cannot invent a friendlier id: `bind:old-path` was REFUSED."""
     alphabet = "0123456789abcdefghjkmnpqrstvwxyz"
-    body = (alphabet[n % len(alphabet)] * 26)
-    return "rel:" + body[:26]
+    return "%s:%s" % (prefix, (alphabet[n % len(alphabet)] * 26)[:26])
+
+
+def _rel_id(n):
+    return _ulid("rel", n)
 
 
 def build_ledger(tmp):
@@ -75,6 +79,30 @@ def build_ledger(tmp):
     store.admit([dict(base, record_type="identity_relation", relation_id=_rel_id(2),
                       relation_type="candidate_equivalence", subject_serial="ent:cand-a",
                       object_serial="ent:canonical-one")], actor=fx.ROOT)
+    # THE RENAME, as a real pair of bindings: one entity, its OLD path binding CLOSED and its NEW
+    # path binding ACTIVE. This is what a rename IS in the ledger -- the entity never moved, only
+    # the key bound to it. Without both bindings the "rename keeps the serial" arm would be a cache
+    # clear pretending to be a rename, which is what it was in my first cut.
+    store.admit(list(fx.minted_pair("ent:renamed-subject", "mr:r1")), actor=fx.ROOT)
+    bind = {"record_type": "entity_binding", "entity_serial": "ent:renamed-subject",
+            "identity_space": "repo_path", "binding_basis": "asserted",
+            "referent_scope": "fabric", "status_basis": "authored"}
+    old_id, new_id = _ulid("bind", 3), _ulid("bind", 4)
+    # A CLOSED BINDING NEEDS ITS CLOSING EVENT. The ledger refused the first cut of this fixture
+    # with L-04-close-without-event -- row 4's machine, from WP-3, declining to let a binding
+    # carry `valid_to` with nothing that closed it. The fixture cannot fake a rename; it has to
+    # perform one.
+    store.admit([dict(bind, binding_id=old_id, native_key="OLD_NAME_BEFORE_RENAME.md",
+                      valid_from="2026-01-01T00:00:00Z", valid_to="2026-02-01T00:00:00Z",
+                      status="closed"),
+                 {"record_type": "binding_event", "event_id": _ulid("bev", 5),
+                  "event_kind": "closed", "binding_id": old_id,
+                  "occurred_at": "2026-02-01T00:00:00Z", "actor": fx.ROOT,
+                  "evidence_refs": ["the rename"]}], actor=fx.ROOT)
+    store.admit([dict(bind, binding_id=new_id, native_key="CLAUDE.md",
+                      valid_from="2026-02-01T00:00:00Z", valid_to=None, status="open")],
+                actor=fx.ROOT)
+
     out = os.path.join(tmp, "published.sqlite")
     snapshot.publish(store.path, out)
     store.close()
@@ -275,19 +303,34 @@ def a_crossfabric(nr):
 
 @arm("R-AC4-rename-keeps-the-canonical-serial")
 def a_rename(nr):
-    """A serial names WHAT a thing is; a node_id names WHERE it is. A rename moves the second only."""
-    before, _ = nr.canonical_serial("ent:alias-old")
-    nr._cache_clear()
-    after, _ = nr.canonical_serial("ent:alias-old")
-    assert before == after == "ent:canonical-one", (before, after)
+    """A serial names WHAT a thing is; a node_id names WHERE it is. A rename moves the second only.
+
+    The fixture holds one entity with its OLD path binding CLOSED and its NEW path binding ACTIVE --
+    which is what a rename IS in the ledger. My first cut of this arm merely cleared a cache and
+    compared a serial to itself: it would have passed against a resolver that had no concept of
+    binding at all.
+    """
+    new = nr.serial_for_native_key("CLAUDE.md")
+    assert new[0] == "ent:renamed-subject", new
+    old = nr.serial_for_native_key("OLD_NAME_BEFORE_RENAME.md")
+    assert old[0] is None, "a CLOSED binding answered a present-tense question: %r" % (old,)
+    r = nr.resolve("CLAUDE.md")
+    assert r.node_ids and r.node_ids[0] != "ent:renamed-subject",         "the serial replaced the node_id instead of travelling beside it"
+    assert r.candidates[0].canonical_serial == "ent:renamed-subject", r.candidates[0]
 
 
 @arm("R-AC4-index-rebuild-keeps-serials")
 def a_rebuild(nr):
-    before, _ = nr.canonical_serial("ent:canonical-one")
-    nr._cache_clear()                      # the rebuild: every memoised index dropped
-    after, _ = nr.canonical_serial("ent:canonical-one")
-    assert before == after, (before, after)
+    """Every memoised index dropped and rebuilt from the substrate: serials must not move.
+
+    The node_id side is what a rebuild is allowed to change; the serial side is not.
+    """
+    before = (nr.canonical_serial("ent:canonical-one")[0],
+              nr.serial_for_native_key("CLAUDE.md")[0])
+    nr._cache_clear()
+    after = (nr.canonical_serial("ent:canonical-one")[0],
+             nr.serial_for_native_key("CLAUDE.md")[0])
+    assert before == after and all(before), (before, after)
 
 
 # -- AC5: compatibility + no egress ----------------------------------------------------------------
@@ -342,6 +385,9 @@ def a_many(nr):
 # These patch the LOADED MODULE, never the file on disk: a mutation harness that edits the subject
 # can leave it edited, and the subject here is a keystone every other NERVES layer imports.
 MUTATIONS = {
+    "closed_bindings_answer_too":
+        lambda nr: setattr(nr, "serial_for_native_key",
+                           _closed_bindings_answer_too(nr)),
     "consult_all_tiers":
         lambda nr: setattr(nr, "_tier_consulted", lambda tier, ref: True),
     "candidate_equivalence_canonicalises":
@@ -354,6 +400,19 @@ MUTATIONS = {
     "state_not_enforced":
         lambda nr: setattr(nr, "STATES", tuple(nr.STATES) + ("MAYBE",)),
 }
+
+
+def _closed_bindings_answer_too(nr):
+    """The mutation: ignore binding status, so a CLOSED binding answers a present-tense question."""
+    def mutated(key):
+        rows, status = nr._ledger_t()
+        if rows is None:
+            return None, "ledger UNAVAILABLE"
+        for r in rows:
+            if r.get("record_type") == "entity_binding" and r.get("native_key") == key:
+                return nr.canonical_serial(r.get("entity_serial"))[0], "mutated"
+        return None, "none"
+    return mutated
 
 
 def run_arms(nr):
@@ -391,7 +450,40 @@ def mutation_proof(nr, baseline_failed):
     return all_caught
 
 
+def clone_and_run(commit, keep):
+    """AC5: run the battery from a FRESH UNIQUE CLONE at --run-commit, then RELEASE the extract.
+
+    Reuses the ISCK battery's clean_clone / release_clone rather than growing a second copy: those
+    already carry the two rules that were each paid for -- the destination is never deleted before
+    cloning (a fresh-dir refusal behind an unconditional delete is a control that cannot fire), and
+    only a directory the run ALLOCATED is ever removed (an explicit --clone-dir belongs to whoever
+    named it). The extract is ~1 GB; leaving them behind is what filled this device today.
+    """
+    from ledger.battery import run_battery as rb
+    commit = subprocess.check_output(["git", "rev-parse", "--verify", "%s^{commit}" % commit],
+                                     cwd=ROOT).decode().strip()
+    dest, owned_parent = rb.choose_clone_dir(None, commit)
+    clone = rb.clean_clone(commit, dest, ROOT)
+    print("CLEAN CLONE of BUILD commit %s -> %s" % (commit, clone))
+    try:
+        child = subprocess.run(
+            [sys.executable, os.path.join(clone, "org", "modules", "graph", "tests",
+                                          "nerves_resolve_battery", "run_battery.py")],
+            cwd=clone, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        sys.stdout.write(child.stdout.decode("utf-8", "replace").replace(chr(13), ""))
+        return child.returncode
+    finally:
+        rb.release_clone(owned_parent, keep)
+
+
 def main():
+    if "--run-commit" in sys.argv:
+        i = sys.argv.index("--run-commit")
+        if i + 1 >= len(sys.argv):
+            print("REFUSING: --run-commit needs a commit")
+            return FAIL_CLOSED
+        return clone_and_run(sys.argv[i + 1], "--keep" in sys.argv)
+
     tmp = tempfile.mkdtemp(prefix="nerves-battery-")
     try:
         snap = build_ledger(tmp)

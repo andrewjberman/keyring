@@ -553,10 +553,20 @@ def resolve(ref: str) -> Resolution:
     m = _FABRIC_RX.match(r)
     base = _resolve_chain(m.group(2) if m else ref)
     cands = []
+    have_ledger = _ledger_t()[0] is not None
     for nid in base.node_ids:
         canon = ""
-        if _RECORD_ID_RX.match(nid) and _ledger_t()[0] is not None:
-            canon = canonical_serial(nid)[0] or ""
+        if have_ledger:
+            if _RECORD_ID_RX.match(nid):
+                canon = canonical_serial(nid)[0] or ""
+            else:
+                # a node_id names a LOCATION (file:<path>, gold:<node>). Ask the ledger what entity
+                # is bound to it, then canonicalise that. Both the bare ref and the id-with-prefix
+                # are tried, because a binding's native_key is written as the plain path.
+                for key in (nid.split(":", 1)[1] if ":" in nid else nid, nid, inner):
+                    canon = serial_for_native_key(key)[0] or ""
+                    if canon:
+                        break
         cands.append(Candidate(nid, base.source or "chain", canon))
     cands = tuple(cands)
 
@@ -657,6 +667,34 @@ def canonical_serial(serial: str):
         seen.add(nxt)
         cur = nxt
     return cur, (" ; ".join(hops) if hops else "canonical is itself")
+
+
+def serial_for_native_key(key: str):
+    """The canonical `ent:` serial bound to a native key (a path, an ARN, a bucket). (serial, why).
+
+    THIS IS AC2's MAIN CLAUSE: a resolved ref returns the canonical serial BESIDE the legacy
+    node_ids. A node_id says WHERE something is; the serial says WHAT it is. That difference is the
+    entire continuity story -- rename the file and the node_id moves, while the serial does not,
+    because the serial was minted against the entity and the path is only a BINDING to it.
+
+    ACTIVE bindings only. A closed binding is a historical fact ("this path USED to be that
+    entity"), and answering a present-tense question with it would report a stale identity as a
+    current one -- the same shape as reporting a candidate as canonical.
+    """
+    rows, status = _ledger_t()
+    if rows is None:
+        return None, "ledger UNAVAILABLE (%s)" % status.reason
+    for r in rows:
+        if r.get("record_type") != "entity_binding" or r.get("native_key") != key:
+            continue
+        # "open" is the FOLD's word for a live binding, and it is the fold that decides: the
+        # ledger refused status="active" with L-05-authored-vs-derived, deriving 'open'. A resolver
+        # that invented its own vocabulary here would silently match nothing.
+        if r.get("valid_to") not in (None, "") or r.get("status") not in (None, "", "open"):
+            continue
+        canon, why = canonical_serial(r.get("entity_serial"))
+        return canon, "binding %s -> %s ; %s" % (r.get("binding_id"), r.get("entity_serial"), why)
+    return None, "no active binding for native key %r" % key
 
 
 def ledger_has(serial: str) -> bool:
