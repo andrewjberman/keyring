@@ -29,11 +29,43 @@ COO or Andrew, and no seat has made it."* **Andrew has now made it.** The non-ex
 was ON THE CARD when he approved it, so it is approved WITH that bound, not in ignorance of it — this
 is a decision taken on stated incomplete information, which is a different thing from a clearance.
 
-⛔ **WHAT THE SHIP DOES NOT DO, carried from `1.0.0_SA_CTO~Z` (13468) and `0.0.0_AB_MSTR~Z` (13472):**
-it repairs the 49financial SMA branch and the `Models` L2 `--` render. It **CANNOT** move the global
-understatement of **$359,773,356.74** by any amount — that gap is exactly `cottonwood + inflection`
-Client, so 49financial cancels identically. Anyone reading this ruling as "the category-views artifact
-is now correct" has over-read it by one defect.
+⛔ **WHAT THE SHIP DOES NOT DO:** it repairs the 49financial SMA branch and the `Models` L2 `--`
+render. A separate defect on the **global** scope is untouched by it. Anyone reading this ruling as
+"the category-views artifact is now correct" has over-read it by one defect.
+
+⛔⛔ **THIS PARAGRAPH WAS CORRECTED 2026-08-28 ~17:2xZ AND ITS ORIGINAL WAS WRONG. THE CORRECTION IS
+RECORDED, NOT SWALLOWED, BECAUSE THE WRONG VERSION REACHED ANDREW TWICE.**
+It read: *"It CANNOT move the global understatement of $359,773,356.74 by any amount — that gap is
+exactly cottonwood + inflection Client, so 49financial cancels identically."*
+**RETRACTED BY `1.0.0_SA_CTO~Z`, WHICH ORIGINATED THE CHARACTERISATION AND THEN WENT AFTER ITS OWN.**
+Measured on the served object: `global.Client` carries `"predicate": "unavailable"` and
+`"held_constituents": ["cottonwood"]`. **It never claimed to aggregate.** It declares itself HELD and
+names its holder, exactly as `mdpf_gold_consolidator.py:143-160` specifies — `global` has no
+`CLIENT_L1_RULE` entry because the three firms' rules differ IN KIND, `client_l1_split('global')`
+RAISES deliberately, and global unholds by itself when cottonwood clears. **THE HOLD IS WORKING AS
+DESIGNED; it was never a $359M reporting error.**
+- *"aggregates Client over one firm of three"* → **FALSE.**
+- *"understated by $359,773,356.74"* → **MISLEADING.** The arithmetic was real; the word was not.
+  "Understated" implies the node purports to be a complete total, and it does not. The figure is a
+  RESIDUAL on a held node, not a shortfall in a claimed sum — and its equalling 49financial's Client
+  is the coincidence that generated the entire wrong mechanism.
+- *"the ship moves it by 0.00"* → **the CONCLUSION SURVIVES** (the deploy genuinely does not touch
+  the global scope) but it was reasoned from a false mechanism and must not be re-quoted with the old
+  framing attached.
+**THE ACTUAL GLOBAL DEFECT, and it is smaller and two-sided:** a residual `aum` on a node declared
+`unavailable` (should be `null`), plus a renderer printing the headline unconditionally beneath a
+panel saying that figure is unavailable. Renderer half GO'd to `0.4.0_DE_ClientPlatform~Z`; producer
+half owned by `2.0.0_SA_COO~Z`.
+>> ⭐ **AND THE REASON IT SURVIVED: FOUR SEATS — CTO, CVO, MSTR AND THIS ONE — CORROBORATED IT FROM
+   THREE DIFFERENT INSTRUMENTS, AND EVERY CORROBORATION WAS OF THE MAGNITUDE, NEVER OF THE CLAIM THE
+   NODE MADE ABOUT ITSELF.** Nobody read `predicate` until 17:2xZ. The field that falsified the whole
+   framing was sitting in the same object every one of those reads opened. **Corroborating a number
+   is not corroborating what the number MEANS.** <<
+⚠ **ANDREW'S RULING IS UNAFFECTED AND IS NOT RE-OPENED BY THIS.** CALL 1 was justified by the
+49financial SMA defect — the artifact asserting "NO SMA category members ... A TRUE ZERO" while
+listing six served members holding $22,794,766.25 — which `3.0.0_SA_CVO~Z` confirms **STANDS AS
+FOUND**, together with the `scope_note` self-contradiction. Only the global half of the card he was
+shown was mischaracterised. The ship remains the right act.
 
 ### CALL 2 (BLOCKING) — Per-use Bloomberg authorization for the sub-industry truncation fix?
 > **REC — GRANT, scoped to this one call.** You already named the work as what remains; the TO was cut
@@ -94,8 +126,10 @@ Andrew*. Andrew has ruled. The signature chain is complete; it did not go around
 ## WHAT THIS RULING IS NOT
 
 - **NOT a clearance of D1_CATVIEWS.** The approved rec says so in its own words.
-- **NOT a fix for the global $359,773,356.74 understatement.** Separate producer defect, no TO cut
-  yet, owned by `2.0.0_SA_COO~Z`, arithmetically untouched by the ship.
+- **NOT a fix for the global scope's own defect** — a residual `aum` on a Client node the producer has
+  declared `unavailable`/held, plus an ungated renderer headline. Untouched by the ship. Renderer half
+  GO'd; producer half owned by `2.0.0_SA_COO~Z`. ⚠ **This line previously read "the global
+  $359,773,356.74 understatement" — retracted, see the correction above.**
 - **NOT a standing Bloomberg authorization.**
 - **NOT a D4 close.**
 
