@@ -87,10 +87,10 @@
       "source_ref": "20260828T025313Z",
       "finding_class": "BATTERY",
       "claim": "ARM-4 consume gate (_dispose, isck_coverage_probes.py:540-567 @36a5514df8): a structurally valid ORPHAN sidecar entry -- no ruling reason, no record link, no ruled_by/source ref, no bundle/rule digest -- suppresses a brand-new live arm as ADJUDICATED (exhibit: 0/0/0/1 -> 1/0/0/0 by swapping only the consumed JSON); _validate_entries ACCEPTS it. A hand/sweep insertion or a stale same-key ruling can hide a live arm while the gate prints disposed/auditable (charter scope item 3)",
-      "disposition": "OPEN",
+      "disposition": "FIXED",
       "disposition_basis": "ROUTED to the module owner 0.4.0_DT_ClientPlatform~X (scoped override for the pathspec; CTO~X integrates at the citation). Remedy spec: every sidecar entry (ARM-4 AND the new ARM-1 sidecar) carries record_ref (the adjudication .md anchor), ruled_at (commit), and arm_digest (sha256 of the normalized then-clause + value set at adjudication); the loader IGNORES an entry missing any -> the row prints NEW + WARN (fail-open-to-NEW); digest mismatch -> LAPSE (the value-set lapse generalized); both-direction self-controls (orphan rejected; linked ruling accepted; stale-digest lapses; a legitimate current entry still suppresses). Same class as R3-DT-1's lesson: the artifact whose only job is to be trusted must prove its own provenance",
-      "fix_commit": "OPEN",
-      "verification_ref": "CVO~X re-attack at the fix citation (the finder); CRO~X corroborates by construction",
+      "fix_commit": "9b27b8c41e (DT~X, scoped override, 77235 authorization; lock announced 77241, released 20260828T030428Z)",
+      "verification_ref": "OPEN-CITATION: CVO~X finder re-attack at 9b27b8c41e; CRO~X corroborates by construction",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -257,8 +257,8 @@
       "claim": "LATENT: the sidecar key assumes one arm per (record_type, discriminant, field, value-set); two arms with an identical tuple would be suppressed by ONE entry and nothing detects it (generator counts rows; _no_dupes guards the JSON; neither compares the arms). Measured at 36a5514df8: ARM 4 22/22 distinct, ARM 1 8/8 distinct -- closed by the current schema, not by construction",
       "disposition": "OPEN",
       "disposition_basis": "OPEN-SUBSUMED by R3-CVO-2: arm_digest (normalized then-clause) makes two same-key arms carry different digests so at most one entry matches; close on the R3-CVO-2 landing, not separately",
-      "fix_commit": "OPEN (with R3-CVO-2)",
-      "verification_ref": "OPEN",
+      "fix_commit": "9b27b8c41e (with R3-CVO-2: arm_digest makes two same-key arms carry different digests)",
+      "verification_ref": "closes on CVO~X's R3-CVO-2 re-attack",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
