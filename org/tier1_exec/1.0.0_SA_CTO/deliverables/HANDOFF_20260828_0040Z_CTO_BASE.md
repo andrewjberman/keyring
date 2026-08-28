@@ -94,8 +94,9 @@ stops the pass for operator judgment. Only the structurally-impossible arm gates
 the admission vocabulary); everything else records. After the campaign: P1.5 re-grade (rate split
 FC/TR) -> Andrew's arm-(a) serve read; the base 0.7.0 re-seat window carries the post-campaign cuts.
 
-MOBILE RENDER (Andrew-direct ~00:5xZ): every /daily-sprint render now produces BOTH
-daily_reports/out/DAILY_REPORT_<date>.html and DAILY_REPORT_<date>_mobile.html from one JSON and
-one shared grammar (templates/_shared_viz.js). Renderer default --variant both.
+MOBILE RENDER (Andrew-direct ~00:5xZ + ~01:0xZ): every /daily-sprint render now produces BOTH
+daily_reports/out/Desktop_DAILY_REPORT_<date>.html and Mobile_DAILY_REPORT_<date>.html from one
+JSON and one shared grammar (templates/_shared_viz.js); the FIRST word of the filename names the
+variant (Teams truncates). Renderer default --variant both.
 
 Push state at handoff: HEAD LOCAL, origin/CLOUD @3fbb493cda (ls-remote 00:35Z); integrator-only.
