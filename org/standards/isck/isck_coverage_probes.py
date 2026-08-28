@@ -464,6 +464,45 @@ def _no_dupes(pairs):
     return dict(pairs)
 
 
+PERMITTED_CLASSES = {"A", "B", "C", "D"}
+
+
+def _validate_entries(record):
+    """Every entry must be STRUCTURALLY SOUND AT CONSUMPTION, or nothing is suppressed.
+
+    WARN: FOUND BY 4.0.0_SA_CRO~X ATTACKING 6245dc0a3d, AND MY LOADER GUARD HAD CLOSED ONLY HALF
+    THE GAP. `_no_dupes` protects KEY UNIQUENESS. It says nothing about whether an entry's PAYLOAD
+    agrees with its own key. The sidecar encodes the ruled value set TWICE -- once in the key's
+    fourth part, once in `values_at_adjudication` -- and the loader matched on the KEY while never
+    reading the payload for agreement. Their exhibit: key `...|evidence_refs|admitted` carrying
+    payload `[admitted, candidate]` is accepted and SUPPRESSES, so a reader auditing the record
+    sees a ruling covering two values while the gate matched on one.
+    THAT IS THE TYPED-BESIDE-DERIVED CLASS INSIDE THE ARTIFACT WHOSE ONLY JOB IS TO BE TRUSTED,
+    and the human-readable half is the half that lies. Two representations of one fact with no
+    consistency check is exactly what the generator's 20-in/20-out assertion cannot reach: that
+    assertion ran at GENERATION, and this is the consumption-time half I said was missing and then
+    only half-supplied.
+    Fail-open to honest: any mismatch raises, the caller suppresses NOTHING and prints a WARN.
+    """
+    for key, val in record.items():
+        parts = key.split("|")
+        if len(parts) != 4:
+            raise ValueError("entry key %r has %d parts, expected 4" % (key, len(parts)))
+        if not isinstance(val, dict):
+            raise ValueError("entry %r payload is not an object" % key)
+        cls = val.get("class")
+        if cls not in PERMITTED_CLASSES:
+            raise ValueError("entry %r class %r not in %s" % (key, cls, sorted(PERMITTED_CLASSES)))
+        payload = val.get("values_at_adjudication")
+        if not isinstance(payload, list):
+            raise ValueError("entry %r values_at_adjudication is not a list" % key)
+        if sorted(set(payload)) != sorted(payload):
+            raise ValueError("entry %r values_at_adjudication is unsorted or has duplicates" % key)
+        if payload != [v for v in parts[3].split(",") if v]:
+            raise ValueError("entry %r payload %s DISAGREES with its own key's value set %s"
+                             % (key, payload, parts[3]))
+
+
 def _dispose(unpaired):
     """Split ARM 4's rows against the ruled adjudication record.
 
@@ -487,6 +526,7 @@ def _dispose(unpaired):
     try:
         with open(ADJUDICATION_PATH, "r", encoding="utf-8") as handle:
             record = json.load(handle, object_pairs_hook=_no_dupes).get("entries", {})
+        _validate_entries(record)
     except (OSError, ValueError) as exc:
         print("  WARN: ARM4_ADJUDICATION.json UNREADABLE (%s) -- suppressing NOTHING, every row "
               "reported" % str(exc)[:70])
@@ -728,6 +768,34 @@ def self_controls(schema, fixtures, verbose=True):
         _ok_load = None
     results.append(("LOADER still ACCEPTS a clean sidecar (else the refusal arm is vacuous)",
                     _ok_load == "A", True))
+
+    # ---- CONSUMPTION-TIME ENTRY VALIDATION. 4.0.0_SA_CRO~X's superset-values attack: the key and
+    # the payload each encode the ruled value set, and the loader matched on one without reading
+    # the other. Every arm below must REFUSE; the last must ACCEPT, or they are all vacuous.
+    def _rejects(entries):
+        try:
+            _validate_entries(entries)
+            return False
+        except ValueError:
+            return True
+
+    _good = {"r|d|f|admitted": {"class": "A", "values_at_adjudication": ["admitted"]}}
+    results.append(("ENTRY GUARD refuses a SUPERSET payload (CRO~X's exhibit)",
+                    _rejects({"r|d|f|admitted":
+                              {"class": "A",
+                               "values_at_adjudication": ["admitted", "candidate"]}}), True))
+    results.append(("ENTRY GUARD refuses a SUBSET payload (the other direction)",
+                    _rejects({"r|d|f|admitted,candidate":
+                              {"class": "A", "values_at_adjudication": ["admitted"]}}), True))
+    results.append(("ENTRY GUARD refuses a key without four parts",
+                    _rejects({"r|d|f": {"class": "A", "values_at_adjudication": []}}), True))
+    results.append(("ENTRY GUARD refuses an unpermitted class",
+                    _rejects({"r|d|f|x": {"class": "Z", "values_at_adjudication": ["x"]}}), True))
+    results.append(("ENTRY GUARD refuses an unsorted/duplicated payload",
+                    _rejects({"r|d|f|a,a": {"class": "A", "values_at_adjudication": ["a", "a"]}}),
+                    True))
+    results.append(("ENTRY GUARD ACCEPTS a sound entry (else every arm above is vacuous)",
+                    not _rejects(_good), True))
 
     ok = True
     for label, got, want in results:
