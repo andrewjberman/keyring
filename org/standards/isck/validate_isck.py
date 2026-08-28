@@ -35,6 +35,7 @@ VOCAB = {
 
 ULID_A = "01jabcde0123456789abcdefgh"[:26]
 ULID_B = "01jzyxwv9876543210zyxwvtsr"[:26]
+ULID_C = "01jprt1a10000000000000000c"[:26]
 TS = "2026-08-27T17:30:00Z"
 TS2 = "2026-08-27T18:30:00Z"
 SHA = "sha256:" + "ab" * 32
@@ -72,6 +73,16 @@ FIXTURES = {
         "observed_on_fabric": "laptop", "referent_scope": "fabric_invariant",
         "failure_state": "observed_absent",
         "evidence_refs": ["obs:" + ULID_A],
+    },
+    "state_observation_partial": {
+        "record_type": "state_observation", "observation_id": f"obs:{ULID_C}",
+        "entity_serial": f"ent:{ULID_A}", "identity_space": "git",
+        "source_vintage": "commit:9fc70e31a1", "observed_at": TS,
+        "observed_on_fabric": "laptop", "referent_scope": "fabric_invariant",
+        "failure_state": "partial",
+        "fingerprint": SHA, "fingerprint_method": "sha256_raw_bytes",
+        "normalization_version": "none_raw_v0",
+        "evidence_refs": ["obs:" + ULID_A + "#unseen:submodule-tree"],
     },
     "identity_relation": {
         "record_type": "identity_relation", "relation_id": f"rel:{ULID_A}",
@@ -222,6 +233,8 @@ ATTACK_TARGETS = {
     "relation.unknown-type": ["relation_type"],
     "entity.smuggled-field": ["legacy_name"],
     "binding.closed-null-valid_to": ["valid_to"],
+    "binding.open-with-valid_to": ["valid_to"],
+    "observation.partial-no-warrant": ["evidence_refs"],
     "bridge.admitted-no-evidence": ["evidence_refs"],
     "bridge.origin-no-evidence": ["evidence_refs"],
     "bridge.corroborated-no-evidence": ["evidence_refs"],
@@ -271,10 +284,14 @@ def _mutants():
         ["required", "dependentRequired"], fingerprint_method=_DEL)
     add("observation.partial-fingerprint-no-method", "state_observation",
         ["dependentRequired"], failure_state="partial", fingerprint_method=_DEL,
-        normalization_version=_DEL)
+        normalization_version=_DEL, evidence_refs=["obs:" + ULID_B])
     add("observation.method-without-fingerprint", "state_observation",
         ["dependentRequired"], failure_state="partial", fingerprint=_DEL,
-        normalization_version=_DEL)
+        normalization_version=_DEL, evidence_refs=["obs:" + ULID_B])
+    # ARM-1 adjudication (ARM1_ADJUDICATION.md, cut 2): a partial observation names what it could
+    # not see -- partial-without-warrant is indistinguishable from observed-with-a-field-missing
+    add("observation.partial-no-warrant", "state_observation", ["required"],
+        failure_state="partial")
     add("observation.substrate-unavailable-carries-fingerprint", "state_observation",
         ["not"], failure_state="substrate_unavailable")
     # R2-5 absence cell (round-2 charter; the GPT review's item)
@@ -304,6 +321,10 @@ def _mutants():
     # LAW 3 intervals (DT-4)
     add("binding.missing-valid-from", "entity_binding", ["required"], valid_from=_DEL)
     add("binding.closed-null-valid_to", "entity_binding", ["type"], status="closed")
+    # ARM-1 adjudication (ARM1_ADJUDICATION.md, cut 1): an OPEN binding carrying an end instant is
+    # a closed binding wearing open's label -- the mirror of DT-4
+    add("binding.open-with-valid_to", "entity_binding", ["type"], status="open",
+        valid_to="commit:9fc70e31a1")
     # LAW 4 locality (DT-7 / DT-8)
     # LAW 5 frontier + coherence warrants (CV-3)
     add("frontier.empty-entries", "source_frontier", ["minItems"], entries=[])
@@ -347,7 +368,8 @@ def _mutants():
     add("observation.observed-with-nothing", "state_observation", ["required"],
         fingerprint=_DEL, fingerprint_method=_DEL, normalization_version=_DEL)
     add("observation.normalization-alone", "state_observation", ["dependentRequired"],
-        failure_state="partial", fingerprint=_DEL, fingerprint_method=_DEL)
+        failure_state="partial", fingerprint=_DEL, fingerprint_method=_DEL,
+        evidence_refs=["obs:" + ULID_B])
     # R2-3 warrants (round-2 batch 1: CRO~X gap 2 + COO~X 76588)
     add("binding.independently-observed-no-evidence", "entity_binding", ["required"],
         evidence_refs=_DEL)

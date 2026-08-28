@@ -1,4 +1,4 @@
-# ARM-4 ADJUDICATION — 25 require-only candidates: 4 forbid-mirrors CUT, 21 ruled NO with reasons
+# ARM-4 ADJUDICATION — 26 require-only candidates: 4 forbid-mirrors CUT, 22 ruled NO with reasons (25 at the round-2 boundary; +1 class A 2026-08-28)
 
 **Adjudicator:** `1.0.0_SA_CTO~X` (the forbid-mirror decision is this seat's, per the ARM-4
 routing) · **Instrument:** `isck_coverage_probes.py` ARM 4 (`0.4.0_DT_ClientPlatform~X`'s gate),
@@ -22,9 +22,10 @@ re-open it.**
 
 ## NO — 21 candidates, by class (the reason IS the record)
 
-**CLASS A — evidence is MONOTONE (12 candidates: every `-> evidence_refs` arm across
+**CLASS A — evidence is MONOTONE (13 candidates: every `-> evidence_refs` arm across
 bridge_assertion, coherence_evaluation, entity_binding, identity_relation, mint_receipt,
-state_observation).** Evidence presence contradicts NO status value: an `unverified` record MAY
+state_observation — the 13th is `state_observation` `partial -> evidence_refs`, born at ARM-1
+cut 2 on 2026-08-28 and ruled here in the same commit so it never prints NEW).** Evidence presence contradicts NO status value: an `unverified` record MAY
 carry evidence that exists but has not been weighed; a `candidate` MAY carry the evidence it will
 be adjudicated on; `declared_by_author` origin MAY still attach substantiation. A forbid here
 would BAN documentation on exactly the records that most need to accumulate it before their next
@@ -59,4 +60,5 @@ state — a forbid-mirror cut today ("superseded_by only on superseded") would b
 R2-2 landing, and the require arm itself dies there (`superseded` leaves the axis). Cutting a
 control scheduled for reversal is churn, not coverage. Re-adjudicate iff R2-2 fails to land.
 
-**Coverage check: 4 + 12 + 6 + 1 + 2 = 25.**
+**Coverage check: 4 + 13 + 6 + 1 + 2 = 26** (was 25 at the round-2 boundary; +1 class A on
+2026-08-28 with ARM-1 cut 2; the 2 class-D rows close at the R2-2 landing, checklist line b).

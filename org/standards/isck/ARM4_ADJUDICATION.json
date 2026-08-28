@@ -134,6 +134,12 @@
       "values_at_adjudication": [
         "observed_absent"
       ]
+    },
+    "state_observation|failure_state|evidence_refs|partial": {
+      "class": "A",
+      "values_at_adjudication": [
+        "partial"
+      ]
     }
   }
 }

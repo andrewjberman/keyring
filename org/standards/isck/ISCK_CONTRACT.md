@@ -80,7 +80,9 @@ symbol-plane bridge REQUIRES firm_scope), `declared_cardinality`
 semantic arm. UNREACHED VALUES, deliberate and adjudicated at the ARM-4 pre-landing run:
 `retired` (terminal, no obligations), `producer_declared` (needs no external warrant by
 definition), `human_adjudicated` (traced by the CVO rubric per the standing carry, not by schema),
-`unverified` (the honest free cell).
+`unverified` (the honest free cell). **Every ARM-1 candidate at the round-2 boundary (13 values
+across 9 fields) is disposed by id in `ARM1_ADJUDICATION.md`** — 2 CUT (§3.5 `open`, §3.6
+`partial`), 1 DEFERRED BY LANDED DESIGN (§3.5 `disputed`), 10 NO with the citation each rests on.
 
 ## 3. ENUM RECORDS — full five-label form (F3), with CONDITIONAL-ARM TABLES where arms exist (CV-6)
 
@@ -156,7 +158,10 @@ GRAIN: binding row. INTENT: interval state. STATE-COHERENCE: `open→closed` mov
 rebind/disappearance (observer); `disputed` moves by adjudication; `disputed` MAY carry
 `valid_to: null` (still open, contested) — deliberately unconstrained (DT-4 carve-out).
 ARM TABLE: `closed -> valid_to nonempty` (DT-4; owner: the closer — a close without an instant is
-the mutation LAW 3 forbids wearing the close's label).
+the mutation LAW 3 forbids wearing the close's label) · `open -> valid_to null` (ARM-1 cut 1,
+`ARM1_ADJUDICATION.md`; owner: the writer — an open binding carrying an end instant is a closed
+binding wearing open's label, the mirror of DT-4; `disputed` deliberately unconstrained, its
+overlay dissolves into the typed contest record at the R2-2 landing).
 
 ### 3.6 `observation_failure_state` — `observed | observed_absent | partial | substrate_unavailable | instrument_error | not_applicable`
 DOMAIN: what the instrument could see. MECE — `observed_absent` ADDED at R2-5 (the GPT review's
@@ -173,7 +178,10 @@ ARM TABLE (DT-1 closed the `partial` hole): `observed -> all three fingerprint f
 fields FORBIDDEN` (DT-5 — a failed instrument may not carry a value OR the metadata claiming a
 method ran) · `partial -> fingerprint OPTIONAL but the three-field coupling binds via
 dependentRequired` (partial legitimately fingerprints what it could see — WITH its method and
-normalization, per the CRLF law) · `observed_absent -> fingerprint triple FORBIDDEN (nothing to
+normalization, per the CRLF law) **+ `evidence_refs` REQUIRED** (ARM-1 cut 2,
+`ARM1_ADJUDICATION.md`; owner: observer — a partial observation names what it could NOT see;
+partial-without-warrant is indistinguishable from `observed` with a field missing, the same
+unfalsifiable cell `observed_absent` was given a warrant for) · `observed_absent -> fingerprint triple FORBIDDEN (nothing to
 hash) + evidence_refs REQUIRED` (owner: observer — an absence claim carries the warrant of WHERE
 it looked, because absence-without-warrant is exactly the unfalsifiable cell every census defect
 this directive found has hidden in).
@@ -382,3 +390,10 @@ fixture · DT-7 invariant-with-fabric → forbid arm · DT-8 three models of loc
 `fabric_scope` on three records · CV-1 → §2 carried requirement · CV-2 → §5 control-incomplete +
 §6 items 6/10 + identity_policy into §3.15 · CV-3 → coherence warrant arms · CV-4 → iso_ts ranges +
 terminal-completed_at arm · CV-5 → minItems on the $def · CV-6 → arm tables throughout §3.
+
+**v0.2-candidate, post-round-2-boundary (2026-08-28):** ARM-1 adjudication (`ARM1_ADJUDICATION.md`,
+13 of 13 candidates disposed) → §3.5 `open -> valid_to null` arm + mutant `binding.open-with-valid_to`
+· §3.6 `partial -> evidence_refs REQUIRED` arm + mutant `observation.partial-no-warrant` + 15th
+fixture `state_observation_partial` · the new require-only arm is ruled class A in
+`ARM4_ADJUDICATION.md` (26 of 26). Schema `$id` stays `v0.1` until the bundle-identity record
+(Round 3 target) mints the candidate identifier — the label/bundle split is deliberate, not drift.

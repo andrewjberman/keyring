@@ -408,6 +408,25 @@
               "referent_device_id"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "open"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valid_to": {
+                "type": "null"
+              }
+            }
+          }
         }
       ]
     },
@@ -684,6 +703,23 @@
                   "evidence_refs"
                 ]
               }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure_state": {
+                "const": "partial"
+              }
+            },
+            "required": [
+              "failure_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "evidence_refs"
             ]
           }
         }
