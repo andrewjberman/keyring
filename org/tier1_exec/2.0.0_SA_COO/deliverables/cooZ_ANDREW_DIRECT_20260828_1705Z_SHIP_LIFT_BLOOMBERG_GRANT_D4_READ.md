@@ -47,14 +47,36 @@ DESIGNED; it was never a $359M reporting error.**
 - *"aggregates Client over one firm of three"* → **FALSE.**
 - *"understated by $359,773,356.74"* → **MISLEADING.** The arithmetic was real; the word was not.
   "Understated" implies the node purports to be a complete total, and it does not. The figure is a
-  RESIDUAL on a held node, not a shortfall in a claimed sum — and its equalling 49financial's Client
-  is the coincidence that generated the entire wrong mechanism.
+  node's own L0 total whose L1 SPLIT is held, not a shortfall in a claimed sum. ⚠ **This bullet
+  briefly called it a "RESIDUAL" — also retracted; see the source read below. And its equalling
+  49financial's Client is NOT established as coincidence: an exact match to the cent is UNEXPLAINED
+  and the one read that settles it is named below.**
 - *"the ship moves it by 0.00"* → **the CONCLUSION SURVIVES** (the deploy genuinely does not touch
   the global scope) but it was reasoned from a false mechanism and must not be re-quoted with the old
   framing attached.
-**THE ACTUAL GLOBAL DEFECT, and it is smaller and two-sided:** a residual `aum` on a node declared
-`unavailable` (should be `null`), plus a renderer printing the headline unconditionally beneath a
-panel saying that figure is unavailable. Renderer half GO'd to `0.4.0_DE_ClientPlatform~Z`; producer
+**THE ACTUAL GLOBAL DEFECT — CORRECTED AGAIN 2026-08-28 ~17:3xZ, READ AT SOURCE:** the renderer
+prints a headline for a node whose children the data has marked unavailable. **THAT IS THE WHOLE
+PAGE DEFECT.** ⛔ An earlier version of this line said the `aum` was a *"residual ... should be
+`null`"* — **RETRACTED.** `mdpf_gold_consolidator.py:590/:669/:672/:679` shows `global.Client.aum` is
+`node_aum["Client"]`, computed from **global's OWN `non_model_aua`**, exactly as every scope derives
+its own. **The hold is on the L1 SPLIT (`client_l1_split`, :748), NOT on the L0 TOTAL** — which is why
+the served object shows `children: {}` while the total stands. **Nulling it would delete a correct
+figure.** No producer TO will be cut to do that.
+**SETTLED 2026-08-28 ~17:3xZ by `3.0.0_SA_CVO~Z`, off the SERVED aggregate-aua-timeseries:**
+```
+  49financial  non_model_aua  290,426,813.47      global  non_model_aua  290,426,813.47   EQUAL TO THE CENT
+  cottonwood                  294,905,777.43      sum of the three firms  650,200,170.21   global does NOT carry it
+  inflection                   64,867,579.31
+```
+**Global's `non_model_aua` is NOT an aggregate over its constituents — it is 49financial's figure.**
+⭐ **THE DISCRIMINATOR IS INTERNAL TO THE SAME OBJECT, so this is not an assumption about what global
+"should" be:** `global.Models` IS the exact sum of the three firms (1,803,924,487.20) while
+`global.non_model_aua` equals ONE firm's value. **One field aggregates; the other does not, on the
+same slice, in the same file.** ⛔ **THE CONSOLIDATOR IS INNOCENT — it computes correctly from an
+input that is itself wrong, so nulling its output would MASK the upstream defect and destroy its only
+visible symptom.** ⚠ **LOCATED TO THE ARTIFACT, NOT TO THE EXPRESSION:** nobody has read the upstream
+producer. *"global's non_model_aua carries 49financial's value instead of an aggregate"* is MEASURED;
+any "because the slice function does X" is NOT, and must not be written. Renderer half GO'd to `0.4.0_DE_ClientPlatform~Z`; producer
 half owned by `2.0.0_SA_COO~Z`.
 >> ⭐ **AND THE REASON IT SURVIVED: FOUR SEATS — CTO, CVO, MSTR AND THIS ONE — CORROBORATED IT FROM
    THREE DIFFERENT INSTRUMENTS, AND EVERY CORROBORATION WAS OF THE MAGNITUDE, NEVER OF THE CLAIM THE
@@ -126,10 +148,10 @@ Andrew*. Andrew has ruled. The signature chain is complete; it did not go around
 ## WHAT THIS RULING IS NOT
 
 - **NOT a clearance of D1_CATVIEWS.** The approved rec says so in its own words.
-- **NOT a fix for the global scope's own defect** — a residual `aum` on a Client node the producer has
-  declared `unavailable`/held, plus an ungated renderer headline. Untouched by the ship. Renderer half
-  GO'd; producer half owned by `2.0.0_SA_COO~Z`. ⚠ **This line previously read "the global
-  $359,773,356.74 understatement" — retracted, see the correction above.**
+- **NOT a fix for the global scope's own defect** — an ungated renderer headline on a node whose
+  children the data marks unavailable. Untouched by the ship; renderer half GO'd. ⚠ **This line has
+  been corrected TWICE: it first read "the global $359,773,356.74 understatement", then "a residual
+  `aum` ... should be `null`". BOTH RETRACTED — see the correction above.**
 - **NOT a standing Bloomberg authorization.**
 - **NOT a D4 close.**
 
