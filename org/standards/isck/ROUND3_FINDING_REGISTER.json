@@ -3,8 +3,8 @@
   "round": 3,
   "attacked_input": "bf6fbe53d9",
   "charter": "51e789ddfb",
-  "boundary_pin": null,
-  "boundary_record": null,
+  "boundary_pin": "dcbe214a44",
+  "boundary_record": "BOUNDARY_ROUND3.md (the commit that lands it is cited in ISCK_CONTRACT.md sec 7)",
   "classes": {
     "CONTRACT": "a defect in ISCK_CONTRACT.md / the schema / the validator at a cited tip",
     "BATTERY": "a defect in the gate suite / probes / runner",
@@ -90,7 +90,7 @@
       "disposition": "FIXED",
       "disposition_basis": "ROUTED to the module owner 0.4.0_DT_ClientPlatform~X (scoped override for the pathspec; CTO~X integrates at the citation). Remedy spec: every sidecar entry (ARM-4 AND the new ARM-1 sidecar) carries record_ref (the adjudication .md anchor), ruled_at (commit), and arm_digest (sha256 of the normalized then-clause + value set at adjudication); the loader IGNORES an entry missing any -> the row prints NEW + WARN (fail-open-to-NEW); digest mismatch -> LAPSE (the value-set lapse generalized); both-direction self-controls (orphan rejected; linked ruling accepted; stale-digest lapses; a legitimate current entry still suppresses). Same class as R3-DT-1's lesson: the artifact whose only job is to be trusted must prove its own provenance || RE-ATTACK at 9b27b8c41e FAILED (CVO~X 20260828T030707Z; converged independently with DT~X R3-DT-4): record_ref/ruled_at were presence-checked, never RESOLVED -- a forged entry with the true arm_digest suppresses. DT~X building the resolution half (ruled_at resolves as a commit; record_ref exists AT ruled_at and contains the key; UNRESOLVED its own printed state; four controls incl. a historical linked-ruling ACCEPTANCE) under a second SINGULAR override (authorized 20260828T030xZ, msgs 77267-77270). The two ARM_ABSENT class-D rows are the RETAINED self-control fixture -- KEEP (COO~X audit rec, ruled). || At 82efe0bb27 (CVO~X 20260828T032742Z): _record_text:528 BASENAMES the declared path and reads a local extract file, so a nonexistent path ending in ARM4_ADJUDICATION.md + a generic anchor ALIASES the real record; forged ruled_at accepted in extract mode (UNCHECKABLE not rejected). Spec addition to the resolver half: record_ref is resolved AS DECLARED (the full path at ruled_at via `git -C $ISCK_REPO_ROOT show <ruled_at>:<path>`), never basenamed; anchor must be found in THAT blob.",
       "fix_commit": "9b27b8c41e (digest) -> 8a9ad0644e (resolution, broke the gate) -> 82efe0bb27 (interim) -> f98f2d020b (object-database resolution under ISCK_REPO_ROOT; record_ref resolved AS DECLARED via git show <ruled_at>:<path>; never open()) + 74671f0911 (DT~X control (e): the alias sub-root stays closed)",
-      "verification_ref": "OPEN-CITATION: CVO~X finder replay at f98f2d020b (the forged-pair exhibit must read ORPHAN; the basename alias must read NO_FILE/ORPHAN)",
+      "verification_ref": "CVO~X finder replay at ea64a64850 (20260828T040032Z): forged pair -> ORPHAN; basename aliases -> ORPHAN; stale digest -> LAPSE; tree-only record not read; swapped root not answered from cache; no-root never LINKED -- PASS/CLOSED; CVO~X declares the package DRY",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -258,7 +258,7 @@
       "disposition": "FIXED",
       "disposition_basis": "OPEN-SUBSUMED by R3-CVO-2: arm_digest (normalized then-clause) makes two same-key arms carry different digests so at most one entry matches; close on the R3-CVO-2 landing, not separately",
       "fix_commit": "9b27b8c41e + f98f2d020b (arm_digest + resolution)",
-      "verification_ref": "closes on CVO~X's R3-CVO-2 replay (latent; 22/22 and 8/8 distinct keys measured)",
+      "verification_ref": "CVO~X finder replay at ea64a64850 (20260828T040032Z): forged pair -> ORPHAN; basename aliases -> ORPHAN; stale digest -> LAPSE; tree-only record not read; swapped root not answered from cache; no-root never LINKED -- PASS/CLOSED; CVO~X declares the package DRY",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -270,7 +270,7 @@
       "disposition": "FIXED",
       "disposition_basis": "merged into R3-CVO-2's resolution half (same root, same fix); closes with it",
       "fix_commit": "f98f2d020b (with R3-CVO-2)",
-      "verification_ref": "closes on CVO~X's R3-CVO-2 replay",
+      "verification_ref": "CVO~X finder replay at ea64a64850 (20260828T040032Z): forged pair -> ORPHAN; basename aliases -> ORPHAN; stale digest -> LAPSE; tree-only record not read; swapped root not answered from cache; no-root never LINKED -- PASS/CLOSED; CVO~X declares the package DRY",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -366,7 +366,7 @@
       "disposition": "FIXED",
       "disposition_basis": "owner DT~X; remedy one line -- key the cache by (root, ruled_at, path) -- plus a control that patches the root WITHOUT clearing and expects UNRESOLVED. Authorized under a 5th singular override (probes file only) so it lands before the boundary; if it lands after, the boundary declares it as the one open latent row",
       "fix_commit": "ea64a64850 (DT~X, 5th singular override 77323): _RECORD_CACHE keyed by (root, ruled_at, path) + a control that patches the root WITHOUT clearing and expects UNRESOLVED",
-      "verification_ref": "OPEN-CITATION: CRO~X (upheld it at 74671f0911) re-runs its discriminating pair at ea64a64850 | COO~X runner corroboration at ea64a64850 (20260828T035150Z)",
+      "verification_ref": "CRO~X targeted replay at ea64a64850 (VALIDATED FIXED, 20260828T035216Z) + COO~X invariant diff (package figures identical to 74671f0911) -- CLOSED",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {

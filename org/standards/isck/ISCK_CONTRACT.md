@@ -610,6 +610,19 @@ REWORK-2 `merged -> surviving_contest_id` typed `ct:` REQUIRED + `consequence_re
 `upheld` forbids the survivor; `dismissed` forbids both (§3.21 arm table re-recorded — it had
 omitted `merged`). Register: `ROUND3_FINDING_REGISTER.json` R3-CRO-1..4, R3-CVO-1.
 
+**ROUND 3 CLOSED — `BOUNDARY_ROUND3.md`, 2026-08-28 04:0xZ, boundary pin dcbe214a44 =
+`v0.2-candidate+38` (`bundle:sha256:617fd9a1…`, `BUNDLE_LABELS.json`).** 30 findings registered
+(`ROUND3_FINDING_REGISTER.json`), 21 FIXED, 7 AMENDED-RECORD, 2 REFUTED by named rule — one of them the
+pre-declared planted claim (R3-CTO-2), refuted by the EXPECTED rule (CVR2-1) by two attackers
+independently; specificity MEASURED, the margin (one first pass UPHELD on an instrument misuse, now
+R3-CRO-16) on the record. Both attackers DRY. Gates at the pin: six of six exit 0 | 1 open (the class-D
+`disputed` projection). **The contract is ELIGIBLE FOR CANDIDATE FREEZE** (memo §10 candidate-freeze
+column met); **NOT operationally certified** — WP-3 ledger, live vertical slice, historical replay
+remain. Later-round landings after the REWORK 5–11 entry below: R3-CVO-4/5 @ab052139a8 (partial
+frontier both directions; unpublished requires the null carrier) · R3-CRO-16 @393c248a09 (validator
+fails fast on a non-list) · consume-gate resolution arc @9b27b8c41e → f98f2d020b → 74671f0911 →
+ea64a64850 (DT~X) · labels gate census @e54c9a0b9e (COO~X) · runner `ISCK_REPO_ROOT` @454781703a.
+
 **Round-3 REWORK 5–11 (`4.0.0_SA_CRO~X` at 36a5514df8; landed as one commit):** `source_frontier`
 gains `normalization_version`, `completeness` (§3.24) + `expected_count`; every entry gains
 `canonical_key`, `availability` (§3.25) + `absence_evidence`, and `referent_scope` with the §3.7

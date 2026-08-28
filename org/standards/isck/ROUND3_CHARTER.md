@@ -136,6 +136,12 @@ measured and its specificity is NOT, and the boundary says so.
 certification (WP-3 ledger + live vertical slice + historical replay) remains a SEPARATE gate. The
 first production record is not written under a contract that cannot prove its own bundle identity.
 
+## 10. CLOSED — `BOUNDARY_ROUND3.md`, pin dcbe214a44 (2026-08-28 04:0xZ)
+
+Both attackers DRY; 30 rows, 0 OPEN; the sealed claim revealed and proven pre-declared (seal
+recomputed over the register row + key); exit criteria §8 all MET. Candidate freeze ELIGIBLE;
+operational certification NOT — see the boundary record.
+
 ## 9. OPENING STATE
 
 Seats live at cut (broker read 02:3xZ): CRO~X, CVO~X, DT~X, COO~X — 4 of 4. Round OPENS on this

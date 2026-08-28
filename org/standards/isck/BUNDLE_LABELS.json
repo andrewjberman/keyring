@@ -2,5 +2,9 @@
   "v0.2-candidate+8": {
     "contract_bundle_id": "bundle:sha256:2d2a2d9e6bc2e3706dd44f59792b2e908d271201766cbaa550144f8924b6e1b5",
     "derived_at_commit": "bf6fbe53d9f2bdfc79c309e5ca8c98fc5409da87"
+  },
+  "v0.2-candidate+38": {
+    "contract_bundle_id": "bundle:sha256:617fd9a18df228efa3f63a9f50129862d5ea01f13a05894dd867b588a7005dc7",
+    "derived_at_commit": "dcbe214a44630b8bcaed211c47ec62b45cd2a146"
   }
 }
