@@ -1,0 +1,43 @@
+{
+  "schema": "nfra-c3materialize.l2.acceptance/1.0",
+  "artifact": "L2_VIEW_ARTIFACTS.json",
+  "passed": 7,
+  "denominator": 7,
+  "rows": [
+    {
+      "criterion_id": "CROA-AC1",
+      "status": "PASS",
+      "evidence": "two exact views; each printed denominator equals its entity array length"
+    },
+    {
+      "criterion_id": "CROA-AC2",
+      "status": "PASS",
+      "evidence": "every per-entity feature is explicit MEASURED/ABSENT; blocked structure affinity is ABSENT"
+    },
+    {
+      "criterion_id": "CROA-AC3",
+      "status": "PASS",
+      "evidence": "gate outcomes carried: STRUCTURE=FAIL, BEHAVIOR=PASS; executed all-1 constant mutant gate result=FAIL"
+    },
+    {
+      "criterion_id": "CROA-AC4",
+      "status": "PASS",
+      "evidence": "STRUCTURE states requested/executed N, deterministic seed policy and per-run record; BEHAVIOR is deterministic N=1"
+    },
+    {
+      "criterion_id": "CROA-AC5",
+      "status": "PASS",
+      "evidence": "both failure modes state a mechanical distinction from measured low affinity"
+    },
+    {
+      "criterion_id": "CROA-AC6",
+      "status": "PASS",
+      "evidence": "no fusion flag true, cross-view affinity list empty, all matrices view-local"
+    },
+    {
+      "criterion_id": "CROA-AC7",
+      "status": "PASS",
+      "evidence": "graph_tool gap is BLOCKING/ABSENT-NOT-ZERO; comp-heat score is NOT USED and drift is ABSENT"
+    }
+  ]
+}

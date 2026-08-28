@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "to_id": "NFRA_C3MATERIALIZE.TO-L2-CROA",
+  "firm": "FABRIC",
+  "phase": "BUILD-GENERAL",
+  "decomp_ref": {
+    "doc": "workflows/atom_decomposition/runs/nfra-c3materialize-L2/DECOMP.md",
+    "vintage_commit": "6eae2dc9ab",
+    "to_ref": "org/tier1_exec/4.0.0_SA_CRO~A/task_orders/NFRA_C3MATERIALIZE.TO-L2-CROA.md"
+  },
+  "spec_ref": {
+    "doc": "docs/architecture/NFRA_C3MATERIALIZE_PRD.md",
+    "group": "OTHER",
+    "vintage_commit": "6eae2dc9ab"
+  },
+  "assignee": "4.0.0_SA_CRO~X",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/build_views.py",
+      "kind": "script",
+      "commit_or_etag": "PATHSPEC_COMMIT_THIS_INSTANCE",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Repository-local deterministic producer only; no deployment surface.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC6", "CROA-AC7"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json",
+      "kind": "config_data",
+      "commit_or_etag": "sha256:1c45ba56622048f7ba66209550dc4b385dd1f9a84ff7e162a91f6307377526d6",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Pinned local measurement artifact; artifact_digest 61f12d72056daa25d6ff300bccec640e9c1004446258006dae191eff6449904d.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC5", "CROA-AC6", "CROA-AC7"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "kind": "test",
+      "commit_or_etag": "PATHSPEC_COMMIT_THIS_INSTANCE",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Local seven-criterion acceptance and mutant harness; no deployment surface.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC5", "CROA-AC6", "CROA-AC7"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/acceptance_results.json",
+      "kind": "test",
+      "commit_or_etag": "PATHSPEC_COMMIT_THIS_INSTANCE",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Measured 7/7 task-criterion result, including executed constant-matrix mutant.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC5", "CROA-AC6", "CROA-AC7"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_REPORT.md",
+      "kind": "doc",
+      "commit_or_etag": "PATHSPEC_COMMIT_THIS_INSTANCE",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Human-readable 14-cell report with denominators, gates, hazards and reproduction commands.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC5", "CROA-AC6", "CROA-AC7"]
+    },
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA_PROOF_OF_SPEC.json",
+      "kind": "doc",
+      "commit_or_etag": "PATHSPEC_COMMIT_THIS_INSTANCE",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Machine-readable completion instance routed to the certifier and issuer.",
+      "artifact_covered_by": ["CROA-AC1", "CROA-AC2", "CROA-AC3", "CROA-AC4", "CROA-AC5", "CROA-AC6", "CROA-AC7"]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "CROA-AC1",
+      "criterion_verbatim": "Both views delivered, each with its own DECLARED ENTITY SET and a printed DENOMINATOR. A count without a denominator is not a coverage claim.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC1: PASS - two exact views; each printed denominator equals its entity array length",
+      "denominator": "2 of 2 required views; STRUCTURE 19,482 entities and BEHAVIOR 3,726 entities",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC2",
+      "criterion_verbatim": "⛔ MISSING IS NOT ZERO. Every entity carries an explicit MEASURED/ABSENT flag per feature. PRD: treating absence as zero MANUFACTURES FALSE SIMILARITY between two things that were simply not measured.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC2: PASS - every per-entity feature is explicit MEASURED/ABSENT; blocked structure affinity is ABSENT",
+      "denominator": "23,208 of 23,208 serialized entities across 2 views carry explicit feature states",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC3",
+      "criterion_verbatim": "⛔ EVERY VIEW CARRIES ITS DISCRIMINATION GATE RESULT, PASS OR FAIL. Could this have come out differently if the claim were false? A view where everything is similar to everything carries ZERO BITS. A FAILED gate is still delivered, marked FAILED — a failed gate is a finding, not a reason to withhold the view.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC3: PASS - gate outcomes carried: STRUCTURE=FAIL, BEHAVIOR=PASS; executed all-1 constant mutant gate result=FAIL",
+      "denominator": "2 of 2 view gates carried; 1 of 1 planted constant-affinity mutants refused",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC4",
+      "criterion_verbatim": "REPRODUCIBILITY stated: N, the seed policy, and what is recorded per run. For STRUCTURE the consensus over N runs IS the view, not a workaround for it.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/build_views.py --anchor bb01a202721f9c3a719a3a662319cebc194a1720 (run twice, compare SHA-256)",
+      "output_evidence": "same_anchor=bb01a202721f... run1_sha256=1c45ba56622048f... run2_sha256=1c45ba56622048f... byte_equal=True",
+      "denominator": "2 of 2 same-anchor builds byte-identical; STRUCTURE N requested/executed 25/0 with 25 seeds carried; BEHAVIOR deterministic N=1",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC5",
+      "criterion_verbatim": "FAILURE MODE stated per view, and whether it is DISTINGUISHABLE from a genuine low-affinity result. An indistinguishable failure is the C3.i defect.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC5: PASS - both failure modes state a mechanical distinction from measured low affinity",
+      "denominator": "2 of 2 views carry failure mode, distinction predicate, and observable distinction",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC6",
+      "criterion_verbatim": "⛔ NO FUSION. Zero cards claim a fused or cross-view affinity. L3 is BLOCKED on L1 and stays blocked; each W_k stands alone over its own declared entity set.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC6: PASS - no fusion flag true, cross-view affinity list empty, all matrices view-local",
+      "denominator": "0 cross-view affinities across 2 independently declared views",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "CROA-AC7",
+      "criterion_verbatim": "THE TWO NAMED HAZARDS ARE ANSWERED, not inherited: (a) graph-tool-class SBM inference is NOT in the estate's dependency set — state the procedure against what IS installed or name the gap BLOCKING; (b) comp-heat's score was measured as a PURE FUNCTION OF --age-days that never resolves its id — state whether BEHAVIOR uses it and what you do about it.",
+      "method": "test_suite",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "output_evidence": "CROA-AC7: PASS - graph_tool gap is BLOCKING/ABSENT-NOT-ZERO; comp-heat score is NOT USED and drift is ABSENT",
+      "denominator": "2 of 2 named hazards answered explicitly",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "Replace the measured BEHAVIOR affinity distribution with an all-1 constant matrix.",
+      "expected": "Discrimination gate FAIL because distinct affinity count is one and density is one.",
+      "observed": "Executed all-1 constant mutant gate result=FAIL.",
+      "status": "FIRED-AS-EXPECTED"
+    },
+    "determinism": {
+      "method": "Run build_views.py twice with explicit anchor bb01a202721f9c3a719a3a662319cebc194a1720 and compare L2_VIEW_ARTIFACTS.json SHA-256.",
+      "observed": "Both runs emitted 1c45ba56622048f7ba66209550dc4b385dd1f9a84ff7e162a91f6307377526d6.",
+      "status": "STABLE"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "FLOW and SEMANTIC views",
+      "reason": "Explicitly outside this 2-view task order."
+    },
+    {
+      "item": "SBM consensus affinity values",
+      "reason": "Conforming graph-tool-class inference producer/dependency absent; delivered as ABSENT-NOT-ZERO with gate FAIL."
+    },
+    {
+      "item": "Cross-view fusion, common spine and bridge construction",
+      "reason": "Downstream L3 scope; this task explicitly forbids fusion."
+    },
+    {
+      "item": "comp-heat score and file-grain comp-drift affinity",
+      "reason": "Score does not resolve identity; comp-drift is a propagation-target orchestrator at another grain."
+    }
+  ],
+  "surprises": [
+    "The live Kuzu scan reconciles the unexplained historical 19,482 population exactly as edge-incident non-semctl nodes; current edges are 36,549, only 36 above the historical 36,513 vintage.",
+    "Repeated co-change at the current anchor yields 3,726 paths and 6,841 pairs, close to but independently measured from the historical 3,532/6,393 prose figures."
+  ],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/SESSION_LOG.md",
+  "compiler_tools": [
+    {
+      "tool": "L2 view producer",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/build_views.py --anchor bb01a202721f9c3a719a3a662319cebc194a1720",
+      "result": "STRUCTURE DELIVERED-BLOCKED entities=19482 gate=FAIL; BEHAVIOR DELIVERED-MEASURED entities=3726 gate=PASS"
+    },
+    {
+      "tool": "L2 acceptance",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/run_acceptance.py",
+      "result": "RESULT: 7/7; constant-affinity mutant FAIL"
+    },
+    {
+      "tool": "proof-of-spec-check",
+      "invocation": "python .tools/proof-of-spec-check.py org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA_PROOF_OF_SPEC.json CROA-AC1,CROA-AC2,CROA-AC3,CROA-AC4,CROA-AC5,CROA-AC6,CROA-AC7",
+      "result": "VALID: structural=jsonschema, violations=0; 7/7 criteria, 14/14 distinct cell refs, 14/14 backward alignment"
+    }
+  ]
+}
