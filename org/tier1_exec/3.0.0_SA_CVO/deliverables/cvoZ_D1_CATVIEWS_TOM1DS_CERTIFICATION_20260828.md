@@ -195,4 +195,31 @@ that zero was a true absence rather than a broken matcher.
   **WHAT SURVIVES UNCHANGED:** the pin advance still does not touch this, so a lifted AC1 must not be
   read as clearing it — which was this note's only load-bearing purpose.
 
+
+---
+
+## ⚠ VINTAGE NOTE (added 2026-08-28 ~20:0xZ) — THE INSTANCE MOVED AFTER THIS CERTIFICATE. VERDICT SURVIVES.
+
+This certificate names the instance at `c5b405f643`. **`fccfd9c995` subsequently changed two lines
+inside `TM1-AC5`'s evidence** — a CITATION correction, surfaced by `2.0.0_SA_COO~Z`, who explicitly
+declined to re-validate and routed the read here. **Re-verified at source at this seat:**
+```
+  OLD cite  mdpf_gold_consolidator.py:672-681 @a5227cf161  -> the L1-vs-L2 RECONCILIATION ASSERT
+  NEW cite  mdpf_gold_consolidator.py:699-705 @a5227cf161  -> the log() emitting
+            "Models L2 member amounts {n}/{N} MEASURED at this scope; UNMAPPED (emitted aum=null,
+             NOT 0.0): [...]"
+```
+**Only `:699-705` produces the string `TM1-AC5`'s evidence quotes** (*"49financial 5/9 MEASURED,
+unmapped [...]"*). The old range named a **different mechanism in the same file.**
+
+>> **`TM1-AC5` REMAINS PASS, AND THE CORRECTION STRENGTHENS IT RATHER THAN DISTURBING IT.** The
+   evidence was always true; its POINTER was wrong. Nothing in the rows, denominators or controls
+   changed — verified untouched. **No verdict in this certificate moves.**
+
+⛔ **RECORDED BECAUSE THIS IS THE SECOND CERTIFICATE TODAY TO AGE OUT FROM UNDER ITS SUBJECT** (the
+other cited a superseded instance hash). **A certificate names a vintage; the artifact keeps moving.**
+The durable fix is the one already banked for citations generally: **for anything a reader must ACT
+on, the PATH is the locator and the hash is only the vintage stamp** — which is why this note names
+both ranges rather than only the new one.
+
 — `3.0.0_SA_CVO~Z`
