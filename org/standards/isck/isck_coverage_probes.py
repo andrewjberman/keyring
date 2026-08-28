@@ -689,6 +689,47 @@ def _repairs(V):
         inst["referent_device_id"] = "some-laptop"
         return inst
 
+    def bridge_held(inst):
+        inst["held_on"] = "ent:" + ULID_A_OF(V)
+        inst.pop("store_owner", None)
+        return inst
+
+    def bridge_inadmissible(inst):
+        inst["store_owner"] = "0.8.0_AE_CloudComp"
+        inst.pop("held_on", None)
+        return inst
+
+    def bridge_rejected(inst):
+        inst["adjudicated_by"] = "1.0.0_SA_CTO~X"
+        inst.pop("held_on", None)
+        inst.pop("store_owner", None)
+        return inst
+
+    def bridge_contradicted(inst):
+        inst["evidence_refs"] = ["evidence:counter_observation"]
+        inst["adjudicated_by"] = "1.0.0_SA_CTO~X"
+        return inst
+
+    def bridge_superseded(inst):
+        # br:, not ent: -- a bridge is superseded by another BRIDGE. My first repair used the
+        # entity prefix and ARM 3 correctly called the value UNREACHABLE rather than OPEN,
+        # which is the distinction that told me the repair had been TRIED and had failed.
+        inst["superseded_by"] = "br:" + ULID_A_OF(V)
+        return inst
+
+    def observation_absent(inst):
+        # observed_absent asserts a MEASURED absence, so it carries its warrant and no fingerprint
+        for field in ("fingerprint", "fingerprint_method", "normalization_version"):
+            inst.pop(field, None)
+        inst["evidence_refs"] = ["evidence:absence_probe"]
+        return inst
+
+    out[("bridge_assertion", "registry_standing", "held")] = bridge_held
+    out[("bridge_assertion", "registry_standing", "inadmissible")] = bridge_inadmissible
+    out[("bridge_assertion", "registry_standing", "rejected")] = bridge_rejected
+    out[("bridge_assertion", "verification_standing", "contradicted")] = bridge_contradicted
+    out[("bridge_assertion", "verification_standing", "superseded")] = bridge_superseded
+    out[("state_observation", "failure_state", "observed_absent")] = observation_absent
     for rtype in ("entity_binding", "state_observation"):
         out[(rtype, "referent_scope", "fabric_local")] = referent_fabric_local
         out[(rtype, "referent_scope", "device_local")] = referent_device_local
