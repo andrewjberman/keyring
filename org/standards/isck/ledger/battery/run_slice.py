@@ -71,7 +71,42 @@ def admit_all(batches, tmp, tag, mutate=None):
     return store, admitted, refused, errored, refusals
 
 
+def clone_and_run(commit, keep):
+    """AC6: run the slice from a FRESH UNIQUE EXTRACT of `commit`, then release it.
+
+    The child runs inside the extract, so what executes is the COMMITTED code at the pin and not
+    this working tree -- the same provenance rule the battery enforces, and the reason the first
+    clean-clone run of this slice found two defects the in-repo run could not.
+
+    EXTRACT HYGIENE (Andrew-direct 16:2xZ via MSTR 78313, "stop generating duplicable binaries on
+    the local device"): the extract is ~1.01 GB and ~25 of them accumulated in one day until C: had
+    0.2 GB free. It is removed on exit unless --keep names a forensic case, and the path removed or
+    kept is PRINTED. Only a directory allocated here is ever a removal candidate.
+    """
+    from ledger.battery import run_battery as rb
+    dest, owned_parent = rb.choose_clone_dir(None, commit)
+    clone = rb.clean_clone(commit, dest, sl.REPO_ROOT)
+    print("AC6 CLEAN EXTRACT of %s -> %s" % (commit, clone))
+    try:
+        child = subprocess.run(
+            [sys.executable, os.path.join(clone, "org", "standards", "isck", "ledger", "battery",
+                                          "run_slice.py"), "--pin", commit],
+            cwd=os.path.join(clone, "org", "standards", "isck"),
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        sys.stdout.write(child.stdout.decode("utf-8", "replace"))
+        return child.returncode
+    finally:
+        rb.release_clone(owned_parent, keep)
+
+
 def main():
+    if "--run-commit" in sys.argv:
+        i = sys.argv.index("--run-commit")
+        if i + 1 >= len(sys.argv):
+            print("REFUSING: --run-commit needs a commit")
+            return 4
+        return clone_and_run(sys.argv[i + 1], "--keep" in sys.argv)
+
     manifest = json.load(open(DECLARED, encoding="utf-8"))
     parts = manifest["parts"]
     print("WP-3b SLICE -- both pins on every count")
