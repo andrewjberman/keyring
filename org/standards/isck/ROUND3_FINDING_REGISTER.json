@@ -366,7 +366,7 @@
       "disposition": "FIXED",
       "disposition_basis": "owner DT~X; remedy one line -- key the cache by (root, ruled_at, path) -- plus a control that patches the root WITHOUT clearing and expects UNRESOLVED. Authorized under a 5th singular override (probes file only) so it lands before the boundary; if it lands after, the boundary declares it as the one open latent row",
       "fix_commit": "ea64a64850 (DT~X, 5th singular override 77323): _RECORD_CACHE keyed by (root, ruled_at, path) + a control that patches the root WITHOUT clearing and expects UNRESOLVED",
-      "verification_ref": "OPEN-CITATION: CRO~X (upheld it at 74671f0911) re-runs its discriminating pair at ea64a64850",
+      "verification_ref": "OPEN-CITATION: CRO~X (upheld it at 74671f0911) re-runs its discriminating pair at ea64a64850 | COO~X runner corroboration at ea64a64850 (20260828T035150Z)",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     },
     {
@@ -377,8 +377,8 @@
       "claim": "validate_isck.semantic_errors silently accepts a MAPPING as its top-level instances input, iterates its string keys, skips each as non-dict, and returns the clean-result shape [] -- wrong-container misuse becomes a false validator PASS (selfcite dict -> []; selfcite list -> one CVR2-1 error)",
       "disposition": "FIXED",
       "disposition_basis": "owner CTO~X (validate_isck.py): fail fast -- a non-list top-level container raises TypeError naming the misuse; a non-dict member is an ERROR entry, never a silent skip; paired controls: dict raises / valid list still evaluates clean / self-cite list still fires / non-dict member errors -- LANDED: semantic_errors raises TypeError on a non-list; a non-dict member yields a \"[i] NOT A RECORD\" error entry; CONTAINER CONTROLS 3 of 3 in the self-test (dict RAISES / non-dict member ERRORS / valid list clean); the CLI already wrapped a single instance as [data] (validate_isck.py:942)",
-      "fix_commit": "(this commit)",
-      "verification_ref": "OPEN-CITATION: CRO~X reproduction at the citation (selfcite dict -> TypeError; selfcite list -> CVR2-1 error; non-dict member -> NOT A RECORD error; valid list -> [])",
+      "fix_commit": "393c248a09",
+      "verification_ref": "CRO~X VALIDATE 20260828T035216Z at 393c248a09 -- CLOSED",
       "boundary_inclusion": "PRE-BOUNDARY (round 3 open)"
     }
   ],
