@@ -130,6 +130,48 @@ client-reachable this is a CONFIDENTIALITY EXPOSURE, not a cosmetics bug. **Neit
 both refuse to assume it is not.** ⭐ **THAT DETERMINATION IS OWED BEFORE ANYTHING ELSE ON THIS PANEL IS
 PRIORITISED.**
 
+## ⛔ THE DIAGNOSTIC TEXT IS **DATA**, NOT A HARDCODED STRING — THE FIX IS PRODUCER-SIDE
+
+**Measured by `0.7.0_AE_CloudOps~S` (13196), read-only, corroborated on two independent artifacts.**
+```
+CategoryViewTree.tsx:212   <p ...>Fee split unavailable at this scope</p>   <- the TITLE, the ONLY literal
+the BODY -- lambda_function.py:300-320, roster counts, WSE_COTMDL, the CTO ruling date, the named
+strategies and the $46,436,739.80 -- is THE EMITTER'S OWN `predicate_reason`, RENDERED VERBATIM.
+  corroboration 1: D1_CATVIEWS.TO-R1-DE face :110
+  corroboration 2: D1_CATVIEWS.TO-R1-DS PROOF_OF_SPEC :132 (carries the literal string)
+```
+>> ⛔ **NO PORTAL CHANGE CAN FIX THIS. The component is faithful — it renders the field it is given.
+   A PRODUCER is writing engineer-facing prose into a field the DOM prints.** The remedy is
+   producer-side, which relocates it entirely.
+
+### ⛔⛔ AND THIS CORRECTS THE RULING RECORDED ABOVE
+This record and `1.0.0_SA_CTO~Z`'s 13185 both hold up `industry_group_basis` as the pattern done right
+— *"every null carries its reason IN THE DATA and the page renders none of it."*
+>> ⭐ **`0.7.0_AE_CloudOps~S`: *"`industry_group_basis` is safe ONLY BECAUSE NOTHING RENDERS IT, not
+   because of anything in its design. The distinction is not artifact-vs-DOM; it is WHETHER A RENDERED
+   FIELD IS ALSO AN ENGINEER'S CHANNEL."***
+⛔ **`predicate_reason` IS THE SAME DESIGN IN A RENDERED FIELD, AND IT FAILS IMMEDIATELY.** The
+pattern we cited as self-securing is merely unrendered. **Carrying the reason in the data is safe only
+while no consumer prints that field — which is a property of the CONSUMER, not of the producer's
+design, and therefore not something the producer can rely on.**
+
+### AUDIENCE GATING — PARTIALLY ANSWERED, DELIBERATELY SPLIT
+```
+/api/general/mdpf/cottonwood/category-views.json -> S3 opal-data-portal-v2
+  viewer-request auth-validator-edge · origin-request public-data-router · rewrite /api/general/mdpf/ -> platinum/mdpf/
+AUTHENTICATION  YES -- from a DECLARED edge function on an S3 origin, not a topology inference
+AUTHORISATION / AUDIENCE  UNDETERMINED. comp-routes models behaviors and rewrites and STRUCTURALLY
+                          CANNOT answer whether a CLIENT-role principal can obtain the artifact.
+```
+⛔ **AUTHENTICATED IS NOT INTERNAL-ONLY. That substitution is the whole hazard and no seat has made
+it.** ⚠ Two residuals stated by their measurer: the plane is **DESIRED only** (parsed TF + committed
+source, never a live `describe-distribution` — the Rule 22a gap on a security-relevant branch), and a
+**no-auth sibling behavior `/json-tiered/*` points at the SAME bucket** with trace UNRESOLVED, which is
+missing coverage rather than a clean bill.
+⭐ **BOTH READ-ONLY CHECKS AUTHORISED by `2.0.0_SA_COO~Z` to `0.7.0_AE_CloudOps~S`, 14:1xZ** — a live
+idle seat, no writes, no producer touch, no TO edits. **A gate a live seat can resolve read-only is not
+a gate.**
+
 ## RULING 2 — L1/L2 named constituents render ONLY if AUM is associated
 
 > ⛔ **VERBATIM. Typos are his and are preserved.**
