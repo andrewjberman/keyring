@@ -101,7 +101,15 @@ def primary_id_fields(schema=None):
 
 
 def reference_fields():
-    """(record, field) -> policy, read from the design's sec 2d table beside this module."""
+    """(record, field) -> {policy, classes}, read from the design's sec 2d table beside this module.
+
+    THE CLASS IS HALF THE RULE AND IT IS THE HALF A RESOLVER FORGETS. Sec 2d's STRICT reads "must
+    resolve in (store U batch) at final state to a record OF THE NAMED CLASS". A resolver that only
+    checks existence admits a binding whose `entity_serial` points at a materializer -- every
+    reference resolves, nothing dangles, and the store is quietly wrong. The named class is column
+    3; a union (an escaped-pipe list) is the whole allowed set, and "any record class" is an
+    empty set meaning no constraint.
+    """
     with open(DESIGN_PATH, "r", encoding="utf-8") as fh:
         text = fh.read()
     body = text.split("## 2d.")[1]
@@ -117,7 +125,8 @@ def reference_fields():
         rec, fld = TICKED.findall(cells[1]), TICKED.findall(cells[2])
         if len(rec) == 1 and len(fld) == 1:
             policy = cells[4].split("(")[0].strip().strip("*").strip()
-            out[(rec[0], fld[0])] = policy or "STRICT"
+            classes = [c.split("[")[0].strip() for c in TICKED.findall(cells[3])]
+            out[(rec[0], fld[0])] = {"policy": policy or "STRICT", "classes": classes}
     return out
 
 
@@ -174,16 +183,34 @@ class Store:
         return value
 
     def _reference_values(self, record):
-        """Every (field, value, policy) this record asserts as a reference, per sec 2d."""
+        """Every (field, value, policy) this record asserts as a reference, per sec 2d.
+
+        Sec 2d names three field SHAPES and a resolver that reads only the first silently ignores
+        the other two -- a dangling reference inside an array is exactly the value nobody checks:
+          `field`                 a scalar
+          `field[]`               every item of a list       (consequence_refs, output_surface_ids)
+          `container[].sub`       a sub-field of every item  (source_frontier.entries[].source_serial)
+        The field name is kept VERBATIM from the table, because it is also the arm id's suffix.
+        """
         rt = record.get("record_type")
         out = []
-        for (rec, fld), policy in self.refs.items():
-            if rec != rt or fld not in record:
+        for (rec, fld), spec in self.refs.items():
+            if rec != rt:
                 continue
-            value = record[fld]
+            policy, classes = spec["policy"], spec["classes"]
+            if "[]." in fld:
+                container, sub = fld.split("[].", 1)
+                for item in record.get(container) or []:
+                    if isinstance(item, dict) and item.get(sub):
+                        out.append((fld, item[sub], policy, classes))
+                continue
+            key = fld[:-2] if fld.endswith("[]") else fld
+            if key not in record:
+                continue
+            value = record[key]
             for v in (value if isinstance(value, list) else [value]):
                 if v:
-                    out.append((fld, v, policy))
+                    out.append((fld, v, policy, classes))
         return out
 
     def delete(self, record_id):
@@ -247,7 +274,7 @@ class Store:
                                    "state (sec 2c, sec 3 row 6)" % serial)
 
             # row 2 -- every reference resolves at FINAL STATE
-            for field, value, policy in self._reference_values(record):
+            for field, value, policy, classes in self._reference_values(record):
                 if policy.startswith("EXTERNAL"):
                     continue
                 parses = str(value).startswith(ID_PREFIXES)
@@ -255,10 +282,17 @@ class Store:
                     continue                       # stored OPAQUE (migration), sec 2d
                 if not parses and not policy.startswith("STRICT"):
                     continue
-                if value not in batch and self.get(value) is None:
+                target = batch.get(value) or self.get(value)
+                if target is None:
                     raise Rejected("L-02-unresolved-%s.%s" % (record["record_type"], field),
                                    "%s does not resolve in (store U batch) at final state "
                                    "(sec 2d policy %s)" % (value, policy))
+                if classes and target.get("record_type") not in classes:
+                    raise Rejected("L-02-unresolved-%s.%s" % (record["record_type"], field),
+                                   "%s resolves to a %s, but sec 2d names %s: a reference that "
+                                   "resolves to the WRONG CLASS is not resolved -- it is a "
+                                   "dangling reference wearing a valid id"
+                                   % (value, target.get("record_type"), " | ".join(classes)))
 
         # -- commit_seq is consumed ONLY after every check passes
         cur = self.db.execute("INSERT INTO batches (actor) VALUES (?)", (actor,))

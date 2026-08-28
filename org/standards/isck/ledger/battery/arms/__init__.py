@@ -31,6 +31,7 @@ def arm(arm_id):
 def load_all():
     """Import every arm module so the registry is populated. Returns the registry."""
     from . import row_01_uniqueness      # noqa: F401
+    from . import row_02_resolver        # noqa: F401
     from . import row_03_append_only     # noqa: F401
     from . import row_12_replay          # noqa: F401
     return REGISTRY
