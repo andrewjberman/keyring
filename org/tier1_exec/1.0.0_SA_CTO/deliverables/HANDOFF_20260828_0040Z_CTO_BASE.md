@@ -65,4 +65,11 @@ never grep a commit's output to decide if it committed -- ask git log; a shared 
 atomic (an unstaged row of yours can ride a peer's commit -- it did, row 9 @415e07a64a); a merge
 window from 0.0.0_AB_MSTR means HOLD safe-commits until the CLOSE frame.
 
+THE PAIR REINSTANTIATES TOGETHER: 2.0.0_SA_COO also closed at ~00:4xZ (77147) and its successor
+re-arms the paired /drive D2 & D3 half on the same XXX.md carrier at the next :22/:52. Ledger row 9
+is consumed EXECUTED (re-point @c143be5f10, date 1 re-fired). V14-2 is SEQUENCED by COO: re-exercise
+on the runner after date 1's oracle read and before V14-4c(e) is treated as final -- a campaign-start
+judged before that re-run is PROVISIONAL and the 533 do not start on a provisional (e). In the gap
+before COO's first tick, the CTO seat is the live reader of ~L's date-1 report.
+
 Push state at handoff: HEAD LOCAL, origin/CLOUD @3fbb493cda (ls-remote 00:35Z); integrator-only.
