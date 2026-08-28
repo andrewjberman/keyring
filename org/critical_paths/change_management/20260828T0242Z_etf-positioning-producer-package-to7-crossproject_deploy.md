@@ -1,6 +1,7 @@
 # DEPLOY LEDGER -- `etf-positioning-producer` package, THIRD apply: ETFS_POSITIONING.TO-7 per-fund as-of
 
-**STATUS: OPEN** -- opened before the first world-touching act per CLAUDE.md NEVER#2.
+**STATUS: CLOSED -- COMPLETE** at 2026-08-28T02:45Z. Applied in full in-session, verified on the
+live plane, nothing half-landed. Opened before the first world-touching act per CLAUDE.md NEVER#2.
 
 ⚠ **THE REFERENT OF THIS LEDGER IS THE PACKAGE, NOT A PROJECT.** `2.0.0_SA_COO~Z` ruling 12179:
 *"THE DEPLOY UNIT IS THE PACKAGE `etf-positioning-producer`, NOT A PROJECT. It spans `ETFS_INGEST` and
@@ -19,8 +20,9 @@ it be assumed.
 | stack | `infra/aws/terraform/etfs-positioning/` |
 | supersedes pin | `f0e2a05889` (applied 02:26:49Z) |
 | source pin | `25f30acc63` |
-| applied | PENDING |
-| closed | PENDING |
+| applied | 2026-08-28T02:43:57Z -- **0 added, 1 changed, 0 destroyed** |
+| closed | 2026-08-28T02:45Z |
+| tag | `etfs-positioning-v1.3.0` (annotated) |
 
 ## ⛔ PRE-APPLY DISCLOSURE -- BOTH PROJECTS, DERIVED BY CONTENT (binding per 12179 s.3)
 
@@ -104,3 +106,39 @@ rule, `abort-incomplete-mpu-7d`, and **no noncurrent-version expiration**):
 either project. `ETFS_POSITIONING.TO-7`'s own acceptance is its owner's, against a later run; I am the
 applier, not its verifier. The ~13:00Z fire will run these bytes and **what it produces is not
 claimed in this ledger.**
+
+---
+
+## COMPLETION EVIDENCE -- LIVE PLANE
+
+    APPLY         0 added, 1 changed, 0 destroyed      safe-apply, 02:43:23 -> 02:44:01Z
+    RE-PLAN       "No changes. Your infrastructure matches the configuration."
+    CodeSha256    EiCjtNChLCKXRY/yUHrAVh3QXBsGfn2i3qHbsJN7QXI=
+               -> wuu+/cHD5gHb3B1iY3wjGq4rB0ozzF7Hm/ooH086P8I=      MOVED, exactly as predicted
+    LastModified  2026-08-28T02:43:57.000+0000         State: Active
+    UNCHANGED     python3.11 | 512 MB | 120 s | handler etf_positioning_gold.lambda_handler
+    CONTENT       live package re-downloaded after the apply == the built artifact, cmp identical
+                  (c2ebbefdc1c3e601...)
+
+### THE PACKAGE IS NOW CURRENT ON EVERY MEMBER
+
+    etf_positioning_gold.py          deployed b9e4940f4de98932 == origin/SITEZ   CURRENT
+    etf_positioning_publisher.py     deployed 62200af215926aa4 == origin/SITEZ   CURRENT
+    etf_classifications_dynamodb.py  deployed 8138da0300ea83c3 == origin/SITEZ   CURRENT
+
+>> **Three races in one night are closed. The deployed artifact and the branch tip agree on all
+three members, measured by CONTENT rather than by any ref, clock or map.**
+
+### Did-not-move control, with its denominator
+
+9 managed resources in state; 1 changed; 8 unchanged -- identical set across all THREE applies,
+including `aws_cloudwatch_event_rule.etf_positioning_producer_daily`, **the 13:00Z schedule, untouched
+by every one of them.** No IAM movement in any of the three.
+
+## WHAT THIS DEPLOY DOES NOT CLAIM
+
+⛔ **APPLIED, never EXERCISED, for BOTH projects.** `ETFS_POSITIONING.TO-7`'s acceptance belongs to its
+owner against a later run; `ETFS_INGEST` `TO-8` `AC2`'s served census belongs to
+`0.4.0_DS_ClientPlatform~Q` after the ~11:00Z pull and the ~13:00Z **scheduled** fire. **I am the
+applier of this package, not the verifier of either project's outcome.** The ~13:00Z fire will run
+these bytes and what it produces is not claimed here.
