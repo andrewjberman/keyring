@@ -22,11 +22,11 @@ records before it — and the place that answers "what is current" only by deriv
 
 | `ISCK_CONTRACT.md` §6 limit | what the ledger adds |
 |---|---|
-| 1 LAW-1 derivation-freedom (audit incomplete) | mint-receipt authentication: every `entity` must be preceded by a `mint_receipt` from a registered minting authority in its epoch (§3) |
-| 3 referential resolution | every `*_serial` / `*_id` / frontier entry / surface pin / run / materializer version RESOLVES to a stored record or the write is REJECTED |
+| 1 LAW-1 derivation-freedom (audit incomplete) | mint-receipt authentication: every `entity` must be preceded by a `mint_receipt` from a registered minting authority in its epoch, and the entity's mint facts must EQUAL the receipt's (§3 row 6) |
+| 3 referential resolution | every STRICT reference in §2d RESOLVES to a stored record or the write is REJECTED |
 | 5 serial uniqueness beyond a batch | global uniqueness across batches AND fabrics (the `provisional` reconciliation path stays: two fabrics may each mint; the ledger records both and the `canonicalized_as` relation, never a rewrite) |
 | 6 LAW-3 append-only (no plane) | no delete, no in-place semantic mutation: a write that carries an existing primary id with different bytes is REJECTED; "close" is an event |
-| 11 cross-record promises | `superseded_by` freezes standing; upheld contests need a consequence on the same target dated after; resolved needs an opened |
+| 11 cross-record promises | `superseded_by` freezes standing; upheld contests need a consequence on the same target dated after; resolved needs an opened — **each a REJECTED-WRITE rule (§3 row 13), never a projection state** (R3-CRO-25 / R3-CVO-9) |
 | 12 canonicalization / cross-batch provenance | the frontier normalizer (per `normalization_version`); run↔surface↔frontier joins across the whole store |
 
 ## 2. AUTHORITATIVE vs DERIVED — the object model (memo §8, made concrete)
@@ -36,18 +36,29 @@ records before it — and the place that answers "what is current" only by deriv
 | Entity identity | `entity` · `mint_receipt` · `identity_relation` (incl. `retirement`) · `contest_event` (target_kind entity) | current entity standing; canonical serial for any serial (alias resolution) |
 | Bindings | `entity_binding` rows (each an assertion of an interval) · binding open/close EVENTS · `contest_event` (target_kind binding) | current bindings by identity space + substrate key; binding history per entity |
 | State | `state_observation` (incl. `observed_absent`, `partial`) | latest admissible state per (serial, space, fabric, method) |
-| Materializers | `materializer` · `materializer_version` · `materialization_run` (+ run receipts) | current version; lifecycle standing; consumers |
+| Materializers | `materializer` · `materializer_version` · `materialization_run` (+ run receipts) | current version (HEAD, §4); lifecycle standing; consumers |
 | Provenance | `source_frontier` (+ entries) | resolved consumed-state vector per run; frontier identity |
-| Surfaces | `surface_version` (+ publication receipt fields) | current authority version per logical surface; current physical projections |
+| Surfaces | `surface_version` (+ publication receipt fields) | current authority version per logical surface (HEAD, §4); current physical projections |
 | Coherence | `coherence_evaluation` | current alignment status per (target_policy, fabric) |
 | Migration | `migration_receipt` | vintage of any rewritten value (the manifest lookup, RA-4) |
 
-**`status_basis` rule (R2-2 §2, now enforceable):** for each of the six axes on the five
-status-bearing records, the ledger holds a DERIVATION RULE (§4). At WP-3 landing `derived` becomes
-LEGAL and REQUIRED for ledger-resident records on the five DERIVABLE-AT-WP-3 axes; a write whose
-authored status disagrees with the derivation is a **REJECTED WRITE** — LAW 3's enforcement plane
-arriving. `bridge_assertion.registry_standing` stays ADJUDICATION-CARRIED (`authored`) until an
-adjudication-event vocabulary exists (declared, not absorbed).
+**`status_basis` rule (R2-2 §2), made consistent with the FROZEN machine contract (R3-CRO-26,
+`4.0.0_SA_CRO~X`):** the frozen `+38` schema requires `status_basis` on the five status-bearing
+records with each axis value `const: authored`, and `+38` is immutable. So **authoritative records
+stay `authored` — always.** What the ledger adds is (a) a DERIVATION RULE per derivable axis (§4) and
+(b) the REJECTED WRITE: an authored value on a derivable axis that disagrees with the fold over the
+admitted records is refused (§3 row 5) — LAW 3's enforcement plane arriving without a byte of the
+contract changing. The DERIVED value lives in a **PROJECTION object**, which is NOT a contract
+record: it has no `record_type` in the frozen catalog, is never admitted as a write (a projection
+submitted as a batch member is REJECTED — `L-05-projection-submitted-as-record-rejected`), and
+carries `{axis, value, basis: [admitted record ids], derived_at_commit_seq}` so the `why` surface
+(§5.4) can show it. Controls: `L-05-frozen-authored-record-validates` (a `+38`-valid record whose
+authored value agrees with the fold is ACCEPTED unchanged) and
+`L-05-projection-not-mistakable-for-record` (a projection fails `+38` validation by construction).
+`bridge_assertion.registry_standing` stays ADJUDICATION-CARRIED (`authored`, no fold) until an
+adjudication-event vocabulary exists (declared, not absorbed). The earlier sentence here — "`derived`
+becomes LEGAL and REQUIRED for ledger-resident records" — was a contract change dressed as a ledger
+rule and is withdrawn.
 
 ## 2b. WHAT THE FROZEN CONTRACT CANNOT CARRY — routed to a NEW CANDIDATE, never a mutation of +38
 (R3-CRO-19 / R3-CVO-6, the design attack's central result)
@@ -61,12 +72,18 @@ append-only carrier in it:
 | binding close (and open as an event) | `entity_binding.valid_to` + `status` on the row | a close is a mutation of the open row, or a second row with no link to the first | **`binding_event`** `{opened \| closed}` with `binding_id`, `occurred_at`, `actor`, `evidence_refs` — or `lifecycle_event` generalizing `contest_event` |
 | materializer decommission | nothing (`retired` is authored) | no event to fold over | **`lifecycle_event` `materializer_decommissioned`** with `materializer_serial`, `occurred_at`, `actor`, `evidence_refs` |
 
+**Two typing gaps ride the same candidate (R3-CRO-22 / R3-CRO-25):** `contest_event.consequence_refs`
+(items) and `migration_receipt.migrated_record_ref` are `nonempty` free strings in `+38` although
+the ledger must RESOLVE them (§2d, §3 row 13). Until typed, the ledger applies a PARSE-THEN-RESOLVE
+policy to them (§2d); the new candidate types them as record-id unions.
+
 **Ruling (C5's last sentence, applied):** these are CONTRACT defects surfaced by the enforcement
 design. They land as **`v0.3-candidate`** — a new `candidate_id`, attacked (one bounded round on the
-three carriers + their folds), then frozen — BEFORE any ledger code. The frozen `+38` is not touched;
-`superseded_by` stays in it as a field the ledger REFUSES to accept on a write after creation
-(§3 responsibility 3) and populates only as a derived projection. WP-3's §7 sequence gains this
-step first. Until the new candidate is frozen, §4's folds for those axes are DECLARED, not buildable.
+three carriers + the two typings + their folds), then frozen — BEFORE any ledger code. The frozen
+`+38` is not touched; `superseded_by` stays in it as a field the ledger REFUSES to accept on a write
+after creation (§3 responsibility 3) and populates only as a derived projection. WP-3's §7 sequence
+gains this step first. Until the new candidate is frozen, §4's folds for those axes are DECLARED,
+not buildable.
 
 ## 2c. ADMISSION MODEL — atomic batches, final-state validation (R3-CRO-18 / R3-CVO-7: the mint bootstrap deadlock)
 
@@ -74,72 +91,159 @@ A ledger WRITE is a **batch** (one or more records) admitted ATOMICALLY: every r
 batch must resolve against **(store ∪ batch)** at the batch's FINAL state, and the whole batch is
 rejected if any does. Ordering inside a batch is irrelevant; there is no "receipt-first vs
 entity-first" — the bootstrap pair `{mint_receipt, entity}` is one batch whose two references
-resolve against each other. **Primary-id fields are NOT reference fields** (row 2's enumeration
-already excludes them; stated so nobody re-adds them). A batch containing an `entity` with no
-`mint_receipt` in (store ∪ batch) is REJECTED (responsibility 6); a batch containing a receipt whose
-`entity_serial` never appears is REJECTED (responsibility 2, final state). Tests:
+resolve against each other. **Primary-id fields are NOT reference fields** (§2d excludes them by
+construction; stated so nobody re-adds them). A batch containing an `entity` with no `mint_receipt`
+in (store ∪ batch) is REJECTED (responsibility 6); a batch containing a receipt whose `entity_serial`
+never appears is REJECTED (responsibility 2, final state). Tests:
 `L-06-bootstrap-pair-accepted`, `L-06-orphan-entity-rejected`, `L-02-forward-ref-within-batch-accepted`,
 `L-02-unresolved-at-final-state-rejected` (either ordering).
 
-## 3. THE TWELVE ENFORCEMENT RESPONSIBILITIES (memo §8, each with its rejection and its test)
+## 2d. THE TYPED REFERENCE TABLE — every reference field in `+38`, its target class, its policy (R3-CRO-22)
+
+Derived MECHANICALLY from the frozen schema at dcbe214a44: a property is a reference iff its type is
+`$ref ent_serial` / `$ref mat_serial` or a `pattern` beginning with a record-id prefix (`ent: mat:
+matv: run: sf: sv: bind: ct: ctev: rel: br: obs: mr: mig: ce:`), excluding each record's own primary
+id. Every other `$ref` in the schema targets a non-record def (`iso_ts`, `sha256`, `ulid`,
+`nonempty`, `evidence_refs`, `claim_origin`, `referent_scope`, `registry_standing`,
+`verification_standing`) — the census is closed over the schema, not over suffix spelling. **The
+earlier row-2 enumeration (18 + 6) was written from memory and omitted four of these; this table
+replaces it.**
+
+**Policy values (one axis: what the ledger does with the value):** **STRICT** — must resolve in
+(store ∪ batch) at final state to a record of the named class, or the batch is REJECTED; every STRICT
+row has BOTH arms `L-02-unresolved-<record>.<field>` / `L-02-resolved-<record>.<field>`.
+**STRICT-CONDITIONAL** — STRICT when the stated condition holds, otherwise the field is a mint
+(uniqueness under row 13). **PARSE-STRICT** — a `nonempty` string in `+38`; a value that PARSES as a
+record id (any prefix above) is STRICT; a value that does not is REJECTED where the responsibility
+requires a record (row 13 consequences) and stored OPAQUE otherwise (migration); typed in
+`v0.3-candidate`. **EXTERNAL** — an opaque reference to something outside the ledger (evidence
+locations, substrate keys, published locations); never resolved; listed so the exclusion is visible.
+
+| record | field | target class | policy | required in +38 |
+|---|---|---|---|---|
+| `bridge_assertion` | `subject_entity_serial` | `entity` | STRICT | yes |
+| `bridge_assertion` | `object_entity_serial` | `entity` | STRICT | yes |
+| `bridge_assertion` | `superseded_by` | `bridge_assertion` | STRICT (and REFUSED on any write after creation — row 3; derived only, §2b) | no |
+| `coherence_evaluation` | `target_source_frontier` | `source_frontier` | STRICT | no |
+| `contest_event` | `contest_id` | `contest_event[event_kind=opened]` with equal `contest_id` | STRICT-CONDITIONAL (`event_kind=resolved`); on `opened` it is a mint (row 13 uniqueness) | yes |
+| `contest_event` | `surviving_contest_id` | `contest_event[event_kind=opened]` | STRICT | no (`outcome=merged` requires it) |
+| `contest_event` | `target_entity_serial` | `entity` | STRICT | conditional (`target_kind=entity`) |
+| `contest_event` | `target_binding_id` | `entity_binding` | STRICT | conditional (`target_kind=binding`) |
+| `contest_event` | `consequence_refs[]` | `identity_relation` \| `binding_event` (v0.3) \| `contest_event` \| `entity_binding` | PARSE-STRICT (row 13: each item MUST parse and resolve) | conditional (`outcome=upheld`) |
+| `entity` | `canonicalized_as` | `entity` | STRICT | no |
+| `entity_binding` | `entity_serial` | `entity` | STRICT | yes |
+| `identity_relation` | `subject_serial` | `entity` | STRICT | yes |
+| `identity_relation` | `object_serial` | `entity` | STRICT | no |
+| `identity_relation` | `superseded_by` | `identity_relation` | STRICT (REFUSED after creation — row 3; derived only) | no |
+| `materialization_run` | `materializer_serial` | `materializer` | STRICT | yes |
+| `materialization_run` | `materializer_version_id` | `materializer_version` | STRICT | yes |
+| `materialization_run` | `source_frontier_id` | `source_frontier` | STRICT | yes |
+| `materialization_run` | `output_surface_version_ids[]` | `surface_version` | STRICT (each item) | items when present |
+| `materializer` | `superseded_by_version` | `materializer_version` | STRICT | no (`current_status=superseded` requires it) |
+| `materializer_version` | `materializer_serial` | `materializer` | STRICT | yes |
+| `materializer_version` | `supersedes` | `materializer_version` | STRICT | no |
+| `migration_receipt` | `migrated_record_ref` | any record class | PARSE-STRICT (parses → must resolve; else stored OPAQUE with `L-02-opaque-migration-ref-accepted`) | yes |
+| `mint_receipt` | `entity_serial` | `entity` | STRICT (final state; the bootstrap pair, §2c) | yes |
+| `source_frontier` | `entries[].source_serial` | `entity` | STRICT (each entry) | entry-required |
+| `state_observation` | `entity_serial` | `entity` | STRICT | yes |
+| `surface_version` | `logical_surface_serial` | `entity` | STRICT | yes |
+| `surface_version` | `physical_instance_serial` | `entity` | STRICT | no |
+| `surface_version` | `producing_run_id` | `materialization_run` | STRICT | yes |
+| `surface_version` | `source_frontier_id` | `source_frontier` | STRICT | yes |
+
+**Denominator: 29 reference rows** — 26 STRICT + 1 STRICT-CONDITIONAL + 2 PARSE-STRICT — of which
+27 are typed by pattern in `+38` and 2 (`consequence_refs[]`, `migrated_record_ref`) are free strings
+the ledger parses. **There is no "resolve-if-present" class**: a present reference resolves or the
+batch is rejected. `state_observation.producer_serial` is `nonempty` in `+38` and names a PRODUCER,
+not a ledger record — EXTERNAL; if it must resolve to a `materializer`, that is a `v0.3-candidate`
+typing, filed alongside the two above.
+
+**EXTERNAL (21, never resolved):** `evidence_refs` on `entity`, `entity_binding`,
+`state_observation`, `identity_relation`, `materializer`, `coherence_evaluation`, `bridge_assertion`,
+`mint_receipt`, `contest_event`, `migration_receipt`; `surface_version.promotion_evidence_refs`,
+`surface_version.published_ref`; `entity_binding.native_key`,
+`state_observation.source_native_key`, `state_observation.producer_serial`;
+`coherence_evaluation.subject_ref` / `target_ref` / `resolved_target_ref`;
+`bridge_assertion.held_on` / `store_owner`; `migration_receipt.migration_map`;
+`source_frontier.entries[].authority_ref`.
+
+## 2e. ADMISSION ORDER AND THE REPLAY ANCHOR (R3-CRO-23)
+
+Records carry EVENT time (`occurred_at` / `asserted_at` / `minted_at` / `published_at`); nothing in
+`+38` carries INGESTION order, and append-only permits a later batch to carry an earlier-dated record
+(backfill). Two replays that disagree on whether to include it are both "as of" the same anchor
+unless the anchor names an ingestion point. So the ledger assigns, per admitted batch, a
+**`commit_seq`** — a strictly increasing integer in the ENVELOPE of the store (never a field of a
+record; the frozen bytes are untouched) — and every record is stored with the `commit_seq` of the
+batch that admitted it.
+
+**Anchor binding (total, deterministic):**
+
+| anchor | binds to | replay set |
+|---|---|---|
+| `as_of publication P` | `commit_seq(P)` — the batch that admitted the `surface_version` with `publication_state=published` | every record with `commit_seq ≤ commit_seq(P)` |
+| `as_of frontier F` | `commit_seq(F)` — the batch that admitted the `source_frontier` | every record with `commit_seq ≤ commit_seq(F)` |
+| `as_of commit_seq N` | N | every record with `commit_seq ≤ N` (the primitive the two above reduce to) |
+
+**Event-time policy inside the set:** folds (§4) order the replay SET by event time; a backfilled
+earlier-dated record is EXCLUDED from any anchor admitted before it and INCLUDED — at its event-time
+position — in any anchor admitted after it. The `replay` surface (§5.6) returns the anchor's
+`commit_seq` beside the estate so a reader can see which backfills it could not know about.
+Records outside the source vector are cut by the same `commit_seq` (there is no anchor without a
+cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anchor-included-at-event-time`,
+`L-12-anchor-commit-seq-printed` (accept), plus row 12's existing arms.
+
+## 3. THE THIRTEEN ENFORCEMENT RESPONSIBILITIES (memo §8 + R3-CRO-25 / R3-CVO-9, each with its rejection and its test)
 
 | # | responsibility | REJECT when | REJECT arm ids | ACCEPT arm ids (the sibling that proves the reject is not "reject everything") |
 |---|---|---|---|---|
 | 1 | global serial uniqueness across batches + fabrics | a mint for a serial already minted (any fabric) — the second fabric's serial must be `provisional` and reconciled by relation | `L-01-dup-serial-cross-batch`, `L-01-dup-serial-cross-fabric` | `L-01-distinct-serials-accepted`, `L-01-provisional-pair-reconciled-accepted` |
-| 2 | referential integrity for every reference field | any reference that does not resolve in the store | `L-02-unresolved-<field>` × the 18 reference fields enumerated below | `L-02-resolved-<field>` × the same 18 (a resolving reference is accepted) |
-| 3 | append-only retention | delete; or a write with an existing primary id and different bytes | `L-03-delete`, `L-03-inplace-mutation` | `L-03-append-accepted`, `L-03-idempotent-rewrite-accepted` (same id, same bytes) |
+| 2 | referential integrity for every reference in §2d | any STRICT / STRICT-CONDITIONAL / parsed PARSE-STRICT reference that does not resolve in (store ∪ batch) at final state | `L-02-unresolved-<record>.<field>` × 29 (the rows of §2d) | `L-02-resolved-<record>.<field>` × 29, plus `L-02-opaque-migration-ref-accepted` |
+| 3 | append-only retention | delete; or a write with an existing primary id and different bytes; or `superseded_by` populated on any write after creation | `L-03-delete`, `L-03-inplace-mutation`, `L-03-superseded-by-written` | `L-03-append-accepted`, `L-03-idempotent-rewrite-accepted` (same id, same bytes) |
 | 4 | binding open/close by event, never mutation | a binding row whose `valid_to` changed in place; a close with no event | `L-04-close-by-mutation`, `L-04-close-without-event` | `L-04-close-event-accepted`, `L-04-open-accepted` |
-| 5 | event→status projection with exact `status_basis` | an authored status on a derivable axis that disagrees with the fold | `L-05-entity.current_status-authored-vs-derived`, `L-05-entity_binding.status-…`, `L-05-identity_relation.verification_standing-…`, `L-05-materializer.current_status-…`, `L-05-bridge_assertion.verification_standing-…` (the five DERIVABLE-AT-WP-3 axes; `bridge_assertion.registry_standing` is ADJUDICATION-CARRIED and has no fold — declared, not tested) | `L-05-<axis>-derived-agrees-accepted` × the same five |
-| 6 | mint-receipt authentication + authority epoch | an `entity` with no preceding `mint_receipt`; a receipt from an authority outside its epoch | `L-06-entity-without-receipt`, `L-06-authority-out-of-epoch` | `L-06-receipted-mint-accepted`, `L-06-authority-in-epoch-accepted` |
-| 7 | relation direction rules + cycle rejection | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12 | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind` | `L-07-acyclic-chain-accepted`, `L-07-retirement-accepted` |
+| 5 | event→status projection with exact `status_basis` (authoritative records stay `authored`; §2) | an authored status on a derivable axis that disagrees with the fold; a projection submitted as a record | `L-05-entity.current_status-authored-vs-derived`, `L-05-entity_binding.status-…`, `L-05-identity_relation.verification_standing-…`, `L-05-materializer.current_status-…`, `L-05-bridge_assertion.verification_standing-…` (the five DERIVABLE-AT-WP-3 axes; `bridge_assertion.registry_standing` is ADJUDICATION-CARRIED and has no fold — declared, not tested), `L-05-projection-submitted-as-record-rejected` | `L-05-<axis>-authored-agrees-accepted` × 5 (the same five axes), `L-05-frozen-authored-record-validates`, `L-05-projection-not-mistakable-for-record` |
+| 6 | mint-receipt authentication + authority epoch + mint-fact equality (R3-CRO-27) | an `entity` with no preceding `mint_receipt`; a receipt from an authority outside its epoch; `entity.minted_at ≠ receipt.minted_at`; `entity.minting_authority ≠ receipt.minting_authority`; a SECOND receipt for one `entity_serial` | `L-06-entity-without-receipt`, `L-06-authority-out-of-epoch`, `L-06-minted-at-mismatch`, `L-06-authority-mismatch`, `L-06-second-receipt-for-serial` | `L-06-receipted-mint-accepted`, `L-06-authority-in-epoch-accepted`, `L-06-mint-facts-equal-accepted` |
+| 7 | relation direction rules + cycle AND fork rejection (R3-CRO-24) | a canonicalization/succession/replacement/merge cycle; a direction row not in §3.12; a second assertion `supersedes`-targeting the same prior; a second `materializer_version` `supersedes`-targeting the same prior version | `L-07-cycle-canonicalize`, `L-07-cycle-merge`, `L-07-unknown-kind`, `L-07-branching-supersession-rejected`, `L-07-fork-materializer-version-rejected` | `L-07-acyclic-chain-accepted`, `L-07-retirement-accepted`, `L-07-linear-version-chain-accepted` |
 | 8 | frontier coordinate uniqueness + temporal consistency | two entries normalizing to one canonical key with different versions (the NORMALIZER, per `normalization_version`); an observation after the consuming run's start | `L-08-normalized-collision` (the case the contract's shape check cannot see), `L-08-observed-after-start` | `L-08-distinct-normalized-keys-accepted`, `L-08-observed-before-start-accepted` |
 | 9 | run / frontier / materializer-version / surface consistency | surface not in run outputs; frontier disagreement; version not the run's | `L-09-membership`, `L-09-frontier-disagree`, `L-09-version-disagree` | `L-09-consistent-triple-accepted` |
 | 10 | admissible publication | `published` from a non-succeeded run; before completion; without a promoter | `L-10-publish-from-failed`, `L-10-publish-before-complete`, `L-10-no-promoter` | `L-10-publish-after-succeeded-accepted`, `L-10-unpublished-accepted` |
-| 11 | current read projections | a projection that cannot show its `status_basis` records | `L-11-projection-without-basis` | `L-11-projection-with-basis-accepted` |
-| 12 | historical replay | a replay as of frontier F or publication P that differs from the state recorded then | `L-12-replay-frontier`, `L-12-replay-publication` | `L-12-replay-matches-recorded-accepted` |
+| 11 | current read projections — single-valued HEADs (R3-CRO-24) | a projection that cannot show its `status_basis` records; a HEAD query that would return two values (impossible after row 7 + the §4 head rules — the arm proves it) | `L-11-projection-without-basis`, `L-11-two-heads` | `L-11-projection-with-basis-accepted`, `L-11-tied-publication-head-deterministic` |
+| 12 | historical replay (anchored by `commit_seq`, §2e) | a replay as of an anchor that differs from the state recorded at that `commit_seq` | `L-12-replay-frontier`, `L-12-replay-publication`, `L-12-backfill-before-anchor-excluded` | `L-12-replay-matches-recorded-accepted`, `L-12-backfill-after-anchor-included-at-event-time`, `L-12-anchor-commit-seq-printed` |
+| 13 | cross-record contest integrity (the three limit-11 promises as REJECTED WRITES) | a `resolved` event whose `contest_id` has no admitted `opened` event; a second `opened` for one `contest_id`; a `resolved` whose typed target differs from its `opened`; an `upheld` resolution any of whose `consequence_refs` does not parse, does not resolve, targets a different typed target, or is dated at/before the opening's `occurred_at`; a `merged` whose `surviving_contest_id` is not an admitted `opened` | `L-13-resolved-without-opened`, `L-13-duplicate-opened`, `L-13-resolved-target-differs`, `L-13-consequence-unparsable`, `L-13-consequence-unresolved`, `L-13-consequence-wrong-target`, `L-13-consequence-predates-opening`, `L-13-merged-into-unopened` | `L-13-opened-then-resolved-accepted`, `L-13-upheld-with-later-same-target-consequence-accepted`, `L-13-merged-into-opened-accepted`, `L-13-dismissed-accepted` |
 
-**Row 2's denominator, enumerated from the frozen schema (so "N reference fields" is never quoted
-as a guess):** `entity.canonicalized_as` · `entity_binding.entity_serial` ·
-`state_observation.entity_serial` · `identity_relation.subject_serial` ·
-`identity_relation.object_serial` · `identity_relation.superseded_by` ·
-`bridge_assertion.subject_entity_serial` · `bridge_assertion.object_entity_serial` ·
-`bridge_assertion.superseded_by` · `mint_receipt.entity_serial` ·
-`materializer_version.materializer_serial` · `materializer_version.supersedes` ·
-`materialization_run.materializer_serial` · `materialization_run.materializer_version_id` ·
-`materialization_run.source_frontier_id` · `materialization_run.output_surface_version_ids[]` ·
-`surface_version.producing_run_id` · `surface_version.source_frontier_id` — **18** (plus
-`contest_event.target_entity_serial` / `target_binding_id` / `surviving_contest_id`,
-`coherence_evaluation.target_source_frontier`, `migration_receipt.migrated_record_ref` and
-`source_frontier.entries[].source_serial`, which are reference-SHAPED but resolve to records the
-ledger may not hold yet — **6 declared as "resolve-if-present"**, tested by `L-02-resolved-<field>`
-only). Battery size, PARSED per row (R3-CRO-21 — my first sentence here typed "24 + 24 = 48" on
-rows 1/3–12; the table itself reads 2R+2A · 2+2 · 2+2 · 5+5 · 2+2 · 3+2 · 3+1 · 3+2 · 1+1 · 2+1 = **27
-reject + 22 accept = 49**) + row 2's 18 + 18 + 6 resolve-if-present = 42 → **91 arms**. The runner
-prints this number by COUNTING the ids it ran, never by reading this sentence; if the two disagree the
-sentence is the stale one.
+**Battery size is DERIVED, never typed (R3-CRO-21 / R3-DT-8 — the one typed number whose whole job
+was to be checked was wrong twice).** The runner prints the denominator by COUNTING the ids it ran;
+a reader reproduces it from this table by the predicate `0.4.0_DT_ClientPlatform~X` and
+`4.0.0_SA_CRO~X` converged on: every backtick-quoted token beginning `L-` in §3 is one arm, a `× N`
+template expands to N arms per column, a token cited twice is one arm. The per-row vector for this
+revision is printed in the commit message that lands it, cited by hash — if the vector and the
+table disagree, the table wins and the vector is the stale one.
 
 **Completion evidence (memo §8):** WP-3 completes on this battery passing from a clean clone of
 the pinned commit, not on code delivery. ⛔ **INSTRUCTION, not description (R3-DT-7, `0.4.0_DT_
 ClientPlatform~X`): the first draft of this table named 23 reject arms and ONE accept arm beneath a
 sentence claiming both directions — a battery built from it could only ever say NO, and §7 makes
 this table the battery's source. Every row now names its sibling accept arm(s); the battery is NOT
-complete until every id in both columns exists and the runner prints the 90-arm denominator.**
+complete until every id in both columns exists and the runner prints the denominator it counted.**
 
 ## 4. DERIVATION RULES — DECISION TABLES (R3-CRO-20 / R3-CVO-8: a fold is a FUNCTION — exactly one value for every reachable record set)
 
-**Event-order rule, once:** every fold consumes the axis's records ordered by
-`(occurred_at | asserted_at | minted_at, primary_id)`; a record written LATER but dated EARLIER is
-folded at its date (append-only, replayable — responsibility 12). **Precedence is top-down: the
-FIRST row whose condition holds wins; the last row is the total-coverage default.** Each table
-has a pairwise-overlap control (`L-05-<axis>-overlap-<a>-<b>`) proving the precedence picks one
-value, and a no-condition control proving the default fires.
+**Event-order rule, once:** every fold consumes the axis's records in the replay set (§2e) ordered
+by `(occurred_at | asserted_at | minted_at, commit_seq, primary_id)`; a record written LATER but
+dated EARLIER is folded at its date (append-only, replayable — responsibility 12). **Precedence is
+top-down: the FIRST row whose condition holds wins; the last row is the total-coverage default.**
+Each table has a pairwise-overlap control (`L-05-<axis>-overlap-<a>-<b>`) proving the precedence
+picks one value, and a no-condition control proving the default fires. **Folds consume only
+ADMITTED record sets** — row 13 has already refused a resolved-without-opened, a wrong-target or a
+pre-dated consequence, so no fold below has a branch for them (R3-CVO-9's "projection folds only
+admitted event sets").
 
 **`entity.current_status`** (records: `mint_receipt`, `identity_relation`, `contest_event[target_kind=entity]`)
 
 | # | condition (evaluated in order) | value |
 |---|---|---|
 | 1 | a `retirement` relation with this subject exists, OR the entity occupies the CEASING endpoint of a directional relation (§3.12 table) | `retired` |
-| 2 | an opened contest targeting this entity has no `resolved` partner, OR its `upheld` resolution's `consequence_refs` do not all resolve | `contested` |
+| 2 | an admitted `opened` contest targeting this entity has no `resolved` partner | `contested` |
 | 3 | its `mint_receipt.collision_preflight == deferred_to_reconciliation` AND no `canonicalized_as`/`merged_into` relation has resolved it | `provisional` |
 | 4 | (default) | `active` |
 
@@ -153,7 +257,7 @@ no relations, no contests → `active`.
 | # | condition | value |
 |---|---|---|
 | 1 | a `closed` binding_event exists for this `binding_id` | `closed` |
-| 2 | an opened contest targeting this binding has no resolved partner | `disputed` |
+| 2 | an admitted `opened` contest targeting this binding has no resolved partner | `disputed` |
 | 3 | (default: an `opened` event, or the row itself with `valid_to: null`) | `open` |
 
 A contest on a closed binding leaves it `closed` (row 1 outranks row 2). **Buildable only after the
@@ -168,8 +272,8 @@ new candidate carries `binding_event`** (§2b); until then this axis is authored
 | 2 | the chain head's authored standing | that value (`unverified` \| `corroborated` \| `contradicted`) |
 
 Single-valued by construction: exactly one head per chain (a second assertion superseding the same
-target is REJECTED — responsibility 7's cycle/branch rule extended to chains; test
-`L-07-branching-supersession-rejected`). **Buildable only after the new candidate** (§2b).
+target is REJECTED — row 7, `L-07-branching-supersession-rejected`). **Buildable only after the new
+candidate** (§2b).
 
 **`materializer.current_status`** (records: `materializer_version`, `lifecycle_event[materializer_decommissioned]` — NEW CANDIDATE for the event)
 
@@ -186,30 +290,56 @@ Overlap controls: retired×superseded, superseded×active; default control: zero
 REFUSES a change without `adjudicated_by` (the adjudication-event vocabulary is a later candidate).
 Declared, not folded; no table.
 
+**HEAD selection — the two singular projections §2 promises (R3-CRO-24):**
+
+*current version of a `materializer`*: the `materializer_version` chain is LINEAR by row 7 (a fork
+is rejected at write); the head is the unique version no other version `supersedes`. A materializer
+with zero versions has no head (`failure_state: no_versions`, never an empty string). Control:
+`L-11-two-heads` is UNREACHABLE after row 7 — the arm submits the fork and asserts the REJECT fired
+at write, not at read.
+
+*current authority version of a logical surface*: among admitted `surface_version` records with this
+`logical_surface_serial` and `publication_state=published`, order by `(published_at DESC,
+commit_seq DESC)` and take the first. `commit_seq` is total, so a tie on `published_at` (two
+publications in one second, or two records with one `published_ref` and different content) is
+broken deterministically and the projection reports `tie_broken_by: commit_seq` beside the value
+(`L-11-tied-publication-head-deterministic`). Zero published versions → `failure_state:
+none_published`. A second published version at the same `published_ref` is a rebuild in place and is
+ADMITTED (append-only); the earlier one is history, visible through `replay`.
+
 ## 5. THE SIX MINIMUM QUERY SURFACES (memo §8) — each with its evidence shape
 
 1. `resolve(raw_ref) -> {candidates: [serial…], evidence, failure_state}` — zero, one, or many
    canonical serials for a substrate reference, never a silent one.
 2. `binding_history(serial) -> [interval + basis + disputes]` — renames and disputed intervals intact.
 3. `surface_provenance(surface_version_id) -> {frontier, materializer bundle, run receipt}`.
-4. `why(record, axis) -> [status_basis records]` — the records that produce a projected value.
+4. `why(record, axis) -> [status_basis records]` — the admitted records that produce a projected
+   value (the projection object of §2).
 5. `coherence(physical_pin, target) -> {availability, integrity, currency, provenance, fabric_validity}`
    — five separate axes, never collapsed (§3.14).
-6. `replay(as_of: frontier | publication) -> the estate as of that point` — from append-only records.
+6. `replay(as_of: frontier | publication | commit_seq) -> {estate, anchor_commit_seq}` — from
+   append-only records, cut by `commit_seq` (§2e).
 
 ## 6. WHAT IS DELIBERATELY OPEN (memo §12; not decided here)
 
 - Persistence engine (SQLite/DuckDB file · Iceberg table under Nessie · a JSONL log + index). The
-  battery is engine-agnostic by construction: every test is a write-then-query.
+  battery is engine-agnostic by construction: every test is a write-then-query. `commit_seq` is a
+  requirement ON the engine (a monotone batch counter), not a choice of engine.
 - API form (library · CLI · service). The six surfaces are the contract; the transport is not.
-- Round-3 attackers may attack the design's ADMISSIBILITY (a responsibility the twelve miss; a
+- Round-3 attackers may attack the design's ADMISSIBILITY (a responsibility the thirteen miss; a
   derivation rule that can return two answers; a query surface whose evidence shape lies) — never
   the engine choice.
 
 ## 7. LANDING SEQUENCE
 
-design attacked-dry → **`v0.3-candidate`: the three carriers of §2b land in the contract as a NEW
-candidate_id, attacked in one bounded round, frozen** → engine chosen by ONE stated criterion (Rule-26 locality of the store) →
-battery written FIRST from §3 (both arms per row) → ledger code until the battery passes from a
-clean clone → `wp3_certification_receipt` set on the frozen bundle (NOT a new candidate_id: the
-contract did not change) → the live vertical slice (charter exit condition 3) begins.
+design attacked-dry → **`v0.3-candidate`: the three carriers + two typings of §2b land in the
+contract as a NEW candidate_id, attacked in one bounded round, frozen** → engine chosen by ONE
+stated criterion (Rule-26 locality of the store) → battery written FIRST from §3 (both arms per
+row; the manifest is the denominator) → ledger code until the battery passes from a clean clone →
+**`wp3_certification_receipt` recorded on the frozen label through the REGISTRY-SIDE receipt
+carrier** (R3-CRO-28: `bundle_identity.py --receipt wp3_certification_receipt --value <clean-clone
+run commit> <commit>` appends the receipt to the label's `BUNDLE_LABELS.json` entry — keyed by the
+immutable `candidate_id` + `contract_bundle_id`, refused unless the label is frozen, idempotent on
+the same value, REFUSED on a conflicting second value, and `derive()` exposes it while the bundle's
+member bytes and id are untouched; NOT a new candidate_id because no member byte changed) → the
+live vertical slice (charter exit condition 3) begins, its receipt landing by the same carrier.

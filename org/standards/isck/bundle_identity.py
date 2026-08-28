@@ -12,6 +12,11 @@ gets a new candidate id even when the doctrine is behaviourally unchanged.
     python org/standards/isck/bundle_identity.py <commit> --freeze --boundary <commit>
                                                     # SCHEMA-ONLY freeze of the label derived at <commit>
                                                     # (C4); recorded in BUNDLE_LABELS.json; immutable after
+    python org/standards/isck/bundle_identity.py <commit> --receipt <kind> --value <v>
+                                                    # append an OPERATIONAL receipt to the FROZEN label's
+                                                    # registry entry (R3-CRO-28): idempotent on the same
+                                                    # value, REFUSED on a conflicting one; bundle bytes and
+                                                    # id untouched, so it is NOT a new candidate_id
 
 Bundle id = sha256 over the sorted (path, blob) pairs of the bundle's member files at the commit
 (content-addressed: a bundle at a commit is IMMUTABLE, so LAW 1's hashes-for-immutables rule
@@ -43,6 +48,10 @@ VOCAB = [f"{REL}/vocab/entity_classes.json", f"{REL}/vocab/identity_spaces.json"
          f"{REL}/vocab/identity_policies.json"]
 BOUNDARIES = {"round_1_boundary_commit": "21d6fc7325", "round_2_boundary_commit": "ece1ac0f41",
               "round_3_boundary_commit": None}
+# R3-CRO-28: the operational receipts are REGISTRY facts on the frozen label (append-only, keyed by
+# the immutable candidate_id + bundle id), never a member byte -- so recording one is not a new
+# candidate. Each kind is set at most once; a second, different value is a conflict, not an update.
+RECEIPT_KINDS = ("clean_clone_gate_receipt", "wp3_certification_receipt", "vertical_slice_receipt")
 
 
 def git(*args):
@@ -82,6 +91,7 @@ def derive(commit):
     # operational receipts stay null BY DEFINITION until WP-3 / the live slice / replay land.
     labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
     fz = labels.get(candidate_id, {}).get("frozen") or {}
+    receipts = labels.get(candidate_id, {}).get("receipts") or {}
     return {
         "contract_bundle_id": bundle_id,
         "semantic_version": "v0.2-candidate",
@@ -99,11 +109,9 @@ def derive(commit):
         "vocabulary_digests": {p: sha256_at(full, p) for p in VOCAB},
         **BOUNDARIES,
         "post_boundary_amendments": post_boundary,
-        "clean_clone_gate_receipt": None,
-        "wp3_certification_receipt": None,
-        "vertical_slice_receipt": None,
+        **{k: receipts.get(k) for k in RECEIPT_KINDS},
         "supersedes_bundle_id": None,
-        "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES",
+        "$comment": "every field is derived by bundle_identity.py -- re-run it, never edit it. status: candidate -> frozen is a SCHEMA-ONLY freeze (C4, CVO~X 20260828T040820Z) recorded in BUNDLE_LABELS.json by --freeze <commit> --boundary <commit>; it requires round 3 CLOSED and does NOT require the operational receipts, which stay null until WP-3 / the live slice / historical replay land (that is 'not operationally certified', not a contradiction). The operational receipts are appended to the frozen label's registry entry by --receipt <kind> --value <v> (R3-CRO-28): registry-side, never a member byte, so the bundle id and candidate_id do not move. A frozen label is immutable: any byte change on the package path derives a NEW candidate_id; --write under a frozen label with different bytes REFUSES",
     }
 
 
@@ -111,6 +119,34 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     commit = sys.argv[1]
+    if "--receipt" in sys.argv:
+        rec = derive(commit)
+        try:
+            kind = sys.argv[sys.argv.index("--receipt") + 1]
+            value = sys.argv[sys.argv.index("--value") + 1]
+        except (ValueError, IndexError):
+            sys.exit("REFUSED: --receipt <kind> needs --value <v>")
+        if kind not in RECEIPT_KINDS:
+            sys.exit(f"REFUSED: receipt kind {kind!r} is not one of {RECEIPT_KINDS}")
+        labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}
+        bound = labels.get(rec["candidate_id"])
+        if not bound or bound["contract_bundle_id"] != rec["contract_bundle_id"]:
+            sys.exit(f"REFUSED: {rec['candidate_id']} is not bound to {rec['contract_bundle_id']} in the registry")
+        if not bound.get("frozen"):
+            sys.exit(f"REFUSED: {rec['candidate_id']} is not frozen; a receipt certifies a FROZEN bundle")
+        receipts = bound.setdefault("receipts", {})
+        if kind in receipts and receipts[kind]["value"] != value:
+            sys.exit(f"REFUSED: {kind} already recorded as {receipts[kind]['value']!r} at {receipts[kind]['recorded_at']}; "
+                     f"a conflicting receipt is not an update -- a different certification is a different candidate")
+        if kind not in receipts:
+            import datetime
+            receipts[kind] = {"value": value, "contract_bundle_id": rec["contract_bundle_id"],
+                              "recorded_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+            LABELS.write_text(json.dumps(labels, indent=2) + "\n", encoding="utf-8", newline="\n")
+        rec = derive(commit)
+        OUT.write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8", newline="\n")
+        print(f"RECEIPT {kind} = {value!r} on {rec['candidate_id']} ({rec['contract_bundle_id'][:24]}...); bundle id unchanged")
+        return
     if "--freeze" in sys.argv:
         # freeze the label derived at <commit>, citing the round-3 boundary record commit; refuses
         # unless the label is bound in the registry to exactly this bundle (no freezing a stranger)
