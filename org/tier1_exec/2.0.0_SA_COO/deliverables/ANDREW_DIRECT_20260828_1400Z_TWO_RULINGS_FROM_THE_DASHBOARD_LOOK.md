@@ -79,6 +79,57 @@ map and the issuer.
 
 ---
 
+## ⛔⛔ CORRECTION FROM ANDREW'S OWN SCREENSHOTS (13190) — THE EMPTY-CARD CLAIM WAS FALSE
+
+**THE RENDERED PAGE SHOWS ONLY `Models` AND `Client`. NO `Alternatives` CARD. NO `SMA` CARD.**
+⭐ **L0 ZERO-SUPPRESSION ALREADY WORKS** — which is `D1-h-p1` of this project's own decomp doing its
+job: *"L0 presence predicate = the node's served AUM > 0 ... Alternatives absent for every firm ...
+assert the tile is ABSENT, not empty."* **The cell exists and is implemented.**
+
+⛔ **`1.0.0_SA_CTO~Z` INFERRED A RENDER FROM DATA, AND `2.0.0_SA_COO~Z` REPEATED THE ERROR WHILE
+BELIEVING IT WAS VERIFYING INDEPENDENTLY.** This seat checked `view_plane.peers` and found
+`Alternatives` present — **that is the DATA half, and it is true.** It then reported *"all four scopes
+render an empty Alternatives card at $0"* **to the sovereign, as measured fact.** The render was never
+read. **A verification that confirms the premise's DATA half and is reported as confirming its RENDER
+claim is not a verification.**
+
+⚠ **THE 08-27 PRODUCER FIX STILL STANDS ON ITS OWN** — `Alternatives` leaving the declared L0 node set
+is correct hygiene — **but it is NOT a visible defect and must not be dispatched as urgent.**
+
+## ⛔⛔ SEQUENCING HAZARD — DO NOT SHIP RULING 2 BEFORE THE VALUES ARE MAPPED
+
+```
+MODELS > PRIMARY  $178.36M   Ultra-Short / Short / Intermediate / Long / Ultra-Long   ALL "--"
+MODELS > CUSTOM   $8.43M     Opal Global All Equity TR / 50-50 INT-LTC / 50-50 ST-INT /
+                             Fixed Income                                             ALL "--"
+```
+**EVERY L2 NODE UNDER `Models` RENDERS `--`.** The L1 parents carry money; the L2 breakdown carries
+none. That is his *"asset value isnt mapped to them."*
+>> ⛔ **HIS SUPPRESSION RULE APPLIED TO TODAY'S DATA WOULD EMPTY THE ENTIRE L2 LAYER.** Every L2 node
+   is valueless, so "hide constituents with no AUM" hides ALL of them and `Custom`/`Primary` expand to
+   nothing. **MAP THE VALUES FIRST, THEN SUPPRESS WHAT IS GENUINELY ZERO.**
+⚠ **AND THIS IS THE CASE WHERE NULL REALLY IS NOT ZERO** — these are UNMAPPED, not empty. **His ruling
+still governs the RENDER: the client is never told which.** The distinction goes in the pipeline's own
+counts. **Both are true; they are not in conflict.**
+⭐ **LEAD FOR THE IMPLEMENTER:** the Primary L2 set is the TERM LADDER — Ultra-Short / Short /
+Intermediate / Long / Ultra-Long — **the same five books as `MODEL_BOOKS` on Positioning.** And
+`Fixed Income` under `Custom` is literally the row he named in Ruling 2.
+
+## ⛔⛔ SEVERE, AND OWED BEFORE ANYTHING ELSE ON THAT PANEL: AUDIENCE GATING
+
+The `Client $294.91M` panel renders an amber **"Fee split unavailable at this scope"** box printing,
+**verbatim on his screen**: an internal source path and line range
+(`cot-rebalancer-runner/lambda_function.py:300-320`), roster counts and a `ROSTER GAP`, an internal
+routing code (`WSE_COTMDL`), a CTO ruling date, and **a named client's two strategies beside their
+combined `$46,436,739.80`.**
+>> **THIS IS THE "noisey client-facing error about Type 2 errors and unknown denominators" HE
+   DESCRIBED. HE WAS READING IT OFF HIS SCREEN, NOT SPEAKING HYPOTHETICALLY.** His overrule was
+   corrective of a LIVE condition, not a hypothetical one.
+⛔ **BOUND, AND IT IS NOT RESOLVED HERE: THIS PANEL'S AUDIENCE GATING IS UNKNOWN.** If the surface is
+client-reachable this is a CONFIDENTIALITY EXPOSURE, not a cosmetics bug. **Neither seat asserts it is;
+both refuse to assume it is not.** ⭐ **THAT DETERMINATION IS OWED BEFORE ANYTHING ELSE ON THIS PANEL IS
+PRIORITISED.**
+
 ## RULING 2 — L1/L2 named constituents render ONLY if AUM is associated
 
 > ⛔ **VERBATIM. Typos are his and are preserved.**
