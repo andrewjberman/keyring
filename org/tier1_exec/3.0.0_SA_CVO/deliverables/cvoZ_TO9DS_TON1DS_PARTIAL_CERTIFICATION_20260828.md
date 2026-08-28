@@ -9,8 +9,9 @@ close this out."*
 TO-9-DS   rc=0 VALID  rows=5  violations=0   3 PASS · 2 UNCOMPUTABLE
 TO-N1-DS  rc=0 VALID  rows=8  violations=0   3 PASS · 5 UNCOMPUTABLE
 ```
-⛔ **NEITHER TO CLOSES.** Seven criteria across the two are UNCOMPUTABLE, and **all seven lift at ONE
-event** — see §3. This is a terminal state, not an open question.
+⛔ **NEITHER TO CLOSES.** Seven criteria across the two are UNCOMPUTABLE. ⚠ **AMENDED 2026-08-28 ~21:1xZ:
+this line originally said “all seven lift at ONE event”. THAT GROUPING WAS WRONG and so was the date it
+named — see §3 and the AMENDMENT block at the end.** This is a terminal state, not an open question.
 
 ---
 
@@ -117,9 +118,12 @@ DISCHARGED and the executor measured it independently rather than relaying: pull
 `0.7.0_AE_CloudOps~Z` obtained by `cmp`. Two seats, two instruments, one value.** State is **APPLIED,
 explicitly NOT EXERCISED.**
 
->> **ALL SEVEN — plus `TM1-AC1` and `CATV-TOV1-AC7` — LIFT AT THE NEXT SCHEDULED FIRE, ~13:0xZ
-   2026-08-29. It is not a decision, and no seat is owed anything to reach it.** No ad-hoc run beats
-   it: the TOs forbid it and an ad-hoc artifact is never production evidence.
+>> ⛔ **RETRACTED AND REPLACED — SEE THE AMENDMENT BLOCK BELOW.** This paragraph said all seven, plus
+   `TM1-AC1` and `CATV-TOV1-AC7`, lift at ~13:0xZ **2026-08-29**. **2026-08-29 IS A SATURDAY**, and the
+   five `CATV-TON1` criteria lift **MONDAY 2026-08-31**, not tomorrow. The `TO-9-DS` pair sits on a
+   DIFFERENT PIPELINE and its lift event is **UNMEASURED at this seat**. <<
+   What survives unchanged: no ad-hoc run beats the scheduled fire — the TOs forbid it and an ad-hoc
+   artifact is never production evidence.
 
 ---
 
@@ -136,5 +140,64 @@ explicitly NOT EXERCISED.**
   `2.0.0_SA_COO~Z` as issuer.
 - **Push state:** both instances and this certificate **LOCAL** at authorship; push is the
   integrator's leg.
+
+— `3.0.0_SA_CVO~Z`
+
+---
+
+## ⛔ AMENDMENT — 2026-08-28 ~21:1xZ: THE LIFT EVENT WAS WRONG TWICE, AND THE SECOND ERROR IS THE WORSE ONE
+
+**Issued by the certifier against the certifier's own committed artifact.** Neither correction changes
+a single VERDICT above — 3 of 5 and 3 of 8 stand, and every PASS and every UNCOMPUTABLE is unmoved.
+What was wrong is **when the UNCOMPUTABLE rows become computable**, which is the operational half other
+seats were scheduling against.
+
+### 1. ⛔ 2026-08-29 IS A SATURDAY, AND I NAMED IT AS THE LIFT EVENT WITHOUT RESOLVING THE CALENDAR
+```
+  2026-08-28  Friday   <- issuance date
+  2026-08-29  Saturday <- what this certificate called "THE NEXT SCHEDULED FIRE"
+  2026-08-31  Monday   <- the real lift for the CATV rows
+```
+CLAUDE.md carries a **NEVER** on exactly this: *"NEVER call a pipeline stale/broken until you resolve
+the TRADING CALENDAR — count trading days. Friday IS Monday's answer."* I wrote a lift schedule off a
+calendar date without counting a trading day.
+
+**MEASURED, and it is not merely that the market is shut:** the A6 manifest key
+`_manifests/{data_as_of}/{run_ts}.json` records that **4 of 4 weekend runs computed the PRECEDING
+FRIDAY's `as_of`** (denominator 42 manifests). A same-`as_of` run writes to an EXISTING key, so the
+served object **does not advance**. Every one of the five `CATV-TON1` rows reads *"from the served
+artifact"* or *"before and after"* — so the AFTER referent is not created on Saturday or Sunday.
+⭐ **AND THE B0 REMEDY LANDED TONIGHT DOES NOT CHANGE THIS — IT MAKES THE NON-ADVANCE CORRECT RATHER
+THAN ACCIDENTAL.** With `category-views` declared (`7604f2b4bd`), the weekend run now returns
+`unchanged` instead of raising `KeyError`. **That is the RIGHT answer and it still writes nothing.**
+A conflict is not a delivery; only a NEW `as_of` advances the object. **Monday 2026-08-31.**
+
+### 2. ⛔ THE WORSE ERROR: "ALL SEVEN LIFT AT ONE EVENT" JOINED TWO DIFFERENT PIPELINES
+```
+  CATV-TON1-AC3..AC7   MDPF gold consolidator    13:30Z   EventBridge SCHEDULER
+  TO-9-DS AC3, AC4     ETFS positioning          13:00Z   EventBridge RULES
+```
+**These are two producers, two planes, two schedules and two `as_of` derivations.** I measured the
+MDPF surface and **extended its answer to a surface I never measured**, then presented the result as a
+single event with a single date. That is the one-banner-over-two-evidence-classes failure, committed
+inside a certificate whose own §1 is about a wrong-referent verdict.
+⚠ **THE `TO-9-DS` LIFT EVENT IS UNMEASURED AND I AM LEAVING IT THAT WAY RATHER THAN GUESSING.** What I
+did measure, with its denominator, is too thin to carry a claim and raises a separate question I am
+not chasing into another lane:
+```
+  portal/gold/etfs/positioning/_manifests/   DENOMINATOR 2 objects / 2 dates: 08-20 Thu, 08-21 Fri
+  portal/gold/etfs/positioning/book/         DENOMINATOR 2 objects / 2 dates: 08-20 Thu, 08-21 Fri
+  weekend-dated: 0 -- BUT WITH n=2 AND NEITHER A WEEKEND, THAT ZERO MEANS NOTHING.
+```
+**Two observations, neither on a weekend, cannot distinguish "skips weekends" from "has not run since
+08-21."** Surfaced to the owning lane as an OBSERVATION; it is not evidence for either reading.
+
+### 3. WHAT DOES NOT CHANGE
+- **No verdict moves.** 3 of 5 and 3 of 8; the seven UNCOMPUTABLE rows remain UNCOMPUTABLE and were
+  correctly refused by both executors. **`CATV-TON1-AC6` remains the sharpest judgement in either
+  instance** — the invariant held while the defect was live, so a before-only reading discriminates
+  nothing.
+- **No ad-hoc run beats the scheduled fire**, and the reason is unchanged.
+- ⛔ **This certificate still does not close D4.**
 
 — `3.0.0_SA_CVO~Z`
