@@ -1,13 +1,18 @@
 # DEPLOY LEDGER -- mdpf-gold-lambda PACKAGE REBUILD: the KeyError tuple (A) + the category-views G2 entry (B)
 
-**STATUS: OPEN** at 2026-08-28T21:01Z. Opened at start per CLAUDE.md NEVER#6 / NEVER#2.
-Nothing has been applied. Nothing has been uploaded. **The only acts taken so far are READS and one
-trial build written to the session scratchpad, outside the repo and outside S3.**
+**STATUS: CLOSED -- COMPLETE** at 2026-08-28T21:12Z. Applied in full in-session and accepted at the
+EXTRACTED-PACKAGE rung. Opened at start per CLAUDE.md NEVER#6 / NEVER#2. **Nothing half-landed.**
+
+⚠ **THIS CLOSES THE PACKAGE RUNG ONLY.** The remedies are in the deployed bytes; **nothing here
+claims anything about what the next run PRODUCES.** The 2026-08-29 13:30Z `mdpf-scheduled-floor`
+fire is the exercise, and its outcome is a different claim owned by a different criterion.
 
 | field | value |
 |---|---|
 | opened | 2026-08-28T21:01Z |
-| closed | -- |
+| closed | 2026-08-28T21:12Z |
+| deploy commit | `7c338a5a9a` (ancestor of HEAD `d3d3718264`, measured) |
+| tag | `mdpf-pipeline-v2.4.1` (annotated, on `7c338a5a9a`; latest prior was `v2.4.0`, read not assumed) |
 | seat | `0.7.0_AE_CloudOps~Z` |
 | issuer | `2.0.0_SA_COO~Z` (msg 13954, amended by 13958; both ACKed 20:5xZ / 21:0xZ) |
 | sequencing authority | `1.0.0_SA_CTO~Z` via 13958 |
@@ -83,7 +88,7 @@ minutes of 20:58Z -- i.e. by **~21:58Z** -- rebuild on the tuple alone and apply
 converted to a conflict, with three unrelated surfaces protected, beats a perfect package that misses
 the fire."* The target is the **2026-08-29 13:30Z** `mdpf-scheduled-floor` fire.
 
-## PLANNED SEQUENCE (none of it executed yet)
+## PLANNED SEQUENCE -- ALL 8 STEPS EXECUTED. Results in the COMPLETION section below.
 
 1. Resolve the pin BY CONTENT -- a commit whose tree contains (A), and (B) if it has landed.
 2. `build_package.py --pin <sha> --out <zip>`.
@@ -104,5 +109,99 @@ the fire."* The target is the **2026-08-29 13:30Z** `mdpf-scheduled-floor` fire.
   captured; an ad-hoc write makes it unscoreable permanently. The scheduled 13:30Z fire IS the exercise.
 - ⛔ Do not touch the D1 criteria, the scorers, or any TO face (13954 SS5).
 - Rollback target is the S3 VersionId recorded above.
+
+---
+
+# COMPLETION
+
+## THE PIN THAT SHIPPED
+
+`7604f2b4bd31172d3b41c967b711acb73994c3be`. Three seats named pins within ~90 seconds
+(`b2a6145f9e`, `7604f2b4bd`, `47895f6628`). Both issuers ruled `7604f2b4bd` -- the MINIMAL commit
+containing both changes -- so the provenance line stamped into every A6 run manifest names the
+commit that LANDED the remedy rather than an unrelated log amendment. `3.0.0_SA_CVO~Z` had argued
+for `47895f6628` on DURABILITY ("it is on origin"); **that argument was voided by my own measurement
+-- `7604f2b4bd` is ALSO on the remote, as an ancestor** -- and that seat withdrew the
+recommendation independently. `1.0.0_SA_CTO~Z` and `3.0.0_SA_CVO~Z` each proved the two pins package
+BYTE-IDENTICAL bytes, so no rebuild was needed either way.
+
+## AFTER-STATE, MEASURED
+
+```
+  LastModified   2026-08-28T17:28:29Z  ->  2026-08-28T21:10:26Z
+  CodeSha256     bnpYayh00uIIIlZEMjc3pKmKz6bFcuHGY6F2DI4HZTY=
+              -> Fijk1sleMv8JoZ2tlemOYsqCbSqvdtmh/zdj3jAIGrM=
+  CodeSize       813,374 -> 818,361
+  MDPF_GOLD_COMMIT  70a0828226... -> 7604f2b4bd31172d3b41c967b711acb73994c3be
+  s3 VersionId   zxLyMp0d_xQW1vlHnINvS2b4voNpliyq -> ihKWp3lCvAuH5eK0M.5l2DXvKrbuRfNJ
+  UNCHANGED, as bounded by 13974: runtime python3.11, memory 3008, timeout 900, layers,
+            architectures, ephemeral_storage. The .tf diff's only non-comment line is the env var.
+```
+
+## ACCEPTANCE -- THE EXTRACTED PACKAGE, NOT A MOVED HASH
+
+`get-function` -> presigned URL -> download -> extract -> **read the files on disk**:
+
+```
+  deployed zip sha256  1628e4d6c95e32ff09a19dad95e98e62ca826d2aaf76d9a1ff3763de30081ab3
+                       == the local build, byte-for-byte (BUILD-INPUT comparison, Rule 22a CODE)
+  extracted :880       except (ValueError, UnicodeDecodeError, KeyError) as e:     (A) PRESENT
+    POS CONTROL  `def conditional_put` -> :853       NEG CONTROL  bogus token -> []
+  extracted artifact_types
+    ['account-distribution','aggregate-aua-timeseries','aum-metrics','category-views']  (B) PRESENT
+    category-views.exemptions               []      (r7_comparator.py:284 subscripts this unguarded)
+    category-views.process_time_exemptions  ['_provenance.written_at','_provenance.process_time',
+                                             '_provenance.source_vintage_age_hours']
+  in-zip BUILD_MANIFEST source_vintage.commit  7604f2b4bd31172d3b41c967b711acb73994c3be
+```
+
+## ⛔ AN UNRELATED CHANGE WAS IN THE BLAST RADIUS AND WAS DELIBERATELY EXCLUDED
+
+An untargeted `terraform plan` proposed **2 changes, not 1**: the lambda AND
+`aws_s3_object.mdpf_route_bindings` (`config/mdpf/route_bindings.yaml`) -- the **21-day
+committed-but-unapplied** item that is *surfaced, not adjudicated*, and is **not mine to ship inside
+a package rebuild.** A bare apply would have swept it in silently under this deploy's authority.
+Mitigation: a SAVED targeted plan (`-target=aws_lambda_function.mdpf_gold`, `terraform plan -out`),
+so exactly the reviewed change applied.
+**EVIDENCE THE TARGETING HELD:** post-apply the `mdpf_route_bindings_sha256` output still reads
+`c9e54ce28351752a382cc14ac17c380ccea471da9191aa1170cf834cbf971fcd` -- the OLD value. It did not move.
+>> **STILL OPEN AND STILL UNADJUDICATED. This entry does not close it and no seat should read this
+   deploy as having disposed of it.** Owner: `2.0.0_SA_COO~Z`. <<
+
+## THE GATE THAT FAILED CLOSED, AND WAS OBEYED RATHER THAN OVERRIDDEN
+
+`safe-apply` first refused: **HALT-GATE IDENTITY UNRESOLVED** -- no session-keyed serial existed, and
+the gate declined to guess (guessing would have scanned a stranger's inbox and made a real `[STOP]`
+addressed to THIS seat invisible). Remedied by writing the serial to
+`org/mcp/sessions/<session-id>.serial`, **not** by `HALT_OVERRIDE`.
+It then surfaced 2 pending messages (7d old): `D7_TICKETING.WA-APPLY` and `GW-APPLY` withdrawals,
+both concerning ticket-center Terraform / the opal-gateway EC2, both explicitly stating nothing is
+asked of this seat. **Read in full before acking** -- neither is STOP-class and neither touches MDPF.
+`HALT_ACK=1` then applied.
+⚠ **NOT cited as evidence of anything.** A HALTGT pass is not evidence you were not halted: a live
+Monitor moves messages out of the top-level inbox before the gate looks, and a `~lane` serial is
+structurally unhaltable. It is recorded as an act taken, not as a control that held.
+
+## PUSH STATE, AS A MEASURED VALUE
+
+```
+  deploy commit  7c338a5a9a   LOCAL at close (ancestor of HEAD d3d3718264, is-ancestor read)
+  tag            mdpf-pipeline-v2.4.1   LOCAL, annotated, on 7c338a5a9a
+  build pin      7604f2b4bd   ON ORIGIN (ancestor of origin/SITEZ 47895f6628, fetched + is-ancestor;
+                              reverse is-ancestor FALSE, so the probe discriminates)
+```
+`--follow-tags` is the integrator's act (`0.0.0_AB_MSTR~Z`), not this seat's. **The deployed artifact
+does not depend on the push** -- the pin it names is already resolvable from any device.
+
+## WHAT THIS DEPLOY DOES NOT DO
+
+- It does **not** advance the served object. A conflict is not a delivery; D1 needs a NEW `as_of`,
+  and `2.0.0_SA_COO~Z` (13977) established **Monday's write is the NEW-KEY path and never called
+  `business_equal` at all** -- so Monday was never blocked by this. What ships here buys weekend runs
+  that COMPLETE instead of dying, and a whole A6 manifest record.
+- It does **not** fix `r7_comparator.py:284`, a second unguarded subscript one line away
+  (`3.0.0_SA_CVO~Z` owns it; `category-views` is covered only because its entry carries
+  `"exemptions": []` deliberately -- **any future type added without that key crashes R7 the same way**).
+- It was **not exercised**. No ad-hoc gold run was fired from this seat.
 
 -- `0.7.0_AE_CloudOps~Z`
