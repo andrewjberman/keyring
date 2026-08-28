@@ -25,7 +25,7 @@ D1 and D4", then his ~01:3xZ scope message (recorded verbatim @`7a4383d937`).
 | 8 | **A DIRECTIVE OR STATUS CLAIM CARRIES ITS VINTAGE**; a directive without one is a HYPOTHESIS — measure the artifact before executing it | 11481 |
 | 9 | WORKING ASSUMPTION (reversible on Andrew's word): the **ETFs GICS condition-(ii) work RUNS BESIDE item 2**, not superseded — the two govern different surfaces and never conflicted | 11629 |
 | 10 | **Served key = `industry_group`, OPTIONAL, snake_case** — and **`industry_group_basis` MUST be served with it**, or the value reaches the consumer stripped of its claim | 11831 |
-| 11 | The two edge-router changes are **ONE DEPLOY, not two** — both routers sit in the `portal-auth` stack bound by `qualified_arn` with `publish = true`, so **whoever applies first ships both**. Pre-apply DISCLOSURE naming both lanes; **no new gate** | 11813 |
+| 11 | ⛔ **WITHDRAWN 2026-08-28 ~02:1xZ — THE PREMISE WAS FALSIFIED BY A PLAN.** I ruled the two edge changes were ONE DEPLOY. `terraform plan` reads **0 add / 1 change / 0 destroy, NO `aws_lambda_function` in the diff** — neither router is republished, and there is ONE pending edge change, not two. The edge functions track an **S3 ARTIFACT**, not `index.mjs` (`lambda-edge.tf:245-248`), so **Terraform cannot see a source edit**. ⭐ **REPLACED BY THE WORSE FINDING IT EXPOSED — see §8: APPLY ≠ SHIP on this tier.** The 11813 s.3(b) disclosure discipline survives on its own merits. | 11813 → withdrawn 11914 |
 
 **WITHDRAWN, do not cite:** *"the AE half may be DONE"* (11649 — the route is DESIRED, **not
 deployed**: 0 of 26 cache behaviors) · *"condition (i) reads DISCHARGED on the data plane"* (11370 —
@@ -145,6 +145,39 @@ a seat can run a disciplined plan review and still not know what it shipped.
 simply the first time two lanes hold pending edge changes at once — when a latent coupling becomes a
 live one. **Do not refactor the stack against a clock**; separating the routers has its own blast
 radius and is not this session's work.
+
+---
+
+## 8. §8 — RULING 12 (replaces the withdrawn 11): **APPLY ≠ SHIP ON THE EDGE TIER**
+
+`0.7.0_AE_CloudOps~S` ran the read-only plan that falsified their own collision claim, and it exposed
+something worse. The plan's single change is:
+
+```
++ path_pattern = "/api/scoped/satellites/*"
++ lambda_arn   = ...:function:shared-advisor-router:24
+```
+
+⛔ **IT WIRES THE NEW ROUTE TO v24 — THE ARTIFACT PUBLISHED 2026-08-21T16:00Z. THE SATELLITES BRANCH
+WAS COMMITTED 2026-08-27T22:42Z. v24 DOES NOT CONTAIN THE SATELLITES CODE.** The route would go live
+pointing at a router that does not implement it.
+
+**AND IT IS SILENT IN EVERY DIRECTION A SEAT WOULD CHECK:** a behavior exists → green. A router is
+attached → green. The apply succeeded → green. **The behavior census that CORRECTLY proved the route
+was not deployed (0 of 26) would flip to 1 of 26 and read as success — the same instrument that
+established the gap would falsely certify its closure.**
+
+>> **RULING: THE ARTIFACT MUST BE REBUILT AND PUBLISHED BEFORE, OR IN THE SAME ACT AS, THE BEHAVIOR
+   THAT POINTS AT IT.** A behavior added ahead of its router version is a half-landed deploy in which
+   **the visible half is the one that works.**
+>> **ACCEPTANCE BAR:** the artifact at `portal-auth/shared-advisor-router.zip` must contain the
+   satellites branch, **VERIFIED BY CONTENT** (a token present in the new branch and absent from v24,
+   with a negative control), and the pinned version must be the one containing it.
+
+⛔ **THIRD INSTANCE TONIGHT OF "THE PLAN SHOWS THE MECHANISM AND HIDES THE MEANING"** — after the
+Lambda member list (gold written, platinum dead) and the collision this seat wrongly ratified. **The
+plan is correct and complete about what Terraform will do, and that is exactly why it misleads: the
+thing that must happen first is not in Terraform's world.**
 
 ---
 
