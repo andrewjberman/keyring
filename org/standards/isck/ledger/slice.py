@@ -43,6 +43,7 @@ no AWS, no vendor call, no credential, no network.
 """
 import hashlib
 import json
+import os
 import re
 import subprocess
 
@@ -55,6 +56,13 @@ OBSERVER_MARKER = "/deliverables/"
 # Claim vocabulary, ordered weakest -> strongest. The translator may carry a claim ACROSS and may
 # lower it; it may never raise it. `measured` is the only value that asserts observation.
 CLAIM_ORDER = ("absent", "held", "inferred", "measured")
+ISO_TIME = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}")
+MAPPING_V02 = "df73332fb2"          # ruled identity mapping v0.2 -- the authored ABSENCE
+# "one artifact" = a repo-relative path, no whitespace, with a file extension. Deliberately strict:
+# the failure it must avoid is accepting a SENTENCE that happens to contain a path.
+MATERIALIZER_PATH = re.compile(r"^[A-Za-z0-9_./-]+\.[A-Za-z0-9]{1,6}$")
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                         "..", "..", "..", ".."))
 
 
 class PartError(Exception):
@@ -197,10 +205,179 @@ def translate_part(part, authority, minted_at):
     return [receipt, entity, binding]
 
 
+def translate_generation(part, authority, pin=None):
+    """AC2's generation half, against RULED MAPPING v0.2 @df73332fb2 -- an authored ABSENCE.
+
+    The design lane took Amendment 2 item 1's exit FOR EVERY CLASS and said why with a measurement:
+    `semantic_layer` and `canonical_role` are `$ref nonempty` free strings with NO vocabulary, no
+    Rule-24 record and no basis slot; the population carries no layer, role or materializer-class
+    key to map from. So v0.2 declares both `declared=false, value=null` for the whole domain.
+
+    THAT IS A DECLARATION, NOT A GAP IN THIS PASS. The difference matters and it is the reason the
+    mapping was asked for at all: the refusal now carries a claim and an evidence path (the mapping
+    file @df73332fb2) instead of being a silent omission by the emitter. A part naming a materializer
+    therefore ERRORS with reason-class `declaration_gap` naming BOTH fields and citing v0.2. No
+    default, no "unknown", no parse of the path -- a path-class mapping here would be a costume
+    (CTO~X 78228), and inventing either value is the same act as inventing an entity_class.
+
+    THE MATERIALIZER FIELD IS ALSO NOT ONE KIND OF THING, measured at pin 06a5ae751c across 42 parts:
+        null                                    14
+        an exact repo path with a blob at pin    14   <- bytes exist; a digest IS computable
+        PROSE                                    14   <- "the early-morning Nessie run per ..."
+    A digest is computable for the middle 14 ONLY. The prose 14 print explicit absence with reason
+    `materializer_not_a_single_artifact`: a sha256 of a sentence describing three delegating writers
+    is a number with no referent. Schema tightening (one artifact per `materializer`, prose to a
+    sibling `materializer_note`) is a NEXT-VINTAGE emitter item, registered in v0.2's next_candidate
+    list. This pass reports the shape; it does not launder it.
+    """
+    gen = part.get("generation") or {}
+    name = gen.get("materializer")
+    if not name:
+        return [], None, {"class": "no_named_materializer"}
+    kind, digest = classify_materializer(name, pin)
+    missing = [f for f in ("semantic_layer", "canonical_role") if not gen.get(f)]
+    if missing:
+        raise PartError(part.get("id"), missing,
+                        "declaration_gap: ruled mapping v0.2 @%s declares both fields "
+                        "declared=false/value=null for the WHOLE domain (no vocabulary, no basis "
+                        "receiver, no class key in the population), so no value is available to "
+                        "declare and none may be invented; the frozen materializer record requires "
+                        "both. materializer_kind=%s" % (MAPPING_V02, kind))
+    serial = "mat:" + _slug(name)
+    return ([{"record_type": "materializer", "materializer_serial": serial,
+              "semantic_layer": gen["semantic_layer"], "canonical_role": gen["canonical_role"],
+              "owner": part.get("owner") or "UNKNOWN", "status_basis": "authored"}],
+            serial, {"class": kind, "materializer_digest": digest})
+
+
+def classify_materializer(name, pin=None):
+    """Is the named materializer ONE ARTIFACT whose bytes exist at the pin? Returns (kind, digest).
+
+    Amendment 2 item 2's method, applied where it CAN apply. The digest is sha256 over the bytes as
+    COMMITTED at the pin (`git show <pin>:<path>`), never the working tree -- a CRLF/LF split moved a
+    hash under this seat earlier in this TO and a working-tree read would reopen it.
+    """
+    if not isinstance(name, str) or not MATERIALIZER_PATH.match(name.strip()):
+        return "prose_not_a_single_artifact", None
+    path = name.strip()
+    if pin is None:
+        return "repo_path", None
+    try:
+        raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, path)], cwd=REPO_ROOT,
+                                      stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError:
+        return "repo_path_absent_at_pin", None
+    return "repo_path", "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+# -- THE SEVEN-FAMILY CENSUS, each family against ITS OWN denominator (Amendment 3 item 4) --------
+#
+# The correction that produced this: five families are attempted ONCE PER PART (42), but
+# source_frontier and materialization_run are ONE record for the whole slice. Reporting all seven
+# over 42 would have printed "1 of 42" for two families that were never attempted 42 times -- a
+# 41-part shortfall that does not exist, which is the same error class as a denominator certifying
+# the sweep instead of the pattern. A family's denominator is a property OF THE FAMILY.
+PER_PART_FAMILIES = ("mint_receipt", "entity", "entity_binding", "materializer",
+                     "materializer_version")
+PER_SLICE_FAMILIES = ("source_frontier", "materialization_run")
+
+
+def _blank(denominator):
+    return {"denominator": denominator, "emitted": 0, "errored": 0, "out_of_reach": 0,
+            "reasons": {}}
+
+
+def _reason(cell, cls, n=1):
+    cell["reasons"][cls] = cell["reasons"].get(cls, 0) + n
+
+
+def family_census(manifest, pin=None):
+    """EMITTED / ERRORED / OUT-OF-REACH per family, each against its own denominator.
+
+    OUT-OF-REACH and ERRORED are deliberately distinct. Out-of-reach = the population never carried
+    the input (no materializer named at all); errored = the input exists and something REFUSED it
+    (the ruled declaration of absence). Collapsing them would let a population gap and a contract
+    gap read identically, and they have different owners and different remedies.
+    """
+    parts = manifest["parts"]
+    n = len(parts)
+    cen = {f: _blank(n) for f in PER_PART_FAMILIES}
+    for f in PER_SLICE_FAMILIES:
+        cen[f] = _blank(1)
+    digests = {"computable": 0, "prose": 0, "absent_at_pin": 0, "values": {}}
+
+    for part in parts:
+        try:
+            for r in translate_part(part, "0.0.0_AB_MSTR",
+                                    (manifest.get("as_of") or {}).get("compiled_utc")):
+                if r["record_type"] in cen:
+                    cen[r["record_type"]]["emitted"] += 1
+        except PartError as exc:
+            for f in ("mint_receipt", "entity", "entity_binding"):
+                cen[f]["errored"] += 1
+                _reason(cen[f], "identity_" + ",".join(sorted(exc.fields)))
+
+        gen = part.get("generation") or {}
+        name = gen.get("materializer")
+        if not name:
+            for f in ("materializer", "materializer_version"):
+                cen[f]["out_of_reach"] += 1
+                _reason(cen[f], "no_named_materializer")
+            continue
+        kind, digest = classify_materializer(name, pin)
+        if kind == "repo_path" and digest:
+            digests["computable"] += 1
+            digests["values"][name] = digest
+        elif kind == "repo_path_absent_at_pin":
+            digests["absent_at_pin"] += 1
+        else:
+            digests["prose"] += 1
+        try:
+            translate_generation(part, "0.0.0_AB_MSTR", pin)
+            cen["materializer"]["emitted"] += 1
+        except PartError:
+            cen["materializer"]["errored"] += 1
+            _reason(cen["materializer"], "declaration_gap")
+        # materializer_version: the digest is computable for a repo path, but the version record
+        # REFERENCES its materializer, and every named materializer errored above. Emitting it
+        # anyway would produce a record whose parent cannot resolve at final state -- sec 2d
+        # refuses it, correctly. So the digest is COMPUTED and PRINTED, and the emission is
+        # reported as errored with the reason, which is what CVO~X asked for: attempt it, and
+        # report or refuse the unresolved parent rather than claiming a family this slice did
+        # not land.
+        if kind == "repo_path" and digest:
+            cen["materializer_version"]["errored"] += 1
+            _reason(cen["materializer_version"], "parent_materializer_errored_declaration_gap")
+        else:
+            cen["materializer_version"]["out_of_reach"] += 1
+            _reason(cen["materializer_version"], "materializer_not_a_single_artifact")
+
+    cen["source_frontier"]["emitted"] = 1
+    cen["materialization_run"]["emitted"] = 1
+    return cen, digests
+
+
+def census_lines(cen):
+    """One printable line per family. Reconciliation is PRINTED, never asserted silently."""
+    out = []
+    for fam in list(PER_PART_FAMILIES) + list(PER_SLICE_FAMILIES):
+        c = cen[fam]
+        tot = c["emitted"] + c["errored"] + c["out_of_reach"]
+        out.append("   %-21s emitted %2d | errored %2d | out-of-reach %2d  of %2d  %s%s"
+                   % (fam, c["emitted"], c["errored"], c["out_of_reach"], c["denominator"],
+                      "OK" if tot == c["denominator"] else "RECONCILIATION FAILS (%d)" % tot,
+                      ("  " + json.dumps(c["reasons"], sort_keys=True)) if c["reasons"] else ""))
+    return out
+
+
 def translate_population(manifest, authority="0.0.0_AB_MSTR", minted_at=None):
     """Every part translated. Returns (batches, errors, census). Nothing is skipped silently."""
     minted_at = minted_at or (manifest.get("as_of") or {}).get("compiled_utc")
     batches, errors, census = [], [], {}
+    # The GENERATION half's accounting lives in family_census(), which counts every family against
+    # ITS OWN denominator. It used to be tallied here too, in a second dict with its own counters --
+    # two tallies of one population, which is how a number and its neighbour drift apart. One
+    # counter, one owner.
     for part in manifest["parts"]:
         try:
             records = translate_part(part, authority, minted_at)
@@ -242,3 +419,119 @@ def no_synthetic_defaults(path=None):
             (allowed if k.value in SCHEMA_CONST_FIELDS else findings).append(
                 "%s = %r (line %d)" % (k.value, v.value, v.lineno))
     return (not findings), {"forbidden": findings, "schema_const_allowed": allowed}
+
+
+# -- THE SLICE'S OWN PROVENANCE RECORDS (issuer amendment 2, item 3) ------------------------------
+# source_frontier and materialization_run are NOT the manifest's to supply -- they are the SLICE's.
+# The frontier describes the population THIS RUN admitted; the run describes THIS ADMISSION. I had
+# been waiting on the manifest for them, which is why AC4's frontier anchor read as unreachable; it
+# is reachable now, and the correction is the issuer's.
+#
+# And the run's own materializer IS a repo artifact -- this file and the runner beside it -- so its
+# bundle_digest is COMPUTABLE, by exactly the method amendment 2 item 2 gives the emitter: the git
+# blob digest at the population pin, method printed. The slice can therefore carry its own
+# provenance in full while the MANIFEST's materializers stay unreachable for want of a digest
+# nothing downstream can compute. Those are different facts about different objects.
+
+CRLF, LF = bytes([13, 10]), bytes([10])
+DIGEST_METHOD = "sha256-over-declared-canonical-tree-inventory-v1"
+DIGEST_NORMALIZATION = ("inventory lines '<sha256-hex>  <posix-relpath>', sorted by relpath, "
+                        "LF-joined with a trailing LF, UTF-8; each file's bytes taken AS COMMITTED "
+                        "at the run pin via `git show <pin>:<path>`, never the working tree")
+# The runner's materializer is the code that actually RUNS the slice: the ledger modules the run
+# imports plus the runner itself. Naming the set explicitly is the point -- a digest over "whatever
+# was in the directory" is not a declared input, and `$ref sha256` is satisfied by 64 hex, never by
+# a git object id (SHA-1). CVO item 4 / Amendment 3 item 3.
+RUNNER_MEMBERS = [
+    "org/standards/isck/ledger/engine.py",
+    "org/standards/isck/ledger/machines.py",
+    "org/standards/isck/ledger/lineage.py",
+    "org/standards/isck/ledger/folds.py",
+    "org/standards/isck/ledger/surfaces.py",
+    "org/standards/isck/ledger/contests.py",
+    "org/standards/isck/ledger/slice.py",
+    "org/standards/isck/ledger/snapshot.py",
+    "org/standards/isck/ledger/battery/run_slice.py",
+]
+
+
+def tree_digest(paths, pin):
+    """64-hex SHA-256 over a DECLARED canonical tree inventory. Returns (digest, report).
+
+    Every member is read at the pin. A member that is absent or UNCOMMITTED at the pin is NOT
+    silently dropped -- it is reported, because a digest over a subset of its declared inventory
+    is a different digest wearing the same name.
+    """
+    # THE DIRTY CHECK IS THE WHOLE POINT OF PINNING. Reading members at a pin while the code that
+    # actually ran is an uncommitted working tree produces a digest over bytes that DID NOT RUN --
+    # the identical shape of the run_commit drift CVO~X caught on this seat's AC8 receipt, where a
+    # receipt named a commit at which no run happened and the bundle binding could not see it
+    # because both commits derived the same bundle. A digest cannot detect that about itself, so it
+    # is reported beside the digest and never folded into it.
+    lines, missing, dirty = [], [], []
+    for rel in sorted(paths):
+        try:
+            raw = subprocess.check_output(["git", "show", "%s:%s" % (pin, rel)], cwd=REPO_ROOT,
+                                          stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError:
+            missing.append(rel)
+            continue
+        lines.append("%s  %s" % (hashlib.sha256(raw).hexdigest(), rel))
+        try:
+            with open(os.path.join(REPO_ROOT, rel), "rb") as fh:
+                wt = fh.read()
+            # compare LF-normalised: a CRLF checkout is not a source edit (banked, this TO)
+            if wt.replace(CRLF, LF) != raw.replace(CRLF, LF):
+                dirty.append(rel)
+        except IOError:
+            dirty.append(rel + " (absent in working tree)")
+    inventory = ("\n".join(lines) + "\n").encode("utf-8")
+    return ("sha256:" + hashlib.sha256(inventory).hexdigest(),
+            {"members_declared": len(paths), "members_hashed": len(lines),
+             "members_absent_at_pin": missing, "members_DIRTY_vs_worktree": dirty,
+             "digest_describes_the_code_that_ran": not dirty and not missing,
+             "method": DIGEST_METHOD,
+             "normalization": DIGEST_NORMALIZATION})
+
+
+def slice_provenance(manifest, pins, run_pin, started_at):
+    """The four provenance records the SLICE owns. Returns (records, ids)."""
+    digest, dreport = tree_digest(RUNNER_MEMBERS, run_pin)
+    mat = "mat:wp3b-slice-runner"
+    ver = "matv:" + digest.split(":")[1][:12]      # identity DERIVED from the sha256, not a SHA-1
+    frontier = "sf:wp3b-" + pins["declared"]
+    run = "run:wp3b-" + pins["declared"]
+    # observed_at is carried ONLY when it is a TIME. Measured on this population: 36 of 42 parse
+    # as ISO, 5 are absent, and ONE carries the prose "per-DB, matches each DB" in a field the
+    # manifest types as a timestamp. Passing that through put a frontier entry "after" the run's
+    # start under a string compare and the ledger REFUSED the slice's own provenance batch with
+    # L-08-observed-after-start -- row 8 catching a value that is not what its field says it is,
+    # on real data, which is the entire point of the rule. A non-time is an explicit ABSENCE here,
+    # never a value, and never silently coerced into one.
+    entries, no_time = [], 0
+    for p in manifest["parts"]:
+        e = {"source_serial": "ent:" + _slug(p["id"]), "source_native_key": p.get("home")}
+        v = (p.get("vintage") or {}).get("measured_utc")
+        if isinstance(v, str) and ISO_TIME.match(v):
+            e["observed_at"] = v
+        else:
+            no_time += 1
+        entries.append(e)
+    recs = [
+        {"record_type": "materializer", "materializer_serial": mat,
+         "semantic_layer": "isck_ledger_slice", "canonical_role": "wp3b_admission_runner",
+         "owner": "0.4.0_DT_ClientPlatform~X", "status_basis": "authored"},
+        {"record_type": "materializer_version", "version_id": ver, "materializer_serial": mat,
+         "bundle_completeness": "complete",
+         "bundle_digest": digest, "valid_from": started_at},
+        {"record_type": "source_frontier", "source_frontier_id": frontier, "entries": entries,
+         "normalization_version": "v1", "completeness": "complete",
+         "expected_count": len(manifest["parts"])},
+        {"record_type": "materialization_run", "run_id": run, "materializer_serial": mat,
+         "materializer_version_id": ver, "source_frontier_id": frontier,
+         "started_at": started_at, "run_status": "succeeded", "random_seeds": [],
+         "output_surface_version_ids": [], "executed_on_fabric": "cloud"},
+    ]
+    return recs, {"materializer": mat, "version": ver, "frontier": frontier, "run": run,
+                  "digest": digest, "digest_report": dreport,
+                  "entries_without_a_time": no_time, "entries": len(entries)}

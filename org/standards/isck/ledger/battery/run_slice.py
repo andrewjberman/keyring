@@ -27,6 +27,7 @@ import collections
 import json
 import os
 import sys
+import subprocess
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +43,7 @@ DECLARED = os.path.join(ROOT, "org", "tier2_senior", "0.4.0_DT_ClientPlatform", 
 PIN_PRESERVED = "057220cca9"
 PIN_DECLARED = "06a5ae751c"
 RATIFIED_VINTAGE = "d86a59514ec3"
+STARTED_AT = "2026-08-28T16:10:00Z"
 MOVED_SET = "87528e2a6d89"
 
 
@@ -90,6 +92,25 @@ def main():
         c = collections.Counter(f for e in errors for f in e.fields)
         print("                 fields the substrate could not supply: %s" % json.dumps(dict(c)))
 
+    # AC2's ACCEPTANCE (Amendment 3 item 4): seven families, EACH against ITS OWN denominator.
+    # WORDING (item 1), and it was a correction: 42 of 42 parts carry a generation OBJECT. What 14
+    # of them lack is a NAMED MATERIALIZER (null). "no generation" said the object was missing and
+    # that is false about the population.
+    cen, digests = sl.family_census(manifest, PIN_DECLARED)
+    print("AC2 census       seven families, each against its own denominator:")
+    for line in sl.census_lines(cen):
+        print(line)
+    print("AC2 generation   42 of 42 carry a generation object | NO NAMED materializer 14 | "
+          "named 28 = %d repo paths (bytes at the pin, digest COMPUTABLE) + %d PROSE "
+          "(materializer_not_a_single_artifact)" % (digests["computable"], digests["prose"]))
+    print("                 semantic_layer + canonical_role: declared ABSENT domain-wide by ruled "
+          "mapping v0.2 @%s -- 28 named-materializer parts ERROR reason-class declaration_gap "
+          "citing v0.2. An AUTHORED absence, not a silent omission; values are the materializer "
+          "OWNERS' to declare under a vocabulary the contract does not yet carry." % sl.MAPPING_V02)
+    for name, dg in sorted(digests["values"].items())[:3]:
+        print("                 digest %s  %s" % (dg[:23] + "...", name))
+    print("                 method %s" % sl.DIGEST_METHOD)
+
     tmp = tempfile.mkdtemp()
     store, adm, ref, err, refusals = admit_all(batches, tmp, "clean")
     den = len(parts)
@@ -107,10 +128,44 @@ def main():
         print("AC3 falsifier    %-44s admitted %d refused %d -> %s"
               % (label, a2, r2 + e2, "PASS" if ok else "DID NOT REFUSE -- the admission path is blind"))
 
+    # THE SLICE'S OWN PROVENANCE (Amendment 3 item 5): the materialization_run is owned by the
+    # SLICE RUNNER, emitted as its own materializer + materializer_version, never borrowed from a
+    # part. Its bundle_digest is a 64-hex SHA-256 over a DECLARED canonical tree inventory at the
+    # run pin -- a git object id is SHA-1 and does not satisfy `$ref sha256` (CVO item 4).
+    run_pin = subprocess.check_output(["git", "rev-parse", "HEAD"],
+                                      cwd=sl.REPO_ROOT).decode().strip()
+    prov, pids = sl.slice_provenance(manifest, {"declared": PIN_DECLARED,
+                                                "preserved": PIN_PRESERVED},
+                                     run_pin, STARTED_AT)
+    store.admit(prov, actor=fx.ROOT)
+    dr = pids["digest_report"]
+    print("AC2 provenance   ADMITTED: materializer %s | version %s" % (pids["materializer"],
+                                                                       pids["version"]))
+    print("                 bundle_digest %s (%d hex)"
+          % (pids["digest"], len(pids["digest"].split(":")[1])))
+    print("                 inventory %d members declared | %d hashed at run pin %s | absent %s"
+          % (dr["members_declared"], dr["members_hashed"], run_pin[:10],
+             dr["members_absent_at_pin"] or "none"))
+    print("                 normalization %s" % dr["normalization"])
+    print("                 DIGEST DESCRIBES THE CODE THAT RAN: %s%s"
+          % (dr["digest_describes_the_code_that_ran"],
+             "" if dr["digest_describes_the_code_that_ran"]
+             else "  <- DIRTY %s; the digest names bytes that did NOT run. Commit, then re-run."
+                  % dr["members_DIRTY_vs_worktree"]))
+    print("                 source_frontier %s: %d entries | %d carry NO parseable observed_at "
+          "(explicit absence, never coerced)"
+          % (pids["frontier"], pids["entries"], pids["entries_without_a_time"]))
+
     head = store.head_commit_seq()
     rep = store.replay("commit_seq", head)
     print("AC4 replay       as_of commit_seq %d -> anchor_commit_seq %d | estate counted %d"
           % (head, rep["anchor_commit_seq"], rep["counted"]))
+    repf = store.replay("frontier", pids["frontier"])
+    print("AC4 replay       as_of frontier %s -> anchor_commit_seq %d | estate counted %d"
+          % (pids["frontier"], repf["anchor_commit_seq"], repf["counted"]))
+    print("AC4 agreement    both anchors resolve to the same commit_seq and the same estate: %s"
+          % (repf["anchor_commit_seq"] == rep["anchor_commit_seq"]
+             and repf["counted"] == rep["counted"]))
     try:
         store.replay("frontier", "sf:never-admitted")
         print("AC4 falsifier    unbindable anchor ADMITTED -- the anchor path is blind")
