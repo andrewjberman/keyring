@@ -12,9 +12,11 @@
 # serial are swept. Modes: `<serial>` (one lane, tilde-precise) | `<serial> -All`
 # (that serial's family: base + ~lanes) | `-All` (entire fabric, minus self).
 #
-# This is MSTR's reallocation capability: when an agent's chartered work is
-# done, MSTR runs `kill-agent <serial>` to release the host slot for the next
-# agent it wants to spawn. Each kill writes a KILL line to
+# This is the fabric's reallocation capability, invoked via /mstr-kill by
+# 0.0.0_AB_MSTR (device/fabric infra) or 2.0.0_SA_COO (work population) -- a COO
+# function in addition to MSTR since Andrew-direct 2026-08-28: when an agent's
+# chartered work is done, the caller runs `kill-agent <serial>` to release the host
+# slot for the next agent it wants to spawn. Each kill writes a KILL line to
 # org/mcp/agent-spawn-audit.log including the killer (from $env:OPAL_AGENT_SERIAL)
 # and the reason. Required reason -- forensic discipline; defaults to
 # "reallocation" if omitted.

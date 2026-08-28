@@ -1,14 +1,27 @@
 ---
 name: mstr-kill
-description: MSTR-only event-triggered skill — terminate a live agent by serial, covering both MSTR-spawned (marker-tracked) and Andrew-launched (no marker) cases via a tiered fallback chain.
+description: MSTR + COO event-triggered skill — terminate a live agent by serial, covering both fabric-spawned (marker-tracked) and Andrew-launched (no marker) cases via a tiered fallback chain. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane) — a COO function in addition to MSTR since Andrew-direct 2026-08-28. Sibling to /mstr-spawn.
 ---
 
 # /mstr-kill — terminate a live agent
 
-MSTR's structural mechanism for **population destruction**. The invocation
+The fabric's structural mechanism for **population destruction**. The invocation
 `/mstr-kill {serial}` IS the per-instance authorization for force-kill of
 unmarked sessions — this skill charter blanket-authorizes the destructive-without-marker
-path within its body. Only `0.0.0_AB_MSTR` invokes it.
+path within its body.
+
+**Invokers: `0.0.0_AB_MSTR` and `2.0.0_SA_COO`, each with or without a `~lane` suffix.**
+Andrew-direct 2026-08-28 ~15:32Z at the `1.0.0_SA_CTO` terminal, VERBATIM: *"/mstr-spawn and
+/mstr-kill should be a COO function in addition to 0.0.0_AB_MSTR, I think it is a natural fit for
+them to handle these things directly rather than having to coordinate through another agent. MSTR
+should just be online as a device/fabric infra manager as well as handling cross-device
+cross-fabric comms and so on."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260828_1532Z_D2D3_RESUME_AND_SPAWN_KILL_TO_COO.md`.
+The skill keeps its `mstr-` name so every existing citation still resolves; the name is a stable
+id, not an ownership claim. **A COO seat kills directly — it no longer files a kill request with
+MSTR.** One carve-out, stated once: **killing `0.0.0_AB_MSTR` itself is not inside a COO's blanket**
+— MSTR is the device's infra manager and its cross-device comms carrier (`/agentbus` consumer), so
+a COO ends it only on Andrew's explicit word; MSTR self-kills with `--self-ack` as before.
 
 > **Force-kill outside this skill still requires explicit Andrew per-instance
 > authorization** (CLAUDE.md / LD-0027). The skill is the structural channel —
@@ -16,9 +29,10 @@ path within its body. Only `0.0.0_AB_MSTR` invokes it.
 
 ## When to invoke
 
-- Andrew direct: `/mstr-kill {full-agent-serial}` (covers both his manual launches and MSTR's own spawns).
-- MSTR autonomous: population action arising from `/mstr-review` scan (STANDING_BY + no queued work, BLOCKED unrecoverable, wrong-mix swap) — LD-charter governs; ledger LD-NNNN before invocation per Stakes-Matrix class.
-- Never invoked by any agent other than `0.0.0_AB_MSTR`.
+- Andrew direct: `/mstr-kill {full-agent-serial}` (covers both his manual launches and fabric spawns).
+- COO (`2.0.0_SA_COO` base or lane): a lane whose TO / decomp cell is ACCEPTED and holds nothing else (free the slot before seating the next), a lane that is STANDING_BY with no queued work in its project, a wedged lane being respawned (kill -> `/mstr-spawn`), a stale duplicate found by the seat census. The COO reads the seat's open obligations FIRST (Step 6's displaced-context list is what it must already know).
+- MSTR autonomous: device/fabric infrastructure population action — fleet stand-down before a device reboot, cross-fabric seat teardown, `/mstr-review` scan findings (STANDING_BY + no queued work, BLOCKED unrecoverable, wrong-mix swap) — LD-charter governs; ledger LD-NNNN before invocation per Stakes-Matrix class.
+- Never invoked by any seat outside `{0.0.0_AB_MSTR, 2.0.0_SA_COO}` (+ lanes). A CTO / Tier-2 / CVO seat that needs a session ended asks its COO (or MSTR for infra-class kills).
 
 ---
 
@@ -27,9 +41,10 @@ path within its body. Only `0.0.0_AB_MSTR` invokes it.
 Parse the argument:
 - Must be a full agent serial matching `^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$`.
 - Tilde-lane suffixes (`~B`/`~C`/`~D`) MUST be included — `1.0.0_SA_CTO~B` is a different session than `1.0.0_SA_CTO`.
-- Refuse self-kill (`0.0.0_AB_MSTR`) without `--self-ack` flag — a self-kill ends MSTR's own session.
+- Refuse self-kill (the target equals the caller's own serial) without `--self-ack` flag — a self-kill ends the caller's own session. `kill-agent.ps1` also self-excludes on `OPAL_AGENT_SERIAL` (`:112-123`), so a self-kill without the flag is refused twice.
+- Target `0.0.0_AB_MSTR` from a COO caller: refuse unless the invocation cites Andrew's explicit word (`--andrew "<verbatim>"`) — see the carve-out at the top.
 
-**Identity gate:** confirm caller is `0.0.0_AB_MSTR` (read `$env:OPAL_AGENT_SERIAL` / `.comp-graph/.agent_context`). Non-MSTR invocation halts here with an error.
+**Identity gate:** confirm the caller serial is `0.0.0_AB_MSTR` or `2.0.0_SA_COO`, either with an optional `~lane` suffix — read `$env:OPAL_AGENT_SERIAL` (per-process) or the session serial file `org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial`; **never `.comp-graph/.agent_context`** (shared, last-writer-wins — not an identity source, `org/XXX.md` Step 1). Any other invoker halts here with an error. The caller serial is what the audit lines below carry as `by <serial>`.
 
 ## Step 1 — Marker-tracked kill attempt (covers MSTR spawns)
 
@@ -109,7 +124,7 @@ if ($parent) {
 
 ```powershell
 $ts = [DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ')
-Add-Content -Path "org/mcp/agent-spawn-audit.log" -Value "$ts  FORCE-KILL  {serial}  by 0.0.0_AB_MSTR  pid={pid}  reason=<reason>  authorized-via=/mstr-kill"
+Add-Content -Path "org/mcp/agent-spawn-audit.log" -Value "$ts  FORCE-KILL  {serial}  by {caller-serial}  pid={pid}  reason=<reason>  authorized-via=/mstr-kill"
 ```
 
 The `FORCE-KILL` verb (distinct from the script's `KILL` verb) marks this as
@@ -182,8 +197,13 @@ it's a population state change with routing implications.
 ## Discipline / risk notes
 
 - **Per-instance authorization scope.** The `/mstr-kill {serial}` invocation
-  authorizes ONE kill of ONE serial. A second kill in the same MSTR turn
+  authorizes ONE kill of ONE serial. A second kill in the same turn (MSTR or COO)
   requires a second invocation. The skill is not a session-wide kill license.
+- **Who kills what (division of the primitive, Andrew-direct 2026-08-28).** COO: work-population
+  seats (finished / idle / wedged lanes in its projects). MSTR: infrastructure population (fleet
+  stand-downs, cross-fabric seats, mix corrections). A COO does not kill a seat of the OTHER
+  fabric on this device (the `~X` cohort fence and its site-Z analogue stand) — that is MSTR's
+  cross-fabric lane, or the other fabric's own COO.
 - **No silent escalation.** If Step 1 succeeds, do not also force-kill any
   PID returned by Step 2 "just to be sure" — that is the LD-0074 failure mode
   (assumed broker LIVE = alive; escalated to no-op force-kill of a ghost).
@@ -193,10 +213,12 @@ it's a population state change with routing implications.
   Phase 2 makes the broker report NOT_LIVE within seconds of process death,
   Step 2a becomes vestigial — but until then, every force-kill goes through
   the `Get-Process` check first.
-- **MSTR self-kill ends the loop.** `--self-ack` flag is required to kill
-  `0.0.0_AB_MSTR`. After self-kill the `/govern` / `/mstr-review` cron is
-  orphaned but harmless (next fire will hit a dead session and surface as
-  a watcher exit). Andrew respawns via `.tools\spawn-agent.ps1 0.0.0_AB_MSTR`.
+- **Self-kill ends the caller's own loops.** `--self-ack` flag is required to kill
+  the caller's own serial (MSTR killing `0.0.0_AB_MSTR`, a COO lane killing itself). After a
+  self-kill any cron the seat armed is orphaned but harmless (next fire hits a dead session and
+  surfaces as a watcher exit) — but a LIVE SCOPED ARM in the seat's `org/XXX.md` Step 1b-F row is
+  NOT struck by a self-kill; the successor re-arms from the row. Respawn via `/mstr-spawn` or
+  `.tools\spawn-agent.ps1 {serial}`.
 - **Audit log is append-only.** Never edit `org/mcp/agent-spawn-audit.log`
   to remove a `FORCE-KILL` line. Constitution Art. V on ledger integrity
   applies by analogy — the forensic trail is the structural defense.

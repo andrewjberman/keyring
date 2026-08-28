@@ -7,8 +7,10 @@
 # autonomous spawn never stalls with nobody at the keyboard). Every spawn is
 # appended to org/mcp/agent-spawn-audit.log.
 #
-# This is MSTR's agent-provisioning capability. Provisioning ONLY -- task
-# orders and direction still flow through Tier 1 (spawn != dispatch).
+# This is the fabric's agent-provisioning capability, invoked via /mstr-spawn by
+# 0.0.0_AB_MSTR (device/fabric infra) or 2.0.0_SA_COO (work population) -- a COO
+# function in addition to MSTR since Andrew-direct 2026-08-28. Provisioning ONLY --
+# task orders and direction still flow through Tier 1 (spawn != dispatch).
 #
 # CAPS (enforced only when invoked FROM an agent, i.e. OPAL_AGENT_SERIAL set;
 # manual operator spawns are uncapped):

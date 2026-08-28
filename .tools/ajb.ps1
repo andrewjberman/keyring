@@ -67,7 +67,7 @@ function Get-AgentLoopDirective {
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
-            return "$header`n  MSTR:`n  1. /watcher ONCE (inbox Monitor, arm-at-load).`n  2. /agentbus ONCE (this device's cross-device SQS consumer; an rc=3 refusal naming a live pid means a consumer already holds this device -- that IS success, do not work around it).`n  3. /integrate ONCE (joint fabric parity ASSESSMENT; assess-only at load -- /integrate merge only on explicit direction).`n  Event-triggered: /mstr-review, /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion).`n  Standing duties + any scoped arming: org/XXX.md Step 1b-F MSTR row."
+            return "$header`n  MSTR:`n  1. /watcher ONCE (inbox Monitor, arm-at-load).`n  2. /agentbus ONCE (this device's cross-device SQS consumer; an rc=3 refusal naming a live pid means a consumer already holds this device -- that IS success, do not work around it).`n  3. /integrate ONCE (joint fabric parity ASSESSMENT; assess-only at load -- /integrate merge only on explicit direction).`n  Event-triggered: /mstr-review, /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion).`n  Role (Andrew-direct 2026-08-28): device/fabric infra manager + cross-device / cross-fabric comms; spawn/kill of WORK-population seats is the COO's own function now (MSTR keeps the primitive for infra-class population: reboots, fleet relaunch, cross-fabric seats).`n  Standing duties + any scoped arming: org/XXX.md Step 1b-F MSTR row."
         }
         '^1\.0\.0_SA_CTO$' {
             return "$header`n  ws CTO: /watcher ONCE. /ws-charter ad-hoc. Event-driven via the inbox Monitor; /fabric-check + /stimulus-scan on signals, not timers."
@@ -76,7 +76,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CTO: /watcher ONCE. /cl-charter ad-hoc. Event-driven via the inbox Monitor."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO: /watcher ONCE. /drive is OFF by default -- the COO coordinates and routes, it does not re-drive the estate. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing."
+            return "$header`n  COO: /watcher ONCE. /drive is OFF by default -- the COO coordinates and routes, it does not re-drive the estate. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing.`n  Event-triggered: /mstr-spawn, /mstr-kill (a COO function in addition to 0.0.0_AB_MSTR -- Andrew-direct 2026-08-28; seat and release work-population lanes directly, no request to MSTR)."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO: /watcher ONCE. /spot-check + /verify-channel ad-hoc / closeout-triggered. Scope (base vs ~Z) + any scoped arming: org/XXX.md Step 1b-F CVO rows."

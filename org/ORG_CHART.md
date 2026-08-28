@@ -118,7 +118,8 @@ Name = Responsibility scope
   | Cell | Owner |
   |---|---|
   | `terraform apply` / any deploy | `1.0.0_SA_CTO` |
-  | Lane dispatch / TO decomposition / spawns | `1.0.0_SA_CTO` + `2.0.0_SA_COO` (spawns via `0.0.0_AB_MSTR`) |
+  | Lane dispatch / TO decomposition | `1.0.0_SA_CTO` + `2.0.0_SA_COO` |
+  | Spawns / kills (`/mstr-spawn`, `/mstr-kill`) | `2.0.0_SA_COO` directly (work population) or `0.0.0_AB_MSTR` (device/fabric infra + cross-device comms) — Andrew-direct 2026-08-28 |
   | Moving served output | `1.0.0_SA_CTO` + `2.0.0_SA_COO` never-widen co-sign |
   | Producer / infra code changes | the owning DS / DE / DT / AE lane |
   | Vendor egress | **Andrew — explicit per-use word, every time** |
