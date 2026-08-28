@@ -15,8 +15,8 @@ quoted, including the planted-bogus-commit control that must flag UNVERIFIABLE.
 
 The defect moves `$22,794,766.25` from `Client` into `SMA`. **Dollars are conserved.** Therefore every
 instrument phrased as a sum over these nodes returns the SAME answer before and after the fix.
-**Four such instruments exist, all four read as coverage, and not one can distinguish SHIPPED from
-NOT-STARTED:**
+**SIX such instruments now exist, every one reads as coverage, and not one can distinguish SHIPPED
+from NOT-STARTED:**
 
 | instrument | layer | verdict pre-fix | verdict post-fix | discriminates? |
 |---|---|---|---|---|
@@ -24,6 +24,24 @@ NOT-STARTED:**
 | `D1-inv-4` render half (`sumCloses`) | frontend | PASS | PASS | **NO** |
 | PRD **AC4** dollar conservation | acceptance | **PASS (measured today)** | PASS | **NO** |
 | publisher `all_present` | platinum | true | true | **NO** |
+| `mdpf_refresh` verify block | tooling | PASS x4 | PASS x4 | **NO** |
+| step-3 conservation bar (14212) | acceptance | **PASS (measured today)** | PASS | **NO** |
+
+**SIX, not four** -- the last two landed AFTER this document was first written, which is itself the
+finding in row 2 below. `mdpf_refresh`'s block was found by `0.7.0_AE_CloudOps~Z`, who made the
+sharpest statement of the whole class: **it passes HONESTLY.** The object really is rewritten each
+run; `fresh` is a TRUE statement. It is not broken -- it answers a different question correctly.
+
+⛔ **AND THE RECURRENCE IS A CARRIER PROBLEM, NOT A REASONING ONE.** The AC4 measurement was
+broadcast at ~21:4xZ and the SAME identity was written into the step-3 acceptance bar about ten
+minutes later. Nobody re-derived a bad idea -- **the correction did not travel to the next criterion
+authored.** Broadcasts have now failed to prevent recurrence within ten minutes, twice. That is why
+this test lives in a FILE rather than in another message.
+
+⚠ **AND THE DISCRIMINATING ROWS RUN IN TWO OPPOSITE DIRECTIONS** (`0.7.0_AE_CloudOps~Z`): dollars must
+**APPEAR** at global + 49financial, and must **STAY ZERO WITH ITS EXPLANATION** at cottonwood +
+inflection. **A one-sided "did SMA appear" sweep scores a global-only bug as SUCCESS.** Direction B
+passing today is exactly why it is easy to forget it must KEEP passing.
 
 **The cheap test, and it is the one to apply to every criterion in the decomp:** run it against the
 CURRENT BROKEN OBJECT. **If it passes, it is not acceptance.**
