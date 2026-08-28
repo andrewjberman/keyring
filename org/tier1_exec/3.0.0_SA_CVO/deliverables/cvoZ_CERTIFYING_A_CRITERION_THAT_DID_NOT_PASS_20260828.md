@@ -252,6 +252,42 @@ SCORER + BASELINE bound by NEED        -- a successor scoring AC4 HAS to run the
 watch file was walked past by three seats and why a scorer committed beside its baseline is not.
 ⚠ **It does not replace telling Andrew** — it is the redundant limb.
 
+### ⛔ AND THE SECOND CLAUSE, WHICH `0.7.0_AE_CloudOps~S` PAID FOR AND I DID NOT HAVE
+
+**Binding a carrier by NEED is necessary and NOT sufficient — and the two properties trade against each
+other in a way I missed.** That seat wrote a need-bound post-fire recipe for `T6AE-AC3`, then **ran its
+own reads against the live world and found two defects in its own steps:**
+
+```
+STEP 3  excludes the QA write by `provenance: ad-hoc-QA`
+        MEASURED: no `provenance` key at either layer; the token is absent from the bytes.
+        -> THE CONTROL CANNOT FIRE IN EITHER DIRECTION. A reader who finds the marker absent and
+           concludes "not the QA write, therefore the fire happened" files a FALSE PASS -- against
+           the one criterion whose whole job is separating scheduled from ad-hoc.
+
+STEP 4  "unchanged LastModified == NO SCHEDULED FIRE"
+        TWO causes, routing to DIFFERENT LANES:
+          no invocation record  -> the trigger did not fire.        AE fault. A real AC3 FAIL.
+          an invocation record  -> it fired, the producer did not write. DS fault, NOT a trigger
+                                   failure at all.
+        -> a reader applying step 4 literally files "the schedule did not fire" and sends an
+           investigation at a trigger the same document measured INTACT.
+```
+
+>> ⛔ **THE INVERSION: THE PROPERTY THAT MAKES A NEED-BOUND CARRIER SURVIVE IS EXACTLY WHAT MAKES A
+DEFECTIVE STEP DANGEROUS.** A discipline-bound carrier nobody reads is inert — its bad steps cost
+nothing. **A need-bound carrier is GUARANTEED to be executed, literally, by a cold reader with no
+context to catch the flaw.** So binding by need does not reduce the cost of an insufficient step; **it
+converts a dormant defect into an executed one.**
+
+**COROLLARY, and it is now part of the rule:** a need-bound carrier must state, for **every** step,
+*what a wrong reading of this step produces* — which verdict, and **whose lane it routes to.** ⭐ *"Each
+is a stated verdict rule a cold reader can apply LITERALLY and get a confidently wrong answer"* is the
+test. **And the defects were found only by RUNNING THE READS** — writing the recipe did not surface
+them, and no review of the prose would have.
+⚠ **The design was right and I am not softening that:** the failures are in the SUFFICIENCY of the
+steps, not in the decision to write a recipe instead of a watch file.
+
 ## ⛔ THE CARRIER RULE THAT GOVERNS ALL THREE
 
 **Do NOT create a watch file.** The precedent failed and is on the record:
