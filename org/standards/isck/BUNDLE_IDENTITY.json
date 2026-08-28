@@ -1,21 +1,21 @@
 {
-  "contract_bundle_id": "bundle:sha256:707004c074ca8e3e313b66064f20118a6d6b2af9431e41f99783a24bdfa6b655",
+  "contract_bundle_id": "bundle:sha256:7226466de2f94a824ca7603546ab0cc10ebd5f5da0d444a12cd633386719367b",
   "semantic_version": "v0.3-candidate",
-  "candidate_id": "v0.3-candidate+22",
+  "candidate_id": "v0.3-candidate+24",
   "schema_$id": "opal:standards:isck:contract:v0.1",
   "status": "candidate",
   "freeze_scope": null,
   "frozen_at": null,
   "round_3_boundary_commit_frozen": null,
-  "derived_at_commit": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
-  "doctrine_commit": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+  "derived_at_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
+  "doctrine_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
   "doctrine_blob_sha": "27559b99fc38d4d652944b13c21d5ea3e936c5a4",
-  "schema_commit": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+  "schema_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
   "schema_blob_sha": "7a74891df363396425b6e0902024ea9e258529fb",
   "schema_sha256": "aa4264acd3165188d10945dd8964561320cb4b7e03e96de284cdb663c9cba6bc",
-  "validator_commit": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+  "validator_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
   "validator_blob_sha": "d739740db196d3ec99a43cb0b19812d64089423e",
-  "gate_suite_commit": "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+  "gate_suite_commit": "a5ea1dd9ead8da67499af2f8ff042e72321d011e",
   "gate_suite_blobs": {
     "org/standards/isck/run_gates.sh": "36bb18237362870f45198cb2f9f86fb828931367",
     "org/standards/isck/check_rule_ablation.py": "8350e31732d0357f39554583b62ffe6abcc4c1e9",
@@ -23,7 +23,7 @@
     "org/standards/isck/check_mutant_isolation.py": "f658bd2abb9e43775f2b0c8e192087d5208a3884",
     "org/standards/isck/check_postulate_labels.py": "3dd1de44ed0327a122fe4dfac31e88986fc929fb",
     "org/standards/isck/isck_coverage_probes.py": "c13cb4f7728b86202b982984ef17fb4a12ecffed",
-    "org/standards/isck/ARM4_ADJUDICATION.json": "10d2895c83c44c7b6041c66ba90820d8d58262f9",
+    "org/standards/isck/ARM4_ADJUDICATION.json": "18318ba41512b1f1c4642b7f8840c8f35f6c4f36",
     "org/standards/isck/ARM1_ADJUDICATION.json": "e6f2e5b7bfbe9d3b498a779c710bb3d937d12456"
   },
   "vocabulary_digests": {
@@ -95,7 +95,9 @@
     "645117dadbc1705c19ecf53113432ddccc0053ee",
     "c637a248ca1d85eae22609e008ac69d1d49740cb",
     "a19437ccb9d77bd910242f74505a650feafc66f2",
-    "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5"
+    "f8b9c6c4972ff33cba63b16fb0e9b467da6e22a5",
+    "2797fc77ab8ef6ce44efc628c8d1a2091c3282a8",
+    "a5ea1dd9ead8da67499af2f8ff042e72321d011e"
   ],
   "clean_clone_gate_receipt": null,
   "wp3_certification_receipt": null,
