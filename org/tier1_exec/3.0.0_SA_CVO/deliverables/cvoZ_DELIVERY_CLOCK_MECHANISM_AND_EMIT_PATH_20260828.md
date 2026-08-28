@@ -109,9 +109,8 @@ existing doctrine did not catch it: every warning is written pointing the other 
 - **n = 2 rows in ONE ack event sharing ONE timestamp** — so this is arguably **one** prospective
   trial, not two. Roughly seven retrospective rows on this lane fit the same shape; **they were not
   pre-registered and I do not count them as trials.**
-- I read the **broker's rendered rows**, not the T1 writer. `0.0.3_BG_BBGTerminal` and I both declared
-  that bound at the outset and it has not moved: **I can now name the BEHAVIOUR with a prediction that
-  held. I still cannot name the LINE.**
+- ~~I read the **broker's rendered rows**, not the T1 writer … I still cannot name the LINE.~~
+  **BOUND CLOSED 02:0xZ — THE LINE IS NAMED. See §7.**
 - **The falsifying experiment, for anyone who wants it:** ack a row that HAS already been emitted
   through a tool response and confirm `EMITTED@` stays EARLIER than `READ@`. I observed exactly that on
   ids 11355/11362 (+61.55s) — **but did not pre-register it**, so it is corroboration, not a trial.
@@ -124,6 +123,69 @@ existing doctrine did not catch it: every warning is written pointing the other 
 residual is open at the surfacing seat and §4 is a new, larger, unowned finding. **Refuting the scary
 reading of an item is not the same as closing it**, and collapsing the two is how a live hazard gets
 retired by good news.
+
+---
+
+## 7. ⭐ THE LINE — SOURCE-CONFIRMED, AND THE BACKFILL IS **BY DESIGN**
+
+Reached by following the Andrew-direct bulletin's own prescription rather than by grepping:
+`comp-which` **declined to route** ("NO CURATED RULE MATCHED … do not pick one because it was ranked
+first") and referred me to `comp-find`, which surfaced `org/mcp/broker.py`.
+
+`org/mcp/broker.py` · `_handle_ack_messages` · **:631-634**
+
+```python
+cur = db.execute(
+    f"UPDATE messages SET acked_at = ?, acked_by = ?, delivered = 1, "
+    f"emitted_at = COALESCE(emitted_at, ?) "
+    f"WHERE id IN ({qmarks}) AND acked_at IS NULL",
+    (now, serial, now, *ids),
+)
+```
+
+And the author's own comment two lines above it, **:629-630**:
+
+> *"An ACK also settles the earlier clocks: a message an agent demonstrably read was necessarily
+> emitted. Never the reverse."*
+
+**THE BACKFILL IS INTENTIONAL AND REASONED, NOT A BUG.** `COALESCE` preserves a genuine earlier
+`emitted_at` when one exists and writes `now` only when the field is NULL — which produces **both**
+observations from one line: `READ@ == EMITTED@` on a never-emitted row, and `READ@ > EMITTED@`
+(ids 11355/11362, +61.55s) on a row a tool response had already drained.
+
+### 7a. ⛔ AND IT REFUTES THE ORIGINAL DIRECTION **AT SOURCE**
+
+The function's docstring, **:611**: *"READ clock — the ONLY sound one, and the only one an orphan
+cannot forge. Written exclusively at a CONSUMPTION act."* An orphan cannot write `acked_at`. The field
+`0.0.3_BG_BBGTerminal` feared was forged is the one the code guards hardest; **`emitted_at` is the
+field being written by the read act.** Direction confirmed inverted, now on source rather than on a
+prediction.
+
+`AND acked_at IS NULL` is the **write-once guard** — and it is exactly why that seat's ack of 11027
+was refused: the slot was already consumed by a predecessor's legitimate ack.
+
+### 7b. ⛔ THE RIVAL I NAMED IN 11367 §4 AND COULD NOT TEST IS **CONFIRMED** — AND IT IS THE RESIDUAL
+
+```
+WHERE id IN ({qmarks}) AND acked_at IS NULL          <- NO RECIPIENT PREDICATE
+acked_by = ?    <- taken from the REQUEST BODY's serial, not from the message's addressee
+```
+
+**THE ACK SLOT IS KEYED PER-MESSAGE, NOT PER-RECIPIENT.** Consequences, all following from the absent
+predicate:
+
+1. **Any agent can ack any message id**, including one addressed to somebody else — which is exactly
+   what id 11228 records: addressed to this seat, `acked_by 0.7.0_AE_CloudOps~Y`, its *sender*.
+2. **On a multi-recipient send the FIRST acker consumes the slot for every other recipient**, whose
+   genuine later ack is then silently refused.
+3. This is the estate's already-banked hazard — *a guessed id consumes the true recipient's write-once
+   slot* — **present in the schema, not merely in bad practice.**
+
+⚠ **SCOPE, HONESTLY:** the docstring's claim is about *forgery by an orphan*, and it holds — an orphan
+cannot ack. It does **not** claim protection against a **live peer** acking another seat's mail, and
+the code does not provide it. Those are different threat models and only the first is defended.
+**I am NOT proposing a schema change**; a recipient predicate has consequences for the multi-recipient
+send path that I have not traced.
 
 ---
 
