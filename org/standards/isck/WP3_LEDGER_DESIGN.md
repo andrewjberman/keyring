@@ -221,6 +221,36 @@ cutoff). Tests: `L-12-backfill-before-anchor-excluded`, `L-12-backfill-after-anc
 | 12 | historical replay (anchored by `commit_seq`, §2e) | a replay as of an anchor that differs from the state recorded at that `commit_seq` | `L-12-replay-frontier`, `L-12-replay-publication`, `L-12-backfill-before-anchor-excluded` | `L-12-replay-matches-recorded-accepted`, `L-12-backfill-after-anchor-included-at-event-time`, `L-12-anchor-commit-seq-printed` |
 | 13 | cross-record contest integrity (the three limit-11 promises as REJECTED WRITES) | a `resolved` event whose `contest_id` has no admitted `opened` event; a second `opened` for one `contest_id`; a `resolved` whose typed target differs from its `opened`; an `upheld` resolution any of whose `consequence_refs` does not parse, does not resolve, targets a different typed target, or is dated at/before the opening's `occurred_at`; a `merged` whose `surviving_contest_id` is not an admitted `opened`; a SECOND `resolved` for one `contest_id` (two admitted resolutions with different outcomes would make the fold ambiguous — R3-CVO-9 residual); a `merged` whose `surviving_contest_id` equals its own `contest_id`; a `merged` whose survivor is not OPEN at the merge (its own `resolved` already admitted), or has a different `target_kind` / target id, or whose merge edge closes a CYCLE in the merge graph over (store ∪ batch) (R3-CRO-35: survivor continuity — the contest that absorbs another must be a live contest on the same typed target, and A→B, B→A leaves no survivor); an `upheld` contest on an EVENT (v0.3, item 8 — `lifecycle_event` / `binding_event` / `authority_epoch_event`) whose `consequence_refs` is not EXACTLY ONE replacement event of the same `event_kind` and the same carrier key (`materializer_serial` / `binding_id` / `authority_id`), or whose replacement's id already exists; a `resolved` not ordered AFTER its `opened` (same `contest_id`), or an `opened` on an event not ordered AFTER that event — order `(occurred_at, commit_seq, id)`, a same-instant pair decided by the id (R4-CRO-5) ; a `nullified` resolution on an entity or binding target, or carrying a consequence or a survivor (R4-CRO-7: VOID is for events only and names nothing); a SECOND admitted CORRECTIVE outcome (`upheld` / `nullified`) on one event target over (store ∪ batch) — `dismissed` and `merged` consume no slot (R4-CVO-4: a dismissal then a new challenge is legal; a merge's survivor resolves later on the same target) | `L-13-event-upheld-without-single-replacement-rejected`, `L-13-event-replacement-kind-or-key-differs-rejected`, `L-13-nullified-on-non-event-rejected`, `L-13-nullified-with-consequence-rejected`, `L-13-second-corrective-outcome-rejected`, `L-13-resolved-before-opened-rejected`, `L-13-opened-before-target-event-rejected`, `L-13-resolved-without-opened`, `L-13-duplicate-opened`, `L-13-duplicate-resolved`, `L-13-resolved-target-differs`, `L-13-consequence-unparsable`, `L-13-consequence-unresolved`, `L-13-consequence-wrong-target`, `L-13-consequence-predates-opening`, `L-13-merged-into-unopened`, `L-13-merged-into-self`, `L-13-merged-into-resolved-rejected`, `L-13-merged-cross-target-rejected`, `L-13-merge-cycle-rejected` | `L-13-opened-then-resolved-accepted`, `L-13-upheld-with-later-same-target-consequence-accepted`, `L-13-merged-into-open-same-target-accepted`, `L-13-dismissed-accepted`, `L-13-event-upheld-with-single-replacement-accepted`, `L-13-event-nullified-accepted` (R4-CRO-7: the reachable path to `L-05-voided-decommission-does-not-retire-accepted`, `L-04-voided-close-then-replacement-accepted`'s no-replacement twin, and a voided false epoch-open), `L-13-dismissed-then-new-challenge-accepted`, `L-13-merge-survivor-resolves-later-accepted` (R4-CVO-4), `L-13-same-instant-pair-ordered-by-id-accepted` |
 
+### 3b. RECORDS EXERCISED PER RESPONSIBILITY — the author's statement (R4-DT-3, `0.4.0_DT_ClientPlatform~X` 77606: no text instrument can read this off the rows, and a row that says "binding machine" never writes `binding_event`)
+
+The column TO-WP3-1 AC3 needs is what each row's arms CONSTRUCT when the battery is written —
+which the design's author can state now and a fixture will confirm later (every fixture names
+its `record_type`). `carrier_dependency` is **V03_CARRIER_REQUIRED** iff any record type the row's
+arms must construct or resolve is absent from the frozen `+38` catalog (the three event carriers,
+the widened contest target, `supersedes` on assertions, the typed unions), else **PLUS38_ONLY**.
+Stated per row, by the author, from the arm ids in §3 — not from the prose:
+
+| # | record types the row's arms construct / resolve | carrier_dependency |
+|---|---|---|
+| row 1 | `entity`, `mint_receipt` | PLUS38_ONLY |
+| row 2 | every class in §2d's 30 rows — incl. `lifecycle_event`, `binding_event`, `authority_epoch_event` via `target_event_id` and the consequence union | V03_CARRIER_REQUIRED |
+| row 3 | any record (delete / rewrite); the `superseded_by` / `superseded_by_version` refusals target `+38` fields | PLUS38_ONLY |
+| row 4 | `entity_binding`, `binding_event`, `contest_event` (the void) | V03_CARRIER_REQUIRED |
+| row 5 | the five status-bearing `+38` records AND the fold inputs — `binding_event`, `lifecycle_event`, `contest_event[nullified]` (`L-05-voided-decommission-does-not-retire-accepted` constructs a nullified lifecycle contest) | V03_CARRIER_REQUIRED |
+| row 6 | `entity`, `mint_receipt`, `authority_epoch_event` | V03_CARRIER_REQUIRED |
+| row 7 | `identity_relation` / `bridge_assertion` (with `supersedes`), `materializer`, `materializer_version`, `lifecycle_event`, `contest_event[upheld\|nullified]` | V03_CARRIER_REQUIRED |
+| row 8 | `source_frontier`, `materialization_run` | PLUS38_ONLY |
+| row 9 | `materialization_run`, `surface_version`, `source_frontier`, `materializer_version` | PLUS38_ONLY |
+| row 10 | `surface_version`, `materialization_run` | PLUS38_ONLY |
+| row 11 | `materializer_version`, `surface_version`, the projection object (not a record) | PLUS38_ONLY |
+| row 12 | any record under the `commit_seq` envelope (an envelope field, not a carrier) | PLUS38_ONLY |
+| row 13 | `contest_event` (five target kinds, four outcomes), `lifecycle_event`, `binding_event`, `authority_epoch_event` | V03_CARRIER_REQUIRED |
+
+Denominator: 13 rows = **6 V03_CARRIER_REQUIRED (2, 4, 5, 6, 7, 13) + 7 PLUS38_ONLY**. DT~X's
+text scan read 11 + 2 and correctly refused to file it — rows 4, 5, 6 and 7 name their carriers
+only through machine prose, arm ids, or the ALLOWED-colliding tokens `opened` / `closed`. The
+wave-2 confirmation is mechanical: each row's fixtures' `record_type` set ⊆ the row above.
+
 **Battery size is DERIVED, never typed (R3-CRO-21 / R3-DT-8 — the one typed number whose whole job
 was to be checked was wrong twice).** The runner prints the denominator by COUNTING the ids it ran;
 a reader reproduces it from this table by the predicate `0.4.0_DT_ClientPlatform~X` and
