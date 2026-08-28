@@ -78,9 +78,40 @@ do not report it as drift.
 49financial  nodes/SMA/absent_reason  the "A TRUE ZERO" sentence -> GONE
 all scopes   nodes/Models/... L2 member `aum` values populate where they were null
 ```
-**POSITIVE CONTROL — cottonwood and inflection should show NOTHING but `written_at`.** If either moves
-a money field, that is drift from the 1,381 un-reviewed lines and it is the thing this baseline exists
-to catch.
+**POSITIVE CONTROL — cottonwood and inflection ONLY. They should show NOTHING but `written_at`.** If
+either moves a money field, that is drift from the 1,381 un-reviewed lines and it is the thing this
+baseline exists to catch.
+
+⛔ **`global` IS NOT A CONTROL. IT IS PREDICTED TO MOVE, AND SCORING IT AS A CONTROL INVERTS THE
+RESULT.** (Refinement from `1.0.0_SA_CTO~Z` 13518; this file's first cut predicted the move further
+down but left it out of the control block, where a reader scanning for controls would miss it — and an
+instrument that needs careful reading to avoid firing on its own prediction is badly built.)
+`global.Client` is currently **byte-identical** to `49financial.Client` (290,426,813.47), so if global
+tracks one firm's Client it **must** follow it to 267,632,047.22. A seat holding global as a control
+would see a money field move on a "control" scope and raise the un-reviewed-drift alarm **on the one
+change that was fully expected.**
+
+⭐ **AND THE INVERSE IS THE MORE VALUABLE HALF — THIS IS A REAL EXPERIMENT, SO SCORE IT.** The
+invariance Andrew is holding ("the ship cannot move the $359,773,356.74 by any amount") is *algebraic
+given a premise* — that global aggregates `Client` over a single firm. **That premise has never been
+tested.** It was inferred from a byte-identical value at one vintage. The deploy produces the decisive
+observation for free, whether or not anyone looks:
+
+```
+global.Client -> 267,632,047.22   PREMISE HOLDS. Understatement stays 359,773,356.74
+                                  (the gap is cottonwood+inflection; 49financial cancels).
+                                  Prediction confirmed; nothing to revise.
+global.Client UNCHANGED           ⛔ THE PREMISE IS FALSE. global.Client is not tracking
+                                  49financial, the "one firm of three" mechanism is wrong, and
+                                  the $359,773,356.74 figure Andrew is holding MUST BE RE-DERIVED
+                                  before anyone acts on it.
+```
+
+⚠ **NOT PREDICTED — record it, do not score it.** Whether `global.SMA` also picks up the
+22,794,766.25, and therefore whether `global.total_aua` holds at 2,094,351,300.67 or drops by that
+amount. Nobody has established whether global tracks 49financial for SMA the way it appears to for
+Client. **Write down what it does; do not grade it against an expectation nobody set.**
+
 **ANY `ADDED` / `REMOVED` key on ANY scope is a schema change nobody predicted.** Report it; do not
 rationalise it.
 
@@ -95,9 +126,11 @@ moves that gap by **0.00**, confirmed independently at three seats (`2.0.0_SA_CO
 49financial and stops there will produce exactly that false sentence, **because the scope it checked is
 the scope that got fixed.**
 
-Expect `global` to show a `Client.aum` move only as the pass-through of 49financial's change; the
-**understatement itself is untouched**, and `global` will still carry a `scope_note` reading *"The
-global scope carries NO category-views object — absent, not empty"* while being that object.
+If `global.Client` moves, it moves **only as the pass-through of 49financial's change** — the
+**understatement itself is untouched**. If it does **not** move, the premise behind that sentence has
+failed and the figure must be re-derived before it is repeated (see the experiment above). Either way
+`global` will still carry a `scope_note` reading *"The global scope carries NO category-views object —
+absent, not empty"* while being that object.
 
 ---
 
