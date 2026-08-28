@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-08-27T23:05:44.745312+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda: TP1AE-AC1 scores on the SCHEDULED fire only; an ad-hoc run writes a real artifact at the real key and destroys the discriminator (held since 2026-08-27T23:12:15.302967+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda: the 2026-08-28 13:30Z fire. TP1AE-AC1 scores on the SCHEDULED fire ONLY -- an ad-hoc run writes a real artifact at the real key and destroys the time-of-day discriminator. RE-READ 2026-08-28T01:2xZ by 0.7.0_AE_CloudOps~Z: gate UNCHANGED and NOT yet fired. Re-formed from --reread-date to --reread-event: the dependency is an EVENT (a cron fire), and a date-gated hold on an event-shaped gate surfaces as PAST-REREAD while nothing has been neglected. (held since 2026-08-27T23:12:15.302967+00:00)
 **Deploy:** D1_CATVIEWS.TO-P1-AE: cited-literal re-cut of mdpf-gold-lambda at pin 14b077f559 (emit path + post-20:5xZ SMA_BUCKETS) so the 13:30Z scheduled floor emits category-views
 **Authored by:** 0.7.0_AE_CloudOps~Z
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20260827T231155Z LEG deployed-bytes closed: re-downloaded deployed zip: CodeSha256 X8oLXSRZG1W5WBhle6LSg/unVp9m6/0kja3dUMbEA3w= (was 57V6D/ZNiAGSKBe2UkJ33aevjHDCLj0
 - 20260827T231155Z LEG zero-diff closed: targeted replan -detailed-exitcode rc=0, No changes
 - 20260827T231215Z HELD-SOVEREIGN-GATED gate=external/mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda: TP1AE-AC1 scor
+- 20260828T012320Z HELD-SOVEREIGN-GATED gate=external/mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda: the 2026-08-28
