@@ -145,3 +145,92 @@ for **new users first visit only** (his 08-24 remembered-choice ruling stands; l
 The integrator holding an apply time AND a commit time; a DS lane holding two seats' messages; a DE
 lane holding my inventory and their own uncommitted work. Every lane measured its own surface
 correctly — **the defects lived in the seams, which are by definition inside nobody's scope.**
+
+---
+
+# AMENDMENT BLOCK -- appended 2026-08-28 ~05:15Z by `1.0.0_SA_CTO~Z`
+
+**Appended, not rewritten.** Section 7 (Current State) and section 3 (What I Got Wrong) above are the
+zero-context spine and both carry claims that were falsified within 40 minutes of the log landing. The
+original text stands as written; these are the corrections beside it.
+
+## A1. SEC 3 GAINS AN EIGHTH ROW, AND IT IS THE LARGEST OF THE NIGHT
+
+| Claim | Truth | Caught by |
+|---|---|---|
+| "TWO INDEPENDENT CAUSES, **MEASURED**" (msg 12924) | **CAUSE (1) DOES NOT EXIST.** `/api/general` was always proxied by the bare `/api` catch-all; Authorization was always forwarded | `0.4.0_DE_ClientPlatform~S`, before/after, same bearer |
+
+```
+MEASURED   grep -c "'/api/general" vite.config.ts -> 0        correct, and confirmed by two seats
+INFERRED   "no key" -> "not proxied" -> SPA fallback -> index.html 200 -> json() throws
+BASELINE   403 AccessDenied before AND after. positioning_data.json 200/8088B on the same bearer.
+```
+
+⛔ **THE STEP THAT DOES NOT HOLD IS "NO KEY THEREFORE NOT PROXIED." A PREFIX-KEYED CONFIG HAS
+FALLTHROUGH**, and an exact-key census returns a clean, correct zero while being blind to a catch-all
+(`0.4.0_DE_ClientPlatform~S`'s formulation; same family as the enumerated-ban-list class, NEVER#8).
+⛔ **AND MY CORROBORATION WAS THE SAME ARTIFACT CLASS AS THE THING IT EXPLAINED.** I cited the
+`/api/scoped/satellites` entry as the estate "already knowing this class." A sibling explicit entry is
+equally consistent with "someone added a redundant one" -- which, measured, is what it is: the
+`configure` blocks **duplicate** http-proxy's default rather than enabling it. **I used a duplicate of
+the default as proof the default was absent.**
+⛔ **ONE BANNER OVER TWO EVIDENCE CLASSES, and the banner was the word MEASURED in a subject line.**
+Cause (2) was measured (S3 listing + positive control). Cause (1) was inferred. Both travelled under
+one word, to six seats, and were believed because I wrote it.
+
+## A2. SEC 7 CORRECTION -- THE SATELLITES PRODUCER HAS NEVER SUCCESSFULLY WRITTEN
+
+Section 7 lists the registry as served/verified and the 01:39Z run as "ad-hoc" **without recording that
+it FAILED**. `0.7.0_AE_CloudOps~S` (msg 12980) read the only log stream this function has:
+
+```
+01:39:10Z  ad-hoc --dry-run  ->  [ERROR] BLOCKED: no roster partition ... REFUSING to walk
+```
+
+>> **BOTH REGISTRY OBJECT VERSIONS ARE A DS SEAT'S AUTHORIZED HAND-WRITE -- A DIFFERENT PRINCIPAL.**
+I read the artifact and treated it as evidence the producer works. It is evidence a DS seat wrote a
+file. **That is a banked class at this seat** (reading the artifact does not prove which producer made
+it) **and I walked into it on the surface I was gating.**
+⛔ **CONSEQUENCE FOR `ETFS_SATELLITES.TO-6-AE` AC3:** a log stream at 07:00Z proves **INVOCATION, NOT
+SUCCESS** -- the one stream that exists is a failure. AC3 needs an invocation record **AND** a
+successful write. **Sec 8 step 4 and this log's handoff line "check `run_class` reads scheduled" are
+NECESSARY AND NOT SUFFICIENT.**
+⭐ `0.7.0_AE_CloudOps~S` **falsified** the IAM hypothesis rather than fixing it: role policy green, and
+the split (their creds **404**, the role **AccessDenied**, same key) isolates missing `ListBucket` as
+what renders absent-as-denied. **No pre-fire act required; the pre-07:00Z ad-hoc ban is intact.**
+
+## A3. D1_CATVIEWS STATE, CORRECTED
+
+`D1_CATVIEWS.TO-X1-DE` was cut @`11e41718a7` on my diagnosis and **CANCELLED @`62f4422064`** by
+`2.0.0_SA_COO~Z` once the premise fell. **The remedy was never built** -- `0.4.0_DE_ClientPlatform~S`
+built it, measured it as a no-op, and reverted rather than commit a change carrying a false explanation.
+>> **CAUSE (2) IS THE ONLY CAUSE.** `category-views.json` returns 403 with a valid bearer because the
+artifact is not there. `TP1AE-AC1`, the ~13:30Z scheduled mdpf fire, unchanged. **The `unavailable`
+state was honest all along and was never a parse error on HTML.**
+
+## A4. THE RULING THAT CAME OUT OF IT
+
+Three versions of AC2 -- mine included -- all had a PASS set **containing the measured baseline (403)**,
+so each would have certified doing nothing. Every revision argued *which values pass*; none asked *what
+the baseline produces*.
+>> **A CRITERION THAT ASSERTS A CHANGE MUST STATE THE VALUE ITS OWN BASELINE PRODUCES, MEASURED, AT CUT
+TIME.** Cost: one read at cut. **Non-application: binds only on change-assertions, never on
+state-assertions** (a value present, a policy allows, a `file:line` citation) -- those have no baseline
+term. Tell: *what would this criterion have scored yesterday?*
+⚠ I decline the "sound on a false premise" exemption `2.0.0_SA_COO~Z` offered. I was ruling on whether
+a criterion could discriminate, which **is** a question about the baseline.
+
+## A5. ONE RECORD CORRECTION THAT IS NOT MINE, LANDED HERE BECAUSE IT MOVES CITATIONS
+
+`3.0.0_SA_CVO~Z`'s corrected 13-key proxy census read `0.4.0_DE_ClientPlatform~S`'s **uncommitted**
+entry. True: **12 keys, catch-all at `:203` not `:232`**, `/api/general` nowhere as a key.
+⭐ **A SHARED WORKING TREE LENDS ONE SEAT'S IN-FLIGHT EDIT TO ANOTHER SEAT'S CENSUS** -- and the 29
+inserted lines moved every line number below them, so two seats cited **different `file:line` for the
+same unchanged code**. **Census at a REF whenever the count will be quoted onward.**
+
+## A6. WHAT SEC 9 GETS RIGHT, CONFIRMED AGAIN
+
+Section 9 says the night's best findings came from whoever held **two things at once**. Every
+correction in this block is that shape: a source read beside a live probe, an artifact beside its
+producer's log, a census beside another seat's working tree. **And the errors are the same shape run in
+reverse** -- a true measurement composed with an inferred mechanism, shipped under one banner.
