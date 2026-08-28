@@ -396,6 +396,27 @@ reached INERT (66521).
    ]
   },
   "notes": "*** WHY THIS IS FILED RATHER THAN FIXED, AND THE RESTRAINT IS THE CERTIFIABLE PART: the component is SHARED and used off this page, so changing its emphasis hierarchy reaches surfaces the TO never measured. The surfacing seat named it and DID NOT NAME AN OWNER, which is correct -- an owner assigned by inference is the unowned-list failure, and that seat has no standing to allocate one. disarm_owner is set to the issuer as the seat that can cut a cell, NOT as the seat that owns the component. *** THE SUBSTANCE IS A CLAIM-CARRYING QUESTION, WHICH IS WHY IT IS NOT MERELY COSMETIC: an N/A is an HONEST ABSENCE and rendering it in the tile's loudest treatment makes the absence read as the headline datum. CLAUDE.md's 'A VALUE MUST CARRY ITS CLAIM' governs the FIELD; this is its render-layer twin -- a presentation that gives absence the emphasis of a measurement. Whether that is wrong depends on the reader the tile is for, which is a design decision and NOT this seat's to rule. *** SCOPE: nothing here blocks TO-Q1-DE, which is delivered 5/5 and certified separately. This item exists so the observation is not lost with the TO that produced it."
+ },
+ {
+  "id": "D1_CATVIEWS-Z-S3",
+  "surfaced_by": "0.4.0_DE_ClientPlatform~C (msg 12105), correcting a MECHANISM in another seat's message whose CONCLUSION was right -- and doing so because that message was going to Andrew. Re-derived and WIDENED at this seat. FILED by 3.0.0_SA_CVO~Z.",
+  "surfaced_at": "2026-08-28T02:32Z",
+  "one_line": "This repository has GITLINKS WITH NO SUBMODULE CONFIG AT ALL: .gitmodules exists but is ZERO BYTES, so every `git submodule` verb FAILS FATAL rather than no-opping -- and the estate's own 'portal submodule' vocabulary (CLAUDE.md Git section) predicts a no-op, which is the opposite of what happens.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    ".gitmodules exists and is 0 bytes; `git config -f .gitmodules --list` returns 0 entries",
+    "`git submodule status portal` -> fatal: no submodule mapping found in .gitmodules for path 'portal'",
+    "`git ls-files -s portal` -> 160000 4ac152f8b93a... : a REAL gitlink with no submodule config behind it",
+    "WIDENING measured at this seat, NOT in the surfacing message: bare `git submodule status` fatals FIRST on models/factor_scanner -- so there are AT LEAST TWO gitlinks and the fatal is reached before portal is even considered",
+    "the recorded pointer 4ac152f8b9 is 25 COMMITS BEHIND origin/DEV and was already stale before the surfacing seat was seated"
+   ]
+  },
+  "notes": "*** THE CONCLUSION WAS RIGHT AND THE MECHANISM WAS NOT, AND THE MECHANISM IS THE PART AN INTEGRATOR ACTS ON. Saying portal 'does not ride the workspace pushes' is true and predicts a NO-OP from a submodule verb. What actually happens is FATAL. An integrator reaching for `git submodule update`, `--recurse-submodules`, or `submodule status` gets an ERROR, not a quiet skip. THE ONLY WORKING FORM IS `git -C portal <verb>`. *** ⭐ MY WIDENING: bare `git submodule status` fatals on models/factor_scanner BEFORE reaching portal, so this is not a portal quirk -- the repo carries MULTIPLE gitlinks against an entirely empty .gitmodules. Anyone diagnosing this by running the bare verb gets an error naming a path they were not asking about, which is a confusing first symptom. *** THREE LEGS, NOT TWO, AND THE THIRD HAS NO OWNER: (1) workspace evidence ON ORIGIN; (2) portal DEV code LOCAL, needing `git -C portal push origin DEV`; (3) THE WORKSPACE'S RECORDED POINTER, 25 commits behind origin/DEV, an ancestor of it, stale before tonight. LANDING LEG 2 ALONE DOES NOT MAKE THE WORKSPACE POINT AT THE NEW CODE. Leg 3 is a separate decision with a separate owner and a 25-commit move -- explicitly NOT to be done as a side effect of landing a DE change, and the surfacing seat correctly declined to bump it from a pathspec-scoped lane. *** ⭐ THE SHAPE IS THE ONE THIS CHANNEL RECORDED AN HOUR EARLIER ON A DIFFERENT PLANE: D1_CATVIEWS-Z-S1 rules that a port probe returning 200 does not tell you WHICH LISTENER answered. Here, 'portal exists at f93fb832' and 'the workspace points at the new portal' are TWO CLAIMS, and the recorded pointer is 25 commits from either answer. The surfacing seat filed a two-leg split an hour ago and it was itself incomplete -- they had checked the two legs they TOUCHED and not the one they had not. *** INERT: nothing is blocked, no act is proposed, and the PNGs Andrew can look at are unaffected. The cost is a wrong mechanism in an integrator's hands and a vocabulary in CLAUDE.md's Git section that predicts the wrong failure. disarm_owner is the integrator seat as the only one who acts on submodule verbs; the doctrine wording is a separate act and is NOT ruled here."
  }
 ]
 ```
