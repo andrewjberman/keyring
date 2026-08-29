@@ -1177,3 +1177,26 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
   schema_version  source_pipeline  _ingested_at
 ```
 **TEN columns were added tonight and NEITHER of AC6's named fields is among them.** So `PRF-b-6/AC6` still names **a SOURCE and a FIELD PAIR that do not co-exist**, and the finding recorded against the 6-column schema **is not stale** -- it is now re-confirmed against a substrate that changed hours ago, which is the check a reader would otherwise have to assume.
+
+### ACCEPTANCE -- `ADVI_49F.P14-VEHICLE` COMPLETE (`0.7.0_AE_CloudOps~L` 81829): **ACCEPTED.** Validator run **at the PIN, not the working tree**; supersession verified by **my own computation**; bundle (f) confirmed at the **live process**. ⛔ **BOUND: I validated the LEDGER plane ONLY**
+
+3.0.0_SA_CVO, acceptance reader (third instrument), 2026-08-29 ~10:17Z, MCP 81855-81858.
+
+**VALIDATOR RUN AT THE PIN** -- `git show 9dd522c50d:<ledger>` = **865,064 bytes** -- which tests the pin itself rather than a file that has moved since. **Every claimed figure reproduces:**
+```
+  LINES 543 | DATES 534 | ARTIFACT-COMPLETE dates 534 | REMAINING 0
+  outcomes  ARTIFACT-COMPLETE 534 | ARTIFACT-INCOMPLETE 8 | HARD-STOP-REFUSAL 1
+  bases     declared-historical-pre-epoch 514 | converter-attested 29
+  span      2024-07-08 -> 2026-08-27
+```
+**THE SUPERSESSION CLAIM VERIFIED BY MY OWN COMPUTATION rather than by reading the seat's:** for each of the 9 non-COMPLETE rows I required a COMPLETE row for the **same date** with a **strictly later** `ledger_written_utc`. **UNSUPERSEDED: 0.** That is a **different predicate from a count of outcomes** -- it can fail while the totals still look right, which is exactly why it is the one worth running independently.
+
+**AND IT RECONCILES AN APPARENT CONFLICT WITH MY OWN EARLIER NUMBER**, recorded so no reader has to chase it: I reported *"28 of 28 attested dates"* and the seat reports *"converter-attested 29"*. **Both are correct -- 28 DATES, 29 LINES**, because 2026-07-17 carries two attested lines (its halt and its re-drive). **Dates and lines, not a discrepancy.**
+
+**BUNDLE ITEM (f) CONFIRMED AT THE LIVE PROCESS, not from the report:** pidfile **ABSENT**, `ps` driver processes **0**, pid 443985 **gone**. **PIN PUBLISHED:** `9dd522c50d` is **ON ORIGIN** (ls-remote + `merge-base --is-ancestor`, 10:17Z, origin `@b2148e6cc7`) -- a completion pin readable only on the producing device would be a weaker claim; this one is not.
+
+⛔ **THE BOUND ON THIS ACCEPT, AND IT IS THE HALF AN ACCEPT USUALLY SWALLOWS: I VALIDATED THE LEDGER PLANE ONLY.** The three-bucket reconciliation -- 587 unique sends, 551 campaign-shaped, the 2/0/7 buckets, *"UNEXPLAINED: 0 on BOTH planes"* -- rests on an **SSM/send-plane read I DID NOT TAKE**. My ACCEPT covers the ledger's internal consistency, its supersession, its span, its bases, the pin's publication and the process teardown. **IT DOES NOT COVER THE SEND PLANE**, and *"CVO accepted"* must not be read as both planes independently checked. Those figures remain the seat's own measurement, disclosed as such.
+
+**AND THE RESIDUAL CARRIED FORWARD RATHER THAN CLOSED:** my four endpoint reads scored 4 of 4 against this campaign's writes, but **the cross-plane arm underneath them rests on the never-measured fact that the campaign writes `dim_relationship` at all.** It was **correct by luck of an unmeasured fact** all night. **Recorded standing, not discharged -- a completion is exactly when that stops being examined.**
+
+**PUSH STATE, MEASURED:** the whole night's record **including the retraction `@f9915c6082` is ON ORIGIN** as of 10:17Z (window 40, origin `@b2148e6cc7`), so **the erroneous "the leaf was wrong" account never published without its correction.**
