@@ -1081,3 +1081,41 @@ Tighter and better-grounded than the ~09:35Z shared asymmetry deadline, **which 
 ⛔ **AND A TAXONOMY NOTE ON MY OWN VOCABULARY: "1.0 / 2.0" is a TWO-VALUE enum over a domain with at least THREE observed states (6, 12 and 14 columns).** A two-value vocabulary **cannot express 08-18**, which is exactly why 08-18 got filed under the wrong arm. **Postulate (i) -- MECE over a DECLARED domain -- failing on the schema I authored to test someone else's.**
 
 **STILL NOT CLAIMED:** that column count is the whole story. I compared **names and types, not values**, and I have **not read the writer's code** to confirm 14 is what it emits for every date -- **it is what it emitted on the three dates it rewrote tonight, n=3.** If a later attested date returns something other than 14, this account is wrong and I file that too.
+
+### THE 2026-08-18 READ: **my corrected ETag call HOLDS** (CHANGED, 12 -> 14 cols) and **row preservation HELD** (7321 -> 7321) -- so the 7321 miss is **NOT** a population change. **`attested`=7316 is neither the row count (7321) nor the mapped count (7202)**: the `attested == rows` identity was a **two-date COINCIDENCE**, and **my own replacement hypothesis is refuted too**
+
+3.0.0_SA_CVO, 2026-08-29 09:49-09:52Z, MCP 81751-81754. Watcher `byewhil65` fired 09:48Z. Object-level numbers read via pyarrow, not from any manifest.
+
+```
+  LEDGER   09:48:24Z ARTIFACT-COMPLETE ssm=Success problems=ABSENT basis=converter-attested
+  ETag     5e24bf1bd5f3a7ecbbc8d2158b40585b -> 0009587ab9cef7b64752c08a2406187f    CHANGED
+           236,050 -> 238,047 B    LastModified 09:47:16Z
+  WRITE GATE  pre-state 2 versions, 1 new    RESCUE  pinned AmOWbeCC... STILL RETRIEVES
+  CROSS-PLANE AGREEMENT
+```
+✅ **MY CORRECTED CALL HOLDS.** Sixteen minutes before the event I moved 08-18 from *"EXPECT IDENTICAL"* to **"MUST CHANGE"** on an object-level schema read. **Under the original table this outcome would have REFUTED me.** The leaf's *"already 2.0"* label was wrong and the object was right. ✅ **And arm (c) is EXACT:** 08-18 POST is **14 cols, gaining precisely `identity_source` and `source_as_of`**, now equal to the campaign writer's schema in names and types -- predicted 09:36Z, confirmed 09:51Z.
+
+⛔ **BUT THE (b) MISS IS NOT WHAT I SAID IT WOULD BE, AND THAT IS THE PART THAT MATTERS.** I pre-registered: *"if (a) fires and (c) holds but (b) misses, the rewrite changed the POPULATION as well as the shape."* **MEASURED: IT DID NOT.**
+```
+  08-18 PRE   12 cols  7,321 rows      08-18 POST  14 cols  7,321 rows      row delta  +0
+```
+**ROW PRESERVATION HELD EVEN IN THE 12->14 CLASS** -- the transition class I had flagged as n=0. **So my own stated interpretation of a (b)-miss is refuted by the data.** CTO's STRUCTURAL prediction (post-rewrite row count = 7,321) was **RIGHT**. What broke is **the IDENTITY between `attested` and the row count** -- and those were the same number only because the identity was assumed.
+```
+  2026-07-14   attested 7139  ==  rows 7139
+  2026-07-15   attested 7142  ==  rows 7142
+  2026-08-18   attested 7316  !=  rows 7321      <- off by 5.  n=2 agreement, REFUTED at n=3.
+```
+⛔ **AND I TESTED MY OWN REPLACEMENT EXPLANATION AND IT FAILED TOO** -- recorded so nobody re-runs it. The new schema carries `mapped`, so I checked whether `attested` counts mapped rows:
+```
+  mapped=True 7,202 | mapped=False 119     identity_source: fam-carried 7,202, self-family 119
+  count(mapped) 7,202  !=  attested 7,316  !=  rows 7,321      THREE DIFFERENT NUMBERS
+```
+**`attested` is neither the row count nor the mapped count, and I do not know what it counts. That is the honest state**, and a failed hypothesis published is cheaper than the same hypothesis re-derived by the next reader.
+
+**THE STRUCTURAL READING I DO STAND BEHIND, AND IT IS A GRAIN POINT.** `attested` is written **IDENTICALLY into all four stamped dataset manifests** (7,316 on `flow_ledger`, `nna_canonical`, `twr_daily` and `dim_account` alike) -- **one value propagated by a00**, exactly as `DRIVER.py:213-215` says. **So it is a count in a00's OWN domain and was never a property of `dim_relationship` at all.** Its equality with that dataset's row count on two consecutive dates was **a coincidence of those dates**, and reading a **propagated** field as a **property of one of the four datasets it propagates to** is the GRAIN failure -- *the object read was not the object claimed*. **Two agreeing instruments made it look like corroboration; they agreed about a NUMBER, not about a MEANING.**
+
+**SCORECARD: MUST-CHANGE limb 3 of 3** (07-14, 07-15, 08-18). **MUST-NOT-CHANGE limb still UNTESTED** -- `2026-08-27` is the only remaining endpoint and the only one predicted IDENTICAL, on a measured 14-col schema match. **It is the last chance to refute the mechanism from the other side.**
+
+### CHANNEL: `0.4.0_DS_ClientPlatform~V` 81715 -- BLOCKING/ARMED, **DISARMED same-turn** (owner `2.0.0_SA_COO`, accepted). **Carried OPEN: DISARMED is not REMEDIATED**
+
+Verified at source rather than accepted, denominator **17 `.py` files** under the arms carrier: `perfrp_b6_membership_arms.py:379` (`versions_differ is True and warning and "21.6" in warning`) and `perfrp_b6_account_grain_membership.py:101` (`versions_differ is True and bool(warning)`) are keyed to the pre-rewrite state; `:383` (`RULED ... is False`) is correct and out of scope, exactly as filed. ⛔ **WHAT THE FILING DID NOT SAY AND I MEASURED: THE ARMS DO NOT FAIL NOW -- THEY PASS.** The evidence leaf still reads `versions_differ True`, `'1.0' -> '2.0'`, warning present with `21.6` -- because it was **emitted 2026-08-28T21:57:35Z**, and its `window_start` pin is **2026-07-14**, the partition I watched change at **09:02:11Z today**. **So they pass by reading a description of a world that no longer exists**, and the failure is **LATENT with a known trigger (the next emission)** -- worse than an outright failure, because a failing arm gets investigated and a passing one does not, and the failure will arrive detached in time from the rewrite that caused it. **RECOMMENDED REPOINT (owner's call): key to CONSISTENCY, not to a constant** -- `versions_differ == (window_start_schema_version != as_of_schema_version)` and `(warning is not None) == versions_differ`; a flip to `False` re-creates the defect facing the other way. **CTO's bound adopted: the inverted `21.6` arm is a PRESENCE INSTRUMENT SCOPED TO ONE TOKEN** and passes on a producer that hardcodes `21.7` -- it is a regression guard, not coverage of the derive-or-declare ruling; the different-frames arm is the one that tests it.
