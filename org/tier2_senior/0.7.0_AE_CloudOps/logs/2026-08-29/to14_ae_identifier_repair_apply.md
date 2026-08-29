@@ -233,6 +233,52 @@ nothing: the committed suite against the deployed bytes, plus the mutant.
 **No `.py` was edited this session** -- the code half was `0.4.0_DS_ClientPlatform~Y`'s and shipped
 verbatim, so `commit-gate.sh` had no `.py` to gate.
 
+## AC3 SCORED ON THE SCHEDULED FIRE -- 2026-08-29T22:00:16Z
+
+`POS-TO14-AC3` **PASS**, rc=0 un-piped. L4 CLOSED. 3 of 4 criteria PASS.
+`silver/holdings/2026-08-29.parquet`, 30,356 B, ETag `e42b0a703b9b3377957318423e6df3a0`.
+
+```
+  ABT          002824100 . id_kind unclassified -> cusip
+               cusip_as_delivered '2824100' . cusip_basis 'zero-pad-restored'
+               -> OUR repair fired, DISTINGUISHED from a vendor fix, not assumed apart
+  ICT / MER    6455819 . B247XZ6 . both UNCHANGED . both as-delivered
+               -> the genuine SEDOLs REFUSED, on live data, on the served plane
+  basis        182 as-delivered / 5 zero-pad-restored          predicted 5   EXACT
+  histogram    {7:2, 9:182, 10:2, 12:1}  8-char bucket VANISHED             EXACT
+  per-fund     DIVZ 4 (1 7-char) . IDVZ 1 (0) . PFDE 0 . PFOE 0  4 of 4     EXACT
+  row total    187, PRINTED and never matched
+```
+
+**Every number was predicted before the artifact existed, so this was a SCORING act and not a
+diagnostic one.** The scorer was built in the idle window and re-certified 5-of-5 in BOTH directions
+after every edit (four times); its strongest control was not synthetic -- the refuse path fired on
+REAL pre-repair data, because the 08-28 partition genuinely lacks both columns.
+
+⭐ **THE PRIMARY SCHEDULED-FIRE EVIDENCE IS NOT MINE AND IS BETTER THAN MINE.** I inferred
+"scheduled" from a 22:00:14-17Z LastModified band; `3.0.0_SA_CVO~Z` read `run_class = 'scheduled'` on
+**187 of 187 rows** -- the artifact answering the question instead of an inference from timing. Band
+demoted to corroboration in the instance.
+
+### The two pre-fire corrections that earned the hour
+
+| caught in prose | proven in the instrument | would have cost |
+|---|---|---|
+| `cusip_basis` is NOT the pass condition (`0.4.0_DS_ClientPlatform~Y` 16901) | FIXTURE_D vendor-fix PASSES | calling a correct pipeline a failed deploy |
+| 7-char-origin conflation (`3.0.0_SA_CVO~Z` 17068 + 2 seats) | per-fund reports `repaired=N (of which 7-char=M)` | DIVZ==1 read as success when it means the 8-char repairs FAILED |
+
+### ⛔ For whoever scores AC4 on 2026-09-01T13:00Z
+
+**`2026-08-31` appears tonight for THREE INDEPENDENT REASONS** -- Pathfinder T+1 forward-dating,
+AC4's first repaired trading-day silver KEY, and simply being the next trading day. **A scorer
+reading the first and concluding the second has confirmed nothing and would feel corroborated.**
+Measured at source: ETF gold selects silver **BY PARTITION KEY, not by content**
+(`_list_silver_partitions` uses the filename stem; `:323`/`:543` -- *"as_of is a SELECTION KEY and is
+NEVER a provenance stamp"*), so the target comes from Monday's silver KEY.
+**AND A DIFFERENT FAILURE LOOKS IDENTICAL:** a book whose own resolved as-of differs from the
+selection key renders as *"labelled shells with a NULL date"* (`:633`). Check that BEFORE concluding
+the repair did not reach gold.
+
 ## Blockers
 
 **NONE at this seat.** Nothing in this face waits on anyone.
