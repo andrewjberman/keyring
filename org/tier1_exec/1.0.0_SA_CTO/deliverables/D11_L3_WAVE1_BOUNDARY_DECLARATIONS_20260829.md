@@ -168,6 +168,25 @@ The **evaluated** run's own `observed.<S>` lives beside it, outside the block, a
 
 **Falsifier:** exhibit a well-formed `floor_derivation` block whose `derived_at_commit` is not an ancestor of the carrying commit, or whose `deriving_run_observed` differs from the value in the deriving artifact at that pin — either is a provenance defect, not a stability result.
 
+### 6c. ADDENDUM 1c (05:0xZ) — THE RUN-N BATTERY EVIDENCE CARRIER, structured for N = 1 as for N ≥ 5
+
+**Trigger.** The union re-emission @`1f5d4f6136` carries the one-permutation case as PROSE (*"ONE permutation was run, so this run provides a POINT, not a spread"*) beside `observed` and `permuted_control` values, with no `n_permutations` or `spread` field. Both certifiers (CRO 050207Z, CVO 050306Z): prose is not a rejectable carrier — a checker that reads it reads the tool, not the world. Correct; the design lane owes the shape.
+
+**THE CARRIER.** On EVERY run-N fusion artifact, inside `stability_L3C01`, one block per statistic, `permutation_battery.<S>` for S ∈ {rho, J}:
+
+| field | type | N = 1 | N ≥ 5 |
+|---|---|---|---|
+| `n_permutations` | integer ≥ 1 | 1 | N |
+| `null` | number | the single permuted draw | mean of the draws |
+| `spread` | number \| null | **null** | sd of the draws |
+| `spread_status` | enum | **UNMEASURED** | MEASURED |
+| `draws` | array of numbers | [the one draw] | all N (so a re-derivation can recompute null and spread) |
+| `observed` | number | this run's S | this run's S |
+
+`floor_status` on a run-N artifact is always **HELD-UNEXERCISED** (6b). A checker reads `n_permutations` and `spread_status`; it never parses prose. **Typed refusals:** `spread_status = MEASURED` with `n_permutations < 5` → FORM_DEFECT; `spread` non-null with `spread_status = UNMEASURED` → FORM_DEFECT; `draws` length ≠ `n_permutations` → FORM_DEFECT; `null` ≠ mean(`draws`) (or ≠ `draws[0]` at N = 1) → FORM_DEFECT. Prose beside the block is permitted and non-binding.
+
+**Delivery for @`1f5d4f6136` (immutable):** a **superseding run-addressed restamp** by the emitter — every measured value byte-identical, the block added, `supersedes` naming `1f5d4f6136` — **not a sidecar.** A sidecar would split the evidence from the artifact the certification cites, and a split carrier is the class this fabric corrected three times tonight. The 6b block (`floor_derivation`, run N+1) reads `null`, `spread`, `n_permutations`, `observed` from THIS block at the deriving pin — the two carriers are now one contract.
+
 **CONSEQUENCES, bound (the certifier's correction 044353Z is adopted verbatim):** a sanity failure on the first battery (`sanity = false`) leaves `floor_status = HELD-UNEXERCISED`, records the excessive spread, and re-runs the battery on the next run — it does NOT raise the multiplier. **The multiplier is raised only by the §6 falsifier — a second, INDEPENDENT battery under which the observed no longer clears the floor** — and never lowered. Typed results on the L3-C01 axis: `FORM_DEFECT` (floor ≠ null + m·spread, or N < 5 with a block present), `SPREAD_SANITY_FAIL` (sanity false), `STABILITY_FAIL` (evaluated observed ≤ floor with sanity true). Each is reachable from a different truth; CCX's 5/5 fixture is the exercise.
 
 **None of the four declarations discharges a PRD §6 falsification test.** §6.3's input (firm-carry per bridge) and §6.4's exclusions (FLOW, SEMANTIC = NOT-DELIVERED-AT-L2) are supplied by wave 1; **6.3 runs at wave 2, 6.1 / 6.2 / 6.5 at L4.**
