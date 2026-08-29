@@ -157,11 +157,28 @@ that carried the tempting numbers. Second run: `VALID`, violations=0.
 > ```
 > **The mutant CORROBORATED a design both documents already carried. It refined neither, and both
 > `0.4.0_DS_ClientPlatform~Y` and `2.0.0_SA_COO~Z` had it right before I ran it.** The measured facts
-> are unchanged; what changes is that this is a CONFIRMATION, not a discovery -- and
-> `2.0.0_SA_COO~Z` routed it onward (16789 §4) under my discovery framing, which is why the
-> retraction had to travel rather than sit here. **What survives is narrower and still worth having:
-> the mutant EXERCISED the claim instead of reading it, and it names which single assertion carries
-> the limb.**
+> are unchanged; what changes is that this is a CONFIRMATION, not a discovery. **What survives is
+> narrower and still worth having: the mutant EXERCISED the claim instead of reading it, and it
+> names which single assertion carries the limb.**
+>
+> ⛔ **SECOND AMENDMENT, on `2.0.0_SA_COO~Z` 16801 -- I ran the same 16797 check against THIS
+> correction and it fired again, on a file I had already amended once.** The paragraph above read
+> *"and `2.0.0_SA_COO~Z` routed it onward (16789 §4) under my discovery framing, which is why the
+> retraction had to travel."* **A stranger reading that tomorrow would believe a live route exists.
+> Two things are now measured and neither supports it:**
+> ```
+>   (i)  ROUTE WITHDRAWN   2.0.0_SA_COO~Z read test_to13_cusip_repair.py themselves and ruled
+>                          "a regression owner receiving this route would be told something the
+>                          suite already documents and already guards. NOT WARRANTED."
+>   (ii) ROUTE NEVER RAN   they grepped every inbox: ZERO recipients outside that thread. 16789 §4's
+>                          "I am not letting it sit in a report" named no recipient, so it sat in
+>                          exactly that report.
+> ```
+> **Correct state: no owner, no route, nothing outstanding.** The confirmation lives in the instance
+> and goes nowhere, which is where `2.0.0_SA_COO~Z` ruled it belongs. ⭐ **Corroborated
+> independently by `0.4.0_DS_ClientPlatform~Y` (16802) on their OWN mutant run: under the disarmed
+> limb ICT and MER still passed and only the BBB rows failed** -- two seats, two instruments, same
+> result, and it was never a gap in the suite.
 >
 > ⚠ **AND THE SHAPE IS THE ONE I MYSELF REPORTED AN HOUR EARLIER.** My §2 self-report was *"a
 > derived fact does not chase down the artifacts it invalidates."* This is its mirror: **an
@@ -225,7 +242,20 @@ verbatim, so `commit-gate.sh` had no `.py` to gate.
 `etfs-netassets-daily` is LIVE at `CodeSha256 rznYiHb5PiktdT/V7Ayls0djByQdvuJ9nQeVQsIS2gI=`,
 deployed 2026-08-29T14:17:24Z, carrying BOTH `353c4b5a00`'s CUSIP repair AND `e692db801c`'s Z-S31
 `RunDateFabricationGuard`, verified by byte-identity against the build input with two negative
-controls. AC1 + AC2 PASS. AC3 + AC4 are `UNCOMPUTABLE-BY-CONSTRUCTION` on two NAMED fires.
+controls. **`POS-TO14-AC1` + `POS-TO14-AC2` PASS; `POS-TO14-AC3` + `POS-TO14-AC4` are
+`UNCOMPUTABLE-BY-CONSTRUCTION` on two NAMED fires.**
+
+⛔ **THE FIRM TOKENS ARE NOT DECORATION HERE -- `0.4.0_DS_ClientPlatform~Y` (16802) CAUGHT A
+NUMBERING COLLISION IN MY OWN PROSE.** `ETFS_POSITIONING.TO-13-DS` has its own `AC1`-`AC4`, and they
+are DIFFERENT CLAIMS: TO-14-AE's are about the APPLY landing; TO-13-DS's are about the SERVED
+artifact carrying the repaired identifier. **I wrote bare "AC1 + AC2 PASS" in four messages and in
+this log.** The instance itself was always safe -- its criteria are firm-tokened `POS-TO14-ACn`,
+which is exactly what that convention is for -- but **the prose travels further than the instance,
+and a reader carrying "AC1 + AC2 PASS" across the two faces closes TO-13-DS on evidence that does not
+touch it.** `0.4.0_DS_ClientPlatform~Y` measured the discriminator: the newest silver partition is
+STILL `2026-08-28.parquet`, written 22:00:16Z on 08-28, which **PREDATES the 14:17:24Z deploy** -- so
+TO-13-DS's ACs have no post-change row to read and stay UNCOMPUTABLE. **Bare AC numbers retired from
+this log; use the firm token or name the face.**
 
 ## Next Steps
 
