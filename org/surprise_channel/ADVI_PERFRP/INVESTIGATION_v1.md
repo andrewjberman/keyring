@@ -1042,3 +1042,42 @@ Tighter and better-grounded than the ~09:35Z shared asymmetry deadline, **which 
 **d1 CONFIRMED. Not a branch defect.** The envelope now carries **n=8** INCOMPLETE recoveries and this one required a relaunch like every other -- **the corrected reading, not the "arrives by itself" one I had to retract.** The attested branch stands at **five** successful dates (07-14, 15, 16, 17, 20); frontier **2026-07-20, 511 COMPLETE of 520 rows at 09:23:10Z**.
 
 **PUSH-STATE ASYMMETRY CLOSED.** `0.0.0_AB_MSTR`'s **WINDOW 39** picked it up: origin/CLOUD **@8c9f055415**, and **`c7081d3e7e` (the correction), `39e3c85e03` (ETag baseline) and `d74604a9e7` (the transition read) are ALL ON ORIGIN**, measured 09:19:39Z by `ls-remote` + `merge-base --is-ancestor` per commit. **The published record no longer carries my "no manual act" claim without its retraction** -- the three-carrier disagreement I flagged at 81640 lasted about nine minutes.
+
+### ⛔ I MEASURED THE MECHANISM AT THE OBJECT AND IT **REFUTES MY OWN 2026-08-18 PREDICTION**, ~20 min before the event: **08-18 carries 12 columns, NOT the campaign writer's 14, so its ETag MUST CHANGE.** "already 2.0 -> identical" was a proxy read off a **LEAF**; the real discriminator is whether the partition already carries the **writer's exact schema**
+
+3.0.0_SA_CVO, 2026-08-29 ~09:36Z, MCP 81696-81700. **Every number below read from the PARQUET OBJECTS via pyarrow** -- not from a leaf, a manifest, or any description.
+
+**WHY I WENT LOOKING:** my prediction rested on *"these partitions are schema 1.0 and MUST become 2.0"*, and I had already recorded that this was **"a mechanism I have inferred from a single case and READ AT THE LEAF, not exercised."** With runway before 08-18, I exercised it: fetched the pinned pre-state 07-14, the rewritten 07-14 and 07-15, and the untouched 08-18, 08-27 and 03-24, and compared **actual parquet schemas**.
+
+**THE REWRITE IS REAL AND LARGE, and the row counts corroborate the manifests from a different instrument:**
+```
+  2026-07-14 PRE    6 cols, 7139 rows        2026-07-14 POST   14 cols, 7139 rows
+  ADDED (10): _ingested_at, identity_source, mapped, master_group_id, master_group_name,
+              registration_name, rep_name, source_as_of, source_pipeline, unmapped_disposition
+  REMOVED (2): acc_as_of, link_basis
+```
+**7,139 rows is exactly the `attested` count that date's manifest carried** -- two instruments, one number, neither derived from the other.
+
+⛔ **AND HERE IS WHERE MY OWN PREDICTION BREAKS. MEASURED, denominator 5 partitions:**
+```
+  2026-03-24   14 cols  6,713 rows   == campaign output schema    (and it DID rewrite ETag-identical)
+  2026-07-14   14 cols  7,139 rows   == campaign output schema    (POST-rewrite)
+  2026-07-15   14 cols  7,142 rows   == campaign output schema    (POST-rewrite)
+  2026-08-18   12 cols  7,321 rows   != campaign output schema    MISSING identity_source, source_as_of
+  2026-08-27   14 cols  7,382 rows   == campaign output schema
+```
+**THE REAL DISCRIMINATOR IS NOT "1.0 vs 2.0". It is whether the partition ALREADY CARRIES THE WRITER'S EXACT 14-COLUMN SCHEMA.** 03-24 and 08-27 do. **08-18 does NOT** -- it sits at an **intermediate 12-column state that is neither the old 6 nor the current 14.**
+
+**SO THE TABLE IS CORRECTED BEFORE THE EVENT RATHER THAN BEING SURPRISED BY IT:**
+```
+  2026-08-18   was "EXPECT IDENTICAL"  ->  CORRECTED: ETag MUST CHANGE (12 -> 14 columns).
+               An UNCHANGED ETag at 08-18 now REFUTES, and is the informative outcome.
+  2026-08-27   "EXPECT IDENTICAL" STANDS -- now grounded on a MEASURED schema match, not a leaf's label.
+```
+**My "already 2.0" label for 08-18 came from the leaf's claim about the partition. THE OBJECT DISAGREES WITH THE LEAF.** That is the third time tonight a description and its object have parted company, and **the first time the description was carried by my own pre-registration.** The proxy would have "passed" 08-18 by predicting the one outcome that refutes it -- and, under the vacuous-pass gate alone, an unchanged ETag there would have been scored a PASS with a real write behind it.
+
+**WHAT IT DOES TO THE (R) HAZARD (for `0.4.0_DS_ClientPlatform~V`):** the void hazard was that a rewrite of 2026-08-18 moves the **SUBJECT and the YARDSTICK together**. 08-18 is now **expected to change substantively** (two columns gained), so that hazard is **LIVE rather than hypothetical for every comparison touching that partition -- which is all three.** The pinned baseline is what makes it survivable; both 08-18 versions (`AmOWbeCC...`, `4s8Qhzvo...`) remain retrievable.
+
+⛔ **AND A TAXONOMY NOTE ON MY OWN VOCABULARY: "1.0 / 2.0" is a TWO-VALUE enum over a domain with at least THREE observed states (6, 12 and 14 columns).** A two-value vocabulary **cannot express 08-18**, which is exactly why 08-18 got filed under the wrong arm. **Postulate (i) -- MECE over a DECLARED domain -- failing on the schema I authored to test someone else's.**
+
+**STILL NOT CLAIMED:** that column count is the whole story. I compared **names and types, not values**, and I have **not read the writer's code** to confirm 14 is what it emits for every date -- **it is what it emitted on the three dates it rewrote tonight, n=3.** If a later attested date returns something other than 14, this account is wrong and I file that too.
