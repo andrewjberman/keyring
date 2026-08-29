@@ -35,6 +35,34 @@
    "role": "CONTROL_ONLY / 6.3_NOT_A_RESULT -- its label IS the 6.3 label on these entities",
    "basis": "INFERRED",
    "declarability": "NAMED_GAP_STORE_OWNER"
+  },
+  "cohort_entities_not_pipeline_symbols_split": {
+   "arn_shaped": 368,
+   "other_shaped": 235,
+   "colon_shaped_non_pipeline": 1,
+   "sum": 604,
+   "the_one_colon_id": {
+    "entity_id": "event-source::CUSTOM::bd-pipeline.gold-chain",
+    "firm": "bd",
+    "node_type": "EVENT_SOURCE",
+    "layer": "aws"
+   },
+   "by_node_type": {
+    "S3Key": 231,
+    "IAM_POLICY": 172,
+    "IAM_ROLE": 60,
+    "LAMBDA": 51,
+    "EVENT_RULE": 46,
+    "CW_ALARM": 8,
+    "INSTANCE_PROFILE": 8,
+    "SCHEDULE": 5,
+    "SNS_TOPIC": 5,
+    "LOG_GROUP": 3,
+    "S3_BUCKET": 3,
+    "ReactQueryKey": 3,
+    "other_types": 9
+   },
+   "correction": "msg 81265 item 3 wrote '368 ARNs + 235 other ids' = 603 for a 604 set; the raw census had colon-id 1,338 = 1,337 pipeline symbols + 1 EVENT_SOURCE id that I dropped when summarising. Referred by 2.0.0_SA_COO~X 81521 as open_discrepancy; closed here. No other value in this file moved."
   }
  },
  "not_measured": [
