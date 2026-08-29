@@ -143,7 +143,43 @@ in its own wording: it anchors its target on *"the PRE-FIX `Client.aum`"*.
    own reading rule **that is a signal, never a clean pass** -- the PRD's evidence is prose-cited and
    had to be derived BY READING, which is what this document is.
 
-## 4. WHAT THIS SWEEP DOES NOT DO
+4. ⛔ **A NULL GROUPING KEY DELETES ROWS THAT AN UPSTREAM CONTRACT PROMISED TO KEEP.**
+   `build_dim_taxsma_report.py` groups on `schwab_account_id` at `:142`, `:252` and `:289` --
+   **three bare calls, no `dropna=`.** The xref contract (`build_schwab_bd_account_xref.py:44`,
+   Rule 17) guarantees an unbridged account survives as `schwab_account_id=NULL` +
+   `bridge_method='unresolved'` and is NEVER DROPPED. **MEASURED on pandas 3.0.3, that exact call
+   shape: 5 rows in, 2 groups, 2 rows survive -- 3 SILENTLY DROPPED.** *"Never dropped" holds at the
+   rung it was written for and is undone one rung later by a library default.*
+   **CONSEQUENCE: at the gold artifact, "2 bridged + 3 unresolved" and "the population is 2" are
+   BYTE-IDENTICAL.** Counting `account={id}/` partitions, or reading the builder's own `by_acct`,
+   returns the RESOLVED count and can never reveal the shortfall -- **so the obvious instrument
+   reports `2 of 2 = 100%`, with a denominator printed, which is what makes it convincing.**
+
+## 5. ⛔ THE RENDER PLANE CANNOT SCORE COVERAGE -- THREE INSTANCES IN ONE NIGHT
+
+**Recorded here rather than in a fourth broadcast, because the recurring failure tonight was a
+correct law living somewhere no criteria author opens.**
+
+| instance | the number is RIGHT | and the population behind it is SHORT | on screen |
+|---|---|---|---|
+| `Client - Opal Supervised` 0.764% | on-contract, correctly derived | 3 accounts with a non-zero residual | identical |
+| `SMA` L1 `$22.79M` | correct L1 total | all 6 L2 members served `null` | identical |
+| `ALT Strategies` aum > 0 | a real number | 1 of Andrew's 5 accounts | identical |
+
+> ⛔ **A CORRECT-BUT-SHORT RESULT AND A CORRECT-AND-COMPLETE ONE RENDER THE SAME, AND THE RENDERER
+> HAS NO COVERAGE FIELD TO DRAW -- ITS FOUNDING RULE FORBIDS COMPUTING MEMBERSHIP.**
+
+**THEREFORE, BINDING ON ANY CRITERION THIS SEAT SCORES:**
+- ⛔ **`<node> aum > 0` IS NEVER AN ACCEPTANCE CRITERION.** It is satisfied by exactly the outcome a
+  coverage ruling exists to prevent. Legal only as a *render-mechanics* description of when a row
+  draws -- **never to score whether the item is done.**
+- ✅ **COVERAGE IS SCORED ON THE PRODUCER PLANE, AS `resolved / declared`, WITH THE DENOMINATOR'S
+  SOURCE NAMED** (`held` when a sovereign ruled it, `measured` when an artifact produced it).
+- ⚠ **AND THE DENOMINATOR MUST NOT BE HARDCODED** -- Andrew's `5` is `held`, not `measured`; a sixth
+  account later would make a correct build fail a stale literal, which is the market-valued-literal
+  defect wearing a population's clothes.
+
+## 6. WHAT THIS SWEEP DOES NOT DO
 
 - It is **not** a proof-of-spec and certifies nothing. The TOs have not been cut.
 - It does **not** exercise the frontend (see 1.3 rung honesty) or the promote.
