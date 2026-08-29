@@ -201,6 +201,23 @@ def check_client_l1(doc, scope, plane, out, post_reland):
             out.append(("%s child view_paths are UNIQUE" % p,
                         len(paths) == len(set(paths)),
                         "%d path(s), %d distinct" % (len(paths), len(set(paths)))))
+            # ⛔ NO NEGATIVE FEE-LINE VALUE. Added 2026-08-29 ~02:4xZ after
+            # 0.4.0_DS_ClientPlatform~Z measured that the specified global
+            # aggregation shape yields Client > Opal Unsupervised =
+            # -$2,253,034.08 -- a NEGATIVE on an advisor-facing fee line.
+            # ⛔ AND c3 CANNOT CATCH IT: defining one leg as `client_aum - other`
+            # makes `SUP + UNSUP == client_aum` true for EVERY value of SUP,
+            # including values that make the complement negative. The guard
+            # compares an expression to itself, so the negative passes it.
+            # THIS ROW IS DELIBERATELY NOT SCOPED TO global OR TO THE AGGREGATION
+            # QUESTION: it is a property of the NODE, it costs one line, and it
+            # outlives whichever of (A)/(B) is chosen and whoever forgets why.
+            # It cannot fail a correct build -- no correct fee split is negative.
+            neg = [(k.get("view_path") or k.get("label") or "?", k.get("aum"))
+                   for k in kids.values() if (k.get("aum") or 0.0) < 0.0]
+            out.append(("%s NO Client child has aum < 0" % p, not neg,
+                        "negative leg(s): %r" % (neg,) if neg
+                        else "all %d child(ren) >= 0" % len(kids)))
     elif pred == "unavailable":
         # THE HELD SHAPE IS ALSO SCORED. `predicate: "unavailable"` with no
         # children IS the render instruction (registry :1066-1074, which removed
