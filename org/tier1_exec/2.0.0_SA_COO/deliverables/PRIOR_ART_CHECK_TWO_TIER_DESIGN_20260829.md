@@ -100,6 +100,71 @@ Andrew explicitly asks."* **He asked for a CHECK, not a gate.** The proposed sha
 on a cut TO — one line naming what was searched and what was found — not a refusal that blocks the cut.
 **A field a reader can reject on beats a gate nobody can see.**
 
+## 6a. ⛔⛔ AMENDED — MY OWN INSTANCE (c) IS OUTSIDE MY OWN MECHANISM
+
+`3.0.0_SA_CVO~Z` scored the design against its own evidence and it fails on its third instance:
+```
+  THE COO TIER'S CORPUS   open+closed TOs, decomp cells, .open_findings, change_management
+  IN INSTANCE (c)         THOSE RECORDS WERE THE THING THAT WAS STALE.
+  -> A CENSUS OF THEM RETURNS THE SAME WRONG ANSWER, WITH A DENOMINATOR PRINTED.
+```
+>> ⛔ **THE COO TIER AS FIRST SPECIFIED WOULD HAVE REPRODUCED (c), NOT CAUGHT IT.** <<
+⛔ **AND THE EVIDENCE THAT THIS IS THE DOMINANT FAILURE, NOT AN EDGE CASE, IS FROM THE SAME NIGHT:
+FOUR TO FACES WERE FOUND STALE IN ~6 HOURS** — `ETFS_INGEST.TO-9-DS` and `D1_CATVIEWS.TO-S1-DE`
+asserting a missing instance that was filed; `TO-N1-DS` the same; `TO-M1-DS` declaring no
+`instance_path` at all so a face-side census read a PRESENT instance as ABSENT. **The corpus this
+tier reads is precisely the corpus that went stale four times.**
+
+**BINDING AMENDMENT — ANDREW-DIRECT 2026-08-29 ~04:0xZ, correcting this design's first answer.**
+⛔ **I had written "records plane, then corroborate against an artifact plane." He replaced it:**
+
+> *"a better approach is to just use two different mechanisms. use `comp-find` for historical search,
+> use a relevant scoped comp-tool to view the same thing from an alternate lens in current state
+> (watch denominator/head/timestamp aka nature of coverage universe for comp-tools)"*
+
+```
+  MECHANISM 1  comp-find                -> HISTORICAL search. What the corpus has EVER carried.
+  MECHANISM 2  a relevant SCOPED comp-tool -> CURRENT STATE, from an ALTERNATE LENS on the
+                                           same object.
+  ⛔ AND ON EACH: WATCH THE COVERAGE UNIVERSE -- DENOMINATOR, HEAD, TIMESTAMP.
+```
+⛔ **WHY MINE WAS WORSE, AND IT IS NOT A WORDING DIFFERENCE:** "census, then spot-check git" is ONE
+mechanism plus a confirmation — **and a confirmation run to settle a question the first mechanism
+already answered inherits that mechanism's frame.** Two genuinely different tools, one TEMPORAL and
+one CURRENT-STATE, disagree in a way a follow-up check cannot.
+⛔ **THE COVERAGE-UNIVERSE CLAUSE IS THE OPERATIVE HALF, NOT A CAVEAT.** Every comp-tool has its own
+corpus and they do not coincide: `comp-find`'s is `.gitignore`-BOUNDED (`--corpus default` = tracked +
+untracked-not-ignored; `all` / `ignored` understate by a PRINTED ephemeral floor; `raw` is the only
+every-file denominator), and a scoped tool answers only inside its scope and returns a **SILENT CLEAN**
+outside it. ⛔ **`0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.** ⛔ **NEVER `head` a
+census** — three seats truncated a grep of ONE file within an hour, and a catch-all four lines from
+the bottom survived all three.
+>> ⭐ **SO THE TWO MECHANISMS ARE NOT MERELY DIFFERENT TOOLS — THEY HAVE DIFFERENT COVERAGE UNIVERSES,
+   AND COMPARING THEIR DENOMINATORS IS ITSELF A SIGNAL. When the temporal and current-state reads
+   disagree, THE DISAGREEMENT IS THE FINDING** — that is what (c) needed and what a single census
+   plus a confirming glance can never produce. <<
+
+## 6b. ⛔ WHAT THIS CHECK CANNOT SEE — the clause CLAUDE.md requires, and it was missing
+
+§6 stated COST and EXEMPTION. **It did NOT state what the check CANNOT SEE, and without that a
+verification rule only ratchets.** Naming the misses:
+```
+  MISS 1  WRONG ARTIFACT. "I audited the wrong object" is invisible to BOTH tiers.
+          No existence probe finds it -- the probe answers about the object you named,
+          and the error is in the naming. MEASURED TONIGHT: a seat ruled Tax SMA
+          "structurally unbuildable" having audited the wrong artifact, and retracted it.
+          ⛔ DISCLAIMED, NOT COVERED. A tier that claimed this would be lying.
+  MISS 2  STALE RECORDS, to whatever extent artifact-corroboration (6a) is not run.
+          The corroboration converts this from a blind spot into a COST.
+```
+⛔ **ACCEPTANCE FOR THE FEATURE — RETRODICTION, WITH THE MISSES NAMED.** Eight measured instances
+exist from one night (five `1.0.0_SA_CTO~Z`, three `2.0.0_SA_COO~Z`) — an unusually good test set that
+did not have to be built. **Score the design against all eight: WOULD IT HAVE FIRED, and on WHICH
+TIER?**
+>> ⛔ **A DESIGN THAT SCORES 8 OF 8 IS THE ONE TO DISBELIEVE — it has been FITTED to its evidence.
+   6 of 8 WITH THE OTHER 2 NAMED is the stronger artifact. That is the difference between a control
+   and a reassurance.** <<
+
 ## 7. WHAT IS OPEN, AND WHAT I AM NOT DECIDING
 
 ⛔ **NOT DECIDED HERE, because it is the unlanded call's subject:** whether Build-Ladder rung 2's
