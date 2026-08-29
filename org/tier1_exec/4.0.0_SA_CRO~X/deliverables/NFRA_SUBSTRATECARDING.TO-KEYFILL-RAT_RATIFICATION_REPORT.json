@@ -1,0 +1,1025 @@
+{
+  "admission": {
+    "admitted": 43,
+    "denominator": 72,
+    "not_admitted": 29,
+    "not_admitted_by_field": {
+      "trust.key.basis": 1,
+      "trust.key.declared_mapping": 27,
+      "trust.key.key_expression": 1
+    },
+    "not_admitted_rows": [
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "532710c8978eb4d926da6a149986da63519a8723",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-coth__kuzu_nessie_db.json",
+        "subject_id": "kuzu_nessie_db"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "ad122a2f833e314f44b08dec64ecba58b26d2347",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-hffm__org_tier1_exec_3.0.0_SA_CVO_deliverables_kimi_subdivision_harness_c2_i.json",
+        "subject_id": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "0d68499b0322d28782455fdf66a13b477dc0860a",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-lqzx__.comp-graph_graph.json.json",
+        "subject_id": ".comp-graph/graph.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "1a63ea2700f9257126e63e3cf2465eaf88789bbe",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-nthk__org_tier1_exec_3.0.0_SA_CVO_deliverables_kimi_subdivision_harness.json",
+        "subject_id": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "c479bd111bcbbaa8621e6c8375c50a2a00af1913",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-pcac__org_modules_graph_keep-dormant.yaml.json",
+        "subject_id": "org/modules/graph/keep-dormant.yaml"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "fc29b199e5e161fdaf67fb745843854c2989d635",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-rpcx__comp-heat.json",
+        "subject_id": "comp-heat"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "fe6e01ca8a78bb6444539f1b18f8383f73573859",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-ukdh__org_modules_graph_nerves-edges.json.json",
+        "subject_id": "org/modules/graph/nerves-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "a5bf6fd3e79d39557a83228ee58bb5e9e29966b0",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-uvcz__org_modules_graph_nerves-risk-edges.json.json",
+        "subject_id": "org/modules/graph/nerves-risk-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "6e404b26c436fb4ec0b85111cdd0042588a56025",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-vlov__opal-313476888478-globgrph_warehouse_globgrph_graph_edges_6629328d-a58.json",
+        "subject_id": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_edges_6629328d-a582-46d2-80bc-5059de1a77ce"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "26a07506dc55f70379a645fcff2e1016259a2f8b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-xnwo__opal-313476888478-globgrph_warehouse_globgrph_graph_nodes_4c6c23bd-fff.json",
+        "subject_id": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d"
+      },
+      {
+        "basis_by_field_key_expression": "absent",
+        "failing_field": "trust.key.key_expression",
+        "git_blob_id": "1eadf0110b2d151bfe795852a62d0cf2d3c99125",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-yjky__opal-estate-report_kuzu_nessie_db.json",
+        "subject_id": "s3://opal-estate-report/kuzu_nessie_db"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "dec078f7e16fb1f2043a8ec58b0c7d3627c97885",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-znom__infra_system_ontology_SYSTEM_DEFINITIONS.yaml.json",
+        "subject_id": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "ac403557dc255182aa3ddf23f17ab7652c4ee29b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W3/W3-gkih__infra_aws_globgrph_kuzu_load_py.json",
+        "subject_id": "infra/aws/globgrph/kuzu_load.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "2d9d13232af227214f4927b13631530fd581dddf",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/anchor_catalog.json",
+        "subject_id": "ANCHOR_CATALOG + HUB_TYPES (org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_canonical_ab_catalog.py)"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "5fa872699655b9fc8e570ee51a0d43fdfc9dcf16",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/baked_static_spec_layers.json",
+        "subject_id": "the two BAKED STATIC SPEC LAYERS folded by ingest_c2c3_motif_producer"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "9492e79cb547ad25175cf8e4c6ceeb91a28d681a",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/comp_debris.json",
+        "subject_id": ".tools/comp-debris"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "1dd37c8274dbfb479d7b282ea14a238c8fa1f997",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/comp_ladder.json",
+        "subject_id": "org/modules/graph/comp_ladder.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "bd577a5a93356d9f03867ab2968acc54aaa08669",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/dup_scan.json",
+        "subject_id": "org/modules/graph/debtscan/dup_scan.py"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "8610c91a0beb446e42d44c0acb1bf68dc2c53e7f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/resource_summaries.json",
+        "subject_id": "resource_summaries"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "58771c1040a8d11d8674714c5d35b0cc3b505501",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/summary_corpus.json",
+        "subject_id": "org/modules/graph/debtscan/summary_corpus.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "f5a5f075a0b61b44734b1f0f22f58735740ff97f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W3/resource_summaries_store.json",
+        "subject_id": "infra/aws/globgrph/resource_summaries_store.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "c5edc7b18e7ff1fb7022e65062db9163193486c9",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-dmua_mdpf_delivery_cadence_contract.json",
+        "subject_id": "mdpf_delivery_cadence_contract"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "98a1c768b7e01c4aa2322e22ef0fa2d217ad821f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-dxxm_c0_c1_rung_boundary.json",
+        "subject_id": "c0_c1_rung_boundary"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "f3dc2e3e7f728fffd58b716fbf1b1e59706cfcc2",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-igwg_native_cloudedge_direction.json",
+        "subject_id": "native_cloudedge_direction"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "d302ec715d2cbe3cb763678629942069353a0536",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-iivv_pstmrt_completeness_and_trigger_layer.json",
+        "subject_id": "pstmrt_completeness_axis_and_trigger_layer_doctrine"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "59104c470b60da1bb01d000264c79e866f26f13b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-kwjy_live_graph_edge_types.json",
+        "subject_id": "d1_bound_live_graph_edge_types"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "5a39be243c29572fa23ca76e0c42c0c33fa415f2",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-mqju_c2_motif_families.json",
+        "subject_id": "NFRA_ONTOLOGY_C2C3_CANONICAL.yaml#c2_motif_families"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.basis",
+        "git_blob_id": "5a1be9954820166cb2194f04861d79a35c0aa1ee",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-qgtd_graph_contracts.json",
+        "subject_id": "graph_contracts"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "626f9ef9c9896dac07c15ffc52280fdc8bc7e9af",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-bzgw_cse_emit_frontend_coevolution_PATH_B_s3_watermark.json",
+        "subject_id": "infra/aws/globgrph/cse_emit_frontend_coevolution.py :: PATH B -- S3 watermark object"
+      }
+    ],
+    "results": [
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "5ea80a986c390d4dba45ea5c776ab2ca347b5f10",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-bcin__org_tier2_senior_0.4.0_DS_ClientPlatform_deliverables_motif_c2c3_mater.json",
+        "subject_id": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize.json"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "532710c8978eb4d926da6a149986da63519a8723",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-coth__kuzu_nessie_db.json",
+        "subject_id": "kuzu_nessie_db"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "ad122a2f833e314f44b08dec64ecba58b26d2347",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-hffm__org_tier1_exec_3.0.0_SA_CVO_deliverables_kimi_subdivision_harness_c2_i.json",
+        "subject_id": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "6c36607e8e3aa34b3b7f97df1b32517a4cfd0b7e",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-jgzc__data_firm_registry.json.json",
+        "subject_id": "data/firm_registry.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "0d68499b0322d28782455fdf66a13b477dc0860a",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-lqzx__.comp-graph_graph.json.json",
+        "subject_id": ".comp-graph/graph.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "1a63ea2700f9257126e63e3cf2465eaf88789bbe",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-nthk__org_tier1_exec_3.0.0_SA_CVO_deliverables_kimi_subdivision_harness.json",
+        "subject_id": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "c479bd111bcbbaa8621e6c8375c50a2a00af1913",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-pcac__org_modules_graph_keep-dormant.yaml.json",
+        "subject_id": "org/modules/graph/keep-dormant.yaml"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "a04fbde867c8ffbfdf3371fa9344e18d68db1a61",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-qvzv__org_tier2_senior_0.4.0_DS_ClientPlatform_deliverables_motif_c2c3_mater.json",
+        "subject_id": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "fc29b199e5e161fdaf67fb745843854c2989d635",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-rpcx__comp-heat.json",
+        "subject_id": "comp-heat"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "fe6e01ca8a78bb6444539f1b18f8383f73573859",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-ukdh__org_modules_graph_nerves-edges.json.json",
+        "subject_id": "org/modules/graph/nerves-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "a5bf6fd3e79d39557a83228ee58bb5e9e29966b0",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-uvcz__org_modules_graph_nerves-risk-edges.json.json",
+        "subject_id": "org/modules/graph/nerves-risk-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "6e404b26c436fb4ec0b85111cdd0042588a56025",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-vlov__opal-313476888478-globgrph_warehouse_globgrph_graph_edges_6629328d-a58.json",
+        "subject_id": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_edges_6629328d-a582-46d2-80bc-5059de1a77ce"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "26a07506dc55f70379a645fcff2e1016259a2f8b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-xnwo__opal-313476888478-globgrph_warehouse_globgrph_graph_nodes_4c6c23bd-fff.json",
+        "subject_id": "s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "386632c76c8c36ad852007b88fc0ed5d73efb812",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-xzjx__org_tier1_exec_3.0.0_SA_CVO_deliverables_kimi_subdivision_harness_c3_s.json",
+        "subject_id": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json"
+      },
+      {
+        "basis_by_field_key_expression": "absent",
+        "failing_field": "trust.key.key_expression",
+        "git_blob_id": "1eadf0110b2d151bfe795852a62d0cf2d3c99125",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-yjky__opal-estate-report_kuzu_nessie_db.json",
+        "subject_id": "s3://opal-estate-report/kuzu_nessie_db"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "dec078f7e16fb1f2043a8ec58b0c7d3627c97885",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-znom__infra_system_ontology_SYSTEM_DEFINITIONS.yaml.json",
+        "subject_id": "infra/system/ontology/SYSTEM_DEFINITIONS.yaml"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "ac403557dc255182aa3ddf23f17ab7652c4ee29b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W3/W3-gkih__infra_aws_globgrph_kuzu_load_py.json",
+        "subject_id": "infra/aws/globgrph/kuzu_load.py"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": null,
+        "git_blob_id": "787a801276baf9bdbc13720718ae4fffb5b3ba1a",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W3/W3-mdiu__infra_aws_globgrph_kuzu_stitch_load_py.json",
+        "subject_id": "infra/aws/globgrph/kuzu_stitch_load.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "2d9d13232af227214f4927b13631530fd581dddf",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/anchor_catalog.json",
+        "subject_id": "ANCHOR_CATALOG + HUB_TYPES (org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_canonical_ab_catalog.py)"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "5fa872699655b9fc8e570ee51a0d43fdfc9dcf16",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/baked_static_spec_layers.json",
+        "subject_id": "the two BAKED STATIC SPEC LAYERS folded by ingest_c2c3_motif_producer"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "9492e79cb547ad25175cf8e4c6ceeb91a28d681a",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/comp_debris.json",
+        "subject_id": ".tools/comp-debris"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "1dd37c8274dbfb479d7b282ea14a238c8fa1f997",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/comp_ladder.json",
+        "subject_id": "org/modules/graph/comp_ladder.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "bd577a5a93356d9f03867ab2968acc54aaa08669",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/dup_scan.json",
+        "subject_id": "org/modules/graph/debtscan/dup_scan.py"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "8610c91a0beb446e42d44c0acb1bf68dc2c53e7f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/resource_summaries.json",
+        "subject_id": "resource_summaries"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "58771c1040a8d11d8674714c5d35b0cc3b505501",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/summary_corpus.json",
+        "subject_id": "org/modules/graph/debtscan/summary_corpus.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "5b250c1e55fd4cb84d500e66f564d49153f8f23f",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W3/cse_store__PATH_A_append.json",
+        "subject_id": "infra/aws/globgrph/cse_store.py#PATH_A_append"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "57d16922f0204d0a6f852af749c78b5a298467a4",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W3/cse_store__PATH_B_drop.json",
+        "subject_id": "infra/aws/globgrph/cse_store.py#PATH_B_drop"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "f5a5f075a0b61b44734b1f0f22f58735740ff97f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W3/resource_summaries_store.json",
+        "subject_id": "infra/aws/globgrph/resource_summaries_store.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "5f8b0906c9a281eaffcf7ad676cd7480c4f8f3db",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W3/snap_store.json",
+        "subject_id": "infra/aws/globgrph/snap_store.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "c5edc7b18e7ff1fb7022e65062db9163193486c9",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-dmua_mdpf_delivery_cadence_contract.json",
+        "subject_id": "mdpf_delivery_cadence_contract"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "98a1c768b7e01c4aa2322e22ef0fa2d217ad821f",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-dxxm_c0_c1_rung_boundary.json",
+        "subject_id": "c0_c1_rung_boundary"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "17ed0be271df88e6b30f8db209cdc8efd95f58bd",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-fwhj_c1_frontend_adapter.json",
+        "subject_id": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#c1_frontend_adapter"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "6287336fdb67d49a256c1505a0b6c895cfdb8b87",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-hzfk_relations.json",
+        "subject_id": "NFRA_ONTOLOGY_RULE_BANK.yaml#relations"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "05503bcb1003b0ca60991398e99c62958f17d1df",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-idsf_node_bindings.json",
+        "subject_id": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#node_bindings"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "f3dc2e3e7f728fffd58b716fbf1b1e59706cfcc2",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-igwg_native_cloudedge_direction.json",
+        "subject_id": "native_cloudedge_direction"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "d302ec715d2cbe3cb763678629942069353a0536",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-iivv_pstmrt_completeness_and_trigger_layer.json",
+        "subject_id": "pstmrt_completeness_axis_and_trigger_layer_doctrine"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "59104c470b60da1bb01d000264c79e866f26f13b",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-kwjy_live_graph_edge_types.json",
+        "subject_id": "d1_bound_live_graph_edge_types"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "5a39be243c29572fa23ca76e0c42c0c33fa415f2",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-mqju_c2_motif_families.json",
+        "subject_id": "NFRA_ONTOLOGY_C2C3_CANONICAL.yaml#c2_motif_families"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "c1518b129a83c3de7165e04c0cef5a36ab5e2139",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-pzkj_non_relation_edges.json",
+        "subject_id": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#non_relation_edges"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.basis",
+        "git_blob_id": "5a1be9954820166cb2194f04861d79a35c0aa1ee",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-qgtd_graph_contracts.json",
+        "subject_id": "graph_contracts"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "0c2f3d060aba9b8b0a6e7ffc66b321f55a1ae35f",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-uyan_roles.json",
+        "subject_id": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#roles"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "3cc4f6a4ae886ce65c637e5e2108de5c9c4ee878",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W2/W2-yoyi_relation_composites.json",
+        "subject_id": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml#relation_composites"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "81a4fe78195bf5eef3f4dee3cbb6f193f9964570",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-bsft_derive_runner_PATH_A_graph_nodes_edges.json",
+        "subject_id": "infra/aws/globgrph/derive_runner.py :: PATH A -- graph_nodes + graph_edges"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": "trust.key.declared_mapping",
+        "git_blob_id": "626f9ef9c9896dac07c15ffc52280fdc8bc7e9af",
+        "key_admission": "NOT_ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-bzgw_cse_emit_frontend_coevolution_PATH_B_s3_watermark.json",
+        "subject_id": "infra/aws/globgrph/cse_emit_frontend_coevolution.py :: PATH B -- S3 watermark object"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "dfa80cc6c6185a606dec18dfc196916a4fa3e520",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-csnj_derive_runner_PATH_B_graph_contracts.json",
+        "subject_id": "infra/aws/globgrph/derive_runner.py :: PATH B -- graph_contracts"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "34bf623698b8add957d7508d346bd675af1c947b",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-dljc_cse_emit_frontend_coevolution_PATH_A_local_jsonl.json",
+        "subject_id": "infra/aws/globgrph/cse_emit_frontend_coevolution.py :: PATH A -- local JSONL batch"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "ed5e20a77870823c507259f1f534c5c25171e6c2",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-ggoq_comp_aws_cli_iceberg_commit.json",
+        "subject_id": "org/modules/graph/comp_aws_cli.py"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "7d49a72c9a2585e7a8e9b16a5c656a5c82c3bd8a",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-thav_incremental_updater_PATH_A_iceberg_nessie.json",
+        "subject_id": "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py :: PATH A -- Iceberg/Nessie atomic commit"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "08f6a41d2bedd8a91c155e52fcd7b8b885070290",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W3/W3-uuxp_incremental_updater_PATH_B_s3_branch_head_marker.json",
+        "subject_id": "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py :: PATH B -- S3 branch-head marker"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "8d51b340300bd7851482636a05b857b93007beae",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-_comp-graph_baseline_json.card.json",
+        "subject_id": ".comp-graph/baseline.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "05337847b80e3de764f5ac191e3b255325505c33",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-_comp-graph_managed_policy_actions_cache_json.card.json",
+        "subject_id": ".comp-graph/managed_policy_actions_cache.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "51cc40e8088506e18e9f768f13aff9f002d9dd5c",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-_comp-graph_pathrooting-census_json.card.json",
+        "subject_id": ".comp-graph/pathrooting-census.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "328c70a018fb63714e961929b58b69136502f42d",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-_comp-graph_pydeps_json.card.json",
+        "subject_id": ".comp-graph/pydeps.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "33c62c641f06c880c116c8fa61efed215463dfed",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-axes_history_jsonl.card.json",
+        "subject_id": "axes_history.jsonl"
+      },
+      {
+        "basis_by_field_key_expression": "held",
+        "failing_field": null,
+        "git_blob_id": "ade8c36a947f3e0d560ad88d81bcee628420c1c7",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-c2_instances_json.card.json",
+        "subject_id": "c2_instances.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "8abd1bb23bd03956c1b3879cd0dd32328f9679b8",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-c3_structures_json.card.json",
+        "subject_id": "c3_structures.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "c75e622bf9ef86d8f7d097396ec801e81aefd1df",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-dncq_build_manifest_json_SET.json",
+        "subject_id": "_build_manifest.json.SET"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "e998fd803df9a3e5e8c1e4a63f3540eb8c1d1b5a",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-estate-coverage-resolver_json.card.json",
+        "subject_id": "estate-coverage-resolver.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "f253f1c4ea9be64a29415ed977fef370d7802490",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_ac7_db.card.json",
+        "subject_id": "kuzu_ac7.db"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "27ad0a7a6de215e6a9758bdad0fdec4bb0e3b340",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_ac7_dir.card.json",
+        "subject_id": "kuzu_ac7.dir"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "3639fe26becbecbf6417ad00b8340a8d50c5819f",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_db.card.json",
+        "subject_id": "kuzu_db"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "923f998aab7ff674b648bd64d3c15d8cfd412a79",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_nessie_db_fallback_jsonl.card.json",
+        "subject_id": "kuzu_nessie_db.fallback.jsonl"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "b5ffab0a19cdc40cfaa73a45a2ed31b417c0b7c1",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_nessie_db_local.card.json",
+        "subject_id": "kuzu_nessie_db.local"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "da4802e9f7e9074feb9c3a980baed68a8d76039a",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-kuzu_stitch_db.card.json",
+        "subject_id": "kuzu_stitch_db"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "f91061cd2a525d2a05a8ba9f33a6272122bf36bd",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-lgbr_platinum_CACHE_SET.json",
+        "subject_id": ".comp-graph/platinum.CACHE_SET"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "c39a57925e188f0a03f7f1e87fe4d412c867768b",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-motif_c2c3_materialize_ab_json.card.json",
+        "subject_id": "motif_c2c3_materialize_ab.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "249d0c65298ff7322d3f77b7d515727b66686d82",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-motif_c2c3_materialize_json.card.json",
+        "subject_id": "motif_c2c3_materialize.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "f0e7aa6ce144a418e5f9cc90c57905ae899eafa0",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-nerves-edges_json.card.json",
+        "subject_id": "nerves-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "1794d193548828a4f6851282ae64aed8302121db",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-nerves-risk-edges_json.card.json",
+        "subject_id": "nerves-risk-edges.json"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "038cf499465fc51227102d98f28718ff52a12af5",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-nerves_resolve.card.json",
+        "subject_id": "nerves_resolve"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "8ed79befc17317464cd91de07ab6fb9636161b60",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-snap_store_WRITER.card.json",
+        "subject_id": "snap_store.WRITER"
+      },
+      {
+        "basis_by_field_key_expression": "measured",
+        "failing_field": null,
+        "git_blob_id": "1514757be05bd586b7101b31c22af66c7b79b667",
+        "key_admission": "ADMITTED",
+        "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-stitch_graph_json.card.json",
+        "subject_id": "stitch_graph.json"
+      }
+    ]
+  },
+  "basis_by_field_key_expression": {
+    "denominator": 72,
+    "distribution": {
+      "absent": 1,
+      "held": 10,
+      "measured": 61
+    },
+    "inferred": 0
+  },
+  "census_exclusion": {
+    "path": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+    "reason": "cell manifest: no schema_version and no subject; not a substrate card"
+  },
+  "collision_disposition": "Every exact duplicate set is empty. All seven basename name-misses remain distinct; c2_instances.json is recorded first and neither id form is ratified as a joined part. No basename collapse and no inferred bytes.",
+  "compile_commit": "92f1b8da9d564f8e5ed8740e1e1a2278577507e5",
+  "compile_receipt": {
+    "candidate_set_digest": "d1e07efb2829a63674e02351c459de6d03605fab87841f5b2ebf3d26f71b44cc",
+    "compile_note": "Inherited W3 pins were RECOMPUTED at the compile pin, not carried forward: measured 13 of 13 stale against the previous registry. The staleness PREDATES the keyfill round -- at the commit before this seat's first keyfill commit, 13 of 13 were already stale -- and the round moved 9 of them again while three lanes filled concurrently. Every blob id and the digest are computed at ONE pin; path-only fallback, silent stale carry-forward and mixed-pin digesting are refused (4.0.0_SA_CRO~X 210720Z). EXCLUDED as not-a-card: org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json.",
+    "compiled_at_commit": "cf66984cfc39e7f45c0799c75be43c4ec1fb7934",
+    "git_blob_id": "ba4e0154016c13e79c478ad95eaa06dcc60ed9a3",
+    "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.compile_receipt.json",
+    "registry_sha256": "sha256:7a6d6cc711d9f9f12170b28fdfd88303984e80d9d3e6c894d5d3071763816c9e",
+    "sha256": "sha256:b6241141abdfa6b687d7fa9b9f098b798014d52db70ef2ba694987792c2424f3",
+    "subject_disposition": {
+      "exact_duplicate_subject_ids": [],
+      "name_misses_not_merged": {
+        "c2_instances.json": [
+          "c2_instances.json",
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json"
+        ],
+        "c3_structures.json": [
+          "c3_structures.json",
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json"
+        ],
+        "kuzu_nessie_db": [
+          "kuzu_nessie_db",
+          "s3://opal-estate-report/kuzu_nessie_db"
+        ],
+        "motif_c2c3_materialize.json": [
+          "motif_c2c3_materialize.json",
+          "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize.json"
+        ],
+        "motif_c2c3_materialize_ab.json": [
+          "motif_c2c3_materialize_ab.json",
+          "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json"
+        ],
+        "nerves-edges.json": [
+          "nerves-edges.json",
+          "org/modules/graph/nerves-edges.json"
+        ],
+        "nerves-risk-edges.json": [
+          "nerves-risk-edges.json",
+          "org/modules/graph/nerves-risk-edges.json"
+        ]
+      },
+      "note": "a subject that is not a path is NOT a missing path; the four shapes are counted separately and never collapsed",
+      "subjects_absent_at_pin": [
+        ".comp-graph/baseline.json",
+        ".comp-graph/graph.json",
+        ".comp-graph/managed_policy_actions_cache.json",
+        ".comp-graph/pathrooting-census.json",
+        ".comp-graph/pydeps.json",
+        "_build_manifest.json.SET",
+        "axes_history.jsonl",
+        "c2_instances.json",
+        "c3_structures.json",
+        "estate-coverage-resolver.json",
+        "kuzu_ac7.db",
+        "kuzu_ac7.dir",
+        "kuzu_nessie_db.fallback.jsonl",
+        "kuzu_nessie_db.local",
+        "motif_c2c3_materialize.json",
+        "motif_c2c3_materialize_ab.json",
+        "nerves-edges.json",
+        "nerves-risk-edges.json",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json",
+        "snap_store.WRITER",
+        "stitch_graph.json"
+      ],
+      "subjects_not_a_path": 32,
+      "subjects_present_at_pin": 16,
+      "subjects_s3_uri": 3
+    }
+  },
+  "compiled_at_commit": "cf66984cfc39e7f45c0799c75be43c4ec1fb7934",
+  "negative_control": {
+    "failing_field": "trust.key.key_expression",
+    "mutation": "set trust.key.key_expression to null on one admitted real card",
+    "result": "NOT_ADMITTED"
+  },
+  "ratification_parent": "d17eee2dc036bb3049d47f8dfd713ab5292b4f4f",
+  "ratifier": "4.0.0_SA_CRO~X",
+  "real_member_control": {
+    "card": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_CARDS_W2/anchor_catalog.json",
+    "identity_space": "bare node-type token strings (e.g. 'S3_BUCKET', 'PipelineScript'), used as set members and matched by equality against a motif's constituent types",
+    "key": "EVENT_RULE",
+    "member": "compute-orchestration",
+    "predicate_result": "PASS",
+    "source_blob_at_pin": "40465b29c5c0714f1a569718820df2f8ddfb41ee",
+    "source_path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_canonical_ab_catalog.py",
+    "target_space_predicate": "^[A-Z][A-Z0-9_]*$"
+  },
+  "registry": {
+    "blob_matches_at_pin": 72,
+    "candidate_set_digest": "d1e07efb2829a63674e02351c459de6d03605fab87841f5b2ebf3d26f71b44cc",
+    "candidate_set_digest_recomputed": "d1e07efb2829a63674e02351c459de6d03605fab87841f5b2ebf3d26f71b44cc",
+    "members": 72,
+    "path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json",
+    "predicate": {
+      "all_non_blank": true,
+      "basis_allowed": [
+        "measured",
+        "held",
+        "inferred"
+      ],
+      "required_fields": [
+        "trust.key.identity_space",
+        "trust.key.key_expression",
+        "trust.key.key_is_stable",
+        "trust.key.crosses_spaces",
+        "trust.key.declared_mapping",
+        "trust.key.basis",
+        "trust.key.evidence",
+        "trust.key.owner"
+      ]
+    },
+    "predicate_sha256": "d57067ed7b0f200fce699841107e805f50acb0eeddad8d2ac8b7e2c54a5ac604",
+    "receiver_key_members_note": "registry v1 keeps every receiver population empty while transform_status is absent; these per-member labels evaluate the unloosened predicate and do not invent a governed transform",
+    "receiver_key_members_unchanged": 0
+  },
+  "schema_version": "1.0",
+  "settled_receipt": {
+    "commit": "f635574b36ef01e958a7513052e755843f374d4c",
+    "live_false_claim": 0,
+    "pass": 72,
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/D11_V31_SETTLED_RECEIPT_cf66984cfc.md",
+    "settled_pin": "cf66984cfc39e7f45c0799c75be43c4ec1fb7934",
+    "unbased": 0,
+    "understates": 0
+  },
+  "status": "PASS",
+  "subject_disposition": {
+    "exact_duplicate_subject_ids": [],
+    "name_misses_not_merged": {
+      "c2_instances.json": [
+        "c2_instances.json",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json"
+      ],
+      "c3_structures.json": [
+        "c3_structures.json",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c3_structures.json"
+      ],
+      "kuzu_nessie_db": [
+        "kuzu_nessie_db",
+        "s3://opal-estate-report/kuzu_nessie_db"
+      ],
+      "motif_c2c3_materialize.json": [
+        "motif_c2c3_materialize.json",
+        "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize.json"
+      ],
+      "motif_c2c3_materialize_ab.json": [
+        "motif_c2c3_materialize_ab.json",
+        "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json"
+      ],
+      "nerves-edges.json": [
+        "nerves-edges.json",
+        "org/modules/graph/nerves-edges.json"
+      ],
+      "nerves-risk-edges.json": [
+        "nerves-risk-edges.json",
+        "org/modules/graph/nerves-risk-edges.json"
+      ]
+    },
+    "subjects_absent_at_pin": [
+      ".comp-graph/baseline.json",
+      ".comp-graph/graph.json",
+      ".comp-graph/managed_policy_actions_cache.json",
+      ".comp-graph/pathrooting-census.json",
+      ".comp-graph/pydeps.json",
+      "_build_manifest.json.SET",
+      "axes_history.jsonl",
+      "c2_instances.json",
+      "c3_structures.json",
+      "estate-coverage-resolver.json",
+      "kuzu_ac7.db",
+      "kuzu_ac7.dir",
+      "kuzu_nessie_db.fallback.jsonl",
+      "kuzu_nessie_db.local",
+      "motif_c2c3_materialize.json",
+      "motif_c2c3_materialize_ab.json",
+      "nerves-edges.json",
+      "nerves-risk-edges.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_instances.json",
+      "snap_store.WRITER",
+      "stitch_graph.json"
+    ],
+    "subjects_not_a_path": 32,
+    "subjects_present_at_pin": 16,
+    "subjects_s3_uri": 3
+  },
+  "to_id": "NFRA_SUBSTRATECARDING.TO-KEYFILL-RAT"
+}
