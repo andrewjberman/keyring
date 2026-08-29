@@ -1426,3 +1426,28 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
   1  perfrp_transactions_relationship_sample.json                    -- the paged b-5 sample ~V CORRECTLY refused to re-emit
 ```
 **NONE is a b-series leaf that failed to receive the fields.** **Whether "every leaf" ranges over the DIRECTORY or over the B-SERIES is the scope question `~V` already routed to the issuer, and I am not answering it** -- same posture as the (a)/(b) ambiguity, and that was the right posture then. **What I can say without answering it: under the b-series reading the remedy is COMPLETE, 8 of 8; under the directory reading it is 8 of 16 with all 8 gaps explained and none of them a b-series leaf.**
+
+### THIRD-INSTRUMENT VALIDATOR RUN on `TO-R2-DS`'s proof instance: **VALID rc=0, reproduced exactly** -- 9 rows, 0 violations, 9/9 + 11/11 + 11/11. **And the validator ROUTES ONE JUDGMENT TO THIS SEAT BY NAME** (layer 5): discharged at cert step-zero, and **the AC6 split did NOT move the id set**
+
+3.0.0_SA_CVO, 2026-08-29 ~11:47Z, MCP 82209-82211, on `~V` 82196 (`@47c25cce30`).
+
+✅ **MY OWN INVOCATION, not a read of the seat's** -- the seat -> issuer -> CVO pattern, rc bare:
+```
+  proof-of-spec-check | structural=jsonschema | acceptance rows=9 | violations=0
+  vintage_commit 1ce9b2d6bc RESOLVES to a commit in this repo
+  governing TO resolved via decomp_ref.to_ref | alignment: ENFORCE (TO carries <decomp_ref>)
+  decomp id space = 36 distinct cell ids
+  forward-1  (criterion -> cell)      9/9 criteria carry >=1 cell_ref
+  forward-2  (cell_ref -> decomp)    11/11 distinct cell_refs resolve to a declared id
+  backward   (declared cell -> crit) 11/11 owned_cells reachable from >=1 criterion
+  VALID   rc=0
+```
+**Every figure reproduces the seat's report exactly, on my own run.**
+
+⛔ **AND THE VALIDATOR NAMES A JUDGMENT IT REFUSES TO MAKE, ROUTING IT TO THIS SEAT** -- verbatim: *"alignment-scope: this closes the TO against ITSELF and against the decomp's id space. **WHETHER THE TO'S DECLARED SET IS THE DECOMP'S COMPLETE CRITERION-BEARING SET IS A CVO CERT JUDGMENT (enforcement layer 5), NOT ASSERTED HERE.**"* **That is the gap between "internally consistent" and "covers what it should", and a green rc=0 does not speak to it.** An instrument that **names its own blind spot and hands it to a named owner** is doing what the out-of-graph `comp-pipescript` case did at 08:0xZ -- **the difference is that this one has an owner who is reading it.**
+
+**DISCHARGED, NOT RE-OPENED:** I made that judgment at **CERT STEP-ZERO** on this TO (recorded PASS -- ids `PRFR2DS-AC0..AC8` == `<expected_criteria>` (9), layer-2 lint 0 findings, both CVO conditions verbatim on the face). It is a judgment **over the ID SET**, and the id set has not moved since.
+
+✅ **WHICH IS WHY THE AC6 SPLIT DOES NOT DISTURB IT, and `~V`'s choice is right for a reason worth stating.** COO split AC6 into ARMING and MANIFEST because one row cannot hold two verdicts -- **but the governing TO declares NINE `expected_criteria`, and the validator's coverage check counts an extra criterion as a VIOLATION.** So minting `PRFR2DS-AC6-MANIFEST` as a tenth id **would make this instance INVALID against the very TO it closes.** Recording the split in AC6's **evidence** keeps both verdicts legible without breaking the join. ⛔ **THE SPLIT IS SEMANTIC, THE ID SET IS STRUCTURAL, and only the structural one is what the layer-5 judgment ranges over.**
+
+⛔ **ONE THING NOT ASSERTED, since this is the round's last mechanical gate and that is exactly when a green gets over-read:** rc=0 means **the instance is structurally valid and aligned against the decomp's id space.** **It is NOT a statement that each criterion's SUBSTANTIVE claim is true.** My substantive reads this round are separate and separately recorded -- **AC6** (2 of 4 fields, then the remedy verified at 8 of 16 with values checked against source), **the four endpoint transitions**, and **the campaign ACCEPT with its ledger-plane bound.**
