@@ -43,12 +43,16 @@
       "reference_only_not_reached": 18437
     },
     {
-      "subject": "motif_to_path",
-      "status": "NOT MEASURED HERE -- instrument mismatch, disclosed",
-      "why": "this seat's population was the 1,678 raw motif-edge targets matched by containing '/'; those ids are NOT repo paths in BEHAVIOR's id form (0 of 1,678 intersect the 3,726 BEHAVIOR paths -- the instrument, not the world). COX 79921: 1,502 targets embed a path, 1,400 extract-and-resolve, 91 DISTINCT RESOLVING PATHS. The overlap that means something is COX's 91 resolved paths vs the BEHAVIOR set, computed on COX's shard list at the re-emission; this seat will compute it the moment the 91 are handed over or read from the shard.",
-      "raw_targets_observed": 1678,
+      "subject": "motif_to_path (COX's 91 resolved endpoints, handed over 79953)",
+      "population": 91,
       "reference": "L2 BEHAVIOR (repo paths)",
-      "reference_size": 3726
+      "reference_size": 3726,
+      "both": 0,
+      "store_only": 91,
+      "reference_only_not_reached": 3726,
+      "status": "MEASURED -- and the 0 is the WORLD this time, by FRAME: disjoint populations",
+      "why": "all 91 resolved endpoints are under portal/ (91 of 91, COX 79953). BEHAVIOR's entity set has 0 of 3,726 ids under portal/ -- by construction: `git ls-files --stage portal` = 160000 (a submodule gitlink), so a Git-DAG walk of the workspace repo never sees a portal file path; it sees one pointer. The bridge reaches the portal frontend ONLY; the BEHAVIOR view sees the workspace ONLY. Not a coverage failure of either; a frame disjointness that wave 2 cannot fuse across until a BEHAVIOR view is measured over the portal submodule's OWN history (a NAMED GAP for the BEHAVIOR view's producer, not this wave). Positive control: the same test against STRUCTURE's ids also finds 0 'portal/'-prefixed ids (its portal-layer nodes use a different id form), so the check discriminates on id form, not on presence.",
+      "instrument_caveat": "existence != correctness: each of the 91 resolves on disk; whether it is the file the producer meant is NOT RUN (COX's failure_mode row) -- the overlap inherits that."
     },
     {
       "subject": "motif_to_pipeline (motif-sourced edge targets, pipeline:*)",
@@ -63,7 +67,8 @@
   "notes": [
     "COX 79947: stitch ARN population 1,689 = 1,683 classes_data + 6 edge-only dangling endpoints; this file uses the 1,683 node population for arn_to_service and the edge targets for the motif bridges, so the 6 appear in motif_to_arn's target set if any motif edge reaches them.",
     "positive control: each 'both' is recomputed as len(pop & ref); a synthetic id injected into pop raises store_only by exactly 1 (asserted below).",
-    "motif_to_path row REPLACED after the first emission: a 0-overlap on raw targets would have shipped as a finding; it is a wrong-population read. The other three rows use id sets that are in the same form on both sides (arn:* / pipeline:*)."
+    "motif_to_path row REPLACED after the first emission: a 0-overlap on raw targets would have shipped as a finding; it is a wrong-population read. The other three rows use id sets that are in the same form on both sides (arn:* / pipeline:*).",
+    "motif_to_path row MEASURED at 00:4xZ on COX's 91: both 0 / store_only 91 / not reached 3,726 -- the WORLD (portal is a submodule gitlink; BEHAVIOR carries no portal/ path), not the instrument as the earlier raw-target 0 was."
   ],
   "positive_control": "PASS: injected id moved store_only by exactly 1"
 }
