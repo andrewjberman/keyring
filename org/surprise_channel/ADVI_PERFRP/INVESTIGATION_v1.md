@@ -1451,3 +1451,41 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ✅ **WHICH IS WHY THE AC6 SPLIT DOES NOT DISTURB IT, and `~V`'s choice is right for a reason worth stating.** COO split AC6 into ARMING and MANIFEST because one row cannot hold two verdicts -- **but the governing TO declares NINE `expected_criteria`, and the validator's coverage check counts an extra criterion as a VIOLATION.** So minting `PRFR2DS-AC6-MANIFEST` as a tenth id **would make this instance INVALID against the very TO it closes.** Recording the split in AC6's **evidence** keeps both verdicts legible without breaking the join. ⛔ **THE SPLIT IS SEMANTIC, THE ID SET IS STRUCTURAL, and only the structural one is what the layer-5 judgment ranges over.**
 
 ⛔ **ONE THING NOT ASSERTED, since this is the round's last mechanical gate and that is exactly when a green gets over-read:** rc=0 means **the instance is structurally valid and aligned against the decomp's id space.** **It is NOT a statement that each criterion's SUBSTANTIVE claim is true.** My substantive reads this round are separate and separately recorded -- **AC6** (2 of 4 fields, then the remedy verified at 8 of 16 with values checked against source), **the four endpoint transitions**, and **the campaign ACCEPT with its ledger-plane bound.**
+
+### AC7 ROUND-CLOSE READ TAKEN -- **all three limbs on the live plane, EACH WITH A POSITIVE CONTROL**: publisher **DISABLED**, grant **UNSET**, **ZERO platinum keys** -- and the strongest limb is that **no `platinum/` prefix EXISTS in the bucket at all.** **APPLIED (negative).** One bound stated on the grant limb
+
+3.0.0_SA_CVO, 2026-08-29 ~11:53Z, MCP 82256-82259, round closed. **AC7 is a LIVE NEGATIVE READ, and a negative read without a positive control is worth nothing** -- so each limb carries one.
+
+**LIMB 1 -- SCHEDULER STATE**
+```
+  advi-49f-publisher    State = DISABLED   (group: default)
+  POSITIVE CONTROL, same instrument, same call -- 7 schedules read ENABLED:
+    smartx-assets-daily-pull-daily | mdpf-scheduled-floor | mdpf-accrual-bridge-daily
+    opal-assets-ingest-mirror-cot-daily-et | estate-report-0900et
+    opal-assets-mdpf-portal-publisher-daily | wsd-49f-partner-held-etf-pull-daily
+```
+**The instrument CAN see a non-DISABLED state -- seven of them. So DISABLED is an OBSERVATION, not a blind read.**
+
+**LIMB 2 -- THE GRANT**
+```
+  OPAL_ADVI_PUBLISH_GRANT = UNSET, tested with ${VAR+x} parameter expansion, which
+  DISTINGUISHES UNSET FROM SET-BUT-EMPTY (a set-to-empty var is still SET, and `-z "$VAR"` cannot tell them apart)
+  POSITIVE CONTROL: the identical test on TEMP returns SET.   Denominator: 75 env vars, 0 matching PUBLISH_GRANT.
+```
+
+**LIMB 3 -- PLATINUM KEYS, the strongest of the three**
+```
+  opal-data-49financial/platinum/        ZERO objects (no Contents key)
+  opal-data-49financial/platinum/advi/   ZERO objects
+  STRONGER: the bucket's ONLY top-level prefixes are `_code/` and `gold/` -- NO platinum/ prefix exists at all.
+  POSITIVE CONTROL: same instrument, same bucket, prefix gold/advi/ -> 970 objects.
+```
+**So the zero is a REAL ABSENCE, not a wrong-prefix blind read** -- the failure that nearly cost me a REFUSED verdict on a working INSURE fire earlier tonight, **when my control sat in the same wrong prefix as my subject.**
+
+**VERDICT: AC7 APPLIED (negative). BUILD-ONLY held, SHOWN not asserted** -- exactly what the criterion demanded, **and the showing is what the controls provide.**
+
+⛔ **THE BOUND, on limb 2 only, because it is the one limb whose plane I should not overstate:** I read **THIS DEVICE'S SHELL ENVIRONMENT.** `~V`'s emitter ran on this same worktree, so it is the same machine -- **but I did NOT capture the emitter's PROCESS environment at its run time**, and an env var can be set for a single invocation without ever appearing in my shell. **So limb 2 is a PRECONDITION read and cannot by itself exclude a per-invocation grant.**
+
+✅ **WHAT CLOSES THAT GAP IS LIMB 3, and it is why I rank it strongest: zero platinum keys is the OUTCOME, not the precondition.** A per-invocation grant that actually published **would have left objects, and there is no prefix to hold them.** ⛔ **The three limbs are not three restatements -- TWO READ THE GATES AND ONE READS THE WORLD, and only the third is immune to the gates being bypassed.**
+
+**That discharges the last queue item:** AC0 census · per-cell rows · AC6 (read, ruled, remedy verified, denominator corrected) · the arming-emission read for this TO and BDPARITY · the third-instrument proof-of-spec run · **AC7 at round close.**
