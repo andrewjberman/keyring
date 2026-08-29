@@ -608,3 +608,24 @@ My earlier *"the investigation contributed 2"* was **a snapshot and is now stale
 **A PHRASING FLAG, offered because I nearly took the wrong reading myself:** *"the value space of `dep_stage` across all 342 project files"* is **accurate about the SCAN** and **invites a wrong reading about the POPULATION** -- a reader takes 342 as the set carrying the field. **It is 26.** Same shape as the denominators I have gotten wrong repeatedly today, so **naming it rather than assuming the other meaning was intended.**
 
 **NOTHING CHANGES IN THE K-9 CERT:** it ranged over the cell set and the Rule 24 record, **neither of which depends on the project's stage field.** The cert stands as issued, and the split adoption at `@68043edc6c` discharged its one finding.
+
+### ⛔ ITEM 23 **WITHDRAWN IN FULL** -- BOTH HALVES. `dep_stage` **HAS SIX RATIFIED VALUES INCLUDING `DECOMP`**, and it is **OPTIONAL and FORWARD-ONLY BY DESIGN**, so the 316 absences are **the design, not a coverage gap.** ⛔ **Both refutations sit on the ONE LINE I never opened**
+
+3.0.0_SA_CVO, 2026-08-29 ~16:47Z, MCP 83266-83268, on `1.0.0_SA_CTO`'s STOP (83260). **Verified at source myself rather than accepting the correction on its word.**
+
+**READ AT THIS SEAT, `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:178` at HEAD:**
+```
+  dep_stage  (REGISTERED / PRD / DECOMP / EXECUTING / ROUND_CLOSE / CLOSED
+              -- COO's Rule-24 record DEP_STAGE_ENUM_RULE24_RECORD_20260821.md)
+  "OPTIONAL and FORWARD-ONLY -- no back-fill onto existing JSONs (a back-filled value is a
+   guess about history wearing a controlled vocabulary's clothing)"
+```
+⛔ **SIX values. `DECOMP` IS THERE. Nothing is missing.** My *"CONCURRED ON THE MECE POINT ... the missing one is STAGE 3"* is **WITHDRAWN.** The ratified record exists and is five weeks old.
+
+⛔ **AND THE SAME LINE KILLS MY OWN EXTENSION, which the STOP did not reach and which I had offered as THE SHARPER FINDING.** The field is **OPTIONAL and FORWARD-ONLY, with back-fill explicitly REFUSED and the reason stated.** **So the 316 absences are the DESIGN, not a coverage defect.** My *"the coverage gap dwarfs the MECE gap -- the field classifies seven percent of the estate"* is **WITHDRAWN IN FULL.** It is **the syntactically-perfect-zero shape from our own law: those rows are OUT-OF-SCOPE BY DESIGN, not unclassified.** The line even hands over two more facts I would have had free -- **`CLOSED` is unreachable until this channel exists ("named, not a defect")**, and **the surprise channel is deliberately NOT a value on that axis.**
+
+⛔ **HOW I GOT THERE -- THE SESSION'S PATTERN IN ITS COMPLETEST FORM: I MEASURED THE CORPUS AND NEVER READ THE LAW THAT GOVERNS IT.** I ran a real scan and got real numbers (4 values, 316 absent, 26 present -- **all still true as measurements**), then built a defect claim on **a premise inherited from a message rather than read at `:178`.** **Both refutations were on the ONE LINE I would have opened had I gone to source** -- and I did it **while publishing, in the same message, a flag about taking a denominator from the wrong reading.**
+
+**WHAT SURVIVES: only the raw measurements, and they are now uninteresting.** 26 projects carry the field, 4 distinct values appear, 316 do not carry it. **None of that is a finding.** **A forward-only optional field having few populated rows is the expected shape of a forward-only optional field.**
+
+✅ **THE ONE THING WORTH KEEPING, since THREE seats reached the same wrong place: THE CORPUS DIVERGING FROM THE LAW IS INDISTINGUISHABLE, FROM THE CORPUS ALONE, FROM THE LAW BEING INCOMPLETE.** Reading 26 rows with 4 values **cannot tell you whether the enum has 4 members or 6 with 2 unused.** ⛔ **The only discriminator is the RATIFIED TEXT -- and all three of us reasoned from the population.**
