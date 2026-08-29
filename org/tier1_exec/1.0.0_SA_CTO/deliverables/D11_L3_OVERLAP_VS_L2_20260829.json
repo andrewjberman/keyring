@@ -1,0 +1,69 @@
+{
+  "issued_by": "1.0.0_SA_CTO~X",
+  "issued_at": "2026-08-29T00:34:36+00:00",
+  "stitch_graph": {
+    "path": "infra/aws/globgrph/stitch_graph.json",
+    "sha256_lf": "bdceef1ff935d71a",
+    "aws_snapshot": "snapshots/20260725/graph-20260725.tar.gz",
+    "total_edges": 43633,
+    "motif_source_edges": 5110,
+    "motif_edge_types": {
+      "CONTAINS": 5110
+    },
+    "motif_target_prefixes_other": {
+      "endpoint": 56,
+      "service-principal": 12,
+      "event-source": 83
+    }
+  },
+  "l2_record": {
+    "path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json",
+    "bytes_of": "64ae1ae879 (on origin via 7f5e2bcc3b)",
+    "STRUCTURE_entities": 19482,
+    "BEHAVIOR_entities": 3726
+  },
+  "frame": "population = the id set the stitch graph carries for the subject (classes_data nodes for ARNs; motif-sourced edge targets for bridges); reference = the ratified L2 view entity set; 'both' = set intersection; 'store_only' = in stitch, outside the ratified set; 'reference_only_not_reached' = ratified entities the bridge never touches (MISSING, not zero, at wave 2)",
+  "overlaps": [
+    {
+      "subject": "arn_to_service (classes_data ARN population)",
+      "population": 1683,
+      "reference": "L2 STRUCTURE",
+      "reference_size": 19482,
+      "both": 1262,
+      "store_only": 421,
+      "reference_only_not_reached": 18220
+    },
+    {
+      "subject": "motif_to_arn (motif-sourced edge targets, arn-shaped)",
+      "population": 1101,
+      "reference": "L2 STRUCTURE",
+      "reference_size": 19482,
+      "both": 1045,
+      "store_only": 56,
+      "reference_only_not_reached": 18437
+    },
+    {
+      "subject": "motif_to_path",
+      "status": "NOT MEASURED HERE -- instrument mismatch, disclosed",
+      "why": "this seat's population was the 1,678 raw motif-edge targets matched by containing '/'; those ids are NOT repo paths in BEHAVIOR's id form (0 of 1,678 intersect the 3,726 BEHAVIOR paths -- the instrument, not the world). COX 79921: 1,502 targets embed a path, 1,400 extract-and-resolve, 91 DISTINCT RESOLVING PATHS. The overlap that means something is COX's 91 resolved paths vs the BEHAVIOR set, computed on COX's shard list at the re-emission; this seat will compute it the moment the 91 are handed over or read from the shard.",
+      "raw_targets_observed": 1678,
+      "reference": "L2 BEHAVIOR (repo paths)",
+      "reference_size": 3726
+    },
+    {
+      "subject": "motif_to_pipeline (motif-sourced edge targets, pipeline:*)",
+      "population": 1291,
+      "reference": "L2 STRUCTURE",
+      "reference_size": 19482,
+      "both": 1291,
+      "store_only": 0,
+      "reference_only_not_reached": 18191
+    }
+  ],
+  "notes": [
+    "COX 79947: stitch ARN population 1,689 = 1,683 classes_data + 6 edge-only dangling endpoints; this file uses the 1,683 node population for arn_to_service and the edge targets for the motif bridges, so the 6 appear in motif_to_arn's target set if any motif edge reaches them.",
+    "positive control: each 'both' is recomputed as len(pop & ref); a synthetic id injected into pop raises store_only by exactly 1 (asserted below).",
+    "motif_to_path row REPLACED after the first emission: a 0-overlap on raw targets would have shipped as a finding; it is a wrong-population read. The other three rows use id sets that are in the same form on both sides (arn:* / pipeline:*)."
+  ],
+  "positive_control": "PASS: injected id moved store_only by exactly 1"
+}
