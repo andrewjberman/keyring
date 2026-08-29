@@ -1018,3 +1018,27 @@ Tighter and better-grounded than the ~09:35Z shared asymmetry deadline, **which 
 **PREDICTION SCORECARD: the MUST-CHANGE limb is 2 of 2.** The **MUST-NOT-CHANGE limb is UNTESTED** -- 2026-08-18 and 2026-08-27 are still ahead, now carrying the write gate so "unchanged" cannot pass by non-execution. **Those are the informative ones: a CHANGE there refutes the mechanism from the other side.** **STILL NOT CLAIMED: that schema version is the CAUSE.** Two confirmations of a predicted direction do not make a mechanism, and the sizes (+71.6% and +71.5%) say the content moved substantially, **not why**.
 
 **STATE: frontier 2026-07-15, 508 COMPLETE at 09:05:34Z, driver pid 169485, no halt.**
+
+### THE 2026-07-17 HALT AND ITS RECOVERY: **the d1/d2 taxonomy DOES NOT TRANSFER to this date** -- d2 was defined as a FIRST-EXERCISE branch defect and the first exercise had already passed three times. **The re-drive settled it in 5.2 min: d1.** And I came one read from filing "driver DEAD" off a **STALE PID**
+
+3.0.0_SA_CVO, 2026-08-29 ~09:21-09:23Z, MCP 81677-81680.
+
+⛔ **THE NEAR-MISS FIRST, because it was one read from a false alarm to three seats.** I read the driver pid as **169485** -- carried in my head from 08:39Z -- found no such process in `ps`, and was composing *"driver DEAD, campaign halted."* **THE PID FILE HAD ALREADY ADVANCED TO 443985.** 169485 is the **dead predecessor**; the live driver is 443985, confirmed in `ps` running `CAMPAIGN_DRIVER.py --run`. **My "not in ps" was TRUE about the pid I held and FALSE about the subject I meant.** A remembered identifier is not an identity, the pid FILE is the authority, and it was one read away. **Arriving on the liveness gate I had published forty minutes earlier as the fix for a confounded envelope** -- the gate was right and I nearly fed it a stale subject.
+
+**THE HALT, MEASURED:** `2026-07-17 ARTIFACT-INCOMPLETE, ssm=Cancelled, ledger_written_utc 09:16:19Z, artifact_evidence ABSENT, problems ABSENT` -- the `:492-497` early-return path, so **the oracle never ran**.
+
+⛔ **THE POINT THAT MATTERS AND IT IS A RULE-24 ONE: THE d1/d2 SPLIT WAS BUILT FOR 2026-07-14 AND DOES NOT TRANSFER TO 07-17 UNCHANGED.** `1.0.0_SA_CTO` defined **d2 as a FIRST-EXERCISE BRANCH DEFECT** -- *"persistent; the re-drive returns INCOMPLETE AGAIN"* -- and **its entire premise was that the attested branch had NEVER EXECUTED.** **MEASURED: it had by then executed and SUCCEEDED THREE TIMES** (2026-07-14, 07-15, 07-16, all ARTIFACT-COMPLETE on `converter-attested` with real `attested` counts). **So a systematic first-exercise branch defect was REFUTED BY THREE POSITIVE CASES before 07-17 ever failed**, and *"the branch has never run and its first run fails"* was not available as an explanation for the fourth attested date.
+
+**THAT IS NOT THE SAME AS "therefore d1", and I said so before the answer arrived.** A date-specific defect remained possible. What was excluded is the **SPECIFIC d2 hypothesis as defined** -- and continuing to reason inside a two-cell taxonomy whose second cell has been refuted is **applying a schema past its DECLARED DOMAIN**, the postulate-(i) failure this fabric spent the night retiring. The live cell at 07-17 was *"ambiguous non-Success failure"*, whose members are the periodic halt and an unnamed date-specific cause.
+
+**TWO INDEPENDENT LINES POINTED AT THE PERIODIC HALT -- different substrates, neither derived from the other:** **(a) TIMING** -- CTO's revised cadence put the periodic halt at **09:13-09:19Z** and the halt landed at **09:16:19Z**, near the centre of a window **predicted before the event rather than fitted after it**; **(b) BRANCH HISTORY** -- three consecutive successful attested drives immediately preceding, which the timing argument does not use.
+
+✅ **AND THE RE-DRIVE SETTLED IT, WHICH IS CTO'S RULING WORKING EXACTLY AS WRITTEN:**
+```
+  2026-07-17  ARTIFACT-INCOMPLETE  ssm=Cancelled  09:16:19Z   evidence ABSENT
+  2026-07-17  ARTIFACT-COMPLETE    ssm=Success    09:21:33Z   evidence PRESENT, basis converter-attested
+  recovery 5.2 min -- INSIDE the 3.1-10.7 min envelope, at its MEDIAN (4.5).
+```
+**d1 CONFIRMED. Not a branch defect.** The envelope now carries **n=8** INCOMPLETE recoveries and this one required a relaunch like every other -- **the corrected reading, not the "arrives by itself" one I had to retract.** The attested branch stands at **five** successful dates (07-14, 15, 16, 17, 20); frontier **2026-07-20, 511 COMPLETE of 520 rows at 09:23:10Z**.
+
+**PUSH-STATE ASYMMETRY CLOSED.** `0.0.0_AB_MSTR`'s **WINDOW 39** picked it up: origin/CLOUD **@8c9f055415**, and **`c7081d3e7e` (the correction), `39e3c85e03` (ETag baseline) and `d74604a9e7` (the transition read) are ALL ON ORIGIN**, measured 09:19:39Z by `ls-remote` + `merge-base --is-ancestor` per commit. **The published record no longer carries my "no manual act" claim without its retraction** -- the three-carrier disagreement I flagged at 81640 lasted about nine minutes.
