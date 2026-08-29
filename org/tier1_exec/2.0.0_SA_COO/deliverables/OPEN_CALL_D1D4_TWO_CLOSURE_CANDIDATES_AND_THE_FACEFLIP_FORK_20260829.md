@@ -1,4 +1,4 @@
-# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (5 calls, 2026-08-29 ~07:4xZ; cards 4-5 added ~08:1x-08:2xZ)
+# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (6 calls, 2026-08-29 ~07:4xZ; cards 4-5 added ~08:1x-08:2xZ, card 6 ~12:0xZ)
 
 **Why this file exists and is not just a message:** the finding below was routed to
 `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` at 20260829T072xZ and lived ONLY in that message. Measured
@@ -15,7 +15,7 @@ recommendation is his to accept or refuse rather than mine to act on.
 
 BLOCKING (nothing waits on the word operationally — but the register is wrong until it comes)
 
-+-- CALL 1 of 5 ---------------------------------------------------------------+
++-- CALL 1 of 6 ---------------------------------------------------------------+
   **`D1_NAMEDISCOVERY` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 3 TO faces read `COMPLETE — ROUND 1 ACCEPTED + CERTIFIED`; open TOs ZERO
   (`total=0, scanned=2172`, positive-controlled against `D1_CATVIEWS` -> `total=3`).
@@ -29,7 +29,7 @@ BLOCKING (nothing waits on the word operationally — but the register is wrong 
   acts. Here neither is. **The close needs one smoke and one word, or (b) and I carry it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 2 of 5 ---------------------------------------------------------------+
++-- CALL 2 of 6 ---------------------------------------------------------------+
   **`ETFS_POSITIONING` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 9 TO faces terminal (complete / closed / superseded); open TOs ZERO, same control.
   Its round 2 was registered as its OWN project, `ETFS_INGEST` — so no round remains here.
@@ -41,7 +41,7 @@ BLOCKING (nothing waits on the word operationally — but the register is wrong 
 
 CARRIED (answer whenever — nothing is blocked)
 
-+-- CALL 3 of 5 ---------------------------------------------------------------+
++-- CALL 3 of 6 ---------------------------------------------------------------+
   **The face-flip check: build it now, or does D1+D4 keep priority? (a) build / (b) hold.**
   YOU authorized it 2026-08-26 ~21:07Z (Card B) and routed it verbatim: *"the face-flip check
   enters Rule 27 as a build item — COO routes/seats it under the standing gates."* Spec exists
@@ -59,7 +59,7 @@ CARRIED (answer whenever — nothing is blocked)
   STATUS that lies. **The project-level analogue is a gap in the spec, not a bug in it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 4 of 5 ---------------------------------------------------------------+
++-- CALL 4 of 6 ---------------------------------------------------------------+
   **Five UNTRACKED alarm/monitor `.tf` files sit in the estate's terraform trees, 1,008
   lines, declaring 7 CloudWatch metric alarms. Commit, delete, or apply? (a) delete /
   (b) commit as held drafts / (c) something else.**
@@ -80,7 +80,7 @@ CARRIED (answer whenever — nothing is blocked)
 +-------------------------------------------------------------------------------+
 
 
-+-- CALL 5 of 5 ---------------------------------------------------------------+
++-- CALL 5 of 6 ---------------------------------------------------------------+
   **`ADVI_49F` P14-VEHICLE V14-1's last open leg is an exercise whose FAILURE MODE STOPS AN
   EC2 HOST. Authorize it? (a) run it / (b) hold.** This seat is `ADVI_49F`'s `coo_lane`, so
   the word would normally be mine — **but CLAUDE.md reserves stopping EC2 to HUMAN
@@ -98,6 +98,34 @@ CARRIED (answer whenever — nothing is blocked)
   ⚠ **If (b), it stays open and alarming indefinitely; there is no third state that is honest.**
 +-------------------------------------------------------------------------------+
 
+
+
++-- CALL 6 of 6 ---------------------------------------------------------------+
+  **One Bloomberg range query, to settle whether delay DESTROYS history or merely DELAYS
+  it. Authorize it? (a) yes / (b) no / (c) it can wait.** A card in `ETFS_POSITIONING` is
+  HELD pending exactly one measurement, that measurement is a VENDOR CALL, and a vendor call
+  needs your explicit per-use word. **Nobody has asked for it, so the card has been held on
+  a gate nobody opened.**
+  -------------------------------------------------------------------------------
+  **REC —** **(a), and note the claim under question is MINE.** The record carries my
+  framing — *"every day of delay PERMANENTLY LOSES a day"* — flagged **UNSETTLED, may rest
+  on a conflation**: `READ_HERE`'s current-day-only property is stated of the DERIVED
+  CONSTITUENT layer (count/sector/geo/top-ten), while `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` is
+  a RETURNS field, and Bloomberg serves returns HISTORICALLY — which is what `history_topup`
+  already pulls. ⭐ **If that is right, my urgency framing is wrong and should be withdrawn
+  rather than acted on.**
+  **THE MEASUREMENT, no new code:** run the existing range logic with a start EARLIER than
+  the prior manifest's end and see whether Bloomberg returns the earlier days. **YES → waiting
+  delays history, does not destroy it, and the urgency framing is withdrawn. NO → the urgency
+  is real and the card goes up with it.**
+  ⛔ **NOT RUN, measured: no result recorded, and `0.4.0_DS_ClientPlatform~Z` has zero commits
+  on it.** ⛔ **AND NOBODY MAY RUN IT WITHOUT YOUR WORD** — CLAUDE.md: *never call an external
+  vendor API without Andrew's explicit per-use word; availability is not authorization.*
+  ⚠ **WHY IT SURFACES ONLY NOW: it was buried in a 5,930-character `blocking` field and
+  absent from this register.** Found by reconciling project records rather than TO faces.
+  ⚠ **If `0.4.0_DS_ClientPlatform~Z` can answer it from ALREADY-PULLED manifests without a
+  new call, that is their lane to say and it needs no word from you at all.**
++-------------------------------------------------------------------------------+
 
 NOT-MINE (pointer only -- these belong to another lane and are NOT counted in the 5 above)
 
@@ -139,5 +167,5 @@ is re-opened or a new one is cut, and neither is contradicted by closing today.
 ---
 
 **raised:** `2.0.0_SA_COO~Z` · **2026-08-29 ~07:4xZ** · **status: calls 1–2 at your next terminal;
-cards 3–5 whenever — cards 4 and 5 are not mine to close either way.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 (`ETFS_INGEST`), all on the
+cards 3–6 whenever — cards 4, 5 and 6 are not mine to close either way, and card 6 asks about a claim of MINE that may be wrong.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 (`ETFS_INGEST`), all on the
 13:30Z / 13:00Z scheduled fires — verified ENABLED on both EventBridge planes this session.
