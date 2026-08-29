@@ -87,6 +87,34 @@ by me at any point.
   ship. Tonight's SMA dollars are all genuine carve-outs, so the figures are sound **under the
   current rule** — which Andrew has since ruled must change.
 
+## 3a. ⭐ AMENDMENT ~04:2xZ — THE CDN EDGE RUNG, WHICH §1 DID NOT COVER
+
+**The verdict above was measured on S3. The application reads CloudFront.** The platinum key is
+UNDATED, so a cached pre-reland body at the edge would be **byte-indistinguishable by key** from the
+fresh one — the exact hazard this instrument documents for S3, which I had not carried one rung
+further out.
+
+```
+  REAL RS256 BEARER (minted from the committed smoke cred; never printed)
+  /api/general/mdpf/49financial/category-views.json  http=200  X-Cache=Miss from cloudfront
+     as_of 2026-08-27 . ETF bucket 22,794,766.25 . 2 of 4 members non-null
+       divz 18,783,379.8116 . pfoe 4,011,386.4409 . idvz None . pfde None
+  /api/general/mdpf/global/category-views.json       http=200  X-Cache=Miss from cloudfront
+       divz 18,783,379.81   . pfoe 4,011,386.44   . idvz None . pfde None
+```
+
+> ⭐ **`X-Cache=Miss` IS THE DISCRIMINATING FIELD.** The edge went to origin for this body, so it is
+> not serving a cached pre-reland copy. **A `Hit` with a non-zero `Age` would have been the failure
+> this check exists to find, and the JSON would have looked identical.**
+
+✅ **THE DATA PATH IS THEREFORE VERIFIED END TO END: gold -> platinum -> CDN edge.**
+**And the promote landed:** entry chunk `index-BamLAu6Q.js`, `Last-Modified Sat, 29 Aug 2026
+04:08:41 GMT` — **after** the 04:00Z ledger open. Hash CHANGED **and** timestamp AFTER; both legs.
+
+⛔ **THE PIXEL RUNG REMAINS OPEN AND IS NOT INFERRED FROM THIS.** *The bytes the application fetches*
+and *the pixels a human sees* are different claims. **A render read is still owed against these
+artifacts, and a default-stub render is the failure state.**
+
 ## 4. THE CONTROL THAT IS STILL EXCLUDED, AND WHY
 
 `Client + SMA == 290,426,813.47` passes — **and it passed on the broken artifact too.** It remains
