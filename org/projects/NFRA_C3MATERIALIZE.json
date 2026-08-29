@@ -24,7 +24,7 @@
       "6.3": {
         "name": "FIRM SEPARATION SURVIVES FUSION",
         "state": "EVALUATED_FALSE",
-        "measured": "wave 2, BOTH frames, sign agreement TRUE, corroborated exactly across two independent instruments; cause ANSWERED (SNF's own smoothing plus a content-independent second view, K-conditional)",
+        "measured": "wave 2, BOTH frames, sign agreement TRUE, corroborated exactly across two independent instruments; cause ANSWERED (SNF's own smoothing plus a FIRM-BLIND second view, K-conditional). CORRECTED 2026-08-29: this field previously read \"a content-independent second view\", which DROPPED THE QUALIFIER THAT CARRIES THE CONCLUSION. The control at c11d1ff734 says \"the real content of view 2 is irrelevant -- ANY FIRM-BLIND SECOND VIEW FLATTENS IT\". \"Content-independent\" reads as \"content cannot help\" and undermines the firm-carrying remedy; the source says firm-BLINDNESS is the mechanism, which is what makes a firm-CARRYING view the named fix. A compression that inverts the conclusion is not a summary.",
         "bar": "RELATIONAL -- the fused output against ITS OWN INPUTS, re-measured on the fusion's own population under the same pair predicate. The PRD's parenthetical (0.989 / 0.974) are BLOCK and CO-CHANGE PURITIES on the 19,482-node L2 graph, NOT AUCs and NOT a floor on the fused model: metric, view and population all differ.",
         "bar_carrier": "Addendum 1f @76c688fa3d; wave-2 certified rectangle run 20260829T0210Z"
       },
@@ -82,6 +82,21 @@
       "degenerate_read_origin": "the paired-arm rule originates in a 2.0.0_SA_COO~X adversarial read (proposal @28cb632c93): a CONSTANT identity layer, reading nothing, passes 6.1 / 6.2 / 6.4 / 6.5 as worded and fails only 6.3 -- which was itself EVALUATED_FALSE, so the pass set's entire defence against an OVER-PERMISSIVE layer rested on the one open item. Rule 22 DISCRIMINATION: for three of five tests the evidence could not differ if the claim were false.",
       "ruled_by": "1.0.0_SA_CTO~X Addendum 1g @194679fa9d (on 2.0.0_SA_COO~X 82077); PAIRED-ARM RULE + the three adopted negative halves = Addendum 1h @3eadb3999e (on 2.0.0_SA_COO~X 82433 / 3.0.0_SA_CVO~X 122500Z)",
       "superseded_note": "this field previously carried the question as OPEN and issuer-unresolvable. It was ruled SEVEN MINUTES after the field was written; the field is corrected here rather than left for a certifier to find."
+    },
+    "firm_carrying_view_GAP_AND_BAR": {
+      "gap": "the step immediately after wave 3 on route_to_complete exists as FOUR WORDS in a prose string and nothing else -- no definition of 'firm-carrying', no owner, no entry criterion, no oracle. Same shape as 6.1/6.5's missing oracles, same wall-clock consequence (every unspecified step before L4 adds to completion one-for-one).",
+      "measured_controls_at_c11d1ff734": {
+        "view_1_alone": "0.7429 / 0.7404 -- 6.3's relational floor",
+        "view_1_fused_with_ITSELF": "0.6665 -- the METHOD's own smoothing cost, 0.076, isolated from any second view's contribution",
+        "view_1_plus_PERMUTED_view_2": "0.5309 -- what a FIRM-BLIND partner costs",
+        "view_1_plus_view_2_actual": "0.5510 / 0.5114",
+        "K_100": "0.5961 -- K-sensitive, which is why wave 3 is the K-sweep"
+      },
+      "the_bar_this_implies": "a candidate second view does NOT merely need to beat 0.5510. It must recover the method's own smoothing loss AND clear view 1: at least +0.074 (0.7404 - 0.6665) of contribution over the SELF-FUSION baseline before 6.3 can return TRUE.",
+      "proposed_entry_criterion": "admit a candidate second view only if, on the fusion's own population and pair predicate, it beats its OWN PERMUTATION by a stated margin. The instrument exists and has been run once -- rederive_l3w2.py @c11d1ff734 computes the view-1-plus-permuted-view-2 arm.",
+      "why_6.4_does_not_cover_it": "6.4 gates a VIEW on its own discrimination before entering; nothing gates whether that view's CONTRIBUTION to the fused output is firm-bearing. View 2 PASSED 6.4 at 0.5203 while being the thing that flattens the fusion. 1h(iii) ruled 6.4 READ-not-amended (it scopes views ENTERING by design), so this belongs on the firm-carrying view's own oracle, not as a 6.4 amendment.",
+      "LIMIT_on_the_number": "c11d1ff734's fused figures DIVERGE from the COX artifact's (0.5358 vs 0.5114 at 1,820; 0.5699 vs 0.5510 at 1,941), named there as an implementation delta with the explicit caveat that the SIGN is implementation-independent and THE SECOND DECIMAL IS NOT. 0.6665 and +0.074 come from ONE implementation and ONE run: the SHAPE of the bar is proposed, the MARGIN must be recomputed on whichever implementation runs the 6.3 re-run. Quoting +0.074 as a fixed cross-implementation threshold would be the exact second-decimal error that control warns against.",
+      "status": "RAISED to the design lane (82560/82561/82562), NOT declared. An entry criterion for a view is a design-lane object and 1h(iv) binds oracles at the L4 cut."
     },
     "wave_3_note": "the K-sweep discharges NONE of these by its own rectangle's rule; it refines 6.3's answered CAUSE and gates whether L4 is safe to build (identity on a fusion that loses firm separation would merge identities ACROSS firms -- the C3.i defect this project prevents)"
   },
