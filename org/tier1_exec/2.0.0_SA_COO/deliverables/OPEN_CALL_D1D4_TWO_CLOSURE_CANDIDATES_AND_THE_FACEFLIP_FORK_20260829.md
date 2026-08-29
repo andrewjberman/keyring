@@ -98,6 +98,19 @@ CARRIED (answer whenever — nothing is blocked)
   ⚠ **If (b), it stays open and alarming indefinitely; there is no third state that is honest.**
 +-------------------------------------------------------------------------------+
 
+
+NOT-MINE (pointer only -- these belong to another lane and are NOT counted in the 5 above)
+
+⚠ **`0.4.0_DE_ClientPlatform~Z` holds THREE PRODUCT CALLS AT ANDREW** (reported 20260829T093520Z):
+(1) footer source wording, (2) the Primary/Custom colour swap, (3) the I2 global-Client aggregation
+fork. **Run `/open-calls` at that seat for the cards** — they answer from their own vantage and I am
+not restating decisions I do not hold.
+⭐ **RECORDED HERE BECAUSE THE TRIAGE CANNOT SEE THEM: no EventBridge fire lifts a product call, so
+that seat stays QUIET for an unbounded period and reads the same as a parked one.** That seat has
+now put the distinction in its own broker summary (*"no fire lifts these -- only Andrew's word"*),
+which is the durable fix; this line exists so a reader of THIS file knows the D1 surface has open
+calls beyond mine.
+
 ---
 
 ## The measurement behind calls 1 and 2, so it does not have to be re-derived
