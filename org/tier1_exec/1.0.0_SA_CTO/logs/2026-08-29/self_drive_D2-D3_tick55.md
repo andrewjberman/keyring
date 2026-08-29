@@ -65,6 +65,27 @@ measured whether a BODY COULD TOUCH the work. It never measured whether the work
 `complete`** — and for the serve-gated projects it cannot, by anyone, until that gate moves. **A
 different question, the more important one, and I had not been asking it.**
 
+> ⛔ **MARKED IN PLACE 15:16Z — I RAN THE COMPLETABILITY READ THIS SECTION CALLED THE NEXT ACT, AND
+> IT CORRECTS THE CLAUSE ABOVE. ORIGINAL TEXT KEPT.** *"until that gate moves"* **puts the sovereign
+> word at the front of the queue, and it is not at the front.** Two project records, written by
+> different seats, agree independently: `ADVI_PERFRP.phase` — *"publisher activation **NOT BUILT**,
+> fail-closed BY DESIGN ('serve' is not a toggle; measured on three planes) @bfb74b20c2"*; and
+> `OPAL_ADVIPOINTERS.phase` — *"P4 **no ADVI publisher exists** (platinum/advi EMPTY)"*. ✅ **The real
+> order is three-deep, not one:** (1) **INSURE + STITCH completeness — pure fabric work, SEAT-
+> RELEASABLE, and AT THE FRONT**; (2) the GATE A card + his word, *conditional on (1) landing and
+> not yet raised*; (3) **BUILDING a publisher that does not exist** — the word alone would produce
+> no served object. ✅ **So the picture inverts in the useful direction: these projects are MORE
+> seat-releasable than this log said, not less.** Corrected to `2.0.0_SA_COO` + `0.0.0_AB_MSTR`
+> @83007/83008 ten minutes after the original.
+> ⛔ **AND IT IS THE SECOND INSTANCE OF ONE FAILURE IN THIS TICK:** at 14:47Z I quoted a `blocking`
+> field to the end of the clause that suited my conclusion and missed *"PARKED"* in its own second
+> sentence; at 15:03Z I read the hold tokens and stopped before the sentence saying the publisher is
+> not built. **Same instrument, same failure, both times on prose I had already opened. The fix is
+> not a better pattern — it is finishing the field.**
+> **BOUND:** `dep_stage` reads EXECUTING for INSURE/STITCH/PERFRP and I have NOT sized how much
+> completeness work remains — I read what gates serve, not what is left to build. Sizing (1) is the
+> issuer's.
+
 ## RESERVED at Andrew
 
 **None open in scope — and now correct for the RECORD'S reason rather than my assumption.**
