@@ -600,11 +600,22 @@ def check_run_fire(as_of, since, out):
         sr = ((t or {}).get("detail") or {}).get("source") if isinstance(t, dict) else None
         rw = d.get("artifacts") or d.get("rows") or d.get("writes") or []
         cvr = [r for r in rw if CV_TYPE in (r.get("key") or "")]
+        # THE VINTAGE LIMB, ADDED 2026-08-29 AFTER THIS INSTRUMENT PRINTED A FALSE
+        # "RATIFIED" ON THE 13:31Z FIRE. The 132 CONTENT assertions read the objects at
+        # --as-of; the AC row credited a `written` from ANY key in the manifest. The
+        # scheduled run conflicted 49financial/inflection/global at 2026-08-27 and wrote
+        # ONLY cottonwood at 2026-08-28 -- so content came from one vintage and provenance
+        # from another, under one banner. That is the SAME defect as the kind/status split
+        # repaired hours earlier, one level deeper: I fixed the shallow instance and the
+        # deep one survived because both halves were individually true.
+        # >> A PROVENANCE ROW MUST BE PINNED TO THE OBJECT WHOSE CONTENT WAS SCORED. <<
+        at_asof = sorted(set(r.get("status") for r in cvr
+                             if ("/" + as_of + ".json") in (r.get("key") or "")))
         seen.append((os.path.basename(k), kd, sr,
-                     sorted(set(r.get("status") for r in cvr)), len(cvr), len(rw)))
-    for name, kd, sr, st, ncv, ntot in seen:
-        print("  INFO %-58s kind=%r src=%r %s (%d of %d rows)"
-              % ("[FIRE] " + name, kd, sr, st, ncv, ntot))
+                     sorted(set(r.get("status") for r in cvr)), len(cvr), len(rw), at_asof))
+    for name, kd, sr, st, ncv, ntot, at in seen:
+        print("  INFO %-58s kind=%r src=%r all=%s at-%s=%s (%d of %d rows)"
+              % ("[FIRE] " + name, kd, sr, st, as_of, at, ncv, ntot))
     out.append(("[FIRE] a SCHEDULED run is among them",
                 any(s[1] == "scheduled" for s in seen),
                 "kinds=%s across %d manifest(s). This is the ONLY plane carrying "
@@ -616,13 +627,13 @@ def check_run_fire(as_of, since, out):
                 "row counts=%s. ZERO means the type was not built by that run -- a "
                 "DIFFERENT failure from a refused write"
                 % ([s[4] for s in sched] or "no scheduled run in window -- NOT scored")))
-    lift = [s[0] for s in sched if "written" in s[3]]
+    lift = [s[0] for s in sched if "written" in s[6]]
     out.append(("[TM1-AC1/CATV-TON1-AC7] %s WRITTEN by a SCHEDULED run" % CV_TYPE,
                 bool(lift),
-                "lifting manifest(s)=%s. `conflict` = the fire RAN and was CORRECTLY "
-                "REFUSED; `unchanged` = a same-kind re-run, old bytes stand. Only "
-                "`written` lifts, and kind+status must come from ONE manifest."
-                % (lift or "NONE")))
+                "lifting manifest(s)=%s. Counts ONLY a `written` AT as_of %s -- a write "
+                "at a DIFFERENT vintage is another object and cannot certify the one whose "
+                "content was scored. `conflict` = the fire RAN and was CORRECTLY REFUSED."
+                % (lift or "NONE", as_of)))
 
 
 def main():
