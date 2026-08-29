@@ -259,13 +259,28 @@ this log; use the firm token or name the face.**
 
 ## Next Steps
 
-- **[any seat, after 2026-08-29T22:00Z]** Close L4 / score AC3 on `silver/holdings/2026-08-29.parquet`.
-  EXPECT: ABT `cusip 002824100`, `cusip_basis zero-pad-restored`, `cusip_as_delivered 2824100`;
-  ICT `6455819` and MER `B247XZ6` both `as-delivered` and unchanged.
-- **[any seat, after 2026-09-01T13:00Z -- NOT BEFORE]** Close L5 / score AC4 on
-  `gold/holding/date=2026-08-31/holding.parquet`. EXPECT the 0-of-8 population to go **6 -> 5 of
-  189** (four CASH rows + `2602335D`, which stays null BY DESIGN), ABT at 8-of-8, ICT and MER still
-  8-of-8. ⛔ **Do NOT score this on Monday** -- see THE FINDING.
+- **[any seat, after 2026-08-29T22:00Z]** Close L4 / score `POS-TO14-AC3` on
+  `silver/holdings/2026-08-29.parquet`. **FIRST CHECK IS NOT A VALUE** (`0.4.0_DS_ClientPlatform~Y`
+  16901): confirm the columns `cusip_as_delivered` and `cusip_basis` EXIST before reading any
+  identifier -- **column presence discriminates WHICH CODE WROTE the partition; a value only reports
+  what it produced.** Then: ABT stored `cusip` is 9-char `002824100` and `id_kind` moved
+  `unclassified` -> `cusip`; ICT `6455819` and MER `B247XZ6` UNCHANGED, still 7-char, `as-delivered`.
+  ⛔ **DO NOT USE `cusip_basis == 'zero-pad-restored'` AS THE PASS CONDITION -- THIS LINE ORIGINALLY
+  DID.** If TrueShares repairs their own sheet, ABT ARRIVES as `002824100`, `cusip_basis` correctly
+  reads `as-delivered`, and the criterion is STILL SATISFIED: it wants a 9-char stored cusip, not a
+  particular repair path. **A checker pinned to `zero-pad-restored` calls a vendor doing the right
+  thing a failed deploy** -- the likeliest false FAIL here. **Discriminator: `cusip_as_delivered`
+  reads `2824100` if OUR repair fired, `002824100` if the vendor fixed it upstream.** A REAL failure
+  is: ABT still 7-char, OR ICT/MER moved, OR the new columns absent, OR any `cusip_basis` outside
+  {`as-delivered`, `zero-pad-restored`}.
+- **[any seat, after 2026-09-01T13:00Z -- NOT BEFORE]** Close L5 / score `POS-TO14-AC4` on
+  `gold/holding/date=2026-08-31/holding.parquet`. **SCORE THE NAMED ROWS, NEVER THE TOTAL** (16901):
+  the 0-of-8 set must be exactly {four CASH rows, `2602335D`} whatever the row count is, with ABT
+  NOT in it and ICT/MER at 8-of-8. **The `189` is 2026-08-28's count and the criterion's "5 of 189"
+  inherits it** -- `0.4.0_DS_ClientPlatform~Y` measured **187** rows on today's silver, so the
+  denominator MOVES with the holdings and a checker pinned to 189 false-alarms on an ordinary
+  composition change. Print the day's observed total beside the count; do not compare against 189.
+  ⛔ **Do NOT score this on Monday** -- see THE FINDING.
 - **[`2.0.0_SA_COO~Z`]** RAVC2 sent. Validate, or return REWORK against the AC text. Two OBSERVATION
   items are yours in the surprises section below.
 
