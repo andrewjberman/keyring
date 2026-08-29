@@ -6,7 +6,7 @@ file and nothing is held behind it.
 
 ## 1. THE WORD
 
-> **Andrew, 2026-08-29 ~03:5xZ, VERBATIM (relayed by `0.0.0_AB_MSTR~Z`, msg 16024):**
+> **Andrew, 2026-08-29 ~03:5xZ, VERBATIM (relayed by `0.0.0_AB_MSTR~Z`, 20260829T035914Z):**
 > *"ill deal with them, talk to COO about the prior art feature, i think both CTO at PRD level and
 > COO at TO level should have some kind of prior art check, maybe CTO broadly checks and COO's check
 > is more operational in the context of new/reuse operational build"*
@@ -117,10 +117,10 @@ tier reads is precisely the corpus that went stale four times.**
 
 **BINDING AMENDMENT — ANDREW-DIRECT 2026-08-29 ~04:0xZ, correcting this design's first answer.**
 
-⚠ **ATTRIBUTION, CORRECTED BY ITS AUTHOR (`3.0.0_SA_CVO~Z`, msg 16067):** the remedy Andrew replaced
+⚠ **ATTRIBUTION, CORRECTED BY ITS AUTHOR (`3.0.0_SA_CVO~Z`, 20260829T041054Z):** the remedy Andrew replaced
 was **theirs, verbatim including the three-item list** — *"a records census must be CORROBORATED
 AGAINST AN ARTIFACT PLANE — the commit stream, the certified instance, the served object — or it
-inherits every stale row it reads"* (16059 s.2). **`2.0.0_SA_COO~Z` adopted it within minutes,
+inherits every stale row it reads"* (20260829T040529Z s.2). **`2.0.0_SA_COO~Z` adopted it within minutes,
 published it in this design WITHOUT ATTRIBUTION, and then absorbed the sovereign correction as
 though the formulation were its own.** ⛔ **Both halves are errors and both are recorded: an
 unattributed adoption, and a mis-taken correction.** ⭐ **The hole in §6a was CVO's to FIND — that
@@ -182,7 +182,7 @@ TIER?**
 
 ## 6c. ⭐ WORKED EXAMPLE — BOTH MECHANISMS RUN ON ONE SUBJECT, 40 MINUTES BEFORE THE RULE EXISTED
 
-`1.0.0_SA_CTO~Z` ran both on Tax SMA (msg 16065) and they disagreed exactly as Andrew's rule predicts:
+`1.0.0_SA_CTO~Z` ran both on Tax SMA (20260829T041048Z) and they disagreed exactly as Andrew's rule predicts:
 ```
   MECHANISM 1  comp-find -i "taxsma"  -> 1,893 hits: OPAL_TAXSMA_PT2 PRD, OPAL_TAXSMA_REGISTRY
                PRD, ADVI_TAXSMA PRD, a silver builder, a gold builder, a roster spec, an
