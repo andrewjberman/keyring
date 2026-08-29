@@ -1329,3 +1329,31 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ⛔ **BOUND:** I verified **WHICH pins moved and WHICH outputs changed**. I did **NOT** verify that each output delta is **CAUSED** by its moved pin -- co-occurrence across 6 cases with matching pin sets is strong, **and it is not a causal read.** Nobody has claimed otherwise.
 
 **NOTED FOR THE OWNER, not chased:** `~V` flags the b-5 transactions sample's `dim_relationship` pin at **2026-08-28T12:46:05Z** while that partition now reads **2026-08-29T09:58:06Z** -- **I confirm that second figure independently**; it is the 2026-08-27 rewrite I read at 09:58:06Z during my own endpoint work. **The sample is stale against the corrected upstream.**
+
+### AC6 READ TAKEN -- **my once-only read for this TO and for BDPARITY's arming**: the manifests carry **2 of the 4 required fields**. `contract_version` and `upstream_pins` PRESENT on every leaf; **`campaign_ledger_commit` and `dates_complete_of_534` ABSENT on ALL 17.** Timing satisfied. **The criterion's wording carries a real ambiguity and the adjudication is the ISSUER'S**
+
+3.0.0_SA_CVO, 2026-08-29 ~11:15Z, MCP 82059-82062.
+
+**PRFR2DS-AC6 AS WRITTEN:** *"THE ARMING EMISSION (CVO condition ii): ONE emission made AFTER the campaign ledger reads 534 of 534 ARTIFACT-COMPLETE (or whose manifest carries the campaign state), every leaf, manifest carrying `{campaign_ledger_commit, dates_complete_of_534 = 534, upstream LastModified per table, CONTRACT_VERSION}`; **this is the emission ADVI_BDPARITY's arming predicate reads.**"*
+
+**MEASURED, whole-document key walk over ALL 17 files in the emissions directory** -- not a scoped accessor, having made exactly that mistake an hour earlier:
+```
+  contract_version        PRESENT 17 of 17   ('perfrp-contract-0.5.0-skeleton')
+  window.upstream_pins    PRESENT on every substantive leaf (absent only on the 4 .verification.json sidecars)
+  campaign_ledger_commit  ABSENT  17 of 17
+  dates_complete_of_534   ABSENT  17 of 17
+```
+⛔ **A FALSE POSITIVE DISCLOSED RATHER THAN LEFT TO STAND:** my first token list included the bare string **`534`**, which matched **46 + 14 + 11** keys across three `.verification.json` sidecars -- **all of them ACCOUNT AND RELATIONSHIP IDS containing those digits** (`/membership/0014575341`, `/membership/rel_2453402a167a1a`, ...). **Not one is a campaign field.** A bare numeric token inside an ID space is a **substring trap**, and reported unexamined it would have read as *"the campaign state IS present on three leaves."* The zero above is **after excluding them**.
+
+**TIMING IS SATISFIED:** the campaign's final row landed **09:59:16Z**, the ledger pin `@9dd522c50d` committed **10:10:47Z**, and the b-6 leaves carry mtimes **10:31:37Z / 10:35:27Z** with the b-series remainder `@0c5194eab8` later still. **Every emission in this round POST-DATES 534 of 534.**
+
+⛔ **THE AMBIGUITY, WHICH IS THE ISSUER'S TO RULE AND NOT MINE.** The criterion reads *"made AFTER ... **(OR whose manifest carries the campaign state)**, every leaf, manifest carrying {four fields}"*. Two readings:
+```
+  (a) the parenthetical is an ALTERNATIVE to the timing condition   -> TIMING alone discharges it, AC6 PASSES
+  (b) the manifest clause is an independent requirement per leaf    -> AC6 FAILS on two missing fields
+```
+**I am NOT picking one. A CVO seat choosing the reading that changes the verdict is adjudicating the criterion it is grading**, and the wording is the issuer's. **What I can say without picking: under (a) it passes, under (b) it fails, and the MEASUREMENT is the same either way** -- 2 of 4 fields, timing satisfied.
+
+**WHY IT MATTERS BEYOND THIS TO, and the reason not to sit on it:** AC6's own text says **"THIS IS THE EMISSION ADVI_BDPARITY's ARMING PREDICATE READS."** If reading (b) holds, **the arming emission does not yet exist in the form the predicate expects** -- which bears directly on `1.0.0_SA_CTO` 81938's per-plane ruling, where **T1-ORACLE and T2-DIMS were armed on the build-only re-emission.** That is **a coupling between two rulings made an hour apart**, and it should be visible **before** either is banked rather than discovered later.
+
+**NOTHING ASKED OF `~V`:** no act proposed -- the fields are a producer change and this is **a criterion-wording question first.** My read is **recorded as TAKEN**; the verdict waits on the issuer's ruling of (a) vs (b), **and I will record whichever is ruled without re-litigating it.**
