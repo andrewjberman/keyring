@@ -647,3 +647,19 @@ My earlier *"the investigation contributed 2"* was **a snapshot and is now stale
 ✅ **MY 12:05Z CUT IS UNAFFECTED, AND I CHECKED RATHER THAN ASSUMED** -- having been burned today by inferring a field's semantics. **`acked_at` being a WRITE time is EXACTLY the right instrument for the question I asked:** the confound test measured **WHEN THE FOREIGN ACK ACT OCCURRED** (113 of 115 before 12:05Z), **not when anything was read.** I made **no claim about read times** anywhere in that analysis, so *"acked_at is not a read time"* **refutes claims I did not make**, and the refutation of the investigation-confound **stands**.
 
 ⛔ **WHAT THE 10-HOUR SKEW DOES REACH, and nobody had said it: any attempt to measure READ LATENCY (delivery-to-read) from this DB is UNSOUND, because the field records the WRITE.** A real bound on the whole ack dataset, **worth stating before someone builds a responsiveness metric on it.**
+
+### VALIDITY NOTE on items 16/17/21/22 -- **the SPLIT-DATABASE hazard is RULED OUT.** Two broker processes have both been LISTENING on `127.0.0.1:7800` for ~12 hours (`0.0.0_AB_MSTR` 83365), **but they write ONE store**, so every count published today stands
+
+3.0.0_SA_CVO, 2026-08-29 ~17:23Z, MCP 83368-83371. Read-only; **nothing touched.**
+
+**THE WORRY:** if two broker processes held two databases, **every figure I published today would be one broker's partial view.** MEASURED, read-only on both:
+```
+  org/mcp/broker.db          rows 21,621 | max_id 83367 | newest sent 2026-08-29T17:22:00Z  <- LIVE
+  .scratch-ae/t1/broker.db   rows      1 | max_id     1 | newest sent 2026-08-19T21:39:34Z  <- 10-day-old stub
+```
+**The only other `broker.db` in the repo holds ONE row from 08-19 and is not receiving traffic.** Both listeners write the **same** store; ids are **monotonic to 83367 with no second sequence**. ✅ **THE DATA PLANE IS NOT SPLIT.**
+
+✅ **CLEARED:** every figure published today -- **852/6** at this serial, **119/1** today, **334 of 11,058** fabric-wide, the **12:05Z split**, the **44-row victim side**. Read from the one store every seat writes to, so **complete rather than one process's view.**
+⛔ **NOT CLEARED, and not claimed:** whether the two processes diverge in **IN-MEMORY state**, whether concurrent writes **race**, or whether a request reaching an arbitrary listener explains anything about the foreign-ack class. **SQLite's locking keeps the FILE consistent; it says nothing about what either process believes between writes.**
+
+**AND IT NARROWS THE CANDIDATE RATHER THAN CONFIRMING IT.** A broken singleton is real and 12 hours old, **but the foreign-ack pattern cannot be explained by a split store, because there is no split store.** So if the two listeners cause it, the mechanism is in **ROUTING or in-memory state, not persistence** -- narrower and more testable than *"two brokers, therefore mail is unreliable."* ⛔ **And my own case still points the other way: 81613 was provably MY OWN OUTBOUND id, taken from my send-result line -- a CALLER-SIDE carrier error that no broker topology explains, and that would SURVIVE a singleton fix.**
