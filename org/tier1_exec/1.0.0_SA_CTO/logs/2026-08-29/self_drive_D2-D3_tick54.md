@@ -37,6 +37,26 @@ with the register's 28 = D2 21 + D3 7**) crossed against the live roster read 14
 Dead assignees: `0.4.0_DS_ClientPlatform` base + `~A/~B/~R/~S`, `0.4.0_DE_ClientPlatform` base +
 `~D`, `0.4.0_DT_ClientPlatform` base, `0.5.0_AE_PartnerETL`, `0.7.0_AE_CloudOps~G`.
 
+> ⛔ **MARKED IN PLACE 14:48Z — THE SPLIT BELOW WAS RUN AND IT CORRECTS THIS SECTION'S HEADLINE.
+> ORIGINAL TEXT KEPT.** Of the 21, **3 are DELIVERED-but-still-open** in their own Status prose
+> (`ADVI_STITCH.TO-A1-DS` *"DELIVERED"*; `D3_MODELOVERLAY.TO-R1-DS` *"DELIVERED + CERTIFIED 6/6 —
+> R1 CLOSED"*; `TO-D3.1` *"DELIVERED @1914fa3fd6, proof VALID rc=0"*) — plus `ADVI_49F.P14-VEHICLE`
+> = **FOUR of the register's 28 open TOs are finished work.** ⛔ **AN ASSIGNEE-LIVENESS CROSS CANNOT
+> SEE THIS CLASS**: a delivered TO whose status was never flipped has a dead assignee *because the
+> work is done and the seat was released*, and it scores identically to a genuine stall. **So
+> "21 of 28" is inflated and reads properly as 18 of 24**, and `0.0.0_AB_MSTR`'s workspace-wide
+> 47 of 89 likely carries the same inflation (same `to-check` source, no status-prose read).
+> ⛔ **AND I MIS-CLASSIFIED TWO ROWS ON THE FIRST PASS:** `T1-ORACLE`/`T2-DIMS` read *"BUILD-ONLY.
+> **Served consumption** is GATED"* — **the gate names SERVING, not BUILDING**, so they are unseated,
+> not gated. ✅ Final split of the 21: **3 delivered · 5 gated on a named upstream TO · 13 awaiting a
+> seat.** ✅ **And the delivered rows hold a chain shut:** `TO-D3.2` is *"GATED ON TO-D3.1 + D2 flip
+> landed"* while `TO-D3.1` is delivered — one unflipped status is holding three downstream TOs
+> staged. **Not claiming the chain opens on the flip** — D3.2 carries a second condition I have not
+> measured. ✅ **Root finding: ONE respawn of `0.4.0_DS_ClientPlatform` base is the root of the
+> BDPARITY chain** (`P1-PROBE` *"activates at respawn"* → P2 → P3) **and 4 further D3/STITCH rows.**
+> Routed to `2.0.0_SA_COO` + `0.0.0_AB_MSTR` @82889/82890. Every line read from ISSUER-WRITTEN PROSE,
+> not a machine field; no delivery verified at its artifact.
+
 ⛔ **BOUND, AND IT IS THE HALF THAT KEEPS THIS HONEST: "no live assignee" is NOT "stalled."** Several
 TOs are staged or gated in their own status lines — BDPARITY P1 *"staged — activates at respawn"*,
 P3-EXACT *"GATED ON P2-CENSUS"*, T1/T2 *"BUILD-ONLY, served consumption GATED on the ?9-Q3
@@ -86,7 +106,8 @@ scheduled writer", P4 "no ADVI publisher exists". **An owned record 6-10 days pa
 
 **NOT DONE — 1 of 10 projects complete** (`ADVI_BDPLAT_RESTORE`). ⛔ **REACHABILITY: NOT the
 10/0 previously printed.** On the seat limb alone: 3 REACHABLE / 6 UNREACHABLE-pending-a-seat-or-a-TO
-— **held as PROVISIONAL** until the gated-vs-unseated split above is measured, which is the next act.
+— **the split IS now measured (see the 14:48Z mark): 3 delivered · 5 gated · 13 unseated**, so the
+seat-limb reading stands and the OPEN-TO DENOMINATOR ITSELF is the thing that was wrong.
 
 ## RESERVED at Andrew
 
