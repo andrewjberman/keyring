@@ -147,8 +147,12 @@ Every `(account, period)` cell returns one of six MECE outcomes and **an unavail
 
 ## Next Steps
 
-1. **[Andrew]** The vendor-egress word for one bounded BD pull over the ruled periods against the CRO-selected cohort. No standing schedule requested. A "no" is a complete answer -- the harness stays build-only and BDPARITY produces no parity number.
-2. **[Andrew]** Which side of his own recorded line the two methodology cells fall on (BDPARITY-subject -> CRO answers; PERFRP-subject -> CRO must not receive them).
-3. **[`4.0.0_SA_CRO`, once seated]** Select 3-5 probe accounts from the candidate table; rule the SI anchor and cumulative-vs-annualised. Both gate the FIRST pull, not the build.
+⛔ **ITEMS 1 AND 2 WERE ANSWERED AFTER THIS LOG'S WINDOW -- ANDREW-DIRECT 2026-08-29T212315Z, RECORDED VERBATIM @`7a4d8a1888`. DO NOT RE-ASK THEM.** A successor reading the original wording below would re-open settled law, which is the single most damaging thing this record could do. Original text struck, ruling stated:
+
+> **"RECS APPROVED BUT THIS IS A MATTER THAT SHOULD BE HANDLED BY 3.0.0_SA_CVO, NOT CRO"**
+
+1. ~~[Andrew] the vendor-egress word~~ **GRANTED.** "RECS APPROVED" landed on a rec whose text was YES to ONE bounded BD reporting pull. **Scope is exactly the card's and no wider: ruled QTD/YTD/1Y/SI periods, 3-5 probe accounts, NO standing schedule, NO cadence, NO widening of any grant.** A recurring pull is a separate card. ⛔ **AND THE APPROVED REC CARRIED ITS OWN SEQUENCING -- "answer it together with CALL 2, not before it" -- SO THE PULL STAYS UNFIRED until item 3 lands.**
+2. ~~[Andrew] which lane holds the methodology~~ **RULED: `3.0.0_SA_CVO`, NOT `4.0.0_SA_CRO`** -- against this seat's own recommendation, which had said CRO. The earlier filing to CRO (msg 83415, QUEUED, never delivered) is **SUPERSEDED; do not re-send or re-point it there.** Scope beyond the two methodology cells (e.g. rider-4 SELECTION, which the faces also place at CRO) was **surfaced and NOT adjudicated by this seat** -- it is `2.0.0_SA_COO`'s with `1.0.0_SA_CTO`.
+3. **[`3.0.0_SA_CVO`, once re-seated]** The two cells that now gate the authorized pull: **(i)** which inception anchors SI -- trade-start, BD funding-inception, or our first-linked-date; **(ii)** cumulative or annualised for QTD/YTD. ⚠ **THAT SEAT'S BASE HAD ALREADY ENDED WHEN THE RULING LANDED** (MSTR 83936) and the broadcast returned QUEUED -- **a sovereign-approved item is sitting in a dead seat's inbox, not a queued one.** Flagged to MSTR for the reinstantiation order at 21:3xZ.
 4. **[`0.4.0_DS_ClientPlatform~C`, on gates 1+2]** Fire the pull, build the probe table (BP1-2), name mechanisms (BP1-3), then BP1-4's census design, then the BP1-5 proof instance at `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ADVI_BDPARITY.P1-PROBE_PROOF_OF_SPEC.json` (currently ABSENT -- the work is genuinely unstarted).
 5. **[`0.4.0_DS_ClientPlatform~N`]** The c02-GROSSLEG determination. Not this seat's; noted so a successor does not re-report it.
