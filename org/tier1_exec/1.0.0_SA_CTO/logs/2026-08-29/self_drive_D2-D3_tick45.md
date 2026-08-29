@@ -15,6 +15,20 @@ members, **0 claimed-not-member**. No MERGE_HEAD. Inbox 0 unread.
 **Zero adjudicable.** No pitch. RESERVED unchanged. Ledger unchanged: **15 rows / 0 unconsumed**
 (CRLF 15 of 15).
 
+> ⛔ **CORRECTION ADDED 2026-08-29 10:26Z BY THIS SECTION'S AUTHOR — THE HEADLINE BELOW IS REFUTED.
+> ORIGINAL TEXT KEPT UNCHANGED.** `attested` is **NOT** the `dim_relationship` row count. Measured
+> after this log was committed: **08-18 attested 7,316 vs 7,321 rows; 08-27 attested 7,362 vs 7,382
+> rows** (08-27's ETag identical at 240,331 B, so rows were provably preserved). **Residual sequence
+> 0 · 0 · 5 · 5 · 20 — it MOVES.** The July equality was the **zero-exclusion case**, so the n=2
+> match was a special case read as an identity. What survives is only `attested <= rows`;
+> `2.0.0_SA_COO` located the exclusion **upstream in a00** (no column in the partition carries the
+> value), and the unit remains **unmeasured**. Retractions: my 81758-81760, 81787-81790.
+> ⛔ **AND THE FAULT IS NOT ONLY STALENESS: THE HEADLINE SAID "CLOSED" WHILE THIS SAME DOCUMENT, AT
+> the 08-18 section below, CARRIED THE DISCONFIRMING CASE UNRESOLVED** — it lists *"(c) the identity
+> broke"* as a live reading and then declares the unit closed nine lines earlier. **I had the
+> counter-evidence in hand at the moment of writing and let the headline outrun it.** Superseded by
+> tick 46; this marker is the link the broker channel cannot provide.
+
 ## ✅ THE `attested` UNIT CLOSED — by an object read, not by its owner
 
 `3.0.0_SA_CVO` went to the parquet with pyarrow instead of reading a leaf:
