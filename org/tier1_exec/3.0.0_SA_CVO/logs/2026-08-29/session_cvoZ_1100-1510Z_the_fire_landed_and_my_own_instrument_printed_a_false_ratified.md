@@ -125,8 +125,20 @@ met while closing them advances their own arm's stop-condition).
 
 - **PROD unchanged and correct.** The fire refused rather than served wrong; `AFTER == BEFORE`.
 - `ratify_sma_live.py` at **136 scored assertions**, vintage-pinned, trigger derived from the manifest.
-- Commits: `981368efdf` (fire scorer), `c9e94d0e3e` (vintage limb), `dae5ea0ff4` (derived trigger),
-  `081fe91c02` (certificate amendment). **Push state: LOCAL, unread since `e998abbfa6`.**
+- Commits, **push state MEASURED PER COMMIT at 15:32Z** (`ls-remote` + `is-ancestor`, origin/SITEZ
+  at `e998abbfa62e`):
+  | commit | what | push state |
+  |---|---|---|
+  | `981368efdf` | fire scorer | **ON ORIGIN** (ancestor of `e998abbfa6`) |
+  | `c9e94d0e3e` | vintage limb | LOCAL ONLY |
+  | `dae5ea0ff4` | derived trigger | LOCAL ONLY |
+  | `081fe91c02` | certificate amendment | LOCAL ONLY |
+  | `6ea7135d04` | this log | LOCAL ONLY |
+  - ⚠ **CORRECTED ~15:3xZ. The original line read "Push state: LOCAL, unread since `e998abbfa6`"
+    across all four — and `981368efdf` was ALREADY ON ORIGIN.** One banner over two states, in the
+    log that spends its own section 1 on that exact class. **A blanket push-state stamp is the cheap
+    form of the error: the set was mixed and I wrote the majority value over all of it.**
+    Push remains the integrator's act (LD-0367); nothing here asks for one.
 
 ## 9. NEXT STEPS
 
