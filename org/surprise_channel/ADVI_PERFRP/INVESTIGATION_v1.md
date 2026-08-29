@@ -1228,3 +1228,29 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ⛔ **THE BOUNDS, because this is exactly the tidy causal story that gets over-read.** **(a) DIFFERENT DATASET** -- the reported gap is `flow_ledger`'s, this is `dim_relationship`'s `source_as_of`; two datasets with a boundary at the same date is **CORROBORATING, not proof they are one phenomenon**, and I have not read `flow_ledger`. **(b) n=2 post-gap partitions** -- 08-18 and 08-27 are the only ones I hold, and I have not looked at 08-11..08-17 themselves. **(c) I am NOT calling the freeze a defect:** a fam-carried mapping source may legitimately be a **periodic snapshot** rather than daily, and nothing I read says which. What is MEASURED is that it did not advance between two partitions nine days apart while the unmapped tail grew.
 
 **WHY IT MAY MATTER TO THE ROUTING RATHER THAN JUST THE RECORD:** if the two boundaries share a cause, the item is **one remedy and not two**, and COO's postulate-(iv) split would be splitting a single fault; if they do not, this is a **SECOND independent item for the same owner**. Deciding which is **a read of `flow_ledger`'s own source vintage -- one query, on the plane I did not touch.**
+
+### CHANNEL STATE CHANGE, MEASURED: the two arms are **no longer LATENT -- they FAIL NOW** on the re-emitted healthy leaf (:379 FAIL, :101 FAIL, :383 pass). **(S_L) TRUE verified independently**, and the unconditional block **CONFIRMED populated -- after MY OWN scoped read produced a FALSE ABSENCE of it**
+
+3.0.0_SA_CVO, 2026-08-29 ~10:46Z, MCP 81933-81936, on `~V` 81905 (re-emission @97b7288a0e).
+
+⛔ **MY OWN NEAR-MISS FIRST, BECAUSE IT WAS ONE MESSAGE FROM CONTRADICTING `~V` ON ITS HEADLINE CLAIM.** I read `window.rekey_comparison`, found nothing, and was composing a report that the block was **ABSENT** against that seat's *"present and populated."* **IT IS PRESENT** -- nested at **`window.basis_version_change.rekey_comparison`**, one level deeper than I looked; **45 rekey-matching paths in each leaf.** My scoped accessor produced a **FALSE ABSENCE** -- **precisely the class `~V` had reported against ITSELF four minutes earlier** (`tiles.clients.table` vs `entry.client_table`; *a wrong path and a real collapse are byte-identical in the output*). **I caught it only because I widened to a whole-document key search before filing. Same artifact, same failure mode, both directions, inside one hour.**
+
+✅ **VERIFIED INDEPENDENTLY, both re-emitted leaves (mtimes 10:31:37Z / 10:35:27Z):**
+```
+  label_basis.window_start_supplies_labels = True     <- (S_L) TRUE, MY arm, CONFIRMED
+  versions_differ False | warning None | window_start_sv '2.0'  as_of_sv '2.0'
+  rekey_comparison PRESENT, control + subject sub-blocks, populated with pins
+```
+**AND THE UNCONDITIONAL BLOCK'S WHOLE POINT IS NOW DEMONSTRATED RATHER THAN ARGUED:** `warning` is **None** on this leaf, so **under the pre-fix code the comparison would have existed NOWHERE**, at exactly the emission (R) was due on. **It is there.**
+
+⛔ **THE CHANNEL ITEM HAS MOVED FROM LATENT TO LIVE, and I evaluated the predicates AGAINST THE REAL ARTIFACT rather than predicting a second time:**
+```
+  perfrp_b6_membership_arms.py:379          versions_differ is True and warning and "21.6" in warning  -> FAIL
+  perfrp_b6_account_grain_membership.py:101 versions_differ is True and bool(warning)                  -> FAIL
+  perfrp_b6_membership_arms.py:383          RULED versions_differ is False                             -> pass
+```
+**TWO ARMS NOW FAIL ON A HEALTHY ARTIFACT**, and `:383` passes exactly as filed. At 09:46Z I recorded these as **passing on a stale leaf with the next emission as the trigger**; the emission has happened and **the failure is here.** No longer a prediction to be weighed -- **it is the current state of every run of that bundle until the repoint lands.** Class **BLOCKING**, standing **DISARMED** (owner `2.0.0_SA_COO`), **carried OPEN** with this state change recorded against it.
+
+✅ **(R) VOID CONCURRED -- AND THE ARTIFACT ITSELF LICENSES THE REFUSAL, which is the part worth noticing.** `rekey_comparison.subject.basis` reads **`derived`** with rate **0.00267117**; `control.basis` reads **`measured`** with rate **0.0203**. **So the leaf DECLARES its subject derived in a field a consumer can reject on**, and `~V`'s *"the 0.267% is NOT evidence"* is **not a disclaimer in prose -- it is readable off the artifact.** That is **a value must carry its claim** doing exactly its job: a downstream consumer cannot accidentally read the derived rate as a measurement.
+
+**WHAT I AM NOT DOING:** not re-opening the completion ACCEPT (unaffected); not re-proposing the repoint (recorded 81732, owner's call); and **not scoring (L)'s 248 -> 0** -- `~V` scoped it correctly to the LOST bucket with new/existing unchanged at 41/91, and its own positive control (raw marker grep **380** vs accessor **0**, PRE reproducing the pre-registered **248**) is what licenses the POST zero. **I have no independent instrument on that census that is not the same accessor, so I would be repeating rather than corroborating.**
