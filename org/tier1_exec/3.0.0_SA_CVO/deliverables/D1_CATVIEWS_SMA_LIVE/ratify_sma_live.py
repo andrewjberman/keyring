@@ -130,6 +130,50 @@ def check_prose(doc, scope, plane, out):
                     if bad else "no contradiction found"))
 
 
+def check_member_conservation(doc, scope, plane, out):
+    """L2 MEMBER RUNG: non-null members must sum to their L1 bucket, to the cent.
+
+    ⛔ THIS INSTRUMENT HAD NO MEMBER RUNG AT ALL UNTIL NOW, AND THE MEMBER RUNG IS
+    ITEM 2's ENTIRE DELIVERABLE. It scored L0 totals, L1 buckets and the Client
+    split, and would have reported a fully RATIFIED build while all six SMA-family
+    members served `aum: null` under a bucket holding $22.79M. A total cannot see a
+    misallocation between its addends -- the blind-instrument class this whole
+    deliverable exists to catch, sitting inside the catcher.
+
+    ⭐ THE LAW IS NOT MINE AND IS NOT RE-DERIVED: `0.4.0_DS_ClientPlatform~Z`
+    exercised it two-sided at `7f06a2ee40` after their own first harness shipped
+    the vacuous form ("no null child under a funded bucket"), and it is stated in
+    that commit message and in TO-P1-DS CATV2-TOP1-AC1's evidence field. This is
+    its P2 clause, which is the half that needs no external membership data.
+    ⛔ Their P1a/P1b clauses (in-by_model => NUMERIC, not-in => NULL) are NOT
+    implemented here: they require the scope's `by_model` key set, which lives on a
+    DIFFERENT artifact (aum-metrics). Implementing half a law and naming the half
+    is honest; implementing it silently and calling it the law is not.
+
+    ⚠ UNIVERSAL SCOPE VALIDATED BY MEASUREMENT, NOT ASSUMED. Run across 4 scopes x
+    2 L0 nodes = 16 buckets before adoption: 14 MATCH, 2 MISMATCH, and the 2 are
+    EXACTLY global + 49financial `SMA/ETF Strategies` -- the item-2 defect. Every
+    Models bucket matches at every scope INCLUDING those with null members (global
+    Custom 3/4, cottonwood Custom 1/4, 49financial Custom 0/4), which is what
+    proves a null member is legitimately non-contributing and that this row does
+    NOT fail a correct build. That check is why it is applied to every bucket
+    rather than scoped to SMA by hand.
+    """
+    for l0, node in (doc.get("nodes") or {}).items():
+        for l1, bucket in (node.get("children") or {}).items():
+            members = bucket.get("members")
+            if not isinstance(members, list) or not members:
+                continue
+            nonnull = [m for m in members
+                       if isinstance(m, dict) and m.get("aum") is not None]
+            got = round(sum(float(m["aum"]) for m in nonnull), 2)
+            want = round(float(bucket.get("aum") or 0.0), 2)
+            out.append(("%s/%s %s>%s members sum to bucket" % (plane, scope, l0, l1),
+                        abs(got - want) < CENT,
+                        "%d/%d non-null sum %.2f vs bucket %.2f"
+                        % (len(nonnull), len(members), got, want)))
+
+
 def check_client_l1(doc, scope, plane, out, post_reland):
     """The Client L1 fee split (D1_CATVIEWS.CATV2-a-1, item 1). DATE-INDEPENDENT.
 
@@ -344,6 +388,7 @@ def main():
             client_aum, sma_aum = check_scope(doc, scope, plane, rows, a.post_reland, a.as_of)
             check_prose(doc, scope, plane, rows)
             check_client_l1(doc, scope, plane, rows, a.post_reland)
+            check_member_conservation(doc, scope, plane, rows)
             if plane == "gold" and scope == "global" and None not in (client_aum, sma_aum):
                 ok = abs((client_aum + sma_aum) - CONSERVATION) < CENT
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
