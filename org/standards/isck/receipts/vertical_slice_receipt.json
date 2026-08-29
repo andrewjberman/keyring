@@ -1,0 +1,11 @@
+{
+  "candidate_id": "v0.3-candidate+27",
+  "contract_bundle_id": "bundle:sha256:87ed70800607dbc46c1d6529eea7e551252673b1f26cc1500592fb71ee978abc",
+  "evidence_digest": "sha256:a7627c0960d9499de11664b3b0c49696d68f94485902043f93957b925b513a45",
+  "evidence_path": "org/standards/isck/receipts/vertical_slice_evidence.txt",
+  "kind": "vertical_slice_receipt",
+  "manifest_digest": "sha256:e840260d7f6376c2e28c011e85c2236ca60dd7731181beb8e9fcdae669377c69",
+  "manifest_path": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/graph_object_manifest.declared.json",
+  "result": "PASS",
+  "run_commit": "9f63564a1f8bb18f07303371f85f282d4dc019c5"
+}

@@ -27,6 +27,28 @@ class CodexInboxTurnBridgeTest(unittest.IsolatedAsyncioTestCase):
         path.write_text("pending", encoding="utf-8")
         return path
 
+    async def test_discovery_accepts_remote_tui_vscode_source(self) -> None:
+        client = AsyncMock()
+        cwd = Path(self.temp_dir.name).resolve()
+        client.request.return_value = {
+            "data": [
+                {
+                    "id": "thread-vscode",
+                    "cwd": str(cwd),
+                    "source": "vscode",
+                    "status": {"type": "active", "activeFlags": []},
+                    "parentThreadId": None,
+                }
+            ]
+        }
+
+        thread_id = await bridge.discover_thread(client, cwd, 0.1)
+
+        self.assertEqual(thread_id, "thread-vscode")
+        method, params = client.request.await_args.args
+        self.assertEqual(method, "thread/list")
+        self.assertEqual(params["sourceKinds"], ["cli", "vscode"])
+
     async def test_idle_thread_calls_turn_start_directly(self) -> None:
         client = AsyncMock()
         client.request.side_effect = [
@@ -58,6 +80,9 @@ class CodexInboxTurnBridgeTest(unittest.IsolatedAsyncioTestCase):
     async def test_active_thread_is_steered_immediately(self) -> None:
         client = AsyncMock()
         client.request.side_effect = [
+            # 1: the classification read -- metadata only, no turns shipped
+            {"thread": {"status": {"type": "active", "activeFlags": []}}},
+            # 2: the steer branch asks for turns explicitly
             {
                 "thread": {
                     "status": {"type": "active", "activeFlags": []},
@@ -76,9 +101,42 @@ class CodexInboxTurnBridgeTest(unittest.IsolatedAsyncioTestCase):
         )
 
         self.assertEqual(action, "turn/steer")
-        method, params = client.request.await_args_list[1].args
+        calls = client.request.await_args_list
+        self.assertEqual(
+            [call.args[0] for call in calls],
+            ["thread/read", "thread/read", "turn/steer"],
+        )
+        self.assertIs(calls[0].args[1]["includeTurns"], False)
+        self.assertIs(calls[1].args[1]["includeTurns"], True)
+        method, params = calls[2].args
         self.assertEqual(method, "turn/steer")
         self.assertEqual(params["expectedTurnId"], "turn-7")
+
+    async def test_classification_read_never_ships_turns(self) -> None:
+        # The 16 MiB frame cap (2026-08-28): every inbound used to pull the
+        # whole thread.  Idle and notLoaded paths must read metadata only.
+        client = AsyncMock()
+        client.request.side_effect = [
+            {"thread": {"status": {"type": "idle"}}},
+            {"turn": {"id": "turn-1", "status": "inProgress"}},
+        ]
+
+        action = await bridge.deliver_nudge(
+            client,
+            "thread-1",
+            "4.0.0_SA_CRO~A",
+            "quiet.md",
+            self.unread("quiet.md"),
+        )
+
+        self.assertEqual(action, "turn/start")
+        reads = [
+            call.args[1]
+            for call in client.request.await_args_list
+            if call.args[0] == "thread/read"
+        ]
+        self.assertEqual(len(reads), 1)
+        self.assertIs(reads[0]["includeTurns"], False)
 
     async def test_unloaded_thread_is_resumed_then_started(self) -> None:
         client = AsyncMock()
@@ -168,9 +226,12 @@ class CodexInboxTurnBridgeTest(unittest.IsolatedAsyncioTestCase):
                 "turns": [{"id": "turn-7", "status": "inProgress"}],
             }
         }
+        # Each race attempt is now two reads (metadata, then turns) + the steer.
         client.request.side_effect = [
             active,
+            active,
             bridge.RpcError("turn/steer", {"code": -32000}),
+            active,
             active,
             bridge.RpcError("turn/steer", {"code": -32000}),
         ]

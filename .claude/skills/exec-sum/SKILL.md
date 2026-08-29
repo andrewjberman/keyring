@@ -1,275 +1,231 @@
 ---
 name: exec-sum
-description: Executive-summary snapshot of the multi-agent fabric, loop-friendly. Runs the two grounding instruments -- /stimulus-scan (per-agent telemetry + broker + git = who is doing what) and /comp-state (BM25 record-drift linter, self-test-gated) -- then renders a TWO-PART product, CARD FIRST: (1) a NON-TECHNICAL exec card at the very top in plain English -- what the fabric is actually doing right now and WHY it matters, a 10-second read with no serials/commits/jargon, a health line, and the one thing waiting on the human; (2) BELOW it, a house-style /draw two-plane ASCII diagram of agent roles + real activity + how that work feeds back into the card's narrative. Read-FIRST: it reports, it does not drive -- at most it surfaces genuine idle-capacity/blockers to the drive-coordinator (COO), never lane-dispatches. Designed for `/loop [interval] /exec-sum` as a recurring exec dashboard that flags what changed each fire; bare `/exec-sum` is a one-shot. A `--macro <CODE>` mode (also triggered by a bare macro or macro_project code, e.g. `/exec-sum OPAL` or `OPAL_ASSETS`) reskins the same card+draw as a PROGRAM CLOSE-OUT view: what remains to close the INTENT of every open project under a macro, each project's state + owner (and whether staffed right now) + the one gate/decision that closes it, grouped into thematic clusters. Any agent may run it; the whole-fabric vantage (MSTR / COO / CTO) is primary. Sits above /overview (prose status) and /fabric-check (agent-axis) by leading with a business-legible card and grounding it in a diagram.
+description: Executive STAGE REPORT of a directive or program (D2, D3, a macro, a project) -- or of the whole fabric -- in PLAIN NATURAL LANGUAGE with /draw card-style frames and clean bullets. Answers "WHAT STAGE ARE WE AT RIGHT NOW, how many steps from completion, and what completion is understood to be" for a reader who has not followed the work. NO task-order ids, NO agent serials, NO commit hashes, NO tool names in the report (they live in the grounding appendix only). Grounded every run on the same two instruments (per-agent telemetry + git = who is doing what; comp-state = record drift, self-test gated) plus a per-project read of the register, PRD and faces -- never recollection. Card-first: each stage is one framed card with a status glyph; a numbered steps-to-completion list with realistic timing; the program's own definition of done; one WAITING-ON-YOU line. Read-only; at most one capacity/drift surface to COO. Andrew-direct 2026-08-28 (CTO terminal): "I like the format, update exec-sum accordingly, except needs more /draw card-style formatting and clean bullet points." Loop-friendly (`/loop [30m] /exec-sum D2`).
 ---
 
-# /exec-sum — executive-summary fabric snapshot (card-first, loopable)
+# /exec-sum — the plain-language STAGE REPORT (card-style, loopable)
 
-The one-call answer to *"in plain English, what is the whole team of agents actually doing right
-now, why does it matter, and is anything waiting on me?"* -- grounded in real telemetry + git, not a
-prose recollection. It runs the two grounding instruments, then renders a two-part product whose
-**top is a non-technical card a busy human reads in ten seconds**, and whose **body is the /draw**
-that backs the card with real names, roles, and activity.
+**Authority (Andrew-direct, 2026-08-28 ~20:2xZ, base CTO terminal, VERBATIM):** after asking *"high
+level WHAT STAGE ARE WE AT RIGHT NOW? I do not want to see TO references, I want to see natural
+language descriptions of what it is and what stage we're at and how many steps away from completion
+we are, and what completion is understood to be, all in plain natural language"* and reading the
+reply: *"I like the format, update exec-sum accordingly, except needs more /draw card-style
+formatting and clean bullet points."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260828_202xZ_EXEC_SUM_STAGE_REPORT_FORMAT.md`.
+Prior authority (the 2026-08-18 card-first design) stands underneath: the report is GROUNDED, not
+recollected; the human-readable half is the deliverable; the instruments are how it is made honest.
 
-> **What makes this different from /overview and /fabric-check:** /overview is prose status;
-> /fabric-check is the agent-axis + project-axis lens. **/exec-sum leads with a business-legible
-> CARD** (what + why, no jargon) and then *earns* that card with a grounded diagram. The card is the
-> deliverable; the instruments and the draw are how it's made honest.
+> **What this is:** the one-call answer to *"where is this actually at?"* for someone who has not
+> been watching. It leads with what the thing IS and what DONE means, then one framed card per
+> stage saying where that stage stands in plain words, then a numbered list of the steps still
+> between here and done with realistic timing, then the single line that is waiting on the human.
+> **What it is NOT:** a status dump, a TO roster, a serial roll-call. Those belong in `/to-check`,
+> `/fabric-check`, `/registry-check`. If a sentence needs the fabric's vocabulary to parse, it does
+> not belong in the report.
 
 ## Invocation forms
 
 | Form | Behavior |
 |---|---|
-| `/exec-sum` | One-shot. Run the sweep now, render card + draw. |
-| `/loop [interval] /exec-sum` | Recurring exec dashboard. Each fire re-runs the sweep and **leads with a WHAT-CHANGED delta** before the current-state card. (`/loop [30m] /exec-sum` is the typical cadence.) |
-| `/exec-sum --project <CODE>` | Scope the comp-state + draw to one project/macro (e.g. `NFRA`, `OPAL_ASSETS`). The card still reads whole-fabric health. |
-| `/exec-sum --macro <CODE>` | **Macro / macro-project CLOSE-OUT view.** `<CODE>` = a macro (`OPAL`) -> every `OPAL_*` project, or a macro_project (`OPAL_ASSETS`) -> that one. Re-scopes BOTH the card and the draw to *what remains to close the intent* of the macro's open projects: per-project state, owner + whether staffed now, and the one gate/decision that closes each, grouped into thematic clusters. A bare `<MACRO>` / `<MACRO_PROJECT>` code routes here too. Distinct from `--project` (which keeps a whole-fabric card). Full spec: "Macro / macro-project close-out mode" below. |
+| `/exec-sum <D-code>` (e.g. `D2`, `D3`) | **The primary form.** Stage report for ONE directive: its member projects resolved from the register, its PRD's own DONE definition, its critical-path brief if one exists. |
+| `/exec-sum <MACRO>` / `<MACRO_PROJECT>` / `--macro <CODE>` | Stage report for a program or one project (enumerate members from the filesystem, never memory). |
+| `/exec-sum` (bare) | Whole-fabric form: one short card per LIVE directive (the D-code, one plain sentence on where it stands, its next step) + one fabric health line. Same grounding. |
+| `/loop [interval] /exec-sum <scope>` | Recurring. Each fire leads with a **CHANGED SINCE LAST** block (which stage moved, which step closed) before the current report. |
 
 ## Step 0 — Scope + posture
 
-- **Any agent may run it** (read-only status product). The **whole-fabric vantage — MSTR / COO / CTO
-  — is primary**; a Tier-2/3 agent gets a self-scoped view.
-- **READ-FIRST.** /exec-sum reports; it does not drive. Aggressive dispatch is /stimulus-scan's job.
-  The most /exec-sum does to the fabric is **surface** genuine idle-capacity or a blocker **to the
-  drive-coordinator (COO)** in one message — never a lane-dispatch (that would violate the
-  create -> coordinate -> gate -> verify separation the card itself describes). A scan where every
-  agent is ACTIVE or legitimately gated is a clean **zero-surface** run.
-- **Two card scopes.** Default (and `--project`) = a **whole-fabric health** card. `--macro <CODE>`,
-  or a **bare macro / macro_project code** (`/exec-sum OPAL`, `/exec-sum OPAL_ASSETS`), = a
-  **program CLOSE-OUT** card scoped to one macro's intent. When the argument is a macro-shaped code,
-  route to the "Macro / macro-project close-out mode" section below (it reuses Steps 1-2 grounding,
-  adds Step M1, and renders with the Step M3 variants in place of 3a/3b). Same read-first posture.
+- **Any agent may run it.** READ-FIRST: it reports, it does not drive. The most it does to the
+  fabric is ONE surface to the coordinator (COO) -- genuine idle capacity or a genuine record drift.
+  Never a lane-dispatch; never manufactured work.
+- **Resolve the scope from the register**, never from memory: `python .tools/directives-check.py
+  --json` -> the directive's `projects[]`; `org/projects/<CODE>.json` per member; the directive's
+  PRD (`docs/architecture/<D>_*_PRD.md`) for the DONE definition; the critical-path brief under
+  `docs/briefs/` if one exists (its P-stage list is the stage skeleton). A project scope resolves to
+  its own phases/TOs as the "stages".
+- **Honor any sovereign hold on a member** (parked / suspended): report it as its own stage card
+  in the state it is in; never re-open or re-close.
 
-## Step 1 — Gather the two instruments (ground the card, never recollect it)
+## Step 1 — Ground it (the same two instruments, every run)
 
-### 1a. Activity (the /stimulus-scan data half)
-
-Per-agent telemetry is the finest signal; broker + git are the cross-checks.
+### 1a. Activity — who is actually working, from telemetry + git (never the broker's prose alone)
 
 ```bash
-# jq IS NOT INSTALLED (CLAUDE.md Rule 16) -- python only. NEVER 2>/dev/null this read: a
-# silent-empty telemetry read renders "quiet fabric" out of a missing binary, and THIS card is
-# the one Andrew reads (measured 2026-08-11: jq-under-2>/dev/null read 13 agents as dead;
-# truth was 18,190 healthy rows, newest 47s old).
+# python only (jq is not installed -- Rule 16). NEVER 2>/dev/null this read.
 python - <<'PY'
 import json, pathlib
-files = sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl'))
-rows = 0
+files = sorted(pathlib.Path('org/mcp/agent_telemetry').glob('*.jsonl')); rows = 0
 for f in files:
-    w = y = None                     # last kind:work ts (staleness) / last-any (alive-but-loop-only)
+    w = y = None
     for line in f.open(encoding='utf-8', errors='replace'):
         line = line.strip()
         if not line: continue
         try: r = json.loads(line)
         except Exception: continue
-        rows += 1
-        y = r.get('ts') or y
+        rows += 1; y = r.get('ts') or y
         if r.get('kind', 'work') == 'work': w = r.get('ts') or w
     print(f"{f.stem} work={w} any={y}")
 print(f"DENOMINATOR: {rows} telemetry rows scanned across {len(files)} files")
 PY
-# git = GROUND TRUTH for "is this agent actually working" (heartbeat summaries are aspirational)
 git log --all --oneline --since="30 minutes ago" --pretty=format:"%aI %an %h %s"
 ```
-Then `get_live_agents()` for registration + one-line summaries. Classify each LIVE agent
-**ACTIVE / IDLE / STALE / gated** per /stimulus-scan's taxonomy. **A stale broker summary + a recent
-commit = WORKING** (git wins). Only the LIVE agents matter for the card; the telemetry file also
-lists dozens of dead historical serials — ignore them.
+Then `get_live_agents()`. Classify each LIVE seat ACTIVE / IDLE / STALE / time-gated. **A stale
+broker summary + a recent commit = WORKING (git wins).** Only live seats matter; dead historical
+serials in the telemetry dir are ignored.
 
-### 1b. Record-drift (the /comp-state half)
+### 1b. Record drift — comp-state, self-test gated
 
 ```bash
-comp-state --self-test        # MUST print PASS (its own N/N line; 4/4 since the J2 encoding leg) -- if not, say so and DO NOT trust the report
-comp-state                    # drift-only (BEHIND / POST-CLOSE); add --project <CODE> when scoped
+comp-state --self-test        # MUST print its own N/N PASS line; if not, say so and do not trust 1b
+comp-state                    # drift-only; triage: keep only rows whose evidence commits are ABOUT that record
 ```
-**Triage, do not auto-edit.** BM25 is a recall layer: most BEHIND rows are lexical false-positives
-(the evidence commits are about a *different* project). Keep only the drift whose evidence commits
-are genuinely *about that record*, and note whether it is **actively being reconciled** (an owner is
-touching it now = transient fast-landing lag, not a stall) vs **QUIET+pending+old** (a real stall
-smell). The card cares about stalls; it does not care about noise.
+Most BEHIND rows are lexical. A real drift (a face/JSON still describing a superseded state) is a
+one-line surface to COO, never an edit from this skill.
 
-## Step 2 — Surface (light, coordinator-routed; optional)
+### 1c. Per-member grounding (the stage cards are built from this, never from memory)
 
-If 1a/1b found **genuine** idle capacity or a blocker, send **one** message to the drive-coordinator
-(COO) — capacity picture + the forward decision — and `date -u +%s > org/mcp/.last-stimulus-scan`.
-**Do not lane-dispatch, do not manufacture work.** If everything is ACTIVE or legitimately gated,
-skip this step and say so in the card's health line. (This mirrors what a real /exec-sum run does:
-the value is the surface to the person who drives, not a flurry of TOs.)
+For every member project: `status`, `phase`, `blocking` from its JSON; the last commit touching it;
+its open TOs (`python .tools/to-check.py --all --project <CODE>` -- **roster only**; a TO's status
+is grounded on its face line, `to-check` mis-renders free-prose `<status>`); the acceptance state
+on its proof-of-spec instance where one exists; the PRD's DONE section; the brief's P-stage list.
+Cross-check status against phase + commits + faces together -- a "complete" with a live phase, or
+an "active" with month-old commits and a finished phase, is drift to name, not a label to repeat.
 
-## Step 3 — Render the product (TWO parts, in THIS order)
+### 1d. Translate, then check the translation
 
-### 3a. THE EXEC CARD (top, MANDATORY, non-technical) — the whole point
+Map every stage to plain words BEFORE writing: what the stage produces (a noun a reader can
+picture), where it stands (done / running / built-not-yet-live / queued-behind-X / waiting on the
+human / parked), and the one thing that moves it. Then re-read every sentence and strike anything
+that is a serial, a TO id, a hash, a tool name, or fabric jargon ("face", "cell", "ledger row",
+"arm-(a)"). Those go to the grounding appendix.
 
-A boxed card in **plain English for a human who does not know the serials**. Hard rules:
+## Step 2 — Surface (optional, one message, coordinator-routed)
 
-- **No serials, no commit hashes, no tool names, no TO/LD/RV ids, no acronyms** the reader would have
-  to look up. If a term needs the fabric's vocabulary to parse, it does not belong in the card — it
-  belongs in the draw below.
-- Answer, in 2-4 sentences: **WHAT is the team of agents collectively working toward right now, and
-  WHY does it matter** (to the product, the data, the business). Name the *purpose*, not the mechanism.
-- One **HEALTH** line: `on track` / `blocked` / `winding down` / `mixed` + a half-sentence why.
-- One **WAITING ON YOU** line: the single most important open decision for the human, or
-  `nothing — running clean`.
-- A 10-second read. If it takes longer, it is too technical — cut it.
+If 1a-1c found genuine idle capacity on the scope, or a face/JSON still describing a superseded
+state, send ONE message to COO and `date -u +%s > org/mcp/.last-stimulus-scan`. Otherwise skip and
+say "zero to surface" in the appendix. Never lane-dispatch.
+
+## Step 3 — Render the STAGE REPORT (this order, these frames)
+
+House style = `/draw` framing: ASCII rails only (`+`, `-`, `|`), no box-drawing, no emoji, no
+right-edge padding; every bullet ONE line; every card the same shape. **Zero serials, TO ids,
+hashes, tool names in Parts 1-5.** They appear once, in Part 6.
 
 ```
-╔═══════════════════════════════════════════════════════════════════════╗
-║  WHAT THE FABRIC IS DOING RIGHT NOW                       <UTC time>   ║
-╟───────────────────────────────────────────────────────────────────────╢
-║  <2-4 plain-English sentences: the one thing the team is collectively  ║
-║   driving toward, and why it matters. Purpose, not mechanism.>         ║
-║                                                                       ║
-║  HEALTH:        <on track | blocked | winding down | mixed> — <why>    ║
-║  WAITING ON YOU: <the one decision, or "nothing — running clean">     ║
-╚═══════════════════════════════════════════════════════════════════════╝
++=======================================================================+
+|  <DIRECTIVE / PROGRAM NAME> -- WHERE THIS IS AT              <UTC>    |
++=======================================================================+
+
++-- 1. WHAT IT IS --------------------------------------------------------+
+|  - <one plain sentence: the product/outcome, for whom>                   |
+|  - <one sentence: how it is produced, in nouns a reader can picture>     |
+|  - <one sentence: the check that makes it trustworthy, if one exists>    |
++-------------------------------------------------------------------------+
+
++-- 2. WHAT YOU SEE TODAY, AND WHY -----------------------------------------+
+|  - <what a user of the thing sees right now (empty page? partial data?)> |
+|  - <the plain reason, measured: nothing served yet / gate off by design> |
++-------------------------------------------------------------------------+
+
++-- 3. WHAT "DONE" MEANS (the program's own definition) --------------------+
+|  - <half 1, plain words>                                                 |
+|  - <half 2, plain words>                                                 |
+|  - <any deadline that was set and whether it held; if it slipped, why>   |
++-------------------------------------------------------------------------+
+
++-- 4. THE STAGES ----------------------------------------------------------+
+|                                                                         |
+|  [x] STAGE 1 -- <plain name>                     DONE                    |
+|      - <what it produced>                                               |
+|                                                                         |
+|  [>] STAGE 2 -- <plain name>                     RUNNING NOW             |
+|      - <where it is, with the one number that matters (e.g. 120/534)>   |
+|      - <when it is expected to land, and what could slip it>            |
+|                                                                         |
+|  [~] STAGE 3 -- <plain name>                     BUILT, NOT YET LIVE     |
+|      - <what is built>                                                  |
+|      - <the one thing that makes it live>                               |
+|                                                                         |
+|  [ ] STAGE 4 -- <plain name>                     WAITING ON YOU          |
+|      - <the decision, in one line>                                      |
+|                                                                         |
+|  [ ] STAGE 5 -- <plain name>                     QUEUED BEHIND STAGE N   |
+|      - <why it waits, in one line>                                      |
+|                                                                         |
+|  [p] STAGE 6 -- <plain name>                     PARKED (your word)      |
+|      - <the condition that un-parks it>                                 |
++-------------------------------------------------------------------------+
+   glyphs:  [x] done   [>] running   [~] built-not-live   [ ] not started   [p] parked/held
+
++-- 5. STEPS FROM HERE TO DONE ---------------------------------------------+
+|  1. <step>                                  -- <when: tonight / tomorrow AM / +N days>  |
+|  2. <step>                                  -- <when>                                   |
+|  3. <step>                                  -- <when>                                   |
+|  ...                                                                                    |
+|  REALISTIC READ: <N working days to <milestone>>, assuming <the one named risk>.         |
+|  WAITING ON YOU: <the single decision, when it will be askable, or "nothing">            |
++-----------------------------------------------------------------------------------------+
 ```
 
-### 3b. THE /draw (below the card) — the grounding
+**Rules for Part 4 (the stage cards):**
+- One card row per stage, in dependency order; the running stage carries the ONE number that
+  matters (e.g. `120 of 534 days`) and its expected landing time with the named risk.
+- A stage that is built but gated says **what makes it live** in one line -- that is the sentence
+  a reader most needs.
+- "WAITING ON YOU" is a stage status, not a footnote: if the human's word is what moves it, say so
+  on the card.
+- Parallel stages are still listed in order; say "runs alongside Stage N" on the bullet.
 
-Invoke the **/draw** house style (two numbered planes, labeled edges, real names/pins, one analogy
-table, concrete answer, closing "story" sentences). For a fabric exec-sum the two planes are:
+**Rules for Part 5:** numbered, each step ONE line with a plain "when"; the REALISTIC READ names the
+milestone a reader cares about (usually "a page you can look at with real numbers") and the one
+risk that would slip it; WAITING ON YOU is a single line (the decision + when it becomes askable).
 
-1. **The work plane** — the roles producing the work: how a directive/goal becomes landed threads.
-   Show the live lanes/agents, what each is actually shipping (real project names + commit pins from
-   Step 1a's git), and the controls it passes through (who gates, who verifies).
-2. **The coordination/governance plane** — how the human reaches the state: the driving/gating/
-   verifying spine, ending in a concrete "ANSWER back in your terminal" that **restates the card's
-   claim in the fabric's own vocabulary** (this is the feedback loop Andrew asked for — the draw must
-   visibly *back* the card).
+**Whole-fabric form (bare `/exec-sum`):** one short card per live directive in the Part-4 shape
+(D-code + plain name, glyph, one where-it-stands bullet, one next-step bullet), then a single
+`FABRIC HEALTH:` line and a single `WAITING ON YOU:` line.
 
-Mandatory analogy table: the **create -> coordinate -> gate -> verify** role separation (or whatever
-the session's real control structure is), one row per role naming what it owns *this* window.
-Close with 1-3 "story" sentences (the freshness story / the control story) naming what the reader can
-now trust.
+### Part 6 — the grounding appendix (the ONLY place serials / ids / hashes appear)
 
-**The draw exists to make the card honest** — every plain-English claim in 3a must be traceable to a
-real box/edge/pin in 3b. If a card claim has no grounding in the draw, one of them is wrong.
+```
++-- 6. HOW THIS REPORT WAS GROUNDED (for the fabric, not the reader) ---------+
+|  register: <k> directive(s) -> <m> project(s); claims scan <n>/<N> JSONs   |
+|  telemetry: <rows> rows / <files> files; git: <c> commits in 30 min       |
+|  comp-state: self-test PASS <n/n>; real drift: <list or none>              |
+|  live seats on scope: <serial: role/state> ...                             |
+|  pins behind the cards: <stage -> commit/artifact> ...                     |
+|  surfaced to COO: <one line or "zero">                                     |
++----------------------------------------------------------------------------+
+```
+Every plain-English claim in Parts 1-5 must be traceable to a line here. If a claim has no pin,
+one of them is wrong.
 
 ## Step 4 — Loop delta (only when looped)
 
-On a looped re-fire, **lead with what changed** before the current-state card:
-
 ```bash
-# what landed since the last exec-sum
-LAST=$(cat org/mcp/.exec-sum-state 2>/dev/null | head -1)   # last recorded HEAD
+LAST=$(cat org/mcp/.exec-sum-state 2>/dev/null | head -1)
 git log --all --oneline ${LAST:+$LAST..}HEAD --since="45 minutes ago" --pretty=format:"%an %s"
-git rev-parse HEAD > org/mcp/.exec-sum-state                # record for next fire
+git rev-parse HEAD > org/mcp/.exec-sum-state
 ```
-Render a 1-3 line **CHANGED SINCE LAST** block (threads closed, new lands, new blockers, health
-flips) directly above the card. A quiet interval with no material change is a healthy one — say
-"no material change since <time>" in one line and still print the current card (the human may be
-reading this fire cold).
-
-Fixed-interval `/loop` handles the recurrence (the cron re-fires the prompt); /exec-sum itself arms
-nothing. In dynamic `/loop` mode, pick a fallback heartbeat of 1200-1800s.
-
-## Macro / macro-project close-out mode (`--macro <CODE>`)
-
-`/exec-sum --macro OPAL` (or a bare macro / macro_project code, with or without the flag) reskins the
-product as a **program close-out view**: not *"what is the whole fabric doing"* but *"what must be
-completed to close the INTENT of every open project under this macro — which project is in what
-state, who holds it (and is it staffed right now), and what one gate or human decision closes it."*
-Same READ-FIRST posture and grounding discipline; the CARD and the DRAW are re-scoped to the macro.
-It reuses Step 1 (activity) + Step 1b (comp-state, `--project <MACRO>` scoped) unchanged, adds **Step
-M1**, and renders with the **Step M3** variants instead of 3a/3b.
-
-**Scope resolution (mirror /overview's Step-0a classifier):**
-- Bare `<MACRO>` (`OPAL`, `NFRA`, `ADVI`) or `--macro <MACRO>` -> enumerate EVERY project yourself:
-  `ls org/projects/<MACRO>_*.json`. Miss none — list from the filesystem, never from memory.
-- A `<MACRO_PROJECT>` code (`OPAL_ASSETS`) -> that one project's close-out (its phases/TOs are the
-  "projects"). A macro with an underscore-suffix family (`OPAL_TAXSMA`, `_PT2`, `_REGISTRY`) — include
-  the whole family.
-- Distinct from `--project <CODE>`: that scopes the *draw* but keeps a whole-fabric-health card;
-  `--macro` makes the *card itself* the macro's close-out narrative.
-- Honor any live DO-NOT-DISTURB / sovereign-suspension state on a project — report its state, never
-  re-open or re-close it (this is a read lens, cf. Step 0 read-first).
-
-### Step M1 — per-project grounding (in addition to Steps 1a/1b)
-Build a grounded per-project table. **Never trust the registry's own say-so for "done"** (Rule 22) —
-cross-check status against phase text + commits + open TOs:
-```bash
-for f in org/projects/<MACRO>_*.json; do
-  code=$(basename "$f" .json)
-  status=$(python -c "import json,sys;print(json.load(open(sys.argv[1],encoding='utf-8')).get('status','?'))" "$f")
-  owner=$(python -c "import json,sys;print(json.load(open(sys.argv[1],encoding='utf-8')).get('owner','?'))" "$f")   # owner-less lean schema is not a defect
-  lc=$(git log -1 --format='%cd' --date=short -- "$f")
-  echo "$code | $status | owner=$owner | last=$lc"
-done
-python .tools/to-check.py --all 2>&1 | grep -E "^Project: <MACRO>"    # open-TO count per project
-```
-For each project derive FOUR fields:
-1. **STATE** — active / shipped-with-residual / superseded-into-X / dormant / suspended. Ground on
-   status + phase + commits together, not the label alone (a "complete" with a live phase, or an
-   "active" with month-stale commits + a done phase, is drift worth naming).
-2. **OWNER + staffed-now?** — map the owner serial to the LIVE-agent read from Step 1a:
-   `WORKING-NOW` (owner live + recent commits on this thread) / `owner-live-elsewhere` (live but on a
-   different thread) / `UNSTAFFED` (no live owner). This is Andrew's "who is working on them."
-3. **THE ONE CLOSING GATE** — the single residual that closes the project: a human decision, a
-   real-world event (first real use / acceptance sign-off), a dependency (behind another project's
-   gate), or a remaining build workstream. If none remains -> it is closeable NOW (say so).
-4. **CLUSTER** — group the projects into 3-6 thematic clusters (typical: the live P0 spine ·
-   superseded/folded predecessors · shipped-tools tail waiting on a real-world event · active build
-   queue · polish/dormant). The clusters ARE the macro's intent decomposed; they become the draw's boxes.
-
-### Step M3 — render (replaces 3a/3b for this mode)
-
-**The CARD** — scoped to the MACRO's intent, still 10-seconds and jargon-free (no serials/hashes):
-- 2-4 sentences: **what is this program trying to achieve**, and **what is the one thing the live
-  team is actually driving right now** versus what is queued or waiting-on-a-person.
-- `HEALTH:` on track / blocked / **concentrated** / mixed + why (e.g. "concentrated — nearly all
-  capacity on one thread; the rest gated/queued, not blocked").
-- `WAITING ON YOU:` the human decisions that gate close — the co-signs / confirmations only the human
-  can give, distilled to the shortlist.
-
-**The DRAW** — the per-project close-out map (still two planes, /draw house style):
-1. **Work plane = the clusters.** One labeled box per cluster; inside, one line per project:
-   `PROJECT [owner / staffed?] STATE -> the ONE gate`. Draw the **live-spine cluster first** with its
-   real critical path as a gate chain (gate 1 -> gate 2 -> the human co-sign), show **superseded
-   predecessors folding into** their successor, and mark each shipped-tail box with the single event
-   that closes it. Pin real commits/versions where they ground a claim.
-2. **Governance plane** = create -> coordinate -> gate -> verify -> **DECIDE(human)**, ending in a
-   concrete one-line ANSWER: *the macro's live critical path + "everything else is gated on a human
-   event or queued behind it — nothing engineering-blocked"* (or the true state if not).
-
-**Analogy table:** the same create -> coordinate -> gate -> verify roles **plus a DECIDE row for the
-human**, each naming what it owns in *this macro's* close-out this window.
-
-**Close with the HOLISTIC CLOSE-OUT STORY:** the ordered moves (1 -> 2 -> 3 ...) that close the whole
-macro's intent — the sequence a reader can act on ("finish the streak + co-sign -> the shipped tail
-closes on its human events -> the build queue drains"), plus the one-line trust statement
-(git+telemetry-grounded, comp-state self-test passed, every card claim traceable to a box above).
-
-**Discipline for this mode:** it is still READ-FIRST — it maps close-out, it does not close anything.
-If M1 surfaces a genuinely-closeable project (no gate left) or a real registry drift, that is a
-one-line **surface to the coordinator (COO) / owner**, exactly as Step 2 — never an edit from this
-skill. A close is the owner's grounded state change, not a status lens's.
+Lead with a `CHANGED SINCE LAST` card: which stage changed glyph, which numbered step closed, any
+new risk. A quiet interval says "no stage moved since <time>" in one line and still prints the
+full report (the reader may be cold).
 
 ## Discipline / risk notes
 
-- **The card is non-technical or it is broken.** The #1 failure mode is a "summary" that is just the
-  draw's jargon in prose. If the reader needs to know what `~C` or `LD-0314` is to parse the card,
-  rewrite it. The serials live in the draw.
-- **Ground it, never recollect it.** The card's claims come from Step 1's telemetry + git + comp-state,
-  not from what you remember happening this session. A fabric snapshot asserted from memory is the
-  stale-record failure this skill exists to avoid.
-- **comp-state self-test is a gate.** No PASS (its own N/N line) -> the drift half is untrusted; say so, lean on the
-  activity half.
-- **Read-first; the coordinator drives.** At most one capacity-surface to COO. Never lane-dispatch,
-  never manufacture backlog work to make an idle agent look busy — an honest "winding down, freed
-  capacity, your scope call" is a better card than a fake-busy one.
-- **git wins over the broker summary.** An agent heads-down in a long build looks stale on the broker
-  and is ACTIVE in git. Classify on git + telemetry, not the aspirational "Working on" line.
-- **Loop-friendly, idempotent.** Every fire re-derives from live state; nothing it writes
-  (`.last-stimulus-scan`, `.exec-sum-state`) is load-bearing beyond delta-display.
+- **Plain language or it is broken.** The #1 failure is the draw's jargon in prose. If a reader
+  needs to know what a serial, a TO, a "face" or a "cell" is, rewrite the sentence.
+- **Ground it, never recollect it.** Every card claim comes from Step 1; a report asserted from
+  memory is the stale-record failure this skill exists to avoid.
+- **comp-state self-test is a gate**; no PASS -> say so, lean on 1a/1c.
+- **git wins over the broker summary.** A seat heads-down in a long build reads stale on the
+  broker and ACTIVE in git.
+- **A deadline that slipped is said plainly, with the reason** (the reader asked "where is this
+  at", and a missed date is part of the answer).
+- **Read-first.** At most one surface to COO. Never dispatch, never manufacture work.
+- **Loop-friendly, idempotent.** Nothing it writes is load-bearing beyond delta display.
 
 ## Cross-references
 
-- `/stimulus-scan` — the activity-classification + dispatch instrument (Step 1a data half; exec-sum
-  uses its read, not its dispatch mandate).
-- `/comp-state` — the BM25 registry/TO/PRD drift linter (Step 1b; self-test-gated).
-- `/draw` — the house-style two-plane ASCII diagram (Step 3b).
-- `/overview` (prose status) and `/fabric-check` (agent + project axis) — sibling status lenses;
-  exec-sum is the card-first, business-legible one. The `--macro` close-out mode mirrors /overview's
-  Step-0a classifier (macro code -> all projects under it) but renders the card+draw close-out
-  product instead of prose.
-- `/loop` — the recurrence wrapper (`/loop [interval] /exec-sum`).
+`/draw` (the frame style) · `/open-calls` (the sovereign-decision cards -- Part 5's WAITING ON
+YOU line is the same decision, distilled) · `/stimulus-scan`, `/comp-state` (the instruments) ·
+`/overview`, `/fabric-check`, `/registry-check`, `/to-check` (the technical status lenses this
+report deliberately is not).

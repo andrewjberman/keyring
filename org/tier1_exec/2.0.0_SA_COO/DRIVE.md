@@ -190,6 +190,36 @@ has never reaped or it never writes the line, **and those are byte-identical in 
 
 ---
 
+- **THE LANE-COLLISION FIX (2026-08-29) AND ITS ONE EXCEPTION — the why behind SKILL.md Step 7's
+  `{RUNNING_SERIAL}` + refuse-on-ambiguity.** `0397e76d33` (2026-07-10, MINE, a 949->245-line
+  compression on Andrew's word) replaced `org/tier1_exec/{COO_SERIAL}/drive_log_...` with the literal
+  `2.0.0_SA_COO`. **A working derivation removed while compressing — a semantic change hiding as
+  formatting.** Effect: every COO lane wrote `drive_log_<ISO>Z.md` into ONE directory, so
+  `ls -t | head -1` returns whichever lane wrote last. **Measured: this seat took its paired-mode
+  cursor from `~X`'s log, 83 of 83 commits on that file authored `~X`.** Harm that tick zero —
+  nothing was classified PARKED — but the failure direction is rule 5's own (cursor too recent ->
+  window narrows -> movement under-reported -> false [STUCK] on a timer). CTO ruling @82648, restated
+  @82656 after its evidence was voided, DERIVE confirmed on maintenance cost @82667.
+  - ⛔ **THE `%an` TRAP THAT NEARLY SANK THE WHOLE ANALYSIS: `git log --format=%an` IS WHO COMMITTED,
+    NOT WHO WROTE.** A census of the directory reported "SEVEN authors, six of them foreign seats."
+    **All six were CUSTODIAL commits of base-COO's own untracked files** — `a47d66325f` (salvage
+    sweep), `b38f05df50` (whose subject literally reads *"land 18 base-COO-authored artifacts found
+    UNTRACKED"*), `d17d45be07` (custodial save). **ZERO foreign writers.** Three seats built on it;
+    this seat relayed it to the ruling seat and added a glob check that made it look more measured,
+    and it turned a CORRECT per-lane recommendation into a wrong retraction. **A wrong retraction
+    spends the credibility of the thing it withdraws.** The discriminator was one field away the
+    whole time — the commit SUBJECT, in plain words.
+  - ⛔ **THE RESIDUAL, AND IT IS THE EXCEPTION TO WRITE DOWN: (a) AND (b) COVER DISJOINT SETS.**
+    Deriving the write path stops the corpus GROWING; it cannot move the six files already sitting in
+    the shared directory, which still glob-match. So (b) is the only thing that touches the existing
+    corpus — not a belt. **And because `%an` on a custodially-committed file returns the CUSTODIAN,
+    (b) refuses SIX OF THIS SEAT'S OWN LOGS.** Correct and costless for those six (5+ weeks old, never
+    the `ls -t` winner). ⛔ **But a custodial sweep landing on the CURRENT log — which is exactly how
+    all six arrived — makes this seat's own live cursor refuse itself, and the sweeping seat has no
+    idea it did that.** Fail-loud, never silent, so the direction is right; **the mitigation is that
+    after (a) the PATH carries lane identity for `~X`/`~Z`/`~B`/`~C` and `%an` is not needed for them
+    at all. BASE is the sole exposed seat**, because its derived path IS the shared legacy directory.
+
 ## §6 — Cycle-log discipline
 
 - One log per `/drive` fire: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`.

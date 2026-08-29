@@ -59,12 +59,19 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
 ## 3. FINDING THINGS FAST
 
 21. **`comp-which "<plain-English question>"` is the reflex; a comp-tool is the DEFAULT for search +
-    inspection, raw grep the exception** (text-local, connection-blind). ⛔ **MEASURED 2026-08-28: of the
-    two limbs called "live hard-deny", only `infra/*.tf` grep without `# rail-checked: <why>` ACTUALLY
-    DENIES — raw-`aws` INSPECTION DID NOT FIRE for 2 seats on 2 command shapes.** It is an imperative
-    enforced by nobody: comply with the RULE, never with the gate. Estate-scoped broad Bash grep DENIES;
-    native `Grep`/`Glob` nudge-and-proceed; `Read` + operational `aws` free. `/freeform` stands the rail
-    down. Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
+    inspection, raw grep the exception** (text-local, connection-blind). ⛔ **T1 (Andrew-direct
+    2026-08-28 "All approved", CTO~D): EVERY standalone repo search in Bash — `grep/rg/egrep/fgrep/
+    findstr/ack/ag` recursive or directory-scoped, `find` with anything — is DENIED per SEGMENT
+    (`&&`/`;`/newline split; any path, any lead verb, a `|` after it or not) and routed to
+    `comp-find`; raw-`aws` INSPECTION is classified on ITS OWN SEGMENT, which closes the
+    `cd X && aws iam …` hole that made the 08-28 "did not fire for 2 seats" measurement.** Mechanism:
+    `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`; falsifier
+    `.tools/comprail-gate1-fptest.sh`, 43 cases, red 18/43 against the pre-T1 hook). Cost: one `grep`
+    per non-search Bash call; ~0.5–1 s more on a Bash call that DOES carry a search token (MSYS process
+    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), a single-file grep (T2, revisit ~09-04 on
+    the `ALLOW-SEARCH` rows), `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob` (nudge-and-
+    proceed, re-affirmed 08-28), `Read`, operational `aws`. `comp-grep` is a forwarder onto `comp-find`.
+    Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
     the pattern): `docs/architecture/NFRA_COMPRAIL_PRD.md`.
     ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Scoping this to comp-find is what let 3
     seats truncate a grep of ONE file within one hour (2026-08-28); a catch-all 4 lines from the bottom
@@ -72,11 +79,17 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     `--files`, `--limit/--page`, `--all`, and `-i` for any token census.
     ⛔ **A PAGE IS NOT AN ANSWER; never conclude from page 1.**
     ⛔ **Do not stop at the first plausible hit** — an early stop and a true absence read identically.
-    ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f): the corpus is `.gitignore`-BOUNDED, NOT
-    tracked-only** — `--corpus default` = tracked + untracked-not-ignored; `all` = + gitignored minus a
-    PRINTED ephemeral floor; `ignored` = only-gitignored MINUS the same printed floor; `raw` =
-    everything (an every-file denominator uses `raw` — `all` AND `ignored` understate by the floor,
-    now disclosed on their own denominator lines). **`--hidden <path>` is the census verb: run it before
+    ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f; DEFAULT FLIPPED 2026-08-28, Andrew-direct):
+    the corpus is `.gitignore`-BOUNDED, NOT tracked-only** — **the DEFAULT is now `all`** = tracked +
+    untracked + gitignored minus a PRINTED ephemeral floor (168,349 gitignored files at the root were
+    invisible to the old default); `default` = the old tracked + untracked-not-ignored population;
+    `ignored` = only-gitignored MINUS the same printed floor; `raw` = everything (an every-file
+    denominator uses `raw` — `all` AND `ignored` understate by the floor, disclosed on their own
+    denominator lines). comp-find is REPO-ONLY by ruling (a pathspec outside the worktree is not a
+    zero, it is `git rc=128`) — **except `--corpus aws` (2026-08-28, Andrew-direct "based off of the
+    comp-kuzu surface"): the LIVE AWS plane** — regex over every aws CloudNode's name+arn+props,
+    pathspecs = node_type filters, `drift_class` per hit (`LIVE-no-DECLARED` = in AWS, not in the
+    repo), denominator = nodes scanned, vintage = the DB's own `built:` line. **`--hidden <path>` is the census verb: run it before
     converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.**
     Log: `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-08-27/` @592e0255b1.
 20. **Check the dependency graph BEFORE any cloud/infra/data change and before frontend commits** — pick

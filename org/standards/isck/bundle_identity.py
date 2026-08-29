@@ -51,7 +51,17 @@ BOUNDARIES = {"round_1_boundary_commit": "21d6fc7325", "round_2_boundary_commit"
 # R3-CRO-28: the operational receipts are REGISTRY facts on the frozen label (append-only, keyed by
 # the immutable candidate_id + bundle id), never a member byte -- so recording one is not a new
 # candidate. Each kind is set at most once; a second, different value is a conflict, not an update.
-RECEIPT_KINDS = ("clean_clone_gate_receipt", "wp3_certification_receipt", "vertical_slice_receipt")
+# R4-CTO-3 (1.0.0_SA_CTO~X 2026-08-28 18:0xZ, on DT~X 78538): the doctrine's $comment names THREE operational
+# receipts -- WP-3 ledger, live vertical slice, HISTORICAL REPLAY -- and the WP-3b decomp/TO (11 tracked files)
+# cut a `historical_replay_receipt` cell on that reading, but this tuple never carried the kind: the CLI refused it
+# by enum while receipt_problem() returned None for it (the kind gate lived only in main()). APPEND, never remove
+# (R3-CRO-31: a slot is set once; `clean_clone_gate_receipt` stays as the declared slot it is, consumer or not).
+# Rule-24 record: domain = operational receipt kinds appended to a FROZEN label's registry entry; grain = one kind,
+# one slot; intent = one (which certification a value attests); MECE over the doctrine's three named receipts +
+# the pre-existing gate slot; state = each slot moves once, independently. Word-boundary census at the edit:
+# `historical_replay_receipt` 11 tracked files (all WP-3b), 0 in this tool or the doctrine.
+RECEIPT_KINDS = ("clean_clone_gate_receipt", "wp3_certification_receipt", "vertical_slice_receipt",
+                 "historical_replay_receipt")
 
 
 def git(*args):
@@ -81,6 +91,10 @@ def receipt_problem(commit, kind, rec):
     """Return None when <commit> carries a valid structured receipt of <kind> for <rec>'s label, else
     the first problem as text. Reads ONLY the object database at <commit> (never the working tree)."""
     import re
+    # R4-CTO-3: the kind gate lived only in main(), so a Python-level call returned None for a kind the CLI
+    # refuses -- a wrong-type call returning the expected shape. Gate here too, so both arms agree.
+    if kind not in RECEIPT_KINDS:
+        return f"receipt kind {kind!r} is not one of {RECEIPT_KINDS} (a receipt of an unregistered kind certifies nothing)"
     path = RECEIPT_PATH.format(kind=kind)
     try:
         raw = subprocess.check_output(["git", "-C", str(ROOT), "cat-file", "blob", f"{commit}:{path}"],
@@ -293,10 +307,30 @@ def main():
         return
     rec = derive(commit)
     if "--check" in sys.argv:
+        # R4-CTO-4 (1.0.0_SA_CTO~X 2026-08-28 18:5xZ, on DT~X 78718 / WP-4 AC2): this compared the WHOLE record,
+        # provenance pointers included, so it read STALE at every commit except the one the record was derived
+        # at -- a check that can pass at exactly one commit says nothing about the bundle, and its STALE was
+        # indistinguishable from a real member change (measured: HEAD STALE, 7a44b65f50 STALE, same word).
+        # The record is derive(<pin>) by construction (--write / --receipt), so the pointers are EXPECTED to
+        # differ from HEAD's. IDENTITY fields decide the verdict; pointer deltas print as INFO, never as a verdict.
+        # post_boundary_amendments = rev-list <round-2 boundary>..<commit> -- org/standards/isck: the package-path
+        # commit list at that vintage, which grows with every isck commit (registers, receipts, this tool) while
+        # the bundle stands still -- provenance, not identity (a bound bundle's candidate_id is the registry's).
+        POINTERS = ("derived_at_commit", "doctrine_commit", "schema_commit", "validator_commit", "gate_suite_commit",
+                    "post_boundary_amendments")
         cur = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
-        same = {k: v for k, v in cur.items() if k != "$comment"} == {k: v for k, v in rec.items() if k != "$comment"}
-        print(("OK" if same else "STALE") + f": {OUT.name} vs derivation at {rec['derived_at_commit'][:10]}")
-        sys.exit(0 if same else 1)
+        def ident(d):
+            return {k: v for k, v in d.items() if k != "$comment" and k not in POINTERS}
+        cur_i, rec_i = ident(cur), ident(rec)
+        diff = sorted(k for k in set(cur_i) | set(rec_i) if cur_i.get(k) != rec_i.get(k))
+        moved = [k for k in POINTERS if cur.get(k) != rec.get(k)]
+        if diff:
+            print(f"STALE: {OUT.name} identity differs from the derivation at {rec['derived_at_commit'][:10]} on {diff}")
+            sys.exit(1)
+        print(f"MATCH: {OUT.name} identity == derivation at {rec['derived_at_commit'][:10]} "
+              f"(bundle {rec['contract_bundle_id'][:24]}..., {rec['candidate_id']})"
+              + (f"; INFO pointers differ {moved} -- the record is derived at its pin, not at this commit" if moved else ""))
+        sys.exit(0)
     text = json.dumps(rec, indent=2) + "\n"
     if "--write" in sys.argv:
         labels = json.loads(LABELS.read_text(encoding="utf-8")) if LABELS.exists() else {}

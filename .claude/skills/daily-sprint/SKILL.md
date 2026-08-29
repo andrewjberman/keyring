@@ -58,7 +58,26 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       attachment names). Same JSON, one shared grammar (`templates/_shared_viz.js`). **A
       validation failure is a content defect: fix the JSON, never the template.** Surface both
       pages (open them); the mobile one is what he reads on a phone.
-7. **Commit** the day's file + JSON + rendered html under your author line (`safe-commit`).
+   d. **PHOTOS OF LIVE FEATURES (Andrew-direct 2026-08-28 ~21:5xZ, verbatim: *"if there's a live feature
+      on the frontend, we take a photo of it and superimpose that"*):** every `live` item whose subject is
+      a portal page gets `viz.type: screens`. `python daily_reports/scripts/capture_screens.py --date
+      <DAY> --route <route> --name <name> [--frame phone]` captures it through the portal's own headless
+      renderer into `daily_reports/shots/<DAY>/`; READ the PNG (the LOC line must be the route you
+      asked for), reference it as `shots/<DAY>/<name>.png` in the JSON, commit the shot with the JSON.
+      **Pick from the diagram catalog** (`daily_reports/README.md`): screens / flow / coverage / tree /
+      link / compare / steps / matrix -- the shape that tells the item's REAL story; repeating `link`
+      and `tree` across a page is the defect the catalog exists to end.
+7. **PUBLISH to the web client (Andrew-direct 2026-08-28):** `python daily_reports/scripts/
+   publish_daily_report.py --date <DAY>` — puts BOTH pages at `s3://opal-data-portal-v2/
+   daily-reports/<DAY>/` and reads each back (size + ETag MATCH x2 is the proof; the put's rc is
+   not). They are then live at **https://mcp.opalinvest.dev/sprint** (latest) and `/sprint/<DAY>`
+   behind Entra sign-in — the viewer picks Desktop/Mobile per device. The Teams link is that
+   URL; nothing else is posted. **UNTIL LDT fixes the App-1 redirect URI (IT_REQUEST.md Incident
+   #3), add `--presign`** (Andrew-direct 2026-08-28, "option 1 works here. go"): it also writes
+   `daily-reports/latest/` + a chooser page and prints a 7-day no-login presigned link — the
+   TEAMS LINK line is what goes in the post; it keeps serving each day's overwrite until it
+   expires. Then **commit** the day's file + JSON + rendered html under your author line
+   (`safe-commit`).
 
 ## The visual shape (Andrew-direct 2026-08-27 — rigidly templated; the runner looks FOR these)
 
@@ -68,11 +87,11 @@ frozen). A /daily-sprint run AUTHORS, it never styles. What the runner is lookin
 - **HEADLINE — a STANDALONE feature, not a sprint item:** what kind of day it was, carried by
   the biggest win or an amalgamation (`headline.kind`: biggest_win | amalgamation | day_summary).
   Never wraps.
-- **SPRINT ITEMS (3–8), IN FIXED CATEGORY ORDER: build → ship → fix → verify → scope**
+- **SPRINT ITEMS (3–8), IN FIXED CATEGORY ORDER: live → build → fix → verify → scope**
   (Andrew-direct 2026-08-27 ~23:4xZ, verbatim: *"always lead with built, then serving, then
-  fixed, then verified, then scoped"*; the renderer rejects an out-of-order JSON; highest
+  fixed, then verified, then scoped"* -- AMENDED 2026-08-28 ~21:5xZ, verbatim: *"change \"Serving\" to \"Live\" and thats what leads in sprint order and in legend order"*; the renderer rejects an out-of-order JSON; highest
   consequence first within a category; `hero` marks the biggest item where it falls). Each
-  carries a category (build/ship/fix/verify/scope), a **card headline that fits whole — max 52
+  carries a category (live/build/fix/verify/scope), a **card headline that fits whole — max 52
   chars, no ellipsis ever (hard law, renderer rejects)**, a stage title, **WHO / WHAT / WHERE /
   WHY** (one short line each; touchpoints a reader knows — firms, platforms, dashboard pages,
   **B2B only, never an individual investor**), a **viz type** (flow / coverage / tree / screens /

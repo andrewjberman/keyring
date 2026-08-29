@@ -151,6 +151,16 @@ reaching for on any versioned bucket before writing "the deployed object at that
 deployed code three commits later. Mitigated locally by committing the harness with a `--target`
 flag; the general class is `NFRA_TORECORD`'s and is not this seat's to build.
 
+>> **THE TRANSFERABLE LINE, `1.0.0_SA_CTO` 78309/78308, banked for the round because it outlives
+   this project: "EXERCISED is a claim about a VINTAGE, and a test whose subject can move CARRIES
+   ITS SUBJECT AS A PARAMETER."** A harness that hardcodes its target reads PASS forever while the
+   thing it was written to defend moves out from under it -- and the pass is not even wrong, it is
+   *about something else*. That is the shape of both round-bank findings here: (a) the deployed
+   object moved under a peer's measurement, (b) the exercised arm went stale when its subject
+   moved. Same defect, two carriers. **The remedy in both cases is to make the vintage an argument
+   rather than an assumption**, which is exactly what `--target` does and what re-fetching by
+   `--version-id` does. <<
+
 ---
 
 ## MCP traffic

@@ -177,6 +177,10 @@ def coverage_check(inst: dict, expected_arg: str) -> list[str]:
 # A retrofitted derivation makes alignment LOOK satisfied while being FALSE -- the
 # same class as the pre-2026-08-19 exclusion-blob substring match at :104.
 WORKSPACE = Path(__file__).resolve().parent.parent
+# Set by alignment_check(): True when the backward limb was ASSERTED on a delimited <owned_cells>
+# set, False when it could only ANNOUNCE (undelimited), None when alignment was not evaluated.
+# main() reads it to qualify the verdict line (DT~X 79061).
+_BACKWARD_ASSERTED = None
 
 # Cell-id grammar, validated against BOTH live decomps before encoding (2026-08-24):
 # etfs-positioning/20260821T194927Z -> 23 ids; d1-catviews/20260824T195537Z -> 28 ids,
@@ -481,6 +485,8 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     """(violations, frames). FRAMES PRINT WHETHER OR NOT ANYTHING FAILS -- a count with
     no denominator beside it is the exact class this gate exists to close, and a bare
     'aligned' is as unreadable as a bare 0."""
+    global _BACKWARD_ASSERTED
+    _BACKWARD_ASSERTED = None  # reset per call: an early return leaves "not evaluated", never a stale value
     frames: list[str] = []
     v: list[str] = []
     code = _project_code(str(inst.get("to_id", "")))
@@ -597,6 +603,11 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     # confident inversion of the TO's own words.
     declared = to["declared_cells"]
     delimited = to["delimited"]
+    # 2026-08-28 (DT~X 79061, six KEYFILL faces): when the delimiter is absent this limb ANNOUNCES
+    # instead of asserting -- correct -- but the run still ended in a bare "VALID", so a VALID on an
+    # undelimited face read as the same statement as a VALID on a delimited one. The verdict line
+    # now carries the degradation (main() reads this flag); rc is unchanged.
+    _BACKWARD_ASSERTED = bool(delimited)
     if to["delimiter_stray_text"]:
         v.append(f"decomp_ref/<owned_cells>: contains non-id text "
                  f"({to['delimiter_stray_text'][:60]!r}) -- the delimiter is machine-parsed "
@@ -684,7 +695,16 @@ def main() -> int:
               "without the verdict.")
     for line in violations:
         print(f"  VIOLATION: {line}")
-    print("VALID" if not violations else "INVALID")
+    if violations:
+        print("INVALID")
+    elif _BACKWARD_ASSERTED is False:
+        # A VALID whose backward limb was never asserted is a WEAKER statement than a VALID on a
+        # delimited face, and nothing in the bare word said so (DT~X 79061). Same rc; the verdict
+        # line names the limb it could not enforce.
+        print("VALID -- alignment-backward UNASSERTED (undelimited <decomp_ref>: put "
+              "<owned_cells>id, id</owned_cells> INSIDE <decomp_ref> to make it enforceable)")
+    else:
+        print("VALID")
     return 0 if not violations else 1
 
 

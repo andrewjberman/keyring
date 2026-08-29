@@ -393,6 +393,10 @@ def main() -> int:
         check("undelimited + exclusion prose: announced with the reason",
               "UNDELIMITED" in _frame(f, "alignment-backward: UNDELIMITED"),
               _frame(f, "alignment-backward: UNDELIMITED"))
+        # 2026-08-28 (DT~X 79061): the verdict line must carry the degradation -- main() reads
+        # this flag and prints "VALID -- alignment-backward UNASSERTED" instead of a bare VALID.
+        check("undelimited: backward limb flagged UNASSERTED for the verdict line",
+              mod._BACKWARD_ASSERTED is False, repr(mod._BACKWARD_ASSERTED))
 
     with tempfile.TemporaryDirectory() as d:
         ws = Path(d)
@@ -403,6 +407,8 @@ def main() -> int:
         check("delimited + exclusion prose: backward is 2/2 over the OWNED set only",
               "2/2 cell(s) declared" in _frame(f, "backward")
               and "<owned_cells>" in _frame(f, "backward"), _frame(f, "backward"))
+        check("delimited: backward limb flagged ASSERTED (the other half of the flag can fail)",
+              mod._BACKWARD_ASSERTED is True, repr(mod._BACKWARD_ASSERTED))
 
     with tempfile.TemporaryDirectory() as d:
         ws = Path(d)

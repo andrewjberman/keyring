@@ -585,10 +585,62 @@ def proof_board() -> int:
     return 0
 
 
+def third_population(tos: list[dict]) -> list[dict]:
+    """THE THIRD PRINTED POPULATION (tool-owner disposition 1.0.0_SA_CTO~X 80520, CVO-accepted;
+    landed by 1.0.0_SA_CTO~Y under the D11 split 80816 (c)).
+
+    Faces that carry a <status> tag (or a markdown Status field) and NO recognised assignment
+    field at all -- no <assigned_to>/<issued_to>, none of the markdown fields Owner / Assigned to /
+    Assignee. Such a face never reaches _assignees_from_field, so it contributes NOTHING to
+    `unresolved_serials`: it is invisible in the one direction that has no disclosure. Measured
+    2026-08-29 (@12a2031f2c): three freshly-cut wave-2 faces addressed as `**to:** <serial>` rendered
+    (unassigned) and the seating census read 0 open TOs for all three. The contract does NOT widen
+    (`**to:**` is not admitted); the silence becomes a number, printed on every run beside the
+    residue with the denominator.
+    """
+    return [t for t in tos
+            if not t.get("_error")
+            and (t.get("status_raw") or "").strip()
+            and t.get("assigned_to") in ("(unassigned)", "", None)]
+
+
+def third_population_selftest() -> int:
+    """Both control arms, exercised on fixtures written to a temp dir and parsed by the SAME
+    parse_to_file the live run uses. POSITIVE: a face carrying only `**to:** <serial>` MUST land
+    in the population. NEGATIVE: a face with <assigned_to> MUST NOT. THIRD: a face with no
+    <status> tag at all MUST NOT (it is not a face with a status tag). Exit 0 only if all fire."""
+    import tempfile
+    fixtures = {
+        "pos_to_only.md": ("# TASK ORDER -- fixture\n<status>pending</status>\n<project>NFRA_SELFTEST</project>\n"
+                           "**to:** `1.0.0_SA_CTO~Y` -- **issuer:** `2.0.0_SA_COO~X`\n"),
+        "neg_assigned_to.md": ("# TASK ORDER -- fixture\n<status>pending</status>\n<assigned_to>1.0.0_SA_CTO~Y</assigned_to>\n"
+                               "<project>NFRA_SELFTEST</project>\n"),
+        "neg_no_status.md": ("# TASK ORDER -- fixture\n<project>NFRA_SELFTEST</project>\n**to:** `1.0.0_SA_CTO~Y`\n"),
+    }
+    expect = {"pos_to_only.md": True, "neg_assigned_to.md": False, "neg_no_status.md": False}
+    ok = True
+    with tempfile.TemporaryDirectory() as d:
+        parsed = []
+        for name, body in fixtures.items():
+            p = Path(d) / name
+            p.write_text(body, encoding="utf-8")
+            parsed.append(parse_to_file(str(p)))
+        pop = {Path(t["path"]).name for t in third_population(parsed)}
+        for name, want in expect.items():
+            got = name in pop
+            arm = "PASS" if got == want else "FAIL"
+            ok &= (got == want)
+            print(f"  third-population selftest {arm}: {name} in_population={got} expected={want}")
+    print(f"third-population selftest: {'PASS 3/3' if ok else 'FAIL'} (denominator 3 arms)")
+    return 0 if ok else 1
+
+
 def main():
     args = sys.argv[1:]
     if "--proof-board" in args:
         sys.exit(proof_board())
+    if "--third-population-selftest" in args:
+        sys.exit(third_population_selftest())
     show_all = "--all" in args
     project_filter: str | None = None
     assignee_filter: str | None = None
@@ -618,6 +670,11 @@ def main():
             tos.append(t)  # still include -- surface, don't drop
         else:
             tos.append(t)
+
+    # THE THIRD POPULATION is taken over the WHOLE parsed corpus, HERE, before any scope filter and
+    # before the BY-AGENT rollup below rebinds the name `tos` to one agent's list (a shadow that
+    # made this line print 0 of 2181 against a raw-text census of 84 on its first run, 2026-08-29).
+    _third_all = third_population(tos)
 
     # Filter: exclude COMPLETE unless --all with explicit intent
     active_tos = [t for t in tos if t["status_class"] != "COMPLETE"]
@@ -748,6 +805,30 @@ def main():
               "recognised assignment notation. They are UNCLASSIFIED, not counted as "
               "non-assignments -- a real assignee written in an unusual notation lands here. "
               "Widen the notation set; do not read this residue as zero.")
+
+    # THE THIRD POPULATION -- printed on EVERY run, over the whole scanned corpus, never over the
+    # scope filter: faces with a <status> tag and NO recognised assignment field. These reach
+    # neither `assignee_serials` nor `unresolved_serials`; without this line their silence reads
+    # as a clean zero on the seating census. Denominator = scanned; "open" = not COMPLETE.
+    _third = _third_all
+    _third_open = [t for t in _third if t["status_class"] != "COMPLETE"]
+    _to_marker = re.compile(r"\*\*to:\*\*")
+    _third_to = [t for t in _third
+                 if _to_marker.search(Path(t["path"]).read_text(encoding="utf-8", errors="replace"))]
+    print(f"  THIRD-POPULATION: {len(_third)} of {len(to_files)} faces carry a <status> tag and NO "
+          f"recognised assignment field ({len(_third_open)} open; {len(_third_to)} of them address a "
+          f"seat as `**to:**`, the unrecognised notation). They are outside BOTH counts above; the "
+          f"contract does not widen -- fix the face's field, then re-run.")
+    _root = WORKSPACE.resolve()
+    for t in sorted(_third, key=lambda t: t["path"]):
+        flag = "OPEN" if t["status_class"] != "COMPLETE" else "complete"
+        mark = " **to:**" if t in _third_to else ""
+        p = Path(t["path"]).resolve()
+        try:
+            shown = p.relative_to(_root).as_posix()
+        except ValueError:
+            shown = p.as_posix()
+        print(f"    [{flag}]{mark} {shown}")
 
 
 if __name__ == "__main__":

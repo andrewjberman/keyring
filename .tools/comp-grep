@@ -1,213 +1,50 @@
 #!/usr/bin/env python3
-"""comp-grep <pattern> [pathspec ...] -- the ON-RAILS scoped repo search primitive
-(NFRA_COMPRAIL TO-2, Andrew-direct 2026-06-18: "make a comp-grep or whatever").
+"""comp-grep -- RETIRED NAME, now a forwarder onto comp-find (Andrew-direct 2026-08-28, "All approved"
+on the /open-calls cards, CTO~D; audit COMPRAIL_GREP_GATE_AUDIT_20260828.md).
 
-THE ROLE: the sanctioned, never-dead-end fallback for the two cases where no rich
-comp-tool fits a search --
-  (1) the TO-4 Bash-side BLOCKED case (raw repo-file grep is gated -> the agent is
-      routed here), and
-  (2) comp-which's run-the-primitive branch (no rich tool fits the question).
+comp-find replaced comp-grep on 2026-08-07 (Rule-21 repoint) and nothing has routed here since --
+yet the name still ran 824 times between 08-01 and 08-28 (comp-find: 2,696). Two names, one job.
+This forwarder maps the old flags onto comp-find and prints ONE WARN line so the habit corrects
+itself; the graded output, printed denominator, corpus modes and the rail-log row all come from
+comp-find. The 2026-06-18 implementation lives in git history (`git show 05ebf8c4fb^:.tools/comp-grep`).
 
-HONEST TRADEOFF (PRD NFRA_COMPRAIL §4 -- do NOT pretend this is free): comp-grep is
-SLOWER than the native Grep tool and adds NO relationship context for a plain string
-search. Its value is exactly two things:
-  - it keeps the Bash-side bypass on an AUDITED rail (every run logs a parseable line
-    to org/mcp/comp-which-rail.log -- the TO-5 coverage-audit feed; a recurring grep
-    for the same intent = a tool to BUILD), and
-  - it is repo-SCOPED and .gitignore-AWARE by construction (file set =
-    `git ls-files --cached --others --exclude-standard`, RECURSED into nested git repos
-    like portal -> tracked + untracked-not-ignored, never node_modules/.terraform).
-The native Grep tool stays the sanctioned FAST path for unguarded plain finds; comp-grep
-is the rail for the gated case, not a blanket replacement.
-
-WHY git-enumerate + in-process regex (not `rg`, not `bash -c grep`): rg is ABSENT on
-this box; and a python->`bash -c "grep ..."` subprocess can SILENTLY return empty (rc0)
-on Windows (memory: reference_python_subprocess_bash_launchers_grep_fail_on_windows).
-git.exe is a native exe (safe via subprocess); the match runs in pure python re.
-
-Read-only, deterministic, ASCII-only.
+Flag map:  -i -> -i   |   -l / --files -> --files   |   --max N -> --limit N   |   --include-held -> passthrough
+Everything else is passed through unchanged (pattern + pathspecs).
 """
 from __future__ import annotations
 
 import os
-import re
+import subprocess
 import sys
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _comprail  # noqa: E402
-
-WS = _comprail.repo_root()
-RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
-
-MAX_MATCHES_DEFAULT = 200
-MAX_FILE_BYTES = 2 * 1024 * 1024  # skip files larger than 2MB (binary/data dumps)
-
-
-def _is_binary(path: str) -> bool:
-    try:
-        with open(path, "rb") as f:
-            return b"\0" in f.read(4096)
-    except Exception:
-        return True
 
 
 def main() -> int:
-    _comprail.harden_stdout()
     argv = sys.argv[1:]
+    here = os.path.dirname(os.path.abspath(__file__))
+    target = os.path.join(here, "comp-find")
     if not argv or argv[0] in ("-h", "--help"):
-        print('comp-grep <pattern> [pathspec ...]  -- on-rails, .gitignore-aware, logged repo search.')
-        print('  flags: -i (ignore case)  -l/--files (matching filenames only)  --max N (cap, default 200)')
-        print('  e.g. comp-grep advisorNameOverrides portal/src')
-        print('       comp-grep "apply_aua_overrides" data/')
+        print("comp-grep is RETIRED -> forwards to comp-find. Use: comp-find <pattern> [pathspec ...]")
+        print("  (comp-find --help for the graded/paged/corpus flags)")
         return 0
-
-    ignore_case = False
-    files_only = False
-    include_held = False
-    max_matches = MAX_MATCHES_DEFAULT
-    positional = []
+    out: list[str] = []
     i = 0
     while i < len(argv):
         a = argv[i]
-        if a == "-i":
-            ignore_case = True
-        elif a in ("-l", "--files"):
-            files_only = True
-        elif a == "--include-held":
-            include_held = True  # audited directed override of the sovereign-held guard (GG1)
+        if a in ("-l", "--files"):
+            out.append("--files")
         elif a == "--max":
             i += 1
-            try:
-                max_matches = int(argv[i])
-            except Exception:
-                max_matches = MAX_MATCHES_DEFAULT
+            out.extend(["--limit", argv[i] if i < len(argv) else "25"])
         else:
-            positional.append(a)
+            out.append(a)
         i += 1
-
-    if not positional:
-        print("comp-grep: ERROR: no pattern given. Usage: comp-grep <pattern> [pathspec ...]")
-        return 2
-
-    pattern = positional[0]
-    pathspec = positional[1:]
-
-    flags = re.IGNORECASE if ignore_case else 0
+    print("WARN: comp-grep is retired (2026-08-28); forwarding to: comp-find " + " ".join(out), file=sys.stderr)
     try:
-        rx = re.compile(pattern, flags)
-        used_pattern = pattern
-    except re.error:
-        rx = re.compile(re.escape(pattern), flags)  # plain-string fallback
-        used_pattern = re.escape(pattern)
-
-    # BRE-vs-ERE footgun guard (2026-07-07, 0.7.0's 2 false-"0 matches" incidents):
-    # comp-grep uses Python `re` (bare `|`/`(`/`)` = alternation/group). Agents raised on
-    # grep/egrep BRE muscle-memory often write `\|`/`\(`/`\)` expecting alternation/grouping
-    # -- in Python re that instead matches a LITERAL backslash-then-char, so the pattern
-    # silently never matches and "0 matches" gets read as "confirmed absence" (exactly the
-    # failure Rule 21's trust premise cannot tolerate). Warn loudly, do not silently reinterpret.
-    if re.search(r"\\[|()]", pattern):
-        print("comp-grep: WARNING: pattern contains '\\|' / '\\(' / '\\)' -- Python re (what "
-              "comp-grep uses) treats these as LITERAL characters, not BRE/egrep alternation/"
-              "grouping. If you meant alternation, use a BARE pipe: 'foo|bar', not 'foo\\|bar'. "
-              "A 0-match result below may be this, not a real absence.")
-
-    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
-    if files is None:
-        # never silently empty -> loud BLOCKED so the agent does not read absence as "no matches"
-        print("comp-grep: BLOCKED: %s" % err)
-        _comprail.log_rail(RAIL_LOG, "RUN-GREP-ERR", "comp-grep", pattern, 'q="%s"' % err)
+        return subprocess.call([sys.executable, target, *out])
+    except OSError as e:
+        print(f"ERROR: could not run comp-find at {target}: {e}", file=sys.stderr)
         return 2
-    if held_note:
-        # sovereign-held guard (GG1): LOUD -- an excluded held path is NOT 'confirmed absent'
-        print("comp-grep: %s" % held_note)
-
-    scanned = 0
-    matches = []  # (path, lineno, text)
-    truncated = False
-    for rel in files:
-        full = os.path.join(WS, rel)
-        try:
-            if os.path.getsize(full) > MAX_FILE_BYTES:
-                continue
-        except Exception:
-            continue
-        if _is_binary(full):
-            continue
-        scanned += 1
-        try:
-            with open(full, "r", encoding="utf-8", errors="replace") as f:
-                for n, line in enumerate(f, 1):
-                    if rx.search(line):
-                        matches.append((rel, n, line.rstrip("\n")))
-                        if len(matches) >= max_matches:
-                            truncated = True
-                            break
-        except Exception:
-            continue
-        if truncated:
-            break
-
-    # output (ASCII-only)
-    if files_only:
-        seen = []
-        for rel, _n, _t in matches:
-            if rel not in seen:
-                seen.append(rel)
-        for rel in seen:
-            print(rel)
-        hit_files = len(seen)
-    else:
-        for rel, n, text in matches:
-            print(_comprail.ascii_safe("%s:%d: %s" % (rel, n, text.strip()[:240])))
-        hit_files = len({m[0] for m in matches})
-
-    # O2/C1': the scope denominator rides WITH the count. `scanned` is files reached before any
-    # early exit; len(files) is the enumerated scope -- printing scanned bare read as a completed
-    # scan. On truncation the true match total is UNKNOWABLE (we broke out), so declare a LOWER
-    # BOUND rather than a number we do not have.
-    foot = "%s: comp-grep -- %d match(es) in %d file(s); scanned %d of %d file(s) in scope" % (
-        "OK" if scanned else "WARN", len(matches), hit_files, scanned, len(files))
-    if truncated:
-        foot += " [TRUNCATED at --max %d -- true total is >=%d; refine the pattern/pathspec]" % (
-            max_matches, len(matches))
-    print("")
-    print(foot)
-    print("  (on-rails: repo-scoped + .gitignore-aware [incl. nested repos] + logged to org/mcp/comp-which-rail.log)")
-    if not matches:
-        # O2/C3a: NEVER assert a zero is real without having searched a non-empty population.
-        # This branch previously printed the reassurance UNCONDITIONALLY, so a typo'd or stale
-        # pathspec returned "0 matches is a real result here" -- an affirmative false assurance
-        # on a FAILED RETRIEVAL. Wording mirrors comp-glob, which already refuses to claim absence.
-        if scanned == 0:
-            print("  WARNING: 0 files were SCANNED -- this is a FAILED RETRIEVAL, not a real zero.")
-            print("  The pathspec matched no tracked, non-ignored file, so nothing was searched.")
-            print("  Verify it exists:  git ls-files <pathspec> | head")
-        else:
-            print("  0 hits in the %d file(s) actually searched. This is NOT a confirmation of"
-                  % scanned)
-            print("  absence -- widen the pattern, or check `git check-ignore -v <path>`.")
-
-    # SYSTEMS UNDERSTANDING (the interplay): every matched file arrives WITH the comp-tool that
-    # explains its dependencies -- so the agent cannot skim-via-grep without understanding what
-    # feeds/consumes it (Andrew-direct 2026-06-22 failure-mode #2).
-    matched_files = []
-    for rel, _n, _t in matches:
-        if rel not in matched_files:
-            matched_files.append(rel)
-    for line in _comprail.systems_context(matched_files):
-        print(line)
-
-    _comprail.log_rail(RAIL_LOG, "RUN-GREP", "comp-grep", used_pattern,
-                       "matches=%d files=%d scanned=%d path=%s" % (
-                           len(matches), hit_files, scanned, ",".join(pathspec) or "."))
-    # O2 rc contract (CTO GO 20260729T031744Z, ruled + ratified): a FAILED RETRIEVAL must not
-    # exit clean -- agents and gates that read only the exit code otherwise get "clean" on a
-    # search that searched nothing. rc=2 matches this tool's own BLOCKED convention. comp-which
-    # passes this rc through by design (interception would recreate the vouching-for-false-
-    # negatives defect at the routing layer).
-    return 2 if scanned == 0 else 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())

@@ -88,8 +88,16 @@ Read the window, not just list it:
   window; any non-append edit (a deleted or rewritten past line) is a finding.
   Every `OVERRIDE` line raises a mandatory `OVERRIDE_REVIEW` finding.
   **Filter audit lines by explicit timestamp range `START <= ts < END`** (the
-  Step-0 flag-author-time boundaries), NOT a date-prefix grep — `awk '$1 >= START
-  && $1 < END'`. Walk BOTH the constitutional log (`tier0/audit/ledger-hook-audit.log`)
+  Step-0 flag-author-time boundaries), NOT a date-prefix grep. Compare each line's
+  FIRST WHITESPACE-SEPARATED FIELD (the timestamp) against both bounds. ⛔ **DO NOT
+  PASTE A LITERAL AWK POSITIONAL FROM THIS FILE — write the field reference at the call
+  site.** A bare `$N` in a skill body is expanded against YOUR OWN invocation arguments
+  before you read it, so the line you see is not the line on disk and NEITHER END CAN SEE
+  THE DIFFERENCE (2.0.0_SA_COO~X 82689, observed on /drive; MSTR census 82731 — exposure
+  is 2 of 64 skills, not the 5 first reported: three of those were dollar amounts a
+  `\$[0-9]` pattern truncated into positional-looking tokens). A `while read ts rest`
+  loop carries no positional and is safe to paste as-is.
+  Walk BOTH the constitutional log (`tier0/audit/ledger-hook-audit.log`)
   AND the commit-scope log (`org/git-author-override-audit.log`); they are distinct
   (constitutional ledger-hook overrides vs commit-scope owned-paths/author overrides)
   and the OVERRIDE_REVIEW must name which log each override came from. Re-derive

@@ -84,16 +84,24 @@ def clone_and_run(commit, keep):
     kept is PRINTED. Only a directory allocated here is ever a removal candidate.
     """
     from ledger.battery import run_battery as rb
+    # The FULL 40-hex, resolved here and printed. The receipt validator binds run_commit to the
+    # evidence by requiring the evidence to NAME it (R4-CVO-5) -- a receipt whose evidence never
+    # mentions its run_commit is a claim, not a run. An abbreviation is not the identity.
+    commit = subprocess.check_output(["git", "rev-parse", "--verify", "%s^{commit}" % commit],
+                                     cwd=sl.REPO_ROOT).decode().strip()
     dest, owned_parent = rb.choose_clone_dir(None, commit)
     clone = rb.clean_clone(commit, dest, sl.REPO_ROOT)
-    print("AC6 CLEAN EXTRACT of %s -> %s" % (commit, clone))
+    print("AC6 CLEAN EXTRACT of BUILD commit %s -> %s" % (commit, clone))
     try:
         child = subprocess.run(
             [sys.executable, os.path.join(clone, "org", "standards", "isck", "ledger", "battery",
                                           "run_slice.py"), "--pin", commit],
             cwd=os.path.join(clone, "org", "standards", "isck"),
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        sys.stdout.write(child.stdout.decode("utf-8", "replace"))
+        # Normalise the child line endings BEFORE handing them to our own stdout, which translates
+        # again on Windows. Without this a child line reaches a capturing parent as CR CR LF and
+        # every downstream consumer inherits a CR nobody wrote.
+        sys.stdout.write(child.stdout.decode("utf-8", "replace").replace(chr(13), ""))
         return child.returncode
     finally:
         rb.release_clone(owned_parent, keep)
@@ -146,6 +154,31 @@ def main():
         print("                 digest %s  %s" % (dg[:23] + "...", name))
     print("                 method %s" % sl.DIGEST_METHOD)
 
+    # AC2's TWO REMAINING LIMBS, exercised rather than asserted.
+    #
+    # (a) BYTE-IDENTICAL BATCHES ON THE SAME PIN. The population is translated a SECOND time and
+    #     every record compared through engine.canonical(). Determinism here is what makes a digest
+    #     over a batch mean anything; a translator that reordered a dict or stamped a clock would
+    #     produce a different artifact from the same input and no downstream digest could tell.
+    second, _e2, _c2 = sl.translate_population(manifest)
+    a = [engine.canonical(r) for _pid, recs in batches for r in recs]
+    b = [engine.canonical(r) for _pid, recs in second for r in recs]
+    byte_identical = a == b
+    first_diff = next((i for i, (x, y) in enumerate(zip(a, b)) if x != y), None)
+    print("AC2 determinism  %d records re-translated at the same pin -> %s%s"
+          % (len(a), "BYTE-IDENTICAL via canonical()" if byte_identical else "DIFFER",
+             "" if byte_identical else "  first difference at record %s" % first_diff))
+    #
+    # (b) NO SYNTHETIC DEFAULTS. An AST sweep of the translator itself: any literal placed into a
+    #     RECORD field that substitutes for absent part data is a finding. This is the arm that
+    #     stops "the part did not carry it" from quietly becoming "unknown".
+    ok_syn, findings = sl.no_synthetic_defaults()
+    print("AC2 no-synthetic %s -- FORBIDDEN %d | schema-const %d | owner-declared %d"
+          % ("PASS" if ok_syn else "FAIL", len(findings["forbidden"]),
+             len(findings["schema_const_allowed"]), len(findings["owner_declared_allowed"])))
+    for entry in findings["forbidden"][:5]:
+        print("                 FORBIDDEN %s" % entry)
+
     tmp = tempfile.mkdtemp()
     store, adm, ref, err, refusals = admit_all(batches, tmp, "clean")
     den = len(parts)
@@ -187,7 +220,13 @@ def main():
             return 2
     prov, pids = sl.slice_provenance(manifest, {"declared": PIN_DECLARED,
                                                 "preserved": PIN_PRESERVED},
-                                     run_pin, STARTED_AT)
+                                     run_pin, STARTED_AT,
+                                     # MEASURED at emission: the admission actually completed with
+                                     # every part admitted and nothing refused or errored. A run
+                                     # that stamps "succeeded" at construction is describing a
+                                     # future it has not observed.
+                                     "succeeded" if (adm == den and ref == 0 and err == 0)
+                                     else "failed")
     store.admit(prov, actor=fx.ROOT)
     dr = pids["digest_report"]
     print("AC2 provenance   run pin %s (%s)" % (run_pin[:10], pin_source))
@@ -271,7 +310,22 @@ def main():
     print("                 POSITIVE %s" % json.dumps(r5["positive"]))
     print("                 NEGATIVE %s" % json.dumps(r5["negative"]))
     print("AC5 verdict      %s" % ("PASS" if ok5 else "FAIL"))
-    return 0 if (adm == den and ok5 and two_e_a and two_e_b) else 1
+
+    # AC4's LAST LIMB: the snapshot opened ALONE must equal an INDEPENDENT LOAD by record-id SET,
+    # not by count. Equal sizes and equal anchors are satisfiable by two different memberships, and
+    # a count check passes on both -- the set is the question the criterion actually asks.
+    snap_ids, snap_anchor = snapshot.record_ids_alone(pub)
+    live_ids = set(store._primary_of(r) for r in store.estate_records())         if hasattr(store, "estate_records") else set(
+            store._primary_of(r) for r, _s in store.estate())
+    same_set = snap_ids == live_ids
+    print("AC4 snapshot     opened ALONE %d ids @ anchor %d | independent load %d ids @ anchor %d"
+          % (len(snap_ids), snap_anchor, len(live_ids), store.head_commit_seq()))
+    print("AC4 set equality %s%s"
+          % ("record-id SETS EQUAL" if same_set else "SETS DIFFER",
+             "" if same_set else "  only-in-snapshot %s | only-in-live %s"
+             % (sorted(snap_ids - live_ids)[:3], sorted(live_ids - snap_ids)[:3])))
+    return 0 if (adm == den and ok5 and two_e_a and two_e_b and same_set
+                 and byte_identical and ok_syn) else 1
 
 
 if __name__ == "__main__":

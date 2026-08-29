@@ -57,36 +57,120 @@ fi
 query=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // .tool_input.pattern // .tool_input.file_path // ""' 2>/dev/null || true)
 gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || true)
 [ -z "$query" ] && exit 0
+_orig_query="$query"   # the T1 rail may narrow $query to one SEGMENT for classification; the override marker + log rows read the ORIGINAL
 
-# --- LEADING-VERB GATE (NFRA_TOOLCHECK P3 req#3b, 2026-07-08): classification below scans the
-# WHOLE command string for a substring match, so a compound OPERATIONAL command (`git push &&
-# terraform plan`, `echo && ls`) can false-fire off an incidental token even though the command is
-# not a search at all. Gate on the command's actual LEADING verb (mirrors comp_which_signals.py's
-# classify_command COMPUTE_RX -- the SAME rail's canonical compute-vs-navigate split, kept native-
-# bash here so the hot PreToolUse path never shells out to python for the common operational case).
-# A leading operational verb skips classification UNLESS a LATER &&/;/newline-separated segment is
-# itself a standalone search-tool invocation (e.g. "cd X && grep -r foo ." IS a real search).
-if [ "$tool" = Bash ]; then
+WS="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS="."
+RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
+_q80() { printf '%s' "$_orig_query" | tr '\n\r' '  ' | head -c 100; }
+
+# emit_deny -- the ONE deny path (shared by the T1 search rail and the aws/infra tiers). Honors the
+# `# rail-checked: <why>` override (allow + audit) and writes the DENY row. Uses $class/$msg/$query.
+emit_deny() {
+  local _ts; _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
+  if printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:'; then
+    local _why; _why="$(printf '%s' "$_orig_query" | sed -E 's/.*#[[:space:]]*rail-checked:[[:space:]]*//' | tr '\n' ' ' | head -c 200)"
+    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  reason=$_why  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    exit 0
+  fi
+  echo "$_ts  DENY  tool=$tool  class=$class  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+  local _reason; _reason="$(printf '%s' "$msg" | sed -E 's/[[:space:]]*\(advisory -- your [a-z]+ still runs\.\)//')"
+  _reason="${_reason} -- GATED per CLAUDE.md Rule 21 (comp-which-first). Run the comp-tool above instead. If NO comp-tool truly fits this exact search, re-run the command with a trailing '# rail-checked: <why no comp-tool fits>' marker (auditable, logged). For a time-boxed speed push, /freeform stands the whole rail down."
+  local _enc; _enc=$(printf '%s' "$_reason" | "$JQ" -Rs . 2>/dev/null) || exit 0
+  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":%s}}' "$_enc"
+  exit 0
+}
+
+# === T1 -- THE PER-SEGMENT SEARCH RAIL (Andrew-direct 2026-08-28, "All approved" on the /open-calls
+# cards; audit org/tier1_exec/1.0.0_SA_CTO/deliverables/COMPRAIL_GREP_GATE_AUDIT_20260828.md) ======
+# The 07-08 LEADING-VERB gate exited on any operational lead verb unless a later segment was a
+# grep-family word, and the old Gate-1 denied only recursive greps over an ESTATE path list with no
+# `|` anywhere in the command. Measured 2026-08-28 (24 shapes fed to this hook): `grep -rn foo .`,
+# `grep -rn foo org/`, `grep -rn foo portal/src | head`, `cd X && grep ...`, `find org -name`, and
+# `cd X && aws iam get-role` ALL passed SILENT -- the rail stood only where the command already said
+# infra/aws, .tf or portal/src. RULE NOW: the command is split into SEGMENTS (&&, ||, ;, newline);
+# each segment's FIRST pipeline stage is its command.
+#   - lead in {grep rg egrep fgrep findstr ack ag} that is RECURSIVE or DIRECTORY-scoped, or `find`
+#     with anything -> a REPO SEARCH -> DENY (marker-gated: org/mcp/comprail-gate1.enforce is the
+#     fabric kill switch), routed to comp-find. Any path. Any lead verb before it. A `|` after it
+#     does not matter (that is post-processing OUR search, still a search).
+#   - a grep-family lead over ONE FILE (no -r, last arg is an existing file or looks like one) stays
+#     free (T2, deferred a week on Andrew's word) and is LOGGED as ALLOW-SEARCH shape=single-file --
+#     the denominator the 08-28 audit found missing. (An infra/.tf single file still hits the
+#     pre-existing infra_grep tier below -- nothing loosened.)
+#   - grep as a pipe RECEIVER (`cmd | grep`) is post-processing, free, LOGGED shape=pipe-receiver.
+#   - an `aws` lead matching the INSPECTION regexes is classified on ITS OWN SEGMENT below, so the
+#     lead-verb hole closes with no second mechanism.
+#   - native Grep/Glob tools: unchanged (nudge-and-proceed, Andrew 06-22 + re-affirmed 08-28).
+# COST: one tr/sed split per Bash call (ms). NON-APPLICATION: pipe-receiver grep, single-file grep,
+# `# rail-checked:`, /freeform, non-search Bash, the native tools.
+_search_seg=""; _search_shape=""; _aws_seg=""; _pipe_receiver=0
+# FAST PATH (measured 2026-08-28: the segment loop costs ~0.7s on `git status` under MSYS, where every
+# sed/awk/grep is a ~100ms process): a command with NO search-family / aws token anywhere pays ONE grep.
+if [ "$tool" = Bash ] && ! printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_-])(grep|rg|egrep|fgrep|findstr|ack|ag|find|aws)([^A-Za-z0-9_-]|$)'; then
   _lead="$(printf '%s' "$query" | sed -E 's/^[[:space:]]*//' | grep -oE '^[A-Za-z0-9_./-]+' | head -1)"
   case "$_lead" in
     python|python3|pip|pip3|npm|npx|node|bun|deno|terraform|tofu|git|pytest|make|docker|bash|sh|zsh|\
-    cargo|go|mvn|gradle|ruby|perl|java|dotnet|safe-*|comp-to|echo|ls|cd|mkdir|rm|cp|mv|touch|chmod|export)
-      if ! printf '%s' "$query" | tr '\n' ';' | grep -qE '(&&|;|\|)[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag|find)([^A-Za-z]|$)'; then
-        exit 0
-      fi
-      ;;
+    cargo|go|mvn|gradle|ruby|perl|java|dotnet|safe-*|comp-to|echo|ls|cd|mkdir|rm|cp|mv|touch|chmod|export) exit 0 ;;
   esac
+  _search_shape=none
 fi
-
-# --- PIPE-GREP EXEMPTION (NFRA_TOOLCHECK P3 req#3c, 2026-07-08): `cmd | grep` filters the LIVE
-# OUTPUT of another command (ps aux | grep, git log | grep, aws ... | grep) -- CLAUDE.md Rule 21
-# already deems this free at the rail-enforcement level ("pipe-greps (cmd | grep) = free"), so the
-# advisory nudge should not fire on it either. grep as the pipe-RECEIVER (a later stage), not the
-# leading/standalone search itself -- a leading `grep -rn foo . | head` is untouched, still a real
-# repo search. Mirrors the single-file negative-filter's "not the estate-search class this hook
-# targets" philosophy below.
-if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '\|[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag)([[:space:]]|$)'; then
-  exit 0
+if [ "$tool" = Bash ] && [ "$_search_shape" != none ]; then
+  if printf '%s' "$query" | grep -qE '\|[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag)([[:space:]]|$)'; then _pipe_receiver=1; fi
+  # QUOTED STRINGS ARE OPAQUE. A `|`, `;` or `&&` INSIDE a quoted pattern (`grep -n 'a\|b' f.py`) is
+  # not a pipe or a separator; masking quoted bodies to Q before the split keeps the first stage and
+  # the segment boundaries honest. Measured 2026-08-28 on this seat: the unmasked splitter cut
+  # `grep -n '^def \|^X' .tools/_comprail.py | head` at the pattern's `\|` and DENIED a single-file
+  # grep as "directory" -- a false deny the FP test now carries.
+  _masked="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g")"
+  _segs="$(printf '%s' "$_masked" | sed -E 's/&&|\|\||;/\n/g')"
+  while IFS= read -r _s; do
+    _s="$(printf '%s' "$_s" | sed -E 's/^[[:space:]]*//; s/^(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|env|sudo|time|nice)[[:space:]]+)*//; s/#.*$//')"
+    [ -z "$_s" ] && continue
+    _first="$(printf '%s' "$_s" | sed -E 's/\|.*$//')"
+    _lead="$(printf '%s' "$_first" | grep -oE '^[A-Za-z0-9_./-]+' | head -1)"
+    _lead_base="${_lead##*/}"
+    case "$_lead_base" in
+      grep|egrep|fgrep)
+        if printf '%s' "$_first" | grep -qE '(^|[[:space:]])-[A-Za-z]*[rR][A-Za-z]*([[:space:]]|$)|--(dereference-)?recursive'; then _search_seg="$_s"; _search_shape=recursive; break; fi
+        _last="$(printf '%s' "$_first" | awk '{for(i=NF;i>2;i--) if ($i !~ /^-/) {print $i; exit}}' | tr -d "'\"")"
+        if [ -z "$_last" ]; then _search_shape=stdin; continue; fi                  # `grep pat` reads stdin: not a repo search
+        if [ -d "$WS/$_last" ] || [ -d "$_last" ] || [ "$_last" = "." ] || printf '%s' "$_last" | grep -qE '[*?]|/$'; then _search_seg="$_s"; _search_shape=directory; break; fi
+        _search_shape=single-file ;;
+      rg|ack|ag|findstr)
+        _last="$(printf '%s' "$_first" | awk '{for(i=NF;i>2;i--) if ($i !~ /^-/) {print $i; exit}}' | tr -d "'\"")"
+        if [ -n "$_last" ] && { [ -f "$WS/$_last" ] || [ -f "$_last" ]; } && ! printf '%s' "$_first" | grep -qE '(^|[[:space:]])(-r|/s)([[:space:]]|$)'; then _search_shape=single-file; else _search_seg="$_s"; _search_shape=recursive; break; fi ;;
+      find) _search_seg="$_s"; _search_shape=find; break ;;
+      aws) [ -z "$_aws_seg" ] && _aws_seg="$_first" ;;
+    esac
+  done <<EOF
+$_segs
+EOF
+  if [ -n "$_search_seg" ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
+    class=repo_search
+    msg="comp-tool on the HUD: a raw repo search in Bash (${_search_shape}: $(printf '%s' "$_search_seg" | head -c 80)). The rail is comp-find: \`comp-find '<pattern>' [pathspec]\` = content (graded bands, PRINTED denominator, gitignored content included by default); \`comp-find --name '<glob>' [pathspec]\` = files; \`comp-which \"<question>\"\` = the router. A \`cmd | grep\` pipe RECEIVER stays free."
+    emit_deny
+  fi
+  if [ -n "$_search_seg" ]; then
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-marker-off  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+  elif [ "$_search_shape" = single-file ]; then
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=single-file  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+  elif [ "$_pipe_receiver" = 1 ]; then
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=pipe-receiver  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+  fi
+  # An aws INSPECTION segment is classified on its own text (closes `cd X && aws iam ...`).
+  if [ -n "$_aws_seg" ]; then
+    query="$_aws_seg"
+  elif [ "$_search_shape" != single-file ] && [ "$_pipe_receiver" = 1 ]; then
+    exit 0   # pure pipe-receiver command (ps | grep, git log | grep): post-processing, no nudge
+  elif [ "$_search_shape" = "" ]; then
+    # A search-family/aws TOKEN appeared but no segment LED with one (e.g. `echo "use grep"`,
+    # `python find_dupes.py`): keep the 07-08 leading-verb quiet path for operational commands.
+    _lead="$(printf '%s' "$query" | sed -E 's/^[[:space:]]*//' | grep -oE '^[A-Za-z0-9_./-]+' | head -1)"
+    case "$_lead" in
+      python|python3|pip|pip3|npm|npx|node|bun|deno|terraform|tofu|git|pytest|make|docker|bash|sh|zsh|\
+      cargo|go|mvn|gradle|ruby|perl|java|dotnet|safe-*|comp-to|echo|ls|cd|mkdir|rm|cp|mv|touch|chmod|export) exit 0 ;;
+    esac
+  fi
 fi
 
 # --- NEGATIVE FILTER (CVO #3: the non-noise guarantee). Suppress when: ---
@@ -112,8 +196,6 @@ if printf '%s' "$query $gpath" | grep -qE 'deck_generation/' \
 # listing (no targeted comp answer) -> stay silent; do NOT fall through to the s3_artifact grep-class
 # on the bucket-name alone. (The targeted code//gold/ s3-ls classes below carry code//gold/ so this skips THEM out.)
 if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)' && ! printf '%s' "$query" | grep -qE 'code/|(^|/)(gold|platinum|silver|json)/'; then exit 0; fi
-
-WS="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS="."
 
 # --- CLASS MATCH (first-match-wins, priority = CVO bypass-volume ranking) ---
 class=""; msg=""
@@ -238,37 +320,11 @@ fi
 # MATCHES data/*/scripts|portal/src, but the LIVE HARD-DENY reaching Gate-1 is NARROWER: {bare data/*/scripts,
 # .../bronze/, infra/aws, .tf}. gold/silver-layer + portal-src get the earlier class's ADVISORY nudge (railed,
 # not denied). Tightening this shadow (should they hard-deny?) = a DEFERRED rail-behavior call, not a doc fix.
-if [ "$tool" = Bash ] && [ "$class" = comp_which ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
-  if ! printf '%s' "$query" | grep -qE '\|' \
-     && printf '%s' "$query" | grep -qE '(grep[[:space:]]+-[A-Za-z]*[rR]|(^|[^A-Za-z])rg[[:space:]]|(^|[^A-Za-z])find[[:space:]])' \
-     && printf '%s' "$query $gpath" | grep -qE 'data/[A-Za-z0-9_]+/scripts|portal/src|infra/aws|\.tf([^A-Za-z0-9]|$)'; then
-    _gate=1
-  fi
-fi
+# (The 06-25 Gate-1 block -- estate-path-scoped broad grep -- stood here; SUPERSEDED 2026-08-28 by the
+#  per-segment T1 rail above, which denies every standalone repo search regardless of path. The
+#  aws/infra tiers keep their deny via the shared emit_deny.)
 if [ "$_gate" = 1 ]; then
-  RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
-  _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
-  # SANITIZED (NFRA_COMPCLOSE 2026-07-14): _q80 kept raw newlines, so a multi-line command wrote
-  # CONTINUATION LINES into the rail whose first token then parsed as a TAG (the "===/-n/bare-s3
-  # junk-row class, ~350 rows). One line per row is the rail's parse contract; enforce it here.
-  # (q= stays UNQUOTED -- existing parsers read the DENY/RUN-OVERRIDE shape; do not change it.)
-  _q80="$(printf '%s' "$query" | tr '\n\r' '  ' | head -c 100)"
-  # OVERRIDE: an explicit, auditable `# rail-checked: <why>` marker -> authorized one-off; allow.
-  if printf '%s' "$query" | grep -qE '#[[:space:]]*rail-checked:'; then
-    # Log the override REASON in its own field (the TO-5 "repeat override = coverage gap" signal).
-    # It lives at the END of the command, so the q-at-100-chars truncation drops it on compound
-    # `cd ... && aws ... # rail-checked: <why>` lines -- capture it separately so the WHY survives.
-    _why="$(printf '%s' "$query" | sed -E 's/.*#[[:space:]]*rail-checked:[[:space:]]*//' | tr '\n' ' ' | head -c 200)"
-    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  reason=$_why  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
-    exit 0
-  fi
-  echo "$_ts  DENY  tool=$tool  class=$class  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
-  # deny reason = the class's comp-tool guidance (strip the advisory tail) + the gate + the override.
-  _reason="$(printf '%s' "$msg" | sed -E 's/[[:space:]]*\(advisory -- your [a-z]+ still runs\.\)//')"
-  _reason="${_reason} -- GATED per CLAUDE.md Rule 21 (comp-which-first). Run the comp-tool above instead. If NO comp-tool truly fits this exact search, re-run the command with a trailing '# rail-checked: <why no comp-tool fits>' marker (auditable, logged). For a time-boxed speed push, /freeform stands the whole rail down."
-  _enc=$(printf '%s' "$_reason" | "$JQ" -Rs . 2>/dev/null) || exit 0
-  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":%s}}' "$_enc"
-  exit 0
+  emit_deny
 fi
 
 # log every hit (CVO's before/after measurement), then advise per the class's throttle
@@ -317,7 +373,9 @@ fi
 # for comp_which -- the DENY-gate reason above already ran off the original generic $msg, untouched
 # (GATE-1 is live; not risking the security-relevant path on a live subprocess call). FAIL-SAFE: any
 # python/route error leaves $msg as the original generic boilerplate (never lose the advisory).
-if [ "$class" = comp_which ] && command -v python >/dev/null 2>&1; then
+if [ "$class" = comp_which ] && [ -z "${COMPRAIL_NO_ROUTE:-}" ] && command -v python >/dev/null 2>&1; then
+  # COMPRAIL_NO_ROUTE=1 is set ONLY by comprail-gate1-fptest.sh: the deny/allow VERDICT is decided above
+  # this line, and the 5s comp-which subprocess per allowed case made a 43-case run exceed 5 minutes.
   _route_out="$(timeout 5 python "$WS/.tools/comp-which" --route-only "$query" 2>/dev/null)" || _route_out=""
   if printf '%s' "$_route_out" | grep -q "NO-ROUTE"; then
     exit 0   # comp-which itself would fall back to grep/glob -- nothing specific to nudge toward

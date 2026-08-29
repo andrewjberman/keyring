@@ -1,0 +1,114 @@
+{
+  "acceptance": [
+    {
+      "criterion_id": "KF-RAT-AC1",
+      "criterion_verbatim": "RATIFIED SET: member count + candidate_set_digest before and after; every admitted member's blob id matches the LF-normalised bytes at the pin.",
+      "denominator": "72 registry members; 72 pinned card blobs; one candidate-set digest; one v1 registry root; one digest-linked compile receipt",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ratify_keyfill_registry.py --apply",
+      "method": "test_suite",
+      "output_evidence": "RAT PASS at parent d17eee2dc036bb3049d47f8dfd713ab5292b4f4f; members 72; blobs at pin 72; digest MATCH. Compile input 92f1b8da9d564f8e5ed8740e1e1a2278577507e5. The only registry delta is ratified_at_commit null -> d17eee2dc036bb3049d47f8dfd713ab5292b4f4f. Compile disposition came from org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.compile_receipt.json at sha256:b6241141abdfa6b687d7fa9b9f098b798014d52db70ef2ba694987792c2424f3, which binds pre-RAT registry sha256:7a6d6cc711d9f9f12170b28fdfd88303984e80d9d3e6c894d5d3071763816c9e and candidate digest d1e07efb2829a63674e02351c459de6d03605fab87841f5b2ebf3d26f71b44cc. Subject disposition independently recomputed as present 16 / absent 21 / not-a-path 32 / S3 3, exact duplicates 0, name-misses 7. The would-be-ratified seven-key root passed CARD_POPULATION_REGISTRY.v1.schema.json; the three-forbidden-field fixture was refused.",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "KF-RAT-AC2",
+      "criterion_verbatim": "KEY PREDICATE HELD: the predicate applied as declared; the null fixture NOT_ADMITTED; no loosening.",
+      "denominator": "72 of 72 members evaluated against the exact receiver_source_populations.key admission predicate; 72 of 72 basis_by_field.key_expression values counted",
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ratify_keyfill_registry.py --apply",
+      "method": "test_suite",
+      "output_evidence": "ADMITTED 43 / NOT_ADMITTED 29. Failing fields: trust.key.declared_mapping 27, trust.key.key_expression 1, trust.key.basis 1. The real null member org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_CARDS_W2/W2-yjky__opal-estate-report_kuzu_nessie_db.json is NOT_ADMITTED(trust.key.key_expression). Independent basis_by_field.key_expression denominator 72: measured 61, held 10, absent 1, inferred 0. A deep-copied admitted card mutated to key_expression=null was also NOT_ADMITTED(trust.key.key_expression). The predicate object equals the compiled declaration byte-for-value; no receiver population member or transform was invented.",
+      "status": "PASS"
+    }
+  ],
+  "artifacts_produced": [
+    {
+      "artifact_covered_by": [
+        "KF-RAT-AC1",
+        "KF-RAT-AC2"
+      ],
+      "commit_or_etag": "sha256:d092ac2991a06b4d1be2fd5f8dcda3e080cfcfb2953182c409bae2c14716bd6f",
+      "deploy_evidence": "Repository-only ratifier; content digest recorded and committed with the evidence bundle.",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "kind": "script",
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ratify_keyfill_registry.py"
+    },
+    {
+      "commit_or_etag": "sha256:598d0d2e2c8d2f7c0d18238a461d072abaa014ea12c0f74faa795d9d88d8e9fd",
+      "deploy_evidence": "Repository-only PASS report containing all 72 per-member dispositions and receipt/schema evidence.",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "kind": "config_data",
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO~X/deliverables/NFRA_SUBSTRATECARDING.TO-KEYFILL-RAT_RATIFICATION_REPORT.json"
+    },
+    {
+      "commit_or_etag": "sha256:66f939a34e1813794840f4c92471ee6186e1e3fb2590da55a2cfd27a7a6ebbc2",
+      "deploy_evidence": "Repository-only registry; only ratified_at_commit changed from canonical compile 92f1b8da9d.",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "kind": "config_data",
+      "path_or_key": "org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST/card_population_registry.v1.json"
+    }
+  ],
+  "assignee": "4.0.0_SA_CRO~X",
+  "compiler_tools": [
+    {
+      "invocation": "python .tools/comp-find compiled_at_commit org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/D11_MANIFEST --files --all",
+      "result": "PASS: four content hits across 22 scoped files; only compiler and registry files carried the field, not the v1 schema.",
+      "tool": "comp-find"
+    },
+    {
+      "invocation": "python org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ratify_keyfill_registry.py --apply",
+      "result": "PASS: 72/72 blob matches, digest match, 43/29 admission, basis 61/10/1/0, schema PASS, RAT field applied, report written.",
+      "tool": "ratify_keyfill_registry.py"
+    },
+    {
+      "invocation": "direct import and call of compile_card_registry_ext.py:validate_root() on shipped and three-field mutant objects",
+      "result": "PASS: shipped simulated-RAT root accepted; mutant refused and named compile_note, compiled_at_commit, subject_disposition.",
+      "tool": "producer schema control"
+    }
+  ],
+  "controls": {
+    "determinism": {
+      "method": "Compared a non-writing RAT dry run with the subsequent apply run over the same compile pair and settled pin.",
+      "observed": "Both runs printed 72/72 blob matches, identical digest, 43/29 admission, failure fields 27/1/1, basis distribution 61/10/1/0, and subject disposition 0 exact duplicates / 7 name-misses / 21 absent paths.",
+      "status": "STABLE"
+    },
+    "mutant": {
+      "description": "Set trust.key.key_expression to null on a deep copy of one otherwise-admitted pinned card and evaluate the unchanged admission predicate.",
+      "expected": "NOT_ADMITTED with failing field trust.key.key_expression",
+      "observed": "NOT_ADMITTED(trust.key.key_expression); the negative arm discriminated. Separately, adding the three forbidden compile fields to the simulated-RAT root was refused by the producer validator.",
+      "status": "FIRED-AS-EXPECTED"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/D11_CARDS_W4/W4-FILE.cells.json",
+      "reason": "Excluded from the 72-card census because it is a cell manifest with neither schema_version nor subject, not a substrate card."
+    },
+    {
+      "item": "card, schema, and compile-receipt mutation",
+      "reason": "RAT authority permits only the registry ratified_at_commit field plus CRO evidence artifacts; all card bytes, schema bytes, and the DT compile receipt remain unchanged."
+    },
+    {
+      "item": "key receiver membership or transform invention",
+      "reason": "The v1 receiver population remains empty because its governed transform is absent; per-card labels evaluate admissibility without inventing a transform or joined part."
+    }
+  ],
+  "decomp_ref": {
+    "doc": "workflows/atom_decomposition/runs/nfra-substratecarding-keyfill/20260828T1915Z/DECOMP.md",
+    "to_ref": "org/tier1_exec/4.0.0_SA_CRO~X/task_orders/NFRA_SUBSTRATECARDING.TO-KEYFILL-RAT.registry-ratification.md",
+    "vintage_commit": "23dfe292e7790b803075ac532edc5ba9f0379da9"
+  },
+  "phase": "BUILD-GENERAL",
+  "schema_version": "1.0",
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/logs/2026-08-29/keyfill_ratification_0050-0055Z.md",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO~X/task_orders/NFRA_SUBSTRATECARDING.TO-KEYFILL-RAT.registry-ratification.md",
+    "group": "OTHER",
+    "vintage_commit": "5b43c084fc6b5b6e8bcaacf9c54ca213e5c88830"
+  },
+  "surprises": [
+    "The first canonical compile mixed a pinned Git read with live os.path.exists(), misclassifying five .comp-graph subjects.",
+    "The first correction exposed non-idempotent inherited-set loading and an invented fallback hash; DT repaired both before the next handoff.",
+    "The second compile passed every member and predicate check but added three fields forbidden by the frozen v1 root; the schema refusal preserved the contract.",
+    "DT's first attempt at the sibling receipt did not write the file; DT detected that absence and landed the pair atomically before handoff."
+  ],
+  "to_id": "NFRA_SUBSTRATECARDING.TO-KEYFILL-RAT"
+}

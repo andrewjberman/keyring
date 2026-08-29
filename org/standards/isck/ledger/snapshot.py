@@ -88,6 +88,22 @@ def read_alone(artifact_path):
         con.close()
 
 
+def record_ids_alone(artifact_path):
+    """Every record id in the artifact, read with NOTHING else present, plus its anchor.
+
+    AC4 asks a STRONGER question than AC5: not "how many rows" but "are these the SAME records".
+    Two estates of equal size and equal anchor can differ in membership, and a count comparison
+    passes on both. So the id SET is compared and the anchor is printed by both sides.
+    """
+    con = sqlite3.connect("file:%s?mode=ro" % artifact_path.replace(chr(92), "/"), uri=True)
+    try:
+        ids = set(r[0] for r in con.execute("SELECT record_id FROM records"))
+        seq = con.execute("SELECT MAX(commit_seq) FROM records").fetchone()[0]
+    finally:
+        con.close()
+    return ids, seq
+
+
 def controls(store_path, published_path, naive_path, expected_rows, expected_anchor):
     """AC5's two arms. Returns (ok, report). The negative arm PASSING is a failure of the whole AC."""
     report = {}

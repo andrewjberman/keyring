@@ -111,6 +111,19 @@ class AppServerClient:
                     future.set_exception(exc)
             self._pending.clear()
             if not isinstance(exc, asyncio.CancelledError):
+                # LOUD by design: a socket death here is otherwise invisible --
+                # the seat keeps heartbeating while every nudge is lost.
+                code = getattr(exc, "code", None) or getattr(
+                    getattr(exc, "rcvd", None), "code", None
+                )
+                print(
+                    "ERROR: app-server socket closed in _read_loop "
+                    f"({type(exc).__name__} code={code}); if code=1009 the thread "
+                    "exceeded the 16 MiB frame cap -- a FRESH THREAD (0.0.0_AB_MSTR) "
+                    "is the recovery, not a retry",
+                    file=sys.stderr,
+                    flush=True,
+                )
                 raise
 
     async def request(
@@ -212,9 +225,17 @@ def in_progress_turn_id(thread: dict[str, Any]) -> str | None:
     return None
 
 
-async def read_thread(client: AppServerClient, thread_id: str) -> dict[str, Any]:
+async def read_thread(
+    client: AppServerClient, thread_id: str, *, include_turns: bool = False
+) -> dict[str, Any]:
+    # includeTurns=True ships the WHOLE thread across the app-server socket on
+    # every call, and both sides cap a frame at 16 MiB (max_size below and the
+    # server's own send limit).  A seat crossed that cap ~21.5 h into a thread
+    # (2026-08-28, "1009 message too big") and went deaf while its heartbeat
+    # read LIVE.  Status classification needs no turns; only the steer branch
+    # needs the in-progress turn id, so it asks for turns explicitly.
     response = await client.request(
-        "thread/read", {"threadId": thread_id, "includeTurns": True}
+        "thread/read", {"threadId": thread_id, "includeTurns": include_turns}
     )
     return response["thread"]
 
@@ -419,6 +440,9 @@ async def deliver_nudge(
                 )
 
         if status == "active":
+            # The only path that needs turns: turn/steer wants the in-progress
+            # turn id.  Fetch them here, not on every classification read.
+            thread = await read_thread(client, thread_id, include_turns=True)
             active_turn_id = in_progress_turn_id(thread)
             if active_turn_id is None:
                 await asyncio.sleep(0.1)
@@ -529,7 +553,11 @@ async def discover_thread(
             {
                 "limit": 50,
                 "sortKey": "updated_at",
-                "sourceKinds": ["cli"],
+                # A TUI attached with ``codex --remote`` is reported by the
+                # shared app-server as ``vscode`` even though the foreground
+                # client is the Codex CLI.  Accept both representations while
+                # the cwd/status/parent filters below select the seat thread.
+                "sourceKinds": ["cli", "vscode"],
                 "archived": False,
                 "cwd": str(cwd.resolve()),
                 "useStateDbOnly": True,

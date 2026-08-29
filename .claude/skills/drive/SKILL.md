@@ -296,14 +296,19 @@ Fire every classified action via `mcp__opal-agent-comms__send_message` **this cy
 
 **A committed drive log is written ONLY on a SUBSTANTIVE tick:** ≥1 dispatch fired, a ledger row **WITH AN `unblocks` PAYLOAD** newly consumed (a closure/bookkeeping row — no `unblocks` key — is consumed silently and rides the next substantive log's delta line; COO ruling on COO~X's 76915 edge, 2026-08-27), a classification CHANGED (a seat entering/leaving PARKED/STUCK, a project changing class), or a finding surfaced. **A quiet tick writes NO file** — Step 8 close only (heartbeat; marker only in ESTATE mode per Step 8's branch), the `/log` no-delta precedent. Each substantive log's delta line covers the quiet ticks since the last one, so the record stays gapless without the noise files. Gate: a `[STUCK]` escalation or a PARKED conviction still requires a logged tick — convictions never rest on an unlogged window. → `DRIVE.md §5`
 
-When a log IS written: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md` — findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
+When a log IS written: **`org/tier1_exec/{RUNNING_SERIAL}/drive_log_{YYYYMMDDTHHMMZ}.md` — the path DERIVES from the serial running this tick, base or lane (`2.0.0_SA_COO~X` writes under `2.0.0_SA_COO~X/`). ⛔ NEVER HARDCODE A LANE HERE** — a literal sends every lane into one directory and `ls -t` then returns the wrong lane's log as your cursor. CTO ruling @82648(a); incident + measurements → `DRIVE.md §5`. findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
+
+⛔ **RESOLVE THE CURSOR FILE BY AUTHOR, NEVER BY MTIME — AND REFUSE ON AMBIGUITY, DO NOT PICK (CTO ruling @82648(b)).** A candidate whose last author is not the running serial, or which has >1 author, **FAILS LOUD**; a resolver that silently picks hands back a plausible wrong answer. Exact match only — `--author=` is a SUBSTRING and matches `~X`. → `DRIVE.md §5`
 
 **Paired-mode cursor note (composes with rule 5 @46f4a0563e):** with quiet ticks unlogged, the movement window derives from the LAST SUBSTANTIVE log + the ledger's consumed timestamps; a widened window over-includes movement, which errs toward ACTIVE — the safe direction. It can never manufacture a PARKED.
 
 **Verify the pathspec is clean before handing it to the wrapper** — `safe-commit` commits the files you NAME, not the files you CHANGED, and returns `rc=0` either way.
 **Then verify YOUR commit landed, by hash — not by `HEAD` and not by a push range** (the tree is shared; `HEAD` drifts):
 ```bash
-C=$(git log -1 --format='%h' --author="2.0.0_SA_COO")
+# EXACT-AUTHOR, and NO POSITIONAL TOKENS: --author= is a SUBSTRING matching 2.0.0_SA_COO~X
+# (row 7 (y) @6b925195fe); and an awk $1/$2 form arrives CORRUPTED -- the skill body is expanded
+# against the INVOCATION's own args before the agent reads it (COO~X @82687, measured both ends).
+C=$(git log -20 --format='%H %an' | grep -m1 ' 2.0.0_SA_COO$' | cut -d' ' -f1)
 git merge-base --is-ancestor "$C" origin/CLOUD && echo "landed"
 ```
 → `DRIVE.md §5`

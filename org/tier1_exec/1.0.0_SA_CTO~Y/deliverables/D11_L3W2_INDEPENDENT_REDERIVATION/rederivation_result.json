@@ -1,0 +1,316 @@
+{
+ "seat": "1.0.0_SA_CTO~Y",
+ "code_path": "independent (this file)",
+ "inputs": {
+  ".tmp-cro-b4-eb009-audit/W_STRUCTURE_FACTORIZED.json": {
+   "sha256": "e91d69910fc9d4eabb58eedb8a73165476225ab838977e8d6c16604af3f5e19a",
+   "expected_prefix": "e91d69910fc9d4eabb58eedb8a73165476225ab838977e8d6c16604af3f5e19a",
+   "match": true
+  },
+  "infra/aws/globgrph/stitch_graph.json": {
+   "sha256": "7ac11d015e0ce4a068d6afb86cd51edddb8171b227afd5fc9e40ffb8d5dd5363",
+   "expected_prefix": "7ac11d015e0ce4a068d6afb86cd51edddb8171b227afd5fc9e40ffb8d5dd5363",
+   "match": true
+  },
+  "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_L3W2_FUSION/firm_cohort_shared.json": {
+   "sha256": "ad361014a7da885037421da005011c32b28cfb37f64da8feafad1cba95db3f19",
+   "expected_prefix": "ad361014a7da885037421da005011c32b28cfb37f64da8feafad1cba95db3f19",
+   "match": true
+  },
+  "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json": {
+   "sha256": "19a7a0f804d8096bcd1156f7a72d94fc3bb43785b2a833958c851c574ebdbe37",
+   "expected_prefix": "19a7a0f8",
+   "match": true
+  },
+  "view2_alignment": {
+   "aligned": 4147,
+   "population": 19482,
+   "outside_population": 68,
+   "edges": 5110,
+   "members": 4215,
+   "families": 19
+  },
+  "cohort": {
+   "size": 1941,
+   "both_measured": 1820,
+   "view2_absent": 121
+  },
+  "view2_positive_control": {
+   "pairs_1.0": 1702992,
+   "pairs_0.0": 6487694,
+   "ccy_published": {
+    "pairs_1.0": 1702992,
+    "pairs_0.0": 6487694
+   }
+  },
+  "view1_distinct_values_on_domain": 26
+ },
+ "frames": {
+  "B_both_measured_1820": {
+   "view1": {
+    "AUC": 0.7429,
+    "within_pairs": 805717,
+    "cross_pairs": 849573,
+    "pairs": 1655290
+   },
+   "view2": {
+    "AUC": 0.5203,
+    "within_pairs": 805717,
+    "cross_pairs": 849573,
+    "pairs": 1655290
+   },
+   "fused": {
+    "AUC": 0.5358,
+    "within_pairs": 805717,
+    "cross_pairs": 849573,
+    "pairs": 1655290
+   },
+   "entities": 1820,
+   "cox_published": {
+    "view1": 0.7429,
+    "view2": 0.5203,
+    "fused": 0.5114
+   },
+   "sec63_predicate_fused_ge_view1": false
+  },
+  "A_full_cohort_1941": {
+   "entities": 1941,
+   "view2_absent_entities": 121,
+   "view1": {
+    "AUC": 0.7404,
+    "within_pairs": 886162,
+    "cross_pairs": 996608,
+    "pairs": 1882770
+   },
+   "fused_with_passthrough": {
+    "AUC": 0.5699,
+    "within_pairs": 886162,
+    "cross_pairs": 996608,
+    "pairs": 1882770,
+    "CAVEAT": "MIXED SCALE: SNF values (max ~0.005, transition-normalised) and view-1 pass-through values (0..1) are ranked in ONE pool; a rank AUC over that pool is partly a statement about which stratum a pair fell in, not only about firm separation. Reported as ruled; the stratified rows beside it are the interpretable ones."
+   },
+   "passthrough_pairs_only_view1": {
+    "AUC": 0.7128,
+    "within_pairs": 80445,
+    "cross_pairs": 147035,
+    "pairs": 227480
+   },
+   "both_measured_pairs_only_fused": {
+    "AUC": 0.5358,
+    "within_pairs": 805717,
+    "cross_pairs": 849573,
+    "pairs": 1655290,
+    "note": "== Frame B fused by construction"
+   },
+   "view2": {
+    "AUC": 0.5203,
+    "effective_denominator_entities": 1820,
+    "ABSENT_entities": 121,
+    "pairs": 1655290,
+    "note": "view 2 has no value on the 121 ABSENT; its row is Frame B's"
+   },
+   "sec63_predicate_fusedPT_ge_view1": false
+  }
+ },
+ "controls": {
+  "C1_view1_with_itself": {
+   "fused_AUC_1820": 0.6665,
+   "expect": "~view1 0.74 if SNF preserves a discriminating view; a collapse here would be the METHOD/normalisation, not view 2"
+  },
+  "C2_view1_with_permuted_view2": {
+   "fused_AUC_1820": 0.5309,
+   "expect": "if ~0.51 like the real fusion, view 2's actual content is not what flattens view 1 -- any near-uniform second view does"
+  },
+  "C3_K100": {
+   "fused_AUC_1820": 0.5961
+  },
+  "T1_absent_as_zero": {
+   "domain": 4268,
+   "fused_AUC_1820": 0.5347,
+   "fused_AUC_1941_genuinely_fused": 0.5477
+  },
+  "T2_absent_as_neutral_mean": {
+   "domain": 4268,
+   "neutral_value": 0.216933,
+   "fused_AUC_1820": 0.5317,
+   "fused_AUC_1941_genuinely_fused": 0.5336
+  },
+  "T3_absent_abstains_copies_view1": {
+   "domain": 4268,
+   "fused_AUC_1820": 0.5355,
+   "fused_AUC_1941_genuinely_fused": 0.5458
+  },
+  "T0_cox_treatment": {
+   "domain": 4147,
+   "fused_AUC_1820": 0.5358,
+   "note": "SNF over the co-measured 4,147 only (ABSENT excluded from the diffusion)"
+  }
+ },
+ "notes": [],
+ "fused": {
+  "pair_domain": 8596731,
+  "distinct_values": 1582567,
+  "min": 1.1231868638828836e-17,
+  "max": 0.040219783782958984,
+  "exact_zeros": 0,
+  "sha256_float32_triu": "b5fe53db04c50d14ca7705e62a9d9bc904782a912c2333bef34f7f81e9265777",
+  "cox_sha256": "d0263653b0a36b29ced066be8d43b18c7c0c641874aa01977d2f0459d307bf48"
+ },
+ "L3C01": {
+  "method": "split-half over DISJOINT halves of the 25 accepted runs (0-11 / 12-24), each fused identically with view 2 at K=20 T=20; compared over the full both-measured pair domain; permuted-labels control = SNF(W1 half b, W2 with entities permuted) vs fused half a; seed 20260829",
+  "observed": {
+   "rho": 0.963153,
+   "J": 0.878192,
+   "top_decile_k": 859673,
+   "pair_denominator": 8596731
+  },
+  "floor_status": "HELD-UNEXERCISED",
+  "battery_evidence": {
+   "rho": {
+    "metric_domain": "both-measured, 8596731 pairs",
+    "null": 0.073279,
+    "spread": 0.005268,
+    "n_permutations": 5,
+    "nulls": [
+     0.079238,
+     0.077154,
+     0.065852,
+     0.073181,
+     0.070969
+    ],
+    "observed": 0.963153,
+    "validity_arm_control_below_observed": true,
+    "held_floor": 0.9,
+    "observed_clears_HELD_floor": true
+   },
+   "J": {
+    "metric_domain": "both-measured, 8596731 pairs",
+    "null": 0.127641,
+    "spread": 0.000771,
+    "n_permutations": 5,
+    "nulls": [
+     0.128314,
+     0.126851,
+     0.127376,
+     0.128594,
+     0.127071
+    ],
+    "observed": 0.878192,
+    "validity_arm_control_below_observed": true,
+    "held_floor": 0.8,
+    "observed_clears_HELD_floor": true
+   }
+  },
+  "no_floor_derivation_block": "per Addendum 1b @4c1886a50f -- same-run derivation is prohibited; a later consumer derives the floor pointing backward",
+  "cox_published": {
+   "rho": 0.958398,
+   "J": 0.803263,
+   "null_rho": -0.144792,
+   "null_J": 0.179046,
+   "n_permutations": 1
+  },
+  "permutation_battery": {
+   "rho": {
+    "n_permutations": 5,
+    "null": 0.073279,
+    "spread": 0.005268,
+    "spread_status": "MEASURED",
+    "draws": [
+     0.079238,
+     0.077154,
+     0.065852,
+     0.073181,
+     0.070969
+    ],
+    "observed": 0.963153
+   },
+   "J": {
+    "n_permutations": 5,
+    "null": 0.127641,
+    "spread": 0.000771,
+    "spread_status": "MEASURED",
+    "draws": [
+     0.128314,
+     0.126851,
+     0.127376,
+     0.128594,
+     0.127071
+    ],
+    "observed": 0.878192
+   }
+  }
+ },
+ "elapsed_s": 1745.1,
+ "artifact": {
+  "schema": "nfra-c3materialize.l3w2.independent-rederivation/1.0",
+  "seat": "1.0.0_SA_CTO~Y",
+  "role": "second instrument, different code path -- item (a) per 1.0.0_SA_CTO~X 80816 / issuer 80827",
+  "subject": "COX fusion run 1 -- f12feb2516 (intersection encoding) and its union re-cut @1f5d4f6136 (+ restamp ab8a2276bb)",
+  "code": {
+   "executed_source": "rederive_l3w2.executed.py.txt",
+   "executed_script_sha256": "3f12fdd83beca358ef08fdfaf2b34c814df67c4f7b0d04ada8202322711de986",
+   "committed_source": "rederive_l3w2.py",
+   "committed_script_sha256": "97cd9afeb73741b93e695331f1fd8388fd8bb45f947c8edd3235d30b6469692c",
+   "equivalence_receipt": "EXECUTED_SOURCE_RECEIPT.json",
+   "superseded_field_value": "rederive_l3w2.py beside this file (sha256 3f12fdd83beca358)",
+   "why": "the first emission cited a TRUNCATED hash of the executed bytes and committed a ruff-formatted copy under the same name; CRO~X 060041Z / CVO~X 060124Z refused the carrier on provenance. This field now carries both FULL identities and the receipt; the executed bytes are committed beside the instrument. No result value changed (leaf diff printed at repair time)."
+  },
+  "snf_implementation": "Wang et al. 2014 as written here: P = W/(2*rowsum) off-diagonal with 0.5 self-mass; S = row-normalised K-NN kernel (stable argsort tie-break, ascending index); each iteration P_v <- S_v (mean of other P) S_v^T, re-normalised and symmetrised; fused = mean(P_v), symmetrised. float32. K=20 T=20.",
+  "what_reproduces_exactly": [
+   "view1 AUC 0.7429 (1,820 frame) and 0.7404 (1,941 frame)",
+   "view2 AUC 0.5203 (1,820)",
+   "view2 derivation counts 5,110 / 4,215 / 19 / 48 and pair extremes 1,702,992 at 1.0 / 6,487,694 at 0.0",
+   "cohort 1,941 = 1,820 + 121; pair denominators 1,655,290 / 1,882,770 / 8,596,731",
+   "sec-6.3 predicate FALSE on both frames"
+  ],
+  "what_diverges": {
+   "fused_AUC_1820": {
+    "mine": 0.5358,
+    "cox": 0.5114,
+    "delta": 0.0244
+   },
+   "fused_AUC_1941": {
+    "mine_fused_plus_passthrough": 0.5699,
+    "cox": 0.551,
+    "delta": 0.0189
+   },
+   "fused_value_distribution": {
+    "mine": {
+     "distinct": 1582567,
+     "exact_zeros": 0,
+     "max": 0.0402
+    },
+    "cox_f12": {
+     "distinct": 323424,
+     "exact_zeros": 297780,
+     "max": 0.00485
+    }
+   },
+   "mechanism_named": "two SNF implementations differ in normalisation detail (COX's fused carries 297,780 exact zeros and max 0.00485 -- sparser, less re-normalised; mine re-normalises every iteration and carries no exact zero). Rank AUC is invariant to monotone rescale but not to which pairs tie at zero, so ~0.02 is the expected size of this class. Neither number is 'the' fused AUC; the SIGN and the 6.3 verdict are implementation-independent, the second decimal is not.",
+   "stability_null": {
+    "mine_rho": 0.0733,
+    "mine_J": 0.1276,
+    "cox_restamp_rho": 0.0094,
+    "cox_restamp_J": 0.0309,
+    "cox_single_draw_rho": -0.1448,
+    "cox_single_draw_J": 0.179,
+    "scheme_note": "MY SCHEME: permute view 2's entity labels, fuse with W1 half b, compare against fused(W1 half a, W2 unpermuted). W1's halves still agree in the control, so this null measures 'view 2 contributes nothing' -- a STRICTER null than relabelling a whole fused matrix. Nulls are scheme-dependent (Addendum 1d); the two seats' nulls compare only under one named scheme."
+   }
+  },
+  "cause_read_from_the_controls": {
+   "absent_handling": "NOT the cause. T0 0.5358 / T1 0.5347 / T2 0.5317 / T3 0.5355 on the 1,820 both-measured frame -- a 0.004 band.",
+   "method_alone": "C1 = SNF(view 1, view 1): 0.6665 from 0.7429 raw. SNF's K-NN kernel + diffusion erodes 0.076 with NO second view.",
+   "second_view_content": "C2 = SNF(view 1, view 2 PERMUTED): 0.5309 vs the real 0.5358. View 2's actual content is irrelevant to the collapse; any second view with its firm-blind marginal flattens view 1 through SNF's cross-diffusion.",
+   "parameter_sensitivity": "C3 = K=100: 0.5961 vs 0.5358 at K=20. K-sensitive; rank agreement across (K,T) (COX rho 0.9848) is a different property from boundary preservation.",
+   "one_line": "Where fusion happened, firm separation is lost to (i) SNF's own smoothing (~0.08) and (ii) a second view carrying no firm signal, regardless of content (~0.13 more); NOT to absent-handling; the loss shrinks as K grows. One run, one carrier, one pair of views -- a finding about this experiment's design, not a verdict on SNF."
+  },
+  "frame_A_mixed_scale_caveat": "fused+pass-through ranks SNF values (max ~0.04) and view-1 values (0..1) in one pool; 0.5699 is partly a stratum statement. Stratified: pass-through pairs 0.7128 over 227,480; both-measured pairs 0.5358 over 1,655,290.",
+  "L3C01_form": "Addendum 1b/1c: battery as EVIDENCE, floor_status HELD-UNEXERCISED, no floor_derivation block, no floor claimed.",
+  "not_claimed": [
+   "6.1 / 6.2 / 6.5",
+   "any cause beyond the four controls",
+   "that either seat's fused AUC is the true value",
+   "any floor"
+  ]
+ }
+}

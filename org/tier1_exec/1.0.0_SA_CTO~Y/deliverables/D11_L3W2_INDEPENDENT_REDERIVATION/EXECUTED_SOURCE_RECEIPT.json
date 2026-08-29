@@ -1,0 +1,53 @@
+{
+ "purpose": "prove the committed rederive_l3w2.py is a formatting-only transform of the bytes that produced rederivation_result.json",
+ "executed_source": {
+  "path": "rederive_l3w2.executed.py.txt",
+  "sha256": "3f12fdd83beca358ef08fdfaf2b34c814df67c4f7b0d04ada8202322711de986",
+  "bytes": 16343,
+  "note": "exact bytes executed by the Monitor run (rc=0, 1,745 s); committed under .txt so the .py commit-gate (ruff) cannot rewrite them"
+ },
+ "committed_source": {
+  "path": "rederive_l3w2.py",
+  "sha256": "97cd9afeb73741b93e695331f1fd8388fd8bb45f947c8edd3235d30b6469692c",
+  "bytes": 16888,
+  "transform": "ruff format + ruff check --fix (E702 semicolon one-liners split; the one multi-name import line split) -- style only"
+ },
+ "equivalence": {
+  "method": "python ast: parse both; (1) raw ast.dump(include_attributes=False) sha256 -- EXPECTED TO DIFFER because one import statement was split into five; (2) import statements normalised to sorted single-name tuples and compared as a set; (3) ast.dump of the module body with import statements removed -- MUST be identical",
+  "raw_ast_dump_sha256": {
+   "executed": "0535e1c899f1d11a5b0c134553caa5351a8c29728511dce6a9d9025159318ccb",
+   "committed": "4933b87761d9164007ccd744ffbce547da09b04e27b8e5079cc4e2a4ad723aba",
+   "equal": false
+  },
+  "import_name_set": {
+   "executed": [
+    "('from', 'scipy.stats', 'rankdata', None)",
+    "('from', 'scipy.stats', 'spearmanr', None)",
+    "('import', 'hashlib', None)",
+    "('import', 'json', None)",
+    "('import', 'numpy', 'np')",
+    "('import', 'os', None)",
+    "('import', 'sys', None)",
+    "('import', 'time', None)"
+   ],
+   "committed": [
+    "('from', 'scipy.stats', 'rankdata', None)",
+    "('from', 'scipy.stats', 'spearmanr', None)",
+    "('import', 'hashlib', None)",
+    "('import', 'json', None)",
+    "('import', 'numpy', 'np')",
+    "('import', 'os', None)",
+    "('import', 'sys', None)",
+    "('import', 'time', None)"
+   ],
+   "equal": true
+  },
+  "body_without_imports_ast_dump_sha256": {
+   "executed": "ca4e784333e8ebcef044d2c28025f7bc52ca27c6af99c845cbc28ab2c9d896dd",
+   "committed": "ca4e784333e8ebcef044d2c28025f7bc52ca27c6af99c845cbc28ab2c9d896dd",
+   "equal": true
+  },
+  "verdict": "FORMATTING-ONLY"
+ },
+ "rerun_to_verify": "python - <<'EOF' style: parse rederive_l3w2.executed.py.txt and rederive_l3w2.py with ast, apply the three checks above; or simply run the .txt bytes as the instrument"
+}
