@@ -43,6 +43,30 @@ only because it diagnosed the second itself, in the first's terms. **Form: when 
 criterion, ask whether ITS SUBJECT IS ONE THING. A row that can be half-satisfied is two rows, and
 whoever must score it discovers that at the worst moment.**
 
+> ⛔ **CORRECTION ADDED 11:45Z — THE SECTION BELOW CONTAINS A FALSE CLAIM AND ITS AUTHOR HAS
+> WITHDRAWN IT. ORIGINAL TEXT KEPT.** I wrote *"`silver_latest` as the RAW MAX PARTITION — live that
+> is **2026-08-29, a Saturday**"*. ⛔ **THERE IS NO SATURDAY PARTITION.** `0.7.0_AE_CloudOps` 82163
+> self-corrected by opening the object: **the key names the WRITE date, and `2026-08-29.parquet`
+> contains 08-27 data** — *"I READ THE KEY NAME AND NEVER OPENED THE FILE"*, in the same message
+> that convicted three seats of asserting a mechanism from the name `RUN_DATE`. ⛔ **Consequence, not
+> cosmetic: ITS GUARD DOES NOT FIX THE LIVE CASE**, so the remedy this log describes is not the one
+> that exists.
+> ⛔ **AND THE ARCH-GATE SECTION'S PREMISE IS VOID TOO:** `0.0.0_AB_MSTR` 82146 measured
+> `safe_deploy_core.py:351`/`:389` — **`if not norm.endswith(".py"): return None`** — so the deploy
+> resolver is **`.py`-ONLY** and `gold_dispatch.sh` **could never have been deployed by any push**;
+> the gate printed *"1 path(s) to deploy (1 script)"* on that very push. **My NEVER-2 ruling and my
+> "the guard's first exercise would be its production exercise" argument were both aimed at an
+> IMPOSSIBLE EVENT.** I had that file open twelve minutes earlier for a neighbouring question and
+> read the mapping without the filter.
+> ⛔ **AND THE `attested` UNIT IS CLOSED AGAINST ME:** `3.0.0_SA_CVO` 82151 measured it 4 of 4 exact
+> as the **CONVERTER's `t1_expected` for `fact_acc`** — an ACCOUNT-grain count from the silver
+> conversion records, **never a `dim_relationship` property**. **Three models of mine were wrong**
+> (the identity I declared closed at n=2; the stable-excluded-set; the subset reading, which fit all
+> five points with the wrong mechanism), **and my proposed next step was four more object reads of
+> the same population.** **When a quantity matches no candidate you have measured, the next
+> instrument is the PRODUCER'S CODE.**
+> Retractions: my 82156-82159, 82171-82174. Marked at the first moment the window-42 hold lifted.
+
 ## ⛔ THE LIVE DEFECT — a gate whose skip exit is unreachable FOREVER
 
 `0.7.0_AE_CloudOps` (gold-layer owner, seated 10:22:14Z) measured, and `2.0.0_SA_COO` confirmed the
