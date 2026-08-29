@@ -64,20 +64,42 @@ WRONG** -- which is exactly why K-1 is an observed-schedule read and is sequence
 
 ---
 
-## 4. ACCEPTANCE COVERAGE -- every property has a home, and the denominator is printed
+## 4. ACCEPTANCE COVERAGE -- AMENDED 15:4xZ on `3.0.0_SA_CVO`'s K-9 cert finding (83089)
+
+⛔ **THE FIRST VERSION OF THIS TABLE READ "7 of 7 assigned, 0 orphaned" AND THAT OVERSTATED COVERAGE.**
+`3.0.0_SA_CVO` certified the cell set and the Rule 24 record PASS, and found this against the table --
+**the serve exclusion in s.5 was UNDER-PROPAGATED. I isolated it to "P1's second clause"; read at source it
+reaches TWO properties.**
+
+- **P1, verbatim: *"SERVED `advisor_assignments_history` for Cottonwood carries four distinct advisor values …"*
+  -- the FIRST clause is a property of the SERVED artifact too, not only the trailing `platinum/advisors/` one.**
+  I had assigned it as build-half -> K-4 and consumer-half -> K-7. **Neither is the serve half.**
+- **P2, verbatim: *"Per-advisor AUA AT THE SERVED PLANE ties to the qt6 group-grain read …"* -- WHOLLY a
+  served-plane property.** K-6 as scoped compares our per-advisor book against the BD session bundle, which is a
+  **BUILT-plane** comparison. **K-6 discharges a build-plane version of P2, not P2 as written.**
 
 ```
-  P1  four advisor values + 944 accounts + zero stray Unassigned   -> K-4 (build) + K-7 (consumers)   [SERVE half: s.5]
-  P2  per-advisor AUA ties to the qt6 group-grain read             -> K-6
-  P3  multi-book account handled by a NAMED, PRINTED rule          -> K-3
-  P4  account_attributes lands DAILY, observed; start date stamped -> K-1
-  P5  no cross-tree reference                                      -> BINDING CONSTRAINT on all cells (not a cell)
-  P6  synthetic bridge retires by its own guard, no parallel path  -> K-4
-  P7  Tier-B interface contract is Inflection's, no cot-specific   -> K-8
-                                                    DENOMINATOR: 7 of 7 properties assigned, 0 orphaned
-```
+  P1  four values / 944 accounts / no stray Unassigned
+        BUILD half     -> K-4          COVERED
+        CONSUMER half  -> K-7          COVERED
+        SERVED half    -> NO CELL      NOT COVERED, deliberately (s.5)
+  P2  per-advisor AUA ties at the SERVED plane
+        build-plane analogue -> K-6    COVERED
+        served-plane P2      -> NO CELL  NOT COVERED, deliberately (s.5)
+  P3  multi-book rule, named + printed          -> K-3   COVERED
+  P4  account_attributes daily, observed        -> K-1   COVERED
+  P5  no cross-tree reference                   -> BINDING CONSTRAINT on all cells (not a cell)
+  P6  synthetic bridge self-retires             -> K-4   COVERED
+  P7  Tier-B contract is Inflection's           -> K-8   COVERED
 
----
+  CORRECTED DENOMINATOR: 5 of 7 properties FULLY covered by cells; 2 (P1, P2) carry a served-plane
+  component NO CELL DISCHARGES; 1 (P5) is a constraint, not a member.
+  THIS DECOMP CANNOT CLOSE P1 OR P2. It can only close their build and consumer halves.
+```
+✅ **The cells do not change and K-1/K-2 remain startable now -- this is a coverage-claim correction, not a
+re-cut.** ⛔ **The defect was that s.5 excluded the serve limb in PROSE while the table still counted the
+properties as whole. A per-property exclusion has to appear in the COLUMN THAT COUNTS, or the count contradicts
+the exclusion one section above it.**
 
 ## 5. ⛔ THE SERVE LIMB IS NOT AUTHORIZED BY THIS DECOMP, AND I AM NOT ASSUMING IT IS CLEAR
 
