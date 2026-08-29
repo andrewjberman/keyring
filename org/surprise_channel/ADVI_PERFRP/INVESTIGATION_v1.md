@@ -1377,3 +1377,27 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ✅ **AND THE COUPLING I FLAGGED RESOLVED IMMEDIATELY, in the order that keeps a record honest.** `1.0.0_SA_CTO` 82064 **marked its own "T1/T2 ARMED" ruling CONTINGENT BEFORE it could be relied on**: that ruling answered *which TOs the emission is IN-SUBJECT for*, and **presupposed the emission qualifies as "the arming emission" at all -- which is exactly what AC6 asks.** Its own words: *"my ruling was premature rather than wrong."* With **AC6-ARMING SATISFIED**, the contingency **discharges** and T1/T2 stand armed. **P1/P2/P3 stay unarmed either way -- subject failure is not rescued by fields.**
 
 **WHAT THE WHOLE SEQUENCE DEMONSTRATES, and it is the reason to refuse a verdict you are not the owner of:** I measured 2-of-4 and named **two readings without picking**; the issuer found the row held **two requirements**; a third seat then found **its own ruling had silently assumed the answer** and marked it contingent before anyone leaned on it. **Had I picked (a), AC6 would read PASS and the missing fields would never have surfaced. Had I picked (b), AC6 would read FAIL and the arming half -- genuinely satisfied -- would have been retracted with it.** **The measurement was identical under both; only the refusal to adjudicate kept both halves visible.**
+
+### THE `attested` UNIT QUESTION **CLOSED, 4 of 4 EXACT**: it is the **CONVERTER's `t1_expected` for `fact_acc`** -- an **ACCOUNT-grain count from the SILVER conversion records**, never a `dim_relationship` property. **It matches on BOTH dates where the row-count reading broke**
+
+3.0.0_SA_CVO, 2026-08-29 ~11:36Z, MCP 82151-82155. **I opened this question and left it OPEN saying it needed a00's code rather than a fourth object read.** The timing constraint I gave then (08-27 was ten minutes out) has lapsed, so I took the read.
+
+**MEASURED across 479 conversion records** in `s3://opal-data-assets/schwab/08335338/meta/conversions/`:
+```
+  date         t1_expected (fact_acc)    manifest `attested`    match
+  2026-07-14   7139                      7139                   YES
+  2026-07-15   7142                      7142                   YES
+  2026-08-18   7316                      7316                   YES
+  2026-08-27   7362                      7362                   YES
+```
+⛔ **4 OF 4 EXACT -- AND IT MATCHES ON THE TWO DATES WHERE THE ROW-COUNT READING FAILED** (7316 vs 7,321 rows; 7362 vs 7,382 rows). **An identity that holds precisely where the previous one broke is a RESOLUTION; one holding only where the old one also held would have been a fourth guess.**
+
+**WHAT IT IS.** `attested` is the **CONVERTER's `t1_expected` for the `fact_acc` type**, collected from the silver conversion records by the predicate at `a00_runner.py:83-100` -- transcribed in `~L`'s re-derivation script as: *some conversion record with `per_type.fact_acc.action == 'converted'` AND the date present in that record's `partitions` list.* **`fact_acc` is ACCOUNT grain.** So the field **was never a property of `dim_relationship`**, and it is **not a row count of anything in gold** -- it is **an EXPECTATION recorded upstream in SILVER**, propagated into all four stamped gold manifests as one value.
+
+⛔ **WHY IT FOOLED THREE SEATS, and it is the cleanest instance of the class tonight:** `dim_relationship` is **account-keyed**, so its row count and the converter's expected `fact_acc` count are **NEARBY QUANTITIES AT THE SAME GRAIN FROM DIFFERENT PLANES.** They coincided **exactly** on 07-14 and 07-15 and diverged by **5 and 20** on 08-18 and 08-27. **Two exact agreements made an identity look measured; the third and fourth showed they were only close.** *Coincidence masquerading as correctness*, with **n=2 doing the work of a definition.**
+
+**AND IT RETIRES MY OWN FAILED HYPOTHESIS:** I proposed `attested` might count **mapped** rows; measured **7,202** at 08-18 against attested **7,316**. Refuted -- and now **explained**: mapped/unmapped is a `dim_relationship` property, and `attested` never lived on that object.
+
+**WHAT IT CHANGES FOR ANY ARM:** an arm reading `attested` is reading **THE CONVERTER'S EXPECTATION, not an observation of gold.** **It cannot detect a gold write that dropped rows, because it was never measuring gold.** If any acceptance criterion treats it as a count of what landed, that is the wrong instrument -- **I am naming the property, not auditing whose arms do this, and I have not swept for consumers.**
+
+⛔ **BOUND:** 4 dates measured, **all in the attested branch**. I did **not** check whether the identity holds on declared-branch dates, where `attested` is the **-1 sentinel on 1,932 of 1,932** entries and the question does not arise in the same form. And I read the **PREDICATE** from `~L`'s transcription of `a00_runner.py:83-100` plus the live records -- **I did not open `a00_runner.py` itself**, so the predicate is **one carrier from source** while the **numbers are direct.**
