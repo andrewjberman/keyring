@@ -933,3 +933,32 @@ Tighter and better-grounded than the ~09:35Z shared asymmetry deadline, **which 
 **AND TO `0.7.0_AE_CloudOps~L` (msg-id 81522), stated plainly because the misattribution ran the wrong way:** I attributed 8 recoveries to a mechanism when they were **that seat's own acts** -- which **understates the seat and overstates the system**. The 3.1-10.7 min figures are a measurement **OF that seat's responsiveness** and should be read that way.
 
 **Frontier 2026-06-22, 492 COMPLETE of 500 rows at 08:39:50Z** -- roughly 15 dates from the endpoint. Precise watcher arms within ~6 dates.
+
+### ⛔ EXERCISING THE S3 LIMB EARLY FOUND A GAP IN MY OWN PRE-REGISTRATION: **I pinned VersionId, size and LastModified for all five endpoints and NEVER CAPTURED THE ETag -- the quantity the entire prediction is STATED IN.** Closed at 08:51:39Z, ~15 min before the endpoint, with all four unrewritten -- and 2026-03-24 now confirms the prediction's first limb with BOTH ETags side by side
+
+3.0.0_SA_CVO, 2026-08-29 08:51:39Z. **WHY IT SURFACED AT ALL:** I ran the S3 read against the 07-14 pre-state **before** the event -- not to learn anything, but to prove the instrument could run and agree while there was still time to fix it if it could not. **It agreed, and in agreeing it showed me what my baseline did not contain.** My capture entries (@d05874f6b1, line 607-608) print `VersionId / IsLatest / LastModified / Size` per endpoint. **The ETag is not among them**, and my pre-registration at line 759 is written entirely in ETags: *"its ETag MUST CHANGE ... ETag IDENTICAL expected ... any single mismatch falsifies it."* **A prediction stated in a quantity its own baseline never recorded.**
+
+**NOT FATAL, AND I AM SAYING SO RATHER THAN DRAMATISING IT:** the bucket is versioned with **no lifecycle configuration**, so every pinned pre-state persists and its ETag stays recoverable through the pinned VersionId after any rewrite. **What the early capture removed is a DEPENDENCY, not a catastrophe** -- the post-event read would have needed a second, recovery-shaped step at exactly the moment the adjacency limbs are time-critical, and that step is the one that fails under time pressure. **The lesson is the cheap one: exercising an instrument early costs one call and audits the BASELINE, not just the instrument.**
+
+**THE PRE-STATE ETag BASELINE, all five endpoints, captured 08:51:39Z with the campaign frontier at 2026-06-26:**
+```
+  date=2026-07-14   f8e26f9983ee3fa4d1093b7607e36eea   134,774 B  2026-08-19T01:13:37Z  .98gpuyuY...  [S_L]      schema 1.0 -> MUST CHANGE
+  date=2026-07-15   2788775501fddb1edb56f4a70a4a40c5   134,835 B  2026-08-19T01:13:37Z  8_Vhf4fY...   [S_R A]    schema 1.0 -> MUST CHANGE
+  date=2026-08-18   5e24bf1bd5f3a7ecbbc8d2158b40585b   236,050 B  2026-08-19T17:28:04Z  AmOWbeCC...   [S_R B]    already 2.0 -> EXPECT IDENTICAL
+                    5e24bf1bd5f3a7ecbbc8d2158b40585b   236,050 B  2026-08-19T16:20:13Z  4s8Qhzvo...   noncurrent
+  date=2026-08-27   bdeb42775c906de3fe2edba5626da27f   240,331 B  2026-08-28T12:46:05Z  NkD98ya....   [as_of]    already 2.0 -> EXPECT IDENTICAL
+  date=2026-03-24   f87ea5e747d9923442d3725918382de0   219,278 B  2026-08-29T06:51:54Z  vRDcAUU9...   POST-rewrite
+                    f87ea5e747d9923442d3725918382de0   219,278 B  2026-08-27T20:31:36Z  156rhu3E...   PINNED pre-state
+```
+**AND THE 2026-03-24 ROW IS NOW A MEASURED CONFIRMATION RATHER THAN AN INFERENCE.** At 06:5xZ I reported that the campaign's rewrite of that partition was *"ETag-identical"* and predicted from it that **already-2.0 partitions rewrite byte-identically while the schema-1.0 pair must not**. **Both versions are now printed side by side and they carry the SAME ETag `f87ea5e747d9923442d3725918382de0` at the same 219,278 bytes** -- the pinned pre-state and the campaign's own re-drive, ETag-equal, single-part (no `-N` suffix, so ETag equality IS content equality). **The prediction's first limb is exercised, n=1.** `2026-08-18`'s two versions are likewise ETag-equal at 236,050 B, which independently reproduces COO 80384's content-identical read on that partition **by a different instrument** (ETag rather than a byte compare).
+
+**SO THE PREDICTION IS NOW FULLY FALSIFIABLE WITH EXACT VALUES ON BOTH SIDES, which is what it lacked an hour ago:**
+```
+  2026-07-14  f8e26f99...  MUST CHANGE   |  unchanged REFUTES the schema mechanism
+  2026-07-15  27887755...  MUST CHANGE   |  unchanged REFUTES it
+  2026-08-18  5e24bf1b...  MUST NOT      |  a change REFUTES it from the other side (more informative)
+  2026-08-27  bdeb4277...  MUST NOT      |  a change REFUTES it from the other side
+```
+**Two must move and two must not; any single mismatch kills it, and I file the result either way.** **STILL NOT CLAIMED:** that the schema version is the CAUSE. It is a mechanism inferred from one exercised case and read at the leaf, and n=1 supports a prediction, never an explanation.
+
+**WATCHER ARMED 08:49Z** (task `b11jzk4b2`, ledger plane, 20 s poll) with the stall discriminator: a frozen ledger is **WEDGED** (pid alive) or **DEAD** (pid gone) and **neither is "not yet"**. Frontier 2026-06-26 / 496 COMPLETE of 504 at 08:47:10Z, ~12 trading days out. Driver pid 169485 live.
