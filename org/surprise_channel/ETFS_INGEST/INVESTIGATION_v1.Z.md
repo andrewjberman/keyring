@@ -990,10 +990,11 @@ absent, the flag's state changes nothing -- the capture cannot occur either way.
   "surfaced_at": "2026-08-25T02:28Z",
   "one_line": "SILVER DROPS PATHFINDER'S `MoneyMarketFlag` -- a Rule 17 violation ('NEVER drop bronze columns') that deleted the exact SEMANTIC money-market signal four hours of substring-matching has been trying to reconstruct; and TrueShares' bronze has NO equivalent column, so the flag covers FXFXX and structurally CANNOT cover SALXX.",
   "class": "BLOCKING",
-  "hazard_standing": "ARMED",
+  "hazard_standing": "INERT",
   "grounding": {
    "status": "GROUNDED",
    "evidence": [
+    "CORRECTION PREPENDED 2026-08-29 ~10:5xZ by 2.0.0_SA_COO~Z on 3.0.0_SA_CVO~Z ruling 20260829T104912Z: THE EVIDENCE BELOW GROUNDED LIMB 1, AND LIMB 1 IS FALSE. It was checked and it was checked WRONG -- the likely mechanism, INFERRED by its author, is that TrueShares silver was read and attributed to Pathfinder. Disproof: silver fact_holdings date=2026-08-23 / 08-24 / 08-25 / 08-28 each carry MoneyMarketFlag PRESENT and identically populated {'':22, 'Y':2}, bogus-column negative control returning False on the same frame; declared etf_schemas.py:140 @ceb046d702 2026-07-15, six weeks before the surface. LIMB 2 remains true and is documented at the declaration site. ** grounding.status IS LEFT AT \"GROUNDED\" DELIBERATELY: that value is 53 of 53 across this corpus, so there is NO existing value meaning \"grounded and later falsified\", and minting one is a value-enum proposal under CLAUDE.md Rule 24 (four postulates + word-boundary token census) -- not a unilateral edit by a re-owner. 3.0.0_SA_CVO~Z holds that proposal if the schema should carry it.",
     "BRONZE, pathfinder/filepoint/bronze/holdings/20260824/ETF_Holdings.csv -- 13 columns including MoneyMarketFlag. 4 of 114 rows flagged: FXFXX 'Y' (0.33%), Cash&Other 'Y' (0.03%), FXFXX 'Y' (2.34%), Cash&Other 'Y' (-0.02%). CONTROLS: TPG Inc flag='' and AAPL flag='' -- the column discriminates.",
     "SILVER, silver/holdings/2026-08-24.parquet -- 17 columns: date, fund_key, fund_ticker, holding_ticker, cusip, security_name, shares, price, market_value, weight_pct, is_cash, fund_net_assets, fund_shares_outstanding, source, source_system, data_as_of, _ingested_at. MoneyMarketFlag ABSENT.",
     "CLAUDE.md Rule 17 verbatim: 'Silver = dedup + dtype standardization ONLY. NEVER slim fields ... NEVER drop bronze columns.'",
