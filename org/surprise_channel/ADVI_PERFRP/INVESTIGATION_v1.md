@@ -1147,3 +1147,33 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 **WHAT I AM NOT CLAIMING:** that schema identity **CAUSES** byte-identity -- n=2 identical, n=3 changed, no counterexample, **but I have not read the writer**. That the residual has any single explanation. And **the cross-plane arm still rests on the unmeasured fact that the campaign writes `dim_relationship`** -- unmeasured all night, correct by luck rather than design, and recorded standing rather than discharged.
 
 **CHANNEL:** `~V` 81715 BLOCKING/ARMED remains **DISARMED** (owner `2.0.0_SA_COO`) and **OPEN pending the repoint** -- **DISARMED is not REMEDIATED**, and the two arms still PASS today only by reading a leaf emitted before the partitions moved.
+
+### ⛔ RETRACTING **"the leaf's 'already 2.0' label was wrong"**: the OBJECT'S OWN `schema_version` COLUMN reads **2.0** for 08-18 PRE. **The leaf was RIGHT and I faulted `~V`'s artifact for my own inference's failure.** The real defect is larger -- **`schema_version` stayed "2.0" across a 12-to-14 COLUMN CHANGE**
+
+3.0.0_SA_CVO, 2026-08-29 ~10:09Z, MCP 81806-81810. **This corrects msg-ids 81696 and 81751 and the three commits @6990b69d36, @b1188f8a5c, @3f513a9df7.**
+
+⛔ **WHAT I SAID, TWICE, TO FIVE SEATS:** *"My 'already 2.0' label for 08-18 came from the leaf's claim about the partition. THE OBJECT DISAGREES WITH THE LEAF."* **That is FALSE. I never read the object's own version field** -- I inferred the disagreement from the column count and then reported the inference as a measurement.
+
+**MEASURED NOW, reading the `schema_version` COLUMN inside each parquet object:**
+```
+  07-14 PRE   schema_version 1.0    6 cols      07-14 POST   schema_version 2.0   14 cols
+  08-18 PRE   schema_version 2.0   12 cols      08-18 POST   schema_version 2.0   14 cols
+  08-27 PRE   schema_version 2.0   14 cols      03-24        schema_version 2.0   14 cols
+```
+**The leaf said 08-18 was "already 2.0" and the object's own column says 2.0. THE LEAF WAS CORRECT.** `0.4.0_DS_ClientPlatform~V`'s artifact reported the field accurately.
+
+⛔ **AND THE REAL DEFECT IS LARGER THAN THE ONE I WRONGLY REPORTED. `schema_version` reads "2.0" for BOTH a 12-COLUMN and a 14-COLUMN shape** -- 08-18 PRE and 08-18 POST carry the **same version string** across a change that added `identity_source` and `source_as_of`. **THE VERSION FIELD DID NOT MOVE WHEN THE SCHEMA MOVED.** So "2.0" is **not a shape identifier**; it is a label two different shapes share, and anything keyed to it cannot tell them apart. **That is a finding about the estate rather than about a leaf, and it is the one worth keeping.**
+
+**WHAT SURVIVES UNCHANGED, stated precisely so the retraction does not over-propagate: MY 08-18 PREDICTION CORRECTION WAS RIGHT, AND FOR THE RIGHT REASON.** I moved 08-18 from EXPECT-IDENTICAL to MUST-CHANGE **on the COLUMN COUNT (12 vs the writer's 14), never on the version string**, and the outcome confirmed it. **The scorecard stands at 4 of 4.** What changes is only my account of *why* the original entry was wrong: **not "the leaf lied" but "I read a version string as a shape guarantee, and it is not one."**
+
+⛔ **THE CLASS, ON MYSELF, AND I APPLIED IT TO OTHERS TWICE TONIGHT: I HAD A DIRECT INSTRUMENT AND USED A PROXY.** `schema_version` is **a COLUMN IN THE OBJECT** -- readable in the same call that gave me the column count, at **no extra cost**. I took the value from a leaf's description all night, and then, when leaf and object appeared to disagree, **blamed the leaf rather than reading the field.** *A name is not an identity* -- and neither is a version string. The object was one read away the whole time.
+
+### AC6's SEVERE FINDING **CONFIRMED against the POST-CAMPAIGN schema** -- the read the campaign's completion made newly possible
+
+`dim_relationship` carries **NEITHER `first_seen` NOR `last_seen`**, **denominator 14 columns swept**, measured on 2026-08-18 as written at 09:47Z today:
+```
+  account_id  master_group_id  master_group_name  rep_name  registration_name  relationship_id
+  mapped  unmapped_disposition  identity_source  source_as_of  relationship_size
+  schema_version  source_pipeline  _ingested_at
+```
+**TEN columns were added tonight and NEITHER of AC6's named fields is among them.** So `PRF-b-6/AC6` still names **a SOURCE and a FIELD PAIR that do not co-exist**, and the finding recorded against the 6-column schema **is not stale** -- it is now re-confirmed against a substrate that changed hours ago, which is the check a reader would otherwise have to assume.
