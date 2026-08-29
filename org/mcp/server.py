@@ -164,7 +164,24 @@ def _locked_liveness(write=False):
         if write:
             tmp = LIVENESS_FILE.with_suffix(".json.tmp")
             tmp.write_text(json.dumps(data, indent=2), encoding="utf-8")
-            os.replace(str(tmp), str(LIVENESS_FILE))
+            # BOUNDED RETRY (2026-08-29, 1.0.0_SA_CTO). On Windows os.replace raises
+            # PermissionError/WinError 5 when the DESTINATION is open by any process.
+            # The mutex above is held on liveness.LOCK, a DIFFERENT file, so it is
+            # structurally incapable of preventing that -- the holder is not a
+            # participant. Measured: 3 sidecar deaths total against ~2,850 consecutive
+            # successful beats at one seat, so the holder is TRANSIENT (a continuous
+            # holder is incompatible with that rate). 5 x 50 ms therefore covers it.
+            # WHAT the holder is remains UNMEASURED -- no handle tooling on this device.
+            # Re-raises on exhaustion ON PURPOSE: a swallow would turn a loud death into
+            # silent liveness drift, which is strictly worse than the defect being fixed.
+            for _attempt in range(5):
+                try:
+                    os.replace(str(tmp), str(LIVENESS_FILE))
+                    break
+                except PermissionError:
+                    if _attempt == 4:
+                        raise
+                    _time.sleep(0.05)
     finally:
         try:
             if sys.platform == "win32":
