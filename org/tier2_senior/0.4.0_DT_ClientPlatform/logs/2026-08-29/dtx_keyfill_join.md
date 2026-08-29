@@ -246,3 +246,41 @@ that, because I wrote both.**
 Cheap habit that would have caught two of the three: when claiming an ordering or a precondition,
 **instrument it** (trace the loader, hash the file) instead of re-reading the source. The source is
 what I already believe.
+
+---
+
+# Part 4 -- a stale row inside the corrected instance
+
+Both readers refused `0bbbb4a6d7` on one narrow thing: `compiler_tools[0].result` still said
+**DECLARATION 0/42** while `acceptance[1]` in the same file said 23/19. One instance stating both as
+the result of the same tool.
+
+**This is the class I had just written a process note about, sitting in my own artifact.** I
+corrected the acceptance rows and never re-read the tool table beside them. A correction pass
+inherits the attention of the finding that triggered it: I was looking at the rows CVO's refusal
+named, so the row nobody named kept its pre-fill value and rode into a commit.
+
+## Fixing only the flagged row would have shipped the same defect again
+
+So I swept the whole instance for pre-fill tokens instead -- `DECLARATION 0/42`, `4dc8ea8335`,
+`55f1d2e2ffc3a030` -- and scored each as historicised (the text marks it as the OLD value) or bare.
+The sweep found **a second bare stale claim neither reader flagged**: AC3 said the manifest is
+`blob 55f1d2e2ffc3a030 at HEAD`. That was true pre-fill; the manifest at HEAD is now
+`fbad17767a681694`.
+
+It also produced **one false positive worth stating**, because a sweep that is never wrong is not
+being read: `artifacts_produced/5` carries blob `55f1d2e2ffc3a030` for the preserved pre-fill copy,
+which is **correct** -- the preserved file is byte-identical to the pre-fill manifest, so it has the
+same blob id, and that identity *is* the preservation claim. Same token, opposite verdicts, decided
+by what the string is asserting rather than by the string.
+
+## What generalises
+
+**A reader's finding tells you where one defect is, never how many there are.** The narrow refusal
+was right and complete as a finding; treating it as the complete list of stale rows would have been
+my error, not theirs. When a class of defect is named, sweep for the class -- the flagged instance is
+a sample.
+
+And a token census needs a **historicised** predicate. `grep "0/42"` would have flagged the corrected
+row too, because the correction quotes the old value in order to record it. Presence is not the
+question; what the sentence is *asserting* is.
