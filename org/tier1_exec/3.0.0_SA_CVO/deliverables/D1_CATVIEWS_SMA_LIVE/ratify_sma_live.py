@@ -70,6 +70,42 @@ CENT = 0.01
 # CLIENT_L1_RULE has 3 keys (49financial, inflection, cottonwood) and
 # CLIENT_L1_HELD has exactly 1 (cottonwood).
 SUPPLY_SCOPES = ("cottonwood",)
+GLOBAL_SCOPE = "global"
+
+# ⛔ READ FROM THE PRODUCER, NOT HARDCODED HERE. A second copy of a declared set is a
+# divergence surface: it would keep passing after the producer's set changed, and the
+# row would then certify against a constituent list nobody uses. Parsed at runtime
+# from the module that DECLARES it, beside the non_model construction it must not
+# drift from. Falls back to an empty set, which DISABLES the scored row rather than
+# guessing -- an absent declaration must never become an assumed one.
+_GCC_SRC = "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py"
+
+
+def _declared_client_constituents():
+    """(tuple, provenance-string). Empty tuple => the scored row is skipped."""
+    try:
+        import re as _re
+        with open(os.path.join(_repo_root(), _GCC_SRC), encoding="utf-8") as fh:
+            m = _re.search(r"^GLOBAL_CLIENT_CONSTITUENTS\s*=\s*\((.*?)\)",
+                           fh.read(), _re.S | _re.M)
+        if not m:
+            return (), "NOT FOUND in %s -- row skipped, not assumed" % _GCC_SRC
+        vals = tuple(_re.findall(r"[\"']([^\"']+)[\"']", m.group(1)))
+        return vals, "declared at %s" % _GCC_SRC
+    except Exception as exc:  # noqa: BLE001
+        return (), "UNREADABLE (%s) -- row skipped, not assumed" % exc
+
+
+def _repo_root():
+    here = os.path.abspath(os.path.dirname(__file__))
+    while here != os.path.dirname(here):
+        if os.path.isdir(os.path.join(here, ".git")):
+            return here
+        here = os.path.dirname(here)
+    return os.getcwd()
+
+
+GLOBAL_CLIENT_CONSTITUENTS, GCC_PROVENANCE = _declared_client_constituents()
 
 
 def fetch(bucket, key):
@@ -128,6 +164,76 @@ def check_prose(doc, scope, plane, out):
                     not bad,
                     "carries %r while nodes=%d" % (phrase, len(doc.get("nodes") or {}))
                     if bad else "no contradiction found"))
+
+
+def check_cross_scope(docs, plane, out):
+    """CROSS-SCOPE: does global aggregate its constituents, per L0 node?
+
+    ⛔ THIS AXIS DID NOT EXIST IN THIS INSTRUMENT UNTIL NOW, AND EVERY OTHER ROW IN
+    IT IS SCOPED **WITHIN** ONE SCOPE. Not one compared a scope to another. So a
+    MIXED-BASIS global -- Models and SMA aggregating three firms while Client
+    aggregates one -- passed all 130 rows and would have passed 130 more of the
+    same shape. Found by `0.4.0_DE_ClientPlatform~Z` at 06:0xZ, corroborated by me
+    on the S3 plane against their CDN read, and NOT by this instrument.
+    The gap is $359,773,356.74 and it flows into `sums.total_aua`, i.e. the $2.09B
+    on the panel Andrew named as his canonical design reference.
+
+    ⛔ AND THE L0 IDENTITY CANNOT SUBSTITUTE FOR THIS ROW. `sum(nodes) ==
+    sums.total_aua` holds EXACTLY under the mixed basis, because it is assembled
+    from the same per-node values it would have to validate. It is the mechanism
+    of concealment, not evidence -- which is precisely why a cross-scope row has
+    to be measured against the CONSTITUENTS and not against the total.
+
+    ⚠ TWO DIFFERENT EVIDENCE GRADES, AND THEY ARE LABELLED SEPARATELY:
+      Client  -- the constituent set is DECLARED at
+                 dim_mdpf_aggregate_aua_timeseries.py:2214
+                 GLOBAL_CLIENT_CONSTITUENTS = ("49financial",), read at BUILD time
+                 beside the non_model construction so it cannot drift from basis B.
+                 SCORED against that declaration.
+      others  -- no declared constituent set was found for Models/SMA. Their
+                 3-firm aggregation is MEASURED to hold exactly, not declared.
+                 REPORTED AS A CONTROL, NEVER SCORED. Scoring an expectation
+                 nobody declared is inventing one, which is the defect this
+                 deliverable exists to catch.
+
+    ⚠ TOLERANCE, STATED RATHER THAN IMPLIED. The comparison is `< CENT`, the same
+    tolerance every other row here uses, so a sub-cent difference PASSES. Exercised:
+    a one-cent-high global still returns PASS (float64 at ~$2.7e8 renders the
+    difference as 0.00999999, below the threshold). THIS ROW IS THEREFORE NOT A
+    ROUNDING-BUG DETECTOR and must not be cited as one. It is sized for the defect
+    it exists to catch -- a whole constituent summed in or dropped out, which is
+    $359,773,356.74 here, seven orders of magnitude above the tolerance.
+    ⛔ THAT LIMIT WAS FOUND BY THE REFUSE FIXTURE, NOT BY REVIEW -- and the fixture's
+    THIRD control ("one cent must FAIL") was MY over-specification, not a code
+    defect. The two controls that matter both behaved: the correct basis-B value
+    PASSES and the three-firm sum FAILS.
+    """
+    g = (docs.get(GLOBAL_SCOPE) or {}).get("nodes") or {}
+    firms = [s for s in ALL_SCOPES if s != GLOBAL_SCOPE and s in docs]
+    if not g or not firms:
+        return
+    for node in ("Models", "SMA", "Client"):
+        gv = (g.get(node) or {}).get("aum")
+        if gv is None:
+            continue
+        terms = {f: float(((docs[f].get("nodes") or {}).get(node) or {}).get("aum") or 0.0)
+                 for f in firms}
+        p = "%s/x-scope %s" % (plane, node)
+        if node == "Client":
+            # DECLARED set. A constituent outside it must NOT be summed in.
+            want = round(sum(v for f, v in terms.items()
+                             if f in GLOBAL_CLIENT_CONSTITUENTS), 2)
+            out.append(("%s == sum(DECLARED constituents) %s"
+                        % (p, list(GLOBAL_CLIENT_CONSTITUENTS)),
+                        abs(round(float(gv), 2) - want) < CENT,
+                        "global %.2f vs declared-sum %.2f | all %d firms would give %.2f"
+                        % (float(gv), want, len(terms), round(sum(terms.values()), 2))))
+        else:
+            allsum = round(sum(terms.values()), 2)
+            out.append(("[CONTROL ONLY] %s vs sum(all %d firms)" % (p, len(terms)),
+                        abs(round(float(gv), 2) - allsum) < CENT,
+                        "global %.2f vs %.2f -- NO declared constituent set for this "
+                        "node; reported, NOT scored" % (float(gv), allsum)))
 
 
 def check_member_conservation(doc, scope, plane, out):
@@ -379,6 +485,7 @@ def main():
     unreadable = []
     for plane, bucket, tmpl in (("gold", GOLD_BUCKET, GOLD),
                                 ("platinum", PLAT_BUCKET, PLAT)):
+        plane_docs = {}
         for scope in ALL_SCOPES:
             key = tmpl.format(scope=scope, as_of=a.as_of)
             doc, err = fetch(bucket, key)
@@ -389,10 +496,12 @@ def main():
             check_prose(doc, scope, plane, rows)
             check_client_l1(doc, scope, plane, rows, a.post_reland)
             check_member_conservation(doc, scope, plane, rows)
+            plane_docs[scope] = doc
             if plane == "gold" and scope == "global" and None not in (client_aum, sma_aum):
                 ok = abs((client_aum + sma_aum) - CONSERVATION) < CENT
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
                              ok, "PASSES PRE-FIX TOO -- evidences nothing alone (14091)"))
+        check_cross_scope(plane_docs, plane, rows)
 
     na = [r for r in rows if r[1] is None]
     scored = [r for r in rows
