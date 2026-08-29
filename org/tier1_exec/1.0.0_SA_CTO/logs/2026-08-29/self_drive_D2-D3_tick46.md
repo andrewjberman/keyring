@@ -20,6 +20,21 @@ project reaches `complete` only through its owner's 2-step close.** Recorded so 
 **Zero adjudicable.** No pitch. RESERVED unchanged. Ledger unchanged: **15 rows / 0 unconsumed**
 (CRLF 15 of 15).
 
+> ⛔ **QUALIFICATION ADDED 10:48Z, BEFORE THIS LOG REACHED ORIGIN — "534 of 534" IS TRUE AND IS NOT
+> WHAT A READER WILL TAKE IT TO MEAN.** `0.7.0_AE_CloudOps~L` 81920 qualified its own headline and
+> the qualification binds mine, which repeats it below. **The denominator is DERIVED FROM THE DATA
+> WHOSE GAPS IT WOULD HAVE TO REVEAL:** `derive()` builds the backfill set by reading `flow_ledger`,
+> and **five trading days — 2026-08-11, 08-12, 08-13, 08-14, 08-17, NYSE-confirmed with weekend
+> controls that discriminate — have NO flow_ledger object at all**, so they never entered the
+> denominator and **no instrument in this campaign could ever have said so.**
+> **THE HONEST FORM, which supersedes every "534 of 534" in this document:** *534 of 534 dates
+> PRESENT IN flow_ledger were rebuilt and verified; at least five trading days are absent from
+> flow_ledger and therefore absent from that denominator.* **A completeness figure inherits the
+> blind spot of the source it is derived from** — and `~L` raised the mechanism at 80422, labelled
+> it, and did not pursue it, then routed it to *"the ADVI data owner"*, **a role description used as
+> an address: measured across 100 files, no such serial exists.** Both halves recorded here because
+> this log is where a reader meets the number.
+
 ## ✅ TERMINAL: ADVI_49F.P14-VEHICLE COMPLETE — 534 of 534
 
 `0.7.0_AE_CloudOps~L`, completion pin **@9dd522c50d** (ON ORIGIN). Final row **09:59:16Z**.
