@@ -250,9 +250,9 @@ $live = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
   }).Count
 ```
 
-If `$live >= 16` → spawn-agent.ps1 will reject. Either kill an idle session first (`/mstr-kill {idle-serial}`) OR re-invoke with `--force "<reason>"` (audited bypass).
+If `$live >= 20` → spawn-agent.ps1 will reject (`spawn-agent.ps1:159` `$concurrencyCap = 20`, enforced `:164`). ⛔ **THIS DOC SAID 16 UNTIL 2026-08-29 AND SOURCE SAID 20** — measured while answering a capacity question; a plan built on the doc's number understates headroom by 4. **Read the cap at source before quoting it.** ⛔ **AND THE COUNTER IS NOT `claude.exe`:** the cap counts MARKER-TRACKED spawned PowerShell windows, so an Andrew-launched session does NOT consume a slot. Measured 2026-08-29 14:4xZ: 9 marker-counted windows of cap 20 while 15 `claude.exe` were live — **headroom 11, not 1.** Either kill an idle session first (`/mstr-kill {idle-serial}`) OR re-invoke with `--force "<reason>"` (audited bypass).
 
-(Same `$PID` exclusion as Step 1b applies; the scanner's CommandLine contains the marker literal verbatim. Pre-fix 2026-05-26 empirical: `CONCURRENCY_LIVE=7/16` was actually 6 spawned agents + 1 scanner-self. The exclusion ensures the cap-headroom signal reflects only true spawned-agent windows.)
+(Same `$PID` exclusion as Step 1b applies; the scanner's CommandLine contains the marker literal verbatim. Pre-fix 2026-05-26 empirical (**cap was 16 then; it is 20 now** — the ratio is history, the denominator is not current): `CONCURRENCY_LIVE=7/16` was actually 6 spawned agents + 1 scanner-self. The exclusion ensures the cap-headroom signal reflects only true spawned-agent windows.)
 
 Surface the count in the Step 6 report regardless — useful context for population-management decisions.
 
@@ -273,7 +273,7 @@ $env:FORCE_SPAWN = $null
 The script:
 - Loose serial sanity check (regex match).
 - Concurrency rate cap (3/spawner/60s, 5/global/60s) — only enforced when `$env:OPAL_AGENT_SERIAL` is set (the agent-as-spawner case — every invocation of this skill, MSTR or COO; the per-spawner cap is keyed on the caller serial).
-- Live-window cap (16 simultaneous).
+- Live-window cap (**20** simultaneous marker-tracked windows; `spawn-agent.ps1:159`).
 - Both caps bypassable via `FORCE_SPAWN` env var with reason → writes `FORCE-SPAWN` line to audit log.
 - Opens new detached PowerShell window via `Start-Process powershell -NoProfile -NoExit`.
 - Dot-sources `.tools\ajb.ps1`; runs `ajb -Headless {serial} [extra]`.
@@ -342,7 +342,7 @@ Print the fixed report:
 
 ```
 /mstr-spawn {serial}
-  PRE-CHECK:    no-duplicate | marker-clean | concurrency {N}/16
+  PRE-CHECK:    no-duplicate | marker-clean | concurrency {N}/20
   SPAWN:        launched (script said: ...) | FORCE-SPAWN reason="<>" | rejected reason="<>"
   REGISTER:     LIVE after {N}s | NOT-LIVE after 60s (INVESTIGATE)
   DIRECTION:    --say sent via broker | (none)
