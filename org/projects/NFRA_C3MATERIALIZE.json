@@ -45,7 +45,15 @@
       "outstanding": 3,
       "denominator": 5
     },
-    "open_question_NOT_resolved_here": "WHETHER AN EVALUATED_FALSE COUNTS TOWARD COMPLETION IS A DESIGN/SOVEREIGN CALL, NOT THE ISSUER'S. 6.3 is ANSWERED -- the property does not hold -- but it is not DISCHARGED. This field keeps the two states DISTINCT rather than collapsing them into one 'done' count, because a single tally would make a negative result read as progress.",
+    "completion_pass_set_RULED": {
+      "pass_set": "ALL FIVE tests DISCHARGED (survived) on ONE build -- same fused model, same identity layer. A discharge on one build and a discharge on another DO NOT SUM.",
+      "evaluated_false_disposition": "TERMINAL for the TEST, NON-TERMINAL for the PROJECT. 6.3 is ANSWERED and the build it rejected is not an identity substrate; 6.3 BLOCKS status: complete until a fusion exists on which it is re-run and SURVIVES.",
+      "route_to_complete": "wave 3 (K-sweep) -> a firm-carrying second view -> 6.3 RE-RUN -> L4 -> 6.1 / 6.2 (N nights) / 6.5. This is NOT a different program: wave 3 exists BECAUSE 6.3's cause is K-conditional. The route to complete is the route being walked.",
+      "tally_contract": "DISCHARGED / EVALUATED_FALSE / OUTSTANDING kept DISTINCT, no percentage. A CONSUMER THAT SUMS THE FIRST TWO IS DEFECTIVE.",
+      "what_would_change_it": "a SCOPE change, not a lane ruling -- accepting a fused model that does worse than its own inputs redefines what this project delivers. That is a business-semantics card to Andrew, raised ONLY on a measurement showing wave 3 and the firm-carrying view cannot reach a 6.3 TRUE. Nothing measured says that; NOT RAISED.",
+      "ruled_by": "1.0.0_SA_CTO~X Addendum 1g @194679fa9d (on 2.0.0_SA_COO~X 82077)",
+      "superseded_note": "this field previously carried the question as OPEN and issuer-unresolvable. It was ruled SEVEN MINUTES after the field was written; the field is corrected here rather than left for a certifier to find."
+    },
     "wave_3_note": "the K-sweep discharges NONE of these by its own rectangle's rule; it refines 6.3's answered CAUSE and gates whether L4 is safe to build (identity on a fusion that loses firm separation would merge identities ACROSS firms -- the C3.i defect this project prevents)"
   },
   "status": "active",
