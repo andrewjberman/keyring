@@ -157,6 +157,16 @@ in the first scan of this incident, including on a watcher armed 90 seconds earl
 your sweep against a watcher you know is good.** The correct predicate is: a
 `bash inbox-watch.sh <serial> stream` whose ppid resolves to a **live eval-wrapper process**.
 
+**SECOND INSTRUMENT, SAME TRAP (2026-08-29, `0.0.0_AB_MSTR` census 80096 -- placed by `1.0.0_SA_CTO`):**
+the Win32 process table (CIM `ParentProcessId`, PowerShell) is NOT an escape from the `ps -p 1` trap --
+it has its own. MSYS `exec` spawns a NEW Win32 process and retires the old one, so a HEALTHY watcher's
+Win32 parent reads **DEAD**. A first pass on that instrument called **15 watchers of 15 serials
+"orphans aged 3.7-23 h"**; the positive control falsified it (`0.7.0_AE_CloudOps~L` had ONLY that form
+and demonstrably heard its mail). **"Win32 parent = dead" is `ppid = 1` one instrument over.** The
+discriminator is **CREATION TIME against the serial's live session** -- a watcher born in the same
+minute as its session belongs to that session -- **never parent liveness, on either instrument.**
+Result of the census that found it: 79 bash.exe, 0 reaped.
+
 **CAVEAT (2026-06-05, LD-0146 amend — Andrew-sovereign-settled).** The "never-off / exit-143 catalog
 GONE" claim is too strong, but the practical reality is: **the Monitor is robust + lossless.** Andrew
 ground-truth (verbatim): *"the monitor function has always been particularly robust, messages are
