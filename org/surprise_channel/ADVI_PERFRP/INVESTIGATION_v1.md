@@ -1401,3 +1401,28 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 **WHAT IT CHANGES FOR ANY ARM:** an arm reading `attested` is reading **THE CONVERTER'S EXPECTATION, not an observation of gold.** **It cannot detect a gold write that dropped rows, because it was never measuring gold.** If any acceptance criterion treats it as a count of what landed, that is the wrong instrument -- **I am naming the property, not auditing whose arms do this, and I have not swept for consumers.**
 
 ⛔ **BOUND:** 4 dates measured, **all in the attested branch**. I did **not** check whether the identity holds on declared-branch dates, where `attested` is the **-1 sentinel on 1,932 of 1,932** entries and the question does not arise in the same form. And I read the **PREDICATE** from `~L`'s transcription of `a00_runner.py:83-100` plus the live records -- **I did not open `a00_runner.py` itself**, so the predicate is **one carrier from source** while the **numbers are direct.**
+
+### ⛔ CORRECTING **MY OWN AC6 DENOMINATOR**: I printed **"17 of 17"** and the directory holds **16** -- verified at the tree of my own read's commit, **16 then and 16 now.** Verdict unaffected, number wrong, **on the axis I have held every seat to all night.** And **AC6-MANIFEST's remedy VERIFIED: 8 of 16 carry all four, values DERIVED CORRECTLY**
+
+3.0.0_SA_CVO, 2026-08-29 ~11:42Z, MCP 82181-82184.
+
+⛔ **MY DENOMINATOR WAS WRONG AND I AM CORRECTING IT BEFORE ANYONE CITES IT.** My AC6 read (82059, committed `@9d445f309c`) printed *"contract_version PRESENT 17 of 17 ... campaign_ledger_commit ABSENT 17 of 17 ... dates_complete_of_534 ABSENT 17 of 17."* **MEASURED NOW: the emissions directory holds 16 `.json` files and 16 total entries** -- and verified against **the tree of MY OWN READ'S COMMIT** (`git show 9d445f309c:<emissions>/` lists exactly 16). **So it was 16 then and 16 now; nothing was added or removed and I simply miscounted a list I had printed in front of me.**
+
+**THE VERDICT IS UNAFFECTED** -- the two fields were absent on ALL of them, **0 of 16 rather than 0 of 17**, and every conclusion built on it stands. **THE NUMBER WAS STILL WRONG, and a denominator is the one thing I have asked every seat for tonight.** ⛔ **A wrong denominator beside a right verdict is exactly the shape that survives review, because the verdict is what gets read.**
+
+✅ **AC6-MANIFEST REMEDY VERIFIED AT THE ARTIFACT, denominator 16.** **8 of 16 leaves now carry ALL FOUR fields -- and they are precisely the substantive b-series leaves:**
+```
+  perfrp_allocation_account | perfrp_allocation_relationship | perfrp_book_advisor
+  perfrp_book_advisor_floor_aligned | perfrp_gainloss_account | perfrp_gainloss_relationship
+  perfrp_performance_account | perfrp_performance_relationship
+  campaign_ledger_commit = 9dd522c50d   dates_complete_of_534 = 534   contract_version + upstream_pins present
+```
+✅ **AND THE VALUES ARE RIGHT, NOT MERELY PRESENT -- the check a presence sweep skips.** `9dd522c50d` is **EXACTLY the campaign ledger pin** `0.7.0_AE_CloudOps~L` published and that **I independently validated at 10:17Z** by reading the ledger at that pin (865,064 bytes, 534 of 534, 0 unsuperseded). And **534** is the measured completion. So the campaign state is **DERIVED onto the leaves and derived CORRECTLY** -- I checked **the value against its source**, not that a key exists.
+
+**THE 8 NON-CARRIERS, enumerated so "8 of 16" is not read as a half-failure:**
+```
+  2  evidence_allocation_{account,relationship}_asof2024-11-07.json  -- an earlier round's as-of leaves
+  5  *.verification.json sidecars                                    -- carry no upstream_pins either, by construction
+  1  perfrp_transactions_relationship_sample.json                    -- the paged b-5 sample ~V CORRECTLY refused to re-emit
+```
+**NONE is a b-series leaf that failed to receive the fields.** **Whether "every leaf" ranges over the DIRECTORY or over the B-SERIES is the scope question `~V` already routed to the issuer, and I am not answering it** -- same posture as the (a)/(b) ambiguity, and that was the right posture then. **What I can say without answering it: under the b-series reading the remedy is COMPLETE, 8 of 8; under the directory reading it is 8 of 16 with all 8 gaps explained and none of them a b-series leaf.**
