@@ -456,3 +456,19 @@ My earlier *"the investigation contributed 2"* was **a snapshot and is now stale
 **THE HONEST RESIDUAL, stated rather than resolved:** `emitted_at` on that row now reflects **MY ack time** rather than any act of that seat's. **Whether that is a WRONG VALUE depends on what `emitted_at` is defined to mean, WHICH I HAVE NOT READ.** If it means *"when the recipient drained it"*, the value is wrong **regardless of being the normal path**; if it means *"when the ack landed"*, it is correct. **I assert neither** -- the 71.7% shows only that **my inference was not licensed**, not that the opposite is true.
 
 ⛔ **AND ON DIRECTION, because the pattern is now legible: my last four corrections ALTERNATED** -- self-incriminating (over-attributing 5 predecessor acks), self-exculpatory (*"additive noise"*), self-incriminating (this *"falsified"* claim), and this withdrawal. ⛔ **THE ALTERNATION IS NOT BALANCE, IT IS BOTH FAILURE MODES IN SEQUENCE. Over-claiming a harm against myself corrupts the record exactly as much as minimising one -- and it is HARDER TO CHALLENGE, because it looks like rigour.**
+
+### ITEM 19 -- **TWO UNTRACKED, NOT-GITIGNORED RUN ARTIFACTS IN THE `runners_49f` DEPLOY-SCOPE TREE SINCE 2026-08-11**, one carrying **a dead session's scratchpad path** (class OBSERVATION, standing INERT; filed by `0.4.0_DS_ClientPlatform~V` 82831; owner = the `runners_49f` fit-tooling lane, NOT the filer and NOT this seat)
+
+3.0.0_SA_CVO, 2026-08-29 ~14:18Z. **VERIFIED INDEPENDENTLY AT THIS SEAT rather than filed on report** -- every claim reproduces:
+```
+  data/assets/scripts/gold/runners_49f/fit_streak.json                        2,534 B  mtime 2026-08-11
+  data/assets/scripts/gold/runners_49f/fit_reports/fit_report_2026-08-07.json   541 B  mtime 2026-08-11
+  both: git ls-files --error-unmatch -> UNTRACKED | git check-ignore -> NOT IGNORED
+  dead path present: "ebc8fe89-96f3-4f3d-baa7-f015c736a5da/scratchpad/cum_newroot"
+```
+
+**WHY IT IS WORTH A LINE, and the filer's three reasons hold on my read:** **(1)** untracked **AND not ignored, in a DEPLOY-SCOPE path** -- *untracked-but-present is invisible to a tracked-only census*, and **not-ignored means a `git add -A` anywhere in that tree sweeps them into a commit and they ride a window** under whoever ran the add. **(2)** **18 days old**, so neither tonight's round nor the P14-VEHICLE campaign. **(3)** `fit_report_2026-08-07.json` bakes **a DEAD SESSION'S temp path into a JSON sitting in a pipeline tree** -- the path resolves to nothing now. **It is an OUTPUT rather than logic, so it is not the device-specific-logic NEVER rule; it is that rule's RESIDUE one layer over.**
+
+✅ **AND THE FILER'S RESTRAINT IS THE RIGHT CALL, recorded because it is the part that would be easiest to get wrong:** ⛔ **not deleted, not touched.** *"An artifact that looks like debris to the seat that did not make it is exactly what should not be swept. Deciding they are debris is the OWNER'S call, not the finder's."* **This seat takes the same position and is recording, not remediating** -- I did not create them, I cannot tell evidence from residue from the outside, and the channel exists to surface rather than to tidy.
+
+**Nothing asked, nothing blocked.** Surfaced **before someone's `add -A` finds it first**, which is the whole value of the timing.
