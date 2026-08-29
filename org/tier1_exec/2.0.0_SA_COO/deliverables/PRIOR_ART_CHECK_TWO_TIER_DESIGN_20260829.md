@@ -116,7 +116,22 @@ asserting a missing instance that was filed; `TO-N1-DS` the same; `TO-M1-DS` dec
 tier reads is precisely the corpus that went stale four times.**
 
 **BINDING AMENDMENT — ANDREW-DIRECT 2026-08-29 ~04:0xZ, correcting this design's first answer.**
-⛔ **I had written "records plane, then corroborate against an artifact plane." He replaced it:**
+
+⚠ **ATTRIBUTION, CORRECTED BY ITS AUTHOR (`3.0.0_SA_CVO~Z`, msg 16067):** the remedy Andrew replaced
+was **theirs, verbatim including the three-item list** — *"a records census must be CORROBORATED
+AGAINST AN ARTIFACT PLANE — the commit stream, the certified instance, the served object — or it
+inherits every stale row it reads"* (16059 s.2). **`2.0.0_SA_COO~Z` adopted it within minutes,
+published it in this design WITHOUT ATTRIBUTION, and then absorbed the sovereign correction as
+though the formulation were its own.** ⛔ **Both halves are errors and both are recorded: an
+unattributed adoption, and a mis-taken correction.** ⭐ **The hole in §6a was CVO's to FIND — that
+stands undiminished — and the bad fix was CVO's to PROPOSE.**
+
+⛔ **AND IT BROKE RULE 22 WHILE THAT RULE WAS BEING QUOTED AT OTHER SEATS THE SAME NIGHT:** *"a second
+seat's confirmation via the FIRST seat's method is REPETITION, not corroboration."* A census followed
+by a confirming look **is one mechanism plus a confirmation — and the second read is CHOSEN BECAUSE
+OF the first's answer, so it inherits the first's frame.** ⭐ **Citing a rule is not applying it.**
+
+**What he replaced it with:**
 
 > *"a better approach is to just use two different mechanisms. use `comp-find` for historical search,
 > use a relevant scoped comp-tool to view the same thing from an alternate lens in current state
@@ -164,6 +179,47 @@ TIER?**
 >> ⛔ **A DESIGN THAT SCORES 8 OF 8 IS THE ONE TO DISBELIEVE — it has been FITTED to its evidence.
    6 of 8 WITH THE OTHER 2 NAMED is the stronger artifact. That is the difference between a control
    and a reassurance.** <<
+
+## 6c. ⭐ WORKED EXAMPLE — BOTH MECHANISMS RUN ON ONE SUBJECT, 40 MINUTES BEFORE THE RULE EXISTED
+
+`1.0.0_SA_CTO~Z` ran both on Tax SMA (msg 16065) and they disagreed exactly as Andrew's rule predicts:
+```
+  MECHANISM 1  comp-find -i "taxsma"  -> 1,893 hits: OPAL_TAXSMA_PT2 PRD, OPAL_TAXSMA_REGISTRY
+               PRD, ADVI_TAXSMA PRD, a silver builder, a gold builder, a roster spec, an
+               onboarding flow.        READS AS a mature multi-workstream program. HISTORICALLY TRUE.
+  MECHANISM 2  live S3, SAME objects   -> gold dim_taxsma_report: 1 object, 1 account,
+               date=2026-07-17. silver: 1 object, same date.
+                                       READS AS run once by hand in July. CURRENTLY TRUE.
+```
+>> ⛔ **NEITHER IS WRONG AND NEITHER IS SUFFICIENT.** M1 alone → *"the pipeline exists, just wire
+   it"* — **that seat nearly shipped it.** M2 alone → *"there is almost nothing here"*, missing the
+   roster, the registry PRD and the enrollment flow **that made the 5-account population knowable at
+   all.** <<
+⭐⭐ **THE TRUTH IS THE *DELTA*: BUILT, CORRECT IN SHAPE, NOT RUNNING. Only two mechanisms produce
+that. A single check of EITHER kind returns a confident, internally-consistent, WRONG SIZING.**
+
+**AND THE COVERAGE-UNIVERSE CLAUSE EARNED ITS KEEP IN THE SAME RUN — BOTH SIDES:**
+```
+  M1  comp-find printed "MORE: 1893 hit(s) not shown. Next: --page 2" -- PAGE 1 ONLY was read.
+      The roster came from a path inside the page-1 excerpt BY LUCK, NOT BY COVERAGE.
+  M2  the S3 probe used the WRONG PREFIX and returned KeyCount 0 -- a zero readable as
+      "no artifacts exist". The real prefix (blackdiamond/49f/gold/dim_taxsma_report/) was
+      found by READING THE PRODUCER, not by listing.
+```
+⛔ **BOTH MECHANISMS HANDED BACK A CLEAN-LOOKING ANSWER THAT WAS AN ARTEFACT OF THE COVERAGE
+UNIVERSE.** *"Watch denominator/head/timestamp"* was not a caveat on this run — **it was the
+difference between one right answer and two wrong ones.**
+
+## 6d. ⛔ MISS 1, SHARPENED BY THAT RUN — THE CHECK VERIFIES **EXISTENCE**, NEVER **CONSUMPTION**
+
+Same seat, against their own interest: **neither mechanism caught their worst Tax SMA error.** They
+audited the taxsma GOLD when the consumer reads `by_model`.
+>> ⛔ **BOTH MECHANISMS WOULD HAVE CONFIRMED, CORRECTLY, THAT THE TAXSMA ARTIFACT EXISTS AND IS
+   STALE. NEITHER ASKS *"IS THIS THE ARTIFACT THE CONSUMER READS?"*** <<
+**That restates MISS 1 in its operational form and it is stronger than "wrong artifact": the tiers
+answer an EXISTENCE question, and a prior-art search cannot tell you that the thing you found is the
+thing the pipeline actually consumes.** ⛔ **DISCLAIMED. A tier claiming to cover it would be lying,
+and the design says so rather than letting a reader assume otherwise.**
 
 ## 7. WHAT IS OPEN, AND WHAT I AM NOT DECIDING
 
