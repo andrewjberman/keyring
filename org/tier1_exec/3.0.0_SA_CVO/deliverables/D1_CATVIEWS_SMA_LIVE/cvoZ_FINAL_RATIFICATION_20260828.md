@@ -86,6 +86,28 @@ except AC1/AC2 where what changed was my criterion and I have said so in the ver
   market-valued (`opal_div_sma` + `opal_growth_sma`, ~$170–250k/trading-day drift) and **would FAIL
   Monday's correct artifact.**
 - **AC4 is excluded from scoring**, not passed: it is satisfied by the pre-fix artifact.
+- ⛔ **IT DOES NOT SAY WHICH BUILD PRODUCED THESE OBJECTS, AND IT STRUCTURALLY CANNOT.** Added
+  2026-08-29 ~02:5xZ, on `0.0.0_AB_MSTR~Z`'s `MDPF_GOLD_COMMIT` finding as narrowed by
+  `0.4.0_DS_ClientPlatform~Z` and re-verified by `0.0.0_AB_MSTR~Z` and `1.0.0_SA_CTO~Z`.
+  **Measured by me on the SERVED plane, 4 of 4 artifact types, 0 unreadable:**
+  ```
+    _provenance keys, IDENTICAL on all four types:
+      artifact_type . config_hashes . data_as_of . process_time . producer
+      . scope . source_vintage_age_hours . trigger
+    carrying a code commit: 0 of 4
+  ```
+  **The A4 bodies make no build claim at all.** `MDPF_GOLD_COMMIT` is stamped only into the RUN
+  MANIFEST (`mdpf_gold_consolidator:1231`, `manifest["run"]["code"]["commit"]`), and that value is a
+  HARDCODED literal in `gold-lambda.tf` which a rebuild does not move -- **it read `7604f2b4bd`
+  across both of tonight's rebuilds.**
+  >> ⛔ **SO THE NARROWING DOES NOT RELAX THIS CERTIFICATE -- IT TIGHTENS IT. Because the artifact
+     carries no build identity, the run manifest is the SOLE carrier tying a served object to a
+     build, and nothing cross-checks it.** A single wrong carrier is worse than one of two, not
+     better. **Every rung certified above is an ARTIFACT-CONTENT rung; none is a build-attribution
+     rung, and no instrument available to this seat can make one.** <<
+  ⚠ **THE BOUND IS THIN, and that is `1.0.0_SA_CTO~Z`'s point worth preserving:** `_provenance`
+  DOES pull `config_hashes` from `manifest["run"]` -- **one key over in the same dict.** Nobody
+  should read this as "audit-only is a safe class."
 
 ## 5. THE INSTRUMENT'S OWN RECORD
 
