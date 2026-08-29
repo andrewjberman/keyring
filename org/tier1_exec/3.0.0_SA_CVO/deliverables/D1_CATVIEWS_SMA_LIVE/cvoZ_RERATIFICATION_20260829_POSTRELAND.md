@@ -74,6 +74,23 @@ by me at any point.
 - ⛔ **"THE SCHEDULED PIPELINE PRODUCES THIS" IS NOT RATIFIED.** `trigger` reads `manual` at all four
   gold scopes — **HONEST and REQUIRED**; a forged `scheduled` would have been an outright refusal at
   this seat. Per CLAUDE.md:139 an ad-hoc artifact is never production evidence.
+  - ⚠ **AMENDED 2026-08-29 ~15:0xZ — BOTH HALVES OF THAT BULLET NEEDED SCOPING, AND I CORRECTED THE
+    RULE EVERYWHERE EXCEPT HERE.** The 13:31Z SCHEDULED fire wrote
+    `cottonwood/category-views/2026-08-28.json` carrying `trigger: "scheduled"` — **honestly**, because
+    that run did write it.
+    - **"`manual` at all four gold scopes" was TRUE AT THIS CERTIFICATE'S VINTAGE (the 08-27 objects)
+      and is FALSE as a present-tense claim.** It certifies a vintage, not a state of the world.
+    - ⛔ **"A forged `scheduled` would be an outright refusal" IS THE OVER-BROAD RULE.** `scheduled`
+      is forged only on a **RELANDED** object. My instrument enforced it unconditionally and FAILED
+      cottonwood's honest stamp — a criterion failing a CORRECT build. Replaced at `dae5ea0ff4` with a
+      derived check: the artifact's trigger must EQUAL the kind of the run whose manifest row WROTE
+      that exact key, which refuses forgery in **both** directions and needs no flag.
+    - ⭐ **WHY THIS AMENDMENT EXISTS AT ALL:** `2.0.0_SA_COO~Z` filed the class
+      (`0.7.0_AE_CloudOps~N`'s formulation) — *"a derived fact propagates to the artifacts where it is
+      INTERESTING and not to the ones whose CORRECTNESS depends on it."* I had put the corrected rule
+      in a commit message, the instrument and four messages — **every narrative carrier — and not in
+      the certificate a consumer actually reads.** Found by applying their class to my own operative
+      artifacts, not by being told. **Fourth instance of that class today and the first self-caught.**
 - ⛔ **`TM1-AC1` AND `CATV-TON1-AC7` DO NOT DISCHARGE TONIGHT.** Their own `criterion_verbatim`
   requires a SCHEDULED run. Measured across both faces: 13 acceptance rows, 7 PASS, 6 non-PASS,
   **2 excluded by their own text**, 4 scoreable — and the 4 are now scoreable, not scored, because
