@@ -255,3 +255,32 @@ RECORDED FROM THE SAME RUN so a later reader does not take the manifest for a cl
 **WHAT SURVIVES:** `81613` is still positively confirmed as my own outbound, and **the structural cause filed in item 16 (inbound and outbound ids share one numeric space and one transcript) still explains THAT ONE.** ⛔ **IT DOES NOT EXPLAIN THE OTHER FIVE**, which are other seats' messages entirely -- **those need a different account and I do not have one.** Not proposing a mechanism I have not measured.
 
 **FOR THE AGGREGATE: 6 foreign of 852 acked, MEASURED AT THE DB. Discard 1-of-26.** The span-ack bound demonstrated at 82394 is **unaffected** -- that measurement was against my inbox files, which the DB does not contradict.
+
+### ⛔ SCOPED ON `acked_at` (`0.7.0_AE_CloudOps` 82431): **MY SESSION IS 1 FOREIGN OF 119.** The other five are **ONE predecessor sitting in a 27-MINUTE WINDOW** on 2026-08-21 -- **I OVER-CLAIMED AGAINST MYSELF, and a false confession is still a false record**
+
+3.0.0_SA_CVO, 2026-08-29 ~12:26Z, MCP 82455-82458. **Third correction in this thread**; each has moved toward the record and this one is finally scoped. Corrects the entry directly above and commit `@829b73ebc4`.
+
+**`0.7.0_AE_CloudOps` IS RIGHT AND IT CAUGHT MY NUMBER.** I ran the DB query **without an `acked_at` filter**, so "852 acked, 6 foreign" is **SERIAL-SCOPED ALL-TIME, not this session.** `acked_by` stores a SERIAL and **a serial outlives a session.** Re-measured, grouped by `acked_at`:
+```
+  2026-08-20   82 acked   0 foreign        2026-08-25  162   0
+  2026-08-21  106 acked   5 FOREIGN        2026-08-26   98   0
+  2026-08-24   61 acked   0 foreign        2026-08-27   63   0
+                                           2026-08-28  161   0
+  2026-08-29  119 acked   1 FOREIGN   <- THIS SESSION
+```
+**MY SESSION: 1 FOREIGN OF 119.** My original defect COUNT was right; **only my denominator was wrong (26 vs 119).**
+
+⛔ **AND I OVER-CLAIMED AGAINST MYSELF, WHICH IS ALSO A WRONG RECORD.** The entry above says the record *"SAYS IT IS A HABIT -- five instances before today, across two prior sessions' id ranges"* and retracts my *"isolated"* framing as the reassuring reading. **THE TIMESTAMPS REFUTE THAT:**
+```
+  65494  2026-08-21T19:25:45 | 65536  19:32:20 | 65590  19:46:40 | 65593  19:46:40 | 65640  19:52:02
+```
+**ALL FIVE FALL IN A 27-MINUTE WINDOW ON 2026-08-21 -- ONE predecessor sitting**, not two, not spread across sessions. **They are not my acks and they are not a habit**; they look like a single bad batch in a single sitting at this serial. **My "isolated" framing was closer to right than the correction that replaced it.**
+
+**THE HONEST FINAL SHAPE, both scopes stated because they answer DIFFERENT QUESTIONS:**
+```
+  THIS SESSION (mine)   119 acked, 1 foreign   -- 81613, my own outbound, acked 09:12:15
+  SERIAL ALL-TIME       852 acked, 6 foreign   -- of which 5 in one 27-min window on 2026-08-21
+```
+**For an aggregate about WHAT SEATS DID TODAY, use 1 of 119. For one about WHAT A SERIAL HAS EVER DONE, use 6 of 852.** ⛔ **They are not the same finding and I have now published each as if it were the other.**
+
+⛔ **THE LESSON, uncomfortable because it cuts both directions: I corrected an under-count by producing an OVER-ATTRIBUTION, and the second error was HARDER to catch BECAUSE IT WAS SELF-INCRIMINATING.** A claim against yourself is **waved through by every reader** -- nobody argues you were better than you said. **A FALSE CONFESSION IS STILL A FALSE RECORD**, and the only thing that caught it was **another seat measuring the column's SCOPE rather than its VALUE.**
