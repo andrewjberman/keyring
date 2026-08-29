@@ -480,7 +480,28 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     trig = doc.get("_provenance", {}).get("trigger")
     if plane != "gold":
         return client_aum, sma_aum
-    if post_reland:
+    gold_key = GOLD.format(scope=scope, as_of=as_of)
+    if gold_key in WRITER_KINDS:
+        # DERIVED, NOT DECLARED. The `--post-reland` form of this row asserted the
+        # trigger must be manual/s3-marker, because a `scheduled` claim on a RELANDED
+        # object is forged. On 2026-08-29 the 13:31Z SCHEDULED fire wrote
+        # cottonwood/category-views/2026-08-28.json, and that row FAILED an HONEST
+        # `scheduled` stamp -- a criterion failing a CORRECT build, which is the shape
+        # this seat refused in three other lanes on the same night.
+        # ROOT IS THE SAME AS THE VINTAGE BUG AT c9e94d0e3e: `--post-reland` is a fact
+        # about ONE VINTAGE (the relanded 08-27 objects) and I applied it as a fact
+        # about the RUN, across every scope and every as_of. A flag cannot know which
+        # object it is looking at.
+        # SO ASK THE PLANE THAT KNOWS: the artifact's trigger must EQUAL the kind of the
+        # run whose manifest row WROTE this exact key. Forgery-proof in BOTH directions
+        # -- it refuses `scheduled` on a manually-written object AND `manual` on a
+        # scheduled one -- and the expectation is MEASURED rather than passed in.
+        want = WRITER_KINDS[gold_key]
+        out.append(("%s trigger MATCHES its writing run (manifest-derived)" % p,
+                    trig == want,
+                    "artifact trigger=%r vs the run that WROTE %s: kind=%r. A mismatch is "
+                    "a forged stamp in whichever direction it points" % (trig, gold_key, want)))
+    elif post_reland:
         # ⛔ CORRECTED MID-RATIFICATION, and it was a GRAIN error of mine. I asserted
         # `"adhoc" in trigger` against the ARTIFACT. Measured at source, TWO OBJECTS CARRY
         # TWO SHAPES (0.7.0_AE_CloudOps~Z, msg 14329, confirmed independently here):
@@ -503,6 +524,11 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
 
 
 MANIFEST_PREFIX = "portal/gold/mdpf/_manifests"
+
+# {gold key -> trigger kind of the run that WROTE it}, read from the manifest plane.
+# Empty unless --score-fire was passed. Primed BEFORE the scope loop by
+# prime_writer_kinds(), because check_scope consumes it and check_run_fire runs later.
+WRITER_KINDS = {}
 CV_TYPE = "category-views"
 
 
@@ -525,6 +551,45 @@ def list_manifest_keys(as_of):
     if not body or body == "None":
         return [], None
     return sorted(k for k in body.split() if k.endswith(".json")), None
+
+
+def prime_writer_kinds(as_of, since):
+    """Populate WRITER_KINDS from the manifest plane BEFORE any scope is scored.
+
+    Ordering is the whole point: check_scope consumes the map and check_run_fire
+    runs after the scope loop, so priming inside check_run_fire would leave every
+    trigger row unscored while looking like it worked.
+    """
+    # SCAN EVERY MANIFEST FOLDER, NOT _manifests/{as_of}/. THIS WAS WRONG ON THE FIRST
+    # BUILD AND IT IS THE SAME CATEGORY ERROR A THIRD TIME IN ONE HOUR: the manifest
+    # FOLDER is keyed by the RUN's data_as_of, while the keys INSIDE it can carry ANY
+    # vintage. The 13:31Z fire sits under _manifests/2026-08-27/ and WRITES
+    # cottonwood/category-views/2026-08-28.json. Priming from the as_of folder therefore
+    # found nothing for the very object the scheduled run had just written, and the row
+    # silently fell back to the flag branch -- looking like it worked.
+    # THE RUN'S VINTAGE AND THE OBJECT'S VINTAGE ARE DIFFERENT FACTS. Filter on the run
+    # TIMESTAMP, which is what `since` actually means, and let the keys say their own.
+    r = subprocess.run(
+        ["aws", "s3api", "list-objects-v2",
+         "--bucket", GOLD_BUCKET, "--prefix", MANIFEST_PREFIX + "/",
+         "--query", "Contents[].Key", "--output", "text"],
+        capture_output=True, text=True)
+    if r.returncode != 0:
+        return
+    body = (r.stdout or "").strip()
+    if not body or body == "None":
+        return
+    keys = sorted(k for k in body.split() if k.endswith(".json"))
+    fresh = [k for k in keys if os.path.basename(k)[:16] >= since] if since else keys
+    for k in sorted(fresh):
+        d, _e = fetch(GOLD_BUCKET, k)
+        if d is None:
+            continue
+        t = (d.get("run", {}) or {}).get("trigger")
+        kd = t.get("kind") if isinstance(t, dict) else t
+        for r in (d.get("artifacts") or d.get("rows") or d.get("writes") or []):
+            if r.get("status") == "written" and r.get("key"):
+                WRITER_KINDS[r["key"]] = kd
 
 
 def check_run_fire(as_of, since, out):
@@ -649,6 +714,8 @@ def main():
 
     rows = []
     unreadable = []
+    if a.score_fire is not None:
+        prime_writer_kinds(a.as_of, a.score_fire)
     for plane, bucket, tmpl in (("gold", GOLD_BUCKET, GOLD),
                                 ("platinum", PLAT_BUCKET, PLAT)):
         plane_docs = {}
