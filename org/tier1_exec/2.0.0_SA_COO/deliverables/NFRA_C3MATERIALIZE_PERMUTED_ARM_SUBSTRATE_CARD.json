@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 3.1,
   "carded_by": "2.0.0_SA_COO~X",
   "subject": {
     "id": "rederive_l3w2.py :: controls.C2_view1_with_permuted_view2",
@@ -16,16 +16,29 @@
       "how": "symmetric entity-index permutation of view 2 -- perm = rng.permutation(n); W2[np.ix_(perm, perm)] -- then SNF([W1, W2p], K=20, T=20), scored by aucB on frame B. Destroys view 2's entity ALIGNMENT while preserving its marginal structure, which is precisely what isolates FIRM-BLINDNESS from content.",
       "determinism": "deterministic",
       "composes": [
-        "SNF(K=20,T=20)",
-        "aucB over frame B",
-        "the four content-pinned inputs"
+        {
+          "id": "SNF",
+          "note": "spectral network fusion; this arm invokes it at K=20, T=20"
+        },
+        {
+          "id": "aucB",
+          "note": "the frame-B AUC scorer, 1,820 both-measured entities"
+        },
+        {
+          "id": "numpy.random.default_rng",
+          "note": "seeded 20260829 and SHARED with the NPERM=5 split-half battery -- that sharing IS blocking defect 2, recorded here as lineage rather than only as prose"
+        }
       ],
       "invents": [
-        "the permutation null for a fused AUC"
+        {
+          "id": "permutation_null_for_a_fused_AUC",
+          "note": "AUC(F(W1, perm(V))) as a null for a FUSED score; n=1 as built, where clause 1 requires a distribution at N >= 20"
+        }
       ],
       "basis": "measured",
       "evidence": "rederive_l3w2.py:443-450 @c11d1ff734 (block read at source)",
-      "owner": "1.0.0_SA_CTO~Y"
+      "owner": "1.0.0_SA_CTO~Y",
+      "materializer_standing": "historical_in_use"
     },
     "cadence": {
       "declared_rhythm": "1i (i) clause 1: a BATTERY -- one null per artifact, N >= 20 for a tail, NEVER ONE DRAW",
@@ -50,10 +63,29 @@
     "location": {
       "home": "org/tier1_exec/1.0.0_SA_CTO~Y/deliverables/D11_L3W2_INDEPENDENT_REDERIVATION/ (rederive_l3w2.py, rederivation_result.json, README.md)",
       "projection_of": [
-        ".tmp-cro-b4-eb009-audit/W_STRUCTURE_FACTORIZED.json (UNTRACKED)",
-        "infra/aws/globgrph/stitch_graph.json (gitignored, content-pinned)"
+        {
+          "id": "s3://opal-313476888478-globgrph/c3materialize-b4/out/eb009c01-c27e-46b3-af85-eb22dbfba01a-b4231e6374ce/W_STRUCTURE_FACTORIZED.json",
+          "note": "sha256 e91d6991...; THE CITED INPUT per the 1i(iii) owner disposition -- the served immutable run-addressed artifact. The local .tmp- copy is a CACHE, never the input"
+        },
+        {
+          "id": "infra/aws/globgrph/stitch_graph.json",
+          "note": "gitignored; content-pinned sha256 7ac11d015e, not commit-pinned"
+        },
+        {
+          "id": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_L3W2_FUSION/firm_cohort_shared.json",
+          "note": "sha256 ad361014a7"
+        },
+        {
+          "id": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json",
+          "note": "sha256 prefix 19a7a0f8"
+        }
       ],
-      "co_resident_stores": null,
+      "co_resident_stores": [
+        {
+          "id": ".tmp-cro-b4-eb009-audit/",
+          "note": "the UNTRACKED audit directory the local input copy lives in; co-resident, device-local, and not reachable by any repo operation"
+        }
+      ],
       "basis": "measured",
       "evidence": "git ls-files + rederive_l3w2.py:39-46 @c11d1ff734",
       "owner": "1.0.0_SA_CTO~Y"
@@ -79,7 +111,8 @@
       "declared_mapping": "index-based, so stability is INHERITED FROM THE CONTENT PIN rather than intrinsic -- the ordering is fixed only because the inputs are sha256-pinned. THE RNG IS NOT INDEPENDENT: one stream, default_rng(20260829), is consumed by the NPERM=5 battery BEFORE this draw, so C2's permutation is a function of how many draws ran above it. Change NPERM and this value moves, with nothing in the artifact recording the dependence.",
       "basis": "measured",
       "evidence": "rederive_l3w2.py:343 seed; :375 battery consumes; :444 C2 draw @c11d1ff734",
-      "owner": "1.0.0_SA_CTO~Y"
+      "owner": "1.0.0_SA_CTO~Y",
+      "key_expression": "the zero-based row index i of an entity in the `measured` array built at rederive_l3w2.py:80 (n = len(measured)) from the content-pinned inputs; under the arm, that entity's key becomes perm[i] where perm = rng.permutation(n), applied SYMMETRICALLY as W2[np.ix_(perm, perm)]. COMPUTABLE from the pinned inputs plus the seed, which is why this row reads measured: the ordering is fixed by the content pin, not intrinsic to the entities."
     },
     "failure_mode": {
       "returns_on_failure": "a plausible scalar AUC. There is no failure signal: an unlucky draw and a genuine firm-blind view return the same shape and the same magnitude range.",
