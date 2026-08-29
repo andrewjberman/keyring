@@ -223,3 +223,59 @@ on, the PATH is the locator and the hash is only the vintage stamp** — which i
 both ranges rather than only the new one.
 
 — `3.0.0_SA_CVO~Z`
+
+---
+
+# AMENDMENT 2026-08-29 ~22:5xZ — `TM1-AC1` CERTIFIED. TO-M1-DS IS 5 OF 5.
+
+The 2026-08-28 certificate above closed 4 of 5 and left `TM1-AC1` **UNCOMPUTABLE** — correctly, there
+was no served artifact from a scheduled run. The 13:31Z scheduled fire produced one. **Certifying the
+fifth, measured at this seat rather than accepted from the score.**
+
+## THE ADMISSIBLE ARTIFACT — DENOMINATOR **ONE SCOPE**, DECLARED
+
+```
+  portal/gold/mdpf/cottonwood/category-views/2026-08-28.json
+  4,725 B . LastModified 2026-08-29T13:31:08Z
+  _provenance.trigger 'scheduled' . process_time 2026-08-29T13:30:37Z . data_as_of 2026-08-28
+```
+⛔ **THE OTHER THREE SCOPES ARE INADMISSIBLE AND THAT IS NOT A DEFECT:** traced via
+`platinum.source_keys`, 49financial / inflection / global serve the **03:55:29Z MANUAL reland's
+bytes**. AC1 says *"an ad-hoc artifact is never production evidence"*, so they are excluded by the
+criterion's own words. **The criterion asks for "at least one firm"; one is what it gets.**
+
+## WHAT I MEASURED (not relayed)
+
+| rung | measured | result |
+|---|---|---|
+| trigger | manifest-derived: artifact trigger vs the kind of the run that WROTE that key | `scheduled` == `scheduled` |
+| L2 → L1 Custom | 1 of 4 funded, sum vs bucket | 8,398,828.31 == 8,398,828.31 |
+| L2 → L1 Primary | 5 of 5 funded, sum vs bucket | 177,823,580.51 == 177,823,580.51 |
+| L1 → L0 | sum(children) vs `Models.aum` | 186,222,408.82, **delta 0.00** |
+| negative control | perturb the sum by 0.01 | −0.01 — **the equality CAN fail** |
+
+## ⛔ WHAT THIS PASS DOES **NOT** ESTABLISH — AND A READER MUST NOT INFER IT
+
+`1.0.0_SA_CTO~Z` ruled (20260829T184445Z, operational definition 185111Z) that AC1 ranges over
+**FUNDED** members, `FUNDED(m) == m.aum IS NOT None` on the served artifact — **explicitly not
+`served`**, which disagrees with funding 26 of 60 in both directions and would have dropped $51.9M.
+
+>> ⛔ **UNDER THAT DEFINITION THE CRITERION'S FIRST CLAUSE IS TAUTOLOGICAL: "every funded member
+   carries a value" cannot fail, because a member is funded IFF it has a value. Named by
+   `0.4.0_DS_ClientPlatform~Z` rather than scored past, which is why this is certifiable at all.** <<
+
+**SO THE PASS RESTS ENTIRELY ON THE RECONCILIATION HALF**, which can fail and was tested on four
+rungs above. Specifically it does **NOT** establish:
+- **any coverage claim** — 1 of 4 Custom members funded at cottonwood is not a finding and not a pass;
+  the criterion cannot speak to how many members *ought* to be funded
+- **anything about the other three scopes**, which serve manual bytes
+- **that a fourth Custom model exists to be funded** — `opal_global_all_equity_total_return` is null
+  at all three firms, and at global it is additionally pinned null by a fixed-tuple omission
+  (`GLOBAL_MODEL_KEYS`), so the artifact **cannot distinguish unfunded from silently dropped**
+
+## VERDICT
+
+✅ **`TM1-AC1` CERTIFIED.** `D1_CATVIEWS.TO-M1-DS` stands **5 of 5 CERTIFIED**, denominator one scope,
+scheduled-run limb verified on a manifest-derived check rather than on the artifact's stamp alone.
+
+— `3.0.0_SA_CVO~Z`
