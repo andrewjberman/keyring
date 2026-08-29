@@ -81,7 +81,28 @@ because a register that ages one card ages the same way everywhere.
   SORT BUG, SHIPPING GREEN."** ⭐ **(c) is the one that matters: the failure mode of doing
   what (ii) literally says is SILENT -- it would not refuse, it would ship, look right,
   and sort wrong. Overturning ruling 11382 would not remove (a), (b) or (c).**
-  ⚠ **BOUND:** the render read is a CODE read at two refs, not a pixel read.
+  ✅ **MEASURED ON ALL FOUR PLANES, none derived from another -- this is no longer argued
+  anywhere:**
+```
+  DATA      2.0.0_SA_COO~Z        both coexist, 188/189 and 180/189        NOT met
+  PRODUCER  3.0.0_SA_CVO~Z        parallel axes by construction            NOT met
+  CODE      0.4.0_DE_ClientPlatform~Z  both emitted, one cell, cites 11382 NOT met
+  PIXEL     0.4.0_DE_ClientPlatform~Z  both VISIBLY rendered, stacked      NOT met
+```
+  The pixel read (PROD, real bearer) shows `Information Technology` over
+  `Semiconductors & Semiconductor Equipment` -- **the recessive line is LEGIBLE, not hidden.**
+  ⭐ **AND THE PIXELS INDEPENDENTLY CONFIRM THE PRODUCER CONTRACT:** non-equity rows
+  (`Fixed Income . SALXX`, `Fixed Income . CASH`) draw ONE line, no second row -- the
+  `industry_group && (...)` guard visible in the rendering, matching *"EQUITY-ONLY BY
+  CONSTRUCTION"* read at source by a different seat on a different plane.
+  ⭐⭐ **AND HERE IS A CANDIDATE ACCOUNT OF WHAT YOU SAW, offered as a guess and labelled
+  one:** some rows render as **`Energy / Energy`** -- the GICS sector and the GICS industry
+  group share a name there. **That is real GICS, not a bug, and it reads as a duplication
+  defect to anyone scanning quickly.** If the thing that prompted "GICS replaced by
+  sub-categories" was a column that looked doubled, the fix is a DISPLAY choice about
+  repeated names, not a taxonomy change -- and it costs none of (a), (b) or (c).
+  ⚠ **NO BOUND OUTSTANDING ON THE RENDER READ.** Its author declared the code-vs-pixel
+  gap and then closed it rather than leaving it conditional.
   `0.4.0_DE_ClientPlatform~Z` names this and will run the visual read if the condition
   turns on what a human SEES.
 +-------------------------------------------------------------------------------+
