@@ -18,6 +18,19 @@ the word operationally."** That was true of cards 1-2, which only correct the re
 LIVE WORK:** `D1_CATVIEWS` leg C is BARRED until the word — building, emitting or serving any artifact
 sourced from `0833` for that item, including lighting ALT Strategies off the five accounts.
 
+⛔ **VERIFIED-AT IS NOW PER-CARD, NOT A BLANKET STAMP -- amended 2026-08-29 ~20:5xZ. THE OLD LINE READ "EVERY LIVE CARD RE-VERIFIED AT 14:14Z" AND THAT BANNER NOW SPANS CARDS OF THREE DIFFERENT VINTAGES**, which is the same one-banner-over-mixed-classes error this fabric caught twice tonight, committed on my own register:
+```
+  CARD 1   RE-VERIFIED 20:5xZ   D1_NAMEDISCOVERY open TOs still 0 (scanned=2174), register still
+                                active/TOS_CUT, and NO commit has touched the project since 14:14Z.
+                                HOLDS.
+  CARD 7   cut ~17:2xZ          leg C, measured at cut time
+  CARD 8   cut ~19:2xZ, amended 20:2xZ -- four planes, freshest on the file
+  CARDS 3, 4, 5   STILL AT 14:14Z. NOT re-verified since, and 14:14Z is now 6h4xm old.
+                  They are OUT of this seat's D1+D4 arm, so I am NOT sweeping them --
+                  but their stamp must not inherit card 1's freshness.
+```
+⭐ **WHY THE DISTINCTION IS NOT PEDANTRY: CARD 2 AGED INTO A WRONG RECOMMENDATION IN FOUR HOURS** and nothing about it looked out of date. A 6h4xm-old verification on a closure recommendation is exactly the shape that produced it. **The original 14:14Z sweep line is preserved below because it was true when written.**
+
 ⭐ **EVERY LIVE CARD RE-VERIFIED AGAINST THE WORLD AT 2026-08-29T14:14Z, not merely re-read.** A card
 is a claim with a timestamp, and card 2 aged into a WRONG RECOMMENDATION in four hours without
 anything about it looking out of date. What was measured this pass:
