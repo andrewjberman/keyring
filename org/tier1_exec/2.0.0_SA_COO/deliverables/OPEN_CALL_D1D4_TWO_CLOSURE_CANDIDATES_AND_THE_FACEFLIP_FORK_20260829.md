@@ -1,4 +1,4 @@
-# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (5 calls, 2026-08-29 ~07:4xZ; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
+# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (5 cards, ONE WITHDRAWN -- **4 LIVE**, 2026-08-29 ~07:4xZ; ⛔ **CARD 2 IS WITHDRAWN AS OF ~14:1xZ AND MUST NOT BE ANSWERED** -- its subject gained two open TOs and an in-flight deploy after it was written, by the issuer's own hand; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
 
 **Why this file exists and is not just a message:** the finding below was routed to
 `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` at 20260829T072xZ and lived ONLY in that message. Measured
@@ -15,6 +15,23 @@ recommendation is his to accept or refuse rather than mine to act on.
 
 BLOCKING (nothing waits on the word operationally — but the register is wrong until it comes)
 
+⭐ **EVERY LIVE CARD RE-VERIFIED AGAINST THE WORLD AT 2026-08-29T14:14Z, not merely re-read.** A card
+is a claim with a timestamp, and card 2 aged into a WRONG RECOMMENDATION in four hours without
+anything about it looking out of date. What was measured this pass:
+
+```
+  CARD 1  D1_NAMEDISCOVERY open TOs = 0                                    HOLDS
+  CARD 3  FACE_FLIP_CHECK_SPEC_20260826.md still present, still unbuilt    HOLDS
+  CARD 4  exactly 5 untracked alarm/monitor .tf, enumerated from
+          `git status --porcelain`, all five still ?? and present          HOLDS
+  CARD 5  advi-49f P14 ledger reads "OPEN -- L1/L2/L3 PROVEN; L4 alone
+          remains", so the exercise it asks about is still the open leg    HOLDS
+  CARD 2  ETFS_POSITIONING gained 2 open TOs + an in-flight deploy         WITHDRAWN
+```
+⛔ **THE DISCIPLINE THAT FOUND IT: check the SET when one member fails, not just the member.** Card 2
+was caught by a routine board read, and the other four were then verified rather than assumed —
+because a register that ages one card ages the same way everywhere.
+
 +-- CALL 1 of 5 ---------------------------------------------------------------+
   **`D1_NAMEDISCOVERY` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 3 TO faces read `COMPLETE — ROUND 1 ACCEPTED + CERTIFIED`; open TOs ZERO
@@ -29,14 +46,29 @@ BLOCKING (nothing waits on the word operationally — but the register is wrong 
   acts. Here neither is. **The close needs one smoke and one word, or (b) and I carry it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 2 of 5 ---------------------------------------------------------------+
-  **`ETFS_POSITIONING` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
-  All 9 TO faces terminal (complete / closed / superseded); open TOs ZERO, same control.
-  Its round 2 was registered as its OWN project, `ETFS_INGEST` — so no round remains here.
++-- CALL 2 of 5 -- ⛔ WITHDRAWN 2026-08-29 ~14:1xZ. DO NOT ANSWER IT. ------------+
+  ⛔ **THIS CARD SAID `ETFS_POSITIONING` IS WORK-COMPLETE AND RECOMMENDED (a) CLOSE. THAT IS NOW
+  FALSE, AND THE ISSUER IS THE ONE WHO MADE IT FALSE.** Since it was written this morning,
+  `2.0.0_SA_COO~Z` cut **TWO** task orders into that very project:
   -------------------------------------------------------------------------------
-  **REC —** **(a) CLOSE**, and this one is cleaner than call 1: the successor project is the
-  explicit carrier of everything that follows, so closing this code loses nothing and strands
-  nothing. Same bar, same reason I did not do it myself.
+  ```
+    ETFS_POSITIONING.TO-13-DS   CODE-COMPLETE @353c4b5a00, 4 ACs UNCOMPUTABLE
+                                pending a deploy DS cannot perform
+    ETFS_POSITIONING.TO-14-AE   IN FLIGHT at 0.7.0_AE_CloudOps~N -- deploy ledger
+                                `etfs-positioning-to14-identifier-repair-apply`
+                                OPENED, legs L1-L4 ALL OUTSTANDING
+  ```
+  ⛔ **AND THE PROJECT CARRIES A LIVE SERVED DEFECT**: `ABT` (Abbott, 2.36% of DIVZ) shows **0 of 8
+  return windows** in the served gold, reproduced across two consecutive scheduled fires. **Answering
+  (a) would close a project with an unrepaired served defect and a deploy in flight.**
+  ⭐ **HOW IT WENT STALE IS THE PART WORTH KEEPING: nothing changed underneath this card — I CHANGED
+  IT, by cutting work into the project the card asks to close, and never came back to the card.** A
+  card is a claim with a timestamp; mine aged four hours while its subject moved under my own hand.
+  **A STALE CARD AT THE SOVEREIGN IS WORSE THAN NO CARD, because it arrives carrying a
+  recommendation and nothing about it looks out of date.**
+  ✅ **NOTHING IS ASKED HERE. When the deploy lands and the ACs score, a NEW card will state the
+  then-true position** — this one is not repaired in place, because a card whose facts were replaced
+  is a different card and should not inherit this one's number or its REC.
 +-------------------------------------------------------------------------------+
 
 CARRIED (answer whenever — nothing is blocked)
