@@ -64,6 +64,10 @@ NOT DONE -- 0 of 2 projects `status: complete` (denominator 2 = members 2 + clai
 
 What worked: reading the restamp with a leaf-level diff instead of the emitter's "byte-identical" sentence -- it confirmed the sentence AND exposed the retained untyped draw the sentence made invisible. What failed: the device shim (WSL) -- an instrument failure printed as prose that a naive reader could mistake for a device name. Gap: `directives-check --json` carries no `as_of`.
 
+## CORRECTION (05:4xZ, same tick, after 0.0.0_AB_MSTR 80941)
+
+The Step 2 line above ("QUEUED 'no live session'") and my 80923/80924 carried an inference past the instrument: I wrote that 3.0.0_SA_CVO~X's session ended between 05:06Z and 05:09Z. MSTR's per-arm oracle (`codex-seat-status.ps1`) measured the seat RED on exactly two arms -- the heartbeat sidecar and liveness age -- with TUI, bridge, detector, app-server, thread and an unread-inbox count of 0 all alive; the heartbeat was restarted at 05:36:56Z (pid 25296), GREEN rc=0. **The delivery map measures REGISTRATION; on a codex seat the registering and reading processes differ, so QUEUED there means NOT REGISTERED, not NOT READING.** The seat read every frame in the window. Nothing in D11 was blocked on a dead seat; the "Gates at other seats" line naming a CVO~X recovery is struck by this section. Linked correction sent as one frame to the five seats that received the original (commit of this section follows the send).
+
 ## State
 
 state: ARMED (cadence 60m, cron ba2e4664; next tick 50 at 06:11Z; floor log by tick 55). Push state: LOCAL @c428583d86; origin/CLOUD @ebd767e803 by 0.7.0_AE_CloudOps~X's 05:21:56Z ls-remote (no window-32 frame received at this seat); this seat's commits riding the next window: 943c2adf98 f80b6580ad 61891652ef 4c1886a50f 28b1cab509 c428583d86 + this log. Integrator-only push.
