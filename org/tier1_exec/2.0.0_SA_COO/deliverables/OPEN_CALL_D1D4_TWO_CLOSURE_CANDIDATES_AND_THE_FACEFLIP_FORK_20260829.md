@@ -1,4 +1,4 @@
-# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (4 calls, 2026-08-29 ~07:4xZ; card 4 added ~08:1xZ)
+# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (5 calls, 2026-08-29 ~07:4xZ; cards 4-5 added ~08:1x-08:2xZ)
 
 **Why this file exists and is not just a message:** the finding below was routed to
 `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` at 20260829T072xZ and lived ONLY in that message. Measured
@@ -15,7 +15,7 @@ recommendation is his to accept or refuse rather than mine to act on.
 
 BLOCKING (nothing waits on the word operationally — but the register is wrong until it comes)
 
-+-- CALL 1 of 4 ---------------------------------------------------------------+
++-- CALL 1 of 5 ---------------------------------------------------------------+
   **`D1_NAMEDISCOVERY` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 3 TO faces read `COMPLETE — ROUND 1 ACCEPTED + CERTIFIED`; open TOs ZERO
   (`total=0, scanned=2172`, positive-controlled against `D1_CATVIEWS` -> `total=3`).
@@ -29,7 +29,7 @@ BLOCKING (nothing waits on the word operationally — but the register is wrong 
   acts. Here neither is. **The close needs one smoke and one word, or (b) and I carry it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 2 of 4 ---------------------------------------------------------------+
++-- CALL 2 of 5 ---------------------------------------------------------------+
   **`ETFS_POSITIONING` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 9 TO faces terminal (complete / closed / superseded); open TOs ZERO, same control.
   Its round 2 was registered as its OWN project, `ETFS_INGEST` — so no round remains here.
@@ -41,7 +41,7 @@ BLOCKING (nothing waits on the word operationally — but the register is wrong 
 
 CARRIED (answer whenever — nothing is blocked)
 
-+-- CALL 3 of 4 ---------------------------------------------------------------+
++-- CALL 3 of 5 ---------------------------------------------------------------+
   **The face-flip check: build it now, or does D1+D4 keep priority? (a) build / (b) hold.**
   YOU authorized it 2026-08-26 ~21:07Z (Card B) and routed it verbatim: *"the face-flip check
   enters Rule 27 as a build item — COO routes/seats it under the standing gates."* Spec exists
@@ -59,7 +59,7 @@ CARRIED (answer whenever — nothing is blocked)
   STATUS that lies. **The project-level analogue is a gap in the spec, not a bug in it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 4 of 4 ---------------------------------------------------------------+
++-- CALL 4 of 5 ---------------------------------------------------------------+
   **Five UNTRACKED alarm/monitor `.tf` files sit in the estate's terraform trees, 1,008
   lines, declaring 7 CloudWatch metric alarms. Commit, delete, or apply? (a) delete /
   (b) commit as held drafts / (c) something else.**
@@ -77,6 +77,25 @@ CARRIED (answer whenever — nothing is blocked)
   `safe-apply` from live.** ⛔ **`0.7.0_AE_CloudOps~Z` refused to commit OR delete them and was
   right — either way is a decision, not a tidy.** **Whichever you pick closes it; no answer leaves
   1,008 unowned lines in the terraform trees.**
++-------------------------------------------------------------------------------+
+
+
++-- CALL 5 of 5 ---------------------------------------------------------------+
+  **`ADVI_49F` P14-VEHICLE V14-1's last open leg is an exercise whose FAILURE MODE STOPS AN
+  EC2 HOST. Authorize it? (a) run it / (b) hold.** This seat is `ADVI_49F`'s `coo_lane`, so
+  the word would normally be mine — **but CLAUDE.md reserves stopping EC2 to HUMAN
+  confirmation, and that reservation binds me too.**
+  -------------------------------------------------------------------------------
+  **REC —** **(a) RUN IT, at `0.7.0_AE_CloudOps~Z`'s convenience.** The leg (`L4`) requires
+  *">=2 consecutive direct ssm send-command with StartedByDispatcher OMITTED; host still
+  running read from INSTANCE STATE, never send rc"* — it exists to prove a halt-trap does
+  **NOT** exist. ⭐ **The EXPECTED outcome is the host keeps running; the host stopping is the
+  FAILURE result, and that is precisely what makes it a reserved act.** ✅ **Everything else on
+  that deploy is proven: L1/L2 verify CLOSED, L3 git CLOSED on measured evidence
+  (`a8907bf114`, on origin/CLOUD). Its sibling entry closed fully at 08:20Z, taking the
+  ledger from 2 BYPASS to 1.** ⛔ **The remaining alarm is CORRECT and should keep firing
+  until this word — `0.7.0_AE_CloudOps~Z` declined to mark it closed and was right.**
+  ⚠ **If (b), it stays open and alarming indefinitely; there is no third state that is honest.**
 +-------------------------------------------------------------------------------+
 
 ---
@@ -107,5 +126,5 @@ is re-opened or a new one is cut, and neither is contradicted by closing today.
 ---
 
 **raised:** `2.0.0_SA_COO~Z` · **2026-08-29 ~07:4xZ** · **status: calls 1–2 at your next terminal;
-cards 3 and 4 whenever — card 4 is not mine to close either way.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 (`ETFS_INGEST`), all on the
+cards 3–5 whenever — cards 4 and 5 are not mine to close either way.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 (`ETFS_INGEST`), all on the
 13:30Z / 13:00Z scheduled fires — verified ENABLED on both EventBridge planes this session.
