@@ -63,6 +63,14 @@ ZERO_SCOPES = ("cottonwood", "inflection")
 ALL_SCOPES = SMA_SCOPES + ZERO_SCOPES
 CENT = 0.01
 
+# The scope(s) whose Client L1 split is SUPPLIED BY THE CALLER rather than
+# computed from a declared rule -- i.e. what item 1 (CATV2-a-1) actually wires.
+# DERIVED AT SOURCE, NOT CHOSEN: mdpf_gold_consolidator :1417-1421 supplies only
+# where CLIENT_L1_RULE[scope] == CLIENT_L1_DERIVED. Measured in the registry:
+# CLIENT_L1_RULE has 3 keys (49financial, inflection, cottonwood) and
+# CLIENT_L1_HELD has exactly 1 (cottonwood).
+SUPPLY_SCOPES = ("cottonwood",)
+
 
 def fetch(bucket, key):
     """Read an S3 object to a real temp file. Returns (doc, err) -- never raises.
@@ -122,6 +130,92 @@ def check_prose(doc, scope, plane, out):
                     if bad else "no contradiction found"))
 
 
+def check_client_l1(doc, scope, plane, out, post_reland):
+    """The Client L1 fee split (D1_CATVIEWS.CATV2-a-1, item 1). DATE-INDEPENDENT.
+
+    ⛔ KEYED ON `view_path`, NEVER ON THE CHILD'S DISPLAY LABEL. The label is
+    `display_label(node_path)` (mdpf_category_registry.py:1088) and the label
+    "Client - Opal Supervised" is under ACTIVE DISCUSSION to change, because
+    0.4.0_DS_ClientPlatform~Z measured that it invites the reading a CVO already
+    made twice tonight. An acceptance row keyed on a string somebody is about to
+    correct FAILS ON THE FIX -- the same class as the market-valued literal.
+    `view_path` is the stable grain and it is what the producer emits beside it.
+
+    ⛔ AND `third_bucket` CHILDREN CARRY NO view_path. :1090-1092 emits
+    kids["Unflagged"] with {label, axis, third_bucket} and NO view_path -- so a
+    bare "every child has a view_path" row would FAIL A CORRECT BUILD the first
+    time an unflagged bucket is non-zero. Read at source rather than assumed;
+    the disjunction below is the producer's own shape.
+    """
+    client = doc.get("nodes", {}).get("Client", {})
+    p = "%s/%s" % (plane, scope)
+    pred = client.get("predicate")
+    kids = client.get("children")
+
+    # TWO-SIDED: a declared value either way. A MISSING predicate is neither
+    # state and must not read as "unavailable" by default -- absent is not held.
+    out.append(("%s Client.predicate is DECLARED" % p,
+                pred in ("available", "unavailable"),
+                "predicate=%r" % (pred,)))
+
+    # ⛔ WITHOUT THIS ROW THE WHOLE FUNCTION IS UNDISCRIMINATING FOR ITEM 1, AND
+    # I FOUND THAT BY RUNNING IT, NOT BY READING IT. Exercised pre-reland: every
+    # shape row PASSES with cottonwood at `unavailable`, and every shape row
+    # would PASS AGAIN at `available` -- so 20 green rows could not tell whether
+    # item 1 had landed at all. A checker that validates the shape of WHICHEVER
+    # state is served, rather than that the RIGHT state is served, is the exact
+    # blind-instrument class this deliverable exists to catch. Eighth defect this
+    # instrument has found in itself by being run.
+    # SUPPLY_SCOPES is cottonwood ALONE, and it is derived, not preferred:
+    # mdpf_gold_consolidator :1417-1421 supplies ONLY where CLIENT_L1_RULE is
+    # CLIENT_L1_DERIVED, and 49financial (all_supervised) / inflection
+    # (all_unsupervised) have computable rules and take the rule branch. global
+    # AGGREGATES and stays held while any constituent is (registry :787).
+    if post_reland and scope in SUPPLY_SCOPES:
+        out.append(("%s [ITEM 1] predicate MUST be available post-reland" % p,
+                    pred == "available",
+                    "predicate=%r -- reads 'unavailable' PRE-reland, so this row "
+                    "is falsifiable in both directions" % (pred,)))
+
+    if pred == "available":
+        out.append(("%s predicate available -> children NON-EMPTY" % p,
+                    isinstance(kids, dict) and len(kids) > 0,
+                    "children=%d" % (len(kids) if isinstance(kids, dict) else -1)))
+        if isinstance(kids, dict) and kids:
+            # c3 asserts this AT BUILD. Re-reading it on the SERVED body is a
+            # DIFFERENT RUNG, not a repetition: it catches a body that was
+            # shaped correctly and then mutated, truncated or partially written
+            # on the way to the plane the reader actually hits.
+            got = round(sum(float(k.get("aum") or 0.0) for k in kids.values()), 2)
+            want = round(float(client.get("aum") or 0.0), 2)
+            out.append(("%s children sum to Client.aum to the cent" % p,
+                        abs(got - want) < CENT,
+                        "children=%.2f vs Client=%.2f (SERVED plane, not build)"
+                        % (got, want)))
+            ident = [k for k in kids.values()
+                     if not k.get("view_path") and not k.get("third_bucket")]
+            out.append(("%s every child carries view_path OR third_bucket" % p,
+                        not ident,
+                        "%d child(ren) carry neither" % len(ident)))
+            paths = [k.get("view_path") for k in kids.values() if k.get("view_path")]
+            out.append(("%s child view_paths are UNIQUE" % p,
+                        len(paths) == len(set(paths)),
+                        "%d path(s), %d distinct" % (len(paths), len(set(paths)))))
+    elif pred == "unavailable":
+        # THE HELD SHAPE IS ALSO SCORED. `predicate: "unavailable"` with no
+        # children IS the render instruction (registry :1066-1074, which removed
+        # the prose field precisely because the STRUCTURE carries it). A held
+        # scope that ships children would let a renderer draw a split nobody
+        # derived -- the mirror of the defect this whole repair is about.
+        out.append(("%s predicate unavailable -> children EMPTY" % p,
+                    kids == {} or kids is None,
+                    "children=%r" % (kids if not kids else len(kids),)))
+        out.append(("%s held scope carries a predicate_reason" % p,
+                    bool(client.get("predicate_reason")),
+                    "reason %s" % ("present" if client.get("predicate_reason")
+                                   else "ABSENT -- a held scope with no reason")))
+
+
 def check_scope(doc, scope, plane, out, post_reland, as_of):
     """AC1/AC2 assertions for one scope. Appends (label, ok, detail) to out."""
     if plane == "platinum":
@@ -138,19 +232,38 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     p = "%s/%s" % (plane, scope)
 
     literal_ok = (as_of == LITERAL_AS_OF)
-    if scope in SMA_SCOPES and not literal_ok:
-        out.append(("%s SMA literals NA_BY_DATE (as_of %s != %s)" % (p, as_of, LITERAL_AS_OF),
-                    None,
-                    "market-valued, moves ~$170k-250k/trading day -- NOT scored, never FAIL"))
-    elif scope in SMA_SCOPES:
-        out.append(("%s SMA.aum == %.2f" % (p, SMA_EXPECTED),
-                    sma_aum is not None and abs(sma_aum - SMA_EXPECTED) < CENT,
-                    "read %r" % (sma_aum,)))
-        out.append(("%s Client.aum == %.2f" % (p, CLIENT_EXPECTED),
-                    client_aum is not None and abs(client_aum - CLIENT_EXPECTED) < CENT,
-                    "read %r" % (client_aum,)))
+    if scope in SMA_SCOPES:
+        # ⛔ THE NA BRANCH USED TO SWALLOW A DATE-INDEPENDENT ROW. Until this split,
+        # `as_of != LITERAL_AS_OF` emitted ONE NA row and scored NOTHING at these
+        # scopes -- including `absent_reason ABSENT`, which has no date content at
+        # all. The gate I added to stop a market-valued literal failing a correct
+        # build ALSO stopped the structural check that a correct build must pass.
+        # That is the over-broad-remedy shape: a fix scoped by MESSAGE ("the SMA
+        # rows") rather than by PROPERTY ("the rows that move with the market").
+        # It would have bitten TONIGHT, not on Monday: if the reland advances the
+        # frontier to 2026-08-28, the re-ratification would have scored 0 rows at
+        # global and 49financial -- the two scopes the whole repair is about --
+        # and still printed a VERDICT.
+        # DATE-INDEPENDENT: ALWAYS SCORED, at any as_of.
+        out.append(("%s SMA.aum > 0 (structural, date-independent)" % p,
+                    sma_aum is not None and sma_aum > CENT,
+                    "read %r -- the pre-fix defect served an affirmative 0.00 here"
+                    % (sma_aum,)))
         out.append(("%s absent_reason ABSENT" % p, not has_reason,
                     "present" if has_reason else "absent"))
+        # DATE-SCOPED: the two market-valued literals, and ONLY these.
+        if literal_ok:
+            out.append(("%s SMA.aum == %.2f" % (p, SMA_EXPECTED),
+                        sma_aum is not None and abs(sma_aum - SMA_EXPECTED) < CENT,
+                        "read %r" % (sma_aum,)))
+            out.append(("%s Client.aum == %.2f" % (p, CLIENT_EXPECTED),
+                        client_aum is not None and abs(client_aum - CLIENT_EXPECTED) < CENT,
+                        "read %r" % (client_aum,)))
+        else:
+            out.append(("%s SMA/Client literals NA_BY_DATE (as_of %s != %s)"
+                        % (p, as_of, LITERAL_AS_OF), None,
+                        "market-valued, ~$170k-250k/trading day -- NOT scored, never FAIL. "
+                        "The structural rows above ARE scored."))
     else:
         out.append(("%s SMA.aum == 0.00 (correct here)" % p,
                     sma_aum is not None and abs(sma_aum) < CENT,
@@ -213,6 +326,7 @@ def main():
                 continue
             client_aum, sma_aum = check_scope(doc, scope, plane, rows, a.post_reland, a.as_of)
             check_prose(doc, scope, plane, rows)
+            check_client_l1(doc, scope, plane, rows, a.post_reland)
             if plane == "gold" and scope == "global" and None not in (client_aum, sma_aum):
                 ok = abs((client_aum + sma_aum) - CONSERVATION) < CENT
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
