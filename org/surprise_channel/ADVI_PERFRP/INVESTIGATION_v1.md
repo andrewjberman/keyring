@@ -1489,3 +1489,28 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ✅ **WHAT CLOSES THAT GAP IS LIMB 3, and it is why I rank it strongest: zero platinum keys is the OUTCOME, not the precondition.** A per-invocation grant that actually published **would have left objects, and there is no prefix to hold them.** ⛔ **The three limbs are not three restatements -- TWO READ THE GATES AND ONE READS THE WORLD, and only the third is immune to the gates being bypassed.**
 
 **That discharges the last queue item:** AC0 census · per-cell rows · AC6 (read, ruled, remedy verified, denominator corrected) · the arming-emission read for this TO and BDPARITY · the third-instrument proof-of-spec run · **AC7 at round close.**
+
+### ⛔ RETRACTING **MY AC7 LIMB-3 EVIDENCE** (the entry directly above, commit `@0b7892c4f3`): `~V` 82271 is right -- **I read the WRONG BUCKET and my control sat in the SAME wrong bucket**, the exact failure I described one paragraph earlier and claimed to have avoided. **And my PREDICATE was wrong too**
+
+3.0.0_SA_CVO, 2026-08-29 ~12:00Z, MCP 82293-82296.
+
+⛔ **THE ERROR, AND IT IS THE ONE I NAMED WHILE COMMITTING IT.** I measured `opal-data-49financial/platinum/` and `platinum/advi/` -- that is **`GOLD_BUCKET`, the plane the port READS FROM.** The publisher **WRITES** to **`opal-data-portal-v2/platinum/advi/49financial`** (`d_publisher_port.py:61-62`; `bd-pipeline/iam.tf:1182`). **My "positive control" was `gold/advi/` -> 970 objects IN THE SAME WRONG BUCKET.** In that same entry I wrote that this was *"the wrong-prefix blind read that nearly cost me a REFUSED verdict on a working INSURE fire earlier tonight, when my control sat in the same wrong prefix as my subject."* **I wrote the warning and shipped the defect one paragraph later.** A control drawn from the same corpus as its subject **cannot detect a corpus error**, and knowing the sentence by heart did not help.
+
+⛔ **AND THE SECOND LAYER IS WORSE THAN THE BUCKET, because it would have bitten even in the right one.** AC7 says **"ZERO PLATINUM KEYS WRITTEN."** I answered **"no platinum prefix EXISTS at all"** -- a **different predicate**. In the correct bucket that predicate returns **12 objects** and would have produced a **FALSE FAIL on a criterion nothing had violated.** So the read was **wrong-bucket AND wrong-question**, and only the first was caught by anyone but me.
+
+✅ **THE CORRECTED READ, right plane, with a control NOT sharing the corpus error:**
+```
+  opal-data-portal-v2/platinum/advi/49financial/     12 objects
+  every LastModified 2026-08-21T15:03:17Z .. 15:04:19Z      -- EIGHT DAYS before this round
+  newest: _manifests/latest.json  2026-08-21T15:04:19Z
+  POSITIVE CONTROL, SAME BUCKET: newest object bucket-wide is
+    platinum/mdpf/inflection/category-views.json   2026-08-29T03:56:23Z   -- TODAY, under a platinum/ prefix
+  bucket denominator: 160 objects
+```
+**So the instrument DEMONSTRABLY SEES TODAY'S WRITES in this bucket and under this prefix family, and the advi plane's newest is eight days old.** That is a sound negative read; **mine was not.**
+
+✅ **AC7's VERDICT IS UNCHANGED -- APPLIED (negative), BUILD-ONLY held** -- and `~V` said so **first**, before presenting my error, which is the right order. Today's emissions ran 10:31-10:35Z; **nothing landed on the served plane.** **The verdict was never in doubt; MY EVIDENCE FOR IT WAS WRONG, and a right verdict on wrong evidence is the thing this seat exists to catch.**
+
+⛔ **WHAT I CARRY FORWARD -- the third time tonight a control of mine sat INSIDE the error it was meant to detect** (INSURE's prefix, the scoped `rekey_comparison` accessor, now this): **NAMING THE CORPUS IS NOT CHOOSING IT.** I pre-registered *"name the corpus"* as a rule at 05:5xZ and **still picked the wrong bucket, because I took the prefix from the CRITERION'S WORDING rather than from the WRITER'S OWN SOURCE.** **The corpus a negative read must sweep is defined by WHERE THE ACT WOULD WRITE, and that is readable only in the producer's code** -- `d_publisher_port.py:64-66` even warns about *"a listing of the old bucket with the new prefix"*, **which is precisely what I did.**
+
+**Limb 1 (scheduler DISABLED, 7 ENABLED controls) and limb 2 (grant UNSET, `${VAR+x}`, TEMP control) are UNAFFECTED and stand.**
