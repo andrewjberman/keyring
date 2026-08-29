@@ -118,4 +118,20 @@
 3. **A registry that MINTS part ids** — the derived-identity class logged three times on this project; owed by this seat as a registry v1.1 contract act at the next boundary, with the compile-provenance fields (`compiled_at_commit`, `subject_disposition`, `compile_note`) admitted at the same time.
 4. **Product semantics of the 540** and **identity-minting authority** — open at Andrew, untouched here.
 
+---
+
+## 6. ADDENDUM 1 (2026-08-29 04:3xZ) — L3-C01: THE FLOOR RE-DERIVATION FORM, declared BEFORE the first run's spread exists
+
+**Trigger.** The first fusion's preliminary shape (CCX 80783, read via broker, not consumed): J = 0.8033 against the held floor 0.80 — a 0.0033 margin over a floor that had never seen its own distribution. Ruled 80787: the held floors bind run 1 in **neither** direction; run 1 is admitted on the permuted control firing (permuted ρ −0.1448 / J 0.1790 against observed 0.9584 / 0.8033); the re-derived floor binds run 2. 80787 deferred *"the exact form"* to the first run's record. **The form does not depend on the numbers, so it is declared here, before them** — a form chosen after seeing where 0.8033 falls would be a floor fitted to the result.
+
+**THE FORM.** For each statistic S ∈ {ρ, J}, over the metric domain of 80804 (the both-measured pairs):
+- **null_S** = the value of S under the permuted-labels control; **spread_S** = the standard deviation of S over **N ≥ 5** independent permutations (N printed).
+- **floor_S (RE-DERIVED)** = **null_S + 3 · spread_S** — three null-spread widths above the run's own noise floor. The multiplier 3 is DECLARED here, not derived, and is the one typed constant in the form; it is chosen so a statistic that clears the floor is outside the null by a margin no single permutation draw reaches, and it is recorded as `held` until a second run shows the spread is stable across runs.
+- **Sanity arm (must hold, printed):** floor_S must lie strictly BELOW the observed S of the run it was derived from — a re-derived floor the deriving run itself fails is a finding about the spread (too wide to discriminate), reported as such, and the floor status stays HELD-UNEXERCISED for run 2.
+- **If only ONE permutation exists at publish** (the preliminary shape reports one): spread_S is UNMEASURED, no floor is re-derived, `floor_status` stays **HELD-UNEXERCISED** into run 2, and the N ≥ 5 permutation battery is run 2's first addition. The record states which case it is.
+
+**What this replaces and what it does not.** It replaces the held constants 0.90 / 0.80 **only from the run at which spread_S exists**; until then they stay reported as HELD-UNEXERCISED beside the observed values (CCX's checker already encodes that regime, `floor_status ∈ {HELD-UNEXERCISED, RE-DERIVED}`). It does not touch the validity arm (the permuted control must still drop below the observed for both statistics — that binds every run), the metric domain (80804), or the two-frame sec-6.3 rule (80835), which is a separate axis.
+
+**Falsifier.** Exhibit a run whose observed S clears null_S + 3·spread_S while a second, independent permutation battery of the same run yields a spread under which it does not — the multiplier is then too small for the noise at this view pair and is raised on the record, never lowered.
+
 **None of the four declarations discharges a PRD §6 falsification test.** §6.3's input (firm-carry per bridge) and §6.4's exclusions (FLOW, SEMANTIC = NOT-DELIVERED-AT-L2) are supplied by wave 1; **6.3 runs at wave 2, 6.1 / 6.2 / 6.5 at L4.**
