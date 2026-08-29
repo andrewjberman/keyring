@@ -36,12 +36,14 @@ was caught by a routine board read, and the other four were then verified rather
 because a register that ages one card ages the same way everywhere.
 
 +-- CALL 8 of 8 -- ⛔ YOUR OWN CONDITION WORDING RESTS ON A FALSE DICHOTOMY --------+
-  **`ETFS_INGEST` condition (ii) reads "proper DEV display with GICS replaced by
-  sub-categories." MEASURED: the sub-categories ARE GICS, one level up. Which did you
-  mean? (a) restate the condition / (b) it is already met / (c) overturn ruling 11382.**
-  Two of the three readings cannot be satisfied by any correct act. This gates
-  `ETFS_INGEST` closing, which discharges the two conditions holding
-  `ETFS_POSITIONING`'s promote.
+  **THE FACT YOU MAY NOT HAVE, AND IT IS NOT A FORK: `sub_asset_class` ALREADY IS THE
+  GICS SECTOR NAMES, and `industry_group` is a FINER GICS LEVEL already rendered BESIDE
+  it in the same cell, on DEV and PROD alike. Your condition (ii) asks for "GICS replaced
+  by sub-categories" -- but one of those already contains the other. What do you want to
+  SEE?**
+  Not offered as (a)/(b)/(c): a fork would presume you were choosing between two things,
+  and the measurement says one contains the other. This gates `ETFS_INGEST` closing, which
+  discharges the two conditions holding `ETFS_POSITIONING`'s promote.
   -------------------------------------------------------------------------------
   **REC —** **(a) RESTATE IT.** Measured across two planes by two seats:
 ```
@@ -69,6 +71,16 @@ because a register that ages one card ages the same way everywhere.
   conditions on `ETFS_POSITIONING`'s promote **AND advances my own /drive arm's
   stop-condition.** I am therefore NOT recommending (b), and the measurement I ran points
   away from it on both literal readings.
+  ⛔ **AND THE COST OF THE LITERAL READING IS MEASURED, NOT JURISDICTIONAL** -- verified
+  independently at the PRODUCER by `3.0.0_SA_CVO~Z` (`etf_positioning_gold.py:158-171`),
+  a different plane from the renderer. Re-pointing `sub_asset_class` would **(a)** send
+  EVERY NON-EQUITY ROW TO NULL (money-market, canonical cash line, NAV residual,
+  fixed-income sleeve); **(b)** leave `Cash & Cash Equivalents` / `Ultra Short Duration`
+  at a different level of the same hierarchy inside ONE field -- a mixed-grain served
+  vocabulary; and **(c)** miss `SUB_ASSET_CLASS_ORDER` on the consumer and **"PRESENT AS A
+  SORT BUG, SHIPPING GREEN."** ⭐ **(c) is the one that matters: the failure mode of doing
+  what (ii) literally says is SILENT -- it would not refuse, it would ship, look right,
+  and sort wrong. Overturning ruling 11382 would not remove (a), (b) or (c).**
   ⚠ **BOUND:** the render read is a CODE read at two refs, not a pixel read.
   `0.4.0_DE_ClientPlatform~Z` names this and will run the visual read if the condition
   turns on what a human SEES.
