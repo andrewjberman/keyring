@@ -27,6 +27,28 @@ class CodexInboxTurnBridgeTest(unittest.IsolatedAsyncioTestCase):
         path.write_text("pending", encoding="utf-8")
         return path
 
+    async def test_discovery_accepts_remote_tui_vscode_source(self) -> None:
+        client = AsyncMock()
+        cwd = Path(self.temp_dir.name).resolve()
+        client.request.return_value = {
+            "data": [
+                {
+                    "id": "thread-vscode",
+                    "cwd": str(cwd),
+                    "source": "vscode",
+                    "status": {"type": "active", "activeFlags": []},
+                    "parentThreadId": None,
+                }
+            ]
+        }
+
+        thread_id = await bridge.discover_thread(client, cwd, 0.1)
+
+        self.assertEqual(thread_id, "thread-vscode")
+        method, params = client.request.await_args.args
+        self.assertEqual(method, "thread/list")
+        self.assertEqual(params["sourceKinds"], ["cli", "vscode"])
+
     async def test_idle_thread_calls_turn_start_directly(self) -> None:
         client = AsyncMock()
         client.request.side_effect = [

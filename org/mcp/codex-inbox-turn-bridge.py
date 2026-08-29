@@ -529,7 +529,11 @@ async def discover_thread(
             {
                 "limit": 50,
                 "sortKey": "updated_at",
-                "sourceKinds": ["cli"],
+                # A TUI attached with ``codex --remote`` is reported by the
+                # shared app-server as ``vscode`` even though the foreground
+                # client is the Codex CLI.  Accept both representations while
+                # the cwd/status/parent filters below select the seat thread.
+                "sourceKinds": ["cli", "vscode"],
                 "archived": False,
                 "cwd": str(cwd.resolve()),
                 "useStateDbOnly": True,
