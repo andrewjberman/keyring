@@ -46,12 +46,32 @@
       "denominator": 5
     },
     "completion_pass_set_RULED": {
-      "pass_set": "ALL FIVE tests DISCHARGED (survived) on ONE build -- same fused model, same identity layer. A discharge on one build and a discharge on another DO NOT SUM.",
+      "pass_set": "ALL FIVE tests DISCHARGED, EACH ON BOTH HALVES, on ONE build -- same fused model, same identity layer. A discharge on one build and a discharge on another DO NOT SUM, and a positive half without its negative half is NOT a discharge.",
       "evaluated_false_disposition": "TERMINAL for the TEST, NON-TERMINAL for the PROJECT. 6.3 is ANSWERED and the build it rejected is not an identity substrate; 6.3 BLOCKS status: complete until a fusion exists on which it is re-run and SURVIVES.",
       "route_to_complete": "wave 3 (K-sweep) -> a firm-carrying second view -> 6.3 RE-RUN -> L4 -> 6.1 / 6.2 (N nights) / 6.5. This is NOT a different program: wave 3 exists BECAUSE 6.3's cause is K-conditional. The route to complete is the route being walked.",
       "tally_contract": "DISCHARGED / EVALUATED_FALSE / OUTSTANDING kept DISTINCT, no percentage. A CONSUMER THAT SUMS THE FIRST TWO IS DEFECTIVE.",
       "what_would_change_it": "a SCOPE change, not a lane ruling -- accepting a fused model that does worse than its own inputs redefines what this project delivers. That is a business-semantics card to Andrew, raised ONLY on a measurement showing wave 3 and the firm-carrying view cannot reach a 6.3 TRUE. Nothing measured says that; NOT RAISED.",
-      "ruled_by": "1.0.0_SA_CTO~X Addendum 1g @194679fa9d (on 2.0.0_SA_COO~X 82077)",
+      "paired_arm_rule": "RULED 1h (i): EVERY sec-6 test is a PAIRED arm on one build -- a POSITIVE half (the build survives the falsifier) and a NEGATIVE half (a degenerate that SHOULD fail, does). DISCHARGED only when BOTH halves return the expected sign. A build that passes the positive AND the negative has FAILED that test.",
+      "negative_halves_ADOPTED": {
+        "6.1": "SUBSTITUTION -- a genuinely different resource at the same position MUST NOT keep the identity.",
+        "6.2": "SUCCESSION BREAK -- genuine removals/replacements between nights MUST break succession; a flat 100% WITH REMOVALS PRESENT is a FAILURE SIGNAL, read off the per-night series 1f already requires.",
+        "6.5": "CONTENT SENSITIVITY -- the two planes hold different content, so identities MUST differ between them; identical output on both is a layer reading nothing.",
+        "6.3_6.4": "READ, NOT AMENDED. 6.3 already carries both signs (a constant fails it, a firm-separating fusion passes it) and its relational bar stands; 6.4 scopes views ENTERING by design and is not where the output is tested."
+      },
+      "oracles_before_artifacts": "RULED 1h (iv): population, pass condition and instrument for BOTH halves of 6.1 and 6.5 are DECLARED AT THE L4 CUT, in the PRD, BEFORE the L4 artifact exists. 1f's rule for 6.2's N (\"a bar set after its data is a fit\") now binds 6.1 and 6.5, which today carry NO ORACLE AT ALL -- a named gap the L4 cut must close.",
+      "repeat_read_by_NON_AUTHOR": "RULED 1h (v): the degenerate read is REPEATED BY A NON-AUTHOR before the L4 cut (3.0.0_SA_CVO~X or 4.0.0_SA_CRO~X), scoring at least one DIFFERENT degenerate. The two named: identity = CONTENT HASH (maximally brittle -- passes every negative half, fails 6.1's positive; proves the pair is two-sided) and identity = FIRM LABEL (passes 6.3 by construction, fails 6.1-substitution and 6.5-content; proves 6.3 alone was never sufficient). A read finding no fourth hole is RECORDED WITH ITS CASE NAMED; one that finds a hole lands as a further paired arm. NOT the issuer's to run -- authorship is the disqualifier.",
+      "nonauthor_repeat_READ_1_of_2": {
+        "degenerate": "identity = FIRM LABEL (the permissive case)",
+        "scored_by": "3.0.0_SA_CVO~X, 20260829T122943Z",
+        "provenance_caveat": "that frame arrived SENDER-UNVERIFIED (the sending session was not registered; the from-line is asserted, not proven) and carries no Msg-ID line. Recorded as that seat's CLAIM, not as a verified verdict, and NOT acked -- an ack enumerated from a frame without a Msg-ID would assert reading it cannot evidence.",
+        "result": "REJECTED by the adopted negative arms on one build -- 6.1 same-firm/different-resource substitution exposes false identity survival; 6.2 removal/replacement exposes inheritance by same-firm replacement; 6.5 same-firm/different-content exposes content collapse. NO FOURTH HOLE FOUND, case named per 1h (v).",
+        "what_it_proves": "the firm-label degenerate passes the POSITIVE surface throughout (rename survives, succession can stay flat, 6.3 satisfied by construction, 6.4 unchanged, 6.5 runs unchanged) -- so it is the case that demonstrates 6.3 alone was never sufficient, exactly as 1h (v) predicted.",
+        "ORACLE CONSTRAINT it adds beyond 1h (iv)": "the L4 oracle must PIN SAME-FIRM fixtures -- same-firm/different-resource for 6.1's substitution, same-firm/different-content for 6.5. A cross-firm fixture would be rejected by the firm label ALONE, so the negative arm would pass WITHOUT discriminating: the right sign for the wrong reason.",
+        "still_outstanding": "the CONTENT HASH degenerate (the maximally brittle case, 1h (v)'s other named one) is NOT yet scored by a non-author."
+      },
+      "prd_edit_queue_FROZEN_ROUND": "RULED 1h (vi): FIVE items queued to the same frozen-round PRD edit -- (1) L1 table; (2) 6.3 metric/view/population; (3) 6.2 N; (4) the sec-6 preamble sentence; (5) the three negative halves. Why now: every unset oracle between the L4 cut and the first scheduled night adds to the completion date one-for-one.",
+      "degenerate_read_origin": "the paired-arm rule originates in a 2.0.0_SA_COO~X adversarial read (proposal @28cb632c93): a CONSTANT identity layer, reading nothing, passes 6.1 / 6.2 / 6.4 / 6.5 as worded and fails only 6.3 -- which was itself EVALUATED_FALSE, so the pass set's entire defence against an OVER-PERMISSIVE layer rested on the one open item. Rule 22 DISCRIMINATION: for three of five tests the evidence could not differ if the claim were false.",
+      "ruled_by": "1.0.0_SA_CTO~X Addendum 1g @194679fa9d (on 2.0.0_SA_COO~X 82077); PAIRED-ARM RULE + the three adopted negative halves = Addendum 1h @3eadb3999e (on 2.0.0_SA_COO~X 82433 / 3.0.0_SA_CVO~X 122500Z)",
       "superseded_note": "this field previously carried the question as OPEN and issuer-unresolvable. It was ruled SEVEN MINUTES after the field was written; the field is corrected here rather than left for a certifier to find."
     },
     "wave_3_note": "the K-sweep discharges NONE of these by its own rectangle's rule; it refines 6.3's answered CAUSE and gates whether L4 is safe to build (identity on a fusion that loses firm separation would merge identities ACROSS firms -- the C3.i defect this project prevents)"
