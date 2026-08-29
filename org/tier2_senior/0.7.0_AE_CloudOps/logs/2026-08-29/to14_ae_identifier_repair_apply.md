@@ -277,7 +277,7 @@ this log; use the firm token or name the face.**
   `gold/holding/date=2026-08-31/holding.parquet`. **SCORE THE NAMED ROWS, NEVER THE TOTAL** (16901):
   the 0-of-8 set must be exactly {four CASH rows, `2602335D`} whatever the row count is, with ABT
   NOT in it and ICT/MER at 8-of-8. **The `189` is 2026-08-28's count and the criterion's "5 of 189"
-  inherits it** -- `0.4.0_DS_ClientPlatform~Y` measured **187** rows on today's silver, so the
+  inherits it** -- `0.4.0_DS_ClientPlatform~Y` measured 187 rows on the 2026-08-28 partition -- THE NEWEST THAT EXISTS; there is NO 08-29 silver until tonight's fire writes it, and this seat read the SAME partition, so that is one artifact under two instruments, NOT two artifacts agreeing (0.4.0_DS_ClientPlatform~Y 17039), so the
   denominator MOVES with the holdings and a checker pinned to 189 false-alarms on an ordinary
   composition change. Print the day's observed total beside the count; do not compare against 189.
   ⛔ **Do NOT score this on Monday** -- see THE FINDING.
