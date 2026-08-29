@@ -193,7 +193,32 @@ _BACKWARD_ASSERTED = None
 # produced were worded AGAINST THE ISSUER (75278). The word branch is deliberately narrow:
 # it admits a word final segment ONLY on the '-m-' mechanism group, so prose tokens like
 # D11-era-things stay unmatched.
-CELL_ID_RE = re.compile(r"\b[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)\b")
+# PLUS the etfs-ingest TIER form (INGEST-T3-6, INGEST-CONV-1, INGEST-INV-2), added
+# 2026-08-28 by 1.0.0_SA_CTO~Z on a CTO ruling, same class as the wave-4 note above and
+# for the same reason: 36 real ids invisible, and the violations they produced were worded
+# AGAINST THE EXECUTOR. Measured before the fix: of 31 DECOMP.md files 30 use the
+# checker-visible lowercase form and etfs-ingest is the SOLE outlier -- it did not violate
+# a convention, it failed to guess one that was written down NOWHERE a decomp author reads
+# (this comment block was the only statement of it, i.e. declared where only the ENFORCER
+# reads it).
+#
+# WHY PREFIX-ANCHORED AND NOT A GENERAL UPPERCASE-MIDDLE SHAPE. The obvious branch --
+# [A-Z]{1,4}\d?-\d+ -- was BUILT AND REJECTED BY ITS OWN CONTROL: it admitted 572 distinct
+# NEW-ONLY tokens across the corpus, including regex character classes in source
+# ('A-Z0-9' in 62 files), prose ('AMONG-THE-6', 'AS-WE-4') and foreign id schemes
+# ('AWS-IAM-1', 'AC-VAL-1'). Uppercase-hyphen-digit is the most common token shape in
+# prose AND in code, so a shape-general branch cannot be narrow. Anchoring on the declared
+# project prefix makes it unambiguous. CONTROLS, both run at the edit:
+#   POSITIVE  36 of 36 real cells now matched; legacy D1-i-2 / ETFS-d-1 / D1-m-foo intact
+#   NEGATIVE  36 NEW-ONLY tokens across the corpus, ALL of them real INGEST cell ids
+#             (the shape-general candidate scored 572)
+# INGEST-ZZ-99 is DELIBERATELY EXCLUDED: the decomp declares it a NEGATIVE CONTROL
+# ("absent from both the cell set and the criteria refs, so the extraction discriminates").
+# Admitting it would have retired another instrument's discriminator as a side effect.
+# A future scheme gets its own anchored branch and its own two controls -- never a widening.
+CELL_ID_RE = re.compile(
+    r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')

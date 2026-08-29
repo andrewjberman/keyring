@@ -1,0 +1,35 @@
+# Deploy Completion Record
+**Date opened:** 2026-08-25T17:42:06.407802+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260825T175058Z
+**Deploy:** ETFS_POSITIONING: retire the duplicate name map onto the centralized ETFClassifier, one canonical CASH line, SALXX NaN-eviction fix, FI return leniency -- Andrew-direct 2026-08-25
+**Authored by:** 1.0.0_SA_CTO~Z
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | git | SITEZ b90316b888 + b3d830094c + 9613368c5a | hashes (rides integrator push) | SITEZ b90316b888 (producer+publisher), b3d830094c (seeder, GIT_COMMIT_AUTHOR_OVERRIDE=YANG_PIPELINE_DEPLOY audited), 9613368c5a + b7b7e3e5b0 (TF IAM + its ARN correction, GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL audited). LANDED LOCAL -- push is integrator-only (LD-0367). | CLOSED 20260825T175058Z |
+| L2 | s3-prefix | lambda-artifacts etfs-positioning zip, now 3 members | uploaded sha256 + content-sha256 metadata + member list | PUT etfs-positioning/etf-positioning-producer.zip VersionId AgBCmpvZGgzrtdI53drY8C6BnHB2.eNr, 39701 B, 3 members. head-object Metadata content-sha256=fjokPnLnotTfVEhdcTccru6kXDMDipzAn9ZMUn3jTNw= verified on the live primitive. Zip DETERMINISTIC (in-memory rebuild digest identical). | CLOSED 20260825T175058Z |
+| L3 | activation | module.etf_positioning_producer TF apply (code + NEW dynamodb IAM) | apply 0-destroy + 0-diff replan + CodeSha256 == uploaded | safe-apply: 0 add / 2 change / 0 destroy (IAM policy + Lambda code). RE-PLAN -detailed-exitcode rc=0 (captured BEFORE any pipe) = No changes. NOTE: the FIRST apply attempt FAILED rc=4 on 'Reference to undeclared local value' -- 9613368c5a shipped local.region/local.account_id which this root does not declare; I had trusted a patch script's print instead of reading the file back. Corrected in b7b7e3e5b0, terraform validate rc=0 before re-apply. | CLOSED 20260825T175058Z |
+| L4 | verify | deployed package carries the vendored classifier + new tokens | download package, sha==live, token controls incl. negative | ACCEPTANCE ON DEPLOYED BYTES: downloaded package sha256 b64 == live CodeSha256 == uploaded b64 (fjokPnL...), so it IS the running artifact. 3 members incl. the vendored etf_classifications_dynamodb.py at sha256 8138da0300ea83c3 -- BYTE-IDENTICAL to _shared/, proving one source. Token controls 7/8 PASS with the 8th explained: DISPLAY_NAME_OVERRIDES still matches, at line 172 ONLY, inside a COMMENT recording its retirement (read the hit; the dict is gone from code). Negative control zzz_no_such_token_9999 ABSENT. | CLOSED 20260825T175058Z |
+| L5 | verify | dynamodb:GetItem GRANT on the LIVE primitive | simulate-principal-policy, ONE resource ARN, separate positive control | LIVE PRIMITIVE, Rule 22a discipline -- ONE --resource-arns per call, controls in SEPARATE invocations. TARGET: simulate-principal-policy dynamodb:GetItem on arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications -> allowed. NEGATIVE CONTROL (separate call): same action on table/bd-securities -> implicitDeny, so the ARN pin holds AND the instrument discriminates. APPLIED STATE: get-role-policy shows Sid Stage2ReadEtfClassifications, Action [dynamodb:GetItem], Resource the pinned table ARN. This grant matters because ETFClassifier CATCHES ClientError and returns None -- a missing grant would have degraded names SILENTLY. | CLOSED 20260825T175058Z |
+| L6 | activation | seed etf-classifications with the 170 constituents | seeder output + post-scan row count | seed-etf-constituents.py wrote 169 items to etf-classifications (universe read from the freshly republished artifact so the canonical CASH ticker was in scope; 116 pre-existing model rows untouched, 0 collisions -- the two populations are disjoint). One defect found and fixed mid-seed: sub_asset_class backs GSI sub-asset-class-index and DynamoDB REFUSES an empty string on an indexed key (ValidationException); empty attributes are now DROPPED rather than written as '', so an unclassified security is simply absent from that index. | CLOSED 20260825T175058Z |
+| L7 | activation | ad-hoc republish (Andrew-authorized standing) | invoke rc + manifest stats | TWO ad-hoc republishes under Andrew's standing authorization, both StatusCode=200 FunctionError=null, run_class=adhoc. Pass 1 (17:4xZ) shipped the canonical CASH ticker so the seeder could read it; pass 2 (17:50:05Z) shipped names resolved through ETFClassifier. Final: holding_rows 189, synthesized_residual_rows 2, platinum status=published. | CLOSED 20260825T175058Z |
+| L8 | verify | served artifact: canonical CASH x4, SALXX 8/8, raw-truth totals, clean names | live S3 read of platinum/etfs/positioning_data.json | SERVED platinum/etfs/positioning_data.json generated_at 2026-08-25T17:50:05Z. CANONICAL CASH 4/4 identical (CASH / 'Cash & Cash Equivalents' / Fixed Income / Ultra Short Duration; DIVZ 0.20, IDVZ 0.49, PFDE 0.03, PFOE -0.02) with ZERO legacy CASH&OTHER or CASH_OTHER rows in any book. NAMES FROM THE REGISTRY: 'The Boeing Co', 'The Bank of New York Mellon Corp', 'The TJX Cos Inc', 'JPMorgan Chase & Co.', 'Verizon Communications Inc', 'Marvell Technology Inc', AIG/ICT/KCDMY/OMAB untruncated, MAR/NU suffixes dropped. ACRONYM-COMPANY CONTROL: BP PLC / GSK PLC / MPLX LP UNCHANGED, so the cleanup did not over-reach. SALXX 8/8 incl YTD 2.1699 and 1Y 3.551. RAW TRUTH preserved: PFOE cash -0.02, no forced 100.00. | CLOSED 20260825T175058Z |
+
+## Log
+
+- 20260825T174206Z OPENED by 1.0.0_SA_CTO~Z with 8 leg(s)
+- 20260825T175058Z LEG L1 closed: SITEZ b90316b888 (producer+publisher), b3d830094c (seeder, GIT_COMMIT_AUTHOR_OVERRIDE=YANG_PIPELINE_DEPLOY audited), 961
+- 20260825T175058Z LEG L2 closed: PUT etfs-positioning/etf-positioning-producer.zip VersionId AgBCmpvZGgzrtdI53drY8C6BnHB2.eNr, 39701 B, 3 members. head-o
+- 20260825T175058Z LEG L3 closed: safe-apply: 0 add / 2 change / 0 destroy (IAM policy + Lambda code). RE-PLAN -detailed-exitcode rc=0 (captured BEFORE an
+- 20260825T175058Z LEG L4 closed: ACCEPTANCE ON DEPLOYED BYTES: downloaded package sha256 b64 == live CodeSha256 == uploaded b64 (fjokPnL...), so it IS th
+- 20260825T175058Z LEG L5 closed: LIVE PRIMITIVE, Rule 22a discipline -- ONE --resource-arns per call, controls in SEPARATE invocations. TARGET: simulate-
+- 20260825T175058Z LEG L6 closed: seed-etf-constituents.py wrote 169 items to etf-classifications (universe read from the freshly republished artifact so 
+- 20260825T175058Z LEG L7 closed: TWO ad-hoc republishes under Andrew's standing authorization, both StatusCode=200 FunctionError=null, run_class=adhoc. P
+- 20260825T175058Z LEG L8 closed: SERVED platinum/etfs/positioning_data.json generated_at 2026-08-25T17:50:05Z. CANONICAL CASH 4/4 identical (CASH / 'Cash
+- 20260825T175058Z CLOSED -- all 8 legs proven

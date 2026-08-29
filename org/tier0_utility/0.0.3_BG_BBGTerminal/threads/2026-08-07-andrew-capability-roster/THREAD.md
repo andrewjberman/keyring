@@ -29,18 +29,21 @@ Treat every inbound as live.
    necessary no one uses you but me"*). Question CLOSED -- do not re-raise. Corollary he
    stated in the same breath: **he is the only consumer of this seat.**
 
-4. **An ACK states RECEIPT, never a message's HISTORY** (Andrew-direct 2026-08-25T21:10:05Z:
-   *"Ok tell MSTR he needs to adjust your startup/operating tenets to account for this kind of
-   thing."*). A receipt may say the message arrived; it may NOT assert age, delay, or whether the
-   ask was previously handled -- RECALL is the step that establishes that, and it runs AFTER the
-   ack. Corollary: **a monitor emit is a DELIVERY event, never proof a message is UNANSWERED** --
-   thread memory decides what is owed, not the event stream.
-   >> **EARNED 2026-08-25:** a stale-cursor replay re-emitted three 08-20 messages and I ACKed
-   with an apology for a 5-day delay that RECALL, one step later, showed was false. He replied
-   "No need thanks" and then issued the instruction above.
-   **ADOPTED BEHAVIOURALLY NOW; the durable tenet write is MSTR~Z's** (prompt.md/refs/ are
-   G1-unwritable from this seat -- the same split as rule 1 above, which is why that precedent is
-   the model here). Broadcast ids 9101/9102/9103, 3 QUEUED / 0 REFUSED.
+4. **ACK/emit discipline -- CANONICAL ELSEWHERE, DO NOT RESTATE IT HERE.** The rule now lives at
+   the three layers MSTR~Z placed it in @00b47a90c4 (2026-08-26): `prompt.md` On-launch step 3
+   (imperative), `refs/TEAMS_DUTY.md` "Reading the arm banner" (mechanism), and the
+   `bbg-teams-assist` SKILL ACK-norms + RECALL step (procedure). **Read them there.**
+   >> **This row is deliberately a POINTER, not a copy.** It carried the full rule text for one
+   day (2026-08-25) while the durable write was routed, exactly as rule 1 above did for the
+   comms-length ruling. Once the canonical edit landed, keeping my wording would have made this
+   file a SECOND CARRIER of one obligation -- the divergence surface MSTR~Z explicitly designed
+   around ("each at the layer BG's own convention assigns so no mechanism sits in two carriers").
+   Two carriers drift from minute one; the thread file would have been the stale one.
+   >> **THREAD-SCOPED CONTEXT, which is what this file is actually for:** the rule was earned in
+   THIS thread on 2026-08-25 -- a stale-cursor replay re-emitted three 08-20 messages, I ACKed
+   with an apology for a 5-day delay that RECALL showed one step later was false, he replied
+   "No need thanks" and then issued the Andrew-direct that produced the tenets. **He has seen
+   this failure once. Do not spend it a second time.**
 
 ## RECURRENCE -- the cross-thread patterns (the thing no single daily file can show)
 

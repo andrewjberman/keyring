@@ -25,3 +25,56 @@
 - 20260827T171301Z LEG L3 closed: Commit a8907bf114 authored 0.7.0_AE_CloudOps~L via .tools/safe-commit.sh -F (message file written by the Write tool, non
 - 20260827T172426Z LEG L4 closed: V14-2 HALT TRAP RULED OUT BY EXERCISE, not by reading the document. Host i-01003b035d2988dfb (bd-gold-layer-runner, r6i.
 - 20260827T172507Z CLOSED -- all 4 legs proven
+
+
+---
+
+## CROSS-FABRIC RECONCILE (0.0.0_AB_MSTR, 2026-08-29 /integrate parity leg 2)
+
+This record was edited INDEPENDENTLY on both fabrics and the merge conflicted. **NOTHING ABOVE WAS CHANGED and NOTHING BELOW WAS DISCARDED.** The CLOUD text is kept above; site Z's full version of this record is reproduced verbatim below.
+
+> ## ADJUDICATED: CLOUD's `CLOSED` STANDS. L4 FIRED.
+>
+> **The two sides disagree on ONE leg — L4** (*">=2 consecutive direct ssm send-command with `StartedByDispatcher` OMITTED; host still running, read from INSTANCE STATE, never send rc"* — i.e. prove the V14-2 halt-trap does not exist).
+>
+> **CLOUD (`0.7.0_AE_CloudOps~L`, 20260827T172426Z): RULED OUT BY EXERCISE.** Host `i-01003b035d2988dfb` (bd-gold-layer-runner, r6i.4xlarge) STOPPED at start, started once, SSM PingStatus Online 17:16:09Z, two consecutive sends. **A performed exercise with host evidence.**
+>
+> **SITE Z (`0.7.0_AE_CloudOps~Z`, 20260829T0821Z): L4 NOT FIRED**, arguing from the leg's own DESIGN (the exercise carries a destructive downside and is ill-posed if its hypothesis is wrong).
+>
+> **ADJUDICATION, on Andrew's rule (2026-08-29): the DIRECTIVE OWNER decides.** `ADVI_49F` is a **D2 (Advisor Intelligence)** project and **D2's device is LAPTOP** — measured from the register, not asserted. **CLOUD owns this directive, so CLOUD's record is authoritative and L4 is CLOSED.**
+>
+> ⭐ **AND THE TWO CLAIMS ARE NOT SYMMETRIC, which is why this is comfortable:** CLOUD MEASURED (instance state, named host, timestamps); site Z ARGUED ABOUT THE MEASUREMENT'S DESIGN. An EXERCISED verdict outranks a design critique of the exercise.
+>
+> ⚠ **SITE Z's POINT IS NOT DISCARDED AND IS WORTH ITS OWNER'S TIME:** if the leg genuinely carries a destructive downside, that is a defect in how the leg was WRITTEN, not evidence it did not fire. Route it to `0.7.0_AE_CloudOps` as a leg-design finding. Its full text is preserved below.
+
+### SITE Z VERSION, VERBATIM
+
+```markdown
+# Deploy Completion Record
+**Date opened:** 2026-08-27T16:52:06.735853+00:00
+**Status:** OPEN -- L1/L2/L3 PROVEN; L4 alone remains and it is an EXERCISE WITH A DESTRUCTIVE DOWNSIDE (see log)
+**Deploy:** ADVI_49F.P14-VEHICLE V14-1: parameterize SSM document advi-49f-chain-dispatch with a Date parameter so a historical run renders --date {{ Date }} --upload. Empty Date = the scheduled production path unchanged (--production, T-1 from the trading calendar). allowedPattern ^$|^[0-9]{4}-[0-9]{2}-[0-9]{2}$ is the injection control on a value substituted into a runShellScript body. Targeted apply: the opal-assets tree carries 3 unapplied FOREIGN changes (CVO 76182/76186) that a bare untargeted apply would sweep in.
+**Authored by:** 0.7.0_AE_CloudOps~L
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | verify | targeted terraform apply of aws_ssm_document.advi_49f_chain_dispatch | post-apply targeted re-plan reads 0-diff | APPLIED via .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply advi49f_v14_198.tfplan, HALT_ACK=1 after reviewing all 5 pending messages (none STOP/HALT class, all 1d old and addressed to the BASE serial from a dead session). TARGETED DELIBERATELY: the untargeted plan reads 4 changes, 3 of them FOREIGN to this seat (MDPF egress AGGREGATE_PREFIX move + 2 output changes) -- filed to the surprise channel as 76182, CVO-accepted 76186. POST-APPLY RE-PLAN, same binary, same -target: 'No changes. Your infrastructure matches the configuration.' = 0-diff. BINARY TRAP RECORDED: the first plan was cut by PATH terraform v1.14.5 while safe-apply resolves the sibling .tools/terraform.exe v1.9.8; the apply REFUSED the cross-version plan file ('plan files cannot be transferred between different Terraform versions') rather than mis-applying it. Re-init+re-plan on 1.9.8 before the real apply. No shared damage: git status showed only advi_49f_floor.tf modified, .terraform.lock.hcl untouched. TOMBSTONE GAP CLOSED BY HAND: safe-apply printed 'tombstone gate could NOT plan this tree, so it checked NOTHING -- this is a GAP, not a pass'; verified manually against a printed denominator of 7 tombstoned resources (6 aws_s3_bucket + 1 aws_dynamodb_table), zero matching name 'advi-49f-chain-dispatch', and the plan is 0-to-add so the gate's blocking condition (a CREATE of a listed resource) is structurally unreachable. | CLOSED 20260827T170715Z |
+| L2 | verify | LIVE SSM document advi-49f-chain-dispatch (APPLIED plane) | aws ssm get-document read showing the Date parameter WITH allowedPattern and the rendered --date {{ Date }} --upload; DESIRED tf is not APPLIED | LIVE APPLIED-plane read, aws ssm get-document --name advi-49f-chain-dispatch (no comp-tool reads live SSM document content; rail-checked). DocumentVersion 1 -> 2, Status Active. PARAMETERS on the live document: Date {type String, default '', allowedPattern '^$\|^[0-9]{4}-[0-9]{2}-[0-9]{2}$'} alongside the pre-existing StartedByDispatcher {default 'false'}. RENDERED runCommand on the live document carries the historical branch VERBATIM: 'python3 chain_49f_entrypoint.py --date {{ Date }} --upload'. --production SURVIVES ONLY inside the empty-Date branch (if [ -z "${DATE_ARG}" ]), so it is unreachable on any historical run -- which is the point: chain_49f_entrypoint.py:411-415 derives date=prev_trading_day under --production and would otherwise run the SAME date for all 531 iterations, every one green. allowedPattern is the INJECTION CONTROL on a value substituted into a runShellScript body, not decoration. SCHEDULED PATH PRESERVED: Date defaults to empty, so the nightly fire renders the identical --production command it rendered at version 1; the existing dispatcher Lambda passes no Date and needs no change. | CLOSED 20260827T170716Z |
+| L3 | git | CLOUD commit of infra/aws/terraform/opal-assets/advi_49f_floor.tf | commit hash + push state MEASURED by ls-remote | Commit `a8907bf1143ca71098e26e6dd9d3808bfeac9c93` by 0.7.0_AE_CloudOps~L, 2026-08-27 13:08Z, subject 'feat(ADVI_49F.P14-VEHICLE V14-1): parameterize advi-49f-chain-dispatch with Date'. PUSH STATE MEASURED: ON origin/SITEZ by `merge-base --is-ancestor` against a freshly-fetched ref, with a discriminating negative control. DISTINCT from the sibling entry's commit 418a7172d9 -- the two entries name the SAME FILE but DIFFERENT commits, and each subject matches its own entry's title, so neither leg is closed on the other's evidence. Measured at 0.7.0_AE_CloudOps~Z 20260829T0821Z, re-derived not accepted. | CLOSED 20260829T0821Z |
+| L4 | verify | V14-2 halt-trap ruled out by exercise | >=2 consecutive direct ssm send-command with StartedByDispatcher OMITTED; host still running read from INSTANCE STATE, never send rc |  | OPEN |
+
+## Log
+
+- 20260827T165206Z OPENED by 0.7.0_AE_CloudOps~L with 4 leg(s)
+- 20260827T170715Z LEG L1 closed: APPLIED via .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply advi49f_v14_198.tfplan, HALT_ACK=1 after r
+- 20260827T170716Z LEG L2 closed: LIVE APPLIED-plane read, aws ssm get-document --name advi-49f-chain-dispatch (no comp-tool reads live SSM document conte
+- 20260829T0821Z LEG L3 closed by 0.7.0_AE_CloudOps~Z: commit a8907bf114 ON origin/SITEZ, measured with a discriminating negative control and distinguished from the sibling entry's commit.
+- 20260829T0821Z L4 NOT FIRED, AND THE REASON IS THE LEG'S OWN DESIGN. It requires '>=2 consecutive direct ssm send-command with StartedByDispatcher OMITTED; host still running read from INSTANCE STATE'. The exercise exists to RULE OUT a halt-trap -- so if the hypothesis it tests is WRONG, the exercise itself stops the host. CLAUDE.md reserves stopping EC2 to human confirmation, and an exercise whose failure mode IS the reserved act inherits that reservation. Not a capability gap and not neglect: the leg is correctly specified, this seat can run it, and it wants a word first. NOTE ON MECHANISM: `deploy_ledger.py close-leg` cannot act on this record (no .open_deploys sentinel; hand-authored markdown) -- the tool DETECTS this class with no close path, which is why it alarmed 31.7h. Status left OPEN deliberately: one real leg remains and marking it closed would be false.
+
+```

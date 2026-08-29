@@ -2,12 +2,13 @@
   "_meta": {
     "artifact": "Guard 2 CLOSED FIELD-PATH LIST (machine-consumed)",
     "derived_from": "docs/architecture/MDPF_CANONICAL_PLATINUM_DELIVERABLE_CONTRACT.md @885aafd35 section B0+B (B0 process-time exemption class ruled ~0155Z; B1 as amended @6c50710af)",
-    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment 1: all transitions absent->present, routed via SURPRISE 002451Z) -> @6c50710af re-derivation ~0045Z (B1 amendment 2, Andrew-direct 'no carve outs': basis/source@global absent->null, composite struck) -> @885aafd35 re-derivation ~0200Z (B0: EXEMPT-PROCESS-TIME class, four constraints; each path CONFIRMED against the 011035Z fixture per records/B0_PROCESS_TIME_VERIFICATION_20260807.md)",
+    "derivation_history": "@a3106d585 first derivation 2026-08-07 ~0010Z -> @850075894 re-derivation ~0030Z (B1 amendment 1: all transitions absent->present, routed via SURPRISE 002451Z) -> @6c50710af re-derivation ~0045Z (B1 amendment 2, Andrew-direct 'no carve outs': basis/source@global absent->null, composite struck) -> @885aafd35 re-derivation ~0200Z (B0: EXEMPT-PROCESS-TIME class, four constraints; each path CONFIRMED against the 011035Z fixture per records/B0_PROCESS_TIME_VERIFICATION_20260807.md) -> +category-views 2026-08-28 ~21:0xZ (B0 constraint-2 CONTRACT AMENDMENT, authorized by 1.0.0_SA_CTO~Z msg 13938 which ruled the entry AUTHORIZED and required its process-time list to name process_time; authored by 3.0.0_SA_CVO~Z against the GOLD plane, see process_time_class.verification_category_views)",
     "process_time_class": {
       "authority": "CONTRACT B0 @885aafd35, four constraints: (1) enumerated EXACT paths, no wildcards; (2) list CLOSED, additions are contract amendments; (3) data-as-of fields PERMANENTLY INELIGIBLE -- the comparator REFUSES TO RUN if this list ever touches one; (4) exempt != unchecked -- the positive assertion (process time absent from business-payload equality and data-as-of derivation) is made separately in every report.",
       "ineligible_forever": ["as_of_last", "as_of_first", "period", "count_as_of", "source_vintage_last", "data_as_of"],
       "verification": "Each entry confirmed against baseline_manifest_20260807T011035Z.json bodies (not adopted from the contract document): _provenance.written_at present on all 12 as publish instants 01:06:0xZ; generated_at present ONLY on account-distribution (runtime instants, microsecond precision); last_updated present ONLY on aum-metrics (runtime instants). Manifest process-time fields are OUT OF THIS COMPARATOR'S SURFACE until run/publish manifests become compared artifacts -- deliberately not listed rather than listed unverifiable."
     },
+    "verification_category_views": "AUTHORED AGAINST THE GOLD PLANE, NOT THE PLATINUM SIBLINGS -- the three pre-existing types all exempt _provenance.written_at, and THE GOLD PLANE NEVER EMITS IT (measured: gold _provenance = {artifact_type, config_hashes, data_as_of, process_time, producer, scope, source_vintage_age_hours, trigger} at 4 of 4 scopes; written_at absent at 4 of 4). Copying the sibling pattern would have stopped the KeyError crash and still returned a FALSE conflict on every same-as_of run. THE THREE PATHS ARE IN THREE DIFFERENT STATES and only one of them is live today (Rule 24(iv) STATE COHERENCE -- naming what this remedy does NOT move): (a) _provenance.process_time is LIVE AND VARYING -- MEASURED 2026-08-28T13:30:37Z at 4 of 4 scopes, set from process_start at mdpf_gold_consolidator.py:1392; IT ALONE PRODUCES THE FALSE CONFLICT this entry exists to prevent. (b) _provenance.source_vintage_age_hours is EMITTED BUT NULL at 4 of 4 scopes today, so it is INERT NOW AND ARMS LATER, when the custody leg populates it; it is a run-clock function of process_start too (:1395, vintage_age_hours(doc, process_start), author comment :1393-1394 naming it clock-derived), so it is exempted BEFORE it can fire rather than after. (c) _provenance.written_at is NEVER EMITTED ON THIS PLANE AT ALL -- structurally inert, retained per the CTO~Z ruling for the platinum counterpart, and excusing nothing here. NONE OF THE THREE IS A MEASURED DIFFERENCE THAT WAS EXCUSED; (a) is the only one that would diff today. DELIBERATELY NOT EXEMPT: trigger (scheduled vs adhoc is a real difference; exempting it would let an ad-hoc QA run silently overwrite a scheduled artifact as unchanged), config_hashes (a config change IS a business change), producer/scope/artifact_type/data_as_of (stable or data). B0 constraint-3 CHECKED AT THE GUARD, not the list: load_process_time_paths splits each path on . and exact-matches every SEGMENT against INELIGIBLE_DATA_AS_OF = {as_of_last, as_of_first, period, count_as_of, source_vintage_last, data_as_of}; neither process_time nor source_vintage_age_hours appears (note source_vintage_LAST is ineligible and is a DIFFERENT field from source_vintage_AGE_HOURS). exemptions:[] is present and REQUIRED, not decorative -- r7_comparator.py:284 subscripts ['exemptions'] UNGUARDED, the same crash class as the missing type key.",
     "governing": [
       "MDPF_CANONICAL_PLATINUM_PRD.md @24d3eb2f8 section 5.5 (Guard 2)",
       "TO MDPF_CANPLAT.G2 @f123fbf6e"
@@ -15,7 +16,7 @@
     "author": "3.0.0_SA_CVO~Z",
     "date": "2026-08-07",
     "rule": "A value-diff vs the pinned baseline is excused ONLY by a matching entry in 'exemptions'. Entries in 'decision_pending' and 'path_pending' excuse NOTHING. A diff not excused is a REGRESSION.",
-    "amendment_protocol": "This list re-derives ONLY from an amended CONTRACT section B; each derivation is a new commit, cited in every comparator report."
+    "amendment_protocol": "This list re-derives ONLY from an amended CONTRACT section B; each derivation is a new commit, cited in every comparator report. ⛔ EVERY artifact_types ENTRY MUST CARRY BOTH 'exemptions' AND 'process_time_exemptions' KEYS, even when empty. r7_comparator.py:284 reads ['exemptions'] with an UNGUARDED SUBSCRIPT and :139 subscripts ['artifact_types'][atype] the same way -- a missing type key, or a present type missing 'exemptions', RAISES KeyError ON THE WRITE PATH and kills the run. This is not hypothetical: category-views existed in S3 from 2026-08-28T13:31Z while undeclared here, and the 13:30Z gold run would have crashed on it (fixed @7604f2b4bd, deployed 21:10:26Z). ⛔ AND DO NOT COPY A SIBLING'S process_time_exemptions: the three 2026-08-07 entries were derived against PLATINUM publish instants and exempt _provenance.written_at, which THE GOLD PLANE NEVER EMITS (measured 0 at 4 of 4 scopes). A sibling-copied entry stops the crash and returns a FALSE conflict on every same-as_of run forever. MEASURE the provenance fields on the artifact you are actually declaring, and EXERCISE the new entry with the sibling pattern as a negative arm -- if the two agree, one of them has learned nothing."
   },
   "scopes": ["global", "49financial", "inflection", "cottonwood"],
   "artifact_types": {
@@ -77,6 +78,22 @@
         {"name": "non-model assets detail fold-in", "scopes": ["global", "49financial", "inflection", "cottonwood"], "authority": "CONTRACT B3 (W-6): FOLDED IN, concrete field paths not yet named in section B. Excuses NOTHING until a CONTRACT amendment names the paths and this list re-derives."}
       ],
       "array_invariants_note": "Every parallel array has len == n_dates == len(dates); non_model_aua and account_count_total carry null for unreached dates, never 0 (CONTRACT B3). Enforced by R2/shape checks, not by exemption."
+    },
+    "category-views": {
+      "canonical_fields": [
+        "_provenance", "as_of", "firm_id", "nodes", "schema_version",
+        "scope", "scope_note", "scope_set", "sums", "view_plane",
+        "sums.gold_plane", "sums.insurance_excluded", "sums.total_aua", "sums.view_plane"
+      ],
+      "canonical_fields_note": "Top-level set MEASURED on the SERVED GOLD object at 4 of 4 scopes (global, 49financial, inflection, cottonwood) @2026-08-27, identical at all four -- derived from the gold plane, NOT adopted from the platinum siblings. sums.* enumerated because those four slots are PRODUCER-STRUCTURAL (emitted regardless of data). nodes.* members (Alternatives, Client, Insurance, Models, SMA) are DELIBERATELY NOT ENUMERATED although identical at 4 of 4 today: they are DATA-DRIVEN members of the category tree, and declaring a data fact as a shape fact would make a legitimate empty category read as a REGRESSION. Rule 24(ii) SAME GRAIN.",
+      "exemptions": [],
+      "process_time_exemptions": [
+        "_provenance.written_at",
+        "_provenance.process_time",
+        "_provenance.source_vintage_age_hours"
+      ],
+      "decision_pending": [],
+      "path_pending": []
     }
   }
 }
