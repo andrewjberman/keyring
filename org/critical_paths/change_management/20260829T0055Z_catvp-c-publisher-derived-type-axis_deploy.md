@@ -1,5 +1,22 @@
 # DEPLOY LEDGER -- CATVP-c publisher: derived artifact-type axis
 
+> ⛔ **THIS FILE IS THE NARRATIVE DETAIL. THE PRIMARY, GATE-VISIBLE RECORD IS THE SENTINEL.**
+> Added 2026-08-29T01:15Z on `2.0.0_SA_COO~Z`'s 15074 -- a hand-authored markdown ledger carries no
+> `.open_deploys/*.json` sentinel, so it is **structurally invisible to NEVER#6's PRIMARY scan** and
+> is caught only by the secondary markdown sweep that exists because this class happened before.
+> **That mattered here specifically**: this deploy is half-complete BY DESIGN for ~12.6h, which is
+> exactly the state the gate exists to make visible, and the window outlasts sessions.
+> ```
+>   PRIMARY   .open_deploys/catvp-c-publisher-derived-type-axis.json          (sentinel, gate-visible)
+>   PRIMARY   change_management/20260829T0114Z_catvp-c-publisher-derived-type-axis_deploy_completion.md
+>             (tool-written; REGENERATED on every leg close -- never hand-edit it)
+>   THIS FILE narrative detail: pre-state, the window argument, the expected-conflict note, rollback
+>   JOIN KEY  the slug `catvp-c-publisher-derived-type-axis` appears in all three
+> ```
+> **If this file and the sentinel ever disagree, THE SENTINEL IS RIGHT** -- it is what the gate reads
+> and what `close-leg` updates. L1 is CLOSED in it with the full rung-(a) proof; **L2 is OPEN and is
+> the 13:50Z fire.**
+
 **Status:** OPEN
 **Opened:** 2026-08-29T00:55Z
 **Executor:** `0.7.0_AE_CloudOps~Z`
