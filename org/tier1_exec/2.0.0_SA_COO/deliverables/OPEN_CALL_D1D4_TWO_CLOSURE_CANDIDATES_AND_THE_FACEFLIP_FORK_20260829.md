@@ -1,4 +1,4 @@
-# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (5 cards, ONE WITHDRAWN -- **4 LIVE**, 2026-08-29 ~07:4xZ; ⛔ **CARD 2 IS WITHDRAWN AS OF ~14:1xZ AND MUST NOT BE ANSWERED** -- its subject gained two open TOs and an in-flight deploy after it was written, by the issuer's own hand; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
+# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (7 ids issued, ONE WITHDRAWN + ONE ANSWERED-AND-DOWN -- **5 LIVE: 1, 3, 4, 5, 7**; ⛔ **CARD NUMBERS ARE STABLE IDS AND ARE NEVER REUSED** -- there is no live card 6, and the `of 7` denominator is the highest id issued, not the live count, 2026-08-29 ~07:4xZ; ⛔ **CARD 2 IS WITHDRAWN AS OF ~14:1xZ AND MUST NOT BE ANSWERED** -- its subject gained two open TOs and an in-flight deploy after it was written, by the issuer's own hand; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
 
 **Why this file exists and is not just a message:** the finding below was routed to
 `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` at 20260829T072xZ and lived ONLY in that message. Measured
@@ -13,7 +13,10 @@ recommendation is his to accept or refuse rather than mine to act on.
 
 ---
 
-BLOCKING (nothing waits on the word operationally — but the register is wrong until it comes)
+BLOCKING — ⛔ **CARD 7 FALSIFIES THE OLD HEADER ON THIS SECTION, WHICH READ "nothing waits on
+the word operationally."** That was true of cards 1-2, which only correct the register. **CARD 7 HOLDS
+LIVE WORK:** `D1_CATVIEWS` leg C is BARRED until the word — building, emitting or serving any artifact
+sourced from `0833` for that item, including lighting ALT Strategies off the five accounts.
 
 ⭐ **EVERY LIVE CARD RE-VERIFIED AGAINST THE WORLD AT 2026-08-29T14:14Z, not merely re-read.** A card
 is a claim with a timestamp, and card 2 aged into a WRONG RECOMMENDATION in four hours without
@@ -32,7 +35,37 @@ anything about it looking out of date. What was measured this pass:
 was caught by a routine board read, and the other four were then verified rather than assumed —
 because a register that ages one card ages the same way everywhere.
 
-+-- CALL 1 of 5 ---------------------------------------------------------------+
++-- CALL 7 of 7 -- ⛔ NOT A RE-ASK OF THE CLOSED 0833 CALL. READ THE FIRST LINE. ---+
+  ⛔ **THIS IS NOT THE 49F MODEL-PORTFOLIOS / UNSUPERVISED QUESTION YOU CLOSED 2026-08-28
+  ~22:47Z.** That one is settled and nobody is re-opening it. **SMA is a DIFFERENT L0 NODE.**
+  **The five Tax SMA roster accounts are custodied in Schwab master `0833`. May they populate
+  the `SMA > ALT Strategies` node? (a) yes / (b) no.**
+  You said *"track those acct numbers in schwab 0824"* — measured, all five are in `0833` and
+  none is in `0824`. `D1_CATVIEWS` leg C is barred until this word.
+  -------------------------------------------------------------------------------
+  **REC —** **(a) YES, scoped to the SMA node ONLY.** Measured by `0.4.0_DS_ClientPlatform~Z`:
+  the five roster accounts resolve **5 of 5 in `0833`** and **0 of 5 in `0824`** on `dim_balance`
+  2026-08-27 (7,362 vs 7,282 accounts, **a positive control on EACH frame**, key form identical
+  10-digit zero-padded) — **so the `0824` zero is a REAL ABSENCE, not a grain-mismatched join.**
+  `1.0.0_SA_CTO~Z` reads your Models ruling as not binding on SMA and I agree — ⛔ **but neither
+  of us may ADOPT that reading; CLAUDE.md says relay verbatim scope and ASK when wider seems
+  plausible, which is the entire reason this is a card and not a decision.**
+  ⚠ **THE IDENTIFIER MAPPING IS MEASURED; THE INTENT MAPPING IS NOT** — nobody has confirmed
+  these are the same `0824`/`0833` you mean. That half is yours and cannot be measured here.
+  ⭐ **WHY THIS CARD IS FOURTEEN HOURS LATE, and it is my defect, not a discovery:** I identified
+  this exact conflict at 03:47Z, framed it correctly, and BARRED the work — **into an MCP message
+  to `0.0.0_AB_MSTR~Z`.** This file's own header says a call whose only carrier is a message is a
+  call that will not reach you. I wrote that sentence and then did it again. `0.4.0_DS_ClientPlatform~Z`
+  found it by asking why leg C had no card.
+  ⛔ **AND THE CLOSED CARD WAS PART OF THE MECHANISM:** `OPEN_CALL_49F_UNSUPERVISED_138M_20260825.md`
+  ends *"NO SEAT RE-ASKS THIS."* **That is correct for the Models question and it does not
+  distinguish the question it settled from the one it did not** — a seat holding leg C reads it
+  and reasonably declines to card the SMA question. **A re-ask prohibition deters the adjacent
+  question too, and nothing about it announces that.**
++-------------------------------------------------------------------------------+
+
+
++-- CALL 1 of 7 ---------------------------------------------------------------+
   **`D1_NAMEDISCOVERY` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 3 TO faces read `COMPLETE — ROUND 1 ACCEPTED + CERTIFIED`; open TOs ZERO
   (`total=0, scanned=2172`, positive-controlled against `D1_CATVIEWS` -> `total=3`).
@@ -46,7 +79,7 @@ because a register that ages one card ages the same way everywhere.
   acts. Here neither is. **The close needs one smoke and one word, or (b) and I carry it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 2 of 5 -- ⛔ WITHDRAWN 2026-08-29 ~14:1xZ. DO NOT ANSWER IT. ------------+
++-- CALL 2 of 7 -- ⛔ WITHDRAWN 2026-08-29 ~14:1xZ. DO NOT ANSWER IT. ------------+
   ⛔ **THIS CARD SAID `ETFS_POSITIONING` IS WORK-COMPLETE AND RECOMMENDED (a) CLOSE. THAT IS NOW
   FALSE, AND THE ISSUER IS THE ONE WHO MADE IT FALSE.** Since it was written this morning,
   `2.0.0_SA_COO~Z` cut **TWO** task orders into that very project:
@@ -73,7 +106,7 @@ because a register that ages one card ages the same way everywhere.
 
 CARRIED (answer whenever — nothing is blocked)
 
-+-- CALL 3 of 5 ---------------------------------------------------------------+
++-- CALL 3 of 7 ---------------------------------------------------------------+
   **The face-flip check: build it now, or does D1+D4 keep priority? (a) build / (b) hold.**
   YOU authorized it 2026-08-26 ~21:07Z (Card B) and routed it verbatim: *"the face-flip check
   enters Rule 27 as a build item — COO routes/seats it under the standing gates."* Spec exists
@@ -91,7 +124,7 @@ CARRIED (answer whenever — nothing is blocked)
   STATUS that lies. **The project-level analogue is a gap in the spec, not a bug in it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 4 of 5 ---------------------------------------------------------------+
++-- CALL 4 of 7 ---------------------------------------------------------------+
   **Five UNTRACKED alarm/monitor `.tf` files sit in the estate's terraform trees, 1,008
   lines, declaring 7 CloudWatch metric alarms. Commit, delete, or apply? (a) delete /
   (b) commit as held drafts / (c) something else.**
@@ -112,7 +145,7 @@ CARRIED (answer whenever — nothing is blocked)
 +-------------------------------------------------------------------------------+
 
 
-+-- CALL 5 of 5 ---------------------------------------------------------------+
++-- CALL 5 of 7 ---------------------------------------------------------------+
   **`ADVI_49F` P14-VEHICLE V14-1's last open leg is an exercise whose FAILURE MODE STOPS AN
   EC2 HOST. Authorize it? (a) run it / (b) hold.** This seat is `ADVI_49F`'s `coo_lane`, so
   the word would normally be mine — **but CLAUDE.md reserves stopping EC2 to HUMAN
@@ -173,5 +206,8 @@ is re-opened or a new one is cut, and neither is contradicted by closing today.
 ---
 
 **raised:** `2.0.0_SA_COO~Z` · **2026-08-29 ~07:4xZ** · **status: calls 1–2 at your next terminal;
-cards 3–5 whenever — cards 4 and 5 are not mine to close either way.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 (`ETFS_INGEST`), all on the
-13:30Z / 13:00Z scheduled fires — verified ENABLED on both EventBridge planes this session.
+cards 3–5 whenever — cards 4 and 5 are not mine to close either way.** D1 has 3 open faces (`D1_CATVIEWS`), D4 has 2 — ⛔ **and they are `ETFS_POSITIONING`, NOT
+`ETFS_INGEST`, which reached ZERO open TOs today.** Corrected 2026-08-29 ~17:2xZ off a live board read;
+the superseded line said `ETFS_INGEST` and named the 13:30Z / 13:00Z fires. **The D4 pair now rides
+`etfs-netassets-daily` at 22:00Z tonight and `2026-09-01T13:00Z` — re-verified ENABLED at
+`cron(0 22 * * ? *)` this tick, with a negative control that fired.**
