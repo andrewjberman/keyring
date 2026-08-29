@@ -37,7 +37,14 @@ Committed `84fda0fd04`; deliberately withheld from apply until now per 14197.
 
 ## PIN
 
-`5b58c5bfced4acee9442b08a5824b3f073176fb8` -- HEAD, and it is
+**BUILT AT `dc14d649bb3e8e7853ed9f648b08f7ca7017b7c8`**, which is THIS LEDGER'S OWN OPENING COMMIT --
+opening the entry advanced HEAD, so the build pinned the ledger commit rather than the revert named
+below. **Not a drift and not a substitution: verified byte-identical across the two pins for all
+three packaged inputs** (`lambda_function.py`, `mdpf_gold_consolidator.py`, `partner_roster.json`),
+and `dc14d649bb` changes exactly one file -- this ledger. Recorded because `BUILD_MANIFEST` stamps
+the real pin, and a ledger naming a different one would read as a discrepancy to the next auditor.
+
+`5b58c5bfced4acee9442b08a5824b3f073176fb8` -- the substantive parent, and it is
 `0.4.0_DS_ClientPlatform~Z`'s revert of the consolidator collapse. **That revert is the
 PRECONDITION for this build**: while the collapse was in the tree the builder REFUSED
 (`ALL_SCOPE ... is not a string constant (got Attribute)`), so no package could be produced at all.
@@ -82,6 +89,67 @@ and the pre-state hash is recorded above, so the prior state is fully specified.
 pinned to a specific object version (`yang-lambda/main.tf:38`), so rollback is a version re-point and
 cannot land partially.**
 
-## CLOSE-OUT
+## RUNG (a) -- DEPLOYED AND VERIFIED AT THE EXTRACTED PACKAGE. 2026-08-29T01:01Z.
 
-_(rung (a) recorded at apply; rung (b) after the 13:50Z fire. This entry stays OPEN until both.)_
+### The act
+
+```
+  ARTIFACT UPLOAD  s3://opal-313476888478-lambda-artifacts/opal-assets/
+                   opal-assets-mdpf-portal-publisher.zip
+    new VersionId  ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql   53,286 B   00:58:31Z
+    metadata content-sha256 ed7e74b91d47ac6c... -- READ BACK and matches the body
+  PLAN (targeted)  0 to add, 1 to change, 0 to destroy
+                   s3_object_version 9nqnBHz63F... -> ZLaQC2nGuQ...
+                   source_code_hash  f613200ac9... -> ed7e74b91d...
+                   28 attributes and 4 blocks unchanged
+  APPLY  .tools/safe-apply.sh (NEVER#9 -- no bare apply, no update-function-code)
+    HALT-GATE FIRED AND BLOCKED on 2 pending messages. BOTH READ IN FULL before HALT_ACK=1:
+      4349 / 4355, both 2026-08-21, both `2.0.0_SA_COO~Z`, both WITHDRAWALS of D7_TICKETING
+      apply TOs, both stating in terms "nothing to approve, decline or hand back; neither is
+      a gate". Neither STOP-class, neither touching MDPF. Acked on the content, not the age.
+    RESULT  Apply complete! Resources: 0 added, 1 changed, 0 destroyed. (6s)
+```
+
+### Rung (a) evidence -- at the EXTRACTED PACKAGE, never a moved CodeSha256
+
+```
+  live CodeSha256   7X50uR1HrGyeEHZ4FWyHBNwTxt/XXJq5GNmR/eFfWE0=
+  LastModified      2026-08-29T01:01:04Z
+  BYTE-IDENTITY CHAIN, one hash end to end:
+    built ed7e74b91d47ac6c... -> uploaded ed7e74b9... -> DOWNLOADED FROM THE FUNCTION ed7e74b9...
+  MEMBERS  [lambda_function.py, partner_roster.json, artifact_types.json, BUILD_MANIFEST.json]
+    artifact_types.json  PRESENT  <- the build-generated member; ABSENT pre-deploy
+    types: account-distribution, aggregate-aua-timeseries, aum-metrics, category-views
+    derived_from  mdpf_gold_consolidator.py @dc14d649bb ; hash tie to BUILD_MANIFEST TRUE
+  NEGATIVE CONTROL  zzz_no_such_token_9999 -> 0 occurrences (the matcher can return zero)
+```
+
+⚠ **ONE CRITERION IS MET IN SUBSTANCE AND NOT ON ITS LITERAL WORDING, AND I AM NOT ROUNDING IT.**
+The issuer's (a) says `RULED_TYPES -> 0`. **Measured on the deployed bytes: 1 OCCURRENCE.** It is
+line 93, a COMMENT (*"# This was a literal 3-tuple, RULED_TYPES, frozen at the 2026-08-06 capability
+snapshot"*). Classified two ways rather than asserted:
+```
+  every occurrence printed and labelled  ->  1, COMMENT
+  ast.parse module-level assignments containing RULED_TYPES  ->  []   THE SYMBOL IS ABSENT
+  ast has ARTIFACT_TYPES_MEMBER assignment                   ->  True
+```
+**The literal frame is gone; a token census cannot say that and an AST read can.** Reported as 1
+occurrence with its unit and its classification, per `3.0.0_SA_CVO~Z` 14905 -- a bare `0` here would
+have been the more convenient number and the less true one.
+
+## RUNG (b) -- OUTSTANDING. THIS ENTRY REMAINS OPEN.
+
+**The 13:50Z scheduled fire on 2026-08-29 must complete and report completeness CORRECTLY.**
+(a) without (b) is NOT done -- issuer, 15025.
+
+```
+  EXPECT  category-views INSIDE `expected`; missing_pairs [];
+          unexpected_pairs NO LONGER listing the four category-views pairs
+  IF all_present:false  -> the signal has done its job. Diagnose; revert before Monday if
+          unresolved. ROLLBACK = re-point to VersionId 9nqnBHz63Fu8qvo4Z.gnfFsL_jtWidyS and
+          safe-apply. Sunday's 13:50Z fire is the retry.
+  UNRELATED AND EXPECTED  today's gold run logs `conflict` on category-views where it logged
+          `unchanged` -- scope_note is correctly NOT exempt (3.0.0_SA_CVO~Z 15031). Not a
+          regression, not this deploy's doing, and nobody relands to clear it.
+```
+**Any seat may close this entry by reading the 13:50Z manifest against the EXPECT block above.**
