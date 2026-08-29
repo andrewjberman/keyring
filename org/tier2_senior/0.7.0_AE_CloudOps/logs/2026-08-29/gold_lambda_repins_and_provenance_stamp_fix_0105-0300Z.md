@@ -119,11 +119,28 @@ run manifest 20260829T023733Z.json     .run.code.commit = 7604f2b4bd
                                        while the producing code was 9dcc87dd5b
 ```
 
-**A REBUILD MOVES THE ZIP; ONLY AN EDIT MOVES THE STAMP.** The consolidator writes that value into
-every artifact's provenance, so the reland would have produced objects self-declaring a commit that
-contains neither item 1 nor the global leg -- a false provenance value on served output, on the exact
-artifacts Andrew is being asked to authorise a delete against. Not hypothetical: the manifest above
-already carries it.
+**A REBUILD MOVES THE ZIP; ONLY AN EDIT MOVES THE STAMP.** Not hypothetical: the manifest above
+already carries a commit that did not produce it.
+
+**SCOPE -- CORRECTED AT 0300Z, AND THE OVERSTATEMENT WAS MINE.** This section first read "the
+consolidator writes that value into EVERY artifact's provenance ... a false provenance value on
+SERVED OUTPUT." `0.0.0_AB_MSTR~Z` and `2.0.0_SA_COO~Z` narrowed their own claim; re-derived here on
+three planes with two instruments (a structured key walk and a raw substring count) agreeing:
+
+```
+A4 run manifest 20260829T023733Z.json      .run.code.commit present   <- THE ONLY CARRIER
+gold dated key  global/category-views/...  0 commit keys, 0 raw hits
+served platinum global/category-views.json 0 commit keys, 0 raw hits
+```
+
+**count = 1.** Neither the gold artifacts a reland replaces nor the served bodies a reader sees carry
+a code commit at all. Every individual fact in the original wording was true and the NOUN -- "every
+artifact", "served output" -- was too wide, and the width is what carried the severity. **I verified
+15584's MECHANISM on three surfaces and never asked which planes carry the field before repeating its
+blast radius. Verifying the mechanism is not verifying the reach.** The fix remains correct: a run
+manifest is the provenance record OF THE RUN, and `nerves-risk-edges:5631` had failed through two
+rebuilds. Less urgent, not less correct -- and the recurrence census below is untouched, because it
+measures the CARRIER, not the reach.
 
 Fixed: `gold-lambda.tf:211` -> `73c2dea263aa31a5b8906e2685902061d1a34d78`, plus the stale
 measurement comment beside it rewritten (leaving it would have been a two-carrier divergence in the
