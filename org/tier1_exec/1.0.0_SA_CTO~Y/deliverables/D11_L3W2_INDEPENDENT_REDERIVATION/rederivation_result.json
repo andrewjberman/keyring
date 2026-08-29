@@ -246,7 +246,15 @@
   "seat": "1.0.0_SA_CTO~Y",
   "role": "second instrument, different code path -- item (a) per 1.0.0_SA_CTO~X 80816 / issuer 80827",
   "subject": "COX fusion run 1 -- f12feb2516 (intersection encoding) and its union re-cut @1f5d4f6136 (+ restamp ab8a2276bb)",
-  "code": "rederive_l3w2.py beside this file (sha256 3f12fdd83beca358)",
+  "code": {
+   "executed_source": "rederive_l3w2.executed.py.txt",
+   "executed_script_sha256": "3f12fdd83beca358ef08fdfaf2b34c814df67c4f7b0d04ada8202322711de986",
+   "committed_source": "rederive_l3w2.py",
+   "committed_script_sha256": "97cd9afeb73741b93e695331f1fd8388fd8bb45f947c8edd3235d30b6469692c",
+   "equivalence_receipt": "EXECUTED_SOURCE_RECEIPT.json",
+   "superseded_field_value": "rederive_l3w2.py beside this file (sha256 3f12fdd83beca358)",
+   "why": "the first emission cited a TRUNCATED hash of the executed bytes and committed a ruff-formatted copy under the same name; CRO~X 060041Z / CVO~X 060124Z refused the carrier on provenance. This field now carries both FULL identities and the receipt; the executed bytes are committed beside the instrument. No result value changed (leaf diff printed at repair time)."
+  },
   "snf_implementation": "Wang et al. 2014 as written here: P = W/(2*rowsum) off-diagonal with 0.5 self-mass; S = row-normalised K-NN kernel (stable argsort tie-break, ascending index); each iteration P_v <- S_v (mean of other P) S_v^T, re-normalised and symmetrised; fused = mean(P_v), symmetrised. float32. K=20 T=20.",
   "what_reproduces_exactly": [
    "view1 AUC 0.7429 (1,820 frame) and 0.7404 (1,941 frame)",

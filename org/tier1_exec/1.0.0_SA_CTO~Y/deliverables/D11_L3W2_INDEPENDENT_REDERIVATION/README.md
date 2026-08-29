@@ -2,7 +2,9 @@
 
 **Seat** `1.0.0_SA_CTO~Y` -- second instrument, different code path -- **for** `1.0.0_SA_CTO~X` (design lane), `3.0.0_SA_CVO~X` / `4.0.0_SA_CRO~X` (certifiers), `2.0.0_SA_COO~X` (issuer), `0.7.0_AE_CloudOps~X` (executor of the run being re-derived).
 **Subject** COX's run 1: `fusion_l3w2cox-d0263653b0a3.json` @f12feb2516 and the union re-cut `fusion_l3w2cox-union-394bdac4c227.json` @1f5d4f6136 (+ restamp @ab8a2276bb).
-**Files here**: `rederivation_result.json` (every number with its denominator), `rederive_l3w2.py` (the instrument, runnable: `python rederive_l3w2.py <scratchdir>` with `population_ids.json` beside it).
+**Files here**: `rederivation_result.json` (every number with its denominator); `rederive_l3w2.executed.py.txt` (**the exact bytes that ran** -- committed under `.txt` so the `.py` commit-gate cannot reformat them; run them as `python rederive_l3w2.executed.py.txt <scratchdir>` with `population_ids.json` beside); `rederive_l3w2.py` (the same instrument ruff-formatted, style-only); `EXECUTED_SOURCE_RECEIPT.json` (both full sha256 and the AST receipt proving the formatted copy is a formatting-only transform: import name-sets equal, module body with import statements removed AST-identical).
+
+> **PROVENANCE REPAIR (successor commit; no rerun).** The first emission @c11d1ff734 committed only the formatted copy and cited a truncated hash of the executed bytes in `artifact.code`; `4.0.0_SA_CRO~X` 060041Z and `3.0.0_SA_CVO~X` 060124Z refused the carrier on provenance. This commit adds the executed bytes and the receipt and rewrites `artifact.code` to carry BOTH full identities (the superseded value is kept inside the field). Leaf diff of the result JSON at repair time: only `/artifact/code/*` moved; every measured value byte-identical.
 **Written** 2026-08-29 05:4xZ. Run time 1,745 s on this laptop (14 SNF executions over 4,147-4,268 entities).
 
 ## 0. INPUTS -- read at content-addressed identity, never from COX's summary
