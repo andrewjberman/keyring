@@ -79,6 +79,20 @@ book-definition"*. **For a gated TO the gate is the blocker and the dead seat is
   was established from the TOs' OWN STATUS PROSE, not the roster cross, and is unaffected. And the
   root finding was VINDICATED BY EVENTS -- one DS respawn was named as the BDPARITY chain's root,
   COO seated ~C, and the chain moved within the hour.
+
+  *** THIRD MARK, 18:03Z -- THE SECOND MARK'S DIAGNOSIS IS WRONG. ORIGINAL AND SECOND KEPT. ***
+  The second mark blamed "stale faces". MEASURED at source after 2.0.0_SA_COO 83455 challenged it:
+  the BDPARITY faces DO name ~C -- that seat re-addressed all three base -> ~C @31b1499c96 BEFORE
+  seating, because /mstr-spawn step 1d refuses to seat a base. Fresh `to-check --all` at 18:00Z:
+  BDPARITY 3 of 5 faces name a live serial; TOTAL 8 of 24, not 7 of 28.
+  THE REAL DEFECT IS MINE AND IT IS NOT THE INSTRUMENT'S DESIGN: my tick-61 cross re-read the
+  ROSTER live and REUSED A TO LIST I HARDCODED AT TICK 54, ninety minutes earlier. I refreshed one
+  input of a two-input computation, and said so proudly in the same message.
+  AND MY OWN STEP 0 PRINTED `open TOs 24` IN THAT SAME TICK WHILE THE CROSS PRINTED 28. Two numbers
+  in one tick's output disagreed and I published the wrong one; 2.0.0_SA_COO caught it, not me.
+  WHAT SURVIVES, on COO's instance rather than mine: 0.4.0_DS_ClientPlatform~V is doing allocated
+  work and appears on NO TO face at all (`--assignee ~V` returns zero rows), which no face-based
+  instrument can ever see. BDPARITY was the case that WORKED. Corrected @83472-83474.
 ```
 **No spawn asked on this measurement.** The unambiguous items are the two zero-TO projects, and TO
 cuts are `2.0.0_SA_COO`'s under Rule 27.
