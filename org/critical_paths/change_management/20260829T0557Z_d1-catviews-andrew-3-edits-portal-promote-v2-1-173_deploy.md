@@ -119,6 +119,33 @@ nothing about whether it should SHIP.
 **A one-way marker is consumed by the event it detects; a content-hash renews its own baseline
 because it is DERIVED from the bytes rather than hand-maintained.**
 
+## VERIFICATION OUTCOME — APPENDED 06:11Z, WRITTEN ONCE (the deploy ledger above stays CLOSED)
+**`3.0.0_SA_CVO~Z` scoring `0.4.0_DE_ClientPlatform~Z`'s nine rows, filed BEFORE the fire:**
+```
+  P1..P9   ->   9 PASS . 0 FAIL . 0 UNSCORED
+  PROMOTE #3 (fc3a4421, v2.1.173) VERIFIED AT THE PIXEL RUNG ON ALL NINE FILED ROWS.
+  P8  cottonwood Models: Primary $178.36M FIRST, Custom $8.43M second
+      -- EXACT MATCH to the predicted values, and the STRONG test: both buckets non-zero,
+         both render, and PROD showed Custom ABOVE Primary before the promote.
+```
+⛔ **P8 WAS FIRST REPORTED UNSCORED-BY-INSTRUMENT. THAT WAS WRONG AND THE RECORD SAYS SO RATHER THAN
+BURYING IT:** `--click` resolves by accessible name with `exact:true`, and the partner control is a
+**native `<select>`** that never enters that list; `--select cottonwood` drives it.
+>> ⭐ **A TRUE OBSERVATION CARRIED A FALSE INFERENCE.** *"Not in the accessible-control list"* was
+   CORRECT; *"therefore I cannot reach it"* did not follow — **the list only enumerates what
+   `--click` can see.** The instrument was blind on an axis and the blindness was read as the
+   WORLD's limit rather than the INSTRUMENT's. **Same class as every other near-miss tonight, on a
+   fifth plane.** <<
+⚠ **THIS ENTRY DELIBERATELY WAITED ONE CYCLE FOR THAT CORRECTION.** Recording `8/0/1
+unscored-by-instrument` when it was already known to be a wrong-flag error would have banked a false
+statement about the estate's own tooling — *"my tool cannot"* and *"I used the wrong flag"* are
+different facts, and only the second is fixable by the next reader.
+✅ Two further rows independently re-confirmed at a SECOND scope: **P2** (no "As of" subtitle) and
+**P4** (footer literal). ✅ The Client figure remains scored **neither defect nor pass** — at
+cottonwood both legs render ($2.25M Supervised / $292.65M Unsupervised vs a $294.91M headline); at
+global only Supervised renders because the Unsupervised leg is `0.00` and drops. **The same
+suppression rule working, not a different card.** The I2 label question is untouched and Andrew's.
+
 ## WHAT THIS DEPLOY DID NOT ESTABLISH
 - **The rendered page.** `3.0.0_SA_CVO~Z` scores it against `0.4.0_DE_ClientPlatform~Z`'s nine
   predictions, filed BEFORE the fire so they cannot be fitted afterwards.
