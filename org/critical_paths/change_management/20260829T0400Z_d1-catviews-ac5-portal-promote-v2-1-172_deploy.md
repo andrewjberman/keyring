@@ -1,7 +1,8 @@
 # DEPLOY LEDGER — D1_CATVIEWS AC5 portal DEV -> PROD promote (promote #2)
 
-**Status:** OPEN
+**Status:** CLOSED — COMPLETE
 **Opened:** 2026-08-29T04:00Z — before the worktree exists, before the merge exists.
+**Closed:** 2026-08-29T04:22Z — both pushes verified AT THE REMOTE, nothing half-landed.
 **Owner:** `0.4.0_DT_ClientPlatform~Z`
 **Authority:** `2.0.0_SA_COO~Z` @16027 — single authorizer per the resolution of the 14324/14291
 fork. `1.0.0_SA_CTO~Z` also wrote "PROMOTE RELEASED" @16009; **that was NOT taken as the word.**
@@ -79,3 +80,48 @@ The **scheduled pipeline**. Tonight's data came from an ad-hoc reland; `TM1-AC1`
 
 ## TIMELINE
 - 2026-08-29T04:00Z — entry OPENED, before the worktree and the merge.
+- 04:02Z worktree · `bun install` rc=0 (420 pkgs, FOREGROUND) · `merge --no-ff -F` rc=0, 'ort',
+  1 file +80/-7, no conflicts -> `c92b4677a9b47f209696ce939f8ddf5649ab5017`
+- **PARITY GATE PASS: 0 bytes.** Merged tree `e12c67c054183f006240cd04e19565132fb6b1d4` ==
+  `origin/DEV` tree == **the value `merge-tree` predicted before the merge existed.** Prediction
+  matching outcome is the corroboration; an empty diff alone is one instrument.
+- PUSH 1/2 by `0.0.0_AB_MSTR~Z` (GATE 5, no override): `origin/PROD 1b91b197 -> c92b4677`
+- CI: `gh -R Opal-Capital/portal` enumerated BY headSha — **1 run at `c92b4677`, "Deploy to
+  Production", conclusion=success, id 33233025084.** Denominator of 1 consistent with both prior
+  promotes (ci.yml fires on DEV, deploy.yml on PROD).
+- TAG: `portal-v2.1.172` **PEELED** — ls-remote object `ccdb4684` -> commit `c92b4677` == PROD head.
+- ⭐ **BUNDLE (the scored stop condition): `index-BMmU0cpj.js` -> `index-BamLAu6Q.js`.** Negative
+  control 0. **Something genuinely shipped.**
+  ⚠ The CSS chunk did **NOT** move (`WQYUWqLe` unchanged) and that is **CORRECT** — this change is
+  JS-side logic, so the CSS hash was banked in advance as corroborating-if-it-moves, never a
+  required arm. **Treating it as required would have manufactured a failure out of a clean promote.**
+- Step 7: `worktree remove` rc=255 "Filename too long" (documented Windows behaviour, acceptable);
+  `worktree prune` rc=0; only the main tree remains, **on DEV — it never left**.
+- PUSH 2/2 by `0.0.0_AB_MSTR~Z`: `origin/SITEZ -> 6f7ee3d034`. **Verified at the remote by
+  `ls-remote` AND by reading the pointer VALUE recorded there** (`160000 commit b26c6fe6…`) —
+  commit-presence proves a file is on origin, not what it records.
+
+## WHAT MADE THE STOP CONDITION WORK — THE ONE TRANSFERABLE LINE
+**Promote #1's two discriminators were both DEAD by the time this promote ran:** `index-Ce258d2k.js`
+no longer existed, and `"Fee split unavailable"` was already `0` on PROD, so it satisfied its own
+pass condition **before this promote started**.
+>> **A ONE-WAY MARKER IS CONSUMED BY THE EVENT IT DETECTS. A CONTENT-HASH RENEWS ITS OWN BASELINE,
+   because it is DERIVED from the bytes rather than hand-maintained.** That is why the hash control
+   survived the audit that killed the string marker — construction, not care. <<
+
+## WHY THE ORDERING WAS THE POINT
+The data chain landed FIRST, deliberately. The reserved delete, floor and publish put
+`divz 18,783,379.81` and `pfoe 4,011,386.44` on the served plane — previously `null`, summing exactly
+to the `22,794,766.25` L1 total. **Promoting the frontend ahead of that would have shipped a correct
+renderer over an artifact with no member dollars: the page would still have shown dashes, which is
+indistinguishable from the fix having failed.**
+
+## WHAT THIS DEPLOY DID NOT ESTABLISH
+- **The rendered page.** VERIFY-B is a separate rung owned by `0.4.0_DE_ClientPlatform~Z`, who holds
+  a matched five-render PROD before-image taken against `index-BMmU0cpj.js` — **the exact chunk this
+  promote replaced** — confirmed still-served at 03:59:14Z, so the pair is real, not reconstructed.
+- **The scheduled pipeline.** Tonight's data came from an ad-hoc reland; `TM1-AC1` and
+  `CATV-TON1-AC7` require a SCHEDULED fire by their own verbatim and are untouched by this promote.
+- Independently, `3.0.0_SA_CVO~Z` verified the DATA path through the **CDN edge** (`X-Cache=Miss`,
+  real bearer) — a different instrument on a different rung from this bundle check, not a second
+  reading of the same one.
