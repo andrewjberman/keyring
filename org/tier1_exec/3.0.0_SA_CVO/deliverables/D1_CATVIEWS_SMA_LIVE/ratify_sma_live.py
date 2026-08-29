@@ -192,22 +192,28 @@ def check_cross_scope(docs, plane, out):
                  SCORED against that declaration.
       others  -- Models/SMA are REPORTED AS A CONTROL, NEVER SCORED.
 
-    ⛔ AND DO NOT "FIX" THAT BY ADDING A TUPLE. Answered at source by
-    `0.4.0_DS_ClientPlatform~Z` (16486), who authored the one declared set that
-    does exist: Models/SMA's three legs are NOT undeclared -- they are the
-    FUNCTION PARAMETERS of `build_global_artifact(a49, ainf, acot)` (:2217, folded
-    :2492-2493). The membership lives in the SIGNATURE.
-      a TUPLE      parseable at runtime, and CAN drift from the code that uses it
-      a SIGNATURE  NOT parseable here, and CANNOT drift from itself -- a fourth
-                   firm cannot join the fold without changing the signature
-    >> SO THE CARRIER THAT WOULD LET ME SCORE THIS ROW IS THE WEAKER ONE. Adding a
-       parseable tuple to satisfy the checker would CREATE the divergence surface
-       that parsing-instead-of-copying exists to avoid, and would trade a guarantee
-       that cannot drift for one that can. THE CONTROL ROW IS THE CORRECT PERMANENT
-       STATE, not a gap awaiting a declaration. <<
-    ⚠ The precise label is NOT "undeclared" -- it is DECLARED IN A NON-PARSEABLE
-    CARRIER, which is a third state between declared and undeclared and has a
-    different remedy from either.
+    ⛔ AND DO NOT "FIX" THAT BY ADDING A TUPLE -- FOR A STRONGER REASON THAN I FIRST
+    RECORDED. I wrote here that the membership "lives in the SIGNATURE" of
+    `build_global_artifact(a49, ainf, acot)` and that a signature "cannot drift from
+    itself". `2.0.0_SA_COO~Z` (16495) read the fold and that is WRONG, verified by me
+    at `dim_mdpf_aggregate_aua_timeseries.py:2392-2399`:
+        cot_in = d in cot_covered or cot_src is not None
+        if cot_in: model_aua.append(round(m49 + minf + mcot, 2))   # THREE firms
+        else:      model_aua.append(_sum2(m49, minf))              # TWO firms
+    >> ⛔ MODELS' CONSTITUENCY IS **DATE-CONDITIONAL**. THE SIGNATURE BOUNDS WHICH
+       FIRMS *MAY* PARTICIPATE; IT DOES NOT STATE WHICH DO ON A GIVEN DATE. A firm
+       can sit IN the signature and OUT of the constituency -- cottonwood does
+       exactly that on uncovered dates. So the signature is not the guarantee I
+       offered it as, and I withdraw that claim. <<
+    ⛔ WHICH MAKES A FIXED TUPLE WORSE, NOT MERELY REDUNDANT: it would assert a
+    CONSTANT membership for a DATE-VARYING one and be wrong on exactly the dates
+    that discriminate. It would look like consistency with :2214 and be a defect.
+    ⚠ AND `GLOBAL_CLIENT_CONSTITUENTS` IS NOT THE SAME CASE: Client's basis genuinely
+    IS fixed (basis B, 49F non_model only), which is why that one is a tuple and is
+    scoreable. Copying the pattern across is not consistency.
+    >> **THE CONTROL ROW IS THE CORRECT PERMANENT STATE because the thing is NOT A
+       STATIC SET AT ALL -- not because it is undeclared, and not because it is
+       declared somewhere unparseable.** <<
     ⛔ AND `GLOBAL_MODEL_KEYS` (:139) IS a declared tuple in that same file and is
     THE WRONG AXIS -- named here so nobody reaches for it because it is the only
     parseable thing nearby.
@@ -246,10 +252,18 @@ def check_cross_scope(docs, plane, out):
                         % (float(gv), want, len(terms), round(sum(terms.values()), 2))))
         else:
             allsum = round(sum(terms.values()), 2)
+            # ⛔ A DELTA HERE IS NOT NECESSARILY A DEFECT. Models' fold is
+            # DATE-CONDITIONAL (:2392-2399): three firms on cottonwood-covered
+            # dates, TWO otherwise. So on an uncovered date global CORRECTLY
+            # differs from the 3-firm sum, and a reader who takes this row as a
+            # conservation check would file a finding against a correct build.
+            # Reported so the numbers are visible, NEVER scored, and the reason
+            # travels in the row itself rather than in a comment nobody opens.
             out.append(("[CONTROL ONLY] %s vs sum(all %d firms)" % (p, len(terms)),
                         abs(round(float(gv), 2) - allsum) < CENT,
-                        "global %.2f vs %.2f -- NO declared constituent set for this "
-                        "node; reported, NOT scored" % (float(gv), allsum)))
+                        "global %.2f vs %.2f -- membership is DATE-CONDITIONAL "
+                        "(3 firms on cot-covered dates, 2 otherwise); a delta may be "
+                        "CORRECT. Reported, NEVER scored" % (float(gv), allsum)))
 
 
 def check_member_conservation(doc, scope, plane, out):
