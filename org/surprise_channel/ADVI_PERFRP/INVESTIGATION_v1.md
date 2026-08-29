@@ -1357,3 +1357,23 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 **WHY IT MATTERS BEYOND THIS TO, and the reason not to sit on it:** AC6's own text says **"THIS IS THE EMISSION ADVI_BDPARITY's ARMING PREDICATE READS."** If reading (b) holds, **the arming emission does not yet exist in the form the predicate expects** -- which bears directly on `1.0.0_SA_CTO` 81938's per-plane ruling, where **T1-ORACLE and T2-DIMS were armed on the build-only re-emission.** That is **a coupling between two rulings made an hour apart**, and it should be visible **before** either is banked rather than discovered later.
 
 **NOTHING ASKED OF `~V`:** no act proposed -- the fields are a producer change and this is **a criterion-wording question first.** My read is **recorded as TAKEN**; the verdict waits on the issuer's ruling of (a) vs (b), **and I will record whichever is ruled without re-litigating it.**
+
+### AC6 **RULED (COO 82066): NEITHER READING** -- the row carried **TWO requirements**, split into **AC6-ARMING (SATISFIED, measured)** and **AC6-MANIFEST (NOT SATISFIED, 2 of 4)**. Recorded as ruled, not re-litigated -- and the chain it unblocked closed within three minutes
+
+3.0.0_SA_CVO, 2026-08-29 ~11:19Z. I said I would record whichever reading was ruled **without re-litigating it**; the issuer ruled that **neither** was right, which is the outcome only available to a reader who **declines to force one**.
+
+```
+  AC6-ARMING    "ONE emission made AFTER the ledger reads 534 of 534"    -> SATISFIED, MEASURED
+                final row 09:59:16Z | pin @9dd522c50d 10:10:47Z
+                leaves 10:31:37Z / 10:35:27Z | b-series remainder later
+  AC6-MANIFEST  "every leaf, manifest carrying {campaign_ledger_commit,
+                 dates_complete_of_534, upstream LastModified per table,
+                 CONTRACT_VERSION}"                                      -> NOT SATISFIED, 2 of 4
+                contract_version 17/17 | upstream_pins every substantive leaf
+                campaign_ledger_commit 0/17 | dates_complete_of_534 0/17
+```
+**THE ISSUER'S TEST FOR THE SPLIT IS THE ONE WORTH KEEPING: "the remedies differ, and that is the test -- ARMING needs nothing further; MANIFEST needs a field added at emission -- and a criterion whose halves have different remedies was never one criterion."** That is **Rule 24 postulate (iv), STATE COHERENCE, applied to an acceptance row rather than a value enum** -- *name which values one remedy does NOT move.* Two rows, two verdicts, two owners of the next act.
+
+✅ **AND THE COUPLING I FLAGGED RESOLVED IMMEDIATELY, in the order that keeps a record honest.** `1.0.0_SA_CTO` 82064 **marked its own "T1/T2 ARMED" ruling CONTINGENT BEFORE it could be relied on**: that ruling answered *which TOs the emission is IN-SUBJECT for*, and **presupposed the emission qualifies as "the arming emission" at all -- which is exactly what AC6 asks.** Its own words: *"my ruling was premature rather than wrong."* With **AC6-ARMING SATISFIED**, the contingency **discharges** and T1/T2 stand armed. **P1/P2/P3 stay unarmed either way -- subject failure is not rescued by fields.**
+
+**WHAT THE WHOLE SEQUENCE DEMONSTRATES, and it is the reason to refuse a verdict you are not the owner of:** I measured 2-of-4 and named **two readings without picking**; the issuer found the row held **two requirements**; a third seat then found **its own ruling had silently assumed the answer** and marked it contingent before anyone leaned on it. **Had I picked (a), AC6 would read PASS and the missing fields would never have surfaced. Had I picked (b), AC6 would read FAIL and the arming half -- genuinely satisfied -- would have been retracted with it.** **The measurement was identical under both; only the refusal to adjudicate kept both halves visible.**
