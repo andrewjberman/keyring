@@ -134,4 +134,27 @@
 
 **Falsifier.** Exhibit a run whose observed S clears null_S + 3·spread_S while a second, independent permutation battery of the same run yields a spread under which it does not — the multiplier is then too small for the noise at this view pair and is raised on the record, never lowered.
 
+### 6a. ADDENDUM 1a (04:4xZ) — THE DERIVATION-PROVENANCE CARRIER, one canonical shape so no two lanes mint incompatible ones
+
+**Trigger.** CCX's typed checker (80860) found that its two exit-2 verdicts — SPREAD_SANITY_FAIL and STABILITY_FAIL — were the SAME comparison, because the sanity arm is about **the run the floor was derived from** while the binding check is about **the run being evaluated**, and with one observation set the two are indistinguishable. CCX proposed a `deriving_run_observed` field; the certifier accepted the requirement and reserved the key to the design lane (044353Z). Ruled here.
+
+**THE CARRIER.** On any artifact whose `floor_status = RE-DERIVED`, one block per statistic, `floor_derivation.<S>` for S ∈ {rho, J}:
+
+| field | type | meaning |
+|---|---|---|
+| `derived_from_run_id` | string | the run whose permutation battery produced the floor |
+| `derived_at_commit` | commit | where that run's artifact is pinned |
+| `metric_domain` | string | `both-measured` + the pair denominator (80804) |
+| `null` | number | S under the permuted-labels control, that run |
+| `spread` | number | sd of S over the battery |
+| `n_permutations` | integer ≥ 5 | the battery size (N = 1 → this block MUST NOT exist; `floor_status` stays HELD-UNEXERCISED) |
+| `multiplier` | number | 3 (basis `held` until run-2 spread stability) |
+| `floor` | number | = null + multiplier · spread, and the checker RECOMPUTES it (FORM_DEFECT if it differs) |
+| `deriving_run_observed` | number | S observed on `derived_from_run_id` — the SANITY arm's reference |
+| `sanity` | bool | `deriving_run_observed > floor` (strict) |
+
+The **evaluated** run's own `observed.<S>` lives beside it, outside the block, and is what the **binding** check reads. When the deriving run IS the evaluated run (run 1 → run 2 derivation applied within run 1's record), the two references coincide by construction — the only case where they should.
+
+**CONSEQUENCES, bound (the certifier's correction 044353Z is adopted verbatim):** a sanity failure on the first battery (`sanity = false`) leaves `floor_status = HELD-UNEXERCISED`, records the excessive spread, and re-runs the battery on the next run — it does NOT raise the multiplier. **The multiplier is raised only by the §6 falsifier — a second, INDEPENDENT battery under which the observed no longer clears the floor** — and never lowered. Typed results on the L3-C01 axis: `FORM_DEFECT` (floor ≠ null + m·spread, or N < 5 with a block present), `SPREAD_SANITY_FAIL` (sanity false), `STABILITY_FAIL` (evaluated observed ≤ floor with sanity true). Each is reachable from a different truth; CCX's 5/5 fixture is the exercise.
+
 **None of the four declarations discharges a PRD §6 falsification test.** §6.3's input (firm-carry per bridge) and §6.4's exclusions (FLOW, SEMANTIC = NOT-DELIVERED-AT-L2) are supplied by wave 1; **6.3 runs at wave 2, 6.1 / 6.2 / 6.5 at L4.**
