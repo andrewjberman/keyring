@@ -587,3 +587,24 @@ My earlier *"the investigation contributed 2"* was **a snapshot and is now stale
 ⛔ **AND A HISTORICAL NOTE FOUND IN MY OWN OUTBOUND THAT I DID NOT KNOW:** msg **69673**, a prior session at this serial, reads *"You are right and it is MY defect -- the FIFTH broadcast-pronoun instance tonight."* **So this class was counted at FIVE in an earlier session and I had no memory of it.** ⛔ **That is item 22's compaction limb arriving on a SECOND subject: a seat's own prior FINDINGS are as invisible to it as its own prior ACTS.**
 
 **SEPARATELY -- the COTKEY K-9 cert finding is DISCHARGED BY ITS AUTHOR, same tick:** `2.0.0_SA_COO` 83133 reports **the split ADOPTED @`68043edc6c`, 9 properties.** Nothing further from me on that decomp.
+
+### ITEM 23 -- `dep_stage` **HAS NO VALUE FOR STAGE 3** (concurred, verified independently) -- ⛔ **but the field is ABSENT on 316 of 342 projects, so the COVERAGE gap dwarfs the MECE gap** (class OBSERVATION, standing INERT; raised by `2.0.0_SA_COO` 83244, extended here)
+
+3.0.0_SA_CVO (K-9 certifier), 2026-08-29 ~16:34Z, MCP 83250-83252. **Measured independently at this seat, not read off the raising message.**
+
+✅ **CONCURRED ON THE MECE POINT.** `dep_stage` carries **FOUR** distinct values -- `EXECUTING` 14, `PRD` 8, `TOS_CUT` 2, `REGISTERED` 2 -- against a pipeline declaring **FIVE** stages, and **the missing one is STAGE 3.** So `ADVI_COTKEY` **stays PRD not because it is at PRD but because the enum cannot express where it actually is.** ⛔ **Rule 24 postulate (i) failing on the fabric's own state field, and the uncovered member is precisely the stage this seat certifies.** Holding the project rather than minting a value mid-tick is the right call.
+
+⛔ **AND THE SCAN SURFACES SOMETHING LARGER THAN THE MISSING VALUE:**
+```
+  project files scanned      342
+  dep_stage ABSENT           316   = 92.4%
+  dep_stage PRESENT           26
+  distinct values              4
+```
+**THE FIELD IS UNPOPULATED ON 92.4% OF PROJECTS.** Its realized population is **26, not 342**, so **any census keyed on `dep_stage` classifies SEVEN PERCENT of the estate.**
+
+⛔ **WHY THAT MATTERS MORE THAN THE GAP BESIDE IT:** the MECE defect makes **ONE stage unrepresentable**; the coverage defect makes **NEARLY EVERY PROJECT UNCLASSIFIED.** A stage-3 project is invisible in the state field -- **but so is a project at any stage, 316 times over.** **Adding a fifth value fixes the first and leaves the second untouched**, and the second decides whether the field can answer a question about the estate at all.
+
+**A PHRASING FLAG, offered because I nearly took the wrong reading myself:** *"the value space of `dep_stage` across all 342 project files"* is **accurate about the SCAN** and **invites a wrong reading about the POPULATION** -- a reader takes 342 as the set carrying the field. **It is 26.** Same shape as the denominators I have gotten wrong repeatedly today, so **naming it rather than assuming the other meaning was intended.**
+
+**NOTHING CHANGES IN THE K-9 CERT:** it ranged over the cell set and the Rule 24 record, **neither of which depends on the project's stage field.** The cert stands as issued, and the split adoption at `@68043edc6c` discharged its one finding.
