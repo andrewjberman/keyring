@@ -153,7 +153,20 @@
 | `deriving_run_observed` | number | S observed on `derived_from_run_id` — the SANITY arm's reference |
 | `sanity` | bool | `deriving_run_observed > floor` (strict) |
 
-The **evaluated** run's own `observed.<S>` lives beside it, outside the block, and is what the **binding** check reads. When the deriving run IS the evaluated run (run 1 → run 2 derivation applied within run 1's record), the two references coincide by construction — the only case where they should.
+The **evaluated** run's own `observed.<S>` lives beside it, outside the block, and is what the **binding** check reads. ~~When the deriving run IS the evaluated run (run 1 → run 2 derivation applied within run 1's record), the two references coincide by construction — the only case where they should.~~ **⛔ THAT SENTENCE WAS A DEFECT — struck by Addendum 1b below (certifier 045433Z): a same-run block would have to carry `derived_at_commit` = the hash of the commit containing itself.**
+
+### 6b. ADDENDUM 1b (04:5xZ) — NO SAME-RUN EMISSION: the `floor_derivation` block lives only in a LATER artifact, and always points BACKWARD to a committed one
+
+**The defect (3.0.0_SA_CVO~X 045433Z, verified at @61891652ef):** 6a permitted the deriving run to equal the evaluated run while requiring `derived_at_commit` to pin the deriving run's artifact — inside an artifact that IS that run's. An immutable artifact cannot contain the hash of the commit that contains it. The certifier refused to improvise a sentinel, a parent pin, or a self token; correct.
+
+**THE RULING — one non-circular shape, and it is the one §6 already implied:** the re-derived floor **binds the NEXT run**, so it never needs to appear in the run it came from.
+- The **fusion artifact of run N** carries the permutation battery as **evidence** — `null`, `spread`, `n_permutations`, and run N's own `observed` per statistic — but its `floor_status` is **HELD-UNEXERCISED**, and it carries **no `floor_derivation` block**. A run-N artifact with a RE-DERIVED status is refused (FORM_DEFECT).
+- The **`floor_derivation` block appears only in a LATER, separately committed artifact** that evaluates against the floor: run N+1's fusion record, or the stability consumer's binding rows (CCX's L3W2-xkbc) for run N+1. Its `derived_from_run_id` / `derived_at_commit` / `derived_artifact_sha256` point **backward** to run N's already-committed artifact; `deriving_run_observed` is read FROM that artifact, never restated; the block's own `floor` is recomputed from that artifact's `null` and `spread`.
+- Consequence for run 1 tonight: **the fusion artifact prints the battery (if N ≥ 5) and stays HELD-UNEXERCISED**; the first RE-DERIVED floor is applied by run 2's consumer, citing run 1's commit. The "deriving == evaluated" case of 6a is not a special case — it is **unreachable by construction**, which is the point.
+
+**Fields added to the block:** `derived_artifact_sha256` (content digest of the deriving artifact at `derived_at_commit`, so the pointer is content-addressed as well as commit-addressed). `derived_at_commit` MUST be an ancestor of the artifact carrying the block (the checker tests it; a non-ancestor is FORM_DEFECT).
+
+**Falsifier:** exhibit a well-formed `floor_derivation` block whose `derived_at_commit` is not an ancestor of the carrying commit, or whose `deriving_run_observed` differs from the value in the deriving artifact at that pin — either is a provenance defect, not a stability result.
 
 **CONSEQUENCES, bound (the certifier's correction 044353Z is adopted verbatim):** a sanity failure on the first battery (`sanity = false`) leaves `floor_status = HELD-UNEXERCISED`, records the excessive spread, and re-runs the battery on the next run — it does NOT raise the multiplier. **The multiplier is raised only by the §6 falsifier — a second, INDEPENDENT battery under which the observed no longer clears the floor** — and never lowered. Typed results on the L3-C01 axis: `FORM_DEFECT` (floor ≠ null + m·spread, or N < 5 with a block present), `SPREAD_SANITY_FAIL` (sanity false), `STABILITY_FAIL` (evaluated observed ≤ floor with sanity true). Each is reachable from a different truth; CCX's 5/5 fixture is the exercise.
 
