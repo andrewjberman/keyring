@@ -190,11 +190,27 @@ def check_cross_scope(docs, plane, out):
                  GLOBAL_CLIENT_CONSTITUENTS = ("49financial",), read at BUILD time
                  beside the non_model construction so it cannot drift from basis B.
                  SCORED against that declaration.
-      others  -- no declared constituent set was found for Models/SMA. Their
-                 3-firm aggregation is MEASURED to hold exactly, not declared.
-                 REPORTED AS A CONTROL, NEVER SCORED. Scoring an expectation
-                 nobody declared is inventing one, which is the defect this
-                 deliverable exists to catch.
+      others  -- Models/SMA are REPORTED AS A CONTROL, NEVER SCORED.
+
+    ⛔ AND DO NOT "FIX" THAT BY ADDING A TUPLE. Answered at source by
+    `0.4.0_DS_ClientPlatform~Z` (16486), who authored the one declared set that
+    does exist: Models/SMA's three legs are NOT undeclared -- they are the
+    FUNCTION PARAMETERS of `build_global_artifact(a49, ainf, acot)` (:2217, folded
+    :2492-2493). The membership lives in the SIGNATURE.
+      a TUPLE      parseable at runtime, and CAN drift from the code that uses it
+      a SIGNATURE  NOT parseable here, and CANNOT drift from itself -- a fourth
+                   firm cannot join the fold without changing the signature
+    >> SO THE CARRIER THAT WOULD LET ME SCORE THIS ROW IS THE WEAKER ONE. Adding a
+       parseable tuple to satisfy the checker would CREATE the divergence surface
+       that parsing-instead-of-copying exists to avoid, and would trade a guarantee
+       that cannot drift for one that can. THE CONTROL ROW IS THE CORRECT PERMANENT
+       STATE, not a gap awaiting a declaration. <<
+    ⚠ The precise label is NOT "undeclared" -- it is DECLARED IN A NON-PARSEABLE
+    CARRIER, which is a third state between declared and undeclared and has a
+    different remedy from either.
+    ⛔ AND `GLOBAL_MODEL_KEYS` (:139) IS a declared tuple in that same file and is
+    THE WRONG AXIS -- named here so nobody reaches for it because it is the only
+    parseable thing nearby.
 
     ⚠ TOLERANCE, STATED RATHER THAN IMPLIED. The comparison is `< CENT`, the same
     tolerance every other row here uses, so a sub-cent difference PASSES. Exercised:
