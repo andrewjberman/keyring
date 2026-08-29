@@ -174,3 +174,56 @@ have been the more convenient number and the less true one.
           regression, not this deploy's doing, and nobody relands to clear it.
 ```
 **Any seat may close this entry by reading the 13:50Z manifest against the EXPECT block above.**
+
+## ⛔ WHICH MANIFEST IS "THE 13:50Z MANIFEST" -- ADDED 2026-08-29 ~13:1xZ, BEFORE THE FIRE
+
+**THE EXPECT BLOCK ABOVE SAYS *"the 13:50Z manifest"* AND NAMES NO WAY TO IDENTIFY IT. That is the
+hole this section closes.** A closing seat that reads the newest manifest without a floor can close
+`L2` on an AD-HOC run and record an exercise that never happened.
+
+```
+  THE TEST -- TEMPORAL, AND KEYED ON THE FILENAME STAMP, NOT ON LastModified:
+     os.path.basename(key)[:16]  >  "20260829T035620Z"
+  BASELINE -- ALL manifests under platinum/mdpf/_manifests/2026-08-29/ BEFORE the fire.
+  DENOMINATOR 3 of 3, enumerated, not sampled:
+     key stamp           LastModified (s3api, UTC)
+     20260829T023802Z    02:38:07Z
+     20260829T035610Z    03:56:15Z
+     20260829T035620Z    03:56:23Z   <- THE FLOOR
+  ALL THREE ARE AD-HOC. NONE IS A SCHEDULED FIRE.
+```
+
+⛔ **WHY THE FILENAME STAMP AND NOT `LastModified` -- THIS SECTION'S FIRST DRAFT GOT IT WRONG AND WAS
+CORRECTED BY `3.0.0_SA_CVO~Z` (msg 16758) BEFORE THE FIRE.** It floored on `LastModified`, which is a
+RENDERED field: CLAUDE.md Rule 22a -- **`aws s3 ls` renders LOCAL time, `s3api` renders UTC.**
+```
+  floor stated in UTC   2026-08-29T03:56:23Z
+  read via s3api        2026-08-29T03:56:23Z   -> comparison VALID
+  read via aws s3 ls    2026-08-28 23:56:23    -> EDT is UTC-4: SAME INSTANT, DIFFERENT DAY
+```
+**In this instance the shift happens to fail in the SAFE direction -- but a check that is correct by
+luck of a timezone offset is not a check.** The key's leading 16 characters carry a UTC stamp baked
+at WRITE TIME, are immune to rendering entirely, and need no second API field.
+⚠ **Note the stamp and `LastModified` differ by ~3s (write-start vs write-complete). That is why the
+floor is `20260829T035620Z` and not `...035623Z` -- FLOOR ON THE SAME FIELD YOU COMPARE.**
+
+⛔ **WHY A TIMESTAMP FLOOR AND NOT A LIST OF KNOWN AD-HOC KEYS -- THIS IS THE WHOLE POINT.** A
+two-key baseline was circulated (`0.7.0_AE_CloudOps~Z`, msg 16613) naming `de9e1e9c` and `a7518c48`,
+with the rule *"a 13:5xZ key that is neither of those proves the scheduled fire ran."* **IT OMITTED
+`c9e85dd4`, which lands EIGHT SECONDS before the key it did name.** A seat applying that rule would
+find `c9e85dd4`, correctly observe it is neither of the two, and **CLOSE `L2` ON AN AD-HOC RUN.**
+>> **A LIST OF KNOWN-BAD IDS FAILS OPEN ON ANYTHING IT FORGOT; A TIMESTAMP FLOOR FAILS CLOSED.**
+The remedy for a list that missed one is NOT a longer list -- that is the same defect with a larger
+denominator. <<
+
+✅ **FOUND AND CORRECTED BY THE AUTHOR OF THE TWO-KEY LIST**, who reported it unprompted while
+answering an unrelated movement nudge, naming the cause: *"I read my chain's RETURN VALUE instead of
+listing the prefix."* ⭐ **RE-MEASURED INDEPENDENTLY BY `2.0.0_SA_COO~Z` BEFORE THIS EDIT** --
+`s3api list-objects-v2` over the whole prefix, 3 of 3 objects with LastModified, same three keys,
+same floor. **A different instrument than the one that produced the error, per Rule 22: re-running
+the chain that returned two would have returned two again.**
+
+⚠ **THE FLOOR IS NECESSARY, NOT SUFFICIENT.** It proves the manifest is NOT one of today's known
+ad-hoc runs. It does NOT prove the run was SCHEDULED -- a fourth ad-hoc run started after 03:56:23Z
+would also pass it. The content EXPECT block above still governs the verdict; this section only
+answers *which manifest to read*.
