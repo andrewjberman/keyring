@@ -1307,3 +1307,25 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ✅ **BOTH LIMBS OF THE FORM I RECOMMENDED AT 81732 ARE IMPLEMENTED AND CONTROLLED:** `versions_differ == (start_sv != as_of_sv)` and `(warning is not None) == versions_differ` appear as the two **STATE COHERENCE** arms, each with a firing negative control. **CTO's bound is carried on the artifact's own face** -- the literal arm prints as **"[regression guard, NOT coverage of 80410]"** in the output itself, so no reader can mistake it for coverage of the ruling.
 
 **DISPOSITION UNCHANGED, EVIDENCE UPGRADED: `~V` 81715 stays REMEDIATED.** What changes is that it now rests on **the producer's own battery, run by a seat that did not write it, with every control firing** -- rather than on three predicates I retyped. **The verdict was right; the evidence under it was thinner than it looked, and I would rather correct the evidence than let a right answer stand on a narrow read.**
+
+### `~V`'s B-SERIES DETERMINISM CLAIM -- **"output changed IFF a pin moved, 6 of 6" -- CORROBORATED BY A DIFFERENT INSTRUMENT**, both directions, with the exact pin sets reproduced
+
+3.0.0_SA_CVO, 2026-08-29 ~11:12Z, MCP 82046-82049, on `~V` 82028 (`@0c5194eab8`).
+
+**THAT SEAT COMPARED ITS OWN BEFORE/AFTER IN THE WORKING TREE. I COMPARED THE COMMITTED OBJECTS** at `@0c5194eab8` vs its parent, **plus the leaves' own recorded `upstream_pins` at both refs** -- a different instrument on the same question.
+```
+  leaf                              output    pins that MOVED
+  perfrp_performance_relationship   IDENT     none
+  perfrp_performance_account        IDENT     none
+  perfrp_gainloss_account           IDENT     none
+  perfrp_gainloss_relationship      CHANGED   dimensions/dim_relationship
+  perfrp_allocation_relationship    CHANGED   canonical_positions + dim_asset_classification + dim_relationship
+  perfrp_allocation_account         CHANGED   canonical_positions + dim_asset_classification
+```
+✅ **6 OF 6, BOTH DIRECTIONS, NO EXCEPTIONS:** every changed leaf has at least one moved pin, every identical leaf has none. **The diffstat reproduces the reported line counts exactly** -- allocation_relationship 50 (31/19), allocation_account 48 (30/18), gainloss_relationship 2 (1 line) -- **and the specific PIN SETS reproduce too, which is the part a coincidence would not survive.**
+
+**SO THE DETERMINISM CLAIM IS CORROBORATED RATHER THAN REPEATED, and the three byte-identicals become load-bearing evidence rather than an absence of news.** `~V` is right that it is an **incidental** determinism check it did not set out to run; **it is the strongest thing in that report.**
+
+⛔ **BOUND:** I verified **WHICH pins moved and WHICH outputs changed**. I did **NOT** verify that each output delta is **CAUSED** by its moved pin -- co-occurrence across 6 cases with matching pin sets is strong, **and it is not a causal read.** Nobody has claimed otherwise.
+
+**NOTED FOR THE OWNER, not chased:** `~V` flags the b-5 transactions sample's `dim_relationship` pin at **2026-08-28T12:46:05Z** while that partition now reads **2026-08-29T09:58:06Z** -- **I confirm that second figure independently**; it is the 2026-08-27 rewrite I read at 09:58:06Z during my own endpoint work. **The sample is stale against the corrected upstream.**
