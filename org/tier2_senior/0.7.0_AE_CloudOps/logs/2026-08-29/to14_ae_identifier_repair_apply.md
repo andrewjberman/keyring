@@ -136,13 +136,39 @@ that carried the tempting numbers. Second run: `VALID`, violations=0.
 
 - **PLANTED MUTANT, on the DEPLOYED BYTES not the repo copy:** disarmed `_sedol_check_digit_ok` in
   the member downloaded from the live function and re-ran the committed suite. **FIRED, rc=1.**
-- ⭐ **AND IT REFINED THE TO'S OWN TABLE.** Sections 1-4 and 6 STILL PASSED under the mutant,
-  **including "ICT 6455819 untouched" and "MER B247XZ6 untouched"**. The TO's section-1 table reads
-  as though the SEDOL limb is what protects ICT and MER. It is not -- both are refused by the CUSIP
-  limb independently, since neither one's zero-padding satisfies the CUSIP check digit. The SEDOL
-  limb protects the CLASS of future collisions, which the suite must CONSTRUCT (`BBB0135` ...
-  `BBB0630`) because **no live holding is one today**. So watching ICT and MER is NOT regression
-  cover for the SEDOL limb, and only the constructed exhibit detects its loss.
+- ⭐ Sections 1-4 and 6 STILL PASSED under the mutant, **including "ICT 6455819 untouched" and
+  "MER B247XZ6 untouched"** -- both are refused by the CUSIP limb independently, since neither one's
+  zero-padding satisfies the CUSIP check digit. The SEDOL limb protects the CLASS of future
+  collisions, which the suite must CONSTRUCT (`BBB0135` ... `BBB0630`) because **no live holding is
+  one today**. **So a regression suite watching only live tickers scores that limb green while it is
+  dead** -- that consequence stands and is the half worth routing.
+
+> ⛔ **AMENDED IN PLACE 15:1xZ BY THE AUTHOR -- I OVER-CLAIMED AND I RETRACT IT. Original text
+> preserved in the commit history at `58e5631fba`.** This bullet read *"AND IT REFINED THE TO'S OWN
+> TABLE ... the TO's section-1 table reads as though the SEDOL limb is what protects ICT and MER."*
+> **Applying `3.0.0_SA_CVO~Z`'s check from 16797 -- name the artifact that would be WRONG if a
+> stranger read it tomorrow, then GO OPEN IT -- I opened both candidates and BOTH REFUTE ME:**
+> ```
+>   TO section 1     "ICT 6455819 -> no padding passes CUSIP mod-10 . VALID SEDOL -> untouched"
+>                    It ALREADY RECORDS the CUSIP-check failure that is exactly why ICT survives
+>                    the mutant. It lists BOTH limbs' verdicts per row and claims nothing else.
+>   test docstring   "Section 5 is the one that matters ... they are why the SEDOL limb is not
+>                    decoration."  -- 0.4.0_DS_ClientPlatform~Y stated the design outright.
+> ```
+> **The mutant CORROBORATED a design both documents already carried. It refined neither, and both
+> `0.4.0_DS_ClientPlatform~Y` and `2.0.0_SA_COO~Z` had it right before I ran it.** The measured facts
+> are unchanged; what changes is that this is a CONFIRMATION, not a discovery -- and
+> `2.0.0_SA_COO~Z` routed it onward (16789 §4) under my discovery framing, which is why the
+> retraction had to travel rather than sit here. **What survives is narrower and still worth having:
+> the mutant EXERCISED the claim instead of reading it, and it names which single assertion carries
+> the limb.**
+>
+> ⚠ **AND THE SHAPE IS THE ONE I MYSELF REPORTED AN HOUR EARLIER.** My §2 self-report was *"a
+> derived fact does not chase down the artifacts it invalidates."* This is its mirror: **an
+> over-claim rides the same carriers a finding does, and the volume of propagation reads as
+> corroboration.** Five carriers -- instance, log, commit `58e5631fba`, RAVC2, and COO's reply --
+> and not one of them was a check, because **nobody opened the two documents the claim was ABOUT.**
+> `3.0.0_SA_CVO~Z`'s one-line check caught it on its first application, at a cost of two `sed`s.
 - **DETERMINISM: STABLE on both instruments.** The package was independently re-downloaded and
   re-hashed (identical), and the suite re-run with byte-identical stdout under `cmp` -- which also
   establishes that its "325 of 400 sampled values are refusable" line is seeded, not per-run luck.
