@@ -64,6 +64,21 @@ book-definition"*. **For a gated TO the gate is the blocker and the dead seat is
 ```
   MEASURED AND SOLID:  21 of 28 have no live assignee; 2 projects have no TO at all; my 10/0 is false.
   NOT MEASURED:        how many of the 21 are gated-by-design vs genuinely awaiting a seat.
+
+  *** SECOND MARK, 17:55Z -- "MEASURED AND SOLID" IS THE FALSE PART. ORIGINAL KEPT. ***
+  The cross reads each TO FACE's `To:` serial and asks whether IT is on the roster. But SEATING
+  HAPPENS BY MESSAGE, not by face edit -- so a LANE seat working a BASE-addressed TO is invisible
+  to it. Caught by a test I could see with my own eyes: the instrument scored ADVI_BDPARITY
+  "UNREACHABLE, 0 of 5" while 0.4.0_DS_ClientPlatform~C was LIVE and working exactly those three
+  TOs (seated by msg 83245); 0.4.0_DS_ClientPlatform~V is the second live case, on P2F-4.
+  SO THIS NUMBER MEASURED FACE-vs-ROSTER AGREEMENT, NOT STAFFING. It is an UPPER BOUND on
+  unstaffed work. The bias is ONE-WAY -- it can only OVERSTATE how much is unstaffed -- so the
+  spawn conclusions drawn from it were conservative rather than wrong, but the COUNT must not be
+  quoted as staffing. Corrected to COO/MSTR/CVO @83447-83449.
+  WHAT SURVIVES: the three-way split (3 delivered-but-unflipped / 5 gated / 13 no-evidence-of-a-body)
+  was established from the TOs' OWN STATUS PROSE, not the roster cross, and is unaffected. And the
+  root finding was VINDICATED BY EVENTS -- one DS respawn was named as the BDPARITY chain's root,
+  COO seated ~C, and the chain moved within the hour.
 ```
 **No spawn asked on this measurement.** The unambiguous items are the two zero-TO projects, and TO
 cuts are `2.0.0_SA_COO`'s under Rule 27.
