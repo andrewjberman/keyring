@@ -305,8 +305,10 @@ When a log IS written: **`org/tier1_exec/{RUNNING_SERIAL}/drive_log_{YYYYMMDDTHH
 **Verify the pathspec is clean before handing it to the wrapper** — `safe-commit` commits the files you NAME, not the files you CHANGED, and returns `rc=0` either way.
 **Then verify YOUR commit landed, by hash — not by `HEAD` and not by a push range** (the tree is shared; `HEAD` drifts):
 ```bash
-# EXACT-AUTHOR: --author= is a SUBSTRING and matches 2.0.0_SA_COO~X (measured, row 7 (y) @6b925195fe)
-C=$(git log -20 --format='%H %an' | awk '$2=="2.0.0_SA_COO"{print $1;exit}')
+# EXACT-AUTHOR, and NO POSITIONAL TOKENS: --author= is a SUBSTRING matching 2.0.0_SA_COO~X
+# (row 7 (y) @6b925195fe); and an awk $1/$2 form arrives CORRUPTED -- the skill body is expanded
+# against the INVOCATION's own args before the agent reads it (COO~X @82687, measured both ends).
+C=$(git log -20 --format='%H %an' | grep -m1 ' 2.0.0_SA_COO$' | cut -d' ' -f1)
 git merge-base --is-ancestor "$C" origin/CLOUD && echo "landed"
 ```
 → `DRIVE.md §5`
