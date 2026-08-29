@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "carded_by": "2.0.0_SA_COO~X",
+  "subject": {
+    "id": "rederive_l3w2.py :: controls.C2_view1_with_permuted_view2",
+    "kind": "script",
+    "declared_domain": "the PERMUTATION-NULL arm that Addendum 1i (i) clause 1 would use as the ENTRY GATE for a firm-carrying second view -- AUC(F(W1, perm(V))) as the null against which AUC(F(W1, V)) is scored. Carded per 1i (iii), which requires carding BEFORE it gates. Its use as a DIAGNOSTIC is a different domain and is not what this card scores."
+  },
+  "as_of": {
+    "carded_utc": "2026-08-29T13:25:30Z",
+    "commit_ish": "c11d1ff734",
+    "graph_vintage": "all four inputs content-pinned by the instrument's own sha256 check, each recorded match:true: W_STRUCTURE_FACTORIZED e91d69910f, stitch_graph 7ac11d015e, firm_cohort_shared ad361014a7, L2_VIEW_ARTIFACTS 19a7a0f8"
+  },
+  "process": {
+    "methodology": {
+      "how": "symmetric entity-index permutation of view 2 -- perm = rng.permutation(n); W2[np.ix_(perm, perm)] -- then SNF([W1, W2p], K=20, T=20), scored by aucB on frame B. Destroys view 2's entity ALIGNMENT while preserving its marginal structure, which is precisely what isolates FIRM-BLINDNESS from content.",
+      "determinism": "deterministic",
+      "composes": [
+        "SNF(K=20,T=20)",
+        "aucB over frame B",
+        "the four content-pinned inputs"
+      ],
+      "invents": [
+        "the permutation null for a fused AUC"
+      ],
+      "basis": "measured",
+      "evidence": "rederive_l3w2.py:443-450 @c11d1ff734 (block read at source)",
+      "owner": "1.0.0_SA_CTO~Y"
+    },
+    "cadence": {
+      "declared_rhythm": "1i (i) clause 1: a BATTERY -- one null per artifact, N >= 20 for a tail, NEVER ONE DRAW",
+      "actual_trigger": "ONE DRAW, taken inline during a single manual re-derivation run. No cadence: the arm is not scheduled and has been exercised exactly once.",
+      "live_matches_declared": "no",
+      "live_instance_age": "one run, 2026-08-29 01:58Z",
+      "basis": "measured",
+      "evidence": "rederive_l3w2.py:444 single `perm` draw @c11d1ff734; the NPERM=5 battery at :371 is a DIFFERENT arm (L3-C01 split-half), not this null; declared side from Addendum 1i (i) @dd8ac390ef",
+      "owner": "2.0.0_SA_COO~X"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "evidence",
+      "mutation_policy": "immutable",
+      "form": "a two-key JSON object -- fused_AUC_1820 = 0.5309 and a prose `expect`. NO draw count, NO spread, NO distribution. The RESULT is tracked; a PRIMARY INPUT IS NOT: .tmp-cro-b4-eb009-audit/W_STRUCTURE_FACTORIZED.json is untracked and present on this device only. CONTENT-ADDRESSED IS NOT RETRIEVABLE -- the sha256 check proves WHICH BYTES were read and does nothing to make them obtainable elsewhere. It does fail LOUDLY rather than silently, which is the mitigation.",
+      "basis": "measured",
+      "evidence": "rederivation_result.json controls.C2_view1_with_permuted_view2 keys read @c11d1ff734; input path rederive_l3w2.py:39; `git ls-files --error-unmatch` on that path returns non-zero (NOT TRACKED) while `test -e` returns present",
+      "owner": "1.0.0_SA_CTO~Y"
+    },
+    "location": {
+      "home": "org/tier1_exec/1.0.0_SA_CTO~Y/deliverables/D11_L3W2_INDEPENDENT_REDERIVATION/ (rederive_l3w2.py, rederivation_result.json, README.md)",
+      "projection_of": [
+        ".tmp-cro-b4-eb009-audit/W_STRUCTURE_FACTORIZED.json (UNTRACKED)",
+        "infra/aws/globgrph/stitch_graph.json (gitignored, content-pinned)"
+      ],
+      "co_resident_stores": null,
+      "basis": "measured",
+      "evidence": "git ls-files + rederive_l3w2.py:39-46 @c11d1ff734",
+      "owner": "1.0.0_SA_CTO~Y"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "frame B -- 1,820 both-measured entities, full both-measured pair domain, (K,T) = (20,20). The 121 view-2-ABSENT members of the 1,941 cohort are outside this arm.",
+      "denominator": "DENOMINATOR OF THE NULL ITSELF: n = 1. One permutation draw. The population denominator (1,820) is sound; the NULL's denominator is the defect.",
+      "explicitly_out": [
+        "frame A (1,941 cohort)",
+        "the 121 view-2-ABSENT entities",
+        "any K other than 20 (C3 covers K=100 separately)"
+      ],
+      "basis": "measured",
+      "evidence": "rederive_l3w2.py:275 frames.B_both_measured_1820; :444 single draw @c11d1ff734",
+      "owner": "2.0.0_SA_COO~X"
+    },
+    "key": {
+      "identity_space": "entity indices of the measured set, permuted symmetrically (rows and columns together) so the draw relabels ENTITIES, not pairs",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "index-based, so stability is INHERITED FROM THE CONTENT PIN rather than intrinsic -- the ordering is fixed only because the inputs are sha256-pinned. THE RNG IS NOT INDEPENDENT: one stream, default_rng(20260829), is consumed by the NPERM=5 battery BEFORE this draw, so C2's permutation is a function of how many draws ran above it. Change NPERM and this value moves, with nothing in the artifact recording the dependence.",
+      "basis": "measured",
+      "evidence": "rederive_l3w2.py:343 seed; :375 battery consumes; :444 C2 draw @c11d1ff734",
+      "owner": "1.0.0_SA_CTO~Y"
+    },
+    "failure_mode": {
+      "returns_on_failure": "a plausible scalar AUC. There is no failure signal: an unlucky draw and a genuine firm-blind view return the same shape and the same magnitude range.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "n=1 gives the observed gap NO SCALE -- 'view 2 is firm-blind' and 'this permutation landed near the real value' are indistinguishable in the stored object",
+        "a changed NPERM silently moves this value via the shared RNG stream",
+        "an input re-homed or re-generated changes the index space with no card-visible signal"
+      ],
+      "basis": "measured",
+      "evidence": "the stored object carries exactly two keys (no n, no sd) -- rederivation_result.json controls.C2_view1_with_permuted_view2 @c11d1ff734; corroborated by 1i (ii-a) refusing the current +0.0049 as a clause-1 verdict @dd8ac390ef",
+      "owner": "2.0.0_SA_COO~X"
+    }
+  },
+  "verdict": {
+    "standing": "UNSOUND",
+    "why": "SCOPED TO THE DECLARED DOMAIN -- this arm AS THE ENTRY GATE. Every row is measured, so not INCOMPLETE; the defect blocks load-bearing use rather than bounding it, so not QUALIFIED. Three independent grounds, any one sufficient: (1) CADENCE -- one draw where clause 1 requires a distribution at N >= 20; (2) KEY -- a shared RNG stream makes the draw order-dependent on an unrelated battery, so the value is not reproducible under any edit above it; (3) PERSISTENCE -- a primary input is untracked, so re-run is device-dependent, and content-pinned is not commit-pinned. NONE OF THIS IMPEACHES THE DIAGNOSTIC FINDING the arm was written for: firm-blindness is the mechanism, 1i read that at source and adopted it, and this card does not disturb it.",
+    "blocking_defects": [
+      "null denominator n=1 vs the required N >= 20 distribution (owner 2.0.0_SA_COO~X)",
+      "shared RNG stream -- draw not independently seeded (owner 1.0.0_SA_CTO~Y)",
+      "primary input untracked; re-run device-dependent (owner 1.0.0_SA_CTO~Y)"
+    ]
+  }
+}
