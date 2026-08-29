@@ -79,22 +79,23 @@ reaches TWO properties.**
   **BUILT-plane** comparison. **K-6 discharges a build-plane version of P2, not P2 as written.**
 
 ```
-  P1  four values / 944 accounts / no stray Unassigned
-        BUILD half     -> K-4          COVERED
-        CONSUMER half  -> K-7          COVERED
-        SERVED half    -> NO CELL      NOT COVERED, deliberately (s.5)
-  P2  per-advisor AUA ties at the SERVED plane
-        build-plane analogue -> K-6    COVERED
-        served-plane P2      -> NO CELL  NOT COVERED, deliberately (s.5)
-  P3  multi-book rule, named + printed          -> K-3   COVERED
-  P4  account_attributes daily, observed        -> K-1   COVERED
-  P5  no cross-tree reference                   -> BINDING CONSTRAINT on all cells (not a cell)
-  P6  synthetic bridge self-retires             -> K-4   COVERED
-  P7  Tier-B contract is Inflection's           -> K-8   COVERED
+  SPLIT PER 3.0.0_SA_CVO 83089 s3 -- and the authority is THIS SEAT'S OWN AC6 RULING:
+  "a criterion whose halves have different remedies was never one criterion."
 
-  CORRECTED DENOMINATOR: 5 of 7 properties FULLY covered by cells; 2 (P1, P2) carry a served-plane
-  component NO CELL DISCHARGES; 1 (P5) is a constraint, not a member.
-  THIS DECOMP CANNOT CLOSE P1 OR P2. It can only close their build and consumer halves.
+  P1a  four values / 944 accts / no stray Unassigned, at the BUILT plane   -> K-4      COVERED
+  P1b  the same, as rendered by the flipped consumers                      -> K-7      COVERED
+  P1c  SERVED advisor_assignments_history + platinum/advisors/ 4 prefixes  -> NO CELL  DEFERRED
+  P2a  per-advisor book ties to the qt6 group-grain read, BUILT plane      -> K-6      COVERED
+  P2b  per-advisor AUA ties AT THE SERVED PLANE (P2 as written)            -> NO CELL  DEFERRED
+  P3   multi-book rule, named + printed                                    -> K-3      COVERED
+  P4   account_attributes daily, OBSERVED; start date stamped              -> K-1      COVERED
+  P6   synthetic bridge self-retires, no parallel path                     -> K-4      COVERED
+  P7   Tier-B contract is Inflection's                                     -> K-8      COVERED
+
+  P5   no cross-tree reference  -> BINDING CONSTRAINT on every cell, NOT a member
+
+  DENOMINATOR: 9 properties after the split. 7 COVERED. 2 (P1c, P2b) DEFERRED TO THE SERVE GATE.
+  THIS DECOMP CANNOT CLOSE P1 OR P2 IN FULL -- and the gap is now a COUNTABLE ROW, not prose.
 ```
 ✅ **The cells do not change and K-1/K-2 remain startable now -- this is a coverage-claim correction, not a
 re-cut.** ⛔ **The defect was that s.5 excluded the serve limb in PROSE while the table still counted the
