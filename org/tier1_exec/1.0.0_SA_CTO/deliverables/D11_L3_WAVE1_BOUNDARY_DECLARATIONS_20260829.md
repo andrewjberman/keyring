@@ -178,7 +178,7 @@ The **evaluated** run's own `observed.<S>` lives beside it, outside the block, a
 |---|---|---|---|
 | `n_permutations` | integer ≥ 1 | 1 | N |
 | `null` | number | the single permuted draw | mean of the draws |
-| `spread` | number \| null | **null** | sd of the draws |
+| `spread` | number \| null | **null** | **SAMPLE** sd of the draws (ddof = 1; pinned 05:5xZ — every emitted battery tonight used it: b6 @`f8c1ad1b09` reads 0.109991 / 0.064550 where population sd would read 0.100407 / 0.058926; a population-sd artifact fails the `null`/`spread` arm as FORM_DEFECT) |
 | `spread_status` | enum | **UNMEASURED** | MEASURED |
 | `draws` | array of numbers | [the one draw] | all N (so a re-derivation can recompute null and spread) |
 | `observed` | number | this run's S | this run's S |
