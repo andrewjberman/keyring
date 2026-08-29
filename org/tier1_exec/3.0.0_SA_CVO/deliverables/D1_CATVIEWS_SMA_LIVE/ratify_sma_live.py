@@ -502,11 +502,136 @@ def check_scope(doc, scope, plane, out, post_reland, as_of):
     return client_aum, sma_aum
 
 
+MANIFEST_PREFIX = "portal/gold/mdpf/_manifests"
+CV_TYPE = "category-views"
+
+
+def list_manifest_keys(as_of):
+    """Every manifest key under one as_of folder. Returns (keys, err).
+
+    NEVER headed: the CLI auto-paginates and the only sound denominator is a
+    client-side count of the whole listing (CLAUDE.md retrieval law).
+    """
+    r = subprocess.run(
+        ["aws", "s3api", "list-objects-v2",
+         "--bucket", GOLD_BUCKET,
+         "--prefix", "%s/%s/" % (MANIFEST_PREFIX, as_of),
+         "--query", "Contents[].Key", "--output", "text"],
+        capture_output=True, text=True)
+    if r.returncode != 0:
+        tail = (r.stderr or "").strip().splitlines()
+        return None, "list rc=%d %s" % (r.returncode, tail[-1][:80] if tail else "")
+    body = (r.stdout or "").strip()
+    if not body or body == "None":
+        return [], None
+    return sorted(k for k in body.split() if k.endswith(".json")), None
+
+
+def check_run_fire(as_of, since, out):
+    """THE RUN PLANE -- the question the ARTIFACT STRUCTURALLY CANNOT ANSWER.
+
+    MEASURED 2026-08-29, denominator 47 manifests: every weekend run repeats the
+    preceding FRIDAY's as_of (6 of 6 weekend runs, zero counterexamples), so a
+    weekend fire re-enters an EXISTING dated key. There conditional_put refuses:
+    category-views is ABSENT from the closed B0 artifact_types list (denominator
+    3), so business_equal raises KeyError and the fail-closed outcome is
+    `conflict` -- RECORDED, NEVER OVERWRITTEN (mdpf_gold_consolidator.py:1029).
+
+    >> SO THE ARTIFACT AFTER A REFUSED FIRE IS BYTE-IDENTICAL TO THE ARTIFACT
+       AFTER NO FIRE AT ALL. Same trigger, same LastModified. A seat scoring
+       TM1-AC1 / CATV-TON1-AC7 on the artifact reads `manual` and cannot tell a
+       PERFECTLY-BEHAVED floor from a dead one -- and the cheap reading is the
+       wrong one, because it opens an infra investigation into a correct refusal.
+
+    The manifest is the ONLY object that separates them, and it is also the only
+    place the FULL trigger dict lives: :1148 writes {kind, detail.source,
+    request_id} to the MANIFEST, :1398 writes trigger.get("kind") -- KIND ONLY --
+    to the ARTIFACT. Two objects, two shapes.
+
+    NON-APPLICATION (this rule costs a listing + one GET, and only here): skip it
+    entirely when no scheduled fire is claimed. It scores a FIRE, never a build.
+    """
+    keys, err = list_manifest_keys(as_of)
+    if keys is None:
+        out.append(("[FIRE] manifest listing readable", None,
+                    "UNREADABLE (%s) -- INDETERMINATE, never a refusal" % err))
+        return
+    fresh = [k for k in keys if os.path.basename(k)[:16] >= since] if since else keys
+    out.append(("[FIRE] a run manifest exists at/after %s" % (since or "<any>"),
+                bool(fresh),
+                "%d of %d manifest(s) under as_of=%s. ABSENT here means the fire "
+                "did NOT run -- that, and only that, is the infra question"
+                % (len(fresh), len(keys), as_of)))
+    if not fresh:
+        return
+    # PER-MANIFEST, NEVER UNIONED ACROSS RUNS. EXERCISING FOUND THIS, and the
+    # first build of this function had the defect: it read sorted(fresh)[-1] --
+    # the NEWEST manifest -- and on 2026-08-29 the 03:55:57Z run recorded
+    # category-views `written` while the 03:56:08Z run 11s later recorded
+    # `unchanged`. DIFFERENT request_ids, so two invocations, not two phases.
+    # The newest is not the meaningful one: the AC row FAILED on a run that had
+    # in fact written, which on Monday is a FALSE FAIL OF A CORRECT FIRE -- the
+    # exact criterion-shape this seat has refused in three other lanes tonight.
+    #
+    # >> AND THE OBVIOUS REPAIR IS WORSE THAN THE BUG. Unioning statuses across
+    #    manifests would pair a MANUAL run's `written` with a LATER SCHEDULED
+    #    run's kind and report a scheduled write that never happened -- one
+    #    evidence banner over two evidence classes. The pair (kind, status) MUST
+    #    come from ONE manifest, so the lifting row is evaluated per-run and only
+    #    then reduced.
+    #
+    # WHY A SAME-as_of SCHEDULED FIRE CANNOT LIFT IN PLACE: `_provenance.trigger`
+    # is INSIDE the artifact bytes, and conditional_put compares raw sha256 first.
+    # A scheduled run at an existing key therefore ALWAYS differs from a stored
+    # `manual` stamp -> business_equal -> KeyError (category-views is absent from
+    # the closed B0 list, denominator 3) -> `conflict`, not overwritten. The
+    # trigger stamp can NEVER be advanced in place; only a NEW dated key carries
+    # a new trigger. That is why the lift is Monday's key, not today's fire.
+    seen = []
+    for k in sorted(fresh):
+        d, e = fetch(GOLD_BUCKET, k)
+        if d is None:
+            out.append(("[FIRE] manifest %s readable" % os.path.basename(k), None,
+                        "UNREADABLE (%s) -- INDETERMINATE, never a refusal" % e))
+            continue
+        run = d.get("run", {}) or {}
+        t = run.get("trigger")
+        kd = t.get("kind") if isinstance(t, dict) else t
+        sr = ((t or {}).get("detail") or {}).get("source") if isinstance(t, dict) else None
+        rw = d.get("artifacts") or d.get("rows") or d.get("writes") or []
+        cvr = [r for r in rw if CV_TYPE in (r.get("key") or "")]
+        seen.append((os.path.basename(k), kd, sr,
+                     sorted(set(r.get("status") for r in cvr)), len(cvr), len(rw)))
+    for name, kd, sr, st, ncv, ntot in seen:
+        print("  INFO %-58s kind=%r src=%r %s (%d of %d rows)"
+              % ("[FIRE] " + name, kd, sr, st, ncv, ntot))
+    out.append(("[FIRE] a SCHEDULED run is among them",
+                any(s[1] == "scheduled" for s in seen),
+                "kinds=%s across %d manifest(s). This is the ONLY plane carrying "
+                "the full {kind, detail.source, request_id}; the artifact has KIND ONLY"
+                % (sorted(set(str(s[1]) for s in seen)), len(seen))))
+    sched = [s for s in seen if s[1] == "scheduled"]
+    out.append(("[FIRE] %s emitted by the SCHEDULED run" % CV_TYPE,
+                (all(s[4] > 0 for s in sched) if sched else None),
+                "row counts=%s. ZERO means the type was not built by that run -- a "
+                "DIFFERENT failure from a refused write"
+                % ([s[4] for s in sched] or "no scheduled run in window -- NOT scored")))
+    lift = [s[0] for s in sched if "written" in s[3]]
+    out.append(("[TM1-AC1/CATV-TON1-AC7] %s WRITTEN by a SCHEDULED run" % CV_TYPE,
+                bool(lift),
+                "lifting manifest(s)=%s. `conflict` = the fire RAN and was CORRECTLY "
+                "REFUSED; `unchanged` = a same-kind re-run, old bytes stand. Only "
+                "`written` lifts, and kind+status must come from ONE manifest."
+                % (lift or "NONE")))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--as-of", default="2026-08-27")
     ap.add_argument("--expect-fail", action="store_true",
                     help="negative-control mode: exit 0 only if ratification FAILS")
+    ap.add_argument("--score-fire", metavar="SINCE", default=None,
+                    help="score the RUN plane: newest manifest at/after SINCE (YYYYMMDDTHHMMSS, '' = any). The artifact CANNOT distinguish a refused fire from no fire; only the manifest can.")
     ap.add_argument("--post-reland", action="store_true",
                     help="score _provenance.trigger: adhoc REQUIRED, a scheduled claim is FORGED")
     a = ap.parse_args()
@@ -532,6 +657,9 @@ def main():
                 rows.append(("[CONTROL ONLY] conservation Client+SMA == %.2f" % CONSERVATION,
                              ok, "PASSES PRE-FIX TOO -- evidences nothing alone (14091)"))
         check_cross_scope(plane_docs, plane, rows)
+
+    if a.score_fire is not None:
+        check_run_fire(a.as_of, a.score_fire, rows)
 
     na = [r for r in rows if r[1] is None]
     scored = [r for r in rows
