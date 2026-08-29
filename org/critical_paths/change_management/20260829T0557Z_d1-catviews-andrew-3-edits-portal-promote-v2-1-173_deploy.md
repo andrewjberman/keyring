@@ -1,7 +1,8 @@
 # DEPLOY LEDGER — D1_CATVIEWS Andrew's 3 panel edits, portal DEV -> PROD (promote #3)
 
-**Status:** OPEN
+**Status:** CLOSED — COMPLETE
 **Opened:** 2026-08-29T05:57Z — before the worktree exists, before the merge exists.
+**Closed:** 2026-08-29T06:07Z — both pushes verified AT THE REMOTE, nothing half-landed.
 **Owner:** `0.4.0_DT_ClientPlatform~Z`
 **Authority:** `2.0.0_SA_COO~Z` @16329 (authorized **with a bar**), concurred `1.0.0_SA_CTO~Z` @16325
 (who corrected their own over-broad brake to release it).
@@ -75,3 +76,52 @@ The rendered page (`3.0.0_SA_CVO~Z`'s rung, against DE~Z's 9 pre-filed predictio
 
 ## TIMELINE
 - 2026-08-29T05:57Z — entry OPENED, before the worktree and the merge.
+- 05:58Z worktree · `bun install` rc=0 (420 pkgs, FOREGROUND) · `merge --no-ff -F` rc=0, 'ort',
+  1 file +103/-75, no conflicts -> `fc3a4421715a4252471accc6e85cecca54c6e9a2`
+- **PARITY GATE PASS: 0 bytes.** Merged tree `1201bd055ef526fe52e6b6fd6a1f5d2d550a224b` ==
+  `origin/DEV` tree == the value `merge-tree` predicted before the merge existed.
+- PUSH 1/2 by `0.0.0_AB_MSTR~Z` (GATE 5, no override): `origin/PROD c92b4677 -> fc3a4421`
+- ⛔ **CI READ `in_progress` ON FIRST POLL — AND I DID NOT SCORE ANYTHING DOWNSTREAM OF IT.**
+  Polled to `status=completed` first. Run 33237535289 "Deploy to Production" **conclusion=success**,
+  enumerated BY headSha.
+  >> **SCORING THE BUNDLE WHILE THE DEPLOY WAS STILL RUNNING WOULD HAVE PRODUCED A FALSE
+     "NOTHING SHIPPED."** The deploy not having finished is not the promote having failed — and it
+     was one impatient `curl` away. Same false-absence class that cost this fabric repeatedly
+     tonight, avoided by waiting rather than by cleverness. <<
+- TAG: `portal-v2.1.173` **PEELED** — object `42abbacf` -> commit `fc3a4421` == PROD head.
+- ⭐ **BUNDLE / DE~Z's P1: `index-BamLAu6Q.js` -> `index-D9vMtGZu.js`**, negative control 0.
+  **Scored FIRST, deliberately** — P1 is the gate on their other eight rows: had the chunk not
+  moved, every prediction below would have been UNINTERPRETABLE rather than false.
+  ⚠ CSS unchanged (`WQYUWqLe`) — expected for a JS-side change; banked in advance as
+  corroborating-if-it-moves, never a required arm.
+- Step 7: `worktree remove` rc=255 "Filename too long" (documented, acceptable); `prune` rc=0; only
+  the main tree remains, **on DEV — it never left**.
+- PUSH 2/2 by `0.0.0_AB_MSTR~Z`: `origin/SITEZ -> 739b6bbf34`. Verified two ways — `ls-remote` for
+  the ref AND the pointer **VALUE** at origin (`160000 commit 0e1c232d…`).
+
+## THE VERIFIER TANGLE COST NOTHING, AND THE REASON IS ACT ORDERING
+Two seats claimed the verify within 90 seconds. **Nothing was staged until one had confirmed** (four
+read-only commands), then the merge was built — **local and reversible** — and the coordination
+traffic was read **before** the irreversible push was handed off.
+`2.0.0_SA_COO~Z` @16363 settled it: **author writes the prediction, an INDEPENDENT seat scores it.**
+`3.0.0_SA_CVO~Z` @16366: *"FIRE. Do not wait for this to be resolved."* **A promote was not held on a
+coordination question that both parties said did not gate it.**
+
+## WHY THIS PROMOTE WAS CHASED RATHER THAN LEFT
+Edit (a) retires a suppression **promote #2 shipped four hours earlier**, so PROD had been rendering
+a state Andrew personally and explicitly corrected, on the surface he is most likely to open next.
+**Holding was not the neutral option.** It had sat ~90 minutes with nobody saying either way, and a
+ruling that the edit *"does not hold the promote"* settled that it was not a GATE while saying
+nothing about whether it should SHIP.
+
+## THIRD BASELINE OF THE NIGHT
+`Ce258d2k` -> `BMmU0cpj` -> `BamLAu6Q`, each dead the moment its own promote fired.
+**A one-way marker is consumed by the event it detects; a content-hash renews its own baseline
+because it is DERIVED from the bytes rather than hand-maintained.**
+
+## WHAT THIS DEPLOY DID NOT ESTABLISH
+- **The rendered page.** `3.0.0_SA_CVO~Z` scores it against `0.4.0_DE_ClientPlatform~Z`'s nine
+  predictions, filed BEFORE the fire so they cannot be fitted afterwards.
+- **The scheduled pipeline** — untouched by any promote.
+- ⚠ Edit (a) makes the Global Client card show **267,632,047.22, 100%-supervised, 49financial-scoped**
+  — **correct-as-built under basis B and the open I2 sovereign fork, NOT a pixel-rung defect.**
