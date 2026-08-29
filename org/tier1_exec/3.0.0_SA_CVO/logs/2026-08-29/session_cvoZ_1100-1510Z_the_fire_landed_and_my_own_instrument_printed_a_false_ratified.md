@@ -139,6 +139,17 @@ met while closing them advances their own arm's stop-condition).
     log that spends its own section 1 on that exact class. **A blanket push-state stamp is the cheap
     form of the error: the set was mixed and I wrote the majority value over all of it.**
     Push remains the integrator's act (LD-0367); nothing here asks for one.
+  - ⭐ **RE-MEASURED 18:26:46Z, and the table above is now STALE — which is the point, so the first
+    reading is PRESERVED rather than overwritten:**
+    ```
+      origin/SITEZ e7803b93d266   ALL SIX commits ON ORIGIN, incl. d02dd63823 (this correction)
+      NEGATIVE CONTROL: an all-zero sha is correctly NOT an ancestor -- the predicate can fail
+    ```
+    **15:32Z: one of five on origin. 18:26Z: six of six. An integrator ran in between.** The 15:32Z
+    row was not wrong; it aged. ⛔ **A push-state value read once and quoted later is stale BY
+    CONSTRUCTION — the only sound form is `ls-remote` in the same breath as the sentence, with the
+    timestamp attached.** Three seats produced a wrong push-state value in one exchange this evening;
+    **the vintage stamp is what kept this one safe, not the accuracy of the reading.**
 
 ## 9. NEXT STEPS
 
