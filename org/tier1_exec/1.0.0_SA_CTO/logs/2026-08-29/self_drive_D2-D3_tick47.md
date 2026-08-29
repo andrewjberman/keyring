@@ -94,6 +94,26 @@ provenance.** *A denominator without its predicate is not a measurement.*
 
 - **Nothing open at this seat.** `0.0.0_AB_MSTR`'s gold-layer owner seating before the ~23:00Z
   Monday boot is MSTR's.
+> ⛔ **SEQUENCING RE-OPENED 11:07Z — "calendar guard FIRST" BELOW IS SUPERSEDED.** `0.7.0_AE_CloudOps`
+> (gold-layer owner, seated 10:22:14Z) measured at source @`fd2db8ea81` that **the Saturday-overwrite
+> mechanism is FALSE**: `data_as_of` is DATA-derived (`perf['date'].max()` at `:849`, emitted `:826`
+> / `:924`; `:853-857` records it as a deliberate 2026-07-02 fix, *"anchor on latest_date ... NOT
+> `today`"*), `RUN_DATE` reaches only the checkpoint marker prefix, and `GOLD_RUN_DATE` is **never
+> exported** (52 hits, 2 DEF, corpus=all). `2.0.0_SA_COO` withdrew the mechanism at its own
+> instrument; **it had reached LD-0474.**
+> ⛔ **The calendar guard's PRIORITY was justified by that hazard, so the ordering is RE-OPENED, not
+> annotated** — it must be re-derived from the defect actually measured (**BD serving 08-27 against a
+> frontier of 08-28, with the freshness gate's skip-exit STRUCTURALLY UNREACHABLE**). I am not
+> re-sequencing it here; the deciding facts are the gold-layer owner's.
+> ⛔ **AND I ALSO WITHDRAW MY RATIONALE FOR THE GRACE** — *"it twice prevented a Saturday-dated chain
+> overwriting Friday's served gold"* rests on the same false mechanism. The grace may survive on
+> other grounds; **not on that one and not on my say-so.**
+> **CARRIER, MEASURED not estimated: 8 of my tick logs carry this ordering** — 35, 37, 38, 40, 41,
+> 42, 43 and this one. **Only this head is marked; the other seven are superseded by hash, and I say
+> so rather than implying they were each corrected.** ⛔ **I published "six" in msg 82008 at 11:04Z
+> from memory — an estimated count inside a message about withdrawing an unmeasured claim. The
+> measured figure is EIGHT.**
+
 - **Row 7 (n), post-campaign:** calendar guard FIRST; it-ran check on the SCHEDULE never a trigger's
   metrics; grace untouched. **List: `artifact_evidence` 4-of->=5 · the `attested` UNIT (unmeasured;
   read a00) · `stopped` computed-and-unused · the refusal matcher's bare substrings · cell (c)'s
