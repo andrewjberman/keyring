@@ -17,7 +17,11 @@
 > and what `close-leg` updates. L1 is CLOSED in it with the full rung-(a) proof; **L2 is OPEN and is
 > the 13:50Z fire.**
 
-**Status:** OPEN
+**Status:** SUPERSEDED-AS-LEDGER-OF-RECORD -- this FILE no longer holds the deploy's open state; the
+sentinel does. **THE DEPLOY ITSELF IS STILL OPEN** (L2 / rung (b), the 13:50Z fire) and is tracked at
+`.open_deploys/catvp-c-publisher-derived-type-axis.json`. Terminal here is a statement about THIS
+CARRIER, never about the deploy -- and it is what stops this file registering as a SECOND open ledger
+and firing a BYPASS alert against a deploy the gate is already correctly tracking.
 **Opened:** 2026-08-29T00:55Z
 **Executor:** `0.7.0_AE_CloudOps~Z`
 **TO / cells:** `D1_CATVIEWS` `CATVP-c-1..c-3`
