@@ -1,0 +1,388 @@
+#!/usr/bin/env python3
+"""comp-impact -- pre-change impact compile.
+
+Answers "what does this change actually touch at runtime?" instead of "what do I think
+it touches?". Built 2026-07-25 after one GOVRIP dispatch produced SIX incomplete censuses
+from four agents, and after a return-arity change silently took collection down for 778
+tests.
+
+THREE MANDATORY OUTPUTS (Andrew-direct 2026-07-25). These print on every run, including
+failures, because each one is a thing an author cannot otherwise see:
+
+  1. ROOTS      what was scanned, and how the root set was DERIVED. A denominator bounds
+                what you scanned; it says NOTHING about what exists. The largest census
+                miss of 2026-07-25 was an honest 304-file denominator whose ROOTS were
+                wrong -- a vendored copy in infra/ that no graph-scoped scan could see.
+  2. CONTROL    did the instrument rediscover instances we ALREADY KNOW are in the set?
+                A census that cannot find a known-present instance is a broken instrument
+                reporting silence. Every predicate that failed on 07-25 was caught this
+                way and none was caught by reasoning about the predicate.
+  3. RUNTIME    does it still import? Static analysis says who REFERENCES a module; only
+                execution says what BREAKS. The deadlock that would have wedged every
+                .py commit fabric-wide was invisible to reference analysis and obvious to
+                a simulated import.
+
+SCOPES REPORTED
+  edit-scope   modules referencing the subject's symbols (AST, follows re-export wrappers)
+  break-scope  modules that fail at IMPORT if the subject is removed (runtime-simulated)
+  test-scope   direct importers + symbol referencers + DIRECTORY SCANNERS
+
+  Directory scanners are the row that exists because of a specific miss: a test that does
+  Path(dir).glob("*.py") asserts an invariant over every file in that directory WITHOUT
+  importing any of them. Three agents verified a change by running the tests it was ABOUT
+  and none ran the test it VIOLATED, because that test referenced nothing they had touched.
+  Independence of verifiers does not give independence of test SELECTION.
+
+NOT A GATE. Advisory. It reports; it never blocks.
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import warnings
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+
+
+# ---------------------------------------------------------------- roots (output 1)
+def derive_roots() -> tuple[list[Path], str]:
+    """Root set DERIVED from git, never hardcoded.
+
+    git ls-files is the estate's own answer to "what is tracked", so the denominator is
+    the repo's rather than the author's. Untracked files are deliberately excluded and
+    that exclusion is REPORTED -- an untracked consumer is a real blind spot and the run
+    should say so rather than silently omit it.
+    """
+    out = subprocess.run(["git", "-C", str(REPO), "ls-files", "*.py"],
+                         capture_output=True, text=True)
+    if out.returncode != 0:
+        return [], "git ls-files FAILED -- roots UNRESOLVED"
+    files = [REPO / p for p in out.stdout.splitlines() if p.strip()]
+    files = [f for f in files if "__pycache__" not in str(f)]
+    return files, "git ls-files '*.py' (tracked only; untracked EXCLUDED and unmeasured)"
+
+
+_AST: dict[Path, object] = {}
+_SRC: dict[Path, str] = {}
+
+
+def parse(path: Path):
+    """Parse once, cache. Without this the fixpoint re-parses the whole estate per pass
+    and the tool costs minutes -- a pre-commit check nobody waits for is a check nobody
+    runs."""
+    if path in _AST:
+        return _AST[path]
+    try:
+        src = path.read_text(encoding="utf-8", errors="replace")
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")  # other files' SyntaxWarnings are not our signal
+            t = ast.parse(src)
+        _SRC[path] = src
+    except (SyntaxError, OSError, ValueError):
+        t = None
+    _AST[path] = t
+    return t
+
+
+def source(path: Path) -> str:
+    if path not in _SRC:
+        try:
+            _SRC[path] = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            _SRC[path] = ""
+    return _SRC[path]
+
+
+# ---------------------------------------------------------------- subject
+def subject_symbols(paths: list[Path]) -> tuple[set[str], set[str]]:
+    """Module basenames + top-level public symbols defined by the changed files."""
+    mods, syms = set(), set()
+    for p in paths:
+        if p.suffix != ".py":
+            continue
+        mods.add(p.stem)
+        t = parse(p)
+        if t is None:
+            continue
+        for n in t.body:
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                syms.add(n.name)
+            elif isinstance(n, ast.Assign):
+                for tgt in n.targets:
+                    if isinstance(tgt, ast.Name):
+                        syms.add(tgt.id)
+    syms = {s for s in syms if _is_distinctive(s)}
+    return mods, syms
+
+
+_BUILTINS = set(dir(__builtins__)) if isinstance(__builtins__, dict) is False else set(__builtins__)
+
+
+def _is_distinctive(name: str) -> bool:
+    """A carrier must be able to identify the subject. Short, dunder, or builtin-shadowing
+    names match everywhere and turn the census into a select-all -- measured: they returned
+    5033 of 5312 files. Distinctiveness is the precondition for a symbol being evidence."""
+    if len(name) < 5 or name.startswith("__"):
+        return False
+    if name in _BUILTINS:
+        return False
+    return "_" in name or not name.islower()
+
+
+# ------------------------------------------------- edit-scope (+ wrapper closure)
+def edit_scope(files: list[Path], mods: set[str], syms: set[str]) -> tuple[dict, set[str]]:
+    """Modules referencing the subject, to fixpoint over THIN RE-EXPORT WRAPPERS.
+
+    The wrapper hop is why a pure alias closure is not enough: a locally-DEFINED function
+    that forwards to an imported predicate carries NO import edge bearing its own name, so
+    alias propagation cannot see its callers. Propagating through ANY def that touches a
+    carrier is the opposite error -- it swept 21 phantoms into a 38-file census on 07-25 --
+    so containment is limited to functions whose body is essentially a forward.
+    """
+    carriers = set(mods) | set(syms)
+    hits: dict[str, set[str]] = {}
+    for _ in range(6):  # fixpoint; 6 is far above any observed depth
+        grew = False
+        for f in files:
+            t = parse(f)
+            if t is None:
+                continue
+            found, new_carriers = set(), set()
+            for n in ast.walk(t):
+                if isinstance(n, ast.ImportFrom) and n.module:
+                    if n.module.split(".")[-1] in carriers:
+                        found.update(a.name for a in n.names)
+                        found.add(n.module.split(".")[-1])
+                        new_carriers.update(x for x in (a.asname or a.name for a in n.names) if _is_distinctive(x))
+                elif isinstance(n, ast.Import):
+                    for a in n.names:
+                        if a.name.split(".")[-1] in carriers:
+                            found.add(a.name.split(".")[-1])
+                # NO bare-Name matching: see module docstring. A symbol is evidence only
+                # when an import edge binds it FROM the subject or a carrier module.
+            # THIN wrapper: a short def that references a carrier re-exports it.
+            for n in ast.walk(t):
+                if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    body = [s for s in n.body if not isinstance(s, ast.Expr)]
+                    if len(body) <= 3:
+                        for sub in ast.walk(n):
+                            if isinstance(sub, ast.Name) and sub.id in carriers:
+                                if _is_distinctive(n.name):
+                                    new_carriers.add(n.name)
+            if found:
+                hits.setdefault(str(f.relative_to(REPO)).replace("\\", "/"), set()).update(found)
+            if new_carriers - carriers:
+                carriers |= new_carriers
+                grew = True
+        if not grew:
+            break
+    return hits, carriers
+
+
+# --------------------------------------------------- break-scope (runtime, output 3)
+def break_scope(candidates: list[str], mods: set[str]) -> tuple[list[str], list[str], str]:
+    """SIMULATE the subject's removal and see what actually fails to import.
+
+    A meta_path blocker makes the subject unimportable WITHOUT touching the repo, so the
+    hazard is measured rather than predicted and nothing is mutated to find out. This is
+    the row that caught the commit-gate deadlock: reference analysis said comp_constants_cli
+    'mentions' sovereign_held; only the simulated import revealed that the Rule-14 gate
+    every agent runs would fail CLOSED, blocking the very commit that would repair it.
+    """
+    probe = f"""
+import sys, importlib, importlib.abc, json
+BLOCK = {sorted(mods)!r}
+class B(importlib.abc.MetaPathFinder):
+    def find_spec(self, name, path=None, target=None):
+        if name.split('.')[-1] in BLOCK:
+            raise ImportError("simulated removal: " + name)
+        return None
+sys.meta_path.insert(0, B())
+for p in ({[str(REPO / d) for d in ('org/modules/graph', '.tools', 'infra/aws/compdiff')]!r}):
+    sys.path.insert(0, p)
+broke, ok = [], []
+for m in {candidates!r}:
+    try:
+        importlib.import_module(m); ok.append(m)
+    except ImportError as e:
+        (broke if 'simulated removal' in str(e) else ok).append(m)
+    except Exception:
+        ok.append(m)
+print(json.dumps({{"broke": broke, "ok": ok}}))
+"""
+    # Probe goes to a FILE, never `python -c`: the candidate list makes the command line
+    # exceed the Windows limit (WinError 206) and the failure is a crash, not a bad answer.
+    tmp = Path(tempfile.gettempdir()) / f"comp_impact_probe_{os.getpid()}.py"
+    try:
+        tmp.write_text(probe, encoding="utf-8")
+        r = subprocess.run([sys.executable, str(tmp)], capture_output=True, text=True,
+                           cwd=str(REPO), timeout=180)
+        d = json.loads(r.stdout.strip().splitlines()[-1])
+        return d["broke"], d["ok"], "simulated-removal import probe (repo untouched)"
+    except Exception as e:
+        return [], [], f"RUNTIME PROBE FAILED -- break-scope UNMEASURED ({str(e)[:110]})"
+    finally:
+        try:
+            tmp.unlink()
+        except OSError:
+            pass
+
+
+# ------------------------------------------------------------------- test-scope
+def test_scope(files: list[Path], paths: list[Path], carriers: set[str]) -> dict:
+    """Tests that would exercise OR assert an invariant over the subject.
+
+    Three classes, and the third is the one that is always missed:
+      direct     imports the subject
+      symbol     references a subject symbol
+      SCANNER    globs/walks a DIRECTORY containing a changed file -- asserts over every
+                 file there while importing none of them. test_sovereign_held_no_drift
+                 is exactly this: it scans the graph dir for marker literals, so a NEW
+                 legitimate file in that dir reddens it, and nothing in the change's own
+                 import graph predicts that.
+    """
+    changed_dirs = {str(p.parent.relative_to(REPO)).replace("\\", "/") for p in paths}
+    out: dict[str, list[str]] = {"direct": [], "symbol": [], "scanner": []}
+    for f in files:
+        rel = str(f.relative_to(REPO)).replace("\\", "/")
+        if "test" not in rel.lower():
+            continue
+        t = parse(f)
+        if t is None:
+            continue
+        src = source(f)
+        direct = symbol = False
+        for n in ast.walk(t):
+            if isinstance(n, ast.ImportFrom) and n.module and n.module.split(".")[-1] in carriers:
+                direct = True
+            elif isinstance(n, ast.Import) and any(a.name.split(".")[-1] in carriers for a in n.names):
+                direct = True
+            elif isinstance(n, ast.Name) and n.id in carriers:
+                symbol = True
+        scans = ("glob(" in src or "rglob(" in src or "os.walk" in src or "iterdir()" in src)
+        touches_dir = any(d.split("/")[-1] in src or d in src for d in changed_dirs)
+        if direct:
+            out["direct"].append(rel)
+        elif symbol:
+            out["symbol"].append(rel)
+        elif scans and touches_dir:
+            out["scanner"].append(rel)
+    return out
+
+
+# ------------------------------------------------------------- control (output 2)
+def positive_control(hits: dict, paths: list[Path], files: list[Path]) -> tuple[str, list[str]]:
+    """Can the instrument rediscover what we ALREADY KNOW is in the set?
+
+    Seeds: every changed file that is imported by at least one other tracked module MUST
+    appear in the impact set. If the scan cannot rediscover a known-present relationship,
+    every other number it printed is unsafe -- so this runs before any result is quoted,
+    and a FAIL is reported louder than the findings.
+    """
+    notes, ok = [], True
+    for p in paths:
+        if p.suffix != ".py":
+            continue
+        stem = p.stem
+        importers = []
+        for f in files:
+            if f == p:
+                continue
+            t = parse(f)
+            if t is None:
+                continue
+            for n in ast.walk(t):
+                if isinstance(n, ast.ImportFrom) and n.module and n.module.split(".")[-1] == stem:
+                    importers.append(str(f.relative_to(REPO)).replace("\\", "/"))
+                    break
+                if isinstance(n, ast.Import) and any(a.name.split(".")[-1] == stem for a in n.names):
+                    importers.append(str(f.relative_to(REPO)).replace("\\", "/"))
+                    break
+        if not importers:
+            notes.append(f"{stem}: no tracked importer -- control VACUOUS for this file")
+            continue
+        missed = [i for i in importers if i not in hits]
+        if missed:
+            ok = False
+            notes.append(f"{stem}: MISSED {len(missed)} known importer(s) e.g. {missed[:3]}")
+        else:
+            notes.append(f"{stem}: rediscovered all {len(importers)} known importer(s)")
+    return ("PASS" if ok else "FAIL"), notes
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="comp-impact")
+    ap.add_argument("paths", nargs="*", help="changed files")
+    ap.add_argument("--commit", help="derive changed files from a commit")
+    ap.add_argument("--json", action="store_true")
+    a = ap.parse_args()
+
+    if a.commit:
+        r = subprocess.run(["git", "-C", str(REPO), "show", "--pretty=format:", "--name-only", a.commit],
+                           capture_output=True, text=True)
+        rels = [x for x in r.stdout.splitlines() if x.strip().endswith(".py")]
+    else:
+        rels = [p for p in a.paths if p.endswith(".py")]
+    paths = [REPO / p for p in rels]
+    paths = [p for p in paths if p.exists()]
+    if not paths:
+        print("comp-impact: no existing .py subject files resolved", file=sys.stderr)
+        return 2
+
+    files, how = derive_roots()
+    mods, syms = subject_symbols(paths)
+    hits, carriers = edit_scope(files, mods, syms)
+    cands = sorted({Path(h).stem for h in hits} | {p.stem for p in paths})
+    broke, _ok, probe_note = break_scope(cands, mods)
+    tests = test_scope(files, paths, carriers)
+    ctl, ctl_notes = positive_control(hits, paths, files)
+
+    if a.json:
+        print(json.dumps({"roots": len(files), "roots_how": how, "subject": rels,
+                          "edit_scope": sorted(hits), "break_scope": broke,
+                          "test_scope": tests, "control": ctl, "control_notes": ctl_notes,
+                          "runtime_note": probe_note}, indent=2))
+        return 0
+
+    print("=== comp-impact ===")
+    print(f"SUBJECT      {len(rels)} file(s): {', '.join(rels[:4])}{' ...' if len(rels) > 4 else ''}")
+    print()
+    print(f"[1] ROOTS    {len(files)} tracked .py files")
+    print(f"             derived: {how}")
+    print("             NOTE: bounds what was SCANNED, not what EXISTS. A vendored or")
+    print("             untracked copy outside this set is invisible here.")
+    print()
+    print(f"[2] CONTROL  {ctl}")
+    for n in ctl_notes:
+        print(f"             {n}")
+    if ctl == "FAIL":
+        print("             *** numbers below are UNSAFE -- the scan missed a known instance ***")
+    print()
+    print(f"[3] RUNTIME  {probe_note}")
+    print(f"             break-scope: {len(broke)} module(s) fail to import if subject removed")
+    for m in broke[:12]:
+        print(f"               BREAKS  {m}")
+    print()
+    print(f"EDIT-SCOPE   {len(hits)} file(s) reference the subject")
+    for h in sorted(hits)[:12]:
+        print(f"               {h}   [{', '.join(sorted(hits[h])[:3])}]")
+    print()
+    print(f"TEST-SCOPE   direct={len(tests['direct'])} symbol={len(tests['symbol'])} "
+          f"scanner={len(tests['scanner'])}")
+    for k in ("direct", "symbol", "scanner"):
+        for t in tests[k][:8]:
+            print(f"               {k.upper():8} {t}")
+    if tests["scanner"]:
+        print("             ^ SCANNER tests assert over a DIRECTORY without importing the")
+        print("               subject. These are the ones a targeted test run misses.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
