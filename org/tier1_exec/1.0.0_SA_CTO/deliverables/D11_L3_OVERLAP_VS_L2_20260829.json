@@ -62,13 +62,26 @@
       "both": 1291,
       "store_only": 0,
       "reference_only_not_reached": 18191
+    },
+    {
+      "subject": "motif_to_portalsym (raw motif-sourced CONTAINS edge targets that are portal_full.graph.json node ids -- CCX 79997 / CVO 004930Z id form, reproduced 1,495)",
+      "population": 1495,
+      "reference": "L2 STRUCTURE, layer == portal",
+      "reference_size": 10365,
+      "both": 1495,
+      "store_only": 0,
+      "reference_only_not_reached": 8870,
+      "id_form_check": "shared prefixes between population and reference: endpoint, endpointurl, fetch, out, rc, type -- the join is non-vacuous by construction (unlike the withdrawn raw-path row); population prefixes out 700 / type 642 / endpoint 50 / fetch 50 / endpointurl 45 / rc 8; STRUCTURE portal-layer prefixes type 5,076 / render 1,433 / jsx 1,298 / out 700 / rc 442 / prop 359 / module 309 / component 199",
+      "side_measurement": "portal_full.graph.json (11,232 node ids) vs STRUCTURE portal layer (10,365): both 10,259 | portal_full-only 973 (isolated nodes, outside the edge-incident frame) | STRUCTURE-only 106",
+      "positive_control": "PASS: one injected 'out:control' id moves store_only by exactly 1"
     }
   ],
   "notes": [
     "COX 79947: stitch ARN population 1,689 = 1,683 classes_data + 6 edge-only dangling endpoints; this file uses the 1,683 node population for arn_to_service and the edge targets for the motif bridges, so the 6 appear in motif_to_arn's target set if any motif edge reaches them.",
     "positive control: each 'both' is recomputed as len(pop & ref); a synthetic id injected into pop raises store_only by exactly 1 (asserted below).",
     "motif_to_path row REPLACED after the first emission: a 0-overlap on raw targets would have shipped as a finding; it is a wrong-population read. The other three rows use id sets that are in the same form on both sides (arn:* / pipeline:*).",
-    "motif_to_path row MEASURED at 00:4xZ on COX's 91: both 0 / store_only 91 / not reached 3,726 -- the WORLD (portal is a submodule gitlink; BEHAVIOR carries no portal/ path), not the instrument as the earlier raw-target 0 was."
+    "motif_to_path row MEASURED at 00:4xZ on COX's 91: both 0 / store_only 91 / not reached 3,726 -- the WORLD (portal is a submodule gitlink; BEHAVIOR carries no portal/ path), not the instrument as the earlier raw-target 0 was.",
+    "motif_to_portalsym row added 00:5xZ on the measured id form (raw edge target == portal_full node id, no parse): every motif-reached portal symbol (1,495 of 1,495) is inside the ratified STRUCTURE set; 8,870 portal-layer entities are not reached by any motif (MISSING at wave 2, not zero)."
   ],
   "positive_control": "PASS: injected id moved store_only by exactly 1"
 }
