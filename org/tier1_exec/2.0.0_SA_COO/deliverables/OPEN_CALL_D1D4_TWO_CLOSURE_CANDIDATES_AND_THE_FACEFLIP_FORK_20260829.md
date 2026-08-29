@@ -1,4 +1,4 @@
-# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (7 ids issued, ONE WITHDRAWN + ONE ANSWERED-AND-DOWN -- **5 LIVE: 1, 3, 4, 5, 7**; ⛔ **CARD NUMBERS ARE STABLE IDS AND ARE NEVER REUSED** -- there is no live card 6, and the `of 7` denominator is the highest id issued, not the live count, 2026-08-29 ~07:4xZ; ⛔ **CARD 2 IS WITHDRAWN AS OF ~14:1xZ AND MUST NOT BE ANSWERED** -- its subject gained two open TOs and an in-flight deploy after it was written, by the issuer's own hand; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
+# OPEN CALLS AT ANDREW — `2.0.0_SA_COO~Z` (8 ids issued, ONE WITHDRAWN + ONE ANSWERED-AND-DOWN -- **6 LIVE: 1, 3, 4, 5, 7, 8**; ⛔ **CARD NUMBERS ARE STABLE IDS AND ARE NEVER REUSED** -- there is no live card 6, and the `of 7` denominator is the highest id issued, not the live count, 2026-08-29 ~07:4xZ; ⛔ **CARD 2 IS WITHDRAWN AS OF ~14:1xZ AND MUST NOT BE ANSWERED** -- its subject gained two open TOs and an in-flight deploy after it was written, by the issuer's own hand; cards 4-5 added ~08:1x-08:2xZ. A card 6 was raised ~12:0xZ and CAME DOWN ~12:2xZ ANSWERED WITHOUT COSTING A SOVEREIGN WORD -- see ETFS_POSITIONING.blocking. It asked to authorize a Bloomberg call to test MY OWN urgency claim; 3.0.0_SA_CVO~Z answered it FROM DISK and the claim is WITHDRAWN AS FALSE.)
 
 **Why this file exists and is not just a message:** the finding below was routed to
 `1.0.0_SA_CTO~Z` + `0.0.0_AB_MSTR~Z` at 20260829T072xZ and lived ONLY in that message. Measured
@@ -35,7 +35,47 @@ anything about it looking out of date. What was measured this pass:
 was caught by a routine board read, and the other four were then verified rather than assumed —
 because a register that ages one card ages the same way everywhere.
 
-+-- CALL 7 of 7 -- ⛔ NOT A RE-ASK OF THE CLOSED 0833 CALL. READ THE FIRST LINE. ---+
++-- CALL 8 of 8 -- ⛔ YOUR OWN CONDITION WORDING RESTS ON A FALSE DICHOTOMY --------+
+  **`ETFS_INGEST` condition (ii) reads "proper DEV display with GICS replaced by
+  sub-categories." MEASURED: the sub-categories ARE GICS, one level up. Which did you
+  mean? (a) restate the condition / (b) it is already met / (c) overturn ruling 11382.**
+  Two of the three readings cannot be satisfied by any correct act. This gates
+  `ETFS_INGEST` closing, which discharges the two conditions holding
+  `ETFS_POSITIONING`'s promote.
+  -------------------------------------------------------------------------------
+  **REC —** **(a) RESTATE IT.** Measured across two planes by two seats:
+```
+  DATA    sub_asset_class non-null 188/189 AND industry_group non-null 180/189
+          -> BOTH COEXIST. Nothing replaced.                          NOT MET
+  RENDER  HoldingsTab.tsx, ONE CELL, both rendered -- the coloured sector chip with
+          industry_group as recessive 11px text BELOW it. Identical at origin/DEV
+          0e1c232d and origin/PROD fc3a4421; negative control discriminates.
+          portal-proxy.ts:1031 states it in terms: "a PARALLEL field beside
+          sub_asset_class, NEVER a replacement (CTO ruling 11382)."   NOT MET, BY RULING
+  NAMES   "readable sub-category NAMES rather than raw GICS codes"     MET
+```
+  ⛔ **THE PREMISE IS THE PROBLEM, NOT THE BUILD.** `bookSet.ts:464`: *"Our served
+  `sub_asset_class` values are GICS sector NAMES"* -- the observed values are
+  `Health Care`, `Information Technology`. `industry_group` is the GICS INDUSTRY GROUP,
+  **a different GICS LEVEL.** So the display shows **GICS sector + GICS industry group --
+  a HIERARCHY, not a substitution**, and "GICS replaced by sub-categories" describes a
+  state the estate deliberately does not implement.
+  ⭐ **SAME SHAPE `1.0.0_SA_CTO~Z` RULED AN HOUR AGO ON `TM1-AC1`:** *"an acceptance
+  criterion whose lift condition is a business event is not an acceptance criterion."*
+  There the lift condition was a client funding a model; **here it is overturning a
+  standing ruling.** Both are outside what the work controls, and both are fixed by
+  correcting the criterion rather than the build.
+  ⚠ **INTEREST DISCLOSED:** reading (b) closes `ETFS_INGEST`, which discharges the
+  conditions on `ETFS_POSITIONING`'s promote **AND advances my own /drive arm's
+  stop-condition.** I am therefore NOT recommending (b), and the measurement I ran points
+  away from it on both literal readings.
+  ⚠ **BOUND:** the render read is a CODE read at two refs, not a pixel read.
+  `0.4.0_DE_ClientPlatform~Z` names this and will run the visual read if the condition
+  turns on what a human SEES.
++-------------------------------------------------------------------------------+
+
+
++-- CALL 7 of 8 -- ⛔ NOT A RE-ASK OF THE CLOSED 0833 CALL. READ THE FIRST LINE. ---+
   ⛔ **THIS IS NOT THE 49F MODEL-PORTFOLIOS / UNSUPERVISED QUESTION YOU CLOSED 2026-08-28
   ~22:47Z.** That one is settled and nobody is re-opening it. **SMA is a DIFFERENT L0 NODE.**
   **The five Tax SMA roster accounts are custodied in Schwab master `0833`. May they populate
@@ -65,7 +105,7 @@ because a register that ages one card ages the same way everywhere.
 +-------------------------------------------------------------------------------+
 
 
-+-- CALL 1 of 7 ---------------------------------------------------------------+
++-- CALL 1 of 8 ---------------------------------------------------------------+
   **`D1_NAMEDISCOVERY` is work-complete and register-open. Close it? (a) yes / (b) not yet.**
   All 3 TO faces read `COMPLETE — ROUND 1 ACCEPTED + CERTIFIED`; open TOs ZERO
   (`total=0, scanned=2172`, positive-controlled against `D1_CATVIEWS` -> `total=3`).
@@ -79,7 +119,7 @@ because a register that ages one card ages the same way everywhere.
   acts. Here neither is. **The close needs one smoke and one word, or (b) and I carry it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 2 of 7 -- ⛔ WITHDRAWN 2026-08-29 ~14:1xZ. DO NOT ANSWER IT. ------------+
++-- CALL 2 of 8 -- ⛔ WITHDRAWN 2026-08-29 ~14:1xZ. DO NOT ANSWER IT. ------------+
   ⛔ **THIS CARD SAID `ETFS_POSITIONING` IS WORK-COMPLETE AND RECOMMENDED (a) CLOSE. THAT IS NOW
   FALSE, AND THE ISSUER IS THE ONE WHO MADE IT FALSE.** Since it was written this morning,
   `2.0.0_SA_COO~Z` cut **TWO** task orders into that very project:
@@ -106,7 +146,7 @@ because a register that ages one card ages the same way everywhere.
 
 CARRIED (answer whenever — nothing is blocked)
 
-+-- CALL 3 of 7 ---------------------------------------------------------------+
++-- CALL 3 of 8 ---------------------------------------------------------------+
   **The face-flip check: build it now, or does D1+D4 keep priority? (a) build / (b) hold.**
   YOU authorized it 2026-08-26 ~21:07Z (Card B) and routed it verbatim: *"the face-flip check
   enters Rule 27 as a build item — COO routes/seats it under the standing gates."* Spec exists
@@ -124,7 +164,7 @@ CARRIED (answer whenever — nothing is blocked)
   STATUS that lies. **The project-level analogue is a gap in the spec, not a bug in it.**
 +-------------------------------------------------------------------------------+
 
-+-- CALL 4 of 7 ---------------------------------------------------------------+
++-- CALL 4 of 8 ---------------------------------------------------------------+
   **Five UNTRACKED alarm/monitor `.tf` files sit in the estate's terraform trees, 1,008
   lines, declaring 7 CloudWatch metric alarms. Commit, delete, or apply? (a) delete /
   (b) commit as held drafts / (c) something else.**
@@ -145,7 +185,7 @@ CARRIED (answer whenever — nothing is blocked)
 +-------------------------------------------------------------------------------+
 
 
-+-- CALL 5 of 7 ---------------------------------------------------------------+
++-- CALL 5 of 8 ---------------------------------------------------------------+
   **`ADVI_49F` P14-VEHICLE V14-1's last open leg is an exercise whose FAILURE MODE STOPS AN
   EC2 HOST. Authorize it? (a) run it / (b) hold.** This seat is `ADVI_49F`'s `coo_lane`, so
   the word would normally be mine — **but CLAUDE.md reserves stopping EC2 to HUMAN
