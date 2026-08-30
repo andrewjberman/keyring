@@ -77,7 +77,7 @@
       "persisted": true,
       "authority_role": "projection",
       "mutation_policy": "replaceable",
-      "form": "estate-coverage-resolver.json: {schema_version 1, generated_from (literal), last_review (preserved), generated_at (now), named_threads [29], resources_by_named_thread {27 -> sorted lambda names}, threads [135 x {thread_id, named_thread, family, owning_tool, status, reachability_status, reason, debtscan_flags, description, producers, served_artifacts, frontend_resolution, classification, classification_reason, enrichment}]}. Committed to the repo (213,450 B), read at call time by two consumers.",
+      "form": "estate-coverage-resolver.json: {schema_version 1, generated_from (literal), last_review (preserved), generated_at (now), named_threads [29], resources_by_named_thread {27 -> sorted lambda names}, threads [135 x {thread_id, named_thread, family, owning_tool, status, reachability_status, reason, debtscan_flags, description, producers, served_artifacts, frontend_resolution, classification, classification_reason, enrichment}]}. Committed to the repo (213,450 B), parsed at call time by SIX code readers (denominator: every *.py in the repo outside org/tier*/** that names the artifact's filename, native Grep, 2026-08-30 09:49Z -- 8 files named it; 6 parse it, 1 lists it as a registry candidate, 1 is the generator) -- see co_resident_stores for each reader's own failure behaviour.",
       "basis": "measured",
       "evidence": "json.dump full rewrite at :161 (no merge, no atomic rename -- a crash mid-write leaves a truncated file at the live path, and the consumer fails LOUD on that: opal_estate_infrastructure.py:120-126 returns _fail_loud on unreadable/corrupt). 'projection': every value is a copy or a derivation of the manifest / census / taxonomy except last_review (carried) and generated_at (clock); 'replaceable' (a full rewrite on every run) with ONE carried field -- the prior artifact's last_review survives the rewrite by construction (:149-153). Shape read from the served file at carding: 135 threads, 29 named, 27 resource groups.",
       "owner": "ANY_EXEC by path (org/modules/graph/); the routing content is CVO's"
@@ -105,15 +105,35 @@
       "co_resident_stores": [
         {
           "id": "org/modules/graph/estate_infrastructure_cli.py",
-          "note": "pipescript. CONSUMER: load() :226-234 reads the resolver and exits 3 with 'run gen-estate-resolver.py' when absent"
+          "note": "pipescript. READER 1 of 6: load() :226-234 parses the resolver; ABSENT -> exits 3 with 'run gen-estate-resolver.py'; corrupt -> json raises (loud). No age check"
         },
         {
           "id": "org/modules/graph/opal_estate_infrastructure.py",
-          "note": "comp-estate. CONSUMER + the only code CALLER: reads the resolver as its NAMING SOURCE (:120-131), ages last_review against STALE_AFTER_DAYS = 14 (:138-149), and re-runs this subject under --refresh (:466-481)"
+          "note": "comp-estate. READER 2 of 6 + the only code CALLER: NAMING SOURCE (:82, :120-131), fail-loud on absent / corrupt / missing last_review, ages last_review against STALE_AFTER_DAYS = 14 (:138-149, prints STALE today), re-runs this subject under --refresh (:466-481)"
+        },
+        {
+          "id": "org/modules/graph/pipeline_cli.py",
+          "note": "comp-pipescript. READER 3 of 6: _load_estate_owner_map() :1418-1440 parses threads[] + resources_by_named_thread into the OUT-OF-SCOPE guard (non-medallion args -> 'OUT-OF-SCOPE -> see <owning_tool>' exit 2). FAILS OPEN: `except (OSError, ValueError)` :1429 caches an EMPTY map, so an absent or corrupt resolver makes every non-medallion arg fall through to the ordinary handling -- the silent-Unknown class the guard was written to close, re-opened by its own loader. No age check"
+        },
+        {
+          "id": "org/modules/graph/comp_legacywriter.py",
+          "note": "READER 4 of 6: phase0_substrate() :197-225 parses last_review (else generated / last_updated) and reports the snapshot STALE when > 14 d (a FINDING, naming-only -- 'legal ONLY as the NAMING layer, never for load-bearing keys'); unreadable -> a 'blindness' entry, not a failure. Reads today: STALE (31 d)"
+        },
+        {
+          "id": ".tools/freshness_manifest_gen.py",
+          "note": "READER 5 of 6: _load_resolver() :127-130 parses threads[] to derive the freshness manifest's artifact SET from the resolver's served lists (:21 'pipescript's served lists'); absent/corrupt -> open/json raise (loud); no age check -- a stale served list becomes a stale freshness manifest with no signal on the manifest side"
+        },
+        {
+          "id": "infra/aws/ec2/estate-report-runner/estate_report_runner.py",
+          "note": "READER 6 of 6, OFF-BOX: the EC2 estate-report runner git-checkouts the file from REPO_BRANCH and parses threads[].producers[] as one attribution hop (:857-880; 138 threads / 501 producer strings at 2026-07-31); load failure DEGRADES THAT HOP AND NAMES IT (loaded['_degraded'], WARN) rather than reducing attribution silently; the read sits behind a named seam because the resolver 'is being retired by CTO's RESOLVER_DEFROST_DESIGN' (:849-851). No age check"
+        },
+        {
+          "id": "rcg/bin/mark.py",
+          "note": "NOT a parser: lists the file among 7 REGISTRY_CANDIDATES (:46-54) for the rcg scan's registry adjudication (:342-345) -- a text-level reference, excluded from the 6"
         }
       ],
       "basis": "measured",
-      "evidence": "Paths at :17-28; the consumers' read sites cited per row; the exercise-mode behaviour of last_review measured by the dry run at carding (OPAL_RESOLVER_OUT set, prior artifact absent at that path, floor stamped).",
+      "evidence": "Paths at :17-28; each reader's parse site and failure branch cited on its row, read at source. CENSUS CORRECTION at the certifier's STOP (3.0.0_SA_CVO~X 09:47Z named 4 readers against the card's 2): the first cut censused the PRODUCER's name ('gen-estate-resolver') and so found only the files that CALL or DESCRIBE the generator; the consumers are found by censusing the ARTIFACT's name ('estate-coverage-resolver.json') -- the carrier the claim travels in. Re-run on that token over *.py outside org/tier*/**: 8 files; 6 parse the JSON (the four above plus freshness_manifest_gen.py and the EC2 estate_report_runner.py, which the STOP's own count of 4 did not include), 1 lists it as text (rcg/bin/mark.py), 1 is the generator. Of the 6 readers only TWO age the artifact (comp-estate and comp_legacywriter, both against 14 d on last_review), and ONE fails open on a missing/corrupt file (pipeline_cli.py). The exercise-mode behaviour of last_review measured by the dry run at carding (OPAL_RESOLVER_OUT set, prior artifact absent at that path, floor stamped).",
       "owner": "ANY_EXEC by path"
     }
   },
