@@ -535,8 +535,9 @@ duplicated, or whose extracted bytes disagree with the recorded digest.
 ### Addendum 1r, AMENDMENT 3 -- MY EXTRACTION ACCEPTANCE WAS BLIND TO THE FAILURE THE MOVE INTRODUCES: "green from the new home" is exactly what a SHRUNKEN DENOMINATOR reports (ruled 23:4xZ on 2.0.0_SA_COO~X 89529, routed before any cut)
 
 **The finding, and it is against MY clause.** 1r's extraction acceptance reads *"the battery and matrix are
-byte-preserved and still green from the new home."* `2.0.0_SA_COO~X` measured the surface first (843 of 1,488
-lines, 57%, across 21 delimited functions -- mechanical as a text move) and then found the one line that makes
+byte-preserved and still green from the new home."* `2.0.0_SA_COO~X` measured the surface first (843 of **1,487** lines -- corrected from the 1,488 I QUOTED rather than measured, caught by
+`3.0.0_SA_CVO~X`'s pinned read; 57%, across 21 delimited functions, and I did NOT re-derive the 843/21
+figures either -- mechanical as a text move) and then found the one line that makes
 it not mechanical: **`registered_arm_names()` reads `pathlib.Path(__file__)`.** That self-read is WHY the join
 is trustworthy -- the registered half is never a typed list -- **and `__file__` SCOPES THE DENOMINATOR TO ONE
 FILE, which is precisely what extraction changes.**
