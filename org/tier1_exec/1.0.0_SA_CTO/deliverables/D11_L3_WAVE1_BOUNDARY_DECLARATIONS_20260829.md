@@ -578,3 +578,42 @@ rather than inventing a boundary. `2.0.0_SA_COO~X` measured the size, found the 
 satisfying an acceptance it had already worked out could not fail** -- *"I would rather say so before I satisfy
 it than after."* An acceptance criterion is only worth what its author's blind spot allows; this one was
 corrected by the seat that would have been graded against it.
+
+
+## Addendum 1t -- a BLOCKER NAMES THE IMMEDIATE UNMET PREDECESSOR, NEVER THE TERMINAL ONE; and a ROUTE'S POSITION IS DERIVED, NEVER STORED (ruled 2026-08-30 22:4xZ on 2.0.0_SA_COO~X 89409 -- and this addendum exists because the ruling lived in a MESSAGE ID for seventy minutes)
+
+⛔ **THE CARRIER FAILURE FIRST, BECAUSE IT IS MINE AND IT IS THE FIFTH INSTANCE TODAY.** I ruled this at 22:4xZ,
+told the issuer to implement against it, and wrote in my own tick log that a PRD edit was owed "when the freeze
+lifts." **When the freeze lifted I went to cut that edit and found (a) the PRD needed NOTHING -- sec 7b already
+carries the route as an ordered enumeration with the named step and its oracle, landed at the wave-3 lift by
+this same lane -- and (b) THE RULING ITSELF WAS IN NO RECORD AT ALL.** Measured: `blocked_on` x0,
+`route_to_complete` x0, `cursor` x0 across both the design record and the PRD. **I spent the evening telling
+four seats that a ruling which binds later cannot live in a message, while mine did exactly that** -- and I
+described the gap as the wrong artifact, so the owed item would have been discharged by editing a file that did
+not need editing.
+
+**Trigger.** `2.0.0_SA_COO~X` (89409) found `sec6_state` carrying a ROUTE and no CURSOR: `route_to_complete`
+lists five steps as prose, every OUTSTANDING test reads `blocked_on: "L4 identity must exist"`, and **step 1 had
+been certified for ~21 hours.** A consumer reading `blocked_on` waits for L4 forever; a consumer reading the
+route re-fires a certified wave; **neither can learn that step 1 is closed, and nothing in the field reconciles
+them.** Re-measuring the timestamp would not fix it -- the field has no slot for POSITION.
+
+**RULING.** (i) **`blocked_on` NAMES THE IMMEDIATE UNMET PREDECESSOR, NEVER THE TERMINAL ONE.** *"L4 identity
+must exist"* is true and is the far end of a chain, and **a terminal blocker hides every actionable step in
+front of it.** This stays at the field's own grain: "what is immediately blocking this test" is a property OF
+the test. (ii) **`route_to_complete` IS A LIST OF STEPS, EACH CARRYING ITS OWN STATE, AND THE POSITION IS
+DERIVED -- the first step not closed.** No cursor field, no marker to update, **nothing that can go stale
+independently of the steps themselves**; a stored cursor is a second carrier that can disagree with the thing it
+points at. (iii) **A FIELD HOLDING A GAP OR FINDING MUST CARRY A STATE BESIDE IT, or it is a permanent open item
+by construction** -- `firm_carrying_view_GAP_AND_BAR` records a gap that Addendum 1i CLOSED the same day, cannot
+say "closed", and therefore reads as current status forever. **That defect cost a wrong next-step list in a
+report to Andrew**, corrected at 23:0xZ. (iv) **OWNER SPLIT:** the route's SHAPE is the design lane's and is
+already in PRD sec 7b; the step STATES are the issuer's to measure per tick, and no word of mine is needed to
+mark a step closed once it is measured closed.
+
+**Cost:** one derived read per consumer, replacing a stored marker. **Non-application:** a single-step
+obligation with no predecessors needs no route and no cursor -- this binds where a field is consumed as "what do
+I do next". **Falsifier:** a `blocked_on` naming a predecessor that is not the immediate one, a stored position
+marker anywhere in the field, or a gap key with no state beside it. **Lineage:** the derive-don't-store form of
+1o and 1s -- and its own trigger is 1r's class one level up, since **an obligation recorded only in a message is
+the same defect as an expectation held only by its emitter.**
