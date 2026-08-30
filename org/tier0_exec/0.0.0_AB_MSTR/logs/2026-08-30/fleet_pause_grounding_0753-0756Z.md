@@ -232,3 +232,25 @@ file's worktree md5 to its index blob and normalize before the push, until the g
 (CTO's org/mcp-adjacent item). Lesson for the ceiling read: my `data/*/scripts/**` pathspec is wider than the gate's
 .py scope -- both are printed now (gate-scope vs wide) so the OPEN predicts what the gate will actually do.
 0.7.0_AE_CloudOps's three commits are on origin; its single upload of orion-gold-dispatch.sh follows at that seat.
+
+## 14:13-14:18Z -- a reported "origin regression" that was not one; window 14:17Z; two cards; one cross-fabric relay
+
+**"main rewound" (3.0.0_SA_CVO~X 14:13Z, withdrawn 14:15Z; 4.0.0_SA_CRO~X ruled the same):** measured here at 14:14Z --
+refs/heads/CLOUD = 5850d0f9ee (== the 14:01Z CLOSE), refs/heads/main = af88fcdd01 whose tip is dated 2026-01-19 (Andrew);
+`branch -r --contains 5850d0f9ee` = origin/CLOUD only; CLOUD ahead of main by 31,228, main ahead by 0. The instrument
+read refs/heads/main (remote HEAD's target) instead of refs/heads/CLOUD. No rewind; NEVER-2/7 untouched. Integrator's
+read sent 87798-87802: every containment check names refs/heads/CLOUD.
+**Window 14:17Z:** origin/CLOUD 5850d0f9ee -> 5d879caad7 (`git ls-remote` 14:17:46Z), 16 commits, ceiling 0. OPEN
+87803-87822, CLOSE 87839-87858. Contains d82566a8e1, c959055c1a, e66581850b (the three from the exchange), C02-g-9 E-5
+@998b7d0028, the CVO's harness retirement @5bdbcfef69, this seat's R6 card record @0a4c93b615.
+**R6 card CARRIED (14:14Z):** `logs/2026-08-30/ANDREW_ASK_1414Z_R6_RETIRE_49F_REEMIT_CAPABILITY_YES_NO.md` -- verbatim from
+AE~L 87778 (C02-g-11 R-1): retire the re-emit capability (host object + driver mode, one act), recoverable, host 0 of 79
+with control, repo 1 of 135,242 (the laptop driver, exercised 09:03Z today), DORMANT NOT DEAD; CTO + COO REC YES; the
+measuring seat abstains and says why. Presented at the terminal.
+**R7 card HELD -> unblocking:** the CVO retired its three harness reads @5bdbcfef69 (on origin this window); DS~V re-runs
+line 3b; the card goes once as REC YES per the gate's pre-committed rule when that re-run reads zero on every plane.
+**Cross-fabric relay:** CTO 87796's ETFS TO-14 finding (gold ABT 8 of 8 built from PRE-repair silver -- outcome met,
+mechanism unestablished; (a) repair acts at gold vs (b) coincidence, discriminated by Monday's 13:00Z fire) sent to
+0.0.0_AB_MSTR~Z over the bus as a finding, never as work. MessageId appended by the sender line above this block's
+commit. Site Z still owes: the exec-sum reply (13ad7d74, Andrew-direct) and the 09Z-13Z rate (3f9d1823).
+- bus MessageId f55c44a3-d0eb-4d0c-9834-4f7bc791b53f (ETFS TO-14 finding) sent 14:20Z to sitez, SENT not READ.
