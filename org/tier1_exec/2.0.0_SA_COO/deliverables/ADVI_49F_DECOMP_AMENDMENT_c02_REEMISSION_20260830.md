@@ -109,6 +109,22 @@ The next c02 emission writes ONE corrected partition beside 534 inverted ones un
 
 ---
 
+### `C02-g-7` — THE FIVE-DATE BACKFILL: 2026-08-11..08-17, the trading days with NO stored `twr_daily` partition (AE~L, vehicle; DS~N supplies the input-presence read) — ADDED 2026-08-30 05:2xZ on C02-g-6's acceptance (CVO 85944)
+
+**The state:** `dim_calendar` carries 539 trading days over 2024-07-08..2026-08-28; 535 partitions are stored; the gap = the five trading days 2026-08-11, 08-12, 08-13, 08-14, 08-17 (a chain-wide outage, AE~L 84527; corroborated by the 539 − 5 + 1 = 535 reconciliation) — and their absence is what made 2026-08-18 all-refused (its D-1 has zero objects). Every period parity cell that spans them links 6 fewer days than BD (the BDPARITY hole). **The five would be NEW partitions — the served set GROWS — so never-widen (CTO+COO) attaches at this cell's PLAN (CTO 85934), not at the round's end.**
+
+**PRE-REGISTERED FIRST ACT — READ THE CAUSE (B-1) before any emission:** a backfill onto an unread cause is a shadow of the outage. The vehicle side (AE~L): the chain's scheduler state and dispatch logs / SSM command history for the five dates (which fire did not happen, which failed, which was disabled — the bd-49f-runner-daily DISABLED state and the fees-session cron are the first two reads); the DS side (DS~N, one message): bronze/silver INPUT presence for the five dates on the 08335338 plane (acc/sec/rps/slm/fam by date) — a date whose inputs are absent cannot be backfilled and is recorded as such, never manufactured. **Owner:** `0.7.0_AE_CloudOps~L` (the P14 mirror-pull vehicle, the same driver), same project (Rule 27). **Severity:** BUILD-then-EMIT; serve stays behind arm-(a).
+
+#### Acceptance criteria
+- **B-1 THE CAUSE, READ:** per date, the measured reason the partition does not exist (scheduler DISABLED / fire absent / fire failed with the log line / inputs absent), with the instrument named; the fix to the cause (if any) is a SEPARATE item routed to its owner — this cell does not repair the scheduler.
+- **B-2 INPUT PRESENCE:** for each of the five dates, the bronze + silver inputs the engine needs present or absent (DS~N's read, quoted with its listing denominator); dates with absent inputs are EXCLUDED from B-4 and printed as UNBACKFILLABLE-INPUTS-ABSENT with the reason.
+- **B-3 THE PLAN, never-widen:** the date list from B-2, the vehicle (mirror-pull driver, current 1.2 engine read on the running artifact), the readers announced (the 85065 clause), the expected shapes per date pre-registered (a populated date's D-1 must exist — 08-11's D-1 is 08-10 (stored); 08-12..08-17 chain on each other in order, so the run is SEQUENTIAL oldest-first and a date whose D-1 failed to emit is refused, not manufactured); CTO+COO sign the plan.
+- **B-4 EMISSION:** oldest-first, per-date artifact oracle, mutex limb (ii) per batch, ledger via the tool; each new partition carries `gross_leg_vintage` 946b5c5a3c… and `schema_version` "1.2" and the ruled status members only.
+- **B-5 ACCEPTANCE:** the domain census after = 535 + the backfilled count (printed); R-6-shaped listing (0 new versions on the four other canonical tables; 0 new versions on any of the 535 existing `twr_daily` partitions — the backfill writes ONLY new keys); **2026-08-18 re-emitted LAST as its own step** (its D-1 now exists) and read: populated or refused, AS PREDICTED per the pre-registration in B-3 — a manufactured return there is a finding against the engine.
+- **B-6** proof VALID rc=0 positional B-1..B-6 with the checker vintage printed; graded by `3.0.0_SA_CVO`.
+
+---
+
 ## 3. RULE 24 — the four-postulate record
 
 - **(i) MECE over a DECLARED domain.** Two cells, two domains: what the engine WRITES (g-2) vs what is STORED (g-3). The uncovered-member hunt: *downstream tables carrying r_gross-derived values* (c03 lineage, nna, PERFRP b-series) — deliberately OUT and NAMED: g-2/V-3 censuses them into a follow-on candidate list for the issuer; they are not silently inside g-3's "534 partitions". *The nightly's own future emissions* — OUT; they carry the vintage by themselves once the engine is deployed.
