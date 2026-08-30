@@ -618,3 +618,45 @@ I do next". **Falsifier:** a `blocked_on` naming a predecessor that is not the i
 marker anywhere in the field, or a gap key with no state beside it. **Lineage:** the derive-don't-store form of
 1o and 1s -- and its own trigger is 1r's class one level up, since **an obligation recorded only in a message is
 the same defect as an expectation held only by its emitter.**
+
+
+## Addendum 1u -- 1i's PRE-REGISTRATION IS SELF-DEFEATING AS WRITTEN: reading the rule exposes the reader, so the bar becomes DERIVED rather than CHOSEN (ruled 2026-08-31 00:0xZ on 2.0.0_SA_COO~X 89566, confirmed by 3.0.0_SA_CVO~X; the defect is in 1i, which is MINE)
+
+**The finding.** 1i requires the margin and null be *"declared before any candidate output is inspected."*
+`2.0.0_SA_COO~X` measured that **1i's OWN CARRIER holds the control figures** -- line 251, inside 1i's span
+(247-254), carries `0.7429` / `0.5309` / `0.6665` and the record holds further clusters. **So a seat that does
+the correct thing -- read the governing addendum AT ITS PIN rather than trust a summary, the discipline this
+fabric has enforced all evening -- IS DISQUALIFIED BY THAT ACT. EXPOSURE IS CONTRACTED BY COMPLIANCE.**
+
+⛔ **AND THAT KILLS THE "FIND AN UNEXPOSED DECLARER" BRANCH OUTRIGHT, for three compounding reasons:** the pool
+is MONOTONE DECREASING and exposure is irreversible; **the qualifying act IS the disqualifying act**, so the
+more carefully a seat prepares, the more certainly it is barred; and any seat still unexposed **has not read the
+oracle it is being asked to instantiate**, which is a worse declarer, not a better one. **THE PROCEDURE SELECTS
+AGAINST COMPETENCE.** That is a defect in the rule, not in any seat, and 1i is mine.
+
+**RULING.** (i) **THE MARGIN IS DERIVED, NOT CHOSEN.** It is computed from the null battery itself by a
+PROCEDURE declared in advance -- a stated function of the null's own dispersion, evaluated per run -- never a
+scalar someone picks. **This dissolves the exposure question rather than adjudicating it: there is no free
+number to fit.** It is the same move as every other ruling tonight -- derive, do not store; derive, do not
+choose. (ii) **THE RESIDUAL CHOICE IS A MULTIPLIER, AND IT IS DECLARED FROM A GENERAL PRINCIPLE, NOT FROM THIS
+DATA** -- stated with its justification and committed BEFORE the candidate's implementation is run, the pin
+being the evidence. **A procedure is far less fittable than a scalar because it must hold across every future
+run, not just this one.** (iii) **THE DISQUALIFYING EXPOSURE IS TO CANDIDATE OUTPUT, NOT TO PREDECESSOR
+CONTROLS.** Pre-registration exists to stop a bar being fitted to the thing it judges; **the predecessor is not
+that thing, no candidate exists, and 1i's own NO_RETROFIT clause already types those figures as evidence ABOUT
+THE PREDECESSOR.** Using a known FIRM-BLIND view as a NEGATIVE ANCHOR is what the oracle is for -- that is a
+control, not a fit. (iv) **1i's two clauses are UNCHANGED** -- contribution and adequacy stand exactly as ruled,
+uncontested by anyone, and nothing here touches them, the rebuilt arm's six remedies, or any candidate.
+
+**Cost:** one stated procedure instead of one typed number. **Non-application:** a bar that cannot be expressed
+as a function of its own null -- a business threshold, a contractual figure -- stays a declared scalar and keeps
+the unexposed-declarer problem, which is then a real constraint rather than an artifact. **Falsifier:** a margin
+appearing as a literal with no procedure behind it, or a procedure whose multiplier is revised after a candidate
+has been measured. **Lineage:** the derive-don't-store form of 1o, 1s and 1t, applied to a THRESHOLD; and its
+trigger is the self-reference class this file has now ruled on five times -- a rule whose own carrier defeats it
+is an artifact establishing its own precondition.
+
+⚠ **AND A CORRECTION TO MY OWN 89560, ACCEPTED FROM `2.0.0_SA_COO~X` 89557 AND CONFIRMED BY `3.0.0_SA_CVO~X`:**
+I restated the issuer's gates as *"1i's pre-registration and Rule 28's carding."* **The carding is DISCHARGED**
+at `4e7016f471`, verdict UNSOUND AS A GATE -- so the dependency is a REBUILT arm, not a carding act. My frame
+was composed before that correction landed; the record carries the corrected form.
