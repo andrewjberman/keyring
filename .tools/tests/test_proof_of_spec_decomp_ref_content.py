@@ -24,6 +24,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import tempfile
 
 _SRC = pathlib.Path(__file__).resolve().parent.parent / "proof-of-spec-check.py"
 _spec = importlib.util.spec_from_file_location("posc", _SRC)
@@ -98,7 +99,29 @@ arm("B2 naive timestamp is NOT rendered with a Z", not posc.iso_offset_to_utc_z(
 arm("B2' garbage -> unparsed, not a crash", "unparsed" in posc.iso_offset_to_utc_z("not a date"))
 v = posc.checker_vintage()
 arm("B3 checker_vintage() renders `<hash10> <...Z>` or an UNREAD sentinel",
-    bool(re.fullmatch(r"[0-9a-f]{10} \d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", v)) or v.startswith("UNREAD"), v)
+    bool(re.fullmatch(r"[0-9a-f]{10} \d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ(\+DIRTY\([^)]+\))?", v)) or v.startswith("UNREAD"), v)
+
+# B4 (3.0.0_SA_CVO 88184): the vintage line must be true of the RUNNING bytes -- a dirty worktree copy of
+# the checker carries +DIRTY(<n> lines); a clean one carries nothing. Exercised on a sealed temp repo file,
+# never by dirtying the live checker.
+with tempfile.TemporaryDirectory(prefix="posc_v_") as _td:
+    _repo = pathlib.Path(_td)
+    _g = lambda *a: subprocess.run(["git", *a], cwd=str(_repo), capture_output=True, text=True, check=True).stdout.strip()  # noqa: E731
+    _g("init", "-q")
+    _g("config", "user.email", "t@t")
+    _g("config", "user.name", "t")
+    (_repo / "tool.py").write_text("a\nb\n", encoding="utf-8")
+    _g("add", ".")
+    _g("commit", "-q", "-m", "A")
+    arm("B4 clean worktree -> no DIRTY suffix", posc.worktree_dirty_suffix(_repo / "tool.py", _repo) == "", repr(posc.worktree_dirty_suffix(_repo / "tool.py", _repo)))
+    (_repo / "tool.py").write_text("a\nb\nc\nd\n", encoding="utf-8")
+    _s = posc.worktree_dirty_suffix(_repo / "tool.py", _repo)
+    arm("B4' modified worktree -> +DIRTY(2 lines)", _s == "+DIRTY(2 lines)", _s)
+    _s2 = posc.worktree_dirty_suffix(_repo / "nope.py", _repo)
+    arm("B4'' untracked/absent path -> no false DIRTY (nothing to diff against HEAD)", _s2 == "", repr(_s2))
+_live = posc.checker_vintage()
+arm("B5 live vintage line is `<hash10> <Z>` optionally followed by +DIRTY(...) -- and says which",
+    bool(re.fullmatch(r"[0-9a-f]{10} \d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ(\+DIRTY\([^)]+\))?", _live)) or _live.startswith("UNREAD"), _live)
 
 src = _SRC.read_text(encoding="utf-8")
 arm("C1 verdict lines name their rc", 'print("INVALID (rc=1)")' in src and 'print("VALID (rc=0)")' in src

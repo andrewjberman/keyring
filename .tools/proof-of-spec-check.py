@@ -15,7 +15,9 @@ Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read 
 Every verdict line NAMES its rc (1.0.0_SA_CTO 87900 (1c), adopted from 0.4.0_DS_ClientPlatform~N):
 rc=2 is a USAGE/READ error, rc=1 is INVALID, rc=0 is VALID -- a caller reading only "non-zero"
 conflates a mis-typed argument with a refuted proof. The header also prints `checker-vintage:
-<hash> <UTC Z>` (1b) so no seat derives the vintage by hand in local time.
+<hash> <UTC Z>` (1b) so no seat derives the vintage by hand in local time; when the checker's own worktree
+differs from HEAD the line carries `+DIRTY(<n> lines)` (1b', 3.0.0_SA_CVO 88184) so it is true of the bytes
+that ran, never only of the last commit.
 
 Layered: jsonschema (if installed) for structure, then the conditional rules the
 schema cannot express -- ALWAYS run, so absence of the jsonschema package degrades
@@ -819,9 +821,34 @@ def checker_vintage() -> str:
         if out.returncode != 0 or "|" not in out.stdout:
             return "UNREAD (git log failed; the hash is not knowable here)"
         h, ci = out.stdout.strip().split("|", 1)
-        return f"{h[:10]} {iso_offset_to_utc_z(ci)}"
+        return f"{h[:10]} {iso_offset_to_utc_z(ci)}{worktree_dirty_suffix(Path(__file__).resolve(), _REPO_ROOT)}"
     except Exception:  # noqa: BLE001 -- a vintage line must never turn the checker into rc=2
         return "UNREAD (exception reading git log)"
+
+
+def worktree_dirty_suffix(path, repo_root) -> str:
+    """(1b', 3.0.0_SA_CVO 88184) The vintage line names the tool's last COMMIT; when the tool's worktree
+    differs from HEAD the bytes that RAN are not those bytes, and a seat grading under an uncommitted
+    checker change would print a vintage that is false of the run (measured 15:0xZ: "checker-vintage:
+    cec2a9b663" beside a content line only 4200a54390 can emit). Returns "" for a clean file, or
+    "+DIRTY(<added>+<deleted> lines)" from `git diff --numstat HEAD -- <path>`; an unreadable diff is
+    announced as +DIRTY(UNREAD) rather than passed off as clean."""
+    try:
+        out = subprocess.run(["git", "diff", "--numstat", "HEAD", "--", str(path)],
+                             capture_output=True, text=True, cwd=str(repo_root), timeout=20)
+    except Exception:  # noqa: BLE001
+        return "+DIRTY(UNREAD)"
+    if out.returncode != 0:
+        return "+DIRTY(UNREAD)"
+    line = out.stdout.strip()
+    if not line:
+        return ""
+    parts = line.split("\t")
+    try:
+        n = int(parts[0]) + int(parts[1])
+    except (ValueError, IndexError):
+        return "+DIRTY(binary)"
+    return f"+DIRTY({n} lines)"
 
 
 def iso_offset_to_utc_z(ci: str) -> str:
