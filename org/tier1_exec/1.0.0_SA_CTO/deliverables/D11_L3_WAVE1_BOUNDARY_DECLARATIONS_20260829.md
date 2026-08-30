@@ -500,3 +500,33 @@ three variants with no rule about which governs.**
 AUTHORED THE EXPECTATION and does not make the expectation RIGHT. **Independence is not correctness.** A wrong
 pinned ruling reproduces faithfully and every arm goes green; whether this sentence is the right acceptance
 remains a judgement the certifiers hold against PRD 7a and its amendments.
+
+
+### Addendum 1s, AMENDMENT 2 -- THE EXTRACTION CONTRACT: a LINE-ANCHORED heading plus a digest, never "the string that matches" (ruled 21:5xZ, same day, before implementation)
+
+**Trigger, and the first draft of this very amendment committed the defect it rules against.** I told both
+certifiers to read the sentence at the pin, then verified the pin serves it -- present verbatim, digest matching,
+**and the governing sentence occurring EXACTLY ONCE.** That last property is what makes extraction possible and
+**it is INCIDENTAL.** ⛔ **THEN MY FIRST DRAFT OF THIS AMENDMENT QUOTED THE SECTION HEADING IN ITS OWN PROSE AND
+TOOK THE COUNT FROM 1 TO 2** -- I measured it after writing and before committing, which is the only reason it is
+a paragraph rather than a defect. **An amendment about ambiguity introduced the ambiguity, in the act of
+forbidding it**, which is the sharpest possible argument for the rule below: a corpus property that any future
+sentence can break is not a foundation.
+
+**RULING.** (i) **THE CUTTER READS A DELIMITED REGION LOCATED BY A LINE-ANCHORED HEADING, NOT BY A SUBSTRING
+SEARCH.** The governing text is the blockquote immediately following the level-3 heading whose line BEGINS at
+column 0 with the words `THE ACCEPTANCE` + `SENTENCE` (written here as two tokens deliberately, so this
+paragraph is not itself a second instance) in this file at the named pin. **Line-anchored is the operative word:
+prose may quote the heading inside a sentence forever without colliding, because an inline mention is not a line
+that starts with it.** (ii) **TWO INDEPENDENT HANDLES ON ONE REGION:** the heading LOCATES it, the sha256 that
+heading carries PROVES the right bytes were taken. Neither alone is sufficient -- a digest cannot find a region
+and a heading cannot detect a mis-slice. (iii) **A CUT REFUSES** if the anchored heading is absent, occurs more
+than ONCE, or the extracted bytes disagree with the recorded digest. Absence and ambiguity are UNMEASURABLE,
+never a silent fallback to a first match. (iv) **QUOTING THE SENTENCE ELSEWHERE IN THIS FILE STAYS LEGAL** and is
+expected -- it is what every amendment does. The contract exists precisely so that quoting CANNOT change what the
+cutter reads.
+
+**Cost:** a line-anchored heading lookup and a digest compare, replacing a substring search. **Non-application:**
+a reader that merely CITES the acceptance -- a message, a log, a face's prose -- needs none of this; it binds
+only the MACHINE READ a cut depends on. **Falsifier:** a cut that succeeds while the anchored heading is
+duplicated, or whose extracted bytes disagree with the recorded digest.
