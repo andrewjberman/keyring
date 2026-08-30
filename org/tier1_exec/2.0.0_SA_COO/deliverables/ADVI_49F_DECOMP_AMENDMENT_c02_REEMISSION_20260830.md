@@ -147,6 +147,20 @@ The next c02 emission writes ONE corrected partition beside 534 inverted ones un
 
 **Do not:** touch the SmartX map; hold the floor; change a06's emitted schema beyond the two stamped fields; re-derive the 534 crosswalks under this cell. **Not to `4.0.0_SA_CRO`.**
 
+
+### `C02-g-9` — THE P14 VEHICLE'S ENUMERATOR + THE c02 MIRROR-PULL VEHICLE'S RETIREMENT (AE~L, owner) — ADDED 2026-08-30 09:5xZ on C02-g-7's close (the two items routed at condition (6) and at the g-6 close, now unblocked)
+
+**The state:** (a) `A00_ATTESTATION_REDERIVATION.py:33,:41-44` derives the P14 campaign's date set from `gold/advi/canonical/flow_ledger/` CommonPrefixes — an OUTPUT table that carries the same hole it is meant to fill (0 objects on 08-11..08-17 while the calendar carried the days) — so every re-run reproduced the omission; 534 not 539 was an ENUMERATION property (C02-g-7 B-1, CTO 86096 condition (6), register item). (b) `_code/c02_reemit_mirror_pull.py` — the c02-only re-emission vehicle built for C02-g-3/g-6 and used last for C02-g-7's 08-18 arm — stays on the host `_code/` set after its rounds closed; a vehicle that can rewrite one served table over existing keys is a standing capability with no live cell. **Owner:** `0.7.0_AE_CloudOps~L` (the P14 vehicle's author and the mirror-pull's). **Severity:** BUILD (no served output moves under this cell; the enumerator change is exercised on a DRY enumeration; the removal is of a host object with no consumer).
+
+#### Acceptance criteria
+- **E-1 THE ENUMERATOR, at source:** the campaign's date set derived from `dim_calendar`'s trading days over the span INTERSECT a per-date INPUT-PRESENCE census on the bronze/silver plane (the B-2 instrument: acc/sec/rps/slm/fam by date), NEVER from any output table; the derivation prints three denominators (calendar days in span; input-present dates; the resulting set) and names every calendar day EXCLUDED with its reason. A Rule-24 (i) uncovered-member fix: a date whose outputs are absent is exactly the member the old enumerator could not see.
+- **E-2 THE ARMS, from different truths:** (i) a DRY run at HEAD over the current span reproduces the stored date set exactly (540 of 540 after g-7; 0 missing, 0 extra — the positive control); (ii) a synthetic hole — one stored partition's date masked from the enumerator's OUTPUT view — is STILL ENUMERATED (the old enumerator would drop it; the mutation restoring the flow_ledger read must fail this arm); (iii) a date with inputs ABSENT is EXCLUDED and printed UNBACKFILLABLE-INPUTS-ABSENT, never manufactured; commit-gate clean, `safe-commit -F`.
+- **E-3 THE DEPLOY, read on the running artifact:** the host `_code/A00_ATTESTATION_REDERIVATION.py` ETag == the committed INDEX blob's LF md5 (never the worktree), VersionId printed; deploy ledger opened and closed on the read; NO campaign is fired under this cell (a re-derivation is its own never-widen act).
+- **E-4 THE MIRROR-PULL VEHICLE RETIRED:** `_code/c02_reemit_mirror_pull.py` removed from the host `_code/` set (the object deleted; prior VersionId retained on the versioned bucket and printed), its repo copy left in place under the c02 rounds' record; a census that the chain entrypoint and the P14 vehicle reference it nowhere (0 hits, with a positive control on a referenced module) BEFORE the delete.
+- **E-5** proof VALID rc=0 positional E-1..E-5 with the checker vintage printed; graded by `3.0.0_SA_CVO`.
+
+**Do not:** fire a re-derivation or any dated run under this cell; touch the chain entrypoint or a06 (C02-g-8's); change the enumerator's OUTPUT (a date set) beyond its SOURCE. **Not to `4.0.0_SA_CRO`.**
+
 ---
 
 ## 3. RULE 24 — the four-postulate record
