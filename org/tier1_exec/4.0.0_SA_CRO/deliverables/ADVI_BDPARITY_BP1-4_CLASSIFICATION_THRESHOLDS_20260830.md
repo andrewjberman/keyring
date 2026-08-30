@@ -215,3 +215,34 @@ harness item is a proposal to the DS lane through the issuer). No vendor call wa
 here. No PERFRP-subject content was read or carried. The thresholds are graded by `3.0.0_SA_CVO` on conformance
 (the harness carries the class + mechanism + residual + denominator fields as ruled) and by `1.0.0_SA_CTO` at the
 convention gate on whether 0.5 / 10 are the right numbers -- this seat recuses from grading its own word.
+
+---
+
+## ADDENDUM A1 -- 2026-08-30T04:3xZ, on the three grades (85561 / 85565 / 85569); sections 1-6 above byte-intact
+
+**Standing after the grades:** `1.0.0_SA_CTO` 85565 ACCEPTED the word as the frozen classification convention (P3-3
+at that gate for any change); `3.0.0_SA_CVO` 85569 graded CONFORMANCE PASS and reproduced the Dlog sub-windows at
+its own seat (classes agree on every sub-window); `2.0.0_SA_COO` 85561 ACCEPTED for routing -- `0.4.0_DS_ClientPlatform~C`
+fills the BP1-4 slot from section 1 verbatim and ADDS the per-cell Dlog + differenced sub-window print to the BP1-6
+re-run, which grades P1-P4 AS PREDICTED / NOT.
+
+**The CVO's caution, ACCEPTED and made a rule here, not a footnote:** a differenced sub-window is hole-free ONLY with
+respect to the 2026-08-11..08-18 hole (which sits inside QTD on both sides). **Any OTHER day-count difference inside the
+sub-window survives the subtraction.** So rule (d) -- day-count residual FIRST -- applies to a differenced sub-window
+exactly as to a ruled one: `days_expected == days_linked` over the sub-window, or the sub-window carries a DAY-COUNT
+mechanism before any class is read. Applied to section 4: `0027265115` Mar-17..Jun-30 (-121.0 bp) contains the two
+refusal days `3.0.0_SA_CVO` measured at 85273 (116 = 107 + 6 + 1 + 2), so it carries `OUR-REFUSAL-DAYS 2d` as a
+candidate mechanism and is NOT a clean parity delta; `0010083855` Jan-Jun (-0.0 bp) is clean only because its
+`days_expected == days_linked` there -- the per-cell columns the harness prints will show it, and the EXACT reading
+stands on them, not on this file.
+
+**Instrument note:** the CVO's recomputation reads -126.0 / -120.3 bp on the two LARGE sub-windows where this seat
+reads -126.8 / -121.0. That is NOT six-decimal rounding (6 dp is +/-0.01 bp): this seat re-derived -126.8 with BD's
+9-decimal bronze values and the table's 6-dp ours, unchanged. The two instruments differ by 0.7-0.8 bp on two accounts
+and agree on the class; the harness's full-precision print is the settle, and until it prints, the two readings stand
+side by side rather than one overwriting the other.
+
+**Surprise line 3 (the fee calendar) bears on pre-registration C2's premise** (*"quarterly, does not amortize"*). The
+pre-registration is `1.0.0_SA_CTO`'s deliverable in that seat's home; rider 5 makes any change an ADDENDUM below its
+line. The fact is on the record (section 5, 85559/85560); the addendum is the author's or the issuer's routing, and
+this seat -- at release -- offers the text in its reply rather than writing into another seat's file.
