@@ -144,6 +144,77 @@ def conditional_checks(inst: dict) -> list[str]:
     return v
 
 
+PENDING_SENTINEL = "PENDING-THIS-COMMIT"
+_COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
+    """ARTIFACT ROW RESOLUTION (2026-08-30, 1.0.0_SA_CTO~X on 2.0.0_SA_COO~X's proposal 85753). Two
+    instances in one night passed this checker VALID and were caught BY HAND: TO-L3W3-COX @c36a309f4d
+    named its own proof at a path that never existed in git; TO-L3W3-CCX @fa7b34274a carried the
+    PENDING sentinel on rows whose artifacts had landed in an EARLIER commit. The schema validates a
+    row's SHAPE; a legal-looking (commit, path) pair that git alone can falsify is invisible to it.
+
+    For every artifacts_produced row that names a REPO artifact (kind != s3_object):
+      - commit_or_etag == PENDING-THIS-COMMIT: the artifact rides the commit that will carry the proof,
+        which does not exist at check time, so the path must at least EXIST IN THE WORKING TREE. A
+        dead path here is a VIOLATION (the COX class).
+      - a commit-ish (7-40 hex): the commit must resolve in the LOCAL object store, then
+        `<commit>:<path>` must exist. Absent -> VIOLATION (a path claimed at a pin that does not
+        carry it).
+    ANNOUNCED, never a violation: a commit-ish that is not in the local object store (UNRESOLVED-HERE
+    -- a cross-fabric pin before a fetch is not a false claim); s3_object rows (an ETag is not a git
+    ref -- the served plane is read by a different instrument).
+    NOT COVERED, stated so nobody reads a clean frame as covering it: the CCX class proper -- a PENDING
+    sentinel on a row whose artifact is ALREADY committed. Before the proof's commit exists there is
+    no candidate to compare against; the issuer's --stat read at close is the instrument for that.
+    Every count prints with its denominator."""
+    v: list[str] = []
+    rows = inst.get("artifacts_produced", []) or []
+    n_resolved = n_pending = n_unresolved = n_s3 = 0
+
+    def _git_ok(*args: str) -> bool:
+        try:
+            return subprocess.run(["git", *args], cwd=str(_REPO_ROOT), capture_output=True,
+                                  timeout=30).returncode == 0
+        except Exception:  # noqa: BLE001 -- a git that cannot run is announced below, not a pass
+            return False
+
+    for a in rows:
+        if not isinstance(a, dict):
+            continue
+        path = str(a.get("path_or_key", "") or "")
+        pin = str(a.get("commit_or_etag", "") or "")
+        if a.get("kind") == "s3_object":
+            n_s3 += 1
+            continue
+        if pin == PENDING_SENTINEL:
+            if path and (_REPO_ROOT / path).exists():
+                n_pending += 1
+            else:
+                v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but does NOT exist in the "
+                         "working tree -- a dead path cannot ride the commit that carries this proof")
+            continue
+        if not _COMMITISH_RE.match(pin):
+            v.append(f"artifact-resolution: {path!r} carries commit_or_etag {pin!r}, which is neither "
+                     "PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact")
+            continue
+        if not _git_ok("cat-file", "-e", pin + "^{commit}"):
+            n_unresolved += 1
+            continue
+        if _git_ok("cat-file", "-e", f"{pin}:{path}"):
+            n_resolved += 1
+        else:
+            v.append(f"artifact-resolution: {path!r} does NOT exist at its declared pin {pin} -- "
+                     "the row names a (commit, path) pair git refutes")
+    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_pending} pending-on-worktree / "
+              f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
+              f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
+              "a PENDING row whose artifact is ALREADY committed is NOT covered here"]
+    return v, frames
+
+
 def coverage_check(inst: dict, expected_arg: str) -> list[str]:
     """CVO step-zero mechanized: instance criterion set vs the TO's expected set."""
     p = Path(expected_arg)
@@ -681,6 +752,11 @@ def main() -> int:
     # discriminator.
     align_violations, align_frames = alignment_check(inst)
     violations.extend(align_violations)
+    # ARTIFACT ROW RESOLUTION (2026-08-30): runs on every instance; its frame prints its denominator
+    # and names the class it does NOT cover, so a clean line cannot be read wider than it is.
+    res_violations, res_frames = artifact_resolution_check(inst)
+    violations.extend(res_violations)
+    align_frames = list(align_frames) + res_frames
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
