@@ -121,7 +121,7 @@
         "crosses_spaces": "measured",
         "declared_mapping": "measured"
       },
-      "evidence": "cli.py:359 (find_node), :365 (--exact), :214-217 (the predicate), :326-352 (banner); comp_log_auto.py:141-178 (dedup key and window); the shim's :5 vs :7 quoting; tool_index.py:935 canonical_call and the cost/freshness metadata strings (the ~0.3s figure read there). Rated STABLE: node ids are deterministic functions of paths/names and the sha key is content-addressed; the instability is in the RENDERING the logger receives, recorded under failure_mode.",
+      "evidence": "cli.py:359 (find_node), :365 (--exact), :214-217 (the predicate), :326-352 (banner); comp_log_auto.py:141-178 (dedup key and window); the shim's :5 vs :7 quoting; tool_index.py:935 (the canonical_call table's comp-trace row) and :1295-1305 (the tool entry: cost '~ms warm', freshness 'graph.json (5-min TTL)', rebuild_trigger 'new files -> comp-build'). Rated STABLE: node ids are deterministic functions of paths/names and the sha key is content-addressed; the instability is in the RENDERING the logger receives, recorded under failure_mode.",
       "owner": "cli.py / trace_graph.py for the id space; the shim for the args rendering; tool_index.py's cost line is the registry's"
     },
     "failure_mode": {
