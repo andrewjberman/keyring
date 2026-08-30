@@ -99,3 +99,18 @@ stands, the trading-calendar answer); the fix is cut (c02-MAPVINTAGE @a33243763d
 map_date/map_carried stamped, guard kept); floor stays ENABLED; today's 12:45Z fire is read at 12:50Z as the
 falsifier or, if the fix lands before ~12:40Z, as its first exercise. C02-g-7 backfill HALTED at date 1 partial
 (6 of 16 written, prior VersionIds captured) until the fix is served. Not mine to hold or fix; carried only.
+
+## Window 08:52Z-08:54Z -- the a06 fix rides; served bytes proven unchanged
+
+origin/CLOUD 0ae699e57b -> 49a851ea2e (`git ls-remote` 08:53:15Z), 36 commits. OPEN 86803-86822, CLOSE 20/20.
+Ceiling 2, both DEPLOYED [advi]. Pre-push measurement that made the push safe: for a06_dim_identity_crosswalk.py,
+worktree md5 == index md5 == served ETag f8763326799bba70dac9edf5c55bdaf8 (0 CRs both) -- the gate uploads worktree
+bytes, so an LF worktree means an identical re-write. Post-push head-object: same ETag, 11,148 B, LastModified
+08:53:08Z (new VersionId, same content). DS~N's M-3 running-artifact read (08:42:34Z) therefore still describes the
+served object; today's 12:45Z fire exercises those bytes. test_a06_map_vintage.py -> _code/tests/ (ETag ==
+committed md5 700c5d75..., beside four existing test members; convention, not a first mint).
+
+**Andrew-facing line, final form for today:** the 49F gold chain's weekend-abort defect (3 of 12 floor fires since
+08-19, Sun 08-23 / Mon 08-24 / masked) has its fix SERVED at 08:42Z, four hours before today's 12:45Z fire; the
+fire is the fix's first exercise, read at 12:50Z, Monday's the second; nothing served moved at any point; the
+five-date backfill (C02-g-7) resumed at 08:4xZ before Monday's map.
