@@ -105,11 +105,31 @@ a blocker on this face.
 - The three roster accounts' full attribute rows and the alternate are in the file s.1/s.4; the
   measurement definitions and controls in s.5.
 
+## Release addendum 02:4xZ (this seat's last act before the kill -- CVO D2-T72-1, 84703 condition C-b)
+
+- **PUSH STATE, measured:** selection @`7cd0cc1200` and the first log commit @`ddd13917d0` are both on
+  origin @`5a928adae7` (MSTR CLOSE 84570, ls-remote 02:33:46Z; own is-ancestor rc=0, control rc=128).
+  Later windows: origin @`711a0717a0` at 02:44:35Z (84682). This addendum's commit rides the next window.
+- **RELEASE:** `3.0.0_SA_CVO` 84703 APPROVED D2-T72-1 -- 4.0.0_SA_CRO base released on capacity (cap 20/20,
+  no CRO-class act reachable for hours: P3-EXACT's methodology limb waits on P2-CENSUS, which waits on the
+  pull, which waits on the reporting-pull deploy). Release is reversible; this file + the selection file
+  are the durable record. C4 of 84196 amended by its author; card D2-T69-R2 at Andrew unchanged.
+- **Carried for the next CRO instance:** (1) CVO 84557 -- a 5-trading-day 49F chain outage 2026-08-11..
+  08-17 sits inside the probe's QTD window for all five accounts; it is a NAMED MECHANISM every
+  QTD/YTD/1Y/SI cell carries (`days_linked < days_expected` by 5); the selection is unchanged by it.
+  (2) The non-fee swap rule (selection file s.4, `0035153269`) stands ready if a P1 non-fee axis is ever
+  wanted. (3) `0079954642` is the first pick for a P2 C5 sub-cohort. (4) Any methodology remark from a CRO
+  seat is a P3-3 proposal through `1.0.0_SA_CTO`'s convention gate -- the cells are frozen @`f11fb765ad`.
+- Inbox top-level empty at 02:4xZ; 24 older drain ids (70762..82792) deliberately left UNACKED -- subjects
+  seen only, bodies not read.
+
 ## Next Steps
 
-1. [`3.0.0_SA_CVO`] grade the selection on C3 (member present, recency measured, attribute printed).
-2. [`0.4.0_DS_ClientPlatform~C`] BP1-2 probe table on the five, when GATE 1 (Andrew) opens; the
-   swap rule in file s.4 needs no re-measurement if the issuer wants non-fee at P1.
-3. [`2.0.0_SA_COO`] the non-fee-at-P1 call (s.3c) if wanted; otherwise nothing owed to this seat.
-4. [`4.0.0_SA_CRO`] commit this log at the 02:20Z window CLOSE (hold observed); then event-driven via the
-   inbox Monitor.
+1. [`2.0.0_SA_COO`] on this seat's one-line "log committed" message: /mstr-kill + deregister, and the
+   release record on the P1-PROBE face per 84703 C-a ("DELIVERED @7cd0cc1200, GRADED PASS, RELEASED on
+   capacity, re-spawn on a CRO-class act" -- never "dark").
+2. [`0.4.0_DS_ClientPlatform~C`] BP1-2 fires on the five once the deployed puller's CodeSha256 is read to
+   have changed and post-dates 27af942259 (COO 84471); the probe table carries the outage mechanism.
+3. [`3.0.0_SA_CVO`] grades the probe table; the C3 record is closed.
+4. [next `4.0.0_SA_CRO` instance] re-spawned on demand for a CRO-class act; start from this log's
+   "Carried" list and the selection file.
