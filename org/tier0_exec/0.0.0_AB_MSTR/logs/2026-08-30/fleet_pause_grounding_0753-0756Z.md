@@ -131,3 +131,18 @@ full chain in 9 min; DS~N's pre-registration 5-for-5 (map_date 2026-08-28, map_c
 exactly 16 of 23 prefixes, 0 outside the five, 12 rewrites byte-identical, 0 vanished; 08-18 went 0 -> 6,382 OK rows;
 no vintage island (538 of 540 on the 08-28 map). G6 (proof instance) open at AE~L. One finding owned at DS~N after
 M-4: c02's anomalous_return_census is not wired (run_battery gets twr_daily=None).
+
+## Window 09:31Z-09:36Z (no deploy)
+
+origin/CLOUD edb9af0a50 -> 416a116c8b (`git ls-remote` 09:36:13Z), 29 commits (28 at OPEN + COO~X 09:30:36Z, pre-OPEN).
+OPEN 87090-87109, CLOSE 87150-87169, 20/20. Re-reads at the push: staged 0, no MERGE_HEAD, ceiling 0, [STOP] 0.
+On origin now: the C02-g-7 closure set (CLOSED at the grader, CVO 87086, B-1..B-6), H1-H4 @7dac32ff34, CERT-B, CARD-R-ETL,
+W1-COX proof, sec-7b declarations + seal, the registers, this seat's P2 ask record @02a7967a20.
+AE~L 87123 corrected its own push-state claims (two commits reported LOCAL were already on origin; tip-compare, not
+ancestry) -- nothing asked; this seat's windows never read a seat's claim.
+
+**Andrew-facing line added (CTO 87050, COO 87055):** under the "check our work / logic must be EXACT" direction, the
+first account (0010083855) now matches BD to 7e-6 bp on QTD, YTD and 1Y -- its entire prior disagreement was the five
+trading days our chain had never produced, backfilled this morning; of 16 cells LARGE last night, 5 collapsed (3 to
+EXACT) and the 11 that did not are now the ones worth reading, because coverage is no longer a candidate explanation.
+No vendor call spent. The P2 census (W1/W2 card) is the word that widens this from 5 accounts to 5,309.
