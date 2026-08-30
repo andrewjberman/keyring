@@ -97,7 +97,8 @@ def packet(day):
 
 
 def print_packet(p):
-    print(f"DAILY-SPRINT PACKET for {p['day']} (UTC)  |  generated {datetime.datetime.now(datetime.UTC):%Y-%m-%d %H:%MZ}")
+    _wd = datetime.date.fromisoformat(p['day']).strftime("%A")  # DATE LAW (Andrew-direct 2026-08-30): the weekday is DERIVED here so the writer never types it
+    print(f"DAILY-SPRINT PACKET for {p['day']} ({_wd}, UTC)  |  generated {datetime.datetime.now(datetime.UTC):%Y-%m-%d %H:%MZ}")
     print(f"  comp-state: {p['comp_state_selftest']}   -> packet trusted: {p['comp_state_trusted']}")
     print(f"  drift rows: {len(p['comp_state_rows'])}")
     for ln in p["comp_state_rows"][:25]:

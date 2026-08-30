@@ -49,7 +49,10 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
       `team_activity` verbatim — the renderer asserts every series sums to its count. `--window
       et` is the page's population (Andrew's day); the TEXT volume line keeps its UTC rule.
    b. Write `daily_reports/data/DAILY_REPORT_<DAY>.json` against
-      `daily_reports/schema/DAILY_REPORT.schema.json`. **The JSON maps 1:1 to the visual —
+      `daily_reports/schema/DAILY_REPORT.schema.json`. **`display_date` is DERIVED from `date` by the
+      renderer (`Saturday, August 29, 2026` form) and a typed value that disagrees FAILS the render** -- Andrew-direct
+      2026-08-30: "however dates are put together for the sprint render ... accurate to calendar"; 3 of 3 reports
+      had carried the wrong weekday, each one day early, from a hand-typed field beside the ISO date. **The JSON maps 1:1 to the visual —
       author to the shape checklist below.**
    c. `python daily_reports/scripts/render_daily_report.py --date <DAY>` — validates and writes
       **BOTH** `daily_reports/out/Desktop_DAILY_REPORT_<DAY>.html` and
