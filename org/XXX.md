@@ -353,6 +353,19 @@ Why this matters: a bare `aws` without the shim is UNPROTECTED against the MSYS 
 class, and `command not found` on comp-tools is the comp-rail failing open. Mechanism + fix record:
 ~D's NFRA_TOOLARCH.PATHFIX delivery (2026-07-25).
 
+**B.0 — YOUR DELIVERY LEDGER, BEFORE YOU RESUME ANYTHING (LD-0480, 2026-08-30):**
+```python
+get_delivery_state(agent_serial="{your_FULL_suffixed_serial}", since="<when this serial's PREVIOUS session was last alive; after a reboot, the reboot time>")
+```
+Every row addressed to you that is **not READ — or is READ `by` a serial that is not yours** — is UNREAD MAIL:
+open the file in your own `read/` dir, act on it, ack it FROM ITS `Msg-ID` LINE. A message OFFERED to a session
+that died reads `OFFER-EXHAUSTED` and is invisible to `check-inbox`, `get_agent_status` and the `read/` listing;
+"resume from your last log" cannot surface an obligation that arrived AFTER that log. Measured 2026-08-30 after
+the 22:57Z reboot: eight rows at one lane, one a `[DRIVE]` contract ruling closed against the wrong shape (84859/84902);
+four FOREIGN READ stamps hiding the same class at another (84900); the coverage line counts a stolen slot as covered
+(84892). Cost: one call, ~1 s. Non-application: a context-clear is the SAME session — you find only your own READ rows.
+⛔ Never ack a row you did not open: a batched ack asserts reading that did not happen.
+
 **B. Check inbox — BOTH paths, both required:**
 ```bash
 check-inbox {your_serial}           # filesystem: base -> inbox/{base}/ ; lane -> inbox/{base}/~{lane}/
@@ -362,6 +375,20 @@ check-inbox {your_serial}           # filesystem: base -> inbox/{base}/ ; lane -
 get_agent_status("{your_serial}")   # broker channel
 ```
 `send_message` writes to **both**, but each probe reads only one. **`check-inbox` alone is insufficient.**
+
+**B.0 — RELAUNCHED AFTER A SESSION DEATH (reboot, kill, crash)? Run the READ-clock query on your OWN
+serial ONCE, before resuming from your last log/TO** (added 2026-08-30 by `1.0.0_SA_CTO` on
+`0.4.0_DS_ClientPlatform~V` 84858 / `2.0.0_SA_COO` 84885 / `0.0.0_AB_MSTR` 84861):
+```python
+get_delivery_state(agent_serial="{your_FULL_suffixed_serial}", since="<your predecessor's last log time>")
+```
+**Any row not READ is unread mail.** A message OFFERED to a session that then died reads
+`OFFER-EXHAUSTED`: `check-inbox` is EMPTY (the offer was consumed), `get_agent_status` shows NOTHING, the
+file already sits in `read/` looking handled, and a relaunch hint of *"resume from your last log"* cannot
+surface an obligation that arrived AFTER that log. Open each such file from `read/`, ack it **from its own
+`Msg-ID` line** (the broker now REFUSES a foreign id), and act on its obligation. Cost: one call at load.
+Non-application: a predecessor that drained cleanly returns zero such rows. Measured 2026-08-30: DS~V found
+six rows this way, one a `[DRIVE]` ruling applied late; the CTO base found 64 of 136.
 
 **B.1 — Find the work you actually hold. RUN THIS; do NOT read your folder:**
 ```bash
