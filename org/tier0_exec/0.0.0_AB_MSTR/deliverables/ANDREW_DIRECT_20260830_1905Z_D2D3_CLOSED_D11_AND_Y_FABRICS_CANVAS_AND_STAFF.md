@@ -76,3 +76,44 @@ seat share a serial; (b) respawn as `~Y` because the seat's IDENTITY and its com
 treating this as a pre-existing exception the rule does not reach backwards into; (c) a different free
 suffix inside the X fabric. **Asked of `1.0.0_SA_CTO~X` and `2.0.0_SA_COO~X` at dispatch; escalated to Andrew
 if they split.** No spawn happens on this serial until it is answered.
+
+---
+
+## OUTCOME: both canvases returned inside 10 minutes; THREE seats spawned, all correctly suffixed
+
+| Fabric | Requested by | Serial spawned | Role / work | Verified |
+|---|---|---|---|---|
+| X | `1.0.0_SA_CTO~X` (89018) | `0.7.0_AE_CloudOps~X` | AE executor; `NFRA_SUBSTRATECARDING.TO-CARD-R-W4-COX`, stranded mid-repair by its owner's death | marker 1, claude.exe 1 |
+| Y | `1.0.0_SA_CTO~Y` (89016) | `1.1.0_SA_KJ~Y` | producer, contract-authoring lane A, 5 defined tasks | marker 1, claude.exe 1 |
+| Y | `1.0.0_SA_CTO~Y` (89016) | `1.2.0_SA_A0~Y` | producer, contract-authoring lane B, 4 defined tasks | marker 1, claude.exe 1 |
+
+Fleet after: **6 marker-counted windows of cap 20.** Every serial carries its fabric's tilde per the naming
+law. Pre-flight on each: 1pt 0 claude.exe, 1b 0 markers, 1c headroom 17, serial format valid.
+⚠ **INSTRUMENT DISCLOSURE:** `to-check --assignee` returned IDENTICAL output for four different serials -- it
+did not DISCRIMINATE, so its result was NOT treated as a measured zero; `comp-find` was used instead (2 hits
+each for `SA_KJ` / `SA_A0`, both DOC-band prose, no task orders, no code).
+
+**BOTH CTOs ASKED FOR LESS THAN THEY COULD HAVE.** `1.0.0_SA_CTO~Y`'s own plan names FIVE seats and it
+requested TWO, declining the three whose prerequisite pins do not exist ("a seat spawned against an absent
+pin does not go faster; it produces something that must be discarded"). `1.0.0_SA_CTO~X` found TWO dead
+executors and requested ONE, declining the 7A seat because its respawn trigger had UN-fired at 19:0xZ (both
+certifiers passed candidate `467e76a9ca` and then STOPPED it on a numerator finding) -- so that seat would
+have been spawned to wait. Neither request was second-guessed by this seat.
+
+**THE NAMING COLLISION IS SETTLED WITHOUT ANDREW:** `1.0.0_SA_CTO~X` picked (a) `~X` and `2.0.0_SA_COO~X`
+concurred, so the escalation condition in 89010 (a split) never fired. Decisive measured fact: the
+determination unit was NEVER DELIVERED to the `~Y` seat, so no work-in-flight transfers and no history
+merges.
+⛔ **ONE RESIDUAL FOR ANDREW IF IT EVER BINDS** (raised by `1.0.0_SA_CTO~X`, adopted here): the tilde now
+carries FABRIC where it used to carry LANE. Those coincide only while no two live lanes of one base serial
+sit in the same fabric. Nothing needs it today. If the estate ever needs two concurrent same-class lanes in
+one fabric, the lane marker must move off the tilde -- a change to what a serial MEANS, and his call.
+
+**CARRIED TO ANDREW AS THE Y CTO'S LINE, NOT AS A REQUEST IT MADE:** `4.0.0_SA_CRO~Y` found 38 defects in
+that CTO's work today (19 blockers across three build increments; 19 across FOUR consecutive review rounds
+on the operating protocol, every round finding something its own gate had reported green) and it found zero
+in the certifier's. Its read: the binding constraint is its own defect rate and the certifier's capacity,
+not production capacity -- so if Andrew would rather add CERTIFICATION capacity than production capacity, a
+second certifier would be the better spend and it would take that instead of its two producers. It
+explicitly did NOT request this, because `4.0.0_SA_CRO~Y` turns verdicts in minutes and it would rather not
+split an independence that is working.
