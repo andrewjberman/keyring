@@ -18,11 +18,24 @@ ZERO data calls. ZERO objects landed. ZERO accounts pulled. THE WORD IS NOT SPEN
 verified against S3, not the error: reporting_performance/2026-08-30/ = 5 objects (the P1 five, unchanged)
 ```
 ⛔ **DO NOT RE-APPROVE ANYTHING. DO NOT RE-ASK ANDREW.** The word survives intact. What is needed is a
-**fresh `.bd.identity` cookie in Secrets Manager `blackdiamond/49f/session`** -- which requires a
-**human BD login** (the module reuses the existing 49F session precisely so there is "no second login
-box"). Routed to `0.7.0_AE_CloudOps` at msg 88977. The credential worked at 03:05Z (the P1 pull) and
-04:35Z (the insurance fire); `describe-secret` LastChanged is 2026-08-27, so the session aged out
-server-side between 04:35Z and 18:29Z.
+**fresh `.bd.identity` cookie in Secrets Manager `blackdiamond/49f/session`**. The credential worked at
+03:05Z (the P1 pull) and 04:35Z (the insurance fire); `describe-secret` LastChanged is 2026-08-27, so
+the session aged out server-side between 04:35Z and 18:29Z. Routed to `0.7.0_AE_CloudOps` at 88977.
+
+⛔ **CORRECTION TO MY OWN CLAIM, from `0.7.0_AE_CloudOps` 89012 -- DO NOT ESCALATE A HUMAN LOGIN ON MY
+SAY-SO.** I wrote that the refresh "requires a human BD login". **THAT IS NOT ESTABLISHED.** There is an
+AUTOMATIC mint: the 04:35Z rule `bd-49f-insurance-session-daily` -> `bd-49f-session-trigger`, whose
+`_session_is_positive_live()` probes the BD token URL live and is **FAIL-SAFE TO MINT** -- any negative
+probe, read error or exception returns False, and False means MINT (EC2 start + OTP auto-login + SSM
+`opal-bd-49f-session-fetch`). **Tomorrow's 04:35Z probe returns NEGATIVE, so it should MINT, not skip.**
+⚠ **AND IT IS NOT A GUARANTEE EITHER: that mint leg is UNEXERCISED -- 19 of 19 Lever-A decisions over
+10 days were POSITIVE-live -> SKIP, so the mint has not actually run once in that window.** A multi-step
+recovery path (EC2 start, OTP, SSM fetch, secret write) unexercised for 10+ days is a **promise, not a
+control**.
+**THE HONEST POSITION: neither "requires a human login" NOR "it self-heals" is established. The
+DISCRIMINATOR is tomorrow's 04:35Z fire, and letting it run costs nothing** -- the word is unspent, and
+a human login remains available afterwards if the mint fails. **Read the 04:35Z outcome before
+escalating anything.**
 ⛔ **DO NOT RETRY THE 401.** It is not transient, and repeatedly hitting a vendor auth endpoint is its
 own bad act.
 
@@ -123,8 +136,10 @@ the selector diff read, and the day-column ask; COO's P2-CENSUS cut and the W1 s
 
 **ONE, evidence-cited, and it is not mine to clear:** the BD session cookie is expired (HTTP 401 on
 `/session/token`, 18:29:33Z; zero data calls; S3 verified unchanged at 5 objects). Owner:
-`0.7.0_AE_CloudOps` + a human BD login. **Not a blocker on the word, the plan, the cohort or the
-vehicle -- all four are ready.**
+`0.7.0_AE_CloudOps`. **The remedy is UNDETERMINED between an automatic 04:35Z mint (present, fail-safe
+to mint, but unexercised for 10+ days) and a human BD login -- see the correction above; my original
+"requires a human login" was an assumption, not a measurement.** **Not a blocker on the word, the plan,
+the cohort or the vehicle -- all four are ready.**
 
 ## Next Steps
 
