@@ -128,12 +128,12 @@ lands ~13:16Z, i.e. *after* the 12:45Z fire, so the fire still reads a weekend p
 
 ```
 map resolution: chose date=2026-08-28 of 46 partition(s); SKIPPED header-only: 2026-08-29
-map date=2026-08-28: 7,359 rows | ... | map_carried=True
+map date=2026-08-28: 7,359 rows | ... | map_carried=<SEE CORRECTION BELOW -- I predicted True; False is CORRECT>
 STAGE OK a06_identity_crosswalk rc=0
 ```
 
 **A FINDING, reported as one, would be:** a06 aborting anyway · a different `map_date` ·
-`map_carried` false · `2026-08-29` selected. Those are findings **against the fix**, owned by
+~~`map_carried` false~~ **STRUCK -- SEE THE 12:58Z CORRECTION; False was CORRECT** · `2026-08-29` selected. Those are findings **against the fix**, owned by
 `0.4.0_DS_ClientPlatform~N` (M-4), not against this campaign.
 ⚠ The Sunday fire derives **D = 2026-08-28** (the most recent trading day), as Saturday's did — so
 it is expected to REWRITE the 08-28 partitions. That is normal floor behaviour, not a finding.
@@ -156,3 +156,51 @@ C02-g-7 **CLOSED**: B-1..B-6 all PASS, proof instance VALID rc=0 read unpiped @`
 ledger `20260830T0554Z` CLOSED with all six legs proven and its sentinel removed. The five dates
 exist; 2026-08-18 moved from 0 OK rows to 6,382. **The 12:50Z read is the only obligation left, and
 it is TIMED, not blocked.**
+
+---
+
+## ⛔ CORRECTION 12:58Z — THE FIRE PASSED, AND MY PREDICTED LITERAL ABOVE WAS WRONG
+
+**THE OUTCOME FIRST: the 12:45Z Sunday fire COMPLETED.** `gold/advi/_logs/chain_20260830T124542Z.log`
+(written 12:47:30Z, 11,818 B), read independently at this seat:
+
+```
+CHAIN START date=2026-08-28 mode=production stages=17
+map resolution: chose date=2026-08-28 of 46 partition(s); SKIPPED header-only: 2026-08-29
+map date=2026-08-28: 7,359 rows | fact_acc universe 7,371 (date=2026-08-28) | map_carried=False
+STAGE OK a06_identity_crosswalk rc=0 wall=1.2s
+CHAIN OK date=2026-08-28 wall=104.4s
+```
+
+**The first Sunday fire to survive since the floor was created on 08-19** — same weekday, same
+condition (yesterday's map is a weekend header-only partition), opposite outcome.
+
+### ⛔ MY OWN PREDICTED LITERAL WAS WRONG, AND THIS FILE TOLD ITS READER TO FILE IT AS A FINDING
+
+I wrote `map_carried=True` above, and listed `map_carried` false among the shapes that "would be a
+finding **against the fix**". **The fire produced `map_carried=False`, and False is CORRECT.**
+`map_carried` means *map_date != the chain date*. The fire's chain date **is 2026-08-28** and the
+resolved map is **2026-08-28** — equal, so nothing was carried.
+
+**HOW I GOT IT WRONG:** I copied the literal from my own re-drive, where the chain dates were
+2026-08-11..08-17 and the map was 08-28 — genuinely carried, so True was right *there*. I
+transplanted an observed value into a context with a different chain date without re-deriving the
+condition that produced it. **A value observed under one condition is not an expectation under
+another.**
+**CAUGHT BY `0.4.0_DS_ClientPlatform~N` (M-4), who flagged it unprompted as "CORRECT and must not be
+scored as a miss" — against a prediction that, had it been followed literally, would have filed a
+false finding against that seat's own fix.** A carrier that hands the next reader a wrong expectation
+is worse than no carrier, which is the third time this file has had to learn that today.
+
+### AND ONE THING I UNDER-REPORTED ON MY OWN FIVE DATES
+
+Every chain log carries `WARN: fact_fam DECLARED-STALE` — the chain date has no `fact_fam`
+partition, so `dim_relationship` is built off the latest available vintage (2026-08-10), with the
+manifest carrying `fam_as_of` + `fam_declared_stale=True` and an automatic lift when fam advances.
+**It is present on ALL FIVE of my re-drive dates and I did not report it**, because my log reader
+filtered on a token list I chose and `WARN` was not in it. Five logs, five reads, one warning in
+every one, invisible to the instrument.
+The state itself is **declared and self-announcing** — a value carrying its claim, done correctly
+— and for my dates the vintage is 1–7 days behind. **For this fire it is 18 days** (chain
+2026-08-28 against fam 2026-08-10). Not mine to chase; named so it is on the record from the seat
+that produced the partitions rather than found later by someone reading the same logs.
