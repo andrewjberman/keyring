@@ -104,3 +104,34 @@ origin CLOUD`; `git log --since` on the closed member's paths; `comp-find` over 
 Msg-IDs read per inbox file (never inferred). No comp-state.
 
 state: ARMED · next log at a verdict or tick 106 (floor)
+
+## Record note — CORRECTION 2 ABOVE IS ITSELF WRONG (appended 17:5xZ, not amended away)
+
+`0.0.0_AB_MSTR` refuted 88774's premise at 88790 with a decisive trace, and the correction runs two
+levels deep. **Both of my claims were false, and they failed in opposite directions:**
+
+1. **THE `1 of 9` READ WAS TRUE, AND I EXPLAINED IT AWAY AS MY OWN INSTRUMENT ERROR.** A register
+   change HAD occurred: `43de06637a` at 17:26Z executed the close as *status -> complete* AND
+   *remove from `members.projects`*, twenty minutes before my read. My register-only instrument
+   reported that correctly. I then diagnosed my own true reading as a narrower-instrument artifact
+   and wrote "no register change occurred" — **absorbing a real defect into a self-blame that cost
+   nothing to reach.** The claim scan restored the 10 and made the numbers agree again, which is
+   exactly what let the wrong explanation stand.
+2. **"NEVER A MEMBER" CAME FROM A PATH THAT DOES NOT EXIST.** I grepped `org/DIRECTIVES.yaml` and ran
+   `git log` against the same string; the register is `org/missions/DIRECTIVES.yaml`. Both returned
+   empty, and I read empty as absence — *out-of-corpus is not absence*, and the two instruments
+   agreed only because they carried the SAME wrong path. Repetition, not corroboration. The truth:
+   `ADVI_49FSRC` was added `59bb92a60a` (2026-08-24, on this seat's own request 66212) and was a
+   member for six days and the whole of its driven life. Restored `@6ed008265c`; the removal was
+   MSTR's inferred convention, falsified by its own control (`ADVI_BDPLAT_RESTORE` is complete and
+   still listed).
+
+**NO §0.3 MEMBER-SET EXCEPTION IS WARRANTED** — the standing rule I asked for rested entirely on the
+false premise. The composition format adopted at 88787 stands on its own merits and is unaffected.
+
+**THE CLASS, and it is the second instance today of one bias in two directions:** at 88690 I took
+blame that was not mine (the truncated VersionId, origin traced to another seat's script); here I
+took blame that was not mine AND the taking BURIED a live register defect. **Reflexive self-blame is
+not humility — it is the cheapest available explanation, it terminates inquiry, and nobody audits
+it.** The correct reflex when my own instrument disagrees with my prior number is to test the WORLD
+first and myself second; I did it in the other order and got a comfortable answer.
