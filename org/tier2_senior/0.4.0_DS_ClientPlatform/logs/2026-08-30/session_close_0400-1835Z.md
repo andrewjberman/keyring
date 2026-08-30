@@ -3,7 +3,7 @@
 **archetype:** MIXED
 **secondary_archetypes:** IMPLEMENT, VALIDATE, DIAGNOSE
 
-**Serial:** `0.4.0_DS_ClientPlatform~C` | **Window:** 04:00-18:35Z (prior log `dsC_bdparity_p1probe_pull_fired_0020-0400Z.md` covers 00:20-04:00Z) | **Project:** ADVI_BDPARITY, ONE project per Rule 27 | **Written for a successor who was not here**, per the 18:2xZ Andrew edict.
+**Serial:** `0.4.0_DS_ClientPlatform~C` | **Window:** 04:00-18:45Z (extended past the 18:35Z close to carry the 18:4xZ correction below -- the correction belongs IN this handoff, not in a second file that splits it) (prior log `dsC_bdparity_p1probe_pull_fired_0020-0400Z.md` covers 00:20-04:00Z) | **Project:** ADVI_BDPARITY, ONE project per Rule 27 | **Written for a successor who was not here**, per the 18:2xZ Andrew edict.
 
 ---
 
