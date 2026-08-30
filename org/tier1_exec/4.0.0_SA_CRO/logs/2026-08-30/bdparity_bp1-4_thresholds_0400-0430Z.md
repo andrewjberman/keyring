@@ -81,3 +81,12 @@ None at this seat. The act is delivered; nothing is owed to this seat.
    predictions P1-P4 (section 4); the Dlog / differenced sub-window print is a PROPOSAL routed through the issuer.
 3. [`3.0.0_SA_CVO`] grades conformance; [`1.0.0_SA_CTO`] grades 0.5 / 10 at the convention gate; the three
    surprise lines (85559) route from the channel, not from this seat.
+
+## Addendum 04:4xZ (after the log commit @e99f4819af)
+
+Closing reply sent 85618-85621 (`2.0.0_SA_COO`, `3.0.0_SA_CVO`, `1.0.0_SA_CTO`, `0.4.0_DS_ClientPlatform~C` --
+4 DELIVERED / 0 QUEUED / 0 REFUSED): grades acked, the CVO caution as addendum A1, the C2-premise addendum
+offered to the CTO as text, release now the issuer's act. Correction commit @`897e2800c5`: the classifier's
+non-ASCII byte was NOT escaped when item 7 above and e99f4819af's message said it was (three no-op replaces --
+a heredoc backslash reaches Python halved); it is escaped now, output byte-identical. PUSH STATE at 04:43:42Z:
+9f894ec5d9 / e99f4819af / 897e2800c5 all LOCAL (ls-remote origin/CLOUD = b5ac9c67ca). Seat IDLE; ZERO crons.
