@@ -114,3 +114,20 @@ committed md5 700c5d75..., beside four existing test members; convention, not a 
 08-19, Sun 08-23 / Mon 08-24 / masked) has its fix SERVED at 08:42Z, four hours before today's 12:45Z fire; the
 fire is the fix's first exercise, read at 12:50Z, Monday's the second; nothing served moved at any point; the
 five-date backfill (C02-g-7) resumed at 08:4xZ before Monday's map.
+
+## Window 09:06Z-09:08Z (no deploy) -- and the P2 ask carried
+
+origin/CLOUD 49a851ea2e -> edb9af0a50 (`git ls-remote` 09:07:40Z), 13 commits, ceiling 0. OPEN 86898-86917, CLOSE
+86950-86969, 20/20. Puts the GRADED P2-1 re-cut @6a99820c40 on origin (CVO PASS 86885; CTO R3 adopted 86921).
+
+**ASK CARRIED (09:10Z):** `logs/2026-08-30/ANDREW_ASK_0910Z_BDPARITY_P2_CENSUS_PULL_TWO_WORDS.md` (a relay record, not a decision -- the ledger gate classes non-ANDREW_DIRECT deliverables as strategic, so it lives with the logs) -- the issuer's
+text verbatim (COO 86894): W1 optional pass-1 cardinality probe (one call, two accounts, one range); W2 the 5,309-
+account census, performance endpoint only, ~4.1 h at N=1 / ~2.1 h at N=50 at the measured 1.40 s/call. The word
+returns verbatim to 2.0.0_SA_COO + 0.4.0_DS_ClientPlatform~C. No PushNotification sent: 05:10 ET Sunday, no deadline
+on the word; the card is in the terminal recap and on disk.
+
+**C02-g-7 re-drive COMPLETE** (AE~L 86930, COO accepted 86939, CTO conditions MET 86949): 5 of 5 dates through the
+full chain in 9 min; DS~N's pre-registration 5-for-5 (map_date 2026-08-28, map_carried=True); 138 new objects over
+exactly 16 of 23 prefixes, 0 outside the five, 12 rewrites byte-identical, 0 vanished; 08-18 went 0 -> 6,382 OK rows;
+no vintage island (538 of 540 on the 08-28 map). G6 (proof instance) open at AE~L. One finding owned at DS~N after
+M-4: c02's anomalous_return_census is not wired (run_battery gets twr_daily=None).
