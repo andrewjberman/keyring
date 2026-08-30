@@ -23,7 +23,7 @@ is consolidated here rather than kept as a subprocess (better than ADHC_COMMITGA
 
 ORDER PRESERVED EXACTLY (per-file, per-check, fail-fast) to guarantee identical pass/fail +
 output vs today's gate: py_compile -> ds-precommit-check -> ruff -> comp-constants ->
-comp-manifest-check -> log-open-lint for .py; comp-shell (in-scope only) -> comp-manifest-check
+comp-manifest-check -> log-open-lint for .py; bash -n (ALL .sh) -> comp-shell (in-scope only) -> comp-manifest-check
 for .sh. The first failing check on a file BLOCKS immediately (matching the bash `|| exit 1`
 chain) -- files after a blocked file are never reached, exactly as today.
 
@@ -98,6 +98,8 @@ import manifest_check_cli   # noqa: E402
 import shell_cli            # noqa: E402
 import log_open_lint        # noqa: E402
 import ses_sender_lint_cli as ses_sender_lint  # noqa: E402
+from git_bash_resolver import git_bash  # noqa: E402
+from msys_argv_guard import msys_safe_run  # noqa: E402
 
 # Rule-16 in-scope path prefixes for the shell scan (mirrors ds-commit-gate.sh _SHELL_SCOPE).
 _SHELL_SCOPE = (".tools/", "org/mcp/", "org/threads/", "infra/aws/lambda/ci/", "infra/aws/terraform/")
@@ -459,6 +461,42 @@ def _nonascii_lint_one(f: str) -> int:
     return 0
 
 
+def _bash_syntax_check_one(f: str) -> int:
+    """`bash -n <f>` -- parse-only syntax check, run on EVERY .sh whatever its path (ZC-2).
+
+    WHY THIS IS NOT comp-shell WIDENED, which the TO forbids: comp-shell answers a
+    LOCAL-RUNTIME question -- does this script use a utility Git Bash 3.6.7 lacks (CLAUDE.md
+    Rule 16) -- and its path scope is CORRECT, because an EC2 script is not a Git Bash
+    subject. `bash -n` answers a DIFFERENT question that has no scope at all: is this file
+    parseable as bash. A syntax error is a defect everywhere the file runs, on every host,
+    so this check is deliberately scope-free while _SHELL_SCOPE is left byte-unchanged.
+
+    FAILS LOUD, NEVER OPEN. If Git Bash cannot be resolved this BLOCKS rather than recording
+    a check that did not run -- recording an unrun check is the exact class the zero-check
+    refusal below exists to close, and it would be absurd to reopen it here.
+
+    Spawns through msys_argv_guard.msys_safe_run per CLAUDE.md (native Python -> MSYS binary),
+    which routes the argv through `bash -c` with shlex quoting so a path carrying a glob
+    metacharacter cannot be de-escaped into a different argument.
+
+    COST: ~64 ms per .sh (the guard's measured ~2.2x on a ~29 ms direct spawn), paid only on
+    files this gate already dispatches. NON-APPLICATION: nothing that is not a .sh.
+    """
+    bash = git_bash()
+    if not bash:
+        _echo("BLOCKED (bash -n): no Git Bash resolved -- refusing to record a syntax check "
+              f"that did not run on {f}", sys.stderr)
+        return 1
+    r = msys_safe_run([bash, "-n", f], capture_output=True, text=True)
+    if r.returncode != 0:
+        _echo(f"BLOCKED (bash -n): {f} is not syntactically valid bash:", sys.stderr)
+        for line in (r.stderr or "").strip().splitlines():
+            _echo(f"    {line}", sys.stderr)
+        return 1
+    _echo(f"OK: bash -n syntax-checked {f}", sys.stdout)
+    return 0
+
+
 def _shell_scan_one(f: str) -> int:
     """Mirrors `shell_cli.py scan <f>` exactly (same cmd_scan function -> identical printed
     findings/summary), then the wrapper's own BLOCKED line on an ERROR-class finding."""
@@ -632,6 +670,11 @@ def _audit_oversize(f: str, size: int, reason: str) -> bool:
 
 def process_files(files: list[str]) -> int:
     checked = 0
+    # ZC-1: files whose suffix this gate DECLARES it reads. Counted IN THE DISPATCH
+    # rather than re-derived at the tail on purpose -- a second predicate describing the
+    # same set is a divergence waiting to happen, and it would fail OPEN (a declared file
+    # the tail's copy did not recognise would slip back to rc=0, which is this whole bug).
+    declared = 0
     # comp-constants config loaded ONCE (read-only; re-reading it per file, like the
     # original per-file subprocess did, would be safe too, but this cheap in-process
     # optimization changes nothing observable -- cmd_check never mutates it).
@@ -671,6 +714,7 @@ def process_files(files: list[str]) -> int:
             return 1
 
         if _is_python_source(f):
+            declared += 1
             try:
                 py_compile.compile(f, doraise=True)
             except py_compile.PyCompileError as e:
@@ -720,10 +764,22 @@ def process_files(files: list[str]) -> int:
             checked += 1
 
         elif f.endswith(".sh"):
+            declared += 1
+
+            # ZC-2: EVERY .sh, whatever its path. This is what makes a .sh outside
+            # _SHELL_SCOPE a CHECKED file instead of a silent zero -- the defect this TO
+            # closes. comp-shell's scope is NOT widened; see _bash_syntax_check_one.
+            if _bash_syntax_check_one(f) != 0:
+                return 1
+
             if _shell_in_scope(f):
                 if _shell_scan_one(f) != 0:
                     return 1
-                checked += 1
+
+            # ONE increment per FILE, not per instrument: `checked` is a file counter (the
+            # summary reads "N of {len(files)} file(s)"), so bumping it once per check would
+            # make N exceed the denominator on an in-scope .sh.
+            checked += 1
 
             # Runs on ALL .sh regardless of Rule-16 scope: the deploy wrapper that motivated
             # this check is NOT local-runtime-scoped, so gating it behind _shell_in_scope would
@@ -737,6 +793,7 @@ def process_files(files: list[str]) -> int:
                 return 1
 
         elif f.endswith(".tf"):
+            declared += 1
             # NEW file type for this gate (ses-sender-lint TO, 2026-07-07) -- Terraform
             # doesn't need py_compile/ruff/etc, just the SES-sender scan (requirement 2:
             # Lambda EMAIL_FROM/SES_SENDER env values live in .tf, not .py).
@@ -745,6 +802,7 @@ def process_files(files: list[str]) -> int:
             checked += 1
 
         elif f.endswith(".json") and f.replace("\\", "/").startswith("org/projects/"):
+            declared += 1
             # NEW 2026-07-13 (CTO). A MALFORMED PROJECT JSON IS A SILENT-INVISIBILITY BUG, and it
             # has already happened: `org/projects/BD_RPSAUTO.json` carried two unescaped inner
             # double-quotes (`DO NOT "RECONCILE" THEM`) and was **1 of 240** that would not parse.
@@ -818,8 +876,15 @@ def process_files(files: list[str]) -> int:
     # Sibling: the identical class in safe_deploy_core.py -- "all files deployed and verified"
     # printed after deploying ZERO (found by 0.0.0_AB_MSTR~Z, ruled and fixed by this seat the
     # same evening). One class, two tools; fixing one without the other is why this survived.
-    # rc stays 0: nothing FAILED, and turning a no-op into a refusal would break every commit
-    # that legitimately carries only non-dispatched files. The output changes, not the verdict.
+    # rc: a commit carrying ONLY non-dispatched files (a .md, a .ts) is a legitimate no-op and
+    # keeps WARN + rc=0 -- turning THAT into a refusal would break every such commit, which is why
+    # the 2026-08-27 fix stopped at the wording. What that fix could not reach is the case below:
+    # a file whose suffix this gate DECLARES it reads, that reached ZERO checks anyway. There the
+    # zero is not a no-op, it is the gate failing to do the one job its own header advertises, and
+    # rc=0 makes that indistinguishable from a clean pass. MEASURED on the pre-fix gate: a .sh with
+    # a planted syntax error and a syntactically clean .sh -- same directory, both outside
+    # _SHELL_SCOPE -- produced BYTE-IDENTICAL output and rc=0. The exit code carried no information
+    # about content at all. (ADHC_COMMITGATE.TO-ZEROCHECK-REFUSE, ZC-1; ruling 1.0.0_SA_CTO 87633.)
     if checked == 0:
         _echo(f"WARN: commit-gate checked 0 of {len(files)} file(s) -- NOTHING WAS CHECKED.",
               sys.stdout)
@@ -828,6 +893,14 @@ def process_files(files: list[str]) -> int:
               "unexamined.", sys.stdout)
         _echo("      Do NOT cite it as validation for a frontend artifact -- use the "
               "language-appropriate instrument (tsc -b, eslint, a read render).", sys.stdout)
+        if declared:
+            _echo(f"REFUSED (rc=2): {declared} of {len(files)} file(s) carry a suffix this gate "
+                  "DECLARES it reads (.py / .sh / .tf / org/projects/*.json), and NOTHING was "
+                  "checked on any of them. A declared subject reaching zero checks is a GATE "
+                  "DEFECT, not a clean commit -- rc=2 exists so it can never be read as a pass. "
+                  "Fix the gate (or say why the file is out of scope); do not re-run for a 0.",
+                  sys.stderr)
+            return 2
         return 0
     _echo(f"OK: pre-commit gate clean for {checked} of {len(files)} file(s)", sys.stdout)
     return 0
