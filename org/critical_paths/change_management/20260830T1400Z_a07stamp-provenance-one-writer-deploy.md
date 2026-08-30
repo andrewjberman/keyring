@@ -60,6 +60,21 @@ byte-equal to the pre-fix INDEX blob and not to that content rendered CRLF, whic
 established rather than assumed. `0.0.0_AB_MSTR` hand-normalised the 557 CRs before the push (87703). **The
 normalisation was a manual act, so it is not a property this key can be assumed to keep on the next deploy.**
 
+**AMENDED 15:08Z -- the manual caveat above is NARROWED, not lifted.** `0.7.0_AE_CloudOps~K` fixed the
+gate at `3d9eb2931d` (`ADHC_DSFLOW.TO-INDEXBYTES-DEPLOY`), verified at source by this seat rather than
+taken from the announcement: `.tools/safe_deploy_core.py` now uploads the INDEX BLOB
+(`git show :<path>`, as BYTES, never decoded) and asserts the returned ETag against THAT, refusing to
+fall back to the worktree on a lookup failure. Their diagnosis is this cell's class measured from the
+other end -- every term came from ONE source (worktree md5, worktree upload, compared to that same
+worktree md5), so the check was self-consistent and could not fail on the thing it guarded. They
+measured 75 CRs served and called MATCH; this cell measured 557 CRs on a07.
+⛔ **STATE, precisely: the fix is COMMITTED and READ, NOT EXERCISED.** The 15:06Z window ran it at
+gate-scope ceiling 0 -- "this push runs the committed gate but exercises no upload". Until a
+non-zero-ceiling window uploads through it, the MANUAL normalisation remains the only thing
+demonstrated to have put index bytes on this key, and a re-deploy of a07 before that first exercise
+still warrants a worktree check. a07's worktree is now LF, so this file's immediate exposure is
+closed; the CLASS closes on the first exercised upload, not on this commit.
+
 ## Chain of custody -- the object read IS the object that runs
 Verified at source, not inferred from the bucket name:
 1. EventBridge Scheduler `advi-49f-gold-floor` -- **ENABLED**, `cron(45 12 * * ? *)` UTC
