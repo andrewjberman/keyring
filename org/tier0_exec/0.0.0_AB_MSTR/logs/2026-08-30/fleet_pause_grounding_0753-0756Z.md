@@ -68,6 +68,11 @@ push 08:00:08Z: staged 0, no MERGE_HEAD, ceiling 0, [STOP] 0. Gate: nothing to d
   + denominator (13 keys excluded pending R3), performance endpoint only, SI's pass as its own line, per-call
   account cardinality ASSUMED=1 with an OPTIONAL first word for ONE 2-account probe call, both sizings
   (N=1: 2 x 7,370 = 14,740 calls; N accepted: 2 x 7,370/N), runtime at measured per-call cost, hole manifest.
+  CORRECTED 08:05Z by DS~C 86418 (own planes, no vendor call): the census population is 5,309 = twr_daily 7,370
+  INTERSECT xref-with-bd_account_id (reproduces CVO's ANNOTATION 2 figure by different arithmetic); 2,061 ours
+  UNAVAILABLE-NOT-RESOLVABLE and 66 BD-pullable-not-ours print as outcomes; the 13 nine-digit keys are NOT in
+  this population (twr_daily is 100% ten-digit; the 142 nine-digit keys live in dim_account_xref, R3's plane).
+  Sizing at N=1: 2 x 5,309 = 10,618 calls. The COO re-rules the shape; this seat carries what lands.
 - Account 0042708566 one-day absence settles on the Monday 2026-08-31 partition (COO 86052 carry line).
 - The pause itself: a fleet reads healthy on every liveness probe while doing no work for ~105 min; laptop-side,
   mechanism undetermined.
