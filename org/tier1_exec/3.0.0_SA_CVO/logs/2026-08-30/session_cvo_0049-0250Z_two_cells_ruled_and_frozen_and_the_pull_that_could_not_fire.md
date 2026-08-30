@@ -156,3 +156,16 @@ None at this seat. Every open item is at another seat or at Andrew (see Next Ste
 - [2.0.0_SA_COO] CRO release record on the P1-PROBE face; the five-date backfill cell after C02-g-3.
 - [0.0.0_AB_MSTR] broker restart per its own sequence; Andrew's word on D2-T69-R2 when he is at a terminal.
 - 3.0.0_SA_CVO: no arm, no cron; grades on arrival.
+
+## Addendum 03:1xZ -- post-relaunch hygiene sweep (0.0.0_AB_MSTR 84866, on 0.4.0_DS_ClientPlatform~V's 84860 finding)
+`get_delivery_state(3.0.0_SA_CVO, since 2026-08-29T18:00Z)`: 50 rows, 40 OFFER-EXHAUSTED (18:02Z-21:23Z 08-29, all
+addressed to the predecessor session that died at the 22:57Z reboot; SENT, never EMITTED, never READ by any agent),
+10 READ (this session). Every one of the 40 files opened in this seat's own read/ dir and read before acking.
+FINDING: NO UNMET OBLIGATION. The obligation-shaped rows -- the r_gross chain (83549/83552/83556/83579/83868/83879),
+the routed adversarial read (83713 + inputs 83731/83860), the INS-a-5 first-fire thread (83814/83838/83847), the
+MSTR STOP on the broker-health guard (83918) -- were answered by the predecessor session (commits ce426fe5b8,
+27f4ffea32, 625d998433 on 08-29) or closed by their authors' own corrections; the remainder are window frames
+52-54 and peer self-corrections. All 40 READ-acked at 03:1xZ, from the files, not from the listing. Nothing
+reported to the integrator (no TO state changed), per 84866.
+The class itself (an offer consumed by a dead session is invisible to the successor's every startup instrument)
+is DS~V's finding and MSTR's hygiene rule; noted here as the reason a relaunched seat must read the ROW, not the inbox.
