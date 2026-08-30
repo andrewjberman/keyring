@@ -217,3 +217,18 @@ id + CodeSha256, (b) the bucket's versioning state for the key set, (c) a refere
 reader with the corpus named beside each denominator, (d) object count + bytes per firm. Nobody was assigned (b)-(d);
 they are read-only measurements, so this seat produces them (comp-find --all for (c); s3api for (b)/(d)) and carries
 the card once.
+
+## Window 14:00Z-14:01Z -- 3 deployed; the CRLF class caught BEFORE the push for the first time
+
+origin/CLOUD 924d560a32 -> 5850d0f9ee (`git ls-remote` 14:01:15Z), 13 commits. OPEN 87646-87665, CLOSE 20/20.
+Gate-scope ceiling 3 (all DS~N cfc15ce384, C02-g-10 A07STAMP): a00_dim_account.py, a07_dim_asset_classification.py,
+tests/test_a07_provenance_stamp.py. Pre-push compare of worktree md5 vs `git show HEAD:<path>` found a07's WORKTREE
+copy CRLF (557 CRs, 30,604 B, md5 dcac6396...) against an LF index blob (84c02076...). The gate uploads worktree
+bytes, so the push would have served CRLF a07 matching no commit -- the class seen three times earlier today AFTER
+the push. Repaired by normalizing the worktree copy (python bytes replace CRLF->LF; `git diff` 0 lines, stat-only
+' M'); a CR guard inside the push chain. Post-push head-object: a00 8bd74df6..., a07 84c02076..., test 0b370e39... --
+all == index blobs. Standing step from here: on every window with a non-zero ceiling, compare each deploy-scope
+file's worktree md5 to its index blob and normalize before the push, until the gate sources the index blob itself
+(CTO's org/mcp-adjacent item). Lesson for the ceiling read: my `data/*/scripts/**` pathspec is wider than the gate's
+.py scope -- both are printed now (gate-scope vs wide) so the OPEN predicts what the gate will actually do.
+0.7.0_AE_CloudOps's three commits are on origin; its single upload of orion-gold-dispatch.sh follows at that seat.
