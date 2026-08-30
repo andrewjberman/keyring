@@ -103,5 +103,37 @@ project and not a second project on one instance. Its acceptance limbs are **tim
 Tuesday** — the seat is otherwise idle for two days, and 1a is available now. **No spawn was needed and none was
 made.** If the timed reads and this cell ever contend, **the timed reads win** — they cannot be re-fired.
 
-**Status:** CUT and SEATED; 1a unstarted. **Nothing has been measured by the issuer beyond resolving that the prior
+## ⛔ CLOSED 2026-08-30 ~18:0xZ — BOTH CELLS ANSWERED, AND THE ANTECEDENT IS FALSE
+
+**1a — AGREES.** The two July rulings resolve at source on a carrier independent of the memory that
+prompted them (relay rows in `org/mcp/message_archive/`, ids 44830 / 47003, verbatim unchanged down to
+the "THis"/"Finacnial" typos, 10 rows carrying the first). Re-measured at a named current vintage
+(17:44:50Z, code @`bb161a8192`): three pinned code carriers agree, and the live plane carries a firing
+negative control — `gold/canonical` **0** objects under `0824`, **4,208** under `0833`.
+**Two corrections to the issuer's prior, adopted:** the fix pin was one character short (`b7dd2a231` ->
+`b7dd2a2311`), and **"SmartX = 0824" is a PURPOSE/BOOK mapping and FALSE as a storage claim** — the
+SmartX feed sits under its own top-level `smartx/` prefix, under neither Schwab master.
+
+**1b — NO, MEASURED.** **0 of 13 keys in the 0833 book, and 0 of 13 in 0824.** Read on each book's own
+authoritative record with its own custodian field, per-key, none omitted, controls firing BOTH ways
+(5,787 of 5,791 eight-digit keys FOUND; fabricated `999999999` ABSENT; residual 4 printed, not swept).
+**So Andrew's antecedent is FALSE and the leadership conditional does not fire** — what follows is his.
+
+⛔ **AND THE POSITIVE DIRECTION IS TYPED UNMEETABLE, as this face required:** naming the 13 accounts'
+true custodian **cannot be met in-estate**. The only carrier of a custodian NAME is dead at the current
+vintage — 46 of 47 partitions carry 0 rows, and the one populated partition holds 91 all-**8**-digit
+keys, so it **structurally cannot answer for a nine-digit key**. **"Not Schwab 0833" is MEASURED; "is
+Fidelity" is NOT.**
+
+⭐ **A FALSE NEGATIVE CAUGHT BEFORE REPORT — the exact failure this face was shaped around.** The first
+identity read compared raw nine-digit keys against a `account_id` **zero-padded to 10**, returning 0 of 13
+**by FORMAT, not absence** — and its positive control, drawn FROM the universe itself, was already 10-char
+and **could not exercise the padding path at all**. *A positive control has its own subject, and it can be
+the wrong one.*
+
+**New from the custodian's own field, which the prior did not carry:** `0824` = **"49 WEALTH MANAGEMENT
+LLC"**, `0833` = **"49 FINANCIAL"** — the two-book split visible in the custodian's record rather than
+inferred from our naming.
+
+**Status:** ⛔ **CLOSED.** No remedy proposed, no vendor contacted, nothing raised with leadership. **Nothing has been measured by the issuer beyond resolving that the prior
 exists and naming that it is unverified.**
