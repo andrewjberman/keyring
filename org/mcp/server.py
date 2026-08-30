@@ -1990,10 +1990,21 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
             msg.rename(read_dir / msg.name)
         _ack_res = None
         if _read_ids and _broker_available:
-            _ack_res = _broker_fetch("/ack-messages",
-                                     {"serial": _my_serial or agent_serial,
-                                      "ids": _read_ids})
+            _ack_body = {"serial": _my_serial or agent_serial, "ids": _read_ids}
+            # The broker's recipient check (2026-08-30) refuses an ack on a row not addressed
+            # to the acking serial. A FOREIGN drain reaches this line only through the audited
+            # INBOX_DRAIN_OVERRIDE branch above, so that is the one case that carries the
+            # override flag -- and acked_by still records the cleaner, never the dead seat.
+            if (mark_read and identity_override and _my_serial
+                    and _identity_key(agent_serial, folder.name) != _my_serial):
+                _ack_body["override"] = True
+            _ack_res = _broker_fetch("/ack-messages", _ack_body)
         parts.append(f"\n--- Archived {len(pairs)} messages to read/")
+        if _read_ids and isinstance(_ack_res, dict) and _ack_res.get("refused"):
+            parts.append(
+                f"--- READ ack REFUSED for {_ack_res.get('refused')} id(s) not addressed to "
+                f"{_my_serial}: {_ack_res.get('refused_ids')} -- the files moved to read/, but "
+                f"the READ clock for those rows is UNWRITTEN (broker recipient check).")
         if _read_ids:
             # REPORT THE ACTUAL OUTCOME. This block previously announced "READ ack recorded"
             # UNCONDITIONALLY -- it claimed the READ clock had been written even when the
@@ -2051,8 +2062,16 @@ async def ack_messages(message_ids: str, ctx: Context = None) -> str:
     if res is None:
         return "ack_messages: broker call FAILED. Nothing acked (reported, not swallowed)."
     n = res.get("acked", 0)
-    skipped = len(ids) - n
-    out = f"READ ack recorded by {_my_serial} for {n} message(s): {ids}"
+    refused = int(res.get("refused", 0) or 0)          # absent on a pre-fix broker -> 0
+    refused_ids = res.get("refused_ids", []) or []
+    skipped = len(ids) - n - refused
+    acked_ids = [i for i in ids if i not in refused_ids]
+    out = f"READ ack recorded by {_my_serial} for {n} message(s): {acked_ids if refused else ids}"
+    if refused > 0:
+        out += (f"\n  REFUSED {refused} id(s) NOT ADDRESSED TO {_my_serial}: {refused_ids} -- an ACK "
+                f"lands only on the true recipient's row (broker recipient check, 2026-08-30). A "
+                f"drain's suggested ids or a peer's copy of a broadcast are not yours to ack; the true "
+                f"recipient's READ slot stays open for them. Nothing was written for these ids.")
     if skipped > 0:
         out += (f"\n  ({skipped} already carried an ACK -- an ACK is write-once, so the "
                 f"FIRST reader's timestamp is preserved rather than overwritten.)")
