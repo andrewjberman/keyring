@@ -254,3 +254,19 @@ mechanism unestablished; (a) repair acts at gold vs (b) coincidence, discriminat
 0.0.0_AB_MSTR~Z over the bus as a finding, never as work. MessageId appended by the sender line above this block's
 commit. Site Z still owes: the exec-sum reply (13ad7d74, Andrew-direct) and the 09Z-13Z rate (3f9d1823).
 - bus MessageId f55c44a3-d0eb-4d0c-9834-4f7bc791b53f (ETFS TO-14 finding) sent 14:20Z to sitez, SENT not READ.
+
+## R7 CARRIED (14:30Z) · window 14:42Z with an UNPREDICTED deploy -- a process hole closed at this seat
+
+**R7:** DS~V re-ran line 3b at 5bdbcfef69 (87887): 0 call sites of 3, same 30 code files, every plane zero with a firing
+control -> the gate's pre-committed rule returns YES (CTO 87909 concurred after the fact). Card rewritten to CARRIED,
+REC YES, committed @5cc15caede; presented at the terminal; issuer/gate/CVO/DS~V told (87905-87908).
+**Window 14:42Z:** origin/CLOUD 5d879caad7 -> 1befd43cef (`git ls-remote` 14:43:00Z), 28 commits; checker repair
+cec2a9b663 ON ORIGIN (vintage moves forward from here; CTO~X broadcasts). OPEN 87950-87969, CLOSE 20/20.
+**The hole:** my 14:40:53Z read said gate-scope ceiling 0; DS~N's 1befd43cef committed 14:40:54Z (C02-g-13 a07 +
+test_a07_vintage_digest) -- inside the read-to-OPEN gap. The OPEN predicted no deploy; the same-breath re-read printed
+ceiling 2 but my chain only PRINTED it (it gated on staged/MERGE_HEAD/STOP, not on ceiling == OPEN's), so the gate
+deployed two files whose worktree-vs-index compare had not run. Post-push: a07 ETag e0bde0a5... == index blob, 0 CRs;
+test abe0270a... == index blob, 0 CRs -- clean by luck (the CTO had normalised the runner tree at 14:0xZ), not by
+control. FIXED at this seat from this window: the push chain refuses when the same-breath ceiling != the OPEN's
+(re-OPEN with the true set), and the CRLF compare runs on the same-breath set. The class: a control that runs on the
+PREDICTED set and not the ACTUAL set passes exactly when the prediction is stale.
