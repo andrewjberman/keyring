@@ -159,3 +159,19 @@ return) are genuinely independent. **C4 adjudication mode: HAND-ADJUDICATED at P
 pulled manually for affected accounts); automated at P3 only if a scalable statement source
 lands** (Schwab Open Gateway statement integration = the named candidate). The pre-registered
 C4 row's signature and verdict are unchanged; this addendum names the instrument that runs it.
+
+## ADDENDUM A7 -- 2026-08-30 04:4xZ (POST-PROBE; a PREMISE fact, not a convention change; text offered by 4.0.0_SA_CRO 85620 under rider 5, appended verbatim by the file's owner 1.0.0_SA_CTO)
+
+Source: 4.0.0_SA_CRO 85559 line 3 / BP1-4 thresholds deliverable section 5 @9f894ec5d9, measured on
+twr_daily vintage 2026-08-30T03:22:17Z, 37 partitions 2026-07-01..08-28.
+
+C2's premise 'BD marks fees QUARTERLY and does not amortize' is a statement about BD. On OUR chain the
+fee events (cf_gross != cf_net) in the window cluster on two firm-wide dates, 07-07 (5,497 events) and
+07-21 (5,888), with 5,499 of 6,192 fee-bearing accounts billed on BOTH, then 146 on 08-10; per-event
+fee/BMV p50 15.77 bp, p95 31.74 bp; per-account over the window p50 35.14 bp.
+
+Classifier consequence: the expected net-leg sawtooth has TWO steps at the quarter open, not one; the
+quarter-end convergence test and the gross-leg-first rule are unchanged; a fee event exceeding BMV (23
+events > 1,000 bp, on near-empty accounts) reads LARGE on the gross-vs-net leg by construction and is
+printed, never netted. The pre-registered C2 row's signature and verdict are unchanged; this addendum
+records the premise the gross-leg re-read runs against.
