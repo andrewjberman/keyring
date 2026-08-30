@@ -96,12 +96,40 @@ __headmove_serial() {
 #   line: {ISO8601-basic} {token} {serial} {tail}
 # ---------------------------------------------------------------------------
 __headmove_audit() {
-    local root audit
+    local root audit ws here foreign
     root="$(command git rev-parse --show-toplevel 2>/dev/null)"
-    [ -z "$root" ] && root="."
-    audit="${HEADMOVE_AUDIT_LOG:-$root/org/git-author-override-audit.log}"
-    echo "$(date -u +%Y-%m-%dT%H%M%SZ) $1 $(__headmove_serial "$root") $2" \
-        >> "$audit" 2>/dev/null || true
+    # *** THE AUDIT LOG IS GOVERNANCE EVIDENCE AND IT LIVES IN ajb_workspace, ALWAYS. ***
+    # Until 2026-08-30 this resolved the log from the CURRENT repo's toplevel, so a FORCE_HEADMOVE in
+    # any other clone wrote a NEW org/git-author-override-audit.log INTO THAT TREE. Measured by
+    # 1.1.0_SA_KJ~Y the same day: the foreign repo's own compiler then refused the file it had just been
+    # given ("forbidden org runtime/history extension") and its suites went 11 failed / 362 passed --
+    # SAME COMMIT, NO CODE CHANGE. A seat that did not diff its own tree would read those failures as a
+    # defect in its work. That is the worst shape a guard can have: its own audit act damages a
+    # repository it does not own, and the damage is indistinguishable from the seat's work being broken.
+    # Two consequences beyond the mess: the governance log SPLITS (OVERRIDE_REVIEW walks ajb_workspace's
+    # copy and would never see the foreign one), and __headmove_serial loses org/mcp/sessions/ -- so the
+    # serial silently degrades to GIT_AUTHOR_NAME or UNKNOWN on exactly the entries that matter most.
+    # Resolved from THIS FILE's own location instead, which is cwd-independent by construction.
+    here="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." 2>/dev/null && pwd)" || here=""
+    ws="${HEADMOVE_WS:-$here}"
+    audit="${HEADMOVE_AUDIT_LOG:-$ws/org/git-author-override-audit.log}"
+    # The marker binds $ws to the tree THIS FILE lives in. Belt-and-braces: the installer wires an
+    # ABSOLUTE source path into ~/.bashrc, so BASH_SOURCE is absolute and $ws is already cwd-independent --
+    # but a hand-edited RELATIVE source line would resolve $ws against the cwd, and "does it have org/"
+    # alone would then happily accept a foreign repo that happens to have one (the tree that reported this
+    # defect HAS an org/). Under that shape this fails to the loud WARN instead of writing into it.
+    if [ -z "$ws" ] || [ ! -d "$ws/org" ] || [ ! -f "$ws/.tools/git-hooks/headmove-guard.sh" ]; then
+        # FAIL OPEN, LOUDLY -- per the CTO ruling in this file's header. The move still proceeds; what
+        # is lost is the record, and a silently unrecorded override is the thing worth shouting about.
+        echo "WARN: headmove-guard cannot resolve the ajb_workspace audit log -- THIS OVERRIDE IS NOT RECORDED." >&2
+        return 0
+    fi
+    # Name the foreign tree when there is one. Same-repo lines keep their exact historical shape, so
+    # nothing that reads this log has to change; a foreign override stops being indistinguishable.
+    foreign=""
+    [ -n "$root" ] && [ "$root" != "$ws" ] && foreign=" [repo: $root]"
+    echo "$(date -u +%Y-%m-%dT%H%M%SZ) $1 $(__headmove_serial "$ws") $2$foreign" \
+        >> "$audit" || echo "WARN: headmove-guard failed to append to $audit -- override NOT recorded." >&2
 }
 
 # ---------------------------------------------------------------------------

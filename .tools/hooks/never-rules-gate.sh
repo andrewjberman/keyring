@@ -75,6 +75,9 @@ fi
 
 CMD=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // empty' 2>/dev/null) || exit 0
 [ -z "$CMD" ] && exit 0
+# The session's working directory, carried on the hook payload. Used ONLY to resolve WHICH REPO the
+# command will run in (see "resolve the target repo's branch" below). Empty is normal and safe.
+HOOK_CWD=$(printf '%s' "$INPUT" | "$JQ" -r '.cwd // empty' 2>/dev/null)
 
 WS="${CLAUDE_PROJECT_DIR:-$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)}"
 # NEVER_GATE_AUDIT lets the TEST SUITE route its override records to a scratch file. Without it the
@@ -259,6 +262,23 @@ scan() {
 # --- resolve the target repo's branch ----------------------------------------------------
 # Honour `git -C <path>` so a portal command is judged against portal's branch, not the parent's.
 REPO="$WS"
+# *** DEFAULT TO THE REPO THE COMMAND WILL ACTUALLY RUN IN -- NOT THE WORKSPACE. ***
+# Until 2026-08-30 this line was the whole story: REPO was ALWAYS ajb_workspace unless the command
+# itself carried `git -C x` or `cd x &&`. A seat working in a SEPARATE CLONE (its own repo, its own
+# branch, no remote) therefore had its rebase judged against ajb_workspace's HEAD -- which is CLOUD --
+# and was DENIED on a branch it was not on and a repo it was not in. The gate's own denial text says
+# "Legitimate local-only rebase on a scratch branch is NOT blocked", so it correctly DESCRIBED a case
+# it could not DETECT. Reported independently the same hour by 1.1.0_SA_KJ~Y (overrode; its audit write
+# then contaminated the foreign tree) and 1.2.0_SA_A0~Y (declined, and took a worse commit history for
+# it) -- the two branches of one defect. The cost is not a stray denial: the only route through is
+# `# never-override`, so the gate was training seats to override ROUTINELY on legitimate acts, and a
+# routine override stops being read. Confirmed at source before the fix, by reading this line.
+# NOTE the ORDER: cwd is the DEFAULT, and an explicit `git -C` / `cd x &&` in the command still WINS
+# below -- the command's own words are better evidence of its target than the shell's position.
+if [ -n "$HOOK_CWD" ] && [ -d "$HOOK_CWD" ]; then
+    _cwdroot=$(git -C "$HOOK_CWD" rev-parse --show-toplevel 2>/dev/null)
+    [ -n "$_cwdroot" ] && REPO="$_cwdroot"
+fi
 if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git[[:space:]]+-C[[:space:]]+[^[:space:]]+'; then
     _c=$(printf '%s' "$CMD" | sed -n 's/.*git[[:space:]]\+-C[[:space:]]\+\([^[:space:]]\+\).*/\1/p' | head -1)
     case "$_c" in
