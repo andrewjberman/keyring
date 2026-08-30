@@ -216,8 +216,16 @@ _BACKWARD_ASSERTED = None
 # ("absent from both the cell set and the criteria refs, so the extraction discriminates").
 # Admitting it would have retired another instrument's discriminator as a side effect.
 # A future scheme gets its own anchored branch and its own two controls -- never a widening.
+# TWO ANCHORED BRANCHES ADDED 2026-08-30 (2.0.0_SA_COO~X, on 0.8.0_AE_CloudComp~Y's measurement
+# 84774): the L3W3 rectangle's family slugs are sha256-derived 4-HEX (dc02 / b8a2 / c69f) and the
+# carding remainder's ids are CARD-R-<4hex|m>-N -- the letters-only slug branch above saw 13 of 34
+# L3W3 cells and 0 of 18 carding cells, and the only fully visible set was the issuer's own
+# mechanism cells. Per the rule two lines up these are ANCHORED branches with their own controls
+# (.tools/tests/test_proof_of_spec_cell_id_re.py), never a widening of the letters-only class.
 CELL_ID_RE = re.compile(
     r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|L3W3-[0-9a-f]{4}-\d+"
+    r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
     r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
