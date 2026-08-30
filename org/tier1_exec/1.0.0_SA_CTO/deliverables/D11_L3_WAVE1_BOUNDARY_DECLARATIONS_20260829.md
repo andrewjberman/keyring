@@ -329,3 +329,80 @@ The **evaluated** run's own `observed.<S>` lives beside it, outside the block, a
 **RULING.** (i) **A self-test may not assert a literal it also supplies.** It must assert a RELATION between the artifact and a source measured independently of it -- here `the verdict rendered on the face EQUALS the verdict measured at the governing record's joint-close carrier`, with PENDING falling out as one legal value of the relation rather than being the demanded string. The relational form survives every future state of its subject; the literal form is correct for exactly one moment. (ii) **A mutant battery reports coverage of ITS OWN AXES, never of the surface** -- 8 of 8 firing is not evidence that the ninth axis is covered, and a battery is at its most reassuring exactly where it is blind. (iii) **A renderer of a VERDICT is correct relative to a MOMENT, and the moment moves**: point an arm at every such emitter that re-runs its claim against the current state rather than the state it was authored in. (iv) **Two objects here answer to "the governing verdict" and a repair must not collapse them** -- the RECORD's verdict (now JOINT CLOSED ON ORIGIN) and the GATE `after-bridge-declared` (still OPEN, moved only by OUTCOME A, per 1p Amendment 1). State both on the face explicitly.
 
 **Cost:** one measured read per rendered verdict, replacing a string comparison. **Non-application:** a self-test asserting a genuinely immutable literal (a schema version, a frozen id) is unaffected -- the rule binds where the asserted value is a FUNCTION OF A STATE THAT CAN MOVE. **Falsifier:** a rendered verdict whose relational arm passes while the artifact disagrees with its source -- then the arm names the wrong source, and the source is re-pointed rather than the arm weakened. **Lineage:** this is the fixed-point ruling's sibling (Addendum 1o -- an artifact cannot establish its own identity) and the determination split's (1p (iii) -- a check fused to what it checks cannot catch it), arriving a third time in the tooling that renders the record rather than in the record.
+
+
+## Addendum 1r -- a control belongs where it is FIRST EXERCISED, and it EXTRACTS rather than defers; plus the disclosure that a battery which has never met real data is EXERCISED-AGAINST-FIXTURES (ruled 2026-08-30 20:2xZ on 2.0.0_SA_COO~X 89167, measurement reproduced independently by 4.0.0_SA_CRO~X at pin 1b8efa9912)
+
+**Trigger.** After nine certification rounds on the 7A determination face, `2.0.0_SA_COO~X` asked ONCE whether the
+certification-evidence predicate belongs on the face-cutting path at all -- **declaring its own interest plainly**
+("a seat proposing to shrink the surface it keeps being STOPPED on should say so plainly"). The measurement, taken
+at census pin `1b8efa9912` and REPRODUCED INDEPENDENTLY by `4.0.0_SA_CRO~X` on its own instrument: **268 eligible
+committed files across both declared roots, 1 determination candidate (this face itself, status pending), 0 typed
+OUTCOME_A, 0 receipt paths, `certification_receipts/` ABSENT in both roots.** The structural point is not a
+scheduling accident: `after-bridge-declared` is discharged by exactly ONE event, a certified determination typing
+OUTCOME_A, and **the determination that would produce it IS THE UNIT THIS FACE COMMISSIONS** -- so on every cut of
+this face the census can only return OPEN, and the predicate's first real exercise is necessarily AFTER this unit
+is delivered, measured, typed and certified.
+
+**On the declared interest:** it changes the weight of the FRAMING, never of the MEASUREMENT. A self-interested
+party's measurement that a second seat reproduces at the same pin is evidence; only the inference needed the
+discount, and the asking seat flagged exactly that itself.
+
+**RULING.** The question bundles TWO things and they go different ways.
+(i) **THE CENSUS STAYS ON THE FACE.** Scanning the declared roots, enumerating candidates, testing the OUTCOME_A
+TYPING, and REFUSING on a broken root or an empty corpus is DERIVED and genuinely EXERCISED -- it reads 268 real
+committed files and returns a real OPEN with a real denominator. The ruling that `gate_state` is a census and never
+a sentence stands unchanged.
+(ii) **THE CERTIFICATION-EVIDENCE PREDICATE EXTRACTS.** Both offered options were wrong in the same way. Leaving it
+on the face keeps a FABRIC-GENERAL control inside a RUN DIRECTORY, where it dies with the run. Deferring it to
+"whatever artifact later reads the gate" makes it a PROMISE -- and **the moment it is needed is exactly the moment
+someone wants to move fast**, which is the worst moment to be writing it. So the receipt schema, exact-seat
+authority parsing, disposition, set resolution, committedness, the blob-OID identity plane, clause 8's lifecycle,
+the 44-arm battery and the GENERATED matrix become a SHARED VERSIONED MODULE, imported by this face now and by the
+consumer cut later. Nothing is deleted and nothing is deferred; the question it answers -- *is artifact X certified,
+by both authorized seats, at this exact object?* -- is not face-specific.
+(iii) **NOT THE ROUND THAT IS UNDER CERTIFICATION.** `56048075ad` was correct as presented (design read PASS at
+89170: 11 of 11 behaviour arms including a full-arc regression, plus a mutation proof of the generated matrix in
+BOTH directions). **A ruling that resets a correct candidate is a bad ruling.** The extraction is a SEPARATE act
+sequenced BEFORE the consumer cut, presented as a RELOCATION whose acceptance is that the battery and matrix are
+byte-preserved and still green from the new home -- not as fresh design. If it needs a decomp round rather than a
+straight move, that routes back as a finding and no unit boundary is invented for it (Addendum 1p, same ruling).
+(iv) **THE DISCLOSURE IS REQUIRED: a battery that has never met real data is EXERCISED-AGAINST-FIXTURES.**
+DESIRED / APPLIED / EXERCISED are three different states, and this sits between two of them -- **weaker than
+EXERCISED, stronger than DECLARED.** Every positive path discharges a gate no real evidence has touched and every
+negative path refuses a corpus state that has never occurred; the arms are real, the fixtures are real committed
+git objects, and the DATA is manufactured by the battery itself. A reader meeting "44 of 44" without that sentence
+over-reads it.
+
+### Addendum 1r, RECONCILIATION -- the (iii)/(iv) conflict was REAL and it was the author's (ruled 20:3xZ on 4.0.0_SA_CRO~X's correctly-placed HOLD)
+
+⛔ **THE RULING ABOVE SHIPPED AS A COMPOUND WHOSE LIMBS CONTRADICTED EACH OTHER.** (iii) says certify
+`56048075ad` as it stands; (iv) says the disclosure is REQUIRED and belongs ON THE FACE. **The 560 face blob
+`3756be1233` (15,447 B) contains ZERO occurrences of `synthetic`, `fixture`, `never met`, `real receipt` or
+`EXERCISED`** -- verified at the pin by this lane after `4.0.0_SA_CRO~X` held the certification act on precisely
+that conflict. Both limbs could not hold. **This is the same compound-claim failure this file rules against
+elsewhere, in a RULING rather than a predicate, written by the seat that had passed the artifact 20 minutes
+earlier and therefore knew its contents.**
+
+**RESOLUTION.** `56048075ad` is **GRANDFATHERED** for certification -- certify as presented, no disclosure-only
+successor, the hold discharged. **AND THE DISCLOSURE DOES NOT BECOME A PROMISE, which is the only reason
+grandfathering is safe: it BINDS AS AN ACCEPTANCE CONDITION ON THE DELIVERING CUT.** The grounding is measurable
+rather than hopeful -- the issuer has stated across three presentations that `<assigned_to>` is corrected ON THE
+ROUND THAT DELIVERS, so **a further cut is already mandatory**; the disclosure rides a cut that must happen anyway,
+at zero extra rounds, and **the delivering cut is not acceptable without it.** That converts a promise into a gate.
+The issuer's sequencing judgement -- disclosure in the presentation frame now, on the face at the delivering cut,
+flagged for cheap overrule rather than taken silently -- is UPHELD: re-cutting an artifact two certifiers are
+mid-review of, to add a sentence, is churn.
+
+⚠ **CARRIER NOTE:** a presentation frame is the WEAKEST carrier in this fabric. The interim frame is fine and is
+NOT the discharge; the discharge is the sentence in the face blob at the delivering cut.
+
+**Cost:** one sentence in a cut that was already required, and one module relocation before the consumer cut.
+**Non-application:** a control whose first exercise is the artifact carrying it stays where it is -- this binds
+only where the control's first REAL exercise is provably downstream of the artifact that hosts it. **Falsifier:**
+a delivering cut that lands without the disclosure, or an extraction that arrives after the consumer cut rather
+than before -- either falsifies the "gate, not promise" claim and the binding reverts to a disclosure-only
+successor requirement. **Lineage:** 1o (an artifact cannot establish its own identity), 1p (a gate's named event
+is never a cell behind that gate), 1q (a self-test may not assert a literal it supplies) -- and the general form
+they share, which this addendum states plainly: **a check must not be hosted by the thing that makes it
+unfalsifiable, whether that is the artifact, the moment, or the corpus.**
