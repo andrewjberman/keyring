@@ -41,6 +41,19 @@ SCHEMA_PATH = Path(__file__).resolve().parent.parent / "org" / "standards" / "SU
 # BASIS claim agreeing with basis_by_field, while the VALUE is `unmeasured`) -- it opened the card,
 # found the card right and the ARM wrong, and branched instead of reporting a defect in certified work.
 # An arm that cannot tell a basis claim from a value claim manufactures defects in accepted artifacts.
+# KNOWN LIMIT, carried IN THE TOOL rather than only in the message that found it (0.7.0_AE_CloudOps~X,
+# 2026-08-30, answering this arm's landing): RULE 2 matches the SYNTAX "`<key>` is `<token>`", not the
+# CLAIM, so it cannot separate a LIVE ASSERTION from QUOTED HISTORY. A card narrating its own correction
+# in the matched form -- "`mutation_policy` is `editable` in the earlier version" -- would trip a rule
+# that is right about the syntax and wrong about the claim. The collision is LIKELY rather than
+# hypothetical, because this face actively REWARDS narrating your own corrections: measured across the 17
+# tracked cards, 2 sites already narrate a superseded value and neither trips RULE 2 only because neither
+# happens to use the matched form ("REMOVED ... from `composes`", "read `held`"). NOT PRE-EMPTIVELY
+# WIDENED -- arming for a case that has never occurred is the same error in the other direction, and the
+# discriminator (a past-tense narration cue in the preceding clause) is cheap to add IF it ever fires.
+# The limit prints in the violation text, so the gate teaches it at violation time rather than in a
+# message that scrolls. Same shape as the ASSERTED-vs-DESCRIBED class this seat spent the evening
+# stopping in the 7A certification predicate: structure proves well-formedness, never authorship.
 BASIS_VOCAB = frozenset({"measured", "inferred", "held", "absent", "unmeasured"})
 
 
@@ -85,7 +98,11 @@ def prose_field_violations(card: dict) -> list:
             elif claimed != str(actual):
                 out.append("%s: prose says `%s` is `%s` but the structured field %s/%s is `%s` "
                            "-- a consumer rejecting on the field and a reader of the sentence learn "
-                           "different things" % (pointer, key, claimed, section, key, actual))
+                           "different things. LIMIT OF THIS ARM: it matches SYNTAX, not CLAIM, and "
+                           "cannot separate a LIVE ASSERTION from QUOTED HISTORY -- if this sentence "
+                           "is narrating a superseded value ('`%s` is `%s` in the earlier version'), "
+                           "THE FIRST HYPOTHESIS IS THE ARM, NOT THE CARD."
+                           % (pointer, key, claimed, section, key, actual, key, claimed))
     return out
 
 
