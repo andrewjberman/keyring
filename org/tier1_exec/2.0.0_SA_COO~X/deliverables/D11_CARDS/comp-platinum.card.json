@@ -45,7 +45,7 @@
         },
         {
           "id": "the summary row key",
-          "note": "`summary` keys rows by component basename: the run printed FOUR rows named `index` (fetches 3 / 1 / 3 / 2, resolved 2 / 0 / 2 / 1 -- FROZEN verbatim from the re-run at 2026-08-30T14:06:23Z, rows 23-26 of the 24 component rows; the same four rows in the same order as the 13:32Z run) with nothing on the row to tell them apart -- a name is not an identity; the table's grain is 'component file', the key printed is 'component name'"
+          "note": "`summary` keys rows by component basename: the run printed FOUR rows named `index` (fetches 3 / 1 / 3 / 2, resolved 2 / 0 / 2 / 1 -- FROZEN verbatim from the re-run at 2026-08-30T14:06:23Z: the summary output is 26 lines = a title line 'FULL-STACK SUMMARY (22 components)', a blank line, the column header, the rule, then 22 component rows (output lines 5-26); the four `index` rows are OUTPUT LINES 23-26 = COMPONENT ROWS 19-22 of 22; the same four rows in the same order as the 13:32Z run) with nothing on the row to tell them apart -- a name is not an identity; the table's grain is 'component file', the key printed is 'component name'"
         },
         {
           "id": "the collapsed args string",
@@ -125,7 +125,7 @@
       ],
       "basis": "measured",
       "evidence": "The summary table from the run at carding (rows quoted); the NOT-FOUND output ('Component not found: <name>', rc 1, nothing else); --firm default None read at :1000-1010; the bd fallback LOCATED at :146 (`firm = FIRM_ALIAS.get((getattr(args, 'firm', None) or 'bd').lower(), 'bd')`) and its NOTE line at :156, both read at source after a first draft had carried the registry's claim unlocated; the false-positive classes read at tool_index.py:2003-2005, :2019-2022, :2050-2053.",
-      "owner": "the extractors for the universe; the registry for the false-positive classes; the CLI (:1035) for the silent no-command exit"
+      "owner": "the extractors for the universe; the registry for the false-positive classes; the CLI (:1025-1027) for the no-command branch that prints help and exits 0 (dispatch :1035)"
     },
     "key": {
       "identity_space": "Component NAMES (file basenames of portal components), fetch URLs / S3 keys (strings, some dynamic), CloudFront route patterns, gold script ids (per firm) -- four spaces joined by string matching, with the firm as an implicit fifth key that defaults.",
