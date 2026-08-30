@@ -273,7 +273,10 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
               "a PENDING row whose artifact is ALREADY committed is NOT covered here",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
               f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
-              "and carries the path, nothing here says it carries the CHANGE) -- 88109 class"]
+              "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"
+              "ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and "
+              "<pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never "
+              "a pin cited for the wrong reason."]
     return v, frames
 
 
