@@ -169,3 +169,61 @@ MSTR STOP on the broker-health guard (83918) -- were answered by the predecessor
 reported to the integrator (no TO state changed), per 84866.
 The class itself (an offer consumed by a dead session is invisible to the successor's every startup instrument)
 is DS~V's finding and MSTR's hygiene rule; noted here as the reason a relaunched seat must read the ROW, not the inbox.
+
+## Addendum 05:2xZ -- the second window, 02:50Z -> 05:20Z (grades, one miss, one tool-class fact)
+**Commits this window (all under this author line):** ccfd6b6093, 711a0717a0 (channel rows 27-30), 11c48031d7
+(ANNOTATION 3), cffd16630e, 639b907f71, c723b323cf, 27bc9bcd26, e037300f71 (rows 31-35); origin at 05:20Z
+c723b323cf per the 04:49Z CLOSE, later rows LOCAL for the next window.
+
+### What was graded, and on what instrument of my own
+- **c02-VINTAGE (C02-g-2) V-1..V-5 ACCEPTED** -- V-5 verified on the diff hunks; the value resolves as a commit.
+- **C02-g-3 round ACCEPTED** -- the R-4 bar I wrote had an UNCOVERED MEMBER (fee days with BMV <= 0); AE~L
+  reported NOT MET AS WRITTEN rather than round 77,072/77,087; I verified the fee-add-back RELATION on the
+  world (2024-07-23: gap*bmv == +|fee| on both bmv<0 rows, controls fire) and amended the bar as its author.
+- **The 15 escalated correctly to ARMED** (DS~N: the guard tests abs(bmv) while its comment says value; 1,089
+  served OK account-days carry a sign-inverted r_net). My first filing as OBSERVATION x INERT was the wrong
+  standing; corrected within the hour (row 31). C02-g-5 cut; CTO ruled the convention (negative base -> REFUSE).
+- **C02-g-5 N-1..N-5 ACCEPTED** -- guard at :252 read at source, battery 20/20 on my own run, N-4 counts
+  partition the 7,141 rows exactly, N-5 closed on the served read (CRLF e5af53dc -> LF 7add6445 == the blob;
+  the pre-computed digests prevented a fourth false-revert alarm). My pre-build note (a moved vintage + a scoped
+  re-emission = a mixed column) was ruled (A) by both issuer and gate: vintage unmoved, schema "1.2".
+- **C02-g-6 round ACCEPTED on substance** -- Q-1 ZERO delta to N-1 (396 / 1,089 / 2.75; DS~N's forward curve
+  five-for-five), Q-2 vintage unmoved on 3,021,660 rows, bmv>=1 r_net delta 0; verified on the world by diffing
+  2024-07-23 against my own pre-round copy (4 refusals with None legs; 3,569 rows byte-identical). R-4's original
+  wording now literally true, 77,072 of 77,072. Formal close waits on the proof instance + checker vintage.
+- **BP1-4 thresholds CONFORMANCE PASS** (numbers: the gate's); the Dlog identity reproduced from the pinned table;
+  the 0.8 bp "instrument note" settled as a UNIT (log points vs arithmetic bp), no class moved.
+- **BP1-6 PASS** -- P1/P2 reproduced to 0.01 bp from published numbers; a producer fix inverting an arm handled by
+  re-pointing + a NEW equality arm; the P2 near-miss banked as the reporter wrote it.
+- **P1-PROBE COMPLETE, 5 of 5** -- BP1-5 re-issued VALID rc=0 on my own run (checker @3948c766a7 stated); the
+  per-cell day columns I required confirmed the two EXACT rows (123/123, 87/87) and FALSIFIED three zero-linked-day
+  rows that read EXACT -> VACUOUS-NO-LINKED-DAYS (an outcome, not a bin). Rule-24 note: the member lives in the
+  harness, not the linker's declared set.
+- **TO-D3.1b: 1..4 PASS on evidence; 5 FAIL then PASS on a one-token rework** (@c393a1e986, my run VALID rc=0).
+
+### The miss, recorded where it happened
+TO-D3.1b was delivered 03:20Z; I acked it, read the issuer's receipt, and treated the receipt as the close. The
+grade ran 95 minutes late, after the issuer's sync (85761). A receipt is not a grade; a delivery acked is not a
+delivery graded. Named to the issuer BEFORE the grade (85770), on the row it happened on (ledger row 35).
+And a second correction of my own: I wrote that DS~E's "VALID rc=0" was "a self-report the checker refutes";
+DS~E measured that the artifact-resolution ARM did not exist in the checker bytes it ran (added @3948c766a7,
+arrived in a later window push). Both reads were true of their instrument. Withdrawn as to the act.
+
+### The tool-class fact surfaced to the CTO (85914)
+A proof-of-spec instance's VALID does not carry the CHECKER's vintage; when an arm is added, every prior VALID
+becomes silently re-gradeable and two seats' verdicts cannot be compared. Rule 22a's running-bytes-older-than-
+built, applied to the instrument. Fix shape offered (print `checker=<hash>` beside the verdict); tool owner's lane.
+
+### Channel this window (rows 27-35)
+Row 27 the deploy gap (re-arm = LF-normalised member sha, adopted verbatim); 28/30 the null-typed partitions and
+the 5-trading-day chain outage 08-11..08-17 that re-polarised my own arm; 29 S17 remediated; 31 negative-BMV
+served-leg artifact; 32 the |r_net| > 50% OK rows (a unit-of-time defect on a valid base, not a BMV member --
+DS~N's framing adopted); 33 three carrier-only facts; 34 INF-ONEWRITER resolved as DEPLOY CURRENCY (writer 2 =
+orion-gold-dispatch.sh:303 on EC2 via SSM); 35 the three grades + the miss.
+
+### Current State delta
+BDPARITY P1 fully graded; P2-CENSUS design inherits the ruling + annotations 1-3, thresholds + A1, the outcome
+vocabulary and the anchor-read cost. c02: g-3 closed, g-5 closed, g-6 accepted on substance (proof pending), g-7
+(the five-date backfill) cut to AE~L. Floor ENABLED since 03:43:53Z; the accelerator applied (P2F-3b). INF-ONEWRITER:
+deploy-currency remedy in the issuer's queue, 4 of 4 synced members stale since 05-11 (AE base). Reserved at Andrew:
+D2-T69-R2 (reach of the 21:23Z word), D3-T73-R3 (SmartX feed custodian scope). Watcher b434aqmn7; zero crons.
