@@ -1,0 +1,174 @@
+{
+  "schema_version": 3.1,
+  "subject": {
+    "id": ".tools/comp-iam",
+    "kind": "script",
+    "declared_domain": "The comp-tool family (NFRA_COMP*, NFRA_COMPIAM_RESOURCE): `comp-iam gaps | roles | services | service <name> | role <name> | stats | reconcile | attach-census | resource-sweep | gaps-filtered | simulate | simulate-self-test | refresh-census | census-self-test | live | investigate-candidates` -- an IAM permission cross-reference for Lambda and EC2 scripts: scans Lambda source and gold EC2 scripts for AWS operations (boto3 client calls + aws CLI), cross-references them against Terraform IAM policy documents, and since 2026-07-10 compares the RESOURCE ARN as well as the action (GRANTED / GRANTED-BROAD / GRANTED-ACTION-UNGRANTED-RESOURCE / UNGRANTED / UNRESOLVABLE-RESOURCE). Registry: tool_index.py:1124 (the canonical IAM-gap path), :1594 (simulate), :1607 (reconcile); comp-tools.yaml:697. The subject is the same 8-line bash SHIM as comp-trace (workspace derived, `python org/modules/graph/iam_cli.py \"$@\"`, exit code captured, logger under `2>/dev/null`, exit with the tool's code); everything else is iam_cli.py (1,624 lines) over extract_iam.py (2,812 lines). The card qualifies the shim AND the delegated contract."
+  },
+  "as_of": {
+    "carded_utc": "2026-08-30T13:35:00Z",
+    "commit_ish": "ea7a7c99f8",
+    "graph_vintage": "Shim @ea7a7c99f8 (2026-07-09, 2.0.0_SA_COO~B). iam_cli.py last moved @c2f70f7ca4 (2026-08-11, 3.0.0_SA_CVO -- the Andrew-direct 'fix the comp-iam tool': `gaps` became two-plane); extract_iam.py @dec85522d7 (2026-07-25, 0.8.0_AE_CloudComp~A). The DESIRED plane it reads is the working tree (Terraform iam.tf, lambda-source-map.json, EC2_MANIFEST.json, Lambda + gold sources) -- head-pinned per run, no cache. The APPLIED-plane inputs it can overlay are dated artifacts: the newest census docs/briefs/cmpaws-iam-census-20260805.json (generated_utc 2026-08-05T00:24:00Z, account 313476888478; 25.6 days old at carding -- STALE by the tool's own 24 h rule, so `reconcile` REFUSES it without --allow-stale-census), and the 2026-06-03 axis census that `_DEFAULT_CENSUS` (:887) still names as the code default while the newest-glob (:909) picks the 08-05 file."
+  },
+  "process": {
+    "methodology": {
+      "how": "THE SHIM: identical to comp-trace's four lines -- WORKSPACE derived from its own path; `python $WORKSPACE/org/modules/graph/iam_cli.py \"$@\"`; `_exit=$?`; `comp_log_auto.py \"comp-iam\" \"$*\" $_exit 2>/dev/null`; `exit $_exit`. THE DELEGATE (iam_cli.py, read at :1-30, :27-60, :887-960, :1020-1070, :1123-1135, :1228-1240, :1501-1624; extract_iam.py read at :1-30 and its method->action tables :196-483): build_iam_report(_WORKSPACE) parses (1) infra/aws/lambda/ci/lambda-source-map.json (function -> source dir), (2) infra/aws/terraform/*/iam.tf (role policies), (3) the Lambda .py sources for boto3 client calls, (4) data/black_diamond/scripts/gold/*.py for boto3 + aws CLI, (5) infra/aws/ec2/EC2_MANIFEST.json (EC2 service -> role); the boto3 method -> IAM action mapping is a hand-maintained whitelist per service (s3, ssm, dynamodb, secretsmanager, ec2, lambda, sns, stepfunctions, cloudfront, cloudwatch, ses, events, iam, logs, sts, sqs, rds, cloudtrail, ce, kms), and a client outside it prints COVERAGE-UNKNOWN with the service names (:122). `gaps` (the default) runs BOTH planes per call site since 2026-08-11 -- action gaps (missing / deny-present / coverage-unknown) and resource verdicts -- and keeps rc 0 as an INFORMATIONAL surface; `resource-sweep` is the rc-GATING form (exit 1 if any call is flagged). `reconcile` / `live` overlay the APPLIED plane from a dated census / comp-aws derive and REFUSE past a TTL (24 h census; derive TTL from comp_iam_live.DEFAULT_DERIVE_TTL_HOURS) rather than guess; `simulate` calls iam simulate-principal-policy for ONE (role, action, resource) with a positive control; two OFFLINE self-test suites (`census-self-test`, `simulate-self-test`) exercise the vintage/fail-closed and mutant arms with no AWS. EXERCISED at carding (no AWS call made): `comp-iam stats` rc 0; `comp-iam census-self-test` -> 'OK: all census self-test cases pass' rc 0 (incl. 'the real 2026-06-03 census age -> STALE'); `comp-iam simulate-self-test` -> 'OK: all simulate self-test cases pass' rc 0; `comp-iam gaps` rc 0 with the two-plane banner and totals; `comp-iam resource-sweep` rc 1 (flagged candidates present) with its own caveat text ('an UNRESOLVABLE resource is not a pass'; 'a FLAGGED call is a CANDIDATE, not a failure'). Every run landed as a row in the live sink.",
+      "determinism": "deterministic",
+      "inference_detail": null,
+      "materializer_standing": "canonical",
+      "composes": [
+        {
+          "id": "org/modules/graph/iam_cli.py",
+          "note": "the dispatch target: 16 subcommands; build_iam_report per run (no cache); the census vintage gate; the simulate wrapper; the two offline self-test suites"
+        },
+        {
+          "id": "org/modules/graph/extract_iam.py",
+          "note": "the engine: five declared sources (:6-12); the boto3 method -> IAM action whitelist per service; the resource verdict machinery (NFRA_COMPIAM_RESOURCE); sovereign_held integration (NFRA_TOOLPASS C7) -- not read in full (2,812 lines; the card names what was read)"
+        },
+        {
+          "id": "infra/aws/terraform/*/iam.tf + infra/aws/lambda/ci/lambda-source-map.json + infra/aws/ec2/EC2_MANIFEST.json",
+          "note": "the DESIRED plane: what Terraform declares and how functions/services map to source and roles -- law-maintained registries (CLAUDE.md Rules 4/8 gate the source map and EC2 manifest at deploy)"
+        },
+        {
+          "id": "docs/briefs/cmpaws-iam-census-*.json",
+          "note": "the APPLIED plane for `reconcile` / `attach-census`: newest by glob (:909); vintage-gated fail-closed (24 h TTL; FRESH / STALE / FUTURE / NO_VINTAGE); the 08-05 census is the newest and is STALE at carding"
+        },
+        {
+          "id": "org/modules/graph/comp_log_auto.py",
+          "note": "the run logger, called under `2>/dev/null` -- the same stderr-discard defect as comp-trace (its last-resort drop disclosure is lost)"
+        }
+      ],
+      "invents": [
+        {
+          "id": "the boto3 method -> IAM action whitelist",
+          "note": "a hand-maintained mapping per service (extract_iam.py:196-483): a boto3 method absent from it is COVERAGE-UNKNOWN, declared loudly per run -- deliberately a whitelist, 'not a percentage of all of boto3' (:376)"
+        },
+        {
+          "id": "UNRESOLVABLE-RESOURCE",
+          "note": "a verdict class for a call whose ARN is computed at runtime: the tool states it could not check it rather than passing it -- 620 of 825 verdicted calls at carding (75%), the dominant class"
+        },
+        {
+          "id": "the collapsed args string",
+          "note": "the shim's `\"$*\"` to the logger vs `\"$@\"` to the tool -- shared with comp-trace and comp-platinum (one template, one commit)"
+        }
+      ],
+      "basis": "measured",
+      "evidence": ".tools/comp-iam:1-8 @ea7a7c99f8 read in full. iam_cli.py: argparse tree :1501-1570 (16 subcommands listed on the card); `gaps` two-plane comment + banner :42-60 (Andrew-direct 2026-08-11; rc deliberately unchanged); COVERAGE-UNKNOWN :122; `_DEFAULT_CENSUS` :887 vs newest-glob :909; live derive TTL + REFUSED :1029-1063; census self-test arms :1123-1135; VINTAGE GATE fail-closed :1228-1240 (CVO brief 5.1 + CTO ruling 2026-07-22). extract_iam.py: the five sources :6-12; boto3 import inside the live path only :163-164; the per-service tables :196-483; the 'sibling helper module invisible' limit :564/:642. Exercise outputs quoted from the runs at carding (rc read via PIPESTATUS[0], never a pipe's rc). Determinism 'deterministic': the DESIRED plane is a pure parse of the working tree; the APPLIED modes are gated by explicit vintages and refuse rather than vary.",
+      "owner": ".owned-paths.yaml: .tools/** for the shim (creator 2.0.0_SA_COO~B); org/modules/graph/** -> ANY_EXEC for the delegate; the two-plane `gaps` fix is 3.0.0_SA_CVO's (@c2f70f7ca4, Andrew-direct); the engine's resource machinery 0.8.0_AE_CloudComp~A's; the census refresh is `comp-iam refresh-census` (live, IAM read-only)"
+    },
+    "cadence": {
+      "declared_rhythm": "ON DEMAND, with one declared obligation in the registry: tool_index.py:1124 names `comp-iam gaps` 'the canonical IAM-gap path' for 'Does this Lambda/EC2 call boto3 actions its IAM role doesn't grant' -- i.e. before an IAM/Lambda change (the Rule 20 class). The APPLIED-plane modes declare their own rhythm by TTL: a census older than 24 h is STALE and `reconcile` refuses it (:1228-1240); `refresh-census` is the declared refresher.",
+      "actual_trigger": "MEASURED from the live sink org/mcp/comp-tool-runs.jsonl on ts_epoch: comp-iam has 275 rows, first 2026-07-14T04:16Z, last 2026-08-30T09:46Z before carding (this seat's `stats`; the 01:25Z row is 0.7.0_AE_CloudOps `service advi-49f-gold-dispatch`, the 08-28 18:48Z row 0.7.0_AE_CloudOps~K `gaps`); rc 0 x209, rc 1 x42, rc 2 x6, rc 3 x14, rc 120 x4; callers 0.8.0_AE_CloudComp~A 79, 3.0.0_SA_CVO~Z 52, 3.0.0_SA_CVO 46, 0.8.0_AE_CloudComp 24, 0.7.0_AE_CloudOps 14 (top 5); 28 rows in the 14 days before carding -- the most-used of the three shims on this face, by a factor of 5-9. The census refresher has NOT run since 2026-08-05 (newest census file generated_utc 2026-08-05T00:24:00Z; no newer file in docs/briefs/).",
+      "live_matches_declared": "no",
+      "live_instance_age": "DESIRED plane: none (head-pinned per run). APPLIED plane: the newest census is 25.6 days old at carding against a 24 h TTL -- `reconcile` and `attach-census` REFUSE it unless --allow-stale-census, and the code's own `_DEFAULT_CENSUS` literal (:887) still names the 2026-06-03 axis census (88 days), which the newest-glob supersedes in practice. So the tool's APPLIED-plane modes have been refusing-by-design for ~24.6 days; the declared refresher exists and nobody has run it.",
+      "basis": "measured",
+      "basis_by_field": {
+        "declared_rhythm": "measured",
+        "actual_trigger": "measured",
+        "live_matches_declared": "measured",
+        "live_instance_age": "measured"
+      },
+      "evidence": "Sink census computed at carding (25,009 rows; per-tool rows / first / last / rc histogram / caller histogram printed); docs/briefs listing (cmpaws-iam-axis-census-20260603.json 305,554 B; cmpaws-iam-census-20260805.json 646,235 B) and the 08-05 file's _meta read; the 24 h TTL from the census self-test arm 'TTL+1m -> STALE' (:1131-1132) and the vintage gate (:1238); the self-test's own arm 'the real 2026-06-03 census age -> STALE' (:1133-1135) -- the tool TESTS that its default census is stale. live_matches_declared = NO on the APPLIED plane specifically: the reconcile rhythm (a fresh census) is declared by TTL and not kept -- stated as the refresher not being run, not as a defect of the shim.",
+      "owner": "the census refresh: whoever runs `comp-iam refresh-census` (an IAM read-only live call -- needs the seat's AWS authority; the CLAUDE.md egress rule does not bind it, it is Opal-owned infrastructure); the DESIRED-plane rhythm: each seat's before an IAM change"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "Per run: stdout reports (gaps by service and role with 'via: <boto3 call> at <file>:<line>' evidence and a totals line 'Total: N missing | N deny-present | N coverage-unknown | N resource-mismatch across N service(s)'; the RESOURCE PLANE summary 'N call(s) verdicted across N mapped role(s); N UNRESOLVABLE-RESOURCE, N GRANTED, N GRANTED-BROAD, N UNGRANTED, N GRANTED-ACTION / UNGRANTED-RESOURCE' plus 'N call(s) in N role-UNMAPPED service(s) NOT resource-checked'); rc per mode (gaps 0 informational; resource-sweep 1 when flagged). SIDE EFFECTS: one row appended to org/mcp/comp-tool-runs.jsonl by the logger; `refresh-census` writes docs/briefs/cmpaws-iam-census-<date>.json (a committed artifact -- the only mode that persists a report); no cache of its own.",
+      "basis": "measured",
+      "evidence": "The totals and resource-plane lines quoted from the `gaps` run at carding: 'RESOURCE PLANE: 825 call(s) verdicted across 95 mapped role(s); 620 UNRESOLVABLE-RESOURCE, 142 GRANTED, 50 GRANTED-BROAD, 11 UNGRANTED, 2 GRANTED-ACTION / UNGRANTED-RESOURCE'; '266 call(s) in 26 role-UNMAPPED service(s) NOT resource-checked (no role to verdict against -- honest hole, not a pass)'; '50 GRANTED-BROAD row(s) are EXCLUDED, NOT CLEARED'; 'Total: 14 missing | 292 deny-present | 0 coverage-unknown | 2 resource-mismatch across 31 service(s)'. refresh-census output path :1183. 'projection': every verdict is a derivation of the working tree (and, in the APPLIED modes, of a dated census); 'replaceable': the census file is fully rewritten per refresh and the sink row is the logger's.",
+      "owner": "reports: the caller's; the census artifact: `refresh-census`'s caller; the sink: comp_log_auto.py's"
+    },
+    "location": {
+      "home": "No artifact of its own on the default path. Census: <workspace>/docs/briefs/cmpaws-iam-census-<date>.json (committed; newest by glob). Run log: <workspace>/org/mcp/comp-tool-runs.jsonl (gitignored, .gitignore:456). Live derive for `live`: .fedobs_tmp/live_aws (comp-aws's derive dir, gitignored class) with its own TTL.",
+      "projection_of": [
+        {
+          "id": "infra/aws/terraform",
+          "note": "iam.tf policy documents -- the DESIRED grants (Terraform is the estate's IAM authority; CLAUDE.md forbids bare apply)"
+        },
+        {
+          "id": "infra/aws/lambda + data/black_diamond/scripts/gold",
+          "note": "the call sites: boto3 client calls in Lambda sources (via lambda-source-map.json) and boto3 + aws CLI in gold EC2 scripts -- ONLY the mapped function's own source dir; a boto3 call in a sibling helper module is INVISIBLE (:564, :642, the tool's own note)"
+        },
+        {
+          "id": "docs/briefs/cmpaws-iam-census-20260805.json",
+          "note": "the APPLIED plane, 25.6 days old at carding; refused by the vintage gate without --allow-stale-census"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": ".tools/comp-iam-usage",
+          "note": "the sibling that answers reachability/usage (RoleLastUsed, who-can-reach) -- the registry's anti_pattern for comp-iam is using the DESIRED-plane gaps to answer that question (tool_index.py:1128-1135)"
+        },
+        {
+          "id": ".tools/comp-aws",
+          "note": "the live derive comp-iam `live` overlays; its TTL is comp-iam's too"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Paths from iam_cli.py :887-909, :1022, :1183, :1213; the sibling-module limit from extract_iam.py :564 / :642 and the registry anti_pattern rows read at tool_index.py:1128-1135, :1594-1607; .gitignore:456 measured at card 2.",
+      "owner": "Terraform: the AE class (CLOUD_OPS_OR_ETL lane); the census: `refresh-census`'s caller; the derive: comp-aws's"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "DESIRED plane: every boto3 client call in (a) the source dir of every function in lambda-source-map.json and (b) data/black_diamond/scripts/gold/*.py, plus aws CLI calls in (b); cross-referenced against every role in infra/aws/terraform/*/iam.tf, with EC2 services mapped by EC2_MANIFEST.json. At carding: 825 call sites verdicted on the resource plane across 95 mapped roles + 266 call sites in 26 services with NO mapped role; 31 services on the action plane.",
+      "denominator": "PRINTED, in both planes, with its holes named: 'N call(s) verdicted across N mapped role(s)' and, separately, 'N call(s) in N role-UNMAPPED service(s) NOT resource-checked (no role to verdict against -- honest hole, not a pass)'; UNRESOLVABLE-RESOURCE counted, not cleared (620 of 825 = 75% at carding -- the DOMINANT class, so three of four calls get no resource verdict); GRANTED-BROAD counted and 'EXCLUDED, NOT CLEARED' (50). COVERAGE-UNKNOWN printed with the unmodeled boto3 services (0 at carding). NOT in the denominator by construction: a boto3 call in a helper module outside the mapped source dir; an action reached through a client the whitelist does not model; a gold script outside data/black_diamond (inf / cot / mdpf gold trees are not in source 4 as declared -- the header names black_diamond only).",
+      "explicitly_out": [
+        "calls in sibling helper modules of a Lambda (only the mapped source dir is scanned) -- the tool's own stated limit (:564, :642)",
+        "gold scripts outside data/black_diamond/scripts/gold (the declared source 4 names one firm's tree; inf/cot/mdpf gold on EC2 is out of the declared universe -- stated here as read from the header, NOT verified against the scanner's actual roots)",
+        "the APPLIED plane on the default path: `gaps` reads Terraform, never AWS -- console-made, AWS-managed and unmanaged grants are invisible until `reconcile` / `live` overlay a fresh census/derive (tool_index.py:1607-1612's own words)",
+        "resource ARNs computed at runtime (UNRESOLVABLE-RESOURCE, 620 at carding) -- declared unverdicted, never passed",
+        "the logger's stderr: the shim's `2>/dev/null` discards comp_log_auto.py's last-resort drop disclosure (same defect as comp-trace)"
+      ],
+      "basis": "measured",
+      "evidence": "The resource-plane and totals lines from the `gaps` run at carding (quoted under artifact.persistence); the role-unmapped line; the header's five sources (extract_iam.py:6-12); the sibling-module note (:564, :642); the registry's reconcile row (tool_index.py:1607-1612). The 'one firm's gold tree' item is READ from the declared header and NOT exercised against the scanner's roots (EI.TF_SCAN_ROOTS names the Terraform trees at :486, not the gold roots) -- carried as an unverified reading, which is why it says so.",
+      "owner": "the whitelist and roots: the engine's authors; the sibling-module hole: declared, owner the engine; the shim's stderr: this seat's family"
+    },
+    "key": {
+      "identity_space": "Three joined spaces: IAM ACTIONS ('s3:GetObject'), derived from boto3 method names by the whitelist; IAM ROLES, named by Terraform resource and matched to Lambda functions (source map) and EC2 services (manifest); RESOURCE ARNs, parsed from the call site's arguments where literal, else UNRESOLVABLE. The census keys roles by name and stamps an account id.",
+      "key_expression": "ACTION KEY: boto3 client service + method -> the whitelist row (extract_iam.py:196-483), one method may map to several actions; a method absent -> COVERAGE-UNKNOWN. ROLE KEY: function name -> source dir (lambda-source-map.json) -> the role the function's Terraform attaches; service -> role via EC2_MANIFEST.json. RESOURCE KEY: the literal bucket/table/ARN in the call arguments against each Allow statement's Resource (pattern-aware; '*' = GRANTED-BROAD, excluded not cleared). VINTAGE KEY: census _meta.generated_utc against now, TTL 24 h -> FRESH / STALE / FUTURE / NO_VINTAGE (fail-closed). LOG KEY: the collapsed `$*` string + 30 s dedup.",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "The five sources and the three verdict planes are declared in the engine header and the CLI docstring; the whitelist is declared as a whitelist (:376). The registry entry (tool_index.py:1124) declares `gaps` 'the canonical IAM-gap path' and its anti_pattern (:1128-1135) declares the DESIRED-plane limit by name ('(action)-not-(action,resource)') -- a declaration that PREDATES the 2026-08-11 two-plane fix and is now stale in the tool's favour: `gaps` does compare the resource since c2f70f7ca4. `_DEFAULT_CENSUS` (:887) declares a 2026-06-03 default the newest-glob (:909) overrides -- two carriers of one default, one stale.",
+      "basis": "measured",
+      "basis_by_field": {
+        "identity_space": "measured",
+        "key_expression": "measured",
+        "key_is_stable": "measured",
+        "crosses_spaces": "measured",
+        "declared_mapping": "measured"
+      },
+      "evidence": "Expressions read at extract_iam.py:196-483 (tables) and :6-12 (sources); iam_cli.py :42-60 (two-plane), :887/:909 (default vs newest), :1228-1240 (vintage gate); tool_index.py:1124-1135 (the registry row and its anti_pattern text, read at the pin). Rated STABLE: every key is a deterministic function of committed text; the instability is in the DECLARATIONS (a stale anti_pattern; a stale default literal), recorded here.",
+      "owner": "the registry text: tool_index.py's maintainers (the anti_pattern needs the 08-11 fix reflected); `_DEFAULT_CENSUS`: iam_cli.py's"
+    },
+    "failure_mode": {
+      "returns_on_failure": "THE TOOL, LOUD on every measured branch: COVERAGE-UNKNOWN printed with the service names; UNRESOLVABLE-RESOURCE counted and declared 'not a pass'; GRANTED-BROAD 'EXCLUDED, NOT CLEARED'; role-unmapped calls printed as an 'honest hole'; `reconcile` / `live` REFUSE a stale census / derive with the age and TTL printed (:1063 'REFUSED: LIVE-plane report NOT PRODUCED'); `simulate` refuses a comma-list of ARNs by construction and demands a positive control; rc: `gaps` 0 always (informational -- a caller that gates on `gaps` rc gates on nothing), `resource-sweep` 1 when flagged (the gating form), rc 3 x14 and rc 2 x6 in the sink for usage/arg errors. THE SHIM: propagates the tool's rc exactly; silences only the logger. THE ENGINE'S SILENT SIDE: a boto3 call in a sibling helper module is not scanned and produces NO row -- an omission invisible to every presence count the tool prints (its own header says so, but the run does not).",
+      "distinguishable_from_true_negative": "yes",
+      "silent_degrade_paths": [
+        "a helper-module boto3 call outside the mapped source dir is absent from every count -- 'no gap' and 'not scanned' print identically for that call (the tool's declared limit, :564)",
+        "`gaps` rc 0 whatever it finds: a pipeline that checks only the exit code reads 14 missing + 2 resource-mismatch as clean; the gating form is `resource-sweep`",
+        "the APPLIED plane is silent on the default path: a console-made or AWS-managed grant neither passes nor fails `gaps`; it is simply not in the DESIRED universe -- and the mode that would show it has been refusing-by-design for 24.6 days because the census is stale",
+        "the logger's last-resort drop disclosure is discarded by the shim's `2>/dev/null` (shared with comp-trace / comp-platinum)",
+        "two carriers of the default census (`_DEFAULT_CENSUS` literal vs newest-glob): a reader of :887 believes the tool reads the 06-03 axis census; the run reads the 08-05 file"
+      ],
+      "basis": "measured",
+      "evidence": "Branches read at iam_cli.py :122, :1029-1063, :1228-1240, :1501-1570 and exercised (gaps rc 0 with findings; resource-sweep rc 1 with its caveat block; both offline self-tests rc 0). The sink's rc histogram (275 rows: 0 x209 / 1 x42 / 2 x6 / 3 x14 / 120 x4). The sibling-module limit at extract_iam.py:564/:642. 'yes' on distinguishable for the tool's VERDICTS: GRANTED, UNGRANTED, UNRESOLVABLE, BROAD and COVERAGE-UNKNOWN are five different outputs, never one; the 'no' cases are the OMISSIONS (unscanned call sites), which no presence instrument sees -- named, not claimed.",
+      "owner": "the shim (this seat's family) for the stderr discard; the engine for the scan roots and the whitelist; the census staleness: whoever owns `refresh-census`"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "The most-used and the most honest of the three shims on this face: 275 runs in the live sink (28 in the last 14 days), and a delegate that prints its denominator in both planes with the holes NAMED -- unresolvable resources counted not cleared, broad grants excluded not cleared, role-unmapped calls printed as a hole, unmodeled boto3 services printed by name, stale censuses refused with the age -- and two offline self-test suites that pass at carding, one of which tests that the tool's own default census is stale. The shim does its four jobs and shares comp-trace's stderr-discard and $*-rendering defects (one template, one commit). QUALIFIED on four measured points. FIRST: the APPLIED plane has been refusing-by-design for 24.6 days -- the newest census (2026-08-05) is STALE against the 24 h TTL and the declared refresher has not been run; `gaps` on the default path is the DESIRED plane only, so a console-made or AWS-managed grant is currently invisible to every mode that will run. SECOND: three of four resource verdicts are UNRESOLVABLE (620 of 825) -- correctly declared, but it means the two-plane fix verdicts one call in four. THIRD: the registry's anti_pattern (tool_index.py:1128-1135) still describes `gaps` as '(action)-not-(action,resource)', a limit the 2026-08-11 fix removed -- the registry is stale in the tool's favour; and `_DEFAULT_CENSUS` (:887) names a default the code no longer uses. FOURTH: the shim's `2>/dev/null` discards the logger's last-resort drop disclosure. Beside these, the sibling-module scan hole is declared by the engine and carried as declared; the gold-tree scope (black_diamond only, per the header) is READ not verified and the card says so.",
+    "blocking_defects": [
+      "APPLIED plane dark by staleness: newest census docs/briefs/cmpaws-iam-census-20260805.json is 25.6 d old against the 24 h TTL, so `reconcile` / `attach-census` REFUSE (fail-closed, correctly) and the declared refresher `refresh-census` has not been run since 08-05 -- console-made / AWS-managed grants invisible to every mode currently runnable (cadence + coverage rows)",
+      "620 of 825 resource verdicts UNRESOLVABLE-RESOURCE (75%) at carding -- declared, not cleared, but the two-plane `gaps` verdicts one call in four on the resource axis (coverage row)",
+      "registry drift in the tool's favour: tool_index.py:1128-1135's anti_pattern still says `gaps` is '(action)-not-(action,resource)' after the 2026-08-11 two-plane fix @c2f70f7ca4; `_DEFAULT_CENSUS` (:887, 2026-06-03) is a second carrier of a default the newest-glob (:909) overrides (key row)",
+      "the shim's `2>/dev/null` on the logger discards comp_log_auto.py's last-resort drop disclosure; `$*` to the logger vs `$@` to the tool -- the shared shim-template defects (failure_mode row; same as comp-trace)"
+    ]
+  },
+  "carded_by": "2.0.0_SA_COO~X"
+}
