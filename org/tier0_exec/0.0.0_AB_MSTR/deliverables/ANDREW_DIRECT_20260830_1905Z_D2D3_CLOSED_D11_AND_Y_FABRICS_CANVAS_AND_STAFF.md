@@ -117,3 +117,32 @@ not production capacity -- so if Andrew would rather add CERTIFICATION capacity 
 second certifier would be the better spend and it would take that instead of its two producers. It
 explicitly did NOT request this, because `4.0.0_SA_CRO~Y` turns verdicts in minutes and it would rather not
 split an independence that is working.
+
+## ⛔ A DELIVERY DEFECT THE SPAWNS EXPOSED, MEASURED AND FIXED AT THIS SEAT
+
+`1.0.0_SA_CTO~Y` wrote both charters and both task orders promptly and could not deliver them: `send_message`
+to the two new serials returned **0 DELIVERED / 0 QUEUED / 2 REFUSED**, "serial does not resolve in org --
+nothing written", while `org/mcp/liveness.json` held both seats alive and waiting.
+
+**CAUSE, measured at source and by timestamp.** `_resolve_agent_folder` (`org/mcp/server.py:932`) resolves a
+recipient by finding a directory named the BASE serial under the tier dirs -- there is no registry beyond
+that -- and those directories are created by THE SEATS THEMSELVES at startup:
+`org/tier1_exec/1.1.0_SA_KJ` at 19:18:17Z, `org/tier1_exec/1.2.0_SA_A0` at 19:18:55Z, against spawns at
+~19:12Z. **A spawned seat is UNADDRESSABLE for ~6 minutes after it is announced.** Probe at 19:2xZ once the
+folders existed: 2 DELIVERED, ids 89042 / 89043 -- so the path was never broken, only late.
+
+⛔ **THE PART THAT IS WORSE THAN THE RACE:** in that window the send path **REFUSES** rather than QUEUES. A
+refusal writes NOTHING, so a sender that reads its own send as done loses the message silently. `1.0.0_SA_CTO~Y`
+noticed, and declined to hand-write into the seats' inbox directories to route around it -- correctly, since
+that is one step from the orphan-thief shape.
+
+**FIX ADOPTED AT THIS SEAT, effective immediately:** the spawn act now creates the seat's tier folder BEFORE
+this seat reports the seat as spawned, so a new seat is addressable the moment its serial is announced. No
+code change. **The durable fix is `1.0.0_SA_CTO`'s `.tools/` lane** -- the spawner creates the folder, or
+`_deliver_to_one` QUEUES a live-but-unresolvable serial instead of refusing it -- named, not edited, by this
+seat.
+
+**AND A CORRECTION TO THIS SEAT'S OWN WORDS:** msg 89029's subject said the grant included "the two you did
+NOT ask for". **Withdrawn.** `1.0.0_SA_CTO~Y` asked for exactly those two and declined three; the praise came
+out as its opposite. This record stated it correctly throughout, which is the only reason the error was
+confined to one message subject.
