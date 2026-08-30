@@ -1,0 +1,153 @@
+{
+  "schema_version": 3.1,
+  "subject": {
+    "id": ".tools/comp-trace",
+    "kind": "script",
+    "declared_domain": "The comp-tool family (NFRA_COMP*): `comp-trace <node> [--direction up|down|both] [--depth N] [--json]` traces data paths through the full stack on the head-pinned TRACE graph (gold scripts + functions, lambdas, S3 artifacts, endpoints, eventbridge rules, portal components). Declared in comp-tools.yaml:224, graph-call-manifest.yaml and .tools/tool_index.py:935 (canonical_call `comp-trace <node> --direction both [--depth N]`). The subject is an 8-line bash SHIM: it resolves the workspace from its own location, execs `python org/modules/graph/cli.py trace \"$@\"`, captures the exit code, runs the auto-logger comp_log_auto.py under `2>/dev/null`, and exits with the tool's code. Everything a user experiences as comp-trace lives in cli.py (1,584 lines) and trace_graph.py; the card qualifies the shim AND the contract it delegates, reading across the exec per the card-5 lesson."
+  },
+  "as_of": {
+    "carded_utc": "2026-08-30T13:25:00Z",
+    "commit_ish": "ea7a7c99f8",
+    "graph_vintage": "The shim's last change is ea7a7c99f8 (2026-07-09, 2.0.0_SA_COO~B) -- the same commit as its two sibling shims comp-iam and comp-platinum (subjects 3 and 4 of this face), all three the one 8-line template. Its dispatch target cli.py moved most recently at the 2026-08-04 'comp-trace dial' (T1/T3/T6 in the source); comp_log_auto.py last moved 2026-07-30 (R8, the sink change). The substrate it serves is the trace-graph CACHE .comp-graph/graph.json (gitignored): at carding it carried built_at 1786056515 = 2026-08-05T20:08:35Z with 2,249 nodes / 2,947 edges, and trace_freshness() read STALE -- 375 of 1,904 indexed nodes had source-SHA drift (25 days of unrebuilt cache); the carding EXERCISE rebuilt it (see process.methodology)."
+  },
+  "process": {
+    "methodology": {
+      "how": "FOUR LINES OF BEHAVIOUR (.tools/comp-trace:4-8): (1) WORKSPACE derived from the shim's own path (`cd $(dirname $0)/..`), so the tool is location-derived, not device-hardcoded (the LD-0405 rule met by construction); (2) `python $WORKSPACE/org/modules/graph/cli.py trace \"$@\"` -- every argument forwarded intact; (3) `_exit=$?` captured; (4) `python comp_log_auto.py \"comp-trace\" \"$*\" $_exit 2>/dev/null` -- the run logged with the args COLLAPSED to one string ($*, not $@) and the logger's stderr DISCARDED; (5) `exit $_exit` -- the tool's code, not the logger's, is what the caller sees. THE DELEGATED CONTRACT (cli.py, read at :95-130, :214-262, :354-410): _get_graph() serves .comp-graph/graph.json when no indexed node has source-SHA drift, else prints STALE_NODE_WARN to stderr, DISCARDS the drifted cache and REBUILDS head-pinned from current source (47.7 s at carding, 2,303 nodes / 3,047 edges), saving the new cache -- so a trace run is also a cache WRITE whenever anything drifted; cmd_trace() prints a provenance banner (cache path, built_at, age, sha-drift at load) to stderr on EVERY walk (T3), resolves the query by prefix (or byte-equal id under --exact, T6), and on zero matches exits rc=3 LOUD with the denominator, the universe and near-matches printed (T1) -- never a silent rc=0 clear. EXERCISED at carding: `.tools/comp-trace gold:A_00.accounts_dimension --exact --direction down --depth 1` -> STALE_NODE_WARN (375 drifted, ten listed, '... and 365 more'), rebuild, banner 'built_at=2026-08-30T13:12:42Z (age 0.8min); sha-drift at load: 375 of 1930', results, rc 0; and the run landed as a row in the live sink (see cadence).",
+      "determinism": "deterministic",
+      "inference_detail": null,
+      "materializer_standing": "canonical",
+      "composes": [
+        {
+          "id": "org/modules/graph/cli.py",
+          "note": "the dispatch target: `trace` subcommand -> _resolve_graph/_get_graph (cache serve-or-rebuild), cmd_trace (:354), _emit_trace_provenance (:326), trace_freshness (:220, the enforcing predicate as a value); also the home of comp-blast"
+        },
+        {
+          "id": "org/modules/graph/trace_graph.py",
+          "note": "TraceGraph, build_graph, format_trace, check_node_freshness -- the graph builder and the per-node content-SHA drift check; not read in full here (the card qualifies the shim and cli.py's contract; the builder's own coverage is its own card)"
+        },
+        {
+          "id": ".comp-graph/graph.json",
+          "note": "the trace-graph CACHE, gitignored, ~1.56 MB; served when un-drifted at ANY age (no TTL on the default path), rebuilt on drift"
+        },
+        {
+          "id": "org/modules/graph/comp_log_auto.py",
+          "note": "the run logger every comp-* shim calls after the tool: appends a row to the live sink org/mcp/comp-tool-runs.jsonl (gitignored; the sink since 2026-07-30 R8 -- org/compiler-tools-log.md is preserved history, last row 2026-07-29), dedups identical tool+args within 30 s (.comp-graph/.comp_dedup), attributes the row to the session's serial, and DISCLOSES a dropped row to .comp-graph/.comp_log_drops else stderr"
+        }
+      ],
+      "invents": [
+        {
+          "id": "the collapsed args string",
+          "note": "the shim passes `\"$*\"` (one string, spaces joined) to the logger while the tool got `\"$@\"` (separate words) -- the logged command is a rendering of the invocation, not the invocation; an argument containing whitespace is logged ambiguously"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Shim read in full, .tools/comp-trace:1-8 @ea7a7c99f8 (8 lines; `file` reports a Bourne-Again shell script, UTF-8, the em-dash on :2 the only non-ASCII byte). cli.py read at :95-130 (cache serve / rebuild / save, the WARN on a corrupt cache), :214-262 (TRACE_PREDICATE, trace_freshness, _freshness_probe), :354-410 (cmd_trace incl. the rc=3 NOT-FOUND path); comp_log_auto.py read at :1-70 (docstring, _disclose_drop), :85-180 (agent context, dedup), :232-290 (R8 route join), :283-360 (the sink move and the runs sink path). Exercise: one real trace at carding, rc 0, the rebuild observed and timed by the tool's own stderr, the sink row observed (comp-tool-runs.jsonl last row: tool comp-trace, serial 2.0.0_SA_COO~X, rc 0, session 34020d37...).",
+      "owner": ".owned-paths.yaml: .tools/** -- no narrower owner enumerated for the shim; creator 2.0.0_SA_COO~B (@ea7a7c99f8). The dispatch target org/modules/graph/cli.py falls to ANY_EXEC (org/modules/**); its comp-trace dial (2026-08-04) was authored under NFRA_COMP* by the AE_CloudComp class."
+    },
+    "cadence": {
+      "declared_rhythm": "ON DEMAND -- a CLI a seat invokes; no schedule. The one declared obligation is the CLAUDE.md Rule 20 gate ('check the dependency graph BEFORE any cloud/infra/data change and before frontend commits' -- comp-trace is a named pick in graph-call-manifest.yaml), i.e. the rhythm is 'before every such change'.",
+      "actual_trigger": "MEASURED from the live sink org/mcp/comp-tool-runs.jsonl (25,009 rows, 2026-07-14T02:37Z -> 2026-08-30T09:46Z at the read; ts_epoch is the clock): comp-trace has 47 rows, first 2026-07-25T06:15Z, last 2026-08-24T21:37Z (`comp-trace --help`, 1.0.0_SA_CTO~X); rc 0 x27, rc 1 x9, rc 3 x9 (the loud NOT-FOUND), rc 120 x2; callers 0.7.0_AE_CloudOps~F 18, 0.8.0_AE_CloudComp~D 14, 3.0.0_SA_CVO 11, 0.8.0_AE_CloudComp~B 2, 0.7.0_AE_CloudOps 1. ONE run in the 14 days before carding (08-16 -> 08-30), and that one a --help. The markdown log's 255 rows (2026-04-09 -> 2026-07-25) are the pre-R8 history, not a second population.",
+      "live_matches_declared": "no",
+      "live_instance_age": "The cache the tool serves was 25 days old at carding (built 2026-08-05T20:08Z) with 375 of 1,904 indexed nodes drifted -- and the default serve path evaluates NO age, only drift (cli.py:214-217 'NOT a TTL ... an un-drifted cache is served at ANY age'), so a cache that happens not to drift is served indefinitely. The exercise rebuilt it at 2026-08-30T13:12:42Z.",
+      "basis": "measured",
+      "basis_by_field": {
+        "declared_rhythm": "measured",
+        "actual_trigger": "measured",
+        "live_matches_declared": "measured",
+        "live_instance_age": "measured"
+      },
+      "evidence": "Rule 20 in CLAUDE.md (the gate names graph-call-manifest.yaml, which lists comp-trace); the sink census computed at carding from org/mcp/comp-tool-runs.jsonl on ts_epoch (rows / first / last / rc histogram / caller histogram printed); trace_freshness() called in-process at carding: ('STALE', '375 of 1904 indexed nodes drifted', 1904, [...]); graph.json built_at read from the cache file before the exercise (1786056515.38 = 2026-08-05T20:08:35Z) and from the tool's banner after (2026-08-30T13:12:42Z). live_matches_declared = NO on the RHYTHM: Rule 20 says before every cloud/infra/data/frontend change; the estate made hundreds of such commits between 08-16 and 08-30 (the windows this seat read carried 13-34 commits each) and the tool ran once. The gate has no mechanism (comp-surface-check is RETIRED per CLAUDE.md Rule 20), so 'before every change' is a rhythm enforced by nobody -- stated, not blamed on the shim.",
+      "owner": "the rhythm is CLAUDE.md's (1.0.0_SA_CTO); the invocation is each seat's; the cache's staleness is whoever runs it next"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "TWO artifacts per run. (a) stdout: the trace (text, or a JSON object under --json with query/matches/status/denominator/universe/near_matches_unverified on NOT-FOUND); stderr: the provenance banner + any STALE_NODE_WARN / rebuild lines. (b) SIDE EFFECTS: the trace-graph cache .comp-graph/graph.json REWRITTEN whenever drift is found (g.save, cli.py:108) and one row APPENDED to org/mcp/comp-tool-runs.jsonl by the logger (ts_epoch, serial, to_id, tool, args_head, rc, result, session_id, verdict_basis, and the R8 route_id/route_age_s/route_n when a comp-which route was handed off). The shim itself persists nothing; both writes are the delegate's and the logger's.",
+      "basis": "measured",
+      "evidence": "cli.py:106-108 (build_graph + g.save(_CACHE_FILE) on the rebuild path); the exercise's banner showing the new built_at; comp_log_auto.py:347 (runs_sink = org/mcp/comp-tool-runs.jsonl) and the observed last row after the exercise. 'projection': the trace is a read of a graph that is itself a projection of the working tree (head-pinned at build). 'replaceable': the cache is fully rewritten on rebuild (atomic save per the :99 comment on the closed C1 reap window); the sink is append-only but is the LOGGER's artifact, not this tool's.",
+      "owner": "cache: whoever rebuilds (any comp-trace/comp-blast/comp-build caller); sink: comp_log_auto.py's (AE_CloudComp class, R8)"
+    },
+    "location": {
+      "home": "No artifact of its own. Cache: <workspace>/.comp-graph/graph.json (gitignored, device-local, ~1.56 MB). Run log: <workspace>/org/mcp/comp-tool-runs.jsonl (gitignored, device-local; `git check-ignore -v` at carding: .gitignore:456 -- the logger's own docstring says :447, a line number that has drifted since it was written). Both paths derive from the workspace root, never a device literal.",
+      "projection_of": [
+        {
+          "id": "the repo working tree",
+          "note": "gold scripts, lambdas, S3 artifact references, endpoints, eventbridge rules, portal components -- the TRACE graph universe as cmd_trace prints it on NOT-FOUND; AWS config planes (IAM/SG/DNS) and the silver tier are OUT of this universe by the tool's own statement (:397-399)"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": ".tools/comp-blast",
+          "note": "shares cli.py and the same cache; a rebuild by either refreshes the other"
+        },
+        {
+          "id": ".tools/comp-build",
+          "note": "the declared refresher ('rerun comp-build to refresh', the STALE_NODE_WARN text) -- comp-trace rebuilds implicitly on drift, comp-build explicitly"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Paths from cli.py (_CACHE_FILE under .comp-graph) and comp_log_auto.py:347; the gitignore facts MEASURED at carding with `git check-ignore -v`: .comp-graph/graph.json -> .gitignore:81 `.comp-graph/`; org/mcp/comp-tool-runs.jsonl -> .gitignore:456 (the logger's docstring :294 says :447 -- a drifted line number, the fact itself holds).",
+      "owner": "device-local artifacts: the device's; the paths: the tool's"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "The head-pinned TRACE graph: 2,303 nodes / 3,047 edges after the carding rebuild (2,249 / 2,947 in the 08-05 cache), of which 1,930 indexed nodes carry a source SHA (1,904 before). A query covers the nodes whose ids match it (prefix by default, byte-equal under --exact) and the edges reachable within --depth in --direction.",
+      "denominator": "PRINTED ON THE PATH THAT NEEDS IT: a NOT-FOUND prints the node count and the per-type breakdown ('denominator: N nodes (HEAD-PINNED TRACE GRAPH) -- FUNCTION=..., SCRIPT=...') plus the universe statement and near-matches (cli.py:385-407); the provenance banner prints indexed-node drift as 'k of N' on every walk. NOT printed: on a successful match, how many nodes the graph holds OUTSIDE the walked depth -- a --depth 1 answer does not say what depth 2 would have added. The run logger records args_head only (the first ~60 chars of the collapsed args), so the sink cannot reconstruct a long invocation.",
+      "explicitly_out": [
+        "AWS config planes (IAM / SG / DNS / ...) and the silver tier -- 'ask comp-kuzu / comp-blast for those' (:397-399)",
+        "any node the builder did not index -- a file type or path root outside build_graph's scan roots is absent from the universe and a query on it reads NOT-FOUND (loud, rc 3), never 'nothing depends on it'",
+        "the deployed plane: the graph is built from the WORKING TREE ('PLANE: repo working tree', the banner's own words); a deployed artifact whose source diverged is invisible",
+        "the logger's stderr: the shim's `2>/dev/null` on :7 discards the COMP_LOG_AUTO_DROP last-resort disclosure, so when the marker file .comp-graph/.comp_log_drops is also unwritable a dropped run row is silent after all (the logger's docstring promises the opposite)"
+      ],
+      "basis": "measured",
+      "evidence": "Node/edge counts from the tool's own rebuild line and the cache file; the NOT-FOUND denominator block read at cli.py:378-407 and exercised indirectly (the 9 rc-3 rows in the sink are that path firing for real callers); the `2>/dev/null` at .tools/comp-trace:7 against comp_log_auto.py:45-69 (_disclose_drop: marker file -> stderr -> bare pass) -- the shim removes the middle rung. .comp-graph/.comp_log_drops did NOT exist at carding (`ls` -> no such file): either no drop has ever occurred or the marker write has never fired; the two are byte-identical from outside, and the stderr rung that would separate them is the one the shim discards.",
+      "owner": "the shim (this card's subject) for the discarded stderr; cli.py for the universe statement"
+    },
+    "key": {
+      "identity_space": "Graph node ids: prefixed strings ('gold:<script>.<function>', 'lambda:<name>', 's3:<key>', endpoint / eventbridge / component ids) built by trace_graph.build_graph from the working tree; the run sink keys rows by (ts_epoch, serial, session_id) with `verdict_basis` naming the rc-to-result mapping vintage ('derived@v1+<hash>').",
+      "key_expression": "QUERY RESOLUTION: g.find_node(query) = prefix match over node ids (:359); under --exact, `m.id == query` byte-for-byte (:365) -- a miss under --exact is rc 3, never a silent widening. FRESHNESS KEY: per-node source_sha vs the current file's sha (check_node_freshness) -- content-addressed, not mtime. LOG KEY: tool + collapsed args + 30 s window (the dedup key .comp-graph/.comp_dedup 'timestamp|dedup_key'). ARGS RENDERING: `\"$*\"` joins with single spaces, so `comp-trace 'a b'` and `comp-trace a b` log identically while resolving differently.",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "The id prefixes and the universe are declared in the NOT-FOUND text and the banner; the prefix-vs-exact split is declared in --help and the T6 comment. NOT declared anywhere on the shim: that the logger sees `$*` while the tool sees `$@`; nor that stderr from the logger is discarded. The comp-tools.yaml row and tool_index.py entry describe the tool's contract (canonical_call, cost '~0.3s', freshness) -- the '~0.3s' cost line does not mention the 47.7 s rebuild a drifted cache triggers on the same call.",
+      "basis": "measured",
+      "basis_by_field": {
+        "identity_space": "measured",
+        "key_expression": "measured",
+        "key_is_stable": "measured",
+        "crosses_spaces": "measured",
+        "declared_mapping": "measured"
+      },
+      "evidence": "cli.py:359 (find_node), :365 (--exact), :214-217 (the predicate), :326-352 (banner); comp_log_auto.py:141-178 (dedup key and window); the shim's :5 vs :7 quoting; tool_index.py:935 canonical_call and the cost/freshness metadata strings (the ~0.3s figure read there). Rated STABLE: node ids are deterministic functions of paths/names and the sha key is content-addressed; the instability is in the RENDERING the logger receives, recorded under failure_mode.",
+      "owner": "cli.py / trace_graph.py for the id space; the shim for the args rendering; tool_index.py's cost line is the registry's"
+    },
+    "failure_mode": {
+      "returns_on_failure": "THE TOOL: LOUD in every measured branch. NOT-FOUND -> rc 3 with denominator + universe + near-matches (the 'false-clear fix', 3.0.0_SA_CVO 2026-06-26, T1 2026-08-04); a corrupt/truncated cache -> WARN to stderr + rebuild (the C1 reap window closed by the atomic save; the WARN added so a real load bug is not hidden behind a slow rebuild); drift -> STALE_NODE_WARN listing ten drifted nodes and the count, then rebuild; the rc histogram in the sink (27 x 0, 9 x 1, 9 x 3, 2 x 120) shows the loud paths firing for real callers. THE SHIM: propagates the tool's exit code exactly (:6, :8) and never masks it with the logger's; the ONE thing it silences is the logger (:7 `2>/dev/null`), whose only failure output is the drop disclosure. THE LOGGER: never raises into the tool by design ('never disrupts the calling tool'); on any error it discloses to the marker file, else stderr (discarded by the shim), else passes.",
+      "distinguishable_from_true_negative": "yes",
+      "silent_degrade_paths": [
+        "a dropped run row when the marker file is unwritable: the logger's stderr disclosure is discarded by the shim's `2>/dev/null`, so the run vanishes from the sink with no trace -- the freshness/health signal the logger's docstring says must not undercount invisibly, undercounting invisibly",
+        "a cache that never drifts is served at any age (no TTL on the default path) -- correct by the predicate, but a 25-day-old cache that happened to be un-drifted would read 'fresh' with nothing to say so except the banner's built_at",
+        "a trace run on a drifted cache silently costs a 47.7 s rebuild and a ~1.5 MB write that the registry's '~0.3s' cost line does not mention; the caller sees it only on stderr",
+        "the logged args are `$*`-collapsed and truncated to args_head: an invocation with quoted whitespace or a long argument list is not reconstructible from the sink",
+        "a successful walk does not print the size of the universe it did not walk (depth beyond --depth), so a --depth 1 'clear' can read as complete"
+      ],
+      "basis": "measured",
+      "evidence": "Exit-code propagation read at :6/:8 and exercised (rc 0 returned through the pipeline). The loud NOT-FOUND read at cli.py:366-410 and evidenced by the 9 rc-3 sink rows. The drop-disclosure chain read at comp_log_auto.py:45-69 and the shim's redirect at :7; .comp-graph/.comp_log_drops absent at carding (never fired, or never written -- indistinguishable, as stated under coverage). 'yes' on distinguishable: for the TOOL's own verdicts a typo, an out-of-universe subject and a genuine no-dependents are three different outputs (rc 3 with near-matches / rc 3 with the universe statement / rc 0 with an empty result), which is exactly what T1 was built to separate; the 'no' cases above are the LOGGER's and are bounded to the run record, not the trace.",
+      "owner": "the shim (this seat's family, 2.0.0_SA_COO~B) for the discarded stderr and the $* rendering; cli.py's authors for the tool's branches; the registry's cost line: tool_index.py's"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "As a shim it does the four things a shim must: derives its workspace from its own path (device-agnostic by construction), forwards every argument intact, propagates the tool's exit code without masking, and logs the run without ever disrupting the tool -- exercised end to end at carding, rc 0, the run row observed in the live sink. The tool it delegates to is the loudest instrument in this face: a NOT-FOUND prints its denominator, universe and near-matches at rc 3; a drifted cache is announced and rebuilt; a corrupt cache is announced and rebuilt; the provenance banner prints both vintage axes on every walk. QUALIFIED on three measured points that belong to the shim or to the contract as declared. FIRST: line 7's `2>/dev/null` discards the logger's stderr, and the logger's stderr is its LAST-RESORT drop disclosure -- so when the marker file cannot be written, a lost run row is silent after all, which is the exact undercount the logger's 2026-07-10 amendment was written to end; the marker file did not exist at carding and the shim is why that absence cannot be read. SECOND: the logger receives `$*` while the tool receives `$@` -- the recorded command is a rendering, not the invocation, and args_head truncates it further. THIRD: the registry's contract says '~0.3s' and 'reads prebuilt graph.json'; a run on a drifted cache is a 47.7 s rebuild and a ~1.5 MB write, and the cache was 25 days old with 375 of 1,904 nodes drifted at carding -- the default path has no TTL, so nothing but a caller's drift triggers a refresh, and the tool ran once in the prior 14 days while the estate committed hundreds of times behind the Rule 20 gate it is named in. None of these produce a wrong trace; all of them make the run record or the cost incomplete relative to what is declared.",
+    "blocking_defects": [
+      "the shim's `2>/dev/null` on the logger call (.tools/comp-trace:7) discards comp_log_auto.py's stderr, which is the logger's last-resort drop disclosure (:66-67) -- a dropped run row is silent when the marker file is unwritable, contrary to the logger's stated invariant (coverage + failure_mode rows)",
+      "the logger is handed `\"$*\"` while the tool is handed `\"$@\"` (:5 vs :7): the logged command is a whitespace-collapsed rendering, then truncated to args_head -- not reconstructible for quoted or long invocations (key row)",
+      "the registry contract (tool_index.py:1515 '~0.3s', 'reads prebuilt graph.json') omits the rebuild path: a drifted cache costs a 47.7 s rebuild + cache write on the same call, and the default serve path has no TTL -- the cache was 25 days / 375-of-1,904-nodes stale at carding (cadence row)",
+      "Rule 20's 'before every cloud/infra/data/frontend change' rhythm has no mechanism (comp-surface-check retired): 47 runs since 07-25, one in the 14 days before carding, against hundreds of gated commits -- the declared rhythm is not the live one (cadence row; the rhythm is CLAUDE.md's, not the shim's)"
+    ]
+  },
+  "carded_by": "2.0.0_SA_COO~X"
+}
