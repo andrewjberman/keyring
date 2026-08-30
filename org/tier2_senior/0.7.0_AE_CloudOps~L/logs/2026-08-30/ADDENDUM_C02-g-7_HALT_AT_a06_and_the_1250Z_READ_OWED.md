@@ -50,10 +50,27 @@ instead, and the read reports *that* — not a silent pass.
 | EMPTY (4,507 B) | 13 | **Sat 7, Sun 6 — every one** |
 | POPULATED (~778 KB) | 33 | Mon–Fri — none |
 
-The map lands **after** the 12:45Z fire, so the fire always reads *yesterday's* map. Saturday's
-fire reads Friday's (populated) and runs; **Sunday's reads Saturday's (empty) and aborts.** The
-49F chain has been structurally unable to complete a Sunday fire since the schedule was created
-on 2026-08-19 — masked because the floor hold was in place for the only prior instances.
+The map lands **after** the 12:45Z fire, so the fire always reads *yesterday's* map.
+
+⛔ **CORRECTED 2026-08-30T08:2xZ — I FIRST WROTE THIS AS A SUNDAY-ONLY HAZARD. IT IS SUNDAY *AND*
+MONDAY.** Propagating the measured empty set (Sat, Sun) through my own stated mechanism:
+
+| fire day | reads map of | map state | outcome |
+|---|---|---|---|
+| **Mon** | Sun | **EMPTY** | **ABORT at a06** |
+| Tue–Sat | Mon–Fri | populated | runs |
+| **Sun** | Sat | **EMPTY** | **ABORT at a06** |
+
+**Two fires abort per week, not one.** I had the Sat+Sun empty census and the "fire reads
+yesterday's map" mechanism in the *same message* and propagated only one of the two forward.
+Caught by `0.4.0_DS_ClientPlatform~N` 86498 — who did better than correct the reasoning and went
+to the logs.
+
+⛔ **AND IT IS NOT A PREDICTION AT ALL — IT HAS ALREADY FIRED TWICE IN PRODUCTION.** That seat
+censused every floor-form chain log and found **Sun 2026-08-23 and Mon 2026-08-24 both ABORTED at
+`a06_identity_crosswalk`**. So today is the *third* instance and tomorrow is the *fourth*. My
+"masked by the hold" reading was wrong for those two dates: they were not masked, they failed in
+the open and nothing read the logs.
 
 **DISARMED to `0.4.0_DS_ClientPlatform~N`** (a06 is a DS-lane gold stage, Rule 13). *Disarmed is
 not remediated.* The guard that fired is **correct** — it refused to build a crosswalk from an
