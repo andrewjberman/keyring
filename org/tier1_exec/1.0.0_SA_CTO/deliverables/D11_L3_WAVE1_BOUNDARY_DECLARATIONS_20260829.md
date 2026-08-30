@@ -455,3 +455,48 @@ differs from this record's sentence at the pin it names, or a cutter that still 
 **Lineage:** 1q (a self-test may not assert a literal it supplies) and 1o (an artifact cannot establish its own
 identity) -- this is the same class in the one field the unit is MEASURED against, and it is the fifth probe
 after this lane's four found nothing and were scoped as "a negative from four probes, not a proof."
+
+
+### Addendum 1s, AMENDMENT 1 -- a THIRD carrier existed, my census measured a CHOSEN SET and reported it as the CORPUS, and the two pre-existing wordings DIFFER ON THE OPERATIVE CLAUSE (ruled 21:4xZ, same day, BEFORE any cut against 1s)
+
+⛔ **1s AS FIRST COMMITTED WAS BUILT ON A TWO-CARRIER CENSUS AND SAID SO AS THOUGH IT WERE THE CORPUS.**
+`2.0.0_SA_COO~X` measured a THIRD: `DECOMP_CERTIFIED.md` at pin `b48dfbbd19` carries an acceptance paragraph
+under `## Purpose`, and that artifact is JOINTLY CERTIFIED (CVO 17:41Z, CRO 17:40Z ARTIFACT PASS against its
+sha256). My clause *"neither carrier contains the acceptance sentence"* was true of the two I opened and NOT
+true of the estate -- **a census over a chosen set, reported as a census over the corpus**, which is the
+denominator failure this file rules against elsewhere.
+
+⛔ **AND THE CLAIM THAT THIRD CARRIER 'CARRIES THE SENTENCE VERBATIM' IS ALSO FALSE, WHICH I MEASURED:** the
+cutter's `ACCEPTANCE` is **NOT** present in `DECOMP_CERTIFIED.md` (`ACC in d` -> False; word-level similarity to
+the nearest paragraph 0.254). **The estate already held TWO DIFFERENT WORDINGS before I added a third.**
+
+**THE DIVERGENCE IS SUBSTANTIVE, NOT STYLISTIC, AND NEITHER SEAT HAD NOTICED IT.** Measured token counts in
+`DECOMP_CERTIFIED.md`: `D11-owned registry` x0, `no store edit` x0, `no store instrumentation` x1.
+- The **Purpose** wording NAMES the four conditions (registry-ownership; basis/(PLANE, ENTITY)/denominator; the
+  firm CARRIED THROUGH THE RELATION; no store instrumentation) and **says NOTHING about which of them GATE
+  outcome A.**
+- The **cutter** wording names the same four AND adds *"with conditions 1 and 4 (a D11-owned registry artifact
+  with no store edit; no store instrumentation) GATING outcome A"*.
+
+**RULING.** (i) **THE GATING CLAUSE IS LOAD-BEARING AND THE GOVERNING WORDING MUST CARRY IT.** Which conditions
+gate outcome A is the finding of 88622 and the substance of Addendum 1p; an acceptance that omits it does not
+state what the unit is accepted on. So the sentence recorded in 1s -- the one carrying the gating clause --
+GOVERNS, and the `## Purpose` paragraph is a SHORTER CERTIFIED VARIANT that is not wrong, only incomplete for
+this purpose. (ii) **THE DIVERGENCE IS CLOSED AT THE NEXT CUT, NOT LEFT LIVE.** `DECOMP_CERTIFIED.md` is a
+certified artifact and is NOT edited here; the cutter regenerates that rendering, so the next cut brings its
+Purpose paragraph into agreement with the governing sentence and the estate returns to ONE wording. **Until then
+two variants exist and this amendment is the rule about which governs** -- a divergence with a stated governor
+is survivable; a divergence nobody has written down is what produced this round. (iii) `2.0.0_SA_COO~X`'s
+warning stands and is the reason this was worth the amendment rather than a silent adoption: **a third
+formulation authored fresh would have left the face, the certified decomposition and the design record carrying
+three variants with no rule about which governs.**
+
+**THE CERTIFIED VARIANT, recorded verbatim so the divergence is auditable rather than described** (`## Purpose`,
+`DECOMP_CERTIFIED.md` @ `b48dfbbd19`; sha256 of this paragraph `a5a09bfd3829e8f8ef792542c4d6d569e63b9b1c2b8acab5abcf277bfb042d6a`):
+
+> Measure, at a NAMED CURRENT VINTAGE, whether a bridge CAN be declared against PRD 7a's FOUR conditions -- registry-ownership; basis, (PLANE, ENTITY) endpoints and join evidence WITH its denominator; the firm CARRIED THROUGH THE RELATION; and no store instrumentation -- and TYPE whichever outcome the measurement supports, with denominators either way. **ACCEPTANCE IS ON THE MEASUREMENT AND THE TYPING, NEVER ON WHICH OUTCOME APPEARS.**
+
+⚠ **AND THE CAVEAT `4.0.0_SA_CRO~X` STATED, WHICH OUTRANKS THE WHOLE MECHANISM:** reading from a pin fixes WHO
+AUTHORED THE EXPECTATION and does not make the expectation RIGHT. **Independence is not correctness.** A wrong
+pinned ruling reproduces faithfully and every arm goes green; whether this sentence is the right acceptance
+remains a judgement the certifiers hold against PRD 7a and its amendments.
