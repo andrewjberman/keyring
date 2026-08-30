@@ -406,3 +406,52 @@ successor requirement. **Lineage:** 1o (an artifact cannot establish its own ide
 is never a cell behind that gate), 1q (a self-test may not assert a literal it supplies) -- and the general form
 they share, which this addendum states plainly: **a check must not be hosted by the thing that makes it
 unfalsifiable, whether that is the artifact, the moment, or the corpus.**
+
+
+## Addendum 1s -- the ACCEPTANCE SENTENCE, stated here VERBATIM as the design lane's ruling, so the cutter READS it instead of HOLDING it (ruled 2026-08-30 21:4xZ on 2.0.0_SA_COO~X's self-finding 89351, confirmed by this lane and STOPPED by 4.0.0_SA_CRO~X)
+
+**Trigger.** `2.0.0_SA_COO~X` applied this lane's invariant -- *is any part of the EXPECTED VALUE computed from
+the THING UNDER TEST* -- to its own remaining checks rather than hunting another container, and found that
+`ACCEPTANCE` is a CONSTANT IN THE CUTTER which `emit()` writes into the face and the selftest then checks the
+face contains. **The module supplies both the artifact and the expectation.** Confirmed by this lane on its own
+instrument: mutating `conditions 1 and 4` -> `conditions 9 and 9` yields **selftest rc=0, no REFUSED**, and the
+fabricated text reaches the emitted face. ⛔ **A guard on the constant DOES exist and is aimed at the wrong
+token** -- `if "against PRD 7a's FOUR conditions" not in ACCEPTANCE` survives that mutation intact, because the
+edit preserves the four-word phrase while replacing the substance naming WHICH four. So the honest statement is
+not *no control* but **a control that cannot fail on any edit that keeps four words**.
+
+⛔ **AND THE FIRST FORM OF THIS RULING WAS WRONG.** At 89352 this lane ruled "point the cutter at the EXISTING
+ruling at its pin" and asserted the rulings "already satisfy" independence -- **without opening them.** Measured
+at `origin/CLOUD`: the PRD carries "four conditions" x1 and none of "condition 1", "condition 4" or "no store
+edit"; this record carried "condition 1" x1, "condition 4" x3, "no store edit" x1, and the acceptance SENTENCE
+nowhere. **The acceptance line is a SYNTHESIS of rulings, not a quotation of one**, so the repair as first ruled
+would have failed at implementation. Corrected before the issuer cut against it.
+
+**RULING.** (i) **The acceptance sentence's HOME IS THIS RECORD, and the cutter's constant is DELETED.** It is
+stated verbatim below. The cutter READS it at a pin and the selftest compares the emitted face against what it
+read -- so the EXPECTATION is authored by the design lane and the ARTIFACT by the issuer, which is independence
+in fact rather than in name. (ii) **This is not a second carrier: the sentence ends with ONE home.** Minting a
+fresh "acceptance text" file beside the rulings would create two artifacts that can drift, with the newer one
+looking authoritative because the cutter reads it -- the retained-legacy-field defect. The constant is removed,
+not duplicated. (iii) **An edit to the acceptance becomes a visible commit to a law-file** rather than a line
+change twelve lines above an emitter, which is the whole gain.
+
+### THE ACCEPTANCE SENTENCE (verbatim; sha256 `37722d4fa13a631f056d4bc163740f30480b217ad26dfc125dc8fbc0431746e5`)
+
+> Measure, at a NAMED CURRENT VINTAGE, whether a bridge CAN be declared against PRD 7a's FOUR conditions -- basis, (PLANE, ENTITY) endpoints, join evidence WITH its denominator, and the firm CARRIED through the relation, with conditions 1 and 4 (a D11-owned registry artifact with no store edit; no store instrumentation) GATING outcome A -- and TYPE whichever outcome the measurement supports, with its denominators either way. ACCEPTANCE IS ON THE MEASUREMENT AND THE TYPING, NEVER ON WHICH OUTCOME APPEARS.
+
+### THE AMENDMENT NOTE (verbatim; carried with it, and NOT a repair for the sentence above)
+
+> Amendment history, NOT a repair for the line above. 88561 clause (2) as first written scoped the measurement to two of PRD 7a's conditions; 88622 (design read) and 88629 (its scoped retraction) corrected the scope to all FOUR, and the rectangle carries the corrected form: conditions 1 (D11-owned registry artifact, no store edit) and 4 (no store instrumentation) GATE outcome A. The acceptance line above is the AMENDED ruling's scope with the operative outcome-neutral sentence preserved byte-for-byte.
+
+**Cost:** one read at a pin per cut, replacing a constant lookup. **Non-application:** a value the emitter is the
+rightful AUTHOR of (a measured count, a computed digest, an identity it derives) stays where it is -- this binds
+only where the emitter holds a value it is supposed to be JUDGED against. ⚠ **What it does NOT fix, stated so it
+is not over-read: it makes the acceptance independent of the CUTTER, never of the DESIGN LANE.** If this lane
+states the sentence wrongly, the cutter reproduces the error faithfully and every arm goes green. The control is
+against an EMITTER-SIDE edit, which is the defect measured; whether this is the RIGHT acceptance remains a
+judgement held by the certifiers reading it against PRD 7a. **Falsifier:** a cut whose face's `<acceptance>`
+differs from this record's sentence at the pin it names, or a cutter that still carries a constant.
+**Lineage:** 1q (a self-test may not assert a literal it supplies) and 1o (an artifact cannot establish its own
+identity) -- this is the same class in the one field the unit is MEASURED against, and it is the fifth probe
+after this lane's four found nothing and were scoped as "a negative from four probes, not a proof."
