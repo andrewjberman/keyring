@@ -7,8 +7,8 @@
 
 ## The short version
 
-Thirteen client accounts, holding **$12.29 million**, appear in the SmartX allocation data we receive for
-49 Financial. They are **not present in either of the two 49F Schwab books** we hold. **Eleven of the thirteen** carry
+Thirteen client accounts, holding **$12.29 million — 0.82% of the $1.49 billion** in the SmartX allocation
+data we receive for 49 Financial, appear in that data. They are **not present in either of the two 49F Schwab books** we hold. **Eleven of the thirteen** carry
 account registrations naming a custodian abbreviated **"FMTC" / "FMT CO"**, which is not Schwab. The
 remaining two carry only a person's name, with no custodian designation at all.
 
@@ -120,9 +120,11 @@ SmartX-driven work is being defined on the 5,791 eight-digit accounts, with thes
 explicitly excluded** rather than silently dropped. An account that vanishes without explanation is a
 future data-quality incident; an account excluded by name with a documented reason is a decision.
 
-**It leaves $12.29 million of client assets outside our account-level analytics.** These accounts hold
-allocations we can see but cannot join to a custody record, so they cannot appear in account-level
-performance, fee, or advisor analysis. Whether that matters depends on the answer to the custody
+**It leaves $12.29 million of client assets outside our account-level analytics — 0.82% of this feed.**
+These accounts hold allocations we can see but cannot join to a custody record, so they cannot appear in
+account-level performance, fee, or advisor analysis. Eight tenths of one percent is neither a rounding
+error nor a material share: it is small enough that nothing needs to stop, and large enough that it should
+be explained rather than dropped. Whether it matters at all depends on the answer to the custody
 question — which is why the question is worth asking.
 
 **One related item, for completeness.** The two 49F master accounts are registered to **different legal
@@ -165,7 +167,9 @@ from the source record if needed for the conversation with 49F.*
 | The thirteen | 13 distinct accounts across 18 rows |
 | Without any custodian designation | 3 rows = 2 accounts (645624489, 655417051) |
 | Combined value | $12,293,768.23 (sum of the 18 rows) |
-| Share of accounts | 13 of 5,804 = 0.22% by count; **share by value not computed** |
+| Share of accounts | 13 of 5,804 = 0.22% by count |
+| Share by value | $12,293,768.23 of $1,493,208,755.74 = **0.8233%** |
+| Additivity check | eight-digit ($1,480,914,987.50) + nine-digit ($12,293,768.23) = total, exact |
 | Custodian label carrier | the account registration field in that same file |
 | "FMTC" / "FMT CO" | 15 of 18 rows = 11 of 13 accounts; 0 of 7,341 eight-digit rows |
 | "FIDELITY" | 0 occurrences in the entire file |
