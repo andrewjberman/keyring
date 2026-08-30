@@ -295,3 +295,40 @@ CTO 88106 + COO 88119 confirmed the uncommitted-fix finding on their own reads, 
 15:06:47Z), 20 commits, ceiling 0 == the OPEN's (chain refuses on mismatch from this window). OPEN 88123-88142, CLOSE
 20/20. IB-5 (the gate's production exercise) remains unread: the first non-zero-ceiling window under 3d9eb2931d is
 the read; the hand-compare stays until its CLOSE.
+
+## 17:1x-17:35Z -- Andrew rules all seven cards; the register close; two more seat deaths; window 17:35Z
+
+**ANDREW-DIRECT ~17:1xZ, seven cards** (recorded verbatim by 1.0.0_SA_CTO, relayed 88634). Cards (2)-(5)
+approved as recommended, (6) approved WITH A GATE ("just confirm there are no consumers of these materials
+first" -- the earlier census NOT spent as that confirmation, re-run at the act), (7) supersedes the rec (a
+non-FAM route via Black Diamond meta tables may already exist -- comp-find first, no vendor ask), and (1)
+is NOT a decision: he states MGMT's mapping is SmartX->0824 and asks for a DEFINITIVE match of the 13 keys
+to 0833. Every card this seat carried is discharged.
+**THE REGISTER ACT, card (4):** ADVI_49FSRC CLOSED by the 2-step atomic close -- project status active ->
+complete AND removal from D2.members.projects in ONE commit @43de06637a, ledgered LD-0481, ON ORIGIN. The
+gate refused it twice first and both refusals were right: org/projects/* is not a record path (needed the
+LD), and my invented `decision_type: register_state_change` is not in the closed enum (it is
+directive_execution, as LD-0425 used for the same surface under LD-0341 register ownership). The estate's
+risk reflex cited LD-0425 and it was read before proceeding.
+⛔ **SURFACED AT THE CLOSE:** ADVI_49FSRC's charter IS the 0824/0833 blend, and Andrew's item (1) re-opens
+that subject in the same message. The parked re-open condition named only the Fidelity login. The close is
+correct and the question is new, but composed carelessly they read as "0824/0833 is settled", which is
+false -- written into the project's own blocking field and into LD-0481.
+**CARD (2) CAME BACK TO HIM:** W1 is NOT executable on the deployed vehicle (builder takes a scalar,
+run() loops per account, so a 2-account probe issues two 1-account calls and measures nothing). DS~C fired
+nothing; the word is unspent. Carried as a sovereign ask with BOTH readings, at the CVO's explicit request:
+the COO reads a builder change as departing from his word, the CVO reads it as a NO-EGRESS BUILD leaving
+the ACT unchanged and therefore inside it. A free third path (the API contract may answer cardinality from
+material we hold) may dissolve the choice.
+**A CARD I CARRIED WAS WRONG:** the C02-g-11 VersionId printed to Andrew was TRUNCATED to 22 of 32 chars by
+AE~L's census script (`[:22]`). Retention was verified independently at the act and the object is proven
+restorable (delete marker YTU5bblW... current; HEAD at 1qPpKmV5CkFCG2pa06_CxQQAW.ntPlIG returns 13,909 B),
+so nothing was lost -- but he ruled "recoverable" on an identifier that could not have restored it. Warned
+DS~V before its own delete; it ran the check and reported 0 of 5 sliced.
+**SCOPE ANSWERED AS CARRIER, not adjudicated:** his "Rec approved" on card (6) covers BOTH buckets (8
+objects) because the card's own subject line named them; the IAM grants stay explicitly outside the word.
+**TWO MORE SEATS DIED:** 0.4.0_DT_ClientPlatform~X (17:1xZ) and 0.7.0_AE_CloudOps~K (17:3xZ), both DEAD at
+the OS plane (0 claude.exe, 0 markers) where the fabric had them as DEAF (inferred). DT~X was deaf BEFORE
+it died -- undelivered files date the watcher, telemetry dates the process, and they diverged. Roster 19;
+recipient lists rebuilt to 18; population calls left to the COOs, who ruled LEAVE IT on DT~X.
+**Window 17:35Z:** origin/CLOUD 5b6ad447ce -> 885e08055f, 34 commits, ceiling 0. OPEN 88695-88712, CLOSE 18/18.
