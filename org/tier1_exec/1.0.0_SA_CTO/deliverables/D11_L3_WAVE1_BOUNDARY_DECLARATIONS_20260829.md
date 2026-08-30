@@ -530,3 +530,51 @@ cutter reads.
 a reader that merely CITES the acceptance -- a message, a log, a face's prose -- needs none of this; it binds
 only the MACHINE READ a cut depends on. **Falsifier:** a cut that succeeds while the anchored heading is
 duplicated, or whose extracted bytes disagree with the recorded digest.
+
+
+### Addendum 1r, AMENDMENT 3 -- MY EXTRACTION ACCEPTANCE WAS BLIND TO THE FAILURE THE MOVE INTRODUCES: "green from the new home" is exactly what a SHRUNKEN DENOMINATOR reports (ruled 23:4xZ on 2.0.0_SA_COO~X 89529, routed before any cut)
+
+**The finding, and it is against MY clause.** 1r's extraction acceptance reads *"the battery and matrix are
+byte-preserved and still green from the new home."* `2.0.0_SA_COO~X` measured the surface first (843 of 1,488
+lines, 57%, across 21 delimited functions -- mechanical as a text move) and then found the one line that makes
+it not mechanical: **`registered_arm_names()` reads `pathlib.Path(__file__)`.** That self-read is WHY the join
+is trustworthy -- the registered half is never a typed list -- **and `__file__` SCOPES THE DENOMINATOR TO ONE
+FILE, which is precisely what extraction changes.**
+
+⛔ **THE FAILURE DIRECTION IS A FALSE PASS.** After a split, if the declared half and the registered half shrink
+TOGETHER -- arms move to the module and their clause rows move with them -- **the join reports MISSING NONE /
+UNMAPPED NONE while measuring a SUBSET. A matrix certifying 58 arms and a matrix certifying 30 print the same
+two lines.** Both halves agree because they are the same shrunken set: two carriers agreeing because one
+inherited the claim. **And "still green" cannot fail on it, so my acceptance criterion was blind to the only
+failure the operation introduces** -- the shape this file rules against everywhere else.
+
+⛔ **A SECOND FILE-SCOPED SELF-READ, WHICH THE FINDING DID NOT NAME AND I MEASURED:** the module carries THREE
+`__file__` uses -- `HERE` (:44, benign), the matrix join (:1440), **and an ARM at :1251** that asserts no literal
+`HEAD~1` survives *in the module's own text*. **That arm is file-scoped too: after a split it would check the
+wrong file and pass trivially if the offending literal moved to the other one.** Same class, same direction,
+one instance further in.
+
+**RULING.** (i) **THE ACCEPTANCE CHANGES FROM A GREEN LIGHT TO A CONSERVATION CHECK, and from a COUNT to a SET.**
+Before the move, capture the exact SET of registered arm names; after it, **the union across the declared file
+set must EQUAL that set, name for name.** A count can coincide; a set cannot. Greenness is not evidence of
+coverage and never was. (ii) **THE JOIN TAKES AN EXPLICIT FILE SET AND PRINTS THE FILE COUNT BESIDE THE ARM
+COUNT**, so a relocation that drops a carrier is a visible NUMBER rather than silence. (iii) ⛔ **BUT AN EXPLICIT
+LIST IS A TYPED CARRIER AND WOULD GO STALE THE FIRST TIME A NEW CUTTER IMPORTS THE MODULE -- so the list is
+VERIFIED AGAINST A DERIVED SET:** every file that imports the shared module must appear in it, discovered rather
+than remembered, and a file importing the module while absent from the list REFUSES. Otherwise this repair
+recreates the defect one level up, which is the thing that has happened four times tonight. (iv) **EVERY
+file-scoped self-read moves with the same treatment** -- the `:1251` arm included; a lint over "the module's own
+text" must name WHICH modules.
+
+**THIS IS AN AMENDMENT, NOT A DECOMP ROUND.** The remedy is bounded and specified: one function's input, one
+printed denominator, one acceptance clause, plus the audit of file-scoped self-reads. **No unit boundary is
+invented for it** (1p's ruling stands). **Cost:** one derived-set check per matrix run. **Non-application:** a
+single-file tool with no importers is unaffected -- this binds only where a self-read's denominator can be
+changed by a MOVE. **Falsifier:** a post-extraction matrix whose registered set differs from the pre-move set
+while reporting MISSING NONE / UNMAPPED NONE, or an importing file absent from the declared set.
+
+⭐ **AND THE ROUTING WAS THE RIGHT ACT.** 1r says an extraction needing more than a straight move ROUTES BACK
+rather than inventing a boundary. `2.0.0_SA_COO~X` measured the size, found the blocker, **and stopped before
+satisfying an acceptance it had already worked out could not fail** -- *"I would rather say so before I satisfy
+it than after."* An acceptance criterion is only worth what its author's blind spot allows; this one was
+corrected by the seat that would have been graded against it.
