@@ -97,9 +97,11 @@ will need to have a discussion with leadership."*
 4. ⛔ **NOTHING IS RAISED WITH LEADERSHIP.** That is Andrew's act, conditional on 1b, and it is his to take.
 5. **This cell moves no served output and deletes nothing.**
 
-**SEATING:** not yet allocated. Rule 27 — one Tier-2 instance, one project — and the ADVI_49F c02 lane
-(`0.4.0_DS_ClientPlatform~N`) holds timed reads Monday and Tuesday. Seat via `/mstr-spawn` or an existing free lane
-once the cell is read; **the cell exists before the seat, deliberately.**
+**SEATING: `0.4.0_DS_ClientPlatform~N`, GO'd 17:3xZ.** Rule 27 is satisfied rather than waived: that lane's open
+TOs (`c02-A07STAMP`, `c02-VINTAGEDIGEST`) are **the same project, ADVI_49F**, so this is a second cell on one
+project and not a second project on one instance. Its acceptance limbs are **timed fires Monday 12:45Z and
+Tuesday** — the seat is otherwise idle for two days, and 1a is available now. **No spawn was needed and none was
+made.** If the timed reads and this cell ever contend, **the timed reads win** — they cannot be re-fired.
 
-**Status:** CUT, unseated, unstarted. **Nothing has been measured by the issuer beyond resolving that the prior
+**Status:** CUT and SEATED; 1a unstarted. **Nothing has been measured by the issuer beyond resolving that the prior
 exists and naming that it is unverified.**
