@@ -1,0 +1,176 @@
+{
+  "schema_version": 3.1,
+  "subject": {
+    "id": ".tools/comp-platinum",
+    "kind": "script",
+    "declared_domain": "The comp-tool family (NFRA_COMP*): `comp-platinum page <Component> [--firm bd|inf|cot] | reverse <s3_key> [--firm] [--strict] | tab-audit [--firm] | summary` -- the full-stack trace from a portal component to its CloudFront route, Lambda / S3 key and gold script, PER FIRM (ADVI is firm-isolated: INF and BD gold trees diverge by design). Chains comp-transform (component dataflows) + comp-routes (routing table) + comp-pipescript (gold DAG). Registry: tool_index.py:1320 (page; cost '~0.2s warm (cache read); ~5s cold/--force rebuild'; freshness 'per-firm cache (.comp-graph/platinum.*), 5-min TTL -- same model as the trace graph.json'; anti_pattern 'omitting --firm for an Inflection/Cottonwood trace (firm-blind -> wrong producer/bucket)'), :1456 (reverse), :1984 / :2000 / :2015 / :2046 (audit rows naming its known false-positive classes: prefix-match attribution, whole-object-pass, auth:NONE on dynamic URLs). The subject is the same 8-line bash SHIM as comp-trace and comp-iam (workspace derived, `python org/modules/graph/platinum_cli.py \"$@\"`, exit code captured, logger under `2>/dev/null`, exit with the tool's code); the delegate is platinum_cli.py (1,039 lines) over graph_cache.py and three extractors. The card qualifies the shim AND the delegated contract."
+  },
+  "as_of": {
+    "carded_utc": "2026-08-30T13:42:00Z",
+    "commit_ish": "ea7a7c99f8",
+    "graph_vintage": "Shim @ea7a7c99f8 (2026-07-09, 2.0.0_SA_COO~B). platinum_cli.py last moved @611b627ddc (2026-07-10, 3.0.0_SA_CVO~A). The substrate it serves is FIVE per-scope caches under .comp-graph/ (gitignored, .gitignore:81): platinum.routing.cache and platinum.dataflows.cache -- REBUILT at 2026-08-30T13:32:16Z by the carding exercise (`summary`) from their 2026-08-24 / 2026-07-25 vintages; platinum.dag.bd.cache built 2026-08-24T21:36:18Z; platinum.dag.inf.cache 2026-07-22T16:40:27Z; platinum.dag.cot.cache 2026-07-22T16:40:53Z (mtimes read in true UTC via os.stat; a first listing with `ls --time-style=+...Z` had rendered LOCAL time with a typed Z -- the CLAUDE.md 22a trap, caught and re-measured). The cache model is graph_cache.py: DEFAULT_TTL 300 s AND a stat-only source fingerprint (max-mtime, file-count) -- a hit needs exists AND age < TTL AND fingerprint match; so the inf/cot DAG caches are not 'stale-served', they are simply rebuilt on the next --firm inf/cot call (39 days since either was asked for)."
+  },
+  "process": {
+    "methodology": {
+      "how": "THE SHIM: the four-line template (workspace from its own path; `python $WORKSPACE/org/modules/graph/platinum_cli.py \"$@\"`; `_exit=$?`; logger with `\"$*\"` under `2>/dev/null`; `exit $_exit`). THE DELEGATE (platinum_cli.py, read at :1-45, :60-90, :993-1039; graph_cache.py read at :1-80): four subcommands dispatched by a commands dict (:1036-1038); no subcommand -> exit 0 silently (:1035-1036). `page <Component> [--firm]` builds the component's dataflow (extract_transforms.build_component_dataflow), joins it to the routing table (extract_routes.build_routing_table) and to the per-firm gold DAG (extract_pipeline) and prints the chain component -> fetch -> route -> S3 key -> gold script with resolution per hop; `reverse <s3_key>` walks it backwards (S3 key -> routes -> components); `tab-audit` runs page over every ADVI tab; `summary` prints one line per component (fetches, resolved, unresolved, chains). Each build goes through gc.cached(name, builder): a hit iff the cache file exists AND its age < 300 s AND the source fingerprint matches; else rebuild and write (:66, :80, :87 -- 'platinum.routing', 'platinum.dag.<firm>', 'platinum.dataflows'); --fresh / --force per the uniform freshness contract (graph_cache.py:10-16). --firm defaults to None, which the code resolves to bd (the registry's anti_pattern warns that an inf/cot trace without --firm is firm-blind and attributes the wrong producer/bucket). EXERCISED at carding: `comp-platinum summary` rc 0 -- rebuilt platinum.routing and platinum.dataflows (both mtimes 13:32:16Z afterwards; the three DAG caches untouched because summary does not walk a firm's DAG), printed the per-component table; `comp-platinum page zzz_definitely_nonexistent_page_9999` rc 1, 'Component not found: zzz_definitely_nonexistent_page_9999' -- loud, but WITHOUT the denominator / universe / near-matches that comp-trace's T1 prints on the same event. Both runs landed as rows in the live sink.",
+      "determinism": "deterministic",
+      "inference_detail": null,
+      "materializer_standing": "canonical",
+      "composes": [
+        {
+          "id": "org/modules/graph/platinum_cli.py",
+          "note": "the dispatch target: four subcommands; the joins; the per-scope gc.cached calls at :66 (routing), :80 (dag.<firm>), :87 (dataflows)"
+        },
+        {
+          "id": "org/modules/graph/graph_cache.py",
+          "note": "the cache contract: DEFAULT_TTL 300 s + stat-only fingerprint (max-mtime, file-count) over the source roots; default/--fresh/--force modes; 'the 1347-vs-1337 catch' (stale-cache phantom class) is why the fingerprint exists"
+        },
+        {
+          "id": "org/modules/graph/extract_transforms.py + extract_routes.py + extract_pipeline.py",
+          "note": "the three extractors (component dataflows; CloudFront routing table; gold DAG per firm) -- NOT read here (the card qualifies the shim and the CLI's contract; each extractor's coverage is its own card, as comp-transform / comp-routes / comp-pipescript)"
+        },
+        {
+          "id": ".comp-graph/platinum.{routing,dataflows,dag.bd,dag.inf,dag.cot}.cache",
+          "note": "five gitignored per-scope caches; the DAG caches are per firm and rebuilt only when that firm is asked for"
+        },
+        {
+          "id": "org/modules/graph/comp_log_auto.py",
+          "note": "the run logger under `2>/dev/null` -- the shim-template defect shared with comp-trace and comp-iam"
+        }
+      ],
+      "invents": [
+        {
+          "id": "the bd default for --firm",
+          "note": "--firm None -> bd (platinum_cli.py:146 `FIRM_ALIAS.get((args.firm or 'bd').lower(), 'bd')`), ANNOUNCED by a NOTE line on the output (:156 'no --firm given -> defaulting to bd (49 Financial) ...'): an inf/cot component traced without --firm still resolves against the BD gold tree and reports the wrong firm's producer/bucket -- the default is declared on the run, the wrong-firm answer is not flagged as such (the registry's anti_pattern, tool_index.py:1316-1318)"
+        },
+        {
+          "id": "the summary row key",
+          "note": "`summary` keys rows by component basename: the run printed FOUR rows named `index` (1 / 3 / 1 / 2 fetches) with nothing on the row to tell them apart -- a name is not an identity; the table's grain is 'component file', the key printed is 'component name'"
+        },
+        {
+          "id": "the collapsed args string",
+          "note": "the shim's `\"$*\"` to the logger vs `\"$@\"` to the tool (template defect)"
+        }
+      ],
+      "basis": "measured",
+      "evidence": ".tools/comp-platinum:1-8 @ea7a7c99f8 read in full. platinum_cli.py docstring :1-15, imports :17-33, the gc.cached call sites :66 / :80 / :87, argparse :993-1035 (page/reverse/tab-audit/summary; --firm default None on page/reverse/tab-audit; --strict on reverse; --json on page), the no-command exit :1035-1036, the dispatch :1038. graph_cache.py :10-16 (TTL 300 s; --fresh = TTL or drift; --force = always), :20 (the stat-only fingerprint), :45 (DEFAULT_TTL = 300), :66-76 (hit predicate; the 1347-vs-1337 catch). Exercise outputs quoted from the runs at carding (rc via PIPESTATUS[0]); cache mtimes via os.stat in UTC before and after. The four `index` rows read from the summary output verbatim.",
+      "owner": ".owned-paths.yaml: .tools/** for the shim (creator 2.0.0_SA_COO~B); org/modules/graph/** -> ANY_EXEC for the delegate (last editor 3.0.0_SA_CVO~A); the extractors: the comp-transform / comp-routes / comp-pipescript owners"
+    },
+    "cadence": {
+      "declared_rhythm": "ON DEMAND. The registry declares the freshness rhythm as the cache's: 'per-firm cache (.comp-graph/platinum.*), 5-min TTL' (tool_index.py:1324) with rebuild_trigger 'n/a (cache auto-refreshes; --force to bust)' (:1983) -- i.e. any call older than 5 min rebuilds what it touches. The audit rows (:1984-2046) declare it as a pre-stitch instrument ('Post-stitch (D4): comp-kuzu Cypher traversal') -- a rhythm bounded by the stitch's arrival.",
+      "actual_trigger": "MEASURED from the live sink on ts_epoch: comp-platinum has 30 rows, first 2026-07-16T16:07Z, last 2026-08-24T21:36Z (`page Positioning --firm bd`, 1.0.0_SA_CTO~X); rc 0 x26, rc 1 x3, rc 2 x1; callers 0.6.2_AE_PartnerETL 14, 0.4.0_DE_ClientPlatform 8, 0.8.0_AE_CloudComp~B 2, 2.0.0_SA_COO 2, 0.4.0_DS_ClientPlatform 1; TWO runs in the 14 days before carding, both `page` on the Positioning component by the CTO seats. The DAG caches say the same thing from the other side: dag.bd last rebuilt 08-24 (that run), dag.inf and dag.cot 07-22 -- no inf or cot trace has been asked for in 39 days.",
+      "live_matches_declared": "yes",
+      "live_instance_age": "At carding, before the exercise: routing 5.7 d, dataflows 36 d, dag.bd 5.7 d, dag.inf / dag.cot 39 d -- all far past the 5-min TTL, which is CORRECT under this cache model (age is a hit predicate, not a staleness claim: a call rebuilds what it needs and the file's age is just the time since it was last needed). After the exercise: routing + dataflows 0 min; the three DAG caches unchanged (summary does not touch them).",
+      "basis": "measured",
+      "basis_by_field": {
+        "declared_rhythm": "measured",
+        "actual_trigger": "measured",
+        "live_matches_declared": "measured",
+        "live_instance_age": "measured"
+      },
+      "evidence": "The registry rows read at tool_index.py:1316-1330 (page), :1454-1460 (reverse), :1983 (rebuild_trigger), :1984-2046 (audit rows); the sink census (30 rows, histogram and callers printed); os.stat mtimes in UTC before and after `summary`. live_matches_declared = YES because the declared rhythm IS the cache's TTL and the cache does exactly that (verified: the two caches summary touches were rebuilt on the call, the three it does not touch were not) -- the low usage is a fact about demand, and the tool declares no obligation it fails. The one declaration that is NOT true is the comparison clause 'same model as the trace graph.json' (:1324): the trace graph has NO TTL on its default path (cli.py:214-217; card 2) -- platinum's model is the stricter one and the registry describes them as the same.",
+      "owner": "the rhythm is each caller's; the registry text: tool_index.py's maintainers (the 'same model' clause)"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "Per run: stdout -- `page`: the chain per fetch (component -> fetch -> route [AUTH] -> S3 key -> gold script, with resolved / prefix-match / unresolved per hop; --json for a structured object); `reverse`: S3 key -> routes -> components; `tab-audit`: the page trace over every ADVI tab; `summary`: one row per component (fetches, resolved, unresolved, chains). SIDE EFFECTS: whichever of the five caches the call needed and found cold is REWRITTEN (gc.cached); one row appended to org/mcp/comp-tool-runs.jsonl by the logger. The shim persists nothing.",
+      "basis": "measured",
+      "evidence": "gc.cached at platinum_cli.py:66/:80/:87 with graph_cache.py's write-on-miss; the two cache mtimes moving to 13:32:16Z on the `summary` exercise while the three DAG caches did not; the summary table's columns read from the run; the sink row observed. 'projection': every line is a derivation of the working tree's portal source, CloudFront config and gold scripts; 'replaceable': each cache is rewritten whole on a miss.",
+      "owner": "caches: whoever's call misses; the sink: comp_log_auto.py's"
+    },
+    "location": {
+      "home": "No artifact of its own. Caches: <workspace>/.comp-graph/platinum.routing.cache, platinum.dataflows.cache, platinum.dag.{bd,inf,cot}.cache (gitignored, .gitignore:81 `.comp-graph/`, device-local). Run log: <workspace>/org/mcp/comp-tool-runs.jsonl (gitignored, .gitignore:456). Paths derive from the workspace root.",
+      "projection_of": [
+        {
+          "id": "the repo working tree",
+          "note": "portal component sources (fetch calls), the CloudFront routing config, and the three firms' gold script trees -- read through the three extractors; the DEPLOYED plane (what CloudFront actually serves, what Lambda actually runs) is NOT read: the registry's auth:NONE false-positive class (:2046) exists because a dynamic URL the extractor cannot resolve shows NONE even when a CF behavior covers it"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": ".tools/comp-transform",
+          "note": "the component-dataflow extractor comp-platinum chains first; comp-transform's own schema-check is the registry's named cross-check for the whole-object-pass false positive (:2015)"
+        },
+        {
+          "id": ".tools/comp-routes",
+          "note": "the routing-table extractor; `comp-routes behaviors` [AUTH] column is the registry's named cross-check for an auth:NONE reading (:2046)"
+        },
+        {
+          "id": ".tools/comp-pipescript",
+          "note": "the gold DAG per firm; `comp-pipescript consumers <script>` is the named follow-up after `reverse` (:2000)"
+        },
+        {
+          "id": ".tools/comp-kuzu",
+          "note": "the declared post-stitch successor for the gold->portal chain question (:2015 'Post-stitch (D4): comp-kuzu Cypher traversal')"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Paths from platinum_cli.py:66/:80/:87 and graph_cache.py; .gitignore:81 and :456 measured with git check-ignore -v at card 2; the registry cross-check rows read at tool_index.py:1984-2046.",
+      "owner": "device-local caches: the device's; the extractors: their owners"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "Every portal component the dataflow extractor indexes, every CloudFront route the routing extractor parses, and the gold DAG of ONE firm per call (bd by default). `summary` at carding printed the whole component table (the tail of it: Positioning 1 fetch / 0 resolved; SelectionTab 2 / 0; TicketCenter 2 / 0; YieldCurveTab 2 / 1; four `index` rows 3-1-3-2 fetches with 2-0-2-1 resolved).",
+      "denominator": "PRINTED per component by `summary` (fetches, resolved, unresolved, chains 'k/n') and per hop by `page`; NOT printed: the size of the component universe as a number (the table has no total row), the firm the run resolved against is printed as a NOTE when --firm was omitted (:156), but the inf/cot chain resolved against bd is not flagged as cross-firm on its rows, and -- on `Component not found` -- any denominator, universe statement or near-match (rc 1 with one line; comp-trace's T1 form is absent here). The registry's own false-positive classes are the coverage limits a reader must carry: prefix-match attribution is not proof of the producer (:1984), a whole-object pass is not an unused field (:2015), auth:NONE on a dynamic URL is not a live auth gap (:2046).",
+      "explicitly_out": [
+        "the DEPLOYED plane: CloudFront behaviors as served, Lambda code as running -- the extractors read repo config and source; a dynamic URL the extractor cannot resolve reads NONE / unresolved regardless of what CF actually does",
+        "any firm other than the one named by --firm (bd when omitted): 'checking only one firm and assuming parity' is the registry's anti_pattern (:2000-2008) because the INF and BD gold trees diverge by design",
+        "post-stitch chains: the registry names comp-kuzu as the successor for gold->portal after D4 (:2015)",
+        "the logger's stderr: discarded by the shim's `2>/dev/null` (template defect)"
+      ],
+      "basis": "measured",
+      "evidence": "The summary table from the run at carding (rows quoted); the NOT-FOUND output ('Component not found: <name>', rc 1, nothing else); --firm default None read at :1000-1010; the bd fallback LOCATED at :146 (`firm = FIRM_ALIAS.get((getattr(args, 'firm', None) or 'bd').lower(), 'bd')`) and its NOTE line at :156, both read at source after a first draft had carried the registry's claim unlocated; the false-positive classes read at tool_index.py:1984, :2015, :2046.",
+      "owner": "the extractors for the universe; the registry for the false-positive classes; the CLI (:1035) for the silent no-command exit"
+    },
+    "key": {
+      "identity_space": "Component NAMES (file basenames of portal components), fetch URLs / S3 keys (strings, some dynamic), CloudFront route patterns, gold script ids (per firm) -- four spaces joined by string matching, with the firm as an implicit fifth key that defaults.",
+      "key_expression": "page: component name -> its fetch calls (extract_transforms) -> route by URL pattern (extract_routes) -> S3 key -> gold script by key PREFIX-MATCH against the firm's DAG (extract_pipeline) -- the prefix match is the documented false-positive class (D_04::build_firm_mix_summary prefix-matching nna_clients artifacts, :1984). reverse: S3 key -> routes whose pattern covers it -> components fetching those routes (--strict tightens the match). summary: rows keyed by component NAME -- four `index` rows at carding. CACHE KEY: 'platinum.routing' / 'platinum.dataflows' / 'platinum.dag.<firm>' + (age < 300 s) + fingerprint equality. LOG KEY: the collapsed `$*` string + 30 s dedup.",
+      "key_is_stable": "unstable",
+      "crosses_spaces": true,
+      "declared_mapping": "The chain, the per-firm isolation and the three false-positive classes are declared in the registry rows (:1316-1330, :1984-2046) and the CLI docstring. What is DECLARED and FALSE: 'same model as the trace graph.json' (:1324) -- the trace graph has no TTL (card 2). What is UNDECLARED: that `summary` keys by basename and cannot distinguish same-named components; that a missing component returns one line and rc 1 with no universe; that an inf/cot chain resolved under the bd default is a cross-firm answer (the run prints the default as a NOTE at :156; it does not flag the chain's rows).",
+      "basis": "measured",
+      "basis_by_field": {
+        "identity_space": "measured",
+        "key_expression": "measured",
+        "key_is_stable": "measured",
+        "crosses_spaces": "measured",
+        "declared_mapping": "measured"
+      },
+      "evidence": "Registry rows at the pin (:1316-1330, :1454-1460, :1984, :2000, :2015, :2046); the summary run's four `index` rows; the NOT-FOUND run; graph_cache.py:45/:66-76 for the cache key. Rated UNSTABLE, deliberately: the gold-script hop is a PREFIX match by the tool's own documentation (a real false-positive class with a named instance), the summary key is a basename that collides in the measured run, and the firm key defaults -- three of the four joins can resolve to a wrong-but-fluent identity without a signal on the row.",
+      "owner": "the extractors for the joins; the CLI for the summary key and the --firm default; tool_index.py's maintainers for the 'same model' clause"
+    },
+    "failure_mode": {
+      "returns_on_failure": "THE TOOL: `Component not found: <name>` rc 1 on a bad component (loud, one line, no denominator / universe / near-matches -- the T1 form comp-trace has is absent here, so a typo and an out-of-universe component read identically); a cold cache is rebuilt silently (~5 s cold per the registry) with no banner naming the vintage served (the trace tool's T3 provenance banner has no counterpart here); no subcommand -> exit 0 with no output (:1035-1036) -- a caller that forgot the verb gets a clean rc; an unresolved hop prints as unresolved / prefix-match on the row (declared, per hop). THE SHIM: propagates the tool's rc exactly; silences only the logger. THE JOINS' silent side: a prefix-matched gold script prints as a producer; a whole-object pass prints as unused fields; a dynamic URL prints auth NONE -- each a declared false-positive class in the registry, none flagged on the row it appears in.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "--firm omitted on an inf/cot component: resolved against the BD gold tree (:146), the default ANNOUNCED as a NOTE (:156), the wrong producer/bucket then printed fluently on the chain rows with no cross-firm flag (the registry's anti_pattern)",
+        "`summary` keys rows by basename: four `index` components at carding printed as four indistinguishable rows -- a reader cannot tell which index has 0 of 1 resolved",
+        "prefix-match attribution: a gold script that prefix-matches an artifact prints as its producer (documented FP, :1984); the row does not say 'prefix'",
+        "no-command invocation exits 0 silently (:1035-1036)",
+        "`Component not found` carries no universe: an out-of-index component and a typo are one output (rc 1) -- unlike comp-trace, which prints denominator + universe + near-matches at rc 3 for the same event",
+        "a cold cache rebuilds with no vintage banner; a warm cache within 5 min serves silently -- correct by design, but a reader of the output cannot tell which vintage of the routing config it walked",
+        "the logger's last-resort drop disclosure is discarded by the shim's `2>/dev/null` (template defect)"
+      ],
+      "basis": "measured",
+      "evidence": "The NOT-FOUND run at carding (one line, rc 1); the no-command branch read at :1035-1036 (`if not args.command: sys.exit(0)`); the four `index` rows from the summary run; the FP classes at tool_index.py:1984 / :2015 / :2046; the cache write-on-miss at graph_cache.py:66-76; the shim's :7. 'no' on distinguishable: three of the tool's verdict surfaces (producer attribution, unused-field, auth) have a documented false-positive class that prints in the same form as a true finding, and the not-found path prints the same for typo and absence -- the discriminators exist (comp-transform schema-check, comp-routes behaviors, comp-pipescript consumers) but live in OTHER tools the registry names as cross-checks.",
+      "owner": "the shim (this seat's family) for the stderr discard; the CLI (3.0.0_SA_CVO~A last) for the summary key, the --firm default and the no-command exit; the extractors for the prefix match; tool_index.py's for the 'same model' clause"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "The least-used shim on this face (30 runs, two in the last 14 days) over the CLI whose cache model is the STRICTER of the family (TTL AND fingerprint -- the 1347-vs-1337 catch), verified at carding: the two caches `summary` needs were rebuilt on the call, the three it does not need were left alone. The shim does its four jobs and shares the template's two defects. QUALIFIED on the tool's DISCRIMINATION, which is the weakest on this face: three of its verdict surfaces carry a documented false-positive class that prints in the same form as a true finding (prefix-match producer attribution, whole-object-pass 'unused' fields, auth:NONE on dynamic URLs), the firm key DEFAULTS to bd (announced as a NOTE, :156) and an inf/cot chain resolved under that default prints fluently with no cross-firm flag on its rows, `summary` keys by basename and printed four indistinguishable `index` rows at carding, a missing component returns one line and rc 1 with no universe (the T1 form the sibling tool has), and a forgotten subcommand exits 0 silently. Every one of the cross-checks that would discriminate exists -- comp-transform schema-check, comp-routes behaviors, comp-pipescript consumers, --firm on every inf/cot call -- but each lives in another tool or in the caller's discipline, and the registry (not the run) is where a reader learns that. One registry clause is false: 'same model as the trace graph.json' -- platinum's model has a TTL, the trace graph's does not. None of these produce a wrong chain when the caller supplies --firm and reads the registry; all of them let a fluent wrong answer through when the caller does not.",
+    "blocking_defects": [
+      "firm-blind default: --firm None resolves against the BD gold tree (platinum_cli.py:146; NOTE printed at :156) -- an inf/cot component traced without --firm reports the wrong firm's producer/bucket fluently on rows that carry no cross-firm flag (registry anti_pattern :1316-1318) (key + failure_mode rows)",
+      "three documented false-positive classes print in the form of true findings with no on-row flag: prefix-match gold attribution (:1984), whole-object-pass 'unused' (:2015), auth:NONE on dynamic URLs (:2046); the discriminators live in other tools (failure_mode row; distinguishable_from_true_negative = no)",
+      "`summary` keys rows by component basename: four `index` rows at carding with nothing to tell them apart -- a name is not an identity (key row)",
+      "NOT-FOUND without a universe (one line, rc 1) and a no-command invocation that exits 0 silently (:1035-1036) -- the sibling comp-trace's T1 denominator/near-match form is absent (failure_mode row)",
+      "registry clause 'same model as the trace graph.json' (tool_index.py:1324) is false: platinum caches carry a 300 s TTL + fingerprint, the trace graph has no TTL on its default path (cadence row); plus the shim template's `2>/dev/null` / `$*` defects (shared)"
+    ]
+  },
+  "carded_by": "2.0.0_SA_COO~X"
+}
