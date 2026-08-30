@@ -87,3 +87,14 @@ that open it all pass an encoding, so no cell was cut); `ls`-based inbox reads f
 No comp-find, no comp-state.
 
 state: ARMED · next log at a verdict or tick 103 (floor)
+
+## Record note (appended after the fact, not amended away)
+
+This file's FIRST commit, `b76d4dcd6d`, carries the **tick-96 subject line** — the gate passed
+`commit_tick96.txt` to `safe-commit` while committing `self_drive_D2-D3_tick97.md`. The file is
+correct; its commit message names the wrong tick. Not amended (CLAUDE.md prefers a new commit over
+a rewrite, and an amend would erase the instance): the mismatch is stated here and the corrective
+commit carries the right subject. Class: the same one this log records three times — a RECORD
+naming something other than what it carries, caught by reading the tool's own output instead of
+assuming it. Cost of the error: a reader searching `git log` for "tick 97" finds nothing and must
+search the path; the file itself was never wrong.
