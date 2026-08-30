@@ -75,3 +75,35 @@ route exists, the vendor conversation is unnecessary and the remedy is a re-poin
 
 **Nothing in (2), (5) or (6) is executed by this seat** — the words are relayed verbatim to the
 lanes that own the acts, and (6) carries its condition as a gate on the act itself.
+
+---
+
+## 4. CORRECTION (appended 17:5xZ, not amended away) — §2(1) CARRIES A FALSE FACTUAL PREMISE, AND IT IS THIS SEAT'S
+
+**The sentence at line 25 of the committed record (`1b730c8df6`), verbatim:** *"the 49F SmartX feed
+this fabric reads lands under `schwab/08335338/` (0833)"*. **IT IS FALSE, and Andrew read it.**
+
+**MEASURED** (`0.4.0_DS_ClientPlatform~N` cell 1a, 88778; independently by `3.0.0_SA_CVO`, 88811):
+`smartx/` is its OWN top-level prefix in `opal-data-assets` — 476,788 objects, with `smartx/account/`,
+`smartx/allocation/`, `smartx/model/`, `smartx/platform/`. **The SmartX platform feed is not stored
+under either Schwab master.** `schwab/08335338/` is the 49F ADVI scope (`a00_runner.py:47`,
+`SCOPE = 'schwab/08335338'`), and `schwab/08242234/` is the Model Portfolios master — both books exist
+and Andrew's own July rulings assign them exactly that way.
+
+**ORIGIN IS THIS SEAT'S, TRACED RATHER THAN ASSUMED** (read at the pin, with a negative control:
+`git show 1b730c8df6:<this file>` matches `08335338` at lines 25 and 30, and matches `smartx/platform`
+zero times — the correct prefix appears nowhere in the record). `3.0.0_SA_CVO` repeated the claim at
+88640 and withdrew it at 88811; **the repetition is not the origin.** The claim was never measured by
+anyone before it was written into a record and put in front of Andrew.
+
+**WHAT THIS CHANGES ABOUT HIS CARD (1):** the *premise* under my own REC dissolves — I told him the
+fabric's ground for "Schwab book" was that the SmartX feed lands under 0833, and no SmartX feed lands
+there. **His MGMT understanding (SmartX ↔ 0824) and his own July rulings AGREE, on three code carriers
+and an independent data-plane read.** What survives as a genuine open question is narrower and is NOT
+the one the card posed: `schwab/08335338/bronze/rps/` holds 540 objects while `OPAL_ASSETS_PRD.md:165/168`
+says 0833 serves CBUGL positions and *not* the SmartX RPS layout. The 13 nine-digit FMTC keys (cell 1b)
+have not been matched to anything yet; nothing about "definitively" has been established either way.
+
+**Class:** an unmeasured spatial claim ("this feed lands there") carried into a sovereign card because it
+was the fabric's working assumption. `docs/architecture/OPAL_ASSETS_PRD.md` states the correct scope; no
+one read it before writing the card.
