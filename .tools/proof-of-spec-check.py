@@ -12,6 +12,10 @@ Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
   (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
   extra criteria are violations, with both denominators printed.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
+Every verdict line NAMES its rc (1.0.0_SA_CTO 87900 (1c), adopted from 0.4.0_DS_ClientPlatform~N):
+rc=2 is a USAGE/READ error, rc=1 is INVALID, rc=0 is VALID -- a caller reading only "non-zero"
+conflates a mis-typed argument with a refuted proof. The header also prints `checker-vintage:
+<hash> <UTC Z>` (1b) so no seat derives the vintage by hand in local time.
 
 Layered: jsonschema (if installed) for structure, then the conditional rules the
 schema cannot express -- ALWAYS run, so absence of the jsonschema package degrades
@@ -296,9 +300,22 @@ _BACKWARD_ASSERTED = None
 CELL_ID_RE = re.compile(
     r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
     r"|L3W3-[0-9a-f]{4}-\d+"
+    # ANCHORED BRANCH 2026-08-30 (1.0.0_SA_CTO~X, found by its own battery while fixing 87900): the sec-7b
+    # rectangle's family slugs are 4-HEX too (1c16 / 4017 / 0b5f / 4565 / 8304) under the L3S7B prefix; the
+    # L3W3 branch is prefix-anchored so it did not see them, and the letters-only branch cannot (a slug that
+    # opens with a digit). Controls in test_proof_of_spec_cell_id_re.py + a corpus arm over all 21 ids of
+    # rectangle.final.certified.json at its pin. The m-cells (L3S7B-m-N) already match the legacy branch.
+    r"|L3S7B-[0-9a-f]{4}-\d+"
     r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
     r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
+# (1a) 2026-08-30, 1.0.0_SA_CTO 87900: the <decomp_ref> element's CONTENT is the claim, not its
+# PRESENCE. Three tooling faces carried "<decomp_ref>NONE -- one-branch remediation under its own
+# charter</decomp_ref>": the presence test ENFORCEd them and then refused cell_refs they must not
+# invent -- the checker demanding a value it forbids. A body that declares no decomposition (NONE /
+# none / absent / n/a, with no decomp doc and no cell id) takes the ANNOUNCE branch, and the branch
+# line prints WHY. A body naming a decomp doc takes ENFORCE regardless of any leading word.
+DECOMP_REF_NONE_RE = re.compile(r"^\s*(NONE|None|none|ABSENT|Absent|absent|N/A|n/a)\b")
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
 
@@ -427,6 +444,7 @@ def _parse_to(text: str) -> dict:
     """The TO's ISSUANCE half, read exactly as declared."""
     m = re.search(r"<decomp_ref>(.*?)</decomp_ref>", text, re.S)
     blob = m.group(1) if m else None
+    present = blob is not None
     doc = ""
     if blob:
         explicit = DECOMP_DOC_TAG_RE.search(blob)
@@ -469,8 +487,24 @@ def _parse_to(text: str) -> dict:
         if not refs:
             no_refs.append(cid)
     exp = re.search(r"<expected_criteria>(.*?)</expected_criteria>", text, re.S)
+    # (1a) CONTENT, NOT PRESENCE: a present element whose body declares NONE (and names no doc and
+    # no cell id) is a declaration of NO decomposition -> ANNOUNCE. The doc wins over the word.
+    body = re.sub(r"<owned_cells>.*?</owned_cells>|<decomp_doc>.*?</decomp_doc>", "", blob, flags=re.S) if present else ""
+    declares_none = bool(present and DECOMP_REF_NONE_RE.match(body) and not doc and not declared)
+    if present and DECOMP_REF_NONE_RE.match(body) and (doc or declared):
+        branch_reason = (f"<decomp_ref> body opens with a NONE-word but names a decomp "
+                         f"({doc or 'cell ids'}) -- the doc wins, ENFORCE")
+    elif declares_none:
+        branch_reason = f"<decomp_ref> body declares NO decomposition: '{body.strip()[:60]}'"
+    elif present:
+        branch_reason = f"<decomp_ref> names {doc or 'cell ids without a doc'}"
+    else:
+        branch_reason = "the governing TO carries NO <decomp_ref> element"
     return {
-        "has_decomp_ref": blob is not None,
+        "has_decomp_ref": present and not declares_none,
+        "decomp_ref_present": present,
+        "decomp_ref_declares_none": declares_none,
+        "decomp_ref_branch_reason": branch_reason,
         "declared_cells": declared,
         "delimited": delimited,
         "delimiter_stray_text": stray,
@@ -622,10 +656,11 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     to = _parse_to(to_path.read_text(encoding="utf-8", errors="replace"))
     if not to["has_decomp_ref"]:
         frames.append(
-            "alignment: ANNOUNCE -- the governing TO carries NO <decomp_ref>, so this is "
-            "PRE-PIPELINE work completing under its own spec; decomp_ref is not required "
-            "and this instance stays VALID on that basis (CTO ruling 66492). A TO cut "
-            "under the pipeline carries <decomp_ref> and is enforced here by construction.")
+            f"alignment: ANNOUNCE -- {to['decomp_ref_branch_reason']}, so this is "
+            "work completing under its own spec; decomp_ref is not required "
+            "and this instance stays VALID on that basis (CTO ruling 66492; CONTENT-not-presence "
+            "1.0.0_SA_CTO 87900). A TO whose <decomp_ref> NAMES a decomp is enforced here by "
+            "construction.")
         return v, frames
 
     # ENFORCE from here: the TO declared a decomp, so the instance owes the join.
@@ -637,7 +672,7 @@ def alignment_check(inst: dict) -> tuple[list, list]:
         frames.append(
             "alignment: ENFORCE (TO carries <decomp_ref>) -- instance decomp_ref ABSENT")
         return v, frames
-    frames.append("alignment: ENFORCE (TO carries <decomp_ref>)")
+    frames.append(f"alignment: ENFORCE ({to['decomp_ref_branch_reason']})")
 
     inst_doc = str(dr.get("doc", "")).strip()
     if inst_doc and to["decomp_doc"] and (
@@ -715,15 +750,47 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     return v, frames
 
 
+def checker_vintage() -> str:
+    """The commit that last touched THIS checker, as `<hash> <YYYY-MM-DDTHH:MM:SSZ>` -- UTC with a Z,
+    or the hash alone. (1b) 2026-08-30, 1.0.0_SA_CTO 87900: an instance carried the checker vintage as
+    "3948c766a7 (2026-08-30 01:00:15)" -- a local time without a zone for a commit made 05:00:15Z --
+    hand-derived by the seat because the checker printed none. The instrument that pins vintages
+    prints its own, correctly, so no seat has to derive it. Never a local time; never a typed Z."""
+    try:
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%H|%cI", "--", str(Path(__file__).resolve())],
+            capture_output=True, text=True, cwd=str(_REPO_ROOT), timeout=20)
+        if out.returncode != 0 or "|" not in out.stdout:
+            return "UNREAD (git log failed; the hash is not knowable here)"
+        h, ci = out.stdout.strip().split("|", 1)
+        return f"{h[:10]} {iso_offset_to_utc_z(ci)}"
+    except Exception:  # noqa: BLE001 -- a vintage line must never turn the checker into rc=2
+        return "UNREAD (exception reading git log)"
+
+
+def iso_offset_to_utc_z(ci: str) -> str:
+    """%cI (ISO 8601 with a numeric offset) -> UTC rendered with a literal Z that is TRUE, because the
+    offset was applied first. A string without an offset is returned as the hash-only sentinel."""
+    from datetime import datetime, timezone
+    try:
+        dt = datetime.fromisoformat(ci.strip())
+    except ValueError:
+        return "(date unparsed)"
+    if dt.tzinfo is None:
+        return "(date carried no offset; not rendered)"
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def main() -> int:
     if len(sys.argv) not in (2, 3):
         print(__doc__)
+        print("USAGE-ERROR (rc=2): expected <instance.json> [expected_criterion_ids]")
         return 2
     try:
         inst = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001
-        print(f"READ-ERROR: {exc}")
+        print(f"READ-ERROR (rc=2): {exc}")
         return 2
 
     violations: list[str] = []
@@ -760,6 +827,7 @@ def main() -> int:
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
+    print(f"  checker-vintage: {checker_vintage()}")
     for line in align_frames:
         print(f"  {line}")
     # ALIGNMENT AND SCHEMA ARE DIFFERENT ORACLES, AND THE ALIGNMENT LINES ARE BYTE-IDENTICAL
@@ -780,15 +848,15 @@ def main() -> int:
     for line in violations:
         print(f"  VIOLATION: {line}")
     if violations:
-        print("INVALID")
+        print("INVALID (rc=1)")
     elif _BACKWARD_ASSERTED is False:
         # A VALID whose backward limb was never asserted is a WEAKER statement than a VALID on a
         # delimited face, and nothing in the bare word said so (DT~X 79061). Same rc; the verdict
         # line names the limb it could not enforce.
-        print("VALID -- alignment-backward UNASSERTED (undelimited <decomp_ref>: put "
+        print("VALID (rc=0) -- alignment-backward UNASSERTED (undelimited <decomp_ref>: put "
               "<owned_cells>id, id</owned_cells> INSIDE <decomp_ref> to make it enforceable)")
     else:
-        print("VALID")
+        print("VALID (rc=0)")
     return 0 if not violations else 1
 
 

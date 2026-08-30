@@ -61,3 +61,15 @@ if __name__ == "__main__":
                 print("FAIL", name, e)
     print("cell-id-re controls: %d failed" % fails)
     sys.exit(1 if fails else 0)
+
+
+def test_l3s7b_hex_slug_branch():
+    # 2026-08-30 (1.0.0_SA_CTO~X): the sec-7b rectangle's ids. Before this branch, L3S7B-1c16-1 was
+    # INVISIBLE to the harvest (slug opens with a digit -> letters-only branch fails; L3W3 branch is
+    # prefix-anchored) while L3S7B-m-7 matched via the legacy branch -- so a face's <owned_cells>
+    # would have harvested the issuer's mechanism cells and none of the lane cells.
+    for s in ("L3S7B-1c16-1", "L3S7B-4017-3", "L3S7B-0b5f-2", "L3S7B-4565-1", "L3S7B-8304-4", "L3S7B-m-7"):
+        assert _hit(s), s
+    # negatives shaped like the positives: uppercase hex, 3-char slug, non-hex letters, no index, wrong prefix
+    for s in ("L3S7B-1C16-1", "L3S7B-1c1-1", "L3S7B-zz16-1", "L3S7B-1c16-", "L3S7A-1c16-1"):
+        assert not _hit(s), s
