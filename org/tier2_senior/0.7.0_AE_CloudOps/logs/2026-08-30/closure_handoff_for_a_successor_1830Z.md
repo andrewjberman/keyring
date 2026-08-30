@@ -161,6 +161,20 @@ One item is HELD BY CHOICE and a successor should know why rather than discover 
   native buffers, and the attached layer. That is a floor, not a measured peak, and it is unverified.
 - STOP: **A manual invocation is NOT the acceptance.** Do not run it ad hoc to close the ledger faster.
 
+- **UPSTREAM AUTH RISK, added 18:4xZ after this log was first written -- READ THIS BEFORE TREATING A
+  MISSING FIRE AS A DEFECT IN MY WORK.** The 04:35Z chain begins at `bd-49f-session-trigger`, which
+  authenticates to the vendor (Black Diamond) with a session cookie stored in AWS Secrets Manager at
+  `blackdiamond/49f/session`. **That cookie EXPIRED sometime on 2026-08-30 between 04:35Z and
+  18:29Z** (a separate seat got HTTP 401 from it at 18:29Z). The trigger probes the cookie LIVE and
+  is fail-safe to MINT a new one, so the 04:35Z fire is EXPECTED to re-mint automatically rather
+  than skip -- but that mint path has NOT run once in 10 days (19 of 19 decisions skipped it), so
+  whether it works is UNVERIFIED.
+  **What this means for the acceptance:** if the mint fails, no insurance bronze lands, no S3 event
+  fires, and the silver-family read has no subject -- through no fault of the deploy being accepted.
+  **Read the 04:35Z outcome before escalating anything, and do not conclude the silver family is
+  broken from an absent fire.** If the mint failed, the remedy is a human vendor login and that is
+  Andrew's act, not a successor's.
+
 ### 4b. ~11:18Z daily -- the first single-writer day for billing (INF-ONEWRITER Step 2)
 
 - **Fires:** the `inf-silver-chain` Lambda's normal daily run.
@@ -212,7 +226,11 @@ A closure log that reads uniformly clean is the one to distrust. These are the s
    deliveries carried an id). In every case the instrument was right and my reading of its output
    was wrong. **If an older message and a newer one disagree on a number, the newer one is the
    correction.**
-7. **The messaging fabric is silently dropping delivery records right now.** `org/mcp/server.py`
+7. **The vendor session cookie behind the 04:35Z chain is expired and its automatic recovery is
+   unexercised.** See section 4a. Two things are measured (the cookie is dead; the trigger is
+   fail-safe to mint) and one is not (whether the mint path still works). Its last apparent success
+   is inferred from two timestamps flipping on 2026-08-27, not from an observed run.
+8. **The messaging fabric is silently dropping delivery records right now.** `org/mcp/server.py`
    swallows broker errors, so a send can report DELIVERED while writing no delivery row and stamping
    no message id in the delivered file. A file with no `**Msg-ID:**` header does NOT mean the row is
    missing -- it means the SENDER never learned the id. Owner is `1.0.0_SA_CTO`; a fix is
