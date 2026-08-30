@@ -100,3 +100,59 @@ not test it** — it stopped at stage 6 of 17, and their absence is what a chain
 predicts under either hypothesis. The inclusion of `ref_txn_classification` in the 16 IS empirical
 (the chain wrote it at 08:04:30Z, `STAGE OK a05_ref_txn_class`); the exclusion of the other two
 remains inference until a full date lands.
+
+---
+
+## ⛔ UPDATE 09:25Z — THE SECOND FALSIFIER BRANCH FIRED. READ THIS BEFORE THE SECTIONS ABOVE.
+
+Everything above was written at 08:2xZ, when the a06 fix did not exist. **It is now stale in its
+framing, and this section governs where the two differ.** The file is kept whole rather than
+rewritten, because the superseded prediction is part of the record.
+
+**WHAT CHANGED.** The section "THE OTHER WAY IT IS FALSIFIED" anticipated exactly this and it
+happened: `0.4.0_DS_ClientPlatform~N` served the a06 fix at **2026-08-30T08:42:34Z**, four hours
+before the fire. Verified independently at this seat, not accepted on report — md5 recomputed from
+the downloaded bytes `f8763326799bba70dac9edf5c55bdaf8` = the ETag, 11,148 B, 0 CR, VersionId
+`mUbfPzyUaEiYJPVJ2jbhmG4QbocOgg_N`, sitting above the 6,263 B 2026-08-19T01:22:34Z baseline that
+aborted on 08-23 and 08-24.
+
+**SO THE 12:50Z READ IS NO LONGER AN ABORT PREDICTION.** It is the fix's **first SCHEDULED
+exercise**, sitting on top of six ad-hoc ones this seat already ran (five chain dates + the 08-18
+mirror-pull), all of which passed.
+
+### WHAT TO EXPECT AT 12:50Z, and what would be a finding
+
+Grounded on the map plane read at 09:2xZ — newest partition `date=2026-08-29` **4,507 B
+HEADER-ONLY** (landed 08-29T13:17:42Z), `date=2026-08-28` **779,487 B POPULATED**. The 08-30 map
+lands ~13:16Z, i.e. *after* the 12:45Z fire, so the fire still reads a weekend partition. Expect:
+
+```
+map resolution: chose date=2026-08-28 of 46 partition(s); SKIPPED header-only: 2026-08-29
+map date=2026-08-28: 7,359 rows | ... | map_carried=True
+STAGE OK a06_identity_crosswalk rc=0
+```
+
+**A FINDING, reported as one, would be:** a06 aborting anyway · a different `map_date` ·
+`map_carried` false · `2026-08-29` selected. Those are findings **against the fix**, owned by
+`0.4.0_DS_ClientPlatform~N` (M-4), not against this campaign.
+⚠ The Sunday fire derives **D = 2026-08-28** (the most recent trading day), as Saturday's did — so
+it is expected to REWRITE the 08-28 partitions. That is normal floor behaviour, not a finding.
+
+**INSTRUMENT, unchanged and still the whole point:** `gold/advi/_logs/chain_<TS>.log` (floor form,
+no date segment). **NOT** SSM stdout — it truncates at ~24 KB and the original abort line fell past
+the cut, which is why the halt was invisible on the first read.
+
+### THE OPEN CLAIM ABOVE IS NOW SETTLED — by measurement, not by inference
+
+The final section says `bridge_group_account` and `dim_portfolio_group` being chain-written could
+not be tested by a run that halted at stage 6 of 17. **Five complete dates have now landed.** Both
+prefixes gained **zero** keys and zero partition-dates across all five, while 16 of 23 prefixes
+gained keys and no date outside the five was touched. The exclusion is now **empirical**, and the
+16 IN / 7 OUT list is confirmed on two independent axes (object counts and distinct dates).
+
+### STATE AT THIS UPDATE
+
+C02-g-7 **CLOSED**: B-1..B-6 all PASS, proof instance VALID rc=0 read unpiped @`3948c766a7`, deploy
+ledger `20260830T0554Z` CLOSED with all six legs proven and its sentinel removed. The five dates
+exist; 2026-08-18 moved from 0 OK rows to 6,382. **The 12:50Z read is the only obligation left, and
+it is TIMED, not blocked.**
