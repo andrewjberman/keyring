@@ -161,7 +161,7 @@
   },
   {
    "item": "the remediation of any finding",
-   "reason": "carding describes; the 27 blocking defects across the four cards are surfaced with owners, never chased (Rule 28: card, do not fix)."
+   "reason": "carding describes; the 18 blocking defects across the four cards (5 + 4 + 4 + 5) are surfaced with owners, never chased (Rule 28: card, do not fix)."
   }
  ],
  "surprises": [
@@ -181,7 +181,7 @@
   {
    "tool": "proof-of-spec-check.py",
    "invocation": "python .tools/proof-of-spec-check.py <this file> COO-AC1,COO-AC2,COO-AC3,COO-AC4,COO-AC5 (rc UNPIPED, on the COMMITTED bytes)",
-   "result": "see acceptance; run post-write by the emitting session and re-run by both certifiers on the committed blob"
+   "result": "see acceptance; run post-write by the emitting session and re-run by both certifiers on the committed blob; checker vintage (last-change commit of .tools/proof-of-spec-check.py at build, derived): cec2a9b663e6094db05668d2ca0c0f5e2766af04"
   }
  ]
 }

@@ -179,7 +179,8 @@ def build(crits, ddoc, dvintage, subjects, rc):
             {"item": "the subjects' delegates (cli.py, iam_cli.py / extract_iam.py, platinum_cli.py and the three extractors) as carded subjects",
              "reason": "each card qualifies the shim AND the contract it delegates, reading the delegate at the lines cited; the delegates' own full coverage is their own cards (comp-transform / comp-routes / comp-pipescript / trace_graph) -- stated on each card, not claimed here."},
             {"item": "the remediation of any finding",
-             "reason": "carding describes; the 27 blocking defects across the four cards are surfaced with owners, never chased (Rule 28: card, do not fix)."}],
+             "reason": "carding describes; the %d blocking defects across the four cards (%s) are surfaced with owners, never chased (Rule 28: card, do not fix)." % (
+                 sum(v["blockers"] for v in rc.values()), " + ".join(str(v["blockers"]) for v in rc.values()))}],
         "surprises": [
             "OBSERVATION/INERT -- the served estate-coverage-resolver.json is STALE against its own inputs (2 of 135 threads; the census edited @727daaab94 after the last regen @7fe3a68013) and the declared on-change rebuild has one manual caller; comp-estate prints STALE on every run today (last_review 31 d > 14). Owner: whoever runs comp-estate --refresh; surfaced, not chased.",
             "OBSERVATION/INERT -- comp-iam's APPLIED plane has been refusing-by-design for ~25 days (newest census 2026-08-05 vs a 24 h TTL; refresh-census unrun) -- console-made / AWS-managed grants invisible to every runnable mode. Owner: refresh-census's caller.",
@@ -191,7 +192,7 @@ def build(crits, ddoc, dvintage, subjects, rc):
             {"tool": "substrate-card-check.py", "invocation": "python .tools/substrate-card-check.py <card> (rc UNPIPED)",
              "result": "%d of 4 VALID rc=0" % n_valid},
             {"tool": "proof-of-spec-check.py", "invocation": "python .tools/proof-of-spec-check.py <this file> COO-AC1,COO-AC2,COO-AC3,COO-AC4,COO-AC5 (rc UNPIPED, on the COMMITTED bytes)",
-             "result": "see acceptance; run post-write by the emitting session and re-run by both certifiers on the committed blob"}],
+             "result": "see acceptance; run post-write by the emitting session and re-run by both certifiers on the committed blob; checker vintage (last-change commit of .tools/proof-of-spec-check.py at build, derived): %s" % sh("git", "log", "-1", "--format=%H", "--", ".tools/proof-of-spec-check.py").stdout.strip()}],
     }
 
 
