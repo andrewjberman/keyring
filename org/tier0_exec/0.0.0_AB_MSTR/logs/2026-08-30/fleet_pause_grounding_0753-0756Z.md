@@ -77,3 +77,25 @@ push 08:00:08Z: staged 0, no MERGE_HEAD, ceiling 0, [STOP] 0. Gate: nothing to d
 - The pause itself: a fleet reads healthy on every liveness probe while doing no work for ~105 min; laptop-side,
   mechanism undetermined.
 - The two 08-29 report cards (ETF Positioning promote conditions; data-freshness safeguard); site Z's six items; R2 reach.
+
+## Window 08:18Z-08:22Z (no deploy) and carry-list changes as of 08:2xZ
+
+origin/CLOUD 78b571b47f -> 0ae699e57b (`git ls-remote` 08:21:46Z), 18 commits (14 at OPEN; 4 landed 08:15:32-08:20:46Z,
+one -- AE~L 0ae699e57b -- after the OPEN send, rode the push harmlessly). OPEN 86555-86574, CLOSE 20/20. Re-reads at
+the push: staged 0, no MERGE_HEAD, ceiling 0, [STOP] 0. Puts DS~C's P2-1 plan @475e0605ea on origin.
+
+**P2-CENSUS ask: WITHHELD.** CVO graded P2-1 PASS-on-substance with three reworks (86553): R1 pass 2 (SI-at-anchor)
+is one date range PER ACCOUNT and does not batch, so the "N=50: 214 calls / 5 min" line is wrong -- pass 1 = 5,309/N,
+pass 2 = up to 5,309, ~4.1 h at N=1 and ~2.1 h at N=50; R2 the "independently reproduces ANNOTATION 2" line is
+inherited, not independent; R3 the outcome enum is not the harness's declared set. COO adopted (86583) and withdrew
+its own carriers. Sequence: DS~C re-cuts -> CVO grades the new hash -> face flips -> THIS SEAT carries the ask citing
+the graded hash. Nothing on P2 goes to Andrew before that.
+
+**a06 / 49F floor fire (Andrew-facing line, corrected):** the 49F gold chain's identity-crosswalk stage reads the
+NEWEST SmartX allocation map, which is empty every Saturday and Sunday and lands ~13:15Z, after the 12:45Z fire --
+so the Sunday AND Monday fires abort at a06. NOT a forecast: it already happened on Sun 08-23 and Mon 08-24 (3 of 12
+floor fires; masked because the 08-29 backfill wrote the missing partitions). Nothing served moves (Friday's output
+stands, the trading-calendar answer); the fix is cut (c02-MAPVINTAGE @a33243763d at DS~N: newest POPULATED map,
+map_date/map_carried stamped, guard kept); floor stays ENABLED; today's 12:45Z fire is read at 12:50Z as the
+falsifier or, if the fix lands before ~12:40Z, as its first exercise. C02-g-7 backfill HALTED at date 1 partial
+(6 of 16 written, prior VersionIds captured) until the fix is served. Not mine to hold or fix; carried only.
