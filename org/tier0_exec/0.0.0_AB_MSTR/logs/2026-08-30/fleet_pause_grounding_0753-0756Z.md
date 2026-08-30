@@ -285,3 +285,13 @@ exercises none of the deploy path, but no non-zero-ceiling window is a valid IB-
 the hand-compare stays. Likely cause (unmeasured): a safe-commit path list that named the proof and not the fix.
 Carry note: R8 -- five scratch S3 objects from the falsifier arms, a reserved delete; gate REC fold onto R7 as a second
 line; the issuer files it once via this seat.
+
+## Window 15:06Z -- the committed deploy gate reaches origin
+
+CTO 88106 + COO 88119 confirmed the uncommitted-fix finding on their own reads, withdrew their acceptances of
+"fix @31579e177b", and held this seat's window until the real commit was in range. AE~K committed 3d9eb2931d at
+15:03:01Z (.tools/safe_deploy_core.py only, +87/-11; worktree == HEAD blob == that commit's blob, 1beadca7..., 0 CRs,
+2 `git show :` lines). Hold lifted on that measurement. origin/CLOUD 1befd43cef -> bbdaa9fdc8 (`git ls-remote`
+15:06:47Z), 20 commits, ceiling 0 == the OPEN's (chain refuses on mismatch from this window). OPEN 88123-88142, CLOSE
+20/20. IB-5 (the gate's production exercise) remains unread: the first non-zero-ceiling window under 3d9eb2931d is
+the read; the hand-compare stays until its CLOSE.
