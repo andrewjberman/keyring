@@ -167,6 +167,10 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
       - a commit-ish (7-40 hex): the commit must resolve in the LOCAL object store, then
         `<commit>:<path>` must exist. Absent -> VIOLATION (a path claimed at a pin that does not
         carry it).
+    CONTENT RUNG (88109): a row may carry `introduces: [token, ...]`; the tokens must be present in the
+    blob at the pin and absent at `<pin>~1` (or the file absent there) -- a pin that exists but does not
+    carry the change is a VIOLATION; a token present at both is "not introduced here". Rows without
+    `introduces` are PRESENCE-ONLY and the frame counts them as such.
     ANNOUNCED, never a violation: a commit-ish that is not in the local object store (UNRESOLVED-HERE
     -- a cross-fabric pin before a fetch is not a false claim); s3_object rows (an ETag is not a git
     ref -- the served plane is read by a different instrument).
@@ -177,6 +181,37 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
     v: list[str] = []
     rows = inst.get("artifacts_produced", []) or []
     n_resolved = n_pending = n_unresolved = n_s3 = 0
+    # CONTENT RUNG (2026-08-30, 1.0.0_SA_CTO 88109, one plane over from the (1a) content-not-presence
+    # rule): the INDEXBYTES proof's fix row resolved because its pin EXISTED while the blob at that pin
+    # LACKED the change the criterion named (the pin was another seat's unrelated commit). A row may
+    # declare `introduces: [token, ...]`; then every token must be PRESENT in the blob at the pin and
+    # ABSENT in the blob at the pin's PARENT (`<pin>~1`, never `^` -- a caret through a shell is not a
+    # parent), or the file must be absent at the parent. A PENDING row is checked the same way against
+    # the WORKTREE file and HEAD's blob. Rows WITHOUT `introduces` stay presence-resolved and the frame
+    # names that class, so a clean line cannot be read as content-resolved.
+    n_content = n_presence_only = 0
+
+    def _blob(ref: str) -> bytes | None:
+        try:
+            o = subprocess.run(["git", "show", ref], cwd=str(_REPO_ROOT), capture_output=True, timeout=30)
+        except Exception:  # noqa: BLE001
+            return None
+        return o.stdout if o.returncode == 0 else None
+
+    def _content_rung(path: str, tokens: list, here: bytes | None, parent: bytes | None, where: str) -> str | None:
+        """None when the tokens are introduced at `where`; else the violation text."""
+        if here is None:
+            return f"artifact-resolution/content: {path!r} unreadable at {where}"
+        missing = [t for t in tokens if t.encode("utf-8") not in here]
+        if missing:
+            return (f"artifact-resolution/content: {path!r} at {where} LACKS the token(s) the row says it "
+                    f"introduces: {missing} -- the pin exists but does not carry the change (88109 class)")
+        if parent is not None:
+            already = [t for t in tokens if t.encode("utf-8") in parent]
+            if already:
+                return (f"artifact-resolution/content: {path!r}: token(s) {already} are ALREADY present at the "
+                        f"parent of {where} -- not introduced here; the row pins a commit that did not make the change")
+        return None
 
     def _git_ok(*args: str) -> bool:
         try:
@@ -193,9 +228,19 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
         if a.get("kind") == "s3_object":
             n_s3 += 1
             continue
+        tokens = a.get("introduces") or []
+        if tokens and not (isinstance(tokens, list) and all(isinstance(t, str) and t for t in tokens)):
+            v.append(f"artifact-resolution/content: {path!r} carries `introduces` that is not a list of non-empty strings")
+            tokens = []
         if pin == PENDING_SENTINEL:
             if path and (_REPO_ROOT / path).exists():
                 n_pending += 1
+                if tokens:
+                    err = _content_rung(path, tokens, (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING)")
+                    if err:
+                        v.append(err)
+                    else:
+                        n_content += 1
             else:
                 v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but does NOT exist in the "
                          "working tree -- a dead path cannot ride the commit that carries this proof")
@@ -209,13 +254,24 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
             continue
         if _git_ok("cat-file", "-e", f"{pin}:{path}"):
             n_resolved += 1
+            if tokens:
+                err = _content_rung(path, tokens, _blob(f"{pin}:{path}"), _blob(f"{pin}~1:{path}"), f"pin {pin}")
+                if err:
+                    v.append(err)
+                else:
+                    n_content += 1
+            else:
+                n_presence_only += 1
         else:
             v.append(f"artifact-resolution: {path!r} does NOT exist at its declared pin {pin} -- "
                      "the row names a (commit, path) pair git refutes")
     frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_pending} pending-on-worktree / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
-              "a PENDING row whose artifact is ALREADY committed is NOT covered here"]
+              "a PENDING row whose artifact is ALREADY committed is NOT covered here",
+              f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
+              f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
+              "and carries the path, nothing here says it carries the CHANGE) -- 88109 class"]
     return v, frames
 
 
