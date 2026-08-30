@@ -195,8 +195,18 @@ def _load_s3(served):
     bucket = SERVED_B if served else STAGED_B
     arts = {}
     for f in FIRMS:
-        key = (f"json/mdpf/{f}/aggregate-aua-timeseries.json" if served
-               else f"gold/mdpf_revamp/{f}/aggregate_aua_timeseries.json")
+        if served:
+            # RETIRED READ 2026-08-30 (3.0.0_SA_CVO): the legacy served mirror this gate compared
+            # against is being deleted on Andrew's word (json/mdpf/{firm} card, DS~V 87745); the
+            # served home moved 2026-08-19 @12b93b59ba to the dated gold path
+            # portal/gold/mdpf/{firm}/aggregate-aua-timeseries/{D}.json (different vintage
+            # semantics). This harness is the record of the P2F round; it REFUSES the served
+            # branch rather than silently re-pointing.
+            raise RuntimeError(
+                "RETIRED 2026-08-30: the served-side read of this P2F gate targeted the legacy "
+                "mirror, retired @12b93b59ba. Re-derive against the dated gold home before "
+                "re-running with served=True.")
+        key = f"gold/mdpf_revamp/{f}/aggregate_aua_timeseries.json"
         obj = s3.get_object(Bucket=bucket, Key=key)
         art = json.loads(obj["Body"].read())
         art["_etag"] = obj["ETag"].strip('"')[:12]
