@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-08-30T05:54:31.453602+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / 0.4.0_DS_ClientPlatform~N c02-MAPVINTAGE M-3 (a06 fix served on the P14 host, read on the running artifact) (held since 2026-08-30T08:29:46.029152+00:00)
 **Deploy:** ADVI_49F.C02-g-7 B-4: FORWARD PRODUCTION of the five never-produced dates 2026-08-11/12/13/14/17 on the FULL 49F chain via advi-49f-chain-dispatch, oldest-first. 5 dates x 18 gold tables = 87 NEW keys + 3 DECLARED overwrites at 08-11 (dim_boundary/dim_calendar/dim_security, from the 2026-08-19T01:13:37Z ad-hoc run). Never-widen BOTH halves signed on one shape: CTO 86149 (A)(B)(C), COO 86183 + (C) word 86229. Build-only: the perfrp projection writes 0 S3 keys (world: 0 platinum objects in the bucket).
 **Authored by:** 0.7.0_AE_CloudOps~L
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,3 +23,4 @@
 
 - 20260830T055431Z OPENED by 0.7.0_AE_CloudOps~L with 6 leg(s)
 - 20260830T081401Z LEG G1 closed: PASS, re-run AT SEND TIME (08:0xZ) rather than trusted from the plan 90 min earlier. stored twr_daily 535; dim_calendar 
+- 20260830T082946Z HELD-SOVEREIGN-GATED gate=external/0.4.0_DS_ClientPlatform~N c02-MAPVINTAGE M-3 (a06 fix served on the P14 host, re
