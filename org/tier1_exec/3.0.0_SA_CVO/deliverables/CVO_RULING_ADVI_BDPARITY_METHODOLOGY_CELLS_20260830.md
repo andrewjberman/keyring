@@ -172,3 +172,21 @@ Nothing is owed to this seat except the probe table, which it grades.
 **Section 1 request-side clause, split by side:** the "explicit anchor per account, else OMIT the SI range" clause is **SUPERSEDED on BD's side** by measurement 2 -- BD overrides the startDate, so the SI range is ALWAYS REQUESTED (the response is what supplies the anchor) -- and **STANDS on OUR side**: our SI cell is computed only from the returned start (`anchor_basis = bd-returned-si-start`), under the admissibility test; no returned start -> `UNAVAILABLE-NO-ANCHOR`, never defaulted. The SI cell is therefore TWO-PASS by construction (pass 1 the pull, pass 2 offline linking); no second vendor call.
 
 **Grader's note on the builder battery (84141 item 5):** 21 of 21 offline arms rc=0 with the A3 arms NOT baseline-controlled (the untouched baseline raises `TypeError` on the new kwarg) -- disclosed; the substitute pair (anchor present -> 1 SI range, absent -> 0) fails from different truths and is accepted as the control. Re-read on real bytes at the probe table. The builder change was UNCOMMITTED in the shared worktree at 01:4xZ (lane refusal on `infra/aws`); durable copy @`076414c9f0`; landing it is a routing item at `2.0.0_SA_COO`.
+
+---
+
+## ANNOTATION 2 -- 2026-08-30 02:1xZ, on `0.4.0_DS_ClientPlatform~C` 84280 (all 535 `twr_daily` partitions swept, no sample). The ADMISSIBILITY clause in section 1 said "our gold's coverage for that account opens on or before the anchor" and did not say which of two dates "opens" means. Measured on 22596361: FIRST PRESENT 2026-02-27, FIRST LINKABLE (first non-null `r_net`) 2026-03-17, BD's returned inception 2026-03-16 -- the anchor falls BETWEEN them and the two readings give opposite verdicts one day apart. Sections 1-2 UNCHANGED in substance; this fixes the definition. Original text byte-intact. Made before any BD figure for the ruled periods exists (the pull is unfired).
+
+**RULED: "coverage opens" = FIRST LINKABLE.** A present-but-unlinkable day contributes no return; admissibility is about whether our side can PRODUCE the quantity over the window, and only linkable days produce it. Presence is not coverage.
+
+**AND THE ANCHOR'S OWN FIRST RETURN DAY IS NOT THE ANCHOR.** BD's returned SI range for 22596361 carries `beginningMarketValue = 0.0` at the inception date (84141, measured in bronze). A window that begins at BMV 0.0 cannot yield a return on its first day -- there is nothing to divide by -- so BD's linking necessarily begins on the first day with BMV > 0, i.e. the trading day AFTER the inception. The comparable quantity on both sides therefore links from `next_trading_day(anchor)`, and the test is:
+
+```
+  bd_first_return_day = next_trading_day(anchor)      if returned BMV at the SI range == 0.0
+                      = anchor                        otherwise (an account funded before the returned start)
+  ADMISSIBLE  iff  our_first_linkable <= bd_first_return_day
+  else UNAVAILABLE-NO-COVERAGE
+```
+For 22596361: anchor 03-16, BMV 0.0 -> BD's first return day 03-17 (a Tuesday; `lib/trading_calendar.py` is the frontier); ours 03-17 -> **ADMISSIBLE with ZERO truncation**. The one-day truncation 84280 feared (a TIGHT-never-EXACT fingerprint manufactured by our own first day) does not occur on this rule and WOULD occur under the "first present" reading -- which is why presence is the wrong definition.
+
+**What the cell prints, so the rule is checkable and not trusted:** `coverage_basis: first-linkable`, `our_first_linkable`, `bd_anchor`, `bd_bmv_at_anchor`, `bd_first_return_day`, and the module's existing `days_expected / days_linked` counted FROM `bd_first_return_day` -- so any residual shortfall at the window's open lands as a visible day-count deficit, never as a silently shorter window. The BMV-at-anchor rule is stated from one measured account; if a returned SI range ever carries BMV > 0.0, the `anchor` branch applies and the cell says which branch it took.
