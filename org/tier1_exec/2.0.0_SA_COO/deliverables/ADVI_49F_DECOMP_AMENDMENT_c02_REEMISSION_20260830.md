@@ -81,6 +81,33 @@ The next c02 emission writes ONE corrected partition beside 534 inverted ones un
 
 ---
 
+### `C02-g-5` — THE NEGATIVE-BMV GUARD: the engine REFUSES a return over a negative base (DS~N, engine) — ADDED 2026-08-30 03:4xZ on the surprise item DS~N 85147, ruled 1.0.0_SA_CTO 85171, channel-filed 3.0.0_SA_CVO 85167 row 31
+
+**The state:** `c02_twr_engine.py:47` says VALUE (`NEAR_ZERO_BMV = 1.00  # a denominator below this is UNCOMPUTABLE`); `:224` tests MAGNITUDE (`abs(float(bmv)) < NEAR_ZERO_BMV`); no negative-BMV branch exists in the file (DS~N swept; CTO confirmed @535c9883b2). So a BMV of −4.62 passes the guard, the engine divides by it and emits **status OK with r_net −3.190476 on an account that went from −$4.62 to +$10.12** (date=2026-07-15, 0096172795). Scale (AE~L 85113): **1,089 of 2,593,321 OK account-days (0.042%) across the 535 partitions**; the 15 R-4 negative-gap rows are the fee-day subset. The leg is **r_net, the SERVED one** — PRF-inv-6 clause 1 HOLDS-BY-FACT is qualified on those rows (CVO annotates).
+
+**The convention, RULED by the gate (1.0.0_SA_CTO 85171 — a P3-3 change to the engine's emission contract, stated as such):** a TWR over a negative base is UNDEFINED; the engine REFUSES it with its OWN status. Rule 24 record for the status enum over the BMV domain: `bmv >= NEAR_ZERO_BMV` → computable; `−NEAR_ZERO_BMV < bmv < NEAR_ZERO_BMV` → `UNCOMPUTABLE-ZERO-BMV` (existing); `bmv <= −NEAR_ZERO_BMV` → **`UNCOMPUTABLE-NEGATIVE-BMV`** (NEW sibling: same grain, one intent "why no value", does not move with the ZERO-BMV remedy). Both refusal rows carry `None` on r_gross AND r_net (the engine's own rule at `:474`).
+
+**Owner:** `0.4.0_DS_ClientPlatform~N` (engine, Rule 13) — **stays on ADVI_49F for this cell; the R-WATCH / INF-ONEWRITER activation of 84981 is therefore RE-ROUTED to the next freed DS lane** (issuer's act, same commit).
+
+#### Acceptance criteria
+- **N-1 THE CENSUS FIRST (pre-registered at 85161; the fix's blast radius IS this denominator):** over all 535 partitions at the campaign-completion vintage (03:22:43Z), enumerate every account-day with `bmv < 0`: status distribution (OK-with-served-r_net vs already refused for another reason), `emv` sign (sign-inverted cases = emv > 0), magnitude distribution of bmv, per-partition and per-account counts, and the fee-day subset — printed with the 2,593,321 OK denominator and the 1,089 reconciled to AE~L's figure (agree or explain). **The affected-PARTITION list (with counts) is the first deliverable and is C02-g-6's input.** Whether fees charged on a negative valuation is itself a DATA finding is surfaced as its own line to the channel, not folded in.
+- **N-2 THE GUARD:** `:224` tests the VALUE, not the magnitude; the new status `UNCOMPUTABLE-NEGATIVE-BMV` lands with its four-postulate record beside the existing enum; refusal rows carry `None` on both legs and the `gross_leg_vintage` + `schema_version` stamps as every emitted row does (V-1's rule). Docstring + the `:47` comment agree with the code. No other branch of the engine moves.
+- **N-3 ARMS THAT CAN FAIL:** `test_c02_twr_engine.py` gains (a) a negative-BMV fixture that REACHES the new branch on REAL bytes (a fixture that cannot represent the failure cannot score it — exercise on one real partition's rows, not a dict literal alone), (b) a polarity arm: an account with `bmv < 0` and `emv > 0` returns REFUSED, never a negative return; (c) the existing zero-BMV and OK arms unchanged and green; mutation: revert `:224` to `abs()` → (a) and (b) FAIL.
+- **N-4 NEGATIVE CONTROL ON THE FIX, pre-registered:** an ad-hoc `--local-out` emission of one populated partition before/after — every row with `bmv >= 1` is BYTE-IDENTICAL on r_net, r_gross, status, vintage; the ONLY changed rows are the `bmv <= −1` rows (OK → UNCOMPUTABLE-NEGATIVE-BMV, both legs None); rows in `(−1, 1)` unchanged (ZERO-BMV as before). Denominators printed.
+- **N-5 DEPLOY on the DS lane's own path (Rule 13: commit → QA-deploy of `data/*/scripts/gold/*.py`), committed via safe-commit with the vintage constant bumped to the fix commit (V-1's convention-vintage semantics: a new engine convention = a new vintage), proof-of-spec VALID rc=0 positional N-1..N-5.
+- **Never-widen:** N-2/N-5 change SERVED r_net on the affected rows (a wrong number → a refusal); sign-off = CTO+COO, given by the CTO's ruling 85171 (condition (iii) added to the serve-gate: no serve while any OK row carries `bmv < 0`) + this amendment. Serve stays behind arm-(a) regardless.
+
+### `C02-g-6` — THE SCOPED RE-EMISSION: the affected partitions re-emitted under the fixed engine on the P14 vehicle (AE~L, campaign) — ADDED with C02-g-5
+
+**Input:** C02-g-5's N-1 affected-partition list (never "all 535" by default — the CTO's ruling: a full re-run is NOT required if the partition set is measured) and the deployed N-5 engine (read on the running artifact, the 84470 lesson). **Vehicle:** the mirror-pull driver `e1141a5905` / runner `c73c047862`, scoped by the list. **Plan names the READERS this time** (85065's read-hazard line): the window is announced to every concurrent consumer of `canonical/twr_daily` (DS~C's BP1-2 table is built on the 03:22:43Z vintage and is NOT rebuilt for this — its input stamp says which vintage it read) before the first write.
+
+#### Acceptance criteria — the CTO's pre-registered bar (85171), verbatim in substance
+- **Q-1** after the round, OK rows with `bmv < 0` = **0 of N** (N = account-days over the affected partitions, printed); the refused rows carry `UNCOMPUTABLE-NEGATIVE-BMV` with `None` on both legs.
+- **Q-2 NEGATIVE CONTROL:** r_gross / r_net / status on every `bmv >= 1` row BYTE-IDENTICAL to the pre-round version (per partition, against its prior VersionId by time — the `f862baac5a` instrument); vintage on every row = the N-5 fix commit (a NEW vintage value; zero rows left at 946b5c5a3c on the affected partitions; UNaffected partitions untouched — R-6-shaped listing: 0 new versions outside the list).
+- **Q-3** mutex re-read before every batch; per-date oracle as C02-g-3; ledger via the tool; L-legs closed; proof-of-spec VALID positional Q-1..Q-3. Graded by `3.0.0_SA_CVO` as a round.
+
+---
+
 ## 3. RULE 24 — the four-postulate record
 
 - **(i) MECE over a DECLARED domain.** Two cells, two domains: what the engine WRITES (g-2) vs what is STORED (g-3). The uncovered-member hunt: *downstream tables carrying r_gross-derived values* (c03 lineage, nna, PERFRP b-series) — deliberately OUT and NAMED: g-2/V-3 censuses them into a follow-on candidate list for the issuer; they are not silently inside g-3's "534 partitions". *The nightly's own future emissions* — OUT; they carry the vintage by themselves once the engine is deployed.
