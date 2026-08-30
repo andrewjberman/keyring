@@ -376,20 +376,6 @@ get_agent_status("{your_serial}")   # broker channel
 ```
 `send_message` writes to **both**, but each probe reads only one. **`check-inbox` alone is insufficient.**
 
-**B.0 — RELAUNCHED AFTER A SESSION DEATH (reboot, kill, crash)? Run the READ-clock query on your OWN
-serial ONCE, before resuming from your last log/TO** (added 2026-08-30 by `1.0.0_SA_CTO` on
-`0.4.0_DS_ClientPlatform~V` 84858 / `2.0.0_SA_COO` 84885 / `0.0.0_AB_MSTR` 84861):
-```python
-get_delivery_state(agent_serial="{your_FULL_suffixed_serial}", since="<your predecessor's last log time>")
-```
-**Any row not READ is unread mail.** A message OFFERED to a session that then died reads
-`OFFER-EXHAUSTED`: `check-inbox` is EMPTY (the offer was consumed), `get_agent_status` shows NOTHING, the
-file already sits in `read/` looking handled, and a relaunch hint of *"resume from your last log"* cannot
-surface an obligation that arrived AFTER that log. Open each such file from `read/`, ack it **from its own
-`Msg-ID` line** (the broker now REFUSES a foreign id), and act on its obligation. Cost: one call at load.
-Non-application: a predecessor that drained cleanly returns zero such rows. Measured 2026-08-30: DS~V found
-six rows this way, one a `[DRIVE]` ruling applied late; the CTO base found 64 of 136.
-
 **B.1 — Find the work you actually hold. RUN THIS; do NOT read your folder:**
 ```bash
 python .tools/to-check.py --all --assignee {your_FULL_suffixed_serial}
