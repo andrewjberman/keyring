@@ -5,7 +5,7 @@
   "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ. D0 member with no project JSON. One TO at 0.8.0_AE_CloudComp: 'pending -- GO received 2026-08-18T165409Z (COO @3bc88957c8); DATED 08-20, sequenced behind PREFIX-READS' (staged->pending @7ea656a2bf). Issued under Andrew-direct ~1537Z at the CTO terminal (both banked proposals APPROVED, @3bc88957c8). MINTED active: the TO has a live GO and is not delivered. LIVE RELEVANCE 2026-08-25: this project's subject is the same ledger surface where 0.0.0_AB_MSTR found 3 entries OPEN for 14 days and 106 of 542 records carrying no parseable Status field -- the unfielded corpus is NOT in this TO's scope.",
   "status": "active",
   "dep_stage": "EXECUTING",
-  "phase": "TO pending on COO GO 2026-08-18T165409Z, dated 08-20, sequenced behind PREFIX-READS",
+  "phase": "[2026-08-30T03:3xZ, issuer 2.0.0_SA_COO, on 1.0.0_SA_CTO~Y's /exec-sum surface] UNSEATED-ON-CAPACITY, NOT STALE: the face is live and unsuperseded; its addressee 0.8.0_AE_CloudComp BASE has carried no session since the 08-28 drawdown, ~X/~Y are D11 lanes (Rule 27), and the marker cap reads 19 of 20 with D2/D3/D11 holding the slots; seats on the first AE slot freed by a D2/D11 release or on Andrew's word. || PRIOR: TO pending on COO GO 2026-08-18T165409Z, dated 08-20, sequenced behind PREFIX-READS",
   "blocking": "Sequenced behind NFRA_COMPTOOLS.PREFIX-READS at the same seat (0.8.0_AE_CloudComp).",
   "prds": [],
   "pods": [

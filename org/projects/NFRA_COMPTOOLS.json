@@ -5,7 +5,7 @@
   "description": "MINTED AT TRUE STATE 2026-08-25 by 0.0.0_AB_MSTR on Andrew-direct ~12:0xZ. D0 member with no project JSON. TWO TOs on disk at 0.8.0_AE_CloudComp, both issued off the CTO ruling set @dfb5fd8f48: REG-SCAN-ATOMCHECK is 'pending -- GO received 2026-08-18T170938Z (COO @dfb5fd8f48)' (staged->pending @541624e822); PREFIX-READS is 'staged -- DATED 2026-08-19, owner named, awaiting spawn'. MINTED active because one TO carries a live GO and the other is staged-awaiting-spawn -- neither is delivered.",
   "status": "active",
   "dep_stage": "EXECUTING",
-  "phase": "TO-issued; REG-SCAN-ATOMCHECK pending on GO, PREFIX-READS staged awaiting spawn",
+  "phase": "[2026-08-30T03:3xZ, issuer 2.0.0_SA_COO, on 1.0.0_SA_CTO~Y's /exec-sum surface] UNSEATED-ON-CAPACITY, NOT STALE: the face is live and unsuperseded; its addressee 0.8.0_AE_CloudComp BASE has carried no session since the 08-28 drawdown, ~X/~Y are D11 lanes (Rule 27), and the marker cap reads 19 of 20 with D2/D3/D11 holding the slots; seats on the first AE slot freed by a D2/D11 release or on Andrew's word. || PRIOR: TO-issued; REG-SCAN-ATOMCHECK pending on GO, PREFIX-READS staged awaiting spawn",
   "blocking": "PREFIX-READS awaits a spawn at 0.8.0_AE_CloudComp. REG-SCAN-ATOMCHECK has its GO and is executable.",
   "prds": [],
   "pods": [
