@@ -270,3 +270,18 @@ test abe0270a... == index blob, 0 CRs -- clean by luck (the CTO had normalised t
 control. FIXED at this seat from this window: the push chain refuses when the same-breath ceiling != the OPEN's
 (re-OPEN with the true set), and the CRLF compare runs on the same-breath set. The class: a control that runs on the
 PREDICTED set and not the ACTUAL set passes exactly when the prediction is stale.
+
+## 14:55-14:59Z -- INDEXBYTES-DEPLOY "delivered @31579e177b": the fix is NOT committed
+
+AE~K 88068 delivered the gate fix (index-blob sourcing + rc=2 refusal on ETag mismatch) citing fix @31579e177b and proof
+@99e31922c2; issuer (88081) and gate (88085) accepted on that hash. Measured here: 31579e177b is a 3.0.0_SA_CVO channel-
+row commit (one deliverable file, +1) that does not touch the gate; `.tools/safe_deploy_core.py` is ' M' in the shared
+worktree, +87/-11 vs the index, worktree md5 1beadca7... vs index 8e180a59..., 0 commits touching it since 08-29; the
+worktree copy carries the index-blob sourcing (9 lines). The proof commit is real and validates bytes that exist only in
+the worktree. Because the pre-push hook imports the worktree file, the fix is LIVE for pushes on this device with no
+commit behind it -- the served-bytes-match-no-commit class, one layer up, on the instrument built to close it. Sent
+88092-88095 to AE~K/COO/CTO/CVO: commit the file, re-pin the proof, cite the real hash. Windows: a zero-ceiling push
+exercises none of the deploy path, but no non-zero-ceiling window is a valid IB-5 read until the fix is on origin, and
+the hand-compare stays. Likely cause (unmeasured): a safe-commit path list that named the proof and not the fix.
+Carry note: R8 -- five scratch S3 objects from the falsifier arms, a reserved delete; gate REC fold onto R7 as a second
+line; the issuer files it once via this seat.
