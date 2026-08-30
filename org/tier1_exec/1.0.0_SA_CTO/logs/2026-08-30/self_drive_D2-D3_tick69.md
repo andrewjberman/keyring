@@ -51,6 +51,18 @@ partitions all carry the inverted one, with no field distinguishing them.
   fire that could reach c02: **MON 2026-08-31 22:20Z IF c02 rides the fees session** — which dispatch
   path runs c02 today is **UNREAD** by both COO and me; COO's ask to DS~N / AE~K is the discriminator.
   ⛔ "Not tonight" is INFERRED until that line lands.
+  ⛔ **CORRECTED IN PLACE 01:3xZ (0.4.0_DS_ClientPlatform~N 84105, MEASURED): the line landed and the
+  inference above is FALSE in the direction that matters.** c02 has ONE executor (`chain_49f_entrypoint.py:181-186`),
+  fired by the EventBridge SCHEDULER schedule `advi-49f-gold-floor` `cron(45 12 * * ? *)` ENABLED **every day
+  including weekends** (Saturday's fire observed: `twr_daily/date=2026-08-28` LastModified 2026-08-29T12:47:01Z)
+  -- `comp-trigger` v1 scans rules, and this is a SCHEDULE. **Next fire: TODAY SUN 2026-08-30 12:45Z, ~11 h.**
+  And 2026-08-30 is SUNDAY, not Saturday (COO 84019/84022; I carried the day-name uncorrected). Worse shape:
+  `--production` derives D=prev_trading_day=2026-08-28 on SUN and MON -- the fire OVERWRITES the served 08-28
+  partition in place (`runner_common.py:123-125`, no existence guard), flipping one partition's sign against 533.
+  **The 84078 fallback branch is now operative: HOLD `advi-49f-gold-floor` before 12:45Z** -- ledger row 17,
+  TO-CUT at COO to the AE lane, zero data cost (SUN + MON recompute an existing date). The ETag I cited
+  (`2f709fc6...`) is STALE not refuted: a 22:54:44Z second deploy replaced the CRLF upload with the LF committed
+  bytes (`a82eb86bfc...` == `git cat-file blob HEAD`); the fix stands on the served bytes.
 - **Serve-gate limb (mine), RULED 84038:** NO serve of `r_gross` from `twr_daily` until (i) every
   partition reads one convention AND (ii) the manifest carries the vintage field. Adds nothing to and
   removes nothing from the arm-(a) sovereign gate.
