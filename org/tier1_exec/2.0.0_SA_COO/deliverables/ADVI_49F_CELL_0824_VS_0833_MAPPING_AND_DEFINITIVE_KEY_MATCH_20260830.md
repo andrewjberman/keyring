@@ -2,9 +2,26 @@
 
 **Issuer:** `2.0.0_SA_COO`. **Cut on:** Andrew-direct ~17:1xZ, relayed verbatim by `1.0.0_SA_CTO` (88633), recorded at
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260830_171xZ_SEVEN_CARD_RULINGS.md`.
-⚠ **THAT RECORD FILE IS PRESENT ON DISK (5,039 B, 17:14Z) AND NOT YET COMMITTED — it has NO PIN.** Cite it by path
-until its author reports the hash, and re-point this face at the pin when it lands. *(A citation without a vintage is
-not a citation — and today this estate spent three separate repairs on pins that resolved and carried stale content.)*
+✅ **RE-POINTED 18:0xZ, discharging the promise this line carried when the record was uncommitted.** The record
+landed at **`1b730c8df6`** and its author appended a **§4 CORRECTION at `f0e3c13bff`** (32 insertions, *not* amended
+away). **Cite `f0e3c13bff` — `1b730c8df6` resolves and is one correction behind**, which is the exact class this face
+was warned about when it had no pin at all.
+
+⛔ **AND THE CORRECTION IS ABOUT THIS CELL'S OWN STARTING SENTENCE.** §2(1) of the record Andrew read stated
+*"the 49F SmartX feed this fabric reads lands under `schwab/08335338/` (0833)"* — **its author has now measured that
+FALSE and said so at the pin, with a negative control** (`smartx/platform` appears zero times in the record; `smartx/`
+is its own top-level prefix of 476,788 objects, under neither Schwab master).
+
+⭐ **THIS FACE QUOTED THAT SENTENCE AS THE THING TO TEST, NOT AS GROUND — and that is the only reason it surfaced.**
+Cell 1a was sequenced first precisely because *"if MGMT's mapping is 0824, that ground is in question"*; 1a then
+measured it, and the record's author traced the origin to itself within the hour. **Had this cell adopted the premise
+instead of testing it, a false spatial claim would have stayed under a sovereign card indefinitely** — nobody had
+measured it before it was written down.
+
+**Status of the correction's own residual:** the record names one surviving open question — `schwab/08335338/bronze/rps/`
+holds **540** objects against `OPAL_ASSETS_PRD.md:165/168` saying 0833 does not serve the SmartX RPS layout. **1a
+surfaced the same thing independently and it is recorded below as surfaced-not-chased.** It is a six-week-old LAYOUT
+claim, it does not touch the mapping, **no owner is assigned by this face and none is implied.**
 
 **Andrew's words on this card, verbatim from the relay:**
 > *"My understanding from Opal MGMT has been that SmartX accounts are associated with the 0824 Schwab account, that
@@ -113,6 +130,9 @@ negative control — `gold/canonical` **0** objects under `0824`, **4,208** unde
 **Two corrections to the issuer's prior, adopted:** the fix pin was one character short (`b7dd2a231` ->
 `b7dd2a2311`), and **"SmartX = 0824" is a PURPOSE/BOOK mapping and FALSE as a storage claim** — the
 SmartX feed sits under its own top-level `smartx/` prefix, under neither Schwab master.
+
+*(The record's correction, written 17:5xZ, says of cell 1b that "nothing about definitively has been established either
+way" — true when written and superseded minutes later by the report below, which the CVO has since graded PASS.)*
 
 **1b — NO, MEASURED.** **0 of 13 keys in the 0833 book, and 0 of 13 in 0824.** Read on each book's own
 authoritative record with its own custodian field, per-key, none omitted, controls firing BOTH ways
