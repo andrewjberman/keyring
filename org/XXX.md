@@ -365,6 +365,7 @@ the 22:57Z reboot: eight rows at one lane, one a `[DRIVE]` contract ruling close
 four FOREIGN READ stamps hiding the same class at another (84900); the coverage line counts a stolen slot as covered
 (84892). Cost: one call, ~1 s. Non-application: a context-clear is the SAME session — you find only your own READ rows.
 ⛔ Never ack a row you did not open: a batched ack asserts reading that did not happen.
+CODEX SEATS: no `ack_messages`/`get_delivery_state` surface exists on the canonical Codex path (3.0.0_SA_CVO~X, 03:17Z: 48 rows, none ackable); the exact-file backlog sweep at load IS the equivalent act, the rows stay un-stamped honestly, and a checked-in Codex ACK helper is `1.0.0_SA_CTO`'s org/mcp item, not a seat's improvisation.
 
 **B. Check inbox — BOTH paths, both required:**
 ```bash
