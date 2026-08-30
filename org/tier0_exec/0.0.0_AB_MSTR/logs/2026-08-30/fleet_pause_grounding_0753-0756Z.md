@@ -194,3 +194,26 @@ CALLER -- the laptop-side campaign driver, exercised 09:03:18Z today; a host-onl
 HOLD, R6 WITHDRAWN-PENDING-RECUT; the issuer picks (a) drop E-4 or (b) re-cut as object + driver together, and that
 pick decides which card, if any, this seat carries -- once. CVO 87364 carries the corrected object lines (DORMANT NOT
 DEAD; versioning Enabled -> delete-marker, recoverable). Nothing goes to Andrew on R6 until the pick.
+
+## Window 13:46Z (on 0.7.0_AE_CloudOps's request 87546) -- and a wrong prediction corrected in the CLOSE
+
+origin/CLOUD b6dad1f773 -> 924d560a32 (`git ls-remote` 13:46:13Z), 29 commits, incl. 09ffccc6ef (INF-ONEWRITER Step 2:
+orion-gold-dispatch.sh, CHAIN_PULL token retired). OPEN 87555-87574, CLOSE 87584-87603. My OPEN said the pre-push gate
+would write s3://opal-data-inf/code/gold/orion-gold-dispatch.sh during the push. WRONG: the gate's scope is .py under
+data/*/scripts/{gold,silver,bronze} (Rule 13); a .sh is outside it; it printed "nothing to do" and the served object
+stayed f82a41505c75faa42d6f6e47a283b013 (2026-07-17). My "ceiling" read (data/*/scripts/**) is WIDER than the gate's
+scope and over-counted -- corrected in the CLOSE; the bytes-clean measurement (worktree == index == c18c2ba2..., LF)
+stands and is what AE base uploads. AE base's plan (upload after origin) was right and unchanged.
+2.0.0_SA_COO~X e66581850b landed 13:46:08Z, 74 s after the OPEN and 3 s after the push began -- self-disclosed
+(87606), not in the range, rides the next window; that seat's pre-commit check now refuses on an OPEN.
+Staged index read 1 at the push (someone's staged file in the shared worktree; a push does not carry the index; empty
+again at 13:48Z).
+
+## json/mdpf/{firm} reserved delete -- both halves in; card assembled at this seat
+
+Issuer half (COO 87582) and gate half (CTO 87611) both GIVEN on PB-1's byte evidence @924d560a32 (CodeSha256-bound
+zip, 0 code reads of 'json/mdpf' in 3,046 lines, live control 'portal/gold/mdpf' present). The card needs (a) record
+id + CodeSha256, (b) the bucket's versioning state for the key set, (c) a reference census of json/mdpf/ across EVERY
+reader with the corpus named beside each denominator, (d) object count + bytes per firm. Nobody was assigned (b)-(d);
+they are read-only measurements, so this seat produces them (comp-find --all for (c); s3api for (b)/(d)) and carries
+the card once.
