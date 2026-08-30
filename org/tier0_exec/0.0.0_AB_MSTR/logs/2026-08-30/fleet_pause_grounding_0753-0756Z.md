@@ -146,3 +146,51 @@ first account (0010083855) now matches BD to 7e-6 bp on QTD, YTD and 1Y -- its e
 trading days our chain had never produced, backfilled this morning; of 16 cells LARGE last night, 5 collapsed (3 to
 EXACT) and the 11 that did not are now the ones worth reading, because coverage is no longer a candidate explanation.
 No vendor call spent. The P2 census (W1/W2 card) is the word that widens this from 5 accounts to 5,309.
+
+## 09:4xZ -- Codex seats send unattested (routed to the CTO, 87199-87201)
+
+3.0.0_SA_CVO~X reported (09:42Z, no broker row, unackable) that its app-server sends are stamped Sender-unverified.
+Measured here: 8 of 8 recent Codex-authored inbox files (CVO~X x5, CRO~X x2, CRO~Y x1) carry the stamp and zero
+Msg-ID lines -- the whole Codex population, the same one whose verdicts are already recorded UNACKABLE. Source:
+org/mcp/server.py:764 `_my_serial` is set only in register_agent (:1072), which the Codex tool surface never exposes;
+the poll loop (:862) is skipped while unset. Proposal to the CTO (org/mcp lane, not mine): seed _my_serial from
+OPAL_AGENT_SERIAL at server start with a distinct "env-seeded" attestation flag; falsifier = one Codex send carrying a
+Msg-ID and no unverified line, with a no-env negative control. No workaround improvised anywhere.
+
+## SECOND laptop-side pause ~09:59Z -> ~12:52Z (~2h55m) -- grounded 13:0xZ; Andrew push-notified 13:07Z
+
+Named first by 3.0.0_SA_CVO (summary) and 2.0.0_SA_COO~X 87336 (0 work rows across 18 telemetry-live seats, 0 frames,
+0 commits 10:03-12:54Z). This seat's instruments: Windows System log since 09:40Z -- ZERO Kernel-Power / Power-
+Troubleshooter / Kernel-General events; NetworkProfile -- ZERO connect/disconnect events (this morning's gap had a
+2 s drop; this one has nothing); last boot unchanged 22:57:52Z; 18 claude.exe live. git log --all: last commit
+09:59:29Z (COO), first after 12:55:18Z (COO~X); 0 for 2h56m. No frame was addressed to this serial 09:44-12:59Z, so
+this session's own clock cannot separate idle from paused; the CVO's and git's zeros are the instruments.
+Verdict: laptop-side, all sessions, second instance today, mechanism UNDETERMINED (no candidate strengthened).
+Roster line 87338-87357 (windows reset from the first work-call after 12:52Z; no reaping; ticks fold). Site Z asked
+over the bus for its 09Z-13Z hourly rate (MessageId 3f9d1823; this morning's 391ed8e7 was answered: flat, no pause).
+PushNotification to Andrew 13:07Z ("2nd fleet pause today ... cause unknown; nothing lost; 49F Sunday fire PASSED") --
+sent because two multi-hour stalls in one day on his device is his to know, not the fabric's alone.
+
+## 12:45Z floor fire: PASSED (M-4). C02-g-8 CLOSED at the grader.
+
+DS~N 87294 + AE~L 87310 secondary read + CVO 87305 grader's own read of gold/advi/_logs/chain_20260830T124542Z.log:
+"chose date=2026-08-28 of 46; SKIPPED header-only: 2026-08-29", map_carried=False (correct: map date == chain date),
+"STAGE OK a06 rc=0", "CHAIN OK date=2026-08-28 wall=104.4s" -- the first Sunday fire to complete since the floor
+was created 08-19. Channel row 38 DISARMED -> REMEDIATED. C02-g-8 M-1..M-5 CLOSED (CVO 87331).
+**Andrew line, final:** the 49F gold chain's weekend-abort defect is FIXED and PROVEN on the scheduled path -- the
+Sunday fire completed for the first time since the floor was created; Monday's fire is the second exercise.
+
+## Window 13:10Z (no deploy)
+
+origin/CLOUD 416a116c8b -> b6dad1f773 (`git ls-remote` 13:10:01Z), 34 commits, everything since the 09:36Z CLOSE.
+OPEN 87377-87396, CLOSE 20/20. COO~X 87336 had flagged the integrator as the one seat not measured back; the 13:07Z
+roster line and this window are the measured return.
+
+## R6 (S3 delete of _code/c02_reemit_mirror_pull.py): HELD, not carried
+
+CTO tick 87 (87313) filed R6 as reserved (Agent Autonomy line: S3 deletes are Andrew's), REC yes after a
+0-reference census. AE~L's census (87332): host-side 0 of 79 with a firing control, BUT the repo sweep finds ONE LIVE
+CALLER -- the laptop-side campaign driver, exercised 09:03:18Z today; a host-only sweep cannot see it. CTO 87360/87375:
+HOLD, R6 WITHDRAWN-PENDING-RECUT; the issuer picks (a) drop E-4 or (b) re-cut as object + driver together, and that
+pick decides which card, if any, this seat carries -- once. CVO 87364 carries the corrected object lines (DORMANT NOT
+DEAD; versioning Enabled -> delete-marker, recoverable). Nothing goes to Andrew on R6 until the pick.
