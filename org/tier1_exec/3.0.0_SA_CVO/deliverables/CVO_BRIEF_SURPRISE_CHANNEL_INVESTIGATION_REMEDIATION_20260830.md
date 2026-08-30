@@ -209,3 +209,58 @@ CLAUDE.md Rule 22 already says a second seat's confirmation via the FIRST seat's
 If exactly one thing lands: **E-2, class ownership with a bounding census.** Everything else on this list makes a working mechanism tidier. E-2 is the one that would have found the fifth CRLF member before it shipped a wrong artifact -- and the same shape, unbounded, is what let seven production functions run stale bytes for 109 days while every instrument in the estate read clean.
 
 -- `3.0.0_SA_CVO`
+
+---
+
+# AMENDMENT 1 -- on `1.0.0_SA_CTO`'s review (88265), 2026-08-30 16:1xZ
+
+The gate read the ARTIFACT (18,526 B @b69314a1cc, all eight sections) rather than the covering message, CONCURRED on the thesis, and returned one disagreement that **changes section 8**. Recorded here rather than by editing the body: the original recommendation stands as written and is superseded by this amendment, because a brief that edits away its own first answer stops being a record of the review.
+
+## A1.1 THE ONE-LINE RECOMMENDATION IS SUPERSEDED: **E-1 + E-2 as ONE act**
+
+Section 8 said "if exactly one thing lands, E-2." **The gate is right and it does not stand alone.** E-2's trigger as written is "when two cells share a mechanism" -- and *noticing that two cells share a mechanism is the same noticing problem this brief identifies one level up.* It is precisely how the fifth CRLF member waited for four fixes. The only mechanical trigger available is E-1's index: **the SECOND JSONL row carrying the same `class` value declares the class automatically.** E-1 alone is tidy-up; E-2 without E-1 is a rule that depends on a seat noticing what section 4 says seats do not notice. Neither should land alone.
+
+## A1.2 AMENDMENT to E-2: a class is a PREDICATE over a NAMED CORPUS, never a description
+
+"Instruments that read the worktree while reporting the record" is not censusable as prose. As a predicate it is: **every call site that hashes, zips, uploads or compares a PATH** (`open()`, `read_bytes`, `md5sum`, `sha256sum`, `zipfile`, `aws s3 cp`) **within a named corpus** (`.tools/`, `infra/aws/lambda/ci/`, `data/*/scripts/`), with the denominator of call sites scanned printed beside the hits. **A class row that cannot state its predicate and its corpus is a cell, not a class.** The cost is then bounded and measured rather than estimated -- today's INF-DRIFTCENSUS is the proof case: a code oracle over 25 rows produced 8 classified members in one read-only act.
+
+## A1.3 ⛔ THE LAW POINT THIS BRIEF SHOULD HAVE CARRIED
+
+Weak spot #1 (no detection layer) **cannot be closed by a monitor.** The standing moratorium forbids building an alert, alarm, freshness-checker or watcher unless Andrew asks by name. **The BOUNDED CENSUS is the legal form of detection** -- and today's evidence is that it works: the census that found seven functions running stale bytes was ONE READ-ONLY ACT, not a standing watcher. That makes E-2 not merely the best first act but **the only one of its kind available under the law**, and Andrew should see it framed that way. The brief's original section 4 named the gap without naming the only legal shape of its remedy; that was an omission.
+
+## A1.4 E-7's FIELD, specified so it cannot become ritual
+
+As written ("the grader names its instrument and whether it differs in AXIS") the field is satisfiable by *"mine; differs"* -- unfalsifiable by any reader. Required instead: **`producer_instrument`, `grader_instrument`, `axis_differs_in: <what>`** -- three fields, all checkable. Non-application as written is right and has today's instance: `inf-portal-advisor-publisher` printed *"0 of 1 member(s) MATCH -- NONE, so this function cannot self-control"*, and naming that WAS the finding -- it is why that leg is HELD before it starts rather than queued last.
+
+## A1.5 ADDITION to E-6: visibility does not unblock
+
+The brief named the single grader as a method risk and correctly declined a second grader. The gate's addition: it is also a single point of **availability**, and today put ~4h45m of grading latency into the fabric while every liveness probe read GREEN. **When `awaiting-grade-since` exceeds a stated bound, the ISSUER's tick routes a spawn ask to `0.0.0_AB_MSTR`** -- the branch `/self-drive` already runs when a CVO lane is dark, reusing a mechanism the fabric has rather than inventing one. That converts E-6 from a display into an escalation without ever putting two graders on the same artifacts.
+
+## A1.6 CORRECTION to section 3.3(a), member 1 -- measured, not queued
+
+The table listed the vendoring-zip member as *"(owned, CTO queue)"*. **A queue entry is not a state.** Measured on my own instrument at 16:1xZ, confirming the gate's read:
+
+```
+grep -rn 'git show :' infra/aws/lambda/ci/   ->  0        (the build chain is worktree-sourced)
+grep -rn 'git show :' .tools/                -> 15        (POSITIVE CONTROL: the pattern is findable)
+build-and-upload.sh:179  ABS_SOURCE="$WORKSPACE_ROOT/$FN_SOURCE"   <- a worktree path, zipped
+BUILD_MANIFESTs declaring blobs: 1 of 11 under infra/aws/lambda/*/*/  (my glob's denominator)
+```
+
+**Status: PARTIALLY CLOSED, and the split is the point.** Where a manifest declares blobs, the index gate plus the raw-CR oracle now refuse a divergent member (inf-silver-chain, 4 of 4). Where it does not -- the large majority -- the zip is still worktree bytes taking the documented SKIP with no index check. One member of the class, half-guarded, **and the split is invisible without exactly the census E-2 proposes.** Per E-3 this item now carries its state rather than its queue position.
+
+## A1.7 A DESIGN RULE the brief should state explicitly
+
+Every enhancement here adds fields to **CLOSURES and INDEXES, and none to FILINGS.** That asymmetry is deliberate -- section 5.1 warns that anything making filing heavier converts filings into silence -- but it was implicit. Stated now as a rule, because the next enhancement proposed will not be written by whoever read section 5.
+
+## A1.8 ONE DENOMINATOR added to section 7
+
+"Six ARMED items in a day" is a function of ACTIVITY, not of time. The figure needs **the number of CELLS WORKED beside it**, not the number of hours, before anyone reads it as a rate. Today: 6 ARMED across 9 cells graded and 4 cut. That is still one day.
+
+## A1.9 WHAT THE REVIEW DID NOT MOVE
+
+The thesis, the three structural gaps, section 5's five protected properties, and section 7's limits stand unamended. The gate called section 7 "the most valuable page"; I record that only because the temptation, having been concurred with, is to shorten it.
+
+**Standing:** the brief is amended, not re-cut. `1.0.0_SA_CTO` has reviewed. E-1 + E-2 land as cells at `2.0.0_SA_COO` if Andrew takes the recommendation; nothing in this brief has been implemented.
+
+-- `3.0.0_SA_CVO`
