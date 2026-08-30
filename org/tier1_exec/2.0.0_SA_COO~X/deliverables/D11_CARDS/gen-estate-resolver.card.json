@@ -1,0 +1,179 @@
+{
+  "schema_version": 3.1,
+  "subject": {
+    "id": "org/modules/graph/gen-estate-resolver.py",
+    "kind": "script",
+    "declared_domain": "NFRA_PIPESCRIPT / estate world model -- the JOIN that generates estate-coverage-resolver.json, the read-source of the `pipescript <name>` CLI (estate_infrastructure_cli.py) and the NAMING SOURCE of comp-estate (opal_estate_infrastructure.py). Declared authority split: routing (owning_tool / status / named_thread / reachability_status) comes from CVO's committed estate-coverage-manifest.yaml, NEVER a heuristic (the docstring records the 79-vs-13 over-assignment CVO caught at seed 61e91d334); per-thread detail (producers / served / frontend / the four prose fields) comes from the frozen census under org/modules/graph/estate_census/ with manifest-wins precedence; resource-level lambda -> named_thread from AUTHORITATIVE_lambda_taxonomy.json."
+  },
+  "as_of": {
+    "carded_utc": "2026-08-30T09:40:00Z",
+    "commit_ish": "7fe3a68013",
+    "graph_vintage": "The subject's own last change is 7fe3a68013 (2026-08-20, 0.8.0_AE_CloudComp, the W-15 landing). The SERVED artifact estate-coverage-resolver.json was last regenerated in that same commit: generated_at 2026-08-20T18:59:22Z, last_review 2026-07-30, 135 threads, 29 named, 27 resource groups, 213,450 B. Its INPUTS are NOT all at that vintage: estate-coverage-manifest.yaml @7fe3a68013 (same commit), pass2_gapfamilies.json + AUTHORITATIVE_lambda_taxonomy.json @cef8e071e2 (2026-08-20), but pass1_inventory.json @727daaab94 (2026-08-20, 3.0.0_SA_CVO, 'DORMANT2 Phase-1 denominators carried') is a LATER commit than the regen -- so the served artifact predates one of its inputs. Measured consequence under trust.coverage and process.cadence."
+  },
+  "process": {
+    "methodology": {
+      "how": "ONE FUNCTION, main() (:69-168), no CLI arguments, one environment variable. (1) load_routing() (:31-53) reads the manifest's `threads` list and lifts 14 fields per row, family == thread_id by CVO's convention (:74). (2) load_census_detail() (:56-66) indexes pass1_inventory.json allThreads by thread_id, then OVERLAYS pass2_gapfamilies.json threads (setdefault family) -- a thread present in both takes pass2's row. (3) For every MANIFEST row: census detail looked up (missing -> counted in no_detail and the row still emitted with empty detail), debtscan_flags DERIVED ('needs-consumer-trace' iff status == 'unreviewed'; 'orphan-candidate' iff the RESOLVED classification_reason lower-cased contains any of 'orphan' / 'superseded' / 'not invoked' / 'no event source', :89-91), four prose fields and four detail fields resolved manifest-wins-else-census (:86-88, :99-107). (4) resources_by_named_thread from the taxonomy's lambda_to_named_thread (191 lambdas -> 27 named threads, :113-119). (5) named_threads = the 25-name CATALOG_ORDER literal filtered to names present, then the sorted remainder of (manifest named_threads UNION taxonomy named_threads) (:130-136) -> 29 today. (6) last_review PRESERVED from the prior artifact at the OUTPUT path (:148-153), floor '2026-06-15' when none is readable; generated_at = now. (7) json.dump over the output path (full overwrite, indent 1) and six summary prints (:161-168). EXERCISED at carding: run with OPAL_RESOLVER_OUT pointed at scratch (the documented exercise mode, :24-28) -- rc 0, rows 135 / threads 135 / named 29 / no_detail 5 (sentiment_query_api, test-yfinance-simple, yfinance-aapl-test, ycharts-session, canonical-schwab), the summary lines reproduced verbatim.",
+      "determinism": "deterministic",
+      "inference_detail": null,
+      "materializer_standing": "canonical",
+      "composes": [
+        {
+          "id": "org/modules/graph/estate-coverage-manifest.yaml",
+          "note": "the ROUTING AUTHORITY (CVO): 135 rows, every row's family is a thread_id; the driver of the join -- a thread absent here is absent from the resolver whatever the census says"
+        },
+        {
+          "id": "org/modules/graph/estate_census/pass1_inventory.json",
+          "note": "126 thread rows of per-thread detail; declared in the source (:47-48) as 'a dated bootstrap default no adjudication may edit' -- and edited @727daaab94 AFTER the last regen (see trust.coverage)"
+        },
+        {
+          "id": "org/modules/graph/estate_census/pass2_gapfamilies.json",
+          "note": "21 thread rows grouped by gap family; overlays pass1 by thread_id"
+        },
+        {
+          "id": "org/modules/graph/estate_census/AUTHORITATIVE_lambda_taxonomy.json",
+          "note": "lambda_to_named_thread, 191 lambdas -> 27 named threads; the resource enumeration `pipescript <name>` surfaces"
+        },
+        {
+          "id": "org/modules/graph/estate-coverage-resolver.json",
+          "note": "ITS OWN PRIOR OUTPUT, read for last_review only (:149-153) -- the one self-referential input; at the OUTPUT path, so an OPAL_RESOLVER_OUT run reads the scratch path, not the live artifact"
+        }
+      ],
+      "invents": [
+        {
+          "id": "debtscan_flags",
+          "note": "two derived flags per thread, one from status equality and one from a four-token substring match on prose (:79-91) -- a classification computed from free text, so a rewording of a reason that keeps its meaning can flip the flag"
+        },
+        {
+          "id": "named_threads ordering",
+          "note": "CATALOG_ORDER, a 25-name literal in the source (:130-135) with dated in-source rationale for each removal/addition; a populated vertical absent from the literal falls to the sorted tail (:136)"
+        },
+        {
+          "id": "generated_from",
+          "note": "a LITERAL string (:156) naming 'CVO census 2d9a0a2a1' and 'taxonomy 26b32687a' -- pins that do not move when the inputs do; the census now read lives at the 08-20 re-pointed home (:18-19), not at 2d9a0a2a1"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Read in full, org/modules/graph/gen-estate-resolver.py:1-172 @7fe3a68013: ROOT/CENSUS/MANIFEST/RESOLVER at :17-28; load_routing :31-53; load_census_detail :56-66 (pass2 overlay :61-65); the flag derivation :78-91; the manifest-wins resolution :86-88 and :99-107; the taxonomy at :113-119; CATALOG_ORDER :130-136; the last_review preservation :137-153; the write :161; the prints :162-168. Determinism 'deterministic' rated on the CONTENT: a dry regen at carding reproduced the committed artifact on 133 of 135 threads exactly and on named_threads + resources_by_named_thread exactly; the two differing threads differ because an INPUT changed after the regen (measured under trust.coverage), not because the function varies -- generated_at is the sole clock-dependent field, by design.",
+      "owner": ".owned-paths.yaml: org/modules/** falls back to ANY_EXEC (Execs + AEs) -- no narrower owner is enumerated for this file (:163-166 note). Creator 2.0.0_SA_COO (@714837b5e4, 2026-06-15, NFRA_PIPESCRIPT P1); last editor 0.8.0_AE_CloudComp (@7fe3a68013). The routing rows it joins are CVO's by declaration."
+    },
+    "cadence": {
+      "declared_rhythm": "ON-CHANGE, declared in three places and none of them is a mechanism: graph-call-manifest.yaml:707 'rebuild_trigger: re-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes (resolver is a generated join)'; comp-tools.yaml:333 the same sentence; .tools/tool_index.py:1540 the same sentence. The subject itself declares nothing about when it runs.",
+      "actual_trigger": "MANUAL ONLY. Callers in code, censused with native Grep over the repo excluding org/tier*/**: exactly ONE -- opal_estate_infrastructure.py:83 names it _REFRESHER and :474 runs it by subprocess under `comp-estate --refresh` (printed as 'BRIDGE, not the destination', :473). estate_infrastructure_cli.py:232 only TELLS an operator to run it when the resolver is absent. No scheduler, no hook, no cron, no CI step invokes it; the other hits are manifests, ledgers, audit logs and a design doc describing it. So the declared on-change rebuild fires only when a person or seat chooses to run it.",
+      "live_matches_declared": "no",
+      "live_instance_age": "The served artifact was generated 2026-08-20T18:59:22Z -- 9.6 days before carding. Its last_review reads 2026-07-30 (31 days), and the consumer's STALE_AFTER_DAYS is 14 (opal_estate_infrastructure.py:86, :141), so comp-estate prints '*** NAMING SNAPSHOT IS STALE' on every run today. A regen cannot advance that clock by design (:137-147: 'A REGEN IS NOT A REVIEW'); only a review can, and NOTHING IN THE REPO WRITES last_review FORWARD -- unmeasured which act does (the field is preserved, never set, by this producer).",
+      "basis": "measured",
+      "basis_by_field": {
+        "declared_rhythm": "measured",
+        "actual_trigger": "measured",
+        "live_matches_declared": "measured",
+        "live_instance_age": "measured"
+      },
+      "evidence": "live_matches_declared = NO is MEASURED, not inferred from the absence of a scheduler: the census input pass1_inventory.json changed @727daaab94 (2026-08-20, CVO, after the 7fe3a68013 regen) and the served resolver was not regenerated -- a dry regen at carding (OPAL_RESOLVER_OUT -> scratch, same inputs as the worktree) differs from the committed artifact on 2 of 135 threads (bd-txn-consolidator, MA-06-market-update-authoring-toolchain), in one field each (classification_reason), where the served value is a 1,021 / 901-char PREFIX of the dry value and the missing suffix is the DORMANT2 Phase-1 '|| INVOCATION DENOMINATOR ...' appendix the census commit added. The census carries the dry value; the manifest carries none. The declared rebuild trigger ('after the manifest/census changes') therefore did NOT fire on the last census change, and the served artifact is 2-of-135 stale against its own inputs today.",
+      "owner": "ANY_EXEC by path; the regen act is whoever runs comp-estate --refresh; the review clock's writer is UNMEASURED"
+    }
+  },
+  "artifact": {
+    "persistence": {
+      "persisted": true,
+      "authority_role": "projection",
+      "mutation_policy": "replaceable",
+      "form": "estate-coverage-resolver.json: {schema_version 1, generated_from (literal), last_review (preserved), generated_at (now), named_threads [29], resources_by_named_thread {27 -> sorted lambda names}, threads [135 x {thread_id, named_thread, family, owning_tool, status, reachability_status, reason, debtscan_flags, description, producers, served_artifacts, frontend_resolution, classification, classification_reason, enrichment}]}. Committed to the repo (213,450 B), read at call time by two consumers.",
+      "basis": "measured",
+      "evidence": "json.dump full rewrite at :161 (no merge, no atomic rename -- a crash mid-write leaves a truncated file at the live path, and the consumer fails LOUD on that: opal_estate_infrastructure.py:120-126 returns _fail_loud on unreadable/corrupt). 'projection': every value is a copy or a derivation of the manifest / census / taxonomy except last_review (carried) and generated_at (clock); 'replaceable' (a full rewrite on every run) with ONE carried field -- the prior artifact's last_review survives the rewrite by construction (:149-153). Shape read from the served file at carding: 135 threads, 29 named, 27 resource groups.",
+      "owner": "ANY_EXEC by path (org/modules/graph/); the routing content is CVO's"
+    },
+    "location": {
+      "home": "org/modules/graph/estate-coverage-resolver.json (committed; the default RESOLVER path :27-28). Redirected by OPAL_RESOLVER_OUT for exercise runs -- and the last_review preservation then reads the REDIRECTED path, so an exercise run to a fresh path always stamps the 2026-06-15 floor (measured at carding: dry last_review 2026-06-15 vs served 2026-07-30).",
+      "projection_of": [
+        {
+          "id": "org/modules/graph/estate-coverage-manifest.yaml",
+          "note": "routing + any adjudicated prose/detail placed on a manifest row (manifest wins)"
+        },
+        {
+          "id": "org/modules/graph/estate_census/pass1_inventory.json",
+          "note": "default per-thread detail; 126 rows"
+        },
+        {
+          "id": "org/modules/graph/estate_census/pass2_gapfamilies.json",
+          "note": "overlay per-thread detail grouped by gap family; 21 rows"
+        },
+        {
+          "id": "org/modules/graph/estate_census/AUTHORITATIVE_lambda_taxonomy.json",
+          "note": "resources_by_named_thread; 191 lambdas"
+        }
+      ],
+      "co_resident_stores": [
+        {
+          "id": "org/modules/graph/estate_infrastructure_cli.py",
+          "note": "pipescript. CONSUMER: load() :226-234 reads the resolver and exits 3 with 'run gen-estate-resolver.py' when absent"
+        },
+        {
+          "id": "org/modules/graph/opal_estate_infrastructure.py",
+          "note": "comp-estate. CONSUMER + the only code CALLER: reads the resolver as its NAMING SOURCE (:120-131), ages last_review against STALE_AFTER_DAYS = 14 (:138-149), and re-runs this subject under --refresh (:466-481)"
+        }
+      ],
+      "basis": "measured",
+      "evidence": "Paths at :17-28; the consumers' read sites cited per row; the exercise-mode behaviour of last_review measured by the dry run at carding (OPAL_RESOLVER_OUT set, prior artifact absent at that path, floor stamped).",
+      "owner": "ANY_EXEC by path"
+    }
+  },
+  "trust": {
+    "coverage": {
+      "universe": "The MANIFEST's 135 thread rows -- the join is manifest-driven (:73), so the universe of the output is exactly the manifest's, plus the taxonomy's named threads for the ordering/resource maps (:121). The census is consulted per manifest row, never enumerated.",
+      "denominator": "PRINTED IN ONE DIRECTION ONLY. The run prints rows 135 / threads 135 / named 29 and 'threads w/o census detail (routing-only): 5' with their ids (:164, :167) -- manifest rows LACKING census detail are counted and named. The OPPOSITE direction is never counted: census thread_ids with NO manifest row are dropped by the join silently. Measured at carding: census union (pass1 126 + pass2 21, overlapping) = 147 thread_ids, of which 17 have no manifest row and so appear nowhere in the resolver -- among them names a reader would expect to find (advi-bd, advi-cot, advi-inf, mdpf, data-refresh, observability, m365-mcp, ceo-digest, etf-reports, historical-prices-scheduler, cot-bd-session-trigger, FRED-09-portfolio-funds-list). Whether each is correctly out of scope is CVO's ruling to state; the point on this card is that the producer cannot show the number. Taxonomy named threads absent from the manifest: 3 (ceo-digest, etf-reports, ticketing) -- these DO surface, via the union at :121, as named threads with resources but no manifest row.",
+      "explicitly_out": [
+        "census-only thread_ids (17 of 147 at carding) -- excluded by the manifest-driven join, with no count printed",
+        "any manifest row whose family key is absent -- tid None would still emit a thread (no validation of the manifest's rows; 0 such rows today, measured)",
+        "a lambda in the taxonomy whose named_thread is in neither the manifest nor CATALOG_ORDER -- surfaces only in the sorted tail (:136), by construction, never dropped",
+        "the census originals at org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-15/estate_census/ -- 'nothing reads them' (:19); the live census home is the 08-20 re-pointed one"
+      ],
+      "basis": "measured",
+      "evidence": "Manifest-driven loop :73; the one-direction count :72,:76-77,:167; the census-only census computed at carding from the three input files at their worktree vintage (manifest families 135; pass1 126; pass2 21; union 147; census-only 17; manifest rows with family None 0); the union at :121 explains why the 3 taxonomy-only names surface.",
+      "owner": "the routing universe is CVO's (manifest); the producer's silence on the dropped set is ANY_EXEC's (this file)"
+    },
+    "key": {
+      "identity_space": "thread_id, a string; the manifest's `family` key IS the thread_id by CVO's convention (:74 comment 'CVO's family key == thread_id'). Two further spaces are crossed: named_thread (a vertical name, many threads -> one) and lambda function name (taxonomy keys, many lambdas -> one named_thread).",
+      "key_expression": "JOIN KEY: r['family'] (manifest) == t['thread_id'] (census pass1 / pass2), exact string equality via dict lookup (:60, :65, :74-75). OVERLAY: pass2 rows replace pass1 rows on equal thread_id (:61-65) -- later file wins, silently. SECONDARY MAPS: taxonomy lambda -> named_thread (:114-117), grouped; named_threads = CATALOG_ORDER-filtered UNION of manifest named_threads and taxonomy named_threads (:121, :136). IDEMPOTENCY: none needed -- full overwrite; re-running with unchanged inputs changes only generated_at (measured: 133 of 135 threads byte-equal to the served artifact, the 2 differing ones explained by an input change).",
+      "key_is_stable": "stable",
+      "crosses_spaces": true,
+      "declared_mapping": "The family == thread_id identity is declared in a comment (:74) and nowhere enforced -- a manifest row whose family is a vertical name rather than a thread_id would look up nothing, land in no_detail, and be emitted as a routing-only thread with empty detail; today 0 such rows. The census is declared FROZEN ('a dated bootstrap default no adjudication may edit', :47-48) -- and 3.0.0_SA_CVO edited pass1_inventory.json @727daaab94 on 2026-08-20 (the DORMANT2 denominators), so the declaration is false as of that commit; the manifest-wins rule (:44-49) was written so adjudicated text survives regen, and it still does, but the census is no longer the frozen side of that contract.",
+      "basis": "measured",
+      "basis_by_field": {
+        "identity_space": "measured",
+        "key_expression": "measured",
+        "key_is_stable": "measured",
+        "crosses_spaces": "measured",
+        "declared_mapping": "measured"
+      },
+      "evidence": "All expressions read at :56-66 and :73-75, :113-121, :136; the pass2-overwrites-pass1 order read at :58-65; the frozen-census declaration :47-48 against git log -1 on pass1_inventory.json (727daaab94, 3.0.0_SA_CVO, 2026-08-20, after 7fe3a68013). Rated STABLE: a string equality on ids that CVO authors; the instability is in the DECLARATIONS around the key (frozen census; comment-only identity), recorded here and under failure_mode rather than on the rating.",
+      "owner": "CVO (the ids and the manifest); ANY_EXEC (the join and its comments)"
+    },
+    "failure_mode": {
+      "returns_on_failure": "LOUD on missing or unparseable INPUTS: every open() and load is unguarded (:32, :58, :61, :113), so a missing manifest, census file or taxonomy, or malformed YAML/JSON, raises and the process exits non-zero WITHOUT touching the output -- and the only caller reads that rc and prints 'REFRESH FAILED ... snapshot NOT regenerated and left untouched' (opal_estate_infrastructure.py:475-481). SILENT on the three things that matter more: (a) a census-only thread is dropped with no count (coverage); (b) a prior artifact that is unreadable or corrupt at the output path is swallowed by the ONE handler in the file, `except (OSError, ValueError): pass` (:152-153), and last_review regresses to the 2026-06-15 floor with no message -- the exact 'moved the review vintage BACKWARDS' defect the :137-147 comment says this code was written to prevent, still reachable through a corrupt prior file; (c) the served artifact carries generated_at but NOTHING that says whether its inputs have changed since, so a stale-against-inputs resolver (2 of 135 today) is indistinguishable, from the artifact alone, from a fresh one -- the consumer ages last_review, which is a REVIEW clock, not an input-vintage clock.",
+      "distinguishable_from_true_negative": "no",
+      "silent_degrade_paths": [
+        "census-only thread_ids (17 of 147 at carding) vanish from the resolver with no count; the printed 'threads w/o census detail' number measures the other direction and can read 5 while 17 are dropped",
+        "a corrupt or unreadable prior artifact at the output path -> last_review silently set to the '2026-06-15' floor (:148-153); the consumer then reports the map 76 days old and STALE, which is loud downstream but false upstream -- a review DID happen (2026-07-30) and the producer forgot it",
+        "an input changed after the last regen -> the served artifact is stale against its inputs with no field saying so (generated_at names the regen instant, generated_from is a frozen literal naming pins the inputs no longer sit at); MEASURED live today: 2 of 135 threads carry a truncated classification_reason relative to the census",
+        "the 'orphan-candidate' flag is a substring match over free prose (:89-91): a reason reworded without one of the four tokens un-flags a thread; a reason QUOTING one of them (e.g. 'not an orphan') flags it -- no arm on this card measured the current false-positive/false-negative count",
+        "pass2 rows overwrite pass1 rows on the same thread_id (:61-65) with no note in the output of which file supplied the detail",
+        "OPAL_RESOLVER_OUT to a fresh path stamps the floor last_review because the preservation reads the OUTPUT path (:150) -- correct for an exercise, but a copy of that exercise output over the live file would regress the review clock by six weeks"
+      ],
+      "basis": "measured",
+      "evidence": "AST HANDLER CENSUS at carding, attribution-controlled: ONE handler in the file, :152 `except (OSError, ValueError): pass`, inside main(); zero module-level handlers; every other I/O is unguarded and raises. The caller's rc handling read at opal_estate_infrastructure.py:474-481. The stale-against-inputs path MEASURED by the dry regen at carding (2 of 135 threads, field classification_reason, served value a strict prefix of the census value; input commit 727daaab94 later than the regen commit 7fe3a68013). The dropped-set count measured from the three input files (147 census ids, 135 manifest, 17 dropped). The floor path exercised by the dry run itself (no prior artifact at the scratch path -> last_review 2026-06-15 in the output).",
+      "owner": "ANY_EXEC by path; the consumer-side staleness verdict is comp-estate's (0.8.0_AE_CloudComp family); the review clock's writer UNMEASURED"
+    }
+  },
+  "verdict": {
+    "standing": "QUALIFIED",
+    "why": "The join does what its docstring says and nothing else: routing from the committed manifest, detail from the census with manifest-wins precedence, resources from the taxonomy, a full overwrite that carries exactly one field forward, and it fails LOUD on any missing or malformed input -- reproduced at carding on 133 of 135 threads byte-for-byte with named_threads and the resource map exact. The 'A REGEN IS NOT A REVIEW' fix at :137-153 is real and correct in direction. QUALIFIED on four measured points. FIRST, the served artifact is STALE AGAINST ITS OWN INPUTS TODAY: the census was edited @727daaab94 after the last regen @7fe3a68013, the declared on-change rebuild has no mechanism (one manual caller, comp-estate --refresh), and 2 of 135 served threads carry a truncated classification_reason as a result -- and no field on the artifact can say so. SECOND, the producer counts coverage in one direction only: manifest rows lacking census detail are printed (5), census thread_ids lacking a manifest row are dropped silently (17 of 147), so the number it prints is the smaller of the two gaps. THIRD, the one exception handler in the file (:152) is on the one path the :137-147 comment says must never regress -- a corrupt prior artifact resets last_review to the floor with no message. FOURTH, the source declares the census frozen (:47-48) and the census has since been edited by its authority, so the manifest-wins contract now sits on a moving default; the comment is false as of 2026-08-20. Beside these, generated_from is a literal naming pins the inputs no longer sit at (:156). None of these leak or corrupt routing; all of them make the served map quietly narrower or older than its consumers can tell.",
+    "blocking_defects": [
+      "served artifact STALE against its inputs: pass1_inventory.json @727daaab94 postdates the last regen @7fe3a68013; dry regen at carding differs from the served resolver on 2 of 135 threads (classification_reason, served = strict prefix of census); the declared on-change rebuild (graph-call-manifest.yaml:707) has no mechanism -- one manual caller (cadence + failure_mode rows)",
+      "coverage counted in one direction: 'threads w/o census detail' printed (5 of 135) while census-only thread_ids are dropped uncounted (17 of 147 at carding) (coverage row)",
+      "the single handler :152-153 swallows a corrupt/unreadable prior artifact into the 2026-06-15 floor silently -- the review-clock regression the :137-147 comment exists to prevent, reachable by the file's only except (failure_mode row)",
+      "the census is declared frozen (:47-48) and was edited by 3.0.0_SA_CVO @727daaab94 -- the declaration is false; the manifest-wins contract now rests on a moving default (key row)",
+      "generated_from is a frozen literal (:156) naming census 2d9a0a2a1 / taxonomy 26b32687a while the census read lives at the 08-20 re-pointed home -- the artifact's own provenance line does not name its inputs' vintage (methodology row)"
+    ]
+  },
+  "carded_by": "2.0.0_SA_COO~X"
+}
