@@ -40,6 +40,29 @@ CTO rules that S1e may be re-pointed to the first scheduled 04:35Z fire after th
 
 This is not a quiet acceptance-criterion amendment and not a substitute proof for 2026-08-31. It is the only non-fabricated way to finish the activation leg after repairing the half-landed deploy. Clauses 2 and 3 from the 2026-08-31 fire may be carried as already met; clauses 1 and 4 must be proven on the post-repair scheduled fire.
 
+## Re-Rule After Untargeted Plan
+
+0.7.0_AE_CloudOps~N reported Msg-ID 89941 that the untargeted `opal-assets` plan returned `2 to add, 2 to change, 0 to destroy`.
+
+The two adds are exactly the intended `bd49finsurance` attachments:
+
+- `aws_iam_role_policy_attachment.silver_basic["bd49finsurance"]`
+- `aws_iam_role_policy_attachment.silver_fence["bd49finsurance"]`
+
+The two changes are unrelated MDPF daily-emitter changes from commit `2740e4de8f`, which is explicitly `STAGED-NOT-APPLIED` and held for its own MDPF window. Those changes must not ship as a side effect of ADVI_INSURE repair.
+
+CTO re-rules: GO for a targeted safe-apply of exactly the two `bd49finsurance` attachment addresses above. This is not the original blind pattern, because the untargeted plan has already bounded the whole stack and exposed the held MDPF delta. The targeted apply is now a deliberate exclusion of known unrelated held resources.
+
+After the targeted apply, the omission-sensitive verification is mandatory:
+
+- run the untargeted plan again; it must show `0 to add, 2 to change, 0 to destroy`, with only the held MDPF emitter pair remaining;
+- prove both `bd49finsurance` attachments present on the live role;
+- prove logs permissions allowed for the `bd49finsurance` role;
+- re-read the `blackdiamond` role as positive control;
+- prove the fence changed the foreign source bucket result to explicit deny while the own silver key remains allowed.
+
+If any condition fails, stop and escalate. No untargeted apply, no MDPF re-home, no hand invoke, no vendor egress, and no backfill.
+
 ## Standing Lesson
 
 This incident should become a standing deploy-control clause: a targeted apply cannot be verified by a targeted re-plan alone. The post-apply verification must include an omission-sensitive check over the declared resource family, or an untargeted plan/read that can surface declared resources omitted from the target set.
