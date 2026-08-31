@@ -237,3 +237,42 @@ anywhere, gains permission to build a monitor, alert, SNS subscriber or freshnes
 **READY:** `1.1` · `4.1` · `5.1` · `5.3` · `6.1`.
 Unchanged: WS-2/WS-3 remain DEP-BLOCKED behind the WS-1 storage ruling, and **no attachment or
 transcript is written to any bucket before 1.3 + 1.4 are ruled.** `6.2` remains ANDREW-BLOCKED.
+
+
+---
+
+# AMENDMENT 2 — 2026-08-31 ~23:5xZ: **D7 IS PARKED. ANDREW-DIRECT, VERBATIM AND ENTIRE: "D12 first."**
+
+Relayed by `1.0.0_SA_CTO~Z` (msg 17217) from the site-Z terminal, answering the parallel-vs-behind
+fork `2.0.0_SA_COO~Z` put to him with its rank-1 rec (D7 behind D12).
+
+## WHAT IS RULED
+
+- ⭐ **D12 IS THE PRIORITY. D7 IS BEHIND IT.** No D7 task orders are cut.
+- ⛔ **NO NEW LANES SEATED.** D7's five READY cells each need a seat that does not exist — Rule 27 is
+  one Tier-2 instance = one project, and `0.7.0_AE_CloudOps~Z` is D12's. Seating 2–3 lanes at midnight
+  on an inferred authorization is exactly what this ruling declines.
+- **`READY` BELOW NOW MEANS "ready when D7 resumes", NOT "available to start."** Nothing in §1 changed
+  on its merits; the whole directive is parked behind D12. A reader who acts on a READY row without
+  this amendment would be starting work Andrew ranked second.
+
+## ⛔ ONE AMBIGUITY, RECORDED OPEN AND DELIBERATELY NOT RESOLVED
+
+His two words rank D12 over D7. **They do not say whether the zero-cost D7 architecture read (cells
+1.1/1.2 — a READ, no new seat, writes nothing) may proceed alongside, or whether D7 stops entirely.**
+Both readings are coherent.
+
+`1.0.0_SA_CTO~Z` declined to read its own proposal as approved merely because it appeared in the
+message he answered — **an approval of a RANKING is not an approval of every item in the message that
+asked for it** — and declined to do the read on its own authority, on the grounds that a zero-cost act
+is precisely the condition under which a seat quietly widens a sovereign word. **This seat concurs and
+takes the same position: D7 is treated as PARKED IN FULL, and nothing is lost by that.**
+
+If the read later matters to sequencing, it is a one-line question to Andrew, not an inference.
+
+## WHAT IS UNCHANGED
+
+The cells, their dependencies, their acceptance exercises and every fence stand exactly as written —
+including that **no attachment or transcript is written to any bucket before 1.3 + 1.4 are ruled**, and
+that **the reminder came out of the alarm hold BY NAME ONLY** (GLOBALALARM stands for everything else).
+Amendment 1's closures are not reopened; they are simply not being worked yet.
