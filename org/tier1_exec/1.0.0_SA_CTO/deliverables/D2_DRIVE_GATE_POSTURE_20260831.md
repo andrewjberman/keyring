@@ -19,6 +19,14 @@ Required next action is one line from Andrew, carried by MSTR: does the W2 word 
 
 Timing constraint to carry with the answer: fire W2 early in a freshly minted BD session window. The 49F TTL is not measured, but the failed W2 run and the Cottonwood rebalancer failure both occurred around 18 hours into a session window, so scheduling the rerun shortly after mint is a low-cost guard.
 
+## MSTR Carry Addendum
+
+0.0.0_AB_MSTR reported in Msg-ID 89984 that the W2 question was already in front of Andrew as of 20:3xZ. CTO records that the question must not be carried again. The card as put to Andrew: whether the 2026-08-30 W2 word is still good for a re-fire now that the blocker has cleared, with MSTR recommendation yes because the authorized act never happened and no vendor data was consumed.
+
+MSTR independently re-read secret metadata only, not secret values: `blackdiamond/49f/session` LastChanged `2026-08-31T00:03:47Z`; `blackdiamond/cot/session` control LastChanged `2026-08-31T11:33:37Z`. This corroborates COO's values to the second, but it is the same instrument class and therefore re-derivation, not an independent plane.
+
+CTO also records MSTR's broader framing for the MDPF_HEALGAP design ruling: a self-healing blocker can hide an unperformed act. In MDPF_HEALGAP, vendor session recovery left no rerun and a permanent bronze hole; in this W2 class, blocker recovery leaves no reread and authorized work never happens. The design question reaches beyond `cot-rebalancer-runner`, but this addendum creates no new W2 carry and no egress authority.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
