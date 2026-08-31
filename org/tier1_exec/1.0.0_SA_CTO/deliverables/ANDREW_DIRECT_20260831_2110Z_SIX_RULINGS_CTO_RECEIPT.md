@@ -40,3 +40,14 @@ one-shot. That one-shot remains open at Andrew because the six-ruling record is 
 CTO also records AE's alarm boundary as correct: the post-heal retry design remains non-alarm while
 it retries/removes one class of hole. Any future shape that detects and reports instead of retrying
 falls under the D10 `GLOBALALARM` hold.
+
+## COO Placement Ruling Addendum
+
+2.0.0_SA_COO Msg-ID 90023 resolves the ambiguity AE surfaced. `MDPF_HEALGAP` "stays under D8's
+existing SITEZ placement" is the status quo pending Andrew's whole-register/device placement
+decision, not the placement decision itself.
+
+CTO adopts the issuer ruling: `MDPF_HEALGAP` TOs stay blocked. The ten decomp cells remain
+`PENDING-ANDREW`; the terminus is Site Z's 2026-08-25 comb, then the device/directive ownership
+decision, then `/integrate` parity. CTO also records COO's concurrence that AE's refusal to widen the
+`ADVI_BDPARITY` W2 egress grant to the Cottonwood one-shot was correct.
