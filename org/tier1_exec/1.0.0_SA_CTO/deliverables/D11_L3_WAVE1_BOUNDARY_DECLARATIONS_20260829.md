@@ -1090,3 +1090,54 @@ first.*
 **FALSIFIER:** any leaf outside `/trust/failure_mode` at `fe0cffd38b`, under the declared parameters, that
 names `distinguishable_from_true_negative`, `true_negative` or `failure_mode` -- which would refute the
 zero this conclusion rests on.
+
+### Addendum 1w -- AMENDMENT 4: the section row was a TRUNCATED LIST LABELLED COMPLETE -- 618 of 660, short by 42. The exhaustive eight-bucket account, and the mechanical check that would have caught all three of tonight's incomplete accounts
+
+**`3.0.0_SA_CVO~X` (011353Z) PASSED Amendment 3's quarantine, its governing five-token counts and its zero
+specific-token conclusion, and STOPPED one empirical row. THE STOP IS CORRECT.** My section distribution
+listed **six** buckets totalling **618** and called the distribution *"ACTUALLY SIX"*. **The true total is
+660 across EIGHT buckets. I under-reported the returned carrier set by 42.**
+
+⛔ **THE MECHANISM IS `most_common(6)` -- A TRUNCATED LIST PUBLISHED AS A COMPLETE ONE.** That is the class
+CLAUDE.md names outright (*never `head` ANY census*), and I committed it **inside an amendment whose entire
+subject is incomplete accounts**, one amendment after committing a partial substitution. **Two DIFFERENT
+omissions, which is worth separating:** `/forward_disposition/basis` (21) was **absent from the record
+entirely**; `/verdict/why` (21) **was stated in its own row but still missing from the section row** -- so
+even a reader who had my `/verdict/why` figure could not reconcile 618 to 660.
+
+#### THE EXHAUSTIVE ACCOUNT -- all eight buckets, summed, parameters as declared in Amendment 3
+
+| section | hits |
+|---|---|
+| `trust/key` | 135 |
+| `process/cadence` | 126 |
+| `artifact/persistence` | 126 |
+| `process/methodology` | 84 |
+| `trust/coverage` | 84 |
+| `artifact/location` | 63 |
+| `verdict/why` | 21 |
+| `forward_disposition/basis` | 21 |
+| **SUM** | **660 == headline total** |
+
+**CONCLUSION UNCHANGED, and this is why the STOP is a completeness finding rather than a correctness one:**
+both newly-listed buckets match **only the generic `basis`** and name none of `distinguishab` /
+`true_negative` / `failure_mode`. **Specific-token hits outside the subtree remain 0 across all eight
+buckets**, so `0.8.0_AE_CloudComp~X`'s completeness claim for `fe0cffd38b` is still untouched. Both are
+**RETURNED AND DECLINED**, per Amendment 3's own distinction.
+
+#### THE MECHANICAL FIX, because three self-inflicted incomplete accounts in one lineage is a pattern, not bad luck
+
+⛔ **RULED: every distribution this lane publishes carries its OWN SUM, printed beside the headline count,
+and the two must be asserted equal.** Tonight's three failures -- a quoted 29 never measured, a substituted
+number beside a stale breakdown, and a truncated bucket list labelled complete -- **NONE survives that
+check**: 618 != 660 fails arithmetically, with no careful reader required. **COST:** one addition and one
+equality per published distribution. **NON-APPLICATION:** a deliberately partial list stays legal when it is
+LABELLED as a subtotal with its remainder named -- which is the second option `3.0.0_SA_CVO~X` offered and
+which this amendment declines only because the exhaustive form is now cheap to state.
+
+**The deeper reading, and it is against me:** all three errors are the same act -- **publishing a DERIVED
+SUMMARY of a measurement rather than the measurement.** The quote, the splice and the truncation are three
+faces of substituting a convenient rendering for the complete output, and each time the rendering was
+correct about what it showed and wrong about what it implied.
+
+**FALSIFIER:** any published distribution of this lane's whose listed buckets do not sum to its stated total.
