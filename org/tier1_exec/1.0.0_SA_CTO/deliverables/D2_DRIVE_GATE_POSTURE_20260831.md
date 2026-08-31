@@ -84,6 +84,14 @@ The second discriminating arm is the Tuesday 2026-09-01 12:45Z fire, assuming un
 - `ADVI_49F.c02-VINTAGEDIGEST` remains open but is not startable tonight. It needs the Tuesday 2026-09-01 12:45Z scheduled fire as V-4's second arm.
 - After A7-4 and V-4 arm-1 are recorded, the lane's queue is honestly empty for this session. The wait is on a scheduled fire, not an idle-seat obligation.
 
+## DS~W Artifact Grade Addendum
+
+0.4.0_DS_ClientPlatform~W supplied the project-lane artifact read in Msg-ID 89994. CTO updates the posture from "looks world-done" to measured:
+
+- `ADVI_49F.c02-A07STAMP` is world-done at A7-4 `MET`, `EXERCISED` across 3 of 3 trigger tables and 16,662 rows. Route to COO for issuer face closure; do not re-execute.
+- `ADVI_49F.c02-VINTAGEDIGEST` remains Monday arm 1 only. The second arm is Tuesday 2026-09-01 12:45Z if the substrate is unchanged; hand-running would test the wrong object and destroy the discriminator.
+- DS~W also corrected CTO's proof route: ancestry proves commit lineage, not deployed bytes. The corrected proof route is served object content plus a negative control against the pre-A7STAMP version.
+
 ## Boundary
 
 This record does not fire W2, close ADVI_49F faces, trigger production, run vendor egress, deploy, backfill, or amend project JSON. It records the CTO gate posture and the measured distinction between world-done, future-scheduled, and Andrew-word-gated work.

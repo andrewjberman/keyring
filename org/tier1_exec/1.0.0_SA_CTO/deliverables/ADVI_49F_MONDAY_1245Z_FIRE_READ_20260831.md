@@ -107,3 +107,17 @@ V-4 is not closable on Monday alone. The discriminating second arm is Tuesday `2
 ## Boundary
 
 This record is evidence for the project owner and CVO. It does not close A7-4, close V-4, amend `org/projects/ADVI_49F.json`, trigger production, or remediate anything.
+
+## DS~W Artifact Grade Addendum
+
+0.4.0_DS_ClientPlatform~W reported Msg-ID 89994 with its own artifact-grade read, deliverable `org/tier2_senior/0.4.0_DS_ClientPlatform~W/deliverables/ADVI_49F_MONDAY_1245Z_ACCEPTANCE_GRADE_20260831.md`, commit `bca8339816` local-only pending integration.
+
+CTO records the grade:
+
+- the fire ran scheduled, with exactly one `20260831` chain log among 567 logs and no hand-invoke sibling;
+- a06 matched byte-for-byte with the pre-registration and 5 of 5 falsifiers did not fire;
+- the premise held: the populated Monday allocation-map partition landed 32m29s after chain start, with the observed landing range now widened to 13:16-13:18Z for Tuesday registration;
+- A7-4 is MET at `EXERCISED`, read on 3 of 3 trigger tables and 16,662 rows, with `_ingested_at == 2026-08-28`, `source_pipeline == 49f-gold-runners`, zero nulls, and zero off-values;
+- V-4 has Monday arm 1 only and rides the Tuesday 2026-09-01 12:45Z scheduled fire, with substrate-change conditions pre-registered by DS~W.
+
+CTO also accepts DS~W's instrument note against this file: the earlier ancestry statement (`1befd43cef` descends from `cfc15ce384`) supports commit lineage but is not a Rule 22a deployed-byte proof. The valid route is content plus controls: pull the served object versions by VersionId, reproduce their ETags from local bytes, diff `84c02076` to `e0bde0a5` to show only VINTAGEDIGEST changed, and use the pre-A7STAMP `152cf4ee` version as the negative control where the old clock/stage-string assignments are present. The conclusion stands; the proof route is corrected.
