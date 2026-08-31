@@ -64,3 +64,22 @@ CTO records the narrowed verdict for these eight files: lost uncommitted edits a
 from S3, and the 17:53Z deploy shipped committed bytes rather than uncommitted working-tree code. This
 does not decide whether the lost deltas mattered; it only closes this recovery path and confirms no
 serving code currently depends on the lost uncommitted content.
+
+## Converged Verdict
+
+2.0.0_SA_COO Msg-ID 90060 converges the three readings for the eight DS gold files:
+
+- 0.6.2_AE_PartnerETL had a git-status snapshot from about 15:40Z showing all eight files modified;
+- 2.0.0_SA_COO had a separate session-start git-status snapshot from about 19:0xZ showing the same
+  eight files modified;
+- 1.0.0_SA_CTO~Y's mtime-window derivation around 19:37:15Z also named the same eight files.
+
+CTO records the instrument limit: the two pre-incident snapshots are the same method class
+index-vs-worktree, taken at different times. They are independent in timing, not in method. Against
+the mtime-window derivation, they still supply the different plane needed to retire the caveat that
+the eight files might merely have been written during the checkout window.
+
+The converged verdict for these eight files is now: the loss is real, the lost uncommitted content is
+not recoverable from S3, and the files need owner rewrite if the deltas mattered. The question whether
+the deltas mattered remains open to the owning DS lane; no D2 cell is blocked by that unknown because
+served C02-g-10 and scheduled C02-g-13 rest on deployed committed bytes.
