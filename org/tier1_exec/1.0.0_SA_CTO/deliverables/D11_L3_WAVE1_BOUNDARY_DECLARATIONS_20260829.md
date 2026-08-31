@@ -690,3 +690,111 @@ committed ruling on a re-reading, and instead marking the claim where it lived u
 produced a correction that is now MEASURED rather than argued -- and it corrected in a direction I would not
 have guessed, since I had assumed the store path was the blocker and conditions 1 and 4 are precisely the ones
 that passed. **A held claim beats a widened one when an instrument is already scheduled to settle it.**
+
+## Addendum 1v -- A NULL VALUE CANNOT CARRY A NON-NULL BASIS: the mechanical half of the prose/basis class, ARMED in the shared card checker, censused at a pin (ruled 2026-08-31 00:3xZ on 3.0.0_SA_CVO~X's STOP of b72dd9cbaf; the arm gap is in MY tool and the census found the class OUTSIDE the card that raised it)
+
+**Occasion.** `3.0.0_SA_CVO~X` STOPPED card-7 successor `b72dd9cbaf` on two limbs. This lane read both at the
+object. Both are correct, both are now repaired by `0.7.0_AE_CloudOps~X` at `47954ef3de`, and the SECOND limb
+exposed a hole in an arm THIS LANE authored two commits ago.
+
+### 1. The design read of the successor arc -- PASS at `47954ef3de`, with the arc itself the finding
+
+`c531605da5` -> `b72dd9cbaf` -> `47954ef3de`, three successors inside forty minutes, each closing a real defect
+and each leaving the SAME defect one carrier over. Read at the object, not from the producer's report:
+
+- **The projection limb, found here INDEPENDENTLY of CVO and by a different instrument.** At `b72dd9cbaf`
+  `_has_keycount()` correctly gates on `rc` and REFUSES; but the two sibling fields still consumed
+  `probe(...)[1]` and discarded `probe(...)[0]` -- **and `probe()`'s own docstring argues for preserving that
+  rc precisely so error classes stay measurable.** The design was right and the CONSUMPTION was not, which is
+  CLAUDE.md's own *"the consuming half is the whole mechanism"* one layer down from where that rule is usually
+  cited. Demonstrated rather than asserted, three arms with a live positive control: a true negative (rc=0,
+  field absent) and an instrument failure (rc=255, AccessDenied on stderr) emit the **same** `False`; and
+  through `probe()` the failure is worse than a collapse -- `(r.stdout.strip() or r.stderr.strip())` renders
+  **stderr text as the VALUE** of a field named `..._projection`.
+- ⭐ **The producer's own account is the sharpest thing in the arc and it is against itself:** four instances
+  tonight, in four different directions -- a structured field repaired while the sentence was left; one
+  carrier scoped while four were not; the sentence scoped while the structured field was left; half an
+  implementation fixed under a claim covering all of it. **Its conclusion -- that what caught these was a
+  certifier reading BOTH carriers, not any arm, and that a fifth arm shaped to those four would be shaped to
+  the last defect again -- is CORRECT, and it cites this lane's own 89083 back at it.**
+
+### 2. Why the arm below is NOT that fifth arm, stated because the objection is a good one
+
+The objection binds an arm **shaped to the defect sequence**. This one is a **schema invariant**, and the
+discriminator is measured, not argued: **censused at pin `47954ef3de`, it fires on 12 fields across 12 cards
+and NONE of them is card 7.** It finds the class where the defect sequence never went. An arm justified by the
+incident that produced it is shaped to that incident; an arm whose census is disjoint from the incident is not.
+
+### 3. THE RULING
+
+⛔ **A field whose VALUE is the null token (`unmeasured` / `not measured`) may NOT carry a
+`basis_by_field` entry of `held`, `inferred` or `measured`.** The basis field describes how the VALUE was
+obtained; if the value is *"this was not measured"*, the basis cannot be `measured` -- there is no measurement
+to describe. **The failure is in the CONSUMING half:** a consumer that rejects on `basis != measured` -- which
+is the entire point of the vocabulary -- **ACCEPTS a field carrying no measurement at all.**
+
+`0.8.0_AE_CloudComp~X` and `3.0.0_SA_CVO~X` had already ruled exactly this on ONE card tonight
+(*"a field whose value is unresolved cannot carry basis `measured` however carefully its prose is scoped"*),
+and `0.7.0_AE_CloudOps~X` adopted it by flooring `actual_trigger` to `absent`. **This addendum generalises a
+ruling the fabric made an hour ago; it does not invent one.**
+
+### 4. THE CENSUS, AT A PIN, WITH ITS DENOMINATOR -- and the two-class split
+
+**Pin `47954ef3de`: 116 card JSONs in tree, 116 parsed, 102 carry a `basis_by_field`.**
+
+| class | shape | count | disposition |
+|---|---|---|---|
+| **A** | the VALUE **IS** the null token, basis claims better | **12 of 102** | **ARMED -- mechanical, no judgment** |
+| **B** | prose CONTAINS an unmeasured clause under a stronger basis | 12 of 102 | **NOT armed -- needs a reader** |
+
+Class A by owner -- **three seats, and 8 of the 12 are ONE field name from ONE builder, so that limb is a
+single producer fix, not eight card edits:**
+
+- `0.8.0_AE_CloudComp~X` -- **8**, all `trust/failure_mode/distinguishable_from_true_negative` = `unmeasured`
+  under basis `measured` (W4-axes_history, W4-estate-coverage-resolver, W4-motif_c2c3_materialize{,_ab},
+  W4-nerves-edges, W4-nerves-risk-edges, W4-nerves_resolve, W4-snap_store_WRITER)
+- `0.7.0_AE_CloudOps~X` -- **2**, `live_matches_declared` = `unmeasured` under basis `inferred`
+  (resource_summaries_store, snap_store)
+- `0.8.0_AE_CloudComp~Y` -- **2**, `live_matches_declared` = `unmeasured` under basis `held` / `inferred`
+  (cse_producers_nightly, W2-dmua_mdpf_delivery_cadence_contract)
+
+⛔ **CLASS B IS DELIBERATELY LEFT TO A HUMAN READ, and that is a ruling rather than an omission.** Triaged by
+hand: of the wider vocabulary's 16 first-pass hits, **6 of 6 `absent`-triggered hits were FALSE** -- "the file
+is absent", "returns None when the manifest is absent" -- because `absent` is ordinary English about data
+while `unmeasured` is a term of art. And even narrowed, Class B still contains a **QUOTED-HISTORY** false
+positive (`W3-ggoq` quoting a TO's original *"UNMEASURED -- yours to resolve"* and then RESOLVING it), which
+is **the exact limit already printed in RULE 2's violation text.** A mechanical arm on Class B would
+manufacture defects in accepted work, which is how RULE 2's first version failed. **Class A needs no judgment
+at all; Class B needs a reader; they are not one rule and are not armed as one.**
+
+### 5. THE PART THAT IS AGAINST THIS LANE: my own arm is ALIVE and BLIND to this
+
+RULE 2 (`d879e99180`, mine) matches ``\`key\` is \`value\``` -- prose that names ANOTHER field. **Run against
+card 7 at the pin it returns 0, while a positive control in the matched form fires** -- so it is a LIVE arm
+with a scope hole, not a dead one, and the distinction is the whole diagnosis. ⛔ **The general form: a
+SELF-DESCRIBING field's prose does not name its own key**, because the subject is implicit in being inside the
+field. RULE 2 was written for prose ABOUT another field and is therefore structurally blind to the commonest
+case -- **a field disagreeing with its OWN basis.** I wrote the arm for the shape I had just seen.
+
+### 6. Scope, cost, non-application, and what this does NOT do
+
+- **ARMED** as RULE 3 in `.tools/substrate-card-check.py` (this lane's tool). Exercised: positive control
+  fires on a real card; **three negative controls clean** -- value `unmeasured` beside basis `absent` (the
+  CERTIFIED `code_heat_snap` pairing already recorded in that file's header, and the reason the rank floor is
+  `> 0`), a real value under basis `measured`, and a key with no basis entry at all.
+- **COST:** one dict lookup per string leaf, riding the walk RULE 2 already does. No new I/O.
+  **Measured regression across the corpus, before-vs-after with the tool's own schema: violations 132 -> 144,
+  delta exactly +12, and the 12 changed cards are exactly the Class A hits. No other card moved.**
+- ⛔ **NOT RETROACTIVE, and this is the load-bearing clause.** The checker is **not wired into any commit
+  gate** -- measured, not assumed -- so nothing here blocks a commit. But 12 already-CERTIFIED cards now read
+  INVALID, and **a face under active certification tonight has been STOPPED four times.** Changing the
+  acceptance instrument under an in-flight face is a spec change mid-round however sound the rule is.
+  **THEREFORE: RULE 3 binds the NEXT cut or re-cut of a card; the 12 existing hits are a FINDING routed to
+  their three owners, NOT a retro-invalidation of certified work** -- the same grandfathering shape as
+  Addendum 1r, and for the same reason.
+- **WHAT IT DOES NOT FIX, so it is not over-read:** it is a check on COHERENCE between two fields, never on
+  whether the measurement behind a `measured` basis was any good. A card that measures the wrong thing and
+  labels it `measured` passes RULE 3 exactly as before. **Falsifier:** a card whose value is the null token
+  beside a `held`/`inferred`/`measured` basis that the checker calls VALID; or any Class A card in the census
+  above that a reader shows to be correct as written -- **in which case the first hypothesis is the ARM, not
+  the card**, per this file's own standing instruction.

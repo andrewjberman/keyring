@@ -50,3 +50,46 @@ def test_foreign_adjudicator_passes_control():
     m["forward_disposition"]["set_by"] = "3.0.0_SA_CVO~X"
     violations, _ = mod.check_card(m, schema)
     assert not any("set_by == carded_by" in v for v in violations), violations
+
+
+# RULE 3 controls -- a NULL VALUE under a NON-NULL basis. Same three-arm shape as above and for the same
+# reason: baseline FIRST, then the mutant must FIRE, then the LEGAL pairing must PASS. The legal arm is the
+# load-bearing one here -- `unmeasured` beside basis `absent` is CORRECT and is a certified pairing in the
+# estate (code_heat_snap), so an arm that fired on it would manufacture defects in accepted work.
+def _basis_fixture():
+    """A card carrying a basis map, with the (section, key) this arm needs. Built from the real card."""
+    mod, schema, card = _fixture()
+    card = copy.deepcopy(card)
+    card.setdefault("trust", {}).setdefault("failure_mode", {})
+    card["trust"]["failure_mode"]["distinguishable_from_true_negative"] = (
+        "rc=255 NoSuchBucket on stderr, distinct from KeyCount=0")
+    card["trust"]["failure_mode"].setdefault("basis_by_field", {})[
+        "distinguishable_from_true_negative"] = "measured"
+    return mod, schema, card
+
+
+def test_rule3_baseline_real_value_under_measured_passes():
+    mod, _schema, card = _basis_fixture()
+    assert mod.null_value_basis_violations(card) == []
+
+
+def test_rule3_null_value_under_measured_fires():
+    mod, _schema, card = _basis_fixture()
+    card["trust"]["failure_mode"]["distinguishable_from_true_negative"] = "unmeasured"
+    v = mod.null_value_basis_violations(card)
+    assert any("carries no measurement" in x for x in v), v
+
+
+def test_rule3_null_value_under_absent_basis_passes_control():
+    """The CERTIFIED legal pairing: value `unmeasured`, basis `absent`. MUST NOT fire."""
+    mod, _schema, card = _basis_fixture()
+    card["trust"]["failure_mode"]["distinguishable_from_true_negative"] = "unmeasured"
+    card["trust"]["failure_mode"]["basis_by_field"]["distinguishable_from_true_negative"] = "absent"
+    assert mod.null_value_basis_violations(card) == []
+
+
+def test_rule3_missing_basis_entry_is_silent_not_a_violation():
+    mod, _schema, card = _basis_fixture()
+    card["trust"]["failure_mode"]["distinguishable_from_true_negative"] = "unmeasured"
+    del card["trust"]["failure_mode"]["basis_by_field"]["distinguishable_from_true_negative"]
+    assert mod.null_value_basis_violations(card) == []

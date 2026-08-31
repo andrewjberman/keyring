@@ -106,6 +106,47 @@ def prose_field_violations(card: dict) -> list:
     return out
 
 
+
+# RULE 3 -- A NULL VALUE CANNOT CARRY A NON-NULL BASIS. The mechanical half of the prose/basis class
+# 3.0.0_SA_CVO~X found on card 7 (basis `measured` beside a value whose own text said UNMEASURED).
+# The consuming half is the whole mechanism: a consumer that rejects on `basis != measured` ACCEPTS a
+# field whose entire value is the word `unmeasured`, which is the one case the vocabulary exists to
+# stop. Censused at pin 47954ef3de: 12 of 102 basis-carrying cards, across four seats, 8 of them
+# declaring `measured` -- and every one passes this checker today, so the arm adds coverage rather
+# than restating one.
+# COST: one dict lookup per string leaf, no new I/O, no network -- it rides the walk RULE 2 already does.
+# NON-APPLICATION, stated so the rule cannot ratchet: (a) it does NOT bind a value of `unmeasured`
+# beside basis `absent`/`unmeasured` -- that pairing is CORRECT and is the certified `code_heat_snap`
+# case in the header above, which is this arm's negative control; (b) it does NOT bind prose that
+# merely CONTAINS an unmeasured clause under a stronger basis -- 12 further fields at the same pin --
+# because separating a live disclosure from QUOTED HISTORY needs a reader, and a mechanical arm there
+# would manufacture defects in accepted work, which is exactly how RULE 2's first version failed.
+# That half stays a human read on purpose; this half needs no judgment at all.
+NULL_VALUE_TOKENS = frozenset({"unmeasured", "not measured"})
+BASIS_RANK = {"absent": 0, "unmeasured": 0, "held": 1, "inferred": 2, "measured": 3}
+
+
+def null_value_basis_violations(card: dict) -> list:
+    """A field whose VALUE is the null token, while its basis_by_field entry claims better."""
+    out: list = []
+    leaves = dict(_leaves(card))
+    for pointer, value in leaves.items():
+        if not isinstance(value, str) or "/basis_by_field/" in pointer:
+            continue
+        section, key = pointer.rsplit("/", 1)
+        if value.strip().rstrip(".").lower() not in NULL_VALUE_TOKENS:
+            continue
+        basis = leaves.get(section + "/basis_by_field/" + key)
+        if basis is None:
+            continue
+        rank = BASIS_RANK.get(str(basis).strip().lower())
+        if rank is not None and rank > 0:
+            out.append("%s: the VALUE is `%s` but %s/basis_by_field/%s is `%s` -- a consumer "
+                       "rejecting on the basis field ACCEPTS a field that carries no measurement. "
+                       "Floor the basis to `absent`, or replace the value with what was measured."
+                       % (pointer, value.strip(), section, key, basis))
+    return out
+
 def check_card(card: dict, schema: dict) -> tuple[list[str], str]:
     """Return (violations, structural_mode)."""
     v: list[str] = []
@@ -134,6 +175,9 @@ def check_card(card: dict, schema: dict) -> tuple[list[str], str]:
     # RULE 2 -- prose/structure divergence on a value the card itself types. See the header.
     for line in prose_field_violations(card):
         v.append("prose/structure: " + line)
+    # RULE 3 -- a null VALUE under a non-null basis. See the header for cost + non-application.
+    for line in null_value_basis_violations(card):
+        v.append("null-value/basis: " + line)
     return v, mode
 
 
