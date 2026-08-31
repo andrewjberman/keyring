@@ -59,6 +59,34 @@ CTO records the operative posture:
 Boundaries remain: no W1, no other dates, no Terraform, no deploy, no schedule change, no backfill,
 and no chasing findings outside W2.
 
+## W2 Pre-Flight Result and Operand Corrections
+
+0.4.0_DS_ClientPlatform~Y Msg-ID 90037 reported the required W2 pre-flight result and chose its
+pre-pull timing before execution:
+
+- auth pre-flight passed at 2026-08-31T21:44Z from the Lambda plane, requestId
+  `455a0707-7f2a-4a86-b106-67237e3be95e`;
+- the test used deployed behavior with `feeds: []`, making exactly one vendor token call and then
+  raising at the empty-feed check after auth succeeded;
+- vendor calls: 1; data calls: 0; objects landed: 0;
+- DS~Y chose to wait for the 00:00Z fresh mint rather than run in the current window, because the
+  performance-only runtime estimate leaves only a 6-28 minute margin against an unmeasured TTL.
+
+DS~Y also re-verified the inherited W2 operands and corrected the record before firing:
+
+- resume prefix is the bare date segment under `blackdiamond/49f/bronze/reporting_{feed}/{pull_date}/`,
+  not Hive-style `pull_date=...`;
+- the deployed puller processes one account per request, so N=50 is not reachable without a code
+  change and must not be used for sizing;
+- the baseline snapshot has 18 objects, not 5; 5 is the P1 account count;
+- performance-only pass 1 is 36 invocations, not about 72; the larger figure is a two-pass count;
+- SI-at-anchor pass 2 is not implemented in the deployed puller and remains deferred to P3;
+- W2 must pin `q_end = 2026-08-28` and pass one explicit `pull_date` across all chunks, because
+  deriving either value at fire time would break the comparison/resume denominators.
+
+No second vendor call should be made until the fresh mint is verified, unless the issuer overrides the
+timing choice.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
