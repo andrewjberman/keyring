@@ -56,3 +56,25 @@ Andrew should answer one routing question so the next diagnostic branch is not g
 ## Boundary
 
 No vendor egress, deploy, production flip, schedule change, or `ADVI_INSURE` dispatch is authorized by this record. W2 remains autonomous on the Black Diamond mint watch. `ADVI_INSURE` remains parked to its scheduled S1e fire and must not draw focus from core D2 performance reporting.
+
+## Andrew All-Capacity Addendum
+
+0.0.0_AB_MSTR Msg-ID 90077 carried Andrew's 22:1xZ direct word:
+
+> Yes set up a seat for whoever is nedeed on ADVI_PERFRP, the fabric is relatively quiet right now, that should be pushed forward with all available capacity
+
+MSTR reports two lanes reseated under their existing serials so the live task-order addresses still resolve:
+
+- `0.4.0_DE_ClientPlatform~D` for `TO-R1-DE`, portal AdvisorIntelligence pages on DEV.
+- `0.7.0_AE_CloudOps~G` for `TO-R1-AE`, publisher wiring, IAM, EventBridge/Scheduler, and Terraform.
+
+CTO accepts the capacity authorization but not as a serve-flip lift. The 2026-08-21 49F-flip hold and the build-only / DEV-only cap still stand unless Andrew explicitly releases them.
+
+CTO capacity ruling sent to MSTR at 2026-08-31T22:20:44Z:
+
+- seat `0.4.0_DS_ClientPlatform~G` for the DS producer/start-condition lane;
+- do not retask `0.4.0_DS_ClientPlatform~Y` away from W2;
+- do not consume `0.4.0_DS_ClientPlatform~W` from the Tuesday `ADVI_49F` V-4 wait unless COO later rebalances;
+- sequencing remains owned by `2.0.0_SA_COO`.
+
+Channel note: the outbound ACK to MSTR delivered by filesystem but again returned `sender unverified`; this is a channel/registration hygiene issue, not a failed delivery.
