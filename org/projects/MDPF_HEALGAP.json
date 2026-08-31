@@ -1,0 +1,43 @@
+{
+ "project_code": "MDPF_HEALGAP",
+ "macro_code": "MDPF",
+ "name": "The self-healing chain that leaves a permanent hole -- a transient vendor-auth gap converts into a permanent bronze hole because nothing re-runs after the heal, and every downstream instrument then reads a healthy chain",
+ "status": "active",
+ "dep_stage": "BRIEF",
+ "created": "2026-08-31",
+ "directive": "D8",
+ "pipeline": "mdpf",
+ "pods": [
+  "PORTAL.MODEL_PORTFOLIOS"
+ ],
+ "prds": [
+  {
+   "path": "docs/architecture/MDPF_HEALGAP_BRIEF.md",
+   "version": "1.0",
+   "note": "project BRIEF, Rule 27 stage 2 -- purpose-level. Does NOT decompose and does NOT choose a design; COO atom-decomp is stage 3 and precedes any TO."
+  },
+  {
+   "path": "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md",
+   "version": "1.0",
+   "note": "DIRECTIVE PRD -- D8 tag. This project is the same blindness one layer over: there the payload was stale inside a daily-rewritten file, here the file is simply absent while the producer reports healthy."
+  }
+ ],
+ "description": "2026-08-31: cot-rebalancer-runner raised on all 3 invocations (06:00:41/06:01:35/06:03:26Z) with 'rebalancer /auth/token 200 but no access_token -- session TTL expired?'; 0 of 3 bronze feeds landed against 1/5/83 on each of 08-29 and 08-30 (re-derived at 0.0.0_AB_MSTR by s3api with both adjacent dates as controls). The cot .bd.identity cookie then healed UNATTENDED at 11:33:37Z -- inside the runner's own DECLARED 6h tolerance -- and nothing re-ran. The declared tolerance is unreachable by construction: maximum_event_age_in_seconds=21600 beside maximum_retry_attempts=2, which AWS caps at 2 and which exhausted in 165 seconds.",
+ "phase": "BRIEF v1.0 written 2026-08-31 on Andrew-direct 'this needs to be a project underneath D8. Write a brief on it'. Awaiting: (1) Andrew on the one-shot --date 2026-08-31 re-run, which is vendor egress and NOT authorized by the brief; (2) Andrew on PLACEMENT -- D8 is SITEZ-placed but site Z lost all 11 seats in a 17:04Z reboot while a codex fabric is being stood up locally; (3) CTO design ruling; (4) COO atom-decomp, Rule 27 stage 3, which precedes any TO.",
+ "blocking": "Nothing blocked at the seat level. The brief authorizes no code, no terraform, no deploy, no vendor egress and no backfill. Today's hole stays open until Andrew rules on the one-shot re-run.",
+ "leads": [
+  "L1 THE CONFIG STATES A TOLERANCE IT CANNOT DELIVER: cot_rebalancer_runner.tf:229 maximum_event_age_in_seconds=21600 (6h) beside :228 maximum_retry_attempts=2. AWS caps async retries at 2 and they back off in minutes -- the three observed invocations spanned 165s. For a function that RAISES, the 6h window is unreachable BY CONSTRUCTION, not misconfigured. An auditor reading the config concludes the opposite of the truth.",
+  "L2 THE HEAL WAS INSIDE THE DECLARED WINDOW: secret LastChanged 11:33:37Z vs 06:00Z + 6h = 12:00Z. A policy delivering what the config claims would have caught this with ~27 minutes to spare.",
+  "L3 PRIOR ART EXISTS -- smartx-pipeline/assets-pull-onsuccess.tf already chains a daily pull via destination_config{on_success}, and its comments record preserving the async default of 2. Event-chaining need not be invented.",
+  "L4 THE CONSTRAINT ON ANY 'FIRE ON HEAL' DESIGN: cot-detection-layer.tf:25 records cot-bd-session-trigger as NOT Terraform-managed (read-only for IAM). Ownership must be settled before that design is costed.",
+  "L5 SCOPE IS UNENUMERATED: 70 .tf files carry a schedule_expression (measured, corpus=all) -- that is the CANDIDATE population, not the affected one. 49F carries its own session chain (bd-49f-session-chain.tf), so the SHAPE exists on more than one firm; that is a reason to enumerate, NOT a finding that 49F is affected. The enumeration is a Rule 24 authoring act and is unperformed.",
+  "L6 A RECONCILER MUST FIX, NOT NOTIFY -- a detector that only reports is what the standing moratorium forbids without Andrew's word. The line is the deliverable, not the intent."
+ ],
+ "root_cause_localized": true,
+ "root_cause": "NOT the cookie death, which is transient and self-repairing. The defect is that NOTHING RE-RUNS AFTER THE HEAL: an EventBridge-daily runner with 2 in-minute async retries dies on the day, and the self-repair then makes the gap invisible because every downstream instrument reads a chain that is genuinely healthy. The only wrong thing is a date that does not exist, and nothing asks that question.",
+ "related": [
+  "MDPF_COTREMEDIATION",
+  "WSE_COTMDL",
+  "COT_CANON458"
+ ]
+}
