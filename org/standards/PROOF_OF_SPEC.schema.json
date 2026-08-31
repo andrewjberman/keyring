@@ -161,6 +161,15 @@
             "minLength": 1,
             "description": "for DEPLOYED-VERIFIED: the live read proving it (ETag match / get-role-policy / describe). For other states: the reason."
           },
+          "introduces": {
+           "type": "array",
+           "minItems": 1,
+           "items": {
+            "type": "string",
+            "minLength": 1
+           },
+           "description": "OPTIONAL, additive (added 2026-08-30 by 1.0.0_SA_CTO~X on 1.0.0_SA_CTO 88109): the literal token(s) this artifact row INTRODUCES at its pin -- e.g. a call the fix adds. The checker requires every token PRESENT in the blob at commit_or_etag and ABSENT at the pin's parent (<pin>~1), or the file absent at the parent; a PENDING row is checked worktree-vs-HEAD. Without it a row is PRESENCE-resolved only (the pin exists and carries the path); with it the row is CONTENT-resolved (the pin carries the change). Class: a fix row pinned to an unrelated real commit resolved by presence (INDEXBYTES, 31579e177b). LIMIT: this proves the token MOVED between <pin>~1 and <pin>; it does NOT prove the token means what the citing face assumes -- it catches a stale pin, never a pin cited for the wrong reason (0.4.0_DS_ClientPlatform~V via 2.0.0_SA_COO 88511)."
+          },
           "artifact_covered_by": {
             "type": "array",
             "items": {

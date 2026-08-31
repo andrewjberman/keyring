@@ -6,6 +6,7 @@ bypass audit logging. Callable directly or importable by test_safe_deploy.py.
 """
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 import os
@@ -14,6 +15,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -521,18 +523,49 @@ def _find_aws() -> Optional[str]:
     return shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
 
 
+def _index_blob(rel_path: str) -> tuple[Optional[bytes], str]:
+    """The bytes git HAS RECORDED for rel_path -- `git show :<path>`, the INDEX, not the worktree.
+
+    BYTES, never text: decoding here would re-introduce the newline translation this whole
+    change exists to remove. Returns (blob, "") or (None, stderr) -- never a worktree fallback,
+    because falling back to the worktree on a lookup failure would silently restore exactly the
+    behaviour being replaced.
+    """
+    r = subprocess.run(["git", "show", ":" + rel_path.replace("\\", "/")],
+                       capture_output=True, cwd=str(WORKSPACE), timeout=30)
+    if r.returncode != 0:
+        return None, (r.stderr or b"").decode("utf-8", "replace").strip()
+    return r.stdout, ""
+
+
 def deploy_file(
     local_path: pathlib.Path,
     bucket: str,
     s3_key: str,
+    rel_path: Optional[str] = None,
 ) -> tuple[str, str]:
-    """Upload file to S3 and verify ETag == local MD5.
+    """Upload the INDEX BLOB for rel_path to S3 and verify ETag == the INDEX blob's MD5.
+
+    ADHC_DSFLOW.TO-INDEXBYTES-DEPLOY (IB-1/IB-2/IB-3). WHAT CHANGED AND WHY:
+
+    This function used to md5 the WORKTREE file, `aws s3 cp` that same worktree file, and then
+    compare the returned ETag against that same worktree md5. Every term came from one source, so
+    the comparison was SELF-CONSISTENT and could not fail on the defect it was standing guard over:
+    on an autocrlf checkout the worktree carries CRLF while the recorded blob is LF, and the gate
+    served the CRs and reported MATCH. MEASURED on a scratch key before this change, subject
+    .tools/git_bash_resolver.py: served ETag 5e77db0a48a4602aac3d3707a88c0ae0 (the CRLF worktree,
+    75 CRs) against index md5 d87543e266b74dfa8a0591098826ff8b (0 CRs) -- status MATCH.
+
+    Now: the uploaded bytes ARE the index blob, and the ETag is asserted against THAT blob's md5.
+    The two terms come from different places, so the assertion can fail. The worktree is read for
+    ONE purpose only -- counting its CRs for the IB-3 line -- and is never served.
 
     Returns (status, detail):
       ("MATCH", "")
       ("LOCAL_MISSING", "")
+      ("INDEX_MISSING", "<path> -- <git stderr>")
       ("UPLOAD_FAIL", stderr)
-      ("SHA_MISMATCH", "local:<md5> s3:<etag>")
+      ("SHA_MISMATCH", "key:<s3 uri> etag:<etag> index_md5:<md5>")   -> the caller REFUSES rc=2
       ("S3_ERROR", stderr)
     """
     if not local_path.exists():
@@ -542,13 +575,38 @@ def deploy_file(
     if not aws_bin:
         return "UPLOAD_FAIL", "aws CLI not found in PATH (checked aws, aws.cmd, aws.exe)"
 
-    local_md5 = _local_md5(local_path)
+    if rel_path is None:
+        try:
+            rel_path = str(local_path.resolve().relative_to(WORKSPACE)).replace(os.sep, "/")
+        except ValueError:
+            return "INDEX_MISSING", f"{local_path} is outside the workspace; no index entry"
+
+    index_bytes, git_err = _index_blob(rel_path)
+    if index_bytes is None:
+        return "INDEX_MISSING", f"{rel_path} -- git show :{rel_path} failed: {git_err}"
+    index_md5 = hashlib.md5(index_bytes).hexdigest()
+
+    # IB-3: the divergence is PRINTED on every deployed file, and never served.
+    worktree_crs = local_path.read_bytes().count(b"\r")
+    index_crs = index_bytes.count(b"\r")
+    print(f"           worktree CR count {worktree_crs} / index CR count {index_crs} / uploaded: index")
+
     env = _aws_env()
 
-    cp_result = subprocess.run(
-        [aws_bin, "s3", "cp", str(local_path), f"s3://{bucket}/{s3_key}"],
-        capture_output=True, text=True, timeout=60, env=env,
-    )
+    # Upload the INDEX bytes. Written to a temp file because `aws s3 cp` takes a path, not stdin;
+    # the temp file is the transport, never the source of truth.
+    tmp = tempfile.NamedTemporaryFile(prefix="safedeploy-index-", suffix=pathlib.Path(rel_path).suffix,
+                                      delete=False)
+    try:
+        tmp.write(index_bytes)
+        tmp.close()
+        cp_result = subprocess.run(
+            [aws_bin, "s3", "cp", tmp.name, f"s3://{bucket}/{s3_key}"],
+            capture_output=True, text=True, timeout=60, env=env,
+        )
+    finally:
+        with contextlib.suppress(OSError):
+            os.unlink(tmp.name)
     if cp_result.returncode != 0:
         return "UPLOAD_FAIL", cp_result.stderr.strip()
 
@@ -562,9 +620,11 @@ def deploy_file(
         return "S3_ERROR", ho_result.stderr.strip()
 
     s3_etag = ho_result.stdout.strip().strip('"')
-    if local_md5 == s3_etag:
+    if index_md5 == s3_etag:
         return "MATCH", ""
-    return "SHA_MISMATCH", f"local:{local_md5} s3:{s3_etag}"
+    # IB-2: all THREE values, because a mismatch is only actionable if the reader can see which
+    # side moved -- the key, what S3 holds, and what the record says it should hold.
+    return "SHA_MISMATCH", (f"key:s3://{bucket}/{s3_key} etag:{s3_etag} index_md5:{index_md5}")
 
 
 # ---------------------------------------------------------------------------
@@ -1169,6 +1229,7 @@ def main(argv: list[str]) -> int:
     # explicit); the SENTENCE was the defect.
     skipped_not_member: list[str] = []
     failed = False
+    etag_refusal = False   # IB-2: S3 holds a byte the record does not carry -- rc=2, not rc=1
 
     for bname, (label, b) in sorted(triggered.items()):
         status, detail, shas = mint_bundle(label, bname, b)
@@ -1225,7 +1286,9 @@ def main(argv: list[str]) -> int:
                     continue
 
         local_path = WORKSPACE / rel_path.replace("/", os.sep)
-        status, detail = deploy_file(local_path, bucket, s3_key)
+        status, detail = deploy_file(local_path, bucket, s3_key, rel_path)
+        if status == "SHA_MISMATCH":
+            etag_refusal = True
         if status == "MATCH":
             print(f"  DEPLOYED  {tag}")
             deployed.append((rel_path, bucket, s3_key))
@@ -1256,7 +1319,9 @@ def main(argv: list[str]) -> int:
                 print("           declared second target key does not exist -- first-mints "
                       "are explicit, never via the push gate. Surface to the owner.")
                 continue
-            st_status, st_detail = deploy_file(local_path, st_bucket, st_key)
+            st_status, st_detail = deploy_file(local_path, st_bucket, st_key, rel_path)
+            if st_status == "SHA_MISMATCH":
+                etag_refusal = True
             if st_status == "MATCH":
                 print(f"  DEPLOYED-SECOND-TARGET  {st_tag}")
             else:
@@ -1270,6 +1335,17 @@ def main(argv: list[str]) -> int:
 
     if failed:
         print()
+        if etag_refusal:
+            # IB-2: a served byte the RECORD does not carry is a distinct verdict from a transport
+            # failure, and it must never share an rc with one. rc=2 says: something is on S3 that
+            # git does not have; do not close the ledger on it.
+            print("REFUSED (rc=2): safe-deploy read-back does NOT match the index blob.")
+            print("  The three values are printed above: the key, the ETag S3 returned, and the")
+            print("  md5 of the bytes git has RECORDED. S3 holds something the record does not.")
+            print("  LEDGER: leave the org/critical_paths/change_management/ entry OPEN. This is")
+            print("  not a transport error to retry -- re-running uploads the same index bytes and")
+            print("  will refuse again until the divergence is explained.")
+            return 2
         print("ERROR: safe-deploy gate FAILED -- S3 deploy or SHA verify error")
         print("  Partial deploy state: files listed above as DEPLOYED may already be on S3.")
         print("  Fix the error and re-run; the gate is idempotent.")

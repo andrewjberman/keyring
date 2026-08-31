@@ -1,6 +1,6 @@
 ---
 # Decision Ledger entry — schema is authoritative in STAKES_MATRIX.md appendix.
-# Copy to LD-NNNN.md (monotonic, max+1). Optional fields keep an explicit null.
+# Copy to LD-NNNN.md (monotonic, max+1 -- and MAX IS MEASURED OVER BOTH FABRICS: fetch, then max over origin/CLOUD AND origin/SITEZ; never gap-fill; a collision is re-minted by the LATER minter. LD-0479). Optional fields keep an explicit null.
 decision_id: LD-NNNN
 timestamp: 2026-00-00T00:00:00Z
 agent: 0.0.0_AB_MSTR

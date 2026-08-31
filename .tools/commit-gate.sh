@@ -15,12 +15,28 @@
 #
 # Python (.py): py_compile + AST undefined-name scan + ruff + comp-constants drift +
 #               comp-manifest-check + log-open-lint.
-# Shell  (.sh): comp-shell scan (forbidden Git Bash 3.6.7 utility check, CLAUDE.md Rule 16)
-#               + comp-manifest-check. Only in-scope local-runtime paths are comp-shell-
-#               scanned (.tools/, org/mcp/, org/threads/, infra/aws/lambda/ci/,
-#               infra/aws/terraform/); comp-manifest-check runs on ALL .sh regardless.
+# Shell  (.sh): bash -n (syntax) on EVERY .sh whatever its path + comp-shell scan
+#               (forbidden Git Bash 3.6.7 utility check, CLAUDE.md Rule 16) + comp-manifest-
+#               check. Only in-scope local-runtime paths are comp-shell-SCANNED (.tools/,
+#               org/mcp/, org/threads/, infra/aws/lambda/ci/, infra/aws/terraform/) -- an EC2
+#               script is not a Git Bash 3.6.7 subject, so that scope is deliberate and is
+#               NOT widened; bash -n and comp-manifest-check run on ALL .sh regardless.
 #
-# Blocks (exit 1) on any failure. Silent on pass.
+# EXIT CODES -- what each one means, and none of them promises a check this gate does not run:
+#   0  every DISPATCHED file was checked and is clean; or nothing was dispatched at all
+#      (a commit of only .md/.ts/.json-outside-org/projects is a legitimate no-op and prints
+#      the WARN below).
+#   1  a check FAILED on some file. Blocking.
+#   2  REFUSAL, and it is neither a pass nor a check failure: a file whose suffix this gate
+#      DECLARES it reads (.py / .sh / .tf / org/projects/*.json) reached ZERO checks. That is
+#      a GATE DEFECT -- the gate did not do the job this header advertises -- and rc=2 exists
+#      so it can never be read as a clean commit. Do not re-run for a 0; fix the gate.
+#      (ADHC_COMMITGATE.TO-ZEROCHECK-REFUSE. Before it, that state exited 0: measured on a
+#      .sh with a planted syntax error and a clean .sh in the same out-of-scope directory --
+#      byte-identical output, rc=0 for both, so the exit code carried no information at all.)
+#
+# Silent on pass, with one exception: each .sh prints "OK: bash -n syntax-checked <file>", so
+# the "N of N file(s)" summary names its instrument per file instead of asserting a number.
 #
 # Usage:
 #   .tools/commit-gate.sh data/black_diamond/scripts/gold/B_00.py

@@ -1,0 +1,229 @@
+# Two cells ruled and frozen, six things graded, and the pull that could not fire -- 3.0.0_SA_CVO
+**archetype:** VALIDATE
+**secondary_archetypes:** COORDINATE, SCRIBE
+
+**Agent:** 3.0.0_SA_CVO (base, MAIN fabric) · **Window:** 2026-08-30 00:49Z -> 02:50Z (read, not estimated)
+**Launch:** post-reboot relaunch by 0.0.0_AB_MSTR relaying Andrew-direct 00:20Z; no handoff existed (the prior
+session ended before wind-down), resumed from the commit record + inbox. /watcher armed ONCE (Monitor b434aqmn7,
+parent-tied pid 59468), zero crons per the XXX.md CVO row. Broker PID 23780.
+
+## Objective
+Take up the two ADVI_BDPARITY methodology cells Andrew placed at this seat (21:23Z, "handled by 3.0.0_SA_CVO,
+NOT CRO"), man the surprise channel through the fabric's relaunch hour, and grade what landed.
+
+## Compiler Tools
+| tool | invocation | result | note |
+|---|---|---|---|
+| comp-find | 'returnMethod', 'def discover_accounts', 'acct.get("inception"', 'cumulative_investment_return', 'QTD/YTD/1Y/SI' --files | PASS | located the puller (lambda_function.py), the linker, and the period-ruling carriers; one census timed out to background and completed |
+| comp-which | A.3 exercise ("how do I grep the repo") | PASS | forwarder RAN (banner produced); 105 of 105 comp-tools resolve bare |
+| audit-archive-invoker | A.2 | WARN | exactly the two OWNED-UNTIL-rv0057-f001 findings, no third |
+| to-check | --all --assignee 3.0.0_SA_CVO | PASS | 2 active TOs (D3.5 gated; P4-PINS-CERT-49F closed) |
+| safe-commit | 5 commits, -F msgfile each | PASS | commit-gate checked 0 of N (md/json only, disclosed by the gate itself) |
+| proof-of-spec / schema | jsonschema.validate on ADVI_PERFRP-S17 | PASS | investigation_item.schema.json |
+| native python | leaf key-path census; sidecar cross-tie; DE~D's AC11 harness exercised rc=0 unpiped | PASS | see Work Completed 5 |
+| aws (shim) | lambda get-function-configuration; s3api list-objects-v2 (rail-checked) | PASS | live-plane reads for rows 27 and the backfill grade |
+What worked: every grade this window rested on at least one read taken at THIS seat on a different instrument
+from the reporter's (a join where they re-summed; a listing where they byte-compared; a live config read where
+they inferred from timestamps). What failed: my first leaf census matched the FILENAME ("perfrp_allocation_account")
+as a key and counted list-of-strings at every depth -- refined before any claim rode on it. Gap found: the
+comp-tool rail gated a raw `s3api list-objects-v2` whose question was set membership (parquet/manifest pairing),
+which neither comp-freshness nor comp-routes answers; landed with `# rail-checked:`.
+
+## Work Completed
+
+### 1. The two BDPARITY methodology cells RULED and FROZEN (@f11fb765ad, ON origin)
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_RULING_ADVI_BDPARITY_METHODOLOGY_CELLS_20260830.md`.
+(i) SI anchor = BD funding-inception, ADMISSIBLE only where our gold coverage spans it (else
+UNAVAILABLE-NO-COVERAGE, never a shorter window). (ii) basis = CUMULATIVE for every ruled period; returnMethod
+stays as captured; BD's basis read from BD, never chosen by which of our figures matches. Shared discriminator:
+every cell records the range BD RETURNED beside the one REQUESTED. Section 4 states the reconciliation of my own
+17:46Z objection (a grader pre-deciding methodology): stated before any BD figure exists, frozen on commit,
+post-response changes are P3-3 CTO-gated and not graded by this seat; this seat grades CONFORMANCE + COVERAGE +
+the silent-failure limb. Veto window: COO 84080 and CTO 84089 both stated NO OBJECTION. The approved rec's
+sequencing clause ("answer it together with CALL 2") is DISCHARGED.
+- ANNOTATION 1 (@3fc9752c58): DS~C 84141 measured on existing bronze that BD SUBSTITUTES ITS OWN INCEPTION
+  (requested 2026-04-08, returned 2026-03-16; corroborated by BMV 0.0/EMV 35,073 on a second instrument) and
+  returns name/type = None on every range -> discriminator = (requested_index, start, end): position joins, dates
+  certify, order signature re-checked per response; SI range ALWAYS requested; our SI cell is TWO-PASS from the
+  returned start. Cell (i) validated by mechanism (n=1).
+- ANNOTATION 2 (@30d51fcbac): DS~C 84280 swept all 535 twr_daily partitions and found BD's inception for
+  22596361 BETWEEN our first PRESENT (02-27) and first LINKABLE (03-17). Ruled: coverage = FIRST LINKABLE; the
+  anchor's first return day = next_trading_day(anchor) when the returned BMV is 0.0 (nothing to divide by on the
+  inception day) -> 22596361 ADMISSIBLE with ZERO truncation.
+
+### 2. Verdicts on the /self-drive D2 & D3 pitches (ticks 69, 70, 72)
+- D2-T69-1 (c02 gross-leg on the deployed plane; (a) rollback CLOSED by Andrew's LD-0477 A2 word): APPROVED --
+  full-range re-emission (all stored partitions + forward, S3-census denominator, NOT a typed count) with the
+  gross_leg_vintage field + schema_version bump PART of the ruling; acceptance bar (a)-(d) stated in advance
+  (r_net value-identical; r_gross > r_net every fee day, SIGNED gap; vintage on every partition + manifest;
+  BUILD-ONLY). Landed as ledger row 16 -> C02-g-2 (DS~N) + C02-g-3 (AE~L) + C02-g-4 floor hold.
+- D2-T69-R1 (49FSRC close): CONFIRMED RESERVED (Andrew's Mike-hold). D2-T69-R2 (reach of the 21:23Z word to
+  selection): CONFIRMED RESERVED; non-blocking.
+- D2-T70-1: APPROVED spawning 4.0.0_SA_CRO base for rider-4 SELECTION in parallel with the card, conditions
+  C1-C4 (selection only; D2 distribution restriction verbatim; inception-recent member REQUIRED with measured
+  recency; same-turn release on a YES). Seated 84208.
+- D2-T72-1: APPROVED releasing the CRO seat on capacity after delivery, amending my own C4; conditions: the face
+  says DELIVERED+GRADED+RELEASED (never "dark"), and the kill lands after the seat's session log.
+
+### 3. Grades
+- ADVI_INSURE RAVC2 (AE~K 84095): ACCEPTED -- `relationshipdetail` is never invoked by `run_insurance_leg`
+  (re-derived: sha256 of the pin == deployed; 2 registry occurrences, 0 in the body; converter :123/:458/:495).
+  Issuer ruled (b): no producer extension without Andrew's egress word.
+- ADVI_BDPARITY C3 selection (CRO 84380 @7cd0cc1200): PASS -- file exists at the commit, no client surnames
+  (0/0/0 vs a positive control of 4), two inception-recent members with MEASURED recency, C5 kept; non-fee axis
+  absent by disclosed choice with a swap rule (issuer's call).
+- ADVI_PERFRP AC11 (DE~D 84384 @55d0637786): PASS ACCEPTED -- harness exercised here rc=0 unpiped, 5 of 5
+  families join with 0 mismatches over 13,378 rows, both negative-control arms fire; the "as DISPLAYED" wording
+  gap stays on the row per the issuer's read-path ruling.
+- ADVI_INSURE --backfill-manifest (DS~R 84599): ACCEPTED -- prefix re-listed here: 3 parquet + 3 manifest, zero
+  unpaired, parquet LastModified untouched vs manifests 02:21Z. The SUPERSEDE-overload catch and the un-armed
+  seam (mutant 4) are the act's value.
+- c02-VINTAGE V-1/V-2 pre-graded at source: GROSS_LEG_VINTAGE resolves as a commit (negative control ok), the
+  convention-vintage rule is written beside the constant citing my 84129, SCHEMA_VERSION "1.1" beside it.
+
+### 4. The surprise channel (ledger rows 24-30 @ccfd6b6093 / @711a0717a0; ADVI_PERFRP-S17 @30d51fcbac)
+- Row 27, BLOCKING x ARMED (DS~C 84434): every BDPARITY gate read GO but the DEPLOYED puller predates its builder
+  commit by 1d 07:46 and carries DRY_RUN "0" -- a fire would spend Andrew's ONE authorized pull on the old
+  dateRanges and read as complete. Confirmed on my own `get-function-configuration` 02:25:33Z. Disarmed by COO's
+  amended GO (DO NOT FIRE), AE~K staffed for the Terraform deploy, CTO gate. My sharpening ADOPTED VERBATIM by COO
+  and CTO: "CodeSha256 CHANGED" is necessary not sufficient; the re-arm read is the package member's
+  LF-normalised sha256 == the 27af942259 blob (66f324ae7c..., 26,475 B) with a prior-package negative control --
+  because the 02:21Z CLOSE showed this worktree deploys CRLF bytes.
+- Row 28 -> row 30: three twr_daily partitions are 10-column all-refused frames -- 2024-07-08 (floor) and
+  2025-01-09 (MARKET CLOSED, DS~N) EXPECTED; 2026-08-18 REFUSED-NO-BMV. AE~L 84528 then measured that 08-18's
+  D-1 (08-17) is ABSENT from every canonical table: the last day of a 5-TRADING-DAY CHAIN-WIDE OUTAGE
+  2026-08-11..08-17 nobody had named. My 84356 arm was WRONG IN POLARITY and is corrected on the record: all
+  three special dates EXPECT the refusal shape; POPULATED on any is a finding AGAINST the engine. Outage routed to
+  the chain's scheduled-history owner (AE base; COO cut a five-date backfill cell pending C02-g-3). BDPARITY
+  consequence stated in advance: the hole sits inside the probe's QTD window for all five accounts -- a NAMED
+  MECHANISM on every period cell, not a tolerance.
+- S17 (PERFRP AC11 wrong gate): the relationship->account edge was never absent -- relocated by design to
+  `.verification.json` sidecars (COO @0fe8a898f8). Cross-tied here 3,075/3,075 + 146/146; no cell cut; REMEDIATED
+  on the AC11 grade. Two lessons banked: a row whose recorded blocker is the serve gate reads as discharged the
+  moment the serve word lands; a census that filters its own answer out then controls inside the filtered corpus.
+- Rows 24-26: DS~N's c02 deployed-plane item (owned by COO), MSTR's telemetry mis-write (closed by CTO at
+  source), AE~X's wind-down-reach item (disarmed by MSTR's roster read).
+
+### 5. Instruments this seat ran that the reporters did not
+Leaf key-path census over 14 perfrp leaves (28,056 entries, 11,712 key paths); sidecar membership join to the
+served leaf's entries[].key; DE~D's harness run on my own invocation; git sha256 of pins with LF normalisation
+and prior-vintage negative controls; live Lambda configuration; rail-checked S3 key listing; weekday check
+(2026-03-17 is a Tuesday) before writing it into an annotation.
+
+## Decisions Made
+- SI anchor (b) with LINKABLE-coverage admissibility and the BMV-0 first-return-day rule; basis CUMULATIVE;
+  BD's basis never inferred from fit; discriminator = index + dates; SI always requested, two-pass.
+- The grader rules methodology by stating it before the outcome exists and freezing it; correctness of the
+  methodology itself is CTO's at the convention gate and Andrew's above.
+- A re-arm read is a byte identity, not a "changed" flag; normalisation and a negative control travel with it.
+- Grading arms are pre-registered with their polarity; when a measured fact reverses one, the correction is
+  written on the record, not absorbed.
+
+## Files Modified
+see commit messages: f11fb765ad, 3fc9752c58, 30d51fcbac, ccfd6b6093, 711a0717a0 (all ON origin @711a0717a0,
+ls-remote read 02:46:18Z). Paths: the ruling deliverable (+2 annotations), the CVO channel ledger (rows 24-30),
+`org/surprise_channel/ADVI_PERFRP/INVESTIGATION_v1.md` (S17).
+
+## Blockers
+None at this seat. Every open item is at another seat or at Andrew (see Next Steps).
+
+## Current State (for a reader with zero context)
+- ADVI_BDPARITY: methodology frozen (ruling + 2 annotations, all on origin). Cohort of 5 selected and graded
+  (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ADVI_BDPARITY_P1_PROBE_SELECTION_20260830.md` @7cd0cc1200). The
+  ONE authorized BD pull is UNFIRED and correctly HELD: the deployed `opal-assets-bd49f-reporting-pull` is the
+  2026-08-28T18:09:29Z package (CodeSha256 0XJf+G2p..., DRY_RUN "0"); the builder bytes @27af942259 (linker
+  annotation-2 edits @5da9e7fffc, served at _code/ per DS~C 84699) await AE~K's Terraform deploy under CTO's gate
+  (early apply allowed only if the diff census shows no insurance-path touches; else after the 04:35Z fire).
+  Re-arm = member sha 66f324ae7c... LF-normalised + prior-package control + live DRY_RUN printed. Then DS~C fires
+  once; the probe table comes here for grading (returned ranges, bd_basis, coverage fields, the 5-day hole
+  named on every period cell).
+- ADVI_49F c02: fix deployed; floor schedule `advi-49f-gold-floor` HELD (State DISABLED read live 01:53:22Z,
+  ledger open, lift = C02-g-3 R-5 read or TUE 09-01 ~12:40Z lift-anyway); C02-g-2 vintage engine deployed
+  (535c9883b2, verified normalised); C02-g-3 535-date re-emission DRIVING at AE~L with the three special-date
+  arms pre-registered; graded here at completion against the S3-census denominator.
+- ADVI_PERFRP: TO-R1-DE 12 PASS / 1 UNCOMPUTABLE (AC8, producer-owned); S17 remediated.
+- ADVI_INSURE: relationshipdetail ruled (b); backfill-manifest done; TO-S1-AE amended for the per-family scope
+  pin (DS~R's BLOCKING finding, disarmed at filing, remediates on the plan); S1-4 graded on the scheduled fire.
+- org/mcp: broker ack recipient-check fix + probe fix are PUBLISHED-NOT-ACTIVATED; MSTR restarts the daemon at
+  the 02:57-03:06Z tick. Two guessed-id acks in one hour, on the same wrong id, from two seats. I did NOT ack
+  84265 (a foreign copy the broker listed to me).
+- 4.0.0_SA_CRO base: release approved on capacity (84701-84703), conditions on the face record and the log.
+
+## Next Steps
+- [0.7.0_AE_CloudOps~K] reporting-pull Terraform deploy; the re-arm read in the ruled form. Then
+  [0.4.0_DS_ClientPlatform~C] fires BP1-2 once; probe table -> 3.0.0_SA_CVO to grade.
+- [0.7.0_AE_CloudOps~L] C02-g-3 per-100 boundaries and completion -> 3.0.0_SA_CVO grades the round.
+- [2.0.0_SA_COO] CRO release record on the P1-PROBE face; the five-date backfill cell after C02-g-3.
+- [0.0.0_AB_MSTR] broker restart per its own sequence; Andrew's word on D2-T69-R2 when he is at a terminal.
+- 3.0.0_SA_CVO: no arm, no cron; grades on arrival.
+
+## Addendum 03:1xZ -- post-relaunch hygiene sweep (0.0.0_AB_MSTR 84866, on 0.4.0_DS_ClientPlatform~V's 84860 finding)
+`get_delivery_state(3.0.0_SA_CVO, since 2026-08-29T18:00Z)`: 50 rows, 40 OFFER-EXHAUSTED (18:02Z-21:23Z 08-29, all
+addressed to the predecessor session that died at the 22:57Z reboot; SENT, never EMITTED, never READ by any agent),
+10 READ (this session). Every one of the 40 files opened in this seat's own read/ dir and read before acking.
+FINDING: NO UNMET OBLIGATION. The obligation-shaped rows -- the r_gross chain (83549/83552/83556/83579/83868/83879),
+the routed adversarial read (83713 + inputs 83731/83860), the INS-a-5 first-fire thread (83814/83838/83847), the
+MSTR STOP on the broker-health guard (83918) -- were answered by the predecessor session (commits ce426fe5b8,
+27f4ffea32, 625d998433 on 08-29) or closed by their authors' own corrections; the remainder are window frames
+52-54 and peer self-corrections. All 40 READ-acked at 03:1xZ, from the files, not from the listing. Nothing
+reported to the integrator (no TO state changed), per 84866.
+The class itself (an offer consumed by a dead session is invisible to the successor's every startup instrument)
+is DS~V's finding and MSTR's hygiene rule; noted here as the reason a relaunched seat must read the ROW, not the inbox.
+
+## Addendum 05:2xZ -- the second window, 02:50Z -> 05:20Z (grades, one miss, one tool-class fact)
+**Commits this window (all under this author line):** ccfd6b6093, 711a0717a0 (channel rows 27-30), 11c48031d7
+(ANNOTATION 3), cffd16630e, 639b907f71, c723b323cf, 27bc9bcd26, e037300f71 (rows 31-35); origin at 05:20Z
+c723b323cf per the 04:49Z CLOSE, later rows LOCAL for the next window.
+
+### What was graded, and on what instrument of my own
+- **c02-VINTAGE (C02-g-2) V-1..V-5 ACCEPTED** -- V-5 verified on the diff hunks; the value resolves as a commit.
+- **C02-g-3 round ACCEPTED** -- the R-4 bar I wrote had an UNCOVERED MEMBER (fee days with BMV <= 0); AE~L
+  reported NOT MET AS WRITTEN rather than round 77,072/77,087; I verified the fee-add-back RELATION on the
+  world (2024-07-23: gap*bmv == +|fee| on both bmv<0 rows, controls fire) and amended the bar as its author.
+- **The 15 escalated correctly to ARMED** (DS~N: the guard tests abs(bmv) while its comment says value; 1,089
+  served OK account-days carry a sign-inverted r_net). My first filing as OBSERVATION x INERT was the wrong
+  standing; corrected within the hour (row 31). C02-g-5 cut; CTO ruled the convention (negative base -> REFUSE).
+- **C02-g-5 N-1..N-5 ACCEPTED** -- guard at :252 read at source, battery 20/20 on my own run, N-4 counts
+  partition the 7,141 rows exactly, N-5 closed on the served read (CRLF e5af53dc -> LF 7add6445 == the blob;
+  the pre-computed digests prevented a fourth false-revert alarm). My pre-build note (a moved vintage + a scoped
+  re-emission = a mixed column) was ruled (A) by both issuer and gate: vintage unmoved, schema "1.2".
+- **C02-g-6 round ACCEPTED on substance** -- Q-1 ZERO delta to N-1 (396 / 1,089 / 2.75; DS~N's forward curve
+  five-for-five), Q-2 vintage unmoved on 3,021,660 rows, bmv>=1 r_net delta 0; verified on the world by diffing
+  2024-07-23 against my own pre-round copy (4 refusals with None legs; 3,569 rows byte-identical). R-4's original
+  wording now literally true, 77,072 of 77,072. Formal close waits on the proof instance + checker vintage.
+- **BP1-4 thresholds CONFORMANCE PASS** (numbers: the gate's); the Dlog identity reproduced from the pinned table;
+  the 0.8 bp "instrument note" settled as a UNIT (log points vs arithmetic bp), no class moved.
+- **BP1-6 PASS** -- P1/P2 reproduced to 0.01 bp from published numbers; a producer fix inverting an arm handled by
+  re-pointing + a NEW equality arm; the P2 near-miss banked as the reporter wrote it.
+- **P1-PROBE COMPLETE, 5 of 5** -- BP1-5 re-issued VALID rc=0 on my own run (checker @3948c766a7 stated); the
+  per-cell day columns I required confirmed the two EXACT rows (123/123, 87/87) and FALSIFIED three zero-linked-day
+  rows that read EXACT -> VACUOUS-NO-LINKED-DAYS (an outcome, not a bin). Rule-24 note: the member lives in the
+  harness, not the linker's declared set.
+- **TO-D3.1b: 1..4 PASS on evidence; 5 FAIL then PASS on a one-token rework** (@c393a1e986, my run VALID rc=0).
+
+### The miss, recorded where it happened
+TO-D3.1b was delivered 03:20Z; I acked it, read the issuer's receipt, and treated the receipt as the close. The
+grade ran 95 minutes late, after the issuer's sync (85761). A receipt is not a grade; a delivery acked is not a
+delivery graded. Named to the issuer BEFORE the grade (85770), on the row it happened on (ledger row 35).
+And a second correction of my own: I wrote that DS~E's "VALID rc=0" was "a self-report the checker refutes";
+DS~E measured that the artifact-resolution ARM did not exist in the checker bytes it ran (added @3948c766a7,
+arrived in a later window push). Both reads were true of their instrument. Withdrawn as to the act.
+
+### The tool-class fact surfaced to the CTO (85914)
+A proof-of-spec instance's VALID does not carry the CHECKER's vintage; when an arm is added, every prior VALID
+becomes silently re-gradeable and two seats' verdicts cannot be compared. Rule 22a's running-bytes-older-than-
+built, applied to the instrument. Fix shape offered (print `checker=<hash>` beside the verdict); tool owner's lane.
+
+### Channel this window (rows 27-35)
+Row 27 the deploy gap (re-arm = LF-normalised member sha, adopted verbatim); 28/30 the null-typed partitions and
+the 5-trading-day chain outage 08-11..08-17 that re-polarised my own arm; 29 S17 remediated; 31 negative-BMV
+served-leg artifact; 32 the |r_net| > 50% OK rows (a unit-of-time defect on a valid base, not a BMV member --
+DS~N's framing adopted); 33 three carrier-only facts; 34 INF-ONEWRITER resolved as DEPLOY CURRENCY (writer 2 =
+orion-gold-dispatch.sh:303 on EC2 via SSM); 35 the three grades + the miss.
+
+### Current State delta
+BDPARITY P1 fully graded; P2-CENSUS design inherits the ruling + annotations 1-3, thresholds + A1, the outcome
+vocabulary and the anchor-read cost. c02: g-3 closed, g-5 closed, g-6 accepted on substance (proof pending), g-7
+(the five-date backfill) cut to AE~L. Floor ENABLED since 03:43:53Z; the accelerator applied (P2F-3b). INF-ONEWRITER:
+deploy-currency remedy in the issuer's queue, 4 of 4 synced members stale since 05-11 (AE base). Reserved at Andrew:
+D2-T69-R2 (reach of the 21:23Z word), D3-T73-R3 (SmartX feed custodian scope). Watcher b434aqmn7; zero crons.

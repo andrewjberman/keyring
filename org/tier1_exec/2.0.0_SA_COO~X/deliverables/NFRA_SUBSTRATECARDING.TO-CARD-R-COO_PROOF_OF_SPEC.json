@@ -1,0 +1,187 @@
+{
+ "schema_version": "1.0",
+ "to_id": "NFRA_SUBSTRATECARDING.TO-CARD-R-COO",
+ "decomp_ref": {
+  "doc": "workflows/atom_decomposition/runs/nfra-substratecarding/20260829T1129Z/rectangle.final.certified.json",
+  "vintage_commit": "603f5546dc",
+  "to_ref": "org/tier1_exec/2.0.0_SA_COO/task_orders/NFRA_SUBSTRATECARDING.TO-CARD-R-COO.carding.md"
+ },
+ "phase": "NON-BUILD-OTHER",
+ "spec_ref": {
+  "doc": "org/tier1_exec/2.0.0_SA_COO/task_orders/NFRA_SUBSTRATECARDING.TO-CARD-R-COO.carding.md",
+  "group": "OTHER",
+  "vintage_commit": "6a0e8e85de0d6baa1b1436d7e90c81afeaafc287"
+ },
+ "assignee": "2.0.0_SA_COO~X",
+ "artifacts_produced": [
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/D11_CARDS/gen-estate-resolver.card.json",
+   "kind": "config_data",
+   "commit_or_etag": "a09300c2f73bbd040757d8c32e713b7ee32d2e67",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; this face deploys nothing; subject org/modules/graph/gen-estate-resolver.py; joint CARD PASS LOCAL 13:08Z (CRO 13:08:26Z, CVO 13:08:36Z, joint ack 13:09:43Z) on a09300c2f7; ON_ORIGIN at the 13:46Z CLOSE (924d560a32)",
+   "artifact_covered_by": [
+    "COO-AC3",
+    "COO-AC4",
+    "COO-AC5"
+   ]
+  },
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/D11_CARDS/comp-trace.card.json",
+   "kind": "config_data",
+   "commit_or_etag": "086b125f8b482111e51db223bc77d68e87515655",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; this face deploys nothing; subject comp-trace; joint CARD PASS LOCAL 13:42Z (CVO) / 13:39:59Z (CRO) on 086b125f8b; ON_ORIGIN at the 13:46Z CLOSE (CVO 13:48:34Z, CRO 13:50:53Z)",
+   "artifact_covered_by": [
+    "COO-AC3",
+    "COO-AC4",
+    "COO-AC5"
+   ]
+  },
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/D11_CARDS/comp-iam.card.json",
+   "kind": "config_data",
+   "commit_or_etag": "d82566a8e1d6ad2cf458a4a7481daccbc7be6975",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; this face deploys nothing; subject comp-iam; joint CARD PASS LOCAL 14:07Z (CVO 14:06:37Z, CRO 14:06:39Z, joint 14:07:04Z / 14:08:55Z) on d82566a8e1; ON_ORIGIN at the 14:18Z CLOSE (CRO 14:20:00Z)",
+   "artifact_covered_by": [
+    "COO-AC3",
+    "COO-AC4",
+    "COO-AC5"
+   ]
+  },
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/D11_CARDS/comp-platinum.card.json",
+   "kind": "config_data",
+   "commit_or_etag": "4e58afeb4070fac723540d9b087af9ef7c955fe3",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; this face deploys nothing; subject comp-platinum; joint CARD PASS LOCAL 14:27Z (CRO 14:25:37Z, CVO 14:26:39Z, joint 14:27:09Z) on 4e58afeb40; containment: rides the next window (origin 5d879caad7 at the 14:18Z CLOSE)",
+   "artifact_covered_by": [
+    "COO-AC3",
+    "COO-AC4",
+    "COO-AC5"
+   ]
+  },
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/D11_CARDS/build_coo_proof.py",
+   "kind": "script",
+   "commit_or_etag": "PENDING-THIS-COMMIT",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; the face's reporting instrument, not a scored subject"
+  },
+  {
+   "path_or_key": "org/tier1_exec/2.0.0_SA_COO~X/deliverables/NFRA_SUBSTRATECARDING.TO-CARD-R-COO_PROOF_OF_SPEC.json",
+   "kind": "config_data",
+   "commit_or_etag": "PENDING-THIS-COMMIT",
+   "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+   "deploy_evidence": "repo artifact; carried by the commit bearing this proof"
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "COO-AC1",
+   "criterion_verbatim": "derive_stitch.py and kuzu_nessie_load.py are carded FIRST and their cards are the gate on the rest. derive_stitch.py writes stitch_graph.json, which is view 2's source in NFRA_C3MATERIALIZE; kuzu_nessie_load.py is the canonical projection loader. Both are load-bearing for a project currently running experiments ON their output, so an uncarded failure mode there is the most expensive one in the estate.",
+   "method": "manual_read_with_citation",
+   "invocation": "the face's <sequenced_after> and the AE face's status, read: TO-CARD-R-AE complete @28dff1a389 (derive_stitch.py + kuzu_nessie_load.py carded and jointly verified on the AE and CC faces)",
+   "output_evidence": "The load-bearing-two gate is CITED, not merely satisfied: this face's <sequenced_after> names the AE face's two cards; the AE face flipped complete @28dff1a389 before any card here was written (card 1 committed @befdb95458, 13:42Z). The other named precondition (an open NFRA_C3MATERIALIZE L3W3 face at this seat: ACCEPTED) held -- the L3W3 faces closed 08:1xZ-08:2xZ; the sec-7b cut is a different rectangle and not an L3W3 face.",
+   "denominator": "2 of 2 load-bearing cards landed and verified before this face's first card; denominator 2",
+   "status": "PASS",
+   "status_reason": "scored on this face's 4 subjects; the class receipt 20 of 20 is printed with its numerator and denominator because every other face is CLOSED (AE @28dff1a389, ETL @7edba304c2, DS, CC, CCY, CCX @ee7f9b1136, COX @3ecf38119c) -- this is the class close's carrier, stated as such"
+  },
+  {
+   "criterion_id": "COO-AC2",
+   "criterion_verbatim": "The 20 resolvable uncarded subjects (19 manifest writers + rebuild.tmp.SET) enumerated FROM the census @9b2c687dc8. Print 20 with its denominator on every receipt. rebuild.tmp.SET is named explicitly because a subject that looks like a temp artifact is exactly the one a reader silently drops.",
+   "method": "command",
+   "invocation": "the census @9b2c687dc8 read at its pin (the issuer's own instrument, sec 3 + sec 6) against the face's <subjects/> -- the 4 subjects here are the issuer's family's share of the 20 resolvable uncarded",
+   "output_evidence": "The 20 resolvable uncarded subjects (19 writers + rebuild.tmp.SET) partition by owner into AE 7 + ETL 4 + DS/CC 5 + COO 4; this face's 4 are gen-estate-resolver.py (created 2.0.0_SA_COO), comp-trace, comp-iam, comp-platinum (created 2.0.0_SA_COO~B), reconciled against the census (a non-reconciling set would be a REFUSAL). Receipt: 4 of 4 at this face / 20 of 20 across the class (AE 7 closed @28dff1a389, ETL 4 @7edba304c2, DS + CC 5 complete, COO 4 here). rebuild.tmp.SET is the AE face's, named there.",
+   "denominator": "4 of 20 at this face; class 20 of 20 carded; census denominator 20 @9b2c687dc8",
+   "status": "PASS",
+   "status_reason": "scored on this face's 4 subjects; the class receipt 20 of 20 is printed with its numerator and denominator because every other face is CLOSED (AE @28dff1a389, ETL @7edba304c2, DS, CC, CCY, CCX @ee7f9b1136, COX @3ecf38119c) -- this is the class close's carrier, stated as such"
+  },
+  {
+   "criterion_id": "COO-AC3",
+   "criterion_verbatim": "Each card answers all 7 questions across the 3 grains -- and 5, 6 and 7 (coverage + denominator, key/identity space, failure mode distinguishable from a genuine negative) are the ones that get skipped and the ones that matter. A card that answers 1-4 and hand-waves 5-7 is not a card.",
+   "method": "manual_read_with_citation",
+   "invocation": "every card read for its 7 questions x 3 grains (process: methodology + cadence; artifact: persistence + location; trust: coverage + key + failure_mode), each with basis / evidence / owner",
+   "output_evidence": "All four cards answer all seven questions with a basis on every row and an owner on every row; questions 5/6/7 carry the measured findings that made each card QUALIFIED (coverage denominators printed with their holes named; key spaces named with their crossings; failure modes distinguishable_from_true_negative set from the evidence, twice to `no`). Both certifiers reproduced every substantive finding independently on every card (CRO + CVO frames, cited on the artifacts rows).",
+   "denominator": "4 of 4 cards, 7 of 7 questions each, 28 rows; every row carries basis + evidence + owner",
+   "status": "PASS",
+   "status_reason": "scored on this face's 4 subjects; the class receipt 20 of 20 is printed with its numerator and denominator because every other face is CLOSED (AE @28dff1a389, ETL @7edba304c2, DS, CC, CCY, CCX @ee7f9b1136, COX @3ecf38119c) -- this is the class close's carrier, stated as such"
+  },
+  {
+   "criterion_id": "COO-AC4",
+   "criterion_verbatim": "A card is written by someone who READ the subject, never generated from its manifest entry. STOP: a generated card is a description that has never been compared with the thing it describes -- the artifact-describes-itself defect, at scale, across 20 subjects.",
+   "method": "command",
+   "invocation": "each subject READ in full at its pin (gen-estate-resolver.py :1-172; the three 8-line shims; their delegates at the lines cited on each card) and EXERCISED (a dry regen to scratch; comp-trace / comp-iam x5 / comp-platinum x3 runs, rc read via PIPESTATUS[0]); no card generated from a manifest entry",
+   "output_evidence": "Every card carries measurements no manifest could supply: the 2-of-135 stale-against-inputs diff and the 17-of-147 dropped census ids (card 1); the 47.7 s rebuild on a 25-day / 375-node-drifted cache and the live-sink usage census (card 2); the 620-of-825 UNRESOLVABLE resource plane and the 25.6-day-stale APPLIED plane (card 3); the four indistinguishable `index` rows and the print_help-then-exit-0 branch (card 4). The certifiers' STOPs on these cards were CARRIER defects (line numbers, transcriptions, a summary field) -- none was a generated description.",
+   "denominator": "4 of 4 cards authored from subject reads + exercises; 0 generated",
+   "status": "PASS",
+   "status_reason": "scored on this face's 4 subjects; the class receipt 20 of 20 is printed with its numerator and denominator because every other face is CLOSED (AE @28dff1a389, ETL @7edba304c2, DS, CC, CCY, CCX @ee7f9b1136, COX @3ecf38119c) -- this is the class close's carrier, stated as such"
+  },
+  {
+   "criterion_id": "COO-AC5",
+   "criterion_verbatim": "20 of 20 at v3.1 with the two load-bearing writers landed and verified first. Partial completion is reported with its numerator AND denominator; 'substantially complete' is not a state.",
+   "method": "command",
+   "invocation": "substrate-card-check.py per card at the derived identity, rc read UNPIPED; the joint verdicts cited per card",
+   "output_evidence": "4 of 4 cards VALID rc=0 at v3.1; 4 of 4 QUALIFIED; pins org/modules/graph/gen-estate-resolver.py @a09300c2f7; comp-trace @086b125f8b; comp-iam @d82566a8e1; comp-platinum @4e58afeb40; joint verdicts: gen-estate-resolver.py: joint CARD PASS LOCAL 13:08Z (CRO 13:08:26Z, CVO 13:08:36Z, joint ack 13:09:43Z) on a09300c2f7; ON_ORIGIN at the 13:46Z CLOSE (924d560a32) | comp-trace: joint CARD PASS LOCAL 13:42Z (CVO) / 13:39:59Z (CRO) on 086b125f8b; ON_ORIGIN at the 13:46Z CLOSE (CVO 13:48:34Z, CRO 13:50:53Z) | comp-iam: joint CARD PASS LOCAL 14:07Z (CVO 14:06:37Z, CRO 14:06:39Z, joint 14:07:04Z / 14:08:55Z) on d82566a8e1; ON_ORIGIN at the 14:18Z CLOSE (CRO 14:20:00Z) | comp-platinum: joint CARD PASS LOCAL 14:27Z (CRO 14:25:37Z, CVO 14:26:39Z, joint 14:27:09Z) on 4e58afeb40; containment: rides the next window (origin 5d879caad7 at the 14:18Z CLOSE). CLASS: 20 of 20 carded (AE 7 + ETL 4 + DS/CC 5 + COO 4) with the two load-bearing writers landed and verified first (AC1). The numerator AND denominator are printed; 'substantially complete' is not claimed anywhere on this face.",
+   "denominator": "4 of 4 at this face; 20 of 20 in the class",
+   "status": "PASS",
+   "status_reason": "scored on this face's 4 subjects; the class receipt 20 of 20 is printed with its numerator and denominator because every other face is CLOSED (AE @28dff1a389, ETL @7edba304c2, DS, CC, CCY, CCX @ee7f9b1136, COX @3ecf38119c) -- this is the class close's carrier, stated as such"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "the 5-id coverage checker (acceptance ids EXACTLY the face's; every cell_ref within <owned_cells>), baseline-first against a widened set, a repointed cell_ref, and a narrowed set",
+   "expected": "baseline ACCEPTED; all three mutants REFUSED, each naming the reason under test",
+   "observed": "BASELINE untouched proof + face map -> ACCEPTED (5 of 5 face criteria, all cell_refs within owned set) | WIDENED with CARD-R-m-1 (a REAL decomp cell the ISSUER discharges; an id-space check accepts it, only an owned-set check refuses it) -> REFUSED (acceptance row(s) not on the face: CARD-R-m-1) | FACE MAP REPOINTED to a mechanism cell -> REFUSED (cell_ref(s) outside this face's <owned_cells> on COO-AC1: CARD-R-m-3) | NARROWED to 4 rows -> REFUSED (face criterion(s) with no acceptance row: COO-AC5)",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "re-derive every card identity from git (dirty -> PENDING, clean -> last-change hex) and re-run substrate-card-check per card on a second invocation of this builder; compare to the values carried on the acceptance rows; the certifiers' independent reproductions of each card's substantive findings (dry regen 2/135, census 17/147, sink 47/275/30 rows, resource plane 825/620, summary 3/1/3/2) are cited on the artifact rows, not re-run here",
+   "observed": "identities gen-estate-resolver @a09300c2f7; comp-trace @086b125f8b; comp-iam @d82566a8e1; comp-platinum @4e58afeb40; substrate-card-check rc 0 on 4 of 4 at those identities; the class receipt 20 of 20 re-derived from the seven closed faces' <status> fields",
+   "status": "STABLE"
+  }
+ },
+ "declared_exclusions": [
+  {
+   "item": "build_coo_proof.py (and the proof instance it emits) EXCLUDED FROM ACCEPTANCE SCORING, not from the commit",
+   "reason": "the face's REPORTING instrument; no criterion scores it; naming it here is the honest route the checker's A_03 arm offers -- claiming artifact_covered_by on an AC that does not score it would satisfy the same arm by asserting something false (the W1-COX @697a0134b4 class). Scored instead by proof-of-spec-check and both certifiers."
+  },
+  {
+   "item": "the 5 mechanism cells (CARD-R-m-1..5)",
+   "reason": "present on this face but DISCHARGED BY THE ISSUER, not owned here; in the decomp's id space, which is why the coverage control mutates with one."
+  },
+  {
+   "item": "a forward_disposition on any of the four cards",
+   "reason": "set_by is NULL on all four by construction -- the disposition is the subject owner's at the class close, and this seat is the carding lane AND the issuer, so it may not set it (substrate-card-check's own rule)."
+  },
+  {
+   "item": "the subjects' delegates (cli.py, iam_cli.py / extract_iam.py, platinum_cli.py and the three extractors) as carded subjects",
+   "reason": "each card qualifies the shim AND the contract it delegates, reading the delegate at the lines cited; the delegates' own full coverage is their own cards (comp-transform / comp-routes / comp-pipescript / trace_graph) -- stated on each card, not claimed here."
+  },
+  {
+   "item": "the remediation of any finding",
+   "reason": "carding describes; the 18 blocking defects across the four cards (5 + 4 + 4 + 5) are surfaced with owners, never chased (Rule 28: card, do not fix)."
+  }
+ ],
+ "surprises": [
+  "OBSERVATION/INERT -- the served estate-coverage-resolver.json is STALE against its own inputs (2 of 135 threads; the census edited @727daaab94 after the last regen @7fe3a68013) and the declared on-change rebuild has one manual caller; comp-estate prints STALE on every run today (last_review 31 d > 14). Owner: whoever runs comp-estate --refresh; surfaced, not chased.",
+  "OBSERVATION/INERT -- comp-iam's APPLIED plane has been refusing-by-design for ~25 days (newest census 2026-08-05 vs a 24 h TTL; refresh-census unrun) -- console-made / AWS-managed grants invisible to every runnable mode. Owner: refresh-census's caller.",
+  "OBSERVATION/INERT -- the shim template shared by all three comp-* wrappers discards the run logger's last-resort drop disclosure (`2>/dev/null`) and hands the logger a $*-collapsed rendering; one template, one commit @ea7a7c99f8 (2.0.0_SA_COO~B) -- this seat's own family.",
+  "OBSERVATION/INERT -- the trace-graph cache was 25 days / 375-of-1,904-nodes stale at carding and the tool ran once in the prior 14 days against hundreds of Rule-20-gated commits; the rhythm CLAUDE.md declares has no mechanism (comp-surface-check retired).",
+  "OBSERVATION/INERT, this seat's own instrument -- seven STOPs on four cards, every one a CARRIER defect: a census of the producer's name instead of the artifact's (card 1), a transplanted registry citation (card 2), a wrong-file citation and an unfrozen usage cutoff (card 3), grep-filtered and window-displaced line numbers plus a transcribed count (card 4); and two commit messages that claimed a residue count the same call had printed differently. The mechanism now at this seat: read the number in one call, write the sentence in the next; grep the exact phrase for every line cited; freeze every measurement with its cutoff."
+ ],
+ "session_log": "org/tier1_exec/2.0.0_SA_COO~X/drive_log_20260830T1005Z.md (and the next substantive drive log)",
+ "compiler_tools": [
+  {
+   "tool": "substrate-card-check.py",
+   "invocation": "python .tools/substrate-card-check.py <card> (rc UNPIPED)",
+   "result": "4 of 4 VALID rc=0"
+  },
+  {
+   "tool": "proof-of-spec-check.py",
+   "invocation": "python .tools/proof-of-spec-check.py <this file> COO-AC1,COO-AC2,COO-AC3,COO-AC4,COO-AC5 (rc UNPIPED, on the COMMITTED bytes)",
+   "result": "see acceptance; run post-write by the emitting session and re-run by both certifiers on the committed blob; checker vintage (last-change commit of .tools/proof-of-spec-check.py at build, derived): cec2a9b663e6094db05668d2ca0c0f5e2766af04"
+  }
+ ]
+}

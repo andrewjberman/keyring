@@ -12,6 +12,12 @@ Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
   (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
   extra criteria are violations, with both denominators printed.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
+Every verdict line NAMES its rc (1.0.0_SA_CTO 87900 (1c), adopted from 0.4.0_DS_ClientPlatform~N):
+rc=2 is a USAGE/READ error, rc=1 is INVALID, rc=0 is VALID -- a caller reading only "non-zero"
+conflates a mis-typed argument with a refuted proof. The header also prints `checker-vintage:
+<hash> <UTC Z>` (1b) so no seat derives the vintage by hand in local time; when the checker's own worktree
+differs from HEAD the line carries `+DIRTY(<n> lines)` (1b', 3.0.0_SA_CVO 88184) so it is true of the bytes
+that ran, never only of the last commit.
 
 Layered: jsonschema (if installed) for structure, then the conditional rules the
 schema cannot express -- ALWAYS run, so absence of the jsonschema package degrades
@@ -144,6 +150,136 @@ def conditional_checks(inst: dict) -> list[str]:
     return v
 
 
+PENDING_SENTINEL = "PENDING-THIS-COMMIT"
+_COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
+    """ARTIFACT ROW RESOLUTION (2026-08-30, 1.0.0_SA_CTO~X on 2.0.0_SA_COO~X's proposal 85753). Two
+    instances in one night passed this checker VALID and were caught BY HAND: TO-L3W3-COX @c36a309f4d
+    named its own proof at a path that never existed in git; TO-L3W3-CCX @fa7b34274a carried the
+    PENDING sentinel on rows whose artifacts had landed in an EARLIER commit. The schema validates a
+    row's SHAPE; a legal-looking (commit, path) pair that git alone can falsify is invisible to it.
+
+    For every artifacts_produced row that names a REPO artifact (kind != s3_object):
+      - commit_or_etag == PENDING-THIS-COMMIT: the artifact rides the commit that will carry the proof,
+        which does not exist at check time, so the path must at least EXIST IN THE WORKING TREE. A
+        dead path here is a VIOLATION (the COX class).
+      - a commit-ish (7-40 hex): the commit must resolve in the LOCAL object store, then
+        `<commit>:<path>` must exist. Absent -> VIOLATION (a path claimed at a pin that does not
+        carry it).
+    CONTENT RUNG (88109): a row may carry `introduces: [token, ...]`; the tokens must be present in the
+    blob at the pin and absent at `<pin>~1` (or the file absent there) -- a pin that exists but does not
+    carry the change is a VIOLATION; a token present at both is "not introduced here". Rows without
+    `introduces` are PRESENCE-ONLY and the frame counts them as such.
+    ANNOUNCED, never a violation: a commit-ish that is not in the local object store (UNRESOLVED-HERE
+    -- a cross-fabric pin before a fetch is not a false claim); s3_object rows (an ETag is not a git
+    ref -- the served plane is read by a different instrument).
+    NOT COVERED, stated so nobody reads a clean frame as covering it: the CCX class proper -- a PENDING
+    sentinel on a row whose artifact is ALREADY committed. Before the proof's commit exists there is
+    no candidate to compare against; the issuer's --stat read at close is the instrument for that.
+    Every count prints with its denominator."""
+    v: list[str] = []
+    rows = inst.get("artifacts_produced", []) or []
+    n_resolved = n_pending = n_unresolved = n_s3 = 0
+    # CONTENT RUNG (2026-08-30, 1.0.0_SA_CTO 88109, one plane over from the (1a) content-not-presence
+    # rule): the INDEXBYTES proof's fix row resolved because its pin EXISTED while the blob at that pin
+    # LACKED the change the criterion named (the pin was another seat's unrelated commit). A row may
+    # declare `introduces: [token, ...]`; then every token must be PRESENT in the blob at the pin and
+    # ABSENT in the blob at the pin's PARENT (`<pin>~1`, never `^` -- a caret through a shell is not a
+    # parent), or the file must be absent at the parent. A PENDING row is checked the same way against
+    # the WORKTREE file and HEAD's blob. Rows WITHOUT `introduces` stay presence-resolved and the frame
+    # names that class, so a clean line cannot be read as content-resolved.
+    n_content = n_presence_only = 0
+
+    def _blob(ref: str) -> bytes | None:
+        try:
+            o = subprocess.run(["git", "show", ref], cwd=str(_REPO_ROOT), capture_output=True, timeout=30)
+        except Exception:  # noqa: BLE001
+            return None
+        return o.stdout if o.returncode == 0 else None
+
+    def _content_rung(path: str, tokens: list, here: bytes | None, parent: bytes | None, where: str) -> str | None:
+        """None when the tokens are introduced at `where`; else the violation text."""
+        if here is None:
+            return f"artifact-resolution/content: {path!r} unreadable at {where}"
+        missing = [t for t in tokens if t.encode("utf-8") not in here]
+        if missing:
+            return (f"artifact-resolution/content: {path!r} at {where} LACKS the token(s) the row says it "
+                    f"introduces: {missing} -- the pin exists but does not carry the change (88109 class)")
+        if parent is not None:
+            already = [t for t in tokens if t.encode("utf-8") in parent]
+            if already:
+                return (f"artifact-resolution/content: {path!r}: token(s) {already} are ALREADY present at the "
+                        f"parent of {where} -- not introduced here; the row pins a commit that did not make the change")
+        return None
+
+    def _git_ok(*args: str) -> bool:
+        try:
+            return subprocess.run(["git", *args], cwd=str(_REPO_ROOT), capture_output=True,
+                                  timeout=30).returncode == 0
+        except Exception:  # noqa: BLE001 -- a git that cannot run is announced below, not a pass
+            return False
+
+    for a in rows:
+        if not isinstance(a, dict):
+            continue
+        path = str(a.get("path_or_key", "") or "")
+        pin = str(a.get("commit_or_etag", "") or "")
+        if a.get("kind") == "s3_object":
+            n_s3 += 1
+            continue
+        tokens = a.get("introduces") or []
+        if tokens and not (isinstance(tokens, list) and all(isinstance(t, str) and t for t in tokens)):
+            v.append(f"artifact-resolution/content: {path!r} carries `introduces` that is not a list of non-empty strings")
+            tokens = []
+        if pin == PENDING_SENTINEL:
+            if path and (_REPO_ROOT / path).exists():
+                n_pending += 1
+                if tokens:
+                    err = _content_rung(path, tokens, (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING)")
+                    if err:
+                        v.append(err)
+                    else:
+                        n_content += 1
+            else:
+                v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but does NOT exist in the "
+                         "working tree -- a dead path cannot ride the commit that carries this proof")
+            continue
+        if not _COMMITISH_RE.match(pin):
+            v.append(f"artifact-resolution: {path!r} carries commit_or_etag {pin!r}, which is neither "
+                     "PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact")
+            continue
+        if not _git_ok("cat-file", "-e", pin + "^{commit}"):
+            n_unresolved += 1
+            continue
+        if _git_ok("cat-file", "-e", f"{pin}:{path}"):
+            n_resolved += 1
+            if tokens:
+                err = _content_rung(path, tokens, _blob(f"{pin}:{path}"), _blob(f"{pin}~1:{path}"), f"pin {pin}")
+                if err:
+                    v.append(err)
+                else:
+                    n_content += 1
+            else:
+                n_presence_only += 1
+        else:
+            v.append(f"artifact-resolution: {path!r} does NOT exist at its declared pin {pin} -- "
+                     "the row names a (commit, path) pair git refutes")
+    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_pending} pending-on-worktree / "
+              f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
+              f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
+              "a PENDING row whose artifact is ALREADY committed is NOT covered here",
+              f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
+              f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
+              "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"
+              "ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and "
+              "<pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never "
+              "a pin cited for the wrong reason."]
+    return v, frames
+
+
 def coverage_check(inst: dict, expected_arg: str) -> list[str]:
     """CVO step-zero mechanized: instance criterion set vs the TO's expected set."""
     p = Path(expected_arg)
@@ -216,10 +352,31 @@ _BACKWARD_ASSERTED = None
 # ("absent from both the cell set and the criteria refs, so the extraction discriminates").
 # Admitting it would have retired another instrument's discriminator as a side effect.
 # A future scheme gets its own anchored branch and its own two controls -- never a widening.
+# TWO ANCHORED BRANCHES ADDED 2026-08-30 (2.0.0_SA_COO~X, on 0.8.0_AE_CloudComp~Y's measurement
+# 84774): the L3W3 rectangle's family slugs are sha256-derived 4-HEX (dc02 / b8a2 / c69f) and the
+# carding remainder's ids are CARD-R-<4hex|m>-N -- the letters-only slug branch above saw 13 of 34
+# L3W3 cells and 0 of 18 carding cells, and the only fully visible set was the issuer's own
+# mechanism cells. Per the rule two lines up these are ANCHORED branches with their own controls
+# (.tools/tests/test_proof_of_spec_cell_id_re.py), never a widening of the letters-only class.
 CELL_ID_RE = re.compile(
     r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|L3W3-[0-9a-f]{4}-\d+"
+    # ANCHORED BRANCH 2026-08-30 (1.0.0_SA_CTO~X, found by its own battery while fixing 87900): the sec-7b
+    # rectangle's family slugs are 4-HEX too (1c16 / 4017 / 0b5f / 4565 / 8304) under the L3S7B prefix; the
+    # L3W3 branch is prefix-anchored so it did not see them, and the letters-only branch cannot (a slug that
+    # opens with a digit). Controls in test_proof_of_spec_cell_id_re.py + a corpus arm over all 21 ids of
+    # rectangle.final.certified.json at its pin. The m-cells (L3S7B-m-N) already match the legacy branch.
+    r"|L3S7B-[0-9a-f]{4}-\d+"
+    r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
     r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
+# (1a) 2026-08-30, 1.0.0_SA_CTO 87900: the <decomp_ref> element's CONTENT is the claim, not its
+# PRESENCE. Three tooling faces carried "<decomp_ref>NONE -- one-branch remediation under its own
+# charter</decomp_ref>": the presence test ENFORCEd them and then refused cell_refs they must not
+# invent -- the checker demanding a value it forbids. A body that declares no decomposition (NONE /
+# none / absent / n/a, with no decomp doc and no cell id) takes the ANNOUNCE branch, and the branch
+# line prints WHY. A body naming a decomp doc takes ENFORCE regardless of any leading word.
+DECOMP_REF_NONE_RE = re.compile(r"^\s*(NONE|None|none|ABSENT|Absent|absent|N/A|n/a)\b")
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
 
@@ -348,6 +505,7 @@ def _parse_to(text: str) -> dict:
     """The TO's ISSUANCE half, read exactly as declared."""
     m = re.search(r"<decomp_ref>(.*?)</decomp_ref>", text, re.S)
     blob = m.group(1) if m else None
+    present = blob is not None
     doc = ""
     if blob:
         explicit = DECOMP_DOC_TAG_RE.search(blob)
@@ -390,8 +548,24 @@ def _parse_to(text: str) -> dict:
         if not refs:
             no_refs.append(cid)
     exp = re.search(r"<expected_criteria>(.*?)</expected_criteria>", text, re.S)
+    # (1a) CONTENT, NOT PRESENCE: a present element whose body declares NONE (and names no doc and
+    # no cell id) is a declaration of NO decomposition -> ANNOUNCE. The doc wins over the word.
+    body = re.sub(r"<owned_cells>.*?</owned_cells>|<decomp_doc>.*?</decomp_doc>", "", blob, flags=re.S) if present else ""
+    declares_none = bool(present and DECOMP_REF_NONE_RE.match(body) and not doc and not declared)
+    if present and DECOMP_REF_NONE_RE.match(body) and (doc or declared):
+        branch_reason = (f"<decomp_ref> body opens with a NONE-word but names a decomp "
+                         f"({doc or 'cell ids'}) -- the doc wins, ENFORCE")
+    elif declares_none:
+        branch_reason = f"<decomp_ref> body declares NO decomposition: '{body.strip()[:60]}'"
+    elif present:
+        branch_reason = f"<decomp_ref> names {doc or 'cell ids without a doc'}"
+    else:
+        branch_reason = "the governing TO carries NO <decomp_ref> element"
     return {
-        "has_decomp_ref": blob is not None,
+        "has_decomp_ref": present and not declares_none,
+        "decomp_ref_present": present,
+        "decomp_ref_declares_none": declares_none,
+        "decomp_ref_branch_reason": branch_reason,
         "declared_cells": declared,
         "delimited": delimited,
         "delimiter_stray_text": stray,
@@ -543,10 +717,11 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     to = _parse_to(to_path.read_text(encoding="utf-8", errors="replace"))
     if not to["has_decomp_ref"]:
         frames.append(
-            "alignment: ANNOUNCE -- the governing TO carries NO <decomp_ref>, so this is "
-            "PRE-PIPELINE work completing under its own spec; decomp_ref is not required "
-            "and this instance stays VALID on that basis (CTO ruling 66492). A TO cut "
-            "under the pipeline carries <decomp_ref> and is enforced here by construction.")
+            f"alignment: ANNOUNCE -- {to['decomp_ref_branch_reason']}, so this is "
+            "work completing under its own spec; decomp_ref is not required "
+            "and this instance stays VALID on that basis (CTO ruling 66492; CONTENT-not-presence "
+            "1.0.0_SA_CTO 87900). A TO whose <decomp_ref> NAMES a decomp is enforced here by "
+            "construction.")
         return v, frames
 
     # ENFORCE from here: the TO declared a decomp, so the instance owes the join.
@@ -558,7 +733,7 @@ def alignment_check(inst: dict) -> tuple[list, list]:
         frames.append(
             "alignment: ENFORCE (TO carries <decomp_ref>) -- instance decomp_ref ABSENT")
         return v, frames
-    frames.append("alignment: ENFORCE (TO carries <decomp_ref>)")
+    frames.append(f"alignment: ENFORCE ({to['decomp_ref_branch_reason']})")
 
     inst_doc = str(dr.get("doc", "")).strip()
     if inst_doc and to["decomp_doc"] and (
@@ -636,15 +811,72 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     return v, frames
 
 
+def checker_vintage() -> str:
+    """The commit that last touched THIS checker, as `<hash> <YYYY-MM-DDTHH:MM:SSZ>` -- UTC with a Z,
+    or the hash alone. (1b) 2026-08-30, 1.0.0_SA_CTO 87900: an instance carried the checker vintage as
+    "3948c766a7 (2026-08-30 01:00:15)" -- a local time without a zone for a commit made 05:00:15Z --
+    hand-derived by the seat because the checker printed none. The instrument that pins vintages
+    prints its own, correctly, so no seat has to derive it. Never a local time; never a typed Z."""
+    try:
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%H|%cI", "--", str(Path(__file__).resolve())],
+            capture_output=True, text=True, cwd=str(_REPO_ROOT), timeout=20)
+        if out.returncode != 0 or "|" not in out.stdout:
+            return "UNREAD (git log failed; the hash is not knowable here)"
+        h, ci = out.stdout.strip().split("|", 1)
+        return f"{h[:10]} {iso_offset_to_utc_z(ci)}{worktree_dirty_suffix(Path(__file__).resolve(), _REPO_ROOT)}"
+    except Exception:  # noqa: BLE001 -- a vintage line must never turn the checker into rc=2
+        return "UNREAD (exception reading git log)"
+
+
+def worktree_dirty_suffix(path, repo_root) -> str:
+    """(1b', 3.0.0_SA_CVO 88184) The vintage line names the tool's last COMMIT; when the tool's worktree
+    differs from HEAD the bytes that RAN are not those bytes, and a seat grading under an uncommitted
+    checker change would print a vintage that is false of the run (measured 15:0xZ: "checker-vintage:
+    cec2a9b663" beside a content line only 4200a54390 can emit). Returns "" for a clean file, or
+    "+DIRTY(<added>+<deleted> lines)" from `git diff --numstat HEAD -- <path>`; an unreadable diff is
+    announced as +DIRTY(UNREAD) rather than passed off as clean."""
+    try:
+        out = subprocess.run(["git", "diff", "--numstat", "HEAD", "--", str(path)],
+                             capture_output=True, text=True, cwd=str(repo_root), timeout=20)
+    except Exception:  # noqa: BLE001
+        return "+DIRTY(UNREAD)"
+    if out.returncode != 0:
+        return "+DIRTY(UNREAD)"
+    line = out.stdout.strip()
+    if not line:
+        return ""
+    parts = line.split("\t")
+    try:
+        n = int(parts[0]) + int(parts[1])
+    except (ValueError, IndexError):
+        return "+DIRTY(binary)"
+    return f"+DIRTY({n} lines)"
+
+
+def iso_offset_to_utc_z(ci: str) -> str:
+    """%cI (ISO 8601 with a numeric offset) -> UTC rendered with a literal Z that is TRUE, because the
+    offset was applied first. A string without an offset is returned as the hash-only sentinel."""
+    from datetime import datetime, timezone
+    try:
+        dt = datetime.fromisoformat(ci.strip())
+    except ValueError:
+        return "(date unparsed)"
+    if dt.tzinfo is None:
+        return "(date carried no offset; not rendered)"
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def main() -> int:
     if len(sys.argv) not in (2, 3):
         print(__doc__)
+        print("USAGE-ERROR (rc=2): expected <instance.json> [expected_criterion_ids]")
         return 2
     try:
         inst = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001
-        print(f"READ-ERROR: {exc}")
+        print(f"READ-ERROR (rc=2): {exc}")
         return 2
 
     violations: list[str] = []
@@ -673,9 +905,15 @@ def main() -> int:
     # discriminator.
     align_violations, align_frames = alignment_check(inst)
     violations.extend(align_violations)
+    # ARTIFACT ROW RESOLUTION (2026-08-30): runs on every instance; its frame prints its denominator
+    # and names the class it does NOT cover, so a clean line cannot be read wider than it is.
+    res_violations, res_frames = artifact_resolution_check(inst)
+    violations.extend(res_violations)
+    align_frames = list(align_frames) + res_frames
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
+    print(f"  checker-vintage: {checker_vintage()}")
     for line in align_frames:
         print(f"  {line}")
     # ALIGNMENT AND SCHEMA ARE DIFFERENT ORACLES, AND THE ALIGNMENT LINES ARE BYTE-IDENTICAL
@@ -696,15 +934,15 @@ def main() -> int:
     for line in violations:
         print(f"  VIOLATION: {line}")
     if violations:
-        print("INVALID")
+        print("INVALID (rc=1)")
     elif _BACKWARD_ASSERTED is False:
         # A VALID whose backward limb was never asserted is a WEAKER statement than a VALID on a
         # delimited face, and nothing in the bare word said so (DT~X 79061). Same rc; the verdict
         # line names the limb it could not enforce.
-        print("VALID -- alignment-backward UNASSERTED (undelimited <decomp_ref>: put "
+        print("VALID (rc=0) -- alignment-backward UNASSERTED (undelimited <decomp_ref>: put "
               "<owned_cells>id, id</owned_cells> INSIDE <decomp_ref> to make it enforceable)")
     else:
-        print("VALID")
+        print("VALID (rc=0)")
     return 0 if not violations else 1
 
 

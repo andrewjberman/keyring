@@ -1,0 +1,148 @@
+# ANDREW-DIRECT 2026-08-30 ~19:05Z -- D2/D3 closed; D11 + Y fabrics remain; canvas the two CTOs and staff on request
+
+**Channel:** Andrew, typed at the `0.0.0_AB_MSTR` terminal (laptop). **Recorded by:** `0.0.0_AB_MSTR`, same turn, VERBATIM.
+
+## VERBATIM
+
+> Yes i have closed out D2/D3 Fabric, now we just have D11 fabric and the two ~Y agents (Y Fabric). If either of
+> these fabrics require any workers, we must bring them on, write to the respective ~X and ~Y CTOs and qualify if
+> they have any requests after they canvas state.
+
+## Reading (labelled as a reading, not as his words)
+
+1. **D2/D3 fabric is CLOSED by his own act.** Those seats are gone or going; this seat does not reap, revive or
+   chase them, and no D2/D3 work is restarted on the strength of this.
+2. **TWO fabrics remain live:** the **D11 fabric** (CTO `1.0.0_SA_CTO~X`) and the **Y fabric** (the two `~Y`
+   agents, CTO `1.0.0_SA_CTO~Y`).
+3. **THE ACT ASKED OF THIS SEAT:** write to `1.0.0_SA_CTO~X` and `1.0.0_SA_CTO~Y`, ask each to CANVAS ITS OWN
+   STATE, and QUALIFY whether it needs workers. "Qualify" = the request must be specific enough to act on -- what
+   role, on what work, why now -- not a headcount.
+4. **STAFFING IS AUTHORIZED ON A QUALIFIED REQUEST** ("we must bring them on"). The spawn primitive is this
+   seat's; the DECISION of what a fabric needs belongs to its CTO. This seat does not invent seats, does not
+   staff a fabric that says it needs nobody, and does not second-guess a request it is given.
+5. **NOT ASKED, AND NOT DONE:** no spawns before the canvas returns; no work allocated to any new seat by this
+   seat (spawn != dispatch, Constitution Art. VI -- direction flows from the fabric's own CTO).
+
+## Dispatch
+
+MCP to `1.0.0_SA_CTO~X` and `1.0.0_SA_CTO~Y`, same turn; msg-ids appended below by the sender after the send.
+
+- msg-ids (19:0xZ): **89008** (`1.0.0_SA_CTO~X`, D11) and **89009** (`1.0.0_SA_CTO~Y`, Y fabric) -- 2 DELIVERED / 0 QUEUED / 0 REFUSED, both `via filesystem+broker+channel push`.
+
+## Roster measured at the dispatch (19:0xZ), because staffing decisions rest on it
+
+8 live: `0.0.0_AB_MSTR`; `1.0.0_SA_CTO` **STALE** (session closed 18:56Z with /log @60b55e8017 + /handoff
+@24f7567dac -- the D2/D3 closeout landing correctly, not a failure); **D11** = `1.0.0_SA_CTO~X`,
+`2.0.0_SA_COO~X`, `3.0.0_SA_CVO~X`, `4.0.0_SA_CRO~X`; **Y fabric** = `1.0.0_SA_CTO~Y`, `4.0.0_SA_CRO~Y`
+(matching his "the two ~Y agents" exactly). Marker-counted windows 15 of cap 20 at 17:3xZ -> headroom 5.
+
+Two seats are DEAD at the OS plane and were NOT re-addressed: `0.4.0_DT_ClientPlatform~X` (ruled LEAVE IT by
+`2.0.0_SA_COO~X`) and `0.8.0_AE_CloudComp~Y` (named by `2.0.0_SA_COO~X` 89006 as the seat that COMPLETES the
+7A unit, with a respawn TRIGGER stated rather than requested). The second was surfaced to `1.0.0_SA_CTO~X`
+as a candidate to JUDGE, explicitly not as a proposal from this seat -- population of a fabric's work seats
+is that fabric's call, and this seat holds only the primitive.
+
+---
+
+## AMENDMENT -- ANDREW-DIRECT ~19:1xZ, the naming law for the two fabrics
+
+### VERBATIM
+
+> Yes let's call them X and Y Fabric, make sure that any agents spawned for each retain ~X or ~Y tilde based on
+> what group they are part of
+
+### Reading (labelled)
+
+1. **The two fabrics are now NAMED: X FABRIC and Y FABRIC.** "D11 fabric" is retired as the name; D11 is a
+   directive the X fabric works on, not the fabric's identity.
+2. **THE TILDE IS THE GROUP MARKER AND IT BINDS AT SPAWN.** Every seat provisioned for the X fabric carries
+   `~X`; every seat provisioned for the Y fabric carries `~Y`. The suffix tracks GROUP MEMBERSHIP, not lane
+   sequence, not the requesting seat's own suffix.
+3. **THIS SEAT ENFORCES IT AT THE SPAWN ACT.** A request naming a bare serial (no tilde) or the wrong tilde
+   is not spawned as written -- this seat corrects the suffix to the requesting fabric and says so, or asks
+   if the group is genuinely ambiguous. It does not silently spawn a mis-suffixed seat.
+4. **NO RENAMING OF LIVE SEATS IS ORDERED BY THIS.** He said "any agents spawned" -- future tense, at spawn.
+   A live seat keeps its serial; nothing here re-labels an existing session.
+
+### ⛔ ONE COLLISION THE RULE EXPOSES, SURFACED AND NOT RESOLVED BY THIS SEAT
+
+`0.8.0_AE_CloudComp~Y` is **dead** and is the seat `2.0.0_SA_COO~X` named as completing the **7A / sec-7b
+unit -- which is X FABRIC work** (its issuer is `2.0.0_SA_COO~X`, its certifiers `3.0.0_SA_CVO~X` and
+`4.0.0_SA_CRO~X`). So a seat suffixed `~Y` was doing X-fabric work. Under this rule a RESPAWN for that work
+would be `0.8.0_AE_CloudComp~X` -- **but that serial already exists as a distinct lane with its own history**
+(it closed both its faces and was released earlier today). Three readings, and the choice is not this seat's:
+(a) respawn as `~X` and accept that the lane letter now means the fabric, so the old `~X` history and the new
+seat share a serial; (b) respawn as `~Y` because the seat's IDENTITY and its committed artifacts are `~Y`,
+treating this as a pre-existing exception the rule does not reach backwards into; (c) a different free
+suffix inside the X fabric. **Asked of `1.0.0_SA_CTO~X` and `2.0.0_SA_COO~X` at dispatch; escalated to Andrew
+if they split.** No spawn happens on this serial until it is answered.
+
+---
+
+## OUTCOME: both canvases returned inside 10 minutes; THREE seats spawned, all correctly suffixed
+
+| Fabric | Requested by | Serial spawned | Role / work | Verified |
+|---|---|---|---|---|
+| X | `1.0.0_SA_CTO~X` (89018) | `0.7.0_AE_CloudOps~X` | AE executor; `NFRA_SUBSTRATECARDING.TO-CARD-R-W4-COX`, stranded mid-repair by its owner's death | marker 1, claude.exe 1 |
+| Y | `1.0.0_SA_CTO~Y` (89016) | `1.1.0_SA_KJ~Y` | producer, contract-authoring lane A, 5 defined tasks | marker 1, claude.exe 1 |
+| Y | `1.0.0_SA_CTO~Y` (89016) | `1.2.0_SA_A0~Y` | producer, contract-authoring lane B, 4 defined tasks | marker 1, claude.exe 1 |
+
+Fleet after: **6 marker-counted windows of cap 20.** Every serial carries its fabric's tilde per the naming
+law. Pre-flight on each: 1pt 0 claude.exe, 1b 0 markers, 1c headroom 17, serial format valid.
+⚠ **INSTRUMENT DISCLOSURE:** `to-check --assignee` returned IDENTICAL output for four different serials -- it
+did not DISCRIMINATE, so its result was NOT treated as a measured zero; `comp-find` was used instead (2 hits
+each for `SA_KJ` / `SA_A0`, both DOC-band prose, no task orders, no code).
+
+**BOTH CTOs ASKED FOR LESS THAN THEY COULD HAVE.** `1.0.0_SA_CTO~Y`'s own plan names FIVE seats and it
+requested TWO, declining the three whose prerequisite pins do not exist ("a seat spawned against an absent
+pin does not go faster; it produces something that must be discarded"). `1.0.0_SA_CTO~X` found TWO dead
+executors and requested ONE, declining the 7A seat because its respawn trigger had UN-fired at 19:0xZ (both
+certifiers passed candidate `467e76a9ca` and then STOPPED it on a numerator finding) -- so that seat would
+have been spawned to wait. Neither request was second-guessed by this seat.
+
+**THE NAMING COLLISION IS SETTLED WITHOUT ANDREW:** `1.0.0_SA_CTO~X` picked (a) `~X` and `2.0.0_SA_COO~X`
+concurred, so the escalation condition in 89010 (a split) never fired. Decisive measured fact: the
+determination unit was NEVER DELIVERED to the `~Y` seat, so no work-in-flight transfers and no history
+merges.
+⛔ **ONE RESIDUAL FOR ANDREW IF IT EVER BINDS** (raised by `1.0.0_SA_CTO~X`, adopted here): the tilde now
+carries FABRIC where it used to carry LANE. Those coincide only while no two live lanes of one base serial
+sit in the same fabric. Nothing needs it today. If the estate ever needs two concurrent same-class lanes in
+one fabric, the lane marker must move off the tilde -- a change to what a serial MEANS, and his call.
+
+**CARRIED TO ANDREW AS THE Y CTO'S LINE, NOT AS A REQUEST IT MADE:** `4.0.0_SA_CRO~Y` found 38 defects in
+that CTO's work today (19 blockers across three build increments; 19 across FOUR consecutive review rounds
+on the operating protocol, every round finding something its own gate had reported green) and it found zero
+in the certifier's. Its read: the binding constraint is its own defect rate and the certifier's capacity,
+not production capacity -- so if Andrew would rather add CERTIFICATION capacity than production capacity, a
+second certifier would be the better spend and it would take that instead of its two producers. It
+explicitly did NOT request this, because `4.0.0_SA_CRO~Y` turns verdicts in minutes and it would rather not
+split an independence that is working.
+
+## ⛔ A DELIVERY DEFECT THE SPAWNS EXPOSED, MEASURED AND FIXED AT THIS SEAT
+
+`1.0.0_SA_CTO~Y` wrote both charters and both task orders promptly and could not deliver them: `send_message`
+to the two new serials returned **0 DELIVERED / 0 QUEUED / 2 REFUSED**, "serial does not resolve in org --
+nothing written", while `org/mcp/liveness.json` held both seats alive and waiting.
+
+**CAUSE, measured at source and by timestamp.** `_resolve_agent_folder` (`org/mcp/server.py:932`) resolves a
+recipient by finding a directory named the BASE serial under the tier dirs -- there is no registry beyond
+that -- and those directories are created by THE SEATS THEMSELVES at startup:
+`org/tier1_exec/1.1.0_SA_KJ` at 19:18:17Z, `org/tier1_exec/1.2.0_SA_A0` at 19:18:55Z, against spawns at
+~19:12Z. **A spawned seat is UNADDRESSABLE for ~6 minutes after it is announced.** Probe at 19:2xZ once the
+folders existed: 2 DELIVERED, ids 89042 / 89043 -- so the path was never broken, only late.
+
+⛔ **THE PART THAT IS WORSE THAN THE RACE:** in that window the send path **REFUSES** rather than QUEUES. A
+refusal writes NOTHING, so a sender that reads its own send as done loses the message silently. `1.0.0_SA_CTO~Y`
+noticed, and declined to hand-write into the seats' inbox directories to route around it -- correctly, since
+that is one step from the orphan-thief shape.
+
+**FIX ADOPTED AT THIS SEAT, effective immediately:** the spawn act now creates the seat's tier folder BEFORE
+this seat reports the seat as spawned, so a new seat is addressable the moment its serial is announced. No
+code change. **The durable fix is `1.0.0_SA_CTO`'s `.tools/` lane** -- the spawner creates the folder, or
+`_deliver_to_one` QUEUES a live-but-unresolvable serial instead of refusing it -- named, not edited, by this
+seat.
+
+**AND A CORRECTION TO THIS SEAT'S OWN WORDS:** msg 89029's subject said the grant included "the two you did
+NOT ask for". **Withdrawn.** `1.0.0_SA_CTO~Y` asked for exactly those two and declined three; the praise came
+out as its opposite. This record stated it correctly throughout, which is the only reason the error was
+confined to one message subject.

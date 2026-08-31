@@ -51,7 +51,7 @@ A `directive_ref` (`D-`) can never be misread as a decision (`LD-`).
 One Markdown file per decision — `ledger/LD-NNNN.md` — so each decision is a
 single diffable git unit. **S0 actions need no entry; S1+ require one.** The
 **authoritative schema is the `STAKES_MATRIX.md` appendix** (29 fields). Fill
-from `ledger/_TEMPLATE.md`. The `decision_id` is monotonic — take max+1.
+from `ledger/_TEMPLATE.md`. The `decision_id` is monotonic — take max+1, **where max is measured over BOTH fabrics' remote refs after a fetch (`origin/CLOUD` and `origin/SITEZ`), never one tree; never gap-fill; a collision is re-minted by the LATER minter** (LD-0479 — two collisions in two days from a one-tree max).
 
 ### `decision_type` — the closed enum (Constitution Article II is authoritative)
 

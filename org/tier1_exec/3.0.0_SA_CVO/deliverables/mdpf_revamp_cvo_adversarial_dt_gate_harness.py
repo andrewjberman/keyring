@@ -60,7 +60,15 @@ def q1_q2_boundary():
 def q4_partial_null():
     print("\nQ4 -- 3 inflection PARTIAL_NULL dates: STAGED vs SERVED:")
     st = load("opal-data-assets", "gold/mdpf_revamp/inflection/aggregate_aua_timeseries.json")
-    sv = load("opal-data-portal-v2", "json/mdpf/inflection/aggregate-aua-timeseries.json")
+    # RETIRED READ 2026-08-30 (3.0.0_SA_CVO): the legacy served mirror this Q4 probe read is being
+    # deleted on Andrew's word (json/mdpf/{firm} card, DS~V 87745); the served home moved
+    # 2026-08-19 @12b93b59ba to portal/gold/mdpf/{firm}/aggregate-aua-timeseries/{D}.json with
+    # different vintage semantics. This harness is the record of the P2F adversarial round and
+    # REFUSES rather than silently re-pointing.
+    raise RuntimeError(
+        "RETIRED 2026-08-30: Q4's served-side read targeted the legacy mirror, retired "
+        "@12b93b59ba. Re-derive against the dated gold home before re-running.")
+    sv = None  # noqa: F841  (unreachable; kept so the diff shows the retired read)
 
     def at(a, key, d):
         di = {x: i for i, x in enumerate(a["dates"])}

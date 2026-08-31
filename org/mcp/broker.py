@@ -616,22 +616,47 @@ class BrokerHandler(BaseHTTPRequestHandler):
         """
         serial = body.get("serial", "")
         ids = [int(i) for i in body.get("ids", [])]
+        # RECIPIENT CHECK (2026-08-30, 1.0.0_SA_CTO on 0.0.0_AB_MSTR 84328). Before this line
+        # the UPDATE carried no `to_serial` predicate: an ack from ANY registered serial landed
+        # on ANY id, and because the row is write-once a mistyped or guessed id did not fail --
+        # it permanently stole the true recipient's READ slot (measured: 84265, addressed to
+        # 0.4.0_DE_ClientPlatform~D, acked by 0.8.0_AE_CloudComp~X; 341 of 22,596 acked rows
+        # carried acked_by != to_serial at the time of the fix). Write-once is a RACE, not a
+        # control. `override` is set ONLY by check_inbox(mark_read=True, identity_override=...)
+        # -- the audited dead-agent-cleanup drain -- and acked_by still records the cleaner.
+        override = bool(body.get("override"))
         if not ids:
-            self._json_response({"ok": True, "acked": 0})
+            self._json_response({"ok": True, "acked": 0, "refused": 0, "refused_ids": []})
             return
         now = datetime.now(timezone.utc).isoformat()
         qmarks = ",".join("?" for _ in ids)
+        refused_ids = []
+        if not override:
+            refused_ids = [
+                int(r["id"]) for r in db.execute(
+                    f"SELECT id FROM messages WHERE id IN ({qmarks}) "
+                    f"AND acked_at IS NULL AND to_serial != ?",
+                    (*ids, serial)).fetchall()
+            ]
+        recipient_clause = "" if override else " AND to_serial = ?"
+        recipient_params = () if override else (serial,)
         # An ACK also settles the earlier clocks: a message an agent demonstrably read was
         # necessarily emitted. Never the reverse.
         cur = db.execute(
             f"UPDATE messages SET acked_at = ?, acked_by = ?, delivered = 1, "
             f"emitted_at = COALESCE(emitted_at, ?) "
-            f"WHERE id IN ({qmarks}) AND acked_at IS NULL",
-            (now, serial, now, *ids),
+            f"WHERE id IN ({qmarks}) AND acked_at IS NULL{recipient_clause}",
+            (now, serial, now, *ids, *recipient_params),
         )
         _log_event("read", serial, f"{cur.rowcount} message(s) READ (agent-side ack)")
+        if refused_ids:
+            _log_event("read", serial,
+                       f"{len(refused_ids)} ack(s) REFUSED -- id(s) not addressed to {serial}: "
+                       f"{refused_ids} (recipient check; the true recipient's READ slot stays open)")
         db.commit()
-        self._json_response({"ok": True, "acked": cur.rowcount})
+        self._json_response({"ok": True, "acked": cur.rowcount,
+                             "refused": len(refused_ids), "refused_ids": refused_ids,
+                             "override": override})
 
     def _handle_delivery_state(self, body: dict):
         """Primitive (ii): per-message SENT / EMITTED / READ -- never an aggregate.

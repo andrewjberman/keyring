@@ -31,6 +31,8 @@ import subprocess
 import sys
 import urllib.request
 import urllib.error
+import socket
+import errno
 from datetime import datetime, timezone
 from pathlib import Path
 from contextlib import contextmanager
@@ -509,25 +511,110 @@ def _broker_fetch(path: str, body: dict | None = None, timeout: float = 3.0) -> 
         return None
 
 
-def _broker_health() -> bool:
-    """Check if the broker is running."""
+def _broker_probe(timeout: float = 2.0) -> str:
+    """ONE probe of BROKER_URL/health -> "ok" | "absent" | "unknown".
+
+    THE DEFECT THIS REPLACES (0.0.0_AB_MSTR 83915, fixed 2026-08-30 by 1.0.0_SA_CTO): the old
+    probe was a bare `except: return False` with a 2 s timeout, so a live-but-BUSY broker read
+    as ABSENT and _ensure_broker spawned a second daemon -- both 08-29 duplicate brokers were
+    born at a seat startup, the busiest moment for that process. A probe must never let an
+    instrument failure become a negative verdict.
+
+    ABSENT is ONLY "nothing is bound to the port" -- the one observation that licenses starting
+    a daemon. A timeout, a reset, an HTTP error, malformed JSON: UNKNOWN -- a live broker that
+    is slow looks exactly like that, and the two need OPPOSITE responses (retry vs start).
+
+    ⛔ WHY THE PORT TABLE AND NOT "connection refused" (measured on this box 2026-08-30 02:3xZ):
+    a closed loopback port here does NOT refuse -- the SYN is dropped and BOTH a raw connect and
+    urlopen read `TimeoutError` after the full timeout (7891 closed: 2.02 s / 2.04 s; 7800 live:
+    0.00 s / 0.36 s). So at the socket level "no listener" and "busy listener" are the SAME
+    observation on this host, and a refused-vs-timeout split would read every absent broker as
+    UNKNOWN and never start one. The OS port table is the discriminator that cannot be fooled by
+    load: an EXCLUSIVE bind attempt on 127.0.0.1:PORT succeeds iff no socket owns the port
+    (released immediately), and fails EADDRINUSE iff one does -- even one bound with
+    SO_REUSEADDR (the HTTPServer default that lets two listeners coexist on Windows, which is the
+    duplicate's own mechanism). Host-local, stdlib-only, no PowerShell.
+    """
+    owned = _port_has_listener(BROKER_PORT)
+    if owned is False:
+        return "absent"
+    # owned is True (a listener exists) or None (could not tell): only an HTTP "ok" is decisive.
     try:
         req = urllib.request.Request(f"{BROKER_URL}/health")
-        with urllib.request.urlopen(req, timeout=2) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             data = json.loads(resp.read())
-            return data.get("status") == "ok"
+        return "ok" if isinstance(data, dict) and data.get("status") == "ok" else "unknown"
+    except ConnectionRefusedError:
+        return "absent"
+    except urllib.error.URLError as e:
+        if isinstance(getattr(e, "reason", None), ConnectionRefusedError):
+            return "absent"
+        return "unknown"
     except Exception:
+        return "unknown"
+
+
+def _port_has_listener(port: int) -> bool | None:
+    """Host-local, OS-level: is ANY socket bound to 127.0.0.1:port? True / False / None (could
+    not tell). Exclusive bind: on Windows SO_EXCLUSIVEADDRUSE makes the bind fail 10048 even
+    against a SO_REUSEADDR listener; on POSIX a plain bind fails EADDRINUSE. Success = nobody --
+    the probe socket is closed at once and never listens."""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        if sys.platform == "win32" and hasattr(socket, "SO_EXCLUSIVEADDRUSE"):
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        s.bind(("127.0.0.1", int(port)))
         return False
+    except OSError as e:
+        if e.errno in (errno.EADDRINUSE, 10048) or getattr(e, "winerror", None) == 10048:
+            return True
+        return None
+    finally:
+        try:
+            s.close()
+        except Exception:
+            pass
+
+
+def _broker_state(retries: int = 3, timeout: float = 2.0, backoff: float = 0.5) -> str:
+    """Bounded re-probe. "ok" / "absent" are decisive on first sight; only "unknown" is
+    retried (backoff 0.5 s, 1.0 s, ...). Returns "unknown" if every probe was -- and the
+    caller must treat that as NOT-YET, never as absent. Same shape as the liveness lock
+    retry at the top of this file (:149-154): bounded, then a stated outcome."""
+    last = "unknown"
+    for i in range(max(1, retries)):
+        last = _broker_probe(timeout)
+        if last != "unknown":
+            return last
+        if i + 1 < retries:
+            _time.sleep(backoff * (i + 1))
+    return last
+
+
+def _broker_health() -> bool:
+    """Is a broker LIVE on BROKER_URL? True ONLY on a probed "ok". False on "absent" AND on
+    "unknown" -- so a caller that wants to START a daemon must NOT key on this bool: it reads
+    _broker_state() and starts only on "absent" (see _ensure_broker)."""
+    return _broker_state() == "ok"
 
 
 def _ensure_broker() -> bool:
     """Start the broker if it's not already running. Returns True if available."""
     global _broker_available
-    if _broker_health():
+    _state = _broker_state()
+    if _state == "ok":
         _broker_available = True
         return True
+    if _state == "unknown":
+        # A slow or resetting listener is NOT an absent one. Starting a daemon here is the
+        # duplicate-broker incident by construction (83915); report, and let the next call
+        # re-probe. _broker_available stays as it was.
+        log.warning("broker probe UNKNOWN after bounded retries (timeout/transport, NOT a "
+                    "refusal) -- a live-but-busy broker reads like this; NOT starting a second "
+                    "daemon. Re-probed on the next call.")
+        return False
 
-    log.info("Starting broker daemon...")
+    log.info("Starting broker daemon (probe read ABSENT: connection refused on the port)...")
     try:
         # Launch broker as detached subprocess
         if sys.platform == "win32":
@@ -1990,10 +2077,21 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
             msg.rename(read_dir / msg.name)
         _ack_res = None
         if _read_ids and _broker_available:
-            _ack_res = _broker_fetch("/ack-messages",
-                                     {"serial": _my_serial or agent_serial,
-                                      "ids": _read_ids})
+            _ack_body = {"serial": _my_serial or agent_serial, "ids": _read_ids}
+            # The broker's recipient check (2026-08-30) refuses an ack on a row not addressed
+            # to the acking serial. A FOREIGN drain reaches this line only through the audited
+            # INBOX_DRAIN_OVERRIDE branch above, so that is the one case that carries the
+            # override flag -- and acked_by still records the cleaner, never the dead seat.
+            if (mark_read and identity_override and _my_serial
+                    and _identity_key(agent_serial, folder.name) != _my_serial):
+                _ack_body["override"] = True
+            _ack_res = _broker_fetch("/ack-messages", _ack_body)
         parts.append(f"\n--- Archived {len(pairs)} messages to read/")
+        if _read_ids and isinstance(_ack_res, dict) and _ack_res.get("refused"):
+            parts.append(
+                f"--- READ ack REFUSED for {_ack_res.get('refused')} id(s) not addressed to "
+                f"{_my_serial}: {_ack_res.get('refused_ids')} -- the files moved to read/, but "
+                f"the READ clock for those rows is UNWRITTEN (broker recipient check).")
         if _read_ids:
             # REPORT THE ACTUAL OUTCOME. This block previously announced "READ ack recorded"
             # UNCONDITIONALLY -- it claimed the READ clock had been written even when the
@@ -2051,8 +2149,16 @@ async def ack_messages(message_ids: str, ctx: Context = None) -> str:
     if res is None:
         return "ack_messages: broker call FAILED. Nothing acked (reported, not swallowed)."
     n = res.get("acked", 0)
-    skipped = len(ids) - n
-    out = f"READ ack recorded by {_my_serial} for {n} message(s): {ids}"
+    refused = int(res.get("refused", 0) or 0)          # absent on a pre-fix broker -> 0
+    refused_ids = res.get("refused_ids", []) or []
+    skipped = len(ids) - n - refused
+    acked_ids = [i for i in ids if i not in refused_ids]
+    out = f"READ ack recorded by {_my_serial} for {n} message(s): {acked_ids if refused else ids}"
+    if refused > 0:
+        out += (f"\n  REFUSED {refused} id(s) NOT ADDRESSED TO {_my_serial}: {refused_ids} -- an ACK "
+                f"lands only on the true recipient's row (broker recipient check, 2026-08-30). A "
+                f"drain's suggested ids or a peer's copy of a broadcast are not yours to ack; the true "
+                f"recipient's READ slot stays open for them. Nothing was written for these ids.")
     if skipped > 0:
         out += (f"\n  ({skipped} already carried an ACK -- an ACK is write-once, so the "
                 f"FIRST reader's timestamp is preserved rather than overwritten.)")

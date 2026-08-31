@@ -49,7 +49,16 @@ def core_sum(d, i):
 overall_hold = []
 for firm in FIRMS:
     st, et = load(STAGED_B, f"gold/mdpf_revamp/{firm}/aggregate_aua_timeseries.json")
-    sv, _ = load(SERVED_B, f"json/mdpf/{firm}/aggregate-aua-timeseries.json")
+    # RETIRED READ 2026-08-30 (3.0.0_SA_CVO): the frozen legacy mirror this harness read as its
+    # SERVED baseline is being deleted on Andrew's word (json/mdpf/{firm} card, DS~V 87745). The
+    # served home moved 2026-08-19 @12b93b59ba to the dated gold path
+    # portal/gold/mdpf/{firm}/aggregate-aua-timeseries/{D}.json -- a different vintage semantics,
+    # so a silent re-point would change what this P2F-round gate measured. The harness stays as
+    # the record of that round and REFUSES rather than reading the retired key.
+    raise RuntimeError(
+        "RETIRED 2026-08-30: this ad-hoc P2F gate read the legacy served mirror; that key is "
+        "retired (@12b93b59ba). Re-derive against the dated gold home before re-running.")
+    sv, _ = None, None  # noqa: F841  (unreachable; kept so the diff shows the retired read)
     si = {d: i for i, d in enumerate(st["dates"])}
     vi = {d: i for i, d in enumerate(sv["dates"])}
     common = sorted(set(st["dates"]) & set(sv["dates"]))
