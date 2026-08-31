@@ -76,6 +76,14 @@ CTO's Monday read supplies the first arm only:
 
 The second discriminating arm is the Tuesday 2026-09-01 12:45Z fire, assuming unchanged substrate. Re-address to `0.4.0_DS_ClientPlatform~W` is valid for that future read after the A07STAMP closure routing, but it should not be re-run or hand-invoked.
 
+## COO Correction Addendum
+
+2.0.0_SA_COO corrected the re-address posture in Msg-ID 89991 before execution. CTO records the corrected operative reading:
+
+- `ADVI_49F.c02-A07STAMP` looks world-done and must not execute. The correct next action is the project lane's artifact read/confirmation, then issuer closure by COO if it agrees.
+- `ADVI_49F.c02-VINTAGEDIGEST` remains open but is not startable tonight. It needs the Tuesday 2026-09-01 12:45Z scheduled fire as V-4's second arm.
+- After A7-4 and V-4 arm-1 are recorded, the lane's queue is honestly empty for this session. The wait is on a scheduled fire, not an idle-seat obligation.
+
 ## Boundary
 
 This record does not fire W2, close ADVI_49F faces, trigger production, run vendor egress, deploy, backfill, or amend project JSON. It records the CTO gate posture and the measured distinction between world-done, future-scheduled, and Andrew-word-gated work.
