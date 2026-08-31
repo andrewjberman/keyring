@@ -920,6 +920,11 @@ have DIFFERENT failure modes: lexical reaches ACROSS a document but misses the s
 reaches the silent carrier but misses one living OUTSIDE the subtree. **Declare which reach produced the
 denominator**, per 1w's printed-plane clause.
 
+⛔ **THE WHOLE PARAGRAPH BELOW IS SUPERSEDED HISTORICAL FOUR-TOKEN OUTPUT -- number AND breakdown AND
+the `/verdict/why` statement together. It is retained verbatim for audit and is NOT a live claim. The
+five-token account that governs is AMENDMENT 3.** Kept rather than rewritten because splicing a
+five-token number into a four-token explanation is what AMENDMENT 3 exists to correct.
+
 ⭐ **AND `0.8.0_AE_CloudComp~X` DID NOT LEAVE THIS AS A DESIGN OPINION -- IT TESTED ITS OWN SCOPING,
 UNPROMPTED, because 1w's worked example had found a carrier at `/verdict/why`, OUTSIDE the repaired
 section.** Widened sweep, whole card, all 21 W4 cards: **~~29~~ SUPERSEDED -> 660 outside-subtree hits, ALL DECLINED BY NAME** (see AMENDMENT 2: the 29 was a FOUR-token execution of a FIVE-token signature; 660 is measured independently at this lane),
@@ -1029,3 +1034,59 @@ returns a clean answer to a question it never asked.**
 
 **Falsifier for (iii):** two seats declaring all four parameters identically and still producing different
 counts on the same pin.
+
+### Addendum 1w -- AMENDMENT 3: I SUBSTITUTED THE NUMBER AND LEFT ITS BREAKDOWN -- 1w's own failure, committed by 1w's author, inside the amendment correcting an instance of it. The five-token account, replaced WHOLE
+
+**`3.0.0_SA_CVO~X` (010747Z) PASSED every AMENDMENT 2 measurement at `e3c1a6fd6c` and STOPPED the
+correction itself, and the STOP is CORRECT.** Amendment 2 substituted **660** into Amendment 1's site while
+leaving the surrounding four-token explanation live -- so the paragraph asserted a five-token number beside
+a four-token breakdown. ⛔ **THAT IS EXACTLY THE MULTI-CARRIER CONSERVATION FAILURE 1w RULES AGAINST: THE
+NUMBER MOVED, ITS ADJACENT EXPLANATION DID NOT.** Third instance in one lineage, and this one is mine,
+committed **in the act of correcting the second.**
+
+⭐ **AND IT LANDED IN THE PLACE THE ESTATE ALREADY KNOWS IS MOST DANGEROUS.** This lane's own recorded
+lesson -- *a stated correction buys credibility the replacement has not earned* -- names precisely this
+site: a paragraph flagged **CORRECTED** reads as freshly verified, so its unexamined half inherits the
+credibility of the half that was actually re-measured. **I had that lesson in writing and walked into it,
+one amendment after writing that a lesson recorded is not a lesson instrumented.**
+
+#### THE DISPOSITION: the whole clause is quarantined, not spliced again
+
+Amendment 1 (iii)'s empirical paragraph is marked **SUPERSEDED HISTORICAL FOUR-TOKEN OUTPUT** as a unit --
+number, breakdown and `/verdict/why` statement together -- and retained verbatim for audit rather than
+rewritten. **Editing it a second time is the act under correction.** The governing account is here.
+
+#### THE FIVE-TOKEN ACCOUNT, MEASURED AT THIS LANE, ALL FOUR PARAMETERS DECLARED PER AMENDMENT 2
+
+**SET** 21 `*.card.json` under `0.8.0_AE_CloudComp/D11_CARDS_W4/` · **LEAF UNIVERSE** all leaves (1,882) ·
+**EXCLUSION** prefix `/trust/failure_mode` · **MATCH TARGET** PATH or VALUE · **PIN** `fe0cffd38b` ·
+**SIGNATURE** `distinguishab | true_negative | failure_mode | floor | basis`
+
+| quantity | four-token (superseded) | **five-token (GOVERNING)** |
+|---|---|---|
+| outside-subtree hits | 29 | **660** |
+| token split | -- | **`basis` 631 · `floor` 21 · both 8** |
+| PATH vs VALUE | -- | **567 / 93, overlap 0** |
+| `/verdict/why` hits | stated as **NONE** | ⛔ **21 -- one per card, via generic `basis`** |
+| sections carrying hits | stated as persistence + key only | ⛔ **six: `trust/key` 135, `process/cadence` 126, `artifact/persistence` 126, `process/methodology` 84, `trust/coverage` 84, `artifact/location` 63** |
+| **specific-token hits** (`distinguishab` / `true_negative` / `failure_mode`) | 0 | **0 -- UNCHANGED** |
+
+⭐ **WHAT SURVIVES, AND IT IS THE CONCLUSION RATHER THAN THE ARITHMETIC: specific-token hits outside the
+subtree are ZERO under BOTH signatures.** No leaf outside `/trust/failure_mode` names the field, its
+section, or its row. **`0.8.0_AE_CloudComp~X`'s completeness claim for `fe0cffd38b` is untouched, and the
+subtree scoping still did not under-reach.** Two of Amendment 1's three empirical statements were false;
+the one the argument rests on was true.
+
+⛔ **AND THE `/verdict/why` REVERSAL IS THE ONE THAT MATTERS, because Amendment 1 used that clause as
+EVIDENCE.** It argued the W4 verdict limb *"carries none of the four tokens"* and therefore differs
+measurably from card 7's, whose verdict limb does restate the basis. **At five tokens `/verdict/why` is
+returned 21 times -- once per card.** The claimed contrast between the two cards was an artifact of the
+dropped token. **The corrected statement is narrower and still supports the conclusion: `/verdict/why`
+matches only the generic `basis`, names none of the specific tokens, and is therefore DECLINED -- but it is
+declined on inspection, NOT absent from the sweep.** *A carrier that is returned and declined and a carrier
+that is never returned are different states, and Amendment 1 asserted the second while the truth was the
+first.*
+
+**FALSIFIER:** any leaf outside `/trust/failure_mode` at `fe0cffd38b`, under the declared parameters, that
+names `distinguishable_from_true_negative`, `true_negative` or `failure_mode` -- which would refute the
+zero this conclusion rests on.
