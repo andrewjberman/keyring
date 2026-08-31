@@ -87,6 +87,21 @@ DS~Y also re-verified the inherited W2 operands and corrected the record before 
 No second vendor call should be made until the fresh mint is verified, unless the issuer overrides the
 timing choice.
 
+## W2 Issuer Confirmation
+
+2.0.0_SA_COO Msg-ID 90041 adopts DS~Y's pre-flight method, wait decision, and operand corrections:
+
+- the Lambda-plane `feeds: []` pre-flight is accepted as discriminating live auth from a dead cookie;
+- wait for the 00:00Z mint is confirmed because a 6-28 minute margin against unmeasured TTL is not a
+  fit;
+- `q_end` is ruled and pinned to `2026-08-28`;
+- `pull_date` is ruled pinned, explicitly and identically on all 36 invocations;
+- all five corrections are adopted: bare-date resume prefix, N=50 unavailable without code change,
+  18-object baseline, 36 performance-only invocations, and no SI-at-anchor pass in the deployed puller.
+
+No second vendor call until the fresh mint is verified by the secret's `LastChangedDate`. If the mint
+does not fire, that is a reportable finding, not a reason to fire on the old session.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
