@@ -14,6 +14,12 @@ device-bound serials — D12 is minted **UNPLACED** and its placement is Andrew'
 after the comb. **An `issued_to` field is a placement**, so TOs are cut only once he rules.
 **No alarm, SNS subscriber, page or monitor is designed, proposed or costed anywhere below.**
 
+⚠ **SUPERSEDED IN PART BY AMENDMENT 1 (bottom of file) — READ IT BEFORE ACTING ON THIS SECTION.**
+Andrew ruled ~23:15Z @`efcfa8cc5b`: **D12 IS PLACED ON SITE Z and TOs ARE CUTTABLE.** The
+no-placement constraint above was correct when written and is now discharged **for D12 and D7 only**
+— `issued_to` remains a placement everywhere else, and the whole-register call stays open for
+D0–D6 and D8–D11. The alarm sentence STANDS: nothing here is licensed to build a monitor.
+
 ---
 
 ## 1. OPEN DECISION #5 — RESOLVED HERE, AS THE PRD ASSIGNED
@@ -212,3 +218,54 @@ act in D12 and it needs no staffing beyond the CTO seat.
 - **No `PORTAL_AUTHHARD` wave re-run.** Import its PRD as prior art; do not reopen its waves.
 - **No user attributes in the partner table.** §1's boundary.
 - **No placement, on any cell.**
+
+
+---
+
+# AMENDMENT 1 — 2026-08-31 ~23:2xZ: **ANDREW-DIRECT ~23:15Z @`efcfa8cc5b` — FOUR CELLS CLOSE, THREE OPEN**
+
+Verbatim, entire: *"All recs approved. Make sure that on the email otp we should be properly set up
+with SES now that its no longer sandboxed. The only thing we will want to clarify is the DNS/DKIM/DMARC
+and health of that service so these things don't go to spam. Furthermore, we will want to do the
+testing for 2FA on my account so we know it works before pushing anything to clients"*
+Relayed by `1.0.0_SA_CTO~Z` (msg 17191) from its own `/open-calls` at the site-Z terminal.
+
+## CELLS THAT CLOSE
+
+| Cell | Was | Now |
+|---|---|---|
+| **placement** | ANDREW-BLOCKED | ⭐ **CLOSED — D12 IS PLACED ON SITE Z.** TOs are cuttable. |
+| **2.0** arch-gate | GATE / READY | ⭐ **DECIDED — BUILD IN `auth-handler`**, by `1.0.0_SA_CTO~Z` under the PRD's own CTO gate. Grounds: the bespoke token is read by ~8 surfaces incl. 2 at the CDN edge; Cognito changes issuer and shape for all of them to add a challenge in front of a working session flow. Entra eliminated on POPULATION — portal users are partner-firm clients outside Opal's tenant. Decision record owed by that seat. |
+| **1.1 / 1.2** | DEP-BLOCKED on 2.0 | **READY** — the gate that blocked them is decided. |
+| **3.1** TTL | ANDREW-BLOCKED | ⭐ **CLOSED — 30 DAYS, revocable by sign-out-everywhere.** 3.2 is now DEP-BLOCKED on 2.1 only. |
+| **2.2** SMS leg | ANDREW-BLOCKED | **DEFERRED, not retired.** Email OTP proceeds now; SMS still needs his explicit per-use word before any vendor egress. |
+
+⛔ **CALL 4 IS SEQUENCING, NOT A SCOPE CUT.** He asked for user CHOICE of channel. Email-first removes
+a vendor decision from the critical path; **it does not retire the SMS leg.**
+
+## THREE NEW CELLS FROM HIS OWN WORDS
+
+| Cell | Deliverable | Owner | Status |
+|---|---|---|---|
+| **2.3** | **SES readiness CONFIRMED** for this use. He states sandbox exit as FACT — ⛔ **a stated premise is still measured before it is built on**, and if the account is not actually out of sandbox that is a FINDING TO REPORT, not to quietly fix. | CTO (taken) | **READY** |
+| **2.4** | **DNS / DKIM / DMARC + service health.** ⭐ **THIS IS AN ACCEPTANCE CONDITION OF WS-2, NOT A FOLLOW-UP: a one-time code that lands in spam is a BROKEN LOGIN, not a degraded one.** | CTO (taken) | **READY** |
+| **2.5** | **PER-ACCOUNT MFA ENABLEMENT.** ⚠ **THIS IS `1.0.0_SA_CTO~Z`'s INFERENCE, EXPLICITLY NOT ANDREW'S WORDS**, and it is carried as such: B.3 names an ordering (his account before clients), which is unsatisfiable if the MFA switch is fabric-wide. **If the inference is wrong, this cell is void — it is not a requirement he stated.** | AE | **READY** |
+
+⛔ **2.4 IS A DIAGNOSTIC, NOT A LICENCE TO BUILD A DELIVERABILITY MONITOR.** See the scope limit below.
+
+## WS-2 ACCEPTANCE — AMENDED
+
+Prior acceptance stands, **plus**: the OTP email must be confirmed to arrive in an inbox rather than a
+spam folder (2.4), **and** — **B.3, A STAGED-ROLLOUT GATE NAMING AN ORDERING:** *"we will want to do
+the testing for 2FA on my account so we know it works before pushing anything to clients."*
+**No client account is exposed to MFA before his own account has been exercised end to end.** This
+binds the workstream's acceptance; it is not a test case inside it.
+
+## ⛔ WHAT THIS RULING DOES **NOT** DO — three limits, carried verbatim from `1.0.0_SA_CTO~Z`
+
+1. **THE ALARM MORATORIUM STANDS.** Call 2 lifted ONE thing BY NAME (D7's reminder). **A hold lifted
+   by name is lifted for that name.** No general licence to build alerts, monitors, SNS subscribers or
+   freshness checkers follows — including a deliverability monitor off 2.4.
+2. **TWO DIRECTIVES ARE PLACED, NOT THE REGISTER.** The ~21:1xZ whole-register call stays **OPEN** for
+   D0–D6 and D8–D11. The approved rec explicitly proposed deferring them.
+3. **`issued_to` IS STILL A PLACEMENT EVERYWHERE ELSE.** The discharge is for D12 and D7 only.

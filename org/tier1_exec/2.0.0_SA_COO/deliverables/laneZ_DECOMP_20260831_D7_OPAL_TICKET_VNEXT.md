@@ -23,6 +23,11 @@ ruled; the cells are complete and will not need re-derivation when that happens.
 **Also not done here:** no alarm, monitor, notifier or scheduled send is designed, proposed or costed.
 See CELL-5.3.
 
+⚠ **SUPERSEDED IN PART BY AMENDMENT 1 (bottom of file) — READ IT BEFORE ACTING ON THIS SECTION.**
+Andrew ruled ~23:15Z @`efcfa8cc5b`: **D7 IS PLACED ON SITE Z, TOs ARE CUTTABLE, and CELL 5.3's
+reminder is UNGATED — build it.** The no-placement constraint above is discharged **for D12 and D7
+only**. ⛔ The reminder was lifted **BY NAME**: GLOBALALARM stands for everything else.
+
 ---
 
 ## 1. THE CELLS
@@ -197,3 +202,38 @@ a sovereign-gated leg; nobody should read a WS-1..WS-4 completion as D7 done.
 3. **A CVO reader exists.** `3.0.0_SA_CVO~Z` is dead. Cells 2.2 and 4.2 are cross-firm refusal
    exercises whose whole value is independent certification; **a build seat certifying its own refusal
    exercise is the author-verifies-author shape** and would void the evidence.
+
+
+---
+
+# AMENDMENT 1 — 2026-08-31 ~23:2xZ: **ANDREW-DIRECT ~23:15Z @`efcfa8cc5b` — THE REMINDER IS UNGATED, AND D7 IS PLACED**
+
+Relayed by `1.0.0_SA_CTO~Z` (msg 17191) from its `/open-calls` at the site-Z terminal; his words are
+quoted in full in the D12 decomp's Amendment 1.
+
+| Cell | Was | Now |
+|---|---|---|
+| **placement** | ANDREW-BLOCKED (open decision #7) | ⭐ **CLOSED — D7 IS PLACED ON SITE Z.** TOs are cuttable. |
+| **5.3** unaddressed-ticket reminder | ⛔ ANDREW-BLOCKED | ⭐ **UNGATED — READY. BUILD IT.** |
+| **5.2** audience asymmetry | DEP-BLOCKED | DEP-BLOCKED on 5.1 only (unchanged); 5.3 no longer gates it. |
+
+**5.1 client-on-complete was never gated and is unchanged.**
+
+⛔ **THE DELIVERABLE IS STILL THE MECHANISM AND ITS CONFIGURABILITY, NOT A SCHEDULE.** His earlier
+words stand and are not superseded by this ruling: *"naive 8.30 to 5.30 or naive 8 to 5. Actually, we
+could even just put it as 9 to 5. That's not important. The idea is simply that we have the mechanics,
+the configuration."* **Ungating the cell does not authorise fixing an exact window** — that would be
+an unmeasured constant failing closed while looking principled.
+
+## ⛔ WHY THIS IS NOT A GENERAL ALARM LICENCE
+
+The rec Andrew approved was argued **specifically** from the reminder being *"a message to a human
+inbox about a human's own work queue, not a monitor on a serving layer."* **GLOBALALARM stands for
+everything else.** A hold lifted by name is lifted for that name — nothing else in this decomp, or
+anywhere, gains permission to build a monitor, alert, SNS subscriber or freshness checker.
+
+## STATUS AFTER THIS AMENDMENT
+
+**READY:** `1.1` · `4.1` · `5.1` · `5.3` · `6.1`.
+Unchanged: WS-2/WS-3 remain DEP-BLOCKED behind the WS-1 storage ruling, and **no attachment or
+transcript is written to any bucket before 1.3 + 1.4 are ruled.** `6.2` remains ANDREW-BLOCKED.
