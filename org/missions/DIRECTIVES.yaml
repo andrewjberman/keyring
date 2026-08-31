@@ -316,7 +316,15 @@ directives:
   D7:
     title: "Opal Ticketing"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
-    placement: "SITEZ -- RULED (Andrew): TO-A + TO-C one workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A DELIVERED same evening); LAPTOP: TO-B (real build per the CVO-P0 verdict, intake identity opalsupport@opalinvest.com per Andrew ~19:4xZ) + TO-D."
+    placement: "SITEZ -- RESTATED 2026-08-31 for the CURRENT member set. Andrew-direct ~23:15Z at the site-Z
+      terminal, verbatim \"All recs approved\" on 1.0.0_SA_CTO~Z's /open-calls CALL 1; authority @efcfa8cc5b.
+      OPAL_TICKET_VNEXT -- this directive's ONLY member -- is SITEZ, whole. ⛔ THE SPLIT BELOW IS HISTORY AND
+      DOES NOT APPLY TO IT: it describes the PRIOR ticketing workstreams (TO-A/B/C/D), none of which is in the
+      member set, so a reader inheriting it would wrongly place half of vNext on the laptop. PRIOR SPLIT,
+      preserved because those workstreams were real and their record should not vanish -- SITEZ: TO-A + TO-C one
+      workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A DELIVERED same evening);
+      LAPTOP: TO-B (real build per the CVO-P0 verdict, intake identity opalsupport@opalinvest.com per Andrew
+      ~19:4xZ) + TO-D."
     members:
       subgroups: []
       projects: [OPAL_TICKET_VNEXT]
@@ -478,10 +486,13 @@ directives:
       breath as the directive, so the D10 row-first/members-second sequencing does not apply here."
   D12:
     title: "Platform Ops"
-    directive: "docs/architecture/D12_PLATFORM_OPS_PRD.md"   # NOT YET WRITTEN -- CTO stage-2 deliverable
-    placement: "AT ANDREW -- NOT SET BY THIS SEAT. The register header reserves placement exceptions to him per
-      case, and D12 is portal/platform work whose home is not derivable from criterion (a) or (b) alone. Minted
-      UNPLACED deliberately rather than guessed."
+    directive: "docs/architecture/D12_PLATFORM_OPS_PRD.md"   # WRITTEN @2da36986f6 (1.0.0_SA_CTO~Z, 207 lines)
+    placement: "SITEZ -- RULED (Andrew-direct 2026-08-31 ~23:15Z at the site-Z terminal, verbatim \"All recs
+      approved\" on 1.0.0_SA_CTO~Z's /open-calls CALL 1; authority record @efcfa8cc5b). This ruling PLACES D12
+      AND D7 ONLY -- his ~21:1xZ whole-register call stays OPEN for D0-D6 and D8-D11, which the approved rec
+      explicitly proposed deferring. Minted UNPLACED 2026-08-31 and deliberately left so until his word: the
+      register header reserves placement exceptions to him per case, and D12 is portal/platform work whose home
+      was not derivable from criterion (a) or (b) alone."
     members:
       subgroups: []
       projects: [PLATFORM_OPS_USERMGMT]
@@ -494,5 +505,6 @@ directives:
       user store. PRIOR ART TO IMPORT AND NOT REOPEN: PORTAL_AUTHHARD, CLOSED BY THE 2026-08-25 SPRING-CLEAN ON
       MEMBERSHIP AND NOT AS A WORK VERDICT -- its PRD already carries MFA/account-lifecycle work, but its WS3
       was privileged-role native TOTP while this scope is broader user-management UX and email/SMS OTP.
-      Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING; no TO may
-      precede the decomp."
+      Rule 27 stage 2 SATISFIED @2da36986f6 (D12_PLATFORM_OPS_PRD.md) and stage 3 SATISFIED @e9ca70c307
+      (2.0.0_SA_COO~Z's atom-decomp, amended @d991e23aad). TOs became cuttable on Andrew's @efcfa8cc5b
+      placement -- an issued_to is a placement, which is why none was cut before it."
