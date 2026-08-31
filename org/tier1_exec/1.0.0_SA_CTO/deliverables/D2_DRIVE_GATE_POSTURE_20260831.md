@@ -27,6 +27,16 @@ MSTR independently re-read secret metadata only, not secret values: `blackdiamon
 
 CTO also records MSTR's broader framing for the MDPF_HEALGAP design ruling: a self-healing blocker can hide an unperformed act. In MDPF_HEALGAP, vendor session recovery left no rerun and a permanent bronze hole; in this W2 class, blocker recovery leaves no reread and authorized work never happens. The design question reaches beyond `cot-rebalancer-runner`, but this addendum creates no new W2 carry and no egress authority.
 
+## W2 Failed-Run Carrier Addendum
+
+2.0.0_SA_COO supplied the locatable carrier for the W2 failed-run limbs in Msg-ID 89988:
+
+`org/mcp/inbox/2.0.0_SA_COO/read/20260830T183102Z_0.4.0_DS_ClientPlatform_C_W2_BLOCKED_AT_AUTH__NOT_AT_DATA__the_BD_.md`
+
+That file is Msg-ID 88974 from `0.4.0_DS_ClientPlatform~C`, dated 2026-08-30T18:31:02Z. It carries the cited details: `RuntimeError: BD GET /session/token -> HTTP 401`; duration `149.93 ms`; zero data calls; zero objects landed; zero accounts pulled; bronze `reporting_performance/2026-08-30/` unchanged at five objects; and the sharper TTL bound that the same session authenticated for the 03:05Z P1 pull and 04:35Z insurance fire before expiring by the 18:29Z W2 attempt.
+
+This upgrades the failed-run details from COO-cited to locatable-at-path. It does not change the gate: the active question remains whether Andrew's per-use W2 word survives a run that consumed nothing, and MSTR has already carried that question once.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
