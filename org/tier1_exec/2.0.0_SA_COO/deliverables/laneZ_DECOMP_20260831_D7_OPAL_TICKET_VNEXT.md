@@ -33,16 +33,20 @@ only**. ⛔ The reminder was lifted **BY NAME**: GLOBALALARM stands for everythi
 ## 1. THE CELLS
 
 Status vocabulary — one axis, *"what does this cell need before it can be executed?"*:
-`READY` (dependencies met, wants only staffing) · `DEP-BLOCKED` (waits on a named cell) ·
+`READY` — ⛔ **READ AS "READY WHEN D7 RESUMES", NOT "AVAILABLE TO START": D7 IS PARKED BEHIND D12 (Andrew-direct ~23:5xZ, *"D12 first."* — see AMENDMENT 2).** Dependencies met; wants a seat that does not exist and must not be created · `DEP-BLOCKED` (waits on a named cell) ·
 `ANDREW-BLOCKED` (waits on a sovereign word; no agent can clear it) · `QUESTION` (the deliverable is
 an answer, not a build).
+
+> ¹ ⛔ **EVERY `READY` ROW BELOW IS PARKED.** Andrew-direct ~23:5xZ, verbatim and entire: **"D12
+> first."** D7 sits behind D12; **no TO is cut and no lane is seated for any cell in this file.**
+> `READY` records that a cell's dependencies are met — it does **not** mean start it. See AMENDMENT 2.
 
 ### WS-1 — Storage architecture read + the ruling · **NO OTHER CELL WRITES A BYTE BEFORE THIS**
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **1.1** | The ticket journey written end-to-end **as it IS**: for ONE real ticket, every store its data touches and who may read each. Descriptive only. | AE (+DS for the table read) | — | **READY** |
-| **1.2** | The **cross-firm separation** read: for each store 1.1 names, what today enforces firm separation — bucket-scoped Deny, key-prefix + IAM condition, or nothing. Report the **enumeration** behind each guard. | AE | 1.1 | **READY** |
+| **1.1** | The ticket journey written end-to-end **as it IS**: for ONE real ticket, every store its data touches and who may read each. Descriptive only. | AE (+DS for the table read) | — | **READY**¹ |
+| **1.2** | The **cross-firm separation** read: for each store 1.1 names, what today enforces firm separation — bucket-scoped Deny, key-prefix + IAM condition, or nothing. Report the **enumeration** behind each guard. | AE | 1.1 | **READY**¹ |
 | **1.3** | Storage-split **ruling**: what stays in DynamoDB, what moves to S3, whether the table's role narrows to analytics. | **CTO arch-gate** | 1.1, 1.2 | DEP-BLOCKED |
 | **1.4** | Bucket **path shape** ruling: firm/partner split first; ticket-vs-user nesting is **explicitly open** in his words. | **CTO arch-gate** | 1.3 | DEP-BLOCKED |
 
@@ -91,7 +95,7 @@ dropping**. The fork is narrower than "build chat."
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **4.1** | Audience-aware Ticket Center: Opal keeps Open / In Progress / Completed; client sees the same three with the first rebranded **Submit**, listing their own not-yet-accepted tickets, which move to In Progress on acceptance. | DE | — | **READY** |
+| **4.1** | Audience-aware Ticket Center: Opal keeps Open / In Progress / Completed; client sees the same three with the first rebranded **Submit**, listing their own not-yet-accepted tickets, which move to In Progress on acceptance. | DE | — | **READY**¹ |
 | **4.2** | Cross-firm render refusal: a client cannot see another firm's tickets. | DE + CVO | 4.1 | DEP-BLOCKED |
 
 **Acceptance:** the same ticket rendered to a client and to an Opal user shows the two intended views;
@@ -107,7 +111,7 @@ count. Cite its measurement or re-derive **with the control**; never a naked zer
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **5.1** | **client-on-complete** — a THIRD KIND on the existing pure `client_notice` function. | AE | — | **READY** |
+| **5.1** | **client-on-complete** — a THIRD KIND on the existing pure `client_notice` function. | AE | — | **READY**¹ |
 | **5.2** | Audience asymmetry preserved: Opal users get exactly two kinds (outset + reminder); clients get file / pickup / complete. | AE | 5.1 | DEP-BLOCKED |
 | **5.3** | Opal-user **reminder** for an unaddressed ticket — mechanism **and its configurability**. | ANDREW to rule; AE thereafter | — | ⛔ **ANDREW-BLOCKED** |
 
@@ -138,7 +142,7 @@ exact window would be an unmeasured constant that fails closed looking principle
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **6.1** | Name concretely what `0.0.3_BG_BBGTerminal` does with a ticket **today**. Descriptive. | BG-class read | — | **READY** |
+| **6.1** | Name concretely what `0.0.3_BG_BBGTerminal` does with a ticket **today**. Descriptive. | BG-class read | — | **READY**¹ |
 | **6.2** | What it *should* do. | **ANDREW** | 6.1 | ⛔ **ANDREW-BLOCKED / QUESTION** |
 
 ⛔ **THE FIRST CELL HERE IS A QUESTION TO HIM, NOT A BUILD.** This is the least-specified item in his
