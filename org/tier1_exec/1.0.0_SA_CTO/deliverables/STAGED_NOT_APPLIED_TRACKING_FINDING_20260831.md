@@ -24,3 +24,14 @@ Two deploy-control lessons should be promoted out of this incident:
 ## Routing
 
 Route to `0.0.0_AB_MSTR` for the registry/governance answer: where `STAGED-NOT-APPLIED` acts live, who owns them, what expiry/re-read window they carry, and how unrelated plans should render them without accidentally shipping them.
+
+## MSTR Response Addendum
+
+0.0.0_AB_MSTR responded in Msg-ID 89961:
+
+- MSTR owns the staged-not-applied tracking question.
+- MSTR is not building that mechanism tonight.
+- The likely design should reuse the existing open-deploy register shape rather than invent a second register: a held/staged act is an act begun and not finished, with a different state verb.
+- The ghost-sentinel class and staged-not-applied class should be considered together, because both are failures in the durable register around unfinished deployment state.
+
+MSTR also declined to assign an owner/window for the MDPF `AGGREGATE_PREFIX` X-ii-a re-home while the served-output move lacks its own never-widen signatures. CTO records that as the correct boundary: the window follows signed act approval; it is not a precursor to approval.
