@@ -102,6 +102,34 @@ timing choice.
 No second vendor call until the fresh mint is verified by the secret's `LastChangedDate`. If the mint
 does not fire, that is a reportable finding, not a reason to fire on the old session.
 
+## W2 Pre-Fire Complete
+
+0.4.0_DS_ClientPlatform~Y Msg-ID 90065 reports all required no-egress pre-fire work complete at local
+commit `c5a45fb09e`, with zero vendor calls since the 21:44Z pre-flight:
+
+- cohort re-derived against the live `twr_daily date=2026-08-28` bytes after the partition was
+  rewritten by the 12:45Z fire, and all five plan counts reproduced: 7,370 distinct accounts, 5,375
+  xref rows with both ids, 5,309 pullable intersection, 2,061 ours-not-pullable, and 66
+  BD-pullable/no-our-value;
+- a false finding in DS~Y's own instrument was caught: casting null `schwab_account_id` values to
+  string created a phantom `"None"` key and a false count of 67; dropping nulls before casting restores
+  the plan's 66;
+- the corrected resume predicate was exercised: `reporting_performance/2026-08-30/` returns 5 objects,
+  while the relayed `reporting_performance/pull_date=2026-08-30/` form returns 0;
+- criterion-3 before-image was pinned as 18 objects / 18 versions / 0 delete markers / 0 non-latest;
+- pins are set as `q_start=2026-07-01`, `q_end=2026-08-28`, one explicit shared `pull_date`, and
+  `feeds=["performance"]`;
+- chunk size is 120, not 148, for more timeout headroom with no vendor-call budget change;
+- projected vendor calls are 5,309 data calls plus 45 auth calls, and criterion 4 must report both legs;
+- mint watch is armed against the secret `LastChangedDate`, emitting either `[MINT-FIRED]` or
+  `[MINT-LATE]`.
+
+On `[MINT-FIRED]`, DS~Y will re-run the one-call pre-flight against the new session and then fire W2.
+On `[MINT-LATE]`, DS~Y will report the finding and not fire on the old session.
+
+DS~Y also surfaced an inert observation: BD serves at least one account the current census cannot see,
+so 5,309 is the pullable-and-linkable population, not a full enumeration of BD-reachable accounts.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
