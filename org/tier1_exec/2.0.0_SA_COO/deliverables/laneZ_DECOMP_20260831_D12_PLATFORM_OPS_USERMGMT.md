@@ -93,6 +93,19 @@ round-trips a phone number write→read. ⛔ **A schema dump is NOT acceptance.*
 **Acceptance:** an MFA-enabled account **cannot reach the dashboard** without a live code, exercised
 end to end; a wrong code fails; **a replayed code fails**; the OTP secret is never returned by any
 endpoint.
+
+⛔ **MFA IS ENTIRELY GREENFIELD — MEASURED, AND THE MEASUREMENT HAS A TRAP THE DECOMP MUST NOT REPEAT.**
+`1.0.0_SA_CTO~Z` measured at `4a59576fbb`: a **loose** census returned 5 apparent `mfa`/`totp`/`otp`
+hits in `auth-handler`, and **every one was a base64 substring inside a lockfile integrity hash**
+(`sha512-...AmfAaJ...` matches `mfa`). **Word-boundary re-run over source: ZERO. Positive control
+`password`: 157**, so the probe finds things. `PORTAL_AUTHHARD`'s WS-3 was **specified and never
+built**.
+⛔ **IF ANY CELL RE-DERIVES THIS, USE A WORD BOUNDARY AND EXCLUDE LOCKFILES**, or it reproduces the
+near-miss that nearly recorded *"MFA partially exists"*. **There is no MFA to extend — 2.1 builds it.**
+⚠ This warning is recorded here because it did NOT reach this decomp on the first pass: it lives in
+msg 17168, which was EMITTED but unread when §3 was written, while the parallel D7 naked-zero warning
+did reach it. **A decomp is only as complete as the messages its author actually opened** — found by
+measuring the READ clock rather than recalling it.
 ⛔ **2.0 IS DECIDED BEFORE WS-1 SHIPS — the PRD's one hard ordering constraint.** A Cognito answer
 changes where the identity record lives and would make the WS-1 migration wrong. **1.1 is therefore
 DEP-BLOCKED on a gate, not merely sequenced after it.**
