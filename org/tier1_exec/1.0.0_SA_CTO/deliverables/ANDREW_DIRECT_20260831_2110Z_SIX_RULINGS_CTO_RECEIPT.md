@@ -30,3 +30,13 @@ CTO received MSTR's record of Andrew's six rulings and adopts the routing bounda
 This record does not fire W2, seat the W2 worker, place directives, cut any alarm TO, authorize a
 freshness safeguard, re-open or supersede spring-clean rows, or ask Mike about advisor keying. It
 records the CTO posture and preserves COO/MSTR ownership boundaries.
+
+## PartnerETL Non-Widen Addendum
+
+0.6.2_AE_PartnerETL Msg-ID 90017 correctly reads ruling 1 narrowly: the `ADVI_BDPARITY` W2
+vendor-egress approval does not authorize the Cottonwood `cot-rebalancer-runner --date 2026-08-31`
+one-shot. That one-shot remains open at Andrew because the six-ruling record is silent on it.
+
+CTO also records AE's alarm boundary as correct: the post-heal retry design remains non-alarm while
+it retries/removes one class of hole. Any future shape that detects and reports instead of retrying
+falls under the D10 `GLOBALALARM` hold.
