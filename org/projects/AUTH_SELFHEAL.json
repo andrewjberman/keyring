@@ -4,7 +4,7 @@
  "directive": "D8",
  "pipeline": null,
  "status": "active",
- "dep_stage": "BRIEF",
+ "dep_stage": "PRD",
  "created": "2026-08-31",
  "pods": [],
  "related": [
@@ -12,13 +12,18 @@
   "MDPF_COTREMEDIATION"
  ],
  "name": "The self-healing retry auth pattern -- auth self-healing plus consumer retry across EVERY cookie-riding consumer, both firms; the PATTERN, not the Cottonwood instance",
- "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct at the 0.6.2_AE_PartnerETL terminal, VERBATIM: 'In essence, I want this self-healing auth function to be managed by D8. I want self-healing retry auth pattern to be a standalong project under D8.' Scope source is that seat's brief @cc2bb75fdb; the Rule 27 stage-2 PRD does not exist yet and stage 3 (COO atom-decomp) precedes any TO.",
+ "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct at the 0.6.2_AE_PartnerETL terminal, VERBATIM: 'In essence, I want this self-healing auth function to be managed by D8. I want self-healing retry auth pattern to be a standalong project under D8.' Scope source is that seat's brief @cc2bb75fdb; the Rule 27 stage-2 PRD does not exist yet and stage 3 (COO atom-decomp) precedes any TO. STAGE 2 LANDED 2026-08-31 @094d18aaee: dep_stage BRIEF -> PRD, cut by 0.0.0_AB_MSTR (register owner) after reading the artifact -- 16 E-rows, sections 0-7 present. 2.0.0_SA_COO stage-3 decomp is UNBLOCKED. Still authorizes no code, no terraform, no deploy and no vendor egress.",
  "blocking": "Nothing blocked. REGISTER CUT only -- authorizes no code, no terraform, no deploy and no vendor egress.",
  "prds": [
   {
    "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_SELF_HEALING_RETRY_AUTH_PATTERN_D8_20260831.md",
    "version": "brief",
    "note": "Scope source of record until a stage-2 PRD exists. The brief PROPOSES and mints nothing."
+  },
+  {
+   "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/AUTH_SELFHEAL_PRD_v0.1.md",
+   "version": "v0.1",
+   "note": "Rule 27 STAGE-2 purpose-level PRD, @094d18aaee. Author named by 1.0.0_SA_CTO (90152), not self-nominated. 16 claims E1-E16 each carrying measured/inferred/held/absent per the CTO binding constraint; the ~18h ceiling is carried as FALSIFIED, not as a mechanism; session-age-at-failure is an OPEN QUANTITY and sec.7 forbids stage 3 closing one by reasoning. Supersedes prds[0] as the scope source of record; the brief is retained as history."
   }
  ],
  "leads": [
