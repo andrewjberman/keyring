@@ -138,7 +138,7 @@ directives:
       subgroup or its other parents, in EITHER direction."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST, ETFS_SATELLITES]
+      projects: [ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST, ETFS_SATELLITES, POSN_TENANCY]
       members_note: "ETFS_INGEST ADDED 2026-08-24 by 0.0.0_AB_MSTR (register owner) on the routing of
         1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z, who correctly DECLINED the edit rather than making it:
         org/missions/ declares its owner twice (file header + .register-owner owner_hostname = the
@@ -319,7 +319,7 @@ directives:
     placement: "SITEZ -- RULED (Andrew): TO-A + TO-C one workstream at the box (KICKOFF #1 delivered 19:11Z, seat 0.5.0_AE_OpalETL~Z, TO-A DELIVERED same evening); LAPTOP: TO-B (real build per the CVO-P0 verdict, intake identity opalsupport@opalinvest.com per Andrew ~19:4xZ) + TO-D."
     members:
       subgroups: []
-      projects: []
+      projects: [OPAL_TICKET_VNEXT]
     stance: "Portal accept/in-progress/complete already LIVE (P0). Open legs: Graph DL discovery
       RESULTS IN (49@opalinvest.com + inflection@opalinvest.com FOUND; Cottonwood NONE -- at Andrew;
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll
@@ -351,7 +351,7 @@ directives:
     placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D8 is named EXPLICITLY in his words. ⛔ NOTHING SERVING MOVES MID-SERVE (1.0.0_SA_CTO sequencing): the 08-27 13:30Z fire COMPLETES on the laptop-applied chain under his 20:15Z arm-(a) word; the DIRECTIVE transfers on the register NOW and the fire's ACCEPTANCE READ re-routes to the sitez CVO seat with it. Work in flight completes under its current seat; NEW D8 TOs cut at sitez. Rule 26 rides; no ferried applies. ZERO spawns."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [MDPF_COTREMEDIATION]
+      projects: [MDPF_COTREMEDIATION, MDPF_HEALGAP]
     stance: "RE-MINT, not an edit: the prior D8 ('Philosophy + benchmark modal live-edit') was CUT to
       DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one -- the code is
       reused, the directive is new. Authority Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal
@@ -374,7 +374,7 @@ directives:
     placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
     members:
       subgroups: []
-      projects: [OPAL_TAXSMA]
+      projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY]
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
       -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427
@@ -397,7 +397,7 @@ directives:
     placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree. CONFIRMED 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('global pipeline' named). Resting per his products-first word; placement is unaffected by rest. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: []
-      projects: []
+      projects: [GLOBALALARM]
     stance: "MINTED BY ANDREW HIMSELF 2026-08-25 ~18:4xZ at the CTO terminal (relayed 1.0.0_SA_CTO
       71188; PRD @afcac062ce). VERBATIM: 'Ok let''s create this under Directive 10, this will be
       Global Pipeline Structure. The premise is canonizing how things are ingested, taxonomy of
@@ -476,3 +476,23 @@ directives:
       C3.i: carding it is what the replacement has to beat.
       ROW MINTED WITH ITS FIRST MEMBER, unlike D10 -- the project is named in the same sovereign
       breath as the directive, so the D10 row-first/members-second sequencing does not apply here."
+  D12:
+    title: "Platform Ops"
+    directive: "docs/architecture/D12_PLATFORM_OPS_PRD.md"   # NOT YET WRITTEN -- CTO stage-2 deliverable
+    placement: "AT ANDREW -- NOT SET BY THIS SEAT. The register header reserves placement exceptions to him per
+      case, and D12 is portal/platform work whose home is not derivable from criterion (a) or (b) alone. Minted
+      UNPLACED deliberately rather than guessed."
+    members:
+      subgroups: []
+      projects: [PLATFORM_OPS_USERMGMT]
+    stance: "MINTED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~19:2xZ (a new directive entry
+      D12) and 1.0.0_SA_CTO transcript readback @1f6541bf16, sourced from three named Whisper transcripts on
+      Andrew Desktop. FIRST PROJECT PLATFORM_OPS_USERMGMT: email/SMS OTP MFA at login with a remembered-device
+      policy; phone/MFA preference storage likely extending OPAL users v2; onboarding and account-creation
+      redesign; a front-end admin UI instead of backend-table-only creation; partner-admin delegated user-add
+      gated by partner-table/RBAC -- with the partner table driving AUTHORIZATION and NOT becoming the primary
+      user store. PRIOR ART TO IMPORT AND NOT REOPEN: PORTAL_AUTHHARD, CLOSED BY THE 2026-08-25 SPRING-CLEAN ON
+      MEMBERSHIP AND NOT AS A WORK VERDICT -- its PRD already carries MFA/account-lifecycle work, but its WS3
+      was privileged-role native TOTP while this scope is broader user-management UX and email/SMS OTP.
+      Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING; no TO may
+      precede the decomp."

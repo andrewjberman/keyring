@@ -1,0 +1,25 @@
+{
+ "project_code": "OPAL_TICKET_VNEXT",
+ "status": "active",
+ "dep_stage": "REGISTERED",
+ "created": "2026-08-31",
+ "pods": [],
+ "blocking": "Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- it authorizes no code, no design and no deploy.",
+ "macro_code": "OPAL_TICKET",
+ "directive": "D7",
+ "pipeline": null,
+ "name": "Ticketing vNext -- attachments stored durably and retrievably in a ticket-scoped store, in-progress chat between Opal users and clients saved against the ticket ID, Opal-side and client-side notification semantics, and a front-end IA of New/Open, In Progress, Completed with a client Submit tab holding submitted-but-unaccepted tickets",
+ "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner). FIRST PHASE per 1.0.0_SA_CTO is a SOURCE ARCHITECTURE READ of the current ticket API, table, events and frontend, and only then a design gate for the S3 attachment/transcript store and the notification semantics -- bucket shape is not to be chosen before that read.",
+ "leads": [
+  "PRIOR ART: OPAL_TICKET, also CLOSED BY THE 2026-08-25 SPRING-CLEAN ON MEMBERSHIP AND EXPLICITLY NOT AS A WORK VERDICT; its own record says recovery can be a reinvented project. D7 already has a backend ticket API, the portal Ticket Center, service identity, Teams/Outlook notification history, a client submit form and a known authorization-floor history.",
+  "D7 DECLARED ZERO PROJECTS UNTIL THIS CUT -- measured in the 2026-08-31 register-hygiene scan (LD-0488) while the directive carried a live stance with open legs. This row closes that representation gap."
+ ],
+ "prds": [
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/TRANSCRIPT_DIRECTIVE_INTAKE_20260831.md",
+   "version": "readback",
+   "note": "TRANSCRIPT READBACK, not a PRD. Scope source of record until the Rule 27 stage-2 PRD exists."
+  }
+ ],
+ "related": []
+}
