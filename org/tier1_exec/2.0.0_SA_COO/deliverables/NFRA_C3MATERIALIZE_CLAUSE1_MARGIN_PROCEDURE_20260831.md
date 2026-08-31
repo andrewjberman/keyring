@@ -109,5 +109,59 @@ its own justification, at a pin, before the implementation.
 
 ---
 
+# AMENDMENT 1 — 2026-08-31T00:0xZ, on `1.0.0_SA_CTO~X`'s read of `039df9f72a`
+
+**Both corrections RAISE or QUALIFY the bar. Neither lowers it. No candidate exists, none has been built or
+measured, and this lands under §7's own falsifier (2): *a revision BEFORE any candidate runs is legitimate
+and must land as an amendment at a pin with its own justification.* Doing this after a candidate ran would
+be the fit the whole apparatus exists to prevent; doing it now costs nothing.**
+
+## A1.1 — the comparison term: `sqrt(1 + 1/N)` was missing
+
+**CORRECTED PROCEDURE:**
+
+```
+margin  =  k(N) * s_null * sqrt(1 + 1/N)
+k(N)    =  t(0.95, df = N - 1)          one-sided
+CLAUSE 1 PASSES  iff  A_fused - m_null  >  margin
+```
+
+**WHY.** `A_fused` is **one new observation** compared against a mean **estimated from N draws**. The
+dispersion of `A_fused - m_null` is therefore `sigma * sqrt(1 + 1/N)` — the observation's own variance
+*plus* the variance of the estimated mean — not `sigma`. §3 used the **confidence** form where the
+**prediction** form is required.
+
+⛔ **AND MY OWN §4 REASONING CONVICTED THE OMISSION BEFORE ANYONE READ IT.** I chose `t` over the normal
+quantile because `s_null` is *estimated* and the normal *"understates the bar exactly where N is
+smallest."* **The missing `sqrt(1 + 1/N)` understates it in the same direction, in the same regime, for the
+same reason** — and at the `N = 20` floor it is **2.47%**, larger than the t-vs-normal gap I did fix.
+**The precise diagnosis, because it is the reusable part: I applied the estimation correction to the
+DISPERSION and not to the COMPARISON.** Two estimation terms, one of them caught.
+
+## A1.2 — the normality assumption is now STATED and CHECKABLE
+
+`t` assumes an approximately **normal** null. **A permutation null of AUC values need not be one:** AUC is
+bounded on `[0, 1]` and its permutation distribution skews near the ceiling. The distribution-free bar for
+a permutation test is the **empirical quantile**, which assumes nothing — but at `N = 20` a 95th percentile
+cannot be estimated well (the max of 20 draws is roughly it), which is a real reason to keep a parametric
+form.
+
+**RULED for this procedure: the parametric form is KEPT, and its assumption stops being implicit.** The arm
+**must report, beside `s_null` and on every verdict**: the battery's **skew**, a **normality indicator**,
+and `N`. A grossly non-normal null is then **visible** rather than silently parametrised.
+
+⚠ **This is a DISCLOSURE requirement, not a refusal, and I am saying so rather than leaving it ambiguous.**
+Turning a skew threshold into a REFUSE would be a new gate nobody has ruled, and inventing gates is not
+mine to do. A verdict issued on a visibly skewed null is a verdict a reader can discount **because the
+number is on the face**; one issued on an unreported null cannot be.
+
+## A1.3 — what is unchanged
+
+§2's battery requirements, §4's multiplier principle and its justification, §5's refusal signals, §6's
+negative anchor, and §7's falsifiers all stand as written. 1i's two clauses remain untouched and
+uncontested. **`k` is still a function of `N` and still not a scalar anyone picked.**
+
+---
+
 **PLACEMENT MEASURED:** origin/CLOUD `61d975d1d5` (own `ls-remote` read 23:59:05Z). This record is LOCAL at
 declaration and rides the next window; **its pin, not its content, is the pre-registration evidence.**
