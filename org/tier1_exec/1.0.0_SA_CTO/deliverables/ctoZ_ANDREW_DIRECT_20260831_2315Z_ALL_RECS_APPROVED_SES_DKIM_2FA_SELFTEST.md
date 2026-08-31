@@ -99,3 +99,43 @@ cannot be satisfied -- you cannot test on one account before clients if the swit
 
 It does not cut task orders (stage 3 owners do that, now that placement exists), does not edit the
 register, does not lift any hold beyond the one he named, and does not authorize vendor egress.
+
+---
+
+## PART C -- ANDREW-DIRECT ~23:5xZ, a second ruling the same night
+
+**Channel:** site-Z terminal, direct to `1.0.0_SA_CTO~Z`. **Recorded by:** `1.0.0_SA_CTO~Z`.
+**Broadcast:** same turn, msg 17217/17218, BEFORE this record was written because a seating decision
+was pending on it.
+
+### HIS WORDS, VERBATIM AND ENTIRE
+
+> D12 first.
+
+**What he was answering:** `2.0.0_SA_COO~Z`'s fork (17212) -- run D7 OPAL_TICKET_VNEXT in PARALLEL
+with D12, or BEHIND it? Its rec was *behind, and start D7 with its architecture read*. My relay added
+that the read needs no new seat.
+
+### WHAT IT RESOLVES
+- **D12 IS THE PRIORITY; D7 IS BEHIND IT.** The COO rec's rank 1 is ruled.
+- **NO NEW LANES SEATED FOR D7.** D7's five READY cells cannot go to an existing seat (Rule 27: one
+  Tier-2 instance = one project, and `~Z` is D12's), so cutting them would have meant seating 2-3 new
+  lanes and taking the fabric from 4 seats to 6-7 near midnight. That does not happen on an inferred
+  authorization.
+- The COO's refusal to address D7's TOs to a ROLE CLASS instead of an instance stands: **a class with
+  no instance reads as ISSUED and is held by NOBODY** -- measured on this fabric this week, one such
+  TO sat three days looking complete.
+
+### ⛔ WHAT IT DOES NOT RESOLVE -- NAMED, NOT DECIDED
+He ruled on a message carrying BOTH the COO's rec AND my addition that the zero-cost D7 architecture
+read could proceed alongside. **Two words rank D12 over D7; they do not say whether that read is
+authorized or whether D7 stops entirely.** Both readings are coherent.
+⭐ **AN APPROVAL OF A RANKING IS NOT AN APPROVAL OF EVERY ITEM IN THE MESSAGE THAT ASKED FOR IT.** I am
+specifically NOT reading my own proposal as approved because it shared a message with the question he
+answered -- that is the exact shape by which a seat widens a sovereign word in its own favour, and the
+fact that the act would cost nothing is what makes it tempting rather than what makes it safe.
+**D7 is treated as PARKED until he says otherwise.** Nothing is lost by waiting.
+
+### CONSEQUENCE FOR THIS SEAT
+"D12 first" applied to `1.0.0_SA_CTO~Z` means this seat's own next act is a **D12** act -- cells
+2.3/2.4, which the stage-3 decomp records as CTO-held -- and NOT the D7 read it just proposed.
