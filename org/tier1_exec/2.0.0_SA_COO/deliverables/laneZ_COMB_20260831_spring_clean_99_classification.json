@@ -1,0 +1,723 @@
+{
+  "artifact": "THE_COMB_20260831",
+  "denominator": 99,
+  "question": "Of the 99 projects the 2026-08-25 spring-clean sweep CLOSED, which were GENUINELY FINISHED and which were CLOSED ON MEMBERSHIP ALONE?",
+  "method": "Read the sweep OUTPUT only; the 08-25 membership predicate was NOT re-run (Andrew-direct). Primary instrument = each face pre-sweep work state preserved in phase after \"Prior phase:\". Second instrument = the blocking field (different field, different authoring moment).",
+  "controls": {
+    "known_wrong_reproduced": [
+      "PORTAL_AUTHHARD",
+      "OPAL_TICKET"
+    ],
+    "overcount_control": "27 membership-only rows whose blocking field opens None/Nothing were re-read in full; all 27 name remaining work in the same field; 0 rows moved to FINISHED.",
+    "verdict_flipped_by_second_instrument": [
+      "OPAL_SQSCHAT"
+    ],
+    "not_measurable_here": [
+      "GLOBALALARM",
+      "PLATFORM_OPS_USERMGMT",
+      "D12"
+    ],
+    "not_measurable_note": "Absent from this SITEZ tree; laptop-side, reported as relayed by 0.0.0_AB_MSTR~Z, never measured here."
+  },
+  "counts": {
+    "MEMBERSHIP_ONLY": 92,
+    "FINISHED": 5,
+    "ABSORBED": 1,
+    "SOVEREIGN_SUSPENDED": 1
+  },
+  "rows": [
+    {
+      "project_code": "ADHC_PREFLT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADHC_PREFLT.json"
+    },
+    {
+      "project_code": "ADVI_BDAPIMIG",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/ADVI_BDAPIMIG.json"
+    },
+    {
+      "project_code": "ADVI_BREAKS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_BREAKS.json"
+    },
+    {
+      "project_code": "ADVI_COTETL",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/ADVI_COTETL.json"
+    },
+    {
+      "project_code": "ADVI_COTSNP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_COTSNP.json"
+    },
+    {
+      "project_code": "ADVI_ETLFIX",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_ETLFIX.json"
+    },
+    {
+      "project_code": "ADVI_INFFEE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_INFFEE.json"
+    },
+    {
+      "project_code": "ADVI_INFREF",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_INFREF.json"
+    },
+    {
+      "project_code": "ADVI_PERFORMANCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_PERFORMANCE.json"
+    },
+    {
+      "project_code": "ADVI_PRVSYS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_PRVSYS.json"
+    },
+    {
+      "project_code": "ADVI_TAGATTR",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/ADVI_TAGATTR.json"
+    },
+    {
+      "project_code": "ADVI_TWR",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ADVI_TWR.json"
+    },
+    {
+      "project_code": "ASTN_WSJFT",
+      "classification": "FINISHED",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/ASTN_WSJFT.json"
+    },
+    {
+      "project_code": "ATOM_LAYER0",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ATOM_LAYER0.json"
+    },
+    {
+      "project_code": "BD_SCHWABCONV",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/BD_SCHWABCONV.json"
+    },
+    {
+      "project_code": "COT_CANON458",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/COT_CANON458.json"
+    },
+    {
+      "project_code": "DATA_ANALYTICS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/DATA_ANALYTICS.json"
+    },
+    {
+      "project_code": "DATA_BDINSURANCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/DATA_BDINSURANCE.json"
+    },
+    {
+      "project_code": "DATA_PIPMAP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/DATA_PIPMAP.json"
+    },
+    {
+      "project_code": "DATA_PLATFORM",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/DATA_PLATFORM.json"
+    },
+    {
+      "project_code": "DATA_SSOTMG",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/DATA_SSOTMG.json"
+    },
+    {
+      "project_code": "ETFS_AVGCAP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/ETFS_AVGCAP.json"
+    },
+    {
+      "project_code": "ETFS_SETUP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/ETFS_SETUP.json"
+    },
+    {
+      "project_code": "EXPAND_AUTHEDGE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/EXPAND_AUTHEDGE.json"
+    },
+    {
+      "project_code": "EXPAND_MSCLOUD",
+      "classification": "ABSORBED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/EXPAND_MSCLOUD.json"
+    },
+    {
+      "project_code": "FIND_DUALBIZ",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/FIND_DUALBIZ.json"
+    },
+    {
+      "project_code": "HEATMAP_PROCESS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/HEATMAP_PROCESS.json"
+    },
+    {
+      "project_code": "MDPF_3FIRMS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MDPF_3FIRMS.json"
+    },
+    {
+      "project_code": "MDPF_CANPLAT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MDPF_CANPLAT.json"
+    },
+    {
+      "project_code": "MDPF_CANRTE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MDPF_CANRTE.json"
+    },
+    {
+      "project_code": "MDPF_CHANNEL_INDEPENDENCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MDPF_CHANNEL_INDEPENDENCE.json"
+    },
+    {
+      "project_code": "MDPF_DEBTCLEAN",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MDPF_DEBTCLEAN.json"
+    },
+    {
+      "project_code": "MDPF_PIPELINE_TRUTH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MDPF_PIPELINE_TRUTH.json"
+    },
+    {
+      "project_code": "MDPF_PROVCANON",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MDPF_PROVCANON.json"
+    },
+    {
+      "project_code": "MDPF_SLICES",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MDPF_SLICES.json"
+    },
+    {
+      "project_code": "MDPF_TRGALN",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MDPF_TRGALN.json"
+    },
+    {
+      "project_code": "MDPF_VARFLAG",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MDPF_VARFLAG.json"
+    },
+    {
+      "project_code": "MKOV_RETFIX",
+      "classification": "FINISHED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/MKOV_RETFIX.json"
+    },
+    {
+      "project_code": "MKOV_TRSRCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/MKOV_TRSRCE.json"
+    },
+    {
+      "project_code": "NFRA_AGENTBUS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_AGENTBUS.json"
+    },
+    {
+      "project_code": "NFRA_AKPIPE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_AKPIPE.json"
+    },
+    {
+      "project_code": "NFRA_CMTQUE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_CMTQUE.json"
+    },
+    {
+      "project_code": "NFRA_COMPASSURANCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_COMPASSURANCE.json"
+    },
+    {
+      "project_code": "NFRA_COMPSIMILAR",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_COMPSIMILAR.json"
+    },
+    {
+      "project_code": "NFRA_COMPTEAM",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_COMPTEAM.json"
+    },
+    {
+      "project_code": "NFRA_COSTAWS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_COSTAWS.json"
+    },
+    {
+      "project_code": "NFRA_EDGES",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_EDGES.json"
+    },
+    {
+      "project_code": "NFRA_EPISTEMY",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_EPISTEMY.json"
+    },
+    {
+      "project_code": "NFRA_EXPAND",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_EXPAND.json"
+    },
+    {
+      "project_code": "NFRA_GCONTR",
+      "classification": "SOVEREIGN_SUSPENDED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_GCONTR.json"
+    },
+    {
+      "project_code": "NFRA_GENESIS",
+      "classification": "FINISHED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_GENESIS.json"
+    },
+    {
+      "project_code": "NFRA_GRAPHFEED",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_GRAPHFEED.json"
+    },
+    {
+      "project_code": "NFRA_GRAPHS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_GRAPHS.json"
+    },
+    {
+      "project_code": "NFRA_INSTDRILL",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_INSTDRILL.json"
+    },
+    {
+      "project_code": "NFRA_KUZUSPLIT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_KUZUSPLIT.json"
+    },
+    {
+      "project_code": "NFRA_LOCALROOT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_LOCALROOT.json"
+    },
+    {
+      "project_code": "NFRA_MSGRAPH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_MSGRAPH.json"
+    },
+    {
+      "project_code": "NFRA_NERVES",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_NERVES.json"
+    },
+    {
+      "project_code": "NFRA_NESTEDABSTRACT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_NESTEDABSTRACT.json"
+    },
+    {
+      "project_code": "NFRA_ONTOLOGY",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_ONTOLOGY.json"
+    },
+    {
+      "project_code": "NFRA_PASSCRAFT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_PASSCRAFT.json"
+    },
+    {
+      "project_code": "NFRA_PSTMRT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_PSTMRT.json"
+    },
+    {
+      "project_code": "NFRA_PYFIELD",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_PYFIELD.json"
+    },
+    {
+      "project_code": "NFRA_REPOCOHERENCEGRAPH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/NFRA_REPOCOHERENCEGRAPH.json"
+    },
+    {
+      "project_code": "NFRA_SYSPARITY",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_SYSPARITY.json"
+    },
+    {
+      "project_code": "NFRA_TERRAFORM",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_TERRAFORM.json"
+    },
+    {
+      "project_code": "NFRA_TOOLCHECK",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_TOOLCHECK.json"
+    },
+    {
+      "project_code": "NFRA_TOOLGRAPH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_TOOLGRAPH.json"
+    },
+    {
+      "project_code": "NFRA_TOOLHEALTH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_TOOLHEALTH.json"
+    },
+    {
+      "project_code": "NFRA_VELOCITY_CORE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_VELOCITY_CORE.json"
+    },
+    {
+      "project_code": "NFRA_VELOCITY_ESTATE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_VELOCITY_ESTATE.json"
+    },
+    {
+      "project_code": "NFRA_WEBSITE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_WEBSITE.json"
+    },
+    {
+      "project_code": "NFRA_WORLDMODEL",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_WORLDMODEL.json"
+    },
+    {
+      "project_code": "NFRA_WRKFLW",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/NFRA_WRKFLW.json"
+    },
+    {
+      "project_code": "OPAL_ALERTS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_ALERTS.json"
+    },
+    {
+      "project_code": "OPAL_ALTRESEARCH",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_ALTRESEARCH.json"
+    },
+    {
+      "project_code": "OPAL_BBGTML",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_BBGTML.json"
+    },
+    {
+      "project_code": "OPAL_BGFALLBACK",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_BGFALLBACK.json"
+    },
+    {
+      "project_code": "OPAL_BRDSEP",
+      "classification": "FINISHED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_BRDSEP.json"
+    },
+    {
+      "project_code": "OPAL_CONSOLIDATION",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/OPAL_CONSOLIDATION.json"
+    },
+    {
+      "project_code": "OPAL_GLDRNS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/OPAL_GLDRNS.json"
+    },
+    {
+      "project_code": "OPAL_INVPHL",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_INVPHL.json"
+    },
+    {
+      "project_code": "OPAL_LCLRPO",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_LCLRPO.json"
+    },
+    {
+      "project_code": "OPAL_MDPFCLEANUP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/OPAL_MDPFCLEANUP.json"
+    },
+    {
+      "project_code": "OPAL_PORTALREFRESH",
+      "classification": "FINISHED",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_PORTALREFRESH.json"
+    },
+    {
+      "project_code": "OPAL_PRISTINE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_PRISTINE.json"
+    },
+    {
+      "project_code": "OPAL_SCHEDULE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_SCHEDULE.json"
+    },
+    {
+      "project_code": "OPAL_SQSCHAT",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_SQSCHAT.json"
+    },
+    {
+      "project_code": "OPAL_TAXONOMY",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_TAXONOMY.json"
+    },
+    {
+      "project_code": "OPAL_TICKET",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/OPAL_TICKET.json"
+    },
+    {
+      "project_code": "OPAL_TICKET_IA",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/OPAL_TICKET_IA.json"
+    },
+    {
+      "project_code": "OPAL_VENDORPROVENANCE",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/OPAL_VENDORPROVENANCE.json"
+    },
+    {
+      "project_code": "PORTAL_AUTHHARD",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/PORTAL_AUTHHARD.json"
+    },
+    {
+      "project_code": "SCTY",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "B",
+      "wave_meaning": "open TOs closed in the same act",
+      "file": "org/projects/SCTY.json"
+    },
+    {
+      "project_code": "SCTY_PREMCP",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/SCTY_PREMCP.json"
+    },
+    {
+      "project_code": "SSCN_PRICOL",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/SSCN_PRICOL.json"
+    },
+    {
+      "project_code": "UIUX_DESIGN",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/UIUX_DESIGN.json"
+    },
+    {
+      "project_code": "YALP_MACROS",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/YALP_MACROS.json"
+    },
+    {
+      "project_code": "YALP_YCUTVR",
+      "classification": "MEMBERSHIP_ONLY",
+      "sweep_wave": "A",
+      "wave_meaning": "zero open TOs at close",
+      "file": "org/projects/YALP_YCUTVR.json"
+    }
+  ]
+}
