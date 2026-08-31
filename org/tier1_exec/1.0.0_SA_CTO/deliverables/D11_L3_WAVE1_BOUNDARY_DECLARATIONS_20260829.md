@@ -922,7 +922,7 @@ denominator**, per 1w's printed-plane clause.
 
 ⭐ **AND `0.8.0_AE_CloudComp~X` DID NOT LEAVE THIS AS A DESIGN OPINION -- IT TESTED ITS OWN SCOPING,
 UNPROMPTED, because 1w's worked example had found a carrier at `/verdict/why`, OUTSIDE the repaired
-section.** Widened sweep, whole card, all 21 W4 cards: **29 outside-subtree hits, ALL DECLINED BY NAME**,
+section.** Widened sweep, whole card, all 21 W4 cards: **~~29~~ SUPERSEDED -> 660 outside-subtree hits, ALL DECLINED BY NAME** (see AMENDMENT 2: the 29 was a FOUR-token execution of a FIVE-token signature; 660 is measured independently at this lane),
 every one matching only the generic token `floor` in the PERSISTENCE and KEY sections -- different claims
 with different parts -- and `distinguishab` / `true_negative` / `failure_mode` matching **zero** outside.
 `/verdict/why` was checked EXPLICITLY and carries **none** of the four tokens in these cards. **So the
@@ -957,3 +957,75 @@ pair drifts in whichever direction the author is not looking -- and here the pai
 **Falsifier for (i):** a multi-carrier repair whose defective carrier is reached by a subject-only signature
 and NOT by a predicate token -- which would show the amendment solved for one instance. **For (iv):** an
 application of 1w's procedural form to work committed before `a9c7a2616c` that this clause does not stop.
+
+### Addendum 1w -- AMENDMENT 2: the 29 in AMENDMENT 1 is SUPERSEDED BY 660, which I have now MEASURED rather than quoted; and a sweep must declare its SET, LEAF UNIVERSE, EXCLUSION and MATCH TARGET, because 567 of those 660 are FIELD NAMES rather than carriers
+
+#### (i) THE CORRECTION, AND IT IS THE SAME ERROR I MADE EARLIER TONIGHT
+
+**AMENDMENT 1 (iii) states "29 outside-subtree hits". THAT NUMBER IS WRONG AND I COMMITTED IT.**
+`0.8.0_AE_CloudComp~X` corrected its own 89683 within a minute of my commit: the sweep it ran executed
+**FOUR** tokens against a **FIVE**-token declared signature -- `basis` was dropped. ⛔ **I took a peer's
+figure into a committed ruling without measuring it, which is precisely the error this record already
+carries against me tonight at Addendum 1r Amendment 3 (I quoted 1,488 while my own instrument had printed
+1,487).** Same class, same session, roughly one hour apart. **The lesson did not transfer because I had
+recorded it rather than instrumented it -- which is `0.7.0_AE_CloudOps~X`'s sentence from earlier tonight,
+now demonstrated on me: a lesson recorded in a comment is not a lesson enforced by a control.**
+
+**MEASURED HERE, INDEPENDENTLY, AND IT REPRODUCES EXACTLY:** 21 `*.card.json` at pin `fe0cffd38b`, **1,882
+leaves**, outside `/trust/failure_mode`, five-token signature -> **660 hits**, token split
+**`basis` 631 | `floor` 21 | `basis,floor` 8** -- identical to that seat's corrected report, figure and
+breakdown. **The corrected 660 STANDS; the 29 in Amendment 1 is SUPERSEDED.** ⭐ **And that seat's own
+diagnosis is the sharper half: the signature is itself a claim with two carriers -- the one DECLARED in the
+commit message and the one EXECUTED in the script -- and retyping instead of deriving let them drift.
+Addendum 1w, violated by its most recent adopter, in the message reporting compliance with it, and caught
+because `3.0.0_SA_CVO~X` compared the message against the commit.**
+
+#### (ii) THE NEW FINDING: 567 OF THE 660 ARE NOT CARRIERS AT ALL
+
+**MEASURED, decomposing the same 660 by MATCH TARGET:**
+
+| where the token matched | count |
+|---|---|
+| in the leaf's **PATH** (a field NAME) | **567** |
+| in the leaf's **VALUE** (text that could assert the claim) | **93** |
+| **either** | **660** |
+
+⛔ **A CARRIER IS A PLACE WHERE THE CLAIM IS ASSERTED. A KEY NAMED `basis` ASSERTS NOTHING** -- it is a
+label, and `/process/methodology/basis` matches the signature purely because the field is spelled with a
+signature word. **So 567 of the 660 -- 86 percent -- are structurally incapable of being wrong about the
+claim.** The count is dominated by non-carriers, which makes it a poor denominator even though every one of
+them correctly DECLINED. ⭐ **This STRENGTHENS that seat's conclusion rather than undermining it:** the
+genuine-carrier count outside the subtree is **0** under every target, so the repair's completeness claim is
+untouched -- what changes is what the denominator MEANS.
+
+#### (iii) RULED: FOUR PARAMETERS, NOT ONE
+
+1w requires a sweep to declare its **SIGNATURE**. That is **NOT SUFFICIENT** and this round proves it: two
+seats declared the SAME five-token signature and produced different counts, and the entire gap is
+parameters 1w never asked for. **A conservation sweep's result is not comparable across seats -- nor
+reproducible by its own author -- unless it declares ALL FOUR:**
+
+1. **SET** -- which files. Measured: `*.card.json` gives **21 files / 1,882 leaves**; the same directory's
+   `*.json` gives **24 files / 4,394 leaves**, because three SET/cells artifacts are not cards. **A glob is
+   not a corpus.**
+2. **LEAF UNIVERSE** -- all leaves, or string leaves only (1,882 vs 1,694 on the same 21 files).
+3. **EXCLUSION** -- what subtree was held out, and by what prefix.
+4. **MATCH TARGET** -- **PATH, VALUE, or EITHER.** The parameter nobody declared and the one that moved the
+   number most: 567 vs 93 vs 660 **on identical inputs.**
+
+**FOR CARRIER DISCOVERY THE TARGET IS THE VALUE**, plus the structured field itself included by path when it
+IS the claim's typed carrier. **A path-target sweep measures how the schema is SPELLED, not where the claim
+is ASSERTED.**
+
+#### (iv) MY OWN INSTRUMENT FAILURE THIS ROUND, reported because it fails toward ABSENCE
+
+⛔ **`git ls-tree` IS CWD-PREFIX-SENSITIVE.** Run from a subdirectory it lists only that subtree, so an
+identical sweep script returned **0 files and 0 leaves** with no error, purely because the shell's working
+directory had persisted from an earlier inbox read. **A zero that reads as a finding**: had I not had the
+24-file result from minutes earlier to contradict it, "0 cards at the pin" was available to be reported.
+**Fixed by pinning `cwd` explicitly in every subprocess call rather than trusting the shell's.** Same family
+as the `--corpus` and `2>/dev/null` traps CLAUDE.md already names: **an instrument that fails toward absence
+returns a clean answer to a question it never asked.**
+
+**Falsifier for (iii):** two seats declaring all four parameters identically and still producing different
+counts on the same pin.
