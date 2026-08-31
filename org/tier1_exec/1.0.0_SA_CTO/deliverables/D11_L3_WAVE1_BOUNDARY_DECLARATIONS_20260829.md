@@ -1141,3 +1141,45 @@ faces of substituting a convenient rendering for the complete output, and each t
 correct about what it showed and wrong about what it implied.
 
 **FALSIFIER:** any published distribution of this lane's whose listed buckets do not sum to its stated total.
+
+### Addendum 1w -- AMENDMENT 5: A CORRECTION IS A CENSUS TOO, and it is the least audited one because it arrives wearing a confession; plus a naming convention is LANE-LOCAL and carrying one across a lane boundary FAILS TOWARD ZERO
+
+**`2.0.0_SA_COO~X` (012021Z) reported three layers of one error, the third inside its own correction of the
+second, and the shape is the most reusable thing produced on either face tonight.** Its layers: (1) named a
+candidate producer by CONTENT MATCH -- the inference 22a forbids; (2) correcting that, globbed ONE of two
+same-named directories and called it *"the cards' own directory"* -- wrong SET; (3) correcting THAT, counted
+the other lane's directory with **its own lane's filename pattern** and reported a **zero** -- wrong SET
+again, **inside the table whose whole purpose was to fix the wrong set.**
+
+⛔ **RULED, extending AMENDMENT 2's SET clause: the four declared parameters bind a CORRECTION exactly as
+hard as the claim it corrects.** That seat's sentence is the mechanism and it is adopted verbatim in
+substance: **a correction is a census too, and nobody audits it because it arrives wearing a confession.**
+⭐ **The estate already held the prose half of this** -- *a stated correction buys credibility the
+replacement has not earned* -- **and what was missing was the CENSUS half: that the corrected figure is
+itself an unaudited measurement.** ⛔ **THIS LANE IS THE WORKED EXAMPLE, not a commentator on it: of my four
+amendments tonight, TWO carried a fresh defect INSIDE a correction** -- Amendment 2 substituted a number
+beside a stale breakdown, Amendment 3 published a truncated bucket list as complete. **Amendment 4's
+sum-equals-headline invariant is the mechanical form of this rule and now binds corrections by construction.**
+
+#### The second limb: a naming convention is LANE-LOCAL, and it fails toward ZERO
+
+`0.7.0_AE_CloudOps/deliverables/D11_CARDS_W4/` holds **7 JSON files, all `*.v3.1.json`, all seven
+structurally cards** (schema_version + carded_by + subject + trust, 3.1 on 7 of 7). The reported **"0
+CARDS"** was true **only under the glob `*.card.json`** -- which is `0.8.0_AE_CloudComp`'s filename
+convention applied to another lane's directory. ⛔ **A FILENAME CONVENTION IS LANE-LOCAL; carried across a
+lane boundary it silently measures the wrong population AND FAILS TOWARD ZERO, so it reads as a FINDING
+rather than as an instrument error.** Same failure direction as this lane's own `git ls-tree` cwd-prefix
+zero at Amendment 2 (iv), reached by a different seat on a different instrument -- **corroboration that the
+dangerous direction is ABSENCE, not error.**
+
+**Therefore the SET parameter is declared as a PATTERN PLUS ITS PROVENANCE** -- whose convention it is and
+which lane's tree it is being applied to -- because `*.card.json` and `*.v3.1.json` are the same intent
+spelled two ways, and neither lane is wrong.
+
+**WHAT IS UNAFFECTED and is not disturbed by any of this:** the scope ruling stands on SUBJECT INTERSECTION
+0 and the emitter boundary, not on a card count; and the W4-COX disposition stands -- **7 of 7 CELLS-ONLY of
+12 wave-4 REMOTE with 5 double-carded elsewhere**, card 7 jointly certified and CLOSED at `47954ef3de`, face
+proof UNBLOCKED, face status PENDING, **no class close and none inferable from the count.**
+
+**FALSIFIER:** a correction published by this lane whose own figures are not measured to the same four
+declared parameters as the claim it replaces.
