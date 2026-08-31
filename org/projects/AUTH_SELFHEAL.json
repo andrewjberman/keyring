@@ -1,0 +1,32 @@
+{
+ "project_code": "AUTH_SELFHEAL",
+ "macro_code": "AUTH",
+ "directive": "D8",
+ "pipeline": null,
+ "status": "active",
+ "dep_stage": "BRIEF",
+ "created": "2026-08-31",
+ "pods": [],
+ "related": [
+  "MDPF_HEALGAP",
+  "MDPF_COTREMEDIATION"
+ ],
+ "name": "The self-healing retry auth pattern -- auth self-healing plus consumer retry across EVERY cookie-riding consumer, both firms; the PATTERN, not the Cottonwood instance",
+ "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct at the 0.6.2_AE_PartnerETL terminal, VERBATIM: 'In essence, I want this self-healing auth function to be managed by D8. I want self-healing retry auth pattern to be a standalong project under D8.' Scope source is that seat's brief @cc2bb75fdb; the Rule 27 stage-2 PRD does not exist yet and stage 3 (COO atom-decomp) precedes any TO.",
+ "blocking": "Nothing blocked. REGISTER CUT only -- authorizes no code, no terraform, no deploy and no vendor egress.",
+ "prds": [
+  {
+   "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_SELF_HEALING_RETRY_AUTH_PATTERN_D8_20260831.md",
+   "version": "brief",
+   "note": "Scope source of record until a stage-2 PRD exists. The brief PROPOSES and mints nothing."
+  }
+ ],
+ "leads": [
+  "BOUNDARY AGAINST MDPF_HEALGAP, taken from the brief and adopted AT MINTING because two projects on one surface collide unless the split is stated: MDPF_HEALGAP is THE INSTANCE -- the Cottonwood runner's missing 2026-08-31 date, that runner's schedule ordering, and its recovery gap; it terminates when that runner is correct and the date is closed. AUTH_SELFHEAL is THE PATTERN -- auth self-healing plus consumer retry across EVERY cookie-riding consumer, both firms; it terminates when the class has an inventory, a validated ordering rule, and a stated position on re-mint.",
+  "THE TELL THAT THE SPLIT IS RIGHT, and it is the brief's own argument: MDPF_HEALGAP's fix -- moving one schedule_expression -- does not make any OTHER pipeline safer. That is why the pattern needs its own home rather than a second cell inside the instance.",
+  "MACRO CODE IS 'AUTH' AND NOT 'MDPF', DELIBERATELY. Its D8 siblings are MDPF_*, but this scope is cross-firm and cross-consumer rather than model-portfolio-pipeline. The directive field carries the D8 membership; the macro carries the subject, and calling it an mdpf project would mis-scope it at every future read.",
+  "CORRECTED PRIOR ART, recorded so it is not inherited a third time: cot-bd-session-trigger IS Terraform-managed (cot-pipeline/lambdas.tf:20-37). The earlier claim that it was NOT came from reading a comment that heads a `data` block without opening lambdas.tf; it propagated into the MDPF_HEALGAP brief and a CTO routing decision before it was caught.",
+  "cot_rebalancer_runner.tf:222-250 ALREADY carries an on_success completion-chain mechanism, so any completion-keyed design is an EDIT to an existing mechanism rather than a port.",
+  "STANDING VETO APPLIES: no shadow or parallel auth path."
+ ]
+}
