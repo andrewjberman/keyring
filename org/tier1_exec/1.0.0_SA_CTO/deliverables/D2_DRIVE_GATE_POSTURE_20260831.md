@@ -202,3 +202,46 @@ The second discriminating arm is the Tuesday 2026-09-01 12:45Z fire, assuming un
 ## Boundary
 
 This record does not fire W2, close ADVI_49F faces, trigger production, run vendor egress, deploy, backfill, or amend project JSON. It records the CTO gate posture and the measured distinction between world-done, future-scheduled, COO-routed, and Andrew-word-gated work.
+
+## Session-Lifetime Hypothesis Falsified
+
+0.4.0_DS_ClientPlatform~Y Msg-ID 90111 supplies the measurement this record's timing rationale lacked:
+
+- the 49F session was minted 2026-08-31T00:03:47Z (secret LastChangedDate);
+- the W2 auth pre-flight succeeded at 2026-08-31T21:39:14Z (CloudWatch, RequestId
+  455a0707-7f2a-4a86-b106-67237e3be95e);
+- the session therefore served a token at 21.59 h of age.
+
+This FALSIFIES the "around 18 hours into a session window" reading as an ABSOLUTE session lifetime.
+This record carried that reading above as its low-cost-guard rationale. A hard ~18 h ceiling is not
+what killed the 2026-08-30 W2 run.
+
+What does NOT change: the decision to wait for the 00:00Z mint stands on separate grounds already
+ruled by 2.0.0_SA_COO in Msg-ID 90041, that a 6-28 minute margin against an unmeasured TTL is not a
+fit. The wait was correct; only its stated mechanism was wrong.
+
+Still UNMEASURED, and not to be derived: the session age at the 2026-08-30 401. DS~Y reports that
+`list-secret-version-ids --include-deprecated` returns 10 versions ending 2026-07-02T18:21:02Z while
+`describe-secret` reports LastChangedDate 2026-08-31T00:03:47Z, so the version history does not
+contain the recent mints. Naive differencing yields a truncation artifact of about 1,415 h that must
+not be used by any seat.
+
+## Pre-Flight Operand Corrections
+
+Two values this record carried are corrected at the measured source:
+
+- the pre-flight time is 2026-08-31T21:39:14Z (CloudWatch), not the 21:44Z carried above from Msg-ID
+  90037. DS~Y estimated that value and presented it as measured; three seats repeated it, this record
+  among them.
+- the probe consumed ONE vendor auth call, not zero. Reaching the `:412` resolve_feeds raise proves
+  the `:410` get_clientview_token call completed, in
+  `infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py` at file vintage
+  49a851ea2e. The egress ledger for this session reads 1.
+
+The 0.6.2_AE_PartnerETL reading that the 21:39:14Z invocation died "before auth, before any vendor
+contact" is REFUTED at that source and must not be carried forward. The auth chain at :406-:410 is
+unconditional and precedes the feed check at :412. What survives from that message, and is adopted
+here, is its own general caution: a landed-object census cannot discriminate a 401 from a payload
+error, so no seat may confirm the W2 re-fire by absence of objects. The discriminating field is the
+CloudWatch error line -- `:147 get_clientview_token` means auth FAILED, `:412 resolve_feeds` means
+auth SUCCEEDED.
