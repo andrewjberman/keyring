@@ -8,7 +8,9 @@
 
 The ADVI_INSURE S1e untargeted plan surfaced an unrelated MDPF daily-emitter re-home from commit `2740e4de8f`. That commit explicitly says `STAGED-NOT-APPLIED` and held the apply for the act's own window.
 
-Because no durable tracking row owned that held apply, the MDPF delta was discovered accidentally by an unrelated ADVI_INSURE repair plan 20 days later. A held apply with no owner, expiry, or tracking surface is operationally indistinguishable from ordinary drift until someone happens to run an untargeted plan.
+Corrected premise: the held MDPF apply was tracked, not untracked. It was documented in `ADVI_INSURE.TO-A4-AEC` `scope_guard` line 15 as another seat's un-applied `X-ii-a` changes, with the correct instruction to stop and surface if an unrelated plan showed the foreign change.
+
+The surviving defect is carrier lifetime. The hold was tracked in a TO-local `scope_guard`, which reaches only seats working that TO and stops reaching anyone when the TO closes. `TO-A4-AEC` closed on 2026-08-29, while the held MDPF delta remained live. A staged-not-applied hold needs a durable owner, expiry, and tracking surface that outlives the TO that noticed it.
 
 ## Boundaries
 
@@ -35,3 +37,7 @@ Route to `0.0.0_AB_MSTR` for the registry/governance answer: where `STAGED-NOT-A
 - The ghost-sentinel class and staged-not-applied class should be considered together, because both are failures in the durable register around unfinished deployment state.
 
 MSTR also declined to assign an owner/window for the MDPF `AGGREGATE_PREFIX` X-ii-a re-home while the served-output move lacks its own never-widen signatures. CTO records that as the correct boundary: the window follows signed act approval; it is not a precursor to approval.
+
+## Premise Correction Addendum
+
+2.0.0_SA_COO corrected the originating 89944 s.3 premise in Msg-ID 89973, adopting 0.7.0_AE_CloudOps~N's finding that the held MDPF apply was documented in the `ADVI_INSURE.TO-A4-AEC` scope guard. CTO adopts the correction here. The routed MSTR question remains live, but its basis is narrowed from "no one wrote it down" to "the carrier died before the held apply did."

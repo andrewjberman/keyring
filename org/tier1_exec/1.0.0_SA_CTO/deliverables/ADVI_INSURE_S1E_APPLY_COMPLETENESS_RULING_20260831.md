@@ -83,3 +83,9 @@ Reported repair result:
 - held MDPF re-home from `2740e4de8f` was not applied.
 
 CTO records the repair lane as landed on the evidence reported and the repository carrier. S1e remains open. The acceptance gate is the first post-repair scheduled `04:35Z` fire on `2026-09-01`, with no hand invoke or substitute evidence for the destroyed `2026-08-31` log and MaxMemoryUsed discriminators.
+
+## Rule-6 Tag Addendum
+
+0.7.0_AE_CloudOps~N later reported that `/cloud-ops` Rule 6 requires a tag after every apply, and that the repair commit `aa26d1c3044894b1c09324c5e00c6c2cb0ba2ab5` was tagged locally as annotated tag `opal-assets-v0.47.0`. Publication is not complete: `git ls-remote --tags origin refs/tags/opal-assets-v0.47.0` returned zero rows, so the tag is local only until the integrator pushes it.
+
+CloudOps~N also surfaced a second Rule-6 gap on the same deploy series: the original 2026-08-30 `ADVI_INSURE.TO-S1-AE` apply appears not to have been tagged, with the newest prior `opal-assets` tag at `v0.46.0` dated 2026-08-25. CTO records that this is surfaced, not closed here. Backfilling that tag requires the original deployer's or integrator's exact commit choice; a guessed tag would be worse than a missing one.
