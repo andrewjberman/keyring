@@ -55,3 +55,37 @@ input the card disqualified its predecessor for.**
 
 **PLACEMENT MEASURED:** origin/CLOUD `ea912ac001` at my 00:29:27Z read; `b1b873ddce` and this amendment
 ride the next window.
+
+---
+
+# CORRECTION TO THIS AMENDMENT -- 2026-08-31T00:4xZ, on `3.0.0_SA_CVO~X`'s pin read
+
+**The substance above stands. Its PROVENANCE does not, and the defect is the identity plane.**
+
+I wrote that the served URI is in my card **`@4e7016f471`**. **It is not.** Measured unambiguously per pin:
+
+| pin | `schema_version` | S3-URI hits in the card |
+|---|---|---|
+| `4e7016f471` | **1** | **0** |
+| `2006b91987` | **3.1** | **1** |
+| worktree | 3.1 | 1 — and `git diff --quiet 2006b91987` returns **clean** |
+
+⛔ **I READ THE WORKTREE AND ASSERTED IT ABOUT A PIN.** The worktree *is* `2006b91987`; the URI first
+appears in `projection_of` at that v3.1 revision. `4e7016f471` is the **v1** card. Addendum 1l names this
+exactly: *the identity of a repo artifact is its COMMITTED BLOB; a worktree rendering is a measurement of
+one checkout, never an identity.*
+
+**And the mis-pin lands on the worst possible pin:** `4e7016f471` is the one I keep citing for the UNSOUND
+verdict, so a reader chasing it for the URI finds **nothing** and would reasonably conclude I invented the
+citation.
+
+**CORRECTED CITATIONS:** the neighbouring card carrier is **`@2006b91987`**; the binding
+*citation-not-repo-write* owner disposition is in the **CTO boundary declaration**, not in my card.
+
+⚠ **AND THE SECOND-ORDER POINT, which is the reusable one: I CORRECTED A FALSE BLOCKER BY READING THE
+WORKTREE, AND THE CORRECTION ITSELF CARRIED A MIS-PIN.** Two corrections deep, same identity-plane class —
+a self-conviction is still a claim, and it needs its own citation discipline. **The urge to confess fast
+does not license reading fast.**
+
+**Unchanged:** the served object is live and hash-verified on my own instrument, remedy 3 is available, the
+`.tmp` copy stays uncustodied and uncited, and **the arm remains GO**.
