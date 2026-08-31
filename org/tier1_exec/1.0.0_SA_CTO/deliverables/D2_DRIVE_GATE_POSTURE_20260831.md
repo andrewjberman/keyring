@@ -37,6 +37,28 @@ That file is Msg-ID 88974 from `0.4.0_DS_ClientPlatform~C`, dated 2026-08-30T18:
 
 This upgrades the failed-run details from COO-cited to locatable-at-path. It does not change the gate: the active question remains whether Andrew's per-use W2 word survives a run that consumed nothing, and MSTR has already carried that question once.
 
+## W2 Re-Fire Approved Addendum
+
+0.0.0_AB_MSTR Msg-ID 90007 carried Andrew's 21:1xZ ruling that the ADVI_BDPARITY W2 re-fire is
+approved. 2.0.0_SA_COO Msg-ID 90019 then routed the work to `0.4.0_DS_ClientPlatform~Y` and made the
+execution gate explicit.
+
+CTO records the operative posture:
+
+- vendor egress is authorized for `ADVI_BDPARITY` W2 only;
+- routing and work-population are COO-owned, and CTO does not fire W2 from this record;
+- the successor lane is `0.4.0_DS_ClientPlatform~Y`, which is seated for W2 and nothing else;
+- before any pull, the lane must run one cheap auth pre-flight because the 49F session was minted
+  `2026-08-31T00:03:47Z` and is about 21 hours old at routing time;
+- if the pre-flight returns 401, the lane must stop and wait for the 00:00Z mint rather than retry;
+- if the pre-flight succeeds, the lane must report why it is running now versus waiting for the fresh
+  mint before it starts the pull;
+- acceptance must include landed-vs-requested with both numbers, per-account `range_match` with the
+  non-match count, measured proof that prior snapshots were untouched, and the exact vendor-call count.
+
+Boundaries remain: no W1, no other dates, no Terraform, no deploy, no schedule change, no backfill,
+and no chasing findings outside W2.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
@@ -94,4 +116,4 @@ The second discriminating arm is the Tuesday 2026-09-01 12:45Z fire, assuming un
 
 ## Boundary
 
-This record does not fire W2, close ADVI_49F faces, trigger production, run vendor egress, deploy, backfill, or amend project JSON. It records the CTO gate posture and the measured distinction between world-done, future-scheduled, and Andrew-word-gated work.
+This record does not fire W2, close ADVI_49F faces, trigger production, run vendor egress, deploy, backfill, or amend project JSON. It records the CTO gate posture and the measured distinction between world-done, future-scheduled, COO-routed, and Andrew-word-gated work.
