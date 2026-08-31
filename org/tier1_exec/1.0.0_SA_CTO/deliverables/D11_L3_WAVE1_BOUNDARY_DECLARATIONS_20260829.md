@@ -660,3 +660,33 @@ is an artifact establishing its own precondition.
 I restated the issuer's gates as *"1i's pre-registration and Rule 28's carding."* **The carding is DISCHARGED**
 at `4e7016f471`, verdict UNSOUND AS A GATE -- so the dependency is a REBUILT arm, not a carding act. My frame
 was composed before that correction landed; the record carries the corrected form.
+
+
+#### Addendum 1p Amendment 1 -- AMENDMENT 2, THE MEASUREMENT LANDED AND THE BLOCKER IS NOT WHAT I NAMED (ruled 2026-08-31 00:0xZ on the typed determination @`d8a53aba9e`)
+
+Amendment 1 said *"the gate is blocked on a STORE-SIDE CAPABILITY that does not exist."* The NARROWING NOTICE
+(17:1xZ, before the determination ran) already flagged that as **true of the store-declared path and too narrow
+for the whole gate**, and deliberately did NOT widen it, on the ground that widening a committed ruling before
+the instrument built to answer it has run is the act this file rules against. **The instrument has now run.**
+
+**MEASURED at `d8a53aba9e`, `L3S7A-detn-1`:** outcome `B-NO-DECLARED-RELATION-YET`; conditions
+**1 MET, 2a MET, 2b MET, 2c MET, 4 MET, and 3 (FIRM CARRY) NOT MET** -- `which_condition_failed: [3_firm_carry]`.
+
+⛔ **SO THE BLOCKER IS CONDITION 3, NOT A STORE-SIDE CAPABILITY, AND THE ORIGINAL SENTENCE IS WRONG AS A
+STATEMENT OF THE GATE.** Condition 1 (a D11-owned registry with no store edit) is **MET** and condition 4 (no
+store instrumentation) is **MET** -- **the two conditions whose failure would have made this a store-owner
+problem are exactly the two that passed.** The gate is open because **no firm attribute exists on EITHER
+endpoint of the carrier's vocabulary** -- 20 node attribute keys over 11,232 nodes plus every edge key, ZERO
+naming a firm -- and the only firm signal available, a `_partners/<firm>/` path substring reaching 18 of 374
+Modules, is INADMISSIBLE under L1 7a:348-350 as a parse **and** insufficient at 4.8% even were it allowed.
+
+**AMENDED CLAUSE: the gate `after-bridge-declared` is open because CONDITION 3 (the firm CARRIED THROUGH THE
+RELATION) is NOT MET on this carrier at this vintage -- and it fails EARLIER than the 75005 bar contemplates,
+since that bar refuses a firm attribute present on BOTH endpoints and here there is none on EITHER.** The named
+gap and its owner are unchanged; what changes is WHICH condition names them.
+
+⭐ **AND THE NARROWING NOTICE IS VINDICATED AS A METHOD, WHICH IS THE part worth keeping.** Refusing to widen a
+committed ruling on a re-reading, and instead marking the claim where it lived until the instrument answered,
+produced a correction that is now MEASURED rather than argued -- and it corrected in a direction I would not
+have guessed, since I had assumed the store path was the blocker and conditions 1 and 4 are precisely the ones
+that passed. **A held claim beats a widened one when an instrument is already scheduled to settle it.**
