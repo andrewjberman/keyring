@@ -9,7 +9,8 @@
 Andrew clarified the week-level ordering:
 
 1. D2 Advisor Intelligence performance reporting is the peak priority.
-2. The immediate business question is how far 49Financial is from being properly set up end to end.
+2. The immediate business question is how far 49Financial is from having the core performance
+   reporting data properly set up end to end and populating in the frontend.
 3. D8 `MDPF_HEALGAP` and the self-healing auth-failure/retry standardization are important
    enhancements and should be standardized across similar auth-dependent pipelines.
 4. D8 must not outrank D2. D8 work should proceed when it protects the D2 path or when D2 has no
@@ -25,12 +26,18 @@ The current near-term D2 critical path is:
 - `ADVI_49F`: C02-g-10 / A07STAMP is closed on exercised evidence. C02-g-13 / VINTAGEDIGEST waits on
   the Tuesday 2026-09-01 12:45Z scheduled fire; no hand invoke. The eight lost DS gold uncommitted
   edits must be disclosed to the next DS gold seat but do not block the currently served C02 cells.
-- `ADVI_INSURE`: S1e repair is landed, but S1e remains open until the first post-repair scheduled
-  2026-09-01 04:35Z fire proves clauses 1 and 4. No hand invoke or substitute evidence.
+- `ADVI_PERFRP` / performance-reporting frontend population: this outranks insurance. As of this
+  clarification, the unresolved business pain is that performance-reporting data is still not
+  populating in the frontend for the relevant functions. The week plan must make this visible as the
+  primary D2 readiness gap rather than letting adjacent D2 work read as equivalent priority.
 - D2 performance-reporting readiness assessment: after the W2 result and the Tuesday scheduled-fire
   reads, CTO/COO need a compact readiness map for 49Financial covering what is complete, what remains
   gated, who owns each remaining action, and whether the portal-facing setup is blocked by data,
   parity, insurance, serve, or frontend work.
+- `ADVI_INSURE`: S1e repair is landed, but S1e remains open until the first post-repair scheduled
+  2026-09-01 04:35Z fire proves clauses 1 and 4. This is not of comparable imperative priority to
+  `ADVI_PERFRP` / core performance reporting. It should be tracked and closed cleanly, but it must not
+  consume the attention needed to get 49Financial performance reporting populated end to end.
 
 ## D8 Boundary
 

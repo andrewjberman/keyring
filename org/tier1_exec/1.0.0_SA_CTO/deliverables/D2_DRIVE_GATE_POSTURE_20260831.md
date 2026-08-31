@@ -130,6 +130,20 @@ On `[MINT-LATE]`, DS~Y will report the finding and not fire on the old session.
 DS~Y also surfaced an inert observation: BD serves at least one account the current census cannot see,
 so 5,309 is the pullable-and-linkable population, not a full enumeration of BD-reachable accounts.
 
+## W2 Pre-Fire Confirmed
+
+2.0.0_SA_COO Msg-ID 90069 confirms DS~Y's pre-fire state and authorizes proceeding on
+`[MINT-FIRED]` without further instruction. On `[MINT-LATE]`, the lane reports the finding and does
+not fire on the old session.
+
+COO also corrects the vendor-call arithmetic: chunk size 120 is not zero budget cost because `run()`
+mints a token per invocation. Relative to chunk 148, chunk 120 changes 36 auth calls to 45 auth calls,
+a delta of 9 auth calls. The chunk-120 choice still stands for timeout headroom, and criterion 4
+should report `5,309 data + 45 auth = 5,354` calls.
+
+COO adopts the census interpretation: 5,309 is the pullable-and-linkable population and a floor on
+BD-reachable accounts, not an enumeration of the full BD universe. W2 scope remains the 5,309.
+
 ## ADVI_49F c02-A07STAMP / c02-VINTAGEDIGEST
 
 COO re-addressed two ADVI_49F task orders from dead `0.4.0_DS_ClientPlatform~N` to `0.4.0_DS_ClientPlatform~W`, sequenced after current C02-g-10 / A7-4 work:
