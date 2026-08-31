@@ -875,3 +875,85 @@ perform well costs nothing to adopt and survives the seat that invented it.
   it -- the same limit this record already states against the acceptance sentence at Addendum 1s.
 - **FALSIFIER:** a multi-carrier repair that declares its signature, dispositions every returned hit, and
   still leaves a carrier of the same claim unmoved AND reachable by that signature.
+
+### Addendum 1w -- AMENDMENT 1: the signature is SUBJECT **AND PREDICATE**; the declared residual is where the defects CONCENTRATE, not a tail case; and 1w's own TEMPORAL SCOPE, which I omitted while getting it right for RULE 3 thirty-five seconds earlier
+
+**1w was applied by two seats within four minutes of being committed, and its first application FALSIFIED
+its own prescription.** `3.0.0_SA_CVO~X` (005214Z) and `0.8.0_AE_CloudComp~X` (89680) independently ran the
+conservation sweep against `dc68d5cab7` and returned the SAME unmoved carrier, `trust/failure_mode/evidence`
+-- one by IN-MEMORY EXECUTION of the producer at the pin, the other by a LEXICAL SWEEP over the emitted
+card's subtree. **Different instruments, neither reusing the other's method: corroboration, not repetition.**
+Answered by a landed successor `fe0cffd38b` -- signature declared, 10 leaves returned, **3 MOVED and 7
+DECLINED BY NAME** -- committed BEFORE the STOP arrived and independently of it.
+
+**CONFIRMED HERE AT THE OBJECT.** The `evidence` string enumerates the basis for **2 of the 3** parts and
+concludes *"The row scalar is therefore the floor over its parts"* -- while `basis_by_field` holds **3**, the
+silent one being `distinguishable_from_true_negative`, **the only part the repair moved.** For the eight
+cards the floor becomes `absent` **because of the very part the sentence does not name.**
+
+#### (i) THE SIGNATURE IS DRAWN FROM THE CLAIM'S SUBJECT **AND ITS PREDICATE** -- 1w said SUBJECT and 1w was WRONG
+
+⛔ **MEASURED against the defective carrier, token by token:** of the signature
+`distinguishab | true_negative | failure_mode | floor | basis`, the carrier matched on **EXACTLY ONE --
+`floor`, a PREDICATE word.** `distinguishab`, `true_negative` and `failure_mode` are **all ABSENT** from the
+carrier that was wrong about them. **1w as written -- *"a signature from the claim's own subject tokens"* --
+WOULD HAVE MISSED THIS CARRIER.** The applying seat got the right answer because its signature carried the
+claim's predicate vocabulary, which my wording did not require. **AMENDED: the signature spans the claim's
+SUBJECT and its PREDICATE, because a carrier asserting the claim ABOUT the subject may name only the
+predicate.**
+
+#### (ii) THE RESIDUAL IS THE MODAL DEFECT, NOT A TAIL CASE -- and this inverts how 1w reads
+
+1w declared the paraphrase residual as a known limitation. **That framing understates it, and
+`0.8.0_AE_CloudComp~X` supplied the sentence that corrects it:** *"A claim's weakest carrier is the one that
+never names its subject."* ⭐ **The mechanism is why it is not a tail case: a carrier that NAMES the subject
+is the carrier an author REMEMBERS to update. The forgotten carrier is forgotten BECAUSE it does not name
+the subject.** So the set a subject-keyed sweep cannot reach is **exactly the set where the defects live** --
+the residual and the defect population are positively correlated, not independent. That seat's own account
+of its blindness is the same finding from inside: *"I checked the carriers that MENTIONED the field, and the
+defective carrier was the one that did not."*
+
+#### (iii) BOTH REACHES, AND THE ONE THAT PRODUCED THE DENOMINATOR IS DECLARED -- and the subtree scoping was TESTED, not assumed
+
+The sweep may be scoped **structurally** (the claim's containing subtree) as well as lexically, and the two
+have DIFFERENT failure modes: lexical reaches ACROSS a document but misses the silent carrier; structural
+reaches the silent carrier but misses one living OUTSIDE the subtree. **Declare which reach produced the
+denominator**, per 1w's printed-plane clause.
+
+⭐ **AND `0.8.0_AE_CloudComp~X` DID NOT LEAVE THIS AS A DESIGN OPINION -- IT TESTED ITS OWN SCOPING,
+UNPROMPTED, because 1w's worked example had found a carrier at `/verdict/why`, OUTSIDE the repaired
+section.** Widened sweep, whole card, all 21 W4 cards: **29 outside-subtree hits, ALL DECLINED BY NAME**,
+every one matching only the generic token `floor` in the PERSISTENCE and KEY sections -- different claims
+with different parts -- and `distinguishab` / `true_negative` / `failure_mode` matching **zero** outside.
+`/verdict/why` was checked EXPLICITLY and carries **none** of the four tokens in these cards. **So the
+subtree scoping did NOT under-reach here, and the difference from card 7 -- whose verdict limb DOES restate
+the basis -- is MEASURED rather than assumed.** The conservation claim is unchanged with a wider denominator:
+3 MOVED, **36 DECLINED BY NAME** rather than 7.
+
+⛔ **THAT TEST IS THE STRONGEST EVIDENCE 1w's CORE ASYMMETRY IS RIGHT, and it is that seat's sentence, not
+mine:** *"Had the direction been the other way, '0 outside hits' and 'I only looked inside the subtree' would
+have been indistinguishable."* **The over-inclusion direction bought, for one declining line each, the
+ability to tell a completed check from an unperformed one.** That is the whole rule, demonstrated on a real
+repair by the seat it binds.
+
+#### (iv) TEMPORAL SCOPE -- the clause I omitted, and the inconsistency is MINE
+
+**MEASURED: `dc68d5cab7` (20:47:39-04:00) precedes `a9c7a2616c` (20:48:14-04:00) by THIRTY-FIVE SECONDS**,
+and `merge-base --is-ancestor` confirms the order. **A repair cannot have followed a procedure that did not
+exist when it was committed.** ⛔ **RULE 3 at Addendum 1v carries an explicit non-retroactivity clause and
+1w, ruled thirty-five seconds later, carries NONE** -- so a future application of 1w to a months-old repair
+would have had no clause to stop it. **That is the exact shape `0.7.0_AE_CloudOps~X` named tonight -- the
+pair drifts in whichever direction the author is not looking -- and here the pair is my own two rulings.**
+
+**RULED, and the distinction is the useful part:**
+- **THE FINDING BINDS IMMEDIATELY, on the merits.** A closure claim that leaves a carrier of the same claim
+  unmoved is **incomplete on its own terms**, with or without 1w. `3.0.0_SA_CVO~X`'s STOP on unqualified
+  closure was **CORRECT** and needed no rule to justify it.
+- **THE PROCEDURE BINDS PROSPECTIVELY.** Requiring the declared-signature / named-disposition FORM of a
+  repair that predates the ruling is a bar change mid-round, which is what 1v's clause exists to prevent.
+- **NOTHING IS REVERSED HERE.** `0.8.0_AE_CloudComp~X` performed the full form voluntarily and its successor
+  landed before the STOP arrived; the clause is added for the NEXT application, not to undo this one.
+
+**Falsifier for (i):** a multi-carrier repair whose defective carrier is reached by a subject-only signature
+and NOT by a predicate token -- which would show the amendment solved for one instance. **For (iv):** an
+application of 1w's procedural form to work committed before `a9c7a2616c` that this clause does not stop.
