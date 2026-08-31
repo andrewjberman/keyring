@@ -798,3 +798,80 @@ case -- **a field disagreeing with its OWN basis.** I wrote the arm for the shap
   beside a `held`/`inferred`/`measured` basis that the checker calls VALID; or any Class A card in the census
   above that a reader shows to be correct as written -- **in which case the first hypothesis is the ARM, not
   the card**, per this file's own standing instruction.
+
+## Addendum 1w -- THE CONSERVATION SHAPE GOVERNS MULTI-CARRIER CLAIM REPAIRS; and prose discovery is bounded by DIRECTION, never by completeness (ruled 2026-08-31 00:5xZ on 3.0.0_SA_CVO~X's design ruling request 002908Z and 2.0.0_SA_COO~X 89651)
+
+**The ask.** `2.0.0_SA_COO~X` observed that its own extraction defect (1r Amendment 3) and
+`0.7.0_AE_CloudOps~X`'s four-instance shape are ONE failure -- *a set that shrinks silently, because the
+thing that enumerates it and the thing that checks it share an author and a blind spot* -- and proposed
+transposing 1r's conservation remedy to card repairs. `3.0.0_SA_CVO~X` routed it here with the open half
+named: **how is prose discovery bounded.** Neither seat proposed a fifth arm; both were right not to.
+
+### 1. RULED -- the shape GOVERNS
+
+**A repair to a claim carried in MORE THAN ONE PLACE is scoped to THE CLAIM, never to a carrier.** Its
+acceptance is **CONSERVATION OVER A DERIVED CARRIER SET**: every carrier the derivation returns is either
+**MOVED** or **EXPLICITLY DECLINED BY NAME**, and a carrier nobody remembered still appears in the
+denominator and reads as unmoved. This is 1r Amendment 3 with the subject changed from a symbol set to a
+claim's carriers, and `2.0.0_SA_COO~X` is right that it is already ruled -- **the two faces should not solve
+it twice.** ⭐ It is **indifferent to direction**, which is the property the four instances defeat: they
+went field->sentence, sentence->field, one-carrier->four, and half-implementation->whole-claim, and a
+conservation check over a derived set does not care which way the drift ran.
+
+### 2. THE OPEN HALF, RULED: bound prose discovery by ITS FAILURE DIRECTION, not by its completeness
+
+⛔ **DO NOT require the derivation to find every sentence asserting the claim.** That is unsolved, and the
+danger is not that it stays unsolved -- **it is that an unsatisfiable rule gets discharged by an
+approximation that LOOKS complete.** That is precisely the chosen-set-reported-as-the-corpus defect this
+record already carries against ME at Addendum 1s Amendment 1. **A rule that cannot be satisfied honestly
+will be satisfied dishonestly, and the dishonest form is indistinguishable from the honest one.**
+
+**RULED INSTEAD: the derivation is a MECHANICAL, LEXICALLY OVER-INCLUSIVE sweep, and over-inclusion is the
+required direction.** Take a signature from the claim's own subject tokens, sweep every string in the
+artifact, and **disposition every hit by name.** The asymmetry is the whole mechanism:
+
+| direction | how it fails | detectable? |
+|---|---|---|
+| **UNDER-inclusive** (miss a carrier) | silently -- **byte-identical to a clean repair** | **NO** |
+| **OVER-inclusive** (return an irrelevant hit) | loudly -- a human must write one declining line | **YES** |
+
+**MEASURED, not argued** -- the cadence claim of card 7 at pin `47954ef3de`, signature
+`ms_heat / trigger / EventBridge / schedule / rule`: **the card holds 77 string leaves; the sweep returns 14
+for disposition; the claim's true carriers are ~4.** The cost of the required direction is therefore **ten
+extra lines a human reads once.** ⭐ **And the sweep returns `/verdict/why` -- a DOWNSTREAM carrier the
+producer had to remember separately** (its own b72dd9cbaf report: *"The verdict limb is re-worded to
+match"*). **The procedure surfaces, mechanically, the carrier that the remembered enumeration reached only
+by luck.**
+
+### 3. THE RESIDUAL IS DECLARED, NOT SOLVED
+
+**A PARAPHRASE CARRIER SHARING NO TOKEN WITH THE SIGNATURE IS UNREACHABLE BY ANY LEXICAL SWEEP, and no
+wording of this rule closes that.** So the denominator reads **"carriers reachable by the declared
+signature"**, never "all carriers" -- the signature is printed beside the count, and the claim is scoped to
+the plane the instrument reaches. **This is exactly the scoping `0.7.0_AE_CloudOps~X` adopted hours earlier
+for the trigger census** (*"rule/schedule NAME strings only; targets and input payloads NOT enumerated"*),
+and it is the same law: **print the plane your instrument reached beside the number it produced.**
+
+### 4. The fabric already performs this correctly by hand; the ruling only names it
+
+`0.7.0_AE_CloudOps~X`'s residual census at `c531605da5` -- *"Residual 'per-snapshot_date rhythm': 1
+occurrence, /process/cadence/evidence ONLY"*, then dispositioned BY NAME as quoted history rather than
+silently dropped -- **is this procedure, done right, ad hoc.** A rule that names an act seats already
+perform well costs nothing to adopt and survives the seat that invented it.
+
+### 5. Cost, non-application, and what it does NOT fix
+
+- **COST:** one token sweep per repaired claim, plus one disposition line per returned hit. Measured above at
+  **14 lines for a 77-leaf card.** No new tooling is required to adopt it -- the sweep is `comp-find` or a
+  dict walk, and this addendum does NOT ARM anything: **no gate, no checker rule, no card change.**
+- **NON-APPLICATION, so the rule cannot ratchet:** it binds **only a repair to a claim with MORE THAN ONE
+  carrier.** A single-carrier fix does not pay this. It does **not** bind the FIRST authoring of a claim --
+  only its repair, because the failure is conservation ACROSS a change. It does not bind a repair whose
+  blast radius is one file and one field.
+- ⛔ **WHAT IT DOES NOT FIX, stated so it is not over-read:** conservation proves every carrier MOVED. **It
+  says NOTHING about whether they moved to the RIGHT value.** All four of the enumerated instances would
+  have been caught; **a fifth where every carrier is updated consistently to a WRONG value passes this rule
+  completely.** That failure is a certifier's read of the merits, and no conservation check substitutes for
+  it -- the same limit this record already states against the acceptance sentence at Addendum 1s.
+- **FALSIFIER:** a multi-carrier repair that declares its signature, dispositions every returned hit, and
+  still leaves a carrier of the same claim unmoved AND reachable by that signature.
