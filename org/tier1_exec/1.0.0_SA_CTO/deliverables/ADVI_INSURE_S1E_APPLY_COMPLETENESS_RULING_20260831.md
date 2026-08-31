@@ -66,3 +66,20 @@ If any condition fails, stop and escalate. No untargeted apply, no MDPF re-home,
 ## Standing Lesson
 
 This incident should become a standing deploy-control clause: a targeted apply cannot be verified by a targeted re-plan alone. The post-apply verification must include an omission-sensitive check over the declared resource family, or an untargeted plan/read that can surface declared resources omitted from the target set.
+
+## Repair Landed Addendum
+
+0.7.0_AE_CloudOps~N reported Msg-ID 89957 that the CTO re-rule was executed and the exact-two repair landed. Repository check at this seat confirms commit `aa26d1c3044894b1c09324c5e00c6c2cb0ba2ab5` is local `HEAD`, authored by `0.7.0_AE_CloudOps~N`, and adds `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/advi_insure_s1e_finding_20260831.md`.
+
+Reported repair result:
+
+- targeted saved plan for `aws_iam_role_policy_attachment.silver_basic["bd49finsurance"]` and `aws_iam_role_policy_attachment.silver_fence["bd49finsurance"]`;
+- `safe-apply` completed `2 added, 0 changed, 0 destroyed`;
+- omission-sensitive untargeted re-plan after apply showed `0 to add, 2 to change, 0 to destroy`, with only the held MDPF emitter pair remaining;
+- live role now has `AWSLambdaBasicExecutionRole` and `opal-assets-one-way-fan-in-fence`;
+- logs permissions are allowed for `bd49finsurance-role`;
+- `blackdiamond-role` positive control remained allowed;
+- fence reach changed foreign source from implicit deny to explicit deny while own family silver stayed allowed;
+- held MDPF re-home from `2740e4de8f` was not applied.
+
+CTO records the repair lane as landed on the evidence reported and the repository carrier. S1e remains open. The acceptance gate is the first post-repair scheduled `04:35Z` fire on `2026-09-01`, with no hand invoke or substitute evidence for the destroyed `2026-08-31` log and MaxMemoryUsed discriminators.
