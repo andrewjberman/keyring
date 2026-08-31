@@ -1,20 +1,44 @@
 {
-  "project_code": "OPAL_TAXSMA_PT2",
-  "macro_code": "OPAL",
-  "name": "49F Tax-SMA Black Diamond table (/tax-pt2) -- BD bronze->silver fact_->gold dim_ anonymized serve, read by Alyssa via per-employee scoped IAM through the MCP gateway",
-  "status": "active",
-  "current_phase": "PRD AUTHORED 2026-07-17 (CTO, from 0.2.0_DT's two briefs), FOR COO DECOMPOSITION. CTO ruling settled: serve layer = GOLD dim_taxsma_report (NOT silver) -- anonymization is parse-down business logic (gold's job per OPAL_TAXONOMY), and gold-only is the security-correct single-prefix PII-free grant. 6 workstreams (WS-1 bronze producer / WS-2 silver fact_ / WS-3 gold dim_ projection / WS-4 gateway email->scoped-ARN entitlement / WS-5 trigger [NO freshness-twin per alert-suspension] / WS-6 /tax-pt2 read path). Open decisions the project closes: endpoint mechanism (.bd.identity datamining vs clientview session), account roster freeze, period-window set. [2026-07-21 GROUND-TRUTH + Andrew-direct family finalize -> owner 0.5.0~A]: WS-1 producer DEPLOYED (opal-assets-bd49f-reporting-pull, DRY_RUN=0, manual-invoke, discover_accounts now reads the registry); WS-2 silver fact_taxsma_report + WS-3 gold dim_taxsma_report BUILT+LANDED+CVO-verified -- bronze->silver->gold PROVEN one-account (Chiles 07-17). WS-3 built without a TO (drift noted). REMAINING: multi-account (via REGISTRY WS-R3 registry-read, code+IAM staged for CTO apply), WS-5 daily trigger, WS-4 gateway scoped-IAM (Andrew+CTO gate), WS-6 productionized /tax-pt2 read path.",
-  "owner": "0.5.0_AE_OpalETL~A",
-  "owner_note": "Execution owner 0.5.0_AE_OpalETL~A per Andrew-direct 2026-07-21 (family finalize end-to-end; CTO ACK 'yours end-to-end' 230440Z). PRD authored by 1.0.0_SA_CTO (2026-07-17). Per-employee scoped-IAM (WS-4) stays CTO+Andrew apply-gate.",
-  "coo_lane": "2.0.0_SA_COO",
-  "created": "2026-07-17",
-  "pods": ["0.2.0", "0.6.2", "0.7.0", "0.4.0", "1.0"],
-  "related": ["OPAL_TAXSMA", "OPAL_BBGTML", "MDPF_REVAMP"],
-  "related_note": "Part 2 of the TAXSMA program (part 1 = SSAVAIL email intake /tax-pt1, under OPAL_TAXSMA, 0.5.0~A sovereign-delegate lane). This BD-table + serve-path half is CTO-owned + COO-decomposed per Andrew-direct 2026-07-17 (routed through CTO, not the delegate). DT (0.2.0) authored the design + IAM briefs (owns the OPAL_BBGTML / benchmark-basis seam).",
-  "depends_on_note": "Reuses (does NOT rebuild): the live 49F BD session/auth (bd-49f-auto-login + .bd.identity cookie in blackdiamond/49f/session); the existing blackdiamond/49f/silver/dim_account_xref (BD accountId <-> Schwab account bridge Alyssa keys off); the template_roster feed (account discovery). The Cottonwood REST-consume pattern (data/cot/scripts/bronze/cot_bronze_ingest.py) is the TEMPLATE -- pattern replicated 49F-scoped, cot firm data untouched (bd<->cot separation gate + IAM stands).",
-  "prds": [
-    {"path": "docs/architecture/OPAL_TAXSMA_PT2_PRD.md", "label": "OPAL_TAXSMA_PT2 implementation PRD v0.1 (CTO; serve-layer ruled gold dim_; 6 WS for COO decomposition)", "date": "2026-07-17"},
-    {"path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_BD_TABLE_DESIGN_SCOPE_BRIEF_20260717.md", "label": "Design-scope brief (0.2.0_DT): field spec + endpoint map + pipeline architecture", "date": "2026-07-17"},
-    {"path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_SCOPED_TABLE_IAM_ASSESSMENT_20260717.md", "label": "IAM/entitlement companion (0.2.0_DT): per-employee scoped-IAM + email->ARN gateway model", "date": "2026-07-17"}
-  ]
+ "project_code": "OPAL_TAXSMA_PT2",
+ "macro_code": "OPAL",
+ "name": "49F Tax-SMA Black Diamond table (/tax-pt2) -- BD bronze->silver fact_->gold dim_ anonymized serve, read by Alyssa via per-employee scoped IAM through the MCP gateway",
+ "status": "active",
+ "current_phase": "PRD AUTHORED 2026-07-17 (CTO, from 0.2.0_DT's two briefs), FOR COO DECOMPOSITION. CTO ruling settled: serve layer = GOLD dim_taxsma_report (NOT silver) -- anonymization is parse-down business logic (gold's job per OPAL_TAXONOMY), and gold-only is the security-correct single-prefix PII-free grant. 6 workstreams (WS-1 bronze producer / WS-2 silver fact_ / WS-3 gold dim_ projection / WS-4 gateway email->scoped-ARN entitlement / WS-5 trigger [NO freshness-twin per alert-suspension] / WS-6 /tax-pt2 read path). Open decisions the project closes: endpoint mechanism (.bd.identity datamining vs clientview session), account roster freeze, period-window set. [2026-07-21 GROUND-TRUTH + Andrew-direct family finalize -> owner 0.5.0~A]: WS-1 producer DEPLOYED (opal-assets-bd49f-reporting-pull, DRY_RUN=0, manual-invoke, discover_accounts now reads the registry); WS-2 silver fact_taxsma_report + WS-3 gold dim_taxsma_report BUILT+LANDED+CVO-verified -- bronze->silver->gold PROVEN one-account (Chiles 07-17). WS-3 built without a TO (drift noted). REMAINING: multi-account (via REGISTRY WS-R3 registry-read, code+IAM staged for CTO apply), WS-5 daily trigger, WS-4 gateway scoped-IAM (Andrew+CTO gate), WS-6 productionized /tax-pt2 read path.",
+ "owner": "0.5.0_AE_OpalETL~A",
+ "owner_note": "Execution owner 0.5.0_AE_OpalETL~A per Andrew-direct 2026-07-21 (family finalize end-to-end; CTO ACK 'yours end-to-end' 230440Z). PRD authored by 1.0.0_SA_CTO (2026-07-17). Per-employee scoped-IAM (WS-4) stays CTO+Andrew apply-gate.",
+ "coo_lane": "2.0.0_SA_COO",
+ "created": "2026-07-17",
+ "pods": [
+  "0.2.0",
+  "0.6.2",
+  "0.7.0",
+  "0.4.0",
+  "1.0"
+ ],
+ "related": [
+  "OPAL_TAXSMA",
+  "OPAL_BBGTML",
+  "MDPF_REVAMP"
+ ],
+ "related_note": "Part 2 of the TAXSMA program (part 1 = SSAVAIL email intake /tax-pt1, under OPAL_TAXSMA, 0.5.0~A sovereign-delegate lane). This BD-table + serve-path half is CTO-owned + COO-decomposed per Andrew-direct 2026-07-17 (routed through CTO, not the delegate). DT (0.2.0) authored the design + IAM briefs (owns the OPAL_BBGTML / benchmark-basis seam).",
+ "depends_on_note": "Reuses (does NOT rebuild): the live 49F BD session/auth (bd-49f-auto-login + .bd.identity cookie in blackdiamond/49f/session); the existing blackdiamond/49f/silver/dim_account_xref (BD accountId <-> Schwab account bridge Alyssa keys off); the template_roster feed (account discovery). The Cottonwood REST-consume pattern (data/cot/scripts/bronze/cot_bronze_ingest.py) is the TEMPLATE -- pattern replicated 49F-scoped, cot firm data untouched (bd<->cot separation gate + IAM stands).",
+ "prds": [
+  {
+   "path": "docs/architecture/OPAL_TAXSMA_PT2_PRD.md",
+   "label": "OPAL_TAXSMA_PT2 implementation PRD v0.1 (CTO; serve-layer ruled gold dim_; 6 WS for COO decomposition)",
+   "date": "2026-07-17"
+  },
+  {
+   "path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_BD_TABLE_DESIGN_SCOPE_BRIEF_20260717.md",
+   "label": "Design-scope brief (0.2.0_DT): field spec + endpoint map + pipeline architecture",
+   "date": "2026-07-17"
+  },
+  {
+   "path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_SCOPED_TABLE_IAM_ASSESSMENT_20260717.md",
+   "label": "IAM/entitlement companion (0.2.0_DT): per-employee scoped-IAM + email->ARN gateway model",
+   "date": "2026-07-17"
+  }
+ ],
+ "directive": "D9",
+ "phase": " REGISTER ATTACH 2026-08-31 (0.0.0_AB_MSTR, register owner): active project attached to a directive rather than superseded -- it was worked within the last 6 days and holds live TO faces, so the staleness half of the 08-31 heuristic does not bite. INFERRED from subject (Tax-SMA) beside the declared OPAL_TAXSMA. Reversible; correct if D9 is wrong."
 }

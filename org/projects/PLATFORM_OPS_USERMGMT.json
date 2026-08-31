@@ -1,0 +1,25 @@
+{
+ "project_code": "PLATFORM_OPS_USERMGMT",
+ "status": "active",
+ "dep_stage": "REGISTERED",
+ "created": "2026-08-31",
+ "pods": [],
+ "blocking": "Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- it authorizes no code, no design and no deploy.",
+ "macro_code": "PLATFORM_OPS",
+ "directive": "D12",
+ "pipeline": null,
+ "name": "User management and MFA for the client portal -- email/SMS OTP at login with a remembered-device policy, phone and MFA-preference storage likely extending OPAL users v2, onboarding and account-creation redesign, a front-end admin UI instead of backend-table-only creation, and partner-admin delegated user-add gated by partner-table/RBAC",
+ "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~19:2xZ naming D12 as an incoming directive entry, plus 1.0.0_SA_CTO's transcript readback. Scope source is that readback, NOT a PRD -- the PRD does not exist yet.",
+ "leads": [
+  "PRIOR ART TO IMPORT, NOT REOPEN: PORTAL_AUTHHARD. It was CLOSED BY THE 2026-08-25 SPRING-CLEAN ON MEMBERSHIP AND EXPLICITLY NOT AS A WORK VERDICT. Its PRD already carries MFA and account-lifecycle work, but its WS3 was privileged-role NATIVE TOTP while this scope is broader user-management UX and email/SMS OTP -- so import the hardening prior art and widen, rather than reopening the row unbounded.",
+  "THE PARTNER TABLE DRIVES AUTHORIZATION AND MUST NOT BECOME THE PRIMARY USER STORE -- stated in the transcript readback as a constraint, not a preference."
+ ],
+ "prds": [
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/TRANSCRIPT_DIRECTIVE_INTAKE_20260831.md",
+   "version": "readback",
+   "note": "TRANSCRIPT READBACK, not a PRD. Scope source of record until the Rule 27 stage-2 PRD exists."
+  }
+ ],
+ "related": []
+}

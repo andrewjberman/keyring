@@ -1,50 +1,50 @@
 {
-  "project_code": "OPAL_TAXROSTER",
-  "macro_code": "OPAL",
-  "name": "Tax SMA account tracking -- the ROSTER is the pipeline's membership input and it has not been written since 2026-07-21, so accounts trade outside the pipeline's view; make enrollment and roster currency a designed mechanism rather than a manual step nobody owns",
-  "description": "ANDREW-DIRECT 2026-08-27 ~20:4xZ, spoken at the 0.4.0_DS_ClientPlatform~Z terminal and relayed as msg 10006 (VERBATIM): 'nudge cto~z again on this topic, we are going to need to get it designed and they control project registration for D9 directive where this will go.' He names 1.0.0_SA_CTO~Z as the registration owner and asks for a DESIGN. Input brief: org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/BRIEF_TAX_SMA_ACCOUNT_TRACKING_20260827.md @2a8b40a1f5. THE FINDING IS NOT NEW AND THAT IS THE POINT: this lane's base serial filed it EIGHT DAYS EARLIER as H6 in D9_TAXSMA_TO-A_STATE_ASSESSMENT_SITEZ_20260819.md:177 with the remedy named at :237 ('enroll Nixon + Tracey now (traded 08-05, invisible to the pipeline)'). MEASURED 08-27: the roster's LastModified is STILL 2026-07-21 -- unchanged since that assessment measured it at the same timestamp -- while the workbook advanced to 2026-08-26 and gained an account (TEPEYEC, +$3.20M, 11 -> 12). THE GAP DID NOT MERELY PERSIST, IT WIDENED WHILE A CORRECT, SPECIFIC, ACTIONABLE FINDING SAT IN A DELIVERED ASSESSMENT -- which is the argument for a designed mechanism over another correct finding. MEASURED AT REGISTRATION (0.4.0_DS_ClientPlatform~Z, keys normalised per normalize_schwab(): digits, zfill 10): workbook 12 accounts / $30.91M, 8 carry account numbers, THE ROSTER HOLDS 3 OF THOSE 8; growth against the 20260805 snapshot reconciles to the cent (+1 account, +$3.20M, +2 columns) and account numbers flipped masked -> unmasked between versions, so the SCHEMA IS DRIFTING WITH THE DATA. WHY A NEW PROJECT RATHER THAN AN AMENDMENT TO OPAL_TAXSMA (1.0.0_SA_CTO~Z ruling, measured not assumed): OPAL_TAXSMA is 'Tax SMA Rebalancing Automation' -- the daily /tax-pt1 cadence, trade-file generation, guardrails, validator. THAT IS THE OPERATION; THIS IS THE MEMBERSHIP INPUT THE OPERATION READS, and an upstream data-currency concern is not the same project as the automation downstream of it. Three further reasons: Rule 27 binds one project per Tier-2 instance, so a seat cannot hold both; OPAL_TAXSMA's owner lane is DEAD (0.5.0_AE_OpalETL~A never respawns) with its seat-or-supersede disposition riding an unresolved standing AUG-4 triage item, so work folded there inherits an open ownership question; and its dep_stage is None (it predates the Rule 27 pipeline) while this project enters at stage 1 cleanly. D9 remains the directive home for both -- Andrew confirmed it, and D9's own stance already sequences 'SHAREPOINT SYNC REVIEW, hole list -> Andrew review -> Yang/Alyssa meeting -> PIPELINE-BUILD TOs', so THIS IS D9 ADVANCING TO ITS OWN NEXT STEP AND NO NEW DIRECTIVE IS NEEDED.",
-  "prds": [
-    {
-      "path": "docs/architecture/OPAL_TAXROSTER_PRD.md",
-      "label": "Stage-2 purpose-level PRD (1.0.0_SA_CTO~Z, 2026-08-27) -- the 3-of-8/37-day state, the s.4 capture-grain ruling in dominance form, five binding constraints incl. the monitor moratorium, and s.6 the five questions named-not-answered for the decomp",
-      "date": "2026-08-27"
-    },
-    {
-      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/BRIEF_TAX_SMA_ACCOUNT_TRACKING_20260827.md",
-      "label": "The input brief (0.4.0_DS_ClientPlatform~Z, @2a8b40a1f5) -- the two disagreeing sources, the 3-of-8 reconciliation, the schema drift, and s.5 the taxonomy defect routed to the CTO gate",
-      "date": "2026-08-27"
-    },
-    {
-      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/D9_TAXSMA_TO-A_STATE_ASSESSMENT_SITEZ_20260819.md",
-      "label": "The EIGHT-DAY-OLD prior art: H6 at :177 and the 'enroll now' remedy at :237 -- a correct finding with a named remedy that moved nothing, which is this project's purpose",
-      "date": "2026-08-19"
-    },
-    {
-      "path": "docs/architecture/D9_TAX_SMA_OPS_PRD.md",
-      "label": "D9 directive PRD -- its stance already sequences this stage (SharePoint sync review -> hole list -> Andrew review -> pipeline-build TOs)",
-      "date": "2026-08-19"
-    }
-  ],
-  "related": [
-    "OPAL_TAXSMA",
-    "D1_CATVIEWS",
-    "ETFS_SATELLITES"
-  ],
-  "status": "active",
-  "dep_stage": "PRD",
-  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (Rule 27) -- dep_stage REGISTERED 2026-08-27 ~20:4xZ (1.0.0_SA_CTO~Z, site Z) on Andrew's ~20:4xZ word naming this seat the registration owner. STAGE 2 PRD LANDED same session: docs/architecture/OPAL_TAXROSTER_PRD.md. STAGE 3 AT 2.0.0_SA_COO~Z (atom-decomp before any TO). SIBLING of OPAL_TAXSMA under D9, NOT an amendment to it -- membership input vs rebalancing operation.",
-  "blocking": "NOTHING BLOCKS THE DESIGN. Two items are carried and NEITHER gates it. (1) ANSWERED -- NO LONGER OPEN. ANDREW-DIRECT ~20:5xZ, VERBATIM: 'They are all meant to be rolled up into tax, not two diff strategies or deeper drills/leaves'. Tax is ONE strategy with no level beneath it. THIS SUPERSEDES THIS SEAT'S EARLIER CAPTURE-FINE RULING, WHICH WAS WRONG: the dominance argument ('capture-fine is correct either way') carried an unexamined premise -- that a finer grain is harmless. A grain the business does not have is one someone later tries to populate, reconcile or render, so splitting a field the sovereign says has one member would have INTRODUCED a Rule 24(iii) defect rather than prevented one. 0.4.0_DS_ClientPlatform~Z's Rule 24(ii) finding is DISSOLVED, not remedied -- there was only ever one strategy; no split, no migration. CORRECTED ~20:5xZ: my claim that D1's registry is CONFIRMED not changed was BACKWARDS. A second word at the 0.4.0_DE_ClientPlatform~Z terminal ('SMAs break down into ETF Strategies and ALT Strategies... ALT would be Tax and Muni') was ruled governing -- 'DE is the correct one'. So SMA L1 becomes {ETF Strategies, ALT Strategies} and the four move to L2: THE REGISTRY DOES CHANGE, as a Rule 24 authoring act certified by 3.0.0_SA_CVO~Z. Both words hold together -- the tax word governs BELOW Tax, the ETF/ALT word ABOVE it. I had warned three times today against reading a confirmation as a change order and then read a change order as a confirmation. (2) NOT GATED BY THIS PROJECT AND EXPLICITLY NOT MADE INTO A GATE BY IT: enrolling Nixon + Tracey, actionable since 2026-08-19. Enrolling them now mints two more composite rows -- CONSIDERED AND REJECTED AS A REASON TO WAIT: a 5-row migration instead of a 3-row one is trivial beside client accounts trading outside the pipeline's view for a ninth day. ENROLL NOW. The write itself is an unseated action against client accounts and needs a seat from 2.0.0_SA_COO~Z; /tax-newacc exists and is agent-runnable. NOT CLAIMED (0.4.0_DS_ClientPlatform~Z's own bound, carried): nobody has traced whether D1_CATVIEWS' SMA 'tax' dollars actually flow through this roster -- the coupling to D1's registry is UNVERIFIED and must not be assumed by the decomp.",
-  "created": "2026-08-27",
-  "pods": [
-    "1.0",
-    "2.0",
-    "3.0",
-    "0.4",
-    "SITEZ"
-  ],
-  "pipeline": "SharePoint Tax SMA workbook (source of truth for membership, 12 accounts / $30.91M, advancing) -> enrollment mechanism (/tax-newacc, taxsma_newacc.py DEFAULT_STRATEGY) -> the roster artifact (3 of 8 numbered accounts, LastModified 2026-07-21) -> the Tax SMA rebalancing pipeline that reads it (OPAL_TAXSMA)",
-  "coo_lane": "2.0.0_SA_COO",
-  "thread_counter": 0,
-  "threads": [],
-  "directive": "D9"
+ "project_code": "OPAL_TAXROSTER",
+ "macro_code": "OPAL",
+ "name": "Tax SMA account tracking -- the ROSTER is the pipeline's membership input and it has not been written since 2026-07-21, so accounts trade outside the pipeline's view; make enrollment and roster currency a designed mechanism rather than a manual step nobody owns",
+ "description": "ANDREW-DIRECT 2026-08-27 ~20:4xZ, spoken at the 0.4.0_DS_ClientPlatform~Z terminal and relayed as msg 10006 (VERBATIM): 'nudge cto~z again on this topic, we are going to need to get it designed and they control project registration for D9 directive where this will go.' He names 1.0.0_SA_CTO~Z as the registration owner and asks for a DESIGN. Input brief: org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/BRIEF_TAX_SMA_ACCOUNT_TRACKING_20260827.md @2a8b40a1f5. THE FINDING IS NOT NEW AND THAT IS THE POINT: this lane's base serial filed it EIGHT DAYS EARLIER as H6 in D9_TAXSMA_TO-A_STATE_ASSESSMENT_SITEZ_20260819.md:177 with the remedy named at :237 ('enroll Nixon + Tracey now (traded 08-05, invisible to the pipeline)'). MEASURED 08-27: the roster's LastModified is STILL 2026-07-21 -- unchanged since that assessment measured it at the same timestamp -- while the workbook advanced to 2026-08-26 and gained an account (TEPEYEC, +$3.20M, 11 -> 12). THE GAP DID NOT MERELY PERSIST, IT WIDENED WHILE A CORRECT, SPECIFIC, ACTIONABLE FINDING SAT IN A DELIVERED ASSESSMENT -- which is the argument for a designed mechanism over another correct finding. MEASURED AT REGISTRATION (0.4.0_DS_ClientPlatform~Z, keys normalised per normalize_schwab(): digits, zfill 10): workbook 12 accounts / $30.91M, 8 carry account numbers, THE ROSTER HOLDS 3 OF THOSE 8; growth against the 20260805 snapshot reconciles to the cent (+1 account, +$3.20M, +2 columns) and account numbers flipped masked -> unmasked between versions, so the SCHEMA IS DRIFTING WITH THE DATA. WHY A NEW PROJECT RATHER THAN AN AMENDMENT TO OPAL_TAXSMA (1.0.0_SA_CTO~Z ruling, measured not assumed): OPAL_TAXSMA is 'Tax SMA Rebalancing Automation' -- the daily /tax-pt1 cadence, trade-file generation, guardrails, validator. THAT IS THE OPERATION; THIS IS THE MEMBERSHIP INPUT THE OPERATION READS, and an upstream data-currency concern is not the same project as the automation downstream of it. Three further reasons: Rule 27 binds one project per Tier-2 instance, so a seat cannot hold both; OPAL_TAXSMA's owner lane is DEAD (0.5.0_AE_OpalETL~A never respawns) with its seat-or-supersede disposition riding an unresolved standing AUG-4 triage item, so work folded there inherits an open ownership question; and its dep_stage is None (it predates the Rule 27 pipeline) while this project enters at stage 1 cleanly. D9 remains the directive home for both -- Andrew confirmed it, and D9's own stance already sequences 'SHAREPOINT SYNC REVIEW, hole list -> Andrew review -> Yang/Alyssa meeting -> PIPELINE-BUILD TOs', so THIS IS D9 ADVANCING TO ITS OWN NEXT STEP AND NO NEW DIRECTIVE IS NEEDED.",
+ "prds": [
+  {
+   "path": "docs/architecture/OPAL_TAXROSTER_PRD.md",
+   "label": "Stage-2 purpose-level PRD (1.0.0_SA_CTO~Z, 2026-08-27) -- the 3-of-8/37-day state, the s.4 capture-grain ruling in dominance form, five binding constraints incl. the monitor moratorium, and s.6 the five questions named-not-answered for the decomp",
+   "date": "2026-08-27"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/BRIEF_TAX_SMA_ACCOUNT_TRACKING_20260827.md",
+   "label": "The input brief (0.4.0_DS_ClientPlatform~Z, @2a8b40a1f5) -- the two disagreeing sources, the 3-of-8 reconciliation, the schema drift, and s.5 the taxonomy defect routed to the CTO gate",
+   "date": "2026-08-27"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/D9_TAXSMA_TO-A_STATE_ASSESSMENT_SITEZ_20260819.md",
+   "label": "The EIGHT-DAY-OLD prior art: H6 at :177 and the 'enroll now' remedy at :237 -- a correct finding with a named remedy that moved nothing, which is this project's purpose",
+   "date": "2026-08-19"
+  },
+  {
+   "path": "docs/architecture/D9_TAX_SMA_OPS_PRD.md",
+   "label": "D9 directive PRD -- its stance already sequences this stage (SharePoint sync review -> hole list -> Andrew review -> pipeline-build TOs)",
+   "date": "2026-08-19"
+  }
+ ],
+ "related": [
+  "OPAL_TAXSMA",
+  "D1_CATVIEWS",
+  "ETFS_SATELLITES"
+ ],
+ "status": "active",
+ "dep_stage": "PRD",
+ "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (Rule 27) -- dep_stage REGISTERED 2026-08-27 ~20:4xZ (1.0.0_SA_CTO~Z, site Z) on Andrew's ~20:4xZ word naming this seat the registration owner. STAGE 2 PRD LANDED same session: docs/architecture/OPAL_TAXROSTER_PRD.md. STAGE 3 AT 2.0.0_SA_COO~Z (atom-decomp before any TO). SIBLING of OPAL_TAXSMA under D9, NOT an amendment to it -- membership input vs rebalancing operation. REGISTER ATTACH 2026-08-31 (0.0.0_AB_MSTR, register owner): active project attached to a directive rather than superseded -- it was worked within the last 6 days and holds live TO faces, so the staleness half of the 08-31 heuristic does not bite. MECHANICAL -- its own JSON already declared this directive; only the register row was missing.",
+ "blocking": "NOTHING BLOCKS THE DESIGN. Two items are carried and NEITHER gates it. (1) ANSWERED -- NO LONGER OPEN. ANDREW-DIRECT ~20:5xZ, VERBATIM: 'They are all meant to be rolled up into tax, not two diff strategies or deeper drills/leaves'. Tax is ONE strategy with no level beneath it. THIS SUPERSEDES THIS SEAT'S EARLIER CAPTURE-FINE RULING, WHICH WAS WRONG: the dominance argument ('capture-fine is correct either way') carried an unexamined premise -- that a finer grain is harmless. A grain the business does not have is one someone later tries to populate, reconcile or render, so splitting a field the sovereign says has one member would have INTRODUCED a Rule 24(iii) defect rather than prevented one. 0.4.0_DS_ClientPlatform~Z's Rule 24(ii) finding is DISSOLVED, not remedied -- there was only ever one strategy; no split, no migration. CORRECTED ~20:5xZ: my claim that D1's registry is CONFIRMED not changed was BACKWARDS. A second word at the 0.4.0_DE_ClientPlatform~Z terminal ('SMAs break down into ETF Strategies and ALT Strategies... ALT would be Tax and Muni') was ruled governing -- 'DE is the correct one'. So SMA L1 becomes {ETF Strategies, ALT Strategies} and the four move to L2: THE REGISTRY DOES CHANGE, as a Rule 24 authoring act certified by 3.0.0_SA_CVO~Z. Both words hold together -- the tax word governs BELOW Tax, the ETF/ALT word ABOVE it. I had warned three times today against reading a confirmation as a change order and then read a change order as a confirmation. (2) NOT GATED BY THIS PROJECT AND EXPLICITLY NOT MADE INTO A GATE BY IT: enrolling Nixon + Tracey, actionable since 2026-08-19. Enrolling them now mints two more composite rows -- CONSIDERED AND REJECTED AS A REASON TO WAIT: a 5-row migration instead of a 3-row one is trivial beside client accounts trading outside the pipeline's view for a ninth day. ENROLL NOW. The write itself is an unseated action against client accounts and needs a seat from 2.0.0_SA_COO~Z; /tax-newacc exists and is agent-runnable. NOT CLAIMED (0.4.0_DS_ClientPlatform~Z's own bound, carried): nobody has traced whether D1_CATVIEWS' SMA 'tax' dollars actually flow through this roster -- the coupling to D1's registry is UNVERIFIED and must not be assumed by the decomp.",
+ "created": "2026-08-27",
+ "pods": [
+  "1.0",
+  "2.0",
+  "3.0",
+  "0.4",
+  "SITEZ"
+ ],
+ "pipeline": "SharePoint Tax SMA workbook (source of truth for membership, 12 accounts / $30.91M, advancing) -> enrollment mechanism (/tax-newacc, taxsma_newacc.py DEFAULT_STRATEGY) -> the roster artifact (3 of 8 numbered accounts, LastModified 2026-07-21) -> the Tax SMA rebalancing pipeline that reads it (OPAL_TAXSMA)",
+ "coo_lane": "2.0.0_SA_COO",
+ "thread_counter": 0,
+ "threads": [],
+ "directive": "D9"
 }
