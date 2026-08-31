@@ -1,0 +1,106 @@
+# Deploy-completion ledger: ADVI_PERFRP -- advi:gold `_code/` sync, 3 of 6 SERVED and 3 SOVEREIGN-HELD
+
+**Status:** CLOSED (partial by design -- see HELD REMAINDER; this is NOT an open deploy and must NOT be re-executed)
+
+⛔ **THIS IS NOT A RED/OPEN ENTRY AND NEVER-2 IS NOT ENGAGED** -- `2.0.0_SA_COO` 90236 s.3, verbatim:
+*"this is NOT a half-landed deploy -- no red ledger entry belongs here. The 3 that landed are complete
+and verified; the 3 that did not were REFUSED BY A GATE DOING ITS JOB. A gate refusal is not an
+incomplete act."* This file exists ONLY as the CLOSED completion record for the three objects whose
+served bytes moved -- it holds their pre/post ETags, which nothing else in the fabric carries. If the
+issuer wants no artifact here at all, delete it; this lane is recording, not adjudicating.
+**Opened:** 2026-08-31T23:1xZ (first object write) | **Closed:** 2026-08-31T23:2xZ (post-sweep read)
+**Operator:** `0.4.0_DS_ClientPlatform~G` | **Deploy executed by:** `.tools/safe-deploy.sh` (Rule 13 DS lane), `HALT_ACK=1`, rc=0
+
+**Authority:** `2.0.0_SA_COO` msg-id 90157 (seating, ADVI_PERFRP only, Rule 27) + `1.0.0_SA_CTO` msg-id
+90172 s.3 (RULING: this sync COMPLETES BEFORE any P4I-3 publish activation -- a hard precondition, not a
+cleanup). Reproduction handed over by `0.7.0_AE_CloudOps~G` at 90166. Report out: 90231-90234.
+
+## Scope
+Repo home `data/assets/scripts/gold/runners_49f/` -> `s3://opal-data-49financial/_code/`
+(`safe_deploy_core.py` CODE_TREES `advi`, `deploy_gated: True`).
+Worktree == `git show HEAD:<path>` for all six (md5, independent of the deploy tool); HEAD ==
+`origin/CLOUD` @ `5b10b4eda0abfd6cf0e89f775e2d031496a84311`. **So the bytes served ARE origin's bytes**,
+and the autocrlf class is excluded by measurement (`safe-deploy` independently: `worktree CR count 0 /
+index CR count 0 / uploaded: index`).
+
+### SERVED -- 3 of 3 attempted, each `VERIFY OK` per-script
+| file | pre-sync S3 ETag | post |
+|---|---|---|
+| `a01_runner.py` | `e6ab112d7dac8a3a41b5597f3b41663b` (2026-08-19T01:22:33Z) | MATCH |
+| `d06_firm_mix_summary.py` | `09f568f363913215540c35ee5da98412` (2026-08-19T01:22:37Z) | MATCH |
+| `d14_advisor_nna_canonical.py` | `89f624d99e6176cc09133ac4f6bf6f7e` (2026-08-19T01:22:38Z) | MATCH |
+
+### HELD REMAINDER -- 3 REFUSED, objects UNTOUCHED at their prior ETags
+| file | S3 ETag (unchanged) | LastModified |
+|---|---|---|
+| `perfrp_emit_core.py` | `de684c77a72f8d879db38e30cdd2d61c` | 2026-08-25T07:17:50Z |
+| `perfrp_rollup.py` | `f5495d7604abc764d7a63972883758a1` | 2026-08-25T07:18:01Z |
+| `perfrp_transactions.py` | `3db19e6ae5bab05a9ebe1dc30b6a34a2` | 2026-08-25T07:18:04Z |
+
+**REASON -- a machine-enforced sovereign hold, at LINE 1 of each of the three:**
+`# DEPLOY-SERVE-HELD: ADVI_PERFRP.TO-R2-DS is BUILD-ONLY (Andrew 2026-08-19 open-calls`
+Enforced by `.tools/safe_deploy_core.py:290` (`SERVE_HELD_RE`); `:281-282` records that REMOVING the
+sentinel IS the act of authorizing serve and is itself gated. **Not taken by this lane.**
+
+**RELEASE PATH (added from `1.0.0_SA_CTO` 90240 s.2, source-verified by that seat at `:285-296`):**
+this is gated, not impossible -- an authorizing commit carries `SERVE-RELEASE-ACK: <reason>`,
+non-empty, on the same line, tied to NEVER#2 never-widen. So the ask to Andrew is precise and small.
+⚠ Both regexes FAIL CLOSED by construction, and the `[ \t]*` (not `\s*`) in the ACK pattern is
+deliberate: `\s*` would cross the newline and let an empty ACK capture the next commit line as its
+reason -- a fail-OPEN inversion. **Nobody may "fix" that to be more permissive.**
+
+**TWO SOVEREIGN HOLDS, NOT ONE (`1.0.0_SA_CTO` 90240 s.3 -- surfaced, NOT adjudicated):**
+| date | hold | scope |
+|---|---|---|
+| 2026-08-19 (open-calls) | `ADVI_PERFRP.TO-R2-DS` BUILD-ONLY | the SCRIPT-SERVE sentinel -- blocks deploying PRODUCER CODE to `advi:gold _code/` |
+| 2026-08-21 | the 49F-FLIP hold | the P4I-3 PUBLISH ACTIVATION -- blocks serving CLIENT-FACING DATA to the portal |
+
+**Different dates, different scopes, different risk. Deploying producer code publishes no
+client-facing data.** Collapsing them makes the cheaper, safer act look like it costs the expensive
+decision. Whether the 08-19 word discharges separately from the 08-21 word is Andrew's to say.
+
+>> **THE SEATING'S OWN BOUNDARY IS THE BLOCKER.** 90157 s.3 scoped this sync "inside the BUILD-ONLY
+   cap" and named `perfrp_emit_core.py` as the first target. The cap is what forbids serving it.
+   `1.0.0_SA_CTO` 90172 s.3's clause "This ruling is INSIDE the BUILD-ONLY cap and consumes no part of
+   the sovereign publish decision" is **FALSE for these three rows** (true for the three that landed).
+   The ruling's SEQUENCE survives; its cap-claim does not. Reachable order:
+   **Andrew lifts BUILD-ONLY for the serve -> sentinel removed -> sync completes -> activation.** <<
+
+## Verification
+`comp-pipescript deployed --pipeline advi`, run twice PRE (per 90166 s.3 -- a TIMEOUT is not a MATCH)
+and once POST. Denominator every run: **71 object(s) / 71 checked / 0 unrendered.**
+
+```
+PRE  (both runs, identical set)  65 MATCH, 6 STALE, 0 TIMEOUT, 0 AWS_UNREACHABLE, 0 ETAG_NOT_COMPARABLE
+POST                             68 MATCH, 3 STALE, 0 TIMEOUT, 0 AWS_UNREACHABLE, 0 ETAG_NOT_COMPARABLE
+POST STALE = exactly the three HELD rows.
+```
+The 15 `MISSING_ON_S3` are all `[SILVER]` rows (a different channel); the 1 `DECLARED-UNSWEPT` is the
+lambda-zip channel the tool scopes out on its own face. Neither is in scope; neither was widened into.
+
+**Negative control on the sentinel:** the three files that DEPLOYED carry `DEPLOY-SERVE-HELD` zero
+times -- the sentinel is the discriminator, not an artifact of which files were newest.
+
+**No fresh-against-stale pair was manufactured by the partial landing:** none of the three SERVED files
+references any of the three HELD files. Positive control -- the same pattern does find the real
+importers (`d_publisher_port.py`, `perfrp_activity_account.py`, et al).
+
+**`d_publisher_port.py` still reads MATCH post-sync** (0.7.0_AE_CloudOps~G 90166 s.5), basis "raw bytes
+... byte-identical", so the `deferred` disarm at `:589-591` is live on both planes and the served
+denominator at activation stays **10 of 11**.
+
+## Corrections carried out of this run
+- 90157/90172 both say the S3 object "predates SEVEN DS round-2 commits." **Measured: 13 commits touch
+  `perfrp_emit_core.py` itself** between that object's LastModified and HEAD (36 touch the tree).
+  Not called wrong -- "round-2" may be a narrower denominator that was not re-derived here. The two
+  denominators are unlabelled in both records. Direction is safe: it strengthens the precondition.
+- `safe-deploy` instrument item (routed to `3.0.0_SA_CVO`): handed SIX files, served three, printed
+  `OK: safe-deploy gate PASS -- all 3 file(s) deployed and verified` at rc=0. **The PASS line
+  re-denominates to what was ATTEMPTED, not what was ASKED FOR.**
+
+## Collision noted, not chased (base-owned)
+The HALT gate surfaced `1.0.0_SA_CTO`'s incident relay: eight `runners_49f` uncommitted edits lost to a
+19:37:15Z `git checkout`. **Five of the six sync targets are on that list.** This did not change which
+bytes are correct -- the lost edits were uncommitted, were never on origin, and this task is "match
+origin"; worktree==HEAD is itself consistent with the revert. Recorded so the owner knows the deployed
+plane is now pinned to origin for three of them. Not acked, not drained -- read from the BASE inbox.
