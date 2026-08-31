@@ -1,0 +1,68 @@
+# EMAIL_CONTACTS.yaml -- the allowlist that /email-check reads.
+#
+# PURPOSE: Andrew's inbox is ~87-99% noise. This file encodes the ONLY thing that
+# separates signal from noise on the one field the mail API actually returns: the SENDER.
+#
+# THE RULE, in one line:
+#   KEEP if (domain in allow_domains) OR (address in allow_addresses)
+#   ... UNLESS the local-part is in deny_local_parts
+#   ... and ALWAYS keep a Re:/RE:/FW: from an otherwise-allowed sender.
+#
+# ⛔ WHY LOCAL-PART DENY EXISTS, AND IT IS NOT OPTIONAL: a whitelisted domain still sends
+# bulk mail. Measured 2026-08-31: `marketing@49financial.com` (real partner domain, pure
+# noise) and `noreply@opalinvest.dev` (his own firm's domain, automated).
+#
+# ⭐ THE FINDING THAT SHAPES THIS FILE: A PERSON-SHAPED SENDER IS NOT SIGNAL. Measured on
+# ~55 messages over 3 days -- `cgavigan@bairdstrategas.com`, `drissmiller@bairdstrategas.com`,
+# `sean.farrell@fundstrat.com` are all named humans writing "Andrew, ..." and all of them are
+# bulk research distribution (12 in 3 days). Any rule that trusts a real-looking human name
+# leaks badly. Sender IDENTITY is the test, never sender SHAPE.
+#
+# MAINTENANCE: /email-check ALWAYS prints the senders it dropped. That residual is how this
+# file grows -- a missed contact shows up once, you add a line, it never misses again.
+# A false NEGATIVE (a real mail dropped) is the only expensive error here; the residual is
+# what keeps it visible instead of silent.
+
+version: 1
+as_of: "2026-08-31"
+owner: 0.0.0_AB_MSTR   # maintained on Andrew's word; /email-check never edits it
+
+# Every human at these domains is signal.
+allow_domains:
+  - opalinvest.com            # EVIDENCED: Yang, Manav, Austin, AJ, Wayne -- his own firm
+  - thewhitelabelcreative.com # ANDREW-NAMED 2026-08-31 (patricia@)
+  - 49financial.com           # INFERRED: known partner firm, seen in inbox. Delete this line
+                              # if 49F should not be blanket-allowed -- marketing@ is already denied.
+
+# Individuals worth keeping at domains that are NOT blanket-allowed.
+allow_addresses: []
+
+# ⭐ CARVE-OUT: automated, but OURS and ACTIONABLE. Measured 2026-08-31: this sender
+# delivered "[Opal][RED] Infrastructure Report -- blind/breach signal (action)". A blanket
+# noreply block would have dropped it. Delete the line if you would rather not see them.
+allow_addresses_automated:
+  - noreply@opalinvest.dev
+
+# Dropped even inside an allowed domain. Local-part match, case-insensitive, exact.
+deny_local_parts:
+  - noreply
+  - no-reply
+  - donotreply
+  - do-not-reply
+  - marketing
+  - communications
+  - subscriptions
+  - newsletter
+  - newsletters
+  - sales
+  - info
+  - hello
+  - support
+  - notifications
+  - alerts
+  - billing
+
+# Subject prefixes that force a KEEP when the sender is otherwise allowed. These are the
+# cheapest available proxy for "this is a live conversation" -- the API exposes no
+# conversationId and no In-Reply-To header, so the subject prefix is all there is.
+conversation_prefixes: ["re:", "fw:", "fwd:"]
