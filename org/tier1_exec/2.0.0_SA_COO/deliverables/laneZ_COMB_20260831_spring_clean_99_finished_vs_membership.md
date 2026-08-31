@@ -11,13 +11,19 @@ what was measured.
 
 | Classification | Count | What the close means |
 |---|---:|---|
-| **MEMBERSHIP-ONLY** | **92** | The face declares work that had NOT happened. The close filed over live work. |
+| **MEMBERSHIP-ONLY** | **≤ 92** | The face declares work that had NOT happened. The close filed over live work. |
 | FINISHED | 5 | Scope delivered; no committed remaining work. The close ratified a terminal state. |
 | ABSORBED | 1 | Work carried into a NAMED live successor. Correctly closed; the work continues elsewhere. |
 | SOVEREIGN-SUSPENDED | 1 | Andrew himself stood it down before the sweep. The close matches his own word. |
 
-**92 of 99 were closed on membership alone.** Only 7 closures correspond to any work verdict, and
-only 5 of those are "finished" in the plain sense.
+**Up to 92 of 99 were closed on membership alone.** Only 7 closures correspond to any work verdict,
+and only 5 of those are "finished" in the plain sense.
+
+⚠ **READ AMENDMENT 1 BEFORE QUOTING THE 92.** Both instruments are face text and share one failure
+mode — a stale face reads "work remains" whether or not work continued — so **92 is an UPPER BOUND on
+the wrong set, not a measured count.** The bound runs in the direction that inflates the number.
+Raised by `1.0.0_SA_CTO~Z`; accepted in full. The root finding and the recommendation are unaffected,
+for reasons given there.
 
 - **FINISHED (5):** `ASTN_WSJFT` · `MKOV_RETFIX` · `NFRA_GENESIS` · `OPAL_BRDSEP` · `OPAL_PORTALREFRESH`
 - **ABSORBED (1):** `EXPAND_MSCLOUD` → re-homed into `NFRA_MSGRAPH`, scope carried forward verbatim
@@ -136,3 +142,68 @@ Options, each independently coherent:
 **My recommendation: (3), then (2) standing.** The sharpest set is small, each row carries its own
 sovereign-word contradiction, and it does not re-float 92 rows into a two-seat fabric. (1) creates a
 board nobody can drive; (2) alone leaves his own reversed rulings sitting closed.
+
+---
+
+# AMENDMENT 1 — 2026-08-31 ~21:5xZ: **92 IS AN UPPER BOUND, NOT A MEASURED COUNT**
+
+Raised by `1.0.0_SA_CTO~Z` (msg 17137) as the D-family ruling seat, after independently re-deriving
+the root finding at source with a negative control. **The correction is accepted in full and the
+headline above is qualified accordingly.**
+
+## The bound I did not close
+
+Both my instruments — the preserved `Prior phase:` state and the `blocking` field — are **FACE TEXT**.
+They were written at different moments, which is why they corroborate rather than repeat. But they
+**share one failure mode**: if a project's face went stale (work continued and finished, nobody
+updated the record), *both* fields still read "work remains" and the row lands MEMBERSHIP-ONLY.
+
+**Neither instrument can see work that happened after the face was last written.**
+
+So **92 is an upper bound on the wrong set**, not a measured count of it. That is the direction that
+inflates an alarming number — and per this estate's own banked lesson, an undercount announces
+itself while an overcount never does. My overcount control tested face-text-vs-face-text; it could
+not test face-vs-world.
+
+## Why the finding is unchanged
+
+1. **The predicate's lack of discriminating power rests on `e0854c5027` alone** and does not depend
+   on the size of the wrong set at all. 3.1% membership is measured, published and committed.
+2. **The refinement path is already recorded and costs nothing to take later:** wave B (43) carries
+   *independent* corroboration that work remained — its live task orders were closed IN THE SAME ACT,
+   which is a fact about the sweep, not about the face. **The staleness risk therefore concentrates
+   in the WAVE A subset (56)**, where face text is the only instrument. Recorded here as the
+   available refinement; NOT taken, and no re-run requested.
+3. **The symmetric risk on FINISHED is small but not zero.** A face can also go stale *terminal-side*
+   — `NFRA_TOOLHEALTH`'s own history is this estate's precedent for it ("terminal status + a blocking
+   field describing work not yet done"). My 5 FINISHED rows each passed two instruments, and one
+   (`OPAL_SQSCHAT`) was caught and flipped by exactly that check — but 5 is the exposure.
+
+## What this does NOT change: the recommendation
+
+**Rec (3) is immune to this bound**, which is the property that makes it the right call on a number
+carrying a one-directional error. The sharp instances rest on **Andrew's own words** — *"SYSPARITY is
+ongoing"*, *"THE PROJECT IS NOT CLOSED"*, *"ON-HOLD, NEVER CLOSED […] Resumes on Andrew's word only"*,
+a sovereign override that RE-OPENED a phase. **A sovereign ruling does not go stale the way a phase
+note does.** The recommended action therefore does not depend on the exact size of the wrong set.
+
+`1.0.0_SA_CTO~Z` concurs with (3)-now / (2)-standing, unchanged.
+
+# AMENDMENT 2 — THE FORWARD QUESTION: CAN THE PREDICATE FIRE AGAIN?
+
+Raised by `1.0.0_SA_CTO~Z`. **"Do not re-run the predicate" and "can the predicate fire again" are
+different questions, and this comb answered only the first.**
+
+If the spring-clean mechanism is still live and still keyed on directive membership, then every
+project minted since — **and every project reopened under rec (3)** — is exposed to closure on the
+same property that has already been measured to have no discriminating power. That would make the 92
+a **recurring class rather than a one-time event**, and it would change the disposition from cleanup
+to control.
+
+⛔ **UNMEASURED AND NOT CHASED.** Neither seat has measured whether the mechanism is a standing job, a
+one-off script, or a hand-run act, and neither is guessing between them. Surfaced as an **open
+question for Andrew's disposition alongside the 92**, because it is cheap to ask now and expensive to
+discover after 92 rows have been reopened into it.
+
+**This remains a finding, not a build.** No monitor, no alarm, no gate is proposed — the standing
+moratorium binds and all alarms are held pending GLOBALALARM.

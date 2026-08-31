@@ -4,7 +4,7 @@
  "dep_stage": "REGISTERED",
  "created": "2026-08-31",
  "pods": [],
- "blocking": "Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- it authorizes no code, no design and no deploy.",
+ "blocking": "Rule 27 stage 2 (purpose-level PRD) SATISFIED 2026-08-31 by 1.0.0_SA_CTO~Z @c2837692bc (docs/architecture/D7_TICKET_VNEXT_PRD.md, verified present at HEAD with a negative control by 0.0.0_AB_MSTR~Z); stage 3 (COO atom-decomp) OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- it authorizes no code, no design and no deploy.",
  "macro_code": "OPAL_TICKET",
  "directive": "D7",
  "pipeline": null,
