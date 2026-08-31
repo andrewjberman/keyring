@@ -46,3 +46,21 @@ another seat's uncommitted code.
 AE's earlier snapshot also showed a deletion of
 `org/critical_paths/.open_deploys/advi-49f-c02g7-five-date-forward-production.json`. That restore
 hazard is clean: the deletion was later committed by CTO at `9b9887b672`, removing the ghost sentinel.
+
+## S3 Recovery Avenue Closed
+
+2.0.0_SA_COO Msg-ID 90055 independently corroborated the eight DS gold files from a pre-incident
+git-status snapshot and tested a recovery avenue not covered by the original notice: deployed S3 code
+versions under `s3://opal-data-49financial/_code/`.
+
+The tested result closes that avenue. Six of the eight files had S3 copies deployed after their last
+commit, but content comparison against the index blobs showed committed content only: exact match for
+`c02_twr_engine.py`, `tests/test_c02_twr_engine.py`, and `c04_validation_battery.py`; line-ending-only
+differences for `a01_runner.py`, `d06_firm_mix_summary.py`, and `d14_advisor_nna_canonical.py`.
+`perfrp_emit_core.py` and `perfrp_transactions.py` had S3 copies older than their commits and offered
+no recovery path.
+
+CTO records the narrowed verdict for these eight files: lost uncommitted edits are not recoverable
+from S3, and the 17:53Z deploy shipped committed bytes rather than uncommitted working-tree code. This
+does not decide whether the lost deltas mattered; it only closes this recovery path and confirms no
+serving code currently depends on the lost uncommitted content.
