@@ -1,0 +1,527 @@
+#!/usr/bin/env python3
+"""comp-schedule -- THE GATE LEDGER: what is still armed, on whom, and is it still real.
+
+ANDREW-DIRECT 2026-09-01, VERBATIM:
+    "having 'preconditions' floating from 12 days ago with no immediate visibility is not good
+     planning. I had asked for a comp-schedule or some kind of schedule function to track ongoing
+     schedule checks/future gates/etc. If we are going to manage preconditions and other such gates
+     over time, we need a clear way of managing these in that persistent location and clear means
+     of cleaning/sweeping items from that list when they no longer are needed."
+
+WHAT IT IS. /schedule-check answers "did the JOB run" from the live AWS APIs. comp-lease answers
+"is the C3 CLOSURE still valid". Neither covers GATES -- a promise to check something later. A job
+that stops firing gets noticed because something expected output; A GATE THAT OUTLIVES ITS REASON
+EMITS NOTHING AT ALL. It just quietly keeps blocking, or quietly stops protecting. That asymmetry
+is the whole reason this exists.
+
+NOTHING IS STORED. The view is COMPILED AT READ TIME from the carriers where gates already live, so
+it cannot go stale -- there is no artifact to age. A hand-maintained gate registry would be one more
+thing that decays, which is the exact failure being fixed (1.0.0_SA_CTO, handoff 90454).
+
+===============================================================================================
+THE DECIDABILITY SCHEMA (CLAUDE.md Rule 24 TAXONOMY LAW -- four-postulate record, in full)
+===============================================================================================
+  AXIS (one, and only one): CAN A MACHINE SETTLE, FROM THIS CARRIER'S OWN BYTES, WHETHER A GATE IS
+  ARMED? Not "is the carrier important", not "is it fresh" -- those are other axes and mixing them
+  is the intent-coherence defect.
+
+  (i) MECE over the DECLARED domain. Domain = the five carriers where gates live in this estate.
+      Every carrier is assigned exactly one decidability, and the assignment is printed beside its
+      denominator so a reader can contest it.
+  (ii) SAME GRAIN. Every value classifies a CARRIER, never an individual gate and never a file.
+  (iii) INTENT COHERENCE. One question: may this carrier's rows be COUNTED?
+  (iv) STATE COHERENCE -- which values one remedy does NOT move:
+        * Excluding org/mcp/inbox moves SEMI-DECIDABLE carriers to DECIDABLE. It moves NOTHING
+          about the prose carrier, whose problem is grammar, not location.
+        * Giving org/projects/*.json a STRUCTURED blocking schema would move NOT-DECIDABLE ->
+          DECIDABLE. That is a 333-file schema change and it is NOT this tool's job.
+        * Making a carrier unreadable (permissions, corruption) moves it to UNREADABLE from ANY
+          value, and UNREADABLE is never silently a zero.
+
+  DECIDABLE      the carrier states armedness in a grammar a machine owns. COUNTABLE.
+  SEMI-DECIDABLE decidable ONLY after a declared exclusion (chatter). Countable once excluded.
+  NOT-DECIDABLE  free prose. NEVER counted. Surfaced as a READING LIST with its own denominator.
+  UNREADABLE     the carrier could not be read at all. Never rendered as zero rows.
+
+WARN: THE MEASUREMENT THAT FORCED THIS AXIS (3.0.0_SA_CVO~C, 2026-09-01, before any code):
+  org/projects/*.json is 348 files, 333 carrying a `blocking` key -- the carrier that looks MOST
+  like a gate registry. It is FREE PROSE. 189 of those are the word "None" written in English.
+  135 are non-null prose, of which 16 SELF-NEGATE in their own text ("SEQUENCING (not a hard
+  blocker)") and 65 use closed/complete/resolved/superseded language. Median 648 characters, max
+  30,625. A 30 KB `blocking` field is an essay, not a field.
+  >> A TOOL THAT COUNTS THAT CARRIER REPORTS "135 BLOCKED" AND IS WRONG BEFORE THE SECOND LINE,
+     AND NO REGEX SETTLES IT BECAUSE THE NEGATION IS IN THE PROSE. Refusing the easy total is the
+     single most load-bearing decision in this file. <<
+
+Read-only over the repo. No AWS calls, no model calls, no network, deterministic, ASCII-only.
+
+USAGE:
+  comp-schedule                      every armed gate, per-carrier denominators
+  comp-schedule --drift              EXCEPTIONS ONLY: discharge condition looks satisfied, still armed
+  comp-schedule --owner <serial>     gates naming that owner
+  comp-schedule --gate <id>          one gate in full, with its evidence
+  comp-schedule --self-test
+"""
+import json
+import os
+import re
+import subprocess
+import sys
+
+# BUILD LADDER RUNG 2: safe_deploy_core OWNS the sentinel grammar and ENFORCES it at deploy time.
+# A second copy here would be a shadow grammar that drifts from the one that actually gates -- and
+# then this tool would report a gate the deployer does not honour, or miss one it does.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from safe_deploy_core import SERVE_HELD_RE
+    _GRAMMAR = "safe_deploy_core.SERVE_HELD_RE"
+except Exception as _e:                                    # never guess the grammar
+    SERVE_HELD_RE = None
+    _GRAMMAR = "UNAVAILABLE (%s)" % type(_e).__name__
+
+# The switch the acceptance battery plants against. It is a named constant rather than an inline
+# condition precisely so a mutant can flip it and prove the separation is enforced, not incidental.
+PROSE_IS_NEVER_A_GATE = True
+
+CHATTER_DIRS = ("org/mcp/inbox",)
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "dist", "build"}
+TEXT_EXT = (".py", ".sh", ".ts", ".tsx", ".js", ".yaml", ".yml", ".tf", ".md", ".json", ".sql")
+_NONE_RX = re.compile(r"^\s*(none|n/?a|-|nil|no\b)", re.I)
+_NEG_RX = re.compile(r"not a (hard )?blocker|no hard blocker|sequencing \(not|not blocking|"
+                     r"non-blocking|informational", re.I)
+_CLOSED_RX = re.compile(r"closed|complete|resolved|discharged|superseded", re.I)
+ROOT = None
+
+
+def repo_root():
+    global ROOT
+    if ROOT is None:
+        r = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+        if r.returncode != 0:
+            print("ERROR: not in a git repo (comp-schedule is repo-scoped)")
+            sys.exit(2)
+        ROOT = r.stdout.strip()
+    return ROOT
+
+
+def _git(*args):
+    return subprocess.run(["git", "-C", repo_root()] + list(args), capture_output=True, text=True)
+
+
+def _rel(p):
+    return os.path.relpath(p, repo_root()).replace("\\", "/")
+
+
+def _is_chatter(rel):
+    return any(rel.startswith(d) for d in CHATTER_DIRS)
+
+
+def _ascii(s):
+    """This tool READS carriers it does not own, and CLAUDE.md's NEVER block carries non-ASCII.
+
+    MEASURED THE HARD WAY: the first cut printed carrier text raw and DIED mid-render with a
+    cp1252 UnicodeEncodeError on a U+26D4 in a moratorium line -- after emitting 16 of 18 gates, so
+    the header said 18 and the body showed 16. A ledger that crashes PART WAY through is worse than
+    one that fails at the start: the output looks complete to anything reading the top.
+    The identical fix was written into comp-adversary earlier the same session and not carried
+    here -- a lesson applied in one file is not a lesson applied in the estate."""
+    return "".join(ch if 32 <= ord(ch) < 127 else "?" for ch in str(s))
+
+
+def _last_touched(rel):
+    """LAST VERIFIED, derived -- and DELIBERATELY LABELLED WEAK at the call site.
+
+    This dates the last EDIT of the carrier, which is NOT the last time a human CONFIRMED the gate
+    is still needed. Those are different acts and only one of them is recorded anywhere. A field
+    that must be hand-stamped is the registry problem returning through a side door, so the proxy
+    is derived and its weakness is printed rather than hidden."""
+    r = _git("log", "-1", "--format=%cI", "--", rel)
+    return (r.stdout.strip()[:10] or "UNKNOWN") if r.returncode == 0 else "UNKNOWN"
+
+
+class Carrier:
+    def __init__(self, cid, name, decid):
+        self.cid, self.name, self.decid = cid, name, decid
+        self.denominator = 0
+        self.gates = []
+        self.note = ""
+        self.unreadable = None            # None = readable; a string = why not
+
+
+def c1_sentinels():
+    """CODE SENTINELS -- the grammar is owned elsewhere and enforced at deploy time."""
+    c = Carrier("C1", "SENTINEL", "DECIDABLE")
+    if SERVE_HELD_RE is None:
+        c.unreadable = "sentinel grammar could not be imported: %s" % _GRAMMAR
+        return c
+    by_cond, lines = {}, 0
+    for dirpath, dirnames, filenames in os.walk(repo_root()):
+        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        for fn in filenames:
+            if not fn.endswith(TEXT_EXT):
+                continue
+            rel = _rel(os.path.join(dirpath, fn))
+            if _is_chatter(rel):
+                continue
+            try:
+                with open(os.path.join(dirpath, fn), encoding="utf-8", errors="replace") as fh:
+                    flines = fh.read().splitlines()
+            except (OSError, UnicodeDecodeError):
+                continue
+            for i, ln in enumerate(flines, 1):
+                m = SERVE_HELD_RE.match(ln)
+                if not m:
+                    continue
+                lines += 1
+                cond = _full_reason(flines, i, (m.group(1) or "").strip())
+                by_cond.setdefault(cond, []).append("%s:%d" % (rel, i))
+    c.denominator = lines
+    for cond, ev in sorted(by_cond.items(), key=lambda kv: (-len(kv[1]), kv[0])):
+        c.gates.append({"owner": _owner_from_condition(cond), "discharge": cond,
+                        "last_verified": _last_touched(ev[0].split(":")[0]),
+                        "evidence": ev, "carrier": "C1"})
+    c.note = ("%d sentinel line(s) -> %d gate(s) grouped by DISCHARGE CONDITION; EXCLUDES "
+              "org/mcp/inbox (agents quoting a sentinel are not a sentinel). grammar=%s"
+              % (lines, len(c.gates), _GRAMMAR))
+    return c
+
+
+def _full_reason(flines, idx, first):
+    """A SENTINEL'S REASON CAN SPAN LINES, AND THE OWNED GRAMMAR ONLY SEES ONE.
+
+    `SERVE_HELD_RE` is single-line BY DESIGN and correctly so: safe_deploy_core needs exactly one
+    bit -- armed or not -- and a single line answers it. This tool needs the REASON, which is a
+    different question about the same bytes, so it reads the continuation HERE rather than widening
+    a grammar that gates real deploys.
+
+    FOUND BY RUNNING THIS TOOL ON LIVE DATA before trusting it: the sentinel at
+    data/inf/scripts/silver/convert_transactions_to_silver.py:94 reads
+    `# DEPLOY-SERVE-HELD -- and READ WHY, because the reason CHANGED and the sentinel did not:`
+    and the actual condition sits on the FOLLOWING comment lines. Captured single-line, that gate
+    rendered with a nonsense discharge and an UNNAMED owner -- an armed gate the ledger could not
+    describe, which is the failure this tool exists to end."""
+    out = [first] if first else []
+    for j in range(idx, min(idx + 12, len(flines))):
+        ln = flines[j]
+        if not re.match(r"^\s*#", ln):
+            break
+        body = re.sub(r"^\s*#\s?", "", ln).rstrip()
+        if not body.strip():
+            continue
+        out.append(body.strip())
+    joined = " ".join(out).strip()
+    return joined or "(no reason given -- fail-closed)"
+
+
+_SATISFIED_RX = re.compile(r"\bSATISFIED\b|\bco-sign GIVEN\b|\bsign-?off GIVEN\b|\bDISCHARGED\b|"
+                           r"\bLIFTED\b|\bcondition MET\b", re.I)
+
+
+def _owner_from_condition(cond):
+    """Owner named IN the discharge text, or UNNAMED. Never inferred from the file's author --
+    who wrote the line and who can lift it are different people, and conflating them puts the
+    remedy on the wrong desk."""
+    m = re.search(r"(CTO~?[A-Z]?|COO|CVO|MSTR|Andrew|POD\d|\d\.\d\.\d_[A-Za-z_]+)", cond)
+    return m.group(1) if m else "UNNAMED"
+
+
+def c2_ledger():
+    """OPEN DEPLOY LEDGER -- file presence IS the armedness, and the entry names its own author."""
+    c = Carrier("C2", "DEPLOY-LEDGER", "DECIDABLE")
+    d = os.path.join(repo_root(), "org", "critical_paths", ".open_deploys")
+    if not os.path.isdir(d):
+        c.unreadable = "org/critical_paths/.open_deploys/ not present"
+        return c
+    try:
+        # A DOT-PREFIXED file here is the ledger tool's own STATE (.unindexed_red_state.json),
+        # not a deploy entry. Counting it invented a gate with no owner and no discharge -- found
+        # by running this tool against live data, which is why it was run before it was trusted.
+        names = sorted(x for x in os.listdir(d)
+                       if x.endswith(".json") and not x.startswith("."))
+    except OSError as e:
+        c.unreadable = "listdir failed: %s" % type(e).__name__
+        return c
+    c.denominator = len(names)
+    for n in names:
+        rel = "org/critical_paths/.open_deploys/" + n
+        try:
+            j = json.load(open(os.path.join(d, n), encoding="utf-8"))
+        except Exception as e:
+            c.gates.append({"owner": "UNKNOWN", "discharge": "UNPARSEABLE ledger entry (%s)"
+                            % type(e).__name__, "last_verified": _last_touched(rel),
+                            "evidence": [rel], "carrier": "C2"})
+            continue
+        c.gates.append({"owner": j.get("author") or "UNNAMED",
+                        "discharge": "ledger entry OPEN, status=%s" % (j.get("status") or "?"),
+                        "last_verified": (j.get("held_at") or j.get("opened_at") or "UNKNOWN")[:10],
+                        "evidence": [rel], "carrier": "C2"})
+    c.note = "%d open deploy-ledger entry(ies); OPEN file = ARMED gate" % len(names)
+    return c
+
+
+def c3_moratoria():
+    """CLAUDE.md standing moratoria -- the NEVER block. Hand-few and rarely changing."""
+    c = Carrier("C3", "MORATORIA", "DECIDABLE")
+    rel = "CLAUDE.md"
+    p = os.path.join(repo_root(), rel)
+    if not os.path.isfile(p):
+        c.unreadable = "CLAUDE.md not present"
+        return c
+    try:
+        lines = open(p, encoding="utf-8", errors="replace").read().splitlines()
+    except OSError as e:
+        c.unreadable = "read failed: %s" % type(e).__name__
+        return c
+    hits = [(i, ln) for i, ln in enumerate(lines, 1)
+            if re.match(r"^\s*[-*]\s*\*\*NEVER\b", ln) or re.match(r"^\s*-\s*\*\*NEVER", ln)]
+    c.denominator = len(hits)
+    for i, ln in hits:
+        txt = re.sub(r"[*`]", "", ln).strip(" -")[:110]
+        c.gates.append({"owner": "Andrew (standing moratorium)", "discharge": txt,
+                        "last_verified": _last_touched(rel),
+                        "evidence": ["%s:%d" % (rel, i)], "carrier": "C3"})
+    c.note = "%d standing NEVER clause(s) in the law" % len(hits)
+    return c
+
+
+def c4_scope_guards():
+    """TASK-ORDER scope_guard -- SEMI: decidable only once chatter is excluded."""
+    c = Carrier("C4", "SCOPE-GUARD", "SEMI-DECIDABLE")
+    found, n = [], 0
+    for base in ("org/tier0", "org/tier0_exec", "org/tier1_exec", "org/tier2_senior",
+                 "org/tier3_junior"):
+        b = os.path.join(repo_root(), base)
+        if not os.path.isdir(b):
+            continue
+        for dirpath, dirnames, filenames in os.walk(b):
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+            for fn in filenames:
+                if not fn.endswith((".json", ".md")):
+                    continue
+                rel = _rel(os.path.join(dirpath, fn))
+                if _is_chatter(rel):
+                    continue
+                try:
+                    txt = open(os.path.join(dirpath, fn), encoding="utf-8",
+                               errors="replace").read()
+                except OSError:
+                    continue
+                if "scope_guard" in txt:
+                    n += 1
+                    found.append(rel)
+    c.denominator = n
+    c.note = ("%d task-order file(s) carry a scope_guard; EXCLUDES org/mcp/inbox. SEMI: a "
+              "scope_guard is a SCOPE statement, and whether it is still ARMED is not stated in "
+              "its own bytes -- listed, never counted as discharged-or-not." % n)
+    for rel in sorted(found)[:0]:                          # listed in --gate detail, not as gates
+        pass
+    return c
+
+
+def c5_prose():
+    """org/projects/*.json `blocking` -- NOT-DECIDABLE. The load-bearing refusal in this tool."""
+    c = Carrier("C5", "PROJECT-BLOCKING", "NOT-DECIDABLE")
+    d = os.path.join(repo_root(), "org", "projects")
+    if not os.path.isdir(d):
+        c.unreadable = "org/projects/ not present"
+        return c
+    try:
+        names = sorted(x for x in os.listdir(d) if x.endswith(".json"))
+    except OSError as e:
+        c.unreadable = "listdir failed: %s" % type(e).__name__
+        return c
+    total = withkey = empty = nonelike = 0
+    prose, neg, closed = [], 0, 0
+    unread = 0
+    for n in names:
+        total += 1
+        try:
+            j = json.load(open(os.path.join(d, n), encoding="utf-8"))
+        except Exception:
+            unread += 1
+            continue
+        if not isinstance(j, dict) or "blocking" not in j:
+            continue
+        withkey += 1
+        v = (j.get("blocking") or "").strip()
+        if not v:
+            empty += 1
+        elif _NONE_RX.match(v):
+            nonelike += 1
+        else:
+            prose.append((n[:-5], v))
+            if _NEG_RX.search(v):
+                neg += 1
+            if _CLOSED_RX.search(v):
+                closed += 1
+    c.denominator = withkey
+    c.needs_read = prose
+    if not PROSE_IS_NEVER_A_GATE:
+        # THE SWITCH IS LOAD-BEARING, NOT DECORATIVE. It was declared and never consulted in the
+        # first cut, so the acceptance mutant flipped it and NOTHING CHANGED -- a switch that
+        # cannot alter behaviour cannot certify that the behaviour is enforced. Wiring it here is
+        # what makes leg 2's separation a property of the code rather than of the data.
+        for name, v in prose:
+            c.gates.append({"owner": "UNNAMED", "discharge": " ".join(v.split())[:150],
+                            "last_verified": "UNKNOWN",
+                            "evidence": ["org/projects/%s.json" % name], "carrier": "C5"})
+    c.note = ("%d project json(s), %d carry a `blocking` key: %d empty, %d prose-'None', "
+              "%d NON-NULL PROSE (of those: %d SELF-NEGATE, %d use closed/resolved language). "
+              "%d unparseable. NOT COUNTED AS GATES -- this is a READING LIST."
+              % (total, withkey, empty, nonelike, len(prose), neg, closed, unread))
+    return c
+
+
+def _drift_flags(g):
+    """Exceptions-only signal: the discharge condition NAMES an artifact that now EXISTS.
+
+    WARN: this raises a CANDIDATE, never a verdict. A condition naming a DEPLOY path is not
+    satisfied by a REPO path -- DESIRED is not APPLIED. The tool surfaces the question and names
+    who can settle it; it never closes a gate."""
+    out = []
+    # A STANDING MORATORIUM CANNOT DRIFT. C3 rows are permanent law, not dischargeable gates: they
+    # have no condition that could become satisfied, so any "drift" on them is definitionally a
+    # false positive. Excluded at the top rather than filtered at the end, so the exclusion is a
+    # property of the classifier and not a cosmetic on the renderer.
+    if g.get("carrier") == "C3":
+        return out
+    # SIGNAL A -- the gate's OWN reason text says the condition was met.
+    # WARN: THIS IS NOT THE PROSE-COUNTING THIS TOOL REFUSES, AND THE DISTINCTION IS THE WHOLE
+    # POINT. C5 is refused because prose would decide WHETHER A GATE EXISTS. Here the gate is
+    # ALREADY established as armed by a machine-owned grammar; the prose is only its REASON, and a
+    # satisfaction phrase raises a QUESTION FOR A NAMED HUMAN. Deciding existence from prose is
+    # forbidden; flagging a candidate from prose, and never closing on it, is not.
+    if _SATISFIED_RX.search(g["discharge"]):
+        out.append("its OWN reason text contains satisfaction language (SATISFIED / co-sign GIVEN "
+                   "/ DISCHARGED) while the sentinel is STILL ARMED")
+    # SIGNAL B -- the reason names an artifact IN A WAITING CONSTRUCTION and that artifact exists.
+    # NARROWED after the first live run: matching ANY filename in the reason fired on files merely
+    # mentioned in passing (safe_deploy_core.py), and an exceptions view that cries wolf is one
+    # nobody reads -- which costs more than the signal is worth. Only a filename governed by an
+    # explicit waiting word is a discharge condition.
+    for m in re.finditer(r"(?:until|pending|once|when|awaiting|blocked on|lands? at|"
+                         r"lands? in|after)\b[^.;]{0,80}?"
+                         r"([A-Za-z0-9_\-/]+\.(?:py|sh|ts|tsx|yaml|yml|json|tf))",
+                         g["discharge"], re.I):
+        cand = m.group(1)
+        base = os.path.basename(cand)
+        r = _git("ls-files", "*" + base)
+        if r.returncode == 0 and r.stdout.strip():
+            hits = r.stdout.strip().splitlines()
+            exact = [h for h in hits if h.endswith(cand)]
+            out.append("names %s -- %d file(s) with that basename exist in the repo%s"
+                       % (cand, len(hits),
+                          "" if exact else " (NONE at the exact path named -- DESIRED vs APPLIED)"))
+    return out
+
+
+def compile_view():
+    cs = [c1_sentinels(), c2_ledger(), c3_moratoria(), c4_scope_guards(), c5_prose()]
+    gid = 0
+    for c in cs:
+        for g in c.gates:
+            gid += 1
+            g["id"] = "G-%d" % gid
+            g["drift"] = _drift_flags(g)
+    return cs
+
+
+def render(cs, drift_only=False, owner=None, gate=None):
+    gates = [g for c in cs for g in c.gates]
+    if owner:
+        gates = [g for g in gates if owner.lower() in str(g["owner"]).lower()]
+    if gate:
+        gates = [g for g in gates if g["id"] == gate]
+    if drift_only:
+        gates = [g for g in gates if g["drift"]]
+    prose = next((c for c in cs if c.cid == "C5"), None)
+    needs = len(getattr(prose, "needs_read", []) or []) if prose else 0
+
+    print("comp-schedule -- the gate ledger (VIEW-TIME COMPILED; no artifact, nothing to go stale)")
+    print()
+    print("GATES ARMED: %d%s" % (len(gates), "   [--drift: exceptions only]" if drift_only else ""))
+    print("NEEDS-READ:  %d project `blocking` field(s) carrying non-null PROSE -- NOT counted as"
+          % needs)
+    print("             gates. This tool does not read prose; these are a reading list.")
+    print()
+    print("CARRIERS -- each with its OWN denominator and its OWN decidability:")
+    for c in cs:
+        if c.unreadable:
+            print("  %-3s %-16s UNREADABLE -- %s" % (c.cid, c.name, _ascii(c.unreadable)))
+            print("      (UNREADABLE is NOT zero rows. A carrier that could not be read and a"
+                  " carrier with nothing in it are opposite facts.)")
+            continue
+        print("  %-3s %-16s %-15s denominator=%d -> %d gate(s)"
+              % (c.cid, c.name, c.decid, c.denominator, len(c.gates)))
+        print("      %s" % _ascii(c.note))
+    print()
+    if not gates:
+        print("  no gate rows for this view." if drift_only else "  no armed gates found.")
+    for g in gates:
+        print("  %-5s owner=%s" % (g["id"], _ascii(g["owner"])))
+        print("        discharge: %s" % _ascii(g["discharge"])[:150])
+        print("        last-verified: %s   [DERIVED from the carrier's last EDIT -- a WEAK proxy:"
+              % g["last_verified"])
+        print("                       it dates the edit, NOT a human confirming the gate is still"
+              " needed]")
+        print("        evidence: %s%s" % (_ascii(", ".join(g["evidence"][:3])),
+                                          "  (+%d more)" % (len(g["evidence"]) - 3)
+                                          if len(g["evidence"]) > 3 else ""))
+        for d in g["drift"]:
+            print("        DRIFT CANDIDATE: %s" % _ascii(d))
+            print("        -> a CANDIDATE, never a verdict. Someone named above must settle it;"
+                  " this tool never closes a gate.")
+    if prose and getattr(prose, "needs_read", None) and not drift_only and not gate:
+        print()
+        print("  NEEDS-READ (the prose carrier, listed with its denominator, never counted):")
+        for name, v in prose.needs_read[:8]:
+            print("    %-30s %s" % (_ascii(name)[:30], _ascii(" ".join(v.split()))[:96]))
+        if len(prose.needs_read) > 8:
+            print("    ... %d more. A PAGE IS NOT AN ANSWER -- the denominator above is the claim."
+                  % (len(prose.needs_read) - 8))
+
+
+def self_test():
+    ok = True
+    cs = compile_view()
+    c1 = next(c for c in cs if c.cid == "C1")
+    c5 = next(c for c in cs if c.cid == "C5")
+    t1 = (SERVE_HELD_RE is not None and "safe_deploy_core" in _GRAMMAR)
+    print("control 1 (sentinel grammar IMPORTED from safe_deploy_core, not re-implemented): %s"
+          % ("PASS" if t1 else "FAIL"))
+    ok = ok and t1
+    t2 = all(not any(e.startswith("org/mcp/inbox") for e in g["evidence"]) for g in c1.gates)
+    print("control 2 (no inbox chatter counted as an armed sentinel): %s" % ("PASS" if t2 else "FAIL"))
+    ok = ok and t2
+    t3 = (len(c1.gates) < c1.denominator) if c1.denominator else True
+    print("control 3 (sentinel LINES collapse to fewer GATES -- a line count is not a gate count):"
+          " %s" % ("PASS" if t3 else "FAIL"))
+    ok = ok and t3
+    t4 = (PROSE_IS_NEVER_A_GATE and not c5.gates and c5.decid == "NOT-DECIDABLE")
+    print("control 4 (the PROSE carrier contributes ZERO gates and is labelled NOT-DECIDABLE): %s"
+          % ("PASS" if t4 else "FAIL"))
+    ok = ok and t4
+    t5 = all(g.get("owner") and g.get("discharge") and g.get("last_verified")
+             for c in cs for g in c.gates)
+    print("control 5 (every gate carries OWNER + DISCHARGE + LAST-VERIFIED, or an explicit"
+          " UNKNOWN): %s" % ("PASS" if t5 else "FAIL"))
+    ok = ok and t5
+    print("self-test: %s" % ("PASS 5/5" if ok else "FAIL"))
+    return 0 if ok else 1
+
+
+def main():
+    args = sys.argv[1:]
+    if args and args[0] in ("-h", "--help"):
+        print(__doc__)
+        return 0
+    if "--self-test" in args:
+        return self_test()
+    owner = args[args.index("--owner") + 1] if "--owner" in args else None
+    gate = args[args.index("--gate") + 1] if "--gate" in args else None
+    render(compile_view(), drift_only=("--drift" in args), owner=owner, gate=gate)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
