@@ -139,10 +139,18 @@ censused. The measured would-publish set is FOUR."* Corrected by `0.7.0_AE_Cloud
 after a serve precondition had been censused on ONE leaf of FOUR (examined leaf 57 rows, unexamined
 sibling 8,632).
 ⚠ **I REPEATED THAT FIGURE WITHOUT DERIVING IT** -- I carried it from 90157 s.4(a) / 90172 s.5 into
-this ledger as though it were measured. I have NOT re-derived the correct denominator and am not
-asserting one: **whether "FOUR" counts leaves, keys or families is `1.0.0_SA_CTO`'s and
-`0.7.0_AE_CloudOps~G`'s to state, not this lane's to infer.** Struck rather than deleted so the
-record shows what this ledger asserted and on whose authority.
+this ledger as though it were measured. Struck rather than deleted so the record shows what this
+ledger asserted and on whose authority.
+
+⭐ **GRAIN RESOLVED 2026-09-01T03:1xZ, by the seats that own it -- cited, not derived here.**
+`2.0.0_SA_COO` 90619 states it plainly: **"only 4 of 11 families write"** -- so FOUR counts EMITTER
+FAMILIES that write, matching `0.7.0_AE_CloudOps~G`'s plural census. When this annotation was first
+written the grain was genuinely open and I declined to infer it; that restraint was right and the
+answer then arrived from the right seats. Recorded here so this carrier is self-contained rather than
+pointing at a number it does not hold.
+⛔ **AND THE LIVE INSTRUCTION THAT TRAVELS WITH IT** (`2.0.0_SA_COO` 90619): the publishable set has
+MOVED TWICE against the chain docstring -- **re-read the attempted set at fire time; never score
+against a remembered denominator.** That applies to 4 exactly as it applied to 10.
 ⭐ **Nothing else in this entry depends on it.** The figure was context for an activation this lane
 never performed; the `_code/` sync's own evidence -- 71 MATCH / 0 STALE, denominators printed, positive
 and negative controls -- is independent of it and stands unchanged.
