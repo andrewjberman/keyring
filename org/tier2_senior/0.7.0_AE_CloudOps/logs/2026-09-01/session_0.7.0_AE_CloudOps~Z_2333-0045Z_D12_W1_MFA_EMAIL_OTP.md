@@ -156,3 +156,64 @@ what it would look like arriving in a human inbox. Account deleted (48 profiles,
 ## Blockers (superseding the section above)
 
 **NONE.** The two remaining items are Andrew's own acts: try the login, and name the pilot cohort.
+
+
+---
+
+# DELTA 2 — 01:15Z → 03:40Z (W3 ACT A). Appended; nothing above rewritten.
+
+⛔ **THIS IS THE SECOND TIME THIS LOG WENT STALE WITHIN AN HOUR OF BEING COMMITTED**, and the
+pattern is worth more than the content: a session log is written at the moment a seat believes
+it is finishing, and this seat has believed that three times tonight. **The fix is the append,
+not a resolution to stop being wrong about when work ends.**
+
+## What landed
+
+**W3 ACT A — `POST /auth/mfa/send`** (`e96de00837`, deployed sha
+`pyKEMVBmUsw8utCs3dw2tImzy63e0XG+pL5AJqqRIN0=`, 0-diff clean). Purely additive; `login()`
+unchanged. Proof instance `d525b48dbe`, **VALID rc=0**: W3-2/3/4 PASS, **W3-1
+UNCOMPUTABLE-BY-CONSTRUCTION** because it is ACT B in one sentence.
+
+⭐ **THE DESIGN DECISION: it takes a `challengeId` and NO email address.** The TO required it not
+become an open mail relay and not reveal account existence. An email-keyed endpoint would have
+needed enumeration defences bolted on; **this one has nothing to defend** — the caller cannot name
+a recipient, and no account identifier is an input. Removing the attack surface beat guarding it.
+
+## Three errors of mine, all caught, all recorded
+
+1. **A false security claim in my own docstring** (`1e5e7d4983`). `hashCode` said a table or
+   backup reader "cannot replay a live challenge." **False** — the code is 6 digits, so a reader
+   with `(salt, codeHash)` recovers it in ~1s, and **that is exactly how I exercised W3-3.** The
+   run that proved the feature works refuted the comment above it. Retracted with the false
+   sentence QUOTED inside the correction rather than substituted away. **Second false claim I left
+   in this codebase tonight** (the first: an IAM deny that did not exist).
+2. **A false zero, nearly shipped.** Whole-bundle census for `login#acct#` → 0, which looked like
+   proof the new route bypasses no throttle. **Minification artifact** — built at runtime from a
+   template. Control proved the throttle IS in the bundle. Replaced with a SCOPED census plus
+   in-region controls. **Same class as the wrong-resource-ARN error six hours earlier: a zero from
+   the wrong scope, wearing the authority of a measurement. Twice tonight, two instruments.**
+3. **An over-stated blocker I corrected in my own favour.** I told COO the split "alters the API
+   contract" — true of only ONE of two acts. Decomposing it shipped ACT A immediately and
+   unblocked a waiting lane. **I had made myself more blocked than the work was.**
+
+## The finding that outranks the build
+
+Running ACT B's precondition (enumerate `/auth/login` consumers) surfaced a **non-human** one:
+`svc-bbgtml@opalinvest.com`, the Opal Gateway's service credential, which fires **the daily
+Bloomberg PKL refresh — Andrew's dashboard.** Enrolling it in MFA mails a code to a mailbox nobody
+reads and the pipeline gets no session. **True today, with or without ACT B.**
+⛔ **AND MY OWN W1 MIGRATION MADE IT MFA-ELIGIBLE** — the 1.2 backfill wrote `mfaChannel` to all 48
+rows, including two service accounts. The migration's declared domain was "users" and was not MECE
+either; that is the same uncovered-member error one layer below the one CVO caught.
+`1.0.0_SA_CTO~Z` ruled the cohort must be an **allowlist of named humans** (an enumerated exclusion
+lapses silently — the cross-firm-ban-list trap). `3.0.0_SA_CVO~Z` corrected the safety invariant to
+three buckets; **its first use found a SECOND service account** (`cot-verify-internal@`) that had
+been counted as human all night. Corrected census: **HUMAN 0/45 | SERVICE 0/2 | FIXTURE 1/2 = 49,
+exhaustive** — with the bound that my bucketing is a NAME heuristic, not an attribute.
+
+## Blockers
+
+**NONE at this seat.** ACT B is deferred by ruling and its precondition is now reframed (blast
+radius = enrolled accounts, not callers, so it strands nobody today). The gated fixture is **HELD**
+for `0.4.0_DE_ClientPlatform~Z`'s DE3 — credential and code-recovery hop handed over; the delete
+waits until both lanes report done.
