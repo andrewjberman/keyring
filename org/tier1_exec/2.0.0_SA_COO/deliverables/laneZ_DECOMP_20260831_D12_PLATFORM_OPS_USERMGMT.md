@@ -14,6 +14,9 @@ device-bound serials — D12 is minted **UNPLACED** and its placement is Andrew'
 after the comb. **An `issued_to` field is a placement**, so TOs are cut only once he rules.
 **No alarm, SNS subscriber, page or monitor is designed, proposed or costed anywhere below.**
 
+⛔ **OPEN FINDING WITH NO OWNER — see FINDING F-1 at the bottom of this file.** An intended IAM
+restriction on auth mail restricts NOTHING. It is not a cell, not assigned, and not closed by W1 or W2.
+
 ⚠ **SUPERSEDED IN PART BY AMENDMENT 1 (bottom of file) — READ IT BEFORE ACTING ON THIS SECTION.**
 Andrew ruled ~23:15Z @`efcfa8cc5b`: **D12 IS PLACED ON SITE Z and TOs ARE CUTTABLE.** The
 no-placement constraint above was correct when written and is now discharged **for D12 and D7 only**
@@ -269,3 +272,44 @@ binds the workstream's acceptance; it is not a test case inside it.
 2. **TWO DIRECTIVES ARE PLACED, NOT THE REGISTER.** The ~21:1xZ whole-register call stays **OPEN** for
    D0–D6 and D8–D11. The approved rec explicitly proposed deferring them.
 3. **`issued_to` IS STILL A PLACEMENT EVERYWHERE ELSE.** The discharge is for D12 and D7 only.
+
+
+---
+
+# FINDING F-1 — 2026-09-01 ~01:1xZ: **AN INTENDED IAM RESTRICTION THAT RESTRICTS NOTHING**
+
+**OPEN. NO OWNER. Not a cell, not assigned, not closed by W1 or W2.** Recorded here because it was
+found inside D12's work and would otherwise live only in a message thread.
+
+Found by `1.0.0_SA_CTO~Z` on the live role `opalinvest-auth-lambda-role`:
+
+| policy | grant | condition |
+|---|---|---|
+| `opalinvest-auth-permissions` | `ses:SendEmail` on `*` | `StringEquals ses:FromAddress = noreply@opalinvest.dev` |
+| `ses-send-email` | `ses:SendEmail` on `identity/*` | ⛔ **NONE** |
+
+**IAM is a union of Allows and there is no Deny**, so the second statement grants exactly what the
+first one's condition excludes. **The narrow grant is decorative.** Someone wrote that condition
+intending to constrain what this role may send as; it constrains nothing.
+
+⛔ **W2 REPOINTED ALL AUTH MAIL TO `noreply@` AND DID NOT FIX THIS.** Andrew's basis was semantic —
+*"there is nobody responding to these"* — not remedial. **Anyone reading "all auth mail now sends from
+`noreply@`" as "sending is now restricted to `noreply@`" has drawn exactly the false conclusion this
+workstream spent a night avoiding.** That reading is why the repoint was nearly shipped as a security
+fix, and why `0.7.0_AE_CloudOps~Z` deleted its own retracted "DENIED by IAM" comment from `email.ts`.
+
+## Why it is recorded and NOT acted on
+
+**Nothing is failing.** The condition has never blocked a send; the finding is that it never could.
+⛔ **Changing it is an IAM act with its own gate and its own owner** — it is not a side effect of a
+sender repoint, and no lane was authorised to widen or narrow a policy. `0.7.0_AE_CloudOps~Z`
+explicitly touched none.
+
+## How it was found — worth keeping, because the route was backwards
+
+A simulation said `support@` was **denied**; the world then delivered a `support@` email to Andrew.
+The cause was `--resource-arns "*"`, which matches the *first* statement's `Resource` and **not**
+`identity/*`, so the simulator only ever evaluated the conditioned grant. **A control run in a separate
+invocation agreed — because both calls carried the same wrong ARN.**
+> The false finding was "the mailer is broken." The true finding is its opposite: **the mailer works
+> precisely because the restriction does not.** Chasing a wrong answer produced a real one.
