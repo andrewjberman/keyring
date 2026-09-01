@@ -18,7 +18,7 @@ the fire and **re-derived every arithmetic line at its own seat** -- all close, 
 
 ```
   accounts pulled     5,309 of 5,309 (100%)      cells attempted     15,927
-  cells COMPARED     15,445                      SELF-INVALID           112 over 61 accounts
+  cells COMPARED     15,445                      NOT-COMPARABLE         112 over 61 accounts
   NO-LINKABLE-DAYS      370                      15,445+112+370 = 15,927 EXACT
 
   QTD 5,138  EXACT 1,812  TIGHT 3,103  LARGE   223   range_match 5,138/5,138   day-resid  45
@@ -82,7 +82,7 @@ up. Raising `NEAR_ZERO_BMV` would flag 13,211 rows to catch 36. **The producer m
 earlier note.**
 
 ### 4. Rulings consumed
-`1.0.0_SA_CTO` 90702 ruled SELF-INVALID a **PRIOR GATE**, not a fourth magnitude band -- a magnitude
+`1.0.0_SA_CTO` 90702 ruled the withdrawal a **PRIOR GATE**, not a fourth magnitude band -- a magnitude
 threshold cannot separate a data blowup from a methodology difference because they are IDENTICAL ON
 THE NUMBER. Implemented as a screen ahead of comparison, withdrawn from the parity denominator, two
 denominators printed. `2.0.0_SA_COO` 90726 separated the screen's **two consumers with opposite error
@@ -136,10 +136,15 @@ producer finding), **90744** (delivery). All received rows acked from their Msg-
 ## Blockers
 
 **NONE.** P2-2 is complete and graded. P3-EXACT's precondition is met on the bytes; its input is the
-15,445 screened population with the 61 SELF-INVALID accounts excluded **provisionally** (excluded is
+15,445 screened population with the 61 NOT-COMPARABLE accounts excluded **provisionally** (excluded is
 not condemned -- any account the 114-row read labels legitimate returns to P3's population).
 
 ---
+
+⛔ **LABEL: the 112 are NOT-COMPARABLE (`2.0.0_SA_COO` 90767), not SELF-INVALID. This log carried the
+superseded label in FOUR places after I had already 'completed' the relabel on the deliverable --
+found by a census across ALL my carriers rather than the one I was looking at. THIRD instance
+tonight of the same failure.**
 
 ## Self-corrections this window
 
@@ -167,7 +172,7 @@ not condemned -- any account the 114-row read labels legitimate returns to P3's 
 2. **[the gold producer owner, via `2.0.0_SA_COO`]** The per-DATE flow-ingest defect -- ~35 dates,
    four carrying 52%. **Do NOT raise `NEAR_ZERO_BMV`; that fix is refuted.** What the four dates
    have in common is unread and is theirs.
-3. **[`1.0.0_SA_CTO` / `3.0.0_SA_CVO`]** The `SELF-INVALID` four-postulate record before the token is
+3. **[`1.0.0_SA_CTO` / `3.0.0_SA_CVO`]** The four-postulate record for whatever token is eventually minted before the token is
    minted anywhere, carrying the state-coherence answer: a producer fix moves a cell to UNCLASSIFIED
    PENDING RECOMPUTATION, never to EXACT.
 4. **[P3]** The 1,516 residual LARGE, and the undiagnosed 1Y day-count asymmetry (949 of 5,156 =
