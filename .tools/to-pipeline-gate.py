@@ -152,12 +152,12 @@ def _check_preflight(body):
 # transitions DECOMP -> EXECUTING directly on "first TO cut from a decomp cell". There is no
 # intermediate state and the record's own postulate work explains why.
 #
-# ⛔ CORRECTED 2026-09-01 ~19:0xZ. This tuple carried a SEVENTH value, `TOS_CUT`, that was NEVER
+# CORRECTED 2026-09-01 ~19:0xZ. This tuple carried a SEVENTH value, `TOS_CUT`, that was NEVER
 # RATIFIED -- introduced by 3.0.0_SA_CVO when this gate was built, from the ten-step map's step 6
 # rather than from the enum's authority. Rule 24 binds any schema an agent AUTHORS **OR ADOPTS**,
 # and this was a bad adoption by the seat that mandated the rule.
 #
-# ⛔⛔ AND THE CONSEQUENCE IS THE SHARP PART: THE WRONG ENUM SUPPRESSED A REAL FINDING. `--sweep`
+# AND THE CONSEQUENCE IS THE SHARP PART: THE WRONG ENUM SUPPRESSED A REAL FINDING. `--sweep`
 # reported `BRIEF x2` as off-enum and said NOTHING about `TOS_CUT x2`, which is equally off-enum --
 # because this tuple had been widened to admit it. A GATE WHOSE VOCABULARY IS WRONG CANNOT SEE THE
 # VIOLATIONS THAT MATCH ITS OWN ERROR, and it reports CLEAN on exactly those. The refusal message
@@ -216,6 +216,120 @@ def check_project_stage(root, rel):
     return []
 
 
+# FOURTH LIMB -- THE ENDPOINT SECTION IS MANDATORY.
+# ANDREW-DIRECT 2026-09-01, VERBATIM, relayed by 1.0.0_SA_CTO (msg 92478) from its own terminal:
+#  "yes endpoint section is mandatory and it is written by running endpoint --forward skill
+#   process."
+# An explicit Andrew word on a NEW REFUSAL CONDITION, which is the one thing no agent may implement
+# without him (CLAUDE.md: never implement an approval gate unless Andrew explicitly asks).
+#
+# WHY IT IS A ROUTING FAILURE, NOT A TIDINESS ONE. Step 10's third limb asks "does the PRD name this
+# OUTCOME?" With no ENDPOINT section that question has NO ANSWER and the scope-change route silently
+# collapses into the spec-error route -- every misrouted scope change lands on COO as a TO amendment
+# instead of on CTO as a PRD revision.
+# AND AS OF TONIGHT IT IS WORSE THAN A SILENT COLLAPSE: surprise-row-gate.py REFUSES
+# route=SCOPE_CHANGE without an outcome_ref matching FWD-n, and FWD ids exist ONLY in an ENDPOINT
+# section. A PRD without one makes a genuine scope change UNFILEABLE -- the row cannot be written and
+# the finding has nowhere to go. Two gates landed hours apart can compose into a dead end; this limb
+# is what stops that one.
+ENDPOINT_HEADING = "## ENDPOINT (step 2, /endpoint --forward)"
+
+
+def _prd_paths(doc):
+    """Every PRD path a project JSON names. Tolerates all THREE shapes measured in the estate.
+
+    MEASURED 2026-09-01 over 349 project JSONs: `prds` is a LIST in 327, ABSENT in 21, and a bare
+    STRING in 1. A resolver written against the common shape alone would throw on that one file --
+    and it would throw inside a GATE, i.e. it would fail closed on a project whose only sin is an
+    old field shape.
+    """
+    v = doc.get("prds")
+    if not v:
+        return []
+    if isinstance(v, str):
+        return [v]
+    out = []
+    for item in v:
+        if isinstance(item, str):
+            out.append(item)
+        elif isinstance(item, dict) and item.get("path"):
+            out.append(item["path"])
+    return out
+
+
+def check_endpoint_section(root, rel):
+    """LIMB 4: a pipeline-registered project's PRD must carry a non-empty ENDPOINT section."""
+    import json
+    code = _project_of(rel)
+    if not code:
+        return [], []
+    p = os.path.join(root, "org", "projects", code + ".json")
+    cand = code
+    while not os.path.isfile(p) and "_" in cand:
+        cand = cand.rsplit("_", 1)[0]
+        p = os.path.join(root, "org", "projects", cand + ".json")
+    if not os.path.isfile(p):
+        return [], []          # layer 3 already refuses this; do not double-report
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except Exception:  # noqa: BLE001
+        return [], []          # layer 3 already fail-closed on an unreadable project JSON
+
+    if doc.get("dep_stage") is None:
+        return [], []          # not pipeline-registered -> this limb does not apply
+    # dep_stage=REGISTERED means "project registered; NO purpose-level PRD yet" at the ratifying
+    # record. Demanding an ENDPOINT section there would refuse a project for being at the stage the
+    # enum defines as pre-PRD.
+    if doc.get("dep_stage") == "REGISTERED":
+        return [], ["%s: project %s is at dep_stage=REGISTERED (pre-PRD by definition) -- endpoint "
+                    "limb does not apply" % (rel, cand)]
+
+    paths = _prd_paths(doc)
+    if not paths:
+        # NOT REFUSED, AND THE RESTRAINT IS DELIBERATE. Andrew's word makes the SECTION mandatory.
+        # It is NOT a word about a project that names no PRD at all -- that is a different defect,
+        # and converting his authorization into a refusal he did not give is precisely the
+        # inferred-gate prohibition (ANDREW_DIRECT_20260804_1827Z). Surfaced loudly, never widened.
+        return [], ["%s: WARN -- project %s names NO PRD (`prds` absent/empty), so the mandatory "
+                    "ENDPOINT section CANNOT BE CHECKED. This limb passes and the hole is stated "
+                    "rather than silently widened into a refusal Andrew did not authorize. 21 of "
+                    "349 project JSONs are in this shape." % (rel, cand)]
+
+    found, missing = [], []
+    for rp in paths:
+        ap = os.path.join(root, rp.replace("\\", "/"))
+        if not os.path.isfile(ap):
+            missing.append("%s (FILE NOT FOUND)" % rp)
+            continue
+        try:
+            with open(ap, "r", encoding="utf-8", errors="replace") as fh:
+                body = fh.read()
+        except Exception as exc:  # noqa: BLE001
+            missing.append("%s (unreadable: %s)" % (rp, exc))
+            continue
+        idx = body.find(ENDPOINT_HEADING)
+        if idx == -1:
+            missing.append("%s (no ENDPOINT heading)" % rp)
+            continue
+        tail = body[idx + len(ENDPOINT_HEADING):]
+        nxt = tail.find("\n## ")
+        section = (tail if nxt == -1 else tail[:nxt]).strip()
+        if len(section) < 12:
+            missing.append("%s (ENDPOINT heading present but section EMPTY)" % rp)
+            continue
+        found.append(rp)
+
+    if found:
+        return [], ["%s: ENDPOINT section OK in %s" % (rel, found[0])]
+    return ([("%s: project %s is pipeline-registered and NONE of its %d named PRD(s) carry a "
+              "non-empty '%s' section -- %s. Andrew-direct 2026-09-01: the endpoint section is "
+              "MANDATORY and is written by running /endpoint --forward. Without it, step 10 cannot "
+              "ask 'does the PRD name this outcome?', so a scope change silently reroutes as a spec "
+              "error -- and with the outcome_ref gate live it becomes UNFILEABLE instead."
+              % (rel, cand, len(paths), ENDPOINT_HEADING, "; ".join(missing)))], [])
+
+
 def check_file(root, rel):
     """Return (violations, notes) for ONE newly-added TO file."""
     v, notes = [], []
@@ -232,7 +346,7 @@ def check_file(root, rel):
         notes.append("OVERRIDE taken on %s -- reason: %s" % (rel, ov.group(1).strip()))
         return ([], notes)
 
-    #  THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
+    # THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
     # .tools/git-hooks/to-proof-of-spec-check.sh:60-71 already refuses a NEW TO that lacks
     # <decomp_ref> when its project is pipeline-registered, it is WIRED into .git/hooks/pre-commit
     # (:130-131, fail-closed at :132), and it reads STAGED content via `git show :path` rather than
@@ -250,6 +364,12 @@ def check_file(root, rel):
     # inert on 90% of the estate. Requiring the stage is the missing keystone, not the decomp_ref
     # check -- that was already built.
     v.extend(check_project_stage(root, rel))
+
+    # LIMB 4 -- the mandatory ENDPOINT section (Andrew-direct 2026-09-01 via 92478). See
+    # check_endpoint_section for the authorization, the routing argument, and what it CANNOT check.
+    ep_v, ep_notes = check_endpoint_section(root, rel)
+    v.extend(ep_v)
+    notes.extend(ep_notes)
 
     pm = PREFLIGHT_RE.search(text)
     if not pm:
