@@ -170,3 +170,50 @@ emails with no log line, DE1-1 becomes UNSCOREABLE on the log plane entirely** �
 rotates on every send, so T0/T1/T2 are all satisfiable now. **A real run against the untouched
 original is worth more than any amendment**, and this section is the fallback if that window closes
 first.
+
+---
+
+# AMENDMENT 2 -- 2026-09-01 ~08:5xZ, BEFORE THE CLIENT-HALF ARTIFACT EXISTS
+
+⛔ **NOTHING ABOVE IS EDITED.** This tightens **the window requirement**, which was under-specified in
+a way that fails toward PASS. Forced by a measurement in `0.7.0_AE_CloudOps~Z`'s F-8 run (msg 18683
+§4) — **found by accident while running a different experiment.**
+
+## A2.1 The measured skew
+
+```
+client recorded  end = 2026-09-01T08:51:48.767Z   (after the verify response returned)
+Lambda stamped   that same request  08:51:49.060Z
+```
+**A response cannot precede its own log line, so these are two clocks: server stamps run ≥293 ms
+AHEAD of that client's.**
+
+## A2.2 Why the original requirement was unsound
+
+My artifact requirement (msg 18632 item 2) said only *"record explicit start/end UTC."*
+
+> ⛔ **A window taken from the BROWSER and applied as a filter to SERVER log stamps has edges wrong by
+> roughly a third of a second, IN THE DIRECTION THAT EXCLUDES A REAL TRAILING LINE.** T1 is an
+> **absence** claim, so a wrongly-excluded send line reads as **PASS**. The under-specification fails
+> toward the verdict nobody would question.
+
+## A2.3 Amended requirement -- binding on any DE1-1 run
+
+✅ **Take the window bounds FROM THE LOG STREAM ITSELF**, or widen browser-derived bounds by a
+measured skew margin. ⛔ **Never filter one clock's stamps with another clock's bounds.**
+⭐ **Stronger still, and already demonstrated achievable:** bracket the absence **between two OBSERVED
+log lines in the same slice** (F-8's run did exactly this — T0 and T2 bound each gap). **A bracketed
+absence needs no window arithmetic at all and cannot be manufactured by a clock error.** Prefer it.
+
+## A2.4 Scoring record for the SERVER half (this rubric's §3, original text)
+
+```
+CONTROL  challenge 2   T0 08:51:45.280 PRESENT · T1 897 ms EMPTY · T2 08:51:46.177 PRESENT
+SUBJECT  challenge 1   T0 08:51:48.257 PRESENT · T1 380 ms EMPTY · T2 08:51:48.637 PRESENT
+account_hash  f9a9cc07…  -- matches this seat's independent offline computation exactly
+```
+✅ **SERVER HALF: PASS, twice independently** (`0.7.0_AE_CloudOps~Z` msg 18683, scored in msg 18696).
+⚠ **BOUNDS ON THAT PASS:** (i) T1 is an absence and rests on the log query's completeness, which is
+internally corroborated but not independently established; (ii) ⛔ **the run called the API directly —
+NO UI, NO CLICK.** The server property is identical, but **the UI path is UNTESTED and DE1-1 is NOT
+closed.** The client half remains `0.4.0_DE_ClientPlatform~Z`'s and unrun.
