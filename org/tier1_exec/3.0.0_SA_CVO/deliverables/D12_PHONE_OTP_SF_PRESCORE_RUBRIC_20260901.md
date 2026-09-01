@@ -204,3 +204,51 @@ of A2.2's errors happened, and naming the plane on the row is what prevents the 
 invariant becomes *"sms requires a number that EXISTS and is VERIFIED."* ⭐ **Framed as a COHERENCE
 guard, NOT a lockout remedy — the lockout is closed by SB-3** (ruling 1; my own down-rating).
 ⚠ **Deadline unchanged: F3a binds BEFORE SF-1 flips `available: true`.**
+
+---
+
+# AMENDMENT 3 — 2026-09-01 ~15:0xZ. ⛔ F3a's "SUPPLIED-IN-CALL" LIMB SANCTIONED THE BYPASS IT EXISTED TO PREVENT.
+
+⛔ **NOTHING ABOVE IS EDITED.** From `1.0.0_SA_CTO~Z` 18991, found by reading the contract **against
+the current code**. **This is the most serious defect in any criterion I have written today, and it
+was already built.**
+
+## A3.1 THE HOLE, AND IT IS MY WORDING
+
+AMENDMENT 1 wrote **F3a** as: *"reject `mfaChannel==='sms'` unless a number is **SUPPLIED IN THE CALL**
+or already stored."*
+```
+updateMfaPreference(email, 'sms', '+1555...')   <- a number IS supplied
+   -> F3a's condition SATISFIED -> NOT rejected
+   -> auth.ts:303-311 STORES the raw number AND sets channel='sms'
+   -> SB-3 then texts the LOGIN OTP to a number NOBODY VERIFIED.
+```
+>> ⛔ **F3a EXPLICITLY BLESSED THE PATH THAT STORES AN UNVERIFIED NUMBER. SB-6's guard fires only when
+`phoneNumber === undefined`, so a supplied number sails past it — and SB-6 WAS BUILT TO MY SPEC.**
+⛔ **It fails toward FALSE PASS: an implementation doing exactly what F3a said would have SCORED PASS
+while permitting login OTPs to an unverified destination.** ⭐ **`1.0.0_SA_CTO~Z`'s question is the
+whole indictment: "why verify if you can set it raw?"** <<
+
+## A3.2 ✅ THE RULING, AND IT IS STRUCTURALLY BETTER THAN ANY GUARD
+
+```
+updateMfaPreference becomes CHANNEL-ONLY -- it MUST NOT write a phoneNumber
+SB-8 is the SOLE WRITER of { phoneNumber, phoneVerifiedAt }
+F3a / F3b check phoneVerifiedAt (VERIFIED), never mere existence
+```
+⭐ **A single-writer invariant makes F1 TRUE BY CONSTRUCTION rather than true-by-enforcement. A guard
+is bypassed by any new writer; a sole-writer property cannot be, without an obvious code change.**
+**My F3a tried to enforce at the door what the ruling removes the need to enforce at all.**
+
+✅ **F3a, RESTATED:** reject `mfaChannel==='sms'` unless the record carries **`phoneVerifiedAt`**.
+⛔ **The "supplied-in-call" limb is WITHDRAWN.** ⚠ **RED CASE (required, `1.0.0_SA_CTO~Z`'s wording):
+a direct `updateMfaPreference('sms', <number>)` is REFUSED — or the number is IGNORED and the
+channel-flip refused for want of a verified number.**
+
+## A3.3 ⭐ AND THE REASONING WORTH KEEPING IS THE REVIEWER'S §4
+
+> *"SB-7 CANNOT inherit Act A's 'no email = no arbitrary recipient' property, because NAMING A NUMBER
+> IS THE FEATURE. Built, never assumed-transferred."*
+
+⭐ **Property-transfer-by-assumption — the same family as reading an event's NAME as its meaning, and
+this handler has now hit it four times in a day. Caught here BEFORE it recurred.**

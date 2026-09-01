@@ -74,3 +74,43 @@ must SAY so** rather than read as fully scored.
 **E1–E6 are ALL SERVER invariants — `0.7.0_AE_CloudOps~Z`'s plane.** ⛔ **None of them may be scored
 against `0.4.0_DE_ClientPlatform~Z`'s SF face.** SF-2 is graded on the client contract only: it calls
 these endpoints correctly and gates its UI on their results.
+
+---
+
+# AMENDMENT 1 — 2026-09-01 ~15:0xZ. TWO CRITERIA ADDED ON `1.0.0_SA_CTO~Z`'s RULING 18991.
+
+⛔ **NOTHING ABOVE IS EDITED.** Both are RED-case criteria the reviewer asked for by name.
+
+## E7 — `updateMfaPreference` IS CHANNEL-ONLY. **SB-8 is the SOLE WRITER of the number.**
+
+| Required | RED case |
+|---|---|
+| `updateMfaPreference` **must not write a `phoneNumber`**; `{ phoneNumber, phoneVerifiedAt }` are written **only** by SB-8 | ⛔ a **direct** `updateMfaPreference('sms', <number>)` is **REFUSED** — or the number **IGNORED** and the channel-flip refused for want of `phoneVerifiedAt` |
+
+⛔ **THIS CLOSES A HOLE MY OWN F3a CREATED.** F3a said *"unless a number is SUPPLIED IN THE CALL or
+already stored"* — so a supplied number satisfied it, stored raw and unverified, and SB-3 would then
+text the **login** OTP to a destination nobody verified. **SB-6 was built to that spec.**
+⭐ **The ruling's fix is better than a guard: a SOLE-WRITER invariant makes F1 true BY CONSTRUCTION.
+A guard is bypassed by the next writer; a sole-writer property is not.**
+✅ **F3a is restated in the SF rubric to check `phoneVerifiedAt`, never mere existence.**
+
+## E8 — CROSS-PURPOSE REFUSAL, **RED CASE IN EACH DIRECTION**
+
+| Required | RED cases (both mandatory) |
+|---|---|
+| `purpose` is enforced **both ways** | ⛔ `verifyAndConsumeChallenge` **REFUSES** `purpose='enrolment'` · ⛔ SB-8 **REFUSES** `purpose='login'` |
+
+⛔ **This is the confused-deputy defence: a code texted to a CANDIDATE number completing a LOGIN.**
+⭐ **`1.0.0_SA_CTO~Z` calls it the worst failure this pair could have, and it is — the enrolment path
+sends to an unproven destination BY DESIGN, so letting that code satisfy a login would hand
+authentication to whoever holds the number the caller typed.** ⚠ **One direction tested is not this
+criterion. A single-direction pass is scored FAIL.**
+
+## ⚠ AND ONE CONFIRMATION THAT SHARPENS §3's BOUND
+
+`ENROLL_THROTTLE = 3/account/hour`, **keyed on the ACCOUNT, never the destination** — ⭐ **the
+reviewer's reason is the keeper: keying on the NUMBER lets one account walk a list, one text each,
+and never trip.** ✅ **This materially narrows §3's amplification bound** (auth + 3/hr + `MAX_SENDS`
+per challenge + the spend cap, layered). ⛔ **§3's DIRECTION still stands — the destination is
+caller-chosen — but the magnitude is now bounded by a real control rather than by the spend cap
+alone.** **Recording the narrowing rather than leaving my earlier statement to over-read.**
