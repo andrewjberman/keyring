@@ -78,6 +78,19 @@ grammar:
 **ONE BLANK LINE BETWEEN OUTCOMES, always** — a wall of them is unreadable and the reader is
 deciding, not skimming.
 
+⛔ **`FWD-n` IDS ARE PERMANENT AND NEVER REUSED. THIS IS A CONTRACT, NOT A CONVENTION.**
+Once an outcome lands in a PRD its id is fixed for the life of the project.
+- A new outcome takes the **next unused number**, never a freed one.
+- A retired outcome **leaves its number vacant** — the gap is the record that it existed.
+- **Never renumber to close a gap.** Renumbering silently re-points every citation ever made to the
+  old id, and nothing announces it.
+>> **WHY IT IS A CONTRACT: step 10's remediation rows cite `outcome_ref` back into this list.** A
+   scope-change row saying *"the world contradicted FWD-3"* is worthless if FWD-3 later means a
+   different outcome. **A drifting id turns a grounded finding into a wrong one, and the finding
+   still looks grounded.** <<
+Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on the remediation
+schema (`route=SCOPE_CHANGE` only).
+
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond
          DONE WHEN  EXERCISED -- an advisor has actually read one
