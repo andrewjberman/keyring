@@ -630,6 +630,66 @@ if [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# SURPRISE-CHANNEL ROW GATE (steps 7 + 10; Andrew-direct 2026-09-01 "All recs approved", card 2).
+# A NEW investigation row must carry the step-7 trigger's BOTH halves (spec_asserts + world_is); a
+# NEW remediation row must carry route + loop_target satisfying the LOCKED MAPPING. Fail-closed.
+# PROSPECTIVE BY CONSTRUCTION: the gate diffs row IDS between HEAD and the staged blob and grades
+# only ids NEW in this commit -- ~190 legacy rows are never re-graded.
+# ⛔ KEYED ON PATHSPEC, **NOT** IN_SCOPE. IN_SCOPE is the .py/.sh gate scope and every channel file
+# is .md, so wiring this the way the TO gate above is wired would have produced a gate that never
+# fires and reports OK -- the silent-no-op class. Mirrors the comp-system gate's pathspec keying.
+if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
+  SRGATE_FILES=()
+  for _sf in "${PATHSPEC[@]}"; do
+    case "$_sf" in
+      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*)
+        SRGATE_FILES+=("$_sf") ;;
+    esac
+  done
+  if [ "${#SRGATE_FILES[@]}" -gt 0 ]; then
+    SRGATE_OUT=""; SRGATE_RC=0
+    SRGATE_OUT="$(python "$SCRIPT_DIR/surprise-row-gate.py" "${SRGATE_FILES[@]}" 2>&1)" || SRGATE_RC=$?
+    if [ "$SRGATE_RC" -ne 0 ]; then
+      # Read the override out of the ACTUAL commit message, -m AND -F, mirroring the
+      # system-current-override extractor below. ⛔ The first cut of this block referenced a
+      # $COMMIT_MSG_BODY that DOES NOT EXIST ANYWHERE IN THIS SCRIPT -- under `set -euo pipefail`
+      # that aborts, and it aborts ONLY on the refusal path, i.e. exactly when the gate matters.
+      # Caught by grepping for the variable instead of assuming it; the lesson is that a NEW
+      # reference to an EXISTING-LOOKING variable is a claim that needs checking like any other.
+      SR_MSG=""; _srk=0
+      while [ $_srk -lt ${#COMMIT_ARGS[@]} ]; do
+        _sra="${COMMIT_ARGS[$_srk]}"; _srf=""
+        if [ "$_sra" = "-m" ] && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+          SR_MSG="${SR_MSG}"$'\n'"${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2)); continue
+        elif { [ "$_sra" = "-F" ] || [ "$_sra" = "--file" ]; } && [ $((_srk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+          _srf="${COMMIT_ARGS[$((_srk + 1))]}"; _srk=$((_srk + 2))
+        elif [ "${_sra#--file=}" != "$_sra" ]; then
+          _srf="${_sra#--file=}"; _srk=$((_srk + 1))
+        else
+          _srk=$((_srk + 1)); continue
+        fi
+        if [ -n "$_srf" ] && [ "$_srf" != "-" ] && [ -f "$_srf" ]; then
+          SR_MSG="${SR_MSG}"$'\n'"$(cat -- "$_srf" 2>/dev/null || true)"
+        fi
+      done
+      SR_OVR="$(printf '%s' "$SR_MSG" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*surprise-row-override:[[:space:]]*//p' | head -1)"
+      if [ -n "$SR_OVR" ]; then
+        mkdir -p "$(dirname "$AUDIT_LOG")" 2>/dev/null || true
+        echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
+        echo "WARN: surprise-row-gate OVERRIDDEN (audited): ${SR_OVR}" >&2
+        printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+      else
+        for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
+        echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2
+        printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+        exit 1
+      fi
+    elif [ -n "$SRGATE_OUT" ]; then
+      printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+    fi
+  fi
+fi
+
 # WS-2 comp-system 06_current_state staleness gate (NFRA_SYSPARITY, CTO arch-gate 20260719T213935Z).
 # A commit that touches a comp-system _SOURCE must not leave 06 stale. FAIL-CLOSED on GENUINE drift
 # (source-fingerprint / managed-region), STALENESS-CONDITIONED (comp-system --gate --changed evaluates
