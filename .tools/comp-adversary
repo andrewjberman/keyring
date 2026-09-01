@@ -14,8 +14,16 @@ coverage is honest BY CONTRACT, never silent). Output = a validation_context_dec
 L0a boundary_report SIBLING per the ruled declaration family (declaration + closed conformance
 enum + evidence pins with declared KIND + in-artifact denominators).
 
+STAGE 4 (PACKET) landed 2026-08-31 by 3.0.0_SA_CVO~C: the complement is no longer a list of
+POINTERS, it is a set of comp-read DIGESTS. It is NOT "digest everything" -- measured on the D2
+proof-of-spec, the complement was 542 siblings, and at 2382-10395 bytes / 313-562 ms per digest
+that is ~3 MB and ~240 s: a context bomb AND a breach of the design note's own measured 71.5 s
+constraint. So the packet is a declared SELECTION RULE plus digests, and the rule prints its
+denominator and its exclusions in the artifact (see SALIENCE below).
+
 USAGE:
   comp-adversary compose <artifact-path> [--out <path>] [--max-neighbors N]
+                        [--digest-budget N] [--digest-bytes N] [--no-packet]
   comp-adversary --open [--out <path>]        # model-prior validator packet, no estate context
   comp-adversary --self-test
 
@@ -110,12 +118,14 @@ def vintage_check(paths, artifact_date):
 
 
 def uncited_neighbors(paths, cap):
+    """Returns (capped_display_list, total, full_list). The FULL list is what stage 4
+    classifies -- selecting from a list that was already capped for display would silently
+    scope the packet to the display cap, a different (and unstated) selection rule."""
     cited = set(paths)
     cited_dirs = {}
     for p in paths:
         cited_dirs.setdefault(os.path.dirname(p), True)
-    out = []
-    total = 0
+    full = []
     for d in sorted(cited_dirs):
         ad = os.path.join(repo_root(), d)
         if not os.path.isdir(ad):
@@ -127,10 +137,122 @@ def uncited_neighbors(paths, cap):
         for s in sibs:
             rp = (d + "/" + s).lstrip("/")
             if rp not in cited:
-                total += 1
-                if len(out) < cap:
-                    out.append(rp)
-    return out, total
+                full.append(rp)
+    return full[:cap], len(full), full
+
+
+# --------------------------------------------------------------------- STAGE 4: THE PACKET
+# THE SELECTION RULE, as a SCHEMA (CLAUDE.md Rule 24 TAXONOMY LAW -- a value-enum an agent
+# authors arrives with its four-postulate record or it is not a proposal):
+#
+#   AXIS (one, and only one): ADVERSARIAL SALIENCE -- how likely is it that this uncited file,
+#   if the validator read it, would CHANGE the conclusion the author reached? Not "importance",
+#   not "recency" alone: those are different axes and mixing them is the intent-coherence defect.
+#
+#   (i) MECE over the DECLARED domain. Domain = every uncited directory sibling of a cited path
+#       (the source-3 set). Classes are evaluated FIRST-MATCH-WINS in the order below, which
+#       makes the partition exhaustive and disjoint BY CONSTRUCTION -- every member lands in
+#       exactly one class, and the class census in the output sums to the domain.
+#   (ii) SAME GRAIN. Every class is at FILE grain. No class is a directory or a topic.
+#   (iii) INTENT COHERENCE. One axis (salience), one intent (what to spend the budget on).
+#         Budget size is a SEPARATE knob (--digest-budget); it is not a class.
+#   (iv) STATE COHERENCE -- which values one remedy does NOT move:
+#         * Re-running at a later vintage moves S1 membership ONLY (S1 is vintage-indexed).
+#           It does NOT move S2/S3/S4, which are structural.
+#         * The author citing MORE paths moves S2 and S3 (both are relative to the citation
+#           set) and can move a file OUT of the domain entirely. It does NOT move S1.
+#         * Raising --digest-budget moves what is SELECTED. It moves no file's CLASS.
+#
+#   S1 POSTDATES  the sibling changed AFTER the artifact's vintage. The author could not have
+#                 read what it says now -- the strongest "the world moved under the author" case.
+#   S2 KIN        the sibling shares a filename stem with something the author DID cite: the
+#                 sibling member / wrong-version class (they read v1, v2 sat beside it).
+#   S3 DENSE      the sibling sits in a directory the author cited 2+ times -- demonstrably
+#                 their working area, so an omission there is a choice, not distance.
+#   S4 PERIPHERAL everything else: a sibling of a directory touched exactly once.
+#
+# WARN: THE RULE IS DECLARED IN THE OUTPUT, NEVER ONLY HERE. A selection rule buried in code is
+# indistinguishable to a validator from an arbitrary truncation.
+SALIENCE_CLASSES = [
+    ("S1", "POSTDATES", "changed after the artifact's vintage -- author could not have read this"),
+    ("S2", "KIN", "shares a filename stem with a CITED path -- sibling-member/wrong-version class"),
+    ("S3", "DENSE", "in a directory the author cited 2+ times -- demonstrably their working area"),
+    ("S4", "PERIPHERAL", "sibling of a directory the author cited once"),
+]
+# Non-text members of the domain: they are CLASSIFIED (they stay in the denominator) but never
+# digested -- comp-read is a text instrument and a binary digest would be noise wearing evidence
+# clothing. Declared in the output as a named exclusion, never dropped silently.
+BINARY_EXT = (".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".gz", ".xlsx", ".pptx", ".docx",
+              ".pkl", ".parquet", ".ico", ".woff", ".woff2", ".ttf", ".exe", ".dll", ".pyc")
+
+
+def _ascii(s):
+    """comp-read reads source files with errors='replace', so a digest can carry U+FFFD out of
+    any file that is not clean ASCII. This declaration gets WRITTEN TO DISK, and CLAUDE.md bans
+    non-ASCII in production output -- so the packet sanitizes rather than propagating."""
+    return "".join(ch if 32 <= ord(ch) < 127 or ch in "\n\t" else "?" for ch in s)
+
+
+def paths_changed_since(since_iso):
+    """ONE git call for the whole S1 question. The per-file form (git log -1 -- <path>) is 542
+    subprocesses on the measured artifact; this is one, and it asks the same question."""
+    if not since_iso:
+        return set(), "artifact has no commit vintage -- S1 is UNRESOLVABLE and reads empty"
+    r = _git("log", "--since=%s" % since_iso, "--name-only", "--format=")
+    if r.returncode != 0:
+        return set(), "git log --since rc=%d -- S1 DEFERRED" % r.returncode
+    return set(x.strip() for x in r.stdout.splitlines() if x.strip()), None
+
+
+def classify_salience(siblings, cited, artifact_date):
+    changed, s1_note = paths_changed_since(artifact_date)
+    stems = set()
+    for p in cited:
+        b = os.path.basename(p)
+        stems.add(b.rsplit(".", 1)[0].lower())
+    dense = {}
+    for p in cited:
+        d = os.path.dirname(p)
+        dense[d] = dense.get(d, 0) + 1
+    rows = []
+    for p in siblings:
+        stem = os.path.basename(p).rsplit(".", 1)[0].lower()
+        kin = stem in stems or any(
+            (stem.startswith(s) or s.startswith(stem)) and min(len(stem), len(s)) >= 8
+            for s in stems)
+        if p in changed:
+            cls = "S1"
+        elif kin:
+            cls = "S2"
+        elif dense.get(os.path.dirname(p), 0) >= 2:
+            cls = "S3"
+        else:
+            cls = "S4"
+        rows.append((p, cls))
+    return rows, s1_note
+
+
+def _comp_read_digest(rel, budget_bytes):
+    """Rung 2 of the build ladder: comp-read EXISTS and the spec names it. This shells out to it
+    exactly as comp_state_drift() shells out to comp-state -- no second digest engine."""
+    tool = os.path.join(repo_root(), ".tools", "comp-read")
+    if not os.path.exists(tool):
+        return None, "comp-read not present at %s (packet DEFERRED, not silently skipped)" % tool
+    try:
+        r = subprocess.run(["python", tool, rel], capture_output=True, text=True,
+                           timeout=60, cwd=repo_root())
+        if r.returncode != 0:
+            return None, "comp-read rc=%d" % r.returncode
+        txt = _ascii(r.stdout or "")
+        if len(txt) > budget_bytes:
+            # comp-read's own hard rule 2 is NEVER TRUNCATE SILENTLY. Inherited here.
+            txt = txt[:budget_bytes] + (
+                "\n... DIGEST TRUNCATED at %d of %d bytes (per-file cap --digest-bytes; the "
+                "FULL file is the territory, this was only ever an index into it)\n"
+                % (budget_bytes, len(_ascii(r.stdout or ""))))
+        return txt, None
+    except Exception as e:
+        return None, "comp-read unavailable: %s" % type(e).__name__
 
 
 def comp_state_drift():
@@ -152,7 +274,10 @@ DEFERRED_SOURCES = [
     ("comp-blast/comp-trace neighborhood expansion",
      "v1: graph expansion not wired -- neighborhood = directory siblings only"),
     ("comp-pulse warnings / comp-cochange diversity", "v1: not wired"),
-    ("comp-read digests (the packet stage)", "v1: the packet lists POINTERS, not digests"),
+    # RETIRED 2026-08-31 (3.0.0_SA_CVO~C): "comp-read digests (the packet stage) -- v1: the
+    # packet lists POINTERS, not digests" is no longer an exclusion. Stage 4 is BUILT (source 5).
+    # What remains bounded there is the SELECTION, and that is declared inside source 5 with its
+    # own denominator and class census -- not here, because it is a stated scope, not an absence.
     ("T11 admissibility method", "named slot, ships when CRO's method ratifies"),
 ]
 
@@ -166,7 +291,68 @@ def _emit(body, out_path):
         print(body)
 
 
-def compose(path, out_path, cap, open_mode=False):
+def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_packet):
+    """STAGE 4. Emits the declared selection rule, its class census, the digests, and -- the
+    part that carries the contract -- what it did NOT digest and why."""
+    L = []
+    L.append("### source 5: comp-read digests of the complement (THE PACKET -- stage 4)")
+    if no_packet:
+        L.append("  SKIP: --no-packet given. Stage 4 was DISABLED BY THE CALLER for this run;")
+        L.append("  the complement above is POINTERS ONLY. This is a caller's choice, recorded")
+        L.append("  here so the validator never reads a pointer list as a digested one.")
+        L.append("")
+        return L
+    rows, s1_note = classify_salience(siblings, cited, artifact_date)
+    order = {c[0]: i for i, c in enumerate(SALIENCE_CLASSES)}
+    ranked = sorted(rows, key=lambda r: (order[r[1]], r[0]))
+    census = {c[0]: [0, 0] for c in SALIENCE_CLASSES}     # [selected, total]
+    for _, c in rows:
+        census[c][1] += 1
+    selected, skipped_binary = [], 0
+    for p, c in ranked:
+        if len(selected) >= budget:
+            break
+        if p.lower().endswith(BINARY_EXT):
+            skipped_binary += 1
+            continue
+        selected.append((p, c))
+        census[c][0] += 1
+    L.append("  selection rule: ADVERSARIAL SALIENCE, one axis, first-match-wins over "
+             "S1>S2>S3>S4 (MECE by construction; full record in the source header)")
+    for cid, nm, why in SALIENCE_CLASSES:
+        L.append("    %s %-10s %s" % (cid, nm, why))
+    if s1_note:
+        L.append("  S1 NOTE: %s" % s1_note)
+    L.append("  budget: %d file(s) at <=%d bytes each (raise with --digest-budget/--digest-bytes)"
+             % (budget, per_file_bytes))
+    L.append("  selected: %d of %d uncited siblings" % (len(selected), len(rows)))
+    L.append("  class census: %s" % ", ".join(
+        "%s %d/%d" % (cid, census[cid][0], census[cid][1]) for cid, _, _ in SALIENCE_CLASSES))
+    not_digested = len(rows) - len(selected)
+    L.append("  NOT DIGESTED: %d of %d siblings -- %d beyond the budget, %d non-text (comp-read "
+             "is a text instrument; binaries stay in the denominator, never dropped)"
+             % (not_digested, len(rows), max(0, not_digested - skipped_binary), skipped_binary))
+    L.append("  WARN: THE PACKET IS A SELECTION, NOT A SURVEY. A file's ABSENCE from the "
+             "digests below is a BUDGET fact, never an assessment that it did not matter.")
+    L.append("")
+    total_bytes = 0
+    for i, (p, c) in enumerate(selected, 1):
+        txt, err = _comp_read_digest(p, per_file_bytes)
+        L.append("  --- digest %d/%d: %s [class %s]" % (i, len(selected), p, c))
+        if err:
+            L.append("      DEFERRED: %s" % err)
+            continue
+        total_bytes += len(txt)
+        for ln in txt.splitlines():
+            L.append("  | " + ln)
+        L.append("")
+    L.append("  packet: %d digest(s), %d bytes total" % (len(selected), total_bytes))
+    L.append("")
+    return L
+
+
+def compose(path, out_path, cap, open_mode=False, digest_budget=12, digest_bytes=2400,
+            no_packet=False):
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     head = _git("rev-parse", "--short=10", "HEAD").stdout.strip()
     L = []
@@ -224,12 +410,14 @@ def compose(path, out_path, cap, open_mode=False):
     for p, v, why in moved:
         L.append("  - %s : %s (%s)" % (p, v, why))
     L.append("")
-    nb, nb_total = uncited_neighbors(prof["paths"], cap)
+    nb, nb_total, nb_full = uncited_neighbors(prof["paths"], cap)
     L.append("### source 3: uncited neighborhood (directory siblings of cited paths)")
     L.append("  total uncited siblings: %d (showing %d -- the CAP is declared, not silent)" % (nb_total, len(nb)))
     for p in nb:
         L.append("  - %s" % p)
     L.append("")
+    L.extend(_packet_section(nb_full, prof["paths"], adate, digest_budget, digest_bytes,
+                             no_packet))
     drift, err = comp_state_drift()
     if err:
         L.append("### source 4: comp-state drift -- DEFERRED (%s)" % err)
@@ -244,7 +432,8 @@ def compose(path, out_path, cap, open_mode=False):
     L.append("")
     L.append("## DENOMINATORS")
     L.append("complement sources: %d run / %d deferred-with-reason / %d declared-excluded"
-             % (3 + (0 if err else 1), (1 if err else 0), len(DEFERRED_SOURCES)))
+             % ((3 if no_packet else 4) + (0 if err else 1), (1 if err else 0),
+                len(DEFERRED_SOURCES)))
     L.append("pin kinds: all pins in this declaration are READ-VINTAGE (declaration-vintage pins")
     L.append("appear only where the artifact itself recorded one -- trace-to-authority claims are")
     L.append("UNANSWERABLE from this declaration alone and are not implied).")
@@ -287,7 +476,19 @@ def self_test():
         c4 = all(s in out for s in need)
         print("control 4 (family-shape sections present): %s" % ("PASS" if c4 else "FAIL"))
         ok = ok and c4
-    print("self-test: %s" % ("PASS 4/4" if ok else "FAIL"))
+        # CONTROL 5 (stage 4, added 2026-08-31 by 3.0.0_SA_CVO~C). THE PLANTED CASE: the fixture
+        # cites a REAL path whose directory has real siblings, so a working packet MUST digest at
+        # least one of them and that digest MUST carry comp-read's own panel banner. Run RED
+        # against the pre-stage-4 binary (measured: 0 banners, 1/7 on the battery) -- a control
+        # that passes against the old code proves nothing. It asserts three things a pointer list
+        # cannot satisfy: comp-read's banner, the selection denominator, and the class census.
+        c5 = ("comp-read: " in out
+              and re.search(r"selected: \d+ of \d+ uncited siblings", out) is not None
+              and "class census:" in out)
+        print("control 5 (stage-4 packet: real comp-read digest content + selection denominator "
+              "+ class census -- fails on the pointers-only build): %s" % ("PASS" if c5 else "FAIL"))
+        ok = ok and c5
+    print("self-test: %s" % ("PASS 5/5" if ok else "FAIL"))
     return 0 if ok else 1
 
 
@@ -312,7 +513,10 @@ def main():
             return 2
         out = args[args.index("--out") + 1] if "--out" in args else None
         cap = int(args[args.index("--max-neighbors") + 1]) if "--max-neighbors" in args else 25
-        compose(path, out, cap=cap)
+        budget = int(args[args.index("--digest-budget") + 1]) if "--digest-budget" in args else 12
+        dbytes = int(args[args.index("--digest-bytes") + 1]) if "--digest-bytes" in args else 2400
+        compose(path, out, cap=cap, digest_budget=budget, digest_bytes=dbytes,
+                no_packet=("--no-packet" in args))
         return 0
     print("unknown mode: %s (see --help)" % args[0])
     return 2

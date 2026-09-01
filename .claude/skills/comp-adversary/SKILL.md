@@ -1,6 +1,6 @@
 ---
 name: comp-adversary
-description: Compose the VALIDATOR-CONTEXT DECLARATION for a returned artifact -- what the author's evidence context WAS, and explicitly what it was NOT. Run it before validating someone's work (Andrew-direct 2026-08-19, a mandatory element of the atom_decomp validation piece), and on your own artifact before handing it over. `comp-adversary compose <artifact-path>` profiles the author's pins, verifies cited commits, flags cited paths that MOVED since authoring, lists the UNCITED directory siblings of everything cited, and adds comp-state drift; `--open` emits the empty-context declaration for model-prior review with estate grounding DECLARED ABSENT; `--self-test` runs 4 controls including a planted bogus commit that must flag UNVERIFIABLE. Read-only over repo + git -- no AWS, no model calls, deterministic. ⛔ EVERY FIGURE IT PRINTS IS SCOPED TO WHAT THE AUTHOR CITED, NEVER TO WHAT EXISTS, and its output is phrased as though it describes the world -- a declaration is a statement of what was and was not looked at, never a clean bill of health. Engine `.tools/comp-adversary`.
+description: Compose the VALIDATOR-CONTEXT DECLARATION for a returned artifact -- what the author's evidence context WAS, and explicitly what it was NOT. Run it before validating someone's work (Andrew-direct 2026-08-19, a mandatory element of the atom_decomp validation piece), and on your own artifact before handing it over. `comp-adversary compose <artifact-path>` profiles the author's pins, verifies cited commits, flags cited paths that MOVED since authoring, lists the UNCITED directory siblings of everything cited, adds comp-state drift, and -- since stage 4 landed 2026-08-31 -- hands the validator actual `comp-read` DIGESTS of a declared-salience selection of that complement, not just its paths; `--open` emits the empty-context declaration for model-prior review with estate grounding DECLARED ABSENT; `--self-test` runs 5 controls including a planted bogus commit that must flag UNVERIFIABLE. Read-only over repo + git -- no AWS, no model calls, deterministic. ⛔ EVERY FIGURE IT PRINTS IS SCOPED TO WHAT THE AUTHOR CITED, NEVER TO WHAT EXISTS, and its output is phrased as though it describes the world -- a declaration is a statement of what was and was not looked at, never a clean bill of health. Engine `.tools/comp-adversary`.
 ---
 
 # /comp-adversary — the validator-context declaration
@@ -20,8 +20,11 @@ the validator's blind spot becomes a printed list instead of an assumption.
 | `/comp-adversary compose <artifact-path>` | The full declaration for one artifact. |
 | `/comp-adversary compose <path> --out <file>` | Write it to disk (it is an L0a `boundary_report` sibling). |
 | `/comp-adversary compose <path> --max-neighbors N` | Cap the sibling list (the cap is declared in the output, never silent). |
+| `/comp-adversary compose <path> --digest-budget N` | How many complement files to DIGEST (default 12). |
+| `/comp-adversary compose <path> --digest-bytes N` | Per-file digest cap (default 2400; truncation is printed, never silent). |
+| `/comp-adversary compose <path> --no-packet` | Pointers only — skips stage 4. The skip is DECLARED in the output. |
 | `/comp-adversary --open` | Empty-context declaration: model priors only, estate grounding DECLARED ABSENT. |
-| `/comp-adversary --self-test` | 4 controls. **Run this first.** |
+| `/comp-adversary --self-test` | 5 controls. **Run this first.** |
 
 ## ⛔⛔ THE ONE READING RULE — it covers every bound this tool has
 
@@ -48,6 +51,14 @@ A backtick-wrapped `` @`hash` `` is invisible to it, so it runs on an empty set 
 >
 > **Practical consequence: cite hashes BARE if you want source 1 to actually verify them.**
 > Backticks are a rendering preference; here they silently disable the check.
+>
+> **STILL UNFIXED as of 2026-08-31, and deliberately not fixed by the stage-4 build.** `COMMIT_RE`
+> at `.tools/comp-adversary:49` is owned by `0.8.0_AE_CloudComp` (design note s.4 routes it there;
+> findings 90276–90279 are queued in that inbox). `3.0.0_SA_CVO~C` built stage 4 without touching
+> `:49` so the two lanes do not collide in one file. Recommended predicate when that seat picks it
+> up: warn when `commits_found == 0 AND raw_hex_runs_present > 0` — the current ZERO-PIN banner
+> keys on profile-emptiness, so it stays silent on the 0-commit/1-path case, which is the half that
+> looks well-evidenced.
 
 **2. COMPLEMENT SIZE — source 3 expands from CITED paths.**
 An artifact citing zero paths yields "0 uncited siblings" on a directory holding six live files.
@@ -71,20 +82,61 @@ Source 2 (cited-path vintage) is the other reliable half: it flags a cited path 
 AUTHORING**, which is the stale-citation class one layer up — the claim is fine, the thing it was
 measured against moved.
 
-## v1 scope is self-declaring, and that is the contract
+## Stage 4 — THE PACKET (landed 2026-08-31, `3.0.0_SA_CVO~C`)
 
-**4 complement sources run; 6 are DECLARED EXCLUSIONS** printed in every output — toolgraph
+Source 3 tells the validator *which* files the author never opened. **Source 5 lets them actually
+read some of them** — real `comp-read` digests, inline, in the declaration.
+
+**It is a SELECTION, not a survey, and that is the whole design problem.** Measured on the D2
+proof-of-spec: the complement is **542 files**, and a digest runs 2.4–10.4 KB / 0.3–0.6 s each.
+Digesting all of them is ~3 MB and ~240 s — a context bomb *and* a breach of the design note's own
+71.5 s constraint. So the packet spends a **budget** against a declared salience ranking:
+
+| class | meaning | why it ranks here |
+|---|---|---|
+| **S1 POSTDATES** | changed *after* the artifact's vintage | the author could not have read what it says now |
+| **S2 KIN** | shares a filename stem with a CITED path | the sibling-member / wrong-version class |
+| **S3 DENSE** | in a directory the author cited 2+ times | demonstrably their working area — an omission there is a choice |
+| **S4 PERIPHERAL** | sibling of a directory cited once | distance, not choice |
+
+First-match-wins, so the classes **partition** the complement (MECE, Rule 24) — the output's
+`class census:` line sums to the domain, and the acceptance battery asserts that it does.
+
+⛔ **READ `selected: N of M` AS THE WHOLE CLAIM.** A typical run digests **12 of 542**. A file's
+absence from the packet is a **BUDGET fact, never an assessment that it did not matter** — the tool
+prints that sentence itself so it cannot be dropped in the retelling. Raise `--digest-budget` when
+the question warrants it; the runtime scales linearly and the 71.5 s order is the bar.
+
+**What one remedy does NOT move** (state coherence): re-running at a later vintage moves S1 only;
+the author citing more paths moves S2/S3 only; raising the budget moves what is *selected* and no
+file's *class*.
+
+## Scope is self-declaring, and that is the contract
+
+**5 complement sources run; 5 are DECLARED EXCLUSIONS** printed in every output — toolgraph
 independence, comp-axes snapshot rows, comp-blast/comp-trace graph expansion, comp-pulse/comp-cochange,
-comp-read digests, and the T11 admissibility slot. Partial coverage is honest **by contract**, never
-silent. Quote the tool's own bound alongside any result you carry.
+and the T11 admissibility slot. (The sixth, "comp-read digests — the packet lists POINTERS", was
+**retired** when stage 4 landed.) Partial coverage is honest **by contract**, never silent. Quote the
+tool's own bound alongside any result you carry.
 
 ## How to use it
 
-1. `--self-test` first. 4/4, and it includes a planted-bogus-commit control that must flag
-   UNVERIFIABLE plus a real pin that must VERIFY — so a pass discriminates rather than merely runs.
+1. `--self-test` first. 5/5 — a planted-bogus-commit control that must flag UNVERIFIABLE, a real pin
+   that must VERIFY, and control 5, which asserts the packet carries comp-read's own panels. Control
+   5 was **run RED against the pre-stage-4 binary** (0 panels) before it was written green, so a pass
+   discriminates rather than merely runs.
 2. `compose` the artifact under review.
-3. Read source 3 as your **assignment list**, not as a finding.
+3. Read source 3 as your **assignment list**, not as a finding — and source 5 as the part of that
+   list someone already pulled for you.
 4. Carry the declaration WITH its bound when you report. Never as a pass.
+
+## Acceptance battery
+
+`python .tools/tests/test_comp_adversary_stage4_packet.py` — 7 legs (digest content, denominator,
+exclusions 6→5, `--open` unchanged, a planted no-digest **mutant**, a zero-cited-path **negative
+control**, and the MECE partition). The mutant is built from the *shipped* bytes at run time rather
+than a pinned commit, so it cannot go stale into measuring a ghost.
+`python .tools/tests/test_comp_adversary_path_truncation.py` — the 4-leg PATH_RE census, unchanged.
 
 ⚠ The mandate names `atom_decomp`'s validation piece, but **`atom_decomp` is not an executable in
 this tree** — it is the method (`/atom-decomp` skill). Do not go looking for a binary.
