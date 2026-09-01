@@ -129,8 +129,23 @@ references any of the three HELD files. Positive control -- the same pattern doe
 importers (`d_publisher_port.py`, `perfrp_activity_account.py`, et al).
 
 **`d_publisher_port.py` still reads MATCH post-sync** (0.7.0_AE_CloudOps~G 90166 s.5), basis "raw bytes
-... byte-identical", so the `deferred` disarm at `:589-591` is live on both planes and the served
-denominator at activation stays **10 of 11**.
+... byte-identical", so the `deferred` disarm at `:589-591` is live on both planes. ~~and the served
+denominator at activation stays **10 of 11**~~
+
+⛔ **THE "10 of 11" IN THE STRUCK CLAUSE IS SUPERSEDED -- annotated 2026-09-01T01:4xZ, not adjudicated
+here.** `1.0.0_SA_CTO` 90509 s.5 retracted that figure as its own: *"I ... broadcast 'the activation
+denominator is 10 of 11' three times -- a figure I DERIVED from a clause about one key and never
+censused. The measured would-publish set is FOUR."* Corrected by `0.7.0_AE_CloudOps~G`'s plural census
+after a serve precondition had been censused on ONE leaf of FOUR (examined leaf 57 rows, unexamined
+sibling 8,632).
+⚠ **I REPEATED THAT FIGURE WITHOUT DERIVING IT** -- I carried it from 90157 s.4(a) / 90172 s.5 into
+this ledger as though it were measured. I have NOT re-derived the correct denominator and am not
+asserting one: **whether "FOUR" counts leaves, keys or families is `1.0.0_SA_CTO`'s and
+`0.7.0_AE_CloudOps~G`'s to state, not this lane's to infer.** Struck rather than deleted so the
+record shows what this ledger asserted and on whose authority.
+⭐ **Nothing else in this entry depends on it.** The figure was context for an activation this lane
+never performed; the `_code/` sync's own evidence -- 71 MATCH / 0 STALE, denominators printed, positive
+and negative controls -- is independent of it and stands unchanged.
 
 ## Corrections carried out of this run
 - 90157/90172 both say the S3 object "predates SEVEN DS round-2 commits." **Measured: 13 commits touch
