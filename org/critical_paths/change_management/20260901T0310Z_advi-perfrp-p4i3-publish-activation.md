@@ -108,6 +108,37 @@ than the producer's self-report.
 **REFUSED BY DESIGN (7):** `activity_{relationship,account}`, `performance_relationship`,
 `allocation_{relationship,account}`, `transactions_relationship`, `roster_relationship`.
 
+## ⚠ DISCLOSURE -- WHAT THE GO SIGNAL CERTIFIED, AND WHAT IT COULD NOT SEE
+
+Raised by `0.4.0_DS_ClientPlatform~G` (90878 s.4), who noted it *"stood ~6.5 hours unstated, including
+through `0.7.0_AE_CloudOps~G`'s activation sweeps."* **Verified independently at this seat, with a
+positive control:**
+
+```
+  git merge-base --is-ancestor 9c7011f93d origin/CLOUD   -> NOT ON ORIGIN
+  POSITIVE CONTROL   79a2eff0ed                          -> ON ORIGIN  (the instrument can see ancestry)
+  origin/CLOUD at read time: 173a873139
+```
+
+>> **SINCE 00:10Z, `s3://opal-data-49financial/_code/` HAS BEEN SERVING BYTES WHOSE AUTHORIZING COMMIT
+   IS NOT ON `origin/CLOUD`. This activation therefore ran emitter code that is CORRECT but whose
+   authorizing commit is unpushed.** It is the INVERSE of the staleness class this session chased --
+   the served plane is AHEAD of the record, not behind it. <<
+
+⛔ **AND THE SCOPE LIMIT IS ON MY OWN GO SIGNAL, WHICH IS THE PART WORTH KEEPING.**
+`comp-pipescript deployed` compares **LOCAL WORKTREE ↔ S3**. It read `71 MATCH / 0 STALE`, and that is
+TRUE and is exactly what the signal was for: the publisher ran against the code S3 actually serves.
+**But the instrument does NOT compare ORIGIN ↔ S3, so it could not have detected this divergence by
+construction** -- a clean `MATCH` says nothing about whether the matched bytes are on the record.
+**A currency check against the DEPLOYED plane is not a currency check against the RECORD.**
+
+**This does NOT invalidate the activation:** the emitters that ran are the correct post-sentinel bytes
+(`perfrp_emit_core.py` `6adffc4949…` @00:10:20Z et al.), the published leaves are correct, and a
+publish's correctness does not depend on push state. **It DOES mean the push resolves an existing
+divergence rather than creating one** -- and the four published leaves above were produced by emitter
+code in that state. Stated here because my own report gave push state for the LEDGER COMMIT and not for
+the EMITTER CODE, and those are two different objects.
+
 ## What this act did NOT do
 
 - **No PROD portal promote.** Separate act, separate branch, not approved and not asked.
