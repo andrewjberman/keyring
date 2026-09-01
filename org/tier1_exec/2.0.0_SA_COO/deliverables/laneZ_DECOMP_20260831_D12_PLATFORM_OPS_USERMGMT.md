@@ -753,18 +753,29 @@ Bloomberg PKL refresh -- Andrew's model-portfolio dashboard.**
    silently goes stale. **TRUE TODAY, with or without Act B** -- it is a property of MFA being ON for
    that account, not of where the send happens. <<
 
-## THE MEASUREMENT - this seat, live, the question `3.0.0_SA_CVO~Z` routed to me
+## THE MEASUREMENT - this seat, live; and ⛔ MY FIRST SPLIT WAS WRONG, WHICH IS ITSELF THE FINDING
 ```
 opal-users-v2 SK=PROFILE scan, no pagination:  49 rows, ScannedCount 76
-  svc-bbgtml@opalinvest.com   PRESENT   mfaEnabled=False   userType=None   -> IN the population
-  49 rows carry mfaEnabled  =  47 humans + 1 SERVICE (svc-bbgtml) + 1 FIXTURE (success@simulator)
-  gated: 1  -- the fixture ONLY
+  ALL 49 carry mfaEnabled (a DEFINED value)   gated: 1  -- success@simulator ONLY
+  userType=Dev: 5  (Andrew, Alyssa, Yang, Michael, Austin -- the HUMAN superadmins)
+  userType=None: 44  (everything else, service accounts and test rows included)
+  KNOWN service accounts BY NAME: svc-bbgtml@ (Bloomberg refresh) + cot-verify-internal@ (UNTRACED)
+  KNOWN test/synthetic rows: demo@demo.test, test-*@* (7), user@* (3)   -- a FOURTH kind
 ```
-⛔ **SO "0 OF 48 GATED" SILENTLY INCLUDED A SERVICE ACCOUNT ALL NIGHT.** The denominator any cohort
-selection draws from **contains an account that must never enter the enrolled set**, and nothing in
-the row distinguishes it: `userType=None` (an ordinary user), and `userType=Dev` marks 5 HUMAN
-superadmins (Andrew/Alyssa/Yang/Michael/Austin) -- **so `userType` is NOT the human/non-human axis and
-must not be pressed into service as one.**
+⛔ **I FIRST REPORTED "47 humans + 1 service + 1 fixture." THAT WAS WRONG** -- my classifier matched
+only the `svc-` prefix and missed `cot-verify-internal@`; `0.7.0_AE_CloudOps~Z` read "45/2/2." **Two
+seats, two different splits -- and THAT DIVERGENCE IS THE FINDING**, not a tie to break:
+>> **THE `{human, service, fixture}` TAXONOMY CANNOT BE DERIVED FROM THE TABLE.** There is no
+   non-interactive flag; `userType=None` covers ordinary humans, both service accounts, AND ~11
+   test/synthetic rows alike. Any census split is an EYEBALL classification of email strings, which is
+   why two seats produced two. **You cannot compute "which accounts are safe to gate" from the
+   schema** -- which is exactly why the cohort must be a NAMED-HUMAN ALLOWLIST (§ below): the
+   complement is not derivable. <<
+✅ **What IS measured and MECE-safe:** `gated: 1` (the fixture), `HUMAN gated: 0`, and **`SERVICE gated:
+0` across the TWO known service accounts.** `cot-verify-internal@`'s blast radius is **UNTRACED**
+(`3.0.0_SA_CVO~Z`) -- `0 gated` protects it today, but **what gating it would COST is unknown**, and
+that unknown is on the record as an unknown, not absorbed into a clean zero.
+⛔ **SO "0 OF 48 GATED" SILENTLY INCLUDED TWO SERVICE ACCOUNTS ALL NIGHT.**
 
 ## ⛔ THE SAFETY INVARIANT WAS NOT MECE - Rule 24, the uncovered member (`3.0.0_SA_CVO~Z`)
 The ruled reporting form was `HUMAN gated: 0 | FIXTURE gated: 1`, on *"no human can be locked out."*
@@ -798,6 +809,19 @@ Act B's blast radius  =  the set of MFA-ENABLED ACCOUNTS   (1 today: the fixture
 above. ⭐ **But the wrong question found the right thing: `0.7.0_AE_CloudOps~Z` would not have found the
 service account without running the enumeration I asked for.** Recorded as a reframe, not a quiet
 replacement.
+
+## ⛔ THE STRUCTURAL RESIDUAL - THE MIGRATION MADE SERVICE ACCOUNTS MFA-**ELIGIBLE**, NOT MERELY VISIBLE (`3.0.0_SA_CVO~Z`)
+The MECE-corrected invariant makes a gated pipeline credential VISIBLE. **It does not make one
+INELIGIBLE.** W1 cell-1.2's backfill wrote a DEFINED `mfaEnabled` onto **all 49 rows, service accounts
+included** -- measured: all 49 carry the attribute. So they are not merely visible to a cohort query,
+they are **first-class MFA-eligible rows, and nothing refuses the `UpdateItem`.**
+>> **VISIBILITY IS NOT ELIGIBILITY. Correcting the report changes nothing about the table.** A
+   three-bucket census tells you AFTER someone gates a pipeline credential; the current protection for
+   two pipeline credentials is that **nobody has typed the wrong row into an `UpdateItem`.** <<
+⭐ **Rule 24 one layer EARLIER than the reporting, and a better instance because it changed the world:**
+the migration's declared domain was *"users"*, and *"leave every user in a DEFINED state"* had nothing
+in it distinguishing a person from a pipeline credential. **Whether service accounts should be
+STRUCTURALLY MFA-ineligible is a design call, part of the same WS-4 gap below.** Surfaced, not built.
 
 ## OWNERSHIP
 Design gap (a non-interactive marker + an enrolment guard that refuses to gate a marked account):
