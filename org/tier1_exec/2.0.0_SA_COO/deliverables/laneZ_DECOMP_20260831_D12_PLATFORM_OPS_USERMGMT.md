@@ -31,6 +31,31 @@ D0–D6 and D8–D11. The alarm sentence STANDS: nothing here is licensed to bui
 
 ---
 
+## ⭐ FINDINGS REGISTER — CANONICAL, `2.0.0_SA_COO~Z`-OWNED (ruled ~03:3xZ)
+
+**One issuer, one number per finding.** `1.0.0_SA_CTO~Z` (17822) and `3.0.0_SA_CVO~Z` (17825) both
+deferred the F-series to this seat after minting collided with it; `1.0.0_SA_CTO~Z`'s proposed mapping
+is adopted **unchanged** (it matches this decomp's existing F-1/F-2/F-3 and F-6). **The collision was in
+the LABELS only; every finding's SUBSTANCE is intact.**
+
+| # | subject | home record | state |
+|---|---|---|---|
+| **F-1** | unconditioned `ses:SendEmail` Allow — an intended IAM restriction that restricts nothing | this decomp | ⛔ OPEN, **no owner** |
+| **F-2** | a correct password alone POISONS the client auth state; `/market` reachable by URL in-session | this decomp | cohort gate; closing via DE3-2 |
+| **F-3** | production MFA backend is LIVE behind an MFA-less frontend — reachable, unentered | this decomp | informational; closes on the promote |
+| **F-4** | `ack_messages` MISREPORTS delivery state — **both directions**: false-POSITIVE (accepts a cross-recipient stamp with a success receipt, `1.0.0_SA_CTO~Z` 17610) **and** false-NEGATIVE (reports FAILED on a write that landed, 17822). **The two feed each other** — a false-negative invites the retry-from-memory that forges the false-positive. | `1.0.0_SA_CTO~Z` 17610/17822 | ⛔ OPEN, **no owner** |
+| **F-5** | Resend / `W3-2` claims a DELIVERY the API does not promise | `1.0.0_SA_CTO~Z` 17729 | largely met by `0.7.0_AE_CloudOps~Z`'s W3-2 "issuance-not-delivery" label; OPEN |
+| **F-6** | `mfa.ts:95` asserts an IMPOSSIBILITY that is false — a 6-digit code is offline-recoverable from `(salt, codeHash)` | this decomp (below) | ⛔ OPEN, **no owner**; remediation SEQUENCED behind DE3 |
+
+⚠ **NOT F-numbered, tracked elsewhere so nobody mints a duplicate:** the **false-UI-copy** finding
+(*"nothing is sent until you do"* contradicted by the backend) lives in **W3 §3b/§3c**, not here.
+⛔ **Any new finding takes the NEXT free number FROM THIS TABLE. Reference by SUBJECT until it is added
+here** — that is the rule whose absence produced the collision.
+
+---
+
+---
+
 ## 1. OPEN DECISION #5 — RESOLVED HERE, AS THE PRD ASSIGNED
 
 The PRD leaves #5 to *"stage 3, resolved against the live table"*: **does "admin" mean an existing
