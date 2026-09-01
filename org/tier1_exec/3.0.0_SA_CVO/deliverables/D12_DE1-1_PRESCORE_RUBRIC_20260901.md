@@ -115,3 +115,58 @@ confirms the arithmetic. **It does not confirm those are the cohort's actual por
 that lives in `opal-users-v2` and is `0.7.0_AE_CloudOps~Z`'s plane. T0 is what closes it at scoring time.
 ⚠ **NON-APPLICATION:** this rubric governs DE1-1 only. It says nothing about whether MFA is correctly
 enforced (a different row), nor about Andrew's own experience, which is his to judge and not a scored row.
+
+---
+
+# AMENDMENT 1 -- 2026-09-01 ~08:3xZ, BEFORE ANY DE1-1 ARTIFACT EXISTS AND BEFORE ACT C LANDS
+
+⛔ **NOTHING ABOVE IS EDITED. §3 STANDS AS ORIGINALLY REGISTERED** and remains the criterion for any
+run against an **Act-B** deployed handler. This section ADDS a form for the post-Act-C world.
+
+## A1.1 Why this amendment is legitimate, stated so the line is auditable
+
+⛔ **The line I am not crossing:** editing criteria to fit an artifact that has ARRIVED is worthless.
+**This is the other thing** — the SYSTEM UNDER TEST is being changed out from under the instrument,
+and the amendment is written **before** the artifact exists and **before** the change lands.
+**If a DE1-1 artifact already existed, I would leave this file alone and score it as written.**
+
+## A1.2 The defect in §3, found by `0.7.0_AE_CloudOps~Z` mid-build (msg 18580), not by me
+
+`resendMfaCode` is the **only** caller of `rotateChallengeCode` (denominator 3 hits / 12 files). Act C
+rewrites that path so nothing rotates. Therefore, on an Act-C handler:
+
+```
+T1  mfa_code_rotated ABSENT before the click   TRIVIALLY, PERMANENTLY TRUE -- the event is gone.
+T2  mfa_code_rotated PRESENT after the click   STRUCTURALLY IMPOSSIBLE.
+=> DE1-1 FALSE-PASSES BY CONSTRUCTION, with the positive control unable to fire.
+```
+
+⛔ **I named an IMPLEMENTATION EVENT (`rotated`) where the property is AN EMAIL WENT OUT** — the same
+class of error I had corrected on this row ninety minutes earlier (`mfa_challenge_issued`, an event
+named for the writer's act rather than the property), **and had banked as a lesson in between.**
+
+## A1.3 The amended criterion -- property-level, implementation-independent
+
+Define **SEND-EVENT** := *any log event emitted because an OTP email was actually sent.* On an Act-B
+handler that is `mfa_code_rotated`; on an Act-C handler it is whatever Act C emits per email
+(`mfa_code_resent` or equivalent), **which the Act C rubric already requires as C5**
+(`57dd460e6c` §3 — every email emits a line; an email with no log line is a FAIL there).
+
+| # | Observation | Required | Role |
+|---|---|---|---|
+| T0 | `mfa_challenge_issued` for the subject's `account_hash` | **PRESENT** | address control (gate) |
+| T1 | **any SEND-EVENT** for that hash, **before** the opt-in click | **ABSENT** | the property |
+| T2 | **any SEND-EVENT** for that hash, **after** the click | **PRESENT** | positive control |
+
+⛔ **T2 REMAINS A HARD GATE AND ITS MEANING IS UNCHANGED:** if no SEND-EVENT can be observed after a
+click that demonstrably sent mail, the instrument is dead and the verdict is `VOID`, never `PASS`.
+⚠ **AND THE AMENDMENT INHERITS A DEPENDENCY:** it is only sound if Act C honours C5. **If Act C ships
+emails with no log line, DE1-1 becomes UNSCOREABLE on the log plane entirely** — not a `FAIL`, a
+`VOID`, and the fix would be C5, not this rubric.
+
+## A1.4 Preferred resolution, and it does not need this amendment
+
+⭐ **Run DE1-1 in the Act-B window, under §3 exactly as first registered.** The deployed handler still
+rotates on every send, so T0/T1/T2 are all satisfiable now. **A real run against the untouched
+original is worth more than any amendment**, and this section is the fallback if that window closes
+first.
