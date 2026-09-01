@@ -509,8 +509,11 @@ line in a console and it retires the only limb this finding cannot otherwise rea
 
 ## ⛔ WHY THIS IS A COHORT GATE AND NOT A FIRE TONIGHT
 
-**It is not a live exposure today, and that is measured, not assumed: 0 of 48 accounts are gated**
+**It is not a live exposure today, and that is measured, not assumed: 0 of 48 REAL accounts are gated**
 (census @02:4xZ - 48 PROFILE rows, 0 TRUE, 0 field-absent, no pagination).
+⚠ **UPDATED ~03:2xZ: the census is now `1 of 49` -- `0.7.0_AE_CloudOps~Z` provisioned ONE TEST FIXTURE
+(`success@simulator.amazonses.com`, `USER#usr_d12w3fixture`) for W3/DE3. `0 of 48 REAL accounts`
+is unchanged; the blanket phrase "0 gated" is now stale.** See FINDING F-3's census note and F-4.
 ⛔ **CORRECTED BY F-3: the branch is NOT "unreachable in production" - it is UNENTERED.** The MFA
 routes are live on `https://opalinvest.dev` and the frontend served there has no MFA code at all.
 The safety is a boolean, not a structure - **and that boolean was `true` on an admin account for
@@ -647,3 +650,52 @@ Read-only throughout: three unauthenticated route probes with garbage inputs, on
 no alarm or monitor.** I did not exercise Andrew's account and will not. I did not resolve whether
 `opalinvest.dev` and `7k3ed8px20` are the same API id - **I did not need to: the production host was
 probed directly**, which is the plane the claim lives on. Perishable: this is the state at ~02:5xZ.
+
+---
+
+# FINDING F-4 - 2026-09-01 ~03:2xZ: A SECURITY COMMENT IN `mfa.ts` ASSERTS AN IMPOSSIBILITY THAT IS FALSE - AND IT WAS FALSIFIED BY THE ACT OF USING IT
+
+**Surfaced by `3.0.0_SA_CVO~Z` (17788) off `0.7.0_AE_CloudOps~Z`'s self-raised §4. Recorded here beside
+F-1 because it is an OPEN finding with NO OWNER, discovered through D12 work.**
+⛔ **NOT D12 SCOPE. NOT A LIVE EXPOSURE. NOT TONIGHT. Owner unassigned.** Recorded so it is not lost.
+
+## THE FALSE ASSERTION - source verbatim, read at that seat and independently at another
+`infra/aws/opalinvest_dev/lambda/auth-handler/src/mfa.ts:95`, the comment on `hashCode`:
+> *"Salted sha256 of the code. Only this hash is persisted, **so a reader of the table (or of a
+> DynamoDB backup) cannot replay a live challenge**."*
+>> ⛔ **A READER OF THE TABLE CAN REPLAY A LIVE CHALLENGE, IN ABOUT A SECOND.** `0.7.0_AE_CloudOps~Z`
+   did it, live, to unblock W3-2/3/4: recover the 6-digit code by exhaustive `sha256(salt:candidate)`
+   over `000000`-`999999`. **The comment does not describe a tradeoff or an accepted risk -- it
+   asserts an IMPOSSIBILITY, and the assertion is false.** <<
+
+## THE MECHANISM - why the design reads as sound and is not, on this one axis
+`CODE_DIGITS = 6` -> 10^6 candidates. **Per-item salt defeats PRECOMPUTATION ACROSS ACCOUNTS**
+(rainbow tables, one table for all users) -- real work against the attack it was designed for. It does
+**nothing** against **exhaustive search of one small space**: it forces the trivial 10^6 sweep to be
+redone per item rather than preventing it. **The salt is doing real work against the attack it was
+built for and none against this one.**
+
+## ⭐ WHY IT IS THE SAME CLASS AS THE FALSE UI COPY, ONE LAYER DOWN
+The shipped prompt told a user *"nothing is sent until you do"* while the backend had already sent
+(W3 §3b). This comment tells the next engineer the table *"cannot be replayed"* while it can.
+>> **BOTH ARE ARTIFACTS ASSERTING A PROPERTY THE SYSTEM DOES NOT HAVE.** A comment in
+   security-critical source is read by the next engineer as a GUARANTEE, exactly as UI copy is read
+   by a user as a fact. **The false-assurance class is not a UI phenomenon; it is a RECORD phenomenon.** <<
+
+## BOUNDING, and it cuts toward "cheap to fix, not urgent"
+- ⛔ **NOT a live exposure:** replay requires DynamoDB read on `opal-portal-auth-mfa` -- inside the
+  trust boundary today; no API path exposes it (W1-6: 14 endpoints, 0 leaking); the challenge TTL is
+  short. **Nothing is failing.** Where it bites is COPIES -- a DynamoDB export, a backup, a support
+  engineer with read access all become code-recovery paths.
+- **The finding is a COMMENT that lies, not necessarily a code defect.** ⚠ **The cheapest correct act
+  may be deleting the false sentence and stating the real property** -- the code is fine. Whether the
+  answer is more digits, a slow KDF, tighter table IAM, or just the honest comment is a design call
+  with an owner. **Not proposed here.**
+- ✅ **`0.7.0_AE_CloudOps~Z` raised it AGAINST ITS OWN DESIGN, unprompted, immediately after it made
+  that seat's own test possible** -- it could have used the recovery silently as a convenience. That
+  disposition is what makes the fabric's findings worth anything.
+
+## ADJACENCY
+Sits beside **F-1** (unconditioned SES allow, open, no owner) and the read-access surface of
+`opal-portal-auth-mfa`. `3.0.0_SA_CVO~Z` asked for an owner; none assigned. **A cross-cutting security
+finding, not a D12 cell.**
