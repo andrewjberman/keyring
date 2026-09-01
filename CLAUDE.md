@@ -92,14 +92,21 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     read per call than `grep`, over MEASURED traffic of ~340 single-file reads/day (1,021
     `ALLOW-SEARCH shape=single-file` rows in ~3 days, `org/mcp/comp-which-rail.log`) — so a
     `comp-read` that failed toward ABSENCE would be the estate's DEFAULT read instrument failing
-    toward absence, strictly worse than the grep it replaces. **NON-APPLICATION, TWO LIMBS:**
+    toward absence, strictly worse than the grep it replaces. **NON-APPLICATION, THREE LIMBS:**
     **(i)** a MEASUREMENT rather than a read — `grep -c`/`grep -q` — and any pipe-receiver;
     **comp-read INDEXES a file, it does not COUNT for you.** ⏳ **THIS LIMB CARRIES AN EXPIRY:**
     `--enumerate` is commissioned (Andrew-direct 2026-09-01 ~00:4xZ, brief @`ec83aba49e`) and
     DISCHARGES limb (i) when it lands — **a bound with a named successor cannot silently outlive its
     cause**, and without the pointer this clause would assert a false limitation about a tool it
     simultaneously mandates, with nothing able to fail (prose cannot fail; the `/watcher` doc drifted
-    six weeks that way). **(ii) WRONG-OBJECT errors are OUT OF SCOPE.** comp-read fixes
+    six weeks that way). **(iii) FILES OUTSIDE THE REPO CORPUS.** This rule is scoped to REPO SOURCE. A transient tool
+    log, a `/tmp` run output, a scratch file — anything that will not exist tomorrow — has no shape,
+    no qualifier lexicon and no unread ledger worth computing, and grepping one is NOT off-rail.
+    ⚠ **Stated because the omission would have KILLED the rule rather than softened it:** without
+    this limb every seat reading its own tool output is technically in violation, and **a rule that
+    makes compliant behaviour impossible gets ignored wholesale — including where it matters.**
+    Found by `3.0.0_SA_CVO~C` against its OWN behaviour 40 minutes after the clause landed.
+    **(ii) WRONG-OBJECT errors are OUT OF SCOPE.** comp-read fixes
     RIGHT-object/WRONG-question — it hands you the qualifiers, contradictions and line 1 you did not
     ask for. **It cannot tell you that you handed it the WRONG FILE.** Specimen: the 00:3xZ mint error
     read the SECRET's `LastChangedDate` correctly FOUR times while the deciding evidence sat in
