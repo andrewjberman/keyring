@@ -97,3 +97,62 @@ reaches me first, I execute and report after.**
 | `aws logs filter-log-events` | AccessDenied + forgot-password sweeps, each with a control | Both zeros real; an early empty result was `--limit` returning oldest-first, **caught by the control**. |
 | `nslookup @8.8.8.8` | all 4 new records on a **public** resolver | SPF, DMARC, MX, MAIL FROM SPF all resolve with correct values — verified off our own API. |
 | `proof-of-spec-check.py` | the instance | First draft **INVALID, 13 violations** (3 rows named paths git refutes). Corrected → `VALID (rc=0)`. |
+
+
+---
+
+# DELTA — 00:45Z → 01:15Z (appended, nothing above rewritten)
+
+⛔ **THE "Blockers" AND "Next Steps" SECTIONS ABOVE WENT STALE WITHIN MINUTES AND THIS
+APPENDS RATHER THAN REWRITES THEM.** Above, item 1 of Next Steps reads "Andrew re-confirm or
+drop the repoint" and Blockers says it is pending him. **He ruled ~00:5xZ and it is DONE.** A
+log is a snapshot, but a snapshot nobody marks as superseded is read as current by whoever
+finds it next — so the delta is here, and the original text is left intact so the sequence of
+what was known when is still legible.
+
+## Andrew ruled both open calls (~00:5xZ, VERBATIM)
+
+> "All of these functions should be noreply, there is nobody responding to these so noreply is
+> the coreect point. on call 2, i want to test it with a few people first, including myself. I
+> want to try logging in and seeing that MFA actually works."
+
+⭐ **Call 1 shipped on HIS reason, not my retracted one.** His basis is SEMANTIC — nobody reads
+replies to auth mail. He had originally been told the mailer was broken, by me, and that was
+false; he re-affirmed on corrected facts with a better reason. That distinction is why the
+`2.0.0_SA_COO~Z` hold (17251) was correctly a pending-re-confirmation and never a gate.
+
+**Call 2 is a NAMED PILOT, not a rollout and not a wait.** His account is enabled and ready.
+**The cohort is unnamed and I did not invent it** — no account beyond his is touched.
+⚠ His login will be the **FIRST real exercise on a real account**: W1-3 was exercised on the
+test account, so his result must be read as a first exercise, not a re-confirmation.
+
+## What landed (ledger `20260901T0058Z`, CLOSED — COMPLETE)
+
+1. **All auth mail → `noreply@`.** "All of these functions" treated as a census instruction:
+   exactly **three** `Source:` sites exist in the whole auth stack, no fourth sender anywhere.
+   Two constants collapsed into one (I had created the second myself hours earlier — two
+   carriers of one value with no named primary).
+2. **`getUserPKByEmail` fails closed on a duplicate email.** `1.0.0_SA_CTO~Z` ruling 1.
+   Deny-capable, so the bad state was measured **first**: 48 emails, 48 distinct, 0 duplicates.
+
+Verified in the **running bytes**, not by a live send — firing `/auth/forgot-password` is the
+exact probe whose side effect mailed Andrew tonight, and re-running it to check my own work
+would have repeated the fault while verifying the fix for it. `2.0.0_SA_COO~Z` W2 verdict:
+**PASS** (17268), re-derived at source including the residual `Limit: 1` (a comment, not code).
+
+⭐ **The catch worth carrying:** the warned-about carrier was the commit message. The worse one
+was **my own retracted claim sitting in `email.ts` as a source comment** — *"a send from
+FROM_EMAIL above is DENIED by IAM"* — in the file every future reader opens. A commit message is
+read once by whoever is watching; a source comment is read by everyone who ever opens the file.
+
+## Accepted without qualification: `1.0.0_SA_CTO~Z` ruling 2
+
+**No test account may use a live human email address.** Mine used Andrew's own address via
+plus-addressing and sent him two production-shaped emails whose only tell was the greeting.
+He reasonably concluded a feature was broken; ~40 minutes of three seats went to a bug that did
+not exist. I chose that address because it was the only mailbox I could read, and did not weigh
+what it would look like arriving in a human inbox. Account deleted (48 profiles, verified).
+
+## Blockers (superseding the section above)
+
+**NONE.** The two remaining items are Andrew's own acts: try the login, and name the pilot cohort.
