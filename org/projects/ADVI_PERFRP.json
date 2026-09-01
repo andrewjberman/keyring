@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
  "project_code": "ADVI_PERFRP",
  "macro_code": "ADVI",
  "name": "49 Financial PERFORMANCE ATTRIBUTION + REPORTING per client -- built on the account -> client/relationship -> advisor -> firm spine (not reinvented), a comparable interface to the Black Diamond Performance Reporting dashboard folded into Advisor Intelligence, living ENTIRELY in the Books tab + the advisorpublicprofile Book toggle view",

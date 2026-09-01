@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_BDPLAT_RESTORE",
   "macro_code": "ADVI",
   "name": "bd platinum publish-leg restore -- BP-1..BP-6, advisor_assignments_history NaT handling and the 25-stage chain green",

@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_COTKEY",
   "macro_code": "ADVI",
   "name": "Cottonwood Capital Advisors ADVI KEYING investigation -- a deep analysis of Cottonwood's current ADVI process and setup ('currently we are not keying them in the right way'); test the hypothesis that advisor relationships are assigned via portfolio_group (or a derivation); produce the measured keying map + the remedy plan that Cottonwood's Tier-B bindings (Performance Reporting, Model Overlay) and the Insurance port sequence after",

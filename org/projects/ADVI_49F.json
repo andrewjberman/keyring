@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_49F",
   "macro_code": "ADVI",
   "name": "49 Financial canonical runner chain (c-series) -- TWR-engine defect remediation on the account spine: the in-kind zero-flow root cause (c00/c02), the c01 NNA sign fix, the P14 backfill vehicle, and the RPS custody repoint",

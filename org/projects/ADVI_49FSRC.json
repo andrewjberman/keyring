@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_49FSRC",
   "macro_code": "ADVI",
   "name": "49 Financial data SOURCING -- the Schwab blend (08335338 + 08242234) as the value/history plane, the BD metatables as light join dims migrating to 49F-hosted, no standing Black Diamond dependency",

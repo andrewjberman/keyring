@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_INSURE",
   "macro_code": "ADVI",
   "name": "49 Financial INSURANCE assets -- Black Diamond insurance-endpoint current-value snapshot -> bronze/silver pattern under opal-data-assets -> very light additive current-state gold in opal-data-49financial -> platinum json -> three frontend integration points (header subtext NAV; account-level Insurance segment, NOT Alternatives; Books-only aggregation up the spine); NEVER blended into asset-management calculations",
