@@ -93,13 +93,17 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     `ALLOW-SEARCH shape=single-file` rows in ~3 days, `org/mcp/comp-which-rail.log`) — so a
     `comp-read` that failed toward ABSENCE would be the estate's DEFAULT read instrument failing
     toward absence, strictly worse than the grep it replaces. **NON-APPLICATION, THREE LIMBS:**
-    **(i)** a MEASUREMENT rather than a read — `grep -c`/`grep -q` — and any pipe-receiver;
-    **comp-read INDEXES a file, it does not COUNT for you.** ⏳ **THIS LIMB CARRIES AN EXPIRY:**
-    `--enumerate` is commissioned (Andrew-direct 2026-09-01 ~00:4xZ, brief @`ec83aba49e`) and
-    DISCHARGES limb (i) when it lands — **a bound with a named successor cannot silently outlive its
-    cause**, and without the pointer this clause would assert a false limitation about a tool it
-    simultaneously mandates, with nothing able to fail (prose cannot fail; the `/watcher` doc drifted
-    six weeks that way). **(iii) FILES OUTSIDE THE REPO CORPUS.** This rule is scoped to REPO SOURCE. A transient tool
+    **(i) DISCHARGED 2026-09-01 — `--enumerate` HAS LANDED AND IS CERTIFIED** (Andrew-direct,
+    `/open-calls` card 9, "All recs approved"; graded 8/8 on committed bytes; exercised at
+    certification). **A COUNT IS NO LONGER A REASON TO REACH FOR `grep`:** `comp-read <file>
+    --enumerate '<regex>'` is a distinct mode that prints its DENOMINATOR, bands hits
+    (DOCSTRING/COMMENT/DEF/CODE), separates WHOLE-VALUE from SUBSTRING, and WARNs when every hit is
+    a fragment — *"an anchored probe would report ZERO against this file"*, which is the false-zero
+    a bare `grep -c` hands you silently. **Still non-application: `grep -q` as a pure predicate, and
+    any pipe-RECEIVER.** ⭐ The expiry fired as designed — **a bound with a named successor cannot
+    silently outlive its cause**; without that pointer this clause would have asserted a false
+    limitation about a tool it simultaneously mandates, with nothing able to fail (prose cannot
+    fail; the `/watcher` doc drifted six weeks that way). **(iii) FILES OUTSIDE THE REPO CORPUS.** This rule is scoped to REPO SOURCE. A transient tool
     log, a `/tmp` run output, a scratch file — anything that will not exist tomorrow — has no shape,
     no qualifier lexicon and no unread ledger worth computing, and grepping one is NOT off-rail.
     ⚠ **Stated because the omission would have KILLED the rule rather than softened it:** without
