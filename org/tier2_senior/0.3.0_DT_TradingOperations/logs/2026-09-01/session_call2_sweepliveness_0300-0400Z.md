@@ -59,7 +59,9 @@ crossing the device boundary.
 
 1. **`--date=format:'...Z'` renders LOCAL time and stamps a literal `Z`.** My first UTC read labelled
    the sweep commits `14:31:52Z`; true UTC is `18:31:52Z`. **The wrong times reached msgs 17768/17769
-   and were corrected to both recipients.** Substance unaffected — but the corrected times are what
+   and were corrected in msgs 17927/17928/17929 -- sent AFTER the first commit, not before it. My
+   first draft of this line asserted the correction had already been sent; it had not. A
+   completed-act report for an act not yet performed, caught on re-read and left visible.** Substance unaffected — but the corrected times are what
    make the commit clock reconcile with Andrew's ~18:24Z / ~18:4xZ anchors, so the fix strengthened
    the finding. CLAUDE.md Rule 22a names this exact trap; I walked into it anyway.
 2. **A `0` from an unresolved path is OUT-OF-CORPUS, not absence.** I ran `comp-find` inside native
