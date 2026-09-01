@@ -106,6 +106,55 @@ def _check_preflight(body):
     return problems
 
 
+# LAYER 3's TEETH. The pipeline doc landed the `dep_stage` ENUM (COO @c4d8c0025d) and routed a
+# "sweep hook" that never shipped. MEASURED 2026-09-01: 316 of 348 project JSONs carry NO dep_stage
+# key -- the enum exists and nothing populates it, which is why 139 of 281 proof instances sit under
+# the resulting waiver. A standalone sweep would only REPORT that. Folding the requirement into the
+# SAME choke-point makes it populate itself: a project cannot have a NEW TO cut against it until its
+# stage is declared. Forward-only by construction -- no back-fill, which the doc forbids as "a guess
+# about history wearing a controlled vocabulary's clothing".
+DEP_STAGE_ENUM = ("REGISTERED", "PRD", "DECOMP", "TOS_CUT", "EXECUTING", "ROUND_CLOSE", "CLOSED")
+PROJECT_RE = re.compile(r"([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)")
+
+
+def _project_of(rel):
+    """The project code a TO filename declares, or None. TOs are named PROJECT.TO-NAME.md."""
+    base = os.path.basename(rel)
+    m = PROJECT_RE.match(base)
+    return m.group(1) if m else None
+
+
+def check_project_stage(root, rel):
+    """LAYER 3: the TO's project must exist and declare a dep_stage from the ratified enum."""
+    import json
+    code = _project_of(rel)
+    if not code:
+        return ["%s: filename declares no PROJECT code -- a TO is named "
+                "PROJECT.TO-NAME.md so its project is resolvable without opening it" % rel]
+    p = os.path.join(root, "org", "projects", code + ".json")
+    # Walk the code back the way the estate's own resolvers do (FOO_BAR_BAZ -> FOO_BAR -> FOO).
+    cand = code
+    while not os.path.isfile(p) and "_" in cand:
+        cand = cand.rsplit("_", 1)[0]
+        p = os.path.join(root, "org", "projects", cand + ".json")
+    if not os.path.isfile(p):
+        return ["%s: NO project JSON for %r (org/projects/%s.json). A TO cannot be cut against "
+                "an unregistered project -- registration is stage 1." % (rel, code, code)]
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            stage = json.load(fh).get("dep_stage")
+    except Exception as exc:  # noqa: BLE001
+        return ["%s: project JSON %s is unreadable (%s) -- fail-closed" % (rel, cand, exc)]
+    if stage is None:
+        return ["%s: project %s declares NO dep_stage. Set it before cutting a TO -- the pipeline "
+                "stage must be machine-readable (layer 3). Enum: %s"
+                % (rel, cand, " | ".join(DEP_STAGE_ENUM))]
+    if stage not in DEP_STAGE_ENUM:
+        return ["%s: project %s has dep_stage=%r, which is NOT in the ratified enum (%s)"
+                % (rel, cand, stage, " | ".join(DEP_STAGE_ENUM))]
+    return []
+
+
 def check_file(root, rel):
     """Return (violations, notes) for ONE newly-added TO file."""
     v, notes = [], []
@@ -136,6 +185,8 @@ def check_file(root, rel):
             notes.append("%s: <decomp_ref> declares NONE -- allowed (one-branch work under its "
                          "own charter), and layer 1 will read it as ANNOUNCE, not ENFORCE." % rel)
 
+    v.extend(check_project_stage(root, rel))
+
     pm = PREFLIGHT_RE.search(text)
     if not pm:
         v.append("%s: NO <preflight> block. Stage 3 must record comp-schedule, comp-iam and "
@@ -147,8 +198,43 @@ def check_file(root, rel):
     return (v, notes)
 
 
+def sweep(root):
+    """LAYER 3's reporting half -- COO's TO sweep as an instrumented pass, not a heroic one.
+
+    Read-only. Prints the dep_stage distribution with its denominator so the pipeline's own
+    machine-readable stage is measurable rather than asserted. Never refuses; rc is always 0.
+    """
+    import glob as _glob
+    import json
+    files = sorted(_glob.glob(os.path.join(root, "org", "projects", "*.json")))
+    counts, unreadable = {}, 0
+    for f in files:
+        try:
+            with open(f, "r", encoding="utf-8") as fh:
+                st = json.load(fh).get("dep_stage")
+        except Exception:  # noqa: BLE001
+            unreadable += 1
+            continue
+        key = "<ABSENT>" if st is None else str(st)
+        counts[key] = counts.get(key, 0) + 1
+    total = len(files)
+    print("[to-pipeline-gate --sweep] dep_stage across org/projects/")
+    print("  DENOMINATOR: %d project JSON(s), %d unreadable" % (total, unreadable))
+    for k in sorted(counts, key=lambda x: (-counts[x], x)):
+        flag = "  <- not in the ratified enum" if (
+            k != "<ABSENT>" and k not in DEP_STAGE_ENUM) else ""
+        print("    %-16s %4d  (%.1f%%)%s" % (k, counts[k], 100.0 * counts[k] / max(total, 1), flag))
+    absent = counts.get("<ABSENT>", 0)
+    print("  NOTE: <ABSENT> is FORWARD-ONLY by ruling -- these are NOT back-filled. The gate "
+          "populates the enum as NEW TOs are cut, never retroactively.")
+    print("  Projects that cannot take a new TO until their stage is declared: %d" % absent)
+    return 0
+
+
 def main(argv):
     root = _repo_root()
+    if "--sweep" in argv[1:]:
+        return sweep(root)
     added = _newly_added(root)
     if added is None:
         print("[to-pipeline-gate] REFUSED: could not read the staged index. Fail-closed.",
