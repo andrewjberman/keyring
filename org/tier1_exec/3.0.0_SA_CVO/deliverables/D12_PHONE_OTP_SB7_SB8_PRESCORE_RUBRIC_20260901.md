@@ -114,3 +114,60 @@ and never trip.** ✅ **This materially narrows §3's amplification bound** (aut
 per challenge + the spend cap, layered). ⛔ **§3's DIRECTION still stands — the destination is
 caller-chosen — but the magnitude is now bounded by a real control rather than by the spend cap
 alone.** **Recording the narrowing rather than leaving my earlier statement to over-read.**
+
+---
+
+# AMENDMENT 2 -- 2026-09-01 ~15:4xZ. E1 WAS UNDER-SPECIFIED AND THE LIMB IT NAMED FOUND F-11.
+
+NOTHING ABOVE IS EDITED. E1's artifact EXISTS and was scored FAIL -- this amendment does NOT change
+that verdict. It corrects the criterion for the RE-RUN against the fixed build, a different artifact
+that does not yet exist.
+
+## A2.1 WHAT E1 SAID, AND WHAT IT MISSED
+
+My exercise note wrote the wrong-session limb as *"EXPECT: refused / no-op."*
+> "no-op" is directionally right and NEVER SAYS WHAT TO MEASURE. `0.7.0_AE_CloudOps~Z` measured
+> THE VICTIM'S `sends` COUNTER -- a third party's state -- which my wording did not require, and
+> that measurement is the entire finding.
+
+EVERY CRITERION IN EVERY RUBRIC I WROTE TODAY TESTS THE CALLER'S OUTCOME. NONE TESTS A SIDE EFFECT ON
+SOMEONE ELSE. F-11's invariant HELD on every outcome -- A got nothing, A's record was untouched, B's
+challenge survived and B still completed its own. The defect was a side effect on the way to a
+CORRECT refusal, and no outcome-shaped criterion could have caught it.
+
+## A2.2 E1, CORRECTED -- the reviewer's own required form
+
+```
+E1w  CROSS-ACCOUNT: A's Bearer against a challengeId minted by B
+     ASSERT THE VICTIM'S STATE IS UNCHANGED, read off B's row BEFORE and AFTER:
+        B.sends UNCHANGED  ·  B.attempts UNCHANGED  ·  B's challenge still USABLE by B
+     A REFUSAL ALONE IS NOT THE CRITERION. The broken build and the fixed build BOTH REFUSE;
+     only the counter separates them. (0.7.0_AE_CloudOps~Z 19169 s.2, and it is right.)
+```
+GENERAL FORM for every cross-account RED case: assert the VICTIM'S state, not merely the caller's
+refusal -- and BRACKET it, reading the victim's row either side of the act, so "unchanged" sits
+between two observations rather than being assumed.
+
+## A2.3 THE FIX AT 688e37909a -- REVIEWED AT SOURCE, NOT FROM THE REPORT
+
+`0.7.0_AE_CloudOps~Z` declined to self-certify ("my confidence in this fix is exactly the confidence I
+had in the last one"), so this is a read of the code:
+```
+mfa.ts sendChallengeCode(challengeId, expectEmail?)
+  if (expectEmail) { GetCommand -> compare row.email, case-insensitive + trimmed
+                     -> log mfa_send_not_owned; return null }     <- ABOVE the charge
+  ...then UpdateCommand 'ADD sends :one'                          <- the charge
+callers: auth.ts:258 sendChallengeCode(challengeId)         LOGIN     -- no check, correct
+         auth.ts:775 sendChallengeCode(challengeId, email)  ENROLMENT -- checked
+```
+The refusal is ABOVE the charging update. It IS logged (`mfa_send_not_owned`). It returns `null`,
+indistinguishable from unknown/expired/exhausted, preserving the silent-by-design contract. The
+charging update touches `sends` only, so the read-then-charge window cannot see `email` move.
+
+HARDENING NOTE, not a blocker: `expectEmail` is OPTIONAL, so the check is OPT-IN -- a future third
+caller that omits it gets no check and no error. Fail-OPEN, the same class as the original defect.
+Two callers today, both correct. A required parameter with an explicit login sentinel would force
+each caller to declare intent. Design call, not mine.
+
+NOT DEPLOYED. The deployed build gmJnyiaSC... STILL CARRIES F-11, so E1 stays FAIL on the deployed
+plane until a new apply plus a re-run of E1w with the victim-state assertion.
