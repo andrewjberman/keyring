@@ -2,6 +2,48 @@
 
 **Status:** CLOSED-COMPLETE. **71 MATCH / 0 STALE.**
 
+⛔ **SCOPE LIMIT ON THIS ENTRY'S OWN COMPLETION EVIDENCE -- added 2026-09-01T07:0xZ, and it is the
+limit a future reader most needs.** Every `71 MATCH / 0 STALE` in this file comes from
+`comp-pipescript deployed`, which compares **LOCAL WORKTREE <-> S3**. It does **NOT** compare
+**ORIGIN <-> S3**, so it certifies that the served bytes are the ones this seat intended to serve --
+and says **NOTHING** about whether those bytes are on the record.
+>> **A CLEAN `MATCH` IS NOT A STATEMENT THAT THE MATCHED BYTES ARE PUSHED.** A currency check against
+   the DEPLOYED plane is not a currency check against the RECORD. <<
+**MEASURED CONSEQUENCE, and it is why this limit is not theoretical:** from 00:10:20Z until the
+integration push, `s3://opal-data-49financial/_code/` served bytes whose authorizing commit
+(`9c7011f93d`) was **NOT on `origin/CLOUD`** -- the served plane AHEAD of the record, the inverse of
+the staleness class this entry was opened for. **The instrument above could not have detected that by
+construction**, and it did not: it was found by a separate `ls-remote` + `merge-base --is-ancestor`
+read, positive-controlled. `0.7.0_AE_CloudOps~G` 90887 confirmed the same limit against its own
+activation sweeps and corrected its ledger @`2912ff3973`.
+**Nothing in this entry's measurements is retracted** -- the ETags, denominators and controls all
+stand. What is added is what they never certified.
+
+✅ **DIVERGENCE CLOSED 2026-09-01T07:0xZ -- MEASURED, INCLUDING THE COMPARISON THE INSTRUMENT ABOVE
+CANNOT MAKE.** The integration push landed; `origin/CLOUD` @`2912ff3973`.
+```
+ANCESTRY, my own ls-remote + merge-base, with BOTH controls:
+  9c7011f93d                                  -> ON ORIGIN
+  79a2eff0ed  POSITIVE CONTROL                -> ON ORIGIN   (instrument can read TRUE)
+  ffff...ffff NEGATIVE CONTROL                -> not ancestor (instrument can read FALSE)
+
+SERVED ARTIFACT, s3api ETag vs the values recorded at deploy time:
+  perfrp_emit_core.py     6adffc4949ffbfffea2d9a3ff116ab1f   IDENTICAL
+  perfrp_rollup.py        f01dd090d503776a79b16b033e5a0b27   IDENTICAL
+  perfrp_transactions.py  1ebf3016a32f79311289dec08812e1e5   IDENTICAL
+  -> nothing re-deployed, nothing rewound, no second act performed.
+
+ORIGIN <-> SERVED, i.e. `git show origin/CLOUD:<path> | md5sum` vs the served ETag:
+  all three  ORIGIN == SERVED
+```
+>> **THAT LAST BLOCK IS THE POINT.** It is the question `comp-pipescript deployed` cannot ask by
+   construction, and it is the one the 6.5-hour gap turned on. **The record and the served plane now
+   agree, and that agreement is measured rather than inferred from the push report.** <<
+Post-push sweep unchanged: 71 object(s) / 71 checked / 0 unrendered -> **71 MATCH, 0 STALE**, 0 in
+every non-verdict class.
+
+---
+
 ⭐ **SUPERSEDING UPDATE 2026-09-01T00:2xZ -- THE HOLD WAS DISCHARGED AND THE REMAINING THREE LANDED.**
 Andrew discharged the 2026-08-19 BUILD-ONLY cap (relayed `1.0.0_SA_CTO` 90310 s.1, record `ce77e285b1`);
 90310 s.3 handed the sentinel removal to this lane BY NAME; `2.0.0_SA_COO` 90331 s.1 sequenced it GO NOW.
