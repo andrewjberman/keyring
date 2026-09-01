@@ -115,3 +115,54 @@ is endorsed here.
   the remaining path is vendor-side.
 
 **That distinction is his to resolve and is not resolved here.**
+
+---
+
+## 7. ⛔ CORRECTION 2026-09-01 ~03:3xZ — THE PREMISE OF SECTIONS 1(B), 3 AND 4 IS FALSIFIED. APPENDED; ALL PRIOR TEXT PRESERVED VERBATIM.
+
+**ANDREW-DIRECT ~03:2xZ, VERBATIM:**
+> *"remember how data is always D+1? today is 8/31 eastern, so all this talk about 8/31 not existing
+> is not a data hole"* · *"we wouldnt be able to get that until tomorrow 9/1"* · *"8/28 is Friday, it
+> is the last day we have data"* · *"because its the last trading day"* · *"prior to today"*
+
+**MEASURED ON THE CALENDAR THIS TURN:** 08-27 Thu · **08-28 FRIDAY, the last TRADING day** · 08-29
+Sat · 08-30 **SUNDAY** · 08-31 **MONDAY** · 09-01 Tue.
+
+>> **DATA IS T-1. THE LATEST AVAILABLE DATA DATE IS 2026-08-28. A 2026-08-31 PARTITION CANNOT EXIST
+   UNTIL 2026-09-01. THERE IS NO 2026-08-31 COT HOLE. The absence is the EXPECTED state.** <<
+
+⛔ **CLAUDE.md §5 HARD STOPS SAYS THIS IN TERMS, AND THIS SEAT DID NOT APPLY IT:** *"NEVER call a
+pipeline stale/broken until you resolve the TRADING CALENDAR — count trading days. Everything is
+`T-1` unless declared; **Friday IS Monday's answer**."* One frontier exists for exactly this:
+`lib/trading_calendar.py`. **This seat maintains the law file and never reached for the rule.**
+
+**WHAT THIS FALSIFIES IN THIS RECORD:**
+- §1 RULING B's ratified option text — *"The hole is a permanent bronze gap that does not
+  self-heal"* — **was false at the premise. This seat authored it.** The defect recorded in §3 was
+  real but was diagnosed one layer too shallow: not merely *"predicted to fail on a stale vendor
+  roster"* but **"asked a vendor for a date that cannot exist yet."**
+- §3's *"the blocking condition is VENDOR-SIDE"* — itself downstream of the same error.
+- §4's endpoint distinction is **moot as posed**: there was no hole for the run to close.
+
+**WHAT IS NOT FALSIFIED — the retraction is scoped to the DATE PREMISE and no wider:**
+- The runner's `COUNT-RECONCILE SELF-GATE FAILED — roster 15 / observed 14` fired twice,
+  byte-identically. **Whether that is a genuine roster/book defect or an artifact of requesting an
+  unavailable date is UNRESOLVED**, and belongs to `0.6.2_AE_PartnerETL`, which holds the runner.
+- **`MDPF_HEALGAP` as a PROJECT is not void.** Its subject — a transient auth gap converting into a
+  permanent hole because nothing re-runs after the heal — is a real class. **What is falsified is
+  that 2026-08-31 is an instance of it.**
+- §2 (D8 placement) and §1 RULING A (D2 scope = the 22 TOs) are untouched by this correction.
+
+⚠ **AND A CONTROL TO RE-EXAMINE THAT NOBODY QUESTIONED:** the NOT-CLOSED verdict was validated
+against **2026-08-30 as "a date known COMPLETE"** — **a SUNDAY**. This estate already records that BD
+silver partition KEYS are WRITE dates, not CONTENT dates, so a Sunday partition can legitimately
+exist carrying Friday's content. **That is not a contradiction — it means the control was not the
+control it was labelled**, and a partition-date read and a content-date claim were treated as one
+measurement. Owner `0.6.2_AE_PartnerETL`. **No re-fire to resolve it; NO-THIRD-FIRE now has a second
+and stronger reason.**
+
+**THE TRANSFERABLE LESSON:** the estate had a NEVER rule, a named frontier module, and a proverb
+(*"Friday IS Monday's answer"*) all pointed at this exact error — **and none of them fired, because
+nothing in the chain from registry record to option text to executing seat asks "is this date
+supposed to exist yet?"** A rule that must be *remembered* by the one seat framing the question is a
+rule with a single point of failure, and tonight it failed at that point.
