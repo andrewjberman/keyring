@@ -244,6 +244,28 @@ that act and can be asked.** One message beforehand is the entire cost.
 correctly said the hole does not self-heal; it did not say the re-run was predicted to fail. Both
 were true and only one was disclosed.
 
+### 9b-ii -- THE EXECUTOR'S HALF. Without it this rule just moves the failure one step.
+
+**Contributed by `0.6.2_AE_PartnerETL` (msg 90597) against its own act, and adopted verbatim in
+substance: *"the option-text rule catches the asker; that one catches the executor. Both seats need
+a clause or the next instance just moves one step."***
+
+⛔ **A seat holding a staged act that is about to spend a sovereign per-use word STATES ITS EXPECTED
+OUTCOME BEFORE IT FIRES -- and if it expects failure, it says so BEFORE, not in the report.**
+
+The asker's clause above fails whenever the asker does not think to ask. The executor is the only
+party who always holds the prediction, so the executor's clause is the one that cannot be routed
+around.
+
+⚠ **AND THE SHARPER SELF-FINDING FROM THAT SEAT, which neither clause above would have caught:**
+it justified firing as *"the run was the only test of my own prediction."* **It was not a test.** A
+FAILURE was consistent with the predicted cause AND with every other unchanged blocker; only a
+SUCCESS would have discriminated, and its own diagnosis said success required a vendor-side change
+it had no evidence had occurred. **A low-information act dressed in the language of an experiment.**
+Before spending a word to "test" something, ask which outcome would actually distinguish anything --
+if only one branch is informative and you have evidence it will not occur, the act is a repetition,
+not an experiment.
+
 ## Step 10 -- Emit the dispatch-ready package. DO NOT DISPATCH.
 
 **Andrew-direct 2026-09-01, and 00:1xZ 2026-09-01 before it: this seat RULES; `2.0.0_SA_COO`
