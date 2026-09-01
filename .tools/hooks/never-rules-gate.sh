@@ -574,8 +574,48 @@ if [ -n "$_PUSHPULL_HIT" ] \
     _CALLER=""
     [ -n "$_SID" ] && _CALLER=$(tr -d '[:space:]' < "$WS/org/mcp/sessions/${_SID}.serial" 2>/dev/null || true)
     [ -z "$_CALLER" ] && _CALLER="${OPAL_AGENT_SERIAL:-}"
-    if ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
-        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
+    # --- DT PORTAL-PROD CARVE-OUT ---------------------------------------------------------
+    # Andrew-direct 2026-09-01 at the 1.0.0_SA_CTO~Z terminal, VERBATIM: "fix the gate so DT
+    # can push portal prod". Until now the ONLY admitted caller was the integrator MSTR, so a
+    # DT running the canonical /prod-deploy promote was denied at its own procedure's push
+    # steps -- and .claude/skills/prod-deploy/SKILL.md names this gate ZERO times, so the DT
+    # met the denial with no warning. Pickaxed before writing this: '_DT_' and 'prod-deploy'
+    # had NEVER appeared in this file, so this is an intent that was never implemented, not a
+    # carve-out someone removed.
+    #
+    # SCOPED THREE WAYS, ALL REQUIRED -- widening any one of them re-opens LD-0367's harm:
+    #   (1) the caller is a DT serial;
+    #   (2) the branch being moved is exactly PROD;
+    #   (3) the TARGET REPO IS THE PORTAL REPO, identified BY ITS ORIGIN REMOTE, NOT BY PATH.
+    #
+    # (3) IS THE ONE THAT LOOKS WRONG AND IS NOT. The obvious test is `[ "$REPO" = "$WS/portal" ]`
+    # and it would MISS THE EXACT CASE THIS EXISTS FOR: /prod-deploy Step 4 pushes PROD from an
+    # EPHEMERAL WORKTREE at .runtmp/portal-promote-<ts>, whose toplevel is NOT $WS/portal. A path
+    # test would leave the DT denied on the one push the carve-out was written to allow, while
+    # passing every hand-run test done from $WS/portal -- green in rehearsal, denied in the act.
+    # The remote is the repo's identity; the worktree is just where you are standing.
+    #
+    # WHY PROD AND NOT DEV, stated because the asymmetry is the safety argument and not an
+    # oversight: the denial text's harm is "a push PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS."
+    # A PROD push moves a merge of origin/DEV -- already on the remote, so it can carry nothing
+    # unpublished. A DEV push can, and that hazard is unchanged. Andrew's word was "portal prod";
+    # DEV is deliberately NOT widened, and a DT still meets the integrator denial there.
+    #
+    # FAIL-CLOSED: if $REPO is unreadable or has no origin, _origin_url is empty, no case arm
+    # matches, and the caller falls through to the integrator test exactly as before.
+    # PUSH ONLY. Andrew's word was "push"; a `git pull` on PROD is a different act and stays
+    # with the integrator. _PUSHPULL_HIT matched either verb, so the carve-out re-tests for
+    # push specifically rather than inheriting the looser match that got us into the block.
+    _RE_PUSH_ONLY="${_GIT}"'push([[:space:]]|$)'
+    _DT_PORTAL_PROD=0
+    if [ "$BRANCH" = "PROD" ]        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
+        _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
+        case "$_origin_url" in
+            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git) _DT_PORTAL_PROD=1 ;;
+        esac
+    fi
+    if [ "$_DT_PORTAL_PROD" -eq 0 ]        && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
+        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD in the PORTAL repo (the /prod-deploy Step 4 promote), scoped to branch=PROD AND an origin remote of Opal-Capital/portal -- so a DT is still denied on DEV, and any non-DT is still denied on PROD. WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
     fi
 fi
 

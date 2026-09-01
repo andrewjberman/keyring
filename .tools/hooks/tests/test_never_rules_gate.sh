@@ -365,6 +365,43 @@ if grep -q 'reason=reason to bypass the gate' "$NEVER_GATE_AUDIT" 2>/dev/null; t
 else
     PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "F-020 no mention audited as an override" "clean"
 fi
+# =========================================================================================
+# DT PORTAL-PROD CARVE-OUT (Andrew-direct 2026-09-01 at the 1.0.0_SA_CTO~Z terminal:
+# "fix the gate so DT can push portal prod").
+#
+# THE POSITIVE ARM IS ONE LINE. THE SIX NEGATIVES ARE THE POINT -- the failure mode for a
+# carve-out is not that it fails to open, it is that it opens WIDER THAN ITS WORD, and a
+# too-wide gate passes its own positive test perfectly. Each negative is an independent cell
+# of the three-way scope (caller is DT / branch is PROD / repo is portal) plus the verb.
+#
+# PROVEN-RED: the positive arm renders DENY against the pre-carve-out hook --
+#     NRG_HOOK=<pre-carve-out build> bash tests/test_never_rules_gate.sh
+# An arm never observed to fail has not been shown it CAN fail.
+#
+# check_as drives the caller identity the way the gate actually resolves it: the payload
+# carries no session_id, so $_CALLER falls through to OPAL_AGENT_SERIAL.
+check_as() { # serial, name, cmd, expected
+    local got
+    export OPAL_AGENT_SERIAL="$1"
+    got=$(verdict "$3")
+    unset OPAL_AGENT_SERIAL
+    if [ "$got" = "$4" ]; then PASS=$((PASS+1)); printf '  PASS  %-58s -> %s
+' "$2" "$got"
+    else FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s (want %s)
+' "$2" "$got" "$4"; fi
+}
+
+echo ""
+echo "DT PORTAL-PROD CARVE-OUT -- 1 positive, 6 negatives (over-widening is the failure mode):"
+check_as '0.4.0_DT_ClientPlatform~Z' "DT pushes portal PROD (the carve-out)"       'git -C portal push origin PROD' PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT pushing portal DEV still DENIED"     'git -C portal push origin DEV'  DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT pushing workspace CLOUD still DENIED" 'git push origin CLOUD'         DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal PROD still DENIED"    'git -C portal pull origin PROD' DENY
+check_as '1.0.0_SA_CTO~Z'            "neg: non-DT (CTO) on portal PROD DENIED"     'git -C portal push origin PROD' DENY
+check_as '0.4.0_DS_ClientPlatform~Z' "neg: DS is not DT, portal PROD DENIED"       'git -C portal push origin PROD' DENY
+check_as ''                          "neg: UNRESOLVED caller fails CLOSED on PROD" 'git -C portal push origin PROD' DENY
+check_as '0.0.0_AB_MSTR~Z'           "integrator unaffected: MSTR workspace CLOUD" 'git push origin CLOUD'          PASS
+
 rm -f "$NEVER_GATE_AUDIT" 2>/dev/null || true
 
 echo ""
