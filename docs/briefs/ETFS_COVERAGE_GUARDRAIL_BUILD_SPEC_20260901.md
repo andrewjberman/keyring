@@ -14,6 +14,28 @@ is maybe we can build in some kind of guardrail that checks for holes pre-publis
 a remediation process that checks the source files, if they are not there it does targeted egress."*
 Then: *"yes do all of the above."*
 
+---
+
+## 0. RULINGS — Andrew-direct 2026-09-01, against `/open-calls` (5 cards). Verbatim anchors.
+
+**Verbatim (1):** *"I agree with the reporting obligation window."*
+**Verbatim (2):** *"All recs approved. ALso I want to be on the email as well as aj@opalinvest.com should be
+him and me at andrew@opalinvest.com."*
+
+| Call | Rec put to him | RULING |
+|---|---|---|
+| 1 — align the three partners onto one date basis before automating the send | YES, fix first | **APPROVED.** Orion T-1 alignment is now a **PREREQUISITE** to the automated send (§6a). |
+| 2 — restate published figures, or forward-only | FORWARD-ONLY | **APPROVED.** No restatement. No partner notification. |
+| 3 — `aj@` REPLACE or JOIN `andrew@` | REPLACE | ⛔ **NOT AS RECOMMENDED — RULED JOIN.** Both `aj@opalinvest.com` AND `andrew@opalinvest.com`. |
+| 4 — standing pre-auth for targeted egress | KEEP PER-USE | **APPROVED.** Rung 3 stays per-use-authorized. |
+| 5 — activate `ETFS_CANON` now | LEAVE AT SCOPING | **APPROVED.** Sequenced after the guardrail. |
+
+⛔ **CALL 3 IS AN OVERRIDE, NOT AN APPROVAL, AND THE DISTINCTION IS THE WHOLE RECORD.** *"All recs approved"*
+arrived in the same message as a sentence that contradicts card 3's rec. **The specific instruction governs
+the general one.** A seat reading only the blanket phrase would implement REPLACE and silently drop Andrew
+from the distribution of his own report. Recorded here because a batch approval carrying one exception is
+exactly where an exception gets lost.
+
 > ⚠ **MORATORIUM CARVE-OUT, CITED SO A LATER SEAT DOES NOT READ THIS AS A VIOLATION.** CLAUDE.md carries a
 > standing ban on building alerts/monitors/freshness-checkers **"unless Andrew explicitly asks."** He asked,
 > in the words quoted above. **Scope of the carve-out: a PRECONDITION inside the existing render path and a
@@ -157,9 +179,11 @@ Ordered. **Each rung runs only if the one above it did not resolve the day.**
 ⛔ **NO RUNG MAY FABRICATE.** If all three fail, the day stays missing and the gate reports it. A guardrail
 that invents a value to make itself pass is the worst possible outcome here.
 
-**OPEN — ANDREW'S CALL (rec: automate rungs 1–2, keep rung 3 manual):** rung 3 is vendor egress, which
-currently needs per-use authorization. Standing pre-authorization for a *bounded, targeted* backfill fetch is
-a sovereign decision, not one this spec should assume.
+⭐ **RULED (call 4, 2026-09-01): rungs 1–2 automate; RUNG 3 STAYS PER-USE-AUTHORIZED.** No standing
+pre-authorization for vendor egress. Rung 3 has never actually fired — granting a standing grant for a path
+with zero observed invocations buys nothing and widens the only step that leaves Opal infrastructure.
+**Build rungs 1–2 to run unattended; build rung 3 to STOP and ask**, surfacing the specific dates and the
+vendor it would need to call. Revisit only if it fires.
 
 ---
 
@@ -169,8 +193,29 @@ a sovereign decision, not one this spec should assume.
 `noreply@opalinvest.dev`, fired by EventBridge Scheduler `etfs-reports-monthly-run`,
 `cron(0 10 1 * ? *)` America/New_York (= 14:00Z, DST-native).
 
-**Change:** recipient to `aj@opalinvest.com`. Make it a **comma-separated list**, not a single string, so
-adding a recipient later is a variable change rather than a code change.
+**Change — RULED (call 3, JOIN not replace):** `EMAIL_RECIPIENT = "aj@opalinvest.com,andrew@opalinvest.com"`.
+A **comma-separated list**, so adding a recipient later is a variable change rather than a code change.
+⛔ **Andrew stays on the distribution — do not implement this as a replacement.** The rec put to him was
+REPLACE and he overrode it in the same message that approved the other four cards.
+
+**Prerequisite verification, BOTH addresses:** confirm `EMAIL_RECIPIENT` is parsed as a LIST by the
+orchestrator's send path before deploying. If it is passed to SES as a single `To:` string, a comma-joined
+value may be accepted-and-mis-delivered rather than rejected — **a delivery failure here is silent**, and the
+tell (Andrew stops receiving his own report) looks identical to "the render did not run."
+
+### 6a. PREREQUISITE — Orion date-basis alignment (call 1, APPROVED)
+
+**The automated send does not go live until the three partners share one date basis.** Inflection's series is
+labelled one NYSE trading day forward of the settled close it reflects; 49F and Cottonwood are correctly
+labelled. `orion_normalize_as_of` is called 0 times in `data/etfs` (measured 2026-09-01, denominator 19 files).
+
+**Why it gates the automation rather than riding behind it:** automating the monthly send propagates a
+partner-incomparable file, on a schedule, to a widened distribution. The defect is 30 days old and has cost
+nothing so far precisely because distribution was one person.
+
+**Scope, and it is deliberately narrow:** forward-only (call 2). Align the basis; **restate nothing, notify
+no partner.** Owner: ETFS/DS lane. **This is a prerequisite to §6, not a component of §3–§5** — the guardrail
+can and should land first; it is the SEND that waits.
 
 **Gate the send on §4:** the monthly email fires only on a PUBLISH verdict. On a refusal it does not send —
 and the refusal must be visible, because **a monthly report that silently does not arrive is indistinguishable
@@ -235,14 +280,20 @@ Each must be **exercised**, not asserted. A declared-but-unrun falsifier is a pr
 ## 10. Sequencing (for COO decomposition — this spec dispatches nothing)
 
 ```
-  1. AE   port catch-up -> cot- + bd-49f-, window per rec 1     [closes the recurrence]
-  2. DS   coverage classifier (A/B/C/D) as a callable           [the discriminator]
-  3. DS   coverage line into the rendered report                [artifact shows its own gaps]
-  4. AE   gate wired as a render precondition + send gating     [the backstop]
-  5. AE   EMAIL_RECIPIENT -> list, aj@opalinvest.com + SES verify
-  6. CVO  exercise A1-A7, A5 mandatory
-  7. AE   retire etfs-canon-fanin (§9.1) -- independent, can run in parallel
+  1. AE   port catch-up -> cot- + bd-49f-, REPORTING-OBLIGATION window   [closes the recurrence]
+  2. DS   coverage classifier (A/B/C/D) as a callable                    [the discriminator]
+  3. DS   coverage line into the rendered report                         [artifact shows its own gaps]
+  4. AE   gate wired as a render precondition + send gating              [the backstop]
+  -- the SEND gate below waits on 5; steps 1-4 do NOT --
+  5. DS   ORION DATE-BASIS ALIGNMENT (s.6a)  ** PREREQUISITE TO THE SEND **
+  6. AE   EMAIL_RECIPIENT -> "aj@opalinvest.com,andrew@opalinvest.com" + SES verify BOTH
+  7. CVO  exercise A1-A7, A5 mandatory
+  8. AE   retire etfs-canon-fanin (s.9.1) -- independent, can run in parallel
 ```
+
+**Do 1 before 4, and 5 before 6.** Two orderings, two different reasons: 1-before-4 because a gate without a
+catch-up only blocks; 5-before-6 because widening the distribution of a partner-incomparable file is the one
+act that converts a contained defect into a circulated one.
 
 **Do 1 before 4.** Shipping the gate first converts a silent wrong number into a blocked report without
 fixing the cause — and the first thing a blocked monthly produces is pressure to override the gate.
