@@ -1,0 +1,40 @@
+{
+ "project_code": "AUTH_SELFHEAL",
+ "macro_code": "AUTH",
+ "directive": "D8",
+ "pipeline": null,
+ "status": "active",
+ "dep_stage": "PRD",
+ "created": "2026-08-31",
+ "pods": [],
+ "related": [
+  "MDPF_HEALGAP",
+  "MDPF_COTREMEDIATION"
+ ],
+ "name": "The self-healing retry auth pattern -- DESIGN of the post-heal retry pattern + IMPLEMENTATION + the AD HOC RERUN, across every cookie-riding consumer, both firms; the PATTERN, not the Cottonwood instance",
+ "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct at the 0.6.2_AE_PartnerETL terminal, VERBATIM: 'In essence, I want this self-healing auth function to be managed by D8. I want self-healing retry auth pattern to be a standalong project under D8.' Scope source is that seat's brief @cc2bb75fdb; the Rule 27 stage-2 PRD does not exist yet and stage 3 (COO atom-decomp) precedes any TO. STAGE 2 LANDED 2026-08-31 @094d18aaee: dep_stage BRIEF -> PRD, cut by 0.0.0_AB_MSTR (register owner) after reading the artifact -- 16 E-rows, sections 0-7 present. 2.0.0_SA_COO stage-3 decomp is UNBLOCKED. Still authorizes no code, no terraform, no deploy and no vendor egress. SCOPE WIDENED + RERUN TRIGGER RELEASED 2026-08-31 ~23:1xZ (Andrew-direct at the CTO terminal, @99c4edf3e6 and @fad321cf07, both ON ORIGIN @b84d267e3b). Stage-3 decomp now decomposes against design + implementation + the ad hoc rerun. BOUNDARY CUT 2026-08-31 ~23:4xZ: only the AD HOC RERUN moved from the instance into this project; MDPF_HEALGAP keeps the schedule ordering and the recovery gap. Stage 3 (atom-decomp) LANDED @3a8bfec867, 10 cells, UNCERTIFIED, ON ORIGIN @7af85d4f62.",
+ "blocking": "Nothing blocked. REGISTER CUT only -- authorizes no code, no terraform, no deploy and no vendor egress.",
+ "prds": [
+  {
+   "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_SELF_HEALING_RETRY_AUTH_PATTERN_D8_20260831.md",
+   "version": "brief",
+   "note": "Scope source of record until a stage-2 PRD exists. The brief PROPOSES and mints nothing."
+  },
+  {
+   "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/AUTH_SELFHEAL_PRD_v0.1.md",
+   "version": "v0.1",
+   "note": "Rule 27 STAGE-2 purpose-level PRD, @094d18aaee. Author named by 1.0.0_SA_CTO (90152), not self-nominated. 16 claims E1-E16 each carrying measured/inferred/held/absent per the CTO binding constraint; the ~18h ceiling is carried as FALSIFIED, not as a mechanism; session-age-at-failure is an OPEN QUANTITY and sec.7 forbids stage 3 closing one by reasoning. Supersedes prds[0] as the scope source of record; the brief is retained as history."
+  }
+ ],
+ "leads": [
+  "SCOPE WIDENED 2026-08-31 ~23:1xZ by ANDREW-DIRECT at the 1.0.0_SA_CTO terminal, relayed verbatim @90201 and committed @99c4edf3e6. VERBATIM: \"I want the whole self-heal retry run work that 0.6.2 described here as its own project under D8: org\\tier2_senior\\0.6.2_AE_PartnerETL\\deliverables\\AUTH_SELFHEAL_PRD_v0.1.md. This should include both the design of the post-heal retry pattern and implementation as well as the ad hoc rerun.\" THREE DELIVERABLES, NOT ONE: (a) DESIGN of the post-heal retry pattern, (b) IMPLEMENTATION, (c) THE AD HOC RERUN. Andrew named the SCOPE SOURCE BY PATH, so prds[1] IS the project scope of record and not merely a supporting artifact.",
+  "THE AD HOC RERUN IS NOW IN SCOPE AND ITS TRIGGER WAS SUBSEQUENTLY RELEASED -- two separate acts, ~5 minutes apart, and conflating them would misread both. SCOPING (23:1xZ) put the rerun in the project. RELEASE (23:1xZ, @fad321cf07) authorized the vendor egress for the single cot --date 2026-08-31 one-shot, discharging Andrew own ~22:3xZ hold by its own author. The release is ONE ACT: no backfill, no other dates, no schedule change, no terraform, no deploy, no other vendor call on any firm; a FAILED run does NOT pre-approve a retry. The 08-21 49F-flip hold and the ADVI_PERFRP BUILD-ONLY cap are UNTOUCHED and both STAND.",
+  "BOUNDARY CALL ON WHAT ELSE MOVED WITH THE RERUN -- cut by 0.0.0_AB_MSTR (register owner) on 2.0.0_SA_COO's routed question (90288 s.7), which correctly refused to adjudicate it. THE QUESTION: the PRD put the WHOLE Cottonwood instance out of scope; Andrew then pulled THE AD HOC RERUN in BY NAME and said nothing about the rest of that instance -- the runner schedule ordering and its recovery gap. THE CUT: only the rerun moved. AUTH_SELFHEAL = the PRD as its named scope source, PLUS the ad hoc rerun. MDPF_HEALGAP KEEPS the schedule ordering and the recovery gap. THE REASONING, so it is not re-litigated: his instruction names the PRD BY PATH as the scope source and then ADDS one item to it. Reading the single named addition as carrying its whole parent instance would be adjudicating WIDER; the LD-0492 instance/pattern boundary that both 1.0.0_SA_CTO and 2.0.0_SA_COO confirmed is unchanged by naming one deliverable out of it. NOTHING IS BLOCKED OR HOMELESS EITHER WAY: MDPF_HEALGAP is a live SITEZ-placed project and continues to own the schedule ordering, so this cut creates no gap and no duplication -- which is precisely why it is a register call and not a sovereign one. SURFACED TO ANDREW as a one-line confirm-if-wrong rather than held as a blocking question, and reversible by his word in one line.",
+  "BOUNDARY AGAINST MDPF_HEALGAP, taken from the brief and adopted AT MINTING because two projects on one surface collide unless the split is stated: MDPF_HEALGAP is THE INSTANCE -- the Cottonwood runner's missing 2026-08-31 date, that runner's schedule ordering, and its recovery gap; it terminates when that runner is correct and the date is closed. AUTH_SELFHEAL is THE PATTERN -- auth self-healing plus consumer retry across EVERY cookie-riding consumer, both firms; it terminates when the class has an inventory, a validated ordering rule, and a stated position on re-mint.",
+  "THE TELL THAT THE SPLIT IS RIGHT, and it is the brief's own argument: MDPF_HEALGAP's fix -- moving one schedule_expression -- does not make any OTHER pipeline safer. That is why the pattern needs its own home rather than a second cell inside the instance.",
+  "MACRO CODE IS 'AUTH' AND NOT 'MDPF', DELIBERATELY. Its D8 siblings are MDPF_*, but this scope is cross-firm and cross-consumer rather than model-portfolio-pipeline. The directive field carries the D8 membership; the macro carries the subject, and calling it an mdpf project would mis-scope it at every future read.",
+  "CORRECTED PRIOR ART, recorded so it is not inherited a third time: cot-bd-session-trigger IS Terraform-managed (cot-pipeline/lambdas.tf:20-37). The earlier claim that it was NOT came from reading a comment that heads a `data` block without opening lambdas.tf; it propagated into the MDPF_HEALGAP brief and a CTO routing decision before it was caught.",
+  "cot_rebalancer_runner.tf:222-250 ALREADY carries an on_success completion-chain mechanism, so any completion-keyed design is an EDIT to an existing mechanism rather than a port.",
+  "STANDING VETO APPLIES: no shadow or parallel auth path."
+ ]
+}

@@ -41,6 +41,16 @@ later — a CORRECTNESS cost, not a speed one.
     ⛔ **The ORDER is the mechanism: DISCRIMINATION passes inside a wrong GRAIN/COVERAGE/STATE** — every
     instrument then agrees about the same wrong thing. ⛔ **A second seat's confirmation via the FIRST
     seat's method is REPETITION, not corroboration** — name your instrument and whether it differs.
+    ⛔ **A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE.** Verifying each
+    member of a set certifies the set CLEAN while a shared dependency beneath it is broken — and every
+    per-member arm passes, so nothing fails. **Ask what the members have in COMMON, and check THAT on
+    its own; then re-read the population UNSCOPED once.** Four instances in one night (2026-08-31): a
+    `-target` apply verified by a `-target` re-plan; 11 wrappers all reading MATCH over one STALE
+    shared core; an acceptance scoped to the same set as the act it graded; and a serve precondition
+    censused on ONE leaf of FOUR, where the leaf examined held **57** rows and an unexamined sibling
+    held **8,632**. COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
+    no shared dependency, and a scoped check that IS the whole question rather than evidence for a
+    wider one.
     **"proof / root cause / definitively / source-confirmed" are RESERVED** — legal only past STATE at
     EXERCISED; cite `file:line @ <commit-ish>` (a citation without a vintage is not a citation). It
     governs SUPPLEMENTARY controls, never the substance of the act; size by the claim your work FEEDS;
@@ -68,9 +78,43 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`; falsifier
     `.tools/comprail-gate1-fptest.sh`, 43 cases, red 18/43 against the pre-T1 hook). Cost: one `grep`
     per non-search Bash call; ~0.5–1 s more on a Bash call that DOES carry a search token (MSYS process
-    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), a single-file grep (T2, revisit ~09-04 on
-    the `ALLOW-SEARCH` rows), `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob` (nudge-and-
-    proceed, re-affirmed 08-28), `Read`, operational `aws`. `comp-grep` is a forwarder onto `comp-find`.
+    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), `# rail-checked: <why>`, `/freeform`,
+    native `Grep`/`Glob` (nudge-and-proceed, re-affirmed 08-28), `Read`, operational `aws`.
+    `comp-grep` is a forwarder onto `comp-find`.
+    ⛔ **A SINGLE-FILE GREP IS NO LONGER THE EXCEPTION — IT ROUTES TO `comp-read`** (Andrew-direct
+    2026-09-01, RETIRING the T2 `ALLOW-SEARCH shape=single-file` carve-out). `comp-read <file> --for
+    "<question>"` returns the file's SHAPE, regions tagged AUTHORITATIVE-vs-DESCRIPTIVE, every
+    QUALIFIER that limits/negates/corrects a nearby claim, intra-file CONTRADICTIONS, and an UNREAD
+    LEDGER — **the four things a grep of one file structurally cannot show.** Why it earns the swap:
+    a seat read `perfrp_emit_core.py`'s git LOG all evening and never its LINE 1, where a
+    `DEPLOY-SERVE-HELD` sentinel sat blocking the very act it was planning (2026-08-31); and the `head`
+    clause below records 3 seats truncating a grep of ONE file inside one hour. **COST:** a heavier
+    read per call than `grep`, over MEASURED traffic of ~340 single-file reads/day (1,021
+    `ALLOW-SEARCH shape=single-file` rows in ~3 days, `org/mcp/comp-which-rail.log`) — so a
+    `comp-read` that failed toward ABSENCE would be the estate's DEFAULT read instrument failing
+    toward absence, strictly worse than the grep it replaces. **NON-APPLICATION, THREE LIMBS:**
+    **(i)** a MEASUREMENT rather than a read — `grep -c`/`grep -q` — and any pipe-receiver;
+    **comp-read INDEXES a file, it does not COUNT for you.** ⏳ **THIS LIMB CARRIES AN EXPIRY:**
+    `--enumerate` is commissioned (Andrew-direct 2026-09-01 ~00:4xZ, brief @`ec83aba49e`) and
+    DISCHARGES limb (i) when it lands — **a bound with a named successor cannot silently outlive its
+    cause**, and without the pointer this clause would assert a false limitation about a tool it
+    simultaneously mandates, with nothing able to fail (prose cannot fail; the `/watcher` doc drifted
+    six weeks that way). **(iii) FILES OUTSIDE THE REPO CORPUS.** This rule is scoped to REPO SOURCE. A transient tool
+    log, a `/tmp` run output, a scratch file — anything that will not exist tomorrow — has no shape,
+    no qualifier lexicon and no unread ledger worth computing, and grepping one is NOT off-rail.
+    ⚠ **Stated because the omission would have KILLED the rule rather than softened it:** without
+    this limb every seat reading its own tool output is technically in violation, and **a rule that
+    makes compliant behaviour impossible gets ignored wholesale — including where it matters.**
+    Found by `3.0.0_SA_CVO~C` against its OWN behaviour 40 minutes after the clause landed.
+    **(ii) WRONG-OBJECT errors are OUT OF SCOPE.** comp-read fixes
+    RIGHT-object/WRONG-question — it hands you the qualifiers, contradictions and line 1 you did not
+    ask for. **It cannot tell you that you handed it the WRONG FILE.** Specimen: the 00:3xZ mint error
+    read the SECRET's `LastChangedDate` correctly FOUR times while the deciding evidence sat in
+    `bd-49f-session-trigger`'s CloudWatch log — a different object on a different plane. Wrong-object
+    needs a different remedy and this rule is not it. ⚠ **MECHANISM IS DESIRED-NOT-APPLIED until `comp-tool-hud.sh` changes:**
+    the carve-out is live at `:138`/`:141` (shape detection), `:155-156` (ALLOW-SEARCH log) and `:182`
+    (`path ends in a file extension` -> `exit 0`). Until those route to `comp-read`, this clause binds
+    agents by reading and nothing by enforcement.
     Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
     the pattern): `docs/architecture/NFRA_COMPRAIL_PRD.md`.
     ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Scoping this to comp-find is what let 3
