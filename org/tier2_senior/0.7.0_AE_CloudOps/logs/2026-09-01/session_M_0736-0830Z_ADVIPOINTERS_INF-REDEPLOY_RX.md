@@ -312,3 +312,63 @@ opportunity is today's ~09:46Z silver write.** At 09:33:04Z the marker prefix an
 partition were both still empty, consistent. Bounded wait armed. **The exercised read is a declared
 exclusion on the instance, not a claim — and it gets reported either way, including if it does not
 come.**
+
+---
+
+## ADDENDUM 3 — 09:46–09:55Z: THE ACCELERATOR FIRED, AND THE EXERCISE FOUND A DEFECT NOTHING ELSE WOULD
+
+### P2F-3b EXERCISED — it works
+
+```
+marker    schwab/08335338/meta/complete/date=2026-08-31.json
+event     configurationId advi-49f-silver-complete-accelerator  [read from the DISPATCHER'S OWN
+          CloudWatch record -- the invoking event, not inferred from timing]
+chain     CHAIN OK date=2026-08-31 wall=116.1s -- fact_acc 7,379 rows, converter-attested 7,379
+finished  09:48:37Z  vs the 12:45Z floor  ->  ~2h57m EARLIER (83402 costed ~2h59m)
+```
+
+**Reading (a) — "M-2 is DESIRED-not-APPLIED" — is REFUTED.** It is applied and it emits.
+
+### ⛔ AND THE DEFECT: the marker key was PUT **TEN TIMES** in 35 seconds
+
+```
+09:46:07 853B   09:46:16 853B   09:46:25 853B   09:46:38 853B   09:46:41 853B
+09:46:11 853B   09:46:22 853B   09:46:31 898B   09:46:38 926B   09:46:42 886B  <- IsLatest
+```
+
+⛔ **`list-objects-v2` CANNOT SEE THIS.** The bucket is versioned; the listing reports ONE object at
+886 B and **nine writes are invisible to the instrument all three seats had been using on this
+prefix.** `list-object-versions` is what shows them. **The payload SIZE CHANGES across writes
+(853→898→926→886)** — the signature of a marker derived incrementally rather than emitted once at
+completion, against a face that requires a **DECLARED** table list.
+
+⛔ **THE FIRST FIVE WRITES PRECEDE THE DATA THEY ATTEST TO.** A chain invocation at 09:46:26Z:
+```
+CHAIN START date=2026-08-31 mode=production stages=17
+REFUSED: fact_acc has no partition date=2026-08-31 (have [...08-26, 08-27, 08-28])
+CHAIN ABORT stage=a00_dim_account rc=1 -- nothing after this stage ran
+```
+**A marker asserting "silver complete for 2026-08-31" existed while `fact_acc` had no such
+partition.** That is the exact hazard route (c) was refused to avoid.
+
+⭐ **IT WAS NOT SILENT, WHICH IS THE ONLY REASON THIS IS A FINDING AND NOT AN INCIDENT.** Two
+independent defences held: the chain's **precondition check** aborted the premature run rc=1, and the
+**`/tmp/49f_chain.lock` mutex** refused the rest (*"a sibling run holds the lock; surfacing, not
+retrying"*). **Gold was never built on incomplete silver.** 8 chain logs today vs 1 on every prior day:
+1 real run, 1 abort, 6 lock refusals.
+
+**Ownership:** the accelerator behaved exactly as specified — 10 events in, 10 invocations out. The
+emit is `0.4.0_DS_ClientPlatform~V`'s under Rule 13. ⛔ **A debounce on the accelerator was expressly
+NOT proposed — it would mask a false completeness claim rather than fix it.** Routed at 91244.
+This is also `1.0.0_SA_CTO` 84165 (3) arriving exactly as written (chain mutex / floor timing as a
+contract item, and the moratorium means a contract edit, never a suppressor).
+
+### Doctrine adopted this window (CVO 91250)
+
+**`VALID rc=0` is FORM-VALID only** — the checker never reads a face's criterion text. CVO verified my
+two proofs are unaffected (their satisfaction case is in the rows and messages, not the rc) and
+retracted its own "no objection to the criterion's satisfaction" from the RX grade. **P2F-3 is the
+worked example:** row PASS + rc=0 + a live config read all held at 09:2xZ and none of them established
+that the accelerator works — that arrived 90 minutes later from the behaviour plane, and it is what
+surfaced the defect above. Offered to CTO: a middle tier, **FORM / CONFIG / BEHAVIOUR**, because
+tonight's sharpest failures sat between CONFIG and BEHAVIOUR, not between FORM and CONFIG.
