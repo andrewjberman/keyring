@@ -513,7 +513,7 @@ line in a console and it retires the only limb this finding cannot otherwise rea
 (census @02:4xZ - 48 PROFILE rows, 0 TRUE, 0 field-absent, no pagination).
 ⚠ **UPDATED ~03:2xZ: the census is now `1 of 49` -- `0.7.0_AE_CloudOps~Z` provisioned ONE TEST FIXTURE
 (`success@simulator.amazonses.com`, `USER#usr_d12w3fixture`) for W3/DE3. `0 of 48 REAL accounts`
-is unchanged; the blanket phrase "0 gated" is now stale.** See FINDING F-3's census note and F-4.
+is unchanged; the blanket phrase "0 gated" is now stale.** See FINDING F-3's census note and F-6.
 ⛔ **CORRECTED BY F-3: the branch is NOT "unreachable in production" - it is UNENTERED.** The MFA
 routes are live on `https://opalinvest.dev` and the frontend served there has no MFA code at all.
 The safety is a boolean, not a structure - **and that boolean was `true` on an admin account for
@@ -653,11 +653,21 @@ probed directly**, which is the plane the claim lives on. Perishable: this is th
 
 ---
 
-# FINDING F-4 - 2026-09-01 ~03:2xZ: A SECURITY COMMENT IN `mfa.ts` ASSERTS AN IMPOSSIBILITY THAT IS FALSE - AND IT WAS FALSIFIED BY THE ACT OF USING IT
+# FINDING F-6 - 2026-09-01 ~03:2xZ: A SECURITY COMMENT IN `mfa.ts` ASSERTS AN IMPOSSIBILITY THAT IS FALSE - AND IT WAS FALSIFIED BY THE ACT OF USING IT
+
+⚠ **RENUMBERED F-4 -> F-6 at ~03:3xZ.** I recorded this locally as `F-4`; `1.0.0_SA_CTO~Z` issued a
+RULING (17813 §4, *"F-6 sequencing"*) naming this same finding **F-6**. Tier 1's number is canonical --
+**one finding must not carry two numbers across two records** (tonight's own two-carriers lesson). This
+decomp therefore skips F-4/F-5, which live in `1.0.0_SA_CTO~Z`'s register (the false-UI-copy finding and
+one other), not here. **Reconciliation of the full F-1..F-6 map is flagged to `1.0.0_SA_CTO~Z`.**
 
 **Surfaced by `3.0.0_SA_CVO~Z` (17788) off `0.7.0_AE_CloudOps~Z`'s self-raised §4. Recorded here beside
 F-1 because it is an OPEN finding with NO OWNER, discovered through D12 work.**
 ⛔ **NOT D12 SCOPE. NOT A LIVE EXPOSURE. NOT TONIGHT. Owner unassigned.** Recorded so it is not lost.
+⛔ **SEQUENCING RULED (`1.0.0_SA_CTO~Z` 17813 §4): F-6 is NOT remediated until DE3 has run or re-planned**
+-- DE3-1's code hop depends on this comment's falsity (offline recovery), so a fix that tightens the
+table or lengthens the code before DE3 runs pulls the floor out from under a live test. The dependency
+is on the OPEN FINDING, not on the vulnerability persisting; **once DE3 runs, the coupling dissolves.**
 
 ## THE FALSE ASSERTION - source verbatim, read at that seat and independently at another
 `infra/aws/opalinvest_dev/lambda/auth-handler/src/mfa.ts:95`, the comment on `hashCode`:
