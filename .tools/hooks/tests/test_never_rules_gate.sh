@@ -42,6 +42,22 @@ PASS=0; FAIL=0
 # wrote fixtures into it as if they were real bypasses. 6 such records existed; ALL were phantoms.
 # Route ours to a scratch file, and assert on it at the end.
 export NEVER_GATE_AUDIT="$(mktemp 2>/dev/null || echo "/tmp/nrg_audit_$$")"
+# *** THE SUITE WAS NOT HERMETIC: ITS TOTALS DEPENDED ON WHO RAN IT. ***
+# Measured 2026-09-01 -- 1.0.0_SA_CTO~Z read 76 PASS/15 FAIL and 0.0.0_AB_MSTR~Z read 79/12 on the
+# SAME commit, same device, same file. Both totals summed to 91, so no arm appeared or vanished:
+# THREE ARMS FLIPPED. Reproduced by changing exactly one variable, the caller identity:
+#     env -u OPAL_AGENT_SERIAL            -> 79 PASS / 12 FAIL
+#     OPAL_AGENT_SERIAL=0.0.0_AB_MSTR~Z   -> 76 PASS / 15 FAIL
+# The three are the `git pull`-based rebase arms (git pull --rebase, -c pull.rebase one-shot,
+# generic-flag-before--c). GATE 5 resolves the caller from OPAL_AGENT_SERIAL when the payload
+# carries no session_id, and for a NON-INTEGRATOR it DENIES those pulls on IDENTITY -- so the arm
+# observed DENY and scored PASS WITHOUT GATE 1 EVER FIRING. Green for the wrong gate: a rebase arm
+# certifying the rebase gate while the push/pull gate did the denying.
+# PINNING the caller to the integrator makes GATE 5 transparent, so a GATE 1 arm measures GATE 1
+# and nothing else. It RAISES the failure count from 12 to 15 -- those three were always broken and
+# were being masked. A per-arm identity (check_as, below) overrides this for GATE 5's own arms.
+export OPAL_AGENT_SERIAL="0.0.0_AB_MSTR~Z"
+
 : > "$NEVER_GATE_AUDIT"
 
 # verdict: prints DENY or PASS for a given command string.
