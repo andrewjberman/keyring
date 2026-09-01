@@ -64,8 +64,12 @@ effect -- see s.2a.
   2026-09-01  Tuesday
 ```
 
-**Data is T-1. The latest available data date is 2026-08-28. A 2026-08-31 partition CANNOT EXIST
-until 2026-09-01. THE ABSENCE IS THE EXPECTED STATE, NOT A DEFECT.**
+~~**Data is T-1. The latest available data date is 2026-08-28. A 2026-08-31 partition CANNOT EXIST
+until 2026-09-01. THE ABSENCE IS THE EXPECTED STATE, NOT A DEFECT.**~~
+
+⛔⛔ **THE CLAUSE DIRECTLY ABOVE IS FALSIFIED AT SOURCE. SEE s.2b. I WROTE IT BY INHERITING A
+GENERALIZATION INSTEAD OF MEASURING THE FEED CLASS -- ~20 MINUTES AFTER FILING A CORRECTION WHOSE
+ENTIRE SUBJECT WAS AN UNMEASURED PREMISE.**
 
 ⛔ **`CLAUDE.md` s.5 HARD STOPS says this in terms, and this seat did not apply it either:**
 *"NEVER call a pipeline stale/broken until you resolve the TRADING CALENDAR -- count trading days.
@@ -181,3 +185,88 @@ they own D8.
 
 *Recorded by `2.0.0_SA_COO`. Both Andrew-direct quotes verbatim. This record is the durable half of
 the XXX.md same-turn duty; the broadcast half is msgs 90614-90619.*
+
+---
+
+## 2b. AMENDMENT -- THE FEED-CLASS IS SETTLED AT SOURCE AND s.2a's CENTRAL CLAUSE IS FALSIFIED
+
+**Filed 2026-09-01 ~03:4xZ, amending s.2a which this seat filed ~20 minutes earlier.**
+
+### The measurement -- TWO instruments, independent, converging
+
+**(i) THE RATIFIED VENDOR CONTRACT**, `data/_contracts/vendor_asof_registry.yaml:757-763`, read by
+this seat. comp-find over `data/`: 1 hit / 1,235 files scanned.
+
+```
+  - vendor: blackdiamond
+    scope: cottonwood (monolith direct)
+    endpoint: "Rebalancer group: POST /api/models/strategies/search
+               + POST /api/accounts/search (take=200) + GET /api/models/{id}"
+    feed: rebalancer_models + rebalancer_accounts + rebalancer_model_detail
+    asof_field: ABSENT
+    asof_semantics: current-state-no-date
+    label_offset: "0 (run-date label)"
+```
+
+**(ii) EVERY VENDOR CALL SITE IN THE RUNNER**, censused by `0.6.2_AE_PartnerETL` (msg 90684),
+**2 of 2 call sites, complete census not a sample:**
+
+```
+  :232-233  body = {"skip","take","sort","searchString"}  POST roster + accounts   NO DATE FIELD
+  :313      GET "/api/models/%s" % mid                    model detail             NO DATE IN PATH
+  :314      key = ".../rebalancer_model_detail/%s/%s.json" % (date, mid)  <- date's ONLY use: the S3 key
+```
+
+>> **`date` NEVER REACHES THE VENDOR. The vendor is asked for CURRENT STATE and the result is
+   stamped with the RUN's date. THIS FEED HAS NO DATA DATE -- the partition is a CAPTURE stamp, so
+   there is no T-1 relationship for a trading calendar to govern.** <<
+
+### What is falsified, and what is NOT
+
+- **FALSIFIED:** s.2a's *"a 2026-08-31 partition CANNOT EXIST until 2026-09-01"* and *"the absence
+  is the expected state"* -- **as applied to THIS feed.**
+- **NOT TOUCHED -- ANDREW'S SENTENCE STANDS ENTIRELY.** *"8/28 is Friday, it is the last day we have
+  data ... because its the last trading day"* is TRUE of a T-1 data feed. **It does not reach this
+  one, because this one has no data date to be T-1 of.** He was not asked about the cot rebalancer
+  roster feed and did not answer about it. ⛔ **THE GENERALIZATION WAS THE FABRIC'S, NOT HIS, AND
+  THIS SEAT MADE IT TOO. No seat may record him as contradicted or corrected.**
+- **NOT TOUCHED:** the `CLAUDE.md` s.5 trading-calendar rule, which binds and was not run.
+
+### ⛔ AND THE ORIGINAL PREMISE FALLS WITH IT -- BOTH DIRECTIONS WERE UNESTABLISHED
+
+`3.0.0_SA_CVO` (90671) and `0.6.2_AE_PartnerETL` (90684) both land here and this seat adopts it:
+
+```
+  ORIGINAL     "there is an 08-31 DATA HOLE"        <- the vendor SERVED 65 models / 947 account
+                                                       rows. There was never an absence.
+  FALSIFYING   "08-31 data cannot exist yet"        <- refuted by the same 947 rows, and by the
+                                                       contract above.
+  MEASURED     a GATE REFUSING TO STAMP data it could not reconcile:
+               COUNT-RECONCILE, strategy "Core | Satellite 60", roster 15 vs observed 14.
+```
+
+>> **THE REAL DEFECT IS A COUNT RECONCILIATION FAILURE AND IT SAT UNTOUCHED UNDER THE ENTIRE
+   CASCADE. A re-run cannot fix a count mismatch -- which is precisely why the one-shot fired twice
+   and failed byte-identically both times.** <<
+
+**NO-THIRD-FIRE STANDS, UNTOUCHED AND ON ITS OWN TERMS.** Its discharge condition was always
+*"a MEASURED BD roster 15 -> 14"* -- **the COUNT question, not the calendar question.** Whoever wrote
+that condition was aiming at the real defect while the rest of the fabric argued about dates.
+
+### The transferable shape, which is worth more than any of the three errors
+
+**THREE CARRIERS, ONE UNMEASURED PREMISE, PROPAGATING IN BOTH DIRECTIONS:** the original "hole"
+claim, the falsification of it, and this seat's correction of the falsification were EACH filed by a
+seat that had not measured the feed class. The instrument that settles it -- a declared contract row
+and two call sites -- was in the repo the whole time and nobody opened it until the fourth pass.
+**Every one of those filings was internally careful. Care inside an unmeasured premise produces
+confident propagation, not detection.**
+
+⭐ **CREDIT, MEASURED:** `0.6.2_AE_PartnerETL` found the original hole, accepted that the
+falsification landed on its own finding (*"that is mine before it is anyone's"*), **then refused to
+inherit the falsification unchecked**, disclosed that it had applied the trading-calendar rule
+CORRECTLY on `account_attributes` hours earlier and failed to carry it across, and named the
+resolving question precisely enough that confirming it took one file read. **Five seats, this one
+included, were mid-stand-down on a premise that seat stopped.**
+
+**ZERO EGRESS in this amendment and none implied by it.**
