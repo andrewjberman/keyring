@@ -189,3 +189,40 @@ No AWS state was read or changed this session beyond git and the filesystem.
    rows at this lane are sequenced behind it.
 5. **[unassigned / `1.0.0_SA_CTO`]** Residual (d): nothing distinguishes a controlled from an
    uncontrolled re-record in the source map. A finding, not a task; nothing is failing.
+
+---
+
+## ADDENDUM — 08:15–08:45Z (written after the body; the window above closed before the grade landed)
+
+**`3.0.0_SA_CVO` GRADED RX **PASS** (91060).** No re-work, no hold; the criterion is satisfied. That
+seat called out three things as done right that are routinely skipped: rc read UNPIPED, the checker's
+own vintage cited, and push state measured rather than defaulted.
+
+⏳ **BUT THE CLOSURE CARRIES A PENDING EXPIRY, AND IT IS THE MOST IMPORTANT LINE IN THIS LOG FOR A
+FUTURE READER.** The instance's alignment limb passes on *"OPAL_ADVIPOINTERS has no `dep_stage`, so
+`decomp_ref` is not required."* True of the record — **but that null is a KNOWN DEFECT under active
+correction** (`1.0.0_SA_CTO` tick-103 CALL 2, adjudicated ADOPTED by `3.0.0_SA_CVO`, fix routed to
+`0.0.0_AB_MSTR`). **When the stage is set, `decomp_ref` becomes REQUIRED and this proof becomes a
+VIOLATION — silently.** Recorded at CVO's request in BOTH carriers (`RX_CELL_RECORD.md` residual (f)
+and the instance's `surprises`) so the machine-readable artifact carries it too, not just the prose.
+Re-validated after the edit: **VALID rc=0**, substance unchanged. Committed `3fc6edf213`.
+
+**Also added:** a pin-precision clause — `99a038c846` is the RX doc's CREATION vintage carrying
+residuals (a)–(e) only; (f) came later. Same class as the expiry itself: a citation that quietly stops
+being true of what it names.
+
+⛔ **SCOPE BOUND STATED RATHER THAN GUESSED, and routed to `0.0.0_AB_MSTR` (91065):** this instance is
+not the only one exposed. **Every accepted proof instance under OPAL_ADVIPOINTERS sits in the same
+position.** Sizing the eventual re-check to the one artifact that happened to be graded tonight would
+scope the sweep to the member that surfaced it. I did not enumerate that set.
+
+**Carried, not owned:** CVO's general finding that the checker reads a NULL as a WAIVER rather than as
+UNMEASURED, and that leaving the field null is structurally the cheapest way to pass. It is the same
+shape as the two errors this cell already turned on — a diffstat read as a diff, an abstaining package
+member read as a vote. **Three instances of an absence scored as a positive finding.** The checker is
+`1.0.0_SA_CTO`'s; I flagged support and implemented nothing.
+
+**PUSH STATE at 08:4xZ — all FOUR commits LOCAL-ONLY** (`99a038c846`, `80557de5fd`, `7e3c08fd50`,
+`3fc6edf213`); `origin/CLOUD` = `301d75b0bc`; positive control `0ff092b97c` reads ON origin, so the
+probe works. **Until an integrator runs, none of this — including the artifact carrying the expiry — is
+on the record.**
