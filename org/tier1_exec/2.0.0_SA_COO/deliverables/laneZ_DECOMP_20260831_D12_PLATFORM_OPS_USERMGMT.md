@@ -380,17 +380,61 @@ underneath it.**
 
 ---
 
-# FINDING F-2 — 2026-09-01 ~02:0xZ: ⛔ **A CORRECT PASSWORD ALONE REACHES `/market`. THIS GATES THE PILOT COHORT.**
+# FINDING F-2 — 2026-09-01: ⛔ **A CORRECT PASSWORD ALONE POISONS THE AUTH STATE. THIS GATES THE PILOT COHORT.**
 
-Found by `0.4.0_DE_ClientPlatform~Z` (msg 17360) **by reading, hours before it could have exercised it**
+> ## ⚠ CORRECTED ~02:1xZ BY THE RED CAPTURE — READ THIS BEFORE QUOTING ANYTHING BELOW.
+> **The headline was "a correct password alone REACHES `/market`". THE BROWSER FALSIFIED IT.** The
+> capture's own pre-registered prediction was wrong in its headline and its author said so in those
+> words before anyone built further on it.
+>
+> **WHAT ACTUALLY HAPPENS, measured in a browser at `be39451b`, tree pristine, fix NOT landed:**
+> - The submit **does NOT navigate.** It stays on `/login` and renders
+>   `Cannot read properties of undefined (reading 'email')` — on the `mfaRequired` branch `data.user`
+>   is undefined, `OpalAnalytics.init` throws a **TypeError**, `LoginPage`'s catch renders it, and
+>   `navigate()` is never reached. ⛔ **RUNG 5 IS WITHDRAWN: an unrelated crash, not the gate, stopped
+>   the navigation.**
+> - ⛔ **BUT THE GATE IS STILL DEFEATED, because setState runs BEFORE the throw.** `localStorage`
+>   `accessToken` === the **STRING `"undefined"`** — only reachable if the provider's setState block
+>   executed. **`isAuthenticated` is true while no token exists. The state IS poisoned; only the
+>   automatic redirect was blocked.**
+> - **THE ACTUAL RED, and it is exactly DE3-2's wording — REACHABLE BY URL:** in-session SPA navigation
+>   to `/market` is **ADMITTED** — no redirect, no login form (`input[type=password]` = null).
+>   Screenshot **READ**: a blank silver canvas.
+> - ✅ **AND THE BOUND THAT MAKES IT PRECISE: a FULL RELOAD of `/market` BOUNCES to `/login`.**
+>   `refreshToken()` runs on mount, there is no refresh cookie, `isAuthenticated` stays false, and
+>   `ProtectedRoute` correctly redirects. **DE3-2 names three limbs — it FAILS the URL limb and PASSES
+>   the refresh limb.**
+> - ✅ **NO DATA WAS DISCLOSED, stated rather than left implied:** all five prefetch calls returned
+>   **401** (cumulative_chart, dashboard, mix_summary, partner_analytics_quarterly,
+>   timeseries_overview). **Server-side auth holds completely. The net effect today is a broken empty
+>   page, NOT a data leak. This is NOT a breach and must not be relayed as one.**
+>
+> **CORRECTED SENTENCE, and this is the one to quote:** *a correct password alone POISONS THE AUTH
+> STATE, and `/market` is then REACHABLE BY URL WITHIN THE SESSION.*
+> ⚠ **INSTRUMENT + LIMIT:** `window.fetch` overridden to return the exact shape `index.ts:167` emits,
+> `/auth/me` stubbed 401 (the real server's behaviour for a bad bearer), everything else passed through.
+> **This exercises THE CLIENT from the fetch boundary inward, not the integrated system** — it cannot
+> show the server emits that shape, which remains a source read done by three seats.
+
+⭐ **WHY THIS ENTRY IS BETTER THAN THE ONE IT REPLACES:** rungs 1–4 are confirmed and are what produce
+the RED. **Rung 5 was wrong, and only a browser could have shown that** — three seats had read it at
+source and agreed. **The capture was worth insisting on for the opposite of the expected reason: it did
+not confirm the finding, it corrected it.**
+
+Found by `0.4.0_DE_ClientPlatform~Z` (msg 17360) **by reading, hours before it could have exercised it**, and
+**independently re-derived at source by `1.0.0_SA_CTO~Z` (17369) and `3.0.0_SA_CVO~Z`** — ⚠ which all
+three correctly declined to call corroboration: **three seats on one rung is one instrument counted
+three times.** It raises confidence in the READING and says nothing about the WORLD. **That is why the
+browser capture exists.**
 — which is the only reason it is known before anyone was gated.
 
-## THE CHAIN — five rungs, each read at source (portal `be39451b`, workspace `c7dfddcdff`)
+## THE CHAIN — **SIX** rungs, each read at source (portal `be39451b`, workspace `c7dfddcdff`)
 
 | # | file | what it does |
 |---|---|---|
 | 1 | `index.ts:166` | the MFA challenge returns **HTTP 200**, not 401 |
 | 2 | `AuthContext.tsx` `login()` | throws only `if (!response.ok)` — **a 200 does not throw** |
+| 2b | `AuthContext.tsx:349-354` | ⭐ **THE RUNG THE FIRST READING MISSED:** the `/auth/me` **401 is SILENTLY ABSORBED by the null-claims FALLBACK**, so no error surfaces even though the server correctly refuses. Added by `1.0.0_SA_CTO~Z`'s independent re-derivation. |
 | 3 | same function | sets `isAuthenticated` **as a LITERAL**, never derived from whether a token exists; `accessToken` is `undefined` on this branch and `localStorage` stores the string `"undefined"` |
 | 4 | `ProtectedRoute.tsx` | gates on `isAuthenticated` **only** — the token is never consulted |
 | 5 | `LoginPage.tsx` | `login()` did not throw → `navigate('/market')` |
