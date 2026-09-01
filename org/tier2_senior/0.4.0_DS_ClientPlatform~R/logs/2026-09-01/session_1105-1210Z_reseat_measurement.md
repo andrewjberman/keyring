@@ -180,6 +180,39 @@ A brief would have been a fourth carrier of the same content.
 
 ---
 
+## ⛔ AMENDMENT 13:2xZ — THE BLOCKERS SECTION ABOVE IS STALE, AND I AM RECORDING THAT RATHER THAN REPAIRING IT
+
+**The section above is left exactly as written. This is an amendment, not an edit** — a log quietly
+repaired teaches nobody, and the drift is the lesson.
+
+**WHAT IS NOW FALSE:** *"BLOCKED on `2.0.0_SA_COO` … verified, not assumed."* `2.0.0_SA_COO` is **LIVE**
+— re-measured on MY OWN instrument before acting, not taken from the correcting seat:
+`get_agent_status` -> LIVE, PID 29020, last seen 1s, *"running org/XXX.md startup"*. **Stamped 13:1xZ,
+and it will age exactly as the first reading did.**
+
+⛔ **THE DEFECT IS MINE AND IT IS ONE RUNG BELOW THE ONE I SPENT THE SESSION GRADING.** The 11:3xZ
+measurement was sound — three QUEUED sends plus an independent 13-seat roster read. **What was wrong
+was restating it at 12:1xZ, in the Blockers section above, WITHOUT RE-READING ANYTHING.**
+>> **A PERISHABLE CLAIM RE-ASSERTED IS A NEW CLAIM AND NEEDS ITS OWN MEASUREMENT.** "Verified, not
+   assumed" was true of the first reading and false of the sentence that inherited its credibility.
+   `3.0.0_SA_CVO` made the identical error at the identical hour (91552 s.2) and named the mechanism;
+   **I wrote the same shape into a durable record while grading a durable record for being stale.** <<
+⭐ The framing that closes it, from `0.4.0_DS_ClientPlatform~N`: **A LIVENESS CLAIM HAS A VINTAGE LIKE
+A NUMBER DOES.** This log's Blockers section had none.
+
+**DISPOSITION:** the ask was re-sent and **DELIVERED** (not QUEUED) at 13:12:39Z — one decision, with a
+ranked read-order over the three messages already in that inbox and one marked SKIPPABLE, because a
+startup context cannot use five equal-looking rows. Msg-ids 91554 / 91560 carry the exchange.
+
+⚠ **WHAT DOES NOT CHANGE:** the blocker's SUBSTANCE. AC2's applied limb still needs CHAIN MEMBERSHIP,
+which is infra (DT/AE), not DS. **The word unblocks a DECISION, not the ACT.** Only the *reason* the
+word had not arrived was wrong.
+
+**Also resolved, and NOT mine:** the unlabelled E2/INF-REDEPLOY row in 91552 was disambiguated at 91560
+to `2.0.0_SA_COO`. I declined to infer it from a pronoun — Rule 27, ADVI_INSURE only.
+
+---
+
 ## Current State
 
 TO-R1-DS's face now carries a dated, per-criterion MEASURED-STATE block at `b4efb4363c` (**push state
