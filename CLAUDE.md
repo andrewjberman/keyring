@@ -41,6 +41,16 @@ later — a CORRECTNESS cost, not a speed one.
     ⛔ **The ORDER is the mechanism: DISCRIMINATION passes inside a wrong GRAIN/COVERAGE/STATE** — every
     instrument then agrees about the same wrong thing. ⛔ **A second seat's confirmation via the FIRST
     seat's method is REPETITION, not corroboration** — name your instrument and whether it differs.
+    ⛔ **A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE.** Verifying each
+    member of a set certifies the set CLEAN while a shared dependency beneath it is broken — and every
+    per-member arm passes, so nothing fails. **Ask what the members have in COMMON, and check THAT on
+    its own; then re-read the population UNSCOPED once.** Four instances in one night (2026-08-31): a
+    `-target` apply verified by a `-target` re-plan; 11 wrappers all reading MATCH over one STALE
+    shared core; an acceptance scoped to the same set as the act it graded; and a serve precondition
+    censused on ONE leaf of FOUR, where the leaf examined held **57** rows and an unexamined sibling
+    held **8,632**. COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
+    no shared dependency, and a scoped check that IS the whole question rather than evidence for a
+    wider one.
     **"proof / root cause / definitively / source-confirmed" are RESERVED** — legal only past STATE at
     EXERCISED; cite `file:line @ <commit-ish>` (a citation without a vintage is not a citation). It
     governs SUPPLEMENTARY controls, never the substance of the act; size by the claim your work FEEDS;
