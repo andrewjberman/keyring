@@ -26,10 +26,17 @@ Diamond**. Every outcome below sits under one of them.
 **D2-1 — the cards render from SERVED leaves, not fixtures.**
 - ACCEPTANCE: an authenticated DEV fetch returns 200 + body for each served perfrp key, AND a read
   render shows real producer figures drilled to the level the card claims.
-- ⛔ **DENOMINATOR IS 10 OF 11, NOT 11.** `perfrp_transactions_relationship` carries `deferred` and
-  fails closed by construction at `d_publisher_port.py:589-591`, tested BEFORE `--publish`, `--keys`,
-  the grant env and the operator. **An acceptance read expecting 11 served keys scores a FALSE MISS on
-  the one key a sovereign ruling deliberately withholds.**
+- ⛔ **CORRECTED 2026-09-01 01:0xZ — "10 OF 11" IS WRONG AND I BROADCAST IT THREE TIMES.** A plural
+  dry-run census over all 11 families (`0.7.0_AE_CloudOps~G`, zero writes) measures **FOUR that would
+  actually WRITE**: `perfrp_performance_account`, `perfrp_gainloss_relationship`,
+  `perfrp_gainloss_account`, `perfrp_book_advisor`. Seven are EMITTER_REFUSED.
+- ⚠ **AND THE SET HAS MOVED TWICE.** It contradicts the chain docstring's 08-25 census in BOTH
+  directions — `gainloss` rel+acct were listed as refusing BY DESIGN and now publish;
+  `performance_relationship` published and now refuses. **Stop quoting that docstring.** The
+  acceptance number is the MEASURED would-publish set at the vintage you grade, never a remembered one.
+- `perfrp_transactions_relationship` still carries `deferred` and fails closed at
+  `d_publisher_port.py:589-591`, tested before `--publish`, `--keys`, the grant env and the operator —
+  but it is inside the SEVEN that refuse, so it is not the discriminator I made it out to be.
 - STATE: five cards bound against fixtures — PERFORMANCE +26.33%, GAIN/LOSS $109K, ALLOCATION $288K,
   TRANSACTIONS 21 rows; ACTIVITY SUMMARY correctly shell-only (no leaf is emitted for it, so its
   emptiness is a producer wait, not a build gap). Key-class precondition landed `@729b7617`. Serve
