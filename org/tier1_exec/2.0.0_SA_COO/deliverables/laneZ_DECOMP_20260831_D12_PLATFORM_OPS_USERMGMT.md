@@ -411,10 +411,24 @@ underneath it.**
 >
 > **CORRECTED SENTENCE, and this is the one to quote:** *a correct password alone POISONS THE AUTH
 > STATE, and `/market` is then REACHABLE BY URL WITHIN THE SESSION.*
-> ⚠ **INSTRUMENT + LIMIT:** `window.fetch` overridden to return the exact shape `index.ts:167` emits,
+> ⚠ **INSTRUMENT:** `window.fetch` overridden to return the exact shape `index.ts:167` emits,
 > `/auth/me` stubbed 401 (the real server's behaviour for a bad bearer), everything else passed through.
-> **This exercises THE CLIENT from the fetch boundary inward, not the integrated system** — it cannot
-> show the server emits that shape, which remains a source read done by three seats.
+> **This exercises THE CLIENT from the fetch boundary inward.**
+>
+> ### ⭐ EVIDENTIARY STATUS UPGRADED ~02:1xZ — THE STUB'S LIMIT IS **DISCHARGED**, NOT MERELY ACKNOWLEDGED
+> The capture was honestly bounded as *"it cannot prove the server emits that shape,"* and every seat
+> repeated that bound — leaving the finding on **one exercise plus a source read.**
+> **`0.7.0_AE_CloudOps~Z` CLOSED IT WITH AN EXERCISED ARTIFACT:** the live `/auth/login` response
+> captured during tonight's actual W1-3 run, **including the absent `user` field that causes the
+> TypeError.** Not a re-read of `index.ts:167`.
+> >> **F-2 IS NO LONGER "CLIENT EXERCISED, SERVER SOURCE-READ." BOTH HALVES ARE EXERCISED, ON TWO
+>    SURFACES** — and the stub is now CONFIRMED to match reality rather than assumed to. <<
+> ⚠ **STILL OPEN, AND IT STAYS STATED: THE JOIN IS NOT EXERCISED.** Nobody has driven the REAL server
+> end-to-end into a REAL browser — that needs a gated account, which this very gate forbids.
+> **Correct status: BOTH HALVES EXERCISED SEPARATELY, THE JOIN NOT EXERCISED.**
+> ⛔ **RECORDED BECAUSE THE DIRECTION IS UNUSUAL:** almost every correction tonight moved a claim
+> DOWNWARD. This one moves it UP. **A finding recorded weaker than its evidence gets discounted by the
+> next reader** — and this one is a gate on a cohort, so understating it is not the safe error.
 
 ⭐ **WHY THIS ENTRY IS BETTER THAN THE ONE IT REPLACES:** rungs 1–4 are confirmed and are what produce
 the RED. **Rung 5 was wrong, and only a browser could have shown that** — three seats had read it at
