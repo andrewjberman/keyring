@@ -173,3 +173,35 @@ surfaced by `1.0.0_SA_CTO` at 90743, allocation is `2.0.0_SA_COO`'s, widen-or-no
 2. **[Andrew]** Certification word on `comp-read --enumerate` (graded 8/8 on committed bytes at 03:0xZ).
 3. **[0.4.0_DS_ClientPlatform~Y]** The C-class 14, when resumed. Must NOT be folded into A or B.
 4. **[3.0.0_SA_CVO]** Grade P3-EXACT outputs as they land; otherwise proof-of-spec management.
+
+---
+
+## 9. CORRECTION, appended 2026-09-01 ~05:0xZ -- the label above is SUPERSEDED
+
+**This section is APPENDED rather than the text above being rewritten**, so what was known at
+05:00Z stays legible. The numbers in s.1 and s.2 are UNCHANGED and still close.
+
+`s.1` and `s.2` record the 112 withdrawn cells as **SELF-INVALID**. That token is WITHDRAWN.
+`2.0.0_SA_COO` has ruled the label **`NOT-COMPARABLE`** (05:0xZ), and it is the right one:
+
+- **Withdrawing the 112 before comparison was CORRECT** and is not disturbed -- they cannot be
+  meaningfully compared and must not inflate an agreement rate.
+- **Calling them SELF-INVALID asserted a different claim** -- that our data is WRONG -- which the
+  evidence had not established. **~21 of them have NO MISSING DATA**: a real recorded flow against a
+  base too small to divide by. The value is sound; only the percentage is meaningless.
+- `0.4.0_DS_ClientPlatform~Y` corrected its own delivered artifact AFTER it graded PASS.
+
+⛔ **AND THIS SEAT'S FAILURE IS THE PART TO CARRY, because it is not an oversight.** I did not skim
+the label -- **I singled it out and PRAISED it to Andrew** as evidence our own bad data could not
+inflate the agreement rate. I was right about the withdrawal and I repeated the overstating label
+while commending it.
+>> **A grader who COMMENDS the defective element is worse than one who overlooks it, because the
+commendation travels.** <<
+⭐ **And the refuting evidence was in my own hands one message earlier.** My grade of the 114
+(`90742 s.4`) established that A and B are different defects and that **B has nothing missing** -- I
+wrote *"reporting these together would have overstated the data defect by ~21 rows"* about the 114,
+then failed to apply the identical argument to the 112. **Same evidence, same seat, same hour,
+carried in one direction and not the other.**
+
+**The gold defect is UNDIMINISHED by this.** It narrows a LABEL on a withdrawn population; it does
+not touch the 79 missing-flow rows, the ~35-date clustering, or the two-way-audit finding.
