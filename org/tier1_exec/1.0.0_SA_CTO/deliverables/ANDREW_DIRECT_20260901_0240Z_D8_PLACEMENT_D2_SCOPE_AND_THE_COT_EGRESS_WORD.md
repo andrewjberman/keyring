@@ -166,3 +166,53 @@ and stronger reason.**
 nothing in the chain from registry record to option text to executing seat asks "is this date
 supposed to exist yet?"** A rule that must be *remembered* by the one seat framing the question is a
 rule with a single point of failure, and tonight it failed at that point.
+
+---
+
+## 8. ⛔ SECTION 7 IS ITSELF WITHDRAWN — SETTLED AT SOURCE 2026-09-01 ~03:4xZ. APPENDED; ALL PRIOR TEXT PRESERVED VERBATIM.
+
+**§7 corrected §1/§3/§4 by applying Andrew's T-1 rule to this feed. THAT APPLICATION WAS WRONG.**
+The feed-class question was settled by `2.0.0_SA_COO` on a **third instrument** — the estate's own
+ratified contract, not either prior seat's inference.
+
+**`data/_contracts/vendor_asof_registry.yaml:757-763`, VERBATIM:**
+```
+  - vendor: blackdiamond
+    scope: cottonwood (monolith direct)
+    feed: rebalancer_models + rebalancer_accounts + rebalancer_model_detail
+    asof_field: ABSENT
+    asof_semantics: current-state-no-date
+    label_offset: "0 (run-date label)"
+```
+
+>> **THIS IS A SNAPSHOT FEED: a daily capture of CURRENT STATE, labelled with the RUN DATE. THE T-1
+   RULE DOES NOT GOVERN IT.** A `current-state-no-date` feed with a run-date label *should* land
+   complete-stamped on a Saturday, *should* show Saturday content differing from Friday, and
+   *should* return 947 rows on a Monday run — which independently explains all three of
+   `0.6.2_AE_PartnerETL`'s measurements. <<
+
+⛔ **ANDREW IS NOT CONTRADICTED AND NOBODY MAY RECORD THAT HE WAS.** His words — *"8/28 is Friday, it
+is the last day we have data … because its the last trading day"* — are about **T-1 market data** and
+are **correct and unchanged**. He was not asked about the cot rebalancer roster feed and did not
+answer about it. **What was wrong was the FABRIC'S GENERALIZATION of a correct rule to a feed whose
+class nobody had established — and this seat made that generalization and broadcast it to five
+seats (90649).**
+
+**NET EFFECT ON THIS RECORD — what now stands:**
+- **§7 is WITHDRAWN.** There *is* a genuine 2026-08-31 gap: the partition should exist for a
+  run-date-labelled snapshot feed, and it does not, because the count-reconcile gate refused to
+  write.
+- **§1/§3/§4 are RESTORED as originally written**, with one refinement: the run did not fail because
+  the date cannot exist. It failed on a **real internal count mismatch** — `strategy "Core |
+  Satellite 60", roster 15, observed 14` — with the vendor serving 65 models and 947 account rows.
+- **`0.6.2_AE_PartnerETL`'s original NOT-CLOSED verdict was CORRECT**, and its prediction that a
+  re-fire would fail identically was correct for the reason it gave.
+- **`MDPF_HEALGAP`'s premise is INTACT.** 2026-08-31 is a live instance after all.
+- **NO-THIRD-FIRE STILL STANDS**, now on the strongest footing yet: a re-fire cannot move a vendor
+  roster count. Discharge condition unchanged — a MEASURED BD roster change `15 -> 14`.
+
+⭐ **THE LESSON THAT SURVIVES ALL THREE TURNS, and it is the one worth keeping:** the original act
+went out on a premise this seat had not checked; **the correction to it also went out on a premise
+this seat had not checked.** Inheriting a *correct* rule is not the same as verifying it *applies*.
+The remedy that actually worked was neither seat arguing — it was reading the **declared contract**
+that already answered the question, on an instrument neither disputant had used.
