@@ -153,14 +153,45 @@ Stated so the door is not closed by accident:
 
 ## 4. OTHER FINDINGS FROM THIS WINDOW
 
-### 4.1 The 00:00Z session mint did not fire
+### 4.1 The 00:00Z session mint did not fire -- AND THAT IS THE SYSTEM WORKING, NOT A FAULT
 
-At 2026-09-01T00:07:33Z the 49F session secret's `LastChangedDate` still read `2026-08-31T00:03:47Z`;
-the prior cycle had landed by 00:03:47Z. **The session is UNROTATED, not expired** -- this pull made
-three successful data calls at session age **23.83 h**, so there is positive evidence of life rather
-than mere absence of failure. Rotation failure and expiry are different faults with different owners,
-and "the pull failed" would have merged them. Surfaced; owner is not this seat. W2 is held rather than
-fired on the old session.
+⛔ **CORRECTED 2026-09-01T00:3xZ, AT THE PRODUCER, BY THE SEAT THAT RAISED IT.** This section first
+read that the mint "did not fire" and filed it under findings with an owner elsewhere. **The
+observation was right and the implication was wrong.**
+
+The observation: at 00:07:33Z and again at 00:27:21Z the 49F session secret's `LastChangedDate` still
+read `2026-08-31T00:03:47Z`, unmoved.
+
+**The cause, read at the producer's own log rather than inferred from the secret:**
+```
+  bd-49f-session-trigger, stream 2026/09/01/[$LATEST]e4f58e2b..., RAN 2026-09-01T00:00:18Z, no error
+    "Lever A: cookie POSITIVE-live (probe positive) -> SKIP mint, direct-invoke bd-49f-runner"
+  POSITIVE CONTROL -- the previous night, same function, other branch:
+    2026-08-31T00:00:18Z  "Lever A: cookie NOT positive-live (probe negative) -> full mint (fail-safe)"
+                          -> StartInstances -> SSM RunCommand -> LastChangedDate 2026-08-31T00:03:47Z
+```
+>> **The trigger fired ON SCHEDULE, probed the cookie, found it live, and skipped the mint BY DESIGN.
+   The mint is CONDITIONAL, not unconditional. Both branches are observed on consecutive nights in one
+   log group. A secret that does not change on a healthy night is the DESIGNED outcome.** <<
+
+**The transferable lesson, which is why this correction is kept rather than quietly edited:**
+`LastChangedDate` is a sound instrument for *did the secret change* and **carries no information about
+why**. "Did not change" has two causes with opposite meanings -- the minter is broken, or the minter
+judged a mint unnecessary -- and **the secret cannot distinguish them. Only the producer can.** This
+brief measured the secret four times and the producer zero times.
+⚠ **And the disconfirming evidence was already in this document.** The line below -- the session
+proven alive at 23.83 h -- **is the very condition that makes Lever A skip.** It was filed as a
+symptom of the problem when it was the explanation.
+
+**What stands unchanged:** the session is UNROTATED, not expired -- this pull made three successful
+data calls at session age **23.83 h**, positive evidence of life rather than absence of failure. That
+is now independently corroborated on a second plane by the trigger's own probe reading POSITIVE-LIVE
+at ~24.0 h. ⚠ Bounded: the probe's own mechanism has NOT been read at source, so it is quoted, not
+vouched for; the three data calls stand on their own regardless.
+
+**Consequence for W2:** the hold's premise was that a non-firing mint indicates a problem. It does not
+-- tonight it is a positive health signal. **"Wait for the mint" has no terminating condition while
+the session stays healthy.** Release requested from `1.0.0_SA_CTO`; not fired without the word.
 
 ### 4.2 `list-secret-version-ids` cannot answer "how old is this session"
 
@@ -216,4 +247,6 @@ Recorded because the same shape will recur.
 - **Not an SI comparison.** SI was deliberately excluded, and section 3 is the reason.
 - **Not a verdict on the LARGE cell.** It is a calculation difference with both sides fully linked;
   diagnosing it is P3's.
-- **Not a claim about the mint mechanism.** The rotation did not fire; why is unmeasured here.
+- **The mint mechanism IS now measured** (section 4.1, corrected): the trigger ran on schedule and
+  skipped the mint by design because it probed the cookie live. What is NOT established is the probe's
+  own internals -- that log line is quoted, not read at source.

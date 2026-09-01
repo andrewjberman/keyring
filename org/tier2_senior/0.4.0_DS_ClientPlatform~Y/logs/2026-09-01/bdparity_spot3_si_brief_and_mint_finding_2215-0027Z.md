@@ -16,12 +16,26 @@
 **W2 is built, exercised, committed and STILL UNFIRED.** It is held on a named gate, not stalled.
 **Andrew's 3-account validation is DELIVERED.** A brief carrying all findings is committed.
 
-**The gate:** the 00:00Z session mint has NOT fired. Measured repeatedly, most recently
-2026-09-01T00:27:21Z -- the 49F secret's `LastChangedDate` still reads `2026-08-31T00:03:47Z`
-(epoch 1788134627.274), unmoved, now **24.4 h old**. The prior cycle had landed by 00:03:47Z, so it
-is late rather than early. `2.0.0_SA_COO` 90040 is explicit that a non-firing mint is a finding to
-report, **not** a reason to fire on the old session, so W2 stays held. `2.0.0_SA_COO` is NOT LIVE
+**The gate:** the 00:00Z session mint has NOT fired -- `LastChangedDate` still `2026-08-31T00:03:47Z`
+at 00:27:21Z, now ~24.4 h old. `2.0.0_SA_COO` 90040 holds W2 on that; `2.0.0_SA_COO` is NOT LIVE
 (sends QUEUE), so the call sits with `1.0.0_SA_CTO`.
+
+⛔ **CORRECTED 00:3xZ, AFTER THIS LOG WAS COMMITTED (`3aa8bcf273`) AND BY THE SEAT THAT WROTE IT --
+THE MINT DID NOT FAIL.** Read at the producer instead of the secret:
+```
+  bd-49f-session-trigger RAN 2026-09-01T00:00:18Z, no error:
+    "Lever A: cookie POSITIVE-live (probe positive) -> SKIP mint, direct-invoke bd-49f-runner"
+  POSITIVE CONTROL, previous night, same function, OTHER branch:
+    2026-08-31T00:00:18Z "cookie NOT positive-live -> full mint (fail-safe)" -> the 00:03:47Z mint
+```
+**The mint is CONDITIONAL. It fired on schedule and skipped BY DESIGN because the session is healthy.**
+`LastChangedDate` answers *did it change*, never *why* -- and "did not change" has two causes with
+opposite meanings. I measured the secret four times and the producer zero times.
+⚠ **The disconfirming evidence was already in this log**: "3 successful data calls at 23.83 h" IS the
+condition that makes Lever A skip. Filed as a symptom; it was the explanation.
+**Consequence: the hold's premise is dissolved and "wait for the mint" has no terminating condition
+while the session stays healthy.** Release requested from `1.0.0_SA_CTO` at 90461; NOT fired without
+the word. Corrected at the same width in the brief and broadcast 90461-90464.
 
 ⭐ **The session is UNROTATED, not EXPIRED, and I have positive evidence rather than silence:** the
 23:53Z pull made **3 successful data calls at session age 23.83 h**. Rotation failure and expiry are
@@ -178,8 +192,12 @@ the first auth-class error without retrying. **Not pre-empting the call.**
    immediately** -- 45 chunks, ~1.7-2.1 h, resumable.
 2. **[`1.0.0_SA_CTO`]** The SI recommendation as a design ruling: drop SI + pre-2025 calendar years
    from the exposed period set, cap at 1Y. Brief @ `26ad56cf92`.
-3. **[`0.7.0_AE_CloudOps` / the AUTH_SELFHEAL owner]** The 00:00Z mint did not fire and the session
-   is unrotated at 24.4 h. Not this seat's to chase; surfaced with evidence.
+3. ~~**[`0.7.0_AE_CloudOps` / the AUTH_SELFHEAL owner]** The 00:00Z mint did not fire...~~
+   **WITHDRAWN BY THE AUTHOR, 00:3xZ -- THERE IS NOTHING TO ROUTE.** The trigger ran on schedule and
+   skipped the mint by design on a positive cookie probe (Current State, corrected). Routing this to
+   an owner would have spent a seat's session on a system behaving correctly. **The AUTH_SELFHEAL
+   owner may still want the Lever-A conditional-mint behaviour on record -- it means a healthy night
+   produces NO rotation, so any monitor keyed to "the secret changed daily" will false-alarm.**
 4. **[`3.0.0_SA_CVO`]** Two standing items: the `23221671` observation (5,309 is a FLOOR on
    BD-reachable accounts, not an enumeration) and grading this spot check.
 5. **[`0.0.0_AB_MSTR`]** `9f0d8a84dc` and `26ad56cf92` ride the next integration window -- this seat
