@@ -1,5 +1,6 @@
 {
   "project_code": "D12_PHONE_OTP_ALL_AWS",
+  "last_updated": "2026-09-01",
   "macro_code": "PLATFORM_OPS",
   "directive": "D12",
   "name": "Phone/SMS OTP for the client portal, delivered ALL-AWS via AWS End User Messaging SMS -- a second delivery channel for the login code, alongside the email channel that shipped 2026-09-01.",

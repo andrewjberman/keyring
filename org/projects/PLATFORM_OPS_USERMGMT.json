@@ -1,10 +1,11 @@
 {
  "project_code": "PLATFORM_OPS_USERMGMT",
+ "last_updated": "2026-09-01",
  "status": "active",
  "dep_stage": "REGISTERED",
  "created": "2026-08-31",
  "pods": [],
- "blocking": "Rule 27 stage 2 (purpose-level PRD) SATISFIED 2026-08-31 by 1.0.0_SA_CTO~Z @2da36986f6 (docs/architecture/D12_PLATFORM_OPS_PRD.md, verified present at HEAD with a negative control by 0.0.0_AB_MSTR~Z); stage 3 (COO atom-decomp) OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- it authorizes no code, no design and no deploy.",
+ "blocking": "NOTHING IS BLOCKED. Rule 27 stage 2 (purpose-level PRD) SATISFIED 2026-08-31 by 1.0.0_SA_CTO~Z @2da36986f6 (docs/architecture/D12_PLATFORM_OPS_PRD.md, verified present at HEAD with a negative control by 0.0.0_AB_MSTR~Z); stage 3 (COO atom-decomp) SATISFIED @e9ca70c307, amended @d991e23aad. || CORRECTION 2026-09-01 by 0.0.0_AB_MSTR~Z (register writer, on Andrew's direct ask via 1.0.0_SA_CTO~Z 19250 that the D12 records carry NO status confusion): this cell PREVIOUSLY read 'stage 3 OUTSTANDING. NO TO may precede the decomp. This row is a REGISTER CUT only -- authorizes no code, no design and no deploy.' That text was MINE, written 2026-08-31 when it was true, and it went stale the moment the decomp landed. It then sat beside this same project's own `phase` recording SIX TASK ORDERS SHIPPED TO PRODUCTION, and beside DIRECTIVES.yaml's D12 stance recording stage 3 SATISFIED -- a register cell asserting 'no code authorized' next to two records of code in production. || CURRENT STATE: the SEND-FIX SLICE IS COMPLETE and verified in PROD (portal-v2.1.174; all 6 TOs W1/W2/W3 + DE1/DE2/DE3 CLOSED-COMPLETE). The SMS delivery channel is SPLIT OUT to sibling project D12_PHONE_OTP_ALL_AWS. THE REMAINING WORK UNDER THIS PROJECT IS THE BROADER NAMED SCOPE AND IT IS NOT STARTED: remembered-device policy, onboarding/account-creation redesign, front-end admin UI, and partner-admin delegated user-add.",
  "macro_code": "PLATFORM_OPS",
  "directive": "D12",
  "pipeline": null,
