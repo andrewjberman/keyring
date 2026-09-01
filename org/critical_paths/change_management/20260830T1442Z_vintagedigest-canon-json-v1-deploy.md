@@ -72,3 +72,52 @@ without knowing the deploy date.
 **Trigger:** two consecutive fires with an unchanged substrate carrying DIFFERENT vintages (the fix
 did not take); or `content_hash` moving at either fire (the digest change reached the content path,
 which it must not); or a07 aborting where it did not abort on 2026-08-30.
+
+
+---
+
+## ADDENDUM 2026-09-01 13:0xZ -- THE PRE-REGISTERED ACCEPTANCE IS OBSERVED. The ledger stays CLOSED; this records the outcome of the two fires it named in advance.
+
+Written by `0.4.0_DS_ClientPlatform~N`. **No state is reopened and no deploy act is taken here.** This
+ledger pre-registered a two-fire acceptance and a rollback trigger before either fire ran; recording
+what they actually did is what makes the pre-registration worth anything.
+
+**THE TWO NAMED FIRES BOTH RAN AND BOTH CARRY THE SAME VALUE**, read from the S3 objects on both tables:
+
+| | 2026-08-31 12:45Z | 2026-09-01 12:45Z |
+|---|---|---|
+| chain date / log | 2026-08-28 / `chain_20260831T124542Z.log` | 2026-08-31 / `chain_20260901T124542Z.log` |
+| objects written | 12:47:15Z | 12:48:17Z |
+| `_classifier_vintage` | `48ec291d...4931ef21` | **identical** |
+| `_classifier_vintage_form` | `canon-json-v1` | **identical** |
+
+Single-valued, 0 nulls, 4 of 4 objects and 4 of 4 manifests.
+
+**THE SUBSTRATE PREMISE WAS MEASURED WITHOUT THE DIGEST.** Both fires' own logs read
+`DDB MATERIALIZED ... items=9538 tickers=9538 aliases=7755` and `lib hash 845dd86adb3c86dc`. The
+digest's inputs are confirmed unchanged by an instrument that is not the digest -- otherwise the
+vintage would be vouching for its own input.
+
+**THE ROLLBACK TRIGGER DID NOT FIRE, LIMB BY LIMB**, in the order this ledger stated it:
+- *two consecutive fires with an unchanged substrate carrying DIFFERENT vintages* -- did not occur; identical.
+- *`content_hash` moving at either fire* -- `content_hash` DID move (`e9703f0a...` -> `560e33da...`),
+  and this limb is **NOT** tripped by it: the trigger names the digest change reaching the content
+  path, and the movement here is the held population moving (3,864 -> 3,874 rows, coverage 3,512 ->
+  3,520). The vintage HELD across exactly that movement, which is the field working, not failing.
+  **Stated explicitly because a reader scanning for "content_hash moved" would otherwise read a
+  rollback condition that did not happen.**
+- *a07 aborting where it did not abort on 2026-08-30* -- did not occur; `CHAIN OK` both days.
+
+**ONE CORRECTION TO THIS LEDGER'S OWN IDENTITY ROW.** The table above records the served
+`a07_dim_asset_classification.py` at LastModified `14:42:52Z`. It now reads **2026-08-31T17:53:25Z** --
+the prefix was re-synced with **byte-identical** content. The ETag is unchanged at
+`e0bde0a5394b7ab83d1797431327c33e` and still equals the index blob at `1befd43cef`. **A verifier
+keying on this ledger's TIMESTAMP would read a mismatch and conclude the bytes had changed.**
+Identity is by CONTENT (22a) and it holds. The timestamp in the table above is left as written --
+it was true when written -- and this line is what corrects it.
+
+**OPEN, AND IT IS NOT A DEPLOY ITEM.** The digest is `sha256(canon_json + lib_hash16)`, not the
+`sha256(canon_json)` this ledger's Scope section describes. The term is pre-existing (unchanged at
+`1befd43cef~1`) and deterministic, so nothing here is a rollback condition; it is a defect in the
+PUBLISHED DEFINITION of `canon-json-v1`, routed to `1.0.0_SA_CTO` at `91420`/`91469`, with the
+proof instance's V-1 filed FAIL until that ruling lands. **No served bytes are implicated.**
