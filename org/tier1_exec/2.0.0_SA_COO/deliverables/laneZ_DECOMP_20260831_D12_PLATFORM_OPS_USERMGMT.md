@@ -99,6 +99,9 @@ round-trips a phone number write→read. ⛔ **A schema dump is NOT acceptance.*
 | **2.1** | OTP challenge between credential check and dashboard, user-selectable channel. **Email leg.** | AE | 2.0, 1.1 | DEP-BLOCKED |
 | **2.2** | **SMS leg.** SES is wired; **SMS is not** — this introduces a new vendor delivery surface. | AE | 2.0, **#4 at Andrew** | ⛔ **ANDREW-BLOCKED** |
 
+⛔ **WS-2 IS NOT COMPLETE — SEE AMENDMENT 3. A LOGIN-CHALLENGE UI DOES NOT EXIST, AND CELL 2.7 IS
+MISSING FROM THIS TABLE.** W1 scored 10/10 against criteria that were narrower than this acceptance.
+
 **Acceptance:** an MFA-enabled account **cannot reach the dashboard** without a live code, exercised
 end to end; a wrong code fails; **a replayed code fails**; the OTP secret is never returned by any
 endpoint.
@@ -313,3 +316,59 @@ The cause was `--resource-arns "*"`, which matches the *first* statement's `Reso
 invocation agreed — because both calls carried the same wrong ARN.**
 > The false finding was "the mailer is broken." The true finding is its opposite: **the mailer works
 > precisely because the restriction does not.** Chasing a wrong answer produced a real one.
+
+
+---
+
+# AMENDMENT 3 — 2026-09-01 ~01:2xZ: **WS-2 IS NOT COMPLETE. THE LOGIN-CHALLENGE UI DOES NOT EXIST.**
+
+Andrew, ~01:2xZ, VERBATIM: *"I got an OTP just now, but that flow doesnt make sense if i am not
+presented wit a page to sign in to input it. Furthermore, OTP should be opt in, like you have to say
+'Yes' on some prompt that it will send you an email OTP or something, not just send silently without a
+UI flow."*
+
+**MEASURED** by `1.0.0_SA_CTO~Z`: `mfaRequired` / `mfa/verify` / `mfaToken` in `portal/src` = **ZERO**,
+against a positive control of **10 auth files** including `LoginPage.tsx`. The probe works; the absence
+is real. The backend correctly returns `mfaRequired: true` with no session token — **the browser has
+nowhere to type the code.**
+
+## NEW CELL 2.7 — the login challenge UI · DE-class · **NOT SEATED**
+
+| | |
+|---|---|
+| **2.7** | Challenge screen (code entry, resend, error states) · an **OPT-IN PROMPT before any send** · the **email-or-text SELECTION at that moment** · one flow for everyone (the client-vs-Opal split does not arise here). Owner: **DE**. Status: **READY, NO LANE SEATED.** |
+
+⛔ **POPULATION IS ANDREW'S CALL.** No DE lane is seated and I am not seating one on any seat's say-so,
+including my own. D7 remains parked ahead of it.
+⛔ **NOBODY ENABLES MFA ON ANY FURTHER ACCOUNT.** The pilot cohort cannot proceed until 2.7 exists —
+enabling it for "a few people" today would lock out a few people. **His account is currently the only
+one enabled, and he cannot complete a login.**
+
+## ⭐ HIS "OPT-IN" IS NOT NEW SCOPE — IT IS THE HALF WE DROPPED
+
+His original 2026-08-31 memo: *"the client has an opportunity to select email or text for an OTP
+receipt."* **We built the preference FIELD (cell 1.1) and never built the SELECTION MOMENT.** "An
+opportunity to select" was always a UI event at challenge time. Both his memos agree; we implemented
+half of one.
+
+## ⛔ HOW A 10/10 PRODUCED A FEATURE A HUMAN CANNOT USE — AND THE DEFECT IS IN THIS DOCUMENT'S CHILD
+
+```
+PRD @2da36986f6  "cannot reach the DASHBOARD ... exercised end to end"        <- a BROWSER outcome
+this decomp      "cannot reach the DASHBOARD ... exercised"                    <- carried faithfully
+the W1 TO, W1-3  "cannot reach the DASHBOARD -- exercised end to end AGAINST
+                  THE DEPLOYED HANDLER, not a unit test."                      <- the narrowing
+```
+**The clause `against the deployed handler, not a unit test` was added by `2.0.0_SA_COO~Z` to RAISE
+rigor** — to forbid a unit-test pass. It kept the word *dashboard* and named the instrument as the
+handler, and an executor reading it tests the handler. **The word survived; the surface moved
+underneath it.**
+
+> ### A CLAUSE THAT NAMES THE INSTRUMENT CAN RELOCATE THE SUBJECT — AND IT READS AS TIGHTENING WHILE IT DOES.
+> **When a PRD exercise names a USER-VISIBLE outcome, do not name the instrument in the criterion at
+> all — name the OBSERVER.** *"A person cannot reach the dashboard"* survives translation;
+> *"exercised against the deployed handler"* does not.
+
+**W1's 10/10 stands and no seat mis-scored anything.** Every criterion was met as written.
+`0.7.0_AE_CloudOps~Z` built and proved exactly what W1-3 asked for. **The ask was wrong, not the work
+— and the ask was mine.**
