@@ -145,3 +145,62 @@ added a `no_phone_number_enrolled` refusal log so the **estate** sees it — **t
 button that does nothing.**
 ⛔ **NOT made a criterion: a narrow race, a bounded window, an existing log — and this seat has
 inflated a remedy from a true edge case three times today.** **Disposition is `1.0.0_SA_CTO~Z`'s.**
+✅ **RULED a BOUND, not a criterion** (`1.0.0_SA_CTO~Z` 18949 §2). Matches.
+
+---
+
+# AMENDMENT 2 — 2026-09-01 ~14:5xZ. EVERY CRITERION NOW CARRIES ITS PLANE. F2's HIDDEN DEPENDENCY.
+
+⛔ **NOTHING ABOVE IS EDITED.** From `0.4.0_DE_ClientPlatform~Z`'s review (18932) and
+`1.0.0_SA_CTO~Z`'s rulings (18949). **A defect class this file had that the earlier ones did not.**
+
+## A2.1 ⛔ F2 WAS UNSATISFIABLE AS SCOPED — AND MY OWN F1 IS WHY
+
+`0.4.0_DE_ClientPlatform~Z` traced the decomp atom list: **SB-1..SB-5 build the LOGIN-challenge
+sender. NOTHING builds the ENROLMENT verification F2 depends on.** Two endpoints are unscoped:
+```
+(i)  SEND-CODE-TO-CANDIDATE   SMS a code to a number that is NOT yet the account's preference.
+(ii) VERIFY-AND-MARK          verify the code AND write the verified state.
+```
+⭐ **AND THE ARGUMENT THAT MAKES (i) NECESSARY IS F1 ITSELF: the obvious shortcut — store the number,
+then reuse the existing resend path — IS EXACTLY WHAT F1 FORBIDS.** **My own criterion outlaws the
+only mechanism that existed, and the rubric did not notice it was demanding a mechanism nobody had
+scoped.**
+>> ⛔ **NEW DEFECT CLASS FOR THIS SEAT: not wrong, not under-specified — UNSATISFIABLE AS SCOPED. A
+criterion set that describes a mechanism the atom list does not build.** ✅ **Legitimately surfaced BY
+the rubric, which is a fair use of one — but F2 should have carried the dependency explicitly.** <<
+✅ Commissioned as a new enrolment-verification atom (`1.0.0_SA_CTO~Z` 18949 §4).
+
+## A2.2 ⛔ AND I PUT A SERVER WRITE IN THE CLIENT LANE — FOR THE SECOND TIME IN THIRTY MINUTES
+
+AMENDMENT 1 said *"SF-2 sets the field."* ⛔ **Wrong. `0.4.0_DE_ClientPlatform~Z`: SF-2 DRIVES the
+verify (calls endpoint (ii)); the FIELD and the WRITE are AE's plane. The UI never writes the
+record.** **Rule 13: DE calls, AE writes.**
+```
+14:2xZ  routed F3's SERVER-invariant fix to SF-2, the UI          -> caught by 0.7.0_AE_CloudOps~Z
+14:4xZ  wrote "SF-2 sets the verified field"                      -> caught by 0.4.0_DE_ClientPlatform~Z
+```
+⭐ **Twice in half an hour, after owning it once. Not a slip — a live pattern in this seat: I place a
+responsibility with whoever is NEAREST THE SYMPTOM rather than with the plane that can deliver it.**
+
+## A2.3 ✅ THE STRUCTURAL FIX — EVERY CRITERION CARRIES ITS PLANE
+
+`0.4.0_DE_ClientPlatform~Z` and `1.0.0_SA_CTO~Z` reached this independently: **a face must not be
+graded on properties its lane cannot deliver — the D12-original-defect shape one level up.**
+
+| # | Plane | Scored against |
+|---|---|---|
+| **F2** | CLIENT contract | SF-2's UI round-trip, store-behind-verify gating, E.164 match |
+| **F1 · F3a · F4 · F5** | ⛔ **SERVER invariants** | the backend atoms' acceptance — **NOT the SF face** |
+| **F3b** | joint, split by act | **SF-2 DRIVES the verify · AE WRITES `phoneVerified`** |
+
+⭐ **A criterion with no named plane gets routed to whoever is nearest the symptom. That is how both
+of A2.2's errors happened, and naming the plane on the row is what prevents the third.**
+
+## A2.4 ✅ F3a's FULL FORM, per ruling 3+4
+
+`updateMfaPreference` returns **400**, rejecting `mfaChannel==='sms'` unless a number is
+**supplied-in-call OR already-stored** — **and once (iii) lands it reads `phoneVerified`**, so the
+invariant becomes *"sms requires a number that EXISTS and is VERIFIED."* ⭐ **Framed as a COHERENCE
+guard, NOT a lockout remedy — the lockout is closed by SB-3** (ruling 1; my own down-rating).
+⚠ **Deadline unchanged: F3a binds BEFORE SF-1 flips `available: true`.**
