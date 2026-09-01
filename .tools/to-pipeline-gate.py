@@ -45,6 +45,32 @@ OVERRIDE_RE = re.compile(r"^#\s*pipeline-override:\s*(\S.*)$", re.M)
 PREFLIGHT_TOOLS = ("comp-schedule", "comp-iam", "comp-adversary")
 DISPOSITION_RE = r"(RUN|DECLARED-NOT-APPLICABLE)"
 
+# THIRD ADMISSIBILITY LIMB (Andrew-direct 2026-09-01, "All recs approved" -- open-call 3 of 9).
+# The ratified fork-1 gate was runtime-OR-vintage. MEASURED 2026-09-01 across all 8 candidate
+# lenses: that predicate admits 7 of 8 and is NOT what separated the strong lenses from the weak
+# ones. A vintage dates the CORPUS; it cannot say the lens was BLIND ON YOUR SUBJECT -- and that
+# is the failure a decomp actually eats. Specimen: `comp-dataflow origin perfrp_emit_core.py`
+# returned "2 reads scanned, 2 unresolved-dynamic (blind)" -- a vintage alone would have shown two
+# rows and read as an answer.
+#
+# So a RUN disposition must carry, ON ITS OWN LINE, either a DENOMINATOR (any digit -- the count
+# the lens scanned) or an explicit blindness/coverage word. COST: none for the seven admitted
+# lenses, which already print one unprompted. NON-APPLICATION: a lens whose output is a single
+# boolean over a named subject has no population and owes no denominator -- declare it
+# DECLARED-NOT-APPLICABLE with that as the reason.
+COVERAGE_WORD_RE = re.compile(
+    r"(BLIND|COVERAGE|DENOMINATOR|UNRESOLVED|SCANNED|NOT-?FOUND|REFUSED|\d)", re.I)
+
+# STEP-3 FABRIC DECLARATION (Andrew-direct 2026-09-01, "All recs approved" -- open-call 4 of 9).
+# From the canonical-workflow transcript: "we need to discuss at that point if this is going to be
+# a laptop fabric project or a site Z fabric project". MEASURED 2026-09-01: 0 of 349 project JSONs
+# carry ANY fabric/device/host/site key -- the fork has NO CARRIER AT ALL. Folded into this same
+# choke point because layer 3 already OPENS org/projects/<code>.json to read dep_stage; this is one
+# more key on a read that already happens. PROSPECTIVE ONLY per Andrew-direct "don't get caught up
+# on historical TOs" -- it binds a project the moment someone cuts a NEW TO against it, never
+# retroactively.
+FABRIC_ENUM = ("laptop", "site-z")
+
 
 def _repo_root():
     try:
@@ -93,16 +119,24 @@ def _check_preflight(body):
                 "preflight names no disposition for %s -- expected "
                 "'%s: RUN' or '%s: DECLARED-NOT-APPLICABLE <reason>'" % (tool, tool, tool))
             continue
+        # The remainder of the disposition's OWN LINE. Reading to the next 200 chars lets the
+        # FOLLOWING TOOL'S line be scored as this tool's evidence -- caught by the bare-reason
+        # control on first exercise, 2026-09-01. Both limbs below share this bound.
+        eol = body.find("\n", m.end())
+        tail = (body[m.end():] if eol == -1 else body[m.end():eol]).strip()
         if m.group(1).upper() == "DECLARED-NOT-APPLICABLE":
-            # The reason must sit on the SAME LINE as the disposition. Reading to the next
-            # 200 chars lets the FOLLOWING TOOL'S line be scored as this tool's reason --
-            # caught by the bare-reason control on first exercise, 2026-09-01.
-            eol = body.find("\n", m.end())
-            tail = (body[m.end():] if eol == -1 else body[m.end():eol]).strip()
             if len(tail) < 8:
                 problems.append(
                     "%s is DECLARED-NOT-APPLICABLE with no reason ON ITS OWN LINE -- a bare "
                     "not-applicable is a skip wearing a tidier label" % tool)
+        else:
+            # THIRD LIMB: a RUN owes a denominator or an explicit blindness statement.
+            if not COVERAGE_WORD_RE.search(tail):
+                problems.append(
+                    "%s: RUN carries NO DENOMINATOR OR BLIND/COVERAGE STATEMENT on its own line. "
+                    "A vintage dates the corpus; it cannot say the lens was blind on THIS "
+                    "subject. Record what it scanned (e.g. '%s: RUN -- 395 .tf files, 24 "
+                    "policy blocks never seen') or what it could not see." % (tool, tool))
     return problems
 
 
@@ -142,7 +176,8 @@ def check_project_stage(root, rel):
                 "an unregistered project -- registration is stage 1." % (rel, code, code)]
     try:
         with open(p, "r", encoding="utf-8") as fh:
-            stage = json.load(fh).get("dep_stage")
+            doc = json.load(fh)
+        stage = doc.get("dep_stage")
     except Exception as exc:  # noqa: BLE001
         return ["%s: project JSON %s is unreadable (%s) -- fail-closed" % (rel, cand, exc)]
     if stage is None:
@@ -152,6 +187,17 @@ def check_project_stage(root, rel):
     if stage not in DEP_STAGE_ENUM:
         return ["%s: project %s has dep_stage=%r, which is NOT in the ratified enum (%s)"
                 % (rel, cand, stage, " | ".join(DEP_STAGE_ENUM))]
+    # STEP-3 FABRIC FORK. Same read, one more key. A project whose execution fabric is undeclared
+    # cannot have work dispatched against it -- the laptop and site-Z fabrics are different worlds
+    # and the choice was being made implicitly, by whoever happened to pick up the TO.
+    fabric = doc.get("fabric")
+    if fabric is None:
+        return ["%s: project %s declares NO fabric. Step 3 requires the laptop-vs-site-Z call to "
+                "be MADE and RECORDED before a TO is cut against it. Set \"fabric\" to one of: %s"
+                % (rel, cand, " | ".join(FABRIC_ENUM))]
+    if str(fabric).strip().lower() not in FABRIC_ENUM:
+        return ["%s: project %s has fabric=%r, which is NOT in the ratified enum (%s)"
+                % (rel, cand, fabric, " | ".join(FABRIC_ENUM))]
     return []
 
 
@@ -296,15 +342,20 @@ def sweep(root):
     import json
     files = sorted(_glob.glob(os.path.join(root, "org", "projects", "*.json")))
     counts, unreadable = {}, 0
+    fabric_counts = {}
     for f in files:
         try:
             with open(f, "r", encoding="utf-8") as fh:
-                st = json.load(fh).get("dep_stage")
+                doc = json.load(fh)
+            st = doc.get("dep_stage")
+            fb = doc.get("fabric")
         except Exception:  # noqa: BLE001
             unreadable += 1
             continue
         key = "<ABSENT>" if st is None else str(st)
         counts[key] = counts.get(key, 0) + 1
+        fkey = "<ABSENT>" if fb is None else str(fb)
+        fabric_counts[fkey] = fabric_counts.get(fkey, 0) + 1
     total = len(files)
     print("[to-pipeline-gate --sweep] dep_stage across org/projects/")
     print("  DENOMINATOR: %d project JSON(s), %d unreadable" % (total, unreadable))
@@ -316,6 +367,16 @@ def sweep(root):
     print("  NOTE: <ABSENT> is FORWARD-ONLY by ruling -- these are NOT back-filled. The gate "
           "populates the enum as NEW TOs are cut, never retroactively.")
     print("  Projects that cannot take a new TO until their stage is declared: %d" % absent)
+    print()
+    print("[to-pipeline-gate --sweep] fabric across org/projects/  (step-3 laptop-vs-site-Z fork)")
+    print("  DENOMINATOR: %d project JSON(s), %d unreadable" % (total, unreadable))
+    for k in sorted(fabric_counts, key=lambda x: (-fabric_counts[x], x)):
+        flag = "  <- not in the ratified enum" if (
+            k != "<ABSENT>" and k.strip().lower() not in FABRIC_ENUM) else ""
+        print("    %-16s %4d  (%.1f%%)%s"
+              % (k, fabric_counts[k], 100.0 * fabric_counts[k] / max(total, 1), flag))
+    fabsent = fabric_counts.get("<ABSENT>", 0)
+    print("  Projects that cannot take a new TO until their fabric is declared: %d" % fabsent)
     return 0
 
 
