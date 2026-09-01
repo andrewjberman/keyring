@@ -14,6 +14,10 @@ device-bound serials — D12 is minted **UNPLACED** and its placement is Andrew'
 after the comb. **An `issued_to` field is a placement**, so TOs are cut only once he rules.
 **No alarm, SNS subscriber, page or monitor is designed, proposed or costed anywhere below.**
 
+⛔ **PILOT COHORT IS GATED — see FINDING F-2 at the bottom of this file. NOBODY MAY BE ENABLED YET.**
+On today's DEV bytes a CORRECT PASSWORD ALONE reaches `/market`; the MFA branch is not enforced
+client-side. Unreachable today only because 0 of 48 accounts are gated.
+
 ⛔ **OPEN FINDING WITH NO OWNER — see FINDING F-1 at the bottom of this file.** An intended IAM
 restriction on auth mail restricts NOTHING. It is not a cell, not assigned, and not closed by W1 or W2.
 
@@ -372,3 +376,52 @@ underneath it.**
 **W1's 10/10 stands and no seat mis-scored anything.** Every criterion was met as written.
 `0.7.0_AE_CloudOps~Z` built and proved exactly what W1-3 asked for. **The ask was wrong, not the work
 — and the ask was mine.**
+
+
+---
+
+# FINDING F-2 — 2026-09-01 ~02:0xZ: ⛔ **A CORRECT PASSWORD ALONE REACHES `/market`. THIS GATES THE PILOT COHORT.**
+
+Found by `0.4.0_DE_ClientPlatform~Z` (msg 17360) **by reading, hours before it could have exercised it**
+— which is the only reason it is known before anyone was gated.
+
+## THE CHAIN — five rungs, each read at source (portal `be39451b`, workspace `c7dfddcdff`)
+
+| # | file | what it does |
+|---|---|---|
+| 1 | `index.ts:166` | the MFA challenge returns **HTTP 200**, not 401 |
+| 2 | `AuthContext.tsx` `login()` | throws only `if (!response.ok)` — **a 200 does not throw** |
+| 3 | same function | sets `isAuthenticated` **as a LITERAL**, never derived from whether a token exists; `accessToken` is `undefined` on this branch and `localStorage` stores the string `"undefined"` |
+| 4 | `ProtectedRoute.tsx` | gates on `isAuthenticated` **only** — the token is never consulted |
+| 5 | `LoginPage.tsx` | `login()` did not throw → `navigate('/market')` |
+
+> ### THE SERVER IS CORRECT. THE CLIENT ADMITS ON A FLAG IT SETS ITSELF.
+> `isAuthenticated` is an assertion, not a derivation — and step 3 is where a security property became
+> a literal.
+
+## ⛔ WHY THIS IS A COHORT GATE AND NOT A FIRE TONIGHT
+
+**It is not a live exposure today, and that is measured, not assumed: 0 of 48 accounts are gated, so
+the `mfaRequired` branch is unreachable in production.**
+>> **IT GOES LIVE THE MOMENT THE FIRST ACCOUNT IS GATED — WHICH IS EXACTLY WHEN THE PILOT COHORT
+   STARTS.** Enabling "a few people" before the client fix would hand each of them a login that a
+   correct password alone completes. <<
+⛔ **SO: NOBODY IS ENABLED — INCLUDING ANDREW'S OWN RE-ENABLE — UNTIL DE3-2 PASSES IN A BROWSER.** This
+is now a **hard precondition on his cohort decision**, and it must travel with the cohort question
+rather than sit in this file.
+
+## BOUNDING — the finder's own, kept verbatim in substance
+
+**SOURCE-CONFIRMED on the code path; UNEXERCISED at the browser rung.** It has not been observed in a
+browser and currently **cannot** be — 0 accounts are gated and that lane is barred from enabling one.
+**So: not "proof", not "exercised" — five rungs at `file:line`, no browser observation yet.**
+⭐ That bound is what makes it usable. **DE3-2 is the row that will exercise it**, and it was written to
+catch exactly this: *"with the correct password and NO code, the dashboard is not reachable — by URL,
+by back-navigation, or by refresh."* The criterion found its defect before it ran.
+
+## DISPOSITION
+
+**The client fix is `0.4.0_DE_ClientPlatform~Z`'s and is squarely in its lane** — it is proceeding with
+it now as DE-a (handle the `mfaRequired` 200 without authenticating; derive admission from a token, not
+from a literal). **Not a new TO**; it is inside DE1/DE2's existing scope.
+**No IAM, no backend, no account enablement follows from this finding.**
