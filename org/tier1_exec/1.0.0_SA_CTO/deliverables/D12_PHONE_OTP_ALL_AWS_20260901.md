@@ -96,17 +96,19 @@ build the rest against the pending identity.
 
 ### Toll-free verification -- DRAFT for sign-off
 
-- **Business / brand:** Opal Capital
-- **Website:** https://opalinvest.dev  *(confirm corporate site / legal entity name)*
-- **Business address:** [NEEDS ANDREW]
-- **Support contact (email + phone):** [NEEDS ANDREW]
+- **Business / brand:** Opal Capital LLC  *(Andrew-direct 2026-09-01)*
+- **Website:** https://opalinvest.dev  *(proposed; Andrew has not corrected it)*
+- **Business address:** 5200 Town Center Circle, Boca Raton, FL 33486  *(Andrew-direct 2026-09-01)*
+- **Support contact (email + phone):** [NEEDS ANDREW -- still outstanding]
 - **Use case:** Two-factor authentication (2FA) / one-time passcodes for account sign-in.
   Transactional only; no marketing.
 - **Est. monthly volume:** < 300 messages (< 10 active users).
-- **Opt-in workflow:** User opts in inside the authenticated app. After signing in with email +
-  password, the two-step verification screen lets the user choose "Text message," enter and
-  confirm their own mobile number, and confirm. A code is sent only after that explicit election.
-  The number is used solely for sign-in codes the user requested; no other messages are sent.
+- **Opt-in workflow** (corrected to the ruled post-login surface, not the earlier loose "two-step
+  screen" phrasing): a signed-in user opts in inside the authenticated app -- after completing
+  sign-in, a dismissible prompt offers text-message verification; the user enters their own mobile
+  number, receives a one-time code by text, and enters it to confirm ownership BEFORE the number is
+  stored. On subsequent sign-ins a code is sent by text only after the user requests it. The number
+  is used solely for sign-in codes the user requested; no marketing, no other messages.
 - **Sample message 1 (the code):**
   `Opal Capital: your sign-in verification code is 123456. It expires in 10 minutes. Do not share this code.`
 - **Sample message 2 (opt-in confirmation):**
