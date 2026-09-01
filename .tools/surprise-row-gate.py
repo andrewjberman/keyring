@@ -48,6 +48,9 @@ CHANNEL_RE = re.compile(
     r"(^|/)org/surprise_channel/[^/]+/(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
 FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 ID_RE = re.compile(r"^[A-Z0-9_]+-(Z-)?S[0-9]+$")
+# /endpoint --forward Phase-0 outcome id. PERMANENT AND NEVER REUSED by contract
+# (1.0.0_SA_CTO @b3584ea86a, landed in the skill AND the PRD template together).
+OUTCOME_REF_RE = re.compile(r"^FWD-[0-9]+$")
 
 # LOCKED MAPPING -- fork 4's verdict IS fork 5's loop target. See the module docstring.
 ROUTE_TO_STEP = {"SPEC_ERROR": 6, "DECOMP_INVALIDATING": 5, "SCOPE_CHANGE": 2}
@@ -161,6 +164,23 @@ def _check_row(row, kind, schema):
                     "LOCKED -- the loop target is not an independent decision, it IS the route's "
                     "output, and this check is the only thing keeping two carriers of one quantity "
                     "from drifting." % (rid, route, want, target))
+        # SCOPE_CHANGE is the ONE route that leaves this fabric: it re-enters at step 2, at a seat
+        # that has an EXISTING PRD and needs to know WHICH named outcome the world contradicted.
+        # Without this the route arrives saying only "some outcome is missing", and step 2 has to
+        # re-derive from prose what the filing seat already knew.
+        # THIS FIELD WAS DELIBERATELY WITHHELD UNTIL 2026-09-01. Ids only became citable when
+        # 1.0.0_SA_CTO landed the permanence contract @b3584ea86a (next-unused numbers, retired
+        # ones leave their number VACANT, renumbering FORBIDDEN). Before that a re-run could
+        # renumber, and A DRIFTING ID TURNS A GROUNDED FINDING INTO A WRONG ONE WHILE IT STILL
+        # LOOKS GROUNDED -- so citing an unstable id would have been worse than citing nothing.
+        if route == "SCOPE_CHANGE":
+            ref = row.get("outcome_ref")
+            if not isinstance(ref, str) or not OUTCOME_REF_RE.match(ref.strip()):
+                out.append(
+                    "%s: route=SCOPE_CHANGE with no usable `outcome_ref`. A scope change re-enters "
+                    "at step 2 against an EXISTING PRD and must name WHICH outcome the world "
+                    "contradicted -- expected an /endpoint --forward id of the form FWD-<n> "
+                    "(permanent, never reused). Got %r." % (rid, ref))
     return out
 
 
