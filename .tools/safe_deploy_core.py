@@ -414,7 +414,7 @@ def s3_key_exists(bucket: str, key: str) -> tuple[Optional[bool], str]:
         return None, "aws CLI not found"
     r = subprocess.run(
         [aws_bin, "s3api", "head-object", "--bucket", bucket, "--key", key],
-        capture_output=True, text=True, timeout=30, env=_aws_env(),
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30, env=_aws_env(),
     )
     if r.returncode == 0:
         return True, ""
@@ -440,7 +440,7 @@ def s3_prefix_keycount(bucket: str, prefix: str) -> str:
     r = subprocess.run(
         [aws_bin, "s3api", "list-objects-v2", "--bucket", bucket,
          "--prefix", prefix, "--output", "json"],
-        capture_output=True, text=True, timeout=30, env=_aws_env(),
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30, env=_aws_env(),
     )
     if r.returncode != 0:
         return "?"
@@ -467,7 +467,7 @@ def _changed_paths(commit_range: Optional[str]) -> list[str]:
 
     try:
         result = subprocess.run(
-            cmd, capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30
+            cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(WORKSPACE), timeout=30
         )
         return [f.strip() for f in result.stdout.splitlines() if f.strip()]
     except Exception:
@@ -602,7 +602,7 @@ def deploy_file(
         tmp.close()
         cp_result = subprocess.run(
             [aws_bin, "s3", "cp", tmp.name, f"s3://{bucket}/{s3_key}"],
-            capture_output=True, text=True, timeout=60, env=env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60, env=env,
         )
     finally:
         with contextlib.suppress(OSError):
@@ -614,7 +614,7 @@ def deploy_file(
         [aws_bin, "s3api", "head-object",
          "--bucket", bucket, "--key", s3_key,
          "--query", "ETag", "--output", "text"],
-        capture_output=True, text=True, timeout=15, env=env,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15, env=env,
     )
     if ho_result.returncode != 0:
         return "S3_ERROR", ho_result.stderr.strip()
@@ -724,7 +724,7 @@ def mint_bundle(label: str, bname: str, b: dict) -> tuple[str, str, dict]:
     cp = subprocess.run(
         [aws_bin, "s3", "cp", str(local), f"s3://{b['bucket']}/{b['s3_key']}",
          "--metadata", meta_arg],
-        capture_output=True, text=True, timeout=120, env=env,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120, env=env,
     )
     if cp.returncode != 0:
         return "UPLOAD_FAIL", cp.stderr.strip(), shas
@@ -732,7 +732,7 @@ def mint_bundle(label: str, bname: str, b: dict) -> tuple[str, str, dict]:
     ho = subprocess.run(
         [aws_bin, "s3api", "head-object", "--bucket", b["bucket"],
          "--key", b["s3_key"], "--output", "json"],
-        capture_output=True, text=True, timeout=30, env=env,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30, env=env,
     )
     if ho.returncode != 0:
         return "S3_ERROR", ho.stderr.strip(), shas
@@ -817,7 +817,7 @@ def run_pipescript_verify(rel_path: str) -> tuple[bool, str]:
     try:
         result = subprocess.run(
             [sys.executable, cli, "deployed", rel_path],
-            capture_output=True, text=True, timeout=120, env=env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120, env=env,
         )
     except subprocess.TimeoutExpired:
         return True, f"WARN: pipescript verify {rel_path} timed out; skipping (MD5 passed)"
@@ -903,7 +903,7 @@ def _old_blob_has_serve_held(old_ref: str, rel_path: str) -> tuple[Optional[bool
     try:
         r = subprocess.run(
             ["git", "show", ref_arg],
-            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(WORKSPACE), timeout=30,
             env=_git_env(),
         )
     except Exception as exc:  # git unavailable / timeout -> undetermined -> refuse
@@ -929,7 +929,7 @@ def _find_serve_release_ack(old_ref: str, new_ref: str) -> tuple[bool, str, Opti
     try:
         r = subprocess.run(
             ["git", "log", rng, "--format=%B"],
-            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(WORKSPACE), timeout=30,
             env=_git_env(),
         )
     except Exception as exc:
@@ -949,7 +949,7 @@ def _file_author(range_expr: str, rel_path: str) -> str:
     try:
         r = subprocess.run(
             ["git", "log", range_expr, "--format=%an", "-1", "--", rel_path],
-            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=15,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(WORKSPACE), timeout=15,
             env=_git_env(),
         )
         if r.returncode == 0:
@@ -984,7 +984,7 @@ def _current_commit_sha() -> str:
     try:
         r = subprocess.run(
             ["git", "rev-parse", "--short", "HEAD"],
-            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=10,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(WORKSPACE), timeout=10,
         )
         return r.stdout.strip() or "unknown"
     except Exception:
