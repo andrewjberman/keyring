@@ -41,7 +41,7 @@ the LABELS only; every finding's SUBSTANCE is intact.**
 | # | subject | home record | state |
 |---|---|---|---|
 | **F-1** | unconditioned `ses:SendEmail` Allow — an intended IAM restriction that restricts nothing | this decomp | ⛔ OPEN, **no owner** |
-| **F-2** | a correct password alone POISONS the client auth state; `/market` reachable by URL in-session | this decomp | ✅ **join limb EXERCISED integrated (DE3-2 PASS @03:4xZ)**; cohort gate holds; prod still vulnerable until promote |
+| **F-2** | a correct password alone POISONS the client auth state; `/market` reachable by URL in-session | this decomp | ✅ **fix CONFIRMED integrated, BOTH limbs — DE3-2 (no code→refused) + DE3-1 (real code→real session, 652-char JWT) PASS @03:5xZ**; ⛔ prod still serves pre-fix — **closes on the PROMOTE, not any test** |
 | **F-3** | production MFA backend is LIVE behind an MFA-less frontend — reachable, unentered | this decomp | informational; closes on the promote |
 | **F-4** | `ack_messages` MISREPORTS delivery state — **both directions**: false-POSITIVE (accepts a cross-recipient stamp with a success receipt, `1.0.0_SA_CTO~Z` 17610) **and** false-NEGATIVE (reports FAILED on a write that landed, 17822). **The two feed each other** — a false-negative invites the retry-from-memory that forges the false-positive. | `1.0.0_SA_CTO~Z` 17610/17822 | ⛔ OPEN, **no owner** |
 | **F-5** | Resend / `W3-2` claims a DELIVERY the API does not promise | `1.0.0_SA_CTO~Z` 17729 | largely met by `0.7.0_AE_CloudOps~Z`'s W3-2 "issuance-not-delivery" label; OPEN |
