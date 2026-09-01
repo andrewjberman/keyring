@@ -1557,3 +1557,35 @@ So the 7382 prediction for 08-27 misses by 20. **The residual is 0, 0, 5, 20 -- 
 ✅ **5. WHAT DOES NOT MOVE -- `PRF-inv-6` CLAUSE 1 STILL HOLDS BY FACT, and 83551 independently SUPPORTS it rather than threatening it.** Clause 1 is *"SERVED RETURN = NET-OF-FEE TWR."* The served leg is `r_net`; the fee cash has already left the account, so `emv` is lower by the fee and **`r_net` correctly carries the drag** -- which is 83551's own reading (*"r_net correctly carries the drag"*). ⛔ **The defect is in the STORED leg, not the served one.** So this seat's 2026-08-28 conclusion stands unretracted; what was blind was the instrument, not the conclusion.
 
 **DISPOSITION, and this seat opens nothing:** 83551 is OBSERVATION / **DISARMED** by `1.0.0_SA_CTO` 83551 with the owner at the DS lane (seat = `2.0.0_SA_COO`'s allocation). ⛔ **DISARMED is not REMEDIATED.** Added to the disposition by this seat: **whoever fixes c02 should re-derive the sign from the file, and any re-census should publish a SIGNED gap, not an absolute one** -- otherwise the fix's own acceptance evidence inherits the same blindness that let this sit a day. **Nothing owed back to this seat.**
+
+
+---
+
+## APPEND 2026-09-01 ~19:0xZ (3.0.0_SA_CVO) -- S18, the lens-blindness row
+
+Appended as a SECOND fenced block rather than by rewriting the 408 KB array above. `comp-surprise.py:40` reads EVERY fenced block via `re.finditer`, so this is the supported shape -- and it is exactly the capability the markdown-to-JSON container swap would have collapsed to one (census @0c7853c17f).
+
+```json
+[
+ {
+  "id": "ADVI_PERFRP-S18",
+  "surfaced_by": "3.0.0_SA_CVO, measured directly at this seat during the fork-1 lens-admissibility run (not relayed, not inherited)",
+  "surfaced_at": "2026-09-01T18:05Z",
+  "one_line": "BOTH step-5 lenses a decomp would use to bound a change to perfrp_emit_core.py are blind or absent on that exact file -- comp-blast cannot resolve it at all against a 27,107-node universe, and comp-dataflow resolves 0 of its 2 S3 reads -- so the file at the centre of this project is the one a future decomp can least see.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "comp-blast perfrp_emit_core.py -> 'NOT-FOUND: no graph node matches' over a PRINTED denominator of 27107 nodes (CANONICAL KUZU GRAPH); d_publisher_port.py returns the same (2026-09-01, this seat)",
+    "comp-dataflow origin data/assets/scripts/gold/runners_49f/perfrp_emit_core.py -> 'DENOMINATOR: 2 reads scanned, 2 unresolved-dynamic (blind), 0 served-origin flagged, 0 exempt' (2026-09-01, this seat)",
+    "comp-blast's own banner carries the correct bound: 'This is a NOT-FOUND, not a nothing-breaks clear.' The TOOL is honest; the hazard is a reader who does not carry that sentence forward into the decomp",
+    "the same file is the 09-01T00:10:20Z discontinuity (19,742 -> 114,406 B) that 11 emitters import, so it is simultaneously the highest-churn and least-visible object in this project"
+   ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "2.0.0_SA_COO (owner of step 5; the disarm is to record the NOT-FOUND and the blind-read denominator in the preflight of any ADVI_PERFRP TO touching this tree, per the third admissibility limb)",
+  "notes": "FILED LATE AND THAT IS THE POINT. Andrew's 2026-09-01 course-correction was that ~25 channel messages over five hours produced ZERO durable rows on this project while I maintained this very file three days earlier. This row exists because the finding was measured today and would otherwise have lived only in a session log. || WHY IT IS ARMED RATHER THAN INERT: nothing is broken right now. The harm is through FUTURE NORMAL OPERATION -- the next decomp runs comp-blast on this tree, gets a clean-looking result, and bounds a change against a universe that never contained the file. comp-blast refuses honestly; the enum of ways to misread it is what is unguarded. || STILL UNFILED, NAMED SO THE GAP IS RECORDED RATHER THAN SILENTLY CARRIED: three measurements by 0.7.0_AE_CloudOps~M -- (1) the BEFORE/AFTER frame is retired because 08-29/30/31 all re-processed asof=2026-08-28, making three pre-fix built=6 observations ONE result repeated; (2) untruncated chain logs ARE served in S3, removing the instance start; (3) the byte discontinuity above. I have NOT re-measured any of the three and will not file them as GROUNDED on another seat's evidence -- agreement is not corroboration when one artifact inherited the claim. They need that seat's own evidence lines, or my own re-measurement, before they become rows."
+ }
+]
+```
