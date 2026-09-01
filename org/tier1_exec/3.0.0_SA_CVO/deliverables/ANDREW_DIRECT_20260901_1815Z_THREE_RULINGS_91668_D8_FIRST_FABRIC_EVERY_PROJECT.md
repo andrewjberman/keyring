@@ -31,6 +31,44 @@ licence to widen a served surface is reading it wrong.
 here was always OVER-CORRECTION -- an unnecessary unpublish costs served data; a delayed ruling cost
 nothing. Raised by `1.0.0_SA_CTO` (FINDING `4022ebae4a` + its ADDENDUM, 13:47Z / 13:50Z).
 
+### ⛔ AMENDMENT ~18:4xZ -- THIS RULING ANSWERS ONLY LIMB (a). I DROPPED LIMB (b) AT MY OWN HOP.
+
+`1.0.0_SA_CTO` (msg 92434, minutes after the broadcast) established that finding `4022ebae4a` was
+**ONE CARD WITH TWO LIMBS**, verbatim:
+```
+  (a) did the 08:5xZ line NARROW the 04:0xZ ratification, or answer the branch/PROD question only?
+  (b) is the attached condition PER-FAMILY or PER-SET -- where per-set is unsatisfiable by
+      construction, which he could not have known when he ratified it.
+```
+**MY `/open-calls` CARD CARRIED ONLY LIMB (a).** So did my handoff before it (*"did the 08-25 08:5xZ
+line NARROW the 04:0xZ ratification of branch (b)?"*). **Andrew answered exactly the question I put
+in front of him, and it was the wrong half of the card.** Limb (b) is UNANSWERED.
+
+⛔ **`1.0.0_SA_CTO` framed this generously as a LABEL COLLISION** -- the ruling's *"(b)-unnarrowed"*
+means BRANCH (b) of the 04:0xZ call, while the card's limb (b) is per-family-vs-per-set, two
+different `(b)`s in one paragraph. **That collision is real and it is not the root.** The root is
+that the second limb was already gone before Andrew ever saw the card. **A TWO-LIMB CARD LOST A LIMB
+CROSSING INTO MY SLATE, and the collision then made the loss invisible.**
+
+⭐ **`1.0.0_SA_CTO`'s generalisation is WIDER AND BETTER THAN MINE, and I adopt it.** I recorded from
+ruling 2 that *"the card carrying the least content is the one most likely to be silently treated as
+decided."* That seat's correction: **a card closes silently whenever the ruling's text CAN BE READ as
+covering it -- whatever makes that reading available.** Least-content is one mechanism; ambiguous
+labelling is another; **a lossy transcription onto someone else's slate is a third, and it is mine.**
+
+**WHY LIMB (b) IS NOT ACADEMIC** (carried as `1.0.0_SA_CTO`'s claim, attributed, NOT re-measured
+here): the attached condition is that PERFRP keys publish only after the round-1 emitters are wired
+and their first emission is read. **Under a PER-SET reading that condition can NEVER be satisfied** --
+`transactions_relationship` is a ruled sovereign deferral that will not emit. **A set-scoped
+antecedent gated on a member that will never arrive is a PERMANENT HOLD CREATED BY ACCIDENT**, which
+nobody chose and Andrew could not have known when he ratified it. That seat further reports the four
+served leaves are ALREADY inconsistent with per-set -- i.e. **the estate has been acting on
+per-family for over a day without naming it as a reading.**
+
+**STATUS: limb (b) is RESERVED AT ANDREW and is a LIVE OPEN CALL at this lane.** The closing line of
+this document -- *"No open sovereign calls remain at this lane"* -- was FALSE when written and is
+retracted to exactly that extent. Rulings 2 and 3 and limb (a) are untouched.
+
 ## RULING 2 -- `/self-drive` directive ordering
 
 >> **"D8 sits first."** D8 precedes D3. <<
@@ -82,6 +120,13 @@ it will arrive from Andrew or CTO, not from here.
      card 8 (D3 vs D8)    non-recommendation -> RULED HERE
   /open-calls run 2 (~1815Z, 3 cards)   all three RULED above
 ```
-**No open sovereign calls remain at this lane.** Cards 1 and 2 discharge to `1.0.0_SA_CTO`; card 3
-required no build. Aftercare: recorded verbatim (this file) + broadcast same turn + push state
-stated as a measured value in the broadcast.
+⛔ **RETRACTED, ~18:4xZ: "No open sovereign calls remain at this lane" was FALSE.** See the amendment
+under RULING 1. **ONE call is live: limb (b) of finding `4022ebae4a` -- per-family vs per-set.**
+
+Cards 1(a) and 2 discharge to `1.0.0_SA_CTO`; card 3 required no build. Aftercare: recorded verbatim
+(this file) + broadcast same turn + push state stated as a measured value in the broadcast; the
+amendment carries its own correcting broadcast to the same nine recipients.
+
+⭐ **The scope of this retraction is deliberately narrow.** Limb (a) is ruled and stays ruled, the
+hold stays discharged, rulings 2 and 3 are untouched. **A retraction that widens past the refuted
+clause buys nothing and costs the parts that were right.**
