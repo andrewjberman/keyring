@@ -252,3 +252,52 @@ channel-flip refused for want of a verified number.**
 
 ⭐ **Property-transfer-by-assumption — the same family as reading an event's NAME as its meaning, and
 this handler has now hit it four times in a day. Caught here BEFORE it recurred.**
+
+---
+
+# AMENDMENT 4 — 2026-09-01 ~15:3xZ. ⛔ "GATED ON LANE A LIVE" IS MY PHRASE AND IT IS AMBIGUOUS IN THE FALSE-PASS DIRECTION.
+
+⛔ **NOTHING ABOVE IS EDITED.** Found by `0.4.0_DE_ClientPlatform~Z` (19119), **in my wording**, before
+SF-1's artifact exists — and made concrete by the SB-1..9 apply an hour earlier.
+
+## A4.1 THE AMBIGUITY
+
+§4 of this rubric says *"**SF-1** (flip `sms` selectable) is **gated on Lane A live**."* After
+`15:23:40Z` that phrase has two readings:
+```
+(a) THE SB CODE IS DEPLOYED     ✅ TRUE NOW  (gmJnyiaSC… positive match)
+(b) SMS IS ACTUALLY SENDABLE    ⛔ FALSE     (0 origination identities; sms.ts fails closed; SP-1
+                                              is held pending Andrew)
+```
+> ⛔ **FLIPPING ON READING (a) REINTRODUCES THE EXACT FAILURE THIS LEG EXISTS TO PREVENT:** a user
+> selects sms, `send-code` hits `sms.ts`, it fails closed — **and they wait on a code that never
+> sends.** *"A user staring at a Resend button that quietly does nothing"*, which the codebase's own
+> `unsealCode` docstring calls the worst of the available failures.
+
+⭐ **AND IT IS MY RECURRING DEFECT ONE LEVEL UP: I bound a gate to a CODE PROPERTY (a deployed sha)
+when the property that matters is a CAPABILITY (can it actually send).** Same disease as binding an
+oracle to an implementation event instead of to the property — **a sha match is `NOT-ACT-C`, never
+`CAN SEND`.**
+
+## A4.2 ✅ THE CORRECTED GATE — and it must be EXERCISED, not provisioned
+
+```
+⛔ NOT   "SP-1 provisioned" / "an origination identity exists"   <- DESIRED plane. A provisioned-
+                                                                   but-broken identity passes it.
+✅ IS    A TEST SMS ACTUALLY DELIVERED -- evidenced on the DOWNSTREAM oracle
+         (End User Messaging config set -> CloudWatch Logs event destination, per-message
+         by MessageId; `1.0.0_SA_CTO~Z` 18889).
+```
+⭐ **The same oracle S5 already names. No new instrument, and it is the one that distinguishes
+"configured" from "delivers".**
+✅ **SF-1's `available:true` AND SF-2's card VISIBILITY both gate on that** — `0.4.0_DE_ClientPlatform~Z`
+is encoding it client-side so neither can activate in the current deployed-but-unsendable state.
+⚠ **F2's acceptance was already gated on SP-1 and is unchanged.**
+
+## A4.3 ⭐ WHY THIS WAS FINDABLE ONLY NOW
+
+Before `15:23:40Z` the two readings were **co-extensive** — no SB code was deployed, so both were
+false and the ambiguity had no consequence. ⛔ **The apply split them, and a phrase that had been
+harmless became a false-pass.** ⭐ **A validity condition can be correct when written and wrong after
+an event that changes nothing about the text** — which is why the pre-artifact review window has to
+stay open until the artifact, not just until the words are agreed.
