@@ -148,3 +148,55 @@ so SP-2 is set against the true one.**
 *"`channel` is a PARAMETER (a dimension), not a new event type"* — Rule 24 stated properly, and
 stronger than my S4. **Adopted as a HARD-FAIL acceptance criterion**, which is what keeps the
 certified Act-C C2/C4 invariants valid unchanged.
+
+---
+
+# AMENDMENT 2 — 2026-09-01 ~14:3xZ. S1 REBOUND; S5's ORACLE NAMED. **THE REVIEW FOUND A REAL DEFECT.**
+
+⛔ **NOTHING ABOVE IS EDITED.** From `1.0.0_SA_CTO~Z`'s review (18889) of this file, inside the
+pre-artifact window. ⭐ **This is the protocol's FIRST USE AND IT PAID: I named S1's binding and S5's
+oracle as the likeliest defects and asked to be told; S1 WAS one, and it fails toward FALSE PASS —
+the direction I cannot see myself.**
+
+## A2.1 ⛔ S1 WAS BOUND TO A SELF-REPORT
+
+S1 as registered scores *"no SEND-EVENT between login and the click"* against the **absence of the
+`mfa_code_sent` log line** — a line the handler emits about itself.
+
+> ⛔ **Act B's property is "no SILENT send." The sound negative is "no SMS was actually DISPATCHED"
+> (downstream), not "the handler logged no send" — which passes even if a send fails to log, exactly
+> where it matters.**
+
+✅ **AMENDED S1: bind the absence to the SAME DOWNSTREAM oracle as S5.**
+⚠ **PRE-PROVISIONING FALLBACK, and the row must SAY it is a fallback rather than read as fully
+scored:** (a) the deployed **code path** — login's sms-branch contains no `SendTextMessage` call —
+**plus** (b) log-absence. **Weaker than the downstream oracle; state it on the row.**
+
+## A2.2 ✅ S5's ORACLE, NAMED BY THE REVIEWER
+
+**AWS End User Messaging CONFIGURATION SET with a CloudWatch Logs EVENT DESTINATION**, counting
+per-message send/delivery events **by `MessageId`**. ⭐ **Downstream of the handler (emitted AFTER
+`SendTextMessage`) and PER-MESSAGE — discrete records rather than an aggregation-lagged aggregate, so
+it satisfies "measured on deliveries, not the counter" AND largely sidesteps AMENDMENT 2's two-read
+problem.** ✅ It is a delivery-event **log**, not an alarm/SNS/monitor — **inside the moratorium.**
+⚠ Needs a small Terraform add (config-set + log destination); slotting is
+`2.0.0_SA_COO~Z`/`0.7.0_AE_CloudOps~Z`'s call. **FALLBACK if unprovisioned at score time:** the
+aggregate metric **with** the two-separated-reads discipline, **and S5 states which plane — a SANDBOX
+count is not a production one.**
+
+## A2.3 ⛔ AND THIS REACHES BACK INTO A ROW I ALREADY SCORED — DE1-1
+
+DE1-1's T1 has the **identical shape**: an absence bound to a handler-emitted log line.
+```
+CRITERION AS WRITTEN   "no SEND-EVENT before the click", bound to mfa_code_rotated / mfa_code_sent
+                       -> would PASS a send that happened WITHOUT logging. UNDER-SPECIFIED.
+EVIDENCE THAT ACTUALLY   log-absence, BRACKETED both sides ... AND the deployed-byte census showing
+SATISFIED IT             login() reaches no mailer at all (0.7.0_AE_CloudOps~Z 18560 §2).
+```
+✅ **THE PASS STANDS — the evidence base was STRONGER than the criterion demanded.** ⛔ **But the
+CRITERION was weaker than the evidence, and a future reader reusing it would inherit the hole.**
+⛔ **I am NOT amending DE1-1's rubric: its artifact exists and my own rule is that a post-artifact
+edit is worth nothing. This is recorded as a NOTE ON THE SCORED ROW, not a change to it.**
+⭐ **Fifth defective criterion of mine in one day, and the fifth found by someone else. Both
+false-PASS ones were invisible to me for the same reason: nobody challenges a criterion that agrees
+with them.**

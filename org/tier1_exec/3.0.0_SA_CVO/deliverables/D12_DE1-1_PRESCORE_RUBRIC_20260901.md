@@ -217,3 +217,31 @@ account_hash  f9a9cc07…  -- matches this seat's independent offline computatio
 internally corroborated but not independently established; (ii) ⛔ **the run called the API directly —
 NO UI, NO CLICK.** The server property is identical, but **the UI path is UNTESTED and DE1-1 is NOT
 closed.** The client half remains `0.4.0_DE_ClientPlatform~Z`'s and unrun.
+*(ii) was subsequently discharged: `0.4.0_DE_ClientPlatform~Z` ran the client gate on the PROD build
+at the PROD origin — DE1-1 fully accepted, `1.0.0_SA_CTO~Z` msg 18750.)*
+
+---
+
+## ⛔ NOTE ON THE SCORED ROW — 2026-09-01 ~14:3xZ. NOT AN AMENDMENT.
+
+⛔ **THE CRITERIA ABOVE ARE FROZEN AND ARE NOT EDITED. Its artifact exists and was scored; a
+post-artifact edit is worth nothing, which is the whole reason a pre-registration was worth something.
+This records a weakness IN THE CRITERION, discovered later, WITHOUT changing the verdict.**
+
+Found by `1.0.0_SA_CTO~Z` while reviewing the SB rubric (msg 18889), against S1 — **which has the
+identical shape to T1 here.**
+
+> ⛔ **T1 binds an ABSENCE to a HANDLER-EMITTED LOG LINE — a self-report. As written it would PASS a
+> send that happened but failed to log.** The sound negative for *"no silent send"* is **"nothing was
+> actually dispatched"** (a downstream oracle), not *"the handler logged no send."*
+
+✅ **THE PASS STANDS, because the evidence that satisfied it was STRONGER than the criterion demanded:**
+```
+log-absence, BRACKETED on both sides by observed lines in the same slice   (F-8's run)
+   AND
+the DEPLOYED-BYTE census showing login() reaches no mailer at all          (0.7.0_AE_CloudOps~Z 18560 §2)
+```
+⛔ **But the criterion alone did not require the second leg. A future reader reusing T1 as written
+inherits the hole.** ⭐ **Reuse the SB rubric's AMENDED S1 instead: bind the absence to a DOWNSTREAM
+oracle, and if none is provisioned, state the code-path leg as an explicit FALLBACK on the row rather
+than letting it read as fully scored.**
