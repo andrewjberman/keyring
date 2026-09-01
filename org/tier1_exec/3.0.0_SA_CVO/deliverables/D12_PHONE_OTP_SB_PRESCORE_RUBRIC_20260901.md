@@ -96,3 +96,55 @@ production one.
 ⚠ **This rubric governs SB only.** SF (phone capture + ownership-verify) is a separate face and needs
 its own criteria — **notably that an unverified number is never stored, which is an ABSENCE claim and
 will need a bracket, not a window.**
+
+---
+
+# AMENDMENT 1 — 2026-09-01 ~14:2xZ. S6's FORK RESOLVED; S5's DENOMINATOR CORRECTED.
+
+⛔ **NOTHING ABOVE IS EDITED.** `1.0.0_SA_CTO~Z` ruling 18858 landed **after** §4's fork was
+registered — which is what makes selecting a branch legitimate rather than fitting.
+
+## A1.1 ✅ S6: the `(c)` branch ACTIVATES
+
+Ruling 1 binds `channel` on the challenge row at `issueChallenge`, sourced from `user.mfaChannel`,
+with `resendMfaCode` dispatching on the **challenge's** channel and `POST /auth/mfa/send` staying
+`challengeId`-only.
+
+> ✅ **S6 IS NOW REQUIRED AND SCORED: the delivery channel of every send on a challenge MUST equal
+> the channel returned in that challenge's login response. A mismatch is a FAIL.**
+
+## A1.2 ⭐ A RETRACTED CLAIM AGES BACK INTO TRUTH
+
+My 18842 §3 feared concurrent email+sms challenges. `0.7.0_AE_CloudOps~Z` **falsified it under (b)**
+(single-valued `mfaChannel` → every live challenge resolves to the current one) and I removed it.
+⭐ **Ruling 1 chooses (c), which FREEZES the channel per challenge — so the cross-channel case now
+exists, and `1.0.0_SA_CTO~Z` names it in ruling 3.** **Neither of us was wrong: the claim was false
+about (b) and true about (c), and the design moved between them.** ⚠ **A register that records only
+the retraction loses this.**
+
+## A1.3 ⛔ S5's BOUND: THE NAMED EDGE IS NOT THE WORST CASE
+
+Ruling 3 names *"one email + one sms live challenge = 2 × MAX_SENDS, half billable."* With
+`MAX_SENDS = 3` (measured on the deployed handler):
+
+```
+NAMED EDGE          1 email challenge (3 free) + 1 sms challenge (3 billable)   =  3 BILLABLE
+2-CHALLENGE WORST   both logins while pref=sms -> both frozen sms               =  6 BILLABLE
+                    (exists under (b) AND (c); (c) did not create it)
+⛔ ACTUAL WORST     N logins = N challenges = N x MAX_SENDS billable, N UNBOUNDED BY APP LOGIC:
+                    auth.ts:78 CLEARS the login throttle on every CORRECT password, and
+                    recordAttempt runs only on the FAILURE branches -- a valid credential is
+                    never counted.
+```
+⭐ **The mixed case is the CHEAP one. It is not the edge that sizes a cap.**
+✅ **AND THIS STRENGTHENS RULING 3's REMEDY RATHER THAN WEAKENING IT:** *"the cap bounds worst-case
+exposure regardless of app logic"* is exactly right — **app logic bounds nothing here, so the spend
+cap is not a backstop, it is the ONLY bound.** The proposed `$1–5/mo` at <10 users survives the
+correction. ⛔ **No rate limit, alarm or monitor is proposed (moratorium). The denominator is recorded
+so SP-2 is set against the true one.**
+
+## A1.4 ✅ RULING 2 ADOPTED IN PREFERENCE TO MY OWN S4 WORDING
+
+*"`channel` is a PARAMETER (a dimension), not a new event type"* — Rule 24 stated properly, and
+stronger than my S4. **Adopted as a HARD-FAIL acceptance criterion**, which is what keeps the
+certified Act-C C2/C4 invariants valid unchanged.
