@@ -105,3 +105,10 @@ Validation `2.0.0_SA_COO~Z`; acceptance `1.0.0_SA_CTO~Z`; independent certificat
 Surprise items → `3.0.0_SA_CVO~Z` (cc `0.0.0_AB_MSTR~Z`), one line, keep working. Push state MEASURED,
 never defaulted (and per CVO~Z 18806, stated as an is-ancestor predicate for ON-ORIGIN, vintage-stamped
 for LOCAL-ahead).
+
+## 8. FUTURE SCOPE — registered, NOT built for the pilot (CTO~Z 19024)
+⛔ **Enrolment surface RULED (c) post-login authenticated step** (CTO~Z 19024, concurring with the §6 scope
+verdict). **Option (a) — a persistent ACCOUNT-SECURITY surface for MANAGING the SMS factor** (change number,
+disable sms, re-verify) — is the correct long-term home but is OUT of this leg's scope: SF-2 stays
+**enrolment-only via (c)**. Registered here as a FUTURE SCOPE item; it becomes its own project when Andrew
+wants a settings/security surface. Not built now, not a pilot dependency — surfaced so it is not lost.
