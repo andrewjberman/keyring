@@ -75,24 +75,39 @@ already moving*, and the blend is unrecoverable downstream because nothing marks
 Identical unit and format to Phase 1 (see Step 3), so a step-10 reader does not need a second
 grammar:
 
+**ONE BLANK LINE BETWEEN OUTCOMES, always** — a wall of them is unreadable and the reader is
+deciding, not skimming.
+
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond
-         REACH:   EXERCISED   (an outcome that is only real once it has RUN and been READ)
-         ACCEPT:  a named advisor opens the book view and reads a figure they would
-                  otherwise have gone to BD for  -- qualitative, deliberately
-         SOURCE:  brief s.4, "the parity oracle is BD and never a dependency"
+         DONE WHEN  EXERCISED -- an advisor has actually read one
+         ACCEPT     a named advisor reads a figure here they would otherwise
+                    have gone to Black Diamond for
+         SOURCE     brief s.4, "the parity oracle is BD and never a dependency"
+
+  FWD-4  Since-inception figures are trustworthy across the 2024 seam
+         DONE WHEN  APPLIED -- the labelled tier is in place
+         ACCEPT     the seam is visible in the figure, never silently spanned
+         SOURCE     brief s.5
 ```
 
 ⛔ **THE TAG MEANS SOMETHING DIFFERENT HERE, AND THE DIFFERENCE IS THE WHOLE VALUE.** In Phase 1 the
 tag is the outcome's **CURRENT** state. At step 2 nothing is built, so a current-state tag would read
 `DESIRED` on every row and **a field with one value carries no information.**
->> **In Phase 0 the tag names the state the outcome must REACH to count as delivered — `REACH:`.**
-   An outcome that is complete at `APPLIED` (a policy is written) is a different KIND of thing from
-   one that is only real at `EXERCISED` (an advisor actually read a number), and deciding which
-   BEFORE the PRD is written is most of what this phase is for. <<
-⚠ **This re-purposing is the driver's design decision, NOT in the commissioning spec** — recorded
-here so `3.0.0_SA_CVO` can contest it rather than inherit it. The spec said "tagged
-DESIRED/APPLIED/EXERCISED"; it did not say tagged with *what*.
+>> **In Phase 0 the field names the BAR — the state the outcome must reach before it counts as
+   delivered. Label it `DONE WHEN`, and gloss the value inline so the card needs no legend.** <<
+
+**The question it actually asks, and it is worth asking per outcome:**
+**is this real when the thing is BUILT, or only when it has RUN and someone READ the result?**
+
+⛔ **`DESIRED` IS NOT A VALID BAR.** An outcome that counts as delivered when someone merely intends
+it is not an outcome. The honest range is **`APPLIED` or `EXERCISED`** — the field is binary in
+practice, and "tagged with three values" obscured that.
+
+⚠ **HISTORY, so nobody re-derives it:** the commissioning spec said "tagged DESIRED/APPLIED/
+EXERCISED" and did not say tagged with *what*. This seat first labelled the field `REACH`; **Andrew
+read it and had to ask what it meant, which is the label failing its own disputability test.**
+Renamed `DONE WHEN` on his word, 2026-09-01.
 
 ## Step F3 -- KEEP IT QUALITATIVE. This is a ratified constraint, not a licence to be vague.
 
@@ -107,6 +122,27 @@ ratified because it is sitting in a PRD.
 DISPUTE whether it was met. *"Advisors find it useful"* fails — nobody can contest it. *"An advisor
 reads a figure here they would otherwise have gone to BD for"* passes — it names who, what, and the
 alternative it displaces, and it can be argued about without a single number.
+
+⛔ **AND THE ACCEPT LINE CARRIES NO TECHNICAL LANGUAGE. EVER.** Andrew-direct 2026-09-01: *"the
+'Accept' description never has technical language, always should be very understandable in plain
+English."*
+
+**No serials, no file paths, no table or column names, no key names, no tool names, no fabric jargon
+(`face`, `cell`, `leaf`, `emit`, `partition`, `grain`, `served`).** Those belong in the PRD's own
+sections and in the decomp — never in the line that says what counts as done.
+
+```
+  FAILS   perfrp_performance_relationship emits at L3 grain with a non-null
+          content_hash on the served leaf
+  PASSES  an advisor can see a client's return for a period they choose, and
+          it matches what the account statements add up to
+```
+
+>> **THE REASON IS NOT STYLE.** An ACCEPT line written in system vocabulary can only be judged by
+   someone who knows the system — **so it silently becomes a check the BUILDER grades, which is
+   exactly the self-attestation the whole loop exists to avoid.** A line in plain English can be
+   graded by the person the outcome is FOR. **Write it so Andrew, or an advisor, could tell you
+   whether it happened.** <<
 
 ## Step F4 -- Write it INTO the PRD as a NAMED SECTION
 
