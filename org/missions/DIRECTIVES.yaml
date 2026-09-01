@@ -495,7 +495,7 @@ directives:
       was not derivable from criterion (a) or (b) alone."
     members:
       subgroups: []
-      projects: [PLATFORM_OPS_USERMGMT]
+      projects: [PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS]
     stance: "MINTED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~19:2xZ (a new directive entry
       D12) and 1.0.0_SA_CTO transcript readback @1f6541bf16, sourced from three named Whisper transcripts on
       Andrew Desktop. FIRST PROJECT PLATFORM_OPS_USERMGMT: email/SMS OTP MFA at login with a remembered-device
