@@ -1,6 +1,6 @@
 ---
 name: endpoint
-description: Project the TERMINAL STATE of one or more directives -- "if every active task order completes as written, what do we actually HAVE?" -- then reorient it to the endpoint Andrew actually wants. Answers the one question no other skill answers: not what stage we are at (/exec-sum), not what is on the register (/directives-check), not which gates are armed (/comp-schedule), not which TOs are open (/to-check), but whether THE WORK IN FLIGHT ADDS UP TO SOMETHING WORTH HAVING. Phase 1 PROJECTS the endpoint as numbered capability outcomes, each tagged DESIRED/APPLIED/EXERCISED and carrying its acceptance test, plus an explicit UNCOVERED partition for endpoint-necessary work that NO task order covers. Phase 2 takes Andrew's desired endpoint, computes the DELTA, and emits a dispatch-ready restructuring package -- TOs to CUT / AMEND / RETIRE -- handed to 2.0.0_SA_COO to sequence and dispatch. It never dispatches itself. Invoke as `/endpoint D2`, `/endpoint D2 D8`, `/endpoint ADVI_PERFRP`. Andrew-commissioned 2026-09-01 at the CTO terminal.
+description: Project the TERMINAL STATE of one or more directives -- "if every active task order completes as written, what do we actually HAVE?" -- then reorient it to the endpoint Andrew actually wants. Answers the one question no other skill answers: not what stage we are at (/exec-sum), not what is on the register (/directives-check), not which gates are armed (/comp-schedule), not which TOs are open (/to-check), but whether THE WORK IN FLIGHT ADDS UP TO SOMETHING WORTH HAVING. Phase 1 PROJECTS the endpoint as numbered capability outcomes, each tagged DESIRED/APPLIED/EXERCISED and carrying its acceptance test, plus an explicit UNCOVERED partition for endpoint-necessary work that NO task order covers. Phase 2 takes Andrew's desired endpoint, computes the DELTA, and emits a dispatch-ready restructuring package -- TOs to CUT / AMEND / RETIRE -- handed to 2.0.0_SA_COO to sequence and dispatch. It never dispatches itself. PHASE 0 (`--forward`) runs EARLIER than both -- at pipeline step 2, BEFORE the PRD and before any task order exists -- reading the step-1 CRO brief instead of the register and emitting the QUALITATIVE endpoint that gets written into the PRD, so step 10 can answer "does the PRD name this outcome?" without it collapsing into the spec-error route. Invoke as `/endpoint D2`, `/endpoint D2 D8`, `/endpoint ADVI_PERFRP`, `/endpoint --forward <topic|brief-path>`. Andrew-commissioned 2026-09-01 at the CTO terminal; Phase 0 added same day per SPEC_CANONICAL_LOOP_INCORPORATION_20260901 s.1.2.
 ---
 
 # /endpoint -- the terminal-state projector
@@ -29,9 +29,101 @@ then lets Andrew move it.
 | `/endpoint ADVI_PERFRP` | Project-scoped rather than directive-scoped. |
 | `/endpoint D2 --reorient` | Re-enter Phase 2 against a projection already rendered this session. |
 | `/endpoint D2 --uncovered` | The UNCOVERED partition alone -- the fastest read of "what is nobody doing". |
+| **`/endpoint --forward <topic\|brief-path>`** | **PHASE 0.** Runs at pipeline STEP 2, BEFORE the PRD exists and before any TO. Reads the CRO brief, not the register. See PHASE 0. |
 
 Phase 2 normally follows Phase 1 in the same conversation: Andrew reacts to the projection,
 states the endpoint he wants, and the skill continues. `--reorient` exists for a later session.
+
+---
+
+# PHASE 0 -- FORWARD (pipeline STEP 2, before the PRD)
+
+**Commissioned by `SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` §1.2 under Andrew-direct
+2026-09-01 (`/open-calls`, "All recs approved" + *"get it done and spec whatever needs to be spec'd"*).**
+
+**The ask it serves, Andrew's words:** *"before even writing the PRD, we need to define where we
+need to go."*
+
+⛔ **WHY PHASES 1 AND 2 CANNOT SERVE IT.** Phase 1 asks *"if every active TO completes as written,
+what do we have?"* — **it reads TASK ORDERS IN FLIGHT.** At step 2 there are no task orders and
+there is not yet a project. **A skill that enumerates the register returns an empty set and calls it
+an endpoint.** Phase 0 reads the BRIEF instead, and reads nothing else.
+
+⛔ **WHY THIS IS THE KEYSTONE, NOT A NICE-TO-HAVE.** Step 10's routing fork has three limbs, and the
+third — SCOPE CHANGE — is decided by *"does the PRD name this OUTCOME?"*
+>> **With no named endpoint that question has NO ANSWER, and the scope-change route SILENTLY
+   COLLAPSES INTO THE SPEC-ERROR ROUTE.** Every misrouted scope change then lands on COO as a TO
+   amendment instead of on CTO as a PRD revision. **The loop degrades quietly rather than failing
+   loudly**, which is the worst available failure mode. <<
+
+## Step F1 -- Read the BRIEF. Refuse without one.
+
+The input is the step-1 CRO brief (`docs/briefs/**`) or a topic naming one. Print the path, its
+`generated` line if it carries one, and its byte size.
+
+⛔ **NO BRIEF, NO PHASE 0.** Print `UNMEASURABLE: no brief at <path>; step 1 has not produced one`
+and stop. **Do not synthesise an endpoint from the topic string** — an endpoint invented from a
+title is exactly the guess this phase exists to prevent, and it would then be written into a PRD and
+read back at step 10 as though someone had decided it.
+
+⛔ **DO NOT READ THE TO REGISTER IN THIS PHASE, even if the project already exists.** If TOs are in
+flight, the caller wanted Phase 1. Reading both silently blends *what we intend* with *what is
+already moving*, and the blend is unrecoverable downstream because nothing marks which is which.
+
+## Step F2 -- Emit numbered CAPABILITY OUTCOMES, same shape as Step 3
+
+Identical unit and format to Phase 1 (see Step 3), so a step-10 reader does not need a second
+grammar:
+
+```
+  FWD-3  Advisors can see per-client performance without opening Black Diamond
+         REACH:   EXERCISED   (an outcome that is only real once it has RUN and been READ)
+         ACCEPT:  a named advisor opens the book view and reads a figure they would
+                  otherwise have gone to BD for  -- qualitative, deliberately
+         SOURCE:  brief s.4, "the parity oracle is BD and never a dependency"
+```
+
+⛔ **THE TAG MEANS SOMETHING DIFFERENT HERE, AND THE DIFFERENCE IS THE WHOLE VALUE.** In Phase 1 the
+tag is the outcome's **CURRENT** state. At step 2 nothing is built, so a current-state tag would read
+`DESIRED` on every row and **a field with one value carries no information.**
+>> **In Phase 0 the tag names the state the outcome must REACH to count as delivered — `REACH:`.**
+   An outcome that is complete at `APPLIED` (a policy is written) is a different KIND of thing from
+   one that is only real at `EXERCISED` (an advisor actually read a number), and deciding which
+   BEFORE the PRD is written is most of what this phase is for. <<
+⚠ **This re-purposing is the driver's design decision, NOT in the commissioning spec** — recorded
+here so `3.0.0_SA_CVO` can contest it rather than inherit it. The spec said "tagged
+DESIRED/APPLIED/EXERCISED"; it did not say tagged with *what*.
+
+## Step F3 -- KEEP IT QUALITATIVE. This is a ratified constraint, not a licence to be vague.
+
+**Andrew, verbatim:** *"This does not have to be a deliverable contract. It can be qualitative
+because we will not know enough about the quantitative mechanics at this point."*
+
+⛔ **DO NOT FORCE A CONTRACT. Forcing one is what makes the endpoint a guess wearing a schema.** A
+number invented at step 2 is not rigour — it is a fabrication that every later stage will treat as
+ratified because it is sitting in a PRD.
+
+**Qualitative is not vague.** The test: an ACCEPT line is good if a competent reader could later
+DISPUTE whether it was met. *"Advisors find it useful"* fails — nobody can contest it. *"An advisor
+reads a figure here they would otherwise have gone to BD for"* passes — it names who, what, and the
+alternative it displaces, and it can be argued about without a single number.
+
+## Step F4 -- Write it INTO the PRD as a NAMED SECTION
+
+The output's home is the PRD, under a section titled **`ENDPOINT (step 2, /endpoint --forward)`** —
+because step 10 reads it back to answer *"does the PRD name this outcome?"*
+
+- **PRD exists:** insert or replace that section. Never edit any other section of someone's PRD.
+- **PRD does not exist yet** (the normal case — this runs BEFORE the PRD): emit the block ready to
+  paste and print the exact path and section title it belongs under. **Say plainly that it is NOT
+  YET LANDED**, because an endpoint that lives only in a terminal is the carrier problem this whole
+  spec exists to close.
+
+## Step F5 -- Provenance, mandatory
+
+Same rule as Step 7: brief path + vintage, every outcome traced to a brief line, and an explicit
+`NOT READ:` line naming what was deliberately not consulted (the register, the TOs, the project
+JSON). **A phase defined by what it refuses to read must say what it refused.**
 
 ---
 
