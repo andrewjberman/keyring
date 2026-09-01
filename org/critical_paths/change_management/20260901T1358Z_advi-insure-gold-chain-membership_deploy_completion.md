@@ -6,6 +6,31 @@
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
 **Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
 
+> ⛔ **DISARMED 20260901T152800Z — SEE `7d7bade318`. READ THIS BEFORE THE MANIFEST BELOW.**
+> **THE STAGE THIS LEDGER CLOSED ON IS NOT LIVE.** Leg L3/L4 registered `insurance_nav_current` in
+> `_stage_list`; **seven minutes after this ledger closed, that entry was COMMENTED OUT** and the
+> disarm deployed and verified in the served object (0 active references; positive control
+> `c02_twr_daily` = 2 active lines).
+> **CAUSE — not a defect of this deploy:** the chain runner `bd-exporter-ec2-role` held **0 allows**
+> for the insurance silver (`0.7.0_AE_CloudOps~R` 92175, confirmed here on `simulate-principal-policy`
+> with a positive control). Root: INS-b-2, the leaf spelling — grants written for `blackdiamond/49f/`,
+> silver landing on `blackdiamond/49financial/`. Left armed it was a GUARANTEED `AccessDenied` on the
+> first production fire, and the chain is fail-fast, so it would have taken c04's validation battery
+> and the ADVI_PERFRP projection with it. Disarmed per NEVER#2 "roll back + escalate loud".
+> **CURRENT STANDING STATE:** the producer IS in `_code/` and the roster does NOT reference it —
+> present-but-unreferenced, i.e. INERT. Re-arm is uncommenting the one entry, and it is HELD by
+> `2.0.0_SA_COO` (92189 s.1); the IAM precondition itself was met at 16:2xZ (`92308`, re-verified
+> first-hand: both tables `allowed`, positive control `allowed`, the ungranted sibling
+> `fact_insurance_relationshipdetail` still `implicitDeny`).
+>
+> ⚠ **WHY THIS NOTE EXISTS RATHER THAN THE CLOSE BEING CALLED WRONG (issuer 92310 s.1, ask accepted
+> rather than declined).** Every act this ledger names DID happen and "nothing stranded" is true.
+> **But its own `Deploy:` line says "register it LAST in `_stage_list`" — a STANDING OUTCOME, not
+> merely an event — so a reader is entitled to read it as current state, and would conclude the stage
+> is live.** That is the exact carrier shape that cost this fabric all day: records TRUE WHEN WRITTEN,
+> still true about their own event, and read as NOW. **A completion ledger whose subject a later act
+> reverses must say so on its face, because nothing else will.**
+
 ---
 
 ## Manifest (every leg must carry proof before CLOSE)
