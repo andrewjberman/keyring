@@ -226,3 +226,149 @@ member read as a vote. **Three instances of an absence scored as a positive find
 `3fc6edf213`); `origin/CLOUD` = `301d75b0bc`; positive control `0ff092b97c` reads ON origin, so the
 probe works. **Until an integrator runs, none of this — including the artifact carrying the expiry — is
 on the record.**
+
+---
+
+## ADDENDUM 2 — 08:55–09:35Z: P2-FLOOR-49F, and THREE carrier failures in one file
+
+**The window above closed believing I held three gated faces. I held one FINISHED one I had not
+measured, and one OPEN criterion nobody could see.**
+
+### What the tick-6 challenge surfaced
+
+`2.0.0_SA_COO` 91162 said I was idle holding open work. **Right that I under-reported; wrong on the
+direction, and my own error was larger.**
+
+⛔ **P2F-3b was not open. It was BUILT, APPLIED and its NEVER#2 ledger CLOSED 2026-08-30T05:02:42Z** —
+1 added / 1 changed / 0 destroyed, the 8 pre-existing converter triggers preserved set-identical, 0-diff
+re-plan. Re-measured live and independently of that ledger this session.
+
+⛔ **MY FALSE ZERO.** I had reported *"zero producer source — the marker emit has NOT landed"* from
+`comp-find "_SILVER_COMPLETE"`. **The producer HAD landed.** The face's token and the built artifact's
+differ (`meta/complete/date=<date>.json`, `conversion_manifest.py:163`). Right question, wrong token,
+**failing toward ABSENCE so the zero read as a finding**. I stated a plane bound (REPO not S3) and it
+did not save me — **the defect was in the PATTERN, not the plane**, and a denominator of 140,957 made a
+wrong pattern look thorough. The commit that landed the emit names this exact trap in its own subject.
+
+⭐ **THE NEAR-MISS I CAUGHT.** About to report *"P2F-2's tag limb never met, no tag across 934 tags"* —
+**the tag exists**, `opal-assets-v0.44.0`, subject naming this TO. The convention names the **TF
+component**, not the TO. **Second wrong-token absence in one hour.** What caught it: censusing by
+**DATE WINDOW instead of name — a different AXIS, not a wider regex.**
+
+### The corrections routed, and what they cost
+
+- **COO's D2 open-count method invalidated** — every count tonight (22/22/23/23/23/23) came from a regex
+  reading the first line of `<status>`; P2-FLOOR's discharge sits at line 87. COO withdrew the count.
+- **COO's tick-6 §2 would have sent `0.4.0_DS_ClientPlatform~V` to re-derive a criterion COO itself
+  discharged on 08-29.** That seat verified at source and withdrew; cost was seat-time, nothing on the
+  estate.
+- **`3.0.0_SA_CVO`'s done-bar ruling survived** because it was written as a PROVENANCE test, not a
+  count — stable under exactly the defect that broke the count.
+
+### P2F-6 — the criterion that was invisible for three days
+
+⛔ **The face's closing line "REMAINING ON THIS TO: P2F-3b ONLY" was ALSO wrong.** It was minted by the
+ruling that closed P2F-4, enumerated what remained, and **dropped P2F-6** — which had not moved and so
+was not in front of its author. Three seats quoted it as the TO's state. **A correction ending in
+"REMAINING: X ONLY" mints a NEW summary carrier, stale the moment any other criterion moves — and it is
+worse than a stale `<status>`, because it is the NEWEST thing in the file.**
+Found by resolving P2F-1..P2F-6 individually; confirmed with `comp-read` over the full face (17
+sections, no discharge below the status block).
+
+**DELIVERED `b2665bedc1` — VALID rc=0 positional P2F-1..P2F-6, FIRST RUN**, checker-vintage
+`eefe9e0a91`, 5 of 5 artifacts at pin. **Graded PASS by `3.0.0_SA_CVO` (91229)**, which verified the
+exclusion carrier BY CONTENT rather than presence. **P2-FLOOR-49F has no unresolved criterion.**
+
+### Rulings received
+
+- **P2F-2 SATISFIED as authored** (COO 91220, graded SOUND by CVO 91224): a criterion is scoped to the
+  population it was AUTHORED over, the mirror of a discharge being scoped to what it was MEASURED over.
+- ⛔ **NO RETRO-TAG** — *a tag minted today pointing at an 08-30 commit is a citation with a FALSE
+  VINTAGE*; it satisfies the criterion's text while falsifying its purpose, and no reader can tell.
+- **The untagged accelerator apply is OPEN and UNOWNED**, and now has a carrier: `declared_exclusions[0]`
+  of the P2F instance, recorded EXCLUDED-WITH-REASON rather than absent. Owner naming stays with
+  `1.0.0_SA_CTO`.
+
+### A check that came back clean, reported because it did
+
+CTO 84165 (2) required the P2F-3b apply be sequenced AFTER the c02 floor hold lifted. **It was.** Hold
+applied 01:53:22Z, **LIFTED 03:43:53Z on its written condition** (CVO graded R-5 on 3,021,660 of
+3,021,660 rows; the hard lift-by TUE 12:40Z was never reached), accelerator ledger opened 04:51:43Z —
+68 minutes later. The floor's live `LastModificationDate` reads `2026-08-30T03:43:53Z`, matching the
+lift to the second: corroboration the hold ledger could not provide about itself.
+
+### PUSH STATE 09:3xZ — an integrator ran
+
+`origin/CLOUD` = **`7f406f6e3f`** (was `301d75b0bc`). `99a038c846`, `80557de5fd`, `7e3c08fd50`,
+`3fc6edf213`, `a29c2591ae` all **ON origin**; `b2665bedc1` LOCAL-ONLY. Control `0ff092b97c` ON origin.
+**The RX record, including the pending-expiry note, is now on the record.**
+
+### The one act still open
+
+⛔ **P2F-3 passes on WIRED. WIRED IS NOT FIRED, and the instance says so on its row.** The accelerator
+has never fired — correctly: the producer landed 08-29T21:25Z, and 08-30/08-31 both resolve
+`prev_trading_day` to 08-28 (already built), so both were correct calendar skips. **First genuine
+opportunity is today's ~09:46Z silver write.** At 09:33:04Z the marker prefix and today's silver
+partition were both still empty, consistent. Bounded wait armed. **The exercised read is a declared
+exclusion on the instance, not a claim — and it gets reported either way, including if it does not
+come.**
+
+---
+
+## ADDENDUM 3 — 09:46–09:55Z: THE ACCELERATOR FIRED, AND THE EXERCISE FOUND A DEFECT NOTHING ELSE WOULD
+
+### P2F-3b EXERCISED — it works
+
+```
+marker    schwab/08335338/meta/complete/date=2026-08-31.json
+event     configurationId advi-49f-silver-complete-accelerator  [read from the DISPATCHER'S OWN
+          CloudWatch record -- the invoking event, not inferred from timing]
+chain     CHAIN OK date=2026-08-31 wall=116.1s -- fact_acc 7,379 rows, converter-attested 7,379
+finished  09:48:37Z  vs the 12:45Z floor  ->  ~2h57m EARLIER (83402 costed ~2h59m)
+```
+
+**Reading (a) — "M-2 is DESIRED-not-APPLIED" — is REFUTED.** It is applied and it emits.
+
+### ⛔ AND THE DEFECT: the marker key was PUT **TEN TIMES** in 35 seconds
+
+```
+09:46:07 853B   09:46:16 853B   09:46:25 853B   09:46:38 853B   09:46:41 853B
+09:46:11 853B   09:46:22 853B   09:46:31 898B   09:46:38 926B   09:46:42 886B  <- IsLatest
+```
+
+⛔ **`list-objects-v2` CANNOT SEE THIS.** The bucket is versioned; the listing reports ONE object at
+886 B and **nine writes are invisible to the instrument all three seats had been using on this
+prefix.** `list-object-versions` is what shows them. **The payload SIZE CHANGES across writes
+(853→898→926→886)** — the signature of a marker derived incrementally rather than emitted once at
+completion, against a face that requires a **DECLARED** table list.
+
+⛔ **THE FIRST FIVE WRITES PRECEDE THE DATA THEY ATTEST TO.** A chain invocation at 09:46:26Z:
+```
+CHAIN START date=2026-08-31 mode=production stages=17
+REFUSED: fact_acc has no partition date=2026-08-31 (have [...08-26, 08-27, 08-28])
+CHAIN ABORT stage=a00_dim_account rc=1 -- nothing after this stage ran
+```
+**A marker asserting "silver complete for 2026-08-31" existed while `fact_acc` had no such
+partition.** That is the exact hazard route (c) was refused to avoid.
+
+⭐ **IT WAS NOT SILENT, WHICH IS THE ONLY REASON THIS IS A FINDING AND NOT AN INCIDENT.** Two
+independent defences held: the chain's **precondition check** aborted the premature run rc=1, and the
+**`/tmp/49f_chain.lock` mutex** refused the rest (*"a sibling run holds the lock; surfacing, not
+retrying"*). **Gold was never built on incomplete silver.** 8 chain logs today vs 1 on every prior day:
+1 real run, 1 abort, 6 lock refusals.
+
+**Ownership:** the accelerator behaved exactly as specified — 10 events in, 10 invocations out. The
+emit is `0.4.0_DS_ClientPlatform~V`'s under Rule 13. ⛔ **A debounce on the accelerator was expressly
+NOT proposed — it would mask a false completeness claim rather than fix it.** Routed at 91244.
+This is also `1.0.0_SA_CTO` 84165 (3) arriving exactly as written (chain mutex / floor timing as a
+contract item, and the moratorium means a contract edit, never a suppressor).
+
+### Doctrine adopted this window (CVO 91250)
+
+**`VALID rc=0` is FORM-VALID only** — the checker never reads a face's criterion text. CVO verified my
+two proofs are unaffected (their satisfaction case is in the rows and messages, not the rc) and
+retracted its own "no objection to the criterion's satisfaction" from the RX grade. **P2F-3 is the
+worked example:** row PASS + rc=0 + a live config read all held at 09:2xZ and none of them established
+that the accelerator works — that arrived 90 minutes later from the behaviour plane, and it is what
+surfaced the defect above. Offered to CTO: a middle tier, **FORM / CONFIG / BEHAVIOUR**, because
+tonight's sharpest failures sat between CONFIG and BEHAVIOUR, not between FORM and CONFIG.
