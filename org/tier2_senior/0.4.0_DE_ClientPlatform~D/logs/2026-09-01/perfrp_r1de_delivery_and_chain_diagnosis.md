@@ -174,10 +174,27 @@ deferred by ruling. The cards for the unserved leaves render their shells, which
 pre-serve state documented at `AdvisorBookView.tsx:428-431`, not an error. The publish path has a
 measured empty-`asof` defect whose manifest sits at the double-slash key
 `platinum/advi/49financial/_manifests//4b36d4f5743c.json` (11:06:00Z, 7 rows, 10 inputs missing,
-0 vintages) and `latest.json` currently points at that run. The chain's 11-of-11 refusal has NO
-established cause: IAM (a false deny from a prefix-conditioned grant read with no context), the
-trading calendar, and stale bytes (ETags identical) are all dead, and the wrapper-argv seam test
-came back green but ran on CPython 3.12.10 against a runner on 3.10, so it clears the seam only.
+0 vintages) and `latest.json` currently points at that run.
+
+**AMENDED 16:2xZ — THE REGRESSION FRAME ITSELF WAS THE DEFECT, so most of this section's original
+cause discussion was answering a question that did not exist.** `0.7.0_AE_CloudOps~M` measured the
+untruncated per-day chain logs in `gold/advi/_logs/` (control: zero truncation sentinel):
+**08-29, 08-30 and 08-31 ALL re-processed `asof=2026-08-28`.** The three pre-fix `built=6`
+observations are ONE RESULT REPEATED ON THE SAME DATA, not three independent days, and today is the
+first new as-of in four days. **THE BEFORE/AFTER COMPARISON HAD NO VALID BEFORE.** That is
+corroboration-by-inheritance operating on the FRAME rather than on any single claim, which is why
+every measurement inside it was sound and the conclusion still went nowhere — and it explains the
+one thing no mechanism could, namely families sharing no code path failing identically. They did
+not start failing; the input changed for the first time in four days. Andrew supplied this
+hypothesis from a single high-level summary roughly forty minutes before it was measured
+(`2.0.0_SA_COO` 92288 records it verbatim).
+
+Every mechanism candidate is now dead: IAM (false deny from a prefix-conditioned grant read with no
+context), the trading calendar (post-fix code aliases a Monday to Friday and builds 9), stale bytes
+(ETags identical), the wrapper-argv seam (green), and the absent-dependency story
+(`0.7.0_AE_CloudOps~M` killed its own candidate — five modules import pandas and all ran STAGE OK in
+the very run that refused 11 of 11, and emitters spawn under `sys.executable`, so there is no
+interpreter gap either). What survives is the discontinuity itself, now correctly framed.
 
 ---
 
@@ -191,9 +208,17 @@ came back green but ran on CPython 3.12.10 against a runner on 3.10, so it clear
    is live.
 3. **Run `comp-cache collisions`** against the query keys added in `AdvisorBookView.tsx` — the DE
    minimum I skipped, and the one gap in this window that is mine to close.
-4. **[0.4.0_DS_ClientPlatform~G]** Compare runner-vs-laptop dependency versions (`pandas 2.3.3`,
-   `pyarrow 18.1.0`, `boto3 1.42.54`, `botocore 1.43.0` measured locally) — the surviving axis
-   after the seam cleared, and likelier than the interpreter minor.
-5. **[0.4.0_DS_ClientPlatform~G]** One read of `run_emitter`'s exception handling settles whether
-   a subprocess failure maps onto `emitter_refused` or `error` — that discriminates a wholesale
-   bundle failure from a per-family refusal and nobody has run it.
+4. ~~Compare runner-vs-laptop dependency versions~~ **SUPERSEDED 16:2xZ.** The dependency axis is
+   DEAD: `0.7.0_AE_CloudOps~M` measured five modules importing pandas running STAGE OK in the same
+   run that refused 11 of 11, and emitters spawn under `sys.executable`, so no interpreter gap
+   exists. Recording the supersession rather than deleting the row — a next-step a reader acts on
+   after it is moot is the same stale-carrier failure this log's own Postmortem is about.
+5. ~~Read `run_emitter`'s exception handling~~ **ANSWERED 16:0xZ** by `0.7.0_AE_CloudOps~M` against
+   bytes verified equal to the deployed ETag: `rc != 0` maps to `emitter_refused`, NOT to
+   `error`/HARD_FAIL — which REFUTES the counter-indication I raised twice (92135 s.3, 92165 s.3).
+   The same read explains the empty reason fields: `emitter_tail` captures STDOUT and a traceback
+   goes to STDERR, so the reasons were never missing and the wrong FIELD was being read.
+6. **The one finding of mine that survives the frame collapse** — the chain stage classifier has no
+   floor on `built`, so `built=0 refused=11 hard_fail=0` prints `STAGE OK rc=0`. Whatever the
+   cause, nothing failed on that number, which is how four days of a repeated as-of went unseen.
+   Remedy shape is a producer-lane call, not mine.
