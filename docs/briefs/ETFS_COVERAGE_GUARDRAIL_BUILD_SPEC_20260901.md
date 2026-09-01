@@ -82,13 +82,23 @@ would never be caught up. A straight port would look correct, pass review, and l
 it was built to close. Schwab is ad-hoc-batch, so the tail is **not bounded by anything we control** — do not
 pick a number from this table and call it safe.
 
-**RECOMMENDED (rec 1):** replace the fixed look-back with a **reporting-obligation window** — reconcile every
+⭐ **RULED — Andrew-direct 2026-09-01, verbatim: *"I agree with the reporting obligation window."*** Rec 1
+below is the BUILD VALUE. Rec 1b is retained only as a record of the rejected alternative; **do not implement
+a day-count window.**
+
+**RULED (rec 1):** replace the fixed look-back with a **reporting-obligation window** — reconcile every
 trading day from the **start of the prior month** forward, until that month's report has shipped. That is
 bounded, self-evidently sufficient for a monthly obligation, and does not require anyone to guess a vendor's
 worst-case lag. Cost: a few extra `head_object` calls per daily run over ~40 dates.
-**FALLBACK (rec 1b):** if a day-count window is preferred, make it an **env var per partner** (it is a
-hardcoded constant today, so tuning it currently costs a code deploy) and set it from the measured max lag
-plus margin — **never below 21 for 49F**.
+**NOT TAKEN (rec 1b), recorded so it is not re-proposed:** a per-partner env-var day count set from measured
+max lag. Rejected because it makes correctness depend on a vendor lag distribution nobody controls — 49F's
+observed tail (13 d) already exceeds the shipped constant (10 d), and Schwab is ad-hoc batch, so the tail has
+no upper bound we can cite.
+
+⛔ **Implementation note the ruling implies:** the window's terminus is *"until that month's report has
+shipped"* — so the catch-up needs a SHIPPED signal to stop at, not a date. Use the existence of
+`platinum/reports/{YYYY-MM}/etf_ownership.pdf`; do not re-derive "has it shipped" from a calendar assumption,
+or a blocked/failed render silently ends the very reconciliation that would have unblocked it.
 
 **Lanes:** `0.7.0_AE_CloudOps` (Lambda + Terraform; `aws lambda update-function-code` is FORBIDDEN — Terraform
 only, CLAUDE.md NEVER-9).
