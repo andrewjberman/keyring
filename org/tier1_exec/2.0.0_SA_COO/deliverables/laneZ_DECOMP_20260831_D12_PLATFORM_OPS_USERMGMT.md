@@ -41,7 +41,7 @@ the LABELS only; every finding's SUBSTANCE is intact.**
 | # | subject | home record | state |
 |---|---|---|---|
 | **F-1** | unconditioned `ses:SendEmail` Allow — an intended IAM restriction that restricts nothing | this decomp | ⛔ OPEN, **no owner** |
-| **F-2** | a correct password alone POISONS the client auth state; `/market` reachable by URL in-session | this decomp | cohort gate; closing via DE3-2 |
+| **F-2** | a correct password alone POISONS the client auth state; `/market` reachable by URL in-session | this decomp | ✅ **join limb EXERCISED integrated (DE3-2 PASS @03:4xZ)**; cohort gate holds; prod still vulnerable until promote |
 | **F-3** | production MFA backend is LIVE behind an MFA-less frontend — reachable, unentered | this decomp | informational; closes on the promote |
 | **F-4** | `ack_messages` MISREPORTS delivery state — **both directions**: false-POSITIVE (accepts a cross-recipient stamp with a success receipt, `1.0.0_SA_CTO~Z` 17610) **and** false-NEGATIVE (reports FAILED on a write that landed, 17822). **The two feed each other** — a false-negative invites the retry-from-memory that forges the false-positive. | `1.0.0_SA_CTO~Z` 17610/17822 | ⛔ OPEN, **no owner** |
 | **F-5** | Resend / `W3-2` claims a DELIVERY the API does not promise | `1.0.0_SA_CTO~Z` 17729 | largely met by `0.7.0_AE_CloudOps~Z`'s W3-2 "issuance-not-delivery" label; OPEN |
@@ -479,9 +479,23 @@ underneath it.**
 > TypeError.** Not a re-read of `index.ts:167`.
 > >> **F-2 IS NO LONGER "CLIENT EXERCISED, SERVER SOURCE-READ." BOTH HALVES ARE EXERCISED, ON TWO
 >    SURFACES** — and the stub is now CONFIRMED to match reality rather than assumed to. <<
-> ⚠ **STILL OPEN, AND IT STAYS STATED: THE JOIN IS NOT EXERCISED.** Nobody has driven the REAL server
-> end-to-end into a REAL browser — that needs a gated account, which this very gate forbids.
-> **Correct status: BOTH HALVES EXERCISED SEPARATELY, THE JOIN NOT EXERCISED.**
+> ✅ **CLOSED ~03:4xZ — THE JOIN IS NOW EXERCISED, INTEGRATED, UNSTUBBED (DE3-2 PASS).**
+> `0.4.0_DE_ClientPlatform~Z` drove the REAL deployed handler into a REAL browser against a REAL gated
+> account (the `success@simulator` fixture): `POST /auth/login` returned `200 {mfaRequired, challengeId}`
+> off the network tab (real handler), and the **fixed** client refused `/market` on all three limbs —
+> in-session nav, full reload, back-nav — `localStorage.accessToken` null throughout. **The negative
+> declaration was MEASURED not asserted** (`window.fetch === native code`, own stub markers checked
+> absent). `3.0.0_SA_CVO~Z` scored it **PASS** against a rubric pre-registered before the artifact.
+> ⛔ **CVO~Z's READING NOTE, KEPT SO NOBODY MISCITES IT:** DE3-2 is **NOT** the discriminating A/B pair
+> — it is UNSTUBBED+POST-fix while the RED was STUBBED+PRE-fix (two variables differ). **The RED/GREEN
+> pair carries the discrimination; DE3-2 carries the INTEGRATED OBSERVATION.** Different jobs, both
+> needed. DE3-2 tests an ABSOLUTE property (*"a correct password alone must not reach the dashboard"*)
+> that demonstrably CAN fail — the pre-fix client did exactly that.
+> ⚠ **BOUND, on the row:** the FIX is confirmed integrated; **production still serves the PRE-fix bundle,
+> so the bypass is live in PRODUCTION for `usr_d12w3fixture` until the promote.** `HUMAN gated: 0 |
+> SERVICE gated: 0 | FIXTURE gated: 1`. **That gap closes on the promote, not this run.** DE3-1 (the
+> positive path) is the remaining limb, live at the handoff between `0.4.0_DE_ClientPlatform~Z` and
+> `0.7.0_AE_CloudOps~Z`.
 > ⛔ **RECORDED BECAUSE THE DIRECTION IS UNUSUAL:** almost every correction tonight moved a claim
 > DOWNWARD. This one moves it UP. **A finding recorded weaker than its evidence gets discounted by the
 > next reader** — and this one is a gate on a cohort, so understating it is not the safe error.
