@@ -147,8 +147,18 @@ a ruling instead.
   `mustChangePassword:false`. **Gated-account census is 3 of 49** (HUMAN 2 | SERVICE 0 | FIXTURE 1).
   Held for `0.4.0_DE_ClientPlatform~Z`'s DE1-1 UI run; on their word DELETE it and broadcast
   `FIXTURE 1->0 = 2 of 48` same-turn.
-- **Push state:** all four commits are LOCAL. `origin/SITEZ` read `57dd460e6c` via `git ls-remote` at
-  ~08:2xZ and has NOT been re-read since — perishable. Push is the integrator's leg (GATE 5 / LD-0367).
+- **Push state — AMENDED 09:18Z, the original line was already stale when written.** It read
+  *"all four commits are LOCAL, `origin/SITEZ` read `57dd460e6c` at ~08:2xZ, not re-read since."*
+  I labelled it perishable and then let it age one more hour. Re-read now:
+  ```
+  origin/SITEZ  0ff10a197b   (git ls-remote, 09:18Z)
+  63bdd9ac8ac / d935669ab9 / 2480077946 / ce7e8c1710   ON ORIGIN  (is-ancestor, each tested)
+  ecb159f716  (this log)                               LOCAL ONLY
+  ```
+  An integrator pushed in the interval. **Only the session log is unpushed.** Caught because
+  `3.0.0_SA_CVO~Z` 18735 reported `origin/SITEZ` last read at `ce7e8c1710` — one of MY commits —
+  which could not be true if my own line was. **Two seats' perishable reads disagreeing is what
+  made it visible; neither read was wrong when taken.**
 - **Tag NOT cut.** Rule 6 wants `portal-auth-v1.25.0`; the tag push is also integrator-only, so no
   half-landed local-only tag was created.
 
@@ -158,8 +168,9 @@ a ruling instead.
    against `mfa_code_sent`, not `mfa_code_rotated`; the pre-Act-C server capture is already banked
    from F-8's window. Then tell me and I delete the fixture.
 2. **[`0.7.0_AE_CloudOps~Z`]** Delete the fixture + broadcast the delete census, on that word.
-3. **[integrator]** Push `63b9dac8ac`, `d935669ab9`, `2480077946`, `ce7e8c1710`; tag
-   `portal-auth-v1.25.0`.
+3. **[integrator]** ~~Push `63b9dac8ac`, `d935669ab9`, `2480077946`, `ce7e8c1710`~~ — **DONE, all
+   four are on `origin/SITEZ` @`0ff10a197b` (measured 09:18Z, is-ancestor per commit).** Remaining:
+   push this log (`ecb159f716`) and tag `portal-auth-v1.25.0`.
 4. **[build-tooling / DT lane]** Finding `@ce7e8c1710` — INERT, no D12 dependency.
 5. **[unassigned, pre-existing]** The `hashCode` finding stands: a 6-digit code is recoverable from
    `(salt, codeHash)` in ~1s, so the real control is table ACCESS. Act C narrows it for the SEALED
