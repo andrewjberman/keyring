@@ -201,6 +201,91 @@ def check_file(root, rel):
     return (v, notes)
 
 
+STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+DONE_WORDS = ("complete", "completed", "closed", "done")
+
+
+def _staged_blob(root, rel):
+    """The STAGED content of rel, or None. Reading the index -- not the worktree -- is the
+    correct read: a seat can stage a conformant file and then edit the worktree copy. The
+    sibling gate at .tools/git-hooks/to-proof-of-spec-check.sh does this and mine did not."""
+    try:
+        out = subprocess.run(["git", "show", ":" + rel], cwd=root,
+                             capture_output=True, timeout=30)
+    except Exception:  # noqa: BLE001
+        return None
+    if out.returncode != 0:
+        return None
+    return out.stdout.decode("utf-8", errors="replace")
+
+
+def check_complete_flip(root, rel):
+    """LAYER 1, half B -- 'No VALID instance -> no complete flip.'
+
+    The pipeline doc's layer 1 says an instance is INVALID without a decomp_ref + bidirectional
+    mapping, AND that no VALID instance means no `complete` flip. The FIRST half is built and
+    lives in proof-of-spec-check.py's alignment arms. The SECOND half -- the thing that actually
+    stops the flip -- was never wired to anything. This is that wire.
+
+    SCOPED to pipeline-registered projects (dep_stage present), the same predicate the sibling
+    decomp_ref gate uses. Old projects close freely: gating every historical close on an instance
+    that never existed would refuse legitimate housekeeping and get the gate disabled wholesale.
+    """
+    staged = _staged_blob(root, rel)
+    if staged is None:
+        return []  # not staged (or unreadable as a blob) -- other arms own that
+    m = STATUS_RE.search(staged)
+    if not m or m.group(1).lower() not in DONE_WORDS:
+        return []  # not a flip to a terminal state
+
+    import json
+    code = _project_of(rel)
+    if not code:
+        return []
+    cand, p = code, os.path.join(root, "org", "projects", code + ".json")
+    while not os.path.isfile(p) and "_" in cand:
+        cand = cand.rsplit("_", 1)[0]
+        p = os.path.join(root, "org", "projects", cand + ".json")
+    if not os.path.isfile(p):
+        return []
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            if json.load(fh).get("dep_stage") is None:
+                return []  # not pipeline-registered -- out of scope by design
+    except Exception:  # noqa: BLE001
+        return []
+
+    # Pipeline-registered AND flipping terminal: the instance must exist and be VALID.
+    inst = None
+    for cand_path in (
+            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
+                         os.path.basename(rel).rsplit(".md", 1)[0] + ".proof_of_spec.json"),
+            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
+                         os.path.basename(rel).rsplit(".md", 1)[0] + "_PROOF_OF_SPEC.json")):
+        if os.path.isfile(cand_path):
+            inst = cand_path
+            break
+    if inst is None:
+        return ["%s: flips to '%s' on PIPELINE-REGISTERED project %s, and NO proof-of-spec "
+                "instance was found beside it. Layer 1: no VALID instance, no complete flip."
+                % (rel, m.group(1), cand)]
+    chk = os.path.join(root, ".tools", "proof-of-spec-check.py")
+    if not os.path.isfile(chk):
+        return ["%s: proof-of-spec-check.py is MISSING -- fail-closed rather than pass a flip "
+                "whose validator cannot run" % rel]
+    try:
+        r = subprocess.run(["python", chk, inst], cwd=root,
+                           capture_output=True, text=True, timeout=180)
+    except Exception as exc:  # noqa: BLE001
+        return ["%s: could not run the validator (%s) -- fail-closed" % (rel, exc)]
+    if r.returncode != 0:
+        head = (r.stdout or r.stderr or "").strip().splitlines()
+        why = head[-1][:160] if head else "rc=%d" % r.returncode
+        return ["%s: flips to '%s' but its instance is NOT VALID (rc=%d) -- %s"
+                % (rel, m.group(1), r.returncode, why)]
+    return []
+
+
 def sweep(root):
     """LAYER 3's reporting half -- COO's TO sweep as an instrumented pass, not a heroic one.
 
@@ -249,8 +334,9 @@ def main(argv):
     targets = sorted(p for p in dispatched
                      if TO_PATH_RE.search(p) and p in added)
 
-    if not targets:
-        print("[to-pipeline-gate] OK: 0 newly-added task_orders/*.md in this commit "
+    any_to = [p for p in dispatched if TO_PATH_RE.search(p)]
+    if not targets and not any_to:
+        print("[to-pipeline-gate] OK: no task_orders/*.md in this commit "
               "(denominator: %d dispatched path(s), %d staged-added)."
               % (len(dispatched), len(added)))
         return 0
@@ -260,6 +346,14 @@ def main(argv):
         v, notes = check_file(root, rel)
         all_v.extend(v)
         all_notes.extend(notes)
+
+    # LAYER 1 half B runs on EVERY staged TO, added or modified -- a `complete` flip is almost
+    # always a MODIFY, so scoping this to newly-added (as layers 2/3 correctly are) would make it
+    # structurally unable to ever fire. Different question, different scope, stated so the
+    # asymmetry reads as deliberate rather than as an oversight.
+    flip_targets = sorted(p for p in dispatched if TO_PATH_RE.search(p))
+    for rel in flip_targets:
+        all_v.extend(check_complete_flip(root, rel))
 
     for n in all_notes:
         print("[to-pipeline-gate] NOTE: %s" % n)
