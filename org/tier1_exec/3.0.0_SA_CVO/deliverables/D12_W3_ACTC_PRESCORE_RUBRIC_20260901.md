@@ -136,3 +136,58 @@ table** — which is the same separation C4 was written to preserve.
 ⭐ **Consequence for the sibling rubric:** `mfa_code_sent` satisfies AMENDMENT 1's `SEND-EVENT` in
 `D12_DE1-1_PRESCORE_RUBRIC_20260901.md` (`f161939dd3`), so **DE1-1 is scoreable on an Act-B *and* an
 Act-C handler** and its declared dependency is discharged.
+
+---
+
+# AMENDMENT 2 -- 2026-09-01 ~09:0xZ. C4's READ TIMING. Under-specified toward FALSE FAIL.
+
+⛔ **NOTHING ABOVE IS EDITED.** Forced by a near-miss in `0.7.0_AE_CloudOps~Z`'s own Act C run
+(msg 18708 §4) — **the builder nearly filed a false defect against its own build using my criterion.**
+
+```
+first read   AWS/SES Send, 08:59 bucket = 2.0   against 3 mfa_code_sent lines
+re-read      same bucket, no new activity       = 3.0                <- aggregation lag
+```
+
+⛔ **C4 as registered says "total delivered emails == MAX_SENDS exactly" and says NOTHING about WHEN
+to read.** A CloudWatch count read seconds after the event reads **LOW** — and on a count-the-emails
+oracle **a low read is indistinguishable from a missing email, which is the exact failure C4 exists
+to catch.** Every ingredient for a confident wrong finding was present: a downstream instrument, a
+plausible mechanism, and a number disagreeing with the thing under test.
+
+✅ **AMENDED C4:** the email count requires **TWO reads separated in time that AGREE**. **A single
+read taken immediately after the event is INADMISSIBLE.** ⭐ **The tell that identifies the lag: the
+number MOVES WITH NO NEW ACTIVITY.**
+⚠ Corroborating window, so this is a lag finding and not a one-off: F-8's 08:51 bucket read `Sum=2.0`
+against exactly 2 sends.
+
+⭐ **SYMMETRY WORTH RECORDING — both of this rubric's amendments correct MY OWN criteria, in OPPOSITE
+directions:** AMENDMENT 1's C2 was under-specified toward **false PASS** (strict equality on a
+one-sided invariant); C4 here is under-specified toward **false FAIL**. **A criterion can be wrong in
+either direction, and only one of those gets noticed by the seat it accuses.**
+
+## Scoring record -- W3 ACT C
+
+```
+VALIDITY  built oExO72Sr… == deployed oExO72Sr… @08:56:27Z   POSITIVE MATCH, as written
+C1 PASS (3 sends -> one code 593658) · C2 PASS (sends [1,2,3]) · C3 PASS (4th refused, sends stays 3)
+C4 PASS (AWS/SES Send = 3) · C5 PASS (3 mfa_code_sent, 2 refusals emit no email) · C6 PASS
+```
+✅ **W3 ACT C: PASS, 6 of 6, exercised on the deployed plane** (`0.7.0_AE_CloudOps~Z` msg 18708,
+scored msg 18721). Andrew's *"should be idempotent anyway"* is delivered: **3 clicks, one code.**
+
+⚠ **GRAIN LIMITS ON THE C5 ORACLE I MANDATED** (measured by the builder, `18708` §5):
+**(i)** `mfa_code_sent` is emitted **before** the SES call and `email.ts` has no logging at all, so
+the line counts an **authorised** send, never a **delivered** one. Sound for the budget invariant;
+**not a delivery record** — which is why C4's independent SES oracle is load-bearing rather than
+belt-and-braces. **(ii)** ⛔ **`resend:true` means "unsealed an existing code", NOT "this was a
+repeat click" — all three sends report `true`, the first included.** Counting repeat clicks by
+counting `resend:true` **overcounts by one per challenge.**
+
+⚠ **NOT ESTABLISHED:** the UI path (every call was a direct API POST — `0.4.0_DE_ClientPlatform~Z`'s
+half, unrun); multi-session (stated bound); and the **transitional legacy-mint branch**, which the
+builder disclosed as shipped-but-unexercised. ⭐ **That branch is now UNREACHABLE** — it needs a
+challenge from the previous build, `CHALLENGE_TTL_SEC=600`, and the apply was 08:56:27Z, so every
+such challenge is refused from ~09:06:27Z. **Record it for REMOVAL as dead code, not as open test
+debt.** ⚠ **But it WAS live and untested for ~10 minutes, and it is the only remaining rotating path
+— nothing hit it, which is a short window plus luck, not a control.**
