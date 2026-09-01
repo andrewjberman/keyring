@@ -139,3 +139,129 @@ fact that the act would cost nothing is what makes it tempting rather than what 
 ### CONSEQUENCE FOR THIS SEAT
 "D12 first" applied to `1.0.0_SA_CTO~Z` means this seat's own next act is a **D12** act -- cells
 2.3/2.4, which the stage-3 decomp records as CTO-held -- and NOT the D7 read it just proposed.
+
+---
+
+## PART D -- ANDREW-DIRECT 2026-09-01 ~00:4xZ, answering /open-calls (5 cards)
+
+**Channel:** site-Z terminal, direct to `1.0.0_SA_CTO~Z`. **Broadcast:** same turn (17245/17246/17247),
+correction first because a production change had been authorized on a false premise.
+
+### HIS WORDS, VERBATIM AND ENTIRE
+
+> 1.) Both the password reset and the otp code, from support and noreply respectively, came to top of
+> inbox no junk. 2.) Reseat them. 3.) That's fine let's move it to noreply. 4.) Amend it. 5.) This is
+> no issue.
+
+### WHAT EACH RESOLVES
+
+| # | Call | RULED |
+|---|---|---|
+| 1 | OTP inbox or junk | **INBOX, top, no junk.** ⭐ **W1-10 CLOSES. WS-2's deliverability acceptance condition is MET.** |
+| 2 | Re-seat `3.0.0_SA_CVO~Z` | **RE-SEAT.** Infra-class respawn -> `0.0.0_AB_MSTR~Z`'s lane. |
+| 3 | support@ -> noreply@ | **AUTHORIZED -- but on a premise I have since FALSIFIED. See below.** |
+| 4 | SES use-case amendment | **AMEND IT.** |
+| 5 | `opalinvest.dev` renewal access | **"no issue" -- CLOSED, not deferred.** Do not re-raise it. |
+
+### ⛔ ITEM 1 CARRIED A SECOND FACT THAT FALSIFIED ITEM 3's PREMISE
+
+He answered the inbox question AND volunteered that **a password reset from `support@` also arrived.**
+My call-3 card asserted *"Your existing password-reset mail is broken ... First real forgot-password
+click gets nothing."* **IT IS NOT BROKEN. He received one.**
+
+**MEASURED AT SOURCE after his message.** The live handler `opalinvest-auth-handler` runs as
+`opalinvest-auth-lambda-role`, which carries **TWO** SES grants:
+- `opalinvest-auth-permissions` -- Allow `ses:SendEmail` on `*`, Condition `ses:FromAddress =
+  noreply@opalinvest.dev`
+- `ses-send-email` -- Allow `ses:SendEmail` on `identity/*`, **Condition: NONE**
+
+⭐ **IAM IS A UNION OF ALLOWS AND THERE IS NO DENY.** The second statement grants exactly what the
+first one's condition excludes. `support@` was never blocked.
+⚠ **WHY THE SIMULATION RETURNED implicitDeny IS UNMEASURED.** Candidates: the wrong role
+(`portal-auth-lambda-role` also exists) or a resource ARN not matching `identity/*`. **Not asserted.**
+The falsification of its CONCLUSION is measured; the cause of the bad simulation is not.
+
+### ⛔ THE REAL DEFECT IS THE INVERSE, AND THE AUTHORIZED FIX WOULD BURY IT
+
+Someone wrote a `FromAddress` condition intending to constrain what this role may send as. **THAT
+CONDITION CONSTRAINS NOTHING.** Repointing `support@ -> noreply@` resolves a symptom that does not
+exist and **leaves the control that is actually broken**, while making every future reader believe
+sending is restricted to `noreply@`. That is worse than the status quo, because it manufactures false
+confidence in a control.
+
+**STATE OF ITEM 3: HELD, NOT EXECUTED.** His word authorizes it and his word is not in question --
+but the basis I gave him was false, and a sovereign authorization obtained on a false premise is not
+one I will execute silently. The corrected picture is with him. A single auth sender is a coherent
+reason to do it anyway; that is his to give knowingly. **`0.7.0_AE_CloudOps~Z` instructed to HOLD.**
+⛔ **AND NO IAM POLICY IS TO BE WIDENED OR NARROWED ON THIS.** The two-Allow structure is a finding
+with its own owner and gate; nothing is failing today.
+
+### WHOSE ERROR
+
+**MINE.** `0.7.0_AE_CloudOps~Z` reported the simulation accurately, labelled it **APPLIED, NOT
+EXERCISED**, and wrote *"so not 'production is broken now'; it is 'the first real send fails'"* -- a
+correctly bounded claim. **I compressed that into "WILL FAIL on first use" and put it to Andrew as an
+open call.** The seat's bound was the thing I dropped. Fourth instance tonight of carrying a claim one
+rung past its evidence, and the first to reach a production authorization.
+⭐ **`APPLIED, NOT EXERCISED` WAS THE TELL.** An unexercised negative is exactly what a single real
+observation destroys -- and one did, from the principal, unprompted.
+
+---
+
+## PART E -- ANDREW-DIRECT 2026-09-01 ~00:5xZ, answering /open-calls (2 cards)
+
+**Channel:** site-Z terminal, direct to `1.0.0_SA_CTO~Z`. **Broadcast:** same turn, 17260/17261/17262.
+
+### HIS WORDS, VERBATIM AND ENTIRE
+
+> All of these functions should be noreply, there is nobody responding to these so noreply is the
+> coreect point. on call 2, i want to test it with a few people first, including myself. I want to try
+> logging in and seeing that MFA actually works.
+
+### CALL 1 -- REPOINT AUTHORIZED, ON A REASON THAT IS HIS AND NOT MINE
+
+⭐ **HIS BASIS IS SEMANTIC, NOT REMEDIAL: "there is nobody responding to these so noreply is the
+correct point."** He gave it AFTER I told him the mailer was broken and then falsified my own claim in
+front of him. **So the hold was discharged, not overridden** -- it was never a refusal of his word,
+only a refusal to execute a sovereign authorization obtained on a premise we had since destroyed.
+⛔ **"ALL of these functions"** -- WIDER than the two senders I named. The census is the criterion and
+it must print its denominator; a census of two where he said all is not an answer.
+⛔ **THE REPOINT FIXES NOTHING SECURITY-WISE AND THE COMMIT MUST SAY SO.** The
+`opalinvest-auth-permissions` FromAddress condition is defeated by a second UNCONDITIONED
+`ses-send-email` Allow on the same role. If the commit implies the sender restriction now holds, it
+buries the broken control under a resolved symptom -- the precise false confidence this thread nearly
+shipped. Executed as `D12_PLATFORM_OPS.W2-SITEZ` @`5486c79a07`.
+
+### CALL 2 -- HE REJECTED BOTH OPTIONS I OFFERED
+
+Ruled: **a NAMED PILOT** -- "test it with a few people first, including myself."
+Not a client rollout, and **NOT WS-3-gated**, which was my recommendation. My rec was to wait for
+remembered-device because every pilot user is otherwise challenged on EVERY login -- the thing he
+himself called *"a little obnoxious."* **A small named cohort answers that objection in a way a full
+rollout would not, so his call is coherent and mine was not the only sound reading.** Pilot users will
+still feel per-login challenges until WS-3 ships; that cost is accepted, not overlooked.
+⚠ **THE COHORT IS NOT NAMED AND MUST NOT BE INFERRED.** No account beyond his own is enabled until he
+names them. Measured at the time of ruling: `mfaEnabled` TRUE on exactly **1 of 48** accounts.
+
+### ⚠ MEASURED AND TOLD TO HIM BEFORE HE ATTEMPTS IT
+
+*"I want to try logging in and seeing that MFA actually works."*
+**HIS REAL ACCOUNT HAS MFA ENABLED AND HAS NEVER BEEN CHALLENGED.** Exactly ONE account has ever
+produced an `mfa_challenge_issued` event -- hash `ab433ad547d5` -- and that was the **deleted test
+account**, proven by both emails being addressed *"Hi D12 MFA Test"*. **W1-3's end-to-end exercise was
+that account, not his.**
+>> So his login is a FIRST EXERCISE, not a re-confirmation, and a failure must be read that way. <<
+State verified ready: active, `mfaEnabled` true, `mfaChannel` email, `mustChangePassword` false.
+Fallback given: do NOT use password reset as the escape hatch (his record carries the stale February
+token traced earlier) -- MFA is one field and can be turned off in seconds.
+
+### MY THREE LANE RULINGS -- decided under my own gate, NOT put to him
+
+1. **`getUserPKByEmail` (`db.ts:66-84`) uses `Limit: 1` on a GSI with no uniqueness constraint.**
+   Duplicate emails resolve NONDETERMINISTICALLY and every auth path routes through it. **The only
+   real bug from the trace.** Surface the ambiguity; a second match is a data-integrity event.
+2. **No test account may use a live human email address.** Cost tonight: two real emails to the
+   principal, indistinguishable from production but for a greeting, and a false bug report.
+3. **An endpoint sweep must not fire `/auth/forgot-password` against a live sender.** W1-6 was a
+   correct test with a real outbound side effect.
+⭐ None of the three is a criticism of W1 -- W1-6 found exactly what it was built to find.
