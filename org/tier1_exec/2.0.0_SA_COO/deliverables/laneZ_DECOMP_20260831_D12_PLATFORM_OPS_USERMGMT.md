@@ -46,6 +46,7 @@ the LABELS only; every finding's SUBSTANCE is intact.**
 | **F-4** | `ack_messages` MISREPORTS delivery state — **both directions**: false-POSITIVE (accepts a cross-recipient stamp with a success receipt, `1.0.0_SA_CTO~Z` 17610) **and** false-NEGATIVE (reports FAILED on a write that landed, 17822). **The two feed each other** — a false-negative invites the retry-from-memory that forges the false-positive. | `1.0.0_SA_CTO~Z` 17610/17822 | ⛔ OPEN, **no owner** |
 | **F-5** | Resend / `W3-2` claims a DELIVERY the API does not promise | `1.0.0_SA_CTO~Z` 17729 | largely met by `0.7.0_AE_CloudOps~Z`'s W3-2 "issuance-not-delivery" label; OPEN |
 | **F-6** | `mfa.ts:95` asserts an IMPOSSIBILITY that is false — a 6-digit code is offline-recoverable from `(salt, codeHash)` | this decomp (below) | ⛔ OPEN, **no owner**; remediation SEQUENCED behind DE3 |
+| **F-7** | an interactive-login MFA gate can be enrolled on a NON-INTERACTIVE service account (`svc-bbgtml@opalinvest.com`, runs Andrew's daily Bloomberg dashboard), silently killing the pipeline — and the schema cannot mark an account non-interactive | this decomp (below) | ⛔ OPEN; design-gap owner `1.0.0_SA_CTO~Z` (WS-4); **binds the cohort call** |
 
 ⚠ **NOT F-numbered, tracked elsewhere so nobody mints a duplicate:** the **false-UI-copy** finding
 (*"nothing is sent until you do"* contradicted by the backend) lives in **W3 §3b/§3c**, not here.
@@ -734,3 +735,72 @@ The shipped prompt told a user *"nothing is sent until you do"* while the backen
 Sits beside **F-1** (unconditioned SES allow, open, no owner) and the read-access surface of
 `opal-portal-auth-mfa`. `3.0.0_SA_CVO~Z` asked for an owner; none assigned. **A cross-cutting security
 finding, not a D12 cell.**
+
+---
+
+# FINDING F-7 - 2026-09-01 ~03:3xZ: AN MFA GATE CAN BE ENROLLED ON A **SERVICE ACCOUNT** THAT RUNS ANDREW'S BLOOMBERG DASHBOARD - AND THE SAFETY INVARIANT WAS NOT MECE, SO IT WOULD READ "SAFE" WHILE THE PIPELINE IS DEAD
+
+**Found by `0.7.0_AE_CloudOps~Z` (17832) running Act B's own precondition; ruled by `1.0.0_SA_CTO~Z`
+(17846) and `3.0.0_SA_CVO~Z` (17852); the account measurement is this seat's.**
+>> ⭐ **THE FIRST FINDING TONIGHT THAT BREAKS A PRODUCT ANDREW LOOKS AT, not a test surface.** <<
+
+## THE FINDING
+`infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py:70` -- a **service account**,
+`svc-bbgtml@opalinvest.com`, logs in through `/auth/login` (`read_only=False`) to fire the **daily
+Bloomberg PKL refresh -- Andrew's model-portfolio dashboard.**
+>> ⛔ **ENROLL THAT ACCOUNT IN MFA AND THE REFRESH STOPS.** `/auth/login` returns `mfaRequired` with no
+   token, a code is emailed to a mailbox no human reads, the pipeline gets no session, the dashboard
+   silently goes stale. **TRUE TODAY, with or without Act B** -- it is a property of MFA being ON for
+   that account, not of where the send happens. <<
+
+## THE MEASUREMENT - this seat, live, the question `3.0.0_SA_CVO~Z` routed to me
+```
+opal-users-v2 SK=PROFILE scan, no pagination:  49 rows, ScannedCount 76
+  svc-bbgtml@opalinvest.com   PRESENT   mfaEnabled=False   userType=None   -> IN the population
+  49 rows carry mfaEnabled  =  47 humans + 1 SERVICE (svc-bbgtml) + 1 FIXTURE (success@simulator)
+  gated: 1  -- the fixture ONLY
+```
+⛔ **SO "0 OF 48 GATED" SILENTLY INCLUDED A SERVICE ACCOUNT ALL NIGHT.** The denominator any cohort
+selection draws from **contains an account that must never enter the enrolled set**, and nothing in
+the row distinguishes it: `userType=None` (an ordinary user), and `userType=Dev` marks 5 HUMAN
+superadmins (Andrew/Alyssa/Yang/Michael/Austin) -- **so `userType` is NOT the human/non-human axis and
+must not be pressed into service as one.**
+
+## ⛔ THE SAFETY INVARIANT WAS NOT MECE - Rule 24, the uncovered member (`3.0.0_SA_CVO~Z`)
+The ruled reporting form was `HUMAN gated: 0 | FIXTURE gated: 1`, on *"no human can be locked out."*
+>> **A SERVICE ACCOUNT IS NEITHER HUMAN NOR FIXTURE.** If `svc-bbgtml` were gated, `HUMAN gated: 0`
+   would still read TRUE, **the invariant would report SAFE, and the Bloomberg pipeline would be
+   dead.** We declared the domain `{human, fixture}` because those were the two kinds in front of us
+   when the fixture was minted; **the third kind was always in the table.** <<
+✅ **CORRECTED FORM, now measured:** `HUMAN gated: 0 | SERVICE gated: 0 | FIXTURE gated: 1`. ⚠ **The
+`SERVICE` count is the one whose breakage is SILENT** -- a locked-out human complains in minutes; a
+locked-out pipeline fails at its next scheduled fire and nobody hears until a dashboard is stale.
+
+## ⛔ RULED - THE COHORT IS AN ALLOWLIST OF NAMED HUMANS (`1.0.0_SA_CTO~Z`)
+The naive guard *"enumerate the service accounts and exclude them"* is the **CLAUDE.md
+cross-firm-ban-list trap: an enumerated exclusion lapses silently the moment a name it does not list
+appears** -- and `svc-bbgtml` looks like an ordinary user.
+>> **Andrew's cohort must be an ALLOWLIST of specifically-named human accounts. NEVER "all", NEVER
+   "everyone except."** An allowlist cannot enroll a service account BY CONSTRUCTION -- it needs no
+   complete enumeration of the things to exclude, which is the enumeration we cannot guarantee. <<
+**COHORT VALIDATION, binding on whoever provisions enrolment:** every address is a named human Andrew
+listed; a cohort that arrives as a CATEGORY (*"all advisors", "all Devs"*) is REFUSED back to him for
+named expansion.
+
+## ⭐ AND IT REFRAMES ACT B's PRECONDITION TOWARD LESS WORK
+My W3 §3c required *"enumerate every consumer of `/auth/login` and print the denominator."* **MFA is
+PER ACCOUNT** -- a consumer only meets the `mfaRequired` branch if ITS OWN account is gated -- so:
+```
+Act B's blast radius  =  the set of MFA-ENABLED ACCOUNTS   (1 today: the fixture)
+                      NOT the set of /auth/login consumers
+```
+**Act B strands NOBODY today.** The precondition is not a caller enumeration; it is the enrolment rule
+above. ⭐ **But the wrong question found the right thing: `0.7.0_AE_CloudOps~Z` would not have found the
+service account without running the enumeration I asked for.** Recorded as a reframe, not a quiet
+replacement.
+
+## OWNERSHIP
+Design gap (a non-interactive marker + an enrolment guard that refuses to gate a marked account):
+**owner `1.0.0_SA_CTO~Z`, placed in WS-4's admin UI, raised NOT built.** Until it exists, the
+allowlist rule is the enforcement -- **procedure now, mechanism at WS-4.** The operational constraint
+(**no service account enrolled; `svc-bbgtml` by name**) binds the cohort call at Andrew NOW.
