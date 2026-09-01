@@ -61,10 +61,21 @@ Diamond**. Every outcome below sits under one of them.
 - ACCEPTANCE: landed-vs-requested with BOTH numbers; per-account `range_match` with the non-match
   count; criterion-3 before/after on the pinned prefix; the exact vendor-call count reporting **both**
   the data leg and the auth leg.
-- STATE: built, exercised, **ARMED AND UNFIRED**. The 00:00Z mint did NOT rotate — at 00:07:33Z the
-  secret still read `2026-08-31T00:03:47Z`. The session is **UNROTATED, not expired**: three data calls
-  succeeded at age 23.83 h, so this is positive evidence of life, not absence of failure. **Rotation
-  failure and expiry are different faults with different owners.**
+- STATE: built, exercised, **ARMED AND UNFIRED**.
+- ⛔ **CORRECTED 2026-09-01 00:3xZ — MY FIRST VERSION OF THIS LINE IMPLIED A ROTATION FAULT. THERE IS
+  NO FAULT.** `bd-49f-session-trigger` RAN ON TIME at `2026-09-01T00:00:18Z`, probed the cookie, found
+  it **POSITIVE-LIVE, and SKIPPED THE MINT BY DESIGN** — *"Lever A: cookie POSITIVE-live -> SKIP mint,
+  direct-invoke bd-49f-runner"*, then invoked, status 202, no error. **THE MINT IS CONDITIONAL, NOT
+  SCHEDULED-UNCONDITIONAL.**
+- POSITIVE CONTROL, same function, previous night: *"cookie NOT positive-live (probe negative) -> full
+  mint (fail-safe)"* — which is precisely why `LastChangedDate` reads `2026-08-31T00:03:47Z`. **Both
+  branches observed on consecutive nights in one log group.**
+- ⛔ **THEREFORE "WAIT FOR THE MINT" WAS WAITING FOR AN EVENT THE SYSTEM DELIBERATELY SUPPRESSES WHILE
+  THE SESSION IS HEALTHY.** W2's blocker is DISSOLVED, not weakened. The secret-not-changing observation
+  was TRUE; every implication drawn from it — mine included, in the first version of this document —
+  was FALSE.
+- ⚠ TRANSFERABLE: an absent event is not a failed event until you read the thing that would have
+  emitted it. Four seats carried "the mint did not fire" as a finding before one log stream was read.
 
 **D2-6 — every non-EXACT cell is explained or accepted.**
 - STATE: probed **n=8** (5 from P1, 3 from the spot check). **12 open calculation differences.**
