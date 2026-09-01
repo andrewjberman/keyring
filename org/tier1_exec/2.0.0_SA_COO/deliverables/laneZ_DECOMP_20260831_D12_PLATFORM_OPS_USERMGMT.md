@@ -571,7 +571,17 @@ Route-existence probes only: garbage 32-zero `challengeId`, code `000000`, and a
 ```
 **BYTE-IDENTICAL ON ALL THREE.** `/auth/mfa/verify` answering *"Invalid or expired code"* is the
 **handler's own** reply to a challenge id that does not exist - the route is deployed and running.
-And `/auth/mfa/send` 404 confirms **W3 Act A has not landed**, so `login()` still sends inside itself.
+
+⚠ **SUPERSEDED ~03:1xZ, AND THE EVIDENCE RETIRED BEFORE THE CLAIM DID.** This section originally read
+*"`/auth/mfa/send` 404 confirms W3 Act A has not landed, so `login()` still sends inside itself."*
+**W3 Act A shipped at `e96de00837` and the route now answers `200 {"success":true}`** - re-probed on
+my own instrument with `0.7.0_AE_CloudOps~Z`'s negative control adopted:
+`POST /auth/mfa/nosuchroute -> 404`, so the 200 is **that route replying, not a catch-all.**
+>> **`login()` may well still send -- but MY EVIDENCE FOR IT IS GONE, and a true claim standing on
+   retired evidence is not knowledge.** Act B's state now rests on `0.7.0_AE_CloudOps~Z`'s report
+   that it shipped Act A only. **It is not externally probeable while 0 accounts are gated**, because
+   the only observable difference is whether mail leaves on an MFA login. Stated rather than left to
+   read as though my probe still covers it. <<
 
 ### THE DISCRIMINATOR THAT MADE THE PROBE READABLE - two different 404s
 ```
