@@ -56,6 +56,54 @@ third — SCOPE CHANGE — is decided by *"does the PRD name this OUTCOME?"*
    amendment instead of on CTO as a PRD revision. **The loop degrades quietly rather than failing
    loudly**, which is the worst available failure mode. <<
 
+## Step F0 -- RE-ENTRY: when step 10 routes a SCOPE CHANGE back here
+
+⛔ **THIS IS NOT THE GREENFIELD PATH AND MUST NOT REFUSE THE CALLER.** Step 10 routes every
+`route=SCOPE_CHANGE` remediation row to `loop_target: 2` — **here**. That arrival has an EXISTING
+PRD, EXISTING outcomes and NO new brief, so the F1 refusal (*no brief, no phase*) would turn a
+correctly-routed finding into a dead end at the wrong seat.
+
+**WHAT ARRIVES** (`remediation_row.schema.json` @`c6c3627269`, agreed with `3.0.0_SA_CVO`):
+
+```
+  route         SCOPE_CHANGE          loop_target  2   (locked in a gate; never drifts)
+  outcome_ref   FWD-n                 <- WHICH outcome the world contradicted
+  remedy        what to do
+  id            {PROJECT}-S{n}        <- chains back to the investigation item, which carries:
+     spec_asserts   what the TO SAID
+     world_is       what the world TURNED OUT TO BE
+```
+
+>> **`spec_asserts` + `world_is` ARE THE PAYLOAD.** The pair is the whole argument that an outcome
+   was wrong: what we believed, and what reality did instead. Everything else is addressing. <<
+
+**HOW TO RE-ENTER — the brief is NOT re-read and NOT re-run:**
+
+1. **Read the named outcome only.** `outcome_ref` points at one `FWD-n`. **Do not re-derive the
+   list** — a scope change contests ONE outcome, and re-running Phase 0 over the whole endpoint
+   silently re-litigates outcomes nobody questioned.
+2. **Decide which of three things happened**, and say which:
+   - **the outcome was WRONG** → amend it in place, id unchanged.
+   - **the outcome was RIGHT and INCOMPLETE** → **add a new `FWD-n` at the next unused number.**
+     The contested one stays as it is.
+   - **the outcome is OBSOLETE** → retire it; **its number stays vacant forever** (see the id
+     contract above), because rows already cite it.
+3. **`ACCEPT` is re-tested, not inherited.** If `world_is` contradicted the outcome, the acceptance
+   line that let it read as met is the thing that failed. Rewrite it — **in plain English, no
+   technical language**, per F3.
+4. **The PRD edit is CTO's, same turn.** Nothing routes onward until the ENDPOINT section reflects
+   the change, because step 10 will read it back on the next round.
+
+⛔ **AND THE ONE THING RE-ENTRY MUST NEVER DO: silently shrink the endpoint.** Retiring the
+contested outcome is always the cheapest way to make a scope change go away, **and the seat doing
+the retiring is the seat the finding was against.** A retirement here states, in one line, what
+capability the project is no longer promising — **if that sentence is uncomfortable to write, the
+outcome was not obsolete.**
+
+⚠ **WHAT I DO NOT HOLD:** whether a scope change may arrive against an outcome that was never
+ratified by Andrew (emitted, never approved). The gate cannot tell. **Treat it as a normal re-entry
+and say on the record that the outcome was unratified** — do not use it as grounds to discard.
+
 ## Step F1 -- Read the BRIEF. Refuse without one.
 
 The input is the step-1 CRO brief (`docs/briefs/**`) or a topic naming one. Print the path, its
@@ -170,54 +218,6 @@ because step 10 reads it back to answer *"does the PRD name this outcome?"*
   paste and print the exact path and section title it belongs under. **Say plainly that it is NOT
   YET LANDED**, because an endpoint that lives only in a terminal is the carrier problem this whole
   spec exists to close.
-
-## Step F0 -- RE-ENTRY: when step 10 routes a SCOPE CHANGE back here
-
-⛔ **THIS IS NOT THE GREENFIELD PATH AND MUST NOT REFUSE THE CALLER.** Step 10 routes every
-`route=SCOPE_CHANGE` remediation row to `loop_target: 2` — **here**. That arrival has an EXISTING
-PRD, EXISTING outcomes and NO new brief, so the F1 refusal (*no brief, no phase*) would turn a
-correctly-routed finding into a dead end at the wrong seat.
-
-**WHAT ARRIVES** (`remediation_row.schema.json` @`c6c3627269`, agreed with `3.0.0_SA_CVO`):
-
-```
-  route         SCOPE_CHANGE          loop_target  2   (locked in a gate; never drifts)
-  outcome_ref   FWD-n                 <- WHICH outcome the world contradicted
-  remedy        what to do
-  id            {PROJECT}-S{n}        <- chains back to the investigation item, which carries:
-     spec_asserts   what the TO SAID
-     world_is       what the world TURNED OUT TO BE
-```
-
->> **`spec_asserts` + `world_is` ARE THE PAYLOAD.** The pair is the whole argument that an outcome
-   was wrong: what we believed, and what reality did instead. Everything else is addressing. <<
-
-**HOW TO RE-ENTER — the brief is NOT re-read and NOT re-run:**
-
-1. **Read the named outcome only.** `outcome_ref` points at one `FWD-n`. **Do not re-derive the
-   list** — a scope change contests ONE outcome, and re-running Phase 0 over the whole endpoint
-   silently re-litigates outcomes nobody questioned.
-2. **Decide which of three things happened**, and say which:
-   - **the outcome was WRONG** → amend it in place, id unchanged.
-   - **the outcome was RIGHT and INCOMPLETE** → **add a new `FWD-n` at the next unused number.**
-     The contested one stays as it is.
-   - **the outcome is OBSOLETE** → retire it; **its number stays vacant forever** (see the id
-     contract above), because rows already cite it.
-3. **`ACCEPT` is re-tested, not inherited.** If `world_is` contradicted the outcome, the acceptance
-   line that let it read as met is the thing that failed. Rewrite it — **in plain English, no
-   technical language**, per F3.
-4. **The PRD edit is CTO's, same turn.** Nothing routes onward until the ENDPOINT section reflects
-   the change, because step 10 will read it back on the next round.
-
-⛔ **AND THE ONE THING RE-ENTRY MUST NEVER DO: silently shrink the endpoint.** Retiring the
-contested outcome is always the cheapest way to make a scope change go away, **and the seat doing
-the retiring is the seat the finding was against.** A retirement here states, in one line, what
-capability the project is no longer promising — **if that sentence is uncomfortable to write, the
-outcome was not obsolete.**
-
-⚠ **WHAT I DO NOT HOLD:** whether a scope change may arrive against an outcome that was never
-ratified by Andrew (emitted, never approved). The gate cannot tell. **Treat it as a normal re-entry
-and say on the record that the outcome was unratified** — do not use it as grounds to discard.
 
 ## Step F5 -- Provenance, mandatory
 
