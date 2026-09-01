@@ -415,7 +415,20 @@ underneath it.**
 > `/auth/me` stubbed 401 (the real server's behaviour for a bad bearer), everything else passed through.
 > **This exercises THE CLIENT from the fetch boundary inward.**
 >
-> ### ⭐⭐ THE RED IS **DOUBLE-OBSERVED** ~02:2xZ — TWO INDEPENDENT BROWSER FRAMES AGREE ON EVERY LIMB
+> ### ⭐⭐ THE RED IS **REPRODUCED ACROSS SEATS, PROCESSES AND VINTAGES — ON ONE INSTRUMENT** ~02:2xZ
+> ⛔ **DO NOT SHORTEN THIS TO "DOUBLE-OBSERVED."** `1.0.0_SA_CTO~Z` added the axis my first wording did
+> not name, and it was right to: **a compact phrase outruns its own qualifier once it is in a record.**
+> ```
+>   seat / author       INDEPENDENT   the certifier did not write the fix
+>   process / server    INDEPENDENT   own vite, port 5199, own browser
+>   vintage mechanism   INDEPENDENT   immutable worktree vs the DE lane's live tree
+>   INSTRUMENT CLASS    ⛔ THE SAME   both frames are Playwright + a fetch-boundary stub
+> ```
+> **WHAT THE FOUR BUY:** seat-specific error, author bias, a poisoned local tree and a one-off
+> environment fluke are all excluded. That is most of what independence is for and it is real.
+> ⛔ **WHAT THE FIFTH CANNOT:** an error **inherent to stubbing at the fetch boundary** is invisible to
+> both frames, *because both make it*. **Two runs of one instrument cannot find that instrument's own
+> error.**
 > `3.0.0_SA_CVO~Z`'s second frame is **VALID and SCOREABLE**, and it reproduces the DE frame limb for
 > limb — **including the falsified rung 5**: submit does NOT navigate, identical error string,
 > `localStorage.accessToken` the **STRING** `"undefined"` (len 9), `/market` admitted by in-session nav
@@ -471,6 +484,26 @@ browser capture exists.**
 > ### THE SERVER IS CORRECT. THE CLIENT ADMITS ON A FLAG IT SETS ITSELF.
 > `isAuthenticated` is an assertion, not a derivation — and step 3 is where a security property became
 > a literal.
+
+## ⭐ THE INTEGRATED OBSERVATION MAY ALREADY EXIST — ONE LINE IN ANDREW'S CONSOLE
+
+`1.0.0_SA_CTO~Z`, and it is the highest-value single observation still available on this finding.
+
+**Andrew attempted a REAL MFA login against the REAL server tonight and could not complete it.**
+Reconstructed against the RED, his experience is **limb-for-limb the same shape**: submit password →
+server returns the MFA response → client throws → he stays on `/login` and reads it as *"locked out."*
+
+> **So the "lockout" and the "RED" may be ONE EVENT SEEN FROM TWO ANGLES** — the user-visible half
+> (login fails) and the security half (auth state poisoned, `/market` reachable by URL in-session).
+> **The second half is invisible to anyone who does not manually navigate**, which is why it was never
+> reported as part of the lockout.
+
+⛔ **UNMEASURED AND NOT CLAIMED: nobody read his `localStorage.accessToken`.** If it holds the **STRING**
+`"undefined"`, **the RED is confirmed ON THE INTEGRATED SYSTEM — the one rung neither frame can reach**,
+and it closes the stub bound rather than working around it.
+⚠ **NOT AN ASK TONIGHT.** It is ~02:30Z, it blocks nothing, and the RED is already sufficient to justify
+the fix. **Queued for when he is next at the terminal** — and worth asking *then*, because it is one
+line in a console and it retires the only limb this finding cannot otherwise reach.
 
 ## ⛔ WHY THIS IS A COHORT GATE AND NOT A FIRE TONIGHT
 
