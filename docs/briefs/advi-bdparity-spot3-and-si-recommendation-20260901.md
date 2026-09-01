@@ -46,6 +46,25 @@ ranges matching exactly -- so it is not our missing days and not a window disagr
 calculation difference, the same class as the eleven already open at P3. Two of the three accounts agree
 with BD to **nine millionths of a basis point** on all three periods.
 
+⭐ **LOCALIZED 2026-09-01T01:4xZ, and the localization is free because the periods NEST.**
+`1Y > YTD > QTD`, so a defect in anything the three SHARE moves all three together. Only 1Y moved:
+```
+  QTD  2026-07-01 .. 2026-08-28   EXACT   +0.008 bp
+  YTD  2026-01-01 .. 2026-08-28   EXACT   -0.407 bp
+  1Y   2025-08-28 .. 2026-08-28   LARGE  -18.722 bp
+  => the entire disagreement is introduced in 1Y MINUS YTD = 2025-08-28 .. 2025-12-31
+```
+**That also clears the shared corpus**: 270 of the 271 partitions under these cells come from ONE
+producer run (the 2026-08-30 rebuild) and the 271st is the 12:47Z re-touch of the terminal day. **A
+defect in either shared input would move QTD and YTD too. Neither did.**
+**And the segment is NOT a coverage artifact on either side** -- measured: our side carries **87 of 87
+days `status=OK`, every one with a nonzero return and positive BMV**; BD's own calendar-2025 row
+excludes ~41 days (`daysHeld=210 / periodLength=251`), but those fall in early 2025, **before this
+window opens**. So both sides fully cover the span they disagree about.
+>> **For P3: this is an 87-trading-day segment, 2025-08-28 to 2025-12-31, fully covered by both
+   sides, carrying the whole -18.7 bp. That is a methodology difference with a date range on it, not
+   "a difference somewhere in 1Y."** <<
+
 **A distribution, never a rate.** A single "parity rate" over nine cells would report the opposite of
 what the data says, exactly as it did at P1.
 
