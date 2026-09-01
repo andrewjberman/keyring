@@ -5,7 +5,7 @@
   "directive": "D12",
   "name": "Phone/SMS OTP for the client portal, delivered ALL-AWS via AWS End User Messaging SMS -- a second delivery channel for the login code, alongside the email channel that shipped 2026-09-01.",
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-01",
   "pods": [],
   "leads": [
