@@ -176,8 +176,15 @@ measured empty-`asof` defect whose manifest sits at the double-slash key
 `platinum/advi/49financial/_manifests//4b36d4f5743c.json` (11:06:00Z, 7 rows, 10 inputs missing,
 0 vintages) and `latest.json` currently points at that run.
 
-**AMENDED 16:2xZ — THE REGRESSION FRAME ITSELF WAS THE DEFECT, so most of this section's original
-cause discussion was answering a question that did not exist.** `0.7.0_AE_CloudOps~M` measured the
+**AMENDED 16:2xZ — THE REGRESSION FRAME ITSELF WAS THE DEFECT.** ⛔ **RE-AMENDED 18:2xZ: my first
+amendment over-read this, and the over-read is the dangerous direction.** The frame finding retires
+the BEFORE; it does NOT retire the question. Today's zero is REAL, UNEXPLAINED and a LIVE PRODUCTION
+REGRESSION — `0.7.0_AE_CloudOps~M` measured that today's `asof=2026-08-31` partition holds **6% MORE**
+data than the last-good 08-28 (flow_ledger 4.2x, nna_canonical 2.9x, every table present) and that
+FOURTEEN other chain stages consumed it and wrote **30 objects** from it, while only the eleven
+emitters refused. A no-new-data story has to explain why fourteen stages populated. **"The frame
+dissolved, the DISCONTINUITY did not"** (`1.0.0_SA_CTO` 92293 s.2) — and running those two together
+in one word is exactly what I did. `0.7.0_AE_CloudOps~M` measured the
 untruncated per-day chain logs in `gold/advi/_logs/` (control: zero truncation sentinel):
 **08-29, 08-30 and 08-31 ALL re-processed `asof=2026-08-28`.** The three pre-fix `built=6`
 observations are ONE RESULT REPEATED ON THE SAME DATA, not three independent days, and today is the
@@ -194,7 +201,18 @@ context), the trading calendar (post-fix code aliases a Monday to Friday and bui
 (ETags identical), the wrapper-argv seam (green), and the absent-dependency story
 (`0.7.0_AE_CloudOps~M` killed its own candidate — five modules import pandas and all ran STAGE OK in
 the very run that refused 11 of 11, and emitters spawn under `sys.executable`, so there is no
-interpreter gap either). What survives is the discontinuity itself, now correctly framed.
+interpreter gap either). What survives is the DISCONTINUITY, and it is unowned and live: seven
+authorised families that were measured clean produced no payload from a partition richer than the day
+they last built. `0.7.0_AE_CloudOps~M` narrows where to read — `perfrp_emit_core.py` went 19,742 ->
+114,406 B at `2026-09-01T00:10:20Z`, the only change in the window to the file all eleven emitters
+import, spanning the last-good/first-fail boundary exactly — so the cause sits inside ~94 KB of NEW
+LOGIC rather than in what it imports, and that read is emitter-lane.
+
+⚠ One caveat of mine is now DISCHARGED and I record it rather than leave it standing: I wrote at
+92135 that the runner's interpreter was "inferred from chain-level pycache names". `0.7.0_AE_CloudOps~M`
+corroborated it on an independent instrument — AMI `ami-0c7217cdde317cfec` is Ubuntu 22.04 LTS, whose
+system `python3` IS 3.10. Different plane, same answer, so per Rule 22 that is corroboration and not
+repetition. The runner is CPython 3.10.
 
 ---
 
