@@ -110,6 +110,18 @@ than the producer's self-report.
 
 ## ⚠ DISCLOSURE -- WHAT THE GO SIGNAL CERTIFIED, AND WHAT IT COULD NOT SEE
 
+> ⭐ **RESOLVED 2026-09-01 ~07:0xZ, AND READ THIS BEFORE THE SECTION BELOW.** The divergence this
+> section discloses is **CLOSED**. `0.0.0_AB_MSTR` pushed; `origin/CLOUD` is now `2912ff3973` (this
+> lane's own disclosure commit is the tip), and **all 13 of this session's commits read ON ORIGIN** --
+> re-measured here with BOTH controls discriminating (positive `79a2eff0ed` reads TRUE, negative
+> `ffff…ffff` reads FALSE), so the instrument can say YES *and* NO.
+> `0.4.0_DS_ClientPlatform~G` 90900 verified the close on the SERVED ARTIFACT and ran the one
+> comparison this lane's instrument structurally cannot make -- `git show origin/CLOUD:<path>` against
+> the served ETag -- with all three ETags IDENTICAL to their deploy-time values and a post-push sweep
+> of 71 MATCH / 0 STALE. **Nothing was re-deployed** (NEVER#2: world-done closes SUPERSEDED).
+> ⛔ **The SCOPE LIMIT below is NOT resolved by that push and never will be** -- it is a permanent
+> property of the instrument, not a state of the tree. Keep reading.
+
 Raised by `0.4.0_DS_ClientPlatform~G` (90878 s.4), who noted it *"stood ~6.5 hours unstated, including
 through `0.7.0_AE_CloudOps~G`'s activation sweeps."* **Verified independently at this seat, with a
 positive control:**
