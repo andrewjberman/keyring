@@ -45,6 +45,7 @@ Read-only, deterministic, ASCII-only.
 from __future__ import annotations
 
 import ast
+import bisect
 import os
 import re
 import sys
@@ -284,6 +285,201 @@ def _shape(path, src, lines):
     s = _sections_generic(lines)
     return (s, "top-level-keys") if s else ([{"name": os.path.basename(path), "kind": "file",
                                               "start": 1, "end": len(lines)}], "whole-file")
+
+
+# --------------------------------------------------------------------------- ENUMERATE (--enumerate)
+# Andrew-direct 2026-09-01: "It should enumerate ... the same efficacy as comp-find just at the
+# file-content level." comp-find answers WHERE ACROSS THE REPO; this answers WHERE INSIDE ONE FILE.
+#
+# THE BAND SET IS A SCHEMA (CLAUDE.md Rule 24 TAXONOMY LAW), recorded here in full:
+#
+#   AXIS (one, and only one): WHAT KIND OF REGION does this hit sit in? Not importance, not
+#   recency, not salience -- those are other axes and the digest already serves them. Mixing any
+#   of them in here would be the intent-coherence defect.
+#
+#   (i) MECE over a DECLARED domain. Domain = every line-level occurrence of the pattern in ONE
+#       file. Bands are evaluated FIRST-MATCH-WINS in the order listed per backend, so every hit
+#       lands in exactly one band and the bands SUM to the total -- asserted by the battery, not
+#       asserted here.
+#   (ii) SAME GRAIN. Every band is a LINE-level region type. No band is a file or a symbol.
+#   (iii) INTENT COHERENCE. One question: where does this occurrence live?
+#   (iv) STATE COHERENCE -- which bands one remedy does NOT move:
+#         * Editing a docstring moves DOCSTRING only.
+#         * Renaming a symbol moves DEF and CODE together, and moves COMMENT only if a human
+#           also updated the prose -- which is precisely the drift this banding makes visible.
+#         * Reformatting (black/ruff) can move CODE<->DEF boundaries; it moves neither DOCSTRING
+#           nor COMMENT counts.
+#
+# BANDS ARE BACKEND-DEPENDENT AND THAT IS DELIBERATE. A python AST can distinguish a docstring
+# from a comment; a top-level-keys scan of a .json cannot, and pretending otherwise would be a
+# band that CANNOT FAIL. Where the backend cannot type regions, we emit ONE band (UNBANDED) and
+# say UNAVAILABLE -- never four rows of 0, which would claim the distinction was tested.
+_BANDS_PY = ("DOCSTRING", "COMMENT", "DEF", "CODE")
+_BANDS_MD = ("HEADING", "FENCE", "PROSE")
+_DEFLINE_RX = re.compile(r"^\s*(?:async\s+)?(?:def|class)\s")
+_FENCE_RX = re.compile(r"^\s*(?:```|~~~)")
+# Value delimiters for the WHOLE-VALUE test. A "value" is the maximal run of characters around the
+# match that is not broken by one of these. Chosen so a JSON string value, a bare token and a YAML
+# scalar all resolve the same way.
+_VALUE_DELIM = set("\"',[]{}()<>|= \t\r\n")
+
+
+def _band_ctx(how, src, lines):
+    """Precompute, ONCE, whatever the backend needs to type a line. Returns (bandset, ctx)."""
+    if how == "python-ast":
+        _sections, docs, _defs = _scan_tree(src)
+        doc_lines = set()
+        for a, b in docs:
+            doc_lines.update(range(a, b + 1))
+        return _BANDS_PY, {"docs": doc_lines}
+    if how == "markdown-headings":
+        fence, inside = set(), False
+        for i, ln in enumerate(lines, 1):
+            if _FENCE_RX.match(ln):
+                fence.add(i)
+                inside = not inside
+                continue
+            if inside:
+                fence.add(i)
+        return _BANDS_MD, {"fence": fence}
+    return None, {}
+
+
+def _band_of(lineno, line, bandset, ctx):
+    """FIRST-MATCH-WINS -- the ordering IS the MECE guarantee, so it is written as one chain.
+
+    DOCSTRING is tested BEFORE COMMENT on purpose: a line inside a docstring that happens to begin
+    with '#' is prose, not a comment, and the reverse order would silently mis-band every hashed
+    line in every module docstring in the estate."""
+    if bandset is _BANDS_PY:
+        if lineno in ctx["docs"]:
+            return "DOCSTRING"
+        if line.lstrip().startswith("#"):
+            return "COMMENT"
+        if _DEFLINE_RX.match(line):
+            return "DEF"
+        return "CODE"
+    if bandset is _BANDS_MD:
+        if lineno in ctx["fence"]:
+            return "FENCE"
+        if _MD_HEAD.match(line) or _MD_BOLD.match(line):
+            return "HEADING"
+        return "PROSE"
+    return "UNBANDED"
+
+
+def _enclosing_value(src, start, end):
+    """The token this code CONSIDERS to be the value around a match.
+
+    WARN: WHY THIS IS RETURNED AND PRINTED, NOT JUST TESTED: "whole-value vs substring" needs a notion
+    of where a value ENDS, and that is a DELIMITER JUDGEMENT, not a token fact. `:` is deliberately
+    NOT a delimiter, so a compound id reads as ONE value -- which is what makes the anchor arm
+    correct on the measured specimen. The same choice makes a YAML key `name:` read as a SUBSTRING.
+    That trade pulls opposite ways depending on the file, so the rule must not be trusted silently:
+    printing the enclosing token makes a wrong delimiter call FALSIFIABLE ON SIGHT instead of
+    buried in a label the reader cannot check."""
+    i = start
+    while i > 0 and src[i - 1] not in _VALUE_DELIM:
+        i -= 1
+    j = end
+    while j < len(src) and src[j] not in _VALUE_DELIM:
+        j += 1
+    return src[i:j]
+
+
+def _whole_value(src, start, end):
+    """Is the match the ENTIRE value, or a fragment of a longer one?
+
+    NOTE: THE HIGHEST-VALUE LINE IN THIS MODE, paid for by a measured incident -- a control
+    using rel.startswith('UNMAPPED-RELATIONSHIP') reported 0 while 132 rows carried values reading
+    UNLABELLED-RELATIONSHIP:UNMAPPED-RELATIONSHIP:0017633210. Anchor-sensitivity is the file-grain
+    twin of comp-find's case/substring trap: the count is right and the CLAIM is wrong."""
+    i = start
+    while i > 0 and src[i - 1] not in _VALUE_DELIM:
+        i -= 1
+    j = end
+    while j < len(src) and src[j] not in _VALUE_DELIM:
+        j += 1
+    return src[i:j] == src[start:end]
+
+
+def _enumerate(path, src, lines, sections, how, pattern, limit, page):
+    """comp-find's three earned properties at file grain: a zero carries its denominator, bands
+    are graded, nothing truncates silently."""
+    try:
+        rx = re.compile(pattern)
+    except re.error as e:
+        print("comp-read: ERROR: bad --enumerate pattern: %s" % e)
+        return 2
+    starts, off = [], 0
+    for ln in lines:
+        starts.append(off)
+        off += len(ln) + 1
+    bandset, ctx = _band_ctx(how, src, lines)
+    counts = {b: 0 for b in (bandset or ("UNBANDED",))}
+    hits, whole, sub, enclosing = [], 0, 0, []
+    for m in rx.finditer(src):
+        i = bisect.bisect_right(starts, m.start()) - 1
+        if i < 0:
+            i = 0
+        lineno = i + 1
+        line = lines[i] if i < len(lines) else ""
+        band = _band_of(lineno, line, bandset, ctx)
+        counts[band] = counts.get(band, 0) + 1
+        if _whole_value(src, m.start(), m.end()):
+            whole += 1
+        else:
+            sub += 1
+            tok = _enclosing_value(src, m.start(), m.end())
+            if len(enclosing) < 3 and tok not in enclosing:
+                enclosing.append(tok)
+        hits.append((lineno, band, line.strip()[:160]))
+    total = len(hits)
+
+    print("comp-read: %s" % path)
+    print("  %d lines | %d section(s) via %s | enumerate: %r"
+          % (len(lines), len(sections), how, pattern))
+    print()
+    print("  ENUMERATE: %d hit(s) across %d lines / %d section(s) scanned"
+          % (total, len(lines), len(sections)))
+    print("    whole-value matches: %d   |   substring matches: %d" % (whole, sub))
+    if enclosing:
+        # The delimiter rule is a JUDGEMENT. Show what it treated as the value so a wrong call is
+        # visible rather than trusted -- ':' is not a delimiter, so a compound id stays one value.
+        print("    value boundary = whitespace/quote/bracket/comma/equals (NOT ':' or '-')")
+        for t in enclosing:
+            print("      substring inside: %s" % (t[:96] + ("..." if len(t) > 96 else "")))
+    if total and whole == 0 and sub:
+        print("    WARN: every hit is a FRAGMENT of a longer value. An anchored probe")
+        print("          (startswith / == / fullmatch) would report ZERO against this file.")
+    if bandset:
+        print("    BANDS (sum to %d):" % total)
+        for b in bandset:
+            print("      %-11s %d" % (b, counts.get(b, 0)))
+    else:
+        print("    BANDS: UNAVAILABLE for this backend (%s) -- region typing needs a parsed" % how)
+        print("           structure this file does not provide. ONE band is printed rather than")
+        print("           typed rows of 0, which would claim the distinction was tested.")
+        print("      %-11s %d" % ("UNBANDED", total))
+    print()
+    if not total:
+        print("  0 hit(s). THE DENOMINATOR ABOVE IS THE POINT -- this file WAS scanned and the")
+        print("  pattern is absent from it. That is a different claim from silence, and from")
+        print("  'the wrong file was scanned'.")
+        return 0
+    pages = (total + limit - 1) // limit
+    page = max(1, min(page, pages))
+    lo = (page - 1) * limit
+    shown = hits[lo:lo + limit]
+    print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, len(shown), total))
+    for lineno, band, text in shown:
+        print("    %6d  %-9s %s" % (lineno, band, text))
+    if pages > 1:
+        rest = total - len(shown)
+        print()
+        print("  MORE: %d hit(s) not shown. Next: --page %d   (a PAGE IS NOT AN ANSWER)"
+              % (rest, min(page + 1, pages)))
+    return 0
 
 
 # --------------------------------------------------------------------------- SALIENCE (BM25-lite)
@@ -541,6 +737,11 @@ def main() -> int:
     argv = sys.argv[1:]
     if not argv or argv[0] in ("-h", "--help"):
         print("comp-read <file> [--for \"<question>\"] [--at LINE] [--top N] [--all-quals]")
+        print("comp-read <file> --enumerate '<regex>' [--limit N] [--page N]")
+        print("  --enumerate is a DISTINCT MODE, not part of the digest: where does this token")
+        print("  occur in this file, how many times, and in what KIND of region. Prints its")
+        print("  denominator, grades hits into bands, and reports whole-value vs substring.")
+        print("  SINGLE FILE ONLY -- for a corpus or a pathspec the answer is comp-find.")
         print("  Shows the file's SHAPE, the regions salient to your question (tagged")
         print("  AUTHORITATIVE vs DESCRIPTIVE), every QUALIFIER that limits/negates/corrects a")
         print("  nearby claim, intra-file CONTRADICTIONS, and an UNREAD LEDGER.")
@@ -549,6 +750,7 @@ def main() -> int:
 
     t0 = time.perf_counter()
     question, at_line, top, all_quals = "", None, 6, False
+    enum_pat, enum_limit, enum_page = None, 40, 1
     hud_mode = False
     positional = []
     i = 0
@@ -563,6 +765,15 @@ def main() -> int:
         elif a == "--top":
             i += 1
             top = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 6
+        elif a == "--enumerate":
+            i += 1
+            enum_pat = argv[i] if i < len(argv) else ""
+        elif a == "--limit":
+            i += 1
+            enum_limit = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 40
+        elif a == "--page":
+            i += 1
+            enum_page = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 1
         elif a == "--all-quals":
             all_quals = True
         elif a == "--hud":
@@ -583,6 +794,14 @@ def main() -> int:
     src = _read(full)
     lines = src.splitlines()
     sections, how = _shape(full, src, lines)
+
+    # ---- ENUMERATE MODE: a DISTINCT mode, and it RETURNS before any digest panel renders.
+    # Rule 24 (iii): enumeration and summarisation are different intents on different axes. It
+    # also has a LIVE CONSUMER -- comp-adversary's stage-4 packet shells out to the default
+    # digest, so folding enumeration into that output would silently alter every
+    # validation_context_declaration the estate emits.
+    if enum_pat is not None:
+        return _enumerate(path, src, lines, sections, how, enum_pat, enum_limit, enum_page)
     doc_ranges = _doc_ranges(src) if full.endswith(".py") else []
     _line_toks = [_toks(ln) for ln in lines]
     scores = _score_sections(sections, lines, question, _line_toks) if question else {}
