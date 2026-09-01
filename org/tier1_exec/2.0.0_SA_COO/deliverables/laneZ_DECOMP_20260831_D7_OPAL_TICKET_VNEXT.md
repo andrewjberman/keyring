@@ -23,21 +23,30 @@ ruled; the cells are complete and will not need re-derivation when that happens.
 **Also not done here:** no alarm, monitor, notifier or scheduled send is designed, proposed or costed.
 See CELL-5.3.
 
+⚠ **SUPERSEDED IN PART BY AMENDMENT 1 (bottom of file) — READ IT BEFORE ACTING ON THIS SECTION.**
+Andrew ruled ~23:15Z @`efcfa8cc5b`: **D7 IS PLACED ON SITE Z, TOs ARE CUTTABLE, and CELL 5.3's
+reminder is UNGATED — build it.** The no-placement constraint above is discharged **for D12 and D7
+only**. ⛔ The reminder was lifted **BY NAME**: GLOBALALARM stands for everything else.
+
 ---
 
 ## 1. THE CELLS
 
 Status vocabulary — one axis, *"what does this cell need before it can be executed?"*:
-`READY` (dependencies met, wants only staffing) · `DEP-BLOCKED` (waits on a named cell) ·
+`READY` — ⛔ **READ AS "READY WHEN D7 RESUMES", NOT "AVAILABLE TO START": D7 IS PARKED BEHIND D12 (Andrew-direct ~23:5xZ, *"D12 first."* — see AMENDMENT 2).** Dependencies met; wants a seat that does not exist and must not be created · `DEP-BLOCKED` (waits on a named cell) ·
 `ANDREW-BLOCKED` (waits on a sovereign word; no agent can clear it) · `QUESTION` (the deliverable is
 an answer, not a build).
+
+> ¹ ⛔ **EVERY `READY` ROW BELOW IS PARKED.** Andrew-direct ~23:5xZ, verbatim and entire: **"D12
+> first."** D7 sits behind D12; **no TO is cut and no lane is seated for any cell in this file.**
+> `READY` records that a cell's dependencies are met — it does **not** mean start it. See AMENDMENT 2.
 
 ### WS-1 — Storage architecture read + the ruling · **NO OTHER CELL WRITES A BYTE BEFORE THIS**
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **1.1** | The ticket journey written end-to-end **as it IS**: for ONE real ticket, every store its data touches and who may read each. Descriptive only. | AE (+DS for the table read) | — | **READY** |
-| **1.2** | The **cross-firm separation** read: for each store 1.1 names, what today enforces firm separation — bucket-scoped Deny, key-prefix + IAM condition, or nothing. Report the **enumeration** behind each guard. | AE | 1.1 | **READY** |
+| **1.1** | The ticket journey written end-to-end **as it IS**: for ONE real ticket, every store its data touches and who may read each. Descriptive only. | AE (+DS for the table read) | — | **READY**¹ |
+| **1.2** | The **cross-firm separation** read: for each store 1.1 names, what today enforces firm separation — bucket-scoped Deny, key-prefix + IAM condition, or nothing. Report the **enumeration** behind each guard. | AE | 1.1 | **READY**¹ |
 | **1.3** | Storage-split **ruling**: what stays in DynamoDB, what moves to S3, whether the table's role narrows to analytics. | **CTO arch-gate** | 1.1, 1.2 | DEP-BLOCKED |
 | **1.4** | Bucket **path shape** ruling: firm/partner split first; ticket-vs-user nesting is **explicitly open** in his words. | **CTO arch-gate** | 1.3 | DEP-BLOCKED |
 
@@ -86,7 +95,7 @@ dropping**. The fork is narrower than "build chat."
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **4.1** | Audience-aware Ticket Center: Opal keeps Open / In Progress / Completed; client sees the same three with the first rebranded **Submit**, listing their own not-yet-accepted tickets, which move to In Progress on acceptance. | DE | — | **READY** |
+| **4.1** | Audience-aware Ticket Center: Opal keeps Open / In Progress / Completed; client sees the same three with the first rebranded **Submit**, listing their own not-yet-accepted tickets, which move to In Progress on acceptance. | DE | — | **READY**¹ |
 | **4.2** | Cross-firm render refusal: a client cannot see another firm's tickets. | DE + CVO | 4.1 | DEP-BLOCKED |
 
 **Acceptance:** the same ticket rendered to a client and to an Opal user shows the two intended views;
@@ -102,7 +111,7 @@ count. Cite its measurement or re-derive **with the control**; never a naked zer
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **5.1** | **client-on-complete** — a THIRD KIND on the existing pure `client_notice` function. | AE | — | **READY** |
+| **5.1** | **client-on-complete** — a THIRD KIND on the existing pure `client_notice` function. | AE | — | **READY**¹ |
 | **5.2** | Audience asymmetry preserved: Opal users get exactly two kinds (outset + reminder); clients get file / pickup / complete. | AE | 5.1 | DEP-BLOCKED |
 | **5.3** | Opal-user **reminder** for an unaddressed ticket — mechanism **and its configurability**. | ANDREW to rule; AE thereafter | — | ⛔ **ANDREW-BLOCKED** |
 
@@ -133,7 +142,7 @@ exact window would be an unmeasured constant that fails closed looking principle
 
 | Cell | Deliverable | Owner class | Depends | Status |
 |---|---|---|---|---|
-| **6.1** | Name concretely what `0.0.3_BG_BBGTerminal` does with a ticket **today**. Descriptive. | BG-class read | — | **READY** |
+| **6.1** | Name concretely what `0.0.3_BG_BBGTerminal` does with a ticket **today**. Descriptive. | BG-class read | — | **READY**¹ |
 | **6.2** | What it *should* do. | **ANDREW** | 6.1 | ⛔ **ANDREW-BLOCKED / QUESTION** |
 
 ⛔ **THE FIRST CELL HERE IS A QUESTION TO HIM, NOT A BUILD.** This is the least-specified item in his
@@ -197,3 +206,77 @@ a sovereign-gated leg; nobody should read a WS-1..WS-4 completion as D7 done.
 3. **A CVO reader exists.** `3.0.0_SA_CVO~Z` is dead. Cells 2.2 and 4.2 are cross-firm refusal
    exercises whose whole value is independent certification; **a build seat certifying its own refusal
    exercise is the author-verifies-author shape** and would void the evidence.
+
+
+---
+
+# AMENDMENT 1 — 2026-08-31 ~23:2xZ: **ANDREW-DIRECT ~23:15Z @`efcfa8cc5b` — THE REMINDER IS UNGATED, AND D7 IS PLACED**
+
+Relayed by `1.0.0_SA_CTO~Z` (msg 17191) from its `/open-calls` at the site-Z terminal; his words are
+quoted in full in the D12 decomp's Amendment 1.
+
+| Cell | Was | Now |
+|---|---|---|
+| **placement** | ANDREW-BLOCKED (open decision #7) | ⭐ **CLOSED — D7 IS PLACED ON SITE Z.** TOs are cuttable. |
+| **5.3** unaddressed-ticket reminder | ⛔ ANDREW-BLOCKED | ⭐ **UNGATED — READY. BUILD IT.** |
+| **5.2** audience asymmetry | DEP-BLOCKED | DEP-BLOCKED on 5.1 only (unchanged); 5.3 no longer gates it. |
+
+**5.1 client-on-complete was never gated and is unchanged.**
+
+⛔ **THE DELIVERABLE IS STILL THE MECHANISM AND ITS CONFIGURABILITY, NOT A SCHEDULE.** His earlier
+words stand and are not superseded by this ruling: *"naive 8.30 to 5.30 or naive 8 to 5. Actually, we
+could even just put it as 9 to 5. That's not important. The idea is simply that we have the mechanics,
+the configuration."* **Ungating the cell does not authorise fixing an exact window** — that would be
+an unmeasured constant failing closed while looking principled.
+
+## ⛔ WHY THIS IS NOT A GENERAL ALARM LICENCE
+
+The rec Andrew approved was argued **specifically** from the reminder being *"a message to a human
+inbox about a human's own work queue, not a monitor on a serving layer."* **GLOBALALARM stands for
+everything else.** A hold lifted by name is lifted for that name — nothing else in this decomp, or
+anywhere, gains permission to build a monitor, alert, SNS subscriber or freshness checker.
+
+## STATUS AFTER THIS AMENDMENT
+
+**READY:** `1.1` · `4.1` · `5.1` · `5.3` · `6.1`.
+Unchanged: WS-2/WS-3 remain DEP-BLOCKED behind the WS-1 storage ruling, and **no attachment or
+transcript is written to any bucket before 1.3 + 1.4 are ruled.** `6.2` remains ANDREW-BLOCKED.
+
+
+---
+
+# AMENDMENT 2 — 2026-08-31 ~23:5xZ: **D7 IS PARKED. ANDREW-DIRECT, VERBATIM AND ENTIRE: "D12 first."**
+
+Relayed by `1.0.0_SA_CTO~Z` (msg 17217) from the site-Z terminal, answering the parallel-vs-behind
+fork `2.0.0_SA_COO~Z` put to him with its rank-1 rec (D7 behind D12).
+
+## WHAT IS RULED
+
+- ⭐ **D12 IS THE PRIORITY. D7 IS BEHIND IT.** No D7 task orders are cut.
+- ⛔ **NO NEW LANES SEATED.** D7's five READY cells each need a seat that does not exist — Rule 27 is
+  one Tier-2 instance = one project, and `0.7.0_AE_CloudOps~Z` is D12's. Seating 2–3 lanes at midnight
+  on an inferred authorization is exactly what this ruling declines.
+- **`READY` BELOW NOW MEANS "ready when D7 resumes", NOT "available to start."** Nothing in §1 changed
+  on its merits; the whole directive is parked behind D12. A reader who acts on a READY row without
+  this amendment would be starting work Andrew ranked second.
+
+## ⛔ ONE AMBIGUITY, RECORDED OPEN AND DELIBERATELY NOT RESOLVED
+
+His two words rank D12 over D7. **They do not say whether the zero-cost D7 architecture read (cells
+1.1/1.2 — a READ, no new seat, writes nothing) may proceed alongside, or whether D7 stops entirely.**
+Both readings are coherent.
+
+`1.0.0_SA_CTO~Z` declined to read its own proposal as approved merely because it appeared in the
+message he answered — **an approval of a RANKING is not an approval of every item in the message that
+asked for it** — and declined to do the read on its own authority, on the grounds that a zero-cost act
+is precisely the condition under which a seat quietly widens a sovereign word. **This seat concurs and
+takes the same position: D7 is treated as PARKED IN FULL, and nothing is lost by that.**
+
+If the read later matters to sequencing, it is a one-line question to Andrew, not an inference.
+
+## WHAT IS UNCHANGED
+
+The cells, their dependencies, their acceptance exercises and every fence stand exactly as written —
+including that **no attachment or transcript is written to any bucket before 1.3 + 1.4 are ruled**, and
+that **the reminder came out of the alarm hold BY NAME ONLY** (GLOBALALARM stands for everything else).
+Amendment 1's closures are not reopened; they are simply not being worked yet.

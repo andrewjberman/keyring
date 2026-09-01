@@ -207,3 +207,48 @@ discover after 92 rows have been reopened into it.
 
 **This remains a finding, not a build.** No monitor, no alarm, no gate is proposed — the standing
 moratorium binds and all alarms are held pending GLOBALALARM.
+
+---
+
+# AMENDMENT 3 — 2026-08-31 ~22:5xZ: **WAVE A IS NOT SAFELY READABLE AS "PROBABLY FINISHED"**
+
+Raised by `1.0.0_SA_CTO~Z` against **its own** Amendment-1 bound, from a counter-example that fell out
+of unrelated work. Accepted, and it belongs at the headline's side rather than in a thread.
+
+## The inference Amendment 1 invites, and why it is wrong
+
+Amendment 1 says staleness risk **concentrates in the WAVE A subset (56)**, because wave B's 43 carry
+independent corroboration (live TOs closed in the same act) while wave A has only the face. That is
+true. But it invites a next step a reader would reasonably take: *"so start by discounting wave A."*
+
+⛔ **THAT INFERENCE NOW HAS A CONCRETE COUNTER-EXAMPLE FROM INSIDE WAVE A.**
+
+**`ADVI_PRVSYS` is wave A** — *"carried ZERO open task orders at close"* — and its PRD carries live,
+unbuilt, load-bearing design that a directive **minted six days later** needs:
+`ADVI_PRVSYS_PRD.md:30` specifies the scoped partner-admin page (`firmRole=admin`, own firm only) and
+`:77` carries the exact control D12's WS-5 requires — *"gates the page AND the API (both — never
+page-only; the API independently re-checks the JWT, **a hidden page is not a control**)."*
+
+> ### ZERO OPEN TASK ORDERS MEANT NOBODY HAD CUT THE TOs YET — NOT THAT THE WORK WAS DONE.
+
+So wave A is **simultaneously the least-corroborated subset AND not safely readable as "probably
+finished."** Those are not in tension: both follow from wave A having only one instrument. Amendment
+1's bound **stands unchanged and is not withdrawn** — ≤92 is still a ceiling. What is withdrawn is any
+reading of it as a ranking of where to look first.
+
+## The part that should worry a decision-maker most
+
+Three instances of "a live directive needs a wrongly-closed project as prior art" are now known:
+`PORTAL_AUTHHARD` (D12), `OPAL_TICKET` (D7), `ADVI_PRVSYS` (D12 again).
+
+**Two of the three were surfaced by a readback of Andrew's own transcripts. The third fell out of
+someone working the directive.** None was found by looking for wrong closures.
+
+⛔ **THERE IS NO REASON TO THINK THE OTHER 89 DIFFER IN KIND, AND NO INSTRUMENT CURRENTLY LOOKS FOR
+THEM.** The discovery rate to date is a function of how much directive work has happened since 08-25,
+not of how many wrong closures exist. This is the strongest available argument for rec (3) — it is
+precisely the mechanism rec (3) exists to catch — and it is equally an argument that (2)
+reopen-on-demand alone is a slow leak rather than a policy.
+
+**Still not acted on. Reopening any of the three is Andrew's.** `IMPORT, DO NOT REOPEN` — a PRD reads
+at its path regardless of project status, so no current work is blocked by any of these closures.
