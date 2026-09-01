@@ -171,20 +171,23 @@ def check_file(root, rel):
         notes.append("OVERRIDE taken on %s -- reason: %s" % (rel, ov.group(1).strip()))
         return ([], notes)
 
+    # ⛔ THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
+    # .tools/git-hooks/to-proof-of-spec-check.sh:60-71 already refuses a NEW TO that lacks
+    # <decomp_ref> when its project is pipeline-registered, it is WIRED into .git/hooks/pre-commit
+    # (:130-131, fail-closed at :132), and it reads STAGED content via `git show :path` rather than
+    # the worktree -- which is the more correct read. Two gates enforcing one predicate with two
+    # different override tokens is worse than one; this file owns only what that one does not.
+    # Found 2026-09-01 AFTER building a duplicate of it. Recorded rather than quietly dropped.
     m = DECOMP_RE.search(text)
-    if not m:
-        v.append("%s: NO <decomp_ref> element. A TO cannot be issued without naming the "
-                 "atom-decomp it executes -- that is what makes stage 3 structurally "
-                 "required (pipeline layer 2)." % rel)
-    else:
-        body = m.group(1).strip()
-        if not body:
-            v.append("%s: <decomp_ref> is EMPTY. The element's CONTENT is the claim, not its "
-                     "PRESENCE (CTO 87900)." % rel)
-        elif NONE_WORD_RE.match(body):
-            notes.append("%s: <decomp_ref> declares NONE -- allowed (one-branch work under its "
-                         "own charter), and layer 1 will read it as ANNOUNCE, not ENFORCE." % rel)
+    if m and NONE_WORD_RE.match(m.group(1).strip()):
+        notes.append("%s: <decomp_ref> declares NONE -- allowed (one-branch work under its own "
+                     "charter); layer 1 reads it as ANNOUNCE, not ENFORCE." % rel)
 
+    # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
+    # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the
+    # project JSON. MEASURED 2026-09-01: 316 of 349 projects have no dep_stage, so the sibling is
+    # inert on 90% of the estate. Requiring the stage is the missing keystone, not the decomp_ref
+    # check -- that was already built.
     v.extend(check_project_stage(root, rel))
 
     pm = PREFLIGHT_RE.search(text)
