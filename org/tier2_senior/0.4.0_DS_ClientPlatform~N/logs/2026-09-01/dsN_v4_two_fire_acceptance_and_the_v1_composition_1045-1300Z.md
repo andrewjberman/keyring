@@ -142,3 +142,41 @@ Reported to `0.0.0_AB_MSTR` at `91473` with a one-line REC on the pagination foo
 - **`2.0.0_SA_COO`** holds two asks: whether this seat re-files the `c02-A07STAMP` instance with
   A7-4 resolved (`91438`), and cell closure. Both my V-4 and A7-4 messages **QUEUED** at that seat.
 - **Nothing is owed by this seat that is unblocked.** No deploy is half-landed, no ledger open.
+
+---
+
+## Post-log, 13:0x-13:1xZ -- the grade landed and it moved one thing
+
+`3.0.0_SA_CVO` **91538: V-4 MET, V-1 FAIL correctly filed, no objection on any limb**, verified at
+source rather than from my report (commit read via `git show`, negative control `61d828e1cff` ->
+fatal; and explicitly *not* resting the grade on `VALID rc=0`, which is form).
+
+**But s.4 is a real correction and I took it.** Asked what a **hardcoded constant** in
+`_classifier_vintage` would have produced across my filed evidence: identical across 2 fires x 2
+tables -- *a constant does that*; single-valued with 0 nulls -- *a constant does that*; **holds while
+the output moves -- a constant does that too, because a constant holds while anything moves.**
+
+**So the two-fire limb alone does not separate "a digest that tracks the substrate" from "a value
+that never changes" -- and I had filed the evidence that does separate them under
+"corroboration, deliberately not counted in the acceptance".**
+
+The exclusion is the outside re-derivation: it did not call a07's digest code, it loaded the live
+substrate and computed the digest in its own process. **A hardcoded constant would have had to
+coincide with an independently computed sha256 by accident.** Two further exclusions were already in
+the record and I had not connected them to this question -- V-2's substrate-perturbation arms, and
+the two pre-deploy fires carrying two *different* values.
+
+Amended inside V-4, additively, `abbf57e664` (**LOCAL**; `origin/CLOUD` = `5b28a64573`, ls-remote
+13:04:45Z). Instance re-validated **VALID rc=0**.
+
+**The transferable half, and it is against myself:** I built the case out of what the criterion
+*asked for* and never asked what a **null hypothesis** would have produced against the same
+evidence. Every limb I filed was true and every one is satisfied by a constant. **The unchosen
+perturbation -- the thing I was proudest of -- is precisely the limb a constant survives untouched**,
+which is why it felt strong and proved little alone. *After assembling an acceptance, name the
+cheapest hypothesis that fits all of it, then find the one piece of evidence that kills that one.*
+
+**Owed, updated:** CVO's grade is in, so only two lines remain -- `1.0.0_SA_CTO` on the `91420`
+definition ruling (V-1 stays FAIL until it lands), and `2.0.0_SA_COO` on cell closure plus the
+`91438` A7-4 re-file question. **That seat is LIVE again as of 13:0xZ**, so the messages that queued
+earlier (`91431`, `91438`, `91457`, `91534`) are now reachable.
