@@ -1,6 +1,6 @@
 ---
 name: endpoint
-description: Project the TERMINAL STATE of one or more directives -- "if every active task order completes as written, what do we actually HAVE?" -- then reorient it to the endpoint Andrew actually wants. Answers the one question no other skill answers: not what stage we are at (/exec-sum), not what is on the register (/directives-check), not which gates are armed (/comp-schedule), not which TOs are open (/to-check), but whether THE WORK IN FLIGHT ADDS UP TO SOMETHING WORTH HAVING. Phase 1 PROJECTS the endpoint as numbered capability outcomes, each tagged DESIRED/APPLIED/EXERCISED and carrying its acceptance test, plus an explicit UNCOVERED partition for endpoint-necessary work that NO task order covers. Phase 2 takes Andrew's desired endpoint, computes the DELTA, and emits a dispatch-ready restructuring package -- TOs to CUT / AMEND / RETIRE -- handed to 2.0.0_SA_COO to sequence and dispatch. It never dispatches itself. Invoke as `/endpoint D2`, `/endpoint D2 D8`, `/endpoint ADVI_PERFRP`. Andrew-commissioned 2026-09-01 at the CTO terminal.
+description: Project the TERMINAL STATE of one or more directives -- "if every active task order completes as written, what do we actually HAVE?" -- then reorient it to the endpoint Andrew actually wants. Answers the one question no other skill answers: not what stage we are at (/exec-sum), not what is on the register (/directives-check), not which gates are armed (/comp-schedule), not which TOs are open (/to-check), but whether THE WORK IN FLIGHT ADDS UP TO SOMETHING WORTH HAVING. Phase 1 PROJECTS the endpoint as numbered capability outcomes, each tagged DESIRED/APPLIED/EXERCISED and carrying its acceptance test, plus an explicit UNCOVERED partition for endpoint-necessary work that NO task order covers. Phase 2 takes Andrew's desired endpoint, computes the DELTA, and emits a dispatch-ready restructuring package -- TOs to CUT / AMEND / RETIRE -- handed to 2.0.0_SA_COO to sequence and dispatch. It never dispatches itself. PHASE 0 (`--forward`) runs EARLIER than both -- at pipeline step 2, BEFORE the PRD and before any task order exists -- reading the step-1 CRO brief instead of the register and emitting the QUALITATIVE endpoint that gets written into the PRD, so step 10 can answer "does the PRD name this outcome?" without it collapsing into the spec-error route. Invoke as `/endpoint D2`, `/endpoint D2 D8`, `/endpoint ADVI_PERFRP`, `/endpoint --forward <topic|brief-path>`. Andrew-commissioned 2026-09-01 at the CTO terminal; Phase 0 added same day per SPEC_CANONICAL_LOOP_INCORPORATION_20260901 s.1.2.
 ---
 
 # /endpoint -- the terminal-state projector
@@ -29,9 +29,201 @@ then lets Andrew move it.
 | `/endpoint ADVI_PERFRP` | Project-scoped rather than directive-scoped. |
 | `/endpoint D2 --reorient` | Re-enter Phase 2 against a projection already rendered this session. |
 | `/endpoint D2 --uncovered` | The UNCOVERED partition alone -- the fastest read of "what is nobody doing". |
+| **`/endpoint --forward <topic\|brief-path>`** | **PHASE 0.** Runs at pipeline STEP 2, BEFORE the PRD exists and before any TO. Reads the CRO brief, not the register. See PHASE 0. |
 
 Phase 2 normally follows Phase 1 in the same conversation: Andrew reacts to the projection,
 states the endpoint he wants, and the skill continues. `--reorient` exists for a later session.
+
+---
+
+# PHASE 0 -- FORWARD (pipeline STEP 2, before the PRD)
+
+**Commissioned by `SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` §1.2 under Andrew-direct
+2026-09-01 (`/open-calls`, "All recs approved" + *"get it done and spec whatever needs to be spec'd"*).**
+
+**The ask it serves, Andrew's words:** *"before even writing the PRD, we need to define where we
+need to go."*
+
+⛔ **WHY PHASES 1 AND 2 CANNOT SERVE IT.** Phase 1 asks *"if every active TO completes as written,
+what do we have?"* — **it reads TASK ORDERS IN FLIGHT.** At step 2 there are no task orders and
+there is not yet a project. **A skill that enumerates the register returns an empty set and calls it
+an endpoint.** Phase 0 reads the BRIEF instead, and reads nothing else.
+
+⛔ **WHY THIS IS THE KEYSTONE, NOT A NICE-TO-HAVE.** Step 10's routing fork has three limbs, and the
+third — SCOPE CHANGE — is decided by *"does the PRD name this OUTCOME?"*
+>> **With no named endpoint that question has NO ANSWER, and the scope-change route SILENTLY
+   COLLAPSES INTO THE SPEC-ERROR ROUTE.** Every misrouted scope change then lands on COO as a TO
+   amendment instead of on CTO as a PRD revision. **The loop degrades quietly rather than failing
+   loudly**, which is the worst available failure mode. <<
+
+## Step F0 -- RE-ENTRY: when step 10 routes a SCOPE CHANGE back here
+
+⛔ **THIS IS NOT THE GREENFIELD PATH AND MUST NOT REFUSE THE CALLER.** Step 10 routes every
+`route=SCOPE_CHANGE` remediation row to `loop_target: 2` — **here**. That arrival has an EXISTING
+PRD, EXISTING outcomes and NO new brief, so the F1 refusal (*no brief, no phase*) would turn a
+correctly-routed finding into a dead end at the wrong seat.
+
+**WHAT ARRIVES** (`remediation_row.schema.json` @`c6c3627269`, agreed with `3.0.0_SA_CVO`):
+
+```
+  route         SCOPE_CHANGE          loop_target  2   (locked in a gate; never drifts)
+  outcome_ref   FWD-n                 <- WHICH outcome the world contradicted
+  remedy        what to do
+  id            {PROJECT}-S{n}        <- chains back to the investigation item, which carries:
+     spec_asserts   what the TO SAID
+     world_is       what the world TURNED OUT TO BE
+```
+
+>> **`spec_asserts` + `world_is` ARE THE PAYLOAD.** The pair is the whole argument that an outcome
+   was wrong: what we believed, and what reality did instead. Everything else is addressing. <<
+
+**HOW TO RE-ENTER — the brief is NOT re-read and NOT re-run:**
+
+1. **Read the named outcome only.** `outcome_ref` points at one `FWD-n`. **Do not re-derive the
+   list** — a scope change contests ONE outcome, and re-running Phase 0 over the whole endpoint
+   silently re-litigates outcomes nobody questioned.
+2. **Decide which of three things happened**, and say which:
+   - **the outcome was WRONG** → amend it in place, id unchanged.
+   - **the outcome was RIGHT and INCOMPLETE** → **add a new `FWD-n` at the next unused number.**
+     The contested one stays as it is.
+   - **the outcome is OBSOLETE** → retire it; **its number stays vacant forever** (see the id
+     contract above), because rows already cite it.
+3. **`ACCEPT` is re-tested, not inherited.** If `world_is` contradicted the outcome, the acceptance
+   line that let it read as met is the thing that failed. Rewrite it — **in plain English, no
+   technical language**, per F3.
+4. **The PRD edit is CTO's, same turn.** Nothing routes onward until the ENDPOINT section reflects
+   the change, because step 10 will read it back on the next round.
+
+⛔ **AND THE ONE THING RE-ENTRY MUST NEVER DO: silently shrink the endpoint.** Retiring the
+contested outcome is always the cheapest way to make a scope change go away, **and the seat doing
+the retiring is the seat the finding was against.** A retirement here states, in one line, what
+capability the project is no longer promising — **if that sentence is uncomfortable to write, the
+outcome was not obsolete.**
+
+⚠ **WHAT I DO NOT HOLD:** whether a scope change may arrive against an outcome that was never
+ratified by Andrew (emitted, never approved). The gate cannot tell. **Treat it as a normal re-entry
+and say on the record that the outcome was unratified** — do not use it as grounds to discard.
+
+## Step F1 -- Read the BRIEF. Refuse without one.
+
+The input is the step-1 CRO brief (`docs/briefs/**`) or a topic naming one. Print the path, its
+`generated` line if it carries one, and its byte size.
+
+⛔ **NO BRIEF, NO PHASE 0 — ON THE GREENFIELD PATH ONLY.** ⚠ **A step-10 SCOPE_CHANGE re-entry has
+no brief BY DESIGN and this refusal MUST NOT fire on it — see Step F0, which runs first.** Applying
+F1 to a re-entry turns a correctly-routed finding into a dead end. On the greenfield path:
+print `UNMEASURABLE: no brief at <path>; step 1 has not produced one`
+and stop. **Do not synthesise an endpoint from the topic string** — an endpoint invented from a
+title is exactly the guess this phase exists to prevent, and it would then be written into a PRD and
+read back at step 10 as though someone had decided it.
+
+⛔ **DO NOT READ THE TO REGISTER IN THIS PHASE, even if the project already exists.** If TOs are in
+flight, the caller wanted Phase 1. Reading both silently blends *what we intend* with *what is
+already moving*, and the blend is unrecoverable downstream because nothing marks which is which.
+
+## Step F2 -- Emit numbered CAPABILITY OUTCOMES, same shape as Step 3
+
+Identical unit and format to Phase 1 (see Step 3), so a step-10 reader does not need a second
+grammar:
+
+**ONE BLANK LINE BETWEEN OUTCOMES, always** — a wall of them is unreadable and the reader is
+deciding, not skimming.
+
+⛔ **`FWD-n` IDS ARE PERMANENT AND NEVER REUSED. THIS IS A CONTRACT, NOT A CONVENTION.**
+Once an outcome lands in a PRD its id is fixed for the life of the project.
+- A new outcome takes the **next unused number**, never a freed one.
+- A retired outcome **leaves its number vacant** — the gap is the record that it existed.
+- **Never renumber to close a gap.** Renumbering silently re-points every citation ever made to the
+  old id, and nothing announces it.
+>> **WHY IT IS A CONTRACT: step 10's remediation rows cite `outcome_ref` back into this list.** A
+   scope-change row saying *"the world contradicted FWD-3"* is worthless if FWD-3 later means a
+   different outcome. **A drifting id turns a grounded finding into a wrong one, and the finding
+   still looks grounded.** <<
+Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on the remediation
+schema (`route=SCOPE_CHANGE` only).
+
+```
+  FWD-3  Advisors can see per-client performance without opening Black Diamond
+         DONE WHEN  EXERCISED -- an advisor has actually read one
+         ACCEPT     a named advisor reads a figure here they would otherwise
+                    have gone to Black Diamond for
+         SOURCE     brief s.4, "the parity oracle is BD and never a dependency"
+
+  FWD-4  Since-inception figures are trustworthy across the 2024 seam
+         DONE WHEN  APPLIED -- the labelled tier is in place
+         ACCEPT     the seam is visible in the figure, never silently spanned
+         SOURCE     brief s.5
+```
+
+⛔ **THE TAG MEANS SOMETHING DIFFERENT HERE, AND THE DIFFERENCE IS THE WHOLE VALUE.** In Phase 1 the
+tag is the outcome's **CURRENT** state. At step 2 nothing is built, so a current-state tag would read
+`DESIRED` on every row and **a field with one value carries no information.**
+>> **In Phase 0 the field names the BAR — the state the outcome must reach before it counts as
+   delivered. Label it `DONE WHEN`, and gloss the value inline so the card needs no legend.** <<
+
+**The question it actually asks, and it is worth asking per outcome:**
+**is this real when the thing is BUILT, or only when it has RUN and someone READ the result?**
+
+⛔ **`DESIRED` IS NOT A VALID BAR.** An outcome that counts as delivered when someone merely intends
+it is not an outcome. The honest range is **`APPLIED` or `EXERCISED`** — the field is binary in
+practice, and "tagged with three values" obscured that.
+
+⚠ **HISTORY, so nobody re-derives it:** the commissioning spec said "tagged DESIRED/APPLIED/
+EXERCISED" and did not say tagged with *what*. This seat first labelled the field `REACH`; **Andrew
+read it and had to ask what it meant, which is the label failing its own disputability test.**
+Renamed `DONE WHEN` on his word, 2026-09-01.
+
+## Step F3 -- KEEP IT QUALITATIVE. This is a ratified constraint, not a licence to be vague.
+
+**Andrew, verbatim:** *"This does not have to be a deliverable contract. It can be qualitative
+because we will not know enough about the quantitative mechanics at this point."*
+
+⛔ **DO NOT FORCE A CONTRACT. Forcing one is what makes the endpoint a guess wearing a schema.** A
+number invented at step 2 is not rigour — it is a fabrication that every later stage will treat as
+ratified because it is sitting in a PRD.
+
+**Qualitative is not vague.** The test: an ACCEPT line is good if a competent reader could later
+DISPUTE whether it was met. *"Advisors find it useful"* fails — nobody can contest it. *"An advisor
+reads a figure here they would otherwise have gone to BD for"* passes — it names who, what, and the
+alternative it displaces, and it can be argued about without a single number.
+
+⛔ **AND THE ACCEPT LINE CARRIES NO TECHNICAL LANGUAGE. EVER.** Andrew-direct 2026-09-01: *"the
+'Accept' description never has technical language, always should be very understandable in plain
+English."*
+
+**No serials, no file paths, no table or column names, no key names, no tool names, no fabric jargon
+(`face`, `cell`, `leaf`, `emit`, `partition`, `grain`, `served`).** Those belong in the PRD's own
+sections and in the decomp — never in the line that says what counts as done.
+
+```
+  FAILS   perfrp_performance_relationship emits at L3 grain with a non-null
+          content_hash on the served leaf
+  PASSES  an advisor can see a client's return for a period they choose, and
+          it matches what the account statements add up to
+```
+
+>> **THE REASON IS NOT STYLE.** An ACCEPT line written in system vocabulary can only be judged by
+   someone who knows the system — **so it silently becomes a check the BUILDER grades, which is
+   exactly the self-attestation the whole loop exists to avoid.** A line in plain English can be
+   graded by the person the outcome is FOR. **Write it so Andrew, or an advisor, could tell you
+   whether it happened.** <<
+
+## Step F4 -- Write it INTO the PRD as a NAMED SECTION
+
+The output's home is the PRD, under a section titled **`ENDPOINT (step 2, /endpoint --forward)`** —
+because step 10 reads it back to answer *"does the PRD name this outcome?"*
+
+- **PRD exists:** insert or replace that section. Never edit any other section of someone's PRD.
+- **PRD does not exist yet** (the normal case — this runs BEFORE the PRD): emit the block ready to
+  paste and print the exact path and section title it belongs under. **Say plainly that it is NOT
+  YET LANDED**, because an endpoint that lives only in a terminal is the carrier problem this whole
+  spec exists to close.
+
+## Step F5 -- Provenance, mandatory
+
+Same rule as Step 7: brief path + vintage, every outcome traced to a brief line, and an explicit
+`NOT READ:` line naming what was deliberately not consulted (the register, the TOs, the project
+JSON). **A phase defined by what it refuses to read must say what it refused.**
 
 ---
 

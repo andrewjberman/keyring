@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_BDPARITY",
   "macro_code": "ADVI",
   "name": "49 Financial Black Diamond PARITY program -- the check-our-work harness: our canonical performance outputs vs BD's own calculated outputs, classified EXACT / EXACT-SHIFTED / TIGHT / LARGE / MIX with named mechanisms and printed denominators (D2 PRD s.4a)",

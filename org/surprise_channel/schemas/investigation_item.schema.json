@@ -85,6 +85,16 @@
   },
   "notes": {
    "type": "string"
+  },
+  "spec_asserts": {
+   "type": "string",
+   "minLength": 8,
+   "description": "STEP-7 TRIGGER, half 1: what the TO SAID, quoted or paraphrased tightly. Paired with `world_is`. The trigger is 'did I have to do something the TO did not say to do, or could I not do something the TO said to do?' -- a SPEC-vs-WORLD MISMATCH. Carrying BOTH halves is what keeps the worker judging FORM and never SIGNIFICANCE: a row that cannot state both is not a mismatch, it is an opinion. OPTIONAL in this schema and REQUIRED BY THE GATE ON NEW ROWS ONLY (.tools/surprise-row-gate.py) -- ~190 rows predate the field and are not back-filled, per Andrew-direct 2026-09-01 'this is a relatively new system ... maintain now and prospectively'."
+  },
+  "world_is": {
+   "type": "string",
+   "minLength": 8,
+   "description": "STEP-7 TRIGGER, half 2: what the WORLD turned out to be. Paired with `spec_asserts`. See that field for the trigger, the prospective-only bound, and why both halves are required together."
   }
  },
  "allOf": [

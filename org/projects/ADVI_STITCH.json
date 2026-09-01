@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "ADVI_STITCH",
   "macro_code": "ADVI",
   "name": "49 Financial BD-HISTORY STITCHING -- migrate the Black Diamond history we hold (opal-data-bd backfill_v2 / forwardfill_v2 / legacy silver+gold) into opal-data-assets by methodical design, then classify every legacy account across the 2024 Schwab migration as MIGRATED / STAYED / DROPPED with an explicit what-we-cannot-know class -- the basis for since-inception attribution and reporting",

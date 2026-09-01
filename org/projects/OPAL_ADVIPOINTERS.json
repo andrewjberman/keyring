@@ -1,4 +1,5 @@
 {
+ "fabric": "laptop",
   "project_code": "OPAL_ADVIPOINTERS",
   "macro_code": "OPAL",
   "name": "ADVI/MDPF canonical repointing -- one traceable path from vendor bytes to the portal, single-homed producers, legacy routes decommissioned last",

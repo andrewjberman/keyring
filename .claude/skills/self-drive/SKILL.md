@@ -134,6 +134,20 @@ driver's own author line **ONLY when one of these holds:**
 record, exactly the /log skill's own skip-silently-on-no-delta pattern. The tick counter still
 advances in scratchpad state; the next written log names the ticks it covers. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; RESERVED cards still at Andrew; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
 
+⛔ **THE MOVEMENT CURSOR IS DERIVED FROM THE COMMIT, NEVER FROM THE LOG'S FILENAME** (found by
+`2.0.0_SA_COO` @91892, `/drive` D2 tick 3, on its own machinery). A log filename is **typed by the
+agent writing it**; a cursor read from it inherits that typo. Measured: a log named
+`...20260901T1440Z.md` was committed at `14:29:38Z`, putting the cursor **eleven minutes in the
+future** — and the movement scan then read **0 MOVED / 15 QUIET**, marking every seat in the fabric
+PARKED, *including the seat that was mid-tick writing the scan*. ⛔ **A FUTURE CURSOR MAKES EVERY SEAT
+READ PARKED, and the nudge ladder escalates on it** (tick 1 nudge → tick 2 harder → tick 3 `[STUCK]`
+to MSTR), so a typed stamp a few minutes ahead **manufactures a fabric-wide stall conviction out of
+nothing.** Use `git log -1 --format=%aI -- <logfile>` (author time), never the name. **Positive
+control:** the scan must show the running seat's own row as MOVED — a scan that reports the seat
+executing it as quiet has a broken cursor, not a quiet fabric. **COST:** one `git log` per tick.
+**NON-APPLICATION:** a cursor already derived from a commit, tag or API timestamp — this binds only
+carriers a human or agent TYPES. Sibling: `sprint display dates are DERIVED, never typed`.
+
 **Tick state** between logs lives in the session scratchpad (`self-drive.<scope>.json`: cron id, armed_at, tick, last_log_tick) — never in the shared working tree (site Z loses uncommitted work). Lost state is re-derived from the latest committed self-drive log for the scope.
 
 **The durable carrier for "persists until done": the `org/XXX.md` Step 1b-F row of the driver's serial.** A cron is session-only; his premise is not. On ARM, the driver adds to its own row a scoped clause — *`/self-drive <scope>` ARMED <date> by Andrew-direct (<record>), cadence N, `paired_with: /drive <scope> @ 2.0.0_SA_COO (+15m)` or `paired_with: solo` (§0.6), STOP-CONDITION: <scope> DONE per §4, or his stand-down; a successor session at this seat RE-ARMS while the scope is not DONE, AND re-arms/asks-for the paired half per the clause* — and on DONE / stand-down STRIKES it (the COO `/drive` precedent) — **the strike covers BOTH halves; the peer's next tick reads the struck clause and stands itself down.** This is a law-file edit: commit + SAME-TURN broadcast + push-state stated ("landed LOCAL, rides integration"), never bare "landed". **The row is the ONLY thing a successor may re-arm from** (§0.4).
