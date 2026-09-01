@@ -171,7 +171,7 @@ def check_file(root, rel):
         notes.append("OVERRIDE taken on %s -- reason: %s" % (rel, ov.group(1).strip()))
         return ([], notes)
 
-    # ⛔ THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
+    #  THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
     # .tools/git-hooks/to-proof-of-spec-check.sh:60-71 already refuses a NEW TO that lacks
     # <decomp_ref> when its project is pipeline-registered, it is WIRED into .git/hooks/pre-commit
     # (:130-131, fail-closed at :132), and it reads STAGED content via `git show :path` rather than
