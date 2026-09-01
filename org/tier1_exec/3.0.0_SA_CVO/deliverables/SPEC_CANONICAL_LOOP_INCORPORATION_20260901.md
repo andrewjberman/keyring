@@ -14,11 +14,61 @@ does not will be REFUSED.
   BUILT (notifier)    the step-8 investigations monitor   org/surprise_channel/surprise-watch.sh
 ```
 
-⛔ **ONE CALL WAS NOT ANSWERED AND IS NOT IN THIS SPEC.** Card 8 (D3-vs-D8 ordering in
-`/self-drive`) carried the explicit non-recommendation *"no recommendation with confidence -- this
-turns on your business priority, which I do not hold."* **A blanket approval of a
-non-recommendation authorizes nothing.** That call is still OPEN at Andrew. Do not sequence D3
-against D8 on the strength of "All recs approved."
+⛔ **CARD 8 UPDATE (RULED ~18:15Z): D8 SITS FIRST.** This spec originally recorded card 8 as still
+open, because a blanket approval of a declared non-recommendation authorizes nothing. Andrew has
+since ruled it explicitly. **D8 precedes D3 in `/self-drive`.**
+
+---
+
+## 0 · AMENDMENT ~19:0xZ -- STEP 4 IS THE PRD, AND THE THREE FRAMINGS ARE RECONCILED
+
+**ANDREW-DIRECT, relayed verbatim by `1.0.0_SA_CTO` (msg 92454), filling a gap that seat flagged in
+this document before he answered:**
+
+> *"Step 4 is the PRD, you need to write it, that's what gets decomposed by COO. The premise is that
+> we basically read the briefing from CRO and align on the endpoint, and the PRD is the document
+> that takes a briefing and converts it into a project arc with a defined outcome."*
+
+⛔ **THIS IS A RE-MAP, NOT JUST A FILL, AND THIS DOCUMENT HAD THE OLD NUMBERING.** The original
+transcript put the PRD at step 2 and made step 4 *"the handoff of the endpointed PRD to COO."*
+Andrew has moved it: **step 2 is ENDPOINT ALIGNMENT, step 4 is THE PRD ITSELF**, and the handoff is
+what step 4 produces rather than a step of its own.
+
+```
+  1  CRO brief                 4.0.0_SA_CRO
+  2  endpoint alignment        1.0.0_SA_CTO      (/endpoint --forward, now BUILT)
+  3  register + fabric         1.0.0_SA_CTO
+  4  THE PRD                   1.0.0_SA_CTO      <- the handoff artifact to COO
+  5  decomp + lens battery     2.0.0_SA_COO
+  6  TO ISSUANCE               2.0.0_SA_COO      <- THE ONLY GATE
+  7  worker + surprise rows    the worker
+  8  compile                   3.0.0_SA_CVO
+  9  disposition               3.0.0_SA_CVO
+ 10  route + loop_target       3.0.0_SA_CVO
+```
+⭐ **TWO WORDS IN HIS PHRASING ARE LOAD-BEARING** (`1.0.0_SA_CTO`'s reading, adopted): **"PROJECT
+ARC"** -- a PRD listing requirements without an arc gives a decomp no shape to follow; and **"WITH A
+DEFINED OUTCOME"** -- that is step 2's endpoint landing INSIDE the PRD, which is exactly what step
+10's scope-change route reads back. **The endpoint section is the SEAM between steps 2 and 4.**
+
+### THE 5-STAGE / 10-STEP / dep_stage DIVERGENCE -- RECONCILED, NOT SUPERSEDED
+
+`1.0.0_SA_CTO` correctly named that `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` describes **FIVE
+STAGES** while this spec describes **TEN STEPS**, and declined to assume which supersedes.
+**Neither does. They are different GRAINS of one process and they nest cleanly:**
+```
+  steps 1-2   PRE-REGISTRATION inputs (feasibility + endpoint) -- they PRODUCE the decision to
+              register, so they do not violate stage 1's "nothing else exists until this does",
+              which is about the PROJECT, not about thinking
+  STAGE 1  REGISTER        = step 3        dep_stage REGISTERED
+  STAGE 2  PRD             = step 4        dep_stage PRD
+  STAGE 3  DECOMP -> TOs   = steps 5-6     dep_stage DECOMP -> EXECUTING
+  STAGE 4  EXECUTE         = step 7        dep_stage EXECUTING
+  STAGE 5  CHANNEL         = steps 8-10    dep_stage ROUND_CLOSE -> CLOSED
+```
+**No document needs to be retired. The ten-step map is the FINE grain of the five-stage pipeline.**
+
+⛔ **AND RECONCILING THEM CAUGHT A DEFECT IN MY OWN GATE.** See s.5.
 
 ---
 
@@ -214,6 +264,42 @@ but not yet SAFE, and I will not break 17 live documents to win a format argumen
   step 10  route + loop_target            REQUIRED fields on a remediation row
                                           spec-error -> 6 | decomp-invalidating -> 5 | scope -> 2
 ```
+
+---
+
+## 5 · A DEFECT IN MY OWN GATE, FOUND BY RECONCILING THE FRAMINGS ABOVE
+
+**`dep_stage` HAS SIX RATIFIED VALUES. MY GATE ACCEPTED SEVEN.**
+
+```
+  RATIFIED (COO Rule-24 record DEP_STAGE_ENUM_RULE24_RECORD_20260821.md:41-46):
+    REGISTERED | PRD | DECOMP | EXECUTING | ROUND_CLOSE | CLOSED
+  MY GATE CARRIED, until 2026-09-01 ~19:0xZ:
+    REGISTERED | PRD | DECOMP | TOS_CUT | EXECUTING | ROUND_CLOSE | CLOSED
+```
+`TOS_CUT` **was never ratified.** The record transitions `DECOMP -> EXECUTING` directly on *"first
+TO cut from a decomp cell"* -- there is no intermediate state, and the record's postulate work says
+why. **I introduced it from the ten-step map's step 6 rather than from the enum's authority.**
+Rule 24 binds any schema an agent **AUTHORS OR ADOPTS**, and this was a bad ADOPTION by the seat
+that mandated the rule.
+
+>> ⛔ **AND THE CONSEQUENCE IS THE SHARP PART: THE WRONG VOCABULARY SUPPRESSED A REAL FINDING.**
+`--sweep` reported `BRIEF x2` as off-enum and said **nothing** about `TOS_CUT x2`, which is equally
+off-enum -- because the tuple had been widened to admit it. **A GATE WHOSE VOCABULARY IS WRONG
+CANNOT SEE THE VIOLATIONS THAT MATCH ITS OWN ERROR, AND IT REPORTS CLEAN ON EXACTLY THOSE.** <<
+
+**MEASURED, before and after the one-line correction:**
+```
+  before   off-enum surfaced: BRIEF x2                    (2 of 33 populated)
+  after    off-enum surfaced: BRIEF x2 + TOS_CUT x2       (4 of 33 populated)
+```
+**The correction DOUBLED the off-enum count** and it did so on a population that had been swept and
+reported CLEAN on that axis twice today. Controls: 8, all pass -- `TOS_CUT` now refused, all six
+ratified values pass, `BRIEF` still refused (regression guard).
+
+⚠ **BLAST RADIUS, disclosed rather than quietly patched:** the bad value was printed back in every
+refusal message this gate issued, and went out in **two fabric broadcasts** to 9 seats. A correcting
+broadcast was sent. **Owner of the two `TOS_CUT` project JSONs: not me** -- surfaced, not chased.
 
 ---
 

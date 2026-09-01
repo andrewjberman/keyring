@@ -147,7 +147,22 @@ def _check_preflight(body):
 # SAME choke-point makes it populate itself: a project cannot have a NEW TO cut against it until its
 # stage is declared. Forward-only by construction -- no back-fill, which the doc forbids as "a guess
 # about history wearing a controlled vocabulary's clothing".
-DEP_STAGE_ENUM = ("REGISTERED", "PRD", "DECOMP", "TOS_CUT", "EXECUTING", "ROUND_CLOSE", "CLOSED")
+# THE RATIFIED ENUM IS SIX VALUES, NOT SEVEN. Authority: COO's Rule-24 record
+# org/tier1_exec/2.0.0_SA_COO/deliverables/DEP_STAGE_ENUM_RULE24_RECORD_20260821.md:41-46, which
+# transitions DECOMP -> EXECUTING directly on "first TO cut from a decomp cell". There is no
+# intermediate state and the record's own postulate work explains why.
+#
+# ⛔ CORRECTED 2026-09-01 ~19:0xZ. This tuple carried a SEVENTH value, `TOS_CUT`, that was NEVER
+# RATIFIED -- introduced by 3.0.0_SA_CVO when this gate was built, from the ten-step map's step 6
+# rather than from the enum's authority. Rule 24 binds any schema an agent AUTHORS **OR ADOPTS**,
+# and this was a bad adoption by the seat that mandated the rule.
+#
+# ⛔⛔ AND THE CONSEQUENCE IS THE SHARP PART: THE WRONG ENUM SUPPRESSED A REAL FINDING. `--sweep`
+# reported `BRIEF x2` as off-enum and said NOTHING about `TOS_CUT x2`, which is equally off-enum --
+# because this tuple had been widened to admit it. A GATE WHOSE VOCABULARY IS WRONG CANNOT SEE THE
+# VIOLATIONS THAT MATCH ITS OWN ERROR, and it reports CLEAN on exactly those. The refusal message
+# printed the bad value back to every seat it refused, and it went out in two fabric broadcasts.
+DEP_STAGE_ENUM = ("REGISTERED", "PRD", "DECOMP", "EXECUTING", "ROUND_CLOSE", "CLOSED")
 PROJECT_RE = re.compile(r"([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)")
 
 
