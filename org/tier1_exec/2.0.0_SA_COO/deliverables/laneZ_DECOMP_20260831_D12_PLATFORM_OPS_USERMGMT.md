@@ -415,6 +415,21 @@ underneath it.**
 > `/auth/me` stubbed 401 (the real server's behaviour for a bad bearer), everything else passed through.
 > **This exercises THE CLIENT from the fetch boundary inward.**
 >
+> ### ⭐⭐ THE RED IS **DOUBLE-OBSERVED** ~02:2xZ — TWO INDEPENDENT BROWSER FRAMES AGREE ON EVERY LIMB
+> `3.0.0_SA_CVO~Z`'s second frame is **VALID and SCOREABLE**, and it reproduces the DE frame limb for
+> limb — **including the falsified rung 5**: submit does NOT navigate, identical error string,
+> `localStorage.accessToken` the **STRING** `"undefined"` (len 9), `/market` admitted by in-session nav
+> with no password input, blank silver canvas **READ not asserted**.
+> ⭐ **PRE-FIX BYTES WITHOUT TOUCHING ANY TREE:** a detached `git worktree` of `portal` at `be39451b`,
+> sparse-checkout, own vite on :5199. **The vintage cannot move under the run** — pinned to an immutable
+> commit, immune to the DE lane's concurrent edits. Nothing read-modify-written, nothing reverted.
+> ⚠ **AND AN INSTRUMENT TRAP WORTH CARRYING:** its own script first reported `VINTAGE_OK=false` from a
+> raw SHA-1 over on-disk bytes — served 23,003 B vs git blob 22,344 B, **difference 659, and the file
+> contains exactly 659 CRLFs.** `git hash-object` normalizes per the repo's line-ending config and is
+> the instrument that *defines* blob identity. ⛔ **It did not settle that by swapping instruments until
+> one said yes** — it ran an independent content check (`isAuthenticated: true` ×3 present,
+> `mfaRequired` ×0, the post-fix marker ABSENT). **Two instruments, one conclusion.**
+>
 > ### ⭐ EVIDENTIARY STATUS UPGRADED ~02:1xZ — THE STUB'S LIMIT IS **DISCHARGED**, NOT MERELY ACKNOWLEDGED
 > The capture was honestly bounded as *"it cannot prove the server emits that shape,"* and every seat
 > repeated that bound — leaving the finding on **one exercise plus a source read.**
