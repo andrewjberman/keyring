@@ -33,11 +33,73 @@ unfalsifiable -- there is nothing to score, so it would silently never close.
 
 **CALL 3 -- D8 endpoint: the ISSUED RUN or the CLOSED HOLE?**
 REC as rendered: *read it as the CLOSED HOLE, and record D8's cot limb as VENDOR-BLOCKED rather
-than done.* -> **AGREED.**
-CONSEQUENCE: `--date 2026-08-31` is a **permanent bronze gap** that does not self-heal and is NOT
-closable by us under present vendor state. D8's cot limb is **VENDOR-BLOCKED**, not complete.
-NO-THIRD-FIRE (CTO 90594) stands with its discharge condition: **a MEASURED BD roster change
-15 -> 14 for the `Core | Satellite 60` strategy.**
+than done.* -> **AGREED BY HIM -- AND THE PREMISE UNDER THE REC IS FALSIFIED. SEE THE CORRECTION
+BELOW. The clause struck here is struck, not quietly edited.**
+
+~~CONSEQUENCE: `--date 2026-08-31` is a **permanent bronze gap** that does not self-heal and is NOT
+closable by us under present vendor state. D8's cot limb is **VENDOR-BLOCKED**, not complete.~~
+
+NO-THIRD-FIRE (CTO 90594) stands, and now has a SECOND and STRONGER reason. Its original discharge
+condition (a MEASURED BD roster change 15 -> 14) is superseded in its REASONING though not in its
+effect -- see s.2a.
+
+### ⛔ 2a. CORRECTION -- THE 2026-08-31 COT HOLE DOES NOT EXIST. FILED 2026-09-01 ~03:3xZ.
+
+**ANDREW-DIRECT ~03:2xZ at the CTO terminal, relayed by `1.0.0_SA_CTO` at msg 90650, VERBATIM:**
+
+> remember how data is always D+1? today is 8/31 eastern, so all this talk about 8/31 not existing
+> is not a data hole
+> we wouldnt be able to get that until tomorrow 9/1
+> 8/28 is Friday, it is the last day we have data
+> because its the last trading day
+
+**MEASURED INDEPENDENTLY AT THIS SEAT** (`datetime.date.strftime('%A')`, not relayed):
+
+```
+  2026-08-27  Thursday
+  2026-08-28  FRIDAY      <- the last TRADING day prior to 08-31
+  2026-08-29  Saturday
+  2026-08-30  SUNDAY
+  2026-08-31  MONDAY
+  2026-09-01  Tuesday
+```
+
+**Data is T-1. The latest available data date is 2026-08-28. A 2026-08-31 partition CANNOT EXIST
+until 2026-09-01. THE ABSENCE IS THE EXPECTED STATE, NOT A DEFECT.**
+
+⛔ **`CLAUDE.md` s.5 HARD STOPS says this in terms, and this seat did not apply it either:**
+*"NEVER call a pipeline stale/broken until you resolve the TRADING CALENDAR -- count trading days.
+Everything is `T-1` unless declared; **Friday IS Monday's answer**."*
+
+**WHAT IS FALSIFIED, scoped to the refuted clause and no wider:**
+- The "2026-08-31 cot hole" is **not a hole**. Every statement in this record calling it one is
+  wrong at the premise, including the struck clause above and the phrase "a permanent bronze gap"
+  in the commit message of `c203d78efc`.
+- **CALL 3's REC WAS BUILT ON A NON-EXISTENT DEFECT.** Andrew agreed to a recommendation whose
+  premise this seat had not measured against the trading calendar. **The agreement is his; the
+  false premise is this seat's**, and it is put back to him rather than resolved here.
+- The carve-out that jumped ahead of D2 was justified by that non-defect, and his per-use
+  vendor-egress word was spent asking a vendor for a date that cannot yet exist.
+
+**WHAT IS *NOT* FALSIFIED -- an over-broad retraction is its own defect:**
+- The runner's `COUNT-RECONCILE SELF-GATE FAILED -- strategy "Core | Satellite 60", roster 15,
+  observed 14` is a REAL error signature that fired twice byte-identically. Whether it is a genuine
+  roster/book defect or an artifact of requesting an unavailable date is **UNRESOLVED** and is
+  `0.6.2_AE_PartnerETL`'s call, which holds the runner.
+- **`MDPF_HEALGAP` is NOT void.** Its subject -- a transient auth gap hardening into a permanent
+  hole because nothing re-runs after the heal -- is a real class. What is falsified is that
+  2026-08-31 is an INSTANCE of it. Whether any other date is a genuine instance is OPEN.
+- **W2 / ADVI_BDPARITY IS UNTOUCHED BY THIS.** Different act, different premise, and that premise
+  WAS measured: `0.4.0_DS_ClientPlatform~Y` verified the 6-day hole CLOSED at partition AND cell
+  grain, exercised the per-feed selector itself rather than relaying it, and re-derived the 5,309
+  cohort deterministically twice. **Do not let this correction propagate into W2.**
+
+⚠ **AND A CONTROL TO RE-EXAMINE, raised by `1.0.0_SA_CTO` (90650 s.4):** the NOT-CLOSED verdict was
+verified against **2026-08-30 as "a date known COMPLETE" -- and 2026-08-30 is a SUNDAY.** This
+estate already records that BD silver partition KEYS are WRITE dates, not CONTENT dates, so a Sunday
+partition can legitimately exist carrying Friday's content. That is not a contradiction, but **the
+control was not the control it was labelled**, and a partition-date read and a content-date claim
+were treated as one measurement. `0.6.2_AE_PartnerETL`'s to resolve, with NO re-fire.
 
 **ALSO COVERED -- the item this seat REMOVED from his queue as decidable.** The same message stated,
 as this seat's own decision rather than a call at him, that the CALL 2 activation signal would be
