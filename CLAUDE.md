@@ -68,9 +68,23 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
     `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`; falsifier
     `.tools/comprail-gate1-fptest.sh`, 43 cases, red 18/43 against the pre-T1 hook). Cost: one `grep`
     per non-search Bash call; ~0.5–1 s more on a Bash call that DOES carry a search token (MSYS process
-    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), a single-file grep (T2, revisit ~09-04 on
-    the `ALLOW-SEARCH` rows), `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob` (nudge-and-
-    proceed, re-affirmed 08-28), `Read`, operational `aws`. `comp-grep` is a forwarder onto `comp-find`.
+    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), `# rail-checked: <why>`, `/freeform`,
+    native `Grep`/`Glob` (nudge-and-proceed, re-affirmed 08-28), `Read`, operational `aws`.
+    `comp-grep` is a forwarder onto `comp-find`.
+    ⛔ **A SINGLE-FILE GREP IS NO LONGER THE EXCEPTION — IT ROUTES TO `comp-read`** (Andrew-direct
+    2026-09-01, RETIRING the T2 `ALLOW-SEARCH shape=single-file` carve-out). `comp-read <file> --for
+    "<question>"` returns the file's SHAPE, regions tagged AUTHORITATIVE-vs-DESCRIPTIVE, every
+    QUALIFIER that limits/negates/corrects a nearby claim, intra-file CONTRADICTIONS, and an UNREAD
+    LEDGER — **the four things a grep of one file structurally cannot show.** Why it earns the swap:
+    a seat read `perfrp_emit_core.py`'s git LOG all evening and never its LINE 1, where a
+    `DEPLOY-SERVE-HELD` sentinel sat blocking the very act it was planning (2026-08-31); and the `head`
+    clause below records 3 seats truncating a grep of ONE file inside one hour. **COST:** a heavier
+    read per call than `grep`. **NON-APPLICATION:** a MEASUREMENT rather than a read — `grep -c` /
+    `grep -q` for a count or an existence test — and any pipe-receiver. **comp-read INDEXES a file; it
+    does not COUNT for you.** ⚠ **MECHANISM IS DESIRED-NOT-APPLIED until `comp-tool-hud.sh` changes:**
+    the carve-out is live at `:138`/`:141` (shape detection), `:155-156` (ALLOW-SEARCH log) and `:182`
+    (`path ends in a file extension` -> `exit 0`). Until those route to `comp-read`, this clause binds
+    agents by reading and nothing by enforcement.
     Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
     the pattern): `docs/architecture/NFRA_COMPRAIL_PRD.md`.
     ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Scoping this to comp-find is what let 3
