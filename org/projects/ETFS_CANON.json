@@ -1,42 +1,42 @@
 {
-  "project_code": "ETFS_CANON",
-  "macro_code": "ETFS",
-  "name": "ETFS canonical-output + delta-charts -- DynamoDB daily rows + monthly 'marquis' (avg-accented) + 6 chart families + periodic deck",
-  "description": "Andrew-direct (2026-06-25, given to 0.4.0_DE) -- the canonical-OUTPUT + analytics-charts layer ON TOP of the ETFS data pipeline (ETFS_SETUP producers + ETFS_AVGCAP metric + the daily-text-report presentation). Andrew decisions captured (DE spec docs/briefs/ETFS_canonical_output_and_charts_design_v0.1.md): (1) GRAIN = PARTNER-NOW / end-client-LATER -- phased, forward-compatible client_id+grain key (ships on the live partner-grain pipeline now, refines to per-household/per-client later WITHOUT a rewrite); (2) DAILY = a DynamoDB row (table opal-etfs-ownership-daily, PK client#etf / SK date + GSIs for the cuts), NO charts; (3) MONTHLY = the 'marquis' artifact -- AVERAGE-level client aggregates ACCENTED at top + current+average summary + daily-values-per-ETF-per-client matrix + DELTA CHARTS (period + available-lookback) at 3 cuts (per-ETF / per-client / per-client-ETF) = 6 chart families. Architecture: an internal fan-in Lambda off the existing S3 daily slices feeds the Dynamo table (firm-sep write-out intact); the monthly producer EXTENDS avgcap_monthly_average.py -> the canonical marquis artifact; the periodic deck (deck-gen) renders it. CONCURRENT WITH the daily-text-report (ETFS presentation core, deployed+CVO-certed) -- this is the richer canonical/charts layer, not a replacement.",
-  "prds": [
-    {
-      "path": "docs/briefs/ETFS_canonical_output_and_charts_design_v0.1.md",
-      "label": "DE design spec (Andrew-direct decisions: partner-now grain / daily=Dynamo-row / monthly=marquis+6-chart-families) -> CTO design-gate",
-      "date": "2026-06-25"
-    }
-  ],
-  "related": [
-    "ETFS_AVGCAP",
-    "ETFS_SETUP",
-    "ETFS_NETAST",
-    "ETFS_SECIDX"
-  ],
-  "status": "scoping",
-  "phase": "*** ANDREW-DIRECT 2026-08-24 ~22:12Z, VERBATIM: \"Agreed with your recs + We can revisit ETFS_CANON After INGEST is done\" -- ETFS_CANON IS DEFERRED, RE-ENTERING AFTER ETFS_INGEST IS DONE, and it is OUT of D4's completion set. This is STRONGER than the rec put to him (which proposed letting it stand as its own directive); he SEQUENCED it. ** DEFERRAL, NOT REMOVAL -- the design gate stays RULED and nothing here is withdrawn; what changes is that no D4 completion test waits on it and no seat is sought for it now. ** Register member-set edit is MSTR~Z's. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_ANDREW_DIRECT_20260824_GICS_SERVED_D4_SCOPE_ETFS_CANON_AFTER_INGEST.md. || *** DESIGN GATE RULED 2026-08-24 ~20:4xZ by 1.0.0_SA_CTO~Z (TO-D4a DISCHARGED; D4 placement SITEZ until done) -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_TO-D4a_ETFS_CANON_DESIGN_GATE_RULING_20260824.md: item 1 marquis=AVGCAP-avg CONFIRMED; item 2 NOT AS RECOMMENDED -- daily canonical form = S3 GOLD PARQUET opal-data-etfs/gold/ownership_daily/date={D}/ (Rule 17b + Andrew's C2 ruling naming opal-data-etfs/gold/ the ETF product's gold home), NO DynamoDB / GSIs / fan-in Lambda / new IAM; item 3 single-internal-writer principle KEPT as one scheduled gold producer; item 4 full lookback BLESSED as the build default (Andrew revises on his word); item 5 monthly = PLATINUM JSON at the live serving root + the periodic deck, INTERNAL ONLY. Siblings ruling (ownership vs composition planes) RULED. R10 closeout-drift finding RESOLVED-AS-EXPECTED (never closed; trigger misfired on a touch commit) -- delete routed to owner 2.0.0_SA_COO~Z. BUILD NOT DISPATCHED by the ruling: activation (COO stage-3 decomp over the four lanes) waits on Andrew's open card 'does D4 complete on the composition plane alone?' -- placement follows D4 if the ownership plane is in; else this project waits for its own word. *** | PHASE 0 -- DESIGN/SCOPING (Andrew-direct 2026-06-25 via 0.4.0_DE). DE design spec STAGED -> CTO design-gate PENDING (DE routed it). 5 design-gate open items (DE-defaulted, CTO-blesses): marquis=AVGCAP-avg (confirm), Dynamo-vs-S3 (rec Dynamo), fan-in-vs-direct-write (rec fan-in), lookback-horizon (rec full), monthly-delivery (rec periodic deck). LANES (phased, P1 partner-grain ships now): AE = Dynamo table + GSIs + fan-in Lambda (TF); DE = monthly canonical producer + the deck; DS = grain key + AVGCAP-avg-as-marquis confirm + daily-matrix parity; CVO = firm-sep (cross-client monthly stays OPAL-INTERNAL, the same NEVER#1 bar as the presentation) + value-parity. SEQUENCE: DE design (DONE) -> CTO design-gate (NEXT) -> COO decomposes build-TOs to the 4 lanes -> build (P1 partner-grain) -> CVO consolidated verify.",
-  "blocking": "DEFERRED by Andrew-direct 2026-08-24 ~22:12Z until ETFS_INGEST is done -- this SUPERSEDES the prior 'build activation is AT ANDREW via the D4 completion-scope card', which he has now answered. Nothing is sought at Andrew for this project; do not re-card it. || Design-gate RULED 2026-08-24 (TO-D4a discharged; see phase). Build activation is AT ANDREW via the D4 completion-scope card (composition plane alone vs ownership plane too); on his word COO runs stage 3 over the four lanes (AE gold-table schedule / DS producer + grain confirm / DE monthly producer + deck / CVO firm-sep + parity cert). No seat holds this project today.",
-  "created": "2026-06-25",
-  "pods": [
-    "0.4",
-    "0.5",
-    "0.7",
-    "3.0"
-  ],
-  "pipeline": "ETFS canonical-output+charts: S3 daily slices (opal-data-etfs) -> internal fan-in Lambda -> DynamoDB opal-etfs-ownership-daily (client#etf/date + GSIs) [DAILY rows]; avgcap_monthly_average.py extension -> canonical 'marquis' monthly artifact (avg-accented aggregates + daily-matrix + 6 delta-chart families) -> deck-gen periodic deck. Firm-sep: cross-client monthly = OPAL-INTERNAL only (NEVER#1).",
-  "coo_lane": "2.0.0_SA_COO",
-  "sovereign": "Andrew",
-  "thread_counter": 0,
-  "threads": [],
-  "annotations": [
-    {
-      "date": "2026-08-19",
-      "by": "0.0.0_AB_MSTR",
-      "note": "Closeout-drift advisory finding (COO~Z, review-by 08-08) ADJUDICATED OVERTAKEN per the D4/ETFS_CANON gate ruling @6d62143d2d -- the owner seat is retired and the ruling supersedes the review ask (CTO instruction 202850Z). NOT a status flip; the PROJECT record (this file) is the correct referent per the two-referents memory (the 08-12 LOCATION ruling is a different thing)."
-    }
-  ],
-  "directive": "D4"
+ "project_code": "ETFS_CANON",
+ "macro_code": "ETFS",
+ "name": "ETFS canonical-output + delta-charts -- DynamoDB daily rows + monthly 'marquis' (avg-accented) + 6 chart families + periodic deck",
+ "description": "Andrew-direct (2026-06-25, given to 0.4.0_DE) -- the canonical-OUTPUT + analytics-charts layer ON TOP of the ETFS data pipeline (ETFS_SETUP producers + ETFS_AVGCAP metric + the daily-text-report presentation). Andrew decisions captured (DE spec docs/briefs/ETFS_canonical_output_and_charts_design_v0.1.md): (1) GRAIN = PARTNER-NOW / end-client-LATER -- phased, forward-compatible client_id+grain key (ships on the live partner-grain pipeline now, refines to per-household/per-client later WITHOUT a rewrite); (2) DAILY = a DynamoDB row (table opal-etfs-ownership-daily, PK client#etf / SK date + GSIs for the cuts), NO charts; (3) MONTHLY = the 'marquis' artifact -- AVERAGE-level client aggregates ACCENTED at top + current+average summary + daily-values-per-ETF-per-client matrix + DELTA CHARTS (period + available-lookback) at 3 cuts (per-ETF / per-client / per-client-ETF) = 6 chart families. Architecture: an internal fan-in Lambda off the existing S3 daily slices feeds the Dynamo table (firm-sep write-out intact); the monthly producer EXTENDS avgcap_monthly_average.py -> the canonical marquis artifact; the periodic deck (deck-gen) renders it. CONCURRENT WITH the daily-text-report (ETFS presentation core, deployed+CVO-certed) -- this is the richer canonical/charts layer, not a replacement.",
+ "prds": [
+  {
+   "path": "docs/briefs/ETFS_canonical_output_and_charts_design_v0.1.md",
+   "label": "DE design spec (Andrew-direct decisions: partner-now grain / daily=Dynamo-row / monthly=marquis+6-chart-families) -> CTO design-gate",
+   "date": "2026-06-25"
+  }
+ ],
+ "related": [
+  "ETFS_AVGCAP",
+  "ETFS_SETUP",
+  "ETFS_NETAST",
+  "ETFS_SECIDX"
+ ],
+ "status": "scoping",
+ "phase": "*** ANDREW-DIRECT 2026-08-24 ~22:12Z, VERBATIM: \"Agreed with your recs + We can revisit ETFS_CANON After INGEST is done\" -- ETFS_CANON IS DEFERRED, RE-ENTERING AFTER ETFS_INGEST IS DONE, and it is OUT of D4's completion set. This is STRONGER than the rec put to him (which proposed letting it stand as its own directive); he SEQUENCED it. ** DEFERRAL, NOT REMOVAL -- the design gate stays RULED and nothing here is withdrawn; what changes is that no D4 completion test waits on it and no seat is sought for it now. ** Register member-set edit is MSTR~Z's. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_ANDREW_DIRECT_20260824_GICS_SERVED_D4_SCOPE_ETFS_CANON_AFTER_INGEST.md. || *** DESIGN GATE RULED 2026-08-24 ~20:4xZ by 1.0.0_SA_CTO~Z (TO-D4a DISCHARGED; D4 placement SITEZ until done) -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_TO-D4a_ETFS_CANON_DESIGN_GATE_RULING_20260824.md: item 1 marquis=AVGCAP-avg CONFIRMED; item 2 NOT AS RECOMMENDED -- daily canonical form = S3 GOLD PARQUET opal-data-etfs/gold/ownership_daily/date={D}/ (Rule 17b + Andrew's C2 ruling naming opal-data-etfs/gold/ the ETF product's gold home), NO DynamoDB / GSIs / fan-in Lambda / new IAM; item 3 single-internal-writer principle KEPT as one scheduled gold producer; item 4 full lookback BLESSED as the build default (Andrew revises on his word); item 5 monthly = PLATINUM JSON at the live serving root + the periodic deck, INTERNAL ONLY. Siblings ruling (ownership vs composition planes) RULED. R10 closeout-drift finding RESOLVED-AS-EXPECTED (never closed; trigger misfired on a touch commit) -- delete routed to owner 2.0.0_SA_COO~Z. BUILD NOT DISPATCHED by the ruling: activation (COO stage-3 decomp over the four lanes) waits on Andrew's open card 'does D4 complete on the composition plane alone?' -- placement follows D4 if the ownership plane is in; else this project waits for its own word. *** | PHASE 0 -- DESIGN/SCOPING (Andrew-direct 2026-06-25 via 0.4.0_DE). DE design spec STAGED -> CTO design-gate PENDING (DE routed it). 5 design-gate open items (DE-defaulted, CTO-blesses): marquis=AVGCAP-avg (confirm), Dynamo-vs-S3 (rec Dynamo), fan-in-vs-direct-write (rec fan-in), lookback-horizon (rec full), monthly-delivery (rec periodic deck). LANES (phased, P1 partner-grain ships now): AE = Dynamo table + GSIs + fan-in Lambda (TF); DE = monthly canonical producer + the deck; DS = grain key + AVGCAP-avg-as-marquis confirm + daily-matrix parity; CVO = firm-sep (cross-client monthly stays OPAL-INTERNAL, the same NEVER#1 bar as the presentation) + value-parity. SEQUENCE: DE design (DONE) -> CTO design-gate (NEXT) -> COO decomposes build-TOs to the 4 lanes -> build (P1 partner-grain) -> CVO consolidated verify. *** CLOSED 2026-09-01 by 0.0.0_AB_MSTR (register owner) on ANDREW-DIRECT 2026-09-01 ~14:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM across three consecutive messages: \"D4 satellites is entirely done, we're ready to move onto the next phase of that work with the Asset Class Taxonomy initiative\" / \"POSN TENANCY is done too\" / \"the entire opal satellites produc and all of these projects are done\" / \"literally all of these ar edone\". HE IS THE AUTHORITY ON WHETHER THE WORK IS DONE; the register was carrying OPEN FACES OVER FINISHED WORK, which is the stale-face class this fabric has been finding all night -- an [ACTIVE] face and genuinely open work render identically, and only the sovereign can discriminate them here. NOTHING WAS RE-EXECUTED and no acceptance was re-run: a world-done item closes, it does not re-run (CLAUDE.md NEVER-2). ANY OPEN TASK ORDER ON THIS PROJECT IS NOW A STALE FACE over finished work -- closing a TO face is its ISSUER's act, not the register owner's, so those are SURFACED to their issuers rather than closed here. *** REOPENED 2026-09-01 ~14:1xZ by 0.0.0_AB_MSTR (register owner), CORRECTING THIS SEAT OWN CLOSE MINUTES EARLIER. ANDREW-DIRECT, VERBATIM: \"ETFS_CANON should be revisited because there may be unaddressed work there, but the rest of the projects you listed are done.\" I closed this row in LD-0497 by reading his \"literally all of these ar edone\" as covering every D4 member; it did not, and he corrected it in the next message. RESTORED TO ITS EXACT PRIOR VALUE (scoping), NOT promoted to active: his words are \"should be revisited\" and \"MAY be unaddressed work\", which is a statement of UNCERTAINTY, and promoting the row would resolve an uncertainty he deliberately left open. THE MECHANISM, and it is the same one that stranded the D4 placement: this project was DEFERRED by Andrew-direct 2026-08-24 ~22:12Z UNTIL ETFS_INGEST IS DONE. ETFS_INGEST is now complete. THE DEFERRAL CONDITION HAS FIRED AND NOBODY PICKED THE PROJECT BACK UP -- a condition-bounded hold does not expire on its own, nothing in the estate watches for its trigger, and the row simply sat. That is why there is unaddressed work here and it is a defect in how we carry conditional holds, not in this project.",
+ "blocking": "*** DEFERRAL CONDITION SATISFIED 2026-09-01: ETFS_INGEST is COMPLETE, so the 2026-08-24 deferral no longer holds. Andrew has asked that this project be REVISITED for unaddressed work. NOT BLOCKED and NOT AT ANDREW -- the revisit is a scoping read someone must actually do. || DEFERRED by Andrew-direct 2026-08-24 ~22:12Z until ETFS_INGEST is done -- this SUPERSEDES the prior 'build activation is AT ANDREW via the D4 completion-scope card', which he has now answered. Nothing is sought at Andrew for this project; do not re-card it. || Design-gate RULED 2026-08-24 (TO-D4a discharged; see phase). Build activation is AT ANDREW via the D4 completion-scope card (composition plane alone vs ownership plane too); on his word COO runs stage 3 over the four lanes (AE gold-table schedule / DS producer + grain confirm / DE monthly producer + deck / CVO firm-sep + parity cert). No seat holds this project today.",
+ "created": "2026-06-25",
+ "pods": [
+  "0.4",
+  "0.5",
+  "0.7",
+  "3.0"
+ ],
+ "pipeline": "ETFS canonical-output+charts: S3 daily slices (opal-data-etfs) -> internal fan-in Lambda -> DynamoDB opal-etfs-ownership-daily (client#etf/date + GSIs) [DAILY rows]; avgcap_monthly_average.py extension -> canonical 'marquis' monthly artifact (avg-accented aggregates + daily-matrix + 6 delta-chart families) -> deck-gen periodic deck. Firm-sep: cross-client monthly = OPAL-INTERNAL only (NEVER#1).",
+ "coo_lane": "2.0.0_SA_COO",
+ "sovereign": "Andrew",
+ "thread_counter": 0,
+ "threads": [],
+ "annotations": [
+  {
+   "date": "2026-08-19",
+   "by": "0.0.0_AB_MSTR",
+   "note": "Closeout-drift advisory finding (COO~Z, review-by 08-08) ADJUDICATED OVERTAKEN per the D4/ETFS_CANON gate ruling @6d62143d2d -- the owner seat is retired and the ruling supersedes the review ask (CTO instruction 202850Z). NOT a status flip; the PROJECT record (this file) is the correct referent per the two-referents memory (the 08-12 LOCATION ruling is a different thing)."
+  }
+ ],
+ "directive": "D4"
 }
