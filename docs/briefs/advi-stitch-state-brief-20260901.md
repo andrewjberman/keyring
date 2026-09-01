@@ -167,7 +167,7 @@ assumed when he commissioned it.
 
 ## PART VI — STATUS ⛔ NOT OUTCOME-BEARING
 
-*Measured 2026-09-01 ~19:30-20:30Z, `s3api` (UTC).*
+*Measured 2026-09-01 19:05-19:45Z, `s3api` (UTC).*
 
 **1. Phase A: landed, not formally certified.** Bronze/silver legacy tiers and the frozen reference
 tier are all present with the counts in Finding A, written 2026-08-25. The census equality of
@@ -213,5 +213,5 @@ PROJECT           ADVI_STITCH  (directive D2, status active, placement LAPTOP)
 EXISTING PRD      docs/architecture/ADVI_STITCH_PRD.md  (v0.2, APPROVED FOR STAGE 3, Phase A now)
 SIBLING PROJECTS  ADVI_PERFRP (consumer) · ADVI_49FSRC · ADVI_BDPARITY · Fidelity ingestion
 PRIOR ART         ADVI_PERFORMANCE plan s.15 (P-5 pre-floor history policy); dim_account_xref
-MEASURED AT       2026-09-01 ~19:30-20:30Z, s3api (UTC) + git log
+MEASURED AT       2026-09-01 19:05-19:45Z, s3api (UTC) + git log
 ```

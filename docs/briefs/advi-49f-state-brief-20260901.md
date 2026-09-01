@@ -162,7 +162,7 @@ one field of one carrier and withdrew it.
 
 ## PART VI — STATUS ⛔ NOT OUTCOME-BEARING
 
-*Measured 2026-09-01 ~19:30-20:30Z, `s3api` (UTC), plus source reads.*
+*Measured 2026-09-01 19:05-19:45Z, `s3api` (UTC), plus source reads.*
 
 **1. The canonical chain is healthy and current.** Eight tables, newest partition `date=2026-08-31`,
 which is the correct as-of for 2026-09-01 under T-1 and the trading calendar.
@@ -209,5 +209,5 @@ PROJECT           ADVI_49F  (directive D2, status active, registered 2026-08-27)
 EXISTING PRD      NONE OF ITS OWN -- points at D2_ADVI_49F_E2E_PRD.md + d2-critical-path-sequencing
 SIBLING PROJECTS  ADVI_PERFRP · ADVI_INSURE (both run AS STAGES in this chain) · ADVI_BDPARITY
 PRIOR ART         chain_49f_entrypoint.py; the canonical gold tier; gold/advi/_logs/
-MEASURED AT       2026-09-01 ~19:30-20:30Z
+MEASURED AT       2026-09-01 19:05-19:45Z
 ```

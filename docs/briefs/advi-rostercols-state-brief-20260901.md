@@ -127,7 +127,7 @@ the register does not cite it.** That is a one-line registry repair, not a scopi
 
 ## PART VI — STATUS ⛔ NOT OUTCOME-BEARING
 
-*PRD read at source; register read 2026-09-01 ~20:30Z.*
+*PRD read at source; register read 2026-09-01 19:45Z.*
 
 1. **PRD v0.1 exists, drafted 2026-09-01 ~04:0xZ**, on Andrew-direct *"agreed with all recs"* at the
    COO terminal, which ratified cutting PRDs for this project and `ADVI_COTKEY` *"so the two stop
@@ -161,5 +161,5 @@ PROJECT           ADVI_ROSTERCOLS  (directive D2, status active)
 EXISTING PRD      docs/architecture/ADVI_ROSTERCOLS_PRD.md (v0.1 DRAFT) -- NOT CITED BY THE REGISTER
 SIBLING PROJECTS  ADVI_PERFRP (the surface, NOT the owner) · ADVI_49F (the spine) · ADVI_STITCH
 PRIOR ART         accountRoster.ts (the correct render path); PRF-d-7 custodian ruling
-MEASURED AT       2026-09-01 ~20:30Z
+MEASURED AT       2026-09-01 19:45Z
 ```

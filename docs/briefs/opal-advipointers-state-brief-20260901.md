@@ -175,5 +175,5 @@ PROJECT           OPAL_ADVIPOINTERS  (directive D2, status active, owner 1.0.0_S
 EXISTING PRD      docs/architecture/OPAL_ADVIPOINTERS_PRD.md (v1.0, 2026-08-12) + 4 further refs
 GOVERNING SPEC    MDPF_ADVI_UNIFIED_CANONICAL_PATTERN_SPEC_20260811.md (RATIFIED 2026-08-11)
 SIBLING PROJECTS  governs ALL D2 members' substrate conformance; depends on D10 for bucket naming
-MEASURED AT       2026-09-01 ~20:30Z (planes + commits); phase state NOT re-measured, see Part VI.1
+MEASURED AT       2026-09-01 19:45Z (planes + commits); phase state NOT re-measured, see Part VI.1
 ```

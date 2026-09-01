@@ -190,7 +190,7 @@ Named, not sequenced. Sequencing is step 5.
 
 ## PART VI — STATUS ⛔ NOT OUTCOME-BEARING
 
-*Everything here was measured 2026-09-01 between ~19:30Z and ~20:30Z unless stated. Status ages;
+*Everything here was measured 2026-09-01 between 19:05Z and 19:45Z unless stated. Status ages;
 outcomes do not.*
 
 **1. Where it stands.** Ingestion landed; silver live to 09-01 on two of three tables; gold minted
@@ -247,5 +247,5 @@ PROJECT           ADVI_INSURE  (directive D2, status active, placement LAPTOP)
 EXISTING PRD      docs/architecture/ADVI_INSURE_PRD.md  (v0.2, APPROVED FOR STAGE 3 2026-08-24)
 SIBLING PROJECTS  ADVI_PERFRP · ADVI_49F · ADVI_STITCH · ADVI_COTKEY · DATA_BDINSURANCE
 PRIOR ART         DATA_BDINSURANCE (BD insurance API, resolved on the cot principal, rung 2)
-MEASURED AT       2026-09-01 ~19:30-20:30Z, s3api (UTC) + comp-find over portal/src
+MEASURED AT       2026-09-01 19:05-19:45Z, s3api (UTC) + comp-find over portal/src
 ```

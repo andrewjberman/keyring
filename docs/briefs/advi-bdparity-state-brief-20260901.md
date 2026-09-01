@@ -129,7 +129,7 @@ with its numbers.
 
 ## PART VI — STATUS ⛔ NOT OUTCOME-BEARING
 
-*Grounded on the project record and commit stream read 2026-09-01 ~20:30Z. Figures RELAYED from the
+*Grounded on the project record and commit stream read 2026-09-01 19:45Z. Figures RELAYED from the
 owning lanes' committed deliverables unless marked measured-by-me.*
 
 **1. ⛔ THE PREMISE CORRECTION, restated because it is load-bearing.** Parity is **not proven**.
@@ -185,5 +185,5 @@ PROJECT           ADVI_BDPARITY  (directive D2, status active, registered 2026-0
 EXISTING PRD      NONE OF ITS OWN -- spec is docs/architecture/D2_ADVI_49F_E2E_PRD.md s.4a
 SIBLING PROJECTS  ADVI_PERFRP (subject) · ADVI_49F (facts) · ADVI_STITCH (the seam)
 PRIOR ART         docs/briefs/advi-bdparity-spot3-and-si-recommendation-20260901.md
-MEASURED AT       2026-09-01 ~20:30Z (commit stream + planes); embedded figures carry lane vintages
+MEASURED AT       2026-09-01 19:45Z (commit stream + planes); embedded figures carry lane vintages
 ```

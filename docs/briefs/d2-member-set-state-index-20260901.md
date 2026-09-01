@@ -133,7 +133,7 @@ Sequencing is COO's at step 5. This is a reading order for the briefs, with the 
 5. **The per-project briefs carry their own limits**, and several are explicitly thinner-sourced —
    BDPARITY has no PRD of its own, ADVI_49F's registry entry is a defect list rather than a purpose,
    and COTKEY's Part IV is relayed rather than measured. **Read each brief's Part VII.**
-6. **Status ages.** Every measurement here carries 2026-09-01 ~19:30–20:30Z.
+6. **Status ages.** Every measurement here carries 2026-09-01 19:05–19:45Z.
 
 ---
 
@@ -145,5 +145,5 @@ DIRECTIVE      D2 -- Advisor Intelligence (placement LAPTOP, one of six named la
 DIRECTIVE PRD  docs/architecture/D2_ADVI_49F_E2E_PRD.md
 MEMBER SOURCE  org/missions/DIRECTIVES.yaml -> D2.members.projects (10 entries)
 PRIOR ART      docs/briefs/d2-critical-path-sequencing-20260827.md (CTO, 08-27)
-MEASURED AT    2026-09-01 ~19:30-20:30Z
+MEASURED AT    2026-09-01 19:05-19:45Z
 ```
