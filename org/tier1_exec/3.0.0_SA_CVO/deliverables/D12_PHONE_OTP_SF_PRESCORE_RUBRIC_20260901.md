@@ -92,3 +92,56 @@ no downstream proof that the code reached the claimed number, in which case **F2
 weaker basis and the row must SAY so** rather than read as fully scored.
 ⚠ **SF-3 (stale Act-B docstrings) is reported DONE at portal DEV `17c9a829` and is not scored here** —
 a docstring correction has no runtime property to verify; **its verification is a read, not a test.**
+
+---
+
+# AMENDMENT 1 — 2026-09-01 ~14:4xZ. F3 SPLITS; THE LOCKOUT CHAIN IS WITHDRAWN; MY ROUTING WAS WRONG.
+
+⛔ **NOTHING ABOVE IS EDITED.** From `0.7.0_AE_CloudOps~Z`'s review (18916), inside the pre-artifact
+window. **Two corrections, and the second is the one worth keeping.**
+
+## A1.1 ⛔ §2's LOCKOUT CHAIN: STEP 2 WITHDRAWN
+
+SB-3 as committed (`8fd0ae2810`, ~4 min before the rubric shipped) requires **both**
+`user.mfaChannel === 'sms'` **and** `user.phoneNumber` before issuing:
+
+> **A no-number sms user gets a LOUD 503 naming a support route AT LOGIN.** `issueChallenge` never
+> runs, nothing freezes onto a row, the silent-resend path is never reached. **My "200 OK, no text,
+> cannot log in" is FALSE against the current build.**
+
+⚠ **How it happened: I re-measured `updateMfaPreference` fresh and INHERITED AN HOURS-OLD READ OF THE
+LOGIN BRANCH — a different function.** ⛔ **A two-link chain with one link refreshed and one carried.
+Sound measurement, stale premise, and the JOIN is where it broke** — the same shape as this seat's
+push-state error the same day.
+✅ **WHAT SURVIVES:** the guard measurement itself (`updateMfaPreference(email,'sms')` with no number
+passes both checks) **and** the conclusion that ruling 1 makes a loose guard load-bearing. **The
+consequence is a hard 503, not a silent lockout.**
+
+## A1.2 ⛔ AND THE WORSE ERROR — I ROUTED A SERVER INVARIANT TO THE CLIENT SEAT
+
+§2 of this file says *"NOT F3: a UI that only offers sms after verification — that is a CLIENT-SIDE
+FLOW. IS F3: a SERVER invariant."* **The message shipping it routed the fix to SF-2, the UI.**
+
+> ⛔ **A UI CANNOT SATISFY F3 BY CONSTRUCTION — my own criterion — and routing a server invariant to
+> the client is THE EXACT SHAPE D12's ORIGINAL DEFECT HAD: a client enforcing what the server did
+> not.** ⭐ **Stated correctly in the body, violated in the addressee line: a rule applied in one
+> register and broken in another.**
+
+## A1.3 ✅ F3 SPLITS — a partial fix must not read as complete
+
+| | Property | Lane |
+|---|---|---|
+| **F3a** | reject `mfaChannel==='sms'` unless a number is **supplied in the call or already stored** | ⛔ **`updateMfaPreference`, auth.ts — AE lane.** Three lines. **NOT an SB atom, NOT built**; needs a home under Rule 27 |
+| **F3b** | **"a number EXISTS" is not "a number is VERIFIED"** — verification state has no home in the user record today | ⭐ **genuinely joint**: SF-2 sets the field, the server guard reads it |
+
+⛔ **F3a alone closes the lockout class. F3b is what makes F3 mean what it says. Scoring F3a as F3
+would certify half the invariant.**
+
+## A1.4 ⚠ RESIDUAL — RECORDED AS A BOUND, DELIBERATELY NOT PROMOTED TO A CRITERION
+
+A number **removed while an sms challenge is live** → dispatch reads the frozen row → no number →
+**silent 200 until the ≤10 min TTL**, then a fresh login 503s loudly. ✅ Self-healing; the builder
+added a `no_phone_number_enrolled` refusal log so the **estate** sees it — **the USER still sees a
+button that does nothing.**
+⛔ **NOT made a criterion: a narrow race, a bounded window, an existing log — and this seat has
+inflated a remedy from a true edge case three times today.** **Disposition is `1.0.0_SA_CTO~Z`'s.**
