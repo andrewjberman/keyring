@@ -193,6 +193,28 @@ are the ones people skip:
 ⛔ **SURPLUS IS THE HALF THAT PAYS FOR THE REST.** A reorientation that only ADDS work is not a
 reorientation, it is a wish. Name what stops.
 
+## Step 9a -- ⛔ THE REACHABILITY PASS: which KEEP items the fabric cannot finish by working
+
+**Added 2026-09-01 after the first live run, where this produced the single most valuable line in
+the output and no earlier step would have surfaced it.**
+
+Walk the KEEP set and mark every item whose completion requires an act **NO SEAT CAN PERFORM** --
+a sovereign word, a vendor-egress grant, an external ingestion, another party's release. Then
+count them.
+
+>> **A DELTA TABLE MADE ONLY OF WORK IS A LIE OF OMISSION WHEN THE BLOCKER IS NOT WORK.** Every
+   KEEP row looks equally actionable, so a plan reads as reachable while some of its rows are
+   waiting on a sentence nobody has said. **The count of unreachable-by-working rows belongs in
+   the package's headline, not its footnotes.** <<
+
+**SPECIMEN, first run:** Andrew ruled "everything on D2" = the 22 open task orders. SIX of those
+22 sat behind two acts no seat could perform -- one un-given per-use vendor-egress word (5 chained
+TOs) and one unnamed activation signal. **The restructuring package could not reach the endpoint it
+was written for, and only this pass says so.**
+
+Render as: `REACHABLE BY WORKING: N of M. BLOCKED ON AN ACT NOBODY IN THE FABRIC CAN PERFORM: K --
+<who owes each>.` Hand the K-list to whoever owes it **in the same turn** as the package.
+
 ## Step 10 -- Emit the dispatch-ready package. DO NOT DISPATCH.
 
 **Andrew-direct 2026-09-01, and 00:1xZ 2026-09-01 before it: this seat RULES; `2.0.0_SA_COO`
