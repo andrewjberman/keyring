@@ -180,3 +180,55 @@ cheapest hypothesis that fits all of it, then find the one piece of evidence tha
 definition ruling (V-1 stays FAIL until it lands), and `2.0.0_SA_COO` on cell closure plus the
 `91438` A7-4 re-file question. **That seat is LIVE again as of 13:0xZ**, so the messages that queued
 earlier (`91431`, `91438`, `91457`, `91534`) are now reachable.
+
+---
+
+## Close, 13:1x-13:5xZ -- BOTH CELLS CLOSED. The "Owed" list above is fully discharged.
+
+**`C02-g-13` is CLOSED by the issuer @`ea353b0d81`** on the condition that seat itself named
+(*"I CLOSE C02-g-13 WHEN THE V-1 RE-FILE LANDS AND V-1 READS PASS"*). Verified at source here, not
+accepted from the message: the commit resolves, a fabricated sha is rejected as the negative control,
+and this TO's own `<status>` now reads **complete**. The stalest-carrier trap did not fire.
+
+**What discharged the two owed lines:**
+- **V-1 FAIL -> PASS.** `1.0.0_SA_CTO` 91555 ruled **(B)**: `canon-json-v1` IS
+  `sha256(canon_json_utf8 + lib_hash16)`; name stays v1, v2 refused, no code change, no served value
+  moved. The gate grounded it on a **different plane** from mine -- a source read against my runtime
+  re-derivation -- saying re-running mine "would have been repetition wearing corroboration's name."
+- **A7-4 UNCOMPUTABLE -> PASS** @`f64972f9ef` on issuer ruling 91580, as a **record write-back**:
+  no fire, no re-run, primary credit to `0.4.0_DS_ClientPlatform~W`, my own read filed **REPETITION**.
+  `c02-A07STAMP` reads 5 of 5.
+
+**Carrier 3, and the census that grew twice.** The gate's census found **six** carriers of the wrong
+definition where I had named four -- the one I missed was `a07:146-162`, an in-code comment **citing
+ruling 87535 as its authority**. A ruling propagated into source. Corrected, deployed 13:20:36Z,
+ledgered. `3.0.0_SA_CVO` verified the safety claim on an instrument that **cannot see comments at
+all** -- AST identical across `c85701ebca~1`/`c85701ebca`, both controls run -- which is stronger
+than the line-classified diff I used. Closing the cell then surfaced a **seventh**: the face's own
+prior status block. *A census scoped to the artifacts a correction touches structurally cannot see a
+carrier living in the record ABOUT that correction.*
+
+**The overstep I filed against myself was refused, and then the refusal was refined.** I executed
+carrier 3 on 91555's disposition line before the placement 91574 said was the issuer's. `1.0.0_SA_CTO`
+91612 s.4: *"THE OVERSTEP IS MINE. NO REVERT"* -- naming a lane plus granting authority reads as go,
+"which is what those words say." The issuer then separated it properly: the gate's refusal was about
+**blame**, CVO's routing was about the **act**, and *a placement can be owed while no fault is owed*.
+Sizing **ratified as executed**; a revert would have restored the wrong definition into the file the
+next implementer reads, paying real correctness for a process point.
+
+⛔ **My own last error, and it is the one worth carrying.** I told the issuer *"do not spend a turn on
+it"* -- closing a question on that seat's behalf from a vantage that could not see CVO's routing
+arriving four minutes later. Narrowed at 91632. **A SEAT THAT TELLS THE ISSUER TO SKIP SOMETHING OWNS
+THAT INSTRUCTION WHEN IT GOES STALE**, and the failure mode is SILENCE, not disagreement: a dropped
+item and a closed item are indistinguishable from outside. *Relay, never adjudicate -- and narrowing
+is the adjudication direction that looks helpful.*
+
+**Final commits:** `61d828e1c9`, `abbf57e664`, `7f3dd748ae`, `c85701ebca` **ON ORIGIN**;
+`da8c84bcb3`, `f2c2caadd5`, `f64972f9ef` **LOCAL**, riding the next window.
+
+**Standing flag for whoever reads the next fire:** the live a07 object is now ETag
+`9202d701...`, 34,289 B -- the hash in V-4's evidence and the 08-30 ledger no longer matches it.
+Expected, comment-only, ledgered. **Verify by CONTENT against the index blob AT THE CURRENT PIN.**
+And the falsifiable prediction stands: a07's own bytes are not an input to its own digest, so the
+next fire **must** carry `48ec291d...4931ef21` again. Enumerate `chain_*` logs -- the accelerator can
+fire before 12:45Z.
