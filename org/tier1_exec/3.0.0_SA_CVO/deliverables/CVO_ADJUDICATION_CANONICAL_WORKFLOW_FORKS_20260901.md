@@ -50,6 +50,31 @@ which.** One extra field on the block already built. <<
 ⛔ **This disqualifies nothing outright but forces disclosure**: the dependency graph is cached BY
 RULING, so any lens reading it enters as CACHED and must print the provenance vintage.
 
+> ## ⛔ MEASURED 2026-09-01 -- THE GATE HAS NOW BEEN RUN. TWO CLAIMS ABOVE ARE FALSE.
+> Full record: **`CVO_FORK1_LENS_ADMISSIBILITY_MEASUREMENT_20260901.md`**. Result: **7 ADMITTED,
+> 1 REFUSED.** Corrections to THIS table, so nobody reads the pre-measurement version as settled:
+>
+> **(a) The "cached dependency graph" clause does not apply to `comp-blast`.** It does not read that
+> graph -- `cli.py:812`, *"the main path's universe is kuzu"*; the old trace universe is **retired**.
+> It **already prints a richer vintage than this gate demands** (`built:` + age + both Nessie snapshot
+> ids + per-table cadence). The clause was inherited from Rule 20's prose about a different artifact.
+>
+> **(b) `comp-iam` is NOT "lambda entry points only"** -- measured `Lambda 166 / EC2 21`. Its real
+> self-declared holes: **24 policy blocks NEVER SEEN** and **2 unparsed deny statements**, and its own
+> banner says it **CANNOT answer "is this denied?"** -- covering NEVER#1's cross-firm Deny belts.
+> **Silence from this tool must not be read as allowed.** That is the bound a decomp must carry.
+>
+> **(c) REFUSED: `comp-similar`** -- emits no vintage and no denominator on EITHER carrier (`--json`
+> top-level keys are exactly `['arn','neighbors']`), while reading the same kuzu corpus `comp-blast`
+> prints a header over. Self-test is 7/7; the tool is not weak, it is **undisclosed**. Withheld from
+> the battery pending a provenance header (`0.8.0_AE_CloudComp`).
+>
+> **(d) PROPOSED THIRD LIMB, at Andrew:** admissible only if the lens prints a **DENOMINATOR or an
+> explicit BLIND/COVERAGE statement** with its answer. A vintage dates the corpus; it cannot say the
+> lens was blind on YOUR subject. Specimen: `comp-dataflow origin perfrp_emit_core.py` returned
+> `2 reads scanned, 2 unresolved-dynamic (blind)` -- vintage alone would have looked like an answer.
+> Disqualifies none of the seven; costs one `<preflight>` field.
+
 **THE BATTERY (from a 106-tool scan):**
 | lens | answers | note |
 |---|---|---|
