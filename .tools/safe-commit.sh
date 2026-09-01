@@ -600,6 +600,36 @@ if [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# ---------------------------------------------------------------------------------------------
+# LAYER 2 of the DIRECTIVE EXECUTION PIPELINE -- the TO issuance gate.
+# Andrew-direct 2026-09-01 (3.0.0_SA_CVO terminal): "re-authorize the three enforcement layers
+# and add the stage-3 preflight" / "we need these set up in a manner that they are actually
+# mandated" / "I prefer gates and deterministic methodology because anything that is simply
+# 'guidance' may dissipate or otherwise be inconsistent over long-running sessions."
+#
+# WHY HERE: commit-gate.sh reads only .py/.sh/.tf/org/projects/*.json -- a TO is a .md and falls
+# through it entirely. safe-commit is the neck every TO must pass (Rule 14a). MEASURED 2026-09-01:
+# 130 of 2233 TO files carry a naming <decomp_ref> (5.8%), so layer 1's ENFORCE path -- which is
+# BUILT and works -- is inert on 94% of the estate. This gate is what feeds it.
+# PROSPECTIVE ONLY: fires on NEWLY-ADDED task_orders/*.md; never refuses an existing TO.
+# Fail-closed, and it unstages on refusal exactly like the commit-gate above.
+if [ -n "$IN_SCOPE" ]; then
+  TOGATE_FILES=()
+  while IFS= read -r _tf; do [ -n "$_tf" ] && TOGATE_FILES+=("$_tf"); done <<< "$IN_SCOPE"
+  if [ "${#TOGATE_FILES[@]}" -gt 0 ] && [ -f "$SCRIPT_DIR/to-pipeline-gate.py" ]; then
+    TOGATE_OUT=""; TOGATE_RC=0
+    TOGATE_OUT="$(python "$SCRIPT_DIR/to-pipeline-gate.py" "${TOGATE_FILES[@]}" 2>&1)" || TOGATE_RC=$?
+    if [ "$TOGATE_RC" -ne 0 ]; then
+      for _tf in "${TOGATE_FILES[@]}"; do git reset -q HEAD -- "$_tf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$TOGATE_OUT" | sed 's/^/  /' >&2
+      exit 1
+    elif [ -n "$TOGATE_OUT" ]; then
+      printf '%s\n' "$TOGATE_OUT" | sed 's/^/  /' >&2
+    fi
+  fi
+fi
+
 # WS-2 comp-system 06_current_state staleness gate (NFRA_SYSPARITY, CTO arch-gate 20260719T213935Z).
 # A commit that touches a comp-system _SOURCE must not leave 06 stale. FAIL-CLOSED on GENUINE drift
 # (source-fingerprint / managed-region), STALENESS-CONDITIONED (comp-system --gate --changed evaluates
