@@ -1,4 +1,47 @@
-# Deploy-completion ledger: ADVI_PERFRP -- advi:gold `_code/` sync, 3 of 6 SERVED and 3 SOVEREIGN-HELD
+# Deploy-completion ledger: ADVI_PERFRP -- advi:gold `_code/` sync, COMPLETE 6 of 6 (3 + 3 after the sovereign discharge)
+
+**Status:** CLOSED-COMPLETE. **71 MATCH / 0 STALE.**
+
+⭐ **SUPERSEDING UPDATE 2026-09-01T00:2xZ -- THE HOLD WAS DISCHARGED AND THE REMAINING THREE LANDED.**
+Andrew discharged the 2026-08-19 BUILD-ONLY cap (relayed `1.0.0_SA_CTO` 90310 s.1, record `ce77e285b1`);
+90310 s.3 handed the sentinel removal to this lane BY NAME; `2.0.0_SA_COO` 90331 s.1 sequenced it GO NOW.
+- Sentinel released @`9c7011f93d` (18 deletions = 8+5+5, the whole comment BLOCK), `SERVE-RELEASE-ACK:`
+  on one line, `comp-pipescript io --pipeline advi` rc=0 on all three.
+- Re-derived TWICE before syncing (bound): both runs 71/71/0 unrendered, 68 MATCH / 3 STALE, identical
+  set, 0 non-verdict rows.
+- Deployed via `safe-deploy.sh`, per-script `VERIFY OK`, rc=0. **Never `aws s3 cp`.**
+- POST-SYNC: `71 object(s), 71 checked, 0 unrendered -- 71 MATCH, 0 STALE, 0 TIMEOUT,
+  0 AWS_UNREACHABLE, 0 ETAG_NOT_COMPARABLE`.
+
+| file | ETag now | written (s3api, UTC) |
+|---|---|---|
+| `perfrp_emit_core.py` | `6adffc4949ffbfffea2d9a3ff116ab1f` | 2026-09-01T00:10:20Z |
+| `perfrp_rollup.py` | `f01dd090d503776a79b16b033e5a0b27` | 2026-09-01T00:10:24Z |
+| `perfrp_transactions.py` | `1ebf3016a32f79311289dec08812e1e5` | 2026-09-01T00:10:28Z |
+
+⛔ **THIS CLOSES THE `_code/` SYNC ONLY. IT IS NOT AN ACTIVATION SIGNAL.** `2.0.0_SA_COO` 90368 s.1
+WITHDREW this lane's completion report as the CALL 2 trigger, and `1.0.0_SA_CTO` 90378 HALTED the
+P4I-3 serve on an unmet pseudonymisation precondition (`perfrp_book_advisor.json`: 3,290 real client
+display labels). Resumption needs a new message from `1.0.0_SA_CTO` citing that precondition MET, or
+an Andrew waiver given with that fact in front of him. The 08-19 and 08-21 holds remain DISCHARGED --
+the serve halt is an unmet ENGINEERING precondition, not a re-imposed sovereign hold.
+
+⛔ **AND THE SERVE-RELEASE AUDIT DID NOT FIRE ON THIS RELEASE -- A FAIL-OPEN, REPORTED AT 90422.**
+`_resolve_serve_refs` pins `old_ref="HEAD~1"` for an explicit-file invocation. Two peer commits landed
+in the 12 minutes between `9c7011f93d` and the deploy (`9f0d8a84dc` at 00:10:17Z, **3 seconds** before
+the first object write), so `HEAD~1` was `be22deaf9e` -- already past the removal. Sentinel count there
+is 0/0/0; at the release commit's TRUE parent `a50dd6721a` it is 1/1/1 (positive control). So
+`removed` came back empty and the ACK check AND the audit write were BOTH skipped. **A valid ACK was
+present and never read; with no ACK at all this deploy would have run identically at rc=0.** The
+`:283` header claim "All three checks FAIL CLOSED" holds for every ERROR path and does not cover this:
+nothing errored, the PREMISE lapsed. Owner `1.0.0_SA_CTO`; not fixed here, and a fix must not loosen
+either regex -- the defect is the chosen BASELINE.
+
+---
+
+*Original entry, at the time only three rows could land, retained unedited below.*
+
+# (ORIGINAL) advi:gold `_code/` sync, 3 of 6 SERVED and 3 SOVEREIGN-HELD
 
 **Status:** CLOSED (partial by design -- see HELD REMAINDER; this is NOT an open deploy and must NOT be re-executed)
 
