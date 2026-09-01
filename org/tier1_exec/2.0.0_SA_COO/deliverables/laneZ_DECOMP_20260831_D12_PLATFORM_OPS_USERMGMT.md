@@ -16,7 +16,9 @@ after the comb. **An `issued_to` field is a placement**, so TOs are cut only onc
 
 ⛔ **PILOT COHORT IS GATED — see FINDING F-2 at the bottom of this file. NOBODY MAY BE ENABLED YET.**
 On today's DEV bytes a CORRECT PASSWORD ALONE reaches `/market`; the MFA branch is not enforced
-client-side. Unreachable today only because 0 of 48 accounts are gated.
+client-side. **UNENTERED today because 0 of 48 accounts are gated (measured, F-3) - NOT unreachable:
+FINDING F-3 measures the MFA backend LIVE on the production host, so the branch is one boolean write
+away, not structurally out of reach.**
 
 ⛔ **OPEN FINDING WITH NO OWNER — see FINDING F-1 at the bottom of this file.** An intended IAM
 restriction on auth mail restricts NOTHING. It is not a cell, not assigned, and not closed by W1 or W2.
@@ -507,8 +509,12 @@ line in a console and it retires the only limb this finding cannot otherwise rea
 
 ## ⛔ WHY THIS IS A COHORT GATE AND NOT A FIRE TONIGHT
 
-**It is not a live exposure today, and that is measured, not assumed: 0 of 48 accounts are gated, so
-the `mfaRequired` branch is unreachable in production.**
+**It is not a live exposure today, and that is measured, not assumed: 0 of 48 accounts are gated**
+(census @02:4xZ - 48 PROFILE rows, 0 TRUE, 0 field-absent, no pagination).
+⛔ **CORRECTED BY F-3: the branch is NOT "unreachable in production" - it is UNENTERED.** The MFA
+routes are live on `https://opalinvest.dev` and the frontend served there has no MFA code at all.
+The safety is a boolean, not a structure - **and that boolean was `true` on an admin account for
+about two hours tonight.**
 >> **IT GOES LIVE THE MOMENT THE FIRST ACCOUNT IS GATED — WHICH IS EXACTLY WHEN THE PILOT COHORT
    STARTS.** Enabling "a few people" before the client fix would hand each of them a login that a
    correct password alone completes. <<
@@ -519,7 +525,9 @@ rather than sit in this file.
 ## BOUNDING — the finder's own, kept verbatim in substance
 
 **SOURCE-CONFIRMED on the code path; UNEXERCISED at the browser rung.** It has not been observed in a
-browser and currently **cannot** be — 0 accounts are gated and that lane is barred from enabling one.
+browser and currently **cannot** be - 0 accounts are gated and that lane is barred from enabling one.
+⚠ **F-3 narrows the word "cannot":** the barrier is a standing instruction, not a technical limit -
+the production backend would serve the branch the moment a flag flipped. **Read it as MAY NOT.**
 **So: not "proof", not "exercised" — five rungs at `file:line`, no browser observation yet.**
 ⭐ That bound is what makes it usable. **DE3-2 is the row that will exercise it**, and it was written to
 catch exactly this: *"with the correct password and NO code, the dashboard is not reachable — by URL,
@@ -531,3 +539,101 @@ by back-navigation, or by refresh."* The criterion found its defect before it ra
 it now as DE-a (handle the `mfaRequired` 200 without authenticating; derive admission from a token, not
 from a literal). **Not a new TO**; it is inside DE1/DE2's existing scope.
 **No IAM, no backend, no account enablement follows from this finding.**
+
+---
+
+# FINDING F-3 - 2026-09-01 ~02:5xZ: THE MFA BACKEND IS **ALREADY LIVE** ON THE HOST PRODUCTION MAIL POINTS USERS AT - BEHIND A FRONTEND WITH NO MFA CODE IN IT
+
+**Assembled by `2.0.0_SA_COO~Z` from two seats' separately-correct reports. Neither seat was wrong;
+neither held both halves, and the composite is a different object from either.**
+
+## THE TWO HALVES, AND THE SENTENCE NOBODY HAD SAID
+
+| half | who measured it | what it says |
+|---|---|---|
+| **BACKEND** | `2.0.0_SA_COO~Z`, this finding | `https://opalinvest.dev/auth/mfa/verify` is **LIVE** |
+| **FRONTEND** | `0.4.0_DE_ClientPlatform~Z` (17494) | the served bundle contains **no MFA handling at all** |
+
+>> ### PRODUCTION IS HALF-LANDED. THE GATE EXISTS ON THE SERVER; THE UI THAT WOULD PASS IT DOES NOT EXIST ON THE CLIENT. THE ONLY THING BETWEEN THAT AND A BROKEN LOGIN IS ONE BOOLEAN PER USER, AND NOTHING GATES THAT BOOLEAN.
+
+## THE BACKEND MEASUREMENT - probed on the production host directly, with a positive control
+
+Route-existence probes only: garbage 32-zero `challengeId`, code `000000`, and a nonexistent
+`@invalid.invalid` login. **Nothing can succeed, no account is touched, no mail reaches a human.**
+
+```
+                     https://opalinvest.dev            7k3ed8px20 (where W1-3 proved mfaRequired)
+/auth/mfa/verify     401 {"error":"Invalid or          401 {"error":"Invalid or expired code"}
+                          expired code"}                    <- POSITIVE CONTROL
+/auth/mfa/send       404 {"error":"Not found"}         404 {"error":"Not found"}
+/auth/login          401 {"error":"Invalid email       401 {"error":"Invalid email or password"}
+                          or password"}
+```
+**BYTE-IDENTICAL ON ALL THREE.** `/auth/mfa/verify` answering *"Invalid or expired code"* is the
+**handler's own** reply to a challenge id that does not exist - the route is deployed and running.
+And `/auth/mfa/send` 404 confirms **W3 Act A has not landed**, so `login()` still sends inside itself.
+
+### THE DISCRIMINATOR THAT MADE THE PROBE READABLE - two different 404s
+```
+{"message":"Not Found"}   API Gateway's own body   -> the ROUTE DOES NOT EXIST at the gateway
+{"error":"Not found"}     the handler's own body   -> the route REACHED THE LAMBDA
+```
+**My first probe was wrong-plane and the control is what showed it.** I aimed at
+`f7lvfv4bjc.execute-api...` - the only host literal in the bundle - and got `404` on all three
+**including `/auth/login`**, which no auth API would do. The API base is `const Ha=""`: the portal
+calls **same-origin** `https://opalinvest.dev/auth/*`, and `f7lvfv4bjc` serves only `/prod/analytics`.
+> **A 404 meaning "wrong URL" and a 404 meaning "route absent" are the same integer.** Had I stopped
+> at the first probe I would have filed *"production has no MFA"* - the exact inverse of the truth,
+> from a clean-looking result.
+
+## THE ACCOUNT-STATE MEASUREMENT - and it retires a record everyone was quoting
+
+```
+usr_7f83e30de95f  andrew@opalinvest.com  role=admin  mfaEnabled=false  mfaChannel=none   [LIVE @02:4xZ]
+
+CENSUS, opal-users-v2, SK=PROFILE:   48 rows returned, ScannedCount 75, no LastEvaluatedKey
+  mfaEnabled TRUE   0        mfaEnabled FALSE  48        field ABSENT  0
+  mfaChannel: {'none': 48}
+```
+**"0 of 48" is TRUE - measured, not inherited.** But it was **NOT true for about two hours tonight.**
+`0.7.0_AE_CloudOps~Z` set `andrew@opalinvest.com` to `mfaEnabled=true` at ~00:2xZ on Andrew's own
+direct instruction (*"test it on me"*), recorded and read back. It is `false` now.
+⛔ **NOBODY BROADCAST THE REVERT, AND I CANNOT ATTRIBUTE IT.** An unattributed state change on a
+production auth table is worth a line of its own. `0.7.0_AE_CloudOps~Z` should say whether it was theirs.
+
+### WHAT I GOT WRONG ON THE WAY, BECAUSE IT IS THE INTERESTING PART
+I reasoned that Andrew was **the 49th account** and that every seat's "0 of 48" had a denominator
+excluding him - which would have made the count structurally blind. **FALSE. He is INSIDE the 48**
+(his row is in the FALSE set). The denominator was always right; only the **numerator** was wrong,
+and only for that window.
+>> **I was one message away from broadcasting "the sovereign is locked out of production right now."**
+   The scan is what stopped it, and I ran the scan only because a 2-hour-old read-back is a snapshot
+   and not an oracle. **A composite assembled from two correct reports is a THIRD claim and needs its
+   own evidence** - the halves being sound says nothing about the join. <<
+
+## WHAT THIS CHANGES - three things, and one of them is a correction to F-2
+
+**1. F-2's reachability reason was right about the fact and wrong about the mechanism.** This document
+said the branch is *"unreachable in production"*. **It is fully reachable** - the server serves it. It
+is **unentered**, because the flag is off. Those are different safeties: one is structural, one is a
+boolean anybody with table access can flip. **Corrected in the banner and in the cohort-gate section.**
+
+**2. F-2's `THE JOIN - NOT EXERCISED` stands, and is now sharper.** No one has observed the join, so
+the words do not move. But the implied reason - *"and it cannot be reached"* - is retired: **the join
+is one boolean write away, on the production host, today.** That strengthens the finding.
+
+**3. DE3-1's TEST SUBJECT IS A PRODUCTION ACT, AND I AM NOT TREATING IT AS A DEV ONE.** There is no
+evidence of a separate DEV user store: `opalinvest.dev` fronts the MFA-capable handler, and
+`opal-users-v2` is the table its profiles live in. **Provisioning a gated test subject means creating
+an account and enabling MFA in the live production users table** - and the account whose mail could
+be read (`andrew+d12mfatest@opalinvest.com`) was a plus-address on a **live human mailbox**, which is
+the precise thing `1.0.0_SA_CTO~Z` barred after it caused tonight's false bug report.
+⛔ **So DE3-1 is not a subject I hand over; it is a decision with a production limb.** Held, with the
+constraint stated rather than the ask silently widened. `0.4.0_DE_ClientPlatform~Z` was right to stop.
+
+## SCOPE - what I did and did not do
+Read-only throughout: three unauthenticated route probes with garbage inputs, one `get-item`, one
+`scan`. **No account created, none enabled, no flag written, no IAM touched, no deploy, no promote,
+no alarm or monitor.** I did not exercise Andrew's account and will not. I did not resolve whether
+`opalinvest.dev` and `7k3ed8px20` are the same API id - **I did not need to: the production host was
+probed directly**, which is the plane the claim lives on. Perishable: this is the state at ~02:5xZ.
