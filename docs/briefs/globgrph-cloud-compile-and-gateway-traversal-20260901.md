@@ -30,6 +30,12 @@ Vintage is legible at the point of the answer, in the answer, to a reader who kn
 markers, snapshot ids, branch heads, or projection modes. Today vintage is honest but is expressed
 in the vocabulary of the build system.
 
+### O3b — The age of any graph-derived answer is BOUNDED, not merely disclosed
+There is a ceiling on how old the graph a seat reasons from can be, and that ceiling is a property
+of the system rather than of the reader's diligence. Distinct from O3: O3 is about *legibility* of
+vintage, O3b is about its *bound*. Today vintage is disclosed honestly and its age is unbounded, so
+disclosure is the only protection and the reader is the only enforcement. See **F11**.
+
 ### O4 — A new box, a new seat, or a second device is graph-capable on arrival
 Graph capability is not a property of a machine that has paid a compile. A seat that has never run
 a graph tool, on hardware that has never held the database, asks the same question and gets the
@@ -219,6 +225,48 @@ QUERY, never rebuild.
 **Finding:** the local projection is the one place where an agent's READ silently triggers a WRITE.
 This work does not introduce a new principle — **it closes the last gap against an existing one.**
 
+### F11 — A nightly compile would BOUND a ratified gate's guarantee, not merely speed a slow thing up. This is a third argument, stronger than the brief's other two.
+**CONTRIBUTED BY `3.0.0_SA_CVO` (msg 92472, 2026-09-01 19:47Z), ATTRIBUTED, on a gate that seat
+owns.** Not adjudication of this brief — an offered consequence. Carried because it changes what the
+PRD's acceptance criteria can be made of.
+
+Andrew ratified a fork-1 admissibility gate today: a lens is admissible to the canonical **step-5
+lens battery** only if it EITHER compiles its corpus at runtime OR prints its corpus vintage (a third
+limb — a denominator or an explicit BLIND statement — approved the same turn).
+
+>> **`comp-blast` is ADMITTED, and it passes on the VINTAGE limb, not the runtime one. Its universe
+   is the Kuzu projection this brief is about.** <<
+
+**Consequence:** an unscheduled corpus makes the printed vintage the **SOLE** protection, and its age
+**UNBOUNDED**. A decomp author who does not read the provenance block is reading a graph of arbitrary
+age with nothing to stop them. *The tool is honest; the bound is the reader.*
+A nightly cloud compile converts an **unbounded** vintage into a **bounded** one (≤ one cycle) — it
+makes a ratified gate's guarantee stronger, rather than making a slow thing faster.
+**This is a genuine acceptance-criterion candidate for the step-4 PRD**, and it is an argument
+neither Part I nor Part III previously made.
+
+⛔ **TWO BOUNDS CARRIED VERBATIM FROM THE CONTRIBUTING SEAT — do not drop them downstream:**
+1. **CVO did NOT measure staleness and is not claiming the projection goes stale in practice.** Its
+   one sample was HEALTHY (`built 2026-09-01T16:18:23Z`, age 1.2h, `Nessie HEAD: current`,
+   `graph_nodes last-write 4.5h < 6h cadence`). **The claim is that nothing BOUNDS it** — which rests
+   on F4, this brief's own measured finding, not on any staleness observation.
+2. **DO NOT CONFLATE TWO ARTIFACTS.** The 47 MB Kuzu projection is **NOT** `.comp-graph/graph.json`
+   (the trace-layer cache `comp-trace` reads, which self-heals by discarding on SHA drift; measured
+   by CVO at 52.2h old with 34 drift entries the same afternoon). **Two caches, two mechanisms; only
+   the Kuzu one is in scope here.**
+
+### F12 — COVERAGE and VINTAGE are different axes, and a nightly compile fixes only ONE of them.
+**Same source (CVO, msg 92472), filed separately as `ADVI_PERFRP-S18` @`3eb00f5905`.** `comp-blast`
+returns **NOT-FOUND** for `perfrp_emit_core.py` against the printed 27,107-node denominator — a live
+gold producer that 11 emitters import is **absent from the projection entirely**.
+>> **A perfectly fresh graph that does not contain a node is still silent about that node.** <<
+The tool refuses honestly (*"This is a NOT-FOUND, not a nothing-breaks clear"*); the hazard is a
+reader who does not carry that sentence forward.
+**Scope consequence:** whatever step 2 cuts, no outcome in Part I should be read as improving
+coverage. **This brief's outcomes are vintage-, placement- and access-shaped. Coverage is a separate
+question with a separate owner, and it is NOT in scope here.**
+⚠ I did not independently reproduce the NOT-FOUND; it is attributed, with its own filed record.
+
 ---
 
 ## PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW
@@ -304,6 +352,15 @@ Andrew's stated experience is **9–10 min**.
    at legacy artifacts.
 10. **The tension in Part V item 7 (O7 vs. the monitoring moratorium) is named, not resolved.** I
     have no authority to resolve it and did not attempt to.
+11. **F11 and F12 are ATTRIBUTED to `3.0.0_SA_CVO`, not measured by me.** I did not re-run
+    `comp-blast`, did not reproduce the `perfrp_emit_core.py` NOT-FOUND, and did not independently
+    verify the step-5 admissibility gate's text. Per the relayer half of the Andrew-direct protocol,
+    the grounding pointer travels with the claim: **msg 92472; `ADVI_PERFRP-S18` @`3eb00f5905`.**
+    A second seat agreeing with F4 via F11 is **not corroboration of F4** — F11 *cites* F4 rather
+    than re-measuring it, so the two are one instrument, not two.
+12. **NOTHING here establishes that the projection actually goes stale in practice.** Both seats'
+    only vintage samples were healthy. The measured claim is the absence of a bound (F4), not the
+    presence of staleness. **Do not let F11's framing be read downstream as evidence of drift.**
 
 ---
 
@@ -320,6 +377,9 @@ EXISTING PRD      NONE for this scope.
                     docs/architecture/NFRA_INTEGRATIONS_STANDARD.md (gateway extension contract)
                     docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md (DIFFERENT consumer)
 SIBLING PROJECTS  NFRA_GLOBGRPH · NFRA_KUZUSPLIT · NFRA_GRAPHS · NFRA_INTEGRATIONS · D6_OPAL_ANALYST
+CONTRIBUTED      F11 + F12 from 3.0.0_SA_CVO msg 92472 (2026-09-01 19:47Z), attributed in place.
+                  F12's coverage finding filed separately as ADVI_PERFRP-S18 @3eb00f5905.
+                  Not re-measured by CRO -- see Part VII items 11-12.
 PRIOR ART         Substrate card (F4): org/tier2_senior/0.7.0_AE_CloudOps~K/deliverables/
                     D11_CARDS/kuzu_nessie_load.card.json @5da9e7fffc, carded 2026-08-30T03:12:00Z
                   Engine:   infra/aws/globgrph/kuzu_nessie_load.py · kuzu_cli.py ·
