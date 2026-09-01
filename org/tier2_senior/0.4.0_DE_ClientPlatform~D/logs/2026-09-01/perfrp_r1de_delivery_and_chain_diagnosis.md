@@ -206,8 +206,12 @@ interpreter gap either). What survives is the discontinuity itself, now correctl
 2. **Build AC11 as `PRF-inv-3`'s RECOMPUTE, not an equality check** — recompute each level from
    the level below on the served block, print all three. Scoring stays BARRED until the harness
    is live.
-3. **Run `comp-cache collisions`** against the query keys added in `AdvisorBookView.tsx` — the DE
-   minimum I skipped, and the one gap in this window that is mine to close.
+3. ~~Run `comp-cache collisions`~~ **CLOSED 16:2xZ, CLEAN.** `captured 118 of 118 useQuery
+   call-site(s); 0 unparseable` / `17 shared key(s); 0 with a TYPE MISMATCH (the bug-class)`, and
+   ZERO of the 17 are perfrp keys. The process gap was real; there was no defect behind it. Tool
+   states its own bound: `useQueries`/`useInfiniteQuery`/`useAutoSaveQuery` are NOT audited — my
+   additions are plain `useQuery`, so they are inside the covered set. Detail:
+   `comp_cache_minimum_closed_1600-1620Z.md`.
 4. ~~Compare runner-vs-laptop dependency versions~~ **SUPERSEDED 16:2xZ.** The dependency axis is
    DEAD: `0.7.0_AE_CloudOps~M` measured five modules importing pandas running STAGE OK in the same
    run that refused 11 of 11, and emitters spawn under `sys.executable`, so no interpreter gap
