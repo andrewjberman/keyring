@@ -91,3 +91,48 @@ deliver idempotency (`0.4.0_DE_ClientPlatform~Z` 18489 §3). They are not scored
 `UNDETERMINED` on the evidence (the challenge item was consumed by the successful verify; CloudWatch
 carries `account_hash` but no code identity). **Act C moots the user-visible symptom; it does not
 answer that question, and a PASS here must not be read as having answered it.**
+
+---
+
+# AMENDMENT 1 -- 2026-09-01 ~08:4xZ, BEFORE ANY ACT C ARTIFACT EXISTS
+
+⛔ **NOTHING ABOVE IS EDITED.** This corrects **C2**, which as registered would FALSE-FAIL a correct
+implementation. Found by reviewing `0.7.0_AE_CloudOps~Z`'s build (msg 18609) — **the seat whose work
+this rubric grades is what exposed the defect in the grading.**
+
+## A1.1 The defect: C2 scores an asymmetric property with a symmetric test
+
+C2 as registered reads *"`sends` after N emails `== N`"*. The built implementation charges the budget
+in the **authorising conditional update, before the mail**:
+
+```
+ADD sends :one   COND attribute_exists(pk) AND expiresAt > :now AND sends < :maxSends   -> then mail
+```
+
+✅ **That ordering is CORRECT** — a caller cannot obtain an email it did not first pay for, and there
+is no branch that sends without charging. ⛔ **But a mail that FAILS after a successful charge leaves
+`sends` > emails, and strict equality scores that as a FAIL when it is fail-CLOSED and correct.**
+
+## A1.2 Corrected C2 -- the direction is the whole point
+
+| Reading | Verdict | Why |
+|---|---|---|
+| `sends` **<** emails | ⛔ **HARD FAIL** | the bound is not binding — **the defect C2 exists to catch** |
+| `sends` **==** emails | ✅ PASS | expected on a clean run |
+| `sends` **>** emails | ✅ **NOT A FAIL** | over-charging is fail-closed (fewer mails than budget). **RECORD it** — it indicates a delivery failure, which is a different question with a different owner |
+
+⭐ **The invariant was never "the counter is exact." It is "the counter can never permit more mail
+than the budget."** That is one-sided, and C2 must be one-sided to match it.
+✅ **C3 and C4 are UNCHANGED and unaffected** — C4 (total delivered emails `== MAX_SENDS`) is still
+the real bound test, and it is still measured on delivered emails rather than on the counter, so a
+broken counter cannot be audited with the broken counter.
+
+## A1.3 C5 is DISCHARGED IN ADVANCE, by the build rather than by a promise
+
+`18609` emits `mfa_code_sent {account_hash, sends (post-increment), resend, ts}` on **every** email
+and `mfa_send_refused` on every refusal. ✅ **C5 satisfied.** ⭐ **And `sends` riding the log line
+exceeds what C5 asked: the invariant is now checkable from the log stream ALONE, without reading the
+table** — which is the same separation C4 was written to preserve.
+⭐ **Consequence for the sibling rubric:** `mfa_code_sent` satisfies AMENDMENT 1's `SEND-EVENT` in
+`D12_DE1-1_PRESCORE_RUBRIC_20260901.md` (`f161939dd3`), so **DE1-1 is scoreable on an Act-B *and* an
+Act-C handler** and its declared dependency is discharged.
