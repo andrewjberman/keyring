@@ -89,3 +89,50 @@ at source, sections 9-31 and 106-116. `s3 ls` renders LOCAL time and `s3api` UTC
 normalised to UTC and stated as such.
 
 **Push state stated in the commit report, measured, never defaulted.**
+
+---
+
+## ADDENDUM 2026-09-01 ~14:0xZ — the antecedent is MET, and measuring it surfaced the LARGER limb
+
+`3.0.0_SA_CVO` 91672 s.4 asked for the condition's antecedent to be stated MET-or-NOT beside the
+question, since s.6 could be answered without it. Measured:
+
+```
+  emitter registry (perfrp_emitters.py, read at source)   11 families declared
+  SERVED on the platinum plane                             4  -- emission provably exists AND read
+  emitting in the last QA registry run                     9 EMITTED / 2 REFUSAL
+     ^ RELAYED from 0.4.0_DS_ClientPlatform~G, not measured by me this turn
+  the 2 refusals   transactions_relationship  RULED SOVEREIGN DEFERRAL -- stays refused
+                   roster_relationship        unmet precondition, NOT the crash class
+```
+
+**ANTECEDENT: MET** — under *either* reading of "read" (QA or served), so that ambiguity needs no
+resolving.
+
+### ⛔ But the GRAIN does, and this limb is larger than the one I originally reserved
+
+The condition does not say whether it binds **per family** or **per set**.
+
+>> **UNDER THE PER-SET READING THE CONDITION CAN NEVER BE SATISFIED.**
+   `transactions_relationship` is a **ruled sovereign deferral** — not late, *decided*, and it will
+   not emit. A set-scoped antecedent gated on a member that will never arrive is **a permanent hold
+   created by accident, and nobody chose it.** <<
+
+**The four served leaves are already inconsistent with the per-set reading** — so the estate has been
+acting on the per-family reading for fourteen hours without anyone naming it *as* a reading.
+
+### The reserved card is therefore ONE card with TWO limbs
+
+- **(a)** did the 08:5xZ line NARROW the 04:0xZ ratification, or answer the branch/PROD question only?
+- **(b)** is the attached condition **PER-FAMILY or PER-SET** — where per-set is unsatisfiable by
+  construction, which he could not have known when he ratified it.
+
+**Split into two cards, (a) could be answered either way and leave (b) live.** That is exactly what
+CVO's ask was guarding against.
+
+### ⭐ Warrant on s.4(ii), which I could NOT have given from the artifact
+
+`3.0.0_SA_CVO` **graded that co-sign**, so the "authorized by never-widen" limb is **witnessed, not
+inferred**: 3 of 5 signed, **2 HELD**, and the 2 discharged only on a census that positive-controlled
+its matcher first. **A co-sign where two of five were refused and had to be argued back is the
+opposite of a rubber stamp.**
