@@ -215,6 +215,35 @@ was written for, and only this pass says so.**
 Render as: `REACHABLE BY WORKING: N of M. BLOCKED ON AN ACT NOBODY IN THE FABRIC CAN PERFORM: K --
 <who owes each>.` Hand the K-list to whoever owes it **in the same turn** as the package.
 
+## Step 9b -- ⛔ ASK THE STAGED SEAT WHETHER THE ACT WILL ACTUALLY WORK
+
+**Added 2026-09-01, same run, ~10 minutes after Step 9a. This one cost a sovereign word.**
+
+For every K-list item you are about to put to Andrew as a decision, **message the seat holding the
+staged act and ask whether it expects the act to SUCCEED** -- before you write the option text.
+
+>> **THE REGISTRY RECORD SAYS AN ACT IS AWAITING A WORD. IT DOES NOT SAY WHETHER THE ACT WILL WORK.**
+   Only the seat holding it knows that, and its prediction lives in ITS session, not in the record
+   the decision-maker reads. A record that says *"held pending Andrew's ruling"* reads identically
+   whether the act is a sure thing or a foregone failure. <<
+
+**SPECIMEN, first run, measured:** this skill's Phase 2 put the Cottonwood one-shot re-run to Andrew
+as a Recommended carve-out, built from `MDPF_HEALGAP`'s registry line *"Today's hole stays open until
+Andrew rules on the one-shot re-run."* **The executing seat had already recorded a falsifiable
+prediction (msg 90345) that a re-fire would fail identically.** Andrew spent a per-use vendor-egress
+word; the run fired at 02:49:51Z and failed byte-identically to a run 3.4 h earlier -- same strategy,
+same `roster 15 / observed 14`, hole still open, verified against a positive control. **The blocking
+condition was vendor-side and unchanged. Nothing our side did could have moved it.**
+
+⛔ **A SOVEREIGN WORD IS A FINITE RESOURCE AND THIS SKILL IS AN INSTRUMENT FOR SPENDING IT.** An
+option rendered as *Recommended* carries this seat's endorsement into a decision the reader cannot
+re-derive. **Never mark an act Recommended on the strength of a record alone when a seat is holding
+that act and can be asked.** One message beforehand is the entire cost.
+
+**And when the answer is "it will fail": say so IN THE OPTION TEXT.** The option Andrew ratified
+correctly said the hole does not self-heal; it did not say the re-run was predicted to fail. Both
+were true and only one was disclosed.
+
 ## Step 10 -- Emit the dispatch-ready package. DO NOT DISPATCH.
 
 **Andrew-direct 2026-09-01, and 00:1xZ 2026-09-01 before it: this seat RULES; `2.0.0_SA_COO`
