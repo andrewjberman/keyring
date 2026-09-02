@@ -1,0 +1,31 @@
+# .owned-paths.yaml project-tree re-key (prereq 4): agent x path -> lane, permitted? -- both directions
+# 2026-09-02T22:12:07Z  HEAD=5fc5038daa  yaml=bf88e84134  validator=de9af5f534
+OK: .owned-paths.yaml -- 68 lanes, 272 path rules, all lane refs resolve
+  OK   1.0.0_SA_CTO             org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md lane=ANY_CTO                  permitted=True  want=True
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md lane=ANY_CTO                  permitted=False want=False
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-A.md lane=TREE_COO                 permitted=True  want=True
+  OK   2.0.0_SA_COO~B           org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-A.md lane=TREE_COO                 permitted=True  want=True
+  OK   1.0.0_SA_CTO             org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-A.md lane=TREE_COO                 permitted=False want=False
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/ETFS_GUARDRAIL/decompositions/round1.md lane=TREE_COO                 permitted=True  want=True
+  OK   0.7.0_AE_CloudOps        org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.7.0_AE_CloudOps/proof.json lane=TREE_DELIVERABLES        permitted=True  want=True
+  OK   0.7.0_AE_CloudOps~L      org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.7.0_AE_CloudOps/proof.json lane=TREE_DELIVERABLES        permitted=True  want=True
+  OK   0.8.0_AE_CloudComp       org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.7.0_AE_CloudOps/proof.json lane=TREE_DELIVERABLES        permitted=False want=False
+  OK   0.7.0_AE_CloudOps        org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/proof.json  lane=TREE_DELIVERABLES        permitted=False want=False
+  OK   3.0.0_SA_CVO             org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/remediations/REMEDIATION_v1.md lane=TREE_CVO                 permitted=True  want=True
+  OK   1.0.0_SA_CTO             org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/remediations/REMEDIATION_v1.md lane=TREE_CVO                 permitted=False want=False
+  OK   0.4.0_DS_ClientPlatform  org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md lane=ANY                      permitted=True  want=True
+  OK   1.0.0_SA_CTO             org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json             lane=TREE_PROJECT_ROW         permitted=True  want=True
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json             lane=TREE_PROJECT_ROW         permitted=False want=False
+  OK   4.0.0_SA_CRO             org/missions/D8/ETFS/ETFS_GUARDRAIL/brief/topic-20260902.md  lane=TREE_CRO                 permitted=True  want=True
+  OK   0.7.0_AE_CloudOps        org/missions/D8/ETFS/ETFS_GUARDRAIL/ledger/20260902_deploy.md lane=TREE_LEDGER              permitted=True  want=True
+  OK   0.4.0_DS_ClientPlatform  org/missions/D8/ETFS/ETFS_GUARDRAIL/ledger/20260902_deploy.md lane=TREE_LEDGER              permitted=False want=False
+  OK   2.0.0_SA_COO             org/missions/D8/README.md                                    lane=TREE_COO                 permitted=True  want=True
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/README.md                               lane=TREE_COO                 permitted=True  want=True
+  OK   2.0.0_SA_COO             org/missions/D8/ETFS/ETFS_GUARDRAIL/stray.txt                lane=TIER0_MSTR               permitted=False want=False
+  OK   0.0.0_AB_MSTR            org/missions/DIRECTIVES.yaml                                 lane=TIER0_DIRECTIVES_REGISTER permitted=True  want=True
+  OK   0.0.0_AB_MSTR            org/missions/OPS/SUB/state.yaml                              lane=TIER0_MSTR               permitted=True  want=True
+  OK   2.0.0_SA_COO             org/missions/MACROS.yaml                                     lane=TREE_MACROS              permitted=True  want=True
+  OK   0.0.0_AB_MSTR            org/missions/MACROS.yaml                                     lane=TREE_MACROS              permitted=True  want=True
+  OK   1.0.0_SA_CTO             org/missions/MACROS.yaml                                     lane=TREE_MACROS              permitted=True  want=True
+  OK   3.0.0_SA_CVO             org/missions/MACROS.yaml                                     lane=TREE_MACROS              permitted=False want=False
+matrix: 27/27
