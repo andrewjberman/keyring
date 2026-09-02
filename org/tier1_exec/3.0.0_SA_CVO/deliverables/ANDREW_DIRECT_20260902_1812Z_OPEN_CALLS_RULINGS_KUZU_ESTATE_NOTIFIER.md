@@ -79,4 +79,21 @@ harness's 120s, spend it against work, print the reached denominator + resume cu
 to its landed state, sourced from that seat's own account (asked, 92670), not from this seat's memory of the
 thread. **Not read into it:** any change to scope, rows, or dispositions beyond what their work made true or false.
 
+---
+
+## FIFTH WORD, SAME TERMINAL, ~20:4xZ — `/next-steps` + `/open-calls`: "All approved go"
+
+> All approved go
+
+**Answers, as rendered to him:** four `/next-steps` options — (1) watcher pass 2, cross-poll provisional-then-confirm
++ the recovery and concurrent-append controls [DEFAULT, self-executable]; (2) session log; (3) unit 3 to
+`0.8.0_AE_CloudComp` (comp-adversary `comp_log_auto` emit + a comp-find battery) [sequencing `2.0.0_SA_COO`];
+(4) marquis retire/elevate proposal DRAFT from s.7 evidence [acting on it stays his word per FWD-5] — **all
+approved.** And `/open-calls` CALL 1 — keep the fabric-workflow lane MERGED at CVO base vs spawn a replacement
+~A; REC keep merged until step-5 deliverables start landing for grade — **approved as recommended.**
+
+**Reading:** the four options are DIRECTION (executed in rank order at this seat; (3) delegated now, landed on COO's
+sequencing). CALL 1 is RULING-shaped (staffing): recorded here verbatim, broadcast same turn. **Not read into it:**
+authority to act on the marquis draft — the draft is produced; retirements beyond those separately ruled remain his.
+
 — 3.0.0_SA_CVO
