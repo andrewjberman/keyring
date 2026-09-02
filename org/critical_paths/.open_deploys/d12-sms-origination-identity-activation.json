@@ -1,0 +1,50 @@
+{
+  "slug": "d12-sms-origination-identity-activation",
+  "title": "D12 SMS OTP activation: HELD on AWS toll-free provisioning (SP-1) + carrier verification, then SP-2 sets SMS_ORIGINATION_IDENTITY on Andrew's GO. WATCH ITEM: sandbox exit is account-level and out-of-band -- nothing in the repo observes it.",
+  "author": "1.0.0_SA_CTO~Z",
+  "status": "HELD-SOVEREIGN-GATED",
+  "opened_at": "2026-09-02T14:12:01.387471+00:00",
+  "window_hours": 0.0,
+  "entry_path": "org/critical_paths/.open_deploys/d12-sms-origination-identity-activation.json",
+  "legs": [
+    {
+      "id": "SP-1",
+      "kind": "external",
+      "target": "AWS End User Messaging: toll-free number provisioning + CARRIER VERIFICATION. Docstring at infra/aws/opalinvest_dev/lambda/auth-handler/src/sms.ts:25 -- 'DOES NOT EXIST YET ... ~1-3wk ... is Andrew-gated and is the long pole.'",
+      "proof_required": "the origination identity (toll-free number or ARN) EXISTS in the AWS account, read from AWS, not from a ticket status",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "SP-2",
+      "kind": "terraform",
+      "target": "set SMS_ORIGINATION_IDENTITY on the auth-handler. sms.ts:30 reads it from env and defaults to '' so assertSendable fails CLOSED and LOUD until it is real.",
+      "proof_required": "applied env var read back from the DEPLOYED function config, plus one exercised send",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "SP-3",
+      "kind": "review",
+      "target": "SANDBOX-EXIT REVIEW. Re-read VERIFIED_DESTINATIONS + SMS_ALLOW_UNVERIFIED before/when the account leaves the SMS sandbox.",
+      "proof_required": "a reviewed commit -- never a silent account-level change",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "2026-09-02T14:12:01.387471+00:00 OPENED by 1.0.0_SA_CTO~Z -- Andrew-direct 2026-09-02 at the CTO~Z terminal: 'We need to keep an eye out for the SMS permissions from AWS ... whoever is responsible for D12 (which is likely going to stay on sitez fabric), needs to be aware of that, because we need to assess when that goes through.' Opened in .open_deploys BECAUSE comp-schedule STORES NOTHING -- it compiles at read time from carriers, so a note anywhere else does not surface. Measured before writing: zero armed gates mentioned SMS provisioning."
+  ],
+  "last_red_at": null,
+  "gate": {
+    "type": "external",
+    "ref": "AWS toll-free provisioning + carrier verification (SP-1), ~1-3wk from filing, Andrew-gated. Then SP-2 (SMS_ORIGINATION_IDENTITY) on Andrew's explicit GO. Source of record: sms.ts:22-59.",
+    "reread": {
+      "kind": "event",
+      "value": "AWS approves the toll-free origination identity AND/OR the account leaves the SMS sandbox. WARN: BOTH ARE OUT-OF-BAND, ACCOUNT-LEVEL EVENTS WITH NO DEPLOY AND NO CODE REVIEW ATTACHED -- sms.ts:38-44 states that the day sandbox exit happens, every guard that lived only in the sandbox evaporates at once and this Lambda would begin texting arbitrary enrolled numbers WITH NOTHING IN THE REPO HAVING CHANGED. Nothing in this estate can observe that transition; it must be checked against AWS deliberately. That is why this entry exists rather than a note in a project blocking field, which comp-schedule classes NOT-DECIDABLE and never counts."
+    }
+  },
+  "owner_note": "D12 is expected to STAY ON THE SITE-Z FABRIC (Andrew, 2026-09-02). SMS backend surface owner: 0.7.0_AE_CloudOps (SB legs, sms.ts, sms-iam.tf). Client surface: 0.4.0_DE_ClientPlatform. Gate: 1.0.0_SA_CTO. Whoever holds D12 on site Z inherits this watch.",
+  "held_at": "2026-09-02T14:12:01.387471+00:00",
+  "last_held_nudge_at": "2026-09-02T14:12:01.387471+00:00"
+}
