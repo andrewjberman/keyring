@@ -59,12 +59,23 @@ def _root() -> str:
 
 
 def _git(root, *args):
-    return subprocess.run(["git", *args], cwd=root, capture_output=True, text=True, timeout=60)
+    # encoding is EXPLICIT: under a git hook on Windows, text=True decodes as cp1252 and a PRD's
+    # UTF-8 arrow at byte 0x90 killed the reader thread -- the first real firing then reported
+    # "no valid PRD_HEADER" against a PRD the step-6 gate had just passed (2026-09-02, cf532d66c5).
+    return subprocess.run(["git", *args], cwd=root, capture_output=True, encoding="utf-8",
+                          errors="replace", timeout=60)
 
 
-def _blob(root, ref, rel):
+def _blob(root, ref, rel, must=False):
+    """Text of ref:rel. rc!=0 is None -- a legitimate ABSENCE for HEAD~1 of a brand-new PRD -- unless
+    `must`, when the caller is reading the commit's OWN file and a failure to read is a defect that
+    must never be reported as 'no header'."""
     r = _git(root, "show", "%s:%s" % (ref, rel))
-    return r.stdout if r.returncode == 0 else None
+    if r.returncode != 0:
+        if must:
+            raise RuntimeError("git show %s:%s rc=%d: %s" % (ref, rel, r.returncode, (r.stderr or "").strip()[:200]))
+        return None
+    return r.stdout
 
 
 def _header(text):
@@ -194,10 +205,21 @@ def post_commit(root):
     state = _load_state(root)
     sent = 0
     for rel in prds:
-        now_h = _header(_blob(root, "HEAD", rel))
-        if not now_h or not _valid(root, now_h):
-            print("[prd-notify] %s: no valid PRD_HEADER at HEAD -- not notified (the step-6 gate refuses "
-                  "a TO against it; this notifier does not gate)" % rel)
+        try:
+            now_text = _blob(root, "HEAD", rel, must=True)
+        except RuntimeError as exc:
+            # A READ failure is not a header verdict. Say so, loudly, and do not pretend to a reason.
+            print("[prd-notify] ERROR: could not read HEAD:%s (%s) -- NOT notified and NOT recorded; "
+                  "re-run `prd-header-notify.py post-commit` once the cause is fixed" % (rel, exc))
+            continue
+        now_h = _header(now_text)
+        if not now_h:
+            print("[prd-notify] %s: no PRD_HEADER fence at HEAD (first ```json block absent or not JSON) "
+                  "-- not notified (the step-6 gate refuses a TO against it; this notifier does not gate)" % rel)
+            continue
+        if not _valid(root, now_h):
+            print("[prd-notify] %s: PRD_HEADER fails %s -- not notified (the step-6 gate refuses a TO "
+                  "against it; this notifier does not gate)" % (rel, SCHEMA_REL))
             continue
         prev_h = _header(_blob(root, "HEAD~1", rel))
         bumped = prev_h is None or prev_h.get("prd_version") != now_h.get("prd_version")
