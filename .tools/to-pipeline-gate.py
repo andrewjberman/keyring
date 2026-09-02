@@ -308,13 +308,13 @@ def check_endpoint_section(root, rel):
         except Exception as exc:  # noqa: BLE001
             missing.append("%s (unreadable: %s)" % (rp, exc))
             continue
-        idx = body.find(ENDPOINT_HEADING)
-        if idx == -1:
-            missing.append("%s (no ENDPOINT heading)" % rp)
+        # Top-level heading only: a fenced, illustrative copy of the title (as _PRD_TEMPLATE.md
+        # carries) must not satisfy this limb (CVO~A @dddd96477d falsifier 1, shared with limb 5).
+        section = _top_section(body, ENDPOINT_HEADING)
+        if section is None:
+            missing.append("%s (no top-level ENDPOINT heading)" % rp)
             continue
-        tail = body[idx + len(ENDPOINT_HEADING):]
-        nxt = tail.find("\n## ")
-        section = (tail if nxt == -1 else tail[:nxt]).strip()
+        section = section.strip()
         if len(section) < 12:
             missing.append("%s (ENDPOINT heading present but section EMPTY)" % rp)
             continue
@@ -340,6 +340,37 @@ PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 # against a header listing EIGHT, because the ENDPOINT section QUOTES a CVO finding about FWD-9.
 # A limb counting mentions would refuse its own first PRD on a quotation.
 FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
+
+
+def _blank_fences(text):
+    """A SAME-LENGTH copy of text with every fenced block turned to spaces (newlines kept), so an
+    offset found in the copy indexes the ORIGINAL. This is how a heading is found at TOP LEVEL only
+    while the section it introduces -- which may itself contain fenced blocks, like the ENDPOINT's
+    FWD cards -- is sliced intact from the original."""
+    return re.sub(r"```.*?```", lambda m: re.sub(r"[^\n]", " ", m.group(0)), text, flags=re.S)
+
+
+def _top_section(text, heading):
+    """The ORIGINAL-text body of the section introduced by `heading` (a str or compiled regex) when
+    that heading appears OUTSIDE any code fence; None when it does not. Body runs to the next
+    top-level '## ' heading.
+
+    CVO~A re-grade @dddd96477d falsifier 1: a plain str.find() selected an ILLUSTRATIVE
+    '## ENDPOINT (...)' inside a code fence in _PRD_TEMPLATE.md before the real one, so every
+    definition read as absent. Same repair owed by @d019922d68 (A) for the manifest heading."""
+    blank = _blank_fences(text)
+    if isinstance(heading, str):
+        idx = blank.find(heading)
+        if idx == -1:
+            return None
+        end = idx + len(heading)
+    else:
+        m = heading.search(blank)
+        if not m:
+            return None
+        end = m.end()
+    nxt = blank.find("\n## ", end)
+    return text[end:] if nxt == -1 else text[end:nxt]
 
 
 def _prd_conformance(prd_text, header_schema, expect):
@@ -384,25 +415,17 @@ def _prd_conformance(prd_text, header_schema, expect):
     # satisfy this. Headings are searched with every fenced block blanked out, and the section must
     # carry a non-trivial body before the next top-level heading. Row-schema enforcement is NOT
     # widened into here -- that is step 5's contract, not this limb's.
-    unfenced = re.sub(r"```.*?```", lambda m: "\n" * m.group(0).count("\n"), prd_text, flags=re.S)
-    mh = MANIFEST_HEADING_RE.search(unfenced)
-    if not mh:
+    m_body = _top_section(prd_text, MANIFEST_HEADING_RE)
+    if m_body is None:
         out.append("PRD has no top-level SURFACE MANIFEST section (a heading inside a code fence does "
                    "not count) -- step 5 cannot run a battery on prose (CVO~A @0d272d257c; contract "
                    "@4bb2c5d94f)")
-    else:
-        m_tail = unfenced[mh.end():]
-        m_nxt = m_tail.find("\n## ")
-        m_body = (m_tail if m_nxt == -1 else m_tail[:m_nxt]).strip()
-        if len(m_body) < 40:
-            out.append("SURFACE MANIFEST heading is present but the section is EMPTY (%d chars). A "
-                       "heading is not a manifest." % len(m_body))
-    idx = prd_text.find(ENDPOINT_HEADING)
-    if idx == -1:
+    elif len(m_body.strip()) < 40:
+        out.append("SURFACE MANIFEST heading is present but the section is EMPTY (%d chars). A "
+                   "heading is not a manifest." % len(m_body.strip()))
+    section = _top_section(prd_text, ENDPOINT_HEADING)
+    if section is None:
         return out  # limb 4 owns the missing-ENDPOINT complaint; do not double-report
-    tail = prd_text[idx + len(ENDPOINT_HEADING):]
-    nxt = tail.find("\n## ")
-    section = tail if nxt == -1 else tail[:nxt]
     defined = set(FWD_DEF_RE.findall(section))
     listed = set(header.get("endpoint_outcomes") or [])
     key = lambda s: int(s.split("-")[1])  # noqa: E731
@@ -461,7 +484,7 @@ def check_prd_conformance(root, rel):
     for rp in paths:
         rp = rp.replace("\\", "/")
         txt = _staged_blob(root, rp)
-        if txt is None or ENDPOINT_HEADING not in txt:
+        if txt is None or _top_section(txt, ENDPOINT_HEADING) is None:
             continue  # limb 4 reports absent/unreadable/endpoint-less PRDs
         graded += 1
         for c in _prd_conformance(txt, header_schema, expect):

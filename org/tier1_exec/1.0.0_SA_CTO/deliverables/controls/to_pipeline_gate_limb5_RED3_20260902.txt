@@ -1,0 +1,3 @@
+  DEFECT  REFUSE->PASS    positive: ILLUSTRATIVE fenced ENDPOINT title BEFORE the real one (template shape) -- must PASS, decoy FWD-99 ignored
+  DEFECT  REFUSE->PASS    positive: FULL INSTANTIATION of _PRD_TEMPLATE.md -- must PASS limb 5 by construction
+DEFECTS: 2 core + 0 schema + 0 wrapper = 2
