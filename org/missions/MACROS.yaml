@@ -1,0 +1,44 @@
+# org/missions/MACROS.yaml -- the RATIFIED macro enum, PER DIRECTIVE (spec s.5 / s.5a; Rule 24).
+#
+# DATA, not prose: .tools/missions-tree-index.py reads `directives.<D>.macros` and
+# `directives.<D>.ratification` (refusal R2 -- a project cannot register under a macro that is
+# absent here or whose directive's enum is not RATIFIED). A macro folder org/missions/<D>/<MACRO>/
+# may exist only if <MACRO> is listed under <D> here.
+#
+# WHO WRITES WHAT:
+#   proposal      2.0.0_SA_COO authors the per-directive set WITH its Rule 24 four-postulate record
+#                 and a word-boundary token census (the `record` path below). A bare edit is not a
+#                 proposal.
+#   ratification  Andrew ONLY (spec s.5a "who ratifies": Andrew, as the per-directive enum). The
+#                 `ratification` value flips from PROPOSED to "RATIFIED <record> <date>" on his word,
+#                 quoting the record that carries it. Nobody else flips it.
+#   scope         PROSPECTIVE ONLY (spec s.8). This enum governs what may ENTER the tree under a
+#                 directive; the 352 flat rows in org/projects/ are untouched by it.
+#
+# A macro repeats across directives by design (NFRA under D0 and D11): each directive's list is
+# ratified on its own, and ratifying one list moves no other (Rule 24 iv, state coherence).
+version: 1
+grammar: "^[A-Z]{4}$"
+record: org/tier1_exec/2.0.0_SA_COO/deliverables/MACRO_ENUM_RULE24_D0_D8_D11_20260902.md
+census_vintage: "org/projects/*.json, 352 rows, read 2026-09-02 ~21:2xZ at @b1ead3af6f"
+
+charters:
+  NFRA: "Infrastructure and substrate -- agent process infrastructure, the estate graph, comp-tools, deploy and register mechanics (D0, D11)"
+  ETFS: "ETF satellites products -- positioning, ingest, guardrails on the served model-portfolio surfaces (D4, D8)"
+  MDPF: "Model-portfolio data pipeline -- the served MP surfaces, their remediation and fortification (D8)"
+  AUTH: "Portal authentication and its self-healing (D8)"
+
+directives:
+  D0:
+    macros: [NFRA]
+    ratification: PROPOSED
+    census: "5 of 5 rows with directive D0 carry macro_code NFRA and prefix NFRA (NFRA_CLDGRPH, NFRA_COMPTOOLS, NFRA_DEPLOYCENSUS, NFRA_DEPLOYLEDGER, NFRA_TORECORD)"
+  D8:
+    macros: [ETFS, MDPF, AUTH]
+    ratification: PROPOSED
+    census: "4 of 4 rows with directive D8: MDPF x2 (MDPF_COTREMEDIATION, MDPF_HEALGAP), ETFS x1 (ETFS_GUARDRAIL), AUTH x1 (AUTH_SELFHEAL); macro_code == prefix on every row"
+    alternative_named: "ETFS only (the water-test minimum the spec wrote before the census) -- rejected in the record: the most likely next D8 registrant is an MDPF_* successor arc, and an enum that refuses it on day one is a bare prohibition, not a taxonomy"
+  D11:
+    macros: [NFRA]
+    ratification: PROPOSED
+    census: "2 of 2 rows with directive D11 carry macro_code NFRA (NFRA_C3MATERIALIZE, NFRA_SUBSTRATECARDING); NFRA_COMPEFFICACY (no row yet; Andrew ~21:0xZ 'laptop under D11') conforms"
