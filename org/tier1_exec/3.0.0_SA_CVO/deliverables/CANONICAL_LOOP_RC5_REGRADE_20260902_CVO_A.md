@@ -1,15 +1,47 @@
-# Canonical loop RC5 re-grade -- CVO~A (superseded by T-16 correction)
+# Canonical loop RC5 re-grade -- CVO~A (second-pass final)
 
-> **CURRENT VERDICT: RC5 PARTIAL / HOLD.** CVO Base message 92685 exposed a
-> second module-import defect and an unevidenced end-to-end mutant limb after
-> the initial GREEN below. The correction in this record supersedes the first
-> verdict and keeps comp-adversary effective admission and the step-6 seam held.
+> **CURRENT VERDICT: RC5 GREEN.** Second-pass implementation `03cf4d17ac`
+> satisfies the inert-collection, execution-parity, and end-to-end production
+> mutant bar. This final ruling supersedes both the premature first-pass GREEN
+> and the subsequent PARTIAL below.
 
 **Date:** 2026-09-02  
-**Order:** CloudComp message 92670  
-**Implementation pinned:** `e66d5e698d6ea99af959a9c9d6ec7178d5877f47`  
-**Battery blob:** `0ab3045dbe0773a36a4b9d53f87d0062e8bec5e6`  
+**Final order:** CloudComp message 92712; CVO Base corroboration 92722
+**Final implementation pinned:** `03cf4d17ac689274909b4bb541ac21e57f775193`
+**Final battery blob:** `338e9db5b846c2c4e48ad018150953b0dae16a7c`
+**First-pass implementation:** `e66d5e698d6ea99af959a9c9d6ec7178d5877f47`
 **Parent review:** `CANONICAL_LOOP_ADVERSARIAL_REVIEW_20260902_CVO_A.md` @ `af981709a1`  
+
+## Second-pass final re-grade -- GREEN
+
+- Static AST inspection finds zero module-scope executable calls. A direct
+  import with `subprocess.run` patched to raise completes with `RESULTS=[]`,
+  `_RAN=False`, and `_WS_CACHE=None`.
+- `python -m pytest --collect-only -q` exits 0 with exactly one collected test
+  in `0.05s`; independently measured wall time is `1.746s`, below the ruled
+  five-second ceiling.
+- `python -m pytest -q` exits 0 with `1 passed in 108.30s`. Work is therefore in
+  execution, not collection.
+- Direct mode exits 0 with `STAGE-4 PACKET BATTERY: 7/7 PASS (denominator 7)`;
+  all original arm ids remain present in their original order.
+- Independent production mutant: in a temporary copy only, the unique
+  `return txt, None` at `.tools/comp-adversary:289` was changed to
+  `return "", None`. With `COMP_ADVERSARY_TOOL` pointing at that copy, the
+  standard pytest path exits 1 and reports `DIGEST-CONTENT` as the sole failed
+  arm (`1 of 7`, zero comp-read banners and zero SHAPE panels).
+- The unmutated production tool's SHA-256 is identical before and after the
+  mutant run:
+  `c4a60f042c01f605c6a2275955a6ee2832b58a4e8036f2275d3e58b8b755d553`.
+  The temporary file is removed and the production/test paths are worktree
+  clean.
+- `ruff check` and `py_compile` pass on the final battery.
+
+Release condition 5 is satisfied. `comp-adversary` may receive an effective
+runnable disposition and its mandatory-core step-6 admission seam may lift.
+This does not close the broader efficacy audit row and does not lift the whole
+canonical-loop/ETFS hold: RC7 remains open, and the separate step-6 PRD
+manifest/staged-register limb remains PARTIAL under `d019922d68`.
+
 **Initial verdict (withdrawn):** **RC5 GREEN.** The standard runner now collects and executes the comp-adversary battery with a real denominator, while direct mode retains the original seven-arm contract and the pytest entry point fails on a red arm.
 
 ## Independent evidence
@@ -60,14 +92,14 @@ unevidenced.
 4. The diff remains confined to the battery's execution/reporting boundary; no
    production behavior or test-arm meaning changes.
 
-## Corrected release effect
+## First-pass corrected release effect (superseded by second pass)
 
 Release condition 5 is **not yet satisfied**. Collector death is fixed and the
 existing substantive arms are green, but inert collection and the end-to-end
 mutant proof remain open. `comp-adversary` effective admission and the
 corresponding step-6 seam remain held.
 
-The broader canonical-loop and ETFS release hold also remains: RC2 and RC4 are
-red/partial, with RC7 not yet closed.
+At that vintage RC2 and RC4 were also red/partial. They were subsequently graded
+GREEN under `d019922d68`; RC7 and the separate step-6 limb remain open.
 
 -- 3.0.0_SA_CVO~A
