@@ -6,7 +6,7 @@
  "prds": [
   {
    "path": "docs/architecture/NFRA_CLDGRPH_PRD.md",
-   "label": "CTO~A step-4 PRD v0.1 -- ENDPOINT (ratified FWD-1..8, FWD-2 amended), the arc, territory table, 9 acceptance properties, out of scope, rulings R1-R12, decomp inputs",
+   "label": "CTO~A step-4 PRD v0.2 -- PRD_HEADER block + ENDPOINT (ratified FWD-1..8, FWD-2 amended), the arc, territory table, 9 acceptance properties, out of scope, rulings R1-R12, decomp inputs, s.7 SURFACE MANIFEST (13 rows lifted from the COO decomp @05d2c89158 as gate)",
    "date": "2026-09-02"
   },
   {
@@ -46,7 +46,7 @@
  "status": "active",
  "dep_stage": "PRD",
  "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (Rule 27) -- dep_stage PRD. Step 1 brief landed 2026-09-01 (CRO @dfd24a010b); step 2 endpoint emitted 2026-09-02 @ed0c95adb4 and RATIFIED by Andrew the same day (FWD-1..8; 'graph' = the KuzuDB projection; FWD-2 amended in place; serving plane = always-on service on opal-globgrph; FWD-8 = pull-style status read, no alarm); step 3 registered + step 4 PRD v0.1 landed 2026-09-02 ~18:5xZ by 1.0.0_SA_CTO~A. NEXT: step 5 atom-decomp by 2.0.0_SA_COO against docs/architecture/NFRA_CLDGRPH_PRD.md s.6 (rulings) + the decomp inputs list; first measurement owed = the full-fallback duration that sizes the worker (KUZUSPLIT P0-INSTRUMENT). No TO exists yet.",
- "blocking": "None on any agent. Step 5 (COO decomp) is the next act and is unblocked. Rulings are complete for a decomp (PRD s.6 R1-R12); the decomp inputs list names what it must measure or decide. DIRECTIVES.yaml D0 members.projects carries NFRA_CLDGRPH from this registration; the missions.yaml INFRASTRUCTURE.GRAPH attach list is 0.0.0_AB_MSTR's to extend (the subgroup's org/projects/NFRA_GRAPH* glob does not match this code) -- requested, not written from this lane.",
+ "blocking": "Step 5 decomp LANDED (2.0.0_SA_COO @05d2c89158, 13 cells, no TO cut). STEP 6 IS SHUT ON TWO HOLDS neither seat owns: comp-adversary admission RC5 PARTIAL fabric-wide (3.0.0_SA_CVO~A @47f1045c7f); and this row carries NO `fabric` key, which .tools/to-pipeline-gate.py layer 3 requires in (laptop | site-z) -- carried to Andrew as a one-line call by 1.0.0_SA_CTO~A 2026-09-02 ~19:2xZ (rec: laptop; PRD header already says laptop), not set from that lane. *** ORIGINAL 18:5xZ TEXT: None on any agent. Step 5 (COO decomp) is the next act and is unblocked. Rulings are complete for a decomp (PRD s.6 R1-R12); the decomp inputs list names what it must measure or decide. DIRECTIVES.yaml D0 members.projects carries NFRA_CLDGRPH from this registration; the missions.yaml INFRASTRUCTURE.GRAPH attach list is 0.0.0_AB_MSTR's to extend (the subgroup's org/projects/NFRA_GRAPH* glob does not match this code) -- requested, not written from this lane.",
  "created": "2026-09-02",
  "pods": [
   "1.0",
