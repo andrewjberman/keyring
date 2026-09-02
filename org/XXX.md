@@ -144,484 +144,246 @@ only, **with no error.**
 
 ## Step 1b — MCP startup (MANDATORY, every session)
 
-### Codex runtime branch (use this instead of the Claude watcher/poller path)
+Run **A → F in order.** Each step is: the command, then the one trap that changes what you type.
+Why a check exists — the incident behind it — is in `docs/references/XXX_STARTUP_HISTORY.md`.
+Do not read that at startup.
 
-Codex sessions must read and follow `org/mcp/CODEX_INBOX_MONITOR.md`. The
-canonical parts are deliberately separate:
+> **CODEX SEATS — different runtime, same semantics.** Steps **A** and **C** below are the Claude
+> harness path and you do not have it. Follow `org/mcp/CODEX_INBOX_MONITOR.md` instead:
+> `codex-agent-heartbeat.py` (register + heartbeat, start once, full suffixed serial) and
+> `codex-inbox-monitor.py` (non-consuming detector, inside the documented `functions.exec` bridge).
+> ⛔ **Never run `inbox-watch.sh ... stream`, `check-inbox.sh` or `agent-poller.py` on the Codex path**
+> — the first two CONSUME inbox files. Everything else here (identity, inbox paths, TO semantics, ACK
+> discipline) binds you unchanged. At every active turn, sweep your suffixed serial's unread root first;
+> read the exact file → ACK → act → move it to `read/`. **Never infer READ from a nudge or a moved file.**
 
-| Role | Codex component | Launch rule |
-|---|---|---|
-| Registration + broker heartbeat | `org/mcp/codex-agent-heartbeat.py` | Start once with the full suffixed serial; keep it running. It imports `server.py`, registers, cancels the consuming broker poll task, and heartbeats separately. |
-| Non-consuming inbox detector | `org/mcp/codex-inbox-monitor.py` | Start once inside the documented persistent `functions.exec` bridge. It emits only `[HARD-NUDGE] <filename>` and repeats while the exact root-level `.md` remains unread. |
-| Codex notification bridge | The `notify()` + `yield_control()` bridge in `org/mcp/CODEX_INBOX_MONITOR.md` | Hand-draw in the Codex tool cell; it is host orchestration, not an OS script. |
-| Broker implementation dependency | `org/mcp/server.py` -> `org/mcp/broker.py` | Used by the heartbeat companion. Do not launch a second broker manually. |
+### A. Register — your FULL serial, including any `~lane` suffix
 
-**Codex must NOT run** `inbox-watch.sh ... stream`, `check-inbox.sh`, or
-`agent-poller.py` alongside this path. The first two consume/move inbox files;
-the generic poller belongs to the Claude MCP-server lifecycle and documents the
-consuming watcher as its delivery companion.
-
-The detector sees existing backlog on its first scan and repeats every 15
-seconds until handling completes. At the start of every active Codex turn,
-also sweep the full suffixed serial's canonical unread root before other work.
-For a Base message: read the exact file -> ACK and begin immediately -> act ->
-move that exact file to `read/`. Never infer READ from a nudge or a moved file.
-
-**Host boundary:** Codex `notify()` can surface an event at an active tool
-boundary, but the currently exposed Codex host cannot start a new reasoning
-turn after a final response. Repeated non-consuming nudges prevent loss; exact
-dormant-turn parity with Claude's harness-native Monitor requires a Codex host
-wake/resume callback.
-
-The A/B/C commands below are the Claude runtime branch unless a paragraph says
-otherwise; their identity, inbox-path, task-order, and ACK semantics still bind
-Codex.
-
-**A. Register — use your FULL serial, including any `~lane` suffix:**
 ```python
 register_agent("{your_serial}", summary="Starting session")
 ```
-Makes you visible, starts the broker, enables message push, reaps your own orphaned watchers.
+Makes you visible, starts the broker, enables push, reaps your own orphaned watchers.
+⛔ **A lane registers as `0.4.0_DS_ClientPlatform~C`, never the base** — register under the base and
+your `~C` inbox is never watched, so every GO addressed to your lane is silently missed.
 
-> **Lane agents register as `0.4.0_DS_ClientPlatform~C`, NOT the base serial.** Registering under the base
-> means your `~C` inbox is never watched — you will silently miss every GO addressed to your lane.
+### A.1 — Session-keyed serial file
 
-**A.1 — Write your session-keyed serial file:**
 ```bash
 mkdir -p org/mcp/sessions
-if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
-    echo "{your_full_suffixed_serial}" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
-fi
+[ -n "${CLAUDE_CODE_SESSION_ID:-}" ] && echo "{your_full_suffixed_serial}" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
 ```
+Without it your halt gate adopts the shared `.agent_context` and **a `[STOP]` addressed to you is
+invisible to your own gate** (LD-0290).
 
-**A.2 — Audit-archive durability + tamper-evidence (audit-archive-invoker, CTO-gated 2026-07-19):**
-Runs after A.1 (it reads the serial file to resolve the exec-permitted author). An EXEC session mints a
-committed snapshot when the archive is due (>=12h since the newest snapshot + a covered log grew); a NON-EXEC
-session defers the commit but STILL runs the append-only + liveness detection (findings to FINDINGS.md +
-stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; design/why in
-`docs/briefs/audit-archive-invoker-spec-20260716.md` + the gate-2 deliverable.
+### A.2 — Audit-archive durability + tamper-evidence
+
 ```bash
-python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
+python .tools/audit-archive-invoker.py || true   # never blocks startup
 ```
+An EXEC session mints a snapshot when due; a non-exec session defers the commit but still runs the
+append-only + liveness detection. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`.
 
-⛔ **ON SITE Z, EXPECT 12-18 TAMPER-VOCABULARY FINDINGS HERE AND DO NOT CHASE THEM. READ THIS
-BEFORE YOU RUN IT, NOT AFTER.** Three separate seats independently spent a message reaching "surface
-it, do not chase it" — the explanation was real but its only carrier was a broker message id, which
-a fresh seat has no reason to open.
+⛔ **EXPECT FINDINGS HERE AND DO NOT CHASE THEM.** The device-chain migration `rv0057-f001` has not
+landed, so the tool compares this device's live logs against another device's baseline and renders
+the difference in tamper vocabulary. Two classes, and they **interleave in the output**:
 
->> **MECHANISM, MEASURED 2026-08-27 at source by `0.0.0_AB_MSTR~Z` (not relayed):**
-   `audit-archive-invoker.py chain_root()` returns `archive/<device>/` **only if that directory
-   exists**; otherwise it falls back to the legacy flat root, and its own docstring says that root
-   **IS THE LAPTOP CHAIN**. `org/audit/archive/` currently holds FLAT timestamp dirs with no
-   `<device>/` level, so **a site-Z seat compares its device-local live logs against the LAPTOP's
-   baseline** — two different files sharing a path. The tool renders that difference in tamper
-   vocabulary because tamper vocabulary is the only vocabulary it has. <<
+| class | what it means | how to read it |
+|---|---|---|
+| `NON-APPEND-EDIT` | a covered log SHRANK vs baseline | **Ask: did any log GROW or stay UNCHANGED?** All-shrink = device-axis, benign. A wide spread is what the benign reading PREDICTS. |
+| `ERROR-FAILCLOSED` | a covered log is ABSENT | ⛔ **NOT covered by the direction test.** Read these rows yourself. |
 
-**THE DISCRIMINATOR IS DIRECTION, NOT MAGNITUDE** (`0.4.0_DS_ClientPlatform~L`, 2026-08-27, correcting
-their own first figure before it propagated):
-```
-DEVICE-AXIS  every covered log SHRINKS, each by its own local activity -> a WIDE SPREAD is expected.
-             MEASURED: 8 of 8 shrank, 0 grew; 1.46x - 23.81x, median 5.96x, only 2 of 8 reach 10x.
-TAMPER       selective truncation of the interesting ones -> a MIXED direction set, some UNCHANGED.
-             0 of 8 unchanged is the observation that argues against it.
-```
-⛔⛔ **THE DISCRIMINATOR COVERS ONE CLASS OF FINDING, NOT THE OUTPUT.** The invoker emits at
-least TWO classes and **they INTERLEAVE in the output** — a reader meets them mixed, not in blocks:
-```
-NON-APPEND-EDIT   (a log SHRANK vs baseline)   <- the direction test below covers EXACTLY this
-ERROR-FAILCLOSED  (a covered log is ABSENT)    <- ⛔ NOT COVERED. "did any log GROW or stay
-                                                  UNCHANGED?" says NOTHING about a file that is
-                                                  not there.
-```
-**MEASURED at two seats, RECONCILED by `0.4.0_DE_ClientPlatform~Y` by set-compare** — and the
-reconciliation is the part a reader needs, because the raw line count invites a frame error:
-```
-tool header  18 finding(s)  =  5 COVERAGE  +  13 INTEGRITY
-                                  |              |-- 8 NON-APPEND-EDIT  (the shrink class)
-                                  |              |-- 5 ERROR-FAILCLOSED (absence)
-                                  \--------------/  THE SAME FIVE FILES, EACH PRINTING TWICE
-```
-⛔ **SO IT IS FIVE ABSENT FILES PRODUCING TEN LINES, NOT TEN FILES.** `3.0.0_SA_CVO~Z` scoped to
-INTEGRITY and read 13; `0.4.0_DE_ClientPlatform~Y` counted printed lines and read the tool's own 18.
-**Neither was wrong — two denominators over one world**, and both independently measured **8**
-NON-APPEND-EDIT, which is the only number the discriminator turns on. **A count without its unit is a
-frame error waiting for a reader: say FILES or say LINES.** ⛔ **So do NOT read a clean direction
-verdict as clearing the run** — it clears the shrink half and is silent on the rest. **Read the
-ABSENT rows yourself; this note does not adjudicate them.**
+**Known and OWNED — do not re-file:** `[LIVENESS/STALE-BASELINE]` and
+`[COVERAGE/UNCOVERED-AUDIT-LOG] org/to-pos-override-audit.log`. Surface only a shrink/absence row
+beyond these, or a genuinely new class.
 
-⛔ **FOR THE SHRINK CLASS ONLY: ASK "did any log GROW or stay UNCHANGED?", never "did they shrink by a similar amount."**
-A 16x spread is what the benign reading PREDICTS; uniform magnitude would be the surprise. **The
-magnitudes are not written here on purpose** — a number in a durable carrier is wrong by next week,
-and the direction is the invariant.
+⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`.** It drops the findings to zero by making the tool
+believe we are post-migration while all 238 files are still in the flat root — so it would compare
+live logs against an **empty chain**. The noise clears by LANDING the migration, never by satisfying
+the predicate. **Resolution condition:** when `rv0057-f001` lands these clear; if they persist after
+it, the device-axis explanation no longer covers them and it IS a finding.
 
-**THIS IS NOT A DEFECT AND NEEDS NO FIX** — `chain_root()` is transition-safe BY DESIGN so the code
-change and the 238-file migration could land in either order. The code landed; the migration has not.
-⭐ **THIS IS A NAMED MIGRATION IN FLIGHT, NOT AN ARTIFACT, AND IT HAS A TERMINUS** (`1.0.0_SA_CTO~Z`):
-`rv0057-f001` moves 238 files to `archive/<DEVICE>/<TS>/`. **RESOLUTION CONDITION, so this note
-retires itself:** when that migration lands the fallback stops firing and these findings clear.
-**If they persist after it lands, the device-axis explanation no longer covers them and it IS a
-finding.** Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; carrier gap surfaced by `3.0.0_SA_CVO~Z`.
+### A.3 — PATH check (comp-tool rail)
 
-⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`. THE MECHANISM ABOVE READS AS AN INVITATION
-TO AND IT IS A TRAP** (caught by `1.0.0_SA_CTO~Z` on this note's own wording). One `mkdir` drops the
-findings to zero — **by making the tool believe we are POST-migration while all 238 files are still
-in the flat root, so it would compare live logs against an EMPTY CHAIN.** The docstring's
-"a half-finished migration cannot strand the instrument" guarantee covers **files-moved-before-code**;
-creating the directory without moving the files is the half-finished state in the OTHER direction and
-**is not covered**. ⛔ **UNTESTED AND NOT TO BE TESTED ON A LIVE AUDIT CHAIN.** The noise is cleared by
-LANDING THE MIGRATION, never by satisfying the predicate.
+Harness shells are non-interactive and source no profile, so `.tools/` is reachable only via the
+`~/bin` forwarders. **Print the denominator, never a boolean — and RESOLUTION IS NOT EXECUTION:**
 
-⛔ **AND THE COST OF THIS NOTE, STATED SO IT STAYS VISIBLE** (`1.0.0_SA_CTO~Z`): telling every seat
-to EXPECT tamper-vocabulary findings removes wasted messages **and simultaneously NORMALISES IGNORING
-A TAMPER DETECTOR.** Both effects are real. **It is the right trade ONLY BECAUSE the migration has a
-terminus** — **if `rv0057-f001` stalls, this note quietly becomes standing permission to ignore a
-tamper detector. Re-read this paragraph if it is still here and the migration has not landed.**
-
-⭐ **TWO MORE FINDINGS THIS NOTE DID NOT COVER, NOW OWNED (2026-08-28, `1.0.0_SA_CTO`, after three seats
-re-filed them in one day):** `[LIVENESS/STALE-BASELINE]` (baseline 2026-08-20T042433Z ageing past 24h with
-an uncaptured tail) and `[COVERAGE/UNCOVERED-AUDIT-LOG] org/to-pos-override-audit.log` are NOT the
-device-axis tamper-vocabulary class above — they are a stale baseline + one uncovered file, and both
-are **OWNED-UNTIL-rv0057-f001**: the exec A.2 ALSO defers (`snapshot=deferred: DEVICE-CHAIN-PENDING`,
-measured at three seats), so no seat archives on this device until that migration lands; the MANIFEST
-add rides the same sitting (owner `0.7.0_AE_CloudOps` base, gate `1.0.0_SA_CTO`; COO carrier
-`D2_CUT_TIME_OBLIGATIONS_20260827.md` row 3 items d+e; re-raise trigger 2026-08-30). **If you see these
-two at A.2, they are known: do not re-file them; surface only a THIRD finding or a shrink/absence row.**
-
-⚠ **REACH IS BOUNDED BY WHO ACTUALLY RUNS A.2, WHICH IS NOT EVERYONE** — the first broadcast of this
-note claimed "every seat meets A.2 at load" and **that claim was false**: `0.4.0_DS_ClientPlatform~W`
-reported running A.1 and A.3 and skipping A.2 entirely (measured, n=1, self-reported). **A note beside
-a step reaches only the seats that run the step.** A.2's MANDATE and A.2's EXECUTION RATE are
-different quantities. No gate is proposed for this.
-
-**A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX; CORRECTED 2026-07-25 — see below):** harness
-shells are non-interactive and source NO profile, so `.tools/` is reachable only via the `~/bin` forwarders
-(`b519fb1c2e`). **Print the DENOMINATOR — never a boolean:**
 ```bash
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
-echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header for the current list) -- it is not, and does not claim to be, all $T."
-# MANDATORY SECOND HALF: RESOLUTION IS NOT EXECUTION. Actually RUN one, and score it on OUTPUT,
-# not on rc -- the rc does NOT discriminate match-vs-no-match (a real question and a no-match
-# question BOTH exit 0; only `comp-which --help` exits 1).
-comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN (produced its own banner)." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- the forwarder exists and its TARGET does not. Run: bash .tools/provision-path-shims.sh"
+echo "PATH: $F of $T comp-tools resolve bare."
+[ "$F" -lt "$T" ] && echo "  -> the rest need an explicit .tools/<tool> prefix; 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header)."
+# MANDATORY SECOND HALF -- score on OUTPUT, not rc (a real question and a no-match question BOTH exit 0):
+comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- run: bash .tools/provision-path-shims.sh"
 ```
-> ⚠ **The remedy line above once named the subset literally ("aws + comp-which + comp-system"). It went
-> stale the same day** — `~D` added `comp-grep`/`comp-glob` to close Rule 21's dead fallback, and the line
-> kept saying three. **A hand-copied list inside the fix for a hand-copied-list defect**; it now points at
-> the provisioner's own header instead of restating it. *The count is deliberately `$T`-derived, never a
-> digit.*
-> ⚠ **THE OLD ONE-LINE PROBE WAS ANTI-CORRELATED WITH THE FAILURE IT SCREENED FOR, and it passed while the
-> rail was broken.** It tested `command -v comp-which` — **the member MOST likely to be provisioned**, because
-> the provisioner forwards a small named subset and `comp-which` is in it. **A probe aimed at the privileged
-> member cannot fail in the state it exists to detect.**
->
-> ⚠ **SECOND, WORSE INSTANCE — 2026-07-29, and it is why the EXERCISE line above is mandatory.**
-> `0.0.0_AB_MSTR~Z` rebooted. **A.3 reported `PATH: 93 of 93 comp-tools resolve bare`. ZERO of them
-> ran.** `command -v` tests that the **forwarder FILE EXISTS** in `~/bin`; it never executes it, so it
-> **structurally cannot see that the forwarder's TARGET is gone.** All 186 forwarders had been
-> generated while LD-0340's `mount -f C: /c` was live, so every one pointed at `/c/...`; the reboot
-> took the mount and killed all of them at once.
->
-> **THE PROBE READ 100% HEALTHY PRECISELY BECAUSE THE BREAKAGE WAS TOTAL AND SINGLE-CAUSED** — all 93
-> exist *because* the provisioner ran, and all 93 are dead *because* they share one prefix. Same
-> anti-correlation as the orphan watcher: **the cleaner the pass, the more complete the failure.**
-> Downstream, `safe-commit`'s surface-check and risk-reflex hooks printed `No such file or directory`
-> and **let the commit through** — a live gate failing OPEN and SILENT.
->
-> **GENERAL FORM, worth carrying past this probe: A NON-DURABLE FIX THAT GENERATES DURABLE ARTIFACTS
-> PROPAGATES ITS OWN EXPIRY INTO THEM.** `mount -f` was correctly labelled *"dies at reboot."* Nobody
-> labelled the 186 forwarders it had silently made conditional on itself.
->
-> **EXERCISE THE TOOL; DO NOT RESOLVE ITS NAME.** Found by `~Z` 2026-07-29, approved by Andrew-direct.
->
-> **RECORD OF THEN — 2026-07-25 morning, NOT a current claim.** *At that moment `~/bin` forwarded 3 tools and
-> exactly 2 of 91 `.tools/comp-*` resolved bare; the probe returned a clean pass at that coverage, one call
-> before `comp-grep` returned `command not found`.* **Those digits are frozen ON PURPOSE and WILL be wrong —
-> ~D provisioned `comp-grep`/`comp-glob` hours later and the ratio moved the same day. For the CURRENT state,
-> RUN THE PROBE ABOVE; it derives both numbers.** *(This block has now gone stale twice within one day — first
-> its hand-listed tool set, then its counts. Both times the mechanised half was fine and the prose decayed.
-> Dating it is the fix; chasing the digits is not.)*
->
-> **And the failure landed on Rule 21's rail:** `comp-which` resolved, so the reflex worked — then it *routed
-> to* `comp-grep`/`comp-glob`, **which did not resolve** (since provisioned). The rail failed open at its own
-> designated fallback, having just told you it was healthy.
->
-> **~D's `provision-path-shims.sh` never overclaimed** — its header scopes itself to the three named tools.
-> **The CHECK inherited a generalization the FIX never made**, and that check was this file's text, i.e.
-> mine. Surfaced by `0.8.0_AE_CloudComp~C`, independently re-measured before landing.
 
-Why this matters: a bare `aws` without the shim is UNPROTECTED against the MSYS leading-`/` silent-mangle
-class, and `command not found` on comp-tools is the comp-rail failing open. Mechanism + fix record:
-~D's NFRA_TOOLARCH.PATHFIX delivery (2026-07-25).
+⛔ **EXERCISE THE TOOL; DO NOT RESOLVE ITS NAME.** `command -v` tests that the forwarder FILE exists;
+it **structurally cannot see that the forwarder's TARGET is gone.** All forwarders share one path
+prefix, so they die together — and the count then reads 100% healthy *because* the breakage was total.
+**The cleaner the pass, the more complete the failure.** The EXERCISE line is not optional.
 
-**B.0 — YOUR DELIVERY LEDGER, BEFORE YOU RESUME ANYTHING (LD-0480, 2026-08-30):**
+### B.0 — Your delivery ledger, BEFORE you resume anything (LD-0480)
+
 ```python
 get_delivery_state(agent_serial="{your_FULL_suffixed_serial}", since="<when this serial's PREVIOUS session was last alive; after a reboot, the reboot time>")
 ```
-Every row addressed to you that is **not READ — or is READ `by` a serial that is not yours** — is UNREAD MAIL:
-open the file in your own `read/` dir, act on it, ack it FROM ITS `Msg-ID` LINE. A message OFFERED to a session
-that died reads `OFFER-EXHAUSTED` and is invisible to `check-inbox`, `get_agent_status` and the `read/` listing;
-"resume from your last log" cannot surface an obligation that arrived AFTER that log. Measured 2026-08-30 after
-the 22:57Z reboot: eight rows at one lane, one a `[DRIVE]` contract ruling closed against the wrong shape (84859/84902);
-four FOREIGN READ stamps hiding the same class at another (84900); the coverage line counts a stolen slot as covered
-(84892). Cost: one call, ~1 s. Non-application: a context-clear is the SAME session — you find only your own READ rows.
-⛔ Never ack a row you did not open: a batched ack asserts reading that did not happen.
-CODEX SEATS: no `ack_messages`/`get_delivery_state` surface exists on the canonical Codex path (3.0.0_SA_CVO~X, 03:17Z: 48 rows, none ackable); the exact-file backlog sweep at load IS the equivalent act, the rows stay un-stamped honestly, and a checked-in Codex ACK helper is `1.0.0_SA_CTO`'s org/mcp item, not a seat's improvisation.
+Every row **not READ — or READ `by` a serial that is not yours** — is UNREAD MAIL: open it in your own
+`read/` dir, act, and ack **from its `Msg-ID` line**.
+⛔ A message offered to a session that died reads `OFFER-EXHAUSTED` and is **invisible to `check-inbox`,
+`get_agent_status` and the `read/` listing** — "resume from your last log" cannot surface an obligation
+that arrived after that log.
+⛔ **Never ack a row you did not open** — a batched ack asserts reading that did not happen.
+Cost: one call, ~1 s. **Non-application:** a context-clear is the SAME session; you find only your own rows.
+**Codex:** no `ack_messages`/`get_delivery_state` surface exists; the exact-file backlog sweep at load IS
+the equivalent act, and the rows stay un-stamped honestly.
 
-**B. Check inbox — BOTH paths, both required:**
+### B. Check inbox — BOTH probes, both required
+
 ```bash
-check-inbox {your_serial}           # filesystem: base -> inbox/{base}/ ; lane -> inbox/{base}/~{lane}/
-                                    # NEVER inbox/{base}~{lane}/ (flat) -- nothing reads it. See "Inbox path" below.
+check-inbox {your_serial}     # filesystem: base -> inbox/{base}/ ; lane -> inbox/{base}/~{lane}/
 ```
 ```python
 get_agent_status("{your_serial}")   # broker channel
 ```
-`send_message` writes to **both**, but each probe reads only one. **`check-inbox` alone is insufficient.**
+`send_message` writes **both** carriers; each probe reads only **one**. **`check-inbox` alone is
+insufficient.** Neither sees an LD-0099 cross-org-root ferry message — if an `[INBOX]` event fired and
+both probes are empty, list your `read/` dir newest-first.
 
-**B.1 — Find the work you actually hold. RUN THIS; do NOT read your folder:**
+### B.1 — Find the work you actually hold
+
 ```bash
 python .tools/to-check.py --all --assignee {your_FULL_suffixed_serial}
 ```
-**`--all` IS LOAD-BEARING — never trim it.** The default view scopes to projects whose PRD is <=14d old,
-so **a TO whose project PRD has aged out DISAPPEARS WHILE STILL OPEN — the view goes blind to exactly
-the TOs that have been stalled LONGEST.** Trimming `--all` silently restores that blindness.
-**MEASURED 2026-08-04: 237 of 272 live TOs — 87% — are invisible in the default view; 60 of them are
-`pending`.** The default shows 35 of 272. This is the estate-wide condition, not a quirk of one seat.
+**`--all` IS LOAD-BEARING — never trim it.** The default view scopes to projects with a PRD ≤14d old, so
+**a TO whose PRD aged out disappears while still open** — it goes blind to exactly the TOs stalled longest.
 
-Two reading notes so the output does not mislead you: `--assignee` is a **substring** match (`:12`
-"partial match ok"), and the rollup groups by **PRIMARY** assignee — so a JOINT TO appears under the
-other seat's heading while still being yours. Read the rows, not just the headings.
+⛔ **A ZERO HERE IS NOT PROOF YOU HOLD NOTHING, AND A NON-ZERO IS NOT PROOF YOU HOLD EVERYTHING.**
+The parser recognises a bare `<issued_to>serial</issued_to>`; an assignee written in prose notation
+(`**SEATED: \`serial\`**`, a class name, a serial behind a label) is dropped as UNCLASSIFIED and the
+filter compares against an empty list. **The tool discloses this on its own face every run:**
+`unresolved_serials=N` — *"a real assignee in an unusual notation lands here… do not read this residue
+as zero."*
 
-⛔⛔ **MEASURED-BROKEN 2026-08-25 09:3xZ -- `--assignee` RETURNS ZERO FOR EVERY TILDE LANE, AND THE COMMAND
-ABOVE MANDATES THE SUFFIXED FORM. IF YOU ARE A `~lane` SEAT, THIS READ WILL TELL YOU YOU HOLD NOTHING.**
-```
-SOME lanes return 0        |  OTHER lanes return real counts    |  bases
-~G  0   ~H  0   ~C  0      |  ~A 10   ~B 9   CRO~C 1            |  DS 90  AE 105  CTO 14
-```
-⛔ **A ZERO HERE IS NOT PROOF YOU HOLD NOTHING, AND A NON-ZERO IS NOT PROOF YOU HOLD EVERYTHING YOU HOLD.**
-Positive control: `~C`'s own TO text contains `0.4.0_DE_ClientPlatform~C` **4 times verbatim** and that exact
-query returns `total=0` over `scanned=2101`. *(The substring note above therefore describes behaviour this
-command does not have: it explains why you might see TOO MUCH; the measured failure is that you see NOTHING.)*
+> ⛔ **THEREFORE: YOUR TO IS THE FILE NAMED IN YOUR DISPATCH MESSAGE.** That is the only read that has
+> not failed. Run the base serial and read your folder as CROSS-CHECKS — but **treat a zero or an
+> absence from either as telling you nothing.**
 
-⛔ **AUTHOR'S CORRECTION -- MY FIRST VERSION OF THIS WARNING SAID "EVERY LANE SERIAL -> 0, EVERY BASE SERIAL
--> A REAL COUNT". THAT IS FALSE** (`0.4.0_DS_ClientPlatform~G` 70076): `~A`=10, `~B`=9, `CRO~C`=1 all return
-non-zero. **I SAMPLED THREE LANES THAT HAPPEN TO SHARE A PROPERTY AND GENERALISED TO EVERY LANE -- a sample
-of three read as the population.** The tilde was never the variable.
-⛔⛔⛔ **MECHANISM CORRECTED AT SOURCE 09:4xZ (`0.7.0_AE_CloudOps~G` 70008) -- THE TILDE IS EXONERATED. IT IS
-NOT A CAUSE AT ALL, AND MY MATRIX ABOVE WAS A CONFOUND.** `.tools/to-check.py:98` --
-`SERIAL_RE = r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?"` -- **EXPLICITLY CAPTURES THE LANE SUFFIX.**
-Run against a failing TO field it finds BOTH serials **with tildes intact**, and `_assignees_from_field` then
-**DISCARDS them as UNCLASSIFIED** (`assignee_serials = []`); the filter at `:639` compares against that empty
-list. **Nothing about the tilde is involved.**
+⛔ **Do not "fix" this by widening the parser to pull serials out of prose** — such fields contain a
+second serial that is a WATCH TARGET, not an assignee, and a naive widening would misassign the TO.
+**The current zero is at least honest.**
 
-**THE CONTROLLED EXPERIMENT, ONE VARIABLE CHANGED:**
-| `<issued_to>` shape | tilde | result |
-|---|---|---|
-| `**SEATED: \`serial\`**` prose | `~G` | **[] -- fails** |
-| `**SEATED: \`serial\`**` prose | base | **[] -- STILL FAILS with the tilde REMOVED** |
-| clean `<serial>` | `~G` | **MATCHED -- works WITH the tilde present** |
-| `-> <serial>` arrow target | `~G` | **MATCHED** |
-> **THE DISCRIMINATOR IS THE `**SEATED: \`serial\`**` PROSE NOTATION. A TILDE LANE IN CLEAN NOTATION MATCHES
-> PERFECTLY.** The tilde/base split in my matrix is a **CONFOUND**: the TOs that seat tilde lanes are the
-> recent ADVI_PERFRP-era ones written in SEATED prose, and the base counts come from older TOs in clean
-> notation. **TWO VARIABLES MOVED TOGETHER AND THE VISIBLE ONE GOT THE BLAME.**
-
-⛔ **THEREFORE A FIX TO TILDE MATCHING WOULD CHANGE NOTHING AND WOULD READ AS SUCCESSFUL** -- lane seats
-would still see zero and the fix would be reported as landed. **THE CORRECT FIX IS TO WIDEN THE RECOGNISED
-ASSIGNMENT NOTATION SET to include `SEATED: <serial>`.**
-
-*Author's note, kept because it is the transferable half: I ran a six-row matrix, saw a perfect split, and
-named the visible variable **without reading the source**. Rule 22 -- a causal claim is a HYPOTHESIS until
-source-confirmed -- and **a perfect correlation across a controlled-LOOKING matrix is exactly what a confound
-looks like.** The PATTERN below stands (lane seats do see zero) and the operational guidance is unaffected;
-only my CAUSE was wrong, twice.*
-
-⛔⛔ **AND THE SECOND HALF STANDS ON ITS OWN EVIDENCE -- `0.4.0_DE_ClientPlatform~D` 69987 MEASURED THAT MY
-FIRST REMEDY HERE ("RUN THE BASE SERIAL") DOES NOT WORK:**
-```
---assignee '0.4.0_DE_ClientPlatform~D'  total=0
---assignee '0.4.0_DE_ClientPlatform'    total=10, projects=7
-POSITIVE CONTROL: `ADVI_PERFRP` occurs ZERO times in BOTH outputs.
-```
-**THEIR LIVE TO -- executing all session, naming their full serial TWICE in its own file -- APPEARS UNDER
-NEITHER QUERY.** The second cause is the **`<issued_to>` NOTATION**:
-| indexed | `<issued_to>0.4.0_DE_ClientPlatform</issued_to>` -- a BARE SERIAL and nothing else |
-|---|---|
-| **invisible** | `<issued_to>DE-class (portal...). **SEATED: ``0.4.0_DE_ClientPlatform~D``** ... watches ``0.4.0_DS_ClientPla...`` ` -- **leads with a CLASS, serial in backticks behind a label, and names a SECOND serial it merely WATCHES** |
-⛔ **SO "TILDE -> 0, BASE -> A REAL COUNT" IS TRUE OF THE SERIAL AND FALSE OF THE TO. BASE-SERIAL RECOVERY
-RECOVERS SOME TOs AND NOT OTHERS, AND NOTHING IN THE OUTPUT SAYS WHICH.**
-
-> **THEREFORE, UNTIL THIS IS FIXED: YOUR TO IS THE FILE NAMED IN YOUR DISPATCH MESSAGE. THAT IS THE ONLY
-> READ THAT HAS NOT FAILED.** Run the base serial AND read your own folder as CROSS-CHECKS -- **but treat a
-> zero or an absence from EITHER as telling you nothing**, and the caution below still holds (a lane's TOs
-> may live in the BASE folder).
-
-⛔ **AND DO NOT "FIX" THIS BY WIDENING THE PARSER TO PULL SERIALS OUT OF THAT PROSE** (DE~D's warning, and it
-is the load-bearing half): **their field contains TWO serials and the second is a WATCH TARGET, not an
-assignee. A naive widening would assign their TO to the DS lane.** **THE CURRENT ZERO IS AT LEAST HONEST; A
-NAIVE WIDENING IS WORSE THAN THE ZERO.**
-**AND THE TOOL ALREADY SAYS SO ON ITS OWN FACE** -- every run prints `unresolved_serials=N` with the note
-*"a real assignee written in an unusual notation lands here -- UNCLASSIFIED, not counted as non-assignments...
-do not read this residue as zero."* **The instrument has been disclosing this limit in every output, and we
-read past it.**
-⛔ **AND KNOW WHAT THIS COLLIDES WITH: a `~lane` seat that runs the mandated check, reads `total=0` and
-concludes it is idle is COMPLYING WITH THIS PROTOCOL WHILE VIOLATING THE DRIVE IMPERATIVE** (*"NEVER
-self-wind-down... passive idling = a coast-failure"*). **Neither failure is visible to that seat.**
-*Found by `0.4.0_DE_ClientPlatform~C`, isolated by `1.0.0_SA_CTO`, severity named by `3.0.0_SA_CVO`. Tool fix
-routed, not taken. This warning is ADDITIVE -- no line above it was altered -- and `0.0.0_AB_MSTR` may revert
-or rewrite it as the protocol's owner.*
-
-⛔ **Two reads that will tell you you are IDLE while you hold a live P0:**
-- **YOUR AGENT FOLDER.** A lane's TOs frequently live in the **BASE** folder — `issued_to` is the only
-  truth, never file location. A lane agent reading `{agent_folder}/task_orders/` sees an empty-or-stale
-  set. *(Step 1's "read your agent folder" is for IDENTITY, not for work.)*
+⛔ **Two reads that say IDLE while you hold a live P0:**
+- **Your agent folder.** A lane's TOs frequently live in the **BASE** folder; `issued_to` is the only
+  truth, never file location. *(Step 1's "read your agent folder" is for IDENTITY, not for work.)*
 - **`get_agent_status`'s pending-TO list.** It is FOLDER-keyed (`org/mcp/server.py:809-812`), so a lane
-  query returns the whole base folder's work — one measured case returned **12 TOs spanning 5 assignees
-  when the lane held 3**. A list that is mostly other seats' work trains you to skim it. Use it for
-  liveness and messages; **it is not the authority on what you hold.**
+  query returns the whole base folder's work. Use it for liveness and messages; **it is not the
+  authority on what you hold.**
 
-*Why this line exists: a CTO-gated closure row on an Andrew-direct P0 sat `pending` for TEN DAYS in
-plain sight of a WORKING instrument nobody was pointed at (CI-R7R8, 2026-07-24 -> 08-03). The tool was
-already correct; the guidance pointed at the folder. Measured + falsified by `0.7.0_AE_CloudOps~B`,
-2026-08-04.*
+⛔ **A lane seat that reads `total=0` and concludes it is idle is COMPLYING WITH THIS PROTOCOL WHILE
+VIOLATING THE DRIVE IMPERATIVE**, and neither failure is visible to that seat.
 
-**C. Arm the persistent inbox Monitor — run `/watcher` (once, at load).**
+### C. Arm the persistent inbox Monitor — run `/watcher` (once, at load)
 
-It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line becomes a
-chat notification. **Arm once — it never exits and you never relaunch it.** If arming by hand, use the
-**Monitor tool** with `persistent: true`, `timeout_ms: 3600000`, and the **absolute** script path.
+It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line
+becomes a chat notification. **Arm once — it never exits and you never relaunch it.** By hand: the
+**Monitor tool**, `persistent: true`, `timeout_ms: 3600000`, **absolute** path.
 
-> **RESOLVE THE DRIVE PREFIX — never hardcode either form.** BOTH prefixes may be mounted at once (measured
-> 2026-08-06, CRO: `/c` and `/cygdrive/c` same device, same inode — the old "one or the other, never both"
-> mechanism sentence here was FALSE), but they are NOT equally durable: `/c` is a non-`auto` user mount that
-> has vanished at reboot before (LD-0340 class — 2026-07-29 it died and took all 186 `~/bin` forwarders that
-> had baked `/c/` into themselves, while A.3 read healthy). `/cygdrive/c` is the system-provided `auto,noumount`
-> mount. So: `test -d /cygdrive/c && echo /cygdrive/c || echo /c`, then build the path.
-> **A wrong prefix arms NOTHING and returns a task id anyway** — it dies `exit 127` in a separate
-> `<task-notification status=failed>`, so an agent that misses that notification is **deaf for the session
-> while registration, `check-inbox` and `get_agent_status` all still read healthy.** Confirm the arm with
-> `TaskOutput(<id>, block=false)` → `running`; that is the only probe that observes a consumer.
-> *(Bit two agents on the 2026-07-25 fleet respawn off a hardcoded `/c/` in the watcher skill doc.)*
+⛔ **RESOLVE THE DRIVE PREFIX — never hardcode either form.** Both may be mounted; they are not equally
+durable (`/c` is a non-`auto` user mount that has vanished at reboot; `/cygdrive/c` is system-provided
+`auto,noumount`):
+```bash
+test -d /cygdrive/c && echo /cygdrive/c || echo /c    # then build the absolute path
+```
+⛔ **A wrong prefix arms NOTHING and returns a task id anyway** — it dies `exit 127` in a *separate*
+`<task-notification status=failed>`, so a seat that misses that notification is **deaf for the whole
+session while `register_agent`, `check-inbox` and `get_agent_status` all read healthy.**
+**Confirm the arm: `TaskOutput(<id>, block=false)` → `running`.** That is the only probe that observes
+a CONSUMER. ⛔ **Never use `TaskList`** — it lists to-do items, not Monitors, and returns "No tasks
+found" while your Monitor is alive; reading that as dead is how seats double-arm.
 
-**BANNED:**
-- Launching `inbox-watch.sh ... stream` under Bash `run_in_background` — the Bash tool only notifies on
-  *exit*, and stream mode never exits, so **you go silent for the session.** It MUST run under the Monitor tool.
-- The bare-path relative launch (`bash org/mcp/inbox-watch.sh ...`) — guard-hook blocked.
-- A recurring `/watcher` cron — the persistent Monitor is the standing mechanism.
+**BANNED:** launching stream mode under Bash `run_in_background` (that tool notifies only on *exit*,
+and stream mode never exits → silent for the session) · the bare-path relative launch (guard-hook
+blocked) · a recurring `/watcher` cron.
 
-> **ORPHAN WATCHERS — the one thing you must know.** `inbox-watch.sh` stream mode **HAS** a parent-liveness
-> self-exit (`:161-165`, the 2026-07-14 root fix) — but it is **OFF when `$PPID <= 1`** (`:137-141`, a
-> deliberate fail-open: MSYS can render a live parent as 1, and a naive check would make healthy watchers
-> ⛔ **NOT the `ps -p 1` trap: OBSERVING a parent from outside shows the eval-WRAPPER at ppid=1; a CHILD
-> READING ITS OWN `$PPID` sees a REAL pid.** Measured at this seat, one tree: banner `parent-tied: pid
-> 515411` - child 515417 ppid=515411 - wrapper 515411 ppid=1. Both statements true, different processes;
-> composing them falsely concludes the self-exit never fires.
-> suicide). **READ YOUR OWN ARM BANNER** (`:159`, stderr, in the Monitor's output file): `parent-tied: pid
-> <N>` = armed, `parent-tied: OFF` = orphan-capable. Measured at this device 2026-08-27: **458 of 471**
-> `orphan-audit.log` lines are `WATCHER-SELF-EXIT` — the routine path, not a theoretical one. So orphans are
-> **narrower than this file used to claim, and still possible in exactly the fail-open cell.**
-> ⛔ **WHY THIS SURVIVED SIX WEEKS: THE DOC, THE FIX AND THE BANNER ARE THREE CARRIERS AND ONLY TWO
-> AGREED** (`0.0.0_AB_MSTR~Z`). The fix landed in source with an attributing comment; the banner
-> reported truthfully every session; the doc kept describing the pre-fix world — **and the doc is what
-> agents read.** A correction is only as complete as its last surviving carrier. An
-> orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
-> into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
-> (a process exists; the inbox is empty *because the orphan drained it*).
-> - **`ps`, an empty inbox, and the `read/` dir are BANNED as delivery oracles** — they observe the
->   *watcher*, not the agent. **Only an agent-side ACK proves an agent HEARD a message.**
-> - **A fresh session that finds a matching `inbox-watch.sh` process has found an ORPHAN, not a watcher.**
->   Reap it (**your own serial only**) before arming, or two streams race the same `mv` and split your inbox.
-> - **BUT ASK WHOSE PID FIRST — the rule above has TWO EXERCISED FALSE-POSITIVES, and killing on it blind
->   makes you deaf while every probe still reads REACHABLE.** Reason from PID identity (**measurable**), never
->   from "am I a fresh session" (**inferred**):
->   `liveness PID == MY PID` → **it is MINE and ALIVE** — a context-clear is the SAME session and you will not
->   remember arming it (**MSTR reaped its own live watcher this way, 07-16**). **DO NOT KILL.**
->   `liveness PID != MY PID` (fresh heartbeat) → a **LIVE PEER** holds your serial — **STOP, identity conflict**
->   → Andrew/CTO (the dual-COO collision, 07-14). · `STALE`/absent → genuine orphan; reap your own, then arm.
->
-> Depth: `.claude/skills/watcher/SKILL.md`.
+⛔ **ORPHAN WATCHERS — an orphan is not inert, it is a THIEF.** It `mv`s each arriving message into
+`read/` **before** echoing into a dead pipe, so it eats your mail **while manufacturing the strongest
+possible REACHABLE verdict** — a process exists, and the inbox is empty *because the orphan drained it*.
+- **`ps`, an empty inbox, and the `read/` dir are BANNED as delivery oracles** — they observe the
+  *watcher*, not the agent. **Only an agent-side ACK proves an agent HEARD a message.**
+- **Read your arm banner** (stderr, in the Monitor's output file): `parent-tied: pid <N>` = armed;
+  `parent-tied: OFF` = orphan-capable. Stream mode HAS a parent-liveness self-exit, disabled only in a
+  documented fail-open cell — so orphans are narrow, not impossible.
+- ⛔ **Before killing any `inbox-watch.sh` you find, ask WHOSE PID.** Reason from PID identity
+  (**measurable**), never from "am I a fresh session" (**inferred**) — that inference has two exercised
+  false-positives, and a wrongly-killed watcher makes you deaf while every probe still reads REACHABLE:
 
-**Never use `TaskList` to check your watcher.** It lists `TaskCreate` to-do items, not Monitors, and returns
-"No tasks found" even when your Monitor is alive — treating that as a dead watcher makes agents double-arm.
-
-### ⚠ TILDE-LANE PATHS: THE TWO FAMILIES USE **OPPOSITE** FORMS. CHECK WHICH ONE YOU ARE IN.
-
-| you are writing… | canonical form | substituting `{serial}` whole gives… |
+| liveness reads | meaning | act |
 |---|---|---|
-| **your AGENT FOLDER** (`org/{tier}/…`) | **FLAT** — `org/tier2_senior/0.7.0_AE_CloudOps~B/` | **the RIGHT answer.** Do substitute. |
-| **an INBOX** (`org/mcp/inbox/…`) | **NESTED** — `org/mcp/inbox/{base}/~{lane}/` | **the DEAD answer.** Never substitute. |
+| **PID == MY PID** | mine, alive — a context-clear is the SAME session and you will not remember arming it | **DO NOT KILL** |
+| **PID != MY PID**, fresh heartbeat | a **LIVE PEER** holds your serial | **STOP — identity conflict → Andrew/CTO** |
+| **STALE / absent** | genuine orphan | reap **your own serial only**, then arm |
 
-**The same habit is correct in one family and silently fatal in the other**, which is why "flat is
-legacy" is a **false generalization** — it is true of inboxes only. Measured 2026-07-30: agent
-folders carry **148 tracked files under FLAT lane dirs vs 1 under nested** (newest flat commit
-2026-07-29; the lone nested dir's only commit is a 2026-05-27 emergency SALVAGE sweep, not a lane
-agent working). `Step 1`'s own `org/{tier_folder}/{your_serial}/README.md` **tells you to substitute**
-— and there that is right.
+Depth: `.claude/skills/watcher/SKILL.md`.
 
-**So: ask which FAMILY you are in before you build the path. Do not carry a rule across.** The
-inbox rule below is scoped to inboxes; it is not a principle about tilde serials in general.
-*(Both failure directions are live: an agent that over-applies "always split" creates a dead
-`org/{tier}/{base}/~{lane}/` agent folder; one that over-applies "flat is legacy" avoids the very
-folder its whole lane writes to.)*
+### D. Install the owned-paths hook (idempotent)
 
-### Inbox path — CANONICAL vs the FLAT form that silently swallows mail
-
-| | path | |
-|---|---|---|
-| base serial | `org/mcp/inbox/{base}/` | ✅ |
-| **lane serial** | **`org/mcp/inbox/{base}/~{lane}/`** — NESTED | ✅ **CANONICAL** |
-| **lane serial** | **`org/mcp/inbox/{base}~{lane}/`** — FLAT | ⛔ **NEVER. INVISIBLE TO THE ENTIRE FABRIC.** |
-
-**⛔ NEVER write, read, watch, or hand-construct the FLAT form `inbox/{base}~{lane}/`.** The broker
-never writes it (`org/mcp/server.py:1615`), `check_inbox` never reads it (`:1745`), and no watcher
-ever polls it (`org/mcp/inbox-watch.sh:73-77`, header `:28-30` — *"Serial WITH ~suffix watches ONLY
-the nested dir"*). **A message placed there is delivered to nobody and reported missing by nothing.**
-
-**THE TRAP IS SUBSTITUTION, and it is why this keeps happening: for a lane serial, `inbox/{serial}/`
-IS the flat path.** Writing your own serial into a `{serial}` slot silently produces the dead form —
-so **never substitute a lane serial into an INBOX `{serial}` path slot; split it into `{base}` +
-`~{lane}` first.** ⚠ **SCOPE — INBOXES ONLY. This is NOT a general rule about tilde serials, and
-reading it as one breaks your agent folder** (see the two-families table above: there, substituting
-the whole serial is CORRECT). *The unscoped phrasing of this sentence is itself what made a reader
-generalize it, 2026-07-30.*
-
-Ratified: **LD-0202** (Andrew-direct 2026-06-18: *"the tilde suffix strip has all kinds of errors…
-fix every case of collapsing, clobbering, bullshit"*). Regression test: `org/mcp/test_ld0202_tilde_routing.py`.
-Design: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
-
-⛔ **WRITING A MESSAGE TO MORE THAN ONE SEAT? NAME THE SERIAL, NEVER "YOU"/"YOUR".** One body goes to
-N inboxes and each is header-stamped `To: <that recipient>`, so **a second person resolves per reader** --
-"you were right" reads as addressed to all of them. Write `3.0.0_SA_CVO's 70924 found X`, not "your
-finding". CLAUDE.md carries the rule; it is repeated here because this is where messages get composed.
-
-**When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical inbox's `read/`
-subdir — base `inbox/{base}/read/<file>`, lane `inbox/{base}/~{lane}/read/<file>` (the
-watcher already moved it there) and **act this turn** — ack (RAVC step 2), do the work, or validate the
-evidence (RAVC step 4). **No "standing by" silence. Do not relaunch anything.**
-
-**If the inbox has a GO:** read the referenced task order, flip `<status>` to `pending`, **begin
-immediately.** The GO **is** your authorization — do not ask Andrew.
-
-**If the GO lists a SEQUENCE of TOs:** execute **all of them in order** without waiting for a new GO. Skip
-any already complete. Keep going until a TO is blocked (deps unmet) or the list is exhausted. **Stopping
-mid-sequence to ask for a new GO is a protocol violation** — the batch GO covers the whole lane.
-
-**D. Install the owned-paths hook (idempotent):**
 ```bash
 test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
 ```
 
-**E. Set compiler-tool context (enables auto-logging):**
+### E. Set compiler-tool context
+
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
-Comp-* runs record to `org/mcp/comp-tool-runs.jsonl` only. **The `org/compiler-tools-log.md` auto-append is RETIRED** (Andrew-direct 2026-07-29, *"just constant commit nonsense"*) — killed at source in `comp_log_auto.py:_append_log`, exercised. **SCOPE: the WRITE is gone, THE FILE IS PRESERVED** at its committed state as readable history — never commit it, never re-point a writer at it. ⚠ **`comp-tool-runs.jsonl` IS GITIGNORED (`.gitignore:447`) = DEVICE-LOCAL, NOT a durable cross-device record** — each device sees only its own runs, so any "estate's comp-tool runs" claim read from it is silently short by every other device's traffic. **
+Comp-* runs record to `org/mcp/comp-tool-runs.jsonl` only; the `org/compiler-tools-log.md` auto-append is
+RETIRED (Andrew-direct 2026-07-29) — the file is preserved as history, never written, never committed.
+⚠ `comp-tool-runs.jsonl` is **gitignored = DEVICE-LOCAL**, so any "estate's comp-tool runs" claim read
+from it is short by every other device's traffic.
 
-**When you start a new TO, set it with `comp-to` — never by writing `TO_ID=` into `.agent_context`:**
-```bash
-comp-to {TO_filename_without_.md}      # e.g. comp-to ADVI_OFFICE.W1
-```
-`.agent_context` is one repo-global file, last-writer-wins across all concurrent agents; `comp-to` writes a
-race-free per-session file instead.
+**Starting a TO? Set it with `comp-to {TO_filename_without_.md}`** — never by writing `TO_ID=` into
+`.agent_context`, which is one repo-global file, last-writer-wins across all concurrent agents.
+
+### Reference — lane paths, inbox paths, and acting on what arrives
+
+⛔ **TILDE LANES: THE TWO FAMILIES USE OPPOSITE FORMS. ASK WHICH FAMILY YOU ARE IN BEFORE BUILDING A PATH.**
+
+| you are writing… | canonical form | substituting `{serial}` whole gives… |
+|---|---|---|
+| your **AGENT FOLDER** (`org/{tier}/…`) | **FLAT** — `org/tier2_senior/0.7.0_AE_CloudOps~B/` | **the RIGHT answer.** Do substitute. |
+| an **INBOX** (`org/mcp/inbox/…`) | **NESTED** — `org/mcp/inbox/{base}/~{lane}/` | **the DEAD answer.** Never substitute. |
+
+**The same habit is correct in one family and silently fatal in the other** — so "flat is legacy" is a
+false generalization, true of inboxes only. Both failure directions are live: over-applying "always
+split" creates a dead agent folder; over-applying "flat is legacy" avoids the very folder your lane
+writes to.
+
+| inbox path | |
+|---|---|
+| `org/mcp/inbox/{base}/` (base serial) | ✅ |
+| `org/mcp/inbox/{base}/~{lane}/` (lane, NESTED) | ✅ **CANONICAL** |
+| `org/mcp/inbox/{base}~{lane}/` (lane, FLAT) | ⛔ **NEVER — INVISIBLE TO THE ENTIRE FABRIC** |
+
+⛔ **THE TRAP IS SUBSTITUTION: for a lane serial, `inbox/{serial}/` IS the flat path.** The broker never
+writes it (`org/mcp/server.py:1615`), `check_inbox` never reads it (`:1745`), no watcher polls it
+(`org/mcp/inbox-watch.sh:73-77`). **A message placed there is delivered to nobody and reported missing
+by nothing.** Split into `{base}` + `~{lane}` first. ⚠ **Scoped to INBOXES** — see the table above.
+Ratified LD-0202. Regression test `org/mcp/test_ld0202_tilde_routing.py`;
+design `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
+
+⛔ **WRITING TO MORE THAN ONE SEAT? NAME THE SERIAL, NEVER "YOU"/"YOUR".** One body goes to N inboxes,
+each header-stamped `To: <that recipient>` — **a second person resolves per reader.** Write
+`3.0.0_SA_CVO's 70924 found X`, not "your finding". Repeated here because this is where messages get composed.
+
+**When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical `read/` subdir (the
+watcher already moved it there) and **act this turn** — ack (RAVC 2), do the work, or validate evidence
+(RAVC 4). **No "standing by" silence. Relaunch nothing.**
+
+**If the inbox has a GO:** read the referenced task order, flip `<status>` to `pending`, **begin
+immediately.** The GO **is** your authorization — do not ask Andrew.
+**If the GO lists a SEQUENCE:** execute **all of them in order** without waiting for a new GO; skip any
+already complete; continue until one is blocked or the list is exhausted. **Stopping mid-sequence to ask
+for a new GO is a protocol violation** — the batch GO covers the whole lane.
+
+---
 
 **F. Loop arming — EVERY serial, including the COO, arms ZERO crons at launch. There is no exception.**
 
