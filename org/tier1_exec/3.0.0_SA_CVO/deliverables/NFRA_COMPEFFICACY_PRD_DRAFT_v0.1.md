@@ -266,9 +266,28 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
   status tracker and must not grow a `done` column; disposition lives in s.7, not in the deliverable.
 - **(iv) STATE COHERENCE.** The answer-state enum (4.3) classifies a RUN, never a tool. A tool is not "ABSENT"; a
   run's subject is. No remedy moves NOT_APPLICABLE — it is a correct result (CVO~A s.11).
-- **Census (required before the 4.3 enum is shared in code):** `SUBJECT_ABSENT|PRESENT_WITH_ZERO|NOT_DECIDABLE|
-  NOT_APPLICABLE` word-boundary census over the estate is **NOT YET RUN** and is the first CVO act after this PRD
-  lands. Until then 4.3 binds deliverables by reading, not code by enforcement.
+- **Census — RUN 2026-09-02 ~17:5xZ (word-boundary, 8-token alternation, `corpus=all`): 653 hits across
+  144,933 files; DEF=4 SURFACED=44 CONFIG=307 TEST=3 DOC=288.** Per-token in CODE/DEF bands of first-party
+  source (comp-read `--enumerate`, whole-value):
+  ```
+    DECLARED-NOT-APPLICABLE   x5   .tools/to-pipeline-gate.py:46 DISPOSITION_RE       (this seat's gate)
+    NOT-DECIDABLE             x3   .tools/comp-schedule (the decidability schema)        (this seat's tool)
+    NOT_APPLICABLE            x2   org/modules/graph/nerves_resolve.py
+    INSTRUMENT_UNAVAILABLE    x1   infra/aws/ec2/estate-report-runner/estate_report_runner.py
+    SUBJECT_ABSENT            0    (the single estate-wide hit was THIS draft)
+    PRESENT_WITH_ZERO         0
+    OUT-OF-CORPUS             0 in CODE/DEF -- lives in comp-find's PROSE output + CLAUDE.md Rule 21
+  ```
+  **WHAT THE CENSUS SETTLES:** two of 4.3's four states already have LIVE carriers and must ADOPT, not mint —
+  `NOT_DECIDABLE` → **`NOT-DECIDABLE`** (comp-schedule's spelling; hyphen), and `NOT_APPLICABLE` already exists
+  in TWO spellings (`NOT_APPLICABLE` underscore in nerves_resolve; `DECLARED-NOT-APPLICABLE` hyphen in my own
+  gate) — **that split is a finding this project inherits, not one it may paper over.** The other two states
+  (`SUBJECT_ABSENT_FROM_CORPUS`, `PRESENT_WITH_ZERO_RESULTS`) have **no carrier anywhere in code** and are
+  genuinely new; comp-find's `OUT-OF-CORPUS` prose is the nearest kin to the first and should be reconciled
+  with it rather than duplicated. **Until the spellings are ratified (CTO gate), 4.3 binds deliverables by
+  reading, not code by enforcement.** Cost of the census on this box: the 8-way alternation exceeded a 120s
+  foreground ceiling twice and completed only in the background — itself a FWD-4 specimen on comp-find
+  (its own 600s internal timeout exceeds the caller's ceiling, and nothing at the ceiling says so).
 
 ---
 
