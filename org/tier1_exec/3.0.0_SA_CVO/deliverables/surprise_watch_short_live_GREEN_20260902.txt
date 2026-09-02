@@ -1,0 +1,13 @@
+# GREEN: surprise-watch.sh selftest on GUARDED bytes (short-live guard added after the RED run)
+# 2026-09-02T20:12:28Z  HEAD=b507b2b97d  file=a89dacde5d
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      same-count DELETE+ADD
+  OK      SHORT live, id still IN corpus (transient)
+  OK      SHORT live, id truly GONE from corpus
+selftest: 9/9 PASS
+# exit=0

@@ -1,0 +1,13 @@
+# RED-FIRST: surprise-watch.sh selftest on PRE-guard bytes (cases added, guard NOT yet added)
+# 2026-09-02T20:08:43Z  HEAD=5f8b774a5d  file=0c377a4d86
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      same-count DELETE+ADD
+  FAIL    SHORT live, id still IN corpus (transient)  (row-warns=1 want 0; count-only=0 want 1; idx-unchanged=0 want 1; rc=1)
+  OK      SHORT live, id truly GONE from corpus
+selftest: 8/9 PASS
+# exit=1

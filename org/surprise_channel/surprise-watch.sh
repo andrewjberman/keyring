@@ -114,6 +114,39 @@ _index_diff() {
         return 0
     fi
     live="$(printf '%s\n' "$live" | tr -d '\r')"
+    # SHORT-LIVE GUARD (3.0.0_SA_CVO 2026-09-02; confirmed independently by CVO~A @217ffafada).
+    # A SUCCESSFUL emit (rc 0) with FEWER rows than the stored index is PROVISIONAL, never a verdict.
+    # Measured 19:0xZ: one short read fired "ADVI_PERFRP-S1 DISAPPEARED" while S1 sat in the file, git
+    # clean; the short emit then REPLACED the index, so the row's return would have fired NEW -- two
+    # false events from one read, the second erasing the evidence of the first. The rc/empty guard
+    # above cannot see this case: the producer SUCCEEDED, it just came back short.
+    # Repair bar (CVO~A): re-sample once; if still short, confirm each missing id against the RAW
+    # corpus; if any missing id is still IN its file, this poll is COUNT-ONLY and the prior index
+    # is preserved. A row whose id is genuinely gone from its file still fires DISAPPEARED below.
+    # RAW_ROOT is only ever set by the selftest, to point the corpus check at a temp tree.
+    if [ -s "$IDX_FILE" ]; then
+        live_n="$(printf '%s\n' "$live" | grep -c .)"
+        stored_n="$(tr -d '\r' < "$IDX_FILE" | grep -c .)"
+        if [ "$live_n" -lt "$stored_n" ]; then
+            live2="$(_index_now 2>/dev/null)"; rc2=$?
+            live2="$(printf '%s\n' "$live2" | tr -d '\r')"
+            if [ "$rc2" -eq 0 ] && [ "$(printf '%s\n' "$live2" | grep -c .)" -ge "$stored_n" ]; then
+                live="$live2"    # the fresh sample is whole: the short read was transient
+            else
+                raw_root="${RAW_ROOT:-$REPO_ROOT}"; still=0
+                while IFS="$(printf '\t')" read -r p i h; do
+                    p="${p%$'\r'}"; i="${i%$'\r'}"
+                    [ -n "$i" ] || continue
+                    printf '%s\n' "$live" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {f=1} END {exit !f}' && continue
+                    grep -qF "\"id\": \"$i\"" "$raw_root/$p" 2>/dev/null && still=$((still+1))
+                done < "$IDX_FILE"
+                if [ "$still" -gt 0 ]; then
+                    echo "WARN: [SURPRISE] id/hash index came back SHORT ($live_n of $stored_n rows) and $still missing id(s) are STILL IN the corpus -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
+                    return 0
+                fi
+            fi
+        fi
+    fi
     emitted=0
     if [ -s "$IDX_FILE" ]; then
         # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
@@ -271,6 +304,19 @@ _selftest() {
     # F. same-count DELETE S2 + ADD S3 -> exactly 1 row warning (DISAPPEARED)
     printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/del.py"
     IDX_TOOL="$T/del.py";                                                      _case "same-count DELETE+ADD" 1 0 0
+    # SHORT live (successful tool, FEWER rows than stored) -- the case 3.0.0_SA_CVO saw fire falsely at
+    # 19:0xZ 2026-09-02 (ADVI_PERFRP-S1 "DISAPPEARED" while present in the file) and CVO~A confirmed
+    # independently @217ffafada. Repair bar (CVO~A): a first short result is PROVISIONAL -- no warn, no
+    # replace -- and absence is confirmed against the RAW corpus before any DISAPPEARED is emitted.
+    # RAW_ROOT lets this suite point the corpus check at a temp tree instead of the live channel.
+    mkdir -p "$T/org/surprise_channel/P"
+    printf '  "id": "P-S1",\n  "id": "P-S2",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    RAW_ROOT="$T"
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\n' > "$T/short.py"
+    IDX_TOOL="$T/short.py";                                                    _case "SHORT live, id still IN corpus (transient)" 0 1 1
+    printf '  "id": "P-S1",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    IDX_TOOL="$T/short.py";                                                    _case "SHORT live, id truly GONE from corpus" 1 0 0
+    unset RAW_ROOT
     rm -rf "$T"
     echo "selftest: $pass/$((pass+fail)) PASS"
     [ "$fail" -eq 0 ]
