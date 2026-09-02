@@ -342,35 +342,51 @@ PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
 
 
+# A fenced block in either admitted Markdown form: an opening ``` or ~~~ at COLUMN 0, through the
+# next line that is the SAME marker at column 0. Anchored at line start on both ends, so an inline
+# backtick run or a marker inside prose never opens a block.
+_FENCE_RE = re.compile(r"(?ms)^(```|~~~)[^\n]*\n.*?^\1[ \t]*$")
+# A top-level heading: '## ' at COLUMN 0, no leading whitespace. This is the one grammar used for the
+# heading being sought AND for the boundary of the section it introduces.
+_H2_RE = re.compile(r"(?m)^## [^\n]*$")
+
+
 def _blank_fences(text):
-    """A SAME-LENGTH copy of text with every fenced block turned to spaces (newlines kept), so an
-    offset found in the copy indexes the ORIGINAL. This is how a heading is found at TOP LEVEL only
-    while the section it introduces -- which may itself contain fenced blocks, like the ENDPOINT's
-    FWD cards -- is sliced intact from the original."""
-    return re.sub(r"```.*?```", lambda m: re.sub(r"[^\n]", " ", m.group(0)), text, flags=re.S)
+    """A SAME-LENGTH copy of text with every fenced block (``` or ~~~) turned to spaces (newlines
+    kept), so an offset found in the copy indexes the ORIGINAL. This is how a heading is found at
+    TOP LEVEL only while the section it introduces -- which may itself contain fenced blocks, like
+    the ENDPOINT's FWD cards -- is sliced intact from the original.
+
+    CVO~A re-grade @df87b39f6e falsifiers 3-4: the first cut blanked ``` only, so a ~~~ fence hid
+    nothing and a heading inside one counted."""
+    return _FENCE_RE.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), text)
 
 
 def _top_section(text, heading):
-    """The ORIGINAL-text body of the section introduced by `heading` (a str or compiled regex) when
-    that heading appears OUTSIDE any code fence; None when it does not. Body runs to the next
-    top-level '## ' heading.
+    """The ORIGINAL-text body of the section introduced by `heading` when that heading is a
+    TOP-LEVEL heading -- '## ' at column 0, outside every fence -- or None. Body runs to the next
+    top-level '## ' heading by the SAME grammar.
 
-    CVO~A re-grade @dddd96477d falsifier 1: a plain str.find() selected an ILLUSTRATIVE
-    '## ENDPOINT (...)' inside a code fence in _PRD_TEMPLATE.md before the real one, so every
-    definition read as absent. Same repair owed by @d019922d68 (A) for the manifest heading."""
+    `heading` is the exact title string (matched as a WHOLE LINE: '^## <title>$' with trailing
+    whitespace tolerated) or a compiled regex that is itself anchored at line start.
+
+    History of this function, kept because each cut was falsified by CVO~A on its own bytes:
+      @dddd96477d f1  plain str.find() selected an ILLUSTRATIVE title inside a ``` fence first
+      @df87b39f6e f1  the title embedded MID-LINE in prose satisfied the blanked-copy find()
+      @df87b39f6e f2  the title in INDENTED code (not fenced) satisfied it
+      @df87b39f6e f3  a section wholly inside a ~~~ fence satisfied it
+    One anchored, unindented, whole-line, fence-aware grammar closes all four at once."""
     blank = _blank_fences(text)
     if isinstance(heading, str):
-        idx = blank.find(heading)
-        if idx == -1:
-            return None
-        end = idx + len(heading)
+        pat = re.compile(r"(?m)^" + re.escape(heading) + r"[ \t]*$")
     else:
-        m = heading.search(blank)
-        if not m:
-            return None
-        end = m.end()
-    nxt = blank.find("\n## ", end)
-    return text[end:] if nxt == -1 else text[end:nxt]
+        pat = heading
+    m = pat.search(blank)
+    if not m:
+        return None
+    end = m.end()
+    nxt = _H2_RE.search(blank, end)
+    return text[end:] if not nxt else text[end:nxt.start()]
 
 
 def _prd_conformance(prd_text, header_schema, expect):
