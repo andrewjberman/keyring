@@ -27,7 +27,7 @@
 # ===========================================================================================
 #
 # GATES (each = an existing NEVER rule with no enforcement):
-#   1. NEVER#7  rebase on a SHARED branch (CLOUD/DEV/PROD/main/master) -- incl. `git pull --rebase`,
+#   1. NEVER#7  rebase on a SHARED branch (CLOUD/DEV/PROD/SITEZ/main/master) -- incl. `git pull --rebase`,
 #               and a BARE `git pull` when pull.rebase=true (CLAUDE.md: "pull.rebase=true makes a
 #               *bare* git pull rebase"; headmove-guard.sh has `pull` x0).
 #   2. NEVER#3  bare `terraform apply` / `destroy` (must go through safe-apply / safe-destroy).
@@ -85,7 +85,11 @@ WS="${CLAUDE_PROJECT_DIR:-$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)}"
 # required to walk every review) then reads its own test fixtures as real overrides. An instrument
 # whose test suite poisons its evidence base, append-only, cannot be audited. (RV-0048 F-020.)
 AUDIT="${NEVER_GATE_AUDIT:-$WS/org/git-author-override-audit.log}"
-SHARED_BRANCHES='^(CLOUD|DEV|PROD|main|master)$'
+# SITEZ ADDED 2026-09-02, Andrew-direct at the 1.0.0_SA_CTO~Z terminal ("all recs approved" on the
+# /open-calls card). Without it, on the site-Z device GATE 1 (NEVER#7 rebase) and GATE 5 (integrator-
+# only push/pull) both read the working branch as NOT shared and never fired -- exhibited by exercise:
+# 27 rebase arms in the suite, 15 failing, the 12 that denied all targeting `git -C portal` (DEV).
+SHARED_BRANCHES='^(CLOUD|DEV|PROD|SITEZ|main|master)$'
 
 deny() {
     "$JQ" -nc --arg r "$1" \
@@ -539,7 +543,7 @@ fi
 #
 # SCOPE, deliberately narrow, three ways:
 #   - `git fetch` is NOT blocked (LD-0367 rule 4: everyone fetches-by-hash mid-hour).
-#   - SHARED branches only (CLOUD/DEV/PROD/main/master); a scratch branch is the worker's own.
+#   - SHARED branches only (CLOUD/DEV/PROD/SITEZ/main/master); a scratch branch is the worker's own.
 #   - rebase-pull is already denied for EVERYONE by GATE 1 above (it runs first and exits).
 #
 # IDENTITY, fail-closed: the caller's serial comes from THIS call's own session_id (hook input
@@ -595,6 +599,12 @@ if [ -n "$_PUSHPULL_HIT" ] \
     # passing every hand-run test done from $WS/portal -- green in rehearsal, denied in the act.
     # The remote is the repo's identity; the worktree is just where you are standing.
     #
+    # WIDENED TO DEV 2026-09-02 (Andrew-direct, "all recs approved"): /prod-deploy Step 1a pushes
+    # portal DEV and a DT was still denied there, so the skill was not runnable by a DT end to end.
+    # The DEV hazard named below is REAL and is not dissolved by this widening -- it moves to the
+    # procedure: /prod-deploy Step 1a now REQUIRES the DT to verify that origin/DEV..HEAD carries
+    # only its own commits before pushing. The gate admits; the skill checks the payload.
+    # ORIGINAL 2026-09-01 REASONING, kept because it is still the reason that check exists:
     # WHY PROD AND NOT DEV, stated because the asymmetry is the safety argument and not an
     # oversight: the denial text's harm is "a push PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS."
     # A PROD push moves a merge of origin/DEV -- already on the remote, so it can carry nothing
@@ -608,14 +618,14 @@ if [ -n "$_PUSHPULL_HIT" ] \
     # push specifically rather than inheriting the looser match that got us into the block.
     _RE_PUSH_ONLY="${_GIT}"'push([[:space:]]|$)'
     _DT_PORTAL_PROD=0
-    if [ "$BRANCH" = "PROD" ]        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
+    if { [ "$BRANCH" = "PROD" ] || [ "$BRANCH" = "DEV" ]; }        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
         _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
         case "$_origin_url" in
             *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git) _DT_PORTAL_PROD=1 ;;
         esac
     fi
     if [ "$_DT_PORTAL_PROD" -eq 0 ]        && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
-        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD in the PORTAL repo (the /prod-deploy Step 4 promote), scoped to branch=PROD AND an origin remote of Opal-Capital/portal -- so a DT is still denied on DEV, and any non-DT is still denied on PROD. WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
+        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
     fi
 fi
 

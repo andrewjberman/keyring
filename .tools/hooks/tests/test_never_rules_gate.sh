@@ -408,15 +408,27 @@ check_as() { # serial, name, cmd, expected
 }
 
 echo ""
-echo "DT PORTAL-PROD CARVE-OUT -- 1 positive, 6 negatives (over-widening is the failure mode):"
+echo "DT PORTAL CARVE-OUT (PROD 09-01, DEV 09-02) -- positives + negatives (over-widening is the failure mode):"
 check_as '0.4.0_DT_ClientPlatform~Z' "DT pushes portal PROD (the carve-out)"       'git -C portal push origin PROD' PASS
-check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT pushing portal DEV still DENIED"     'git -C portal push origin DEV'  DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "DT pushes portal DEV (Andrew 2026-09-02)"    'git -C portal push origin DEV'  PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal DEV still DENIED"     'git -C portal pull origin DEV'  DENY
 check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT pushing workspace CLOUD still DENIED" 'git push origin CLOUD'         DENY
 check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal PROD still DENIED"    'git -C portal pull origin PROD' DENY
 check_as '1.0.0_SA_CTO~Z'            "neg: non-DT (CTO) on portal PROD DENIED"     'git -C portal push origin PROD' DENY
 check_as '0.4.0_DS_ClientPlatform~Z' "neg: DS is not DT, portal PROD DENIED"       'git -C portal push origin PROD' DENY
 check_as ''                          "neg: UNRESOLVED caller fails CLOSED on PROD" 'git -C portal push origin PROD' DENY
 check_as '0.0.0_AB_MSTR~Z'           "integrator unaffected: MSTR workspace CLOUD" 'git push origin CLOUD'          PASS
+
+# SITEZ IN SHARED_BRANCHES (Andrew-direct 2026-09-02, "all recs approved"). Before this, on the site-Z
+# device the working branch read as NOT shared, so GATE 1 and GATE 5 never fired there -- every rebase
+# arm above was red on that device for that reason alone. PROVEN-RED: the three DENY arms render
+# PASS (want DENY) against the pre-09-02 hook when run from a SITEZ checkout.
+echo ""
+echo "SITEZ IS A SHARED BRANCH (Andrew 2026-09-02):"
+check    "SITEZ: rebase onto origin/SITEZ DENIED (NEVER#7 fires here now)" 'git rebase origin/SITEZ'  DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator push DENIED (LD-0367 mechanical)" 'git push origin SITEZ' DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator pull DENIED"              'git pull origin SITEZ' DENY
+check_as '0.0.0_AB_MSTR~Z'           "SITEZ: integrator push still PASS"              'git push origin SITEZ' PASS
 
 rm -f "$NEVER_GATE_AUDIT" 2>/dev/null || true
 

@@ -21,6 +21,13 @@ incident anchors are cited inline. Design history: `docs/briefs/portal-main-tree
 
 - **DT-only check:** if your serial is not a `0.x.0_DT_*` (or explicitly Andrew-directed), HALT —
   route to the pod DT.
+- **GATE 5 (`.tools/hooks/never-rules-gate.sh`, LD-0367/LD-0368) is what enforces the push steps, and
+  until 2026-09-01 this document never named it.** It admits the integrator MSTR, and -- Andrew-direct
+  2026-09-01 + 2026-09-02 -- a DT serial pushing PROD or DEV **in the portal repo** (identified by its
+  origin remote, so the Step-4 ephemeral worktree qualifies). Workspace branches and any `pull` stay
+  integrator-only. **An explicitly Andrew-directed non-DT is NOT admitted by the gate** (Andrew-direct
+  2026-09-02, "all recs approved" on the CTO~Z card): append `# never-override: Andrew-direct <date>
+  <his words>` to the SAME push command. It is audited; that is the design, not a workaround.
 - **Anchor — DERIVE the workspace root; never type a device path** (CLAUDE.md NEVER: *derive, don't
   hardcode*). This procedure runs on more than one device and their roots differ; at least one
   contains a **SPACE**, so quote every expansion or word-splitting silently truncates the path:
@@ -59,7 +66,14 @@ git -C portal log --oneline origin/DEV..HEAD  # non-empty = local ahead → push
 
 ### Step 1a — Push DEV if local is ahead
 
+**VERIFY THE PAYLOAD IS ONLY YOURS BEFORE YOU PUSH (Andrew-direct 2026-09-02).** The reason DEV was
+integrator-only is real and did not go away when DT was admitted: on a shared checkout, a DEV push
+publishes EVERY seat's local commits, and you cannot see what you carried from the push receipt. The
+gate now admits you; this check is what replaces the gate.
 ```bash
+git -C portal log --format='%h %an %s' origin/DEV..HEAD      # EVERY line must be authored by YOUR serial
+# Any other author = STOP. That commit is another seat's unpublished work; route it to the integrator
+# (0.0.0_AB_MSTR) rather than publishing it under your push. Do not rebase or reset it away (NEVER#7).
 git -C portal push origin DEV   # NO MSYS_NO_PATHCONV — see Step 2
 ```
 VALGATE D-1 runs on DEV push. PASS or PASS/WARN proceed; a hard BLOCK means fix the adapter gap
