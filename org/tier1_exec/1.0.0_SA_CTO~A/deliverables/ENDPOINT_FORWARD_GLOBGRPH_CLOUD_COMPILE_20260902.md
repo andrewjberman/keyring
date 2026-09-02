@@ -42,14 +42,20 @@ PERMANENT and never reused; a retired outcome leaves its number vacant.*
                     anything first, and no wait they could blame on a build
          SOURCE     brief Part I O1; Part III bars 1 and 2
 
-  FWD-2  The graph gets newer on the nightly clock, never because someone asked
+  FWD-2  The graph gets newer on the estate's own schedule -- nightly in full and
+         within minutes of any cloud change -- never because someone asked
          DONE WHEN  EXERCISED -- the schedule has fired on its own at least once
                     and the next morning's answers carry that night's date
          ACCEPT     left completely alone overnight, the graph is newer in the
-                    morning than it was the evening before; and no question
-                    anyone asks is ever the reason a rebuild starts
+                    morning than it was the evening before; a change made in the
+                    cloud during the day shows up without anyone asking for a
+                    refresh; and no question anyone asks is ever the reason a
+                    rebuild starts
          SOURCE     brief Part I O2; Part IV F1 (the nightly window already has
                     five members), F4 (nothing schedules the projection today), F10
+         AMENDED    2026-09-02 in place, id unchanged (Andrew: "I agree with all
+                    your recs", /open-calls CALL 1 rec (b)); the ratified 17:5xZ
+                    text read "on the nightly clock"
 
   FWD-3  Anyone reading an answer can tell how old it is, from the answer itself,
          in plain words
@@ -318,6 +324,52 @@ both LIVE-no-DECLARED). Andrew's word on FWD-8's mechanism is the same word FRES
 - The FRESHGUARD leg-4 L4 criterion as ORIGINALLY written (per-table `last_write_iso` populated + writer_id)
   is observably TRUE on today's live marker; the entry's criterion was re-specced four times after, so this
   is an observation for the owner, not a closure.
+
+---
+
+## ANDREW-DIRECT #2 -- 2026-09-02 ~18:3xZ, same terminal, in reply to `/open-calls` (recorded VERBATIM, same turn)
+
+> "I agree with all your recs. Just need to understnad the freshguard alarm and where it is interfacing as
+> referenced in call 3."
+
+**Rulings this lands (the three cards, recs as rendered at ~18:2xZ):**
+
+| card | ruling | applied |
+|---|---|---|
+| CALL 1 | **FWD-2 = (b)**, widened in place, id unchanged | block above amended; `AMENDED` line carries the prior text |
+| CALL 2 | **serving plane = (a)** a small ALWAYS-ON service on the existing `opal-globgrph` ECS cluster; the gateway is a thin proxy, never the host | PRD s.3 + s.6 (step 4) |
+| CALL 3 | **FWD-8 mechanism = (a)** a PULL-style status surface only -- a read of the projection pointer's own manifest -- no alarm, SNS, checker or monitor; FRESHGUARD's alarm leg stays torn down on its own ruling | PRD s.6 (step 4) |
+
+Decided in lane, stated to Andrew in the same output and not contested: the marker-downstream refresh shape
+is the PRD's design; Cypher stays the query language; steps 3 and 4 proceed on this ratification.
+
+**FRESHGUARD, answered on the record (what it is, where it interfaces, why it is not live):**
+- **What it is:** NFRA_GLOBGRPH.FRESHGUARD, `0.7.0_AE_CloudOps` lanes, July 2026, five legs against one class of
+  failure -- a graph surface that reads FRESH while its content is FROZEN (the `code_heat` nine-day
+  stale-checkout incident; a `graph_edges` table 23h old under a minutes-old marker stamp).
+- **Leg 4 -- per-table vintage IN THE MARKER (writer side, live).** Every Nessie writer stamps the one
+  branch-head marker through the shared `_provenance.stamp_marker`, and the marker carries per-table
+  `last_write_iso` so a stalled sole-writer shows as `graph_edges: STALE 23h` even under a fresh stamp.
+  **This is the exact object the cloud projection consumes** (assessment above). Its deploy-ledger entry is
+  HELD-SOVEREIGN-GATED only on its L4 verify criterion, re-specced four times; the field itself is populated
+  on today's live marker for all four tables.
+- **Leg 3 -- derive watchdog** (CloudWatch metric filter on `DERIVE_RUNNER_COMPLETE`, alarm on a 24h window,
+  SNS) and **Leg 5 -- per-producer freshness alarm** (Lambda `opal-globgrph-freshness-alarm`: v1 served-object
+  AGE per target; v2 PARITY-DRIFT, the served parquet's `repo_head_sha` vs live GitHub branch HEAD; metrics to
+  `Opal/FreshnessAlarm`, one CloudWatch alarm per target, SNS) **were TORN DOWN 2026-07-17 @858554332d**
+  (`freshness_alarm.tf` 404 lines, `freshguard_derive_watchdog.tf`, `tool_activity_freshness.tf`,
+  `item2d_freeze_monitor.tf`; 44 destroys) **on Andrew's ruling (A) = remove ALL Class-A monitors** -- the
+  kind that PAGES and does not REFUSE data -- relayed as CTO GO 235109Z: *"The correctness firebreaks we
+  KEEP are the ones that REFUSE bad data ... a paging monitor is not one."* Re-arm = `git revert` of that
+  commit. The two residual log groups on the live plane are what the census sees today.
+- **Where it interfaces with THIS project:** (1) the marker leg is UPSTREAM of the projection worker and is
+  the vintage the worker pins to; (2) the projection artifact + pointer on S3 would be a natural leg-5
+  TARGET if that alarm class were ever re-armed -- **it is not, and CALL 3 (a) does not re-arm it**; (3)
+  `comp-graph status` (brief F6, mis-pointed at legacy artifacts) is the operator-facing surface CALL 3 (a)
+  repoints at the projection pointer's manifest -- a read, not a monitor.
+- ⚠ CLAUDE.md s.5 cites `MDPF_DEBTCLEAN_PRD.md` s.11-12 for the moratorium; a word search of that file for
+  "moratorium" returns 0 hits across 1,110 lines. The rule binds from CLAUDE.md regardless; the pointer is
+  surfaced, not chased.
 
 **Instruments this assessment used:** comp-read (`kuzu_incremental_refresh.py`, `kuzu_nessie_load.py`,
 `_provenance.py`, `derive_runner.py`, `derive_stitch.py`, `item2b.tf`, `stitch-produce.tf`); comp-find
