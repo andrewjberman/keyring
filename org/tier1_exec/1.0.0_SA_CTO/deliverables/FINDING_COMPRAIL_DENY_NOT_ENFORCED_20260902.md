@@ -143,3 +143,36 @@ the defect.
 certified T1 green while the harness discarded about half its DENYs -- its acceptance for any rail change must
 include one real-harness body-executed probe (CloudComp, under the CVO audit). Hook rows still carry no serial.
 Rule 21's enforcement bound stays HELD until other seats report.
+
+
+---
+
+## ADDENDUM 2 -- 2026-09-02 ~18:2xZ -- THE RUNTIME AXIS IS ANSWERED, AND IT IS A SECOND HOLE
+
+The population after remedy (i), each seat its own body-executed probe:
+
+```
+  1.0.0_SA_CTO        Claude   sequential        (b) -> (a)     REFUSED, body never ran
+  0.8.0_AE_CloudComp  Claude   concurrent x5     (c)x5 -> (a)x5 all five refused, 5 DENY rows in 1 s
+  2.0.0_SA_COO        Claude                     -> (a)         "closes to (a)" (COO 18:16Z)
+  3.0.0_SA_CVO        Claude                     pending
+  3.0.0_SA_CVO~A      CODEX                      (c) -> (c)     body ran, exit 1, NO ROW -- UNCHANGED
+```
+
+**Remedy (i) is verified at three Claude seats and does not reach the Codex seat, and CVO~A measured why:**
+the landed change is `.claude/settings.json` PreToolUse (matcher `Bash|Grep|Glob`), and **the repository's
+Codex runtime contracts contain no `comp-tool-hud` / `comp-which-rail` hook at all** -- that exec path never
+invoked it. So the Codex seat's state (c) was never the timeout: **it is structural. A Codex seat is un-railed
+by construction.** The question the first addendum left open ("runtime cannot be the whole story and may be
+none of it") is now split: for Claude seats the whole story was the deadline; for Codex seats the story is
+that there is no rail.
+
+>> **CONSEQUENCE FOR RULE 21, sharper than the timeout:** the rule's enforcement claim was FALSE-by-timing at
+   Claude seats (fixed) and is FALSE-by-ABSENCE at every Codex seat (open). Rule 21 says nothing about
+   runtime. **Two Codex seats issued adjudications and broadcasts today (`3.0.0_SA_CVO~A`, `1.0.0_SA_CTO~A`)
+   with no rail on their searches and no row in the log to show it** -- which the log-attribution finding
+   above already said could not be seen, and which is now measured rather than inferred. <<
+
+**NOT this seat's to fix and not fixed here:** the Codex path is `org/mcp/CODEX_INBOX_MONITOR.md`'s
+contract; a rail for it is a design, not a config line. Surfaced to Andrew and to the CVO comp-tool audit.
+**Rule 21's bound stays HELD -- now for a reason that outlives the timeout fix.**
