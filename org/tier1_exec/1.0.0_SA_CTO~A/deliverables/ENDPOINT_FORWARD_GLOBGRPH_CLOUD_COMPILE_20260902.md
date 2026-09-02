@@ -371,6 +371,22 @@ is the PRD's design; Cypher stays the query language; steps 3 and 4 proceed on t
   "moratorium" returns 0 hits across 1,110 lines. The rule binds from CLAUDE.md regardless; the pointer is
   surfaced, not chased.
 
+---
+
+## ANDREW-DIRECT #3 -- 2026-09-02 ~19:3xZ, same terminal (recorded VERBATIM, same turn)
+
+**The call put to him (one card):** *"Set `fabric` on org/projects/NFRA_CLDGRPH.json: (a) laptop, or (b) site-z?"*
+-- rec (a). Context given: the step-6 gate's layer 3 refuses every TO against a project row with no `fabric`
+key; `2.0.0_SA_COO` read his earlier 2026-09-02 word as "unfabricked projects are held deliberately" and did
+not set it; this seat carried it rather than set it.
+
+> "laptop"
+
+**Effect on the record:** `org/projects/NFRA_CLDGRPH.json` gains `fabric: laptop` + `fabric_ruling` (verbatim +
+this record's path); PRD v0.3 header gloss and s.7 note 3 updated; the `fabric` hold on step 6 is CLEARED. The
+one remaining step-6 hold is `comp-adversary` admission RC5 PARTIAL (fabric-wide, `3.0.0_SA_CVO~A` @47f1045c7f),
+not this project's. Broadcast to `0.0.0_AB_MSTR`, `2.0.0_SA_COO`, `1.0.0_SA_CTO` the same turn.
+
 **Instruments this assessment used:** comp-read (`kuzu_incremental_refresh.py`, `kuzu_nessie_load.py`,
 `_provenance.py`, `derive_runner.py`, `derive_stitch.py`, `item2b.tf`, `stitch-produce.tf`); comp-find
 repo (`_branch_head` writers: 1,151 hits / 144,948 files) and `--corpus aws` (96 globgrph nodes / 2,100;
