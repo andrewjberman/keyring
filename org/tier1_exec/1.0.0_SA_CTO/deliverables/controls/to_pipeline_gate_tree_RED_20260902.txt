@@ -1,0 +1,22 @@
+# RED-FIRST: to-pipeline-gate.py TWO-ROOT controls against HEAD's gate (before the resolver)
+# 2026-09-02T22:08:11Z  HEAD=5fc5038daa  gate-under-test=git show HEAD:.tools/to-pipeline-gate.py
+  DEFECT  False ->True    discovery: tree task-orders/ path IS a TO
+  OK      True  ->True    discovery: flat task_orders/ path IS a TO
+  OK      False ->False   discovery: tree prd/ path is NOT a TO
+  OK      False ->False   discovery: tree path with a non-D directive folder is NOT a tree TO
+  DEFECT  gate has no _project_row_rel -- one resolver for two roots is absent (4 cases)
+  DEFECT  REFUSE->PASS    L3: tree TO against the tree row -> PASS
+           first: org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-TREE1.md: NO project JSON for 'ETFS_GUARDRAIL' (org/pr
+  OK      PASS  ->PASS    L3: flat TO against the flat row -> PASS
+  DEFECT  PASS  ->REFUSE  L3: walk-back candidate (no FLATPROJ_SUB.json) -> REFUSE, no walk-back
+  DEFECT  REFUSE->REFUSE  L3: tree TO in the wrong project folder -> REFUSE naming the folder
+           first: org/missions/D8/ETFS/ETFS_OTHERPRJ/task-orders/ETFS_GUARDRAIL.TO-TREE2.md: NO project JSON for 'ETFS_GUARDRAIL' (org/pro
+  OK      REFUSE->REFUSE  L3: task_orders/ (underscore) INSIDE the tree is read as a flat TO -> REFUSE (no flat row)
+  DEFECT  PASS  ->PASS    L4: tree TO -> its PRD (from the tree row) carries the ENDPOINT -> PASS with a note
+  DEFECT  PASS  ->REFUSE  L4: tree PRD with the ENDPOINT heading removed -> REFUSE
+  DEFECT  PASS  ->PASS    L5: tree TO -> tree row (project_code/directive/fabric) vs PRD_HEADER -> graded 1, PASS
+  DEFECT  PASS  ->REFUSE  L5: tree row says D9 (staged), header says D8 -> REFUSE
+  DEFECT  MISSING->FOUND   flip: tree TO flips COMPLETE; proof under deliverables/<serial>/ is FOUND (its validation is the next limb, which then reports)
+  DEFECT  FOUND ->MISSING  flip: proof directly under deliverables/ (no serial folder) is NOT found -- the ruled layout is the lookup
+DEFECTS: 14  (gate under test: C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/f57f7d28-0ee0-4349-91c1-8cede3c97975/scratchpad/togate_head2.py)
+# exit=1

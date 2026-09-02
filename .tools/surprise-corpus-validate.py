@@ -108,13 +108,20 @@ def _rows(text: str, raw_json: bool = False):
 
 
 def _channel_docs(root: str) -> list:
-    """Every channel document, .md AND .json, in a stable order."""
-    base = os.path.join(root, "org", "surprise_channel")
+    """Every channel document, .md AND .json, in a stable order -- from BOTH roots. The flat channel
+    org/surprise_channel/<PROJECT>/ stays exactly as it is; the project tree adds
+    org/missions/<D>/<MACRO>/<PROJECT>/surprise-channel/{investigations,remediations}/ (spec s.7,
+    Andrew-ruled 2026-09-02, prospective only). A corpus pass -- and the watcher's --index, which is
+    this function -- that reads one root is blind to the other for the whole dual-register period."""
     found = []
+    flat = os.path.join(root, "org", "surprise_channel")
     for pattern in ("*/*.md", "*/*.json"):
-        found.extend(p for p in glob.glob(os.path.join(base, pattern))
-                     if CHANNEL_FILE_RE.search(os.path.basename(p)))
-    return sorted(found)
+        found.extend(glob.glob(os.path.join(flat, pattern)))
+    tree = os.path.join(root, "org", "missions")
+    for pattern in ("*/*/*/surprise-channel/investigations/*.md", "*/*/*/surprise-channel/investigations/*.json",
+                    "*/*/*/surprise-channel/remediations/*.md", "*/*/*/surprise-channel/remediations/*.json"):
+        found.extend(glob.glob(os.path.join(tree, pattern)))
+    return sorted(p for p in found if CHANNEL_FILE_RE.search(os.path.basename(p)))
 
 
 def _tuple(doc: str, row: dict, err) -> list:

@@ -1,0 +1,23 @@
+# surprise-watch.sh selftest on the TWO-ROOT repoint (CTO, on 3.0.0_SA_CVO's pass-3 bytes @d413196285)
+# 2026-09-02T22:09:09Z  HEAD=5fc5038daa  file=9272e4c561
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      F2 DELETE+ADD same count, poll 1: provisional, merge write
+  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)
+  OK      F2 DELETE+ADD same count, poll 2: CONFIRMED
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+  OK      E2: short twice but id STILL IN raw file -> NOT confirmed
+  OK      two roots: _watched_files sees the flat AND the tree doc (2 of 2)
+  OK      _project_of on a tree path -> ETFS_TREEPRJ
+  OK      _project_of on a flat path -> P
+selftest: 19/19 PASS
+# exit=0

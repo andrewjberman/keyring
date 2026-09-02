@@ -35,7 +35,16 @@ import re
 import subprocess
 import sys
 
-TO_PATH_RE = re.compile(r"(^|/)org/.*/task_orders/[^/]+\.md$")
+# TWO ROOTS (project-tree spec s.7/s.8, Andrew-ruled 2026-09-02 ~20:0xZ; `task-orders` with the hyphen is
+# the TREE spelling, prospective only): the flat seat-dir task_orders/ population stays exactly as it is;
+# the tree adds org/missions/D*/MACRO/PROJECT/task-orders/. A gate that reads one root is blind to the
+# other for the whole dual-register period.
+# The tree's level grammar is DATA: org/standards/PROJECT_TREE.contract.json (COO, contract_version 0.1.0)
+# -- directive folder ^D(0|[1-9][0-9]?)$, task_orders_glob org/missions/D*/*/*/task-orders/*.md. The
+# regexes below are that contract's values; a change there is a change here, stated in its `readers`.
+_TREE_D = r"D(?:0|[1-9][0-9]?)"
+TO_PATH_RE = re.compile(r"(^|/)org/.*/task_orders/[^/]+\.md$|(^|/)org/missions/" + _TREE_D + r"/[^/]+/[^/]+/task-orders/[^/]+\.md$")
+TREE_TO_RE = re.compile(r"(^|/)(org/missions/(" + _TREE_D + r")/([^/]+)/([^/]+))/task-orders/[^/]+\.md$")
 DECOMP_RE = re.compile(r"<decomp_ref>(.*?)</decomp_ref>", re.S)
 PREFLIGHT_RE = re.compile(r"<preflight>(.*?)</preflight>", re.S)
 NONE_WORD_RE = re.compile(r"^\W*(NONE|N/?A|NO\b)", re.I)
@@ -173,22 +182,47 @@ def _project_of(rel):
     return m.group(1) if m else None
 
 
+def _project_row_rel(root, rel):
+    """(code, rel_json, err): the TO's project code, the repo-relative path of its register row, and an
+    error string when the path itself is inconsistent. ONE resolver for BOTH roots, used by every limb:
+      TREE  org/missions/D*/MACRO/PROJECT/task-orders/X.md -> org/missions/D*/MACRO/PROJECT/project.json
+            -- derived from the PATH, never looked up; the filename's code must equal the folder's
+            PROJECT, and a TO filed under another project's folder is an identity defect, reported.
+      FLAT  org/.../task_orders/PROJECT.TO-x.md -> org/projects/PROJECT.json, the EXACT code only.
+    THE WALK-BACK (FOO_BAR_BAZ -> FOO_BAR -> FOO) IS RETIRED, in all four places it lived: once macro
+    folders exist a walked-back code resolves a PROJECT to its MACRO (spec s.7). Measured before
+    retiring it (2026-09-02): of 2,235 flat TOs, 1,968 resolve exactly, 264 have no row under any
+    spelling, and THREE resolved only by walk-back -- every one to a row that is not its project
+    (SCTY_ONBOARDING_GUARDRAILS -> SCTY, ADHC_PREFLT_TO -> ADHC_PREFLT, ADHC_COMPIL_V2 -> ADHC_COMPIL).
+    It was already wrong three times and had never once saved a correct resolution."""
+    code = _project_of(rel)
+    if not code:
+        return None, None, None
+    m = TREE_TO_RE.search(rel.replace("\\", "/"))
+    if m:
+        if m.group(5) != code:
+            return code, None, ("%s: the filename says project %r but the tree folder is %r. A tree TO "
+                                "lives in ITS project's task-orders/ -- the path is the membership."
+                                % (rel, code, m.group(5)))
+        return code, m.group(2) + "/project.json", None
+    return code, "org/projects/%s.json" % code, None
+
+
 def check_project_stage(root, rel):
     """LAYER 3: the TO's project must exist and declare a dep_stage from the ratified enum."""
     import json
-    code = _project_of(rel)
+    code, rel_json, err = _project_row_rel(root, rel)
     if not code:
         return ["%s: filename declares no PROJECT code -- a TO is named "
                 "PROJECT.TO-NAME.md so its project is resolvable without opening it" % rel]
-    p = os.path.join(root, "org", "projects", code + ".json")
-    # Walk the code back the way the estate's own resolvers do (FOO_BAR_BAZ -> FOO_BAR -> FOO).
-    cand = code
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    if err:
+        return [err]
+    p = os.path.join(root, rel_json)
+    cand = rel_json  # the messages below name the row by PATH, which is unambiguous across two roots
     if not os.path.isfile(p):
-        return ["%s: NO project JSON for %r (org/projects/%s.json). A TO cannot be cut against "
-                "an unregistered project -- registration is stage 1." % (rel, code, code)]
+        return ["%s: NO project row at %s. A TO cannot be cut against an unregistered project -- "
+                "registration is stage 1 (tree: mkdir + project.json in ONE commit; flat: "
+                "org/projects/<CODE>.json, exact code, no walk-back)." % (rel, rel_json)]
     try:
         with open(p, "r", encoding="utf-8") as fh:
             doc = json.load(fh)
@@ -260,14 +294,11 @@ def _prd_paths(doc):
 def check_endpoint_section(root, rel):
     """LIMB 4: a pipeline-registered project's PRD must carry a non-empty ENDPOINT section."""
     import json
-    code = _project_of(rel)
-    if not code:
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
         return [], []
-    p = os.path.join(root, "org", "projects", code + ".json")
-    cand = code
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    p = os.path.join(root, rel_json)
+    cand = code  # the messages below name the project by CODE
     if not os.path.isfile(p):
         return [], []          # layer 3 already refuses this; do not double-report
     try:
@@ -495,20 +526,15 @@ def check_prd_conformance(root, rel):
     that carries an ENDPOINT section. Reads PRD and schema from the STAGED INDEX, so a PRD edited in
     the same commit is graded as it will be committed."""
     import json as _json
-    code = _project_of(rel)
-    if not code:
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
         return [], []
-    p = os.path.join(root, "org", "projects", code + ".json")
-    cand = code
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    p = os.path.join(root, rel_json)
     if not os.path.isfile(p):
         return [], []
     # CVO~A re-grade @d019922d68 (B): the project row is read from the STAGED INDEX like everything
     # else this limb compares -- a worktree read let staged directive=D9 pass against a worktree/header
-    # D8. The worktree file above is used only to resolve the code; the CONTENT comes from the index.
-    rel_json = "org/projects/%s.json" % cand
+    # D8. The worktree file above is used only to resolve the row; the CONTENT comes from the index.
     staged_json = _staged_blob(root, rel_json)
     if staged_json is None:
         return (["%s: %s unreadable from the staged index -- the step-4 conformance limb cannot compare "
@@ -641,13 +667,11 @@ def check_complete_flip(root, rel):
         return []  # not a flip to a terminal state
 
     import json
-    code = _project_of(rel)
-    if not code:
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
         return []
-    cand, p = code, os.path.join(root, "org", "projects", code + ".json")
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    p = os.path.join(root, rel_json)
+    cand = code  # the message below names the project by CODE
     if not os.path.isfile(p):
         return []
     try:
@@ -658,12 +682,20 @@ def check_complete_flip(root, rel):
         return []
 
     # Pipeline-registered AND flipping terminal: the instance must exist and be VALID.
+    # FLAT: <seat>/deliverables/<TO>.proof_of_spec.json beside <seat>/task_orders/. TREE (ruled
+    # 2026-09-02, s.6 option ii): deliverables/<serial>/ sub-folders, the owner in the path -- so the
+    # instance is searched one level down, under whichever serial the TO assigned.
+    stem = os.path.basename(rel).rsplit(".md", 1)[0]
+    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
+    to_dir = os.path.dirname(rel).replace("\\", "/")
+    if to_dir.endswith("/task-orders"):
+        import glob as _glob
+        cands = [c for n in names
+                 for c in _glob.glob(os.path.join(root, to_dir[:-len("/task-orders")], "deliverables", "*", n))]
+    else:
+        cands = [os.path.join(root, to_dir.replace("task_orders", "deliverables"), n) for n in names]
     inst = None
-    for cand_path in (
-            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
-                         os.path.basename(rel).rsplit(".md", 1)[0] + ".proof_of_spec.json"),
-            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
-                         os.path.basename(rel).rsplit(".md", 1)[0] + "_PROOF_OF_SPEC.json")):
+    for cand_path in cands:
         if os.path.isfile(cand_path):
             inst = cand_path
             break

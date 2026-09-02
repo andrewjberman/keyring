@@ -54,10 +54,23 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CHANNEL_DIR="$SCRIPT_DIR"
-STATE_DIR="$CHANNEL_DIR/.watch-state"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+# STATE lives under .tools/state/ (project-tree spec s.7: "the watermark file moves to .tools/state/";
+# CTO repoint 2026-09-02 under the COO/CTO prerequisite split @a8d63f097c). The old location was
+# INSIDE the watched channel; the tree adds a second root, and a watcher's state belongs to neither.
+STATE_DIR="$REPO_ROOT/.tools/state/surprise-watch"
+_OLD_STATE_DIR="$CHANNEL_DIR/.watch-state"
 STATE_FILE="$STATE_DIR/${SERIAL}.tsv"
 
 mkdir -p "$STATE_DIR" 2>/dev/null || true
+# ONE-TIME MIGRATION: a live watcher's watermark + id/hash index carry over, so the move never makes
+# a seat re-seed (a re-seed is silent by design -- and silence is exactly what a moved state file
+# would otherwise buy). Copies only the files this serial owns and only when the new home lacks them.
+for _old in "$_OLD_STATE_DIR/${SERIAL}".*; do
+    [ -f "$_old" ] || continue
+    _new="$STATE_DIR/$(basename "$_old")"
+    [ -e "$_new" ] || cp -p "$_old" "$_new" 2>/dev/null || true
+done
 
 # The id pattern is the SCHEMA's own (investigation_item.schema.json "id"):
 #   ^[A-Z0-9_]+-(Z-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z.
@@ -75,7 +88,6 @@ ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?S[0-9]+"'
 # If the index cannot be produced, say so LOUDLY every poll -- a notifier that degrades to
 # count-only in silence is the P0 wearing a green light.
 # ---------------------------------------------------------------------------------------------
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 IDX_FILE="$STATE_DIR/${SERIAL}.idx.tsv"
 PROV_FILE="$STATE_DIR/${SERIAL}.prov.tsv"   # cross-poll PROVISIONAL set (pass 2); the selftest overrides it
 IDX_TOOL="$REPO_ROOT/.tools/surprise-corpus-validate.py"
@@ -230,15 +242,30 @@ _watched_files() {
     # Every project's investigation doc, whatever the container. The protocol's container is
     # markdown-with-a-fenced-block today and a pure .json swap is proposed but NOT censused
     # against existing readers -- so BOTH suffixes are watched and the swap needs no change here.
-    for f in "$CHANNEL_DIR"/*/INVESTIGATION_v*.md "$CHANNEL_DIR"/*/INVESTIGATION_v*.json; do
+    # TWO ROOTS (project-tree spec s.7; grammar = org/standards/PROJECT_TREE.contract.json
+    # surprise_channel_glob): the flat channel <CHANNEL_DIR>/<PROJECT>/ stays; the tree adds
+    # org/missions/D*/<MACRO>/<PROJECT>/surprise-channel/investigations/. A watcher on one root is
+    # deaf to the other for the whole dual-register period. The --index this watcher diffs
+    # (surprise-corpus-validate.py) enumerates the same two roots.
+    for f in "$CHANNEL_DIR"/*/INVESTIGATION_v*.md "$CHANNEL_DIR"/*/INVESTIGATION_v*.json \
+             "$REPO_ROOT"/org/missions/D*/*/*/surprise-channel/investigations/INVESTIGATION_v*.md \
+             "$REPO_ROOT"/org/missions/D*/*/*/surprise-channel/investigations/INVESTIGATION_v*.json; do
         [ -f "$f" ] || continue
         printf '%s\n' "$f"
     done
 }
 
 _project_of() {
-    # .../org/surprise_channel/ADVI_PERFRP/INVESTIGATION_v1.md -> ADVI_PERFRP
-    basename "$(dirname "$1")"
+    # flat: .../org/surprise_channel/ADVI_PERFRP/INVESTIGATION_v1.md            -> ADVI_PERFRP
+    # tree: .../org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md
+    #                                                                            -> ETFS_GUARDRAIL
+    # (the tree's project folder is three levels up; basename(dirname) would say "investigations")
+    case "$1" in
+        */surprise-channel/investigations/*|*/surprise-channel/remediations/*)
+            basename "$(dirname "$(dirname "$(dirname "$1")")")" ;;
+        *)
+            basename "$(dirname "$1")" ;;
+    esac
 }
 
 _prior_count() {
@@ -392,6 +419,21 @@ _selftest() {
     RAW_ROOT="$T"; rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1
     IDX_TOOL="$T/short.py";                                                    _case "E2: short twice but id STILL IN raw file -> NOT confirmed" 0 1 1
     unset RAW_ROOT; rm -f "$PROV_FILE"
+    # TWO ROOTS (CTO repoint 2026-09-02): _watched_files sees a tree investigation doc beside a flat
+    # one, and _project_of names the PROJECT for both shapes (a tree path's basename(dirname) is
+    # "investigations", which is what the pre-repoint function would have reported).
+    mkdir -p "$T/org/surprise_channel/P" "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations"
+    printf '  "id": "P-S1",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    printf '  "id": "ETFS_TREEPRJ-S1",\n' > "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md"
+    _saved_channel="$CHANNEL_DIR"; _saved_root="$REPO_ROOT"
+    CHANNEL_DIR="$T/org/surprise_channel"; REPO_ROOT="$T"
+    _n="$(_watched_files | grep -c .)"
+    if [ "$_n" -eq 2 ] && _watched_files | grep -q 'org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md'; then pass=$((pass+1)); echo "  OK      two roots: _watched_files sees the flat AND the tree doc (2 of 2)"; else fail=$((fail+1)); echo "  FAIL    two roots: _watched_files saw $_n doc(s), want 2 incl. the tree path"; fi
+    _p="$(_project_of "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md")"
+    if [ "$_p" = "ETFS_TREEPRJ" ]; then pass=$((pass+1)); echo "  OK      _project_of on a tree path -> ETFS_TREEPRJ"; else fail=$((fail+1)); echo "  FAIL    _project_of on a tree path -> '$_p' (want ETFS_TREEPRJ)"; fi
+    _p="$(_project_of "$T/org/surprise_channel/P/INVESTIGATION_v1.md")"
+    if [ "$_p" = "P" ]; then pass=$((pass+1)); echo "  OK      _project_of on a flat path -> P"; else fail=$((fail+1)); echo "  FAIL    _project_of on a flat path -> '$_p' (want P)"; fi
+    CHANNEL_DIR="$_saved_channel"; REPO_ROOT="$_saved_root"
     rm -rf "$T"
     echo "selftest: $pass/$((pass+fail)) PASS"
     [ "$fail" -eq 0 ]
@@ -470,7 +512,7 @@ if [ ! -f "$STATE_FILE" ]; then
     echo "surprise-watch: baseline seeded -- ${LAST_FILES} file(s), ${LAST_ROWS} row(s); pre-existing rows NOT notified" >&2
 fi
 
-echo "surprise-watch: STREAM mode for $SERIAL watching $CHANNEL_DIR/*/INVESTIGATION_v* (persistent; READ-ONLY on the watched files; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep)/15s)" >&2
+echo "surprise-watch: STREAM mode for $SERIAL watching $CHANNEL_DIR/*/INVESTIGATION_v* + org/missions/D*/*/*/surprise-channel/investigations/ (two roots; state $STATE_DIR) (persistent; READ-ONLY on the watched files; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep)/15s)" >&2
 
 while true; do
     if [ "$PARENT_CHECK" -eq 1 ] && ! kill -0 "$WATCH_PARENT" 2>/dev/null; then
