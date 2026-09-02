@@ -309,6 +309,12 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
 ### 4.6 USAGE + DISPOSITION PROPOSAL
 ```
   runs_30d        from BOTH instruments (runs.jsonl AND rail log), stated separately
+                  TRAP (0.8.0_AE_CloudComp, unit 3a @4c3b848c97): the runs.jsonl SINK cuts
+                  args_head at 80 chars (comp_log_auto.py:349), not the 200 the emitters pass.
+                  A token-based acceptance on this sink matches ZERO rows while rows are being
+                  written if the token sits past char 80 of "<tool> <args>" -- unit 1's passed
+                  only because its args were short. Place the token inside the first 80 chars,
+                  or count rows by tool+serial+rc, never by a late token.
   hook_driven     fraction of runs from a hook vs by hand
   battery         path, collects >0 under pytest?, has a red-first mutant?
   overlap         tools it duplicates or subsumes, with the EXECUTABLE-BODY evidence
