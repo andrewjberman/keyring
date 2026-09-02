@@ -903,7 +903,7 @@ paths:
     note: 'Project tree: deliverables/<SERIAL>/** -- owner carried by the path, resolved by validator clause 4.'
   org/missions/*/*/*/surprise-channel/investigations/**:
     lane: ANY
-    note: 'Project tree: investigations rows are appended by the ASSIGNED WORKER (a value in the TO, not a path) + CVO; a path gate cannot name the worker, so this is ANY and the surprise-row gate validates every row (schema, identity, mutation, folder==project). RESIDUAL stated in the prerequisite manifest: narrowing needs a resolver or a per-serial sub-folder ruling like deliverables/.'
+    note: 'Project tree: investigations rows are appended by the ASSIGNED WORKER (a value in the TO, not a path) + CVO; a path gate cannot name the worker, so this is ANY and the surprise-row gate validates every row (schema, identity, mutation, folder==project). RULED keep ANY -- Andrew-direct 2026-09-02 23:0xZ (/open-calls at the CTO terminal, verbatim Both recs accepted); the row gate is the control, no resolver, no per-serial sub-folder.'
   org/missions/*/*/*/surprise-channel/remediations/**:
     lane: TREE_CVO
     note: 'Project tree: remediation rows CVO routes at step 10.'
@@ -912,7 +912,7 @@ paths:
     note: 'Project tree: ledger/ (deploy-completion + change-management for THIS project).'
   org/missions/*/*/*/cards/**:
     lane: ANY
-    note: 'Project tree: substrate cards for resources THIS project builds on -- ''the building lane'' is a TO value, not a path. ANY; cards carry their own schema (org/standards/SUBSTRATE_CARD.schema.json). RESIDUAL, same as investigations.'
+    note: 'Project tree: substrate cards for resources THIS project builds on -- ''the building lane'' is a TO value, not a path. ANY; cards carry their own schema (org/standards/SUBSTRATE_CARD.schema.json). RULED keep ANY, same word as investigations (Andrew-direct 2026-09-02 23:0xZ).'
   org/missions/*/*/*/project.json:
     lane: TREE_PROJECT_ROW
     note: 'Project tree: the register row, in its folder.'

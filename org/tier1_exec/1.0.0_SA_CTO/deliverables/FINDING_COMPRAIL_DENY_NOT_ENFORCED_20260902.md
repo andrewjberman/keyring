@@ -176,3 +176,20 @@ that there is no rail.
 **NOT this seat's to fix and not fixed here:** the Codex path is `org/mcp/CODEX_INBOX_MONITOR.md`'s
 contract; a rail for it is a design, not a config line. Surfaced to Andrew and to the CVO comp-tool audit.
 **Rule 21's bound stays HELD -- now for a reason that outlives the timeout fix.**
+
+
+---
+
+## ADDENDUM 3 (2026-09-02 ~23:0xZ) -- RULED: Andrew-direct at the CTO terminal, `/open-calls`, "Both recs accepted"
+
+The call this finding surfaced was put to Andrew as one card -- *(a) design a Codex-runtime rail, (b) until one
+exists, Codex seats issue no comp-tool-grounded adjudications, or (c) both?* -- with the REC *(c): (b) now, (a) as a
+row in NFRA_COMPEFFICACY*. **Accepted verbatim.** Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md`.
+
+- **(b) is in force from this word:** no Codex-runtime seat issues a comp-tool-grounded adjudication until a rail
+  exists on that runtime. A directive to seats, broadcast to every live exec + MSTR + CloudComp + `1.0.0_SA_CTO~A`;
+  NOT a mechanical gate (none was asked for; none is built).
+- **(a) is a row in NFRA_COMPEFFICACY** at `3.0.0_SA_CVO`, executor `0.8.0_AE_CloudComp`.
+- **Rule 21's bound stays HELD** -- lifted only when (a) lands and is exercised at a Codex seat, on the same
+  body-executed probe this finding used for the Claude seats.
