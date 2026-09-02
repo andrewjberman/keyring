@@ -54,7 +54,21 @@ def _git(*args):
     return subprocess.run(["git", "-C", repo_root()] + list(args), capture_output=True, text=True)
 
 
-COMMIT_RE = re.compile(r"@([0-9a-f]{7,40})\b")
+COMMIT_RE = re.compile(r"@`?([0-9a-f]{7,40})\b")
+# BACKTICK FIX (2026-09-02; 3.0.0_SA_CVO findings 90276-90279, bound 1, reproduced independently
+# 3 days after the design note's own 08-28 reproduction). The pattern required a hex digit
+# IMMEDIATELY after `@`, so the estate's most common markdown pin form -- @`<hash>` -- matched
+# NOTHING and source 1 reported "0 attempted / 0 verified / 0 UNVERIFIABLE".
+# WARN: THAT ZERO READS AS "0 PROBLEMS". A pin the parser cannot see is indistinguishable, in the
+# output, from an artifact that cited no commits at all.
+# MEASURED on the specimen before and after (ANDREW_DIRECT_20260828_MSTR_INTEGRATOR_AND_
+# OBSERVER_ONLY.md, 1 raw hex run, ctx ' @`6bac8e6cdb` '):
+#     before  @([0-9a-f]{7,40})\b   -> []
+#     after   @`?([0-9a-f]{7,40})\b -> ['6bac8e6cdb']
+# Scoped deliberately to an optional backtick after `@`: a BARE backticked hex run with no `@`
+# is NOT treated as a pin, because md5s, S3 ETags and snapshot ids are also backticked hex and
+# promoting them to commits would manufacture UNVERIFIABLE noise. The zero-pin guard below is
+# what covers that residue -- it reports unparsed hex runs instead of guessing at them.
 # TRUNCATION FIX (Andrew-PRIORITIZED 2026-08-20, VERBATIM: "truncated outputs is a very risky
 # error type and one we've seen crop up many times").
 # The trailing \b was satisfied by the FIRST dot-segment that could pass as an extension, so a
@@ -71,6 +85,9 @@ COMMIT_RE = re.compile(r"@([0-9a-f]{7,40})\b")
 PATH_RE = re.compile(r"\b((?:org|docs|infra|data|portal|rcg|workflows)/[A-Za-z0-9_\-./~]+\.[A-Za-z0-9]{1,6})(?![A-Za-z0-9_\-./~])")
 TOOL_RE = re.compile(r"\b(comp-[a-z0-9\-]+|to-check\.py|safe-commit|safe-apply|safe-deploy)\b")
 FILELINE_RE = re.compile(r"\b([A-Za-z0-9_\-./]+\.(?:py|ts|tsx|sh|yaml|yml|json|md)):(\d+)\b")
+# Any bare hex run that could be a commit-ish. Deliberately NOT used to extract pins (see the
+# COMMIT_RE note) -- only to COUNT what the pin parser may have failed to see.
+RAW_HEX_RE = re.compile(r"\b[0-9a-f]{7,40}\b")
 
 
 def parse_artifact(path):
@@ -79,8 +96,14 @@ def parse_artifact(path):
     paths = sorted(set(p for p in PATH_RE.findall(text) if not p.endswith((".png", ".jpg"))))
     tools = sorted(set(TOOL_RE.findall(text)))
     filelines = sorted(set(FILELINE_RE.findall(text)))
+    # Every hex run that COULD be a commit pin, whether or not COMMIT_RE claimed it. This is the
+    # denominator the zero-pin guard needs: "hashes exist in the bytes but zero PARSED" is a
+    # strictly sharper alarm than "the profile is empty", and it is the only way a FUTURE
+    # unparsed pin form announces itself instead of rendering as a clean zero.
+    raw_hex = sorted(set(RAW_HEX_RE.findall(text)))
     return {"text_len": len(text), "commits": commits, "paths": paths,
-            "tools": tools, "filelines": filelines}
+            "tools": tools, "filelines": filelines, "raw_hex": raw_hex,
+            "unparsed_hex": [h for h in raw_hex if h not in set(commits)]}
 
 
 def verify_commits(commits):
@@ -387,6 +410,31 @@ def compose(path, out_path, cap, open_mode=False, digest_budget=12, digest_bytes
         L.append("!! externally homed -- the validator must derive the evidence set BY READING.")
         L.append("!! Every complement source below ran against an EMPTY profile and says so in")
         L.append("!! its own denominator. A zero here is a signal, never a clean pass.")
+    # SHARPER TRIGGER (2026-09-02, 3.0.0_SA_CVO finding 90279 s.2, recommendation adopted):
+    # WARN: THE GUARD ABOVE FIRES ONLY ON A TOTALLY EMPTY PROFILE, AND THAT IS THE WRONG HALF OF THE
+    # CLASS. Measured by that seat, two runs bracketing the trigger exactly:
+    #     0 commits, 0 paths, 0 tools -> banner FIRES     (already looks suspicious)
+    #     0 commits, 1 path,  0 tools -> banner SILENT    (looks WELL-EVIDENCED, and was not)
+    # The silent case is the dangerous one: an artifact that cites paths reads as well-grounded
+    # while every commit pin was silently dropped by the parser. The predicate below is what
+    # that seat recommended -- warn when hashes EXIST IN THE BYTES but zero PARSED -- and it
+    # needs no new source, only the denominator parse_artifact now carries.
+    if not prof["commits"] and prof["raw_hex"]:
+        L.append("!! HEX RUNS PRESENT BUT ZERO PARSED AS PINS (%d run(s)): %s"
+                 % (len(prof["raw_hex"]), ", ".join(prof["raw_hex"][:8])
+                    + (" ..." if len(prof["raw_hex"]) > 8 else "")))
+        L.append("!! The pin parser saw NOTHING while the bytes carry commit-shaped hex. Either")
+        L.append("!! these are digests/ETags/snapshot-ids (not pins -- fine), or the citation")
+        L.append("!! form is one COMMIT_RE cannot read, in which case source 1's '0 attempted'")
+        L.append("!! is a PARSER zero, not an evidence zero. They are byte-identical in output.")
+        L.append("!! The runs are printed so this is inspectable rather than merely alarming.")
+    elif prof["unparsed_hex"]:
+        # Partial: some pins parsed, others did not. Lower severity, still worth the denominator.
+        L.append("!! %d hex run(s) not parsed as pins (%d were): %s"
+                 % (len(prof["unparsed_hex"]), len(prof["commits"]),
+                    ", ".join(prof["unparsed_hex"][:6])
+                    + (" ..." if len(prof["unparsed_hex"]) > 6 else "")))
+        L.append("!! Expected for digests/ETags. Check none is a pin in a form COMMIT_RE misses.")
     L.append("")
     L.append("## COMPLEMENT (what the validator should know the author may NOT have seen)")
     L.append("")
