@@ -3,7 +3,13 @@
 All active and completed projects. Each project has a project code, a macro code,
 a JSON file, and a PRD set.
 
-**Project code format:** `{MACRO}_{6CHAR}` (e.g., `ADVI_V1VERS`)
+**Project code format:** `{MACRO}_{SUFFIX}`. `{MACRO}_{6CHAR}` (e.g. `ADVI_V1VERS`) is the
+PREFERRED form and is **NOT ENFORCED** -- no gate checks it. MEASURED 2026-09-02 by
+`0.0.0_AB_MSTR~Z` (register owner) over all 352 project JSONs: **188 (53.4%) carry a 6-char
+suffix; 162 (46.0%) do not**, with suffixes from 3 to 17 characters and five already at 14.
+So a longer code is ORDINARY PRACTICE, not an exception -- do not record one as a sovereign
+override, and do not "fix" the 46%. This line previously stated the 6-char form flatly, which
+made half the register read as non-conformant against a rule nothing enforces.
 **Thread serials:** `{PROJECT_CODE}-{NNN}` (e.g., `ADVI_YANGV2-001`)
 **Project JSON:** `org/projects/{PROJECT_CODE}.json`
 
