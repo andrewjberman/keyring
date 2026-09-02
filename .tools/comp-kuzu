@@ -5,7 +5,9 @@
 #        comp-kuzu --limit 20 "..."     # auto-append LIMIT
 #        comp-kuzu --db-path PATH "..."
 # This wrapper runs kuzu_cli.py, which serves _canonical.CANONICAL_DB_PATH = kuzu_nessie_db.
-# DB is rebuilt via: comp-kuzu-full (full) / comp-kuzu-inc (incremental) -- engine
+# DB is rebuilt via: comp-kuzu --mode full (force full) / comp-kuzu --mode inc (incremental-OR-
+# serve-labeled-stale, NEVER a mid-task full rebuild -- that guarantee lives on the FLAG; the
+# comp-kuzu-inc / comp-kuzu-full wrappers were retired 2026-09-02, NFRA_COMPEFFICACY unit 2) -- engine
 # infra/aws/globgrph/kuzu_nessie_load.py. NOT kuzu_load.py: that builds a DIFFERENT
 # 5-column schema (PK arn, no props) into a DIFFERENT dir (kuzu_db). Aimed at the
 # canonical path it answers every props/D1 query with a silent empty result.

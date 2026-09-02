@@ -718,43 +718,17 @@ contracts:
   comp-kuzu:
     coverage: "the Cypher query result over the canonical auto-refreshing Kuzu graph DB"
     blind_spots:
+      - "--mode inc (NFRA_KUZUSPLIT P1, formerly the comp-kuzu-inc wrapper, retired 2026-09-02): THE VERDICT-BEARING BEHAVIOR IS IN-BAND, NOT IN THE rc -- a labeled-stale serve exits 0; the verdict rides stderr (provenance marker 'SERVED LABELED-STALE ... behind-by-N' + WARN line) and the persistent .fallback.jsonl sink beside the DB. An rc-only caller CANNOT distinguish fresh from labeled-stale; read the header. Declared from source (_canonical.py:483-530, COND-1 :524-529, COND-2 :423 @2026-08-04); the live labeled-stale exercise remains dial re-dial trigger 6"
+      - "--mode full (formerly comp-kuzu-full, retired 2026-09-02): forces kuzu_nessie_load UNCONDITIONALLY before serving; a rebuild failure is WARN-and-proceed on the prior DB, never an exit -- read stderr, not rc, for the refresh outcome"
       - "answers ONLY what the graph models; a relationship not extracted into the graph is absent, not zero. Read the provenance header (UNKNOWN VINTAGE = freshness unverifiable; a --db-path scratch DB is a frozen vintage)"
     plane: projection
     grain: field
     scope: estate
-    vintage: "the materialized Kuzu DB (provenance header printed to stderr every call)"
+    vintage: "the materialized Kuzu DB (provenance header printed to stderr every call). --mode inc: current on small-delta incremental; PRIOR vintage honestly labeled on large-delta/timeout/error fallback (never half-built). --mode full: post-rebuild = current HEAD"
     exit_codes:
-      "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
+      "1": {class: fail, meaning: "tool/input error -- DB not found (incl. --mode inc COLD START: no local DB to serve stale, and inc NEVER full-rebuilds -- run --mode full or wait for MSTR startup), or the Cypher query failed to execute"}
     exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
 
-  # ---- comp-kuzu VARIANTS (declared per dial(comp-kuzu) K3, 2026-08-04, 0.7.0_AE_CloudOps~B) ----
-  # Same engine (kuzu_cli.py), same query surface as comp-kuzu; ONLY the refresh discipline differs.
-  # The K3 finding: -inc's labeled-stale serve is VERDICT-BEARING with undeclared rc/stdout
-  # semantics -- declared here from source (+ exercised paths); the labeled-stale serve itself is
-  # the dial's P6 skip = re-dial trigger 6, so its declaration is SOURCE-grounded, exercise pending.
-  comp-kuzu-full:
-    coverage: "identical Cypher query surface to comp-kuzu over the canonical Kuzu DB; differs ONLY in refresh discipline -- forces the full kuzu_nessie_load projection UNCONDITIONALLY before serving (MSTR-startup daily ground-truth reset)"
-    blind_spots:
-      - "same modeled-universe bound as comp-kuzu (0-rows scope note printed since dial K6); a rebuild failure is WARN-and-proceed on the prior DB, never an exit -- read stderr, not rc, for refresh outcome"
-    plane: projection
-    grain: field
-    scope: estate
-    vintage: "post-rebuild canonical DB (provenance header on stderr every call; on rebuild success vintage = current HEAD)"
-    exit_codes:
-      "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute (refresh exceptions are WARN-and-proceed, not exits)"}
-    exit_source: "infra/aws/globgrph/kuzu_cli.py:65-66 (DB-missing), :89-90 (query error); refresh exception WARN-and-proceed :60-62 @2026-08-04 (dial K3 declaration)"
-  comp-kuzu-inc:
-    coverage: "identical Cypher query surface to comp-kuzu; refresh discipline = incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild (Andrew O-1 / NFRA_KUZUSPLIT section-4 hard gate)"
-    blind_spots:
-      - "same modeled-universe bound as comp-kuzu (0-rows scope note printed since dial K6)"
-      - "THE VERDICT-BEARING BEHAVIOR IS IN-BAND, NOT IN THE rc: a labeled-stale serve exits 0 -- the verdict rides stderr (provenance marker 'SERVED LABELED-STALE ... behind-by-N' + WARN line) and the persistent .fallback.jsonl sink beside the DB. An rc-only caller CANNOT distinguish fresh from labeled-stale; read the header"
-    plane: projection
-    grain: field
-    scope: estate
-    vintage: "as labeled per call -- current on small-delta incremental; PRIOR vintage honestly labeled on large-delta/timeout/error fallback (never half-built: complete prior projection)"
-    exit_codes:
-      "1": {class: fail, meaning: "DB not found -- incl. inc COLD START (no local DB to serve stale; inc NEVER full-rebuilds: run comp-kuzu-full or wait for MSTR startup) -- or Cypher query error"}
-    exit_source: "infra/aws/globgrph/kuzu_cli.py:65-66 + :89-90 (shared engine); labeled-stale fallback = rc-neutral rebuild_fn, _canonical.py:483-530 (COND-1 in-band marker :524-529, COND-2 .fallback.jsonl :423) @2026-08-04 -- SOURCE-grounded; live labeled-stale exercise remains dial re-dial trigger 6"
 
 
   # T0 (comp-trace dial 2026-08-04, CVO record DIAL_RECORD_comp-trace_20260804.md): the NAVIGATE
