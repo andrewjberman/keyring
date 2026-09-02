@@ -4,6 +4,7 @@ param(
     [string]$DriverSerial = '1.0.0_SA_CTO~Y',
     [int]$IntervalSeconds = 300,
     [int]$NudgeAfterMinutes = 5,
+    [switch]$DriveMode,
     [switch]$Once
 )
 
@@ -142,14 +143,17 @@ function Get-GitShortStatus {
 
 function Test-P2To05CroRuling {
     param([string]$DocsRoot)
-    $verdictRoot = Join-Path $DocsRoot 'fabric\seats\4.0.0_SA_CRO~Y\verdicts'
-    if (-not (Test-Path -LiteralPath $verdictRoot)) {
-        return $false
+    $recordName = 'CROY_VERDICT_P2_TO_05_POST_LANDING_097D3940_20260902.md'
+    $indexPath = Join-Path $DocsRoot 'fabric\seats\4.0.0_SA_CRO~Y\verdicts\index.jsonl'
+    $recordPath = Join-Path $DocsRoot ('plan\integration_proposals\' + $recordName)
+    if ((Test-Path -LiteralPath $indexPath -PathType Leaf) -and
+        (Test-Path -LiteralPath $recordPath -PathType Leaf)) {
+        $indexText = Get-Content -LiteralPath $indexPath -Raw
+        if ($indexText -match [regex]::Escape($recordName)) {
+            return $true
+        }
     }
-    $hits = @(Get-ChildItem -LiteralPath $verdictRoot -File -Recurse -Filter '*.md' |
-        Where-Object { $_.Name -match 'P2[-_]TO[-_]05|P2_TO_05' } |
-        Select-Object -First 1)
-    return $hits.Count -gt 0
+    return $false
 }
 
 function Test-P2To05ObservedFailure {
@@ -290,7 +294,8 @@ function Invoke-DriverPass {
         [string]$Driver,
         [int]$NudgeMinutes,
         [string]$LogPath,
-        [string]$StatePath
+        [string]$StatePath,
+        [bool]$EnableDriveTick
     )
 
     $state = Read-DriverState -Path $StatePath
@@ -309,6 +314,8 @@ function Invoke-DriverPass {
     $seats = @(
         '1.0.0_SA_CTO~Y',
         '4.0.0_SA_CRO~Y',
+        '1.1.0_SA_KJ~Y',
+        '1.2.0_SA_A0~Y',
         '1.3.0_SA_ADP~Y',
         '1.4.0_SA_GATE~Y',
         '1.5.0_SA_FI~Y',
@@ -345,6 +352,7 @@ function Invoke-DriverPass {
     if ($ctoUnread.Count -gt 0) {
         Write-DriverLog -Path $LogPath -Message "cto_unread_names=$((($ctoUnread | Sort-Object Name | Select-Object -ExpandProperty Name) -join ', '))"
     }
+    $p2To05Resolved = $croRulingPresent -and $repairPassRuling -and $p2To05Landed
 
     $nowEpoch = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     $lastNudgeState = $state['last_nudge']
@@ -394,7 +402,7 @@ Expected next motion: 4.0.0_SA_CRO~Y materializes and indexes the bounded P2-TO-
             $lastNudgeState[$key] = $nowEpoch
         }
     }
-    elseif ($repairPassRuling -and $p2To05Landed -and $postLandingRoutedToCro) {
+    elseif ($repairPassRuling -and $p2To05Landed -and $postLandingRoutedToCro -and -not $croRulingPresent) {
         $key = 'P2-TO-05-CRO-POST-LANDING'
         $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
         if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
@@ -480,7 +488,7 @@ Expected next motion: 1.0.0_SA_CTO~Y reads the FI repair handback, verifies it, 
             $lastNudgeState[$key] = $nowEpoch
         }
     }
-    elseif ($failRepairRuling -and $fiRepairMoved -and $repairHandbackPresent -and $repairRoutedToCro) {
+    elseif ($failRepairRuling -and $fiRepairMoved -and $repairHandbackPresent -and $repairRoutedToCro -and -not $repairPassRuling) {
         $key = 'P2-TO-05-CRO-REPAIR-CERTIFICATION'
         $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
         if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
@@ -542,6 +550,10 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
 
     foreach ($seatState in $seatStates) {
         if ($seatState.State -ne 'GREEN') {
+            if ($p2To05Resolved) {
+                Write-DriverLog -Path $LogPath -Message "suppress red-seat alert serial=$($seatState.Serial) reason=p2_to_05_resolved_logged_only"
+                continue
+            }
             $key = "SEAT-RED-$($seatState.Serial)"
             $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
             if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
@@ -557,6 +569,10 @@ Expected next motion: 4.0.0_SA_CRO~Y issues the bounded P2-TO-05 handback ruling
             continue
         }
         if ($unreadState.OldestAgeSeconds -lt ($NudgeMinutes * 60)) {
+            continue
+        }
+        if ($p2To05Resolved -and $unreadState.Serial -eq '4.0.0_SA_CRO~Y') {
+            Write-DriverLog -Path $LogPath -Message "suppress unread-inbox nudge serial=$($unreadState.Serial) count=$($unreadState.Count) oldest=$($unreadState.OldestAgeSeconds)s reason=p2_to_05_resolved_cro_green_path"
             continue
         }
         $key = "UNREAD-INBOX-$($unreadState.Serial)"
@@ -579,6 +595,26 @@ Expected next motion: the addressed seat reads exact root-level files, acts on l
         }
     }
 
+    if ($EnableDriveTick -and $ctoUnread.Count -eq 0) {
+        $key = "DRIVE-TICK-$Driver"
+        $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
+        if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
+            $body = @"
+DRIVE TICK: continue repository-local drive mode for exact seat $Driver.
+
+Measured state:
+- current seat root unread .md count: $($ctoUnread.Count)
+- seat readiness summary: $seatSummary
+- product main HEAD: $($mainGit.Head)
+- product main dirty count: $($mainGit.Dirty)
+
+Required next motion: sweep the exact current-seat root inbox. If work has stopped on this seat, perform the next authorized action, verify it, and route the resulting artifact. If the next motion belongs to another seat, verify that dependency and nudge or route it canonically. Do not end on a status-only report while an authorized action remains.
+"@
+            Send-DriverMessage -Root $Root -From $Driver -To $Driver -Subject 'DRIVE TICK continue active seat motion' -Body $body -LogPath $LogPath
+            $lastNudgeState[$key] = $nowEpoch
+        }
+    }
+
     Write-DriverState -Path $StatePath -State $state
 }
 
@@ -588,12 +624,14 @@ New-Item -ItemType Directory -Force -Path $runtimeRoot | Out-Null
 $logPath = Join-Path $runtimeRoot 'driver.log'
 $statePath = Join-Path $runtimeRoot 'state.txt'
 $pidPath = Join-Path $runtimeRoot 'driver.pid'
+$modePath = Join-Path $runtimeRoot 'driver.mode'
 Set-Content -LiteralPath $pidPath -Encoding ascii -Value ([string]$PID)
-Write-DriverLog -Path $logPath -Message "start pid=$PID interval_seconds=$IntervalSeconds nudge_after_minutes=$NudgeAfterMinutes once=$Once"
+Set-Content -LiteralPath $modePath -Encoding ascii -Value $(if ($DriveMode) { 'drive' } else { 'monitor' })
+Write-DriverLog -Path $logPath -Message "start pid=$PID interval_seconds=$IntervalSeconds nudge_after_minutes=$NudgeAfterMinutes drive_mode=$DriveMode once=$Once"
 
 do {
     try {
-        Invoke-DriverPass -Root $root -Driver $DriverSerial -NudgeMinutes $NudgeAfterMinutes -LogPath $logPath -StatePath $statePath
+        Invoke-DriverPass -Root $root -Driver $DriverSerial -NudgeMinutes $NudgeAfterMinutes -LogPath $logPath -StatePath $statePath -EnableDriveTick $DriveMode.IsPresent
     }
     catch {
         Write-DriverLog -Path $logPath -Message "ERROR $($_.Exception.Message)"
