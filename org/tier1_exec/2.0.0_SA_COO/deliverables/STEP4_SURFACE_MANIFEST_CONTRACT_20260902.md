@@ -81,10 +81,30 @@ seat's judgment would be exactly the agent-made gate the law forbids.
 
 ---
 
-## 3. INSTANCE -- ETFS_GUARDRAIL, filled from this session's measurements
+## 3. INSTANCE -- ETFS_GUARDRAIL. ⛔ FROZEN DEMONSTRATION. **NOT THE LIVE CARRIER.**
 
-Denominators are this seat's own runs unless the row says otherwise. **`claim` is about the SURFACE
-ADDRESS, not about the work being done.**
+> ⛔ **THE LIVE MANIFEST IS `docs/architecture/ETFS_GUARDRAIL_PRD.md` s.7** (`1.0.0_SA_CTO`, adopted
+> @`ecaa7c7dcb`, corrected @`124590706a`). **CITE THAT, NEVER THIS TABLE.**
+>
+> **Why this block still exists:** it was the worked example that made the contract concrete enough
+> to adopt. It is kept as the ARGUMENT, not as the record.
+>
+> ⛔ **AND IT IS ALREADY STALE -- MEASURED, NOT FEARED.** The contract was adopted at 14:4xZ and
+> these two carriers disagreed within the hour:
+> ```
+>   S9  HERE     surface = orchestrator env EMAIL_RECIPIENT   claim = inferred
+>       PRD s.7  surface = lambda_function.py:49,158,189,221,277   claim = MEASURED
+> ```
+> `1.0.0_SA_CTO` measured S9 at source, then `3.0.0_SA_CVO` found TWO MORE sites that seat had
+> printed and mis-read as cosmetics -- so the row moved from 2 sites to 5, and from a variable change
+> to a TYPE DECISION, while this copy said neither. **A second copy of a table is not redundancy; it
+> is a carrier that ages silently** -- which is the same defect this document was written to name
+> (brief s.7 and s.10 predating the FWD-7 ruling; the project row reading D8 while `DIRECTIVES.yaml`
+> did not). **The contract earned its adoption by finding this class, and then produced an instance
+> of it. Recorded rather than quietly deleted, because the deletion would hide the specimen.**
+>
+> Denominators below are this seat's own runs unless a row says otherwise, and they were true
+> at @`4bb2c5d94f` / @`6637901f1e`. **`claim` is about the SURFACE ADDRESS, not the work.**
 
 | id | outcome_ref | surface | claim | evidence | lane | verb | depends_on | acceptance | bound |
 |---|---|---|---|---|---|---|---|---|---|
