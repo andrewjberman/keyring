@@ -422,7 +422,24 @@ s.7 flags it as a decision, not a default.
 
 ---
 
-## 10. Open for Andrew -- the calls this spec does not make
+## 10. RULED -- Andrew-direct 2026-09-02 ~20:0xZ, `/open-calls` at the COO terminal: "All recs approved"
+
+Record: `ANDREW_DIRECT_20260902_200xZ_OPEN_CALLS_x5_TREE_RULED_CUSTODIAN_INVESTIGATE.md`.
+Every (a) below is now the design; the alternatives are retired, not carried.
+
+| # | RULED | binds |
+|---|---|---|
+| 1 | **KEEP the macro layer; ratify per-directive enum** | s.5, s.5a, s.8 prereq 1 -- the tree is THREE levels |
+| 2 | **`project.json` MOVES in; `org/projects/` is a GENERATED INDEX** | s.2 choice B; s.8 prereq 3 is the first build |
+| 3 | **`deliverables/{serial}/`** sub-folders | s.6 option (ii); no new resolver |
+| 4 | **`task-orders`** (hyphen), tree only, prospective | s.7; the gate reads both roots in the dual-register period |
+
+⛔ Approved as the four recommendations on the cards -- NOT the spec wholesale as law, NOT a lift of
+the L1-L5 water-test bound, NOT retroactive. The 19:3xZ word stands.
+
+*(The section below is the pre-ruling text, kept so the alternatives are on the record.)*
+
+## 10a. As asked -- the calls this spec did not make
 
 1. **`task-orders` or `task_orders`.** One word; it decides a gate glob.
 2. **Does `project.json` move into the folder (choice B, with a generated index), or stay flat with a
