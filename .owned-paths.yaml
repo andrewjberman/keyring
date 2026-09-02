@@ -835,6 +835,15 @@ lanes:
 # Listed roughly from most-specific to most-general within each top-level group.
 # Longest match wins — more specific globs override broader ones at hook eval time.
 # =========================================================================
+  LOOP_MECHANISM:
+    permitted_agents:
+    - 1.0.0_SA_CTO
+    - 3.0.0_SA_CVO
+    description: 'The canonical loop''s MECHANISM files -- the surprise-row gate, the surprise watcher, the surprise-channel schemas, and the TO-pipeline gate. NOT the channel''s document tree (project INVESTIGATION/REMEDIATION files stay CVO_WORKSPACE) and NOT the workflow reference doc (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md stays ANY_EXEC -- held back from this lane; see the CTO record for why). AUTHORITY: Andrew-direct 2026-09-02 ~17:0xZ at the 1.0.0_SA_CTO terminal, /open-calls CALL 1 of 3, VERBATIM: "All recs approved". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md. Measured basis: 59 lanes / 254 rules held ZERO claim on these mechanism files (CTO 92581; CVO~A independent parse 92583). INCUMBENTS, stated because longest-match DISPLACES: the two org/surprise_channel paths were CVO_WORKSPACE [CVO, CTO, COO]; this lane keeps CVO and CTO and REMOVES 2.0.0_SA_COO from the two mechanism FILES only (watcher script + schemas dir), never from the channel documents. The two .tools gates were UNCLAIMED (permit-by-default), so the only change there is that non-members are now refused. Added 2026-09-02 by 1.0.0_SA_CTO on Andrew''s word; 0.0.0_AB_MSTR is register owner and was broadcast same turn to dissent.'
+  TOOL_BATTERIES:
+    permitted_agents:
+    - 0.8.0_AE_CloudComp
+    description: 'The comp-tool test batteries under .tools/tests/**. Previously UNCLAIMED -- any seat could edit them and no seat was obliged to notice one had stopped collecting, which is exactly how test_comp_adversary_stage4_packet.py sat GREEN while pytest died at collection (SystemExit at module scope, CVO~A @0d272d257c). Owner 0.8.0_AE_CloudComp (de facto comp-tool battery seat: comp-similar, comp-pipescript, comp-adversary and comp-read all moved through it 2026-09-02). 1.0.0_SA_CTO GATES battery repairs and is deliberately NOT a member: gate and author are different seats. AUTHORITY: Andrew-direct 2026-09-02 ~17:0xZ at the 1.0.0_SA_CTO terminal, /open-calls CALL 1 of 3, VERBATIM: "All recs approved". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md. Measured basis: 59 lanes / 254 rules held ZERO claim on these mechanism files (CTO 92581; CVO~A independent parse 92583).'
 paths:
 
   # -----------------------------------------------------------------------
@@ -2010,3 +2019,18 @@ paths:
   "org/XXX.md":
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "Duplicate entry for clarity — same path as above (widened 2026-05-26)"
+  .tools/surprise-row-gate.py:
+    lane: LOOP_MECHANISM
+    note: Step-7/10 row gate. Was UNCLAIMED. Andrew-direct 2026-09-02 'All recs approved' (CALL 1).
+  .tools/to-pipeline-gate.py:
+    lane: LOOP_MECHANISM
+    note: Step-6 TO gate, the loop's only choke point; the step-4 conformance limb (CALL 2) lands here. Was UNCLAIMED.
+  org/surprise_channel/surprise-watch.sh:
+    lane: LOOP_MECHANISM
+    note: 'Step-8 notifier. DISPLACES CVO_WORKSPACE on this ONE file: keeps CVO + CTO, removes COO from the mechanism script only. Channel documents unchanged.'
+  org/surprise_channel/schemas/**:
+    lane: LOOP_MECHANISM
+    note: 'The investigation/remediation row schemas. DISPLACES CVO_WORKSPACE on this dir only: keeps CVO + CTO, removes COO. Rule 24 authoring stays with CVO by ruling; the lane is who may COMMIT the file.'
+  .tools/tests/**:
+    lane: TOOL_BATTERIES
+    note: Comp-tool batteries. Was UNCLAIMED. Owner 0.8.0_AE_CloudComp; CTO gates, does not author. Andrew-direct 2026-09-02 'All recs approved' (CALL 1).
