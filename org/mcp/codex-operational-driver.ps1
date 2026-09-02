@@ -250,6 +250,25 @@ function Test-P2To05PostLandingRoutedToCro {
     return $false
 }
 
+function Test-P2To05PostLandingPassInbox {
+    param([string]$Root)
+    $ctoInbox = Get-InboxPath -Root $Root -Serial '1.0.0_SA_CTO~Y'
+    foreach ($candidateRoot in @($ctoInbox, (Join-Path $ctoInbox 'read'))) {
+        if (-not (Test-Path -LiteralPath $candidateRoot)) {
+            continue
+        }
+        $hits = @(Get-ChildItem -LiteralPath $candidateRoot -File -Filter '*.md' |
+            Where-Object {
+                $_.Name -match 'CRO_RULING_P2-TO-05_post-landing_PASS'
+            } |
+            Select-Object -First 1)
+        if ($hits.Count -gt 0) {
+            return $true
+        }
+    }
+    return $false
+}
+
 function Send-DriverMessage {
     param(
         [string]$Root,
@@ -310,6 +329,7 @@ function Invoke-DriverPass {
     $repairRoutedToCro = Test-P2To05RepairRoutedToCro -Root $Root
     $repairPassRuling = Test-P2To05RepairPassRuling -Root $Root
     $postLandingRoutedToCro = Test-P2To05PostLandingRoutedToCro -Root $Root
+    $postLandingPassInbox = Test-P2To05PostLandingPassInbox -Root $Root
     $failedFiCommit = '161b9131d996e6e77c77ebd440eb46786e45ac3e'
     $p2To05BaseMain = 'e6b7266f702ea35e118cc343c4b8750bacd60c0c'
     $fiRepairMoved = $fiGit.Exists -and $fiGit.Head -ne $failedFiCommit
@@ -321,7 +341,7 @@ function Invoke-DriverPass {
         $repairHandbackPresent = $repairHandbacks.Count -gt 0
     }
 
-    Write-DriverLog -Path $LogPath -Message "pass cto_unread_md=$($ctoUnread.Count) seats=[$seatSummary] inboxes=[$inboxSummary] main_head=$($mainGit.Head) main_dirty=$($mainGit.Dirty) fi_head=$($fiGit.Head) fi_dirty=$($fiGit.Dirty) p2_to_05_handback=$handbackPresent cro_ruling=$croRulingPresent observed_failure=$observedFailure fail_repair=$failRepairRuling fi_repair_moved=$fiRepairMoved repair_handback=$repairHandbackPresent repair_routed_to_cro=$repairRoutedToCro repair_pass=$repairPassRuling p2_to_05_landed=$p2To05Landed post_landing_routed_to_cro=$postLandingRoutedToCro"
+    Write-DriverLog -Path $LogPath -Message "pass cto_unread_md=$($ctoUnread.Count) seats=[$seatSummary] inboxes=[$inboxSummary] main_head=$($mainGit.Head) main_dirty=$($mainGit.Dirty) fi_head=$($fiGit.Head) fi_dirty=$($fiGit.Dirty) p2_to_05_handback=$handbackPresent cro_ruling=$croRulingPresent observed_failure=$observedFailure fail_repair=$failRepairRuling fi_repair_moved=$fiRepairMoved repair_handback=$repairHandbackPresent repair_routed_to_cro=$repairRoutedToCro repair_pass=$repairPassRuling p2_to_05_landed=$p2To05Landed post_landing_routed_to_cro=$postLandingRoutedToCro post_landing_pass_inbox=$postLandingPassInbox"
     if ($ctoUnread.Count -gt 0) {
         Write-DriverLog -Path $LogPath -Message "cto_unread_names=$((($ctoUnread | Sort-Object Name | Select-Object -ExpandProperty Name) -join ', '))"
     }
@@ -350,6 +370,27 @@ Measured state:
 Expected next motion: 1.0.0_SA_CTO~Y routes landed main evidence to CRO for bounded post-landing validation.
 "@
             Send-DriverMessage -Root $Root -From $Driver -To $Driver -Subject 'DRIVER NUDGE P2-TO-05 landed evidence needs CRO route' -Body $body -LogPath $LogPath
+            $lastNudgeState[$key] = $nowEpoch
+        }
+    }
+    elseif ($repairPassRuling -and $p2To05Landed -and $postLandingRoutedToCro -and $postLandingPassInbox -and -not $croRulingPresent) {
+        $key = 'P2-TO-05-CRO-VERDICT-INDEX'
+        $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
+        if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
+            $body = @"
+DRIVER NUDGE: P2-TO-05 post-landing PASS exists in CTO inbox, but fabric CRO verdict indexing has not advanced.
+
+Measured state:
+- main HEAD: $($mainGit.Head)
+- main dirty count: $($mainGit.Dirty)
+- post-landing PASS in CTO inbox/read: $postLandingPassInbox
+- CRO verdict artifact/index present for P2-TO-05: $croRulingPresent
+- CTO root unread .md count: $($ctoUnread.Count)
+- seat readiness summary: $seatSummary
+
+Expected next motion: 4.0.0_SA_CRO~Y materializes and indexes the bounded P2-TO-05 post-landing PASS verdict so 02check can advance. Downstream issuance remains held until the indexed verdict is visible.
+"@
+            Send-DriverMessage -Root $Root -From $Driver -To '4.0.0_SA_CRO~Y' -Subject 'DRIVER NUDGE P2-TO-05 PASS verdict index pending' -Body $body -LogPath $LogPath
             $lastNudgeState[$key] = $nowEpoch
         }
     }
