@@ -93,6 +93,12 @@ There is also a law/code mismatch to resolve explicitly: the workflow lists seve
 
 Do not call all admitted lenses mandatory unless the gate enforces that claim. Do not call the current three-tool gate evidence that the nine-lens catalog ran.
 
+### Binding clarification after COO 92612 -- the hold has no truthful disposition shortcut
+
+`DECLARED-NOT-APPLICABLE` is not a lawful bridge around held admission. The gate defines non-application at the subject grain: a lens whose named subject has no population owes no denominator and may declare that reason (`.tools/to-pipeline-gate.py:56-60`). A pytest-collectability/admission hold is battery-readiness at a different grain; it does not make an otherwise applicable lens inapplicable. Marking it `RUN` would likewise nullify the effective-admission hold.
+
+Therefore, until RC5 makes `comp-adversary` admission effective, an applicable `comp-adversary` has no truthful legal disposition under the current mandatory-core gate and **no new canonical TO may be cut through that collision**. If a TO must be cut before RC5 lands, the gate owner must align code and law explicitly; COO must not encode readiness as subject non-applicability. The `comp-similar` admission remains separately bounded: a seat must observe its vintage line render before citing its output because `b8a73cc064` is not guaranteed on an origin-only checkout.
+
 ## F2 -- no fifth `disposition`; add an orthogonal resolution axis
 
 The design's population statement needs one correction. The 192-row full-corpus pass has four failures, but only **two** are disposition failures. `ETFS_POSITIONING-S14` fails `hazard_standing`, not `disposition`; its disposition remains `GRADUATED` (`ETFS_POSITIONING/INVESTIGATION_v1.md:350-370`). That datum is decisive: an item can remain historically GRADUATED while a later event removes its live obligation. Replacing its disposition with a fifth value would erase where it went next and violate the axis's declared intent (`SURPRISE_CHANNEL_PROTOCOL.md:133-146`).
