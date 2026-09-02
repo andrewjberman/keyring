@@ -77,6 +77,7 @@ ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?S[0-9]+"'
 # ---------------------------------------------------------------------------------------------
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 IDX_FILE="$STATE_DIR/${SERIAL}.idx.tsv"
+PROV_FILE="$STATE_DIR/${SERIAL}.prov.tsv"   # cross-poll PROVISIONAL set (pass 2); the selftest overrides it
 IDX_TOOL="$REPO_ROOT/.tools/surprise-corpus-validate.py"
 
 _index_now() {
@@ -123,31 +124,48 @@ _index_diff() {
     # Repair bar (CVO~A): re-sample once; if still short, confirm each missing id against the RAW
     # corpus; if any missing id is still IN its file, this poll is COUNT-ONLY and the prior index
     # is preserved. A row whose id is genuinely gone from its file still fires DISAPPEARED below.
-    # RAW_ROOT is only ever set by the selftest, to point the corpus check at a temp tree.
+    # PASS 2 (Andrew "All approved go" ~20:4xZ; CTO 92746 race note taken): the pass-1 form re-sampled
+    # and grepped the RAW file in the SAME poll, and both reads can land inside the very write that
+    # shortened the index. A write does not straddle two POLLS. So a short result is PROVISIONAL:
+    # the missing ids are recorded in PROV_FILE, nothing is emitted, the prior index is preserved.
+    # On the NEXT poll: a whole sample clears the provisional set silently (recovery); a sample still
+    # missing the SAME id CONFIRMS the deletion -- DISAPPEARED fires then, and only that row leaves
+    # the stored index. Mutations among present rows are deferred one poll while short (stated).
+    emitted=0
     if [ -s "$IDX_FILE" ]; then
         live_n="$(printf '%s\n' "$live" | grep -c .)"
         stored_n="$(tr -d '\r' < "$IDX_FILE" | grep -c .)"
         if [ "$live_n" -lt "$stored_n" ]; then
-            live2="$(_index_now 2>/dev/null)"; rc2=$?
-            live2="$(printf '%s\n' "$live2" | tr -d '\r')"
-            if [ "$rc2" -eq 0 ] && [ "$(printf '%s\n' "$live2" | grep -c .)" -ge "$stored_n" ]; then
-                live="$live2"    # the fresh sample is whole: the short read was transient
-            else
-                raw_root="${RAW_ROOT:-$REPO_ROOT}"; still=0
-                while IFS="$(printf '\t')" read -r p i h; do
-                    p="${p%$'\r'}"; i="${i%$'\r'}"
-                    [ -n "$i" ] || continue
-                    printf '%s\n' "$live" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {f=1} END {exit !f}' && continue
-                    grep -qF "\"id\": \"$i\"" "$raw_root/$p" 2>/dev/null && still=$((still+1))
-                done < "$IDX_FILE"
-                if [ "$still" -gt 0 ]; then
-                    echo "WARN: [SURPRISE] id/hash index came back SHORT ($live_n of $stored_n rows) and $still missing id(s) are STILL IN the corpus -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
-                    return 0
+            missing="$(tr -d '\r' < "$IDX_FILE" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2 "\t" $3}')"
+            prev=""; [ -f "$PROV_FILE" ] && prev="$(tr -d '\r' < "$PROV_FILE")"
+            confirmed=""; newprov=""; nconf=0; nprov=0
+            while IFS="$(printf '\t')" read -r p i h; do
+                [ -n "$i" ] || continue
+                if [ -n "$prev" ] && printf '%s\n' "$prev" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {f=1} END {exit !f}'; then
+                    confirmed="${confirmed}${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"; nconf=$((nconf+1))
+                else
+                    newprov="${newprov}${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"; nprov=$((nprov+1))
                 fi
+            done <<< "$missing"
+            if [ "$nconf" -gt 0 ]; then
+                while IFS="$(printf '\t')" read -r p i h; do
+                    [ -n "$i" ] || continue
+                    [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i DISAPPEARED (absent on two consecutive polls) -> $p  (append-only channel; a vanished id is a deletion or a merge that dropped it)"
+                    emitted=$((emitted + 1))
+                done <<< "$confirmed"
+                # drop ONLY the confirmed rows from the stored index; never adopt the short sample wholesale
+                tr -d '\r' < "$IDX_FILE" | awk -F'\t' -v C="$confirmed" 'BEGIN{n=split(C,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") gone[f[1] "\t" f[2]]=1}} !(($1 "\t" $2) in gone)' > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
             fi
+            if [ "$nprov" -gt 0 ]; then
+                printf '%s' "$newprov" > "$PROV_FILE.tmp" && mv -f "$PROV_FILE.tmp" "$PROV_FILE"
+                echo "WARN: [SURPRISE] id/hash index came back SHORT ($live_n of $stored_n rows): $nprov id(s) PROVISIONAL, confirmed next poll if still absent -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
+            else
+                rm -f "$PROV_FILE"
+            fi
+            return "$emitted"
         fi
+        rm -f "$PROV_FILE"    # a whole (or longer) sample clears any provisional set: recovery is silent
     fi
-    emitted=0
     if [ -s "$IDX_FILE" ]; then
         # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
         while IFS="$(printf '\t')" read -r p i h; do
@@ -309,14 +327,30 @@ _selftest() {
     # independently @217ffafada. Repair bar (CVO~A): a first short result is PROVISIONAL -- no warn, no
     # replace -- and absence is confirmed against the RAW corpus before any DISAPPEARED is emitted.
     # RAW_ROOT lets this suite point the corpus check at a temp tree instead of the live channel.
-    mkdir -p "$T/org/surprise_channel/P"
-    printf '  "id": "P-S1",\n  "id": "P-S2",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
-    RAW_ROOT="$T"
+    # PASS 2 (3.0.0_SA_CVO, Andrew "All approved go" ~20:4xZ; CTO 92746 race note taken): a short
+    # result is PROVISIONAL across POLLS, not confirmed by re-reading the raw file in the SAME poll --
+    # a write does not straddle two polls, a same-poll grep can land inside it. So absence is
+    # CONFIRMED only when the NEXT poll's sample still lacks the id. Four cases, each two polls where
+    # it matters; PROV_FILE is the cross-poll carrier and the selftest points it at the temp tree.
+    PROV_FILE="$T/prov.tsv"; rm -f "$PROV_FILE"
     printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\n' > "$T/short.py"
-    IDX_TOOL="$T/short.py";                                                    _case "SHORT live, id still IN corpus (transient)" 0 1 1
-    printf '  "id": "P-S1",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
-    IDX_TOOL="$T/short.py";                                                    _case "SHORT live, id truly GONE from corpus" 1 0 0
-    unset RAW_ROOT
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb")\n' > "$T/whole.py"
+    # (a) TRANSIENT SHORT, poll 1: no row-warn, COUNT-ONLY on stderr, index UNCHANGED, id marked provisional.
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py";                                _case "SHORT poll 1: provisional, no warn, index kept" 0 1 1
+    # (b) RECOVERY, poll 2 whole after a provisional short: no warnings at all, provisional cleared, index replaced (same rows).
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1; IDX_TOOL="$T/whole.py"; _case "SHORT then WHOLE: recovery, silent, provisional cleared" 0 0 1
+    [ -s "$PROV_FILE" ] && { fail=$((fail+1)); echo "  FAIL    provisional file not cleared after recovery"; } || { pass=$((pass+1)); echo "  OK      provisional file cleared after recovery"; }
+    # (c) CONFIRMED DELETION, poll 2 still short with the SAME id missing: DISAPPEARED fires NOW, index = stored minus that row.
+    IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1;                       _case "SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2" 1 0 0
+    # The index assertion must read the file RIGHT AFTER the confirming poll -- _case re-seeds at its
+    # end, so a check placed after _case sees the seed, never the drop (first cut of this suite did).
+    rm -f "$PROV_FILE"; printf '%s\n' "$seed" > "$IDX_FILE"; IDX_TOOL="$T/short.py"
+    _index_diff >/dev/null 2>&1; _index_diff >/dev/null 2>&1
+    if [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S2')" -eq 0 ] && [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S1')" -eq 1 ]; then pass=$((pass+1)); echo "  OK      confirmed row dropped from stored index; the present row kept"; else fail=$((fail+1)); echo "  FAIL    stored index after confirmation: $(tr -d '\r' < "$IDX_FILE" | cut -f2 | tr '\n' ' ')"; fi
+    printf '%s\n' "$seed" > "$IDX_FILE"; rm -f "$PROV_FILE"
+    # (d) CONCURRENT-APPEND BOUNDARY: live LONGER than stored, every stored row present: no warnings, replace.
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/longer.py"
+    IDX_TOOL="$T/longer.py";                                                   _case "live LONGER than stored, all present: append boundary, silent, replace" 0 0 0
     rm -rf "$T"
     echo "selftest: $pass/$((pass+fail)) PASS"
     [ "$fail" -eq 0 ]

@@ -1,0 +1,17 @@
+# RED-FIRST pass 2: cross-poll cases added; guard still PASS-1 (same-poll raw-corpus). Expect (a)(b)(c) FAIL, (d) PASS.
+# 2026-09-02T20:44:59Z  HEAD=38f60078c4  file=0fe0451e1b
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      same-count DELETE+ADD
+  FAIL    SHORT poll 1: provisional, no warn, index kept  (row-warns=1 want 0; count-only=0 want 1; idx-unchanged=0 want 1; rc=1)
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  FAIL    SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2  (row-warns=0 want 1; count-only=0 want 0; idx-unchanged=0 want 0; rc=0)
+  FAIL    confirmed row still in stored index
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+selftest: 10/13 PASS
+# exit=1

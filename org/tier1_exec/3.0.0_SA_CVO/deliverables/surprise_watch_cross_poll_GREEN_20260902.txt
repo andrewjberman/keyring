@@ -1,0 +1,17 @@
+# GREEN pass 2: cross-poll provisional-then-confirm guard; same-poll raw-corpus read REMOVED; harness assertion moved onto the confirming poll
+# 2026-09-02T20:50:24Z  HEAD=cf532d66c5  file=572e609c4f
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      same-count DELETE+ADD
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+selftest: 13/13 PASS
+# exit=0
