@@ -1,0 +1,120 @@
+There are a handful of areas that we need to address before proceeding with any kind
+of integration, push, or proceeding the project in general for the ETF guardrails.
+So starting from the top here, I need to understand exactly how comp recon works at L1, at the
+CRO brief level.
+That's a little note.
+I just want to understand that.
+L2 is fine.
+L3 is fine.
+L4 is good.
+The surface manifest seems to be covered pretty fairly.
+L5 is good.
+However, we want to cover a handful of these lenses, a handful of the comp tools.
+So comp similar, we had an issue with before.
+I seem to have not printed a denominator that has since been rectified.
+So we want to make sure that that is implemented in an appropriate manner.
+We also want to make sure that comp adversary is implemented in an appropriate manner and
+is included in the spec.
+furthermore, a lot of these processes from L1 to L5 understandably are human-driven.
+I would like to explore opportunities from L1 to L5 where we can mechanize this a little bit.
+So L1 is pretty human.
+I don't think there's anything we can do about that.
+L2, that's good to go as is.
+L3s should follow naturally from like a little approval or something from L2.
+I think there's nothing to do there.
+The PRD and ARC document, an L4, I think we're clear there.
+I would like it if it was possible that maybe COO has a monitor or something.
+Maybe we start putting PRDs in a dedicated folder, in a dedicated format that is machine-readable,
+that COO has a monitor on.
+And once we effectively commit that PRD, once it's committed, it's sent to COO immediately for decomposition.
+I think that might be the best way to drive that aspect.
+So we need to discuss the mechanics around that.
+L6, the dispatch with the gate on L3, registry and fabric characteristics, that's good to go.
+L7, worker execution, the spec asserts versus world is and the associated gate script, that is good to go.
+However, I want to understand when we get into L8, when those surprises are peer and CVO has the channel, the surprisewatch.sh,
+they need a monitor to be able to see those surprises come in because they need to address investigations the moments that those come in.
+And so that begs the question, the output of surprise-row-gate.py, is that output, does it include L3 registration and fabric details?
+Is it attached to a given project?
+Like, that, I want to make sure that that is very, very locked up and we know exactly what, so that the CVO is not just getting random files.
+Like, it should be a, I would say, a JSON output that has all relevant identification characteristics so that these can be properly grouped in a, in the relevant folders.
+Like, I, I think that's, in that surprise channel, there should be, it should just be a bunch of folders of, of projects.
+And then there's a, a structured JSON that goes in each of those folders so that there's just no doubt about what is coming in and what it's assigned to and so on.
+And then I would say that those, that maybe the folder as a whole, if there's like a, a count, if the counts are going up on any nested projects,
+that's where the monitor is tracking and it's, it's finding where is the new count coming from.
+It could be done that way.
+It could be a function of the surprise emitting in the first place.
+Either way, the, the transfer not only has to be fully indexed between L7 and L8, there needs to be a, a monitor set up on those emits.
+That, like, that, that has to be mechanical.
+Then moving into L9 adjudication, the investigations versus remediations.
+This is kind of a continuation of what we discussed just now regarding the surprise channel.
+We need to have JSONs for investigations.
+We need to have JSONs for remediations, which is going to be, the, the investigations, I would say, are the emits.
+They're the, the surprise channel emits from L7.
+Those should be, go to, like, an investigations folder associated with that project in the surprise channel.
+Um, and then remediations, I would say, are, uh, surprise or investigation files that are, um, adjudicated as something that actually needs to be remediated.
+So then there needs to be a structured output for the findings and what needs to be remediated and how.
+And that has to move over to that remediations folder within the project folder within the surprise channel.
+Um, now that goes into, and we need to understand, yeah, file type and format for all of that stuff.
+I really think all of this stuff should be JSON.
+I, I don't really like markdowns if we can avoid it, especially when we're in the process of building a canonical, uh, form and function.
+Um, this is an opportunity to make a compilable, uh, structured, very, very efficient process.
+Because we want to get this as deterministic as possible right from the outset.
+So, so this is a key design architecture we need to cover.
+Um, and then this rolls into L10 routing.
+So we need to make sure that the, the process where it's, oh, if it's a spec error, it goes back to L6 for, for TO or task order adjustment and dispatch.
+Uh, if it is a, uh, decomp and validation that goes to L5, maybe, maybe a COO needs to look a little deeper on, on that surface.
+Um, and like adjudicate whatever the remediation is, like whatever CBO suggested COO basically looks back over that surface and double checks or something.
+Um, and, and then obviously that proceeds through L6 and so on.
+And then the scope change.
+So this one is, is probably the most complex because I think we need a really defined way of qualifying what is a scope change.
+What are the material or deterministic aspects of a scope change?
+Because that is, I would say the highest risk.
+Um, that is, I, I would find that to be the highest likelihood of, of, uh, a wrench in the gears.
+So, so that just really has to be hammered down because that goes back to L2 on endpoint alignment.
+And in all of these cases, so in, in the, the L6 spec error or the decomp and validate in L5,
+those have to go to COO, um, I would prefer if COO had a monitor on, on, um, the remediation's JSON outputs.
+And, um, and basically it like groups the remediation outputs.
+There's like a field somewhere in there where it defines if it's a L6 issue, if it's an L5 issue.
+And so that, uh, COO knows exactly what to do and it happens automatically.
+I don't, I don't like relying on MCP for this stuff.
+I understand that sending messages and like a more human qualitative process is likely necessary, uh, L1 through L4.
+But I would much prefer if, uh, if following L4, like the whole L5, L6, L7, L8, L9, L10,
+if all of that is, uh, is, uh, is triggered by gates and monitors.
+So, yeah, we need to assess, I think, um, at that routing level when there's remediations,
+those remediation files need to be tagged.
+Is it a L6?
+Is it an L5?
+Is it an L2?
+If it's L6 or L5, that needs to trigger a, a notification either through a monitor or otherwise for, uh, COO.
+If it's an L2 issue, that needs to trigger a monitor for CTO and, um, and scope, uh, scope changes L2 issues that go to endpoint alignment.
+I would prefer if the CTO would immediately analyze that case and kind of have a, like, what I would call a remediation analysis,
+which would roll directly into an endpoint, uh, skill output.
+And then I will review that output and we will kind of see, uh, where, where it needs to proceed from there.
+So, yeah, that's the pass.
+Let's go.
+Let's go.
+All right.
+Let's go.
+Flavor.
+So, yeah.
+Let's go.
+All right.
+Let's go.
+I'm going.
+Let's move on.
+All right.
+Let's go.
+All right.
+Let's go.
+All right.
+This is a lock.
+So, sorry.
+Let's go.
+All right.
+All right.
+Let's go.
+All right.
+Let's go.
+All right.
+Let's go.
+All right.
