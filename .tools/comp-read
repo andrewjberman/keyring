@@ -268,6 +268,20 @@ def _shape(path, src, lines):
     with no marker. Rule 2 of this tool is NEVER TRUNCATE SILENTLY; a degraded parse is a truncated
     view of the file, so it prints its own name."""
     ext = os.path.splitext(path)[1].lower()
+    # Q4 (2026-09-02): route on WHAT THE FILE IS, not only on what its NAME ends with.
+    # RULED 1.0.0_SA_CTO 90547; re-homed both halves to this seat by 2.0.0_SA_COO 92538.
+    # The ~100 comp-* tools in .tools/ are python with NO extension, so `ext == ".py"` sent the
+    # estate's own instruments to the generic backend: they rendered "via top-level-keys" and
+    # enumerated UNBANDED. Banding was WEAKEST on exactly the files agents read most -- and
+    # CLAUDE.md Rule 21 now routes single-file reads TOWARD comp-read, so the miss compounds.
+    # Detected on the SHEBANG, which is a fact about the file, not about its name. Scoped
+    # deliberately: a shebang naming python only. A bash/sh shebang (.tools/aws, the hooks) is
+    # NOT python and must keep the generic backend -- routing it to the AST would produce
+    # UNPARSEABLE on a perfectly valid shell script, which is worse than an honest generic read.
+    if not ext and src[:2] == "#!":
+        _first = src.split("\n", 1)[0].lower()
+        if "python" in _first:
+            ext = ".py"
     if ext == ".py":
         s = _sections_py(src, lines)
         if s:

@@ -255,6 +255,19 @@ def classify_salience(siblings, cited, artifact_date):
     return rows, s1_note
 
 
+def _digest_basis(txt):
+    """The backend comp-read used, lifted from its own header line:
+        '  574 lines | 22 section(s) via python-ast | question: ...'
+    Returns 'UNDECLARED' when the header is absent or reshaped -- NEVER a guess. A wrong basis
+    label is worse than an absent one here, because this string is what a validator compares
+    across two declarations to decide whether a digest difference is real."""
+    for ln in (txt or "").splitlines()[:6]:
+        if " via " in ln and "section(s)" in ln:
+            tail = ln.split(" via ", 1)[1]
+            return tail.split("|", 1)[0].strip() or "UNDECLARED"
+    return "UNDECLARED"
+
+
 def _comp_read_digest(rel, budget_bytes):
     """Rung 2 of the build ladder: comp-read EXISTS and the spec names it. This shells out to it
     exactly as comp_state_drift() shells out to comp-state -- no second digest engine."""
@@ -359,6 +372,7 @@ def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_p
              "digests below is a BUDGET fact, never an assessment that it did not matter.")
     L.append("")
     total_bytes = 0
+    bases = {}
     for i, (p, c) in enumerate(selected, 1):
         txt, err = _comp_read_digest(p, per_file_bytes)
         L.append("  --- digest %d/%d: %s [class %s]" % (i, len(selected), p, c))
@@ -366,10 +380,26 @@ def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_p
             L.append("      DEFERRED: %s" % err)
             continue
         total_bytes += len(txt)
+        # Q4 CONSUMER HALF (2026-09-02). This packet embeds comp-read's stdout VERBATIM, so the
+        # backend comp-read chose IS part of this declaration's content. 1.0.0_SA_CTO 90547 ruled
+        # the shebang fix and this update move TOGETHER precisely because landing the producer
+        # alone would have SILENTLY altered every validation_context_declaration the estate emits.
+        # The remedy is not to freeze the digest -- it is to make the basis VISIBLE, so a reader
+        # comparing two declarations can see WHY they differ instead of inferring drift.
+        _b = _digest_basis(txt)
+        bases[_b] = bases.get(_b, 0) + 1
+        L.append("      digest basis: %s" % _b)
         for ln in txt.splitlines():
             L.append("  | " + ln)
         L.append("")
     L.append("  packet: %d digest(s), %d bytes total" % (len(selected), total_bytes))
+    if bases:
+        L.append("  digest bases: %s" % ", ".join(
+            "%s x%d" % (k, v) for k, v in sorted(bases.items(), key=lambda kv: -kv[1])))
+        L.append("  ^ the BACKEND comp-read used per file. A change here changes this packet's "
+                 "CONTENT, so it is declared rather than left for a diff to discover. Extensionless "
+                 "python (the comp-* tools) reads via python-ast as of 2026-09-02; before that it "
+                 "fell to top-level-keys and enumerated UNBANDED.")
     L.append("")
     return L
 
