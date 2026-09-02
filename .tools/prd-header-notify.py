@@ -162,7 +162,7 @@ def is_read(message_id: int) -> bool:
     return delivery_state(message_id) == "READ"
 
 
-def send(root, to, subject, body) -> int:
+def send(root, to, subject, body, sender=None) -> int:
     """Deliver through the broker's HTTP /send-message and return its message_id, or raise.
 
     NOT codex-send.py. That path delivers through the broker LIBRARY in-process (its receipt says
@@ -172,7 +172,11 @@ def send(root, to, subject, body) -> int:
     identity control codex-send carried (OPAL_AGENT_SERIAL names a live seat) is kept as the
     refusal below; the broker stamps the row's from_serial from the same value. Payload keys per
     the broker's own tests (org/mcp/test_d0_t1_delivery_clocks.py:131)."""
-    sender = os.environ.get("OPAL_AGENT_SERIAL", "")
+    # `sender` is the ROW's original author on a re-offer. The post-commit hook is device-wide: it
+    # fires on every seat's commit in this worktree (measured 2026-09-02 20:51-20:56Z: three reoffer
+    # firings, two on 3.0.0_SA_CVO's commits), so a re-offer that falls due during another seat's
+    # commit would otherwise go out under THAT seat's serial.
+    sender = sender or os.environ.get("OPAL_AGENT_SERIAL", "")
     if not sender:
         raise RuntimeError("OPAL_AGENT_SERIAL is not set; refusing to send as nobody")
     data = _post("/send-message", {"from_serial": sender, "to_serial": to, "subject": subject,
@@ -194,7 +198,7 @@ def _notify(root, row):
             % (row["project"], row.get("directive"), row.get("fabric"), row["prd_version"], row.get("status"),
                row["sha"], row["path"], row.get("brief_ref"), ", ".join(row.get("outcomes") or []),
                REOFFER_MINUTES, MAX_ATTEMPTS))
-    return send(root, row["to"], subject, body)
+    return send(root, row["to"], subject, body, sender=row.get("from"))
 
 
 def post_commit(root):
@@ -230,7 +234,8 @@ def post_commit(root):
         row = {"project": now_h["project"], "directive": now_h.get("directive"), "fabric": now_h.get("fabric"),
                "prd_version": now_h["prd_version"], "status": now_h.get("status"), "sha": sha, "path": rel,
                "brief_ref": now_h.get("brief_ref"), "outcomes": now_h.get("endpoint_outcomes"),
-               "to": RECIPIENT, "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
+               "to": RECIPIENT, "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
+               "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
         try:
             mid = _notify(root, row)
             row.update(msg_id=mid, sent_at=time.time(), attempts=1)
