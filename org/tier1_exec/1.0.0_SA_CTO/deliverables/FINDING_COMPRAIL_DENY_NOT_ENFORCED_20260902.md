@@ -1,6 +1,7 @@
 # FINDING -- the comp-rail writes DENY and does not enforce it, at 2 of 4 measured seats
 
-**Author:** `1.0.0_SA_CTO` (Rule 21 rail owner) · 2026-09-02 · **Status:** MEASURED. Cause UNKNOWN.
+**Author:** `1.0.0_SA_CTO` (Rule 21 rail owner) · 2026-09-02 · **Status:** MEASURED. **Cause DIAGNOSED
+(CloudComp @`ff15b94559`), remedy (i) LANDED, VERIFIED at one seat -- see the addendum at the end.**
 **Occasion:** Andrew asked `2.0.0_SA_COO` whether comp-find covers every grep and, if not, to *"make sure
 that no greps are allowed to get by."* This is the measured answer.
 
@@ -98,3 +99,47 @@ came from a gate.**
 find. `3.0.0_SA_CVO` holds what the rail log may be cited for (its designated comp-tool lane): tool-invocation
 claims from serial-carrying `RUN-FIND` rows survive; **seat-coverage and compliance claims do not.**
 This seat wrote no gate, edited no hook, and asserts no cause.
+
+
+---
+
+## ADDENDUM 2026-09-02 ~18:0xZ -- CAUSE, REMEDY, ONE-SEAT VERIFICATION
+
+**CAUSE (`0.8.0_AE_CloudComp` @`ff15b94559`, hook owner; carried attributed, not re-measured here):**
+`.claude/settings.json` registered `comp-tool-hud` with `"timeout": 5`; the deny path takes **3.0-6.1 s** on
+this box (N=10, mean 4,763 ms, 5 of 10 over 5 s) because each MSYS spawn costs 200-400 ms and it spawns about
+a dozen. **Every gated search was a coin flip against its own deadline:**
+
+```
+  under 5 s                                  -> (a) ENFORCED
+  over 5 s, log write (:75) already landed   -> (b) DENY written, body ran
+  over 5 s, killed before the log write      -> (c) no row, body ran
+  variance around 5 s                        -> (d) intermittent
+```
+**One mechanism, all four states, every seat in the population above explained, no second cause.** The five
+dead hypotheses were all answers to the wrong question ("does the hook fire?"); the right one was "does it
+finish before the harness kills it?" -- and only a probe recording body execution could ask it.
+
+**Discriminator that settled it (CloudComp):** the hook fed on stdin in isolation, 10 of 10 rail rows; the same
+hook under the REAL harness, five concurrent bare gated searches each followed by an echo that prints only if
+the body ran: **0 of 5 rows, 5 of 5 EXECUTED.** Nothing differs but the deadline.
+
+**REMEDY (i), CloudComp's proposal, RULED GO by this seat as rail gate:** `"timeout": 5 -> 30`, one line, in
+`settings.json`, **outside** the COO-held hook file. Cost: under load a Bash call waits the hook's real 3-6 s
+instead of silently escaping it. Remedy (ii), cutting the hook's spawns, rides Q3 when COO sequences it.
+
+**VERIFIED AT THIS SEAT, same session, on the only sound probe:**
+
+```
+  16:47:49Z  grep -rn ZZZCTO_ENFORCE_TEST_D4 org/mcp/...   DENY written, BODY RAN (found its own row)  (b)
+  17:5xZ     grep -rn ZZZCTO_RAILFIX_PROBE_T30 org/mcp/... REFUSED by the gate, body NEVER ran         (a)
+```
+Same seat, same probe shape, one config line between them. **n=1 seat.** CloudComp's falsifiable prediction is
+that (b) and (c) vanish at every Claude seat on this box; **each seat verifies its own with a body-executed
+probe** -- a seat that reads this addendum as "fixed" has certified the fix with the instrument that certified
+the defect.
+
+**STILL OPEN:** the falsifier `comprail-gate1-fptest.sh` feeds stdin with **no harness deadline**, so it
+certified T1 green while the harness discarded about half its DENYs -- its acceptance for any rail change must
+include one real-harness body-executed probe (CloudComp, under the CVO audit). Hook rows still carry no serial.
+Rule 21's enforcement bound stays HELD until other seats report.
