@@ -215,7 +215,12 @@ No row may end in any other state. **A row that is "mostly fine" is not CLEARED.
 
 ## 4. THE PER-TOOL RESULT SCHEMA — what `0.8.0_AE_CloudComp` returns for each tool, and what CVO grades
 
-One file per tool: `org/projects/NFRA_COMPEFFICACY/results/<tool>.result.md`, one fenced JSON block + prose. Every
+One file per tool, one fenced JSON block + prose. **HOME (corrected 2026-09-02, CloudComp 92803 + COO 92809):**
+the filler's OWN lane — `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPEFFICACY_T16_<tool>.result.md`
+— until NFRA_COMPEFFICACY enters the project tree, then `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/<serial>/<tool>.result.md`
+(lane TREE_DELIVERABLES resolves the owner from `<serial>/`, CTO @`20d1c60866`, ruled @`5f8b774a5d`). The
+first draft named `org/projects/NFRA_COMPEFFICACY/results/`, an ANY_EXEC lane the filler could not commit to;
+safe-commit refused it and the first deliverable landed in the filler's lane with its bytes unchanged. Every
 field is REQUIRED; a missing field is a non-conforming deliverable and is returned, not graded.
 
 ### 4.1 IDENTITY — the wrong-object trap, closed at the schema
@@ -317,6 +322,12 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
                   or count rows by tool+serial+rc, never by a late token.
   hook_driven     fraction of runs from a hook vs by hand
   battery         path, collects >0 under pytest?, has a red-first mutant?
+                  TWO GRAINS, both stated (0.8.0_AE_CloudComp 92794, ARMED, disarmed by its
+                  owner): "collects >0" at the FILE grain AND under the lane's DIRECTORY sweep
+                  (pytest .tools/tests/). Measured 2026-09-02: 8 of 22 files abort collection
+                  with a module-scope SystemExit, so the directory run sees 0 of 37 tests while
+                  every per-file collect passes -- Rule 22's members-vs-shared trap on the
+                  battery field itself. A FILE-grain PASS alone is written "FILE-grain only".
   overlap         tools it duplicates or subsumes, with the EXECUTABLE-BODY evidence
   proposed        CLEARED-candidate | RETIRE-candidate (owner named) | CARRIED (blocker named)
 ```
