@@ -140,6 +140,53 @@ seat README/prompt. **Law and doctrine do not move**: `CLAUDE.md`, `docs/doctrin
 
 ---
 
+## 3a. FORM -- a gate-read component is DATA, never prose (Andrew, ~19:5xZ)
+
+> *"this is why we need structured/enumerated formatting, because none of this should be variable"*
+
+**The rule:** every component in s.3 has a FORM, and **any component a gate READS must be STRUCTURED
+DATA against a declared schema** -- a fenced JSON/YAML block, a JSON row, a JSON file. Markdown is the
+prose AROUND the data and is never the carrier of anything a gate has to find. **A gate that parses
+headings is a gate that has been handed prose, and every fence form, indent, and decoy heading is a
+falsifier it did not need to have.**
+
+**Measured on today's record -- the six open carrier falsifiers (`3.0.0_SA_CVO~A` @`df87b39f6e`)
+cluster exactly on the prose-encoded, gate-read components:**
+
+| gate-read component | FORM today | where today's defects sit |
+|---|---|---|
+| `PRD_HEADER` | fenced **JSON** | falsifiers 5-6 only -- path UNDER-CONSTRAINT, not structure recovery. The block itself is found without ambiguity |
+| ENDPOINT section | markdown `##` heading + fenced FWD cards | **falsifiers 1, 2, 3** -- title in prose, in indented code, inside a `~~~` fence. Three ways to fake a heading |
+| SURFACE MANIFEST | markdown `##` heading + a markdown TABLE | **falsifier 4** -- manifest only inside a `~~~` fence passes; and an EMPTY heading passed at `d019922d68`. A table cannot be schema-validated |
+| TO `<preflight>` | pseudo-XML block, regex-parsed (`DISPOSITION_RE`) | the "NOT RUN is neither RUN nor DNA" class -- correct today, but a regex over prose is one rewording from wrong |
+| TO `<status>` | free text | `/to-check` renders `[??]` on an absent field; 30 of 62 D2 status blocks carry BOTH open and closed words (CVO 2026-09-01) |
+| surprise-channel ROW | **JSON** against a schema | `~A` P0: nested enum/pattern/minLength/allOf NOT enforced -- a SCHEMA-DEPTH gap, not a structure-recovery gap |
+| `project.json` · `dep_stage` · `fabric` | **JSON** / enum | ZERO structure falsifiers all day. The off-enum defects (`BRIEF`, `TOS_CUT`) were VALUE defects, caught by the enum |
+
+**The line is clean: every structure-recovery falsifier is on a prose-encoded component; every
+JSON-encoded component's defects are value/schema-depth defects, which a schema catches.** The
+repair bar `~A` set -- "one shared anchored heading parser outside all admitted fence forms" -- is the
+BEST parser for prose. The rule above says: stop handing the gate prose.
+
+**Consequence for the inventory -- three components change FORM under the tree:**
+
+| component | today | under the tree |
+|---|---|---|
+| ENDPOINT | `## ENDPOINT` section | `prd/endpoint.json` -- `{ "FWD-1": {done_when, accept, source}, ... }` against `org/standards/endpoint.schema.json`; the PRD RENDERS it, the gate READS the file. FWD-n existence becomes CHECKABLE (the `^FWD-[0-9]+$` shape-only defect at `surprise-row-gate.py:53` closes for free) |
+| SURFACE MANIFEST | `## 7. SURFACE MANIFEST` + table | `prd/manifest.json` -- rows against `org/standards/surface_manifest.schema.json` (the contract's 9 fields + the claim/evidence-rank binding). `comp-adversary compose` reads it directly; the "empty heading passes" class cannot exist |
+| TO `<preflight>` + `<status>` | XML-ish + free text | `task-orders/{TO}.json` sidecar, or a fenced JSON block: `{ "status": <enum>, "preflight": { "comp-iam": {"disposition": "RUN", "denominator": "...", "blind": "..."} } }`. `DISPOSITION_RE` retires; the enum is the check |
+
+**What stays prose, deliberately:** the arc (s.1), purpose (s.2), out-of-scope (s.5), rulings (s.6),
+deliverable narrative, the `bound` column's reasoning. **Prose is for humans; no gate reads it; no
+gate should.** The four-postulate record's intent axis (iii) holds: FORM is one axis -- *"does a gate
+read this"* -- and the answer decides JSON vs markdown, nothing else.
+
+⛔ **NOT PROPOSED AS A GATE.** This is a FORM rule for the three water-test projects going forward;
+the existing gate limbs keep parsing prose until the JSON components exist to point them at. **The
+first project to carry `endpoint.json` + `manifest.json` is the water test of this section.**
+
+---
+
 ## 4. Components that exist today but have no home, exposed by the inventory
 
 - **The ENDPOINT as a separate deliverable.** Today `ENDPOINT_FORWARD_*.md` lands in the CTO lane's
