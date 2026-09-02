@@ -434,6 +434,25 @@ def main(argv):
         all_v.extend(v)
         all_notes.extend(notes)
 
+    # RC4 (CVO~A re-grade @0dbf12ebb3 + RC4 re-grade): the STANDING corpus pass runs INSIDE this gate
+    # on every channel commit -- one gate, one more limb, never a second gate. It grades the whole
+    # corpus against the exact-tuple baseline; the per-row checks above grade what THIS commit adds
+    # or mutates. A corpus pass that cannot run is a refusal, not a skip.
+    try:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "surprise_corpus_validate", os.path.join(root, ".tools", "surprise-corpus-validate.py"))
+        _scv = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_scv)
+        if _scv.main([]) != 0:
+            all_v.append("standing corpus pass REFUSED -- see the [surprise-corpus] lines above")
+    except SystemExit as exc:
+        if exc.code not in (0, None):
+            all_v.append("standing corpus pass exited %r -- fail-closed" % exc.code)
+    except Exception as exc:  # noqa: BLE001
+        all_v.append("standing corpus pass could not run (%s: %s) -- fail-closed"
+                     % (type(exc).__name__, exc))
+
     for n in all_notes:
         print("[surprise-row-gate] %s" % n)
     if all_v:

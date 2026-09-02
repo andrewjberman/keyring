@@ -101,7 +101,19 @@ _index_diff() {
     # stored hash read back as "hash\r" while awk's $(...) output had the \r stripped -- every row
     # compared unequal and a no-change poll emitted 191 MUTATION warnings. Strip \r on BOTH sides:
     # the live index before it is stored or compared, and each stored field on read.
-    live="$(_index_now | tr -d '\r')" || return 0
+    # FAILURE MUST NOT REACH THE DIFF, AND MUST NOT REACH THE WRITE. First cut piped _index_now
+    # through tr, so a tool failure exited 0 through the pipe (no pipefail in this bash), `live`
+    # went EMPTY, every stored row read DISAPPEARED, and the index file was overwritten with
+    # nothing (CVO~A re-grade, 2026-09-02). The exit status is captured on its own line, BEFORE any
+    # pipe; an empty index is treated as failure too (the channel is never empty); and on failure
+    # this function returns BEFORE the write so the prior index survives intact.
+    live="$(_index_now)"
+    rc=$?
+    if [ "$rc" -ne 0 ] || [ -z "$live" ]; then
+        [ "$rc" -eq 0 ] && echo "WARN: [SURPRISE] id/hash index came back EMPTY -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
+        return 0
+    fi
+    live="$(printf '%s\n' "$live" | tr -d '\r')"
     emitted=0
     if [ -s "$IDX_FILE" ]; then
         # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
@@ -212,7 +224,62 @@ EOF
     return 0
 }
 
+# ---------------------------------------------------------------------------------------------
+# selftest -- REAL bash integration controls for _index_diff (CVO~A re-grade 2026-09-02: the
+# Python-side "watcher controls" were a dictionary emulation that never executed this script and
+# could not see the pipeline-masked failure). Each case swaps IDX_TOOL/IDX_FILE for temp copies and
+# runs the real function. Prints its own N/N line. Exit 1 on any failure.
+# ---------------------------------------------------------------------------------------------
+_selftest() {
+    quiet=0
+    T="$(mktemp -d 2>/dev/null || echo "${TMPDIR:-/tmp}/sw-selftest.$$")"; mkdir -p "$T"
+    IDX_FILE="$T/idx.tsv"
+    seed="$(printf 'org/surprise_channel/P/INVESTIGATION_v1.md\tP-S1\taaaaaaaaaaaa\norg/surprise_channel/P/INVESTIGATION_v1.md\tP-S2\tbbbbbbbbbbbb\n')"
+    printf '%s\n' "$seed" > "$IDX_FILE"
+    seed_sum="$(cksum < "$IDX_FILE")"
+    pass=0; fail=0
+    _case() {  # $1 name  $2 expected stdout WARN count  $3 expected stderr COUNT-ONLY count  $4 expect idx unchanged (1/0)
+        out="$(_index_diff 2>"$T/err")"; rc=$?
+        warns="$(printf '%s\n' "$out" | grep -c 'WARN: \[SURPRISE\]')"
+        conly="$(grep -c 'COUNT-ONLY' "$T/err")"
+        now_sum="$(cksum < "$IDX_FILE")"
+        unchanged=0; [ "$now_sum" = "$seed_sum" ] && unchanged=1
+        if [ "$warns" -eq "$2" ] && [ "$conly" -eq "$3" ] && [ "$unchanged" -eq "$4" ]; then
+            pass=$((pass+1)); echo "  OK      $1"
+        else
+            fail=$((fail+1)); echo "  FAIL    $1  (row-warns=$warns want $2; count-only=$conly want $3; idx-unchanged=$unchanged want $4; rc=$rc)"
+        fi
+        printf '%s\n' "$seed" > "$IDX_FILE"   # re-seed for the next case
+    }
+    # A. tool missing -> one COUNT-ONLY, zero row warnings, index untouched
+    IDX_TOOL="$T/does-not-exist.py";                                           _case "tool MISSING" 0 1 1
+    # B. tool exits 1 -> same
+    printf 'import sys\nsys.exit(1)\n' > "$T/fail.py"; IDX_TOOL="$T/fail.py";   _case "tool exits 1" 0 1 1
+    # C. tool exits 0 with EMPTY output -> same (empty is failure; the channel is never empty)
+    printf 'pass\n' > "$T/empty.py"; IDX_TOOL="$T/empty.py";                    _case "tool empty output" 0 1 1
+    # D. CRLF output, same content -> zero warnings, index rewritten (LF) so 'unchanged' is 0 but no CR
+    printf 'import sys\nsys.stdout.write("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa\\r\\norg/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb\\r\\n")\n' > "$T/crlf.py"
+    # After CR-stripping the live index is byte-identical to the LF seed, so the rewrite yields the
+    # SAME file: unchanged=1 is the correct expectation (first cut of this case asserted 0 and was
+    # wrong about the test, not the code). The LF-clean check below is the CRLF assertion proper.
+    IDX_TOOL="$T/crlf.py";                                                     _case "CRLF output, same rows" 0 0 1
+    [ "$(tr -cd '\r' < "$IDX_FILE" | wc -c)" -eq 0 ] && { pass=$((pass+1)); echo "  OK      stored index is LF-clean after CRLF input"; } || { fail=$((fail+1)); echo "  FAIL    stored index still carries CR"; }
+    printf '%s\n' "$seed" > "$IDX_FILE"
+    # E. same-count MUTATION of S2 -> exactly 1 row warning
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tCHANGEDHASH1")\n' > "$T/mut.py"
+    IDX_TOOL="$T/mut.py";                                                      _case "same-count MUTATION" 1 0 0
+    # F. same-count DELETE S2 + ADD S3 -> exactly 1 row warning (DISAPPEARED)
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/del.py"
+    IDX_TOOL="$T/del.py";                                                      _case "same-count DELETE+ADD" 1 0 0
+    rm -rf "$T"
+    echo "selftest: $pass/$((pass+fail)) PASS"
+    [ "$fail" -eq 0 ]
+}
+
 case "$MODE" in
+selftest)
+    _selftest; exit $?
+    ;;
 status)
     if [ ! -f "$STATE_FILE" ]; then
         echo "surprise-watch: NO WATERMARK for $SERIAL (never run). Next run seeds a baseline."

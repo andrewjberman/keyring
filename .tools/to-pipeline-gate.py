@@ -330,6 +330,127 @@ def check_endpoint_section(root, rel):
               % (rel, cand, len(paths), ENDPOINT_HEADING, "; ".join(missing)))], [])
 
 
+PRD_HEADER_SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
+MANIFEST_HEADING_RE = re.compile(r"^##\s+.*SURFACE MANIFEST", re.M | re.I)
+PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
+# An outcome DEFINITION is the id at LINE START followed by 2+ spaces and text -- the card form
+# /endpoint --forward emits. A MENTION ("a row citing `FWD-9` passes") is mid-line and does not
+# match; neither does a possessive at line start ("FWD-7's message ...", no 2-space gap).
+# MEASURED before this limb existed: a bare id sweep of ETFS_GUARDRAIL_PRD.md read NINE outcomes
+# against a header listing EIGHT, because the ENDPOINT section QUOTES a CVO finding about FWD-9.
+# A limb counting mentions would refuse its own first PRD on a quotation.
+FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
+
+
+def _prd_conformance(prd_text, header_schema, expect):
+    """LIMB 5 core, pure: complaints about ONE PRD's step-4 SHAPE. `expect` = {project, directive,
+    fabric} from the project JSON (missing keys are not compared). Returns [] when conformant.
+
+    ANDREW-DIRECT 2026-09-02 (/open-calls CALL 2, "All recs approved"): a step-4 conformance check,
+    authorized as ONE limb inside THIS existing gate and never a second gate. What it refuses:
+      (a) no PRD_HEADER block (the FIRST fenced ```json in the file) or one that fails
+          org/standards/PRD_HEADER.schema.json
+      (b) header identity disagreeing with the register row (project / directive / fabric)
+      (c) no SURFACE MANIFEST section (the step-4 -> step-5 handoff contract, CVO~A adopted)
+      (d) header.endpoint_outcomes != the outcomes DEFINED in the ENDPOINT section, either direction
+    It does NOT judge the PRD's content -- only that the machinery step 5 and step 10 read is present
+    and self-consistent."""
+    import json  # local, matching limb 4's style -- this module does not import json at top level
+    out = []
+    m = PRD_FENCE_RE.search(prd_text)
+    if not m:
+        return ["PRD carries no fenced ```json block -- the PRD_HEADER block must be the FIRST fenced "
+                "json in the file (org/standards/PRD_HEADER.schema.json)"]
+    try:
+        header = json.loads(m.group(1))
+    except Exception as exc:  # noqa: BLE001
+        return ["PRD_HEADER block does not parse as JSON (%s)" % exc]
+    try:
+        import jsonschema
+    except ImportError:
+        return ["jsonschema is not importable -- the PRD_HEADER limb cannot run; REFUSED (fail-closed)"]
+    for err in sorted(jsonschema.Draft7Validator(header_schema).iter_errors(header),
+                      key=lambda e: list(e.path)):
+        ptr = "/" + "/".join(str(p) for p in err.path) if err.path else "/"
+        out.append("PRD_HEADER violation at %s -- %s" % (ptr, err.message[:140]))
+    if out:
+        return out
+    for key in ("project", "directive", "fabric"):
+        want = expect.get(key)
+        if want is not None and header.get(key) != want:
+            out.append("PRD_HEADER.%s=%r but the register row says %r -- two carriers of one quantity "
+                       "must agree" % (key, header.get(key), want))
+    if not MANIFEST_HEADING_RE.search(prd_text):
+        out.append("PRD has no SURFACE MANIFEST section -- step 5 cannot run a battery on prose "
+                   "(CVO~A @0d272d257c; contract @4bb2c5d94f)")
+    idx = prd_text.find(ENDPOINT_HEADING)
+    if idx == -1:
+        return out  # limb 4 owns the missing-ENDPOINT complaint; do not double-report
+    tail = prd_text[idx + len(ENDPOINT_HEADING):]
+    nxt = tail.find("\n## ")
+    section = tail if nxt == -1 else tail[:nxt]
+    defined = set(FWD_DEF_RE.findall(section))
+    listed = set(header.get("endpoint_outcomes") or [])
+    key = lambda s: int(s.split("-")[1])  # noqa: E731
+    if defined - listed:
+        out.append("ENDPOINT section DEFINES %s but PRD_HEADER.endpoint_outcomes omits them"
+                   % ", ".join(sorted(defined - listed, key=key)))
+    if listed - defined:
+        out.append("PRD_HEADER.endpoint_outcomes lists %s but the ENDPOINT section defines no such outcome "
+                   "(a mention in prose is not a definition)" % ", ".join(sorted(listed - defined, key=key)))
+    return out
+
+
+def check_prd_conformance(root, rel):
+    """LIMB 5 wrapper: resolve the TO's project the same way limb 4 does, then grade every named PRD
+    that carries an ENDPOINT section. Reads PRD and schema from the STAGED INDEX, so a PRD edited in
+    the same commit is graded as it will be committed."""
+    import json as _json
+    code = _project_of(rel)
+    if not code:
+        return [], []
+    p = os.path.join(root, "org", "projects", code + ".json")
+    cand = code
+    while not os.path.isfile(p) and "_" in cand:
+        cand = cand.rsplit("_", 1)[0]
+        p = os.path.join(root, "org", "projects", cand + ".json")
+    if not os.path.isfile(p):
+        return [], []
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            doc = _json.load(fh)
+    except Exception:  # noqa: BLE001
+        return [], []
+    if doc.get("dep_stage") in (None, "REGISTERED"):
+        return [], []
+    paths = _prd_paths(doc)
+    if not paths:
+        return [], []
+    schema_txt = _staged_blob(root, PRD_HEADER_SCHEMA_REL)
+    if schema_txt is None:
+        return (["%s: %s unreadable from the staged index -- the step-4 conformance limb cannot run; "
+                 "REFUSED (fail-closed)" % (rel, PRD_HEADER_SCHEMA_REL)], [])
+    try:
+        header_schema = _json.loads(schema_txt)
+    except Exception as exc:  # noqa: BLE001
+        return (["%s: %s does not parse (%s) -- REFUSED" % (rel, PRD_HEADER_SCHEMA_REL, exc)], [])
+    expect = {k: doc.get(k) for k in ("project_code", "directive", "fabric")}
+    expect["project"] = expect.pop("project_code")
+    v, notes, graded = [], [], 0
+    for rp in paths:
+        rp = rp.replace("\\", "/")
+        txt = _staged_blob(root, rp)
+        if txt is None or ENDPOINT_HEADING not in txt:
+            continue  # limb 4 reports absent/unreadable/endpoint-less PRDs
+        graded += 1
+        for c in _prd_conformance(txt, header_schema, expect):
+            v.append("%s: %s: %s" % (rel, rp, c))
+    if graded:
+        notes.append("%s: step-4 conformance graded %d PRD(s) with an ENDPOINT section%s"
+                     % (rel, graded, "" if v else " -- OK"))
+    return v, notes
+
+
 def check_file(root, rel):
     """Return (violations, notes) for ONE newly-added TO file."""
     v, notes = [], []
@@ -370,6 +491,10 @@ def check_file(root, rel):
     ep_v, ep_notes = check_endpoint_section(root, rel)
     v.extend(ep_v)
     notes.extend(ep_notes)
+    # LIMB 5 -- step-4 conformance (Andrew-direct 2026-09-02 CALL 2): one more limb on THIS gate.
+    pc_v, pc_notes = check_prd_conformance(root, rel)
+    v.extend(pc_v)
+    notes.extend(pc_notes)
 
     pm = PREFLIGHT_RE.search(text)
     if not pm:

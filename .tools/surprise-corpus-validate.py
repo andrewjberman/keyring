@@ -67,19 +67,54 @@ def _schemas(root: str) -> dict:
     return {"INVESTIGATION": inv, "REMEDIATION": rem}
 
 
-def _rows(text: str):
+CHANNEL_FILE_RE = re.compile(r"(INVESTIGATION|REMEDIATION)_v[^/\\]*\.(md|json)$")
+
+
+def _collect(val, rows) -> int:
+    """Append object rows; return the count of NON-object items (each one a defect, never dropped)."""
+    if isinstance(val, dict):
+        rows.append(val)
+        return 0
+    if isinstance(val, list):
+        bad = 0
+        for item in val:
+            if isinstance(item, dict):
+                rows.append(item)
+            else:
+                bad += 1
+        return bad
+    return 1
+
+
+def _rows(text: str, raw_json: bool = False):
+    """Rows + malformed count. raw_json=True parses the whole body (a .json channel file) --
+    MARKDOWN/JSON PARITY with surprise-row-gate.py, which admits both (CVO~A re-grade 2026-09-02:
+    JSON channel rows were unwatermarked and unvalidated because this parser was fenced-only)."""
     rows, bad = [], 0
+    if raw_json:
+        try:
+            val = json.loads(text)
+        except ValueError:
+            return rows, 1
+        return rows, _collect(val, rows)
     for m in FENCE_RE.finditer(text):
         try:
             val = json.loads(m.group(1))
         except ValueError:
             bad += 1
             continue
-        if isinstance(val, list):
-            rows.extend(v for v in val if isinstance(v, dict))
-        elif isinstance(val, dict):
-            rows.append(val)
+        bad += _collect(val, rows)
     return rows, bad
+
+
+def _channel_docs(root: str) -> list:
+    """Every channel document, .md AND .json, in a stable order."""
+    base = os.path.join(root, "org", "surprise_channel")
+    found = []
+    for pattern in ("*/*.md", "*/*.json"):
+        found.extend(p for p in glob.glob(os.path.join(base, pattern))
+                     if CHANNEL_FILE_RE.search(os.path.basename(p)))
+    return sorted(found)
 
 
 def _tuple(doc: str, row: dict, err) -> list:
@@ -98,16 +133,14 @@ def sweep(root: str):
         sys.exit(2)
     schemas = _schemas(root)
     validators = {k: jsonschema.Draft7Validator(v) for k, v in schemas.items()}
-    pattern = os.path.join(root, "org", "surprise_channel", "*", "*.md")
-    docs = sorted(p for p in glob.glob(pattern)
-                  if re.search(r"(INVESTIGATION|REMEDIATION)_v[^/\\]*\.md$", os.path.basename(p)))
+    docs = _channel_docs(root)
     stats = {"documents": 0, "rows": 0, "malformed_blocks": 0, "failures": 0}
     failures = []
     for path in docs:
         stats["documents"] += 1
         rel = os.path.relpath(path, root).replace("\\", "/")
         with open(path, encoding="utf-8", errors="replace") as fh:
-            rows, bad = _rows(fh.read())
+            rows, bad = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
         stats["malformed_blocks"] += bad
         validator = validators[_kind(path)]
         for row in rows:
@@ -118,10 +151,17 @@ def sweep(root: str):
     return stats, failures
 
 
-def _load_baseline(root: str) -> set:
+def _load_baseline(root: str):
+    """The baseline tuple set, or None when NO BASELINE FILE EXISTS.
+
+    CVO~A re-grade 2026-09-02, RC4 hole 5: returning an empty set for BOTH a missing file and a
+    legitimate zero-tuple baseline meant that once the legacy four were normalized to zero, a
+    DELETED baseline file would grade as "matches the baseline". Presence is explicit: None means
+    absent and is refused regardless of what the corpus looks like; an empty set means a present
+    file that says "zero known failures", which is the state normalization is aiming for."""
     path = os.path.join(root, BASELINE_REL)
     if not os.path.exists(path):
-        return set()
+        return None
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
     return {tuple(t) for t in data.get("tuples", [])}
@@ -153,14 +193,11 @@ def index(root: str) -> list:
     surprise-watch.sh diffs this against its stored copy each poll. A same-id hash change is a
     MUTATION and an id that disappears is a DELETION -- both invisible to a row COUNT, which is
     all the watcher had. Read-only over the channel; the watcher writes only its own state."""
-    pattern = os.path.join(root, "org", "surprise_channel", "*", "*.md")
     lines = []
-    for path in sorted(glob.glob(pattern)):
-        if not re.search(r"(INVESTIGATION|REMEDIATION)_v[^/\\]*\.md$", os.path.basename(path)):
-            continue
+    for path in _channel_docs(root):
         rel = os.path.relpath(path, root).replace("\\", "/")
         with open(path, encoding="utf-8", errors="replace") as fh:
-            rows, _ = _rows(fh.read())
+            rows, _ = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
         for row in rows:
             rid = row.get("id")
             if rid:
@@ -191,6 +228,14 @@ def main(argv: list) -> int:
         return 0
 
     baseline = _load_baseline(root)
+    if baseline is None:
+        print("[surprise-corpus] DENOMINATORS: documents=%d rows=%d malformed_blocks=%d failures=%d "
+              "baseline=ABSENT" % (stats["documents"], stats["rows"], stats["malformed_blocks"],
+                                    stats["failures"]))
+        print("[surprise-corpus] REFUSED: no baseline file at %s. Presence is explicit -- write one "
+              "deliberately (--write-baseline), even when it holds zero tuples." % BASELINE_REL,
+              file=sys.stderr)
+        return 1
     new = sorted(current - baseline)
     resolved = sorted(baseline - current)
     known = sorted(current & baseline)
@@ -211,9 +256,11 @@ def main(argv: list) -> int:
         for t in known:
             print("  KNOWN    %s  %s  %s" % (t[0], t[1], t[2]))
 
-    if not baseline and current:
-        print("[surprise-corpus] REFUSED: no baseline at %s and the corpus has %d failure(s). "
-              "Write one deliberately (--write-baseline) before grading." % (BASELINE_REL, len(current)),
+    if stats["malformed_blocks"]:
+        # RC4 hole 2 (CVO~A re-grade): the malformed count was printed and never graded. A block that
+        # does not parse is a row nobody can validate; it fails the pass, not just the display.
+        print("[surprise-corpus] REFUSED: %d malformed block(s)/item(s) in the corpus. A row that does "
+              "not parse is not a known failure, it is an unvalidated one." % stats["malformed_blocks"],
               file=sys.stderr)
         return 1
     if new or resolved:
