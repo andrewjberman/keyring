@@ -14,6 +14,25 @@ no row reads OPEN or BUILT-UNCOMMITTED and every residual names a holder outside
 
 **STATE OF THE SET at 2026-09-02 ~22:4xZ: COMPLETE by the rule above -- no row reads OPEN or BUILT-UNCOMMITTED; every residual names a holder outside the two builders (Andrew x2: enum ratification, investigations/+cards/ narrowing; 0.0.0_AB_MSTR: missions.yaml attach globs; 0.8.0_AE_CloudComp: the pytest wrapper). Delivered to `3.0.0_SA_CVO` for review in ONE message from `2.0.0_SA_COO` citing this file. Live re-check at @1223c343fe: `missions-tree-index check` 0 violations (tree=0, flat 352, DIRECTIVES 38/13, MACROS 0 of 3 RATIFIED), `--self-test` 18/18.**
 
+## CVO REVIEW VERDICT @580c4f72a2 (23:33Z) and the residuals it added
+
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_REVIEW_TREE_PREREQ_SET_20260902.md`, reviewed once on CVO's own
+instrument. **COMPLETE and REAL.** (a) PASS with 2 divergences (R4/R2 fire in `check` only, the gate never
+read project_code or MACROS.yaml; no VALUE enum, so dep_stage=BOGUS was VALID to the generator); (b) PARTIAL --
+`check` is wired into no commit (0 of 56 commit-time files); (c) PARTIAL -- six more one-root TO readers incl.
+the proof-of-spec issuance hook; (d) PASS. CVO's sequence reading: none of the five blocks registering
+NFRA_COMPEFFICACY by hand; all five should close before the first TREE TO is cut.
+
+| residual | owner | state |
+|---|---|---|
+| R-i wire `missions-tree-index check` into commit-gate/safe-commit for staged `org/missions/D*` / `org/projects/` paths, refuse on rc 1 | 1.0.0_SA_CTO (gate) + 2.0.0_SA_COO (tool: `check` exits 0/1/2, `--json`; nothing more needed unless the hook asks) | **AT ANDREW as a call** -- CTO put it to him with the L2 report (a NEW refusal on an existing gate is not built on a seat's own word) |
+| R-ii repoint the six one-root TO readers, the hook first | 1.0.0_SA_CTO | queued at CTO behind the water test's steps |
+| R-iii contract value enums for dep_stage/fabric BY REFERENCE to the gate's; generator validates | 2.0.0_SA_COO | **CLOSED @3d0fb43105** -- contract v0.1.1 `value_enums` (AST read of `DEP_STAGE_ENUM` / `FABRIC_ENUM` from the gate at run time, one carrier, fail closed); refusal ROW-ENUM; self-test 22/22 incl. AST == independent regex read; live check 0 violations |
+| R-iv the gate reads row.project_code and refuses a folder mismatch | 1.0.0_SA_CTO | OPEN at CTO |
+| R-v the D8 census after GLOBALALARM's move | 2.0.0_SA_COO (record) + 0.0.0_AB_MSTR (carrier) | **CLOSED** -- record s.1 + s.4a @3d0fb43105 (5 of 5 at @3eae79fea1, GLOBALALARM outside the domain, enum unchanged); carrier census string restated by MSTR in its lane |
+
+**ANDREW GO (CTO terminal ~23:1xZ, relayed by CTO 23:39Z):** *"I think we are ready here to begin the first test run of the workflow ... run /endpoint --forward on the relevant path"* / *"lets take compefficacy through the whole canonical process"* / *"Starting with L2"*. The pre-notice @a258e3060f is a GO. L2 DONE at CTO (8 FWD outcomes on `ENDPOINT_FWD_NFRA_COMPEFFICACY_20260902.md`, not yet in a PRD); L3 next (CTO folder + row + index; MSTR the DIRECTIVES row; `check` read gingerly before and after); COO nothing at L3; **L5 (decomp) is COO's when the PRD lands at L4**, into `org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/` (lane TREE_COO).
+
 ## The rows
 
 | # | prereq (spec s.8) | build | owner | state | commit | falsifier + denominator | residual |
