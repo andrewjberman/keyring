@@ -380,9 +380,23 @@ def _prd_conformance(prd_text, header_schema, expect):
         if want is not None and header.get(key) != want:
             out.append("PRD_HEADER.%s=%r but the register row says %r -- two carriers of one quantity "
                        "must agree" % (key, header.get(key), want))
-    if not MANIFEST_HEADING_RE.search(prd_text):
-        out.append("PRD has no SURFACE MANIFEST section -- step 5 cannot run a battery on prose "
-                   "(CVO~A @0d272d257c; contract @4bb2c5d94f)")
+    # CVO~A re-grade @d019922d68 (A): a heading INSIDE a code fence and an EMPTY heading both used to
+    # satisfy this. Headings are searched with every fenced block blanked out, and the section must
+    # carry a non-trivial body before the next top-level heading. Row-schema enforcement is NOT
+    # widened into here -- that is step 5's contract, not this limb's.
+    unfenced = re.sub(r"```.*?```", lambda m: "\n" * m.group(0).count("\n"), prd_text, flags=re.S)
+    mh = MANIFEST_HEADING_RE.search(unfenced)
+    if not mh:
+        out.append("PRD has no top-level SURFACE MANIFEST section (a heading inside a code fence does "
+                   "not count) -- step 5 cannot run a battery on prose (CVO~A @0d272d257c; contract "
+                   "@4bb2c5d94f)")
+    else:
+        m_tail = unfenced[mh.end():]
+        m_nxt = m_tail.find("\n## ")
+        m_body = (m_tail if m_nxt == -1 else m_tail[:m_nxt]).strip()
+        if len(m_body) < 40:
+            out.append("SURFACE MANIFEST heading is present but the section is EMPTY (%d chars). A "
+                       "heading is not a manifest." % len(m_body))
     idx = prd_text.find(ENDPOINT_HEADING)
     if idx == -1:
         return out  # limb 4 owns the missing-ENDPOINT complaint; do not double-report
@@ -416,11 +430,18 @@ def check_prd_conformance(root, rel):
         p = os.path.join(root, "org", "projects", cand + ".json")
     if not os.path.isfile(p):
         return [], []
+    # CVO~A re-grade @d019922d68 (B): the project row is read from the STAGED INDEX like everything
+    # else this limb compares -- a worktree read let staged directive=D9 pass against a worktree/header
+    # D8. The worktree file above is used only to resolve the code; the CONTENT comes from the index.
+    rel_json = "org/projects/%s.json" % cand
+    staged_json = _staged_blob(root, rel_json)
+    if staged_json is None:
+        return (["%s: %s unreadable from the staged index -- the step-4 conformance limb cannot compare "
+                 "the header against the register; REFUSED (fail-closed)" % (rel, rel_json)], [])
     try:
-        with open(p, "r", encoding="utf-8") as fh:
-            doc = _json.load(fh)
-    except Exception:  # noqa: BLE001
-        return [], []
+        doc = _json.loads(staged_json)
+    except Exception as exc:  # noqa: BLE001
+        return (["%s: %s does not parse from the staged index (%s) -- REFUSED" % (rel, rel_json, exc)], [])
     if doc.get("dep_stage") in (None, "REGISTERED"):
         return [], []
     paths = _prd_paths(doc)

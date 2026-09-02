@@ -1,0 +1,4 @@
+  DEFECT  PASS  ->REFUSE  SURFACE MANIFEST heading present but section EMPTY
+  DEFECT  PASS  ->REFUSE  SURFACE MANIFEST heading only inside a code fence
+  DEFECT  PASS  ->REFUSE  wrapper: STAGED project row says D9, header says D8 -> must REFUSE (index read, not worktree)
+DEFECTS: 2 core + 1 wrapper = 3
