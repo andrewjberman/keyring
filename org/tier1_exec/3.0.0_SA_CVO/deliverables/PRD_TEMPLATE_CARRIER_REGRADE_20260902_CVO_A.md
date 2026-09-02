@@ -2,8 +2,12 @@
 
 **Date:** 2026-09-02  
 **Order:** CTO message 92702  
-**Implementation pinned:** `75ead40079b9d6e594ab4e411518ce73ccb6c474`  
-**Verdict:** **PARTIAL.** The carrier now contains the header and manifest skeleton, but the claim that a PRD authored from the full template passes limb 5 by construction is false, and the widened `brief_ref` pattern does not enforce its declared two-shape domain.
+**Pass-1 implementation pinned:** `75ead40079b9d6e594ab4e411518ce73ccb6c474`
+**Pass-2 implementation pinned:** `f5f7481015`
+**Current verdict:** **PARTIAL.** Pass 2 closes the full-template, adopted-field, and staged-register defects, but its helper still does not establish that a heading is top-level and its `brief_ref` pattern still admits Windows traversal and a non-brief extension.
+
+The original pass-1 verdict and falsifiers are retained below as the historical
+red-first record. The pass-2 disposition is appended after them.
 
 The two implementation files were byte-identical between the pinned commit and
 the live bytes exercised below, with no worktree divergence.
@@ -88,5 +92,91 @@ separate refusal condition and must not be added without Andrew's authorization.
 - NFRA_CLDGRPH decomposition remains unblocked. Its owner still owes the header
   and manifest in a version-bumped PRD before the first TO.
 - No new refusal condition is authorized or proposed by this carrier review.
+
+## Pass-2 re-grade -- `f5f7481015`
+
+The four graded implementation/control files at the pinned commit are
+byte-identical to the live bytes exercised. The commit is an ancestor of
+`HEAD`; there is no worktree divergence in those paths.
+
+### Closed by pass 2
+
+- The committed battery is green: **14/14 core, 10/10 `brief_ref`, and 2/2
+  wrapper controls**, with zero reported defects.
+- A filled copy of the **full** `_PRD_TEMPLATE.md`, including its illustrative
+  fenced ENDPOINT title before the real title, now passes `_prd_conformance()`.
+- The template carries the adopted `outcome_ref` field and the truthful
+  `FWD-n | NONE -- <reason>` form. It no longer forks the manifest contract to
+  `outcome`.
+- An empty manifest and a manifest title inside an ordinary triple-backtick
+  fence refuse.
+- The wrapper reads the staged project-register blob: a staged `directive=D9`
+  against a worktree/header `D8` refuses.
+- Ruff, Python compilation, and the Draft-07 schema meta-check are green.
+
+### Open falsifier 1 -- `_top_section()` does not require a heading
+
+`_top_section()` uses `blank.find(ENDPOINT_HEADING)` for the string form. It
+does not anchor the title at the start of an unindented line. With the real
+ENDPOINT heading replaced by each of the following non-heading forms,
+`_prd_conformance()` returned **PASS** instead of refusing:
+
+```text
+Narrative reference only: ## ENDPOINT (step 2, /endpoint --forward)
+    ## ENDPOINT (step 2, /endpoint --forward)  [indented code]
+```
+
+The helper and its call sites say "top-level heading only," so these are direct
+counterexamples to the claimed invariant. The next-section search is also
+hard-coded to `\n## ` rather than sharing an anchored heading matcher.
+
+### Open falsifier 2 -- `_blank_fences()` does not blank every fenced block
+
+The helper blanks only text between literal triple backticks:
+
+```python
+re.sub(r"```.*?```", ...)
+```
+
+A PRD whose only exact ENDPOINT title and outcome cards were inside a `~~~`
+fence passed. A PRD whose only SURFACE MANIFEST title and non-trivial body were
+inside a `~~~` fence also passed. Both should refuse under the gate's stated
+rule that a heading inside a code fence does not count. This is not a new gate;
+it is a bypass in the already-authorized top-level-heading check.
+
+The repair bar is one shared parser/matcher that recognizes an unindented
+level-2 heading outside all admitted Markdown fence forms, then finds the next
+top-level section with the same grammar. Add the mid-line, indented-code, and
+tilde-fence cases to the standing red/green battery.
+
+### Open falsifier 3 -- `brief_ref` traversal is still open on Windows
+
+The pattern excludes `/` from a path segment but not `\\`. Both of these
+values matched the schema on this Windows repository even though they escape
+or cross the declared segment boundary when resolved as Windows paths:
+
+```text
+docs/briefs/..\architecture\_PRD_TEMPLATE.md@abcdef0
+org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_x\..\..\OTHER.md@abcdef0
+```
+
+Exclude both path separators (or normalize then validate) and apply the dot
+segment rule to the normalized path. Add both cases to the schema battery.
+
+The pass-1 extension falsifier also remains:
+`docs/briefs/not-a-brief.txt@abcdef0` still validates. The schema description
+declares this branch to be a CRO brief and the template presents `.md` as its
+shape. Either constrain that branch to the adopted brief extension or amend
+the declared domain explicitly; the regex and its contract must say the same
+thing.
+
+### Pass-2 disposition
+
+The carrier happy path, adopted manifest field, and staged-register seam are
+**GREEN**. The shared top-level-section parser and the declared `brief_ref`
+domain remain **RED/PARTIAL**. Therefore step 6 limb 5 is not yet closed by
+`f5f7481015`. The unrelated `PRD_HEADER.status` Rule-24 proposal remains
+unadopted, and the known ETFS instance's `outcome` column remains an explicit
+instance deviation rather than a defect in this generic carrier patch.
 
 -- 3.0.0_SA_CVO~A
