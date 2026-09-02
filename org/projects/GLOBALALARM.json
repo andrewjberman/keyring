@@ -1,19 +1,19 @@
 {
- "project_code": "GLOBALALARM",
- "macro_code": "GLOBALALARM",
- "directive": "D10",
- "pipeline": null,
- "status": "active",
- "dep_stage": "REGISTERED",
- "created": "2026-08-31",
- "pods": [],
- "related": [],
- "name": "Global estate alarm consolidation -- assess EVERY serving layer and produce ONE unified alarm schedule, replacing piecemeal per-surface alarm decisions",
- "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~21:1xZ, VERBATIM: 'i'd prefer to hold on alarms until a dedicated global estate alarm consolidation plan where we assess every serving layer and come up with a unified alarm schedule, this process of GLOBALALARM would be a D10 directive project'. Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING.",
- "blocking": "Nothing blocked. This is a REGISTER CUT only.",
- "leads": [
-  "SCOPE GUARD, AND IT IS THE POINT OF THE PROJECT: this is a CONSOLIDATION PLAN, NOT A LICENCE TO BUILD ALARMS. The standing alert/alarm/SNS/SES/notification/freshness-checker/monitor moratorium BINDS UNTIL the plan exists and Andrew rules on it. Minting this project does NOT lift it, and no seat may read the project's existence as permission to ship a monitor.",
-  "FIRST KNOWN INPUT: the data-freshness safeguard, which is HELD by this same ruling. A check exists and works but cannot notify; Andrew declined a per-surface non-alarm carve-out for it precisely because piecemeal exceptions are what GLOBALALARM exists to replace.",
-  "D10 DECLARED ZERO PROJECTS UNTIL THIS CUT -- the same representation gap the 2026-08-31 register-hygiene scan (LD-0488) found on D7."
- ]
+  "project_code": "GLOBALALARM",
+  "macro_code": "GLOBALALARM",
+  "directive": "D8",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-08-31",
+  "pods": [],
+  "related": [],
+  "name": "Global estate alarm consolidation -- assess EVERY serving layer and produce ONE unified alarm schedule, replacing piecemeal per-surface alarm decisions",
+  "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~21:1xZ, VERBATIM: 'i'd prefer to hold on alarms until a dedicated global estate alarm consolidation plan where we assess every serving layer and come up with a unified alarm schedule, this process of GLOBALALARM would be a D10 directive project'. Rule 27 stage 2 (purpose-level PRD) and stage 3 (COO atom-decomp) are BOTH OUTSTANDING.",
+  "blocking": "Nothing blocked. This is a REGISTER CUT only.",
+  "leads": [
+    "SCOPE GUARD, AND IT IS THE POINT OF THE PROJECT: this is a CONSOLIDATION PLAN, NOT A LICENCE TO BUILD ALARMS. The standing alert/alarm/SNS/SES/notification/freshness-checker/monitor moratorium BINDS UNTIL the plan exists and Andrew rules on it. Minting this project does NOT lift it, and no seat may read the project's existence as permission to ship a monitor.",
+    "FIRST KNOWN INPUT: the data-freshness safeguard, which is HELD by this same ruling. A check exists and works but cannot notify; Andrew declined a per-surface non-alarm carve-out for it precisely because piecemeal exceptions are what GLOBALALARM exists to replace.",
+    "D10 DECLARED ZERO PROJECTS UNTIL THIS CUT -- the same representation gap the 2026-08-31 register-hygiene scan (LD-0488) found on D7."
+  ]
 }
