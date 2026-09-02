@@ -247,8 +247,40 @@ in code — it is the GRADING vocabulary of this PRD until the census is adjudic
   page_contract         --page/--limit present? true total printed? "PAGE i of N"?
   size_invariance       does the ceiling scale with corpus width, or is it a constant?
 ```
-Policy this project sets (transcript 1056): **a constant ceiling over a variable corpus must disclose what it did
-not reach.** It does not mandate one number; it mandates that the number and the reached-denominator print together.
+**POSTURE — Andrew-approved 2026-09-02 ~18:38Z, VERBATIM: *"I agree with this posturing, incorporate it into the
+document."*** Two rules, both size-invariant by construction; measured baseline in §4.4.1.
+
+**RULE P (output): comp-find's page contract is the SHARED OUTPUT CONTRACT, not a shared library.** Every marquis
+tool that can emit more than one page of rows carries `--limit` / `--page` / `--all`, prints `PAGE i of N` and the
+**TRUE TOTAL on every page**, and treats a bare `--top N` that does not print what it dropped as **non-conforming**.
+The consumer half already exists in law (CLAUDE.md Rule 21: never `head` a census; a page is not an answer).
+Size-invariance comes from the page, never from making output smaller.
+
+**RULE T (work): a tool never exceeds a ceiling it was not told.** Every marquis tool **accepts a budget** (flag or
+env; default = the harness's 120s Bash ceiling), **spends it against the WORK, not the call**, and at expiry
+**prints the reached denominator with a resume cursor** — *"scanned 12,400 of 144,933 when the 120s budget hit;
+re-run `--page 2` / `--budget 600`."* A timeout thereby becomes a page boundary, not a kill. **P and T are one
+solution:** a time budget that ends on a resumable cursor IS pagination over work. Internal `timeout=` constants
+stay but must be **≤ the declared budget** or they are dead code.
+
+**Non-application:** tools whose output is bounded by nature (`comp-which`, `comp-denytest`, `comp-schedule`'s five
+carriers) carry Rule P's disclosure line and nothing else. **Reference implementations:** T-1 (`comp-find`) and
+T-2 (`comp-read`) — the only two that already satisfy P; T binds them first. **Cost, stated:** T is a code change on
+~18 marquis implementations; P on ~10.
+
+#### 4.4.1 Measured baseline (2026-09-02, 20 marquis tools; help-text census + source grep)
+```
+  --page          2 of 20  (comp-find, comp-read)       --limit  3 of 20   --top  3 of 20   --all  4 of 20
+  prints a true total when capped        8 of 20  (help-text heuristic -- weak; graded per tool in 4.2)
+  knows / accepts the OUTER harness budget   0 of 19 implementations  (no BASH_*_TIMEOUT, --budget, deadline,
+                                                                       SIGTERM handler, or alarm anywhere)
+  outer ceiling the tools cannot see     120,000 ms default / 600,000 ms max (harness contract)
+  inner ceilings                         18 of 94 set one; 14 distinct constants; comp-find's 600s EXCEEDS the outer
+```
+Live specimens the same day: comp-find killed silent at 120s twice (its 600s never reached); comp-similar imposing
+180s on comp-kuzu from outside; the rail hook straddling its own 5s harness deadline and writing DENY rows for
+searches that ran (fixed @`d2eb720bde` by raising the ceiling, confirmed at 4 of 4 Claude seats) — **every one is a
+tool that did not know its budget.**
 
 ### 4.5 PASSCRAFT LEG — the 8 moves, run, and the shapes hunted
 ```
@@ -343,8 +375,8 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 
 | id | outcome | surface (engine) | claim | evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
-| T-1 | FWD-1,2,3,6 | `comp-find` → `.tools/comp-find` (Python, self-contained) | measured | 3,722 runs (rail); 0→1 runs.jsonl post unit-1 @`f34122edfb`; paginates; 600s timeout | CloudComp | audit | — | 4.1-4.6 | **NO battery** (92625 s.5b) — FWD-6 gate |
-| T-2 | FWD-1,2,3,6 | `comp-read` → `.tools/comp-read` (Python) | measured | 2,401 runs (rail); `--enumerate` writes NO rail row (92625 s.5a); battery 8/8 | CloudComp | audit | — | 4.1-4.6 | enumerate-path logging gap is a finding, not a fix in this row |
+| T-1 | FWD-1,2,3,6 | `comp-find` → `.tools/comp-find` (Python, self-contained) | measured | 3,722 runs (rail); **unit 1 @`f34122edfb` ON origin — now also writes runs.jsonl (0→2 `comp_log_auto` calls), CLEARED by exercise at this seat**; paginates (Rule P reference); 600s internal timeout **exceeds the 120s outer ceiling — Rule T's first target** | CloudComp | audit+fix | — | 4.1-4.6 | **NO battery** (92625 s.5b) — FWD-6 gate; Rule T budget + reached-denominator at expiry |
+| T-2 | FWD-1,2,3,6 | `comp-read` → `.tools/comp-read` (Python) | measured | 2,401 runs (rail); **unit 1 @`f34122edfb` ON origin (0→2 `comp_log_auto`), CLEARED; `_shape()` shebang routing @`8ed23144cb` ON origin** (extensionless comp-* now parse via python-ast: 10→22 sections on comp-adversary); `--enumerate` writes NO rail row (92625 s.5a); battery 8/8 | CloudComp | audit+fix | — | 4.1-4.6 | enumerate-path logging gap is a finding, not a fix in this row; Rule P reference |
 | T-3 | FWD-1,3 | `comp-which` → `.tools/comp-which` | measured | 520 runs.jsonl + 9,643 rail; paginates; 20/60s | CloudComp | audit | — | 4.1-4.6 | the router — its NOFIT-POSTERIOR path is a 4.3 case |
 | T-4 | FWD-1 | `comp-hud` | absent | **no such entrypoint**; the HUD is `.tools/hooks/comp-tool-hud.sh` (a hook) | CVO | record | — | 4.1 | DOES-NOT-EXIST; rail hook is CloudComp's by ruling and OUT of this project |
 | T-5 | FWD-1,2 | `comp-schedule` → `.tools/comp-schedule` (Python) | measured | 0 runs.jsonl/30d; five carriers; NOT-DECIDABLE is a designed result | CloudComp | audit | — | 4.1-4.6 | **no remediation on this run's evidence** (CVO~A s.11); ARNs absent BY DESIGN — record, do not "fix" |
@@ -354,7 +386,7 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | T-9 | FWD-1,2,3 | `comp-trigger` → `comp_trigger.py` | measured | 80 runs; EventBridge+Scheduler only; blind to S3 notifications (COO preflight) | CloudComp | audit+fix | — | 4.3 | declare scope in header OR add S3-notification backend via shared event graph — check existing machinery first (CVO~A s.7) |
 | T-10 | FWD-1,2,3,4 | `comp-pipescript` → `.tools/comp-pipescript` | measured | 571 runs; 6 timeouts 10-30s; F9 gate GREEN @`4a6f564c6f` | CloudComp | audit+fix | — | 4.1 | shim self-identification (CVO~A s.9); do NOT add ETFS to registry on one preflight |
 | T-11 | FWD-1,2 | `comp-denytest` → `.tools/comp-denytest` | measured | 2 runs/30d, 8 ever; zero population when no IAM change is CORRECT | CloudComp | audit | — | 4.1-4.6 | no remediation (CVO~A s.11); disposition on USAGE is his — RETIRE-candidate surfaced, not acted |
-| T-12 | FWD-1,3,6,7 | `comp-similar` → `debtscan/comp_similar.py` | measured | 30 runs; D1-D3 fixed @`b8a73cc064` **LOCAL**; vintage now prints | CloudComp | audit | — | FWD-6 | **integration first** (CVO~A s.10): CLEARED only when @`b8a73cc064` is ON origin |
+| T-12 | FWD-1,3,6,7 | `comp-similar` → `debtscan/comp_similar.py` | measured | 30 runs; D1-D3 fixed @`b8a73cc064` **ON origin** (is-ancestor of `c9ea7b3b63`, read 18:15:44Z); vintage prints, exercised at two seats | CloudComp | audit | — | FWD-6 | **integration condition MET** (CVO~A s.10). Remaining for CLEARED: the s.4 deliverable (identity, 4.3 four-case test, bounds); D1-D3 are the vintage/disclosure half only |
 | T-13 | FWD-1,5 | `comp-dups` → `debtscan/dup_scan.py` | measured | **0 runs ever**; separate engine by CTO ruling 3 (names+bodies vs summaries) | CTO | record | — | R-5 | RETIRE-candidate on usage; **do not fold** into comp-similar; CTO's disposition |
 | T-14 | FWD-1,5 | `comp-drift` → `.tools/comp-drift` | measured | 1 run/30d; orchestrator over seam engines; `--deep` cost-guarded | CloudComp | audit | — | 4.1-4.6 | overlap with comp-similar is by NAME only (drift = propagation; similar = function) — record |
 | T-15 | FWD-1 | `comp-legacy` | absent | **no such entrypoint** (0 of 106) | CVO | record | — | 4.1 | DOES-NOT-EXIST |
@@ -364,7 +396,7 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | T-19 | FWD-5 | `comp-trace` → `org/modules/graph/cli.py trace` | measured | 45 runs; **strict subset of blast** (`cli.py:1478-1530`) | CloudComp | retire | T-6 | R-4 | his conditional ruling, condition met; redirect 45 callers (`0.7.0_AE_CloudOps~F` 18, `~D` 14, CVO 11) to `comp-blast`; **not platinum** |
 | T-20 | FWD-1,3 | `comp-heat` → `.tools/comp-heat` (377) | measured | 0 CLI runs; library consumer = comp-similar `load_heat_live()`; named in the estate-report runner's docstring, **invoked by nothing** | CloudComp | audit | — | 4.2 | his interest; "delivered/described better" — the disclosure fields ARE that; wiring into the daily report is `@09355b6d93`'s, not this row's |
 | T-21 | FWD-1,3 | `comp-system` → `org/modules/graph/comp_system.py` (1751) | measured | 584 runs; compiles `infra/system/06_current_state.{md,json}`; `--check` 0/2/1; self-test carries the no-fabrication invariant | CloudComp | audit | — | 4.2 | his ask: "understand what this one does" — the deliverable's purpose_1line + 4.2 answer it; it regenerated on unit 1's commit (side effect, not a scope widening) |
-| T-22 | FWD-5,7 | `comp-kuzu` + `comp-kuzu-inc` + `comp-kuzu-full` → `infra/aws/globgrph/kuzu_cli.py` (`--mode inc|full`) | measured | 1,591 + 14 + ? runs; three wrappers, one engine, one flag | CloudComp | **CARRIED** | R-3 | R-3 | **HELD on his reconciliation.** NEVER-full property travels with whatever wins; comp-which `:614,:620-621`, comp-describe `:24`, comp-manifest-check all move together |
+| T-22 | FWD-5,7 | `comp-kuzu` + `comp-kuzu-inc` + `comp-kuzu-full` → `infra/aws/globgrph/kuzu_cli.py` (`--mode inc|full`) | measured | 1,591 + 14 + ? runs; three wrappers, one engine, one flag | CloudComp | **retire** | — | R-3 **RULED (a)** | **UNHELD 18:12Z — Andrew: "recs approved except 2."** `--mode inc|full` is the surface; both name-wrappers retire; NEVER-full moves onto `--mode inc` EXPLICITLY; KUZUSPLIT P1/P3 + comp-which `:614,:620-621` + comp-describe `:24` + comp-manifest-check in ONE commit. Unit 2 delegated (92664); prepped read-only by CloudComp (92669 s.3); sequencing on COO |
 | T-23 | FWD-1,3 | `comp-cache` → `.tools/comp-cache` | measured | 35 runs; React Query cache keys across `portal/src`; `map`/`collisions`/`key` | CloudComp | audit | — | 4.1-4.6 | **not comp-platinum** — portal-local grain; record the distinction |
 | T-24 | FWD-1,3 | `comp-platinum` → `org/modules/graph/platinum_cli.py` | measured | 7 runs; composite of transform+routes+pipescript; portal-page → gold-script | CloudComp | audit | T-10 | 4.2 | his question *"how is comp-platinum defined? what coverage universe?"* — the deliverable's corpus_or_backend + denominator fields answer it |
 | G-1 | FWD-7 | `comp-graph status` freshness surface | measured | reports `kuzu_db 81d` + `stitch_graph 38d`; canonical is `kuzu_nessie_db` built 2026-09-01T16:18Z (globgrph F6, attributed to CRO) | NFRA_GRAPHS lane | fix | — | brief O7 | surfaced by CRO, not chased; **re-homes to the comp-graph owner** — this row records the dependency |

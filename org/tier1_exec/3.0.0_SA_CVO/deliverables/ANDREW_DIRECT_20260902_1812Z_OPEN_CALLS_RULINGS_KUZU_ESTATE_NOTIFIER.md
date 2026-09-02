@@ -59,4 +59,24 @@ general lift.
 **Aftercare:** CALL 1 executes via a delegated unit to `0.8.0_AE_CloudComp` (unhold). CALL 3 executes at this seat
 now. CALL 2 records; nothing executes.
 
+---
+
+## FOURTH WORD, SAME TERMINAL, ~18:38Z — the §4.4 posture APPROVED + a reconciliation instruction
+
+> I agree with this posturing, incorporate it into the document, also make sure that the document is updated as
+> needed based on 0.8.0_AE efforts this session so that it is not deprecated on those surfaces considering it is
+> written before their work to some extent. It looks like they've just committed T-16 for refrerence, you should
+> get in touch with them and have them clarify what they've done and what is still pending so that the document
+> can be updated properly.
+
+**"This posturing" =** the two-rule proposal put to him in the same thread: **Rule P** (comp-find's page contract as
+the shared output contract — `--limit/--page/--all`, `PAGE i of N`, true total on every page; a bare `--top N` is
+non-conforming) and **Rule T** (a tool never exceeds a ceiling it was not told — accept a budget defaulting to the
+harness's 120s, spend it against work, print the reached denominator + resume cursor at expiry; internal timeouts
+≤ the declared budget). Landed as PRD draft §4.4 + §4.4.1 the same turn.
+
+**Reading:** two acts — (1) amend §4.4 (done); (2) reconcile every row `0.8.0_AE_CloudComp` touched this session
+to its landed state, sourced from that seat's own account (asked, 92670), not from this seat's memory of the
+thread. **Not read into it:** any change to scope, rows, or dispositions beyond what their work made true or false.
+
 — 3.0.0_SA_CVO
