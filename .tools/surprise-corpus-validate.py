@@ -212,16 +212,39 @@ def index(root: str) -> list:
     return lines
 
 
+INDEX_ROW_FIELDS = ("project", "fabric", "class", "hazard_standing")
+
+
+def index_rows(root: str) -> list:
+    """R4-c (design @3814be3317; the fields R4-a/b made possible): `path\\tid\\thash` PLUS
+    `project\\tfabric\\tclass\\thazard_standing`, one line per row. A SIBLING of --index, never a
+    change to it: the watcher's index diff parses exactly three columns with `read -r p i h`, and a
+    fourth column would land inside the hash and read as 192 MUTATIONs. The watcher calls this only
+    when its diff has found NEW ids, to name them."""
+    lines = []
+    for path in _channel_docs(root):
+        rel = os.path.relpath(path, root).replace("\\", "/")
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            rows, _ = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
+        for row in rows:
+            rid = row.get("id")
+            if rid:
+                extra = [str(row.get(k, "") if row.get(k) is not None else "").replace("\t", " ").replace("\n", " ")
+                         for k in INDEX_ROW_FIELDS]
+                lines.append("%s\t%s\t%s\t%s" % (rel, rid, _canon_hash(row), "\t".join(extra)))
+    return lines
+
+
 def main(argv: list) -> int:
     root = _root()
-    if "--index" in argv:
+    if "--index" in argv or "--index-rows" in argv:
         # LF only, even on Windows: the consumer is a bash watcher comparing hashes byte-for-byte,
         # and text-mode stdout here would emit \r\n (measured 2026-09-02: 191 false MUTATIONs).
         try:
             sys.stdout.reconfigure(newline="\n")
         except (AttributeError, ValueError):
             pass
-        for line in index(root):
+        for line in (index_rows(root) if "--index-rows" in argv else index(root)):
             sys.stdout.write(line + "\n")
         return 0
     as_json = "--json" in argv

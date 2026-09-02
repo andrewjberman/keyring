@@ -1,0 +1,26 @@
+# surprise-watch.sh selftest with the R4-c NEW-row arm (CTO; on 3.0.0_SA_CVO's pass-3 bytes + the two-roots repoint)
+# 2026-09-02T22:46:44Z  HEAD=64b930be4f  file=6ae1c0fc32
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      F2 DELETE+ADD same count, poll 1: provisional, merge write
+  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)
+  OK      F2 DELETE+ADD same count, poll 2: CONFIRMED
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+  OK      E2: short twice but id STILL IN raw file -> NOT confirmed
+  OK      two roots: _watched_files sees the flat AND the tree doc (2 of 2)
+  OK      _project_of on a tree path -> ETFS_TREEPRJ
+  OK      _project_of on a flat path -> P
+  OK      NEW-row arm: one line names P-S2 (S1, already stored, not named)
+  OK      NEW-row arm: second poll, nothing new, names nothing
+  OK      real validator: --index-rows emits 7 columns for every --index row (192 of 192)
+selftest: 22/22 PASS
+# exit=0

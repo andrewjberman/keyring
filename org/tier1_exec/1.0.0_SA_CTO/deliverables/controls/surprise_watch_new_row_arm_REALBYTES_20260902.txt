@@ -1,0 +1,8 @@
+# R4-c NEW-row arm on REAL bytes: worktree function block, real validator, real index with ONE real row withheld
+# 2026-09-02T22:49:38Z  HEAD=a258e3060f  file=6ae1c0fc32
+# real index 192 rows; stored copy withholds WSE_COTMDL-S1
+# poll 1 stdout:
+    [SURPRISE] WSE_COTMDL  NEW ROW WSE_COTMDL-S1  project= fabric= class=BLOCKING hazard=ARMED -> org/surprise_channel/WSE_COTMDL/INVESTIGATION_v1.md
+  OK      one NEW ROW line names WSE_COTMDL-S1 with real fields
+  OK      poll 2 names nothing
+# exit=0

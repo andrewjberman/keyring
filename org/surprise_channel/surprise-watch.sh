@@ -217,6 +217,20 @@ _index_diff() {
                 emitted=$((emitted + 1))
             fi
         done < "$IDX_FILE"
+        # R4-c (1.0.0_SA_CTO, design @3814be3317; the fields R4-a/b put on every new row): the NEW arm.
+        # The count pass says "+N new row(s)"; this names each one -- project, fabric, id, class,
+        # hazard_standing -- so the L8 reader groups without opening a file. One --index-rows call,
+        # only when the diff has found new ids (never on the seeding pass, never when nothing is new).
+        # A 7-column sibling of --index, because the loop above reads exactly three columns.
+        newpairs="$(printf '%s\n' "$live" | awk -F'\t' -v S="$(tr -d '\r' < "$IDX_FILE")" 'BEGIN{n=split(S,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2}')"
+        if [ -n "$newpairs" ] && [ "$quiet" -ne 1 ]; then
+            rows7="$(python "$IDX_TOOL" --index-rows 2>/dev/null | tr -d '\r')"
+            while IFS="$(printf '\t')" read -r p i; do
+                [ -n "$i" ] || continue
+                fields="$(printf '%s\n' "$rows7" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {printf "project=%s fabric=%s class=%s hazard=%s", $4, $5, $6, $7; exit}')"
+                echo "[SURPRISE] $(_project_of "$p")  NEW ROW $i  ${fields:-fields=UNREAD (index-rows did not return this id)} -> $p"
+            done <<< "$newpairs"
+        fi
     fi
     printf '%s\n' "$live" > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
     return "$emitted"
@@ -434,6 +448,19 @@ _selftest() {
     _p="$(_project_of "$T/org/surprise_channel/P/INVESTIGATION_v1.md")"
     if [ "$_p" = "P" ]; then pass=$((pass+1)); echo "  OK      _project_of on a flat path -> P"; else fail=$((fail+1)); echo "  FAIL    _project_of on a flat path -> '$_p' (want P)"; fi
     CHANNEL_DIR="$_saved_channel"; REPO_ROOT="$_saved_root"
+    # R4-c NEW-row arm: stored has S1 only, live (whole.py) has S1+S2 -> exactly one "NEW ROW P-S2"
+    # line on STDOUT naming the row; a second poll (S2 now stored) names nothing. The synthetic tool
+    # answers --index-rows with three columns, so the line reads fields=UNREAD -- the fields half is
+    # exercised against the REAL validator below.
+    rm -f "$PROV_FILE"; printf 'org/surprise_channel/P/INVESTIGATION_v1.md\tP-S1\taaaaaaaaaaaa\n' > "$IDX_FILE"
+    IDX_TOOL="$T/whole.py"; quiet=0
+    _out="$(_index_diff 2>/dev/null)"
+    if [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW P-S2')" -eq 1 ] && [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW P-S1')" -eq 0 ]; then pass=$((pass+1)); echo "  OK      NEW-row arm: one line names P-S2 (S1, already stored, not named)"; else fail=$((fail+1)); echo "  FAIL    NEW-row arm: $(printf '%s\n' "$_out" | grep -c 'NEW ROW') NEW line(s): $(printf '%s' "$_out" | tr '\n' '|' | cut -c1-160)"; fi
+    _out="$(_index_diff 2>/dev/null)"
+    if [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW')" -eq 0 ]; then pass=$((pass+1)); echo "  OK      NEW-row arm: second poll, nothing new, names nothing"; else fail=$((fail+1)); echo "  FAIL    NEW-row arm: second poll named $(printf '%s\n' "$_out" | grep -c 'NEW ROW') row(s)"; fi
+    _n7="$(python "$REPO_ROOT/.tools/surprise-corpus-validate.py" --index-rows 2>/dev/null | awk -F'\t' 'NF==7' | grep -c .)"
+    _n3="$(python "$REPO_ROOT/.tools/surprise-corpus-validate.py" --index 2>/dev/null | grep -c .)"
+    if [ "$_n7" -gt 0 ] && [ "$_n7" -eq "$_n3" ]; then pass=$((pass+1)); echo "  OK      real validator: --index-rows emits 7 columns for every --index row ($_n7 of $_n3)"; else fail=$((fail+1)); echo "  FAIL    real validator: --index-rows 7-col rows=$_n7 vs --index rows=$_n3"; fi
     rm -rf "$T"
     echo "selftest: $pass/$((pass+fail)) PASS"
     [ "$fail" -eq 0 ]
