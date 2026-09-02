@@ -14,13 +14,15 @@
 _ws="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 [ -n "$_ws" ] || exit 0
 _touched="$(git -C "$_ws" diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null)"
+_log="$_ws/org/mcp/.prd-notify/hook.log"
+mkdir -p "$_ws/org/mcp/.prd-notify"
+# ONE LINE PER FIRING, before any work: a reoffer with nothing outstanding prints nothing, and an
+# empty log then cannot tell "fired, nothing to do" from "never fired" (measured on the first
+# commit after install: 0 bytes, and the question could not be answered from the log).
 case "$_touched" in
-  *docs/architecture/*_PRD.md*)
-    ( cd "$_ws" && python "$_ws/.tools/prd-header-notify.py" post-commit >> "$_ws/org/mcp/.prd-notify/hook.log" 2>&1 ) &
-    ;;
-  *)
-    # No PRD in this commit -- still let outstanding notifications RE-OFFER (commit-driven in v1).
-    ( cd "$_ws" && python "$_ws/.tools/prd-header-notify.py" reoffer >> "$_ws/org/mcp/.prd-notify/hook.log" 2>&1 ) &
-    ;;
+  *docs/architecture/*_PRD.md*) _mode=post-commit ;;
+  *) _mode=reoffer ;;   # no PRD in this commit -- outstanding rows still RE-OFFER (commit-driven in v1)
 esac
+printf '%s fired HEAD=%s mode=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(git -C "$_ws" rev-parse --short=10 HEAD 2>/dev/null)" "$_mode" >> "$_log"
+( cd "$_ws" && python "$_ws/.tools/prd-header-notify.py" "$_mode" >> "$_log" 2>&1 ) &
 exit 0
