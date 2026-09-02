@@ -70,45 +70,105 @@ def _repo_root():
 
 
 def _blob(root, ref, rel):
-    """Bytes of rel at ref ('' = staged index). None when the path does not exist there.
+    """(status, text) of rel at ref ('' = staged index). status is one of:
+         OK      -- text is the content
+         ABSENT  -- the path does not exist at that ref (a NEW file, or not staged)
+         ERROR   -- git could not answer (bad ref, timeout, crash). NOT the same as absent.
 
-    NEVER 2>/dev/null on this read -- a mangled ref returns clean-empty and an ABSENT verdict
-    would be indistinguishable from an empty file (CLAUDE.md Git).
+    RC2 second pass (CVO~A re-grade @0dbf12ebb3): the old single-None return made "the file is
+    new in this commit" and "git failed to read HEAD" indistinguishable, so a read failure on
+    HEAD silently SKIPPED the mutation check and graded the file as brand new. Absence is tested
+    FIRST with `git cat-file -e` (rc 1 = not there, rc 0 = there, anything else = error), and
+    only a confirmed-present path is read. NEVER 2>/dev/null on either call -- a mangled ref
+    returns clean-empty and an ABSENT verdict would be indistinguishable from an empty file.
     """
     spec = "%s:%s" % (ref, rel) if ref else ":%s" % rel
+    # PRESENCE PROBE. `git cat-file -e ref:path` was tried first and is WRONG for this: it exits 128
+    # for a missing PATH as well as for a bad REF, so absence and failure were still one state
+    # (caught by the harness's own blob control on first green run). `ls-tree <ref> -- <path>` and
+    # `ls-files -s -- <path>` (index) exit 0 with EMPTY output for a missing path and non-zero
+    # only when git itself cannot answer -- which is exactly the two-state distinction needed.
+    # cwd=root because ls-tree is CWD-prefix-sensitive and returns a silent zero from a subdir.
+    probe_cmd = (["git", "ls-tree", ref, "--", rel] if ref
+                 else ["git", "ls-files", "-s", "--", rel])
+    try:
+        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True, timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return ("ERROR", "%s raised %s" % (probe_cmd[1], exc))
+    if probe.returncode != 0:
+        return ("ERROR", "%s rc=%d: %s" % (probe_cmd[1], probe.returncode, probe.stderr.strip()[:160]))
+    if not probe.stdout.strip():
+        return ("ABSENT", None)
     try:
         r = subprocess.run(["git", "show", spec], cwd=root,
                            capture_output=True, text=True, timeout=60)
-    except Exception:  # noqa: BLE001
-        return None
+    except Exception as exc:  # noqa: BLE001
+        return ("ERROR", "show raised %s" % exc)
     if r.returncode != 0:
-        return None
-    return r.stdout
+        return ("ERROR", "show rc=%d: %s" % (r.returncode, r.stderr.strip()[:160]))
+    return ("OK", r.stdout)
 
 
-def _rows(text):
-    """(rows, malformed_count) over EVERY fenced json block. A malformed block is NEVER dropped."""
+def _collect(val, rows):
+    """Append the object rows in a parsed JSON value; return the count of NON-object items.
+
+    RC1 second pass (CVO~A re-grade @0dbf12ebb3): the old loop kept dicts and SILENTLY DROPPED
+    everything else -- a fenced scalar, a list of strings, a list with one bad element -- so a
+    malformed row could never be counted as malformed. Every non-object item is a defect."""
+    if isinstance(val, dict):
+        rows.append(val)
+        return 0
+    if isinstance(val, list):
+        bad = 0
+        for item in val:
+            if isinstance(item, dict):
+                rows.append(item)
+            else:
+                bad += 1
+        return bad
+    return 1
+
+
+def _rows(text, raw_json=False):
+    """(rows, malformed_count). A malformed block or item is NEVER dropped.
+
+    raw_json=True: the whole body IS the JSON document (a .json channel file). CHANNEL_RE has
+    accepted .json since it was written, but this parser read only fenced Markdown -- so an
+    invalid .json file matched as a target, yielded 0 rows and 0 violations, and passed
+    (CVO~A re-grade @0dbf12ebb3, RC1 hole 1). A raw file that does not parse is one malformed
+    block; a raw file holding anything but an object or a list of objects is malformed per item."""
     rows, bad = [], 0
     if text is None:
         return rows, bad
+    if raw_json:
+        try:
+            val = json.loads(text)
+        except Exception:  # noqa: BLE001
+            return rows, 1
+        return rows, _collect(val, rows)
     for m in FENCE_RE.finditer(text):
         try:
             val = json.loads(m.group(1))
         except Exception:  # noqa: BLE001
             bad += 1
             continue
-        if isinstance(val, list):
-            rows.extend([v for v in val if isinstance(v, dict)])
-        elif isinstance(val, dict):
-            rows.append(val)
+        bad += _collect(val, rows)
     return rows, bad
 
 
 def _schema(root, kind):
+    """The schema AS IT WILL BE COMMITTED -- read from the staged index, never the worktree.
+
+    RC1 second pass (CVO~A re-grade @0dbf12ebb3, hole 3): reading the worktree let a commit stage
+    a LOOSENED schema together with rows that only pass under it, while the gate graded against
+    whatever happened to be on disk. The index is what the commit contains. Unreadable = REFUSE."""
     name = ("investigation_item" if kind == "INVESTIGATION" else "remediation_row") + ".schema.json"
-    p = os.path.join(root, "org", "surprise_channel", "schemas", name)
-    with open(p, "r", encoding="utf-8") as fh:
-        return json.load(fh)
+    rel = "org/surprise_channel/schemas/" + name
+    status, text = _blob(root, "", rel)
+    if status != "OK":
+        raise RuntimeError("schema %s not readable from the staged index (%s: %s)"
+                           % (rel, status, text))
+    return json.loads(text)
 
 
 def _kind(rel):
@@ -133,6 +193,42 @@ def _check_row(row, kind, schema):
         enum = props[key].get("enum")
         if enum is not None and val not in enum:
             out.append("%s: %s=%r is not in the ratified enum %s" % (rid, key, val, enum))
+
+    # ---- RC1 (CVO~A @0d272d257c P0-1): the FULL Draft-07 schema, not a top-level walk. ----
+    # The manual walk above enforces required keys and top-level enums only. It cannot see a
+    # nested enum (grounding.status), a pattern (surfaced_at), a minLength, or an allOf -- so
+    # the protocol's central rule (GRADUATED requires GROUNDED + evidence) was bypassable while
+    # the schema described it. A validator that is not installed is a REFUSAL, never a skip:
+    # a gate that silently degrades to the top-level walk is the P0 wearing a green light.
+    try:
+        import jsonschema  # noqa: WPS433 -- local import so the module loads without it
+    except ImportError:
+        return out + ["%s: jsonschema is not importable in this Python -- the Draft-07 limb "
+                      "cannot run, so this row is REFUSED (fail-closed). Install jsonschema; "
+                      "do not bypass." % rid]
+    for err in sorted(jsonschema.Draft7Validator(schema).iter_errors(row), key=lambda e: list(e.path)):
+        ptr = "/" + "/".join(str(p) for p in err.path) if err.path else "/"
+        out.append("%s: schema violation at %s -- %s" % (rid, ptr, err.message[:160]))
+
+    # ---- RC1 (P0-1, identity half): project + fabric are GATE-REQUIRED on new rows and must ----
+    # ---- AGREE WITH THE ID. Two carriers of one quantity, compared instead of derived.     ----
+    m = ID_RE.match(str(rid))
+    id_project = str(rid).rsplit("-S", 1)[0]
+    if id_project.endswith("-Z"):
+        id_project = id_project[:-2]
+    id_fabric = "site-z" if (m and m.group(1)) else "laptop"
+    for fld in ("project", "fabric"):
+        if not str(row.get(fld, "")).strip():
+            out.append("%s: NEW row carries no %r. Step-3 identity (project + fabric) is required on "
+                       "every new row so the L8 monitor can GROUP without regexing an id -- a "
+                       "consumer that must parse an id cannot reject a malformed one." % (rid, fld))
+    if row.get("project") and row["project"] != id_project:
+        out.append("%s: project=%r but the id says %r. The id prefix and the project field are two "
+                   "carriers of one quantity; they must agree." % (rid, row["project"], id_project))
+    if row.get("fabric") and row["fabric"] != id_fabric:
+        out.append("%s: fabric=%r but the id %s the Z- infix, which means %r. site-z iff the id "
+                   "carries Z-." % (rid, row["fabric"], "carries" if id_fabric == "site-z" else "lacks",
+                                    id_fabric))
 
     if kind == "INVESTIGATION":
         # STEP-7 TRIGGER, both halves. A row that cannot state both is an opinion, not a mismatch.
@@ -174,31 +270,133 @@ def _check_row(row, kind, schema):
         # renumber, and A DRIFTING ID TURNS A GROUNDED FINDING INTO A WRONG ONE WHILE IT STILL
         # LOOKS GROUNDED -- so citing an unstable id would have been worse than citing nothing.
         if route == "SCOPE_CHANGE":
+            # RC3 (CVO~A @0d272d257c P0-4). A scope change is one of TWO kinds, and the old
+            # single-field form could express only the first:
+            #   CONTRADICTS_NAMED_OUTCOME  the world contradicted an outcome the PRD names
+            #                              -> outcome_ref is a real FWD-<n>
+            #   REQUIRES_UNNAMED_OUTCOME   the remedy needs an outcome the PRD names NOWHERE
+            #                              -> outcome_ref is PRESENT WITH VALUE null, and
+            #                                 proposed_outcome carries the plain-English ask
+            # Required-null is the point: it distinguishes "there is deliberately no outcome to
+            # cite" from "the filer forgot the field" WITHOUT minting a false id. FWD-NONE was
+            # proposed and REJECTED -- an identifier must never carry the absence of the thing
+            # it identifies. Before this, the uncovered-member case had no legal row and its
+            # only gate-passing option was to misroute as DECOMP_INVALIDATING.
+            kind_sc = row.get("scope_change_kind")
             ref = row.get("outcome_ref")
-            if not isinstance(ref, str) or not OUTCOME_REF_RE.match(ref.strip()):
-                out.append(
-                    "%s: route=SCOPE_CHANGE with no usable `outcome_ref`. A scope change re-enters "
-                    "at step 2 against an EXISTING PRD and must name WHICH outcome the world "
-                    "contradicted -- expected an /endpoint --forward id of the form FWD-<n> "
-                    "(permanent, never reused). Got %r." % (rid, ref))
+            if isinstance(ref, str) and ref.strip().upper() == "FWD-NONE":
+                out.append("%s: outcome_ref='FWD-NONE' is REJECTED (CVO~A P0-4). An identifier may "
+                           "not carry the absence of an outcome. Use scope_change_kind="
+                           "REQUIRES_UNNAMED_OUTCOME with outcome_ref: null and a proposed_outcome."
+                           % rid)
+            if kind_sc not in ("CONTRADICTS_NAMED_OUTCOME", "REQUIRES_UNNAMED_OUTCOME"):
+                out.append("%s: route=SCOPE_CHANGE carries no scope_change_kind. It must be "
+                           "CONTRADICTS_NAMED_OUTCOME (a named FWD-<n> is wrong) or "
+                           "REQUIRES_UNNAMED_OUTCOME (the PRD names no outcome this remedy serves). "
+                           "Got %r." % (rid, kind_sc))
+            elif kind_sc == "CONTRADICTS_NAMED_OUTCOME":
+                if not isinstance(ref, str) or not OUTCOME_REF_RE.match(ref.strip()):
+                    out.append("%s: CONTRADICTS_NAMED_OUTCOME must cite a real outcome_ref of the "
+                               "form FWD-<n> (permanent, never reused). Got %r." % (rid, ref))
+            else:  # REQUIRES_UNNAMED_OUTCOME
+                if "outcome_ref" not in row or row["outcome_ref"] is not None:
+                    out.append("%s: REQUIRES_UNNAMED_OUTCOME requires the outcome_ref KEY PRESENT "
+                               "with value null (required-null), not %s." %
+                               (rid, "absent" if "outcome_ref" not in row else repr(ref)))
+                po = row.get("proposed_outcome")
+                if not isinstance(po, str) or len(po.strip()) < 12:
+                    out.append("%s: REQUIRES_UNNAMED_OUTCOME requires a usable proposed_outcome "
+                               "(plain English, >=12 chars) -- the step-2 seat mints the FWD-<n> "
+                               "from it. Got %r." % (rid, po))
+    return out
+
+
+def _canon_hash(row):
+    """Canonical content hash of one row: key-sorted, whitespace-free JSON. Two rows with the
+    same hash are byte-equivalent as DATA regardless of how the fenced block was laid out."""
+    import hashlib
+    blob = json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _mutation_violations(rel, head_text, staged_text):
+    """RC2 (CVO~A @0d272d257c P0-2): APPEND-ONLY AS A CONTROL, NOT PROSE.
+
+    The protocol says corrections are NEW items and an existing row is never edited in place
+    (SURPRISE_CHANNEL_PROTOCOL.md:29-33). Until this function, the gate graded only ids absent
+    from HEAD, so a changed or deleted EXISTING row was invisible to it -- and the watcher counts
+    ids, so a same-id rewrite left the count unchanged and emitted nothing. The corpus already
+    holds the failure mode: three authors wrote lifecycle prose into an existing enum field.
+
+    A pre-existing id must be byte-equivalent as DATA, or absent from HEAD. Anything else is a
+    violation carrying the old and new content hashes. The escape is the SAME audited override
+    the rest of this gate uses ('# surprise-row-override: <reason>'); there is deliberately no
+    second one."""
+    raw = rel.lower().endswith(".json")
+    old_rows, _ = _rows(head_text, raw) if head_text is not None else ([], 0)
+    new_rows, _ = _rows(staged_text, raw)
+    old = {r["id"]: r for r in old_rows if r.get("id")}
+    # RC2 second pass (CVO~A re-grade @0dbf12ebb3, hole 4 -- DICT COLLAPSE): the old code built
+    # {id: row} over the staged rows, so a CONTRADICTORY duplicate of an existing id followed by
+    # the unchanged original collapsed to the original, hashed equal, and passed. Every occurrence
+    # of an id is kept and every one is compared.
+    new_all = {}
+    for r in new_rows:
+        if r.get("id"):
+            new_all.setdefault(r["id"], []).append(r)
+    out = []
+    for nid, occurrences in new_all.items():
+        if len(occurrences) > 1:
+            out.append("%s: id %s occurs %d times in the staged file. An id is one row; a second "
+                       "occurrence is either a contradictory rewrite hiding behind the original or a "
+                       "paste error, and both are refused." % (rel, nid, len(occurrences)))
+    if head_text is None:
+        return out
+    for oid, orow in old.items():
+        if oid not in new_all:
+            out.append("%s: EXISTING row %s was DELETED. The channel is append-only: retire it "
+                       "with a new row that cites it, never by removal." % (rel, oid))
+            continue
+        h_old = _canon_hash(orow)
+        for nrow in new_all[oid]:
+            h_new = _canon_hash(nrow)
+            if h_old != h_new:
+                out.append("%s: EXISTING row %s was MUTATED in place (content hash %s -> %s). "
+                           "Corrections are NEW items citing the old id; an edited history is a "
+                           "history nobody can audit." % (rel, oid, h_old[:12], h_new[:12]))
     return out
 
 
 def check_file(root, rel):
     """(violations, notes) for ONE staged channel file. Validates only rows NEW in this commit."""
     kind = _kind(rel)
-    staged = _blob(root, "", rel)
-    if staged is None:
-        return (["%s: could not read the STAGED blob -- fail-closed" % rel], [])
-    head = _blob(root, "HEAD", rel)          # None = the file is new in this commit
+    raw = rel.lower().endswith(".json")
+    s_status, staged = _blob(root, "", rel)
+    if s_status != "OK":
+        return (["%s: could not read the STAGED blob (%s: %s) -- fail-closed" % (rel, s_status, staged)], [])
+    h_status, head = _blob(root, "HEAD", rel)
+    if h_status == "ERROR":
+        # RC2 second pass (hole 5): a HEAD read FAILURE is not "the file is new". Grading a file as
+        # new because git could not answer would skip the mutation check on exactly the commit
+        # where something is wrong with the ref.
+        return (["%s: could not read the HEAD blob (%s) -- REFUSED rather than graded as a new "
+                 "file. Absence and failure are different states." % (rel, head)], [])
+    # h_status == ABSENT -> head is None -> the file is genuinely new in this commit.
 
-    new_rows, bad_new = _rows(staged)
-    old_rows, _ = _rows(head)
+    new_rows, bad_new = _rows(staged, raw)
+    old_rows, _ = _rows(head, raw)
     old_ids = {r.get("id") for r in old_rows if r.get("id")}
 
     if bad_new:
-        return (["%s: %d fenced json block(s) do NOT parse. A malformed block is never dropped and "
-                 "never waved through." % (rel, bad_new)], [])
+        return (["%s: %d %s do NOT parse as object rows. A malformed block or item is never dropped "
+                 "and never waved through." % (rel, bad_new, "raw json document(s)/item(s)" if raw
+                                                 else "fenced json block(s)/item(s)")], [])
+    if not new_rows:
+        # A channel file mints ON AN ITEM, never empty (SURPRISE_CHANNEL_PROTOCOL). Zero rows from a
+        # target file is either an empty mint or a parser that could not see the rows (RC1 hole 1:
+        # a raw .json that did not parse used to land here with 0 rows and 0 violations).
+        return (["%s: target file yields ZERO rows. A channel file mints on an item; zero is an empty "
+                 "mint or an unparsed body, and both are refused." % rel], [])
 
     try:
         schema = _schema(root, kind)
@@ -206,6 +404,8 @@ def check_file(root, rel):
         return (["%s: schema unreadable (%s) -- fail-closed" % (rel, exc)], [])
 
     v, notes = [], []
+    # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
+    v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
     for row in added:
         rid = row.get("id")

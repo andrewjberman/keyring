@@ -89,11 +89,39 @@ tool's line is not scored as this tool's evidence.
 `comp-dataflow` on the file at the centre of the 09-01 incident returned *2 reads scanned, 2
 unresolved-dynamic (blind)* — a vintage alone would have shown two rows and read like an answer.
 
+⛔ **TWO SETS, NOT ONE -- corrected 2026-09-02 (CVO~A @`0d272d257c` R2; RC6).** The prior text listed one
+"admitted" set and merely bounded `comp-adversary`, while `.tools/to-pipeline-gate.py:45`
+`PREFLIGHT_TOOLS` already made `comp-adversary` one of THREE tools every new TO **must** disposition. Law
+said seven-and-a-bound; the gate enforced three-and-different. **Distinguish what is LAWFUL TO SELECT from
+what is REQUIRED OF EVERY TO, and do not call the admitted catalog mandatory unless the gate enforces it:**
+
 ```
-  ADMITTED (7)   comp-blast · comp-dataflow · comp-schedule · comp-iam · comp-trigger
-                 comp-pipescript · comp-denytest
-  REFUSED (1)    comp-similar -- emits no vintage and no denominator. Not weak: UNDISCLOSED.
+  MANDATORY CORE (3)   comp-schedule · comp-iam · comp-adversary
+                       = to-pipeline-gate.py PREFLIGHT_TOOLS. Every new TO carries a disposition for
+                       each (RUN + denominator/blindness word on its own line, or
+                       DECLARED-NOT-APPLICABLE + reason). This is what the gate REFUSES on.
+
+  ADMITTED CATALOG (9) the core, plus: comp-blast · comp-dataflow · comp-trigger · comp-pipescript ·
+                       comp-denytest · comp-similar
+                       = tools LAWFUL to select for a decomp. Not every one is required of every TO.
+                       comp-similar READMITTED 2026-09-02 on CVO~A's own exercise (self-test 9/9;
+                       vintage + denominator on its disposition line; a failed resolution returns
+                       an explicit non-answer). Admission is bounded to a version that prints both.
+
+  ⛔ comp-adversary     SUBSTANTIVELY FIT, EFFECTIVE ADMISSION HELD (CVO~A) until its battery is
+                       collectible by the standard runner (`sys.exit()` at module scope kills pytest
+                       collection while the module battery prints 7/7). It is IN THE MANDATORY CORE
+                       BY THE GATE AND HELD BY THE REVIEW AT THE SAME TIME -- and there is no truthful
+                       disposition for an applicable-but-held tool (DECLARED-NOT-APPLICABLE is the
+                       wrong grain; RUN erases the hold). CONSEQUENCE, stated rather than papered:
+                       NO NEW CANONICAL TO PASSES STEP 6 ANYWHERE until the battery repair lands
+                       (placed with 0.8.0_AE_CloudComp, gate 1.0.0_SA_CTO). That is the fabric-wide
+                       critical path as of 2026-09-02.
 ```
+
+>> **A gate's mandatory list and a spec's admitted list are two carriers of one quantity, and this file
+   let them drift for a day.** When the gate changes `PREFLIGHT_TOOLS`, this block changes in the same
+   commit, or the spec is describing a gate that does not exist. <<
 **Two bounds to carry when using them, not footnotes:**
 - **`comp-iam` cannot answer "is this denied?"** — unparsed deny statements include NEVER#1's
   cross-firm belts. **Silence from it must not be read as allowed.**

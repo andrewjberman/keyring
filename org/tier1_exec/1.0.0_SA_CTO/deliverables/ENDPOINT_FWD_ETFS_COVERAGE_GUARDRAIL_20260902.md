@@ -119,6 +119,7 @@ and is folded -- FWD-7's message carries the dates/partner/provider detail. The 
 FWD-8 fires BEFORE we leave Opal and asks permission; FWD-7 fires AFTER leaving Opal already failed.
 A message sent after egress failed cannot ask permission for the egress that already happened, so
 folding would silently retire ruling card 4's capability. **Surfaced, not assumed.**
+**RESOLVED 2026-09-02 ~17:0xZ -- Andrew-direct, `/open-calls` CALL 3, "All recs approved": KEEP FWD-8.**
 
 ---
 

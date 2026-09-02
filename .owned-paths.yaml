@@ -444,6 +444,11 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
     description: "Tier-0 operating artifacts -- ledger, cycle records, /mstr_review outputs. MSTR-owned. Added 2026-05-22 by COO per Andrew directive."
+  TIER0_DIRECTIVES_REGISTER:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+    description: "The directive register FILE ONLY -- org/missions/DIRECTIVES.yaml. Added 2026-09-02 by 0.0.0_AB_MSTR as GRANTOR (SoD: 1.0.0_SA_CTO is the grantee and did NOT self-land; CTO attempted the edit, was refused by this gate, REVERTED rather than overriding, and asked -- the behaviour the gate exists to produce). AUTHORITY: Andrew-direct 2026-09-02 at the 0.0.0_AB_MSTR terminal, VERBATIM: \"I also need you to address with CTO's request, they shold have directives.yaml edit access\", answering CTO 92488 which relays his word at the CTO terminal: \"You need to have permissions for that, ask MSTR to make the necessary adjustments.\" >> WHY A ONE-FILE LANE AND NOT ADDING CTO TO TIER0_MSTR: that lane also carries org/tier0/ledger/**, org/tier0/cycles/**, org/tier0/reviews/**, the org/tier0/** catch-all AND the whole org/missions/** tree. Andrew named ONE file. Widening TIER0_MSTR would have granted the MSTR constitutional ledger on a request for a register row -- the same reasoning this file already records for the ATOM_DECOMP grant (\"a one-path lane grants exactly what Andrew asked for and nothing else\") and for OPAL_ANALYST_DE_RUNS. << >> ⚠ THIS IS A DISPLACEMENT, AND THE INCUMBENT IS RE-ASSERTED DELIBERATELY: a longest-match path rule REPLACES the broader lane rather than adding to it, so a grant naming only 1.0.0_SA_CTO would have SILENTLY REVOKED 0.0.0_AB_MSTR -- the register's owner and sole writer -- on the register's own file. 0.0.0_AB_MSTR is listed FIRST above for that reason, not as decoration. This file's own rule, learned at OPAL_ANALYST_DE_RUNS: the control that catches a grant is not the one that confirms the grantee, it is the one that confirms the INCUMBENTS. << GATE EXERCISED BEFORE LANDING, both directions, baseline captured at @54e0058551 BEFORE the edit so a dead arm cannot read as a passing one: grantee 1.0.0_SA_CTO on org/missions/DIRECTIVES.yaml REFUSE->PERMIT (reproduces the exact refusal CTO reported); incumbent 0.0.0_AB_MSTR PERMIT->PERMIT (not displaced); 1.0.0_SA_CTO~Z REFUSE->PERMIT (confirms the documented base-auto-permits-tilde lane-stripping rather than trusting the claim); NEG 1.0.0_SA_CTO on org/tier0/ledger/LD-0001.md REFUSE->REFUSE (the ledger did NOT come with it); NEG 1.0.0_SA_CTO on org/missions/README.md and org/missions/DIRECTIVES_RETIRED.yaml REFUSE->REFUSE (the mission tree did NOT come with it -- the grant is one file, and DIRECTIVES_RETIRED.yaml is deliberately excluded, a cut-to-retired act still routes through MSTR); NEG 2.0.0_SA_COO on org/missions/DIRECTIVES.yaml REFUSE->REFUSE (no incidental widening to other execs). SCOPE: this one file. A second register file needs a second grant."
   OPAL_ANALYST_DE_RUNS:
     permitted_agents:
       - 0.1.0_DE_MarketIntelligence
@@ -830,6 +835,15 @@ lanes:
 # Listed roughly from most-specific to most-general within each top-level group.
 # Longest match wins — more specific globs override broader ones at hook eval time.
 # =========================================================================
+  LOOP_MECHANISM:
+    permitted_agents:
+    - 1.0.0_SA_CTO
+    - 3.0.0_SA_CVO
+    description: 'The canonical loop''s MECHANISM files -- the surprise-row gate, the surprise watcher, the surprise-channel schemas, and the TO-pipeline gate. NOT the channel''s document tree (project INVESTIGATION/REMEDIATION files stay CVO_WORKSPACE) and NOT the workflow reference doc (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md stays ANY_EXEC -- held back from this lane; see the CTO record for why). AUTHORITY: Andrew-direct 2026-09-02 ~17:0xZ at the 1.0.0_SA_CTO terminal, /open-calls CALL 1 of 3, VERBATIM: "All recs approved". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md. Measured basis: 59 lanes / 254 rules held ZERO claim on these mechanism files (CTO 92581; CVO~A independent parse 92583). INCUMBENTS, stated because longest-match DISPLACES: the two org/surprise_channel paths were CVO_WORKSPACE [CVO, CTO, COO]; this lane keeps CVO and CTO and REMOVES 2.0.0_SA_COO from the two mechanism FILES only (watcher script + schemas dir), never from the channel documents. The two .tools gates resolved to lane ANY through the .tools/** rule (permit-everyone; 0.8.0_AE_CloudComp 92622 corrected my earlier UNCLAIMED), so the only change there is that non-members are now refused. Added 2026-09-02 by 1.0.0_SA_CTO on Andrew''s word; 0.0.0_AB_MSTR is register owner and was broadcast same turn to dissent.'
+  TOOL_BATTERIES:
+    permitted_agents:
+    - 0.8.0_AE_CloudComp
+    description: 'The comp-tool test batteries under .tools/tests/**. Previously UNCLAIMED -- any seat could edit them and no seat was obliged to notice one had stopped collecting, which is exactly how test_comp_adversary_stage4_packet.py sat GREEN while pytest died at collection (SystemExit at module scope, CVO~A @0d272d257c). Owner 0.8.0_AE_CloudComp (de facto comp-tool battery seat: comp-similar, comp-pipescript, comp-adversary and comp-read all moved through it 2026-09-02). 1.0.0_SA_CTO GATES battery repairs and is deliberately NOT a member: gate and author are different seats. AUTHORITY: Andrew-direct 2026-09-02 ~17:0xZ at the 1.0.0_SA_CTO terminal, /open-calls CALL 1 of 3, VERBATIM: "All recs approved". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md. Measured basis: 59 lanes / 254 rules held ZERO claim on these mechanism files (CTO 92581; CVO~A independent parse 92583).'
 paths:
 
   # -----------------------------------------------------------------------
@@ -896,6 +910,10 @@ paths:
   "org/tier0/**":
     lane: TIER0_MSTR
     note: "Tier-0 catch-all -- MSTR operating artifacts (longest-match yields the specific rules above)"
+  "org/missions/DIRECTIVES.yaml":
+    lane: TIER0_DIRECTIVES_REGISTER
+    note: "The directive register file -- MSTR (owner, re-asserted: this longest-match rule DISPLACES the org/missions/** rule below rather than adding to it) + 1.0.0_SA_CTO. Andrew-direct 2026-09-02 at the MSTR terminal. Scoped to this ONE file: org/missions/DIRECTIVES_RETIRED.yaml, GOALS.yaml, SCHEDULE.yaml, MISSIONS.md and the whole {GROUP}/{SUB_GROUP} tree stay TIER0_MSTR and were exercised as negative controls. Rationale + full both-directions exercise in the TIER0_DIRECTIVES_REGISTER lane description."
+
   "org/missions/**":
     lane: TIER0_MSTR
     note: "MSTR mission tree -- org/missions/{GROUP}/{SUB_GROUP}/ (commits.jsonl · state.yaml · execsum.yaml) + README. Andrew-direct 2026-07-28; the durable form of the mission register (org/tier0/MISSIONS.md, LD-0341). MSTR is the SOLE writer; no other lane writes here and none is asked to -- it creates no gate, no hook and no obligation on any lane, which is the register's founding constraint. GRANTED BY 1.0.0_SA_CTO as grantor, MSTR as grantee, per SoD -- MSTR requested it rather than adding it, on the same principle as the 4.0.0_SA_CRO grant (LD-0331) and this file's own record-path ruling: a gate whose subject can amend its scope is a suggestion with an audit log. MSTR could have written this rule in ten seconds and declined to. Scoped EXPLICITLY to org/missions/** rather than anything broader: per the enumeration discriminator, a path rule that decays toward MORE friction (a new tree blocked, loudly, at commit) is the safe direction -- unlike a serving allowlist, which decays toward silent unavailability. Added 2026-07-28 by ws CTO."
@@ -2001,3 +2019,18 @@ paths:
   "org/XXX.md":
     lane: TIER0_TIER1_STARTUP_DOCS
     note: "Duplicate entry for clarity — same path as above (widened 2026-05-26)"
+  .tools/surprise-row-gate.py:
+    lane: LOOP_MECHANISM
+    note: Step-7/10 row gate. Was UNCLAIMED. Andrew-direct 2026-09-02 'All recs approved' (CALL 1).
+  .tools/to-pipeline-gate.py:
+    lane: LOOP_MECHANISM
+    note: Step-6 TO gate, the loop's only choke point; the step-4 conformance limb (CALL 2) lands here. Was UNCLAIMED.
+  org/surprise_channel/surprise-watch.sh:
+    lane: LOOP_MECHANISM
+    note: 'Step-8 notifier. DISPLACES CVO_WORKSPACE on this ONE file: keeps CVO + CTO, removes COO from the mechanism script only. Channel documents unchanged.'
+  org/surprise_channel/schemas/**:
+    lane: LOOP_MECHANISM
+    note: 'The investigation/remediation row schemas. DISPLACES CVO_WORKSPACE on this dir only: keeps CVO + CTO, removes COO. Rule 24 authoring stays with CVO by ruling; the lane is who may COMMIT the file.'
+  .tools/tests/**:
+    lane: TOOL_BATTERIES
+    note: Comp-tool batteries. Was UNCLAIMED. Owner 0.8.0_AE_CloudComp; CTO gates, does not author. Andrew-direct 2026-09-02 'All recs approved' (CALL 1).

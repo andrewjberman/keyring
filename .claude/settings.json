@@ -124,7 +124,7 @@
           {
             "type": "command",
             "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/comp-tool-hud.sh\"",
-            "timeout": 5
+            "timeout": 30
           }
         ]
       },

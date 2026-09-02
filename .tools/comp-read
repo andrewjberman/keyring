@@ -268,6 +268,20 @@ def _shape(path, src, lines):
     with no marker. Rule 2 of this tool is NEVER TRUNCATE SILENTLY; a degraded parse is a truncated
     view of the file, so it prints its own name."""
     ext = os.path.splitext(path)[1].lower()
+    # Q4 (2026-09-02): route on WHAT THE FILE IS, not only on what its NAME ends with.
+    # RULED 1.0.0_SA_CTO 90547; re-homed both halves to this seat by 2.0.0_SA_COO 92538.
+    # The ~100 comp-* tools in .tools/ are python with NO extension, so `ext == ".py"` sent the
+    # estate's own instruments to the generic backend: they rendered "via top-level-keys" and
+    # enumerated UNBANDED. Banding was WEAKEST on exactly the files agents read most -- and
+    # CLAUDE.md Rule 21 now routes single-file reads TOWARD comp-read, so the miss compounds.
+    # Detected on the SHEBANG, which is a fact about the file, not about its name. Scoped
+    # deliberately: a shebang naming python only. A bash/sh shebang (.tools/aws, the hooks) is
+    # NOT python and must keep the generic backend -- routing it to the AST would produce
+    # UNPARSEABLE on a perfectly valid shell script, which is worse than an honest generic read.
+    if not ext and src[:2] == "#!":
+        _first = src.split("\n", 1)[0].lower()
+        if "python" in _first:
+            ext = ".py"
     if ext == ".py":
         s = _sections_py(src, lines)
         if s:
@@ -994,5 +1008,31 @@ def main() -> int:
     return 0
 
 
+def _self_report(rc: int) -> None:
+    """comp-read SELF-REPORTS into org/mcp/comp-tool-runs.jsonl -- the same shape comp-which uses.
+
+    MEASURED 2026-09-02 (3.0.0_SA_CVO audit, delegated unit 1; verified here at source): comp-read
+    made ZERO comp_log_auto calls and wrote ONLY the rail log. Last 30 days: 2,401 rail rows /
+    0 runs.jsonl rows, so comp-pulse (reads comp-tool-runs.jsonl, comp_pulse.py:66) could not see
+    the instrument CLAUDE.md Rule 21 now routes every single-file read toward.
+
+    ADDITIVE. The RUN-READ rail writer is UNTOUCHED -- it carries serial= and attributes; this
+    feeds the traffic sink only. SURFACED, NOT CHANGED HERE (out of unit-1 scope): the rail writer
+    fires on the DIGEST path only -- an --enumerate run writes NO rail row (all-time 0 rows for the
+    file probed). This telemetry row fires on EVERY mode, so the two sinks now disagree for
+    --enumerate until the rail writer is widened by whoever owns that change.
+    Never raises: a telemetry sink must never break the tool it measures."""
+    import subprocess
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join(_WS, "org", "modules", "graph", "comp_log_auto.py"),
+             "comp-read", " ".join(sys.argv[1:])[:200], str(rc)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    _rc = main()
+    _self_report(_rc)
+    raise SystemExit(_rc)

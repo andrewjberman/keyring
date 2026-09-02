@@ -1,0 +1,31 @@
+{
+ "_comment": "EXACT legacy failure tuples (document, id, json_pointer, failure_digest). Re-written ONLY deliberately, under CVO-owned normalization (CVO~A @0d272d257c RC4). A passing run never shrinks this set. Retire to zero; do not grow.",
+ "written_at_rows": 192,
+ "written_at_documents": 19,
+ "tuples": [
+  [
+   "org/surprise_channel/D1_CATVIEWS/INVESTIGATION_v1.md",
+   "D1_CATVIEWS-S8",
+   "/disposition",
+   "99a9efd23c0e"
+  ],
+  [
+   "org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md",
+   "ETFS_INGEST-Z-S37",
+   "/disposition",
+   "36a502523a96"
+  ],
+  [
+   "org/surprise_channel/ETFS_POSITIONING/INVESTIGATION_v1.md",
+   "ETFS_POSITIONING-S14",
+   "/hazard_standing",
+   "46acc89658c8"
+  ],
+  [
+   "org/surprise_channel/POSN_TENANCY/INVESTIGATION_v1.md",
+   "POSN_TENANCY-S3",
+   "/surfaced_at",
+   "7de261839ce0"
+  ]
+ ]
+}

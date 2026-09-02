@@ -18,6 +18,18 @@
    "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$",
    "description": "Fabric-namespaced item id. {PROJECT}-S{n} = laptop fabric; {PROJECT}-Z-S{n} = site Z. The fabric coordinate is REQUIRED for site Z because both certifiers otherwise allocate the same sequence by construction -- measured 2026-08-21: 7 colliding ids, 14 distinct findings, zero identical. Bridged messages cite the namespaced id."
   },
+  "project": {
+   "type": "string",
+   "pattern": "^[A-Z0-9_]+$",
+   "description": "L3 IDENTITY, half 1. The register project code this item belongs to. MUST equal the id's prefix -- the gate checks the two against each other rather than deriving one from the other, because two carriers of one quantity that are never compared are how drift starts. OPTIONAL HERE AND GATE-REQUIRED ON NEW ROWS ONLY, the same bound `spec_asserts` carries: ~190 rows predate this field and are not back-filled (Andrew-direct 2026-09-01, 'maintain now and prospectively'). WHY A FIELD AND NOT JUST THE ID PREFIX: a consumer that must regex an id to learn which project a row belongs to cannot REJECT a malformed one -- it silently mis-groups it, and grouping is the L8 monitor's entire job (Andrew-direct 2026-09-02: 'so that these can be properly grouped')."
+  },
+  "fabric": {
+   "enum": [
+    "laptop",
+    "site-z"
+   ],
+   "description": "L3 IDENTITY, half 2, and the same enum as the project register's `fabric` key (to-pipeline-gate.py:72 FABRIC_ENUM). MUST agree with the id: `site-z` iff the id carries the `Z-` infix. Gate-checked against the id, OPTIONAL here, gate-required on NEW rows only. Before this field the fabric was carried ONLY by the presence-or-absence of an infix -- a claim expressed as a GAP IN A STRING, which no consumer can reject on."
+  },
   "surfaced_by": {
    "type": "string",
    "minLength": 3

@@ -179,11 +179,49 @@ vintage alone would have shown two rows and read like an answer.
 ```
   ADMITTED (7)     comp-blast · comp-dataflow · comp-schedule · comp-iam · comp-trigger
                    comp-pipescript · comp-denytest
-  REFUSED (1)      comp-similar -- emits NO vintage and NO denominator on either carrier
-                   (--json top-level keys are exactly ['arn','neighbors']). Its self-test is 7/7:
-                   the tool is not weak, it is UNDISCLOSED. Do not cite it in a preflight until
-                   0.8.0_AE_CloudComp adds the provenance header its sibling already prints.
+  REFUSED (1)      comp-similar -- SUPERSEDED 2026-09-02. See the amendment below.
 ```
+
+⛔ **AMENDMENT 2026-09-02 (`3.0.0_SA_CVO`) -- THE REFUSAL'S STATED GROUND WAS HALF FALSE WHEN I WROTE
+IT, AND THE OTHER HALF IS NOW DISCHARGED. BOTH CORRECTIONS BELONG HERE BECAUSE THIS IS THE CARRIER
+OTHER SEATS READ.**
+
+**What the original text got WRONG (my error, propagated to two seats).** *"NO denominator on either
+carrier"* was **FALSE**. `comp-similar` always printed a rich coverage denominator in `supersede` and
+`cluster` -- `comp_similar.py:470` and `:494` print `cov["note"]`, and `coverage()` returns ten
+fields. The parenthetical evidence (`--json` top-level keys `['arn','neighbors']`) was **correct but
+scoped to the QUERY modes only**, and I generalised one mode's shape to "either carrier". CTO's
+92486 and COO's manifest both inherited the wrong headline from this line.
+
+**What was RIGHT: no VINTAGE, in any mode.** That was the whole true finding.
+
+**DISCHARGED @`b8a73cc064` (`0.8.0_AE_CloudComp`), verified by this seat at source AND exercised:**
+```
+  D1  vintage rode comp-kuzu's STDERR; _kuzu_json read stdout only. Fixed in coverage() -- NOT at
+      the comp-similar surface -- because coverage() has TWO consumers (comp_similar.py and
+      0.7.0_AE_CloudOps' build_w1_cards.py:96). The defect was in what they SHARE.
+  D2  all four modes now emit coverage, human and --json. Consumers censused first.
+  D3  self-test 9/9, red-first, two planted mutants, byte-exact sha256 restore.
+```
+Exercised on THIS device 2026-09-02 ~15:0xZ, first line of `comp-similar cluster`:
+`corpus built: 2026-09-02T14:20:11 (age: 0.8h), DB kuzu_nessie_db` over a 1,868-resource denominator.
+
+**ALSO WITHDRAWN: my own claim that the corpus modes do not run on the laptop.** I measured a 180s
+comp-kuzu timeout at ~13:53Z and reported it as a device condition. **The corpus was built at
+14:20:11Z -- 27 minutes AFTER that run.** I had measured a cold DB building inside my own call.
+There is no laptop-local retrieval defect; a cold kuzu build can exceed the 180s ceiling, which is a
+cold-start property.
+
+**TWO BOUNDS THAT TRAVEL WITH ANY USE, neither discharged:**
+- **`b8a73cc064` is LOCAL** until an integrator runs. A seat pulling from `origin` still gets the
+  undisclosed tool. **Check the vintage line renders before citing it.**
+- **The vintage dates the KUZU DB, not the AWS estate behind it.** A fresh corpus is not a fresh
+  estate.
+
+**ADMISSION IS NOT RE-GRANTED BY THIS AMENDMENT, AND THAT IS DELIBERATE.** This line records that the
+GROUND is gone; which lenses a given project's preflight admits is the ISSUING seat's call
+(`1.0.0_SA_CTO` for ETFS_GUARDRAIL). **A spec that silently re-admitted a tool would be the same
+stale-record-with-authority hazard in the other direction.**
 **Two bounds to carry when you USE them, not footnotes:**
 - **`comp-iam` CANNOT answer "is this denied?"** -- 2 deny statements are unparsed and among them
   are NEVER#1's cross-firm Deny belts. **Silence from this tool must not be read as allowed.**

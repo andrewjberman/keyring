@@ -17,8 +17,20 @@
  "properties": {
   "id": {
    "type": "string",
-   "pattern": "^[A-Z0-9_]+-S[0-9]+$",
-   "description": "== the graduated investigation item's id"
+   "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$",
+   "description": "== the graduated investigation item's id. THE `(Z-)?` FABRIC COORDINATE WAS MISSING UNTIL 2026-09-02 AND ITS ABSENCE MADE SITE-Z GRADUATION IMPOSSIBLE: the investigation schema accepted `{PROJECT}-Z-S{n}` while THIS pattern refused it, so a site-Z item could be filed and could never become a remediation row. The only ways past were to drop the `Z-` -- re-introducing exactly the collision the investigation schema exists to prevent (7 colliding ids over 14 distinct findings, measured 2026-08-21) -- or to file nothing. Found by 1.0.0_SA_CTO by exercising BOTH patterns against the same id rather than reading them (ETFS_GUARDRAIL-Z-S1: investigation ACCEPT, remediation REFUSE), while designing the loop remediations Andrew gated site-Z activation on. It had never fired because SCOPE_CHANGE has never fired: exactly ONE remediation file existed estate-wide."
+  },
+  "project": {
+   "type": "string",
+   "pattern": "^[A-Z0-9_]+$",
+   "description": "L3 IDENTITY, half 1. The register project code this row belongs to. MUST equal the id's prefix -- the gate checks the two against each other rather than deriving one from the other, because two carriers of one quantity that are never compared are how drift starts. OPTIONAL HERE AND GATE-REQUIRED ON NEW ROWS ONLY, the same bound `spec_asserts` carries: ~190 rows predate this field and are not back-filled (Andrew-direct 2026-09-01, 'maintain now and prospectively'). WHY A FIELD AND NOT JUST THE ID PREFIX: a consumer that must regex an id to learn which project a row belongs to cannot REJECT a malformed one -- it silently mis-groups it, and the L8 monitor's whole job is grouping."
+  },
+  "fabric": {
+   "enum": [
+    "laptop",
+    "site-z"
+   ],
+   "description": "L3 IDENTITY, half 2, and the same enum as the project register's `fabric` key (to-pipeline-gate.py:72 FABRIC_ENUM). MUST agree with the id: `site-z` iff the id carries the `Z-` infix. Gate-checked against the id, OPTIONAL here, gate-required on NEW rows only. Before this field the fabric was encoded ONLY as the presence-or-absence of an infix -- a claim carried by a gap in a string, which no consumer can reject on."
   },
   "class": {
    "enum": [
@@ -133,8 +145,23 @@
    ],
    "description": "STEP-10 ROUTING, the DESTINATION step. THIS IS DERIVED FROM `route`, NOT AN INDEPENDENT CHOICE -- fork 5: 'the loop-back target is not a separate decision, it IS fork 4's output'. LOCKED MAPPING, enforced by the gate: SPEC_ERROR->6 (COO re-cuts TOs), DECOMP_INVALIDATING->5 (COO re-decomposes), SCOPE_CHANGE->2 (CTO re-aligns the endpoint, then the PRD at 4). Stored rather than computed ONLY so a reader of the row alone can act on it; the gate REFUSES any pair that contradicts the mapping, so the two fields cannot drift into two carriers of one quantity."
   },
-  "outcome_ref": {
+  "scope_change_kind": {
+   "enum": [
+    "CONTRADICTS_NAMED_OUTCOME",
+    "REQUIRES_UNNAMED_OUTCOME"
+   ],
+   "description": "STEP-10 SCOPE-CHANGE KIND. Gate-required when route=SCOPE_CHANGE (CVO~A adjudication @0d272d257c P0-4, replacing the rejected FWD-NONE sentinel). CONTRADICTS_NAMED_OUTCOME: the world contradicted an outcome the PRD names -- outcome_ref MUST be a real ^FWD-[0-9]+$. REQUIRES_UNNAMED_OUTCOME: the remedy needs an outcome the PRD names NOWHERE (the uncovered-member case) -- outcome_ref MUST be PRESENT WITH VALUE null (required-null distinguishes intentional absence from a missing field without minting a false id) AND proposed_outcome MUST be usable text. The filer never allocates an outcome number; step 2 does, at the next unused number. Before this field a scope change with no citable outcome had NO legal row and its only gate-passing option was to misroute as DECOMP_INVALIDATING (CTO design @3814be3317 R8-b)."
+  },
+  "proposed_outcome": {
    "type": "string",
+   "minLength": 12,
+   "description": "Plain-English statement of the outcome the PRD needs and does not name. Gate-required iff scope_change_kind=REQUIRES_UNNAMED_OUTCOME. Same ACCEPT-line discipline as /endpoint Phase 0: no serials, no paths, no fabric jargon -- it is read at step 2 by the seat that will mint the FWD-n, and by Andrew."
+  },
+  "outcome_ref": {
+   "type": [
+    "string",
+    "null"
+   ],
    "pattern": "^FWD-[0-9]+$",
    "description": "STEP-10 SCOPE-CHANGE PAYLOAD: the PRD outcome id this row contradicts. REQUIRED BY THE GATE WHEN route=SCOPE_CHANGE, optional otherwise. Ids are emitted by /endpoint --forward Phase 0 and are PERMANENT AND NEVER REUSED by contract (1.0.0_SA_CTO @b3584ea86a, in the skill AND the PRD template): a new outcome takes the next unused number, a retired one LEAVES ITS NUMBER VACANT, and renumbering to close a gap is FORBIDDEN. That contract is the whole reason this field can be cited at all -- renumbering silently re-points every citation ever made, and A DRIFTING ID TURNS A GROUNDED FINDING INTO A WRONG ONE WHILE IT STILL LOOKS GROUNDED. Without the permanence contract this field would have been a liability, not a feature, which is why it was withheld until 2026-09-01."
   }
@@ -159,7 +186,7 @@
    }
   },
   {
-   "comment": "DISARMED IS NOT REMEDIATED: an ARMED row closes only when BOTH have landed",
+   "comment": "DISARMED IS NOT REMEDIATED: an ARMED row closes only when BOTH have landed. `closed` is in `required` here (added 2026-09-02, CTO, surfaced by the RC1 red-first harness): without it a row with NO closed key vacuously matches this `if` (Draft-07 `properties` constrains only PRESENT keys) and every OPEN ARMED row is forced to DISARMED+REMEDIATED. Latent while the gate walked top-level keys only; fired the moment the full validator ran.",
    "if": {
     "properties": {
      "hazard_standing": {
@@ -170,7 +197,8 @@
      }
     },
     "required": [
-     "hazard_standing"
+     "hazard_standing",
+     "closed"
     ]
    },
    "then": {
@@ -193,7 +221,7 @@
    }
   },
   {
-   "comment": "INERT rows close on REMEDIATED alone",
+   "comment": "INERT rows close on REMEDIATED alone. `closed` added to `required` 2026-09-02 (CTO, RC1 harness): same vacuous-match defect as the ARMED conditional above -- an OPEN INERT row with no `closed` key was being forced to REMEDIATED.",
    "if": {
     "properties": {
      "hazard_standing": {
@@ -204,7 +232,8 @@
      }
     },
     "required": [
-     "hazard_standing"
+     "hazard_standing",
+     "closed"
     ]
    },
    "then": {
