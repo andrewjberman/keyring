@@ -1,0 +1,18 @@
+== gate under test: C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/f57f7d28-0ee0-4349-91c1-8cede3c97975/scratchpad/gate_head.py ==
+== ROW CONTROLS (RC1 + RC3) ==
+== MUTATION CONTROLS (RC2) ==
+  DEFECT  PASS  ->REFUSE  RC2 DUPLICATE id: contradictory copy PREPENDED, original unchanged after it (dict collapse)
+== PARSER CONTROLS (RC1 second pass) ==
+  DEFECT  NOAPI ->REFUSE  RC1 parser: raw .json INVALID body counts as malformed  (gate._rows has no raw_json parameter)
+  DEFECT  NOAPI ->PASS    RC1 parser: raw .json valid object (must PASS)  (gate._rows has no raw_json parameter)
+  DEFECT  NOAPI ->REFUSE  RC1 parser: raw .json list with a STRING item  (gate._rows has no raw_json parameter)
+  DEFECT  NOAPI ->REFUSE  RC1 parser: fenced SCALAR block  (gate._rows has no raw_json parameter)
+  DEFECT  NOAPI ->REFUSE  RC1 parser: fenced list of non-objects  (gate._rows has no raw_json parameter)
+  DEFECT  NOAPI ->PASS    RC1 parser: fenced valid object (must PASS)  (gate._rows has no raw_json parameter)
+== BLOB / STAGED-SCHEMA CONTROLS (RC1+RC2 second pass) ==
+  DEFECT  TEXT  ->OK      blob: real path at HEAD  (single-value return: absence == failure)
+  DEFECT  NONE  ->ABSENT  blob: MISSING path at HEAD -> ABSENT  (single-value return: absence == failure)
+  DEFECT  NONE  ->ERROR   blob: BOGUS ref -> ERROR, not ABSENT  (single-value return: absence == failure)
+  DEFECT  TEXT  ->OK      blob: staged index copy of the schema  (single-value return: absence == failure)
+== WATCHER INDEX CONTROLS (RC2 second pass) ==
+DEFECTS: 0 row + 1 mutation + 6 parser + 4 blob + 0 watcher = 11

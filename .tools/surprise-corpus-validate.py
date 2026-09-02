@@ -142,8 +142,44 @@ def _write_baseline(root: str, failures: list, stats: dict) -> None:
         fh.write("\n")
 
 
+def _canon_hash(row: dict) -> str:
+    blob = json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:12]
+
+
+def index(root: str) -> list:
+    """RC2 (CVO~A re-grade @0dbf12ebb3, the watcher half): one line per row, `path\\tid\\thash`.
+
+    surprise-watch.sh diffs this against its stored copy each poll. A same-id hash change is a
+    MUTATION and an id that disappears is a DELETION -- both invisible to a row COUNT, which is
+    all the watcher had. Read-only over the channel; the watcher writes only its own state."""
+    pattern = os.path.join(root, "org", "surprise_channel", "*", "*.md")
+    lines = []
+    for path in sorted(glob.glob(pattern)):
+        if not re.search(r"(INVESTIGATION|REMEDIATION)_v[^/\\]*\.md$", os.path.basename(path)):
+            continue
+        rel = os.path.relpath(path, root).replace("\\", "/")
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            rows, _ = _rows(fh.read())
+        for row in rows:
+            rid = row.get("id")
+            if rid:
+                lines.append("%s\t%s\t%s" % (rel, rid, _canon_hash(row)))
+    return lines
+
+
 def main(argv: list) -> int:
     root = _root()
+    if "--index" in argv:
+        # LF only, even on Windows: the consumer is a bash watcher comparing hashes byte-for-byte,
+        # and text-mode stdout here would emit \r\n (measured 2026-09-02: 191 false MUTATIONs).
+        try:
+            sys.stdout.reconfigure(newline="\n")
+        except (AttributeError, ValueError):
+            pass
+        for line in index(root):
+            sys.stdout.write(line + "\n")
+        return 0
     as_json = "--json" in argv
     stats, failures = sweep(root)
     current = {tuple(t) for t in failures}

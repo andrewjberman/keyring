@@ -70,45 +70,105 @@ def _repo_root():
 
 
 def _blob(root, ref, rel):
-    """Bytes of rel at ref ('' = staged index). None when the path does not exist there.
+    """(status, text) of rel at ref ('' = staged index). status is one of:
+         OK      -- text is the content
+         ABSENT  -- the path does not exist at that ref (a NEW file, or not staged)
+         ERROR   -- git could not answer (bad ref, timeout, crash). NOT the same as absent.
 
-    NEVER 2>/dev/null on this read -- a mangled ref returns clean-empty and an ABSENT verdict
-    would be indistinguishable from an empty file (CLAUDE.md Git).
+    RC2 second pass (CVO~A re-grade @0dbf12ebb3): the old single-None return made "the file is
+    new in this commit" and "git failed to read HEAD" indistinguishable, so a read failure on
+    HEAD silently SKIPPED the mutation check and graded the file as brand new. Absence is tested
+    FIRST with `git cat-file -e` (rc 1 = not there, rc 0 = there, anything else = error), and
+    only a confirmed-present path is read. NEVER 2>/dev/null on either call -- a mangled ref
+    returns clean-empty and an ABSENT verdict would be indistinguishable from an empty file.
     """
     spec = "%s:%s" % (ref, rel) if ref else ":%s" % rel
+    # PRESENCE PROBE. `git cat-file -e ref:path` was tried first and is WRONG for this: it exits 128
+    # for a missing PATH as well as for a bad REF, so absence and failure were still one state
+    # (caught by the harness's own blob control on first green run). `ls-tree <ref> -- <path>` and
+    # `ls-files -s -- <path>` (index) exit 0 with EMPTY output for a missing path and non-zero
+    # only when git itself cannot answer -- which is exactly the two-state distinction needed.
+    # cwd=root because ls-tree is CWD-prefix-sensitive and returns a silent zero from a subdir.
+    probe_cmd = (["git", "ls-tree", ref, "--", rel] if ref
+                 else ["git", "ls-files", "-s", "--", rel])
+    try:
+        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True, timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return ("ERROR", "%s raised %s" % (probe_cmd[1], exc))
+    if probe.returncode != 0:
+        return ("ERROR", "%s rc=%d: %s" % (probe_cmd[1], probe.returncode, probe.stderr.strip()[:160]))
+    if not probe.stdout.strip():
+        return ("ABSENT", None)
     try:
         r = subprocess.run(["git", "show", spec], cwd=root,
                            capture_output=True, text=True, timeout=60)
-    except Exception:  # noqa: BLE001
-        return None
+    except Exception as exc:  # noqa: BLE001
+        return ("ERROR", "show raised %s" % exc)
     if r.returncode != 0:
-        return None
-    return r.stdout
+        return ("ERROR", "show rc=%d: %s" % (r.returncode, r.stderr.strip()[:160]))
+    return ("OK", r.stdout)
 
 
-def _rows(text):
-    """(rows, malformed_count) over EVERY fenced json block. A malformed block is NEVER dropped."""
+def _collect(val, rows):
+    """Append the object rows in a parsed JSON value; return the count of NON-object items.
+
+    RC1 second pass (CVO~A re-grade @0dbf12ebb3): the old loop kept dicts and SILENTLY DROPPED
+    everything else -- a fenced scalar, a list of strings, a list with one bad element -- so a
+    malformed row could never be counted as malformed. Every non-object item is a defect."""
+    if isinstance(val, dict):
+        rows.append(val)
+        return 0
+    if isinstance(val, list):
+        bad = 0
+        for item in val:
+            if isinstance(item, dict):
+                rows.append(item)
+            else:
+                bad += 1
+        return bad
+    return 1
+
+
+def _rows(text, raw_json=False):
+    """(rows, malformed_count). A malformed block or item is NEVER dropped.
+
+    raw_json=True: the whole body IS the JSON document (a .json channel file). CHANNEL_RE has
+    accepted .json since it was written, but this parser read only fenced Markdown -- so an
+    invalid .json file matched as a target, yielded 0 rows and 0 violations, and passed
+    (CVO~A re-grade @0dbf12ebb3, RC1 hole 1). A raw file that does not parse is one malformed
+    block; a raw file holding anything but an object or a list of objects is malformed per item."""
     rows, bad = [], 0
     if text is None:
         return rows, bad
+    if raw_json:
+        try:
+            val = json.loads(text)
+        except Exception:  # noqa: BLE001
+            return rows, 1
+        return rows, _collect(val, rows)
     for m in FENCE_RE.finditer(text):
         try:
             val = json.loads(m.group(1))
         except Exception:  # noqa: BLE001
             bad += 1
             continue
-        if isinstance(val, list):
-            rows.extend([v for v in val if isinstance(v, dict)])
-        elif isinstance(val, dict):
-            rows.append(val)
+        bad += _collect(val, rows)
     return rows, bad
 
 
 def _schema(root, kind):
+    """The schema AS IT WILL BE COMMITTED -- read from the staged index, never the worktree.
+
+    RC1 second pass (CVO~A re-grade @0dbf12ebb3, hole 3): reading the worktree let a commit stage
+    a LOOSENED schema together with rows that only pass under it, while the gate graded against
+    whatever happened to be on disk. The index is what the commit contains. Unreadable = REFUSE."""
     name = ("investigation_item" if kind == "INVESTIGATION" else "remediation_row") + ".schema.json"
-    p = os.path.join(root, "org", "surprise_channel", "schemas", name)
-    with open(p, "r", encoding="utf-8") as fh:
-        return json.load(fh)
+    rel = "org/surprise_channel/schemas/" + name
+    status, text = _blob(root, "", rel)
+    if status != "OK":
+        raise RuntimeError("schema %s not readable from the staged index (%s: %s)"
+                           % (rel, status, text))
+    return json.loads(text)
 
 
 def _kind(rel):
@@ -272,41 +332,71 @@ def _mutation_violations(rel, head_text, staged_text):
     violation carrying the old and new content hashes. The escape is the SAME audited override
     the rest of this gate uses ('# surprise-row-override: <reason>'); there is deliberately no
     second one."""
-    if head_text is None:
-        return []
-    old_rows, _ = _rows(head_text)
-    new_rows, _ = _rows(staged_text)
+    raw = rel.lower().endswith(".json")
+    old_rows, _ = _rows(head_text, raw) if head_text is not None else ([], 0)
+    new_rows, _ = _rows(staged_text, raw)
     old = {r["id"]: r for r in old_rows if r.get("id")}
-    new = {r["id"]: r for r in new_rows if r.get("id")}
+    # RC2 second pass (CVO~A re-grade @0dbf12ebb3, hole 4 -- DICT COLLAPSE): the old code built
+    # {id: row} over the staged rows, so a CONTRADICTORY duplicate of an existing id followed by
+    # the unchanged original collapsed to the original, hashed equal, and passed. Every occurrence
+    # of an id is kept and every one is compared.
+    new_all = {}
+    for r in new_rows:
+        if r.get("id"):
+            new_all.setdefault(r["id"], []).append(r)
     out = []
+    for nid, occurrences in new_all.items():
+        if len(occurrences) > 1:
+            out.append("%s: id %s occurs %d times in the staged file. An id is one row; a second "
+                       "occurrence is either a contradictory rewrite hiding behind the original or a "
+                       "paste error, and both are refused." % (rel, nid, len(occurrences)))
+    if head_text is None:
+        return out
     for oid, orow in old.items():
-        if oid not in new:
+        if oid not in new_all:
             out.append("%s: EXISTING row %s was DELETED. The channel is append-only: retire it "
                        "with a new row that cites it, never by removal." % (rel, oid))
             continue
-        h_old, h_new = _canon_hash(orow), _canon_hash(new[oid])
-        if h_old != h_new:
-            out.append("%s: EXISTING row %s was MUTATED in place (content hash %s -> %s). "
-                       "Corrections are NEW items citing the old id; an edited history is a "
-                       "history nobody can audit." % (rel, oid, h_old[:12], h_new[:12]))
+        h_old = _canon_hash(orow)
+        for nrow in new_all[oid]:
+            h_new = _canon_hash(nrow)
+            if h_old != h_new:
+                out.append("%s: EXISTING row %s was MUTATED in place (content hash %s -> %s). "
+                           "Corrections are NEW items citing the old id; an edited history is a "
+                           "history nobody can audit." % (rel, oid, h_old[:12], h_new[:12]))
     return out
 
 
 def check_file(root, rel):
     """(violations, notes) for ONE staged channel file. Validates only rows NEW in this commit."""
     kind = _kind(rel)
-    staged = _blob(root, "", rel)
-    if staged is None:
-        return (["%s: could not read the STAGED blob -- fail-closed" % rel], [])
-    head = _blob(root, "HEAD", rel)          # None = the file is new in this commit
+    raw = rel.lower().endswith(".json")
+    s_status, staged = _blob(root, "", rel)
+    if s_status != "OK":
+        return (["%s: could not read the STAGED blob (%s: %s) -- fail-closed" % (rel, s_status, staged)], [])
+    h_status, head = _blob(root, "HEAD", rel)
+    if h_status == "ERROR":
+        # RC2 second pass (hole 5): a HEAD read FAILURE is not "the file is new". Grading a file as
+        # new because git could not answer would skip the mutation check on exactly the commit
+        # where something is wrong with the ref.
+        return (["%s: could not read the HEAD blob (%s) -- REFUSED rather than graded as a new "
+                 "file. Absence and failure are different states." % (rel, head)], [])
+    # h_status == ABSENT -> head is None -> the file is genuinely new in this commit.
 
-    new_rows, bad_new = _rows(staged)
-    old_rows, _ = _rows(head)
+    new_rows, bad_new = _rows(staged, raw)
+    old_rows, _ = _rows(head, raw)
     old_ids = {r.get("id") for r in old_rows if r.get("id")}
 
     if bad_new:
-        return (["%s: %d fenced json block(s) do NOT parse. A malformed block is never dropped and "
-                 "never waved through." % (rel, bad_new)], [])
+        return (["%s: %d %s do NOT parse as object rows. A malformed block or item is never dropped "
+                 "and never waved through." % (rel, bad_new, "raw json document(s)/item(s)" if raw
+                                                 else "fenced json block(s)/item(s)")], [])
+    if not new_rows:
+        # A channel file mints ON AN ITEM, never empty (SURPRISE_CHANNEL_PROTOCOL). Zero rows from a
+        # target file is either an empty mint or a parser that could not see the rows (RC1 hole 1:
+        # a raw .json that did not parse used to land here with 0 rows and 0 violations).
+        return (["%s: target file yields ZERO rows. A channel file mints on an item; zero is an empty "
+                 "mint or an unparsed body, and both are refused." % rel], [])
 
     try:
         schema = _schema(root, kind)

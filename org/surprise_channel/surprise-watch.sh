@@ -66,6 +66,62 @@ mkdir -p "$STATE_DIR" 2>/dev/null || true
 # scores them. Counting is a MEASUREMENT (Rule 21 non-application limb i), not a search.
 ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?S[0-9]+"'
 
+# ---------------------------------------------------------------------------------------------
+# ID/HASH WATERMARK -- RC2, the watcher half (CVO~A re-grade @0dbf12ebb3).
+# A row COUNT cannot see a same-id rewrite (count unchanged) or a delete-and-add (count unchanged).
+# Each poll pulls `path<TAB>id<TAB>hash` for every row from the corpus validator's --index mode and
+# diffs it against the stored index. Emits WARN on a known id whose hash changed (MUTATION) or that
+# vanished (DELETION). Still READ-ONLY over the channel: the only write is this watcher's own state.
+# If the index cannot be produced, say so LOUDLY every poll -- a notifier that degrades to
+# count-only in silence is the P0 wearing a green light.
+# ---------------------------------------------------------------------------------------------
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+IDX_FILE="$STATE_DIR/${SERIAL}.idx.tsv"
+IDX_TOOL="$REPO_ROOT/.tools/surprise-corpus-validate.py"
+
+_index_now() {
+    # Echoes the current index, or nothing (with a WARN on stderr) if it cannot be produced.
+    if [ ! -f "$IDX_TOOL" ]; then
+        echo "WARN: [SURPRISE] id/hash index tool missing at $IDX_TOOL -- watcher is COUNT-ONLY this poll" >&2
+        return 1
+    fi
+    python "$IDX_TOOL" --index 2>/dev/null
+    rc=$?
+    if [ "$rc" -ne 0 ]; then
+        echo "WARN: [SURPRISE] id/hash index FAILED (rc=$rc) -- watcher is COUNT-ONLY this poll" >&2
+        return 1
+    fi
+    return 0
+}
+
+_index_diff() {
+    # Compares the live index to the stored one; emits MUTATION / DELETION lines. Writes the
+    # new index afterwards. Returns the number of lines emitted.
+    # CRLF TRAP, MEASURED 2026-09-02 on first smoke: Windows Python writes \r\n to a pipe, so the
+    # stored hash read back as "hash\r" while awk's $(...) output had the \r stripped -- every row
+    # compared unequal and a no-change poll emitted 191 MUTATION warnings. Strip \r on BOTH sides:
+    # the live index before it is stored or compared, and each stored field on read.
+    live="$(_index_now | tr -d '\r')" || return 0
+    emitted=0
+    if [ -s "$IDX_FILE" ]; then
+        # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
+        while IFS="$(printf '\t')" read -r p i h; do
+            p="${p%$'\r'}"; i="${i%$'\r'}"; h="${h%$'\r'}"
+            [ -n "$i" ] || continue
+            cur="$(printf '%s\n' "$live" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {print $3; exit}')"
+            if [ -z "$cur" ]; then
+                [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i DISAPPEARED -> $p  (append-only channel; a vanished id is a deletion or a merge that dropped it)"
+                emitted=$((emitted + 1))
+            elif [ "$cur" != "$h" ]; then
+                [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i MUTATED in place (${h} -> ${cur}) -> $p  (corrections are NEW rows citing the old id)"
+                emitted=$((emitted + 1))
+            fi
+        done < "$IDX_FILE"
+    fi
+    printf '%s\n' "$live" > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
+    return "$emitted"
+}
+
 _count_rows() {
     # $1 = file. Echoes the row count, or 0 for an unreadable/empty file.
     #
@@ -148,6 +204,10 @@ $(_watched_files)
 EOF
     printf '%s' "$new_state" | _write_state
     LAST_FILES="$files"
+    # RC2: the id/hash pass runs AFTER the count pass every poll, so a same-count rewrite that the
+    # count above could not see is reported here. Its return value is the number of WARN lines.
+    _index_diff
+    grew=$((grew + $?))
     LAST_ROWS="$total_rows"
     return 0
 }
