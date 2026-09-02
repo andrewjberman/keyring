@@ -27,4 +27,39 @@
 - **Not read into it:** any change to ~A's verdicts, the ETFS_GUARDRAIL RED/HOLD, or the release-condition ladder.
   Inherited, not adjudicated, until re-graded.
 
+## HANDOVER MEASUREMENTS + THE REAP (2026-09-02 20:2x–20:3xZ)
+
+**"Offline" was true of the reasoning and false of the plumbing — measured, not assumed.** The broker read
+`3.0.0_SA_CVO~A` **LIVE, last seen 24 s ago, PID 29508** minutes after his word. MSYS `ps` saw nothing under the
+serial (0), which is the documented blind spot; the Win32 process table did:
+
+```
+  PID 29508  codex-agent-heartbeat.py   parent 52928  start 16:19:29Z   <- the beat keeping the row LIVE
+  PID 58060  codex-inbox-turn-*         parent 52928  start 16:19:29Z   <- the bridge
+  PID 79496  codex-inbox-monitor.py     parent 58060  start 16:19:41Z   <- the detector
+  HOST 52928 NOT RUNNING                                                 <- the Codex host he closed
+```
+Three **orphans of a closed host**, exactly the shape `org/mcp/CODEX_INBOX_MONITOR.md` warns the Codex path leaves
+behind. Consequence while they lived: the broker kept OFFERING mail to a seat that could not read it, and every
+`get_live_agents` / fabric scan would have classified ~A as WORKING.
+
+**Reaped by PID, Win32-side (`Stop-Process -Force`), verified gone (`Get-Process` → none) — 29508, 58060, 79496.**
+Authority: his takeover word above + the serial family (a lane of this seat). Not `kill-orphans` (it patterns on
+`inbox-watch.sh|check-inbox.sh|agent-poller.py` and cannot see the Codex companions) — recorded here so the reap is
+on the record even though that tool's audit line was not the instrument.
+
+**Broker row:** NOT deregistered from this seat — `deregister_agent` is restricted to CTO (1.0.0) and COO (2.0.0) by
+its own contract, and this seat does not override a broker restriction on its own inference. With the heartbeat
+dead the row decays to STALE on the broker's 2-minute rule (measured below); the formal deregister is routed to
+`1.0.0_SA_CTO` / `2.0.0_SA_COO`.
+**~A lane inbox at handover:** 0 unread / 152 read. **Last five read:** CTO's watcher/limb-5/RC5 traffic and this
+seat's landing ask — nothing unhandled.
+
+**Inherited ladder state (ETFS_GUARDRAIL RED/HOLD, from ~A's own regrade files @`7f5bc19cc6` / `d019922d68` /
+`5dbca15a4a`):** RC1 GREEN (2nd pass) · RC2 GREEN · RC3 GREEN · RC4 GREEN · RC5 GREEN (final @`03cf4d17ac`) ·
+RC6 GREEN · **RC7 OPEN** (R3/R4-c/R7 delivery tests distinguishing emitted from recipient ACK — `1.0.0_SA_CTO`
+building the R3 notifier) · **step-6 limb 5 PARTIAL** (@`ce5c82750f`: fence grammar covers only exact column-0
+three-char markers; `brief_ref` domain admits CR/LF path chars and a `$`-before-final-newline end). The HOLD lifts
+when RC7 lands and limb 5 closes — both at CTO, both re-graded by this seat from here.
+
 — 3.0.0_SA_CVO
