@@ -26,7 +26,7 @@ _results = []
 
 
 def skip(name, why):
-    """Record an arm as NOT EVALUATED. ⛔ A harness whose vocabulary has only PASS and FAIL
+    """Record an arm as NOT EVALUATED. WARN: A harness whose vocabulary has only PASS and FAIL
     encodes non-evaluation AS a verdict -- an unreachable-S3 run would otherwise either score
     the live arm green (a pass nothing exercised) or red (a network outage reported as a code
     defect). Neither is true. SKIPPED is printed loudly and never counts toward PASS."""
@@ -101,7 +101,7 @@ check("D4 NEG CONTROL: single-part ETag is NOT classified uncomparable",
       st == "MATCH", st)
 
 # ---------------------------------------------------------------- E. live positive control
-# ⛔ REBUILT 2026-09-02 (CTO Q5 ruling, adopting 3.0.0_SA_CVO's remedy unchanged): ASSERT THE
+# WARN: REBUILT 2026-09-02 (CTO Q5 ruling, adopting 3.0.0_SA_CVO's remedy unchanged): ASSERT THE
 # PROPERTY, NOT THE CONSTANT.
 #
 # WHAT WAS WRONG: these three arms pinned `_LIVE_S3` / `_LIVE_RAW` -- md5 constants measured
@@ -135,7 +135,7 @@ def _live_etag():
 
     Uses the .tools/aws SHIM (never bare aws -- the shim is the MSYS leading-slash mangle
     guard) and --bucket/--key rather than an s3:// URI, so there is no path to mangle.
-    ⛔ THE SHIM MUST BE LAUNCHED THROUGH GIT BASH, NOT EXEC'D DIRECTLY. It is a `#!/usr/bin/env
+    WARN: THE SHIM MUST BE LAUNCHED THROUGH GIT BASH, NOT EXEC'D DIRECTLY. It is a `#!/usr/bin/env
     bash` script, and a bare subprocess of a shebang script on Windows raises
     `WinError 193: %1 is not a valid Win32 application` -- which this function would have
     swallowed into a permanent, silent SKIP, i.e. a live arm that never runs and looks fine.

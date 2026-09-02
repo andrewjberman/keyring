@@ -176,14 +176,14 @@ _DBNAME_RE = re.compile(r"^\s*DB:\s*(\S+)", re.M)
 def _capture_kuzu_vintage(*streams: str) -> None:
     """Record the vintage from comp-kuzu's provenance header into _CORPUS_VINTAGE.
 
-    ⛔ THE HEADER IS ON **STDERR**, NOT STDOUT. Measured 2026-09-02 with the streams
+    WARN: THE HEADER IS ON **STDERR**, NOT STDOUT. Measured 2026-09-02 with the streams
     separated: stdout carries the bare JSON array (0 `built:` lines), stderr carries the
     provenance block (1). _kuzu_json's docstring says the header "is printed before the JSON
     array", which reads as one stream and is two -- and a first pass at this fix captured
     stdout only, self-tested GREEN, and still rendered UNKNOWN against the live corpus.
     Both streams are searched so a future comp-kuzu that moves it does not silently re-break.
 
-    ⛔ FAILS TOWARD 'ABSENT', LOUDLY -- never toward a fresh-looking value. If the header
+    WARN: FAILS TOWARD 'ABSENT', LOUDLY -- never toward a fresh-looking value. If the header
     shape changes or is missing, the dict stays empty and coverage() renders UNKNOWN with an
     explicit do-not-trust clause. A vintage that silently defaulted to 'now' would be the
     exact false-green this fix exists to close."""

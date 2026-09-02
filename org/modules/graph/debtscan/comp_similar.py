@@ -34,7 +34,7 @@ CONTROLS (PRD 5 -- controls, not care; comp-similar must not be able to lie):
   C3 blind-row       : a resource with a thin/UNKNOWN summary, or UNKNOWN heat, is NEVER a
                        candidate; the coverage denominator (scanned / total / UNKNOWN) AND the
                        corpus VINTAGE print on every run -- all FOUR modes, not two.
-                       ⛔ "on every run" was FALSE from 2026-07-19 to 2026-09-02: it printed on
+                       WARN: "on every run" was FALSE from 2026-07-19 to 2026-09-02: it printed on
                        supersede/cluster only, while this line asserted otherwise and the
                        self-test scored C3 PASS on the half that worked. An untrue control
                        statement is worse than an absent one -- it teaches the reader to stop
@@ -43,7 +43,7 @@ CONTROLS (PRD 5 -- controls, not care; comp-similar must not be able to lie):
                        mode emits), C3c capture (a real comp-kuzu header parses to MEASURED,
                        a headerless one to ABSENT). An unknown vintage renders UNKNOWN with an
                        explicit do-not-trust clause: never omitted, never defaulted to fresh.
-                       ⛔ C3c exists because C3b alone passed IDENTICALLY while the live corpus
+                       WARN: C3c exists because C3b alone passed IDENTICALLY while the live corpus
                        still read UNKNOWN -- the vintage rides comp-kuzu's STDERR and the first
                        fix read stdout. A control that only tests the absent-path green-lights
                        the broken one.
@@ -420,7 +420,7 @@ def self_test() -> int:
           f"{'PASS' if c3b else 'FAIL'}")
 
     # C3c CAPTURE (added 2026-09-02, same session, after C3b was caught committing C3's own
-    # defect). ⛔ C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
+    # defect). WARN: C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
     # stderr fix, while the live corpus still rendered UNKNOWN. A control that green-lights the
     # broken state is the D3 shape one domain over, so the MEASURED path needs its own leg.
     # The header below is a VERBATIM excerpt of real comp-kuzu output (streams separated,
