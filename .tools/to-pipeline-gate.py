@@ -342,24 +342,60 @@ PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
 
 
-# A fenced block in either admitted Markdown form: an opening ``` or ~~~ at COLUMN 0, through the
-# next line that is the SAME marker at column 0. Anchored at line start on both ends, so an inline
-# backtick run or a marker inside prose never opens a block.
-_FENCE_RE = re.compile(r"(?ms)^(```|~~~)[^\n]*\n.*?^\1[ \t]*$")
+# A fence OPENER by the CommonMark grammar the estate's documents actually use: 0-3 spaces of indent,
+# then a run of THREE OR MORE backticks or tildes, then an info string. A backtick opener's info
+# string may not itself contain a backtick (that line is inline code, not a fence).
+_FENCE_OPEN_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")
 # A top-level heading: '## ' at COLUMN 0, no leading whitespace. This is the one grammar used for the
-# heading being sought AND for the boundary of the section it introduces.
+# heading being sought AND for the boundary of the section it introduces. Stricter than CommonMark
+# (which admits 1-3 spaces) ON PURPOSE: an indented heading the gate cannot see makes limb 4 REFUSE
+# loudly ("no ENDPOINT section") -- fail-closed. The fence grammar below is PERMISSIVE for the same
+# reason in the other direction: a fence the gate fails to blank lets a heading INSIDE it count --
+# fail-open. Strict where a miss refuses; permissive where a miss admits.
 _H2_RE = re.compile(r"(?m)^## [^\n]*$")
 
 
 def _blank_fences(text):
-    """A SAME-LENGTH copy of text with every fenced block (``` or ~~~) turned to spaces (newlines
-    kept), so an offset found in the copy indexes the ORIGINAL. This is how a heading is found at
-    TOP LEVEL only while the section it introduces -- which may itself contain fenced blocks, like
-    the ENDPOINT's FWD cards -- is sliced intact from the original.
+    """A SAME-LENGTH copy of text with every fenced block turned to spaces (newlines kept), so an
+    offset found in the copy indexes the ORIGINAL. This is how a heading is found at TOP LEVEL only
+    while the section it introduces -- which may itself contain fenced blocks, like the ENDPOINT's
+    FWD cards -- is sliced intact from the original.
 
-    CVO~A re-grade @df87b39f6e falsifiers 3-4: the first cut blanked ``` only, so a ~~~ fence hid
-    nothing and a heading inside one counted."""
-    return _FENCE_RE.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), text)
+    A LINE SCANNER, not a regex, because the fence grammar is stateful: a block opened by a run of N
+    markers closes only at a line of the SAME marker with a run of AT LEAST N (0-3 spaces of indent,
+    nothing else but trailing whitespace), and a block never closed runs to END OF FILE. Each rule is
+    a falsifier CVO~A landed on the earlier regex forms:
+      @df87b39f6e f3/f4  ``` only was blanked -> a ~~~ fence hid nothing
+      @ef6a37e098 f7     a ~~~~ opener could not be closed by an exact-three closer -> the regex
+                         failed to MATCH and the whole block stayed visible
+      @ef6a37e098 f8     a 1-space-indented ``` fence (legal Markdown, present in this estate's
+                         architecture documents) was not a fence at column 0 -> visible
+      @ef6a37e098 f11    a ```` outer block was closed by the ``` opener of an INNER FWD card -> the
+                         outer block's tail stayed visible
+      @ef6a37e098        an EOF-unclosed fence -- Markdown blanks it to the end; the regex needed a
+                         closer to match at all, so it blanked nothing
+    Every one of those is fail-OPEN: a heading inside an unblanked fence counts as top level."""
+    out = []
+    fence_char = None
+    fence_len = 0
+    for line in text.split("\n"):
+        body = line.rstrip("\r")
+        if fence_char is None:
+            m = _FENCE_OPEN_RE.match(body)
+            if m and not (m.group(2)[0] == "`" and "`" in m.group(3)):
+                fence_char = m.group(2)[0]
+                fence_len = len(m.group(2))
+                out.append(" " * len(line))
+            else:
+                out.append(line)
+            continue
+        stripped = body.lstrip(" ")
+        run = stripped.rstrip(" \t")
+        if (len(body) - len(stripped) <= 3 and run and set(run) == {fence_char}
+                and len(run) >= fence_len):
+            fence_char = None
+        out.append(" " * len(line))
+    return "\n".join(out)
 
 
 def _top_section(text, heading):

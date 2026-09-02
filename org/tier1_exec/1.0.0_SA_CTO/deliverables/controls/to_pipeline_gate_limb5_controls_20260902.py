@@ -14,6 +14,16 @@ CVO~A re-grade @dddd96477d added: an ILLUSTRATIVE fenced ENDPOINT heading BEFORE
 template's own shape); a FULL INSTANTIATION of _PRD_TEMPLATE.md; and brief_ref traversal negatives.
 CVO~A re-grade @df87b39f6e added six: title MID-LINE in prose; title in INDENTED code; ENDPOINT
 section inside a ~~~ fence; manifest inside a ~~~ fence; backslash traversal (x2); non-.md brief.
+CVO~A re-grade @ce5c82750f (pass 5; CVO base inherited the grade when ~A went offline) added the
+CommonMark fence shapes the exact-three/column-zero regex could not see -- ~~~~ (f7), 1-space-
+indented ``` (f8), the same two around the manifest (f9/f10), a ```` outer mispaired with an inner
+```json (f11), an EOF-unclosed fence (both directions) -- plus two POSITIVES the scanner must keep
+admitting (a closed indented fence; an unclosed fence after everything), and brief_ref values that
+carry a newline before a backslash, before a slash-traversal, or before `$`, a CR, and a space.
+f11's construction is deliberate: on THIS PRD the section holds a column-0 FWD fence, and a plain
+```` wrap is refused by the OLD grammar too (it pairs the ```` opener with that inner opener and
+blanks the title by accident); a decoy ```json block is an opener the old closer grammar cannot
+match, so the old gate blanks only the decoy and leaves the title VISIBLE -- the red.
 
 (This file was once corrupted by injecting helpers through a Bash heredoc that halved every
 backslash -- the trap in the estate's own memory. It is written by a non-shell writer only.)
@@ -120,6 +130,58 @@ def _tilde_fenced_endpoint(text):
     return text[:s] + "~~~\n" + text[s:e] + "\n~~~" + text[e:]
 
 
+def _four_tilde_fenced_endpoint(text):
+    """f7: the whole real ENDPOINT section wrapped in a ~~~~ (four-marker) fence."""
+    s, e = _endpoint_span(text)
+    return text[:s] + "~~~~\n" + text[s:e] + "\n~~~~" + text[e:]
+
+
+def _indented_fenced_endpoint(text):
+    """f8: the section wrapped in a ONE-SPACE-indented ``` fence (legal Markdown, in this estate)."""
+    s, e = _endpoint_span(text)
+    return text[:s] + " ```\n" + text[s:e] + "\n ```" + text[e:]
+
+
+def _four_backtick_outer_inner_json_endpoint(text):
+    """f11: a ```` outer fence whose first inner lines are a ```json block. An exact-three closer
+    grammar pairs the outer opener with that block's bare ``` CLOSER (its opener carries an info
+    string and is not a closer), then leaves the title visible."""
+    s, e = _endpoint_span(text)
+    return text[:s] + "````\n```json\n{\"decoy\": true}\n```\n" + text[s:e] + "\n````" + text[e:]
+
+
+def _eof_unclosed_fence_before_endpoint(text):
+    """An EOF-unclosed ``` opened BEFORE the real ENDPOINT: Markdown blanks to end of file."""
+    s, _ = _endpoint_span(text)
+    return text[:s] + "```\n" + text[s:]
+
+
+def _eof_unclosed_fence_after_everything(text):
+    """POSITIVE: an EOF-unclosed fence appended after the last section blanks only the tail."""
+    return text + "\n```\ntrailing unclosed fence; nothing of consequence after it\n"
+
+
+def _closed_indented_fence_before_endpoint(text):
+    """POSITIVE: a legal 2-space-indented fence, CLOSED, before the real ENDPOINT -- the scanner
+    must recognise the indented closer, or it swallows the section that follows."""
+    s, _ = _endpoint_span(text)
+    return text[:s] + "  ```\n  decoy inside an indented fence\n  ```\n\n" + text[s:]
+
+
+def _four_tilde_fenced_manifest(text):
+    """f9: the SURFACE MANIFEST heading existing only inside a ~~~~ fence."""
+    t = _empty_manifest(text)
+    t = re.sub(r"^## .*SURFACE MANIFEST.*$", "## 7. Something else", t, count=1, flags=re.M)
+    return t + "\n\n~~~~\n## 7. SURFACE MANIFEST (four-tilde-fenced, must not count)\n| S1 | FWD-1 | x |\n~~~~\n"
+
+
+def _indented_fenced_manifest(text):
+    """f10: the SURFACE MANIFEST heading existing only inside a 1-space-indented ``` fence."""
+    t = _empty_manifest(text)
+    t = re.sub(r"^## .*SURFACE MANIFEST.*$", "## 7. Something else", t, count=1, flags=re.M)
+    return t + "\n\n ```\n## 7. SURFACE MANIFEST (indented-fenced, must not count)\n| S1 | FWD-1 | x |\n ```\n"
+
+
 def _instantiate_template():
     """Fill _PRD_TEMPLATE.md's placeholders with ETFS_GUARDRAIL values; the result must pass limb 5."""
     t = open(TEMPLATE, encoding="utf-8").read()
@@ -161,6 +223,20 @@ def run_core():
         ("f2: ENDPOINT title in INDENTED code, real section removed -> same", _title_indented(base), EXPECT, "PASS"),
         ("f3: ENDPOINT section wholly inside a ~~~ fence -> no top-level section; core DEFERS to limb 4 (PASS); the gate refuses via run_limb4",
          _tilde_fenced_endpoint(base), EXPECT, "PASS"),
+        ("f9: SURFACE MANIFEST heading only inside a ~~~~ fence", _four_tilde_fenced_manifest(base), EXPECT, "REFUSE"),
+        ("f10: SURFACE MANIFEST heading only inside a 1-space-indented ``` fence", _indented_fenced_manifest(base), EXPECT, "REFUSE"),
+        ("f7: ENDPOINT section inside a ~~~~ fence -> core DEFERS (PASS); the gate refuses via run_limb4",
+         _four_tilde_fenced_endpoint(base), EXPECT, "PASS"),
+        ("f8: ENDPOINT section inside a 1-space-indented ``` fence -> core DEFERS (PASS); refused via run_limb4",
+         _indented_fenced_endpoint(base), EXPECT, "PASS"),
+        ("f11: ```` outer fence with an inner ```json block -> core DEFERS (PASS); refused via run_limb4",
+         _four_backtick_outer_inner_json_endpoint(base), EXPECT, "PASS"),
+        ("EOF-unclosed fence opened BEFORE the ENDPOINT blanks to end of file -> manifest gone -> REFUSE",
+         _eof_unclosed_fence_before_endpoint(base), EXPECT, "REFUSE"),
+        ("positive: EOF-unclosed fence appended AFTER everything blanks only the tail -> PASS",
+         _eof_unclosed_fence_after_everything(base), EXPECT, "PASS"),
+        ("positive: a CLOSED 2-space-indented fence before the ENDPOINT is closed by the scanner -> PASS",
+         _closed_indented_fence_before_endpoint(base), EXPECT, "PASS"),
         ("header omits a DEFINED outcome (FWD-8)", _with_header(base, dict(hdr, endpoint_outcomes=hdr["endpoint_outcomes"][:-1])), EXPECT, "REFUSE"),
         ("header lists a PHANTOM outcome (FWD-9, mentioned only)", _with_header(base, dict(hdr, endpoint_outcomes=hdr["endpoint_outcomes"] + ["FWD-9"])), EXPECT, "REFUSE"),
         ("a possessive at LINE START ('FWD-7's message') is not a definition (must PASS; injection asserted)",
@@ -198,6 +274,12 @@ def run_schema():
         ("NEG f5a Windows backslash traversal", "docs/briefs/..\\architecture\\_PRD_TEMPLATE.md@abcdef0", False),
         ("NEG f5b ANDREW_DIRECT backslash cross-segment", "org/tier1_exec/X/deliverables/ANDREW_DIRECT_x\\..\\OTHER.md@abcdef0", False),
         ("NEG f6 docs/briefs non-.md", "docs/briefs/not-a-brief.txt@abcdef0", False),
+        ("NEG f12a newline THEN backslash traversal (dot-lookahead stopped at the LF)",
+         "docs/briefs/safe\n\\..\\architecture\\x.md@abcdef0", False),
+        ("NEG f12b newline THEN slash traversal", "docs/briefs/safe\n/../x.md@abcdef0", False),
+        ("NEG f12c trailing LF before $ (Python $ matches before a final newline)", "docs/briefs/x.md@abcdef0\n", False),
+        ("NEG trailing CR", "docs/briefs/x.md@abcdef0\r", False),
+        ("NEG space inside the path", "docs/briefs/a b.md@abcdef0", False),
     ]
     fails = 0
     for name, val, want in cases:
@@ -227,6 +309,12 @@ def run_limb4():
         ("limb 4: f1 title MID-LINE only -> REFUSE", _title_mid_line(base), "REFUSE"),
         ("limb 4: f2 title INDENTED only -> REFUSE", _title_indented(base), "REFUSE"),
         ("limb 4: f3 section inside ~~~ -> REFUSE", _tilde_fenced_endpoint(base), "REFUSE"),
+        ("limb 4: f7 section inside ~~~~ -> REFUSE", _four_tilde_fenced_endpoint(base), "REFUSE"),
+        ("limb 4: f8 section inside 1-space-indented ``` -> REFUSE", _indented_fenced_endpoint(base), "REFUSE"),
+        ("limb 4: f11 ```` outer with inner ```json -> REFUSE", _four_backtick_outer_inner_json_endpoint(base), "REFUSE"),
+        ("limb 4: EOF-unclosed fence BEFORE the section -> REFUSE", _eof_unclosed_fence_before_endpoint(base), "REFUSE"),
+        ("limb 4: CLOSED 2-space-indented fence before the section -> PASS", _closed_indented_fence_before_endpoint(base), "PASS"),
+        ("limb 4: EOF-unclosed fence AFTER everything -> PASS", _eof_unclosed_fence_after_everything(base), "PASS"),
     ]
     for name, text, want in shapes:
         def fake_open(path, *a, **k):

@@ -1,0 +1,71 @@
+# RED-FIRST: limb-5 pass-5 harness against HEAD's gate (controls added, scanner NOT yet in the gate under test)
+# 2026-09-02T20:37:42Z  HEAD=584ab2dc24  gate-under-test=git show HEAD:.tools/to-pipeline-gate.py  schema=worktree (NEW; its red is the fix script below)
+== gate under test: C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/f57f7d28-0ee0-4349-91c1-8cede3c97975/scratchpad/togate_head.py ==
+== CORE ==
+  OK      PASS  ->PASS    positive: the real ETFS_GUARDRAIL PRD (must PASS; FWD-9 quotation must NOT trip)
+  OK      PASS  ->PASS    positive: ILLUSTRATIVE fenced ENDPOINT title BEFORE the real one (template shape) -- must PASS, decoy FWD-99 ignored
+  OK      PASS  ->PASS    positive: FULL INSTANTIATION of _PRD_TEMPLATE.md -- must PASS limb 5 by construction
+  OK      REFUSE->REFUSE  no PRD_HEADER block
+  OK      REFUSE->REFUSE  header.project mismatches the register row
+  OK      REFUSE->REFUSE  header.fabric mismatches the register row
+  OK      REFUSE->REFUSE  no SURFACE MANIFEST section at all
+  OK      REFUSE->REFUSE  SURFACE MANIFEST heading present but section EMPTY
+  OK      REFUSE->REFUSE  SURFACE MANIFEST heading only inside a ``` fence
+  OK      REFUSE->REFUSE  f4: SURFACE MANIFEST heading only inside a ~~~ fence
+  OK      PASS  ->PASS    f1: ENDPOINT title MID-LINE in prose, real section removed -> no top-level section; limb 4 owns; limb 5 PASSES (counts nothing)
+  OK      PASS  ->PASS    f2: ENDPOINT title in INDENTED code, real section removed -> same
+  OK      PASS  ->PASS    f3: ENDPOINT section wholly inside a ~~~ fence -> no top-level section; core DEFERS to limb 4 (PASS); the gate refuses via run_limb4
+  DEFECT  PASS  ->REFUSE  f9: SURFACE MANIFEST heading only inside a ~~~~ fence
+  DEFECT  PASS  ->REFUSE  f10: SURFACE MANIFEST heading only inside a 1-space-indented ``` fence
+  OK      PASS  ->PASS    f7: ENDPOINT section inside a ~~~~ fence -> core DEFERS (PASS); the gate refuses via run_limb4
+  OK      PASS  ->PASS    f8: ENDPOINT section inside a 1-space-indented ``` fence -> core DEFERS (PASS); refused via run_limb4
+  DEFECT  REFUSE->PASS    f11: ```` outer fence with an inner ```json block -> core DEFERS (PASS); refused via run_limb4
+           first: PRD has no top-level SURFACE MANIFEST section (a heading inside a code fence does not count) -- step 5 cannot 
+  OK      REFUSE->REFUSE  EOF-unclosed fence opened BEFORE the ENDPOINT blanks to end of file -> manifest gone -> REFUSE
+  OK      PASS  ->PASS    positive: EOF-unclosed fence appended AFTER everything blanks only the tail -> PASS
+  OK      PASS  ->PASS    positive: a CLOSED 2-space-indented fence before the ENDPOINT is closed by the scanner -> PASS
+  OK      REFUSE->REFUSE  header omits a DEFINED outcome (FWD-8)
+  OK      REFUSE->REFUSE  header lists a PHANTOM outcome (FWD-9, mentioned only)
+  OK      PASS  ->PASS    a possessive at LINE START ('FWD-7's message') is not a definition (must PASS; injection asserted)
+  OK      REFUSE->REFUSE  a real extra definition injected at line start IS counted (must REFUSE: phantom vs header)
+  OK      REFUSE->REFUSE  header schema violation: step=5
+== SCHEMA (brief_ref) ==
+  OK      ACCEPT->ACCEPT  brief_ref: POS docs/briefs
+  OK      ACCEPT->ACCEPT  brief_ref: POS docs/briefs nested subdir
+  OK      ACCEPT->ACCEPT  brief_ref: POS ANDREW_DIRECT record
+  OK      REFUSE->REFUSE  brief_ref: NEG no vintage
+  OK      REFUSE->REFUSE  brief_ref: NEG non-ANDREW_DIRECT deliverable
+  OK      REFUSE->REFUSE  brief_ref: NEG random path
+  OK      REFUSE->REFUSE  brief_ref: NEG short vintage
+  OK      REFUSE->REFUSE  brief_ref: NEG dot-traversal out of docs/briefs
+  OK      REFUSE->REFUSE  brief_ref: NEG cross-segment ANDREW_DIRECT
+  OK      REFUSE->REFUSE  brief_ref: NEG single-dot segment
+  OK      REFUSE->REFUSE  brief_ref: NEG f5a Windows backslash traversal
+  OK      REFUSE->REFUSE  brief_ref: NEG f5b ANDREW_DIRECT backslash cross-segment
+  OK      REFUSE->REFUSE  brief_ref: NEG f6 docs/briefs non-.md
+  OK      REFUSE->REFUSE  brief_ref: NEG f12a newline THEN backslash traversal (dot-lookahead stopped at the LF)
+  OK      REFUSE->REFUSE  brief_ref: NEG f12b newline THEN slash traversal
+  OK      REFUSE->REFUSE  brief_ref: NEG f12c trailing LF before $ (Python $ matches before a final newline)
+  OK      REFUSE->REFUSE  brief_ref: NEG trailing CR
+  OK      REFUSE->REFUSE  brief_ref: NEG space inside the path
+== LIMB 4 (gate-level, the deferred shapes) ==
+  OK      PASS  ->PASS    limb 4 on the REAL PRD -> must PASS
+  OK      REFUSE->REFUSE  limb 4: f1 title MID-LINE only -> REFUSE
+  OK      REFUSE->REFUSE  limb 4: f2 title INDENTED only -> REFUSE
+  OK      REFUSE->REFUSE  limb 4: f3 section inside ~~~ -> REFUSE
+  DEFECT  PASS  ->REFUSE  limb 4: f7 section inside ~~~~ -> REFUSE
+  DEFECT  PASS  ->REFUSE  limb 4: f8 section inside 1-space-indented ``` -> REFUSE
+  DEFECT  PASS  ->REFUSE  limb 4: f11 ```` outer with inner ```json -> REFUSE
+  OK      REFUSE->REFUSE  limb 4: EOF-unclosed fence BEFORE the section -> REFUSE
+  OK      PASS  ->PASS    limb 4: CLOSED 2-space-indented fence before the section -> PASS
+  OK      PASS  ->PASS    limb 4: EOF-unclosed fence AFTER everything -> PASS
+== WRAPPER ==
+  OK      OK    ->OK      wrapper: real staged project row + real staged PRD -> graded 1, OK
+  OK      REFUSE->REFUSE  wrapper: STAGED project row says D9, header says D8 -> must REFUSE (index read, not worktree)
+DEFECTS: 3 core + 0 schema + 3 limb4 + 0 wrapper = 6
+# exit=1
+
+# brief_ref pattern red-first (scratch fix script, OLD vs NEW on 11 values):
+OLD correct 7/11 ["HOLE:'docs/briefs/safe\\n\\\\..\\\\architecture\\\\x.md@abcdef0'", "HOLE:'docs/briefs/safe\\n/../x.md@abcdef0'", "HOLE:'docs/briefs/x.md@abcdef0\\n'", "HOLE:'docs/briefs/a b.md@abcdef0'"]
+NEW correct 11/11 []
+ALREADY NEW org/standards/PRD_HEADER.schema.json
