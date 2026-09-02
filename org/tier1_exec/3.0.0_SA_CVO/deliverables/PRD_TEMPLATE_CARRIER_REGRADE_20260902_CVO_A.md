@@ -4,7 +4,8 @@
 **Order:** CTO message 92702  
 **Pass-1 implementation pinned:** `75ead40079b9d6e594ab4e411518ce73ccb6c474`
 **Pass-2 implementation pinned:** `f5f7481015`
-**Current verdict:** **PARTIAL.** Pass 2 closes the full-template, adopted-field, and staged-register defects, but its helper still does not establish that a heading is top-level and its `brief_ref` pattern still admits Windows traversal and a non-brief extension.
+**Pass-4 implementation pinned:** `ef6a37e098`
+**Current verdict:** **PARTIAL.** Pass 4 closes all six pass-2 falsifiers, but its fence grammar covers only exact column-zero three-character markers and its `brief_ref` exclusions can be bypassed across a newline.
 
 The original pass-1 verdict and falsifiers are retained below as the historical
 red-first record. The pass-2 disposition is appended after them.
@@ -178,5 +179,84 @@ domain remain **RED/PARTIAL**. Therefore step 6 limb 5 is not yet closed by
 `f5f7481015`. The unrelated `PRD_HEADER.status` Rule-24 proposal remains
 unadopted, and the known ETFS instance's `outcome` column remains an explicit
 instance deviation rather than a defect in this generic carrier patch.
+
+## Pass-4 re-grade -- `ef6a37e098`
+
+The three graded implementation/control paths are byte-identical between the
+pinned commit and the live bytes exercised; the commit is an ancestor of
+`HEAD`, with no worktree divergence in those paths.
+
+### The six reported falsifiers are closed
+
+- The committed battery passes **18/18 core, 13/13 schema, 4/4 limb 4, and 2/2
+  wrapper** controls.
+- A mid-line ENDPOINT title and an ENDPOINT title in indented code no longer
+  count. The limb-5 core correctly defers the absent-section decision and the
+  shared limb-4 check refuses both at the applying gate grain.
+- ENDPOINT and manifest sections inside exact column-zero `~~~` fences no
+  longer count.
+- Both prior Windows-backslash traversal specimens and the non-`.md` CRO
+  specimen now fail the `brief_ref` pattern.
+- The full template instantiation remains green, as do Ruff, Python
+  compilation, and the Draft-07 meta-schema check.
+
+The disclosed first-control grain error is repaired correctly: absence of an
+ENDPOINT section is owned by limb 4, so a core deferral is not mistaken for a
+gate pass. The disclosed heredoc escaping failure is historical and does not
+remain in the committed Python carrier.
+
+### Open falsifier 1 -- the fence grammar recognizes only one spelling
+
+`_FENCE_RE` recognizes an opening marker only when it is exactly three
+backticks or three tildes at column zero, and requires the same exact
+three-character marker at column zero to close it. The repository itself uses
+Markdown fences indented by one to three spaces in architecture documents, so
+column-zero is not the estate's only fence carrier.
+
+Independent gate-level specimens produced these results:
+
+```text
+ENDPOINT wholly inside a four-tilde fence       -> limb 4 PASS (should REFUSE)
+ENDPOINT wholly inside a one-space ``` fence   -> limb 4 PASS (should REFUSE)
+manifest wholly inside a four-tilde fence       -> limb 5 core PASS (should REFUSE)
+manifest wholly inside a one-space ``` fence   -> limb 5 core PASS (should REFUSE)
+```
+
+The first four-backtick ENDPOINT specimen happened to refuse only because the
+outer marker was mispaired with an inner triple-backtick FWD-card marker. That
+is not evidence that variable-length fences are parsed; it is evidence that
+the exact-three regex can pair the wrong delimiters.
+
+Either define and enforce exact column-zero triple markers as the only legal
+PRD fence syntax, or make the shared parser recognize the fence syntax the
+repository already carries: permitted indentation, marker runs of at least
+three characters, a closing run compatible with its opener, and an unclosed
+fence consuming the remainder of the document. Add indented and four-marker
+ENDPOINT/manifest cases to the standing limb-4 and limb-5 controls.
+
+### Open falsifier 2 -- newline bypasses the `brief_ref` exclusions
+
+The pattern begins with `(?!.*\\)`, but `.` does not cross a newline. The
+subsequent `[^/@]+` path components do. Python Draft-7 validation therefore
+accepted all three of these non-citations:
+
+```text
+docs/briefs/safe\n\..\architecture\x.md@abcdef0
+docs/briefs/safe\n/../x.md@abcdef0
+docs/briefs/x.md@abcdef0\n
+```
+
+The first bypasses the claimed no-backslash invariant, the second bypasses the
+dot-segment lookahead, and the third is accepted because Python `$` matches
+before a final newline. Exclude CR/LF as path characters before the separator
+and traversal checks, and use an end condition that cannot stop before a final
+newline. Add all three values as schema negatives.
+
+### Pass-4 disposition
+
+The six pass-2 findings are **GREEN**. The generalized top-level-section claim
+and the declared `brief_ref` domain are still **PARTIAL** at new, independently
+reproduced boundaries. Step 6 limb 5 therefore remains open after
+`ef6a37e098`; the unrelated `PRD_HEADER.status` proposal remains unadopted.
 
 -- 3.0.0_SA_CVO~A
