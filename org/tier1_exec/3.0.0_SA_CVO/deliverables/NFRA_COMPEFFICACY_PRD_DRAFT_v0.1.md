@@ -8,6 +8,22 @@ D8 precedent) · **dep_stage:** PRD
 **Version:** v0.1, 2026-09-02 · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
+```json
+{
+ "project": "NFRA_COMPEFFICACY",
+ "directive": "D11",
+ "fabric": "laptop",
+ "prd_version": "v0.1",
+ "step": 4,
+ "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "status": "DRAFT"
+}
+```
+*PRD_HEADER block (`org/standards/PRD_HEADER.schema.json`; limb 5 of `to-pipeline-gate.py` @`689960ce16`). `brief_ref` is
+the Andrew-direct RECORD, not a `docs/briefs` file — admitted by the pattern widened @`75ead40079` on this seat's Rule 24
+finding. `status` flips to `RATIFIED` when `1.0.0_SA_CTO` lands this at `docs/architecture/NFRA_COMPEFFICACY_PRD.md`.*
+
 ---
 
 ## 0. AUTHORITY — his words, verbatim
@@ -37,7 +53,7 @@ retired"* (condition met — §7 row T-19).
 
 ---
 
-## ENDPOINT (step 2, `/endpoint --forward`)
+## ENDPOINT (step 2, /endpoint --forward)
 
 Emitted from his words alone, before any task order exists. `FWD-n` ids are **permanent and never reused**; a retired
 outcome leaves its number vacant.
