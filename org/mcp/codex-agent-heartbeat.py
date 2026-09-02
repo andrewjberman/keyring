@@ -28,6 +28,10 @@ from pathlib import Path
 import server as comms
 
 
+def heartbeat_needs_reregistration(serial: str, result: str) -> bool:
+    return result.strip() == f"{serial} is not registered. Call register_agent first."
+
+
 def default_runtime_dir(serial: str) -> Path:
     """Mirror start-codex-seat.ps1's runtime-dir derivation EXACTLY."""
     sanitized = re.sub(r"[^A-Za-z0-9_.~-]", "_", serial)
@@ -79,21 +83,27 @@ def compute_summary(runtime_dir: Path, note: str = "") -> str:
 async def run(
     serial: str, note: str, interval_seconds: float, runtime_dir: Path
 ) -> int:
-    result = await comms.register_agent(
-        serial, summary=compute_summary(runtime_dir, note)
-    )
-    print(result, flush=True)
-    if f"Registered {serial} as live" not in result:
-        return 2
+    async def register() -> bool:
+        result = await comms.register_agent(
+            serial, summary=compute_summary(runtime_dir, note)
+        )
+        print(result, flush=True)
+        if f"Registered {serial} as live" not in result:
+            return False
 
-    # register_agent starts the Claude-oriented broker polling task. A Codex
-    # session uses the non-consuming filesystem detector instead, so keep the
-    # registration/heartbeat half and explicitly stop the consuming half.
-    poll_task = comms._poll_task
-    if poll_task is not None:
-        poll_task.cancel()
-        await asyncio.gather(poll_task, return_exceptions=True)
-        comms._poll_task = None
+        # register_agent starts the Claude-oriented broker polling task. A
+        # Codex session uses the non-consuming filesystem detector instead, so
+        # keep the registration/heartbeat half and explicitly stop the
+        # consuming half.
+        poll_task = comms._poll_task
+        if poll_task is not None:
+            poll_task.cancel()
+            await asyncio.gather(poll_task, return_exceptions=True)
+            comms._poll_task = None
+        return True
+
+    if not await register():
+        return 2
 
     while True:
         await asyncio.sleep(interval_seconds)
@@ -102,6 +112,10 @@ async def run(
         )
         if "Heartbeat OK" not in result:
             print(result, file=sys.stderr, flush=True)
+            if heartbeat_needs_reregistration(serial, result):
+                if await register():
+                    continue
+                return 2
             return 3
 
 
