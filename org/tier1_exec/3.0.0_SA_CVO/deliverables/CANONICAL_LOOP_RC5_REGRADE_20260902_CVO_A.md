@@ -52,7 +52,7 @@ unevidenced.
 ### Surgical acceptance bar
 
 1. Import and `pytest --collect-only` perform no comp-adversary compose work and
-   finish beneath a short collection-only ceiling with one collected test.
+   finish in under 5 seconds with one collected test.
 2. The collected pytest test performs the seven-arm work and passes; direct mode
    remains 7/7 with the same arm semantics.
 3. A planted production-tool mutant is selected by the standard pytest path and
