@@ -1,7 +1,10 @@
 # ENDPOINT (step 2, `/endpoint --forward`) — ETFS coverage guardrail
 
 **Emitted by:** `1.0.0_SA_CTO` · **Date:** 2026-09-02 · **Pipeline step:** 2 (before the PRD, before any TO)
-**Status:** ⛔ **NOT YET LANDED IN A PRD.** This block is ready to paste; see "Where this belongs" below.
+**Status:** ✅ **LANDED 2026-09-02** in `docs/architecture/ETFS_GUARDRAIL_PRD.md` under the section
+`ENDPOINT (step 2, /endpoint --forward)`. Project code `ETFS_GUARDRAIL` ratified Andrew-direct
+(*"ETFS_GUARDRAIL is good"*). The outcome list below was AMENDED at landing -- see the amendment note
+after FWD-8. **The PRD is the authoritative carrier from here; this file is the step-2 record.**
 
 ---
 
@@ -78,7 +81,20 @@
                     the two being a day apart
          SOURCE     brief s.6a (lines 206-232)
 
-  FWD-7  Going outside Opal to ask a provider for missing data stays a
+  FWD-7  When a gap survives every attempt to repair it, Andrew finds out --
+         and finds out exactly what is missing, without having to ask
+
+         DONE WHEN  EXERCISED -- such a message has actually been sent and read
+         ACCEPT     if every attempt to fill a gap has failed, including asking
+                    the outside provider, Andrew receives an urgent message that
+                    lists each day still missing, which partner it belongs to,
+                    and which provider the data should have come from -- and he
+                    can act on it without a follow-up question. He should almost
+                    never receive one; if these become routine, the repair ahead
+                    of it has failed, not succeeded
+         SOURCE     Andrew-direct 2026-09-02 (terminal ruling 3)
+
+  FWD-8  Going outside Opal to ask a provider for missing data stays a
          decision a person makes
 
          DONE WHEN  EXERCISED -- the system has actually stopped and asked,
@@ -88,6 +104,21 @@
                     and waits for a person to say yes
          SOURCE     brief s.5 (lines 163-189), ruling card 4
 ```
+
+## AMENDED 2026-09-02 -- Andrew-direct, and the renumber is legal only because nothing had landed
+
+**FWD-7 (terminal urgent notification) INSERTED; the prior FWD-7 RENUMBERED to FWD-8**, on his explicit
+instruction (*"which i would call FWD-7 and make your 7 entry at 8"*). ⛔ **A renumber is normally
+FORBIDDEN** -- it silently re-points every citation ever made to the old id and nothing announces it.
+It is safe here, and only here, because at the moment of the change **this list had never landed in a
+PRD and nothing cited it**: no remediation row, no `outcome_ref`, no TO. It is frozen from the PRD
+landing (`docs/architecture/ETFS_GUARDRAIL_PRD.md`) forward.
+
+**FWD-8 was NOT folded away.** He observed it *"can be folded into"* FWD-7. The REPORT CONTENT is shared
+and is folded -- FWD-7's message carries the dates/partner/provider detail. The AUTHORIZATION is not:
+FWD-8 fires BEFORE we leave Opal and asks permission; FWD-7 fires AFTER leaving Opal already failed.
+A message sent after egress failed cannot ask permission for the egress that already happened, so
+folding would silently retire ruling card 4's capability. **Surfaced, not assumed.**
 
 ---
 
@@ -100,12 +131,13 @@
 
 ## Where this belongs
 
-- **Proposed PRD:** `docs/architecture/ETFS_GUARDRAIL_PRD.md` (sibling to the existing
+- **PRD (LANDED):** `docs/architecture/ETFS_GUARDRAIL_PRD.md` (sibling to the existing
   `ETFS_INGEST_PRD.md` / `ETFS_POSITIONING_PRD.md` / `ETFS_SECIDX_PRD.md`)
 - **Section title, verbatim:** `ENDPOINT (step 2, /endpoint --forward)`
-- ⛔ **The project code is UNCONFIRMED.** No register row and no PRD exist for the guardrail
-  (measured: `comp-find COVERAGE_GUARDRAIL` returns the brief and tool logs only, no PRD).
-  `ETFS_GUARDRAIL` is a PROPOSAL from this seat, not a ratified code.
+- **Project code `ETFS_GUARDRAIL`: RATIFIED** Andrew-direct 2026-09-02.
+- ⚠ **STILL OPEN: there is no REGISTER ROW.** The PRD exists; the registry entry does not.
+  Rule 27's pipeline is register -> PRD -> decomp, and this project reached the PRD without
+  the register step. Surfaced, not silently patched.
 
 ---
 
