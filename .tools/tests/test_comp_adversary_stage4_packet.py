@@ -143,9 +143,32 @@ if cm and m:
                   "double-counted" % (tot, m.group(2), sel, m.group(1)))
 rec("MECE-PARTITION", mece, detail)
 
-n = sum(1 for _, v, _ in RESULTS if v == "PASS")
-print()
-print("=" * 80)
-print("STAGE-4 PACKET BATTERY: %d/%d PASS (denominator %d)" % (n, len(RESULTS), len(RESULTS)))
-print("=" * 80)
-sys.exit(0 if n == len(RESULTS) else 1)
+# ---------------------------------------------------------------- report
+# sys.exit() MUST NOT run at module scope: the standard runner (pytest) collects this file, and a
+# module-level SystemExit crashes the COLLECTOR -- pytest reports INTERNALERROR / "no tests
+# collected" (measured 2026-09-02: SystemExit: 0, i.e. the battery PASSED and then killed the
+# collector). A GREEN battery read as a RED suite, and it could not have contributed a test
+# denominator to any gate that runs pytest. Same defect test_pipescript_digest.py documents in
+# its own header; same repair. Release condition 5 (CVO~A @0d272d257c): "collected by the
+# standard runner with a real test denominator." Lane-owner maintenance, no TO (1.0.0_SA_CTO 92659).
+
+
+def _report() -> int:
+    n = sum(1 for _, v, _ in RESULTS if v == "PASS")
+    print()
+    print("=" * 80)
+    print("STAGE-4 PACKET BATTERY: %d/%d PASS (denominator %d)" % (n, len(RESULTS), len(RESULTS)))
+    print("=" * 80)
+    return 0 if n == len(RESULTS) else 1
+
+
+def test_all_arms_pass():
+    """pytest entry point -- the arms above already ran at import (the same shape the pipescript
+    battery uses). Fails on any FAIL row; the denominator is len(RESULTS)."""
+    fails = [(tid, d) for tid, v, d in RESULTS if v != "PASS"]
+    assert not fails, "stage-4 packet battery arms failed (%d of %d): %r" % (
+        len(fails), len(RESULTS), fails)
+
+
+if __name__ == "__main__":
+    sys.exit(_report())
