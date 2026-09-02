@@ -214,3 +214,113 @@ NOT READ     the TO register (to-check / query_project) -- refused per F1, even 
 `_PRD_TEMPLATE.md` with this block pasted in -> COO decomp (step 5). Andrew reviews this output first
 (voice memo 2026-09-02: *"I will review that output and we will kind of see where it needs to proceed from
 there"*).
+
+---
+
+## ANDREW-DIRECT -- 2026-09-02 ~17:5xZ, at the `1.0.0_SA_CTO~A` terminal (recorded VERBATIM, same turn)
+
+> "I agree with all of these only have one comment. First, I want to clarify that this is the kuzudb
+> projection, and that every time you reference the "graph", that is what you are referring to. Secondly, I
+> want to clarify the stitching/incremental refresh mechanism. For the Nessie/Iceberg graph, we have an SQS
+> queue and associated lambda that manages the stitching, however, I want to understand how we manage this
+> on the KuzuDB basis, if it can simply be downstream of this, which I think would be a simplified
+> architecture. Let's discuss."
+
+**Effect on the record (surfaced, not adjudicated wider or narrower):**
+
+1. **FWD-1 .. FWD-8 RATIFIED AS WRITTEN** (*"I agree with all of these"*).
+2. **SCOPE CLARIFICATION, binding on the step-4 PRD:** every occurrence of *"the graph"* in the ENDPOINT
+   block means **the KuzuDB projection** -- the copy agents query (`infra/aws/globgrph/kuzu_nessie_db`, what
+   `comp-kuzu` answers from) -- **not** the Nessie/Iceberg tables it is projected from, which stay where they
+   are (brief Part II). When the block is pasted, add this gloss line to its preamble:
+   *"'the graph' here means the KuzuDB projection -- the copy agents query -- not the Nessie/Iceberg tables it
+   is projected from."* No outcome text changes; the referent is pinned.
+3. **The refresh-mechanism question is OPEN for discussion.** Assessment below; the decision is Andrew's.
+
+## ASSESSMENT -- can the KuzuDB projection simply sit downstream of the SQS/Lambda? (grounded 2026-09-02 17:3x-18:0xZ)
+
+**Premise, corrected fairly.** The SQS queue + Lambda are the AWS-layer INCREMENTAL updater, not the stitch:
+`opal-globgrph-incremental-events` (+ DLQ) -> `opal-globgrph-incremental-updater` (2-min debounce event-source
+mapping, `infra/aws/terraform/globgrph/item2b.tf:175`; GLOBGRPH PRD s.2a Item-2b: CloudTrail -> bounded derive
+-> Nessie commit). The STITCH is a different thing: `opal-stitch-produce` is a nightly CodeBuild (03:00Z) that
+writes `stitch_graph.json` + its own artifact marker and **never touches Nessie** (`stitch-produce.tf:21,77`;
+`derive_stitch.py:253` writes a file). Portal/pipeline-layer nodes reach the Nessie tables through the nightly
+derive's producer fold (`derive_runner.py:2175` `ingest_graphuni_producers` -- "ONE derive -> ONE Nessie commit
++ ONE marker-advance", the NFRA_GRAPHUNI single-writer seam). So "downstream of the SQS/Lambda" would put the
+projection downstream of ONE of at least five Nessie writers.
+
+**The simplification is real, one level up.** Every writer to the Nessie graph -- nightly `derive_runner`,
+the incremental Lambda, `cse_store`, `fedobs`, `resource_summaries` -- ends by stamping ONE object:
+`s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json` (GLOBGRPH PRD s.2b F6 ruling; shared
+`_provenance.stamp_marker` at `_provenance.py:194`; artifact-first-marker-last is the write-order contract).
+Live marker at read time: `writer_id: incremental_updater`, `committed_at 2026-09-02T12:58:01Z`, per-table
+`last_write_iso` populated for all four tables. **And the projection's own incremental engine ALREADY keys on
+that marker**: `kuzu_incremental_refresh.py:64` reads the marker-pinned HEAD tables via pyiceberg from S3
+(no Nessie REST, no Trino), diffs against the live DB, applies only the delta, count-guards, and falls back to
+the full `kuzu_nessie_load` on a large delta (which is exactly what the nightly full derive produces).
+
+**Recommended shape (CTO rec, not a ruling):**
+```
+  every Nessie writer ... -> PUT warehouse/_branch_head.main.json      (exists today; the commit point)
+                              |  S3 event notification on that ONE key  (new; same pattern as item2b)
+                              v
+                      SQS opal-globgrph-projection-events (+DLQ)        (new)
+                              |  event-source mapping, short batch window
+                              v
+                      projection worker = the existing kuzu_incremental_refresh logic
+                        copy current -> apply delta -> count-guard -> (fallback: full load)
+                        -> write Kuzu artifact + _build_manifest to S3 under a versioned key
+                        -> advance ONE pointer object atomically (artifact first, pointer last)
+                              |
+                              v
+                      serving plane (PRD fork, Part V item 1 -- NOT decided here):
+                        a small always-on service on the existing opal-globgrph ECS cluster holding
+                        the current artifact and swapping on pointer advance; the gateway (t4g.nano,
+                        --workers 1, brief F7) is a THIN PROXY to it via the IntegrationSpec pattern,
+                        never the host.
+```
+Why this and not the CloudTrail queue: one trigger covers every writer, present and future, with no
+per-producer wiring; the projection can never run ahead of Nessie or from a half-committed state, because the
+marker IS the commit point; and the engine that consumes it is already written and already certified
+incremental-equals-full (`kuzu_incremental_refresh.reconcile`). The KUZUSPLIT `full`/`inc` split survives
+intact but moves INSIDE the worker -- which is FWD-6 by construction.
+
+**Measured, so the worker is sized against a number and not a feeling:** incremental updater over the last
+24h (CloudWatch `/aws/lambda/opal-globgrph-incremental-updater`, filter `MARKER_STAMPED` / `REPORT`):
+**45 marker stamps / 102 invocations**. Plus the nightly derive, cse, and the other producers: the worker
+would fire on the order of 50 times a day, each an incremental apply the KUZUSPLIT PRD claims at seconds
+(unverified here; P0-INSTRUMENT exists for it). Full-fallback duration is a DOCUMENT CLAIM (~6 min) and
+decides Lambda-vs-ECS-task for the worker -- measure before choosing.
+
+**One consequence for the ratified endpoint -- PROPOSED, not applied:** under this shape the projection
+advances whenever Nessie advances (intraday as well as nightly), which satisfies FWD-2 and FWD-4 more
+strongly than "nightly clock" states. Proposed in-place wording for FWD-2 (id unchanged): *"The graph gets
+newer on the estate's own schedule -- nightly in full and within minutes of any cloud change -- never because
+someone asked."* Andrew ratified the current text; changing it needs his word.
+
+**What ports with the code:** the QUALIFIED verdict on `kuzu_nessie_load` (node/edge key asymmetry, brief F4)
+-- fix at the port or carry it consciously. **What retires:** the local `kuzu_nessie_db` and the local
+`comp-kuzu-full` / `comp-kuzu-inc` rebuild paths; `comp-kuzu` becomes a thin client (FWD-7's retirement).
+
+**Prior art for FWD-8, found not chased:** NFRA_GLOBGRPH FRESHGUARD already designed the operator-facing
+half. Leg 4 (writer wiring to the shared stamp) is an OPEN deploy-ledger entry HELD-SOVEREIGN-GATED since
+2026-07-09 (`org/critical_paths/.open_deploys/freshguard-leg4-writer-wiring-finish.json`; L1-L3 closed, L4
+verify open, "FAIL-BY-DESIGN standing state" declared 2026-08-20); leg 5 (per-producer freshness alarm) has
+code at `infra/aws/globgrph/freshness_alarm/` but **no Lambda on the live plane** -- only two residual log
+groups (`/aws/lambda/opal-globgrph-freshness-alarm`, `/aws/lambda/opal-globgrph-tool-activity-freshness`,
+both LIVE-no-DECLARED). Andrew's word on FWD-8's mechanism is the same word FRESHGUARD is waiting on.
+
+**Surprise channel (OBSERVATION class, INERT, to `3.0.0_SA_CVO`, not chased):**
+- `warehouse/_branch_head.history/` is EMPTY (0 objects; positive control: the marker itself lists),
+  although `_provenance._archive_superseded` (`:271`) says every overwrite archives the superseded marker
+  first and REFUSES to overwrite without it. Either the CAS path that calls it is gated off, or the promise
+  is not being kept; both mean the "what did the previous marker hold" question is currently un-evaluable.
+- The FRESHGUARD leg-4 L4 criterion as ORIGINALLY written (per-table `last_write_iso` populated + writer_id)
+  is observably TRUE on today's live marker; the entry's criterion was re-specced four times after, so this
+  is an observation for the owner, not a closure.
+
+**Instruments this assessment used:** comp-read (`kuzu_incremental_refresh.py`, `kuzu_nessie_load.py`,
+`_provenance.py`, `derive_runner.py`, `derive_stitch.py`, `item2b.tf`, `stitch-produce.tf`); comp-find
+repo (`_branch_head` writers: 1,151 hits / 144,948 files) and `--corpus aws` (96 globgrph nodes / 2,100;
+LAMBDA=1, SQS_QUEUE=2); live S3 read of the marker; CloudWatch `filter-log-events` 24h; deploy ledger read.
+**NOT done:** no timing, no Lambda sizing, no network-reachability check, no serving-plane decision.
