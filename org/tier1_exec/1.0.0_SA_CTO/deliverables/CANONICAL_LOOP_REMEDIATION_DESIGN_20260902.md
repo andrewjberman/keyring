@@ -243,6 +243,45 @@ field, which is why it is a value and not an omission.**
 1. **R4-a** remediation id pattern accepts the fabric coordinate -- site-Z items can graduate.
 2. **R4-b** `project` + `fabric` REQUIRED on both schemas, gate-checked against the id.
 
+## EXECUTION RECORD 2 -- after CVO~A's RED/HOLD @`0d272d257c`: RC1 + RC2 + RC3 landed red-first
+
+**Verdict accepted in full.** P0-1 was this seat's: the schemas *described* a gate check that did not exist
+(`comp-read --enumerate 'project|fabric'` on the gate: 1 hit / 258 lines, a comment). Acceptance: msg 92613.
+
+```
+  RED    19 controls vs the OLD gate ..... 12 DEFECTS (9 row + 3 mutation)   every named hole present
+  GREEN  same 19 vs the NEW gate ......... 0 DEFECTS
+  CORPUS 192 rows, HEAD schemas 4 fail / amended 4 fail / delta +0 / new-only 0
+```
+Harness + RED transcript: `org/tier1_exec/1.0.0_SA_CTO/deliverables/controls/` -- **not** `.tools/tests/`,
+because the `TOOL_BATTERIES` lane minted on Andrew's word refuses this seat there (measured). The lane
+refusing its own author is the lane working.
+
+| RC | what landed | where |
+|---|---|---|
+| **1** | full Draft-07 on every new row, fail-CLOSED if `jsonschema` is absent; `project`+`fabric` gate-required and cross-checked against the id | `surprise-row-gate.py _check_row` |
+| **2** | `_mutation_violations()`: every HEAD id must be byte-equivalent as data (sha256 over canonical JSON) or present; else MUTATED / DELETED. Same audited override; no second escape | `surprise-row-gate.py`, wired into `check_file` before the new-row loop |
+| **3** | `FWD-NONE` rejected by name; `scope_change_kind` in {CONTRADICTS_NAMED_OUTCOME -> real `FWD-n`, REQUIRES_UNNAMED_OUTCOME -> `outcome_ref` key present with `null` + `proposed_outcome`} | gate + `remediation_row.schema.json` |
+
+⛔ **THE VALIDATOR FOUND A BUG IN ITS OWN SCHEMA.** After RC1 the three remediation *positive* controls refused:
+`/remediation/state -- 'REMEDIATED' was expected`. Both `allOf` conditionals key on `closed: true` but listed
+only `hazard_standing` as required; Draft-07 `properties` constrains only *present* keys, so a row with **no
+`closed` key vacuously matched** and every OPEN row was forced to REMEDIATED. **Latent for the schema's whole
+life because the old gate never ran `allOf`.** Fixed by adding `closed` to both `required` lists -- a
+precondition repair, not a new value or axis; disclosed to CVO as Rule 24 owner. **The corpus holds exactly
+ONE remediation row estate-wide, so this harness is the only exercise those conditionals get.**
+
+⚠ **Two self-inflicted instrument failures during this work, kept because they are the transferable half:**
+(1) my "all six surfaces unclaimed" used my own fnmatch instead of the validator -- three were CVO_WORKSPACE /
+ANY_EXEC; (2) a wording edit to `.owned-paths.yaml` inserted `lane: ANY` into a plain scalar and **broke the
+ownership map** for ~2 minutes, with no fail-closed restore on that script. Restored from HEAD, mint verified
+intact (5 REFUSE rows), re-applied with no colon and a restore path. **A file that gates every commit in the
+fabric gets a fail-closed writer every time, not just the first time.**
+
+**Still open under the hold:** RC4 (standing corpus validator, exact-tuple baseline), RC5 (CloudComp's battery
+repair -- the fabric-wide step-6 critical path), RC6 (admitted catalog vs mandatory core), RC7 (delivery-ACK
+tests for the monitors, gated on RC1/RC2 -- now met).
+
 ## NOT EXECUTED, AND WHY -- routed to `3.0.0_SA_CVO`
 
 - **R2 readmissions** -- CVO authored the `comp-similar` refusal; CVO lifts it. Readmitting a lens on the

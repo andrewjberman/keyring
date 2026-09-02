@@ -1,0 +1,21 @@
+== ROW CONTROLS (RC1 + RC3) ==
+  OK      PASS  ->PASS    RC1 good investigation row (positive control, must PASS)
+  DEFECT  PASS  ->REFUSE  RC1 absent project+fabric
+  DEFECT  PASS  ->REFUSE  RC1 wrong project (id says ETFS_GUARDRAIL)
+  DEFECT  PASS  ->REFUSE  RC1 wrong fabric (id has -Z-, fabric=laptop)
+  DEFECT  PASS  ->REFUSE  RC1 invalid surfaced_at (21:2xZ)
+  DEFECT  PASS  ->REFUSE  RC1 GRADUATED without GROUNDED evidence
+  DEFECT  PASS  ->REFUSE  RC1 nested enum: grounding.status=BOGUS
+  OK      PASS  ->PASS    RC3 good SPEC_ERROR remediation (positive control, must PASS)
+  OK      REFUSE->REFUSE  RC3 FWD-NONE sentinel
+  DEFECT  PASS  ->REFUSE  RC3 SCOPE_CHANGE with no scope_change_kind
+  DEFECT  REFUSE->PASS    RC3 CONTRADICTS_NAMED_OUTCOME + real FWD-n (must PASS)
+           first: ETFS_GUARDRAIL-Z-S999: field 'scope_change_kind' is not in the schema (additionalProperties is false)
+  OK      REFUSE->REFUSE  RC3 CONTRADICTS_NAMED_OUTCOME + null ref
+  DEFECT  REFUSE->PASS    RC3 REQUIRES_UNNAMED_OUTCOME + required-null + proposed (must PASS)
+           first: ETFS_GUARDRAIL-Z-S999: field 'scope_change_kind' is not in the schema (additionalProperties is false)
+  OK      REFUSE->REFUSE  RC3 REQUIRES_UNNAMED_OUTCOME with outcome_ref key ABSENT (not null)
+  OK      REFUSE->REFUSE  RC3 REQUIRES_UNNAMED_OUTCOME with no proposed_outcome
+== MUTATION CONTROLS (RC2) ==
+  DEFECT  gate has no _mutation_violations -- existing-row edits are UNCHECKED (P0-2 present)
+DEFECTS: 9 row + 3 mutation = 12
