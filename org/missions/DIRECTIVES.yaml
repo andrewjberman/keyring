@@ -36,7 +36,7 @@ directives:
     placement: "LAPTOP -- RULED (criterion b: ontology/infra local). The T1/kill-fix EXERCISE legs run on BOTH fabrics as small ferried verification kickoffs post-build, never as moved builds. Ontology lock-down tranche (T6/T7/T8, s3 set, T12) pinned LOCAL as a class. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [INFRASTRUCTURE.TOOLS, INFRASTRUCTURE.GRAPH, INFRASTRUCTURE.DEBT]
-      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS, NFRA_TORECORD]
+      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS, NFRA_TORECORD, NFRA_CLDGRPH]
     stance: "Ongoing, laptop. Live legs: T1 broker primitives (design->0.8.0 build), T2 stamps,
       T4 two-homes declarations, REG-SCAN-ATOMCHECK + J3 (08-20, REQUIRED before INF binds),
       LD-0424 kill-instrument self-exclusion fix, GLDRNS wrapper disambiguation (08-25),
