@@ -128,6 +128,16 @@ outcome leaves its number vacant.
 **Not cut, deliberately:** an outcome for "the marquis list." He said *"we may want to"* — the enumeration and
 evidence in s.7 make that decision possible; making it is his.
 
+> ⛔ **BINDING ON FWD-7 AND THE G-ROWS — Andrew-direct 2026-09-02 ~18:12Z, VERBATIM:** *"right now i think the
+> estate pipeline is probably junk for the most part, until the tools at the front of that pipeline are properly
+> rectified and generating real outputs/data, i dont think that pipeline makes sense to analyze analyses from."*
+> **So the daily Semantic Evolution Pipeline is DOWNSTREAM of this project, not beside it.** Its outputs are not
+> adjudicated until the tools it consumes are CLEARED here (the 24 PENDING manifest days stay PENDING by his word).
+> This matches the measurement in §7 rows G-1..G-3 and the review §5b: the runner's propagation stratum returns
+> `INSTRUMENT_UNAVAILABLE` daily and invokes zero comp-tools. **Not read into it:** stopping or changing the
+> runner; it keeps running, nobody acts on its output. Record:
+> `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1812Z_OPEN_CALLS_RULINGS_KUZU_ESTATE_NOTIFIER.md`.
+
 ---
 
 ## 1. The arc
