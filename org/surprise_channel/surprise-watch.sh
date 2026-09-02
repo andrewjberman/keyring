@@ -131,40 +131,65 @@ _index_diff() {
     # On the NEXT poll: a whole sample clears the provisional set silently (recovery); a sample still
     # missing the SAME id CONFIRMS the deletion -- DISAPPEARED fires then, and only that row leaves
     # the stored index. Mutations among present rows are deferred one poll while short (stated).
+    quiet="${quiet:-0}"   # CTO grade (a): a caller global read under set -u; default so a bare call cannot die on it
+    # PASS 3 (CTO grade of 1a4ce78782: F2 DEFECT + E2 bound; bar (i)-(iv) taken whole):
+    #   (i)  the trigger is the SET, not the count. `missing` = stored pairs absent from live, computed
+    #        UNCONDITIONALLY. Pass 2 keyed on live_n < stored_n, so a real row dropped AND a row appended in
+    #        the same sample (count equal) took the old path, fired on poll 1, and FORGOT the row -- pass 1's
+    #        defect through a different door (CTO's F2, measured on WSE_COTMDL-S1).
+    #   (ii) the write while anything is provisional is a MERGE, not a copy: stored minus CONFIRMED; present
+    #        rows take live's hash (a changed hash still warns MUTATED); missing-but-unconfirmed rows keep
+    #        their stored hash; rows NEW in live are appended. So an append is recorded the poll it happens,
+    #        a transient miss is never adopted, and the "mutations deferred while short" bound is retired.
+    #   (E2) a provisional row is CONFIRMED only if, on the confirming poll, its id is ALSO absent from its
+    #        raw file (RAW_ROOT is the selftest's hook; production reads REPO_ROOT). A row still in its file
+    #        while the index omits it twice is an index-tool omission, not a deletion -- it stays provisional
+    #        and says so. The residual is two INDEPENDENT races, not one.
     emitted=0
     if [ -s "$IDX_FILE" ]; then
-        live_n="$(printf '%s\n' "$live" | grep -c .)"
-        stored_n="$(tr -d '\r' < "$IDX_FILE" | grep -c .)"
-        if [ "$live_n" -lt "$stored_n" ]; then
-            missing="$(tr -d '\r' < "$IDX_FILE" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2 "\t" $3}')"
+        stored="$(tr -d '\r' < "$IDX_FILE")"
+        missing="$(printf '%s\n' "$stored" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2 "\t" $3}')"
+        if [ -n "$missing" ]; then
             prev=""; [ -f "$PROV_FILE" ] && prev="$(tr -d '\r' < "$PROV_FILE")"
-            confirmed=""; newprov=""; nconf=0; nprov=0
+            raw_root="${RAW_ROOT:-$REPO_ROOT}"
+            confirmed=""; newprov=""; nconf=0; nprov=0; nheld=0
             while IFS="$(printf '\t')" read -r p i h; do
                 [ -n "$i" ] || continue
+                row="${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"
                 if [ -n "$prev" ] && printf '%s\n' "$prev" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {f=1} END {exit !f}'; then
-                    confirmed="${confirmed}${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"; nconf=$((nconf+1))
+                    if grep -qF "\"id\": \"$i\"" "$raw_root/$p" 2>/dev/null; then
+                        newprov="${newprov}${row}"; nprov=$((nprov+1)); nheld=$((nheld+1))   # E2: still in its file -- not a deletion
+                    else
+                        confirmed="${confirmed}${row}"; nconf=$((nconf+1))
+                    fi
                 else
-                    newprov="${newprov}${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"; nprov=$((nprov+1))
+                    newprov="${newprov}${row}"; nprov=$((nprov+1))
                 fi
             done <<< "$missing"
             if [ "$nconf" -gt 0 ]; then
                 while IFS="$(printf '\t')" read -r p i h; do
                     [ -n "$i" ] || continue
-                    [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i DISAPPEARED (absent on two consecutive polls) -> $p  (append-only channel; a vanished id is a deletion or a merge that dropped it)"
+                    [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i DISAPPEARED (absent from the index on two consecutive polls AND from its file) -> $p  (append-only channel; a vanished id is a deletion or a merge that dropped it)"
                     emitted=$((emitted + 1))
                 done <<< "$confirmed"
-                # drop ONLY the confirmed rows from the stored index; never adopt the short sample wholesale
-                tr -d '\r' < "$IDX_FILE" | awk -F'\t' -v C="$confirmed" 'BEGIN{n=split(C,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") gone[f[1] "\t" f[2]]=1}} !(($1 "\t" $2) in gone)' > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
             fi
+            # mutations among PRESENT rows still warn (the merge takes live's hash; the change is not silent)
+            while IFS="$(printf '\t')" read -r p i oh nh; do
+                [ -n "$i" ] || continue
+                [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i MUTATED in place (${oh} -> ${nh}) -> $p  (corrections are NEW rows; an edited row is a rewrite of the record)"
+                emitted=$((emitted + 1))
+            done <<< "$(printf '%s\n' "$stored" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") lh[f[1] "\t" f[2]]=f[3]}} NF>=2 && (($1 "\t" $2) in lh) && lh[$1 "\t" $2]!=$3 {print $1 "\t" $2 "\t" $3 "\t" lh[$1 "\t" $2]}')"
+            # (ii) THE MERGE WRITE
+            printf '%s\n' "$stored" | awk -F'\t' -v L="$live" -v C="$confirmed" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!=""){lh[f[1] "\t" f[2]]=f[3]; ord[++ln]=f[1] "\t" f[2]}} m=split(C,c,"\n"); for(k=1;k<=m;k++){split(c[k],g,"\t"); if(g[2]!="") gone[g[1] "\t" g[2]]=1}} NF>=2 { key=$1 "\t" $2; if (key in gone) next; if (key in lh) { print $1 "\t" $2 "\t" lh[key]; seen[key]=1 } else print $0 } END{ for(k=1;k<=ln;k++){ key=ord[k]; if (!(key in seen) && !(key in gone)) print key "\t" lh[key] } }' > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
             if [ "$nprov" -gt 0 ]; then
                 printf '%s' "$newprov" > "$PROV_FILE.tmp" && mv -f "$PROV_FILE.tmp" "$PROV_FILE"
-                echo "WARN: [SURPRISE] id/hash index came back SHORT ($live_n of $stored_n rows): $nprov id(s) PROVISIONAL, confirmed next poll if still absent -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
+                echo "WARN: [SURPRISE] id/hash index is MISSING $nprov stored row(s) this poll ($nheld of them still present in their files): PROVISIONAL, confirmed next poll only if absent from index AND file -- watcher is COUNT-ONLY on those rows this poll; index merged, not replaced" >&2
             else
                 rm -f "$PROV_FILE"
             fi
             return "$emitted"
         fi
-        rm -f "$PROV_FILE"    # a whole (or longer) sample clears any provisional set: recovery is silent
+        rm -f "$PROV_FILE"    # nothing missing: any provisional set clears silently (recovery)
     fi
     if [ -s "$IDX_FILE" ]; then
         # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
@@ -321,7 +346,15 @@ _selftest() {
     IDX_TOOL="$T/mut.py";                                                      _case "same-count MUTATION" 1 0 0
     # F. same-count DELETE S2 + ADD S3 -> exactly 1 row warning (DISAPPEARED)
     printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/del.py"
-    IDX_TOOL="$T/del.py";                                                      _case "same-count DELETE+ADD" 1 0 0
+    # PASS 3 (CTO grade 92 / 2026-09-02, bar (iii)+(iv)): same-count DELETE+ADD is CTO's F2 -- a real row dropped
+    # AND a row appended in ONE sample hides a transient short exactly. It is TWO-POLL now: poll 1 provisional
+    # (no DISAPPEARED, COUNT-ONLY, the dropped row KEPT, the appended row RECORDED -- the write is a MERGE);
+    # poll 2 still missing -> CONFIRMED. The old single-poll "1 warning" expectation encoded the defect.
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/del.py";                                  _case "F2 DELETE+ADD same count, poll 1: provisional, merge write" 0 1 0
+    rm -f "$PROV_FILE"; printf '%s\n' "$seed" > "$IDX_FILE"; IDX_TOOL="$T/del.py"; _index_diff >/dev/null 2>&1
+    if [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S2')" -eq 1 ] && [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S3')" -eq 1 ]; then pass=$((pass+1)); echo "  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)"; else fail=$((fail+1)); echo "  FAIL    F2 poll 1 index: $(tr -d '\r' < "$IDX_FILE" | cut -f2 | tr '\n' ' ')"; fi
+    IDX_TOOL="$T/del.py";                                                      _case "F2 DELETE+ADD same count, poll 2: CONFIRMED" 1 0 0
+    rm -f "$PROV_FILE"
     # SHORT live (successful tool, FEWER rows than stored) -- the case 3.0.0_SA_CVO saw fire falsely at
     # 19:0xZ 2026-09-02 (ADVI_PERFRP-S1 "DISAPPEARED" while present in the file) and CVO~A confirmed
     # independently @217ffafada. Repair bar (CVO~A): a first short result is PROVISIONAL -- no warn, no
@@ -351,6 +384,14 @@ _selftest() {
     # (d) CONCURRENT-APPEND BOUNDARY: live LONGER than stored, every stored row present: no warnings, replace.
     printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/longer.py"
     IDX_TOOL="$T/longer.py";                                                   _case "live LONGER than stored, all present: append boundary, silent, replace" 0 0 0
+    # (e) E2 SECOND LIMB (CTO's stated bound, narrowed): a row short on TWO consecutive polls but STILL PRESENT
+    # in its raw file must NOT be confirmed -- the index tool is omitting a present row. RAW_ROOT aims the
+    # confirm-time file check at the temp tree; production reads REPO_ROOT. The residual is now two
+    # INDEPENDENT races (index short on poll N AND the raw read racing a write on poll N+1), not one.
+    mkdir -p "$T/org/surprise_channel/P"; printf '  "id": "P-S1",\n  "id": "P-S2",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    RAW_ROOT="$T"; rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1
+    IDX_TOOL="$T/short.py";                                                    _case "E2: short twice but id STILL IN raw file -> NOT confirmed" 0 1 1
+    unset RAW_ROOT; rm -f "$PROV_FILE"
     rm -rf "$T"
     echo "selftest: $pass/$((pass+fail)) PASS"
     [ "$fail" -eq 0 ]

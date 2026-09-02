@@ -1,0 +1,20 @@
+# GREEN pass 3: set-keyed trigger + MERGE write + confirm-time raw check (CTO bar i-iv + E2 second limb)
+# 2026-09-02T21:39:03Z  HEAD=689a52cac2  file=8fbb161103
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      F2 DELETE+ADD same count, poll 1: provisional, merge write
+  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)
+  OK      F2 DELETE+ADD same count, poll 2: CONFIRMED
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+  OK      E2: short twice but id STILL IN raw file -> NOT confirmed
+selftest: 16/16 PASS
+# exit=0
