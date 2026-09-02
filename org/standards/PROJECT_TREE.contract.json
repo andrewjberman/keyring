@@ -1,11 +1,17 @@
 {
   "_what": "org/standards/PROJECT_TREE.contract.json -- the org/missions project tree as DATA (spec s.3a: a gate-read component is data, never prose). Gates and tools read THIS file; the spec is the reasoning behind it, never the thing a gate parses.",
-  "contract_version": "0.1.0",
+  "contract_version": "0.1.1",
+  "changelog": [
+    "0.1.1 (2026-09-02 ~23:4xZ, R-iii of the CVO review @580c4f72a2): `value_enums` added -- dep_stage and fabric are validated against the GATE's own enum constants, resolved by AST from .tools/to-pipeline-gate.py at run time (one carrier, never copied); new refusal ROW-ENUM. `status` deliberately carries no enum: the gate does not read it and the flat register holds 12 distinct live values",
+    "0.1.0 (2026-09-02 ~21:3xZ): first landing @cb6e93e7f8"
+  ],
   "authority": {
     "spec": "org/tier1_exec/2.0.0_SA_COO/deliverables/SPEC_PROJECT_TREE_DIRECTIVE_MACRO_PROJECT_20260902.md",
     "rulings": [
       "@5f8b774a5d -- calls 1-4 RULED: macro layer KEPT + per-directive enum; project.json MOVES in + generated index; deliverables/{serial}/; task-orders (hyphen), tree only",
-      "@a8d63f097c -- the prerequisite builds are the MANDATORY START POINT; COO+CTO split; 3.0.0_SA_CVO reviews the complete set"
+      "@a8d63f097c -- the prerequisite builds are the MANDATORY START POINT; COO+CTO split; 3.0.0_SA_CVO reviews the complete set",
+      "@580c4f72a2 -- CVO review of the set: COMPLETE and REAL; (a) PASS w/ 2 divergences, (b)/(c) PARTIAL, (d) PASS; residuals R-i..R-v with owners",
+      "@3eae79fea1 -- Andrew at the CTO terminal: investigations/ and cards/ lanes STAY ANY, the surprise-row gate is the control"
     ],
     "owner": "2.0.0_SA_COO (contract) -- a change is a versioned edit here plus the diff stated to every reader named in `readers`"
   },
@@ -59,6 +65,12 @@
     "surprise_channel_glob": "org/missions/D*/*/*/surprise-channel/{investigations,remediations}/**",
     "note": "sub-folders are created when their step first writes; an absent sub-folder is not a violation"
   },
+  "value_enums": {
+    "_rule": "a row field named here is valid ONLY if its value is in the enum the GATE compares against; the enum is read from the gate's source BY AST at run time (a module-level literal assignment), never copied into this file or the generator -- Rule 24(iv): one carrier, so the generator and to-pipeline-gate.py cannot render two verdicts over one row. A missing source or symbol FAILS CLOSED (rc 2), never an empty enum",
+    "dep_stage": {"source": ".tools/to-pipeline-gate.py", "symbol": "DEP_STAGE_ENUM", "normalize": "exact"},
+    "fabric": {"source": ".tools/to-pipeline-gate.py", "symbol": "FABRIC_ENUM", "normalize": "lower", "note": "the gate compares str(fabric).strip().lower(); the generator mirrors that"},
+    "status": {"no_enum": true, "why": "the gate does not read status; the flat register carries 12 distinct live values (complete, closed, active, inactive, merged, ...) and enumerating them is a Rule 24 authoring act nobody has asked for"}
+  },
   "index": {
     "root": "org/projects",
     "file": "{project_code}.json",
@@ -83,6 +95,7 @@
     {"id": "R5", "test": "a tree project is absent from DIRECTIVES.yaml directives.<D>.members.projects"},
     {"id": "ROW-MISSING", "test": "a project folder has no project.json"},
     {"id": "ROW-FIELD", "test": "a row lacks a required field"},
+    {"id": "ROW-ENUM", "test": "a row's dep_stage or fabric is present but not in the gate's enum (value_enums), after the gate's own normalization"},
     {"id": "INDEX-MISSING", "test": "a valid tree project has no generated index entry (remedy: derive --write)"},
     {"id": "INDEX-DRIFT", "test": "a generated index entry's compared field differs from the tree row"},
     {"id": "INDEX-ORPHAN", "test": "a generated index entry's `home` has no tree row"}

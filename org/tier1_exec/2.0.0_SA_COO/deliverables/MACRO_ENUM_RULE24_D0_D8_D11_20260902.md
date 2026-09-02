@@ -11,7 +11,7 @@ here is ratified until his word flips `ratification:` on the carrier, quoting th
 | directive | macros (the enum) | evidence (rows with that `directive`, 352-row register @d413196285) |
 |---|---|---|
 | D0 | `NFRA` | 5 of 5 rows: prefix NFRA, `macro_code` NFRA |
-| D8 | `ETFS`, `MDPF`, `AUTH` | 4 of 4 rows: MDPF x2, ETFS x1, AUTH x1; `macro_code` == prefix on every row |
+| D8 | `ETFS`, `MDPF`, `AUTH` | 4 of 4 rows at the 21:2xZ census: MDPF x2, ETFS x1, AUTH x1; `macro_code` == prefix on every row. **RE-CENSUSED 23:3xZ (s.4a): 5 of 5 at @3eae79fea1** -- the same four conform; `GLOBALALARM` (moved D10->D8 by MSTR @2fa0e0b29f, 22:13Z) fails the grammar and is outside the domain; enum UNCHANGED |
 | D11 | `NFRA` | 2 of 2 rows: NFRA; `NFRA_COMPEFFICACY` (no row yet; Andrew ~21:0xZ "laptop under D11") conforms |
 
 A macro repeats across directives by design (`NFRA` under D0 and D11); each directive's list is its
@@ -77,6 +77,28 @@ non-conforming prefixes (18 rows) are all flat, all pre-existing, all untouched:
 **2 rows whose `project_code` begins `projects\MDPF`** -- a path fragment leaked into the code field.
 That last one is a register-hygiene SURPRISE (OBSERVATION class), surfaced to `3.0.0_SA_CVO` in the
 session log, not chased here; it is why R1 tests the ROW's `project_code` and not only the folder.
+
+## 4a. Re-census after GLOBALALARM's move (R-v of the CVO review @580c4f72a2)
+
+The 21:2xZ census read D8 at 4 rows. At 22:13Z `0.0.0_AB_MSTR` moved `GLOBALALARM` D10 -> D8 in both
+carriers (@2fa0e0b29f), ~an hour after the census and before Andrew ratified anything for D8. CVO's
+review caught the stale row. **Re-censused 23:3xZ at @3eae79fea1, denominator 352 rows, 0 parse
+errors:** D8 = 5 rows. `AUTH_SELFHEAL`, `ETFS_GUARDRAIL`, `MDPF_COTREMEDIATION`, `MDPF_HEALGAP` conform
+(`macro_code` == prefix, each in {ETFS, MDPF, AUTH}). `GLOBALALARM`: `macro_code` = `GLOBALALARM`
+(11 letters), `project_code` = `GLOBALALARM` (no separator) -- fails `^[A-Z]{4}$` and
+`^[A-Z]{4}_[A-Z0-9]{4,12}$` both; `dep_stage` REGISTERED, `status` active, `fabric` unset.
+
+**What it does to the proposal: nothing, and here is why that is the honest answer rather than the
+convenient one.** The declared domain (s.2) is *the macro a NEW project may register under, INTO the
+tree*. `GLOBALALARM` is a flat row and stays one (spec s.8: no migration); it is outside the domain by
+construction, not by omission. It COULD become in-domain only by a rename to a conforming code
+(`XXXX_GLOBALALARM` under a ratified macro), which is a separate act with its own record -- MSTR's
+register, Andrew's word -- that nobody has asked for and this record does not propose. The enum for D8
+stays `[ETFS, MDPF, AUTH]`. The carrier's D8 census string was RESTATED by `0.0.0_AB_MSTR` at ~23:4xZ
+(its own lane, its own move) to read 5 of 5 with the exception named, so a reader of `MACROS.yaml`
+alone sees the same fact this section carries. **The uncovered-member hunt (postulate i) is what
+found it:** a member of D8 that no listed macro covers -- and the answer is that it is not a member
+of the DOMAIN, which is a different thing from being covered.
 
 ## 5. What makes the enum BIND (the consuming half)
 

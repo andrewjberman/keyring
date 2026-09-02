@@ -30,6 +30,7 @@ be overridden for fixtures (--root/--projects/--directives/--macros/--contract).
 from __future__ import annotations
 
 import argparse
+import ast
 import datetime as _dt
 import json
 import re
@@ -51,6 +52,26 @@ _DEFAULTS = {
     "macros": _WS / "org" / "missions" / "MACROS.yaml",
 }
 TOOL_NAME = ".tools/missions-tree-index.py"
+
+
+def _resolve_enum(path: Path, symbol: str) -> tuple:
+    """Read ONE module-level literal assignment from a Python source by AST -- no import, no execution.
+
+    The gate's enum is the only carrier (contract `value_enums`); a copy here would be a second
+    carrier that drifts. Missing file or symbol FAILS CLOSED: an empty enum would read every row
+    as invalid or every row as valid, and both are wrong silently."""
+    if not path.is_file():
+        raise SystemExit(f"ERROR: value-enum source {path} not found -- refusing to run without the gate's enum")
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if isinstance(t, ast.Name) and t.id == symbol:
+                    val = ast.literal_eval(node.value)
+                    if not isinstance(val, (tuple, list)) or not val:
+                        raise SystemExit(f"ERROR: {symbol} in {path} is not a non-empty tuple/list literal")
+                    return tuple(str(v) for v in val)
+    raise SystemExit(f"ERROR: {symbol} not found as a module-level literal in {path} -- refusing to run without the gate's enum")
 
 
 class Estate:
@@ -75,6 +96,21 @@ class Estate:
         self.compared = list(self.contract["index"]["compared_fields"])
         self.index_root_rel = self.contract["index"]["root"]
         self.tree_root_rel = self.contract["root"]
+        # value enums: resolved from the GATE's source by AST (contract `value_enums`), one carrier
+        self.enums = {}
+        self.enum_sources = {}
+        self.enum_norm = {}
+        for field, spec in (self.contract.get("value_enums") or {}).items():
+            if field.startswith("_") or not isinstance(spec, dict) or spec.get("no_enum"):
+                continue
+            src = _WS / spec["source"]
+            self.enums[field] = _resolve_enum(src, spec["symbol"])
+            self.enum_sources[field] = f"{spec['source']}:{spec['symbol']}"
+            self.enum_norm[field] = spec.get("normalize", "exact")
+
+    def _norm(self, field, value):
+        v = str(value)
+        return v.strip().lower() if self.enum_norm.get(field) == "lower" else v
 
     # ---------- loaders ----------
     def load_macros(self):
@@ -190,6 +226,12 @@ class Estate:
             if code and not self.re_prj.match(code):
                 viol.append(("R1", path, f"project_code {code!r} fails {self.re_prj.pattern}"))
                 ok = False
+            # ROW-ENUM: present-but-wrong against the gate's own enum (absence is ROW-FIELD above)
+            for f, allowed in self.enums.items():
+                v = row.get(f)
+                if v not in (None, "") and self._norm(f, v) not in allowed:
+                    viol.append(("ROW-ENUM", path, f"{f}={v!r} not in {allowed} (source {self.enum_sources[f]})"))
+                    ok = False
             # R4 path agreement
             if str(row.get("directive")) != t["D"]:
                 viol.append(("R4", path, f"row directive {row.get('directive')!r} != folder {t['D']!r}"))
@@ -256,6 +298,7 @@ class Estate:
             "directives_entries": sum(len(v) for v in directives.values()),
             "macros_directives": len(macros),
             "macros_ratified": sum(1 for v in macros.values() if v["ratification"].startswith(self.ratified_prefix)),
+            "value_enums": {f: {"values": list(vals), "source": self.enum_sources[f]} for f, vals in self.enums.items()},
         }
         viol.sort(key=lambda v: (v[0], v[1], v[2]))
         return viol, denom, valid, directives
@@ -321,6 +364,8 @@ def _print_check(viol, denom, as_json=False):
           " | flat index rows={flat_rows} (generated={flat_generated}, hand-written={flat_hand_written}, parse-errors={flat_parse_errors})"
           " | DIRECTIVES.yaml: {directives_entries} entries across {directives_listed} directives"
           " | MACROS.yaml: {macros_ratified} of {macros_directives} directive(s) RATIFIED".format(**denom))
+    for f, spec in denom.get("value_enums", {}).items():
+        print(f"  value enum {f}: {len(spec['values'])} values from {spec['source']} (read by AST at run time)")
     for a, b, c in viol:
         print(f"  [{a}] {b}: {c}")
     print(f"RESULT: {len(viol)} violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)")
@@ -476,6 +521,33 @@ def self_test() -> int:
         (est.root / "INFRASTRUCTURE" / "GRAPH" / "state.yaml").write_text("x: 1\n", encoding="utf-8")
         viol, denom, _, _ = est.check()
         chk("MSTR mission register beside the tree is not read", not viol and denom["tree_projects"] == 0, str(ids(viol)))
+        # 14. value enums resolve from the GATE by AST and agree with an independent regex read (grain)
+        est = fresh("t14")
+        gate_src = (_WS / ".tools" / "to-pipeline-gate.py").read_text(encoding="utf-8")
+
+        def rx_enum(sym):
+            m = re.search(r"^" + sym + r"\s*=\s*\((.*?)\)\s*$", gate_src, re.M)
+            return tuple(s.strip().strip("'\"") for s in m.group(1).split(",") if s.strip()) if m else None
+
+        chk("value enums resolved by AST == independent regex read of the gate (dep_stage, fabric)",
+            est.enums.get("dep_stage") == rx_enum("DEP_STAGE_ENUM") and est.enums.get("fabric") == rx_enum("FABRIC_ENUM") and len(est.enums["dep_stage"]) >= 6,
+            f"ast={est.enums} regex={rx_enum('DEP_STAGE_ENUM')},{rx_enum('FABRIC_ENUM')}")
+        # 15. ROW-ENUM mutants: dep_stage BOGUS; fabric moon; fabric case-insensitive like the gate
+        est = fresh("t15")
+        plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", dep_stage="BOGUS")
+        est.derive(write=True)
+        viol, _, _, _ = est.check()
+        chk("mutant ROW-ENUM (dep_stage=BOGUS) -> exactly [ROW-ENUM]", ids(viol) == ["ROW-ENUM"], str(ids(viol)))
+        est = fresh("t16")
+        plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", fabric="moon")
+        est.derive(write=True)
+        viol, _, _, _ = est.check()
+        chk("mutant ROW-ENUM (fabric=moon) -> exactly [ROW-ENUM]", ids(viol) == ["ROW-ENUM"], str(ids(viol)))
+        est = fresh("t17")
+        plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", fabric="Laptop")
+        est.derive(write=True)
+        viol, _, _, _ = est.check()
+        chk("fabric 'Laptop' passes like the gate (lower-normalized) -> 0 violations", not viol, str(ids(viol)))
 
     n_ok = sum(1 for _, ok, _ in results if ok)
     for name, ok, detail in results:
