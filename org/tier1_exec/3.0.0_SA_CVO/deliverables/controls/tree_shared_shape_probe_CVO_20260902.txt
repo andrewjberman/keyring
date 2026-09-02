@@ -1,0 +1,18 @@
+LIVE MACROS.yaml: 3 directives, RATIFIED = ['D11']
+
+ROOT: C:\Users\ANDREW~1\AppData\Local\Temp\cvo-tree-shape-dkbhly9d  (real contract C:\Users\AndrewBerman\Desktop\ajb_workspace\org\standards\PROJECT_TREE.contract.json)
+  1 VALID tree project (D11/NFRA, RATIFIED, listed)    generator=check ['INDEX-MISSING'], derive wrote ['NFRA_COMPEFFICACY'] gate=PASS               DISAGREE
+     generated index entry fields: ['dep_stage', 'directive', 'fabric', 'generated_at', 'generated_by', 'generated_from', 'home', 'macro_code', 'name', 'project_code', 'status']
+     gate resolved row: org/missions/D11/NFRA/NFRA_COMPEFFICACY/project.json
+     re-check after derive --write: 0 viol (INDEX-MISSING must be gone; generated=1)
+  2 row.project_code != folder (R4)                    generator=check ['R4']                 gate=PASS               DISAGREE: gate reads the row and never compares its code to the folder
+  3 dep_stage=BOGUS fabric=moon (values outside the gate enums) generator=check ['INDEX-MISSING'], derive wrote ['NFRA_COMPEFFICACY'] gate=REFUSE             AGREE
+     gate said: org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CVO1.md: project 
+  4 project under D0/NFRA (ratification PROPOSED) (R2) generator=check ['R2']                 gate=PASS               DISAGREE: ratification binds in check only; the TO gate admits it
+  5 CONTROL TO filename code != folder                 generator=n/a (a TO, not a row)        gate=REFUSE(identity)   EXPECTED
+
+  6 GENERATED entry lacks these fields a live hand-written row carries: ['blocking', 'created', 'leads', 'phase', 'pipeline', 'pods', 'related']
+     (readers_of_the_index_unchanged per contract: to-pipeline-gate L3, to-check, registry-check, fabric-check, /drive step 2, surprise-row-gate)
+
+ROOT removed: True
+SUMMARY: 5 cases, 3 DISAGREE
