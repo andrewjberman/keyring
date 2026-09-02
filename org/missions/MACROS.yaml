@@ -40,5 +40,5 @@ directives:
     alternative_named: "ETFS only (the water-test minimum the spec wrote before the census) -- rejected in the record: the most likely next D8 registrant is an MDPF_* successor arc, and an enum that refuses it on day one is a bare prohibition, not a taxonomy"
   D11:
     macros: [NFRA]
-    ratification: PROPOSED
+    ratification: "RATIFIED org/tier1_exec/2.0.0_SA_COO/deliverables/MACRO_ENUM_RULE24_D0_D8_D11_20260902.md 2026-09-02 -- verbatim: 'commit macros.yaml and ratify D11' (Andrew-direct ~22:3xZ at the 0.0.0_AB_MSTR terminal; record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260902_MACRO_ENUM_D11_RATIFIED.md). HE NAMED D11 AND ONLY D11 -- D0 and D8 stay PROPOSED, and Rule 24 (iv) is why that is expressible: ratifying one directive's list moves no other."
     census: "2 of 2 rows with directive D11 carry macro_code NFRA (NFRA_C3MATERIALIZE, NFRA_SUBSTRATECARDING); NFRA_COMPEFFICACY (no row yet; Andrew ~21:0xZ 'laptop under D11') conforms"
