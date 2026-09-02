@@ -9,6 +9,8 @@ instrument observed the conjunction.
 from __future__ import annotations
 
 import importlib.util
+import asyncio
+import contextlib
 import json
 import os
 import sys
@@ -94,6 +96,46 @@ class HeartbeatSummaryIsMeasured(unittest.TestCase):
         self.assertNotIn("WORKING: Codex non-consuming inbox monitor active",
                          summary.split(" | ")[0])
         self.assertIn("DEGRADED", summary)
+
+
+class HeartbeatLostRegistrationRecovery(unittest.IsolatedAsyncioTestCase):
+    async def test_run_reregisters_when_liveness_entry_is_lost(self):
+        old_comms = heartbeat.comms
+        done = asyncio.Event()
+
+        class FakeComms:
+            _poll_task = None
+
+            def __init__(self):
+                self.registrations = 0
+                self.beats = 0
+
+            async def register_agent(self, serial, summary):
+                self.registrations += 1
+                return f"Registered {serial} as live (PID 1)."
+
+            async def heartbeat(self, serial, summary):
+                self.beats += 1
+                if self.beats == 1:
+                    return f"{serial} is not registered. Call register_agent first."
+                if self.registrations >= 2:
+                    done.set()
+                return f"Heartbeat OK for {serial}."
+
+        fake = FakeComms()
+        heartbeat.comms = fake
+        try:
+            task = asyncio.create_task(
+                heartbeat.run(SERIAL, "", 0, Path(tempfile.gettempdir()))
+            )
+            await asyncio.wait_for(done.wait(), timeout=1)
+            task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await task
+        finally:
+            heartbeat.comms = old_comms
+
+        self.assertEqual(fake.registrations, 2)
 
 
 def proc(pid: int, cmdline: str) -> dict:
