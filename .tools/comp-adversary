@@ -600,5 +600,27 @@ def main():
     return 2
 
 
+def _self_report(rc):
+    """comp-adversary SELF-REPORTS into org/mcp/comp-tool-runs.jsonl -- the shape comp-which,
+    comp-find and comp-read use (NFRA_COMPEFFICACY unit 3a, 3.0.0_SA_CVO 92758).
+
+    MEASURED 2026-09-02: ZERO comp_log_auto call sites in this file and ZERO tool=comp-adversary
+    rows in the sink, all-time -- the THIRD tool found with the unit-1 gap (92625 s.1). comp-pulse
+    reads that sink (comp_pulse.py:66), so the estate's validator-context composer was invisible
+    to its own vital-signs tool. Negative control taken PRE-change: one real compose, 0 rows.
+
+    ADDITIVE. The declaration, the packet, the rail-log rows: untouched. Never raises -- a
+    telemetry sink must never break the tool it measures."""
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join(repo_root(), "org", "modules", "graph", "comp_log_auto.py"),
+             "comp-adversary", " ".join(sys.argv[1:])[:200], str(rc)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    _rc = main()
+    _self_report(_rc)
+    sys.exit(_rc)
