@@ -198,7 +198,29 @@ def _notify(root, row):
             % (row["project"], row.get("directive"), row.get("fabric"), row["prd_version"], row.get("status"),
                row["sha"], row["path"], row.get("brief_ref"), ", ".join(row.get("outcomes") or []),
                REOFFER_MINUTES, MAX_ATTEMPTS))
-    return send(root, row["to"], subject, body, sender=row.get("from"))
+    sender = row.get("from") or _ledger_sender(row)
+    if not sender:
+        raise RuntimeError("row %s %s carries no `from` and its first message is not on the ledger -- "
+                           "refusing to re-offer under the committing seat's identity"
+                           % (row.get("project"), row.get("prd_version")))
+    row["from"] = sender
+    return send(root, row["to"], subject, body, sender=sender)
+
+
+def _ledger_sender(row):
+    """The ORIGINAL sender of a row written before `from` was recorded: read off the ledger row of its
+    first message. MEASURED 2026-09-02 21:42Z: the v0.2 row predated the `from` fix, so its first live
+    re-offer (id 92780) fell back to OPAL_AGENT_SERIAL of the seat whose commit fired the hook --
+    3.0.0_SA_CVO -- exactly the mis-attribution 719e73ffd3 was written to stop, one row earlier."""
+    hist = row.get("history") or []
+    first = hist[0].get("msg_id") if hist and isinstance(hist[0], dict) else row.get("msg_id")
+    if not first:
+        return None
+    rows = _ledger_rows({"message_id": int(first)}) or []
+    for r in rows:
+        if isinstance(r, dict) and r.get("id") == int(first) and r.get("from_serial"):
+            return str(r["from_serial"])
+    return None
 
 
 def post_commit(root):
