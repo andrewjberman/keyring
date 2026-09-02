@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""prd-header-notify -- R3 of the canonical loop (step 4 -> step 5), release condition 7.
+"""prd-header-notify -- R3 of the canonical loop (step 4 -> step 5), release condition 7 -- and, since
+2026-09-02 22:4xZ, R7 (step 10 -> the loop_target's owner) on the SAME durable READ-ack machinery:
+a remediation row NEW in a commit, on either channel root, is offered to ROUTE_OWNER[loop_target]
+and re-offered until READ. The file keeps its R3 name; `kind` on each outstanding row says which.
 
 WHAT IT IS. When a commit lands a step-4 PRD whose PRD_HEADER is NEW or whose `prd_version` BUMPED,
 deliver the exact identity -- project, version, commit SHA, path, status -- to 2.0.0_SA_COO through
@@ -51,6 +54,52 @@ STATE_REL = "org/mcp/.prd-notify/outstanding.jsonl"
 SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
 PRD_GLOB_RE = re.compile(r"^docs/architecture/[^/]+_PRD\.md$")
 FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
+
+# R7 -- step 10 -> the loop_target's owner (design @3814be3317 R7; Andrew: "there's like a field
+# somewhere in there where it defines if it's an L6 issue, if it's an L5 issue"). The field is
+# `loop_target`, enum [2, 5, 6], gate-locked to `route` in surprise-row-gate.py ROUTE_TO_STEP
+# (SPEC_ERROR -> 6, DECOMP_INVALIDATING -> 5, SCOPE_CHANGE -> 2). The owner per target is the STEP's
+# owner in the canonical loop; steps 5 and 6 are COO's, step 2 is CTO's (/endpoint --forward F0
+# re-entry). Same durable READ-ack machinery as R3; same boundary: it NOTIFIES, it does not act.
+ROUTE_OWNER = {2: "1.0.0_SA_CTO", 5: "2.0.0_SA_COO", 6: "2.0.0_SA_COO"}
+REMED_RE = re.compile(r"(^|/)org/surprise_channel/[^/]+/REMEDIATION_v[^/]*\.(md|json)$"
+                      r"|(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/surprise-channel/remediations/"
+                      r"REMEDIATION_v[^/]*\.(md|json)$")
+
+
+def _gate_rows(root):
+    """surprise-row-gate.py's OWN row parser (_rows), imported by path. One parser for the channel,
+    never a second one here: a second parser is a second carrier of what a row IS."""
+    import importlib.util
+    p = os.path.join(root, ".tools", "surprise-row-gate.py")
+    spec = importlib.util.spec_from_file_location("srg_for_notify", p)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod._rows
+
+
+def route_rows(prev_text, now_text, raw, rows_fn):
+    """[(owner, row, reason)] for rows NEW in now_text vs prev_text. A new row with no usable
+    loop_target, or one outside ROUTE_OWNER, comes back with owner None and the reason -- printed by
+    the caller, never silently dropped (an unrouted remediation is the loop degrading quietly)."""
+    now_rows, _ = rows_fn(now_text, raw)
+    prev_rows, _ = rows_fn(prev_text, raw) if prev_text else ([], 0)
+    prev_ids = {r.get("id") for r in prev_rows if isinstance(r, dict)}
+    out = []
+    for r in now_rows:
+        if not isinstance(r, dict) or not r.get("id") or r.get("id") in prev_ids:
+            continue
+        try:
+            t = int(r.get("loop_target"))
+        except (TypeError, ValueError):
+            out.append((None, r, "no usable loop_target (%r)" % (r.get("loop_target"),)))
+            continue
+        owner = ROUTE_OWNER.get(t)
+        if not owner:
+            out.append((None, r, "loop_target %d has no owner (known: %s)" % (t, sorted(ROUTE_OWNER))))
+            continue
+        out.append((owner, r, ""))
+    return out
 
 
 def _root() -> str:
@@ -187,17 +236,48 @@ def send(root, to, subject, body, sender=None) -> int:
     return mid
 
 
-def _notify(root, row):
+_ACK_TAIL = ("\nACK this message (ack_messages) -- the notifier re-offers every %d minutes until the READ ack "
+             "lands, up to %d attempts. SENT != EMITTED != READ.\n" % (REOFFER_MINUTES, MAX_ATTEMPTS))
+
+
+def _compose(row):
+    """(subject, body) for either kind of outstanding row: 'prd' (R3) or 'route' (R7)."""
+    if row.get("kind") == "route":
+        t = int(row["loop_target"])
+        subject = "[ROUTE step %d] %s route=%s -> %s re-enters at step %d" % (
+            t, row["id"], row.get("route"), row["project"], t)
+        if t == 2:
+            act = ("Step 2 re-entry: run /endpoint --forward Step F0 on outcome_ref=%s -- read THAT outcome only, "
+                   "decide WRONG / RIGHT-BUT-INCOMPLETE / OBSOLETE, re-test its ACCEPT, edit the PRD's ENDPOINT "
+                   "section the same turn. Never re-derive the whole list." % row.get("outcome_ref"))
+        elif t == 5:
+            act = "Step 5 re-entry: the decomposition is invalidated by this row; re-decompose before any TO."
+        else:
+            act = "Step 6 re-entry: the TO is wrong as cut; re-cut it through the step-6 gate."
+        body = ("R7 ROUTER (canonical loop step 10 -> loop_target). This is a NOTIFICATION, not a dispatch: "
+                "nothing is cut, decomposed or re-aligned by it.\n\n"
+                "  id            %s\n  route         %s\n  loop_target   %s\n  outcome_ref   %s\n  project       %s\n"
+                "  fabric        %s\n  commit        %s\n  path          %s\n  remedy        %s\n\n%s\n%s"
+                % (row["id"], row.get("route"), row.get("loop_target"), row.get("outcome_ref"), row["project"],
+                   row.get("fabric"), row["sha"], row["path"], row.get("remedy"), act, _ACK_TAIL))
+        return subject, body
     subject = "[PRD LANDED] %s %s @%s -- step 4 done; step 5 is yours" % (row["project"], row["prd_version"], row["sha"][:10])
     body = ("R3 NOTIFIER (canonical loop step 4 -> 5). This is a NOTIFICATION, not a dispatch: no TO is cut and "
             "no decomposition is started by it.\n\n"
             "  project      %s\n  directive    %s\n  fabric       %s\n  prd_version  %s\n  status       %s\n"
-            "  commit       %s\n  path         %s\n  brief_ref    %s\n  outcomes     %s\n\n"
-            "ACK this message (ack_messages) -- the notifier re-offers every %d minutes until the READ ack lands, "
-            "up to %d attempts. SENT != EMITTED != READ.\n"
+            "  commit       %s\n  path         %s\n  brief_ref    %s\n  outcomes     %s\n%s"
             % (row["project"], row.get("directive"), row.get("fabric"), row["prd_version"], row.get("status"),
-               row["sha"], row["path"], row.get("brief_ref"), ", ".join(row.get("outcomes") or []),
-               REOFFER_MINUTES, MAX_ATTEMPTS))
+               row["sha"], row["path"], row.get("brief_ref"), ", ".join(row.get("outcomes") or []), _ACK_TAIL))
+    return subject, body
+
+
+def _label(row):
+    return ("%s %s" % (row["id"], row.get("route")) if row.get("kind") == "route"
+            else "%s %s" % (row["project"], row.get("prd_version")))
+
+
+def _notify(root, row):
+    subject, body = _compose(row)
     sender = row.get("from") or _ledger_sender(row)
     if not sender:
         raise RuntimeError("row %s %s carries no `from` and its first message is not on the ledger -- "
@@ -253,25 +333,76 @@ def post_commit(root):
             print("[prd-notify] %s: prd_version %s unchanged vs HEAD~1 -- not notified (bump it for a "
                   "substantive edit; an un-bumped edit is invisible to COO by design)" % (rel, now_h.get("prd_version")))
             continue
-        row = {"project": now_h["project"], "directive": now_h.get("directive"), "fabric": now_h.get("fabric"),
-               "prd_version": now_h["prd_version"], "status": now_h.get("status"), "sha": sha, "path": rel,
-               "brief_ref": now_h.get("brief_ref"), "outcomes": now_h.get("endpoint_outcomes"),
-               "to": RECIPIENT, "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
+        row = {"kind": "prd", "project": now_h["project"], "directive": now_h.get("directive"),
+               "fabric": now_h.get("fabric"), "prd_version": now_h["prd_version"], "status": now_h.get("status"),
+               "sha": sha, "path": rel, "brief_ref": now_h.get("brief_ref"),
+               "outcomes": now_h.get("endpoint_outcomes"), "to": RECIPIENT,
+               "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
                "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
+        sent += _dispatch(root, state, row)
+    # ---- R7: remediation rows NEW in this commit, on either root -> the loop_target's owner ----
+    for rel in [f for f in touched if REMED_RE.search(f)]:
         try:
-            mid = _notify(root, row)
-            row.update(msg_id=mid, sent_at=time.time(), attempts=1)
-            row["history"].append({"msg_id": mid, "at": time.time()})
-            print("[prd-notify] %s %s @%s -> %s id=%d (DELIVERED/QUEUED is transport; READ is the goal)"
-                  % (row["project"], row["prd_version"], sha[:10], RECIPIENT, mid))
-            sent += 1
-        except Exception as exc:  # noqa: BLE001
-            row["last_error"] = str(exc)[:300]
-            print("[prd-notify] %s: SEND FAILED (%s) -- recorded as outstanding with 0 attempts; reoffer will retry"
-                  % (rel, str(exc)[:160]))
-        state.append(row)
+            now_text = _blob(root, "HEAD", rel, must=True)
+        except RuntimeError as exc:
+            print("[prd-notify] ERROR: could not read HEAD:%s (%s) -- NO route notified and NOT recorded; "
+                  "re-run `prd-header-notify.py post-commit` once the cause is fixed" % (rel, exc))
+            continue
+        prev_text = _blob(root, "HEAD~1", rel)
+        for owner, r, reason in route_rows(prev_text, now_text, rel.lower().endswith(".json"), _gate_rows(root)):
+            if owner is None:
+                print("[prd-notify] %s: NEW remediation row %s NOT routed -- %s (the surprise-row gate should "
+                      "have refused it; this notifier does not gate)" % (rel, r.get("id"), reason))
+                continue
+            row = {"kind": "route", "id": r["id"], "route": r.get("route"), "loop_target": int(r["loop_target"]),
+                   "outcome_ref": r.get("outcome_ref"), "project": r.get("project") or str(r["id"]).rsplit("-S", 1)[0],
+                   "fabric": r.get("fabric"), "remedy": str(r.get("remedy") or "")[:400], "sha": sha, "path": rel,
+                   "to": owner, "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
+                   "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
+            sent += _dispatch(root, state, row)
     _save_state(root, state)
     return sent
+
+
+def _dispatch(root, state, row):
+    """Send one outstanding row now and record it (attempt 1), or record it with 0 attempts for the
+    re-offer to retry. Returns 1 if sent."""
+    try:
+        mid = _notify(root, row)
+        row.update(msg_id=mid, sent_at=time.time(), attempts=1)
+        row["history"].append({"msg_id": mid, "at": time.time()})
+        print("[prd-notify] %s @%s -> %s id=%d (DELIVERED/QUEUED is transport; READ is the goal)"
+              % (_label(row), row["sha"][:10], row["to"], mid))
+        state.append(row)
+        return 1
+    except Exception as exc:  # noqa: BLE001
+        row["last_error"] = str(exc)[:300]
+        print("[prd-notify] %s: SEND FAILED (%s) -- recorded as outstanding with 0 attempts; reoffer will retry"
+              % (_label(row), str(exc)[:160]))
+        state.append(row)
+        return 0
+
+
+def route_dryrun(root, sha):
+    """What post-commit WOULD route for commit `sha` (vs sha~1), sending nothing. The real-bytes
+    exercise: run it on any commit that touched a remediation doc."""
+    touched = [ln.strip().replace("\\", "/") for ln in
+               _git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", sha).stdout.splitlines()]
+    rels = [f for f in touched if REMED_RE.search(f)]
+    print("[prd-notify route-dryrun] %s touched %d file(s), %d remediation doc(s)" % (sha[:10], len(touched), len(rels)))
+    n = 0
+    for rel in rels:
+        now_text = _blob(root, sha, rel)
+        prev_text = _blob(root, sha + "~1", rel)
+        routed = route_rows(prev_text, now_text, rel.lower().endswith(".json"), _gate_rows(root))
+        for owner, r, reason in routed:
+            n += 1
+            print("  %s  %-28s route=%-20s loop_target=%-4s -> %s" % (
+                "ROUTE " if owner else "SKIP  ", r.get("id"), r.get("route"), r.get("loop_target"), owner or reason))
+        if not routed:
+            print("  %s: no NEW rows vs %s~1" % (rel, sha[:10]))
+    print("[prd-notify route-dryrun] %d new remediation row(s) considered" % n)
+    return 0
 
 
 def reoffer(root):
@@ -282,7 +413,7 @@ def reoffer(root):
         mid = row.get("msg_id")
         if mid and is_read(mid):
             retired += 1
-            print("[prd-notify] RETIRED %s %s id=%d -- READ by %s" % (row["project"], row["prd_version"], mid, row["to"]))
+            print("[prd-notify] RETIRED %s id=%d -- READ by %s" % (_label(row), mid, row["to"]))
             continue
         due = (row.get("sent_at") is None) or (now - row["sent_at"] > REOFFER_MINUTES * 60)
         if due and row.get("attempts", 0) < MAX_ATTEMPTS:
@@ -291,12 +422,12 @@ def reoffer(root):
                 row.update(msg_id=new_mid, sent_at=now, attempts=row.get("attempts", 0) + 1)
                 row["history"].append({"msg_id": new_mid, "at": now})
                 resent += 1
-                print("[prd-notify] RE-OFFERED %s %s id=%d attempt %d/%d" % (row["project"], row["prd_version"], new_mid, row["attempts"], MAX_ATTEMPTS))
+                print("[prd-notify] RE-OFFERED %s id=%d attempt %d/%d" % (_label(row), new_mid, row["attempts"], MAX_ATTEMPTS))
             except Exception as exc:  # noqa: BLE001
                 row["last_error"] = str(exc)[:300]
         elif due:
-            print("[prd-notify] EXHAUSTED %s %s after %d attempts -- still not READ. This is a finding for the "
-                  "loop owner, not something this notifier can fix." % (row["project"], row["prd_version"], row["attempts"]))
+            print("[prd-notify] EXHAUSTED %s after %d attempts -- still not READ. This is a finding for the "
+                  "loop owner, not something this notifier can fix." % (_label(row), row["attempts"]))
         keep.append(row)
     _save_state(root, keep)
     return retired, resent
@@ -307,7 +438,7 @@ def status(root):
     print("[prd-notify] outstanding=%d (state file %s)" % (len(rows), STATE_REL))
     for r in rows:
         st = delivery_state(r["msg_id"]) if r.get("msg_id") else "UNSENT"
-        print("  %-22s %-6s @%s id=%s attempts=%d state=%s" % (r["project"], r["prd_version"], r["sha"][:10], r.get("msg_id"), r.get("attempts", 0), st))
+        print("  %-6s %-34s @%s -> %s id=%s attempts=%d state=%s" % (r.get("kind", "prd"), _label(r), r["sha"][:10], r.get("to"), r.get("msg_id"), r.get("attempts", 0), st))
     return 0
 
 
@@ -318,6 +449,39 @@ def selftest(root):
         print("  DEFECT  OPAL_AGENT_SERIAL unset; cannot run the round-trip")
         return 1
     fails = 0
+    # ---- R7 routing, PURE (the gate's own parser on synthetic prev/now texts; nothing sent) ----
+    rows_fn = _gate_rows(root)
+
+    def fence(*rows):
+        return "".join("```json\n" + json.dumps(r) + "\n```\n" for r in rows)
+    old = {"id": "P-S1", "route": "SPEC_ERROR", "loop_target": 6}
+    prev = fence(old)
+    now = fence(old,
+                {"id": "P-S2", "route": "SPEC_ERROR", "loop_target": 6},
+                {"id": "P-S3", "route": "DECOMP_INVALIDATING", "loop_target": 5},
+                {"id": "P-S4", "route": "SCOPE_CHANGE", "loop_target": 2, "outcome_ref": "FWD-3"},
+                {"id": "P-S5", "route": "SPEC_ERROR"},
+                {"id": "P-S6", "route": "SPEC_ERROR", "loop_target": 9})
+    got = {r["id"]: (o, bool(reason)) for o, r, reason in route_rows(prev, now, False, rows_fn)}
+    want = {"P-S2": ("2.0.0_SA_COO", False), "P-S3": ("2.0.0_SA_COO", False), "P-S4": ("1.0.0_SA_CTO", False),
+            "P-S5": (None, True), "P-S6": (None, True)}
+    ok = got == want
+    print("  %-7s route_rows: 6->5 rows routed as %s (P-S1 pre-existing, not re-routed; S5 no target, S6 unknown target)"
+          % ("OK" if ok else "DEFECT", "expected" if ok else got))
+    fails += int(not ok)
+    raw_now = json.dumps([{"id": "P-S7", "route": "SCOPE_CHANGE", "loop_target": 2}])
+    got_raw = [(o, r["id"]) for o, r, _ in route_rows(None, raw_now, True, rows_fn)]
+    ok = got_raw == [("1.0.0_SA_CTO", "P-S7")]
+    print("  %-7s route_rows on a RAW .json document with no HEAD~1 -> %s" % ("OK" if ok else "DEFECT", got_raw))
+    fails += int(not ok)
+    subj, body = _compose({"kind": "route", "id": "P-S4", "route": "SCOPE_CHANGE", "loop_target": 2,
+                           "outcome_ref": "FWD-3", "project": "P", "fabric": "laptop", "sha": "0" * 40,
+                           "path": "x", "remedy": "r"})
+    ok = "[ROUTE step 2]" in subj and "F0" in body and "FWD-3" in body and "NOTIFICATION" in body
+    print("  %-7s _compose(route, loop_target=2) names step 2, F0 re-entry, the outcome_ref, and the NOTIFICATION boundary"
+          % ("OK" if ok else "DEFECT"))
+    fails += int(not ok)
+    # ---- delivery, LIVE: delivered is not read (the RC7 property) ----
     try:
         mid = send(root, me, "[prd-notify selftest] probe", "probe body -- delivered is not read")
         print("  OK      probe sent to self, id=%d" % mid)
@@ -358,7 +522,9 @@ def main(argv):
         return status(root)
     if mode == "selftest":
         return selftest(root)
-    print("usage: prd-header-notify.py post-commit|reoffer|status|selftest", file=sys.stderr)
+    if mode == "route-dryrun" and len(argv) > 1:
+        return route_dryrun(root, argv[1])
+    print("usage: prd-header-notify.py post-commit|reoffer|status|selftest|route-dryrun <sha>", file=sys.stderr)
     return 2
 
 

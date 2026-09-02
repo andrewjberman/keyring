@@ -386,3 +386,71 @@ and postulate (iii) says one axis, one intent.
 F2 the enum gap (Rule 24) · and whether F1 warrants a full-corpus validation pass as a standing act.
 **REVIEW ADVERSARIALLY:** R8-a's containment ladder -- it is the piece Andrew called highest-risk, it is
 the piece with no mechanism behind it yet, and it is the one I would most expect to be wrong.
+
+---
+
+## EXECUTION RECORD 3 -- 2026-09-02 20:1xZ-21:3xZ: limb 5 pass 5, R3 BUILT + EXERCISED (RC7), the HOLD lifted
+
+`3.0.0_SA_CVO~A` was taken offline by Andrew at ~20:15Z; `3.0.0_SA_CVO` base inherited every grade.
+The handover is on the record at `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_2015Z_CVO_BASE_TAKES_OVER_CVO_A.md`.
+
+### Limb 5 pass 5 @`38f60078c4` -- answers CVO~A's PARTIAL @`ce5c82750f`
+
+The exact-three/column-zero fence regex was not Markdown's grammar; every gap was fail-OPEN. Replaced by
+a line scanner (0-3 spaces of indent, runs >= 3, closer at least as long, unclosed -> EOF). `brief_ref`
+gained one leading `(?![\s\S]*[\s\\])`. Harness v5 = 26 core + 18 schema + 10 limb-4 + 2 wrapper; RED 6
+on HEAD's gate, 4 of 11 on the old pattern; GREEN 0. Transcripts beside the harness. **GRADED GREEN by
+CVO base on its own instrument** (`CANONICAL_LOOP_RC7_LIMB5_GRADE_AND_HOLD_LIFT_20260902.md`).
+
+### R3 -- BUILT as `.tools/prd-header-notify.py` + post-commit hook + installer; RC7 GREEN
+
+Landed @`38f60078c4`; exercised on a real PRD commit @`cf532d66c5` (ETFS_GUARDRAIL v0.1 -> v0.2). **The
+exercise found two defects the selftest could not:** (1) under a git hook on Windows `subprocess` decoded
+`git show` as cp1252 and died on the PRD's UTF-8; the notifier then printed *"no valid PRD_HEADER"* -- a
+FALSE reason naming the gate as refuser of a PRD the gate passes (fixed @`451df0d61f`: explicit UTF-8; a
+read failure is an ERROR, never a header verdict; the hook logs one line per firing so an empty log
+cannot mean two things). (2) the hook is device-wide and fired on `3.0.0_SA_CVO`'s commits twice in five
+minutes, so a re-offer falling due then would have gone out under CVO's serial (fixed @`719e73ffd3`: the
+row carries `from`; a re-offer sends as the row's author).
+**THE TRANSPORT FINDING:** `codex-send.py` delivers through the broker LIBRARY in-process and the ledger
+that `/delivery-state` + `/ack-messages` read never sees it -- two DELIVERED probes, zero ledger rows.
+No READ-ack can exist on that path. The notifier sends on HTTP `/send-message`. Ledger vocabulary on 200
+live rows to this seat: EMITTED 133, OFFER-EXHAUSTED 34, READ 33.
+Evidence: ledger row **92762** `[PRD LANDED] ETFS_GUARDRAIL v0.2 @cf532d66c5` from `1.0.0_SA_CTO` to
+`2.0.0_SA_COO`, SENT -> OFFER-EXHAUSTED in ~6 min, `acked_at` null; outstanding 1, attempt 1 of 6.
+**The moratorium width, stated:** this is a loop-internal notifier on a settled route (step 4 -> 5), the
+carve-out Andrew's memo authorized; it does not alert, alarm, or watch a pipeline.
+
+### VERDICT -- RC1-RC7 GREEN, limb 5 GREEN, ETFS_GUARDRAIL RED/HOLD LIFTED (CVO base, 21:26Z)
+
+Carriers that move on it: the PRD's status line (this seat, v0.3) and the register row's `blocking`
+(`0.0.0_AB_MSTR`, addressed by CVO directly). Step 6 on ETFS_GUARDRAIL proceeds at COO's sequencing.
+
+### The watcher (RC2's other half) -- graded BY this seat, certifier != author
+
+Pass 2 @`1a4ce78782` on a second instrument (the committed function block sourced; the REAL validator
+over the LIVE 192-row channel; wrappers dropping a REAL row): **PARTIAL 3/4.** A2/B2/C2 pass. **F2
+DEFECT:** the provisional guard triggers on COUNT (`live_n < stored_n`), the hazard is a missing
+`(path,id)`; a real row dropped in the same 2-second sample as a genuine append elsewhere keeps the count
+equal, fires DISAPPEARED on poll 1, and the short sample is adopted wholesale -- the row is FORGOTTEN.
+E2 bound with its number: a row absent across two polls (~34 s at a 2 s sample + 15 s sleep) confirms
+falsely. Repair bar (i)-(iv) sent to CVO; the fix is CVO's, the re-grade mine.
+
+### Still open on this side, and where it now sits
+
+- **The project-tree prerequisites (Andrew's mandatory start point, 21:0xZ via COO) -- DONE on this
+  side:** (4) lane re-key @`20d1c60866` (27/27 both directions; validator clause 4 for
+  `deliverables/<serial>/`), (5) gate repoints @`1655d87688` (TO gate RED 14/GREEN 0 of 19; row gate
+  RED 8/0 of 12; watcher selftest 19/19; walk-back retired on a 2,235-TO census). Manifest rows 4-5
+  @`fa44d04e2c`; COO closed the set @`1223c343fe` and sent it to CVO in ONE message (22:36Z).
+- **R7 router -- BUILT** on the R3 machinery (`kind: route`): a remediation row NEW in a commit on
+  either root -> `ROUTE_OWNER[loop_target]` {2: CTO, 5: COO, 6: COO}, re-offered until READ; the
+  loop_target-2 body carries the F0 re-entry instruction. selftest 7/7; `route-dryrun` on the only
+  two real remediation commits: no new rows / one pre-schema row SKIPPED with its reason. **The corpus
+  has never held a routed row** (1 remediation row, route None) -- the first live firing is CVO's next
+  step-10 row, and the hook is armed for it.
+- **R4-c watcher extension** -- next: one stream line per NEW row carrying project, fabric, id, class,
+  hazard_standing (the fields R4-a/b made possible). CVO's file; sequenced behind CVO's re-arm on the
+  tree repoint so the file is edited once more, not twice.
+- `PRD_HEADER.status` enum: still unadopted; not carried by any gate.
+- The first live re-offer (due ~21:20Z on the next commit if COO has not acked 92762): evidence to read.

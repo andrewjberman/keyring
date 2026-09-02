@@ -19,9 +19,11 @@ mkdir -p "$_ws/org/mcp/.prd-notify"
 # ONE LINE PER FIRING, before any work: a reoffer with nothing outstanding prints nothing, and an
 # empty log then cannot tell "fired, nothing to do" from "never fired" (measured on the first
 # commit after install: 0 bytes, and the question could not be answered from the log).
+# post-commit mode when the commit touched a PRD (R3, step 4 -> 5) OR a remediation doc on either root
+# (R7, step 10 -> loop_target owner); the python decides what, if anything, is notified.
 case "$_touched" in
-  *docs/architecture/*_PRD.md*) _mode=post-commit ;;
-  *) _mode=reoffer ;;   # no PRD in this commit -- outstanding rows still RE-OFFER (commit-driven in v1)
+  *docs/architecture/*_PRD.md*|*/REMEDIATION_v*|*surprise-channel/remediations/*) _mode=post-commit ;;
+  *) _mode=reoffer ;;   # nothing notifiable in this commit -- outstanding rows still RE-OFFER (commit-driven in v1)
 esac
 printf '%s fired HEAD=%s mode=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(git -C "$_ws" rev-parse --short=10 HEAD 2>/dev/null)" "$_mode" >> "$_log"
 ( cd "$_ws" && python "$_ws/.tools/prd-header-notify.py" "$_mode" >> "$_log" 2>&1 ) &
