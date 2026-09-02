@@ -588,5 +588,28 @@ def main() -> int:
     return 0
 
 
+def _self_report(rc: int) -> None:
+    """comp-find SELF-REPORTS into org/mcp/comp-tool-runs.jsonl -- the same shape comp-which uses.
+
+    MEASURED 2026-09-02 (3.0.0_SA_CVO audit, delegated unit 1; verified here at source): comp-find
+    made ZERO comp_log_auto calls and wrote ONLY the rail log. Last 30 days: 3,722 rail rows /
+    0 runs.jsonl rows. comp-pulse's L2 traffic source IS comp-tool-runs.jsonl (comp_pulse.py:66),
+    so the estate's vital-signs tool was blind to its most doctrinally central search instrument.
+
+    ADDITIVE. The RUN-FIND rail writer above is UNTOUCHED -- it carries serial= and is the only
+    row that can attribute; this row feeds the traffic sink, it does not replace anything.
+    Never raises: a telemetry sink must never break the tool it measures."""
+    import subprocess
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join(WS, "org", "modules", "graph", "comp_log_auto.py"),
+             "comp-find", " ".join(sys.argv[1:])[:200], str(rc)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    _rc = main()
+    _self_report(_rc)
+    raise SystemExit(_rc)
