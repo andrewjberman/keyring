@@ -32,8 +32,21 @@ CONTROLS (PRD 5 -- controls, not care; comp-similar must not be able to lie):
                        construction) -> a name-identical/purpose-different pair scores LOW,
                        a name-different/purpose-identical pair scores HIGH (self-test).
   C3 blind-row       : a resource with a thin/UNKNOWN summary, or UNKNOWN heat, is NEVER a
-                       candidate; the coverage denominator (scanned / total / UNKNOWN) prints
-                       on every run.
+                       candidate; the coverage denominator (scanned / total / UNKNOWN) AND the
+                       corpus VINTAGE print on every run -- all FOUR modes, not two.
+                       ⛔ "on every run" was FALSE from 2026-07-19 to 2026-09-02: it printed on
+                       supersede/cluster only, while this line asserted otherwise and the
+                       self-test scored C3 PASS on the half that worked. An untrue control
+                       statement is worse than an absent one -- it teaches the reader to stop
+                       looking. All three halves are now legs of the harness so the tool can
+                       FAIL on this -- C3a blind-row, C3b disclosure (UNKNOWN path + every
+                       mode emits), C3c capture (a real comp-kuzu header parses to MEASURED,
+                       a headerless one to ABSENT). An unknown vintage renders UNKNOWN with an
+                       explicit do-not-trust clause: never omitted, never defaulted to fresh.
+                       ⛔ C3c exists because C3b alone passed IDENTICALLY while the live corpus
+                       still read UNKNOWN -- the vintage rides comp-kuzu's STDERR and the first
+                       fix read stdout. A control that only tests the absent-path green-lights
+                       the broken one.
   C4 dogfood         : the monolith-cutover superseded pair surfaces once both carry
                        divergent heat (offline shape mutant + the live scan).
   C5 hold-aware      : INF-chain / frozen / sovereign-named resources (_HELD_RX) are excluded
@@ -58,8 +71,14 @@ REPO = _HERE.parents[4]                  # .../ajb_workspace
 if str(_DEBTSCAN) not in sys.path:
     sys.path.insert(0, str(_DEBTSCAN))
 
-# Corpus + similarity engine (which itself reuses dup_scan.BM25) -- read-only import, ZERO
-# edits to summary_corpus.py (the ~C _position_key lane owns that file; edit-surface declared).
+# Corpus + similarity engine (which itself reuses dup_scan.BM25).
+# EDIT-SURFACE, CORRECTED 2026-09-02: this read "ZERO edits to summary_corpus.py (the ~C
+# _position_key lane owns that file)". That lane is 0.8.0_AE_CloudComp~C -- THIS SERIAL's own
+# lane, not a foreign seat -- so the note read as a cross-seat boundary when it was an
+# intra-serial coordination note from 2026-07-19, and no ~C/~D lane was live at this edit.
+# The D1 vintage fix landed IN coverage() deliberately: build_w1_cards.py (0.7.0_AE_CloudOps)
+# is a SECOND consumer of it, and fixing the vintage only here would have left that consumer
+# reading the same undated denominator -- the defect is in what the consumers SHARE.
 from summary_corpus import (  # noqa: E402
     build_corpus, SimilarityIndex, coverage, _HELD_RX,
 )
@@ -369,10 +388,72 @@ def self_test() -> int:
     print(f"  C1 false-twin (high-sim + no heat divergence -> 0 candidates): "
           f"n={len(cands_noheat)} {'PASS' if c1 else 'FAIL'}")
 
-    # C3 blind-row: the thin row is never a candidate (and would be UNKNOWN-heat anyway).
+    # C3a blind-row: the thin row is never a candidate (and would be UNKNOWN-heat anyway).
     c3 = "opal-data-lonely" not in names
     ok &= c3
-    print(f"  C3 blind-row (thin row absent from candidates): {'PASS' if c3 else 'FAIL'}")
+    print(f"  C3a blind-row (thin row absent from candidates): {'PASS' if c3 else 'FAIL'}")
+
+    # C3b DISCLOSURE (added 2026-09-02, CVO finding D2/D3). C3 is a TWO-clause control and only
+    # clause (a) was ever tested -- so the harness returned a clean 7/7 over a control that was
+    # half false, and the passing half was the half the harness was written from. Nothing in the
+    # tool could fail on it, which is why the defect survived from 2026-07-19.
+    # Two legs, because the claim has two halves:
+    #   (i)  coverage() ALWAYS discloses a vintage -- value may be UNKNOWN, disclosure may not
+    #        be absent. Asserted on a synthetic corpus, where the vintage IS unknown: the
+    #        UNKNOWN path is the one that must not silently render as fresh.
+    #   (ii) every mode emits it. Counted at SOURCE, so removing a call site fails this leg.
+    import inspect
+    cov_probe = coverage(corpus)
+    c3b_i = (cov_probe.get("corpus_vintage_claim") == "absent"
+             and "UNKNOWN" in cov_probe.get("vintage_note", "")
+             and "corpus built:" in cov_probe.get("note", ""))
+    src = inspect.getsource(main)
+    n_compute = src.count("coverage(corpus)")      # 2 branches: supersede/cluster + query
+    n_json = src.count('"coverage": cov')          # 4 modes, --json render path
+    n_human = src.count('print(cov["note"])')      # 4 modes, human render path
+    c3b_ii = n_compute == 2 and n_json == 4 and n_human == 4
+    c3b = c3b_i and c3b_ii
+    ok &= c3b
+    print(f"  C3b disclosure (vintage always disclosed; all 4 modes emit coverage): "
+          f"unknown-path={'ok' if c3b_i else 'BROKEN'} "
+          f"compute={n_compute}/2 json={n_json}/4 human={n_human}/4 "
+          f"{'PASS' if c3b else 'FAIL'}")
+
+    # C3c CAPTURE (added 2026-09-02, same session, after C3b was caught committing C3's own
+    # defect). ⛔ C3b tests ONLY the UNKNOWN path -- it passed IDENTICALLY before and after the
+    # stderr fix, while the live corpus still rendered UNKNOWN. A control that green-lights the
+    # broken state is the D3 shape one domain over, so the MEASURED path needs its own leg.
+    # The header below is a VERBATIM excerpt of real comp-kuzu output (streams separated,
+    # 2026-09-02), so this tests the shape the parser actually meets -- not one written to fit
+    # the parser. Runs offline: no graph, no AWS.
+    import summary_corpus as _sc
+    _saved = dict(_sc._CORPUS_VINTAGE)
+    try:
+        _sc._CORPUS_VINTAGE.clear()
+        _sc._capture_kuzu_vintage(
+            "=== comp-kuzu provenance ===\n"
+            "  DB: kuzu_nessie_db  (27122 nodes / 60670 edges)\n"
+            "  source: nessie\n"
+            "  built: 2026-09-02T14:20:11.113748+00:00 (age: 0.2h)\n"
+            "============================\n")
+        cap = coverage(corpus)
+        c3c = (cap.get("corpus_vintage_claim") == "measured"
+               and cap.get("corpus_built") == "2026-09-02T14:20:11.113748+00:00"
+               and cap.get("corpus_age") == "0.2h"
+               and cap.get("corpus_db") == "kuzu_nessie_db"
+               and "UNKNOWN" not in cap.get("vintage_note", ""))
+        # negative control: a header with NO built: line must NOT yield a measured claim.
+        _sc._CORPUS_VINTAGE.clear()
+        _sc._capture_kuzu_vintage("=== comp-kuzu provenance ===\n  DB: kuzu_nessie_db\n")
+        c3c_neg = coverage(corpus).get("corpus_vintage_claim") == "absent"
+    finally:
+        _sc._CORPUS_VINTAGE.clear()
+        _sc._CORPUS_VINTAGE.update(_saved)
+    c3c_ok = c3c and c3c_neg
+    ok &= c3c_ok
+    print(f"  C3c vintage-CAPTURE (real header parsed -> measured; headerless -> absent): "
+          f"parse={'ok' if c3c else 'BROKEN'} neg-control={'ok' if c3c_neg else 'BROKEN'} "
+          f"{'PASS' if c3c_ok else 'FAIL'}")
 
     # C5 hold-aware: the held twin is excluded even though it is COLD + summary-identical.
     c5 = "inf-gold-legacyfeed" not in names
@@ -392,7 +473,7 @@ def self_test() -> int:
     print(f"  C-conf both-cold -> HIGH confidence: {cands[0].get('confidence') if cands else None} "
           f"{'PASS' if cconf else 'FAIL'}")
 
-    print(f"=== comp_similar self-test: {'PASS' if ok else 'FAIL'} (7/7) ===" if ok
+    print(f"=== comp_similar self-test: {'PASS' if ok else 'FAIL'} (9/9) ===" if ok
           else "=== comp_similar self-test: FAIL ===")
     return 0 if ok else 1
 
@@ -502,6 +583,12 @@ def main(argv=None) -> int:
         if not corpus:
             sys.stderr.write("comp-similar: EMPTY corpus (broken retrieval, not an empty estate)\n")
             return 2
+        # D2 (CVO finding 2026-09-02): the C3 control says the coverage denominator prints on
+        # EVERY run. It printed on supersede/cluster only -- and the two query modes are the
+        # ones a human reaches for FIRST, whose bare `sim=` / [THIN] / [HELD] output most looks
+        # like a finished answer. The docstring was the thing that was wrong; the code is now
+        # what it always claimed to be.
+        cov = coverage(corpus)
         index = SimilarityIndex(corpus)
         a = _resolve(args.query[0], corpus)
         if a is None:
@@ -513,16 +600,20 @@ def main(argv=None) -> int:
                 sys.stderr.write(f"comp-similar: '{args.query[1]}' did not resolve\n")
                 return 1
             res = pairwise(a, b, corpus, index)
-            print(json.dumps(res, indent=2) if args.json else
-                  f"summary_sim={res['summary_sim']}\n  {res['verdict']}\n"
-                  f"  a: {res['a_summary']}\n  b: {res['b_summary']}")
+            if args.json:
+                print(json.dumps({"coverage": cov, **res}, indent=2))
+            else:
+                print(cov["note"])
+                print(f"\nsummary_sim={res['summary_sim']}\n  {res['verdict']}\n"
+                      f"  a: {res['a_summary']}\n  b: {res['b_summary']}")
             return 0
         # one-vs-corpus neighbors
         nbrs = index.neighbors(a, top=args.top)
         if args.json:
-            print(json.dumps({"arn": a, "neighbors": nbrs}, indent=2))
+            print(json.dumps({"coverage": cov, "arn": a, "neighbors": nbrs}, indent=2))
         else:
-            print(f"summary-similar peers of {corpus[a].name}:")
+            print(cov["note"])
+            print(f"\nsummary-similar peers of {corpus[a].name}:")
             for n in nbrs:
                 flags = (" [THIN]" if n["thin"] else "") + (" [HELD]" if n["held"] else "")
                 print(f"  sim={n['norm']:<6} {n['node_type']:<18} {n['name']}{flags}")

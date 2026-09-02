@@ -161,9 +161,51 @@ def _kuzu_cmd() -> list[str]:
     return [interp, str(tool)]
 
 
+# ---- corpus VINTAGE (D1, 2026-09-02) -------------------------------------------------------
+# comp-kuzu prints a provenance header BEFORE its JSON payload and _kuzu_json used to discard
+# it wholesale -- so every denominator this module emitted was undated. A stale kuzu DB then
+# produces a confident, fully-denominated report about an estate that no longer exists: the
+# count says how many rows were scanned, and nothing said WHEN. Captured here, disclosed by
+# coverage(). CVO finding 2026-09-02 (D1), exercised on the live corpus before landing.
+_CORPUS_VINTAGE: dict = {}
+
+_BUILT_RE = re.compile(r"^\s*built:\s*(\S+)(?:\s*\(age:\s*([^)]*)\))?", re.M)
+_DBNAME_RE = re.compile(r"^\s*DB:\s*(\S+)", re.M)
+
+
+def _capture_kuzu_vintage(*streams: str) -> None:
+    """Record the vintage from comp-kuzu's provenance header into _CORPUS_VINTAGE.
+
+    ⛔ THE HEADER IS ON **STDERR**, NOT STDOUT. Measured 2026-09-02 with the streams
+    separated: stdout carries the bare JSON array (0 `built:` lines), stderr carries the
+    provenance block (1). _kuzu_json's docstring says the header "is printed before the JSON
+    array", which reads as one stream and is two -- and a first pass at this fix captured
+    stdout only, self-tested GREEN, and still rendered UNKNOWN against the live corpus.
+    Both streams are searched so a future comp-kuzu that moves it does not silently re-break.
+
+    ⛔ FAILS TOWARD 'ABSENT', LOUDLY -- never toward a fresh-looking value. If the header
+    shape changes or is missing, the dict stays empty and coverage() renders UNKNOWN with an
+    explicit do-not-trust clause. A vintage that silently defaulted to 'now' would be the
+    exact false-green this fix exists to close."""
+    for out in streams:
+        m = _BUILT_RE.search(out or "")
+        if m:
+            break
+    else:
+        return
+    db = _DBNAME_RE.search(out or "")
+    _CORPUS_VINTAGE.clear()
+    _CORPUS_VINTAGE.update({"built": m.group(1),
+                            "age": (m.group(2) or "").strip() or None,
+                            "db": db.group(1) if db else None,
+                            "claim": "measured"})
+
+
 def _kuzu_json(query: str, timeout: int = 180) -> list[dict]:
-    """Run a comp-kuzu Cypher query, return the parsed JSON rows. The provenance header is
-    printed before the JSON array; we parse the first line that opens a JSON array/object.
+    """Run a comp-kuzu Cypher query, return the parsed JSON rows. The provenance header goes to
+    STDERR (measured 2026-09-02 -- this line used to say only "printed before the JSON array",
+    which reads as one stream); STDOUT carries the payload, and we parse the first line that
+    opens a JSON array/object.
     A control on the RETRIEVAL, not the pattern: an empty/error result returns [] LOUDLY
     (the caller prints the denominator), never a silent partial."""
     try:
@@ -173,6 +215,9 @@ def _kuzu_json(query: str, timeout: int = 180) -> list[dict]:
         sys.stderr.write(f"summary_corpus: comp-kuzu invocation failed: {e}\n")
         return []
     out = r.stdout or ""
+    # D1: keep the header's vintage. It rides STDERR (measured) -- stdout is checked too so a
+    # future comp-kuzu that moves the header does not silently reintroduce the UNKNOWN.
+    _capture_kuzu_vintage(r.stderr or "", out)
     # find the JSON payload -- the header lines precede a line beginning with '['.
     depth_start = out.find("\n[")
     blob = out[depth_start + 1:] if depth_start >= 0 else (out if out.lstrip().startswith("[") else "")
@@ -1138,12 +1183,25 @@ def coverage(corpus: dict[str, SummaryDoc]) -> dict:
     var_verdicts = sum(1 for d in corpus.values() if d.variance)  # C3/Twin: a firm-variance verdict fired
     fork_shadows = sum(1 for d in corpus.values()
                        if (d.variance or {}).get("kind") == "Fork-Shadow")
+    # D1 -- THE DENOMINATOR SAYS HOW MANY, THE VINTAGE SAYS WHEN. Both or neither.
+    # The vintage is ALWAYS disclosed; its VALUE may be unknown, and unknown says so.
+    v = dict(_CORPUS_VINTAGE) or {"claim": "absent"}
+    if v.get("claim") == "measured":
+        vintage_note = (f"corpus built: {v['built']}"
+                        + (f" (age: {v['age']})" if v.get("age") else "")
+                        + (f", DB {v['db']}" if v.get("db") else ""))
+    else:
+        vintage_note = ("corpus built: UNKNOWN -- vintage undisclosed by the retrieval; "
+                        "DO NOT read this denominator as current")
     return {"total_arn_resources": total, "summarized": total - thin,
             "unknown_thin": thin, "held_marked": held,
             "motif_matched": motif_matched, "motif_unmatched": total - motif_matched,
             "membership_matched": memb_matched, "membership_unmatched": total - memb_matched,
             "variance_verdicts": var_verdicts, "fork_shadows": fork_shadows,
-            "note": f"scanned {total} ARN resources; {total - thin} with purpose summary; "
+            "corpus_built": v.get("built"), "corpus_age": v.get("age"),
+            "corpus_db": v.get("db"), "corpus_vintage_claim": v.get("claim", "absent"),
+            "vintage_note": vintage_note,
+            "note": f"{vintage_note}\nscanned {total} ARN resources; {total - thin} with purpose summary; "
                     f"{thin} UNKNOWN-thin (no twin known); {held} hold-marked; "
                     f"{motif_matched} matched >=1 canonical motif, {total - motif_matched} unmatched (no motif clause); "
                     f"{memb_matched} carry a C2/C3 membership clause, {total - memb_matched} in no canonical motif; "
