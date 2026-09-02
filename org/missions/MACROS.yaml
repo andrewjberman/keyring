@@ -36,7 +36,7 @@ directives:
   D8:
     macros: [ETFS, MDPF, AUTH]
     ratification: PROPOSED
-    census: "4 of 4 rows with directive D8: MDPF x2 (MDPF_COTREMEDIATION, MDPF_HEALGAP), ETFS x1 (ETFS_GUARDRAIL), AUTH x1 (AUTH_SELFHEAL); macro_code == prefix on every row"
+    census: "5 of 5 rows with directive D8: MDPF x2 (MDPF_COTREMEDIATION, MDPF_HEALGAP), ETFS x1 (ETFS_GUARDRAIL), AUTH x1 (AUTH_SELFHEAL), and GLOBALALARM which carries NO macro prefix. ⛔ RESTATED 2026-09-02 ~23:4xZ (CVO residual R-v): the prior line read '4 of 4 ... macro_code == prefix on EVERY row' and was made false the same day by 0.0.0_AB_MSTR moving GLOBALALARM D10 -> D8 on Andrew-direct ('Call 1 - I would put this in D8 yes', LD-0519). A census is a MEASUREMENT AT A VINTAGE, and this one was invalidated by an edit to a DIFFERENT file an hour after it was written -- the D8 membership list, not this enum. THE ENUM IS NOT WIDENED AND NO 'GLOB' MACRO IS MINTED: adding one would need its own Rule 24 record, its own census and Andrew's word, and inventing a macro to make a census line true again is the tail wagging the dog. GLOBALALARM is legal exactly because scope is PROSPECTIVE ONLY (spec s.8) -- it is a pre-macro FLAT row that this enum does not govern. FORWARD CONSEQUENCE, stated rather than discovered later: GLOBALALARM can never be moved INTO the D8 tree under the current enum; a tree home for it needs a ratified macro first."
     alternative_named: "ETFS only (the water-test minimum the spec wrote before the census) -- rejected in the record: the most likely next D8 registrant is an MDPF_* successor arc, and an enum that refuses it on day one is a bare prohibition, not a taxonomy"
   D11:
     macros: [NFRA]
