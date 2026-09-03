@@ -433,10 +433,25 @@ def _check_row(row, kind, schema):
                        "is a hazard nobody has agreed to hold" % rid)
     else:
         route, target = row.get("route"), row.get("loop_target")
-        if route is None:
+        # REMEDIATED-IN-ROUND (2026-09-03, the gate-model fork between 1.0.0_SA_CTO and 1.0.0_SA_CTO~Z, ruled at the
+        # base -- relay 93568, ruling 93571): the route enum answers "what does the remedy need that does not exist
+        # yet"; a remedy EXECUTED inside the round by the row's owner is a member that enum does not cover, and refusing
+        # it forced a slug to land as re-entry rows (NFRA_OPSEC202609, site Z). A NEW remediation row may omit `route`
+        # and `loop_target` IF AND ONLY IF remediation.state is REMEDIATED and, when ARMED, disarm.state is DISARMED;
+        # the row's required `evidence` is where the executed remedy is cited. An OPEN row without a route is still a
+        # graduated item whose remedy needs a task order, a cell or an outcome -- the route IS the decision -- refused.
+        rem_state = (row.get("remediation") or {}).get("state") if isinstance(row.get("remediation"), dict) else None
+        dis_state = (row.get("disarm") or {}).get("state") if isinstance(row.get("disarm"), dict) else None
+        remediated_in_round = (rem_state == "REMEDIATED"
+                               and (row.get("hazard_standing") != "ARMED" or dis_state == "DISARMED"))
+        if route is None and not remediated_in_round:
+            why = ("remediation.state=%r%s" % (rem_state, (" with disarm.state=%r on an ARMED row" % dis_state)
+                                                if row.get("hazard_standing") == "ARMED" else ""))
             out.append("%s: NEW remediation row carries no `route`. One axis: what does the remedy "
-                       "need that does not exist yet? %s" % (rid, " | ".join(ROUTE_TO_STEP)))
-        if target is None:
+                       "need that does not exist yet? %s. A route is omitted only by a row whose remedy already "
+                       "happened inside the round (remediation.state=REMEDIATED, and DISARMED if ARMED); this row "
+                       "reads %s" % (rid, " | ".join(ROUTE_TO_STEP), why))
+        if target is None and route is not None:
             out.append("%s: NEW remediation row carries no `loop_target`" % rid)
         if route in ROUTE_TO_STEP and target is not None:
             want = ROUTE_TO_STEP[route]
@@ -658,6 +673,35 @@ def _self_test(root):
          lambda: any("phantom" in x for x in _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "GRADUATED"}, ["X_PRJ-S7 (by X_PRJ-S2)"], 1, "")))),
     ]
+    # REMEDIATED-IN-ROUND: the four cells of the route-less admission, graded through _check_row with the committed schema.
+    try:
+        rschema = _schema(root, "REMEDIATION")
+    except Exception as exc:  # noqa: BLE001
+        rschema = None
+        arms.append(("remediation schema readable for the route-less arms", lambda exc=exc: (_ for _ in ()).throw(exc)))
+    base_rem = {"id": "X_PRJ-S3", "project": "X_PRJ", "fabric": "laptop", "class": "OBSERVATION", "hazard_standing": "INERT",
+                "mechanism": "a stale token in one doc", "evidence": ["docs/x.md:12 @abcdef1234 -- the token"],
+                "remedy": "the token re-pointed in place", "owner": "1.0.0_SA_CTO", "round": "v1",
+                "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"}}
+    def rem(**over):
+        r = json.loads(json.dumps(base_rem))
+        r.update(over)
+        return r
+    noroute = lambda r: any("carries no `route`" in x for x in _check_row(r, "REMEDIATION", rschema))  # noqa: E731
+    if rschema is not None:
+        arms += [
+            ("OPEN remediation, no route -> refused (the route IS the decision)", lambda: noroute(rem())),
+            ("REMEDIATED, INERT, no route -> admitted (remedy happened in-round)",
+             lambda: not noroute(rem(remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"}))),
+            ("REMEDIATED but still ARMED (disarm ARMED), no route -> refused",
+             lambda: noroute(rem(hazard_standing="ARMED", remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
+                                 disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}))),
+            ("REMEDIATED and DISARMED, no route -> admitted",
+             lambda: not noroute(rem(hazard_standing="ARMED", remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
+                                     disarm={"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-03T11:00Z"}))),
+            ("OPEN with route SPEC_ERROR + loop_target 6 -> no route complaint (unchanged)",
+             lambda: not noroute(rem(route="SPEC_ERROR", loop_target=6))),
+        ]
     failed = 0
     for name, fn in arms:
         ok = False
