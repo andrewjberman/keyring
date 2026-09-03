@@ -5,7 +5,7 @@
 <issued_to>0.8.0_AE_CloudComp~I</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 wide on Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b; CE-t-20 at the ~I lane), PRD v0.5 @5bbdab5ec7 (s.4; s.7 row T-20).</status>
+<status>complete -- comp-heat CLI/engine boundary landed at a4b426e7ed; system current-state refreshed at 5d14443dff; proof valid and S29 resolves at 156c205ca4; distinct-seat FWD-9 was completed by 2.0.0_SA_COO in Message 93785 at HEAD f1dce36b9b (load_heat_live returned empty dict before comp-heat, confirming the consumer-boundary record). LOCAL only; no push.</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` (s.7 T-20: "0 CLI runs; library consumer = comp-similar `load_heat_live()`; named in the estate report") · **Decomp cell:** `CE-t-20` ("0 CLI runs; library consumer only; invoked by nothing"; closes on "graded; the daily-report wiring is @09355b6d93's, not this cell's") · **Lane:** `.tools/comp-heat` (377 lines -- the engine IS the shim; measure) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~I/comp-heat.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~I` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
 
