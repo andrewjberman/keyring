@@ -559,7 +559,12 @@ def _parse_to(text: str) -> dict:
         cid = attrs.get("id", "").strip()
         if not cid:
             continue
-        refs = [c.strip() for c in attrs.get("cell_refs", "").split(",") if c.strip()]
+        # cell_refs separator = comma AND/OR whitespace, the same convention the <owned_cells> read above
+        # already accepts (CELL_ID_RE.findall is separator-blind). A comma-only split read the pair
+        # "OP-s-17 OP-s-16" as ONE literal and refused an otherwise-clean instance with a message that
+        # blamed the DECOMP (row NFRA_OPSEC202609-Z-S11, 2026-09-03; 3.0.0_SA_CVO~Z 19577). Documented in
+        # org/standards/DECOMP_CELL_ID_CONVENTION.md.
+        refs = [c for c in re.split(r"[,\s]+", attrs.get("cell_refs", "")) if c]
         crits[cid] = refs
         if not refs:
             no_refs.append(cid)
