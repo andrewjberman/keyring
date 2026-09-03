@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **17 rows** (S1-S18, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:3xZ by `0.7.0_AE_CloudOps~S` on appending S18 (was 16); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **18 rows** (S1-S19, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:3xZ by `0.7.0_AE_CloudOps~S` on appending S19 (was 17); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -752,6 +752,43 @@ applied task override is the decisive carrier: `PROJECTION_EVENT_JSON` equals th
     "spec_asserts": "S15's disarm and B2-AC2 require the worker to receive and classify the queue body, including s3:TestEvent without Records in that body.",
     "world_is": "The Terraform used <$.body>, but the actual Pipes SQS execution envelope nests the message body under Records[0]; the non-resolving expression was delivered to ECS as a literal string and the worker could not parse it.",
     "notes": "Disarm in this task: set the Pipe container override value to <$.Records[0].body>, target-safe-apply the in-place Pipe update, and repeat the TestEvent control until the task exits 0 with test_event_ignored, the main queue is empty, DLQ delta is zero and projection/ remains absent. Messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
+  }
+]
+```
+
+## S19 -- ECS container environment overrides do not transform either measured JSONPath
+
+The corrected wrapper path `<$.Records[0].body>` was also delivered literally. This falsifies the
+assumption that a Pipes ECS container environment value is a dynamic target field on the applied API,
+not merely the first path's location. The task does not need historical event bytes: the marker is the
+R5/R8 HEAD oracle and bucket versioning is off. The Pipe therefore owns both message-shape branches with
+a source filter, and the task reads current HEAD only after a real `Records` body matched.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S19",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T14:30Z",
+    "one_line": "Pipes delivered both attempted ECS environment JSONPaths literally (<$.body> and <$.Records[0].body>), so per-message container environment is not a dynamic field on this applied target path. The Pipe must own the two-shape branch through an SQS-body filter: TestEvent is deleted without RunTask; only an exact Records marker event launches a task, which reads the mutable marker HEAD oracle directly.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~S",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Revision-2 TestEvent task 52cd0f5035934db78e21cd070099cc9e carried literal <$.body>; the second task 2617e42c961b4ca288d9de74ab1803dd carried literal <$.Records[0].body>; both exited JSONDecodeError before any S3 call",
+        "Both applied task overrides retained cpu=2048 and memory=16384, so these failures are independent of S17's cgroup defect",
+        "Pipe execution data itself parses each SQS message as Records[0].body, but neither expression transformed in the ECS environment override; two locations were exercised, both literal",
+        "PRD R5/R8 names warehouse/_branch_head.main.json as the HEAD oracle; the task can consume current committed HEAD without an event body, while the Pipe source filter can discriminate body.Records from the no-Records TestEvent before RunTask"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S14 declares the Pipe the consumer of record; S15 requires that consumer to tolerate Records and TestEvent; R5 requires real marker events to start the worker, whose source of truth is the marker oracle.",
+    "world_is": "The ECS task cannot receive either attempted dynamic environment value on this applied target. Without a source filter it cannot distinguish TestEvent; with a body.Records marker filter the Pipe can delete TestEvent and invoke ECS only for real marker notifications, after which the task reads current HEAD.",
+    "notes": "Disarm in this task: remove PROJECTION_EVENT_JSON from the Pipe target, add an exact SQS body filter for Records[*].s3 bucket/key, keep the 2048/16384 override, and let the task use a pipe-filtered-records sentinel before reading the marker. Repeat the TestEvent: main queue empty, no new ECS task, DLQ delta zero, projection absent. Then wait for a real producer stamp and show it does launch the task. Messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
   }
 ]
 ```
