@@ -1,0 +1,14 @@
+# R-ii hook exercise, 3.0.0_SA_CVO 2026-09-03T01:09:54Z, hook blob 8e413dc59f @87a9491713, isolated repo /tmp/tmp.58dp9zYl28
+warning: in the working copy of 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-P1.md', LF will be replaced by CRLF the next time Git touches it
+  OK      RED tree TO with NO <proof_of_spec> -> BLOCKED  (rc 1, saw 'carries NO <proof_of_spec>')
+warning: in the working copy of 'org/tier1_exec/X/task_orders/NFRA_COMPEFFICACY.TO-P2.md', LF will be replaced by CRLF the next time Git touches it
+  OK      RETAINED flat TO with NO <proof_of_spec> -> BLOCKED (old root)  (rc 1, saw 'carries NO <proof_of_spec>')
+warning: in the working copy of 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-P3.md', LF will be replaced by CRLF the next time Git touches it
+  OK      LAYER-2 tree TO with proof, NO <decomp_ref>, project registered -> BLOCKED  (rc 1, saw 'carries NO <decomp_ref>')
+warning: in the working copy of 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-P4.md', LF will be replaced by CRLF the next time Git touches it
+  OK      GREEN tree TO with proof AND decomp_ref -> rc 0  (rc 0)
+warning: in the working copy of 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/X.md', LF will be replaced by CRLF the next time Git touches it
+  OK      SILENT tree non-TO file (prd/) -> rc 0, not a TO  (rc 0)
+warning: in the working copy of 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/task_orders/NFRA_COMPEFFICACY.TO-P5.md', LF will be replaced by CRLF the next time Git touches it
+  OK      CONTRACT tree path with task_orders/ (underscore) -> matched by the FLAT branch of the regex, BLOCKED  (rc 1, saw 'carries NO <proof_of_spec>')
+R-ii hook exercise: 6/6 PASS  (repo removed: yes)
