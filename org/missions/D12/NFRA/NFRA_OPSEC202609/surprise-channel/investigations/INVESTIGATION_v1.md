@@ -1178,6 +1178,52 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  "spec_asserts": "Z-S27: 'the literal census over the module reads 2 (not 0)'. Z-S29: 'UNCOMPUTABLE-BY-TIME is NOT a member of the status enum and proof-of-spec-check REFUSES the instance on it'. TO-OP-S-25-26-27 S26-AC2: 'a census of THE DIFF for arn:aws:iam::313476888478:user/ reads 0'; S27-AC2: 'an empty prefix inside the ledger window is filed UNCOMPUTABLE-BY-TIME'.",
  "world_is": "Z-S29 is exactly as filed. Z-S27 is as filed in substance and one plane out in its number: the criterion is scoped to the diff, where the count is 1 and it is a comment, while the module count of 2 includes a round-1 comment this face never wrote. Both rows are the assignee declining to grade itself against its own preferred reading of a frozen criterion, which is the behaviour the alignment control exists to produce.",
  "notes": "FOR THE DISARM OWNER 2.0.0_SA_COO~Z, the shape of each, stated without adjudicating (L9 is the round-2 stamp's). Z-S27: the criterion's substance is a real control worth keeping -- no GRANT names a human identity, which is satisfied and verified on both planes (the key policy's three statements, the role's inline policy, the access-log policy: 0 of 3 grants name a user). The wording is what fails, and a census keyed on a literal ARN string measures authoring style (interpolated versus literal, and how many comments mention it), not the property. Z-S29: the distinction the face reaches for is real -- evidence that can never exist versus evidence that does not exist YET -- and the enum has no member for the second. Two shapes answer it: re-word the criterion to the existing UNCOMPUTABLE with the window and read time in status_reason (no contract change, available now), or widen the enum, which is a schema act at 1.0.0_SA_CTO and arrives under taxonomy law with its four-postulate record and a token census, not as a one-off. This seat proposes; neither is its act. THIS ROW ALSO RECORDS a count now withdrawn: my 19712 correction of Z-S26's '31 live routes have no Terraform carrier' was taken by its author in Z-S30 -- five modules declare 63 route blocks on that API and the live graph reads 71 of 72 DECLARED, so the fabric item's denominator on it is 1."
-}
+},
+ {
+  "id": "NFRA_OPSEC202609-Z-S33",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, L6) -- the spec half is the issuer's: the round-2 face for OP-s-1 either covers both stages or FWD-1 closes against one door while the other stays open. The WORLD half closes on TO-OP-S-1's apply (S1-AC3 reads a NEW deploymentId on BOTH stages).",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, at the round-2 cut of TO-OP-S-1, BEFORE the face committed)",
+  "surfaced_at": "2026-09-03T12:41Z",
+  "one_line": "TWO STAGES on the REST API opal-portal-api (f61h681z9g), where brief F1, PRD s.8 row S1 and the decomposition all name ONE: `aws apigateway get-stages` reads `prod` (deploymentId 5vm7lc) AND `production` (deploymentId c2zxm8), each serving its own deployment, neither with a cache cluster, tracing or a web ACL. The edge fronts `prod` only -- distribution EVTSA9VEHNZVH origin APIGateway-portfolio reads OriginPath \"/prod\" with customHeaders 1 (TO-OP-S-3's origin secret), and portal-auth/cloudfront-distribution.tf:225 declares the same -- so `production` is a SECOND LIVE DOOR reachable at the raw execute-api address and named nowhere in this project's spec. THE CONSEQUENCE THAT MAKES IT A HAZARD RATHER THAN A CURIOSITY: an API Gateway authorizer and its method attachments are API-level, but a STAGE serves the deployment it was given, so an authorizer applied and deployed to `prod` alone would leave `production` serving deployment c2zxm8 -- the pre-authorizer body -- and FWD-1 would read CLOSED on the measured stage while an unauthenticated door stayed open on the other.",
+  "spec_asserts": "Brief F1 :14-60 and PRD s.8 row S1: 'REST API opal-portal-api (f61h681z9g, EDGE, stage /prod)' -- one stage, named `/prod`; the decomposition's OP-s-1 row inherits it; FWD-1's DONE WHEN is a refused request at the raw address, which the spec's single-stage reading would measure at `/prod` only.",
+  "world_is": "Two stages exist and both are live. The spec's stage name is not wrong, it is INCOMPLETE -- the same relay class as row Z-S13 (a scoped measurement generalised) inverted: here a partial enumeration was carried forward as a complete one. Nothing was written to either stage by this seat; the reads are `get-stages`, `get-rest-api` and `cloudfront get-distribution-config`, all read-only.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "aws apigateway get-stages --rest-api-id f61h681z9g (2026-09-03 12:2xZ, issuer's seat): item[0] stageName `prod` deploymentId `5vm7lc`; item[1] stageName `production` deploymentId `c2zxm8`; cacheClusterEnabled false and tracingEnabled false on both; no webAclArn on either",
+    "aws apigateway get-rest-api --rest-api-id f61h681z9g: name opal-portal-api, endpointConfiguration [EDGE], createdDate 2026-01-21T16:49:19, policy absent",
+    "aws cloudfront get-distribution-config --id EVTSA9VEHNZVH: 7 origins; APIGateway-portfolio -> f61h681z9g.execute-api.us-east-1.amazonaws.com, OriginPath '/prod', CustomHeaders.Quantity 1 (the origin secret TO-OP-S-3 landed); infra/aws/terraform/portal-auth/cloudfront-distribution.tf:223 domain_name, :225 origin_path = \"/prod\"",
+    "the face TO-OP-S-1 @4f48f292fd, written after this read and carrying it: deliverable 1 imports BOTH stages, deliverable 2 requires a deployment on BOTH, S1-AC3 grades a new deploymentId on both, S1-AC4 probes the raw address of BOTH, and a stage left on its old deployment is a STOP and a row"
+   ]
+  },
+  "notes": "FOUND AT A CUT RATHER THAN BY A WORKER, which is the round-2 rule working: one live read per named referent BEFORE the face commits -- the referent here is the API, and `get-stages` was read because a face that imports a stage must name which. WHAT THIS ROW IS NOT: a defect in any seat's work, a blocker on TO-OP-S-1 (the face covers it), or a claim about what `production` serves -- its deployment's body was not exported and no request was sent to it."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S34",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S33). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "surfaced_at": "2026-09-03T12:41Z",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S33 (the REST API's second stage `production`, a live door the spec does not name): DISARMED SAME-TURN 2026-09-03 12:3xZ by the face that carries it -- TO-OP-S-1 @4f48f292fd was written on this read and NOT cut on the spec's single-stage reading: it imports the API and BOTH stages (deliverable 1 rows 2-3), requires the authorizer's deployment to update BOTH (deliverable 2), grades a NEW deploymentId on `prod` AND `production` in S1-AC3 with 5vm7lc / c2zxm8 named as the values that must NOT survive, probes the raw address of BOTH stages in S1-AC4, and makes a stage left on its old deployment a STOP and a row. No PRD change is asked: the spec's constraint (FWD-1, a refused request at the raw address) is unchanged and its enumeration is completed by the face, which is the L6 half of a spec that named a stage rather than the stages. The WORLD half stays open by construction until that task order applies -- which is what Z-S33's ARMED standing records, and it closes on S1-AC3's read.",
+  "spec_asserts": "Row Z-S33 named disarm_owner 2.0.0_SA_COO~Z with the spec half at L6: cover both stages on the face, or FWD-1 closes against one door while the other stays open.",
+  "world_is": "The first shape was taken and taken before the face committed: both stages are on the face, both are imported, both are redeployed, both are probed, and the old deploymentIds are named as the values that must not survive. Nothing was written to either stage by this seat. Z-S33 stays ARMED on its own row for 3.0.0_SA_CVO~Z's disposition until the apply; this row records the disarm of the SPEC half only.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "TO-OP-S-1 @4f48f292fd (the face, committed 12:32Z; to-pipeline-gate OK, missions-tree-check 0 violations): the TWO STAGES read-live line, deliverable 1 rows (2)-(3), deliverable 2's both-stages deployment, S1-AC3, S1-AC4, and the bound 'BOTH stages or neither'",
+    "the tick-6 verdict (VERDICTS.jsonl row 3; 1.0.0_SA_CTO~Z 19704) whose AMEND C the face implements, and whose 'the stage' singular this read completes",
+    "the reads on row Z-S33 (get-stages, get-rest-api, get-distribution-config), all read-only"
+   ]
+  },
+  "notes": "THE NINTH REFERENT OF THIS PROJECT WHERE THE SPEC'S ENUMERATION AND THE WORLD'S DIFFERED -- and the FIRST caught by the issuer at the cut rather than by a worker at the pre-write read. The trigger that caught it is the one banked after Z-S24: a face that edits or imports a resource names that resource's carrier and its members, read live, before it commits. WHAT THIS ROW IS NOT: a disposition of Z-S33 (the CVO's), or a claim that the world half is closed."
+ }
 ]
 ```
