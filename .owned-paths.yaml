@@ -855,7 +855,7 @@ lanes:
   TREE_COO:
     permitted_agents:
     - 2.0.0_SA_COO
-    description: 'Project tree, COO-owned artifact folders: decompositions/ (step 5), task-orders/ (step 6 -- the ONLY gate reads here), and the directive/macro skeleton READMEs (prereq 3). Tilde lanes of 2.0.0_SA_COO auto-permit. Spec s.6.'
+    description: 'Project tree, COO-owned artifact folders: decompositions/ (L5) and the directive/macro skeleton READMEs (prereq 3). task-orders/ LEFT this lane 2026-09-03 (-> ANY, Andrew-direct @a4c9b25b4c: workers commit freely where their work is; the L6 gates are the control). Tilde lanes of 2.0.0_SA_COO auto-permit. Spec s.6.'
   TREE_CVO:
     permitted_agents:
     - 3.0.0_SA_CVO
@@ -896,8 +896,8 @@ paths:
     lane: TREE_COO
     note: 'Project tree: decompositions/ (step 5).'
   org/missions/*/*/*/task-orders/**:
-    lane: TREE_COO
-    note: 'Project tree: task-orders/ (step 6; hyphen RULED). to-pipeline-gate.py discovers TOs here as well as in seat task_orders/.'
+    lane: ANY
+    note: "Project tree: task-orders/ (L6; hyphen RULED). WIDENED TREE_COO -> ANY 2026-09-03 ~04:0xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR on Andrew-direct at the 0.0.0_AB_MSTR terminal ~03:5xZ (record @a4c9b25b4c, LD-0521 A2), VERBATIM: 'worker agents should be able to commit freely to the directives folder path as thats where their work is'. THE LOOSE END THIS RETIRES: a worker's own <status> flip on a TO it holds sat in the worktree because this lane refused the worker, and became a record only under the issuer's author line (TO-CE-T-1: 6d04680f2b then fc5ec7106c) -- an issuer committing a worker's status text is the workaround, not the pattern. THE GATES ARE THE CONTROL, not the lane: to-pipeline-gate.py at issuance (decomp_ref + preflight + limb (i) Tier-0/1 <issued_to> REFUSED), the proof-of-spec issuance hook, and check_complete_flip on a terminal flip (a VALID proof instance + its SURPRISES limb, exercised on fc5ec7106c). SoD: the grantee is the Tier-2 worker class, which cannot self-grant. INCUMBENT RE-ASSERTED: ANY permits every serial, 2.0.0_SA_COO keeps write. WHAT THE LANE NO LONGER GUARDS, stated: L6 exclusivity (a NEW tree TO is 2.0.0_SA_COO's act) is not a path property any more; the committer-identity limb for a newly-added tree TO is proposed to 1.0.0_SA_CTO as a to-pipeline-gate build (LOOP_MECHANISM), same shape as limb (i). MEASURED before/after with owned-paths-validate --check-agent, 5 serials x 11 tree paths: BEFORE 0.8.0_AE_CloudComp / 0.4.0_DS_ClientPlatform~V / 3.0.0_SA_CVO / 1.0.0_SA_CTO REFUSED here; AFTER all permitted; prd/**, decompositions/**, project.json, brief/**, remediations/** and a foreign deliverables/<serial>/ still REFUSE the worker (negative controls unchanged)."
   org/missions/*/*/*/deliverables/**:
     lane: TREE_DELIVERABLES
     note: 'Project tree: deliverables/<SERIAL>/** -- owner carried by the path, resolved by validator clause 4.'
@@ -908,8 +908,8 @@ paths:
     lane: TREE_CVO
     note: 'Project tree: remediation rows CVO routes at step 10.'
   org/missions/*/*/*/ledger/**:
-    lane: TREE_LEDGER
-    note: 'Project tree: ledger/ (deploy-completion + change-management for THIS project).'
+    lane: ANY
+    note: "Project tree: ledger/ (deploy-completion + change-management for THIS project). WIDENED TREE_LEDGER -> ANY 2026-09-03 ~04:0xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR, same word as task-orders/** (@a4c9b25b4c: 'commit freely to the directives folder path as thats where their work is'): a DS lane deploying under rule 13 writes THIS project's deploy-completion entry and was REFUSED (measured: 0.4.0_DS_ClientPlatform~V) -- the same loose end one folder over. The CTO/COO co-sign in TREE_LEDGER's description was a convention, never a lane control (any single member could commit alone). TREE_LEDGER stays defined for any flat-root rule that still cites it. INCUMBENTS RE-ASSERTED: ANY permits every serial. NEVER-2's ledger discipline (entry opened at start, closed at completion) is the control and is unchanged."
   org/missions/*/*/*/cards/**:
     lane: ANY
     note: 'Project tree: substrate cards for resources THIS project builds on -- ''the building lane'' is a TO value, not a path. ANY; cards carry their own schema (org/standards/SUBSTRATE_CARD.schema.json). RULED keep ANY, same word as investigations (Andrew-direct 2026-09-02 23:0xZ).'
