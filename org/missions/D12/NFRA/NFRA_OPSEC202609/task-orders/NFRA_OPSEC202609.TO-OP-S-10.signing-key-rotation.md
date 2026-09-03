@@ -13,7 +13,9 @@
 
 ## READ LIVE AT THIS CUT BY THE ISSUER (2026-09-03 19:2xZ; re-ground in phase 1 and STOP on any difference)
 
-- **`opal/auth/jwt-private-key`** -- created `2026-01-03`, **`LastChangedDate 2026-04-06T13:31:00Z`**, **`RotationEnabled: null`** (no rotation configured).
+- **`opal/auth/jwt-private-key`** -- created `2026-01-03`, **`LastChangedDate 2026-04-06T17:31:00Z`**, **`RotationEnabled: null`** (no rotation configured). ⛔ **CORRECTED 2026-09-03 23:2xZ on row Z-S100: this face rendered it `13:31:00Z` and the API returns `13:31:00.251000-04:00`. Same wall clock, WRONG DECLARED ZONE -- the true instant is FOUR HOURS from what a reader takes the `Z` to mean. The issuer typed a literal `Z` onto a local timestamp**, which is the trap CLAUDE.md Rule 22a names in terms. The secret has NOT changed since the cut (one version, one stage, no `AWSPREVIOUS`), so this is citation hygiene and not a re-ground failure.
+
+⛔ **THIS FACE IS BLOCKED ON `TO-OP-S-10B` AND ITS GATE HAS ALREADY FIRED.** Deliverable 1's negative branch is the measured outcome: **BOTH consumers are single-slot** (row Z-S100, confirmed on three planes), so deliverable 2 is unreachable without a prior code change. **`TO-OP-S-10B` is that change** -- two slots on both consumers AND a TTL on the authorizer, whose cache currently never expires. **Do not attempt the rotation until that face is terminal.**
 - **`opal/auth/jwt-public-key`** -- created `2026-01-03`, `LastChangedDate 2026-04-06T13:31:00Z`, `RotationEnabled: null`.
 - **So the signing keypair is ~5 months old and has never been rotated by any automated path.** That is `OP-s-10`'s subject.
 - **TWO consumers, and both must survive the rotation:** `auth-validator-edge` (the CloudFront edge) and the API authorizer. **A rotation that satisfies one and breaks the other is the failure mode this face exists to prevent**, and the edge is the one that is easy to forget because it is replicated.
