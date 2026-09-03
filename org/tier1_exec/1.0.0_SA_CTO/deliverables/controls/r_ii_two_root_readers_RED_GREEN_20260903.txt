@@ -1,0 +1,20 @@
+# R-ii (CVO review @580c4f72a2): six one-root TO readers repointed to BOTH roots -- the issuance hook first
+# 2026-09-03T01:02:50Z  HEAD=774c108bb5  probe = ONE staged tree TO with NO <proof_of_spec>: org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-HOOKPROBE.md (planted, staged, removed)
+
+## RED: HEAD's .tools/git-hooks/to-proof-of-spec-check.sh on the staged tree TO -> rc 0, ADMITTED (output empty):
+   (rc 0 -- a tree TO without a proof block issued silently)
+
+## GREEN: the repointed hook on the same staged TO -> rc 1, REFUSED:
+   BLOCKED: NEW task order 'org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-HOOKPROBE.md' carries NO <proof_of_spec> element.
+     Andrew-direct 2026-08-11: no TO issues without a machine-readable data contract.
+     Fix: mint the criterion-id set per org/ref/TASK_ORDER_PROTOCOL.md <proof_of_spec>;
+     contract schema: org/standards/PROOF_OF_SPEC.schema.json; validator: .tools/proof-of-spec-check.py
+     Audited override (edge cases only): TO_POS_OVERRIDE="<reason>" git commit ...
+
+## READER VISIBILITY of an unstaged tree TO (the same path, worktree only):
+   to-check.find_all_to_files      True
+   to-liveness-join glob           True
+   proof-of-spec-check / to-decomp-ref-lint: read git-TRACKED TOs only by design; ls-files pathspec now '*/task_orders/*.md' + '*/task-orders/*.md' -- exercised when the first real tree TO commits
+   loop-quiescence: tree loop added; owner = <issued_to> (the BARE shape to-check.py trusts), else UNRESOLVED:<project> -- exercised when the first real tree TO commits
+
+## R-iv (the gate reads row.project_code against the folder): tree harness RED 2 on HEAD's gate / GREEN 0 of 21 (to_pipeline_gate_tree_{RED,GREEN}_20260902.txt re-run below)

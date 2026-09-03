@@ -159,6 +159,17 @@ def scan_macro(macro: str, repo_root: Path) -> dict:
         for to_file in base.glob(f"*/task_orders/{macro}.*.md"):
             agent_serial = to_file.parent.parent.name
             all_tos.append((to_file, agent_serial))
+    # R-ii (project-tree spec s.7; CVO review @580c4f72a2): the tree's task-orders/ is the second root.
+    # The SEAT is not in a tree path -- parent.parent is the PROJECT folder -- so the owner is read from
+    # the TO's <issued_to> field, the BARE shape to-check.py trusts; an unreadable owner is named as such.
+    import re as _re
+    for to_file in (repo_root / "org" / "missions").glob(f"D*/*/*/task-orders/{macro}.*.md"):
+        try:
+            head = to_file.read_text(encoding="utf-8", errors="replace")[:4000]
+        except OSError:
+            head = ""
+        m = _re.search(r"<issued_to>\s*([0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)", head)
+        all_tos.append((to_file, m.group(1) if m else "UNRESOLVED:%s" % to_file.parent.parent.name))
 
     validated_complete = []
     validated_active = []

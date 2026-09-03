@@ -53,6 +53,9 @@ def build_root():
     _w(root, TREE_TO, TO_BODY)
     _w(root, TREE_TO_WRONG_FOLDER, TO_BODY)
     _w(root, "org/missions/D8/ETFS/ETFS_OTHERPRJ/project.json", json.dumps(dict(row_tree, project_code="ETFS_OTHERPRJ")))
+    # R-iv (CVO review @580c4f72a2): a folder whose ROW claims another project_code
+    _w(root, "org/missions/D8/ETFS/ETFS_MISMATCH/project.json", json.dumps(dict(row_tree, project_code="ETFS_OTHERCODE")))
+    _w(root, "org/missions/D8/ETFS/ETFS_MISMATCH/task-orders/ETFS_MISMATCH.TO-M.md", TO_BODY)
     _w(root, TREE_TO_UNDERSCORE, TO_BODY)
     _w(root, "org/projects/FLATPROJ.json", json.dumps({"project_code": "FLATPROJ", "dep_stage": "DECOMP",
                                                        "directive": "D8", "fabric": "laptop"}))
@@ -91,6 +94,8 @@ def main():
                 ("resolver: flat TO -> org/projects/<CODE>.json, exact code", FLAT_TO, "org/projects/FLATPROJ.json", False),
                 ("resolver: tree TO filed under ANOTHER project's folder -> identity error", TREE_TO_WRONG_FOLDER, None, True),
                 ("resolver: FLATPROJ_SUB resolves to ITS OWN row path, never walked back to FLATPROJ", WALKBACK_TO, "org/projects/FLATPROJ_SUB.json", False),
+                ("resolver R-iv: the tree ROW says project_code ETFS_OTHERCODE in folder ETFS_MISMATCH -> identity error",
+                 "org/missions/D8/ETFS/ETFS_MISMATCH/task-orders/ETFS_MISMATCH.TO-M.md", None, True),
             ]:
                 code, rel_json, err = gate._project_row_rel(root, rel)
                 ok = (rel_json == want_json) and (bool(err) == want_err)
@@ -103,6 +108,8 @@ def main():
             ("L3: walk-back candidate (no FLATPROJ_SUB.json) -> REFUSE, no walk-back", WALKBACK_TO, "REFUSE", "no walk-back"),
             ("L3: tree TO in the wrong project folder -> REFUSE naming the folder", TREE_TO_WRONG_FOLDER, "REFUSE", "tree folder"),
             ("L3: task_orders/ (underscore) INSIDE the tree is read as a flat TO -> REFUSE (no flat row)", TREE_TO_UNDERSCORE, "REFUSE", "org/projects/ETFS_GUARDRAIL.json"),
+            ("L3 R-iv: row.project_code != folder -> REFUSE naming both carriers",
+             "org/missions/D8/ETFS/ETFS_MISMATCH/task-orders/ETFS_MISMATCH.TO-M.md", "REFUSE", "project_code"),
         ]:
             v = gate.check_project_stage(root, rel)
             got = "PASS" if not v else "REFUSE"

@@ -204,7 +204,22 @@ def _project_row_rel(root, rel):
             return code, None, ("%s: the filename says project %r but the tree folder is %r. A tree TO "
                                 "lives in ITS project's task-orders/ -- the path is the membership."
                                 % (rel, code, m.group(5)))
-        return code, m.group(2) + "/project.json", None
+        rel_json = m.group(2) + "/project.json"
+        # R-iv (CVO review @580c4f72a2): the ROW's project_code must equal the folder too. The generator's
+        # R4 catches it when `check` runs; the gate reads the row ITSELF here, so a TO cannot be graded
+        # against a row that claims another project. The read is best-effort: an unreadable row is layer
+        # 3's refusal, not this one's.
+        try:
+            import json as _j
+            with open(os.path.join(root, rel_json), "r", encoding="utf-8") as fh:
+                pc = _j.load(fh).get("project_code")
+        except Exception:  # noqa: BLE001
+            pc = None
+        if pc is not None and pc != m.group(5):
+            return code, None, ("%s: the tree row %s says project_code %r but its folder is %r. Two carriers of "
+                                "one identity disagree; the row is graded against nothing until they agree "
+                                "(generator refusal R4)." % (rel, rel_json, pc, m.group(5)))
+        return code, rel_json, None
     return code, "org/projects/%s.json" % code, None
 
 
