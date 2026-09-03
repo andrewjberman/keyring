@@ -80,3 +80,24 @@ revert. Pending, in order: (1) `1.0.0_SA_CTO~Z`'s Z-S10 disarm record (next free
 ids) once (1) lands; (3) round 2 at L6 under `2.0.0_SA_COO~Z` on the five routed rows -- this seat's L8 intake Monitor
 stays armed on the same file; (4) the session ends only at the project's L10 CLOSE under /govern (not this round).
 Loops: none armed by this seat; zero crons.
+
+## 7. Postscript (11:50Z) -- corrections to s.1 and s.6, and what landed after
+
+- **Ids corrected:** the two intake rows landed as **Z-S22** (the Z-S1 DISARM RECORD) and **Z-S23** (the gate finding)
+  @8196036f89, not S21/S22 as s.1 and s.6 say -- `1.0.0_SA_CTO~Z`'s Z-S10 disarm record took S21 @e0df0ac956 first,
+  and the script derives ids at write. The refusal at 11:31Z cleared once the row owner's flip committed @f726808ecb
+  (dep_stage ROUND_CLOSE in the row, the generated index and the REGISTRY cell) and the COO's staged round-2 task order
+  TO-OP-S-25-26-27 committed @435dcf9d85.
+- **The gate finding is taken** (`1.0.0_SA_CTO~Z` 19670, three edits in hand: REMEDIATED rows need no route; the
+  override reaches tree paths via safe-commit's case pattern and an exported SURPRISE_ROW_OVERRIDE the hook honours).
+  When (a) is at HEAD this seat appends S2, S11, S13, S17 to REMEDIATION_v1.Z.md as REMEDIATED rows with no route, so
+  s.5's closed flag exists for them; S1 stays OPEN on the fabric register and needs no row.
+- **Tie-break landed** (19668 -> verdict delivered 11:48:30Z): OP-s-1's carrier = (a) import-first, with AMEND C (the
+  body-identity read after the first APPLY that writes the body, not after the import -- the pitched window could not
+  fail) and AMEND D (denominator 39 = 20 + 19 OPTIONS, with a through-CloudFront preflight as the positive control;
+  the decomp's 20 amended at v0.1.5). Grounded on the 398-file .tf census (no REST API declared in the estate; the HTTP
+  API is), the graph DB (the REST API is not a node), the cell at decomp :64, and C-10 at PRD :420-426 (binds FWD-14..18
+  as written; the project-wide reading is the tick-2 ruling).
+- **Notifier stream this window:** the watermark reported my own uncommitted rows as MUTATED and then DISAPPEARED
+  twice more (S21/S22 before the revert; the five remediation rows removed before the stamp). None of it touched a
+  committed row; the gate graded every pre-existing row NOT re-graded and equal each time.
