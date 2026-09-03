@@ -50,3 +50,27 @@
   `deploy_ledger.py hold --gate-type external --gate-ref "<the runner import-safety fix + re-arm>" --reread-event "..."`
   is the state that would say so, and it re-surfaces as HELD-PAST-REREAD rather than as an aged OPEN. NOT APPLIED HERE
   because the operating note said in terms "it stays OPEN"; the status change is 2.0.0_SA_COO's call, not this lane's.
+- 20260903T114500Z ANNOTATED by 0.7.0_AE_CloudOps~R -- THE ROLLBACK THAT STRANDED L4 IS NOW ACCEPTED.
+  0.0.0_AB_MSTR 93554 ruled the NEVER-2 rollback ACCEPTED under /govern on the artifact, against the
+  predicate fixed before the fact (93301 item 4 / 93348): s3://opal-data-49financial/gold/advi/_logs/
+  chain_20260903T094640Z.log -- 18 STAGE OK, 0 CHAIN ABORT, "CHAIN OK date=2026-09-02 wall=152.9s",
+  header stages=17 (was 18: the disarm visible in the RUNNING declaration), zero "insurance" tokens,
+  downstream gold written inside the run window (canonical/twr_daily/date=2026-09-02 @09:49:05Z,
+  dimensions/dim_asset_classification/date=2026-09-02 @09:48:54Z). A scheduled production fire on the
+  deployed bytes, not a hand-run.
+  THIS DOES NOT CLOSE L4 AND IS NOT A CLOSE OF THIS ENTRY. L4's proof is a REAL insurance-runner read
+  on a scheduled fire; the stage is disarmed, so no such read occurred or could. The rollback being
+  ACCEPTED and L4 being CLOSED are different objects and are not conflated here. gold/advi/insurance/
+  insurance_nav_current/ remains its single date=2026-08-25 object -- a disarmed stage wrote nothing.
+  STATUS UNCHANGED AND DELIBERATELY SO: OPEN, past window, firing RED daily -- which by the ledger's
+  own guardrail (_qualifies_as_held (a): an open leg of kind != verify IS a half-landed deploy) is the
+  DESIGNED signal and not noise. 2.0.0_SA_COO 93381 withdrew the 93365 hold word on exactly that
+  reading and recorded the RED as expected. The tool refuses HELD here and no override was attempted.
+  93554 item (1) asks for a DISPOSITIONING act recording L4's close as ROLLED-BACK with the re-arm
+  riding advi-insure-gold-chain-membership under a fresh L4. THAT ACT IS NOT TAKEN HERE: the leg
+  vocabulary has {closed-with-proof, open} and no member for "activation attempted, failed,
+  deliberately rolled back" (the Rule 24 (i) residual already on the record as ADVI_INSURE-S12), so
+  every available verb would assert something false. Surfaced to 2.0.0_SA_COO as the router; this lane
+  annotates and does not invent a disposition.
+  Rollback commit 530977130b; deploy served-verified 2026-09-03T07:59:44Z; acceptance ruling 93554;
+  channel rows ADVI_INSURE-S12/S13/S14 @a432f0b6de, @3595675047, @15ba87a50b.
