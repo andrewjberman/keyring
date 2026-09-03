@@ -549,7 +549,15 @@ def build_mirror(binary_src):
     os.makedirs(os.path.join(root, "org", "mcp"))
     os.makedirs(os.path.join(root, ".comp-graph"))
     shutil.copyfile(binary_src, os.path.join(root, ".tools", "comp-which"))
-    for aux in ("comp-grep", "comp-glob", "_comprail.py", "_trino_fed.py"):
+    # "_compbudget.py" ADDED (NFRA_COMPEFFICACY CE-t-3, Rule T): comp-which now imports it
+    # UNGUARDED at module level, same as comp-find's own precedent. Found live: the mirror's
+    # POSITIVE-CONTROL invocation below (a real subprocess, not the warm in-process path) crashed
+    # on ModuleNotFoundError before ever reaching main() -- zero stdout, zero rail row -- which
+    # `run_no_pollution_check`'s own v4 alibi correctly read as MIRROR CAPTURES NOTHING and failed
+    # the run (exit 2), exactly the absence-of-evidence class limb (b) exists to catch. This is not
+    # a false alarm the control should be silenced for -- it is the control doing its job against
+    # a genuine missing runtime dependency of the binary under test.
+    for aux in ("comp-grep", "comp-glob", "_comprail.py", "_trino_fed.py", "_compbudget.py"):
         src = os.path.join(WS, ".tools", aux)
         if os.path.exists(src):
             shutil.copyfile(src, os.path.join(root, ".tools", aux))
