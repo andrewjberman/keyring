@@ -50,7 +50,7 @@ None. FWD-9 is an independent receiving-seat verification, not a lane blocker.
 
 ## Current State
 
-N-authored engine adoption is local and self-test is 45/45. Proof and complete flip are ready. No push was attempted.
+N-authored engine adoption is local and self-test is 45/45. Proof and complete flip are committed. COO completed independent FWD-9 at 18:03:30Z: exact check rc 0 CURRENT, WITHIN BUDGET 1 of 1, DEFERRED 0 of 1. No push was attempted.
 
 ## Next Steps
 

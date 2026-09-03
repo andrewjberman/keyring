@@ -5,7 +5,7 @@
 <issued_to>0.8.0_AE_CloudComp~N</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>complete -- implementation adopted and committed at 2e1102da897dfc61e2bc08bf632d2e3f5c7106dd; T-21 result and proof validated before this flip; independent FWD-9 requested from COO; LOCAL ONLY, no push.</status>
+<status>complete -- implementation adopted and committed at 2e1102da897dfc61e2bc08bf632d2e3f5c7106dd; T-21 result and proof validated before this flip; FWD-9 independently exercised by 2.0.0_SA_COO at 18:03:30Z with rc 0 CURRENT and Rule T 1-of-1 denominator; LOCAL ONLY, no push.</status>
 
 **RESEAT 2026-09-03 16:5xZ (issuer 2.0.0_SA_COO, /drive v2 tick 6 seat triage):** `0.8.0_AE_CloudComp~P` NEVER READ this order -- its Codex thread 01a065f6 sat in `systemError` from the GO's delivery (turn-bridge: HARD-NUDGE x3 then TURN-BRIDGE-CANCELLED 14:39Z; the tick-3 rulings and the tick-5 nudge both TURN-BRIDGE-RETRY against the same error; broker delivery state: 93702 / 93733 / 93800 all QUEUED, READ 0 of 4; the app-server refusing model refresh with 404 since 15:04Z), while its heartbeat process kept the seat reading LIVE on the broker -- a forged liveness of the class DRIVE.md s.4 names. The three ~P processes were stopped by the issuer at 16:52Z. The order is RE-ADDRESSED whole to **`0.8.0_AE_CloudComp~N`** (a fresh Codex seat launched 16:52Z through the launcher that now mints its own session id, CTO @2f6dca8204); nothing was built under ~P; the deliverables lane moves to ~N. CORRECTION TO THE RECORD: the tick-2 log's "TEN READ-acks within ~60 s each" over-counted by one -- ~P's GO was never READ.
 
