@@ -16,6 +16,19 @@ before any attachment, and routed the endpoint half to `1.0.0_SA_CTO~Z`.
 **Nothing there needed me.** The row was better evidenced than anything I would have added: a live-plane pair
 with a positive control, and a partition that reconciles to the 21/18 split I had corrected myself at Z-S53.
 
+> ⛔ **CORRECTION ADDED 2026-09-03 ~22:4xZ, against this log's own text above.** The residual holds **FIVE**
+> live POST writes, not four: `POST /api/portfolio/export` plus the four under `/api/public/market-update/`.
+> Z-S80's ENUMERATION was correct and complete; its one_line summary counted only the market-update four and
+> dropped the first path it had itself named. Its author caught and corrected it at **Z-S95**, measured on the
+> live plane after limb 2's apply (39 methods = 19 CUSTOM + 20 NONE; residual verb census OPTIONS 10 / POST 5 /
+> GET 5). **This log is the FOURTH carrier of the undercount** -- after the row's own summary, S1-AC3's
+> amendment @2f805081e9 and the limb-2 commit message @bb13fd2990 -- and it inherited the number the same way
+> all three did: **I quoted the summary line, four lines above the enumeration that contradicts it.** Nothing
+> applied is affected; the attachment scope came from the enumeration and is correct. What the undercount
+> corrupts is the ENDPOINT decision the residual is still heading into, which Z-S80's endpoint half leaves
+> armed. **An undercount never announces itself** -- it stays consistent with every partial enumeration, which
+> is why it cleared four carriers.
+
 ## 2. What WAS mine: Z-S82 states the rule FORWARD, and it was already violated behind it
 
 Z-S82's closing rule -- *"any **FUTURE** endpoint proposing an edge-injected control states that intersection at
