@@ -6,6 +6,14 @@ D8 precedent) · **dep_stage:** PRD
 **Author:** `3.0.0_SA_CVO` (driver, Andrew-designated comp-tool lane @`98b1a59907`) · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
 **Version:** v0.1, 2026-09-02 · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+
+> ⛔ **SUPERSEDED 2026-09-03 00:24Z.** This draft was the step-3 input to L4. The RATIFIED PRD (v0.2) lives at its tree
+> home `org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md` @`e906c6f156` (1.0.0_SA_CTO, from this
+> file @`86a5538003`; ENDPOINT replaced by L2's nine cards, this file's seven kept there verbatim as AC-1..AC-7, §7
+> `outcome` → `outcome_ref` re-pointed). **This file is no longer edited.** The three edits it took AFTER `86a5538003`
+> — §4 result-file home + §4.6 two-grain battery field (@`4b2255545a`), §4.6 runs.jsonl 80-char trap (@`86a5538003`
+> itself is the input, so that one is IN), §7 row G-4 Codex-runtime rail (@`5a72185ede`) — plus row T-16 → CLEARED
+> @`bbba0db0e9` were sent to 1.0.0_SA_CTO as deltas for v0.2.1 (00:3xZ). Two carriers drift; this one is retired.
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
