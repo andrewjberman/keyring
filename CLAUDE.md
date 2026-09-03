@@ -15,11 +15,16 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 
 ## 1. HOW WE WORK
 
-27. **Every new directive/project runs the pipeline: register → purpose-level PRD → COO atom-decomp →
-    execute ON SPEC → CVO's surprise channel.** Mid-round the spec is FROZEN; the only legal off-spec act
-    is surfacing a surprise item (class {OBSERVATION, BLOCKING} × standing {ARMED, INERT}; ARMED disarms
-    same-turn via a named owner; DISARMED ≠ REMEDIATED). One Tier-2 instance = ONE project — the protected
-    resource is the seat's context. `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`.
+27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
+    (`4.0.0_SA_CRO` only) → L2 endpoint → L3 register → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
+    L5 decomp + battery → L6 task orders (`2.0.0_SA_COO` only — no CVO) → L7 execute (Tier-2 workers ONLY)
+    → L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement) → L10 route, ONLY after every task
+    order is complete and every investigation is CVO-checked** (spec error → L6, decomp error → L5, scope
+    change → L2). `0.0.0_AB_MSTR` integrates and never works a project. Mid-round the spec is FROZEN; the
+    only off-spec act is a surprise ROW (§2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
+    Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (state of record @`716a9bc7ce`, LD-0521; the
+    five-stage `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` keeps its mechanisms, two clauses VOID). This stub
+    is Andrew's form (2026-09-03: *"rule 27 just link out to the canonical spec doc"*); detail lives there.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
@@ -57,8 +62,15 @@ later — a CORRECTNESS cost, not a speed one.
     re-derive with a DIFFERENT instrument or cite the peer's — never re-run the same command.
     Catalogue: `docs/doctrine/CONTROLS_OVER_CARE.md`.
 
-⛔ **FOUND SOMETHING ODD OFF-TASK? Do NOT halt-and-investigate** — one line to `3.0.0_SA_CVO` (cc issuer),
-KEEP WORKING; an ARMED hazard still disarms same-turn. `docs/doctrine/THE_SURPRISE_CHANNEL.md`.
+⛔ **FOUND SOMETHING ODD OFF-TASK? Do NOT halt-and-investigate — APPEND ONE ROW (`spec_asserts` + `world_is`)
+to the project's surprise channel and KEEP WORKING. A broker message is NEVER the carrier** (Andrew-direct
+2026-09-03: *"claude.md should not have that rule to do this over mcp"* — a notifier watching files cannot see
+an inbox). Tree project: `org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md`
+(lane ANY — the worker appends it); legacy flat channel `org/surprise_channel/<CODE>/` admits CVO/CTO/COO only,
+so there the ISSUER appends the worker's row. An ARMED hazard still disarms same-turn via the row's
+`disarm_owner`. Gates: `.tools/surprise-row-gate.py` (the row, at commit) + `.tools/proof-of-spec-check.py`
+SURPRISES LIMB (a `surprises` entry with no resolving row id blocks a tree TO's `complete` flip).
+`docs/doctrine/THE_SURPRISE_CHANNEL.md`.
 
 ⛔ **DO NOT MANUFACTURE FRICTION:** (a) **NEVER implement an approval gate on any work unless Andrew
 explicitly asks** — an agent-made gate is invisible to him (pre-existing mechanical gates stand; proposing

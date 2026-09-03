@@ -1,11 +1,19 @@
 # CANONICAL FABRIC WORKFLOW — the ten steps, their owners, and where the gates actually are
 
 **AUTHORED:** `1.0.0_SA_CTO`, 2026-09-01, at Andrew's instruction to persist this concretely.
-**STATUS:** REFERENCE. Describes the loop as it stands on 2026-09-01. It creates no gate and lifts none.
-**SIBLING, AND THEY ARE NOT RECONCILED:** `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` describes the
-same process as **FIVE STAGES**. Two live framings, one process. ⚠ **Nothing here supersedes that
-document and I do not know which governs** — the divergence is named so a reader hits it here rather
-than discovering it mid-decomp.
+**STATUS (2026-09-03 ~03:2xZ): THE STATE OF RECORD GOVERNS.** Andrew memorialized the canonical workflow as
+**L1–L10 WITH ROLE EXCLUSIVITY PER STEP** -- L1 `4.0.0_SA_CRO` only; L2–L4 `1.0.0_SA_CTO` only (no COO, no CVO);
+L5–L6 `2.0.0_SA_COO` only (no CVO); L7 Tier-2 workers ONLY; L8–L9 `3.0.0_SA_CVO`, its FIRST engagement; L10
+routing ONLY after every task order is complete AND every investigation is CVO-checked; `0.0.0_AB_MSTR`
+integrates and never works a project -- record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md`
+@`716a9bc7ce` (LD-0521; the transcript verbatim in its s.2; the drawing he called *"completely correct"* in
+s.3). **Where this file's text and that record's s.3 differ, s.3 governs.** This file is being REWRITTEN from
+the atom-decomp water test of its own mechanisms (run `canonical-fabric-workflow-spec__20260903T0305Z`, CTO,
+on his word *"running atom-decomp on the spec itself to water test every single ref, gate, transfer, handoff"*);
+until that rewrite lands, the step sections below are the 2026-09-01 text with their known-stale clauses noted
+in the run. **SIBLING:** `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` keeps its MECHANISMS (they are what the gates
+cite); its clauses *"certifier of record = CVO"* and *"CTO runs the decomp on a dark COO"* are **VOID** by that
+record (dated markers in place there). The 2026-09-01 sentence *"I do not know which governs"* is RETIRED.
 
 **WHY IT EXISTS — Andrew's diagnosis, and it is the whole design constraint:** *whole projects were
 becoming thrashing debug sessions with no hierarchy.* The measured instance is `ADVI_PERFRP` on

@@ -42,14 +42,21 @@ declared. Close then follows the existing 2-step atomic closure discipline.
   worse than no date — it re-arms the lapsed-date hazard.*
 - **Status is CELL-level, never TO-level over a cell-grain decomp** — partial completion must be
   expressible, or the record lies to the next seat in whichever direction it happens to lag.
-- **Fallback (ratified REC):** on a MEASURED dark COO, CTO runs stage 3, disclosed on the
-  decomp's face. Work never queues on an unseated stage.
+- ⛔ **VOID 2026-09-03 (Andrew-direct at the `0.0.0_AB_MSTR` terminal, record @`716a9bc7ce` call 1, LD-0521;
+  marker placed by `1.0.0_SA_CTO`, text retained as history): the clause below is superseded by the L1–L10
+  state of record -- L5 is `2.0.0_SA_COO` ONLY; a dark COO is a seating problem for the integrator, never a
+  CTO decomp.** ~~**Fallback (ratified REC):** on a MEASURED dark COO, CTO runs stage 3, disclosed on the
+  decomp's face. Work never queues on an unseated stage.~~
 - **STAGE 3 IS A COO-OWNED RUN, NOT A SOLO ACT** *(CTO ruling 2026-08-21 ~16:5xZ on COO's
   structural finding 65076 at the first project — the canonical atom-decomp package requires
   status-missioned FAN-OUT with patch shapes merged only through the validator, and CERTIFICATION
   by a standing certifier who is never the author)*: COO authors and merges; the FAN-OUT COHORT
   and the CERTIFIER are **executor classes declared at stage-3 open** (the seating clause above
-  applies — dark class → MSTR same-turn). **Certifier of record = CVO** (standing certifier).
+  applies — dark class → MSTR same-turn). ~~**Certifier of record = CVO** (standing certifier).~~ ⛔ **VOID
+  2026-09-03 (Andrew-direct, record @`716a9bc7ce` calls 1 + 2, LD-0521; marker placed by `1.0.0_SA_CTO`):
+  NOBODY certifies the decomp before L6 -- `3.0.0_SA_CVO`'s first engagement is L8; a defective decomp
+  surfaces at L7 as a `DECOMP_INVALIDATING` row and routes to L5 (gate-locked). `2.0.0_SA_COO` may run the
+  sealed-mutant harness as a SELF-CHECK; it is not a certification and nobody waits on it.**
   **Role-collision resolution:** CVO's channel role is RECORD + GRADUATE, never re-certifying its
   own cert — a DECOMP-INVALIDATING item routes to the decomp OWNER (COO) to re-decomp, and the
   RE-CERTIFICATION after invalidation is signed by a DIFFERENT independent seat (CRO, or base
