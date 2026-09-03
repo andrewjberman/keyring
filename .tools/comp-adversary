@@ -21,6 +21,19 @@ that is ~3 MB and ~240 s: a context bomb AND a breach of the design note's own m
 constraint. So the packet is a declared SELECTION RULE plus digests, and the rule prints its
 denominator and its exclusions in the artifact (see SALIENCE below).
 
+T11 ADMISSIBILITY (landed 2026-09-03 by 4.0.0_SA_CRO -- Andrew-direct at the CRO terminal "yes, add
+T11 to the build order", then "DO it"; spec org/tier1_exec/4.0.0_SA_CRO/deliverables/
+SPEC_CANONICAL_FLOW_V3_SUBAGENT_WORKERS_ONE_SHOT_DISPATCH_20260903.md s.12 step 5 and s.13 L-4;
+standard org/standards/ADMISSIBILITY_METHOD_T11.md). For an artifact that carries <decomp_doc> +
+<owned_cells> (a tree task order, or a proof instance whose decomp_ref.to_ref names one), source 3
+is the DECOMPOSITION NEIGHBORHOOD: the owned cells' depends_on (one hop) from BOTH carriers -- the
+decomposition's own column and the task order's declared read-dependencies, differences printed --
+the task orders owning those cells, their proof-of-spec instances at read-vintage (a dependency with
+none is printed UNPROVEN), and the PRD with the sections the artifact names by token. Directory
+siblings are then DEMOTED to a declared exclusion carrying their count. MEASURED on TO-CE-T-2 before
+this landed: 93 uncited siblings, org/mcp/.exec-sum-state and broker.db-shm first -- adjacency of ONE
+cited path. When the neighborhood does not resolve, siblings stand and the declaration says why.
+
 USAGE:
   comp-adversary compose <artifact-path> [--out <path>] [--max-neighbors N]
                         [--digest-budget N] [--digest-bytes N] [--no-packet]
@@ -308,14 +321,194 @@ DEFERRED_SOURCES = [
     ("comp-axes unexamined-axes (snapshot rows)",
      "v1: snapshot-row consumption not wired (never live-render, per the 71.5s constraint)"),
     ("comp-blast/comp-trace neighborhood expansion",
-     "v1: graph expansion not wired -- neighborhood = directory siblings only"),
+     "v1: CODE-graph expansion (blast radius over the kuzu graph) not wired -- the neighborhood is "
+     "the DECOMPOSITION graph under T11 when it resolves, else directory siblings; never a blast radius"),
     ("comp-pulse warnings / comp-cochange diversity", "v1: not wired"),
     # RETIRED 2026-08-31 (3.0.0_SA_CVO~C): "comp-read digests (the packet stage) -- v1: the
     # packet lists POINTERS, not digests" is no longer an exclusion. Stage 4 is BUILT (source 5).
     # What remains bounded there is the SELECTION, and that is declared inside source 5 with its
     # own denominator and class census -- not here, because it is a stated scope, not an absence.
-    ("T11 admissibility method", "named slot, ships when CRO's method ratifies"),
+    # RETIRED 2026-09-03 (4.0.0_SA_CRO): "T11 admissibility method -- named slot, ships when CRO's
+    # method ratifies" is no longer an exclusion. The method is BUILT (source 3 under T11, below).
+    # What it withholds when it resolves -- directory siblings -- is declared DYNAMICALLY in the
+    # output with its count, because that is a stated demotion, not an absence.
 ]
+
+
+# --------------------------------------------------------------------- T11: ADMISSIBILITY
+# (2026-09-03, 4.0.0_SA_CRO. The slot above carried this seat's name from 2026-08-19 and stayed
+# empty until Andrew's word at the CRO terminal.)
+# THE METHOD IN ONE SENTENCE: an evidence item is ADMISSIBLE to the validator of an artifact when it
+# sits on the artifact's own dependency graph in the decomposition -- never merely because it shares
+# a directory with something the author cited. Full text: org/standards/ADMISSIBILITY_METHOD_T11.md.
+# WHY: the pre-T11 source 3 answered "what might the author not have seen" with FILESYSTEM ADJACENCY.
+# On TO-CE-T-2 that was 93 siblings led by org/mcp/.exec-sum-state and broker.db-shm -- the siblings
+# of the one org/mcp/ path the TO cited -- while the cells the TO actually depended on (CE-t-1,
+# CE-tp-1, CE-disc-2, CE-t-3, CE-g-5), their proofs and the PRD rows it named appeared nowhere.
+# DEFERRED_SOURCES said so itself: "neighborhood = directory siblings only". This is the wiring.
+# ONE HOP: direct depends_on only. Transitive closure is a v2 limb and is stated as a non-application
+# in the standard, so a validator never reads "one hop" as "the whole chain".
+# The regexes MIRROR .tools/proof-of-spec-check.py :68-70 and :462-473 (the S5 fix @7b649df39d):
+# copied, not imported -- that module runs code at import and this tool stays a leaf.
+CELL_ID_RE = re.compile(
+    r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|L3W3-[0-9a-f]{4}-\d+"
+    r"|L3S7B-[0-9a-f]{4}-\d+"
+    r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
+    r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
+DECOMP_REF_RE = re.compile(r"<decomp_ref>(.*?)</decomp_ref>", re.S)
+DECOMP_DOC_TAG_RE = re.compile(r"<decomp_doc>\s*([^<]+?)\s*</decomp_doc>", re.S)
+OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
+# The PRD sections, outcomes and manifest rows the artifact NAMES -- printed as tokens beside the PRD
+# member so the validator opens THOSE sections, never the whole document.
+PRD_TOKEN_RE = re.compile(r"\bs\.\d+(?:\.\d+)*\b|\bFWD-\d+\b|\b[TGR]-\d+\b")
+
+
+def _rel(p):
+    try:
+        return os.path.relpath(p, repo_root()).replace("\\", "/")
+    except ValueError:
+        return p.replace("\\", "/")
+
+
+def _decomp_depends_on(decomp_text):
+    """{cell_id: raw depends_on text} from every markdown table in the decomposition whose header
+    carries a `depends_on` column. Pipe-split: a literal `|` inside a cell would shift columns.
+    The RAW text is returned and printed, so a DROPPED / RETIRED word sitting in that column stays
+    visible to the reader instead of being flattened into a bare dependency id."""
+    out = {}
+    lines = decomp_text.splitlines()
+    i = 0
+    while i < len(lines):
+        ln = lines[i].strip()
+        nxt = lines[i + 1].strip() if i + 1 < len(lines) else ""
+        if (ln.startswith("|") and nxt.startswith("|")
+                and set(nxt.replace("|", "").strip()) <= set("-: ")):
+            hdr = [c.strip().strip("`").lower() for c in ln.strip("|").split("|")]
+            if "depends_on" not in hdr:
+                i += 2
+                continue
+            di = hdr.index("depends_on")
+            i += 2
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                cols = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                m = CELL_ID_RE.search(cols[0]) if cols else None
+                if m and di < len(cols):
+                    out.setdefault(m.group(0), cols[di])
+                i += 1
+            continue
+        i += 1
+    return out
+
+
+def decomp_neighborhood(path):
+    """T11. (info, None) when the artifact's decomposition neighborhood resolves, else (None, reason)
+    -- and the reason is PRINTED, because a fallback to directory siblings must never look like a
+    graph read. Every member is a path at read-vintage; absent members print as absent."""
+    text = open(path, encoding="utf-8", errors="replace").read()
+    to_text, to_path = text, path
+    if text.lstrip().startswith("{"):
+        # A proof-of-spec instance: follow decomp_ref.to_ref to the governing task order.
+        try:
+            import json
+            ref = (json.loads(text).get("decomp_ref") or {}).get("to_ref") or ""
+        except Exception:
+            ref = ""
+        if not ref:
+            return None, "JSON artifact carries no decomp_ref.to_ref -- not the proof of a tree task order"
+        cand = ref if os.path.isabs(ref) else os.path.join(repo_root(), ref)
+        if not os.path.isfile(cand):
+            return None, "decomp_ref.to_ref '%s' does not resolve to a file" % ref
+        to_path = cand
+        to_text = open(cand, encoding="utf-8", errors="replace").read()
+    m = DECOMP_REF_RE.search(to_text)
+    if not m:
+        return None, "artifact carries no <decomp_ref> -- not a tree task order"
+    blob = m.group(1)
+    dm = DECOMP_DOC_TAG_RE.search(blob)
+    om = OWNED_CELLS_RE.search(blob)
+    if not dm or not om:
+        return None, "<decomp_ref> lacks a delimited <decomp_doc> or <owned_cells>"
+    doc = dm.group(1).strip()
+    owned = sorted(set(CELL_ID_RE.findall(om.group(1))))
+    if not owned:
+        return None, "<owned_cells> names no cell id"
+    dabs = doc if os.path.isabs(doc) else os.path.join(repo_root(), doc)
+    if not os.path.isfile(dabs):
+        return None, "decomposition '%s' does not resolve to a file at read-vintage" % doc
+    ddir = os.path.dirname(dabs)
+    if os.path.basename(ddir) != "decompositions":
+        return None, "decomposition is not under a project tree (no decompositions/ parent) -- flat-root layout"
+    proj = os.path.dirname(ddir)
+    table = _decomp_depends_on(open(dabs, encoding="utf-8", errors="replace").read())
+    deps_decomp, raw = set(), {}
+    for c in owned:
+        r = table.get(c)
+        raw[c] = r
+        if r is not None:
+            deps_decomp |= set(x for x in CELL_ID_RE.findall(r) if x not in owned)
+    body = OWNED_CELLS_RE.sub("", DECOMP_DOC_TAG_RE.sub("", blob))
+    deps_to = set(x for x in CELL_ID_RE.findall(body) if x not in owned)
+    deps = sorted(deps_decomp | deps_to)
+    members = [(_rel(dabs), "decomposition", None, "the rectangle the owned cells live in")]
+    to_dir = os.path.join(proj, "task-orders")
+    dl_dir = os.path.join(proj, "deliverables")
+    owners = {}
+    if os.path.isdir(to_dir):
+        for fn in sorted(os.listdir(to_dir)):
+            fp = os.path.join(to_dir, fn)
+            if not fn.endswith(".md") or os.path.abspath(fp) == os.path.abspath(to_path):
+                continue
+            try:
+                t = open(fp, encoding="utf-8", errors="replace").read()
+            except OSError:
+                continue
+            mm = DECOMP_REF_RE.search(t)
+            oo = OWNED_CELLS_RE.search(mm.group(1)) if mm else None
+            if not oo:
+                continue
+            for c in CELL_ID_RE.findall(oo.group(1)):
+                if c in deps:
+                    owners.setdefault(c, []).append(fp)
+    unproven, proofs_found = set(), 0
+    for c in deps:
+        tos = owners.get(c, [])
+        if not tos:
+            members.append((None, "dependency-cell", c,
+                            "NO task order owns this cell -- spec-level, unissued, or withdrawn"))
+            unproven.add(c)
+            continue
+        for fp in tos:
+            members.append((_rel(fp), "dependency-to", c, "owns the cell"))
+            stem = os.path.basename(fp)[:-3]
+            found = []
+            if os.path.isdir(dl_dir):
+                for seat in sorted(os.listdir(dl_dir)):
+                    pp = os.path.join(dl_dir, seat, stem + ".proof_of_spec.json")
+                    if os.path.isfile(pp):
+                        found.append(pp)
+            if found:
+                for pp in found:
+                    members.append((_rel(pp), "dependency-proof", c, "proof-of-spec instance at read-vintage"))
+                    proofs_found += 1
+            else:
+                members.append((None, "dependency-proof", c,
+                                "NO proof-of-spec instance under deliverables/*/ -- the dependency is UNPROVEN"))
+                unproven.add(c)
+    prd = None
+    prd_dir = os.path.join(proj, "prd")
+    if os.path.isdir(prd_dir):
+        for fn in sorted(os.listdir(prd_dir)):
+            if fn.endswith("_PRD.md"):
+                prd = os.path.join(prd_dir, fn)
+                break
+    toks = sorted(set(PRD_TOKEN_RE.findall(to_text)))
+    if prd:
+        members.append((_rel(prd), "prd", None,
+                        "sections named by the artifact: %s" % (", ".join(toks[:20]) or "none by token")))
+    return {"decomp": _rel(dabs), "project": _rel(proj), "owned": owned, "deps": deps,
+            "deps_decomp": sorted(deps_decomp), "deps_to": sorted(deps_to), "raw": raw,
+            "members": members, "unproven": sorted(unproven), "proofs_found": proofs_found}, None
 
 
 def _emit(body, out_path):
@@ -327,9 +520,12 @@ def _emit(body, out_path):
         print(body)
 
 
-def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_packet):
+def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_packet,
+                    domain_label="uncited siblings"):
     """STAGE 4. Emits the declared selection rule, its class census, the digests, and -- the
-    part that carries the contract -- what it did NOT digest and why."""
+    part that carries the contract -- what it did NOT digest and why. `domain_label` names the
+    source-3 set the packet selects from: directory siblings before T11, the decomposition
+    neighborhood's members when T11 resolves. The DOMAIN is printed, never only implied."""
     L = []
     L.append("### source 5: comp-read digests of the complement (THE PACKET -- stage 4)")
     if no_packet:
@@ -359,15 +555,17 @@ def _packet_section(siblings, cited, artifact_date, budget, per_file_bytes, no_p
         L.append("    %s %-10s %s" % (cid, nm, why))
     if s1_note:
         L.append("  S1 NOTE: %s" % s1_note)
+    L.append("  domain: %s (the source-3 set)" % domain_label)
     L.append("  budget: %d file(s) at <=%d bytes each (raise with --digest-budget/--digest-bytes)"
              % (budget, per_file_bytes))
-    L.append("  selected: %d of %d uncited siblings" % (len(selected), len(rows)))
+    L.append("  selected: %d of %d %s" % (len(selected), len(rows), domain_label))
     L.append("  class census: %s" % ", ".join(
         "%s %d/%d" % (cid, census[cid][0], census[cid][1]) for cid, _, _ in SALIENCE_CLASSES))
     not_digested = len(rows) - len(selected)
-    L.append("  NOT DIGESTED: %d of %d siblings -- %d beyond the budget, %d non-text (comp-read "
+    L.append("  NOT DIGESTED: %d of %d %s -- %d beyond the budget, %d non-text (comp-read "
              "is a text instrument; binaries stay in the denominator, never dropped)"
-             % (not_digested, len(rows), max(0, not_digested - skipped_binary), skipped_binary))
+             % (not_digested, len(rows), domain_label, max(0, not_digested - skipped_binary),
+                skipped_binary))
     summary_at = len(L)   # F2: the DEFERRED line is inserted HERE after the digests run
     L.append("  WARN: THE PACKET IS A SELECTION, NOT A SURVEY. A file's ABSENCE from the "
              "digests below is a BUDGET fact, never an assessment that it did not matter.")
@@ -498,13 +696,56 @@ def compose(path, out_path, cap, open_mode=False, digest_budget=12, digest_bytes
         L.append("  - %s : %s (%s)" % (p, v, why))
     L.append("")
     nb, nb_total, nb_full = uncited_neighbors(prof["paths"], cap)
-    L.append("### source 3: uncited neighborhood (directory siblings of cited paths)")
-    L.append("  total uncited siblings: %d (showing %d -- the CAP is declared, not silent)" % (nb_total, len(nb)))
-    for p in nb:
-        L.append("  - %s" % p)
+    dn, dn_err = decomp_neighborhood(path)
+    dyn_excl = []
+    if dn:
+        # T11: the graph resolved. Siblings are DEMOTED, never silently dropped -- their count
+        # prints here AND as a declared exclusion below.
+        L.append("### source 3: decomposition neighborhood (T11 admissibility -- the cell's graph, "
+                 "not the filesystem)")
+        L.append("  owned cells: %s | decomposition: %s | project: %s"
+                 % (", ".join(dn["owned"]), dn["decomp"], dn["project"]))
+        both = sorted(set(dn["deps_decomp"]) & set(dn["deps_to"]))
+        d_only = sorted(set(dn["deps_decomp"]) - set(dn["deps_to"]))
+        t_only = sorted(set(dn["deps_to"]) - set(dn["deps_decomp"]))
+        L.append("  dependencies (ONE HOP): %d -- decomp depends_on column: %s | TO-declared "
+                 "read-dependencies: %s"
+                 % (len(dn["deps"]), ", ".join(dn["deps_decomp"]) or "none",
+                    ", ".join(dn["deps_to"]) or "none"))
+        L.append("    in both carriers: %s | decomp-only: %s | TO-only: %s"
+                 % (", ".join(both) or "none", ", ".join(d_only) or "none",
+                    ", ".join(t_only) or "none"))
+        for c, r in dn["raw"].items():
+            if r is None:
+                L.append("    %s depends_on: (cell not found in a table carrying a depends_on column)" % c)
+            else:
+                L.append("    %s depends_on (raw): %s"
+                         % (c, _ascii(r)[:160] + (" ..." if len(r) > 160 else "")))
+        L.append("  members: %d (proof instances found: %d)" % (len(dn["members"]), dn["proofs_found"]))
+        for p, kind, cell, note in dn["members"]:
+            L.append("  - %s [%s%s] %s" % (p or "(absent)", kind, (" " + cell) if cell else "", note))
+        L.append("  UNPROVEN dependencies: %d of %d -- %s"
+                 % (len(dn["unproven"]), len(dn["deps"]), ", ".join(dn["unproven"]) or "none"))
+        L.append("  directory siblings: DEMOTED under T11 -- %d uncited sibling(s) of cited paths "
+                 "NOT shown; filesystem adjacency is not admissible when the decomposition "
+                 "resolves (org/standards/ADMISSIBILITY_METHOD_T11.md)" % nb_total)
+        dyn_excl.append(("directory-sibling neighborhood (the pre-T11 source 3)",
+                         "DEMOTED: the decomposition neighborhood resolved; %d sibling(s) withheld"
+                         % nb_total))
+        packet_domain = [p for p, _, _, _ in dn["members"] if p]
+        domain_label = "neighborhood members"
+    else:
+        L.append("### source 3: uncited neighborhood (directory siblings of cited paths)")
+        L.append("  T11: decomposition neighborhood NOT RESOLVED (%s) -- filesystem adjacency "
+                 "stands as the neighborhood" % dn_err)
+        L.append("  total uncited siblings: %d (showing %d -- the CAP is declared, not silent)" % (nb_total, len(nb)))
+        for p in nb:
+            L.append("  - %s" % p)
+        packet_domain = nb_full
+        domain_label = "uncited siblings"
     L.append("")
-    L.extend(_packet_section(nb_full, prof["paths"], adate, digest_budget, digest_bytes,
-                             no_packet))
+    L.extend(_packet_section(packet_domain, prof["paths"], adate, digest_budget, digest_bytes,
+                             no_packet, domain_label))
     drift, err = comp_state_drift()
     if err:
         L.append("### source 4: comp-state drift -- DEFERRED (%s)" % err)
@@ -514,13 +755,13 @@ def compose(path, out_path, cap, open_mode=False, digest_budget=12, digest_bytes
             L.append("  " + ln)
     L.append("")
     L.append("## DECLARED EXCLUSIONS (sources the validator was NOT shown -- v1 contract)")
-    for name, why in DEFERRED_SOURCES:
+    for name, why in DEFERRED_SOURCES + dyn_excl:
         L.append("  - %s : %s" % (name, why))
     L.append("")
     L.append("## DENOMINATORS")
     L.append("complement sources: %d run / %d deferred-with-reason / %d declared-excluded"
              % ((3 if no_packet else 4) + (0 if err else 1), (1 if err else 0),
-                len(DEFERRED_SOURCES)))
+                len(DEFERRED_SOURCES) + len(dyn_excl)))
     L.append("pin kinds: all pins in this declaration are READ-VINTAGE (declaration-vintage pins")
     L.append("appear only where the artifact itself recorded one -- trace-to-authority claims are")
     L.append("UNANSWERABLE from this declaration alone and are not implied).")
@@ -575,7 +816,52 @@ def self_test():
         print("control 5 (stage-4 packet: real comp-read digest content + selection denominator "
               "+ class census -- fails on the pointers-only build): %s" % ("PASS" if c5 else "FAIL"))
         ok = ok and c5
-    print("self-test: %s" % ("PASS 5/5" if ok else "FAIL"))
+        # CONTROL 6 (T11, 2026-09-03, 4.0.0_SA_CRO). THE PLANTED CASE: a temp project tree -- a
+        # decomposition whose table carries a depends_on column (Q-a-2 depends on Q-a-1), a task order
+        # owning Q-a-1 with a proof instance under deliverables/, a PRD, and the artifact under review
+        # owning Q-a-2 while ALSO citing a real repo path, so directory siblings EXIST to be demoted.
+        # RED, MEASURED on the pre-T11 binary against the real TO-CE-T-2 at HEAD @c44bd68273: source 3
+        # read "uncited neighborhood (directory siblings of cited paths)", 93 siblings,
+        # org/mcp/.exec-sum-state first, and "decomposition neighborhood" was ABSENT from the output --
+        # every conjunct below fails on that build. --no-packet keeps the arm deterministic (no digest
+        # shell-outs); the packet-over-members path is exercised by the live run on TO-CE-T-2.
+        proj = os.path.join(td, "proj")
+        for sub in ("decompositions", "task-orders", os.path.join("deliverables", "w1"), "prd"):
+            os.makedirs(os.path.join(proj, sub), exist_ok=True)
+        dpath = os.path.join(proj, "decompositions", "Q_DECOMP.md")
+        with open(dpath, "w", encoding="utf-8") as f:
+            f.write("# Q decomp\n\n| cell | = | outcome_ref | value | status now | evidence | lane "
+                    "| depends_on | closes on |\n|---|---|---|---|---|---|---|---|---|\n"
+                    "| Q-a-1 | one | FWD-1 | CLEARED | DONE | -- | w | -- | x |\n"
+                    "| Q-a-2 | two | FWD-1 | CLEARED | OPEN | -- | w | Q-a-1 | y |\n")
+        with open(os.path.join(proj, "task-orders", "Q.TO-1.one.md"), "w", encoding="utf-8") as f:
+            f.write("# TO-1\n<decomp_ref>\n<decomp_doc>%s</decomp_doc>\n<owned_cells>Q-a-1"
+                    "</owned_cells>\n</decomp_ref>\n" % dpath)
+        with open(os.path.join(proj, "deliverables", "w1", "Q.TO-1.one.proof_of_spec.json"), "w",
+                  encoding="utf-8") as f:
+            f.write('{"to_id": "Q.TO-1.one", "acceptance": []}\n')
+        with open(os.path.join(proj, "prd", "Q_PRD.md"), "w", encoding="utf-8") as f:
+            f.write("# Q PRD\n## s.4\n")
+        fx6 = os.path.join(proj, "task-orders", "Q.TO-2.two.md")
+        with open(fx6, "w", encoding="utf-8") as f:
+            f.write("# TO-2 cites PRD s.4 and docs/architecture/PRD_AUTHORING_PROTOCOL.md\n"
+                    "<decomp_ref>\n<decomp_doc>%s</decomp_doc>\n<owned_cells>Q-a-2</owned_cells>\n"
+                    "Read-dependencies, NOT claimed: Q-a-1.\n</decomp_ref>\n" % dpath)
+        o6 = compose(fx6, None, cap=5, no_packet=True)
+        demoted = re.search(r"directory siblings: DEMOTED under T11 -- (\d+) uncited sibling", o6)
+        c6 = ("source 3: decomposition neighborhood" in o6
+              and "in both carriers: Q-a-1" in o6
+              and "Q.TO-1.one.proof_of_spec.json [dependency-proof Q-a-1]" in o6
+              and "Q_PRD.md [prd] sections named by the artifact: s.4" in o6
+              and demoted is not None and int(demoted.group(1)) > 0
+              and "UNPROVEN dependencies: 0 of 1" in o6
+              and "T11 admissibility method" not in o6)
+        print("control 6 (T11: decomposition neighborhood resolves -- the dependency from BOTH "
+              "carriers, its proof found, PRD sections by token, %s sibling(s) DEMOTED, the T11 slot "
+              "retired; fails on the pre-T11 build): %s"
+              % (demoted.group(1) if demoted else "?", "PASS" if c6 else "FAIL"))
+        ok = ok and c6
+    print("self-test: %s" % ("PASS 6/6" if ok else "FAIL"))
     return 0 if ok else 1
 
 
