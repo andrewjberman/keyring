@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **10 rows** (S1-S10). Corrected 2026-09-03 09:0xZ by
+**Append-only during the round.** Denominator at this write: **12 rows** (S1-S12). Corrected 2026-09-03 09:1xZ by `0.7.0_AE_CloudOps~P` on appending S11 (was 10); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -447,6 +447,100 @@ stale comment.
     "spec_asserts": "TO-CG-B-2 B2-AC1 requires the runtime decision to carry 'the memory size with the measured peak beside it' and the visibility timeout '>= the longest step that holds the message, with the number', i.e. every runtime bound derived from CG-s-10's measurements rather than from a document claim (PRD s.6 R5).",
     "world_is": "One runtime bound the worker inherits -- the engine's own rebuild deadline -- is still derived in-source from the ~6 min document figure that CG-s-10 falsified, giving 1.80x headroom where the code claims 5x. It is inherited silently by any caller that does not set the env var, including a task definition written from the face without reading :389.",
     "notes": "Disarm at this port = set KUZU_REBUILD_DEADLINE_S explicitly in the projection task definition from the measured number with the headroom stated in the runtime decision, and re-check it against B2-AC6's CLOUD measurement once that exists (the cloud number is the one the sizing may rest on). The ENGINE-side fix -- re-deriving the default and correcting the comment -- is NOT taken here: this task order's four named fixes are S9, S2, S3 and S8, and quietly widening that set is the scope drift the round-2 face forbids. Surfaced so a later caller does not inherit a stale justification; 3.0.0_SA_CVO~A routes it."
+  }
+]
+```
+
+## S13 (filed as S11; renumbered on a same-minute id collision with ~Q -- see notes) -- the tree cannot produce the adds-only plan B1-AC3 requires, and a bare apply would land an Andrew-EXCLUDED SNS email subscription
+
+STOP condition named by TO-CG-B-1 itself, MET. Terraform written, `validate` Success, `fmt` clean, `comp-iam gaps`
+delta confined to the parser's own denominators -- and then the plan came back **8 add / 2 change**, with **4 of those
+foreign to this cell**. NOT APPLIED. The deliverable's own words: *a non-zero change/destroy count is a STOP and a row.*
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S13",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~P",
+    "surfaced_at": "2026-09-03T09:15Z",
+    "one_line": "TO-CG-B-1 B1-AC3 requires an adds-only plan (0 change / 0 destroy) and a 0-diff re-plan, but the globgrph tree CANNOT produce either: a module-wide plan reads 'Plan: 8 to add, 2 to change, 0 to destroy' of which 4 are FOREIGN committed-but-never-applied drift, including aws_sns_topic_subscription.critical_surface_alerts_email to andrew@opalinvest.com -- a resource recorded as an EXPLICIT Andrew EXCLUSION that must not land. NOT APPLIED. Deploy ledger left OPEN/RED (hold correctly refused while an apply leg is open); issuer ruling needed on a -target scoped apply.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -input=false -no-color in infra/aws/terraform/globgrph at 2026-09-03 ~09:0xZ (init OK, validate Success, fmt clean): 'Plan: 8 to add, 2 to change, 0 to destroy'. Enumerated by address: MINE 6 of 6 exactly as the face specifies (aws_sqs_queue.globgrph_projection_events, .globgrph_projection_events_dlq, aws_sqs_queue_policy.globgrph_projection_events, aws_s3_bucket_notification.globgrph_warehouse_marker, aws_iam_role.globgrph_projection_worker, aws_iam_role_policy.projection_worker_sqs) -- all 'will be created'. FOREIGN 4: aws_glue_partition.tool_activity[\"rolling_log\"] and [\"rolling_log_summary\"] updated in-place (adding a frozen_by_retirement parameter), aws_glue_partition.tool_activity[\"routing\"] created, aws_sns_topic_subscription.critical_surface_alerts_email created",
+        "THE FOREIGN CHANGES ARE NOT UNCOMMITTED PEER EDITS -- they are COMMITTED DESIRED text never applied. MEASURED: git status --porcelain infra/aws/terraform/globgrph/ returns exactly ONE line, '?? projection.tf' (this seat's own new file). Declaring commits: item2c_surface_alarm.tf @446f00ecaf (0.7.0_AE_CloudOps, 2026-06-17); tool_activity.tf @981719334a (0.8.0_AE_CloudComp, 2026-08-21). So the tree has carried unapplied DESIRED drift for up to ~2.5 months -- CLAUDE.md Rule 22a's DESIRED != APPLIED axis, concrete",
+        "THE SNS SUBSCRIPTION IS A RECORDED ANDREW EXCLUSION, not merely unowned: org/tier2_senior/0.7.0_AE_CloudOps/deliverables/ZGATES_PREFLIGHT_VERIFIED_20260714.md:37 -- 'THE EXCLUSION (must NOT land): aws_sns_topic_subscription.critical_surface_alerts_email'; org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-14/session_0816-0900Z_Z-gate-opener_gateA-image_gateB-fedobs-producer.md:119 -- 'NOT touched (by design) ... (excluded per Andrew'; 3.0.0_SA_CVO~Z's 2026-07-14 cert log flagged the same module-wide-apply hazard as a P1 apply-leg flag, naming item2c_surface_alarm.tf:30 and the endpoint andrew@opalinvest.com",
+        "AN ESTABLISHED HANDLING CONVENTION EXISTS AND IS NOT THIS SEAT'S TO INVOKE UNASKED: org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-06-22/datemode_b_backfill_executed_plus_f1_email_reapply.md:31 records 'safe-apply.sh globgrph -target=critical_surface_alerts_email apply'; org/tier2_senior/0.8.0_AE_CloudComp/task_orders/nfra-toolunify-critical-surface-alerts-email-sub-apply.md:109 instructs scoping with -target. So prior seats worked this tree by TARGETING, which the face of TO-CG-B-1 does not mention",
+        "NOTHING WAS APPLIED. safe-apply was never invoked; the plan was written to a plan file and read, never applied. Control: infra/aws/terraform/globgrph working copy still shows exactly one dirty line (the untracked projection.tf), and no ledger leg carries a proof",
+        "CONSEQUENCE FOR B1-AC3 AS WRITTEN: even a correct targeted apply of the 6 cannot yield the '0-diff re-plan' the criterion demands, because the 4 foreign items remain in every UNSCOPED plan of this tree by design. The criterion is unreachable in this tree without either landing an Andrew-excluded resource or redefining the re-plan bar"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-1 B1-AC3: 'APPLIED UNDER THE PROTOCOL: ledger entry opened before, safe-apply with the plan quoted (adds only; 0 change / 0 destroy), the 0-diff re-plan quoted, ledger entry closed after'; and the deliverable clause 'a non-zero change/destroy count is a STOP and a row'.",
+    "world_is": "The module-wide plan is 8 add / 2 change / 0 destroy, not adds-only, and 4 of the 8+2 belong to other cells entirely. A bare safe-apply would land an Andrew-excluded SNS email subscription to a real human address plus three Glue partition changes this task order does not own. The STOP condition the face itself names is MET, so the apply was not run and the row is filed.",
+    "notes": "RECOMMENDATION for the disarm owner, offered as a rec and NOT self-executed because an apply is outward-facing and hard to reverse: (1) safe-apply -target on exactly the 6 CG-s-1 addresses; (2) verify NOT with a -target re-plan -- CLAUDE.md Rule 22 names 'a -target apply verified by a -target re-plan' as a specimen of the scoped-check defect -- but with ONE UNSCOPED re-plan asserted to contain exactly the 4 known-excluded foreign items and ZERO of this cell's 6; (3) B1-AC3's '0-diff re-plan' limb re-worded to that bar, since 0-diff is structurally unreachable in this tree. The deploy ledger cldgrph-cgs1-marker-notification-projection-queue is deliberately left OPEN/RED: deploy_ledger.py hold REFUSED it ('a half-landed deploy cannot be HELD') and closing a leg that never ran would put a FALSE CLOSED on the record. Nothing is half-landed -- the deploy never started -- and OPEN is the honest state until the ruling lands. Routed to the issuer in the same turn per the face's BOUNDS. || ID COLLISION, RESOLVED BY RENUMBERING THIS ROW ONLY: this row was first written as NFRA_CLDGRPH-S11 and 0.7.0_AE_CloudOps~Q independently claimed S11 for a different row in the same minute (theirs surfaced_at 09:14Z, this one 09:15Z); the surprise-row-gate refused the commit on the duplicate, which is the gate working. This seat renumbered ITS OWN row to NFRA_CLDGRPH-S13 rather than touching a peer's, which append-only forbids. \u26a0 REFERENTIAL NOTE FOR READERS AND FOR THE L8 SEAT: 2.0.0_SA_COO~A's RULING at msg 93430 is titled 'RULING on NFRA_CLDGRPH-S11' and its subject cites S11 -- that ruling is about THIS row, now NFRA_CLDGRPH-S13. The id S11 in the channel now resolves to ~Q's unrelated OBSERVATION row. Recorded here because a citation that silently retargets is worse than a renumber that is announced."
+  }
+]
+```
+
+## S12 -- TO-CG-B-2 MANDATES a tool that violates TO-CG-B-2's own bound: `comp-blast` rebuilt the canonical DB
+
+Surfaced by running the face's own `<compiler_tools_mandate>` BEFORE-WRITE step. This is not a tool
+defect and not a bound I chose to break -- **the two clauses of one task order contradict each other, and
+a seat that obeys the mandate necessarily violates the bound.**
+
+The BOUNDS say: *"`infra/aws/globgrph/kuzu_nessie_db` is not read or written (mtime control as in
+TO-CG-V-1)."* The mandate says: *"`comp-blast infra/aws/globgrph/kuzu_nessie_load.py` and `comp-blast
+infra/aws/globgrph/kuzu_incremental_refresh.py`."* `comp-blast` queries the canonical Kuzu graph, which
+routes through `_canonical.ensure_fresh`, which found the DB BEHIND Nessie HEAD and **rebuilt it** --
+printing its own reasoning: *"canonical FULL rebuild via the DESIGNED daily ground-truth reset
+(post-nightly whole-table delta trips the large-delta gate; CTO condition 2, NOT a defect)"*.
+
+**Nothing is harmed and the estate is better off** -- the DB is now FRESHER than before and the rebuild is
+the designed path. The defect is that a criterion's named control cannot be stated as the face states it:
+the mtime control over the canonical DB **had already failed before any port code existed**, through the
+face's own required tooling.
+
+⭐ **The rebuild's own banner independently CORROBORATES `CG-s-10`'s finding** that the full load is the
+DAILY path -- from a different instrument (`_canonical`'s runtime log) than the one that measured it
+(INC-A's delta census). The estate's tooling already calls it "the DESIGNED daily ground-truth reset".
+
+⚠ **TO-CG-V-1's control is NOT retroactively broken and I am not claiming it is.** That task order closed
+at 07:52Z; its four control read points were all before this write, and each was true when taken. This
+write is at 09:11:51Z, under TO-CG-B-2.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S12",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~Q",
+    "surfaced_at": "2026-09-03T09:14Z",
+    "one_line": "TO-CG-B-2's BOUNDS forbid reading or writing infra/aws/globgrph/kuzu_nessie_db while its own compiler_tools_mandate REQUIRES comp-blast on both engine files; comp-blast routes through _canonical.ensure_fresh, which found the DB BEHIND HEAD and REBUILT it at 09:11:51Z (82,661,376 B -> 46,997,504 B, fingerprint 711b0b3c.. -> d64fca39..). The mandate and the bound cannot both be obeyed, and the face's named mtime control had therefore already failed before any port code existed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-CG-B-2 BOUNDS @585daff578 -- 'No pointer, no deletion, no serving, no local canonical DB. ... infra/aws/globgrph/kuzu_nessie_db is not read or written (mtime control as in TO-CG-V-1).'",
+        "TO-CG-B-2 compiler_tools_mandate @585daff578 -- 'BEFORE WRITE: ... comp-blast infra/aws/globgrph/kuzu_nessie_load.py and comp-blast infra/aws/globgrph/kuzu_incremental_refresh.py (every caller of the engine that the port changes ...)'",
+        "THE TOOL'S OWN STDOUT, first two lines of the comp-blast run: 'INFO: canonical auto-refresh (BEHIND Nessie HEAD (pin 5527093883275558226 != HEAD 919122196731915390 (writer=incremental_updater, committed_at=2026-09-03T08:32:05.491916+00:00))) -> rebuilding kuzu_nessie_db' then 'INFO: canonical FULL rebuild via the DESIGNED daily ground-truth reset (post-nightly whole-table delta trips the large-delta gate; CTO condition 2, NOT a defect)'",
+        "MEASURED BEFORE/AFTER on the same instrument used for TO-CG-V-1's control: size 82,661,376 B at mtime '2026-09-02 20:36:15.505342500 -0400' with listing md5 711b0b3c78f0bfecff7a92bcdcd49193, then 46,997,504 B at mtime '2026-09-03 05:12:21.682472900 -0400' with listing md5 d64fca39dfa47179f7798dcb1b8e2340",
+        "THE REBUILD IS ATTRIBUTED, not inferred: kuzu_nessie_db._build_manifest.json now carries built_at 2026-09-03T09:11:51.036107+00:00 with node_count 27135 -- matching the head count in the comp-blast banner (27,135), and 09:11:51Z falls inside the comp-blast invocation window",
+        "TIMING CONTROL separating this from TO-CG-V-1: that task order's last control read was 07:52Z and its window closed at 07:51:30Z; this write is 09:11:51Z, i.e. 80 minutes after V-1 was terminal. V-1's four control reads are unaffected and are not being re-claimed here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-2 simultaneously BOUNDS the assignee off `infra/aws/globgrph/kuzu_nessie_db` ('not read or written', with an mtime control 'as in TO-CG-V-1') and MANDATES `comp-blast` on both engine files as a BEFORE-WRITE step.",
+    "world_is": "comp-blast reaches the canonical Kuzu graph through _canonical.ensure_fresh, which auto-refreshes a BEHIND database by rebuilding it. Obeying the mandate wrote the file the bound protects, at 09:11:51Z, before a single line of the port was written. The two clauses are not jointly satisfiable by any ordering.",
+    "notes": "Disarm = the issuer decides which clause governs: either the bound is narrowed to 'the PORT does not read or write the canonical DB' (the intent I read, and which the port will honour regardless), or the mandate names a comp-blast invocation that does not trigger a refresh, or the mtime control is re-baselined. THIS SEAT PROCEEDS on the narrow reading -- the port itself will not touch the canonical DB, and its control runs from the POST-comp-blast baseline (46,997,504 B, mtime 2026-09-03 05:12:21.682472900 -0400, md5 d64fca39dfa47179f7798dcb1b8e2340), stated in the deliverable so the shifted baseline is visible rather than silent. Classed OBSERVATION and not BLOCKING because no work is stopped: the rebuild is the designed daily path, it left the estate fresher, and the port's own control is stateable from the new baseline. Not messaged to the issuer for that reason (the face routes only BLOCKING rows to a message). Wider than this project: ANY task order that bounds a seat off the canonical DB while mandating a comp-* tool that queries the graph carries this same contradiction."
   }
 ]
 ```
