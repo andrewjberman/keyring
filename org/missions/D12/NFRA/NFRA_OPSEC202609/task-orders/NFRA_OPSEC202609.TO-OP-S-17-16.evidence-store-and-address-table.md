@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.4 @43b75ffbd6 (ENDPOINT FWD-16 / FWD-18, properties 15 and 17; s.7.3 the two specs; 7.6 C-8, C-9, C-5, C-2) - **Decomp cells:** `OP-s-17` + `OP-s-16` (v0.1 @bff1f8d012, s.1a; ROUND 1: "bucket + table, Terraform, no dependencies") - **Lane:** a NEW Terraform module for this project's owned resources under `infra/aws/terraform/` (name it for the project: `opsec/` or the estate's convention -- state which and why), AE lane - **Round:** 1 of NFRA_OPSEC202609.
 
