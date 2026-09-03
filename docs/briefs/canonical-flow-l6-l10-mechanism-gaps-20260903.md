@@ -5,6 +5,45 @@
 **Vintage of every measurement below:** repo `CLOUD` @`3667eee8b5`, measured 2026-09-03T18:48Z on the
 laptop fabric. Every status claim carries its own clock in PART VI.
 
+---
+
+## HOW TO READ THIS
+
+**THIS IS A PROBLEMS LIST. IT CONTAINS NO SUGGESTIONS AND NO FIXES.** Andrew asked directly -- *"i cant
+tell if youre phrasing this as a suggestions list or a problems list"* -- and the ambiguity was real, so
+it is answered here at the top rather than left to inference.
+
+**The same problems appear TWICE, in two shapes, because two different readers need them:**
+
+| part | shape | reads like | what it actually is |
+|---|---|---|---|
+| **PART IV** (F1-F21) | the problem as EVIDENCE | a problems list | a problems list. What was measured or observed, with the instrument named. |
+| **PART I** (O1-O12) | the problem as the MISSING CAPABILITY | a suggestions list | **the same problems.** "What would be true if this were not broken." |
+
+**Why PART I is written that way, and why it is not a proposal.** The next limb is `/endpoint --forward`,
+which cuts numbered capability outcomes out of PART I and prints a line citing the section it took each
+one from. A problem written as a complaint cannot become an outcome there -- it does not degrade, it
+VANISHES. So every problem is restated as the capability whose absence IS the problem.
+
+**The line between an outcome and a fix, since that is where the confusion lives:**
+
+```
+  AN OUTCOME (in this brief)   "a worker receives its full set of task orders at once"
+                               -- names what is missing. Does not say how to get it.
+
+  A FIX (NOT in this brief)    "change L6 to cut every cell in one issuance and dispatch through X"
+                               -- names an act. Reserved for the discussion Andrew held back.
+```
+
+**The test to apply while reading:** if any line tells you what to BUILD, CHANGE or RUN, it is a defect in
+this brief and should be reported as one. Where a finding CONSTRAINS the fix space -- F17 and C3 do this
+most -- it says so and stops, without proposing the remedy the constraint implies.
+
+**Nothing here is an approval gate, a checkpoint, or a process addition.** Andrew's standing constraint
+against agent-made friction governs PART I in full.
+
+---
+
 **What prompted it.** Andrew asked this seat to assess the biggest operational holes in the L6 to L10
 rungs, ahead of handing over a set of recorded observations of his own. This brief is that assessment
 converted into outcome territory.
@@ -164,16 +203,18 @@ handoffs require, and anything else needs a stated reason. Andrew's own framing,
 not adopted here as a design: *"when an agent is running canonical flow, there are different messaging
 patterns than normal. If you are part of a canonical flow group, you follow the flow."*
 
-### O11 -- The CVO accrues for the whole project and speaks once
+### O11 -- The CVO accrues for the whole project and issues ONE artifact UPWARD, once
 
 **Today the CVO's single output arrives per round, and rounds are small (O8), so it arrives repeatedly.**
 Andrew: *"CVO just accrues them... over the entire project and create the remediation file and then send
 the remediation file at the end. It is not a discussion."*
 
 **The outcome:** the CVO compiles investigations across the whole project while the work proceeds beneath
-it, and issues one remediation artifact at the end, routed to the COO or the CTO by the nature of each
-finding. Note PART IV-A F17: the law already says one artifact at one moment -- the cadence problem is
-inherited from O8, not from the adjudication limb.
+it, and issues one remediation artifact at the end -- **upward only**, to `2.0.0_SA_COO`, or to
+`1.0.0_SA_CTO` where the finding is a scope change (Andrew's own split: *"issue to COO or CTO depending on
+the nature of the remediations"*). **Never downward to a worker, at this or any limb** -- see O2, which
+makes that refusal total, and C1, which measures where it currently lapses. Note F17: the law already says
+one artifact at one moment; the cadence problem is inherited from O8, not from the adjudication limb.
 
 ### O12 -- A flow can be re-entered midstream from measured truth
 
@@ -553,15 +594,26 @@ implementation to build onto.
 Three collisions between the mechanism findings (F1-F11) and the coordination findings (F12-F21). These
 are the highest-value content in this brief, because neither instrument produced them alone.
 
-### C1 -- The correspondence guard is dark at exactly the moment Andrew's CVO design does its only speaking
+### C1 -- The prohibition on CVO-to-worker sends is unenforced during the CVO's busiest limb
 
-O11 has the CVO silent through L7 to L9 and issuing one remediation artifact at the end. F3 measures the
-guard that enforces CVO silence as keyed to `dep_stage == EXECUTING` only, with `ROUND_CLOSE` absent at
-HEAD -- and `ROUND_CLOSE` is the stage the project enters on the CVO's L10 stamp.
+⛔ **Read this clause precisely, because an earlier draft of it was ambiguous and Andrew corrected it.**
+**THE CVO NEVER TALKS TO A WORKER. AT ANY LIMB. FOR ANY REASON.** Andrew-direct at the CRO terminal,
+2026-09-03, verbatim: *"CVO should never be talking to Workers... CVO should just be relaying their slug
+to the COO."* This matches the spine's L8 clause and O2 and O11. Nothing in this brief proposes, requests
+or contemplates an exception, and the earlier phrasing -- which described L10 as the moment the CVO "does
+its only speaking" -- was this seat's sloppy wording for "issues its only artifact," not a suggestion that
+the artifact travels downward. **The remediation slug goes UP, to `2.0.0_SA_COO` (or to `1.0.0_SA_CTO`
+where the finding is a scope change). That send is lawful and the guard has no opinion on it.**
 
-**So the single sanctioned CVO output lands in the one window where the mechanism is not watching.** The
-better Andrew's cadence discipline gets, the more of the CVO's total output concentrates into the
-unguarded window. These two findings make each other worse, and neither reading alone shows it.
+**The finding is about ENFORCEMENT COVERAGE, not about the slug.** F3 measures the guard that refuses
+CVO-to-Tier-2 sends as keyed to `dep_stage == EXECUTING` only, with `ROUND_CLOSE` absent from the file at
+HEAD. L10 runs at `ROUND_CLOSE` -- the stage the project enters on the CVO's own stamp. So during the limb
+where the CVO is most active (stamping routes, compiling the slug, dispositioning rows), a worker-directed
+send would be **admitted by the mechanism**.
+
+**Andrew's rule is absolute; the mechanism enforces it part-time.** The rule is not in question -- its
+carrier is. O2 exists to close that gap, and O11's cadence discipline concentrates more of the CVO's
+activity into precisely the unguarded stage, which is why the two findings compound.
 
 ### C2 -- The messaging remedy Andrew has already applied is the one whose applied-state is unverifiable
 
