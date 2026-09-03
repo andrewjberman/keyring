@@ -12,6 +12,15 @@ Task orders go in the **receiving agent's** `task_orders/` folder:
 ```
 One file per feature. Never overwrite into a monolith.
 
+**Tree projects (spine v3.0).** A project with a tree home issues its task orders at
+`org/missions/D<n>/<MACRO>/<CODE>/task-orders/<CODE>.TO-<id>.<slug>.md`, every cell of the decomposition in ONE
+issuance commit whose message carries `fanout: N of M chains, cap K, reason: <one line>`; the flat folder above is
+the legacy home. A task order has TWO FACES in one file: the WORKER FACE (cell text inlined, surfaces, bounds,
+`<paths>` absolute from the root, one clause per criterion) is the worker subagent's prompt and the whole of its
+context; the RECORD FACE (`<status>`, seating, preflight narrative, authority chain, provenance) stays in the file
+for the gates and never travels to the worker. `<issued_to>` names the worker serial `0.9.0_WK_<CODE>~<n>`. Where
+this template and the spine differ, the spine governs.
+
 ---
 
 ## XML Template
@@ -254,6 +263,18 @@ One file per feature. Never overwrite into a monolith.
     the re-derivation mechanical and its refusals precise.
     -->
     <expected_criteria><!-- comma-separated ids, minted by the ISSUER --></expected_criteria>
+    <!-- spine v3.0, ONE CLAUSE PER CRITERION (CRO spec s.13 L-2): each id above is declared once below, mechanical
+         or judgment, never compound. A MECHANICAL criterion carries the exact invocation and the EXPECTATION the
+         observed output must match, so its pass is decided by the match and not by the worker. A JUDGMENT criterion
+         carries judgment="true", is NOT self-graded, and is graded only by 3.0.0_SA_CVO at L9 against the spec. A
+         criterion that conjoins clauses is refused at the cut. The instance schema (PROOF_OF_SPEC.schema.json) and
+         proof-of-spec-check.py learn `expect` and `judgment` as BUILD ACTS (spine s.4); until they land, the worker
+         records the output as today and the CVO's L9 read of the instance against the spec is the only grade. -->
+    <criterion id="C1" cell_refs="CE-x-1" judgment="false">
+      <invocation><!-- the exact re-runnable command --></invocation>
+      <expect><!-- the pattern the deciding output must match --></expect>
+    </criterion>
+    <criterion id="C2" cell_refs="CE-x-1" judgment="true"><!-- CVO-graded at L9; the worker records output, no verdict --></criterion>
     <instance_path><!-- where the assignee's filled instance lands --></instance_path>
   </proof_of_spec>
 
@@ -290,7 +311,7 @@ One file per feature. Never overwrite into a monolith.
 | `superseded` | **The NEED WAS MET ANOTHER WAY** — done elsewhere, replaced by a newer TO, or the artifact now exists by another route. **MUST name what superseded it** (commit-ish / TO id). | COO or the ISSUER — never the assignee alone |
 | `cancelled` | **The NEED WENT AWAY** — a later ruling killed the work. **MUST cite the ruling** (verbatim + date, or commit-ish). | COO or the ISSUER — never the assignee alone |
 
-`staged` → `pending` happens when the agent receives a GO message from COO. Flip it immediately and begin. The GO message IS the authorization — do not ask Andrew.
+`staged` → `pending` happens when the agent receives a GO message from COO, or -- for a worker subagent under spine v3.0 -- when the COO's spawn hands it the task order's worker face: the spawn IS the GO and no broker message carries it. Flip it immediately and begin. The GO IS the authorization -- do not ask Andrew.
 
 **`superseded` and `cancelled` added 2026-08-07, ANDREW-DIRECT, VERBATIM: *"yeah you need to be able to 'supersede' or 'cancel' outstanding task orders in status to clean that up when these situations arise."*** ⚠ **THE MECHANISM ALREADY EXISTED AND ONLY THE LAW WAS MISSING** — `.tools/to-check.py:47` has accepted `superseded`/`cancelled`/`dropped`/`decommissioned`/`archived` as DONE-class the whole time, and the parseable-status paragraph below lists them. **This TABLE is what an agent reads to learn what is legal, and it carried three values.** So a TO whose work a ruling had killed had nowhere honest to go: `complete` is a lie, and `pending` is the rot. *A record NARROWER than its mechanism leaves agents unable to reach a capability that exists — the mirror of the CLAUDE.md 14a `--force` correction, where the record was BROADER than its mechanism.*
 

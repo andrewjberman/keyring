@@ -69,8 +69,9 @@ Every inter-agent request follows **Request → Acknowledge → Validate → Clo
   suppress, because suppression looks like compliance.** Task-order authors: name the channel.
   `docs/doctrine/THE_SURPRISE_CHANNEL.md` (Andrew-named 2026-08-06). **FORMALIZED 2026-08-21
   (Andrew-ratified): `3.0.0_SA_CVO` MANS THE CHANNEL, and every new project runs the canonical
-  pipeline — register → PRD → COO decomp-before-TOs → execute ON SPEC (frozen mid-round) →
-  investigation/remediation rounds. Only BLOCKING/HAZARD classes interrupt; OBSERVATION never
+  pipeline (spine v3.0) — register → PRD → COO decomp → ONE issuance to worker SUBAGENTS in worktrees →
+  execute ON SPEC (frozen mid-round) → the CVO's ONE slug to the CTO → the CTO's round-N analysis → the
+  COO's one-shot recut. Only BLOCKING/HAZARD classes interrupt; OBSERVATION never
   does. Protocol: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (CLAUDE.md Rule 27).**
 - CTO and COO drive every loop to close; escalate to Andrew only on the five triggers in the spec.
 - **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
