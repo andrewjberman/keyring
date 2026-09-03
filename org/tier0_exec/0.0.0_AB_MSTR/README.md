@@ -15,12 +15,10 @@ resolves every agent to a folder under one of the `TIER_DIRS`; `tier0_exec/`
 was added to `TIER_DIRS` so MSTR can:
 
 - `register_agent("0.0.0_AB_MSTR")` — register LIVE on the broker;
-- be addressed as a `send_message` recipient (the agent → CTO/COO → MSTR
-  escalation chain that D-001 depends on);
+- be addressed as a `send_message` recipient;
 - run a watchable inbox (`org/mcp/inbox/0.0.0_AB_MSTR/`).
 
-Created 2026-05-22 by `1.0.0_SA_CTO` per MSTR charter **LD-0001** (broker
-activation). Design: `tier0_exec/` is deliberately a **separate** directory
+Design: `tier0_exec/` is deliberately a **separate** directory
 from `org/tier0/` — the broker must never scan `org/tier0/`, whose subdirs
 (`audit/`, `cycles/`, `ledger/`, `ratifications/`) would otherwise be
 mistaken for agent folders.

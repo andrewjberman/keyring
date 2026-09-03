@@ -16,6 +16,12 @@ The third, ~20:1xZ, while this seat was writing this record (the Codex process-h
 
 > Additionally, I need you to analyze the various codex-specific monitors/pollers/etc. They seem to stay alive for long periods of time, unlike Claude watchers/pollers/etc which seem to usually just die upon session closure. WE need to clean up all those i recommend a /kill script operation.
 
+His answer, ~21:0xZ, to the three calls this seat put to him (the README pare view; call A, the 19 headless Codex seat runtimes; call B, the dead CLDGRPH ~A team):
+
+> go on readme, call a kill all the codex runtimes. call b we will wait on this.
+
+Read as stated: the README cut proceeds; ALL Codex runtimes on this device are killed (the 19 seats' heartbeat + bridge + detector + app-server trees, working seats included -- his call, made with the census in front of him); the ~A team stays down and nothing is relaunched or reassigned until his further word.
+
 ## What it binds, per seat, in his scope and no wider
 
 This seat relays; it does not adjudicate scope in either direction (XXX.md "Andrew-direct instructions"; CLAUDE.md "do not manufacture friction" (b)). The three seats named are the ones he named.
