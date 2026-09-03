@@ -162,6 +162,13 @@ if ([string]::IsNullOrWhiteSpace($startupPrompt)) {
     throw 'Codex seat startup context produced an empty prompt.'
 }
 
+# Windows PowerShell 5.1 serializes native-process arguments through a single
+# command-line string. Literal double quotes inside an otherwise single prompt
+# argument would reopen that command line and split the prompt at the quoted
+# text (for example, comp-which "your question"). Escape only for the native
+# invocation; keep $startupPrompt unchanged for the persisted diagnostic file.
+$startupPromptArgument = $startupPrompt.Replace('"', '\"')
+
 Set-CodexSeatTitle -SeatSerial $Serial
 
 # Reuse the estate's serial-scoped registration cleanup before asserting that
@@ -452,10 +459,10 @@ Preflight detail: $detail
 
     if ($ThreadId) {
         & codex @codexPermissionArgs resume --remote $endpoint -C $Workspace `
-          $ThreadId $startupPrompt
+          $ThreadId $startupPromptArgument
     }
     else {
-        & codex @codexPermissionArgs --remote $endpoint -C $Workspace $startupPrompt
+        & codex @codexPermissionArgs --remote $endpoint -C $Workspace $startupPromptArgument
     }
 }
 finally {
