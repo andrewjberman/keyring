@@ -277,6 +277,127 @@ def _run_battery() -> None:
         if mutant3 is not None and mutant3.exists():
             mutant3.unlink()
 
+    # ---------------- ARM 9: TO-CE-T-9R (S13 disarm) -- the full existence+S3 pipeline, fixture-driven ----------------
+    # _kuzu_query is the ONE seam between comp_trigger.py and the graph (a subprocess call) --
+    # monkeypatching it here exercises _resolve_existence/_check_s3_notification/render() together
+    # (the REAL pipeline main() runs) without any live graph/AWS dependency or timing race.
+    import re as _re
+    denom9 = {"rules": 5, "schedules": 2, "region": "fixture"}
+    clock9 = m._compbudget.Clock(0)
+
+    def _token_of(body: str) -> str | None:
+        mm = _re.search(r"ANSWER-STATE: (\S+)", body)
+        return mm.group(1) if mm else None
+
+    real_kuzu_query = m._kuzu_query
+
+    def _fake_kuzu_empty(cypher, timeout_s):
+        return {"ok": True, "rows": [], "vintage": "built: fixture", "error": None}
+
+    def _fake_kuzu_lambda_found(cypher, timeout_s):
+        if "S3_BUCKET" in cypher:
+            return {"ok": True, "rows": [], "vintage": "built: fixture", "error": None}
+        return {"ok": True, "rows": [{"n.name": "fixture-fn", "n.arn": "arn:fixture"}],
+               "vintage": "built: fixture", "error": None}
+
+    def _fake_kuzu_s3_found(cypher, timeout_s):
+        if "S3_BUCKET" in cypher and "TRIGGERS" in cypher:
+            return {"ok": True, "rows": [{"b.name": "fixture-bucket", "b.arn": "arn:fixture-bucket"}],
+                   "vintage": "built: fixture", "error": None}
+        return {"ok": True, "rows": [{"n.name": "fixture-fn", "n.arn": "arn:fixture"}],
+               "vintage": "built: fixture", "error": None}
+
+    try:
+        m._kuzu_query = _fake_kuzu_empty
+        m.tf_lambda_declared = lambda name, tf_root=None: []
+        existence_absent = m._resolve_existence("zzz-fixture-absent", clock9)
+        body_absent = m.render([], "zzz-fixture-absent", denom9, existence=existence_absent)
+
+        m._kuzu_query = _fake_kuzu_lambda_found
+        existence_present = m._resolve_existence("fixture-fn", clock9)
+        s3_absent = m._check_s3_notification("fixture-fn", clock9)
+        body_present_zero = m.render([], "fixture-fn", denom9, existence=existence_present, s3_check=s3_absent)
+
+        m._kuzu_query = _fake_kuzu_s3_found
+        existence_present2 = m._resolve_existence("fixture-fn", clock9)
+        s3_found = m._check_s3_notification("fixture-fn", clock9)
+        body_partial = m.render([], "fixture-fn", denom9, existence=existence_present2, s3_check=s3_found)
+    finally:
+        m._kuzu_query = real_kuzu_query
+
+    tok_absent, tok_zero, tok_partial = _token_of(body_absent), _token_of(body_present_zero), _token_of(body_partial)
+    ok9 = (tok_absent == "SUBJECT_ABSENT_FROM_CORPUS" and tok_zero == "PRESENT_WITH_ZERO_RESULTS"
+          and tok_partial == "PARTIAL_OR_BLIND" and "fixture-bucket" in body_partial
+          and len({tok_absent, tok_zero, tok_partial}) == 3)
+    rec("CT9R-FULL-PIPELINE-THREE-STATES", ok9,
+        "tokens: absent=%r zero=%r partial=%r" % (tok_absent, tok_zero, tok_partial))
+
+    # ---------------- ARM 10 (red-first): mutant collapses the miss branch back to the S13 shape ----------------
+    needle4 = (
+        '    if not matches:\n'
+        '        tf_hits = (existence or {}).get("tf_hits") or []\n'
+    )
+    replacement4 = (
+        '    if not matches:\n'
+        '        L.append("  NO MATCH (mutant: existence check collapsed -- the S13 shape)")\n'
+        '        return "\\n".join(L)\n'
+        '        tf_hits = (existence or {}).get("tf_hits") or []\n'
+    )
+    mutant4 = None
+    try:
+        mutant4 = _write_mutant("s13_collapse", needle4, replacement4)
+        spec = importlib.util.spec_from_file_location("comp_trigger_mutant4", str(mutant4))
+        mm4 = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mm4)
+        mbody_absent = mm4.render([], "zzz-fixture-absent", denom9, existence=existence_absent)
+        mbody_zero = mm4.render([], "fixture-fn", denom9, existence=existence_present, s3_check=s3_absent)
+        mbody_partial = mm4.render([], "fixture-fn", denom9, existence=existence_present2, s3_check=s3_found)
+        mtok_absent, mtok_zero, mtok_partial = (_token_of(mbody_absent), _token_of(mbody_zero),
+                                                _token_of(mbody_partial))
+        mutant_collapsed = (mtok_absent is None and mtok_zero is None and mtok_partial is None)
+        rec("CT9R-MUTANT-S13-COLLAPSE-DETECTED", mutant_collapsed,
+            "mutant tokens: absent=%r zero=%r partial=%r (all None = the S13 regression, correctly caught)"
+            % (mtok_absent, mtok_zero, mtok_partial))
+    finally:
+        if mutant4 is not None and mutant4.exists():
+            mutant4.unlink()
+
+    # ---------------- ARM 11 (red-first): mutant treats an UNAVAILABLE graph read as ABSENT ----------------
+    needle5 = (
+        '    if g["error"] == "DEFERRED":\n'
+        '        graph_state = "DEFERRED"\n'
+        '    elif not g["ok"]:\n'
+        '        graph_state = "UNAVAILABLE"\n'
+    )
+    replacement5 = (
+        '    if g["error"] == "DEFERRED":\n'
+        '        graph_state = "DEFERRED"\n'
+        '    elif not g["ok"]:\n'
+        '        graph_state = "ABSENT"  # MUTANT: an incomplete read now silently reads as a clean absence\n'
+    )
+    mutant5 = None
+    try:
+        mutant5 = _write_mutant("unavailable_as_absent", needle5, replacement5)
+        spec = importlib.util.spec_from_file_location("comp_trigger_mutant5", str(mutant5))
+        mm5 = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mm5)
+
+        def _fake_kuzu_unavailable(cypher, timeout_s):
+            return {"ok": False, "rows": [], "vintage": None, "error": "UNAVAILABLE: fixture graph down"}
+
+        real_mm5_kuzu = mm5._kuzu_query
+        mm5._kuzu_query = _fake_kuzu_unavailable
+        mm5.tf_lambda_declared = lambda name, tf_root=None: []
+        mutant_existence = mm5._resolve_existence("zzz-fixture-absent", m._compbudget.Clock(0))
+        mm5._kuzu_query = real_mm5_kuzu
+        mutant_falsely_absent = mutant_existence["graph_state"] == "ABSENT"
+        rec("CT9R-MUTANT-UNAVAILABLE-AS-ABSENT-DETECTED", mutant_falsely_absent,
+            "mutant graph_state=%r on an UNAVAILABLE read (production correctly reads UNAVAILABLE, "
+            "never collapsing it to ABSENT)" % mutant_existence["graph_state"])
+    finally:
+        if mutant5 is not None and mutant5.exists():
+            mutant5.unlink()
+
 
 def _report() -> int:
     _run_battery()
