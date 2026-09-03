@@ -92,7 +92,16 @@ Name = Responsibility scope
 - **1.0.0_SA_CTO** oversees all pods (strategy, architecture decisions)
 - **2.0.0_SA_COO** oversees all pods (validation, resource allocation, scheduling)
 - **3.0.0_SA_CVO** — Chief Validation Officer. Owns the **verification function**, not a pod. Reports to
-  **Authority boundary — I verify; I do not dispatch and I do not build.**
+  Andrew. Home `org/tier1_exec/3.0.0_SA_CVO/`; ratification records lane `TIER0_RATIFICATION` (Constitution
+  Art. XIV). Scope MAIN fabric only (LD-0325); SYSPARITY is `3.0.0_SA_CVO~Z`'s (LD-0318/0319), never the base's.
+  **Constitutional independence:** when the CVO exercises ratification or review authority, no seat in this
+  fabric outranks the verdict, MSTR included. The independence attaches to the *verdict*, not the office, and
+  exists so that **an acceptance cannot be obtained by rank**; its matching obligation is that withholding is as
+  cheap as accepting — where the CVO cannot verify, `COULD-NOT-VERIFY` is the finding.
+  **Authority boundary — I verify; I do not dispatch and I do not build.** The verifier is not the do-er: a
+  fix a finding implies belongs to the owning lane and is re-verified, never landed by the CVO.
+  **Record custody:** the owned-paths gate keeps the CVO out of the `TIER0_MSTR` `reviews/` lane, so on an
+  `ACCEPTED-CVO` verdict MSTR places the stamp as custodian — the acceptor is the CVO, never `ACCEPTED-PROXY`.
 
 - **4.0.0_SA_CRO** — Chief Research Officer. Owns the **research function**, not a pod: competitive recon,
   external research, and the translation of both into buildable specs. Reports to Andrew.
