@@ -642,7 +642,11 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
   SRGATE_FILES=()
   for _sf in "${PATHSPEC[@]}"; do
     case "$_sf" in
-      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*)
+      # BOTH ROOTS (2026-09-03, 1.0.0_SA_CTO on 0.0.0_AB_MSTR~Z's site-Z finding, relay 93546): this set keyed on the
+      # LEGACY spelling only, so for a TREE project the block below -- and the surprise-row-override reader inside
+      # it -- never ran; CVO~Z's L10 slug for NFRA_OPSEC202609 could not carry an audited override and landed by
+      # re-entry rows only. The tree spelling is the contract's (PROJECT_TREE.contract.json surprise_channel_glob).
+      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*|*org/missions/*/surprise-channel/investigations/*|*org/missions/*/surprise-channel/remediations/*)
         SRGATE_FILES+=("$_sf") ;;
     esac
   done
