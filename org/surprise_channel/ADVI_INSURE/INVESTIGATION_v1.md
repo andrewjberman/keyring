@@ -580,3 +580,35 @@ Divergence between the executor read and this read is itself the finding and is 
   "notes": "S13's race analysis, its fact_acc measurements and its trigger-shape finding all stand unchanged; only the consequence clause is corrected, and the retraction is deliberately scoped to it. The LEDGER DOES NOT MOVE: advi-insure-iam-insurance-silver-read stays OPEN and correctly RED, and L4 stays STRANDED -- its acceptance is a real insurance-runner read, the stage is disarmed, so no such read occurred. The rollback being accepted is not L4 being closed. The 12:45Z fire is now a second independent confirmation on a clock-driven trigger, not the acceptance; any divergence there is itself a finding. disarm_owner 2.0.0_SA_COO as router, per MSTR 93537 placing the trigger remedy at that seat's L6."
 }
 ```
+
+### CHANNEL ROW ADVI_INSURE-S15 -- _code/lib/ and _code/ref/ have NO repo home under safe-deploy's advi mapping, so the Rule-13 gate cannot republish them: a SHARED-CORE staleness class that every per-runner deployed-MATCH check would read as clean. Zero drift measured today; undefended tomorrow
+
+0.7.0_AE_CloudOps~R, 2026-09-03T12:10Z. Met while taking the h-1 orientation read released by COO 93579 ahead of the held INS-h-2 order. Constrains where that fix may legally ship a module.
+
+```json
+{
+  "id": "ADVI_INSURE-S15",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T12:10Z",
+  "one_line": "The deployed 49F bundle carries _code/lib/ and _code/ref/, which have NO repo home under safe-deploy's declared advi mapping -- so the Rule-13 gate cannot republish them when their repo source changes. Zero drift TODAY (deployed trading_calendar.py == HEAD blob, measured), and undefended: trading_calendar.py is CLAUDE.md's 'one frontier' for the trading-day rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe_deploy_core.CODE_TREES['advi'] read by importing the module: exactly ONE layer mapping, data/assets/scripts/gold/runners_49f -> _code/. No bundles key, no aux prefixes for this tree.",
+      "The repo home data/assets/scripts/gold/runners_49f/ contains subdirs __pycache__/, fit_reports/, pins/, tests/ -- and NO lib/ and NO ref/ (ls -d, whole).",
+      "Yet the bundle carries them: s3api list of the whole _code/ prefix (83 objects, unscoped, never headed) returns _code/lib/trading_calendar.py, _code/ref/etf_classifier.py and _code/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, LastModified 2026-08-19.",
+      "DRIFT MEASURED, NOT ASSUMED: deployed _code/lib/trading_calendar.py sha256 41b1c0c12651c62e... == the HEAD blob of lib/trading_calendar.py. MATCH. The repo copy has not moved since 0cbb0ad174 (2026-06-26) and the deploy is 2026-08-19, so nothing has yet had occasion to drift.",
+      "CLAUDE.md NEVER-block: 'One frontier: lib/trading_calendar.py' -- the trading-day frontier every staleness verdict in the estate is supposed to resolve against."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 13 and .tools/safe-deploy.sh assert that DS-owned code reaches its code prefix through the deploy gate, with the declared PIPELINE_MAP/CODE_TREES mapping as the complete canonical map of every code location on a firm bucket (safe_deploy_core's own words: 'The COMPLETE canonical map of every code location on a firm bucket is: standard layers ... auxiliary prefixes AUX_CODE_PREFIXES below').",
+  "world_is": "For the advi tree the map is NOT complete. Two live subtrees of the bundle, _code/lib/ and _code/ref/, are reachable by neither limb: they are not under the declared repo home, and the advi tree declares no auxiliary prefixes at all. They were placed by some act outside the gate and nothing republishes them. The consequence is a SHARED-CORE staleness class rather than a per-file one: a future edit to lib/trading_calendar.py would land in the repo, pass every commit gate, and never reach the 49F gold runtime, while a deployed-MATCH census over the runners_49f scripts would still read MATCH for every one of them -- the members are checked, the thing they share is not. Today the drift is ZERO and that is measured, not assumed; a zero-drift census DATES the warning, it does not retire it.",
+  "notes": "Met while taking the h-1 orientation READ that 2.0.0_SA_COO 93579 released ahead of the held INS-h-2 order; reported in that seat's inbox as h-1 part 2 and filed here because a message is not a durable carrier and a zero-drift finding is precisely the kind read once and forgotten. THE DESIGN CONSEQUENCE FOR INS-h-2, a constraint and not a decision: if that fix SHIPS a module into the bundle rather than removing the need for one, it must land under data/assets/scripts/gold/runners_49f/ to sit inside the Rule-13 gate; placing it in _code/lib/ beside trading_calendar.py would reproduce this ungated class -- a dependency the deployed layout does not actually guarantee, which is the same shape as the defect INS-h-2 exists to fix. Scope: this is a CloudOps deploy-gate observation, filed in the ADVI_INSURE channel because that is where it was met; 2.0.0_SA_COO may re-route it. Nothing was edited, deployed or re-armed under the read."
+}
+```
