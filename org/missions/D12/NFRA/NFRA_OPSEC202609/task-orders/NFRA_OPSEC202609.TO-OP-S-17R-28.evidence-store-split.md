@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.10 @a554b9d197** (ENDPOINT FWD-5 / FWD-16 / FWD-18; 7.3 the two bucket specs; 7.6 C-8, C-13, C-14, C-15, C-16; s.3 OWNS items 12 and 20) - **Decomp cells:** `OP-s-17` (re-pointed) + `OP-s-28` (new) (v0.1.7 @03fbe25e92, s.1a) - **Lane:** `infra/aws/terraform/opsec/`, AE lane - **Round:** 2 of NFRA_OPSEC202609. **Dispatch:** GO is held until this seat's `TO-OP-S-16-17-8R2` and `TO-OP-S-25-26-27` are both terminal -- one task order at a time.
 
