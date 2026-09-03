@@ -879,6 +879,29 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "NFRA_COMPEFFICACY TO-CE-T-14 compiler_tools_mandate requires comp-read before write and truthful recording of any instrument limitation.",
     "world_is": "The repository-local .tools/comp-read exists, but its Windows invocation did not emit content; the production audit and proof remain valid and the seam engines stayed read-only.",
     "notes": "Filed by the owning seat as the required round-6 surprise row. No message to CVO and no additional scope or dependency was introduced."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S27",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~C",
+    "surfaced_at": "2026-09-03T15:10:46Z",
+    "one_line": "TO-CE-T-5's first required before-write audit action was exercised against the production engine. comp-read reports .tools/comp-schedule as a 527-line Python module with 23 sections; the default comp-schedule view reports 23 armed gates across the five declared carriers (C1 21->5, C2 6->6, C3 12->12, C4 20->0 SEMI-DECIDABLE, C5 337->0 NOT-DECIDABLE) and 138 prose entries as a reading list. The live census matches the cut preflight; no spec-vs-world divergence was found in this first action.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/comp-read .tools/comp-schedule --for 'the five carriers, how each decides or refuses to decide, what the rc means, every loop over a carrier population' -> rc 0; 527 lines, 23 sections via python-ast; self-report within budget.",
+        "python .tools/comp-read .tools/to-pipeline-gate.py --for 'whether the preflight reads comp-schedule rc' -> rc 0; PREFLIGHT_TOOLS includes comp-schedule and the gate's check_preflight path was surfaced.",
+        "python .tools/comp-schedule -> rc 0; GATES ARMED 23; NEEDS-READ 138; C1 21 -> 5, C2 6 -> 6, C3 12 -> 12, C4 20 -> 0, C5 337 -> 0, matching the 2026-09-03 14:23Z preflight values in TO-CE-T-5."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The first-action census is consistent with the task-order preflight and the engine's declared five-carrier schema. This is a measured starting-state record, not a defect or remediation request; subsequent T5 criteria still require the four planted answer-state cases, Rule T consumer census, battery, deliverable, and proof instance.",
+    "spec_asserts": "TO-CE-T-5 AC1/AC2/AC4: the s.4 audit must quote the five-carrier default, preserve the NOT-DECIDABLE tool voice, and answer the rc question by consumer census.",
+    "world_is": "At 2026-09-03T15:10:46Z the production engine's view-time compilation agrees with the cut preflight on gate count and every carrier denominator/result; no remediation is authorized or performed by this row.",
+    "notes": "Filed by the assigned ~C seat as the first-action evidence row required by the tick-3 issuer ruling. The row is inert and does not alter carrier semantics."
   }
 ]
 ```
