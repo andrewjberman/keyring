@@ -1,0 +1,200 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 1,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-03T08:52Z",
+  "trigger": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/remediations/REMEDIATION_v1.md @59af3f1df5 (L10 stamp, 3.0.0_SA_CVO~A: rows NFRA_CLDGRPH-S2/-S3/-S8 GRADUATED route SPEC_ERROR loop_target 6 owner 2.0.0_SA_COO~A; 5 DISMISSED_WITH_REASON by adjudication row S9; 0 DECOMP_INVALIDATING, 0 SCOPE_CHANGE)",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-03T05:17Z",
+      "ended_utc": "2026-09-03T05:33Z",
+      "act": "fresh-session startup: /watcher (Monitor bty1jg17t, arm banner parent-tied pid 691014), org/XXX.md Step 1b A-F (session serial file, shims 104x2, audit-archive 5 known findings, PATH exercise RAN), B.0 delivery ledger 2 of 2 opened and READ-acked, B.1 holdings (0 open TOs on this lane), Step 1b-F COO row read: no live loop authorization for a ~A lane, zero crons armed",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93141 (1.0.0_SA_CTO~A: Andrew-direct 05:1xZ seating this lane on L5-L6, record @8e134cc126)"},
+        {"kind": "MESSAGE", "ref": "93146 (2.0.0_SA_COO base: continuity -- the flat decomposition @05d2c89158 and the standing holds)"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "broker registration 2.0.0_SA_COO~A PID 24856; org/mcp/sessions/6d5b61d5-0631-446e-8fab-04a4bce2dfaa.serial; READ acks 93141, 93146; ACK message to 1.0.0_SA_CTO~A (053243Z)"}
+      ],
+      "spine_clause": "NONE (session mechanics, org/XXX.md)",
+      "note": "identity cross-check: this lane at its own PID, the base seat at a different PID under its own serial -- a peer, not a conflict"
+    },
+    {
+      "seq": 2,
+      "limb": "L5",
+      "started_utc": "2026-09-03T05:33Z",
+      "ended_utc": "2026-09-03T06:27Z",
+      "act": "picked L5 up on the MEASURED artifact (PRD v0.4 at the tree home @25c66d3358, header + endpoint + manifest conforming) per /canonical-flow Step 2 while the L4 notifier frame read OFFER-EXHAUSTED; read the spine v2.2/v2.3, the flat decomposition, the tree contract, the cell-id convention, the L6 gate; ran the L5 battery (comp-schedule, comp-iam DESIRED, comp-trigger, comp-find aws + repo, comp-read enumerate, comp-adversary compose rc 0 22/22); wrote decompositions/NFRA_CLDGRPH_DECOMP.md v0.1 -- 19 cells (CG-s-1..13 = S1-S13, CG-x-1/2/4/5/7/8 the closing pass), Rule 24 record, placement, edges keyed to observed completion, rounds 1-4; held the commit through 0.0.0_AB_MSTR's push window; committed after the CLOSE",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md@25c66d3358 (s.7 manifest S1-S13)"},
+        {"kind": "ARTIFACT", "ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_CLDGRPH_DECOMP_20260902.md@05d2c89158 (the flat decomposition, lifted via the PRD)"},
+        {"kind": "ARTIFACT", "ref": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md@e9b196b29a (spine v2.3, the close)"},
+        {"kind": "MESSAGE", "ref": "93149 / 93187 (the L4 prd-header-notify frame and its re-offer; READ-acked when the body arrived)"},
+        {"kind": "MESSAGE", "ref": "93161 (1.0.0_SA_CTO LAW EDIT: the close -- closing-pass cells required for EXERCISED outcomes)"},
+        {"kind": "MESSAGE", "ref": "93231 / 93243 (0.0.0_AB_MSTR push window OPEN / CLOSE: safe-commits held then resumed)"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md@994c9381d0"},
+        {"kind": "MESSAGE", "ref": "93249 (L5 handoff to 1.0.0_SA_CTO~A; READ 06:27:54Z) -> row flip PRD->DECOMP @a1af5d70c2 by the row owner"}
+      ],
+      "spine_clause": "L5 output (rectangle, NOT-EVALUATED vocabulary, placement, edges, battery); section 2 lane TREE_COO; L4 notifier as the handoff",
+      "gate_or_notifier_touched": "missions-tree-check at commit: 0 violations; commit-gate: 0 of 1 checked (a .md); prd-header-notify: frame 93149 OFFER-EXHAUSTED for a LIVE seat, re-offered as 93187 30 min later",
+      "note": "s.0 re-pinned every manifest surface at HEAD: two S8 retirement targets ABSENT (retired by NFRA_COMPEFFICACY cell t-22 @dffbee781c); the evidence drift stated to the L4 owner as information, not a route"
+    },
+    {
+      "seq": 3,
+      "limb": "X",
+      "started_utc": "2026-09-03T06:08Z",
+      "ended_utc": "2026-09-03T06:16Z",
+      "act": "the L6 <issued_to> fork: 3.0.0_SA_CVO~A surfaced the collision between Andrew's 06:05Z 'run entirely by this fabric' and gate (i); this seat held L6 issuance, continued L5, and recorded the fork as decomposition s.5 hold 5; Andrew ruled (a) at both lane terminals; the hold discharged by his word",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93194 (CVO~A surfaced), 93201 (base COO reading), 93205 / 93210 (both CTO seats' cards)"},
+        {"kind": "RECORD", "ref": "org/tier1_exec/3.0.0_SA_CVO~A/deliverables/ANDREW_DIRECT_20260903_060xZ_CLDGRPH_RUN_ENTIRELY_BY_THE_A_FABRIC_CVOA_COOA_CTOA.md@7da3befc20; the ruling @858fc08951 (93214 / 93220)"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "decomposition s.5 hold 5 (in @994c9381d0): the fork, its discharge, the consequence -- fresh Tier-2 lane letters spawned by this lane"}
+      ],
+      "spine_clause": "section 2 role exclusivity; L7 'not engaged: every Tier-0 and Tier-1 seat as a worker'; L6 'a dark seat class is seated by a spawn, which is the COO's act'",
+      "note": "no seat edited the gate; the card was answered by Andrew before it was needed at L6"
+    },
+    {
+      "seq": 4,
+      "limb": "L6",
+      "started_utc": "2026-09-03T06:27Z",
+      "ended_utc": "2026-09-03T06:49Z",
+      "act": "ROUND 1 cut: /mstr-spawn pre-flight (1pt 9 claude.exe none CloudOps; 1b 0 CloudOps markers, 2 of cap 20; 1a NOT REGISTERED; 1d census: ~Q 0 corpus hits, ~P one CLOSED prior TO, six other letters encumbered); spawned 0.7.0_AE_CloudOps~Q and ~P with --say hints; wrote TO-CG-V-1 (CG-s-10) and TO-CG-V-2 (CG-s-11+12+13); composed comp-adversary on both (10/10, 8/8); exercised the L6 gate's check_file off-stage (0 violations); held through 0.0.0_AB_MSTR's merge window; committed; GOs to the exact serials; hash to the row owner",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "decomposition @994c9381d0 cells CG-s-10..13"},
+        {"kind": "MESSAGE", "ref": "93258 / 93271 (merge window OPEN / CLOSE)"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-V-1.full-fallback-duration-measured.md + NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.md @d0c21677c7"},
+        {"kind": "MESSAGE", "ref": "93277 (GO -> ~Q, READ 06:48:17Z), 93278 (GO -> ~P, READ 06:49:15Z), the L6-landed hash to 1.0.0_SA_CTO~A (064805Z) -> row flip DECOMP->EXECUTING @db581c6e41"},
+        {"kind": "RECORD", "ref": "org/mcp/agent-spawn-audit.log: SPAWN 0.7.0_AE_CloudOps~Q 06:35:51Z, ~P 06:35:54Z by 2.0.0_SA_COO~A"}
+      ],
+      "spine_clause": "L6 output (decomp_ref, preflight, proof_of_spec, one Tier-2 issued_to, GO in the same window); L6 gate",
+      "gate_or_notifier_touched": "to-pipeline-gate OK 2 newly-added faces; to-proof-of-spec-check.sh OK; surprise-row-gate OK; missions-tree-check 0 violations",
+      "note": "the pre-flight's 1d census read the BY AGENT rollup on the base serial; an unmatched lane serial passed to --assignee prints the complete-only list, not an empty set"
+    },
+    {
+      "seq": 5,
+      "limb": "L8",
+      "started_utc": "2026-09-03T07:27Z",
+      "ended_utc": "2026-09-03T07:30Z",
+      "act": "relayed 3.0.0_SA_CVO~A's disarm request on row S1 (ARMED, disarm_owner 1.0.0_SA_CTO~A) UP to the disarm owner with the grounding carried, plus CVO~A's cross-project-route spine gap as a pitch; the owner disarmed in place @f9ca7a9309 (six tokens of the 08-14 rename) and later appended the ack row S7 @abd89d2263",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93297 (CVO~A L8/L9 on S1)"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_CLDGRPH-S1 (worktree at 07:2xZ; first committed @9b59f39114)"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "the disarm request to 1.0.0_SA_CTO~A (072930Z); later the channel-file hash 9b59f39114 (075346Z) for the ack row"}
+      ],
+      "spine_clause": "L8 'a disarm request travels through the COO'; L8 'findings travel UP, never DOWN to a worker'",
+      "note": "1.0.0_SA_CTO (scribe) answered the route gap as spine v2.4: no fourth route; an outside remedy is a disarm in place or DISMISSED_WITH_REASON naming the brief that opens the owning project"
+    },
+    {
+      "seq": 6,
+      "limb": "L7",
+      "started_utc": "2026-09-03T07:39Z",
+      "ended_utc": "2026-09-03T07:47Z",
+      "act": "row S5 (BLOCKING, ARMED, disarm_owner this seat): TO-CG-V-2's V2-AC7 cell_refs was space-separated while proof-of-spec-check.py:562 splits on commas, so the assignee could not reach rc 0 by any act of its own; disarmed by amending the face's encoding only (declared cell set unchanged, spec frozen); operating note to the assignee to re-run the checker",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "INVESTIGATION_v1.md row NFRA_CLDGRPH-S5 (by 0.7.0_AE_CloudOps~P, 07:31Z)"},
+        {"kind": "MESSAGE", "ref": "93307 (CVO~A L8/L9 on S2/S3/S4), 93315 (CVO~A L9 on S5 -- the uncommitted-amendment hazard, overtaken by the commit)"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.md@ee7c884f29 (V2-AC7 cell_refs comma-separated; status line carries the amendment)"},
+        {"kind": "MESSAGE", "ref": "operating note to 0.7.0_AE_CloudOps~P (074658Z); the disarm state to 3.0.0_SA_CVO~A (074720Z)"}
+      ],
+      "spine_clause": "L7 surprise: 'an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated'",
+      "gate_or_notifier_touched": "to-pipeline-gate on a MODIFIED face: OK (no new-issuance limb); missions-tree-check 0 violations",
+      "note": "a first commit attempt was swallowed by a trailing comment marker on the same shell line and re-run clean; the four-minute worktree-only window was real and is on the record via CVO~A's 93315"
+    },
+    {
+      "seq": 7,
+      "limb": "L7",
+      "started_utc": "2026-09-03T07:44Z",
+      "ended_utc": "2026-09-03T08:05Z",
+      "act": "rows S2 and S8 (ARMED, disarm_owner this seat): the surfaces are engine source in infra/aws/globgrph (lane CLOUD_OPS_OR_ETL refuses this seat; a Tier-1 engine edit mid-round is off-spec), so the disarm this owner could honestly make was a CARRY -- both bound to the round-2 port order as criteria with controls (S2 flag semantics stated once; S8's fix half at the port under R10, its contract half to CG-s-3, the 2,256-duplicate question asked on the record); stated to the L9 seat, which adopted the S8 split and held its L9 disposition as the channel-side carrier",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "INVESTIGATION_v1.md rows NFRA_CLDGRPH-S2 and -S8 (by 0.7.0_AE_CloudOps~Q)"},
+        {"kind": "RECORD", "ref": "owned-paths-validate --check-agent 2.0.0_SA_COO~A infra/aws/globgrph/kuzu_incremental_refresh.py -> VIOLATION lane CLOUD_OPS_OR_ETL (measured 07:4xZ)"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "to 3.0.0_SA_CVO~A (074720Z on S2; 080502Z on S8) -- the carry and its two bounds"}
+      ],
+      "spine_clause": "L7 surprise (disarm by owner) read against section 2 (a Tier-1 seat does not do L7 work) -- the carry was the only honest disarm",
+      "note": "the carry's durable carriers: the L9 disposition (CVO~A's) and the round-2 faces (this seat's); a broker message was never the carrier"
+    },
+    {
+      "seq": 8,
+      "limb": "X",
+      "started_utc": "2026-09-03T07:52Z",
+      "ended_utc": "2026-09-03T08:27Z",
+      "act": "RAVC 4 on both round-1 task orders, validated on the artifacts with this seat's own checker runs (TO-CG-V-2 @9b59f39114: rc 0, 7/7, 3/3 cells, 2/2 surprises; TO-CG-V-1 @6a9858d7ac: rc 0, 6/6, 4/4 artifacts at pin, 4/4 surprises) and the deliverables read at their verdict sections; the L10 precondition stated as met from this seat to the L8 seat",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "deliverables/0.7.0_AE_CloudOps~P/CG-s-11-12-13.reachability-iam-authkind.result.md + its proof instance @9b59f39114"},
+        {"kind": "ARTIFACT", "ref": "deliverables/0.7.0_AE_CloudOps~Q/CG-s-10.full-fallback-duration.result.md @a9aea6f3ce + its proof instance @6a9858d7ac"},
+        {"kind": "MESSAGE", "ref": "93331 (~P report), 93382-93385 (~Q report, four parts)"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "RAVC 4 CLOSED to ~P (075624Z) and to ~Q (082623Z); precondition-met note to 3.0.0_SA_CVO~A (082637Z)"}
+      ],
+      "spine_clause": "RAVC (org/ref/RAVC_PROTOCOL.md) -- validate evidence before closing; L10 precondition read",
+      "note": "the checker's own frame said coverage was UNCHECKED without expected ids; coverage was checked by reading the face's expected_criteria against the instance rows (7 of 7, 6 of 6)"
+    },
+    {
+      "seq": 9,
+      "limb": "X",
+      "started_utc": "2026-09-03T08:03Z",
+      "ended_utc": "2026-09-03T08:27Z",
+      "act": "two instrument findings carried UP as pitches, never acted on here: (a) CVO~A's PENDING-THIS-COMMIT checker limb (unverifiable by construction for co-committed artifacts) -> 1.0.0_SA_CTO via 1.0.0_SA_CTO~A; the scribe landed automatic resolution @2bc3679e0b; (b) this seat then MEASURED the strict form's side effect (an untracked in-repo copy of a VALID instance read INVALID pre-commit: 2 CCX violations) and pitched the never-committed/already-committed split; the scribe landed it @7e78fe9171; the worker about to run the step was told the order of operations first",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93332 (CVO~A item 3), 93352 (1.0.0_SA_CTO CLOSED @2bc3679e0b), 93369 (CVO~A weight), 93374 (1.0.0_SA_CTO LANDED @7e78fe9171)"},
+        {"kind": "RECORD", "ref": "probe: org/tier1_exec/2.0.0_SA_COO/deliverables/_precommit_probe.proof_of_spec.json (untracked copy, run, deleted) -> rc 1, 2 CCX violations at checker-vintage 2bc3679e0b"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "pitch to 1.0.0_SA_CTO~A (080421Z); measured friction to 1.0.0_SA_CTO + 3.0.0_SA_CVO~A + 1.0.0_SA_CTO~A (93362-93364); operating note to ~Q (082104Z)"}
+      ],
+      "spine_clause": "NONE (workflow instrument surface -- Andrew's 05:1xZ word withholds it from the ~A lanes absent /open-calls egress; pitching is legal, implementing is not)",
+      "note": "neither ~A seat touched the checker or the spine"
+    },
+    {
+      "seq": 10,
+      "limb": "L6",
+      "started_utc": "2026-09-03T08:40Z",
+      "ended_utc": "2026-09-03T08:49Z",
+      "act": "ROUND 2 cut on the L10 stamp: read the slug (three SPEC_ERROR rows, loop_target 6, this owner); finalized the two faces drafted during round 1 (CG-s-1 -> ~P: the marker notification to a new queue + DLQ with the live bucket config read first; CG-s-2 + CG-s-9 -> ~Q: the worker port under the fit table's ceiling rule, carrying S2, S3 and S8's fix half as criteria with controls, the daily-full-load fact, the memory caveat, the stamp-cadence bound); preflights at cut (comp-schedule 20/5, comp-iam DESIRED, compose rc 0 6/6 and 9/9, lanes 3/3 and 4/4); committed; GOs; hash to the row owner",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "surprise-channel/remediations/REMEDIATION_v1.md@59af3f1df5 (rows S2, S3, S8); INVESTIGATION_v1.md row S9 (adjudication)"},
+        {"kind": "MESSAGE", "ref": "93392 (stamp), 93389-93391 (the three route frames), 93397 (row at ROUND_CLOSE @5a11f076d0)"},
+        {"kind": "ARTIFACT", "ref": "deliverables/0.7.0_AE_CloudOps~Q/CG-s-10.full-fallback-duration.result.md@a9aea6f3ce (the fit table); deliverables/0.7.0_AE_CloudOps~P B.3 (i) @9b59f39114 (the IAM delta)"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "task-orders/NFRA_CLDGRPH.TO-CG-B-1.marker-notification-to-projection-queue.md + NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.md @585daff578"},
+        {"kind": "MESSAGE", "ref": "GO -> ~P (084842Z), GO -> ~Q (084900Z), the L6-landed hash to 1.0.0_SA_CTO~A (084914Z) for the ROUND_CLOSE->EXECUTING flip"}
+      ],
+      "spine_clause": "L10 'the loop' (a remediation pass is an L6 re-dispatch by the COO, cut as fresh task orders in dependency order); L6 output and gate; L9 remediation rows as the specification",
+      "gate_or_notifier_touched": "to-pipeline-gate OK 2 newly-added faces; surprise-row-gate OK; missions-tree-check 0 violations; prd-header-notify kind:route delivered 93389-93391 (READ-acked)",
+      "note": "the slug routes to a limb and an owner, not to faces; the number of faces was the sequencer's act (three rows onto two faces, S8 split fix/contract), adopted by the L9 seat on the record"
+    },
+    {
+      "seq": 11,
+      "limb": "X",
+      "started_utc": "2026-09-03T08:50Z",
+      "ended_utc": "2026-09-03T08:53Z",
+      "act": "this step log, written at the round's L10 stamp per org/standards/STEP_LOG.schema.json; the seat records, the CTO compiles",
+      "inputs": [
+        {"kind": "RECORD", "ref": "org/standards/STEP_LOG.schema.json; the precedent org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/STEP_LOG.2.0.0_SA_COO.round1.json"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/STEP_LOG.2.0.0_SA_COO~A.round1.json (this file)"}
+      ],
+      "spine_clause": "NONE (org/ref/SESSION_LOG_STANDARD.md 'Step log' section; Andrew-direct 2026-09-03 ~04:2xZ at the 2.0.0_SA_COO terminal)",
+      "note": "round 1 at this seat, end to end, in 3 h 36 min from registration to the round-2 GOs; 2 task orders cut and closed, 9 rows on the channel, 4 commits by this seat"
+    }
+  ]
+}
