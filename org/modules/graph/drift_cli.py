@@ -27,13 +27,19 @@ import shutil
 import subprocess
 import sys
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_WORKSPACE = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
+if os.path.join(_WORKSPACE, ".tools") not in sys.path:
+    sys.path.insert(0, os.path.join(_WORKSPACE, ".tools"))
+import _compbudget  # noqa: E402 -- NFRA_COMPEFFICACY CE-t-14: shared Rule-T carrier
+
 try:
     import yaml
 except ImportError:  # pragma: no cover
     sys.stderr.write("comp-drift: PyYAML required (pip install pyyaml)\n")
     sys.exit(2)
 
-WORKSPACE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+WORKSPACE = _WORKSPACE
 TOPOLOGY = os.path.join(WORKSPACE, "org", "modules", "graph", "drift-topology.yaml")
 
 # Resolve the REAL Git Bash (NOT WSL bash) -- on Windows, bare subprocess(["bash"])
@@ -48,7 +54,20 @@ BASH_EXE = (os.environ.get("COMP_DRIFT_BASH")
 PYTHON_EXE = (sys.executable or shutil.which("python3") or shutil.which("python") or "python")
 
 # Tri-state exit (PRD arch-gate (c); manifest exit_contract).
-EXIT_CLEAN, EXIT_BREAK, EXIT_UNVERIFIABLE = 0, 1, 2
+# Complete-sweep verdicts retain the established 0/1/2 vocabulary.  A budget
+# cut is a fourth state: it is not clean, an integrity break, or a seam that
+# could not be read.  The rc is deliberately distinct so rc-only consumers
+# cannot mistake a PREFIX for a complete verdict (FWD-10 / Rule T).
+EXIT_CLEAN, EXIT_BREAK, EXIT_UNVERIFIABLE, EXIT_NOT_DECIDABLE = 0, 1, 2, 3
+_ACTIVE_CLOCK = None
+# Ratified PRD s.4.3 answer-state spellings.  comp-drift's budget-cut branch
+# speaks the PARTIAL_OR_BLIND member; the remaining members are kept as data
+# vocabulary for result consumers and planted-case reporting (not re-invented
+# per seam).
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
 
 # Verdicts that are an integrity BREAK (exit 1). Everything else clean unless UNVERIFIABLE.
 BREAK_VERDICTS = {
@@ -90,6 +109,16 @@ def _run(cmd: list[str], timeout: int = 120) -> tuple[int, str]:
     """Invoke an engine as a black box. Returns (returncode, combined stdout+stderr).
     A non-zero rc is NOT inherently a break -- each adapter maps the engine's OWN
     verdict; rc is only a fallback signal."""
+    # Every child call in a budgeted walk inherits the shared wall-clock ceiling.
+    # A remaining() timeout prevents a slow seam engine from silently running
+    # past expiry and being reported as a complete verdict.
+    global _ACTIVE_CLOCK
+    if _ACTIVE_CLOCK is not None:
+        remaining = _ACTIVE_CLOCK.remaining()
+        if remaining is not None:
+            if remaining <= 0:
+                return 124, "budget exhausted before engine invocation"
+            timeout = min(timeout, max(0.01, remaining))
     try:
         p = subprocess.run(
             cmd, cwd=WORKSPACE, capture_output=True, text=True, timeout=timeout,
@@ -526,6 +555,22 @@ def _seam_engines(seam: dict) -> list[tuple[str, str | None]]:
     return out
 
 
+def _unit_key(seam: dict, sub_target: str, engine: str | None) -> str:
+    """Stable cursor key for one topology binding in deterministic scan order."""
+    return "%s:%s" % (seam.get("seam_id", "?"), sub_target or engine or "default")
+
+
+def _topology_units(topo: dict, only_seams: set[str] | None = None) -> list[tuple[str, dict, str, str | None]]:
+    """Expand manifest seams into the exact units walked by the orchestrator."""
+    units = []
+    for seam in topo.get("seams", []):
+        if only_seams and seam["seam_id"] not in only_seams:
+            continue
+        for sub_target, engine in _seam_engines(seam):
+            units.append((_unit_key(seam, sub_target, engine), seam, sub_target, engine))
+    return units
+
+
 def walk_seams(topo: dict, target: str | None, ctx: dict,
                only_seams: set[str] | None = None) -> list[dict]:
     """LIVE PROGRESS ON STDERR + PER-ADAPTER TIMING (NFRA_COMPCLOSE 2026-07-14). The sweep used to
@@ -538,35 +583,52 @@ def walk_seams(topo: dict, target: str | None, ctx: dict,
     the adapter's elapsed seconds, so a killed run now shows WHERE it died and WHICH leg is slow."""
     import time as _time
     records = []
-    for seam in topo.get("seams", []):
-        if only_seams and seam["seam_id"] not in only_seams:
+    units = _topology_units(topo, only_seams)
+    allowed = ctx.get("_allowed_units")
+    clock = ctx.get("_clock")
+    global _ACTIVE_CLOCK
+    for key, seam, sub_target, engine in units:
+        if allowed is not None and key not in allowed:
             continue
-        for sub_target, engine in _seam_engines(seam):
-            adapter = _adapter_for(engine)
-            ctx["_binding"] = sub_target   # per-binding catalog label for fan-in adapters (seam-6)
-            t0 = _time.time()
-            try:
-                sys.stderr.write("  [sweep] %-8s %s ...\n" % (seam["seam_id"], engine or "?"))
-                sys.stderr.flush()
-            except Exception:  # noqa: BLE001 -- progress is advisory, never fatal
-                pass
-            try:
-                rec = adapter(seam, target, ctx)
-            except Exception as exc:  # noqa: BLE001
-                rec = _record(seam, target or "?", "UNVERIFIABLE",
-                              "adapter raised: %s" % exc)
-            elapsed = _time.time() - t0
-            try:
-                sys.stderr.write("  [sweep] %-8s %s -> %s (%.1fs)\n"
-                                 % (seam["seam_id"], engine or "?", rec.get("verdict", "?"), elapsed))
-                sys.stderr.flush()
-            except Exception:  # noqa: BLE001
-                pass
-            if sub_target:
-                rec["target"] = "%s[%s]" % (rec["target"], sub_target)
-                rec["_engine"] = engine
-            rec["_elapsed_s"] = round(elapsed, 1)
-            records.append(rec)
+        if clock is not None and clock.remaining() is not None and clock.remaining() <= 0:
+            ctx["_budget_partial"] = True
+            ctx.setdefault("_deferred_units", []).append(key)
+            continue
+        adapter = _adapter_for(engine)
+        ctx["_binding"] = sub_target   # per-binding catalog label for fan-in adapters (seam-6)
+        t0 = _time.time()
+        try:
+            sys.stderr.write("  [sweep] %-8s %s ...\n" % (seam["seam_id"], engine or "?"))
+            sys.stderr.flush()
+        except Exception:  # noqa: BLE001 -- progress is advisory, never fatal
+            pass
+        try:
+            _ACTIVE_CLOCK = clock
+            rec = adapter(seam, target, ctx)
+        except Exception as exc:  # noqa: BLE001
+            rec = _record(seam, target or "?", "UNVERIFIABLE",
+                          "adapter raised: %s" % exc)
+        finally:
+            _ACTIVE_CLOCK = None
+        elapsed = _time.time() - t0
+        try:
+            sys.stderr.write("  [sweep] %-8s %s -> %s (%.1fs)\n"
+                             % (seam["seam_id"], engine or "?", rec.get("verdict", "?"), elapsed))
+            sys.stderr.flush()
+        except Exception:  # noqa: BLE001
+            pass
+        # If the child was cut off by Rule T, the current binding is not a
+        # fully processed cursor unit.  Keep only the completed PREFIX.
+        if clock is not None and clock.remaining() is not None and clock.remaining() <= 0:
+            ctx["_budget_partial"] = True
+            ctx.setdefault("_deferred_units", []).append(key)
+            continue
+        if sub_target:
+            rec["target"] = "%s[%s]" % (rec["target"], sub_target)
+            rec["_engine"] = engine
+        rec["_elapsed_s"] = round(elapsed, 1)
+        records.append(rec)
+        ctx.setdefault("_completed_units", []).append(key)
     return records
 
 
@@ -645,6 +707,17 @@ def fold_infra_drift(ctx: dict) -> list[dict]:
     """P4: fold drift_producer's infra/repo drift legs into the board. The comp leg
     (manifest + critical-surface) runs in the standard sweep; the terraform leg (tf plan across
     modules -- slow) is cost-guarded to --deep. Never re-implements a check -- calls drift_producer."""
+    def can_start(key: str) -> bool:
+        allowed = ctx.get("_allowed_units")
+        if allowed is not None and key not in allowed:
+            return False
+        clock = ctx.get("_clock")
+        if clock is not None and clock.remaining() is not None and clock.remaining() <= 0:
+            ctx["_budget_partial"] = True
+            ctx.setdefault("_deferred_units", []).append(key)
+            return False
+        return True
+
     try:
         sys.path.insert(0, os.path.join(WORKSPACE, ".tools"))
         import drift_producer as dp
@@ -652,20 +725,37 @@ def fold_infra_drift(ctx: dict) -> list[dict]:
         return [_infra_rec("infra-comp", "REPO", "SURFACE", "UNVERIFIABLE",
                            "cannot import drift_producer: %s" % exc)]
     records = []
-    try:
-        records.extend(_infra_findings("infra-comp", "REPO", "SURFACE", dp.run_comp_leg()))
-    except Exception as exc:  # noqa: BLE001
-        records.append(_infra_rec("infra-comp", "REPO", "SURFACE", "UNVERIFIABLE",
-                                  "run_comp_leg raised: %s" % exc))
-    if ctx.get("deep"):
+    if can_start("infra-comp"):
         try:
+            global _ACTIVE_CLOCK
+            _ACTIVE_CLOCK = ctx.get("_clock")
+            records.extend(_infra_findings("infra-comp", "REPO", "SURFACE", dp.run_comp_leg()))
+        except Exception as exc:  # noqa: BLE001
+            records.append(_infra_rec("infra-comp", "REPO", "SURFACE", "UNVERIFIABLE",
+                                      "run_comp_leg raised: %s" % exc))
+        finally:
+            _ACTIVE_CLOCK = None
+        if ctx.get("_clock") is None or ctx["_clock"].remaining() is None or ctx["_clock"].remaining() > 0:
+            ctx.setdefault("_completed_units", []).append("infra-comp")
+        else:
+            ctx["_budget_partial"] = True
+    if ctx.get("deep") and can_start("infra-tf"):
+        try:
+            _ACTIVE_CLOCK = ctx.get("_clock")
             records.extend(_infra_findings("infra-tf", "CODE", "INFRA", dp.run_terraform_leg()))
         except Exception as exc:  # noqa: BLE001
             records.append(_infra_rec("infra-tf", "CODE", "INFRA", "UNVERIFIABLE",
                                       "run_terraform_leg raised: %s" % exc))
-    else:
+        finally:
+            _ACTIVE_CLOCK = None
+        if ctx.get("_clock") is None or ctx["_clock"].remaining() is None or ctx["_clock"].remaining() > 0:
+            ctx.setdefault("_completed_units", []).append("infra-tf")
+        else:
+            ctx["_budget_partial"] = True
+    elif not ctx.get("deep") and can_start("infra-tf"):
         records.append(_infra_rec("infra-tf", "CODE", "INFRA", "COST-GUARDED",
                                   "terraform-plan infra-drift leg skipped (cost-guard; --deep to run)"))
+        ctx.setdefault("_completed_units", []).append("infra-tf")
     return records
 
 
@@ -758,6 +848,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--deep", action="store_true",
                     help="invoke the live/network engines (lambda/iam/iceberg/code_heat/freshness); "
                          "default cost-guards them.")
+    ap.add_argument("--budget", metavar="N", default=None,
+                    help="RULE T wall-clock ceiling in seconds for sweep "
+                         "(carrier: --budget > env COMP_BUDGET_S > default "
+                         "%ss; --budget 0 = unbounded). "
+                         "Budget expiry returns rc=3 (PARTIAL_OR_BLIND), distinct from "
+                         "rc=0 clean and rc=1 integrity-break; complete rc vocabulary: "
+                         "0 clean, 1 integrity-break, 2 unverifiable, 3 partial-budget."
+                         % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
+    ap.add_argument("--cursor", metavar="UNIT", default=None,
+                    help="resume sweep after the last fully processed unit named by a "
+                         "BUDGET REACHED line")
     ap.add_argument("--json", action="store_true", help="emit the normalized records as JSON (CI mode).")
     args = ap.parse_args(argv)
 
@@ -777,14 +878,61 @@ def main(argv: list[str] | None = None) -> int:
 
     if mode == "sweep" or mode is None:
         # sweep: cheap seams always; live engines only under --deep (cost-guard)
+        try:
+            budget_s, budget_source = _compbudget.resolve_budget(args.budget)
+        except ValueError as exc:
+            print("comp-drift: ERROR: --budget %s" % exc)
+            return EXIT_NOT_DECIDABLE
+        planned = [u[0] for u in _topology_units(topo)] + ["infra-comp", "infra-tf"]
+        requested = planned
+        if args.cursor:
+            if args.cursor in planned:
+                requested = planned[planned.index(args.cursor) + 1:]
+            else:
+                print("comp-drift: WARNING: --cursor %r does not match any sweep unit -- "
+                      "running the full requested set (no units skipped)." % args.cursor)
+        total_units = len(requested)
+        clock = _compbudget.Clock(budget_s)
+        ctx.update({"_clock": clock, "_budget_s": budget_s, "_budget_source": budget_source,
+                    "_allowed_units": set(requested), "_completed_units": [],
+                    "_deferred_units": [], "_budget_partial": False})
         records = walk_seams(topo, None, ctx)
         records.extend(fold_infra_drift(ctx))   # P4: fold drift_producer's infra/repo drift legs (PRD sec 8)
-        code = rollup_exit(records)
+        completed = list(ctx.get("_completed_units", []))
+        partial = bool(ctx.get("_budget_partial")) or len(completed) < total_units
+        code = EXIT_NOT_DECIDABLE if partial else rollup_exit(records)
+        used_s = round(clock.elapsed(), 2)
         if args.json:
-            print(json.dumps({"mode": "sweep", "exit": code, "records": _strip(records)}, indent=1))
+            print(json.dumps({"mode": "sweep", "exit": code, "records": _strip(records),
+                              "budget": {"scanned": len(completed), "total": total_units,
+                                         "deferred": len(ctx.get("_deferred_units", [])),
+                                         "budget_s": budget_s, "source": budget_source,
+                                         "used_s": used_s,
+                                         "state": STATE_PARTIAL_BLIND if partial else None,
+                                         "cursor": completed[-1] if completed else None}}, indent=1))
         else:
+            print("  " + _compbudget.disclosure_line(budget_s, budget_source))
             print(render_board(topo, records))
             print(_sweep_summary(records))
+            if partial:
+                if completed:
+                    args_repr = "comp-drift sweep --deep" if args.deep else "comp-drift sweep"
+                    print("  " + _compbudget.budget_reached_line(
+                        budget_s, budget_source, len(completed), total_units, "sweep_unit",
+                        args_repr, completed[-1]))
+                else:
+                    print("  BUDGET REACHED: %s s (%s); scanned 0 of %d sweep_unit(s); results are "
+                          "a PREFIX, not the answer; NO CURSOR YET: no unit completed before "
+                          "the budget hit, so there is no last-processed unit to resume from; "
+                          "resume: re-run with a larger --budget."
+                          % (_compbudget.fmt(budget_s), budget_source, total_units))
+                print("  ANSWER-STATE: %s" % STATE_PARTIAL_BLIND)
+                print("  STATE: %s (rc=%d, distinct from clean rc=0, integrity-break rc=1, "
+                      "and seam-unverifiable rc=2 -- a PREFIX carries no verdict)"
+                      % (STATE_PARTIAL_BLIND, EXIT_NOT_DECIDABLE))
+            else:
+                print("  " + _compbudget.within_budget_line(
+                    len(completed), total_units, "sweep_unit", budget_s, budget_source, used_s))
             print("\n  EXIT: %d (%s)" % (code, _exit_label(code)))
         return code
 
@@ -807,7 +955,7 @@ def _strip(records: list[dict]) -> list[dict]:
 
 def _exit_label(code: int) -> str:
     return {0: "clean-or-dispositioned", 1: "integrity-break",
-            2: "unverifiable"}.get(code, "?")
+            2: "unverifiable", 3: "partial-budget"}.get(code, "?")
 
 
 def _drift_self_test() -> int:
@@ -841,6 +989,17 @@ def _drift_self_test() -> int:
 
     # 5. empty (no records) is not a false verified-nothing.
     ck("empty.no_false_banner", "VERIFIED NOTHING" not in _sweep_summary([]))
+
+    # T-14 AC-2 fixture control: keep the four ratified answer-state spellings
+    # machine-visible and pairwise distinct in one invocation.  Production
+    # sweep records retain their engine-native verdicts; this control prevents
+    # a future result consumer from collapsing the state vocabulary.
+    planted_states = [STATE_SUBJECT_ABSENT, STATE_PRESENT_ZERO,
+                      STATE_PARTIAL_BLIND, STATE_NOT_APPLICABLE]
+    for state in planted_states:
+        print("  ANSWER-STATE: %s" % state)
+    ck("answer_state.four_distinct_tokens",
+       len(planted_states) == 4 and len(set(planted_states)) == 4)
 
     ok = all(results)
     print("\n" + ("OK: all comp-drift self-test cases pass" if ok else "ERROR: comp-drift self-test FAILED"))
