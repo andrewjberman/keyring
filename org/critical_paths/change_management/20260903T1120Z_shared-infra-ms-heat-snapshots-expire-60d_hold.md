@@ -45,6 +45,61 @@ or a plan that otherwise does not touch it). The acceptance check for such an ap
 apply verified only by a scoped re-plan is the exact trap this estate has already measured and
 named elsewhere (never re-derive that mistake here).
 
+## REBUILDABILITY STATEMENT (Andrew's condition)
+
+**Measured 2026-09-03T14:15:08Z by `0.8.0_AE_CloudComp~K`; conclusion: the
+snapshots are rebuildable at the semantic/index-content level, so Andrew's conditional apply
+path is admitted.** The boundary is explicit below: this is not a byte-for-byte serialization
+guarantee and the current CLI has no one-command historical replay flag.
+
+- **Producer and run.** `python .tools/comp-read
+  org/modules/heatmap/ms_heat_index.py --for "what it reads, what it writes, and what its
+  docstring says about retention"`, followed by pinned section reads, measures the non-dry-run
+  path at `org/modules/heatmap/ms_heat_index.py:362-390`: `main()` calls `read_ms_nodes()`,
+  `build_index(...)`, then `persist(...)`. `persist()` at lines 267-285 writes the current index
+  to `s3://opal-313476888478-globgrph/warehouse/ms_heat/ms_heat_index.json` and appends a dated
+  JSON object below `warehouse/ms_heat/snapshots/`; lines 27-36 and 265 name the same retention
+  boundary and state that deletion is lifecycle-declared, never a code-side delete.
+- **Recompute source.** The same `comp-read` instrument plus the pinned read at
+  `org/modules/heatmap/ms_heat_index.py:88-132,138-216` measures that the index is recomputed
+  from `MS_FILE` and `MS_FOLDER` rows in the canonical read-only Kuzu graph after
+  `ensure_fresh(...)`; the run records its `graph_nodes_snapshot` and graph last-write vintage.
+  A live `.tools/aws s3api list-objects-v2` read of each of the three recorded source snapshot
+  IDs (`2968923625689391988`, `8723832531903082995`, `6901201222334213263`) returned
+  `KeyCount=1`, `IsTruncated=false` for each exact
+  `warehouse/globgrph/graph_nodes_.../metadata/snap-<id>-` prefix. The July 15 source metadata
+  additionally reads `gc.enabled=false` and points at snapshot `2968923625689391988`. Thus the
+  source graph vintages for every currently stored JSON snapshot remain present, rather than
+  being assumed from a message or from the current graph alone.
+- **Live snapshot-prefix denominator.** The live command `bash .tools/aws s3api
+  list-objects-v2 --bucket opal-313476888478-globgrph --prefix
+  warehouse/ms_heat/snapshots/ --max-keys 1000 --output json` returned
+  `KeyCount=3`, `MaxKeys=1000`, `IsTruncated=false`: dated objects
+  `20260715T213817Z.json` (2,585,175 bytes), `20260716T132023Z.json` (2,601,374
+  bytes), and `20260717T180941Z.json` (2,626,103 bytes). Live reads of those objects record
+  5,519 / 5,560 / 5,604 source rows respectively and carry the three source snapshot IDs above.
+- **Append-only historical source.** `python .tools/comp-read
+  infra/aws/globgrph/snap_store.py --for "the ms_heat_snap table: append-only or not, where it
+  lives"`, followed by pinned reads at `infra/aws/globgrph/snap_store.py:1-35,47-54,79-93,
+  212-268`, measures table id `globgrph.ms_heat_snap`: `ensure_table()` loads an existing table
+  and never recreates it; `append_rows()` calls only `t.append(table)`. A live read of its newest
+  metadata object reports location
+  `s3://opal-313476888478-globgrph/warehouse/globgrph/ms_heat_snap_a1875ebc-9d80-4078-b8e7-19e6455265bd`,
+  `gc.enabled=false`, current summary `operation=append`, two data files and 11,164 total rows.
+  A live data-prefix listing returned exactly two partitions,
+  `snapshot_date=2026-07-16` and `snapshot_date=2026-07-17`, matching the 5,560 + 5,604 rows.
+- **Loss surface and why it does not reverse the conclusion.** Once the lifecycle fires, the
+  standalone dated JSON object older than 60 days is gone; byte identity, original S3 ETag, and
+  a ready-made one-command historical replay are not preserved by `ms_heat_index.py`. The
+  `2026-07-15` JSON also predates the two populated `ms_heat_snap` partitions. Its exact source
+  graph snapshot manifest nevertheless remains live with GC disabled, while the later two runs'
+  per-node history is additionally retained in the append-only sibling. Therefore the functional
+  artifact can be recomputed from the live graph for current state and replayed from the retained
+  recorded graph vintage for each of the three existing snapshots; what is surrendered is the
+  convenience and byte identity of the standalone JSON history, not the underlying graph input
+  or the append-only analytic history. That bounded loss is consistent with the ruled 60-day
+  retention and does not make the snapshots non-rebuildable.
+
 ## THE CARD TO ANDREW (open)
 
 **Apply the 60-day expiry on `ms_heat` snapshots — yes or no?**
@@ -63,7 +118,8 @@ change is the honest, correct state and should stay visible, not be papered over
 - [x] Prior scoping precedent located (`20260819T0106Z_...`) confirming this is a known, banked
       item, not a fresh surprise
 - [x] This ledger entry opened, naming the pending change, its commit, and the HOLD
-- [ ] Andrew's word (apply / retire)
+- [x] Andrew's word — conditional apply admitted by his "recs approved" ruling; the measured
+      rebuildability condition is satisfied in the section above
 - [ ] Owning apply or revert, under its own ledger entry, citing this HOLD as closed
 - [ ] Unscoped re-plan confirms `0/0/0`
 
