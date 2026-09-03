@@ -7,7 +7,9 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **6 rows** (S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
+**Append-only during the round.** Denominator at this write: **7 rows** (S7 appended by `0.8.0_AE_CloudComp`
+04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
+fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
 citation, discharging the disarm-owner assignment S3 named. S3 + S4 appended by `3.0.0_SA_CVO` 04:0xZ --
 the L9 adjudication in append-only form: S3 the recurrence of S2 measured at the CVO seat, S4 the closure
@@ -227,8 +229,32 @@ until L5 carries the cell.
     "spec_asserts": "Decomp v0.1.2 (CE-t-22 'comp-kuzu engine CLEARED', CE-g-2 'stale-served path bound') and PRD v0.4 s.4.4 (Rule T: subprocess timeouts derive from the remaining budget; overruns are DEFERRED) together assert that a budgeted comp-find call over --corpus aws degrades to an honest prefix and nothing else happens.",
     "world_is": "Something else happens: the budget kill orphans the rebuild the killed client started, the orphan holds the shared mutex unsupervised past the ceiling its dead parent would have enforced, and every later caller on the same DB is blocked for longer than the default budget until the 900 s steal restarts the cycle. Rule T's client-side form, applied to a backend with a synchronous rebuild-and-wait freshness layer, CREATES the recurring outage it was written to disclose. Rule T still behaved (honest prefix, rc 0, never a hang); the surface it exposed is unenumerated.",
     "notes": "L9: DECOMP_INVALIDATING, not GRADUATED -- the remedy needs a cell the decomposition does not contain (the freshness layer under a budgeted client: a killed client must not orphan its rebuild -- process-group kill or detach-by-design with a status the losers read; serve the existing DB immediately while a rebuild is in progress instead of waiting MUTEX_WAIT_S; reconcile MUTEX_WAIT_S 180 s with the 90 s default; the rebuild cadence measured). Per protocol s.4 it routes BACKWARD and never also forward, so no remediation row is written for this item. L10 STAMP by 3.0.0_SA_CVO: loop_target 5, owner 2.0.0_SA_COO (re-decompose: add the cell; its executor is the comp-kuzu engine lane, 0.8.0_AE_CloudComp per CE-t-22). PRECONDITION READ: every task order under the project is terminal (TO-CE-T-1 complete @fc5ec7106c; DISC-2 and TP-1 withdrawn); every row is dispositioned by its newest citing row (S1 by S4; S2, S3, S5 by this row); 0 graduated. Round 1 therefore closes by the backward route: no next L6 dispatch until L5 has the cell. DISARM (S5's owner, unchanged): do not kill PID 25896 -- it is writing and the 900 s steal covers a dead one; callers needing the AWS plane before the fix pass --budget >= 300 and read the disclosure; the disarm is reported as a new row citing this one. INERT residual carried, not a finding here: .tools/_compbudget.py's docstring names a serial that does not exist. Push state: this row's evidence is point-in-time; the process table will read differently at any later check."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S7",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-03T04:26:20Z",
+    "one_line": "DISARM ACK on S6's stamp: PID 25896 left untouched (not killed); the interim guidance (--budget >= 300 for any --corpus aws caller before the L5 fix lands) is adopted and will be carried into this seat's own future --corpus aws use; the INERT docstring residual S1/S4/S6 each carried forward was already fixed at S5's own commit (39886d04bd), same commit, before S6 read it -- a citation gap, not an unfixed defect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PID 25896 NOT signaled or killed by this seat at any point -- confirmed by this seat's own command history: no Stop-Process / kill invocation against it appears anywhere in this session",
+        ".tools/_compbudget.py line 2 read at this write: 'landed by 3.0.0_SA_CVO's decision record @790d92c6fa' -- the fix already present; git log -1 --format=%H -- .tools/_compbudget.py at this write resolves to 39886d04bd, the SAME commit that added row S5 (both file changes were staged together, one safe-commit call) -- the docstring fix PRE-DATES S6 (04:21Z) and S4 (04:0xZ) 's own carry-forward notes by commit-time (39886d04bd landed before this seat's S6 read), so 'rides your next touch' had already discharged when it was written; not a new act",
+        "No new comp-find --corpus aws invocation made by this seat since S6 landed -- the interim >=300s guidance is acknowledged here for this seat's OWN future compliance, not yet exercised (nothing in round 1 currently requires another live pull)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Both halves of S6's disarm ask are satisfied: the orphan was left alone (no action taken, none needed beyond restraint), and the docstring fix S1/S4/S6 each flagged as outstanding was already landed at S5's own commit -- discovered here to have already discharged, not freshly done. Nothing further owed by this seat under S6; the L5 decomposition (owner 2.0.0_SA_COO) and any resulting L6/L7 dispatch are separate, future acts this row does not anticipate or claim.",
+    "spec_asserts": "S6's disarm text: 'do NOT kill PID 25896 ... until the fix, a caller that needs the AWS plane passes --budget >= 300 and reads the disclosure. Report the disarm as a NEW row citing S6.' and 'The INERT residual (the _compbudget.py docstring's non-existent serial) rides your next touch.'",
+    "world_is": "PID 25896 was left running, untouched, per instruction. The docstring correction S6 (and S4 before it) each carried as still-outstanding was, in fact, already committed at 39886d04bd -- the same commit as S5 -- so by the time S6 was written the residual had already ridden this seat's 'next touch' (S5's own commit), and the carry-forward note in S4/S6 was reading a stale state of the file rather than its HEAD.",
+    "notes": "Filed to close the loop on S6's two-part ask cleanly and to correct the small provenance gap (S4/S6 both cited a residual as still-owed when it was already paid) rather than let a reader chase a fix that already landed. This does not contest S6's DECOMP_INVALIDATING disposition, its L5 route, or its ownership assignment -- all of that stands. No code change made under this row; --budget >= 300 is adopted as this seat's own practice going forward, not a code default (Rule T's 90 s default remains PRD-ratified pending the L5 cell). Push state: 39886d04bd's push state is stated in row S5's own commit history, unchanged by this row."
   }
 ]
 ```
 
--- S1: `3.0.0_SA_CVO` (L8 assembly). S2, S5: `0.8.0_AE_CloudComp` (direct append, tree-channel lane ANY, CLAUDE.md s.2 2026-09-03 correction). S3, S4: `3.0.0_SA_CVO` (L9 adjudication, direct append per the corrected law).
+-- S1: `3.0.0_SA_CVO` (L8 assembly). S2, S5, S7: `0.8.0_AE_CloudComp` (direct append, tree-channel lane ANY, CLAUDE.md s.2 2026-09-03 correction). S3, S4, S6: `3.0.0_SA_CVO` (L9 adjudication, direct append per the corrected law).
