@@ -1,0 +1,79 @@
+# TO NFRA_CLDGRPH.TO-CG-C-2 -- the WORKER'S ROUND-3 REVISION: the conditional-create publisher, the verified pointer writer, compaction and the contract's INTEGRITY CHECK (counts, hashes, declared sizes -- never a byte band) DEPLOYED as task-definition revision 3 and EXERCISED on real stamps, plus the engine's rebuild deadline re-derived from the measured duration -- the four SPEC_ERROR routes S10, S22, S23, S24 of the round-2 stamp, in one order
+
+<to_id>NFRA_CLDGRPH.TO-CG-C-2</to_id>
+<project>NFRA_CLDGRPH</project>
+<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_by>2.0.0_SA_COO~A</issued_by>
+<issued_date>2026-09-03</issued_date>
+<status>pending -- GO paired at cut (2026-09-03 ~18:3xZ). ROUND 3 of NFRA_CLDGRPH, cut in the tick that read the round-2 stamp (spine L10 -> L6, obligation 1 of the drive: a graduated round is acted on in the tick that reads it). Four routed rows, one order, one seat: the remedies are all edits to the worker this seat ported and deployed, and their exercise is one image rebuild, one revision, and real stamps. The assignee commits its own status flip after a VALID proof-of-spec instance; the L8 seat reads the record.</status>
+
+**Directive:** D0 · **Fabric:** laptop · **PRD:** `../prd/NFRA_CLDGRPH_PRD.md` v0.4 @`25c66d3358` (R5 the worker; R9 the incremental path serve-labeled-stale; FWD-2 the daytime limb, FWD-4) · **Decomp cells:** `CG-s-2` (the worker, ROUND-3 RE-ENTRY at v0.2) and `CG-s-3` (the contract's integrity check, implemented in the publisher's code) (`../decompositions/NFRA_CLDGRPH_DECOMP.md` v0.2, changelog 0.2) · **Stamp:** `../surprise-channel/remediations/REMEDIATION_v2.md` @`0c72b64180`, rows S10, S22, S23, S24 -- `route: SPEC_ERROR`, `loop_target: 6`, `owner: 2.0.0_SA_COO~A` · **Lane:** `infra/aws/globgrph/**` + `infra/aws/terraform/globgrph/**` (CLOUD_OPS_OR_ETL; `0.7.0_AE_CloudOps~S` PERMITTED) + the deliverable at `org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/` · **Rule 27 seating:** `0.7.0_AE_CloudOps~S`, the worker's own seat (B-2 complete @`ebe85fd69e`).
+
+---
+
+## THE CELL -- four routed remedies, verbatim from the stamp, and why they are one order
+
+- **S22** (stamp remedy): "Deploy the conditional-create publisher with the round-3 worker revision, then exercise byte-identical same-vintage no-op and non-identical refusal on the running image." The code is at `59aeb265cc` (`projection_worker.py` conform_manifest / verify_remote_publish / advance_pointer / build_and_publish), committed by `~T`, not deployed: the two live pointer advances ran digest `sha256:1e1aaa14...` built before it.
+- **S23** (stamp remedy): "Keep the valid live pointer, deploy the B-3 completeness/forward/conditional writer through the round-3 worker revision, and prove one authentic strictly-forward advance with the deployed fixed image." The verified writer has moved no cloud pointer yet (B3-AC5's carry).
+- **S24** (stamp remedy): "Deploy compaction with the fixed publisher and replace the fixed cross-mode byte band with integrity checks over direct counts, hashes, and declared exact sizes, or a separately measured mode-specific diagnostic band; exercise the resulting publisher on a real incremental stamp." Compaction is at `052a58999a` (this seat's; 83,615,744 B -> 34,824,192 B on one graph); the band refuses in both directions and is not an integrity property.
+- **S10** (stamp remedy): "Re-derive and state the engine-level default from the measured duration, correct the stale source comment, and exercise both an explicit-override caller and a caller that inherits the default. Preserve the current deployed 3600-second task override until that engine contract is independently certified." `kuzu_nessie_load.py:464-468` at `ebe85fd69e` still carries the 1800 s default and the falsified "~6 min, 5x headroom" rationale; the cloud measured 801-835 s full loads.
+
+One order because every remedy is an edit to files this seat owns, and the exercise of all four is ONE image rebuild from HEAD, ONE task-definition revision, ONE Pipe re-target, and the next real stamps.
+
+## DELIVERABLE
+
+1. **THE CODE (engine files, this seat's lane):** (a) the publisher's completeness check REPLACES the byte band with the contract's integrity check -- every declared object read back, exact byte counts and sha256 as declared, the manifest's counts equal to direct `COUNT(*)` on the artifact, the prefix/vintage equality -- and, if a diagnostic band is kept, a MODE-SPECIFIC one measured from real full and compacted incremental artifacts, stated with its measurement, never the full-load band on an incremental; (b) compaction in the incremental path (already @`052a58999a`) confirmed in the publish path; (c) `KUZU_REBUILD_DEADLINE_S`'s engine default re-derived from the MEASURED cloud duration (801-835 s full, the headroom stated as a number), the stale comment corrected, and the task definition's explicit 3600 s override PRESERVED; (d) the conditional-create writer and the forward-only pointer writer @`59aeb265cc` are the publish path (no second copy).
+2. **THE IMAGE + REVISION:** rebuild the worker image from HEAD of `infra/aws/globgrph/` (the derive-runner image pattern), register task-definition **revision 3**, re-target the Pipe; Terraform for every resource, `safe-apply -target` under a NEVER-2 ledger opened before the plan, verified by ONE UNSCOPED re-plan asserted BY ADDRESS LIST (exactly the four known foreign items -- `aws_glue_partition.tool_activity["rolling_log"]`, `["rolling_log_summary"]`, `["routing"]`, `aws_sns_topic_subscription.critical_surface_alerts_email` -- and NONE of this cell's); the APPLIED read after `comp-iam refresh-census` if any statement changes.
+3. **THE CONTRACT TEXT:** the exact amended wording of `PROJECTION_CONTRACT.md` s.2 and s.5 (the integrity check; the band's demotion or its mode-specific measured form) written in the deliverable as a block -- the document itself is `0.7.0_AE_CloudOps~T`'s folder and lane; the issuer relays the block to `~T` for the v0.2 document edit. A divergence between the code and the relayed text is a row.
+4. **EXERCISED, on real stamps through the real path (S3 -> SQS -> Pipe -> the revision-3 task):** (a) ONE authentic strictly-forward advance by the DEPLOYED verified writer (S23) -- the pointer body, the verify-then-PUT log lines, the before/after vintages; (b) the same-vintage arms on the RUNNING image (S22): a byte-identical re-publish is a no-op and a non-identical one is REFUSED (a test seam that never writes S3 is acceptable for the non-identical arm; say how); (c) ONE real incremental stamp publishes a COMPACTED incremental artifact that passes the integrity check (S24) -- its counts equal to direct `COUNT(*)`, its bytes and sha256 as declared, the pointer advanced; (d) the deadline arms (S10): an explicit-override caller (the task definition's 3600 s) and an inheriting caller (a local invocation with the env var unset) each observed with the number in effect. The scheduled fire stays CG-x-2's acceptance; one ad-hoc QA run of the real producer is permitted for a stamp; the marker is never written by hand.
+5. **THE DELIVERABLE FILE** `org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/CG-s-2.worker-revision-three.result.md`: one fenced JSON block (the image digest, revision 3, the Pipe target, the deadline default with its derivation, the integrity check's rules, each exercised arm's task id and vintages) plus prose, and the contract text block for `~T`.
+
+## ACCEPTANCE -- criterion ids minted at cut; the assignee files the proof instance
+
+<criterion id="C2-AC1" cell_refs="CG-s-3"/> `C2-AC1` -- THE INTEGRITY CHECK IN CODE: the publisher refuses on exact bytes, sha256 and count disagreement and never on a cross-mode byte band; if a diagnostic band remains it is mode-specific and MEASURED (the numbers and their artifacts cited); `file:line @ commit`; the contract text block written for the document edit.
+<criterion id="C2-AC2" cell_refs="CG-s-2"/> `C2-AC2` -- THE ENGINE DEADLINE (S10): the default re-derived from the measured cloud duration with the headroom as a number, the comment corrected, `file:line @ commit`; the explicit-override caller and the inheriting caller each exercised with the number in effect; the task definition's 3600 s override preserved.
+<criterion id="C2-AC3" cell_refs="CG-s-2"/> `C2-AC3` -- REVISION 3 APPLIED under NEVER-2: the image digest, the task-definition revision, the Pipe target; the targeted plan; the ONE UNSCOPED re-plan quoted by address list = the four foreign items and none of this cell's; the ledger CLOSED on the exercised leg.
+<criterion id="C2-AC4" cell_refs="CG-s-2"/> `C2-AC4` -- S23 EXERCISED: one authentic strictly-forward pointer advance by the DEPLOYED verified writer, the verify-then-PUT evidence and both vintages quoted; the previously valid pointer never undone.
+<criterion id="C2-AC5" cell_refs="CG-s-2"/> `C2-AC5` -- S22 EXERCISED on the running image: the byte-identical same-vintage no-op and the non-identical refusal, both quoted; the refusal arm can fail.
+<criterion id="C2-AC6" cell_refs="CG-s-2"/> `C2-AC6` -- S24 EXERCISED: one real incremental stamp publishes a compacted incremental artifact that PASSES the integrity check, counts equal to direct COUNT(*), bytes and sha256 as declared, the pointer advanced; the size printed beside the full artifact's for the record.
+<criterion id="C2-AC7" cell_refs="CG-s-2"/> `C2-AC7` -- PUSH STATE MEASURED at report (never a push); the proof instance VALID (`.tools/proof-of-spec-check.py` rc 0) with every `surprises` entry resolving to a row (S10, S22, S23, S24 at their commits, plus any new row) BEFORE the complete flip, which this seat commits itself.
+
+<expected_criteria>C2-AC1, C2-AC2, C2-AC3, C2-AC4, C2-AC5, C2-AC6, C2-AC7</expected_criteria>
+
+## SURFACES
+
+`infra/aws/globgrph/projection_worker.py` @`59aeb265cc` and @`052a58999a` · `infra/aws/globgrph/kuzu_nessie_load.py:464-468` @`ebe85fd69e` · `infra/aws/terraform/globgrph/projection.tf` (`:237-238` the deadlines; the task definition, the Pipe) · `infra/aws/globgrph/Dockerfile`, `build-derive-image.sh`, `buildspec.yml` · `deliverables/0.7.0_AE_CloudOps~T/PROJECTION_CONTRACT.md` @`93c26badf8` s.2, s.5 (read; the edit is relayed) · rows S10, S22, S23, S24 and the stamp @`0c72b64180` · the B-2 proof @`ebe85fd69e` and the B-3 proof @`93c26badf8`.
+
+## BOUNDS
+
+- **No change to the serving service (CG-s-4, TO-CG-C-1 at `~T`), the gateway, the client or the deriver**; no retirement.
+- **The contract document is `~T`'s folder**: this seat writes the amended TEXT in its deliverable and edits no file under `deliverables/0.7.0_AE_CloudOps~T/`.
+- **Keep the valid live pointer**; never undo, never delete, never write the marker by hand; the S22 non-identical arm never overwrites a real object.
+- **Terraform only, `safe-apply` only, `-target` scoped, ONE unscoped re-plan by address list; the four foreign addresses never land.** `.tools/terraform.exe` (v1.9.8) with `-chdir`; never `init -reconfigure` the shared module.
+- **No alarm, SNS, checker or monitor.** **A spec-vs-world divergence is a ROW** (append-only; id minted at commit; correct the header denominator); a BLOCKING row also to the issuer same turn; never message a CVO seat. **No `git push`, under this or any order.**
+
+<decomp_ref>
+<decomp_doc>org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md</decomp_doc> @70918d5d2b (v0.2, changelog 0.2), cells CG-s-2 (ROUND-3 RE-ENTRY on the stamp's routes S10/S22/S23/S24) and CG-s-3 (the integrity check in code).
+<owned_cells>CG-s-2, CG-s-3</owned_cells>
+Read-dependencies, NOT claimed: CG-s-1 (the queue and role this revision keeps), CG-s-4 (the reader of the pointer this writer advances), CG-s-9 (satisfied in the port).
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN -- GATES ARMED 21 across 5 carriers (C1 sentinel denominator 21 -> 5, C2 deploy-ledger 4 -> 4, C3 moratoria 12 -> 12, C4 scope-guard 20 SEMI-DECIDABLE -> 0, C5 project-blocking 337 NOT-DECIDABLE -> 0); 138 prose blocking fields NEEDS-READ; 0 armed gates name NFRA_CLDGRPH, globgrph, kuzu, opal-gateway or projection (read 2026-09-03 18:11:28Z, this tick).
+comp-iam: RUN -- DESIRED plane at cut (18:12Z): gaps 14 missing | 292 deny-present | 0 coverage-unknown | 2 resource-mismatch across 31 services, unchanged; the worker role `opal-globgrph-projection-worker` carries the queue-consume statement (CG-s-1) plus B-2's S3-read / projection-write / logs statements as APPLIED @ebe85fd69e (2 inline / 4 statements / 0 attached, B2-AC5); revision 3 changes the image and the task definition, NOT the role -- if a statement moves, the APPLIED read after refresh-census is the assignee's (C2-AC3).
+comp-adversary: RUN -- rc 0 at read-vintage @68d7f16a6c (2026-09-03T18:31:40Z, --no-packet: stage 4 disabled by the caller, disclosed); pins found 6 commits, 6 repo paths, 2 file:line cites, 6 tool mentions; cited commits 6 attempted / 6 verified / 0 UNVERIFIABLE; cited paths 6 attempted / 4 stable / 2 flagged (both GONE at read-vintage = the deliverable file and the proof instance this TO CREATES); uncited siblings 100 with the cap (25) declared; 1 hex run not parsed as a pin by design (the image digest prefix); complement sources 4 run / 0 deferred / 5 declared-excluded (v1 contract). The decomposition vintage @70918d5d2b landed after this compose; the face cites it by hash.
+lane: RUN -- owned-paths-validate --check-agent 0.7.0_AE_CloudOps~S on infra/aws/globgrph/projection_worker.py, infra/aws/globgrph/kuzu_nessie_load.py, infra/aws/terraform/globgrph/projection.tf and the deliverables folder: 4 of 4 PERMITTED; deliverables/0.7.0_AE_CloudOps~T/PROJECTION_CONTRACT.md REFUSED (TREE_DELIVERABLES: the serial in the path only) -- which is why DELIVERABLE 3 writes the contract TEXT for relay and edits no file there (read 2026-09-03 18:22Z).
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut by the issuer: `C2-AC1`..`C2-AC7`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
+`org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/NFRA_CLDGRPH.TO-CG-C-2.worker-revision-three.proof_of_spec.json`
+and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, which the assignee commits itself. C2-AC4's forward
+advance, C2-AC5's refusal and C2-AC6's integrity pass are the arms that must be able to FAIL.
+</proof_of_spec>
+
+<compiler_tools_mandate>
+BEFORE WRITE: `comp-read infra/aws/globgrph/projection_worker.py --for "the publish path, the completeness check and the band"`; `comp-read infra/aws/globgrph/kuzu_nessie_load.py --for "the rebuild deadline default and its rationale"`. DURING: the S3 reads via the `.tools/aws` shim (`s3api` for UTC). AFTER: `.tools/commit-gate.sh` on every .py touched; `comp-iam refresh-census` before any APPLIED read; `.tools/proof-of-spec-check.py`; `git ls-remote` + `is-ancestor` for C2-AC7. `comp-blast` on the engine files is permitted (the local canonical DB rebuild it triggers is nobody's control now); record its time if run.
+</compiler_tools_mandate>
+
+**DELIVERABLE REPORT:** to `2.0.0_SA_COO~A` with per-criterion evidence, the image digest and revision, each exercised arm's task id and vintages, the contract text block, and push state as MEASURED. GO = this TO + the dispatch message.
