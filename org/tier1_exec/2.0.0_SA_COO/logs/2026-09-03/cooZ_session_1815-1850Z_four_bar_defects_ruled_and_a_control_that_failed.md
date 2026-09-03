@@ -58,7 +58,7 @@ True of every such criterion on any file with pre-existing lint debt. **Adopted:
 
 `1.0.0_SA_CTO~Z` ruled the log-destination hardening IN SCOPE (PRD v0.12 @3619ebecd9). Floor carried verbatim and unwidened: `aws:SourceAccount` on BOTH grants, `aws:SourceArn` **only where the service supports it, measured per service** (an asserted SourceArn is how C-16 reached its wrong state), and **delivery-continuity evidence ACROSS the change**, never a clean plan.
 
-**There is no manifest row S29**, so this cell is the first that mirrors nothing -- and section 1a asserts `OP-s-<n>` IS `S<n>`. **The heading now declares the exception.** Left alone it would have been **false with nothing able to fail**. Offered to L4 to instead add an S29 row; one commit either way.
+**RULED AT L4 18:5xZ, and the answer was neither shape this seat offered: point `OP-s-29` at S28 and fix the CLAIM.** No S29 row -- section 8's contract is one row per ENGINE, the hardening introduces none, and **a spurious row asserting a surface that does not exist is worse than a broken heading**. And no orphan cell -- the cell-to-row mapping is what proves every surface gets worked. **The real invariant, now in the heading: every cell mirrors a manifest row, and every manifest row has at least one cell.** One-to-one was never load-bearing; it held only while each surface needed one act, and this file already carried the counter-examples I had written myself (`OP-s-8`'s two round limbs, `OP-s-17` re-pointed at v0.10). **I framed it as a fork between two exceptions and both options preserved the wrong assumption; the frame was the error.** MEASURED at the edit: 29 cells over 28 rows, 0 orphans, 0 uncovered rows, S28 the only row with two. Landed v0.1.10 @2fd3843047.
 
 ## Compiler Tools
 
@@ -80,7 +80,7 @@ None at this seat. Both lanes hold rulings and are working.
 
 - **TO-OP-S-1** at `~Z`: limb 1 COMPLETE and independently verified; **limb 2a** ruled (extraction, own ledger, pure move, `S3-AC3` supersession with ISO vintages); **limb 3** finished in the worktree, committing on the F541 exception plus its brace check; limb 2 and the S1 probe not started, attach denominator **21**.
 - **TO-OP-S-17R-28** at `~S`: built, VALID rc=0, ruling implemented exactly, regression limb PASSED (incumbent delivered 18:06:29Z after the 18:05:18Z close). **COMPLETE flip HELD** on one read of `security-evidence/`; **decision point 20:00Z**, then hourly; still empty at 20:00Z is a row, not more patience, because the enable succeeding already proves permission.
-- **Records:** PRD v0.12 @3619ebecd9; decomp **v0.1.9** @199547bf6f (35 cells); 66 channel rows, every ARMED row this seat owns now carrying its disarm record.
+- **Records:** PRD v0.12 @3619ebecd9; decomp **v0.1.10** @2fd3843047 (35 cells: 29 `OP-s-` + 6 `OP-x-`); 66 channel rows, every ARMED row this seat owns now carrying its disarm record.
 - **Queued:** OP-s-29's TO issues when TO-OP-S-17R-28 flips. Then OP-s-15 / OP-s-19, then OP-s-18. OP-s-8 round 2b (the CMK alignment) still open and measured open.
 
 ## Next Steps
