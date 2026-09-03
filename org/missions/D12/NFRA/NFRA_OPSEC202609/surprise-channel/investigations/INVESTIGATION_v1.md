@@ -74,7 +74,75 @@ L8 reads below were appended at this write; no row was added or changed by it.
   it reads as a contradiction of a RATIFIED constraint (C-8, with the S8/S9 labels), which is the `SCOPE_CHANGE`
   shape to L2 naming C-8 -- unless the CTO's L4 version bump lands before the round closes, in which case the
   remediation is a round-2 task order and no route is needed. Stated, not stamped: no route exists while three task
-  orders are open.
+  orders are open. UPDATE 08:1xZ: the L4 bump LANDED -- PRD v0.5 @a3cad58b0d names ONE project customer-managed key
+  `alias/opal-security` (new C-13, manifest S25); both owners now read the stamp the same way (`1.0.0_SA_CTO~Z` 19515,
+  `2.0.0_SA_COO~Z` 19528 withdrawing its SCOPE_CHANGE wording): Z-S3 GRADUATES with the L4 bump as its remedy and
+  takes no route unless Andrew reverses v0.5 before the close.
+
+- **S4** (surfaced by `0.7.0_AE_CloudOps~S` re-grounding bound (b)'s principals before authoring the bucket policy;
+  committed @cdbdcb473c with the opsec module; BLOCKING, so it also reached the issuer by message the same turn).
+  Grounding RESOLVES at this seat on instruments other than the worker's IAM/STS reads: the face @5494591e91 carries
+  the deliverable-2(b) and bound-(b) clauses at :23 and :47 (8 enumerate hits / 85 lines on the five quoted phrases);
+  the PRD carried the same absent referent -- v0.5 @a3cad58b0d :405 (C-8) "sentinel, reconciler and CTO-admin roles"
+  and :438 (C-13, minted twelve minutes before this row was read) -- so the principal Z-S4 measured absent sat in the
+  ratified constraint AND in the constraint just added; the repo census (`comp-find -i 'cto-admin|terraform-apply
+  role|terraform apply role'`: 35 hits / 50,969 files) finds the names ONLY in this project's texts and the day's
+  broker messages -- zero in any .tf, IAM census or role declaration. That is a different mechanism from S3: the key
+  was a MISLABELLED measured resource; these principals were NEVER MEASURED -- designed names that read as existing
+  because they sat beside two that are explicitly new. Qualifier on the row, not a defect: "the applier is
+  user/Andrew_Berman" is `sts get-caller-identity` on the worker's shell, a device-scoped fact the conclusion does not
+  need (a deny-outside-a-list-of-two-absent-ARNs denies every applier there is). The worker's list-roles (216,
+  client-side over 3 pages), 'lambda' control (55) and list-users stand as the worker's. DISARM recorded by the
+  issuer (19519 + operating note): (a) DEFER the deny-outside-list statement to the task orders that create the
+  principals (OP-s-14 / OP-s-15 / OP-s-19); SecureTransport deny only this round; the four public-access blocks are
+  the control -- which is bound (b)'s own rule ("this policy names only the roles that exist today") applied to
+  bound (b)'s own list, not a spec change. The issuer owned the defect ("I wrote a bound naming two principals I had
+  not measured"). L4 ruled the identity half: PRD v0.6 @b482fe8a5b replaces the six "CTO-admin" referents with ONE
+  Terraform-declared role `opal-security-admin` (new C-14, manifest S26); the role's TRUST (which humans may assume it)
+  is Andrew's card OP-x-6 and the role is not assumable before his word. At the stamp Z-S4 reads as BOTH the face's
+  (SPEC_ERROR -> L6 for the deferred statement, accepted in advance by the issuer) and the PRD's (v0.6, done). ⛔ NOT
+  YET A ROW (disarm record), same note as S2/S3. Held `UNDER_INVESTIGATION`; GRADUATES on the grounding bar.
+
+- **S5** (surfaced by `0.7.0_AE_CloudOps~S` authoring the access-logging limb, BEFORE the apply -- a deviation from
+  an instruction the issuer had given minutes earlier (19517 listed access logging among what the bucket carries)
+  surfaced pre-act rather than reported after; committed @cdbdcb473c; BLOCKING). Grounding RESOLVES at this seat:
+  the face @5494591e91 :23 (deliverable 2(c), "CloudTrail/access-logs bucket") and :30 (S17-AC1 `get-bucket-logging`);
+  the PRD v0.6 @b482fe8a5b :407-408 C-8 "access logging to the CloudTrail bucket", :482 manifest S5, :494 S17; the
+  DESIRED plane: `infra/aws/terraform/shared-infra/s3.tf` @HEAD (444 lines) declares the target at :44-49 with a
+  `*** LIVE -- DO NOT REMOVE ***` marker and carries ZERO tokens matching logging.s3 / LogDelivery /
+  aws_s3_bucket_logging / cloudtrail.amazonaws.com (positive control: 28 `resource` lines) -- so the two CloudTrail
+  policy statements the worker read live are themselves NOT Terraform-declared (a DESIRED != APPLIED on the audit-log
+  bucket's policy; an OBSERVATION for that bucket's owner, shared-infra, OUT of this project and not chased here);
+  the worker's module `infra/aws/terraform/opsec/s3.tf` (now @cdbdcb473c) carries the `aws_s3_bucket_logging`
+  resource COMMENTED at :165 with this row's id at :142, as the row says. The worker's get-bucket-policy /
+  get-bucket-acl / describe-trails reads stand as the worker's; its own "UNPROVEN, STATED AS SUCH" line on the
+  31-bucket sweep (no positive control) is the honest form and is carried as written. THE L8 FINDING on top of the
+  row: the acceptance read S17-AC1 names (`get-bucket-logging`) observes the CONFIGURATION and never the DELIVERY,
+  so the silent failure mode (configured, nothing ever delivered) would have PASSED the criterion -- the criterion
+  could not tell its two outcomes apart; the CTO's v0.7 wrote that into C-15's own violation list. DISARM recorded
+  by the issuer (19534 + operating note): DEFER; the limb stays authored-and-commented; S17-AC1's logging read files
+  UNCOMPUTABLE-BY-CONSTRUCTION citing this row; the audit-log bucket is not touched (never-widen); the other seven
+  resources applied (plan 7/0/0, ledger entry open). L4 ruled: PRD v0.7 @237265f9f1 "OWN TARGET" -- a project-owned
+  `opal-data-security-access-logs` bucket (new C-15, manifest S27), graded by a DELIVERED object under the prefix,
+  never `get-bucket-logging`; the additive-grant alternative rejected on the never-widen bar. At the stamp Z-S5 reads
+  as the PRD's (v0.7, done) plus the face's acceptance-read re-cut (SPEC_ERROR -> L6, named by the issuer). ⛔ NOT YET
+  A ROW (disarm record). Held `UNDER_INVESTIGATION`; GRADUATES on the grounding bar.
+
+- **THE ROUND'S PATTERN, read at L8 (S3 + S4 + S5):** three referents of ONE ratified constraint (C-8: the key,
+  the roles, the target) were asserted from the brief's 09-02 reading and never read at a vintage until a worker's
+  mandated re-grounding -- and each limb between them cited the one before (brief -> PRD -> decomposition, whose own
+  preflight honestly declared "NOT re-measured on 2026-09-03" -> task order). Three mechanisms under one shape: a
+  measured resource wearing the wrong label (S3), names never measured at all (S4), a real resource assumed to permit
+  a delivery it does not (S5). Both L4 and L6 owners have banked the rule (one live read per named referent before a
+  task order commits; a constraint names no resource it has not read at a vintage) and the PRD's s.6 now carries it
+  in its own words. Recorded here so the L9 slug adjudicates the class once, not three times.
+
+- **NEAR-MISS, measured, not a row:** at 08:24Z `git status` showed the worker's `infra/aws/terraform/opsec/.terraform/`
+  tree STAGED, including `terraform-provider-aws_v5.100.0_x5.exe` (718,820,352 bytes on disk) and
+  `opsec-round1.tfplan` -- the exact shape `.gitignore:199-205` records as having stranded every push once
+  (GitHub rejects >100 MB). At 08:29Z the index and HEAD @cdbdcb473c carry only `.terraform.lock.hcl` + three `.tf`
+  files; `.terraform/` and the tfplan read `!!` (ignored). The rule and the worker's discipline held; nothing was
+  committed; nothing to disarm. Stated so the next reader of a raw `git status` on this device knows the shape.
 
 ```json
 [
@@ -211,6 +279,78 @@ L8 reads below were appended at this write; no row was added or changed by it.
   "spec_asserts": "PRD s.7.6 C-8 and TO-OP-S-17-16 DELIVERABLE 2(c): the bucket carries 'server access logging to the estate's CloudTrail/access-logs bucket (read its name from the existing Terraform)'. S17-AC1 lists get-bucket-logging (target = the CloudTrail/access-logs bucket) as one of the six reads. Issuer ruling 19517 lists access logging among what the bucket carries at this apply. The spec treats naming the target as sufficient to enable delivery.",
   "world_is": "Naming the target is necessary but NOT sufficient: S3 requires the TARGET bucket to permit the log-delivery principal, and this target permits only CloudTrail. Two failure modes follow and they differ in visibility. If S3 validates the target at PutBucketLogging, the apply FAILS (loud, and it fails the whole safe-apply). If S3 accepts the configuration without validating, get-bucket-logging reads CONFIGURED -- S17-AC1's logging read would PASS -- while no log object is ever delivered: a DESIRED-not-EXERCISED trap that the specified read cannot detect, because the read observes the configuration and never the delivery. The second mode is why this is a row rather than a thing to try and see: the acceptance criterion as written cannot tell the two apart.",
   "notes": "WHY A ROW AND ALSO A MESSAGE: BLOCKING for this limb, and it departs from an instruction the issuer gave minutes earlier (19517), so it is surfaced BEFORE the apply rather than reported after -- a deviation discovered pre-act must not reach the issuer as a fait accompli. NOT CHASED: this seat did not add the grant to opal-cloudtrail-logs-313476888478. That bucket belongs to shared-infra, holds the account's CloudTrail audit log, and carries a DO-NOT-REMOVE marker; widening its policy to satisfy a limb of another module is exactly the never-widen and 'nothing else rides the apply' shape. THE LIMB IS AUTHORED, NOT DELETED: the aws_s3_bucket_logging resource sits commented in infra/aws/terraform/opsec/s3.tf with the measurement and this row id beside it, so landing it later is an uncomment, not a rediscovery. S17-AC1's logging read files UNCOMPUTABLE-BY-CONSTRUCTION citing this row unless the issuer rules otherwise before the apply. NOTE FOR OP-s-5: that cell delivers WAF/ALB logs into waf-logs/ and will meet the SAME target-permission question one layer over; solving it once, as its own authorized act, serves both. CLOSING CONDITION: DISARMED when the issuer rules; REMEDIATED when get-bucket-logging on opal-data-security names a target AND a log object is observed delivered under that prefix -- the delivery read, never the configuration read, is the one that discriminates. FALSIFIER: a get-bucket-policy on the target showing a logging.s3.amazonaws.com grant this seat failed to read."
+ },
+ {
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of the item this row records the disarm of). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's). Written to the record because the L10 gate reads rows, never messages (3.0.0_SA_CVO~Z 19521).",
+  "surfaced_at": "2026-09-03T08:31Z",
+  "id": "NFRA_OPSEC202609-Z-S6",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S2 (the origin-secret value rests in Terraform state by construction): design call (a) ACCEPTED by the issuer 2026-09-03 08:04Z (operating note to 0.7.0_AE_CloudOps~Z) -- state-at-rest is the value's resting place on the measured mitigations (state bucket SSE-S3 + full public-access-block; the value proves path-of-entry only, every authenticated route still requires the JWT; a rotation bounds a state-history read to one window). No criterion changed; the secrets.tf container comment scopes the 'never enters state' invariant to the JWT keypair; the runbook (deliverable 4) states the state-history residual. Shape (c) rejected (no literal-free, drift-free alternative for an API Gateway origin). The state bucket's missing noncurrent-version expiry is NOT this project's: bootstrap bucket with no Terraform resource (0.0.0_AB_MSTR~Z 19508), steward 0.7.0_AE_CloudOps, gate 1.0.0_SA_CTO, homed by the CTO under the D0 NFRA substrate as its own task order (19514).",
+  "spec_asserts": "Row Z-S2 named disarm_owner 2.0.0_SA_COO~Z with three remedy shapes (a) accept state-at-rest, (b) a noncurrent-version expiry on the state bucket, (c) a different header mechanism; the L7 rule: an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated.",
+  "world_is": "The issuer chose (a) in writing at 08:04Z and the worker proceeded on it; (b) is a separate lane's act, homed by the CTO outside this project; (c) has no viable member. The value's exposure surface after (a): a read of the state bucket's object versions by a principal that can already read Terraform state, bounded by the rotation window. Z-S2 stays OBSERVATION/ARMED on its own row (append-only); this row records that the owner's disarm act occurred and what it was.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "operating note 2.0.0_SA_COO~Z -> 0.7.0_AE_CloudOps~Z 2026-09-03T08:04:46Z (the disarm as sent; the worker's ack is its own record)",
+    "0.7.0_AE_CloudOps~Z row Z-S2 @7c6dc7dca6: the worker's own reads (get-bucket-encryption SSE-S3; get-public-access-block 4 of 4; get-bucket-versioning Enabled; get-bucket-lifecycle-configuration NoSuchLifecycleConfiguration rc=254; get-distribution-config 7 origins, CustomHeaderCount 0)",
+    "3.0.0_SA_CVO~Z 19499 L8 read: grounding RESOLVES (secrets.tf:5-7 and main.tf:20-24 at @94b6fd0d11 read as quoted; negative control on a bogus path fails loud)",
+    "0.0.0_AB_MSTR~Z 19508: comp-find 'opal-313476888478-terraform-state' 180 hits / 50,956 files, every SURFACED hit a backend block, no aws_s3_bucket declares it; s3-hand-audit-fixture-v1.1.yaml:841 'bootstrap bucket, no TF resource'",
+    "1.0.0_SA_CTO~Z 19514: the lifecycle rule's home = NOT this project; steward 0.7.0_AE_CloudOps, gate CTO, a bootstrap module that imports the bucket, its own task order under the D0 NFRA substrate"
+   ]
+  },
+  "notes": "WHAT THE DISARM IS NOT: not a re-file, not an edit of the frozen face's criteria, not a disposition of Z-S2 (the CVO's at L9). At the stamp: (a) is a recorded acceptance and no route (the CVO's own reading, 19499)."
+ },
+ {
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of the item this row records the disarm of). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's). Written to the record because the L10 gate reads rows, never messages (3.0.0_SA_CVO~Z 19521).",
+  "surfaced_at": "2026-09-03T08:31Z",
+  "id": "NFRA_OPSEC202609-Z-S7",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S3 (BLOCKING: 'the estate CMK' is the AWS-managed DynamoDB key; C-8's bucket encryption unsatisfiable as written): the WORK was disarmed by the issuer's operating note 08:05Z (0.7.0_AE_CloudOps~S builds the table on the AWS-managed key = opal-users-v2's exact APPLIED shape, and every non-encryption property of the bucket with SSE-S3 as the INTERIM; S17-AC1's KMS limb filed UNCOMPUTABLE-BY-CONSTRUCTION citing Z-S3; nobody picks a key mid-round); the SPEC was routed UP the same turn (19503) and RULED at L4 by 1.0.0_SA_CTO~Z: PRD v0.5 @a3cad58b0d -- ONE project customer-managed key alias/opal-security, new C-13, manifest row S25, OWNS 17; the key flip is a round-2 task order in place. The decomposition re-read it at v0.1.1 (cell OP-s-25, the C-13 bound on OP-s-16 / OP-s-17).",
+  "spec_asserts": "Row Z-S3 named disarm_owner 2.0.0_SA_COO~Z: 'the issuer names which key the bucket uses, in writing, on the face or by ruling'; the L7 rule on ARMED rows; Rule 27: mid-round the spec is FROZEN, a spec error routes to L6 and onward to L4 if the defect sits in the PRD.",
+  "world_is": "The defect sat in the PRD (7.3 / C-8 / C-9 inherited the brief F6's misread of an AWS-managed key's yearly rotation as a CMK) and was corrected at L4 by the L4 owner's own act, disclosed to Andrew and reversible by his word (19514). Round 1's interim readings stand exactly as PRD v0.5 permits; the remediation is the round-2 cell OP-s-25 plus the two in-place flips. Z-S3 stays BLOCKING/ARMED on its own row; this row records the disarm of the WORK and the routing of the SPEC.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "operating note 2.0.0_SA_COO~Z -> 0.7.0_AE_CloudOps~S 2026-09-03T08:05:11Z; the worker's ack 19506 (proceeding table-first; module opsec/ confirmed 08:06Z)",
+    "0.7.0_AE_CloudOps~S row Z-S3 @d59b3734c3: describe-key KeyManager=AWS, sole alias alias/aws/dynamodb, KeyManager=CUSTOMER positive control over all 11 keys; describe-table opal-users-v2 SSEDescription KMS with that ARN",
+    "3.0.0_SA_CVO~Z 19502 L8 read: grounding RESOLVES on four instruments; the estate's own census labels alias/aws/dynamodb an 'AWS-managed CMK' -- a Rule 24 axis defect on the word CMK",
+    "1.0.0_SA_CTO~Z 19514: PRD v0.5 @a3cad58b0d, C-13 KEY, manifest S25, OWNS 17; _prd_conformance [] after the edit; disclosed to Andrew",
+    "2.0.0_SA_COO~Z decomposition v0.1.1 (this commit window): OP-s-25 added, C-13 bound on OP-s-16 / OP-s-17, round 2 opens with OP-s-25 on the ~S seat"
+   ]
+  },
+  "notes": "At the stamp: the CVO reads Z-S3 as GRADUATED with the L4 bump as its remedy and no route unless Andrew reverses v0.5 before the close (19521); this seat concurs and withdraws its earlier 'SCOPE_CHANGE candidate' wording (19519) -- the CTO's L4 adjudication of a questioned spec point is the spine's own path (v2.3, after L2 no limb waits on him)."
+ },
+ {
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of the item this row records the disarm of). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's). Written to the record because the L10 gate reads rows, never messages (3.0.0_SA_CVO~Z 19521).",
+  "surfaced_at": "2026-09-03T08:31Z",
+  "id": "NFRA_OPSEC202609-Z-S8",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S4 (BLOCKING: bound (b) of TO-OP-S-17-16 named two principals that do not exist -- 'the CTO-admin role' and 'the account's Terraform-apply role'; 0 of 216 roles; the applier is an IAM user): the defect is the ISSUER'S OWN FACE (a bound naming referents never enumerated). Disarm ruled 08:13Z: (a) DEFER -- the deny-outside-list statement is NOT written this round; the bucket policy carries the SecureTransport deny ONLY; the four public-access blocks are the control (not public, not exposed); S17-AC1's allow-list limb filed UNCOMPUTABLE-BY-CONSTRUCTION citing Z-S4; no IAM user is named in a security-evidence policy. The identity half was routed UP the same turn (19518) and RULED at L4: PRD v0.6 @b482fe8a5b -- ONE Terraform-declared role opal-security-admin, new C-14, manifest row S26, OWNS 18; its TRUST (which humans may assume it) is Andrew's card OP-x-6. The decomposition re-read it at v0.1.1 (cell OP-s-26; C-14 bound on OP-s-14/15/17/19; OP-x-6).",
+  "spec_asserts": "Row Z-S4 named disarm_owner 2.0.0_SA_COO~Z: 'the issuer names the real principal(s) in writing, or rules the deny-outside-list statement DEFERRED to the round that creates the sentinel/reconciler roles'; the face's own rule 'a bucket policy cannot name an absent role'.",
+  "world_is": "Deferral ruled; the worker proceeds to the apply on that basis (the ledger entry opens after the ruling); the two service roles are created by OP-s-14 / OP-s-15 and the human-side role by OP-s-26 in round 2, after which the deny-outside-list statement is cut into those faces (the SPEC_ERROR route to L6 this seat accepted in advance, 19519). Z-S4 stays BLOCKING/ARMED on its own row; this row records the disarm and the routing. Banked at this seat as a memory: an issuer enumerates every principal, key or resource a bound names, at the cut.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "ruling 2.0.0_SA_COO~Z -> 0.7.0_AE_CloudOps~S 2026-09-03T08:13:12Z (operating note); the worker's BLOCKING notification 19512 08:11:57Z",
+    "0.7.0_AE_CloudOps~S row Z-S4 (worktree at 08:11Z, commit pending at the worker): list-roles 216 client-side over 3 pages, 'admin|cto|terraform' 0, positive control 'lambda' 55; sts get-caller-identity user/Andrew_Berman; list-users no such function user",
+    "3.0.0_SA_CVO~Z 19521 L8 read: grounding RESOLVES; comp-find -i 'cto-admin|terraform-apply role' 35 hits / 50,969 files, every hit in this project's own texts -- the principals were never measured, a different mechanism from Z-S3's mislabelled key",
+    "1.0.0_SA_CTO~Z 19525: PRD v0.6 @b482fe8a5b, C-14 IDENTITY, manifest S26, OWNS 18; the six 'CTO-admin' referents replaced; card OP-x-6 to Andrew at the CTO~Z terminal 08:16Z",
+    "the face TO-OP-S-17-16 @5494591e91 :23 and :47 (the two principals named; the self-refuting rule beside them) -- the issuer's own text"
+   ]
+  },
+  "notes": "WHY THREE ROWS AND NOT ONE: the L10 gate joins rows to items; one row disarming three items would leave the L9 adjudication of each without a citable disarm. WHAT THESE ROWS ARE NOT: dispositions (the CVO's), re-files, or face edits (the spec is frozen; the deferred statement lands in the round-2 faces)."
  }
 ]
 ```
