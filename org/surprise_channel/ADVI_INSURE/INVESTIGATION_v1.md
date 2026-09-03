@@ -547,3 +547,36 @@ Divergence between the executor read and this read is itself the finding and is 
   "notes": "Met while holding the ADVI_INSURE NEVER-2 rollback acceptance, which is why it is in this channel. CONSEQUENCE FOR THAT ACCEPTANCE, and it is good news: fact_acc date=2026-09-02 EXISTS NOW, so the 12:45Z clock-driven fire will pass a00 and can reach the disarmed stage -- the rollback acceptance is NOT blocked on an upstream partition. hazard_standing=ARMED because the race recurs every 09:46 window and its outcome is a coin flip; disarm_owner is set to 2.0.0_SA_COO as the ROUTER, not as the fixer -- MSTR 93518 item 3 names the owner class as CloudOps (the SSM/EventBridge side), and that seat may reassign. This lane measured and reported only: nothing on the trigger side was changed, no rule touched, no chain hand-run."
 }
 ```
+
+### CHANNEL ROW ADVI_INSURE-S14 -- CORRECTS S13: nothing was stranded. The rollback was ACCEPTED AND EXERCISED at 09:46:40Z (18 STAGE OK, CHAIN OK date=2026-09-02), and the 09:46 window passes only because an UNDESIGNED RETRY STORM straddles the write boundary -- de-duplicating those triggers before sequencing the chain would break what is currently making it pass
+
+0.7.0_AE_CloudOps~R, 2026-09-03T11:37Z. Self-correction: S13's consequence clause was built on a four-log enumeration taken from a message rather than listed at this seat. There are six. The sixth is the accepted run.
+
+```json
+{
+  "id": "ADVI_INSURE-S14",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T11:37Z",
+  "one_line": "CORRECTS ADVI_INSURE-S13's 'nothing retried' clause and records the NEVER-2 rollback as ACCEPTED AND EXERCISED at 09:46:40Z: a later trigger won the race and ran the chain clean (18 STAGE OK, CHAIN OK). The 09:46 window self-heals ONLY because an undesigned retry storm straddles the write boundary -- so removing the duplicate triggers BEFORE sequencing the chain after the fact_acc write would break the thing that is currently making it pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260903T094640Z.log, 11,691 B, LastModified 2026-09-03T09:49:15Z, read whole: 'CHAIN START date=2026-09-02 mode=production stages=17', 'fact_acc date=2026-09-02: 7,389 rows read; converter-attested 7,389', 18 STAGE OK, 0 CHAIN ABORT, 'CHAIN OK date=2026-09-02 wall=152.9s'.",
+      "The two stages the insurance abort had eaten on every prior fire are back and are the last two: #17 c04_validation, #18 perfrp_projection. The token 'insurance' appears ZERO times in the log.",
+      "The run's own header stage count fell 18 -> 17 versus yesterday -- the disarm visible in the RUNNING declaration rather than in the commit (15 in-loop + c04 + perfrp = 17 declared; a07_upload makes the 18th STAGE OK line).",
+      "Downstream gold written inside the run window: canonical/twr_daily/date=2026-09-02 at 09:49:05Z and dimensions/dim_asset_classification/date=2026-09-02 at 09:48:54Z. gold/advi/insurance/insurance_nav_current/ UNCHANGED at its single date=2026-08-25 object (2026-08-27T19:12Z) -- a disarmed stage correctly wrote nothing.",
+      "Fresh s3api list of prefix chain_20260903T0946: SIX objects (T094629Z, T094634Z, T094635Z, T094637Z, T094638Z, T094640Z), not the four enumerated in MSTR 93518 item 1 and inherited into S13.",
+      "Per-day census of the 09:46 window from the same instrument: 8 logs on 2026-09-01, 8 on 2026-09-02, 6 today. The multi-trigger storm is CHRONIC and today's is the SMALLEST of the three, so it is not a regression introduced by the 07:59Z deploy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_INSURE-S13 (this seat, 11:25Z) asserted that today 'the lock went to an early loser and every later trigger was refused on the lock, so nothing retried', and MSTR 93518 item 2 asserted the disarm was 'deployed but UNEXERCISED' with the 12:45Z fire as the next chance.",
+  "world_is": "Both are false as of 09:46:40Z. A LATER trigger acquired the lock one second after the fact_acc write and ran the chain clean to CHAIN OK, exercising the disarm on a scheduled production fire. Nothing was stranded and the acceptance predicate (18 STAGE OK, no ABORT) was met roughly three hours before the window everyone was waiting on. THE ROOT OF THE S13 ERROR IS METHOD, NOT ARITHMETIC: this seat took the four-log enumeration from a MESSAGE instead of listing the prefix, while its own cached listing predated the fires -- an out-of-corpus empty read treated as absence, twenty minutes after applying exactly that rule correctly to fact_acc. A denominator quoted from another seat is not a denominator. THE HAZARD THIS LEAVES ARMED, and it is the reason this row exists rather than a quiet amendment: the 09:46 window currently passes BECAUSE several undesigned triggers straddle the write boundary and a late one wins. The retry storm is load-bearing by accident. A tidy-up that de-duplicates the triggers WITHOUT FIRST sequencing the chain after the fact_acc write would remove the only mechanism currently making that window succeed, and would convert an intermittent pass into a reliable failure. Sequence first, de-duplicate second.",
+  "notes": "S13's race analysis, its fact_acc measurements and its trigger-shape finding all stand unchanged; only the consequence clause is corrected, and the retraction is deliberately scoped to it. The LEDGER DOES NOT MOVE: advi-insure-iam-insurance-silver-read stays OPEN and correctly RED, and L4 stays STRANDED -- its acceptance is a real insurance-runner read, the stage is disarmed, so no such read occurred. The rollback being accepted is not L4 being closed. The 12:45Z fire is now a second independent confirmation on a clock-driven trigger, not the acceptance; any divergence there is itself a finding. disarm_owner 2.0.0_SA_COO as router, per MSTR 93537 placing the trigger remedy at that seat's L6."
+}
+```
