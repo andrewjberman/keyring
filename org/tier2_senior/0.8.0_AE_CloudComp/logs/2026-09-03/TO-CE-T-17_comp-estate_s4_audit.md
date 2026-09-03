@@ -65,6 +65,10 @@ full mode/caller breakdown is in `comp-estate.result.md`.
 
 ## Placement
 
-Per issuer message 93728, this seat never pushes. Push state is reported as LOCAL with the remote
-head measured in the proof/report. FWD-9 was requested from the COO after the production commit;
-the independent seat receipt is appended to the proof before completion.
+Per issuer message 93728, this seat never pushes. Push state is LOCAL; the proof records remote
+head `351f309e0a`. FWD-9 completed at `0.8.0_AE_CloudComp~G` after production commit
+`be15852e76`: repository-local `comp-estate cma`, rc 0, engine/naming header present, denominator
+1 chain/in-scope 1, `WITHIN BUDGET` 1/1 at default 90 s (0.078 s), no edits and no push. Receipt
+`20260903T160109Z`. Issuer seat `2.0.0_SA_COO` independently repeated that post-commit run at
+16:03:54Z: rc 0, the exact engine/naming header, one-chain denominator, and `WITHIN BUDGET` 1/1
+at the 90 s default (0.06300000000192085 s). Msg-ID 93772; no edits and no push.
