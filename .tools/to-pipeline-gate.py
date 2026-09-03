@@ -572,7 +572,13 @@ PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 # MEASURED before this limb existed: a bare id sweep of ETFS_GUARDRAIL_PRD.md read NINE outcomes
 # against a header listing EIGHT, because the ENDPOINT section QUOTES a CVO finding about FWD-9.
 # A limb counting mentions would refuse its own first PRD on a quotation.
-FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
+# COLUMN-ALIGNED IDS (2026-09-03, 2.0.0_SA_COO 93532 -- three round-5 orders refused on ONE character): the card form
+# pads the id to one text column, so a one-digit id is followed by TWO spaces and a two-digit id by ONE. The first
+# two-digit outcome in the estate (NFRA_COMPEFFICACY FWD-10, PRD v0.5) therefore read as a MENTION and the header was
+# refused for listing an outcome the section "did not define". A definition is the id at line start followed by
+# whitespace up to the text column: 2+ spaces after any id, or exactly one after an id of two or more digits. The
+# mention exclusions stand: an apostrophe ("FWD-7's"), a backtick, or a mid-line citation still do not match.
+FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)(?:[ \t]{2,}|(?<=[0-9]{2})[ \t])\S", re.M)
 
 
 # A fence OPENER by the CommonMark grammar the estate's documents actually use: 0-3 spaces of indent,
