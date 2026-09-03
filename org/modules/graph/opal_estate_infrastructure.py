@@ -66,7 +66,9 @@ import json
 import re
 import subprocess
 import sys
+import time
 import warnings
+from collections import Counter
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -82,9 +84,29 @@ _WS = _HERE.parent.parent.parent
 _SNAPSHOT = _HERE / "estate-coverage-resolver.json"
 _REFRESHER = _HERE / "gen-estate-resolver.py"
 
+# NFRA_COMPEFFICACY CE-t-17: Rule T's one shared carrier.  Keep the carrier in
+# .tools/_compbudget.py; a per-tool copy would fork the output contract.
+_TOOLS = _WS / ".tools"
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+import _compbudget  # noqa: E402 -- path insert above is the declared shared carrier
+
 TOOL = "comp-estate"
 STALE_AFTER_DAYS = 14
 _DYN = "{*}"
+
+# Ratified spellings: org/standards/COMPTOOL_ANSWER_STATE.enum.json.  These
+# classify one non-positive RUN answer, never the tool or project.
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+STATE_NOT_DECIDABLE = "NOT-DECIDABLE"  # tool-voice token for PARTIAL_OR_BLIND
+
+# C(N) is not an alias table this tool owns.  These are the two literal names
+# supplied by the dependency contract, not guessed members of the unlocked
+# ontology.  Every other unknown name remains a measured corpus absence.
+_CN_CARRIED_NAMES = {"c(n)", "nfra_c3materialize"}
 
 # Producer trees whose source defines the LIVE key set. This list IS the denominator and is printed.
 _SCAN_ROOTS = ("data", "infra/aws", "org/modules", "portal/scripts")
@@ -327,6 +349,368 @@ def _head_object(bucket: str, key: str) -> tuple:
 # ---------------------------------------------------------------------------------------------
 # Threads
 # ---------------------------------------------------------------------------------------------
+def _emit_naming_context(data: dict) -> None:
+    """Name the actual ontology carrier and its vintage on the three audited modes."""
+    print(
+        f"{TOOL} | ENGINE: org/modules/graph/opal_estate_infrastructure.py | "
+        f"NAMING ONTOLOGY: org/modules/graph/{_SNAPSHOT.name} -- "
+        f"last_review {data.get('last_review') or 'ABSENT'}"
+    )
+    print(
+        "  ONTOLOGY BOUNDARY: this is a generated C3.ii naming snapshot, not locked C(N). "
+        "C(N) is RELIES-ON NFRA_C3MATERIALIZE; unresolved C(N) names are CARRIED there, "
+        "never guessed here."
+    )
+
+
+def _emit_state(token: str, explanation: str, tool_voice: str | None = None) -> None:
+    print(f"ANSWER-STATE: {token}")
+    if tool_voice:
+        print(f"TOOL-VOICE: {tool_voice}")
+    print(f"  {explanation}")
+
+
+def _is_cn_carried_name(name: str) -> bool:
+    return name.strip().lower() in _CN_CARRIED_NAMES
+
+
+def _thread_id(row: dict) -> str:
+    return str(row.get("thread_id") or "")
+
+
+def _after_cursor(rows: list, cursor: str | None) -> tuple[list, str | None]:
+    """Return the deterministic suffix after cursor; an unknown cursor is an error string."""
+    ordered = sorted(rows, key=_thread_id)
+    if not cursor:
+        return ordered, None
+    for idx, row in enumerate(ordered):
+        if _thread_id(row) == cursor:
+            return ordered[idx + 1:], None
+    return [], (
+        f"cursor {cursor!r} is not a chain in this traversal; refusing to skip an "
+        "unmeasured prefix"
+    )
+
+
+def _budget_prefix(
+    rows: list, clock: _compbudget.Clock, deadline_ns: int | None
+) -> tuple[list, bool]:
+    """Spend Rule T against deterministic traversal units, never only around the call."""
+    out = []
+    for row in rows:
+        remaining = clock.remaining()
+        # Some Windows Python builds expose a coarse time.monotonic() quantum through the
+        # shared Clock.  perf_counter_ns is the enforcement clock so a deliberately tiny
+        # planted budget cannot scan a whole prefix inside one coarse tick; Clock remains the
+        # shared carrier for resolution/disclosure/elapsed reporting.
+        deadline_hit = deadline_ns is not None and time.perf_counter_ns() >= deadline_ns
+        if deadline_hit or (remaining is not None and remaining <= 0):
+            return out, True
+        out.append(row)
+    return out, False
+
+
+def _budget_terminal(
+    *,
+    selected: list,
+    total: int,
+    expired: bool,
+    clock: _compbudget.Clock,
+    budget_s: float,
+    budget_source: str,
+    command: str,
+) -> None:
+    if not expired:
+        print(
+            _compbudget.within_budget_line(
+                len(selected), total, "chain", budget_s, budget_source, clock.elapsed()
+            )
+        )
+        return
+    cursor = _thread_id(selected[-1]) if selected else "NO-CURSOR-YET"
+    if selected:
+        print(
+            _compbudget.budget_reached_line(
+                budget_s,
+                budget_source,
+                len(selected),
+                total,
+                "chain",
+                command,
+                cursor,
+            )
+        )
+    else:
+        print(
+            f"BUDGET REACHED: {_compbudget.fmt(budget_s)} s ({budget_source}); scanned 0 of "
+            f"{total} chain(s); results are a PREFIX, not the answer; NO CURSOR YET: no chain "
+            "completed before the budget hit; resume: re-run with a larger --budget."
+        )
+
+
+def _deadline_hit(clock: _compbudget.Clock, deadline_ns: int | None) -> bool:
+    remaining = clock.remaining()
+    return (
+        (deadline_ns is not None and time.perf_counter_ns() >= deadline_ns)
+        or (remaining is not None and remaining <= 0)
+    )
+
+
+def _render_named_rows(
+    legacy,
+    data: dict,
+    name: str,
+    rows: list,
+    resources: list,
+    clock: _compbudget.Clock,
+    deadline_ns: int | None,
+) -> tuple[list, bool]:
+    """Render full chain units with a Rule-T boundary before every next unit.
+
+    The legacy engine remains the vocabulary/ladder authority; this function is the budget-aware
+    loop the public engine lacked.  A stopped run never prints the all-at-once C0 roster or a
+    whole-traversal footer, so its prefix cannot masquerade as the answer.
+    """
+    sc = Counter(row.get("status") for row in rows)
+    tc = Counter(row.get("owning_tool") for row in rows)
+    n_debt = sum(1 for row in rows if row.get("debtscan_flags"))
+    print(
+        f"{TOOL} C3.ii vertical {name!r} - {len(rows)} chains "
+        f"(D2 = C2-motif instances) (in-scope {sc.get('in-scope', 0)} / "
+        f"explicit-out {sc.get('explicit-out', 0)} / "
+        f"unreviewed {sc.get('unreviewed', 0)})"
+        + (f" | {n_debt} with DEBT flags" if n_debt else "")
+    )
+    print("=" * 78)
+    print("NOTE: freshness adjectives inside chain prose are CENSUS-VINTAGE claims (snapshot")
+    print("      vintage in the header), never live reads -- comp-freshness owns live truth.")
+
+    fam2sys, motif_idx = legacy.ladder_context()
+    processed = []
+    for row in rows:
+        if _deadline_hit(clock, deadline_ns):
+            break
+        body(f"\n[{legacy.status_tag(row['status'])} | {row['owning_tool']}] {legacy._a(row['thread_id'])}")
+        ladder = legacy.chain_ladder_line(row, fam2sys, motif_idx)
+        if ladder:
+            body(ladder)
+        flags = row.get("debtscan_flags") or []
+        if flags:
+            body(
+                f"  DEBT: {', '.join(flags)}  "
+                f"({'; '.join(legacy._FLAG_MEANING.get(flag, '?') for flag in flags)})"
+            )
+        if row.get("description"):
+            body(f"  what: {legacy._census_prose(row['description'])}")
+        for idx, producer in enumerate(legacy._aslist(row.get("producers"), "(none recorded)")):
+            body(
+                f"  {'producers:' if idx == 0 else '          '} "
+                f"{legacy._census_prose(producer)}"
+            )
+        for idx, served in enumerate(
+            legacy._aslist(row.get("served_artifacts"), "(no data artifact)")
+        ):
+            body(
+                f"    {'-> served:' if idx == 0 else '          '} "
+                f"{legacy._census_prose(served)}"
+            )
+        body(f"    -> frontend: {legacy._a(row.get('frontend_resolution') or '(none)')}")
+        reachability, authority = legacy._fe_status(row)
+        if authority:
+            body(f"    -> reachable: {reachability} [CVO ground-truth]")
+        processed.append(row)
+
+    expired = len(processed) < len(rows)
+    print("\n" + "-" * 78)
+    if expired:
+        print(
+            f"PREFIX ONLY: {len(processed)} of {len(rows)} chain unit(s) rendered. "
+            "Whole-traversal tool census and C0 roster are DEFERRED until the resumed union completes."
+        )
+        close_pager()
+        return processed, True
+
+    print("owning tools in this traversal (drill in for live detail -- comp-estate stays read-only):")
+    for owning_tool, count in tc.most_common():
+        print(f"  {count:>3}  {owning_tool:<22} {legacy.OWNING_TOOLS.get(owning_tool, '')}")
+        drill = legacy._drill_call(owning_tool, rows)
+        if drill:
+            print(f"       -> drill: {drill}")
+    if resources:
+        print("\n" + "-" * 78)
+        print(f"C0 facts ({len(resources)}) - the CENSUS-TAXONOMY roster for {name!r}. NOT exhaustive:")
+        print("  chain prose may name facts outside this census; do NOT use this roster as the")
+        print("  traversal denominator. It prints only after every chain unit completes.")
+        for resource in resources:
+            body(f"  {legacy._a(resource)}")
+    footer("")
+    footer("DRILL DOWN THE LADDER -- one D-rail carries each descent; the rails ARE the fidelity:")
+    footer("  C4->C3 registry membership | C3->C2 D3 contract | C2->C1 D2 path | C1->C0 D1 grain")
+    return processed, False
+
+
+def _named_thread_run(
+    legacy,
+    data: dict,
+    name: str,
+    budget_s: float,
+    budget_source: str,
+    clock: _compbudget.Clock,
+    deadline_ns: int | None,
+    cursor: str | None,
+) -> int:
+    """Budgeted flagship traversal plus the ratified non-positive answer states."""
+    _emit_naming_context(data)
+    if _is_cn_carried_name(name):
+        _emit_state(
+            STATE_PARTIAL_BLIND,
+            f"CARRIED: {name!r} asks for the unlocked C(N) ontology. The dated naming snapshot "
+            "cannot resolve it; RELIES-ON NFRA_C3MATERIALIZE owns that lock. No vertical, "
+            "membership, or answer was guessed.",
+            STATE_NOT_DECIDABLE,
+        )
+        return 0
+
+    known = set(data.get("named_threads") or [])
+    if name not in known:
+        _emit_state(
+            STATE_SUBJECT_ABSENT,
+            f"subject {name!r} is absent from the naming corpus: 0 matches across "
+            f"{len(known)} declared C3.ii vertical name(s). This is not a C(N) inference.",
+        )
+        return 2
+
+    units = [row for row in data.get("threads", []) if row.get("named_thread") == name]
+    resources = (data.get("resources_by_named_thread") or {}).get(name, [])
+    if not units:
+        _emit_state(
+            STATE_PRESENT_ZERO,
+            f"subject {name!r} exists in the {len(known)}-vertical naming corpus; measured result "
+            f"is 0 chain(s) in the asked class across {len(data.get('threads', []))} estate "
+            f"chain(s); the separate C0 roster carries {len(resources)} item(s) and is not "
+            "silently promoted into a chain result.",
+        )
+        # Preserve the denominator grammar consumed by the typed Observation_Record wrapper.
+        print(
+            f"{TOOL} C3.ii vertical {name!r} - 0 chains (D2 = C2-motif instances) "
+            "(in-scope 0 / explicit-out 0 / unreviewed 0)"
+        )
+        print(
+            _compbudget.within_budget_line(
+                0, 0, "chain", budget_s, budget_source, clock.elapsed()
+            )
+        )
+        return 0
+
+    remaining, cursor_error = _after_cursor(units, cursor)
+    if cursor_error:
+        _emit_state(STATE_PARTIAL_BLIND, cursor_error, STATE_NOT_DECIDABLE)
+        return 2
+    if cursor:
+        print(
+            f"RESUMED AFTER: {cursor}; {len(remaining)} of {len(units)} chain(s) remain "
+            "in deterministic thread_id order."
+        )
+    selected, expired = _render_named_rows(
+        legacy, data, name, remaining, resources, clock, deadline_ns
+    )
+    if expired:
+        _emit_state(
+            STATE_PARTIAL_BLIND,
+            "the traversal reached only the declared chain prefix before its caller-supplied "
+            "budget; resume from the printed cursor. No unseen chain is reported as absent.",
+            STATE_NOT_DECIDABLE,
+        )
+    _budget_terminal(
+        selected=selected,
+        total=len(remaining),
+        expired=expired,
+        clock=clock,
+        budget_s=budget_s,
+        budget_source=budget_source,
+        command=f"{TOOL} {name!r} --budget {_compbudget.fmt(budget_s)}",
+    )
+    return 0
+
+
+def _resource_blob(row: dict) -> str:
+    return " ".join(
+        [
+            str(row.get("thread_id") or ""),
+            str(row.get("description") or ""),
+            " ".join(row.get("producers") or []),
+            " ".join(row.get("served_artifacts") or []),
+            str(row.get("frontend_resolution") or ""),
+        ]
+    ).lower()
+
+
+def _resource_run(
+    legacy,
+    data: dict,
+    needle: str,
+    budget_s: float,
+    budget_source: str,
+    clock: _compbudget.Clock,
+    deadline_ns: int | None,
+    cursor: str | None,
+) -> int:
+    _emit_naming_context(data)
+    remaining, cursor_error = _after_cursor(list(data.get("threads") or []), cursor)
+    if cursor_error:
+        _emit_state(STATE_SUBJECT_ABSENT, cursor_error)
+        return 2
+    selected, expired = _budget_prefix(remaining, clock, deadline_ns)
+    hits = [row for row in selected if needle.lower() in _resource_blob(row)]
+    if hits:
+        view = dict(data)
+        view["threads"] = hits
+        legacy.cmd_resource(view, needle)
+    elif not expired:
+        _emit_state(
+            STATE_SUBJECT_ABSENT,
+            f"resource subject {needle!r} is absent from {len(selected)} measured estate chain(s).",
+        )
+    if expired:
+        _emit_state(
+            STATE_PARTIAL_BLIND,
+            f"resource search examined {len(selected)} of {len(remaining)} chain(s); the unseen "
+            "suffix is NOT-DECIDABLE until resumed.",
+            STATE_NOT_DECIDABLE,
+        )
+    _budget_terminal(
+        selected=selected,
+        total=len(remaining),
+        expired=expired,
+        clock=clock,
+        budget_s=budget_s,
+        budget_source=budget_source,
+        command=f"{TOOL} --resource {needle!r} --budget {_compbudget.fmt(budget_s)}",
+    )
+    if expired or hits:
+        return 0
+    return 2
+
+
+def _list_run(legacy, data: dict, budget_s: float, budget_source: str) -> int:
+    _emit_naming_context(data)
+    print(f"RULE T: {_compbudget.disclosure_line(budget_s, budget_source)}")
+    print(
+        "  DECLARED NON-APPLICATION for --list early-abort/resume: the generated naming "
+        "snapshot is one atomic read before this mode begins; there is no honest internal "
+        "cursor from which to resume that read."
+    )
+    if not data.get("named_threads"):
+        _emit_state(
+            STATE_NOT_APPLICABLE,
+            "--list has no C3.ii vertical population in the loaded naming snapshot; this is a "
+            "mode-level empty domain, not a miss on one subject.",
+        )
+        return 0
+    legacy.cmd_list(data)
+    return 0
+
+
 def threads_of(snap: dict) -> dict:
     for field in ("resources_by_named_thread", "threads", "named_threads"):
         v = snap.get(field)
@@ -875,12 +1259,30 @@ def main(argv=None) -> int:
                          "(marker on stdout + one stderr copy) and the mode's "
                          "verdict/denominator footer ALWAYS prints -- a cut denominator "
                          "is how a truncated worldview gets mistaken for the whole one.")
+    ap.add_argument(
+        "--budget",
+        default=None,
+        help=(
+            "Rule T (NFRA_COMPEFFICACY PRD s.4.4): seconds for <name> and --resource "
+            "chain traversal; carrier --budget > env COMP_BUDGET_S > default %ss. "
+            "Expiry prints scanned n of N plus a --cursor and returns rc 0; --list "
+            "declares its atomic-snapshot non-application."
+            % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S)
+        ),
+    )
+    ap.add_argument(
+        "--cursor",
+        metavar="CHAIN_ID",
+        help="resume <name>/--resource after the last fully processed deterministic chain",
+    )
     a = ap.parse_args(argv)
 
     if a.head is not None:
         if a.head < 0:
             ap.error("--head takes a non-negative line count")
         set_head(a.head)
+    if a.cursor and not (a.name or a.resource):
+        ap.error("--cursor requires <name> or --resource")
 
     if a.layers:
         return cmd_layers()
@@ -898,6 +1300,17 @@ def main(argv=None) -> int:
 
     if a.self_test:
         return self_test()
+
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(a.budget)
+    except ValueError as exc:
+        print(f"{TOOL}: REFUSED --budget: {exc}", file=sys.stderr)
+        return 2
+    # Start before the snapshot load: loading the traversal substrate is work, not free setup.
+    rule_t_clock = _compbudget.Clock(budget_s)
+    rule_t_deadline_ns = (
+        None if budget_s == 0 else time.perf_counter_ns() + max(1, int(budget_s * 1_000_000_000))
+    )
 
     # Legacy-plane modes: thread model only, no live key scan (fast path).
     # Legacy cmd_* may return None for success -- normalize to int.
@@ -930,11 +1343,22 @@ def main(argv=None) -> int:
 
     if a.list:
         legacy, data = _legacy()
-        return legacy.cmd_list(data) or 0
+        return _list_run(legacy, data, budget_s, budget_source)
     if a.resource:
         # Thread-model reverse lookup (lambdas/resources/sub-threads) -- the question
         # the registry teaches; append the live key match only under --keys.
         legacy, data = _legacy()
+        if not a.keys:
+            return _resource_run(
+                legacy,
+                data,
+                a.resource,
+                budget_s,
+                budget_source,
+                rule_t_clock,
+                rule_t_deadline_ns,
+                a.cursor,
+            )
         lrc = legacy.cmd_resource(data, a.resource) or 0
         if a.keys:
             snap, rc = load_snapshot()
@@ -947,7 +1371,16 @@ def main(argv=None) -> int:
     if a.name and not want_keys:
         # The flagship: full thread traversal from the resolver snapshot, fast.
         legacy, data = _legacy()
-        return legacy.cmd_thread(data, a.name) or 0
+        return _named_thread_run(
+            legacy,
+            data,
+            a.name,
+            budget_s,
+            budget_source,
+            rule_t_clock,
+            rule_t_deadline_ns,
+            a.cursor,
+        )
 
     snap, rc = load_snapshot()
     if rc:
