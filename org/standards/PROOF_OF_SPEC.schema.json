@@ -333,7 +333,7 @@
     },
     "surprises": {
       "type": "array",
-      "description": "surprise-channel entries: one line each, observed outside mandate, NO action taken",
+      "description": "surprise-channel entries: one line each, observed outside mandate, NO action taken. FORM (2026-09-03, Andrew-direct at the 3.0.0_SA_CVO terminal, relayed 92976; landed by 1.0.0_SA_CTO): each entry OPENS WITH THE ROW ID of the surprise as filed in the project's channel -- '<PROJECT>-S<n>: <one line>' (site Z: '<PROJECT>-Z-S<n>') -- because a surprise exists as a ROW (tree: org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md; flat: org/surprise_channel/<CODE>/) or it does not exist; a broker message is never the carrier. proof-of-spec-check.py's SURPRISES LIMB resolves the id on both roots and REFUSES the instance (hence the complete flip, via to-pipeline-gate check_complete_flip) when the governing TO is a TREE task order; flat-root and unresolved TOs get an ANNOUNCE frame only. The items stay `string` here deliberately: a pattern on this ratified schema would invalidate the 288 legacy instances wholesale for a rule that binds prospectively; the checker is the enforcer, this text is the carrier of the form.",
       "items": {
         "type": "string"
       }

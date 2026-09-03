@@ -12,6 +12,22 @@ Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
   (the row-quality/row-coverage split -- CVO's step-zero, mechanized). Missing or
   extra criteria are violations, with both denominators printed.
 Exit 0 = VALID. Exit 1 = INVALID (every violation printed). Exit 2 = usage/read error.
+  --self-test               exercise the SURPRISES LIMB red-first (6 arms, N of N printed; rc 0 only
+                            when every arm behaves) -- the battery lives HERE because the checker's
+                            author seat is deliberately not in the TOOL_BATTERIES lane.
+
+SURPRISES LIMB (Andrew-direct 2026-09-03 ~03:1xZ at the 3.0.0_SA_CVO terminal, relayed 92976, VERBATIM:
+"claude.md should not have that rule to do this over mcp + any gate with proof of spec surprises field to
+prevent this should be implemented now"): a surprise exists as a ROW in the project's channel or it does
+not exist. Every `surprises` entry opens with the ROW ID it names ("<PROJECT>-S<n>: <one line>", site Z
+"<PROJECT>-Z-S<n>"), and that id must resolve to a row in the project's INVESTIGATION file on EITHER root
+(flat org/surprise_channel/<CODE>/, tree org/missions/D*/*/<CODE>/surprise-channel/investigations/).
+ENFORCED when the governing TO lives under the TREE root -- prospective by construction, every tree TO is
+new; ANNOUNCED (frame lines, no violation) for flat-root and unresolved TOs, so the 288 legacy instances
+with free-string entries are never re-graded. Because to-pipeline-gate.py's check_complete_flip runs this
+checker on a terminal <status> flip, a tree TO whose instance names a surprise with no row CANNOT flip
+to complete. Trap named: this gate reads FILES; it cannot see the broker plane, which is exactly why the
+carrier must be the row.
 Every verdict line NAMES its rc (1.0.0_SA_CTO 87900 (1c), adopted from 0.4.0_DS_ClientPlatform~N):
 rc=2 is a USAGE/READ error, rc=1 is INVALID, rc=0 is VALID -- a caller reading only "non-zero"
 conflates a mis-typed argument with a refuted proof. The header also prints `checker-vintage:
@@ -811,6 +827,141 @@ def alignment_check(inst: dict) -> tuple[list, list]:
     return v, frames
 
 
+# ---------------------------------------------------------------------------
+# SURPRISES LIMB (2026-09-03, 1.0.0_SA_CTO, Andrew-direct via 3.0.0_SA_CVO 92976). See the module docstring.
+# The id grammar is surprise-row-gate.py's ID_RE, anchored at the start of the entry and followed by a
+# boundary -- one carrier of the grammar would be better; until the two files share a module this is a
+# COPY and is named as one (a change there is a change here).
+SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?S[0-9]+)\b")
+_TREE_TO_RE = re.compile(r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/task-orders/[^/]+\.md$")
+_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
+
+
+def _channel_row_ids(code: str) -> tuple[set, int]:
+    """(row ids, files scanned) across BOTH channel roots for one project. Reads the WORKTREE (this
+    checker runs at completion, not at commit; the row gate is the staged-index reader). A fenced
+    block that does not parse is skipped and counted in the scan -- absence of an id is what the
+    caller grades, and a malformed channel file is the row gate's finding, not this limb's."""
+    if not code:
+        return set(), 0
+    files = list(WORKSPACE.glob("org/surprise_channel/%s/INVESTIGATION_v*" % code))
+    files += list(WORKSPACE.glob("org/missions/D*/*/%s/surprise-channel/investigations/INVESTIGATION_v*" % code))
+    ids: set = set()
+    for f in files:
+        try:
+            text = f.read_text(encoding="utf-8", errors="replace")
+        except Exception:  # noqa: BLE001
+            continue
+        blocks = [text] if f.suffix.lower() == ".json" else _FENCE_RE.findall(text)
+        for b in blocks:
+            try:
+                val = json.loads(b)
+            except Exception:  # noqa: BLE001
+                continue
+            rows = val if isinstance(val, list) else [val]
+            for r in rows:
+                if isinstance(r, dict) and isinstance(r.get("id"), str):
+                    ids.add(r["id"])
+    return ids, len(files)
+
+
+def _governing_is_tree(inst: dict) -> tuple[bool, str]:
+    """(enforce, reason). ENFORCE iff the governing TO resolves under the tree root."""
+    try:
+        to_path, note, _scanned = _resolve_governing_to(inst)
+    except Exception as exc:  # noqa: BLE001
+        return False, "governing TO could not be resolved (%s)" % exc
+    if to_path is None:
+        return False, "governing TO unresolved -- " + note
+    rel = str(to_path).replace("\\", "/")
+    try:
+        rel = str(Path(to_path).resolve().relative_to(WORKSPACE.resolve())).replace("\\", "/")
+    except Exception:  # noqa: BLE001
+        pass
+    if _TREE_TO_RE.search(rel):
+        return True, "governing TO is under the TREE root (%s)" % rel
+    return False, "governing TO is under the FLAT root (%s) -- legacy, announce only" % rel
+
+
+def surprises_check(inst: dict, enforce: bool | None = None, row_ids: set | None = None,
+                    files_scanned: int | None = None) -> tuple[list[str], list[str]]:
+    """(violations, frames). Every entry of `surprises` must open with a row id that resolves to a row
+    in the project's channel. ENFORCE -> violations; ANNOUNCE -> frame lines only. `enforce`,
+    `row_ids` and `files_scanned` are injectable so the self-test exercises the limb without a repo."""
+    v: list[str] = []
+    frames: list[str] = []
+    entries = inst.get("surprises", []) or []
+    if not isinstance(entries, list):
+        return v, ["surprises-frame: `surprises` is not a list -- the schema owns that complaint"]
+    if enforce is None:
+        enforce, reason = _governing_is_tree(inst)
+    else:
+        reason = "mode injected by caller"
+    code = _project_code(str(inst.get("to_id", "")))
+    if row_ids is None:
+        row_ids, files_scanned = _channel_row_ids(code)
+    files_scanned = 0 if files_scanned is None else files_scanned
+    defects: list[str] = []
+    n_with_id = n_resolved = 0
+    for i, e in enumerate(entries):
+        s = e if isinstance(e, str) else json.dumps(e)
+        m = SURPRISE_ID_RE.match(s)
+        if not m:
+            defects.append("surprises[%d] carries NO row id -- a surprise that is not a row in the project's "
+                           "channel does not exist (Andrew-direct 2026-09-03); open the entry with '<PROJECT>-S<n>: '"
+                           % i)
+            continue
+        n_with_id += 1
+        rid = m.group(1)
+        if rid in row_ids:
+            n_resolved += 1
+        else:
+            defects.append("surprises[%d] names row id %s which resolves to NO row in %s's channel "
+                           "(%d INVESTIGATION file(s) scanned on both roots) -- the row must be committed "
+                           "before the instance cites it" % (i, rid, code or "<unparsed project>", files_scanned))
+    frames.append("surprises-frame: %d entr%s; %d open with a row id; %d resolve to a channel row; %d channel "
+                  "file(s) scanned (flat+tree) for %s; mode %s -- %s"
+                  % (len(entries), "y" if len(entries) == 1 else "ies", n_with_id, n_resolved, files_scanned,
+                     code or "<unparsed project>", "ENFORCE" if enforce else "ANNOUNCE", reason))
+    if enforce:
+        v.extend(defects)
+    else:
+        frames.extend("surprises-announce (would REFUSE under a tree TO): " + d for d in defects)
+    return v, frames
+
+
+def _self_test() -> int:
+    """RED-FIRST BATTERY for the surprises limb. Six arms; each names its expectation; N of N printed.
+    A gate never exercised on its failure limbs is a gate that cannot fail."""
+    base = {"to_id": "NFRA_TESTPROJ.TO-X-1", "surprises": []}
+    rows = {"NFRA_TESTPROJ-S1", "NFRA_TESTPROJ-Z-S2"}
+    arms = []
+
+    def arm(name, inst, enforce, rows_, expect_v, expect_frame_sub=None):
+        v, f = surprises_check(inst, enforce=enforce, row_ids=rows_, files_scanned=1)
+        ok = (len(v) == expect_v) and (expect_frame_sub is None or any(expect_frame_sub in x for x in f))
+        arms.append((name, ok, len(v), expect_v, f[-1][:110] if f else ""))
+
+    arm("A ENFORCE + entry without a row id -> 1 violation",
+        dict(base, surprises=["the tool crashed on a directory subject"]), True, rows, 1)
+    arm("B ENFORCE + row id that resolves to no row -> 1 violation",
+        dict(base, surprises=["NFRA_TESTPROJ-S9: a row nobody committed"]), True, rows, 1)
+    arm("C ENFORCE + row id that resolves -> 0 violations",
+        dict(base, surprises=["NFRA_TESTPROJ-S1: the interim grammar was superseded mid-round"]), True, rows, 0)
+    arm("D ENFORCE + site-Z id that resolves -> 0 violations",
+        dict(base, surprises=["NFRA_TESTPROJ-Z-S2 -- site Z row"]), True, rows, 0)
+    arm("E ANNOUNCE + entry without a row id -> 0 violations, 1 announce frame",
+        dict(base, surprises=["legacy free-string surprise"]), False, rows, 0, "surprises-announce")
+    arm("F ENFORCE + empty list -> 0 violations, frame says 0 entries",
+        dict(base, surprises=[]), True, rows, 0, "0 entries")
+    passed = sum(1 for a in arms if a[1])
+    print("proof-of-spec-check --self-test (surprises limb)")
+    for name, ok, got, exp, tail in arms:
+        print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
+    print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))
+    return 0 if passed == len(arms) else 1
+
+
 def checker_vintage() -> str:
     """The commit that last touched THIS checker, as `<hash> <YYYY-MM-DDTHH:MM:SSZ>` -- UTC with a Z,
     or the hash alone. (1b) 2026-08-30, 1.0.0_SA_CTO 87900: an instance carried the checker vintage as
@@ -868,6 +1019,8 @@ def iso_offset_to_utc_z(ci: str) -> str:
 
 
 def main() -> int:
+    if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
+        return _self_test()
     if len(sys.argv) not in (2, 3):
         print(__doc__)
         print("USAGE-ERROR (rc=2): expected <instance.json> [expected_criterion_ids]")
@@ -910,6 +1063,11 @@ def main() -> int:
     res_violations, res_frames = artifact_resolution_check(inst)
     violations.extend(res_violations)
     align_frames = list(align_frames) + res_frames
+    # SURPRISES LIMB (2026-09-03): runs on every instance; ENFORCE vs ANNOUNCE is derived from the
+    # governing TO's root, never from a caller-side flag -- the same one-discriminator rule as layer 1.
+    sur_violations, sur_frames = surprises_check(inst)
+    violations.extend(sur_violations)
+    align_frames = align_frames + sur_frames
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
