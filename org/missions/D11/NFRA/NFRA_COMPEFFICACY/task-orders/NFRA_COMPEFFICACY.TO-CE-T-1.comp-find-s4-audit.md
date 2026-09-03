@@ -56,7 +56,7 @@ at BOTH instruments and the battery at BOTH grains). Then the ONE code change th
 ## BOUNDS
 
 - **Search behaviour and pagination do NOT change** (the 3b battery is the control). Rule P/T work beyond the ceiling is a later row.
-- **No new dependency, no new file outside the two named** (the tool, its battery) plus the deliverable + proof instance.
+- **No new dependency, no new file outside the two named** (the tool, its battery) plus the deliverable + proof instance. **AMENDED BY THE ISSUER 2026-09-03 ~02:59Z (msg 92959, on surprise 92944):** this bound was written before PRD s.4.4 existed; PRD v0.4 @`19bf1c7322` s.4.4 (L4, outranks a pre-spec TO bound) names ONE shared sibling module `.tools/_compbudget.py` as Rule T's carrier with comp-find as its reference target, so **`.tools/_compbudget.py` is IN SCOPE under CE-t-1** (never per-tool copies). Everything else in this section stands; acceptance T1-AC1..AC6 unchanged. The interim-grammar clause in DELIVERABLE is thereby exercised: the form HAS landed and is the grammar.
 - **Truthful non-application stays truthful:** a scope with 0 files is OUT-OF-CORPUS and prints as such; do not convert it into a hit or a violation (PRD s.5).
 - **Grade is CVO's; CLEARED is CVO's word after T1-AC6 reads ON origin.** Certifier != author.
 
