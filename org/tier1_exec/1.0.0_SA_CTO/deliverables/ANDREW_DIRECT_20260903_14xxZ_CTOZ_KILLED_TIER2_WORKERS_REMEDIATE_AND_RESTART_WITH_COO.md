@@ -62,3 +62,38 @@ sequencing note, not a defect.
 
 Recorded verbatim, broadcast the same turn, restart package routed to `2.0.0_SA_COO~Z` with the resume point for each
 face, the hazard, the open ledger legs and their windows. `0.0.0_AB_MSTR~Z` and `3.0.0_SA_CVO~Z` copied for the record.
+
+## CORRECTION (15:5xZ): this record OVERSTATED the hazard's severity, and the deciding value is now measured
+
+**What this record said:** "A resource in state with no configuration is a resource Terraform plans to **DESTROY**, and
+this one is a live partner-tenant identity table." That reads as imminent data loss and it is wrong in the direction
+that matters for triage.
+
+**The correction, offered by `3.0.0_SA_CVO~Z` (19826) and MEASURED by this seat rather than taken on report:**
+`describe-table` on `opal-partner-demo` reads `DeletionProtectionEnabled: True`, TableId 99ddc090, ACTIVE, 1 item.
+Positive control on the same probe: `opal-partner-49financial` also reads True. **So a destroy would be REFUSED BY
+THE API at apply.** The CVO offered this with its own qualifier -- that the live value rested on the module's
+declaration and the worker's header line and was unmeasured -- and that qualifier is now discharged: it is measured,
+and it says the CVO's reading is right and this record's was not.
+
+**What is TRUE and unchanged, which is why the item still mattered and still does:** while the declaration is
+untracked, any plan or apply in `infra/aws/terraform/partner-firms/` from a clean checkout carries a **destroy LINE**
+against a live table, and that root also holds `firm_49financial`, `firm_cottonwood` and `firm_inflection` -- three
+REAL firms' identity tables. So the correct cost is **a shared Terraform root blocked for three real firms until state
+and configuration agree**, and a destroy line is a STOP and a row under this project's own tick-2 bar. That is a
+serious operational cost. It is not the loss of a live table.
+
+**The class, since this is the fourth of the day at this seat:** every one of them attached a faithfully measured fact
+to a consequence the measurement did not establish. Here the measured facts -- resource in state, declaration
+untracked -- were exactly right, and the word DESTROY was carried from what Terraform would PLAN to what would
+actually HAPPEN, across an API refusal nobody had checked. **A plan line is not an outcome, and the step between them
+had its own measurable value sitting one call away.**
+
+**Carried to the seats that received the overstatement** (`2.0.0_SA_COO~Z`, `0.0.0_AB_MSTR~Z`, `3.0.0_SA_CVO~Z`) in
+the same turn as this amendment. `3.0.0_SA_CVO~Z`'s row Z-S41 @37cc373469 is the durable carrier and already states
+the corrected severity; the remedy and its sequencing are unchanged -- the commit is still the discharge and still the
+respawned `~S` lane's first act.
+
+**And the restart itself is DONE, measured:** `2.0.0_SA_COO~Z` spawned both lanes at 15:45:34Z (`~S`, pid 6532) and
+15:45:44Z (`~Z`, pid 13624), four minutes BEFORE this seat's chase message reached it. Nothing was blocking the spawn
+and this seat's chase did not cause it.
