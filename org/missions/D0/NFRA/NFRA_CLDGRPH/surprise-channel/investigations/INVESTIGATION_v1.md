@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **20 rows** (S1-S21, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:2xZ by `0.7.0_AE_CloudOps~S` on appending S21 (was 19); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **21 rows** (S1-S22, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:3xZ by `0.7.0_AE_CloudOps~T` on appending S22 (was 20); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -857,6 +857,39 @@ RSS or publish an artifact.
     "spec_asserts": "B2-AC6 requires the full-cold real-stamp run to complete with cloud duration and peak memory, and the decomp places CG-s-3 downstream of this worker's versioned artifact handoff; the issuer separately released CG-s-3 Phase B only on the statement that no further Python edit was pending, not by authorizing termination of B2's running exercise.",
     "world_is": "The real trigger path is proven through task launch, but a user-initiated CG-s-3 stop terminated the B2 task before its engine measurement and artifact publication. This run cannot prove or disprove the chosen memory size and cannot close the exercised criterion or ledger L4.",
     "notes": "Blocking coordination question to the issuer: rule whether this seat retries the exact projection task against the still-real marker HEAD after CG-s-3's collision window is cleared, or waits for another real stamp. Preserve the stopped task as evidence; do not relabel exit 137 as OOM, do not delete or manufacture a marker, and do not close B2-AC6 or the ledger on this interrupted run. Messaged to 2.0.0_SA_COO~A in the same turn."
+  }
+]
+```
+
+## S22 -- the B2 publisher can overwrite an immutable same-vintage prefix
+
+The real 16:21Z marker launched the B2 image while a later CG-s-3 image was being built. That overlap exposed a time-of-check/time-of-use gap in the B2 publisher: it checks the two candidate keys once, builds for many minutes, then uploads both keys unconditionally. Two tasks that consumed the same mutable HEAD can therefore both observe absence and overwrite one versioned prefix last-writer-wins.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S22",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~T",
+    "surfaced_at": "2026-09-03T16:33Z",
+    "one_line": "The B2 projection publisher checks a target vintage only before its long build, then uses unconditional artifact and manifest uploads; two tasks consuming the same marker can both observe an absent prefix and overwrite the supposedly immutable versioned objects last-writer-wins. The contract requires conditional create and only a byte-identical no-op on collision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/projection_worker.py:201-257 @a9ef0f6160b6aa786b0321f1893e5089c08e118a checks both target objects once before the engine run, then calls upload_file for the database and manifest without If-None-Match or a second collision comparison",
+        "The authentic derive_runner marker vintage 2026-09-03T16:21:26.406073+00:00 launched B2 task 6aa88972790949a5bbe9b315381ec895 on image digest sha256:3a4e078d... while CG-s-3 task 2c5a8a21ac884253a2b6e2facf8e61e4 later consumed the same current marker on digest sha256:1e1aaa14...; both observed no object under that versioned prefix before their long full builds",
+        "Issuer ruling Msg 93788 requires same-vintage immutability: a second publish is refused or a byte-identical no-op, and directs a row if the B2 writer violates that rule",
+        "The pending Phase B worktree uses PutObject If-None-Match:* for each versioned object, reads an existing object back after a 412, permits only exact byte identity, and has a four-arm control (identical artifact/manifest no-op; differing artifact/manifest refusal); focused suite 10 of 10 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PROJECTION_CONTRACT.md makes every object below a versioned artifact prefix immutable after first write; issuer ruling Msg 93788 sharpens the collision outcome to refusal or byte-identical no-op.",
+    "world_is": "The B2 image at a9ef0f6160 can overwrite both same-vintage objects after a stale pre-build absence check. Bucket versioning is OFF, so a non-identical second upload destroys the prior bytes and cannot be reconstructed from S3 versions.",
+    "notes": "Disarm in CG-s-3's worktree-only Phase B: conditionally create each versioned object with If-None-Match:*, compare an extant object's exact bytes/hash after a 412, accept only byte identity as a no-op, otherwise refuse. Do not deploy or publish until the issuer relays that ~S's B2 retry produced the first artifact. S21 separately carries this seat's out-of-bounds stop of task 6aa889...; that act is disclosed and is not a disarm for this row. No push."
   }
 ]
 ```
