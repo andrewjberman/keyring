@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Opened** | 2026-09-03T11:20Z |
-| **State** | OPEN — HOLD pending Andrew's explicit word (S3 delete/expiry, CLAUDE.md confirmation list) |
+| **State** | CLOSED — Andrew admitted the conditional apply; scoped lifecycle apply completed and deploy ledger `shared-infra-ms-heat-snapshots-expire-60d` closed on the amended whole-control acceptance (`ee688a660b`) at 2026-09-03T16:35:50Z. |
 | **Seat** | `0.8.0_AE_CloudComp` (owner class, NFRA_GLOBGRPH) |
 | **Authority** | `1.0.0_SA_CTO` DECISION on 93515 (msg 93528, 2026-09-03T11:17:27Z): *"it is NOT shipped as a passenger ... whether that retention is wanted is a data decision, and S3 deletes take Andrew's explicit word."* Relayed from `0.0.0_AB_MSTR~Z` (bus c4a47c90), sourced from `0.7.0_AE_CloudOps~S`'s pre-edit baseline read for TO-OP-S-8 (row NFRA_OPSEC202609-Z-S17). |
 | **Pipeline** | `infra/aws/terraform/shared-infra` (`s3.tf`, resource `aws_s3_bucket_lifecycle_configuration.global_graph`) |
@@ -100,7 +100,25 @@ guarantee and the current CLI has no one-command historical replay flag.
   or the append-only analytic history. That bounded loss is consistent with the ruled 60-day
   retention and does not make the snapshots non-rebuildable.
 
-## THE CARD TO ANDREW (open)
+## CLOSURE — scoped apply and disclosed whole control
+
+The apply path was selected. Deploy ledger
+`org/critical_paths/change_management/20260903T1418Z_shared-infra-ms-heat-snapshots-expire-60d_deploy_completion.md`
+is CLOSED with all five legs proven. The NEW saved plan was target-scoped to
+`aws_s3_bucket_lifecycle_configuration.global_graph`, and `safe-apply` completed exactly
+`0 added, 1 changed, 0 destroyed`. The live post-read has exactly two Enabled rules:
+`abort-incomplete-mpu-7d` unchanged at 7 days and `ms-heat-snapshots-expire-60d` at prefix
+`warehouse/ms_heat/snapshots/` with 60-day expiration.
+
+The amended acceptance at `ee688a660b` closes on the whole disclosed unscoped control:
+`Plan: 0 to add, 10 to change, 0 to destroy`; the lifecycle address is gone. The ten remaining
+addresses are the untouched `aws_dynamodb_table.opal_users_v2` deletion-protection drift and
+nine untouched API Gateway route authorization drifts (`r_as2dsme`, `r_c0k8rl0`, `r_gwygx58`,
+`r_m8wdq80`, `r_mxus2bs`, `r_o2xr1ct`, `r_ruzaqhq`, `r_sogv7z9`, `r_t81twif`). None of those ten
+changes was applied. The route drift is carried by `NFRA_GLOBGRPH-S2`; the users-table drift is
+assigned to the separate `NFRA_GLOBGRPH.TO-USERS-DELPROT` order.
+
+## THE CARD TO ANDREW (closed: Yes)
 
 **Apply the 60-day expiry on `ms_heat` snapshots — yes or no?**
 - **Yes** → the owner (`0.8.0_AE_CloudComp`, or the `~Z` lane that declared it) applies it under
@@ -120,12 +138,13 @@ change is the honest, correct state and should stay visible, not be papered over
 - [x] This ledger entry opened, naming the pending change, its commit, and the HOLD
 - [x] Andrew's word — conditional apply admitted by his "recs approved" ruling; the measured
       rebuildability condition is satisfied in the section above
-- [ ] Owning apply or revert, under its own ledger entry, citing this HOLD as closed
-- [ ] Unscoped re-plan confirms `0/0/0`
+- [x] Owning target-scoped apply completed under its own CLOSED ledger entry, citing this HOLD
+- [x] Unscoped re-plan disclosed the whole `0/10/0` control with the lifecycle change gone and
+      none of the ten remaining changes applied, accepted by issuer amendment `ee688a660b`
 
-## Not established
+## Live state established
 
-⚠ No live AWS read (`get-bucket-lifecycle-configuration`) has been taken to determine whether the
-rule is already partially or fully applied out of band — the tree cannot currently distinguish
-"never applied" from "applied then reverted/changed elsewhere." Not required to resolve the HOLD
-(Andrew's word governs regardless of which), but named here rather than assumed.
+The pre-read at 2026-09-03T14:19Z returned exactly one rule,
+`abort-incomplete-mpu-7d`, proving the MS heat rule had not been applied. The post-read after the
+scoped apply returned exactly the two rules stated in the closure section. Both reads and the
+captured safe-apply output are committed evidence under this seat's `deliverables/` directory.
