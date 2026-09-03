@@ -14,9 +14,10 @@
 |---|---|---|---|---|---|
 | L1 | activation | safe-apply: log group aws-waf-logs-opal-cloudfront (400d) + the ACL logging configuration | apply completes, re-plan 0-diff, and get-logging-configuration on the CloudFront ACL returns the destination and the 2 redacted fields | safe-apply: 2 added, 0 changed, 0 destroyed, rc=0. LIVE get-logging-configuration on the CLOUDFRONT ACL now returns destination arn:aws:logs:us-east-1:313476888478:log-group:aws-waf-logs-opal-cloudfront with RedactedFields [authorization, cookie]; it returned WAFNonexistentItemException before. Denominator 2 of 2 ACLs now carry a logging configuration (the REGIONAL one pre-existed -- row Z-S13). Post-apply re-plan -detailed-exitcode = 0. S5-AC6 census on the STRUCTURED plan (not the plan text, which counts refresh lines and false-positives): 0 alarm/filter/subscription/SNS-SES resources of 2 changing resources, negative control aws_cloudwatch_log_group = 1 so the census can see types that are present. | CLOSED 20260903T092352Z |
 | L2 | verify | records arrive without a probe (S5-AC2) and retention is read on every destination (S5-AC5) | describe-log-streams/get-log-events count stated, describe-log-groups retentionInDays read |  | OPEN |
-| L3 | git | lane commit of waf-cloudfront.tf + the surprise row | commit hash, push state MEASURED |  | OPEN |
+| L3 | git | lane commit of waf-cloudfront.tf + the surprise row | commit hash, push state MEASURED | Lane commit 2866bd5f1f (author 0.7.0_AE_CloudOps~Z), 3 files / 86 insertions: waf-cloudfront.tf (log group + logging configuration), this ledger, and the TO status flip to pending. The first attempt was REFUSED by the non-ASCII commit-message gate (a U+26D4 in my own message); corrected to the sanctioned >> form rather than using ASCII_OVERRIDE. Push state MEASURED at this write: LOCAL. | CLOSED 20260903T092845Z |
 
 ## Log
 
 - 20260903T092132Z OPENED by 0.7.0_AE_CloudOps~Z with 3 leg(s)
 - 20260903T092352Z LEG L1 closed: safe-apply: 2 added, 0 changed, 0 destroyed, rc=0. LIVE get-logging-configuration on the CLOUDFRONT ACL now returns dest
+- 20260903T092845Z LEG L3 closed: Lane commit 2866bd5f1f (author 0.7.0_AE_CloudOps~Z), 3 files / 86 insertions: waf-cloudfront.tf (log group + logging con
