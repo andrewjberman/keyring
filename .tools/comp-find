@@ -77,6 +77,13 @@ WS = _comprail.repo_root()
 RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
 
 PAGE_DEFAULT = 25
+# NFRA_COMPEFFICACY CE-t-1 / Rule T (PRD v0.3 s.4.4): a tool never exceeds a ceiling it was not
+# told. Before this cell the AWS-corpus pull hard-coded timeout=600 against a 120s outer harness
+# ceiling (measured @774c108bb5, TO-CE-T-1) -- 5x over, and nothing at expiry said so. The budget
+# is now caller-settable (--budget-s); this is the default when the caller says nothing, kept
+# safely under the 120s outer ceiling so the tool's own expiry disclosure has room to print before
+# the harness kills it.
+AWS_BUDGET_DEFAULT_S = 100.0
 _CONFIG_EXT = {".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".conf", ".env", ".lock", ".xml"}
 _DOC_EXT = {".md", ".txt", ".rst"}
 _DEF_RX = re.compile(r"^\s*(def |class |function |const |export (const|function|class)|[A-Z0-9_]+\s*=)")
@@ -121,8 +128,15 @@ def _terms(pattern):
     return [t for t in re.split(r"[^A-Za-z0-9_]+", pattern.lower()) if len(t) > 2]
 
 
+def _fmt_budget(seconds):
+    """Print an int-looking float without a trailing '.0' (e.g. 100.0 -> '100', 0.001 -> '0.001')."""
+    if seconds == int(seconds):
+        return str(int(seconds))
+    return str(seconds)
+
+
 def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_all, page, limit,
-                band_filter):
+                band_filter, budget_s=AWS_BUDGET_DEFAULT_S):
     """--corpus aws (Andrew-direct 2026-08-28, "based off of the comp-kuzu surface ... the easiest way
     to have fast scan access to aws cloud"): the LIVE AWS plane as a search corpus.
 
@@ -155,8 +169,34 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
     env.setdefault("GLOBGRPH_KUZU_INCREMENTAL_REFRESH", "1")
     try:
         proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
-                              capture_output=True, text=True, timeout=600, env=env, cwd=WS)
-    except (OSError, subprocess.TimeoutExpired) as exc:
+                              capture_output=True, text=True, timeout=budget_s, env=env, cwd=WS)
+    except subprocess.TimeoutExpired:
+        # RULE T EXPIRY (CE-t-1, T-16 interim shape -- CE-tp-1's grammar was WITHDRAWN as a task
+        # order 2026-09-03 and its decision routes to the PRD s.4.4 landing instead; nothing here
+        # waits on it). The pull is ONE non-paginated call -- kuzu_cli.py writes its whole JSON
+        # array in a single flush at the end, so a killed process leaves no valid partial rows to
+        # count (proved harmless-to-assume: a truncated capture is not parseable JSON either way).
+        # The honest reached-denominator for this call shape is "0 of UNKNOWN scanned" -- never a
+        # bare "0 hit(s)", which would read exactly like a clean, fully-scanned zero (the same
+        # false-absence class CLAUDE.md Rule 21 already bans for the file corpus). The resume
+        # affordance for THIS call shape is real and already exists: narrow the pathspec to a
+        # node_type (the WHERE clause above), which is a smaller, cheaper query, not a cursor into
+        # this one -- stated as such, not dressed up as a numeric offset that does not exist.
+        print("comp-find [aws] %r" % pattern)
+        print("  DEFERRED: comp-kuzu pull did not return within the budget (%ss) -- "
+              "0 of UNKNOWN aws node(s) scanned." % _fmt_budget(budget_s))
+        print("  This is NOT a measured zero: the pull is one non-paginated call and no partial "
+              "rows exist to report when it is killed mid-flight.")
+        print("  RESUME: re-run with --budget-s N (this call: %s), or narrow the pathspec to a "
+              "node_type (e.g. LAMBDA) to shrink the query -- that is the resume cursor available "
+              "for this call shape (no numeric offset exists for a single non-paginated pull)."
+              % _fmt_budget(budget_s))
+        print("  BUDGET: %ss (--budget-s to set; default %ss, under this box's ~120s outer ceiling)"
+              % (_fmt_budget(budget_s), _fmt_budget(AWS_BUDGET_DEFAULT_S)))
+        _comprail.log_rail(RAIL_LOG, "RUN-FIND-DEFERRED", "comp-find", pattern,
+                           "corpus=aws budget_s=%s" % _fmt_budget(budget_s))
+        return 0
+    except OSError as exc:
         print("comp-find [aws] %r" % pattern)
         print("  BLOCKED: comp-kuzu pull failed (%s) -- NO MEASUREMENT, not a zero." % exc)
         _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, "corpus=aws err=%s" % exc)
@@ -281,6 +321,10 @@ def _usage():
     print("               IAM_ROLE, S3_BUCKET, ...); --name = name/arn only; drift_class per hit;")
     print("               denominator = nodes scanned; vintage = the DB's own built: line.")
     print("               e.g. comp-find --corpus aws opal-gateway | comp-find --corpus aws 'python3\\.9' LAMBDA")
+    print("  --budget-s N  RULE T (PRD s.4.4): ceiling in seconds for the --corpus aws pull subprocess")
+    print("               (default %s, kept under this box's ~120s outer harness ceiling); at expiry" % _fmt_budget(AWS_BUDGET_DEFAULT_S))
+    print("               prints a DEFERRED disclosure distinguishable from a clean zero, never a bare 0.")
+    print("               No effect outside --corpus aws (the file corpus has no comparable internal ceiling).")
     print("  --hidden      report the out-of-corpus (hidden) file count for this scope and exit")
     print("  e.g. comp-find apply_aua_overrides data/")
     print("       comp-find --name 'test_pipescript_*.py'")
@@ -305,6 +349,7 @@ def main() -> int:
     include_held = False
     corpus = "all"   # Andrew-direct 2026-08-28: gitignored content searchable by default (floor still out)
     hidden_only = False
+    budget_s = AWS_BUDGET_DEFAULT_S
     positional = []
     i = 0
     while i < len(argv):
@@ -337,6 +382,16 @@ def main() -> int:
                 limit = max(1, int(val)) if (val or "").isdigit() else PAGE_DEFAULT
             else:
                 band_filter = (val or "").upper()
+        elif a == "--budget-s":
+            i += 1
+            val = argv[i] if i < len(argv) else None
+            try:
+                budget_s = float(val)
+                if budget_s <= 0:
+                    raise ValueError
+            except (TypeError, ValueError):
+                print("comp-find: ERROR: --budget-s wants a positive number of seconds, got %r" % val)
+                return 2
         else:
             positional.append(a)
         i += 1
@@ -395,7 +450,7 @@ def main() -> int:
     if corpus == "aws":
         return _aws_corpus(pattern, pathspec, ignore_case=ignore_case, name_mode=name_mode,
                            files_only=files_only, show_all=show_all, page=page, limit=limit,
-                           band_filter=band_filter)
+                           band_filter=band_filter, budget_s=budget_s)
 
     # Same BRE-vs-ERE footgun guard comp-grep carries: python `re` treats \| \( \) as LITERALS, so
     # a BRE-muscle-memory pattern silently matches nothing and "0 hits" reads as confirmed absence.
