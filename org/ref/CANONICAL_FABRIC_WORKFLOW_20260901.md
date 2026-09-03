@@ -189,8 +189,10 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
   `UNCOVERED`, both denominators printed, so an outcome no cell ever served shows in the COO's own report.
   `1.0.0_SA_CTO` reads the exercised artifact each outcome's `DONE WHEN` names, never the report, and writes
   `ledger/COMPLETION_GRADES.round<N>.json`: one verdict per outcome, `REALIZED`, `NOT_REALIZED` or `NOT_EVALUATED`,
-  the artifact and its vintage cited, the observed state matching the card's state. `CLOSED` follows mechanically when
-  every grade reads `REALIZED`. A `NOT_REALIZED` re-enters at L5 as a decomposition gap or at L2 as a `SCOPE_CHANGE`;
+  the artifact and its vintage cited, the observed state matching the card's state, and the artifacts covering every
+  limb of the card's acceptance clause; a control window that makes a limb true by construction is not evidence for
+  it, and a limb no artifact covers grades `NOT_EVALUATED`. `CLOSED` follows mechanically when every grade reads
+  `REALIZED` and no grade cites a state below its card. A `NOT_REALIZED` re-enters at L5 as a decomposition gap or at L2 as a `SCOPE_CHANGE`;
   a grade in question on receipt is adjudicated by the CTO as at L2. An outcome whose `DONE WHEN` is an act after the
   work is met by a closing-pass task order whose specification is that act. Then the registry bookkeeping: terminal
   status, completion date, registry row. Contract: `org/standards/COMPLETION_REPORT.schema.json`.
@@ -277,3 +279,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 | 2.2 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md` | two refusers for clauses that bound by reading: the L8 send guard on the broker path (CVO to a Tier-2 serial refused while a tree project is executing) and the second limb of the L10 gate (no route while an investigation item is undispositioned; both route shapes; the `adjudicates` carrier) |
 | 2.3 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md` | the close: the COO's completion report and the CTO's grades, two reads on two axes, the `CLOSED` flip mechanical on the grades (`missions-tree-index.py` R6, `COMPLETION_REPORT.schema.json`); autonomy after L2 -- Andrew confirms the `DONE WHEN` lines at L2 and no limb waits on him after; `SCOPE_CHANGE` and a questioned grade are adjudicated by the CTO (`/open-calls --adjudicate`) and the loop runs forward from L4 |
 | 2.4 | 2026-09-03 | `docs/architecture/NFRA_INTEGRATIONS_STANDARD.md` @f9ca7a9309 -- the in-place disarm of NFRA_CLDGRPH round 1's first finding, whose remedy lay in another surface's document; the question relayed by the run's L2 owner to the scribe | the routes are about this project's own chain; an outside remedy is a disarm in place within the owner's lane or a `DISMISSED_WITH_REASON` naming the brief that opens the owning surface's own project at L1; no route targets another project |
+| 2.5 | 2026-09-03 | `org/standards/COMPLETION_REPORT.schema.json` (the grader's bar in the contract) | the close's grading bars stated in the process rather than in messages: a `REALIZED` grade cites artifacts covering every limb of the card's acceptance clause and a vacuous control window is not evidence; the observed state never sits below the card's state (mechanical in the tree check) |
