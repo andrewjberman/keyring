@@ -112,9 +112,14 @@ row. Zero items under any D7 or D12 code.
 ### L8 intake, first notifier event (07:03Z): D1_CATVIEWS +1 row (17)
 `D1_CATVIEWS-Z-S4`, surfaced_by `2.0.0_SA_COO~Z` 07:03Z, OBSERVATION / INERT / UNDER_INVESTIGATION,
 no `adjudicates`: the DISARM RECORD for `D1_CATVIEWS-S11` (TO-I1-DS's committed proof instance
-re-measures INVALID rc=1 at HEAD b80b692a1d; the TO face annotated in the same commit). Read here as
-intake. The row was UNCOMMITTED in the shared worktree at the read (file ` M`, last commit 9437945112
-2026-08-29). L9 on S11 is deliberately NOT taken: D1_CATVIEWS is SEQUENCED-BEHIND (fourth in Andrew's
+re-measures INVALID rc=1 at HEAD b80b692a1d). Read here as intake. The row was UNCOMMITTED in the
+shared worktree at the read (file ` M`, last commit 9437945112 2026-08-29). CORRECTION 07:0xZ: the
+draft I first read said the TO face was annotated "in the same commit"; the notifier then reported
+the row MUTATED in place (c5ae1571f267 -> 8b36bcd7777f) and the re-read row says that face edit was
+REFUSED at commit by `.tools/to-pipeline-gate.py` layer 2 (the gate keys on a staged `<status>` line
+reading `complete` and cannot tell an issuer annotation from a flip -- COO~Z's own observation, in
+its row). An edit to an UNCOMMITTED draft is not an append-only violation; the notifier's watermark
+reads the worktree and was right to say so. Quoting a draft is what made this line need a correction. L9 on S11 is deliberately NOT taken: D1_CATVIEWS is SEQUENCED-BEHIND (fourth in Andrew's
 06:4xZ sequence) and its round is not open; S11 stays UNDER_INVESTIGATION until that round's CVO row.
 The row's transferable half is worth carrying: a `disarm_owner` named on a row does not travel with a
 session, and nothing in B.0 or the inbox surfaces it -- the `/canonical-flow --report-only` pass did.
