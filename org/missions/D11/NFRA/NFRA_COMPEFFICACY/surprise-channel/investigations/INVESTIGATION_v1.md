@@ -902,6 +902,28 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "TO-CE-T-5 AC1/AC2/AC4: the s.4 audit must quote the five-carrier default, preserve the NOT-DECIDABLE tool voice, and answer the rc question by consumer census.",
     "world_is": "At 2026-09-03T15:10:46Z the production engine's view-time compilation agrees with the cut preflight on gate count and every carrier denominator/result; no remediation is authorized or performed by this row.",
     "notes": "Filed by the assigned ~C seat as the first-action evidence row required by the tick-3 issuer ruling. The row is inert and does not alter carrier semantics."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S28",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~H",
+    "surfaced_at": "2026-09-03T15:43:44Z",
+    "one_line": "The Codex launcher environment gives concurrent round-6 seats one shared CLAUDE_CODE_SESSION_ID, while comp-to and comp_log_auto.py key task attribution only on that Claude variable. During TO-CE-T-17, other seats repeatedly overwrote the same supposedly race-free .to_id file: this seat set T17, later read T20, and its comp-estate rows were stamped T20. The production tool answers remain valid, but per-task telemetry attribution is not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.8.0_AE_CloudComp~H environment at 2026-09-03T14:5xZ: CLAUDE_CODE_SESSION_ID=af7a2a30-0946-4127-83c9-871c7ac970cb while CODEX_SESSION_ID and CODEX_THREAD_ID were the distinct Codex value 01a06796-f277-7213-93bc-ef01e77d6724.",
+        ".tools/comp-to:17-21 writes org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.to_id and describes it as race-free per-session; org/modules/graph/comp_log_auto.py:103-111 and :350 read and emit that same Claude-keyed id, with no Codex-session fallback.",
+        "org/mcp/comp-tool-runs.jsonl recent rows sharing session_id af7a2a30-0946-4127-83c9-871c7ac970cb carried serials ~H, ~J, ~M, ~L and ~E under TO-CE-T-20. The corresponding session file contained T20 after ~H had set T17; ~H's 37 comp-estate rows in the 30-day census were consequently attributed to T20 until the next rebind."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": ".tools/comp-to:4-10 and comp_log_auto.py:89-96 assert that the session-keyed .to_id mechanism prevents cross-agent last-writer-wins attribution; TO-CE-T-17 requires usage evidence attributable to the exact assigned seat/order.",
+    "world_is": "The shared-host Codex launch supplies a unique CODEX session/thread id but also an inherited CLAUDE_CODE_SESSION_ID common to concurrent child seats. The attribution helpers ignore the unique Codex id, so the collision class they claim to remove is live for Codex. Tool+serial usage counts remain measurable; to_id is not trustworthy for these concurrent rows.",
+    "notes": "No launcher or telemetry helper is changed under T17's engine/test boundary. The T17 result excludes to_id from its usage count, names the attribution defect, and reports this row. A future runtime/telemetry owner can key Codex seats on CODEX_SESSION_ID or another launcher-owned unique id while retaining the Claude path. This row does not block the comp-estate production change or its battery."
   }
 ]
 ```
