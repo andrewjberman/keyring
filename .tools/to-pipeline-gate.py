@@ -152,6 +152,101 @@ def _issuer_identity_violations(rel, author):
     return []
 
 
+# CELL-REFERENCE RESOLUTION AT THE CUT (2026-09-03, 1.0.0_SA_CTO on 3.0.0_SA_CVO~A 93412 + the issuer's own evidence
+# 93419): NFRA_CLDGRPH-S5's class recurred 62 minutes after its instance was fixed -- a criterion whose cell_refs did not
+# resolve against the decomposition passed this gate at issuance and could only fail at the worker's proof check, after
+# the order was cut, dispatched and worked; S5 cost a round trip and a BLOCKING row when found at the flip. Every tree
+# task order already names its decomposition (<decomp_doc>) and its cells (<owned_cells>, criterion cell_refs), so the
+# resolution is knowable the moment the face is written. This limb reads the decomposition from the INDEX (what the
+# commit contains), then HEAD, then the worktree; every cell token (commas, semicolons or whitespace between them) must
+# match the cell-id grammar AND be a cell of that decomposition. An unreadable or absent decomposition is a NOTE, never a
+# refusal here -- to-decomp-ref-lint.py owns absence. Tree task orders only, NEW files only (this gate's standing model).
+DECOMP_DOC_TAG_RE = re.compile(r"<decomp_doc>\s*([^<]+?)\s*</decomp_doc>", re.S)
+OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
+CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
+ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
+# The same grammar as .tools/proof-of-spec-check.py CELL_ID_RE (its anchored branches included); a change there is a
+# change here, and the checker's battery (.tools/tests/test_proof_of_spec_cell_id_re.py) is the control for both.
+CELL_ID_RE = re.compile(
+    r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|L3W3-[0-9a-f]{4}-\d+"
+    r"|L3S7B-[0-9a-f]{4}-\d+"
+    r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
+    r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
+
+
+def _split_cells(value):
+    return [c for c in re.split(r"[\s,;]+", value or "") if c]
+
+
+def _decomp_text(root, doc):
+    """(text, where) for the decomposition at `doc`: the index first, then HEAD, then the worktree; (None, why)."""
+    for ref, where in ((":" + doc, "index"), ("HEAD:" + doc, "HEAD")):
+        try:
+            r = subprocess.run(["git", "show", ref], cwd=root, capture_output=True, text=True, encoding="utf-8",
+                               errors="replace", timeout=30)
+        except Exception as exc:  # noqa: BLE001
+            return None, "git show raised %s" % exc
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout, where
+    p = os.path.join(root, doc)
+    if os.path.isfile(p):
+        try:
+            with open(p, encoding="utf-8", errors="replace") as fh:
+                return fh.read(), "worktree"
+        except OSError as exc:
+            return None, "worktree read failed (%s)" % exc
+    return None, "not in the index, not at HEAD, not in the worktree"
+
+
+def _cell_refs_violations(root, rel, text, decomp_text=None):
+    """(violations, notes) for a NEW tree TO's cell references. `decomp_text` is injectable for the battery."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return [], []
+    m = DECOMP_RE.search(text)
+    if not m or NONE_WORD_RE.match(m.group(1).strip()):
+        return [], []
+    body = m.group(1)
+    dm = DECOMP_DOC_TAG_RE.search(body)
+    doc = dm.group(1).strip() if dm else ""
+    owned = _split_cells(" ".join(OWNED_CELLS_RE.findall(body)))
+    crit = []
+    for tag in CRITERION_TAG_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(tag.group(1)))
+        for c in _split_cells(attrs.get("cell_refs", "")):
+            crit.append((attrs.get("id", "").strip() or "<no id>", c))
+    v, notes = [], []
+    for label, tok in [("owned_cells", c) for c in owned] + [("criterion %s" % cid, c) for cid, c in crit]:
+        if not CELL_ID_RE.fullmatch(tok):
+            v.append("%s: %s names %r, which is not a cell id by the decomposition grammar (a stray delimiter, a typo, "
+                     "or prose in an attribute)" % (rel, label, tok))
+    if not doc:
+        notes.append("%s: <decomp_ref> names no <decomp_doc>; cell references graded on grammar only" % rel)
+        return v, notes
+    if decomp_text is None:
+        decomp_text, where = _decomp_text(root, doc)
+    else:
+        where = "injected"
+    if decomp_text is None:
+        notes.append("%s: decomposition %s unreadable (%s) -- cell references graded on grammar only; absence is "
+                     "to-decomp-ref-lint's" % (rel, doc, where))
+        return v, notes
+    ids = set(CELL_ID_RE.findall(decomp_text))
+    if not ids:
+        notes.append("%s: decomposition %s carries no cell id by the grammar -- cell references graded on grammar only" % (rel, doc))
+        return v, notes
+    for label, tok in [("owned_cells", c) for c in owned] + [("criterion %s" % cid, c) for cid, c in crit]:
+        if CELL_ID_RE.fullmatch(tok) and tok not in ids:
+            v.append("%s: %s names cell %r, which is not a cell of %s (%d cell ids read from the %s) -- a criterion that "
+                     "cites a cell the decomposition lacks cannot be proved by the assignee (NFRA_CLDGRPH-S5 class)"
+                     % (rel, label, tok, doc, len(ids), where))
+    if not v:
+        notes.append("%s: %d owned cell(s) and %d criterion reference(s) resolve against %s (%d cell ids, %s)"
+                     % (rel, len(owned), len(crit), doc, len(ids), where))
+    return v, notes
+
+
 def _issued_to_tier_violations(rel, text):
     """GATE (i): complaints about a NEW tree TO's <issued_to>. [] for flat-root TOs (out of scope)."""
     rel = rel.replace("\\", "/")
@@ -730,6 +825,10 @@ def check_file(root, rel):
     v.extend(_issued_to_tier_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
+    # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).
+    _cv, _cn = _cell_refs_violations(root, rel, text)
+    v.extend(_cv)
+    notes.extend(_cn)
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the

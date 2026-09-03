@@ -644,7 +644,11 @@ def _parse_to(text: str) -> dict:
         cid = attrs.get("id", "").strip()
         if not cid:
             continue
-        refs = [c.strip() for c in attrs.get("cell_refs", "").split(",") if c.strip()]
+        # DELIMITER-TOLERANT (2026-09-03, 3.0.0_SA_CVO~A 93412 -- NFRA_CLDGRPH-S5's class recurred within the hour:
+        # cell_refs="CG-s-2 CG-s-9" parsed as ONE phantom id and blocked the completion flip). A cell id never carries
+        # whitespace, so commas, semicolons and whitespace are all separators -- the same tolerance <owned_cells>
+        # already gets above. The encoding convention stays commas; the parser stops making a space a defect.
+        refs = [c.strip() for c in re.split(r"[\s,;]+", attrs.get("cell_refs", "")) if c.strip()]
         crits[cid] = refs
         if not refs:
             no_refs.append(cid)
