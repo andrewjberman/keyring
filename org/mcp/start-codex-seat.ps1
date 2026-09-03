@@ -254,6 +254,15 @@ if ($Port -eq 0) {
 
 $endpoint = "ws://127.0.0.1:$Port"
 $runtimeDir = Join-Path $Workspace ('.runtime\codex-seats\' + ($Serial -replace '[^A-Za-z0-9_.~-]', '_'))
+# THE LANE'S INBOX AND ITS read/ EXIST BEFORE THE FIRST TURN (2026-09-03, 2.0.0_SA_COO 93817): a Claude seat's watcher
+# creates <lane>/read/ when it arms; this runtime has no watcher, and a fresh lane (~N, ~U) met its first mail with an
+# inbox root and no read/ folder. The broker now creates read/ on every delivery too; this is the launch-time half so a
+# seat's very first sweep has the folder whether or not anything has been delivered yet. Same path grammar as
+# server.py's _deliver_to_one: base serial folder, then ~suffix for a lane.
+$inboxBase = ($Serial -split '~', 2)[0]
+$inboxLane = Join-Path $Workspace ('org\mcp\inbox\' + $inboxBase)
+if ($Serial -match '~') { $inboxLane = Join-Path $inboxLane ('~' + ($Serial -split '~', 2)[1]) }
+New-Item -ItemType Directory -Force -Path (Join-Path $inboxLane 'read') | Out-Null
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 $startupPromptPath = Join-Path $runtimeDir 'startup-prompt.txt'
 [System.IO.File]::WriteAllText(

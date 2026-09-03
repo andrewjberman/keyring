@@ -1899,6 +1899,12 @@ async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: st
     else:
         inbox = INBOX_DIR / to_folder.name
     inbox.mkdir(parents=True, exist_ok=True)
+    # THE read/ FOLDER RIDES WITH THE ROOT (2026-09-03, 2.0.0_SA_COO 93817, measured on fresh Codex lanes ~N and ~U):
+    # on the Claude path inbox-watch.sh creates <lane>/read/ when it arms; a Codex seat has no watcher, so a lane whose
+    # first mail arrived before anything else touched it had an inbox root and no read/, and its move-to-read contract
+    # had nowhere to move to (it correctly refused to invent the path). Every delivery now creates read/ beside the
+    # root it creates, whatever runtime reads the lane.
+    (inbox / "read").mkdir(exist_ok=True)
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     safe_from = re.sub(r"[^a-zA-Z0-9._-]", "_", from_agent)
