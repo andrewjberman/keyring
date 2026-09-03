@@ -90,6 +90,40 @@ else {
     $Workspace = (Resolve-Path -LiteralPath $Workspace).Path
 }
 
+# Codex tool calls run through PowerShell, where the extensionless Python and
+# Bash entrypoints under .tools are not executable by bare command name. The
+# canonical repository provisioner writes the full derived comp-* forwarding
+# set as both Bash scripts and PowerShell/cmd .cmd shims in the persistent
+# user bin. Run it idempotently for each Codex seat and put that directory
+# first on this launcher's child PATH, so every Codex app-server/TUI/tool call
+# resolves `comp-which`, `comp-read`, and the rest exactly as a Claude seat
+# does. Do not hand-maintain a second subset here.
+$compShimProvisioner = Join-Path $Workspace '.tools\provision-path-shims.sh'
+$gitBash = 'C:\Program Files\Git\bin\bash.exe'
+foreach ($requiredCompShimDependency in @($compShimProvisioner, $gitBash)) {
+    if (-not (Test-Path -LiteralPath $requiredCompShimDependency)) {
+        throw "Codex comp-tool shim dependency not found: $requiredCompShimDependency"
+    }
+}
+$compShimOutput = @(
+    & $gitBash $compShimProvisioner 2>&1
+)
+$compShimExitCode = $LASTEXITCODE
+if ($compShimExitCode -ne 0) {
+    $detail = ($compShimOutput | ForEach-Object { [string]$_ }) -join "`n"
+    throw "Codex comp-tool shim provisioning failed (exit $compShimExitCode): $detail"
+}
+$compShimDir = Join-Path $env:USERPROFILE 'bin'
+if (-not (Test-Path -LiteralPath $compShimDir)) {
+    throw "Codex comp-tool shim directory was not created: $compShimDir"
+}
+if (-not (($env:PATH -split ';') -contains $compShimDir)) {
+    $env:PATH = "$compShimDir;$env:PATH"
+}
+if (-not (($env:PATHEXT -split ';') -contains '.CMD')) {
+    $env:PATHEXT = (($env:PATHEXT -split ';') + '.CMD' | Where-Object { $_ }) -join ';'
+}
+
 # The full launcher serial is the process identity for ajb2, direct starts,
 # and handoffs alike. Downstream startup checks must never infer it elsewhere.
 $env:OPAL_AGENT_SERIAL = $Serial
