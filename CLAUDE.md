@@ -17,14 +17,24 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 
 27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
     (`4.0.0_SA_CRO` only) → L2 endpoint → L3 register → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
-    L5 decomp + battery → L6 task orders (`2.0.0_SA_COO` only — no CVO) → L7 execute (Tier-2 workers ONLY)
-    → L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement) → L10 route, ONLY after every task
-    order is complete and every investigation is CVO-checked** (spec error → L6, decomp error → L5, scope
-    change → L2). `0.0.0_AB_MSTR` integrates and never works a project. Mid-round the spec is FROZEN; the
-    only off-spec act is a surprise ROW (§2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
-    Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` — the ONE process document (constitutional; state of
-    record @`716a9bc7ce`, LD-0521). There is no other process and no second description of it; a document that
-    describes one is retired to a redirect. This stub is Andrew's form; every detail lives in the spec.
+    L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
+    decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
+    execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
+    WORKER FACE is the worker's whole context — cell text, absolute paths, ONE clause per criterion with its
+    invocation and expectation; the RECORD FACE never travels; a compound criterion is refused at the cut) →
+    L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement; JUDGMENT criteria are graded HERE and
+    never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
+    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
+    COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
+    Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
+    analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
+    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below). Gate:
+    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.0
+    — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
+    ⚠ EIGHT v3 clauses BIND BY READING until their carriers land (spine §4) — four are contradicted by a
+    live gate or lane TODAY, and the only lawful way through is that gate's audited override. There is no
+    other process and no second description of it; a document that describes one is retired to a redirect.
+    This stub is Andrew's form; every detail lives in the spec.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
