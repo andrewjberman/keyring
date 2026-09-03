@@ -413,4 +413,76 @@ From the brief @`6a1d845ecb`, flat list:
 6. Run **one** project through it -- a small one -- with the step logs Andrew already asked for (record
    @`bcc26d2691`), so the four-quadrant read grades v3 against v2 on the same instrument.
 
+---
+
+## 13. LEVERS READ FROM ONE THREAD OF THE ROUND 1-6 ARTIFACTS
+
+Andrew, CRO terminal ~20:1xZ: *"it really does seem like the game is effectively context compilation,
+deconstructing from a lossy qualitative broad outcomes, and narrowing down more and more granular into the
+structural truth and nodes... how much more effective could the TOs be, and how much more effective can the
+validator be?"* One full thread read: decomp v0.2.7 -> TO-CE-T-2 -> its proof instance -> INVESTIGATION_v1
+(33 rows) -> REMEDIATION_v1 (3 graduated) -> STEP_LOG_COMPILED.round1 -> comp-adversary's declaration on the
+TO. Every claim below names its specimen.
+
+**The principle the thread shows:** signal is highest at the two ENDS of the chain -- the decomp cell when
+clean, a real surprise row (S13, S17) -- and lowest in the MIDDLE, which is exactly what crosses the worker
+boundary. The TO and the proof instance are where provenance, authority chains and self-report accumulate.
+**Provenance travels in the record; only the spec travels to the worker.** This section refines 3.1.
+
+### L-1. The TO has two faces; the worker sees one
+
+TO-CE-T-2: 89 lines. Signal -- THE CELL, SURFACES, BOUNDS, six criteria -- about 30. The rest: a 15-line
+`<status>` of POST-HOC prose (push state, prior history, the round's authority chain) sitting FIRST in the
+file; Rule 27 seating; preflight narrative; the compiler-tools mandate; the report clause. A fresh-context
+subagent reads all of it before the first act. **The worker face** (cell text, paths absolute-from-root,
+bounds, criteria per L-2) is the subagent's prompt; **the record face** (status, authority, preflight,
+provenance) stays in the file for the gates and is never sent.
+
+### L-2. One clause per criterion, invocation and expectation inlined
+
+T2-AC3 conjoins five clauses. T9-AC2 is the failure: the worker self-graded PASS having met "only 2 of 4
+ways"; `proof-of-spec-check.py` passed it (rc 0 -- by its own words it "does not grade a criterion's truth");
+the CVO's L9 read caught it (S13). **Mechanical criteria** carry `invocation` + `expect` (a pattern the
+observed output must match); the worker runs and records; the checker greps -- PASS becomes
+machine-decidable. **Judgment criteria** ("stated honestly", "owner named") carry `judgment: true`, are not
+self-graded, and go only to the CVO. A compound criterion is refused at the cut.
+
+### L-3. Split the surprise channel
+
+INVESTIGATION_v1: 33 rows, 1,065 lines; roughly half are the CVO's own L10 stamps, scoped corrections and
+narrative, in the same JSON array as worker surprises; the markdown has collapsed (one bold line at :219 with
+846 lines beneath it). Workers append to `investigations/`; the CVO's adjudications go to their own file
+(`adjudications/`, or a section of the remediation file). L8 intake then reads worker rows only, and the
+CVO's narrative stops inflating the L10 precondition's census. The `adjudicates` carrier already exists; the
+split is a file boundary.
+
+### L-4. comp-adversary's neighborhood should be the decomposition, not the filesystem
+
+On TO-CE-T-2 its "uncited neighborhood" is `org/mcp/broker.db-shm`, `agent-spawn-audit.log`,
+`.last-stimulus-scan` -- directory siblings of one cited path. The tool declares it: *"graph expansion not
+wired -- neighborhood = directory siblings only."* The right neighborhood for a task order is its cell's
+`depends_on` chain, those cells' proof instances, and the PRD rows it cites -- a graph the decomposition
+already carries. Its `T11 admissibility method` slot reads *"ships when CRO's method ratifies"*: that slot is
+this seat's, unfilled, named here as owed.
+
+### L-5. Freeze the decomposition at the cut
+
+v0.1.2 -> v0.2.7 in one day; a tool row's "status now / evidence now" column is now a 400-character running
+ledger. Under one-shot dispatch (4.1) the rectangle has no reason to version mid-round. History lives in the
+proof instances and the CTO's round-N analysis (6.2); the source grain stays clean for the next cut.
+
+### L-6. The acceptance test for v3 already exists
+
+STEP_LOG_COMPILED.round1: 63 rows; per limb L2 2, L3 1, L4 4, L5 3, L6 5, L7 3, L8 3, L9 4, L10 3, **X 35**.
+Fifty-six percent of every seat's acts in round 1 were outside the limbs -- startup, push windows, law
+broadcasts, holds, relays. Andrew's messaging observation, measured on the loop's own instrument. Step 6 of
+section 12 compiles the same log on a v3 run; **X's share is the verdict.**
+
+### On the validator
+
+It works. S13 caught a self-graded PASS that the spec's bar reads as FAIL; S17 caught a PRD row carrying
+`claim=measured` on a subset claim the world contradicts (158 of 2,302 sampled, 38.6% / 58.2%, rc-coded).
+Both came from the CVO reading a proof against the spec. The lever is not depth -- it is L-2 and L-3, which
+cut what the CVO reads so its depth lands where the ambiguity is.
+
 **Push state of this file:** LOCAL on commit; origin UNREAD by this seat; the integrator owns the window.
