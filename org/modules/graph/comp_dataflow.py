@@ -62,6 +62,9 @@ try:
 except Exception:  # pragma: no cover
     _oc = None
 
+sys.path.insert(0, str(_WS / ".tools"))
+import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-7)
+
 # ---------------------------------------------------------------------------------------------------
 # LAYER GRAMMAR -- the canonical-source definition (item-9 core; firm_registry aua_source is the
 # optional G2b enrichment, null-until-bound, wired as a named future refinement, not a dependency).
@@ -165,6 +168,78 @@ def _function_scope(fn: ast.FunctionDef, module_consts: dict) -> dict:
     return scope
 
 
+# ---------------------------------------------------------------------------------------------------
+# UNRESOLVED-REASON classifier (NFRA_COMPEFFICACY CE-t-7): WHY a read renders UNRESOLVED, in the
+# tool's own voice, never resolving anything -- SEPARATE and ADDITIVE from the resolver above, which
+# stays byte-for-byte unchanged (BOUNDS: the enrichment is on the PRINT, not the classification).
+# ---------------------------------------------------------------------------------------------------
+def _is_env_access(node) -> bool:
+    """STATIC AST shape match for a deploy-time-config read: os.environ.get(...), os.environ[...],
+    os.getenv(...). NEVER evaluates the call and NEVER substitutes a value -- this only powers the
+    UNRESOLVED-reason LABEL below (BOUNDS: never guess through deploy-time config to resolve a path)."""
+    if isinstance(node, ast.Call):
+        f = node.func
+        if isinstance(f, ast.Attribute) and f.attr in ("get", "getenv"):
+            base = f.value
+            if isinstance(base, ast.Attribute) and base.attr == "environ":
+                return True                                            # os.environ.get(...)
+            if f.attr == "getenv" and isinstance(base, ast.Name) and base.id == "os":
+                return True                                            # os.getenv(...)
+    if isinstance(node, ast.Subscript):
+        v = node.value
+        if isinstance(v, ast.Attribute) and v.attr == "environ":
+            return True                                                # os.environ["KEY"]
+    return False
+
+
+def _env_derived_names(tree: ast.Module) -> set:
+    """Names (module-level OR function-local, any function) whose assignment's RHS is a deploy-time-
+    config read per _is_env_access(). A SEPARATE pass over the same Assign shapes _module_constants()/
+    _function_scope() already walk -- it never changes what those two resolve (both still return None
+    for an env-access RHS, so the name still falls through to _DYNAMIC exactly as before); it only
+    labels WHY a name that ends up unresolved could not have resolved to anything else."""
+    names: set = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            if _is_env_access(node.value):
+                names.add(node.targets[0].id)
+    return names
+
+
+UNRESOLVED_REASONS = ("DYNAMIC-PATH", "DEPLOY-TIME-ONLY", "FIRM-TREE-ABSENT", "OTHER")
+
+
+def _unresolved_reason(path_expr, resolved: str, env_names: set) -> str:
+    """WHY a read renders UNRESOLVED, from the read's own STATIC shape alone -- MECE over the domain
+    'a read this tool cannot resolve to a canonical-layer path' (Rule 24 record):
+      FIRM-TREE-ABSENT  a literal (non-fully-dynamic) prefix DOES resolve, but it carries no
+                        recognized layer-vocabulary segment anywhere -- a real, traced path that
+                        simply sits outside the layer tree, never an untraced variable.
+      DEPLOY-TIME-ONLY  the value is fully dynamic ({*} only) AND at least one Name node driving it
+                        is a STATICALLY detected os.environ/os.getenv read (_is_env_access) -- known
+                        only by the read's OWN source shape, never by reading the live env var.
+      DYNAMIC-PATH      the value is fully dynamic and at least one real Name drives it, but that
+                        Name's own assignment could not be traced at all (a loop var, a function
+                        parameter, an expression the resolver does not evaluate) -- the docstring's
+                        own words: 'a fully-dynamic key whose path prefix does not resolve to a
+                        module/local constant'.
+      OTHER             the value is fully dynamic and NO Name node drives it at all (a bare call,
+                        subscript, or comprehension result the resolver structurally cannot open) --
+                        the reserved, always-computed fallback so no unresolved read is ever silently
+                        left without a reason (Rule 24 (i), the uncovered-member hunt).
+    Never guesses a VALUE for any of the four -- every branch returns a REASON LABEL only.
+    """
+    stripped = resolved.replace(_DYNAMIC, "").strip("/")
+    if stripped:
+        return "FIRM-TREE-ABSENT"
+    names = {n.id for n in ast.walk(path_expr) if isinstance(n, ast.Name)}
+    if names & env_names:
+        return "DEPLOY-TIME-ONLY"
+    if names:
+        return "DYNAMIC-PATH"
+    return "OTHER"
+
+
 def _parent_fn_map(tree: ast.Module) -> dict:
     """node -> innermost enclosing FunctionDef (or None for module scope)."""
     enclosing: dict = {}
@@ -196,7 +271,9 @@ def _kw(node: ast.Call, name: str):
 
 def trace_file(path: Path) -> dict:
     """Parse one producer script and return its resolved reads (with layer) + output-layer context.
-    reads: [{line, kind, raw, layer, is_served, resolved, exempt, exempt_reason}]."""
+    reads: [{line, kind, raw, layer, is_served, resolved, exempt, exempt_reason, unresolved_reason}].
+    unresolved_reason is one of UNRESOLVED_REASONS when resolved=False, else None -- ADDITIVE
+    (NFRA_COMPEFFICACY CE-t-7): it never changes is_unresolved/resolved/layer, only labels WHY."""
     try:
         src = path.read_text(encoding="utf-8")
     except Exception as e:
@@ -208,6 +285,7 @@ def trace_file(path: Path) -> dict:
 
     src_lines = src.splitlines()
     module_consts = _module_constants(tree)
+    env_names = _env_derived_names(tree)
     fn_scopes: dict = {}
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -288,6 +366,8 @@ def trace_file(path: Path) -> dict:
             "resolved": not is_unresolved,
             "exempt": ex is not None,
             "exempt_reason": ex,
+            "unresolved_reason": (_unresolved_reason(path_expr, resolved, env_names)
+                                   if is_unresolved else None),
         })
 
     reads.sort(key=lambda r: r["line"])
@@ -348,7 +428,16 @@ def _denominator(traces: list) -> dict:
     unresolved = sum(1 for t in traces for r in t["reads"] if not r["resolved"])
     served = sum(1 for t in traces for r in t["reads"] if r["is_served"] and not r["exempt"])
     exempt = sum(1 for t in traces for r in t["reads"] if r["exempt"])
+    # ENRICHED (NFRA_COMPEFFICACY CE-t-7): the unresolved count's OWN reason-class breakdown, always
+    # printed with all four members even at 0 -- a class reading 0 is a MEASURED zero over this
+    # sweep, never an omitted member (Rule 24 (i): a zero row is not a zero denominator).
+    by_reason = {rc: 0 for rc in UNRESOLVED_REASONS}
+    for t in traces:
+        for r in t["reads"]:
+            if not r["resolved"]:
+                by_reason[r["unresolved_reason"]] = by_reason.get(r["unresolved_reason"], 0) + 1
     return {"files": len(traces), "reads_scanned": scanned, "reads_unresolved": unresolved,
+            "reads_unresolved_by_reason": by_reason,
             "served_origin_unexempted": served, "exempted": exempt}
 
 
@@ -384,9 +473,15 @@ def cmd_origin(args) -> int:
             print(f"  L{r['line']:<5} [{r['layer']:<8}] {tag:<22} {r['raw']}")
             if r["exempt"]:
                 print(f"          exemption: {r['exempt_reason']}")
+            # ENRICHED UNRESOLVED PRINT (NFRA_COMPEFFICACY CE-t-7): the reason class on the line, so
+            # a reader can tell WHY without opening the producer -- never resolved by guessing, only
+            # LABELLED from the read's own static shape (UNRESOLVED_REASONS, see _unresolved_reason).
+            if not r["resolved"]:
+                print(f"          reason: {r['unresolved_reason']}")
         d = _denominator([trace])
+        by_reason = ", ".join(f"{k}={v}" for k, v in d["reads_unresolved_by_reason"].items())
         print(f"  DENOMINATOR: {d['reads_scanned']} reads scanned, {d['reads_unresolved']} unresolved-dynamic "
-              f"(blind), {d['served_origin_unexempted']} served-origin flagged, {d['exempted']} exempt")
+              f"(blind) [{by_reason}], {d['served_origin_unexempted']} served-origin flagged, {d['exempted']} exempt")
     return 1 if _served_findings(trace) else 0
 
 
@@ -406,18 +501,58 @@ def _iter_producers(paths: list) -> list:
 
 
 def cmd_gate(args) -> int:
-    """GATE form (item-9): sweep producers, file a structured finding per served-origin read."""
+    """GATE form (item-9): sweep producers, file a structured finding per served-origin read.
+
+    RULE T (NFRA_COMPEFFICACY CE-t-7, PRD v0.4 s.4.4): the ONLY corpus-width loop in this tool --
+    tracing N producer files -- carries a caller-settable wall-clock ceiling via the ONE shared
+    .tools/_compbudget.py (carrier: --budget > env COMP_BUDGET_S > default 90s). `origin` has no
+    such loop (always exactly one file) and exposes no --budget flag at all -- a declared
+    non-application, not an omission: there is no unit to bound there.
+    """
     _emit_contract("gate")
     population = _iter_producers(args.paths)
     if not population:
         print(f"REFUSE: no producer .py files resolved under {args.paths} -- nothing swept, "
               f"nothing concluded (NOT a clean pass)")
         return 3
-    traces = [trace_file(p) for p in population]
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(args.budget)
+    except ValueError as exc:
+        print(f"comp-dataflow: ERROR: --budget {exc}")
+        return 2
+
+    units = sorted({str(p).replace("\\", "/") for p in population})  # deterministic scan order
+    total_units = len(units)
+    if args.cursor:
+        if args.cursor in units:
+            units = [u for u in units if u > args.cursor]
+        else:
+            print(f"comp-dataflow: WARNING: --cursor {args.cursor!r} does not match any resolved "
+                  f"producer -- running the full requested set (no units skipped).")
+
+    clock = _compbudget.Clock(budget_s)
+    by_unit: dict = {}
+    completed: list = []
+    deferred_reasons: list = []
+    for u in units:
+        remaining = clock.remaining()
+        if remaining is not None and remaining <= 0:
+            deferred_reasons.append(f"{u}: budget exhausted before this unit could start")
+            continue
+        by_unit[u] = trace_file(Path(u))
+        completed.append(u)
+
+    traces = list(by_unit.values())
     findings = [f for t in traces for f in _served_findings(t)]
     d = _denominator(traces)
+    n, N, n_deferred = len(completed), total_units, len(deferred_reasons)
+    used_s = round(clock.elapsed(), 2)
+
     if args.json:
-        print(json.dumps({"findings": findings, "denominator": d}, indent=2))
+        print(json.dumps({"findings": findings, "denominator": d,
+                          "budget": {"scanned": n, "total": N, "deferred": n_deferred,
+                                     "budget_s": budget_s, "source": budget_source, "used_s": used_s}},
+                         indent=2))
     else:
         print(f"comp-dataflow GATE (layer-grammar / PSTMRT item-9): {len(findings)} finding(s)")
         for f in findings:
@@ -425,8 +560,23 @@ def cmd_gate(args) -> int:
             print(f"      ref:   {f['ref']}")
             print(f"      read:  {f['served_read']}  (layer={f['read_layer']})")
             print(f"      owner: {f['owner']}")
+        by_reason = ", ".join(f"{k}={v}" for k, v in d["reads_unresolved_by_reason"].items())
         print(f"  DENOMINATOR: {d['files']} producer files swept, {d['reads_scanned']} reads scanned, "
-              f"{d['reads_unresolved']} unresolved-dynamic (blind), {d['exempted']} exempt")
+              f"{d['reads_unresolved']} unresolved-dynamic (blind) [{by_reason}], {d['exempted']} exempt")
+        if n == N:
+            print("  " + _compbudget.within_budget_line(n, N, "producer_file", budget_s, budget_source,
+                                                         used_s))
+        elif completed:
+            args_repr = "comp-dataflow " + " ".join(sys.argv[1:])
+            print("  " + _compbudget.budget_reached_line(budget_s, budget_source, n, N, "producer_file",
+                                                          args_repr, completed[-1]))
+        else:
+            print(f"  BUDGET REACHED: {_compbudget.fmt(budget_s)} s ({budget_source}); scanned 0 of "
+                  f"{N} producer_file(s); results are a PREFIX, not the answer; NO CURSOR YET: no "
+                  f"file completed before the budget hit, so there is no last-processed unit to "
+                  f"resume from; resume: re-run with a larger --budget.")
+        for line in _compbudget.deferred_bucket(n_deferred, N, "producer_file", deferred_reasons):
+            print("  " + line)
     return 1 if findings else 0
 
 
@@ -466,6 +616,15 @@ def main() -> int:
     g = sub.add_parser("gate", help="layer-grammar gate (item-9) over a producer tree/files")
     g.add_argument("paths", nargs="+", help="producer .py files or dirs (gold/silver/backfill swept)")
     g.add_argument("--json", action="store_true")
+    g.add_argument("--budget", metavar="N", default=None,
+                    help="RULE T (PRD s.4.4, shared .tools/_compbudget): wall-clock ceiling in "
+                         "seconds for this sweep (carrier: --budget > env COMP_BUDGET_S > default "
+                         "%s s); --budget 0 = unbounded. Only 'gate' has this flag -- 'origin' "
+                         "traces exactly one file and has no corpus-width loop to bound." % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
+    g.add_argument("--cursor", metavar="PATH", default=None,
+                    help="resume a budget-limited sweep after producer PATH (named in an earlier "
+                         "BUDGET REACHED line's resume command); skips every unit up to and "
+                         "including it, in the same sorted scan order.")
     g.set_defaults(func=cmd_gate)
 
     args = ap.parse_args()
