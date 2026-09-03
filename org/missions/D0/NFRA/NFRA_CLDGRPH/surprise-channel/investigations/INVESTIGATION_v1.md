@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **19 rows** (S1-S20, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:5xZ by `2.0.0_SA_COO~A` on appending S20 (was 18); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **20 rows** (S1-S21, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:2xZ by `0.7.0_AE_CloudOps~S` on appending S21 (was 19); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -821,6 +821,42 @@ The base CVO's lateral record at commit b5d228fe62 places NFRA_COMPEFFICACY-S15 
     "spec_asserts": "PRD v0.4 R5 (@25c66d3358) and FWD-2/FWD-4 assume the worker runs the existing engine and that the projection it publishes is the estate's graph; a derived edge count of zero is read by every consumer as a genuine absence.",
     "world_is": "The deriver reports a FAILED notification read as ZERO edges (bare except), so the TRIGGERS edge from S3 buckets to Lambda is empty on the live graph while the Terraform declares the resources; a consumer cannot distinguish that zero from a real absence, and the ported worker would publish the same zero under a fresh vintage every night.",
     "notes": "Mid-round the spec is frozen: no order is amended for this. ISSUER'S ROUTE RECOMMENDATION for the round-2 stamp (3.0.0_SA_CVO~A's disposition): SPEC_ERROR with loop_target 6 and owner 2.0.0_SA_COO~A -- an L6 order against the engine files in a later round (the shape the surfacing seat would recognise: a failed notification read reported as UNREADABLE, never zero; the TRIGGERS edge derived from the declared aws_s3_bucket_notification resources as a second source; a denominator of buckets read versus unreadable on every build). Not a fix under TO-CG-B-2 (the four ruled fixes are S2/S3/S8/S9's) and not under TO-CG-B-3. The disarm this round is this row plus the route; the hazard stays ARMED until the derive reports the read state. Filed by the issuer as the seat that read the lateral, per the base CVO's 93697 (asked of nobody; a row by the seat that reads it)."
+  }
+]
+```
+
+## S21 -- the first post-fix real-stamp projection was deliberately stopped by CG-s-3
+
+The task's exit 137 initially resembled an OOM, but the ECS task face resolves it: `stopCode` is
+`UserInitiated` and the supplied stop reason names CG-s-3. The explicit 16 GiB sizing therefore was not
+falsified by this run; the B2 exercise was interrupted from outside the task before it could measure peak
+RSS or publish an artifact.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S21",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T16:28Z",
+    "one_line": "The first post-fix real producer stamp correctly traversed S3 -> SQS -> Pipe -> projection task, but task 6aa88972790949a5bbe9b315381ec895 was explicitly stopped after about 288 s of engine time with ECS stopCode UserInitiated and stoppedReason 'CG-s-3 prevent pre-contract image collision at released vintage'; exit 137 is the consequence of that external stop, not evidence of a 16 GiB OOM, and B2-AC6 remains unexercised with zero projection artifacts.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Real marker committed_at_iso 2026-09-03T16:21:26.406073+00:00 / writer_id derive_runner / ETag 1e65605ed5ae82abb97dadf94ee0d945 produced SQS message e089eaf4-7544-49d7-9229-9864e5f3e9a3 and Pipe execution 5203b1a7-c5eb-45ca-8c6e-1aa057224557, which launched task 6aa88972790949a5bbe9b315381ec895",
+        "ECS describe-tasks: startedBy 'Started by Eventbridge Pipes'; task definition globgrph-projection-worker:2; image digest sha256:3a4e078d2c65c0243f2aac3c2ad033ac7a154c12cc46d7b9998cf37601188486; task and container override cpu 2048 / memory 16384",
+        "ECS describe-tasks: startedAt 1788452507.355; stoppingAt 1788452795.641; executionStoppedAt 1788452837.073; stoppedAt 1788452860.647; stopCode UserInitiated; stoppedReason 'CG-s-3 prevent pre-contract image collision at released vintage'; container exitCode 137",
+        "The worker log contains PROJECTION_EVENT pipe-filtered-records and no PROJECTION_RESULT or PROJECTION_ERROR; list-objects-v2 under projection/ remains zero, so the external stop left no partial published artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "B2-AC6 requires the full-cold real-stamp run to complete with cloud duration and peak memory, and the decomp places CG-s-3 downstream of this worker's versioned artifact handoff; the issuer separately released CG-s-3 Phase B only on the statement that no further Python edit was pending, not by authorizing termination of B2's running exercise.",
+    "world_is": "The real trigger path is proven through task launch, but a user-initiated CG-s-3 stop terminated the B2 task before its engine measurement and artifact publication. This run cannot prove or disprove the chosen memory size and cannot close the exercised criterion or ledger L4.",
+    "notes": "Blocking coordination question to the issuer: rule whether this seat retries the exact projection task against the still-real marker HEAD after CG-s-3's collision window is cleared, or waits for another real stamp. Preserve the stopped task as evidence; do not relabel exit 137 as OOM, do not delete or manufacture a marker, and do not close B2-AC6 or the ledger on this interrupted run. Messaged to 2.0.0_SA_COO~A in the same turn."
   }
 ]
 ```
