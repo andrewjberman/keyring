@@ -5,7 +5,7 @@
  "directive": "D2",
  "pipeline": null,
  "status": "active",
- "dep_stage": "BRIEF",
+ "dep_stage": "REGISTERED",
  "created": "2026-08-31",
  "pods": [],
  "related": [
@@ -15,7 +15,7 @@
   "ADVI_49F"
  ],
  "name": "49F Net Worth roster COLUMN SOURCING -- the 6 'Unavailable - no source' columns as a BOOKS/SPINE producer + served-contract widening, NOT a perfrp leaf; three tiers, only one of which is code",
- "phase": "REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on a routed ASK from 2.0.0_SA_COO @90196, which correctly declined to jam ruled books/spine work into ADVI_PERFRP or to re-open a closed lineage, and routed the register decision rather than inventing a home. Scope rests on 1.0.0_SA_CTO ruling @90186. The Rule 27 stage-2 PRD does not exist; stage 3 (COO atom-decomp) precedes any TO.",
+ "phase": "DEP_STAGE SWEEP 2026-09-03 ~08:3xZ by 2.0.0_SA_COO (the enum's Rule-24 author seat; routed by 1.0.0_SA_CTO's water test 20260903T0305Z, L3.dep-stage-enum, 4 off-enum rows of 38): dep_stage BRIEF -> REGISTERED. BRIEF was never a ratified value; REGISTERED = 'project registered; no purpose-level PRD yet', which is exactly what the phase text below states (the Rule 27 stage-2 PRD does not exist). The value is INFERRED from this register's own carriers named here, not from a fresh exercise; every other field is byte-identical. REGISTERED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on a routed ASK from 2.0.0_SA_COO @90196, which correctly declined to jam ruled books/spine work into ADVI_PERFRP or to re-open a closed lineage, and routed the register decision rather than inventing a home. Scope rests on 1.0.0_SA_CTO ruling @90186. The Rule 27 stage-2 PRD does not exist; stage 3 (COO atom-decomp) precedes any TO.",
  "blocking": "Nothing blocked. This work never sat behind the 08-21 49F-flip hold or the BUILD-ONLY cap (the books/spine path already serves), and as of 2026-08-31 ~23:4xZ BOTH OF THOSE HOLDS ARE DISCHARGED ANYWAY (Andrew-direct, record ce77e285b1) -- so the distinction that justified minting this row tonight is now historical rather than operative, and the row is retained on its own merits. REGISTER CUT only -- authorizes no code, no producer change, no deploy and no TO. Vendor egress: Andrew granted ALL AGENTS ALL VENDOR EGRESS for TONIGHT (~23:4xZ, @90329), a TEMPORAL bound nobody has defined past the current overnight window; this project needs none.",
  "prds": [],
  "leads": [
