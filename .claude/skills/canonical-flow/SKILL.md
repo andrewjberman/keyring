@@ -33,6 +33,43 @@ Read `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` in full at HEAD: section 1 
 instruments and artifacts), section 2 (role exclusivity), section 3 (limb, owner, `dep_stage`, refuser).
 Everything below keys on that file's grammar; where this skill and the spine differ, the spine governs.
 
+## Step 0b -- The project tree: folder structure and key paths
+
+**Normative carrier: `org/standards/PROJECT_TREE.contract.json`** (the tree as DATA; gates and the generator read
+it, never prose). Reasoning and the artifact inventory per limb: `org/tier1_exec/2.0.0_SA_COO/deliverables/SPEC_PROJECT_TREE_DIRECTIVE_MACRO_PROJECT_20260902.md`
+(sections 1, 3, 5a, 6). Lanes per folder: `.owned-paths.yaml`. What follows is the shape at contract 0.1.1,
+restated once so a seat can orient without opening the contract; where they differ, the contract governs.
+
+```
+org/missions/D<n>/<MACRO>/<CODE>/                 three levels, each an enum:
+  |                                                 D<n>   in org/missions/DIRECTIVES.yaml (directives.<D>; placement, members)
+  |                                                 MACRO  ^[A-Z]{4}$, RATIFIED per directive in org/missions/MACROS.yaml
+  |                                                 CODE   ^[A-Z]{4}_[A-Z0-9]{4,12}$
+  +-- project.json                                  the register row IN its folder: dep_stage, fabric, directive, leads    (L3; lane TREE_PROJECT_ROW, CTO)
+  +-- brief/                                        L1 output                                                                (lane TREE_CRO)
+  +-- prd/<CODE>_PRD.md                             L4 output: PRD_HEADER block + ENDPOINT section + surface manifest       (lane ANY_CTO)
+  +-- decompositions/<CODE>_DECOMP.md               L5 output: the rectangle + four-postulate record                        (lane TREE_COO)
+  +-- task-orders/<CODE>.TO-<cell>.<slug>.md         L6 output (hyphen, tree spelling); a NEW file commits only as COO;
+  |                                                   a worker commits its own status flip                                  (lane ANY; gates are the control)
+  +-- deliverables/<serial>/                         L7 outputs: <tool>.result.md, <TO>.proof_of_spec.json                   (owner carried by the path)
+  +-- surprise-channel/investigations/INVESTIGATION_v{N}.md   L7/L8 rows, append-only, the seat that sees it appends        (lane ANY)
+  +-- surprise-channel/remediations/REMEDIATION_v{N}.md       L9/L10 rows: route + loop_target, the one slug               (lane TREE_CVO)
+  +-- ledger/                                        deploy-completion / change-management entries; STEP_LOG.<serial>.round<N>.json (lane ANY)
+  +-- cards/                                         substrate cards for what the project builds on                          (lane ANY)
+
+org/projects/<CODE>.json                            the flat index entry, GENERATED from the tree for tree projects (derive --write);
+                                                    hand-written for legacy flat projects (never overwritten, refusal R3)
+org/projects/REGISTRY.md                            the human register row
+docs/architecture/<CODE>_PRD.md                     a legacy flat PRD's home; a tree project's PRD lives at prd/ and this becomes a stub
+org/surprise_channel/<CODE>/                        the legacy flat channel (investigations lane ANY; remediations CVO)
+```
+
+**Tools of the tree:** `python .tools/missions-tree-index.py check` (tree <-> index <-> DIRECTIVES.yaml; every
+denominator printed; refusals R1-R5, ROW-*, INDEX-*), `... derive --write` (refresh the generated index entries),
+`--self-test`; the commit-time validator `.tools/git-hooks/missions-tree-check.sh` (installed per device by
+`install-missions-tree-check.sh`; fail-closed on any staged tree or register path). **PROSPECTIVE ONLY:** a legacy
+flat project enters the tree the first time it is picked up (its L3 under the tree grammar), never by back-fill.
+
 ## Step 1 -- LOCATE the project on both roots, and stop if it is not yours to pick up
 
 Measure each of these; ABSENT is a value, not a guess. Print the table.
