@@ -21,6 +21,38 @@
 
 ---
 
+## LIMB OBLIGATIONS -- v2 (LD-0530, Andrew-direct 2026-09-03: "COOs should be very aggressive in driving L5 L6 activity" / "I agree completely")
+
+**The tick's unit is the measured LIMB of each in-scope project** in the `/canonical-flow` grammar (Ln, round, task
+orders terminal of total, decomposition cells covered of those serving an ungraded FWD), read from the tree's
+artifacts (`project.json`, task-order faces, the decomposition, the remediation doc), never from the register's status
+word. **Run these five, in order, at every tick, BEFORE Step 2b's agent triage.** Brief:
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_DRIVE_V2_LIMB_DRIVEN_COO_LOOP.md`.
+
+1. **Graduated round -> L5/L6 SAME TICK.** A stamped round with graduated rows (`SPEC_ERROR` -> L6,
+   `DECOMP_INVALIDATING` -> L5) is acted on in the tick that reads it: the decomposition amended, the orders cut. Never
+   scheduled for a later tick.
+2. **WIDTH RULE at L6.** Every uncovered cell that serves an ungraded FWD and has no unmet dependency is cut THIS tick,
+   one order per cell, one cell per lane; lanes seated via `/mstr-spawn` in the same tick under the COO's spawn
+   authority. **No dispatch cap** (the Step 5 cap is retired); the bound is the decomposition's dependency axis. A cell
+   that serves no FWD is never cut for coverage's sake: the completion marker is the FWDs.
+3. **Terminal orders -> L8 compile NOW.** Every task order terminal with no L8 compile packet is compiled by the COO in
+   this tick. The compile is the COO's own act, not a wait.
+4. **The L8 packet at the CVO.** No READ ack at one tick -> nudge citing ground truth; at two ticks -> `[STUCK]` to
+   `0.0.0_AB_MSTR` naming the packet and the clock. Two ticks, not three.
+5. **Idle lane + uncovered FWD-serving cell = a DEFECT** written in this tick's log row, never a state; the remedy is
+   obligation 2 in the same tick.
+
+**Gate:** a tick that reads a stamped-with-graduations round, a terminal order without a compile, or an idle lane
+beside an uncovered FWD-serving cell, and fires nothing on it, FAILS Step 6 regardless of what Step 2b found.
+
+**COMPANION TICK at `3.0.0_SA_CVO` (CVO MODE, same LD):** the CVO runs this skill scoped to its own limbs -- an L8
+compile packet received -> L9 adjudication and the L10 stamp in the tick that reads it; a packet older than one tick
+without a stamp is the CVO's own defect row; `[STUCK]` to `0.0.0_AB_MSTR` at two ticks when the stamp is blocked outside
+the CVO's power. Cadence and log as below; obligations 1-3 and 5 do not apply in CVO mode.
+
+---
+
 ## Invocation
 
 | Form | Behavior |
@@ -30,7 +62,7 @@
 | `/drive once` | One cycle. No cron. |
 | `/drive off` / `stop` | `CronList` → `CronDelete` any `/drive` cron. No cycle. |
 
-Cadence: **20m while ACTIVE > 0; 30m when ACTIVE = 1-2 and all advancing; 60m only when ACTIVE = 0.** Never disable while ACTIVE > 0.
+Cadence (v2, LD-0530): **20m STANDING while any in-scope project reads `EXECUTING` / `ROUND_CLOSE` / `DECOMP`; 60m only when none does.** **Standing ON for `2.0.0_SA_COO` (base) from LD-0530's landing -- Andrew-direct 2026-09-03 "I agree completely" supersedes the LD-0288/0289/0293 standing OFF for the base COO's `/drive`.** Lane COOs (`~A` etc.) run the same tick over their own team's project. Never disable while a project is in the loop.
 
 ---
 
@@ -78,7 +110,7 @@ alive, Rule 27 (TOs from decomp cells only, seats via MSTR), identity gate, RAVC
 
 ## Step 0 — Identity gate
 
-Scoped to **`2.0.0_SA_COO`**. Any other serial halts with:
+Scoped to **`2.0.0_SA_COO`** (base and lanes), and to **`3.0.0_SA_CVO`** (base and lanes) in CVO MODE only (the companion tick under LIMB OBLIGATIONS, LD-0530). Any other serial halts with:
 
 > `/drive is a COO-scoped skill. Your serial is {serial}, not a COO. MCP the COO directly with the ask.`
 
@@ -218,17 +250,10 @@ Cross-check with `get_live_agents()` + `get_org_summary()`.
 
 ### 2b.2a — Movement check + dependency-liveness gate (the anti-coast core)
 
-> ### ⚠ EVERY LIVENESS DETECTOR HERE HAS BEEN WRONG AT LEAST ONCE. **Two signals agreeing convict. One absence convicts nothing.**
-> - **Telemetry has BLACKOUT WINDOWS.** `0 work-calls` **only opens an inquiry** — never convicts. Corroborate with a telemetry-independent writer (commits).
-> - **`u` (undelivered) and `w` (watcher `ps` count) are BANNED as delivery oracles, jointly and severally.** A single orphaned watcher sets both green — it *drains* the inbox (`u==0`) while its agent is deaf. **A fully deaf agent produces the strongest possible REACHABLE verdict.**
-> - **A file in `read/` observes the WATCHER, not the AGENT.** `mv` preserves mtime, so no artifact on disk can date a delivery.
-> - **`channel push` measures `liveness.json`, not deafness.** `pushed=False` is a fact about the SENDER. Never report it as a recipient verdict.
-> - **`ps -ef | grep …` needs `grep -v grep`** (it matches itself) and **cannot see detached native-Windows processes.** MSYS `ps -p 1` returns zero rows, so a healthy `ppid=1` wrapper reads as an orphan.
-> - **The only sound oracle is something only a live consumer can produce: an agent-side ACK.** It does not exist yet.
->
-> **Do NOT run `/watcher rearm`** — `TaskStop` does not reap the grandchild, so the repair procedure *generates* the orphan it is meant to clear. **REAP BEFORE RESPAWN.**
-> **Do NOT "clean up" `flat_orphans`** — they are the only evidence the dispatch path is broken.
-> → `DRIVE.md §4`
+> ⚠ **Every liveness detector here has been wrong at least once -- two signals agreeing convict; one absence
+> convicts nothing.** The full oracle doctrine (telemetry blackout windows; `u` and `w` banned as delivery oracles;
+> `read/` observes the watcher, not the agent; `channel push` measures the sender; the `ps` traps; never `/watcher
+> rearm`; never clean up `flat_orphans`) is **`DRIVE.md §4a`** -- moved there whole under LD-0530, same wording.
 
 **(A) MOVEMENT.** Compare each hot-TO owner against the prior tick. **PAIRED MODE: the window is LOG-DERIVED** -- this seat's last SUBSTANTIVE drive log plus the ledger's `consumed` timestamps (rules 5 + Step 7's paired-mode note), NEVER the base-keyed marker, which a second lane clobbers. Estate (unpaired) `/drive` uses its legacy `org/mcp/.last-drive-<base>` marker.
 - **MOVED** (≥1 work-call OR commit since last tick) → ADVANCING; attest with the real timestamps, never the self-report.
@@ -282,7 +307,7 @@ Blocked project + stale owner ⇒ unblock the agent first. Advancing project + u
 
 ## Step 5 — DISPATCH
 
-Fire every classified action via `mcp__opal-agent-comms__send_message` **this cycle**. Subject prefix `[DRIVE]` / `[STUCK]` / `[SYNC]`. Body cites project code + phase + reason + expected RAVC2 window. **Cap 5 per cycle**; surface the rest as carry-forward.
+Fire every classified action via `mcp__opal-agent-comms__send_message` **this cycle**. Subject prefix `[DRIVE]` / `[STUCK]` / `[SYNC]`. Body cites project code + phase + reason + expected RAVC2 window. **No cap (v2, LD-0530): every order the width rule produces is cut this cycle; the bound is the decomposition's dependency axis.** (The former cap of 5 was a flat-world anti-over-driving rule; it would have refused a wide round.)
 
 ## Step 6 — Hard gate
 
@@ -296,7 +321,7 @@ Fire every classified action via `mcp__opal-agent-comms__send_message` **this cy
 
 **A committed drive log is written ONLY on a SUBSTANTIVE tick:** ≥1 dispatch fired, a ledger row **WITH AN `unblocks` PAYLOAD** newly consumed (a closure/bookkeeping row — no `unblocks` key — is consumed silently and rides the next substantive log's delta line; COO ruling on COO~X's 76915 edge, 2026-08-27), a classification CHANGED (a seat entering/leaving PARKED/STUCK, a project changing class), or a finding surfaced. **A quiet tick writes NO file** — Step 8 close only (heartbeat; marker only in ESTATE mode per Step 8's branch), the `/log` no-delta precedent. Each substantive log's delta line covers the quiet ticks since the last one, so the record stays gapless without the noise files. Gate: a `[STUCK]` escalation or a PARKED conviction still requires a logged tick — convictions never rest on an unlogged window. → `DRIVE.md §5`
 
-When a log IS written: **`org/tier1_exec/{RUNNING_SERIAL}/drive_log_{YYYYMMDDTHHMMZ}.md` — the path DERIVES from the serial running this tick, base or lane (`2.0.0_SA_COO~X` writes under `2.0.0_SA_COO~X/`). ⛔ NEVER HARDCODE A LANE HERE** — a literal sends every lane into one directory and `ls -t` then returns the wrong lane's log as your cursor. CTO ruling @82648(a); incident + measurements → `DRIVE.md §5`. findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
+When a log IS written: **`org/tier1_exec/{RUNNING_SERIAL}/drive_log_{YYYYMMDDTHHMMZ}.md` — the path DERIVES from the serial running this tick, base or lane (`2.0.0_SA_COO~X` writes under `2.0.0_SA_COO~X/`). ⛔ NEVER HARDCODE A LANE HERE** — a literal sends every lane into one directory and `ls -t` then returns the wrong lane's log as your cursor. CTO ruling @82648(a); incident + measurements → `DRIVE.md §5`. the LIMB TABLE first (`project | limb | round | TOs terminal/total | cells covered/FWD-serving | act fired this tick`, v2 LD-0530), then the findings table (Project | Class | Owner | Last-touch | Action), dispatch count, gate status. **Findings and incident detail go in the log — not into this skill.** Commit via `.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -F <msgfile> -- <paths>` (the message file by a NON-SHELL writer — `python -c` is a shell-parsed region, measured 2026-08-27).
 
 ⛔ **RESOLVE THE CURSOR FILE BY AUTHOR, NEVER BY MTIME — AND REFUSE ON AMBIGUITY, DO NOT PICK (CTO ruling @82648(b)).** A candidate whose last author is not the running serial, or which has >1 author, **FAILS LOUD**; a resolver that silently picks hands back a plausible wrong answer. Exact match only — `--author=` is a SUBSTRING and matches `~X`. → `DRIVE.md §5`
 
