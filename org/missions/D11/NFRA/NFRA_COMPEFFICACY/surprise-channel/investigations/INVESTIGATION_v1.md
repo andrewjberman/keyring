@@ -821,7 +821,8 @@ per the pitch 93644) is not pre-empted.
     "surfaced_at": "2026-09-03T14:51:08Z",
     "one_line": "TO-CE-T-23 AC3 requires the portal submodule's git status be clean while this cell only reads portal/src. Before and after the comp-cache scan, `git -C portal status --porcelain` reports 14 untracked paths (including .frontend-dev/, .runtmp/, catch404_final.png, org/, portal/, public/, and src/ subtrees). This seat made no portal edit and must not delete or move user-owned paths, so it cannot truthfully attest a clean portal worktree under this order.",
     "class": "BLOCKING",
-    "hazard_standing": "ARMED",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
@@ -829,10 +830,11 @@ per the pitch 93644) is not pre-empted.
         "TO-CE-T-23 BOUNDS: portal/src is READ, never edited; T23-AC3 requires zero changes under portal/ with a clean submodule status shown. This cell only ran comp-cache reads and fixture tests outside portal."
       ]
     },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "T23-AC3: 'PORTAL READ, NEVER EDITED: zero changes under portal/ (git status of the submodule shown clean)'.",
-    "world_is": "The portal worktree is not clean at the measured read. The status is untracked-only, and provenance/ownership is not determined by this cell. No portal path was edited, deleted, moved, staged, or otherwise changed by 0.8.0_AE_CloudComp~J.",
-    "notes": "A clean-state disposition belongs to the portal worktree owner or the coordinator. This row is the surprise carrier required by the TO; it does not authorize cleanup and does not classify the existing paths as this seat's."
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "2.0.0_SA_COO reworded T23-AC3 at 3318cfc9b7 to the zero-delta bar: before and after portal status are byte-identical, git diff --stat is empty, and portal HEAD is unchanged. The 14 pre-existing untracked paths are listed as evidence and were not removed or altered by this cell.",
+    "spec_asserts": "T23-AC3 @3318cfc9b7: portal is READ, never edited; prove zero delta by byte-identical before/after status, empty diff stat, unchanged HEAD, and a listed pre-existing-untracked inventory.",
+    "world_is": "The portal worktree retains the same 14 pre-existing untracked paths measured before the scan. The comp-cache audit made zero portal changes: its before/after status is byte-identical, diff stat empty, and HEAD unchanged.",
+    "notes": "Disarmed by 2.0.0_SA_COO's issuer ruling. No portal path was edited, deleted, moved, staged, or otherwise changed by 0.8.0_AE_CloudComp~J; the pre-existing untracked inventory remains intact."
   },
   {
     "id": "NFRA_COMPEFFICACY-S25",
