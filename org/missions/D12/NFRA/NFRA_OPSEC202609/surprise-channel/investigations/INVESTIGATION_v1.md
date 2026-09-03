@@ -210,7 +210,23 @@ L8 reads below were appended at this write; no row was added or changed by it.
   instance; TO-OP-S-3 `pending` (deploy commit reports DEPLOYED-VERIFIED); TO-OP-S-5 and TO-OP-S-8 `staged`. The L10
   precondition (every task order terminal with a valid instance; every item dispositioned) is not met; the L9 slug and
   any route wait on it. The self-drive tick-1 verdict on OP-x-1 (the probe list) went to the driver at 09:06:12Z (delivery
-  file 20260903T090612Z_3.0.0_SA_CVO_Z_VERDICT_on_SELF-DRIVE_NFRA_OPSEC202609_t.md; the receipt carried no numeric id).
+  file 20260903T090612Z_3.0.0_SA_CVO_Z_VERDICT_on_SELF-DRIVE_NFRA_OPSEC202609_t.md; the receipt carried no numeric id;
+  the driver's landing 19590 names it 19584, ledger row 1).
+
+- **ROUND-1 STATE, second read (09:1xZ):** TWO of four task orders terminal -- TO-OP-S-17-16 `complete` @f9b2a16c2c and
+  TO-OP-S-3 `complete` @a491aaec8c (instance @3c32f20c38); TO-OP-S-5 (`~Z`) and TO-OP-S-8 (`~S`) open on those flips
+  per their GOs. Both instances checked at this seat on an instrument other than the checker: 0 schema errors each
+  (Draft7 against PROOF_OF_SPEC.schema.json), and every `surprises` entry resolves to a channel row by my own reader
+  (S-17-16: Z-S3/Z-S4/Z-S5/Z-S11, 4 of 4; S-3: Z-S2/Z-S10, 2 of 2); the UNCOMPUTABLE-BY-CONSTRUCTION rows are exactly
+  S17-AC1 (three deferred limbs, each with its row and disarm record) and S3-AC5 (the probe, now authorized by ledger
+  row 1 and computable when it runs). The issuer's own coverage runs (19595: expected ids passed, VALID rc=0 both) are
+  the second instrument the L9 grades cite. Two accepted deviations on S-3 for L9: the header name is
+  `X-Opal-Origin-Verify` (the PRD names none; a distinct name removes an asserted precedence dependency on the inert
+  edge injection at `auth-validator-edge/index.mjs:392`), and both consumers cache the secret at 300 s against the
+  runbook's 600 s wait (the worker's first build cached unbounded, which would have falsified deliverable 4's rotation
+  claim -- caught before the leg closed). Z-S11 is now closed on BOTH halves: the face @beacddcf26 (issuer) and the
+  checker @50ff3d674a (`1.0.0_SA_CTO~Z`: `cell_refs` split on comma and/or whitespace, documented in
+  `org/standards/DECOMP_CELL_ID_CONVENTION.md`); at the stamp it takes no route. Twelve rows; nothing new since S12.
 
 ```json
 [
@@ -514,6 +530,60 @@ L8 reads below were appended at this write; no row was added or changed by it.
    ]
   },
   "notes": "THE FOURTH ROW OF ROUND 1 WHOSE CAUSE SITS IN THE ISSUANCE HALF (key, roles, target, and now a separator) -- three referents asserted without a read, and one convention copied from the face's own <owned_cells> line that the checker accepts there and refuses one line down. The round-2 cut rule extends by one clause: every multi-value attribute on a face is written in the separator the reading tool declares, and where the tool declares none, single values only. WHAT THIS ROW IS NOT: a re-file, an edit to Z-S11, or a disposition of it (the CVO's)."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S13",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z (L7 worker, OP-s-5, at the face's mandated Phase-1 pre-write read)",
+  "surfaced_at": "2026-09-03T09:14:00Z",
+  "one_line": "TO-OP-S-5 asserts WAF logging is OFF on BOTH ACLs and instructs this cell to create it on both. At my vintage the REGIONAL ACL opal-gateway-waf ALREADY HAS a logging configuration -- live, delivering to log group aws-waf-logs-opal-gateway (the exact group name the TO specifies) with 84,723,696 bytes stored, declared in Terraform at infra/aws/terraform/opal-gateway/waf.tf:194 with the authorization and cookie redactions already present. Only the CLOUDFRONT ACL is genuinely unconfigured (WAFNonexistentItemException). Two consequences: the group's retention is 90 d, not the 400 d the TO specifies; and the file that owns it is infra/aws/terraform/opal-gateway/waf.tf, which is NOT inside the lane the TO declares for the gateway WAF (infra/aws/ec2/opal-gateway/**).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer) -- two calls, neither the worker's to make alone: (a) whether the existing 90 d retention on aws-waf-logs-opal-gateway is RAISED to the TO's 400 d, and (b) if so, whether this seat may edit infra/aws/terraform/opal-gateway/waf.tf, which the TO's own Lane clause does not name. NOT BLOCKING: the CloudFront half of leg 1 is genuinely absent, squarely in lane, and is being built now.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "LIVE 2026-09-03: aws wafv2 get-logging-configuration on the CLOUDFRONT ACL (arn ...global/webacl/opal-cloudfront-protection/a09833c0-4043-49fc-a92c-0dcdeaff9abd) -> WAFNonexistentItemException, i.e. NO logging configuration. The brief's F3 claim holds for THIS ACL.",
+    "LIVE 2026-09-03: the same call on the REGIONAL ACL (arn ...regional/webacl/opal-gateway-waf/181df35e-e886-40c6-a8dc-9d0b60346a44) RETURNS a LoggingConfiguration: LogDestinationConfigs = [arn:aws:logs:us-east-1:313476888478:log-group:aws-waf-logs-opal-gateway], LogType WAF_LOGS, LogScope CUSTOMER, ManagedByFirewallManager false, and SIX RedactedFields -- authorization, cookie, x-amzn-ava-user-context, x-amzn-oidc-accesstoken, x-amzn-oidc-data, x-amzn-oidc-identity.",
+    "LIVE 2026-09-03: aws logs describe-log-groups --log-group-name-prefix aws-waf-logs- -> exactly ONE group, aws-waf-logs-opal-gateway, retentionInDays 90, storedBytes 84723696. The stored bytes are the discriminator: this is not a declared-but-idle configuration, it has been receiving records.",
+    "DESIRED plane: infra/aws/terraform/opal-gateway/waf.tf:194 resource aws_wafv2_web_acl_logging_configuration \"gw\"; :195 log_destination_configs = [aws_cloudwatch_log_group.waf.arn]; :200-226 six redacted_fields blocks; :20 resource aws_cloudwatch_log_group \"waf\" with :23 retention_in_days = 90. So the live state is IaC-declared and not console drift.",
+    "TO-OP-S-5 face @5494591e91 title: 'WAF logging on both ACLs, CloudFront access logs, ALB access logs -- all OFF today'; deliverable 1: 'WAF logging on BOTH ACLs to CloudWatch Logs ... opal-gateway-waf (REGIONAL) -> aws-waf-logs-opal-gateway ... Retention 400 days on both groups'; compiler_tools_mandate phase 1 step 1 expect: '0 logging configurations today (the brief's zero re-measured)', if_mismatch 'STOP; a logging configuration already present is a row before any edit'.",
+    "TO-OP-S-5 face Lane clause names 'the gateway ALB / regional WAF Terraform under infra/aws/ec2/opal-gateway/**'; the resource actually lives at infra/aws/terraform/opal-gateway/waf.tf. Measured: the path the TO names is not the path that holds the resource."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OP-S-5: WAF logging is OFF on both ACLs today and this cell creates it on both, with retention 400 d on both groups; the gateway/regional WAF Terraform lives under infra/aws/ec2/opal-gateway/**; Phase-1 expects 0 logging configurations.",
+  "world_is": "One of the two ACLs (REGIONAL opal-gateway-waf) already has a live, IaC-declared logging configuration delivering to the exact log group the TO names, with the two required redactions already in place plus four more, and 84.7 MB already stored. Its retention is 90 d rather than 400 d -- which SATISFIES FWD-5's stated ACCEPT bar (>= 7 d, S5-AC5) but not the TO's specified setting. The owning file is infra/aws/terraform/opal-gateway/waf.tf, outside the lane the TO declares. The CLOUDFRONT ACL is genuinely unconfigured, so half of deliverable 1 is real work and half is already done.",
+  "notes": "WHY A ROW AND NOT A HALT: the face's Phase-1 step says STOP on this mismatch, and the row is that stop discharged -- the estate's standing rule is to append a row and keep working, and the work that remains (the CloudFront ACL half) is untouched by this finding, in lane, and proceeding. NOTHING WAS EDITED on the regional side. WHY IT MATTERS: had this seat followed deliverable 1 literally it would have authored a SECOND aws_wafv2_web_acl_logging_configuration for an ACL that already has one -- wafv2 permits one logging configuration per ACL, so the apply would either have failed or silently replaced a working control that is currently capturing gateway traffic, and replacing it at 400 d would also have been an unrequested change to a module this TO does not name. THE RETENTION QUESTION IS GENUINELY OPEN, not a defect: 90 d clears the criterion's own bar (S5-AC5 is '>= 7 d on every destination', with 400 d described as 'the settings'), so the two halves of the TO disagree about what is being asserted, and only the issuer can say whether mirroring C-8 at 400 d is worth an out-of-lane edit to a live control. SCOPE BOUND: this row is about the REGIONAL ACL only; the CloudFront ACL's absence is re-measured and confirmed. FALSIFIER: if get-logging-configuration on the regional ACL later returns WAFNonexistentItemException, this row is wrong and the TO's premise was right."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S14",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~S (L7 worker, TO-OP-S-8, re-grounding the five tables at their REAL declaration carrier before any write)",
+  "surfaced_at": "2026-09-03T09:16:35Z",
+  "one_line": "opal-partner-demo is LIVE but NOT TERRAFORM-MANAGED, so TO-OP-S-8 DELIVERABLE 3 directs a Terraform SSE/PITR change on a table Terraform does not own. Three carrier claims on the face are wrong and they share one root: (a) the module's instantiations are in infra/aws/terraform/partner-firms/, NOT under partners-api/** as the Lane says; (b) there are THREE instantiations (49financial, cottonwood, inflection), not the four the mandate's step-2 expects; (c) the fourth, opal-partner-demo, is absent from source (0 literal hits over 530 files; no firm_id=\"demo\" anywhere) AND from every initialized module's terraform state. The other four tables are managed and their work proceeds.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, L6). Bringing an unmanaged live table under Terraform is a `terraform import`, which is materially more than the face's 'five settings on five tables' and carries the estate's own recorded resurrection/drift hazard (shared-infra/s3.tf documents a declaration that outlived its deleted bucket and would have recreated it). The alternative -- an out-of-band `aws dynamodb update-table` -- is a console-equivalent act against the face's Terraform bound. Either is a scope decision, not a worker's. SURFACED, NOT ADJUDICATED. DISARM = the issuer rules which: import the table as part of this cell, split it into its own cell, or defer the demo limb and cut S8-AC1/AC2/AC3's denominators from five to four.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "comp-find 'opal-partner-demo|partner_demo' --files infra/aws/terraform -> 0 hit(s) across 530 file(s) scanned. NOTE this arm alone is NOT sufficient: the module CONSTRUCTS the name as \"opal-partner-${var.firm_id}\", so a literal probe structurally cannot find an instantiation -- which is exactly why the constructor's input was searched too.",
+    "comp-find 'firm_id *= *\"demo\"|firm_demo|\"demo\"' --files infra/aws/terraform -> 1 hit, and it is infra/aws/terraform/ticket-center/main.tf, unrelated to partner tables. No demo instantiation exists in source.",
+    "comp-find 'partner-firm-table' --files infra/aws/terraform -> 4 hits: partner-firms/49financial.tf, partner-firms/cottonwood.tf, partner-firms/inflection.tf, and shared-infra/main.tf. The shared-infra hits are COMMENTS at :238 and :243 describing the pattern, not an instantiation (read at source). So THREE instantiations.",
+    "terraform -chdir=infra/aws/terraform/partner-firms state list -> exactly three entries: module.firm_49financial|firm_cottonwood|firm_inflection .aws_dynamodb_table.partner_table. No demo.",
+    "A sweep of every module carrying an initialized .terraform dir, resolving each aws_dynamodb_table in state to its `name` attribute, found NO resource named opal-partner-demo. POSITIVE CONTROL on that same loop: it resolves module.firm_49financial.aws_dynamodb_table.partner_table -> name=opal-partner-49financial, so the name-extraction works and the NOT-FOUND is a real absence.",
+    "SCOPE LIMIT, stated: that state sweep covers only modules with an initialized .terraform dir on this device, not every module in the estate. The SOURCE arm is the complete one (530 files, 0 declarations); the state arm corroborates it. An earlier state probe returned '(no partner resources in state)' for all four modules and was a BROKEN PROBE -- terraform exited rc=1 'Backend initialization required' and the grep read an error, not a listing; caught by a positive control on partner-firms, which demonstrably has three.",
+    "The table is nonetheless LIVE: aws dynamodb describe-table opal-partner-demo (BEFORE snapshot 2026-09-03T09:04:21Z) -> DeletionProtectionEnabled=true, SSE AWS-OWNED (no SSEDescription KMS), TableId 99ddc090..., CreationDateTime 2026-06-03T15:26:08, PITR DISABLED -- matching brief F6's row for it exactly.",
+    "The other four tables ARE managed and their settings re-ground to brief F6 at this seat's vintage: opal-users-v2 (portal-auth/dynamodb.tf) DP=false PITR=ENABLED SSE=KMS 86cc6c40; opal-partner-49financial / -cottonwood / -inflection (modules/partner-firm-table/main.tf) DP=false PITR=DISABLED SSE=KMS 86cc6c40."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OP-S-8's Lane names 'infra/aws/terraform/modules/partner-firm-table/main.tf and the module's instantiations under infra/aws/terraform/partners-api/**'. DELIVERABLE 3 directs opal-partner-demo's server_side_encryption to be switched to the estate CMK with PITR ON via Terraform, and S8-AC1/AC2 both carry a denominator of FIVE tables. The compiler mandate's phase-1 step 2 expects an instantiation count agreeing with 'the brief names 4 partner tables incl. demo'.",
+  "world_is": "The instantiations live in partner-firms/, not partners-api/**; there are three of them, not four; and opal-partner-demo is not declared in any .tf nor present in any readable terraform state, while being live in the account. Consequences: DELIVERABLE 3 cannot be performed as written -- there is no resource block to edit -- and S8-AC1/AC2's five-of-five denominators are only reachable for the demo table by an act (import, or an out-of-band update-table) the face does not authorise. S8-AC3 additionally asserts the demo table 'was UPDATED not replaced (TableId / CreationDateTime identical before and after)', a control that presupposes Terraform is doing the updating. The face's own bound -- a plan that would REPLACE any table is a STOP -- is the reason this matters: an unmanaged table brought under management carelessly is precisely how a replace gets planned.",
+  "notes": "WHY A ROW: found by the re-grounding this round taught and the issuer explicitly asked for (19501 item 3, 19587: 'the five tables at their REAL declaration carrier, never the face's named one'). It is the same failure SHAPE as Z-S3 -- a face naming a carrier that does not hold the thing -- which is now the fourth instance on this project, so the pattern is worth the issuer's attention beyond this cell. NOT CHASED: no import run, no update-table, no console act. WORK CONTINUES on the four MANAGED tables, which is the majority of the cell and is unaffected: deletion_protection_enabled on opal-users-v2 (portal-auth/dynamodb.tf), and point_in_time_recovery + deletion_protection_enabled added to modules/partner-firm-table/main.tf so all three real partner tables inherit them. Phase-1 step 4 is DISCHARGED and clears the way for whichever ruling lands: the AWS-managed key's policy (Id auto-dynamodb-3) carries the via-service grant -- Principal AWS:* conditioned on kms:CallerAccount=313476888478 and kms:ViaService=dynamodb.*.amazonaws.com -- so a demo-table SSE switch cannot fail on key policy whenever it is authorised. REMEDY SHAPES, offered not prescribed: (a) rule the demo limb OUT of this cell and cut S8-AC1/AC2 to four of four, S8-AC3 to N/A -- smallest act, and the demo table holds 1 item and no real client identity; (b) authorise a `terraform import` of the table into partner-firms as an explicit sub-act, with the plan required to show 0 to add / 0 to replace before any apply; (c) a separate cell for adopting unmanaged identity-plane tables, since the same question will recur. This seat recommends (a) for this round and (c) as the durable answer, and holds. CLOSING CONDITION: DISARMED when the issuer rules; REMEDIATED when either the demo table reads PITR ENABLED + SSE KMS under Terraform management, or the face's denominators and Lane match the world. FALSIFIER: a terraform state entry anywhere resolving to name opal-partner-demo."
  }
 ]
 ```

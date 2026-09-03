@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.4 @43b75ffbd6 (ENDPOINT FWD-8, property 7; brief F6 the table-by-table posture) - **Decomp cell:** `OP-s-8` (v0.1 @bff1f8d012, s.1a; ROUND 1: "table protections; no dependencies"; OP-s-9 and OP-s-11 depend on THIS) - **Lane:** `infra/aws/terraform/portal-auth/dynamodb.tf`, `infra/aws/terraform/modules/partner-firm-table/main.tf` and the module's instantiations under `infra/aws/terraform/partners-api/**` (AE lane) - **Round:** 1 of NFRA_OPSEC202609, SECOND on this seat after TO-OP-S-17-16.
 
