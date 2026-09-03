@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **22 rows** (S19-S22 appended by `3.0.0_SA_CVO` 14:28Z as the round-5 L10 slug: S19 closes S14 with S16, S20 closes S13 with S18, S21 places S15 with its owning surface, S22 is this seat's own aged-packet row; S17 graduates by its remediation row in `../remediations/REMEDIATION_v1.md`, same commit).
+**Append-only during the round.** Denominator at this write: **31 rows** (S31 appended by `3.0.0_SA_CVO` 17:10Z, in-round: comp-blast's budget bounds the traversal only -- a stale graph runs the full rebuild inside a budgeted call, killed outside at the harness ceiling; ARMED, disarm owner `0.8.0_AE_CloudComp~G` via the COO; S23-S30 round 6's workers' rows, S28 remedied in place by `1.0.0_SA_CTO`).
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -947,6 +947,54 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "TO-CE-T-20 and PRD v0.5 row T-20 require a library-grain audit of comp-heat with 0 CLI runs, a return-carried typed absent/stale state, and no change to the comp-similar consumer.",
     "world_is": "The dispatched .tools/comp-heat is a CLI shim with an executable argparse entrypoint. Its named consumer uses it through a CLI subprocess and then returns an ordinary dict; the only place a return-carried typed state could be introduced is the consumer that the order forbids changing.",
     "notes": "No engine, consumer, or report wiring code is changed by this row. The T20 deliverable can truthfully record the measured CLI and consumer facts, but AC2's requested library-return mutation needs an issuer disposition that either changes the allowed boundary or replaces the library premise with the actual CLI grain."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S31",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T17:10:00Z",
+    "one_line": "comp-blast's Rule T carrier bounds the TRAVERSAL only: the universe load that precedes it (org/modules/graph/cli.py:799 and :1053, load_kuzu_universe(refresh=True) -> the auto path) runs a FULL kuzu rebuild when the served graph is stale, outside the budget and before the traversal's clock starts. Measured at this seat: `.tools/comp-blast gold:A_00.accounts_dimension --exact --budget 60` issued 16:56:37Z took the rebuild mutex at 16:56:39Z, spawned kuzu_nessie_load.py (pid 30976) at 16:56:46Z, and had not returned when the harness's 300 s ceiling killed the shell at 17:01:37Z -- the call outlived its declared budget by more than 5x with no BUDGET REACHED line (KILLED-OUTSIDE, indistinguishable from a crash to the caller), and the chain (bash 39196 -> bash 50680 -> cli.py blast 44804 -> loader 30976) was still alive with the WAL growing at 17:06Z. The same shape CE-g-5 closed for comp-find's --corpus aws (a budgeted client never waits on or runs a rebuild; it serves the existing graph labeled stale) is open on comp-blast, and TO-CE-T-6's criterion T6-AC4 scoped Rule T to 'the traversal', which the face's PASS honestly met.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-03T16:56:37Z: .tools/comp-blast gold:A_00.accounts_dimension --exact --budget 60 inside a Bash call with a 300 s ceiling; the harness returned exit 143 'Command timed out after 5m 0s' with no comp-blast output at all -- KILLED-OUTSIDE (PRD s.4.4's named uncovered member), not BUDGET REACHED",
+        "infra/aws/globgrph/ at 17:04:35Z and 17:06:27Z: kuzu_nessie_db.rebuild.lock created 16:56:39Z (2 s after the call), kuzu_nessie_db.rebuild.tmp 43,995,136 B at 17:02:38Z, .rebuild.tmp.wal 4,324,400 B at 17:04:32Z -> 8,964,023 B at 17:06:26Z (growing); no _refresh_status.json (the winner's path, not a serve-stale)",
+        "Win32 process table at 17:06Z (Get-CimInstance, ParentProcessId resolved): bash 39196 '.tools/comp-blast ... --exact --budget 60' (created 16:56:37Z) -> bash 50680 -> python cli.py blast (44804) -> python kuzu_nessie_load.py --db ...kuzu_nessie_db.rebuild.tmp (30976, created 16:56:46Z); every parent ALIVE -- the loader is SUPERVISED, not orphaned: CE-g-5's process claim holds on this path; the rebuild was left to finish and swap (a running rebuild belongs to whoever started it)",
+        "org/modules/graph/cli.py at HEAD (comp-read --enumerate): :799 and :1053 `load_kuzu_universe(refresh=not getattr(args, 'force', False))` -- refresh=True by default, the auto path (a stale graph -> incremental, a large delta -> FULL rebuild; REBUILD_TIMEOUT_S 1800 in _canonical.py); :847 the only remaining() check, inside the traversal; :1633-1635 the --budget carrier's help text 'Rule-T wall-clock ceiling for traversal'",
+        "NFRA_CLDGRPH-S4 / CG-s-10 @a9aea6f3ce: the full-fallback duration of the projection MEASURED at 940.6-1006.3 s -- the ambush's size on this device; PRD s.4.4 'a tool never exceeds a ceiling it was not told ... every timeout= derives from remaining(); a call that would outlive the budget is DEFERRED'",
+        "TO-CE-T-6 face at HEAD (complete @dad11b5207): T6-AC4 '(AC-4) Rule T's form on the TRAVERSAL: --help discloses the carrier, the budget and the cursor; a planted small --budget produces the expiry line ...' -- the criterion's own scope word; the instance VALID rc 0 at this seat (6 of 6, checker 7b649df39d); the CE-g-5 precedent: _canonical.py ensure_fresh(wait_for_peer=False) + kuzu_cli.py --mode inc for comp-find's budgeted client @173dd335f4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.6 s.4.4 RULE T: 'a tool never exceeds a ceiling it was not told' and 'every timeout= derives from remaining(); a call that would outlive the budget is DEFERRED'; s.4.4.1's 'outer ceiling the tools cannot see 120,000 ms default'; the CE-g-5 outcome for the freshness layer under a budgeted client (AC-7): a budgeted caller is served the existing graph labeled stale, never a rebuild.",
+    "world_is": "On comp-blast the budget is applied after the universe is loaded, and loading a stale universe on the auto path runs the full rebuild (measured ~1,000 s on this device) inside the budgeted call; a 60 s budget call ran past a 300 s harness ceiling and was killed outside with no line printed. The traversal half of Rule T is met (T6-AC4 PASS, honestly scoped); the call half is not.",
+    "notes": "Surfaced by the seat that met it (the L9 exercise of S17's flag carry), same turn, one row, no message as carrier; the rebuild it started was NOT killed and is left to finish and swap the served graph. DISARM (the T-6 lane's, via 2.0.0_SA_COO): comp-blast's universe load under a budget takes the CE-g-5 contract -- serve the existing graph labeled stale with its age when a budget is set (load_kuzu_universe(refresh=False) or the inc/serve-stale path, never a full rebuild inside a budgeted call), the age on the answer's disclosure line; the full refresh stays comp-kuzu-full / MSTR startup. The remedy is a cell the decomposition already contains (CE-t-6, complete on a criterion that scoped Rule T to the traversal), so the L10 route, if graduated, is SPEC_ERROR -> L6 -- a remediated order under CE-t-6 with Rule T on the CALL, quoted from s.4.4. Harm while unattended: every budgeted comp-blast call on a stale graph -- every morning after the nightly derive, until someone runs comp-kuzu-full -- runs ~1,000 s, is killed by any Bash ceiling, prints nothing, and leaves the caller unable to tell the ambush from a crash; and each such call takes the mutex for the duration. S17's own closure is unaffected: the flag carry is exercised by a seat other than the builder on the T-6 face (COO, rc 0, 507/507)."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S30",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~N",
+    "surfaced_at": "2026-09-03T17:08:00Z",
+    "one_line": "After the RESEAT message stated that no T-21 work existed under ~P, the shared worktree already contained an uncommitted modification to org/modules/graph/comp_system.py and an untracked .tools/tests/test_comp_system_battery.py implementing T-21-shaped Rule T, answer-state, unreadable-source, and mutant controls. Their author cannot be established from the worktree, so this seat neither claims nor overwrites them; the foreign battery's direct run produced no output for five minutes before it was interrupted, while the engine's own --self-test later passed 45/45 in about 83 seconds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2026-09-03T17:0xZ at 0.8.0_AE_CloudComp~N: git status --short -- .tools/tests/test_comp_system_battery.py org/modules/graph/comp_system.py -> ' M org/modules/graph/comp_system.py' and '?? .tools/tests/test_comp_system_battery.py'.",
+        "The exact untracked battery was read as directed by TO-CE-T-21; its header names the T-21 battery and its arms exercise no-fabrication, four ratified states, Rule T expiry, --check rc 3, unreadable source, and red mutants.",
+        "python .tools/tests/test_comp_system_battery.py was started at this seat and emitted no result for five minutes; interruption left only a seat-created temporary mutant, which was removed. python org/modules/graph/comp_system.py --self-test then completed rc 0 with 45/45 passed, including the first no-fabrication and four-state arms."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CE-T-21 RESEAT says nothing was built under ~P and directs this seat to read any pre-existing untracked battery, not assume authorship, name it in a row, and write its own battery beside it.",
+    "world_is": "The stated reseat starting condition differs from the present shared worktree: T-21-shaped engine and battery changes are present but uncommitted and unproven as this seat's work. The engine self-test is green; the foreign battery's full direct result is not yet available.",
+    "notes": "No foreign file was edited, staged, committed, moved, or deleted. This seat will place a separately named lane-owned battery beside the foreign file, preserve the existing worktree state, and report validation evidence only for artifacts it owns."
   }
 ]
 ```
