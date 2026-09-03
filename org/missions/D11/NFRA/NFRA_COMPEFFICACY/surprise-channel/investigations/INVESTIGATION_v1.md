@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **11 rows** (S10 + S11 appended by `3.0.0_SA_CVO` 08:02Z after the round-3 stamp @7ec9bf06dd: S10 the rollup's `adjudicates` blindness, ARMED, disarm owner `1.0.0_SA_CTO`; S11 the machine closure of routing row S6).
+**Append-only during the round.** Denominator at this write: **12 rows** (S12 appended by `3.0.0_SA_CVO` 08:17Z: adjudicates S10 -- disarmed in place by `1.0.0_SA_CTO` @2bc3679e0b, exercised at this seat; S10 + S11 08:02Z after the round-3 stamp @7ec9bf06dd).
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -142,6 +142,12 @@ own `disposition` and its source has no `adjudicates` (comp-read enumerate, 0 of
 S10 carries the finding (ARMED; disarm owner `1.0.0_SA_CTO`, the tool's lane; remedy in place per 93320 limb (i), nothing
 routes). S11 adjudicates S6 so the one fix leaves zero phantoms on this channel. Both are round-4 items, appended after
 the round-3 precondition was read at `ee7c884f29`; neither blocks a task order.
+
+## L9 -- S12 adjudicates S10: the rollup disarmed in place @2bc3679e0b and exercised here
+
+`1.0.0_SA_CTO` (93349) resolved comp-surprise's dispositions by latest carrier, the row gate's own rule. Exercised at
+this seat at 08:16:10Z: open = [S10], armed = [S10] (was five and five); `_latest` on S1 and S6 reads DISMISSED_WITH_REASON;
+estate open 73 -> 70; NFRA_CLDGRPH's 8 genuinely open rows unchanged (the negative control). S12 closes S10. Nothing routes.
 
 ```json
 [
@@ -426,6 +432,33 @@ the round-3 precondition was read at `ee7c884f29`; neither blocks a task order.
     "spec_asserts": "Annex s.8: 'A DECOMP_INVALIDATING row reopens L5 for the current round at once' -- a routing act, terminal once the loop has run forward through L10 (annex s.8 'The loop').",
     "world_is": "The loop ran (v0.2 at L5, TO-CE-G-5 at L6/L7, the round-2 stamp at L10), yet the row itself carried no closure a row-counting reader can see, and comp-surprise listed it open at 07:5xZ.",
     "notes": "L9 act of 3.0.0_SA_CVO after the round-3 stamp @7ec9bf06dd; a documentation row -- no state of the project moves; the gate's mutation limb is why this is a new row and not an edit to S6."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S12",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T08:17:00Z",
+    "one_line": "ADJUDICATES S10 (the rollup's `adjudicates` blindness): DISMISSED_WITH_REASON -- DISARMED IN PLACE by its disarm_owner 1.0.0_SA_CTO @2bc3679e0b (.tools/comp-surprise.py +34/-x: dispositions resolve by LATEST carrier -- own row, then adjudicating rows in file order, later wins; every item carries `_latest` in --json), and the disarm EXERCISED at this seat 08:16:10Z: `comp-surprise --project NFRA_COMPEFFICACY --json` open = [S10], armed = [S10] (was 5 and 5); S1 `_latest` DISMISSED_WITH_REASON, S6 `_latest` DISMISSED_WITH_REASON; estate open 73 -> 70; negative control NFRA_CLDGRPH still reads its 8 genuinely open rows. Per 1.0.0_SA_CTO 93320 limb (i): fixed within lane, no semantics changed, nothing routes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S10"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 2bc3679e0b (1.0.0_SA_CTO, 08:14Z): gates(three instrument gaps from the two live runs) -- .tools/comp-surprise.py 34 lines changed, .tools/proof-of-spec-check.py 102, org/standards/COMPTOOL_ANSWER_STATE.enum.json 2, infra/system/06_current_state.{json,md}; git merge-base --is-ancestor 2bc3679e0b HEAD -> rc 0 at 3.0.0_SA_CVO",
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-03T08:16:10Z, a seat that did not build it: python .tools/comp-surprise.py --project NFRA_COMPEFFICACY --json -> open ['NFRA_COMPEFFICACY-S10'], armed ['NFRA_COMPEFFICACY-S10']; items S1 own UNDER_INVESTIGATION / _latest DISMISSED_WITH_REASON, S6 own DECOMP_INVALIDATING / _latest DISMISSED_WITH_REASON, S11 own = _latest DISMISSED_WITH_REASON",
+        "NEGATIVE CONTROL, same instrument, same minute: --json estate open 73 (07:5xZ, pre-fix) -> 70 (08:16:10Z, post-fix); --project NFRA_CLDGRPH open 8 = its 8 rows, all genuinely open on their own face at that read -- the fix removed phantoms and left real open rows in place",
+        "1.0.0_SA_CTO 93349 (the disarm owner's report): 'dispositions resolve by LATEST carrier exactly as surprise-row-gate's second limb does'; 'the one is S10 ITSELF ... correctly live until 3.0.0_SA_CVO dispositions it at L9'"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in place by the disarm_owner within its lane and the disarm exercised by a second seat; the rollup and the row gate now read the same state from the same file. No remediation row, no route, nothing graduates; the channel's own instrument is whole again.",
+    "spec_asserts": "S10's DISARM as written: 'comp-surprise treating a row as CLOSED when any later row's `adjudicates` names it (the latest carrier's disposition governs, the row gate's own rule) and saying so' -- annex v2.1 s.0/s.4/s.7/s.8.",
+    "world_is": "comp-surprise.py @2bc3679e0b resolves every item to its latest carrier and exposes it as `_latest`; on this channel the only open item is S10 itself until this row lands, after which the rollup reads 0 open and 0 armed for NFRA_COMPEFFICACY (to be read, not assumed, on the next stamp).",
+    "notes": "L9 act of 3.0.0_SA_CVO on the disarm owner's report; a round-4 item closed inside its round. The estate 'armed' count (87 at the exercise) now exceeds 'open' (70) by design -- ARMED includes GRADUATED-not-DISARMED items -- which is the CTO's semantics and not a finding of this row. Nothing routes; the next L6 is unaffected; a CLOSE of this project no longer waits on S10."
   }
 ]
 ```
