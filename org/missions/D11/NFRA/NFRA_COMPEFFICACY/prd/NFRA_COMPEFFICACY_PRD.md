@@ -5,7 +5,7 @@ Substrate/Tooling."*) · **Fabric:** laptop (D11 placement row; membership and f
 D8 precedent) · **dep_stage:** PRD
 **Author:** `3.0.0_SA_CVO` (driver, Andrew-designated comp-tool lane @`98b1a59907`) · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
-**Version:** v0.1, 2026-09-02 · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+**Version:** v0.3, 2026-09-03 (v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -173,6 +173,13 @@ CRITERIA `AC-1..AC-7` -- the engineering tests behind the plain-English outcomes
 | FWD-5 (redundancy named with evidence; retirements on his ruling) | FWD-4, FWD-5, FWD-8 | dispositions, his questions answered, the short list |
 | FWD-6 (a cleared tool stays cleared, on origin) | **FWD-9 (new)** | right and incomplete in L2 -- added, not renumbered |
 | FWD-7 (graph tools answer from a bounded-age graph) | FWD-7 | the cloud-compile/gateway-traversal brief addressed |
+
+**Reading rule (3.0.0_SA_CVO's L4 read, 00:31Z; no row of the table was wrong): a row closes on its AC where the AC is
+stricter than the landed card.** NOTE A -- FWD-3 ("says what it could not see") does not carry AC-2's property that the
+absence is MACHINE-REJECTABLE (four distinct answer states, planted not asserted); rows whose verb is 4.3 (T-1, T-2, T-16
+and every 4.3 grade to come) close on AC-2, not on a disclosure sentence. NOTE B -- FWD-7 is DONE WHEN APPLIED (each ask
+has an owner or is ruled out); AC-7 is EXERCISED (an answer from a bounded-age graph); rows G-1..G-3 close on AC-7.
+Assigning owners meets FWD-7 and is not the end of the brief.
 
 ### Acceptance criteria at engineering grain -- 3.0.0_SA_CVO's draft cards, verbatim, relabelled AC-n
 
@@ -338,9 +345,10 @@ No row may end in any other state. **A row that is "mostly fine" is not CLEARED.
 ## 4. THE PER-TOOL RESULT SCHEMA — what `0.8.0_AE_CloudComp` returns for each tool, and what CVO grades
 
 One file per tool, one fenced JSON block + prose. **HOME (corrected 2026-09-02, CloudComp 92803 + COO 92809):**
-the filler's OWN lane — `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPEFFICACY_T16_<tool>.result.md`
-— until NFRA_COMPEFFICACY enters the project tree, then `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/<serial>/<tool>.result.md`
-(lane TREE_DELIVERABLES resolves the owner from `<serial>/`, CTO @`20d1c60866`, ruled @`5f8b774a5d`). The
+the project tree, which NFRA_COMPEFFICACY entered at L3 @`41d11d178d` (2026-09-03 00:0xZ): `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/<serial>/<tool>.result.md`
+(lane TREE_DELIVERABLES resolves the owner from `<serial>/`, CTO @`20d1c60866`, ruled @`5f8b774a5d`). The interim home
+was the filler's own lane (`org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPEFFICACY_T16_<tool>.result.md`);
+CloudComp's T-16 file may move to the tree home bytes-unchanged at CloudComp's hand (D1, CVO 00:31Z). The
 first draft named `org/projects/NFRA_COMPEFFICACY/results/`, an ANY_EXEC lane the filler could not commit to;
 safe-commit refused it and the first deliverable landed in the filler's lane with its bytes unchanged. Every
 field is REQUIRED; a missing field is a non-conforming deliverable and is returned, not graded.
@@ -545,7 +553,7 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | T-13 | FWD-2, FWD-4, FWD-5, FWD-8 | `comp-dups` → `debtscan/dup_scan.py` | measured | **0 runs ever**; separate engine by CTO ruling 3 (names+bodies vs summaries) | CTO | record | — | R-5 | RETIRE-candidate on usage; **do not fold** into comp-similar; CTO's disposition |
 | T-14 | FWD-2, FWD-4, FWD-5, FWD-8 | `comp-drift` → `.tools/comp-drift` | measured | 1 run/30d; orchestrator over seam engines; `--deep` cost-guarded | CloudComp | audit | — | 4.1-4.6 | overlap with comp-similar is by NAME only (drift = propagation; similar = function) — record |
 | T-15 | FWD-2, FWD-4 | `comp-legacy` | absent | **no such entrypoint** (0 of 106) | CVO | record | — | 4.1 | DOES-NOT-EXIST |
-| T-16 | FWD-2, FWD-3, FWD-4, FWD-9 | `comp-adversary` → `.tools/comp-adversary` (Python, 526) | measured | 0 runs.jsonl/30d; gate-ENFORCED at `to-pipeline-gate.py:45`; **THREE surfaces (CloudComp 92718): TOOL — `:49` COMMIT_RE backtick + zero-pin guard @`a9dc767e34` ON origin (graded by this seat 15:29Z), digest-basis declaration @`8ed23144cb` ON origin; BATTERY — pass 1 @`e66d5e698d` ON origin (collector lives; 135 s import — PARTIAL), pass 2 @`03cf4d17a` **LOCAL** — P0.1 CLEARED at this seat 2026-09-02 19:3xZ by exercise: `--collect-only` → 1 collected in 0.07 s (2 s wall); module level now constants only, both `compose` calls inside functions (`:94`, `:142`); 1 file touched (+116/-85), production untouched; production MUTANT via `COMP_ADVERSARY_TOOL` temp copy → pytest FAIL on a real arm (1 of 7, rc 1) — the battery discriminates the TOOL, not just the runner** | CloudComp | audit+fix | — | CVO~A P0.1 **MET** | P0.1 limbs all met → RC5 may close (~A's call; CTO gate). **Still owed for row CLEARED:** the s.4 deliverable (identity, 4.2 disclosure, 4.3 four-case test, 4.4 bounds) — the repair was the battery, not the audit; **Unit-1 gap CLOSED — unit 3a @`4c3b848c97` ON origin: `comp_log_auto` 0→2; exercised at this seat, one `compose` → exactly one runs.jsonl row (serial, rc, args_head); the third traffic-feed blind spot is gone.** `--json` = native L0a form (ruled 92527), separate row |
+| T-16 | FWD-2, FWD-3, FWD-4, FWD-9 | `comp-adversary` → `.tools/comp-adversary` (Python, 526) | measured | 0 runs.jsonl/30d; gate-ENFORCED at `to-pipeline-gate.py:45`; **THREE surfaces (CloudComp 92718): TOOL — `:49` COMMIT_RE backtick + zero-pin guard @`a9dc767e34` ON origin (graded by this seat 15:29Z), digest-basis declaration @`8ed23144cb` ON origin; BATTERY — pass 1 @`e66d5e698d` ON origin (collector lives; 135 s import — PARTIAL), pass 2 @`03cf4d17a` **LOCAL** — P0.1 CLEARED at this seat 2026-09-02 19:3xZ by exercise: `--collect-only` → 1 collected in 0.07 s (2 s wall); module level now constants only, both `compose` calls inside functions (`:94`, `:142`); 1 file touched (+116/-85), production untouched; production MUTANT via `COMP_ADVERSARY_TOOL` temp copy → pytest FAIL on a real arm (1 of 7, rc 1) — the battery discriminates the TOOL, not just the runner** | CloudComp | audit+fix | — | CVO~A P0.1 **MET** | P0.1 limbs all met → RC5 may close (~A's call; CTO gate). **CLEARED @`bbba0db0e9`** (3.0.0_SA_CVO 92842, 2026-09-03 00:2xZ: the s.4 deliverable landed and both re-measurements met on CVO's own run; the row closes on AC-2 per the reading rule under the re-pointing table); **Unit-1 gap CLOSED — unit 3a @`4c3b848c97` ON origin: `comp_log_auto` 0→2; exercised at this seat, one `compose` → exactly one runs.jsonl row (serial, rc, args_head); the third traffic-feed blind spot is gone.** `--json` = native L0a form (ruled 92527), separate row |
 | T-17 | FWD-2, FWD-3, FWD-4, FWD-7 | `comp-estate` → `org/modules/graph/opal_estate_infrastructure.py` | measured | 281 runs; `<name>`/`--list`/`--resource` | CloudComp | audit | T-22 | 4.2 | his word: *"need to lock in C(N) ontology for this to actually be useful"* — C(N) is `NFRA_C3MATERIALIZE` (D11 sibling); depends_on, not owns |
 | T-18 | FWD-2, FWD-3, FWD-4 | `comp-pulse` → `org/modules/graph/comp_pulse.py` (707) | measured | **8,364 runs, 8,359 = `diff` from the commit hook; 5 by hand**; L2 traffic source = runs.jsonl | CloudComp | audit | T-1,T-2 | 4.2 | it is a HOOK, not a morning read; its traffic was blind to T-1/T-2 until unit 1 — re-measure after |
 | T-19 | FWD-4, FWD-5, FWD-8 | `comp-trace` → `org/modules/graph/cli.py trace` | measured | 45 runs; **strict subset of blast** (`cli.py:1478-1530`) | CloudComp | retire | T-6 | R-4 | his conditional ruling, condition met; redirect 45 callers (`0.7.0_AE_CloudOps~F` 18, `~D` 14, CVO 11) to `comp-blast`; **not platinum** |
@@ -557,7 +565,7 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | G-1 | FWD-7 | `comp-graph status` freshness surface | measured | reports `kuzu_db 81d` + `stitch_graph 38d`; canonical is `kuzu_nessie_db` built 2026-09-01T16:18Z (globgrph F6, attributed to CRO) | NFRA_GRAPHS lane | fix | — | brief O7 | surfaced by CRO, not chased; **re-homes to the comp-graph owner** — this row records the dependency |
 | G-2 | FWD-7 | stale-served path `kuzu_nessie_db.fallback.jsonl` | held | 16 `inc-served-labeled-stale` events, ~34h behind (F5, CRO's measurement) | CloudComp | verify | T-22 | brief O3b | KUZUSPLIT working AS RATIFIED; the cost is unbounded age — bound it or disclose it on the answer |
 | G-3 | FWD-7 | `kuzu_nessie_load` key asymmetry (node stripped `:150`, edge raw `:184`) | held | carded QUALIFIED @`5da9e7fffc` by `0.7.0_AE_CloudOps~K` (F4) | CloudComp | verify | T-22 | brief F4 | a port carries or fixes it, never silently |
-| G-4 | FWD-6 | **Codex-runtime rail: design** | absent | Andrew-direct 2026-09-02 ~23:0xZ (CTO terminal, "Both recs accepted"), ruling 2(a): this project carries the row; ruling 2(b) EFFECTIVE NOW: a Codex-runtime seat issues NO comp-tool-grounded adjudication until a rail exists on that runtime. The T1 rail is a Claude PreToolUse hook (`.tools/hooks/comp-tool-hud.sh`); the Codex runtime contract (`org/mcp/CODEX_INBOX_MONITOR.md`, MSTR) has no hook at all — `FINDING_COMPRAIL_DENY_NOT_ENFORCED_20260902.md` addendum 2 | CVO drives; CloudComp executes | design | T-1, T-2 | Rule 21 | **what the rail IS is this row's work.** Acceptance: a rail EXERCISED at a Codex seat — a DENY observed as the BODY NOT EXECUTING (a rail-log row is not a block; the 5s-timeout lesson). Rule 21's enforcement bound stays HELD until then. Not a mechanical gate on any seat's word; a design deliverable |
+| G-4 | FWD-9 | **Codex-runtime rail: design** | absent | Andrew-direct 2026-09-02 ~23:0xZ (CTO terminal, "Both recs accepted"), ruling 2(a): this project carries the row; ruling 2(b) EFFECTIVE NOW: a Codex-runtime seat issues NO comp-tool-grounded adjudication until a rail exists on that runtime. The T1 rail is a Claude PreToolUse hook (`.tools/hooks/comp-tool-hud.sh`); the Codex runtime contract (`org/mcp/CODEX_INBOX_MONITOR.md`, MSTR) has no hook at all — `FINDING_COMPRAIL_DENY_NOT_ENFORCED_20260902.md` addendum 2 | CVO drives; CloudComp executes | design | T-1, T-2 | Rule 21 | **what the rail IS is this row's work.** Acceptance: a rail EXERCISED at a Codex seat — a DENY observed as the BODY NOT EXECUTING (a rail-log row is not a block; the 5s-timeout lesson). Rule 21's enforcement bound stays HELD until then. Not a mechanical gate on any seat's word; a design deliverable |
 
 **MECE check against the DECLARED domain (his text block), run not asserted:** 22 named tools + 3 roll-up questions
 (dups/drift/legacy) = **25 names → 24 rows T-1..T-24** (kuzu/-inc/-full collapse to one engine row by postulate ii;
