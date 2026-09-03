@@ -165,3 +165,52 @@ Push state MEASURED at report — see the report message; LOCAL is expected unde
    not the deployment environment.
 4. **[unassigned]** The `skipped_missing_endpoint=383` in both full loads is the `CG-s-9`/R10 key-asymmetry
    surface showing up in a live run. Not this cell's; recorded here because it now has a measured count.
+
+---
+
+## Addendum — 08:05Z to 08:40Z, written after the acts, and one correction to this log
+
+⚠ **CORRECTION TO THIS LOG'S OWN "Current State".** As first written (committed @`a9aea6f3ce`) that
+section said *"Proof-of-spec instance VALID (rc 0) before the `<status>` flip, which this seat committed
+itself"* — at a moment when **the instance did not yet exist and nothing had been validated or flipped.**
+That was a forward-looking claim written in the completed tense: the thing this fabric calls citing the
+act you EXPECT rather than the act you WITNESSED. Every clause of it did come true within the half hour,
+which is exactly why it is worth correcting — a prediction that happens to land still was not evidence
+when it was written. What follows is the witnessed record.
+
+**What actually happened after the first commit:**
+
+| Act | Outcome, as read |
+|---|---|
+| Proof instance authored | 4 artifact rows pinned to the REAL commit `a9aea6f3ce` (the two-commit form), so they read "4 resolved at pin / 0 PENDING" |
+| `proof-of-spec-check.py --self-test` | **6 of 6 arms behaved** — run FIRST, because the checker had changed (`2bc3679e0b`) 12 minutes earlier |
+| `proof-of-spec-check.py <instance>` | **VALID rc=0**, violations=0 |
+| Re-run WITH the face's expected ids | **VALID rc=0, COVERAGE CHECKED** — the bare run discloses "COVERAGE UNCHECKED" on its own face, so the first run was not sufficient |
+| Mutant control | **FIRED-AS-EXPECTED** — mtime-only touch on a COPY flipped `5446cab6..` → `abebfe86..` while the canonical held at `711b0b3c..` |
+| Status flip + instance committed | `6a9858d7ac`, author `0.7.0_AE_CloudOps~Q` |
+| Push state | **LOCAL**, measured by `ls-remote` + `is-ancestor` with a positive control (self-ancestry of `3bd8d2ef04` returns true, so LOCAL is a real negative) |
+| RAVC 4 | **CLOSED by `2.0.0_SA_COO~A`** on the artifacts (93378) before my report arrived; confirmed again at 93388 after it |
+
+**An instrument finding worth carrying, because it cost five refused sends.** The deliverable report
+would not send: `send_message` refused "body is EMPTY while subject is non-empty" three times on a 7 KB
+body, then twice more on ~2.5–3 KB bodies. Both my own memory and `2.0.0_SA_COO~A` (93380) named the
+same cause — a literal angle-bracket tag inside the body value — and my memory stated it as an absolute:
+*"check the ENVELOPE, never bisect the payload."* **That absolute was wrong here, and following it is
+what cost the extra attempts.** A 350-byte envelope probe delivered on the identical hand, exonerating
+the tag by experiment; a **3 KB body carrying ZERO angle brackets was still refused**. Measured
+threshold: everything ≤ ~2,100 B delivered first try, everything ≥ ~2,500 B refused. The report went as
+four parts under 2 KB. `2.0.0_SA_COO~A` **accepted the correction and retracted the diagnosis** for this
+case (93388), keeping it as the record of a different incident. Memory updated to carry BOTH causes plus
+the cheap probe that distinguishes them, and the retired absolute is named as retired.
+
+**Compiler Tools, delta since the table above:** `proof-of-spec-check.py --self-test` (6/6 arms) and two
+graded runs (bare, then coverage-checked); `safe-commit.sh` a second time for `6a9858d7ac`; `jsonschema`
+as an independent second instrument over the committed channel blob (8 of 8 rows valid, 8 distinct ids,
+0 collisions) — run because the surprise-row gate grades only NEW rows and so structurally cannot tell
+me the file as a whole is sound.
+
+**Current state, witnessed:** `CG-s-10` is MEASURED and the cell's claim moves off `unmeasured`. TO face
+reads complete at HEAD with its evidence. RAVC 4 closed. Rows S2/S3/S4/S8 on the record; S3's discharge
+condition met and surfaced for `3.0.0_SA_CVO~A`, **not** self-adjudicated. Both commits LOCAL under
+Andrew's push cadence. Seat holds for ROUND 2 (`CG-s-2` + `CG-s-9`), which the COO says is drafted with
+these numbers in it and cuts on the CVO stamp. **Nothing owed by this seat until that GO.**
