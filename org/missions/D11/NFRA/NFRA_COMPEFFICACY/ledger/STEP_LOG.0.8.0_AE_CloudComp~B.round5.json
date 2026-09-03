@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 5,
+  "seat": "0.8.0_AE_CloudComp~B",
+  "written_utc": "2026-09-03T12:34:00Z",
+  "trigger": "GO 93552 from 2.0.0_SA_COO on NFRA_COMPEFFICACY.TO-CE-T-19 @8a5d683c38 (round 5 L7), preceded by HOLD 93533 while 1.0.0_SA_CTO fixed the L6 gate regex @8be09ce020. Round-5 fence per decomp v0.2.3 @dcf07b4799: T-9R (base) || T-25 (~A) || T-19 (this seat). Terminal state of this cell: STOPPED AT A ROW -- NFRA_COMPEFFICACY-S17@a140eed779, BLOCKING/ARMED, disarm owner 1.0.0_SA_CTO via 2.0.0_SA_COO.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-03T11:17:00Z",
+      "ended_utc": "2026-09-03T11:22:00Z",
+      "act": "Seat startup: /watcher then org/XXX.md Step 1b A-B.1. Lane ~B read NOT REGISTERED; registered under the FULL suffixed serial; persistent inbox Monitor armed on the lane path org/mcp/inbox/0.8.0_AE_CloudComp/~B (arm banner parent-tied pid 2169459, so the self-exit protection is ARMED, not orphan-capable). Confirmed no pre-existing ~B watcher existed before arming (ps showed ~A at 564078 and base at 87734 only), so the startup-kill discriminator did not apply.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/XXX.md"},
+        {"kind": "ARTIFACT", "ref": ".claude/skills/watcher/SKILL.md"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "broker registration 0.8.0_AE_CloudComp~B pid 24244; Monitor task bae67r934"},
+        {"kind": "RECORD", "ref": "org/mcp/sessions/72b4228d-f949-4ea1-a605-0da4d4207c51.serial"}
+      ],
+      "spine_clause": "XXX.md Step 1b A/A.1/A.3/B.0/B.1 -- register under the suffixed serial or the lane inbox is never watched",
+      "note": "A.3 rail exercise: 104 of 104 comp-tools resolve bare AND a forwarder RAN (the mandatory second half -- resolution is not execution). A.2 audit-archive findings were the documented benign device-axis set (all-shrink, no ERROR-FAILCLOSED beyond the two known-and-owned rows); not re-filed, per XXX.md."
+    },
+    {
+      "seq": 2,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:22:00Z",
+      "ended_utc": "2026-09-03T11:26:00Z",
+      "act": "Delivery-ledger sweep (B.0) found 4 OFFER-EXHAUSTED rows from 2026-08-03/04 addressed to this lane by a superseded seating; each opened in this seat's own read/ dir and acked from its Msg-ID. Not worked: the current seating message scopes this lane to NFRA_COMPEFFICACY only (Rule 27). Then read and READ-acked the HOLD.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "56681"},
+        {"kind": "MESSAGE", "ref": "56747"},
+        {"kind": "MESSAGE", "ref": "57663"},
+        {"kind": "MESSAGE", "ref": "57724"},
+        {"kind": "MESSAGE", "ref": "93533"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "ack_messages READ acks: 56681,56747,57663,57724 and 93533"}
+      ],
+      "spine_clause": "LD-0480 delivery ledger before resuming; Rule 27 lane seating",
+      "note": "Acked only rows actually opened -- a batched ack asserts reading that did not happen."
+    },
+    {
+      "seq": 3,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:26:00Z",
+      "ended_utc": "2026-09-03T11:40:00Z",
+      "act": "Orientation reads ONLY, per the HOLD's explicit bound (no edits, no commits, no messages to other seats). Grounded the PRD at its cited pin: git diff --quiet 5bbdab5ec7 -- worktree byte-identical (63,969 bytes / 677 lines both sides). Read s.7 row T-19, the R-4 heading :609 and the T-22 pattern row :650. Independently measured that the TO file named in the HOLD was UNTRACKED (git status '??', zero git log) against a positive control -- confirming the sequencer's 'not committed, do not work against it' rather than taking it on report.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@5bbdab5ec7"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@dcf07b4799"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "PRD pin verified identical to worktree; TO measured UNCOMMITTED at that time"}
+      ],
+      "spine_clause": "an order that is not committed is not issued",
+      "note": "Instrument note for the sequencer: .tools/to-check.py rendered TO-CE-T-19 as [PENDING] from the WORKTREE while the file was still untracked -- it cannot distinguish a committed order from an uncommitted draft."
+    },
+    {
+      "seq": 4,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:40:00Z",
+      "ended_utc": "2026-09-03T11:45:00Z",
+      "act": "GO 93552 received and READ-acked; hold lifted. Verified the order is now committed and byte-identical to its cited pin (git ls-files --error-unmatch OK; git diff --quiet 8a5d683c38). Read the order in full as the spec. Ran the mandated BEFORE-WRITE compiler reads: comp-read cli.py --for the trace-vs-blast flag question, and located the PRD and TO via comp-find --name.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93552"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-19.comp-trace-retire-into-blast.md@8a5d683c38"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "READ ack 93552; broker summary set to WORKING on CE-t-19"}
+      ],
+      "spine_clause": "L7 execute on the committed order; compiler_tools_mandate BEFORE WRITE",
+      "note": ""
+    },
+    {
+      "seq": 5,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:45:00Z",
+      "ended_utc": "2026-09-03T11:55:00Z",
+      "act": "DELIVERABLE item 1, FLAG GRAIN. Enumerated both argparse parser blocks in cli.py (worktree byte-identical to the TO's pin @7b649df39d). Found the cited range :1478-1530 IS those two blocks and already carries the counter-evidence: trace declares --exact, --all and the upstream/downstream --direction spellings; blast declares none of them. EXERCISED rather than inferred: comp-blast <q> --exact -> rc 1 'unrecognized arguments: --exact'; comp-trace --exact hit -> rc 0; comp-trace --exact miss -> rc 3.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/modules/graph/cli.py@7b649df39d"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "flag table (trace flag -> blast equivalent or ABSENT), 7 rows, in the deliverable"}
+      ],
+      "spine_clause": "T19-AC1 first half -- the subset claim re-derived at this seat with a different instrument",
+      "note": "All three trace-only flags are CARRYABLE into blast's parser; they are not the reason the order stopped."
+    },
+    {
+      "seq": 6,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:55:00Z",
+      "ended_utc": "2026-09-03T12:05:00Z",
+      "act": "DELIVERABLE item 1, TRAVERSAL GRAIN -- the deciding measurement. Established that the two tools answer over different substrates (trace: head-pinned working-tree scan, rebuilt this session to 2,302 nodes / 3,044 edges; blast: kuzu, 27,134 nodes, by Andrew-direct ruling 2026-08-03). Ran 4 real CLI query pairs (gold: answers on both; lambda:, s3:, eventbridge: answer rc 0 on trace and rc 3 on blast), a NOT-FOUND control (rc 3 both), a --json arm (both parse), plus bare-name rescue attempts. Then a stratified population probe, seed 19, 158 of 2,302 real trace node ids through blast's own resolver.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": ".comp-graph/graph.json (trace universe, built_at 2026-09-03T11:48:41Z)"},
+        {"kind": "ARTIFACT", "ref": "infra/aws/globgrph/kuzu_nessie_db (blast universe)"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "parity table 8 rows + population table: full trace-id spelling ANSWER 61/158 (38.6%), NOT-FOUND 97 (61.4%); bare name ANSWER 92 (58.2%), AMBIGUOUS rc5 41 (25.9%), NOT-FOUND 25 (15.8%)"}
+      ],
+      "spine_clause": "T19-AC1 second half -- node sets and rc from real runs",
+      "note": "SELF-CORRECTION, recorded because it changes the number: a first pass counted any non-empty match set as a hit and read 133/158 (84.2%). That conflated blast's AMBIGUOUS-SUBJECT rc 5 REFUSAL with an answer and overstated coverage by 26 points. The corrected three-outcome pass (58.2%) is what is reported everywhere."
+    },
+    {
+      "seq": 7,
+      "limb": "L7",
+      "started_utc": "2026-09-03T12:05:00Z",
+      "ended_utc": "2026-09-03T12:08:00Z",
+      "act": "Named and killed the cheapest competing hypothesis instead of assuming it: that kuzu was merely STALE. Forced a refresh (load_kuzu_universe(refresh=True), graph_nodes last-write 0.0h) and re-measured -- kuzu still carries ZERO node ids under gold:/lambda:/s3:/eventbridge:/sqs:/sns:/sfn:/s3bucket: and ZERO nodes of type GOLD_SCRIPT/S3_ARTIFACT/ENDPOINT/EVENTBRIDGE/COMPONENT. Schema and address-space difference, not vintage: a refresh cannot add a node type the schema does not carry.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/modules/graph/comp_blast_universe.py (load_kuzu_universe, the entry point cmd_blast uses at cli.py:970)"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "forced-refresh prefix and node-type census, quoted in the row and deliverable"}
+      ],
+      "spine_clause": "Rule 22 -- name the cheapest hypothesis that fits all the evidence, then find what kills it",
+      "note": "This is what converts the finding from 'blast looks behind today' into 'the subset condition is structurally unmet'."
+    },
+    {
+      "seq": 8,
+      "limb": "L7",
+      "started_utc": "2026-09-03T12:08:00Z",
+      "ended_utc": "2026-09-03T12:15:00Z",
+      "act": "STOPPED and filed the row rather than building the forwarder, per DELIVERABLE item 5's gate and T19-AC1's second limb. Appended NFRA_COMPEFFICACY-S17 (BLOCKING, ARMED, disarm owner 1.0.0_SA_CTO via 2.0.0_SA_COO, disposition UNDER_INVESTIGATION) to the tree channel's INVESTIGATION_v1.md under the lane-ANY grant. Ran the row gate's own --self-test FIRST (11 arms, 0 failed) before trusting it as a control.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/ref/SURPRISE_CHANNEL_PROTOCOL.md (class enum BLOCKING|OBSERVATION)"},
+        {"kind": "ARTIFACT", "ref": ".tools/surprise-row-gate.py"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "surprise row NFRA_COMPEFFICACY-S17@a140eed779 (BLOCKING, ARMED)"}
+      ],
+      "spine_clause": "CLAUDE.md s.2 -- a spec-vs-world divergence is a ROW, never a message; the row gate is the control",
+      "note": "The row was swept into the BASE seat's commit a140eed779 as a co-tenant hunk while uncommitted here. Verified before citing: HEAD's S17 is byte-identical (json-canonical) to the row this seat appended and carries this seat's surfaced_by, so the record is correct and unmutated, and the id mints at that commit."
+    },
+    {
+      "seq": 9,
+      "limb": "L7",
+      "started_utc": "2026-09-03T12:15:00Z",
+      "ended_utc": "2026-09-03T12:25:00Z",
+      "act": "DELIVERABLE items 2 and 4, measurement halves only -- delivered because any re-adjudication needs them, with NOTHING edited. Carrier census: comp-find -i 'comp-trace' --all --files = 39,710 hits across 4,814 files (never headed; the 234KB output was persisted and partitioned in a second pass), yielding 171 LIVE carriers after excluding 4,643 record/telemetry files by named class. Caller census from comp-tool-runs.jsonl: 28,077 rows, 0 malformed, comp-trace 57 all-time by seat.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/mcp/comp-tool-runs.jsonl"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "carrier census 171 live of 4,814 with lanes; caller census 57 rows by seat"}
+      ],
+      "spine_clause": "T19-AC2 / T19-AC4 measurement halves; never head a census; print the denominator",
+      "note": "Two honesty adjustments: 10 of the 57 comp-trace runs are THIS cell's own parity runs and are excluded from any demand reading; and the census surfaced 28 agent prompt.md personas naming comp-trace -- the T-22 'about 15 live carriers where 5 were assumed' lesson repeating at larger scale, routed to 2.0.0_SA_COO rather than edited."
+    },
+    {
+      "seq": 10,
+      "limb": "L7",
+      "started_utc": "2026-09-03T12:25:00Z",
+      "ended_utc": "2026-09-03T12:34:00Z",
+      "act": "Wrote and committed the deliverable; reported to the issuer in two parts. Deliberately excluded INVESTIGATION_v1.md from this seat's commit because it then carried the BASE seat's uncommitted S18 -- sweeping it back would repeat the co-tenant defect in reverse. Measured, not asserted: push state LOCAL; .tools/comp-trace present and unchanged (368 B, sha256 16da64a2b9e3); cli.py unchanged; production sha unchanged.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~B/comp-trace.result.md"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "commit bfbff9dc14 (the deliverable; author 0.8.0_AE_CloudComp~B)"},
+        {"kind": "MESSAGE", "ref": "20260903T123017Z_0.8.0_AE_CloudComp_B_TO-CE-T-19_STOPPED_AT_A_ROW__1_2"},
+        {"kind": "MESSAGE", "ref": "20260903T123228Z_0.8.0_AE_CloudComp_B_TO-CE-T-19__2_2"}
+      ],
+      "spine_clause": "a BLOCKING row also goes to the issuer in the same turn; push state is a MEASURED value",
+      "note": "NO proof_of_spec instance filed, deliberately: the instance gates a complete flip that did not happen, and grading AC2-AC5 N/A-BY-CONSTRUCTION would assert the very disposition being routed to the L4 owner. Independent control run and unchanged by this cell: test_trace_blast_xref_notfound_is_loud.py, 6 passed under pytest at FILE grain, confirming both rc=3 dials and that production is untouched."
+    }
+  ]
+}
