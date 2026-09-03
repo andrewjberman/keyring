@@ -418,7 +418,7 @@ def _tracked_task_orders() -> set:
         try:
             out = subprocess.run(
                 ["git", "ls-files", "--", "*/task_orders/*.md", "*/task-orders/*.md"],  # R-ii: both roots
-                cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+                cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace", check=True).stdout
             _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
         except Exception:  # noqa: BLE001
             _TRACKED_TOS = set()
@@ -435,7 +435,7 @@ def _is_tracked(rel: str) -> bool:
     try:
         rc = subprocess.run(
             ["git", "ls-files", "--error-unmatch", "--", rel.replace("\\", "/")],
-            cwd=WORKSPACE, capture_output=True, text=True).returncode
+            cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace").returncode
         return rc == 0
     except Exception:  # noqa: BLE001
         return False
@@ -971,7 +971,7 @@ def checker_vintage() -> str:
     try:
         out = subprocess.run(
             ["git", "log", "-1", "--format=%H|%cI", "--", str(Path(__file__).resolve())],
-            capture_output=True, text=True, cwd=str(_REPO_ROOT), timeout=20)
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_REPO_ROOT), timeout=20)
         if out.returncode != 0 or "|" not in out.stdout:
             return "UNREAD (git log failed; the hash is not knowable here)"
         h, ci = out.stdout.strip().split("|", 1)
@@ -989,7 +989,7 @@ def worktree_dirty_suffix(path, repo_root) -> str:
     announced as +DIRTY(UNREAD) rather than passed off as clean."""
     try:
         out = subprocess.run(["git", "diff", "--numstat", "HEAD", "--", str(path)],
-                             capture_output=True, text=True, cwd=str(repo_root), timeout=20)
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(repo_root), timeout=20)
     except Exception:  # noqa: BLE001
         return "+DIRTY(UNREAD)"
     if out.returncode != 0:

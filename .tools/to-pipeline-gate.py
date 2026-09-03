@@ -128,7 +128,7 @@ def _committer_serial(root):
         except OSError:
             pass
     try:
-        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
                                timeout=20).stdout
     except Exception:  # noqa: BLE001
         return ""
@@ -176,7 +176,7 @@ def _issued_to_tier_violations(rel, text):
 def _repo_root():
     try:
         out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                             capture_output=True, text=True, timeout=20)
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20)
         if out.returncode == 0:
             return out.stdout.strip()
     except Exception:  # noqa: BLE001
@@ -192,7 +192,7 @@ def _newly_added(root):
     """
     try:
         out = subprocess.run(["git", "diff", "--cached", "--name-status"],
-                             cwd=root, capture_output=True, text=True, timeout=30)
+                             cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
     except Exception:  # noqa: BLE001
         return None  # fail closed: caller refuses
     if out.returncode != 0:
@@ -699,7 +699,7 @@ def check_file(root, rel):
         # be written is a NOTE, never a refusal -- the override was already legal, the audit is the record of it.
         reason = ov.group(1).strip()
         try:
-            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
                                  timeout=20).stdout.split(" <")[0].strip() or "<unknown author>"
         except Exception:  # noqa: BLE001
             who = "<unknown author>"
@@ -839,7 +839,7 @@ def check_complete_flip(root, rel):
                 "whose validator cannot run" % rel]
     try:
         r = subprocess.run(["python", chk, inst], cwd=root,
-                           capture_output=True, text=True, timeout=180)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
     except Exception as exc:  # noqa: BLE001
         return ["%s: could not run the validator (%s) -- fail-closed" % (rel, exc)]
     if r.returncode != 0:

@@ -46,7 +46,24 @@ import sys
 import time
 import urllib.request
 
-RECIPIENT = os.environ.get("PRD_NOTIFY_TO", "2.0.0_SA_COO")
+# LANE-HOMED RECIPIENT (2026-09-03, 1.0.0_SA_CTO on 0.0.0_AB_MSTR~Z's site-Z finding, relay 93296 item 2): the
+# default used to be the BASE serial 2.0.0_SA_COO. On site Z the base inbox is unwatched, so the L4->L5 handoff
+# read QUEUED at the base and 0 rows at 2.0.0_SA_COO~Z; on the laptop the ~A fabric had to set PRD_NOTIFY_TO by
+# hand for the same reason. The rule now: the recipient is the COO ON THE COMMITTER'S OWN LANE -- the ~suffix of
+# $OPAL_AGENT_SERIAL (the process carrier the identity rules name first) is appended to the base serial; a base
+# committer still reaches the base COO; PRD_NOTIFY_TO, when set non-empty, wins outright. The same re-homing
+# applies to the route owners below (kind:route), for the same reason.
+def _lane_suffix():
+    s = os.environ.get("OPAL_AGENT_SERIAL", "")
+    return s[s.index("~"):] if "~" in s else ""
+
+
+def _seat(base):
+    """A base serial re-homed onto the committer's lane ('2.0.0_SA_COO' -> '2.0.0_SA_COO~Z' under a ~Z committer)."""
+    return base + _lane_suffix()
+
+
+RECIPIENT = os.environ.get("PRD_NOTIFY_TO") or _seat("2.0.0_SA_COO")
 REOFFER_MINUTES = int(os.environ.get("PRD_NOTIFY_REOFFER_MINUTES", "30"))
 MAX_ATTEMPTS = int(os.environ.get("PRD_NOTIFY_MAX_ATTEMPTS", "6"))
 BROKER = "http://127.0.0.1:%s" % os.environ.get("OPAL_BROKER_PORT", "7800")
@@ -107,12 +124,12 @@ def route_rows(prev_text, now_text, raw, rows_fn):
 
 
 def _root() -> str:
-    out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     return out.stdout.strip() if out.returncode == 0 and out.stdout.strip() else os.getcwd()
 
 
 def _git(root, *args):
-    # encoding is EXPLICIT: under a git hook on Windows, text=True decodes as cp1252 and a PRD's
+    # encoding is EXPLICIT: under a git hook on Windows, text=True, encoding="utf-8", errors="replace" decodes as cp1252 and a PRD's
     # UTF-8 arrow at byte 0x90 killed the reader thread -- the first real firing then reported
     # "no valid PRD_HEADER" against a PRD the step-6 gate had just passed (2026-09-02, cf532d66c5).
     return subprocess.run(["git", *args], cwd=root, capture_output=True, encoding="utf-8",
@@ -361,7 +378,7 @@ def post_commit(root):
             row = {"kind": "route", "id": r["id"], "route": r.get("route"), "loop_target": int(r["loop_target"]),
                    "outcome_ref": r.get("outcome_ref"), "project": r.get("project") or str(r["id"]).rsplit("-S", 1)[0],
                    "fabric": r.get("fabric"), "remedy": str(r.get("remedy") or "")[:400], "sha": sha, "path": rel,
-                   "to": owner, "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
+                   "to": _seat(owner), "from": os.environ.get("OPAL_AGENT_SERIAL", ""),
                    "attempts": 0, "msg_id": None, "sent_at": None, "history": []}
             sent += _dispatch(root, state, row)
     _save_state(root, state)

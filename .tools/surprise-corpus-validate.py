@@ -46,7 +46,7 @@ BASELINE_REL = "org/surprise_channel/.corpus-baseline.json"
 
 def _root() -> str:
     try:
-        out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if out.returncode == 0 and out.stdout.strip():
             return out.stdout.strip()
     except OSError:

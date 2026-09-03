@@ -116,7 +116,7 @@ def _index_paths(root, patterns):
     """(paths, note): the index entries matching the pathspecs; (None, note) when git could not answer."""
     try:
         ls = subprocess.run(["git", "ls-files", "--"] + list(patterns), cwd=root, capture_output=True,
-                            text=True, timeout=60)
+                            text=True, encoding="utf-8", errors="replace", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return None, "git ls-files raised %s" % exc
     if ls.returncode != 0:
@@ -206,7 +206,7 @@ def _open_tos_for_project(root, code):
     try:
         ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
                              "org/missions/D*/*/%s/task-orders/*.md" % code],
-                            cwd=root, capture_output=True, text=True, timeout=60)
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return None, 0, "git ls-files raised %s" % exc
     if ls.returncode != 0:
@@ -247,7 +247,7 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
 def _repo_root():
     try:
         out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                             capture_output=True, text=True, timeout=20)
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20)
         if out.returncode == 0:
             return out.stdout.strip()
     except Exception:  # noqa: BLE001
@@ -278,7 +278,7 @@ def _blob(root, ref, rel):
     probe_cmd = (["git", "ls-tree", ref, "--", rel] if ref
                  else ["git", "ls-files", "-s", "--", rel])
     try:
-        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True, timeout=60)
+        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return ("ERROR", "%s raised %s" % (probe_cmd[1], exc))
     if probe.returncode != 0:
@@ -287,7 +287,7 @@ def _blob(root, ref, rel):
         return ("ABSENT", None)
     try:
         r = subprocess.run(["git", "show", spec], cwd=root,
-                           capture_output=True, text=True, timeout=60)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return ("ERROR", "show raised %s" % exc)
     if r.returncode != 0:

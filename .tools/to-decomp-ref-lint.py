@@ -82,7 +82,7 @@ def staged_added() -> list[str]:
     try:
         out = subprocess.run(
             ["git", "diff", "--cached", "--diff-filter=A", "--name-only"],
-            cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+            cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace", check=True).stdout
     except Exception as exc:  # noqa: BLE001
         print(f"to-decomp-ref-lint: GIT-ERROR {exc}", file=sys.stderr)
         raise
@@ -144,7 +144,7 @@ def _tracked_task_orders() -> set:
         try:
             out = subprocess.run(
                 ["git", "ls-files", "--", "*/task_orders/*.md", "*/task-orders/*.md"],  # R-ii: both roots
-                cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+                cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace", check=True).stdout
             _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
         except Exception:  # noqa: BLE001
             _TRACKED_TOS = set()
@@ -323,7 +323,7 @@ def audit_override(reason: str, files: list[str]) -> None:
     try:
         OVERRIDE_LOG.parent.mkdir(parents=True, exist_ok=True)
         stamp = subprocess.run(["git", "log", "-1", "--format=%cI"], cwd=WORKSPACE,
-                               capture_output=True, text=True).stdout.strip()
+                               capture_output=True, text=True, encoding="utf-8", errors="replace").stdout.strip()
         with OVERRIDE_LOG.open("a", encoding="utf-8") as fh:
             fh.write(f"{stamp}\tOVERRIDE\t{','.join(files)}\t{reason}\n")
     except Exception as exc:  # noqa: BLE001
