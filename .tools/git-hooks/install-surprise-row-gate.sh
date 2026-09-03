@@ -38,15 +38,7 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # legacy rows across 18 files are never re-graded.
 # FAIL-CLOSED on the sentinel: a staged channel file with the checker missing = DENY.
 if [ -f "$ROOT/.tools/surprise-row-gate.py" ]; then
-    if ! python "$ROOT/.tools/surprise-row-gate.py" $STAGED; then
-        # SURPRISE_ROW_OVERRIDE is exported by .tools/safe-commit.sh ONLY after it read an audited
-        # "# surprise-row-override: <reason>" in the commit message and wrote the audit line.
-        if [ -n "${SURPRISE_ROW_OVERRIDE:-}" ]; then
-            echo "WARN: surprise-row-gate OVERRIDDEN (audited by safe-commit): ${SURPRISE_ROW_OVERRIDE}" >&2
-        else
-            exit 1
-        fi
-    fi
+    python "$ROOT/.tools/surprise-row-gate.py" $STAGED || exit 1
 elif git diff --cached --name-only 2>/dev/null | grep -qE 'org/surprise_channel/[^/]+/(INVESTIGATION|REMEDIATION)_v'; then
     echo "BLOCKED: a surprise-channel row file is staged but .tools/surprise-row-gate.py is missing." >&2
     exit 1

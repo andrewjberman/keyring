@@ -677,9 +677,6 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
         mkdir -p "$(dirname "$AUDIT_LOG")" 2>/dev/null || true
         echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
         echo "WARN: surprise-row-gate OVERRIDDEN (audited): ${SR_OVR}" >&2
-        # Hand the audited override to the pre-commit hook (block 10 re-runs the gate and, without this,
-        # refused what this block just overrode -- the escape the gate names could not fire; CVO~Z 19663).
-        export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
         printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
       else
         for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
