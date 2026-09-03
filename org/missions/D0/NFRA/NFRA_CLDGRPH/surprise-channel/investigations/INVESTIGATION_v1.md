@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **27 rows** (S1-S28, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 19:16Z by `0.8.0_AE_CloudComp~O` on appending S28 (was 26); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **28 rows** (S1-S29, id S11 vacated by the concurrent-append renumber). Restated 2026-09-03 19:40Z by `1.0.0_SA_CTO` on appending S29 (was 27); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1089,6 +1089,33 @@ but it leaves B2-AC6's required incremental artifact impossible under the curren
     "spec_asserts": "TO-CG-C-3 requires the repaired deriver to be exercised read-only against the real AWS control plane, explicitly forbids deploy/resource/Terraform writes by this seat, and directs the assignee to file a surprise row so the issuer can route an image rebuild if one is required.",
     "world_is": "The repository implementation and its local real-AWS exercise are complete, but the running cloud task will retain the prior comp_aws_cli.py until the shared globgrph image is rebuilt and the relevant task definition is refreshed. That deployment has a five-consumer blast radius and is not authorized by C-3.",
     "notes": "This does not block local C-3 completion or its proof. Disarm by routing and proving the shared-image rebuild/deployment through the existing change-management path, preserving the single canonical derive runner and checking all five consumers; this seat must not perform or imply that deployment."
+  },
+  {
+    "id": "NFRA_CLDGRPH-S29",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-03T19:40Z",
+    "one_line": "S26's user-bin deny ACEs are FIXED IN THE WORLD by this seat on Andrew's direct order, and the population was 192 of 211 shims, not the three that were tried; the shared dependency the shims resolve to (.tools) was clean at 0 of 252, so the damage was confined to the forwarders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Andrew-direct 2026-09-03 ~19:3xZ at the 1.0.0_SA_CTO terminal, VERBATIM: \"fix the shim ACLs, then i have a task for you\" -- this supersedes the S26 ruling-1 clause forbidding user-bin ACL alteration, which bound the 0.8.0_AE_CloudComp~O seat's own conduct, not this seat under a later sovereign order.",
+        "PRE-STATE, unscoped census of C:\\Users\\AndrewBerman\\bin: 192 of 211 files carried a non-NULL-SID DENY ACE. The three shims S26 names (comp-to, comp-read, comp-find) were members, NOT the population -- comp-read carried AzureAD\\AndrewBerman:(DENY)(RD,REA,X); most .cmd siblings additionally carried NT AUTHORITY\\SYSTEM:(DENY)(X) and BUILTIN\\Administrators:(DENY)(X); ~10 carried Andrew\\CodexSandboxUsers:(DENY)(X).",
+        "SHARED-DEPENDENCY CHECK (CLAUDE.md Rule 22, the members-vs-what-they-share limb): the .tools targets every shim forwards to were censused on their own -- 0 of 252 files carry a non-NULL-SID DENY ACE. The defect is in the forwarder layer only.",
+        "AUTHOR: no repo file writes these ACEs. comp-find over 148,214 files for 'icacls|CodexSandboxUsers|AddAccessRule|SetAccessRule|FileSystemAccessRule' returned 11 hits, 0 of them in the shim provisioner and 0 naming CodexSandboxUsers -- so cef249b2f7's provisioner is NOT the author and re-provisioning will not re-write them; the author is the Codex runtime's own Windows sandbox, outside the repo.",
+        "ACT: icacls /remove:d for AzureAD\\AndrewBerman, NT AUTHORITY\\SYSTEM, BUILTIN\\Administrators and Andrew\\CodexSandboxUsers across all 211 files. REMOVED-CLEAN 192, STILL-DENIED 0.",
+        "POST-STATE, re-censused UNSCOPED (never scoped to the 192 that were touched): 0 of 211 files carry a non-NULL-SID DENY ACE. comp-read's DACL now matches comp-which's shape -- comp-which being the control that worked throughout.",
+        "REVERSIBLE: byte-exact pre-state saved by icacls /save /t, 212 entries / 139,848 bytes, restorable with icacls /restore."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S26 asserts the hazard is the three user-bin compiler shims TO-CG-C-3 names (comp-to, comp-read, comp-find) carrying explicit deny entries, with comp-which as the working control, and names 1.0.0_SA_CTO the disarm owner.",
+    "world_is": "The hazard's EXTENT was 64x the row's reading: 192 of 211 user-bin shims carried deny ACEs, and the three named are simply the three that a seat happened to invoke -- a census scoped to the members that FAILED could not see the size of the population they belong to. All 192 are now clean (0 of 211 residual, unscoped re-read). EXERCISED only at this Claude/MSYS seat, where all six probed shims return rc=0 -- but that same exercise ALSO passed BEFORE the fix, because the DACL was non-canonically ordered (the ALLOW(F) ACE preceded the DENY, so access was granted before the deny was reached). This seat's exercise is therefore NOT the discriminator; the ACL read is. Whether a Codex seat now resolves these shims is UNEXERCISED and needs a Codex launch to settle.",
+    "notes": "DISARM of S26 itself is NOT taken here: remediation rows are 3.0.0_SA_CVO~A's by the channel's own header and by CLAUDE.md section 2, and DISARMED is a remediation-plane state. This row is the disarm EVIDENCE the owner owes; the state flip is routed to the CVO by one message. Two residues deliberately left: the NULL SID:(DENY)(Rc,REA,DC) ACE present on every file including the working control (it matches no token and discriminates nothing), and the Codex sandbox's authorship -- if that runtime re-writes deny ACEs at the next seat launch, this is a recurrence, not a regression of the fix, and the durable remedy is at the launcher, not at the ACL."
   }
 ]
 ```
