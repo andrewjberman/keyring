@@ -117,4 +117,8 @@ print()
 print("=" * 80)
 print(f"PATH-TRUNCATION BATTERY: {n}/{len(RESULTS)} PASS (denominator {len(RESULTS)})")
 print("=" * 80)
-sys.exit(0 if n == len(RESULTS) else 1)
+if __name__ == "__main__":
+    # F6 (NFRA_COMPEFFICACY, 2026-09-02): a module-scope SystemExit ends the pytest SESSION on
+    # collection (INTERNALERROR), killing every other battery in this directory. Guarded first;
+    # the import-inert shape follows.
+    sys.exit(0 if n == len(RESULTS) else 1)

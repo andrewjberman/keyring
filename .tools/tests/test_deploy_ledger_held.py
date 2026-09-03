@@ -155,4 +155,8 @@ print("deploy-ledger HELD-STATE planted-mutant battery")
 print("\n".join(ARMS))
 print()
 print("ARMS: %d passed / %d failed / %d total" % (PASS, FAIL, PASS + FAIL))
-sys.exit(1 if FAIL else 0)
+if __name__ == "__main__":
+    # F6 (NFRA_COMPEFFICACY, 2026-09-02): a module-scope SystemExit ends the pytest SESSION on
+    # collection (INTERNALERROR), killing every other battery in this directory. Guarded first;
+    # the import-inert shape follows.
+    sys.exit(1 if FAIL else 0)
