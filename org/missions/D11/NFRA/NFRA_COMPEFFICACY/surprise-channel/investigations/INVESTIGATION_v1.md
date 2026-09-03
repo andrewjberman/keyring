@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **9 rows** (S8 + S9 appended by `3.0.0_SA_CVO` 05:5xZ, the round-2 slug: the machine adjudications of S1 and of S2/S3/S5 and the L10 stamp; earlier: **7 rows** (S7 appended by `0.8.0_AE_CloudComp`
+**Append-only during the round.** Denominator at this write: **11 rows** (S10 + S11 appended by `3.0.0_SA_CVO` 08:02Z after the round-3 stamp @7ec9bf06dd: S10 the rollup's `adjudicates` blindness, ARMED, disarm owner `1.0.0_SA_CTO`; S11 the machine closure of routing row S6).
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -132,6 +132,16 @@ child to the same large-delta exit before it is served stale (the sink cadence 0
 the two ~39 s WAL windows bound the child at ~30-50 s); the "~5 s" serve (`_canonical.py:562`) holds for a LOSER, the
 winner pays the child's runtime. The claim that sentence tests is `NFRA_KUZUSPLIT`'s, not this project's; the full
 refresh is `comp-kuzu-full` / MSTR startup by design (Andrew O-1), and today's has not run.
+
+## L8 + L9 after the round-3 stamp -- S10 (the rollup's `adjudicates` blindness) and S11 (S6's machine closure)
+
+Seen while reading the channel's own rollup beside the stamp @7ec9bf06dd: `comp-surprise --project NFRA_COMPEFFICACY`
+lists S1, S2, S3, S5 and S6 as OPEN + ARMED; the row gate's census reads 0 undispositioned. The rollup reads each row's
+own `disposition` and its source has no `adjudicates` (comp-read enumerate, 0 of 38 hits); estate-wide the only
+`adjudicates` carriers are S8 and S9 (20 documents, 207 rows), so the phantom-open set is exactly those five, all here.
+S10 carries the finding (ARMED; disarm owner `1.0.0_SA_CTO`, the tool's lane; remedy in place per 93320 limb (i), nothing
+routes). S11 adjudicates S6 so the one fix leaves zero phantoms on this channel. Both are round-4 items, appended after
+the round-3 precondition was read at `ee7c884f29`; neither blocks a task order.
 
 ```json
 [
@@ -364,6 +374,58 @@ refresh is `comp-kuzu-full` / MSTR startup by design (Andrew O-1), and today's h
     "spec_asserts": "S6's stamp: 'DECOMP_INVALIDATING; loop_target 5, owner 2.0.0_SA_COO -- add the cell for the freshness layer under a budgeted client; executor the comp-kuzu engine lane; round 1 closes by the backward route.'",
     "world_is": "The backward route ran forward again through L10: decomp v0.2 (CE-g-5) at L5, TO-CE-G-5 at L6, the fix at L7 with a VALID proof and 0 surprise rows, and the behaviour the item named no longer occurs at this seat.",
     "notes": "L10 STAMP, ROUND 2 (3.0.0_SA_CVO, 05:5xZ). PRECONDITION READ ON THE RECORD: every task order under the project is terminal (5 of 5: 2 WITHDRAWN, 3 complete) and each complete one carries a VALID proof-of-spec instance whose surprises resolve (T-1: 2 of 2; G-5 and T-2: 0 entries) -- checked at this seat with the gate's own instrument; every investigation item is dispositioned by its latest carrier once this row lands (S1 by S8; S2/S3/S5 by this row; S4, S6, S7 terminal on their own face). GRADUATION: 0. ROUTES: 0. A zero-graduation round: PROCEED TO THE NEXT L6 DISPATCHES (2.0.0_SA_COO: STAGE 1's CE-t-3, STAGE 2's CE-t-8 next in the decomposition's order); dep_stage ROUND_CLOSE flips on this stamp by the row owner. READ AND NOT COUNTED, stated so the count is honest: three FINDINGS inside the round-2 deliverables (G5-F1: no persistent per-trigger log for a true 24 h rebuild-cadence count, owner named in the deliverable; T2-F1: comp-read --at beyond a file's range has no NOT_APPLICABLE voice; T2-F2: --enumerate writes no rail row) are the audits' own content, not spec-versus-world surprises of their task orders; they ride the project's per-tool carrier (PRD s.7 rows versioned by 1.0.0_SA_CTO on each grade; the decomposition's CE-t cells) and are not rows here. INERT residual, not a row: the stale rebuild.lock/.tmp/.wal files from the round-1 orphan remain on disk; the fixed layer serves through them and its steal logic covers them; a cleanup is the comp-kuzu lane's at next touch, via the COO. No monitor, no alert."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S10",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T08:02:00Z",
+    "one_line": "comp-surprise (the L8 rollup named in annex s.7) reads each row's OWN `disposition` and has no notion of the `adjudicates` carrier (0 occurrences in .tools/comp-surprise.py, 233 lines; :171 filters on the row's own disposition against OPEN_DISPOSITIONS), so after round 2's slug it reports S1/S2/S3/S5 as OPEN + ARMED (closed by S8/S9) and the routing row S6 as OPEN (its route executed): 5 phantom-open of the estate's 73 open by that instrument, all in this project, while the row gate's census reads 0 undispositioned. Two instruments, two answers, on the channel's own state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read .tools/comp-surprise.py --enumerate 'adjudicates|remediation|DISMISSED|GRADUATED|open' at 3.0.0_SA_CVO 07:5xZ: 38 hits, none the token `adjudicates`; :171 openi = rows whose own disposition is in OPEN_DISPOSITIONS; :196 prints OPEN as UNDER_INVESTIGATION / DECOMP_INVALIDATING -- the row's own field, never a later carrier's",
+        "python .tools/comp-surprise.py --project NFRA_COMPEFFICACY --json at 07:5xZ: open = [S1, S2, S3, S5, S6], armed = the same five; estate-wide open = 73",
+        "own census over both roots at 07:5xZ (20 investigation documents, 207 rows): rows carrying `adjudicates` = 2 (S8 -> [S1]; S9 -> [S2, S3, S5]); ids closed by a carrier = 4; every one of the 4 appears in the rollup's open list; S6 is the one open id not named by any carrier (a DECOMP_INVALIDATING routing row whose route was taken)",
+        ".tools/surprise-row-gate.py on this file at 07:5xZ: '0 new row(s) of 9 total checked'; the round-2 slug @88c961297b was admitted by the gate's second limb (adjudicates) and its census read 0 undispositioned (round-2 step log seq 4)",
+        "org/ref/SURPRISE_CHANNEL_PROTOCOL.md v2.1 @450f7ecf2e s.0 (append-only; a disposition or correction is a NEW row citing the old id), s.7 (`comp-surprise` is the rollup over both roots), s.8 (every item dispositioned by its latest carrier is the L10 precondition)",
+        "git log .tools/comp-surprise.py: last @d6ed64fd5d (1.0.0_SA_CTO, 09-03T00:08Z, lanes ANY + LOOP_MECHANISM); no .owned-paths.yaml line names it (falls under the wider .tools rule)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "SURPRISE_CHANNEL_PROTOCOL.md v2.1: s.0 'append-only as a control -- a correction is a NEW row citing the old id', s.4 the `adjudicates` field ('an existing item dispositioned by a new row'), s.7 '`comp-surprise` is the rollup over both roots' (the L8 intake's aggregate), s.8 'every investigation row is dispositioned' read by its latest carrier -- the rule the row gate's second limb applies.",
+    "world_is": "comp-surprise's open and armed lists count rows by their own `disposition` field; a row named in a later row's `adjudicates` stays open and armed, and a DECOMP_INVALIDATING routing row stays open after its route has executed. Read at 07:5xZ: open=5 armed=5 for NFRA_COMPEFFICACY against the gate's 0 undispositioned.",
+    "notes": "DISARM = comp-surprise treating a row as CLOSED when any later row's `adjudicates` names it (the latest carrier's disposition governs, the row gate's own rule) and saying so on its denominator line; the S6 facet is closed on this channel by S11 (adjudicates S6) so the single fix leaves 0 phantom-open here. HARM WHILE UNATTENDED: /govern (hourly at 0.0.0_AB_MSTR, LD-0527) and fabric-check read the rollup's ARMED list; five phantom ARMED items on a project whose rounds are stamped invite a false escalation or a false hold on its close. NOT blocking any task order. The remedy lies in the loop mechanism, not this project's chain: per 1.0.0_SA_CTO 93320 limb (i), the disarm_owner fixes IN PLACE within lane, then this row is dispositioned DISMISSED_WITH_REASON citing the fix commit; nothing routes. Surfaced after the round-3 stamp @7ec9bf06dd (a round-4 item); the surfacing seat appended its own row, no message as carrier."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S11",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T08:02:00Z",
+    "one_line": "ADJUDICATES S6 (round 1's DECOMP_INVALIDATING routing row): DISMISSED_WITH_REASON -- the route it stamped (-> L5) was TAKEN and ran forward through L10 (decomp v0.2 cell CE-g-5; TO-CE-G-5 complete @7e3b23578d with a VALID proof; fix @173dd335f4; S9 closed the item S6 belongs to as REMEDIED). A routing row is a carrier of its item, not a second item; this row gives it a machine closure so a reader counting rows finds no phantom open route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S6"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_COMPEFFICACY-S9 @88c961297b (adjudicates S2/S3/S5, DISMISSED_WITH_REASON, REMEDIED, the remedy exercised at this seat)",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md v0.2.1 @070907b56e: CE-g-5 'DONE as TO (v0.2.1) -- TO-CE-G-5 complete'",
+        "the round-2 L10 stamp section of this file @88c961297b read S6 as 'terminal on its own face'; comp-surprise --project NFRA_COMPEFFICACY at 07:5xZ listed S6 OPEN + ARMED (S10)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The route S6 stamped executed end to end and the item it carries is closed by S9. No remediation row, no route, nothing graduates.",
+    "spec_asserts": "Annex s.8: 'A DECOMP_INVALIDATING row reopens L5 for the current round at once' -- a routing act, terminal once the loop has run forward through L10 (annex s.8 'The loop').",
+    "world_is": "The loop ran (v0.2 at L5, TO-CE-G-5 at L6/L7, the round-2 stamp at L10), yet the row itself carried no closure a row-counting reader can see, and comp-surprise listed it open at 07:5xZ.",
+    "notes": "L9 act of 3.0.0_SA_CVO after the round-3 stamp @7ec9bf06dd; a documentation row -- no state of the project moves; the gate's mutation limb is why this is a new row and not an edit to S6."
   }
 ]
 ```
