@@ -25,3 +25,28 @@
 - 20260901T162349Z LEG L2 closed: PASSES on the live plane. get-role-policy on bd-exporter-ec2-role/advi-49f-chain-access after the apply: TWELVE statemen
 - 20260901T162349Z LEG L3 closed: PASSES. Post-apply targeted re-plan, same 1.9.8 binary, same -target: 'No changes. Your infrastructure matches the confi
 - 20260901T162906Z LEG L5 closed: TWO commits, both authored via .tools/safe-commit.sh -F with the message file written by the Write tool (non-shell write
+- 20260903T080000Z ANNOTATED by 0.7.0_AE_CloudOps~R -- NEVER-2 ROLLBACK TAKEN UPSTREAM; THIS ENTRY STAYS OPEN AND L4 IS STRANDED.
+  Issuer: 2.0.0_SA_COO operating note 93306 (+ pointer 93324), READ-acked by this lane before the work; MSTR 93301 concurred.
+  WHAT CHANGED: the ("insurance_nav_current", ...) stage tuple in data/assets/scripts/gold/runners_49f/chain_49f_entrypoint.py
+  is DISARMED (commented out with a dated block) at commit 530977130b, deployed to s3://opal-data-49financial/_code/ via
+  .tools/safe-deploy.sh rc=0 ("deployed and verified", comp-pipescript MATCH). INDEPENDENTLY VERIFIED against the SERVED
+  artifact rather than the tool's self-report: served sha256 037541a7a771e098... == the blob at 530977130b, and DIFFERS from
+  the pre-disarm blob e65edcda3c9e9a43... (negative control); served object VersionId 0hgfQygK4Dgb_MgWnMRrCvrmV5UQhJq5,
+  LastModified 2026-09-03T07:59:44Z; an AST parse of the SERVED bytes shows 15 in-loop stages ending at c02_twr_daily with
+  insurance_nav_current ABSENT.
+  WHY: 3 of 3 post-arm scheduled fires CHAIN ABORT rc=1 at stage=insurance_nav_current (chain_20260901T214645Z,
+  chain_20260902T094636Z, chain_20260902T124542Z), against a clean PRE-arm control (chain_20260901T124542Z, 18 STAGE OK,
+  0 ABORT). The abort is fail-fast and also took c04_validation and perfrp_projection on every fire.
+  THE FAILURE IS NOT THIS ENTRY'S GRANT. Root cause read at source in bd49f_insurance_nav_current.py:88-112 @c08c1bbe99:
+  _workspace_root() raises when no org/ dir is found above the file, and _SILVER_HOME calls it at MODULE LEVEL, so the
+  producer dies at IMPORT in the flat /tmp/advi_49f_code bundle -- before argparse, and before any S3 read is attempted.
+  The IAM grant this entry records stays APPLIED and is NOT withdrawn; nothing was widened or narrowed by the rollback.
+  L4 STATUS: STRANDED, not failed and not superseded. Its acceptance is a REAL runner read on a scheduled fire, which
+  cannot occur while the stage is disarmed. THE WORLD IS NOT DONE -- do not close this entry SUPERSEDED.
+  L4 RE-ARM RIDES: the runner import-safety fix (acceptance exercised in a FLAT temp dir, not the repo), then re-arm through
+  ledger advi-insure-gold-chain-membership. That fix is ADVI_INSURE forward work and was explicitly NOT done under the note.
+  SURFACED TO THE ISSUER, NOT SELF-ADJUDICATED: this entry is past its 36h window and is now firing RED daily as an AGED
+  OPEN (last_red_at 2026-09-03T07:18:07Z), which mis-describes it -- L4 is blocked on a NAMED future event, not neglected.
+  `deploy_ledger.py hold --gate-type external --gate-ref "<the runner import-safety fix + re-arm>" --reread-event "..."`
+  is the state that would say so, and it re-surfaces as HELD-PAST-REREAD rather than as an aged OPEN. NOT APPLIED HERE
+  because the operating note said in terms "it stays OPEN"; the status change is 2.0.0_SA_COO's call, not this lane's.
