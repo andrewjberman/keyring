@@ -70,33 +70,26 @@ _of_status="$(sh "$_hkdir/_open-findings-status.sh" "$WS" 2>/dev/null)"
 [ -n "$_of_status" ] || _of_status="$(sh "$WS/.tools/git-hooks/_open-findings-status.sh" "$WS" 2>/dev/null)"
 printf '\n[closeout-trigger NFRA_MSBEFF.R4-A] closeout detected (%s) -- comp-state drift sweep dispatched (async); finding lands in org/critical_paths/.open_findings/ if drift.\n' "$codes" >&2
 printf '  open findings: %s  <- resolve + delete, or the PAST-DUE count is an expiry nobody honoured\n' "${_of_status:-unavailable}" >&2
+# CLASS DECISION 2026-09-03 (1.0.0_SA_CTO, mechanism owner, on 0.0.0_AB_MSTR's /govern owner-sweep 93407 -- LD-0528):
+# THE OWNED FINDING FILE IS RETIRED FOR R4-A. Measured: 255 of 256 open findings estate-wide were closeout-drift, 250 of
+# 250 past review_by, and every one MSTR re-ran cited an UNRELATED later commit sharing tokens. comp-state's BEHIND is a
+# LEXICAL (BM25) drift over the corpus; a closed project's row is never touched again while the corpus keeps mentioning
+# its tokens, so a closeout-drift finding on a closed row is UNRESOLVABLE BY ANY ACT -- the trigger was measuring itself
+# and filing the measurement as an obligation on the closing seat. A finding no act can clear is a control that fires on
+# the class name, not on a defect event (CLAUDE.md s.2). The comp-state run and the breadcrumb stay -- "you just closed X,
+# here is what comp-state read" is still worth a line -- but the line lands in an APPEND-ONLY RUN LOG, not as an owned
+# item with an expiry: one line per closeout, code / closing commit / owner / BEHIND count / POST-CLOSE count. R4-B
+# (deploy_stale, blocking-class, a different instrument with a real negative) is untouched.
 (
     FIND_DIR="$WS/org/critical_paths/.open_findings"
     mkdir -p "$FIND_DIR"
     now="$(date -u +%Y%m%dT%H%M%SZ)"
-    review_by="$(date -u -d '+2 days' +%Y-%m-%d 2>/dev/null || date -u +%Y-%m-%d)"
     for CODE in $codes; do
         out="$( cd "$WS" && timeout 120 .tools/comp-state --project "$CODE" 2>/dev/null )"
-        # A BEHIND/POST-CLOSE record for the just-closed project = a place to LOOK.
-        behind="$(echo "$out" | grep -E '^\[BEHIND\]' | head -20)"
-        if [ -n "$behind" ]; then
-            n="$(echo "$behind" | grep -c '^\[BEHIND\]')"
-            f="$FIND_DIR/${CODE}_closeout_drift_${now}.json"
-            {
-                printf '{\n'
-                printf '  "finding": "closeout-drift",\n'
-                printf '  "project": "%s",\n' "$CODE"
-                printf '  "owner": "%s",\n' "$owner"
-                printf '  "severity": "advisory",\n'
-                printf '  "review_by": "%s",\n' "$review_by"
-                printf '  "closing_commit": "%s",\n' "$head_sha"
-                printf '  "detected_utc": "%s",\n' "$now"
-                printf '  "behind_record_count": %s,\n' "$n"
-                printf '  "trigger": "closeout-comp-state-post-commit (NFRA_MSBEFF.R4-A)",\n'
-                printf '  "note": "comp-state still reads this project BEHIND after its closeout commit -- a place to LOOK (JSON<->REGISTRY consistency, an unmoved row, an open TO). ADVISORY, non-blocking. Resolve the drift or record why it is expected, then delete this file."\n'
-                printf '}\n'
-            } > "$f"
-        fi
+        n_behind="$(echo "$out" | grep -c '^\[BEHIND\]')"
+        n_post="$(echo "$out" | grep -c '^\[POST-CLOSE\]')"
+        printf '%s | %s | closing=%s | owner=%s | BEHIND=%s | POST-CLOSE=%s | R4-A run log (owned finding retired 2026-09-03, see README)\n' \
+            "$now" "$CODE" "$head_sha" "$owner" "$n_behind" "$n_post" >> "$FIND_DIR/closeout-runs.log"
     done
 ) >/dev/null 2>&1 &
 exit 0

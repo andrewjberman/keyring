@@ -23,6 +23,17 @@ owner+review_by as the accountability record; the breadcrumb is the surfacing. I
 accumulate ignored DESPITE a past-due breadcrumb, escalate to an owner-sweep then — measured,
 not preemptive.
 
-NOTE (arm-gate): the R4 triggers are BUILT + mutant-proven but NOT yet wired live — live-arm is
-gated to a non-serve window on 1.0.0_SA_CTO~Z's GO. Arming is one command:
-`bash .tools/git-hooks/install-closeout-comp-state.sh`.
+STATE (corrected 2026-09-03): the R4 triggers ARE wired live on this device (the closeout trigger fired on
+ETFS_SATELLITES's close @e0ffa955d0 and printed the breadcrumb); the earlier "not yet wired" note was stale.
+
+CLASS DECISION 2026-09-03 (1.0.0_SA_CTO, mechanism owner of R4-A, on 0.0.0_AB_MSTR's owner-sweep, LD-0528):
+**R4-A no longer files an owned finding.** Measured at the sweep: 255 of 256 open findings were closeout-drift,
+250 of 250 past `review_by`, and every one re-run cited an UNRELATED later commit sharing tokens. comp-state's
+BEHIND is lexical drift over the corpus; a closed project's row is never touched again while the corpus keeps
+mentioning its tokens, so a closeout-drift finding on a closed row cannot be cleared by any act -- the trigger
+was measuring itself and filing the measurement as an obligation. A finding no act can clear is not a finding.
+The comp-state run at close still happens and lands ONE LINE in `closeout-runs.log` (append-only, in this
+folder): code, closing commit, owner, BEHIND count, POST-CLOSE count. The 250 closeout-drift files open at the
+decision were resolved AS A CLASS and deleted in the same commit; the record of what was deleted, by owner and
+project, is `RESOLVED_R4A_CLASS_20260903.md` beside this file. R4-B (deploy_stale, blocking-class) is unchanged:
+it reads a served plane with a real negative, and its files stay owned items with an expiry.
