@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT FWD-5, FWD-6, FWD-14; s.5 the exercise bars; C-2, C-3) - **Decomp cells:** `OP-s-4` + `OP-s-18` (v0.1.10 @2fd3843047, s.1a) - **Lane:** `infra/aws/terraform/portal-auth/waf-cloudfront.tf` and `infra/aws/terraform/opal-gateway/waf.tf`, AE lane - **Round:** 3 of NFRA_OPSEC202609. **Dispatch:** GO on `TO-OP-S-17R-28` going terminal -- one task order at a time.
 
