@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.8 @36786251af (ENDPOINT FWD-2 / FWD-3; s.5 the exercise bars; 7.6 C-1) - **Decomp cells:** `OP-s-2` (v0.1.4 @c8d58b1004, s.1a; s.5 the round-2 line) - **Lane:** `infra/aws/terraform/shared-infra/apigateway-portal/` (the HTTP API `opal-portal-data-proxy-api` in `main.tf`, `portal-jwt-authorizer` in `main.tf`, and ITS ROUTES in `routes.tf` -- 41 `aws_apigatewayv2_route` blocks, the nine data routes among them each declared once with `authorization_type = "NONE"`; AMENDED on row Z-S24: the face's first cut named `portal-auth/`, which declares no apigatewayv2 resource) and `infra/aws/terraform/portal-auth/` (the deny belt `cross-firm-secret-deny.tf` only; the auth-handler and the authorizer TO-OP-S-3 built), AE lane - **Round:** 2 of NFRA_OPSEC202609. **OP-s-1 (the REST API) is NOT this task order:** its carrier is not Terraform-declared (the issuer's live read at the cut) and is a card in `1.0.0_SA_CTO~Z`'s loop; OP-s-24's Lambda-lane limb rides OP-s-1's task order when that lands.
 
