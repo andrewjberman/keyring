@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **22 rows** (S1-S23, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:4xZ by `0.7.0_AE_CloudOps~S` on appending S23 (was 21); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **23 rows** (S1-S24, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 17:2xZ by `0.7.0_AE_CloudOps~S` on appending S24 (was 22); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -927,6 +927,42 @@ to CG-s-3. No undo is authorized because that would replace one out-of-bounds wr
     "spec_asserts": "TO-CG-B-2 section 2, B2-AC2, B2-AC7, and BOUNDS require the B2 port to advance no pointer and leave projection/current.json absent because the pointer object, its atomicity, and the manifest contract belong to CG-s-3.",
     "world_is": "The B2 worker at a9ef0f6160 writes projection/current.json after its artifact/manifest readback; the accepted fa5df7 real-path run exercised that code and advanced the pointer to the 2026-09-03T16:27:39.471730+00:00 artifact.",
     "notes": "Issuer ruling Msg 93807: no undo by this seat. Disarm owner 0.7.0_AE_CloudOps~T; disarm is B3-AC2's pointer writer with the completeness check and conditional create superseding the bare write in the shared publish path. B2-AC7 must disclose the exact pointer body and this crossed bound. No push."
+  }
+]
+```
+
+## S24 -- a valid one-node incremental projection cannot pass the fixed publish-set size band
+
+The authentic incremental arm completed its delta apply and count guard, but the copied-and-updated Kuzu
+database plus manifest was much larger than the fixed full-build baseline band. The shared publisher therefore
+refused the otherwise valid incremental result before any immutable object or pointer write. This is safe failure,
+but it leaves B2-AC6's required incremental artifact impossible under the currently deployed contract.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S24",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T17:24Z",
+    "one_line": "The authentic one-node incremental arm succeeded at the engine and count guard (27,225 nodes / 58,606 edges / 383 skipped) but produced an 83,617,383-byte publish set, so the shared writer refused it outside the fixed 42,294,879..51,693,741-byte contract band; no artifact or manifest can land for B2-AC6 until the issuer accepts engine-only evidence or routes a compaction/band correction and one bounded retry.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Exactly-once reversible QA trigger: bucket opal-313476888478-globgrph had the canonical six-tag array read before and after one PutBucketTagging call; the arrays were byte-identical. CloudTrail event 2ef5326a-ad76-4071-8307-d9b8ff5c8bcc at 17:21:01Z caused incremental_updater request 70d9ca80-4548-51f8-865c-a993ebf9cd25 to process the real S3_BUCKET ARN, write one node, and stamp marker 2026-09-03T17:23:22.339410+00:00",
+        "Pipe execution 09f97531-1a2c-4b5f-91ce-8ead27b74dbc accepted that SQS event at 17:23:24.109Z and launched ECS task 32d8608dbe8f42f482a5e4114b3e0ace on globgrph-projection-worker:2 / image digest sha256:1e1aaa14df31da756001f3a42b1f5b6c671e4d75586aeb72c96586534a50f01c",
+        "Worker log: INCR_NODE_DELTA head=27225 cur=27225 upsert=1 delete=0 (0.0%); edge upsert=0 delete=0; nodes=27225 edges=58606 skipped=383; INCR_RESULT status=incremental; the container then logged PROJECTION_ERROR PublicationRefused: publish set 83617383 bytes is outside 42294879..51693741 and exited 1",
+        "Independent post-failure S3 control: projection/2026-09-03T17:23:22.339410+00:00/ contains zero objects, while projection/current.json still names the accepted 2026-09-03T17:01:08.128628+00:00 full-fallback artifact and manifest SHA-256 28ed81e28144fa3db6dc880adf55ff1076c1b376d36b4b8b1d8597d1cc4a8f1c"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "B2-AC6 requires the subsequent real incremental run to publish artifact plus manifest under its real marker vintage with manifest edge_count equal to direct COUNT(*); PROJECTION_CONTRACT.md v0.1 independently refuses every publish set outside the measured full-build baseline +/-10%, 42,294,879..51,693,741 bytes.",
+    "world_is": "The real one-node delta is valid and the incremental engine's own guard passes, but its copied-and-updated Kuzu file yields an 83,617,383-byte publish set. The contract gate safely refuses it before artifact, manifest, or pointer writes, so the B2 incremental arm cannot satisfy its artifact requirement without changing a frozen carrier or accepting engine-only evidence.",
+    "notes": "Escalated to 2.0.0_SA_COO~A at 17:24:52Z with two bounded choices: accept the engine-success arm despite the refused publication, or route correction to compaction/band ownership and authorize one retry on this same authentic marker. Peer 0.7.0_AE_CloudOps~T acknowledged and independently routed the contract divergence. No second QA trigger, no marker write, no contract widening, no retry, no push. The previous pointer and prefix remain intact."
   }
 ]
 ```
