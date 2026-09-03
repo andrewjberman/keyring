@@ -17,13 +17,10 @@ Usage: python .tools/tests/test_safe_deploy_receipt_names_both_legs.py
 """
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
-WS = Path(subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                         cwd=str(Path(__file__).resolve().parent),
-                         capture_output=True, text=True).stdout.strip())
+WS = Path(__file__).resolve().parents[2]   # .tools/tests/<this> -> workspace root; no subprocess at import
 sys.path.insert(0, str(WS / ".tools"))
 
 import safe_deploy_core as sdc  # noqa: E402
@@ -51,43 +48,64 @@ def receipt_total(files, bundle):
     return len(files) + len(bundle_only), len(files), len(bundle_only)
 
 
-# --- 1. bundle-member-only: the case the receipt was blind to ---
-files, bundle = sets_for([ROSTER])
-total, n_s, n_b = receipt_total(files, bundle)
-rec("BUNDLE-ONLY-APPEARS", total == 1 and n_s == 0 and n_b == 1,
-    f"roster-only change -> receipt total={total} ({n_s} script, {n_b} bundle-member). "
-    f"Before the fix this printed 0 while deploying 1.")
+_RAN = False
 
-# --- 2. script-only: no regression, no double-count ---
-files, bundle = sets_for([SCRIPT])
-total, n_s, n_b = receipt_total(files, bundle)
-rec("SCRIPT-ONLY-UNCHANGED", total == 1 and n_s == 1,
-    f"ordinary script change -> receipt total={total} ({n_s} script, {n_b} bundle-member); "
-    f"the ordinary path is untouched")
 
-# --- 3. both together: the union is counted once, not twice ---
-files, bundle = sets_for([ROSTER, SCRIPT])
-total, n_s, n_b = receipt_total(files, bundle)
-rec("NO-DOUBLE-COUNT", total == n_s + n_b and total == 2,
-    f"roster + script -> receipt total={total} ({n_s} script, {n_b} bundle-member); "
-    f"a path in BOTH sets is counted once")
+def _run_battery():
+    """EVERY piece of work the battery does lives here, so IMPORT IS INERT (the T-16 pass-2 shape,
+    03cf4d17ac; NFRA_COMPEFFICACY F6, 92794). Called once per process by test_all_arms_pass (pytest)
+    or _report (direct). safe_deploy_core is imported at module level (measured 0.5 s, no subprocess); the arms ran at import before this."""
+    global _RAN
+    if _RAN:
+        return
+    _RAN = True
+    # --- 1. bundle-member-only: the case the receipt was blind to ---
+    files, bundle = sets_for([ROSTER])
+    total, n_s, n_b = receipt_total(files, bundle)
+    rec("BUNDLE-ONLY-APPEARS", total == 1 and n_s == 0 and n_b == 1,
+        f"roster-only change -> receipt total={total} ({n_s} script, {n_b} bundle-member). "
+        f"Before the fix this printed 0 while deploying 1.")
 
-# --- 4. the nothing-to-do gate and the receipt agree on their domain ---
-# :997 exits when NEITHER set has entries; the receipt must therefore be able to describe
-# anything that gets past that gate. A receipt whose domain is narrower than its gate's is
-# exactly the defect this fixes.
-files, bundle = sets_for([ROSTER])
-rec("GATE-AND-RECEIPT-SAME-DOMAIN", bool(files or bundle) and receipt_total(files, bundle)[0] > 0,
-    "a path that passes the nothing-to-do gate is describable by the receipt "
-    "(gate domain == receipt domain)")
+    # --- 2. script-only: no regression, no double-count ---
+    files, bundle = sets_for([SCRIPT])
+    total, n_s, n_b = receipt_total(files, bundle)
+    rec("SCRIPT-ONLY-UNCHANGED", total == 1 and n_s == 1,
+        f"ordinary script change -> receipt total={total} ({n_s} script, {n_b} bundle-member); "
+        f"the ordinary path is untouched")
 
-n = sum(1 for _, v, _ in RESULTS if v == "PASS")
-print()
-print("=" * 78)
-print(f"SAFE-DEPLOY RECEIPT BATTERY: {n}/{len(RESULTS)} PASS (denominator {len(RESULTS)})")
-print("=" * 78)
+    # --- 3. both together: the union is counted once, not twice ---
+    files, bundle = sets_for([ROSTER, SCRIPT])
+    total, n_s, n_b = receipt_total(files, bundle)
+    rec("NO-DOUBLE-COUNT", total == n_s + n_b and total == 2,
+        f"roster + script -> receipt total={total} ({n_s} script, {n_b} bundle-member); "
+        f"a path in BOTH sets is counted once")
+
+    # --- 4. the nothing-to-do gate and the receipt agree on their domain ---
+    # :997 exits when NEITHER set has entries; the receipt must therefore be able to describe
+    # anything that gets past that gate. A receipt whose domain is narrower than its gate's is
+    # exactly the defect this fixes.
+    files, bundle = sets_for([ROSTER])
+    rec("GATE-AND-RECEIPT-SAME-DOMAIN", bool(files or bundle) and receipt_total(files, bundle)[0] > 0,
+        "a path that passes the nothing-to-do gate is describable by the receipt "
+        "(gate domain == receipt domain)")
+
+
+def _report() -> int:
+    _run_battery()
+    n = sum(1 for _, v, _ in RESULTS if v == "PASS")
+    print()
+    print("=" * 80)
+    print("SAFE-DEPLOY RECEIPT BATTERY: %d/%d PASS (denominator %d)" % (n, len(RESULTS), len(RESULTS)))
+    print("=" * 80)
+    return 0 if n == len(RESULTS) else 1
+
+
+def test_all_arms_pass():
+    _run_battery()
+    failed = [(t, d) for t, v, d in RESULTS if v != "PASS"]
+    assert not failed, "arms failed (%d of %d): %s" % (len(failed), len(RESULTS), failed)
+    print("SAFE-DEPLOY RECEIPT BATTERY: %d/%d PASS (denominator %d)" % (len(RESULTS), len(RESULTS), len(RESULTS)))
+
+
 if __name__ == "__main__":
-    # F6 (NFRA_COMPEFFICACY, 2026-09-02): a module-scope SystemExit ends the pytest SESSION on
-    # collection (INTERNALERROR), killing every other battery in this directory. Guarded first;
-    # the import-inert shape follows.
-    sys.exit(0 if n == len(RESULTS) else 1)
+    sys.exit(_report())
