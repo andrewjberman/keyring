@@ -131,7 +131,7 @@ L5 as the next round's decomposition inputs; they are not task orders.
 investigation row's id; `project`, `fabric`; `class`, `hazard_standing`; `mechanism` (the grounded attribution, carried
 verbatim); `evidence`; `remedy`; `owner` (the lane that builds); `round`; `remediation` `{state: OPEN or REMEDIATED,
 owner, round}`; for `ARMED` rows also `disarm` `{state: ARMED or DISARMED, owner, at}`; `closed`; and the routing
-fields of section 8.
+fields of section 8, omitted only for a row already remediated inside the round.
 
 **Disarmed is not remediated.** Two states, two owners, two clocks. Disarm is urgent and off-cadence; remediation
 rides the round. An `ARMED` row is `closed` only when both states have landed; an `INERT` row when `REMEDIATED`. A
@@ -177,7 +177,11 @@ the point; the CVO never shortens it by writing to a worker.
 **Routing fields on a remediation row.** `route` is the decision: what does the remedy need that does not exist yet?
 `SPEC_ERROR`, a cell the decomposition already contains; `DECOMP_INVALIDATING`, a cell it does not; `SCOPE_CHANGE`, an
 outcome the PRD does not name. `loop_target` is derived from `route` and stored so a reader of one row can act:
-`SPEC_ERROR` to 6, `DECOMP_INVALIDATING` to 5, `SCOPE_CHANGE` to 2; the gate refuses any pair off that map. A
+`SPEC_ERROR` to 6, `DECOMP_INVALIDATING` to 5, `SCOPE_CHANGE` to 2; the gate refuses any pair off that map. A new
+remediation row omits `route` and `loop_target` only when its `remediation.state` is `REMEDIATED` and, for an `ARMED`
+row, its `disarm.state` is `DISARMED`: the remedy executed inside the round by the row's owner, and the row's `evidence`
+cites the exercised remedy; such a row re-enters nothing. An `OPEN` remediation without a route is refused, because the
+route is the decision. A
 `SCOPE_CHANGE` row carries `scope_change_kind` (`CONTRADICTS_NAMED_OUTCOME` with a real `outcome_ref`, or
 `REQUIRES_UNNAMED_OUTCOME` with `outcome_ref` null and a `proposed_outcome`); the filer never allocates an outcome id.
 
@@ -236,3 +240,4 @@ window. A document that describes the channel in a second shape is retired to a 
 | 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; Andrew's word at the CVO terminal, recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260903_031xZ_SURPRISE_ROW_NOT_MCP_GATE_ON_PROOF_OF_SPEC_SURPRISES.md` @007481053a | re-keyed from a five-stage document to the L7 to L10 annex of the spine, in constitutional form; the row is the only carrier and the surfacing seat appends its own row on either root; append-only as a control with corrections as new rows; the proof-of-spec surprises limb; the L10 precondition and its gate; the CVO's intake named |
 | 2.1 | 2026-09-03 | spine v2.1 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` @aaa5a2b085; Andrew's two words at the COO terminal, recorded at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb and `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the channel runs in one direction: findings up to the COO or the CTO, never down to a worker; the round's remediations issued as one slug at L10 to the route owner only; the L10 precondition carries the valid proof-of-spec instance with resolving surprises; the loop stated |
 | 2.2 | 2026-09-03 | the reading of the channel mechanism's owner `1.0.0_SA_CTO` on the NFRA_CLDGRPH round-2 id collision (message 93459): the gate is the allocator and an id is minted at commit | an id is provisional until its commit and is not cited; a citation carries `<id>@<commit>`; the header's section pointers corrected (amendment is section 10, the changelog section 11); the changelog reordered by version |
+| 2.3 | 2026-09-03 | the gate-model ruling of the channel mechanism's owner `1.0.0_SA_CTO` (message 93572) on the fork with `1.0.0_SA_CTO~Z` over a site-Z slug that could only land as re-entry rows; the gate `.tools/surprise-row-gate.py` @ebe3a4caea (11 of 11 arms) | a new remediation row omits its route only when already remediated inside the round (and disarmed, if armed), the remedy cited in `evidence`, re-entering nothing; an open remediation without a route stays refused |
