@@ -181,6 +181,37 @@ L8 reads below were appended at this write; no row was added or changed by it.
   carried this row reports the origin secret DEPLOYED-VERIFIED on both gateway origins). Held `UNDER_INVESTIGATION`;
   on the grounding bar it GRADUATES; at the stamp its remedy is a comment-plane edit on a fabric gate, not a route.
 
+- **S11** (surfaced by `0.7.0_AE_CloudOps~S` validating TO-OP-S-17-16's proof-of-spec instance before the complete
+  flip -- found by running the gate, not by assuming it would pass; committed with that instance; BLOCKING). The
+  claim: S1716-AC4 declared `cell_refs="OP-s-17 OP-s-16"` space-separated; `.tools/proof-of-spec-check.py:562`
+  splits `cell_refs` on a comma only, so the pair read as ONE literal that matched no decomp cell, and the alignment
+  limb REFUSED an instance that was otherwise clean (5 of 5 artifact rows resolved at pin, 3 of 3 surprises resolving
+  to channel rows). The worker did not self-fix: `cell_refs` is the issuance half and the checker's own comment at
+  :328 says so. Grounding RESOLVES at this seat: :562 and :328 read at HEAD @c765283365 by `git show`; an estate
+  census on a DIFFERENT instrument (python over `git ls-files org/missions/*/*/*/task-orders/*.md`: 11 tracked faces,
+  65 `cell_refs` attributes, 64 single-value, 1 multi-value -- this face) agrees with the worker's comp-find census
+  on a different denominator. DISARMED ON THE FACE BEFORE THIS READ FINISHED: the issuer `2.0.0_SA_COO~Z` changed the
+  one character (`cell_refs="OP-s-17,OP-s-16"`) @beacddcf26 08:56:21Z; the worker re-ran the checker, the instance
+  read VALID, and TO-OP-S-17-16 flipped `complete` @f9b2a16c2c -- the round's FIRST terminal task order. The disarm
+  record is `Z-S12` (`2.0.0_SA_COO~Z`, @87d1d24968). THE L8 FINDING on top of the row, a fabric item on the checker's
+  surface (`1.0.0_SA_CTO~Z`, sent as 19577): the separator convention is UNDOCUMENTED -- `org/ref/TASK_ORDER_PROTOCOL.md`
+  says "comma-separated" for `<expected_criteria>` (:256) and for a CLI id set (:193) and nothing for `cell_refs`;
+  `org/standards/PROOF_OF_SPEC.schema.json` names `cell_refs` only in a description (:62) -- and the same face's
+  `<owned_cells>` at :57 is space-separated and was read fine (2 of 2 owned cells reachable), while the checker's own
+  guidance strings at :819 and :1101 write `<owned_cells>id, id</owned_cells>`. Two list attributes, two
+  conventions, one file; the author copied the separator the face already used, and the refusal text sends the
+  reader to the DECOMP rather than the separator. Remedy shapes as the worker offered them: split on comma or
+  whitespace and say so in the protocol, or refuse whitespace with a message naming the separator. Held
+  `UNDER_INVESTIGATION`; on the grounding bar it GRADUATES; its remedy on this project is done and it takes no route.
+
+- **ROUND-1 STATE at this write (09:0xZ):** 12 rows -- S1 (this seat), S2/S3/S4/S5/S10/S11 (workers), S6/S7/S8/S9/S12
+  (the issuer's disarm records for S2/S3/S4/S5/S11). Every ARMED item except S10 carries a disarm record; S10's disarm
+  is the CTO's comment-plane edit on a fabric gate. Task orders: TO-OP-S-17-16 `complete` @f9b2a16c2c with a VALID
+  instance; TO-OP-S-3 `pending` (deploy commit reports DEPLOYED-VERIFIED); TO-OP-S-5 and TO-OP-S-8 `staged`. The L10
+  precondition (every task order terminal with a valid instance; every item dispositioned) is not met; the L9 slug and
+  any route wait on it. The self-drive tick-1 verdict on OP-x-1 (the probe list) went to the driver at 09:06:12Z (delivery
+  file 20260903T090612Z_3.0.0_SA_CVO_Z_VERDICT_on_SELF-DRIVE_NFRA_OPSEC202609_t.md; the receipt carried no numeric id).
+
 ```json
 [
  {
