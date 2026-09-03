@@ -24,16 +24,21 @@ score it" class:
      BESIDE the real tool (sibling imports resolve) and the arm asserts the mutant RAN (rc 0, the
      tool's own header printed) AND lacks the denominator. A crash now reads FAIL, never PASS.
 
-ARM F/G (added NFRA_COMPEFFICACY CE-t-1, Rule T -- PRD v0.3 s.4.4): before this cell, the
-`--corpus aws` pull hard-coded timeout=600 against a 120s outer harness ceiling (5x over, nothing
-at expiry said so). It is now `--budget-s` (caller-settable, default 100s). F exercises the
-REAL ceiling on the PRODUCTION binary directly (no mutant needed to force it -- a tiny --budget-s
-against a real pull is a genuine timeout, not a simulation) and asserts the DEFERRED disclosure is
-printed and is TEXTUALLY DISTINCT from a clean "NO HITS" zero. G is the red-first control: a
-mutant with the DEFERRED marker text neutered must still RUN (not crash) and FAIL F's own
-predicate -- proving F is a live arm, not a dead one. BOTH SKIP (recorded, not silently omitted)
-if this box has no local Kuzu DB/CLI to exercise (a fixture that cannot represent the failure
-cannot score it -- stated, not silent).
+ARM F/G (NFRA_COMPEFFICACY CE-t-1, Rule T's FORM -- PRD v0.4 s.4.4, the shared .tools/_compbudget
+carrier): before this cell, the `--corpus aws` pull hard-coded timeout=600 against a 120s outer
+harness ceiling (5x over, nothing at expiry said so). It is now `--budget <s>` (> env
+COMP_BUDGET_S > default 90s), spent per UNIT: an explicit node_type pathspec makes each named
+type its own unit (real --cursor resumability); an unscoped pull is one indivisible "ALL" unit
+(a live measurement showed enumerating node_types first, to decompose even the unscoped case,
+itself costs far more than the budget it would serve -- so that is a disclosed non-application,
+never a faked cursor). F drives the REAL ceiling on the PRODUCTION binary directly (no mutant
+needed to force it -- the ceiling is a flag, not a constant, so exercising it touches no bytes)
+and asserts BUDGET REACHED is printed and TEXTUALLY DISTINCT from both a clean "NO HITS" zero
+(F2) and a scoped WITHIN BUDGET completion (F3, the other unit-shape). G is the red-first
+control: a mutant with the BUDGET REACHED marker text neutered must still RUN (not crash) and
+FAIL F's own predicate. ALL SKIP (recorded, not silently omitted) if this box has no local Kuzu
+DB/CLI to exercise (a fixture that cannot represent the failure cannot score it -- stated, not
+silent).
 
 Run: python .tools/tests/test_comp_find_battery.py    |    pytest -q .tools/tests/test_comp_find_battery.py
 """
@@ -56,7 +61,6 @@ DENOM_RE = re.compile(r"DENOMINATOR: (\d+) hit\(s\) across (\d+) file\(s\) scann
 PAGE_RE = re.compile(r"PAGE (\d+) of (\d+)\s+\(showing (\d+) of (\d+)\)")
 HEADER_RE = re.compile(r"^comp-find \[(content|name)\]", re.M)
 AWS_HEADER_RE = re.compile(r"^comp-find \[aws", re.M)
-DEFERRED_MARKER = "DEFERRED: comp-kuzu pull did not return within the budget"
 
 
 def _aws_exercisable() -> bool:
@@ -99,9 +103,9 @@ def rec(tid: str, ok: bool, detail: str = "") -> None:
     RESULTS.append((tid, bool(ok), detail))
 
 
-def run(args: list[str], tool: Path | None = None) -> tuple[int, str]:
+def run(args: list[str], tool: Path | None = None, timeout: int = 120) -> tuple[int, str]:
     r = subprocess.run([sys.executable, str(tool or _tool())] + args,
-                       capture_output=True, text=True, timeout=120, cwd=str(_ws()))
+                       capture_output=True, text=True, timeout=timeout, cwd=str(_ws()))
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
 
@@ -157,43 +161,72 @@ def _run_battery() -> None:
             except OSError:
                 pass
 
-    # F/G -- RULE T (CE-t-1): the --corpus aws budget ceiling and its expiry disclosure.
+    # F/G -- RULE T's FORM (PRD v0.4 s.4.4, landed mid-CE-t-1 -- superseded the T-16 interim shape
+    # this file's first version tested): the --corpus aws budget ceiling via the shared
+    # .tools/_compbudget carrier (--budget / env COMP_BUDGET_S / default 90s), its two terminal
+    # tokens (WITHIN BUDGET / BUDGET REACHED), and the per-node_type unit loop.
     if not _aws_exercisable():
         skip = "SKIP: no local Kuzu CLI/DB on this box -- --corpus aws not exercisable here"
-        rec("F-CEILING-DEFERRED", None, skip)
-        rec("G-MUTANT-NO-DEFERRED", None, skip)
+        for tid in ("F-UNSCOPED-BUDGET-REACHED", "F2-CLEAN-EMPTY-DISCRIMINATOR",
+                    "F3-SCOPED-DISCRIMINATOR", "G-MUTANT-NO-BUDGET-REACHED"):
+            rec(tid, None, skip)
         return
 
-    # F -- driven past its ceiling on the REAL PRODUCTION BINARY (no mutant needed: the ceiling
-    # is now a caller-supplied flag, not a hard-coded constant, so exercising it touches no bytes
-    # and production sha is trivially unchanged -- itself evidence Rule T is doing its job).
-    rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget-s", "0.001"])
-    deferred_ok = (rc == 0 and DEFERRED_MARKER in out and "DENOMINATOR:" not in out
-                   and "NO HITS" not in out)
-    rec("F-CEILING-DEFERRED", deferred_ok, "rc=%s deferred_marker=%s" % (rc, DEFERRED_MARKER in out))
+    # F -- driven past its ceiling on the REAL PRODUCTION BINARY (no mutant needed: the ceiling is
+    # a caller-supplied flag, not a hard-coded constant, so exercising it touches no bytes and
+    # production sha is trivially unchanged -- itself evidence Rule T is doing its job). Unscoped
+    # (no node_type pathspec) -> the NO-CURSOR branch: one indivisible "ALL" unit.
+    rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget", "0.001"])
+    f_ok = (rc == 0 and "BUDGET REACHED:" in out and "NO CURSOR:" in out
+            and "WITHIN BUDGET:" not in out and "NO HITS" not in out)
+    rec("F-UNSCOPED-BUDGET-REACHED", f_ok, "rc=%s out_has_reached=%s" % (rc, "BUDGET REACHED:" in out))
 
-    # SIDE-BY-SIDE CONTROL: a clean empty must NOT be able to produce the same line (T1-AC3).
-    rc0, out0 = run(["--corpus", "aws", "ZZZ_NOSUCH_AWS_TERM_%d" % os.getpid()])
-    rec("F2-CLEAN-EMPTY-DIFFERS", rc0 == 0 and DEFERRED_MARKER not in out0 and "NO HITS" in out0,
-        "rc=%s" % rc0)
+    # SIDE-BY-SIDE CONTROL (T1-AC3): a clean empty must never be able to produce the BUDGET
+    # REACHED line, and D1/D2 (the token, and n==N vs n<N) must be mutually exclusive and self-
+    # consistent. LATENCY-TOLERANT BY DESIGN: this calls the LIVE aws-backed comp-kuzu pull, whose
+    # wall-clock is real infra latency this battery does not control (measured live 2026-09-03:
+    # the same query ran ~8s repeatedly for ~20 minutes, then degraded to 90s+ -- see the project's
+    # surprise-channel row). A GENEROUS explicit --budget (150s, comfortably past every measured
+    # sample) plus a matched wrapper timeout gives the tool room to speak either way; the arm
+    # asserts the CONTRACT (exactly one valid, self-consistent outcome), never "must complete
+    # fast" -- a battery coupled to live external latency is the "wrong arm, not a dead arm" class
+    # if it hard-requires the happy path.
+    rc0, out0 = run(["--corpus", "aws", "ZZZ_NOSUCH_AWS_TERM_%d" % os.getpid(), "--budget", "150"],
+                    timeout=170)
+    within0, reached0 = "WITHIN BUDGET:" in out0, "BUDGET REACHED:" in out0
+    ok0 = (rc0 == 0 and within0 != reached0 and (
+        (within0 and "WITHIN BUDGET: scanned 1 of 1" in out0 and "NO HITS. This is a MEASURED zero" in out0)
+        or (reached0 and "0 hit(s) shown -- NOT a measured zero" in out0
+            and "NO HITS. This is a MEASURED zero" not in out0)))
+    rec("F2-CLEAN-EMPTY-DISCRIMINATOR", ok0,
+        "rc=%s within=%s reached=%s (live-latency-observed=%s)" % (rc0, within0, reached0, reached0))
 
-    # G -- MUTANT, red-first: neuter the DEFERRED marker text in a copy beside the real tool.
-    # Must RUN (rc 0, its own aws header printed -- a crash is a DEAD arm, not a pass) and FAIL
-    # F's own predicate (the marker must be ABSENT).
+    # F3 -- SCOPED unit path: an explicit node_type pathspec makes the unit a real node_type, not
+    # the unscoped "ALL" -- a distinct code path (genuine --cursor resumability lives here, not in
+    # the unscoped branch). Same latency tolerance as F2.
+    rc3, out3 = run(["--corpus", "aws", AWS_PATTERN, "LAMBDA", "--budget", "150"], timeout=170)
+    within3, reached3 = "WITHIN BUDGET: scanned 1 of 1 node_type" in out3, "BUDGET REACHED:" in out3
+    ok3 = rc3 == 0 and within3 != reached3 and (within3 or "NO CURSOR YET" in out3)
+    rec("F3-SCOPED-DISCRIMINATOR", ok3,
+        "rc=%s within=%s reached=%s (live-latency-observed=%s)" % (rc3, within3, reached3, reached3))
+
+    # G -- MUTANT, red-first: neuter the BUDGET REACHED marker text in a copy beside the real
+    # tool. Must RUN (rc 0, its own aws header printed -- a crash is a DEAD arm, not a pass) and
+    # FAIL F's own predicate (the marker must be ABSENT).
+    marker = "BUDGET REACHED:"
     src = _tool().read_text(encoding="utf-8", errors="replace")
     mp2 = _ws() / ".tools" / (".mutant-comp-find-ceiling-%d" % os.getpid())
-    if src.count(DEFERRED_MARKER) == 0:
-        rec("G-MUTANT-NO-DEFERRED", False, "mutation anchor absent from the tool under test")
+    if src.count(marker) == 0:
+        rec("G-MUTANT-NO-BUDGET-REACHED", False, "mutation anchor absent from the tool under test")
     else:
         try:
-            mp2.write_text(src.replace(DEFERRED_MARKER, "MUTATED: no longer says DEFERRED"),
-                           encoding="utf-8")
-            rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget-s", "0.001"], tool=mp2)
+            mp2.write_text(src.replace(marker, "MUTATED-BUDGET:"), encoding="utf-8")
+            rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget", "0.001"], tool=mp2)
             ran = rc == 0 and AWS_HEADER_RE.search(out) is not None
-            rec("G-MUTANT-NO-DEFERRED", ran and DEFERRED_MARKER not in out,
+            rec("G-MUTANT-NO-BUDGET-REACHED", ran and marker not in out,
                 ("mutant did not RUN (rc=%s, header=%s) -> DEAD arm, not a pass"
                  % (rc, bool(AWS_HEADER_RE.search(out)))) if not ran
-                else ("mutant still printed the DEFERRED marker -> arm F is DEAD" if DEFERRED_MARKER in out
+                else ("mutant still printed the marker -> arm F is DEAD" if marker in out
                       else "mutant ran and lacks the marker: OK"))
         finally:
             try:
