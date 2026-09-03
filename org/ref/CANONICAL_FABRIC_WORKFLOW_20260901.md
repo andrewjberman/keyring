@@ -36,7 +36,10 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 - **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker.
 - **Input:** the brief. **Output:** numbered qualitative outcomes `FWD-1..n`, each citing a brief line, carrying no
   numbers, each disputable; ids are permanent and never reused.
-- **Tool:** `/endpoint --forward <brief>`. The same skill re-enters here from an L10 `SCOPE_CHANGE`.
+- **Tool:** `/endpoint --forward <brief>`. Andrew confirms the `DONE WHEN` line of every outcome here; it is his last
+  touch point, and after L2 no limb waits on him. The same skill re-enters here from an L10 `SCOPE_CHANGE`, where the
+  CTO adjudicates: it runs `/open-calls --adjudicate` on the subject, rules on the recommendations itself, records the
+  ruling, appends the new outcomes at the next unused ids, re-issues the PRD, and the loop runs forward from L4.
 - **Gate:** none at L2. At L6 the L6 gate refuses a task order whose PRD does not define every listed outcome in its
   endpoint section, and every defined outcome not listed in the header.
 - **Handoff:** the outcomes land inside the PRD as its endpoint section.
@@ -174,17 +177,29 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
   `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`, re-cuts the task order), `DECOMP_INVALIDATING` to L5 (owner
   `2.0.0_SA_COO`, re-decomposes), `SCOPE_CHANGE` to L2 (owner `1.0.0_SA_CTO`, re-enters the endpoint; the row names
   the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). A round whose remediation doc
-  graduates zero rows proceeds to the next L6 dispatches; a project closes on a zero-graduation round by the two-part
-  atomic close.
+  graduates zero rows proceeds to the next L6 dispatches, or, when the decomposition is spent, opens the close.
+- **The close:** two reads on two axes. `2.0.0_SA_COO`, the only seat that can say the decomposition is spent (every
+  cell holds a terminal task order with a valid proof-of-spec), writes `ledger/COMPLETION_REPORT.round<N>.json`: one
+  row per outcome in the PRD header, the cells that served it, each cell's proof-of-spec, and the claim `COVERED` or
+  `UNCOVERED`, both denominators printed, so an outcome no cell ever served shows in the COO's own report.
+  `1.0.0_SA_CTO` reads the exercised artifact each outcome's `DONE WHEN` names, never the report, and writes
+  `ledger/COMPLETION_GRADES.round<N>.json`: one verdict per outcome, `REALIZED`, `NOT_REALIZED` or `NOT_EVALUATED`,
+  the artifact and its vintage cited, the observed state matching the card's state. `CLOSED` follows mechanically when
+  every grade reads `REALIZED`. A `NOT_REALIZED` re-enters at L5 as a decomposition gap or at L2 as a `SCOPE_CHANGE`;
+  a grade in question on receipt is adjudicated by the CTO as at L2. An outcome whose `DONE WHEN` is an act after the
+  work is met by a closing-pass task order whose specification is that act. Then the registry bookkeeping: terminal
+  status, completion date, registry row. Contract: `org/standards/COMPLETION_REPORT.schema.json`.
 - **Tool:** the remediation row; `.tools/prd-header-notify.py kind:route` delivers a new route row to its owner and
   re-offers until READ.
 - **Gate:** `.tools/surprise-row-gate.py` refuses a route-carrying row (a remediation row with a `route`, or an
   investigation row whose `disposition` is `DECOMP_INVALIDATING`) while any task order under the project is not
   terminal or any investigation item under it is not dispositioned, a route and target off the locked map, and a
   `SCOPE_CHANGE` without its kind and outcome reference. An existing item is dispositioned by a new investigation row
-  that names it in `adjudicates`; the channel stays append-only.
-- **Handoff:** the stamped row to the route owner and to no one else; `dep_stage: ROUND_CLOSE`, then `CLOSED` on the
-  closing round, flipped by the row owner on the CVO's stamp.
+  that names it in `adjudicates`; the channel stays append-only. `.tools/missions-tree-index.py check` refuses a
+  `CLOSED` row unless the completion report and the grades exist for the same round, cover exactly the header's
+  outcomes, and every grade reads `REALIZED`.
+- **Handoff:** the stamped row to the route owner and to no one else; `dep_stage: ROUND_CLOSE` on the CVO's stamp,
+  then `CLOSED` on the CTO's grades, both flipped by the row owner.
 
 ### Cross-cutting — the integrator
 
@@ -220,7 +235,7 @@ of every done test, read by `ls-remote`, never a cell of a decomposition.
 | L7 execution | Tier-2 worker | `EXECUTING` | `surprise-row-gate.py` (rows) | `proof-of-spec-check.py`; the terminal-flip limb of `to-pipeline-gate.py` | — |
 | L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` | — | `surprise-watch.sh` to the CVO |
 | L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows), lane `TREE_CVO` | — | — |
-| L10 routing | `3.0.0_SA_CVO` stamps; owner acts | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (precondition, locked map) | — | `prd-header-notify.py kind:route` to the owner |
+| L10 routing | `3.0.0_SA_CVO` stamps; owner acts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (precondition, locked map); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py kind:route` to the owner |
 
 Every notification and every acknowledgement is read on the broker's delivery ledger: sent, emitted and read are
 three states, and only an agent's own acknowledgement is read.
@@ -255,3 +270,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 | 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; water test `workflows/atom_decomposition/runs/canonical-fabric-workflow-spec/20260903T0305Z/` | constitutional form; ten limbs with one owner each and the not-engaged set; the project tree homes; the surprise row as the only carrier; the L6 refusal of Tier-0/1 seating and the L10 precondition gate; the proof-of-spec surprises limb; worker commits its own status; the earlier second description of the process retired to a redirect |
 | 2.1 | 2026-09-03 | `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb; `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the L7 to L10 loop: the CVO's findings travel up to the COO (or the CTO for a scope change) and never down to a worker; remediations are one slug at L10; every task order finishes with its valid proof-of-spec before any loop-back; the pass re-enters at L5 or L6 as fresh and remediated task orders in dependency order; the L10 handoff is to the route owner only |
 | 2.2 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md` | two refusers for clauses that bound by reading: the L8 send guard on the broker path (CVO to a Tier-2 serial refused while a tree project is executing) and the second limb of the L10 gate (no route while an investigation item is undispositioned; both route shapes; the `adjudicates` carrier) |
+| 2.3 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md` | the close: the COO's completion report and the CTO's grades, two reads on two axes, the `CLOSED` flip mechanical on the grades (`missions-tree-index.py` R6, `COMPLETION_REPORT.schema.json`); autonomy after L2 -- Andrew confirms the `DONE WHEN` lines at L2 and no limb waits on him after; `SCOPE_CHANGE` and a questioned grade are adjudicated by the CTO (`/open-calls --adjudicate`) and the loop runs forward from L4 |
