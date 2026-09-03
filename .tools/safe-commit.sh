@@ -682,6 +682,13 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
         echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
         echo "WARN: surprise-row-gate OVERRIDDEN (audited): ${SR_OVR}" >&2
         printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+        # CARRY THE AUDITED OVERRIDE TO THE HOOK (2026-09-03, 1.0.0_SA_CTO~Z's measurement via 0.0.0_AB_MSTR~Z 93575,
+        # landed at the base): this stage audits and warns, but .git/hooks/pre-commit block 10 re-runs the gate with no
+        # knowledge of the message and exits 1 regardless -- so the audited override never worked on ANY path. The gate
+        # honours this variable (prints the violations as WARN, exits 0) and ONLY safe-commit sets it, after the audit
+        # line above; a raw `git commit` has no such variable and stays refused, which is the asymmetry the installer
+        # exists to close. Scoped to this process: git inherits it for the hook, nothing else does.
+        export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
       else
         for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
         echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2

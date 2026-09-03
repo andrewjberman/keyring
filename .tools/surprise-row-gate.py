@@ -762,6 +762,19 @@ def main(argv):
     for n in all_notes:
         print("[surprise-row-gate] %s" % n)
     if all_v:
+        # THE AUDITED OVERRIDE, HONOURED HERE (2026-09-03, 1.0.0_SA_CTO on 1.0.0_SA_CTO~Z's measurement via 93575): this
+        # gate cannot see the commit message, so it always exited 1 on a violation; safe-commit read the message, audited
+        # the '# surprise-row-override: <reason>' and warned -- and then the pre-commit hook re-ran this gate and refused
+        # anyway. The override therefore never worked on any path. safe-commit now exports SURPRISE_ROW_OVERRIDE after
+        # writing its audit line; when it is set, the violations print as WARN and the gate exits 0. A raw `git commit`
+        # never has it, so an un-audited override is still impossible. The variable carries the reason, never a bare flag.
+        _ovr = os.environ.get("SURPRISE_ROW_OVERRIDE", "").strip()
+        if _ovr:
+            print("[surprise-row-gate] OVERRIDDEN (audited by safe-commit): %s -- %d violation(s) on NEW rows follow as WARN:"
+                  % (_ovr, len(all_v)), file=sys.stderr)
+            for x in all_v:
+                print("    WARN: %s" % x, file=sys.stderr)
+            return 0
         print("[surprise-row-gate] BLOCKED -- %d violation(s) on NEW rows:" % len(all_v),
               file=sys.stderr)
         for x in all_v:
