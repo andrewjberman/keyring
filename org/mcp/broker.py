@@ -29,6 +29,11 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from threading import Timer
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cvo_send_guard  # noqa: E402  the L8 correspondence guard, shared with server.py (same dir)
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 # OPAL_BROKER_DB lets the T1 exercise battery run against a scratch DB on a scratch port.
 # Exercising delivery semantics requires killing clients mid-flight; doing that against the
@@ -497,6 +502,17 @@ class BrokerHandler(BaseHTTPRequestHandler):
         subject = body.get("subject", "")
         text = body["text"]
         now = datetime.now(timezone.utc).isoformat()
+
+        # L8 CORRESPONDENCE GUARD (spine v2.1 L8; Andrew-direct 2026-09-03 "Recs approved", CTO /open-calls
+        # CALL 1) -- the same decision org/mcp/server.py applies before it posts here. This HTTP path is
+        # reachable WITHOUT the server (a direct POST), so it grades on its own; a refused send inserts nothing.
+        _l8 = cvo_send_guard.cvo_worker_send_refusal(
+            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+        if _l8:
+            _log_event("refused", from_serial, f"-> {to_serial} L8 guard: {_l8[:160]}")
+            db.commit()
+            self._json_response({"ok": False, "refused": _l8}, 403)
+            return
 
         # Always accept the insert. A recipient does not need to be currently
         # registered for us to queue a message — they may be mid-restart or the

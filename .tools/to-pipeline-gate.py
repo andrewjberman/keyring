@@ -98,15 +98,35 @@ TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
 
 # GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
 # that does task orders"). A NEWLY ADDED tree task order commits only under 2.0.0_SA_COO or one of its ~lanes, read
-# from the committer identity the owned-paths hook already resolves (git var GIT_AUTHOR_IDENT). A MODIFICATION of an
-# existing task order -- the worker's own status flip, admitted by the lane grant that made task-orders/** ANY -- is
-# not this limb's: main() sends only newly-added paths through check_file. Prospective, tree projects only. An
-# unreadable identity REFUSES (fail-closed): a gate that cannot see who is committing must not admit an issuance.
+# by the estate's actor precedence (.tools/lib/resolve-actor.sh): $OPAL_AGENT_SERIAL (per process) -> the session's
+# org/mcp/sessions/<id>.serial file -> GIT_AUTHOR_IDENT last. MEASURED 2026-09-03 (2.0.0_SA_COO, message 93110): at
+# pre-commit time GIT_AUTHOR_IDENT reads the git CONFIG name, never safe-commit's --author, so a limb keyed on it alone
+# refused the one seat it exists to admit on every standard safe-commit; the two per-process carriers were present and
+# unread. The wrapper's --author is a CLAIM; the process carriers are the actor. A MODIFICATION of an existing task
+# order -- the worker's own status flip, admitted by the lane grant that made task-orders/** ANY -- is not this limb's:
+# main() sends only newly-added paths through check_file. Prospective, tree projects only. An unreadable identity
+# REFUSES (fail-closed): a gate that cannot see who is committing must not admit an issuance.
 ISSUER_SERIAL = "2.0.0_SA_COO"
 
 
 def _committer_serial(root):
-    """The serial before ' <' in GIT_AUTHOR_IDENT, or '' when git cannot answer."""
+    """The committing seat's serial by the resolve-actor precedence: $OPAL_AGENT_SERIAL, then
+    org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial, then the name before ' <' in GIT_AUTHOR_IDENT (the config
+    name at pre-commit time -- a last resort, never the --author), or '' when nothing answers."""
+    env = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+    if env:
+        return env
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    if sid:
+        try:
+            p = os.path.join(root, "org", "mcp", "sessions", sid + ".serial")
+            if os.path.isfile(p):
+                with open(p, encoding="utf-8") as fh:
+                    v = fh.read().strip()
+                if v:
+                    return v
+        except OSError:
+            pass
     try:
         ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
                                timeout=20).stdout

@@ -86,11 +86,118 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 # on EITHER root, is not terminal at HEAD. Tree projects only; NEW rows only (this gate's standing model);
 # the census reads HEAD blobs, never the worktree -- a peer's half-written status flip must not decide a
 # refusal. THE OTHER HALF of his precondition ("the surprise channel, all investigations, completely checked
-# by CVO") has no artifact a gate can read today beyond the rows' own disposition field and is NOT enforced
-# here -- stated so this limb's OK line is never read as covering it. Terminal words are the TO protocol's
-# (complete / superseded / cancelled) plus the withdrawn state an issuer writes on a mis-seated dispatch.
+# by CVO") is the SECOND LIMB below (Andrew-direct 2026-09-03 ~04:5xZ "Recs approved", CTO /open-calls CALL 2).
+# Terminal words are the TO protocol's (complete / superseded / cancelled) plus the withdrawn state an issuer
+# writes on a mis-seated dispatch.
 TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
 TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
+
+# GATE (iii), SECOND LIMB -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_
+# APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md. A NEW route-carrying row under a TREE project is
+# ALSO refused while any investigation item of that project is not dispositioned. The channel is append-only, so an
+# item's disposition is its LATEST CARRIER, resolved in this order: a REMEDIATION row bearing the item's id (GRADUATED
+# by construction); else the last investigation row whose `adjudicates` list names the item (that row's `disposition`
+# is the item's); else the item's own row. UNDER_INVESTIGATION, or an item no row carries, is "not dispositioned".
+# The census reads the INDEX (what the commit contains), so the L10 stamp row and the adjudications it carries land
+# in ONE commit -- one slug, one act. An `adjudicates` entry naming an id no row carries is a phantom adjudication
+# and is refused on its own.
+# ROUTE-CARRYING ROW, BOTH SHAPES: a REMEDIATION row with `route`, and an INVESTIGATION row whose `disposition` is
+# DECOMP_INVALIDATING -- that word is in ROUTE_TO_STEP (it IS the route to L5) and it is the shape the round-1 stamp
+# took (an investigation row, not a remediation row), which the first limb's trigger never saw. Both limbs now run
+# on both shapes.
+UNDISPOSITIONED = ("UNDER_INVESTIGATION", None, "")
+INVESTIGATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/investigations/*",
+                          "org/surprise_channel/%s/INVESTIGATION_v*")
+REMEDIATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/remediations/*",
+                        "org/surprise_channel/%s/REMEDIATION_v*")
+
+
+def _index_paths(root, patterns):
+    """(paths, note): the index entries matching the pathspecs; (None, note) when git could not answer."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--"] + list(patterns), cwd=root, capture_output=True,
+                            text=True, timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return None, "git ls-files raised %s" % exc
+    if ls.returncode != 0:
+        return None, "git ls-files rc=%d: %s" % (ls.returncode, ls.stderr.strip()[:120])
+    return [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()], ""
+
+
+def _resolve_latest(investigation_files, remediation_ids):
+    """PURE. investigation_files = [(path, rows)] in path order; remediation_ids = ids of remediation rows.
+    Returns (latest {item_id: disposition}, unknown_targets [ids named by `adjudicates` that no row carries])."""
+    latest, order = {}, []
+    for _p, rows in investigation_files:
+        for r in rows:
+            rid = r.get("id")
+            if rid and rid not in latest:
+                latest[rid] = r.get("disposition")
+                order.append(rid)
+    unknown = []
+    for _p, rows in investigation_files:
+        for r in rows:
+            for target in (r.get("adjudicates") or []):
+                if target not in latest:
+                    unknown.append("%s (by %s)" % (target, r.get("id")))
+                    continue
+                latest[target] = r.get("disposition")
+    for rid in remediation_ids:
+        if rid in latest:
+            latest[rid] = "GRADUATED"
+    return latest, unknown
+
+
+def _latest_dispositions(root, code):
+    """(latest, unknown, files_read, note) for the project's investigation items, read from the INDEX.
+    latest is None when the census could not run -- the caller fails closed."""
+    inv_paths, note = _index_paths(root, [p % code for p in INVESTIGATION_PATTERNS])
+    if inv_paths is None:
+        return None, [], 0, note
+    rem_paths, note = _index_paths(root, [p % code for p in REMEDIATION_PATTERNS])
+    if rem_paths is None:
+        return None, [], 0, note
+    files, rem_ids = [], []
+    for p in inv_paths:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None, [], 0, "%s unreadable in the index (%s)" % (p, st)
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None, [], 0, "%s holds %d unparsed block(s)" % (p, bad)
+        files.append((p, rows))
+    for p in rem_paths:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None, [], 0, "%s unreadable in the index (%s)" % (p, st)
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None, [], 0, "%s holds %d unparsed block(s)" % (p, bad)
+        rem_ids.extend(r.get("id") for r in rows if r.get("id"))
+    latest, unknown = _resolve_latest(files, rem_ids)
+    return latest, unknown, len(files) + len(rem_paths), ""
+
+
+def _investigations_precondition_violations(rel, row, code, route_word, dispositions):
+    """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
+    _latest_dispositions (injectable for the self-test)."""
+    rid = row.get("id", "<no id>")
+    latest, unknown, nfiles, note = dispositions
+    if latest is None:
+        return ["%s: the L10 precondition (every investigation item under %s dispositioned) could NOT be "
+                "evaluated (%s) -- REFUSED, fail-closed" % (rid, code, note)]
+    out = []
+    if unknown:
+        out.append("%s: `adjudicates` names %s, which no investigation row under %s carries -- an adjudication "
+                   "of a phantom item is refused" % (rid, ", ".join(unknown), code))
+    open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
+    if open_items:
+        out.append("%s: NEW row carries a route (%s) while %d of %d investigation item(s) under %s are NOT "
+                   "dispositioned (latest carrier reads UNDER_INVESTIGATION): %s. L10 routing waits until every "
+                   "investigation is CVO-checked; an existing item is dispositioned by a NEW row that names it in "
+                   "`adjudicates` (spine L10 precondition; Andrew-direct 2026-09-03 'Recs approved')."
+                   % (rid, route_word, len(open_items), len(latest), code, ", ".join(open_items)))
+    return out
 
 
 def _open_tos_for_project(root, code):
@@ -117,10 +224,11 @@ def _open_tos_for_project(root, code):
     return open_ids, len(paths), ""
 
 
-def _route_precondition_violations(root, rel, row, code, open_tos=None):
-    """GATE (iii) for ONE new tree remediation row carrying a route. `open_tos` is injectable for the
+def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None):
+    """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
     red-first exercise; production passes None and the census runs."""
     rid = row.get("id", "<no id>")
+    route_word = route_word or row.get("route")
     if open_tos is None:
         open_ids, total, note = _open_tos_for_project(root, code)
     else:
@@ -132,7 +240,7 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None):
         return ["%s: NEW remediation row carries route=%s while %d of %d task order(s) under %s are NOT "
                 "terminal at HEAD: %s. L10 routing waits until every task order is complete "
                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
-                "is over')." % (rid, row.get("route"), len(open_ids), total, code, ", ".join(open_ids))]
+                "is over')." % (rid, route_word, len(open_ids), total, code, ", ".join(open_ids))]
     return []
 
 
@@ -502,21 +610,79 @@ def check_file(root, rel):
                      "membership; a row filed under another project is an identity defect."
                      % (rel, rid, row["project"], folder_project))
         v.extend(_check_row(row, kind, schema))
-        # GATE (iii): a NEW tree remediation row with a route waits for every TO under the project.
-        if kind == "REMEDIATION" and folder_kind == "REMEDIATION" and folder_project and row.get("route") is not None:
-            pre = _route_precondition_violations(root, rel, row, folder_project)
+        # GATE (iii), both limbs, both route shapes: a NEW tree row that carries a route waits for every TO under
+        # the project to be terminal AND every investigation item under it to be dispositioned.
+        _route_word = None
+        if kind == "REMEDIATION" and folder_kind == "REMEDIATION" and row.get("route") is not None:
+            _route_word = "route=%s" % row.get("route")
+        elif kind == "INVESTIGATION" and folder_kind == "INVESTIGATION" and row.get("disposition") == "DECOMP_INVALIDATING":
+            _route_word = "disposition=DECOMP_INVALIDATING, the route to L5"
+        if folder_project and _route_word is not None:
+            pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word)
+            pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
+                                                               _latest_dispositions(root, folder_project)))
             v.extend(pre)
             if not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
-                notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; "
-                             "route admitted" % (rel, rid, _t))
+                _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
+                notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
+                             "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "
+                             "route admitted" % (rel, rid, _t, len(_l or {}), _nf))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
                  % (rel, len(added), len(new_rows), len(old_ids)))
     return (v, notes)
 
 
+def _self_test(root):
+    """The battery of gate (iii)'s second limb: five injected arms (pure) and one live census. Red and green."""
+    row = {"id": "X_PRJ-S9", "route": "SPEC_ERROR"}
+    arms = [
+        ("one item UNDER_INVESTIGATION -> refused, names it",
+         lambda: any("X_PRJ-S1" in x and "NOT dispositioned" in x for x in _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION", "X_PRJ-S2": "GRADUATED"}, [], 1, "")))),
+        ("every item dispositioned -> admitted",
+         lambda: _investigations_precondition_violations("r", row, "X_PRJ", "route=SPEC_ERROR",
+                                                          ({"X_PRJ-S1": "DISMISSED_WITH_REASON", "X_PRJ-S2": "GRADUATED"}, [], 1, "")) == []),
+        ("adjudication by a later row flips the item (pure resolver)",
+         lambda: _resolve_latest([("f", [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                          {"id": "X_PRJ-S2", "disposition": "DECOMP_INVALIDATING", "adjudicates": ["X_PRJ-S1"]}])], [])
+         == ({"X_PRJ-S1": "DECOMP_INVALIDATING", "X_PRJ-S2": "DECOMP_INVALIDATING"}, [])),
+        ("a remediation row bearing the id resolves it GRADUATED; a phantom target is reported",
+         lambda: _resolve_latest([("f", [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                          {"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S7"]}])], ["X_PRJ-S1"])
+         == ({"X_PRJ-S1": "GRADUATED", "X_PRJ-S2": "GRADUATED"}, ["X_PRJ-S7 (by X_PRJ-S2)"])),
+        ("census could not run -> refused fail-closed",
+         lambda: any("fail-closed" in x for x in _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", (None, [], 0, "git ls-files rc=128")))),
+        ("phantom adjudication -> its own refusal",
+         lambda: any("phantom" in x for x in _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "GRADUATED"}, ["X_PRJ-S7 (by X_PRJ-S2)"], 1, "")))),
+    ]
+    failed = 0
+    for name, fn in arms:
+        ok = False
+        try:
+            ok = bool(fn())
+        except Exception as exc:  # noqa: BLE001
+            name += " (raised %s: %s)" % (type(exc).__name__, exc)
+        print("  %s  %s" % ("PASS" if ok else "FAIL", name))
+        failed += 0 if ok else 1
+    latest, unknown, nfiles, note = _latest_dispositions(root, "NFRA_COMPEFFICACY")
+    if latest is None:
+        print("  LIVE  census for NFRA_COMPEFFICACY DID NOT RUN (%s)" % note)
+        failed += 1
+    else:
+        open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
+        print("  LIVE  NFRA_COMPEFFICACY: %d item(s) across %d file(s); undispositioned %d: %s; phantom %d"
+              % (len(latest), nfiles, len(open_items), ", ".join(open_items) or "-", len(unknown)))
+    print("RESULT: %d arm(s) failed of %d (+ live census)" % (failed, len(arms)))
+    return 1 if failed else 0
+
+
 def main(argv):
     root = _repo_root()
+    if "--self-test" in argv:
+        return _self_test(root)
     files = [a.replace("\\", "/") for a in argv[1:] if not a.startswith("-")]
     targets = [f for f in files if CHANNEL_RE.search(f)]
     if not targets:

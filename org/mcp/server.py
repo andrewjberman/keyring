@@ -61,6 +61,8 @@ sys.path.insert(0, str(WORKSPACE_ROOT / ".tools"))  # for the shared python->bas
 from git_bash_resolver import git_bash  # noqa: E402  NEVER bare 'bash' (python-spawned -> System32 WSL stub)
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # org/mcp on path BEFORE the guards import (harness-import safe)
 import broker_arg_guards  # noqa: E402  call-boundary guards (D0-T1, pure, same dir) -- see _install_strict_kwargs
+import cvo_send_guard  # noqa: E402  the L8 correspondence guard (spine v2.1; Andrew-direct 2026-09-03 "Recs approved")
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
@@ -1821,6 +1823,19 @@ async def send_message(
     if not _recipients:
         return ("SEND REFUSED: no recipient. Pass to_agent=\"<serial>\" or "
                 "to_agents=[\"<serial>\", ...]. (Nothing was sent.)")
+
+    # --- L8 CORRESPONDENCE GUARD (spine v2.1 L8 "Not engaged"; Andrew-direct 2026-09-03 ~04:5xZ "Recs
+    # approved", CTO /open-calls CALL 1). A send from 3.0.0_SA_CVO to ANY Tier-2 serial is REFUSED while a
+    # tree project reads dep_stage EXECUTING (L7-L9); the finding travels up to the COO or the CTO. Runs
+    # AFTER the identity gate (a forged CVO is audited as a forgery first) and BEFORE any write, over the
+    # whole recipient list (a partial delivery would let a cc to the COO carry the body to the worker).
+    # Decision and census live in cvo_send_guard.py so the daemon's HTTP path grades with the same code.
+    _l8_refusal = cvo_send_guard.cvo_worker_send_refusal(
+        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+    if _l8_refusal:
+        _audit_identity("SEND_CVO_WORKER_REFUSED", from_agent, os.getpid(),
+                        "to=" + ",".join(_recipients), _l8_refusal[:200])
+        return _l8_refusal
 
     _results = []
     for _rcpt in _recipients:
