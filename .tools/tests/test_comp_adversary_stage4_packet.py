@@ -17,7 +17,7 @@ THE DESIGN CONSTRAINT THAT MAKES THIS NON-TRIVIAL, MEASURED 2026-08-31 by 3.0.0_
   PLUS DIGESTS, never digest-everything.
 
 SEVEN LEGS. Legs 1-3 are RED against the pre-build binary BY CONSTRUCTION (the feature is
-absent); leg 5 is the planted mutant that keeps them honest afterwards.
+absent); leg 5 is the planted mutant that keeps them honest afterwards. Legs 8-9 (2026-09-02, NFRA_COMPEFFICACY T-16): a directory subject is refused in the tool's own voice (F1); the packet roll-up carries a DEFERRED bucket above the fold, proven on a planted ceiling mutant (F2).
   1. DIGEST-CONTENT   the packet carries comp-read's OWN output (its shape panel), not paths
   2. DENOMINATOR      the selection rule prints "selected N of M" on its own line
   3. EXCLUSIONS-5     the DECLARED EXCLUSIONS block drops 6 rows -> 5 (:155 retired, 5 intact)
@@ -169,6 +169,44 @@ def _run_battery():
                       "siblings, sum(selected)=%d == %s selected -- no member uncovered, none "
                       "double-counted" % (tot, m.group(2), sel, m.group(1)))
     rec("MECE-PARTITION", mece, detail)
+
+    # --- 8. DIRECTORY-REFUSED (F1, NFRA_COMPEFFICACY T-16 @64b930be4f) -------------
+    # A directory subject used to raise through open() at parse_artifact: a Python traceback, rc 1,
+    # a different exception class per platform. The tool must refuse it in its OWN voice, rc 2,
+    # with text distinguishable from the absent-subject refusal ("artifact not found").
+    dr = subprocess.run([sys.executable, str(_tool()), "compose", str(_ws() / ".tools" / "tests")],
+                        capture_output=True, text=True, cwd=str(_ws()), timeout=120)
+    dout = dr.stdout + dr.stderr
+    rec("DIRECTORY-REFUSED",
+        dr.returncode == 2 and "not an artifact" in dout and "artifact not found" not in dout
+        and "Traceback" not in dout,
+        "directory subject -> rc %d, %s" % (dr.returncode,
+            "the tool's own refusal" if "not an artifact" in dout else
+            ("a TRACEBACK (interpreter's voice)" if "Traceback" in dout else "no refusal text")))
+
+    # --- 9. DEFERRED-BUCKET above the fold (F2, same row) --------------------------
+    # With every digest timed out, the roll-up used to read exactly as a healthy run. The bucket
+    # must print ALWAYS (0 of N on the healthy run, above) and, when the ceiling fires, count every
+    # deferral BEFORE the first digest header, where a reader of the summary sees it.
+    healthy_bucket = re.search(r"DEFERRED: 0 of (\d+) selected digest", OUT)
+    tsrc, tsub = re.subn(r"timeout=60,", "timeout=0.01,", src)
+    if tsub != 1:
+        rec("DEFERRED-BUCKET", False,
+            "could not plant the ceiling mutant: expected exactly one 'timeout=60,' in the shipped "
+            "source, found %d -- reported as FAIL, never skipped" % tsub)
+    else:
+        with tempfile.TemporaryDirectory() as td:
+            tp = Path(td) / "comp-adversary-ceiling-mutant"
+            tp.write_text(tsrc, encoding="utf-8")
+            TOUT = run(["compose", RICH, "--digest-budget", "6"], tool=tp)
+        bm = re.search(r"DEFERRED: (\d+) of (\d+) selected digest", TOUT)
+        first_digest = TOUT.find("--- digest 1/")
+        above = bm is not None and first_digest > 0 and bm.start() < first_digest
+        all_deferred = bm is not None and int(bm.group(1)) == int(bm.group(2)) > 0
+        rec("DEFERRED-BUCKET", healthy_bucket is not None and above and all_deferred,
+            "healthy run prints 'DEFERRED: 0 of N' %s; forced ceiling prints '%s' %s the first digest"
+            % ("yes" if healthy_bucket else "NO", bm.group(0) if bm else "(no bucket line)",
+               "ABOVE" if above else "NOT above"))
 
 
 
