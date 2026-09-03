@@ -351,6 +351,28 @@ L8 reads below were appended at this write; no row was added or changed by it.
    ]
   },
   "notes": "WHY THREE ROWS AND NOT ONE: the L10 gate joins rows to items; one row disarming three items would leave the L9 adjudication of each without a citable disarm. WHAT THESE ROWS ARE NOT: dispositions (the CVO's), re-files, or face edits (the spec is frozen; the deferred statement lands in the round-2 faces)."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S9",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S5). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "surfaced_at": "2026-09-03T08:33Z",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S5 (BLOCKING: C-8's server-access-logging TARGET opal-cloudtrail-logs-313476888478 permits only cloudtrail.amazonaws.com -- no logging.s3.amazonaws.com grant, no LogDelivery ACL -- so the limb cannot receive, and the specified get-bucket-logging read cannot tell a configured-but-dead limb from a live one): ruled DEFER 2026-09-03 08:2xZ (operating note to 0.7.0_AE_CloudOps~S) -- the aws_s3_bucket_logging resource stays authored-and-commented in infra/aws/terraform/opsec/s3.tf with the row id beside it; S17-AC1's logging read files UNCOMPUTABLE-BY-CONSTRUCTION citing Z-S5; the audit-log bucket is NOT edited (shared-infra's, DO-NOT-REMOVE, never-widen); the other seven resources apply now. The TARGET question was routed to 1.0.0_SA_CTO~Z (L4) the same turn with this seat's rec (a project-owned access-logs target in opsec/; alternative: a scoped additive logging.s3 grant on the CloudTrail bucket under shared-infra's lane); the limb lands in round 2 beside the key flip, graded by a DELIVERED object, never the configuration.",
+  "spec_asserts": "PRD 7.6 C-8 and TO-OP-S-17-16 deliverable 2(c): 'server access logging to the estate's CloudTrail/access-logs bucket'; S17-AC1 lists get-bucket-logging (target = that bucket) among the six reads; ruling 19517 listed access logging among what the bucket carries at this apply. Row Z-S5 named disarm_owner 2.0.0_SA_COO~Z with three shapes (authorize the target grant as its own cell, re-point the target, or defer).",
+  "world_is": "Naming the target is necessary and not sufficient: the target must permit the S3 log-delivery principal, and this one permits only CloudTrail (the worker's get-bucket-policy: two statements, both cloudtrail.amazonaws.com; get-bucket-acl: one CanonicalUser FULL_CONTROL, no LogDelivery grant). The issuer deferred the limb rather than widen a shared-infra audit-log bucket mid-round; the worker's rec 'defer to OP-s-5' was corrected (OP-s-5 delivers INTO the owned bucket; Z-S5 is the owned bucket's own logs going OUT to a bucket the project does not own). Z-S5 stays BLOCKING/ARMED on its own row; this row records the disarm of the work and the routing of the spec.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "ruling 2.0.0_SA_COO~Z -> 0.7.0_AE_CloudOps~S 2026-09-03 08:2xZ (operating note); the worker's BLOCKING notification 19531 08:23:37Z, surfaced BEFORE the apply (plan 7 / 0 / 0 read as stated; ledger entry opsec-evidence-store-and-address-table OPEN)",
+    "0.7.0_AE_CloudOps~S row Z-S5: get-bucket-policy on opal-cloudtrail-logs-313476888478 (Sid AWSCloudTrailAclCheck + AWSCloudTrailWrite, both Principal cloudtrail.amazonaws.com); get-bucket-acl (1 grant, CanonicalUser FULL_CONTROL, LogDelivery False); describe-trails (opal-organization-trail delivers there); comp-find 'opal-cloudtrail-logs' -> shared-infra/s3.tf:48 '*** LIVE -- DO NOT REMOVE ***'; a 31-bucket get-bucket-logging sweep with NO positive control, stated as such",
+    "the finding to 1.0.0_SA_CTO~Z 2026-09-03 08:2xZ with the rec and the alternative; the round-2 re-cut carries the delivery read (a log object observed under the target prefix) in place of the configuration read S17-AC1 used"
+   ]
+  },
+  "notes": "THE THIRD REFERENT OF ONE FACE IN ONE ROUND (key, roles, target), each asserted without a read until the worker's re-grounding; the round-2 cut at this seat runs one live read per named referent BEFORE the TO commits. WHAT THIS ROW IS NOT: a re-file, a face edit, or a disposition of Z-S5 (the CVO's)."
  }
 ]
 ```
