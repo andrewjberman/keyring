@@ -228,8 +228,15 @@ flip to `EXECUTING` happens **in the dispatch commit** by the COO, not afterward
 | writes | merges; the next TO to a drained worker; `dep_stage` | remediation rows; the slug | nothing until the slug |
 | tools | the harness Agent/SendMessage primitives; the gates | **all of it** -- comp-find/read/blast/trace/adversary, the graph, atom-decomp on a row that needs it | none |
 | depth | shallow; keeps the drain moving | deep; "only on problems that actually appear ambiguous do we ramp the analysis" | n/a |
-| messages sent | zero | zero | zero |
+| messages sent | **ONE** -- the drain-end read to the CTO (below); zero to workers, zero to the CVO | ONE -- the slug to the CTO | ONE -- the analysis to the COO |
 | ends when | every TO terminal, every worktree merged | every row dispositioned; slug written | -- |
+
+**Corrected on spine v3.1 @`20e1293216` (the CVO's constitutional review of v3.0, relayed by `1.0.0_SA_CTO`
+93954):** this table first read "zero" for Track A while the stall clause below had the COO reporting to the
+CTO -- a contradiction. v3.1 closes it and a second gap the probes could not see (an OBSERVATION+ARMED row whose
+`disarm_owner` is a dark seat had NO carrier, since a worker cannot send and the CVO's one send is the slug):
+the COO reads every row a worker's branch carries at the merge, re-seats a dark owner as the seat that spawns,
+and its ONE message of a round is the drain-end read to the CTO.
 
 **The tracks share files, not messages.** Track A writes deliverables and status flips; Track B reads the
 channel those produce. The existing `cvo_send_guard` stays and is SIMPLIFIED: the CVO's only admitted send,
