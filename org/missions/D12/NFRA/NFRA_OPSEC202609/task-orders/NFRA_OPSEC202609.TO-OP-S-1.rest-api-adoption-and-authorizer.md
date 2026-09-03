@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.8 @36786251af (ENDPOINT FWD-1 / FWD-2; s.5 the exercise bars; s.6 "no Cognito, never"; 7.6 C-10) - **Decomp cells:** `OP-s-1` (v0.1.5 @df3c847ddc, s.1a) with `OP-s-24`'s Lambda-lane limb riding (s.1a) - **Lane:** `infra/aws/terraform/portfolio-management/` (a Terraform ROOT: `terraform {}` :4, `required_providers` :7, `backend "s3"` :14; it holds the portfolio Lambdas' IAM and the two shell scripts that created this API's routes) and the eight Lambda sources named below, AE lane - **Round:** 2 of NFRA_OPSEC202609. **Authority:** the tick-6 verdict, VERDICTS.jsonl row 3 (`3.0.0_SA_CVO~Z` 19674 via `1.0.0_SA_CTO~Z` 19704) -- "(a), the import as OP-s-1's own first limb, with the Z-S14 bar and the body-identity control", AMEND C (the seven rows, body identity read AFTER the first apply) and AMEND D (the denominator and the OPTIONS pair). NO PRD change.
 
