@@ -2151,6 +2151,8 @@ def _cmd_deployed(args):
               % (_compbudget.fmt(budget_s), budget_source, unit))
         print("  STATE: NOT-DECIDABLE  (rc=%d, distinct from a complete deployed verdict; "
               "a PREFIX carries no verdict)" % RC_NOT_DECIDABLE)
+        print("  ANSWER-STATE: PARTIAL_OR_BLIND  (Rule T stopped before the remote "
+              "operation could answer)")
         for line in _compbudget.deferred_bucket(1, 1, unit, budget_state["deferred_reasons"]):
             print("  " + line)
         raise _PipescriptBudgetReached()
@@ -2249,6 +2251,7 @@ def _cmd_deployed(args):
     if is_held_bucket(S3_BUCKET) and not include_held("COMP_PIPESCRIPT_INCLUDE_HELD"):
         print("  SKIP: opal-data-bd (bd) deploy-verify HELD under the sovereign prohibition -- "
               "set COMP_PIPESCRIPT_INCLUDE_HELD=1 (or COMP_INCLUDE_HELD=1) for the DS deploy-verify path.")
+        print("  ANSWER-STATE: NOT_APPLICABLE  (the held BD mode has no permitted population)")
         print("  " + _compbudget.within_budget_line(
             budget_state["units"], budget_state["units"], "timeout_bearing_operation",
             budget_s, budget_source, round(budget_clock.elapsed(), 2)))
@@ -2992,6 +2995,9 @@ def _cmd_deployed(args):
                   "(UNCOVERED = unverified / AUX-DRIFT = check-only divergence -- see above).")
         else:
             print("  All checked scripts are up-to-date on S3.")
+        if raw_filter and matched and not local_missing:
+            print("  ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS  (the named script is in this "
+                  "deployment corpus; zero non-MATCH deployment results)")
     elif not checked_any and not uncovered:
         # PSCRIPT2 P2 -- THE ABSENCE LAW: an ABSENT verdict names its searched tree and the
         # trees it did NOT search. A bare "no match" over one tree reads as estate-wide
@@ -3000,6 +3006,8 @@ def _cmd_deployed(args):
         _unsearched = sorted({_pk for _pk, _b in _ALL_DEPLOYED_TREES} - {pipeline})
         print(f"  No scripts matched filter: {raw_filter!r} -- ABSENT IN TREE [{pipeline}] ONLY; "
               f"trees NOT searched this run: {', '.join(_unsearched) or '(none)'}")
+        print("  ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS  (scoped to the named tree; "
+              "this is not an estate-wide absence claim)")
     if _nothing_verified:
         return 2  # UNVERIFIED -- consistent with this tool's existing rc=2 "cannot answer"
     return 0
@@ -3756,16 +3764,34 @@ _SKIPGATE_META_BASE = 's3://opal-data-inf/gold/meta/'
 _SKIPGATE_CURRENT_SCHEMA_VERSION = 1
 
 
-def _skipgate_list_s3_dates(script_id: str) -> list[str]:
-    """List input partition dates for a Pattern A script via S3 listing."""
+class _SkipgateBudgetReached(Exception):
+    """The non-verdict skipgate scan stopped at its shared Rule-T ceiling."""
+
+
+def _skipgate_run(argv, timeout_s: float, clock, **kwargs):
+    """Run one skipgate remote operation with its timeout capped by remaining()."""
     import subprocess
+    remaining = clock.remaining()
+    if remaining is not None and remaining <= 0:
+        raise _SkipgateBudgetReached("budget exhausted before this operation could start")
+    effective_timeout = timeout_s if remaining is None else min(timeout_s, remaining)
+    try:
+        return subprocess.run(argv, timeout=effective_timeout, **kwargs)
+    except subprocess.TimeoutExpired:
+        if remaining is not None and remaining <= timeout_s:
+            raise _SkipgateBudgetReached("operation did not return inside the remaining shared budget")
+        raise
+
+
+def _skipgate_list_s3_dates(script_id: str, clock) -> list[str]:
+    """List input partition dates for a Pattern A script via S3 listing."""
     prefix_info = _SKIPGATE_INPUT_PREFIXES.get(script_id)
     if not prefix_info:
         return []
     s3_bucket_prefix, key_prefix, key_suffix = prefix_info
-    result = subprocess.run(
+    result = _skipgate_run(
         [sys.executable, '-m', 'awscli', 's3', 'ls', s3_bucket_prefix],
-        capture_output=True, text=True, timeout=30,
+        30, clock, capture_output=True, text=True,
     )
     if result.returncode != 0:
         return []
@@ -3780,14 +3806,13 @@ def _skipgate_list_s3_dates(script_id: str) -> list[str]:
     return sorted(set(dates))
 
 
-def _skipgate_check_provenance(script_id: str, date: str) -> dict | None:
+def _skipgate_check_provenance(script_id: str, date: str, clock) -> dict | None:
     """Check partition_provenance manifest for (script_id, date). Returns None if missing."""
-    import subprocess
     import json as _json
     s3_key = f'{_SKIPGATE_META_BASE}partition_provenance/{script_id}/{date}.json'
-    result = subprocess.run(
+    result = _skipgate_run(
         [sys.executable, '-m', 'awscli', 's3', 'cp', s3_key, '-'],
-        capture_output=True, text=True, timeout=10,
+        10, clock, capture_output=True, text=True,
     )
     if result.returncode != 0 or not result.stdout:
         return None
@@ -3822,8 +3847,22 @@ def _skipgate_decide(script_id: str, date: str, manifest: dict | None,
     return 'SKIP', 'manifest current; no upstream silver changes detected'
 
 
-def cmd_skipgate(args) -> None:
+def cmd_skipgate(args) -> int:
     script_id = args.skipgate_script_id.upper().replace('-', '_')
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, 'budget', None))
+    except ValueError as exc:
+        print(f'comp-pipescript skipgate: ERROR: --budget {exc}')
+        return 2
+    budget_clock = _compbudget.Clock(budget_s)
+
+    def _partial(scanned: int, total: int, unit: str, reason: str, cursor: str | None = None):
+        print('  ' + _compbudget.budget_reached_line(
+            budget_s, budget_source, scanned, total, unit,
+            'comp-pipescript skipgate %s' % script_id, cursor or 'NO_CURSOR_YET'))
+        print('  ANSWER-STATE: PARTIAL_OR_BLIND  (the skipgate sample is incomplete)')
+        for line in _compbudget.deferred_bucket(total - scanned, total, unit, [reason]):
+            print('  ' + line)
 
     rebuild_start = rebuild_end = None
     if args.rebuild_window:
@@ -3834,7 +3873,11 @@ def cmd_skipgate(args) -> None:
     print(f'COMP-PIPESCRIPT SKIPGATE: {script_id}')
 
     # Phase 1: list input partitions
-    dates = _skipgate_list_s3_dates(script_id)
+    try:
+        dates = _skipgate_list_s3_dates(script_id, budget_clock)
+    except _SkipgateBudgetReached as exc:
+        _partial(0, 1, 's3_listing', str(exc))
+        return 0
     if not dates:
         # Fallback: generic canonical listing
         print(f'  WARN: no date partitions found for {script_id} via known prefix mapping')
@@ -3851,7 +3894,11 @@ def cmd_skipgate(args) -> None:
     rows: list[tuple[str, str, str]] = []
     has_any_manifest = False
     for date in sample_dates:
-        manifest = _skipgate_check_provenance(script_id, date)
+        try:
+            manifest = _skipgate_check_provenance(script_id, date, budget_clock)
+        except _SkipgateBudgetReached as exc:
+            _partial(len(rows), len(sample_dates), 'partition_manifest', str(exc), rows[-1][0] if rows else None)
+            return 0
         if manifest:
             has_any_manifest = True
         status, reason = _skipgate_decide(script_id, date, manifest, rebuild_start, rebuild_end)
@@ -3893,6 +3940,12 @@ def cmd_skipgate(args) -> None:
     if rebuild_window := args.rebuild_window:
         in_window = sum(1 for d, s, _ in rows if rebuild_start <= d <= rebuild_end and s == 'COMPUTE')
         print(f'  Rebuild window {rebuild_window}: {in_window} partition(s) forced to COMPUTE')
+    print('  ' + _compbudget.within_budget_line(
+        len(sample_dates), len(sample_dates), 'remote_operation', budget_s, budget_source,
+        round(budget_clock.elapsed(), 2)))
+    for line in _compbudget.deferred_bucket(0, len(sample_dates), 'remote_operation', []):
+        print('  ' + line)
+    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -4013,7 +4066,13 @@ def main():
     p_skipgate.add_argument('--manifest-fresh-only', dest='manifest_fresh_only', action='store_true',
                             help='Filter to partitions where input mtime > last skip-gate emit')
     p_skipgate.add_argument('--limit', type=int, default=50,
-                            help='Limit rows displayed (default 50; 0 = all)')
+                          help='Limit rows displayed (default 50; 0 = all)')
+    p_skipgate.add_argument('--budget', metavar='N', default=None,
+                            help='RULE T (PRD s.4.4): one wall-clock ceiling for the S3 listing and '
+                                 'partition-manifest reads (carrier: --budget > env COMP_BUDGET_S > '
+                                 'default %s s); --budget 0 = unbounded. A partial sample prints '
+                                 'PARTIAL_OR_BLIND and its deferred bucket.'
+                                 % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
 
     # shadow-detect (ADHC_COMPIL_V4.028)
     p_shadow = sub.add_parser(
