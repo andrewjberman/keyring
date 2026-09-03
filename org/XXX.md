@@ -142,6 +142,11 @@ the difference in tamper vocabulary. Two classes, and they **interleave in the o
 `[COVERAGE/UNCOVERED-AUDIT-LOG] org/to-pos-override-audit.log`. Surface only a shrink/absence row
 beyond these, or a genuinely new class.
 
+⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`.** It drops the findings to zero by making the tool believe we
+are post-migration while every file is still in the flat root, so it compares live logs against an **empty
+chain**. The noise clears by LANDING `rv0057-f001`, never by satisfying the predicate; findings that persist
+after it lands ARE a finding.
+
 ### A.3 — PATH check (comp-tool rail)
 
 Harness shells are non-interactive and source no profile, so `.tools/` is reachable only via the
