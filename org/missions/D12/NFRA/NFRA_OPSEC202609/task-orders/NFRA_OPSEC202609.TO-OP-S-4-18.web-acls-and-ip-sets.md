@@ -1,0 +1,69 @@
+# TO NFRA_OPSEC202609.TO-OP-S-4-18 -- THE TWO WEB ACLs HARDENED IN COUNT AND THE BLOCK LISTS BUILT EMPTY: managed rule groups added WATCH-ONLY on both ACLs (OP-s-4, C-3), and the `opal-blocked-ips-{scope}` IP sets created with their IPSetReference rule so the sentinel chain has somewhere to write (OP-s-18, C-2) -- the ACL edits ride together and NOTHING graduates to BLOCK in this face
+
+<to_id>NFRA_OPSEC202609.TO-OP-S-4-18</to_id>
+<project>NFRA_OPSEC202609</project>
+<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_by>2.0.0_SA_COO~Z</issued_by>
+<issued_date>2026-09-03</issued_date>
+<status>staged</status>
+
+**Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT FWD-5, FWD-6, FWD-14; s.5 the exercise bars; C-2, C-3) - **Decomp cells:** `OP-s-4` + `OP-s-18` (v0.1.10 @2fd3843047, s.1a) - **Lane:** `infra/aws/terraform/portal-auth/waf-cloudfront.tf` and `infra/aws/terraform/opal-gateway/waf.tf`, AE lane - **Round:** 3 of NFRA_OPSEC202609. **Dispatch:** GO on `TO-OP-S-17R-28` going terminal -- one task order at a time.
+
+---
+
+## WHY THESE TWO CELLS ARE ONE FACE
+
+The decomposition says it in both directions: `OP-s-4` depends on `OP-s-18` (*"rule 0 IPSetReference, C-2"*) and `OP-s-18` depends on `OP-s-4` (*"the ACL edits ride together"*). **That is not a cycle to resolve, it is the decomposition saying these are one act.** Both cells edit the same two rule arrays, and two applies against one ACL is two chances to leave it half-configured. **This face is the largest single unlock left in the project: `OP-s-13`, `OP-s-14`, `OP-s-15`, `OP-s-19` and `OP-s-22` are all behind it.**
+
+## READ LIVE AT THIS CUT BY THE ISSUER (2026-09-03 19:1xZ; the worker re-reads each in phase 1 and STOPS on any difference -- a row, never a substitution)
+
+- **`opal-cloudfront-protection`** (CLOUDFRONT, id `a09833c0-4043-49fc-a92c-0dcdeaff9abd`): **2 rules, both `Block`** -- `RateLimitRule` at **priority 1**, `AuthLoginRateLimit` at **priority 2**. **ZERO managed rule groups**, which is what `OP-s-4` exists to fix. **Priority 0 is FREE.**
+- **`opal-gateway-waf`** (REGIONAL, id `181df35e-e886-40c6-a8dc-9d0b60346a44`): **4 rules** -- `rate-based-ip` **at priority 0** (`Block`), `ip-reputation` at 1 (`OverrideAction: None`, i.e. **ENFORCED**), `known-bad-inputs` at 2 (**Count**), `common-rule-set` at 3 (**Count**).
+- **NO IP SETS EXIST IN EITHER SCOPE.** `list-ip-sets` returns `[]` for CLOUDFRONT and `[]` for REGIONAL. `OP-s-18` is a pure create, not an adoption.
+- **Both carriers are tracked:** `git ls-files` resolves `infra/aws/terraform/portal-auth/waf-cloudfront.tf` and `infra/aws/terraform/opal-gateway/waf.tf`.
+
+> ⛔ **THE PRIORITY COLLISION, RULED HERE SO IT DOES NOT COST YOU A ROW.** The cell says *"rule 0 IPSetReference BLOCK on BOTH ACLs"*. **On the regional ACL, priority 0 is TAKEN by `rate-based-ip`.** **RULED: do NOT renumber any existing rule.** Renumbering live rules is an edit to working protection for a cosmetic ordering win, and this face's whole posture is that nothing existing changes behaviour. **Use the lowest FREE priority on each ACL** -- 0 on CloudFront, and on the regional ACL the lowest integer not in `{0,1,2,3}`. **Name the chosen priority per ACL in the proof and state that no existing rule's priority changed**, with the before-and-after priority maps pasted. If you believe a block list genuinely must evaluate before the rate rule, that is a ROW and a question to the issuer, not a renumber.
+
+## DELIVERABLE
+
+1. **BUILD THE TWO IP SETS (OP-s-18, C-2):** `aws_wafv2_ip_set` `opal-blocked-ips-cloudfront` (scope `CLOUDFRONT`) and `opal-blocked-ips-regional` (scope `REGIONAL`), **both created EMPTY**, `IPAddressVersion` IPV4 plus an IPV6 sibling each if the resource requires separate sets -- state which shape the provider gives you. **`/32` for v4 and `/64` for v6** as the cell specifies. **Declared in Terraform in the carrier beside the ACL that uses them; never created by console or CLI.**
+2. **ADD THE IPSetReference RULE to BOTH ACLs**, action **`Block`**, at the lowest free priority per the ruling above. **The sets are EMPTY, so this rule blocks nobody on day one** -- that is the intended state. **C-2 is binding and goes in the proof: the TABLE is truth and `OP-s-15` is the ONLY writer of these sets. Nothing in this face writes an address, and no human writes one by hand.**
+3. **ADD THE MANAGED RULE GROUPS TO `opal-cloudfront-protection` IN COUNT (OP-s-4):** `AWSManagedRulesAmazonIpReputationList`, `AWSManagedRulesCommonRuleSet`, `AWSManagedRulesKnownBadInputsRuleSet`, each with `OverrideAction: Count`. **ALL THREE IN COUNT. NONE IN BLOCK.** The cell's `closes on` says reputation graduates to BLOCK **only after a watch-only soak with a MEASURED false-positive count over the window**, and that soak has not run. **`AWSManagedRulesBotControlRuleSet` is NOT AUTHORIZED** (PRD s.5) -- do not add it, and say in the proof that you did not.
+4. **THE REGIONAL ACL'S TWO COUNT GROUPS DO NOT GRADUATE HERE.** `known-bad-inputs` and `common-rule-set` stay in `Count`; `ip-reputation` stays as it is. The cell says they *"graduate on the same evidence"* and the evidence is the soak. **This face changes NO existing rule's action or override on either ACL.**
+5. **START THE SOAK AND MAKE IT READABLE:** state in the proof the UTC timestamp at which all three CloudFront groups are live in Count, and confirm the ACL's logging destination is the one `OP-s-5` established, so the soak's counts land somewhere a later face can read. **Do not build a dashboard, an alarm or a notification** -- the moratorium binds and this face carries no exception.
+6. **A deploy-ledger entry per ACL** (`safe-apply`, never bare), opened before and closed after, each with its module's UNSCOPED baseline quoted BEFORE the first edit and the ROLLBACK named. **Two ACLs, two roots, two entries.**
+7. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip. Every status value is a member of `PROOF_OF_SPEC.schema.json`'s enum; a timed absence files `UNCOMPUTABLE` with its window and read time.
+
+**BROKER DRAIN IMMEDIATELY BEFORE EACH APPLY**, not only at the top of your turn -- the halt gate cannot see a lane inbox (row Z-S63) and this face touches live request-path protection on two ACLs.
+
+## ACCEPTANCE -- criterion ids minted at cut; the assignee files the instance
+
+<criterion id="S18-AC1" cell_refs="OP-s-18"/> `S18-AC1` -- THE SETS EXIST, ARE EMPTY, AND ARE TERRAFORM-DECLARED: `list-ip-sets` in BOTH scopes returns the new set(s) where it previously returned `[]` (the empty read is quoted from this face as the before); `get-ip-set` on each reads `Addresses: []`; and each address appears in `terraform state list` in its carrier. Denominator: sets created of sets expected.
+<criterion id="S18-AC2" cell_refs="OP-s-18"/> `S18-AC2` -- THE IPSetReference RULE IS LIVE ON BOTH ACLs AND NO EXISTING RULE MOVED: `get-web-acl` on each ACL, before and after, with the FULL rule array pasted both times -- name, priority, action/override for every rule. The new rule is `Block` at the priority named in the proof; **every pre-existing rule holds the SAME priority and the SAME action/override it had at this cut** (CloudFront `RateLimitRule` 1 Block, `AuthLoginRateLimit` 2 Block; regional `rate-based-ip` 0 Block, `ip-reputation` 1 None, `known-bad-inputs` 2 Count, `common-rule-set` 3 Count). Any movement is a FAIL and a row.
+<criterion id="S4-AC1" cell_refs="OP-s-4"/> `S4-AC1` -- THREE MANAGED GROUPS ON CLOUDFRONT, ALL IN COUNT, BOT CONTROL ABSENT: `get-web-acl` reads `AWSManagedRulesAmazonIpReputationList`, `AWSManagedRulesCommonRuleSet` and `AWSManagedRulesKnownBadInputsRuleSet` each with `OverrideAction: Count` -- 3 of 3 pasted -- and a census of the rule array showing **`AWSManagedRulesBotControlRuleSet` count = 0**, printed with its denominator. **A group in `Block` is a FAIL**, not a bonus.
+<criterion id="S4-AC2" cell_refs="OP-s-4"/> `S4-AC2` -- THE SOAK IS RUNNING AND COUNTING, MEASURED NOT ASSERTED: after the apply, a read showing the CloudFront ACL is evaluating the new groups -- sampled requests or the CloudWatch metric for at least one of the three groups showing a non-null datapoint, with the read time and the window. **If no traffic has arrived yet, this files `UNCOMPUTABLE` with the window and the read time, never PASS on the configuration** -- C-15's lesson one surface over: a configuration read is not an exercise. The soak's END and any graduation to BLOCK are NOT in this face.
+<criterion id="S418-AC3" cell_refs="OP-s-4,OP-s-18"/> `S418-AC3` -- BASELINE QUOTED, 0-DIFF AFTER, NOTHING ELSE RODE, PUSH STATE MEASURED, PER ROOT: for EACH of the two roots, the UNSCOPED plan quoted BEFORE the first edit (0/0/0 or the row that says otherwise); the apply's changed-resource list enumerated with its count, containing ONLY the new IP set(s), the new rule's parent ACL and the CloudFront ACL's managed-group additions; the UNSCOPED re-plan 0-diff after; the ledger entry CLOSED with its proof and rollback named. **`0 to destroy` and `0 forces-replacement` bind PLAN-WIDE on both roots** -- a web ACL replacement would drop protection between destroy and create and is an immediate STOP.
+
+<expected_criteria>S18-AC1, S18-AC2, S4-AC1, S4-AC2, S418-AC3</expected_criteria>
+
+<decomp_ref>
+<decomp_doc>org/missions/D12/NFRA/NFRA_OPSEC202609/decompositions/NFRA_OPSEC202609_DECOMP.md</decomp_doc> @2fd3843047 (v0.1.10), cells `OP-s-4` (manifest S4; FWD-5, FWD-6) and `OP-s-18` (manifest S18; FWD-14); s.1a the mutual dependency that makes them one face.
+<owned_cells>OP-s-4,OP-s-18</owned_cells>
+Read-dependencies, NOT claimed: `OP-s-5` (COMPLETE -- its logging is what makes the soak readable), `OP-s-15` (the ONLY writer of these sets, C-2, not yet cut), `OP-s-13` / `OP-s-14` / `OP-s-19` / `OP-s-22` (all behind this face).
+</decomp_ref>
+
+<preflight>
+comp-schedule: RUN 2026-09-03 19:1xZ -- GATES ARMED 21 over 5 carriers (C1 SENTINEL denominator 21 -> 5 gates; C2 DEPLOY-LEDGER 4 -> 4; C3 MORATORIA 12 -> 12; C4 SCOPE-GUARD 20 -> 0; C5 PROJECT-BLOCKING 336 -> 0). The MORATORIA carrier is the one that binds here: this face builds NO alarm, dashboard or notification, and carries no moratorium exception -- FWD-4's exception belongs to OP-s-6 and is not borrowed.
+comp-iam: DECLARED-NOT-APPLICABLE -- this face creates no role, attaches no policy and changes no principal; its acts are WAF resources under the existing Terraform execution identity. comp-iam is a DESIRED-plane lens over IAM policy documents and would return a clean read that certifies nothing about this face. The IAM verdict for the sentinel chain is OP-s-22's own cell and is not borrowed here.
+comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim; every factual claim in it is a LIVE AWS read taken at the cut and timestamped, which the assignee re-takes in phase 1 and STOPS on any difference. The live reads are the control and they are re-derivable by a different seat at any time.
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut by the issuer: `S18-AC1`, `S18-AC2`, `S4-AC1`, `S4-AC2`, `S418-AC3`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-4-18.web-acls-and-ip-sets.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S18-AC1,S18-AC2,S4-AC1,S4-AC2,S418-AC3"` BEFORE the complete flip, which the assignee commits itself. **The controls that must be able to FAIL: `S18-AC2`'s before-and-after priority maps (they would show a renumber), `S4-AC1`'s BotControl census (it would show an unauthorised group), and `S418-AC3`'s per-root unscoped re-plan.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+</proof_of_spec>
+
+<compiler_tools_mandate>
+  <phase id="1" when="before write">Re-ground BOTH ACLs and BOTH IP-set scopes against the reads quoted above. A difference is a ROW and a STOP, never a silent substitution. Also re-read the two carriers at HEAD -- another seat may have touched them since this cut.</phase>
+  <phase id="2" when="before each apply">A broker drain, then the unscoped baseline plan for that root, then the ledger entry opened. Two roots, two of each.</phase>
+  <phase id="3" when="after each apply">The unscoped re-plan, the full rule array re-read, and the ledger leg closed on the artifact rather than on the apply's own rc.</phase>
+</compiler_tools_mandate>
