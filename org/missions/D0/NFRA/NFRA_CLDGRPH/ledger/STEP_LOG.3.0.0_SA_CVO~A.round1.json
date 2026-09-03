@@ -1,0 +1,380 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 1,
+  "seat": "3.0.0_SA_CVO~A",
+  "written_utc": "2026-09-03T09:08Z",
+  "trigger": "LD-0527 (Andrew-direct ~07:0xZ): write your step logs and the close per the spine so the finish is measurable, not declared. Written after this seat's L10 stamp @59af3f1df5.",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-03T05:27Z",
+      "ended_utc": "2026-09-03T05:35Z",
+      "act": "Lane startup. Found 3.0.0_SA_CVO~A NOT REGISTERED with no lane watcher; the inbox-watch process on the box was the BASE serial's and was left untouched under the self-scoped rule. Registered and armed the inbox Monitor.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/XXX.md@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "register_agent: 3.0.0_SA_CVO~A live, PID 3108"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "inbox-watch.sh arm banner: parent-tied pid 720646"
+        }
+      ],
+      "spine_clause": "NONE",
+      "gate_or_notifier_touched": "inbox-watch.sh stream",
+      "note": "Killing the found watcher would have been the exercised false-positive the watcher doctrine warns about: it belonged to the base serial, not this lane."
+    },
+    {
+      "seq": 2,
+      "limb": "X",
+      "started_utc": "2026-09-03T05:35Z",
+      "ended_utc": "2026-09-03T05:47Z",
+      "act": "Drained the delivery ledger: 31 messages queued for this lane since 2026-09-02 16:23Z, read and READ-acked, plus the ANDREW-DIRECT seating this lane at L8-L10.",
+      "inputs": [
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "get_delivery_state since 2026-09-02T00:00:00Z: 32 rows, 31 EMITTED, 1 READ"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "92550"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "92747"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93142"
+        }
+      ],
+      "spine_clause": "NONE",
+      "gate_or_notifier_touched": "opal-agent-comms delivery ledger",
+      "note": "Triage of the 31 was delegated to a fork. That method cannot see a discharge that lands outside the batch, which produced the error corrected in row 4."
+    },
+    {
+      "seq": 3,
+      "limb": "L8",
+      "started_utc": "2026-09-03T05:40Z",
+      "ended_utc": "2026-09-03T05:44Z",
+      "act": "Armed the L8 intake before any row existed and verified at source that the watcher re-globs each poll, so a project whose channel directory does not yet exist is still caught.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/surprise_channel/surprise-watch.sh@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "surprise-watch arm banner: baseline 19 files / 198 rows, parent-tied pid 788858"
+        }
+      ],
+      "spine_clause": "L8 Tool: surprise-watch.sh is the CVO's intake",
+      "gate_or_notifier_touched": "surprise-watch.sh",
+      "note": "Checked because the failure is silent and anti-correlated: an intake blind to a new project reads identical to a project with no rows."
+    },
+    {
+      "seq": 4,
+      "limb": "X",
+      "started_utc": "2026-09-03T05:47Z",
+      "ended_utc": "2026-09-03T06:00Z",
+      "act": "Measured the step-7 lane refusal routed to this seat as loop holder and found it DISCHARGED; then issued a scoped correction of my own claim that a Rule 24 record was owed, when it was already landed.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "92633"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": ".owned-paths.yaml@88c961297b"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/RULE24_RECORD_SCOPE_CHANGE_KIND_20260902_CVO_A.md@dd434502ae"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93171"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93176"
+        }
+      ],
+      "spine_clause": "NONE",
+      "gate_or_notifier_touched": "owned-paths-validate.py check_agent",
+      "note": "Both channel roots read lane ANY with two negative controls firing. The error: a batch-scoped triage cannot see a discharge that landed as a commit outside the batch, and it fails in one direction only, reporting closed obligations as open."
+    },
+    {
+      "seq": 5,
+      "limb": "X",
+      "started_utc": "2026-09-03T06:05Z",
+      "ended_utc": "2026-09-03T06:20Z",
+      "act": "Recorded and broadcast two ANDREW-DIRECTs received at this terminal, same turn as receipt, and surfaced the gate-(i) collision they implied without adjudicating it.",
+      "inputs": [
+        {
+          "kind": "WORD",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO~A/deliverables/ANDREW_DIRECT_20260903_060xZ_CLDGRPH_RUN_ENTIRELY_BY_THE_A_FABRIC_CVOA_COOA_CTOA.md@7da3befc20"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": ".tools/to-pipeline-gate.py@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO~A/deliverables/ANDREW_DIRECT_20260903_061xZ_CLDGRPH_COOA_MSTR_SPAWNS_THE_L6_L7_WORKERS_NARROW_READING_RULED.md@858fc08951"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93193"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93214"
+        }
+      ],
+      "spine_clause": "NONE",
+      "gate_or_notifier_touched": "to-pipeline-gate.py (read only)",
+      "note": "The collision dissolved on his own next word. The narrow reading was plainly available and this seat escalated a reading it should have weighed; the cost was two CTO seats each cutting a card to him."
+    },
+    {
+      "seq": 6,
+      "limb": "L8",
+      "started_utc": "2026-09-03T07:12Z",
+      "ended_utc": "2026-09-03T07:20Z",
+      "act": "Compiled the project's first investigation row and adjudicated it: confirmed on two instruments the surfacing seat had not used, re-attributed the mechanism from an authoring error to stale-after-rename, and bounded the extent its remedy left open.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md@9b59f39114"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "docs/architecture/NFRA_INTEGRATIONS_STANDARD.md@a1af5d70c2"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "docs/briefs/m365-to-opal-gateway-rename-cutover-20260814.md@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93297"
+        }
+      ],
+      "spine_clause": "L8 Input/Output; L9 grounding bar",
+      "gate_or_notifier_touched": "NONE",
+      "note": "Extent bounded at 1 of 1 across 489 architecture files, and explicitly NOT claimed clean over the 8,764-hit repo-wide population."
+    },
+    {
+      "seq": 7,
+      "limb": "L9",
+      "started_utc": "2026-09-03T07:30Z",
+      "ended_utc": "2026-09-03T07:40Z",
+      "act": "Adjudicated S2, S3 and S4. Confirmed S2 and S3 at source, widened S2 with a defect its row did not name, and resolved S4's open question in both directions.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "infra/aws/globgrph/kuzu_incremental_refresh.py@aebe0d0a67"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "infra/aws/globgrph/_canonical.py@173dd335f4"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "infra/aws/globgrph/kuzu_nessie_load.py@e445642c5f"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93307"
+        }
+      ],
+      "spine_clause": "L9 Input/Output",
+      "gate_or_notifier_touched": "NONE",
+      "note": "S2's docstring contradicts itself on its own line, which the row did not name. S4's reason was later restated, not preserved: see row 10."
+    },
+    {
+      "seq": 8,
+      "limb": "L9",
+      "started_utc": "2026-09-03T07:42Z",
+      "ended_utc": "2026-09-03T07:50Z",
+      "act": "Adjudicated the BLOCKING row S5 and in the same turn corrected my own census, which appeared to refute it. Raised an uncommitted-amendment hazard that was real but already overtaken.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": ".tools/proof-of-spec-check.py@c765283365"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.md@d0c21677c7"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93315"
+        }
+      ],
+      "spine_clause": "L7 Surprise (a BLOCKING row also goes to the issuer); L9",
+      "gate_or_notifier_touched": "NONE",
+      "note": "My census read the worktree against a claim pinned to a commit, the DESIRED-versus-APPLIED trap inside my own instrument. The hazard I then raised had been closed by the issuer's commit before my message was sent: I prevented nothing and claim nothing."
+    },
+    {
+      "seq": 9,
+      "limb": "L10",
+      "started_utc": "2026-09-03T08:05Z",
+      "ended_utc": "2026-09-03T08:20Z",
+      "act": "Certified TO-CG-V-2, ran the coverage step-zero the checker delegates to the certifier in its own output, and reported a structural hole: PENDING-THIS-COMMIT is permanently unresolvable, so that limb rested on a certifier's diligence.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.proof_of_spec.json@9b59f39114"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93332"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "proof-of-spec-check: VALID rc 0, violations 0, coverage step-zero 7/7 exact"
+        }
+      ],
+      "spine_clause": "L10 Precondition (a valid proof-of-spec instance)",
+      "gate_or_notifier_touched": "proof-of-spec-check.py",
+      "note": "I proposed a flag or a spine sentence making it my step-zero. Both were wrong the same way and the scribe named it: a flag is a certifier's choice, and the choice was the hole. The automatic form landed at 2bc3679e0b and my read is corroboration, not the control."
+    },
+    {
+      "seq": 10,
+      "limb": "L9",
+      "started_utc": "2026-09-03T08:06Z",
+      "ended_utc": "2026-09-03T08:12Z",
+      "act": "Updated S4's reason on a peer's instrument. 3.0.0_SA_CVO read a completion sink this seat had not opened, establishing that both parents died mid-child, which supplies the premise my non-discriminating call was missing.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93343"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93344"
+        }
+      ],
+      "spine_clause": "L9",
+      "gate_or_notifier_touched": "NONE",
+      "note": "Disposition unchanged, reason corrected on the record. My conclusion was sound on the evidence I held and no care inside my own instrument would have closed it; it took a peer reading a different artifact. That is what corroboration is for, as against two seats agreeing via one method."
+    },
+    {
+      "seq": 11,
+      "limb": "L9",
+      "started_utc": "2026-09-03T07:56Z",
+      "ended_utc": "2026-09-03T08:04Z",
+      "act": "Adjudicated S8, the round's material finding: one manifest field written by two producers with different semantics, the wrong one destined for the served provenance record.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "infra/aws/globgrph/kuzu_nessie_load.py@3bd8d2ef04"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "infra/aws/globgrph/kuzu_incremental_refresh.py@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93332"
+        }
+      ],
+      "spine_clause": "L9 grounding bar",
+      "gate_or_notifier_touched": "NONE",
+      "note": "Whether the full loader also lacks the incremental engine's post-apply correctness guard is DECIDED at the port and is not asserted absent here: I enumerated one token, not the file's control flow."
+    },
+    {
+      "seq": 12,
+      "limb": "L10",
+      "started_utc": "2026-09-03T08:28Z",
+      "ended_utc": "2026-09-03T08:39Z",
+      "act": "Verified the L10 precondition myself rather than on the sequencer's report, then stamped round 1: three graduated rows routing SPEC_ERROR to L6 plus the S9 adjudication row, one slug in one commit.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-V-1.full-fallback-duration-measured.md@6a9858d7ac"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~Q/NFRA_CLDGRPH.TO-CG-V-1.full-fallback-duration-measured.proof_of_spec.json@6a9858d7ac"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/remediations/REMEDIATION_v1.md@59af3f1df5"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93392"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "surprise-row-gate: route admitted for S2/S3/S8 -- 2 task orders at HEAD, 0 open; 9 items, 0 undispositioned"
+        }
+      ],
+      "spine_clause": "L10 Precondition, Input/Output, Handoff",
+      "gate_or_notifier_touched": "surprise-row-gate.py gate (iii), both limbs",
+      "note": "FIRST ATTEMPT REFUSED: S9 carried no spec_asserts and no world_is, and the gate does not exempt the adjudicator. I declined the audited override because those fields can be filled truthfully for a stamp. The watcher also fired ROW COUNT FELL and ROW MUTATED on my own rollback, both accurate about my acts."
+    },
+    {
+      "seq": 13,
+      "limb": "X",
+      "started_utc": "2026-09-03T08:50Z",
+      "ended_utc": "2026-09-03T09:00Z",
+      "act": "Checked the round-2 faces against what the slug routed and found S5's defect recurred on the criterion gating the completion flip. Surfaced at the cut with a census; recommended a cut-time guard and implemented nothing.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.md@585daff578"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": ".tools/proof-of-spec-check.py@3bd8d2ef04"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93410"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.md@ab9fb68d"
+        }
+      ],
+      "spine_clause": "L8; L10 Gate (the cut-time guard, as a pitch only)",
+      "gate_or_notifier_touched": "to-pipeline-gate.py (recommendation only, NOT implemented)",
+      "note": "Census: 893 cell_refs attributes estate-wide, exactly 1 space-separated, and it was the new face. The class recurred within the hour in a face written by the seat that had just fixed it, so 'the author will remember' is measured false at n=1. The L6 gate is outside this lane's envelope under Andrew's 05:1xZ word and an agent-made gate is banned; the pitch is the gate owner's to weigh, and one recurrence may not justify it."
+    }
+  ]
+}
