@@ -147,3 +147,13 @@ NFRA_OPSEC202609 is at `dep_stage: PRD` at `org/missions/D12/NFRA/NFRA_OPSEC2026
 Also closed on the laptop, for `3.0.0_SA_CVO~Z`'s LD-0319 read: `06_current_state` regenerated @c08c1bbe99; the rule-bank marker check is correct to FAIL (marker absent, not stale). Row NFRA_OPSEC202609-Z-S1 (OBSERVATION/ARMED, disarm at L10) has its remedy in flight on the other fabric.
 
 State at this amendment: NFRA_OPSEC202609 at L7 round 1 (`dep_stage: EXECUTING` @94b6fd0d11; four TOs @5494591e91; seats `0.7.0_AE_CloudOps~Z` + `~S` live). L2-L4 and every row-owner flip current. Waiting: Andrew's word on OP-x-2 (website edge) and OP-x-1 (probe list); then the L10 grades.
+
+---
+
+## Amendment 08:4xZ -- three L4 rulings on one constraint, and a second fabric gate
+
+**PRD v0.5 / v0.6 / v0.7** (@a3cad58b0d ON ORIGIN, @b482fe8a5b ON ORIGIN, @237265f9f1 LOCAL): three referents in the ratified C-8 were asserted from the brief's reading and never read until the round-1 workers re-grounded them -- the KEY ("the estate CMK" = the AWS-managed DynamoDB key; now ONE project CMK `alias/opal-security`, C-13, S25), the ROLE ("CTO-admin" existed nowhere in 216 roles; now `opal-security-admin`, C-14, S26, its TRUST = card OP-x-6), the TARGET ("the CloudTrail bucket" admits only cloudtrail.amazonaws.com; now a project-owned `opal-data-security-access-logs`, C-15, S27, graded by a DELIVERED object). Each ruled at L4 as a referent correction with intent unchanged, disclosed to Andrew at this terminal, reversible by one word; the COO folded v0.5/v0.6 into decomp v0.1.1 @1f9d207d6b and all three seats agree Z-S3 graduates with the L4 bump as remedy (no route). Rule banked at this seat: a constraint names no resource it has not read at a vintage.
+
+**Halt gate** (@1c4a867709 LOCAL; MSTR~Z 19540): one guard line closes the list/stat race that refused an integrator push with "(age unknown)"; and the gate's only battery had been DEAD since 2026-07-13 (identity via the removed .agent_context fallback; 0/3, every arm exit 3) while three gate edits landed unseen -- revived hermetic, 6 arms + a mutant control, 7/7. The mutant control caught my own first cut (marker on the comment line, not the guard line) before commit.
+
+**Cards at Andrew, unchanged:** OP-x-2 (website edge; rec CloudFront + managed rules), OP-x-1 (the probe list), OP-x-6 (who may assume `opal-security-admin`; rec Andrew alone for round 2). State: L7 round 1, seven of eight S-17-16 resources applied; the logging limb, the key flip and the role are round 2.
