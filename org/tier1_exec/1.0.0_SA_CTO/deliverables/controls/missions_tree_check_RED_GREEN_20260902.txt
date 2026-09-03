@@ -19,3 +19,10 @@
    ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
    HEAD_after=e646a8b84c (must equal HEAD_before); mutant in HEAD: 0 (must be 0)
    cleanup: staged=''; RESULT: 0 violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)
+
+## CONTROL: the hook's own commit @eb979e5859 (touches .tools/git-hooks/** + deliverables only)
+   SKIP: missions-tree-check -- no org/missions/D*/ or org/projects/*.json path staged; check not run
+
+## GREEN: the L3 registration commit @41d11d178d (org/missions/D11/NFRA/NFRA_COMPEFFICACY/project.json + org/projects/NFRA_COMPEFFICACY.json)
+   OK: missions-tree-check -- 2 tree/register path(s) staged; RESULT: 0 violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)
+   the commit LANDED: 41d11d178d 1.0.0_SA_CTO; both files in HEAD: 2 of 2
