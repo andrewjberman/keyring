@@ -924,6 +924,29 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": ".tools/comp-to:4-10 and comp_log_auto.py:89-96 assert that the session-keyed .to_id mechanism prevents cross-agent last-writer-wins attribution; TO-CE-T-17 requires usage evidence attributable to the exact assigned seat/order.",
     "world_is": "The shared-host Codex launch supplies a unique CODEX session/thread id but also an inherited CLAUDE_CODE_SESSION_ID common to concurrent child seats. The attribution helpers ignore the unique Codex id, so the collision class they claim to remove is live for Codex. Tool+serial usage counts remain measurable; to_id is not trustworthy for these concurrent rows.",
     "notes": "No launcher or telemetry helper is changed under T17's engine/test boundary. The T17 result excludes to_id from its usage count, names the attribution defect, and reports this row. A future runtime/telemetry owner can key Codex seats on CODEX_SESSION_ID or another launcher-owned unique id while retaining the Claude path. This row does not block the comp-estate production change or its battery."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S29",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~I",
+    "surfaced_at": "2026-09-03T15:45:10Z",
+    "one_line": "TO-CE-T-20 describes comp-heat as a library-only surface whose comp-similar consumer returns the heat state, but the live source exposes a CLI entrypoint and comp-similar invokes that CLI as a subprocess before returning an untyped dict. The ordered library-grain typed-state change cannot be made inside T20's allowed engine-only boundary without changing its read-only consumer.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_COMPEFFICACY.TO-CE-T-20 @6e5d443ad3: the cell calls .tools/comp-heat a 377-line engine used only as a library by comp-similar load_heat_live(), requires 0 CLI runs, and requires an absent or stale heat source to raise or return a typed state at the library grain; its bounds declare comp-similar READ, never edited.",
+        ".tools/comp-heat at the dispatched source: main() creates argparse subparsers freshness, drift, score, federated, and compare; lines 374-377 execute sys.exit(main()) under __main__. It contains no load_heat_live() import surface.",
+        "org/modules/graph/debtscan/comp_similar.py:275-300 defines load_heat_live(); its line 290 calls _run_json([REPO/.tools/comp-heat, freshness, --json, out_json]) and line 300 returns heat. The consumer imports no comp-heat library function and carries no typed absent/stale state.",
+        "This seat's mandated pre-write reads: python .tools/comp-read .tools/comp-heat --for the library surface/return/CLI/loops -> rc 0 (377 lines, __main__ surfaced); python .tools/comp-read org/modules/graph/debtscan/comp_similar.py --for load_heat_live and return -> rc 0 (load_heat_live surfaced at 275-300)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CE-T-20 and PRD v0.5 row T-20 require a library-grain audit of comp-heat with 0 CLI runs, a return-carried typed absent/stale state, and no change to the comp-similar consumer.",
+    "world_is": "The dispatched .tools/comp-heat is a CLI shim with an executable argparse entrypoint. Its named consumer uses it through a CLI subprocess and then returns an ordinary dict; the only place a return-carried typed state could be introduced is the consumer that the order forbids changing.",
+    "notes": "No engine, consumer, or report wiring code is changed by this row. The T20 deliverable can truthfully record the measured CLI and consumer facts, but AC2's requested library-return mutation needs an issuer disposition that either changes the allowed boundary or replaces the library premise with the actual CLI grain."
   }
 ]
 ```
