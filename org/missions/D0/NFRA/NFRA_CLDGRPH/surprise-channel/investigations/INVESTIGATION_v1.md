@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **15 rows** (S1-S16, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 13:5xZ by `0.7.0_AE_CloudOps~T` on appending S16 (was 14); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **16 rows** (S1-S17, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:2xZ by `0.7.0_AE_CloudOps~S` on appending S17 (was 15); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -679,6 +679,44 @@ EventBridge target identity/input before forming its edge identity.
     "spec_asserts": "TO-CG-B-3 B3-AC4 requires every one of the 2,256 duplicate excess rows to be classified as expected-by-construction or as a finding with a named producer owner; this cell answers and records, but does not adjudicate or fix another producer.",
     "world_is": "13 excess ASSUMES rows are expected-by-construction from 14 EC2 observations of one profile-to-role relation. The remaining 2,243 are findings: 2,235 uncollapsed live C2-instance member-edge emissions owned by 3.0.0_SA_CVO's c2_individuate.py, and 8 EventBridge target configurations made indistinguishable by 0.8.0_AE_CloudComp's comp_aws_cli.py projection. derive_runner persists both lists without deduplication.",
     "notes": "No producer fix is authorized under CG-s-3. 2.0.0_SA_COO~A owns routing/disposition for this round. The named source owners are 3.0.0_SA_CVO for c2_individuate.py and 0.8.0_AE_CloudComp for comp_aws_cli.py; live EventBridge resource owners retain configuration ownership. The B3 artifact contract remains count-correct because both full and incremental manifests must stamp post-load COUNT(*), not attempt counts."
+  }
+]
+```
+
+## S17 -- a Pipe environment-only ECS container override imposed a 4 MiB memory limit
+
+The first two real queue deliveries reached `ecs:RunTask` successfully, but both containers died before
+Python started. The task definition carried the ruled `cpu=2048` / `memory=16384`; the Pipe override
+carried only the event environment variable. On the applied API path that omitted override memory was not
+neutral: `runc` attempted a **4,194,304-byte (4 MiB)** cgroup limit and refused container initialization.
+This is blocking only until the override repeats the already-ruled task CPU/memory values; it changes no
+runtime decision and no graph or marker bytes were touched.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S17",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T14:20Z",
+    "one_line": "The applied EventBridge Pipe's environment-only ECS container override was not memory-neutral: although task definition globgrph-projection-worker:1 declared 16,384 MiB, both first real executions failed before Python with runc attempting a 4,194,304-byte cgroup memory limit. The disarm is to repeat the already-ruled 2048 CPU / 16384 MiB memory in the container definition and Pipe override, then exercise the same real-event path.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~S",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "APPLIED task definition arn:aws:ecs:us-east-1:313476888478:task-definition/globgrph-projection-worker:1 declared task cpu=2048 and memory=16384; the Pipe target override declared only container name + PROJECTION_EVENT_JSON environment",
+        "CloudWatch worker streams projection-worker/projection-worker/7619cf4e95684e24b69bb73681f0f612 and .../cef53f4b52b041ec889194308d5a9ac6 each contain only runc create failed: unable to set memory limit to 4194304; neither contains PROJECTION_EVENT, proving Python never started",
+        "Pipe execution ids 6e752e41-36bf-41ef-8ad4-4ec97579cb7a and 4c2350ad-49e7-4d07-854c-a5b82924eb39 both report ExecutionSucceeded in under one second, independently corroborating S14: the Pipe acked RunTask acceptance rather than task completion",
+        "Both inputs were real marker writes by principal AWS:AROAUR7FNW6PIZYLEKZRE:opal-globgrph-incremental-updater at 13:23:40.625Z and 13:23:55.540Z; DLQ remained at its disclosed baseline 3, and no projection/ object existed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "B2-AC1 fixes the ECS task at cpu 2048 and memory 16384 from the measured fit table, and B2-AC6 requires the real-event cloud task to run the engine rather than fail before entrypoint.",
+    "world_is": "On the first applied Pipe calls, an environment-only container override yielded a 4 MiB cgroup memory request despite the 16 GiB task-level memory declaration, so both containers failed during runc initialization and no engine path ran.",
+    "notes": "Disarm in this task: explicitly carry cpu=2048 and memory=16384 on the projection-worker container definition AND the Pipe container override, create task-definition revision 2, update the Pipe target, then show a real-event execution reaches PROJECTION_EVENT and the engine. This repeats the already-ruled sizing; it does not reopen B2-AC1. The two failed deliveries are not recoverable by SQS (S14), but a third real queued stamp remains and the nightly guarantee remains; never manufacture a marker. This row is messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
   }
 ]
 ```
