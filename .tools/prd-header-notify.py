@@ -52,7 +52,11 @@ MAX_ATTEMPTS = int(os.environ.get("PRD_NOTIFY_MAX_ATTEMPTS", "6"))
 BROKER = "http://127.0.0.1:%s" % os.environ.get("OPAL_BROKER_PORT", "7800")
 STATE_REL = "org/mcp/.prd-notify/outstanding.jsonl"
 SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
-PRD_GLOB_RE = re.compile(r"^docs/architecture/[^/]+_PRD\.md$")
+# TWO ROOTS (project-tree spec s.7; contract prd_path prd/{project_code}_PRD.md): a PRD landing under
+# org/missions/D*/<MACRO>/<PROJECT>/prd/ is a step-4 event exactly like one under docs/architecture/.
+# Found by the first tree test run (NFRA_COMPEFFICACY L4, 2026-09-03 00:1xZ): without this the tree's
+# first PRD would have landed and COO would never have been told.
+PRD_GLOB_RE = re.compile(r"^docs/architecture/[^/]+_PRD\.md$|^org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/prd/[^/]+_PRD\.md$")
 FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 
 # R7 -- step 10 -> the loop_target's owner (design @3814be3317 R7; Andrew: "there's like a field
