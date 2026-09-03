@@ -16,7 +16,9 @@
 | `OP-s-16`, `OP-s-17`, `OP-s-5` | DONE | the table, the evidence store, the logs |
 | `OP-s-3` | DONE | governs the `OP-s-21` coverage-bound string's removal |
 
-**GO CONDITION: `TO-OP-S-4-18` terminal AND `TO-OP-S-20` terminal.** The `OP-s-22` verdict is sequenced inside deliverable 6, not before the GO.
+**GO CONDITION: `TO-OP-S-4-18` terminal.** The `OP-s-22` verdict is sequenced inside deliverable 6, not before the GO.
+
+⛔ **CORRECTED 2026-09-03 22:0xZ ON ROW Z-S90: THIS FACE NO LONGER WAITS ON `TO-OP-S-20`, AND MY ORIGINAL GATE WAS OVER-STRICT.** C-4 forbids **ARMING BLOCK** with zero ALLOW rows. **It does not forbid BUILDING the sentinel in WATCH mode, which is all this face does** -- the BLOCK arm is explicitly a later, separate act on measured evidence. I gated the build on the list and I should have gated only the arm. **`TO-OP-S-20` has stopped at its own GO condition and may not be buildable as decomposed at all** (the WAF layer carries no field attributing an address to a FIRM: `Cookie` reads REDACTED by `OP-s-5`'s deliberate redaction, and the handler is IP-blind per brief F4 -- so a per-firm census there is INEXPRESSIBLE, not merely sparse). **Had this gate stood, the largest cell in the project would have waited on a cell that may never complete in its current shape.** The BLOCK arm still waits on the ALLOW list and that has not moved.
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT FWD-14, FWD-15; C-1, C-3, C-4, C-6) - **Decomp cells:** `OP-s-14` + `OP-s-21` (v0.1.11, s.1a; the cell places S21's statement *"inside OP-s-14's format"*, which is why they are one face) - **Lane:** AE lane - **Round:** 3.
 
