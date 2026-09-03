@@ -66,8 +66,8 @@ later — a CORRECTNESS cost, not a speed one.
 to the project's surprise channel and KEEP WORKING. A broker message is NEVER the carrier** (Andrew-direct
 2026-09-03: *"claude.md should not have that rule to do this over mcp"* — a notifier watching files cannot see
 an inbox). Tree project: `org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md`
-(lane ANY — the worker appends it); legacy flat channel `org/surprise_channel/<CODE>/` admits CVO/CTO/COO only,
-so there the ISSUER appends the worker's row. An ARMED hazard still disarms same-turn via the row's
+or legacy flat `org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md` — BOTH lane ANY (COO grant @`bfec7d99b5`):
+the seat that sees it appends its own row; REMEDIATION rows stay CVO's. An ARMED hazard still disarms same-turn via the row's
 `disarm_owner`. Gates: `.tools/surprise-row-gate.py` (the row, at commit) + `.tools/proof-of-spec-check.py`
 SURPRISES LIMB (a `surprises` entry with no resolving row id blocks a tree TO's `complete` flip).
 `docs/doctrine/THE_SURPRISE_CHANNEL.md`.

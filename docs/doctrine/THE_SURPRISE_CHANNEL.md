@@ -14,10 +14,12 @@ ROW, never a broker message.** A row is what the commit-time row gate validates 
 a surprise that only ever reached an inbox -- measured 2026-09-03: one surprise cost three broker messages,
 an issuer reply and a CVO assembly in place of one file append. **Where the row goes:** a tree project's
 `org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md` -- lane ANY, the
-worker appends it (measured: `owned-paths-validate.py check_agent 0.8.0_AE_CloudComp` admits that path). A
-legacy flat channel `org/surprise_channel/<CODE>/` is lane CVO_WORKSPACE (CVO, CTO, COO only -- measured the
-same way): there the ISSUER appends the worker's row; a message carries the row's text to the issuer, never
-the surprise to CVO. That lane asymmetry is itself a finding, owner `2.0.0_SA_COO` (registry grantor).
+worker appends it (measured: `owned-paths-validate.py check_agent 0.8.0_AE_CloudComp` admits that path). The
+legacy flat channel `org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md` is lane ANY as well since
+`2.0.0_SA_COO`'s grant @`bfec7d99b5` (2026-09-03 ~03:25Z; measured refused for a Tier-2 worker at 03:1xZ, the
+asymmetry was surfaced as a finding and closed by the grantor within the hour). REMEDIATION rows stay
+`3.0.0_SA_CVO`'s (L9) on both roots -- by design, not by omission. There is no project shape left in which the
+seat that sees a surprise cannot append its own row.
 
 ---
 

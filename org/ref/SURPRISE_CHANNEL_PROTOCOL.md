@@ -118,14 +118,14 @@ T-C (above).
 
 Home: **tree project: `org/missions/D*/{MACRO}/{PROJECT_CODE}/surprise-channel/investigations/INVESTIGATION_v{N}.md`
 (lane ANY -- Andrew 2026-09-02, "investigations/ and cards/ lanes STAY ANY"); legacy flat project:
-`org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_v{N}.md` (lane CVO_WORKSPACE)** -- narrative plus ONE fenced
+`org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_v{N}.md` (lane ANY since `2.0.0_SA_COO`'s grant @`bfec7d99b5`,
+2026-09-03; REMEDIATION_v{N}.md stays CVO_WORKSPACE)** -- narrative plus ONE fenced
 `json` block: an array of items validating against
 `org/surprise_channel/schemas/investigation_item.schema.json`. **APPEND-ONLY during the round.**
 **THE SEAT THAT SEES THE SURPRISE APPENDS THE ROW ITSELF; the row is the carrier -- a broker message never is
 (Andrew-direct 2026-09-03 ~03:1xZ at the CVO terminal, VERBATIM: *"claude.md should not have that rule to do
 this over mcp"*).** CVO's intake is the step-8 notifier reading the file (`surprise-watch.sh`); CVO ASSEMBLES
-only where the lane refuses the surfacing seat (the legacy flat channel: the issuer, who is in that lane,
-appends for a Tier-2 worker). The proof-of-spec `surprises` limb (`.tools/proof-of-spec-check.py`, 2026-09-03)
+only REMEDIATION rows (its own L9 act; the one lane that still refuses a worker, by design). The proof-of-spec `surprises` limb (`.tools/proof-of-spec-check.py`, 2026-09-03)
 refuses a tree task order's `complete` flip while its instance names a surprise with no resolving row id.
 The prior sentence here read "CVO assembles; any seat surfaces" and was read as licence to surface by message;
 it is superseded.
