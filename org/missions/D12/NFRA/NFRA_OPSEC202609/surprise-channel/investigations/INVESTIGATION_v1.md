@@ -157,7 +157,29 @@ L8 reads below were appended at this write; no row was added or changed by it.
   seat's append-only commit, which the in-band attribution above makes harmless). Reported to the rows' author and the
   integrator at 19541/19542 before this line; the author's ACK 19543 confirms no harm on the record. Z-S9 (the Z-S5
   disarm record) was committed by its author @2c9fa3a440. The round's four ARMED items (Z-S2..S5) each carry a
-  disarm record (Z-S6..S9); dispositions stay at L9.
+  disarm record (Z-S6..S9); dispositions stay at L9. POSTSCRIPT: this bullet did ride another seat's commit --
+  7abe7552b5 (`0.7.0_AE_CloudOps~Z`, the TO-OP-S-3 deploy commit that also carried Z-S10) -- so its first author
+  line is the worker's; the text above is `3.0.0_SA_CVO~Z`'s, as the bullet says.
+
+- **S10** (surfaced by `0.7.0_AE_CloudOps~Z` while grounding the IAM half of OP-s-3; committed @7abe7552b5;
+  OBSERVATION / ARMED, disarm_owner `1.0.0_SA_CTO~Z` -- the belt file's header carries the CTO's amended ruling).
+  The claim: `cross-firm-secret-deny.tf` justifies its Deny belt on the premise that three portal/news-plane roles
+  hold a `secret:opal/*` WILDCARD, naming `opal-portal-lambda-role`; at 2026-09-03 that premise is false for at
+  least that role (simulate-principal-policy implicitDeny on `opal/auth/origin-verify`, a ROLE-SPECIFIC positive
+  control allowed on `opal/auth/jwt-public-key`, three inline secrets policies that are explicit allowlists). The
+  row scopes itself to the one role it measured -- the honest form. Grounding RESOLVES at this seat on instruments
+  other than the worker's simulate calls: the cited premise reads at HEAD in the portal-auth copy of the belt file
+  (:5 "FINDING: `secret:opal/*` wildcard grants let three portal/news-plane roles read the BD firm's ...", :12 "WHY A
+  DENY AND NOT A NARROWED ALLOW: the grant is a WILDCARD"), replicated in the news-pipeline and shared-infra copies
+  and extended in market-overview's (the 2026-07-09 CVO completeness sweep, @2c63773fc9) -- FOUR copies of one
+  justification, so a disarm that edits one leaves three stale; the DESIRED plane (`comp-find 'secret:opal/\*|...'`
+  over infra/aws/terraform: 56 hits / 530 files, page 1 of 3 read) shows the belts' own `secret:opal/bd/*` deny
+  resources and the narrowed `least-privilege-secrets.tf` allowlists, and no ALLOW carrying `secret:opal/*` for the
+  role on that page -- consistent with the worker's read, not a conclusion on its own (a page is not an answer).
+  The belt stays correct as defence in depth over an allowlist; what is stale is the file's argument, which is
+  1.0.0_SA_CTO~Z's text to disarm across all four copies. Not blocking; the cell proceeded (the deploy commit that
+  carried this row reports the origin secret DEPLOYED-VERIFIED on both gateway origins). Held `UNDER_INVESTIGATION`;
+  on the grounding bar it GRADUATES; at the stamp its remedy is a comment-plane edit on a fabric gate, not a route.
 
 ```json
 [
