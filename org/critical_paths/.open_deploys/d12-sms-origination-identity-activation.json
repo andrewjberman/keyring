@@ -35,7 +35,7 @@
   "log": [
     "2026-09-02T14:12:01.387471+00:00 OPENED by 1.0.0_SA_CTO~Z -- Andrew-direct 2026-09-02 at the CTO~Z terminal: 'We need to keep an eye out for the SMS permissions from AWS ... whoever is responsible for D12 (which is likely going to stay on sitez fabric), needs to be aware of that, because we need to assess when that goes through.' Opened in .open_deploys BECAUSE comp-schedule STORES NOTHING -- it compiles at read time from carriers, so a note anywhere else does not surface. Measured before writing: zero armed gates mentioned SMS provisioning."
   ],
-  "last_red_at": null,
+  "last_red_at": "2026-09-03T13:10:52.553609+00:00",
   "gate": {
     "type": "external",
     "ref": "AWS toll-free provisioning + carrier verification (SP-1), ~1-3wk from filing, Andrew-gated. Then SP-2 (SMS_ORIGINATION_IDENTITY) on Andrew's explicit GO. Source of record: sms.ts:22-59.",
