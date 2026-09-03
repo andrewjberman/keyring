@@ -34,6 +34,8 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 sys.path.insert(0, str(_WORKSPACE / ".tools"))  # safe_deploy_core lives in .tools/
 
+import _compbudget  # noqa: E402 -- Rule T's one shared budget carrier
+
 # NFRA_TOOLPASS C: the deployed-guard's held-BUCKET check + lift signal delegate to sovereign_held.
 from org.modules.graph.sovereign_held import is_held_bucket, include_held  # noqa: E402
 from org.modules.graph.extract_pipeline import (  # noqa: E402
@@ -2070,12 +2072,29 @@ def _deployed_sweep_all(args):
         _a.pipeline = pk
         _a.script_id = ''
         _a.firm = None
-        cmd_deployed(_a)
+        rc = cmd_deployed(_a)
+        if rc:
+            return rc
         print()
     return 0
 
 
+RC_NOT_DECIDABLE = 4  # FWD-10: a verdict-bearing partial is neither clean nor a finding.
+
+
+class _PipescriptBudgetReached(Exception):
+    """Raised only after the Rule-T partial verdict has been rendered."""
+
+
 def cmd_deployed(args):
+    """Public deployed command: preserve its verdict-bearing partial rc at the boundary."""
+    try:
+        return _cmd_deployed(args)
+    except _PipescriptBudgetReached:
+        return RC_NOT_DECIDABLE
+
+
+def _cmd_deployed(args):
     """Compare local gold + silver script files against their S3-uploaded code versions.
 
     Default (--pipeline bd-gold): BD gold + BD silver vs opal-data-bd.
@@ -2099,6 +2118,57 @@ def cmd_deployed(args):
     Uses S3 ETag (MD5) comparison."""
     import shutil
     import subprocess
+
+    budget_state = getattr(args, "_pipescript_budget_state", None)
+    if budget_state is None:
+        try:
+            budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+        except ValueError as exc:
+            print(f"comp-pipescript deployed: ERROR: --budget {exc}")
+            return 2
+        budget_state = {
+            "budget_s": budget_s,
+            "budget_source": budget_source,
+            "clock": _compbudget.Clock(budget_s),
+            "units": 0,
+            "deferred_reasons": [],
+        }
+        # The all-trees sweep copies argparse's namespace once per tree. Keeping the state on
+        # that namespace gives every timeout-bearing operation ONE wall-clock allowance rather
+        # than silently handing each firm a fresh 90 seconds.
+        setattr(args, "_pipescript_budget_state", budget_state)
+    budget_s = budget_state["budget_s"]
+    budget_source = budget_state["budget_source"]
+    budget_clock = budget_state["clock"]
+
+    def _budget_reached(unit, reason):
+        """Render the Rule-T partial state before ending this verdict-bearing sweep."""
+        budget_state["deferred_reasons"].append(f"{unit}: {reason}")
+        print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 %s; results are a PREFIX, not the "
+              "answer; the timeout-bearing operation was DEFERRED, not run; NO CURSOR: this is "
+              "one indivisible remote operation -- the supplied --cursor is unchanged; re-run "
+              "with a larger --budget."
+              % (_compbudget.fmt(budget_s), budget_source, unit))
+        print("  STATE: NOT-DECIDABLE  (rc=%d, distinct from a complete deployed verdict; "
+              "a PREFIX carries no verdict)" % RC_NOT_DECIDABLE)
+        for line in _compbudget.deferred_bucket(1, 1, unit, budget_state["deferred_reasons"]):
+            print("  " + line)
+        raise _PipescriptBudgetReached()
+
+    def _run_budgeted(argv, timeout_s, unit, **kwargs):
+        """Every deployed timeout derives from the one shared clock's remaining allowance."""
+        remaining = budget_clock.remaining()
+        if remaining is not None and remaining <= 0:
+            _budget_reached(unit, "budget exhausted before this operation could start")
+        effective_timeout = timeout_s if remaining is None else min(timeout_s, remaining)
+        try:
+            result = subprocess.run(argv, timeout=effective_timeout, **kwargs)
+        except subprocess.TimeoutExpired:
+            if remaining is not None and remaining <= timeout_s:
+                _budget_reached(unit, "did not return inside the remaining shared budget")
+            raise
+        budget_state["units"] += 1
+        return result
 
     # --- NFRA_DEBTSCAN.TOOL-01: scope resolution (--firm / path-autodetect / all-trees sweep) ---
     # --pipeline default is None (argparse) so we can tell "user chose a tree" from "no scope given".
@@ -2179,6 +2249,12 @@ def cmd_deployed(args):
     if is_held_bucket(S3_BUCKET) and not include_held("COMP_PIPESCRIPT_INCLUDE_HELD"):
         print("  SKIP: opal-data-bd (bd) deploy-verify HELD under the sovereign prohibition -- "
               "set COMP_PIPESCRIPT_INCLUDE_HELD=1 (or COMP_INCLUDE_HELD=1) for the DS deploy-verify path.")
+        print("  " + _compbudget.within_budget_line(
+            budget_state["units"], budget_state["units"], "timeout_bearing_operation",
+            budget_s, budget_source, round(budget_clock.elapsed(), 2)))
+        for line in _compbudget.deferred_bucket(0, budget_state["units"],
+                                                "timeout_bearing_operation", []):
+            print("  " + line)
         return 0
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
@@ -2223,13 +2299,13 @@ def cmd_deployed(args):
         # sitting beside real ones train a reader to discount the signal.
         local_bytes = local_path.read_bytes()
         try:
-            result = subprocess.run(
+            result = _run_budgeted(
                 [aws_bin, "s3api", "head-object",
                  "--bucket", S3_BUCKET,
                  "--key", s3_key,
                  "--query", "ETag",
                  "--output", "text"],
-                capture_output=True, text=True, timeout=15, env=aws_env,
+                15, "s3_head_object", capture_output=True, text=True, env=aws_env,
             )
         except subprocess.TimeoutExpired:
             return "TIMEOUT", [f"(aws CLI hung; AWS_EC2_METADATA_DISABLED={aws_env.get('AWS_EC2_METADATA_DISABLED', '')})"]
@@ -2664,9 +2740,9 @@ def cmd_deployed(args):
                     print(f"  [aux:{_aux_prefix}] {'(whole prefix)':<44} UNCOVERED      s3://{S3_BUCKET}/code/{_aux_prefix}/")
                 continue
             try:
-                _ls = subprocess.run(
+                _ls = _run_budgeted(
                     [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/code/{_aux_prefix}/"],
-                    capture_output=True, text=True, timeout=20, env=aws_env,
+                    20, "aux_prefix_listing", capture_output=True, text=True, env=aws_env,
                 )
             except subprocess.TimeoutExpired:
                 timed_out.append(f"[aux:{_aux_prefix}] (listing)")
@@ -2739,9 +2815,9 @@ def cmd_deployed(args):
         # Skipped on filtered runs (focused view) and bronze-only views.
         if not silver_filter_stem and not _bronze_only_view:
             try:
-                _ls_root = subprocess.run(
+                _ls_root = _run_budgeted(
                     [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/code/"],
-                    capture_output=True, text=True, timeout=20, env=aws_env,
+                    20, "code_prefix_listing", capture_output=True, text=True, env=aws_env,
                 )
                 if _ls_root.returncode == 0:
                     for _ls_line in _ls_root.stdout.splitlines():
@@ -2793,9 +2869,9 @@ def cmd_deployed(args):
     _basename_homes = {}
     for _ename, _eprefix in sorted(_enum_prefixes.items()):
         try:
-            _els = subprocess.run(
+            _els = _run_budgeted(
                 [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/{_eprefix}"],
-                capture_output=True, text=True, timeout=20, env=aws_env,
+                20, "s3_prefix_enumeration", capture_output=True, text=True, env=aws_env,
             )
         except subprocess.TimeoutExpired:
             timed_out.append(f"[s3-enum:{_ename}] (listing)")
@@ -2864,6 +2940,11 @@ def cmd_deployed(args):
           f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT, "
           f"{len(not_in_tree)} NOT-A-MEMBER(no-verdict), {len(s3_only)} S3-ONLY, "
           f"{len(multi_home)} MULTI-HOME, {len(declared_unswept)} DECLARED-UNSWEPT")
+    print("  " + _compbudget.within_budget_line(
+        budget_state["units"], budget_state["units"], "timeout_bearing_operation", budget_s, budget_source,
+        round(budget_clock.elapsed(), 2)))
+    for line in _compbudget.deferred_bucket(0, budget_state["units"], "timeout_bearing_operation", []):
+        print("  " + line)
     # NOTHING-VERIFIED guard (CVO~B 2026-08-05): rows were seen but not one of them was
     # actually verified against S3. The common cause is a script OUTSIDE this tool's
     # universe -- the path auto-detected into a tree it does not belong to, every file
@@ -3890,6 +3971,15 @@ def main():
     p_deployed.add_argument('--firm', default=None, choices=('bd', 'inf', 'cot', 'mdpf'),
                             help='NFRA_DEBTSCAN.TOOL-01: single-tree scope by firm/tree. '
                                  'Sweeps that tree against ONLY its own bucket (firm separation).')
+    p_deployed.add_argument('--budget', metavar='N', default=None,
+                            help='RULE T (PRD s.4.4): one wall-clock ceiling for every timeout-bearing '
+                                 'remote operation (carrier: --budget > env COMP_BUDGET_S > default %s s); '
+                                 '--budget 0 = unbounded. At expiry deployed returns rc=%d and '
+                                 'NOT-DECIDABLE because its rc is verdict-bearing.'
+                                 % (_compbudget.fmt(_compbudget.DEFAULT_BUDGET_S), RC_NOT_DECIDABLE))
+    p_deployed.add_argument('--cursor', metavar='UNIT', default=None,
+                            help='Reserved Rule-T resume cursor. A timeout-bearing operation is indivisible; '
+                                 'an expiry leaves this supplied cursor unchanged and directs a larger-budget re-run.')
 
     # postdeps
     p_postdeps = sub.add_parser('postdeps', help='Show post-step and precondition dependencies for gold scripts')

@@ -2,6 +2,7 @@
 # comp-pipescript — authoritative pipeline script dependency tool
 # Usage: comp-pipescript dag | io D_00 | chain downstream | feeds D_00 | consumers D_00 | overlap D_00 D_03 | deployed | postdeps | inject | stats
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+echo "comp-pipescript SHIM: .tools/comp-pipescript -> org/modules/graph/pipeline_cli.py" >&2
 python "$WORKSPACE/org/modules/graph/pipeline_cli.py" "$@"
 _exit=$?
 python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-pipescript" "$*" $_exit 2>/dev/null
