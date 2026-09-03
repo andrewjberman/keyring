@@ -2,12 +2,15 @@
 
 <to_id>NFRA_COMPEFFICACY.TO-CE-T-21</to_id>
 <project>NFRA_COMPEFFICACY</project>
-<issued_to>0.8.0_AE_CloudComp~P</issued_to>
+<issued_to>0.8.0_AE_CloudComp~N</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 opens; CE-t-21 at ~P, the live CODEX seat), PRD v0.5 @5bbdab5ec7 (s.4; s.4.4 incl. the verdict-bearing row; s.7 row T-21 :649).</status>
+<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 opens; CE-t-21 at ~N, a fresh CODEX seat (RESEAT 16:5xZ)), PRD v0.5 @5bbdab5ec7 (s.4; s.4.4 incl. the verdict-bearing row; s.7 row T-21 :649).</status>
 
-**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` (s.4; s.4.3 + GRAIN; s.4.4 + the verdict-bearing row; s.7 T-21) · **Decomp cell:** `CE-t-21` (STAGE 3; closes on "graded; the unit-1 regen recorded as a side effect") · **Lane:** `.tools/comp-system` (the shim, if one exists -- measure) + `org/modules/graph/comp_system.py` (the ENGINE, 1,751 lines) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~P/comp-system.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~P` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
+**RESEAT 2026-09-03 16:5xZ (issuer 2.0.0_SA_COO, /drive v2 tick 6 seat triage):** `0.8.0_AE_CloudComp~P` NEVER READ this order -- its Codex thread 01a065f6 sat in `systemError` from the GO's delivery (turn-bridge: HARD-NUDGE x3 then TURN-BRIDGE-CANCELLED 14:39Z; the tick-3 rulings and the tick-5 nudge both TURN-BRIDGE-RETRY against the same error; broker delivery state: 93702 / 93733 / 93800 all QUEUED, READ 0 of 4; the app-server refusing model refresh with 404 since 15:04Z), while its heartbeat process kept the seat reading LIVE on the broker -- a forged liveness of the class DRIVE.md s.4 names. The three ~P processes were stopped by the issuer at 16:52Z. The order is RE-ADDRESSED whole to **`0.8.0_AE_CloudComp~N`** (a fresh Codex seat launched 16:52Z through the launcher that now mints its own session id, CTO @2f6dca8204); nothing was built under ~P; the deliverables lane moves to ~N. CORRECTION TO THE RECORD: the tick-2 log's "TEN READ-acks within ~60 s each" over-counted by one -- ~P's GO was never READ.
+
+
+**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` (s.4; s.4.3 + GRAIN; s.4.4 + the verdict-bearing row; s.7 T-21) · **Decomp cell:** `CE-t-21` (STAGE 3; closes on "graded; the unit-1 regen recorded as a side effect") · **Lane:** `.tools/comp-system` (the shim, if one exists -- measure) + `org/modules/graph/comp_system.py` (the ENGINE, 1,751 lines) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~N/comp-system.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~P` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
 
 ---
 
@@ -77,7 +80,7 @@ comp-adversary: RUN -- rc 0 at read-vintage @07601c54c9 (2026-09-03T14:25:19Z); 
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `T21-AC1`..`T21-AC6`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~P/NFRA_COMPEFFICACY.TO-CE-T-21.comp-system-s4-audit.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~N/NFRA_COMPEFFICACY.TO-CE-T-21.comp-system-s4-audit.proof_of_spec.json`
 and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, which the lane commits itself. T21-AC2's unreadable-source
 case and T21-AC5's mutants are the controls that must be able to FAIL.
 </proof_of_spec>
