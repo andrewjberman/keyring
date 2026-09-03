@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.8 @36786251af (ENDPOINT FWD-2 / FWD-3; s.5 the exercise bars; 7.6 C-1) - **Decomp cells:** `OP-s-2` (v0.1.4 @c8d58b1004, s.1a; s.5 the round-2 line) - **Lane:** `infra/aws/terraform/portal-auth/` (the HTTP API `opal-portal-data-proxy-api`, its routes and `portal-jwt-authorizer`; the deny belt `cross-firm-secret-deny.tf`; the auth-handler and the authorizer TO-OP-S-3 built), AE lane - **Round:** 2 of NFRA_OPSEC202609. **OP-s-1 (the REST API) is NOT this task order:** its carrier is not Terraform-declared (the issuer's live read at the cut) and is a card in `1.0.0_SA_CTO~Z`'s loop; OP-s-24's Lambda-lane limb rides OP-s-1's task order when that lands.
 
