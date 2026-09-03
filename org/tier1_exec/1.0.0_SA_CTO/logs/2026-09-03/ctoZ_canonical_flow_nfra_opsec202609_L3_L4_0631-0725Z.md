@@ -135,3 +135,15 @@ NFRA_OPSEC202609 is at `dep_stage: PRD` at `org/missions/D12/NFRA/NFRA_OPSEC2026
 3. **[successor, ASSETCLASS_TAXONOMY / D4]** claim BRIEF; next limb L2 `/endpoint --forward`. D4's macro enum in MACROS.yaml: check before L3 (only D0, D8, D11, D12 are ratified today).
 4. **[1.0.0_SA_CTO, any device]** the notifier gap: `prd-header-notify.py RECIPIENT` is the base serial; on a lane-only fabric the L4 -> L5 handoff needs a lane-aware recipient. Surfaced here and in 19469; a fix is a spine-mechanism edit, not this project's.
 5. **[0.0.0_AB_MSTR~Z]** push legs for `c3ef3a2530` and this commit when convenient; nothing waits on them.
+
+---
+
+## Amendment 07:5xZ -- the reconcile pick the successor must know (0.0.0_AB_MSTR~Z 19498, relaying the laptop 1.0.0_SA_CTO 93312)
+
+**One defect, corrected twice.** `.tools/surprise-row-gate.py _blob` is fixed on BOTH fabrics: here @c3ef3a2530 (two call sites, `errors="surrogateescape"`); on the laptop @e58250f261 (LOCAL there at 07:44Z; origin/CLOUD still 3bd8d2ef04), which fixes the same class at **20 call sites in six tools** (`surprise-row-gate.py`, `to-pipeline-gate.py`, `proof-of-spec-check.py`, `prd-header-notify.py`, `to-decomp-ref-lint.py`, `surprise-corpus-validate.py`) with `errors="replace"`, batteries 6/6 + 6/6, and **makes the PRD notifier lane-aware** (RECIPIENT = the COO on the committer's lane, so the L4 -> L5 handoff reaches `2.0.0_SA_COO~Z` without a pointer -- the gap "Gap found" above names, closed there).
+
+**At the next CLOUD -> SITEZ reconcile the `_blob` hunk CONFLICTS on identical base-side ranges. It is a PICK, never a union: take the laptop's wholesale** (wider, and the notifier fix rides with it). This seat's reading for the audit of the loser: for a gate that only READS a blob and greps rows, `replace` is the safer choice -- a surrogate-escaped string raises on any later plain `.encode("utf-8")`, a replaced one never does. The laptop's choice should win on the merits, not only on width.
+
+Also closed on the laptop, for `3.0.0_SA_CVO~Z`'s LD-0319 read: `06_current_state` regenerated @c08c1bbe99; the rule-bank marker check is correct to FAIL (marker absent, not stale). Row NFRA_OPSEC202609-Z-S1 (OBSERVATION/ARMED, disarm at L10) has its remedy in flight on the other fabric.
+
+State at this amendment: NFRA_OPSEC202609 at L7 round 1 (`dep_stage: EXECUTING` @94b6fd0d11; four TOs @5494591e91; seats `0.7.0_AE_CloudOps~Z` + `~S` live). L2-L4 and every row-owner flip current. Waiting: Andrew's word on OP-x-2 (website edge) and OP-x-1 (probe list); then the L10 grades.
