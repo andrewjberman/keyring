@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **23 rows** (S1-S24, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 17:2xZ by `0.7.0_AE_CloudOps~S` on appending S24 (was 22); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **25 rows** (S1-S26, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 18:5xZ by `0.8.0_AE_CloudComp~O` on appending S26 (was 23; S25 did not restate the header); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -998,6 +998,37 @@ but it leaves B2-AC6's required incremental artifact impossible under the curren
     "spec_asserts": "The L10 precondition requires every project task order terminal with a valid proof-of-spec instance, every proof criterion covered exactly, and every investigation item dispositioned before one route slug issues.",
     "world_is": "All five faces are terminal and their proof sets are exact. Of the fourteen round-2 items, seven remedies executed in-round, five require existing L6 cells in round 3, one is an outside-remedy producer census, and one is an externally stopped attempt superseded by completed authentic exercise.",
     "notes": "Zero DECOMP_INVALIDATING and zero SCOPE_CHANGE. The fixed publisher and compaction are committed but not deployed; the live forward pointer was written by the pre-fix image and remains valid. Those applied-versus-desired boundaries are preserved as S22-S24 routes, never flattened into round-2 closure. No push by this seat."
+  }
+]
+```
+
+## S26 -- the user-bin compiler shims deny this Codex seat while the repository-local tools run
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S26",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~O",
+    "surfaced_at": "2026-09-03T18:51Z",
+    "one_line": "The three user-bin compiler shims required by TO-CG-C-3 deny this Codex seat before tool execution, while comp-which and the repository-local compiler entry points run; the task continues through the ruled repository-local path without changing user-bin ACLs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Bare comp-to, comp-read, and comp-find each failed before tool execution with Windows 'Access is denied' at C:\\Users\\AndrewBerman\\bin\\comp-to.cmd, comp-read.cmd, and comp-find.cmd respectively; Get-Acl showed explicit deny entries on the affected user-bin shims.",
+        "Bare comp-which executed successfully from C:\\Users\\AndrewBerman\\bin\\comp-which.cmd and routed the focused key-context question to comp-read.",
+        "After COO ruling Msg-ID 93884, repository-local entry points were exercised: python .tools/comp-read fully read both ruling files and bash .tools/comp-to set the race-free seat/session TO_ID for NFRA_CLDGRPH.TO-CG-C-3.deriver-read-state.",
+        "COO ruling Msg-ID 93885 assigned disarm ownership to 1.0.0_SA_CTO, identified as the launcher owner, and stated that the issuer had already notified that seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_CLDGRPH.TO-CG-C-3's compiler mandate names comp-to, comp-read, and comp-find as the required tool surfaces, and the launcher contract says the bare comp-* commands are provided to this Codex PowerShell seat through canonical user-bin command shims.",
+    "world_is": "For 0.8.0_AE_CloudComp~O, the user-bin comp-to, comp-read, and comp-find shims carry explicit deny ACL entries and fail with Access is denied before their tools execute, while comp-which runs. The repository-local comp-read and comp-to entry points execute successfully, so the ordered C-3 work proceeds through those ruled entry points rather than collapsing into a stop or an unrecorded workaround.",
+    "notes": "Ruling 1 explicitly forbids altering the user-bin ACLs and authorizes repository-local tool entry points; ruling 2 requires this one OBSERVATION row and names 1.0.0_SA_CTO as disarm owner. No ACL was changed, no task surface was widened, and no push is permitted or attempted."
   }
 ]
 ```
