@@ -137,11 +137,13 @@ tools:
     overlay_role: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern): comp-iam parses TF = DESIRED; comp-aws emits the LIVE census; `comp-iam reconcile` overlays live on desired. IAM axis feeds comp-iam reconcile (per-role statements in its contract shape). NOTE 2026-07-14 (NFRA_COMPCLOSE): this file carried a SECOND `comp-aws:` key adjacent to comp-iam -- YAML duplicate-key semantics meant that thin Phase-0 stub SILENTLY REPLACED this canonical entry in every safe_load of this catalog. The stub is now a comment there; this is the one entry."
 
   comp-kuzu:
-    command: 'comp-kuzu [--json] [--limit N] [--db-path PATH] "<Cypher>"'
+    command: 'comp-kuzu [--mode auto|inc|full] [--json] [--limit N] [--db-path PATH] "<Cypher>"'
     segment_scope: aws-cloud
     when: |
       - "List/inspect cloud resources of a type, transitive reachability, or blast radius" (the fast ~ms query layer over the comp-aws cloud graph)
       - DEFAULT surface (no --db-path) = the canonical Nessie-sourced kuzu_nessie_db (post-2a nightly + accumulated-2b). Scratch DBs (kuzu_db tarball, kuzu_stitch_db, kuzu_ac7.db) via explicit --db-path ONLY.
+      - "refresh / update the graph / my graph is behind" -> comp-kuzu --mode inc. NFRA_KUZUSPLIT P1: incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild (Andrew O-1, the section-4 hard gate). The DEFAULT for every non-MSTR agent pre-query. THE GUARANTEE LIVES ON THE FLAG since 2026-09-02 -- the comp-kuzu-inc wrapper is retired (NFRA_COMPEFFICACY unit 2).
+      - "full rebuild / ground-truth reset / reconcile" -> comp-kuzu --mode full: force kuzu_nessie_load UNCONDITIONALLY (~482s measured P0). 0.0.0_AB_MSTR startup only; NOT for mid-session use. The comp-kuzu-full wrapper is retired.
     cost: "~ms (auto-refresh adds a one-time Nessie rebuild only when the canonical DB trails HEAD)"
     output: "Cypher result (table, or --json array on stdout)"
     freshness: |
@@ -163,37 +165,12 @@ tools:
       changes -- the marker tracks COMMITTED HEAD; PENDING surfaces the not-yet-committed delta.
       The graph is a minutes-stale-and-LABELED traversal surface, NOT a read-your-own-writes verification substitute
       (verify vs served artifact / live AWS).
-    rebuild_trigger: "DEFAULT surface auto-rebuilds on BEHIND/stale (no manual step). Scratch DBs: rerun the matching loader (kuzu_nessie_load / kuzu_load / kuzu_stitch_load, force default)."
+      --mode inc (NFRA_KUZUSPLIT P1): on a large delta the provenance header carries "SERVED LABELED-STALE -- behind-by-N"
+      IN-BAND (Rule 20, COND-1) and a persistent fallback line lands beside the DB (.fallback.jsonl, COND-2). A worker
+      serving labeled-stale is SAFE: a complete prior-vintage projection, honestly labeled. --mode full advances HEAD.
+      THE VERDICT RIDES STDERR, NOT rc: a labeled-stale serve exits 0 -- an rc-only caller cannot tell fresh from stale.
+    rebuild_trigger: "DEFAULT (--mode auto) auto-rebuilds on BEHIND/stale. --mode inc: small delta -> incremental applied; large/cold -> serve labeled-stale + LOUD, NEVER full. --mode full: always rebuilds. Scratch DBs: rerun the matching loader (kuzu_nessie_load / kuzu_load / kuzu_stitch_load, force default)."
     project: "NFRA_GLOBGRPH"
-
-  comp-kuzu-full:
-    command: 'comp-kuzu-full [--json] [--limit N] "<Cypher>"'
-    segment_scope: aws-cloud
-    when: |
-      - 0.0.0_AB_MSTR STARTUP: force a FULL kuzu_nessie_load projection UNCONDITIONALLY, absorbing the daily full-derive whole-table delta ONCE so the shared canonical is warm for every peer on the box that day.
-      - "full rebuild / ground-truth reset / reconcile the local projection" routes here. NOT for general mid-session use -- every OTHER agent uses comp-kuzu-inc.
-    cost: "~482s full ~55K-row Nessie->Kuzu reload (measured NFRA_KUZUSPLIT P0). Deterministic + non-blocking at MSTR startup vs a random-worker mid-task ambush."
-    output: "Cypher result (table, or --json array on stdout)"
-    freshness: "Forces the full reload even when the local pin reads current (force=True) -- MSTR's job is to make the daily reset deterministic. Shares comp-kuzu's provenance/HEAD-oracle contract."
-    rebuild_trigger: "Always rebuilds (unconditional full). The P2 idempotent guard will later skip a same-cycle redo."
-    project: "NFRA_KUZUSPLIT"
-
-  comp-kuzu-inc:
-    command: 'comp-kuzu-inc [--json] [--limit N] "<Cypher>"'
-    segment_scope: aws-cloud
-    when: |
-      - THE DEFAULT for every non-MSTR agent: "refresh / update the graph / my graph is behind" -- apply the fast ~5s incremental if the delta is small.
-      - On a LARGE delta (queried before MSTR's startup-full, or a burst): serve the COMPLETE prior-vintage DB labeled-stale, NEVER a mid-task full rebuild (Andrew O-1 / the section-4 hard gate).
-    cost: "~5s incremental (measured P0). On a large delta: serves labeled-stale in ~5s -- NEVER the ~482s full ambush."
-    output: "Cypher result (table, or --json array on stdout)"
-    freshness: |
-      NFRA_KUZUSPLIT P1: incremental-OR-serve-labeled-stale, NEVER full. On a large delta the provenance header carries
-      "SERVED LABELED-STALE (comp-kuzu-inc) -- behind-by-N nodes" IN-BAND (Rule 20, COND-1) and a persistent fallback
-      line is appended beside the DB (.fallback.jsonl, COND-2) so the ambush rate is observable. A worker serving
-      labeled-stale is SAFE: the DB is a complete prior-vintage projection, honestly labeled. Run comp-kuzu-full (or
-      wait for MSTR startup) to advance HEAD. Shares comp-kuzu's provenance/HEAD-oracle contract otherwise.
-    rebuild_trigger: "Small delta -> incremental applied. Large delta/cold -> serve labeled-stale + LOUD (no full)."
-    project: "NFRA_KUZUSPLIT"
 
   comp-describe:
     command: 'comp-describe <arn-or-name> [--json]'
@@ -204,7 +181,7 @@ tools:
     cost: "~ms: 2 targeted comp-kuzu queries for an exact ARN (node + edge neighborhood); +1 light all-node sweep only when resolving a name/substring. NEVER the full-corpus build."
     output: "human summary (RESOURCE / SUMMARY / produced-by / consumes / provenance), or --json. Exit 1 (no silent guess) when a query resolves to 0 (refresh hint) or N (disambiguation list) resources."
     freshness: "Reads the live comp-kuzu graph (shares its provenance/HEAD-oracle contract). derive-at-scan: no projected property, no table -- nothing to go stale beyond the graph vintage itself."
-    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> hints comp-kuzu-inc to refresh a behind graph (broken retrieval != absent resource)."
+    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> hints comp-kuzu --mode inc to refresh a behind graph (broken retrieval != absent resource)."
     project: "NFRA_COMPSIMILAR"
 
   comp-similar:

@@ -73,7 +73,7 @@ def assignees(raw: str) -> list[str]:
 
 def main() -> int:
     live = load_live()
-    tos = sorted(ROOT.glob("org/**/task_orders/*.md"))
+    tos = sorted(list(ROOT.glob("org/**/task_orders/*.md")) + list(ROOT.glob("org/missions/D*/*/*/task-orders/*.md")))  # R-ii: both roots
 
     zombies: list[tuple[str, str, str]] = []
     stranded: list[tuple[str, str, str]] = []

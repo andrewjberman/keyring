@@ -6,7 +6,33 @@ D8 precedent) · **dep_stage:** PRD
 **Author:** `3.0.0_SA_CVO` (driver, Andrew-designated comp-tool lane @`98b1a59907`) · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
 **Version:** v0.1, 2026-09-02 · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+
+> ⛔ **SUPERSEDED 2026-09-03 00:24Z.** This draft was the step-3 input to L4. The RATIFIED PRD (v0.2) lives at its tree
+> home `org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md` @`e906c6f156` (1.0.0_SA_CTO, from this
+> file @`86a5538003`; ENDPOINT replaced by L2's nine cards, this file's seven kept there verbatim as AC-1..AC-7, §7
+> `outcome` → `outcome_ref` re-pointed). **This file is no longer edited.** The three edits it took AFTER `86a5538003`
+> — §4 result-file home + §4.6 two-grain battery field (@`4b2255545a`), §4.6 runs.jsonl 80-char trap (@`86a5538003`
+> itself is the input, so that one is IN), §7 row G-4 Codex-runtime rail (@`5a72185ede`) — plus row T-16 → CLEARED
+> @`bbba0db0e9` were sent to 1.0.0_SA_CTO as deltas (00:3xZ) and **LANDED in v0.3 @`264bc9fa92`, verified on the
+> landed bytes by this seat 00:4xZ** (each delta's token present once; G-4's `outcome_ref` re-pointed FWD-6 → FWD-9 by
+> CTO's own stated miss). Later versions at the tree home supersede these pins. Two carriers drift; this one is retired.
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
+
+```json
+{
+ "project": "NFRA_COMPEFFICACY",
+ "directive": "D11",
+ "fabric": "laptop",
+ "prd_version": "v0.1",
+ "step": 4,
+ "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "status": "DRAFT"
+}
+```
+*PRD_HEADER block (`org/standards/PRD_HEADER.schema.json`; limb 5 of `to-pipeline-gate.py` @`689960ce16`). `brief_ref` is
+the Andrew-direct RECORD, not a `docs/briefs` file — admitted by the pattern widened @`75ead40079` on this seat's Rule 24
+finding. `status` flips to `RATIFIED` when `1.0.0_SA_CTO` lands this at `docs/architecture/NFRA_COMPEFFICACY_PRD.md`.*
 
 ---
 
@@ -37,7 +63,7 @@ retired"* (condition met — §7 row T-19).
 
 ---
 
-## ENDPOINT (step 2, `/endpoint --forward`)
+## ENDPOINT (step 2, /endpoint --forward)
 
 Emitted from his words alone, before any task order exists. `FWD-n` ids are **permanent and never reused**; a retired
 outcome leaves its number vacant.
@@ -128,6 +154,16 @@ outcome leaves its number vacant.
 **Not cut, deliberately:** an outcome for "the marquis list." He said *"we may want to"* — the enumeration and
 evidence in s.7 make that decision possible; making it is his.
 
+> ⛔ **BINDING ON FWD-7 AND THE G-ROWS — Andrew-direct 2026-09-02 ~18:12Z, VERBATIM:** *"right now i think the
+> estate pipeline is probably junk for the most part, until the tools at the front of that pipeline are properly
+> rectified and generating real outputs/data, i dont think that pipeline makes sense to analyze analyses from."*
+> **So the daily Semantic Evolution Pipeline is DOWNSTREAM of this project, not beside it.** Its outputs are not
+> adjudicated until the tools it consumes are CLEARED here (the 24 PENDING manifest days stay PENDING by his word).
+> This matches the measurement in §7 rows G-1..G-3 and the review §5b: the runner's propagation stratum returns
+> `INSTRUMENT_UNAVAILABLE` daily and invokes zero comp-tools. **Not read into it:** stopping or changing the
+> runner; it keeps running, nobody acts on its output. Record:
+> `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1812Z_OPEN_CALLS_RULINGS_KUZU_ESTATE_NOTIFIER.md`.
+
 ---
 
 ## 1. The arc
@@ -189,7 +225,12 @@ No row may end in any other state. **A row that is "mostly fine" is not CLEARED.
 
 ## 4. THE PER-TOOL RESULT SCHEMA — what `0.8.0_AE_CloudComp` returns for each tool, and what CVO grades
 
-One file per tool: `org/projects/NFRA_COMPEFFICACY/results/<tool>.result.md`, one fenced JSON block + prose. Every
+One file per tool, one fenced JSON block + prose. **HOME (corrected 2026-09-02, CloudComp 92803 + COO 92809):**
+the filler's OWN lane — `org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPEFFICACY_T16_<tool>.result.md`
+— until NFRA_COMPEFFICACY enters the project tree, then `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/<serial>/<tool>.result.md`
+(lane TREE_DELIVERABLES resolves the owner from `<serial>/`, CTO @`20d1c60866`, ruled @`5f8b774a5d`). The
+first draft named `org/projects/NFRA_COMPEFFICACY/results/`, an ANY_EXEC lane the filler could not commit to;
+safe-commit refused it and the first deliverable landed in the filler's lane with its bytes unchanged. Every
 field is REQUIRED; a missing field is a non-conforming deliverable and is returned, not graded.
 
 ### 4.1 IDENTITY — the wrong-object trap, closed at the schema
@@ -237,8 +278,40 @@ in code — it is the GRADING vocabulary of this PRD until the census is adjudic
   page_contract         --page/--limit present? true total printed? "PAGE i of N"?
   size_invariance       does the ceiling scale with corpus width, or is it a constant?
 ```
-Policy this project sets (transcript 1056): **a constant ceiling over a variable corpus must disclose what it did
-not reach.** It does not mandate one number; it mandates that the number and the reached-denominator print together.
+**POSTURE — Andrew-approved 2026-09-02 ~18:38Z, VERBATIM: *"I agree with this posturing, incorporate it into the
+document."*** Two rules, both size-invariant by construction; measured baseline in §4.4.1.
+
+**RULE P (output): comp-find's page contract is the SHARED OUTPUT CONTRACT, not a shared library.** Every marquis
+tool that can emit more than one page of rows carries `--limit` / `--page` / `--all`, prints `PAGE i of N` and the
+**TRUE TOTAL on every page**, and treats a bare `--top N` that does not print what it dropped as **non-conforming**.
+The consumer half already exists in law (CLAUDE.md Rule 21: never `head` a census; a page is not an answer).
+Size-invariance comes from the page, never from making output smaller.
+
+**RULE T (work): a tool never exceeds a ceiling it was not told.** Every marquis tool **accepts a budget** (flag or
+env; default = the harness's 120s Bash ceiling), **spends it against the WORK, not the call**, and at expiry
+**prints the reached denominator with a resume cursor** — *"scanned 12,400 of 144,933 when the 120s budget hit;
+re-run `--page 2` / `--budget 600`."* A timeout thereby becomes a page boundary, not a kill. **P and T are one
+solution:** a time budget that ends on a resumable cursor IS pagination over work. Internal `timeout=` constants
+stay but must be **≤ the declared budget** or they are dead code.
+
+**Non-application:** tools whose output is bounded by nature (`comp-which`, `comp-denytest`, `comp-schedule`'s five
+carriers) carry Rule P's disclosure line and nothing else. **Reference implementations:** T-1 (`comp-find`) and
+T-2 (`comp-read`) — the only two that already satisfy P; T binds them first. **Cost, stated:** T is a code change on
+~18 marquis implementations; P on ~10.
+
+#### 4.4.1 Measured baseline (2026-09-02, 20 marquis tools; help-text census + source grep)
+```
+  --page          2 of 20  (comp-find, comp-read)       --limit  3 of 20   --top  3 of 20   --all  4 of 20
+  prints a true total when capped        8 of 20  (help-text heuristic -- weak; graded per tool in 4.2)
+  knows / accepts the OUTER harness budget   0 of 19 implementations  (no BASH_*_TIMEOUT, --budget, deadline,
+                                                                       SIGTERM handler, or alarm anywhere)
+  outer ceiling the tools cannot see     120,000 ms default / 600,000 ms max (harness contract)
+  inner ceilings                         18 of 94 set one; 14 distinct constants; comp-find's 600s EXCEEDS the outer
+```
+Live specimens the same day: comp-find killed silent at 120s twice (its 600s never reached); comp-similar imposing
+180s on comp-kuzu from outside; the rail hook straddling its own 5s harness deadline and writing DENY rows for
+searches that ran (fixed @`d2eb720bde` by raising the ceiling, confirmed at 4 of 4 Claude seats) — **every one is a
+tool that did not know its budget.**
 
 ### 4.5 PASSCRAFT LEG — the 8 moves, run, and the shapes hunted
 ```
@@ -251,8 +324,20 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
 ### 4.6 USAGE + DISPOSITION PROPOSAL
 ```
   runs_30d        from BOTH instruments (runs.jsonl AND rail log), stated separately
+                  TRAP (0.8.0_AE_CloudComp, unit 3a @4c3b848c97): the runs.jsonl SINK cuts
+                  args_head at 80 chars (comp_log_auto.py:349), not the 200 the emitters pass.
+                  A token-based acceptance on this sink matches ZERO rows while rows are being
+                  written if the token sits past char 80 of "<tool> <args>" -- unit 1's passed
+                  only because its args were short. Place the token inside the first 80 chars,
+                  or count rows by tool+serial+rc, never by a late token.
   hook_driven     fraction of runs from a hook vs by hand
   battery         path, collects >0 under pytest?, has a red-first mutant?
+                  TWO GRAINS, both stated (0.8.0_AE_CloudComp 92794, ARMED, disarmed by its
+                  owner): "collects >0" at the FILE grain AND under the lane's DIRECTORY sweep
+                  (pytest .tools/tests/). Measured 2026-09-02: 8 of 22 files abort collection
+                  with a module-scope SystemExit, so the directory run sees 0 of 37 tests while
+                  every per-file collect passes -- Rule 22's members-vs-shared trap on the
+                  battery field itself. A FILE-grain PASS alone is written "FILE-grain only".
   overlap         tools it duplicates or subsumes, with the EXECUTABLE-BODY evidence
   proposed        CLEARED-candidate | RETIRE-candidate (owner named) | CARRIED (blocker named)
 ```
@@ -333,8 +418,8 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 
 | id | outcome | surface (engine) | claim | evidence | lane | verb | depends_on | accept | bound |
 |---|---|---|---|---|---|---|---|---|---|
-| T-1 | FWD-1,2,3,6 | `comp-find` → `.tools/comp-find` (Python, self-contained) | measured | 3,722 runs (rail); 0→1 runs.jsonl post unit-1 @`f34122edfb`; paginates; 600s timeout | CloudComp | audit | — | 4.1-4.6 | **NO battery** (92625 s.5b) — FWD-6 gate |
-| T-2 | FWD-1,2,3,6 | `comp-read` → `.tools/comp-read` (Python) | measured | 2,401 runs (rail); `--enumerate` writes NO rail row (92625 s.5a); battery 8/8 | CloudComp | audit | — | 4.1-4.6 | enumerate-path logging gap is a finding, not a fix in this row |
+| T-1 | FWD-1,2,3,6 | `comp-find` → `.tools/comp-find` (Python, self-contained) | measured | 3,722 runs (rail); **unit 1 @`f34122edfb` ON origin — now also writes runs.jsonl (0→2 `comp_log_auto` calls), CLEARED by exercise at this seat**; paginates (Rule P reference); 600s internal timeout **exceeds the 120s outer ceiling — Rule T's first target** | CloudComp | audit+fix | — | 4.1-4.6 | **BATTERY LANDED — unit 3b @`1e6206a267`** (`.tools/tests/test_comp_find_battery.py`, 6 arms on the measured output contract). CLEARED at this seat 21:5xZ by exercise: collect 0.05 s (import-inert), pytest 1 passed 11 s, direct 6/6 denominator 6, **a planted DENOMINATOR mutant in a temp copy → 5 of 6 arms RED, rc 1** (`COMP_FIND_TOOL` hook). FWD-6's battery gate is met. Still owed: Rule T budget + reached-denominator at expiry (600 s internal > 120 s outer) |
+| T-2 | FWD-1,2,3,6 | `comp-read` → `.tools/comp-read` (Python) | measured | 2,401 runs (rail); **unit 1 @`f34122edfb` ON origin (0→2 `comp_log_auto`), CLEARED; `_shape()` shebang routing @`8ed23144cb` ON origin** (extensionless comp-* now parse via python-ast: 10→22 sections on comp-adversary); `--enumerate` writes NO rail row (92625 s.5a); battery 8/8 | CloudComp | audit+fix | — | 4.1-4.6 | enumerate-path logging gap is a finding, not a fix in this row; Rule P reference |
 | T-3 | FWD-1,3 | `comp-which` → `.tools/comp-which` | measured | 520 runs.jsonl + 9,643 rail; paginates; 20/60s | CloudComp | audit | — | 4.1-4.6 | the router — its NOFIT-POSTERIOR path is a 4.3 case |
 | T-4 | FWD-1 | `comp-hud` | absent | **no such entrypoint**; the HUD is `.tools/hooks/comp-tool-hud.sh` (a hook) | CVO | record | — | 4.1 | DOES-NOT-EXIST; rail hook is CloudComp's by ruling and OUT of this project |
 | T-5 | FWD-1,2 | `comp-schedule` → `.tools/comp-schedule` (Python) | measured | 0 runs.jsonl/30d; five carriers; NOT-DECIDABLE is a designed result | CloudComp | audit | — | 4.1-4.6 | **no remediation on this run's evidence** (CVO~A s.11); ARNs absent BY DESIGN — record, do not "fix" |
@@ -342,24 +427,25 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | T-7 | FWD-1,2,3 | `comp-dataflow` → `comp_dataflow.py` | measured | 11 runs; `origin`/`gate` modes; no timeout | CloudComp | audit+fix | — | 4.3 | preserve 4/4 honest-unresolved; enrich unresolved print (CVO~A s.6); never guess through deploy-time config |
 | T-8 | FWD-1,2,3 | `comp-iam` → `.tools/comp-iam` (Python, 14 subcommands) | measured | 113 runs; no timeout; "cannot answer deny" is a declared blind spot | CloudComp | audit+fix | — | 4.3 three-state | **effective-deny mode** (CVO~A s.8): explicit deny / no deny over complete carrier set / NOT DECIDABLE. Never "no parsed deny" → allowed |
 | T-9 | FWD-1,2,3 | `comp-trigger` → `comp_trigger.py` | measured | 80 runs; EventBridge+Scheduler only; blind to S3 notifications (COO preflight) | CloudComp | audit+fix | — | 4.3 | declare scope in header OR add S3-notification backend via shared event graph — check existing machinery first (CVO~A s.7) |
-| T-10 | FWD-1,2,3,4 | `comp-pipescript` → `.tools/comp-pipescript` | measured | 571 runs; 6 timeouts 10-30s; F9 gate GREEN @`4a6f564c6f` | CloudComp | audit+fix | — | 4.1 | shim self-identification (CVO~A s.9); do NOT add ETFS to registry on one preflight |
+| T-10 | FWD-1,2,3,4 | `comp-pipescript` → `.tools/comp-pipescript` | measured | 571 runs; 6 timeouts 10-30s; F9 gate GREEN @`4a6f564c6f` ON origin (141 passed, exercised on 5 later commits; 19/19; live arm asserts the PROPERTY not a pinned digest; **SKIPPED is a third verdict**, per CTO's Q5 ruling) — the tool itself untouched | CloudComp | audit+fix | — | 4.1 | shim self-identification (CVO~A s.9); do NOT add ETFS to registry on one preflight |
 | T-11 | FWD-1,2 | `comp-denytest` → `.tools/comp-denytest` | measured | 2 runs/30d, 8 ever; zero population when no IAM change is CORRECT | CloudComp | audit | — | 4.1-4.6 | no remediation (CVO~A s.11); disposition on USAGE is his — RETIRE-candidate surfaced, not acted |
-| T-12 | FWD-1,3,6,7 | `comp-similar` → `debtscan/comp_similar.py` | measured | 30 runs; D1-D3 fixed @`b8a73cc064` **LOCAL**; vintage now prints | CloudComp | audit | — | FWD-6 | **integration first** (CVO~A s.10): CLEARED only when @`b8a73cc064` is ON origin |
+| T-12 | FWD-1,3,6,7 | `comp-similar` → `debtscan/comp_similar.py` | measured | 30 runs; D1-D3 fixed @`b8a73cc064` **ON origin** (is-ancestor of `c9ea7b3b63`, read 18:15:44Z); vintage prints, exercised at two seats | CloudComp | audit | — | FWD-6 | **integration condition MET** (CVO~A s.10). Remaining for CLEARED: the s.4 deliverable (identity, 4.3 four-case test, bounds); D1-D3 are the vintage/disclosure half only. ⛔ **DEPLOYED ≠ COMMITTED (CLAUDE.md 22a): `summary_corpus.py` is baked into the globgrph derive IMAGE, which carries PRE-fix bytes** (CloudComp 92718; owner `0.7.0_AE_CloudOps`) — the repo says D1 fixed, the running image says not; carried to G-rows |
 | T-13 | FWD-1,5 | `comp-dups` → `debtscan/dup_scan.py` | measured | **0 runs ever**; separate engine by CTO ruling 3 (names+bodies vs summaries) | CTO | record | — | R-5 | RETIRE-candidate on usage; **do not fold** into comp-similar; CTO's disposition |
 | T-14 | FWD-1,5 | `comp-drift` → `.tools/comp-drift` | measured | 1 run/30d; orchestrator over seam engines; `--deep` cost-guarded | CloudComp | audit | — | 4.1-4.6 | overlap with comp-similar is by NAME only (drift = propagation; similar = function) — record |
 | T-15 | FWD-1 | `comp-legacy` | absent | **no such entrypoint** (0 of 106) | CVO | record | — | 4.1 | DOES-NOT-EXIST |
-| T-16 | FWD-1,2,3,6 | `comp-adversary` → `.tools/comp-adversary` (Python, 526) | measured | 0 runs.jsonl/30d (logs elsewhere?); gate-ENFORCED at `to-pipeline-gate.py:45`; battery `sys.exit()` at module scope kills pytest | CloudComp | audit+fix | — | CVO~A P0.1 | **surgical**: collector repair + mutant proof ONLY (CTO placement 92582); `--json` = native L0a form (ruled 92527), separate row |
+| T-16 | FWD-1,2,3,6 | `comp-adversary` → `.tools/comp-adversary` (Python, 526) | measured | 0 runs.jsonl/30d; gate-ENFORCED at `to-pipeline-gate.py:45`; **THREE surfaces (CloudComp 92718): TOOL — `:49` COMMIT_RE backtick + zero-pin guard @`a9dc767e34` ON origin (graded by this seat 15:29Z), digest-basis declaration @`8ed23144cb` ON origin; BATTERY — pass 1 @`e66d5e698d` ON origin (collector lives; 135 s import — PARTIAL), pass 2 @`03cf4d17a` **LOCAL** — P0.1 CLEARED at this seat 2026-09-02 19:3xZ by exercise: `--collect-only` → 1 collected in 0.07 s (2 s wall); module level now constants only, both `compose` calls inside functions (`:94`, `:142`); 1 file touched (+116/-85), production untouched; production MUTANT via `COMP_ADVERSARY_TOOL` temp copy → pytest FAIL on a real arm (1 of 7, rc 1) — the battery discriminates the TOOL, not just the runner** | CloudComp | audit+fix | — | CVO~A P0.1 **MET** | P0.1 limbs all met → RC5 may close (~A's call; CTO gate). **Still owed for row CLEARED:** the s.4 deliverable (identity, 4.2 disclosure, 4.3 four-case test, 4.4 bounds) — the repair was the battery, not the audit; **Unit-1 gap CLOSED — unit 3a @`4c3b848c97` ON origin: `comp_log_auto` 0→2; exercised at this seat, one `compose` → exactly one runs.jsonl row (serial, rc, args_head); the third traffic-feed blind spot is gone.** `--json` = native L0a form (ruled 92527), separate row |
 | T-17 | FWD-1,3,7 | `comp-estate` → `org/modules/graph/opal_estate_infrastructure.py` | measured | 281 runs; `<name>`/`--list`/`--resource` | CloudComp | audit | T-22 | 4.2 | his word: *"need to lock in C(N) ontology for this to actually be useful"* — C(N) is `NFRA_C3MATERIALIZE` (D11 sibling); depends_on, not owns |
 | T-18 | FWD-1,3 | `comp-pulse` → `org/modules/graph/comp_pulse.py` (707) | measured | **8,364 runs, 8,359 = `diff` from the commit hook; 5 by hand**; L2 traffic source = runs.jsonl | CloudComp | audit | T-1,T-2 | 4.2 | it is a HOOK, not a morning read; its traffic was blind to T-1/T-2 until unit 1 — re-measure after |
 | T-19 | FWD-5 | `comp-trace` → `org/modules/graph/cli.py trace` | measured | 45 runs; **strict subset of blast** (`cli.py:1478-1530`) | CloudComp | retire | T-6 | R-4 | his conditional ruling, condition met; redirect 45 callers (`0.7.0_AE_CloudOps~F` 18, `~D` 14, CVO 11) to `comp-blast`; **not platinum** |
 | T-20 | FWD-1,3 | `comp-heat` → `.tools/comp-heat` (377) | measured | 0 CLI runs; library consumer = comp-similar `load_heat_live()`; named in the estate-report runner's docstring, **invoked by nothing** | CloudComp | audit | — | 4.2 | his interest; "delivered/described better" — the disclosure fields ARE that; wiring into the daily report is `@09355b6d93`'s, not this row's |
 | T-21 | FWD-1,3 | `comp-system` → `org/modules/graph/comp_system.py` (1751) | measured | 584 runs; compiles `infra/system/06_current_state.{md,json}`; `--check` 0/2/1; self-test carries the no-fabrication invariant | CloudComp | audit | — | 4.2 | his ask: "understand what this one does" — the deliverable's purpose_1line + 4.2 answer it; it regenerated on unit 1's commit (side effect, not a scope widening) |
-| T-22 | FWD-5,7 | `comp-kuzu` + `comp-kuzu-inc` + `comp-kuzu-full` → `infra/aws/globgrph/kuzu_cli.py` (`--mode inc|full`) | measured | 1,591 + 14 + ? runs; three wrappers, one engine, one flag | CloudComp | **CARRIED** | R-3 | R-3 | **HELD on his reconciliation.** NEVER-full property travels with whatever wins; comp-which `:614,:620-621`, comp-describe `:24`, comp-manifest-check all move together |
+| T-22 | FWD-5,7 | `comp-kuzu` + `comp-kuzu-inc` + `comp-kuzu-full` → `infra/aws/globgrph/kuzu_cli.py` (`--mode inc|full`) | measured | 1,591 + 14 + ? runs; three wrappers, one engine, one flag | CloudComp | **retire** | — | R-3 **RULED (a)** | **UNHELD 18:12Z — Andrew: "recs approved except 2."** `--mode inc|full` is the surface (already exists: `kuzu_cli.py:165`, choices auto/full/inc); both name-wrappers retire; NEVER-full moves onto `--mode inc` EXPLICITLY. ⛔ **RE-SCOPED 19:3xZ on CloudComp's census (92718, denominator 145,054 files): ~15 LIVE carriers, not 5** — comp-describe, comp-kuzu, both wrappers, comp-which, `kuzu_cli.py:39/:168`, COMPTOOL_REGISTRATION_FLOW.md, comp-coverage-map.yaml, comp-output-contracts.yaml, comp-tools.yaml, NFRA_COMPREG.json, NFRA_KUZUSPLIT.json, KUZUSPLIT PRD, two dated briefs. **Split by lane, not one commit:** CODE+REGISTRY carriers (CloudComp, one commit) · KUZUSPLIT PRD P1/P3 (CTO, same window) · the two briefs are dated RECORDS and are NOT rewritten. **CODE HALF LANDED @`dffbee781c` (15 files, +87/−145, LOCAL) — CLEARED by exercise at this seat 21:1xZ:** both wrappers deleted; forwarders no longer resolve on this device (positive control `comp-kuzu` resolves); `retired_aliases` declared with successor + dated order (manifest `:63`, `:75`); `comp-manifest-check retired-alias` PASS (9 declared / 99 live); `--mode inc` on a live query took the inc branch, 6 s, 27,122 nodes, `built:` unchanged; comp-which routes "behind" → `--mode inc` and "full reset" → `--mode full`. **Still open: the KUZUSPLIT PRD P1/P3 amendment (CTO) — until it lands, the PRD text names wrappers that do not exist.** Acceptance baseline for this unit: `comp-which-routing-baseline.json` @`610bb9e31e` (the routing test rewrote it mid-edit; CloudComp measured and recorded it rather than letting the 74-file revert closure look reopened). Forwarders on OTHER devices are DESIRED until each re-provisions (the provisioner only ADDS; a stale one fails loud) |
 | T-23 | FWD-1,3 | `comp-cache` → `.tools/comp-cache` | measured | 35 runs; React Query cache keys across `portal/src`; `map`/`collisions`/`key` | CloudComp | audit | — | 4.1-4.6 | **not comp-platinum** — portal-local grain; record the distinction |
 | T-24 | FWD-1,3 | `comp-platinum` → `org/modules/graph/platinum_cli.py` | measured | 7 runs; composite of transform+routes+pipescript; portal-page → gold-script | CloudComp | audit | T-10 | 4.2 | his question *"how is comp-platinum defined? what coverage universe?"* — the deliverable's corpus_or_backend + denominator fields answer it |
 | G-1 | FWD-7 | `comp-graph status` freshness surface | measured | reports `kuzu_db 81d` + `stitch_graph 38d`; canonical is `kuzu_nessie_db` built 2026-09-01T16:18Z (globgrph F6, attributed to CRO) | NFRA_GRAPHS lane | fix | — | brief O7 | surfaced by CRO, not chased; **re-homes to the comp-graph owner** — this row records the dependency |
 | G-2 | FWD-7 | stale-served path `kuzu_nessie_db.fallback.jsonl` | held | 16 `inc-served-labeled-stale` events, ~34h behind (F5, CRO's measurement) | CloudComp | verify | T-22 | brief O3b | KUZUSPLIT working AS RATIFIED; the cost is unbounded age — bound it or disclose it on the answer |
 | G-3 | FWD-7 | `kuzu_nessie_load` key asymmetry (node stripped `:150`, edge raw `:184`) | held | carded QUALIFIED @`5da9e7fffc` by `0.7.0_AE_CloudOps~K` (F4) | CloudComp | verify | T-22 | brief F4 | a port carries or fixes it, never silently |
+| G-4 | FWD-6 | **Codex-runtime rail: design** | absent | Andrew-direct 2026-09-02 ~23:0xZ (CTO terminal, "Both recs accepted"), ruling 2(a): this project carries the row; ruling 2(b) EFFECTIVE NOW: a Codex-runtime seat issues NO comp-tool-grounded adjudication until a rail exists on that runtime. The T1 rail is a Claude PreToolUse hook (`.tools/hooks/comp-tool-hud.sh`); the Codex runtime contract (`org/mcp/CODEX_INBOX_MONITOR.md`, MSTR) has no hook at all — `FINDING_COMPRAIL_DENY_NOT_ENFORCED_20260902.md` addendum 2 | CVO drives; CloudComp executes | design | T-1, T-2 | Rule 21 | **what the rail IS is this row's work.** Acceptance: a rail EXERCISED at a Codex seat — a DENY observed as the BODY NOT EXECUTING (a rail-log row is not a block; the 5s-timeout lesson). Rule 21's enforcement bound stays HELD until then. Not a mechanical gate on any seat's word; a design deliverable |
 
 **MECE check against the DECLARED domain (his text block), run not asserted:** 22 named tools + 3 roll-up questions
 (dups/drift/legacy) = **25 names → 24 rows T-1..T-24** (kuzu/-inc/-full collapse to one engine row by postulate ii;

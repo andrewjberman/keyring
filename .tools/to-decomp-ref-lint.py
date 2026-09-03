@@ -143,7 +143,7 @@ def _tracked_task_orders() -> set:
     if _TRACKED_TOS is None:
         try:
             out = subprocess.run(
-                ["git", "ls-files", "--", "*/task_orders/*.md"],
+                ["git", "ls-files", "--", "*/task_orders/*.md", "*/task-orders/*.md"],  # R-ii: both roots
                 cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
             _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
         except Exception:  # noqa: BLE001
@@ -212,7 +212,7 @@ def _open_to_index(exclude: set) -> tuple[dict, int, int, int, int]:
     idx: dict = {}
     scanned = held = unclassified = untracked_skipped = 0
     tracked = _tracked_task_orders()
-    for f in (WORKSPACE / "org").rglob("task_orders/*.md"):
+    for f in list((WORKSPACE / "org").rglob("task_orders/*.md")) + list((WORKSPACE / "org" / "missions").rglob("task-orders/*.md")):  # R-ii: both roots
         rel = str(f.relative_to(WORKSPACE)).replace("\\", "/")
         if rel in exclude:
             continue

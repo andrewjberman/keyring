@@ -34,19 +34,34 @@ NINE LEGS. Legs 1-8 are RED against a non-existent/pre-build tool BY CONSTRUCTIO
   8 DRIFT-SUBSET         --drift is exceptions-only: a strict subset of the full view
   9 MUTANT               a planted build that counts the prose carrier as gates FAILS leg 2
 
-Usage: python .tools/tests/test_comp_schedule.py
+Usage: python .tools/tests/test_comp_schedule.py   (direct)  |  python -m pytest -q .tools/tests/test_comp_schedule.py   (collected)
+COMP_SCHEDULE_TOOL=<path> aims it at a mutant
 """
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
 from pathlib import Path
 
-WS = Path(subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                         cwd=str(Path(__file__).resolve().parent),
-                         capture_output=True, text=True).stdout.strip())
-TOOL = WS / ".tools" / "comp-schedule"
+_WS_CACHE = None
+
+
+def _ws():
+    """Workspace root, resolved on first use -- never at import (import must be INERT under pytest)."""
+    global _WS_CACHE
+    if _WS_CACHE is None:
+        _WS_CACHE = Path(subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                                        cwd=str(Path(__file__).resolve().parent),
+                                        capture_output=True, text=True).stdout.strip())
+    return _WS_CACHE
+
+
+def _tool():
+    """The comp-schedule UNDER TEST. COMP_SCHEDULE_TOOL overrides it, so a grader can aim the battery at a mutant
+    of their own without touching this file or the tool."""
+    return Path(os.environ.get("COMP_SCHEDULE_TOOL") or (_ws() / ".tools" / "comp-schedule"))
 
 RESULTS: list[tuple[str, str, str]] = []
 
@@ -57,119 +72,146 @@ def rec(tid, ok, detail):
 
 
 def run(args, tool=None, timeout=300):
-    if not (tool or TOOL).exists():
+    if not (tool or _tool()).exists():
         return "TOOL-ABSENT"
-    r = subprocess.run([sys.executable, str(tool or TOOL)] + args,
-                       capture_output=True, text=True, cwd=str(WS), timeout=timeout)
+    r = subprocess.run([sys.executable, str(tool or _tool())] + args,
+                       capture_output=True, text=True, cwd=str(_ws()), timeout=timeout)
     return r.stdout + r.stderr
 
 
-OUT = run([])
+_RAN = False
 
-# --- 1. EVERY CARRIER PRINTS ITS OWN DENOMINATOR AND DECIDABILITY -----------
-# One global total is the thing this tool exists to refuse: the carriers differ in kind, so a
-# single number silently averages a regex over an essay.
-carrier_lines = re.findall(r"^\s*(C\d)\s+(\S+).*?denominator[= ](\d+)", OUT, re.MULTILINE)
-decid = len(re.findall(r"DECIDABLE|SEMI-DECIDABLE|NOT-DECIDABLE", OUT))
-rec("CARRIER-DENOMINATOR", len(carrier_lines) >= 4 and decid >= 4,
-    "%d carrier row(s) carry an explicit denominator and %d decidability label(s) are printed"
-    % (len(carrier_lines), decid))
 
-# --- 2. THE PROSE CARRIER IS NEVER COUNTED AS GATES -------------------------
-gm = re.search(r"GATES ARMED:\s*(\d+)", OUT)
-needs = re.search(r"NEEDS-READ:\s*(\d+)", OUT)
-gates = int(gm.group(1)) if gm else -1
-rec("PROSE-NOT-COUNTED",
-    bool(gm) and bool(needs) and int(needs.group(1)) > 100 and gates < 100,
-    ("GATES ARMED=%d is separate from NEEDS-READ=%s prose field(s) -- the prose carrier is a "
-     "reading list, never a count" % (gates, needs.group(1))) if (gm and needs) else
-    "no separate 'GATES ARMED' / 'NEEDS-READ' totals -- prose and gates are being flattened, which "
-    "is the defect this tool exists to avoid")
+def _run_battery():
+    """EVERY subprocess the battery runs lives here, so IMPORT IS INERT (the T-16 pass-2 shape,
+    03cf4d17ac). Called once per process by test_all_arms_pass (pytest) or _report (direct). Before
+    this, the arms ran at IMPORT: collection of this one file took 98 s, and its module-scope
+    sys.exit ended the pytest session for the whole directory (NFRA_COMPEFFICACY F6, 92794). The arm
+    code below is 3.0.0_SA_CVO~C's, byte-identical but for the indentation and _tool()/_ws() -> _tool()/_ws()."""
+    global _RAN
+    if _RAN:
+        return
+    _RAN = True
+    OUT = run([])
 
-# --- 3. THE SENTINEL GRAMMAR IS REUSED, NOT RE-IMPLEMENTED ------------------
-# Build ladder rung 2: safe_deploy_core.py OWNS this grammar and enforces it at deploy time. A
-# second regex here would be a shadow grammar that drifts from the one that actually gates.
-src = TOOL.read_text(encoding="utf-8") if TOOL.exists() else ""
-reused = ("safe_deploy_core" in src and "SERVE_HELD_RE" in src)
-recopied = re.search(r"DEPLOY-SERVE-HELD\\b|re\.compile\(r[\"'].*DEPLOY-SERVE-HELD", src)
-rec("GRAMMAR-REUSED", reused and not recopied,
-    "imports SERVE_HELD_RE from safe_deploy_core (%s) and does NOT compile its own copy of the "
-    "sentinel pattern (%s)" % (reused, "clean" if not recopied else "FOUND A SECOND COPY"))
+    # --- 1. EVERY CARRIER PRINTS ITS OWN DENOMINATOR AND DECIDABILITY -----------
+    # One global total is the thing this tool exists to refuse: the carriers differ in kind, so a
+    # single number silently averages a regex over an essay.
+    carrier_lines = re.findall(r"^\s*(C\d)\s+(\S+).*?denominator[= ](\d+)", OUT, re.MULTILINE)
+    decid = len(re.findall(r"DECIDABLE|SEMI-DECIDABLE|NOT-DECIDABLE", OUT))
+    rec("CARRIER-DENOMINATOR", len(carrier_lines) >= 4 and decid >= 4,
+        "%d carrier row(s) carry an explicit denominator and %d decidability label(s) are printed"
+        % (len(carrier_lines), decid))
 
-# --- 4. INBOX CHATTER IS NOT AN ARMED SENTINEL ------------------------------
-# Measured: 39 raw text matches, 19 of them inbox mail QUOTING the sentinel. Counting those is the
-# same class of error as counting a code comment about a gate as the gate.
-# The declaration itself contains the path, so "absent from the output" was a self-contradictory
-# assertion in the first cut -- it can only be checked on the EVIDENCE lines.
-_ev = [ln for ln in OUT.splitlines() if ln.strip().startswith("evidence:")]
-rec("CHATTER-EXCLUDED",
-    all("org/mcp/inbox" not in ln for ln in _ev) and "EXCLUDES org/mcp/inbox" in OUT,
-    "no inbox path appears in any of the %d evidence line(s) and the exclusion is DECLARED in the "
-    "output -- 19 of 39 raw matches are agents quoting the sentinel, not sentinels" % len(_ev))
+    # --- 2. THE PROSE CARRIER IS NEVER COUNTED AS GATES -------------------------
+    gm = re.search(r"GATES ARMED:\s*(\d+)", OUT)
+    needs = re.search(r"NEEDS-READ:\s*(\d+)", OUT)
+    gates = int(gm.group(1)) if gm else -1
+    rec("PROSE-NOT-COUNTED",
+        bool(gm) and bool(needs) and int(needs.group(1)) > 100 and gates < 100,
+        ("GATES ARMED=%d is separate from NEEDS-READ=%s prose field(s) -- the prose carrier is a "
+         "reading list, never a count" % (gates, needs.group(1))) if (gm and needs) else
+        "no separate 'GATES ARMED' / 'NEEDS-READ' totals -- prose and gates are being flattened, which "
+        "is the defect this tool exists to avoid")
 
-# --- 5. GATES ARE GROUPED BY DISCHARGE CONDITION ----------------------------
-sm = re.search(r"(\d+) sentinel line", OUT)
-c1g = re.search(r"C1\s+SENTINEL.*?->\s*(\d+) gate", OUT, re.S)
-ok5 = bool(sm) and bool(c1g) and int(c1g.group(1)) < int(sm.group(1))
-rec("GATE-GRAIN", ok5,
-    ("%s sentinel lines collapse to %s gate(s) -- one gate stamped across many files is ONE gate; "
-     "a line count is not a gate count" % (sm.group(1), c1g.group(1))) if ok5 else
-    "sentinel lines are not collapsed to distinct discharge conditions -- the tool would report "
-    "20 gates where there are 3")
+    # --- 3. THE SENTINEL GRAMMAR IS REUSED, NOT RE-IMPLEMENTED ------------------
+    # Build ladder rung 2: safe_deploy_core.py OWNS this grammar and enforces it at deploy time. A
+    # second regex here would be a shadow grammar that drifts from the one that actually gates.
+    src = _tool().read_text(encoding="utf-8") if _tool().exists() else ""
+    reused = ("safe_deploy_core" in src and "SERVE_HELD_RE" in src)
+    recopied = re.search(r"DEPLOY-SERVE-HELD\\b|re\.compile\(r[\"'].*DEPLOY-SERVE-HELD", src)
+    rec("GRAMMAR-REUSED", reused and not recopied,
+        "imports SERVE_HELD_RE from safe_deploy_core (%s) and does NOT compile its own copy of the "
+        "sentinel pattern (%s)" % (reused, "clean" if not recopied else "FOUND A SECOND COPY"))
 
-# --- 6. AN UNREADABLE CARRIER RENDERS UNREADABLE, NOT ZERO ------------------
-rec("UNREADABLE-NOT-ZERO", "UNREADABLE" in src,
-    "the tool has an explicit UNREADABLE rendering path -- a carrier that cannot be read is a "
-    "DIFFERENT fact from a carrier with no rows, and they must never print alike")
+    # --- 4. INBOX CHATTER IS NOT AN ARMED SENTINEL ------------------------------
+    # Measured: 39 raw text matches, 19 of them inbox mail QUOTING the sentinel. Counting those is the
+    # same class of error as counting a code comment about a gate as the gate.
+    # The declaration itself contains the path, so "absent from the output" was a self-contradictory
+    # assertion in the first cut -- it can only be checked on the EVIDENCE lines.
+    _ev = [ln for ln in OUT.splitlines() if ln.strip().startswith("evidence:")]
+    rec("CHATTER-EXCLUDED",
+        all("org/mcp/inbox" not in ln for ln in _ev) and "EXCLUDES org/mcp/inbox" in OUT,
+        "no inbox path appears in any of the %d evidence line(s) and the exclusion is DECLARED in the "
+        "output -- 19 of 39 raw matches are agents quoting the sentinel, not sentinels" % len(_ev))
 
-# --- 7. THE GATE SCHEMA IS COMPLETE OR EXPLICITLY UNKNOWN -------------------
-rows = re.findall(r"^\s+(G-\d+)\b", OUT, re.MULTILINE)
-has_owner = len(re.findall(r"owner[= ]", OUT))
-has_disc = len(re.findall(r"discharge[: ]", OUT))
-has_lastv = len(re.findall(r"last[- ]verified[: ]", OUT))
-rec("GATE-SCHEMA",
-    len(rows) > 0 and has_owner >= len(rows) and has_disc >= len(rows) and has_lastv >= len(rows),
-    "%d gate row(s); owner printed %d, discharge %d, last-verified %d -- the field tonight's "
-    "failure lacked must be present or explicitly UNKNOWN, never omitted"
-    % (len(rows), has_owner, has_disc, has_lastv))
+    # --- 5. GATES ARE GROUPED BY DISCHARGE CONDITION ----------------------------
+    sm = re.search(r"(\d+) sentinel line", OUT)
+    c1g = re.search(r"C1\s+SENTINEL.*?->\s*(\d+) gate", OUT, re.S)
+    ok5 = bool(sm) and bool(c1g) and int(c1g.group(1)) < int(sm.group(1))
+    rec("GATE-GRAIN", ok5,
+        ("%s sentinel lines collapse to %s gate(s) -- one gate stamped across many files is ONE gate; "
+         "a line count is not a gate count" % (sm.group(1), c1g.group(1))) if ok5 else
+        "sentinel lines are not collapsed to distinct discharge conditions -- the tool would report "
+        "20 gates where there are 3")
 
-# --- 8. --drift IS EXCEPTIONS-ONLY ------------------------------------------
-DOUT = run(["--drift"])
-dg = re.findall(r"^\s+(G-\d+)\b", DOUT, re.MULTILINE)
-rec("DRIFT-SUBSET", DOUT != "TOOL-ABSENT" and len(dg) <= len(rows),
-    "--drift returns %d row(s) against the full view's %d -- exceptions-only, so an empty drift "
-    "view is the good day" % (len(dg), len(rows)))
+    # --- 6. AN UNREADABLE CARRIER RENDERS UNREADABLE, NOT ZERO ------------------
+    rec("UNREADABLE-NOT-ZERO", "UNREADABLE" in src,
+        "the tool has an explicit UNREADABLE rendering path -- a carrier that cannot be read is a "
+        "DIFFERENT fact from a carrier with no rows, and they must never print alike")
 
-# --- 9. MUTANT: a build that counts the prose carrier as gates --------------
-if not TOOL.exists():
-    rec("MUTANT-PROSE-COUNTED", False,
-        "tool absent -- the leg certifies nothing and is reported FAIL, never skipped")
-else:
-    mutant_src, nsub = re.subn(r"^(\s*)PROSE_IS_NEVER_A_GATE = True",
-                               r"\1PROSE_IS_NEVER_A_GATE = False", src, flags=re.MULTILINE)
-    if nsub == 0:
+    # --- 7. THE GATE SCHEMA IS COMPLETE OR EXPLICITLY UNKNOWN -------------------
+    rows = re.findall(r"^\s+(G-\d+)\b", OUT, re.MULTILINE)
+    has_owner = len(re.findall(r"owner[= ]", OUT))
+    has_disc = len(re.findall(r"discharge[: ]", OUT))
+    has_lastv = len(re.findall(r"last[- ]verified[: ]", OUT))
+    rec("GATE-SCHEMA",
+        len(rows) > 0 and has_owner >= len(rows) and has_disc >= len(rows) and has_lastv >= len(rows),
+        "%d gate row(s); owner printed %d, discharge %d, last-verified %d -- the field tonight's "
+        "failure lacked must be present or explicitly UNKNOWN, never omitted"
+        % (len(rows), has_owner, has_disc, has_lastv))
+
+    # --- 8. --drift IS EXCEPTIONS-ONLY ------------------------------------------
+    DOUT = run(["--drift"])
+    dg = re.findall(r"^\s+(G-\d+)\b", DOUT, re.MULTILINE)
+    rec("DRIFT-SUBSET", DOUT != "TOOL-ABSENT" and len(dg) <= len(rows),
+        "--drift returns %d row(s) against the full view's %d -- exceptions-only, so an empty drift "
+        "view is the good day" % (len(dg), len(rows)))
+
+    # --- 9. MUTANT: a build that counts the prose carrier as gates --------------
+    if not _tool().exists():
         rec("MUTANT-PROSE-COUNTED", False,
-            "could not plant the mutant: no 'PROSE_IS_NEVER_A_GATE = True' switch in the shipped "
-            "source -- the leg certifies nothing and is reported FAIL, never skipped")
+            "tool absent -- the leg certifies nothing and is reported FAIL, never skipped")
     else:
-        # Write the mutant BESIDE the real tool so its sibling imports still resolve.
-        mp = WS / ".tools" / ".comp-schedule-mutant.tmp"
-        try:
-            mp.write_text(mutant_src, encoding="utf-8")
-            MO = run([], tool=mp)
-        finally:
-            if mp.exists():
-                mp.unlink()
-        mm = re.search(r"GATES ARMED:\s*(\d+)", MO)
-        inflated = bool(mm) and int(mm.group(1)) > 100
-        rec("MUTANT-PROSE-COUNTED", inflated,
-            "the planted prose-counting build reports GATES ARMED=%s (inflated past 100) -- so "
-            "leg 2's separation is enforced by the switch and is not an accident of the data"
-            % (mm.group(1) if mm else "n/a"))
+        mutant_src, nsub = re.subn(r"^(\s*)PROSE_IS_NEVER_A_GATE = True",
+                                   r"\1PROSE_IS_NEVER_A_GATE = False", src, flags=re.MULTILINE)
+        if nsub == 0:
+            rec("MUTANT-PROSE-COUNTED", False,
+                "could not plant the mutant: no 'PROSE_IS_NEVER_A_GATE = True' switch in the shipped "
+                "source -- the leg certifies nothing and is reported FAIL, never skipped")
+        else:
+            # Write the mutant BESIDE the real tool so its sibling imports still resolve.
+            mp = _ws() / ".tools" / ".comp-schedule-mutant.tmp"
+            try:
+                mp.write_text(mutant_src, encoding="utf-8")
+                MO = run([], tool=mp)
+            finally:
+                if mp.exists():
+                    mp.unlink()
+            mm = re.search(r"GATES ARMED:\s*(\d+)", MO)
+            inflated = bool(mm) and int(mm.group(1)) > 100
+            rec("MUTANT-PROSE-COUNTED", inflated,
+                "the planted prose-counting build reports GATES ARMED=%s (inflated past 100) -- so "
+                "leg 2's separation is enforced by the switch and is not an accident of the data"
+                % (mm.group(1) if mm else "n/a"))
 
-n = sum(1 for _, v, _ in RESULTS if v == "PASS")
-print()
-print("=" * 80)
-print("COMP-SCHEDULE BATTERY: %d/%d PASS (denominator %d)" % (n, len(RESULTS), len(RESULTS)))
-print("=" * 80)
-sys.exit(0 if n == len(RESULTS) else 1)
+
+def _report() -> int:
+    _run_battery()
+    n = sum(1 for _, v, _ in RESULTS if v == "PASS")
+    print()
+    print("=" * 80)
+    print("COMP-SCHEDULE BATTERY: %d/%d PASS (denominator %d)" % (n, len(RESULTS), len(RESULTS)))
+    print("=" * 80)
+    return 0 if n == len(RESULTS) else 1
+
+
+def test_all_arms_pass():
+    _run_battery()
+    failed = [(t, d) for t, v, d in RESULTS if v != "PASS"]
+    assert not failed, "arms failed (%d of %d): %s" % (len(failed), len(RESULTS), failed)
+    print("COMP-SCHEDULE BATTERY: %d/%d PASS (denominator %d)" % (len(RESULTS), len(RESULTS), len(RESULTS)))
+
+
+if __name__ == "__main__":
+    sys.exit(_report())

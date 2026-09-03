@@ -28,6 +28,7 @@ from __future__ import annotations
 import importlib.util
 import os
 import pathlib
+import sys
 import tempfile
 
 TOOLS = pathlib.Path(__file__).resolve().parents[1]
@@ -35,6 +36,11 @@ RUNNER = TOOLS / "commit_gate_runner.py"
 
 spec = importlib.util.spec_from_file_location("cgr", RUNNER)
 cgr = importlib.util.module_from_spec(spec)
+# F6-adjacent (2026-09-02, TOOL_BATTERIES lane maintenance): commit_gate_runner.py :101 imports its
+# sibling git_bash_resolver bare; loaded by spec from here, .tools/ is not on sys.path and the
+# import raised ModuleNotFoundError at collection -- this battery had been dead since that import landed.
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
 spec.loader.exec_module(cgr)
 
 LIMIT = cgr.MAX_FILE_BYTES

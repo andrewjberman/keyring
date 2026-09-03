@@ -21,7 +21,7 @@ if [ "$#" -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "comp-describe -- FIND + DESCRIBE one AWS resource (NFRA_COMPSIMILAR describe surface)."
   echo "Usage: comp-describe <arn-or-name> [--json]"
   echo "  <arn-or-name>  exact ARN, exact name, or a lexical substring (unique -> described;"
-  echo "                 ambiguous -> disambiguation list; 0 matches -> comp-kuzu-inc refresh hint)."
+  echo "                 ambiguous -> disambiguation list; 0 matches -> comp-kuzu --mode inc refresh hint)."
   echo "  --json         machine JSON instead of the human summary."
   echo "Reads the live comp-kuzu graph (derive-at-scan; no projection, no table). Advisory/read-only."
   exit 2

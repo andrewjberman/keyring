@@ -100,4 +100,63 @@ The committed positive and negative controls reproduce. Release condition 3 is m
 - R4-c/R7 build work may proceed only as remediation work under the hold; it is not evidence condition 2 or 7 is complete.
 - **No site-Z activation, ETFS_GUARDRAIL integration/push, first TO, or loop-complete claim. HOLD remains.**
 
+## Second-pass addendum -- CTO message 92645
+
+**Pins:** RC1/RC2 `21f4ddc908`; RC4/RC6/PRD_HEADER `4a54f6d554`; re-grade performed after those commits with the release hold unchanged.
+
+### Reproduced evidence
+
+- Expanded harness: 34 controls, 0 defects.
+- Independent `check_file` seam probes: invalid raw JSON REFUSE; valid raw JSON PASS; fenced scalar REFUSE; contradictory duplicate-existing ID REFUSE.
+- Index command: 192 lines, 0 CR bytes, 0 duplicate `(path,id)` keys.
+- Gate, corpus tool, and harness pass `py_compile` and `ruff`; watcher passes `bash -n`.
+- Current corpus validator happy path: 19 documents, 192 rows, 0 reported malformed, 4 exact known tuples, 0 new, 0 resolved.
+- RC6 machine comparison: gate core is exactly `(comp-schedule, comp-iam, comp-adversary)`; all nine admitted-catalog tools are present in the workflow block.
+
+### RC1 second pass -- GREEN
+
+The three RC1 holes named at `0dbf12ebb3` are closed: raw JSON is parsed as a raw container; non-object bodies/items are refused; schemas are read from the staged index. The real `check_file` seam, not only `_check_row`, reproduces the required positive and negative behavior. Release condition 1 is met at `21f4ddc908`.
+
+### RC2 second pass -- RED / partial
+
+The gate half is green: duplicate IDs are refused without dictionary collapse, ordinary mutations/deletions remain refused, and HEAD blob absence is distinct from read failure.
+
+The watcher half remains red on two independently observed seams:
+
+1. `_index_diff` assigns the output of `_index_now | tr -d '\r'` and expects the assignment's `||` branch to catch `_index_now` failure. The script does not enable `pipefail`; `tr` returns zero and masks the producer's nonzero exit. An exact shell semantic control using `false | tr` printed `CONTINUED` and never took the short-circuit branch. With a stored index, the real consequence is a false DISAPPEARED warning for every row followed by replacement of the stored index with empty state.
+2. `surprise-corpus-validate.py --index` globs only `*.md`, while the row gate now deliberately admits raw `*.json` channel files. Those valid gate targets have no watcher watermark.
+
+The committed watcher tests do not execute the watcher: `run_index_diff_controls()` emulates the intended comparison with Python dictionaries, then checks only the producer's happy-path shape. It cannot falsify the Bash failure branch, state preservation, or target-set mismatch.
+
+Required closure: an actual Bash integration battery proves tool-missing/tool-error produces one COUNT-ONLY warning, zero false row warnings, and no index overwrite; proves unchanged/CRLF/same-count mutation/delete-add; and makes Markdown/JSON target coverage agree (or removes JSON from the gate). Release condition 2 is not met.
+
+### RC4 -- RED / partial
+
+The four committed baseline tuples are correct and the current happy path reproduces. The implementation is not yet the required standing fail-closed pass:
+
+1. no invocation exists in `safe-commit.sh`, installed hook sources, or the current pre-commit hook;
+2. `malformed_blocks` is reported but never affects exit status; a matching schema baseline with `malformed_blocks=1` returns 0;
+3. the corpus parser returns `(0 rows, 0 malformed)` for a fenced scalar and for a fenced list containing only a scalar;
+4. sweep/index ignore raw JSON targets accepted by the row gate;
+5. baseline loading maps both an absent file and a legitimate empty baseline to `set()`. At zero corpus failures, a missing baseline returns 0 despite the stated fail-closed contract.
+
+Required closure: share or exactly align the row parser/target set, refuse malformed structure, distinguish absent baseline even when the correct tuple set is empty, and invoke this checker as one limb of the existing channel commit gate. Add red/green controls for those branches. Release condition 4 is not met.
+
+### RC6 -- GREEN
+
+The workflow now separates the admitted catalog from the mandatory core and matches `to-pipeline-gate.py` exactly. It preserves the bounded `comp-similar` admission and explicitly states the mandatory-but-held `comp-adversary` collision. Release condition 6 is met at `4a54f6d554`.
+
+### PRD_HEADER precursor -- schema-valid, not yet a release credit
+
+The schema is valid Draft-07. The current unstaged ETFS header instance has zero schema errors; its eight `endpoint_outcomes` exactly match the eight line-start definitions, while the prose-only `FWD-9` mention is excluded. The header block is not in `4a54f6d554` and is currently a worktree modification. Its new `status = DRAFT | RATIFIED | SUPERSEDED` enum also owes the Rule-24 record and token census before this seat can adopt the schema.
+
+### Updated state
+
+- RC1 / release condition 1: **GREEN**.
+- RC2 / release condition 2: **RED / partial**.
+- RC3 / release condition 3: **GREEN**; its Rule-24 debt is separately closed at `dd434502ae`.
+- RC4 / release condition 4: **RED / partial**.
+- RC6 / release condition 6: **GREEN**.
+- **HOLD remains.**
+
 -- 3.0.0_SA_CVO~A

@@ -60,6 +60,26 @@ retired_aliases:
       caller, then the executable. Binary-first would have converted a deliberate retirement into a
       SILENT SKIP -- every caller guards on `command -v`, and a gate that cannot be found is not
       advisory, it is off while reporting nothing (the 2026-07-29 precedent)."
+  comp-kuzu-full:
+    successor: comp-kuzu
+    retired: "2026-09-02 NFRA_COMPEFFICACY unit 2 (Andrew-approved 92664; executed by 0.8.0_AE_CloudComp, re-scoped by
+      3.0.0_SA_CVO 92726). Consolidated onto comp-kuzu --mode full -- the flag kuzu_cli.py :165 always carried; the
+      wrapper was a 16-line alias that set it. RETIREMENT ORDER per the comp-surface-check precedent: consumers FIRST
+      (comp-which routing, comp-describe hint, comp-tools.yaml, comp-coverage-map.yaml, comp-output-contracts.yaml, this
+      manifest -- routing entries retargeted + tools_index row removed), the measured 30d callers notified (92748), THEN
+      the executable; ~/bin forwarders deprovisioned on device Andrew (the provisioner only ADDS, so every other box
+      re-provisions or carries a loud dead forwarder until it does)."
+    why: "Two names for one flag on one engine; Andrew ruled consolidate. The guarantee that lived on a NAME now lives on
+      the FLAG, stated in code (kuzu_cli.py :42/:167) and in every registry carrier, so nothing that read the name reads
+      an absence."
+  comp-kuzu-inc:
+    successor: comp-kuzu
+    retired: "2026-09-02 NFRA_COMPEFFICACY unit 2 -- same commit, same order as comp-kuzu-full. 30d callers re-derived from
+      org/mcp/comp-tool-runs.jsonl by ts_epoch: 1.0.0_SA_CTO 7, 4.0.0_SA_CRO 6, 1.0.0_SA_CTO~B 1 -- all notified (92748)
+      before the executable was removed."
+    why: "Consolidated onto comp-kuzu --mode inc: incremental-OR-serve-labeled-stale, NEVER a mid-task full rebuild (Andrew
+      O-1 / NFRA_KUZUSPLIT sec-4 hard gate). The guarantee is now a property of the FLAG, declared in comp-tools.yaml,
+      comp-output-contracts.yaml and the cloud.refresh.incremental routing entry below."
   comp-adapter-audit:
     successor: null    # retired outright -- no successor; comp-transform (JSX-vs-TS) and comp-pii keep their distinct portal-component concerns
     retired: "2026-07-30 Andrew-ruled staleness-audit AT-RISK retirement -- executable + fixtures + registry rows deleted in one commit; ~/bin deprovisioned"
@@ -190,38 +210,39 @@ entries:
     anti_pattern: "running this to answer a traversal -> query comp-kuzu instead"
     status: canonical
 
-  # ---- LOCAL-PROJECTION REFRESH MODES (comp-kuzu-full / comp-kuzu-inc -- NFRA_KUZUSPLIT P1, code @5de839ff0) ----
+  # ---- LOCAL-PROJECTION REFRESH MODES (comp-kuzu --mode full / --mode inc -- NFRA_KUZUSPLIT P1, code @5de839ff0;
+    #      the comp-kuzu-full / comp-kuzu-inc WRAPPERS were RETIRED 2026-09-02, NFRA_COMPEFFICACY unit 2 -- see retired_aliases) ----
   # Refresh WRITE-PATH counterparts to cloud.derive.refresh, but for the LOCAL kuzu projection (kuzu_nessie_load),
   # NOT the Nessie derive. Bare comp-kuzu stays the READ default; these are the two named REFRESH modes (LD-0307
   # three-tool model). Registration is COO-SoD (grantee ~D cannot self-register); landed as the first worked
   # example of the emerging canonical comp-tool registration flow.
   - id: cloud.refresh.full
     use_case: "Full rebuild / ground-truth reset / reconcile the LOCAL kuzu projection from Nessie -- the once-per-session MSTR-startup warm that absorbs the whole-table daily delta and warms the shared canonical for peers."
-    canonical_call: "comp-kuzu-full [--json] [--limit N] \"<Cypher>\"   # forces a FULL kuzu_nessie_load unconditionally, then serves the query"
-    tool: comp-kuzu-full
+    canonical_call: "comp-kuzu --mode full [--json] [--limit N] \"<Cypher>\"   # forces a FULL kuzu_nessie_load unconditionally, then serves the query"
+    tool: comp-kuzu
     mode: rebuild
-    write_path: false   # SERVES the Cypher query after a refresh-first (read-WITH-refresh: `comp-kuzu-full "<Cypher>"` returns results), NOT a pure producer like comp-aws derive. Must stay in the read/navigate candidate set or the DR1 write_path pre-filter EXCLUDES it from the very 'reconcile then query' intents it owns (measured 2026-07-17).
+    write_path: false   # SERVES the Cypher query after a refresh-first (read-WITH-refresh: `comp-kuzu --mode full "<Cypher>"` returns results), NOT a pure producer like comp-aws derive. Must stay in the read/navigate candidate set or the DR1 write_path pre-filter EXCLUDES it from the very 'reconcile then query' intents it owns (measured 2026-07-17).
     layer: cloud
     cost: "~482s (measured P0 @b0c94d9ff -- absorbs the daily whole-table delta once)"
     freshness: "post-run = current Nessie HEAD (unconditional full load); the MSTR-startup warm-once mode"
     rebuild_trigger: "MSTR session startup (once), or an explicit ground-truth reset when the local projection is untrusted"
-    anti_pattern: "running comp-kuzu-full mid-task to answer a traversal (a 482s full rebuild to serve a read) -> bare comp-kuzu (auto) or comp-kuzu-inc"
+    anti_pattern: "running --mode full mid-task to answer a traversal (a 482s full rebuild to serve a read) -> bare comp-kuzu (auto) or --mode inc"
     status: canonical
-    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- grantee cannot self-register). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME kuzu_nessie_db store, NOT a new surface). Three-tool model (LD-0307): comp-aws derive = cloud producer (nightly, never MSTR-startup) / comp-kuzu-full = local full (MSTR startup once) / comp-kuzu-inc = local incremental (workers, pre-query). comp-which routing: 'full rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph' -> comp-kuzu-full."
+    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- grantee cannot self-register). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME kuzu_nessie_db store, NOT a new surface). Three-tool model (LD-0307): comp-aws derive = cloud producer (nightly, never MSTR-startup) / comp-kuzu --mode full = local full (MSTR startup once) / comp-kuzu --mode inc = local incremental (workers, pre-query). comp-which routing: 'full rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph' -> comp-kuzu --mode full. Wrappers retired 2026-09-02."
 
   - id: cloud.refresh.incremental
     use_case: "Refresh / update the graph / my graph is behind -- the DEFAULT every non-MSTR worker runs pre-query: serve the incremental delta, OR serve a LABELED-STALE prior-vintage projection, but NEVER a mid-task full rebuild."
-    canonical_call: "comp-kuzu-inc [--json] [--limit N] \"<Cypher>\"   # incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves the query"
-    tool: comp-kuzu-inc
+    canonical_call: "comp-kuzu --mode inc [--json] [--limit N] \"<Cypher>\"   # incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves the query"
+    tool: comp-kuzu
     mode: rebuild
-    write_path: false   # SERVES the Cypher query after an incremental refresh (read-WITH-refresh: `comp-kuzu-inc "<Cypher>"` returns results), NOT a pure producer. Must stay in the read candidate set: "my graph is behind, refresh then query" is a READ intent, and write_path==true DR1-excludes it before its curated route can fire (measured 2026-07-17).
+    write_path: false   # SERVES the Cypher query after an incremental refresh (read-WITH-refresh: `comp-kuzu --mode inc "<Cypher>"` returns results), NOT a pure producer. Must stay in the read candidate set: "my graph is behind, refresh then query" is a READ intent, and write_path==true DR1-excludes it before its curated route can fire (measured 2026-07-17).
     layer: cloud
     cost: "~5.2s (measured P0 @b0c94d9ff -- incremental delta) / instant when serving labeled-stale"
     freshness: "post-run = current HEAD when the delta is small; ELSE a LABELED-STALE prior-vintage projection with an in-band SERVED-LABELED-STALE header (COND-1) -- honestly labeled, never a silent stale read"
     rebuild_trigger: "any worker, pre-query, when the local projection may be behind -- the default refresh"
-    anti_pattern: "a mid-task FULL rebuild (Andrew O-1 forbids incremental-or-full; the fork is incremental-OR-labeled-stale) -> comp-kuzu-full is MSTR-startup-only"
+    anti_pattern: "a mid-task FULL rebuild (Andrew O-1 forbids incremental-or-full; the fork is incremental-OR-labeled-stale) -> --mode full is MSTR-startup-only"
     status: canonical
-    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 (Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my graph is behind / default worker graph refresh' -> comp-kuzu-inc."
+    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 (Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my graph is behind / default worker graph refresh' -> comp-kuzu --mode inc. Wrapper retired 2026-09-02."
 
   - id: cloud.describe.resource
     use_case: "What IS this resource / what does it do / describe this ARN / find + describe one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring)."
@@ -1759,9 +1780,7 @@ entries:
 tools_index:
   comp-ontolint: { does: "Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception (routes-to->Router / resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis, a Relation with no Role) from the canonical rule-bank -- machine-enforced, replaces the prose 'load-bearing subtlety' (NFRA_ONTOCLARITY WS-B fog-7). ALSO the WS-C spot-8 polymorphic-Role tie-breaker (role-resolve): role_priority total-order arbitration when a node matches 2+ roles (guards+transforms -> Guard)", subcommands: ["check", "self-test", "role-resolve <Role>..."], entries: [ontology.relation_role.dual_axis_lint] }
   comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
-  comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
-  comp-kuzu-full: { does: "NFRA_KUZUSPLIT P1 refresh-mode VARIANT of comp-kuzu (SAME kuzu_nessie_db store, not a new surface): forces a FULL kuzu_nessie_load UNCONDITIONALLY. 0.0.0_AB_MSTR-startup-only -- absorbs the daily whole-table delta once, warming the shared canonical for every peer that day. Every OTHER agent uses comp-kuzu-inc; a mid-session comp-kuzu-full is the ~482s ambush the split exists to remove (WS-7 tools_index closure, NFRA_TOOLUNIFY 2026-07-25 -- router-reachable per comp-routable-check, was missing from this browsable catalog; entry already existed at cloud.refresh.full)", subcommands: ["<cypher>", "--json", "--limit"], entries: [cloud.refresh.full] }
-  comp-kuzu-inc: { does: "NFRA_KUZUSPLIT P1 refresh-mode VARIANT of comp-kuzu (SAME store): the DEFAULT every non-MSTR worker runs before a query. Serves the incremental delta OR a labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew O-1 / sec-4 hard gate). 'My local graph is behind, refresh it' -> this, not comp-aws derive (the cloud nightly producer). WS-7 tools_index closure (router-reachable, entry already existed at cloud.refresh.incremental, was missing from this browsable catalog)", subcommands: ["<cypher>", "--json", "--limit"], entries: [cloud.refresh.incremental] }
+  comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--mode auto|inc|full", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket, cloud.refresh.full, cloud.refresh.incremental] }
   comp-describe: { does: "FIND + DESCRIBE one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring), off the derive-at-scan summary-corpus engine over the comp-kuzu QUERY path. Lexical resolution (exact ARN -> exact name -> substring); ambiguous -> disambiguation list, no silent guess. NOT nearest-BY-PURPOSE similarity (that is comp-similar). WS-7 tools_index closure (router-reachable, entry already existed at cloud.describe.resource, was missing from this browsable catalog)", subcommands: ["<arn-or-name>", "--json"], entries: [cloud.describe.resource] }
   comp-state:    { does: "Registry/TO/PRD state linter -- is the registry / a project JSON / a task-order status / a PRD Status line BEHIND the estate's actual git-commit state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is absence-of-lexical-evidence not a verified record. --self-test MUST print PASS (its own N/N line; 4/4 since the TIGHTENING-J2 encoding leg) before trusting a report. WS-7 tools_index closure (router-reachable, entry already existed at org.state.registry_drift, was missing from this browsable catalog)", subcommands: ["--project CODE", "--days N", "--all", "--self-test", "--json"], entries: [org.state.registry_drift] }
   comp-keys:     { does: "What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live s3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5", subcommands: [prefix, partitions, exists], entries: [pipeline.keys.enumerate] }

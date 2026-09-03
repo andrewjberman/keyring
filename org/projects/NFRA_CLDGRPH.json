@@ -1,0 +1,68 @@
+{
+ "project_code": "NFRA_CLDGRPH",
+ "macro_code": "NFRA",
+ "name": "Cloud-resident KuzuDB projection + gateway traversal -- the projection is compiled in the cloud as a consumer of the branch-head marker, served from a small always-on service on the existing opal-globgrph cluster, reached through the gateway as a thin proxy; the local copy and the local full/inc rebuild commands retire",
+ "description": "Andrew-direct at the CTO~A terminal, 2026-09-02, three verbatims recorded in org/tier1_exec/1.0.0_SA_CTO~A/deliverables/ENDPOINT_FORWARD_GLOBGRPH_CLOUD_COMPILE_20260902.md: (1) ~17:5xZ 'I agree with all of these only have one comment. First, I want to clarify that this is the kuzudb projection, and that every time you reference the \"graph\", that is what you are referring to. Secondly, I want to clarify the stitching/incremental refresh mechanism. For the Nessie/Iceberg graph, we have an SQS queue and associated lambda that manages the stitching, however, I want to understand how we manage this on the KuzuDB basis, if it can simply be downstream of this, which I think would be a simplified architecture. Let's discuss.' (2) ~18:3xZ, in reply to /open-calls: 'I agree with all your recs. Just need to understnad the freshguard alarm and where it is interfacing as referenced in call 3.' The originating prompt (brief header, 2026-09-01): 'I'm starting to think the compilation should be done at the same time as nessie refreshes in the early morning, and the whole kuzudb and stitching is accessed in the cloud and agents who want to traverse it just traverse the cloud representation ... We want that process very abstracted away from the user so they dont have to deal with refreshing/stitching at all.' + 'yeah if thats not a runtime graph or has no automated process that is a risk surface.' THE PROJECT: the producer side of the estate graph is already cloud-resident and scheduled (nightly derive, incremental Lambda, stitch, three producers, all ending at ONE branch-head marker); the one local thing is the 47 MB KuzuDB projection, unscheduled and demand-driven (substrate card @5da9e7fffc). This project makes the projection a consumer of the marker write (S3 event -> SQS -> worker running the existing kuzu_incremental_refresh engine -> versioned artifact + pointer on S3), stands up a serving plane on the existing ECS cluster with the gateway as thin proxy, and RETIRES the local copy (PORT WITH A RETIREMENT, never coexistence). Eight ratified capability outcomes FWD-1..FWD-8 in the PRD's ENDPOINT section; coverage is explicitly NOT an outcome (brief F12). Supersedes NFRA_KUZUSPLIT O-4/P4 (never specifically ruled). Canonical pipeline (Rule 27): step 1 brief @dfd24a010b (CRO) -> step 2 /endpoint --forward @ed0c95adb4 -> ratified + amended @3fd55f37d9/@082c90a610 -> step 3 register + step 4 PRD (this commit) -> step 5 COO decomp.",
+ "prds": [
+  {
+   "path": "docs/architecture/NFRA_CLDGRPH_PRD.md",
+   "label": "CTO~A step-4 PRD v0.2 -- PRD_HEADER block + ENDPOINT (ratified FWD-1..8, FWD-2 amended), the arc, territory table, 9 acceptance properties, out of scope, rulings R1-R12, decomp inputs, s.7 SURFACE MANIFEST (13 rows lifted from the COO decomp @05d2c89158 as gate)",
+   "date": "2026-09-02"
+  },
+  {
+   "path": "docs/briefs/globgrph-cloud-compile-and-gateway-traversal-20260901.md",
+   "label": "Step-1 CRO brief @dfd24a010b -- outcome territory O1-O7/O3b, boundary, qualitative bar, substrate findings F1-F12 (F11/F12 attributed to CVO), what must be true, status, what it does not claim",
+   "date": "2026-09-01"
+  },
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO~A/deliverables/ENDPOINT_FORWARD_GLOBGRPH_CLOUD_COMPILE_20260902.md",
+   "label": "Step-2 /endpoint --forward record -- the FWD block, provenance, O-4 resolution, both Andrew-direct verbatims, the grounded refresh-mechanism assessment (marker-downstream), FRESHGUARD answered, surprise-channel observations",
+   "date": "2026-09-02"
+  },
+  {
+   "path": "docs/architecture/NFRA_KUZUSPLIT_PRD.md",
+   "label": "Ancestor -- O-1 ratified (survives worker-internal); O-4/P4 build-once-distribute superseded by this project",
+   "date": "2026-07-17"
+  },
+  {
+   "path": "docs/architecture/NFRA_GLOBGRPH_PRD.md",
+   "label": "Platform sibling (CLOSED-COMPLETE) -- s.0 locks, s.2a hybrid freshness (Item-2b incremental Lambda), s.2b F5/F6 (read-your-own-writes; the marker is the HEAD oracle)",
+   "date": "2026-06-12"
+  },
+  {
+   "path": "docs/architecture/NFRA_INTEGRATIONS_STANDARD.md",
+   "label": "Gateway extension contract the serving path is added through (IntegrationSpec, AuthKinds, 5-step add checklist)",
+   "date": "2026-08-20"
+  }
+ ],
+ "related": [
+  "NFRA_GLOBGRPH",
+  "NFRA_KUZUSPLIT",
+  "NFRA_GRAPHS",
+  "NFRA_GRAPHUNI",
+  "NFRA_INTEGRATIONS",
+  "D6_OPAL_ANALYST"
+ ],
+ "status": "active",
+ "dep_stage": "PRD",
+ "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (Rule 27) -- dep_stage PRD. Step 1 brief landed 2026-09-01 (CRO @dfd24a010b); step 2 endpoint emitted 2026-09-02 @ed0c95adb4 and RATIFIED by Andrew the same day (FWD-1..8; 'graph' = the KuzuDB projection; FWD-2 amended in place; serving plane = always-on service on opal-globgrph; FWD-8 = pull-style status read, no alarm); step 3 registered + step 4 PRD v0.1 landed 2026-09-02 ~18:5xZ by 1.0.0_SA_CTO~A. NEXT: step 5 atom-decomp by 2.0.0_SA_COO against docs/architecture/NFRA_CLDGRPH_PRD.md s.6 (rulings) + the decomp inputs list; first measurement owed = the full-fallback duration that sizes the worker (KUZUSPLIT P0-INSTRUMENT). No TO exists yet.",
+ "blocking": "ANDREW-DIRECT 2026-09-02 ~21:0xZ at the 2.0.0_SA_COO terminal (record @a8d63f097c), VERBATIM: \"Call 1, once we're completely good to go on Call 3 setup and validated, we can use CLDGRPH as a water test, more details on that at that time.\" -> STEP 6 IS SEQUENCED BEHIND THE PROJECT-TREE PREREQUISITE BUILDS (spec s.8 @31463f1286; COO+CTO split; 3.0.0_SA_CVO reviews the complete set). The water-test shape is Andrew's to give at that time; no TO is cut before it. Every tool-side hold below is CLOSED: RC5 GREEN @5dbca15a4a (2nd pass, corroborated by CTO + CVO~A on different instruments). *** 20:0xZ TEXT, superseded: Step 5 decomp LANDED (2.0.0_SA_COO @05d2c89158, 13 cells, no TO cut). STEP 6 IS SHUT ON ONE HOLD, not this project's: comp-adversary admission RC5 PARTIAL fabric-wide (3.0.0_SA_CVO~A @47f1045c7f). The `fabric` hold CLEARED 2026-09-02 ~19:3xZ -- Andrew-direct at the 1.0.0_SA_CTO~A terminal, verbatim \"laptop\"; key written on this row the same turn; PRD header (laptop) and row now agree. *** 19:2xZ TEXT, superseded: STEP 6 IS SHUT ON TWO HOLDS ... this row carries NO `fabric` key ... carried to Andrew as a one-line call (rec: laptop). *** ORIGINAL 18:5xZ TEXT: None on any agent. Step 5 (COO decomp) is the next act and is unblocked. Rulings are complete for a decomp (PRD s.6 R1-R12); the decomp inputs list names what it must measure or decide. DIRECTIVES.yaml D0 members.projects carries NFRA_CLDGRPH from this registration; the missions.yaml INFRASTRUCTURE.GRAPH attach list is 0.0.0_AB_MSTR's to extend (the subgroup's org/projects/NFRA_GRAPH* glob does not match this code) -- requested, not written from this lane.",
+ "created": "2026-09-02",
+ "pods": [
+  "1.0",
+  "2.0",
+  "3.0",
+  "4.0",
+  "0.7",
+  "0.8",
+  "0.0"
+ ],
+ "pipeline": "globgrph",
+ "coo_lane": "2.0.0_SA_COO",
+ "thread_counter": 0,
+ "threads": [],
+ "directive": "D0",
+ "placement": "LAPTOP",
+ "fabric": "laptop",
+ "fabric_ruling": "ANDREW-DIRECT 2026-09-02 ~19:3xZ at the 1.0.0_SA_CTO~A terminal, VERBATIM: \"laptop\" -- in reply to the one-line call 'Set fabric on org/projects/NFRA_CLDGRPH.json: (a) laptop, or (b) site-z?' (rec (a)). Record: org/tier1_exec/1.0.0_SA_CTO~A/deliverables/ENDPOINT_FORWARD_GLOBGRPH_CLOUD_COMPILE_20260902.md, ANDREW-DIRECT #3."
+}

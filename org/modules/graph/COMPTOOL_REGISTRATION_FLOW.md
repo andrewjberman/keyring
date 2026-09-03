@@ -17,7 +17,7 @@ runs; this document is the ordered, repeatable process that produces that state 
 (the completeness gate, section 1); what did not exist was a documented *process* an author follows so the
 next tool does not rediscover the two gate-blocks and the chicken-and-egg by trial. This is that process,
 EXTRACTED from real registrations (no-retrofit): comp-iam-usage + comp-debris (NFRA_DECOMTOOL) and
-comp-kuzu-full/comp-kuzu-inc (NFRA_KUZUSPLIT-P1) are the worked examples in section 8.
+comp-kuzu-full/comp-kuzu-inc (NFRA_KUZUSPLIT-P1) are the worked examples in section 8. *(Both were RETIRED 2026-09-02 -- consolidated onto `comp-kuzu --mode inc|full`, NFRA_COMPEFFICACY unit 2, Andrew-approved; the example stands as the RECORD of a CREATE-via-SPLIT, and its inverse -- RETIRE-via-CONSOLIDATE -- is that unit's commit.)*
 
 ---
 
@@ -80,7 +80,7 @@ the flow.
   `routable: true` + a comp-which curated route. *(58 of 77 tools today.)*
 - **ENTRIES-ONLY** -- registered and homed, but NOT a first-class `tools_index` rank target: a subcommand
   variant, a split sibling, or the router itself. Gets an `entries:` row + a coverage-map home, no
-  `tools_index` key. *(5 today: comp-describe, comp-kuzu-full, comp-kuzu-inc, comp-state, comp-which.)*
+  `tools_index` key. *(3 today: comp-describe, comp-state, comp-which. comp-kuzu-full / comp-kuzu-inc were ENTRIES-ONLY until their retirement 2026-09-02.)*
 - **EXCLUDED** -- NOT a graph-query use-case at all: an enforcement gate (comp-manifest-check,
   comp-surface-check, comp-*-gate), a worklist producer (comp-canon-motif), a graph producer/write-path
   (comp-stitch-refresh), an on-rails search/inspection primitive (comp-grep, comp-glob, comp-imgread), or a
@@ -233,7 +233,9 @@ live 2026-07-14; the audit is a periodic confirmation, run after any batch of to
   the coverage-map home stayed.
 - **CREATE via SPLIT (comp-kuzu-full / comp-kuzu-inc, NFRA_KUZUSPLIT-P1):** two ENTRIES-ONLY siblings homed
   in `meta_tools[]`, registered in `entries:` without their own `tools_index` rank key (comp-kuzu remains the
-  rank target). COO-landed as the SoD exemplar.
+  rank target). COO-landed as the SoD exemplar. **RETIRED 2026-09-02** (NFRA_COMPEFFICACY unit 2): both siblings
+  consolidated onto `comp-kuzu --mode inc|full`; the NEVER-full guarantee moved from the `-inc` NAME onto the FLAG.
+  This bullet stands as the worked example of the REGISTER half; the retirement commit is the worked example of the inverse.
 
 ---
 

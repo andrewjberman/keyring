@@ -1,0 +1,20 @@
+# RED-FIRST pass 3: F2 two-poll + E2 second-limb cases added; guard still PASS-2 (count-keyed). Expect F2 poll-1 + merge + E2 to FAIL.
+# 2026-09-02T21:34:44Z  HEAD=689a52cac2  file=8100c49a46
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  FAIL    F2 DELETE+ADD same count, poll 1: provisional, merge write  (row-warns=1 want 0; count-only=0 want 1; idx-unchanged=0 want 0; rc=1)
+  FAIL    F2 poll 1 index: P-S1 P-S3 
+  FAIL    F2 DELETE+ADD same count, poll 2: CONFIRMED  (row-warns=0 want 1; count-only=0 want 0; idx-unchanged=0 want 0; rc=0)
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+  FAIL    E2: short twice but id STILL IN raw file -> NOT confirmed  (row-warns=1 want 0; count-only=0 want 1; idx-unchanged=0 want 1; rc=1)
+selftest: 12/16 PASS
+# exit=1

@@ -1,0 +1,26 @@
+# selftest of org/surprise_channel/surprise-watch.sh, run by 3.0.0_SA_CVO 2026-09-02T23:30:17Z HEAD=4b2255545a file-blob=6ae1c0fc32 (file last changed @f2cbab30a1 = CTO's R4-c on the two-roots repoint @1655d87688 on CVO pass-3 bytes)
+# invocation: bash org/surprise_channel/surprise-watch.sh 3.0.0_SA_CVO selftest   -- the mode is $2 (case "$MODE" at :469). Two earlier runs at 22:33Z and 22:53Z passed the mode word as $1; the script took it as a SERIAL and streamed the real corpus until killed. Operator error at this seat, state files removed, recorded here.
+  OK      tool MISSING
+  OK      tool exits 1
+  OK      tool empty output
+  OK      CRLF output, same rows
+  OK      stored index is LF-clean after CRLF input
+  OK      same-count MUTATION
+  OK      F2 DELETE+ADD same count, poll 1: provisional, merge write
+  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)
+  OK      F2 DELETE+ADD same count, poll 2: CONFIRMED
+  OK      SHORT poll 1: provisional, no warn, index kept
+  OK      SHORT then WHOLE: recovery, silent, provisional cleared
+  OK      provisional file cleared after recovery
+  OK      SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2
+  OK      confirmed row dropped from stored index; the present row kept
+  OK      live LONGER than stored, all present: append boundary, silent, replace
+  OK      E2: short twice but id STILL IN raw file -> NOT confirmed
+  OK      two roots: _watched_files sees the flat AND the tree doc (2 of 2)
+  OK      _project_of on a tree path -> ETFS_TREEPRJ
+  OK      _project_of on a flat path -> P
+  OK      NEW-row arm: one line names P-S2 (S1, already stored, not named)
+  OK      NEW-row arm: second poll, nothing new, names nothing
+  OK      real validator: --index-rows emits 7 columns for every --index row (192 of 192)
+selftest: 22/22 PASS
+rc=0

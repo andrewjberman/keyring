@@ -1,0 +1,11 @@
+# R-i hook exercise, 3.0.0_SA_CVO 2026-09-03T00:21:07Z, hook blob 4562a01eed, generator 3d0fb43105, root /tmp/tmp.jkFtQX9Kgq
+# baseline of the isolated root: RESULT: 0 violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)
+  OK      RED-1 staged tree row: dep_stage BOGUS, unregistered -> BLOCKED naming ROW-ENUM  (rc 1, saw 'ROW-ENUM')
+  OK      RED-1 ... and R5 printed in the same refusal  (rc 1, saw '\[R5\]')
+  OK      RED-2 staged tree row: project_code != folder -> BLOCKED naming R4  (rc 1, saw '\[R4\]')
+  OK      CONTROL non-tree path staged -> SKIP, rc 0  (rc 0, saw 'SKIP: missions-tree-check')
+  OK      CONTROL non-tree path with the generator ABSENT -> still SKIP (nothing ran)  (rc 0, saw 'SKIP: missions-tree-check')
+  OK      FAIL-CLOSED register path staged, generator missing -> BLOCKED (fail-closed)  (rc 1, saw 'is missing (fail-closed)')
+  OK      GREEN the L3 registration paths staged on a clean root -> OK, 0 violations  (rc 0, saw 'RESULT: 0 violation')
+  OK      BOUND staged name with no worktree file -> OK (hook grades the worktree, not the index)  (rc 0, saw 'OK: missions-tree-check')
+R-i hook exercise: 8/8 PASS  (root removed: yes)

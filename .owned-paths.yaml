@@ -844,7 +844,87 @@ lanes:
     permitted_agents:
     - 0.8.0_AE_CloudComp
     description: 'The comp-tool test batteries under .tools/tests/**. Previously UNCLAIMED -- any seat could edit them and no seat was obliged to notice one had stopped collecting, which is exactly how test_comp_adversary_stage4_packet.py sat GREEN while pytest died at collection (SystemExit at module scope, CVO~A @0d272d257c). Owner 0.8.0_AE_CloudComp (de facto comp-tool battery seat: comp-similar, comp-pipescript, comp-adversary and comp-read all moved through it 2026-09-02). 1.0.0_SA_CTO GATES battery repairs and is deliberately NOT a member: gate and author are different seats. AUTHORITY: Andrew-direct 2026-09-02 ~17:0xZ at the 1.0.0_SA_CTO terminal, /open-calls CALL 1 of 3, VERBATIM: "All recs approved". Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md. Measured basis: 59 lanes / 254 rules held ZERO claim on these mechanism files (CTO 92581; CVO~A independent parse 92583).'
+
+# --- PROJECT TREE lanes (spec s.6, Andrew-ruled 2026-09-02; prereq 4, CTO under the COO/CTO split @a8d63f097c) ---
+  TREE_MACROS:
+    permitted_agents:
+    - 2.0.0_SA_COO
+    - 0.0.0_AB_MSTR
+    - 1.0.0_SA_CTO
+    description: org/missions/MACROS.yaml -- the per-directive macro enum carrier (PROJECT_TREE.contract.json levels[1].enum_carrier; a sibling DATA file, deliberately NOT inside DIRECTIVES.yaml so the register's FORM tripwire is untouched). COO owns the generator that validates it, MSTR registers, CTO co-signs; Andrew flips `ratification` and a seat records it. COO write set 2026-09-02 21:48Z (b).
+  TREE_COO:
+    permitted_agents:
+    - 2.0.0_SA_COO
+    description: 'Project tree, COO-owned artifact folders: decompositions/ (step 5), task-orders/ (step 6 -- the ONLY gate reads here), and the directive/macro skeleton READMEs (prereq 3). Tilde lanes of 2.0.0_SA_COO auto-permit. Spec s.6.'
+  TREE_CVO:
+    permitted_agents:
+    - 3.0.0_SA_CVO
+    description: Project tree, surprise-channel/remediations/ -- rows CVO routes at step 10. Spec s.6.
+  TREE_CRO:
+    permitted_agents:
+    - 4.0.0_SA_CRO
+    description: Project tree, brief/ (step 1). Spec s.6.
+  TREE_PROJECT_ROW:
+    permitted_agents:
+    - 1.0.0_SA_CTO
+    description: Project tree, <PROJECT>/project.json -- the register row moved into its folder (s.2 choice B, RULED). Registration is mkdir + this file in ONE commit at step 3 (CTO). The flat index org/projects/<CODE>.json and DIRECTIVES.yaml rows are DERIVED by COO's generator and need no lane. Spec s.6.
+  TREE_LEDGER:
+    permitted_agents:
+    - 0.5.0_AE_OpalETL
+    - 0.6.0_AE_PartnerETL
+    - 0.6.1_AE_PartnerETL
+    - 0.6.2_AE_PartnerETL
+    - 0.7.0_AE_CloudOps
+    - 0.8.0_AE_CloudComp
+    - 1.0.0_SA_CTO
+    - 2.0.0_SA_COO
+    description: 'Project tree, ledger/ -- deploy-completion + change-management entries for THIS project: the deploying lane (AE, rule 13) + CTO/COO co-sign. Spec s.6.'
+  TREE_DELIVERABLES:
+    permitted_agents: []
+    description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
+
 paths:
+
+# --- PROJECT TREE lanes (spec s.6, Andrew-ruled 2026-09-02; prereq 4, CTO under the COO/CTO split @a8d63f097c) ---
+  org/missions/MACROS.yaml:
+    lane: TREE_MACROS
+    note: 'Project tree: the macro enum carrier (sibling of DIRECTIVES.yaml; longest-match displaces org/missions/** TIER0_MSTR for this one file).'
+  org/missions/*/*/*/prd/**:
+    lane: ANY_CTO
+    note: 'Project tree: prd/ (steps 2-4; the ENDPOINT lives INSIDE the PRD). Spec s.6.'
+  org/missions/*/*/*/decompositions/**:
+    lane: TREE_COO
+    note: 'Project tree: decompositions/ (step 5).'
+  org/missions/*/*/*/task-orders/**:
+    lane: TREE_COO
+    note: 'Project tree: task-orders/ (step 6; hyphen RULED). to-pipeline-gate.py discovers TOs here as well as in seat task_orders/.'
+  org/missions/*/*/*/deliverables/**:
+    lane: TREE_DELIVERABLES
+    note: 'Project tree: deliverables/<SERIAL>/** -- owner carried by the path, resolved by validator clause 4.'
+  org/missions/*/*/*/surprise-channel/investigations/**:
+    lane: ANY
+    note: 'Project tree: investigations rows are appended by the ASSIGNED WORKER (a value in the TO, not a path) + CVO; a path gate cannot name the worker, so this is ANY and the surprise-row gate validates every row (schema, identity, mutation, folder==project). RULED keep ANY -- Andrew-direct 2026-09-02 23:0xZ (/open-calls at the CTO terminal, verbatim Both recs accepted); the row gate is the control, no resolver, no per-serial sub-folder.'
+  org/missions/*/*/*/surprise-channel/remediations/**:
+    lane: TREE_CVO
+    note: 'Project tree: remediation rows CVO routes at step 10.'
+  org/missions/*/*/*/ledger/**:
+    lane: TREE_LEDGER
+    note: 'Project tree: ledger/ (deploy-completion + change-management for THIS project).'
+  org/missions/*/*/*/cards/**:
+    lane: ANY
+    note: 'Project tree: substrate cards for resources THIS project builds on -- ''the building lane'' is a TO value, not a path. ANY; cards carry their own schema (org/standards/SUBSTRATE_CARD.schema.json). RULED keep ANY, same word as investigations (Andrew-direct 2026-09-02 23:0xZ).'
+  org/missions/*/*/*/project.json:
+    lane: TREE_PROJECT_ROW
+    note: 'Project tree: the register row, in its folder.'
+  org/missions/*/*/*/brief/**:
+    lane: TREE_CRO
+    note: 'Project tree: brief/ (step 1, CRO).'
+  org/missions/D[0-9]*/README.md:
+    lane: TREE_COO
+    note: 'Project tree skeleton: the directive-level README (prereq 3, COO''s root skeleton).'
+  org/missions/D[0-9]*/*/README.md:
+    lane: TREE_COO
+    note: 'Project tree skeleton: the macro-level README (prereq 3).'
 
   # -----------------------------------------------------------------------
   # Tier-0 governance framework (org/tier0/). Added 2026-05-22 by COO per

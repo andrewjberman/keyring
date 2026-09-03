@@ -44,8 +44,31 @@ import re
 import subprocess
 import sys
 
-CHANNEL_RE = re.compile(
-    r"(^|/)org/surprise_channel/[^/]+/(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
+# TWO ROOTS (project-tree spec s.7, Andrew-ruled 2026-09-02; grammar from org/standards/PROJECT_TREE.
+# contract.json: surprise_channel_glob org/missions/D*/*/*/surprise-channel/{investigations,remediations}/**).
+# The flat channel org/surprise_channel/<PROJECT>/ stays; the tree adds a per-project channel whose
+# PATH carries the project AND the kind. A gate reading one root is blind to the other.
+FLAT_CHANNEL_RE = re.compile(
+    r"(^|/)org/surprise_channel/([^/]+)/(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
+TREE_CHANNEL_RE = re.compile(
+    r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/([^/]+)/surprise-channel/(investigations|remediations)/"
+    r"(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
+CHANNEL_RE = re.compile(FLAT_CHANNEL_RE.pattern + "|" + TREE_CHANNEL_RE.pattern)
+
+
+def _folder_identity(rel):
+    """(project, kind) the PATH declares, or (None, None). Flat: the <PROJECT>/ directory (kind is
+    the filename's). Tree: the project folder two levels above surprise-channel/, and the kind from
+    the sub-folder -- a REMEDIATION file filed under investigations/ is a path/content disagreement.
+    Measured before this limb: 192 of 192 flat rows already sit in a folder named for their project."""
+    rel = rel.replace("\\", "/")
+    m = TREE_CHANNEL_RE.search(rel)
+    if m:
+        return m.group(2), m.group(3).upper().rstrip("S")
+    m = FLAT_CHANNEL_RE.search(rel)
+    if m:
+        return m.group(2), None
+    return None, None
 FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 ID_RE = re.compile(r"^[A-Z0-9_]+-(Z-)?S[0-9]+$")
 # /endpoint --forward Phase-0 outcome id. PERMANENT AND NEVER REUSED by contract
@@ -404,6 +427,12 @@ def check_file(root, rel):
         return (["%s: schema unreadable (%s) -- fail-closed" % (rel, exc)], [])
 
     v, notes = [], []
+    # THE PATH IS THE MEMBERSHIP (tree spec s.1/s.2 choice A): the folder's project and, in the tree,
+    # the sub-folder's kind are carriers the row must agree with. Graded on NEW rows only, like the rest.
+    folder_project, folder_kind = _folder_identity(rel)
+    if folder_kind and folder_kind != kind:
+        v.append("%s: a %s file filed under the %s/ sub-folder -- the path says one kind, the filename "
+                 "says another" % (rel, kind, "investigations" if folder_kind == "INVESTIGATION" else "remediations"))
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
@@ -413,6 +442,10 @@ def check_file(root, rel):
             v.append("%s: a NEW row has id=%r, which does not match the schema's id pattern "
                      "{PROJECT}-S{n} / {PROJECT}-Z-S{n}" % (rel, rid))
             continue
+        if folder_project and row.get("project") and row["project"] != folder_project:
+            v.append("%s: NEW row %s says project=%r but the file sits in %r's folder. The path is the "
+                     "membership; a row filed under another project is an identity defect."
+                     % (rel, rid, row["project"], folder_project))
         v.extend(_check_row(row, kind, schema))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
                  % (rel, len(added), len(new_rows), len(old_ids)))
@@ -433,6 +466,25 @@ def main(argv):
         v, notes = check_file(root, rel)
         all_v.extend(v)
         all_notes.extend(notes)
+
+    # RC4 (CVO~A re-grade @0dbf12ebb3 + RC4 re-grade): the STANDING corpus pass runs INSIDE this gate
+    # on every channel commit -- one gate, one more limb, never a second gate. It grades the whole
+    # corpus against the exact-tuple baseline; the per-row checks above grade what THIS commit adds
+    # or mutates. A corpus pass that cannot run is a refusal, not a skip.
+    try:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location(
+            "surprise_corpus_validate", os.path.join(root, ".tools", "surprise-corpus-validate.py"))
+        _scv = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_scv)
+        if _scv.main([]) != 0:
+            all_v.append("standing corpus pass REFUSED -- see the [surprise-corpus] lines above")
+    except SystemExit as exc:
+        if exc.code not in (0, None):
+            all_v.append("standing corpus pass exited %r -- fail-closed" % exc.code)
+    except Exception as exc:  # noqa: BLE001
+        all_v.append("standing corpus pass could not run (%s: %s) -- fail-closed"
+                     % (type(exc).__name__, exc))
 
     for n in all_notes:
         print("[surprise-row-gate] %s" % n)

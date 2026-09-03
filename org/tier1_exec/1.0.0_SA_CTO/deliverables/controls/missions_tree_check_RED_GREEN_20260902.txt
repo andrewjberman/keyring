@@ -1,0 +1,28 @@
+# missions-tree-check.sh through the REAL harness (safe-commit -> git commit --only -> .git/hooks/pre-commit stage 10)
+# 2026-09-03T00:06:12Z  HEAD_before=e646a8b84c  hook blob=4562a01eed
+# FIRST CUT (blob af06b9f8ed) refused the same mutant with rc 1 and NO TEXT: set -e killed the script at OUT=$(check) before the case printed. Fixed (RC captured with ||). Both runs below are on the fixed bytes.
+
+## RED-a: the INSTALLED hook invoked directly on the staged mutant (dep_stage BOGUS, code absent from the register)
+   pre-commit rc=1
+   BLOCKED: missions-tree-check -- the project tree's validator REFUSES this commit (staged: org/missions/D11/NFRA/NFRA_TREEMUTANT/project.json )
+   missions-tree-index check: tree=2 project(s) under 1 directive folder(s), 1 valid | flat index rows=353 (generated=1, hand-written=352, parse-errors=0) | DIRECTIVES.yaml: 39 entries across 13 direc
+     [R5] org/missions/D11/NFRA/NFRA_TREEMUTANT: 'NFRA_TREEMUTANT' absent from DIRECTIVES.yaml directives.D11.members.projects
+     [ROW-ENUM] org/missions/D11/NFRA/NFRA_TREEMUTANT: dep_stage='BOGUS' not in ('REGISTERED', 'PRD', 'DECOMP', 'EXECUTING', 'ROUND_CLOSE', 'CLOSED') (source .tools/to-pipeline-gate.py:DEP_STAGE_ENUM)
+     remedy: fix the state the violation names (R5 = the register's members list, 0.0.0_AB_MSTR's lane); never bypass.
+
+## RED-b: the same mutant through safe-commit (the real commit path)
+   safe-commit rc=1
+   BLOCKED: missions-tree-check -- the project tree's validator REFUSES this commit (staged: org/missions/D11/NFRA/NFRA_TREEMUTANT/project.json )
+   missions-tree-index check: tree=2 project(s) under 1 directive folder(s), 1 valid | flat index rows=353 (generated=1, hand-written=352, parse-errors=0) | DIRECTIVES.yaml: 39 entries across 13 direc
+     [R5] org/missions/D11/NFRA/NFRA_TREEMUTANT: 'NFRA_TREEMUTANT' absent from DIRECTIVES.yaml directives.D11.members.projects
+     [ROW-ENUM] org/missions/D11/NFRA/NFRA_TREEMUTANT: dep_stage='BOGUS' not in ('REGISTERED', 'PRD', 'DECOMP', 'EXECUTING', 'ROUND_CLOSE', 'CLOSED') (source .tools/to-pipeline-gate.py:DEP_STAGE_ENUM)
+   ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
+   HEAD_after=e646a8b84c (must equal HEAD_before); mutant in HEAD: 0 (must be 0)
+   cleanup: staged=''; RESULT: 0 violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)
+
+## CONTROL: the hook's own commit @eb979e5859 (touches .tools/git-hooks/** + deliverables only)
+   SKIP: missions-tree-check -- no org/missions/D*/ or org/projects/*.json path staged; check not run
+
+## GREEN: the L3 registration commit @41d11d178d (org/missions/D11/NFRA/NFRA_COMPEFFICACY/project.json + org/projects/NFRA_COMPEFFICACY.json)
+   OK: missions-tree-check -- 2 tree/register path(s) staged; RESULT: 0 violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)
+   the commit LANDED: 41d11d178d 1.0.0_SA_CTO; both files in HEAD: 2 of 2

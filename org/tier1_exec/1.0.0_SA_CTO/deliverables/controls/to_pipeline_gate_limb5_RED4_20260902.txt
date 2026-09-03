@@ -1,0 +1,7 @@
+  DEFECT  PASS  ->REFUSE  f4: SURFACE MANIFEST heading only inside a ~~~ fence
+  DEFECT  REFUSE->PASS    f1: ENDPOINT title MID-LINE in prose, real section removed -> no top-level section; 
+  DEFECT  REFUSE->PASS    f2: ENDPOINT title in INDENTED code, real section removed -> same
+  DEFECT  PASS  ->REFUSE  limb 4: f1 title MID-LINE only -> REFUSE
+  DEFECT  PASS  ->REFUSE  limb 4: f2 title INDENTED only -> REFUSE
+  DEFECT  PASS  ->REFUSE  limb 4: f3 section inside ~~~ -> REFUSE
+DEFECTS: 3 core + 0 schema + 3 limb4 + 0 wrapper = 6

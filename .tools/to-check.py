@@ -347,8 +347,11 @@ def parse_to_file(path: str) -> dict:
 
 
 def find_all_to_files() -> list[str]:
-    pattern = str(WORKSPACE / "org" / "**" / "task_orders" / "*.md")
-    return glob.glob(pattern, recursive=True)
+    # TWO ROOTS (project-tree spec s.7, CVO residual R-ii): seat task_orders/ AND the tree's
+    # org/missions/D*/<MACRO>/<PROJECT>/task-orders/ (contract task_orders_glob).
+    flat = glob.glob(str(WORKSPACE / "org" / "**" / "task_orders" / "*.md"), recursive=True)
+    tree = glob.glob(str(WORKSPACE / "org" / "missions" / "D*" / "*" / "*" / "task-orders" / "*.md"))
+    return flat + tree
 
 
 def get_hot_prd_project_codes(lookback_days: int) -> set[str]:

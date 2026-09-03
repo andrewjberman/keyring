@@ -54,10 +54,23 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CHANNEL_DIR="$SCRIPT_DIR"
-STATE_DIR="$CHANNEL_DIR/.watch-state"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+# STATE lives under .tools/state/ (project-tree spec s.7: "the watermark file moves to .tools/state/";
+# CTO repoint 2026-09-02 under the COO/CTO prerequisite split @a8d63f097c). The old location was
+# INSIDE the watched channel; the tree adds a second root, and a watcher's state belongs to neither.
+STATE_DIR="$REPO_ROOT/.tools/state/surprise-watch"
+_OLD_STATE_DIR="$CHANNEL_DIR/.watch-state"
 STATE_FILE="$STATE_DIR/${SERIAL}.tsv"
 
 mkdir -p "$STATE_DIR" 2>/dev/null || true
+# ONE-TIME MIGRATION: a live watcher's watermark + id/hash index carry over, so the move never makes
+# a seat re-seed (a re-seed is silent by design -- and silence is exactly what a moved state file
+# would otherwise buy). Copies only the files this serial owns and only when the new home lacks them.
+for _old in "$_OLD_STATE_DIR/${SERIAL}".*; do
+    [ -f "$_old" ] || continue
+    _new="$STATE_DIR/$(basename "$_old")"
+    [ -e "$_new" ] || cp -p "$_old" "$_new" 2>/dev/null || true
+done
 
 # The id pattern is the SCHEMA's own (investigation_item.schema.json "id"):
 #   ^[A-Z0-9_]+-(Z-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z.
@@ -75,8 +88,8 @@ ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?S[0-9]+"'
 # If the index cannot be produced, say so LOUDLY every poll -- a notifier that degrades to
 # count-only in silence is the P0 wearing a green light.
 # ---------------------------------------------------------------------------------------------
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 IDX_FILE="$STATE_DIR/${SERIAL}.idx.tsv"
+PROV_FILE="$STATE_DIR/${SERIAL}.prov.tsv"   # cross-poll PROVISIONAL set (pass 2); the selftest overrides it
 IDX_TOOL="$REPO_ROOT/.tools/surprise-corpus-validate.py"
 
 _index_now() {
@@ -101,8 +114,95 @@ _index_diff() {
     # stored hash read back as "hash\r" while awk's $(...) output had the \r stripped -- every row
     # compared unequal and a no-change poll emitted 191 MUTATION warnings. Strip \r on BOTH sides:
     # the live index before it is stored or compared, and each stored field on read.
-    live="$(_index_now | tr -d '\r')" || return 0
+    # FAILURE MUST NOT REACH THE DIFF, AND MUST NOT REACH THE WRITE. First cut piped _index_now
+    # through tr, so a tool failure exited 0 through the pipe (no pipefail in this bash), `live`
+    # went EMPTY, every stored row read DISAPPEARED, and the index file was overwritten with
+    # nothing (CVO~A re-grade, 2026-09-02). The exit status is captured on its own line, BEFORE any
+    # pipe; an empty index is treated as failure too (the channel is never empty); and on failure
+    # this function returns BEFORE the write so the prior index survives intact.
+    live="$(_index_now)"
+    rc=$?
+    if [ "$rc" -ne 0 ] || [ -z "$live" ]; then
+        [ "$rc" -eq 0 ] && echo "WARN: [SURPRISE] id/hash index came back EMPTY -- watcher is COUNT-ONLY this poll; prior index preserved" >&2
+        return 0
+    fi
+    live="$(printf '%s\n' "$live" | tr -d '\r')"
+    # SHORT-LIVE GUARD (3.0.0_SA_CVO 2026-09-02; confirmed independently by CVO~A @217ffafada).
+    # A SUCCESSFUL emit (rc 0) with FEWER rows than the stored index is PROVISIONAL, never a verdict.
+    # Measured 19:0xZ: one short read fired "ADVI_PERFRP-S1 DISAPPEARED" while S1 sat in the file, git
+    # clean; the short emit then REPLACED the index, so the row's return would have fired NEW -- two
+    # false events from one read, the second erasing the evidence of the first. The rc/empty guard
+    # above cannot see this case: the producer SUCCEEDED, it just came back short.
+    # Repair bar (CVO~A): re-sample once; if still short, confirm each missing id against the RAW
+    # corpus; if any missing id is still IN its file, this poll is COUNT-ONLY and the prior index
+    # is preserved. A row whose id is genuinely gone from its file still fires DISAPPEARED below.
+    # PASS 2 (Andrew "All approved go" ~20:4xZ; CTO 92746 race note taken): the pass-1 form re-sampled
+    # and grepped the RAW file in the SAME poll, and both reads can land inside the very write that
+    # shortened the index. A write does not straddle two POLLS. So a short result is PROVISIONAL:
+    # the missing ids are recorded in PROV_FILE, nothing is emitted, the prior index is preserved.
+    # On the NEXT poll: a whole sample clears the provisional set silently (recovery); a sample still
+    # missing the SAME id CONFIRMS the deletion -- DISAPPEARED fires then, and only that row leaves
+    # the stored index. Mutations among present rows are deferred one poll while short (stated).
+    quiet="${quiet:-0}"   # CTO grade (a): a caller global read under set -u; default so a bare call cannot die on it
+    # PASS 3 (CTO grade of 1a4ce78782: F2 DEFECT + E2 bound; bar (i)-(iv) taken whole):
+    #   (i)  the trigger is the SET, not the count. `missing` = stored pairs absent from live, computed
+    #        UNCONDITIONALLY. Pass 2 keyed on live_n < stored_n, so a real row dropped AND a row appended in
+    #        the same sample (count equal) took the old path, fired on poll 1, and FORGOT the row -- pass 1's
+    #        defect through a different door (CTO's F2, measured on WSE_COTMDL-S1).
+    #   (ii) the write while anything is provisional is a MERGE, not a copy: stored minus CONFIRMED; present
+    #        rows take live's hash (a changed hash still warns MUTATED); missing-but-unconfirmed rows keep
+    #        their stored hash; rows NEW in live are appended. So an append is recorded the poll it happens,
+    #        a transient miss is never adopted, and the "mutations deferred while short" bound is retired.
+    #   (E2) a provisional row is CONFIRMED only if, on the confirming poll, its id is ALSO absent from its
+    #        raw file (RAW_ROOT is the selftest's hook; production reads REPO_ROOT). A row still in its file
+    #        while the index omits it twice is an index-tool omission, not a deletion -- it stays provisional
+    #        and says so. The residual is two INDEPENDENT races, not one.
     emitted=0
+    if [ -s "$IDX_FILE" ]; then
+        stored="$(tr -d '\r' < "$IDX_FILE")"
+        missing="$(printf '%s\n' "$stored" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2 "\t" $3}')"
+        if [ -n "$missing" ]; then
+            prev=""; [ -f "$PROV_FILE" ] && prev="$(tr -d '\r' < "$PROV_FILE")"
+            raw_root="${RAW_ROOT:-$REPO_ROOT}"
+            confirmed=""; newprov=""; nconf=0; nprov=0; nheld=0
+            while IFS="$(printf '\t')" read -r p i h; do
+                [ -n "$i" ] || continue
+                row="${p}$(printf '\t')${i}$(printf '\t')${h}$(printf '\n')"
+                if [ -n "$prev" ] && printf '%s\n' "$prev" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {f=1} END {exit !f}'; then
+                    if grep -qF "\"id\": \"$i\"" "$raw_root/$p" 2>/dev/null; then
+                        newprov="${newprov}${row}"; nprov=$((nprov+1)); nheld=$((nheld+1))   # E2: still in its file -- not a deletion
+                    else
+                        confirmed="${confirmed}${row}"; nconf=$((nconf+1))
+                    fi
+                else
+                    newprov="${newprov}${row}"; nprov=$((nprov+1))
+                fi
+            done <<< "$missing"
+            if [ "$nconf" -gt 0 ]; then
+                while IFS="$(printf '\t')" read -r p i h; do
+                    [ -n "$i" ] || continue
+                    [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i DISAPPEARED (absent from the index on two consecutive polls AND from its file) -> $p  (append-only channel; a vanished id is a deletion or a merge that dropped it)"
+                    emitted=$((emitted + 1))
+                done <<< "$confirmed"
+            fi
+            # mutations among PRESENT rows still warn (the merge takes live's hash; the change is not silent)
+            while IFS="$(printf '\t')" read -r p i oh nh; do
+                [ -n "$i" ] || continue
+                [ "$quiet" -eq 1 ] || echo "WARN: [SURPRISE] $(_project_of "$p")  ROW $i MUTATED in place (${oh} -> ${nh}) -> $p  (corrections are NEW rows; an edited row is a rewrite of the record)"
+                emitted=$((emitted + 1))
+            done <<< "$(printf '%s\n' "$stored" | awk -F'\t' -v L="$live" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") lh[f[1] "\t" f[2]]=f[3]}} NF>=2 && (($1 "\t" $2) in lh) && lh[$1 "\t" $2]!=$3 {print $1 "\t" $2 "\t" $3 "\t" lh[$1 "\t" $2]}')"
+            # (ii) THE MERGE WRITE
+            printf '%s\n' "$stored" | awk -F'\t' -v L="$live" -v C="$confirmed" 'BEGIN{n=split(L,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!=""){lh[f[1] "\t" f[2]]=f[3]; ord[++ln]=f[1] "\t" f[2]}} m=split(C,c,"\n"); for(k=1;k<=m;k++){split(c[k],g,"\t"); if(g[2]!="") gone[g[1] "\t" g[2]]=1}} NF>=2 { key=$1 "\t" $2; if (key in gone) next; if (key in lh) { print $1 "\t" $2 "\t" lh[key]; seen[key]=1 } else print $0 } END{ for(k=1;k<=ln;k++){ key=ord[k]; if (!(key in seen) && !(key in gone)) print key "\t" lh[key] } }' > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
+            if [ "$nprov" -gt 0 ]; then
+                printf '%s' "$newprov" > "$PROV_FILE.tmp" && mv -f "$PROV_FILE.tmp" "$PROV_FILE"
+                echo "WARN: [SURPRISE] id/hash index is MISSING $nprov stored row(s) this poll ($nheld of them still present in their files): PROVISIONAL, confirmed next poll only if absent from index AND file -- watcher is COUNT-ONLY on those rows this poll; index merged, not replaced" >&2
+            else
+                rm -f "$PROV_FILE"
+            fi
+            return "$emitted"
+        fi
+        rm -f "$PROV_FILE"    # nothing missing: any provisional set clears silently (recovery)
+    fi
     if [ -s "$IDX_FILE" ]; then
         # For every stored (path,id,hash): missing id -> DELETION; same id, other hash -> MUTATION.
         while IFS="$(printf '\t')" read -r p i h; do
@@ -117,6 +217,20 @@ _index_diff() {
                 emitted=$((emitted + 1))
             fi
         done < "$IDX_FILE"
+        # R4-c (1.0.0_SA_CTO, design @3814be3317; the fields R4-a/b put on every new row): the NEW arm.
+        # The count pass says "+N new row(s)"; this names each one -- project, fabric, id, class,
+        # hazard_standing -- so the L8 reader groups without opening a file. One --index-rows call,
+        # only when the diff has found new ids (never on the seeding pass, never when nothing is new).
+        # A 7-column sibling of --index, because the loop above reads exactly three columns.
+        newpairs="$(printf '%s\n' "$live" | awk -F'\t' -v S="$(tr -d '\r' < "$IDX_FILE")" 'BEGIN{n=split(S,a,"\n"); for(k=1;k<=n;k++){split(a[k],f,"\t"); if(f[2]!="") seen[f[1] "\t" f[2]]=1}} NF>=2 && !(($1 "\t" $2) in seen) {print $1 "\t" $2}')"
+        if [ -n "$newpairs" ] && [ "$quiet" -ne 1 ]; then
+            rows7="$(python "$IDX_TOOL" --index-rows 2>/dev/null | tr -d '\r')"
+            while IFS="$(printf '\t')" read -r p i; do
+                [ -n "$i" ] || continue
+                fields="$(printf '%s\n' "$rows7" | awk -F'\t' -v P="$p" -v I="$i" '$1==P && $2==I {printf "project=%s fabric=%s class=%s hazard=%s", $4, $5, $6, $7; exit}')"
+                echo "[SURPRISE] $(_project_of "$p")  NEW ROW $i  ${fields:-fields=UNREAD (index-rows did not return this id)} -> $p"
+            done <<< "$newpairs"
+        fi
     fi
     printf '%s\n' "$live" > "$IDX_FILE.tmp" && mv -f "$IDX_FILE.tmp" "$IDX_FILE"
     return "$emitted"
@@ -142,15 +256,30 @@ _watched_files() {
     # Every project's investigation doc, whatever the container. The protocol's container is
     # markdown-with-a-fenced-block today and a pure .json swap is proposed but NOT censused
     # against existing readers -- so BOTH suffixes are watched and the swap needs no change here.
-    for f in "$CHANNEL_DIR"/*/INVESTIGATION_v*.md "$CHANNEL_DIR"/*/INVESTIGATION_v*.json; do
+    # TWO ROOTS (project-tree spec s.7; grammar = org/standards/PROJECT_TREE.contract.json
+    # surprise_channel_glob): the flat channel <CHANNEL_DIR>/<PROJECT>/ stays; the tree adds
+    # org/missions/D*/<MACRO>/<PROJECT>/surprise-channel/investigations/. A watcher on one root is
+    # deaf to the other for the whole dual-register period. The --index this watcher diffs
+    # (surprise-corpus-validate.py) enumerates the same two roots.
+    for f in "$CHANNEL_DIR"/*/INVESTIGATION_v*.md "$CHANNEL_DIR"/*/INVESTIGATION_v*.json \
+             "$REPO_ROOT"/org/missions/D*/*/*/surprise-channel/investigations/INVESTIGATION_v*.md \
+             "$REPO_ROOT"/org/missions/D*/*/*/surprise-channel/investigations/INVESTIGATION_v*.json; do
         [ -f "$f" ] || continue
         printf '%s\n' "$f"
     done
 }
 
 _project_of() {
-    # .../org/surprise_channel/ADVI_PERFRP/INVESTIGATION_v1.md -> ADVI_PERFRP
-    basename "$(dirname "$1")"
+    # flat: .../org/surprise_channel/ADVI_PERFRP/INVESTIGATION_v1.md            -> ADVI_PERFRP
+    # tree: .../org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md
+    #                                                                            -> ETFS_GUARDRAIL
+    # (the tree's project folder is three levels up; basename(dirname) would say "investigations")
+    case "$1" in
+        */surprise-channel/investigations/*|*/surprise-channel/remediations/*)
+            basename "$(dirname "$(dirname "$(dirname "$1")")")" ;;
+        *)
+            basename "$(dirname "$1")" ;;
+    esac
 }
 
 _prior_count() {
@@ -212,7 +341,135 @@ EOF
     return 0
 }
 
+# ---------------------------------------------------------------------------------------------
+# selftest -- REAL bash integration controls for _index_diff (CVO~A re-grade 2026-09-02: the
+# Python-side "watcher controls" were a dictionary emulation that never executed this script and
+# could not see the pipeline-masked failure). Each case swaps IDX_TOOL/IDX_FILE for temp copies and
+# runs the real function. Prints its own N/N line. Exit 1 on any failure.
+# ---------------------------------------------------------------------------------------------
+_selftest() {
+    quiet=0
+    T="$(mktemp -d 2>/dev/null || echo "${TMPDIR:-/tmp}/sw-selftest.$$")"; mkdir -p "$T"
+    IDX_FILE="$T/idx.tsv"
+    seed="$(printf 'org/surprise_channel/P/INVESTIGATION_v1.md\tP-S1\taaaaaaaaaaaa\norg/surprise_channel/P/INVESTIGATION_v1.md\tP-S2\tbbbbbbbbbbbb\n')"
+    printf '%s\n' "$seed" > "$IDX_FILE"
+    seed_sum="$(cksum < "$IDX_FILE")"
+    pass=0; fail=0
+    _case() {  # $1 name  $2 expected stdout WARN count  $3 expected stderr COUNT-ONLY count  $4 expect idx unchanged (1/0)
+        out="$(_index_diff 2>"$T/err")"; rc=$?
+        warns="$(printf '%s\n' "$out" | grep -c 'WARN: \[SURPRISE\]')"
+        conly="$(grep -c 'COUNT-ONLY' "$T/err")"
+        now_sum="$(cksum < "$IDX_FILE")"
+        unchanged=0; [ "$now_sum" = "$seed_sum" ] && unchanged=1
+        if [ "$warns" -eq "$2" ] && [ "$conly" -eq "$3" ] && [ "$unchanged" -eq "$4" ]; then
+            pass=$((pass+1)); echo "  OK      $1"
+        else
+            fail=$((fail+1)); echo "  FAIL    $1  (row-warns=$warns want $2; count-only=$conly want $3; idx-unchanged=$unchanged want $4; rc=$rc)"
+        fi
+        printf '%s\n' "$seed" > "$IDX_FILE"   # re-seed for the next case
+    }
+    # A. tool missing -> one COUNT-ONLY, zero row warnings, index untouched
+    IDX_TOOL="$T/does-not-exist.py";                                           _case "tool MISSING" 0 1 1
+    # B. tool exits 1 -> same
+    printf 'import sys\nsys.exit(1)\n' > "$T/fail.py"; IDX_TOOL="$T/fail.py";   _case "tool exits 1" 0 1 1
+    # C. tool exits 0 with EMPTY output -> same (empty is failure; the channel is never empty)
+    printf 'pass\n' > "$T/empty.py"; IDX_TOOL="$T/empty.py";                    _case "tool empty output" 0 1 1
+    # D. CRLF output, same content -> zero warnings, index rewritten (LF) so 'unchanged' is 0 but no CR
+    printf 'import sys\nsys.stdout.write("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa\\r\\norg/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb\\r\\n")\n' > "$T/crlf.py"
+    # After CR-stripping the live index is byte-identical to the LF seed, so the rewrite yields the
+    # SAME file: unchanged=1 is the correct expectation (first cut of this case asserted 0 and was
+    # wrong about the test, not the code). The LF-clean check below is the CRLF assertion proper.
+    IDX_TOOL="$T/crlf.py";                                                     _case "CRLF output, same rows" 0 0 1
+    [ "$(tr -cd '\r' < "$IDX_FILE" | wc -c)" -eq 0 ] && { pass=$((pass+1)); echo "  OK      stored index is LF-clean after CRLF input"; } || { fail=$((fail+1)); echo "  FAIL    stored index still carries CR"; }
+    printf '%s\n' "$seed" > "$IDX_FILE"
+    # E. same-count MUTATION of S2 -> exactly 1 row warning
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tCHANGEDHASH1")\n' > "$T/mut.py"
+    IDX_TOOL="$T/mut.py";                                                      _case "same-count MUTATION" 1 0 0
+    # F. same-count DELETE S2 + ADD S3 -> exactly 1 row warning (DISAPPEARED)
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/del.py"
+    # PASS 3 (CTO grade 92 / 2026-09-02, bar (iii)+(iv)): same-count DELETE+ADD is CTO's F2 -- a real row dropped
+    # AND a row appended in ONE sample hides a transient short exactly. It is TWO-POLL now: poll 1 provisional
+    # (no DISAPPEARED, COUNT-ONLY, the dropped row KEPT, the appended row RECORDED -- the write is a MERGE);
+    # poll 2 still missing -> CONFIRMED. The old single-poll "1 warning" expectation encoded the defect.
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/del.py";                                  _case "F2 DELETE+ADD same count, poll 1: provisional, merge write" 0 1 0
+    rm -f "$PROV_FILE"; printf '%s\n' "$seed" > "$IDX_FILE"; IDX_TOOL="$T/del.py"; _index_diff >/dev/null 2>&1
+    if [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S2')" -eq 1 ] && [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S3')" -eq 1 ]; then pass=$((pass+1)); echo "  OK      F2 poll 1: dropped row KEPT and appended row RECORDED (merge, not copy)"; else fail=$((fail+1)); echo "  FAIL    F2 poll 1 index: $(tr -d '\r' < "$IDX_FILE" | cut -f2 | tr '\n' ' ')"; fi
+    IDX_TOOL="$T/del.py";                                                      _case "F2 DELETE+ADD same count, poll 2: CONFIRMED" 1 0 0
+    rm -f "$PROV_FILE"
+    # SHORT live (successful tool, FEWER rows than stored) -- the case 3.0.0_SA_CVO saw fire falsely at
+    # 19:0xZ 2026-09-02 (ADVI_PERFRP-S1 "DISAPPEARED" while present in the file) and CVO~A confirmed
+    # independently @217ffafada. Repair bar (CVO~A): a first short result is PROVISIONAL -- no warn, no
+    # replace -- and absence is confirmed against the RAW corpus before any DISAPPEARED is emitted.
+    # RAW_ROOT lets this suite point the corpus check at a temp tree instead of the live channel.
+    # PASS 2 (3.0.0_SA_CVO, Andrew "All approved go" ~20:4xZ; CTO 92746 race note taken): a short
+    # result is PROVISIONAL across POLLS, not confirmed by re-reading the raw file in the SAME poll --
+    # a write does not straddle two polls, a same-poll grep can land inside it. So absence is
+    # CONFIRMED only when the NEXT poll's sample still lacks the id. Four cases, each two polls where
+    # it matters; PROV_FILE is the cross-poll carrier and the selftest points it at the temp tree.
+    PROV_FILE="$T/prov.tsv"; rm -f "$PROV_FILE"
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\n' > "$T/short.py"
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb")\n' > "$T/whole.py"
+    # (a) TRANSIENT SHORT, poll 1: no row-warn, COUNT-ONLY on stderr, index UNCHANGED, id marked provisional.
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py";                                _case "SHORT poll 1: provisional, no warn, index kept" 0 1 1
+    # (b) RECOVERY, poll 2 whole after a provisional short: no warnings at all, provisional cleared, index replaced (same rows).
+    rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1; IDX_TOOL="$T/whole.py"; _case "SHORT then WHOLE: recovery, silent, provisional cleared" 0 0 1
+    [ -s "$PROV_FILE" ] && { fail=$((fail+1)); echo "  FAIL    provisional file not cleared after recovery"; } || { pass=$((pass+1)); echo "  OK      provisional file cleared after recovery"; }
+    # (c) CONFIRMED DELETION, poll 2 still short with the SAME id missing: DISAPPEARED fires NOW, index = stored minus that row.
+    IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1;                       _case "SHORT twice, same id: CONFIRMED DISAPPEARED on poll 2" 1 0 0
+    # The index assertion must read the file RIGHT AFTER the confirming poll -- _case re-seeds at its
+    # end, so a check placed after _case sees the seed, never the drop (first cut of this suite did).
+    rm -f "$PROV_FILE"; printf '%s\n' "$seed" > "$IDX_FILE"; IDX_TOOL="$T/short.py"
+    _index_diff >/dev/null 2>&1; _index_diff >/dev/null 2>&1
+    if [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S2')" -eq 0 ] && [ "$(tr -d '\r' < "$IDX_FILE" | grep -c 'P-S1')" -eq 1 ]; then pass=$((pass+1)); echo "  OK      confirmed row dropped from stored index; the present row kept"; else fail=$((fail+1)); echo "  FAIL    stored index after confirmation: $(tr -d '\r' < "$IDX_FILE" | cut -f2 | tr '\n' ' ')"; fi
+    printf '%s\n' "$seed" > "$IDX_FILE"; rm -f "$PROV_FILE"
+    # (d) CONCURRENT-APPEND BOUNDARY: live LONGER than stored, every stored row present: no warnings, replace.
+    printf 'print("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S1\\taaaaaaaaaaaa")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S2\\tbbbbbbbbbbbb")\nprint("org/surprise_channel/P/INVESTIGATION_v1.md\\tP-S3\\tcccccccccccc")\n' > "$T/longer.py"
+    IDX_TOOL="$T/longer.py";                                                   _case "live LONGER than stored, all present: append boundary, silent, replace" 0 0 0
+    # (e) E2 SECOND LIMB (CTO's stated bound, narrowed): a row short on TWO consecutive polls but STILL PRESENT
+    # in its raw file must NOT be confirmed -- the index tool is omitting a present row. RAW_ROOT aims the
+    # confirm-time file check at the temp tree; production reads REPO_ROOT. The residual is now two
+    # INDEPENDENT races (index short on poll N AND the raw read racing a write on poll N+1), not one.
+    mkdir -p "$T/org/surprise_channel/P"; printf '  "id": "P-S1",\n  "id": "P-S2",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    RAW_ROOT="$T"; rm -f "$PROV_FILE"; IDX_TOOL="$T/short.py"; _index_diff >/dev/null 2>&1
+    IDX_TOOL="$T/short.py";                                                    _case "E2: short twice but id STILL IN raw file -> NOT confirmed" 0 1 1
+    unset RAW_ROOT; rm -f "$PROV_FILE"
+    # TWO ROOTS (CTO repoint 2026-09-02): _watched_files sees a tree investigation doc beside a flat
+    # one, and _project_of names the PROJECT for both shapes (a tree path's basename(dirname) is
+    # "investigations", which is what the pre-repoint function would have reported).
+    mkdir -p "$T/org/surprise_channel/P" "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations"
+    printf '  "id": "P-S1",\n' > "$T/org/surprise_channel/P/INVESTIGATION_v1.md"
+    printf '  "id": "ETFS_TREEPRJ-S1",\n' > "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md"
+    _saved_channel="$CHANNEL_DIR"; _saved_root="$REPO_ROOT"
+    CHANNEL_DIR="$T/org/surprise_channel"; REPO_ROOT="$T"
+    _n="$(_watched_files | grep -c .)"
+    if [ "$_n" -eq 2 ] && _watched_files | grep -q 'org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md'; then pass=$((pass+1)); echo "  OK      two roots: _watched_files sees the flat AND the tree doc (2 of 2)"; else fail=$((fail+1)); echo "  FAIL    two roots: _watched_files saw $_n doc(s), want 2 incl. the tree path"; fi
+    _p="$(_project_of "$T/org/missions/D8/ETFS/ETFS_TREEPRJ/surprise-channel/investigations/INVESTIGATION_v1.md")"
+    if [ "$_p" = "ETFS_TREEPRJ" ]; then pass=$((pass+1)); echo "  OK      _project_of on a tree path -> ETFS_TREEPRJ"; else fail=$((fail+1)); echo "  FAIL    _project_of on a tree path -> '$_p' (want ETFS_TREEPRJ)"; fi
+    _p="$(_project_of "$T/org/surprise_channel/P/INVESTIGATION_v1.md")"
+    if [ "$_p" = "P" ]; then pass=$((pass+1)); echo "  OK      _project_of on a flat path -> P"; else fail=$((fail+1)); echo "  FAIL    _project_of on a flat path -> '$_p' (want P)"; fi
+    CHANNEL_DIR="$_saved_channel"; REPO_ROOT="$_saved_root"
+    # R4-c NEW-row arm: stored has S1 only, live (whole.py) has S1+S2 -> exactly one "NEW ROW P-S2"
+    # line on STDOUT naming the row; a second poll (S2 now stored) names nothing. The synthetic tool
+    # answers --index-rows with three columns, so the line reads fields=UNREAD -- the fields half is
+    # exercised against the REAL validator below.
+    rm -f "$PROV_FILE"; printf 'org/surprise_channel/P/INVESTIGATION_v1.md\tP-S1\taaaaaaaaaaaa\n' > "$IDX_FILE"
+    IDX_TOOL="$T/whole.py"; quiet=0
+    _out="$(_index_diff 2>/dev/null)"
+    if [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW P-S2')" -eq 1 ] && [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW P-S1')" -eq 0 ]; then pass=$((pass+1)); echo "  OK      NEW-row arm: one line names P-S2 (S1, already stored, not named)"; else fail=$((fail+1)); echo "  FAIL    NEW-row arm: $(printf '%s\n' "$_out" | grep -c 'NEW ROW') NEW line(s): $(printf '%s' "$_out" | tr '\n' '|' | cut -c1-160)"; fi
+    _out="$(_index_diff 2>/dev/null)"
+    if [ "$(printf '%s\n' "$_out" | grep -c 'NEW ROW')" -eq 0 ]; then pass=$((pass+1)); echo "  OK      NEW-row arm: second poll, nothing new, names nothing"; else fail=$((fail+1)); echo "  FAIL    NEW-row arm: second poll named $(printf '%s\n' "$_out" | grep -c 'NEW ROW') row(s)"; fi
+    _n7="$(python "$REPO_ROOT/.tools/surprise-corpus-validate.py" --index-rows 2>/dev/null | awk -F'\t' 'NF==7' | grep -c .)"
+    _n3="$(python "$REPO_ROOT/.tools/surprise-corpus-validate.py" --index 2>/dev/null | grep -c .)"
+    if [ "$_n7" -gt 0 ] && [ "$_n7" -eq "$_n3" ]; then pass=$((pass+1)); echo "  OK      real validator: --index-rows emits 7 columns for every --index row ($_n7 of $_n3)"; else fail=$((fail+1)); echo "  FAIL    real validator: --index-rows 7-col rows=$_n7 vs --index rows=$_n3"; fi
+    rm -rf "$T"
+    echo "selftest: $pass/$((pass+fail)) PASS"
+    [ "$fail" -eq 0 ]
+}
+
 case "$MODE" in
+selftest)
+    _selftest; exit $?
+    ;;
 status)
     if [ ! -f "$STATE_FILE" ]; then
         echo "surprise-watch: NO WATERMARK for $SERIAL (never run). Next run seeds a baseline."
@@ -282,7 +539,7 @@ if [ ! -f "$STATE_FILE" ]; then
     echo "surprise-watch: baseline seeded -- ${LAST_FILES} file(s), ${LAST_ROWS} row(s); pre-existing rows NOT notified" >&2
 fi
 
-echo "surprise-watch: STREAM mode for $SERIAL watching $CHANNEL_DIR/*/INVESTIGATION_v* (persistent; READ-ONLY on the watched files; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep)/15s)" >&2
+echo "surprise-watch: STREAM mode for $SERIAL watching $CHANNEL_DIR/*/INVESTIGATION_v* + org/missions/D*/*/*/surprise-channel/investigations/ (two roots; state $STATE_DIR) (persistent; READ-ONLY on the watched files; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep)/15s)" >&2
 
 while true; do
     if [ "$PARENT_CHECK" -eq 1 ] && ! kill -0 "$WATCH_PARENT" 2>/dev/null; then

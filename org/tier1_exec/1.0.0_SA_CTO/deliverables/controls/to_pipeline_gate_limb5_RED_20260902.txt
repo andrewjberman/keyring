@@ -1,0 +1,3 @@
+== gate under test: C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/f57f7d28-0ee0-4349-91c1-8cede3c97975/scratchpad/togate_head.py ==
+  DEFECT  gate has no _prd_conformance -- limb 5 absent (step-4 shape unchecked)
+DEFECTS: 8

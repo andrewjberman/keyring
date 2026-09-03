@@ -85,6 +85,30 @@ def _owns_home_folder(agent_norm: str, agent_base: str, path: str,
     return False
 
 
+_TREE_DELIV_RE = re.compile(r"^org/missions/[^/]+/[^/]+/[^/]+/deliverables/([^/]+)/.+")
+
+
+def _owns_tree_deliverables(agent_norm: str, agent_base: str, path: str) -> bool:
+    """Project-tree deliverables convention (ADHC_OWNPTH.004, 2026-09-02; spec s.6 option ii,
+    Andrew-ruled ~20:0xZ "deliverables/{serial}/ sub-folders"; CTO builds it under the COO/CTO
+    prerequisite split @a8d63f097c).
+
+    True iff `path` is org/missions/<D>/<MACRO>/<PROJECT>/deliverables/<SERIAL>/** and <SERIAL> is
+    the committer's own identity (self, or the tilde-stripped base of a ~lane). The PATH carries the
+    owner, so the TO's `to:` value never has to be resolved by a path gate -- the "one hard part" of
+    s.6 closed by convention, same posture as the home-folder clause: additive, consulted only after
+    enumeration fails, never revokes, and can never reach another serial's folder. A file directly
+    under deliverables/ (no serial folder) matches nothing here and stays refused.
+    """
+    m = _TREE_DELIV_RE.match(path.replace("\\", "/").lstrip("/"))
+    if not m:
+        return False
+    owner = _normalize_serial(m.group(1))
+    if owner == agent_norm:
+        return True
+    return agent_base != agent_norm and owner == agent_base
+
+
 try:
     import yaml as _yaml
     def _load_yaml(path: str) -> dict:
@@ -168,6 +192,10 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
         # tier-dir set (no org/*/ wildcard); scoped to logs+task_orders only.
         if _owns_home_folder(agent_norm, agent_base, path,
                              _home_folder_tier_dirs(paths_config)):
+            return True
+        # ADHC_OWNPTH.004 (2026-09-02): the project tree's deliverables/<SERIAL>/ convention -- 4th
+        # clause, same additive-after posture. See _owns_tree_deliverables.
+        if _owns_tree_deliverables(agent_norm, agent_base, path):
             return True
         return False
 

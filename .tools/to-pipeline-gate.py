@@ -35,7 +35,16 @@ import re
 import subprocess
 import sys
 
-TO_PATH_RE = re.compile(r"(^|/)org/.*/task_orders/[^/]+\.md$")
+# TWO ROOTS (project-tree spec s.7/s.8, Andrew-ruled 2026-09-02 ~20:0xZ; `task-orders` with the hyphen is
+# the TREE spelling, prospective only): the flat seat-dir task_orders/ population stays exactly as it is;
+# the tree adds org/missions/D*/MACRO/PROJECT/task-orders/. A gate that reads one root is blind to the
+# other for the whole dual-register period.
+# The tree's level grammar is DATA: org/standards/PROJECT_TREE.contract.json (COO, contract_version 0.1.0)
+# -- directive folder ^D(0|[1-9][0-9]?)$, task_orders_glob org/missions/D*/*/*/task-orders/*.md. The
+# regexes below are that contract's values; a change there is a change here, stated in its `readers`.
+_TREE_D = r"D(?:0|[1-9][0-9]?)"
+TO_PATH_RE = re.compile(r"(^|/)org/.*/task_orders/[^/]+\.md$|(^|/)org/missions/" + _TREE_D + r"/[^/]+/[^/]+/task-orders/[^/]+\.md$")
+TREE_TO_RE = re.compile(r"(^|/)(org/missions/(" + _TREE_D + r")/([^/]+)/([^/]+))/task-orders/[^/]+\.md$")
 DECOMP_RE = re.compile(r"<decomp_ref>(.*?)</decomp_ref>", re.S)
 PREFLIGHT_RE = re.compile(r"<preflight>(.*?)</preflight>", re.S)
 NONE_WORD_RE = re.compile(r"^\W*(NONE|N/?A|NO\b)", re.I)
@@ -173,22 +182,62 @@ def _project_of(rel):
     return m.group(1) if m else None
 
 
+def _project_row_rel(root, rel):
+    """(code, rel_json, err): the TO's project code, the repo-relative path of its register row, and an
+    error string when the path itself is inconsistent. ONE resolver for BOTH roots, used by every limb:
+      TREE  org/missions/D*/MACRO/PROJECT/task-orders/X.md -> org/missions/D*/MACRO/PROJECT/project.json
+            -- derived from the PATH, never looked up; the filename's code must equal the folder's
+            PROJECT, and a TO filed under another project's folder is an identity defect, reported.
+      FLAT  org/.../task_orders/PROJECT.TO-x.md -> org/projects/PROJECT.json, the EXACT code only.
+    THE WALK-BACK (FOO_BAR_BAZ -> FOO_BAR -> FOO) IS RETIRED, in all four places it lived: once macro
+    folders exist a walked-back code resolves a PROJECT to its MACRO (spec s.7). Measured before
+    retiring it (2026-09-02): of 2,235 flat TOs, 1,968 resolve exactly, 264 have no row under any
+    spelling, and THREE resolved only by walk-back -- every one to a row that is not its project
+    (SCTY_ONBOARDING_GUARDRAILS -> SCTY, ADHC_PREFLT_TO -> ADHC_PREFLT, ADHC_COMPIL_V2 -> ADHC_COMPIL).
+    It was already wrong three times and had never once saved a correct resolution."""
+    code = _project_of(rel)
+    if not code:
+        return None, None, None
+    m = TREE_TO_RE.search(rel.replace("\\", "/"))
+    if m:
+        if m.group(5) != code:
+            return code, None, ("%s: the filename says project %r but the tree folder is %r. A tree TO "
+                                "lives in ITS project's task-orders/ -- the path is the membership."
+                                % (rel, code, m.group(5)))
+        rel_json = m.group(2) + "/project.json"
+        # R-iv (CVO review @580c4f72a2): the ROW's project_code must equal the folder too. The generator's
+        # R4 catches it when `check` runs; the gate reads the row ITSELF here, so a TO cannot be graded
+        # against a row that claims another project. The read is best-effort: an unreadable row is layer
+        # 3's refusal, not this one's.
+        try:
+            import json as _j
+            with open(os.path.join(root, rel_json), "r", encoding="utf-8") as fh:
+                pc = _j.load(fh).get("project_code")
+        except Exception:  # noqa: BLE001
+            pc = None
+        if pc is not None and pc != m.group(5):
+            return code, None, ("%s: the tree row %s says project_code %r but its folder is %r. Two carriers of "
+                                "one identity disagree; the row is graded against nothing until they agree "
+                                "(generator refusal R4)." % (rel, rel_json, pc, m.group(5)))
+        return code, rel_json, None
+    return code, "org/projects/%s.json" % code, None
+
+
 def check_project_stage(root, rel):
     """LAYER 3: the TO's project must exist and declare a dep_stage from the ratified enum."""
     import json
-    code = _project_of(rel)
+    code, rel_json, err = _project_row_rel(root, rel)
     if not code:
         return ["%s: filename declares no PROJECT code -- a TO is named "
                 "PROJECT.TO-NAME.md so its project is resolvable without opening it" % rel]
-    p = os.path.join(root, "org", "projects", code + ".json")
-    # Walk the code back the way the estate's own resolvers do (FOO_BAR_BAZ -> FOO_BAR -> FOO).
-    cand = code
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    if err:
+        return [err]
+    p = os.path.join(root, rel_json)
+    cand = rel_json  # the messages below name the row by PATH, which is unambiguous across two roots
     if not os.path.isfile(p):
-        return ["%s: NO project JSON for %r (org/projects/%s.json). A TO cannot be cut against "
-                "an unregistered project -- registration is stage 1." % (rel, code, code)]
+        return ["%s: NO project row at %s. A TO cannot be cut against an unregistered project -- "
+                "registration is stage 1 (tree: mkdir + project.json in ONE commit; flat: "
+                "org/projects/<CODE>.json, exact code, no walk-back)." % (rel, rel_json)]
     try:
         with open(p, "r", encoding="utf-8") as fh:
             doc = json.load(fh)
@@ -260,14 +309,11 @@ def _prd_paths(doc):
 def check_endpoint_section(root, rel):
     """LIMB 4: a pipeline-registered project's PRD must carry a non-empty ENDPOINT section."""
     import json
-    code = _project_of(rel)
-    if not code:
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
         return [], []
-    p = os.path.join(root, "org", "projects", code + ".json")
-    cand = code
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    p = os.path.join(root, rel_json)
+    cand = code  # the messages below name the project by CODE
     if not os.path.isfile(p):
         return [], []          # layer 3 already refuses this; do not double-report
     try:
@@ -308,13 +354,13 @@ def check_endpoint_section(root, rel):
         except Exception as exc:  # noqa: BLE001
             missing.append("%s (unreadable: %s)" % (rp, exc))
             continue
-        idx = body.find(ENDPOINT_HEADING)
-        if idx == -1:
-            missing.append("%s (no ENDPOINT heading)" % rp)
+        # Top-level heading only: a fenced, illustrative copy of the title (as _PRD_TEMPLATE.md
+        # carries) must not satisfy this limb (CVO~A @dddd96477d falsifier 1, shared with limb 5).
+        section = _top_section(body, ENDPOINT_HEADING)
+        if section is None:
+            missing.append("%s (no top-level ENDPOINT heading)" % rp)
             continue
-        tail = body[idx + len(ENDPOINT_HEADING):]
-        nxt = tail.find("\n## ")
-        section = (tail if nxt == -1 else tail[:nxt]).strip()
+        section = section.strip()
         if len(section) < 12:
             missing.append("%s (ENDPOINT heading present but section EMPTY)" % rp)
             continue
@@ -328,6 +374,218 @@ def check_endpoint_section(root, rel):
               "ask 'does the PRD name this outcome?', so a scope change silently reroutes as a spec "
               "error -- and with the outcome_ref gate live it becomes UNFILEABLE instead."
               % (rel, cand, len(paths), ENDPOINT_HEADING, "; ".join(missing)))], [])
+
+
+PRD_HEADER_SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
+MANIFEST_HEADING_RE = re.compile(r"^##\s+.*SURFACE MANIFEST", re.M | re.I)
+PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
+# An outcome DEFINITION is the id at LINE START followed by 2+ spaces and text -- the card form
+# /endpoint --forward emits. A MENTION ("a row citing `FWD-9` passes") is mid-line and does not
+# match; neither does a possessive at line start ("FWD-7's message ...", no 2-space gap).
+# MEASURED before this limb existed: a bare id sweep of ETFS_GUARDRAIL_PRD.md read NINE outcomes
+# against a header listing EIGHT, because the ENDPOINT section QUOTES a CVO finding about FWD-9.
+# A limb counting mentions would refuse its own first PRD on a quotation.
+FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
+
+
+# A fence OPENER by the CommonMark grammar the estate's documents actually use: 0-3 spaces of indent,
+# then a run of THREE OR MORE backticks or tildes, then an info string. A backtick opener's info
+# string may not itself contain a backtick (that line is inline code, not a fence).
+_FENCE_OPEN_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")
+# A top-level heading: '## ' at COLUMN 0, no leading whitespace. This is the one grammar used for the
+# heading being sought AND for the boundary of the section it introduces. Stricter than CommonMark
+# (which admits 1-3 spaces) ON PURPOSE: an indented heading the gate cannot see makes limb 4 REFUSE
+# loudly ("no ENDPOINT section") -- fail-closed. The fence grammar below is PERMISSIVE for the same
+# reason in the other direction: a fence the gate fails to blank lets a heading INSIDE it count --
+# fail-open. Strict where a miss refuses; permissive where a miss admits.
+_H2_RE = re.compile(r"(?m)^## [^\n]*$")
+
+
+def _blank_fences(text):
+    """A SAME-LENGTH copy of text with every fenced block turned to spaces (newlines kept), so an
+    offset found in the copy indexes the ORIGINAL. This is how a heading is found at TOP LEVEL only
+    while the section it introduces -- which may itself contain fenced blocks, like the ENDPOINT's
+    FWD cards -- is sliced intact from the original.
+
+    A LINE SCANNER, not a regex, because the fence grammar is stateful: a block opened by a run of N
+    markers closes only at a line of the SAME marker with a run of AT LEAST N (0-3 spaces of indent,
+    nothing else but trailing whitespace), and a block never closed runs to END OF FILE. Each rule is
+    a falsifier CVO~A landed on the earlier regex forms:
+      @df87b39f6e f3/f4  ``` only was blanked -> a ~~~ fence hid nothing
+      @ef6a37e098 f7     a ~~~~ opener could not be closed by an exact-three closer -> the regex
+                         failed to MATCH and the whole block stayed visible
+      @ef6a37e098 f8     a 1-space-indented ``` fence (legal Markdown, present in this estate's
+                         architecture documents) was not a fence at column 0 -> visible
+      @ef6a37e098 f11    a ```` outer block was closed by the ``` opener of an INNER FWD card -> the
+                         outer block's tail stayed visible
+      @ef6a37e098        an EOF-unclosed fence -- Markdown blanks it to the end; the regex needed a
+                         closer to match at all, so it blanked nothing
+    Every one of those is fail-OPEN: a heading inside an unblanked fence counts as top level."""
+    out = []
+    fence_char = None
+    fence_len = 0
+    for line in text.split("\n"):
+        body = line.rstrip("\r")
+        if fence_char is None:
+            m = _FENCE_OPEN_RE.match(body)
+            if m and not (m.group(2)[0] == "`" and "`" in m.group(3)):
+                fence_char = m.group(2)[0]
+                fence_len = len(m.group(2))
+                out.append(" " * len(line))
+            else:
+                out.append(line)
+            continue
+        stripped = body.lstrip(" ")
+        run = stripped.rstrip(" \t")
+        if (len(body) - len(stripped) <= 3 and run and set(run) == {fence_char}
+                and len(run) >= fence_len):
+            fence_char = None
+        out.append(" " * len(line))
+    return "\n".join(out)
+
+
+def _top_section(text, heading):
+    """The ORIGINAL-text body of the section introduced by `heading` when that heading is a
+    TOP-LEVEL heading -- '## ' at column 0, outside every fence -- or None. Body runs to the next
+    top-level '## ' heading by the SAME grammar.
+
+    `heading` is the exact title string (matched as a WHOLE LINE: '^## <title>$' with trailing
+    whitespace tolerated) or a compiled regex that is itself anchored at line start.
+
+    History of this function, kept because each cut was falsified by CVO~A on its own bytes:
+      @dddd96477d f1  plain str.find() selected an ILLUSTRATIVE title inside a ``` fence first
+      @df87b39f6e f1  the title embedded MID-LINE in prose satisfied the blanked-copy find()
+      @df87b39f6e f2  the title in INDENTED code (not fenced) satisfied it
+      @df87b39f6e f3  a section wholly inside a ~~~ fence satisfied it
+    One anchored, unindented, whole-line, fence-aware grammar closes all four at once."""
+    blank = _blank_fences(text)
+    if isinstance(heading, str):
+        pat = re.compile(r"(?m)^" + re.escape(heading) + r"[ \t]*$")
+    else:
+        pat = heading
+    m = pat.search(blank)
+    if not m:
+        return None
+    end = m.end()
+    nxt = _H2_RE.search(blank, end)
+    return text[end:] if not nxt else text[end:nxt.start()]
+
+
+def _prd_conformance(prd_text, header_schema, expect):
+    """LIMB 5 core, pure: complaints about ONE PRD's step-4 SHAPE. `expect` = {project, directive,
+    fabric} from the project JSON (missing keys are not compared). Returns [] when conformant.
+
+    ANDREW-DIRECT 2026-09-02 (/open-calls CALL 2, "All recs approved"): a step-4 conformance check,
+    authorized as ONE limb inside THIS existing gate and never a second gate. What it refuses:
+      (a) no PRD_HEADER block (the FIRST fenced ```json in the file) or one that fails
+          org/standards/PRD_HEADER.schema.json
+      (b) header identity disagreeing with the register row (project / directive / fabric)
+      (c) no SURFACE MANIFEST section (the step-4 -> step-5 handoff contract, CVO~A adopted)
+      (d) header.endpoint_outcomes != the outcomes DEFINED in the ENDPOINT section, either direction
+    It does NOT judge the PRD's content -- only that the machinery step 5 and step 10 read is present
+    and self-consistent."""
+    import json  # local, matching limb 4's style -- this module does not import json at top level
+    out = []
+    m = PRD_FENCE_RE.search(prd_text)
+    if not m:
+        return ["PRD carries no fenced ```json block -- the PRD_HEADER block must be the FIRST fenced "
+                "json in the file (org/standards/PRD_HEADER.schema.json)"]
+    try:
+        header = json.loads(m.group(1))
+    except Exception as exc:  # noqa: BLE001
+        return ["PRD_HEADER block does not parse as JSON (%s)" % exc]
+    try:
+        import jsonschema
+    except ImportError:
+        return ["jsonschema is not importable -- the PRD_HEADER limb cannot run; REFUSED (fail-closed)"]
+    for err in sorted(jsonschema.Draft7Validator(header_schema).iter_errors(header),
+                      key=lambda e: list(e.path)):
+        ptr = "/" + "/".join(str(p) for p in err.path) if err.path else "/"
+        out.append("PRD_HEADER violation at %s -- %s" % (ptr, err.message[:140]))
+    if out:
+        return out
+    for key in ("project", "directive", "fabric"):
+        want = expect.get(key)
+        if want is not None and header.get(key) != want:
+            out.append("PRD_HEADER.%s=%r but the register row says %r -- two carriers of one quantity "
+                       "must agree" % (key, header.get(key), want))
+    # CVO~A re-grade @d019922d68 (A): a heading INSIDE a code fence and an EMPTY heading both used to
+    # satisfy this. Headings are searched with every fenced block blanked out, and the section must
+    # carry a non-trivial body before the next top-level heading. Row-schema enforcement is NOT
+    # widened into here -- that is step 5's contract, not this limb's.
+    m_body = _top_section(prd_text, MANIFEST_HEADING_RE)
+    if m_body is None:
+        out.append("PRD has no top-level SURFACE MANIFEST section (a heading inside a code fence does "
+                   "not count) -- step 5 cannot run a battery on prose (CVO~A @0d272d257c; contract "
+                   "@4bb2c5d94f)")
+    elif len(m_body.strip()) < 40:
+        out.append("SURFACE MANIFEST heading is present but the section is EMPTY (%d chars). A "
+                   "heading is not a manifest." % len(m_body.strip()))
+    section = _top_section(prd_text, ENDPOINT_HEADING)
+    if section is None:
+        return out  # limb 4 owns the missing-ENDPOINT complaint; do not double-report
+    defined = set(FWD_DEF_RE.findall(section))
+    listed = set(header.get("endpoint_outcomes") or [])
+    key = lambda s: int(s.split("-")[1])  # noqa: E731
+    if defined - listed:
+        out.append("ENDPOINT section DEFINES %s but PRD_HEADER.endpoint_outcomes omits them"
+                   % ", ".join(sorted(defined - listed, key=key)))
+    if listed - defined:
+        out.append("PRD_HEADER.endpoint_outcomes lists %s but the ENDPOINT section defines no such outcome "
+                   "(a mention in prose is not a definition)" % ", ".join(sorted(listed - defined, key=key)))
+    return out
+
+
+def check_prd_conformance(root, rel):
+    """LIMB 5 wrapper: resolve the TO's project the same way limb 4 does, then grade every named PRD
+    that carries an ENDPOINT section. Reads PRD and schema from the STAGED INDEX, so a PRD edited in
+    the same commit is graded as it will be committed."""
+    import json as _json
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
+        return [], []
+    p = os.path.join(root, rel_json)
+    if not os.path.isfile(p):
+        return [], []
+    # CVO~A re-grade @d019922d68 (B): the project row is read from the STAGED INDEX like everything
+    # else this limb compares -- a worktree read let staged directive=D9 pass against a worktree/header
+    # D8. The worktree file above is used only to resolve the row; the CONTENT comes from the index.
+    staged_json = _staged_blob(root, rel_json)
+    if staged_json is None:
+        return (["%s: %s unreadable from the staged index -- the step-4 conformance limb cannot compare "
+                 "the header against the register; REFUSED (fail-closed)" % (rel, rel_json)], [])
+    try:
+        doc = _json.loads(staged_json)
+    except Exception as exc:  # noqa: BLE001
+        return (["%s: %s does not parse from the staged index (%s) -- REFUSED" % (rel, rel_json, exc)], [])
+    if doc.get("dep_stage") in (None, "REGISTERED"):
+        return [], []
+    paths = _prd_paths(doc)
+    if not paths:
+        return [], []
+    schema_txt = _staged_blob(root, PRD_HEADER_SCHEMA_REL)
+    if schema_txt is None:
+        return (["%s: %s unreadable from the staged index -- the step-4 conformance limb cannot run; "
+                 "REFUSED (fail-closed)" % (rel, PRD_HEADER_SCHEMA_REL)], [])
+    try:
+        header_schema = _json.loads(schema_txt)
+    except Exception as exc:  # noqa: BLE001
+        return (["%s: %s does not parse (%s) -- REFUSED" % (rel, PRD_HEADER_SCHEMA_REL, exc)], [])
+    expect = {k: doc.get(k) for k in ("project_code", "directive", "fabric")}
+    expect["project"] = expect.pop("project_code")
+    v, notes, graded = [], [], 0
+    for rp in paths:
+        rp = rp.replace("\\", "/")
+        txt = _staged_blob(root, rp)
+        if txt is None or _top_section(txt, ENDPOINT_HEADING) is None:
+            continue  # limb 4 reports absent/unreadable/endpoint-less PRDs
+        graded += 1
+        for c in _prd_conformance(txt, header_schema, expect):
+            v.append("%s: %s: %s" % (rel, rp, c))
+    if graded:
+        notes.append("%s: step-4 conformance graded %d PRD(s) with an ENDPOINT section%s"
+                     % (rel, graded, "" if v else " -- OK"))
+    return v, notes
 
 
 def check_file(root, rel):
@@ -370,6 +628,10 @@ def check_file(root, rel):
     ep_v, ep_notes = check_endpoint_section(root, rel)
     v.extend(ep_v)
     notes.extend(ep_notes)
+    # LIMB 5 -- step-4 conformance (Andrew-direct 2026-09-02 CALL 2): one more limb on THIS gate.
+    pc_v, pc_notes = check_prd_conformance(root, rel)
+    v.extend(pc_v)
+    notes.extend(pc_notes)
 
     pm = PREFLIGHT_RE.search(text)
     if not pm:
@@ -420,13 +682,11 @@ def check_complete_flip(root, rel):
         return []  # not a flip to a terminal state
 
     import json
-    code = _project_of(rel)
-    if not code:
+    code, rel_json, err = _project_row_rel(root, rel)
+    if not code or err:
         return []
-    cand, p = code, os.path.join(root, "org", "projects", code + ".json")
-    while not os.path.isfile(p) and "_" in cand:
-        cand = cand.rsplit("_", 1)[0]
-        p = os.path.join(root, "org", "projects", cand + ".json")
+    p = os.path.join(root, rel_json)
+    cand = code  # the message below names the project by CODE
     if not os.path.isfile(p):
         return []
     try:
@@ -437,12 +697,20 @@ def check_complete_flip(root, rel):
         return []
 
     # Pipeline-registered AND flipping terminal: the instance must exist and be VALID.
+    # FLAT: <seat>/deliverables/<TO>.proof_of_spec.json beside <seat>/task_orders/. TREE (ruled
+    # 2026-09-02, s.6 option ii): deliverables/<serial>/ sub-folders, the owner in the path -- so the
+    # instance is searched one level down, under whichever serial the TO assigned.
+    stem = os.path.basename(rel).rsplit(".md", 1)[0]
+    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
+    to_dir = os.path.dirname(rel).replace("\\", "/")
+    if to_dir.endswith("/task-orders"):
+        import glob as _glob
+        cands = [c for n in names
+                 for c in _glob.glob(os.path.join(root, to_dir[:-len("/task-orders")], "deliverables", "*", n))]
+    else:
+        cands = [os.path.join(root, to_dir.replace("task_orders", "deliverables"), n) for n in names]
     inst = None
-    for cand_path in (
-            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
-                         os.path.basename(rel).rsplit(".md", 1)[0] + ".proof_of_spec.json"),
-            os.path.join(root, os.path.dirname(rel).replace("task_orders", "deliverables"),
-                         os.path.basename(rel).rsplit(".md", 1)[0] + "_PROOF_OF_SPEC.json")):
+    for cand_path in cands:
         if os.path.isfile(cand_path):
             inst = cand_path
             break

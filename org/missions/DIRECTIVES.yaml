@@ -31,18 +31,18 @@ as_of: "2026-08-19"  # stance cells D4/D7/D9 event-refreshed 20:3xZ per CTO vali
 
 directives:
   D0:
-    title: "Agent Infrastructure (Process Management)"
+    title: "Agent Infrastructure"
     directive: "docs/architecture/D0_INFRA_TIGHTENING_PRD.md"
     placement: "LAPTOP -- RULED (criterion b: ontology/infra local). The T1/kill-fix EXERCISE legs run on BOTH fabrics as small ferried verification kickoffs post-build, never as moved builds. Ontology lock-down tranche (T6/T7/T8, s3 set, T12) pinned LOCAL as a class. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [INFRASTRUCTURE.TOOLS, INFRASTRUCTURE.GRAPH, INFRASTRUCTURE.DEBT]
-      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS, NFRA_TORECORD]
+      projects: [NFRA_COMPTOOLS, NFRA_DEPLOYLEDGER, NFRA_DEPLOYCENSUS, NFRA_TORECORD, NFRA_CLDGRPH]
     stance: "Ongoing, laptop. Live legs: T1 broker primitives (design->0.8.0 build), T2 stamps,
       T4 two-homes declarations, REG-SCAN-ATOMCHECK + J3 (08-20, REQUIRED before INF binds),
       LD-0424 kill-instrument self-exclusion fix, GLDRNS wrapper disambiguation (08-25),
       the CRO-led infra-graph program."
   D1:
-    title: "Model Portfolios: Asset-Category Views"
+    title: "Model Portfolios"
     directive: "docs/architecture/D1_ASSET_CATEGORY_VIEWS_PRD.md"
     placement: "SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D1 is 'all model portfolio stuff' (CATVIEWS + NAMEDISCOVERY). SEQUENCING (1.0.0_SA_CTO, inside his 'can push'): work IN FLIGHT completes under its CURRENT laptop seat per Rule 27's scope clause; NEW D1 TOs cut at sitez. Rule 26 rides every move -- no ferried applies. This row is the DIRECTIVE-OWNERSHIP fact; it creates ZERO spawns (MSTR allocation freeze)."
     members:
@@ -66,7 +66,7 @@ directives:
       then the parity program (census MON-TUE, drive-to-EXACT); INF binds after J3 + A3-green,
       COT third. FAM heal = R-WATCH (Schwab-side outage; R..R+3 chain per @f79760179a)."
   D3:
-    title: "Account-Level Model Overlay"
+    title: "Portfolio Analytics"
     directive: "docs/architecture/D3_ACCOUNT_MODEL_OVERLAY_PRD.md"
     placement: "LAPTOP -- RULED (criterion a). CONFIRMED 2026-08-27 ~00:02Z, Andrew-direct, VERBATIM: 'account letl model overlay we can keep' -- answering the one-line ask on whether D3 fell inside his ~23:52Z 'all model portfolio stuff' move. IT DOES NOT: D3 STAYS LAPTOP while D1 and D8 go to SITEZ. Recorded because the ambiguity was real and a later reader would otherwise re-derive it from the same words. Record @f20a3ac5c6 (1.0.0_SA_CTO 74127). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
@@ -75,7 +75,7 @@ directives:
     stance: "CTO writes the PRD now (Mike-call user story verbatim); the SmartX<->BD/Schwab
       EXACT-JOIN spec is the early-startable precondition; build launches the day D1+D2 clear."
   D4:
-    title: 'Satellites "Positioning" Variant'
+    title: "Asset Management"
     directive: "docs/architecture/D4_ETF_POSITIONING_VARIANT_PRD.md"
     placement: "SITEZ -- CONFIRMED BY ANDREW, NOT INFERRED ANY LONGER. ANDREW-DIRECT 2026-09-01 ~15:2xZ at the 0.0.0_AB_MSTR terminal, answering a three-card /open-calls, VERBATIM: \"All your recs are correct.\" The prior text below flagged that moving the WHOLE directive was THIS SEAT'S INFERENCE from his placing the Asset Class Taxonomy on site Z -- reasoned from the register's own rule that placement attaches to a DIRECTIVE and never to a member -- and asked him to correct it if he had meant the member alone. HE DID NOT CORRECT IT; he ratified the reading. The inference is now his word and no future reader needs to re-derive it. NOTHING ELSE ABOUT THE ROW CHANGES. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- SITEZ -- THE NEXT PHASE, PLACED BY HIM. ANDREW-DIRECT 2026-09-01 ~14:3xZ at the 0.0.0_AB_MSTR terminal, VERBATIM: \"Asset Class Taxonomy should go in D4, and should be owned by sitez fabric. CTO~Z should take the transcript for it, which is in their downloads, and analyze the TAX SMA thread on teams on the subject, and come up with a PRD and they run that.\" He placed the ASSET CLASS TAXONOMY on site Z, and the register's own standing rule is that PLACEMENT ATTACHES TO THE DIRECTIVE, NEVER TO A MEMBER -- there is no way to express a site-Z-owned member inside a laptop-placed directive. So the whole row moves. THAT INFERENCE IS STATED RATHER THAN BURIED: if he meant the taxonomy alone to sit on site Z while D4 stayed laptop, the register cannot express that and he should say so. IT REVERSES A REVERT TAKEN TWENTY MINUTES EARLIER AND THAT IS NOT CHURN. LD-0497 moved this row to LAPTOP on his completion word, discharging a completion-bound that had sat eight days unfired. That act was correct on the facts it had. He has now opened the NEXT PHASE of the same directive and placed it on site Z -- the first flip closed a finished phase, the second opens a new one, and each answers a different question. SEVENTH placement on this row, all his; a reader takes the latest and must not read this as reopening the ones beneath it. OWNER NAMED BY HIM: 1.0.0_SA_CTO~Z takes the transcript, analyzes the TAX SMA Teams thread, AUTHORS THE PRD AND RUNS IT. Rule 27 stage 3 still precedes any TO. SCOPE: this moves the DIRECTIVE. It creates zero spawns, cuts no TO, and closes no face -- the four prior D4 faces were already closed by their issuers (SUPERSEDED and WITHDRAWN-NOT-EXECUTED, on measured grounds, not by a bulk stamp). --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- LAPTOP -- THE COMPLETION CONDITION IS SATISFIED AND THE REVERT IS TAKEN. ANDREW-DIRECT 2026-09-01 ~14:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM across three consecutive messages: \"D4 satellites is entirely done, we're ready to move onto the next phase of that work with the Asset Class Taxonomy initiative\" / \"POSN TENANCY is done too\" / \"the entire opal satellites produc and all of these projects are done\" / \"literally all of these ar edone\". THE PRIOR ROW WAS 'SITEZ -- UNTIL THE PROJECT IS DONE' and recorded, in its own text, that the bound had changed KIND from a DATE to a COMPLETION CONDITION -- that a date-bounded placement expires silently and correctly while a COMPLETION-BOUNDED ONE NEVER EXPIRES AND MUST BE REVERTED DELIBERATELY, that the revert is 0.0.0_AB_MSTR's ACT as register owner, and that it would be triggered by an EVENT NOBODY HAD YET DEFINED. Andrew has now defined the event by declaring the work done, so the trigger has fired and this is that act. THE REVERT TARGET IS NOT INVENTED: the superseded row carried its own revert target verbatim -- 'LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal)' -- and this row returns there rather than to a placement chosen now. SIXTH placement on this row, all his; a reader takes the latest and must not read this as reopening the ones beneath it. SCOPE: this moves the DIRECTIVE only. It creates zero spawns, cuts no TO and closes no TO face -- the four open D4 task orders are STALE FACES over finished work and closing a face is its ISSUER's act. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- SITEZ -- UNTIL THE PROJECT IS DONE (Andrew-direct 2026-08-24, MSTR~Z terminal, relayed by 0.0.0_AB_MSTR~Z, brief laneZ_ANDREW_DIRECT_20260824_NO_BQL_ETF_CONSTITUENT_PIPELINE_HANDOFF_TO_CTOZ.md @93d126c4aa on origin/SITEZ). VERBATIM: 'keep D4 on sitez until the project is done'. SUPERSEDES the same-day TODAY-ONLY placement below. FIFTH placement on this row in six days, all his. \u26d4 THE BOUND CHANGED KIND, NOT JUST LENGTH -- READ THIS BEFORE ACTING ON THE ROW: it was a DATE ('today only') and is now a COMPLETION CONDITION. A date-bounded placement expires silently and correctly; A COMPLETION-BOUNDED ONE NEVER EXPIRES AND MUST BE REVERTED DELIBERATELY. So the revert is still 0.0.0_AB_MSTR's ACT (register owner), and it is now triggered by an EVENT nobody has yet defined rather than by a clock everyone can read. \u26a0 THE CLOSING CONDITION IS NOT YET RULED AND I AM NOT INVENTING IT. His premise is the ETF constituent pipeline running end to end (bronze+silver per ETF from idiosyncratic issuer shapes -> unified parquet -> unified gold parquet in opal-data-etfs/gold/ -> platinum JSON serving in opal-data-portal-v2, reaching the frontend daily publish). 1.0.0_SA_CTO~Z is drafting that PRD; THE PRD DEFINES 'DONE' AND THIS ROW INHERITS IT. Until then the row is deliberately open-ended, and that is recorded rather than papered -- a placement whose exit nobody can state is a placement nobody dares touch. SCOPE NOTE, same-day: he also closed BQL ('No we're not doing BQL'), so the constituent LIST no longer waits on a spend word; bronze for both issuer channels stays in opal-data-assets. This is a MULTI-WEEK POSTURE now, not a day's loan. --- THE TODAY-ONLY PLACEMENT IT SUPERSEDES, preserved for provenance --- SITEZ -- TEMPORARY, TODAY ONLY (Andrew-direct 2026-08-24 ~17:4xZ, base CTO terminal, relayed by 1.0.0_SA_CTO msg 66261, record ANDREW_DIRECT_20260824_ETFS_TO_SITEZ_TODAY_NO_0824_UNION_RECORDING_BD_DASHBOARD.md). VERBATIM: 'we can temporarily move the directive for that ETFs work over to sitez machine in Directives.yaml. That can be their project for today.' SCOPE OF 'THAT ETFs WORK': the L1 order A4/A4.1 scoped additional script -- the derived Bloomberg layer accruing from the first run (current-day-only, so it loses a day per calendar day), issuer fill, and the constituent LIST as a BQL upgrade on his spend word ONLY -- plus the round-2 data-structure condition from his ~15:2xZ promote ruling. Whether the DEV-build frontend condition (GICS -> sub-categories) rides site Z today or waits for a laptop DE seat is 0.0.0_AB_MSTR~Z's read of 'that ETFs work'; CTO did not adjudicate it and neither did I. \u26d4 TEMPORARY MEANS TEMPORARY: 'today' is HIS word and this row reverts to the LAPTOP-OWNED placement preserved verbatim below without needing a new ruling -- but the revert is an ACT and it is 0.0.0_AB_MSTR's, not something that happens by the date changing. THIS IS THE FOURTH PLACEMENT ON THIS ROW IN FOUR DAYS, ALL HIS; a reader must take the latest and must not read this flip as reopening the ones beneath it. NOT A SPAWN-ORDER RATIFICATION: laptop lanes stay closed-out until his further word. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED, REVERT TARGET --- LAPTOP-OWNED -- RULED (Andrew-direct 2026-08-21 ~05:5xZ, CTO~A terminal), SUPERSEDING the ~02:5xZ SITEZ handoff on this same row (which itself superseded the 2026-08-19 LAPTOP ruling -- THREE placements on this row in 3 days, all his, latest binds). VERBATIM: 'I thought we might handle this on the sitez fabric because they have the bloomberg access but it probably makes more sense to decidedly own it here and just have MSTR~Z specifically operate on a defined deliverable.' SITE Z RETAINS ONE SCOPED EXECUTION LEG ONLY -- since 2026-08-21 ~14:1xZ that leg is the STANDING DAILY SCHEDULED Bloomberg pull per docs/architecture/ETFS_POSITIONING_DAILY_PULL_ORDER.md (extension made by Andrew's OWN daily-pull word at the CTO terminal, record @1cf66d7d93 -- not by any seat widening the prior 'single bounded pull' sentence; order delivered-and-READ, MSTR~Z ack of bus msg 7c2d1e21 at 14:13:47Z, operative as inline spec). They return DATA on the standing schedule and own none of the design, shape, producer or page. WHY THE REVERSAL IS GROUNDED RATHER THAN A PREFERENCE: the spec was thought to need Bloomberg access to read. It does not -- the live project is OneDrive-synced ON THE LAPTOP at '%USERPROFILE%/OneDrive - Opal Capital/Shared - Documents/OCIO Models/Dashboard/202511 Model Portfolio Exposure' (path VERIFIED to exist on this device by 0.0.0_AB_MSTR at the edit), so the field spec was readable with no Bloomberg access at all. Laptop ownership is the cheaper arrangement, not merely the preferred one. NOTE RETAINED FROM THE PRIOR PLACEMENT, still load-bearing: PLACEMENT ATTACHES TO THE DIRECTIVE, NEVER TO A MEMBER. PORTAL.MODEL_PORTFOLIOS is SHARED with D1 and D3 and this flip does not move them either -- a placement change on this row must never be read as moving the subgroup or its other parents, in EITHER direction."
     members:
@@ -246,7 +246,7 @@ directives:
       at this row's git history + PRD s.3.3. ETFS_CANON design gate RULED @6d62143d2d; the four
       ETFs join D1's taxonomy as SMA-category members -- one registry serves both."
   D5:
-    title: "Alt Research"
+    title: "Alternative Research"
     directive: "docs/architecture/D5_ALT_RESEARCH_PRD.md"
     placement: "LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
@@ -255,7 +255,7 @@ directives:
     stance: "CRO ingest lane continues; the build queue activates on Andrew's prioritization word.
       No register home yet -- an empty member set is honest where a plausible one is not."
   D6:
-    title: "Opal Analyst"
+    title: "Opal AI"
     directive: "docs/architecture/D6_OPAL_ANALYST_GRAPHQL_PRD.md"
     placement: "SITEZ -- RULED (Andrew): TO-C SharePoint binding + TO-D BBG standing read (sitez-only identity opal-gateway-bbg); LAPTOP: the GraphQL query layer. Kickoff ferries on CVO clearance."
     members:
@@ -312,12 +312,12 @@ directives:
       D7 therefore has a STANDING HUMAN CADENCE and its quiet weeks are EXPECTED, not
       stalled -- do not read low activity here as a staffing gap. No work created by this."
   D8:
-    title: "Model Portfolios Pipeline Fortification"
+    title: "Data Pipelines"
     directive: "docs/architecture/D8_MODEL_PORTFOLIOS_PIPELINE_FORTIFICATION_PRD.md"
     placement: "LAPTOP -- MOVED BACK 2026-09-01 ~03:0xZ by Andrew-direct at the 0.0.0_AB_MSTR terminal, VERBATIM: \"This is all correct but D8 on laptop\" -- answering a full read of the register's placement column that he confirmed as otherwise correct. SUPERSEDES the 2026-08-26 SITEZ placement preserved verbatim below. THIS IS THE SECOND PLACEMENT ON THIS ROW, BOTH HIS; a reader takes the latest and must not read this flip as reopening the one beneath it. SCOPE -- READ THIS BEFORE MOVING ANYTHING ELSE: he named D8 AND ONLY D8. The 2026-08-26 word that sent it away bundled it with 'all model portfolio stuff' (D1), but THIS word names one directive, so D1 DOES NOT MOVE WITH IT and stays SITEZ. Reading the bundle backwards out of a single-directive sentence would be adjudicating wider, which a relay may not do in either direction. D3 is likewise untouched and was already LAPTOP. WHY THE REGISTER WAS ALREADY BEHIND REALITY HERE, recorded because it makes the move a correction rather than a disruption: all three D8 members -- MDPF_COTREMEDIATION, MDPF_HEALGAP and AUTH_SELFHEAL -- were being worked ON THE LAPTOP through the night of 2026-08-31. AUTH_SELFHEAL was minted (LD-0492), its stage-2 PRD authored by 0.6.2_AE_PartnerETL and accepted by 1.0.0_SA_CTO, its stage-3 decomp authored by 2.0.0_SA_COO, and the cot --date 2026-08-31 one-shot fired from this fabric on his own word. The placement said SITEZ while every act happened here. SEQUENCING PRECEDENT, CARRIED NOT INVENTED: the superseded row records 1.0.0_SA_CTO's rule for the outbound move -- NOTHING SERVING MOVES MID-SERVE, work in flight completes under its current seat, new TOs cut at the destination, Rule 26 rides, zero spawns. That shape is on the record for a D8 move and is the obvious read for this one, but the DIRECTION is reversed and I am not restating it as though it were ruled for this move. 1.0.0_SA_CTO sequences; site Z's exec-sum listed this workstream as NOT STARTED and waiting on a planning breakdown, so there is little in flight to strand. CREATES ZERO SPAWNS. Placement attaches to the DIRECTIVE, never to a member. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- SITEZ -- MOVED 2026-08-26 from LAPTOP by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. D8 is named EXPLICITLY in his words. \u26d4 NOTHING SERVING MOVES MID-SERVE (1.0.0_SA_CTO sequencing): the 08-27 13:30Z fire COMPLETES on the laptop-applied chain under his 20:15Z arm-(a) word; the DIRECTIVE transfers on the register NOW and the fire's ACCEPTANCE READ re-routes to the sitez CVO seat with it. Work in flight completes under its current seat; NEW D8 TOs cut at sitez. Rule 26 rides; no ferried applies. ZERO spawns."
     members:
       subgroups: [PORTAL.MODEL_PORTFOLIOS]
-      projects: [MDPF_COTREMEDIATION, MDPF_HEALGAP, AUTH_SELFHEAL, ETFS_GUARDRAIL]
+      projects: [MDPF_COTREMEDIATION, MDPF_HEALGAP, AUTH_SELFHEAL, ETFS_GUARDRAIL, GLOBALALARM]
     stance: "RE-MINT, not an edit: the prior D8 ('Philosophy + benchmark modal live-edit') was CUT to
       DIRECTIVES_RETIRED.yaml 2026-08-20T20:32:35Z and carries nothing into this one -- the code is
       reused, the directive is new. Authority Andrew-direct 2026-08-25 ~14:20Z at the CTO terminal
@@ -335,7 +335,7 @@ directives:
       opal-data-portal-v2) is RECORDED AS DIRECTION in the PRD s.3 -- it diverges from CLAUDE.md
       Rule 17b, and NEITHER the law amendment NOR any migration is authorized by it."
   D9:
-    title: "Tax SMA Ops + YCharts"
+    title: "Opal Workflows"
     directive: "docs/architecture/D9_TAX_SMA_OPS_PRD.md"
     placement: "SITEZ -- RULED (Andrew): whole item, one seat (assess-first recon + SharePoint local-disk leg, zero applies). Kickoff ferries on CVO clearance."
     members:
@@ -358,12 +358,25 @@ directives:
       home, and its lack of movement this week is deliberate rather than a gap. The Tax half's
       gating dependency is unchanged (the meeting with Yang and Alyssa)."
   D10:
-    title: "Global Pipeline Structure"
+    title: "Partner Implementations"
     directive: "docs/architecture/D10_GLOBAL_PIPELINE_STRUCTURE_PRD.md"
     placement: "LAPTOP -- the estate this fabric owns; the canon binds every pipeline tree. CONFIRMED 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('global pipeline' named). Resting per his products-first word; placement is unaffected by rest. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: []
-      projects: [GLOBALALARM]
+      projects: []
+      members_note: "GLOBALALARM MOVED TO D8 2026-09-02 by 0.0.0_AB_MSTR (register owner) on
+        Andrew-direct, VERBATIM: \"Call 1 - I would put this in D8 yes.\" ⛔ THIS ROW IS NOW A
+        DIFFERENT WORKSTREAM FROM THE ONE ITS STANCE DESCRIBES. D10 was renamed
+        'Global Pipeline Structure' -> 'Partner Implementations' in the same session, and Andrew
+        CONFIRMED (VERBATIM: \"Yes it is.\") that this row IS the External Implementations block he
+        opened for the Canterbury class of work. The stance and `directive:` path below still
+        describe the pipeline-canon workstream and are PRESERVED UNMODIFIED rather than rewritten,
+        because they are the record of what was minted here on 2026-08-25 -- but a reader must take
+        the TITLE and this note as current and the stance as history until the row is re-stanced.
+        The pipeline-canon work itself is D8 by his word (\"the 'Global Pipeline Consolidation' work
+        is now resolutely going to be in D8\"), which is why its one project went there.
+        ⚠ EXPLICITLY EMPTY, NOT SILENTLY EMPTY: the Canterbury call is next week and nothing is
+        registered here yet."
     stance: "MINTED BY ANDREW HIMSELF 2026-08-25 ~18:4xZ at the CTO terminal (relayed 1.0.0_SA_CTO
       71188; PRD @afcac062ce). VERBATIM: 'Ok let''s create this under Directive 10, this will be
       Global Pipeline Structure. The premise is canonizing how things are ingested, taxonomy of
@@ -408,12 +421,12 @@ directives:
       else in D10 is EXISTING LAW BEING ENFORCED. ANDREW MAKES THAT AMENDMENT. Nothing here amends
       Rule 17b, authorizes a migration, or moves a served key (NEVER#3 unchanged)."
   D11:
-    title: "Substrate/Tooling Enhancements"
+    title: "Substrate & Tooling"
     directive: "docs/architecture/D11_SUBSTRATE_ANALYSIS_PRD.md"
     placement: "LAPTOP -- the semantic ladder and its generators live in this fabric; the qualification binds every rung, rail and generator. CONFIRMED UNCONDITIONAL 2026-08-26 by Andrew-direct 2026-08-26 ~23:52Z, VERBATIM: 'I would say agent infra, advi, substrate, global pipeline, all stays here. can push d8 and all model portfolio stuff over to sitez.' Relayed by 1.0.0_SA_CTO 74105, record @0a96a52989. ('substrate' named). The D11 group is one of the two seat-sets Andrew kept live in the same-night drawdown. ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: [INFRASTRUCTURE.GRAPH]
-      projects: [NFRA_SUBSTRATECARDING, NFRA_C3MATERIALIZE]
+      projects: [NFRA_SUBSTRATECARDING, NFRA_C3MATERIALIZE, NFRA_COMPEFFICACY]
     stance: "MINTED BY ANDREW 2026-08-26 at the CTO~X terminal. VERBATIM: 'I would put this as
       Directive 11, Substrate Analysis, and register a project beneath it called NFRA_SUBSTRATECARDING.'
       SCOPE, his words: 'we need to follow this substrate identification process on c0 c1 c2 on d1 d2
@@ -443,7 +456,7 @@ directives:
       ROW MINTED WITH ITS FIRST MEMBER, unlike D10 -- the project is named in the same sovereign
       breath as the directive, so the D10 row-first/members-second sequencing does not apply here."
   D12:
-    title: "Platform Ops"
+    title: "Platform Operations"
     directive: "docs/architecture/D12_PLATFORM_OPS_PRD.md"   # WRITTEN @2da36986f6 (1.0.0_SA_CTO~Z, 207 lines)
     placement: "SITEZ -- RULED (Andrew-direct 2026-08-31 ~23:15Z at the site-Z terminal, verbatim \"All recs
       approved\" on 1.0.0_SA_CTO~Z's /open-calls CALL 1; authority record @efcfa8cc5b). This ruling PLACES D12

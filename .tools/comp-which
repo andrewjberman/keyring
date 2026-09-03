@@ -607,18 +607,18 @@ RULES = [
       "ground-truth reset", "ground truth reset", "reconcile the local projection", "reconcile the local kuzu",
       "reconcile my local graph", "mstr startup graph", "mstr-startup graph", "warm the canonical graph",
       "full kuzu reload", "unconditional full kuzu load", "reset my local graph", "full projection rebuild"],
-     "full local kuzu-projection rebuild (comp-kuzu-full)",
-     ["comp-kuzu-full \"MATCH ...\""],
+     "full local kuzu-projection rebuild (comp-kuzu --mode full)",
+     ["comp-kuzu --mode full \"MATCH ...\""],
      "FORCE a full kuzu_nessie_load of the LOCAL projection -- the MSTR-startup warm-once that absorbs the "
      "daily whole-table delta. DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws "
-     "derive (the CLOUD nightly producer). A mid-task refresh -> comp-kuzu-inc, not this"),
+     "derive (the CLOUD nightly producer). A mid-task refresh -> comp-kuzu --mode inc, not this"),
     (["my graph is behind", "my local graph is behind", "graph is behind", "refresh my local graph",
       "refresh the local graph", "update my local graph", "update the local projection",
       "bring my local graph up to date", "incremental graph refresh", "incremental kuzu refresh",
       "refresh before querying", "pre-query graph refresh", "my dependency graph is stale",
       "refresh the local projection", "refresh the local kuzu projection"],
-     "incremental local kuzu-projection refresh (comp-kuzu-inc)",
-     ["comp-kuzu-inc \"MATCH ...\""],
+     "incremental local kuzu-projection refresh (comp-kuzu --mode inc)",
+     ["comp-kuzu --mode inc \"MATCH ...\""],
      "REFRESH the LOCAL kuzu projection incrementally -- the DEFAULT a worker runs pre-query: serves the "
      "incremental delta OR a labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew "
      "O-1). DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws derive (cloud producer)"),

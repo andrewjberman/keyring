@@ -1,0 +1,14 @@
+# RED-FIRST: surprise-row-gate.py TWO-ROOT controls against the pre-repoint gate
+# 2026-09-02T22:20:23Z  HEAD=86a5538003  gate-under-test=pre-repoint blob f159fb03bb
+  DEFECT  False ->True    CHANNEL_RE: tree investigations path IS a channel file
+  DEFECT  False ->True    CHANNEL_RE: tree remediations path IS a channel file
+  OK      True  ->True    CHANNEL_RE: flat path still IS a channel file
+  OK      False ->False   CHANNEL_RE: non-D directive folder is NOT
+  OK      False ->False   CHANNEL_RE: a tree file outside surprise-channel/ is NOT
+  DEFECT  gate has no _folder_identity -- the path is not read as membership (3 cases)
+  OK      PASS  ->PASS    tree investigations file, row project == folder -> PASS
+  DEFECT  PASS  ->REFUSE  tree file whose row says ANOTHER project -> REFUSE naming the folder
+  DEFECT  REFUSE->REFUSE  a REMEDIATION file filed under investigations/ -> REFUSE (path kind vs filename kind)
+  DEFECT  PASS  ->REFUSE  FLAT file in ADVI_PERFRP/ carrying an ETFS_GUARDRAIL row -> REFUSE (the limb binds both roots)
+DEFECTS: 8  (gate under test: C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/f57f7d28-0ee0-4349-91c1-8cede3c97975/scratchpad/srg_head.py)
+# exit=1

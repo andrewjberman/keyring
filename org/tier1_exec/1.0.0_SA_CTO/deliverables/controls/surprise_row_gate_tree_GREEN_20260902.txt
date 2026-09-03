@@ -1,0 +1,16 @@
+# GREEN: surprise-row-gate.py TWO-ROOT controls on the worktree gate
+# 2026-09-02T22:20:25Z  HEAD=86a5538003  gate=worktree blob 56b737086b
+  OK      True  ->True    CHANNEL_RE: tree investigations path IS a channel file
+  OK      True  ->True    CHANNEL_RE: tree remediations path IS a channel file
+  OK      True  ->True    CHANNEL_RE: flat path still IS a channel file
+  OK      False ->False   CHANNEL_RE: non-D directive folder is NOT
+  OK      False ->False   CHANNEL_RE: a tree file outside surprise-channel/ is NOT
+  OK      ('ETFS_GUARDRAIL', 'INVESTIGATION')->('ETFS_GUARDRAIL', 'INVESTIGATION')  _folder_identity: tree -> (ETFS_GUARDRAIL, INVESTIGATION)
+  OK      ('ETFS_GUARDRAIL', 'REMEDIATION')->('ETFS_GUARDRAIL', 'REMEDIATION')  _folder_identity: tree remediations -> (ETFS_GUARDRAIL, REMEDIATION)
+  OK      ('ADVI_PERFRP', None)->('ADVI_PERFRP', None)  _folder_identity: flat -> (ADVI_PERFRP, None)
+  OK      PASS  ->PASS    tree investigations file, row project == folder -> PASS
+  OK      REFUSE->REFUSE  tree file whose row says ANOTHER project -> REFUSE naming the folder
+  OK      REFUSE->REFUSE  a REMEDIATION file filed under investigations/ -> REFUSE (path kind vs filename kind)
+  OK      REFUSE->REFUSE  FLAT file in ADVI_PERFRP/ carrying an ETFS_GUARDRAIL row -> REFUSE (the limb binds both roots)
+DEFECTS: 0  (gate under test: .tools/surprise-row-gate.py)
+# exit=0

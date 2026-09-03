@@ -30,7 +30,7 @@ root="${ROOT:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 staged="${STAGED:-$(git diff --cached --name-only 2>/dev/null || true)}"
 [ -z "$staged" ] && exit 0
 
-added="$(git diff --cached --name-only --diff-filter=A 2>/dev/null | grep -E '(^|/)task_orders/[^/]+\.(md|xml)$' || true)"
+added="$(git diff --cached --name-only --diff-filter=A 2>/dev/null | grep -E '(^|/)task_orders/[^/]+\.(md|xml)$|^org/missions/D(0|[1-9][0-9]?)/[^/]+/[^/]+/task-orders/[^/]+\.(md|xml)$' || true)"
 [ -z "$added" ] && exit 0
 
 blocked=0
