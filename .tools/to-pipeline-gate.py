@@ -772,6 +772,21 @@ def check_prd_conformance(root, rel):
         txt = _staged_blob(root, rp)
         if txt is None or _top_section(txt, ENDPOINT_HEADING) is None:
             continue  # limb 4 reports absent/unreadable/endpoint-less PRDs
+        # PARENT PRD (2026-09-03, 1.0.0_SA_CTO, the ADVI_INSURE / ADVI_49F retrofits): a project's prds[] may list a
+        # PARENT program PRD for context (ADVI_INSURE lists D2_ADVI_49F_E2E_PRD.md, whose header names ADVI_49F). Grading
+        # that header against this project's row would refuse every child of every program PRD on identity. A listed PRD
+        # whose header names ANOTHER project is graded by that project's own row and is NOTED here, not graded; a PRD with
+        # no header, or a header naming THIS project, is graded exactly as before.
+        _hm = PRD_FENCE_RE.search(txt)
+        if _hm:
+            try:
+                _hp = (_json.loads(_hm.group(1)) or {}).get("project")
+            except Exception:  # noqa: BLE001
+                _hp = None
+            if _hp and _hp != expect.get("project"):
+                notes.append("%s: %s carries a PRD_HEADER for project %s (a parent or sibling PRD listed for context) -- "
+                             "graded by that project's row, not this one" % (rel, rp, _hp))
+                continue
         graded += 1
         for c in _prd_conformance(txt, header_schema, expect):
             v.append("%s: %s: %s" % (rel, rp, c))
