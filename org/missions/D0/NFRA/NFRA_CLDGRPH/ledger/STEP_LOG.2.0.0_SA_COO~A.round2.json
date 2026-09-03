@@ -1,0 +1,369 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 2,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-03T18:43Z",
+  "trigger": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/remediations/REMEDIATION_v2.md @0c72b64180 (L10 stamp, 3.0.0_SA_CVO~C, 18:12Z: 12 graduated; S10/S20/S22/S23/S24 routed SPEC_ERROR loop_target 6 owner 2.0.0_SA_COO~A; S12/S13/S14/S15/S17/S18/S19 REMEDIATED+DISARMED (annex v2.3's route-less shape); S16/S21 dismissed with reason by S25; 0 DECOMP_INVALIDATING, 0 SCOPE_CHANGE; 24 items 0 undispositioned). LAW CHANGE MID-ROUND, stated so the two rounds' shapes do not read as inconsistency: SURPRISE_CHANNEL_PROTOCOL v2.3 @be96e4ff6f / spine v2.6 / gate @ebe3a4caea (12:02Z) admits a route-less REMEDIATED+DISARMED remediation row citing the exercised remedy -- round 1's S5 was DISMISSED_WITH_REASON @59af3f1df5 under the model then in force and stands as made (3.0.0_SA_CVO~A 93589).",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L6",
+      "started_utc": "2026-09-03T08:44Z",
+      "ended_utc": "2026-09-03T08:53Z",
+      "act": "ROUND 2 task orders cut nine minutes after the round-1 stamp from pre-drafted faces: TO-CG-B-1 (CG-s-1, marker notification -> new projection queue + DLQ + worker role) to 0.7.0_AE_CloudOps~P and TO-CG-B-2 (CG-s-2 + CG-s-9, the projection worker ported with the four fixes) to 0.7.0_AE_CloudOps~Q; both through to-pipeline-gate.py and to-proof-of-spec-check.sh; GOs paired",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md @994c9381d0 (round 2 = CG-s-1, CG-s-2+9, CG-s-3)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "REMEDIATION_v1.md @59af3f1df5 (round-1 stamp; S2/S3/S8 SPEC_ERROR loop_target 6 -> folded into the round-2 faces)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-B-1.marker-notification-to-projection-queue.md @585daff578"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-B-2.projection-worker-ported.md @585daff578"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "GO 93401 (B-1 -> ~P, 084842Z); GO 93402 (B-2 -> ~Q, 084900Z)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "register row dep_stage EXECUTING @69beed50f1 (1.0.0_SA_CTO~A's flip, lane TREE_PROJECT_ROW)"
+        }
+      ],
+      "spine_clause": "L6 (task orders, 2.0.0_SA_COO only); L7 releases on the row flip",
+      "gate_or_notifier_touched": "NONE (gates run, none edited)",
+      "note": "CG-s-3's face (TO-CG-B-3) deliberately NOT cut with these two: it releases on B-2's first artifact under projection/<vintage>/ and carries that key; drafted in the issuer's scratchpad"
+    },
+    {
+      "seq": 2,
+      "limb": "X",
+      "started_utc": "2026-09-03T09:00Z",
+      "ended_utc": "2026-09-03T09:10Z",
+      "act": "S5-CLASS RECURRENCE ON THE ISSUER'S OWN FACE: B2-AC8 cell_refs written space-separated (one phantom token) an hour after disarming the same shape on V-2; caught by 3.0.0_SA_CVO~A's census of every committed face (893 cell_refs attributes estate-wide, one malformed); amended @ab9fb68d; the two-second pre-cut class check added to the routine and to memory (loaded by every seat, survives the LD-0527 reap)",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93410 (3.0.0_SA_CVO~A census)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "TO-CG-B-2 B2-AC8 cell_refs=\"CG-s-2, CG-s-9\" @ab9fb68d"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "memory/feedback_a_fix_on_the_instance_is_not_a_fix_on_the_class_check_cell_refs_at_every_cut.md"
+        }
+      ],
+      "spine_clause": "L6 (a face amendment by the issuer before any flip exists; the assignee never edits its own acceptance)",
+      "gate_or_notifier_touched": "NONE by this seat; the gate half landed by the scribe @7b649df39d (to-pipeline-gate.py resolves cell_refs at the cut)",
+      "note": "the instance fix left the class armed and the seat that fixed it was the next instance; a lane habit dies at the reap, so the carrier chosen was memory + a pitch for the gate"
+    },
+    {
+      "seq": 3,
+      "limb": "L7",
+      "started_utc": "2026-09-03T09:11Z",
+      "ended_utc": "2026-09-03T09:28Z",
+      "act": "TWO ROWS IN ONE WINDOW, both disarmed by the issuer: S13 (filed as S11 by ~P, renumbered by ~Q's concurrent S12 commit) BLOCKING -- the module-wide plan carried FOUR committed-never-applied foreign items incl. the Andrew-excluded aws_sns_topic_subscription.critical_surface_alerts_email, so B1-AC3's adds-only + 0-diff bar was unreachable; RULED: safe-apply -target on exactly the six, verified by ONE UNSCOPED re-plan asserted BY ADDRESS LIST (exit (ii) shape; the four never land; their drift is their owners' finding). S12 (~Q) OBSERVATION: the B-2 bound off kuzu_nessie_db was not jointly satisfiable with the mandated comp-blast (which rebuilds a BEHIND canonical DB through _canonical.ensure_fresh, measured 09:11:51Z); bound narrowed to the port's own code and runs, control baselined after the mandated runs",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "INVESTIGATION_v1.md rows S12@d60817d742, S13@fa22111310 (filed S11; the id was minted at commit)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "ZGATES_PREFLIGHT_VERIFIED_20260714.md:37 (the exclusion)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "TO-CG-B-1 B1-AC3 + BOUNDS @e23ac771bf; S11 citations re-pointed to S13 @fa22111310"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "TO-CG-B-2 BOUNDS narrowed @fa22111310"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93430 (ruling to ~P); corrections 93448/93449 (S11 -> S13)"
+        }
+      ],
+      "spine_clause": "surprise channel: the seat that sees it appends its row; disarm_owner disarms same-turn; the spec stays frozen mid-round (an amendment of a bound/verification bar, no criterion re-scoped)",
+      "gate_or_notifier_touched": "NONE",
+      "note": "OFF_PLAN CONTROL ADDED (the S12 class): before committing a face, read every mandated comp-* invocation against every BOUND on the same face -- what each tool reads or WRITES (graph tools rebuild the canonical DB; comp-iam refresh-census writes the census). Recorded in memory; the mechanical half needs a `mutates:` field on the comp-tool manifest first and was recorded as a plan improvement, not pitched as a gate"
+    },
+    {
+      "seq": 4,
+      "limb": "X",
+      "started_utc": "2026-09-03T09:38Z",
+      "ended_utc": "2026-09-03T11:09Z",
+      "act": "ACCOUNT-WIDE USAGE-LIMIT PAUSE: every seat on the account stalled 09:38-11:0xZ; on reset this seat sent one wake note per worker naming the exact step each was at; both READ at 11:09Z and both workers' telemetry resumed (~P 11:09:31Z, ~Q 11:09:43Z)",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "worker telemetry rows (org/mcp/comp-which-rail.log) 11:09Z"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93509 (-> ~P), 93510 (-> ~Q)"
+        }
+      ],
+      "spine_clause": "NONE (session mechanics)",
+      "gate_or_notifier_touched": "NONE",
+      "note": "~P's apply had already run at 09:21-09:27Z before the pause; the commit was what the pause delayed"
+    },
+    {
+      "seq": 5,
+      "limb": "X",
+      "started_utc": "2026-09-03T10:5xZ",
+      "ended_utc": "2026-09-03T11:16Z",
+      "act": "OFF_PLAN, THE CLOSE: 3.0.0_SA_CVO~A found the closing cell CG-x-2 tests ONE of FWD-2's THREE ratified ACCEPT limbs and makes limb (iii) ('no question is ever the reason a rebuild starts') true BY CONSTRUCTION in a zero-invocation window; 1.0.0_SA_CTO~A stated the grading bar (every limb covered or NOT_EVALUATED; R6 refuses). Issuer's remedy: ONE cell, THREE criteria -- (i) the unattended night with the invocation-in-window void; (ii) a daytime producer stamp to a served answer with the latency PRINTED against the ratified 'within minutes'; (iii) tested BY TRYING: a read against a served artifact held BEHIND the marker, no rebuild on the worker's invocation log + ECS task list, with the can-fail arm ON THE SAME cloud detector (a legitimate marker-triggered rebuild reported by the same read) -- S12's local rebuild kept as the before/after contrast, never the licensing arm (CVO~A 93505 / CTO~A 93507 correction of 93503(a)). The bar then moved into the CONTRACT by 1.0.0_SA_CTO: spine v2.5 + COMPLETION_REPORT.schema.json @39c0d295ae, R6 state bar mechanical @105cbe8705 (93523)",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93494, 93499, 93505 (3.0.0_SA_CVO~A); 93496, 93504, 93507 (1.0.0_SA_CTO~A); 93523 (1.0.0_SA_CTO)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "PRD v0.4 @25c66d3358 FWD-2 ACCEPT (three limbs, Andrew's ratified words)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93502 (remedy shape), 93506-adjacent acceptance of the same-detector control"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "scratchpad DRAFT_NFRA_CLDGRPH.TO-CG-X-2.fwd2-three-limbs-exercised.md (cut in the closing round, after CG-s-8)"
+        }
+      ],
+      "spine_clause": "the close (v2.5): a REALIZED grade cites exercised artifacts covering EVERY limb; the spec is frozen mid-round so the decomposition text follows at the next legitimate L5 touch (v0.2), this row being the carrier until then",
+      "gate_or_notifier_touched": "NONE by this seat (the contract edits are 1.0.0_SA_CTO's)",
+      "note": "DECOMP v0.2 OWED at the next L5 touch: CG-x-2 -> three criteria; S8's contract/fix split (CG-s-3 vs CG-s-2+9); S10's second carrier retired with CG-s-8"
+    },
+    {
+      "seq": 6,
+      "limb": "L7",
+      "started_utc": "2026-09-03T11:24Z",
+      "ended_utc": "2026-09-03T11:48Z",
+      "act": "TO-CG-B-1 COMPLETE by the assignee @afd94db0ce (CG-s-1 APPLIED scoped: 6 added / 0 changed / 0 destroyed on a saved plan; EXERCISED on two real producer stamps 09:24:47Z and 09:25:18Z with distinct eTags and sequencers plus the s3:TestEvent; ledger CLOSED 4/4; proof VALID). Certified by 3.0.0_SA_CVO~A (93540: coverage 6/6 exact; wrong-object check on the topic at source; the sms subscription framed as the positive control). ISSUER RAVC on own instruments 11:33-11:47Z: live bucket notification config (one rule), SNS subscriptions (sqs + sms, NO email), queue attrs (VT 30, retention 3600, redrive 3, depth 0), DLQ 3, marker head-object 09:42:42Z, checker re-run VALID, and ONE UNSCOPED plan at 11:45:46Z on .tools/terraform.exe v1.9.8 = exactly the four foreign addresses, none of the six. ACCEPTED (11:47Z). Queue/DLQ/role ARNs + five live-queue facts relayed to ~Q (B-2's cloud exercise released); ~P standing by live for ROUND 3",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93534 (~P report), 93540 (CVO~A cert)"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "deliverables/0.7.0_AE_CloudOps~P/CG-s-1.marker-notification.result.md + .proof_of_spec.json @afd94db0ce; ledger 20260903T0903Z_cldgrph-cgs1-marker-notification-projection-queue_deploy_completion.md CLOSED 111437Z"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "RAVC ACCEPTED -> ~P (114727Z); B-2 RELEASE 1 of 2 (114741Z) and 2 of 2 (114802Z) -> ~Q"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "memory/reference_two_terraform_versions_on_this_box_the_module_cache_is_1_9_8_and_path_is_1_14_5.md"
+        }
+      ],
+      "spine_clause": "L7 (the worker commits its own flip on a VALID instance; the L8 seat reads the record); Rule 22 world tier: the issuer re-derived the apply's verification with instruments other than the report",
+      "gate_or_notifier_touched": "NONE",
+      "note": "DISCLOSED, not a row: the DLQ holds 3 messages ~P's own polling redrove (every ReceiveMessage counts, even at visibility 0); left as evidence; expires ~09:25Z 2026-09-04; a live demonstration that CG-s-2's visibility timeout is load-bearing. FORWARD NOTE (CVO~A 93540 item 4, no route): the excluded email subscription stays DECLARED in committed terraform and reappears in every future unscoped plan of the module -- a standing four-item expected-foreign list; the durable fix is its owner's or Andrew's, outside this project"
+    },
+    {
+      "seq": 7,
+      "limb": "L7",
+      "started_utc": "2026-09-03T12:29Z",
+      "ended_utc": "2026-09-03T12:34Z",
+      "act": "CARRIER DEFECT CAUGHT BEFORE THE FLIP: ~Q's evidence commit @5b79df903d (11:58Z) recorded in its MESSAGE (lines 49-57) that the chosen EventBridge Pipe form acks on target invocation while RunTask returns on acceptance -- the defect B2-AC1 rejects, relocated -- and declared B2-AC1's mechanism limb OPEN pending a measured read; no channel row existed (issuer census: S1-S10, S12, S13). 3.0.0_SA_CVO~A (93609) and 1.0.0_SA_CTO~A's relay (93612) asked the issuer for an operating note; sent to ~Q 12:32:26Z: one investigation row BEFORE the completion flip with the two halves verbatim, cited in the proof's surprises entry, B2-AC1's proof row carrying the limb's TRUE state, no design change; the two-shape queue fact offered as a second row (worker's call); the DLQ baseline of 3 stays a proof denominator. Loop closed to both seats (93616/93617). ~Q filed S14 (B2-AC1's 'task is the consumer of record' unsatisfiable under any Pipe/SQS shape -- MEASURED on the live API skeleton with the Kinesis/DynamoDB contrast as the discriminating control; OBSERVATION/ARMED, disarm_owner ~Q) and S15 (two message shapes; OBSERVATION/ARMED, disarm_owner ~Q) @6c0297289b 12:36Z. ISSUER on both (12:4xZ): no face amendment -- B2-AC1's own words '>= the longest step that HOLDS the message' admit option (a) (Pipe = consumer of record, timeout from the Pipe's measured hold, retry = marker idempotency + nightly guarantee); RETRACTED narrowly the 93565 clause deriving 2400 s from the V-1 run duration (premise falsified by S14); the worker role's SQSConsume statement becomes a recorded residual under (a), retired with CG-s-8's cleanup, not re-applied this round. CVO~A 93619: neither row DECOMP_INVALIDATING; both fit v2.3's REMEDIATED shape if disarmed before the stamp",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "commit 5b79df903d (deliverables/0.7.0_AE_CloudOps~Q/CG-s-2-9.projection-worker.result.md), read by the issuer"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93609 (3.0.0_SA_CVO~A), 93612 (1.0.0_SA_CTO~A relay of 93610)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "operating note -> ~Q (123226Z); 93616 -> 3.0.0_SA_CVO~A, 93617 -> 1.0.0_SA_CTO~A"
+        }
+      ],
+      "spine_clause": "L7 surprise trigger (could not do something the task order said) -- the ROW is the carrier, never a message or a commit message; the proof's SURPRISES LIMB blocks a complete flip with an unresolved entry",
+      "gate_or_notifier_touched": "NONE",
+      "note": "the work itself (four fix controls RED-then-GREEN, S8 decided on control flow, S9's zero-recovered-edges line) was read by CVO~A as the best of the day; only the carrier was wrong"
+    },
+    {
+      "seq": 8,
+      "limb": "L6",
+      "started_utc": "2026-09-03T13:08Z",
+      "ended_utc": "2026-09-03T13:33Z",
+      "act": "SCOPED DRIVE ARMED on Andrew's word at this terminal (13:08Z, verbatim '/drive CLDGRPH to completion.'; record ANDREW_DIRECT_20260903_1308Z_DRIVE_CLDGRPH_TO_COMPLETION.md; XXX.md COO row clause; cron 20m; stop = register row CLOSED). Tick 1: ~P IDLE 80 min with round-2's last cell uncut -> TO-CG-B-3 (CG-s-3, S8's contract half) CUT to ~P @789c0bc9c5 in TWO PHASES: PHASE A now (contract, 2,256 census, handoff lines; NO edit under infra/aws/globgrph/** or infra/aws/terraform/globgrph/** -- the worktree is shared and ~Q holds those files), PHASE B (pointer writer, agreement, exercised flips) released by ~Q's B-2 flip commit; comp-blast deferred to PHASE B (S12 class). Preflights RUN (comp-schedule 21/5, 0 naming the project; comp-iam worker role 4 sqs, pointer key under CG-s-2's projection/* write; comp-adversary rc 0 @e36422df68 9/9; lane 3/4, docs/architecture refused as expected); class checks 6/0. GO 133158Z; FYI to ~Q 133209Z",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "decomp @994c9381d0 CG-s-3 row (edge 'CG-s-2 -> a delta artifact exists'); REMEDIATION_v1.md @59af3f1df5 S8 contract half; rows S14/S15 @6c0297289b (the recovery property)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "telemetry 415,652 rows at 13:08:58Z: ~P last work 11:48:31Z, ~Q 12:42:31Z"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-B-3.artifact-manifest-pointer-contract.md @789c0bc9c5"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "GO -> ~P 133158Z; FYI -> ~Q 133209Z"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "org/tier1_exec/2.0.0_SA_COO~A/drive_log_20260903T1308Z.md"
+        }
+      ],
+      "spine_clause": "L6 (task orders from decomposition cells only; one owner per step; the spec frozen); the drive skill's resolve-don't-attest within scope",
+      "gate_or_notifier_touched": "NONE (cron d59e13f7 is a session-only loop at this seat, not a gate)",
+      "note": "the phase bound is the mechanism a shared worktree needs and no gate provides; recorded as a pattern for the round-3 cuts (two seats, adjacent cells)"
+    },
+    {
+      "seq": 9,
+      "limb": "L7",
+      "started_utc": "2026-09-03T13:34Z",
+      "ended_utc": "2026-09-03T16:40Z",
+      "act": "THE CODEX RE-SEAT AND ITS FIRST HOURS (Andrew 13:3xZ: the Tier-2 Claude workers killed for the outage; codex workers instead). ~P/~Q measured STALE, worktree clean under the engine; codex seats 0.7.0_AE_CloudOps~S (B-2 continuation from ~Q's record) and ~T (B-3) launched via ajb2 13:42Z, faces re-seated @cab640d351, ~P/~Q deregistered, GOs ACKed within a minute. Scoped drive ticks 2-6 (13:55-16:13Z): ~T Phase A @823ea90776 (contract + the 2,256 census -> S16); ~S port @a9ceed3486, fixes S17 (4 MiB cgroup from the Pipe override), S18/S19 (the Pipes ECS environment override delivers a JSONPath literally) ruled in-scope; the base CVO's lateral (COMPEFFICACY-S15, the deriver's bare-except silent zero) filed as S20 @72c0022be8 under an audited corpus override (COMPEFFICACY-S24 blocked every channel append). TWO CODEX PUSHES inside the hold (~T 14:11Z, ~S 14:37Z; both disclosed; carded to MSTR; law carried into the codex load by the CTO @07cb6153e3). BOTH CODEX THREADS DEAF in systemError (14:46Z/15:12Z, Codex backend 404s device-wide) while every liveness instrument read green; recovered 15:55Z by exiting the TUIs and resuming by thread id. Terminal-act dispatches (instance path, checker, flip mechanics) 15:12Z per MSTR 93722; ~T's Phase B released 16:04Z on ~S's no-engine-edits word. Ad-hoc QA run of the real derive runner ordered 16:11Z (the scheduled fire stays CG-x-2's acceptance): stamp 16:21:26Z traversed S3 -> SQS -> Pipe -> task; ~T STOPPED that task (S21) fearing a same-vintage collision -> ruled outside B-3, ~S retrying (task 312c57e4 RUNNING 16:33Z); ~T's S22 (the B-2 publisher's check-then-write race; conditional create with If-None-Match, byte-identical no-op) accepted as the contract rule, worktree-only until ~S's artifact exists.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "MSTR 93669/93720/93722/93768; CTO 93684 (act guard), 93761 (compile packet = the L7-to-L8 handoff message; gate mechanisms; codex law); base CVO 93697 (S15 lateral)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "rows S16-S22; drive logs @da44a5915c, @25ae4cf6fd, @33577b43c7, @e5afe59487"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "faces @cab640d351; row S20 @72c0022be8; ~S/~T commits a9ceed3486, bcd1a272ea, 6c25fd2adb, 07601c54c9, a9ef0f6160, 823ea90776, 2c5ef31995, 59aeb265cc"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "rulings 93699 + 144625Z (S17-S19), 163151Z-163223Z (S21), 163833Z/163913Z-adjacent (S22, task 968bf1a3); L9 inputs to 3.0.0_SA_CVO~C 151712Z-151732Z, 163243Z"
+        }
+      ],
+      "spine_clause": "L7 (the worker's own flip on a VALID instance); the surprise channel (rows, same-turn BLOCKING messages, disarm by owner); obligation 7 of the drive skill (rulings within L6; RESERVED cards to MSTR)",
+      "gate_or_notifier_touched": "NONE by this seat (the surprise-row gate's audited override used once, reason on the commit; the gate itself unchanged)",
+      "note": "LATER THIS ROUND (16:5x-17:3xZ): B-3 COMPLETE @93c26badf8, RAVC-accepted with one carry (the verified writer's advancing arm unexercised in the cloud); B-2's full-cold (task fa5df7) and forced-fallback (task 0a53e160) arms PASS on authentic stamps; the incremental arm's engine PASS on the authorized one-time tagging re-PUT (stamp 17:23:22Z, task 32d8608d) but the publish REFUSED by the contract's full-load size band at 83,617,383 B -> row S24 @0c918a24b5; RULED 17:30Z: compaction in the incremental path + ONE image rebuild from HEAD (carrying ~T's writer at 59aeb265cc) + revision 3 + ONE retry on the authentic marker; if within band the writer's first cloud advance discharges the redeploy carry in-round, else the band is a round-3 contract order. CTO 93839 (L4, COMPEFFICACY): CE-g-3 CARRIED to CG-s-9 (satisfied by B-2's port, the RED-then-GREEN key-asymmetry control @117e539280 -- cite in the L8 packet); CE-g-2's ENGINE half CARRIED to CG-s-8 + CG-x-7 (round 4 now carries a sibling's FWD-7 engine limb). ROUND 3 OWES: (a) the fixed-publisher deploy IF ~S's in-round rebuild does not land it; (b) S20's SPEC_ERROR order against the deriver; (b2) S24's mode-specific band IF compaction does not fit the band; (c) CG-s-4/5/6. INSTRUMENT FINDINGS this round: send_message refuses over ~700 B or on long subjects; a codex thread in systemError reads green on every liveness instrument; PATH terraform 1.14.5 vs the module's 1.9.8; deploy_ledger --red crashes under cp1252"
+    },
+    {
+      "seq": 10,
+      "limb": "L8",
+      "started_utc": "2026-09-03T17:56Z",
+      "ended_utc": "2026-09-03T18:03Z",
+      "act": "ROUND 2 TERMINAL: TO-CG-B-2 COMPLETE @ebe85fd69e by 0.7.0_AE_CloudOps~S (8 rows VALID at the pin on the issuer's own run; 10/10 surprises resolving; the unscoped re-plan by address list; the applied role after a fresh census; the ledger CLOSED @668a2a2694 on the exercise; two published artifacts matched to direct COUNT(*); two authentic incremental engines PASS then failed closed at the contract's byte band -> S24, ruled (d): no retry, compaction @052a58999a kept for round 3, the band a round-3 contract order) -> RAVC ACCEPTED 18:00Z. The L8 handoff in the form CTO 93761 item 3 ruled: [L8 PACKET] NFRA_CLDGRPH round 2 to 3.0.0_SA_CVO~C in three parts (180034Z/180045Z/180057Z: the three terminal orders with instances at pins; rows S12-S24 with commits and in-round dispositions; carries (a) B3-AC5's advancing arm, (b) the redeploy of the fixed publisher + compaction, (c) S20's L6 order, (d) S24's integrity contract). CVO~C ACKed all three parts by content at 180220Z and began the one-slug adjudication.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "~S report 175811Z; CVO~C 180030Z (terminal precondition met), 180220Z (packet ACK)"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "instances at afd94db0ce (B-1), ebe85fd69e (B-2), 93c26badf8 (B-3); ledger 20260903T0903Z_cldgrph-cgs1-... CLOSED 11:14Z and the B-2 worker ledger CLOSED @668a2a2694"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "RAVC ACCEPTED -> ~S 180023Z; [L8 PACKET] parts 1-3 -> 3.0.0_SA_CVO~C 180034Z-180057Z"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "drive logs @e5afe59487 (tick 5), @e35d802bce (ticks 6-7), @435d0eec5b (tick 8), @449c70a5fc (ticks 9-11)"
+        }
+      ],
+      "spine_clause": "L7 -> L8: the proof instances to L8; the rows are L8's input; the CVO's engagement begins here (its L8/L9 seat for this round = 3.0.0_SA_CVO~C per MSTR 93722 after CVO~A left the broker)",
+      "gate_or_notifier_touched": "NONE",
+      "note": "the round's mechanism is PROVEN on the real path: two authentic producer stamps ran S3 -> SQS -> Pipe -> ECS to published artifacts (48.0 MB and 48.0 MB, 27,206-27,225 nodes) with the pointer advanced; the incremental path runs the engine correctly and is held only by a contract byte band that is not an integrity property (round 3)"
+    },
+    {
+      "seq": 11,
+      "limb": "L10",
+      "started_utc": "2026-09-03T18:12Z",
+      "ended_utc": "2026-09-03T18:41Z",
+      "act": "THE STAMP READ AND ACTED ON IN THE SAME TICK (drive obligation 1): REMEDIATION_v2.md @0c72b64180 by 3.0.0_SA_CVO~C (the L8/L9 seat for round 2 after 3.0.0_SA_CVO~A left the broker; MSTR 93722). Five SPEC_ERROR routes -> three orders + one L5 amendment, all in the tick: decomposition v0.2 @70918d5d2b (CG-s-14 added for S20's deriver read-state; CG-x-2 -> three criteria; the changelog records S8's split, S10/S22/S23/S24 as CG-s-2's round-3 re-entry, CE-g-3 -> CG-s-9 and CE-g-2's engine half -> CG-s-8/CG-x-7 per CTO 93839); TO-CG-C-1 (CG-s-4, the serving service) @68d7f16a6c -> 0.7.0_AE_CloudOps~T, cut on the width rule the moment CG-s-4's edges read DONE (GO 182234Z, ACKed 182300Z; first commit @8f0dff109f 18:37Z, task sized 512 CPU / 1024 MiB from a measured 143.5 MiB peak); TO-CG-C-2 (CG-s-2 re-entry + CG-s-3: the integrity check in code, the engine deadline from the measured duration, the verified writer + conditional create + compaction deployed as revision 3, exercised on real stamps) + TO-CG-C-3 (CG-s-14 -> the codex seat 0.8.0_AE_CloudComp~O, launched 18:30:12Z via ajb2, the graph engine home's lane) @918923adaa (GOs 184028Z / 184040Z; ~O ACKed 184111Z, ~S 184138Z). Preflights RUN on all three faces; class checks 6+7+6 cell_refs, 0 malformed, all resolving against v0.2.",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "REMEDIATION_v2.md @0c72b64180 (remedies verbatim for S10, S20, S22, S23, S24); INVESTIGATION_v1.md rows S1-S24"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "3.0.0_SA_CVO~C 181402Z (the stamp), 180220Z (the packet ACK); 1.0.0_SA_CTO 93839 (CE-g-2/g-3 carries); MSTR 93845 (LD-0531)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "V-2 @9b59f39114 (REACHABLE by CIDR 172.31.0.0/16 in vpc-0cc0c6a75e54605e3; the serving delta (ii); AuthKind NONE); the contract @93c26badf8 s.5-s.8"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "decompositions/NFRA_CLDGRPH_DECOMP.md v0.2 @70918d5d2b; task-orders/NFRA_CLDGRPH.TO-CG-C-1.serving-service-on-the-cluster.md @68d7f16a6c; TO-CG-C-2.worker-revision-three.md + TO-CG-C-3.deriver-read-state.md @918923adaa"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "GO C-1 -> ~T 182234Z; GO C-2 -> ~S 184028Z; GO C-3 -> ~O 184040Z"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "seat 0.8.0_AE_CloudComp~O launched 18:30:12Z (LIVE PID 28872, thread bound); ~S and ~T kept live (LD-0527 reaps at the project's close, not the round's)"
+        }
+      ],
+      "spine_clause": "L10 -> L6 (SPEC_ERROR re-enters at L6; the decomposition amended at L5 for the one remedy no cell covered); drive obligations 1 and 2 (a graduated round acted on in the tick that reads it; width at L6 with lanes seated the same tick, codex via ajb2 while Andrew holds Claude Tier-2 spawns)",
+      "gate_or_notifier_touched": "NONE (the L6 gate ran green on three faces; the missions-tree-check on the decomposition 0 violations)",
+      "note": "ROUND 3 = CG-s-4 (C-1) -> CG-s-5 -> CG-s-6, plus C-2 (the worker's revision 3) and C-3 (the deriver); CG-s-5 and CG-s-6 cut when CG-s-4 reads DONE (the width rule, next ticks). The round's close acts by this seat at the next stamp: the round-3 step log; then ROUND 4 (CG-s-7, CG-x-1/2/4/5/8, CG-s-8 LAST per R7, CG-x-7)."
+    },
+    {
+      "seq": 12,
+      "limb": "X",
+      "started_utc": "2026-09-03T18:41Z",
+      "ended_utc": "2026-09-03T18:43Z",
+      "act": "this step log, written at the round's L10 stamp per org/standards/STEP_LOG.schema.json; the seat records, the CTO compiles",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/standards/STEP_LOG.schema.json; the round-1 precedent org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/STEP_LOG.2.0.0_SA_COO~A.round1.json @061701e9c4; the drive logs @da44a5915c, @25ae4cf6fd, @33577b43c7, @e5afe59487, @e35d802bce, @435d0eec5b, @449c70a5fc"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/STEP_LOG.2.0.0_SA_COO~A.round2.json (this file)"
+        }
+      ],
+      "spine_clause": "NONE (org/ref/SESSION_LOG_STANDARD.md 'Step log' section)",
+      "note": "round 2 at this seat, 08:44Z (the cut) to 18:12Z (the stamp): 3 task orders cut and closed under two re-seats (Claude -> codex on Andrew's word 13:3xZ), 16 rows on the channel (S9-S24), 14 commits by this seat, the mechanism proven on the real path twice"
+    }
+  ]
+}
