@@ -410,7 +410,13 @@ From the brief @`6a1d845ecb`, flat list:
 3. `to-pipeline-gate.py` coverage limb; `cvo_send_guard.py` simplification; sentinel retarget.
 4. The CTO's round-N artifact (`ledger/ROUND_ANALYSIS.round<N>.md`) and the addendum path.
 5. **T11 -- comp-adversary's admissibility method** (Andrew, CRO terminal ~20:3xZ: *"yes, add T11 to the
-   build order"*). Owner `4.0.0_SA_CRO`; the slot has carried this seat's name since 2026-08-19 and reads
+   build order"*, then *"DO it"*). **BUILT @`074001c978`** (2026-09-03 ~21:0xZ, `4.0.0_SA_CRO`): self-test
+   6/6 with control 6 red-measured on the pre-T11 binary; the acceptance test below PASSES on the live TO-CE-T-2
+   (5 of 5 cells, 3 proofs found, CE-disc-2 / CE-tp-1 correctly UNPROVEN, 93 siblings demoted, nothing under
+   `org/mcp/`); the packet-over-members path exercised live (`domain: neighborhood members`, 3 of 10, 0
+   deferred). Standard: `org/standards/ADMISSIBILITY_METHOD_T11.md`. First-run finding: the decomposition names
+   ONE dependency for CE-t-2 and the task order declares FIVE -- both carriers now print, the disagreement is
+   the L5 owner's. Owner `4.0.0_SA_CRO`; the slot had carried this seat's name since 2026-08-19 and read
    *"ships when CRO's method ratifies."* The method: what makes an evidence item ADMISSIBLE to the validator
    for a given artifact -- and its first application is L-4, the neighborhood drawn from the decomposition
    rather than the filesystem: the artifact's cell, its `depends_on` chain, those cells' proof instances at
