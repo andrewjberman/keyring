@@ -266,6 +266,7 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
     inst_rel = None
     ctx = "UNKNOWN"
     inst_commit = None
+    dry_run = False
     if inst_path is not None:
         try:
             inst_rel = Path(inst_path).resolve().relative_to(_REPO_ROOT).as_posix()
@@ -276,6 +277,13 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
         tracked_inst = _git_ok("ls-files", "--error-unmatch", "--", inst_rel)
         if staged_inst or not tracked_inst:
             ctx = "PRE-COMMIT"
+            # DRY RUN vs HOOK RUN (2.0.0_SA_COO~A 93362, measured): the faces say "VALID BEFORE the flip" and 14a says
+            # a seat does not pre-`git add`, so a worker's natural dry run is an UNTRACKED instance with UNTRACKED
+            # artifacts and nothing staged. Inside safe-commit's hook the INSTANCE is staged; in a dry run it is not.
+            # An UNTRACKED artifact (never committed anywhere) in a dry run is honestly PENDING -- it rides the commit
+            # if staged, and the hook run refuses if it is not. The CCX refusal (already at HEAD, not staged) stands in
+            # both, because that artifact cannot ride this commit whatever gets staged.
+            dry_run = not staged_inst
         else:
             inst_commit = _git_out("log", "-1", "--format=%H", "--", inst_rel).strip() or None
             ctx = "POST-COMMIT" if inst_commit else "UNKNOWN"
@@ -308,9 +316,12 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                     v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
                              "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
                     continue
+                elif dry_run:
+                    n_pending += 1
+                    here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (dry run; untracked, rides the commit if staged with the proof)"
                 else:
                     v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but exists only in the working tree and "
-                             "is NOT staged -- it cannot ride the commit that carries this proof; stage it in the same commit")
+                             "is NOT staged while the proof IS -- it cannot ride the commit that carries this proof; stage it in the same commit")
                     continue
             elif ctx == "POST-COMMIT":
                 if _git_out("diff-tree", "--no-commit-id", "--name-only", "-r", inst_commit, "--", path).strip():
@@ -357,7 +368,7 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                      "the row names a (commit, path) pair git refutes")
     frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_cocommit} PENDING co-committed "
               f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
-              f"{n_pending} pending-on-worktree (instance path unknown; presence only) / "
+              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
               "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known",
