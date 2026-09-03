@@ -1,0 +1,220 @@
+{
+ "schema_version": "1.0",
+ "project": "NFRA_COMPEFFICACY",
+ "round": 4,
+ "seat": "2.0.0_SA_COO",
+ "written_utc": "2026-09-03T09:36Z",
+ "trigger": "the round-4 L10 stamp: 3.0.0_SA_CVO 93439 @153522a509 (S13 SPEC_ERROR -> L6 to this seat; S14 SCOPE_CHANGE -> L2 to 1.0.0_SA_CTO, adjudicated @5bbdab5ec7 PRD v0.5 / FWD-10)",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L10",
+   "started_utc": "2026-09-03T07:55Z",
+   "ended_utc": "2026-09-03T08:05Z",
+   "act": "receive CVO's round-3 stamp (ZERO GRADUATION; 0 routed; two round-4 rows S10 ARMED at CTO / S11 closes S6); write the round-3 step log; proceed to the next L6",
+   "inputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93338"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md@ab44245fb7 (S10, S11)"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "RECORD",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/STEP_LOG.2.0.0_SA_COO.round3.json@b7daeaa6f0"
+    }
+   ],
+   "spine_clause": "L10: a round whose remediation doc graduates zero rows proceeds to the next L6 dispatches",
+   "note": "S10's disposition is the L4 owner's disarm + CVO's row, off this seat's path; a CLOSE would have waited on it (it did not need to: S12 @b1dbe2ab26 dispositioned it 08:18Z)"
+  },
+  {
+   "seq": 2,
+   "limb": "L5",
+   "started_utc": "2026-09-03T08:05Z",
+   "ended_utc": "2026-09-03T08:09Z",
+   "act": "decomp v0.2.2 (bookkeeping on the record): CE-t-3 and CE-t-8 DONE-as-TO citing the workers' own flips; CE-t-2 evidence-vintage note on comp-read's off-loop change @dc944897c5; ROUND 4 fence (CE-t-9 base, CE-t-7 ~A, no dependency; CE-t-19 next ahead of CE-t-6)",
+   "inputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93338"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.md@7f4cbd3dc8"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.md@accf86b136"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@b7daeaa6f0"
+    }
+   ],
+   "spine_clause": "L5 owner 2.0.0_SA_COO (the record moves on the stamp, no new round)",
+   "gate_or_notifier_touched": "missions-tree-check 0 violations",
+   "note": "one commit with the round-3 step log"
+  },
+  {
+   "seq": 3,
+   "limb": "L6",
+   "started_utc": "2026-09-03T08:09Z",
+   "ended_utc": "2026-09-03T08:21Z",
+   "act": "measure the two STAGE-2 surfaces (comp_trigger.py 344 lines, :20-21 the declared S3-notification blind spot, :194-195 the absent-trigger prose; comp_dataflow.py 476 lines, :33 counted-unresolved contract, :280 is_unresolved, :348-352 summary, :361 cmd_origin; 0 battery files for either); write TO-CE-T-9 and TO-CE-T-7; preflight battery (comp-schedule 20 gates / 0 name the subject at 08:09Z; comp-iam declared not applicable with the reason on each; comp-adversary compose rc 0 on each, 9/9 and 10/10 cited commits verified, flagged paths = the outputs); lanes measured 7 of 7 on each assignee; commit through the L6 gates",
+   "inputs": [
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@b7daeaa6f0"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/modules/graph/comp_trigger.py@b7daeaa6f0"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/modules/graph/comp_dataflow.py@b7daeaa6f0"
+    },
+    {
+     "kind": "GATE_OUTPUT",
+     "ref": "comp-adversary compose: T-9 9/9 verified, 2 flagged = outputs (read-vintage @a9aea6f3ce); T-7 10/10 verified, 2 flagged = outputs (read-vintage @03a3dc5aea)"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.md@2c7fd65946"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-7.comp-dataflow-s4-audit.md@2c7fd65946"
+    }
+   ],
+   "spine_clause": "L6 owner 2.0.0_SA_COO; L6 gate to-pipeline-gate.py",
+   "gate_or_notifier_touched": "to-pipeline-gate OK 2 newly-added TO files; surprise-row-gate 0 rows; missions-tree-check 0 violations; risk-reflex CLEAN 2 of 2 against 1906 danger nodes",
+   "note": "the comp-adversary --out file is a YAML-shaped declaration, not JSON, despite the .json name the caller gave it -- read as text"
+  },
+  {
+   "seq": 4,
+   "limb": "L6",
+   "started_utc": "2026-09-03T08:22Z",
+   "ended_utc": "2026-09-03T08:22Z",
+   "act": "dispatch the two GOs (T-9 to 0.8.0_AE_CloudComp, T-7 to 0.8.0_AE_CloudComp~A)",
+   "inputs": [
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/@2c7fd65946"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93366"
+    },
+    {
+     "kind": "MESSAGE",
+     "ref": "93367"
+    }
+   ],
+   "spine_clause": "L6 handoff; L7 owner Tier-2 workers",
+   "note": "thirty-one minutes from the round-3 stamp receipt to the round-4 dispatch; 93366 RAVC-acked (93371) and READ; 93367 READ at 08:22:46Z by the broker's own clock"
+  },
+  {
+   "seq": 5,
+   "limb": "X",
+   "started_utc": "2026-09-03T08:12Z",
+   "ended_utc": "2026-09-03T08:32Z",
+   "act": "off-spine (NEVER-2 on the 49F chain, not this project): read 0.7.0_AE_CloudOps~R's rollback report (disarm @530977130b served-verified with negative control; ledger OPEN L4 STRANDED @da90add817); authorize the deploy-ledger hold (gate-type external); acceptance = the 12:45Z fire log at 18 STAGE OK; the hold word then WITHDRAWN on the lane's correction (ledger guardrail: an open activation leg is half-landed by definition; the daily RED is the designed signal)",
+   "inputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93348"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93365"
+    },
+    {
+     "kind": "MESSAGE",
+     "ref": "93378 (the lane's correction: the hold is refused by the ledger guardrail, L4 is an activation leg; accepted, the RED stands)"
+    }
+   ],
+   "spine_clause": "NONE (a different project's deploy ledger; recorded here because it shared the window)",
+   "note": "no act on the runner; ADVI_INSURE's forward work stays under Andrew's /govern queue"
+  },
+  {
+   "seq": 6,
+   "limb": "L6",
+   "started_utc": "2026-09-03T09:03Z",
+   "ended_utc": "2026-09-03T09:09Z",
+   "act": "on each worker's completion report re-run proof-of-spec-check at this seat (T-9 VALID 6/6, 0 surprises, 1 co-committed at b1dab0b6a0; T-7 VALID 6/6, 0 surprises, 2 co-committed at 803539f490), verify the six commits exist and the two flips are self-committed, census the round (9 task orders: 2 withdrawn, 7 complete, 0 pending; channel 12 rows, 0 open / 0 armed), hand the state to 3.0.0_SA_CVO with two sequencer reads (T9-AC2's disclosed 2-of-4 text distinguishability against the cell's AC-2 closes-on; T-7 F4 rc 0 on a partial GATE sweep) -- read, not adjudicated",
+   "inputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93415"
+    },
+    {
+     "kind": "MESSAGE",
+     "ref": "93420"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.proof_of_spec.json@b1dab0b6a0"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-7.comp-dataflow-s4-audit.proof_of_spec.json@803539f490"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93421"
+    }
+   ],
+   "spine_clause": "L10 precondition: every task order terminal with a valid proof-of-spec whose surprises resolve to rows; CVO adjudicates up to COO, never to a worker",
+   "gate_or_notifier_touched": "proof-of-spec-check VALID rc 0 on both instances at this seat; comp-surprise open 0 / armed 0",
+   "note": "forty-six minutes from dispatch to both completions; the base worker found and fixed a real crash (live_rules() unguarded under --budget) inside the cell"
+  },
+  {
+   "seq": 7,
+   "limb": "L10",
+   "started_utc": "2026-09-03T09:23Z",
+   "ended_utc": "2026-09-03T09:36Z",
+   "act": "receive CVO's round-4 stamp (TWO graduated: S13 SPEC_ERROR -> loop_target 6, a remediated order under CE-t-9 -- T9-AC2 met 2 of 4, three planted cases byte-identical, PRD s.4.3 'any two alike = FAIL'; S14 SCOPE_CHANGE -> L2 at 1.0.0_SA_CTO, adjudicated same turn as PRD v0.5 FWD-10 'verdict-bearing tools never return the clean verdict from a partial run'); write this log; act as route owner: L5 (decomp v0.2.3 gains the verdict-bearing cells, corrects the T-3 F2 placement) then L6 (TO-CE-T-9R remediated, TO-CE-T-19 fresh, TO-CE-T-7V fresh)",
+   "inputs": [
+    {
+     "kind": "MESSAGE",
+     "ref": "93439"
+    },
+    {
+     "kind": "MESSAGE",
+     "ref": "93458"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/remediations/REMEDIATION_v1.md@153522a509 (S13, S14)"
+    },
+    {
+     "kind": "ARTIFACT",
+     "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@5bbdab5ec7 (v0.5)"
+    }
+   ],
+   "outputs": [
+    {
+     "kind": "RECORD",
+     "ref": "this file"
+    }
+   ],
+   "spine_clause": "L10: a graduated row names its loop_target; SPEC_ERROR re-enters at L6 as a remediated order; SCOPE_CHANGE re-enters at L2 and comes back through L4 -> L5 -> L6",
+   "note": "the first round with graduations; the remediation slug was ONE artifact at L10 (REMEDIATION_v1.md opened in the stamp commit) and nothing went to a worker -- the L7-L10 shape Andrew asked for @10a4beaffb / @de2d6d643c, exercised"
+  }
+ ]
+}
