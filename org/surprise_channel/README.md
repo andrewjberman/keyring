@@ -1,8 +1,9 @@
 # org/surprise_channel/ -- the CVO-manned surprise channel's document home
 
-**Protocol (normative):** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` -- stage 5 of the Directive
-Execution Pipeline (`org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` + CLAUDE.md Rule 27, Andrew-ratified
-2026-08-21).
+**Protocol (normative):** `org/ref/SURPRISE_CHANNEL_PROTOCOL.md` -- the L7 to L10 annex of the canonical
+fabric workflow (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` + CLAUDE.md Rule 27). This flat root is the
+legacy home; a project with a tree home keeps its channel at
+`org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/{investigations,remediations}/`.
 
 ## Layout grammar
 

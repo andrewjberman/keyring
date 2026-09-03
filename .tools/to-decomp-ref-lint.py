@@ -374,7 +374,7 @@ def main(argv: list[str]) -> int:
                 f"X-a-1, X-a-2</decomp_ref>\n"
                 f"      WHY: nothing executes without a TO, so requiring the ref HERE requires the\n"
                 f"      decomp, the PRD and the registration behind it -- one gate at the neck\n"
-                f"      (DIRECTIVE_EXECUTION_PIPELINE.md:164). If no decomp exists yet, that is a\n"
+                f"      (CANONICAL_FABRIC_WORKFLOW_20260901.md L5/L6). If no decomp exists yet, that is a\n"
                 f"      PIPELINE FAILURE TO SURFACE to COO/CTO, not a reason to cut the TO without one.")
             continue
         if not CELL_ID_RE.search(m.group(1)):
