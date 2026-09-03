@@ -409,8 +409,18 @@ From the brief @`6a1d845ecb`, flat list:
    line -> flip -> spawn N -> drain loop via SendMessage -> merge on valid proof -> remove worktree.
 3. `to-pipeline-gate.py` coverage limb; `cvo_send_guard.py` simplification; sentinel retarget.
 4. The CTO's round-N artifact (`ledger/ROUND_ANALYSIS.round<N>.md`) and the addendum path.
-5. Spine amendment v3.0 by the CTO from section 9.
-6. Run **one** project through it -- a small one -- with the step logs Andrew already asked for (record
+5. **T11 -- comp-adversary's admissibility method** (Andrew, CRO terminal ~20:3xZ: *"yes, add T11 to the
+   build order"*). Owner `4.0.0_SA_CRO`; the slot has carried this seat's name since 2026-08-19 and reads
+   *"ships when CRO's method ratifies."* The method: what makes an evidence item ADMISSIBLE to the validator
+   for a given artifact -- and its first application is L-4, the neighborhood drawn from the decomposition
+   rather than the filesystem: the artifact's cell, its `depends_on` chain, those cells' proof instances at
+   HEAD, and the PRD rows the artifact cites; directory siblings demoted to a declared exclusion. Deliverable:
+   the method ratified as a short standard under `org/standards/`, wired into comp-adversary's stage 2/3 as
+   the neighborhood source, its `--self-test` gaining one red/green arm. Test: `compose` on TO-CE-T-2 lists
+   CE-t-1, CE-tp-1, CE-disc-2, CE-t-3, CE-g-5 and their proofs as the neighborhood, and nothing under
+   `org/mcp/`. About a day. Lands before step 7 so the v3 run's validator is on the new neighborhood.
+6. Spine amendment v3.0 by the CTO from section 9.
+7. Run **one** project through it -- a small one -- with the step logs Andrew already asked for (record
    @`bcc26d2691`), so the four-quadrant read grades v3 against v2 on the same instrument.
 
 ---
@@ -463,7 +473,7 @@ On TO-CE-T-2 its "uncited neighborhood" is `org/mcp/broker.db-shm`, `agent-spawn
 wired -- neighborhood = directory siblings only."* The right neighborhood for a task order is its cell's
 `depends_on` chain, those cells' proof instances, and the PRD rows it cites -- a graph the decomposition
 already carries. Its `T11 admissibility method` slot reads *"ships when CRO's method ratifies"*: that slot is
-this seat's, unfilled, named here as owed.
+this seat's, and it is now section 12 step 5 on Andrew's word.
 
 ### L-5. Freeze the decomposition at the cut
 
@@ -475,7 +485,7 @@ proof instances and the CTO's round-N analysis (6.2); the source grain stays cle
 
 STEP_LOG_COMPILED.round1: 63 rows; per limb L2 2, L3 1, L4 4, L5 3, L6 5, L7 3, L8 3, L9 4, L10 3, **X 35**.
 Fifty-six percent of every seat's acts in round 1 were outside the limbs -- startup, push windows, law
-broadcasts, holds, relays. Andrew's messaging observation, measured on the loop's own instrument. Step 6 of
+broadcasts, holds, relays. Andrew's messaging observation, measured on the loop's own instrument. Step 7 of
 section 12 compiles the same log on a v3 run; **X's share is the verdict.**
 
 ### On the validator
