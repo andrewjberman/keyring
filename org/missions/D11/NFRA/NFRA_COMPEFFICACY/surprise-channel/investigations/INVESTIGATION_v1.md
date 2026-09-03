@@ -7,10 +7,13 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **4 rows** (S3 + S4 appended by `3.0.0_SA_CVO` 04:0xZ -- the L9 adjudication in append-only form: S3 the recurrence of S2 measured at the CVO seat, S4 the closure of S1; S2 appended by
-`0.8.0_AE_CloudComp` under the tree channel's lane-ANY worker-appends grant, CLAUDE.md s.2 as
-corrected by Andrew-direct 2026-09-03 03:1xZ -- "a broker message is NEVER the carrier"; S1's own
-text and CVO attribution are UNCHANGED below).
+**Append-only during the round.** Denominator at this write: **5 rows** (S5 appended by `0.8.0_AE_CloudComp`
+04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
+citation, discharging the disarm-owner assignment S3 named. S3 + S4 appended by `3.0.0_SA_CVO` 04:0xZ --
+the L9 adjudication in append-only form: S3 the recurrence of S2 measured at the CVO seat, S4 the closure
+of S1; S2 appended by `0.8.0_AE_CloudComp` under the tree channel's lane-ANY worker-appends grant,
+CLAUDE.md s.2 as corrected by Andrew-direct 2026-09-03 03:1xZ -- "a broker message is NEVER the carrier";
+S1's own text and CVO attribution are UNCHANGED below).
 
 ## L8 read -- what the CVO checked on each row
 
@@ -162,8 +165,34 @@ the defect here: it is what turned a 600 s hang into a 90 s honest prefix, three
     "spec_asserts": "S1's own closing condition (S1.notes): 'flips to DISMISSED_WITH_REASON when 0.8.0_AE_CloudComp's reworked commit lands and the T1 deliverable report cites the s.4.4 form (T1-AC4 in the landed grammar); if the rework does not land before the TO's report, the item GRADUATES to a remediation row instead.'",
     "world_is": "Both halves met on the record before the TO's report closed: the rework 2718cffc45 landed at 03:33Z and reached origin at 03:42Z; the report 93025 at 03:52Z cites it and the form. The graduation branch did not fire.",
     "notes": "L9 form note: the surprise-row gate refused an in-place disposition flip on S1 (EXISTING row MUTATED in place; corrections are NEW items citing the old id), so this row is the closure carrier and S1's own disposition field stays UNDER_INVESTIGATION by construction. A reader resolving S1's state reads the newest row citing it."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S5",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-03T04:16:43Z",
+    "one_line": "GROUNDS S2/S3: the --corpus aws BUDGET REACHED phenomenon is LOCAL, not upstream/AWS-side -- a live, legitimate infra/aws/globgrph/kuzu_nessie_load.py rebuild subprocess (PID 25896) has been holding the canonical DB's shared rebuild mutex since 04:07:26Z, still running at 04:16:02Z (515s, under its own 600s incremental timeout); comp-find's own 90s Rule-T budget kills the CLIENT's wait-for-rebuild loop before the mutex-wait (180s) or the rebuild itself would resolve. S3's disarm-owner assignment discharged; mechanism GROUNDED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/_canonical.py source read (this seat, 04:1xZ): every --corpus aws call (comp-find -> kuzu_cli.py --mode inc) runs _canonical.ensure_fresh() SYNCHRONOUSLY, INSIDE the same subprocess comp-find times, BEFORE the DB is opened or the query runs; ensure_fresh() takes a mkdir-mutex (kuzu_nessie_db.rebuild.lock) -- one caller becomes the rebuild winner (subprocess.run of kuzu_nessie_load.py, INCREMENTAL_TIMEOUT_S=600 / REBUILD_TIMEOUT_S=1800), every other concurrent caller polls every RECHECK_SLEEP_S=2.5s for up to MUTEX_WAIT_S=180s before falling back to serving the existing (labeled-stale) DB",
+        "_liveness_on() defaults OFF (env GLOBGRPH_KUZU_REBUILD_LIVENESS unset on this box) -- 'the exact pre-#17 behavior (shared tmp, 900s-only steal, no heartbeat/gen-check)', so an EMPTY kuzu_nessie_db.rebuild.lock/ (no gen, no heartbeat file) is NORMAL for any in-progress rebuild here, healthy or dead alike -- absence of a heartbeat file is NOT itself evidence of an orphan under this config, which the S2/S3 rows did not have (corrected here, not asserted there)",
+        "kuzu_nessie_db.rebuild.lock/ measured present, empty, mtime age 320.5s at first read (04:1xZ)",
+        "Get-CimInstance Win32_Process (PowerShell, not MSYS ps -- the estate's own instrument trap for detached Windows processes): PID 25896, CommandLine 'python ... infra\\aws\\globgrph\\kuzu_nessie_load.py --db ...\\kuzu_nessie_db.rebuild.tmp', StartTime 2026-09-03T04:07:26Z (UTC, computed from the process object's local StartTime + ToUniversalTime(), not read off a filename or a log line)",
+        "Re-measured 2026-09-03T04:16:02Z: PID 25896 still alive, elapsed 515.46s -- WITHIN its own INCREMENTAL_TIMEOUT_S=600s ceiling (not yet hung by the code's own standard), and within the lock's ORPHAN_LOCK_S=900s steal backstop -- a caller checking now would correctly NOT steal this lock",
+        "Comparison: this specific PID (25896, started 04:07:26Z) post-dates BOTH S2's degraded window (03:16Z-03:20Z, this seat) and S3's (03:53Z-03:58Z, CVO) -- it is a LATER, SEPARATE rebuild attempt, not the one that caused those two windows. Evidence therefore supports a RECURRING pattern (repeated rebuild attempts, each taking longer than comp-find's 90s default) rather than one isolated stall; the mechanism generalizes, the specific PID does not retroactively explain S2/S3's own windows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S3's disarm instruction: 'diagnoses NOW whether the pull is stalled locally (Kuzu native library / lock) or upstream (the CloudTrail-driven incremental refresh)... one discriminating measurement is --mode inc against a non-incremental read of the same DB.'",
+    "world_is": "LOCALLY stalled, confirmed by a live process, not a hypothesis: a real kuzu_nessie_load.py rebuild subprocess is the thing every --corpus aws caller is waiting behind via the shared mutex. It is not stuck by the code's own definitions (under both the incremental and orphan-lock ceilings) -- it is simply SLOW relative to comp-find's 90s Rule-T default, and it appears to recur (a fresh rebuild attempt was live at 04:07Z, well after the two incidents already on record).",
+    "notes": "DISARM DISCHARGED: mechanism named, LOCAL, with a live-process citation rather than an unconfirmed hypothesis -- S2/S3's own 'either local contention or AWS-side throttling' is resolved in the LOCAL direction, specifically. NOT CHASED FURTHER, stated so the boundary is explicit: why the rebuild cadence is frequent enough to be caught THREE separate times in under an hour (00:36Z DB write per S2/S3, then windows at 03:16Z, 03:53Z, and this live one at 04:07Z) is a comp-kuzu/globgrph maintenance question, not a comp-find one, and is NOT this seat's to own -- named here as the natural next question, not answered here (CLAUDE.md s.2: the next check would not change what this cell does). No code change proposed or made under this row; Rule T's 90s default is PRD-ratified and this row does not ask to revisit it. GRADUATION / REMEDIATION is 3.0.0_SA_CVO's call at L9 (remediation rows are CVO's by design, per the annex @d1220c4971) -- candidates visible from here, not chosen here: (a) document the rebuild-window behavior as expected in PRD s.4.4's non-application notes for comp-kuzu-backed tools, (b) a comp-kuzu-side fast-path that serves the existing DB immediately when a rebuild is already in progress rather than making every caller wait on the same mutex, (c) nothing -- an occasional honest BUDGET REACHED during a real rebuild may simply be Rule T doing its job. Push state: none of this row's evidence is a commit; PID/timing measurements are point-in-time and will read differently by the time anyone re-checks."
   }
 ]
 ```
 
--- S1: `3.0.0_SA_CVO` (L8 assembly). S2: `0.8.0_AE_CloudComp` (direct append, tree-channel lane ANY, CLAUDE.md s.2 2026-09-03 correction).
+-- S1: `3.0.0_SA_CVO` (L8 assembly). S2, S5: `0.8.0_AE_CloudComp` (direct append, tree-channel lane ANY, CLAUDE.md s.2 2026-09-03 correction). S3, S4: `3.0.0_SA_CVO` (L9 adjudication, direct append per the corrected law).

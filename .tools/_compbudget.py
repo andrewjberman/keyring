@@ -1,5 +1,5 @@
 """_compbudget.py -- RULE T's shared budget carrier (NFRA_COMPEFFICACY PRD v0.4 s.4.4 "RULE T's
-FORM", landed by 1.0.0_SA_CVO's decision record @790d92c6fa / msg 92932, L4 by 1.0.0_SA_CTO
+FORM", landed by 3.0.0_SA_CVO's decision record @790d92c6fa / msg 92932, L4 by 1.0.0_SA_CTO
 @19bf1c7322). ONE sibling module, never per-tool copies (build ladder rung 2) -- the whole point
 of naming a shared carrier is that fifteen tools re-implementing "print something at expiry"
 drift into fifteen dialects, and a grader (or a caller's script) then has to special-case each one.
