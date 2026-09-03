@@ -303,3 +303,52 @@ the same file, accepted by the L9 seat (93316 item 4) before this row was writte
   }
 ]
 ```
+
+## S8 -- the full loader's `_build_manifest.edge_count` overstates the graph's real edge count by 2,256
+
+Found by AC2's own measurement: both full loads produced byte-identical DBs, and the manifest each wrote
+disagrees with the DB it describes. **`node_count` agrees exactly; only `edge_count` is wrong**, and the
+INCREMENTAL path writing the same field for the same graph gets it right. The full loader increments its
+counter once per `MERGE` executed (61,071 read - 383 skipped endpoints = 60,688 merges), but `MERGE`
+collapses duplicate `(src, dst, edge_type, props)` identities, so 2,256 of those merged onto an edge that
+already existed. It then stamps the merge-attempt count as `edge_count`.
+
+**Why it matters to THIS project rather than being a local curiosity:** `CG-s-3` (FWD-3, FWD-7) is
+*"S3 versioned artifact + `_build_manifest` + ONE pointer object"* -- the manifest IS the provenance
+record a cloud consumer reads, and `CG-s-7` repoints `comp-graph status` at that manifest. A port carries
+this field to the cloud, where a consumer comparing a manifest `edge_count` against a live graph count
+would read a 3.9% phantom drift that is an artifact of the producer, not of the data.
+
+⚠ **This seat surfaces and does not fix** -- BOUNDS bar editing repo source, and CG-s-9/R10 already own
+the loader's node/edge key handling at the port.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S8",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~Q",
+    "surfaced_at": "2026-09-03T07:55Z",
+    "one_line": "kuzu_nessie_load.py stamps _build_manifest.edge_count with its MERGE-ATTEMPT count (60,688), not the graph's stored edge count (58,432) -- an overstatement of 2,256 (3.9%) reproduced identically by two independent full loads, while node_count (27,133) agrees exactly and the INCREMENTAL path writes the correct 58,432 for the same graph. The manifest is the provenance record CG-s-3 ports to S3 and CG-s-7 repoints comp-graph status at.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, independent instrument (direct Cypher against the built DB, NOT either engine's own counter): kuzu.Database(full1_db, read_only=True) -> 'MATCH ()-[r:CloudEdge]->() RETURN count(*)' = 58432; same query on full2_db = 58432",
+        "The manifests those same two runs wrote: full1_db._build_manifest.json and full2_db._build_manifest.json both carry edge_count=60688, node_count=27133 -- so node_count agrees with the query (27133==27133) and edge_count does not (60688 != 58432, delta 2256)",
+        "PRODUCER-SIDE ARITHMETIC that explains it, from the loader's own stdout: 'INFO: ICEBERG_READ nodes=27156 edges=61071' then 'INFO: EDGES_WRITTEN written=60688 skipped_missing_endpoint=383' -- 61071-383 = 60688 exactly, i.e. the field counts MERGE statements executed, and MERGE is idempotent on a repeated (src,dst,edge_type,props) identity",
+        "CROSS-PRODUCER CONTROL: the incremental engine's manifest for the same graph (incB_db._build_manifest.json) carries edge_count=58432 -- it stamps a post-apply 'MATCH ()-[e:CloudEdge]->() RETURN count(*)' (kuzu_incremental_refresh.py:227-228) rather than a write counter, so two producers of ONE field disagree by construction",
+        "REPRODUCIBILITY: the discrepancy is identical (2256) across two runs 21 minutes apart that produced byte-identical output DBs (46,994,310 B each, same nodes_snapshot_id 1242378212505298814 / edges_snapshot_id 1026441646305052092), so it is deterministic and not a race",
+        "NEGATIVE CONTROL that the query instrument is sound: the SAME Cypher session returned nodes=27133, which MATCHES the manifest's node_count -- a broken reader would not agree on one field and disagree on the other"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-V-1 AC2 requires each full load's INPUT SIZES be reported as 'node and edge row counts per table', and the deliverable to identify what a 'projection rebuild' means in each carrier -- treating the build manifest the loader writes as an accurate description of the artifact it stamps.",
+    "world_is": "The loader's manifest edge_count is a count of write attempts, not of edges in the artifact. Reporting it as the graph's edge count would have put a 2,256-edge phantom into this deliverable's own input-size table; the correct stored count is only visible by querying the DB or by reading a manifest the INCREMENTAL path wrote.",
+    "notes": "Disarm = make the full loader stamp a post-load COUNT(*) the way kuzu_incremental_refresh.py:227-228 already does, or rename the field to say it is a write count. Owner set to 2.0.0_SA_COO~A as this round's sequencer because the fix is a repo-source edit this task order is barred from making; the natural home is CG-s-9/R10 ('the port is the moment') or CG-s-3, which defines the artifact manifest contract -- 3.0.0_SA_CVO~A routes it at L8. This deliverable reports BOTH numbers with their producers named rather than picking one. NOT blocking: no duration or memory figure in TO-CG-V-1 depends on the edge count."
+  }
+]
+```
