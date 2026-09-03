@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **14 rows** (S1-S15, ids S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 09:1xZ by `0.7.0_AE_CloudOps~P` on appending S11 (was 10); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **15 rows** (S1-S16, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 13:5xZ by `0.7.0_AE_CloudOps~T` on appending S16 (was 14); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -640,6 +640,45 @@ consumer written from `R5`'s description alone would crash on its first real del
     "spec_asserts": "PRD v0.4 s.6 R5 and TO-CG-B-2 s.2 describe the worker as receiving 'the queue message' from an S3 event notification on the branch-head marker -- one shape, an S3 event envelope whose object key is the marker.",
     "world_is": "The queue delivers that envelope AND a one-off s3:TestEvent with no Records key. A consumer built to the spec's description alone raises on the TestEvent rather than skipping it, which is how ~P's first parser failed.",
     "notes": "Disarm = the worker's consumer tolerates both shapes explicitly, with a control that feeds it a TestEvent body and asserts it is deleted-not-DLQ'd, landing with B2-AC2. Recorded now rather than at the exercise because the consumer is written BEFORE the exercise, and this is the fact that decides its first branch. RELATED denominator, deliberately NOT a row per the issuer: the DLQ baseline is 3, not 0 -- ~P's four receive-polls incremented ApproximateReceiveCount against maxReceiveCount 3. That is disclosed probing, not a spec divergence, and it rides this seat's proof as the before/after denominator; it also means this seat must not receive-message the main queue more than twice before the consumer runs, or it DLQs its own exercise message."
+  }
+]
+```
+
+## S16 -- 2,243 of the 2,256 duplicate edge rows are producer findings, not expected repeated observations
+
+CG-s-3's source-table census answered the question S8 left open. The source denominator reconciles exactly,
+but the excess is not one homogeneous class. Thirteen rows are the same profile-to-role fact observed through
+14 EC2 instances and are expected-by-construction. The other 2,243 expose two producer seams: the live C2
+composition emits member edges before collapsing repeated member sets, and the AWS graph producer discards
+EventBridge target identity/input before forming its edge identity.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S16",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~T",
+    "surfaced_at": "2026-09-03T13:58Z",
+    "one_line": "The 2,256-edge excess reconciles as 13 expected repeated observations plus 2,243 producer findings. 2,235 semctl C2i->C1 CONTAINS excess rows come from c2_individuate deduplicating motif nodes by member set while emitting the pre-collapse edge list. Eight AWS TRIGGERS excess rows represent two distinct EventBridge target IDs per rule whose Id/Input are dropped by comp_aws_cli, making different configurations one empty-props graph identity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ-ONLY PyIceberg census at edge snapshot 1026441646305052092: 61,071 rows; 383 missing-endpoint skips; 60,688 eligible MERGE attempts; 58,432 distinct (src,dst,edge_type,props) identities; 2,256 excess across 1,632 duplicate identity groups. Multiplicity: 1,580 groups x2 and 52 groups x14. Every excess row is identical on src_id,dst_id,edge_type,layer,snapshot_ts,props.",
+        "MERGE identity source: infra/aws/globgrph/kuzu_nessie_load.py:210-226 @117e539280d678e946f5c74a1f2593e07d41e01a; stored COUNT(*) and collapsed delta: :230-240 at the same commit.",
+        "SEMCTL split: 2,235 excess, all CONTAINS, all props.rel_tier=C2i->C1. c2_individuate.py:427-465 @23220a7b20df85b669c6a9711e0ae9d50b3acd1a keys nodes by deterministic member set but appends member edges for every raw detector row; :631 reports collapsed_duplicate_member_sets while :633 emits the uncollapsed edges list. The two static semctl specs each have zero internal duplicate identities and zero cross-spec overlap; none of their identities is in the duplicate group set.",
+        "AWS ASSUMES split: 13 excess from one profile->role identity occurring 14 times. comp_aws_cli.py:1382-1398 @59347e4d9ec9603562c6dd7095e13dd1ae630291 emits that relation once inside the EC2 loop; live read-only describe-instances found exactly 14 instances using bd-exporter-profile. This is expected repeated observation of one logical relation.",
+        "AWS TRIGGERS split: 8 excess, eight identities occurring twice. comp_aws_cli.py:1500-1516 at the same commit emits only rule ARN and target ARN. Live read-only list-targets-by-rule showed two target IDs for each rule; the news targets carry different or absent Input payloads. Since Id/Input are not emitted into props, semantically distinct target configurations collapse.",
+        "Final Iceberg writer: infra/aws/globgrph/derive_runner.py:313,357-376 @ec0408628ac098ddbb0035da1f032964faa8b286 copies graph['edges'] directly into graph_edges with no identity dedup pass."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-3 B3-AC4 requires every one of the 2,256 duplicate excess rows to be classified as expected-by-construction or as a finding with a named producer owner; this cell answers and records, but does not adjudicate or fix another producer.",
+    "world_is": "13 excess ASSUMES rows are expected-by-construction from 14 EC2 observations of one profile-to-role relation. The remaining 2,243 are findings: 2,235 uncollapsed live C2-instance member-edge emissions owned by 3.0.0_SA_CVO's c2_individuate.py, and 8 EventBridge target configurations made indistinguishable by 0.8.0_AE_CloudComp's comp_aws_cli.py projection. derive_runner persists both lists without deduplication.",
+    "notes": "No producer fix is authorized under CG-s-3. 2.0.0_SA_COO~A owns routing/disposition for this round. The named source owners are 3.0.0_SA_CVO for c2_individuate.py and 0.8.0_AE_CloudComp for comp_aws_cli.py; live EventBridge resource owners retain configuration ownership. The B3 artifact contract remains count-correct because both full and incremental manifests must stamp post-load COUNT(*), not attempt counts."
   }
 ]
 ```
