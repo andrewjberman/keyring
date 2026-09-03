@@ -2,12 +2,15 @@
 
 <to_id>NFRA_COMPEFFICACY.TO-CE-T-5</to_id>
 <project>NFRA_COMPEFFICACY</project>
-<issued_to>0.8.0_AE_CloudComp~C</issued_to>
+<issued_to>0.8.0_AE_CloudComp~K</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 opens wide on Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b; CE-t-5 at the ~C lane; depends_on CE-disc-2, DONE at L4 -- its spelling is the adopted one), PRD v0.5 @5bbdab5ec7 (s.4; s.4.3 the enum as DATA + GRAIN; s.4.4 + the verdict-bearing row; s.5; s.7 row T-5).</status>
+<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 opens wide on Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b; CE-t-5 at the ~K lane (RESEAT 18:3xZ); depends_on CE-disc-2, DONE at L4 -- its spelling is the adopted one), PRD v0.5 @5bbdab5ec7 (s.4; s.4.3 the enum as DATA + GRAIN; s.4.4 + the verdict-bearing row; s.5; s.7 row T-5).</status>
 
-**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` (s.4; s.5 the gate ledger's own section; s.7 T-5) · **Decomp cell:** `CE-t-5` (STAGE 3; "audit only; NOT-DECIDABLE is a designed result; no remediation on this run's evidence"; closes on "graded; 'ARNs absent BY DESIGN' recorded, not fixed") · **Lane:** `.tools/comp-schedule` (the ENGINE itself -- a 527-line python file, no separate shim) + `.tools/tests/**` (`test_comp_schedule.py` exists); the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~C/comp-schedule.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~C` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
+**RESEAT 2026-09-03 18:3xZ (issuer 2.0.0_SA_COO on Andrew's word at this terminal, "There is no ~C online"):** `0.8.0_AE_CloudComp~C` was a HOLLOW seat -- its Codex app-server produced ZERO output since boot (app-server.stdout.log 0 bytes, mtime 14:04Z), its API access died at 15:17Z (websocket 404s in app-server.stderr.log), this GO and the issuer's FWD-9 message sat UNREAD in its inbox under repeated HARD-NUDGE, it has NO deliverables folder and NO commit since its S27 row at 15:12Z -- while its heartbeat process kept it reading LIVE on the broker and 48 messages signed ~C reached the issuer, including a 17:52Z claim that "the implementation landed at 97c0064e09" -- a commit that exists but is 3.0.0_SA_CVO~C's comp-schedule BUILD of 2026-08-31, not T-5's work. The issuer's 17:56Z FWD-9 run therefore exercised the pre-existing tool, not an implementation; the tick-8 log's line "T-5 impl @97c0064e09" is RETRACTED here. The three ~C processes were stopped at 18:3xZ. NOTHING has been built on CE-t-5. The order is RE-ADDRESSED whole to **`0.8.0_AE_CloudComp~K`** (a Codex seat with its own real commits on record today: f42be3d548, 45b641343d, 6f8c95436a, 3d2daa3ffa, f1dce36b9b, 28b9a1e4d6, 49c49c218f, 45b99d1f96, 14fbeace00; both its NFRA_GLOBGRPH orders complete and flipped @78d1ed2d0d; nothing open); the deliverables lane moves to ~K.
+
+
+**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` (s.4; s.5 the gate ledger's own section; s.7 T-5) · **Decomp cell:** `CE-t-5` (STAGE 3; "audit only; NOT-DECIDABLE is a designed result; no remediation on this run's evidence"; closes on "graded; 'ARNs absent BY DESIGN' recorded, not fixed") · **Lane:** `.tools/comp-schedule` (the ENGINE itself -- a 527-line python file, no separate shim) + `.tools/tests/**` (`test_comp_schedule.py` exists); the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/comp-schedule.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~C` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
 
 ---
 
@@ -76,7 +79,7 @@ comp-adversary: RUN -- rc 0 at read-vintage @07601c54c9 (2026-09-03T14:25:42Z); 
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `T5-AC1`..`T5-AC6`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~C/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json`
 and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, which the lane commits itself. T5-AC2's NOT-DECIDABLE case
 and T5-AC5's mutants are the controls that must be able to FAIL.
 </proof_of_spec>
