@@ -1,224 +1,273 @@
-# CANONICAL FABRIC WORKFLOW — the ten steps, their owners, and where the gates actually are
+# THE CANONICAL FABRIC WORKFLOW
 
-**AUTHORED:** `1.0.0_SA_CTO`, 2026-09-01, at Andrew's instruction to persist this concretely.
-**STATUS:** REFERENCE. Describes the loop as it stands on 2026-09-01. It creates no gate and lifts none.
-**SIBLING, AND THEY ARE NOT RECONCILED:** `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` describes the
-same process as **FIVE STAGES**. Two live framings, one process. ⚠ **Nothing here supersedes that
-document and I do not know which governs** — the divergence is named so a reader hits it here rather
-than discovering it mid-decomp.
+**Status:** constitutional. This document is the one specification of how the Opal fabric takes a topic from a brief
+to a closed project. There is one process, the ten limbs L1 to L10, and every document, gate, skill and record that
+touches the process resolves to this file. Amendment is by whole-file version under the protocol in section 5; the
+authorizing records are named only in the changelog (section 6).
 
-**WHY IT EXISTS — Andrew's diagnosis, and it is the whole design constraint:** *whole projects were
-becoming thrashing debug sessions with no hierarchy.* The measured instance is `ADVI_PERFRP` on
-2026-09-01: five seats, one producer question, **nine hypotheses raised and nine dead**, no frame
-holding them.
+**Vocabulary.** A **limb** is one of the ten numbered hops; "step" is an accepted synonym. A **seat** is an agent
+serial. **Owner** means the only seat that performs the limb; **not engaged** means no other seat reviews, grades,
+certifies, or acts on that limb's artifact while the limb is open. A **gate** refuses at commit or at completion; a
+**notifier** delivers and never blocks; **binds by reading** means the sentence has no mechanical carrier. The
+register's `dep_stage` enum (`REGISTERED`, `PRD`, `DECOMP`, `EXECUTING`, `ROUND_CLOSE`, `CLOSED`) is data; its limb
+mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `SCOPE_CHANGE`.
 
----
-
-## THE TEN STEPS
-
-```
-  #   OWNER             STEP                                  ENFORCEMENT
-  --------------------------------------------------------------------------------------
-  1   4.0.0_SA_CRO      the brief                             binds by reading
-  2   1.0.0_SA_CTO      endpoint alignment                    binds by reading
-  3   1.0.0_SA_CTO      register + fabric key                 binds by reading (checked at 6)
-  4   1.0.0_SA_CTO      THE PRD                               binds by reading
-  5   2.0.0_SA_COO      decomp + comp-battery preflight       binds by reading (checked at 6)
-  6   2.0.0_SA_COO      TASK-ORDER ISSUANCE               >>> THE ONLY GATE <<<
-  7   the worker        execute; append surprise rows         binds by reading
-  8   3.0.0_SA_CVO      compile the channel                   NOTIFIER, never a gate
-  9   3.0.0_SA_CVO      disposition                           binds by reading
- 10   3.0.0_SA_CVO      route + loop_target                   binds by reading
-```
-
-**The PRD is the handoff artifact** between CTO and COO. Andrew: *"that's what gets decomposed by COO."*
-
-### Step 1 — the brief (CRO)
-
-The grounding document. Everything downstream traces to a line in it; an outcome with no line to
-cite cannot be emitted at step 2.
-
-### Step 2 — endpoint alignment (CTO)
-
-**Andrew:** *"before even writing the PRD, we need to define where we need to go."*
-
-Instrument: `/endpoint --forward <brief>` — Phase 0 of `.claude/skills/endpoint/SKILL.md`. It reads
-the **brief**, never the task-order register: at step 2 there are no task orders, and a skill that
-enumerates the register returns an empty set and calls it an endpoint.
-
-⛔ **THE OUTPUT IS QUALITATIVE BY RULING.** Andrew: *"This does not have to be a deliverable
-contract. It can be qualitative because we will not know enough about the quantitative mechanics at
-this point."* **Do not invent numbers here** — a number fabricated at step 2 is treated as ratified by
-every later stage because it is sitting in a document.
-**Qualitative is not vague. The test is DISPUTABILITY:** *"advisors find it useful"* fails, because
-nobody can contest it; *"an advisor reads a figure here they would otherwise have opened Black
-Diamond for"* passes, and contains no number.
-
-### Step 3 — registration + fabric (CTO)
-
-**Andrew:** *"when it is listed to directives.yaml, we need to discuss at that point if this is going
-to be a laptop fabric project or a site Z fabric project."*
-
-`fabric` enum: **`laptop` | `site-z`**. **Andrew 2026-09-01, on scope: *"every project at next TO"*** —
-the key binds **every** project the next time a task order is cut against it, not only newly
-registered ones. Measured 2026-09-01: **349 of 349 project JSONs carried no fabric key**; D2's ten
-were set that day, leaving 339, each acquiring the key at the moment someone is already editing that
-file.
-
-### Step 4 — THE PRD (CTO)
-
-**Andrew, verbatim:** *"Step 4 is the PRD, you need to write it, that's what gets decomposed by COO.
-The premise is that we basically read the briefing from CRO and align on the endpoint, and the PRD is
-the document that takes a briefing and converts it into a project arc with a defined outcome."*
-
-⭐ **Two words in that are load-bearing.**
-- **PROJECT ARC**, not specification. A PRD that lists requirements without an arc gives a decomp no
-  shape to follow — **and work with requirements but no arc is the thrash this loop exists to prevent.**
-- **DEFINED OUTCOME.** The step-2 endpoint lands *inside* the PRD as a named section, because
-  **step 10's scope-change route reads it back.** The endpoint section is the seam between steps 2
-  and 4, and both are CTO's.
-
-### Step 5 — decomp + preflight (COO)
-
-Every `<preflight>` disposition carries **a denominator or an explicit blindness statement, on its
-own line**. Accepted evidence tokens: any digit, or `BLIND` `COVERAGE` `DENOMINATOR` `UNRESOLVED`
-`SCANNED` `NOT-FOUND` `REFUSED`. Both limbs are bounded to the disposition's own line — the next
-tool's line is not scored as this tool's evidence.
-
-⛔ **A vintage dates the corpus; it cannot tell you the lens was BLIND on your subject.** Specimen:
-`comp-dataflow` on the file at the centre of the 09-01 incident returned *2 reads scanned, 2
-unresolved-dynamic (blind)* — a vintage alone would have shown two rows and read like an answer.
-
-⛔ **TWO SETS, NOT ONE -- corrected 2026-09-02 (CVO~A @`0d272d257c` R2; RC6).** The prior text listed one
-"admitted" set and merely bounded `comp-adversary`, while `.tools/to-pipeline-gate.py:45`
-`PREFLIGHT_TOOLS` already made `comp-adversary` one of THREE tools every new TO **must** disposition. Law
-said seven-and-a-bound; the gate enforced three-and-different. **Distinguish what is LAWFUL TO SELECT from
-what is REQUIRED OF EVERY TO, and do not call the admitted catalog mandatory unless the gate enforces it:**
-
-```
-  MANDATORY CORE (3)   comp-schedule · comp-iam · comp-adversary
-                       = to-pipeline-gate.py PREFLIGHT_TOOLS. Every new TO carries a disposition for
-                       each (RUN + denominator/blindness word on its own line, or
-                       DECLARED-NOT-APPLICABLE + reason). This is what the gate REFUSES on.
-
-  ADMITTED CATALOG (9) the core, plus: comp-blast · comp-dataflow · comp-trigger · comp-pipescript ·
-                       comp-denytest · comp-similar
-                       = tools LAWFUL to select for a decomp. Not every one is required of every TO.
-                       comp-similar READMITTED 2026-09-02 on CVO~A's own exercise (self-test 9/9;
-                       vintage + denominator on its disposition line; a failed resolution returns
-                       an explicit non-answer). Admission is bounded to a version that prints both.
-
-  ⛔ comp-adversary     SUBSTANTIVELY FIT, EFFECTIVE ADMISSION HELD (CVO~A) until its battery is
-                       collectible by the standard runner (`sys.exit()` at module scope kills pytest
-                       collection while the module battery prints 7/7). It is IN THE MANDATORY CORE
-                       BY THE GATE AND HELD BY THE REVIEW AT THE SAME TIME -- and there is no truthful
-                       disposition for an applicable-but-held tool (DECLARED-NOT-APPLICABLE is the
-                       wrong grain; RUN erases the hold). CONSEQUENCE, stated rather than papered:
-                       NO NEW CANONICAL TO PASSES STEP 6 ANYWHERE until the battery repair lands
-                       (placed with 0.8.0_AE_CloudComp, gate 1.0.0_SA_CTO). That is the fabric-wide
-                       critical path as of 2026-09-02.
-```
-
->> **A gate's mandatory list and a spec's admitted list are two carriers of one quantity, and this file
-   let them drift for a day.** When the gate changes `PREFLIGHT_TOOLS`, this block changes in the same
-   commit, or the spec is describing a gate that does not exist. <<
-**Two bounds to carry when using them, not footnotes:**
-- **`comp-iam` cannot answer "is this denied?"** — unparsed deny statements include NEVER#1's
-  cross-firm belts. **Silence from it must not be read as allowed.**
-- **`comp-adversary` expands from CITED paths.** A thin decomp yields "0 uncited siblings" over a
-  directory holding six live files. **Record the cited-path denominator: a 0-over-0 is an unrun
-  check, not a clean bill.**
-
-### Step 6 — TASK-ORDER ISSUANCE · **THE ONLY GATE**
-
-Mechanism: `.tools/to-pipeline-gate.py` @`40bf270dec`. Three requirements refuse a non-conformant new
-task order: the third admissibility limb, the step-3 fabric declaration, and the per-lens preflight
-evidence. Override `# pipeline-override: <reason>`, audited.
-
->> **THE CHOKE-POINT PRINCIPLE — gate the NECK of the funnel, not every stage.** Nothing executes
-   without a task order. A conformant TO requires a decomp reference, which requires the decomp,
-   which requires the PRD, which requires registration. **One gate at issuance enforces the entire
-   upstream funnel without taxing any other act.** Steps 1–5 are enforced BY IMPLICATION. <<
+**Project tree.** Every project lives at `org/missions/D<n>/<MACRO>/<CODE>/` with the subfolders `brief/`, `prd/`,
+`decompositions/`, `task-orders/`, `deliverables/<serial>/`, `surprise-channel/investigations/`,
+`surprise-channel/remediations/`, `ledger/`, `cards/`. The row is `project.json`; the flat index entry
+`org/projects/<CODE>.json` is generated from it and carries `home`. The grammar is `org/standards/PROJECT_TREE.contract.json`.
 
 ---
 
-## THE SURPRISE / INVESTIGATION FLOW — steps 7 to 10
+## 1. The ten limbs
 
-### Step 7 — the worker
+### L1 — Brief
 
-**This line goes VERBATIM into every task order**, so a worker never has to judge:
+- **Owner:** `4.0.0_SA_CRO`. **Not engaged:** every other seat.
+- **Input:** the topic, discussed with Andrew. **Output:** the brief at `org/missions/D<n>/<MACRO>/<CODE>/brief/<slug>.md`
+  (`docs/briefs/<slug>.md` and a sovereign-word record `org/tier<n>_<tier>/<serial>/deliverables/ANDREW_DIRECT_<slug>.md`
+  are the two other admitted shapes), every line citable.
+- **Tool:** `/brief-create`.
+- **Gate:** none at L1. The brief's path shape is refused at L6 by the PRD header pattern if it is none of the three.
+- **Handoff:** the brief's path and vintage, `<path>@<commit>`, become the PRD header's `brief_ref`.
 
-> **"Did I have to do something the TO did not say to do, or could I not do something the TO said to
-> do?"** If yes, append a row. If it is *"I noticed something interesting elsewhere"* or *"this could
-> be better"* — **that is NOT a surprise and you must keep working.**
+### L2 — Endpoint
 
-⛔ **THE WORKER JUDGES FORM. NEVER SIGNIFICANCE.** That is the load-bearing decision: significance is
-the judgment a worker is worst placed to make mid-task and most likely to resolve as "not worth
-interrupting." Validated against all **17 rows already filed on `ADVI_PERFRP`: zero exceptions.**
+- **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker.
+- **Input:** the brief. **Output:** numbered qualitative outcomes `FWD-1..n`, each citing a brief line, carrying no
+  numbers, each disputable; ids are permanent and never reused.
+- **Tool:** `/endpoint --forward <brief>`. Andrew confirms the `DONE WHEN` line of every outcome here; it is his last
+  touch point, and after L2 no limb waits on him. The same skill re-enters here from an L10 `SCOPE_CHANGE`, where the
+  CTO adjudicates: it runs `/open-calls --adjudicate` on the subject, rules on the recommendations itself, records the
+  ruling, appends the new outcomes at the next unused ids, re-issues the PRD, and the loop runs forward from L4.
+- **Gate:** none at L2. At L6 the L6 gate refuses a task order whose PRD does not define every listed outcome in its
+  endpoint section, and every defined outcome not listed in the header.
+- **Handoff:** the outcomes land inside the PRD as its endpoint section.
 
-A row carries **`spec_asserts` + `world_is`** — both halves required.
+### L3 — Register
 
-### Step 8 — compilation (CVO)
+- **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker. `0.0.0_AB_MSTR` holds the
+  directive register the row must appear in.
+- **Input:** the endpoint. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/project.json` with `project_code`,
+  `macro_code`, `directive`, `fabric` (`laptop` or `site-z`), `dep_stage`, `status`; the generated
+  `org/projects/<CODE>.json`; the project listed under `directives.D<n>.members.projects` in `org/missions/DIRECTIVES.yaml`;
+  the macro present and ratified under `directives.D<n>.macros` in `org/missions/MACROS.yaml`.
+- **Tool:** `.tools/missions-tree-index.py derive --write` (the index), `check` (the validator).
+- **Gate:** `.tools/git-hooks/missions-tree-check.sh` at commit refuses R1 (folder grammar), R2 (macro not ratified),
+  R3 (a hand-written flat twin), R4 (row and folder disagree), R5 (absent from the directive register), `ROW-*`
+  (a required field missing or off its enum) and `INDEX-*` (index missing, drifted, orphaned); it fails closed when
+  the validator cannot run.
+- **Handoff:** `dep_stage: REGISTERED`; the row is the identity every later gate compares the PRD against.
 
-`org/surprise_channel/surprise-watch.sh <serial> stream|once|status|reset`. Baseline seeded on the
-real channel: **18 files, 190 rows, 17 projects.** Pre-existing rows are not notified — that is a
-flood, not a signal.
+### L4 — PRD
 
-⛔ **IT IS A NOTIFIER. It never gates, never blocks, never closes anything.** Local only: no SNS, no
-SES, no email, no alarm, no freshness-checker.
+- **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker.
+- **Input:** the brief and the endpoint. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/prd/<CODE>_PRD.md`: the
+  fenced PRD_HEADER json block first (`org/standards/PRD_HEADER.schema.json`: `project`, `directive`, `fabric`,
+  `prd_version`, `step`, `brief_ref`, `endpoint_outcomes`, `status`), the endpoint section, the project arc with its
+  defined outcome, and the surface manifest, one row per engine. Every specification decision is closed in the PRD;
+  a decision that is an enumeration is closed as data in `org/standards/` and cited; a PRD carries no open
+  decide-first question into L5. Any substantive edit bumps `prd_version`.
+- **Tool:** the PRD authoring protocol and the template it names.
+- **Gate:** lane `ANY_CTO` refuses any other author's write to `prd/`. At L6 the L6 gate refuses a task order whose
+  PRD lacks the header, fails its schema, disagrees with the row on identity, lacks the endpoint section, or lacks the
+  surface manifest.
+- **Notifier:** `.tools/prd-header-notify.py` (post-commit) delivers a new or bumped header to `2.0.0_SA_COO` and
+  re-offers until READ. The handoff to L5 is that notification, never a dispatch.
+- **Handoff:** `dep_stage: PRD`.
 
-⭐ **THE DESIGN POINT WORTH COPYING ELSEWHERE.** `inbox-watch.sh` achieves exactly-once delivery by
-**moving** the message before echoing it — **and that move is what makes an orphaned inbox watcher a
-THIEF.** This watcher is a **read-only watermark**: it never mutates what it watches, so **an orphan
-of it cannot steal** — the worst it does is advance a state file nobody reads. Delivery is
-at-least-once rather than exactly-once, **and that is the correct trade for a notifier: a duplicate
-ping costs a glance, a stolen row costs the finding.** It also cannot race workers appending
-concurrently.
-⚠ **The state file is NOT an oracle for "CVO read it."** It records what the PROCESS emitted.
-**SENT ≠ EMITTED ≠ READ**; only an agent-side ack is sound.
+### L5 — Decomposition and battery
 
-### Steps 9 and 10 — disposition, then route
+- **Owner:** `2.0.0_SA_COO`. **Not engaged:** `1.0.0_SA_CTO`, `3.0.0_SA_CVO`, `0.0.0_AB_MSTR`, every worker. No seat
+  certifies the decomposition before L6; the COO may run the sealed-mutant harness as a self-check that no seat waits on.
+- **Input:** the PRD's surface manifest. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/decompositions/<CODE>_DECOMP.md`:
+  the rectangle over the manifest's surfaces, every cell carrying a status from a vocabulary that has a
+  not-evaluated value, cell ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md`, the Rule 24 four-postulate record,
+  a placement axis (which fabric executes each cell), dependency edges keyed to observed completion, and a battery
+  disposition per lens: the mandatory core `comp-schedule`, `comp-iam`, `comp-adversary`, each `RUN` with a
+  denominator or blindness statement or `DECLARED-NOT-APPLICABLE` with a reason, plus any lens of the admitted
+  catalog. No cell is owned by a Tier-0 or Tier-1 seat.
+- **Tool:** `/atom-decomp` (`projects/ATOM_DECOMP`), the lenses.
+- **Gate:** lane `TREE_COO` refuses any other author's write to `decompositions/`. The decomposition is consumed at L6
+  through `<decomp_ref>`; a defective decomposition surfaces at L7 as a `DECOMP_INVALIDATING` row and routes back here.
+- **Handoff:** `dep_stage: DECOMP`.
 
-`route` and `loop_target` are REQUIRED fields on a remediation row. **This is where the loop closes:**
+### L6 — Task orders
 
-```
-  spec-error            ->  back to step 6
-  decomp-invalidating   ->  back to step 5
-  SCOPE CHANGE          ->  back to step 2
-```
+- **Owner:** `2.0.0_SA_COO`. **Not engaged:** `1.0.0_SA_CTO`, `3.0.0_SA_CVO`, `0.0.0_AB_MSTR`.
+- **Input:** the decomposition. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/task-orders/<CODE>.TO-<id>.<slug>.md`,
+  each carrying `<decomp_ref>` with a delimited `<owned_cells>` list, `<preflight>` with the three mandatory
+  dispositions, `<proof_of_spec>` with the criterion ids the assignee will prove, `<issued_to>` naming one Tier-2
+  seat, and a GO message to that exact serial in the same window. A task order is one project for one seat instance;
+  parallelism is more instances, never more projects on one instance. A dark seat class is seated by a spawn, which is
+  the COO's act. Task orders are small circles that close.
+- **Tool:** the task-order protocol, `send_message` to the exact serial.
+- **Gate:** at commit, `.tools/git-hooks/to-proof-of-spec-check.sh` refuses a new task order without `<proof_of_spec>`
+  or without `<decomp_ref>`; `.tools/to-pipeline-gate.py` refuses a new task order whose project row is absent, whose
+  `dep_stage` or `fabric` is off its enum, whose preflight is incomplete, whose PRD fails L2 or L4's conditions above,
+  whose row and folder disagree, or whose `<issued_to>` names a Tier-0 or Tier-1 seat; an override is written to
+  `org/to-pipeline-override-audit.log`. Lane `TREE_COO` refuses any other author's issuance.
+- **Handoff:** `dep_stage: EXECUTING`, flipped by the row owner on the first task order.
 
-⛔ **The scope-change limb is decided by "does the PRD name this OUTCOME?"** With no named endpoint
-that question has **no answer**, and the scope-change route **silently collapses into the spec-error
-route** — every misrouted scope change then lands on COO as a task-order amendment instead of on CTO
-as a PRD revision. **The loop degrades quietly rather than failing loudly**, which is the worst
-available failure mode. That is why step 2's output must land in the step-4 document.
+### L7 — Execution
+
+- **Owner:** the Tier-2 worker named in `<issued_to>`. **Not engaged:** every Tier-0 and Tier-1 seat as a worker.
+- **Input:** the task order and its cited decomposition cells. **Output:** the deliverables and the proof-of-spec
+  instance at `org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json`, one acceptance row per
+  criterion with its invocation and output evidence, and the task order's own `<status>` flip, committed by the
+  worker. The specification is frozen for the round; the worker's first act is to re-ground the task order's premises
+  against live state; status moves with the act, by the actor, in the same commit; a precondition that becomes
+  unreachable is declared so on the record.
+- **Surprise:** when the worker had to do something the task order did not say, or could not do something it said,
+  the worker appends one row to `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`
+  (`org/surprise_channel/<CODE>/INVESTIGATION_v<N>.md` on a project without a tree home; site Z writes
+  `INVESTIGATION_v<N>.Z.md`) carrying `spec_asserts`, `world_is`, `class` (`OBSERVATION` or `BLOCKING`),
+  `hazard_standing` (`ARMED` or `INERT`, with `disarm_owner` when armed), and keeps working. The row is the carrier; a
+  message is never the carrier. The worker judges the form of a surprise, never its significance. An `OBSERVATION`
+  never interrupts; a `BLOCKING` row also goes to the issuer in the same turn; an `ARMED` row is disarmed in the same
+  turn by its named owner, and disarmed is not remediated.
+- **Gate:** `.tools/surprise-row-gate.py` at commit refuses a new investigation row without both halves, off its
+  enums, or off its project. `.tools/proof-of-spec-check.py` at completion refuses an instance that fails its schema,
+  whose cells and criteria do not align in both directions, whose artifact rows do not resolve at their pins, or whose
+  `surprises` entries do not each open with a row id present in the project's investigation file; the L6 gate refuses
+  a terminal `<status>` flip without a valid instance. Lanes admit the worker on `deliverables/<serial>/`,
+  `task-orders/` for its own status flip, `surprise-channel/investigations/`, and `cards/`.
+- **Handoff:** the investigation rows, to L8.
+
+### L8 — Compilation
+
+- **Owner:** `3.0.0_SA_CVO`, whose engagement with the project begins here. **Not engaged:** the owners of L1 to L7
+  as reviewers of this limb; every worker as a correspondent. The CVO's findings travel UP the loop to `2.0.0_SA_COO`
+  (or to `1.0.0_SA_CTO` for a scope change) and never DOWN to a worker: a worker hears from the CVO only through a
+  task order or an operating note issued by the COO. A row's `disarm_owner` names who disarms, never whom the CVO
+  may message; a disarm request travels through the COO.
+- **Input:** new investigation rows on either channel root. **Output:** the compiled channel, append-only during the round.
+- **Tool:** `org/surprise_channel/surprise-watch.sh <serial> stream` (a read-only watermark on both roots, one line
+  per new row, at-least-once) is the CVO's intake; `comp-surprise` is the rollup over both roots.
+- **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any Tier-2
+  serial while a tree project reads `dep_stage: EXECUTING`; the whole send is refused and nothing is written. The
+  watcher notifies and never blocks.
+- **Handoff:** every row to L9.
+
+### L9 — Adjudication
+
+- **Owner:** `3.0.0_SA_CVO`. **Not engaged:** every other seat.
+- **Input:** the investigation rows. **Output:** a `disposition` on every row (`UNDER_INVESTIGATION`, `GRADUATED`,
+  `DISMISSED_WITH_REASON`, `DECOMP_INVALIDATING`) and, for graduated rows, remediation rows at
+  `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`, issued as ONE slug for the
+  round at L10 (one artifact, one moment), never as a stream of messages during L7 to L9. Graduation is a grounding bar:
+  a row graduates when its mechanism is attributed, its denominators carried and its remedy holder named; severity
+  decides where it lands, grounding decides whether it graduates. A `DECOMP_INVALIDATING` row reopens L5 for the
+  current round at once; it never also takes a forward route.
+- **Tool:** the surprise-channel protocol and its row schemas at `org/surprise_channel/schemas/`.
+- **Gate:** `.tools/surprise-row-gate.py` refuses a new remediation row without its required fields, off its enums,
+  or a graduated row without grounded evidence. Lane `TREE_CVO` admits only the CVO to `remediations/`.
+- **Handoff:** the remediation rows, to L10.
+
+### L10 — Routing
+
+- **Owner:** `3.0.0_SA_CVO` stamps the route; the route owner acts. **Not engaged:** every worker.
+- **Precondition:** every task order under the project is terminal, each finished with a valid proof-of-spec instance
+  whose `surprises` entries resolve to rows, and every investigation row is dispositioned.
+- **The loop:** the round's findings re-enter at the limb the route names and run forward again through L10; a
+  remediation pass is an L5 re-decomposition or an L6 re-dispatch by the COO, cut as fresh task orders and remediated
+  runs in the order their dependencies dictate, to the relevant workers or to newly seated ones, never a conversation
+  between the CVO and a worker. Looping in order is the point of the process.
+- **Input:** the remediation rows. **Output:** on each row a `route` and its `loop_target`, locked:
+  `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`, re-cuts the task order), `DECOMP_INVALIDATING` to L5 (owner
+  `2.0.0_SA_COO`, re-decomposes), `SCOPE_CHANGE` to L2 (owner `1.0.0_SA_CTO`, re-enters the endpoint; the row names
+  the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). A round whose remediation doc
+  graduates zero rows proceeds to the next L6 dispatches, or, when the decomposition is spent, opens the close.
+- **The close:** two reads on two axes. `2.0.0_SA_COO`, the only seat that can say the decomposition is spent (every
+  cell holds a terminal task order with a valid proof-of-spec), writes `ledger/COMPLETION_REPORT.round<N>.json`: one
+  row per outcome in the PRD header, the cells that served it, each cell's proof-of-spec, and the claim `COVERED` or
+  `UNCOVERED`, both denominators printed, so an outcome no cell ever served shows in the COO's own report.
+  `1.0.0_SA_CTO` reads the exercised artifact each outcome's `DONE WHEN` names, never the report, and writes
+  `ledger/COMPLETION_GRADES.round<N>.json`: one verdict per outcome, `REALIZED`, `NOT_REALIZED` or `NOT_EVALUATED`,
+  the artifact and its vintage cited, the observed state matching the card's state. `CLOSED` follows mechanically when
+  every grade reads `REALIZED`. A `NOT_REALIZED` re-enters at L5 as a decomposition gap or at L2 as a `SCOPE_CHANGE`;
+  a grade in question on receipt is adjudicated by the CTO as at L2. An outcome whose `DONE WHEN` is an act after the
+  work is met by a closing-pass task order whose specification is that act. Then the registry bookkeeping: terminal
+  status, completion date, registry row. Contract: `org/standards/COMPLETION_REPORT.schema.json`.
+- **Tool:** the remediation row; `.tools/prd-header-notify.py kind:route` delivers a new route row to its owner and
+  re-offers until READ.
+- **Gate:** `.tools/surprise-row-gate.py` refuses a route-carrying row (a remediation row with a `route`, or an
+  investigation row whose `disposition` is `DECOMP_INVALIDATING`) while any task order under the project is not
+  terminal or any investigation item under it is not dispositioned, a route and target off the locked map, and a
+  `SCOPE_CHANGE` without its kind and outcome reference. An existing item is dispositioned by a new investigation row
+  that names it in `adjudicates`; the channel stays append-only. `.tools/missions-tree-index.py check` refuses a
+  `CLOSED` row unless the completion report and the grades exist for the same round, cover exactly the header's
+  outcomes, and every grade reads `REALIZED`.
+- **Handoff:** the stamped row to the route owner and to no one else; `dep_stage: ROUND_CLOSE` on the CVO's stamp,
+  then `CLOSED` on the CTO's grades, both flipped by the row owner.
+
+### Cross-cutting — the integrator
+
+`0.0.0_AB_MSTR` holds the directive register, opens and closes the push windows on the shared branch, and seats
+classes on request. It works no limb and holds no task order. Whether a commit is on origin is a measured property
+of every done test, read by `ls-remote`, never a cell of a decomposition.
 
 ---
 
-## ⛔ WHAT IS NOT MECHANICAL — stated plainly
+## 2. Role exclusivity — the guard on each half
 
-**The loop is gated at exactly ONE hop of ten.** Steps 1–5 and 7–10 bind by reading.
-
-⚠ **The upstream half is enforced by implication through step 6. THE DOWNSTREAM HALF IS ENFORCED BY
-NOTHING** — and steps 7–10 are exactly where surprises are raised, compiled, dispositioned and
-routed. A worker who never appends a row, a disposition never made, a remediation row with no route:
-none of that refuses anything today.
-
-**CVO's own summary, quoted rather than softened:**
-> *"A loop with one gate is not a deterministic loop. It is a well-documented convention with a
-> checkpoint in it."*
-
-**The next build** is row validators on the investigation and remediation rows, landing the step
-7/9/10 fields as mandatory. That is what gives the downstream half its first teeth.
+| limb | owner only | writes refused by | engagement by message |
+|---|---|---|---|
+| L1 | `4.0.0_SA_CRO` | none (the brief's shape is refused at L6) | binds by reading |
+| L2–L4 | `1.0.0_SA_CTO` | lane `ANY_CTO` on `prd/`; lane `TREE_PROJECT_ROW` on the row | binds by reading |
+| L5–L6 | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading |
+| L7 | Tier-2 workers | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>` | not applicable |
+| L8–L10 | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/`; `investigations/` and `cards/` admit every seat | binds by reading; the CVO's messages go to the COO or the CTO, never to a worker |
+| integrator | `0.0.0_AB_MSTR` | the pre-push deploy gate on deploy scope | binds by reading |
 
 ---
 
-## POINTERS
+## 3. Limb, owner, `dep_stage`, refuser
 
-- `org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` — the
-  incorporation spec this document summarises. Names steps 1,2,3,5,6,7,8,9,10; **step 4 was defined
-  by Andrew afterwards and is recorded here.**
-- `.claude/skills/endpoint/SKILL.md` — Phase 0 `--forward` (step 2), Phase 1/2 (projection, reorient).
-- `.tools/to-pipeline-gate.py` — the step-6 gate.
-- `org/surprise_channel/surprise-watch.sh` — the step-8 notifier.
-- `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` — **the five-stage framing. UNRECONCILED with this one.**
+| limb | owner | `dep_stage` after the limb | refuses at commit | refuses at completion | notifies |
+|---|---|---|---|---|---|
+| L1 brief | `4.0.0_SA_CRO` | none | — | — | — |
+| L2 endpoint | `1.0.0_SA_CTO` | none | — | — | — |
+| L3 register | `1.0.0_SA_CTO` | `REGISTERED` | `missions-tree-check.sh` | — | — |
+| L4 PRD | `1.0.0_SA_CTO` | `PRD` | lane `ANY_CTO` | — | `prd-header-notify.py` to the COO |
+| L5 decomposition | `2.0.0_SA_COO` | `DECOMP` | lane `TREE_COO` | — | — |
+| L6 task orders | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py`, lane `TREE_COO` | — | — |
+| L7 execution | Tier-2 worker | `EXECUTING` | `surprise-row-gate.py` (rows) | `proof-of-spec-check.py`; the terminal-flip limb of `to-pipeline-gate.py` | — |
+| L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` | — | `surprise-watch.sh` to the CVO |
+| L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows), lane `TREE_CVO` | — | — |
+| L10 routing | `3.0.0_SA_CVO` stamps; owner acts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (precondition, locked map); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py kind:route` to the owner |
+
+Every notification and every acknowledgement is read on the broker's delivery ledger: sent, emitted and read are
+three states, and only an agent's own acknowledgement is read.
+
+---
+
+## 4. What binds by reading
+
+The citable brief and the qualitative outcomes at L1 and L2; the arc and defined outcome of the PRD; the choice to
+use the decomposition method's validator at L5; the worker's significance judgment at L7, which is deliberately not
+the worker's; the CVO's engagement beginning at L8; the grounding bar at L9; the dispositioned half of the L10
+precondition; role exclusivity against engagement by message at every limb; the integrator-only push. Everything
+else in section 3 refuses.
+
+---
+
+## 5. Amendment protocol
+
+This file is amended as a whole, by `1.0.0_SA_CTO` as the scribe of process law, on Andrew's word or on a routed
+L10 finding. Each amendment is a new version with one changelog line naming the record that authorized it. No
+in-place markers, no partial-clause patches, no quotations, no dates or hashes in the body. Independent review of
+an amendment is the CVO's constitutional review role and is not an engagement with any limb. A document that
+describes this process in a second shape is retired to a redirect the day it is found.
+
+---
+
+## 6. Changelog
+
+| version | date | authorizing record | summary |
+|---|---|---|---|
+| 1.0 | 2026-09-01 | `org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` | first text of the ten steps and the surprise flow |
+| 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; water test `workflows/atom_decomposition/runs/canonical-fabric-workflow-spec/20260903T0305Z/` | constitutional form; ten limbs with one owner each and the not-engaged set; the project tree homes; the surprise row as the only carrier; the L6 refusal of Tier-0/1 seating and the L10 precondition gate; the proof-of-spec surprises limb; worker commits its own status; the earlier second description of the process retired to a redirect |
+| 2.1 | 2026-09-03 | `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb; `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the L7 to L10 loop: the CVO's findings travel up to the COO (or the CTO for a scope change) and never down to a worker; remediations are one slug at L10; every task order finishes with its valid proof-of-spec before any loop-back; the pass re-enters at L5 or L6 as fresh and remediated task orders in dependency order; the L10 handoff is to the route owner only |
+| 2.2 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md` | two refusers for clauses that bound by reading: the L8 send guard on the broker path (CVO to a Tier-2 serial refused while a tree project is executing) and the second limb of the L10 gate (no route while an investigation item is undispositioned; both route shapes; the `adjudicates` carrier) |
+| 2.3 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md` | the close: the COO's completion report and the CTO's grades, two reads on two axes, the `CLOSED` flip mechanical on the grades (`missions-tree-index.py` R6, `COMPLETION_REPORT.schema.json`); autonomy after L2 -- Andrew confirms the `DONE WHEN` lines at L2 and no limb waits on him after; `SCOPE_CHANGE` and a questioned grade are adjudicated by the CTO (`/open-calls --adjudicate`) and the loop runs forward from L4 |

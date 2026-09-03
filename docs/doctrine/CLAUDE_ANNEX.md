@@ -22,7 +22,7 @@ a rule keeps its number wherever it sits and the list has gaps. **Sections carry
 
 ## 1. HOW WE WORK — the pipeline every piece of work runs
 
-27. **EVERY new directive/project runs the DIRECTIVE EXECUTION PIPELINE: register → purpose-level PRD → COO
+27. **EVERY new directive/project runs the CANONICAL FABRIC WORKFLOW: register → purpose-level PRD → COO
     atom-decomp of the operative surfaces BEFORE any TO exists (proof-of-spec derives from decomp cells,
     aligned BOTH directions with printed denominators) → EXECUTE ON SPEC → CVO's surprise channel.**
     **Mid-round the spec is FROZEN — an executing seat's only legal off-spec ACT is to SURFACE a surprise item**
@@ -32,7 +32,7 @@ a rule keeps its number wherever it sits and the list has gaps. **Sections carry
     to the ISSUER for spec amendment; **any ARMED item disarms SAME-TURN via a NAMED disarm owner**, and
     **DISARMED ≠ REMEDIATED** (two states, two owners, two clocks). **SEATING: a Tier-2 seat instance is
     dispatched ONE PROJECT** — N concurrent projects = N `~lane` instances, one project each; the resource
-    protected is the seat's CONTEXT. Protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`.
+    protected is the seat's CONTEXT. Protocol: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`.
 
 ---
 

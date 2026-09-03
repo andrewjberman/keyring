@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 1,
+  "seat": "0.0.0_AB_MSTR",
+  "written_utc": "2026-09-03T04:30Z",
+  "trigger": "NFRA_COMPEFFICACY-S6 @f659b4edd2 (L10 stamp: DECOMP_INVALIDATING, loop_target 5, owner 2.0.0_SA_COO; 3.0.0_SA_CVO msg 93091)",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-03T01:58Z",
+      "ended_utc": "2026-09-03T02:16Z",
+      "act": "Post-reboot startup: registered, armed the inbox Monitor and the agentbus consumer, ran /integrate assess-only (leg SITEZ-in-CLOUD outstanding, 34 commits, overlap 0), read and READ-acked the pre-restart mail, held on Andrew's word 'finish startup and await my further command, which will come from COO'.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_020xZ_FINISH_STARTUP_AWAIT_COMMAND_VIA_COO.md@cada6cb81e"},
+        {"kind": "MESSAGE", "ref": "92899"},
+        {"kind": "MESSAGE", "ref": "92900"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "92908"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates and never works a project",
+      "note": "One instrument trap hit and banked: the session that launched the broker daemon held a stale 'broker unavailable' flag until a second register_agent call."
+    },
+    {
+      "seq": 2,
+      "limb": "X",
+      "started_utc": "2026-09-03T02:19Z",
+      "ended_utc": "2026-09-03T02:23Z",
+      "act": "Push window 1 on 2.0.0_SA_COO's dispatch (the L6 task-order commit): OPEN hold frame to 6 seats, same-breath re-read, push, ls-remote read, CLOSE frame.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "92912"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/@4d9cd02e40"}
+      ],
+      "outputs": [
+        {"kind": "GATE_OUTPUT", "ref": "pre-push-safe-deploy: OK: safe-deploy -- no deploy-scope script files detected, nothing to do"},
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@96af269f47"},
+        {"kind": "MESSAGE", "ref": "92914"},
+        {"kind": "MESSAGE", "ref": "92921"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates (push state is a measured property of every DONE test)",
+      "gate_or_notifier_touched": "pre-push-safe-deploy: no deploy-scope files; same-breath control: HEAD/ceiling/MERGE_HEAD/staged/STOP all matched the OPEN",
+      "note": "T1-AC6 'on origin' for the tree task orders reads YES from this push."
+    },
+    {
+      "seq": 3,
+      "limb": "X",
+      "started_utc": "2026-09-03T02:30Z",
+      "ended_utc": "2026-09-03T02:53Z",
+      "act": "Carried four sovereign calls to Andrew as cards (which spec governs; decomp certification; the conditional gates; two stale carriers), received 'ALl recs approved' plus the Rule 27 stub form, wrote the state-of-record document with the transcript verbatim and the L1-L10 drawing, ledgered it, broadcast it.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md@716a9bc7ce"},
+        {"kind": "RECORD", "ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_020xZ_REBOOT_RECOVERY_AND_COMPEFFICACY_CANONICAL_L1_L10.md@2bec6afa0a"},
+        {"kind": "ARTIFACT", "ref": "org/ref/DIRECTIVE_EXECUTION_PIPELINE.md@85ad2a5839"},
+        {"kind": "ARTIFACT", "ref": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md@85ad2a5839"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md@716a9bc7ce"},
+        {"kind": "RECORD", "ref": "org/tier0/ledger/LD-0521.md@716a9bc7ce"},
+        {"kind": "MESSAGE", "ref": "92936"}
+      ],
+      "spine_clause": "NONE",
+      "note": "An act outside the ten limbs by construction: the carrier function to Andrew. Its content became the spine's governing record."
+    },
+    {
+      "seq": 4,
+      "limb": "X",
+      "started_utc": "2026-09-03T02:56Z",
+      "ended_utc": "2026-09-03T02:59Z",
+      "act": "Push window 2 (the state of record, PRD v0.4, the answer-state enum): the first same-breath re-read REFUSED because HEAD moved eleven seconds after the OPEN; re-opened on the new head, pushed, closed.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "92941"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@19bf1c7322"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@e5c0968d45"},
+        {"kind": "MESSAGE", "ref": "92945"},
+        {"kind": "MESSAGE", "ref": "92953"},
+        {"kind": "MESSAGE", "ref": "92964"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates",
+      "gate_or_notifier_touched": "same-breath control: REFUSED once (HEAD 716a9bc7ce -> e5c0968d45), then matched; pre-push-safe-deploy: no deploy-scope files",
+      "note": "Two frames per window instead of one when a seat commits inside the hold; the control is the index inspection, the frame is courtesy."
+    },
+    {
+      "seq": 5,
+      "limb": "X",
+      "started_utc": "2026-09-03T02:04Z",
+      "ended_utc": "2026-09-03T03:12Z",
+      "act": "Cross-fabric exchange with 0.0.0_AB_MSTR~Z over the agentbus: their merge and D12 ratification received and acked; their orphan-consumer finding closed by measurement (creation time against the session, not parent liveness); their load-form assessment acked with the laptop state.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "agentbus a35cc2b0-8360-4887-8979-5d73f8b5b224"},
+        {"kind": "MESSAGE", "ref": "agentbus 8eb26d0e-e5c5-4046-a308-a4844f350155"},
+        {"kind": "MESSAGE", "ref": "agentbus 85e45c1c-0e85-45a7-b68d-f967bf23ab1b"}
+      ],
+      "outputs": [
+        {"kind": "MESSAGE", "ref": "agentbus e558d1d5-0aad-42e5-96a3-00c5382dd34c"},
+        {"kind": "MESSAGE", "ref": "agentbus be5ff63a-57e0-4548-81d0-9e9412144f78"},
+        {"kind": "MESSAGE", "ref": "agentbus 2ba84b91-98c9-4740-8bd9-fe3a396e9953"}
+      ],
+      "spine_clause": "NONE",
+      "note": "Nothing merged in either direction; both legs outstanding by the end of the round; assess-only on Andrew's launch row."
+    },
+    {
+      "seq": 6,
+      "limb": "X",
+      "started_utc": "2026-09-03T03:22Z",
+      "ended_utc": "2026-09-03T03:24Z",
+      "act": "Push window 3, law in range: CLAUDE.md Rule 27 stub, the surprise-row rule, the proof-of-spec surprises limb, CVO's first L8 row; site Z told over the bus that CLOUD carries law.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "92982"},
+        {"kind": "ARTIFACT", "ref": "CLAUDE.md@6e8805eb90"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@6e8805eb90"},
+        {"kind": "MESSAGE", "ref": "92985"},
+        {"kind": "MESSAGE", "ref": "92991"},
+        {"kind": "MESSAGE", "ref": "agentbus 08021307-1572-499a-a3f9-f0e1e34b897b"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates; a law edit travels with its record",
+      "gate_or_notifier_touched": "pre-push-safe-deploy: no deploy-scope files"
+    },
+    {
+      "seq": 7,
+      "limb": "X",
+      "started_utc": "2026-09-03T03:32Z",
+      "ended_utc": "2026-09-03T03:42Z",
+      "act": "Push window 4 (gates (i) and (iii), the flat-channel lane grant, CVO's S2 row, CloudComp's rework): the first same-breath re-read REFUSED on three paths staged by 0.8.0_AE_CloudComp mid-commit; waited for their commit, re-opened on the new head, pushed, closed.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93002"},
+        {"kind": "MESSAGE", "ref": "92997"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@2718cffc45"},
+        {"kind": "MESSAGE", "ref": "93007"},
+        {"kind": "MESSAGE", "ref": "93013"},
+        {"kind": "MESSAGE", "ref": "93019"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates",
+      "gate_or_notifier_touched": "same-breath control: REFUSED once (staged=3, index.lock live), then matched; pre-push-safe-deploy: no deploy-scope files",
+      "note": "A seat committing during the hold is the normal case, not a breach; the index inspection is what protects the push."
+    },
+    {
+      "seq": 8,
+      "limb": "X",
+      "started_utc": "2026-09-03T03:33Z",
+      "ended_utc": "2026-09-03T03:53Z",
+      "act": "On Andrew's word that the five-stage pipeline doc is not the process, wrote the brief: ten limbs, one process, the spine at org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md as a constitutional document, DIRECTIVE_EXECUTION_PIPELINE.md to a redirect stub; ledgered and broadcast to 1.0.0_SA_CTO.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md@ba9add4200"},
+        {"kind": "ARTIFACT", "ref": "org/ref/DIRECTIVE_EXECUTION_PIPELINE.md@2718cffc45"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md@ba9add4200"},
+        {"kind": "RECORD", "ref": "org/tier0/ledger/LD-0521.md@ba9add4200"},
+        {"kind": "MESSAGE", "ref": "93027"}
+      ],
+      "spine_clause": "NONE",
+      "gate_or_notifier_touched": "mstr-ledger-check: BLOCKED the first commit (non-record path without a ledger entry); passed with LD-0521 A1 in the same commit",
+      "note": "A repo-wide census of the five-stage vocabulary was started and stopped on Andrew's interrupt; the spec decomp owns that census."
+    },
+    {
+      "seq": 9,
+      "limb": "X",
+      "started_utc": "2026-09-03T03:54Z",
+      "ended_utc": "2026-09-03T03:59Z",
+      "act": "Recorded Andrew's ruling that workers commit freely under their project tree path (the worker's own status flip had been refused by the task-orders lane) and routed it to 2.0.0_SA_COO as registry grantor.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_035xZ_WORKERS_COMMIT_FREELY_UNDER_THEIR_PROJECT_TREE.md@a4c9b25b4c"},
+        {"kind": "ARTIFACT", "ref": ".owned-paths.yaml@2718cffc45"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_035xZ_WORKERS_COMMIT_FREELY_UNDER_THEIR_PROJECT_TREE.md@a4c9b25b4c"},
+        {"kind": "MESSAGE", "ref": "93033"}
+      ],
+      "spine_clause": "L7: the worker's status flip is the worker's own commit (as amended by this ruling)",
+      "note": "The record's first draft said the flip sat dirty in the worktree; measured before committing, it had landed under the issuer's author line at fc5ec7106c, and the record was corrected to say so."
+    },
+    {
+      "seq": 10,
+      "limb": "X",
+      "started_utc": "2026-09-03T04:00Z",
+      "ended_utc": "2026-09-03T04:02Z",
+      "act": "Push window 5 (the spine rewrite, the brief, the ruling, T-1 complete, the EXECUTING row); site Z told over the bus.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md@d6bdf947e0"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit.md@fc5ec7106c"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@a4c9b25b4c"},
+        {"kind": "MESSAGE", "ref": "93036"},
+        {"kind": "MESSAGE", "ref": "93042"},
+        {"kind": "MESSAGE", "ref": "agentbus 4efecad9-7804-4782-aa57-473bfef099e0"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates",
+      "gate_or_notifier_touched": "pre-push-safe-deploy: no deploy-scope files"
+    },
+    {
+      "seq": 11,
+      "limb": "X",
+      "started_utc": "2026-09-03T04:04Z",
+      "ended_utc": "2026-09-03T04:06Z",
+      "act": "Carried 2.0.0_SA_COO's proposed gate limb (iv) to Andrew, received 'Approved, tell CTO to land that limb too. COO is the only agent that does task orders', ledgered it, told 1.0.0_SA_CTO.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93048"},
+        {"kind": "WORD", "ref": "org/tier0/ledger/LD-0521.md@415e322f7a"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "org/tier0/ledger/LD-0521.md@415e322f7a"},
+        {"kind": "MESSAGE", "ref": "93052"}
+      ],
+      "spine_clause": "L6: only 2.0.0_SA_COO issues a task order (made a gate property by this ruling)"
+    },
+    {
+      "seq": 12,
+      "limb": "X",
+      "started_utc": "2026-09-03T04:10Z",
+      "ended_utc": "2026-09-03T04:14Z",
+      "act": "Push window 6 (the tree lane grant, limb (iv) approval, CTO's two water-test fixes, CVO's L9 rows). Andrew's word 'stop pushing until i say so, stop interrupting the fabric' arrived after the push had landed; the window was CLOSED so seats stop holding, the CLOSE frame carried his word, and no further window or hold frame has been issued.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93057"},
+        {"kind": "WORD", "ref": "org/tier0/ledger/LD-0522.md@291bf6c087"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@db508e75b4"},
+        {"kind": "MESSAGE", "ref": "93064"},
+        {"kind": "MESSAGE", "ref": "93070"},
+        {"kind": "RECORD", "ref": "org/tier0/ledger/LD-0522.md@291bf6c087"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates",
+      "gate_or_notifier_touched": "pre-push-safe-deploy: no deploy-scope files",
+      "note": "Six windows in two hours were read by Andrew as interrupting the fabric. Push cadence is his to gate while he is at the terminal; recorded as LD-0522 and banked as feedback."
+    },
+    {
+      "seq": 13,
+      "limb": "X",
+      "started_utc": "2026-09-03T02:10Z",
+      "ended_utc": "2026-09-03T04:26Z",
+      "act": "READ-acked every broker message addressed to this seat by its Msg-ID line in the same turn it was read (22 ids), and read every agentbus frame in full from the consumer's output file when the notification was truncated.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "92855"},
+        {"kind": "MESSAGE", "ref": "92865"},
+        {"kind": "MESSAGE", "ref": "92874"},
+        {"kind": "MESSAGE", "ref": "92875"},
+        {"kind": "MESSAGE", "ref": "92911"},
+        {"kind": "MESSAGE", "ref": "92929"},
+        {"kind": "MESSAGE", "ref": "92939"},
+        {"kind": "MESSAGE", "ref": "92952"},
+        {"kind": "MESSAGE", "ref": "92962"},
+        {"kind": "MESSAGE", "ref": "92972"},
+        {"kind": "MESSAGE", "ref": "92978"},
+        {"kind": "MESSAGE", "ref": "93030"},
+        {"kind": "MESSAGE", "ref": "93060"},
+        {"kind": "MESSAGE", "ref": "93063"},
+        {"kind": "MESSAGE", "ref": "93078"},
+        {"kind": "MESSAGE", "ref": "93084"},
+        {"kind": "MESSAGE", "ref": "93091"}
+      ],
+      "outputs": [],
+      "spine_clause": "NONE",
+      "note": "The READ clock is the only delivery signal an orphan cannot forge; two messages from unregistered Codex senders carried no Msg-ID and could not be acked."
+    }
+  ]
+}

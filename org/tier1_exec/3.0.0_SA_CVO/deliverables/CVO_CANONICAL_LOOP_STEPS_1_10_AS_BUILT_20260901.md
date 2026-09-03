@@ -138,6 +138,13 @@ and it is not the argument the transcript makes.**
   2.0.0_SA_COO   /drive        the primary driver. 20 min default, a KNOB not a gate.         [~]
 ```
 
+> **DATED MARKER, 2026-09-03 (the spec water test's finding `X.drive-off-in-as-built`, routed to this seat):** the two
+> lines above describe 2026-09-01 and are stale as a statement of the live process. `/drive` is OFF by Andrew's standing
+> word (`org/XXX.md` Step 1b-F, COO row; the D2 arm HELD 2026-09-02, "D2 stays off for now"); `/self-drive` was struck
+> 2026-08-31 and re-arms only on fresh word. Neither loop drives the ten limbs. The process as it now binds is the spine,
+> `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, with the surprise flow's annex at `org/ref/SURPRISE_CHANNEL_PROTOCOL.md`;
+> this document is history and is not amended further.
+
 ---
 
 ## THE ANALOGY THAT MAKES THE WHOLE DESIGN COHERENT

@@ -3,9 +3,9 @@
 **Directive:** D11 Substrate/Tooling Enhancements (Andrew-direct 2026-09-02, VERBATIM: *"This would go in D11
 Substrate/Tooling."*) · **Fabric:** laptop (D11 placement row; membership and fabric agree, per the ETFS_GUARDRAIL
 D8 precedent) · **dep_stage:** PRD
-**Author:** `3.0.0_SA_CVO` (driver, Andrew-designated comp-tool lane @`98b1a59907`) · **Executor:** `0.8.0_AE_CloudComp`
+**Author (draft; step-3 input @`86a5538003`):** `3.0.0_SA_CVO` (the Andrew-designated comp-tool lane @`98b1a59907`; NOT the driver from L4 on — Andrew-direct at the CVO terminal 2026-09-03 ~02:1xZ, VERBATIM *"you are not going to be driving this, we are doing canonical order flow"*, record @`96af269f47`; the canonical roles are the Limb-check record @`9a4d508ae5`: L2–L4 CTO only, L5–L6 COO only, CVO first engaged at L8) · **L4 owner:** `1.0.0_SA_CTO` · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
-**Version:** v0.3, 2026-09-03 (v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+**Version:** v0.4, 2026-09-03 (v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ; **v0.4 = the two STAGE-0 decisions landed at L4 on the L4 owner's authority after 2.0.0_SA_COO withdrew TO-CE-DISC-2 and TO-CE-TP-1 (92927, Andrew-direct ~02:2xZ *"Only tier2 agents are workers"*): s.4.3's four answer-state spellings RATIFIED AS DATA in `org/standards/COMPTOOL_ANSWER_STATE.enum.json` + s.4.7's "until ratified" clause closed + the NOT_APPLICABLE finding; s.4.4 carries RULE T's FORM (input 3.0.0_SA_CVO 92932, two amendments); the roles line above**) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -388,8 +388,14 @@ For each tool, CloudComp plants one case per state and records what the tool pri
   NOT_APPLICABLE               the question does not apply to this subject/tool
 ```
 **PASS** = four cases, four distinguishable outputs. **FAIL** = any two states print alike. This is FWD-2 and it is
-the load-bearing test of the project. ⛔ **Rule 24 census on this enum is in s.4.5; it is NOT yet a shared enum**
-in code — it is the GRADING vocabulary of this PRD until the census is adjudicated.
+the load-bearing test of the project. **RATIFIED AS DATA (v0.4, L4, `1.0.0_SA_CTO`): the four state names above ARE the
+spellings — `org/standards/COMPTOOL_ANSWER_STATE.enum.json`, exactly one per state; the keys of every deliverable's
+`answer_state` block are compared against that file (T-16 @`d101d4fe20` already conforms, 4 of 4), and a key outside it
+is a non-conforming deliverable (s.4). Where a LIVE carrier prints a state in a tool's own voice the file ADOPTS that
+token as the state's tool-voice: `PARTIAL_OR_BLIND` <- `NOT-DECIDABLE` (comp-schedule, exercised 02:18Z), `NOT_APPLICABLE`
+<- `NOT_APPLICABLE` (nerves_resolve); `SUBJECT_ABSENT_FROM_CORPUS` and `PRESENT_WITH_ZERO_RESULTS` are minted (no code
+carrier; comp-find's denominator shape is their kin, not a token). Rule 24 record + census: s.4.7 and the file. It binds
+BY READING — no code consumer, no gate (s.5).**
 
 ### 4.4 BOUNDS — timeout and pagination mechanics
 ```
@@ -408,16 +414,60 @@ The consumer half already exists in law (CLAUDE.md Rule 21: never `head` a censu
 Size-invariance comes from the page, never from making output smaller.
 
 **RULE T (work): a tool never exceeds a ceiling it was not told.** Every marquis tool **accepts a budget** (flag or
-env; default = the harness's 120s Bash ceiling), **spends it against the WORK, not the call**, and at expiry
-**prints the reached denominator with a resume cursor** — *"scanned 12,400 of 144,933 when the 120s budget hit;
-re-run `--page 2` / `--budget 600`."* A timeout thereby becomes a page boundary, not a kill. **P and T are one
-solution:** a time budget that ends on a resumable cursor IS pagination over work. Internal `timeout=` constants
-stay but must be **≤ the declared budget** or they are dead code.
+env; default 90 s, BELOW the harness's 120 s Bash ceiling — THE FORM below), **spends it against the WORK, not the
+call**, and at expiry **prints the reached denominator with a resume cursor** — *"scanned 12,400 of 144,933 when the
+budget hit; re-run `--cursor <last-unit>` / `--budget 600`."* A timeout thereby becomes a page boundary, not a kill.
+**P and T are one solution:** a time budget that ends on a resumable cursor IS pagination over work. Internal
+`timeout=` constants stay but must be **≤ the declared budget** or they are dead code.
 
-**Non-application:** tools whose output is bounded by nature (`comp-which`, `comp-denytest`, `comp-schedule`'s five
-carriers) carry Rule P's disclosure line and nothing else. **Reference implementations:** T-1 (`comp-find`) and
-T-2 (`comp-read`) — the only two that already satisfy P; T binds them first. **Cost, stated:** T is a code change on
-~18 marquis implementations; P on ~10.
+**RULE T's FORM (v0.4, L4 landing by `1.0.0_SA_CTO`; input `3.0.0_SA_CVO`'s decision record @`790d92c6fa` + msg 92932,
+adopted with two amendments — B1 the source word on the line, B2 the non-application corrected below; the record is
+history, this section is the ONE carrier):**
+```
+  carrier         --budget <seconds>  >  env COMP_BUDGET_S  >  the tool's documented default
+  default         90 s -- BELOW the 120 s outer ceiling, so the tool always speaks before the harness kills it
+  unbounded       --budget 0 -> the denominator line prints "budget: unbounded (--budget 0)"
+  on every        "budget: <S> s (flag | env COMP_BUDGET_S | default)" -- the SOURCE word travels with the value
+  denominator     (a value must carry its claim: without it a reader cannot tell where a ceiling came from)
+  at expiry       on stdout, BEFORE the summary, rc stays 0 (the LINE is the rejectable state, not the rc):
+                  "BUDGET REACHED: <S> s (<source>); scanned <n> of <N> <unit>; results are a PREFIX, not the
+                   answer; resume: <tool> <args> --cursor <last-unit>"
+  on completion   "WITHIN BUDGET: scanned <N> of <N> <unit>; budget: <S> s (<source>), used <t> s"
+  cursor          the last FULLY processed unit in the tool's DETERMINISTIC scan order; --cursor resumes after
+                  it; the union of runs reaches N (size-invariant by construction -- Rule P along time)
+  subprocesses    every timeout= derives from remaining(); a call that would outlive the budget is DEFERRED in
+                  T-16's always-printed bucket: "DEFERRED: k of K <unit>(s) did not return -- each names its
+                  reason below" (k may be 0; the bucket prints on a healthy run, so absence is never zero)
+  discriminators  TWO, independent: D1 the token (WITHIN BUDGET | BUDGET REACHED); D2 "scanned n of N", n == N
+                  vs n < N. Either alone separates the pair; a consumer greps one.
+  shared code     ONE sibling `.tools/_compbudget.py`, never per-tool copies (build ladder rung 2)
+```
+**Word-boundary census at ratification** (`3.0.0_SA_CVO`, comp-find `--files --all`, ~145.9k files, 92932 C): `BUDGET
+REACHED` 7 hits, all the decision record and its message copies (0 prior occupancy in code); `WITHIN BUDGET` 0;
+`SCAN COMPLETE` 8 hits INCLUDING `infra/aws/nfra_terraform_p1/drift_scan.sh` — COLLIDES, not used; `COMP_BUDGET_S` 5,
+all the record's own. **Uncovered member, named: KILLED-OUTSIDE** — the harness kills the process and NO line prints
+(indistinguishable from a crash; live specimen 92932 E: a fourth comp-find sweep killed at a 300 s Bash ceiling, exit
+143, no line). That is why the default sits below the outer ceiling; mitigated, never eliminated. **State coherence
+(iv):** raising `--budget` moves BUDGET REACHED -> WITHIN BUDGET; it moves neither KILLED-OUTSIDE (only the harness
+ceiling does) nor a DEFERRED-for-a-non-time-reason. **Grader's arm for every 4.4 grade from here:** plant `--budget 1`
+on the default corpus -> BUDGET REACHED, n < N, rc 0, "(flag)"; plant `--budget 0` on a zero-hit pattern -> WITHIN
+BUDGET, n == N, no "BUDGET REACHED"; `COMP_BUDGET_S=1` with no flag -> as the first with "(env COMP_BUDGET_S)";
+`--cursor <unit>` -> "resumed after <unit>", n1 + n2 == N; a temp-copy mutant that prints the clean token at expiry
+goes RED. Falsifier already exercised on the grammar (92932 D, scratch, no tool code): planted pair DISTINGUISHABLE,
+mutant INDISTINGUISHABLE -> control fired, two runs STABLE, 3 arms of 3. **First target T-1 (`comp-find`), facts at
+HEAD `96af269f47`:** `:158 timeout=600` wraps the comp-kuzu subprocess (`--corpus aws`), `:607 timeout=20` wraps the
+telemetry sink; page contract present (`:240`, `:522` "PAGE i of N"); NO `--budget` / env / deadline / cursor anywhere
+(census 0). Its 600 s inner constant EXCEEDS the outer ceiling — the dead-code clause above, live.
+
+**Non-application (corrected v0.4, 92932 B2):** a tool with NO loop whose iteration count depends on corpus width AND
+NO subprocess carrying a timeout constant (`comp-which`, `comp-denytest`, `comp-schedule`'s five carriers) carries Rule
+P's disclosure line and nothing else. **Output caps do NOT make a tool non-application:** caps bound OUTPUT (Rule P),
+not WALL-CLOCK — `comp-adversary` (caps 25/12/2400 B) is IN scope; its own T-16 grade reads `size_invariance.time`
+*"NOT budgeted ... worst case 12 x 60 s = 720 s + 120 s comp-state, against a 120 s outer ceiling the tool cannot see"*
+and Rule T *"NOT MET ... owed"* (`comp-adversary.result.md:71` @`d101d4fe20`); its route is the `subprocesses` clause
+above (`comp-adversary:401-402` at HEAD). **Reference implementations:** T-1 (`comp-find`) and T-2 (`comp-read`) — the
+only two that already satisfy P; T binds them first. **Cost, stated:** T is a code change on ~18 marquis
+implementations; P on ~10.
 
 #### 4.4.1 Measured baseline (2026-09-02, 20 marquis tools; help-text census + source grep)
 ```
@@ -489,8 +539,19 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
   gate) — **that split is a finding this project inherits, not one it may paper over.** The other two states
   (`SUBJECT_ABSENT_FROM_CORPUS`, `PRESENT_WITH_ZERO_RESULTS`) have **no carrier anywhere in code** and are
   genuinely new; comp-find's `OUT-OF-CORPUS` prose is the nearest kin to the first and should be reconciled
-  with it rather than duplicated. **Until the spellings are ratified (CTO gate), 4.3 binds deliverables by
-  reading, not code by enforcement.** Cost of the census on this box: the 8-way alternation exceeded a 120s
+  with it rather than duplicated. **RATIFIED 2026-09-03 (v0.4, `1.0.0_SA_CTO`, L4): the spellings are DATA in
+  `org/standards/COMPTOOL_ANSWER_STATE.enum.json`; 4.3 binds by reading against that file (no code consumer, no gate —
+  s.5). Three corrections to the census reading above, carried in the file: (a) `NOT_DECIDABLE -> NOT-DECIDABLE` names
+  the TOOL-VOICE token of the state `PARTIAL_OR_BLIND` (s.4.3's third state, exercised by T-16) — a tool's printed token
+  and a state's spelling are two grains, and s.4.3 has no fifth state; `NOT_DECIDABLE` (underscore) has no code carrier
+  and is retired as a spelling. (b) `DECLARED-NOT-APPLICABLE` is the preflight DISPOSITION enum of `to-pipeline-gate.py`
+  (`:55` at HEAD `96af269f47`; `:46` above was a dated read) — an AUTHOR's declaration about a lens, a different axis
+  (postulate iii), so the NOT_APPLICABLE "split" resolves to ONE spelling, `NOT_APPLICABLE` (nerves_resolve's, a RUN's
+  answer), with NO change owed to the gate's token (owner `3.0.0_SA_CVO`; the finding, with the losing carrier and its
+  owner, is in the file). (c) `OUT-OF-CORPUS` is not a token comp-find prints (comp-read `--enumerate` over
+  `.tools/comp-find`, 615 lines: 0 hits; in code only as a comment, `.tools/_comprail.py:382`); it is the PROSE name
+  CLAUDE.md Rule 21 gives comp-find's `0 hit(s) across 0 file(s)` shape, and that shape is `SUBJECT_ABSENT_FROM_CORPUS`'s
+  kin — the pathspec, not the pattern, is the absent subject. T-16's `answer_state` keys already match, 4 of 4.** Cost of the census on this box: the 8-way alternation exceeded a 120s
   foreground ceiling twice and completed only in the background — itself a FWD-4 specimen on comp-find
   (its own 600s internal timeout exceeds the caller's ceiling, and nothing at the ceiling says so).
 

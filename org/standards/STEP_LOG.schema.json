@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "opal://standards/STEP_LOG.schema.json",
+  "title": "STEP LOG -- one seat's step-by-step INPUT/OUTPUT record of one end-to-end pass of the canonical fabric workflow, written at the round's L10 stamp; the CTO compiles every seat's step log against the spine into four quadrants",
+  "description": "Authority: Andrew-direct at the 2.0.0_SA_COO terminal 2026-09-03 ~04:2xZ (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_042xZ_PER_AGENT_STEP_LOGS_INPUT_OUTPUT_FOR_CTO_LOOP_COMPILATION.md); schema fixed by 1.0.0_SA_CTO as the compiler. THE SEAT RECORDS ACTS; IT NEVER SELF-ASSIGNS A QUADRANT. The quadrant is derived by the compiler from two orthogonal axes read against the spine (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md): plan_conformance {ON_PLAN, OFF_PLAN} x outcome {EFFICIENT, DEFICIENT}. ON_PLAN x EFFICIENT = the loop worked; ON_PLAN x DEFICIENT = a plan-improvement opportunity; OFF_PLAN x EFFICIENT = allowed flexibility or a plan improvement; OFF_PLAN x DEFICIENT = a GATE CANDIDATE. Rule 24 on the two axes: (i) each is two members, exhaustive by negation; (ii) one grain, one recorded act; (iii) one intent each -- did the act follow a spine clause / did the act reach its output without waste or failure; (iv) a plan amendment moves the conformance axis for future acts, a gate moves the deficient off-plan cell to refused, neither rewrites a recorded act. One file per seat per project per round at org/missions/D<n>/<MACRO>/<CODE>/ledger/STEP_LOG.<serial>.round<N>.json (lane ANY on ledger/). Nothing about this file gates the L10 stamp.",
+  "type": "object",
+  "required": ["schema_version", "project", "round", "seat", "written_utc", "rows"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "project": {"type": "string", "pattern": "^[A-Z0-9]+_[A-Z0-9_]+$"},
+    "round": {"type": "integer", "minimum": 1},
+    "seat": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+_[A-Z]{2}_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$"},
+    "written_utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
+    "trigger": {"type": "string", "description": "the L10 stamp this log answers to: the remediation row id or the round-close record, as a locator"},
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "description": "ONE ROW PER ACT, in the order performed. An act is one thing the seat did that produced or consumed an artifact or a message: a skill run, a commit, a dispatch, a grade, a relay, an ack, a hold.",
+      "items": {
+        "type": "object",
+        "required": ["seq", "limb", "started_utc", "ended_utc", "act", "inputs", "outputs", "spine_clause"],
+        "additionalProperties": false,
+        "properties": {
+          "seq": {"type": "integer", "minimum": 1},
+          "limb": {
+            "enum": ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "X"],
+            "description": "the limb the act belongs to per the spine; X = an act outside the ten limbs (a push window, a relay, a startup, a hold). The seat states the limb it BELIEVED it was in; the compiler compares that against the spine's owner for the limb."
+          },
+          "started_utc": {"type": "string"},
+          "ended_utc": {"type": "string"},
+          "act": {"type": "string", "minLength": 8, "description": "what was done, one line, in the seat's own words"},
+          "inputs": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/ref"},
+            "description": "what the act consumed: artifacts at a vintage, messages by id, a sovereign word by its record. An empty list is legal and says the act consumed nothing on the record."
+          },
+          "outputs": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/ref"},
+            "description": "what the act produced: artifacts at a commit, messages by id, a record. An act with no output is a hold or a read; say so in `act`."
+          },
+          "spine_clause": {
+            "type": "string",
+            "minLength": 1,
+            "description": "the spine section the act followed (e.g. 'L6 gate', 'L7 surprise', 'section 2 role exclusivity'), or NONE when the seat followed no clause. NONE is a record, not a confession; the compiler classifies."
+          },
+          "gate_or_notifier_touched": {"type": "string", "description": "the gate that refused or admitted, or the notifier that fired, if any -- with its verdict as printed"},
+          "note": {"type": "string", "description": "one line; what the next reader needs and nothing else"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "required": ["kind", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"enum": ["ARTIFACT", "MESSAGE", "RECORD", "WORD", "GATE_OUTPUT"]},
+        "ref": {"type": "string", "minLength": 3, "description": "ARTIFACT: <path>@<commit>; MESSAGE: the broker message id; RECORD: <path>@<commit>; WORD: the record that carries the sovereign word; GATE_OUTPUT: the gate name + its verdict line"}
+      }
+    }
+  },
+  "compiler_output": {
+    "description": "NOT part of a seat's instance; the shape the CTO's compilation emits per row so the four quadrants are data, not prose.",
+    "per_row": {"seat": "serial", "seq": "integer", "limb": "L1..L10|X", "plan_conformance": "ON_PLAN|OFF_PLAN", "outcome": "EFFICIENT|DEFICIENT", "quadrant": "ON_PLAN_EFFICIENT|ON_PLAN_DEFICIENT|OFF_PLAN_EFFICIENT|OFF_PLAN_DEFICIENT", "disposition": "NONE|PLAN_IMPROVEMENT|ALLOWED_FLEXIBILITY|GATE_CANDIDATE", "discriminator": "the spine clause or the measured fact that decided both axes"},
+    "denominators": "rows per seat and per limb; rows per quadrant; every count with its frame"
+  }
+}

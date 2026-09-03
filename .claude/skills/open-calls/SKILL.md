@@ -110,3 +110,43 @@ Rules of the format:
 - When Andrew rules in-response, apply the standard law: **record verbatim + broadcast same turn**
   (org/XXX.md), then execute or route.
 - Do not mark a call closed on your own inference — closure is his word or a relayed ruling.
+
+## Self-adjudication inside a running project -- the CTO rules, the loop keeps cycling
+
+**Andrew-direct 2026-09-03 ~05:2xZ at the 1.0.0_SA_CTO terminal, VERBATIM:** *"if upon receipt it is in question, or
+if there is a scope change, the CTO can run /open-calls on the subject and then CTO adjudicates on the recs and it
+picks up from there via a new (or adjusted) PRD and then runs through the loop from that point. The goal is to have
+this entire process autonomous after Limb 2. I will work with CRO on the /brief-create , i will confirm CTO's "DONE
+WHEN" from their /endpoint --forward, but after that point, no matter what happens, I want the canonical loop to be
+able to keep cycling in its pattern and get the thing done."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md`.
+
+**When (and ONLY when):** a project is past L2 (Andrew has confirmed its `DONE WHEN` lines) and one of two things
+happens at L10 -- a `SCOPE_CHANGE` route reaches `1.0.0_SA_CTO`, or the COO's completion report is IN QUESTION on
+receipt (a grade the CTO cannot turn REALIZED or NOT_REALIZED from the artifact). Everything else that is
+sovereign-class stays in Andrew's queue exactly as the sections above say; this mode never widens to a new project,
+a new directive, money, vendors or a standing hold.
+
+**Invocation:** `/open-calls --adjudicate <PROJECT_CODE>` at `1.0.0_SA_CTO` (or its lane running that project).
+
+**What it does, in order:**
+1. Builds the cards in the EXACT format above -- one card per decision, the call on top, the internal divider, the
+   REC beneath -- as if for Andrew. The format is the discipline: a call that cannot be reduced to one line is not
+   ready to be ruled on.
+2. **The CTO rules on each card itself**, in the same turn, and writes the ruling under the card's REC as a third
+   stacked half: `RULING -- (a) ... because ...`. A ruling may reject its own REC; it says why.
+3. Records the whole frame verbatim at
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_<PROJECT_CODE>_<UTC-stamp>.md` and broadcasts it the
+   same turn to `2.0.0_SA_COO`, `3.0.0_SA_CVO` and `0.0.0_AB_MSTR` with push state stated. The record is what the
+   grades' `adjudication_ref` and any `SCOPE_CHANGE` row cite.
+4. **Acts, then and there:** the endpoint is appended (new `FWD-<n>` ids at the next unused number, never renumbered,
+   never reused), the PRD is re-issued or adjusted at L4 with its header's `endpoint_outcomes` updated, the L4
+   notifier fires to the COO, and the loop runs forward from L4 -- L5 re-decomposition, L6 fresh task orders, and
+   on through L10 again. Nothing waits on Andrew.
+
+**What it is not:** not a gate on any other seat (the COO's L5/L6 and the CVO's L8-L10 proceed on the re-issued PRD
+as on any PRD); not a channel to Andrew (he reads the record if he wants to; the loop does not stop for him); not
+available to the COO or the CVO (their questions travel up to the CTO by the L10 route). A CTO that finds itself
+unable to rule -- the call genuinely needs money, a vendor, or a directive-level change -- lists that ONE call in the
+ordinary `/open-calls` queue for Andrew and keeps every other card's ruling in force so the loop keeps cycling on
+everything it can.

@@ -189,3 +189,21 @@ Never declare BLOCKED based on assumption. Before writing a blocker:
 ```
 
 If checking the directory resolves the question — proceed, don't write a blocker.
+
+---
+
+## Step log — the per-seat INPUT/OUTPUT record of an end-to-end pass of the canonical fabric workflow
+
+Distinct from the session log above. When a round of the canonical fabric workflow
+(`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`) reaches its L10 stamp, **every seat that acted on the
+project** writes ONE machine-readable step log — one row per act, each row carrying the limb, the act, its
+inputs and outputs as typed references, and the spine clause followed or `NONE`. The seat RECORDS; it never
+assigns a quadrant. `1.0.0_SA_CTO` compiles every seat's file against the spine into the four quadrants
+(on-plan efficient · on-plan deficient = plan improvement · off-plan efficient = flexibility or plan improvement ·
+off-plan deficient = gate candidate).
+
+- **Schema (normative):** `org/standards/STEP_LOG.schema.json`.
+- **Home:** `org/missions/D<n>/<MACRO>/<CODE>/ledger/STEP_LOG.<serial>.round<N>.json` (lane ANY).
+- **Trigger:** the round's L10 stamp; nothing about the step log gates the stamp or the next round.
+- **Authority:** Andrew-direct 2026-09-03 ~04:2xZ at the `2.0.0_SA_COO` terminal
+  (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_042xZ_PER_AGENT_STEP_LOGS_INPUT_OUTPUT_FOR_CTO_LOOP_COMPILATION.md`).

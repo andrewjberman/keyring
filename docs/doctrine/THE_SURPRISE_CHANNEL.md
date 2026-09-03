@@ -2,10 +2,24 @@
 
 **An observation you are not authorized to chase needs somewhere to go, or it becomes one of two
 failures.** Suppressed, and a real defect dies at the seat that found it. Chased, and a velocity mandate
-turns into an investigation. **Give it a third path: a one-line report to the coordinator, no action
-taken, work continues.**
+turns into an investigation. **Give it a third path: ONE ROW appended to the project's surprise channel,
+no action taken, work continues.**
 
-Named by Andrew, 2026-08-06.
+Named by Andrew, 2026-08-06. **CARRIER CORRECTED 2026-09-03 (Andrew-direct at the `3.0.0_SA_CVO` terminal
+~03:1xZ, VERBATIM: *"claude.md should not have that rule to do this over mcp"*): the surfacing act IS THE
+ROW, never a broker message.** A row is what the commit-time row gate validates (`.tools/surprise-row-gate.py`:
+`spec_asserts` + `world_is`), what the step-8 notifier delivers to `3.0.0_SA_CVO` with its exact path
+(`org/surprise_channel/surprise-watch.sh`), and what the proof-of-spec `surprises` limb binds a task order's
+`complete` flip to (`.tools/proof-of-spec-check.py`). A notifier that watches files is structurally blind to
+a surprise that only ever reached an inbox -- measured 2026-09-03: one surprise cost three broker messages,
+an issuer reply and a CVO assembly in place of one file append. **Where the row goes:** a tree project's
+`org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md` -- lane ANY, the
+worker appends it (measured: `owned-paths-validate.py check_agent 0.8.0_AE_CloudComp` admits that path). The
+legacy flat channel `org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md` is lane ANY as well since
+`2.0.0_SA_COO`'s grant @`bfec7d99b5` (2026-09-03 ~03:25Z; measured refused for a Tier-2 worker at 03:1xZ, the
+asymmetry was surfaced as a finding and closed by the grantor within the hour). REMEDIATION rows stay
+`3.0.0_SA_CVO`'s (L9) on both roots -- by design, not by omission. There is no project shape left in which the
+seat that sees a surprise cannot append its own row.
 
 ---
 
@@ -18,7 +32,8 @@ scoping; it is what competent attention produces. The question is only where the
 ```
 SUPPRESS  -> a real defect dies at the seat that found it, and the seat learns not to look
 CHASE     -> the scope dissolves; one surprising number becomes an investigation
-REPORT    -> one line to the coordinator. NO ACTION TAKEN. Work continues. Coordinator triages.
+REPORT    -> ONE ROW in the project's channel (spec_asserts + world_is). NO ACTION TAKEN. Work continues.
+             CVO triages FROM THE ROW the notifier delivers -- never from a message (2026-09-03).
 ```
 
 **The channel must be named explicitly in the task order.** A seat told only *"do not chase"* has been

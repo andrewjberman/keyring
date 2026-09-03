@@ -96,7 +96,7 @@ def main() -> int:
               "must carry <decomp_ref>" in out, out[:200])
         check("refusal names the FIX", "FIX:" in out, out[:200])
         check("refusal names the WHY (choke-point citation)",
-              "DIRECTIVE_EXECUTION_PIPELINE.md:164" in out, out[:200])
+              "CANONICAL_FABRIC_WORKFLOW_20260901.md L5/L6" in out, out[:200])
         check("refusal does NOT invite a silent shortcut",
               "PIPELINE FAILURE TO SURFACE" in out, out[:200])
 

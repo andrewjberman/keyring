@@ -72,6 +72,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _comprail  # noqa: E402
+import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-1)
 
 WS = _comprail.repo_root()
 RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
@@ -122,19 +123,30 @@ def _terms(pattern):
 
 
 def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_all, page, limit,
-                band_filter):
+                band_filter, budget_flag=None, cursor=None):
     """--corpus aws (Andrew-direct 2026-08-28, "based off of the comp-kuzu surface ... the easiest way
     to have fast scan access to aws cloud"): the LIVE AWS plane as a search corpus.
 
     Source = the GLOBGRPH Kuzu DB (infra/aws/globgrph/kuzu_cli.py), whose aws layer is produced by the
     02:00Z full re-derive + the CloudTrail-driven incremental -- NOT parsed Terraform. Every aws
     CloudNode carries name / arn / node_type / drift_class / source / snapshot_ts + a props JSON
-    (runtime, handler, role, env keys, tf provenance ...). One Cypher pull, then the SAME in-process
-    regex the repo corpus uses, over `name + arn + props` (or name + arn only under --name).
-    Pathspecs are node_type filters (case-insensitive: lambda == LAMBDA). Bands = node_type.
+    (runtime, handler, role, env keys, tf provenance ...). One Cypher pull per UNIT, then the SAME
+    in-process regex the repo corpus uses, over `name + arn + props` (or name + arn only under
+    --name). Pathspecs are node_type filters (case-insensitive: lambda == LAMBDA). Bands = node_type.
     DENOMINATOR = nodes scanned; VINTAGE = the DB's own provenance header (built: ... age ...);
     drift_class rides every hit -- the "exists in AWS but not in the repo" case is a labelled column.
     A FAILED pull is printed as a failure, never as a zero.
+
+    RULE T (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-1): budgeted via .tools/_compbudget (--budget /
+    env COMP_BUDGET_S / default 90s -- the shared carrier, never a per-tool copy). THE UNIT: when
+    the caller names explicit node_type(s) as pathspec, each named type is queried separately, in
+    sorted order -- a genuine per-type unit with real --cursor <TYPE> resumability. When no type is
+    named (the whole aws layer), the pull is ONE indivisible unit ("ALL"): measured on this box
+    2026-09-03, a cheap-looking DISCOVERY step -- enumerating distinct node_types first so even the
+    unscoped case could be decomposed -- itself took far longer than the budget it would serve
+    (a single `RETURN DISTINCT n.node_type` pull exceeded 4 minutes), so decomposing the unscoped
+    case would defeat the rule it exists to satisfy. That is a disclosed non-application (BUDGET
+    REACHED prints "NO CURSOR" and why), never a cursor faked to look like one that exists.
     """
     import json
     import subprocess
@@ -144,41 +156,116 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
         print("comp-find [aws] %r" % pattern)
         print("  BLOCKED: %s is absent -- no AWS corpus on this device (not a zero)." % cli)
         return 2
-    types = [t.upper() for t in pathspec]
-    where = "n.layer='aws'"
-    if types:
-        where += " AND n.node_type IN [%s]" % ",".join("'%s'" % t.replace("'", "") for t in types)
-    cypher = ("MATCH (n:CloudNode) WHERE %s RETURN n.node_type AS t, n.name AS name, n.arn AS arn, "
-              "n.drift_class AS drift, n.source AS src, n.snapshot_ts AS ts, n.props AS props "
-              "LIMIT 1000000" % where)
+
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(budget_flag)
+    except ValueError as exc:
+        print("comp-find: ERROR: --budget %s" % exc)
+        return 2
+
+    types = [t.upper() for t in pathspec]      # as given, for the DENOMINATOR line's "types=" tag
+    scoped = bool(types)
+    units = sorted(set(types)) if scoped else ["ALL"]     # deterministic scan order
+    unit_word = "node_type" if scoped else "pull"
+
+    if cursor:
+        if not scoped:
+            print("comp-find: WARNING: --cursor has no effect here -- an unscoped --corpus aws "
+                  "pull is one indivisible unit (see --help); ignoring --cursor %r." % cursor)
+        else:
+            cursor_u = cursor.upper()
+            if cursor_u in units:
+                units = [u for u in units if u > cursor_u]
+            else:
+                print("comp-find: WARNING: --cursor %r does not match any requested node_type -- "
+                      "running the full requested set (no units skipped)." % cursor)
+
     env = dict(os.environ)
     env.setdefault("GLOBGRPH_KUZU_INCREMENTAL_REFRESH", "1")
-    try:
-        proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
-                              capture_output=True, text=True, timeout=600, env=env, cwd=WS)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        print("comp-find [aws] %r" % pattern)
-        print("  BLOCKED: comp-kuzu pull failed (%s) -- NO MEASUREMENT, not a zero." % exc)
-        _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, "corpus=aws err=%s" % exc)
-        return 2
-    vintage = [ln.strip() for ln in (proc.stderr or "").splitlines()
-               if ln.strip().startswith(("built:", "Nessie HEAD:", "DB:"))]
-    body = proc.stdout or ""
-    start = body.find("[")
-    try:
-        rows = json.loads(body[start:]) if start != -1 else []
-    except ValueError:
-        rows = None
-    if proc.returncode != 0 or rows is None:
-        print("comp-find [aws] %r" % pattern)
-        print("  BLOCKED: comp-kuzu returned rc=%s / unparseable JSON -- NO MEASUREMENT, not a zero."
-              % proc.returncode)
-        tail = (proc.stderr or "").strip().splitlines()[-3:]
-        for ln in tail:
-            print("    " + ln[:200])
-        _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern,
-                           "corpus=aws rc=%s" % proc.returncode)
-        return 2
+    clock = _compbudget.Clock(budget_s)
+
+    all_rows = []
+    vintage = []
+    completed = []
+    deferred_reasons = []
+    total_units = len(units)
+
+    for u in units:
+        remaining = clock.remaining()          # every timeout= derives from remaining()
+        if remaining is not None and remaining <= 0:
+            deferred_reasons.append("%s: budget exhausted before this unit could start" % u)
+            continue
+        where = "n.layer='aws'" if u == "ALL" else ("n.layer='aws' AND n.node_type='%s'"
+                                                     % u.replace("'", ""))
+        cypher = ("MATCH (n:CloudNode) WHERE %s RETURN n.node_type AS t, n.name AS name, n.arn AS arn, "
+                  "n.drift_class AS drift, n.source AS src, n.snapshot_ts AS ts, n.props AS props "
+                  "LIMIT 1000000" % where)
+        try:
+            proc = subprocess.run([sys.executable, cli, "--json", "--mode", "inc", cypher],
+                                  capture_output=True, text=True, timeout=remaining, env=env, cwd=WS)
+        except subprocess.TimeoutExpired:
+            deferred_reasons.append("%s: did not return within the remaining budget (TimeoutExpired)" % u)
+            continue
+        except OSError as exc:
+            print("comp-find [aws] %r" % pattern)
+            print("  BLOCKED: comp-kuzu pull failed (%s) -- NO MEASUREMENT, not a zero." % exc)
+            _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern, "corpus=aws err=%s" % exc)
+            return 2
+        if not vintage:
+            vintage = [ln.strip() for ln in (proc.stderr or "").splitlines()
+                       if ln.strip().startswith(("built:", "Nessie HEAD:", "DB:"))]
+        body = proc.stdout or ""
+        start = body.find("[")
+        try:
+            rows = json.loads(body[start:]) if start != -1 else []
+        except ValueError:
+            rows = None
+        if proc.returncode != 0 or rows is None:
+            print("comp-find [aws] %r" % pattern)
+            print("  BLOCKED: comp-kuzu returned rc=%s / unparseable JSON on unit %s -- NO "
+                  "MEASUREMENT, not a zero." % (proc.returncode, u))
+            tail = (proc.stderr or "").strip().splitlines()[-3:]
+            for ln in tail:
+                print("    " + ln[:200])
+            _comprail.log_rail(RAIL_LOG, "RUN-FIND-ERR", "comp-find", pattern,
+                               "corpus=aws rc=%s unit=%s" % (proc.returncode, u))
+            return 2
+        all_rows.extend(rows)
+        completed.append(u)
+
+    used_s = round(clock.elapsed(), 2)
+    n, N, n_deferred = len(completed), total_units, len(deferred_reasons)
+
+    print("comp-find [aws %s] %r" % ("name" if name_mode else "content", pattern))
+    # RULE T STATUS PRINTS FIRST, ABOVE THE METRICS BLOCK -- a partial/degraded outcome must never
+    # sit below a clean-looking DENOMINATOR/BANDS block (the estate's own "clean metrics print
+    # above a failure verdict" trap): the caller must see BUDGET REACHED before any number that
+    # might otherwise read as a complete answer.
+    if n == N:
+        print("  " + _compbudget.within_budget_line(n, N, unit_word, budget_s, budget_source, used_s))
+    elif scoped and completed:
+        # A real unit boundary was crossed -- genuine --cursor resumability.
+        args_repr = "comp-find " + " ".join(sys.argv[1:])
+        print("  " + _compbudget.budget_reached_line(budget_s, budget_source, n, N, unit_word,
+                                                      args_repr, completed[-1]))
+    elif scoped:
+        # SCOPED, but the budget expired before even the FIRST unit finished: units exist, but
+        # none is a valid cursor (a cursor names the last FULLY processed unit -- there isn't
+        # one). Distinct from the unscoped case below: do not claim "one indivisible unit" for a
+        # call shape that genuinely has units, just zero completed ones.
+        print("  BUDGET REACHED: %s s (%s); scanned %d of %d %s(s); results are a PREFIX, not the "
+              "answer; NO CURSOR YET: no %s completed before the budget hit, so there is no last-"
+              "processed unit to resume from; resume: re-run with a larger --budget."
+              % (_compbudget.fmt(budget_s), budget_source, n, N, unit_word, unit_word))
+    else:
+        print("  BUDGET REACHED: %s s (%s); scanned %d of %d %s(s); results are a PREFIX, not the "
+              "answer; NO CURSOR: an unscoped --corpus aws pull is one indivisible unit -- a "
+              "discovery step to decompose it into per-node_type units was measured to cost MORE "
+              "than this budget itself, so it is not attempted automatically; resume: raise "
+              "--budget, or narrow the pathspec to explicit node_type(s) (e.g. LAMBDA) for real "
+              "--cursor support." % (_compbudget.fmt(budget_s), budget_source, n, N, unit_word))
+    for line in _compbudget.deferred_bucket(n_deferred, N, unit_word, deferred_reasons):
+        print("  " + line)
 
     flags = re.IGNORECASE if ignore_case else 0
     try:
@@ -191,7 +278,7 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
     hits = []          # (node_type, name, arn, drift, src, fragment)
     scanned = 0
     drift_census = {}
-    for r in rows:
+    for r in all_rows:
         scanned += 1
         t = str(r.get("t") or "")
         name = str(r.get("name") or "")
@@ -228,7 +315,6 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
         page = min(page, pages)
         start_i, end_i = (page - 1) * limit, min((page - 1) * limit + limit, total)
 
-    print("comp-find [aws %s] %r" % ("name" if name_mode else "content", pattern))
     print("  DENOMINATOR: %d hit(s) across %d aws node(s) scanned [corpus=aws%s]%s"
           % (len(hits), scanned, (" types=" + ",".join(types)) if types else "",
              (" | band=%s -> %d" % (band_filter.upper(), total)) if band_filter else ""))
@@ -239,10 +325,14 @@ def _aws_corpus(pattern, pathspec, *, ignore_case, name_mode, files_only, show_a
     print("  BANDS = node_type (true totals, not this page): %s" % (counts or "none"))
     print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, max(0, end_i - start_i), total))
     print()
-    if total == 0:
+    if total == 0 and n == N:
         print("  NO HITS. This is a MEASURED zero over %d aws node(s) in the graph -- not a claim the "
               "term is absent from AWS: only what the graph MODELS can match (comp-kuzu --schema for "
               "the classes; an unmodeled resource class returns 0 identically)." % scanned)
+    elif total == 0:
+        print("  0 hit(s) shown -- NOT a measured zero: BUDGET REACHED above means %d of %d %s(s) "
+              "never ran. This is silence from the units that did not complete, not an answer about "
+              "them." % (N - n, N, unit_word))
     else:
         cur = None
         for t, name, arn, drift, src, frag in ordered[start_i:end_i]:
@@ -281,6 +371,13 @@ def _usage():
     print("               IAM_ROLE, S3_BUCKET, ...); --name = name/arn only; drift_class per hit;")
     print("               denominator = nodes scanned; vintage = the DB's own built: line.")
     print("               e.g. comp-find --corpus aws opal-gateway | comp-find --corpus aws 'python3\\.9' LAMBDA")
+    print("  --budget N    RULE T (PRD s.4.4, shared .tools/_compbudget): ceiling in seconds for the")
+    print("               --corpus aws pull (carrier: --budget > env COMP_BUDGET_S > default %s s," % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
+    print("               kept under this box's ~120s outer harness ceiling); --budget 0 = unbounded.")
+    print("               Prints WITHIN BUDGET / BUDGET REACHED (never a bare zero at expiry).")
+    print("  --cursor U    resume a --corpus aws pull after unit U (a node_type named in an earlier")
+    print("               BUDGET REACHED line) -- only meaningful when the pathspec names explicit")
+    print("               node_type(s); a no-op warning otherwise. No effect outside --corpus aws.")
     print("  --hidden      report the out-of-corpus (hidden) file count for this scope and exit")
     print("  e.g. comp-find apply_aua_overrides data/")
     print("       comp-find --name 'test_pipescript_*.py'")
@@ -305,6 +402,8 @@ def main() -> int:
     include_held = False
     corpus = "all"   # Andrew-direct 2026-08-28: gitignored content searchable by default (floor still out)
     hidden_only = False
+    budget_flag = None
+    cursor = None
     positional = []
     i = 0
     while i < len(argv):
@@ -337,6 +436,15 @@ def main() -> int:
                 limit = max(1, int(val)) if (val or "").isdigit() else PAGE_DEFAULT
             else:
                 band_filter = (val or "").upper()
+        elif a == "--budget":
+            i += 1
+            budget_flag = argv[i] if i < len(argv) else None
+            if budget_flag is None:
+                print("comp-find: ERROR: --budget wants a number of seconds (0 = unbounded)")
+                return 2
+        elif a == "--cursor":
+            i += 1
+            cursor = argv[i] if i < len(argv) else None
         else:
             positional.append(a)
         i += 1
@@ -395,7 +503,7 @@ def main() -> int:
     if corpus == "aws":
         return _aws_corpus(pattern, pathspec, ignore_case=ignore_case, name_mode=name_mode,
                            files_only=files_only, show_all=show_all, page=page, limit=limit,
-                           band_filter=band_filter)
+                           band_filter=band_filter, budget_flag=budget_flag, cursor=cursor)
 
     # Same BRE-vs-ERE footgun guard comp-grep carries: python `re` treats \| \( \) as LITERALS, so
     # a BRE-muscle-memory pattern silently matches nothing and "0 hits" reads as confirmed absence.

@@ -9,7 +9,7 @@ rows over ~3 days (~340/day) -- file-internal reading done through raw grep, wit
 bands and no false-zero protection. The carve-out existed because no comp-tool covered file
 internals.
 
-EIGHT LEGS. Legs 1-6 are RED against the pre-build binary BY CONSTRUCTION (the mode is absent).
+TEN LEGS. Legs 1-6 are RED against the pre-build binary BY CONSTRUCTION (the mode is absent).
   1 DENOMINATOR      every run prints hits across LINES / SECTIONS scanned
   2 BAND-CONSERVATION per-band counts SUM to the total, over 3 DIFFERENT backends (Rule 24 (i))
   3 ANCHOR-ARM       the real 14.9 MB specimen: whole-value 0 / substring >0, never a bare 0
@@ -19,6 +19,13 @@ EIGHT LEGS. Legs 1-6 are RED against the pre-build binary BY CONSTRUCTION (the m
   6 PAGINATION       over-page hit sets show page, total, and how to get the rest
   7 MUTANT           a planted build with the band classifier neutered FAILS leg 2
   8 CONSUMER         comp-adversary (a live consumer of the DEFAULT digest) is untouched
+  9 BUDGET-CARRIER    (NFRA_COMPEFFICACY CE-t-2, Rule T / PRD s.4.4) a real production run: default
+                     budget prints WITHIN BUDGET; a planted --budget 0.001 on the REAL binary (no
+                     mutant needed -- the ceiling is a caller flag now, not a constant) prints
+                     BUDGET REACHED, distinguishable from the clean line by token alone
+ 10 MUTANT-BUDGET     a planted build whose budget resolution ignores --budget FAILS leg 9's own
+                     BUDGET REACHED predicate at --budget 0.001 (ONE new arm was owed; this is the
+                     second, exceeding it -- the comp-find T-1 F/G precedent)
 
 Usage: python .tools/tests/test_comp_read_enumerate.py   (direct)  |  python -m pytest -q .tools/tests/test_comp_read_enumerate.py   (collected)
 COMP_READ_TOOL=<path> aims it at a mutant
@@ -198,6 +205,42 @@ def _run_battery():
         "comp-adversary --self-test still %s -- it shells out to comp-read for its stage-4 packet, so a "
         "changed DEFAULT digest would silently alter every validation_context_declaration in the estate"
         % ("PASS 5/5" if "PASS 5/5" in CA else "DID NOT return PASS 5/5"))
+
+    # --- 9. BUDGET-CARRIER: the REAL production binary, no mutant needed -------
+    # (NFRA_COMPEFFICACY CE-t-2, Rule T / PRD s.4.4) comp-read's ceiling is now a caller flag, not
+    # a constant -- exercising it touches zero bytes, exactly the comp-find T-1 precedent.
+    OUT_WITHIN = run([SPECIMEN, "--enumerate", "class"], timeout=600)
+    OUT_REACHED = run([SPECIMEN, "--enumerate", "class", "--budget", "0.001"], timeout=600)
+    ok9 = ("WITHIN BUDGET" in OUT_WITHIN and "BUDGET REACHED" not in OUT_WITHIN
+           and "BUDGET REACHED" in OUT_REACHED and "WITHIN BUDGET" not in OUT_REACHED)
+    rec("BUDGET-CARRIER", ok9,
+        "default budget -> WITHIN BUDGET (no BUDGET REACHED token); --budget 0.001 on the same real "
+        "binary -> BUDGET REACHED (no WITHIN BUDGET token) -- the two are distinguishable by token "
+        "alone, no shared shape" if ok9 else
+        "the real binary did not produce two distinguishable Rule T lines: within=%r reached=%r"
+        % ("WITHIN BUDGET" in OUT_WITHIN, "BUDGET REACHED" in OUT_REACHED))
+
+    # --- 10. MUTANT-BUDGET: neuter the carrier in the SHIPPED bytes, RED-first --
+    src2 = _tool().read_text(encoding="utf-8")
+    mutant_src2, nsub2 = re.subn(
+        r"_compbudget\.resolve_budget\(budget_flag\)", "_compbudget.resolve_budget(None)", src2)
+    if nsub2 == 0:
+        rec("MUTANT-BUDGET", False,
+            "could not plant the mutant: no '_compbudget.resolve_budget(budget_flag)' call site in "
+            "the shipped source -- the leg certifies nothing and is reported FAIL, never skipped")
+    else:
+        with tempfile.TemporaryDirectory() as td:
+            mp = Path(td) / "comp-read-mutant"
+            mp.write_text(mutant_src2, encoding="utf-8")
+            MO2 = run([SPECIMEN, "--enumerate", "class", "--budget", "0.001"], tool=mp, timeout=600)
+        ignored = "BUDGET REACHED" not in MO2
+        rec("MUTANT-BUDGET", ignored,
+            "the planted build that ignores --budget (always resolves flag=None) %s at --budget "
+            "0.001 -- so leg 9's BUDGET REACHED is produced by real carrier resolution, not by an "
+            "identity that would print it regardless"
+            % ("still reports WITHIN BUDGET, never BUDGET REACHED" if ignored else
+               "STILL reached BUDGET REACHED -- the mutant did not neuter the carrier, so this arm "
+               "certifies nothing"))
 
 
 def _report() -> int:

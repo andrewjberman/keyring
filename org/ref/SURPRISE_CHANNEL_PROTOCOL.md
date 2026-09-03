@@ -1,257 +1,237 @@
-# SURPRISE CHANNEL PROTOCOL -- stage 5 of the Directive Execution Pipeline
+# SURPRISE CHANNEL PROTOCOL -- the L7 to L10 annex of the canonical fabric workflow
 
-**Owner:** `3.0.0_SA_CVO` (the channel is CVO-manned; this doc + both schemas are CVO authoring
-acts under Rule 24). **Authority:** Andrew ratification 2026-08-21 ~16:1xZ (*"I agree with this
-framework lets get it formalized properly"*), pipeline law @8e40cb7861
-(`org/ref/DIRECTIVE_EXECUTION_PIPELINE.md`, CLAUDE.md Rule 27); GO assignment CTO 64960.
-**Specimen set:** 2026-08-21's live session (each cited inline) -- the protocol freezes what that
-day PROVED works; it invents no ceremony the informal channel did not already exercise.
+**Status:** constitutional annex. This document is the one specification of the surprise channel: how a surprise leaves
+the seat that met it at L7, how it is compiled at L8, adjudicated at L9 and routed at L10. It is scoped to those four
+limbs of `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (the spine), is cited from the spine's L8, and adds nothing to
+the other six. Where this annex and the spine differ, the spine governs and this annex is amended. Amendment is by
+whole-file version under section 9; the authorizing records are named only in the changelog (section 10).
 
-## 0. DOCUMENT FORM -- ONE HOME PER DOC, MACHINE BLOCK INSIDE IT
+**Owner:** `3.0.0_SA_CVO` authors this annex and the two row schemas at `org/surprise_channel/schemas/`; the lanes
+that admit writes to the channel files are the registry grantor's.
 
-**The pipeline doc names the homes: `org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_vN.md` +
-`REMEDIATION_vN.md`.** It also requires schemas. Those two requirements meet in ONE file per doc
-type, not two: each document is the named `.md`, carrying its narrative AND a single fenced
-` ```json ` block that is the machine half, validating against the schemas in
-`org/surprise_channel/schemas/`. **No sidecar `.json` instance exists** -- a second file would be
-one logical document with two independently-editable homes, the divergence class this estate
-polices, and the one that reads CLEAN while the halves drift. Extraction for validation is the
-fenced block (section 8).
+**Vocabulary.** A **row** is one item in a channel file's fenced `json` block. A **surprise** is a spec-versus-world
+mismatch met during on-spec execution: the worker had to do something the task order did not say, or could not do
+something it said. **Surfacing** is appending the row. **Compiling**, **adjudicating** and **routing** are the CVO's
+three limbs over the rows. An **open** item is a row whose newest citing row is not terminal.
 
-*(This section exists because my first draft made JSON primary with `.md` companions, which both
-contradicted the ratified home and minted that divergence surface. Corrected before landing.)*
+---
 
-## 1. WHAT THE CHANNEL IS
+## 0. Document form -- one home per document, the machine half inside it
 
-Execution is ON SPEC, PERIOD (pipeline stage 4). Anything unexpected met during on-spec execution
-is SURFACED to this channel in ONE LINE, SAME TURN, WITH NO ACTION TAKEN -- the standing
-surprise-channel doctrine (`docs/doctrine/THE_SURPRISE_CHANNEL.md`), unchanged.
-**UNIVERSAL RECORD (pipeline stage-5 law): every surprise of EVERY class reaches this channel --
-issuer-routed classes (BLOCKING) arrive as a cc, hazards arrive with their disarm owner named.
-Investigation docs are APPEND-ONLY during a round** (a correction is a new item citing the prior
-id, never an edit in place -- an append-only record is the only one whose history cannot be
-quietly rewritten by the seat it indicts). The channel then:
-1. **collects** surfaced items into the round's INVESTIGATION doc (schema section 4),
-2. **investigates** measurement-first (Rule 22: mechanism attributed at source, denominators printed),
-3. **graduates** valid grounded items into the round's REMEDIATION doc (schema section 5),
-4. **hands the remediation doc over at completion of the round's TOs**, informing the next round's
-   TOs (vN rounds). **A project closes only on a zero-graduation round.**
+Each channel document is one `.md` file carrying a narrative and exactly one fenced `json` block. The block is an
+array of rows validating against the schema for its kind. There is no sidecar `.json`; a second block in one file is a
+second home and is refused. Validation extracts the block from the document, so what is checked is what is read.
 
-**Interruption rights (ratified):** `OBSERVATION` never interrupts; `BLOCKING` goes to the issuer;
-and ORTHOGONALLY, an `ARMED` item of EITHER class rides the escape valve (section 6) outside round
-cadence -- "latent hazard" is the prose name for that case, never an enum value.
+**Append-only as a control.** During a round a channel file only grows. A row that exists at HEAD is byte-equivalent
+as data in every later commit; a correction, a closure or a change of disposition is a NEW row citing the old id. A
+reader resolves a row's state from the newest row that cites it. The row gate refuses an in-place edit; the one escape
+is the gate's audited override written into the commit message body.
 
-## 2. THE GRADUATION BAR IS A GROUNDING BAR, NOT A SEVERITY BAR
+---
 
-An item graduates to remediation ONLY when its mechanism is GROUNDED (Rule 22: source/live-primitive
-citation, could-have-said-otherwise controls where the claim class needs them). An ungrounded item
-stays in the investigation doc marked `INFERRED` and CANNOT seed a remediation row -- severity
-decides WHERE a valid item lands (the class axis); grounding decides WHETHER it graduates at all.
-*This is what keeps the remediation doc actionable-by-construction and the channel from becoming a
-speculation ledger. Specimens: the T-2 steady-state (3-point series), the SSM no-log gap
-(source-read of the dispatch document), the d12 cross-serve limitation (probe lists + identical
-shas side by side) -- every graduated item that day was graduated by measurement.*
+## 1. What the channel is
 
-## 3. THE TWO ORTHOGONAL AXES -- `class {OBSERVATION, BLOCKING}` x `hazard_standing {ARMED, INERT}`
+Execution at L7 is on spec, frozen for the round. Anything the spec did not anticipate is surfaced to this channel as
+one row, in the same turn, with no action taken beyond the row, and the seat keeps working fail-closed on its task. The
+row is the carrier. A broker message is never the carrier: a notifier that watches files cannot see an inbox, and a
+surprise that exists only as a message is invisible to L8 and uncounted at L10.
 
-**RULED FORM (CTO @a35da72725, on the channel's own graduated item `NFRA_PIPELINE-S1`).**
-**"LATENT HAZARD" IS THE PROSE NAME FOR `(any class, ARMED)` -- NEVER AN ENUM VALUE.** It was a
-standing value sitting on an interruption axis, and the precedence rule that reconciled them was
-the tell. The prose meaning is unchanged everywhere it appears; only the encoding moved.
+Every surprise of every class reaches the channel. A `BLOCKING` row also goes to the issuer in the same turn; an
+`ARMED` row names its disarm owner in the row. The channel runs in one direction: rows travel UP from the seat that
+met the surprise, and the CVO's findings travel UP to `2.0.0_SA_COO` (or to `1.0.0_SA_CTO` for a scope change), never
+DOWN to a worker. A worker hears from the CVO only through a task order or an operating note issued by the COO; a
+row's `disarm_owner` names who disarms, never whom the CVO may message; a disarm request travels through the COO.
+The channel then:
 
-### `class` -- four-postulate record (Rule 24, authored with the axis)
-- **INTENT (one):** INTERRUPTION RIGHT -- what the item does to the CURRENT turn. Not severity, not
-  standing, not validity.
-- **GRAIN:** one surfaced item, at surfacing.
-- **MECE:** one discriminating question -- *does it stop live in-scope work right now?* `BLOCKING`
-  (interrupts, routes to the issuer) vs `OBSERVATION` (does not interrupt). Exhaustive by negation,
-  disjoint by construction, **and needing no precedence -- which is the property its three-value
-  predecessor lacked.**
-- **STATE COHERENCE (iv):** two members, two remedies (unblock-now vs record-and-route), moving
-  independently of standing.
-- ⛔ **THE PRECEDENCE RULE THIS AXIS CARRIED FOR NINETY MINUTES IS REMOVED (channel item
-  `NFRA_PIPELINE-S1`, disarmed 2026-08-21).** It read `BLOCKING > LATENT_HAZARD > OBSERVATION`, and
-  the estate's own memory names precedence as THE TELL for two axes fused: *a single-intent MECE
-  axis never needs precedence -- its values are disjoint by construction; a precedence clause is a
-  repair for a MECE failure the author decided to live with, and it reads as rigour, which is why
-  it survives review.* **Measured proof it was fused, on my own specimen: the `tsc --noEmit` false
-  green was filed OBSERVATION and then received the LATENT_HAZARD remedy** (a same-turn off-cadence
-  disarm -- routed into the DT spawn brief, portal law landed @82d3f28f). The fused property is now
-  its own field below; an item that BOTH blocks and is armed carries both, and no ordering is
-  needed.
+1. **compiles** the rows into the round's investigation document (section 4), at L8;
+2. **adjudicates** each row measurement-first, mechanism attributed at source, denominators printed, at L9;
+3. **graduates** valid grounded rows into the round's remediation document (section 5), at L9;
+4. **routes** each graduated row to the limb that owns its remedy, at L10, once the round's task orders are terminal
+   with valid proof-of-spec instances -- the remediations of a round are issued as ONE slug at L10, one artifact at
+   one moment to the route owner, never as a stream of messages during L7 to L9.
 
-### The `hazard_standing` axis -- `ARMED | INERT` (orthogonal to class; four-postulate record)
+A project closes only on a zero-graduation round.
 
-- **INTENT (one):** whether the item, LEFT ALONE, causes harm through the process's future NORMAL
-  operation. Not urgency, not severity, not whether it interrupts -- those are `class`.
-- **GRAIN:** one surfaced item, at surfacing.
-- **MECE:** `ARMED` (a future ordinary act encounters it and is harmed -- a scheduled TO, a seat
-  typing the obvious command, a queued execution) vs `INERT` (nothing does; harm requires an error
-  or never arrives). Exhaustive by negation, disjoint by construction, **no precedence needed --
-  which is the property the removed rule lacked.**
-- **STATE COHERENCE (iv):** `ARMED` obliges a NAMED DISARM OWNER and an off-cadence disarm;
-  `INERT` obliges nothing. Two members, two remedies, moving independently of `class` -- which is
-  exactly why it could not live on the class axis.
-- **BINDING RULE (ruled form, CTO @a35da72725):** ANY class may be `ARMED`, and an `ARMED` item
-  carries a NAMED DISARM OWNER whatever its class. *The `tsc` specimen is the type case:
-  OBSERVATION class (nothing stopped), ARMED standing (a future seat gets a false green), disarm
-  owner CTO -- which is exactly what happened before the field existed to say so.*
-- **NOT ON EITHER AXIS, deliberately:** `DECOMP-INVALIDATING` is a DISPOSITION (section 4) -- it
-  describes an item's SCOPE-EFFECT on stage 3, a third intent; putting it on a class or standing
-  axis would flatten two axes onto one (the Rule-24(iii) trap the ratified dialogue caught).
+---
 
-### Standing constraint on ANY future axis in this domain (adopted from COO's `dep_stage` record, ratified CTO 64978)
+## 2. The graduation bar is a grounding bar
 
-**THE CHANNEL IS A PROCESS CONCURRENT WITH EXECUTION, NEVER A POSITION IN IT.** COO drafted a
-`CHANNEL` value on the pipeline-stage axis and CUT IT: surprises surface same-turn DURING
-execution, so `EXECUTING` and `CHANNEL` would be simultaneously true and MECE would break on day
-one. **Any axis that tries to hold this channel as a STATE hits that failure** -- which is why the
-three axes here classify ITEMS (handling path, disposition, disarm/remediation state) and none of
-them classifies the channel. Carried as a constraint rather than an anecdote because the next
-author of an axis that touches the channel will be tempted by exactly that value.
+A row graduates to remediation only when its mechanism is grounded: a source or live-primitive citation, with the
+controls the claim class needs. An ungrounded row stays in the investigation document marked `INFERRED` and cannot seed
+a remediation row. Severity decides where a valid row lands; grounding decides whether it graduates at all. A
+remediation row without its mechanism is an inference wearing a row's clothing.
 
-Class specimens (2026-08-21): BLOCKING = twins published to a bucket no portal route reads
-(DE P4R-3). OBSERVATION = portal `tsc --noEmit` passes its own mutant (DE). LATENT_HAZARD =
-T-C (above).
+---
 
-## 4. THE INVESTIGATION DOC -- one per project per round
+## 3. The two orthogonal axes -- `class` and `hazard_standing`
 
-Home: **`org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_v{N}.md`** -- narrative plus ONE fenced
-`json` block: an array of items validating against
-`org/surprise_channel/schemas/investigation_item.schema.json`. **APPEND-ONLY during the round.**
-CVO assembles; any seat surfaces.
+**`class` -- the interruption right.** `BLOCKING` stops live in-scope work now and goes to the issuer; `OBSERVATION`
+does not interrupt. One intent (what the row does to the current turn), one grain (one row at surfacing), exhaustive by
+negation, disjoint by construction, no precedence rule. Two members, two remedies: unblock now, or record and route.
 
-**Item fields** (schema is normative; this table is the reader's map):
+**`hazard_standing` -- whether the row, left alone, harms through the process's future normal operation.** `ARMED`: a
+future ordinary act encounters it and is harmed. `INERT`: nothing does. One intent, one grain, exhaustive by negation,
+no precedence. `ARMED` obliges a named `disarm_owner` and an off-cadence disarm; `INERT` obliges nothing. Any class may
+be `ARMED`; "latent hazard" is the prose name for `(any class, ARMED)` and is never an enum value.
+
+**Not on either axis.** `DECOMP_INVALIDATING` is a disposition (section 4): it describes a row's scope effect on L5, a
+third intent.
+
+**Standing constraint on any axis touching this channel.** The channel is a process concurrent with execution, never a
+position in it. The register's `dep_stage` enum has no channel value, because surfacing happens during `EXECUTING`; the
+three axes here classify rows (handling path, disposition, disarm and remediation state), and none classifies the
+channel.
+
+---
+
+## 4. The investigation document -- one per project per fabric per round
+
+**Homes.** `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md` for a project with
+a tree home; `org/surprise_channel/<CODE>/INVESTIGATION_v<N>.md` for a project without one. Site Z writes
+`INVESTIGATION_v<N>.Z.md` beside the laptop file. The lane on both roots admits every seat; the row gate is the control.
+
+**Who writes.** The seat that meets the surprise appends its own row. The CVO appends its own rows for what it observes
+at L8 and L9, and appends the closure and correction rows of section 0.
+
+**Row fields** (`org/surprise_channel/schemas/investigation_item.schema.json` is normative):
 
 | field | content |
 |---|---|
-| `id` | `{PROJECT}-S{seq}` -- stable, cited by remediation rows |
-| `surfaced_by` / `surfaced_at` | seat serial / UTC |
-| `one_line` | the banked line, verbatim as surfaced |
-| `class` | section-3 enum |
-| `grounding` | `{status: INFERRED\|GROUNDED, evidence: [citations]}` -- Rule 22 projection; `GROUNDED` requires source/live-primitive evidence, never self-report |
-| `disposition` | `UNDER_INVESTIGATION \| GRADUATED \| DISMISSED_WITH_REASON \| DECOMP_INVALIDATING` |
-| `disarm_owner` | **REQUIRED whenever `hazard_standing: ARMED`, any class** (section 6) |
+| `id` | `<CODE>-S<n>` on the laptop fabric; `<CODE>-Z-S<n>` on site Z. Stable; cited by later rows and by remediation rows. |
+| `project`, `fabric` | the project code and fabric, each equal to what the id and the path declare; the gate compares them. |
+| `surfaced_by`, `surfaced_at` | seat serial; UTC. |
+| `one_line` | the surprise as surfaced. |
+| `spec_asserts`, `world_is` | the two halves of the trigger: what the task order said, and what the world was. A row that cannot state both is an opinion, not a surprise. |
+| `class`, `hazard_standing`, `disarm_owner` | section 3; `disarm_owner` is required whenever `hazard_standing` is `ARMED`. |
+| `grounding` | `{status: INFERRED or GROUNDED, evidence: [citations]}`; `GROUNDED` requires source or live-primitive evidence, never self-report. |
+| `disposition` | `UNDER_INVESTIGATION`, `GRADUATED`, `DISMISSED_WITH_REASON`, `DECOMP_INVALIDATING`; `dismissal_reason` is required with a dismissal. |
+| `notes` | free text; the closing condition of an open row belongs here. |
 
-**Disposition axis, four-postulate record:** intent = where the item goes next (one intent);
-grain = one investigated item; MECE = `UNDER_INVESTIGATION` is the only active state, the three
-terminals partition "every item ends somewhere at this layer": valid+grounded -> `GRADUATED`
-(forward, seeds a remediation row) · not-valid-or-not-worth-carrying -> `DISMISSED_WITH_REASON`
-(reason REQUIRED -- a bare dismissal is the rot with a tidier label) · valid + reveals an
-UNENUMERATED OPERATIVE SURFACE -> `DECOMP_INVALIDATING`; state-frame (iv) = the three terminals
-take different remedies (build / record / reopen), named. **Composition rule (the B2 specimen,
-COO 64943(b)): `DECOMP_INVALIDATING` routes BACKWARD into stage 3 FIRST and reopens the round's
-scope -- the CURRENT round's completion claim is over-scoped, not merely the next round's input.
-The remediation work then mints from the REOPENED DECOMP's cells, never directly from the channel
--- one item never takes both routes.**
+**Disposition axis.** One intent: where the row goes next. `UNDER_INVESTIGATION` is the only active state; the three
+terminals partition every row's end at this limb: valid and grounded graduates and seeds a remediation row; not valid
+or not worth carrying is dismissed with its reason; valid and revealing an unenumerated operative surface is
+`DECOMP_INVALIDATING`, which routes backward to L5 first, reopens the current round's scope, and never also takes a
+forward route. The three terminals take three different remedies: build, record, reopen.
 
-## 5. THE REMEDIATION DOC -- graduated rows only, handed over at round completion
+**Setting a disposition.** A row is appended with `UNDER_INVESTIGATION`. The CVO's adjudication is a new row citing the
+old id and carrying the terminal disposition and its reason or evidence; the original row is unchanged.
 
-Home: **`org/surprise_channel/{PROJECT_CODE}/REMEDIATION_v{N}.md`** -- narrative plus ONE fenced
-`json` block validating against `org/surprise_channel/schemas/remediation_row.schema.json`.
-**CUT AT ROUND CLOSE**, handed to the issuer AT COMPLETION of the round's TOs; its rows re-enter
-at STAGE 3 as the next round's TO inputs (they are decomp inputs, not TOs themselves).
+---
 
-**Row fields:** `id` (== the investigation item id) · `mechanism` (the GROUNDED attribution,
-carried verbatim with its citations) · `remedy` · `owner` (the lane that builds) · `round` ·
-and for LATENT_HAZARD rows the **TWO-STATE block**:
+## 5. The remediation document -- graduated rows only
 
-```
-"disarm":      {"state": "ARMED|DISARMED",  "owner": "<seat>", "at": "<UTC|null>"}
-"remediation": {"state": "OPEN|REMEDIATED", "owner": "<lane>", "round": "v{N}"}
-```
+**Homes.** `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`, or
+`org/surprise_channel/<CODE>/REMEDIATION_v<N>.md` for a project without a tree home; `.Z.md` on site Z. The lane admits
+the CVO only.
 
-**DISARMED IS NOT REMEDIATED (COO 64943(a), the T-C specimen: disarmed the same afternoon, its
-underlying gap exactly as unbuilt as at dawn).** Two states, two owners, two clocks: DISARM is
-urgent and off-cadence; REMEDIATION rides the round. **A LATENT_HAZARD row is closable only when
-BOTH have landed.** A single terminal state would convert dangerous-and-visible into
-safe-and-invisible -- the channel manufacturing the exact loss it exists to prevent.
-**Non-hazard rows** carry `remediation` only. Every row prints its evidence pointers; a row
-without its citations is INFERRED wearing a row's clothing and does not belong here.
+**When.** Cut at round close and handed to the issuer at completion of the round's task orders. Its rows re-enter at
+L5 as the next round's decomposition inputs; they are not task orders.
 
-## 6. THE ESCAPE VALVE -- LATENT_HAZARD rides outside round cadence
+**Row fields** (`org/surprise_channel/schemas/remediation_row.schema.json` is normative): `id` equal to the graduated
+investigation row's id; `project`, `fabric`; `class`, `hazard_standing`; `mechanism` (the grounded attribution, carried
+verbatim); `evidence`; `remedy`; `owner` (the lane that builds); `round`; `remediation` `{state: OPEN or REMEDIATED,
+owner, round}`; for `ARMED` rows also `disarm` `{state: ARMED or DISARMED, owner, at}`; `closed`; and the routing
+fields of section 8.
 
-An ARMED item (prose: a latent hazard) is surfaced same-turn (one line, no action -- doctrine unchanged) and its DISARM
-does not wait for round completion: T-C would have detonated before any handover. **The valve has
-an actuator by construction (COO 64943(c)): the surfacing line NAMES the disarm owner -- whoever
-can act on the armed artifact NOW. If that seat is dark, the item escalates SAME-TURN to the
-spawn-holder (MSTR) rather than waiting.** A naming obligation discharged in one line, not a gate.
-*A valve whose actuator has no owner reads open and is shut -- the staffing-miss class measured
-four times on ratification day.*
+**Disarmed is not remediated.** Two states, two owners, two clocks. Disarm is urgent and off-cadence; remediation
+rides the round. An `ARMED` row is `closed` only when both states have landed; an `INERT` row when `REMEDIATED`. A
+single terminal state would convert dangerous-and-visible into safe-and-invisible.
 
-## 7. ROUND MECHANICS
+---
 
-- Spec is FROZEN mid-round (stage 4's law); the channel is where deviations go INSTEAD of into
-  scope drift.
-- Handover = the remediation doc, at completion of the round's TOs; next round's TOs derive from
-  it (plus any DECOMP_INVALIDATING reopening, which happens when it happens, not at handover).
-- **Termination: the project closes only on a ZERO-GRADUATION round** -- a round whose
-  investigation doc graduates nothing and reopens nothing. Dismissals with reasons do not block
-  closure; an UNDER_INVESTIGATION item does (an item still open is not a zero).
-- Enforcement rides the TO-issuance choke point per the pipeline doc; the channel itself gates
-  nothing (no-inferred-gates law binds -- surfacing is mandatory, holding is prohibited).
+## 6. The escape valve -- an `ARMED` row rides outside round cadence
 
-## 8. HOMES + VALIDATION
+An `ARMED` row is surfaced in the same turn like any other, and its disarm does not wait for the round. The surfacing
+row names the disarm owner: whoever can act on the armed artifact now. If that seat is dark, the row escalates in the
+same turn to the integrator, `0.0.0_AB_MSTR`, which seats a class on request. A disarm is reported as a new row citing
+the armed row. A valve whose actuator has no owner reads open and is shut.
 
-`org/surprise_channel/{PROJECT_CODE}/INVESTIGATION_v{N}.md` + `REMEDIATION_v{N}.md` (each ONE
-file carrying its own fenced `json` block -- section 0) · schemas at
-`org/surprise_channel/schemas/` · this protocol at `org/ref/`. CVO-owned lane (owned-paths row is
-COO's as registry grantor).
+---
 
-⛔ **SCOPE, TIGHTENED 2026-08-21 21:2xZ AND THE TIGHTENING IS LOAD-BEARING: THIS APPLIES WHERE BOTH
-FABRICS *INDEPENDENTLY AUTHOR* A CHANNEL FOR ONE PROJECT -- NOT WHERE A FILE MERELY EXISTS AT THE SAME
-PATH ON BOTH BRANCHES.** A file one fabric authored and the other simply PULLED is a **MIRROR**: one
-author, one content, two branches, no ambiguity, and git resolves its `ADD/ADD` trivially.
-**RENAMING A MIRROR MANUFACTURES THE EXACT DEFECT THIS RULE PREVENTS** -- two files that agree today,
-drift apart forever, and have no mechanism to reconcile.
-**THE DISCRIMINATOR IS MECHANICAL AND COSTS ONE COMMAND: byte-identical whole file -> MIRROR, leave it
-alone; divergent content under shared ids -> COLLISION, rename.** From the file LIST alone the two are
-indistinguishable -- same path, present twice, both cases. *Measured that day across both remotes:
-**4 same-path files, exactly 1 real collision**; two more projects were byte-identical mirrors and a
-third existed on ONE fabric only and could not collide at all. My own first wording said "any project
-with a file at the same path" and would have forked three healthy files.*
+## 7. L8 compilation -- the CVO's intake
 
-⛔ **ONE INVESTIGATION FILE PER *FABRIC* PER ROUND, WITH A FABRIC-DISTINCT FILENAME** -- laptop
-fabric keeps `INVESTIGATION_v{N}.md`; site Z writes `INVESTIGATION_v{N}.Z.md`. Same for
-`REMEDIATION_v{N}[.Z].md`, unless the two certifiers agree at handover on a single merged
-remediation authored by ONE of them. **THE TWO FILES ARE NEVER MERGED.** An `ADD/ADD` on this path
-resolves by **RENAME** (keep the laptop file at its path, land site Z's beside it under the `.Z`
-name; no content edit to either).
+The CVO's engagement with a project begins at L8; its correspondents are the COO and, for a scope change, the CTO,
+and no worker. Its intake is `org/surprise_channel/surprise-watch.sh <serial> stream`,
+a read-only watermark over both roots that prints one line per new, mutated or vanished row and never writes what it
+watches; `comp-surprise` is the rollup over both roots. The watcher notifies and never blocks; its state records what it
+emitted, never that a seat read anything. A row the CVO reads is acknowledged by its L9 act, never by a message.
 
-**IDS CARRY A FABRIC COORDINATE:** `{PROJECT}-S{n}` is the laptop fabric; `{PROJECT}-Z-S{n}` is
-site Z. **Bridged messages cite the namespaced id.**
+---
 
-⛔ **WHY, because the failure is invisible until the merge and the fix looks unnecessary before it
-(CVO, 2026-08-21, measured on this protocol's own first round):** the id axis was namespaced by
-**PROJECT** and never by **FABRIC**, so two certifiers working one project on two machines allocate
-the *same sequence by construction* -- **not a collision risk, a guarantee.** Measured at the first
-integrate: **7 colliding ids, 14 distinct findings, ZERO identical.** Every ordinary resolution
-destroys the record -- concatenation yields two `json` blocks (refused by this protocol's own
-validation), keep-one-side drops 8 items silently, and **union-by-id is the worst because it
-collapses 14 into 7 while looking like it worked.** The live half needed no merge at all: a bare
-`S3` in a bridged message named **two different hazards** depending on the reader's fabric.
-**The single-block-per-file rule was RIGHT; the FILE GRAIN was wrong** -- a Rule-24 missing-coordinate
-defect, repaired by adding the coordinate, never by renumbering (renumbering breaks every citation
-in flight). Ruling: `1.0.0_SA_CTO` 65860, cross-fabric.
+## 8. L9 adjudication and L10 routing
 
-Validation extracts the fenced block from the document itself, so what is checked IS what is read:
+**L9.** Every row receives its disposition per section 4. Graduated rows receive a remediation row per section 5. A
+`DECOMP_INVALIDATING` row reopens L5 for the current round at once.
 
-```bash
-python - "$DOC" "$SCHEMA" <<'PY'
-import json, re, sys, jsonschema
-doc, schema = open(sys.argv[1], encoding='utf-8').read(), json.load(open(sys.argv[2]))
-blocks = re.findall(r"```json\n(.*?)\n```", doc, re.S)
-assert len(blocks) == 1, f"expected exactly 1 fenced json block, found {len(blocks)}"  # a second block is a second home
-items = json.loads(blocks[0])
-for i, it in enumerate(items):
-    jsonschema.validate(it, schema)
-print(f"VALID: {len(items)} item(s) over 1 block")   # denominator printed, per the law it enforces
-PY
-```
+**L10 precondition.** Every task order under the project is terminal (`complete`, `superseded`, `cancelled`,
+`withdrawn`), each finished with a valid proof-of-spec instance whose `surprises` entries resolve to rows, and every
+investigation row is dispositioned. An open item is not a zero: a round with an `UNDER_INVESTIGATION` row does not
+route and does not close. The row gate enforces the task-order half and the proof-of-spec checker its surprises
+clause; the dispositioned half binds by reading.
 
-The single-block assertion is load-bearing: two blocks in one file is the two-homes hazard
-re-created INSIDE the file, where it is harder to see. A dedicated checker + the TO-issuance lint
-are the 0.8.0 tooling lane's (COO routes per the ratification), NOT minted here -- build-ladder
-rung 2, the estate already has `jsonschema`.
+**The loop.** The round's findings re-enter at the limb the route names and run forward again through L10. A
+remediation pass is an L5 re-decomposition or an L6 re-dispatch by the COO, cut as fresh task orders and remediated
+runs in the order their dependencies dictate, to the relevant workers or to newly seated ones. Looping in order is
+the point; the CVO never shortens it by writing to a worker.
 
--- 3.0.0_SA_CVO, 2026-08-21, under the ratification of the same day
+**Routing fields on a remediation row.** `route` is the decision: what does the remedy need that does not exist yet?
+`SPEC_ERROR`, a cell the decomposition already contains; `DECOMP_INVALIDATING`, a cell it does not; `SCOPE_CHANGE`, an
+outcome the PRD does not name. `loop_target` is derived from `route` and stored so a reader of one row can act:
+`SPEC_ERROR` to 6, `DECOMP_INVALIDATING` to 5, `SCOPE_CHANGE` to 2; the gate refuses any pair off that map. A
+`SCOPE_CHANGE` row carries `scope_change_kind` (`CONTRADICTS_NAMED_OUTCOME` with a real `outcome_ref`, or
+`REQUIRES_UNNAMED_OUTCOME` with `outcome_ref` null and a `proposed_outcome`); the filer never allocates an outcome id.
+
+**Who acts.** The CVO stamps the route; the route owner acts: `2.0.0_SA_COO` for 6 and 5, `1.0.0_SA_CTO` for 2. The
+stamped rows go to the route owner and to no one else. The
+notifier `.tools/prd-header-notify.py kind:route` delivers a new route row to its owner and re-offers until read. A
+round whose remediation document graduates zero rows proceeds to the next L6 dispatches; a project closes on a
+zero-graduation round.
+
+---
+
+## 9. Homes, validation, and the two fabrics
+
+**Gates.** `.tools/surprise-row-gate.py` at commit, reading staged bytes against HEAD, refuses on either root: a new
+investigation row without `spec_asserts` and `world_is`, without `project` and `fabric` agreeing with its id and its
+path, or off its schema; any pre-existing row changed in place; a new remediation row without its required fields, a
+graduated row without grounded evidence, a `route` and `loop_target` off the locked map, a `SCOPE_CHANGE` without its
+kind and outcome reference, or a route row while any task order under the project is not terminal. It fails closed on
+an unreadable blob or an unparseable block. `.tools/proof-of-spec-check.py` refuses a worker's proof-of-spec instance
+whose `surprises` entries do not each open with a row id present in the project's investigation file, so a task order
+cannot complete on a surprise that has no row.
+
+**Validation of a document** extracts the single fenced block and validates each row against its schema, printing the
+row count as its denominator.
+
+**One investigation file per fabric per round, with a fabric-distinct filename.** The laptop fabric writes
+`INVESTIGATION_v<N>.md`; site Z writes `INVESTIGATION_v<N>.Z.md`; the same for remediation files unless the two
+certifiers agree at handover on one merged remediation authored by one of them. The two files are never merged; a
+same-path add on both branches resolves by rename, keeping each file's content. Ids carry the fabric coordinate
+(`<CODE>-S<n>` and `<CODE>-Z-S<n>`) so that two certifiers on two machines never allocate one sequence; bridged messages
+cite the namespaced id.
+
+**Mirror versus collision.** This rule applies where both fabrics independently author a channel for one project, not
+where a file merely exists at the same path on both branches. A file one fabric authored and the other pulled is a
+mirror: byte-identical whole file, leave it alone. Divergent content under shared ids is a collision: rename. The
+discriminator is one byte comparison of the whole file.
+
+---
+
+## 10. Amendment protocol
+
+This annex is amended as a whole by `3.0.0_SA_CVO`, on Andrew's word or on a routed L10 finding, as a new version with
+one changelog line naming the record that authorized it. No in-place markers, no partial-clause patches, no quotations,
+no dates or hashes in the body. An amendment of the spine that touches L7 to L10 amends this annex in the same
+window. A document that describes the channel in a second shape is retired to a redirect the day it is found.
+
+---
+
+## 11. Changelog
+
+| version | date | authorizing record | summary |
+|---|---|---|---|
+| 1.0 | 2026-08-21 | Andrew's ratification of the channel framework at the CTO terminal; the CTO's assignment of the channel to the CVO | one home per document; the two axes; the grounding bar; investigation and remediation documents; the escape valve; round mechanics |
+| 1.1 | 2026-08-21 | the CTO's cross-fabric ruling on colliding ids | one file per fabric per round; ids carry the fabric coordinate; mirror versus collision |
+| 1.2 | 2026-09-02 | `org/tier0/ledger/` entries for the row gate and the project tree; Andrew's word at the CTO terminal on lane `ANY` for investigations | `.tools/surprise-row-gate.py`; `project`, `fabric`, `spec_asserts`, `world_is` gate-required on new rows; the tree root; the `SCOPE_CHANGE` payload; the remediation schema's fabric coordinate |
+| 2.1 | 2026-09-03 | spine v2.1 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` @aaa5a2b085; Andrew's two words at the COO terminal, recorded at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb and `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the channel runs in one direction: findings up to the COO or the CTO, never down to a worker; the round's remediations issued as one slug at L10 to the route owner only; the L10 precondition carries the valid proof-of-spec instance with resolving surprises; the loop stated |
+| 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; Andrew's word at the CVO terminal, recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260903_031xZ_SURPRISE_ROW_NOT_MCP_GATE_ON_PROOF_OF_SPEC_SURPRISES.md` @007481053a | re-keyed from a five-stage document to the L7 to L10 annex of the spine, in constitutional form; the row is the only carrier and the surfacing seat appends its own row on either root; append-only as a control with corrections as new rows; the proof-of-spec surprises limb; the L10 precondition and its gate; the CVO's intake named |

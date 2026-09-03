@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
-"""to-pipeline-gate.py -- LAYER 2 of the DIRECTIVE EXECUTION PIPELINE enforcement architecture.
+"""to-pipeline-gate.py -- the L6 gate of the canonical fabric workflow (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md).
+The file keeps its historical name; renaming a gate breaks the hook chain on every device.
 
 AUTHORITY: Andrew-direct 2026-09-01 at the 3.0.0_SA_CVO terminal -- "re-authorize the three
-enforcement layers and add the stage-3 preflight" / "we need these set up in a manner that they
+enforcement checks and add the stage-3 preflight" / "we need these set up in a manner that they
 are actually mandated" / "I prefer gates and deterministic methodology because anything that is
 simply 'guidance' may dissipate or otherwise be inconsistent over long-running sessions."
 
 WHAT THIS GATES, AND WHY IT IS THE KEYSTONE
-  org/ref/DIRECTIVE_EXECUTION_PIPELINE.md specifies five enforcement layers. Layer 1 (the
+  org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md specifies five enforcement checks. Check 1 (the
   proof-of-spec validation gate) IS BUILT and DOES enforce -- but only on an instance whose
   GOVERNING TO carries a naming <decomp_ref>. MEASURED 2026-09-01: 130 of 2233 TO files carry
-  one = 5.8%. Layer 1 is therefore inert on 94% of the estate, not because it is broken but
+  one = 5.8%. Check 1 is therefore inert on 94% of the estate, not because it is broken but
   because nothing ever required the TO to carry the element that activates it.
 
-  LAYER 2 IS THAT REQUIREMENT. Gate the neck of the funnel: a TO that conformantly requires a
+  CHECK 2 IS THAT REQUIREMENT. Gate the neck of the funnel: a TO that conformantly requires a
   decomp structurally requires the decomp, which requires the PRD, which requires registration.
   One gate at TO issuance enforces the entire upstream funnel without taxing any other act.
 
@@ -79,6 +80,97 @@ COVERAGE_WORD_RE = re.compile(
 # on historical TOs" -- it binds a project the moment someone cuts a NEW TO against it, never
 # retroactively.
 FABRIC_ENUM = ("laptop", "site-z")
+
+# GATE (i) -- Andrew-direct 2026-09-03 (state of record @716a9bc7ce call 3, LD-0521; his conditional
+# "If there's any chance of doing this out of order, we need more gates" became his ask): L7 WORKERS ARE
+# TIER-2 SEATS ONLY. A NEW tree task order whose <issued_to> names a Tier-0 serial (0.0.<n>_*: MSTR and the
+# utility seats) or a Tier-1 serial (*_SA_*: the exec tier) is REFUSED. Prospective, TREE projects only --
+# every tree TO is new by construction, so nothing historical is re-graded; a flat-root TO is left to its
+# 2,000-file legacy population. Measured the same night, before this limb existed: TO-CE-DISC-2 ->
+# 1.0.0_SA_CTO and TO-CE-TP-1 -> 3.0.0_SA_CVO were cut through this gate and WITHDRAWN by their issuer on
+# his correction ("Only tier2 agents are workers, MSTR does not 'WORK' on projects, they are an integrator").
+# A `~lane` suffix is stripped before the tier is read (a lane of an exec is still an exec). A value that
+# is not a serial at all (an executor CLASS, prose) is not this limb's -- the seating clause owns that shape.
+ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
+SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
+TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
+
+
+# GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
+# that does task orders"). A NEWLY ADDED tree task order commits only under 2.0.0_SA_COO or one of its ~lanes, read
+# by the estate's actor precedence (.tools/lib/resolve-actor.sh): $OPAL_AGENT_SERIAL (per process) -> the session's
+# org/mcp/sessions/<id>.serial file -> GIT_AUTHOR_IDENT last. MEASURED 2026-09-03 (2.0.0_SA_COO, message 93110): at
+# pre-commit time GIT_AUTHOR_IDENT reads the git CONFIG name, never safe-commit's --author, so a limb keyed on it alone
+# refused the one seat it exists to admit on every standard safe-commit; the two per-process carriers were present and
+# unread. The wrapper's --author is a CLAIM; the process carriers are the actor. A MODIFICATION of an existing task
+# order -- the worker's own status flip, admitted by the lane grant that made task-orders/** ANY -- is not this limb's:
+# main() sends only newly-added paths through check_file. Prospective, tree projects only. An unreadable identity
+# REFUSES (fail-closed): a gate that cannot see who is committing must not admit an issuance.
+ISSUER_SERIAL = "2.0.0_SA_COO"
+
+
+def _committer_serial(root):
+    """The committing seat's serial by the resolve-actor precedence: $OPAL_AGENT_SERIAL, then
+    org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial, then the name before ' <' in GIT_AUTHOR_IDENT (the config
+    name at pre-commit time -- a last resort, never the --author), or '' when nothing answers."""
+    env = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+    if env:
+        return env
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    if sid:
+        try:
+            p = os.path.join(root, "org", "mcp", "sessions", sid + ".serial")
+            if os.path.isfile(p):
+                with open(p, encoding="utf-8") as fh:
+                    v = fh.read().strip()
+                if v:
+                    return v
+        except OSError:
+            pass
+    try:
+        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+                               timeout=20).stdout
+    except Exception:  # noqa: BLE001
+        return ""
+    return ident.split(" <", 1)[0].strip()
+
+
+def _issuer_identity_violations(rel, author):
+    """GATE (iv): complaints about WHO is committing a NEW tree TO. [] for flat-root TOs (out of scope)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    if not author:
+        return ["%s: committer identity UNREADABLE -- a NEW tree task order commits only under %s; REFUSED, fail-closed"
+                % (rel, ISSUER_SERIAL)]
+    base = author.split("~", 1)[0].strip()
+    if base != ISSUER_SERIAL:
+        return ["%s: a NEW tree task order committed under %r. COO is the only agent that does task orders (LD-0521 "
+                "A3): a new file under org/missions/*/*/*/task-orders/ commits only under %s or a ~lane of it. A "
+                "worker's own <status> flip on an EXISTING task order is a modification and is not this limb's."
+                % (rel, author, ISSUER_SERIAL)]
+    return []
+
+
+def _issued_to_tier_violations(rel, text):
+    """GATE (i): complaints about a NEW tree TO's <issued_to>. [] for flat-root TOs (out of scope)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    out = []
+    for m in ISSUED_TO_RE.finditer(text):
+        raw = m.group(1).strip()
+        base = raw.split("~", 1)[0].strip()
+        if not SERIAL_RE.match(base):
+            continue
+        if TIER01_RE.match(base):
+            tier = "0" if base.startswith("0.0.") else "1"
+            out.append("%s: <issued_to>%s</issued_to> names a TIER-%s seat. L7 workers are TIER-2 ONLY "
+                       "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521): a Tier-1 exec does not hold a "
+                       "task order and 0.0.0_AB_MSTR integrates and never works a project. Re-address to a "
+                       "Tier-2 seat, or land the decision as SPEC at its L-owner (L4 CTO / L5 COO)."
+                       % (rel, raw, tier))
+    return out
 
 
 def _repo_root():
@@ -601,7 +693,25 @@ def check_file(root, rel):
 
     ov = OVERRIDE_RE.search(text)
     if ov:
-        notes.append("OVERRIDE taken on %s -- reason: %s" % (rel, ov.group(1).strip()))
+        # AUDITED means WRITTEN (2026-09-03, 1.0.0_SA_CTO; spec water test cell L6.pipeline-override-audited): the
+        # canonical spec said this override is "audited" while the gate only PRINTED it. The sibling issuance hook
+        # appends to org/to-pos-override-audit.log; this appends to its own sink in the same shape. A sink that cannot
+        # be written is a NOTE, never a refusal -- the override was already legal, the audit is the record of it.
+        reason = ov.group(1).strip()
+        try:
+            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+                                 timeout=20).stdout.split(" <")[0].strip() or "<unknown author>"
+        except Exception:  # noqa: BLE001
+            who = "<unknown author>"
+        import datetime as _dt
+        line = "%s | %s | %s | %s\n" % (_dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H%M%SZ"), who, rel, reason)
+        try:
+            with open(os.path.join(root, "org", "to-pipeline-override-audit.log"), "a", encoding="utf-8") as fh:
+                fh.write(line)
+            notes.append("OVERRIDE taken on %s -- reason: %s (audited: org/to-pipeline-override-audit.log)" % (rel, reason))
+        except Exception as exc:  # noqa: BLE001
+            notes.append("OVERRIDE taken on %s -- reason: %s (AUDIT SINK UNWRITABLE: %s -- the override stands, the record does not)"
+                         % (rel, reason, exc))
         return ([], notes)
 
     # THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
@@ -615,6 +725,11 @@ def check_file(root, rel):
     if m and NONE_WORD_RE.match(m.group(1).strip()):
         notes.append("%s: <decomp_ref> declares NONE -- allowed (one-branch work under its own "
                      "charter); layer 1 reads it as ANNOUNCE, not ENFORCE." % rel)
+
+    # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
+    v.extend(_issued_to_tier_violations(rel, text))
+    # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
+    v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the

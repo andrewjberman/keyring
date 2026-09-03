@@ -601,7 +601,7 @@ if [ -n "$IN_SCOPE" ]; then
 fi
 
 # ---------------------------------------------------------------------------------------------
-# LAYER 2 of the DIRECTIVE EXECUTION PIPELINE -- the TO issuance gate.
+# LAYER 2 of the CANONICAL FABRIC WORKFLOW -- the TO issuance gate.
 # Andrew-direct 2026-09-01 (3.0.0_SA_CVO terminal): "re-authorize the three enforcement layers
 # and add the stage-3 preflight" / "we need these set up in a manner that they are actually
 # mandated" / "I prefer gates and deterministic methodology because anything that is simply
@@ -772,7 +772,7 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && printf '%s\n' "${PATHSPEC[@]}" | grep -qE '\.too
   fi
 fi
 
-# PIPELINE GATE LAYER 2 (org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:171; build routed to the
+# PIPELINE GATE LAYER 2 (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md; build routed to the
 # tooling lane on Andrew's word in the ratification; built 2026-08-24 by 0.8.0_AE_CloudComp~F).
 # A NEW task order for a PIPELINE-REGISTERED project must carry <decomp_ref>. The choke-point
 # principle (:164): nothing executes without a TO, so requiring the ref at ISSUANCE requires the

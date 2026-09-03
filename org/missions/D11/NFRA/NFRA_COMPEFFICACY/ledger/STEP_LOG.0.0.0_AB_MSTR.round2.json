@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 2,
+  "seat": "0.0.0_AB_MSTR",
+  "written_utc": "2026-09-03T05:55Z",
+  "trigger": "NFRA_COMPEFFICACY-S9 @88c961297b (L10 stamp, round 2: zero graduation, proceed to the next L6 dispatches; 3.0.0_SA_CVO msg 93170)",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "X",
+      "started_utc": "2026-09-03T04:13Z",
+      "ended_utc": "2026-09-03T04:56Z",
+      "act": "Held the push cadence on Andrew's word (no window, no hold frame) while round 2 was dispatched and executed; every round-2 commit stayed LOCAL through the round's L7 by his word, not by any seat's fault.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier0/ledger/LD-0522.md@291bf6c087"}
+      ],
+      "outputs": [],
+      "spine_clause": "cross-cutting: MSTR integrates; the cadence is Andrew's while he is at the terminal",
+      "note": "A hold, not a read: nothing produced."
+    },
+    {
+      "seq": 2,
+      "limb": "X",
+      "started_utc": "2026-09-03T04:56Z",
+      "ended_utc": "2026-09-03T05:01Z",
+      "act": "One batched push window on Andrew's word ('run it 1 YES'): carried round 2's dispatch (TO-CE-G-5, TO-CE-T-2), decomp v0.2, the round-1 stamp and step logs, and the night's law to origin.",
+      "inputs": [
+        {"kind": "WORD", "ref": "org/tier0/ledger/LD-0522.md@800b85c1a2"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/@0110eb7cb7"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "origin/CLOUD@800b85c1a2"},
+        {"kind": "MESSAGE", "ref": "93116"},
+        {"kind": "MESSAGE", "ref": "93123"}
+      ],
+      "spine_clause": "cross-cutting: MSTR integrates",
+      "gate_or_notifier_touched": "same-breath control matched the OPEN; pre-push-safe-deploy: no deploy-scope files",
+      "note": "Round 2's L7 completions (G-5 @173dd335f4, T-2) and its L10 stamp landed after this window and are LOCAL at the stamp."
+    },
+    {
+      "seq": 3,
+      "limb": "X",
+      "started_utc": "2026-09-03T05:44Z",
+      "ended_utc": "2026-09-03T05:51Z",
+      "act": "Read and READ-acked the round-2 L10 stamp and CTO's spine v2.3 close frame; no act owed at this seat; the round's push state stays LOCAL until Andrew's word.",
+      "inputs": [
+        {"kind": "MESSAGE", "ref": "93158"},
+        {"kind": "MESSAGE", "ref": "93170"}
+      ],
+      "outputs": [],
+      "spine_clause": "NONE",
+      "note": "T2-F2 in the round's deliverables (comp-read --enumerate writes no rail row) corroborates, on a different instrument, the finding this seat carried to Andrew at 05:4xZ."
+    }
+  ]
+}

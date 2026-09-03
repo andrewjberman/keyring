@@ -1,0 +1,131 @@
+{
+  "$id": "opal://standards/COMPTOOL_ANSWER_STATE.enum.json",
+  "title": "COMPTOOL_ANSWER_STATE -- the four answer-states of a comp-tool RUN (PRD NFRA_COMPEFFICACY s.4.3), ratified as DATA: one spelling per state, the tool-voice token adopted where a live carrier exists",
+  "enum_version": "1.0",
+  "ratification": "RATIFIED 1.0.0_SA_CTO 2026-09-03 -- L4 landing in PRD NFRA_COMPEFFICACY v0.4 at the tree home (org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md). Origin of the decision: decomp cell CE-disc-2 (STAGE 0 decide-first). TO-CE-DISC-2 was cut for it @4d9cd02e40 and WITHDRAWN by its issuer 2.0.0_SA_COO (msg 92927) on Andrew-direct ~02:2xZ 'Only tier2 agents are workers'; a spec decision is L4 content, so this file is the L4 owner's act, not a task-order deliverable.",
+  "binds": "BY READING. No code consumer, no gate (PRD s.5 'Any gate' stands; Andrew has not asked for one). What reads it today: (1) the `answer_state` block of every per-tool result deliverable at org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/<serial>/<tool>.result.md -- its KEYS are exactly the four `state` values below; (2) the certifier's 4.3 grade -- a key outside the four is a non-conforming deliverable, returned not graded (PRD s.4 'every field is REQUIRED'). T-16 (comp-adversary.result.md @d101d4fe20) already conforms: 4 of 4 keys match.",
+  "grain": {
+    "what_one_member_classifies": "ONE RUN's answer about ONE subject when that answer is not a plain positive result. Never a tool (a tool is CLEARED/RETIRED/DOES-NOT-EXIST/CARRIED -- PRD s.2, a different axis), never a project, never a preflight.",
+    "two_grains_kept_apart": "STATE = the spelling, the grading key (exactly one per state). TOOL-VOICE = the token an ENGINE prints in its own output when it names the state itself; adopted from a live carrier where one exists, otherwise null. PRD s.4.7's census line 'NOT_DECIDABLE -> NOT-DECIDABLE' mixed the two grains: it named comp-schedule's printed token as if it were a state. s.4.3 has no fifth state; the token belongs to PARTIAL_OR_BLIND.",
+    "normalize": "exact -- a consumer compares bytes; it does NOT fold case or separators (folding would make 'one spelling' meaningless)."
+  },
+  "states": [
+    {
+      "state": "SUBJECT_ABSENT_FROM_CORPUS",
+      "meaning": "the subject does not exist where the tool looks (PRD s.4.3). SUBJECT = the thing the tool was pointed at (a path, an artifact, a pathspec/scope), NOT the pattern searched for.",
+      "origin": "MINTED -- no carrier in code (word-boundary census, corpus=all: 10 hits / 145,913 files, all DOC band: this PRD, its decomp, the T-16 result, the withdrawn TO, CVO drafts).",
+      "tool_voice": {
+        "token": null,
+        "carrier": null,
+        "note": "no engine prints a token for this state today. T-16's comp-adversary prints 'ERROR: artifact not found: <path>' rc 2 -- a message, distinguishable, not a token. An engine that adopts a token for this state prints SUBJECT_ABSENT_FROM_CORPUS or this file is versioned first."
+      },
+      "kin_not_a_spelling": [
+        "comp-find's denominator shape '0 hit(s) across 0 file(s)' -- ZERO FILES scanned = the pathspec is not in the corpus. CLAUDE.md Rule 21 names that shape 'OUT-OF-CORPUS, NOT ABSENCE': Rule 21's 'absence' means the PATTERN is absent (that is PRESENT_WITH_ZERO_RESULTS); this state is the SCOPE being absent. Same shape, this state.",
+        "'OUT-OF-CORPUS' is PROSE, not a printed token: comp-read --enumerate 'OUT[-_]OF[-_]CORPUS' over .tools/comp-find (615 lines) = 0 hits; census corpus=all 111 hits / 145,918 files, SURFACED=3 CONFIG=2 DOC=106, the only first-party code hit a COMMENT at .tools/_comprail.py:382. Reconciled by naming it here as kin; it is not duplicated as a second spelling."
+      ]
+    },
+    {
+      "state": "PRESENT_WITH_ZERO_RESULTS",
+      "meaning": "the subject exists; the measured answer is genuinely zero (PRD s.4.3).",
+      "origin": "MINTED -- no carrier in code (census corpus=all: 8 hits / 145,914 files, all DOC band).",
+      "tool_voice": {
+        "token": null,
+        "carrier": null,
+        "note": "no engine prints a token for this state today. T-16's comp-adversary prints 'pins found: 0 commits, 0 repo paths ... !! ZERO MACHINE-EXTRACTABLE PINS ... A zero here is a signal, never a clean pass' rc 0 -- distinguishable by text and by the denominator, not a token."
+      },
+      "kin_not_a_spelling": [
+        "comp-find's denominator shape 'N hit(s) across M file(s)' with N = 0 and M > 0 -- the scope exists and was scanned; the pattern is absent. This is what CLAUDE.md Rule 21 calls a true absence, and the state Rule 21's '--hidden before converting a zero into an absence' protects."
+      ]
+    },
+    {
+      "state": "PARTIAL_OR_BLIND",
+      "meaning": "the tool examined part of the space and says which part (PRD s.4.3). Two limbs, one state: PARTIAL (a declared cap or an unfinished scan) and BLIND (a carrier the tool cannot decide, with its denominator).",
+      "origin": "s.4.3's name, EXERCISED by T-16 (planted: --max-neighbors 1 --no-packet; printed: 'total uncited siblings: 18 (showing 1 -- the CAP is declared, not silent)'). Census corpus=all: 4 hits / 145,914 files, all DOC.",
+      "tool_voice": {
+        "token": "NOT-DECIDABLE",
+        "carrier": ".tools/comp-schedule -- comp-read --enumerate 'NOT[-_]DECIDABLE': 6 hits (5 whole-value, 1 substring), CODE :323 Carrier(\"C5\", \"PROJECT-BLOCKING\", \"NOT-DECIDABLE\"), :500-:501 (control 4), DOCSTRING :36 :43 :322. Census corpus=all: 55 hits / 145,897 files, SURFACED=8 CONFIG=18 TEST=1 DOC=28; the only first-party source carrier is comp-schedule (the other SURFACED rows are the tool-run logs).",
+        "exercised": "comp-schedule run 2026-09-03T02:18:28Z at this seat, rc 0, 130 lines; line 16 VERBATIM: 'C5  PROJECT-BLOCKING NOT-DECIDABLE   denominator=337 -> 0 gate(s)'. That is the BLIND limb spoken in the tool's own voice WITH its denominator -- PRD s.5: 'A tool that prints NOT-DECIDABLE with a denominator has PASSED 4.3'.",
+        "why_this_state_and_not_NOT_APPLICABLE": "the question ('which gates are armed in org/projects/*.json blocking fields?') APPLIES; the tool cannot decide it from free prose and says so over 337 fields. A question that applies but cannot be decided on this part is BLIND, not not-applicable.",
+        "retired_variant": "NOT_DECIDABLE (underscore) -- no code carrier (census corpus=all: 7 hits / 145,904 files; SURFACED=2 are org/mcp/comp-tool-runs.jsonl + org/mcp/comp-which-rail.log recording this seat's own census probes, DOC=5). Retired as a spelling; PRD s.4.7's arrow is honored by adopting the hyphen token here.",
+        "scope_of_the_token": "an engine prints NOT-DECIDABLE for the BLIND limb only. The PARTIAL limb is carried by the denominator/page line ('showing n of N', 'scanned n of N', 'PAGE i of N') -- Rule P / Rule T (PRD s.4.4), not a token."
+      },
+      "kin_not_a_spelling": [
+        "comp-dataflow 'unresolved-dynamic (blind)'; comp-iam 'cannot answer deny' (PRD s.4.2 blind_spots example); comp-adversary 'the CAP is declared, not silent' (T-16) -- each says which part, none prints a state token."
+      ]
+    },
+    {
+      "state": "NOT_APPLICABLE",
+      "meaning": "the question does not apply to this subject/tool (PRD s.4.3). A CORRECT result -- no remedy moves it (PRD s.4.7 (iv), CVO~A s.11).",
+      "origin": "s.4.3's name, EXERCISED by T-16 as the key (its finding F1: the tool 'never says NOT_APPLICABLE in its own voice' -- it crashed on a directory; the tool-voice token below is exactly the vocabulary that F1-class remedy prints).",
+      "tool_voice": {
+        "token": "NOT_APPLICABLE",
+        "carrier": "org/modules/graph/nerves_resolve.py -- comp-read --enumerate 'NOT[-_]APPLICABLE': 6 hits, all whole-value; CODE :74 (state enum member) and :524 (state=\"NOT_APPLICABLE\" emitted when the ref belongs to another fabric: 'a ref for another fabric is not a miss in ours' :508). A RUN's answer about a subject -- the same axis as this enum.",
+        "exercised": "not exercised at this ratification (adopted from source, the run-state is emitted at :524; the resolver's own battery org/modules/graph/tests/nerves_resolve_battery/run_battery.py carries the token -- TEST band, census). Stated so 'adopted' is not read as 'exercised here'.",
+        "census": "corpus=all: 516 hits / 145,911 files, DEF=3 SURFACED=36 CONFIG=297 TEST=2 DOC=178. First-party SURFACED besides nerves_resolve: data/etfs/scripts/gold/etf_positioning_gold.py and integrations/bloomberg/pipeline/etf_daily_pull.py -- PRESENT, axis NOT READ at this ratification (they may carry the token for their own domains; nothing here claims they are 4.3 carriers).",
+        "word_boundary_property": "\\bNOT_APPLICABLE\\b cannot match inside DECLARED-NOT-APPLICABLE (underscore is a word character); a hyphenated \\bNOT-APPLICABLE\\b WOULD (hyphen is a boundary), so a grader grepping tool output for the hyphen form would false-positive on every preflight block. A second reason, beside adoption, that the underscore form is the one spelling."
+      },
+      "kin_not_a_spelling": []
+    }
+  ],
+  "not_applicable_split_finding": {
+    "the_split_as_the_census_stated_it": "PRD s.4.7: NOT_APPLICABLE 'already exists in TWO spellings (NOT_APPLICABLE underscore in nerves_resolve; DECLARED-NOT-APPLICABLE hyphen in my own gate) -- that split is a finding this project inherits, not one it may paper over.'",
+    "winner": "NOT_APPLICABLE -- the state's one spelling AND its tool-voice token coincide.",
+    "losing_carrier": {
+      "token": "DECLARED-NOT-APPLICABLE",
+      "where": ".tools/to-pipeline-gate.py:55  DISPOSITION_RE = r\"(RUN|DECLARED-NOT-APPLICABLE)\"  at HEAD 96af269f47 (PRD s.4.7 cites :46 -- a DATED read; the blob moved). comp-read --enumerate 'NOT[-_]APPLICABLE' over the gate: 7 hits, 0 whole-value, 7 substring -- every hit is a fragment of DECLARED-NOT-APPLICABLE (the tool's own WARN: 'an anchored probe would report ZERO against this file'). Census corpus=all: 60 hits / 145,911 files, HEAD=2 DEF=1 SURFACED=8 DOC=49; DEF = the gate, SURFACED includes .tools/git-hooks/install-to-pipeline-gate.sh.",
+      "owner": "3.0.0_SA_CVO -- the gate's author (Andrew-direct 2026-09-01 at the CVO terminal, the gate's own header; PRD s.4.7 'this seat's gate'). Any code touch on it executes at 0.8.0_AE_CloudComp under its own row (the project's tool-code lane); none is opened here.",
+      "what_it_is": "the three-value PREFLIGHT DISPOSITION enum -- RUN | DECLARED-NOT-APPLICABLE | (absent -> refused) -- a TO AUTHOR's declaration that a lens does not apply to a subject BEFORE anything runs (gate header: 'a vocabulary with no not-applicable value encodes non-application as a violation'). Andrew-ruled; treated as fixed.",
+      "why_it_loses_without_changing": "Rule 24 postulate (iii), intent coherence: DECLARED-NOT-APPLICABLE is declared by a PERSON about whether to RUN a lens; NOT_APPLICABLE is measured by a RUN about its SUBJECT. Two intents, two axes. The s.4.7 census filed a different-axis token under 4.3's state; the 'split' is that filing, not two spellings of one state. Under this enum the two tokens never compete for one field.",
+      "change_owed_to_the_token": "NONE.",
+      "gate_changed": false,
+      "residual_recommended_not_done": "one docstring line at the gate stating that DISPOSITION_RE is a preflight disposition and not a 4.3 answer-state, so the next census does not refile it. Owner 3.0.0_SA_CVO; executor 0.8.0_AE_CloudComp under its own row; no task order exists for it; not a gate."
+    },
+    "residual_declared_not_hidden": "the four state spellings use the underscore separator; the one adopted tool-voice token that differs from its state (NOT-DECIDABLE) uses a hyphen because that is what the live carrier prints and a live carrier is adopted, never re-minted. A consumer compares exact bytes per grain (state keys against `state`; a tool's printed token against `tool_voice.token`); it never folds separators."
+  },
+  "rule_24_record": {
+    "i_MECE_over_a_declared_domain": "DOMAIN: one RUN's answer about one subject when it is not a plain positive result. Four members, decided by three questions in order: does the subject exist where the tool looks? (no -> SUBJECT_ABSENT_FROM_CORPUS) / is the question well-formed for this subject-tool pair? (no -> NOT_APPLICABLE) / did the tool examine the whole space it claims? (no -> PARTIAL_OR_BLIND; yes and zero -> PRESENT_WITH_ZERO_RESULTS). UNCOVERED-MEMBER HUNT: a plain positive result (hits > 0, complete) is outside the domain by construction -- the answer IS the result; a run that prints NOTHING (crash, KILLED-OUTSIDE by the harness) has NO state -- this enum classifies what a tool SAYS, and saying nothing is precisely the AC-2 failure it exists to make rejectable, not a fifth member. EXCLUSIVITY exercised: T-16 planted one case per state and got four distinguishable outputs; the one overlap candidate found (comp-schedule's NOT-DECIDABLE: blind vs not-applicable) is resolved by question 2 -- the question applies.",
+    "ii_same_grain": "every member classifies ONE RUN's answer (never a tool's disposition, never a project's stage, never a preflight lens). The state spelling and the tool-voice token are two grains and sit in two fields; s.4.7's census collapsed them and that collapse produced the phantom 'NOT_DECIDABLE' state.",
+    "iii_intent_coherence": "one intent: 'why is this answer not a plain positive result', from the run's point of view. Excluded on intent: DECLARED-NOT-APPLICABLE (an author's preflight declaration -- see the finding); CLEARED/RETIRED/DOES-NOT-EXIST/CARRIED (a tool's disposition, PRD s.2/s.7); DONE/IN-FLIGHT/OPEN/HELD/NOT-EVALUATED (a decomp cell's status).",
+    "iv_state_coherence": "which values one remedy does NOT move: a coverage/corpus fix moves PARTIAL_OR_BLIND toward a positive result or PRESENT_WITH_ZERO_RESULTS; it does NOT move NOT_APPLICABLE (a correct result) and does NOT move SUBJECT_ABSENT_FROM_CORPUS (the subject is what it is). A 'say it in your own voice' remedy (T-16 F1 class) moves a tool from crashing/silent to printing the tool-voice token; it moves NO state. This ratification moves the spellings from by-reading to data; it moves NO tool's output.",
+    "census": {
+      "instrument": "comp-find '\\b<token>\\b' --files --all (corpus=all, the default since 2026-08-28), one run per token, 2026-09-03 02:22Z-02:35Z at 1.0.0_SA_CTO; per-carrier grain by comp-read --enumerate. A DIFFERENT instrument from PRD s.4.7's source grep + 8-way alternation.",
+      "denominator": "145,897-145,918 files scanned per run (the corpus grew by ~20 files while the eight sweeps ran -- seats were committing); 71,671 EPHEMERAL-FLOOR, 6-7 UNREADABLE, 4,181 BINARY not searched, disclosed on each run's own line.",
+      "per_token": {
+        "NOT-DECIDABLE": "55 hits: SURFACED=8 CONFIG=18 TEST=1 DOC=28; code carrier .tools/comp-schedule",
+        "NOT_DECIDABLE": "7 hits: SURFACED=2 (tool-run logs) DOC=5; no code carrier",
+        "NOT_APPLICABLE": "516 hits: DEF=3 SURFACED=36 CONFIG=297 TEST=2 DOC=178; code carrier org/modules/graph/nerves_resolve.py (+2 first-party scripts unread for axis)",
+        "DECLARED-NOT-APPLICABLE": "60 hits: HEAD=2 DEF=1 SURFACED=8 DOC=49; DEF .tools/to-pipeline-gate.py",
+        "SUBJECT_ABSENT_FROM_CORPUS": "10 hits: DOC=10",
+        "PRESENT_WITH_ZERO_RESULTS": "8 hits: DOC=8",
+        "PARTIAL_OR_BLIND": "4 hits: DOC=4",
+        "OUT-OF-CORPUS": "111 hits: SURFACED=3 CONFIG=2 DOC=106; in code only as a COMMENT (.tools/_comprail.py:382) -- not a printed token"
+      }
+    }
+  },
+  "consumers": {
+    "reading_check": {
+      "what": "the check a reader runs to reject a malformed copy of THIS file -- stdlib, one line (build ladder rung 6). It is the consumer this file names for its negative control; it is NOT a gate and is not wired to any hook.",
+      "invocation": "python -c \"<python_c>\" org/standards/COMPTOOL_ANSWER_STATE.enum.json",
+      "python_c": "import json,sys;p=sys.argv[1];d=json.load(open(p));s=d['states'];n=lambda x:x.upper().replace('-','_');assert len(s)==4,'REJECT: %d states -- the enum has exactly four'%len(s);assert len({x['state'] for x in s})==4,'REJECT: duplicate state';assert len({n(x['state']) for x in s})==4,'REJECT: a second spelling of an existing state';t=[x['tool_voice']['token'] for x in s if x['tool_voice']['token']];assert len(t)==len(set(t)),'REJECT: tool-voice token reused across states';print('OK: 4 states, one spelling each; tool-voice tokens',t)",
+      "rejects": [
+        "a planted FIFTH state (len != 4)",
+        "a SECOND SPELLING of an existing state (case/separator variant collides after normalization)",
+        "a tool-voice token reused across two states"
+      ],
+      "negative_control": "exercised at ratification on temp copies, never on this file: mutant M1 (fifth state appended) -> REJECT; M2 (PARTIAL_OR_BLIND respelled NOT-APPLICABLE, a variant of an existing state) -> REJECT; M3 (NOT-DECIDABLE reused as NOT_APPLICABLE's token) -> REJECT; the ratified file -> OK, twice, byte-identical output (determinism). Observed outputs are in the L4 landing report and the 1.0.0_SA_CTO session log of 2026-09-03, not in this file."
+    },
+    "future_code_consumer": "if Andrew asks for one, the pattern already exists: org/standards/PROJECT_TREE.contract.json `value_enums` reads an enum from ONE source at run time and never copies it (Rule 24 (iv), one carrier). A grader of result deliverables would read `states[].state` from this file the same way. Not built; not asked."
+  },
+  "provenance": {
+    "prd": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md s.4.3 (the four states), s.4.7 (the Rule 24 record + the first census), v0.4 (this ratification)",
+    "decomp_cell": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md @ee52600980 cell CE-disc-2 (OWNS items 1 and 4; STAGE 0)",
+    "withdrawn_task_order": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-DISC-2.ratify-the-answer-state-spellings.md @4d9cd02e40 -- WITHDRAWN by 2.0.0_SA_COO 92927; its acceptance ids DISC2-AC1..AC5 no longer bind; their substance (four states / NOT-DECIDABLE cited from comp-schedule's own output / one winner + losing carrier + owner / PRD cites the file / a named consumer that rejects a fifth state) is what this file carries.",
+    "andrew_direct": [
+      "2026-09-03 ~02:1xZ 'Limb check' transcript (record @9a4d508ae5): L2-L4 CTO only -- the reason this is an L4 act",
+      "2026-09-03 ~02:2xZ at the 2.0.0_SA_COO terminal: 'Only tier2 agents are workers ... COMPEFFICIENCY workers at this point number at 1, which is 0.8.0_AE_CloudComp' (COO 92927)"
+    ],
+    "exercised_deliverable_read": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/comp-adversary.result.md @d101d4fe20 lines 50-54 -- answer_state keys = the four states, 4 of 4",
+    "author": "1.0.0_SA_CTO",
+    "date": "2026-09-03"
+  }
+}

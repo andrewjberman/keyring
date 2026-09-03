@@ -1,6 +1,6 @@
 #!/bin/bash
-# comp-surprise -- the SURPRISE CHANNEL rollup (CLAUDE.md Rule 27, stage 5 of the Directive
-# Execution Pipeline). Every item across every project in ONE list, with denominators.
+# comp-surprise -- the SURPRISE CHANNEL rollup (L8 of the canonical fabric workflow,
+# org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md). Every item across every project in ONE list, with denominators.
 #
 #   comp-surprise                  open items, grouped, denominators printed
 #   comp-surprise --armed          ARMED only -- can cause harm while unattended

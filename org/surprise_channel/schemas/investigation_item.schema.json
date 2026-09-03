@@ -98,6 +98,15 @@
   "notes": {
    "type": "string"
   },
+  "adjudicates": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "string",
+    "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$"
+   },
+   "description": "L9 ADJUDICATION CARRIER. The channel is append-only, so the CVO dispositions an EXISTING item with a NEW row that names it here: this row's `disposition` becomes the named items' latest disposition (.tools/surprise-row-gate.py, gate (iii) second limb -- Andrew-direct 2026-09-03 'Recs approved'). Without this field an adjudication lives in prose ('S6 dispositions S2/S3/S5') where no gate can read it, and the L10 precondition 'every investigation CVO-checked' has no refuser. Every id named must exist under the project; a phantom target is refused. OPTIONAL: a row that adjudicates nothing omits it."
+  },
   "spec_asserts": {
    "type": "string",
    "minLength": 8,

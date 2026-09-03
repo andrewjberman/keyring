@@ -13,7 +13,7 @@
 # Audited override: TO_POS_OVERRIDE="<reason>" -- appends to org/to-pos-override-audit.log.
 #
 # LAYER-2 DECOMP LINT (2026-08-27, 1.0.0_SA_CTO; authority = the 08-21 ratification,
-# org/ref/DIRECTIVE_EXECUTION_PIPELINE.md item 2 "build routed"; sequenced as a D2
+# org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md item 2 "build routed"; sequenced as a D2
 # launch precondition per CVO's ANDREW_DIRECT_20260827_D2_TIGHTENING_LOCKIN_BEFORE_FLOOD.md):
 # a NEW TO whose project is PIPELINE-REGISTERED must carry <decomp_ref> -- refused otherwise.
 # Pipeline-registered predicate: org/projects/{CODE}.json exists AND carries "dep_stage"
@@ -66,7 +66,7 @@ while IFS= read -r f; do
                 echo "WARN: TO_DECOMP_OVERRIDE -- $f issued WITHOUT <decomp_ref> on pipeline project $code (audited: $TO_DECOMP_OVERRIDE)" >&2
             else
                 echo "BLOCKED: NEW task order '$f' -- project $code is PIPELINE-REGISTERED (dep_stage in its JSON) and the TO carries NO <decomp_ref>." >&2
-                echo "  Rule 27 layer 2 (ratified 2026-08-21, org/ref/DIRECTIVE_EXECUTION_PIPELINE.md item 2):" >&2
+                echo "  Rule 27 layer 2 (ratified 2026-08-21, org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md item 2):" >&2
                 echo "  a pipeline project's TO cites the decomp run it executes -- decomp before TOs." >&2
                 echo "  Fix: add <decomp_ref> naming the decomp run (workflows/atom_decomposition/runs/...)." >&2
                 echo "  Audited override (edge cases only): TO_DECOMP_OVERRIDE=\"<reason>\" git commit ..." >&2

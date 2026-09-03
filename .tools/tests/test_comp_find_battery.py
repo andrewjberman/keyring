@@ -24,14 +24,50 @@ score it" class:
      BESIDE the real tool (sibling imports resolve) and the arm asserts the mutant RAN (rc 0, the
      tool's own header printed) AND lacks the denominator. A crash now reads FAIL, never PASS.
 
+ARM F/G (NFRA_COMPEFFICACY CE-t-1, Rule T's FORM -- PRD v0.4 s.4.4, the shared .tools/_compbudget
+carrier): before this cell, the `--corpus aws` pull hard-coded timeout=600 against a 120s outer
+harness ceiling (5x over, nothing at expiry said so). It is now `--budget <s>` (> env
+COMP_BUDGET_S > default 90s), spent per UNIT: an explicit node_type pathspec makes each named
+type its own unit (real --cursor resumability); an unscoped pull is one indivisible "ALL" unit
+(a live measurement showed enumerating node_types first, to decompose even the unscoped case,
+itself costs far more than the budget it would serve -- so that is a disclosed non-application,
+never a faked cursor). F drives the REAL ceiling on the PRODUCTION binary directly (no mutant
+needed to force it -- the ceiling is a flag, not a constant, so exercising it touches no bytes)
+and asserts BUDGET REACHED is printed and TEXTUALLY DISTINCT from both a clean "NO HITS" zero
+(F2) and a scoped WITHIN BUDGET completion (F3, the other unit-shape). G is the red-first
+control: a mutant with the BUDGET REACHED marker text neutered must still RUN (not crash) and
+FAIL F's own predicate. ALL SKIP (recorded, not silently omitted) if this box has no local Kuzu
+DB/CLI to exercise (a fixture that cannot represent the failure cannot score it -- stated, not
+silent).
+
+ARM G5 (NFRA_COMPEFFICACY TO-CE-G-5, the freshness layer under a budgeted client): comp-find's
+--corpus aws pull budgets the KUZU_CLI subprocess, but a killed budgeted client only reaches its
+DIRECT child (kuzu_cli.py) -- subprocess.run(timeout=)'s kill never reaches the GRANDCHILD
+(kuzu_nessie_load.py / kuzu_incremental_refresh.py), which survived ORPHANED holding the shared
+rebuild mutex (measured: PID 25896, parent dead, 743s past its own ceiling -- row
+NFRA_COMPEFFICACY-S6). G5-AC1 exercises the fix -- infra/aws/globgrph/_canonical.py's
+_run_child_supervised, a Windows Job Object (JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE) / POSIX process-
+group wrapper -- via a REAL subprocess killed externally (the same act comp-find performs on
+kuzu_cli.py), reading the OS process table for the grandchild's pid, never this process's own
+bookkeeping. Its planted mutant (an UNSUPERVISED spawn, the pre-fix shape) must show the orphan
+SURVIVING, proving the arm can fail. G5-AC2 exercises ensure_fresh(wait_for_peer=False): with a
+planted lock directory (a temp DB, never the live one), a budgeted caller must return immediately
+("STALE", labeled with an age) rather than polling MUTEX_WAIT_S (180s) against a 90s client
+budget. Nothing here touches the live canonical DB or its rebuild (PID 25896 or its successor) --
+every fixture is a fresh, disposable temp path per TO-CE-G-5's own bound. SKIPS (recorded, not
+silent) if infra/aws/globgrph/_canonical.py cannot be imported here.
+
 Run: python .tools/tests/test_comp_find_battery.py    |    pytest -q .tools/tests/test_comp_find_battery.py
 """
 from __future__ import annotations
 
+import importlib
 import os
 import re
 import subprocess
 import sys
+import tempfile
+import time
 from pathlib import Path
 
 RESULTS: list[tuple[str, bool | None, str]] = []
@@ -40,9 +76,25 @@ _RAN = False
 
 SCOPE = ".tools"                      # small (~360 files), fast (~1 s), contains the tool itself
 PRESENT = "def _self_report"          # defined in comp-find, comp-read, comp-adversary (DEF band)
+AWS_PATTERN = "opal-gateway"          # a real, present AWS-corpus term (34 hits / 2100 nodes measured)
 DENOM_RE = re.compile(r"DENOMINATOR: (\d+) hit\(s\) across (\d+) file\(s\) scanned")
 PAGE_RE = re.compile(r"PAGE (\d+) of (\d+)\s+\(showing (\d+) of (\d+)\)")
 HEADER_RE = re.compile(r"^comp-find \[(content|name)\]", re.M)
+AWS_HEADER_RE = re.compile(r"^comp-find \[aws", re.M)
+
+
+def _aws_exercisable() -> bool:
+    """MOVE-2-style precondition, not an assumption: the CLI file and the default Kuzu DB path
+    must both exist on THIS box, or --corpus aws cannot be exercised for real here."""
+    cli = _ws() / "infra" / "aws" / "globgrph" / "kuzu_cli.py"
+    if not cli.is_file():
+        return False
+    try:
+        sys.path.insert(0, str(cli.parent))
+        import kuzu_cli  # noqa: PLC0415
+        return os.path.exists(kuzu_cli.DEFAULT_DB_PATH)
+    except Exception:
+        return False
 
 
 def _absent_token() -> str:
@@ -71,9 +123,9 @@ def rec(tid: str, ok: bool, detail: str = "") -> None:
     RESULTS.append((tid, bool(ok), detail))
 
 
-def run(args: list[str], tool: Path | None = None) -> tuple[int, str]:
+def run(args: list[str], tool: Path | None = None, timeout: int = 120) -> tuple[int, str]:
     r = subprocess.run([sys.executable, str(tool or _tool())] + args,
-                       capture_output=True, text=True, timeout=120, cwd=str(_ws()))
+                       capture_output=True, text=True, timeout=timeout, cwd=str(_ws()))
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
 
@@ -129,12 +181,218 @@ def _run_battery() -> None:
             except OSError:
                 pass
 
+    # F/G -- RULE T's FORM (PRD v0.4 s.4.4, landed mid-CE-t-1 -- superseded the T-16 interim shape
+    # this file's first version tested): the --corpus aws budget ceiling via the shared
+    # .tools/_compbudget carrier (--budget / env COMP_BUDGET_S / default 90s), its two terminal
+    # tokens (WITHIN BUDGET / BUDGET REACHED), and the per-node_type unit loop.
+    if not _aws_exercisable():
+        skip = "SKIP: no local Kuzu CLI/DB on this box -- --corpus aws not exercisable here"
+        for tid in ("F-UNSCOPED-BUDGET-REACHED", "F2-CLEAN-EMPTY-DISCRIMINATOR",
+                    "F3-SCOPED-DISCRIMINATOR", "G-MUTANT-NO-BUDGET-REACHED"):
+            rec(tid, None, skip)
+        return
+
+    # F -- driven past its ceiling on the REAL PRODUCTION BINARY (no mutant needed: the ceiling is
+    # a caller-supplied flag, not a hard-coded constant, so exercising it touches no bytes and
+    # production sha is trivially unchanged -- itself evidence Rule T is doing its job). Unscoped
+    # (no node_type pathspec) -> the NO-CURSOR branch: one indivisible "ALL" unit.
+    rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget", "0.001"])
+    f_ok = (rc == 0 and "BUDGET REACHED:" in out and "NO CURSOR:" in out
+            and "WITHIN BUDGET:" not in out and "NO HITS" not in out)
+    rec("F-UNSCOPED-BUDGET-REACHED", f_ok, "rc=%s out_has_reached=%s" % (rc, "BUDGET REACHED:" in out))
+
+    # SIDE-BY-SIDE CONTROL (T1-AC3): a clean empty must never be able to produce the BUDGET
+    # REACHED line, and D1/D2 (the token, and n==N vs n<N) must be mutually exclusive and self-
+    # consistent. LATENCY-TOLERANT BY DESIGN: this calls the LIVE aws-backed comp-kuzu pull, whose
+    # wall-clock is real infra latency this battery does not control (measured live 2026-09-03:
+    # the same query ran ~8s repeatedly for ~20 minutes, then degraded to 90s+ -- see the project's
+    # surprise-channel row). A GENEROUS explicit --budget (150s, comfortably past every measured
+    # sample) plus a matched wrapper timeout gives the tool room to speak either way; the arm
+    # asserts the CONTRACT (exactly one valid, self-consistent outcome), never "must complete
+    # fast" -- a battery coupled to live external latency is the "wrong arm, not a dead arm" class
+    # if it hard-requires the happy path.
+    rc0, out0 = run(["--corpus", "aws", "ZZZ_NOSUCH_AWS_TERM_%d" % os.getpid(), "--budget", "150"],
+                    timeout=170)
+    within0, reached0 = "WITHIN BUDGET:" in out0, "BUDGET REACHED:" in out0
+    ok0 = (rc0 == 0 and within0 != reached0 and (
+        (within0 and "WITHIN BUDGET: scanned 1 of 1" in out0 and "NO HITS. This is a MEASURED zero" in out0)
+        or (reached0 and "0 hit(s) shown -- NOT a measured zero" in out0
+            and "NO HITS. This is a MEASURED zero" not in out0)))
+    rec("F2-CLEAN-EMPTY-DISCRIMINATOR", ok0,
+        "rc=%s within=%s reached=%s (live-latency-observed=%s)" % (rc0, within0, reached0, reached0))
+
+    # F3 -- SCOPED unit path: an explicit node_type pathspec makes the unit a real node_type, not
+    # the unscoped "ALL" -- a distinct code path (genuine --cursor resumability lives here, not in
+    # the unscoped branch). Same latency tolerance as F2.
+    rc3, out3 = run(["--corpus", "aws", AWS_PATTERN, "LAMBDA", "--budget", "150"], timeout=170)
+    within3, reached3 = "WITHIN BUDGET: scanned 1 of 1 node_type" in out3, "BUDGET REACHED:" in out3
+    ok3 = rc3 == 0 and within3 != reached3 and (within3 or "NO CURSOR YET" in out3)
+    rec("F3-SCOPED-DISCRIMINATOR", ok3,
+        "rc=%s within=%s reached=%s (live-latency-observed=%s)" % (rc3, within3, reached3, reached3))
+
+    # G -- MUTANT, red-first: neuter the BUDGET REACHED marker text in a copy beside the real
+    # tool. Must RUN (rc 0, its own aws header printed -- a crash is a DEAD arm, not a pass) and
+    # FAIL F's own predicate (the marker must be ABSENT).
+    marker = "BUDGET REACHED:"
+    src = _tool().read_text(encoding="utf-8", errors="replace")
+    mp2 = _ws() / ".tools" / (".mutant-comp-find-ceiling-%d" % os.getpid())
+    if src.count(marker) == 0:
+        rec("G-MUTANT-NO-BUDGET-REACHED", False, "mutation anchor absent from the tool under test")
+    else:
+        try:
+            mp2.write_text(src.replace(marker, "MUTATED-BUDGET:"), encoding="utf-8")
+            rc, out = run(["--corpus", "aws", AWS_PATTERN, "--budget", "0.001"], tool=mp2)
+            ran = rc == 0 and AWS_HEADER_RE.search(out) is not None
+            rec("G-MUTANT-NO-BUDGET-REACHED", ran and marker not in out,
+                ("mutant did not RUN (rc=%s, header=%s) -> DEAD arm, not a pass"
+                 % (rc, bool(AWS_HEADER_RE.search(out)))) if not ran
+                else ("mutant still printed the marker -> arm F is DEAD" if marker in out
+                      else "mutant ran and lacks the marker: OK"))
+        finally:
+            try:
+                mp2.unlink()
+            except OSError:
+                pass
+
+    _g5_arms()
+
+
+_G5_CHILD_SRC = (
+    "import sys, os, time\n"
+    "with open(sys.argv[1], 'w') as f:\n"
+    "    f.write(str(os.getpid()))\n"
+    "time.sleep(90)\n"
+)
+
+_G5_WRAPPER_SRC = (
+    "import sys\n"
+    "sys.path.insert(0, sys.argv[1])\n"
+    "import importlib\n"
+    "mod = importlib.import_module(sys.argv[2])\n"
+    "cmd = [sys.executable, sys.argv[3], sys.argv[4]]\n"
+    "try:\n"
+    "    mod._run_child_supervised(cmd, timeout=90)\n"
+    "except Exception:\n"
+    "    pass\n"
+)
+
+_G5_MUTANT_UNSUPERVISED_SRC = (
+    "import subprocess\n"
+    "def _run_child_supervised(cmd, timeout):\n"
+    "    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)\n"
+)
+
+
+def _globgrph_dir() -> Path:
+    return _ws() / "infra" / "aws" / "globgrph"
+
+
+def _pid_alive(pid: int) -> bool:
+    """OS-level truth via tasklist on Windows -- MSYS ps cannot see detached Win32 processes
+    reliably (a documented estate trap); os.kill(pid, 0) on POSIX."""
+    if sys.platform == "win32":
+        out = subprocess.run(["tasklist", "/FI", "PID eq %d" % pid, "/FO", "CSV"],
+                             capture_output=True, text=True).stdout
+        return str(pid) in out
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
+
+def _g5_no_orphan_check(module_dir: str, module_name: str) -> tuple[bool, str]:
+    """Runs a wrapper as a REAL subprocess that calls <module_name>._run_child_supervised to spawn
+    a long-running grandchild, then kills the WRAPPER externally (proc.kill(), the identical act
+    comp-find performs on kuzu_cli.py) well before the grandchild's own 90s sleep or the
+    supervised call's 90s timeout would fire on their own. Returns (no_orphan, detail) where
+    no_orphan=True means the grandchild pid was NOT alive after the wrapper died -- read from the
+    OS process table, never this process's own bookkeeping."""
+    with tempfile.TemporaryDirectory() as d:
+        marker = os.path.join(d, "g5_marker.txt")
+        wrapper = os.path.join(d, "g5_wrapper.py")
+        child = os.path.join(d, "g5_child.py")
+        Path(wrapper).write_text(_G5_WRAPPER_SRC, encoding="utf-8")
+        Path(child).write_text(_G5_CHILD_SRC, encoding="utf-8")
+        proc = subprocess.Popen([sys.executable, wrapper, module_dir, module_name, child, marker])
+        try:
+            t0 = time.time()
+            while not os.path.exists(marker) and time.time() - t0 < 15:
+                time.sleep(0.2)
+            if not os.path.exists(marker):
+                return False, "grandchild never started (marker never appeared) -- fixture failure, not a pass"
+            time.sleep(0.5)   # let the pid write flush
+            gc_pid = int(Path(marker).read_text().strip())
+            proc.kill()       # TerminateProcess on the WRAPPER -- comp-find's own act on kuzu_cli.py
+            proc.wait(timeout=10)
+            time.sleep(1.0)   # let the OS finish tearing down handles (job-close is not instantaneous)
+            alive = _pid_alive(gc_pid)
+            return (not alive), "grandchild pid=%d alive-after-parent-kill=%s" % (gc_pid, alive)
+        finally:
+            try:
+                proc.kill()
+                proc.wait(timeout=5)
+            except Exception:
+                pass
+
+
+def _g5_arms() -> None:
+    gdir = str(_globgrph_dir())
+    try:
+        sys.path.insert(0, gdir)
+        canon = importlib.import_module("_canonical")
+    except Exception as ex:
+        skip = "SKIP: infra/aws/globgrph/_canonical.py not importable here (%s)" % ex
+        for tid in ("G5-AC1-NO-ORPHAN", "G5-AC1-MUTANT-STILL-ORPHANS", "G5-AC2-SERVE-STALE-IMMEDIATELY"):
+            rec(tid, None, skip)
+        return
+
+    # G5-AC1 -- production: no orphan survives a killed budgeted client.
+    ok, detail = _g5_no_orphan_check(gdir, "_canonical")
+    rec("G5-AC1-NO-ORPHAN", ok, detail)
+
+    # G5-AC1 mutant, red-first: an UNSUPERVISED spawn (the pre-fix shape) must show the orphan
+    # SURVIVING -- proving the arm above can fail, not just always pass.
+    with tempfile.TemporaryDirectory() as md:
+        Path(os.path.join(md, "_g5_mutant_unsupervised.py")).write_text(
+            _G5_MUTANT_UNSUPERVISED_SRC, encoding="utf-8")
+        mok, mdetail = _g5_no_orphan_check(md, "_g5_mutant_unsupervised")
+        # mok is the "no orphan" reading; under the mutant it must read False (orphan SURVIVED).
+        rec("G5-AC1-MUTANT-STILL-ORPHANS", mok is False, mdetail)
+
+    # G5-AC2 -- a live peer's lock must never be waited on by a wait_for_peer=False caller. The
+    # db_path need not exist: needs_refresh() reads a SIBLING manifest file, absent here by
+    # construction, so it always reads "needs refresh" -- no real Kuzu DB required for this check.
+    with tempfile.TemporaryDirectory() as d:
+        db_path = os.path.join(d, "kuzu_nessie_db")
+        lock_path = db_path.rstrip("/\\") + ".rebuild.lock"
+        os.mkdir(lock_path)   # a FRESH lock -- simulates a live peer (far younger than ORPHAN_LOCK_S)
+        try:
+            t0 = time.time()
+            refreshed, reason = canon.ensure_fresh(db_path, wait_for_peer=False)
+            elapsed = time.time() - t0
+            ok2 = (refreshed is False and reason.startswith("STALE") and elapsed < 10.0)
+            rec("G5-AC2-SERVE-STALE-IMMEDIATELY", ok2,
+                "refreshed=%s reason=%r elapsed=%.2fs (must be << MUTEX_WAIT_S=%.0fs)"
+                % (refreshed, reason, elapsed, canon.MUTEX_WAIT_S))
+        finally:
+            try:
+                os.rmdir(lock_path)
+            except OSError:
+                pass
+
 
 def _report() -> int:
+    """PRE-EXISTING GAP FIXED HERE: the RESULTS type was declared `bool | None` (None = SKIP,
+    neither pass nor fail) since this file's first version, but this printer had no branch for
+    it -- `"PASS" if ok else "FAIL"` renders a None row as FAIL even though the fails-count below
+    correctly excludes it. Never fired before F/G (the first arms to use None); fixed on first use
+    rather than left to misrender silently."""
     _run_battery()
     fails = [r for r in RESULTS if r[1] is False]
     for tid, ok, detail in RESULTS:
-        print("  [%s] %s%s" % ("PASS" if ok else "FAIL", tid, "" if ok else "  -- " + detail[:160]))
+        label = "SKIP" if ok is None else ("PASS" if ok else "FAIL")
+        print("  [%s] %s%s" % (label, tid, "" if ok or ok is None else "  -- " + detail[:160]))
     print("COMP-FIND BATTERY: %d/%d PASS (denominator %d)" % (len(RESULTS) - len(fails), len(RESULTS), len(RESULTS)))
     return 1 if fails else 0
 
