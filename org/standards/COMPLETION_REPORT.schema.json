@@ -1,0 +1,136 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "the close of a canonical-workflow project: the COO's COMPLETION REPORT and the CTO's COMPLETION GRADES (spine L10, the close)",
+ "description": "Two documents, two authors, one schema. The COO writes ledger/COMPLETION_REPORT.round<N>.json when the decomposition is spent (every cell has a terminal task order with a valid proof-of-spec): one row per outcome in the PRD header, the cells that served it, each cell's proof, and the COO's CLAIM on the coverage axis. The CTO writes ledger/COMPLETION_GRADES.round<N>.json after reading the exercised artifact each outcome's DONE WHEN names, never the report: one VERDICT per outcome on the realization axis. The CLOSED flip is mechanical on the grades (.tools/missions-tree-index.py check, rule R6). Authority: Andrew-direct at the CTO terminal 2026-09-03 ~05:2xZ, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md ('at least two agents have a chance of assessing the true finished status' / 'Do it').",
+ "x-rule24": {
+  "declared_domain": "the finished status of one project, as a function of its PRD header's endpoint_outcomes (FWD-1..n)",
+  "postulate_i_mece": "claim over {COVERED, UNCOVERED} partitions every outcome by whether at least one cell with a terminal, proved task order served it; verdict over {REALIZED, NOT_REALIZED, NOT_EVALUATED} partitions every outcome by whether the exercised artifact meets the card's DONE WHEN -- NOT_EVALUATED is present so that a row nobody read is never encoded as a verdict",
+  "postulate_ii_same_grain": "one row per FWD id in the PRD header, in both documents; the gate refuses a document whose ids are not exactly the header's set",
+  "postulate_iii_intent_coherence": "claim is the COVERAGE axis and is the COO's; verdict is the REALIZATION axis and is the CTO's; neither document carries the other's field, so agreement between them is corroboration across axes and never repetition on one",
+  "postulate_iv_state_coherence": "UNCOVERED is moved only by L5 (a cell added), never by grading; NOT_REALIZED is moved by L5 (a cell missing) or L2 (the outcome itself wrong, adjudicated by the CTO), never by re-grading the same artifact; NOT_EVALUATED is moved only by the CTO reading the artifact, or by the CTO's self-adjudication when the artifact cannot be read",
+  "autonomy_after_L2": "Andrew-direct 2026-09-03 ~05:2xZ: 'after that point [his L2 confirmation of the DONE WHEN lines], no matter what happens, I want the canonical loop to be able to keep cycling in its pattern and get the thing done'. NO ROW OF THE CLOSE WAITS ON ANDREW: a card whose DONE WHEN names him is graded by the CTO on the record that the artifact reached him. A grade in question on receipt, or a SCOPE_CHANGE, is adjudicated by the CTO itself (/open-calls on the subject, the CTO rules on the recommendations, records the ruling, amends or re-issues the endpoint and the PRD) and the loop runs forward from L4.",
+  "token_census": "COVERED / UNCOVERED / REALIZED / NOT_REALIZED / NOT_EVALUATED: new as whole-value tokens in org/standards at authoring; APPLIED / EXERCISED reuse the /endpoint --forward DONE WHEN states verbatim (same concept, same grain, renaming would be the defect)"
+ },
+ "x-homes": {
+  "report": "org/missions/D<n>/<MACRO>/<CODE>/ledger/COMPLETION_REPORT.round<N>.json",
+  "grades": "org/missions/D<n>/<MACRO>/<CODE>/ledger/COMPLETION_GRADES.round<N>.json",
+  "consumer": ".tools/missions-tree-index.py check -- rule R6 refuses a project.json dep_stage CLOSED unless both documents exist for the same round, their fwd ids equal the PRD header's endpoint_outcomes exactly, and every verdict is REALIZED"
+ },
+ "oneOf": [
+  {"$ref": "#/$defs/completion_report"},
+  {"$ref": "#/$defs/completion_grades"}
+ ],
+ "$defs": {
+  "fwd_id": {"type": "string", "pattern": "^FWD-[0-9]+$"},
+  "done_when_state": {"enum": ["APPLIED", "EXERCISED"]},
+  "ref_at_vintage": {"type": "string", "minLength": 12, "description": "a repo path or S3/URL plus '@<commit-ish or ISO instant>' -- a citation without a vintage is not a citation"},
+  "completion_report": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["kind", "schema_version", "project", "round", "written_by", "written_utc", "decomposition_ref", "denominators", "outcomes"],
+   "properties": {
+    "kind": {"const": "COMPLETION_REPORT"},
+    "schema_version": {"const": "1.0"},
+    "project": {"type": "string", "pattern": "^[A-Z0-9]+_[A-Z0-9_]+$"},
+    "round": {"type": "integer", "minimum": 1},
+    "written_by": {"type": "string", "pattern": "^2\\.0\\.0_SA_COO(~[A-Z]+)?$", "description": "the L5/L6 owner; the only seat that can say the decomposition is spent"},
+    "written_utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
+    "decomposition_ref": {"$ref": "#/$defs/ref_at_vintage"},
+    "denominators": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["fwd_in_prd_header", "cells_in_decomposition", "task_orders", "task_orders_terminal_with_valid_proof"],
+     "properties": {
+      "fwd_in_prd_header": {"type": "integer", "minimum": 1},
+      "cells_in_decomposition": {"type": "integer", "minimum": 0},
+      "task_orders": {"type": "integer", "minimum": 0},
+      "task_orders_terminal_with_valid_proof": {"type": "integer", "minimum": 0}
+     }
+    },
+    "outcomes": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fwd_id", "done_when_state", "done_when_text", "cells", "claim"],
+      "properties": {
+       "fwd_id": {"$ref": "#/$defs/fwd_id"},
+       "done_when_state": {"$ref": "#/$defs/done_when_state"},
+       "done_when_text": {"type": "string", "minLength": 8, "description": "the card's DONE WHEN line, copied verbatim from the PRD's ENDPOINT section"},
+       "cells": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": ["cell_id", "task_orders"],
+         "properties": {
+          "cell_id": {"type": "string", "minLength": 2},
+          "task_orders": {
+           "type": "array",
+           "minItems": 1,
+           "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "status", "proof_of_spec_ref"],
+            "properties": {
+             "id": {"type": "string", "minLength": 3},
+             "status": {"enum": ["complete", "superseded", "cancelled", "withdrawn"]},
+             "proof_of_spec_ref": {"$ref": "#/$defs/ref_at_vintage"}
+            }
+           }
+          }
+         }
+        }
+       },
+       "claim": {"enum": ["COVERED", "UNCOVERED"], "description": "the COO's coverage claim -- COVERED = at least one cell with a terminal, proved task order served this outcome; UNCOVERED = no such cell (the report's own shape surfaces a spent decomposition that never held a cell for the outcome)"},
+       "note": {"type": "string", "minLength": 8}
+      },
+      "allOf": [
+       {"if": {"properties": {"claim": {"const": "COVERED"}}, "required": ["claim"]}, "then": {"properties": {"cells": {"minItems": 1}}}},
+       {"if": {"properties": {"claim": {"const": "UNCOVERED"}}, "required": ["claim"]}, "then": {"required": ["note"]}}
+      ]
+     }
+    }
+   }
+  },
+  "completion_grades": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["kind", "schema_version", "project", "round", "graded_by", "graded_utc", "report_ref", "rows"],
+   "properties": {
+    "kind": {"const": "COMPLETION_GRADES"},
+    "schema_version": {"const": "1.0"},
+    "project": {"type": "string", "pattern": "^[A-Z0-9]+_[A-Z0-9_]+$"},
+    "round": {"type": "integer", "minimum": 1},
+    "graded_by": {"type": "string", "pattern": "^1\\.0\\.0_SA_CTO(~[A-Z]+)?$", "description": "the L2 owner: acceptance by the owner of the criteria, against the artifact, never against the report"},
+    "graded_utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
+    "report_ref": {"$ref": "#/$defs/ref_at_vintage", "description": "the COMPLETION_REPORT graded, at its vintage"},
+    "rows": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fwd_id", "verdict"],
+      "properties": {
+       "fwd_id": {"$ref": "#/$defs/fwd_id"},
+       "verdict": {"enum": ["REALIZED", "NOT_REALIZED", "NOT_EVALUATED"]},
+       "artifact_ref": {"$ref": "#/$defs/ref_at_vintage", "description": "the exercised artifact the card's DONE WHEN names, read by the grader; for a card that names Andrew, the record that the artifact reached him -- no row waits on his word after L2"},
+       "state_observed": {"enum": ["APPLIED", "EXERCISED", "ABSENT"], "description": "what the artifact shows; a card whose DONE WHEN is EXERCISED is not met by APPLIED"},
+       "route": {"enum": ["DECOMP_INVALIDATING", "SCOPE_CHANGE"], "description": "on NOT_REALIZED: a cell missing re-enters at L5 (COO); the outcome itself wrong re-enters at L2, where the CTO adjudicates it (/open-calls on the subject, the CTO rules) and the loop runs forward from L4"},
+       "adjudication_ref": {"$ref": "#/$defs/ref_at_vintage", "description": "the CTO's recorded self-adjudication when the grade was in question on receipt or the route is SCOPE_CHANGE"},
+       "note": {"type": "string", "minLength": 8}
+      },
+      "allOf": [
+       {"if": {"properties": {"verdict": {"const": "REALIZED"}}, "required": ["verdict"]}, "then": {"required": ["artifact_ref", "state_observed"]}},
+       {"if": {"properties": {"verdict": {"const": "NOT_REALIZED"}}, "required": ["verdict"]}, "then": {"required": ["route", "note"]}},
+       {"if": {"properties": {"verdict": {"const": "NOT_EVALUATED"}}, "required": ["verdict"]}, "then": {"required": ["note"]}},
+       {"if": {"properties": {"route": {"const": "SCOPE_CHANGE"}}, "required": ["route"]}, "then": {"required": ["adjudication_ref"]}}
+      ]
+     }
+    }
+   }
+  }
+ }
+}

@@ -265,6 +265,13 @@ class Estate:
             # R5 directives list
             if key not in directives.get(t["D"], []):
                 viol.append(("R5", path, f"{key!r} absent from DIRECTIVES.yaml directives.{t['D']}.members.projects"))
+            # R6 the close: a CLOSED row needs the COO's report and the CTO's grades, on the header's outcomes, all REALIZED
+            if str(row.get("dep_stage")) == CLOSE_STAGE:
+                home = self.root / t["D"] / t["M"] / t["code"]
+                hdr, rep, gr, errs = load_close_artifacts(home, t["code"], _WS / CLOSE_SCHEMA_REL)
+                for rid, msg in close_violations(t["code"], hdr, rep, gr, errs):
+                    viol.append((rid, path, msg))
+                    ok = False
             if ok:
                 valid.append(t)
         # index consistency for valid tree projects
@@ -402,6 +409,115 @@ def cmd_derive(args) -> int:
 
 
 # ---------- self-test ----------
+# ---- R6, THE CLOSE (Andrew-direct at the CTO terminal 2026-09-03 ~05:2xZ, record org/tier1_exec/1.0.0_SA_CTO/
+# deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md; spine L10
+# "The close"). A tree row may read dep_stage CLOSED only when two documents exist under the project's ledger/ for the
+# same round -- the COO's COMPLETION_REPORT (coverage: one row per outcome, the cells that served it, each proof) and the
+# CTO's COMPLETION_GRADES (realization: one verdict per outcome against the exercised artifact) -- both valid against
+# org/standards/COMPLETION_REPORT.schema.json, both covering EXACTLY the PRD header's endpoint_outcomes, and every grade
+# REALIZED. Two reads on two axes; the flip is mechanical on the second. Nothing here waits on Andrew after L2.
+CLOSE_STAGE = "CLOSED"
+CLOSE_SCHEMA_REL = "org/standards/COMPLETION_REPORT.schema.json"
+_ROUND_RE = re.compile(r"\.round(\d+)\.json$")
+_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
+
+
+def header_outcomes(prd_text):
+    """The PRD header's endpoint_outcomes (the FIRST fenced json block of the PRD), or None when unreadable."""
+    m = _FENCE_RE.search(prd_text or "")
+    if not m:
+        return None
+    try:
+        h = json.loads(m.group(1))
+    except ValueError:
+        return None
+    v = h.get("endpoint_outcomes") if isinstance(h, dict) else None
+    return [str(x) for x in v] if isinstance(v, list) else None
+
+
+def close_violations(code, header_fwds, report, grades, schema_errors=()):
+    """R6, PURE. `report` / `grades` are the parsed documents or None when absent; `schema_errors` are the
+    jsonschema complaints the loader collected. Returns [(rule_id, message)] -- empty means the row may close."""
+    out = []
+    if header_fwds is None:
+        return [("R6", f"{code}: PRD header endpoint_outcomes unreadable -- a CLOSED row cannot be graded; REFUSED fail-closed")]
+    if report is None:
+        out.append(("R6", f"{code}: dep_stage CLOSED but no ledger/COMPLETION_REPORT.round<N>.json -- the COO's report is the close's first read"))
+    if grades is None:
+        out.append(("R6", f"{code}: dep_stage CLOSED but no ledger/COMPLETION_GRADES.round<N>.json -- the CTO's grades are the close's second read"))
+    for e in schema_errors:
+        out.append(("R6", f"{code}: {e}"))
+    if out:
+        return out
+    if report.get("kind") != "COMPLETION_REPORT" or grades.get("kind") != "COMPLETION_GRADES":
+        out.append(("R6", f"{code}: close documents carry kind {report.get('kind')!r} / {grades.get('kind')!r}"))
+    if report.get("round") != grades.get("round"):
+        out.append(("R6", f"{code}: report round {report.get('round')!r} != grades round {grades.get('round')!r} -- the grades must grade THIS report"))
+    want = set(header_fwds)
+    rep_ids = [str(o.get("fwd_id")) for o in (report.get("outcomes") or [])]
+    gr_ids = [str(r.get("fwd_id")) for r in (grades.get("rows") or [])]
+    for label, ids_ in (("report", rep_ids), ("grades", gr_ids)):
+        s = set(ids_)
+        if len(ids_) != len(s):
+            out.append(("R6", f"{code}: {label} repeats an fwd_id ({len(ids_)} rows, {len(s)} distinct)"))
+        if s != want:
+            out.append(("R6", f"{code}: {label} outcomes {sorted(s)} != PRD header {sorted(want)} (missing {sorted(want - s)}, extra {sorted(s - want)})"))
+    not_real = [(r.get("fwd_id"), r.get("verdict")) for r in (grades.get("rows") or []) if r.get("verdict") != "REALIZED"]
+    if not_real:
+        out.append(("R6", f"{code}: CLOSED with {len(not_real)} of {len(gr_ids)} grade(s) not REALIZED: {not_real} -- a NOT_REALIZED re-enters at L5 or L2; NOT_EVALUATED is not a verdict"))
+    wb = str(report.get("written_by") or "").split("~", 1)[0]
+    gb = str(grades.get("graded_by") or "").split("~", 1)[0]
+    if wb != "2.0.0_SA_COO":
+        out.append(("R6", f"{code}: report written_by {report.get('written_by')!r}, not 2.0.0_SA_COO (the seat that knows the decomposition is spent)"))
+    if gb != "1.0.0_SA_CTO":
+        out.append(("R6", f"{code}: grades graded_by {grades.get('graded_by')!r}, not 1.0.0_SA_CTO (the owner of the DONE WHEN criteria)"))
+    return out
+
+
+def load_close_artifacts(home: Path, code: str, schema_path: Path):
+    """(header_fwds, report, grades, schema_errors) for one project home. Reads the PRD header and the LATEST round
+    of each close document under ledger/; validates each against the close schema. Fail-closed by construction:
+    an unparseable document or an unimportable validator becomes a schema_error, never a skip."""
+    prd = home / "prd" / f"{code}_PRD.md"
+    hdr = header_outcomes(prd.read_text(encoding="utf-8")) if prd.is_file() else None
+    errors = []
+
+    def latest(glob):
+        led = home / "ledger"
+        cands = []
+        if led.is_dir():
+            for p in led.glob(glob):
+                m = _ROUND_RE.search(p.name)
+                if m:
+                    cands.append((int(m.group(1)), p))
+        if not cands:
+            return None
+        _n, p = max(cands)
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except ValueError as exc:
+            errors.append(f"{p.name} does not parse as JSON ({exc})")
+            return None
+
+    report = latest("COMPLETION_REPORT.round*.json")
+    grades = latest("COMPLETION_GRADES.round*.json")
+    if report is not None or grades is not None:
+        try:
+            import jsonschema  # noqa: WPS433 -- local import so the module loads without it
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+            for label, doc in (("COMPLETION_REPORT", report), ("COMPLETION_GRADES", grades)):
+                if doc is None:
+                    continue
+                for err in sorted(jsonschema.Draft7Validator(schema).iter_errors(doc), key=lambda e: list(e.path))[:5]:
+                    ptr = "/" + "/".join(str(x) for x in err.path) if err.path else "/"
+                    errors.append(f"{label} schema violation at {ptr} -- {err.message[:120]}")
+        except ImportError:
+            errors.append("jsonschema is not importable -- the close documents cannot be validated; REFUSED fail-closed")
+        except (OSError, ValueError) as exc:
+            errors.append(f"close schema {schema_path.name} unreadable ({exc}) -- REFUSED fail-closed")
+    return hdr, report, grades, errors
+
+
 def self_test() -> int:
     results = []
 
@@ -538,6 +654,56 @@ def self_test() -> int:
         est.derive(write=True)
         viol, _, _, _ = est.check()
         chk("mutant ROW-ENUM (dep_stage=BOGUS) -> exactly [ROW-ENUM]", ids(viol) == ["ROW-ENUM"], str(ids(viol)))
+        # 16. R6 THE CLOSE -- pure arms first, then the loader end-to-end on a planted estate.
+        H = ["FWD-1", "FWD-2"]
+        rep_ok = {"kind": "COMPLETION_REPORT", "round": 2, "written_by": "2.0.0_SA_COO",
+                  "outcomes": [{"fwd_id": "FWD-1"}, {"fwd_id": "FWD-2"}]}
+        gr_ok = {"kind": "COMPLETION_GRADES", "round": 2, "graded_by": "1.0.0_SA_CTO",
+                 "rows": [{"fwd_id": "FWD-1", "verdict": "REALIZED"}, {"fwd_id": "FWD-2", "verdict": "REALIZED"}]}
+        r6 = lambda *a, **k: [m for _r, m in close_violations(*a, **k)]  # noqa: E731
+        chk("R6 pure: header unreadable -> fail-closed", any("fail-closed" in m for m in r6("X", None, rep_ok, gr_ok)), "")
+        chk("R6 pure: no report -> named", any("COMPLETION_REPORT" in m for m in r6("X", H, None, gr_ok)), "")
+        chk("R6 pure: no grades -> named", any("COMPLETION_GRADES" in m for m in r6("X", H, rep_ok, None)), "")
+        chk("R6 pure: both present, ids == header, all REALIZED -> admitted", r6("X", H, rep_ok, gr_ok) == [], str(r6("X", H, rep_ok, gr_ok)))
+        gr_ne = json.loads(json.dumps(gr_ok))
+        gr_ne["rows"][1]["verdict"] = "NOT_EVALUATED"
+        chk("R6 pure: one NOT_EVALUATED -> refused, names it", any("not REALIZED" in m and "FWD-2" in m for m in r6("X", H, rep_ok, gr_ne)), "")
+        gr_short = json.loads(json.dumps(gr_ok))
+        gr_short["rows"].pop()
+        chk("R6 pure: grades miss FWD-2 -> denominator mismatch named", any("missing ['FWD-2']" in m for m in r6("X", H, rep_ok, gr_short)), str(r6("X", H, rep_ok, gr_short)))
+        gr_rd = json.loads(json.dumps(gr_ok))
+        gr_rd["round"] = 1
+        chk("R6 pure: grades grade a different round -> refused", any("round" in m for m in r6("X", H, rep_ok, gr_rd)), "")
+        gr_who = json.loads(json.dumps(gr_ok))
+        gr_who["graded_by"] = "2.0.0_SA_COO"
+        chk("R6 pure: grades by the COO -> refused (author separation)", any("graded_by" in m for m in r6("X", H, rep_ok, gr_who)), "")
+        chk("R6 pure: schema errors surface as R6", any("boom" in m for m in r6("X", H, rep_ok, gr_ok, ["boom"])), "")
+        # loader end-to-end: CLOSED row with nothing under ledger/ -> R6; with two valid docs -> no R6
+        est = fresh("t16r6")
+        plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", dep_stage="CLOSED")
+        est.derive(write=True)
+        viol, _, _, _ = est.check()
+        chk("planted CLOSED row, no close documents -> R6 present", "R6" in ids(viol), str(ids(viol)))
+        home16 = est.root / "D8" / "ETFS" / "ETFS_GUARDRAIL"
+        (home16 / "prd").mkdir(exist_ok=True)
+        (home16 / "prd" / "ETFS_GUARDRAIL_PRD.md").write_text("# x\n\n```json\n{\"endpoint_outcomes\": [\"FWD-1\"]}\n```\n", encoding="utf-8")
+        (home16 / "ledger").mkdir(exist_ok=True)
+        (home16 / "ledger" / "COMPLETION_REPORT.round1.json").write_text(json.dumps({
+            "kind": "COMPLETION_REPORT", "schema_version": "1.0", "project": "ETFS_GUARDRAIL", "round": 1,
+            "written_by": "2.0.0_SA_COO", "written_utc": "2026-09-03T05:30Z", "decomposition_ref": "org/x/DECOMP.md@abcdef1234",
+            "denominators": {"fwd_in_prd_header": 1, "cells_in_decomposition": 1, "task_orders": 1, "task_orders_terminal_with_valid_proof": 1},
+            "outcomes": [{"fwd_id": "FWD-1", "done_when_state": "APPLIED", "done_when_text": "the list is in the PRD",
+                          "cells": [{"cell_id": "C1", "task_orders": [{"id": "TO-1", "status": "complete", "proof_of_spec_ref": "org/x/TO-1.proof.json@abcdef1234"}]}],
+                          "claim": "COVERED"}]}), encoding="utf-8")
+        (home16 / "ledger" / "COMPLETION_GRADES.round1.json").write_text(json.dumps({
+            "kind": "COMPLETION_GRADES", "schema_version": "1.0", "project": "ETFS_GUARDRAIL", "round": 1,
+            "graded_by": "1.0.0_SA_CTO", "graded_utc": "2026-09-03T05:31Z", "report_ref": "org/x/ledger/COMPLETION_REPORT.round1.json@abcdef1234",
+            "rows": [{"fwd_id": "FWD-1", "verdict": "REALIZED", "artifact_ref": "org/x/PRD.md@abcdef1234", "state_observed": "APPLIED"}]}), encoding="utf-8")
+        viol, _, _, _ = est.check()
+        chk("planted CLOSED row with valid report + grades, all REALIZED -> no R6", "R6" not in ids(viol), str(ids(viol)))
+        (home16 / "ledger" / "COMPLETION_GRADES.round1.json").write_text("{not json", encoding="utf-8")
+        viol, _, _, _ = est.check()
+        chk("mutant: grades file unparseable -> R6 (fail-closed, never a skip)", "R6" in ids(viol), str(ids(viol)))
         est = fresh("t16")
         plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", fabric="moon")
         est.derive(write=True)
