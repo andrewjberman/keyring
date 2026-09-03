@@ -1836,6 +1836,14 @@ async def send_message(
         _audit_identity("SEND_CVO_WORKER_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _l8_refusal[:200])
         return _l8_refusal
+    # --- LD-0529 (Andrew-direct 2026-09-03 ~13:1xZ, "Mechanism works"): a Tier-0/Tier-1 -> Tier-2 send that
+    # carries an ACT is refused unless it cites a task order assigned to that recipient. The issuer's dispatch
+    # passes; acks and act-free information pass. Decision and citation resolver live in cvo_send_guard.py.
+    _t2_refusal = cvo_send_guard.tier2_act_send_refusal(from_agent, _recipients, subject, body, _REPO_ROOT)
+    if _t2_refusal:
+        _audit_identity("SEND_TIER2_ACT_REFUSED", from_agent, os.getpid(),
+                        "to=" + ",".join(_recipients), _t2_refusal[:200])
+        return _t2_refusal
 
     _results = []
     for _rcpt in _recipients:

@@ -93,6 +93,120 @@ def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple) -> st
                           UP_ROUTE, len(recipients or [])))
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# THE GENERALISED GUARD -- Andrew-direct ~13:1xZ-13:2xZ at the MSTR terminal, 2026-09-03 (LD-0529, "Mechanism works"):
+# "why the fuck is a tier 2 agent Investigating? Not their fucking job. Their job is do task that was asked of them.
+# Second, no open calls from tier2 agents anymore. That should be impossible, they should be on their orders and
+# running that up to mgmt." ROOT, measured on the message record: three Tier-0/Tier-1 -> Tier-2 sends (93516, 93528,
+# 93636) carried ACTS in their bodies -- "opens a change-management ledger entry NOW", "writes the rebuildability
+# statement ... THEN the owner applies", "THE DECISION IS YOURS: apply the rule" -- and none was a task order: no face,
+# no issuer, no acceptance, no bound. A worker that receives an ask with no order does exactly what followed.
+#
+# THE RULE: a send from a Tier-0 or Tier-1 seat to a Tier-2 seat whose text CARRIES AN ACT is REFUSED unless the text
+# CITES A TASK ORDER ASSIGNED TO THAT RECIPIENT. The issuer's own dispatch passes (it cites its order); an ack or
+# act-free information passes; a Tier-2 sender is never in scope here (its route UP is the point).
+#   ACT   = a prescription naming the recipient or "the owner / steward / worker / assignee / seat" followed within a
+#           clause by an act verb; or a sentence-initial imperative from the act-verb lexicon; or the ask markers
+#           ("the decision is yours", "your act", "you must/should/need to/are to", "THE ASK", "RAVC", a bare "NOW").
+#           This IS prose parsing, so it is bounded by the falsifier the record fixed: the three messages above must
+#           refuse, a COO dispatch citing its order and a worker ack must pass; the battery below carries them as
+#           real bytes read from the worker's inbox where present.
+#   CITE  = a token <PROJECT>.TO-<id> whose task-order file exists under either root and whose <issued_to> is the
+#           recipient (base serial). A citation of an order assigned to SOMEONE ELSE does not admit the send.
+# Not decided by his words and NOT built here: a Tier-2 seat refusing an actless ask itself (item 1) and /open-calls
+# refusing a Tier-2 serial at Step 0 (item 3) -- both stay proposals at Andrew.
+TO_ID_RE = re.compile(r"\b([A-Z][A-Z0-9_]*\.TO-[A-Za-z0-9][A-Za-z0-9-]*)")
+ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
+_ACT_VERBS = ("open", "write", "apply", "run", "cut", "fix", "revert", "investigate", "measure", "file", "commit",
+              "deploy", "land", "remove", "add", "re-run", "rerun", "state", "seat", "spawn", "dispatch", "build",
+              "update", "edit", "delete", "migrate", "rebuild", "verify", "confirm", "report", "send", "amend",
+              "resolve", "disarm", "retire", "restart", "install", "scope", "re-plan", "replan", "grade", "close")
+_VERB_ALT = "|".join(re.escape(v) for v in _ACT_VERBS)
+# a present-tense prescription: "<who> ... opens|writes|applies" (3rd person -s), the recipient or an owner word
+_PRESCRIBE_RE = re.compile(r"\b(the\s+(owner|steward|worker|assignee|seat)|%s)\b[^.\n:;]{0,60}?\b(%s)(s|es)\b",
+                           re.I)
+# a sentence-initial imperative (base form), optionally after a list marker or "please"
+_IMPERATIVE_RE = re.compile(r"(?:^|[.:;!?]\s+|\n\s*)(?:\(?\d+\)?\.?\s*)?(?:please\s+)?(%s)\b(?!\s+(?:state|of|by|is|was|reads|read)\b)"
+                            % _VERB_ALT, re.I | re.M)
+_ASK_MARKER_RE = re.compile(r"\b(the decision is yours|your act|you (must|should|need to|are to|will)|THE ASK|RAVC|"
+                            r"nothing is built until you|until you answer)\b|(?<![A-Za-z-])NOW(?![A-Za-z-])", re.I)
+
+
+def carries_act(recipient: str, subject: str, body: str) -> list:
+    """PURE. The act markers found in subject+body for this recipient ([] = act-free)."""
+    text = "%s\n%s" % (subject or "", body or "")
+    hits = []
+    who = re.escape(base_serial(recipient))
+    pres = re.compile(_PRESCRIBE_RE.pattern % (who, _VERB_ALT), re.I) if who else None
+    if pres:
+        for m in pres.finditer(text):
+            hits.append("prescription: %r" % text[m.start():min(m.end(), m.start() + 90)].replace("\n", " "))
+            if len(hits) >= 3:
+                break
+    for m in _IMPERATIVE_RE.finditer(text):
+        hits.append("imperative: %r" % text[m.start():min(m.end() + 40, len(text))].strip().replace("\n", " "))
+        if len(hits) >= 5:
+            break
+    for m in _ASK_MARKER_RE.finditer(text):
+        hits.append("ask marker: %r" % m.group(0))
+        if len(hits) >= 6:
+            break
+    return hits
+
+
+def cited_orders_for(recipient: str, subject: str, body: str, repo_root) -> tuple:
+    """(assigned, cited): the task-order ids the text cites that resolve to a file whose <issued_to> is the
+    recipient, and every id cited. Reads the two roots; a file that cannot be read counts as not assigned."""
+    text = "%s\n%s" % (subject or "", body or "")
+    cited = sorted(set(TO_ID_RE.findall(text)))
+    assigned = []
+    root = Path(repo_root)
+    for tok in cited:
+        code = tok.split(".", 1)[0]
+        hits = list(root.glob("org/*/*/task_orders/%s*.md" % tok)) + list(root.glob("org/*/task_orders/%s*.md" % tok)) \
+            + list(root.glob("org/missions/D*/*/%s/task-orders/%s*.md" % (code, tok)))
+        for p in hits:
+            try:
+                m = ISSUED_TO_RE.search(p.read_text(encoding="utf-8", errors="replace"))
+            except OSError:
+                continue
+            if m and base_serial(m.group(1)) == base_serial(recipient):
+                assigned.append(tok)
+                break
+    return assigned, cited
+
+
+def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str, repo_root) -> str | None:
+    """The generalised guard. None admits; a refusal text refuses the WHOLE send (nothing written for anyone)."""
+    sender = base_serial(from_agent)
+    if not sender or not TIER01_RE.match(sender):
+        return None  # a Tier-2 sender is out of scope: its route up is the point
+    workers = [r for r in (recipients or []) if is_tier2(r)]
+    if not workers:
+        return None
+    problems = []
+    for r in workers:
+        acts = carries_act(r, subject, body)
+        if not acts:
+            continue
+        assigned, cited = cited_orders_for(r, subject, body, repo_root)
+        if assigned:
+            continue
+        problems.append((r, acts, cited))
+    if not problems:
+        return None
+    lines = []
+    for r, acts, cited in problems:
+        lines.append("  -> %s: act(s) found [%s]%s" % (
+            r, "; ".join(acts[:3]),
+            (" -- cites %s but none is assigned to this recipient" % ", ".join(cited)) if cited else " -- cites NO task order"))
+    return ("SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): "
+            "%s -> a Tier-2 seat with an ACT in the body and no task order assigned to that recipient cited.\n%s\n"
+            "A worker hears an act only as a task order from its issuer: cut the order (2.0.0_SA_COO, L6) and cite its id "
+            "(<PROJECT>.TO-<id>) in the GO; information with no act, and acks, pass as they are. Nothing was written for "
+            "ANY recipient of this send (%d named)." % (from_agent, "\n".join(lines), len(recipients or [])))
+
+
 def _self_test() -> int:
     exe = (["NFRA_COMPEFFICACY"], "1 tree project(s) read")
     idle = ([], "1 tree project(s) read")
@@ -114,6 +228,48 @@ def _self_test() -> int:
          lambda: cvo_worker_send_refusal("0.0.0_AB_MSTR", ["0.8.0_AE_CloudComp"], exe) is None),
         ("CVO -> Tier-2, census could not run: REFUSED fail-closed",
          lambda: "fail-closed" in (cvo_worker_send_refusal("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], (None, "x")) or "")),
+    ]
+    # ---- the generalised guard: the falsifier the record fixed (LD-0529) ----
+    root = Path(__file__).resolve().parents[2]
+    inbox = root / "org" / "mcp" / "inbox" / "0.8.0_AE_CloudComp" / "read"
+
+    def _msg(mid):
+        for p in inbox.glob("*.md"):
+            try:
+                t = p.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            m = re.search(r"\*\*Msg-ID:\*\*\s*(\d+)", t)
+            if m and m.group(1) == mid:
+                subj = re.search(r"\*\*Subject:\*\*\s*(.*)", t)
+                return (subj.group(1) if subj else ""), (t.split("\n\n", 1)[1] if "\n\n" in t else t)
+        return None
+
+    for mid, sender in (("93516", "0.0.0_AB_MSTR"), ("93528", "1.0.0_SA_CTO"), ("93636", "1.0.0_SA_CTO")):
+        got = _msg(mid)
+        if got is None:
+            arms.append(("falsifier %s: message not on this device (arm skipped, stated)" % mid, lambda: True))
+            continue
+        s_, b_ = got
+        arms.append(("falsifier %s (%s -> 0.8.0_AE_CloudComp, an act, no order) -> REFUSED" % (mid, sender),
+                     lambda s_=s_, b_=b_, sender=sender: tier2_act_send_refusal(sender, ["0.8.0_AE_CloudComp"], s_, b_, root) is not None))
+    go = _msg("92913")
+    if go is not None:
+        arms.append(("the COO's GO dispatch 92913 (cites NFRA_COMPEFFICACY.TO-CE-T-1, issued to the recipient) -> admitted",
+                     lambda: tier2_act_send_refusal("2.0.0_SA_COO", ["0.8.0_AE_CloudComp"], go[0], go[1], root) is None))
+    else:
+        arms.append(("GO dispatch 92913 not on this device (arm skipped, stated)", lambda: True))
+    arms += [
+        ("an ack from a Tier-1 to a Tier-2 (no act) -> admitted",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.8.0_AE_CloudComp"], "RE 93641: READ-acked",
+                                        "1.0.0_SA_CTO -> 0.8.0_AE_CloudComp. 93641 READ-acked. For information only: the round-5 stamp landed. Nothing owed.", root) is None),
+        ("an act citing an order assigned to ANOTHER recipient -> refused",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["0.7.0_AE_CloudOps"], "x",
+                                        "0.7.0_AE_CloudOps opens the ledger entry NOW; see NFRA_COMPEFFICACY.TO-CE-T-1.", root) is not None),
+        ("a Tier-2 sender with an act -> out of scope (its route up is the point)",
+         lambda: tier2_act_send_refusal("0.8.0_AE_CloudComp", ["0.7.0_AE_CloudOps"], "x", "Please apply the fix now.", root) is None),
+        ("a Tier-1 -> Tier-1 act -> out of scope",
+         lambda: tier2_act_send_refusal("1.0.0_SA_CTO", ["2.0.0_SA_COO"], "x", "2.0.0_SA_COO cuts the order NOW.", root) is None),
     ]
     failed = 0
     for name, fn in arms:

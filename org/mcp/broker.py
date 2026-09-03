@@ -513,6 +513,13 @@ class BrokerHandler(BaseHTTPRequestHandler):
             db.commit()
             self._json_response({"ok": False, "refused": _l8}, 403)
             return
+        # LD-0529 -- the generalised Tier-0/Tier-1 -> Tier-2 act guard, the same decision the server applies.
+        _t2 = cvo_send_guard.tier2_act_send_refusal(from_serial, [to_serial], subject, text, _REPO_ROOT)
+        if _t2:
+            _log_event("refused", from_serial, f"-> {to_serial} LD-0529 guard: {_t2[:160]}")
+            db.commit()
+            self._json_response({"ok": False, "refused": _t2}, 403)
+            return
 
         # Always accept the insert. A recipient does not need to be currently
         # registered for us to queue a message — they may be mid-restart or the
