@@ -231,6 +231,36 @@ so no downstream check fires.
 ]
 ```
 
+### CHANNEL ROW ADVI_INSURE-S17 -- the 09:46Z chain-dispatch storm is not emitted by `bd-49f-session-complete`; the H3 brief's session-complete discriminator is therefore outside the observed failure path
+
+0.7.0_AE_CloudOps~U, 2026-09-03T15:5xZ. Read-only Phase 1 of `ADVI_INSURE.TO-H3-AE.trigger-sequencing`.
+
+```json
+{
+  "id": "ADVI_INSURE-S17",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U",
+  "surfaced_at": "2026-09-03T15:53:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "one_line": "At 09:46Z on both 2026-09-02 and 2026-09-03, CloudTrail records ten `advi-49f-chain-dispatch` SendCommand calls from `advi-49f-gold-dispatch`; none are the `opal-bd-49f-session-fetch` command that can match the shared `bd-49f-session-complete` rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live Terraform and served bd-49f-session-trigger artifact: bd-49f-session-complete matches SSM document opal-bd-49f-session-fetch and only invokes bd-49f-session-trigger in runner-run mode.",
+      "CloudTrail, 09:40Z-10:00Z: 12 SendCommand events each day; ten `advi-49f-chain-dispatch` commands on 2026-09-02 at 09:46:29-39Z and ten on 2026-09-03 at 09:46:28-41Z, all issued by the advi-49f-gold-dispatch Lambda. No opal-bd-49f-session-fetch command appears in either window.",
+      "Served bd-49f-session-trigger source_code_hash YZ3FHmwtWwag53zlm6XwbyNq8331A0TZpygqatswIJs=; its artifact is opal-313476888478-lambda-artifacts/bd-pipeline/bd-49f-session-trigger.zip, VersionId wv2TERsp4YMeHbaA_fAQgIqP5yA2rSIT."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_INSURE-S13 asserted that the 09:46Z race was caused by several pattern-matching status events from one `opal-bd-49f-session-fetch` command flowing through `bd-49f-session-complete` to `bd-49f-session-trigger`.",
+  "world_is": "The observed 09:46 race is downstream of the separate advi-49f-gold-dispatch surface. Narrowing bd-49f-session-complete cannot be selected from the Phase-1 evidence as a remedy for this storm without first establishing a causal connection that these reads do not show.",
+  "notes": "No AWS object, rule, Lambda, IAM policy, trigger, or deploy surface was modified. This row does not select a remedy; it records the topology mismatch for the issuer's decision row."
+}
+```
+
 
 ---
 
