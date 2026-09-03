@@ -134,7 +134,10 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 ### L8 — Compilation
 
 - **Owner:** `3.0.0_SA_CVO`, whose engagement with the project begins here. **Not engaged:** the owners of L1 to L7
-  as reviewers of this limb.
+  as reviewers of this limb; every worker as a correspondent. The CVO's findings travel UP the loop to `2.0.0_SA_COO`
+  (or to `1.0.0_SA_CTO` for a scope change) and never DOWN to a worker: a worker hears from the CVO only through a
+  task order or an operating note issued by the COO. A row's `disarm_owner` names who disarms, never whom the CVO
+  may message; a disarm request travels through the COO.
 - **Input:** new investigation rows on either channel root. **Output:** the compiled channel, append-only during the round.
 - **Tool:** `org/surprise_channel/surprise-watch.sh <serial> stream` (a read-only watermark on both roots, one line
   per new row, at-least-once) is the CVO's intake; `comp-surprise` is the rollup over both roots.
@@ -145,8 +148,9 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 
 - **Owner:** `3.0.0_SA_CVO`. **Not engaged:** every other seat.
 - **Input:** the investigation rows. **Output:** a `disposition` on every row (`UNDER_INVESTIGATION`, `GRADUATED`,
-  `DISMISSED_WITH_REASON`, `DECOMP_INVALIDATING`) and, for graduated rows, a remediation row at
-  `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`. Graduation is a grounding bar:
+  `DISMISSED_WITH_REASON`, `DECOMP_INVALIDATING`) and, for graduated rows, remediation rows at
+  `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`, issued as ONE slug for the
+  round at L10 (one artifact, one moment), never as a stream of messages during L7 to L9. Graduation is a grounding bar:
   a row graduates when its mechanism is attributed, its denominators carried and its remedy holder named; severity
   decides where it lands, grounding decides whether it graduates. A `DECOMP_INVALIDATING` row reopens L5 for the
   current round at once; it never also takes a forward route.
@@ -158,7 +162,12 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 ### L10 — Routing
 
 - **Owner:** `3.0.0_SA_CVO` stamps the route; the route owner acts. **Not engaged:** every worker.
-- **Precondition:** every task order under the project is terminal and every investigation row is dispositioned.
+- **Precondition:** every task order under the project is terminal, each finished with a valid proof-of-spec instance
+  whose `surprises` entries resolve to rows, and every investigation row is dispositioned.
+- **The loop:** the round's findings re-enter at the limb the route names and run forward again through L10; a
+  remediation pass is an L5 re-decomposition or an L6 re-dispatch by the COO, cut as fresh task orders and remediated
+  runs in the order their dependencies dictate, to the relevant workers or to newly seated ones, never a conversation
+  between the CVO and a worker. Looping in order is the point of the process.
 - **Input:** the remediation rows. **Output:** on each row a `route` and its `loop_target`, locked:
   `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`, re-cuts the task order), `DECOMP_INVALIDATING` to L5 (owner
   `2.0.0_SA_COO`, re-decomposes), `SCOPE_CHANGE` to L2 (owner `1.0.0_SA_CTO`, re-enters the endpoint; the row names
@@ -170,7 +179,8 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 - **Gate:** `.tools/surprise-row-gate.py` refuses a route row while any task order under the project is not terminal,
   a route and target off the locked map, and a `SCOPE_CHANGE` without its kind and outcome reference. The dispositioned
   half of the precondition binds by reading.
-- **Handoff:** `dep_stage: ROUND_CLOSE`, then `CLOSED` on the closing round, flipped by the row owner on the CVO's stamp.
+- **Handoff:** the stamped row to the route owner and to no one else; `dep_stage: ROUND_CLOSE`, then `CLOSED` on the
+  closing round, flipped by the row owner on the CVO's stamp.
 
 ### Cross-cutting — the integrator
 
@@ -188,7 +198,7 @@ of every done test, read by `ls-remote`, never a cell of a decomposition.
 | L2–L4 | `1.0.0_SA_CTO` | lane `ANY_CTO` on `prd/`; lane `TREE_PROJECT_ROW` on the row | binds by reading |
 | L5–L6 | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading |
 | L7 | Tier-2 workers | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>` | not applicable |
-| L8–L10 | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/`; `investigations/` and `cards/` admit every seat | binds by reading |
+| L8–L10 | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/`; `investigations/` and `cards/` admit every seat | binds by reading; the CVO's messages go to the COO or the CTO, never to a worker |
 | integrator | `0.0.0_AB_MSTR` | the pre-push deploy gate on deploy scope | binds by reading |
 
 ---
@@ -239,3 +249,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 |---|---|---|---|
 | 1.0 | 2026-09-01 | `org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` | first text of the ten steps and the surprise flow |
 | 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; water test `workflows/atom_decomposition/runs/canonical-fabric-workflow-spec/20260903T0305Z/` | constitutional form; ten limbs with one owner each and the not-engaged set; the project tree homes; the surprise row as the only carrier; the L6 refusal of Tier-0/1 seating and the L10 precondition gate; the proof-of-spec surprises limb; worker commits its own status; the earlier second description of the process retired to a redirect |
+| 2.1 | 2026-09-03 | `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb; `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the L7 to L10 loop: the CVO's findings travel up to the COO (or the CTO for a scope change) and never down to a worker; remediations are one slug at L10; every task order finishes with its valid proof-of-spec before any loop-back; the pass re-enters at L5 or L6 as fresh and remediated task orders in dependency order; the L10 handoff is to the route owner only |
