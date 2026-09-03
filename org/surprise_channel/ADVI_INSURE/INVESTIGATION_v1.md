@@ -612,3 +612,36 @@ Divergence between the executor read and this read is itself the finding and is 
   "notes": "Met while taking the h-1 orientation READ that 2.0.0_SA_COO 93579 released ahead of the held INS-h-2 order; reported in that seat's inbox as h-1 part 2 and filed here because a message is not a durable carrier and a zero-drift finding is precisely the kind read once and forgotten. THE DESIGN CONSEQUENCE FOR INS-h-2, a constraint and not a decision: if that fix SHIPS a module into the bundle rather than removing the need for one, it must land under data/assets/scripts/gold/runners_49f/ to sit inside the Rule-13 gate; placing it in _code/lib/ beside trading_calendar.py would reproduce this ungated class -- a dependency the deployed layout does not actually guarantee, which is the same shape as the defect INS-h-2 exists to fix. Scope: this is a CloudOps deploy-gate observation, filed in the ADVI_INSURE channel because that is where it was met; 2.0.0_SA_COO may re-route it. Nothing was edited, deployed or re-armed under the read."
 }
 ```
+
+### CHANNEL ROW ADVI_INSURE-S16 -- STOP: the 13-line import fix is NECESSARY BUT NOT SUFFICIENT. A SECOND _workspace_root() consumer sits on the PRODUCTION WRITE PATH (:338 inside emit()) and needs a module that is absent from the bundle and cannot be in it. Re-arming on the import fix alone would abort the chain again, after the silver reads instead of before argparse
+
+0.7.0_AE_CloudOps~R, 2026-09-03T12:38Z. Found executing TO-H2-AE @bfa0e6de10 step 2, BEFORE any edit. Nothing edited, nothing re-armed, nothing deployed. Stopped under the order's own 'a wider change is a ROW and a stop' bound.
+
+```json
+{
+  "id": "ADVI_INSURE-S16",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T12:38Z",
+  "one_line": "TO-H2-AE's 13-line import fix is NECESSARY BUT NOT SUFFICIENT: a SECOND _workspace_root() consumer sits on the production write path at :338 inside emit(), and it needs a module that is ABSENT from the deployed bundle and cannot be in it (it lives under org/). Re-arming on the import fix alone would abort the chain again, later in the run instead of at import.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd49f_insurance_nav_current.py:217-239 _forbidden_census() calls root = _workspace_root() then builds cand = os.path.join(root, 'org','tier2_senior','0.4.0_DS_ClientPlatform~J','deliverables'), raises RuntimeError if not isdir, sys.path.insert(0, cand), and `import insurance_forbidden_field_census as cen`.",
+      "AST: line 228 is INSIDE def _forbidden_census() (:217-239), so it runs at CALL time, not import -- which is exactly why the import-safety fix at :88-122 does not reach it.",
+      "AST: the call site `cen = _forbidden_census(list(df.columns))` at :338 is INSIDE def emit() (:313-369) -- the production write path, reached AFTER both silver reads succeed.",
+      "The module is ABSENT from the deployed bundle: 0 hits for insurance_forbidden_field_census across the 83-object _code/ listing (whole prefix, unscoped, never headed).",
+      "It exists ONLY in the repo at org/tier2_senior/0.4.0_DS_ClientPlatform~J/deliverables/insurance_forbidden_field_census.py (8,421 B) -- under org/, and the bundle has NO org/ at any depth (h-1, 93592).",
+      "Deleting _workspace_root() as the order's :110-122 diff requires would also remove _forbidden_census's own caller of it, so the minimal diff as written does not even leave the file self-consistent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-H2-AE @bfa0e6de10 step 2 and H2-AC2 assert the fix is 'lines :110-121 and :122's one use go -- a 13-line diff and nothing else; no new file, no second registry', that 'nothing else in the runner's logic changes', and H2-AC5 asserts the acceptance is the next scheduled fire reading 19 STAGE OK with the insurance stage OK and a gold partition written. GO 93615 repeats the 13-line shape.",
+  "world_is": "The 13-line diff makes the module IMPORT-safe and nothing more. A second consumer of the same deleted derivation sits at :217-239 and is invoked at :338 inside emit(), on the production write path, after both silver reads. It needs a repo path under org/ that the flat bundle structurally cannot contain, and the module it imports is measurably not in the 83-object bundle. So on the first re-armed fire the stage would import cleanly, reach argparse, read both silver keys -- and then abort inside emit() with the SAME RuntimeError class, later in the run. THE CHAIN IS FAIL-FAST, so that abort would again take c04_validation and perfrp_projection, reproducing the exact two-day outage this order exists to end, with the added cost that the failure now happens AFTER the S3 reads rather than before argparse. The order's acceptance (19 STAGE OK) is therefore unreachable on the diff as specified.",
+  "notes": "STOPPED BEFORE THE ACT, per this order's own bound ('the runner's computation, tolerances and outputs do not change -- a wider change is a ROW and a stop'). The runner has NOT been edited, the tuple has NOT been re-armed, and NOTHING has been deployed. Fixing this second site is a WIDER change than the order authorises -- it is a question about what the forbidden-field census is for in a deployed run (ship the census module into the bundle under runners_49f/, make the census optional-with-a-stated-state when its module is absent, or move the check out of the runner), and each of those changes the runner's behaviour, which the bounds forbid. That decision is 2.0.0_SA_COO's at L6 with the AC3 census owner (0.4.0_DS_ClientPlatform~J's lane), not this lane's. This is why the order's step 1 says the h-1 measurement 'decides the fix's shape; do not write code before it' -- the measurement kept going one call past the first plausible answer and found the second site."
+}
+```
