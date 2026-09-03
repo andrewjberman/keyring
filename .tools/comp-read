@@ -58,6 +58,22 @@ try:
     _RAIL = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
 except Exception:                                    # never block a read on the rail
     _comprail, _WS, _RAIL = None, os.getcwd(), None
+import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-2)
+
+# Set once by main() (every code path except --help/-h reaches it); read by _self_report() for the
+# tool's ONE timeout-carrying subprocess (the telemetry sink below, :1027ish). Module-level because
+# main() returns a bare rc and _self_report() is invoked separately from __main__ -- this is the
+# narrowest carrier between them, mirroring nothing wider.
+# "quiet" is set True for --hud: the SUBPROCESS CALL is still budgeted (Rule T's code effect is
+# unconditional), but its printed status line is suppressed there. --hud's own contract is FIRE
+# ONLY WHEN THERE IS SOMETHING WORTH SAYING, ELSE ZERO BYTES (see _hud()'s docstring) -- an
+# unconditional trailing print from _self_report would have silently broken that on every clean
+# file, which is read semantics this TO's bounds forbid touching.
+# "clock" is started in main() -- BEFORE the read/enumerate/hud work runs, not inside
+# _self_report() -- so remaining() at self-report time reflects the WHOLE run's elapsed time, not
+# just the telemetry call's own microseconds. Starting it any later makes the pre-flight SKIP
+# branch below structurally unreachable for a single-unit tool (see _self_report()'s own comment).
+_BUDGET_STATE = {"s": None, "source": None, "quiet": False, "clock": None}
 
 # --------------------------------------------------------------------------- qualifier lexicon
 # The load-bearing panel. These are the shapes that INVERT, LIMIT, or RETRACT a nearby claim -- the
@@ -750,8 +766,8 @@ def main() -> int:
         _comprail.harden_stdout()
     argv = sys.argv[1:]
     if not argv or argv[0] in ("-h", "--help"):
-        print("comp-read <file> [--for \"<question>\"] [--at LINE] [--top N] [--all-quals]")
-        print("comp-read <file> --enumerate '<regex>' [--limit N] [--page N]")
+        print("comp-read <file> [--for \"<question>\"] [--at LINE] [--top N] [--all-quals] [--budget N]")
+        print("comp-read <file> --enumerate '<regex>' [--limit N] [--page N] [--budget N]")
         print("  --enumerate is a DISTINCT MODE, not part of the digest: where does this token")
         print("  occur in this file, how many times, and in what KIND of region. Prints its")
         print("  denominator, grades hits into bands, and reports whole-value vs substring.")
@@ -760,12 +776,21 @@ def main() -> int:
         print("  AUTHORITATIVE vs DESCRIPTIVE), every QUALIFIER that limits/negates/corrects a")
         print("  nearby claim, intra-file CONTRADICTIONS, and an UNREAD LEDGER.")
         print("  Excerpts are VERBATIM with line numbers -- this indexes the file, never replaces it.")
+        print("  --budget N    RULE T (PRD s.4.4, shared .tools/_compbudget): ceiling in seconds for")
+        print("               comp-read's ONE timeout-carrying subprocess (the self-report telemetry")
+        print("               sink, fired after every run; carrier: --budget > env COMP_BUDGET_S >")
+        print("               default %s s, kept under this box's ~120s outer harness ceiling);"
+              % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
+        print("               --budget 0 = unbounded. comp-read has NO corpus-width loop, so a")
+        print("               BUDGET REACHED line is reachable only by a deliberately tiny value")
+        print("               (e.g. --budget 0.001) -- an ordinary run always prints WITHIN BUDGET.")
         return 0
 
     t0 = time.perf_counter()
     question, at_line, top, all_quals = "", None, 6, False
     enum_pat, enum_limit, enum_page = None, 40, 1
     hud_mode = False
+    budget_flag = None
     positional = []
     i = 0
     while i < len(argv):
@@ -792,9 +817,30 @@ def main() -> int:
             all_quals = True
         elif a == "--hud":
             hud_mode = True
+        elif a == "--budget":
+            i += 1
+            budget_flag = argv[i] if i < len(argv) else None
+            if budget_flag is None:
+                print("comp-read: ERROR: --budget wants a number of seconds (0 = unbounded)")
+                return 2
         else:
             positional.append(a)
         i += 1
+
+    # RULE T (PRD s.4.4): resolved for EVERY code path from here down, including a usage error
+    # below (no file / not a file) -- so the ONE timeout-carrying subprocess in _self_report()
+    # applies the same carrier whether or not this run went on to read anything. Only --help/-h
+    # (which returns above, before this line) skips it -- a declared non-application, not a gap:
+    # a help call does zero read-work, so the ceiling it guards against does not apply there, and
+    # _self_report() falls back to its pre-Rule-T fixed 20s in that one narrow case.
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(budget_flag)
+    except ValueError as exc:
+        print("comp-read: ERROR: --budget %s" % exc)
+        return 2
+    _BUDGET_STATE["s"], _BUDGET_STATE["source"] = budget_s, budget_source
+    _BUDGET_STATE["quiet"] = hud_mode
+    _BUDGET_STATE["clock"] = _compbudget.Clock(budget_s)   # starts NOW, before any read work
 
     if not positional:
         print("comp-read: ERROR: no file given.")
@@ -1021,13 +1067,74 @@ def _self_report(rc: int) -> None:
     fires on the DIGEST path only -- an --enumerate run writes NO rail row (all-time 0 rows for the
     file probed). This telemetry row fires on EVERY mode, so the two sinks now disagree for
     --enumerate until the rail writer is widened by whoever owns that change.
-    Never raises: a telemetry sink must never break the tool it measures."""
+    Never raises: a telemetry sink must never break the tool it measures.
+
+    RULE T (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-2): the subprocess.run() below is comp-read's
+    ONE timeout-carrying subprocess -- the tool's own s.4 audit measured it hard-coded at
+    timeout=20, invisible to a caller. comp-read carries NO corpus-width loop, so there is exactly
+    ONE unit ("telemetry_call") per run; the same carrier/Clock machinery comp-find applies over a
+    per-node_type loop is applied here over that single unit unchanged. The Clock is read from
+    _BUDGET_STATE, NOT created fresh here -- it was started in main() before any read work, so
+    remaining() below reflects the WHOLE run's elapsed time. Starting it here instead (adjacent to
+    its own check, with no elapsed time between) would make the pre-flight SKIP branch below
+    structurally unreachable: for a --budget as small as 0.001s, remaining() checked immediately
+    after Clock() is still ~budget_s (not yet exceeded), so only subprocess.run's own
+    TimeoutExpired could ever fire -- MEASURED during this cell's own build, before this fix.
+    NON-APPLICATION, STATED HONESTLY: at the DEFAULT 90s budget this line is essentially
+    unreachable in practice -- a comp-read run's own runtime is milliseconds, so remaining() is
+    still ~90s by the time this fires; BUDGET REACHED is exercised only by a deliberately tiny
+    --budget (e.g. 0.001s). ALSO NON-APPLICATION: this print happens AFTER the digest/enumerate/hud
+    panels have already been printed (this subprocess is a post-hoc telemetry sink, not part of the
+    answer-producing read path the way comp-find's aws pull is), so unlike comp-find's Rule T
+    status it cannot print ABOVE the metrics block -- it is always the LAST thing this tool prints."""
     import subprocess
+    budget_s, budget_source = _BUDGET_STATE["s"], _BUDGET_STATE["source"]
+    clock = _BUDGET_STATE.get("clock")
+    if budget_s is None or clock is None:
+        # main() returned before resolving a budget (the --help/-h path only -- every other exit,
+        # including a usage error, resolves it above). Fall back to the pre-Rule-T fixed ceiling
+        # rather than invent a budget for a call that did zero read-work.
+        try:
+            subprocess.run(
+                [sys.executable, os.path.join(_WS, "org", "modules", "graph", "comp_log_auto.py"),
+                 "comp-read", " ".join(sys.argv[1:])[:200], str(rc)],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+        except Exception:
+            pass
+        return
+
+    quiet = _BUDGET_STATE.get("quiet")
+    remaining = clock.remaining()          # every timeout= derives from remaining()
+    if remaining is not None and remaining <= 0:
+        if not quiet:
+            try:
+                print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 telemetry_call; results are a "
+                      "PREFIX, not the answer; the self-report subprocess was SKIPPED, not run; NO "
+                      "CURSOR: this is comp-read's one indivisible timeout-carrying subprocess -- "
+                      "nothing to resume, only to re-run with a larger --budget."
+                      % (_compbudget.fmt(budget_s), budget_source))
+            except Exception:
+                pass
+        return
     try:
         subprocess.run(
             [sys.executable, os.path.join(_WS, "org", "modules", "graph", "comp_log_auto.py"),
              "comp-read", " ".join(sys.argv[1:])[:200], str(rc)],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=remaining)
+        if not quiet:
+            used_s = round(clock.elapsed(), 2)
+            print("  " + _compbudget.within_budget_line(1, 1, "telemetry_call", budget_s,
+                                                         budget_source, used_s))
+    except subprocess.TimeoutExpired:
+        if not quiet:
+            try:
+                print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 telemetry_call; results are a "
+                      "PREFIX, not the answer; the self-report subprocess did not return within the "
+                      "remaining budget (TimeoutExpired); NO CURSOR: this is comp-read's one "
+                      "indivisible timeout-carrying subprocess -- nothing to resume, only to re-run "
+                      "with a larger --budget." % (_compbudget.fmt(budget_s), budget_source))
+            except Exception:
+                pass
     except Exception:
         pass
 
