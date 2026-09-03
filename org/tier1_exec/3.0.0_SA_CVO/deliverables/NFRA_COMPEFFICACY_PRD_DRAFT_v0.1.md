@@ -13,7 +13,9 @@ D8 precedent) · **dep_stage:** PRD
 > `outcome` → `outcome_ref` re-pointed). **This file is no longer edited.** The three edits it took AFTER `86a5538003`
 > — §4 result-file home + §4.6 two-grain battery field (@`4b2255545a`), §4.6 runs.jsonl 80-char trap (@`86a5538003`
 > itself is the input, so that one is IN), §7 row G-4 Codex-runtime rail (@`5a72185ede`) — plus row T-16 → CLEARED
-> @`bbba0db0e9` were sent to 1.0.0_SA_CTO as deltas for v0.2.1 (00:3xZ). Two carriers drift; this one is retired.
+> @`bbba0db0e9` were sent to 1.0.0_SA_CTO as deltas (00:3xZ) and **LANDED in v0.3 @`264bc9fa92`, verified on the
+> landed bytes by this seat 00:4xZ** (each delta's token present once; G-4's `outcome_ref` re-pointed FWD-6 → FWD-9 by
+> CTO's own stated miss). Later versions at the tree home supersede these pins. Two carriers drift; this one is retired.
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
