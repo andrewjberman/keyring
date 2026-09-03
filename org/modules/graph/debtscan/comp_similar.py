@@ -60,6 +60,7 @@ from __future__ import annotations
 
 import json
 import os
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -70,6 +71,9 @@ _GRAPH = _HERE.parents[1]                # .../org/modules/graph
 REPO = _HERE.parents[4]                  # .../ajb_workspace
 if str(_DEBTSCAN) not in sys.path:
     sys.path.insert(0, str(_DEBTSCAN))
+_TOOLS = REPO / ".tools"
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
 
 # Corpus + similarity engine (which itself reuses dup_scan.BM25).
 # EDIT-SURFACE, CORRECTED 2026-09-02: this read "ZERO edits to summary_corpus.py (the ~C
@@ -84,12 +88,46 @@ from summary_corpus import (  # noqa: E402
 )
 # Name-tier suppressors (the designed-parallel controls).
 from dup_scan import _firm_of, _service_suffix_of, _strip_env  # noqa: E402
+import _compbudget  # noqa: E402  # Rule T shared carrier; do not fork its wording here.
 
 # --- thresholds (conservative v1; CTO may retune at the gate) -------------------------------
 SIM_TWIN = 0.60          # summary-sim at/above this = a functional-twin candidate (mirror M2)
 SIM_FLOOR = 0.15         # below this = not related (mirror SimilarityIndex.neighbors floor)
 _COLD_BANDS = {"COLD", "COLD-DORMANT"}
 _HOT_BANDS = {"HOT"}
+
+# COMPTOOL_ANSWER_STATE.enum.json -- literal tokens are a machine contract.
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+_ANSWER_STATES = {
+    STATE_SUBJECT_ABSENT, STATE_PRESENT_ZERO, STATE_PARTIAL_BLIND, STATE_NOT_APPLICABLE,
+}
+
+
+def answer_state_line(state: str, detail: str = "") -> str:
+    """Render the exact s.4 answer-state token, with optional tool-voice evidence."""
+    if state not in _ANSWER_STATES:
+        raise ValueError("unknown comp-tool answer state: %r" % state)
+    return "ANSWER-STATE: %s%s" % (state, (" -- " + detail) if detail else "")
+
+
+def _budget_expired(clock) -> bool:
+    remaining = clock.remaining() if clock is not None else None
+    return remaining is not None and remaining <= 0
+
+
+def _scan_units(corpus, cursor=None):
+    """Rule T units: ARN keys in stable lexical order, strictly after the cursor."""
+    return [arn for arn in sorted(corpus) if cursor is None or arn > cursor]
+
+
+def _finish_progress(progress, completed, total):
+    if progress is not None:
+        progress.update({"completed": len(completed), "total": total,
+                         "cursor": completed[-1] if completed else None,
+                         "partial": len(completed) < total})
 
 
 # ==========================================================================================
@@ -146,16 +184,35 @@ def is_designed_parallel(name_a: str, name_b: str) -> str | None:
 # The joint scan (PURE -- takes the corpus, a SimilarityIndex, and an injected heat dict so
 # it is fully offline-testable; the live modes assemble heat via load_heat_live()).
 # ==========================================================================================
-def supersede_scan(corpus, index, heat, *, sim_twin=SIM_TWIN, top=40):
+def supersede_scan(corpus, index, heat, *, sim_twin=SIM_TWIN, top=40,
+                   clock=None, cursor=None, progress=None, pool_out=None):
     """Ranked superseded-twin candidates. A candidate = a pair that is (i) SUMMARY-similar
     (functional twin, >= sim_twin), (ii) NOT a designed parallel, (iii) heat-DIVERGENT (one
     COLD, one HOT), (iv) neither held. Emits the COLD member as the decommission candidate +
     the HOT member as its live replacement. Rank = summary_sim * (HIGH=1.0 / MEDIUM=0.6).
     PURE: heat = {name -> {data,invoke}} (UNKNOWN for anything unread -- C3)."""
     seen: set[tuple] = set()
+    pool_seen: set[tuple] = set()
     out: list[dict] = []
-    for arn, doc in corpus.items():
+    units = _scan_units(corpus, cursor)
+    completed: list[str] = []
+    for arn in units:
+        # Always finish at least one real unit so a tiny-budget run has a truthful cursor.
+        # Thereafter, only begin a new unit while budget remains.
+        if completed and _budget_expired(clock):
+            break
+        doc = corpus[arn]
+        if pool_out is not None and not doc.thin:
+            for nb in index.neighbors(arn, top=6, min_norm=sim_twin):
+                pool_key = tuple(sorted((arn, nb["arn"])))
+                if (nb["thin"] or pool_key in pool_seen
+                        or is_designed_parallel(doc.name, nb["name"])):
+                    continue
+                pool_seen.add(pool_key)
+                pool_out.append({"a": doc.name, "b": nb["name"],
+                                 "node_type": doc.node_type, "summary_sim": nb["norm"]})
         if doc.thin:
+            completed.append(arn)
             continue                                  # C3: no twin claim off a blind row
         for nb in index.neighbors(arn, top=8, min_norm=sim_twin):
             b_arn = nb["arn"]
@@ -191,17 +248,29 @@ def supersede_scan(corpus, index, heat, *, sim_twin=SIM_TWIN, top=40):
                                f"(summary-sim {nb['norm']}, {conf}-confidence cold) -- "
                                "advisory decommission candidate, verify before reap"),
             })
+        completed.append(arn)
+    _finish_progress(progress, completed, len(units))
     out.sort(key=lambda c: -c["rank_score"])
+    if pool_out is not None:
+        pool_out.sort(key=lambda c: -c["summary_sim"])
+        del pool_out[top:]
     return out[:top]
 
 
-def cluster_scan(corpus, index, *, node_type=None, min_norm=SIM_TWIN, top=60):
+def cluster_scan(corpus, index, *, node_type=None, min_norm=SIM_TWIN, top=60,
+                 clock=None, cursor=None, progress=None):
     """Functional-overlap census: every resource with a summary-similar peer (a same-JOB
     cluster), suppressors applied. Advisory overlap map, NOT a supersession verdict (no heat)."""
     seen: set[tuple] = set()
     out: list[dict] = []
-    for arn, doc in corpus.items():
+    units = _scan_units(corpus, cursor)
+    completed: list[str] = []
+    for arn in units:
+        if completed and _budget_expired(clock):
+            break
+        doc = corpus[arn]
         if doc.thin or (node_type and doc.node_type != node_type):
+            completed.append(arn)
             continue
         for nb in index.neighbors(arn, top=6, min_norm=min_norm):
             if nb["thin"]:
@@ -212,6 +281,8 @@ def cluster_scan(corpus, index, *, node_type=None, min_norm=SIM_TWIN, top=60):
             seen.add(key)
             out.append({"a": doc.name, "b": nb["name"], "node_type": doc.node_type,
                         "summary_sim": nb["norm"]})
+        completed.append(arn)
+    _finish_progress(progress, completed, len(units))
     out.sort(key=lambda c: -c["summary_sim"])
     return out[:top]
 
@@ -272,7 +343,7 @@ def normalize_heat(raw: dict) -> dict:
     return heat
 
 
-def load_heat_live(timeout=280) -> dict:
+def load_heat_live(timeout=280, *, clock=None, deferred=None) -> dict:
     """SLOW opt-in (--live-heat): pull comp-debris (invoke, live AWS -- minutes) + comp-heat
     (data). Best-effort; a tool that times out leaves its axis UNKNOWN (never assume cold -- C3).
     NOTE (open plumbing, flagged to CTO): comp-debris default = lambda only (S3/DDB need --types,
@@ -280,12 +351,27 @@ def load_heat_live(timeout=280) -> dict:
     is partial for the S3-bucket consolidation surface. The clean path is a heat SNAPSHOT via
     --heat-json (cadence/source is the §6-decision-5 open item)."""
     heat: dict[str, dict] = {}
-    dbg = _run_json([str(REPO / ".tools" / "comp-debris"), "--json"], timeout=timeout)
+    deferred = deferred if deferred is not None else []
+
+    def remaining_timeout(label):
+        if clock is None:
+            return timeout
+        remaining = clock.remaining()
+        if remaining is not None and remaining <= 0:
+            deferred.append(f"{label}: budget exhausted before subprocess could start")
+            return 0
+        return None if remaining is None else min(timeout, remaining)
+
+    debris_timeout = remaining_timeout("comp-debris")
+    dbg = (_run_json([str(REPO / ".tools" / "comp-debris"), "--json"],
+                     timeout=debris_timeout) if debris_timeout != 0 else None)
     if dbg:
         heat.update(normalize_heat(dbg))
     out_json = _GRAPH / "debtscan" / ".comp_similar_heat.json"
-    _run_json([str(REPO / ".tools" / "comp-heat"), "freshness", "--json", str(out_json)],
-              timeout=timeout)
+    heat_timeout = remaining_timeout("comp-heat freshness")
+    if heat_timeout != 0:
+        _run_json([str(REPO / ".tools" / "comp-heat"), "freshness", "--json", str(out_json)],
+                  timeout=heat_timeout)
     try:
         if out_json.exists():
             for name, v in normalize_heat(json.loads(out_json.read_text())).items():
@@ -473,7 +559,71 @@ def self_test() -> int:
     print(f"  C-conf both-cold -> HIGH confidence: {cands[0].get('confidence') if cands else None} "
           f"{'PASS' if cconf else 'FAIL'}")
 
-    print(f"=== comp_similar self-test: {'PASS' if ok else 'FAIL'} (9/9) ===" if ok
+    # s.4 answer-state battery: one invocation plants all four mutually distinct machine
+    # tokens. The PARTIAL arm says why its corpus is stale and carries the vintage in tool voice.
+    class _SpentClock:
+        @staticmethod
+        def remaining():
+            return 0.0
+
+    budget_progress = {}
+    supersede_scan(corpus, index, heat, clock=_SpentClock(), progress=budget_progress)
+    measured_cov = {"corpus_vintage_claim": "measured",
+                    "vintage_note": "corpus built: 2026-09-03T00:00:00Z (age: 1h)"}
+    stale_cov = {"corpus_vintage_claim": "measured",
+                 "vintage_note": "corpus built: 2025-01-01T00:00:00Z (age: STALE)"}
+    absent_resolved = _resolve("arn:missing", corpus)
+    zero_neighbors = index.neighbors("arn:fill0", top=40)
+    absent_state = _query_answer_state(absent_resolved, measured_cov, subject="arn:missing")
+    zero_state = _query_answer_state("arn:fill0", measured_cov, result_count=len(zero_neighbors),
+                                     subject="arn:fill0")
+    partial_state = _partial_state(budget_progress, stale_cov)
+    empty_type_clusters = cluster_scan(corpus, index, node_type="NO_SUCH_TYPE")
+    empty_type_population = sum(1 for d in corpus.values() if d.node_type == "NO_SUCH_TYPE")
+    not_app_state = _cluster_answer_state(
+        {"partial": False}, measured_cov, eligible=empty_type_population,
+        result_count=len(empty_type_clusters),
+        node_type="NO_SUCH_TYPE")
+
+    def render_plant(state_pair):
+        # Keep the harness running through a mutant that removes an arm; absence must be a red
+        # assertion, not an early traceback that prevents the remaining discriminators running.
+        return answer_state_line(*state_pair) if state_pair[0] in _ANSWER_STATES else (
+            "ANSWER-STATE: MISSING -- planted arm produced no ratified token")
+
+    planted = [
+        ("absent-subject", render_plant(absent_state)),
+        ("present-zero", render_plant(zero_state)),
+        ("stale-corpus", render_plant(partial_state)),
+        ("not-applicable", render_plant(not_app_state)),
+    ]
+    planted_tokens = [line.split(" -- ", 1)[0].split(": ", 1)[1] for _, line in planted]
+    state_ok = (absent_resolved is None and len(zero_neighbors) == 0
+                and budget_progress.get("partial") is True
+                and empty_type_population == 0 and len(empty_type_clusters) == 0
+                and set(planted_tokens) == _ANSWER_STATES and len(planted_tokens) == 4
+                and "corpus built:" in planted[2][1] and "STALE" in planted[2][1])
+    ok &= state_ok
+    for label, line in planted:
+        print(f"  PLANTED {label}: {line}")
+    print(f"  s.4 answer-state four-arm contract: {'PASS' if state_ok else 'FAIL'}")
+
+    # Rule T tiny-budget arm. Even if the clock is already spent, the scanner completes one
+    # deterministic ARN unit before stopping, which makes the emitted cursor real/resumable.
+    rule_t_line = _compbudget.budget_reached_line(
+        0.000001, "flag", budget_progress.get("completed", 0),
+        budget_progress.get("total", 0), "ARN resource",
+        "comp-similar supersede --budget 0.000001", budget_progress.get("cursor") or "")
+    rule_t_ok = (budget_progress.get("completed") == 1
+                 and budget_progress.get("partial") is True
+                 and budget_progress.get("cursor") == sorted(corpus)[0]
+                 and "BUDGET REACHED:" in rule_t_line
+                 and "results are a PREFIX, not the answer" in rule_t_line
+                 and "--cursor " + sorted(corpus)[0] in rule_t_line)
+    ok &= rule_t_ok
+    print(f"  Rule T tiny-budget + genuine cursor: {'PASS' if rule_t_ok else 'FAIL'}")
+
+    print(f"=== comp_similar self-test: {'PASS' if ok else 'FAIL'} (11/11) ===" if ok
           else "=== comp_similar self-test: FAIL ===")
     return 0 if ok else 1
 
@@ -492,12 +642,95 @@ def _resolve(query: str, corpus) -> str | None:
     return sub[0] if len(sub) == 1 else None
 
 
+def _resume_args(args, mode: str) -> str:
+    """Reproduce scan-affecting arguments except the old cursor; Rule T appends the new one."""
+    parts = ["comp-similar", mode]
+    if args.type:
+        parts.extend(["--type", args.type])
+    if args.top != 40:
+        parts.extend(["--top", str(args.top)])
+    if args.heat_json:
+        parts.extend(["--heat-json", args.heat_json])
+    if args.live_heat:
+        parts.append("--live-heat")
+    if args.budget is not None:
+        parts.extend(["--budget", str(args.budget)])
+    if args.json:
+        parts.append("--json")
+    return " ".join(shlex.quote(str(part)) for part in parts)
+
+
+def _budget_status(progress, budget_s, budget_source, clock, resume_args):
+    n, total = progress.get("completed", 0), progress.get("total", 0)
+    if n == total:
+        return _compbudget.within_budget_line(
+            n, total, "ARN resource", budget_s, budget_source, round(clock.elapsed(), 2))
+    cursor = progress.get("cursor")
+    if cursor:
+        return _compbudget.budget_reached_line(
+            budget_s, budget_source, n, total, "ARN resource", resume_args, cursor)
+    return ("BUDGET REACHED: %s s (%s); scanned 0 of %d ARN resource; results are a PREFIX, "
+            "not the answer; NO CURSOR YET: no ARN resource completed before the budget hit"
+            % (_compbudget.fmt(budget_s), budget_source, total))
+
+
+def _partial_state(progress, cov, extra=""):
+    if progress.get("partial"):
+        why = "scanned %d of %d ARN resources; %s" % (
+            progress.get("completed", 0), progress.get("total", 0), cov["vintage_note"])
+        return STATE_PARTIAL_BLIND, why
+    if cov.get("corpus_vintage_claim") != "measured":
+        why = cov["vintage_note"]
+        return STATE_PARTIAL_BLIND, ("%s; %s" % (extra, why)) if extra else why
+    if extra:
+        return STATE_PARTIAL_BLIND, "%s; %s" % (extra, cov["vintage_note"])
+    return None, ""
+
+
+def _query_answer_state(resolved, cov, *, result_count=None, subject="subject"):
+    """One/pair query answer-state dispatcher; shared by live paths and planted controls."""
+    if resolved is None:
+        return STATE_SUBJECT_ABSENT, f"'{subject}' did not resolve to a corpus resource"
+    if cov.get("corpus_vintage_claim") != "measured":
+        return STATE_PARTIAL_BLIND, cov["vintage_note"]
+    if result_count == 0:
+        return STATE_PRESENT_ZERO, f"{subject} is present; zero results cleared the threshold"
+    return None, ""
+
+
+def _cluster_answer_state(progress, cov, *, eligible, result_count, node_type=None):
+    """Cluster answer-state dispatcher; NOT_APPLICABLE is about population, never zero rows."""
+    state = _partial_state(progress, cov)
+    if state[0] is not None:
+        return state
+    if node_type and eligible == 0:
+        return STATE_NOT_APPLICABLE, f"node_type={node_type} has no applicable population"
+    if result_count == 0:
+        return (STATE_PRESENT_ZERO,
+                "subject population present; zero overlaps cleared the threshold")
+    return None, ""
+
+
+def _supersede_answer_state(progress, cov, *, heat_present, result_count):
+    """Supersede dispatcher; absent heat makes the answer partial, never a measured zero."""
+    state = _partial_state(progress, cov, "" if heat_present else "heat source absent")
+    if state[0] is not None:
+        return state
+    if result_count == 0:
+        return (STATE_PRESENT_ZERO,
+                "subject population present; zero heat-corroborated twins")
+    return None, ""
+
+
 def main(argv=None) -> int:
     import argparse
     ap = argparse.ArgumentParser(
         prog="comp-similar",
         description="BM25 SUMMARY similarity (what a resource DOES) + superseded-twin scan. "
-                    "Advisory, read-only, hold-aware. NFRA_COMPSIMILAR PH2.")
+                    "Advisory, read-only, hold-aware. NFRA_COMPSIMILAR PH2.",
+        epilog="Engine: org/modules/graph/debtscan/comp_similar.py\n"
+               "Rule T: --budget SECONDS > COMP_BUDGET_S > 90s default; 0 is unbounded. "
+               "Corpus scans stop on deterministic ARN boundaries and emit --cursor.")
     ap.add_argument("query", nargs="*",
                     help="'<a> <b>' pairwise | '<a>' one-vs-corpus neighbors | "
                          "'supersede' | 'cluster'")
@@ -509,6 +742,10 @@ def main(argv=None) -> int:
     ap.add_argument("--live-heat", action="store_true",
                     help="supersede: pull heat live via comp-debris+comp-heat (SLOW, minutes; "
                          "partial for S3 buckets -- see --heat-json).")
+    ap.add_argument("--budget", metavar="SECONDS",
+                    help="Rule T wall-clock budget (flag > COMP_BUDGET_S > 90s; 0=unbounded)")
+    ap.add_argument("--cursor", metavar="LAST_ARN",
+                    help="resume a bounded supersede/cluster scan strictly after this ARN")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--self-test", action="store_true", help="offline mutant gate (no graph/AWS)")
     args = ap.parse_args(argv)
@@ -520,12 +757,20 @@ def main(argv=None) -> int:
 
     # supersede / cluster need the corpus + (supersede) live heat.
     if mode in ("supersede", "cluster"):
+        try:
+            budget_s, budget_source = _compbudget.resolve_budget(args.budget)
+        except ValueError as exc:
+            ap.error(str(exc))
+        clock = _compbudget.Clock(budget_s)
         corpus = build_corpus()
         if not corpus:
+            sys.stderr.write(_compbudget.disclosure_line(budget_s, budget_source) + "\n")
             sys.stderr.write("comp-similar: EMPTY corpus (broken retrieval, not an empty estate)\n")
             return 2
         cov = coverage(corpus)
         index = SimilarityIndex(corpus)
+        progress = {}
+        deferred = []
         if mode == "supersede":
             # Heat source: --heat-json snapshot (preferred/fast) | --live-heat (slow) | none.
             heat, heat_src = {}, "none"
@@ -537,17 +782,38 @@ def main(argv=None) -> int:
                     sys.stderr.write(f"comp-similar: --heat-json unreadable ({e})\n")
                     return 1
             elif args.live_heat:
-                heat = load_heat_live()
+                heat = load_heat_live(clock=clock, deferred=deferred)
                 heat_src = "live (comp-debris+comp-heat)"
-            cands = supersede_scan(corpus, index, heat, top=args.top)
+            # One deterministic outer sweep produces both views. Their similarity thresholds and
+            # neighbor widths remain the legacy 8 (supersede) / 6 (pool); only scheduling changed.
+            pool = []
+            cands = supersede_scan(corpus, index, heat, top=args.top, clock=clock,
+                                   cursor=args.cursor, progress=progress, pool_out=pool)
             # The candidate POOL (summary-twin + unheld + not-designed-parallel) -- what WOULD be a
             # supersede candidate once heat diverges. Shown so a no-heat run is still useful + honest.
-            pool = cluster_scan(corpus, index, top=args.top)
+            budget_status = _budget_status(
+                progress, budget_s, budget_source, clock, _resume_args(args, mode))
+            resume_note = f"RESUMED AFTER: {args.cursor}" if args.cursor else None
+            state, state_detail = _supersede_answer_state(
+                progress, cov, heat_present=bool(heat), result_count=len(cands))
+            state_text = answer_state_line(state, state_detail) if state else None
+            deferred_lines = _compbudget.deferred_bucket(
+                len(deferred), 2 if args.live_heat else 0, "heat subprocess", deferred)
             if args.json:
-                print(json.dumps({"coverage": cov, "heat_source": heat_src,
+                print(json.dumps({"budget_status": budget_status, "resume_basis": resume_note,
+                                  "answer_state": state,
+                                  "answer_state_detail": state_detail,
+                                  "deferred": deferred_lines, "coverage": cov, "heat_source": heat_src,
                                   "heat_resources": len(heat), "candidates": cands,
                                   "summary_twin_pool": pool}, indent=2))
                 return 0
+            if resume_note:
+                print(resume_note)
+            print(budget_status)
+            for line in deferred_lines:
+                print(line)
+            if state_text:
+                print(state_text)
             print(cov["note"])
             print(f"heat: source={heat_src}, {len(heat)} resources banded "
                   f"(UNKNOWN heat -> never a candidate -- C3)")
@@ -568,10 +834,30 @@ def main(argv=None) -> int:
                 print("  (none -- no summary-twin + heat-divergent + unheld pair in this heat set)")
             return 0
         # cluster
-        clusters = cluster_scan(corpus, index, node_type=args.type, top=args.top)
+        clusters = cluster_scan(corpus, index, node_type=args.type, top=args.top,
+                                clock=clock, cursor=args.cursor, progress=progress)
+        budget_status = _budget_status(
+            progress, budget_s, budget_source, clock, _resume_args(args, mode))
+        resume_note = f"RESUMED AFTER: {args.cursor}" if args.cursor else None
+        eligible = sum(1 for d in corpus.values() if not args.type or d.node_type == args.type)
+        state, state_detail = _cluster_answer_state(
+            progress, cov, eligible=eligible, result_count=len(clusters), node_type=args.type)
+        state_text = answer_state_line(state, state_detail) if state else None
+        deferred_lines = _compbudget.deferred_bucket(0, 0, "heat subprocess", [])
         if args.json:
-            print(json.dumps({"coverage": cov, "clusters": clusters}, indent=2))
+            print(json.dumps({"budget_status": budget_status, "resume_basis": resume_note,
+                              "answer_state": state,
+                              "answer_state_detail": state_detail,
+                              "deferred": deferred_lines, "coverage": cov,
+                              "clusters": clusters}, indent=2))
         else:
+            if resume_note:
+                print(resume_note)
+            print(budget_status)
+            for line in deferred_lines:
+                print(line)
+            if state_text:
+                print(state_text)
             print(cov["note"])
             print(f"\n=== functional-overlap clusters (same-JOB, advisory) [{len(clusters)}] ===")
             for c in clusters:
@@ -579,6 +865,8 @@ def main(argv=None) -> int:
         return 0
 
     if mode and len(args.query) >= 1:
+        if args.cursor is not None:
+            ap.error("--cursor applies only to supersede/cluster corpus scans")
         corpus = build_corpus()
         if not corpus:
             sys.stderr.write("comp-similar: EMPTY corpus (broken retrieval, not an empty estate)\n")
@@ -592,27 +880,53 @@ def main(argv=None) -> int:
         index = SimilarityIndex(corpus)
         a = _resolve(args.query[0], corpus)
         if a is None:
-            sys.stderr.write(f"comp-similar: '{args.query[0]}' did not resolve to a corpus resource\n")
-            return 1
+            state, detail = _query_answer_state(None, cov, subject=args.query[0])
+            payload = {"answer_state": state, "answer_state_detail": detail}
+            payload["coverage"] = cov
+            if args.json:
+                print(json.dumps(payload, indent=2))
+            else:
+                print(cov.get("note", ""))
+                print(answer_state_line(state, detail))
+            return 0
         if len(args.query) >= 2:                     # pairwise
             b = _resolve(args.query[1], corpus)
             if b is None:
-                sys.stderr.write(f"comp-similar: '{args.query[1]}' did not resolve\n")
-                return 1
+                state, detail = _query_answer_state(None, cov, subject=args.query[1])
+                payload = {"answer_state": state, "answer_state_detail": detail}
+                payload["coverage"] = cov
+                if args.json:
+                    print(json.dumps(payload, indent=2))
+                else:
+                    print(cov.get("note", ""))
+                    print(answer_state_line(state, detail))
+                return 0
             res = pairwise(a, b, corpus, index)
+            state, state_detail = _query_answer_state(
+                a, cov, result_count=0 if res["summary_sim"] == 0 else 1,
+                subject="both subjects")
             if args.json:
-                print(json.dumps({"coverage": cov, **res}, indent=2))
+                print(json.dumps({"coverage": cov, "answer_state": state,
+                                  "answer_state_detail": state_detail, **res}, indent=2))
             else:
                 print(cov["note"])
+                if state:
+                    print(answer_state_line(state, state_detail))
                 print(f"\nsummary_sim={res['summary_sim']}\n  {res['verdict']}\n"
                       f"  a: {res['a_summary']}\n  b: {res['b_summary']}")
             return 0
         # one-vs-corpus neighbors
         nbrs = index.neighbors(a, top=args.top)
+        state, state_detail = _query_answer_state(
+            a, cov, result_count=len(nbrs), subject=corpus[a].name)
         if args.json:
-            print(json.dumps({"coverage": cov, "arn": a, "neighbors": nbrs}, indent=2))
+            print(json.dumps({"coverage": cov, "answer_state": state,
+                              "answer_state_detail": state_detail,
+                              "arn": a, "neighbors": nbrs}, indent=2))
         else:
             print(cov["note"])
+            if state:
+                print(answer_state_line(state, state_detail))
             print(f"\nsummary-similar peers of {corpus[a].name}:")
             for n in nbrs:
                 flags = (" [THIN]" if n["thin"] else "") + (" [HELD]" if n["held"] else "")
