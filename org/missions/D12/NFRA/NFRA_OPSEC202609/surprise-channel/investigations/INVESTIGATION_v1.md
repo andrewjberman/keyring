@@ -314,6 +314,44 @@ L8 reads below were appended at this write; no row was added or changed by it.
   every ARMED worker item of the round (S2/S3/S4/S5/S11/S13/S14/S17) carries the issuer's disarm record; S10's disarm
   is the CTO's text and S1's is this seat's act at L10.
 
+## L9 adjudication + L10 stamp -- round 1, the one slug (2026-09-03T10:36:19Z, `3.0.0_SA_CVO~Z`)
+
+**Precondition applied at this seat (spine L10; protocol s.8):** task orders terminal 4 of 4 (TO-OP-S-3 @a491aaec8c,
+TO-OP-S-17-16 @f9b2a16c2c, TO-OP-S-8 @2da0c78f6a, TO-OP-S-5 @f49c82b891); proof-of-spec instances valid with every
+`surprises` entry resolving to a row 4 of 4 (schema Draft7, 0 errors each; 4/4, 2/2, 2/2, 1/1 by my own reader; the
+issuer's coverage-checked runs 19595 / 19634 / 19646 as the second instrument); rows at HEAD 18, all
+`UNDER_INVESTIGATION` until this slug. HEAD f49c82b891 = origin/SITEZ at the read.
+**Dispositions (rows Z-S19, Z-S20 below):** GRADUATED -- S1, S2, S3, S4, S5, S10, S11, S13, S14, S17 (10 findings, every
+mechanism re-derived at this seat on a second instrument); DISMISSED_WITH_REASON -- S6, S7, S8, S9, S12, S15, S16, S18
+(the issuer's disarm records: records of acts, carried on the items they disarm). 18 of 18 dispositioned.
+**Remediation document:** `../remediations/REMEDIATION_v1.Z.md`, 5 rows, every one `SPEC_ERROR -> 6`: S3 (the key
+flip: OP-s-25/16/17), S4 (the deny statement with the C-14 role: OP-s-14/15/19/26), S5 (the logging target: OP-s-27 +
+OP-s-17's limb), S10 (the belt-justification correction as a RIDER on the round-2 portal-auth face TO-OP-S-1-2, cells
+OP-s-1/OP-s-2, with the disarm owner's scope bound: all three roles measured before the sentence is rewritten; the belt
+stays), S14 (the demo table's import under OP-s-8's round-2 limb, the plan read as the bar) -- each a cell decomposition
+v0.1.4 already contains. 0 `DECOMP_INVALIDATING`; 0 `SCOPE_CHANGE` (C-8's key, roles and target were corrected at L4 by
+the L4 owner before this stamp: v0.5 @a3cad58b0d, v0.6 @b482fe8a5b, v0.7 @237265f9f1). The other five graduated items
+carry NO remediation row; their facts are carried verbatim on Z-S19's evidence: S2, S11, S13, S17 were remediated inside
+round 1 and are closed (disarm and remedy both landed); S1's remedy is a fabric surface homed by the register
+(0.0.0_AB_MSTR~Z 19629), its disarm is this seat's lane-addressed pointer at the stamp, recorded as its own row after
+the pointer. WHY: the row gate (`.tools/surprise-row-gate.py`, the mechanism at commit) requires `route` +
+`loop_target` on every NEW remediation row, while the schema does not require them and protocol s.8 defines `route` as
+the re-entry decision ('what does the remedy need that does not exist yet?') -- a value that does not exist for a
+remedied or out-of-project item; writing one would put a second intent on the axis. The gate names an audited override;
+on this device the tree-path files are graded by the pre-commit hook (`.git/hooks/pre-commit:137-138`), which reads no
+commit message, and safe-commit's override reader keys on the legacy `org/surprise_channel` spelling only, so the
+escape cannot fire for a tree project (exercised on this slug at 10:36Z and 11:19Z). The divergence is filed as a
+round-2 intake row for the gate's owner. S10's disarm record (1.0.0_SA_CTO~Z, written and validated 10:38:59Z) is HELD
+off this file until this slug commits and takes the next free id; S10's remediation row reads ARMED until then. Not a
+zero-graduation round: the project does not close; round 2 opens on the routed rows at L6, owner `2.0.0_SA_COO~Z`.
+**Handoff:** the remediation document is the one artifact, to the route owner and no one else. The mechanical
+`prd-header-notify.py kind:route` addresses the BASE serial (row S1); this seat's lane-addressed pointer to
+`2.0.0_SA_COO~Z` in the same turn is S1's own disarm act, recorded as its own row (next free id at write) after the
+pointer. `dep_stage: ROUND_CLOSE` is the row owner's flip on this stamp (`1.0.0_SA_CTO~Z`).
+**What the round said about the loop, once:** seven referents on four faces were written from a reading and none
+survived the workers' mandated pre-write re-grounding; zero destructive acts. The three cut rules banked by the issuer
+and the CTO are the remedy for the class; this slug routes only what the cells need.
+
 ```json
 [
  {
@@ -763,6 +801,78 @@ L8 reads below were appended at this write; no row was added or changed by it.
    ]
   },
   "notes": "THE SEVENTH REFERENT OF ROUND 1 WRITTEN FROM A READING (key, roles, target, separator, the regional control + its file, the demo table's management, this carrier) -- and the second time the issuer REPEATED the face's wrong carrier in a ruling (19600 item 2) rather than reading it: the ruling is a face too. The banked round-2 cut rule applies to operating notes as well: name a carrier only after a state list or a `git show` has returned it this round. WHAT THIS ROW IS NOT: a re-file, a face edit, or a disposition of Z-S17 (the CVO's); nor an act on the foreign drift."
- }
+ },
+{
+ "id": "NFRA_OPSEC202609-Z-S19",
+ "project": "NFRA_OPSEC202609",
+ "fabric": "site-z",
+ "surfaced_by": "3.0.0_SA_CVO~Z (L9 adjudication row; the round's one slug at L10)",
+ "surfaced_at": "2026-09-03T10:36:19Z",
+ "one_line": "L9 ADJUDICATION, round 1: the ten grounded items GRADUATE -- S1, S2, S3, S4, S5, S10, S11, S13, S14, S17 -- each with its mechanism attributed at source or on a live primitive with a control, its denominators carried, and its remedy holder named. The remediation document REMEDIATION_v1.Z.md carries the five whose remedy needs a cell the decomposition already contains (S3, S4, S5, S10, S14 -> SPEC_ERROR -> 6). The other five carry no remediation row and their facts are carried on this row's evidence: S2, S11, S13, S17 remediated inside round 1 and closed; S1 a fabric surface homed by the register, disarmed by this seat's lane-addressed pointer at the stamp.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "NFRA_OPSEC202609-Z-S1",
+  "NFRA_OPSEC202609-Z-S2",
+  "NFRA_OPSEC202609-Z-S3",
+  "NFRA_OPSEC202609-Z-S4",
+  "NFRA_OPSEC202609-Z-S5",
+  "NFRA_OPSEC202609-Z-S10",
+  "NFRA_OPSEC202609-Z-S11",
+  "NFRA_OPSEC202609-Z-S13",
+  "NFRA_OPSEC202609-Z-S14",
+  "NFRA_OPSEC202609-Z-S17"
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Each adjudicated item's grounding was re-derived at this seat on an instrument other than its surfacing seat's, recorded in this file's L8 narrative under the item's heading (S1 07:17Z; S2/S3 08:1xZ; S4/S5 08:3xZ; S10 08:5xZ; S11 09:0xZ; S13/S14 09:2xZ; S17 09:3xZ), with the instrument and its denominator named each time",
+   "The L10 precondition read at the stamp: every task order under the project terminal with a VALID proof-of-spec instance whose surprises entries resolve to rows (TO-OP-S-3 @a491aaec8c / instance @3c32f20c38; TO-OP-S-17-16 @f9b2a16c2c; TO-OP-S-8 @2da0c78f6a; TO-OP-S-5 @f49c82b891) -- checked at this seat by schema (Draft7, 0 errors each) and by resolving every surprises id against this file's block, and by the issuer's coverage-checked runs (19595, 19634, 19646)",
+   "The dispositions are grouped by value, one adjudication row per value, because a row's disposition applies to every id it adjudicates (org/ref/SURPRISE_CHANNEL_PROTOCOL.md section 4, 'Setting a disposition'); the disarm records S6-S9, S12, S15, S16, S18 are adjudicated by the sibling row Z-S20",
+   "FABRIC ITEM (no remediation row; homed by the register, 0.0.0_AB_MSTR~Z 19629): NFRA_OPSEC202609-Z-S1 -- class OBSERVATION / ARMED; disarm DISARMED by 3.0.0_SA_CVO~Z at 2026-09-03T10:36:19Z; remediation OPEN, owner 1.0.0_SA_CTO, round v2; closed False; remedy: A lane-aware recipient in the notifier (the laptop's e58250f261 when it reaches SITEZ); until then every L4 and L10 handoff on this device is accompanied by a hand-sent lane-addressed pointer.; builder: 1.0.0_SA_CTO (notifier/gate surface; the laptop's commit is the carrier); mechanism: .tools/prd-header-notify.py @e906c6f156 addresses BASE serials only (:49 RECIPIENT default 2.0.0_SA_COO; :68 ROUTE_OWNER {2: 1.0.0_SA_CTO, 5/6: 2.0.0_SA_COO}; :364 sends to that owner with no lane lookup); on site Z every live seat is a ~Z lane and the base inboxes are unwatched, so the L4 and L10 handoffs re-offer to a dead inbox until a READ that cannot come.",
+   "CLOSED IN ROUND 1 (no remediation row; carried here verbatim): NFRA_OPSEC202609-Z-S2 -- class OBSERVATION / ARMED; disarm DISARMED by 2.0.0_SA_COO~Z at 2026-09-03T08:04:00Z; remediation REMEDIATED, owner 2.0.0_SA_COO~Z, round v1; closed True; remedy: Design call (a) ACCEPTED: state-at-rest is the value's resting place on the measured mitigations (SSE-S3 + full public-access-block; the value proves path-of-entry only; a rotation bounds a state-history read to one window); wording clarifications inside the worker's deliverables (secrets.tf's invariant scoped to the JWT keypair; the runbook names the state-history residual). The state bucket's missing noncurrent-version expiry is homed OUT of this project (0.0.0_AB_MSTR~Z 19629: a steward item on the debt baseline, or a D0 brief at 4.0.0_SA_CRO).; builder: 2.0.0_SA_COO~Z (the design call, recorded); the lifecycle item's steward is 0.7.0_AE_CloudOps, gate 1.0.0_SA_CTO, outside this project; mechanism: A CloudFront custom origin header value is returned in full by cloudfront:GetDistributionConfig, so the origin secret is written into Terraform state by construction on every write path; the portal-auth state bucket is versioning-Enabled with NO lifecycle, so superseded values persist indefinitely; portal-auth/secrets.tf:5-7's invariant ('key material never enters Terraform state') does not hold for the new secret.",
+   "CLOSED IN ROUND 1 (no remediation row; carried here verbatim): NFRA_OPSEC202609-Z-S11 -- class BLOCKING / ARMED; disarm DISARMED by 2.0.0_SA_COO~Z at 2026-09-03T08:56:21Z; remediation REMEDIATED, owner 1.0.0_SA_CTO~Z, round v1; closed True; remedy: Done on both halves: the face @beacddcf26 (issuer) and the checker @50ff3d674a (CTO), documented in DECOMP_CELL_ID_CONVENTION.md; exercised by the issuer's coverage run on the fixed checker (19634).; builder: 2.0.0_SA_COO~Z (face) and 1.0.0_SA_CTO~Z (checker) -- both landed; mechanism: TO-OP-S-17-16's S1716-AC4 declared cell_refs='OP-s-17 OP-s-16' space-separated; .tools/proof-of-spec-check.py:562 split cell_refs on a comma only, read the pair as one literal matching no cell, and refused an otherwise-valid instance; the separator convention was undocumented and the same file read <owned_cells> tolerantly.",
+   "CLOSED IN ROUND 1 (no remediation row; carried here verbatim): NFRA_OPSEC202609-Z-S13 -- class OBSERVATION / ARMED; disarm DISARMED by 2.0.0_SA_COO~Z at 2026-09-03T09:26:00Z; remediation REMEDIATED, owner 2.0.0_SA_COO~Z, round v1; closed True; remedy: Done for this project: the regional half is discharged by prior state at its real carrier; the CloudFront half proceeds under TO-OP-S-5. The face's lane defect and the relay's scope loss are covered by the issuer's third round-2 cut rule (a relayed measurement carries its scope; a Terraform deliverable names the declaration carrier of every resource it edits, read live).; builder: 2.0.0_SA_COO~Z (the ruling and the cut rule); mechanism: The face said WAF logging was OFF on both ACLs; the regional ACL has had a live, Terraform-declared logging configuration since 2026-08-14 (opal-gateway/waf.tf:194 @a7312b946b, retention 90 d), delivering to the exact group the face named; the brief measured only the CloudFront ACL and said so (:95), and the qualifier was dropped at the PRD's SOURCE line, the manifest and the face -- a scoped measurement generalised in relay; the face's Lane path holds no Terraform.",
+   "CLOSED IN ROUND 1 (no remediation row; carried here verbatim): NFRA_OPSEC202609-Z-S17 -- class BLOCKING / ARMED; disarm DISARMED by 2.0.0_SA_COO~Z at 2026-09-03T09:32:00Z; remediation REMEDIATED, owner 2.0.0_SA_COO~Z, round v1; closed True; remedy: Done for this project: the carrier corrected in the GO and the table protected in place (TO-OP-S-8 complete @2da0c78f6a; TableId and CreationDateTime identical); the issuer's cut rule covers the carrier class. The drift (apply-or-retire the global_graph rule) is a fabric item routed to the laptop with 0.8.0_AE_CloudComp / NFRA_GLOBGRPH as the owner class (19629).; builder: 2.0.0_SA_COO~Z (the GO and the cut rule); the drift's owner class is 0.8.0_AE_CloudComp, placement the laptop's; mechanism: opal-users-v2 is managed by shared-infra/dynamo.tf, not the portal-auth/dynamodb.tf the face and the issuer's ruling both named -- a correction that already existed in three places (the target file's own comment block since 2026-06-29; this channel's S3 evidence; the issuer's own 19504) and did not reach the ruling; and shared-infra's baseline plan carried a foreign unapplied change (a global_graph lifecycle rule committed 2026-07-15 @4cd024c5c6 by 0.8.0_AE_CloudComp~Z) that an unscoped apply would have shipped."
+  ]
+ },
+ "disposition": "GRADUATED",
+ "spec_asserts": "Spine L9 (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md v2.3): 'a disposition on every row ... and, for graduated rows, remediation rows ... issued as ONE slug for the round at L10 (one artifact, one moment)'; the graduation bar is a grounding bar.",
+ "world_is": "Ten of the round's eighteen rows are findings and every one is grounded on its own evidence and re-derived here; eight are the issuer's disarm records for the ARMED findings and are not findings themselves. Seven of the ten findings say the same thing about the loop's inputs: a face asserted something about the world that the world did not hold (a label taken for a fact; a name never measured; a scoped measurement generalised in relay; a correction that never reached the ruling that needed it), and every one was caught by the workers' mandated pre-write re-grounding before a destructive act -- zero destructive acts this round. The other three are the loop's own instruments: the notifier's base-serial addressing (S1), the checker's undocumented separator (S11), and a deny belt whose justification outlived its premise (S10).",
+ "notes": "WHAT THE SLUG DOES AND DOES NOT DO. It dispositions; it does not re-cut a face, re-decompose, or write to a worker. Five routes go to 2.0.0_SA_COO~Z at L6 as one artifact (the remediation document) and to no one else; the mechanical notifier's delivery to the BASE serial is disarmed by this seat's lane-addressed pointer to 2.0.0_SA_COO~Z in the same turn (S1's own disarm act). NO row is DECOMP_INVALIDATING: every remedy that needs building sits on a cell the decomposition already contains at v0.1.4 (OP-s-25, OP-s-26, OP-s-27, OP-s-8's import limb, OP-s-14/15/19's deny statement, OP-s-1/OP-s-2's portal-auth face carrying S10's rider). NO row is SCOPE_CHANGE: the three ratified-constraint contradictions (C-8's key, roles and target) were corrected at L4 by the L4 owner's own act (v0.5, v0.6, v0.7), disclosed to Andrew and reversible by his word, before this stamp -- the remedy for each is a round-2 task order on an existing cell, which is SPEC_ERROR, not a re-entry at L2. The round is not a zero-graduation round, so the project does not close; round 2 opens on the routed rows. WHY FIVE REMEDIATION ROWS AND NOT TEN: the row gate requires route + loop_target on every NEW remediation row; the schema does not require them and protocol s.8 defines route as the re-entry decision, which has no value for a remedied or out-of-project item -- writing one would put a second intent on the axis (rule 24 iii). The gate's named override is read by safe-commit only for the legacy org/surprise_channel spelling; tree-path files are graded by the pre-commit hook, which reads no message, so the escape cannot fire for a tree project (exercised twice on this slug). The five items without a row are carried on this row's evidence, verbatim; the divergence is a round-2 intake row."
+},
+{
+ "id": "NFRA_OPSEC202609-Z-S20",
+ "project": "NFRA_OPSEC202609",
+ "fabric": "site-z",
+ "surfaced_by": "3.0.0_SA_CVO~Z (L9 adjudication row; the round's one slug at L10)",
+ "surfaced_at": "2026-09-03T10:36:19Z",
+ "one_line": "L9 ADJUDICATION, round 1: the eight DISARM RECORDS -- S6, S7, S8, S9, S12, S15, S16, S18 -- are DISMISSED WITH REASON: each is the record of a disarm act by its named owner, not a finding; its content is carried on the item it disarms and in that item's remediation row (disarm.state DISARMED, owner, at), so it seeds no remediation row of its own.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "NFRA_OPSEC202609-Z-S6",
+  "NFRA_OPSEC202609-Z-S7",
+  "NFRA_OPSEC202609-Z-S8",
+  "NFRA_OPSEC202609-Z-S9",
+  "NFRA_OPSEC202609-Z-S12",
+  "NFRA_OPSEC202609-Z-S15",
+  "NFRA_OPSEC202609-Z-S16",
+  "NFRA_OPSEC202609-Z-S18"
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Each of the eight rows names itself a DISARM RECORD in its surfaced_by and one_line, carries no adjudicates field, and cites the item it disarms by id; each is OBSERVATION / INERT by its own terms",
+   "Each disarm act is carried onto the disarmed item's remediation row in REMEDIATION_v1.Z.md as disarm {state: DISARMED, owner: 2.0.0_SA_COO~Z, at: <the record's own timestamp>}, so dismissing the record loses nothing the L10 gate reads",
+   "The D1_CATVIEWS-Z-S4 precedent (2.0.0_SA_COO~Z, 2026-09-03 07:03Z): a disarm record is 'not a new finding and not an adjudication'"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A disarm record is the record of an act, not a finding: it has no mechanism of its own to graduate and no remedy of its own to route. Its substance -- who disarmed what, when, on what grounding -- is carried verbatim on the disarmed item's remediation row, which is the carrier the L10 gate and the next round read. Dismissing the record keeps the channel's item count honest (ten findings, not eighteen) without losing a byte of what the record said.",
+ "spec_asserts": "Protocol section 4: 'not valid or not worth carrying is dismissed with its reason'; section 5: the remediation row carries the two-state disarm block; section 0: a reader resolves a row's state from the newest row that cites it.",
+ "world_is": "Eight of the round's eighteen rows are disarm records, each valid, each already reflected in the remediation row of the item it cites; carrying them forward as items would count eight acts as eight findings.",
+ "notes": "Nothing is lost: the records stay on this file's block byte-identical (append-only), and each remediation row's disarm block names the record's owner and timestamp. If a later reader wants the disarm's grounding, the record row is the citation."
+}
 ]
 ```
