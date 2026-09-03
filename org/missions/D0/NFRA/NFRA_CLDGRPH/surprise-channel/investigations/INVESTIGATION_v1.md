@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **26 rows** (S1-S27, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 19:0xZ by `0.8.0_AE_CloudComp~O` on appending S27 (was 25); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **27 rows** (S1-S28, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 19:16Z by `0.8.0_AE_CloudComp~O` on appending S28 (was 26); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1059,6 +1059,36 @@ but it leaves B2-AC6's required incremental artifact impossible under the curren
     "spec_asserts": "TO-CG-C-3 THE CELL says the estate declares real aws_s3_bucket_notification resources with Lambda targets in bd-pipeline, cot-pipeline, and inf-pipeline, and DELIVERABLE 4(a) requires the three declared targets to derive non-zero.",
     "world_is": "bd-pipeline and inf-pipeline declare Lambda notification blocks, but cot-pipeline's notification resource is EventBridge-only in both HCL and resolved state. The implementation derives every real Lambda target and does not fabricate a cot Lambda edge; the acceptance arm remains exercisable using three actual bd-pipeline targets.",
     "notes": "Not blocking the bounded implementation: C3-AC3's non-zero three-target arm is met by the three actual bd-pipeline Lambda configurations, with the two inf-pipeline configurations as additional evidence. Disarm by correcting the face's parenthetical or explicitly naming EventBridge as a different target class outside this cell; no Terraform change belongs here."
+  }
+]
+```
+
+## S28 -- the graph deriver fix is committed but the shared cloud image still requires a separately routed rebuild
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S28",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~O",
+    "surfaced_at": "2026-09-03T19:16Z",
+    "one_line": "The C-3 graph-engine fix is locally committed and passes a real read-only derive, but the live derive runner receives comp_aws_cli.py through a shared Docker image tagged latest, so cloud runtime application requires a separately routed image rebuild outside this task's no-deploy bounds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/comp_aws_cli.py and org/modules/graph/tests/test_comp_aws_s3_notification_state.py: local implementation commit b5bc1c8b27; focused and adjacent tests pass 27/27, and the full read-only derive exits 0 with TRIGGERS=188 and S3 notification reads 34/0.",
+        "infra/aws/globgrph/derive_runner.py:101 invokes comp_aws_cli.cmd_derive, while infra/aws/globgrph/Dockerfile:56 copies org/modules/graph/comp_aws_cli.py into the image and Dockerfile:206 starts derive_runner.py.",
+        "org/critical_paths/change_management/20260826T0008Z_globgrph-derive-runner-c2c3-compose_deploy_completion.md:79-113 records that the shared globgrph :latest image serves five task definitions: derive, comp_learns_producer, cse_producer, fedobs_producer, and resource_summaries_producer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-C-3 requires the repaired deriver to be exercised read-only against the real AWS control plane, explicitly forbids deploy/resource/Terraform writes by this seat, and directs the assignee to file a surprise row so the issuer can route an image rebuild if one is required.",
+    "world_is": "The repository implementation and its local real-AWS exercise are complete, but the running cloud task will retain the prior comp_aws_cli.py until the shared globgrph image is rebuilt and the relevant task definition is refreshed. That deployment has a five-consumer blast radius and is not authorized by C-3.",
+    "notes": "This does not block local C-3 completion or its proof. Disarm by routing and proving the shared-image rebuild/deployment through the existing change-management path, preserving the single canonical derive runner and checking all five consumers; this seat must not perform or imply that deployment."
   }
 ]
 ```
