@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **7 rows** (S7 appended by `0.8.0_AE_CloudComp`
+**Append-only during the round.** Denominator at this write: **9 rows** (S8 + S9 appended by `3.0.0_SA_CVO` 05:5xZ, the round-2 slug: the machine adjudications of S1 and of S2/S3/S5 and the L10 stamp; earlier: **7 rows** (S7 appended by `0.8.0_AE_CloudComp`
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -76,6 +76,19 @@ the defect here: it is what turned a 600 s hang into a 90 s honest prefix, three
 
 Precondition: every task order terminal; every row dispositioned; 0 graduated, 0 forward routes. Nothing is cut at L6
 until L5 carries the cell.
+
+## L10 stamp -- round 2 (3.0.0_SA_CVO, zero graduation: proceed to the next L6 dispatches)
+
+| item | carrier | disposition | L10 |
+|---|---|---|---|
+| S1 | S8 (adjudicates S1; S4 gave the same closure in prose) | DISMISSED_WITH_REASON | closed |
+| S2 / S3 / S5 | S9 (adjudicates all three) | DISMISSED_WITH_REASON -- REMEDIED by CE-g-5 @173dd335f4, TO-CE-G-5 complete with a VALID proof, exercised at this seat (WITHIN BUDGET, 14.34 s, 2,100 nodes) | closed |
+| S4, S6, S7 | themselves | terminal on their own face | -- |
+
+Precondition: 5 of 5 task orders terminal, the three complete ones with VALID proof instances whose surprises resolve;
+every item dispositioned by its latest carrier. 0 graduated, 0 routed. The round's three in-deliverable findings are read
+and not counted here (the audits' own content; the per-tool carrier is theirs). Next: L6, `2.0.0_SA_COO`; `ROUND_CLOSE`
+on this stamp by the row owner; the close (completion report + grades) follows per the spine.
 
 ```json
 [
@@ -253,6 +266,61 @@ until L5 carries the cell.
     "spec_asserts": "S6's disarm text: 'do NOT kill PID 25896 ... until the fix, a caller that needs the AWS plane passes --budget >= 300 and reads the disclosure. Report the disarm as a NEW row citing S6.' and 'The INERT residual (the _compbudget.py docstring's non-existent serial) rides your next touch.'",
     "world_is": "PID 25896 was left running, untouched, per instruction. The docstring correction S6 (and S4 before it) each carried as still-outstanding was, in fact, already committed at 39886d04bd -- the same commit as S5 -- so by the time S6 was written the residual had already ridden this seat's 'next touch' (S5's own commit), and the carry-forward note in S4/S6 was reading a stale state of the file rather than its HEAD.",
     "notes": "Filed to close the loop on S6's two-part ask cleanly and to correct the small provenance gap (S4/S6 both cited a residual as still-owed when it was already paid) rather than let a reader chase a fix that already landed. This does not contest S6's DECOMP_INVALIDATING disposition, its L5 route, or its ownership assignment -- all of that stands. No code change made under this row; --budget >= 300 is adopted as this seat's own practice going forward, not a code default (Rule T's 90 s default remains PRD-ratified pending the L5 cell). Push state: 39886d04bd's push state is stated in row S5's own commit history, unchanged by this row."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S8",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T05:50:00Z",
+    "one_line": "ADJUDICATES S1 (machine carrier for the closure S4 gave in prose before the `adjudicates` field existed): DISMISSED_WITH_REASON -- the mid-round grammar landing was handled in-round; the rework landed on origin, the T1 report cited the form, the checker read VALID; nothing to carry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S1"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row S4 @db508e75b4 (the closure of S1, with its five evidence items: rework 2718cffc45 on origin and read on its bytes; T1 report 93025; proof-of-spec-check VALID at 3.0.0_SA_CVO; TO-CE-T-1 terminal @fc5ec7106c; the other-seat exercise)",
+        ".tools/surprise-row-gate.py live census at 3.0.0_SA_CVO 05:4xZ: NFRA_COMPEFFICACY 7 items, undispositioned by machine reading = S1, S2, S3, S5 (the prose closures in S4/S6 are not readable by the gate)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "As S4 states: handled in-round -- the TO's Grammar clause anticipated the form landing mid-round, the issuer amended the bound (92960 -> @2e90f4e06c), the owner's rework under the live TO was both the disarm and the remedy, landed on origin, read on its bytes and exercised from a second seat. This row restates S4's closure in the carrier gate (iii)'s second limb reads.",
+    "spec_asserts": "S1.notes closing condition: 'flips to DISMISSED_WITH_REASON when 0.8.0_AE_CloudComp's reworked commit lands and the T1 deliverable report cites the s.4.4 form; if the rework does not land before the TO's report, the item GRADUATES instead.'",
+    "world_is": "Both halves met on the record before the TO's report closed (S4's evidence); the graduation branch did not fire.",
+    "notes": "Form note: S4 already carries this disposition and reason; it predates the `adjudicates` carrier (@4774db2c87), so the gate reads S1 as undispositioned. This row adds the machine-readable link and nothing else."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S9",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T05:50:00Z",
+    "one_line": "ADJUDICATES S2 + S3 + S5 (one item, the AWS-corpus pull under Rule T): DISMISSED_WITH_REASON -- REMEDIED. Round 1's DECOMP_INVALIDATING route (S6) was taken: decomp v0.2 added cell CE-g-5, TO-CE-G-5 is complete with a VALID proof, the fix landed (@173dd335f4), and the remedy is EXERCISED at this seat: the same default-budget pull that expired 3 of 3 at 03:53Z-03:58Z now returns WITHIN BUDGET in 14.34 s with 2,100 nodes scanned; no kuzu process alive.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S2",
+      "NFRA_COMPEFFICACY-S3",
+      "NFRA_COMPEFFICACY-S5"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 173dd335f4 (0.8.0_AE_CloudComp): fix(NFRA_COMPEFFICACY CE-g-5): comp-kuzu freshness layer -- a killed budgeted client no longer orphans its rebuild; infra/aws/globgrph/_canonical.py +109/-x, kuzu_cli.py +11/-x, .tools/tests/test_comp_find_battery.py +147 (git show --stat at 3.0.0_SA_CVO)",
+        "TO-CE-G-5 status complete @7e3b23578d (self-committed under the lane grant); deliverable + proof @9852efdfb3; python .tools/proof-of-spec-check.py on the instance at 3.0.0_SA_CVO 05:4xZ -> VALID rc 0, 6 of 6 criteria -> CE-g-5, surprises-frame 0 entries, mode ENFORCE",
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-03T05:46Z: `comp-find --corpus aws opal-gateway` (default budget) -> 'WITHIN BUDGET: scanned 1 of 1 pull; budget: 90 s (default), used 14.34 s'; 'DENOMINATOR: 34 hit(s) across 2100 aws node(s) scanned [corpus=aws]'; rc 0; 15 s wall -- against the same query's 3 of 3 BUDGET REACHED at 90 s from this seat at 03:53Z-03:58Z (S3)",
+        "Win32 process table at 05:46:39Z: no python process matching kuzu_nessie_load|kuzu_cli (the round-1 orphan PID 25896 is gone); infra/aws/globgrph/ still carries kuzu_nessie_db.rebuild.lock/, .rebuild.tmp and .rebuild.tmp.wal from the round-1 orphan and the fixed layer served within budget through them",
+        "Task-order census at HEAD: DISC-2 WITHDRAWN, TP-1 WITHDRAWN, T-1 complete, G-5 complete, T-2 complete (5 of 5 terminal); TO-CE-T-2's proof instance VALID at this seat too (6 of 6, 0 surprises)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "REMEDIED, and the remedy exercised by a seat that did not build it. The mechanism S6 grounded (a budgeted client's kill orphaning the mutex winner; every later caller waiting past the budget; the 900 s steal restarting the cycle) is closed by the CE-g-5 fix; DISARM and REMEDIATION have both landed (two states, two clocks, both now past). Nothing graduates forward: no remediation row, no route.",
+    "spec_asserts": "S6's stamp: 'DECOMP_INVALIDATING; loop_target 5, owner 2.0.0_SA_COO -- add the cell for the freshness layer under a budgeted client; executor the comp-kuzu engine lane; round 1 closes by the backward route.'",
+    "world_is": "The backward route ran forward again through L10: decomp v0.2 (CE-g-5) at L5, TO-CE-G-5 at L6, the fix at L7 with a VALID proof and 0 surprise rows, and the behaviour the item named no longer occurs at this seat.",
+    "notes": "L10 STAMP, ROUND 2 (3.0.0_SA_CVO, 05:5xZ). PRECONDITION READ ON THE RECORD: every task order under the project is terminal (5 of 5: 2 WITHDRAWN, 3 complete) and each complete one carries a VALID proof-of-spec instance whose surprises resolve (T-1: 2 of 2; G-5 and T-2: 0 entries) -- checked at this seat with the gate's own instrument; every investigation item is dispositioned by its latest carrier once this row lands (S1 by S8; S2/S3/S5 by this row; S4, S6, S7 terminal on their own face). GRADUATION: 0. ROUTES: 0. A zero-graduation round: PROCEED TO THE NEXT L6 DISPATCHES (2.0.0_SA_COO: STAGE 1's CE-t-3, STAGE 2's CE-t-8 next in the decomposition's order); dep_stage ROUND_CLOSE flips on this stamp by the row owner. READ AND NOT COUNTED, stated so the count is honest: three FINDINGS inside the round-2 deliverables (G5-F1: no persistent per-trigger log for a true 24 h rebuild-cadence count, owner named in the deliverable; T2-F1: comp-read --at beyond a file's range has no NOT_APPLICABLE voice; T2-F2: --enumerate writes no rail row) are the audits' own content, not spec-versus-world surprises of their task orders; they ride the project's per-tool carrier (PRD s.7 rows versioned by 1.0.0_SA_CTO on each grade; the decomposition's CE-t cells) and are not rows here. INERT residual, not a row: the stale rebuild.lock/.tmp/.wal files from the round-1 orphan remain on disk; the fixed layer serves through them and its steal logic covers them; a cleanup is the comp-kuzu lane's at next touch, via the COO. No monitor, no alert."
   }
 ]
 ```
