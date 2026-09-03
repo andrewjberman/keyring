@@ -4,10 +4,10 @@
  "directive": "D12",
  "macro_code": "NFRA",
  "fabric": "site-z",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Platform fortification: authentication + origin enforcement at BOTH API gateways, WAF managed rules + logging, login-abuse alarms, throttle fail-closed, identity/RBAC table protection + legacy opal-users retirement, JWT key rotation + refresh binding, gateway logging/shared-key expiry, website edge protection, and the ratified auto-block framework -- from the 2026-09-02 attack-surface assessment Andrew agreed with",
  "generated_from": "org/missions/D12/NFRA/NFRA_OPSEC202609/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-03T07:26:19Z"
+ "generated_at": "2026-09-03T07:42:40Z"
 }
