@@ -21,6 +21,7 @@
 - Cursor resume: unbounded rc 0, WITHIN BUDGET, remaining traversal completed.
 - Overlap empty population: `NOT_APPLICABLE` token.
 - `comp-trace` SHA-256-equivalent blob stayed `9bcf128cf6ff4b7e95f6ed2e6869526b9588fd2d`.
+- Distinct-seat FWD-9 from `2.0.0_SA_COO` at HEAD `9879a8d5ab`: carried `--exact --all --budget 0`, rc 0, 507/507 traversal, Kuzu 27134 nodes / 58432 edges, `WITHIN BUDGET`; `--budget 0` is explicitly UNBOUNDED and is not the expiry arm.
 
 ## Controls and handoff
 
