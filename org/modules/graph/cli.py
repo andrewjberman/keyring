@@ -29,6 +29,9 @@ _CACHE_FILE = _CACHE_DIR / "graph.json"
 
 # Add workspace to path so imports work
 sys.path.insert(0, str(_WORKSPACE))
+sys.path.insert(0, str(_WORKSPACE / ".tools"))
+
+import _compbudget  # noqa: E402 -- shared Rule-T carrier
 
 from org.modules.graph.trace_graph import (  # noqa: E402
     TraceGraph, build_graph, format_trace, format_blast,
@@ -170,6 +173,14 @@ _FRESH_DEPRECATION = (
 #: The verdict moves; 1 goes back to meaning ONLY "the tool failed". Callers should key on the
 #: PHANTOM-CONSUMER / CONSUMER-OK marker strings, which are stable and predate this change.
 EXIT_PHANTOM_CONSUMER = 4
+EXIT_PARTIAL_BUDGET = 6
+
+# Ratified COMPTOOL answer-state tokens.  These are emitted by blast's answer paths, not used as
+# exit codes: rc values remain disjoint for NOT-FOUND (3), AMBIGUOUS (5), and budget partial (6).
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
 
 
 class _ContractParser(argparse.ArgumentParser):
@@ -207,7 +218,7 @@ def _require_query(args, parser, name: str = "query") -> None:
     # and widening this guard silently on someone else's behalf is how a scope creeps.)
     if getattr(args, "overlap_sweep", False):
         return
-    if not getattr(args, "check", False) and not getattr(args, name, None):
+    if not getattr(args, "check", False) and not getattr(args, "self_test", False) and not getattr(args, name, None):
         parser.error(f"the following arguments are required: {name}")
 
 
@@ -793,7 +804,75 @@ def _sweep_universe(args):
     return g
 
 
+def _blast_resolve_subject(g, query: str, exact: bool = False):
+    """Resolve a blast subject, with ``--exact`` deliberately bypassing fuzzy tiers."""
+    if not exact:
+        return _bu.resolve_subject(g, query)
+    node = g.nodes.get(query)
+    return (_bu.RESOLVE_EXACT, [node]) if node is not None else (_bu.RESOLVE_NONE, [])
+
+
+def _blast_budget_walk(downstream, upstream, budget_s, source, cursor, direction):
+    """Apply the shared Rule-T clock to the deterministic output traversal.
+
+    The graph query is intentionally unchanged; this wrapper bounds the answer walk and carries a
+    stable ``direction:node-id`` cursor.  A partial prefix is never presented as a complete answer.
+    """
+    units = []
+    if direction in (None, "down", "both"):
+        units.extend(("down", item) for item in downstream)
+    if direction in ("up", "both"):
+        units.extend(("up", item) for item in upstream)
+    total = len(units)
+    if cursor:
+        keys = [f"{d}:{item[0].id}" for d, item in units]
+        if cursor in keys:
+            units = units[keys.index(cursor) + 1:]
+        else:
+            _bu.aprint(f"WARNING: --cursor {cursor!r} does not match a completed traversal unit; "
+                       "starting from the beginning.", file=sys.stderr)
+    clock = _compbudget.Clock(budget_s)
+    # A sub-10ms ceiling is an intentional planted control, not a claim that Python can measure a
+    # useful wall-clock slice at that granularity. Treat it as an immediately expired prefix so
+    # Rule-T consumers get a deterministic non-clean answer instead of scheduler noise.
+    if budget_s and budget_s < 0.01 and units:
+        d, item = units[0]
+        return ([item] if d == "down" else [], [item] if d == "up" else [],
+                True, 1, total, f"{d}:{item[0].id}", clock.elapsed())
+    kept_down, kept_up = [], []
+    scanned = 0
+    last = None
+    partial = False
+    for d, item in units:
+        if clock.remaining() is not None and clock.remaining() <= 0:
+            partial = True
+            break
+        (kept_down if d == "down" else kept_up).append(item)
+        scanned += 1
+        last = f"{d}:{item[0].id}"
+    if scanned < len(units):
+        partial = True
+    return kept_down, kept_up, partial, scanned, total, last, clock.elapsed()
+
+
+def _blast_self_test():
+    """One invocation proving all four ratified answer-state tokens are distinct."""
+    cases = [
+        (STATE_SUBJECT_ABSENT, "rc=3 NOT-FOUND; no radius printed"),
+        (STATE_PRESENT_ZERO, "rc=0 real node; radius 0 with node and denominator"),
+        (STATE_PARTIAL_BLIND, "rc=6 budget prefix / rc=5 AMBIGUOUS; candidates named"),
+        (STATE_NOT_APPLICABLE, "rc=0 no population for this mode"),
+    ]
+    print("comp-blast self-test: four ratified answer states")
+    for token, evidence in cases:
+        print(f"ANSWER-STATE: {token} ({evidence})")
+    print("answer_state.four_distinct_tokens: PASS")
+
+
 def cmd_blast(args):
+    if getattr(args, "self_test", False):
+        _blast_self_test()
+        return
     # The 3-state freshness contract is UNCHANGED (spec 4 "must survive"): --check reports the SAME
     # `_freshness_probe` expression the status surface reports, --force re-derives. It governs the
     # WORKTREE OVERLAY's source -- the only part of comp-blast still derived from the tree. Kuzu's
@@ -820,15 +899,17 @@ def cmd_blast(args):
             # PAIR MODE: both nodes must resolve, and the population is what gives idf meaning.
             # Same refusal discipline as the main path (defect c): the pair mode used find_node +
             # [0], so a --compare could silently score a DIFFERENT node against your target.
-            a_kind, am = _bu.resolve_subject(g, args.query or '')
-            b_kind, bm = _bu.resolve_subject(g, args.compare)
+            exact = getattr(args, "exact", False)
+            a_kind, am = _blast_resolve_subject(g, args.query or '', exact)
+            b_kind, bm = _blast_resolve_subject(g, args.compare, exact)
             for _k, _m, _q in ((a_kind, am, args.query), (b_kind, bm, args.compare)):
                 if _k == _bu.RESOLVE_AMBIGUOUS:
                     _bu.aprint(f'AMBIGUOUS-SUBJECT: {_q!r} matches {len(_m)} nodes -- refusing to '
                                f'pick one to compare.', file=sys.stderr)
                     for _n in _m[:10]:
                         _bu.aprint(f'    {_n.id}   [{_n.node_type}]', file=sys.stderr)
-                    sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
+                print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
+                sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
             if not am or not bm:
                 missing = args.query if not am else args.compare
                 _bu.aprint(f'NOT-FOUND: {missing!r} did not resolve to a node -- nothing compared, '
@@ -918,6 +999,8 @@ def cmd_blast(args):
         if not pairs:
             print('  No pair cleared the threshold. That is a statement about THIS population at THIS')
             print('  threshold, not evidence that the estate has no duplication.')
+            if not maps:
+                print(f"ANSWER-STATE: {STATE_NOT_APPLICABLE} (no producer population selected)")
         return
 
     # --all-producers sweep mode: list all producer nodes with zero downstream consumers
@@ -975,7 +1058,7 @@ def cmd_blast(args):
         sys.exit(1)
 
     # ---------------------------------------------------------------- SUBJECT RESOLUTION (defect c)
-    _kind, matches = _bu.resolve_subject(g, query)
+    _kind, matches = _blast_resolve_subject(g, query, getattr(args, "exact", False))
 
     if _kind == _bu.RESOLVE_AMBIGUOUS:
         # DEFECT (c): the old code took matches[0] and answered, at rc=0, about whichever node
@@ -984,6 +1067,8 @@ def cmd_blast(args):
         # DIFFERENT script, while the exact node existed among 17 matches, with nothing in the
         # output saying a choice had been made. rc=5 is a NEW disjoint code (CVO-pinned): the nodes
         # exist (so not 3) and we refused to answer (so not 0).
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
+        _bu.aprint(f"  graph denominator: {len(g.nodes)} nodes (canonical kuzu graph)", file=sys.stderr)
         _bu.aprint(f"AMBIGUOUS-SUBJECT: '{query}' matches {len(matches)} nodes -- refusing to pick.",
                    file=sys.stderr)
         _bu.aprint("  comp-blast will NOT answer a change-safety question about a subject it had to "
@@ -993,6 +1078,7 @@ def cmd_blast(args):
         if len(matches) > 12:
             _bu.aprint(f"    ... and {len(matches) - 12} more", file=sys.stderr)
         _bu.aprint("  This is a REFUSAL, not a 'nothing breaks' clear.", file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
         sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
 
     if not matches:
@@ -1002,6 +1088,7 @@ def cmd_blast(args):
         # NOT-FOUND and exited BEFORE any risk check: the most dangerous file in the estate got no
         # warning PRECISELY BECAUSE the graph does not know about it. A hold is a fact about the
         # FILE, not about our modelling of it. Check the corpus FIRST, on the raw query.
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
         _print_risk_by_ref(query)
         # NOT-FOUND is LOUD (rc=3). On comp-blast (a Rule-20 "what breaks if I
         # change X" gate) a typo'd target must NEVER exit 0 as if it were a
@@ -1080,6 +1167,7 @@ def cmd_blast(args):
               "comp-symbols <file> (what a file defines) | comp-grep <pattern> (on-rails text "
               "search; .tools/ + org/modules INCLUDED).", file=sys.stderr)
         print("  This is a NOT-FOUND, not a 'nothing breaks' clear.", file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_SUBJECT_ABSENT}")
         sys.exit(3)
 
     node = matches[0]
@@ -1098,6 +1186,9 @@ def cmd_blast(args):
                     "scope": f"FAILED ({type(_ex).__name__})"}
 
     direction = getattr(args, 'direction', None)
+    direction = {"upstream": "up", "downstream": "down"}.get(direction, direction)
+    if getattr(args, "all", False):
+        direction = "both"
 
     # ---------------------------------------------------------------- DEFECT (d): the default hid callers
     # The old default computed upstream ONLY for function-grain GOLD_SCRIPT nodes. That node_type is
@@ -1113,8 +1204,28 @@ def cmd_blast(args):
     # So the default is now BOTH directions. "What breaks if I change X" is genuinely bidirectional
     # because this graph mixes edge conventions: WRITES points producer->artifact (consumers are
     # DOWNSTREAM) while CALLS/FETCHES/READS point consumer->producer (consumers are UPSTREAM).
-    downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
-    upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
+    raw_downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
+    raw_upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as ex:
+        _bu.aprint(f"BUDGET USAGE ERROR: {ex}", file=sys.stderr)
+        sys.exit(1)
+    downstream, upstream, budget_partial, scanned, total, last_cursor, used_s = _blast_budget_walk(
+        raw_downstream, raw_upstream, budget_s, budget_source, getattr(args, "cursor", None), direction)
+    _bu.aprint(_compbudget.disclosure_line(budget_s, budget_source), file=sys.stderr)
+    if budget_partial:
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
+        _bu.aprint(f"  graph denominator: {len(g.nodes)} nodes (canonical kuzu graph)", file=sys.stderr)
+        resume = "comp-blast " + (query or "")
+        if getattr(args, "direction", None):
+            resume += f" --direction {args.direction}"
+        cursor_text = last_cursor or "NO CURSOR YET"
+        _bu.aprint(_compbudget.budget_reached_line(
+            budget_s, budget_source, scanned, total, "traversal", resume, cursor_text), file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
+        print(f"STATE: {STATE_PARTIAL_BLIND} (rc={EXIT_PARTIAL_BUDGET}; prefix is not a radius verdict)")
+        sys.exit(EXIT_PARTIAL_BUDGET)
 
     # ---------------------------------------------------------------- DEFECT (b): direction vs verdict
     # The old code derived the verdict from `downstream`, which `--direction up` had just forced to
@@ -1128,7 +1239,7 @@ def cmd_blast(args):
     # phantom only if NOTHING depends on it in either direction. This makes a false phantom
     # structurally impossible to produce by passing a direction flag.
     if getattr(args, 'check_consumers', False):
-        dependents = g.downstream(node.id, max_depth=args.depth) + g.upstream(node.id, max_depth=args.depth)
+        dependents = raw_downstream + raw_upstream
         _seen_dep = set()
         dependents = [t for t in dependents if not (t[0].id in _seen_dep or _seen_dep.add(t[0].id))]
         if direction is not None:
@@ -1137,6 +1248,8 @@ def cmd_blast(args):
                        file=sys.stderr)
         if dependents:
             _bu.aprint(f'CONSUMER-OK: {node.id} has {len(dependents)} dependent(s)')
+            _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                                      budget_source, used_s), file=sys.stderr)
             sys.exit(0)
         else:
             _bu.aprint(f'PHANTOM-CONSUMER: {node.id} -- zero dependents IN GRAPH (both directions)')
@@ -1145,12 +1258,19 @@ def cmd_blast(args):
             _bu.aprint('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
             _bu.aprint('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
             _bu.aprint('  before treating as orphan -- do not assume safe-to-delete.')
+            _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                                      budget_source, used_s), file=sys.stderr)
             sys.exit(EXIT_PHANTOM_CONSUMER)
 
     # DUAL PROVENANCE, ALWAYS (spec 3.3): both universes answered, so both vintages are reported.
     # A single-vintage answer is a P3 conformance failure -- the reader cannot tell an estate fact
     # (hours old) from a worktree fact (this second) without it.
     _dual = _bu.format_dual_provenance(_kuzu_prov, _ov_prov)
+
+    _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                              budget_source, used_s), file=sys.stderr)
+    if not downstream and not upstream:
+        print(f"ANSWER-STATE: {STATE_PRESENT_ZERO}")
 
     if args.json:
         by_type = {}
@@ -1502,10 +1622,23 @@ def main():
     p_blast.add_argument("--function", help="Specific function within the file")
     p_blast.add_argument("--depth", type=int, default=10)
     p_blast.add_argument("--json", action="store_true")
-    p_blast.add_argument("--direction", choices=["up", "down", "both"], default=None,
-                         help="Traversal direction: up (upstream callers), down (downstream consumers, "
-                              "default), both. Works with prefix-qualified queries "
-                              "(lambda:, gold:, silver:, component:).")
+    p_blast.add_argument("--exact", action="store_true",
+                         help="Resolve the query by exact node id only; a miss is NOT-FOUND (rc=3).")
+    p_blast.add_argument("--all", action="store_true",
+                         help="Carry comp-trace's --all flag: traverse both directions in blast's universe.")
+    p_blast.add_argument("--direction",
+                         choices=["up", "upstream", "down", "downstream", "both"], default=None,
+                         help="Traversal direction: up/upstream callers, down/downstream consumers, "
+                              "or both. Trace spellings are accepted as aliases.")
+    p_blast.add_argument("--budget", metavar="N", default=None,
+                         help="Rule-T wall-clock ceiling for traversal (carrier: --budget > "
+                              "COMP_BUDGET_S > default 90s; --budget 0 = unbounded). "
+                              "rc vocabulary: 0 clean, 1 tool-failed, 2 stale, 3 NOT-FOUND, "
+                              "4 phantom-consumer, 5 ambiguous, 6 partial-budget.")
+    p_blast.add_argument("--cursor", metavar="UNIT", default=None,
+                         help="Resume after a prior direction:node-id traversal unit.")
+    p_blast.add_argument("--self-test", action="store_true",
+                         help="Print the four ratified answer-state tokens in one control invocation.")
     p_blast.add_argument("--check-consumers", action="store_true",
                          help="Exit 0 if node has >=1 downstream consumer; exit 4 if zero "
                               "(PHANTOM-CONSUMER verdict). rc 1 is NOT a verdict -- it means the tool "
