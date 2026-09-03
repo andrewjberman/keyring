@@ -968,3 +968,36 @@ but it leaves B2-AC6's required incremental artifact impossible under the curren
   }
 ]
 ```
+
+## S25 -- L10 stamp, round 2: two bounded dismissals and twelve graduations
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S25",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~C",
+    "surfaced_at": "2026-09-03T18:04Z",
+    "one_line": "L10 STAMP, round 2: all five project task orders are terminal with valid, exact-coverage proofs. S16 and S21 are dismissed with bounded reasons; twelve other round-2 items graduate through REMEDIATION_v2.md, seven completed in-round and five routed SPEC_ERROR to L6 for round 3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CVO re-ran proof-of-spec-check on B-1 @afd94db0ce, B-2 @ebe85fd69e and B-3 @93c26badf8: all VALID rc 0; criterion step-zero is exact at 6/6, 8/8 and 6/6, with every declared cell reachable and every surprise reference resolving.",
+        "All five task-order faces under NFRA_CLDGRPH read complete at HEAD; the round-1 V-1/V-2 proof coverage remains 6/6 and 7/7.",
+        "S16 @823ea90776 separates 13 expected profile-role repeats from 2,235 C2-instance member emissions and eight collapsed EventBridge-target observations, names their source owners, and establishes that B-3's post-load counts remain correct; neither producer fix belongs to a round-2 face.",
+        "S21 @ee51681c45 records an external UserInitiated stop rather than OOM. It is superseded as an exercise blocker by authentic completed tasks fa5df773, 0a53e160, 32d8608d and 03a14222 in the accepted B-2 proof @ebe85fd69e.",
+        "REMEDIATION_v2.md in this same commit carries twelve graduations: seven evidenced in-round closures and five SPEC_ERROR routes with the locked loop target 6."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S16 is an outside-remedy producer census, not a missing or failed NFRA_CLDGRPH round-2 criterion: the graph port preserves correct post-load counts, the two upstream source owners are named, and no worker may silently widen its face to repair them. S21 is a one-time cross-seat stop whose classification remains UserInitiated; later authentic runs completed every required B-2 exercise arm, so it establishes no remaining normal-operation defect and routes no remedy.",
+    "adjudicates": ["NFRA_CLDGRPH-S16", "NFRA_CLDGRPH-S21"],
+    "spec_asserts": "The L10 precondition requires every project task order terminal with a valid proof-of-spec instance, every proof criterion covered exactly, and every investigation item dispositioned before one route slug issues.",
+    "world_is": "All five faces are terminal and their proof sets are exact. Of the fourteen round-2 items, seven remedies executed in-round, five require existing L6 cells in round 3, one is an outside-remedy producer census, and one is an externally stopped attempt superseded by completed authentic exercise.",
+    "notes": "Zero DECOMP_INVALIDATING and zero SCOPE_CHANGE. The fixed publisher and compaction are committed but not deployed; the live forward pointer was written by the pre-fix image and remains valid. Those applied-versus-desired boundaries are preserved as S22-S24 routes, never flattened into round-2 closure. No push by this seat."
+  }
+]
+```
