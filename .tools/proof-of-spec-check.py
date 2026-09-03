@@ -171,7 +171,7 @@ _COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
+def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], list[str]]:
     """ARTIFACT ROW RESOLUTION (2026-08-30, 1.0.0_SA_CTO~X on 2.0.0_SA_COO~X's proposal 85753). Two
     instances in one night passed this checker VALID and were caught BY HAND: TO-L3W3-COX @c36a309f4d
     named its own proof at a path that never existed in git; TO-L3W3-CCX @fa7b34274a carried the
@@ -238,6 +238,49 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
         except Exception:  # noqa: BLE001 -- a git that cannot run is announced below, not a pass
             return False
 
+    def _git_out(*args: str) -> str:
+        try:
+            o = subprocess.run(["git", *args], cwd=str(_REPO_ROOT), capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=30)
+        except Exception:  # noqa: BLE001
+            return ""
+        return o.stdout if o.returncode == 0 else ""
+
+    # CO-COMMIT RESOLUTION OF PENDING ROWS (2026-09-03, 1.0.0_SA_CTO on 3.0.0_SA_CVO~A's NFRA_CLDGRPH finding,
+    # relayed 93334/93337): a PENDING-THIS-COMMIT row was HONEST at write time and PERMANENTLY UNVERIFIED after it
+    # -- before the commit there was no hash to compare, after the commit nobody re-ran the checker, and the
+    # co-commit that opens the gap is the spine's own prescribed L7 shape (status, proof and artifacts in one
+    # commit by the actor). The CCX class ("PENDING on a row whose artifact had ALREADY landed") was disclosed as
+    # NOT COVERED. It is covered now, in both contexts the checker runs in, by reading the INDEX or the RECORD:
+    #   PRE-COMMIT  (the instance file is staged or untracked): the artifact must be STAGED in this same commit
+    #               (`git diff --cached --name-only -- <path>` non-empty) -> CO-COMMITTED. Already committed at
+    #               HEAD and not staged -> the CCX violation (pin the commit that carried it). In the worktree but
+    #               not staged -> a violation (it cannot ride this commit).
+    #   POST-COMMIT (the instance is tracked and unstaged; a certifier's re-run): the artifact must be TOUCHED
+    #               by the instance's own commit (`git diff-tree --name-only <c> -- <path>` non-empty) ->
+    #               CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation. Absent -> a
+    #               violation.
+    #   UNKNOWN     (no instance path handed in): the old presence-only read, announced as such.
+    # The content rung on a PENDING row now compares the index blob (or <c>:<path>) against its parent instead of
+    # the worktree against HEAD. Fails toward a LOUD violation, never toward absence.
+    inst_rel = None
+    ctx = "UNKNOWN"
+    inst_commit = None
+    if inst_path is not None:
+        try:
+            inst_rel = Path(inst_path).resolve().relative_to(_REPO_ROOT).as_posix()
+        except ValueError:
+            inst_rel = None
+    if inst_rel:
+        staged_inst = _git_out("diff", "--cached", "--name-only", "--", inst_rel).strip()
+        tracked_inst = _git_ok("ls-files", "--error-unmatch", "--", inst_rel)
+        if staged_inst or not tracked_inst:
+            ctx = "PRE-COMMIT"
+        else:
+            inst_commit = _git_out("log", "-1", "--format=%H", "--", inst_rel).strip() or None
+            ctx = "POST-COMMIT" if inst_commit else "UNKNOWN"
+    n_cocommit = 0
+
     for a in rows:
         if not isinstance(a, dict):
             continue
@@ -251,17 +294,46 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
             v.append(f"artifact-resolution/content: {path!r} carries `introduces` that is not a list of non-empty strings")
             tokens = []
         if pin == PENDING_SENTINEL:
-            if path and (_REPO_ROOT / path).exists():
-                n_pending += 1
-                if tokens:
-                    err = _content_rung(path, tokens, (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING)")
-                    if err:
-                        v.append(err)
-                    else:
-                        n_content += 1
-            else:
+            present_somewhere = bool(path) and ((_REPO_ROOT / path).exists()
+                                                or (inst_commit is not None and _git_ok("cat-file", "-e", f"{inst_commit}:{path}")))
+            if not present_somewhere:
                 v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but does NOT exist in the "
-                         "working tree -- a dead path cannot ride the commit that carries this proof")
+                         "working tree (nor at the instance's commit) -- a dead path cannot ride the commit that carries this proof")
+                continue
+            if ctx == "PRE-COMMIT":
+                if _git_out("diff", "--cached", "--name-only", "--", path).strip():
+                    n_cocommit += 1
+                    here, parent, where = _blob(f":{path}"), _blob(f"HEAD:{path}"), "the index (co-committed)"
+                elif _git_ok("ls-files", "--error-unmatch", "--", path):
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
+                             "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
+                    continue
+                else:
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but exists only in the working tree and "
+                             "is NOT staged -- it cannot ride the commit that carries this proof; stage it in the same commit")
+                    continue
+            elif ctx == "POST-COMMIT":
+                if _git_out("diff-tree", "--no-commit-id", "--name-only", "-r", inst_commit, "--", path).strip():
+                    n_cocommit += 1
+                    here, parent, where = (_blob(f"{inst_commit}:{path}"), _blob(f"{inst_commit}~1:{path}"),
+                                           f"the instance's commit {inst_commit[:10]} (co-committed)")
+                elif _git_ok("cat-file", "-e", f"{inst_commit}:{path}"):
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but PREDATES the instance's commit "
+                             f"{inst_commit[:10]} (present there, not touched by it) -- pin the row to the commit that carried it (CCX class)")
+                    continue
+                else:
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ABSENT at the instance's commit "
+                             f"{inst_commit[:10]} -- it did not ride the commit that carries this proof")
+                    continue
+            else:
+                n_pending += 1
+                here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING; instance path unknown, presence only)"
+            if tokens:
+                err = _content_rung(path, tokens, here, parent, where)
+                if err:
+                    v.append(err)
+                else:
+                    n_content += 1
             continue
         if not _COMMITISH_RE.match(pin):
             v.append(f"artifact-resolution: {path!r} carries commit_or_etag {pin!r}, which is neither "
@@ -283,10 +355,12 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
         else:
             v.append(f"artifact-resolution: {path!r} does NOT exist at its declared pin {pin} -- "
                      "the row names a (commit, path) pair git refutes")
-    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_pending} pending-on-worktree / "
+    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_cocommit} PENDING co-committed "
+              f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
+              f"{n_pending} pending-on-worktree (instance path unknown; presence only) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
-              "a PENDING row whose artifact is ALREADY committed is NOT covered here",
+              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
               f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
               "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"
@@ -1060,7 +1134,7 @@ def main() -> int:
     violations.extend(align_violations)
     # ARTIFACT ROW RESOLUTION (2026-08-30): runs on every instance; its frame prints its denominator
     # and names the class it does NOT cover, so a clean line cannot be read wider than it is.
-    res_violations, res_frames = artifact_resolution_check(inst)
+    res_violations, res_frames = artifact_resolution_check(inst, inst_path=Path(sys.argv[1]))
     violations.extend(res_violations)
     align_frames = list(align_frames) + res_frames
     # SURPRISES LIMB (2026-09-03): runs on every instance; ENFORCE vs ANNOUNCE is derived from the

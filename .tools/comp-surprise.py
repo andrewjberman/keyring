@@ -168,8 +168,32 @@ def main():
     # beside it, never merged into it.
     inv = [r for r in items if r.get("_kind") != "REMEDIATION"]
     rem = [r for r in items if r.get("_kind") == "REMEDIATION"]
-    openi = [r for r in inv if r.get("disposition") in OPEN_DISPOSITIONS]
-    armed = [r for r in inv if r.get("hazard_standing") == "ARMED"]
+    # LATEST CARRIER, not own row (2026-09-03, 1.0.0_SA_CTO as disarm_owner of NFRA_COMPEFFICACY-S10, 3.0.0_SA_CVO
+    # 93340): the channel is append-only, so an item's disposition moves by a LATER row that names it in
+    # `adjudicates` (investigation_item.schema.json; the row gate's second limb resolves it the same way), or by a
+    # remediation row bearing its id (GRADUATED by construction). Reading each row's OWN `disposition` listed five
+    # phantom OPEN + ARMED items on one project after a round whose gate read 0 undispositioned. Same resolution as
+    # .tools/surprise-row-gate.py _resolve_latest: own row first, adjudications in file order (later wins), then
+    # remediation ids. Every item carries `_latest` so a JSON consumer can reject on it.
+    latest = {}
+    for r in inv:
+        rid = r.get("id")
+        if rid and rid not in latest:
+            latest[rid] = r.get("disposition")
+    for r in inv:
+        for target in (r.get("adjudicates") or []):
+            if target in latest:
+                latest[target] = r.get("disposition")
+    for r in rem:
+        if r.get("id") in latest:
+            latest[r["id"]] = "GRADUATED"
+    for r in inv:
+        r["_latest"] = latest.get(r.get("id"), r.get("disposition"))
+    disarmed_ids = {r.get("id") for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"}
+    openi = [r for r in inv if r.get("_latest") in OPEN_DISPOSITIONS]
+    # ARMED means the hazard is still live: an open item, or a graduated one whose remediation row has not DISARMED it.
+    armed = [r for r in inv if r.get("hazard_standing") == "ARMED"
+             and (r.get("_latest") in OPEN_DISPOSITIONS or (r.get("_latest") == "GRADUATED" and r.get("id") not in disarmed_ids))]
     shown = armed if a.armed else (items if a.all else openi)
     dfx = defects(items)
 
@@ -193,10 +217,10 @@ def main():
     print("\n== DENOMINATORS (the two planes are NOT summed -- ids collide BY DESIGN) ==")
     print("  INVESTIGATION plane: %d item(s) across %d project(s), from %d file(s)"
           % (len(inv), len(projects), files))
-    print("    OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d" % len(openi))
-    print("    ARMED (can cause harm while unattended):          %d" % len(armed))
+    print("    OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d   [by LATEST carrier: own row, then `adjudicates`, then remediation id]" % len(openi))
+    print("    ARMED (hazard still live: open, or graduated and not DISARMED): %d" % len(armed))
     for d in ("GRADUATED", "DISMISSED_WITH_REASON"):
-        print("    %-46s %d" % (d + ":", len([r for r in inv if r.get("disposition") == d])))
+        print("    %-46s %d" % (d + ":", len([r for r in inv if r.get("_latest") == d])))
     print("  REMEDIATION plane:   %d row(s)  -- a remediation row's id EQUALS its graduated"
           % len(rem))
     print("                       investigation item's id, so these are reported beside the")
