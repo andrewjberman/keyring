@@ -10,7 +10,9 @@ here and VALID (rc 0) at checker vintage `7b649df39d`, 6 of 6 criteria each, sur
 dispositioned by its latest carrier (12 rows at HEAD; S13 and S14 appended GRADUATED in THIS SAME COMMIT -- the gate's
 census reads the index, so the stamp and its graduations are one act).
 
-**This slug GRADUATES 2.** One `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`); one `SCOPE_CHANGE` of kind
+**Round 5 (14:2xZ):** S13 and S14 read `DISARMED`, `REMEDIATED`, `closed` on their own rows (the two clocks landed; the exercise is in investigation rows S19 and S20); S17 appended, `SCOPE_CHANGE` -> L2, owner `1.0.0_SA_CTO`. The state advance on S13 and S14 is an in-place edit of committed rows, landed under the gate's audited override with its reason in the commit message, because the schema's two-state block is the carrier of a routed row's clocks and no other row can carry them.
+
+**Round 4 -- this slug GRADUATED 2.** One `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`); one `SCOPE_CHANGE` of kind
 `REQUIRES_UNNAMED_OUTCOME` to L2 (owner `1.0.0_SA_CTO`), the first scope change this project has routed. Zero
 `DECOMP_INVALIDATING`: no cell is missing; one cell's order fell short of its bar, and one form clause has an uncovered
 member. Neither route pre-empts the COO's next L6 for the cells they do not touch.
@@ -35,18 +37,18 @@ member. Neither route pre-empts the COO's next L6 for the cells they do not touc
     "owner": "2.0.0_SA_COO",
     "round": "v4",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.8.0_AE_CloudComp",
-      "at": null
+      "at": "2026-09-03T14:18Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO",
-      "round": "v4"
+      "round": "v5"
     },
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_COMPEFFICACY-S14",
@@ -66,20 +68,53 @@ member. Neither route pre-empts the COO's next L6 for the cells they do not touc
     "owner": "1.0.0_SA_CTO",
     "round": "v4",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.8.0_AE_CloudComp~A",
-      "at": null
+      "at": "2026-09-03T14:18Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
-      "round": "v4"
+      "round": "v5"
     },
     "route": "SCOPE_CHANGE",
     "loop_target": 2,
     "scope_change_kind": "REQUIRES_UNNAMED_OUTCOME",
     "outcome_ref": null,
     "proposed_outcome": "A tool whose exit code is its verdict never returns the clean verdict from a run its time budget cut short; a partial run says so in a form an automated caller cannot mistake for a pass.",
+    "closed": true
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S17",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "mechanism": "Andrew's R-4 is conditional ('comp-trace ... if so it should be retired'); the PRD's s.7 row T-19 records the condition as MET with claim=measured on 'strict subset of blast (cli.py:1478-1530)', and R-4's heading repeats it. That line range is the two argparse parser blocks, and the parsers themselves carry the counter-evidence: comp-trace declares --exact and --all, which comp-blast rejects as unrecognized arguments (rc 1), and direction spellings blast does not accept. The axis that cannot be carried is the universe: comp-trace answers over a head-pinned working-tree scan (2,302 nodes with gold:/lambda:/s3:/eventbridge: ids), comp-blast over kuzu (27,134 nodes) by Andrew-direct 2026-08-03 with a FAIL-LOUD-NEVER-FALL-BACK clause at cli.py:970-976, and the kuzu universe carries none of those id prefixes even after a forced refresh. On a stratified sample of 158 of 2,302 real trace ids, blast answers 61 (38.6%) as the caller spells them and 92 (58.2%) under the most generous prefix mapping, with 41 AMBIGUOUS rc 5 and 25 NOT-FOUND rc 3. A forwarder built on that turns roughly two in five working comp-trace calls into a false NOT-FOUND -- the class both tools' rc 3 dials exist to prevent.",
+    "evidence": [
+      "NFRA_COMPEFFICACY-S17 @a140eed779 (0.8.0_AE_CloudComp~B, 12:08Z): the flag-grain exercise (.tools/comp-blast gold:A_00.accounts_dimension --exact -> rc 1 'unrecognized arguments: --exact'; the trace control rc 0), the traversal-grain exercise (4 queries, both tools), the population measurement through blast's own resolver comp_blast_universe.resolve_subject, and the staleness hypothesis killed by load_kuzu_universe(refresh=True) -- carried as that seat's measurements",
+      "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md v0.5 @5bbdab5ec7 :647 '| T-19 | FWD-4, FWD-5, FWD-8 | comp-trace ... | measured | 45 runs; **strict subset of blast** (cli.py:1478-1530) | CloudComp | retire | T-6 | R-4 | his conditional ruling, condition met ...' and :609-610 '**R-4 (Andrew, 2026-09-02):** \"comp-trace ... if so it should be retired.\" Condition MET (trace subset of blast at cli.py:1478-1530).' -- read at full width at 3.0.0_SA_CVO",
+      "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md :109 FWD-5 'Andrew's specific questions are answered in writing: whether the one he was unsure of is a ...' -- the outcome the subset answer serves",
+      "TO-CE-T-19 WITHDRAWN @5a837b1abd by the issuer on the order's own STOP clause; deliverable org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~B/comp-trace.result.md @bfbff9dc14 (flag table, 8-row parity table, carrier census 171 live of 4,814, caller census 57 all-time); production sha of cli.py unchanged",
+      "decomp v0.2.3 @dcf07b4799 row CE-t-6 (comp-blast) depends_on CE-t-19 -- the carrier another cell reads; 2.0.0_SA_COO 93626: 'CE-t-6 waits by the decomposition's own dependency'"
+    ],
+    "remedy": "At L2 (owner 1.0.0_SA_CTO): re-adjudicate R-4 on the corrected measurement -- the ruling is conditional and its condition is measured unmet -- choosing on the record among the three honest options the lane named: retire comp-trace anyway and accept the coverage loss as a DECISION rather than a subset claim; keep comp-trace and close T-19 as NOT-RETIRED with this measurement as its evidence; or widen the cell to carry trace's universe into blast, which is a CE-t-6 scope. On (b) the choice is plausibly Andrew's, since it is his ruling's own condition that failed; the L4 owner cards it or rules under the autonomy word and says which. Then at L4: PRD s.7 row T-19's claim corrected (measured -> the corrected measurement) and R-4's heading rewritten to the ruling taken, since CE-t-6 reads that carrier; then L5/L6 forward for CE-t-6 and for whatever T-19 becomes. Whichever way (b) goes, the carryable flag remainder (--exact, --all, the direction aliases) is genuine trace-only capability any retirement must carry into blast's parser rather than drop silently. The DISARM (the PRD row's false 'measured' claim, which another cell reads) is the L4 owner's in place and does not wait for the ruling.",
+    "owner": "1.0.0_SA_CTO",
+    "round": "v5",
+    "disarm": {
+      "state": "ARMED",
+      "owner": "1.0.0_SA_CTO",
+      "at": null
+    },
+    "remediation": {
+      "state": "OPEN",
+      "owner": "1.0.0_SA_CTO",
+      "round": "v5"
+    },
+    "route": "SCOPE_CHANGE",
+    "loop_target": 2,
+    "scope_change_kind": "CONTRADICTS_NAMED_OUTCOME",
+    "outcome_ref": "FWD-5",
     "closed": false
   }
 ]

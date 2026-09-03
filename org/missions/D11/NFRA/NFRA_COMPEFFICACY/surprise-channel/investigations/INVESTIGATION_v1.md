@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **15 rows** (S15 appended by `0.8.0_AE_CloudComp` 12:05Z under TO-CE-T-9R: comp-aws's S3_BUCKET-TRIGGERS-LAMBDA edge, the delegation TO-CE-T-9R names, is empty across the whole live graph despite real TF-declared notifications -- OPEN, awaiting CVO route, not blocking this seat's own completion. S13 + S14 appended by `3.0.0_SA_CVO` 09:21Z as the round-4 L10 slug, both GRADUATED -- S13 comp-trigger's AC-2 by the PRD's own bar (SPEC_ERROR -> L6), S14 the gate archetype at budget expiry (SCOPE_CHANGE -> L2); their remediation rows in `../remediations/REMEDIATION_v1.md`, same commit).
+**Append-only during the round.** Denominator at this write: **22 rows** (S19-S22 appended by `3.0.0_SA_CVO` 14:28Z as the round-5 L10 slug: S19 closes S14 with S16, S20 closes S13 with S18, S21 places S15 with its owning surface, S22 is this seat's own aged-packet row; S17 graduates by its remediation row in `../remediations/REMEDIATION_v1.md`, same commit).
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -181,6 +181,45 @@ not cover), unlike S13. `2.0.0_SA_COO` is told for v0.2.3. Everything else in th
 
 Next: the two route owners act (annex s.8 'Who acts'); the COO's next L6 for the cells the routes do not touch (CE-t-19
 RULED, then CE-t-6; STAGE 3) is not pre-empted by either route.
+
+## L10 stamp -- round 5 (3.0.0_SA_CVO: ONE graduated, to L2; two routed items CLOSED on exercised disarms; one placed with its owning surface)
+
+Precondition, read at this seat at HEAD `6cabd10827` (14:1xZ), never from the report (93626):
+
+| half | read | result |
+|---|---|---|
+| task orders | 12 files' `<status>` tags at HEAD | 9 `complete` (G-5, T-1, T-2, T-3, T-7, T-8, T-9, T-9R, T-25), 3 `WITHDRAWN` (DISC-2, TP-1, T-19), 0 pending |
+| proof instances (round 5) | `proof-of-spec-check.py` at this seat, checker vintage `7b649df39d` | TO-CE-T-9R VALID rc 0, 5 of 5, surprises 1 resolving; TO-CE-T-25 VALID rc 0, 5 of 5, surprises 2 resolving |
+| rows | 17 at HEAD + S18 in the worker's worktree | open by the rollup: S15, S16, S17; armed: S13, S14, S15, S17 |
+
+**Graduated, one:** **S17** -- R-4's condition ("comp-trace ... if so it should be retired") measured NOT MET on two
+instruments the L4 owner's line-range cite did not use; the PRD's manifest row carries `claim=measured` on a strict-subset
+claim the world contradicts. `SCOPE_CHANGE`, `CONTRADICTS_NAMED_OUTCOME`, `outcome_ref` FWD-5 (Andrew's written answer to
+the subset question), -> L2, owner `1.0.0_SA_CTO`; the three honest options the lane named ride the remediation row, and the
+choice is the L4 owner's and plausibly Andrew's, since it is his ruling's own condition that failed. TO-CE-T-19 stands
+WITHDRAWN on its own gate; nothing was built or deleted; the carryable flag remainder is named for whichever cell the
+sequencer places it in. CE-t-6 waits on this route by the decomposition's own dependency.
+
+**Closed, two, on exercised disarms** (their remediation rows in `REMEDIATION_v1.md` carry `DISARMED`, `REMEDIATED`,
+`closed`; the adjudicating rows S19 and S20 carry the exercise): S14 (comp-dataflow's gate returns rc 4 NOT-DECIDABLE at
+expiry; run here) and S13 (comp-trigger's four states by token; three demonstrated live here, the fourth by fixture because
+of S15). For the grade: T9R-AC3's disclosed partial stands as disclosed.
+
+**Placed, one:** S15 (the empty TRIGGERS edge; a silent-zero in the graph engine's deriver) -- outside this project's chain,
+handed to NFRA_CLDGRPH by the record committed with this slug (S21). Consequence for this project's close, stated: FWD-2's
+comp-trigger limb is fixture-covered for one state until that surface derives the edge; the L4 owner grades it.
+
+**Read and not counted:** T-25's F1 (the expiry rc form into the shared budget module -- the L4 owner's grain), T-9R's
+disclosed partial (in S20 for the grade), T-19's flag table and carrier census (the deliverable @bfbff9dc14).
+
+**Form notes for the issuer:** S18's author set its own disposition (the CVO's field); S18 was integrated into this commit
+from the worker's worktree under the audited override because the round could not stamp around it -- authorship unchanged.
+**Law changed between rounds:** annex v2.3 (12:02Z) gives a remedied-in-round item a REMEDIATED remediation row; S13 and S14
+were routed before it and close on their own rows' clocks; read the two shapes as a law change, not an inconsistency.
+**This seat's own defect** (S22): the packet aged about five ticks; CVO MODE of /drive is armed at 20 minutes from this stamp.
+
+Next: `1.0.0_SA_CTO` acts on the S17 route; `2.0.0_SA_COO`'s next L6 for everything the route does not touch (STAGE 3 wide,
+per the pitch 93644) is not pre-empted.
 
 ```json
 [
@@ -620,6 +659,136 @@ RULED, then CE-t-6; STAGE 3) is not pre-empted by either route.
     "spec_asserts": "PRD v0.5 @5bbdab5ec7 s.7 row T-19, claim=measured: comp-trace is a 'strict subset of blast (cli.py:1478-1530)'; and the R-4 heading (:609), Andrew 2026-09-02 'comp-trace ... if so it should be retired.' with the L4 owner's note 'Condition MET (trace subset-of blast at cli.py:1478-1530)'. TO-CE-T-19's own DELIVERABLE item 1 makes that condition the gate and requires it re-derived at this seat with a different instrument from the L4 owner's.",
     "world_is": "Re-derived here by enumerating both parsers' flag sets and by running both tools over a stratified sample of the real node population, rather than by reading the cited line range as prose. The condition does not hold. At the FLAG grain trace carries --exact, --all and the upstream/downstream direction spellings that blast rejects (--exact measured at rc=1, 'unrecognized arguments'). At the TRAVERSAL grain the two tools answer over different graphs with disjoint address spaces and disjoint node-type schemas, so blast answers only 38.6% of trace's own node ids as the caller spells them, and only 58.2% under the most generous prefix-stripping mapping. The first three are carryable into blast's parser exactly as the order anticipates; the universe gap is not, and it is the one the ruling's 'if so' actually turns on.",
     "notes": "STOPPED AT THIS ROW, per TO-CE-T-19 DELIVERABLE item 1's own instruction and T19-AC1 ('...or a ROW and a stop'). NOT DONE, and deliberately so: the .tools/comp-trace forwarder is NOT built, nothing is deleted, no registry carrier is edited, cli.py is unmodified (production sha unchanged). Building the forwarder on the current measurement would silently convert ~61% of working comp-trace invocations (or ~42% with the best prefix mapping) into NOT-FOUND rc 3 or AMBIGUOUS rc 5, against 45 real runs in the 30d window by three seats -- the false-clear class that cli.py:377-380 and :1006-1010 exist to prevent, reintroduced through the retirement rather than through a typo. WHAT THE DISARM NEEDS (1.0.0_SA_CTO, via 2.0.0_SA_COO): (a) PRD s.7 T-19's claim=measured corrected, since it is the carrier another cell reads -- CE-t-6 (comp-blast) is recorded as depending on THIS cell; and (b) R-4 re-adjudicated on the corrected measurement, because Andrew's ruling is CONDITIONAL and this seat measures the condition unmet. The honest options a re-adjudication chooses between are: retire comp-trace anyway and accept the coverage loss as a DECISION rather than a subset claim; keep comp-trace and close T-19 as NOT-RETIRED with this measurement as its evidence; or widen the cell to carry trace's universe into blast, which is a CE-t-6 / L2 scope change and not a T-19 act. This seat expresses no preference among the three; the choice is the L4 owner's and, on (b), plausibly Andrew's, since it is his ruling's own condition that failed. CARRYABLE REMAINDER, unbuilt and left for whichever cell the sequencer places it in: --exact, --all and the upstream/downstream direction aliases are genuine trace-only capability that any retirement must carry into blast's parser rather than drop silently -- they are bounded to the blast parser + render exactly as the order scopes them, and they remain correct work whichever way (b) is decided. No other cell is blocked: CE-t-9 (base) and CE-t-25 (~A) carry no dependency either way."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S18",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp",
+    "surfaced_at": "2026-09-03T12:20:00Z",
+    "one_line": "DISARMS NFRA_COMPEFFICACY-S13 (disarm_owner 0.8.0_AE_CloudComp): under TO-CE-T-9R (PRD v0.5 s.4.3's GRAIN amendment), comp_trigger.py now separates all four ratified answer-states with a literal ANSWER-STATE: <TOKEN> line, never sharing a token across states -- a real function-existence check (live graph LAMBDA nodes via kuzu_cli.py, zero new AWS calls, + Terraform aws_lambda_function declarations including the module-wrapped shape) separates SUBJECT_ABSENT_FROM_CORPUS (rc 3, new distinct value) from the other three; the graph's real S3_BUCKET-[TRIGGERS]->LAMBDA edge (queried directly, zero new AWS calls) separates PARTIAL_OR_BLIND from PRESENT_WITH_ZERO_RESULTS. EXERCISING the fix found and filed a SEPARATE finding (NFRA_COMPEFFICACY-S15, this same commit): the S3-notification delegation's live DATA is empty estate-wide (a comp-aws-side gap), so the PARTIAL_OR_BLIND branch is proven end-to-end against a fixture rather than a live specimen -- disclosed in the deliverable, not hidden.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit a140eed779 (0.8.0_AE_CloudComp): org/modules/graph/comp_trigger.py +255/-15 -- STATE_SUBJECT_ABSENT/STATE_PRESENT_ZERO/STATE_PARTIAL_BLIND/STATE_NOT_APPLICABLE constants; _resolve_existence() (graph LAMBDA lookup via the existing kuzu_cli.py subprocess + tf_lambda_declared(), a brace-depth-aware Terraform scan covering BOTH the literal resource shape and the module-wrapped shape); _check_s3_notification() (a direct Cypher query for the real TRIGGERS edge); render() now branches on existence/s3_check to print one of the four tokens, never falling through one undifferentiated `if not matches:` body; an UNAVAILABLE/DEFERRED graph read is never collapsed into ABSENT (existence reads NOT-DECIDABLE, rc 2, in that case). .tools/tests/test_comp_trigger_battery.py +3 arms (11/11 total)",
+        "EXERCISED live at this seat, real production binary, real AWS reads (list_rules/list_schedules/graph queries), zero mocks: `comp-trigger ZZZ_NONEXISTENT_FUNCTION_93999` -> ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS, rc 3; `comp-trigger bd-price-update` -> ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS, rc 0 (existence FOUND via the module-wrapped TF shape AND the live graph); `comp-trigger --list --region us-west-2` -> ANSWER-STATE: NOT_APPLICABLE, rc 0; `comp-trigger bd-gold-trigger` (a real hit, 3 EventBridge rules) unaffected, rc 0",
+        "embedded self-test 14/14 -> 20/20 (6 new cases including render.six_of_six_pairs_distinct: 6 of 6 pairs of {hit, absent, present-zero, partial(fixture)} bodies differ BY TOKEN, not merely by the echoed query argument -- the exact discriminator PRD v0.5's GRAIN sentence requires); external battery 8/8 -> 11/11, including two red-first mutants (CT9R-MUTANT-S13-COLLAPSE-DETECTED: a mutant reproducing the EXACT S13 shape correctly loses all three tokens; CT9R-MUTANT-UNAVAILABLE-AS-ABSENT-DETECTED: a mutant silently collapsing UNAVAILABLE into ABSENT is caught) -- both confirmed direct and under pytest",
+        "deliverable amendment org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/comp-trigger.result.md, a NEW dated section above the round-4 record (kept, unchanged) quoting PRD v0.5 s.4.3 verbatim and re-planting all four cases with rc + full text"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S13's own remedy text is satisfied: 'a function-existence check ... that separates SUBJECT_ABSENT_FROM_CORPUS; and the S3-notification-only case separated ... by the cell's own closes-on (existing machinery) or by a distinct PARTIAL_OR_BLIND voice'. Both landed, both exercised (the first live, the second against a fixture with the live-data gap disclosed as S15). This row records the tool-lane disarm; S13's own L9 disposition (GRADUATED) is 3.0.0_SA_CVO's to close or carry forward, not touched here.",
+    "spec_asserts": "S13's remediation row (REMEDIATION_v1.md, same id) and TO-CE-T-9R's own acceptance T9R-AC1..AC5, quoting PRD v0.5 s.4.3's PASS/FAIL and GRAIN sentences verbatim.",
+    "world_is": "comp_trigger.py's four answer-states are now pairwise distinguishable by a literal, machine-rejectable token within one invocation's output -- measured directly (six of six pairs differ by token), not merely by the previously-sufficient-sounding-but-actually-collapsing scope+delegation line S13 correctly flagged as separating nothing.",
+    "notes": "The PARTIAL_OR_BLIND branch's real-world exercise is currently blocked by S15 (a comp-aws-lane gap, out of this cell's BOUNDS to fix) -- not a gap in THIS fix. Certifier != author: this row does not grade T9R-AC1..AC5 as PASS on the record; that is the L4 owner's act at COMPLETION_GRADES, per the TO's own BOUNDS."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S19",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T14:28:00Z",
+    "one_line": "ADJUDICATES S14 and its disarm carrier S16: DISMISSED_WITH_REASON -- REMEDIATED and DISARMED, both clocks landed and the disarm EXERCISED at this seat. The outcome the route asked for is named (FWD-10, PRD v0.5 @5bbdab5ec7) and s.4.4 carries the verdict-bearing row; TO-CE-T-25 is complete @97ebcf9931 with a VALID instance (5 of 5) whose surprises cite S14 and S16; the fix @72e7846ca7 returns rc 4 NOT-DECIDABLE at BUDGET REACHED. Run here 14:18Z: `comp-dataflow gate data/assets/scripts/gold --budget 0.001` -> rc 4, 'BUDGET REACHED ... scanned 1 of 102 producer_file ... resume: ... --cursor', 'STATE: NOT-DECIDABLE (rc=4, distinct from clean rc=0 and findings rc=1 -- a PREFIX carries no verdict)'. The remediation row S14 in REMEDIATION_v1.md carries the two states and closed=true in this same commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S14",
+      "NFRA_COMPEFFICACY-S16"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-25.comp-dataflow-gate-under-fwd10.proof_of_spec.json @1bf60cae74: python .tools/proof-of-spec-check.py at 3.0.0_SA_CVO 14:1xZ -> VALID rc 0, 5 of 5 -> CE-t-25, surprises 2 entries resolving (S14@153522a509, S16@72e7846ca7), checker vintage 7b649df39d",
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-03T14:18Z: .tools/comp-dataflow gate data/assets/scripts/gold --budget 0.001 -> rc 4; stdout 'BUDGET REACHED: 0.001 s (flag); scanned 1 of 102 producer_file; results are a PREFIX, not the answer; resume: comp-dataflow gate data/assets/scripts/gold --budget 0.001 --cursor data/assets/scripts/gold/build_cottonwood_interpolated_backfill.py' and 'STATE: NOT-DECIDABLE  (rc=4, distinct from clean rc=0 and findings rc=1 -- a PREFIX carries no verdict)'",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md v0.5 @5bbdab5ec7: prd_version v0.5; FWD-10 at :158; s.4.4 'verdict-bearing (v0.5, FWD-10, S14)' at :457 (comp-read --enumerate at this seat, 10 hits)",
+        "NFRA_COMPEFFICACY-S16 @710819ddc6 (0.8.0_AE_CloudComp~A): the disarm carrier, fix @72e7846ca7, hazard INERT, disposition left for this seat"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "REMEDIATED (FWD-10 named at L2, the s.4.4 clause at L4, TO-CE-T-25 complete at L6/L7 with a VALID instance) and DISARMED (rc 4 at expiry, exercised by a seat that did not build it). Residual for the L4 owner, not a row: any other verdict-bearing marquis tool the census names, and T-25's F1 (whether the expiry rc form belongs in the shared _compbudget.py so the next verdict-bearing cell inherits it).",
+    "spec_asserts": "S14's remediation row: 'at L2 name the outcome ... then s.4.4 ... then L5/L6 forward for the comp-dataflow change under CE-t-7'; the disarm 'cmd_gate at BUDGET REACHED returns a distinct non-clean rc, or refuses to render a verdict on a partial sweep'.",
+    "world_is": "All three halves landed in order (93459 the L2 re-entry; PRD v0.5; decomp v0.2.3 CE-t-25; TO-CE-T-25 complete) and the exercised disarm reads rc 4 with the state token, with the cursor intact; the cell also fixed a second bug (total_units measured before the --cursor filter) that would have made FWD-10's own DONE WHEN unsatisfiable.",
+    "notes": "S16 is the worker's disarm-report row and is closed with the item; its disposition was left to this seat as the TO's BOUNDS say. Under annex v2.3 a graduated item remedied in-round would be written as a REMEDIATED remediation row; S14 was routed before that clause existed and is closed on its own remediation row's clocks instead -- the law changed between the route and the close, and this row says so rather than leaving two shapes to read as an inconsistency."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S20",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T14:28:00Z",
+    "one_line": "ADJUDICATES S13 and its disarm carrier S18: DISMISSED_WITH_REASON -- REMEDIATED and DISARMED, the disarm EXERCISED at this seat on the production binary. TO-CE-T-9R is complete @9bdcdaa5af with a VALID instance (5 of 5; surprises cite S18); the fix @a140eed779 gives comp_trigger.py a function-existence check and a literal ANSWER-STATE token per state. Run here 14:18Z, the four planted cases: ZZZ_NONEXISTENT_FUNCTION_93999 -> rc 3, ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS; bd-price-update -> rc 0, PRESENT_WITH_ZERO_RESULTS; --list --region us-west-2 -> rc 0, NOT_APPLICABLE; bd-allocation-processor -> rc 0, PRESENT_WITH_ZERO_RESULTS -- the PARTIAL_OR_BLIND specimen reads PRESENT_WITH_ZERO live because the graph's S3_BUCKET-[TRIGGERS]->LAMBDA edge is empty estate-wide (S15), so three of four states are demonstrated live by token and the fourth by the cell's fixture over a correct query. The mechanism S13 asked for is complete; the live specimen for one state is blocked upstream of this project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S13",
+      "NFRA_COMPEFFICACY-S18"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-9R.comp-trigger-four-distinguishable-states.proof_of_spec.json @8abaa451d0: proof-of-spec-check at 3.0.0_SA_CVO 14:1xZ -> VALID rc 0, 5 of 5 -> CE-t-9, surprises 1 entry resolving (S18), checker 7b649df39d; row T9R-AC3 status_reason: 'PASS on the criterion's own controlling requirement ... the SPECIFIC named specimen (bd-allocation-processor) does not currently read PARTIAL_OR_BLIND live because the delegation's live data is empty (NFRA_COMPEFFICACY-S15 ...)'",
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-03T14:18Z on the production binary: .tools/comp-trigger ZZZ_NONEXISTENT_FUNCTION_93999 --budget 60 -> rc 3, 'ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS'; bd-price-update -> rc 0, 'ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS'; bd-allocation-processor -> rc 0, 'ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS'; --list --region us-west-2 -> rc 0, 'ANSWER-STATE: NOT_APPLICABLE' -- three tokens distinct live, the fourth absent for the S15 reason",
+        "commit a140eed779 (0.8.0_AE_CloudComp): fix(NFRA_COMPEFFICACY TO-CE-T-9R, S13 disarm) -- comp_trigger.py +255/-15; the T-9R flip @9bdcdaa5af (status complete at HEAD 6cabd10827)",
+        "NFRA_COMPEFFICACY-S18 (0.8.0_AE_CloudComp, worktree at 12:20Z, integrated in this commit): 'six of six pairs differ by token'; NFRA_COMPEFFICACY-S15 @a140eed779: the TRIGGERS edge 0 rows estate-wide, opal-data-bd present with zero outgoing TRIGGERS edges against 3 Terraform-declared targets"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "REMEDIATED (the remediated order under CE-t-9 landed and closes on s.4.3's bar quoted; six of six token pairs distinct on the production binary) and DISARMED (the existence check separates SUBJECT_ABSENT_FROM_CORPUS at rc 3, exercised by a seat that did not build it). For the L4 owner's grade, stated here so the disclosure is not lost: T9R-AC3 carries PASS with a disclosed partial; under the limb-coverage bar FWD-2's comp-trigger limb is fixture-covered for PARTIAL_OR_BLIND until S15's owning surface derives the edge, and whether that grades REALIZED or NOT_EVALUATED is the CTO's call, not this row's.",
+    "spec_asserts": "S13's remediation row: 'a remediated order under CE-t-9 that closes on PRD s.4.3's bar quoted, not restated: four planted cases, four distinguishable outputs in the tool's own voice. Minimally, a function-existence check ... and the S3-notification-only case separated ... by the cell's own closes-on or by a distinct PARTIAL_OR_BLIND voice'.",
+    "world_is": "The order landed with both halves as code (existence check over the live graph's LAMBDA nodes plus the Terraform declarations; the S3 separation as a direct Cypher query on the TRIGGERS edge), the tokens are distinct within one invocation, and the one live specimen the fixture stands in for is blocked by an upstream data gap the same cell filed as S15.",
+    "notes": "S18 is the worker's disarm-report row; the worker set its disposition to DISMISSED_WITH_REASON itself, which is the CVO's field -- harmless here, noted for the issuer as form. S18 was not at HEAD at this write (the worker's worktree row since 12:20Z, cited by TO-CE-T-9R's instance and by 93626); it is integrated into this commit under the gate's audited override so the slug can land, with its surfaced_by unchanged -- the pre-law filing practice retired this morning is not being revived, the row is the worker's and the override line says so."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S21",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T14:28:00Z",
+    "one_line": "ADJUDICATES S15 (the graph's S3_BUCKET-[TRIGGERS]->LAMBDA edge empty estate-wide; comp_aws_cli.py derive_edges swallows a failed get_bucket_notification_configuration in a bare except, so a failed read is indistinguishable from a genuine zero): DISMISSED_WITH_REASON under 1.0.0_SA_CTO's reading 93320 limb (ii) -- the remedy lives outside this project's chain. comp-aws is not one of the 24 tool rows of this decomposition and org/modules/graph/comp_aws_cli.py is the graph engine NFRA_CLDGRPH is porting (the same class as that project's S2, S3 and S8: a defect in the thing being ported). The handoff record committed with this row places it with the owning surface's L6 owner and CVO; the consequence for THIS project is stated in S20: comp-trigger's PARTIAL_OR_BLIND live limb cannot be demonstrated until the edge derives honestly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S15"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_COMPEFFICACY-S15 @a140eed779 (0.8.0_AE_CloudComp): the four Cypher reads, the Terraform resource with three lambda_function blocks, comp_aws_cli.py:1439-1447 and :273-279 (the bare except), the staleness hypothesis killed by a forced refresh -- carried as that seat's measurement",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md v0.2.3 @dcf07b4799: no CE-t row names comp-aws (python filter over every '| CE-t-' line at 3.0.0_SA_CVO 11:5xZ; only CE-t-9 mentions it as the delegation)",
+        ".owned-paths.yaml: 'org/modules/graph/comp_*.py' under the GRAPH ENGINE HOME rule (CTO ruling 2026-08-20, msg 63234) -- 0.8.0_AE_CloudComp's comp-plane work lands there; 1.0.0_SA_CTO 93320 limb (ii): an outside remedy is DISMISSED_WITH_REASON naming the record that opens the owning surface's project",
+        "NFRA_CLDGRPH REMEDIATION_v1.md @59af3f1df5 rows S2/S3/S8: the same class (defects in the engine being ported) routed SPEC_ERROR to 2.0.0_SA_COO~A's L6 port orders CG-s-2 + CG-s-9"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The remedy needs nothing that does not exist in this project's chain and everything that exists in another's: a fix to comp_aws_cli.py's derive_edges (a failed read reported as UNREADABLE, never as zero, and the TRIGGERS edge derived from the Terraform aws_s3_bucket_notification resources the estate declares) belongs to the graph engine's lane under NFRA_CLDGRPH, which is EXECUTING with a tree home. Record that opens it there: org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_HANDOFF_NFRA_COMPEFFICACY_S15_TO_NFRA_CLDGRPH_20260903T142xZ.md (this commit), relayed to 2.0.0_SA_COO~A and 3.0.0_SA_CVO~A. Nothing routes here; S15's disarm_owner field named a lane and not a seat, and the handoff names the seat class (0.8.0_AE_CloudComp under the GRAPH ENGINE HOME rule of .owned-paths.yaml, via that project's issuer).",
+    "spec_asserts": "S15 (0.8.0_AE_CloudComp @a140eed779): TO-CE-T-9R's delegation target -- the graph's TRIGGERS edge -- is the measured machinery for comp-trigger's S3-notification PARTIAL_OR_BLIND separation; PRD s.4.3 asks four distinguishable outputs per tool.",
+    "world_is": "The delegation exists as code (the edge deriver and the node-property counter) and its data is empty across the whole live graph for this relationship (0 of an expected >=3 real edges), traced to a silently swallowed exception for at least one real, Terraform-confirmed bucket; forced refresh does not change it.",
+    "notes": "The decision that the remedy is outside the chain rests on two reads made here: decomp v0.2.3's tool rows (CE-t-1..25) carry no comp-aws cell, and .owned-paths.yaml's GRAPH ENGINE HOME rule places comp_*.py under the graph engine's lane. Under the limb-coverage bar (spine v2.5) the close of this project will read FWD-2's comp-trigger limb as fixture-covered until the owning surface delivers; that is disclosed, not hidden, and the L4 owner grades it."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S22",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T14:28:00Z",
+    "one_line": "THIS SEAT'S OWN DEFECT ROW under drive v2 (LD-0530, obligation 6): the round-5 compile packet (93626, 12:42Z; pointer 93629, 12:46Z) waited about five ticks for its stamp. The seat was held by a usage-limit pause on the account and then by a tool call that did not return until 14:07Z (an exercise whose output redirect targeted an unwritable path); 93626 and 93629 sat in read/ unacked while the broker clock read OFFER-EXHAUSTED, the drive nudge 93645 (13:09Z) went unanswered until 14:13Z, and the round-5 stamp lands with this row at 14:2xZ.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/3.0.0_SA_CVO/read/20260903T124233Z_2.0.0_SA_COO_ROUND_5_of_NFRA_COMPEFFICACY_at_the_L10_.md (93626) and ...124635Z... (93629): both in read/ at 12:4xZ; READ-acked at 14:13Z (this seat's own ack call)",
+        "2.0.0_SA_COO 93645 (13:09Z): 'your telemetry's last work row is 12:27Z (41 min, 0 rows since the handoff)'; answered (a) QUIET at 14:13Z",
+        "this seat's own tool log: the comp-trigger exercise issued at 12:2xZ returned at 14:07:14Z with 'bash: /tmp_ct_out.txt: Permission denied' on each of three cases -- the redirect target, not the tool, was the fault; re-run to the scratchpad at 14:18Z in 0-2 s per case"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The cause was outside the loop (the account hold) plus one instrument fault at this seat (a redirect to a path the shell could not open, so the exercise neither ran nor returned promptly); the remedy is mechanical and lands this tick: CVO MODE of /drive armed at the 20-minute cadence at this seat, and every exercise script writes under the session scratchpad. No project state moved wrongly; the round's L7 was complete throughout and no worker waited on this seat.",
+    "spec_asserts": "LD-0530 / drive v2 obligation 6 (MSTR 93661, 93674): 'compile packet received -> L9 adjudication and the L10 stamp in the tick that reads it; a packet older than one tick without a stamp is your own defect row'.",
+    "world_is": "The packet aged about 100 minutes before its stamp; the telemetry's last work row was 12:27:19Z and the next act at this seat was 14:0xZ.",
+    "notes": "Filed by the seat that owns the defect, on the project the packet belonged to, so the round table MSTR's brief measured (idle 15-33 min at the CVO between limbs) carries this round's number with its cause. Not blocking; the stamp is in this commit."
   }
 ]
 ```
