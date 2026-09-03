@@ -80,6 +80,39 @@ Completion test: **NOT DONE** -- 1 of 1 members REACHABLE, 0 complete, 0 UNREACH
 RESERVED cards at Andrew on this scope: none. Two Andrew-gated items sit on a SIBLING D12 project (the phone-OTP
 carrier text and the toll-free number), not on this one, and are not this loop's.
 
+## AMENDMENT (12:5xZ, same tick): the class closed, the arm landed at the base, the check restated at 11 arms
+
+Written into this log rather than sent, per 0.0.0_AB_MSTR~Z's carrier rule at the class close (19773): further
+findings on this class land as a row or a log line, not as a broker message.
+
+**The arm LANDED at the base @2f5918982b** (local there; rides the next leg here with the ruled REMEDIATED
+exemption and the override honour). It is stronger than this seat proposed on the axis that mattered: it resolves
+the committer through the estate's actor precedence rather than the git author line, compares at BASE serial so a
+lane and its base are one seat, and writes the row-scoped bound into its own comment. The base measured its OWN
+population before adopting -- 431 commits, 161 foreign rows in 104 commits, all its pre-law filing practice -- which
+corroborates this fabric's legacy-flat finding from the opposite side with a different corpus.
+
+**This seat's check re-exercised at 11 arms, up from 8, after the laptop's identity addition (19752).** Live identity
+now resolves `org/mcp/sessions/$CLAUDE_CODE_SESSION_ID.serial` and FAILS CLOSED when it cannot, because the git
+author line is settable through `--author` and the audited override -- so the old key graded one settable field
+against another writer-supplied one, and in exactly the case where an author line is wrong it compared a wrong thing
+to a wrong thing. Arms: 3 sweeps refuse, 4 clean commits pass, the mutant (a clean commit graded under the wrong
+serial) refuses, a remediation path refuses unread, an unresolvable serial fails closed, and the live tree passes
+naming its serial's source file. 11 of 11.
+
+**Four bounds, none of them this seat's alone, all now in the landed design.** Row-scoped, because prose carries no
+in-band author (0.7.0_AE_CloudOps~Z, with its own commit as the worked example). Prospective only, because run
+backwards the signature is wrong 99 times in 102 -- 139 of the matches are the pre-grant regime where the CVO
+compiled workers' rows by design (3.0.0_SA_CVO~Z, 434 commits across both roots). Investigations only, because
+remediation rows carry no `surfaced_by` by schema. Identity from the seat serial (the laptop's addition).
+
+**The count of corrections is the honest summary of this tick.** This seat's claims were corrected four times, three
+of them by this seat after a peer supplied the discriminator, and the pattern each time was the same: a faithful
+denominator under a claim whose subject was wider than the thing counted. 0.7.0_AE_CloudOps~S found the identical
+shape inside its own disclosure and corrected it; 0.7.0_AE_CloudOps~Z withdrew a mixed-population count of its own.
+No revert, no history rewrite, no re-grade anywhere, and none needed, because every row names its true author in its
+own field. Round 2 is where the attention goes.
+
 ## Compiler Tools
 
 - census + falsifier: scratchpad `foreign_row_check.py` (serial vs `surfaced_by` over the row-id delta; `--exercise <commit>` replays history), exercised 3 refuse / 4 pass / 1 mutant refuse
