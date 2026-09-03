@@ -35,9 +35,19 @@ _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
+sys.path.insert(0, str(_WORKSPACE / ".tools"))
 
 from org.modules.graph.extract_iam import build_iam_report, PermissionGap  # noqa: E402
 from org.modules.graph import extract_iam as EI  # noqa: E402
+import _compbudget  # noqa: E402  -- NFRA_COMPEFFICACY CE-t-8: Rule T's shared carrier (PRD v0.4 s.4.4)
+
+# NFRA_COMPEFFICACY CE-t-8: the three-state a deny-shaped answer is graded on (decomp cell's own
+# closes-on: "effective-deny three-state; 'no parsed deny' is never 'allowed'"). Printed as its own
+# line ("STATE: <TOKEN>") beside the existing rich VERDICT text, never replacing it -- a consumer
+# that wants the nuance still has it; a consumer that wants ONE machine-rejectable token greps this.
+STATE_ALLOWED = "ALLOWED"
+STATE_DENIED = "DENIED"
+STATE_NOT_DECIDABLE = "NOT-DECIDABLE"
 
 
 def _build():
@@ -509,8 +519,32 @@ def _print_plane_banner():
 
 
 def cmd_attach_census(args):
-    """List every aws_iam_role_policy block comp-iam could NOT attach to a role."""
+    """List every aws_iam_role_policy block comp-iam could NOT attach to a role.
+
+    NFRA_COMPEFFICACY CE-t-8, Rule T non-application (disclosed, not silent): this call's cost is
+    dominated by ONE opaque _build() pass with no internal resumable unit (unlike resource-sweep's
+    per-lambda loop) -- there is nothing to check a clock against mid-call, and no safe way to abort
+    a synchronous Terraform parse partway without risking a corrupted partial read. The budget is
+    therefore MEASURED and DISCLOSED after the fact, never enforced mid-call: WITHIN BUDGET if the
+    measured time is under it, an honest non-application note if not (the call still ran to
+    completion -- a truthful, complete answer, never a fabricated partial one)."""
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as exc:
+        print(f"REFUSED: --budget {exc}")
+        return 2
+    clock = _compbudget.Clock(budget_s)
     _build()
+    used_s = round(clock.elapsed(), 2)
+    remaining = clock.remaining()
+    if remaining is None or remaining > 0:
+        print(f"{_compbudget.within_budget_line(1, 1, 'build_pass', budget_s, budget_source, used_s)}")
+    else:
+        print(f"NOT WITHIN BUDGET: the _build() pass took {_compbudget.fmt(used_s)}s, over the "
+              f"{_compbudget.disclosure_line(budget_s, budget_source)} -- but it already RAN TO "
+              "COMPLETION (this call has no internal resumption point to abort at; a truthful "
+              "complete answer, not a fabricated partial one). Disclosed non-application of the "
+              "early-abort half of Rule T for this specific subcommand shape.")
     st = EI._ATTACH_STATS
     print("comp-iam attach-census -- policy blocks NOT attached to any role")
     print("=" * 78)
@@ -552,8 +586,25 @@ def cmd_resource_sweep(args):
     constants, dead code); binding the check to a name pattern instead of to the call's
     resource is `action` for `resource` one layer down, inside the sweep hunting it.
     """
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as exc:
+        print(f"REFUSED: --budget {exc}")
+        return 2
+    clock = _compbudget.Clock(budget_s)
+
     profiles, roles, _ = _build()
-    lambdas = [p for p in profiles if p.service_type == 'lambda']
+    lambdas = sorted((p for p in profiles if p.service_type == 'lambda'), key=lambda p: p.name)
+    resume_after = getattr(args, "resume_after", None)
+    if resume_after:
+        names = [p.name for p in lambdas]
+        if resume_after in names:
+            lambdas = lambdas[names.index(resume_after) + 1:]
+        else:
+            print(f"WARN: --resume-after {resume_after!r} does not match any lambda -- "
+                  "running the full sorted set (no units skipped).")
+    total_units = len(lambdas)
+    budget_exhausted_at = None   # index into `lambdas` where the budget ran out, if it did
 
     flagged, broad_roles = [], set()
     tally: dict[str, int] = {}
@@ -569,7 +620,11 @@ def cmd_resource_sweep(args):
     zero_op = [p.name for p in lambdas
                if p.iam_role and p.iam_role in roles and not p.operations]
 
-    for p in lambdas:
+    for _idx, p in enumerate(lambdas):
+        remaining = clock.remaining()
+        if remaining is not None and remaining <= 0:
+            budget_exhausted_at = _idx
+            break
         role = roles.get(p.iam_role) if p.iam_role else None
         if role is None:
             continue
@@ -606,6 +661,26 @@ def cmd_resource_sweep(args):
             if any(EI._action_pattern_matches(a, 's3:GetObject') for a in s.actions):
                 wildcard_s3_roles.add(rn)
                 break
+
+    # RULE T STATUS PRINTS FIRST, ABOVE the FLAGGED/DENOMINATOR block -- a partial sweep must
+    # never sit below numbers that could otherwise read as a complete answer.
+    used_s = round(clock.elapsed(), 2)
+    n_units_seen = total_units if budget_exhausted_at is None else budget_exhausted_at
+    if budget_exhausted_at is None:
+        print(_compbudget.within_budget_line(total_units, total_units, "lambda", budget_s,
+                                             budget_source, used_s))
+    else:
+        cursor = lambdas[budget_exhausted_at - 1].name if budget_exhausted_at > 0 else None
+        args_repr = "comp-iam resource-sweep" + (" --s3-only" if args.s3_only else "")
+        if cursor:
+            print(_compbudget.budget_reached_line(budget_s, budget_source, n_units_seen, total_units,
+                                                  "lambda", args_repr, cursor))
+        else:
+            print(f"BUDGET REACHED: {_compbudget.fmt(budget_s)}s ({budget_source}); scanned 0 of "
+                  f"{total_units} lambda(s); results are a PREFIX, not the answer; NO CURSOR YET: "
+                  "no lambda completed before the budget hit, so there is no last-processed unit "
+                  "to resume from; resume: re-run with a larger --budget.")
+    print()
 
     _print_plane_banner()
     if flagged:
@@ -707,10 +782,23 @@ def cmd_simulate(args):
                   f"aws:SourceVpc=string:vpc-123)")
             return 2
 
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as exc:
+        print(f"REFUSED: --budget {exc}")
+        return 2
+
     client = getattr(args, "_client", None)
     if client is None:
         import boto3  # lazy; the self-test injects a stub
-        client = boto3.client("iam")
+        from botocore.config import Config
+        # NFRA_COMPEFFICACY CE-t-8, Rule T (AWS-plane calls): the live simulate/get_role calls carry
+        # NO caller-settable ceiling before this cell -- boto3's own defaults (60s connect, 60s read)
+        # apply unconditionally, deaf to the caller's own budget. budget_s==0 (unbounded) leaves
+        # boto3's own defaults in place rather than passing a nonsensical 0s timeout.
+        cfg = Config(connect_timeout=budget_s, read_timeout=budget_s) if budget_s > 0 else None
+        client = boto3.client("iam", config=cfg)
+    print(f"  {_compbudget.disclosure_line(budget_s, budget_source)}")
 
     role = args.role
     role_arn = role if role.startswith("arn:") else None
@@ -723,9 +811,20 @@ def cmd_simulate(args):
 
     def _one_call(arn, label):
         """One isolated simulate invocation -> (decision, missing_context, raw)."""
-        resp = client.simulate_principal_policy(
-            PolicySourceArn=role_arn, ActionNames=[args.action],
-            ResourceArns=[arn], **({"ContextEntries": ctx_entries} if ctx_entries else {}))
+        try:
+            resp = client.simulate_principal_policy(
+                PolicySourceArn=role_arn, ActionNames=[args.action],
+                ResourceArns=[arn], **({"ContextEntries": ctx_entries} if ctx_entries else {}))
+        except Exception as exc:
+            # Rule T's DEFERRED bucket for an AWS-plane call that outlived its budget (a
+            # ReadTimeoutError/ConnectTimeoutError from the Config above, or any other transport
+            # failure) -- printed once per unit, never silently swallowed, never mistaken for a
+            # deny (this is a MISSING measurement, not a NOT-DECIDABLE one -- the caller checks
+            # for the "DEFERRED" sentinel decision below and reports it distinctly).
+            print(f"  [{label}] {args.action} on {arn}")
+            print(f"      DEFERRED: call did not complete within {_compbudget.fmt(budget_s)}s "
+                  f"({budget_source}) -- {type(exc).__name__}: {exc}")
+            return "DEFERRED", []
         ev = (resp.get("EvaluationResults") or [{}])[0]
         decision = ev.get("EvalDecision", "?")
         missing = [m.get("ContextKeyName", str(m)) if isinstance(m, dict) else str(m)
@@ -740,12 +839,17 @@ def cmd_simulate(args):
     print("=" * 78)
     t_dec, t_missing = _one_call(args.resource_arn, "TARGET")
 
+    if t_dec == "DEFERRED":
+        print(f"STATE: {STATE_NOT_DECIDABLE}")
+        return 2
+
     if t_missing:
         print("\nVERDICT: CONDITIONED-UNEVALUATED -- a conditioned statement was evaluated with")
         print("  no context, and that returns implicitDeny BYTE-IDENTICAL to a real deny")
         print("  (22a false-deny mode 2). This is NOT a deny verdict. Re-run with:")
         for k in t_missing:
             print(f"    --context {k}=<type>:<value>")
+        print(f"STATE: {STATE_NOT_DECIDABLE}")
         return 2
 
     # ---- the positive control: a SEPARATE invocation, never batched with the target ----
@@ -801,15 +905,18 @@ def cmd_simulate(args):
         if control_ok is False:
             print("  NOTE: the control DENIED on a resource DESIRED says is held -- census/TF")
             print("  drift or missing context on the control; does not weaken an ALLOWED target.")
+        print(f"STATE: {STATE_ALLOWED}")
         return 0
     if control_ok is True:
         print(f"VERDICT: DENIED ({t_dec}), control-proven -- the instrument demonstrably CAN say")
         print("  allowed for this role, so this deny discriminates. APPLIED plane.")
+        print(f"STATE: {STATE_DENIED}")
         return 1
     print(f"VERDICT: DENIED-UNPROVEN ({t_dec}) -- rc=2, NOT 1: no passing positive control ran")
     print("  in isolation, so this deny is indistinguishable from an instrument failure")
     print("  (stale principal, missing context on a conditioned allow, wrong role).")
     print("  An instrument that cannot fail is not an instrument; one that cannot PASS is not one either.")
+    print(f"STATE: {STATE_NOT_DECIDABLE}")
     return 2
 
 
@@ -819,9 +926,10 @@ def _simulate_self_test():
     import types as _t
 
     class Stub:
-        def __init__(self, decisions, missing=None):
+        def __init__(self, decisions, missing=None, raise_on=None):
             self.decisions = dict(decisions)   # arn -> decision
             self.missing = dict(missing or {}) # arn -> [keys]
+            self.raise_on = set(raise_on or ())  # arns whose call raises (Rule T DEFERRED)
             self.calls = []
         def get_role(self, RoleName):
             return {"Role": {"Arn": f"arn:aws:iam::123:role/{RoleName}"}}
@@ -829,6 +937,8 @@ def _simulate_self_test():
             assert len(ResourceArns) == 1, "wrapper must never batch ARNs"
             self.calls.append(list(ResourceArns))
             arn = ResourceArns[0]
+            if arn in self.raise_on:
+                raise TimeoutError("stub transport timeout (Rule T DEFERRED case)")
             return {"EvaluationResults": [{
                 "EvalDecision": self.decisions.get(arn, "implicitDeny"),
                 "MissingContextValues": self.missing.get(arn, [])}]}
@@ -870,6 +980,13 @@ def _simulate_self_test():
     s = Stub({"arn:aws:s3:::B/new": "allowed", "arn:aws:s3:::A/held": "allowed"})
     rc = cmd_simulate(_args(control_arn="arn:aws:s3:::A/held", _client=s))
     ck("allow.rc0", rc == 0)
+
+    # 6. NFRA_COMPEFFICACY CE-t-8, Rule T's DEFERRED bucket: a transport failure on the TARGET
+    #    call (timeout, connection reset -- anything _one_call's except catches) must never read
+    #    as a decision at all. rc=2, NOT-DECIDABLE, "DEFERRED" printed -- never mistaken for a deny.
+    s = Stub({}, raise_on={"arn:aws:s3:::B/new"})
+    rc = cmd_simulate(_args(_client=s))
+    ck("ruleT.target_call_deferred_rc2_not_denied", rc == 2 and len(s.calls) == 1)
 
     ok = all(o for _, o in results)
     print("\n" + ("OK: all simulate self-test cases pass" if ok else "ERROR: simulate self-test FAILED"))
@@ -1522,14 +1639,27 @@ def main():
     p_rec.add_argument('--census', default=None,
                        help='Path to the comp-aws live IAM census JSON (default: docs/briefs/cmpaws-iam-axis-census-*.json)')
 
-    sub.add_parser('attach-census',
+    p_ac = sub.add_parser('attach-census',
                    help='Policy blocks comp-iam could NOT attach to a role (exit 1 if any)')
+    p_ac.add_argument('--budget', default=None,
+                      help=f'Rule T (PRD s.4.4): seconds for this sweep (carrier: --budget > env '
+                           f'{_compbudget.ENV_VAR} > default {_compbudget.fmt(_compbudget.DEFAULT_BUDGET_S)}s); '
+                           'this call has no internal resumption point (one opaque _build() pass), so '
+                           'a budget it cannot meet is DISCLOSED, never silently exceeded or aborted mid-way')
     p_rs = sub.add_parser('resource-sweep',
                           help='Estate-wide: calls whose ACTION is held but RESOURCE is not')
     p_rs.add_argument('--s3-only', action='store_true',
                       help='Only s3:* actions (the modeled resource space)')
     p_rs.add_argument('--show-broad', action='store_true',
                       help='List the Resource:* roles (EXCLUDED, NOT CLEARED)')
+    p_rs.add_argument('--budget', default=None,
+                      help=f'Rule T (PRD s.4.4): seconds for the per-lambda sweep loop (carrier: '
+                           f'--budget > env {_compbudget.ENV_VAR} > default '
+                           f'{_compbudget.fmt(_compbudget.DEFAULT_BUDGET_S)}s); a budget reached mid-sweep '
+                           'stops and reports a resumable cursor (the last fully-checked lambda)')
+    p_rs.add_argument('--resume-after', default=None,
+                      help='resume a sweep after this lambda name (from an earlier BUDGET REACHED '
+                           'line); the sorted lambda list is scanned starting after it')
 
     # Also add --service flag to gaps command
     p_gaps = sub.add_parser('gaps-filtered', help='Show gaps for one service')
@@ -1546,6 +1676,11 @@ def main():
                        help='a resource the role IS known to hold (the positive control; auto-derived from DESIRED if omitted)')
     p_sim.add_argument('--no-control', action='store_true',
                        help='skip the positive control (a resulting DENY is UNPROVEN, never rc=1)')
+    p_sim.add_argument('--budget', default=None,
+                       help=f'Rule T (PRD s.4.4): seconds for the live simulate/get_role calls '
+                            f'(carrier: --budget > env {_compbudget.ENV_VAR} > default '
+                            f'{_compbudget.fmt(_compbudget.DEFAULT_BUDGET_S)}s); a call that outlives it '
+                            'is DEFERRED, never read as a deny or an allow; --budget 0 = boto3 defaults')
     sub.add_parser('simulate-self-test', help='offline mutant suite for the simulate wrapper (no AWS)')
     p_rc = sub.add_parser('refresh-census',
                           help='APPLIED: generate a vintage-stamped live-IAM census (Plane 2)')
