@@ -37,12 +37,18 @@ row is the carrier. A broker message is never the carrier: a notifier that watch
 surprise that exists only as a message is invisible to L8 and uncounted at L10.
 
 Every surprise of every class reaches the channel. A `BLOCKING` row also goes to the issuer in the same turn; an
-`ARMED` row names its disarm owner in the row. The channel then:
+`ARMED` row names its disarm owner in the row. The channel runs in one direction: rows travel UP from the seat that
+met the surprise, and the CVO's findings travel UP to `2.0.0_SA_COO` (or to `1.0.0_SA_CTO` for a scope change), never
+DOWN to a worker. A worker hears from the CVO only through a task order or an operating note issued by the COO; a
+row's `disarm_owner` names who disarms, never whom the CVO may message; a disarm request travels through the COO.
+The channel then:
 
 1. **compiles** the rows into the round's investigation document (section 4), at L8;
 2. **adjudicates** each row measurement-first, mechanism attributed at source, denominators printed, at L9;
 3. **graduates** valid grounded rows into the round's remediation document (section 5), at L9;
-4. **routes** each graduated row to the limb that owns its remedy, at L10, once the round's task orders are terminal.
+4. **routes** each graduated row to the limb that owns its remedy, at L10, once the round's task orders are terminal
+   with valid proof-of-spec instances -- the remediations of a round are issued as ONE slug at L10, one artifact at
+   one moment to the route owner, never as a stream of messages during L7 to L9.
 
 A project closes only on a zero-graduation round.
 
@@ -144,7 +150,8 @@ the armed row. A valve whose actuator has no owner reads open and is shut.
 
 ## 7. L8 compilation -- the CVO's intake
 
-The CVO's engagement with a project begins at L8. Its intake is `org/surprise_channel/surprise-watch.sh <serial> stream`,
+The CVO's engagement with a project begins at L8; its correspondents are the COO and, for a scope change, the CTO,
+and no worker. Its intake is `org/surprise_channel/surprise-watch.sh <serial> stream`,
 a read-only watermark over both roots that prints one line per new, mutated or vanished row and never writes what it
 watches; `comp-surprise` is the rollup over both roots. The watcher notifies and never blocks; its state records what it
 emitted, never that a seat read anything. A row the CVO reads is acknowledged by its L9 act, never by a message.
@@ -157,9 +164,15 @@ emitted, never that a seat read anything. A row the CVO reads is acknowledged by
 `DECOMP_INVALIDATING` row reopens L5 for the current round at once.
 
 **L10 precondition.** Every task order under the project is terminal (`complete`, `superseded`, `cancelled`,
-`withdrawn`) and every investigation row is dispositioned. An open item is not a zero: a round with an
-`UNDER_INVESTIGATION` row does not route and does not close. The row gate enforces the task-order half; the
-dispositioned half binds by reading.
+`withdrawn`), each finished with a valid proof-of-spec instance whose `surprises` entries resolve to rows, and every
+investigation row is dispositioned. An open item is not a zero: a round with an `UNDER_INVESTIGATION` row does not
+route and does not close. The row gate enforces the task-order half and the proof-of-spec checker its surprises
+clause; the dispositioned half binds by reading.
+
+**The loop.** The round's findings re-enter at the limb the route names and run forward again through L10. A
+remediation pass is an L5 re-decomposition or an L6 re-dispatch by the COO, cut as fresh task orders and remediated
+runs in the order their dependencies dictate, to the relevant workers or to newly seated ones. Looping in order is
+the point; the CVO never shortens it by writing to a worker.
 
 **Routing fields on a remediation row.** `route` is the decision: what does the remedy need that does not exist yet?
 `SPEC_ERROR`, a cell the decomposition already contains; `DECOMP_INVALIDATING`, a cell it does not; `SCOPE_CHANGE`, an
@@ -169,6 +182,7 @@ outcome the PRD does not name. `loop_target` is derived from `route` and stored 
 `REQUIRES_UNNAMED_OUTCOME` with `outcome_ref` null and a `proposed_outcome`); the filer never allocates an outcome id.
 
 **Who acts.** The CVO stamps the route; the route owner acts: `2.0.0_SA_COO` for 6 and 5, `1.0.0_SA_CTO` for 2. The
+stamped rows go to the route owner and to no one else. The
 notifier `.tools/prd-header-notify.py kind:route` delivers a new route row to its owner and re-offers until read. A
 round whose remediation document graduates zero rows proceeds to the next L6 dispatches; a project closes on a
 zero-graduation round.
@@ -219,4 +233,5 @@ window. A document that describes the channel in a second shape is retired to a 
 | 1.0 | 2026-08-21 | Andrew's ratification of the channel framework at the CTO terminal; the CTO's assignment of the channel to the CVO | one home per document; the two axes; the grounding bar; investigation and remediation documents; the escape valve; round mechanics |
 | 1.1 | 2026-08-21 | the CTO's cross-fabric ruling on colliding ids | one file per fabric per round; ids carry the fabric coordinate; mirror versus collision |
 | 1.2 | 2026-09-02 | `org/tier0/ledger/` entries for the row gate and the project tree; Andrew's word at the CTO terminal on lane `ANY` for investigations | `.tools/surprise-row-gate.py`; `project`, `fabric`, `spec_asserts`, `world_is` gate-required on new rows; the tree root; the `SCOPE_CHANGE` payload; the remediation schema's fabric coordinate |
+| 2.1 | 2026-09-03 | spine v2.1 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` @aaa5a2b085; Andrew's two words at the COO terminal, recorded at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb and `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the channel runs in one direction: findings up to the COO or the CTO, never down to a worker; the round's remediations issued as one slug at L10 to the route owner only; the L10 precondition carries the valid proof-of-spec instance with resolving surprises; the loop stated |
 | 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; Andrew's word at the CVO terminal, recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260903_031xZ_SURPRISE_ROW_NOT_MCP_GATE_ON_PROOF_OF_SPEC_SURPRISES.md` @007481053a | re-keyed from a five-stage document to the L7 to L10 annex of the spine, in constitutional form; the row is the only carrier and the surfacing seat appends its own row on either root; append-only as a control with corrections as new rows; the proof-of-spec surprises limb; the L10 precondition and its gate; the CVO's intake named |
