@@ -3,8 +3,10 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **1 row** (S1, appended by `0.7.0_AE_CloudOps~P`
-at 07:12Z while executing `NFRA_CLDGRPH.TO-CG-V-2` cells CG-s-11/12/13).
+**Append-only during the round.** Denominator at this write: **10 rows** (S1-S10). Corrected 2026-09-03 09:0xZ by
+`0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
+header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
+other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
 **Round 1 task orders:** two live -- `TO-CG-V-1` at `0.7.0_AE_CloudOps~Q`, `TO-CG-V-2` at `0.7.0_AE_CloudOps~P`.
 
 ## S1 -- the ADD-CHECKLIST grants on a role that does not exist
@@ -388,6 +390,63 @@ the loader's node/edge key handling at the port.
       ]
     },
     "notes": "This row is the L10 STAMP's adjudication half and carries NO route, so it is not route-carrying under either shape and does not itself need the precondition it attests. The three graduated items take their disposition from the remediation rows bearing their ids in REMEDIATION_v1.md, landed in this same commit -- the gate's census reads the index, so one slug is one act. DISCLOSURE for any reader using the rollup: comp-surprise resolves dispositions by latest carrier as of @2bc3679e0b, so this round reads closed there; on an older vintage it would read OPEN and ARMED despite the adjudication, and that must not be taken as this round failing to close. This seat is NOT the grader of realization: the outcome grades at the close are 1.0.0_SA_CTO~A's against the exercised artifacts, and the coverage report is 2.0.0_SA_COO~A's."
+  }
+]
+```
+
+## S10 -- the rebuild deadline watchdog's stated "5x headroom" is 1.8x against the measured duration, and the port inherits it
+
+Found while gathering the runtime-sizing inputs for `B2-AC1` (TO-CG-B-2), reading the loader's own
+watchdog block rather than a document about it.
+
+`kuzu_nessie_load.py:389-393` sets `KUZU_REBUILD_DEADLINE_S` to a default of **1800 s** and justifies
+that number in-source: *"a full rebuild is ~6min, so 5x headroom"*. **That justification rests on the
+same ~6 min figure `CG-s-10` measured and falsified.** Against the measured full load (935.500 s and
+1001.172 s, 2 of 2 runs) the real headroom is **1.80x**, not 5x. Nothing is failing today -- 1800 s
+still exceeds 1001 s -- which is exactly why it is worth a row rather than a shrug: the margin is a
+quarter of what the code says it is, and the number was never re-derived when the duration changed.
+
+**Why ARMED, and why it lands on THIS port:** `B2-AC1` sizes a cloud worker that runs this loader, and
+the cloud number is UNMEASURED (that is `B2-AC6`'s job) with a NAMED reason to expect it to differ --
+`CG-s-10`'s memory-pressure caveat cuts both ways. A cloud full load only **1.8x** slower than the
+laptop's would hit the watchdog, and `_deadline_exit` is not a graceful degrade: it calls
+`os._exit(3)` after releasing the singleton, so the run dies mid-build and the caller falls back. A
+worker inheriting an un-restated 1800 s default would be sized against a comment, not a measurement --
+which is the precise failure mode `PRD s.6 R5` exists to forbid ("decided by the MEASURED full-fallback
+duration, not the document claim").
+
+**Disarm is this seat's, at this port:** set `KUZU_REBUILD_DEADLINE_S` EXPLICITLY in the task
+definition from the measured number with its headroom stated, rather than inheriting the default, and
+say so in the runtime decision. Recorded as a row first because the finding is about the ENGINE and
+outlives my task definition -- a later caller that does not set it still inherits 1800 s justified by a
+stale comment.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S10",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~Q",
+    "surfaced_at": "2026-09-03T09:05Z",
+    "one_line": "kuzu_nessie_load.py:389-393 defaults KUZU_REBUILD_DEADLINE_S to 1800 s and justifies it in-source as '5x headroom' over 'a full rebuild is ~6min' -- the same figure CG-s-10 measured and falsified. Against the measured 935.500-1001.172 s the real headroom is 1.80x, not 5x. Not failing today; ARMED for the cloud port, whose duration is UNMEASURED and whose watchdog exit is os._exit(3) mid-build, not a graceful degrade.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Q",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/globgrph/kuzu_nessie_load.py:389-393 @e445642c5f -- the comment 'Hard-exit past KUZU_REBUILD_DEADLINE_S (default 1800s; a full rebuild is ~6min, so 5x headroom)' and the code '_deadline_s = int(os.environ.get(\"KUZU_REBUILD_DEADLINE_S\", \"1800\"))'. Blob identity checked: git hash-object of the worktree == 8ed0108820852e4be03ee5a06647e4e17a4f251f == the blob at the pin, so this is the read at the pin",
+        "MEASURED CONTRADICTION, this seat's own runs at a9aea6f3ce: FULL-1 1001.172 s and FULL-2 935.500 s, 2 of 2, run-to-run spread +/-3.39%. 1800/1001.172 = 1.798x and 1800/935.500 = 1.924x, so the headroom is 1.80x at the worst measured run against a stated 5x",
+        "ARITHMETIC THE COMMENT ASSERTS: 5x headroom over ~6 min implies a deadline sized for a ~360 s rebuild (5 x 360 = 1800). The 1800 s constant is therefore DERIVED from the ~6 min figure, not independently chosen -- which is what makes it a carrier of the falsified figure rather than a coincidence",
+        "infra/aws/globgrph/kuzu_nessie_load.py:395-401 @e445642c5f -- _deadline_exit prints REBUILD-DEADLINE-EXCEEDED, calls _release_singleton() and then os._exit(3); the comment states os._exit rather than sys.exit is deliberate because a thread blocked in a native Arrow S3 read ignores normal interpreter shutdown. So the failure mode is a hard kill mid-build",
+        "NEGATIVE CONTROL on the claim that nothing is failing today: 1800 s DOES exceed both measured runs, and both exited rc=0 with the watchdog armed -- so this row is about MARGIN, not about an observed failure, and says so"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-2 B2-AC1 requires the runtime decision to carry 'the memory size with the measured peak beside it' and the visibility timeout '>= the longest step that holds the message, with the number', i.e. every runtime bound derived from CG-s-10's measurements rather than from a document claim (PRD s.6 R5).",
+    "world_is": "One runtime bound the worker inherits -- the engine's own rebuild deadline -- is still derived in-source from the ~6 min document figure that CG-s-10 falsified, giving 1.80x headroom where the code claims 5x. It is inherited silently by any caller that does not set the env var, including a task definition written from the face without reading :389.",
+    "notes": "Disarm at this port = set KUZU_REBUILD_DEADLINE_S explicitly in the projection task definition from the measured number with the headroom stated in the runtime decision, and re-check it against B2-AC6's CLOUD measurement once that exists (the cloud number is the one the sizing may rest on). The ENGINE-side fix -- re-deriving the default and correcting the comment -- is NOT taken here: this task order's four named fixes are S9, S2, S3 and S8, and quietly widening that set is the scope drift the round-2 face forbids. Surfaced so a later caller does not inherit a stale justification; 3.0.0_SA_CVO~A routes it."
   }
 ]
 ```
