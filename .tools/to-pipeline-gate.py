@@ -80,6 +80,41 @@ COVERAGE_WORD_RE = re.compile(
 # retroactively.
 FABRIC_ENUM = ("laptop", "site-z")
 
+# GATE (i) -- Andrew-direct 2026-09-03 (state of record @716a9bc7ce call 3, LD-0521; his conditional
+# "If there's any chance of doing this out of order, we need more gates" became his ask): L7 WORKERS ARE
+# TIER-2 SEATS ONLY. A NEW tree task order whose <issued_to> names a Tier-0 serial (0.0.<n>_*: MSTR and the
+# utility seats) or a Tier-1 serial (*_SA_*: the exec tier) is REFUSED. Prospective, TREE projects only --
+# every tree TO is new by construction, so nothing historical is re-graded; a flat-root TO is left to its
+# 2,000-file legacy population. Measured the same night, before this limb existed: TO-CE-DISC-2 ->
+# 1.0.0_SA_CTO and TO-CE-TP-1 -> 3.0.0_SA_CVO were cut through this gate and WITHDRAWN by their issuer on
+# his correction ("Only tier2 agents are workers, MSTR does not 'WORK' on projects, they are an integrator").
+# A `~lane` suffix is stripped before the tier is read (a lane of an exec is still an exec). A value that
+# is not a serial at all (an executor CLASS, prose) is not this limb's -- the seating clause owns that shape.
+ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
+SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
+TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
+
+
+def _issued_to_tier_violations(rel, text):
+    """GATE (i): complaints about a NEW tree TO's <issued_to>. [] for flat-root TOs (out of scope)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    out = []
+    for m in ISSUED_TO_RE.finditer(text):
+        raw = m.group(1).strip()
+        base = raw.split("~", 1)[0].strip()
+        if not SERIAL_RE.match(base):
+            continue
+        if TIER01_RE.match(base):
+            tier = "0" if base.startswith("0.0.") else "1"
+            out.append("%s: <issued_to>%s</issued_to> names a TIER-%s seat. L7 workers are TIER-2 ONLY "
+                       "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521): a Tier-1 exec does not hold a "
+                       "task order and 0.0.0_AB_MSTR integrates and never works a project. Re-address to a "
+                       "Tier-2 seat, or land the decision as SPEC at its L-owner (L4 CTO / L5 COO)."
+                       % (rel, raw, tier))
+    return out
+
 
 def _repo_root():
     try:
@@ -615,6 +650,9 @@ def check_file(root, rel):
     if m and NONE_WORD_RE.match(m.group(1).strip()):
         notes.append("%s: <decomp_ref> declares NONE -- allowed (one-branch work under its own "
                      "charter); layer 1 reads it as ANNOUNCE, not ENFORCE." % rel)
+
+    # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
+    v.extend(_issued_to_tier_violations(rel, text))
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the

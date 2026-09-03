@@ -80,6 +80,61 @@ ROUTE_TO_STEP = {"SPEC_ERROR": 6, "DECOMP_INVALIDATING": 5, "SCOPE_CHANGE": 2}
 
 OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 
+# GATE (iii) -- Andrew-direct 2026-09-03 (state of record @716a9bc7ce call 3, LD-0521; transcript: "no
+# LIM-10 routing until all task orders are complete ... We do not route until the job is over"). A NEW
+# remediation row carrying a `route` under a TREE project is REFUSED while any task order of that project,
+# on EITHER root, is not terminal at HEAD. Tree projects only; NEW rows only (this gate's standing model);
+# the census reads HEAD blobs, never the worktree -- a peer's half-written status flip must not decide a
+# refusal. THE OTHER HALF of his precondition ("the surprise channel, all investigations, completely checked
+# by CVO") has no artifact a gate can read today beyond the rows' own disposition field and is NOT enforced
+# here -- stated so this limb's OK line is never read as covering it. Terminal words are the TO protocol's
+# (complete / superseded / cancelled) plus the withdrawn state an issuer writes on a mis-seated dispatch.
+TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
+
+
+def _open_tos_for_project(root, code):
+    """(open_ids, total, note): the project's task orders on BOTH roots (tracked at HEAD) whose <status>
+    is not terminal. open_ids is None when the census could not run -- the caller fails closed."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
+                             "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return None, 0, "git ls-files raised %s" % exc
+    if ls.returncode != 0:
+        return None, 0, "git ls-files rc=%d: %s" % (ls.returncode, ls.stderr.strip()[:120])
+    paths = [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()]
+    open_ids = []
+    for p in paths:
+        st, text = _blob(root, "HEAD", p)
+        if st != "OK":
+            return None, len(paths), "%s unreadable at HEAD (%s)" % (p, st)
+        m = TO_STATUS_RE.search(text)
+        word = m.group(1).lower() if m else "<no status tag>"
+        if word not in TERMINAL_TO_WORDS:
+            open_ids.append("%s [%s]" % (os.path.basename(p), word))
+    return open_ids, len(paths), ""
+
+
+def _route_precondition_violations(root, rel, row, code, open_tos=None):
+    """GATE (iii) for ONE new tree remediation row carrying a route. `open_tos` is injectable for the
+    red-first exercise; production passes None and the census runs."""
+    rid = row.get("id", "<no id>")
+    if open_tos is None:
+        open_ids, total, note = _open_tos_for_project(root, code)
+    else:
+        open_ids, total, note = open_tos
+    if open_ids is None:
+        return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
+                "-- REFUSED, fail-closed" % (rid, code, note)]
+    if open_ids:
+        return ["%s: NEW remediation row carries route=%s while %d of %d task order(s) under %s are NOT "
+                "terminal at HEAD: %s. L10 routing waits until every task order is complete "
+                "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
+                "is over')." % (rid, row.get("route"), len(open_ids), total, code, ", ".join(open_ids))]
+    return []
+
 
 def _repo_root():
     try:
@@ -447,6 +502,14 @@ def check_file(root, rel):
                      "membership; a row filed under another project is an identity defect."
                      % (rel, rid, row["project"], folder_project))
         v.extend(_check_row(row, kind, schema))
+        # GATE (iii): a NEW tree remediation row with a route waits for every TO under the project.
+        if kind == "REMEDIATION" and folder_kind == "REMEDIATION" and folder_project and row.get("route") is not None:
+            pre = _route_precondition_violations(root, rel, row, folder_project)
+            v.extend(pre)
+            if not pre:
+                _o, _t, _n = _open_tos_for_project(root, folder_project)
+                notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; "
+                             "route admitted" % (rel, rid, _t))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
                  % (rel, len(added), len(new_rows), len(old_ids)))
     return (v, notes)
