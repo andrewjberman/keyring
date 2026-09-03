@@ -93,9 +93,31 @@ The 2 residual never-rules-gate arms (`git -c pull.rebase=true pull origin CLOUD
 (gate surface; F-XXX option-consumer work). A fabric gate, not a project -- no channel home; this log
 is the carrier. The SITEZ pair from 19296/19306 is DISARMED by CALL 2 on origin @98fd4ca0d4 (19353).
 
+CORRECTION 07:0xZ (msg 19461 from `0.0.0_AB_MSTR~Z`, relaying the laptop `0.0.0_AB_MSTR` bus frame
+1347cb9e): the count "2" above is NOT this seat's measurement. It is the 2026-09-02 SITEZ reading
+(`1.0.0_SA_CTO~Z` 19347 and `0.0.0_AB_MSTR~Z` 19353, 94 PASS / 2 FAIL), relayed here and in 19455
+WITHOUT its qualifier -- who ran it, on which device. The laptop reads 92 PASS / 4 FAIL on the SAME
+hook bytes (origin/CLOUD 3bd8d2ef04 = SITEZ after the 06:5xZ merge): `git -C portal rebase`, the
+`-c pull.rebase` one-shot, `-C and -c combined`, `generic flag before -c`, all PASS where DENY is
+wanted. The suite's totals were already measured to depend on RUNNER IDENTITY (26221d9c2e), so the
+runner is the first candidate for 2-vs-4 before a device difference is inferred. This seat did not
+run the suite and does not now: the classing {OBSERVATION, ARMED, disarm_owner `1.0.0_SA_CTO`} is
+unchanged by either count, and resolving the count is the disarm owner's. Self-correction: a relayed
+measurement lost its qualifier on the way into a CVO record, the banked class, third instance.
+
 ### Channel denominators at intake (bare comp-surprise, 06:44Z)
 200 items / 17 projects / 20 files; OPEN 66, ARMED 87, GRADUATED 121, DISMISSED 11; 1 remediation
 row. Zero items under any D7 or D12 code.
+
+### L8 intake, first notifier event (07:03Z): D1_CATVIEWS +1 row (17)
+`D1_CATVIEWS-Z-S4`, surfaced_by `2.0.0_SA_COO~Z` 07:03Z, OBSERVATION / INERT / UNDER_INVESTIGATION,
+no `adjudicates`: the DISARM RECORD for `D1_CATVIEWS-S11` (TO-I1-DS's committed proof instance
+re-measures INVALID rc=1 at HEAD b80b692a1d; the TO face annotated in the same commit). Read here as
+intake. The row was UNCOMMITTED in the shared worktree at the read (file ` M`, last commit 9437945112
+2026-08-29). L9 on S11 is deliberately NOT taken: D1_CATVIEWS is SEQUENCED-BEHIND (fourth in Andrew's
+06:4xZ sequence) and its round is not open; S11 stays UNDER_INVESTIGATION until that round's CVO row.
+The row's transferable half is worth carrying: a `disarm_owner` named on a row does not travel with a
+session, and nothing in B.0 or the inbox surfaces it -- the `/canonical-flow --report-only` pass did.
 
 ---
 
