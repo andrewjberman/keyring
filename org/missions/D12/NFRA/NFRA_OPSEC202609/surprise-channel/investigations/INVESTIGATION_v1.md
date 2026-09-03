@@ -2134,6 +2134,72 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  "spec_asserts": "Z-S69 (this seat): 'Mechanism confirmed on the declared plane ... exactly the config-versus-state asymmetry the row names.'",
  "world_is": "The config asymmetry is real and is not the whole cause. A sibling root with the same config idiom plans clean, so the difference that produces the churn is in state and is unmeasured by this seat.",
  "notes": "WHAT SURVIVES Z-S69 UNCHANGED and is not reopened by this row: the DATING (the three managed groups entered at 7987571c9a, 15:40Z, with every earlier vintage of that file carrying zero); the consequence that TO-OP-S-5's S5-AC7 PASS was correct at its vintage so NOTHING is re-graded; the two further completed faces checked and clear on their own terms; and the ROOT-not-FACE scoping, which 2.0.0_SA_COO~Z verified independently at portal-auth/lambdas.tf:51 and acted on by amending S1-AC5 @bc0d0ed2bd before the limb-2a apply. WHAT IS WITHDRAWN is the single sentence claiming the mechanism was confirmed. THE SHAPE, this seat's FOURTH today and the first where it supplied its own refutation: a reading from ONE plane written up as a claim about a RELATION between two. The three earlier instances were a denominator whose carriers agreed but were not the world, a bar transplanted across a premise checked only against the spec, and a live-resource claim sourced from four spec carriers. The estate's rule covers it -- verify on the layer where the claim lives -- and the addition today is narrower: when a row QUOTES a measurement from a neighbouring root or vintage, that quotation is a control on any mechanism the same row asserts, and it has to be read as one before the row is filed."
-}
+},
+ {
+  "id": "NFRA_OPSEC202609-Z-S72",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-09-03T20:22Z",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S53). A DISARM RECORD. Not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S53 (BLOCKING/ARMED: AMEND D's method split is wrong by one in each direction -- the face and the tick-6 verdict both print the f61h681z9g denominator as '39 = 20 non-OPTIONS + 18... ' i.e. 20 + 19, and the S1-AC3 fallback denominator of 20 is therefore wrong): DISARMED. The measured split is 39 = 21 non-OPTIONS + 18 OPTIONS and the fallback denominator is 21, corrected at 93e72ef53f in all THREE carriers -- the face's census line, S1-AC3's fallback, and the decomposition's OP-s-1 cell, which would have outlived both other fixes. WHY IT WAS LOAD-BEARING RATHER THAN COSMETIC: a worker taking the fallback at 20 attaches the authorizer to 20 methods, prints '20 of 20' and PASSES while one real data method keeps authorizationType NONE -- the exact outcome FWD-1 and FWD-2 exist to prevent, produced by a criterion that reads as satisfied. The face now states that '20 of 20' is a FAIL and a row.",
+  "spec_asserts": "TO-OP-S-1 as CUT and VERDICTS.jsonl row 3 AMEND D: the denominator '39 = 20 non-OPTIONS + 19 OPTIONS', and S1-AC3's fallback 'or on 20 of 20 non-OPTIONS with the measured reason and BOTH counts printed'.",
+  "world_is": "39 = 21 non-OPTIONS + 18 OPTIONS. THE ROOT IS A GRAIN MISMATCH and the face half-carried it in the same sentence: 20 is the count of method-bearing RESOURCES (exactly 20, confirmed) and it was matched against a count of non-OPTIONS METHODS (21). Two different quantities sharing a value, agreeing across THREE carriers -- the pitch's subtraction, the decomposition cell and the verdict -- none of which was the live plane.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "re-measured at 2.0.0_SA_COO~Z before editing, on a THIRD instrument rather than relaying either reporting seat: aws apigateway get-resources --rest-api-id f61h681z9g --embed methods --limit 500, rc 0; pagination control: NO position key in the response, so a single complete read",
+    "result: 38 resources, 20 method-bearing, 39 methods; per-verb GET 12, POST 7, PUT 2, OPTIONS 18; authorizationType NONE on 39 of 39",
+    "the fix commits: TO-OP-S-1 census line and S1-AC3 fallback at 93e72ef53f, and the decomposition's OP-s-1 cell in the same commit as the THIRD carrier of the wrong number"
+   ]
+  },
+  "notes": "THE ISSUER RELAYED THE WRONG NUMBER BEFORE CORRECTING IT: this seat wrote '39 as 20 non-OPTIONS + 19 OPTIONS' verbatim into its own 17:20Z GO message to the assignee, and corrected it to that seat directly once measured. The row was filed by 0.7.0_AE_CloudOps~Z from its mandated pre-write re-read; 3.0.0_SA_CVO~Z confirmed it against its own verdict and filed Z-S57 as its self-correction. THE REUSABLE PART: a quantity that two carriers predict is not evidence, and a number matched to a number without checking they measure the same thing is a grain error in the direction nobody audits."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S73",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-09-03T20:22Z",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S56). A DISARM RECORD. Not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S56 (BLOCKING/ARMED: the Z-S14 bar as written cannot be met by the design the same face mandates -- AMEND C row (4) requires '0 to add' while row (2) mandates a body-triggered aws_api_gateway_deployment, which cannot be imported and must therefore be created on a first adoption; the assignee HELD the apply rather than reinterpreting the criterion it is graded on): DISARMED by the issuer's ruling at 00fdc44a76 and dc8042045a. THE BAR IS SCOPED to the imported objects -- the REST API, both stages, the 38 resources and the 39 methods are never created, replaced or destroyed -- while '0 to destroy' and '0 forces-replacement' bind PLAN-WIDE, which is what actually protects a production API with two live doors. The expected-change set is EXACTLY THREE, each named. The fuller reasoning, including the root and the two additions from other seats, is carried in this seat's record for Z-S58, which is the certifier's correction of the same defect.",
+  "spec_asserts": "TO-OP-S-1 deliverable 1 row (4) and S1-AC1 as CUT: the plan under the Z-S14 bar captured BEFORE any change -- 0 to add, 0 to destroy, NO forces-replacement line; the ONLY expected diff is the in-place body update and its deployment; anything else a STOP and a row.",
+  "world_is": "The measured plan read 1 to add, 3 to change, 0 to destroy, 0 forces-replacement, the single add being the deployment the same deliverable's row (2) mandates. Two of the bar's three numeric clauses were met and the third was unsatisfiable by the face's own design. THE ROOT: the Z-S14 bar was imported wholesale from the demo table's adoption, a PURE IMPORT where nothing is created and '0 to add' is exactly right, into an adoption that necessarily creates the deployment making the imported body serve.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "the ruling commits on the TO-OP-S-1 face: 00fdc44a76 (the scoped bar and the three enumerated expected changes), dc8042045a (the three apply preconditions)",
+    "the measured plan the assignee reported: 1 to add, 3 to change, 0 to destroy, 0 forces-replacement, the single add being the deployment AMEND C row (2) mandates",
+    "post-apply verification at 2.0.0_SA_COO~Z against a 17:36Z pre-apply capture: 39 of 39 methods identical by path+verb, 0 lost, 0 gained; get-stages reads prod and production both on 4ykw9p"
+   ]
+  },
+  "notes": "WHY THE HOLD WAS CORRECT AND IS THE POINT OF THE ROW: S1-AC1 is the one control AMEND C designates as the control that must be able to FAIL on this limb, so a worker who reinterprets the criterion it is graded on -- on a production API with two live doors -- has silently removed it. The worker measures and reports; the owner of the bar decides what the bar means. TWO ADDITIONS CAME FROM OTHER SEATS AFTER THE FIRST RULING and are recorded in the Z-S58 record: the apply REPOINTS BOTH LIVE STAGES onto the new deployment (3.0.0_SA_CVO~Z), and the body-identity control runs AFTER the apply so it would DETECT damage rather than PREVENT it (the assignee), which earned three preconditions ON the apply."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S74",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-09-03T20:22Z",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S57). A DISARM RECORD. Not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S57 (BLOCKING/ARMED: 3.0.0_SA_CVO~Z's self-correction confirming Z-S53 -- AMEND D of its own tick-6 verdict prints the wrong denominator and the fallback of 20 would leave a real data method unauthenticated): DISARMED BY THE SAME FIX AS Z-S53 at 93e72ef53f. Recorded under its own id rather than folded into Z-S53's record because the census reads per id, and because the two rows are different acts: Z-S53 is the assignee finding the defect, Z-S57 is the verdict's author confirming it against the carrier only that seat owns.",
+  "spec_asserts": "VERDICTS.jsonl row 3, AMEND D, as written by 3.0.0_SA_CVO~Z: the denominator and the S1-AC3 fallback of 20.",
+  "world_is": "The measured split is 21 + 18. The certifier reached it independently on the live control plane and stated the root in its own words: it derived 20 by subtracting the pitch's OPTIONS figure from 39 and then cross-checked against the decomposition cell's '20 methods', finding agreement -- an agreement that was an accident of grain, because that 20 is method-bearing RESOURCES.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "re-measured at 2.0.0_SA_COO~Z before editing, on a THIRD instrument rather than relaying either reporting seat: aws apigateway get-resources --rest-api-id f61h681z9g --embed methods --limit 500, rc 0; pagination control: NO position key in the response, so a single complete read",
+    "result: 38 resources, 20 method-bearing, 39 methods; per-verb GET 12, POST 7, PUT 2, OPTIONS 18; authorizationType NONE on 39 of 39",
+    "the fix commits: TO-OP-S-1 census line and S1-AC3 fallback at 93e72ef53f, and the decomposition's OP-s-1 cell in the same commit as the THIRD carrier of the wrong number"
+   ]
+  },
+  "notes": "WHAT THIS SEAT OWED HERE AND DID: the face and the decomposition are this seat's carriers and both are corrected. VERDICTS.jsonl row 3 is the certifier's own carrier and this seat did not edit it -- the row names 1.0.0_SA_CTO~Z for that surface. A DEFECT WITH THREE CARRIERS NEEDS THREE OWNERS TO ACT, and this record states only what this seat's two carriers now say."
+ }
 ]
 ```
