@@ -1,0 +1,894 @@
+{
+ "schema_version": "1.0",
+ "project": "NFRA_COMPEFFICACY",
+ "round": 1,
+ "compiler": "1.0.0_SA_CTO",
+ "compiled_utc": "2026-09-03T04:4xZ",
+ "spine": "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md v2.1",
+ "seats_filed": [
+  "0.0.0_AB_MSTR",
+  "1.0.0_SA_CTO",
+  "2.0.0_SA_COO",
+  "3.0.0_SA_CVO"
+ ],
+ "seats_expected": [
+  "4.0.0_SA_CRO",
+  "1.0.0_SA_CTO",
+  "2.0.0_SA_COO",
+  "0.8.0_AE_CloudComp",
+  "3.0.0_SA_CVO",
+  "0.0.0_AB_MSTR"
+ ],
+ "seats_missing": [
+  "4.0.0_SA_CRO",
+  "0.8.0_AE_CloudComp"
+ ],
+ "denominators": {
+  "rows": 63,
+  "per_seat": {
+   "0.0.0_AB_MSTR": 13,
+   "1.0.0_SA_CTO": 16,
+   "2.0.0_SA_COO": 12,
+   "3.0.0_SA_CVO": 22
+  },
+  "per_limb": {
+   "X": 35,
+   "L2": 2,
+   "L3": 1,
+   "L4": 4,
+   "L5": 3,
+   "L7": 3,
+   "L6": 5,
+   "L10": 3,
+   "L8": 3,
+   "L9": 4
+  },
+  "per_quadrant": {
+   "ON_PLAN_EFFICIENT": 38,
+   "ON_PLAN_DEFICIENT": 10,
+   "OFF_PLAN_DEFICIENT": 10,
+   "OFF_PLAN_EFFICIENT": 5
+  },
+  "gate_candidates": 9,
+  "plan_improvements": 14
+ },
+ "rows": [
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 1,
+   "limb": "X",
+   "act": "Post-reboot startup: registered, armed the inbox Monitor and the agentbus consumer, ran /integrate assess-only (leg SITEZ-in-CLOUD outstandi",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "integrator startup; a broker trap banked",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 2,
+   "limb": "X",
+   "act": "Push window 1 on 2.0.0_SA_COO's dispatch (the L6 task-order commit): OPEN hold frame to 6 seats, same-breath re-read, push, ls-remote read, ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a push window with ls-remote before and after",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 3,
+   "limb": "X",
+   "act": "Carried four sovereign calls to Andrew as cards (which spec governs; decomp certification; the conditional gates; two stale carriers), recei",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the carrier function to Andrew; its content became the governing record",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 4,
+   "limb": "X",
+   "act": "Push window 2 (the state of record, PRD v0.4, the answer-state enum): the first same-breath re-read REFUSED because HEAD moved eleven second",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "the same-breath re-read refused once (a commit inside the hold); two frames per window",
+   "closed_by": "candidate: hold frames are courtesy; the index inspection is the control -- fewer frames"
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 5,
+   "limb": "X",
+   "act": "Cross-fabric exchange with 0.0.0_AB_MSTR~Z over the agentbus: their merge and D12 ratification received and acked; their orphan-consumer fin",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "cross-fabric exchange, assess-only on his launch row",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 6,
+   "limb": "X",
+   "act": "Push window 3, law in range: CLAUDE.md Rule 27 stub, the surprise-row rule, the proof-of-spec surprises limb, CVO's first L8 row; site Z tol",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a law push with its record",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 7,
+   "limb": "X",
+   "act": "Push window 4 (gates (i) and (iii), the flat-channel lane grant, CVO's S2 row, CloudComp's rework): the first same-breath re-read REFUSED on",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "re-read refused on a peer's staged paths; two frames again",
+   "closed_by": "same candidate as row 4"
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 8,
+   "limb": "X",
+   "act": "On Andrew's word that the five-stage pipeline doc is not the process, wrote the brief: ten limbs, one process, the spine at org/ref/CANONICA",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the brief on his word; the census deferred to the spec decomp",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 9,
+   "limb": "X",
+   "act": "Recorded Andrew's ruling that workers commit freely under their project tree path (the worker's own status flip had been refused by the task",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a ruling recorded; the first draft corrected before committing",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 10,
+   "limb": "X",
+   "act": "Push window 5 (the spine rewrite, the brief, the ruling, T-1 complete, the EXECUTING row); site Z told over the bus.",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a push window",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 11,
+   "limb": "X",
+   "act": "Carried 2.0.0_SA_COO's proposed gate limb (iv) to Andrew, received 'Approved, tell CTO to land that limb too. COO is the only agent that doe",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "carried a proposed limb to Andrew; approved",
+   "closed_by": ""
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 12,
+   "limb": "X",
+   "act": "Push window 6 (the tree lane grant, limb (iv) approval, CTO's two water-test fixes, CVO's L9 rows). Andrew's word 'stop pushing until i say ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "six windows in two hours read by him as interrupting the fabric; push cadence is his to gate while at the terminal",
+   "closed_by": "LD-0522: no windows until his word"
+  },
+  {
+   "seat": "0.0.0_AB_MSTR",
+   "seq": 13,
+   "limb": "X",
+   "act": "READ-acked every broker message addressed to this seat by its Msg-ID line in the same turn it was read (22 ids), and read every agentbus fra",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the READ clock honoured on every message",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 1,
+   "limb": "X",
+   "act": "received Andrew's GO at this terminal to take the project through the whole canonical process from L2; recorded it verbatim",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a sovereign word recorded verbatim; the record law, outside the limbs",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 2,
+   "limb": "L2",
+   "act": "/endpoint --forward on the L1 record; eight qualitative FWD outcomes, each cited to a line",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L2 owner ran the L2 instrument on the L1 artifact; qualitative outcomes, each cited",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 3,
+   "limb": "X",
+   "act": "built and red-first exercised the tree validator's pre-commit hook (R-i) before L3 on Andrew's word; first cut refused with rc 1 and no text",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "gate infrastructure before L3 on his word; red-first; not a limb act",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 4,
+   "limb": "L3",
+   "act": "registered the project under the tree: project.json + generated flat index; check read 0 -> INDEX-MISSING+R5 -> R5 -> 0 after the register l",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L3 owner registered under the tree; the validator's refusals fired then cleared",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 5,
+   "limb": "L4",
+   "act": "landed PRD v0.2 at the tree home from 3.0.0_SA_CVO's step-3 draft: header, endpoint FWD-1..9, surface manifest; the notifier's tree-root bli",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "L4 owner landed the PRD, but from a draft authored by a seat the spine keeps out of L4; v2.0 now says 'not engaged'",
+   "closed_by": "spine v2.0 L4 not-engaged set"
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 6,
+   "limb": "L4",
+   "act": "PRD v0.3: four deltas + the AC reading rule from 3.0.0_SA_CVO's row-by-row read; a G-4 mapping miss of my own stated and fixed",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "same class: an L4 version driven by a CVO row-by-row read of an L4 artifact",
+   "closed_by": "spine v2.0"
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 7,
+   "limb": "L5",
+   "act": "flipped the tree row dep_stage PRD -> DECOMP and regenerated the index when 2.0.0_SA_COO's decomposition landed",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "row owner flipped dep_stage on the L5 handoff",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 8,
+   "limb": "X",
+   "act": "landed the L6 readers' two-root repair (R-ii: proof-of-spec issuance hook + six readers see the tree root; R-iv: row/folder identity in the ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "the readers' repair was right; treating a CVO review sequence as the condition for opening L6 was not -- v2.0: nobody certifies before L6",
+   "closed_by": "spine v2.0 L5"
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 9,
+   "limb": "X",
+   "act": "PENCILS DOWN on Andrew's word (device restart): session log committed, nothing half-landed, no push",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a hold on his word; nothing half-landed",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 10,
+   "limb": "X",
+   "act": "fresh session after the restart: startup A-F, 14 offer-exhausted rows opened and READ-acked, two Andrew-direct words recorded and broadcast ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "startup and the record+broadcast law",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 11,
+   "limb": "L7",
+   "act": "received GO 92905 for TO-CE-DISC-2 addressed to this Tier-1 seat; acked; measured the four carriers and ran the token census as an L7 worker",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "a Tier-1 seat accepted an L7 task order; L7 is Tier-2 only",
+   "closed_by": "gate (i) @caa8b5c3a5 -- the same TO is now refused at commit"
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 12,
+   "limb": "L4",
+   "act": "landed the two STAGE-0 decisions as spec: PRD v0.4 (s.4.3 spellings ratified as data in org/standards/COMPTOOL_ANSWER_STATE.enum.json; s.4.7",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L4 owner closed two open spec decisions as data; limb 5 exercised on the bytes; the notifier reached READ",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 13,
+   "limb": "X",
+   "act": "landing report to 2.0.0_SA_COO / 0.0.0_AB_MSTR / 3.0.0_SA_CVO, one retraction scoped to one clause (the notifier had fired; the first observ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the report was owed and sent; one clause read the wrong plane and was retracted -- a seat error, not a plan gap",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 14,
+   "limb": "X",
+   "act": "the spec water test on Andrew's mandate: 74 mechanisms x 12 fields = 888 cells, DRY at cycle 5, certification OPEN; the surprises limb, gate",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "process law on his mandate, outside the round; the round's L7 completion ran through the gates it produced",
+   "closed_by": ""
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 15,
+   "limb": "L6",
+   "act": "flipped the tree row dep_stage DECOMP -> EXECUTING, owed since the first task order at 02:14Z; index regenerated",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "the flip is the row owner's and it happened 98 minutes late; nothing flips dep_stage mechanically on the first task order",
+   "closed_by": "candidate: the L6 gate or a notifier flips the row on the first tree TO"
+  },
+  {
+   "seat": "1.0.0_SA_CTO",
+   "seq": 16,
+   "limb": "X",
+   "act": "the spine rewritten as one constitutional document, the second description retired to a redirect, Rule 27 spine-only, gate (iv), docstrings ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "process law on his word, outside the round",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 1,
+   "limb": "X",
+   "act": "post-reboot startup: /watcher (Monitor bqr8bib4y, parent-tied), XXX.md A.1-E, B.0 delivery ledger 6 of 6 READ, B.1 holdings; read the predec",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "startup per the protocol; no project act before his word",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 2,
+   "limb": "X",
+   "act": "record Andrew's reboot-recovery word and the Limb-check transcript verbatim; broadcast the post-reboot state and the L1-L10 pattern to Tier-",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "record+broadcast law followed; the record's reading seated a Tier-1 seat as an L7 worker and needed his correction",
+   "closed_by": "spine v2.0 L7 owner"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 3,
+   "limb": "L6",
+   "act": "commit the three tree task orders (DISC-2, TP-1, T-1) through the L6 gates in one safe-commit",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "two of three task orders named Tier-1 seats in <issued_to>",
+   "closed_by": "gate (i) @caa8b5c3a5"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 4,
+   "limb": "L6",
+   "act": "dispatch the three GOs (DISC-2 to 1.0.0_SA_CTO, TP-1 to 3.0.0_SA_CVO, T-1 to 0.8.0_AE_CloudComp); spawn 0.8.0_AE_CloudComp via /mstr-spawn f",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "two of three GOs dispatched to Tier-1 seats",
+   "closed_by": "gate (i) @caa8b5c3a5"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 5,
+   "limb": "L6",
+   "act": "on Andrew's correction (L7 workers are Tier-2 only; worker count 1) withdraw DISC-2 and TP-1 as task orders, route their spec decisions to 1",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the correction executed within minutes: withdrawn as task orders, decisions routed to their L4 owner",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 6,
+   "limb": "L5",
+   "act": "decomp v0.1.2: retire CE-org-1 (Andrew's state-of-record call 4), move CE-disc-2 and CE-tp-1 to DONE-as-spec at L4 on CTO's PRD v0.4; amend ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "ON_PLAN_DEFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "L5 owner amended the decomposition; the bound amendment reached the worker by message before the artifact carried it",
+   "closed_by": "candidate: the artifact first, the message names it"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 7,
+   "limb": "X",
+   "act": "lane grant as registry grantor: legacy flat org/surprise_channel/*/INVESTIGATION_v*.md -> ANY, measured before/after on one harness (4 seria",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "registry grantor widened a lane the law needed; measured before and after",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 8,
+   "limb": "L6",
+   "act": "commit TO-CE-T-1's status flip to complete (the worker's own text) after re-running proof-of-spec-check at this seat; the task-orders lane h",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "the issuer committed the worker's own status text because the lane refused the worker",
+   "closed_by": "lane grant @f9c97a52ce (the worker commits its own flip) + limb (iv) @c765283365 (only the COO issues)"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 9,
+   "limb": "X",
+   "act": "lane grant as registry grantor: tree task-orders/** and ledger/** -> ANY, measured before/after (5 serials x 11 paths); propose the committe",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "registry grantor on his word; proposed the limb the grant made necessary",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 10,
+   "limb": "L10",
+   "act": "on CVO's L9 adjudication, message the round as HELD (S2/S3 open) and endorse CVO's direct disarm ask to the worker; then retract the 'this s",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "endorsed the CVO's direct ask to a worker during L7-L10; named by him as off the intended flow",
+   "closed_by": "spine v2.1 L8 not-engaged set; a gate on CVO->worker sends is at Andrew"
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 11,
+   "limb": "X",
+   "act": "record + broadcast Andrew's step-log word; write and commit the session log",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "record+broadcast law; the session log",
+   "closed_by": ""
+  },
+  {
+   "seat": "2.0.0_SA_COO",
+   "seq": 12,
+   "limb": "L10",
+   "act": "receive CVO's L10 stamp (DECOMP_INVALIDATING -> L5, owner this seat); record + broadcast Andrew's L7-L10 word (CVO relays to COO, never conv",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L10 route received by its owner; the next acts are L5 then L6",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 1,
+   "limb": "X",
+   "act": "Reviewed the tree prerequisite set (the gates and generator, infrastructure) on my own instrument: temp estate, real contract, real generato",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "infrastructure review of the gates; later ruled not a limb engagement",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 2,
+   "limb": "L2",
+   "act": "Named the record the CTO's /endpoint --forward should run on (the Andrew-direct brief record) and engaged with L2's output",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "OFF_PLAN_EFFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "engaged with L2 (CTO only); it helped and he ruled it out -- the spine now names the not-engaged set",
+   "closed_by": "spine v2.0 L2"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 3,
+   "limb": "L4",
+   "act": "Wrote a PRD draft (never at a home, marked SUPERSEDED) and four L4-read deltas that the CTO adopted into v0.3",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "OFF_PLAN_EFFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "drafted an L4 artifact (CTO only); adopted and ruled out",
+   "closed_by": "spine v2.0 L4"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 4,
+   "limb": "L5",
+   "act": "Graded the COO's decomposition PASS (39 of 39 ids on the gate's regex, 6 of 6 OWNS)",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "OFF_PLAN_EFFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "certified the L5 decomposition; void under the state of record",
+   "closed_by": "spine v2.0 L5: nobody certifies before L6"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 5,
+   "limb": "X",
+   "act": "Decided Rule T's budget form (decomp cell CE-tp-1, decide-first) as a spec decision",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "OFF_PLAN_EFFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "decided a spec question outside L4; carried into the PRD by its owner",
+   "closed_by": "spine v2.0 L4: decisions close in the PRD"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 6,
+   "limb": "L7",
+   "act": "Graded the worker's T-16 comp-adversary deliverable CLEARED after re-measuring both re-measurements",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "OFF_PLAN_EFFICIENT",
+   "disposition": "PLAN_IMPROVEMENT",
+   "discriminator": "graded a worker deliverable as certifier of record; that role is void; the per-tool grade itself is the project's L8/L9 work under the PRD",
+   "closed_by": "spine v2.0"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 7,
+   "limb": "X",
+   "act": "Pencils down on Andrew's word via the COO; session-close log committed",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "a hold on his word",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 8,
+   "limb": "X",
+   "act": "Startup per org/XXX.md: registration, inbox Monitor, surprise-channel notifier re-armed with its watermark, delivery ledger, TO census, esta",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "startup",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 9,
+   "limb": "X",
+   "act": "Recorded Andrew's word at this terminal (not driving; canonical order flow; the transcript) and broadcast it with two surfaces",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "record+broadcast law with two surfaces, not adjudicated",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 10,
+   "limb": "L7",
+   "act": "Accepted GO 92906 on TO-CE-TP-1 as a worker; grounding reads; Rule 24 token census (four sweeps in one call, the fourth killed at the harnes",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "a Tier-1 seat accepted an L7 task order",
+   "closed_by": "gate (i) @caa8b5c3a5"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 11,
+   "limb": "X",
+   "act": "Stood down; sent everything drafted to the L4 owner as input in one message; amended the record so a successor does not read the superseded ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "handed everything drafted to the L4 owner as input, up the loop",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 12,
+   "limb": "L8",
+   "act": "Assembled row S1 at the tree home from a surprise that reached this seat by broker message only (both channel roots empty)",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "assembled a row from a surprise that arrived by message only; the carrier was the deviation",
+   "closed_by": "surprises limb @7968221ef5 + law @6e8805eb90"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 13,
+   "limb": "X",
+   "act": "Relayed Andrew's word at this terminal to the CTO (CLAUDE.md must not route surprises over MCP; a gate on the proof-of-spec surprises field ",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "relayed a sovereign word; recorded",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 14,
+   "limb": "L8",
+   "act": "Read row S2 (the worker's own row, delivered by the notifier from the file); re-derived one evidence item (the DB file's size and mtime; the",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L8 intake via the notifier and a re-derived evidence item; the message to the worker that followed is scored under rows 17 and 21",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 15,
+   "limb": "L9",
+   "act": "Grounded S1's closing condition and exercised the rework from this seat: forced ceiling textbook; the default budget expired 3 of 3 (unscope",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L9 grounding with three exercised measurements",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 16,
+   "limb": "L9",
+   "act": "Attempted an in-place disposition flip on S1 and S2; the row gate refused it",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "NONE",
+   "discriminator": "an in-place disposition flip; the existing row gate refused it and the write was discarded -- the gate exists and fired",
+   "closed_by": "surprise-row-gate mutation limb (existing)"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 17,
+   "limb": "L9",
+   "act": "Redid the adjudication additively: S3 (own row, the recurrence, ARMED with a named disarm owner) and S4 (closure of S1); reported to the sea",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "the additive adjudication was right; the disarm ask went directly to the worker",
+   "closed_by": "spine v2.1 L8; a gate on CVO->worker sends is at Andrew"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 18,
+   "limb": "X",
+   "act": "Rewrote the surprise-channel protocol as the L7 to L10 annex of the spine in constitutional form, per Andrew's brief; broadcast",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the annex rewritten under the amendment protocol",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 19,
+   "limb": "L8",
+   "act": "Read row S5 (the worker's disarm measurement); verified its source claims line by line; re-measured the live state (the rebuild past its own",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L8 intake + L9 verification of the worker's measurement, line by line",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 20,
+   "limb": "L9",
+   "act": "Discriminating measurement: the rebuild's parent process is dead and no kuzu client is alive; the rebuild is orphaned by the client's budget",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "L9 discriminating measurement; the cheapest hypothesis that fit, confirmed",
+   "closed_by": ""
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 21,
+   "limb": "L10",
+   "act": "Row S6: dispositioned S2, S3, S5 as one item DECOMP_INVALIDATING; read the L10 precondition; stamped the route to L5; handed it off",
+   "plan_conformance": "OFF_PLAN",
+   "outcome": "DEFICIENT",
+   "quadrant": "OFF_PLAN_DEFICIENT",
+   "disposition": "GATE_CANDIDATE",
+   "discriminator": "the stamp and the backward route were right; operating instructions went directly to the worker",
+   "closed_by": "spine v2.1 L8/L10 handoff to the route owner only; gate at Andrew"
+  },
+  {
+   "seat": "3.0.0_SA_CVO",
+   "seq": 22,
+   "limb": "X",
+   "act": "Wrote this seat's step log (markdown twin, then this instance in the CTO's schema); read row S7 (the worker's disarm ack) on the record: its",
+   "plan_conformance": "ON_PLAN",
+   "outcome": "EFFICIENT",
+   "quadrant": "ON_PLAN_EFFICIENT",
+   "disposition": "NONE",
+   "discriminator": "the step log in the schema",
+   "closed_by": ""
+  }
+ ],
+ "gate_candidate_classes": [
+  {
+   "class": "a Tier-1 seat holding an L7 task order",
+   "rows": [
+    [
+     "1.0.0_SA_CTO",
+     11
+    ],
+    [
+     "2.0.0_SA_COO",
+     3
+    ],
+    [
+     "2.0.0_SA_COO",
+     4
+    ],
+    [
+     "3.0.0_SA_CVO",
+     10
+    ]
+   ],
+   "state": "CLOSED -- gate (i) @caa8b5c3a5 refuses it at commit"
+  },
+  {
+   "class": "the issuer committing a worker's status text / anyone but the COO issuing",
+   "rows": [
+    [
+     "2.0.0_SA_COO",
+     8
+    ]
+   ],
+   "state": "CLOSED -- lane grant @f9c97a52ce + limb (iv) @c765283365"
+  },
+  {
+   "class": "a surprise carried by message instead of a row",
+   "rows": [
+    [
+     "3.0.0_SA_CVO",
+     12
+    ]
+   ],
+   "state": "CLOSED -- surprises limb @7968221ef5 + law @6e8805eb90"
+  },
+  {
+   "class": "the CVO messaging a worker during L7-L10 (and an issuer endorsing it)",
+   "rows": [
+    [
+     "2.0.0_SA_COO",
+     10
+    ]
+   ],
+   "state": "OPEN -- spine v2.1 states it; the mechanical guard is Andrew's call (a broker send from 3.0.0_SA_CVO to a Tier-2 serial while the project is in L7-L9: refused or announced). His words lean to the gate."
+  }
+ ],
+ "plan_improvement_classes": [
+  {
+   "class": "CVO engaged at L2-L7 before the ruling",
+   "state": "CLOSED in the spine (not-engaged sets); guarded by reading only"
+  },
+  {
+   "class": "the L4 owner accepting drafts/reads of an L4 artifact from a non-engaged seat",
+   "state": "CLOSED in the spine"
+  },
+  {
+   "class": "a CVO review sequence treated as the condition for opening L6",
+   "state": "CLOSED in the spine (no certification before L6)"
+  },
+  {
+   "class": "dep_stage flipped by hand, late",
+   "state": "OPEN -- candidate: flip on the first tree TO mechanically"
+  },
+  {
+   "class": "a bound amendment by message before the artifact carried it",
+   "state": "OPEN -- candidate: artifact first, message names it"
+  },
+  {
+   "class": "push windows: two frames per window on a refused re-read; six windows in two hours",
+   "state": "OPEN -- Andrew gates cadence while at the terminal (LD-0522)"
+  }
+ ],
+ "note": "0.8.0_AE_CloudComp's step log is not filed at compile time; this compilation covers 4 of 6 expected seats and is re-run when it lands. 4.0.0_SA_CRO was not live in round 1 (the L1 artifact was an ANDREW_DIRECT record)."
+}
