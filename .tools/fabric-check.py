@@ -247,6 +247,24 @@ def is_deaf(unread: int, age_any: float, serial: str, reaped: set) -> bool:
             and serial not in reaped)
 
 
+# CODEX SEATS (2026-09-03, 0.0.0_AB_MSTR 93745 item 2, measured at 15:11Z): a Codex seat's inbox detector is
+# NON-CONSUMING by design (org/mcp/CODEX_INBOX_MONITOR.md) -- it never moves a file to read/ and the runtime has no
+# ack surface, so `unread` is structurally > 0 the moment mail arrives and the predicate above read five live,
+# committing Codex lanes as DEAF. The unread limb carries no information for such a seat; its liveness oracle is
+# its heartbeat (codex-agent-heartbeat.py registers and beats the full serial). A seat IS a Codex seat when the
+# launcher's runtime dir exists: .runtime/codex-seats/<serial sanitized exactly as codex-agent-heartbeat.py does>.
+_CODEX_RUNTIME = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".runtime", "codex-seats")
+
+
+def is_codex_seat(serial: str) -> bool:
+    return os.path.isdir(os.path.join(_CODEX_RUNTIME, re.sub(r"[^A-Za-z0-9_.~-]", "_", serial)))
+
+
+def is_deaf_codex(hb_age: float, serial: str, reaped: set) -> bool:
+    """A Codex seat is deaf when its HEARTBEAT has gone quiet inside the deaf window (never on unread mail)."""
+    return SESSION_ALIVE_S < hb_age < DEAF_RECENT_S and serial not in reaped
+
+
 # Denominator for the deaf verdict, published by gather() and printed by --blocks.
 # "A verdict without its universe is not a verdict" (CTO 205745Z, render_open_deploys).
 ENUM_STATS: dict = {"enumerated": 0, "base": 0, "nested": 0, "legacy_flat": 0, "orphans": 0}
@@ -531,7 +549,11 @@ def gather() -> list[dict]:
         # Post-LD-0157 (no /work self-tick) this is the reachability failure mode for a
         # lane whose persistent Monitor died -- OR, per 2026-07-09, was never armed at all.
         # ("Absent" and "died" are different states and only one of them respawns.)
-        deaf = is_deaf(unread, age_any, serial, reaped)  # reaped lanes excluded (COO tuning)
+        if is_codex_seat(serial):
+            # a Codex seat's unread count is structurally non-zero (non-consuming detector): judge its heartbeat
+            deaf = is_deaf_codex((now - hb) if hb else 1e12, serial, reaped)
+        else:
+            deaf = is_deaf(unread, age_any, serial, reaped)  # reaped lanes excluded (COO tuning)
 
         # coherence: does declared status match objective telemetry?
         coherence = "OK"
@@ -894,6 +916,12 @@ def self_test() -> int:
               is_deaf(1, quiet, "A_AGENT~B", {"A_AGENT~B"}), False)
         check("DEAF silent on a long-dead lane (beyond window)",
               is_deaf(1, DEAF_RECENT_S + 1, "A_AGENT~B", set()), False)
+        # --- CODEX seats: the unread limb is meaningless (non-consuming detector); the heartbeat decides ---
+        check("CODEX: fresh heartbeat -> not deaf even with mail piled", is_deaf_codex(5.0, "C_AGENT~J", set()), False)
+        check("CODEX: heartbeat quiet inside the window -> deaf", is_deaf_codex(quiet, "C_AGENT~J", set()), True)
+        check("CODEX: never beat (age 1e12) -> beyond the window, not deaf-needing-respawn", is_deaf_codex(1e12, "C_AGENT~J", set()), False)
+        check("CODEX: reaped -> silent", is_deaf_codex(quiet, "C_AGENT~J", {"C_AGENT~J"}), False)
+        check("CODEX: a serial with no runtime dir is not a Codex seat", is_codex_seat("A_AGENT~B_NO_SUCH_SEAT"), False)
 
         # --- the pre-fix path proves the bug was real, not theoretical ---
         legacy_read = _count_md(os.path.join(INBOX_DIR, "A_AGENT~B"))[0]
