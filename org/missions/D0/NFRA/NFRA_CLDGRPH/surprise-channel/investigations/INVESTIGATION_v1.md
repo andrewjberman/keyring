@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **21 rows** (S1-S22, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:3xZ by `0.7.0_AE_CloudOps~T` on appending S22 (was 20); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **22 rows** (S1-S23, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 16:4xZ by `0.7.0_AE_CloudOps~S` on appending S23 (was 21); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -890,6 +890,43 @@ The real 16:21Z marker launched the B2 image while a later CG-s-3 image was bein
     "spec_asserts": "PROJECTION_CONTRACT.md makes every object below a versioned artifact prefix immutable after first write; issuer ruling Msg 93788 sharpens the collision outcome to refusal or byte-identical no-op.",
     "world_is": "The B2 image at a9ef0f6160 can overwrite both same-vintage objects after a stale pre-build absence check. Bucket versioning is OFF, so a non-identical second upload destroys the prior bytes and cannot be reconstructed from S3 versions.",
     "notes": "Disarm in CG-s-3's worktree-only Phase B: conditionally create each versioned object with If-None-Match:*, compare an extant object's exact bytes/hash after a 412, accept only byte identity as a no-op, otherwise refuse. Do not deploy or publish until the issuer relays that ~S's B2 retry produced the first artifact. S21 separately carries this seat's out-of-bounds stop of task 6aa889...; that act is disclosed and is not a disarm for this row. No push."
+  }
+]
+```
+
+## S23 -- the B2 worker advanced the projection pointer owned by CG-s-3
+
+The first accepted B2 full-cold task published a complete versioned artifact and then advanced
+`projection/current.json`. That pointer transition is internally consistent and independently verified,
+but it is outside the B2 face: the port was required to leave the pointer absent and hand pointer ownership
+to CG-s-3. No undo is authorized because that would replace one out-of-bounds write with a destructive one.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S23",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T16:46Z",
+    "one_line": "The accepted B2 full-cold Pipe task fa5df7737afc48fdbda6a9106d5676b6 advanced projection/current.json at 16:41:58Z even though TO-CG-B-2 explicitly bounds the port off all pointer writes and assigns the pointer to CG-s-3; the complete pointer is disclosed and left in place for CG-s-3's conditional writer to supersede, with no undo by this seat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-CG-B-2 at spec vintage cab640d351ca1ada655b13647c2e65916f5f32cf section 2 says advances NO pointer; B2-AC2 requires the pointer object ABSENT after every run; B2-AC7 hands pointer ownership to CG-s-3; BOUNDS repeat No pointer by the port",
+        "infra/aws/globgrph/projection_worker.py @a9ef0f6160b6aa786b0321f1893e5089c08e118a defines POINTER_KEY=projection/current.json and its shared publish path advances that pointer after artifact/manifest readback",
+        "CloudWatch result for authentic S3 -> SQS -> Pipe -> RunTask task fa5df7737afc48fdbda6a9106d5676b6: status published, mode full-cold, pointer_written true, pointer_status advanced; S3 head-object timestamps projection/current.json at 2026-09-03T16:41:58Z",
+        "Exact canonical pointer body as written: {\"artifact_prefix\":\"projection/2026-09-03T16:27:39.471730+00:00/\",\"manifest_key\":\"projection/2026-09-03T16:27:39.471730+00:00/_build_manifest.json\",\"manifest_sha256\":\"0c2c0052c43ca06ce92bb37fe822a733c4999a0405e2a8b456b015f14d40f101\",\"schema_version\":1,\"vintage\":\"2026-09-03T16:27:39.471730+00:00\"}",
+        "Independent readback: the pointer manifest SHA-256 equals the downloaded 1,632-byte manifest hash 0c2c0052c43ca06ce92bb37fe822a733c4999a0405e2a8b456b015f14d40f101; that manifest's artifact hash equals the downloaded 48,046,080-byte Kuzu DB hash 5a449cb4384c5933491d431546136b0053f3d0cc37e6c681d361611a7ba0a12a; direct Kuzu counts equal manifest nodes 27,206 / edges 58,550"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-2 section 2, B2-AC2, B2-AC7, and BOUNDS require the B2 port to advance no pointer and leave projection/current.json absent because the pointer object, its atomicity, and the manifest contract belong to CG-s-3.",
+    "world_is": "The B2 worker at a9ef0f6160 writes projection/current.json after its artifact/manifest readback; the accepted fa5df7 real-path run exercised that code and advanced the pointer to the 2026-09-03T16:27:39.471730+00:00 artifact.",
+    "notes": "Issuer ruling Msg 93807: no undo by this seat. Disarm owner 0.7.0_AE_CloudOps~T; disarm is B3-AC2's pointer writer with the completeness check and conditional create superseding the bare write in the shared publish path. B2-AC7 must disclose the exact pointer body and this crossed bound. No push."
   }
 ]
 ```
