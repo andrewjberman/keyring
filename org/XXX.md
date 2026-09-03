@@ -281,15 +281,25 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 ---
 
-**F. Loop arming — EVERY serial, including the COO, arms ZERO crons at launch. There is no exception.**
+**F. Loop arming — every serial arms ZERO crons at launch, with ONE standing exception the ledger names.**
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
 | Serial | Launch arming |
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. `/agentbus` once and `/integrate` once (arm-at-load, same pattern as `/watcher`, NOT loops). Zero crons. |
-| every other serial, Tier 0-3, every `~lane` | `/watcher` once. Zero crons. `/drive` is OFF (Andrew-direct, standing). **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
+| `2.0.0_SA_COO` (base) | `/watcher` once. **`/drive` v2 standing ON at 20 minutes** over `EXECUTING` / `ROUND_CLOSE` / `DECOMP` projects — `org/tier0/ledger/LD-0530.md` (Andrew-ratified 2026-09-03, supersedes LD-0288's OFF); the one standing loop. **D2 stays off** until Andrew lifts it (his word 2026-09-02, recorded at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_020xZ_REBOOT_RECOVERY_AND_COMPEFFICACY_CANONICAL_L1_L10.md`). |
+| every other serial, Tier 0-3, every `~lane` | `/watcher` once. Zero crons. **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
 | Codex seats | per `org/mcp/CODEX_INBOX_MONITOR.md`. Zero crons. |
+
+**A live SCOPED arm is re-armed from the ANDREW_DIRECT record its serial names, never from this table**, while its
+scope is not DONE on the register and no hold stands: `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH
+(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_1308Z_DRIVE_CLDGRPH_TO_COMPLETION.md`; HELD on
+Andrew's "we will wait" 2026-09-03 ~21:0xZ); `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE
+(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`);
+`3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
+`1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above). A pause
+or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
