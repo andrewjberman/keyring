@@ -90,6 +90,49 @@ every item dispositioned by its latest carrier. 0 graduated, 0 routed. The round
 and not counted here (the audits' own content; the per-tool carrier is theirs). Next: L6, `2.0.0_SA_COO`; `ROUND_CLOSE`
 on this stamp by the row owner; the close (completion report + grades) follows per the spine.
 
+## L10 stamp -- round 3 (3.0.0_SA_CVO, zero graduation: proceed to the next L6 dispatches)
+
+Precondition, read at this seat at HEAD `ee7c884f29` (07:4xZ-07:5xZ), never from the report (93305):
+
+| half | read | result |
+|---|---|---|
+| task orders | 7 files' `<status>` tags | 5 `complete` (G-5, T-1, T-2, T-3, T-8), 2 `WITHDRAWN` (DISC-2, TP-1), 0 pending |
+| proof instances (round 3) | `proof-of-spec-check.py` at this seat, checker vintage `e58250f261` | TO-CE-T-3 VALID rc 0, 6 of 6, surprises 0; TO-CE-T-8 VALID rc 0, 6 of 6, surprises 0 |
+| rows | this file at HEAD | 9, none appended in round 3; every item dispositioned by its latest carrier (S8, S9) -- unchanged |
+
+0 graduated, 0 routed. Next: L6, `2.0.0_SA_COO` (STAGE 2 / STAGE 3 per the decomposition's arc), or the close if the
+COO reports the decomposition spent.
+
+**Read and not counted** (the per-tool carrier; the `CE-pass` roll-up consumes every finding): T-3's F1-F4 and T-8's
+F1-F5. Named for the L4 owner, `1.0.0_SA_CTO`: T-3 **F2** -- `comp-which` routes a syntactically valid, NON-EXISTENT
+gold-script id with a forced curated score (shape validated, existence never) -- is the round's one finding ARMED for
+normal operation; its remedy is in-chain (STAGE 2 "subject existence", CE-t-6 after CE-t-19, and the roll-up), so it
+is not a row under the CTO's reading 93320. T-8 F4 (the enum's carrier census one entry stale) is an L4 residual.
+
+**Cross-check at L8** -- a row on ANOTHER project's channel that touches this project's stamped remedy:
+`NFRA_CLDGRPH-S4` (`0.7.0_AE_CloudOps~Q`, 07:29Z) reports two local rebuild residues (mkdir mutex 06:49:01Z and
+07:05:32Z; WAL growth stopping ~38-39 s after each; no kuzu process alive at either observation) beside CE-g-5's
+"no orphaned rebuild; serve-stale-immediately". Read here against S9:
+(a) no orphaned PROCESS at either observation -- `_run_child_supervised` (job object, KILL_ON_JOB_CLOSE) took the child
+with its parent, which is the half CE-g-5 promised;
+(b) neither attempt wrote a fallback-sink line (`infra/aws/globgrph/kuzu_nessie_db.fallback.jsonl`: 06:47:28Z,
+06:47:59Z, 06:48:52Z, then 07:26:35Z -- nothing between), so both PARENTS died before the serve-stale completion path
+(`_canonical.py` `_incremental_or_serve_stale`, status + sink + `_rm_kuzu`) and before the `finally` lock release;
+(c) the residue is the designed `ORPHAN_LOCK_S` 900 s backstop's domain, and at this seat's read (07:33:41Z) no lock,
+tmp or WAL was on disk;
+(d) an inc-mode caller meeting a held lock is served immediately (`wait_for_peer=False`), so no caller paid `MUTEX_WAIT_S`.
+S9's REMEDIED stands. NOT established here: what killed the two parents (a client-side event -- a harness ceiling or a
+seat kill; the discriminator is the killed client's own log, not the engine's). Not a row: no assertion of this
+project's spec is contradicted.
+
+**Observation carried to the CTO for placement, claim INFERRED** (no client log read; the sink census is MEASURED):
+36 sink lines today, all `inc-served-labeled-stale`, delta 27133-27134 nodes, served vintage
+`2026-09-03T00:36:15Z` unchanged from 02:26:26Z to 07:26:35Z -- every WINNING inc-mode call re-runs the incremental
+child to the same large-delta exit before it is served stale (the sink cadence 06:47:28Z -> 06:47:59Z -> 06:48:52Z and
+the two ~39 s WAL windows bound the child at ~30-50 s); the "~5 s" serve (`_canonical.py:562`) holds for a LOSER, the
+winner pays the child's runtime. The claim that sentence tests is `NFRA_KUZUSPLIT`'s, not this project's; the full
+refresh is `comp-kuzu-full` / MSTR startup by design (Andrew O-1), and today's has not run.
+
 ```json
 [
   {
