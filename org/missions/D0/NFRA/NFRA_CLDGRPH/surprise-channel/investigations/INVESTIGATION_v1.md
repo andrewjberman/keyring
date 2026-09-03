@@ -11,26 +11,6 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
 
 ## S1 -- the ADD-CHECKLIST grants on a role that does not exist
 
-Surfaced while executing **CG-s-13** (the AuthKind read), which the TO scopes to `registry.py` +
-`NFRA_INTEGRATIONS_STANDARD.md`. The AuthKind question itself resolved cleanly (`AuthKind.NONE`); this is the
-mismatch found beside it.
-
-`NFRA_INTEGRATIONS_STANDARD.md` §5 step 4 is the IAM step of the **mandated 5-step ADD-CHECKLIST** -- the canonical
-contract every new gateway integration is built against. It instructs the author to grant
-`secretsmanager:GetSecretValue` on the new secret's ARN **to `m365-mcp-gateway-role`**. That role does not exist in
-account `313476888478`. The live gateway instance role is `opal-gateway-role`, and it is the role the gateway
-instance actually carries.
-
-**Why it is ARMED rather than inert, and why it is NOT blocking THIS task order:** for `AuthKind.NONE` -- the kind an
-agent graph traversal fits, and therefore the kind CG-s-5 will build -- steps 3 and 4 are vacuous by the checklist's
-own parenthetical (`(SHARED_SECRET)` / "on that exact secret ARN"), because a `NONE` integration provisions no secret.
-So CG-s-5 is unharmed and nothing here changes this TO's verdicts. The harm lands on the **next SHARED_SECRET
-integration**: an author following the canonical contract literally writes Terraform against a principal that is not
-there. That is the future-normal-operation test the `ARMED` standing exists for.
-
-⚠ **The defect is in `NFRA_INTEGRATIONS`'s document, not in this project's surfaces.** This seat SURFACES and does not
-adjudicate the routing; `3.0.0_SA_CVO~A` reads this file at L8 and disposes.
-
 ```json
 [
   {
@@ -62,26 +42,6 @@ adjudicate the routing; `3.0.0_SA_CVO~A` reads this file at L8 and disposes.
 ```
 
 ## S2 -- the incremental engine's own docstring says it is gated OFF; its only caller defaults it ON
-
-Surfaced while executing **CG-s-10**'s mandated `comp-read` of `kuzu_incremental_refresh.py` (TO-CG-V-1
-`<compiler_tools_mandate>`, BEFORE WRITE). The full-fallback trigger and threshold resolved cleanly
-(`:174`, `FALLBACK_MIN_ABS=4000` / `FALLBACK_FRACTION=0.25`); this is the mismatch found beside them.
-
-The engine's module docstring closes with *"Gated OFF by default (`GLOBGRPH_KUZU_INCREMENTAL_REFRESH=1`)
-pending CTO arch-gate of the design."* Its **only** caller reads that same flag with a default of `"1"` --
-i.e. ON -- and its own docstring says so in as many words. `NFRA_KUZUSPLIT_PRD.md` records the CTO GO as
-landed (`195732Z`, "LIVE default-on"). **Two carriers of one quantity disagree, and the stale one is the
-file a reader opens FIRST.**
-
-**Why ARMED rather than inert:** `CG-s-2` ports this exact engine to the cloud worker. A seat reading the
-engine to establish whether the incremental path is live concludes it is not -- and a port carries the
-stale claim with the code, which is precisely the "QUALIFIED verdict travels with the code" shape the
-brief's F4 already flags for this file's sibling. **Not blocking THIS task order:** AC3 invokes the
-script *directly*, and the flag is read only at `_canonical.py:450`, so no measured number here depends
-on it.
-
-⚠ This seat SURFACES and does not adjudicate the routing, and it is barred by its own BOUNDS from editing
-repo source ("No edit to any repo source. The engine is invoked, not changed.").
 
 ```json
 [
@@ -116,24 +76,6 @@ repo source ("No edit to any repo source. The engine is invoked, not changed.").
 
 ## S3 -- a temp-path full load still takes a process-wide singleton lock; the TO's bound says it needs none
 
-Surfaced while re-grounding TO-CG-V-1's premises before measuring (the L7 first act the GO names).
-
-The TO's BOUNDS say a parallel temp-path run "needs no lock". That is **true of `_canonical.py`'s mkdir
-mutex** -- invoking `kuzu_nessie_load.py` directly bypasses `_canonical` entirely, so this seat never
-touches `kuzu_nessie_db.rebuild.lock`. It is **false of the loader's own singleton**: `_LOCK_PATH` is keyed
-to the **script's directory**, not to `--db`, and `_acquire_singleton_or_exit()` runs unconditionally
-before `main()`. So a temp-path full load serializes against every other full load on the device.
-
-**Why ARMED, and why it is nonetheless the right thing to have run:** for the duration of each measured
-full load, a concurrent `_canonical` rebuild is refused `rc=4` and the caller serves the existing DB
-**labeled stale** -- the engine's own designed fail-safe (no corruption, no wrong DB), and the singleton
-invariant Andrew ordered 2026-07-30. The hazard is bounded by the run and disarms when the measurement
-completes. AC2 requires two full loads; there is no temp-path form of this engine that avoids the lock,
-so the alternative to accepting it is not measuring at all.
-
-⚠ **This is a correction to the TO's premise, not a defect in the engine.** The singleton is behaving
-exactly as designed and as documented at `:295-327`.
-
 ```json
 [
   {
@@ -166,10 +108,6 @@ exactly as designed and as documented at `:295-327`.
 
 ## S4 -- two orphaned local rebuilds left mutex + tmp + WAL residue inside 40 minutes, both before this seat ran
 
-Observed while establishing the live-state baseline that TO-CG-V-1 requires before measuring ("the current
-lock state"). Recorded as a **residue observation, not a diagnosis**: this seat did not establish WHY the
-rebuilds died and is not claiming a defect in the CE-G-5 layer.
-
 ```json
 [
   {
@@ -200,10 +138,6 @@ rebuilds died and is not claiming a defect in the CE-G-5 layer.
 ```
 
 ## S5 -- V2-AC7's cell_refs are space-separated; the checker splits on comma, so the instance cannot reach rc 0
-
-Surfaced at the **final** step of TO-CG-V-2, validating the proof instance V2-AC7 itself demands. Every measurement
-in the task order is done and passing; this is a one-token encoding defect on the TO's issuance half that no act
-available to the assignee can clear. **Filed BLOCKING and routed to the issuer in the same turn, per the TO's BOUNDS.**
 
 ```json
 [
@@ -237,10 +171,6 @@ available to the assignee can clear. **Filed BLOCKING and routed to the issuer i
 
 ## S6 -- DISARM ACK for S5 (the issuer amended the face in-round; the instance is now VALID)
 
-The disarm owner named in S5 acted before this seat reported, so S5's blocking condition is gone in the world.
-Recorded as a NEW row because the channel is append-only. **This is an acknowledgement, not an adjudication --
-S5's disposition stays `3.0.0_SA_CVO~A`'s at L9.**
-
 ```json
 [
   {
@@ -270,11 +200,6 @@ S5's disposition stays `3.0.0_SA_CVO~A`'s at L9.**
 ```
 
 ## S7 -- DISARM ACK for S1 (the disarm owner corrected the canonical integration contract in-round; six tokens of one cutover)
-
-The disarm owner named in S1 (`1.0.0_SA_CTO~A`) acted at @`f9ca7a9309` before the channel file's first commit, so S1's hazard is
-gone in the world. Recorded as a NEW row because the channel is append-only. **This is an acknowledgement, not an adjudication --
-S1's disposition stays `3.0.0_SA_CVO~A`'s at L9.** Scope of "sibling occurrence" = every token of the same 2026-08-14 rename in
-the same file, accepted by the L9 seat (93316 item 4) before this row was written.
 
 ```json
 [
@@ -307,22 +232,6 @@ the same file, accepted by the L9 seat (93316 item 4) before this row was writte
 ```
 
 ## S8 -- the full loader's `_build_manifest.edge_count` overstates the graph's real edge count by 2,256
-
-Found by AC2's own measurement: both full loads produced byte-identical DBs, and the manifest each wrote
-disagrees with the DB it describes. **`node_count` agrees exactly; only `edge_count` is wrong**, and the
-INCREMENTAL path writing the same field for the same graph gets it right. The full loader increments its
-counter once per `MERGE` executed (61,071 read - 383 skipped endpoints = 60,688 merges), but `MERGE`
-collapses duplicate `(src, dst, edge_type, props)` identities, so 2,256 of those merged onto an edge that
-already existed. It then stamps the merge-attempt count as `edge_count`.
-
-**Why it matters to THIS project rather than being a local curiosity:** `CG-s-3` (FWD-3, FWD-7) is
-*"S3 versioned artifact + `_build_manifest` + ONE pointer object"* -- the manifest IS the provenance
-record a cloud consumer reads, and `CG-s-7` repoints `comp-graph status` at that manifest. A port carries
-this field to the cloud, where a consumer comparing a manifest `edge_count` against a live graph count
-would read a 3.9% phantom drift that is an artifact of the producer, not of the data.
-
-⚠ **This seat surfaces and does not fix** -- BOUNDS bar editing repo source, and CG-s-9/R10 already own
-the loader's node/edge key handling at the port.
 
 ```json
 [
@@ -396,31 +305,6 @@ the loader's node/edge key handling at the port.
 
 ## S10 -- the rebuild deadline watchdog's stated "5x headroom" is 1.8x against the measured duration, and the port inherits it
 
-Found while gathering the runtime-sizing inputs for `B2-AC1` (TO-CG-B-2), reading the loader's own
-watchdog block rather than a document about it.
-
-`kuzu_nessie_load.py:389-393` sets `KUZU_REBUILD_DEADLINE_S` to a default of **1800 s** and justifies
-that number in-source: *"a full rebuild is ~6min, so 5x headroom"*. **That justification rests on the
-same ~6 min figure `CG-s-10` measured and falsified.** Against the measured full load (935.500 s and
-1001.172 s, 2 of 2 runs) the real headroom is **1.80x**, not 5x. Nothing is failing today -- 1800 s
-still exceeds 1001 s -- which is exactly why it is worth a row rather than a shrug: the margin is a
-quarter of what the code says it is, and the number was never re-derived when the duration changed.
-
-**Why ARMED, and why it lands on THIS port:** `B2-AC1` sizes a cloud worker that runs this loader, and
-the cloud number is UNMEASURED (that is `B2-AC6`'s job) with a NAMED reason to expect it to differ --
-`CG-s-10`'s memory-pressure caveat cuts both ways. A cloud full load only **1.8x** slower than the
-laptop's would hit the watchdog, and `_deadline_exit` is not a graceful degrade: it calls
-`os._exit(3)` after releasing the singleton, so the run dies mid-build and the caller falls back. A
-worker inheriting an un-restated 1800 s default would be sized against a comment, not a measurement --
-which is the precise failure mode `PRD s.6 R5` exists to forbid ("decided by the MEASURED full-fallback
-duration, not the document claim").
-
-**Disarm is this seat's, at this port:** set `KUZU_REBUILD_DEADLINE_S` EXPLICITLY in the task
-definition from the measured number with its headroom stated, rather than inheriting the default, and
-say so in the runtime decision. Recorded as a row first because the finding is about the ENGINE and
-outlives my task definition -- a later caller that does not set it still inherits 1800 s justified by a
-stale comment.
-
 ```json
 [
   {
@@ -452,10 +336,6 @@ stale comment.
 ```
 
 ## S13 (filed as S11; renumbered on a same-minute id collision with ~Q -- see notes) -- the tree cannot produce the adds-only plan B1-AC3 requires, and a bare apply would land an Andrew-EXCLUDED SNS email subscription
-
-STOP condition named by TO-CG-B-1 itself, MET. Terraform written, `validate` Success, `fmt` clean, `comp-iam gaps`
-delta confined to the parser's own denominators -- and then the plan came back **8 add / 2 change**, with **4 of those
-foreign to this cell**. NOT APPLIED. The deliverable's own words: *a non-zero change/destroy count is a STOP and a row.*
 
 ```json
 [
@@ -490,30 +370,6 @@ foreign to this cell**. NOT APPLIED. The deliverable's own words: *a non-zero ch
 
 ## S12 -- TO-CG-B-2 MANDATES a tool that violates TO-CG-B-2's own bound: `comp-blast` rebuilt the canonical DB
 
-Surfaced by running the face's own `<compiler_tools_mandate>` BEFORE-WRITE step. This is not a tool
-defect and not a bound I chose to break -- **the two clauses of one task order contradict each other, and
-a seat that obeys the mandate necessarily violates the bound.**
-
-The BOUNDS say: *"`infra/aws/globgrph/kuzu_nessie_db` is not read or written (mtime control as in
-TO-CG-V-1)."* The mandate says: *"`comp-blast infra/aws/globgrph/kuzu_nessie_load.py` and `comp-blast
-infra/aws/globgrph/kuzu_incremental_refresh.py`."* `comp-blast` queries the canonical Kuzu graph, which
-routes through `_canonical.ensure_fresh`, which found the DB BEHIND Nessie HEAD and **rebuilt it** --
-printing its own reasoning: *"canonical FULL rebuild via the DESIGNED daily ground-truth reset
-(post-nightly whole-table delta trips the large-delta gate; CTO condition 2, NOT a defect)"*.
-
-**Nothing is harmed and the estate is better off** -- the DB is now FRESHER than before and the rebuild is
-the designed path. The defect is that a criterion's named control cannot be stated as the face states it:
-the mtime control over the canonical DB **had already failed before any port code existed**, through the
-face's own required tooling.
-
-⭐ **The rebuild's own banner independently CORROBORATES `CG-s-10`'s finding** that the full load is the
-DAILY path -- from a different instrument (`_canonical`'s runtime log) than the one that measured it
-(INC-A's delta census). The estate's tooling already calls it "the DESIGNED daily ground-truth reset".
-
-⚠ **TO-CG-V-1's control is NOT retroactively broken and I am not claiming it is.** That task order closed
-at 07:52Z; its four control read points were all before this write, and each was true when taken. This
-write is at 09:11:51Z, under TO-CG-B-2.
-
 ```json
 [
   {
@@ -547,37 +403,6 @@ write is at 09:11:51Z, under TO-CG-B-2.
 
 ## S14 -- B2-AC1 names the TASK as the consumer of record; no Pipe/SQS shape can deliver that
 
-Surfaced by this seat against **its own criterion**, while authoring the Terraform `B2-AC1` was written to
-justify. The issuer is right that it belonged here and not in a commit message (93613): a commit message
-never reaches L8 and the proof's surprises frame has no row to resolve to.
-
-`B2-AC1` (@`18503387b5`) chose an EventBridge Pipe to `ecs:RunTask` and **explicitly rejected** a third
-design *"that deletes the message on RunTask acceptance"* on the grounds that `RunTask` returns when the
-task is ACCEPTED, so a ~16-minute job dying at minute 12 would leave nothing to redrive. It then asserted
-*"the TASK is therefore the consumer of record"*.
-
-**MEASURED against the live service's own API surface, not recalled:** a Pipes SQS source exposes exactly
-`BatchSize` and `MaximumBatchingWindowInSeconds` -- **no retention, no defer-ack, no on-failure control** --
-where the stream sources (Kinesis, DynamoDB) do carry retry/bisect/on-failure options. **The Pipe owns the
-receive/delete lifecycle outright**, and `EcsTaskParameters` is a fire-and-forget `RunTask`. So the
-semantics `B2-AC1` rejected are the semantics the design it CHOSE actually has, and the sentence "the task
-is the consumer of record" is not satisfiable under any Pipe/SQS shape. The same holds for a Lambda
-event-source mapping, which acks on the handler's return.
-
-⭐ **The correction is against my own reasoning, and it is narrower than it looks:** the rejection of the
-naive form was RIGHT; the claim that the chosen form escapes it was WRONG. Every other limb of `B2-AC1`
--- the runtime (ECS, because 940.6-1006.3 s never fits 900 s), cpu 2048, memory 16384 against a measured
-6,752 MB peak, ephemeral, and the explicit 3600 s deadline -- rests on `CG-s-10`'s measurements and is
-untouched.
-
-**A CROSS-SEAT CONSEQUENCE, which is why this is ARMED rather than a note.** `~P` deliberately shipped
-`aws_sqs_queue.globgrph_projection_events` with `visibility_timeout_seconds = 30` and the in-file comment
-that **CG-s-2 sets it from CG-s-10's measured duration**; the issuer endorsed my provisional **2400 s** on
-that basis (93565). **That reservation presupposes the worker holds the message for its run.** Under a
-Pipe the message is acked in seconds and a 2400 s timeout protects nothing -- so an APPLIED resource would
-carry a number whose stated derivation does not hold. Left alone, the next seat reads the queue comment,
-the endorsement and the 2400 s and infers a redrive property the wiring does not have.
-
 ```json
 [
   {
@@ -610,11 +435,6 @@ the endorsement and the 2400 s and infers a redrive property the wiring does not
 
 ## S15 -- the projection queue delivers TWO message shapes, and the second has no `Records` key
 
-Carried as a row on the issuer's option (93613 item 4) so a successor meets it on the face rather than in
-a commit message. Not this seat's discovery -- `0.7.0_AE_CloudOps~P` met it first and its first parser
-crashed on it; recorded here because `CG-s-2`'s worker is the consumer that must tolerate both, and a
-consumer written from `R5`'s description alone would crash on its first real delivery.
-
 ```json
 [
   {
@@ -645,12 +465,6 @@ consumer written from `R5`'s description alone would crash on its first real del
 ```
 
 ## S16 -- 2,243 of the 2,256 duplicate edge rows are producer findings, not expected repeated observations
-
-CG-s-3's source-table census answered the question S8 left open. The source denominator reconciles exactly,
-but the excess is not one homogeneous class. Thirteen rows are the same profile-to-role fact observed through
-14 EC2 instances and are expected-by-construction. The other 2,243 expose two producer seams: the live C2
-composition emits member edges before collapsing repeated member sets, and the AWS graph producer discards
-EventBridge target identity/input before forming its edge identity.
 
 ```json
 [
@@ -685,13 +499,6 @@ EventBridge target identity/input before forming its edge identity.
 
 ## S17 -- a Pipe environment-only ECS container override imposed a 4 MiB memory limit
 
-The first two real queue deliveries reached `ecs:RunTask` successfully, but both containers died before
-Python started. The task definition carried the ruled `cpu=2048` / `memory=16384`; the Pipe override
-carried only the event environment variable. On the applied API path that omitted override memory was not
-neutral: `runc` attempted a **4,194,304-byte (4 MiB)** cgroup limit and refused container initialization.
-This is blocking only until the override repeats the already-ruled task CPU/memory values; it changes no
-runtime decision and no graph or marker bytes were touched.
-
 ```json
 [
   {
@@ -722,10 +529,6 @@ runtime decision and no graph or marker bytes were touched.
 ```
 
 ## S18 -- the Pipe's SQS payload is a Records wrapper, so `$.body` was passed literally
-
-After S17's memory disarm, the revision-2 TestEvent task reached Python and failed in JSON decoding. The
-applied task override is the decisive carrier: `PROJECTION_EVENT_JSON` equals the literal string
-`<$.body>`. Pipe execution data shows the source value lives at `$.Records[0].body`, not `$.body`.
 
 ```json
 [
@@ -758,12 +561,6 @@ applied task override is the decisive carrier: `PROJECTION_EVENT_JSON` equals th
 
 ## S19 -- ECS container environment overrides do not transform either measured JSONPath
 
-The corrected wrapper path `<$.Records[0].body>` was also delivered literally. This falsifies the
-assumption that a Pipes ECS container environment value is a dynamic target field on the applied API,
-not merely the first path's location. The task does not need historical event bytes: the marker is the
-R5/R8 HEAD oracle and bucket versioning is off. The Pipe therefore owns both message-shape branches with
-a source filter, and the task reads current HEAD only after a real `Records` body matched.
-
 ```json
 [
   {
@@ -795,8 +592,6 @@ a source filter, and the task reads current HEAD only after a real `Records` bod
 
 ## S20 -- HANDED OFF from NFRA_COMPEFFICACY: the ported deriver reports a failed S3 notification read as a genuine zero (bare except), so the live graph's S3_BUCKET-[TRIGGERS]->LAMBDA edge is EMPTY estate-wide
 
-The base CVO's lateral record at commit b5d228fe62 places NFRA_COMPEFFICACY-S15 with the owning surface: the graph deriver is part of the build CG-s-2 ports, so a silent-zero ported is a silent-zero shipped twice. Filed here by the issuer as the seat that read the lateral; the measurement is 0.8.0_AE_CloudComp's and is marked RELAYED.
-
 ```json
 [
   {
@@ -826,11 +621,6 @@ The base CVO's lateral record at commit b5d228fe62 places NFRA_COMPEFFICACY-S15 
 ```
 
 ## S21 -- the first post-fix real-stamp projection was deliberately stopped by CG-s-3
-
-The task's exit 137 initially resembled an OOM, but the ECS task face resolves it: `stopCode` is
-`UserInitiated` and the supplied stop reason names CG-s-3. The explicit 16 GiB sizing therefore was not
-falsified by this run; the B2 exercise was interrupted from outside the task before it could measure peak
-RSS or publish an artifact.
 
 ```json
 [
@@ -863,8 +653,6 @@ RSS or publish an artifact.
 
 ## S22 -- the B2 publisher can overwrite an immutable same-vintage prefix
 
-The real 16:21Z marker launched the B2 image while a later CG-s-3 image was being built. That overlap exposed a time-of-check/time-of-use gap in the B2 publisher: it checks the two candidate keys once, builds for many minutes, then uploads both keys unconditionally. Two tasks that consumed the same mutable HEAD can therefore both observe absence and overwrite one versioned prefix last-writer-wins.
-
 ```json
 [
   {
@@ -895,11 +683,6 @@ The real 16:21Z marker launched the B2 image while a later CG-s-3 image was bein
 ```
 
 ## S23 -- the B2 worker advanced the projection pointer owned by CG-s-3
-
-The first accepted B2 full-cold task published a complete versioned artifact and then advanced
-`projection/current.json`. That pointer transition is internally consistent and independently verified,
-but it is outside the B2 face: the port was required to leave the pointer absent and hand pointer ownership
-to CG-s-3. No undo is authorized because that would replace one out-of-bounds write with a destructive one.
 
 ```json
 [
@@ -932,11 +715,6 @@ to CG-s-3. No undo is authorized because that would replace one out-of-bounds wr
 ```
 
 ## S24 -- a valid one-node incremental projection cannot pass the fixed publish-set size band
-
-The authentic incremental arm completed its delta apply and count guard, but the copied-and-updated Kuzu
-database plus manifest was much larger than the fixed full-build baseline band. The shared publisher therefore
-refused the otherwise valid incremental result before any immutable object or pointer write. This is safe failure,
-but it leaves B2-AC6's required incremental artifact impossible under the currently deployed contract.
 
 ```json
 [
