@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **12 rows** (S12 appended by `3.0.0_SA_CVO` 08:17Z: adjudicates S10 -- disarmed in place by `1.0.0_SA_CTO` @2bc3679e0b, exercised at this seat; S10 + S11 08:02Z after the round-3 stamp @7ec9bf06dd).
+**Append-only during the round.** Denominator at this write: **14 rows** (S13 + S14 appended by `3.0.0_SA_CVO` 09:21Z as the round-4 L10 slug, both GRADUATED -- S13 comp-trigger's AC-2 by the PRD's own bar (SPEC_ERROR -> L6), S14 the gate archetype at budget expiry (SCOPE_CHANGE -> L2); their remediation rows in `../remediations/REMEDIATION_v1.md`, same commit).
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -148,6 +148,39 @@ the round-3 precondition was read at `ee7c884f29`; neither blocks a task order.
 `1.0.0_SA_CTO` (93349) resolved comp-surprise's dispositions by latest carrier, the row gate's own rule. Exercised at
 this seat at 08:16:10Z: open = [S10], armed = [S10] (was five and five); `_latest` on S1 and S6 reads DISMISSED_WITH_REASON;
 estate open 73 -> 70; NFRA_CLDGRPH's 8 genuinely open rows unchanged (the negative control). S12 closes S10. Nothing routes.
+
+## L10 stamp -- round 4 (3.0.0_SA_CVO: TWO graduated, one to L6 and one to L2; the rest read and not counted)
+
+Precondition, read at this seat at HEAD `c6d4eced8f` (09:1xZ-09:2xZ), never from the report (93421):
+
+| half | read | result |
+|---|---|---|
+| task orders | 9 files' `<status>` tags | 7 `complete` (G-5, T-1, T-2, T-3, T-7, T-8, T-9), 2 `WITHDRAWN` (DISC-2, TP-1), 0 pending |
+| proof instances (round 4) | `proof-of-spec-check.py` at this seat, checker vintage `7b649df39d` (clean; an earlier run at `7e78fe9171` + 6 uncommitted lines read the same, and those lines touched only multi-token `cell_refs`, which neither instance has) | TO-CE-T-9 VALID rc 0, 6 of 6, surprises 0, 1 artifact co-committed at `b1dab0b6a0`; TO-CE-T-7 VALID rc 0, 6 of 6, surprises 0, 2 co-committed at `803539f490` |
+| rows | this file at HEAD | 12; every item dispositioned by its latest carrier (S12 closed S10); the rollup reads 0 open / 0 armed on the fixed instrument |
+
+**Graduated, two** (the remediation document opens with this round):
+- **S13** -- comp-trigger's T9-AC2: three of four planted cases byte-identical; the instance self-marks PASS; PRD s.4.3 says
+  any two alike is FAIL and calls it FWD-2, the load-bearing test. `SPEC_ERROR` -> L6, owner `2.0.0_SA_COO` (a remediated
+  order under CE-t-9). For the grade: T9-AC2 reads FAIL by the spec's own bar, honestly disclosed, wrongly marked.
+- **S14** -- comp-dataflow's T7-F4: Rule T's form fixes rc 0 at expiry; a gate whose rc is its verdict then returns CLEAN
+  from a partial sweep. The PRD names no outcome for a gate archetype at expiry. `SCOPE_CHANGE` (REQUIRES_UNNAMED_OUTCOME)
+  -> L2, owner `1.0.0_SA_CTO`.
+
+**Read and not counted** (the per-tool carrier; the `CE-pass` roll-up): T-9 F2 (a real crash on a tiny budget, FIXED in-cell
+with a red-first arm) and F3 (the canonical opal-data-bd/-cot/-inf buckets absent from the single-account live graph's
+28-bucket population -- account scope vs a real gap UNDETERMINED; named for `1.0.0_SA_CTO`'s placement, it is the graph's
+coverage, `NFRA_CLDGRPH`-adjacent, not this project's spec); T-7 F1, F2, F3 (F2 named for the grade against s.4.3).
+
+**Correction to the round-3 stamp, scoped to one clause:** that stamp placed T-3's F2 (comp-which validates a gold-script
+id's shape, never its existence) "in-chain" under "STAGE 2 subject existence, CE-t-6 after CE-t-19". The decomposition's own
+row :55 makes CE-t-6 comp-blast's cell (T-6), not a cross-tool home, so the placement was wrong; decomp v0.2.2 :52 inherited
+it. F2's home is the `CE-pass` roll-up ("fixed" or "not fixing, and here is why") and the L4 owner's grade; it is not
+graduated here because T3-AC2's four planted cases were distinguishable (F2 names a subject class the planted case did
+not cover), unlike S13. `2.0.0_SA_COO` is told for v0.2.3. Everything else in the round-3 stamp stands.
+
+Next: the two route owners act (annex s.8 'Who acts'); the COO's next L6 for the cells the routes do not touch (CE-t-19
+RULED, then CE-t-6; STAGE 3) is not pre-empted by either route.
 
 ```json
 [
@@ -459,6 +492,57 @@ estate open 73 -> 70; NFRA_CLDGRPH's 8 genuinely open rows unchanged (the negati
     "spec_asserts": "S10's DISARM as written: 'comp-surprise treating a row as CLOSED when any later row's `adjudicates` names it (the latest carrier's disposition governs, the row gate's own rule) and saying so' -- annex v2.1 s.0/s.4/s.7/s.8.",
     "world_is": "comp-surprise.py @2bc3679e0b resolves every item to its latest carrier and exposes it as `_latest`; on this channel the only open item is S10 itself until this row lands, after which the rollup reads 0 open and 0 armed for NFRA_COMPEFFICACY (to be read, not assumed, on the next stamp).",
     "notes": "L9 act of 3.0.0_SA_CVO on the disarm owner's report; a round-4 item closed inside its round. The estate 'armed' count (87 at the exercise) now exceeds 'open' (70) by design -- ARMED includes GRADUATED-not-DISARMED items -- which is the CTO's semantics and not a finding of this row. Nothing routes; the next L6 is unaffected; a CLOSE of this project no longer waits on S10."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S13",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T09:21:00Z",
+    "one_line": "TO-CE-T-9 (comp-trigger) closes on AC-2 and its T9-AC2 criterion asks for 'four PLANTED cases ... four DISTINGUISHABLE, machine-rejectable outputs'; the deliverable's own answer_state block records THREE of the four planted cases (SUBJECT_ABSENT_FROM_CORPUS, PRESENT_WITH_ZERO_RESULTS, PARTIAL_OR_BLIND) printing BYTE-IDENTICAL bodies at rc 0 -- comp-trigger has no function-existence check -- and the proof instance self-marks T9-AC2 PASS on 'the criterion's controlling ask'. PRD s.4.3: 'PASS = four cases, four distinguishable outputs. FAIL = any two states print alike. This is FWD-2 and it is the load-bearing test of the project.' The world is a FAIL by the spec's own bar; the second clause (the S3-notification scope + delegation line) IS met and stays.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.md (complete @b1295d1164), criterion T9-AC2 verbatim: '(AC-2) four PLANTED cases keyed on the ratified enum produce four DISTINGUISHABLE, machine-rejectable outputs in the tool's own voice (rc + text quoted per case); the S3-notification-only function reads out-of-scope / NOT_APPLICABLE with the scope + delegation line' -- two clauses, conjoined",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md v0.4 @19bf1c7322 s.4.3 :390: '**PASS** = four cases, four distinguishable outputs. **FAIL** = any two states print alike. This is FWD-2 and it is the load-bearing test of the project.'",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md v0.2.2 @b7daeaa6f0 :118 'STAGE 2  THE 4.3 ANSWER-STATE FIXES (each closes on AC-2)' and :58 CE-t-9 outcome_ref 'FWD-2,3,4 + AC-2'",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/comp-trigger.result.md @b1dab0b6a0, answer_state block: PRESENT_WITH_ZERO_RESULTS 'printed': 'BYTE-IDENTICAL to the SUBJECT_ABSENT case above'; PARTIAL_OR_BLIND 'printed': 'the SAME NO MATCH text as the two cases above, PLUS the new SCOPE line' with 'distinguishable_from_the_others_by': 'nothing in THIS run alone (same rc, same NO MATCH text)'; finding F1 'guard-asymmetry (three states, one guard)' citing comp_trigger.py:render()'s `if not matches:` branch @7737320640",
+        "the proof instance NFRA_COMPEFFICACY.TO-CE-T-9.comp-trigger-s4-audit.proof_of_spec.json @b1dab0b6a0, row T9-AC2 status PASS, status_reason: \"the first clause's 'four DISTINGUISHABLE outputs' is met only 2 of 4 ways at the text level ... reported as PASS because the criterion's controlling ask (the S3-notification voice) is satisfied and the shortfall is fully disclosed as finding F1\" -- read at 3.0.0_SA_CVO; the instance is structurally VALID (proof-of-spec-check rc 0) and the checker does not grade a criterion's truth",
+        "STAGE 2's subject-existence cell CE-t-6 (:55) is T-6 comp-blast's own row ('subject-existence + graph vintage + node denominator; NOT-FOUND != zero radius'), not a cross-tool home -- so no cell other than CE-t-9 carries comp-trigger's existence check"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "T9-AC2 (the TO face, frozen for the round) and PRD s.4.3 (the bar the cell closes on): four planted cases produce four distinguishable outputs; any two alike is FAIL; this is FWD-2.",
+    "world_is": "Three of comp-trigger's four planted cases print byte-identical bodies at rc 0 (no function-existence check; the S3-only case differs from PRESENT_WITH_ZERO only by a scope line that prints on every miss), and the proof instance carries PASS on that criterion by reading its second clause as controlling. The task order is complete on the record with a valid instance; the cell's AC-2 is not met.",
+    "notes": "GRADUATED: the remedy needs a task order under a cell the decomposition already contains (CE-t-9) -> route SPEC_ERROR, loop_target 6, owner 2.0.0_SA_COO -- the remediation row of the same id in REMEDIATION_v1.md carries the remedy. DISARM (the tool lane's, via the COO): a function-existence check that separates SUBJECT_ABSENT_FROM_CORPUS from the other three is the minimal disarm; the S3-notification-only case still needs the cell's own closes-on ('S3-notification backend via existing machinery; existing machinery checked FIRST') or a distinct PARTIAL_OR_BLIND voice to separate it from PRESENT_WITH_ZERO_RESULTS. Harm while unattended: a mistyped or retired function name reads as 'exists, no EventBridge/Scheduler trigger, check S3 notifications' -- a reader is sent to chase notifications on a function that does not exist (the wrong-object class s.4.1 closes at the schema and s.4.3 tests). FOR THE GRADE (1.0.0_SA_CTO, COMPLETION_GRADES): T9-AC2 reads FAIL by s.4.3's bar, self-marked PASS with the shortfall disclosed -- the disclosure is honest, the mark is not the spec's. The worker's F1 is the same fact in the per-tool carrier; this row exists because the fact contradicts the TO's own criterion, which S9's precedent (findings inside a deliverable are not rows) never covered. Not blocking any task order (the round's orders are terminal)."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S14",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T09:21:00Z",
+    "one_line": "Rule T's FORM (PRD s.4.4) fixes 'at expiry ... rc stays 0 (the LINE is the rejectable state, not the rc)' for every marquis tool; comp-dataflow's `gate` subcommand is a GATE archetype whose rc IS the verdict by its own contract, so a BUDGET-REACHED sweep with 0 findings among the files it reached returns rc 0 -- byte-identical to a genuinely complete clean sweep -- and any rc-only consumer (a hook, a script, a `&&`) reads PARTIAL as CLEAN. The PRD names no outcome for a gate archetype at expiry: its non-application clause covers tools with no corpus-width loop and no timeout-bearing subprocess, and nothing else. An uncovered member of the form's own domain (Rule 24 (i)); deliverable finding T7-F4, 'sharper here than in prior cells'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md v0.4 @19bf1c7322 s.4.4 :432 'at expiry       on stdout, BEFORE the summary, rc stays 0 (the LINE is the rejectable state, not the rc)'; :462-471 the non-application clause (no corpus-width loop AND no timeout-bearing subprocess; output caps do not exempt) -- no archetype distinction anywhere in the form (read at full width at 3.0.0_SA_CVO)",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/comp-dataflow.result.md @803539f490, finding F4 'success-token-bound-to-wrong-step, SHARPER here than in prior cells': 'a BUDGET-REACHED (partial) gate sweep with 0 findings among the reached files still returns rc=0 -- byte-identical to a genuinely complete clean sweep's rc ... this tool's GATE archetype (rc IS the verdict, by design) makes an rc-only caller's mis-read materially more consequential', citing org/modules/graph/comp_dataflow.py:cmd_gate() @8fdc3d0602 (the cell's own new code; disclosed in --help's carrier description)",
+        "2.0.0_SA_COO 93421, sequencer read (2): 'Rule T's documented behaviour, but comp-dataflow's GATE archetype binds rc to the VERDICT ... A candidate for the s.4.4 form's next clause or a STAGE-3 cell, at the L4 owner's grain' -- named so it does not vanish into a deliverable",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md v0.2.2 @b7daeaa6f0 :93 CE-tp-1: 'DONE v0.1.2 -- APPLIED as SPEC at L4 ... s.4.4 is the ONE carrier' -- the form is a PRD clause, owned at L4, not a cell a task order can amend",
+        "1.0.0_SA_CTO 93320: the route enum answers 'what does the remedy need that does not exist yet in this project's chain' -- an outcome the PRD does not name is SCOPE_CHANGE -> L2"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "PRD s.4.4 RULE T's FORM: at expiry rc stays 0 and the BUDGET REACHED line is the rejectable state -- stated for every marquis tool, with a non-application clause that names only no-loop/no-subprocess tools; and comp-dataflow's own gate contract (T7-AC6 / --help): the gate's rc is its verdict.",
+    "world_is": "For a gate archetype the two specs collide: honouring the form makes a budget-cut sweep return the CLEAN verdict; honouring the gate contract would violate the form's rc clause. The PRD names no outcome for what a gate does at expiry, so the cell built to the form and disclosed the hazard rather than resolving it (correctly: a worker may not amend the PRD).",
+    "notes": "GRADUATED: the remedy needs an OUTCOME the PRD does not name (what a verdict-bearing tool returns from a partial run) -> route SCOPE_CHANGE, scope_change_kind REQUIRES_UNNAMED_OUTCOME, outcome_ref null, loop_target 2, owner 1.0.0_SA_CTO (re-align at L2, then the PRD at L4 -- s.4.4's next clause -- then L5/L6 forward for the comp-dataflow change). The remediation row of the same id in REMEDIATION_v1.md carries the proposed outcome in plain English. DISARM (the tool lane's, via the COO, once the outcome is named -- nothing is built against the current form before that): cmd_gate at BUDGET REACHED returns a distinct non-clean rc, or refuses to render a verdict on a partial sweep. Harm while unattended: a gate that passes on a partial sweep is the false-green class (CLAUDE.md s.5 'a monitor on an unsettled route measures the wrong thing precisely' is the same shape one rung up); comp-dataflow gate has 11 runs in 30 days by the manifest, so the exposure is small today and grows with every hook that adopts it. Not blocking any task order. T7-F1 (vintage stderr-only), T7-F2 (SUBJECT_ABSENT and NOT_APPLICABLE share one REFUSE shape and rc, distinguishable by the echoed argument), T7-F3 (the shim's un-budgeted self-report, owner named) ride the per-tool carrier; F2 is named for the L4 owner's grade against s.4.3's bar."
   }
 ]
 ```
