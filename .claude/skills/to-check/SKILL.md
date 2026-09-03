@@ -1,6 +1,6 @@
 ---
 name: to-check
-description: Active task-order view -- enumerates non-complete TO files grouped by project. `/to-check` shows TOs for hot PRD projects (PRDs issued <=14d, not closed); `/to-check --all` shows all non-complete TOs workspace-wide; `/to-check --project CODE` or `--assignee SERIAL` scope to one project or agent (filters compose, e.g. `--all --assignee DS`). Each TO renders with status ([ACTIVE]/[PENDING]/[BLOCKED !!]/[??]), TO-id, agent-tag, age, title, assignee, issuer -- plus a BY AGENT rollup (the who-owns-what roster, grouped by primary assignee so joint TOs don't split counts). Parses the new + old XML schemas AND the oldest markdown TO format; never drops a file (parse errors surface with PARSE-ERROR); ASCII-only (Windows/grep safe). Drill-down companion to /prd-check's coverage view (prd-check = which hot projects have TOs filed; to-check = what those TOs are + who owns them). Read-only, never dispatches. By default ALSO renders + surfaces the Desktop TO dashboard (TO-load-by-agent leaderboard + by-project cards). Engine: `.tools/to-check.py`.
+description: Active task-order view: `/to-check` (hot PRD projects, <=14d); `/to-check --all` (every non-complete TO workspace-wide); `--project CODE`; `--assignee SERIAL` (filters compose). Each TO with status, id, age, title, assignee, issuer, plus a BY AGENT rollup; never drops a file. Also renders the Desktop TO dashboard. Read-only, never dispatches. Companion to /prd-check. Engine `.tools/to-check.py`.
 ---
 
 # /to-check -- active task order view

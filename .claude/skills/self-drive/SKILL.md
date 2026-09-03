@@ -1,6 +1,6 @@
 ---
 name: self-drive
-description: Drive ONE scope of the directive register to completion on a self-ending loop -- `/self-drive D4`, `/self-drive ETFS_INGEST`, `/self-drive sitez directives`, `/self-drive laptop directives`. Each tick runs /open-calls RESTRICTED to the scope, PITCHES every adjudicable call WITH THIS SEAT'S REC to the fabric's CVO lane to adjudicate, then PROCEEDS on the verdicts received. The loop PERSISTS UNTIL THE SCOPE IS DONE (read from the register, never declared), then TURNS ITSELF OFF; the log is DELTA-DRIVEN (completion / substantive delta / a 6-tick floor -- quiet ticks write and commit NOTHING; Andrew-amended 2026-08-27, retiring the every-2-ticks form). While armed, the scope is the ONLY work the driver's fabric does. Operator-initiated (never armed at launch); NOT /drive -- it dispatches nothing on a timer. Andrew-direct 2026-08-24 at the CTO~Z terminal.
+description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick runs /open-calls restricted to the scope, pitches every adjudicable call with this seat's rec to the CVO lane, and proceeds on the verdicts; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
 ---
 
 # /self-drive — drive a DIRECTIVES.yaml scope to DONE: open-calls -> CVO adjudicates -> proceed, on a loop that ends itself

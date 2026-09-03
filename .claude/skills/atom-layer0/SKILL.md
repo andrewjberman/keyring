@@ -1,6 +1,6 @@
 ---
 name: atom-layer0
-description: Run the atom_layer0 method ad hoc on a named concept -- test whether it is an atomic conceptual base within a versioned decomposition grammar and scope, certify only bounded frontier closure, legislate the layer through Rule 24, and compile exact resolution contracts for every binding above it. Use when Andrew or an exec says "/atom-layer0 <concept>", "find the true atom of X", "is X actually the base layer", or "what binds to X and how must it resolve". Method status PROPOSED; findings are characterize-not-fix and ROUTE to owners, never repaired in-run.
+description: Run the atom_layer0 method on a named concept: test whether it is an atomic base within a versioned decomposition grammar, certify bounded frontier closure, compile resolution contracts for every binding above it. Use on `/atom-layer0 <concept>`, "find the true atom of X", "is X the base layer". Findings characterize-not-fix and route to owners.
 ---
 
 # /atom-layer0 — ad-hoc invocation of the atom_layer0 method

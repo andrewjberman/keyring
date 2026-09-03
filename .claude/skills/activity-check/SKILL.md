@@ -1,6 +1,6 @@
 ---
 name: activity-check
-description: Recent-commit activity view -- for each ACTIVE agent (a fabric serial that committed in the last N days, default 7), its 5 MOST RECENT commits, plus a summary section aggregating WHERE that activity is directed via three top-4+Other pie charts -- (1) which MACROS get the most project-directed activity, (2) which PROJECTS get the most commits, (3) which AGENTS commit the most. `/activity-check` prints the text lens; the HTML dashboard companion (card-per-agent + the three pies) is `.claude/skills/activity-check/render_activity_dashboard.py` -> Desktop/Opal_Activity_Dashboard.html. Read-only; pure git + filesystem, no MCP. Sister to /registry-check (project axis) + /to-check (task-order axis); /activity-check is the COMMIT-activity axis. Engine: `.tools/activity-check.py`.
+description: Recent-commit activity per ACTIVE agent (last N days, default 7) with three pie charts (macros, projects, agents). `/activity-check`; the HTML dashboard via render_activity_dashboard.py. Read-only. Sister to /registry-check (project axis) and /to-check (task-order axis). Engine `.tools/activity-check.py`.
 ---
 
 # /activity-check -- recent-commit activity by active agent + where it's directed

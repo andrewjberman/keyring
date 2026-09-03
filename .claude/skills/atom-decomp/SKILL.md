@@ -1,6 +1,6 @@
 ---
 name: atom-decomp
-description: Run the ATOM_DECOMP atomic-decomposition method ad hoc on a named system, pipeline, or estate surface -- convert an ambiguous system-change question into a closed evidence model (the entity-by-field RECTANGLE, every cell {value, status, evidence}, born UNMEASURED) populated by status-missioned fan-out, iterated until dry, and CERTIFIED with a sealed planted mutant before use. Use when Andrew or an exec says "/atom-decomp <subject>", "decompose X", "establish SSOT on X", "get to the bottom of what is going on with X", or before refactoring/migration/decommissioning where deployed truth must be proven, not recalled. Charter: the "Marines Force Recon" of SSOT -- go in and establish truth decisively.
+description: Run the ATOM_DECOMP method on a named system, pipeline or estate surface: the entity-by-field rectangle, every cell {value, status, evidence}, fan-out until dry, certified with a sealed planted mutant. Use on `/atom-decomp <subject>`, "decompose X", "establish SSOT on X", or before a refactor, migration or decommission where deployed truth must be proven.
 ---
 
 # /atom-decomp — ad-hoc invocation of the atomic-decomposition method

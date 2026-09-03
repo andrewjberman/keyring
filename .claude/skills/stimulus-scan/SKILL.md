@@ -1,6 +1,6 @@
 ---
 name: stimulus-scan
-description: Action-oriented meta-supervisor scan for the Opal multi-agent fabric. Reads per-agent telemetry from `org/mcp/agent_telemetry/*.jsonl` (the PostToolUse-hook stream, kind:work/loop-tagged), cross-checks the opal-agent-comms broker + inboxes, classifies each agent by staleness, and **dispatches work to fix blockers and redirect idle capacity**. NOT a reporting tool — every STALE / STANDING_BY / BLOCKED agent receives a TO or nudge in the same scan. For CTO/COO use, primarily inside the `/loop` body. Trigger: sooner-of (~45min since last scan) OR (watcher down / fresh wake). Adapted for ajb_workspace from corporeal's stimulus-scan.
+description: Action-oriented meta-supervisor scan: read per-agent telemetry (org/mcp/agent_telemetry/*.jsonl), cross-check the broker and inboxes, classify each agent by staleness, and DISPATCH -- every STALE / STANDING_BY / BLOCKED agent gets a TO or nudge in the same scan. Not a report. CTO/COO, primarily inside a /loop body; trigger ~45 minutes since the last scan or a fresh wake.
 ---
 
 # /stimulus-scan

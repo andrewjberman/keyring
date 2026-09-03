@@ -1,6 +1,6 @@
 ---
 name: terminal-upload
-description: One-command daily Bloomberg pipeline from the terminal machine - pull the data/model PKLs through Yang's notebooks (run_daily_pull.py + tripwire), then push them through the portal /data-refresh channel (opal_data_refresh_upload) and confirm the portal serves the new date - no UI. Use when asked to "run the terminal upload", "pull and upload the PKLs", "refresh the dashboard from the terminal", or to re-send already-pulled PKLs ("send-only"). Runs ONLY on the Bloomberg terminal machine. Born 2026-08-03 from the ST-mapping incident; folds its failure signatures.
+description: One-command daily Bloomberg pipeline from the terminal machine: pull the data/model PKLs through Yang's notebooks (run_daily_pull.py + tripwire), push them through the portal /data-refresh channel, confirm the portal serves the new date. Use on "run the terminal upload", "pull and upload the PKLs", or "send-only" to re-send pulled PKLs. Runs only on the Bloomberg terminal machine.
 ---
 
 # /terminal-upload — pull the PKLs and upload through data-refresh, no UI

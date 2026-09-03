@@ -1,6 +1,6 @@
 ---
 name: find
-description: Catchall to surface dual-business / insurance producing-agency leads by Case (A/B/C) and geography, then display a ranked card list in chat. Parses a plain query like "/find Case A Georgia" or "/find Case B Southeast US", runs the FIND_DUALBIZ recall->evaluate->filter chain (discovers NEW firms via disclosure-string SERP, scores them, geo+case filters), and renders a clean /draw-style card display ranked by the scoring mechanism. Use when the operator types "/find ...", asks to find/surface/pull leads, prospects, agencies, or firms by case+region. Pair: "/target" takes a surfaced company or person into Lusha. Lead pipeline = data/find/dualbiz/; DS-owned.
+description: Surface dual-business / insurance producing-agency leads by Case (A/B/C) and geography and render a ranked card list: `/find Case A Georgia`. Runs the FIND_DUALBIZ recall->evaluate->filter chain. Use on `/find ...` or asks to find, surface or pull leads, prospects, agencies or firms by case and region. Pair: `/target` takes a result into Lusha. DS-owned; data/find/dualbiz/.
 ---
 
 # /find -- surface dual-business / insurance producing-agency leads

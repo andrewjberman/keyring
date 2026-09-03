@@ -1,6 +1,6 @@
 ---
 name: registry-check
-description: Clean, human-readable What/Where/Why view of the active (not-closed) project registry. `/registry-check` shows HOT projects only (worked <72h); `/registry-check -all` shows HOT + COLD (cold = >72h since work, still not closed). Each project renders as a numbered title row (code / status / last ascribed-commit timestamp / owner) with the long phase/description blocks PARSED OUT into three one-line fields -- What (what the project is), Where (where it is at now), Why (why we are/were doing it) -- ordered by most recent ascribed commit. Schema-tolerant (handles both the rich name/description/phase JSONs and the thin status/current_phase ones) and SURFACES malformed JSONs instead of silently dropping them. Read-only; pure filesystem + git, no MCP, no writes. Sister to /fabric-check (which is the agent-axis + raw project-axis lens); /registry-check is the cleaned-up, reading-optimized project view. Engine: `.tools/registry-check.py`.
+description: Human-readable What/Where/Why view of the active project registry: `/registry-check` (HOT, worked <72h); `/registry-check -all` (HOT + COLD). One numbered row per project with the long phase text parsed into What / Where / Why, ordered by most recent ascribed commit; malformed JSONs surfaced, never dropped. Read-only, no MCP. Sister to /fabric-check. Engine `.tools/registry-check.py`.
 ---
 
 # /registry-check -- clean project-registry view (What / Where / Why)

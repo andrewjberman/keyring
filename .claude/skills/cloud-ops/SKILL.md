@@ -1,6 +1,6 @@
 ---
 name: cloud-ops
-description: Operational reference + permissions profile for AE_CloudOps agents. Loads when the agent will be running AWS CLI, Terraform, EC2/SSM operations, or any other cloud-infrastructure work. Pre-approves the wildcards in .claude/settings.json so the agent is not interrupted with permission prompts for routine cloud ops. Confirms the CLAUDE.md non-negotiables that pre-approval does NOT override. CANONICAL HOME for the deployment rules (4,5,6,8,9,11,12,18) as of 2026-08-25 -- they were moved off CLAUDE.md so they load for the seats that do cloud work instead of taxing every agent's context; rule NUMBERS are preserved so existing citations still resolve.
+description: Operational reference and permissions profile for AE_CloudOps seats -- load before AWS CLI, Terraform, EC2/SSM or any cloud-infrastructure work. Pre-approves the routine-ops wildcards in .claude/settings.json and restates the CLAUDE.md non-negotiables that pre-approval does not override. Canonical home of deployment rules 4, 5, 6, 8, 9, 11, 12, 18.
 ---
 
 # cloud-ops

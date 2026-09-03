@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: Generate a REINSTANTIATION TEXT BLOCK — a compact, copy-pasteable context dump that lets a FRESH session of this same agent (or a successor / a peer taking the thread) pick up with full working context and zero ramp. Distinct from /log (the durable session record) and /overview (human-facing fabric status): /handoff is the continuity artifact, GATE-FORWARD (its highest-value content is "what is waiting on whom"), self-scoped, bounded. Bare `/handoff` = your full reinstantiation block now, emitted in chat. `/handoff brief` = essentials + gates only. `/handoff <CODE>` = one project/thread scoped. `/handoff save` = also persist to org/{tier}/{serial}/handoffs/{date}_{HHMM}Z.md (committed). Grounds load-bearing state on commit hashes / artifacts (hot context IS evidence; verify uncertain gates against live state) — never recollection. Any agent, any tier.
+description: Emit a REINSTANTIATION TEXT BLOCK so a fresh session of this seat (or a successor) resumes with zero ramp -- gate-forward (what is waiting on whom), self-scoped, grounded on hashes and artifacts. Bare `/handoff`; `/handoff brief`; `/handoff <CODE>`; `/handoff save` (persists to org/{tier}/{serial}/handoffs/). Not /log (the durable record) and not /overview (fabric status). Any agent.
 ---
 
 # /handoff — reinstantiation text block

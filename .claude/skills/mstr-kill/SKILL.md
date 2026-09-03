@@ -1,6 +1,6 @@
 ---
 name: mstr-kill
-description: MSTR + COO event-triggered skill — terminate a live agent by serial, covering both fabric-spawned (marker-tracked) and Andrew-launched (no marker) cases via a tiered fallback chain. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane) — a COO function in addition to MSTR since Andrew-direct 2026-08-28. Sibling to /mstr-spawn.
+description: Terminate a live agent by serial -- fabric-spawned (marker-tracked) or Andrew-launched -- via a tiered fallback chain. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane). Sibling to /mstr-spawn.
 ---
 
 # /mstr-kill — terminate a live agent

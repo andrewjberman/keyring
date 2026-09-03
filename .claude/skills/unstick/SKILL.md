@@ -1,6 +1,6 @@
 ---
 name: unstick
-description: Unstick a turn-starved agent terminal tab (Codex lanes are the recurring case) by locating that tab BY TITLE and sending keys -- TWO stall shapes, peek first to tell them apart. PROMPT-STUCK (numbered approval prompt) -> bare `/unstick <serial>` sends "1"+Enter; IDLE-AT-INPUT (clean completion, empty composer, mail landed after its last inbox read -- the dominant shape) -> `/unstick <serial> --keys '<prompt>{ENTER}'` NUDGES it (body typed, pause, Enter as a separate act: an Enter inside the keystroke burst is a paste-newline and never submits). `--peek` captures the tab's window to a PNG and sends NOTHING -- the invoking seat READS it, and re-peeks after any send (two identical peeks = sitting in the composer, send a lone `--keys '{ENTER}'`); `--dry-run` locates only. Foreground-verify + abort-on-steal; operator-initiated (it briefly steals desktop focus). Engine `.tools/unstick.ps1`; runbook org/ref/RUNBOOK_CODEX_TAB_UNSTICK.md.
+description: Unstick a turn-starved agent terminal tab (Codex lanes are the recurring case) by locating it by title and sending keys. Two shapes -- PROMPT-STUCK: bare `/unstick <serial>` sends 1 + Enter; IDLE-AT-INPUT: `/unstick <serial> --keys '<prompt>{ENTER}'` nudges it. `--peek` captures the tab to a PNG and sends nothing (read it; re-peek after any send); `--dry-run` locates only. Operator-initiated (it briefly steals focus). Engine `.tools/unstick.ps1`; runbook org/ref/RUNBOOK_CODEX_TAB_UNSTICK.md.
 ---
 
 # /unstick — answer a stuck terminal tab's approval prompt, by serial

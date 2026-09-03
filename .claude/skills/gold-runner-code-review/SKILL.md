@@ -1,6 +1,6 @@
 ---
 name: gold-runner-code-review
-description: Exhaustive per-script code-review of a whole gold runner (any pipeline -- INF / 49F / COT). Fans out one reviewer subagent per gold script hunting type issues / incremental-vs-full breaks / unguarded reads / merge-dtype mismatches / silent served-number corruption, adversarially verifies each material finding, PERSISTS granular per-agent reports to a colocated folder, then DRIVES through them one-by-one (ground-truth -> fix safe ones / flag design items -> FIX_LOG + commit). Repeatable framework; abstracted from the INF ADHC_GLDINC pass 2026-07-06.
+description: Exhaustive per-script code review of a whole gold runner (INF / 49F / COT): one reviewer subagent per script for type, incremental-vs-full, unguarded-read, dtype and served-number defects; adversarial verification of each material finding; per-agent reports persisted to a colocated folder; then fix-or-flag one by one with a FIX_LOG and commit.
 ---
 
 # /gold-runner-code-review -- exhaustive gold-runner review (fan-out + drive)

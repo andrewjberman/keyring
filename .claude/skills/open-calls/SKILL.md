@@ -1,6 +1,6 @@
 ---
 name: open-calls
-description: Enumerate the SOVEREIGN CALLS currently pending at Andrew from THIS agent's vantage -- each rendered as ONE CARD, the minimal decision on top and the agent's recommendation beneath it, split by an internal divider inside the card (Andrew-direct card format, 2026-08-07). Andrew triggers /open-calls at any agent to pull its outstanding asks without typing the question every time. Calls ONLY, no status dump; zero calls = one line and stop. Any agent.
+description: Enumerate the SOVEREIGN CALLS pending at Andrew from this seat's vantage, one card each: the minimal decision on top, the recommendation beneath. Calls only, no status dump; zero calls = one line. Any agent.
 ---
 
 # /open-calls — the sovereign-decision queue, from this agent's vantage

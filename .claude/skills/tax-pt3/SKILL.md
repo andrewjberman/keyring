@@ -1,6 +1,6 @@
 ---
 name: tax-pt3
-description: OPAL_TAXSMA part-3 runner -- the FactSet conversion step (step 3 of Yang's 5-step Tax SMA workflow). Takes pt2's lot-level cost-basis CSVs (TAX/Tax Lot/{YYYYMMDD}/CostBasis_Acct_*.csv, the exact Schwab "Export only lot level detail" shape) + Yang's roster (Tax SMA Accounts.xlsx) and runs Yang's convert_cost_basis.py VERBATIM (via tools/tax_sma/run_converter.py -- byte-identical canonical, injection-parameterized BASE+date, fail-loud on drift) to produce the FactSet "Initial Holding" format that Yang feeds into his MANUAL optimization. Invoke /tax-pt3 {YYYYMMDD} (default: the newest TAX/Tax Lot/ date that has pt2 CSVs). Emits {index}_{account}.txt + {index}_{account}_ex_divest.txt (+ a taxpt3-report.md) into SharePoint TAX/Initial Holding/{YYYYMMDD}/. GENERATES files only -- never a trade, never a Schwab upload; no Schwab/Factset credentials. Phase A (now): workspace-agent operated. The chain: pt1 intake -> pt2 assessment -> pt3 FactSet conversion.
+description: OPAL_TAXSMA part 3, the FactSet conversion: take pt2's lot-level CSVs and Yang's roster and run his convert_cost_basis.py verbatim (tools/tax_sma/run_converter.py, fail-loud on drift) to produce the FactSet Initial Holding files into SharePoint TAX/Initial Holding/{YYYYMMDD}/. `/tax-pt3 {YYYYMMDD}` (default: the newest date with pt2 CSVs). Generates files only -- never a trade or an upload.
 ---
 
 # /tax-pt3 {YYYYMMDD} — Schwab lots -> FactSet "Initial Holding" format (OPAL_TAXSMA part 3)

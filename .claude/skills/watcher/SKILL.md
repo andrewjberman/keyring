@@ -1,6 +1,6 @@
 ---
 name: watcher
-description: Ensure this agent is reachable — registered LIVE on the broker with exactly one persistent inbox Monitor armed for this session. Post-LD persistent-Monitor model: the watcher is a long-running Monitor task armed ONCE at load that streams one chat notification per inbox message, survives in-session compaction, handles batches, and never exits. There is no recurring watcher loop anymore — a fresh session re-arms at startup; within a session the Monitor just keeps running. Run at session start, after a window exit / restart, or whenever reachability is in doubt. Self-scoped — only touches the invoking agent's own watcher.
+description: Ensure this seat is reachable: registered LIVE on the broker with exactly one persistent inbox Monitor armed for this session -- armed once at load, one notification per inbox message, survives compaction, never exits; no recurring loop. Run at session start, after a window exit or restart, or whenever reachability is in doubt. Self-scoped.
 ---
 
 # /watcher — Inbox Reachability (persistent-Monitor model, arm-at-load)

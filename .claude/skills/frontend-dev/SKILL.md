@@ -1,6 +1,6 @@
 ---
 name: frontend-dev
-description: Portal UI verification loop -- render a portal route headlessly (no credentials needed), READ the screenshot, and check it against the silver-canvas color law before committing any new page or visual change. Use whenever building or modifying portal frontend (pages, components, panels, nav), when asked to "check the frontend", "screenshot the portal", or verify UI colors/contrast. The canvas is SILVER: light text or ghost-white buttons outside a dark Panel are the #1 recurring portal defect (Andrew-direct 2026-07-15, TicketCenter incident) -- a grep cannot see contrast, only a rendered screenshot can.
+description: Portal UI verification loop: render a portal route headlessly, READ the screenshot, and check it against the silver-canvas color law before committing any page or visual change. Use whenever building or modifying portal frontend, or on "check the frontend" / "screenshot the portal". Light text or ghost-white buttons outside a dark Panel are the recurring defect a grep cannot see.
 ---
 
 # /frontend-dev — render, LOOK, then commit

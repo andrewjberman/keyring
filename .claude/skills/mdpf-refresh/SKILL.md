@@ -1,6 +1,6 @@
 ---
 name: mdpf-refresh
-description: Initiate a fresh gold run + platinum publish (a "reset run") for the MDPF Model Portfolios product with ONE invocation -- no dictating individual resources. Fires the SAME Lambdas the production schedules target (floor -> accrual -> publisher, optionally the COT/INF vendor+mirror legs first), waits each leg, then verifies every firm scope's served platinum against the trading-calendar T-1. Use when Andrew says "refresh mdpf", "fresh gold run", "re-publish model portfolios", "reset run", or when served MDPF data must be brought to newest information for any reason. Built on Andrew-direct 2026-08-14 ("I just run the skill rather than having to dictate the various resources"). Any agent may run status/gold/full; the --reland delete leg additionally requires Andrew's explicit in-session word.
+description: Fresh gold run + platinum publish for MDPF Model Portfolios in one invocation: fires the same Lambdas the production schedules target (floor -> accrual -> publisher; optionally the COT/INF legs first), waits each leg, verifies every firm scope's served platinum against trading-calendar T-1. Use on "refresh mdpf", "fresh gold run", "re-publish model portfolios", "reset run". Any agent for status/gold/full; `--reland` needs Andrew's explicit in-session word.
 ---
 
 # /mdpf-refresh — fresh gold + platinum reset run for MDPF
