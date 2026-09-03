@@ -163,27 +163,72 @@ def _base_serial(s):
     return str(s or "").strip().split("~", 1)[0]
 
 
-def _foreign_row_violations(rel, kind, added, committer):
-    """PURE. Complaints for NEW investigation rows whose `surfaced_by` is not the committer's seat."""
+def _seats_with_open_orders(root, code):
+    """The base serials holding a NON-TERMINAL task order under the project, on both roots, read from HEAD blobs
+    (never the worktree). (set, note); set is None when the census could not run -- the caller fails closed."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
+                             "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return None, "git ls-files raised %s" % exc
+    if ls.returncode != 0:
+        return None, "git ls-files rc=%d" % ls.returncode
+    seats = set()
+    for p in [x.strip().replace("\\", "/") for x in ls.stdout.splitlines() if x.strip()]:
+        st, text = _blob(root, "HEAD", p)
+        if st != "OK":
+            continue
+        m = TO_STATUS_RE.search(text)
+        word = m.group(1).lower() if m else ""
+        if word in TERMINAL_TO_WORDS:
+            continue
+        im = re.search(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", text, re.I)
+        if im:
+            seats.add(_base_serial(im.group(1)))
+    return seats, ""
+
+
+def _foreign_row_violations(rel, kind, added, committer, coworkers=None):
+    """PURE given `coworkers`. Complaints for NEW investigation rows whose `surfaced_by` is not the committer's seat.
+
+    CO-WORKER ADMISSION (2026-09-03, 2.0.0_SA_COO 93746, measured under round 6 of NFRA_COMPEFFICACY): ten Codex lanes
+    on one project in ONE worktree share ONE investigation file, so every lane's commit necessarily carries every other
+    lane's uncommitted row -- the arm refused four lanes' rows together and deadlocked the round. A row whose
+    `surfaced_by` HOLDS A NON-TERMINAL TASK ORDER ON THE SAME PROJECT is a co-worker's row riding along in a shared
+    worktree, not a sweep of a stranger's: it is ADMITTED and NAMED in the gate's notes (the author-line mismatch stays
+    on the record without an override). A row whose surfacer holds no open order on the project -- site Z's accident
+    class, a Tier-1 seat's row, a stranger -- is still refused. `coworkers` None = the census could not run -> refused.
+    Returns (violations, notes)."""
     if kind != "INVESTIGATION" or not added:
-        return []
+        return [], []
     who = _base_serial(committer)
     if not who or not SERIAL_RE.match(who):
         return ["%s: committer identity UNREADABLE (%r) while %d new row(s) are staged -- the foreign-row sweep "
-                "cannot be graded; REFUSED, fail-closed" % (rel, committer, len(added))]
-    foreign = []
+                "cannot be graded; REFUSED, fail-closed" % (rel, committer, len(added))], []
+    foreign, carried = [], []
     for r in added:
         sb = _base_serial(r.get("surfaced_by"))
         if not SERIAL_RE.match(sb):
             foreign.append("%s (surfaced_by %r unparseable)" % (r.get("id"), r.get("surfaced_by")))
-        elif sb != who:
+        elif sb == who:
+            continue
+        elif coworkers is None:
+            foreign.append("%s (surfaced_by %s; the open-order census could not run, so co-worker status is unknown)"
+                           % (r.get("id"), r.get("surfaced_by")))
+        elif sb in coworkers:
+            carried.append("%s (surfaced_by %s, an open order on this project)" % (r.get("id"), r.get("surfaced_by")))
+        else:
             foreign.append("%s (surfaced_by %s)" % (r.get("id"), r.get("surfaced_by")))
+    notes = []
+    if carried:
+        notes.append("%s: CO-WORKER ROWS carried under %s's author line (shared worktree; each row's own surfaced_by "
+                     "holds an open order on this project): %s" % (rel, who, ", ".join(carried)))
     if foreign:
-        return ["%s: FOREIGN-ROW SWEEP -- %d of %d new row(s) were surfaced by a seat other than the committer %s: %s. "
-                "A peer's uncommitted row rides along under your author line; commit only your own rows (a seat commits "
-                "its own row), or integrate deliberately under the audited override."
-                % (rel, len(foreign), len(added), who, ", ".join(foreign))]
-    return []
+        return ["%s: FOREIGN-ROW SWEEP -- %d of %d new row(s) were surfaced by a seat that is neither the committer %s "
+                "nor a co-worker with an open order on this project: %s. Commit only your own rows, or integrate "
+                "deliberately under the audited override." % (rel, len(foreign), len(added), who, ", ".join(foreign))], notes
+    return [], notes
 
 
 def _index_paths(root, patterns):
@@ -636,10 +681,44 @@ def _mutation_violations(rel, head_text, staged_text):
         for nrow in new_all[oid]:
             h_new = _canon_hash(nrow)
             if h_old != h_new:
+                if _monotone_advance(orow, nrow):
+                    continue  # the two clocks moved forward on a remediation row; noted by check_file, never refused
                 out.append("%s: EXISTING row %s was MUTATED in place (content hash %s -> %s). "
                            "Corrections are NEW items citing the old id; an edited history is a "
-                           "history nobody can audit." % (rel, oid, h_old[:12], h_new[:12]))
+                           "history nobody can audit. A remediation row's own clocks may advance in place "
+                           "(disarm ARMED->DISARMED with `at`, remediation OPEN->REMEDIATED, closed false->true, "
+                           "nothing else changed)." % (rel, oid, h_old[:12], h_new[:12]))
     return out
+
+
+# MONOTONE STATE ADVANCE (2026-09-03, 3.0.0_SA_CVO 93695 item 4, measured on the round-5 slug): a routed remediation
+# row's two clocks -- disarm.state / disarm.at and remediation.state -- and its `closed` flag can only land ON that row
+# (a second row with the same id is refused; the id IS the graduated item), yet the mutation limb read any in-place
+# change as a mutation, so closing S13 and S14 had no gate-clean path and rode the audited override. The advance is
+# admitted when, and only when: disarm.state ARMED -> DISARMED with `at` set from null to a timestamp; and/or
+# remediation.state OPEN -> REMEDIATED; and/or closed false -> true; and EVERY OTHER FIELD is byte-equal as data. Any
+# other change -- a reversal, a reworded remedy, a touched evidence list -- is the mutation it always was.
+def _monotone_advance(old, new):
+    """PURE. True iff `new` differs from `old` only by a forward move of the remediation row's clocks."""
+    if not isinstance(old, dict) or not isinstance(new, dict):
+        return False
+    o = json.loads(json.dumps(old))
+    n = json.loads(json.dumps(new))
+    moved = False
+    od, nd = o.get("disarm"), n.get("disarm")
+    if isinstance(od, dict) and isinstance(nd, dict):
+        if od.get("state") == "ARMED" and nd.get("state") == "DISARMED" and not od.get("at") and nd.get("at"):
+            moved = True
+            nd["state"], nd["at"] = od.get("state"), od.get("at")
+    orm, nrm = o.get("remediation"), n.get("remediation")
+    if isinstance(orm, dict) and isinstance(nrm, dict):
+        if orm.get("state") == "OPEN" and nrm.get("state") == "REMEDIATED":
+            moved = True
+            nrm["state"] = orm.get("state")
+    if o.get("closed") is False and n.get("closed") is True:
+        moved = True
+        n["closed"] = False
+    return moved and o == n
 
 
 def check_file(root, rel):
@@ -688,8 +767,11 @@ def check_file(root, rel):
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
-    # FOREIGN-ROW SWEEP: every new investigation row must be the committer's own (site Z's measured class).
-    v.extend(_foreign_row_violations(rel, kind, added, _committer_serial(root)))
+    # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
+    _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
+    _fv, _fn = _foreign_row_violations(rel, kind, added, _committer_serial(root), coworkers=_cw)
+    v.extend(_fv)
+    notes.extend(_fn)
     for row in added:
         rid = row.get("id")
         if not rid or not ID_RE.match(str(rid)):
@@ -779,9 +861,11 @@ def _self_test(root):
              lambda: not noroute(rem(route="SPEC_ERROR", loop_target=6))),
         ]
     # FOREIGN-ROW SWEEP arms (pure), the class site Z measured; includes the mutant (a clean commit under the WRONG seat).
-    fr = lambda rows, who: _foreign_row_violations("f", "INVESTIGATION", rows, who)  # noqa: E731
+    fr = lambda rows, who, cw=frozenset(): _foreign_row_violations("f", "INVESTIGATION", rows, who, coworkers=cw)[0]  # noqa: E731
+    fn_ = lambda rows, who, cw=frozenset(): _foreign_row_violations("f", "INVESTIGATION", rows, who, coworkers=cw)[1]  # noqa: E731
     mine = {"id": "X_PRJ-S1", "surfaced_by": "0.8.0_AE_CloudComp~B"}
     theirs = {"id": "X_PRJ-S2", "surfaced_by": "3.0.0_SA_CVO"}
+    cowork = {"id": "X_PRJ-S4", "surfaced_by": "0.8.0_AE_CloudComp~J"}
     arms += [
         ("sweep: own row under own seat (lane vs base) -> admitted", lambda: fr([mine], "0.8.0_AE_CloudComp") == []),
         ("sweep: a peer's row under my seat -> refused, names the id and its surfacer",
@@ -792,7 +876,39 @@ def _self_test(root):
          lambda: fr([mine], "2.0.0_SA_COO") != []),
         ("sweep: unparseable surfaced_by -> refused (fail-safe)", lambda: any("unparseable" in x for x in fr([{"id": "X_PRJ-S3", "surfaced_by": "someone"}], "0.8.0_AE_CloudComp"))),
         ("sweep: committer unreadable -> refused fail-closed", lambda: any("UNREADABLE" in x for x in fr([mine], "Andrew Berman"))),
-        ("sweep: remediation rows out of scope", lambda: _foreign_row_violations("f", "REMEDIATION", [theirs], "0.8.0_AE_CloudComp") == []),
+        ("sweep: remediation rows out of scope", lambda: _foreign_row_violations("f", "REMEDIATION", [theirs], "0.8.0_AE_CloudComp", coworkers=set())[0] == []),
+        # co-worker admission (the shared-worktree class of 93746)
+        ("co-worker: a row whose surfacer holds an open order on the project -> admitted, NAMED in notes",
+         lambda: fr([cowork], "0.7.0_AE_CloudOps", {"0.8.0_AE_CloudComp", "0.7.0_AE_CloudOps"}) == []
+         and any("CO-WORKER ROWS" in n and "X_PRJ-S4" in n for n in fn_([cowork], "0.7.0_AE_CloudOps", {"0.8.0_AE_CloudComp", "0.7.0_AE_CloudOps"}))),
+        ("co-worker: the same row when its surfacer holds NO open order -> refused (a stranger's row)",
+         lambda: fr([cowork], "0.7.0_AE_CloudOps", {"0.7.0_AE_CloudOps"}) != []),
+        ("co-worker: census could not run (None) -> refused, says so",
+         lambda: any("could not run" in x for x in fr([cowork], "0.7.0_AE_CloudOps", None))),
+        ("co-worker MUTANT: a Tier-1 seat's row never holds an order -> refused even beside co-workers",
+         lambda: fr([theirs], "0.7.0_AE_CloudOps", {"0.8.0_AE_CloudComp", "0.7.0_AE_CloudOps"}) != []),
+    ]
+    # monotone state advance on an existing remediation row (93695 item 4)
+    base_row = {"id": "X-S1", "remedy": "fix the thing", "evidence": ["a@b"], "hazard_standing": "ARMED", "closed": False,
+                "disarm": {"state": "ARMED", "owner": "x", "at": None}, "remediation": {"state": "OPEN", "owner": "x", "round": "v1"}}
+    def adv(**over):
+        r = json.loads(json.dumps(base_row))
+        for k, val in over.items():
+            if isinstance(val, dict) and isinstance(r.get(k), dict):
+                r[k].update(val)
+            else:
+                r[k] = val
+        return r
+    arms += [
+        ("advance: disarm ARMED->DISARMED with `at` set -> admitted", lambda: _monotone_advance(base_row, adv(disarm={"state": "DISARMED", "at": "2026-09-03T14:00Z"}))),
+        ("advance: remediation OPEN->REMEDIATED -> admitted", lambda: _monotone_advance(base_row, adv(remediation={"state": "REMEDIATED"}))),
+        ("advance: all three clocks at once -> admitted", lambda: _monotone_advance(base_row, adv(disarm={"state": "DISARMED", "at": "2026-09-03T14:00Z"}, remediation={"state": "REMEDIATED"}, closed=True))),
+        ("advance MUTANT: DISARMED without `at` -> refused (a clock needs its timestamp)", lambda: not _monotone_advance(base_row, adv(disarm={"state": "DISARMED"}))),
+        ("advance MUTANT: a reversal DISARMED->ARMED -> refused",
+         lambda: not _monotone_advance(adv(disarm={"state": "DISARMED", "at": "2026-09-03T14:00Z"}), base_row)),
+        ("advance MUTANT: the clock moves AND the remedy is reworded -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"state": "REMEDIATED"}, remedy="fix the other thing"))),
+        ("advance: no change at all -> not an advance (False)", lambda: not _monotone_advance(base_row, adv())),
     ]
     failed = 0
     for name, fn in arms:

@@ -156,6 +156,11 @@ Do not read that at startup.
 > — the first two CONSUME inbox files. Everything else here (identity, inbox paths, TO semantics, ACK
 > discipline) binds you unchanged. At every active turn, sweep your suffixed serial's unread root first;
 > read the exact file → ACK → act → move it to `read/`. **Never infer READ from a nudge or a moved file.**
+> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it (measured 2026-09-03: a Codex
+> worker pushed CLOUD inside Andrew's hold, 144 commits of every seat):** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`/
+> `SITEZ`) is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
+> terminal** (LD-0367/0368; the hold LD-0522). Every other seat -- you included -- **commits and never pushes**; a report
+> states its push state as **LOCAL** with the origin hash from `git ls-remote`. A rejected push is not yours to retry.
 
 ### A. Register — your FULL serial, including any `~lane` suffix
 
