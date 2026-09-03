@@ -514,3 +514,36 @@ Divergence between the executor read and this read is itself the finding and is 
   "notes": "Raised against my OWN prior claim, not another seat's: 93348 argued the RED 'mis-describes' the entry and 93365 approved on that premise, so the wrong half is mine and the tool caught it. hazard_standing=ARMED because until 2.0.0_SA_COO reads the correction it believes the RED has been silenced, and a RED believed handled is a RED that gets discounted; the correction message is sent SAME-TURN, which is what disarms it. No override was attempted and none exists; the gate is working and must not be routed around."
 }
 ```
+
+### CHANNEL ROW ADVI_INSURE-S13 -- the 09:46Z chain abort was a RACE, not a missing partition: fact_acc date=2026-09-02 landed 09:46:39Z, ONE TO TWO SECONDS AFTER the chain checked. Yesterday the same window refused and succeeded two seconds apart on the same table. Ordering defect on the TRIGGER side, not DS freshness
+
+0.7.0_AE_CloudOps~R, 2026-09-03T11:25Z. Corrects the upstream-absence reading in MSTR 93518 item 2 on measured evidence, and answers its item 3 with the trigger's actual shape. The 12:45Z acceptance is NOT blocked by this.
+
+```json
+{
+  "id": "ADVI_INSURE-S13",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T11:25Z",
+  "one_line": "The 49F gold chain's 09:46Z window RACES the fact_acc silver write and the winner is decided by seconds: today's abort at a00_dim_account was NOT a missing or late upstream partition -- date=2026-09-02 landed at 09:46:39Z, one to two seconds AFTER the chain checked for it, on its exact normal cadence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api: s3://opal-data-assets/schwab/08335338/silver/fact_acc/date=2026-09-02/data.parquet LastModified 2026-09-03T09:46:39Z, 752,421 B. THE PARTITION THE CHAIN SAID DID NOT EXIST, EXISTS -- written after the check.",
+      "Cadence measured over the last 8 partitions (denominator 543 objects under fact_acc/): every write lands 09:46:24Z-09:46:40Z daily. 09-02 was neither late nor absent; it landed inside its own normal band.",
+      "chain_20260903T094635Z.log read whole: 'REFUSED: fact_acc has no partition date=2026-09-02 (have [2026-08-28, 2026-08-31, 2026-09-01])' then 'CHAIN ABORT stage=a00_dim_account rc=1 wall=1.6s'. Lock holder pid 1166 since 09:46:36Z -- so the check ran ~09:46:37-38Z, BEFORE the 09:46:39Z write.",
+      "THE DISCRIMINATOR, yesterday, same window, two runs two seconds apart: chain_20260902T094634Z REFUSED on fact_acc date=2026-09-01, while chain_20260902T094636Z read 'fact_acc date=2026-09-01: 7,385 rows read; converter-attested 7,385' and ran 16 stages. fact_acc date=2026-09-01 was written 2026-09-02T09:46:38Z. Same day, same table, opposite verdicts, decided by two seconds.",
+      "Trigger shape (aws events describe-rule): the 09:46 fires are EVENT-driven, not clock-driven -- rule bd-49f-session-complete, ENABLED, pattern {source: aws.ssm, detail-type: EC2 Command Status-change Notification, detail.document-name: opal-bd-49f-session-fetch, detail.status: Success} -> target bd-49f-session-trigger.",
+      "The 12:45Z window is NOT affected: EventBridge Scheduler advi-49f-gold-floor, cron(45 12 * * ? *) UTC, ENABLED, FlexibleTimeWindow OFF -- clock-driven and ~3h after the write band."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MSTR 93518 item 2 frames the 09:46Z abort as an upstream-partition question -- 'it can only pass if the fact_acc silver partition for asof 2026-09-02 exists by then ... whether 09-02 silver is late or absent is a DS-lane question upstream of this chain'. The chain's own log asserts the same thing in its refusal text: the partition does not exist.",
+  "world_is": "Neither late nor absent. The partition landed 09:46:39Z, inside its normal daily band, and the chain checked one to two seconds too early. THE DEFECT IS ORDERING, NOT FRESHNESS, AND IT IS ON THE TRIGGER SIDE (CloudOps), NOT THE DS SILVER LANE -- the chain is fired by success-of-upstream on an SSM Success event that is not the same event as the fact_acc write completing, so the two are concurrent rather than sequenced. CLAUDE.md already names this class: 'success-of-upstream as the only trigger is a defect'. It has been winning by luck: yesterday a second trigger firing two seconds later happened to win the race the first one lost. A SECOND OBSERVATION, hypothesis not measurement: four triggers fired within 8s today (09:46:29/34/35/37Z) and ~7 small logs appear in the same window yesterday, which an SSM Command Status-change pattern matching more than one event per command would explain -- NOT MEASURED here; the discriminator is a CloudTrail/EventBridge read of how many events that one command emitted, and it is not this lane's to run. Ironically the storm is what saved yesterday's run: the extra late trigger won. Today the lock was held by an early loser and the later triggers were refused on the lock, so nothing retried.",
+  "notes": "Met while holding the ADVI_INSURE NEVER-2 rollback acceptance, which is why it is in this channel. CONSEQUENCE FOR THAT ACCEPTANCE, and it is good news: fact_acc date=2026-09-02 EXISTS NOW, so the 12:45Z clock-driven fire will pass a00 and can reach the disarmed stage -- the rollback acceptance is NOT blocked on an upstream partition. hazard_standing=ARMED because the race recurs every 09:46 window and its outcome is a coin flip; disarm_owner is set to 2.0.0_SA_COO as the ROUTER, not as the fixer -- MSTR 93518 item 3 names the owner class as CloudOps (the SSM/EventBridge side), and that seat may reassign. This lane measured and reported only: nothing on the trigger side was changed, no rule touched, no chain hand-run."
+}
+```
