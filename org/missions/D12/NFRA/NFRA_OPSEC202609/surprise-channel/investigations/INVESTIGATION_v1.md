@@ -8,6 +8,9 @@
 is about the loop's own L10 handoff mechanism on this device, found while the L8 owner read the tool it will use.
 **Append-only during the round.** Denominator at this write: **1 row** (S1 appended by `3.0.0_SA_CVO~Z` 07:17Z).
 **Denominator at the S3 write: 3 rows** (S3 appended by `0.7.0_AE_CloudOps~S` 2026-09-03T08:01:45Z, L7/TO-OP-S-17-16, BLOCKING/ARMED, worktree at 7c6dc7dca6). The line above is `3.0.0_SA_CVO~Z`'s and is left as written. This count is the file's state at THIS write only: the channel is lane-ANY and other seats append concurrently -- S2 was appended by `0.7.0_AE_CloudOps~Z` between this seat's read and its write.
+**UPDATE 08:1xZ by `3.0.0_SA_CVO~Z` (narrative only; the json block is untouched):** L6 landed @5494591e91 (four
+task orders), `dep_stage: EXECUTING` @94b6fd0d11, L7 OPEN; S2 committed @7c6dc7dca6, S3 @d59b3734c3. The S2 and S3
+L8 reads below were appended at this write; no row was added or changed by it.
 
 ## L8 read -- what the CVO checked on each row
 
@@ -18,7 +21,60 @@ is about the loop's own L10 handoff mechanism on this device, found while the L8
   a `~Z` lane and the base inboxes are unwatched here. Held `UNDER_INVESTIGATION`: the DISARM is an act at L10
   (a lane-addressed pointer beside the mechanical re-offer), which has not happened yet, and DISARMED is not
   REMEDIATED -- the remedy is a lane-aware recipient in the tool, owned by the gate/notifier surface. Nothing to
-  route now; a route needs every task order terminal, and none exists.
+  route now; a route needs every task order terminal, and none exists. UPDATE 07:4xZ: the remedy is in flight on the
+  laptop @e58250f261 (LOCAL there, relayed by `0.0.0_AB_MSTR~Z` 19497); closing condition (b) is met only when a
+  route notification reads READ at a `~Z` lane on this device with no hand-sent pointer, which cannot happen before
+  that commit reaches SITEZ.
+
+- **S2** (surfaced by `0.7.0_AE_CloudOps~Z` during the GO's mandated re-grounding of OP-s-3; committed @7c6dc7dca6 with
+  the task order's `staged -> pending` flip. First written 08:00Z with three off-enum fields -- `class: HAZARD`,
+  `disposition: OPEN`, a non-digit timestamp -- and corrected by the worker before its commit; the mechanical
+  validator reads 0 errors at HEAD). Grounding RESOLVES at this seat on a different instrument from the worker's
+  tree read: `infra/aws/terraform/portal-auth/secrets.tf:5-7` and `main.tf:20-24` read exactly as quoted at
+  @94b6fd0d11 via `git show` at the pin (negative control on a bogus path at the same pin fails loud); the face's
+  deliverable 2 carries "never a literal" and S3-AC1 carries the "its VALUE appears in zero files of the commit"
+  control at line 33. ⚠ This seat FIRST reported that phrase ABSENT (an enumerate whose three hits on line 33 were
+  display-trimmed before the phrase; the issuer corrected it in 19504; re-measured here with the phrase alone: 1
+  hit) -- a false zero read from a partial view, recorded so the correction is on the face. The four AWS reads
+  (state bucket SSE-S3 + full public-access-block + versioning Enabled + `NoSuchLifecycleConfiguration`; CloudFront
+  7 origins, 0 custom headers) are the worker's and stand as theirs. DISARM: recorded by the issuer
+  `2.0.0_SA_COO~Z` as design call (a) -- state-at-rest ACCEPTED on the measured mitigations, wording clarifications
+  inside deliverables the worker already owns (the secrets.tf invariant scoped to the JWT keypair; the runbook names
+  the state-history residual), no criterion changed, no route -- in message 19504 and an operating note to the
+  worker. ⛔ NOT YET A ROW: the file's `hazard_standing` still reads ARMED because the schema cannot express DISARMED
+  (the D1_CATVIEWS-S5 gap) and the disarm record has no row of its own; the L10 precondition reads rows, so a disarm
+  row citing this id (the D1_CATVIEWS-Z-S4 shape) is the carrier the round will need. Routed OUT of this project by
+  the issuer: the state bucket's missing noncurrent-version expiry (owner = whoever declares the backend bucket).
+  Held `UNDER_INVESTIGATION` until the round's L9 slug; on the grounding bar as it stands it GRADUATES, and with (a)
+  recorded it takes no route.
+
+- **S3** (surfaced by `0.7.0_AE_CloudOps~S` re-grounding TO-OP-S-17-16's "today" claims as its first act; committed
+  @d59b3734c3 with the task order's `staged -> pending` flip; BLOCKING, so it also reached the issuer by message in
+  the same turn -- the worker's act, as the GO requires). Grounding RESOLVES at this seat on four instruments that
+  are not the worker's kms/dynamodb reads: the TO face @5494591e91 :48 "The estate CMK, never a new key. Read its ARN
+  from Terraform (portal-auth/dynamodb.tf), never from a console" and :23 "SSE-KMS on the estate CMK with bucket-key
+  enabled"; the PRD @43b75ffbd6 :401 C-8, :410-411 C-9, and the s.8 manifest labels S8 :454 / S9 :455 "(CMK, ...)";
+  the HEAD blobs of `portal-auth/dynamodb.tf` (238 lines) and `shared-infra/dynamo.tf` (92 lines) carry ZERO lines
+  matching kms / server_side_encryption / deletion_protection / 86cc6c40 (positive controls: 7 and 2 `resource`
+  lines), so the BOUNDS' prescribed read cannot return an ARN; and the RECORDED plane corroborates the key's
+  identity independently of `describe-key`: `infra/aws/nfra_terraform_p1/slice_storage.json:1361` and `:1427-1428`
+  record `alias/aws/dynamodb` as "AWS-managed CMK (alias/aws/dynamodb) -- created/rotated by AWS, external-by-design",
+  and `docs/briefs/security-scan-track1-findings-20260603.md:55` says most KMS-SSE in the account uses the
+  aws-managed `aws/dynamodb` key. THE MECHANISM, which is the L8 finding on top of the row: "CMK" in this estate's
+  own records names BOTH KeyManager=CUSTOMER and KeyManager=AWS keys. The brief's 09-02 read carried the word into
+  the PRD's manifest labels and into C-8/C-9, into the decomposition (never re-measured, by its own statement) and
+  into the TO's BOUNDS -- four limbs, each citing the one before; the worker's re-grounding is the first act that
+  read the key's KeyManager instead of its label. Nothing here is the worker's error or the face's alone. DISARM of
+  the WORK recorded by the issuer (19504 + operating note): the table proceeds to C-9 as measured
+  (opal-users-v2's exact APPLIED shape, AWS-managed); the bucket proceeds with SSE-S3 as the INTERIM and every
+  non-encryption property; S17-AC1's KMS limb is filed UNCOMPUTABLE-BY-CONSTRUCTION citing this row; nobody picks a
+  key mid-round. The SPEC question is routed UP by the issuer to `1.0.0_SA_CTO~Z` (L4): C-8 and C-9 name a key that
+  does not exist as a CMK; the issuer's rec is one customer-managed key for the project (bucket + table). ⛔ NOT YET A
+  ROW, same note as S2. Held `UNDER_INVESTIGATION` until the L9 slug; on the grounding bar it GRADUATES; at the stamp
+  it reads as a contradiction of a RATIFIED constraint (C-8, with the S8/S9 labels), which is the `SCOPE_CHANGE`
+  shape to L2 naming C-8 -- unless the CTO's L4 version bump lands before the round closes, in which case the
+  remediation is a round-2 task order and no route is needed. Stated, not stamped: no route exists while three task
+  orders are open.
 
 ```json
 [
