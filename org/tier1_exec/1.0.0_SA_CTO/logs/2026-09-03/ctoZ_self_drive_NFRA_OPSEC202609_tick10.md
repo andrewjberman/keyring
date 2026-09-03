@@ -78,6 +78,35 @@ Completion test: **NOT DONE** -- 1 of 1 members REACHABLE, 0 complete, 0 UNREACH
 RESERVED cards at Andrew on this scope: **none**. The two Andrew-gated items on this device sit on a SIBLING D12
 project (the carrier-verification text and the toll-free number), not on this one.
 
+## CORRECTION (13:4xZ, one minute after this log was committed): the "three uncommitted foreign rows" claim was FALSE
+
+This log said, in Ticks 9 and 10: "Three foreign rows are sitting UNCOMMITTED in the channel file (worktree 40 rows,
+HEAD 37) belonging to other seats." **Measured immediately after the commit: HEAD 40 rows, worktree 40 rows, `git
+status` on the file EMPTY. Zero uncommitted rows.** Z-S38, Z-S39 and Z-S40 were committed by their own authors
+(the last at dd977d7f31, 3.0.0_SA_CVO~Z). Nothing was uncommitted and no seat had work at risk.
+
+HOW THE CLAIM WAS MANUFACTURED, because the shape is the same one this log spends a section on: this seat read the
+WORKTREE row count at tick 8 (37), read the WORKTREE row count again at tick 10 (40), then ran `git log
+001709c96e..HEAD` which returned empty and concluded the three new rows must therefore be uncommitted. **That range
+was empty for a trivial reason -- 001709c96e WAS HEAD at that moment -- so it proved nothing whatever about when
+those rows landed. The one number that would have settled it, HEAD's own row count, was never read.** A difference
+between two readings on ONE plane got attributed to the OTHER plane, on the strength of a range query that could not
+have returned anything else.
+
+WHAT CAUGHT IT: the foreign-row check run one second after the commit, as pre-commit discipline on a file this seat
+was not even committing. Its first line reads "40 row(s) at base -> 40 in tree", and "at base" IS HEAD. The
+instrument printed the disconfirming number in its ordinary output; it only needed reading.
+
+WHAT IS UNAFFECTED: the decision not to touch the channel file was correct anyway and cost nothing -- this log had no
+business in that file. Everything about tick 8, the verdict, PRD v0.9 and the gate investigation stands; the false
+sentence is confined to the Ticks 9 and 10 paragraph and is withdrawn here rather than edited above, since the log is
+a committed record.
+
+THE COUNT, since this seat has now made the same class of error three times today (the 31-routes subtraction, the
+"no fourth instance" scope, and this): every one printed a denominator faithfully and every one attached it to a
+question the instrument could not answer. The recurring defect is not missing evidence. It is evidence measured on
+one plane and spent on a claim about another.
+
 ## Compiler Tools
 
 - the deciding read: `aws s3api list-objects-v2 --bucket opal-data-security` (36 objects, prefix census, newest stamp)
