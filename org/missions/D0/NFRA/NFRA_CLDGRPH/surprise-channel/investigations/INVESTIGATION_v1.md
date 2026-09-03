@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **12 rows** (S1-S12). Corrected 2026-09-03 09:1xZ by `0.7.0_AE_CloudOps~P` on appending S11 (was 10); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **14 rows** (S1-S15, ids S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 09:1xZ by `0.7.0_AE_CloudOps~P` on appending S11 (was 10); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -541,6 +541,105 @@ write is at 09:11:51Z, under TO-CG-B-2.
     "spec_asserts": "TO-CG-B-2 simultaneously BOUNDS the assignee off `infra/aws/globgrph/kuzu_nessie_db` ('not read or written', with an mtime control 'as in TO-CG-V-1') and MANDATES `comp-blast` on both engine files as a BEFORE-WRITE step.",
     "world_is": "comp-blast reaches the canonical Kuzu graph through _canonical.ensure_fresh, which auto-refreshes a BEHIND database by rebuilding it. Obeying the mandate wrote the file the bound protects, at 09:11:51Z, before a single line of the port was written. The two clauses are not jointly satisfiable by any ordering.",
     "notes": "Disarm = the issuer decides which clause governs: either the bound is narrowed to 'the PORT does not read or write the canonical DB' (the intent I read, and which the port will honour regardless), or the mandate names a comp-blast invocation that does not trigger a refresh, or the mtime control is re-baselined. THIS SEAT PROCEEDS on the narrow reading -- the port itself will not touch the canonical DB, and its control runs from the POST-comp-blast baseline (46,997,504 B, mtime 2026-09-03 05:12:21.682472900 -0400, md5 d64fca39dfa47179f7798dcb1b8e2340), stated in the deliverable so the shifted baseline is visible rather than silent. Classed OBSERVATION and not BLOCKING because no work is stopped: the rebuild is the designed daily path, it left the estate fresher, and the port's own control is stateable from the new baseline. Not messaged to the issuer for that reason (the face routes only BLOCKING rows to a message). Wider than this project: ANY task order that bounds a seat off the canonical DB while mandating a comp-* tool that queries the graph carries this same contradiction."
+  }
+]
+```
+
+## S14 -- B2-AC1 names the TASK as the consumer of record; no Pipe/SQS shape can deliver that
+
+Surfaced by this seat against **its own criterion**, while authoring the Terraform `B2-AC1` was written to
+justify. The issuer is right that it belonged here and not in a commit message (93613): a commit message
+never reaches L8 and the proof's surprises frame has no row to resolve to.
+
+`B2-AC1` (@`18503387b5`) chose an EventBridge Pipe to `ecs:RunTask` and **explicitly rejected** a third
+design *"that deletes the message on RunTask acceptance"* on the grounds that `RunTask` returns when the
+task is ACCEPTED, so a ~16-minute job dying at minute 12 would leave nothing to redrive. It then asserted
+*"the TASK is therefore the consumer of record"*.
+
+**MEASURED against the live service's own API surface, not recalled:** a Pipes SQS source exposes exactly
+`BatchSize` and `MaximumBatchingWindowInSeconds` -- **no retention, no defer-ack, no on-failure control** --
+where the stream sources (Kinesis, DynamoDB) do carry retry/bisect/on-failure options. **The Pipe owns the
+receive/delete lifecycle outright**, and `EcsTaskParameters` is a fire-and-forget `RunTask`. So the
+semantics `B2-AC1` rejected are the semantics the design it CHOSE actually has, and the sentence "the task
+is the consumer of record" is not satisfiable under any Pipe/SQS shape. The same holds for a Lambda
+event-source mapping, which acks on the handler's return.
+
+⭐ **The correction is against my own reasoning, and it is narrower than it looks:** the rejection of the
+naive form was RIGHT; the claim that the chosen form escapes it was WRONG. Every other limb of `B2-AC1`
+-- the runtime (ECS, because 940.6-1006.3 s never fits 900 s), cpu 2048, memory 16384 against a measured
+6,752 MB peak, ephemeral, and the explicit 3600 s deadline -- rests on `CG-s-10`'s measurements and is
+untouched.
+
+**A CROSS-SEAT CONSEQUENCE, which is why this is ARMED rather than a note.** `~P` deliberately shipped
+`aws_sqs_queue.globgrph_projection_events` with `visibility_timeout_seconds = 30` and the in-file comment
+that **CG-s-2 sets it from CG-s-10's measured duration**; the issuer endorsed my provisional **2400 s** on
+that basis (93565). **That reservation presupposes the worker holds the message for its run.** Under a
+Pipe the message is acked in seconds and a 2400 s timeout protects nothing -- so an APPLIED resource would
+carry a number whose stated derivation does not hold. Left alone, the next seat reads the queue comment,
+the endorsement and the 2400 s and infers a redrive property the wiring does not have.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S14",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~Q",
+    "surfaced_at": "2026-09-03T12:35Z",
+    "one_line": "B2-AC1 chose a Pipe to ecs:RunTask and asserted 'the TASK is the consumer of record', rejecting a design that acks on RunTask acceptance -- but a Pipes SQS source exposes only BatchSize and MaximumBatchingWindowInSeconds (no retention, no defer-ack, no on-failure), so the Pipe owns receive/delete and RunTask returns on acceptance. The rejected semantics ARE the chosen design's semantics; no Pipe/SQS shape gives a ~16-minute ECS task SQS-backed redrive. Consequence: ~P's queue reserves visibility_timeout for CG-s-2 to set 'from the measured duration' and the issuer endorsed 2400 s, a number that protects nothing if the worker never holds the message.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Q",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, live API surface: `aws pipes create-pipe --generate-cli-skeleton` -> SourceParameters.SqsQueueParameters == {\"BatchSize\": 0, \"MaximumBatchingWindowInSeconds\": 0} and nothing else; TargetParameters.EcsTaskParameters present. Read 2026-09-03 ~12:0xZ",
+        "DISCRIMINATING CONTRAST in the same skeleton: KinesisStreamParameters and DynamoDBStreamParameters DO carry retry/bisect/on-failure controls, so the absence under SQS is a real absence of the capability and not an artifact of reading a thin skeleton",
+        "THE CRITERION'S OWN TEXT, org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~Q/CG-s-2-9.projection-worker.result.md s.1.2 @18503387b5 -- 'NOT CHOSEN -- Pipe straight to RunTask with the message deleted on invocation ... RunTask returns as soon as the task is ACCEPTED, not when it finishes ... THEREFORE the task itself is the consumer of record'",
+        "CROSS-SEAT CARRIER: infra/aws/terraform/globgrph/projection.tf:18-22 (~P, applied @afd94db0ce) -- 'AWS DEFAULT (30s), deliberately. CG-s-2 SETS THIS from CG-s-10's measured full-fallback duration -- the visibility timeout must exceed the worker's runtime'; and issuer msg 93565 endorsing 'your provisional 2400 ... with its derivation from the V-1 duration'",
+        "NEGATIVE CONTROL on the reading: ~P's role grants the WORKER sqs:ReceiveMessage / DeleteMessage / GetQueueAttributes / ChangeMessageVisibility -- an IAM shape that only makes sense for a worker that consumes the queue itself, which is exactly the design the API surface says a Pipe cannot provide. Two independent carriers (the IAM grant and the queue comment) both encode the assumption this row falsifies"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-2 B2-AC1 requires the queue-to-compute mechanism named with 'the queue's visibility timeout set from the measured numbers (>= the longest step that holds the message, with the number)', and this seat's own B2-AC1 answer names the ECS task as the consumer of record and rejects acking on RunTask acceptance.",
+    "world_is": "A Pipes SQS source has no control that defers or suppresses the ack; the Pipe receives and deletes around a RunTask call that returns on acceptance. The longest step that HOLDS THE MESSAGE is therefore the Pipe's own invocation (seconds), not the task's ~16-minute run -- so the criterion's own derivation of the timeout, and the sentence naming the task as consumer of record, do not hold under the chosen mechanism.",
+    "notes": "Disarm, and it is this seat's because the mechanism is this face's decision: re-state B2-AC1's mechanism limb on the measured surface -- either (a) keep the Pipe, declare the Pipe the consumer of record, derive the visibility timeout from the PIPE's hold rather than the run, and state the retry property honestly as marker idempotency plus the nightly 02:00Z guarantee rather than SQS redrive; or (b) choose a mechanism where the worker genuinely holds the message, which needs a trigger that does not consume the queue and is a larger change. THE DESIGN IS NOT ASKED TO CHANGE BY THIS ROW and the issuer has not asked for one (93613); what the row refuses is shipping the ASSERTION unchanged. B2-AC1's proof row carries the limb as OPEN, never PASS -- a PASS on a limb I declared open would be the defect this project keeps finding in other carriers. No Terraform is authored until the limb is re-stated; ack semantics I have only recalled are not a foundation for an applied resource."
+  }
+]
+```
+
+## S15 -- the projection queue delivers TWO message shapes, and the second has no `Records` key
+
+Carried as a row on the issuer's option (93613 item 4) so a successor meets it on the face rather than in
+a commit message. Not this seat's discovery -- `0.7.0_AE_CloudOps~P` met it first and its first parser
+crashed on it; recorded here because `CG-s-2`'s worker is the consumer that must tolerate both, and a
+consumer written from `R5`'s description alone would crash on its first real delivery.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S15",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~Q",
+    "surfaced_at": "2026-09-03T12:36Z",
+    "one_line": "The projection queue delivers TWO shapes, not one: the S3 event envelope {\"Records\":[...]} AND a one-off {\"Service\":\"Amazon S3\",\"Event\":\"s3:TestEvent\"} with NO Records key, emitted by S3 when the notification configuration is created. A consumer written from R5's description alone assumes Records and crashes on the TestEvent (0.7.0_AE_CloudOps~P's first parser did). The worker must tolerate both; a TestEvent is deleted, never DLQ'd.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~Q",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.7.0_AE_CloudOps~P's CG-s-1 deliverable sections D-E, org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/CG-s-1.marker-notification.result.md @afd94db0ce -- both shapes observed on the live queue, relayed by the issuer as msg 93566 item (1)",
+        "The real envelope carries s3.object.{key,size,eTag,sequencer}, s3.configurationId 'projection-branch-head-marker' and userIdentity.principalId of the producer (93566 items 1 and 5)",
+        "RELAYED, NOT RE-MEASURED BY THIS SEAT, and marked so: the main queue read depth 0 at 11:47Z because the 09:42:42Z stamp expired at retention 3600, so this seat has not itself received either shape. The grounding is ~P's first-party observation carried through the issuer, and B2-AC6's exercise is where this seat meets them directly",
+        "PRD v0.4 s.6 R5 describes the trigger as 'an S3 event notification on warehouse/_branch_head.main.json -> an SQS queue with DLQ' and names ONE shape; the TestEvent is not in the spec's description and is not optional -- S3 emits it when the notification configuration is created"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.4 s.6 R5 and TO-CG-B-2 s.2 describe the worker as receiving 'the queue message' from an S3 event notification on the branch-head marker -- one shape, an S3 event envelope whose object key is the marker.",
+    "world_is": "The queue delivers that envelope AND a one-off s3:TestEvent with no Records key. A consumer built to the spec's description alone raises on the TestEvent rather than skipping it, which is how ~P's first parser failed.",
+    "notes": "Disarm = the worker's consumer tolerates both shapes explicitly, with a control that feeds it a TestEvent body and asserts it is deleted-not-DLQ'd, landing with B2-AC2. Recorded now rather than at the exercise because the consumer is written BEFORE the exercise, and this is the fact that decides its first branch. RELATED denominator, deliberately NOT a row per the issuer: the DLQ baseline is 3, not 0 -- ~P's four receive-polls incremented ApproximateReceiveCount against maxReceiveCount 3. That is disclosed probing, not a spec divergence, and it rides this seat's proof as the before/after denominator; it also means this seat must not receive-message the main queue more than twice before the consumer runs, or it DLQs its own exercise message."
   }
 ]
 ```
