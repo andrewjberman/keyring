@@ -55,9 +55,10 @@ same serial while the shared-host launcher is active.
 
 Before its duplicate-process assertion, the launcher invokes the existing
 serial-scoped registration cleanup hook. That hook delegates to
-`.tools/kill-orphans --serial <FULL_SERIAL> --force`; the reaper recognizes the
-Codex heartbeat, turn bridge, and detector, including their native Windows
-Python processes. The final conflict scan remains an exact-serial assertion.
+`.tools/kill-orphans --serial <FULL_SERIAL> --force` for the legacy Bash/MSYS
+watcher set and, on Windows, also reaps the same exact serial's native Codex
+runtime leftovers: heartbeat, turn bridge, detector, and the recorded loopback
+app-server tree. The final conflict scan remains an exact-serial assertion.
 Never replace this with an unscoped `kill-orphans --force` call.
 
 ## Startup

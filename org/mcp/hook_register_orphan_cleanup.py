@@ -93,6 +93,183 @@ def _log_failure(workspace: Path, serial: str, why: str) -> None:
         pass
 
 
+def _log_codex_reap(workspace: Path, serial: str, pid: int, endpoint: str) -> None:
+    try:
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        by = os.environ.get("OPAL_AGENT_SERIAL", "unknown")
+        line = (
+            f"{ts}  KILL-CODEX-RUNTIME  by {by}  serial={serial}  "
+            f"pid={pid}  endpoint={endpoint or '?'}\n"
+        )
+        with (workspace / "org" / "mcp" / "agent-spawn-audit.log").open(
+            "a", encoding="utf-8"
+        ) as fh:
+            fh.write(line)
+    except Exception:
+        pass
+
+
+def _codex_runtime_dir(workspace: Path, serial: str) -> Path:
+    safe_serial = "".join(
+        ch if ch.isalnum() or ch in "_.~-" else "_" for ch in serial
+    )
+    return workspace / ".runtime" / "codex-seats" / safe_serial
+
+
+def _read_codex_endpoint(workspace: Path, serial: str) -> str:
+    state_path = _codex_runtime_dir(workspace, serial) / "bridge-state.json"
+    try:
+        data = json.loads(state_path.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    endpoint = data.get("endpoint")
+    return endpoint if isinstance(endpoint, str) else ""
+
+
+def _reap_codex_runtime(workspace: Path, serial: str) -> int:
+    """Reap Windows-native Codex launcher leftovers for this exact serial.
+
+    .tools/kill-orphans is intentionally Bash/MSYS-shaped and does not see the
+    native Python/Codex app-server tree that ajb2 launches on Windows. The
+    duplicate-process assertion uses Win32_Process, so this cleanup uses the
+    same process surface and the same exact serial boundary.
+    """
+    if os.name != "nt":
+        return 0
+
+    powershell = shutil.which("powershell.exe") or shutil.which("powershell")
+    if powershell is None:
+        _log_failure(workspace, serial, "no powershell found for Codex runtime reap")
+        return 1
+
+    endpoint = _read_codex_endpoint(workspace, serial)
+    command = r"""
+$payload = [Console]::In.ReadToEnd() | ConvertFrom-Json
+$serial = [string]$payload.serial
+$workspace = [string]$payload.workspace
+$endpoint = [string]$payload.endpoint
+$serialPattern = '(?<![\w~])' + [regex]::Escape($serial) + '(?![~\w])'
+$scriptNames = @(
+  'codex-inbox-turn-bridge.py',
+  'codex-inbox-monitor.py',
+  'codex-agent-heartbeat.py'
+)
+$all = @(Get-CimInstance Win32_Process)
+$ids = New-Object 'System.Collections.Generic.HashSet[int]'
+foreach ($proc in $all) {
+  $cmd = [string]$proc.CommandLine
+  if ([string]::IsNullOrWhiteSpace($cmd)) { continue }
+  $isHelper = $false
+  foreach ($name in $scriptNames) {
+    if ($cmd.Contains($name)) { $isHelper = $true; break }
+  }
+  if ($isHelper -and $cmd.Contains($workspace) -and ($cmd -match $serialPattern)) {
+    [void]$ids.Add([int]$proc.ProcessId)
+  }
+  if (-not [string]::IsNullOrWhiteSpace($endpoint) -and
+      $cmd.Contains($endpoint) -and $cmd.Contains('app-server')) {
+    [void]$ids.Add([int]$proc.ProcessId)
+  }
+}
+if (-not [string]::IsNullOrWhiteSpace($endpoint) -and
+    $endpoint -match ':(\d+)$') {
+  $port = [int]$Matches[1]
+  foreach ($conn in @(Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue)) {
+    if ($conn.OwningProcess) { [void]$ids.Add([int]$conn.OwningProcess) }
+  }
+}
+
+$changed = $true
+while ($changed) {
+  $changed = $false
+  foreach ($proc in $all) {
+    if ($ids.Contains([int]$proc.ParentProcessId) -and
+        -not $ids.Contains([int]$proc.ProcessId)) {
+      [void]$ids.Add([int]$proc.ProcessId)
+      $changed = $true
+    }
+  }
+}
+
+$killed = @()
+$failed = @()
+foreach ($pidToKill in @($ids | Sort-Object -Descending)) {
+  if ($pidToKill -eq $PID) { continue }
+  $target = Get-Process -Id $pidToKill -ErrorAction SilentlyContinue
+  if (-not $target) { continue }
+  try {
+    Stop-Process -Id $pidToKill -Force -ErrorAction Stop
+    $killed += $pidToKill
+  }
+  catch {
+    if ($_.Exception.Message -like 'Cannot find a process with the process identifier*') {
+      continue
+    }
+    $failed += [pscustomobject]@{
+      pid = $pidToKill
+      error = $_.Exception.Message
+    }
+  }
+}
+[pscustomobject]@{ killed = $killed; failed = $failed } | ConvertTo-Json -Compress
+"""
+    payload = json.dumps(
+        {
+            "serial": serial,
+            "workspace": str(workspace),
+            "endpoint": endpoint,
+        }
+    )
+    try:
+        proc = subprocess.run(
+            [
+                powershell,
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                command,
+            ],
+            input=payload,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=30,
+        )
+    except Exception as exc:
+        _log_failure(workspace, serial, f"Codex runtime reap {type(exc).__name__}: {exc}")
+        return 1
+
+    detail = (proc.stdout or proc.stderr or "").strip()
+    if proc.returncode != 0:
+        _log_failure(
+            workspace,
+            serial,
+            f"Codex runtime reap rc={proc.returncode} out={detail[:300]}",
+        )
+        return 1
+    if detail:
+        try:
+            data = json.loads(detail)
+        except Exception:
+            data = {}
+        killed = data.get("killed") or []
+        if isinstance(killed, int):
+            killed = [killed]
+        for pid in killed:
+            if isinstance(pid, int):
+                _log_codex_reap(workspace, serial, pid, endpoint)
+        failed = data.get("failed") or []
+        if failed:
+            _log_failure(
+                workspace,
+                serial,
+                f"Codex runtime reap partial failure out={detail[:300]}",
+            )
+            return 1
+    return 0
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
@@ -198,6 +375,10 @@ def main() -> int:
         _log_failure(workspace, serial,
                      f"rc={rc} bash={bash} out_bytes={len(detail)} "
                      f"out={detail[:300].replace(chr(10), ' | ')}")
+        return 0  # NO marker -> the next register retries.
+
+    codex_rc = _reap_codex_runtime(workspace, serial)
+    if codex_rc != 0:
         return 0  # NO marker -> the next register retries.
 
     if marker is not None:
