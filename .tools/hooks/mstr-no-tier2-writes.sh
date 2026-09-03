@@ -33,7 +33,7 @@
 # the same failure mode CLAUDE.md records for the cross-firm ban list.
 # ~lane suffixes are stripped before the lookup (a lane is not a separate agent for this).
 #
-# ⚠ ONE READING OF HIS WORDS I HAD TO CHOOSE, stated so he can correct it in one word: the
+# WARN: ONE READING OF HIS WORDS I HAD TO CHOOSE, stated so he can correct it in one word: the
 # parenthetical "(LIKE BBGTerminal BG agent)" is attached to "TIER0 AGENT", i.e. BG is offered
 # as an EXAMPLE OF a Tier-0 agent and is therefore PERMITTED. It reads that way because BG
 # lives at org/tier0_utility/0.0.3_BG_BBGTerminal and because his stated harm is chain of
