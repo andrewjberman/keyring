@@ -5,7 +5,7 @@
 <issued_to>0.8.0_AE_CloudComp~G</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending -- GO paired at cut. Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY -- CVO's round-5 stamp -- the round-5 L10 precondition TERMINAL since 12:42Z (12 orders: 9 complete, 3 WITHDRAWN with rows, 0 pending; the stamp being written at 3.0.0_SA_CVO, ETA this tick, 93690) -- cut on the terminal precondition per /drive v2 obligation 2 (LD-0530) --, decomp v0.2.4 @39515415cc (STAGE 3 wide on Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b; CE-t-14 at the ~G lane), PRD v0.5 @5bbdab5ec7 (s.4; s.4.4 incl. the verdict-bearing row; s.7 row T-14).</status>
+<status>complete -- lane commit 9334701e712cb99f606e4ab755a7788f4c053d04; proof-of-spec-check VALID before this flip; report push state measured local-only (origin/CLOUD 351f309e0a6ded1a5a5bdf3aacec18a5f9f8dbee, ancestry rc=1). Authority: round 6 of the canonical loop on NFRA_COMPEFFICACY, decomp v0.2.4 @39515415cc, PRD v0.5 @5bbdab5ec7.</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.5 @`5bbdab5ec7` · **Decomp cell:** `CE-t-14` (STAGE 3; closes on "graded; overlap with comp-similar recorded as BY NAME ONLY") · **Lane:** `.tools/comp-drift` (15-line shim; exports COMP_DRIFT_BASH for the engine subprocesses) + `org/modules/graph/drift_cli.py` (the ENGINE, 853 lines) + `drift-topology.yaml` (READ) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~G/comp-drift.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~G` (a CODEX seat, Andrew 13:4xZ) holds NFRA_COMPEFFICACY only.
 
