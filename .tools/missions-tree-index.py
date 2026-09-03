@@ -465,6 +465,22 @@ def close_violations(code, header_fwds, report, grades, schema_errors=()):
     not_real = [(r.get("fwd_id"), r.get("verdict")) for r in (grades.get("rows") or []) if r.get("verdict") != "REALIZED"]
     if not_real:
         out.append(("R6", f"{code}: CLOSED with {len(not_real)} of {len(gr_ids)} grade(s) not REALIZED: {not_real} -- a NOT_REALIZED re-enters at L5 or L2; NOT_EVALUATED is not a verdict"))
+    # THE STATE BAR, mechanical (2026-09-03, 3.0.0_SA_CVO~A 93500: "the bar that produces that answer currently lives in a
+    # message, which R6 cannot read"): a card whose DONE WHEN is EXERCISED is not met by an APPLIED citation, and no card is
+    # met by ABSENT. The report row carries the card's state (done_when_state), the grade row carries what the grader saw
+    # (state_observed); R6 compares the two per outcome. APPLIED is met by APPLIED or EXERCISED; EXERCISED only by EXERCISED.
+    rank = {"ABSENT": 0, "APPLIED": 1, "EXERCISED": 2}
+    want_state = {str(o.get("fwd_id")): o.get("done_when_state") for o in (report.get("outcomes") or [])}
+    under = []
+    for r in (grades.get("rows") or []):
+        if r.get("verdict") != "REALIZED":
+            continue
+        need, seen = want_state.get(str(r.get("fwd_id"))), r.get("state_observed")
+        if need in rank and (seen not in rank or rank[seen] < rank[need]):
+            under.append((r.get("fwd_id"), need, seen))
+    if under:
+        out.append(("R6", f"{code}: {len(under)} REALIZED grade(s) cite a state BELOW the card's DONE WHEN: "
+                          f"{[(f, 'needs ' + str(n), 'saw ' + str(s)) for f, n, s in under]} -- an EXERCISED card is not met by an APPLIED citation, and nothing is met by ABSENT"))
     wb = str(report.get("written_by") or "").split("~", 1)[0]
     gb = str(grades.get("graded_by") or "").split("~", 1)[0]
     if wb != "2.0.0_SA_COO":
@@ -678,6 +694,23 @@ def self_test() -> int:
         gr_who["graded_by"] = "2.0.0_SA_COO"
         chk("R6 pure: grades by the COO -> refused (author separation)", any("graded_by" in m for m in r6("X", H, rep_ok, gr_who)), "")
         chk("R6 pure: schema errors surface as R6", any("boom" in m for m in r6("X", H, rep_ok, gr_ok, ["boom"])), "")
+        # the state bar: the report's done_when_state vs the grade's state_observed
+        rep_st = json.loads(json.dumps(rep_ok))
+        rep_st["outcomes"] = [{"fwd_id": "FWD-1", "done_when_state": "EXERCISED"}, {"fwd_id": "FWD-2", "done_when_state": "APPLIED"}]
+        gr_st = json.loads(json.dumps(gr_ok))
+        gr_st["rows"] = [{"fwd_id": "FWD-1", "verdict": "REALIZED", "state_observed": "APPLIED"},
+                         {"fwd_id": "FWD-2", "verdict": "REALIZED", "state_observed": "APPLIED"}]
+        chk("R6 pure: EXERCISED card met by an APPLIED citation -> refused, names FWD-1 only",
+            any("BELOW the card" in m and "FWD-1" in m and "FWD-2" not in m for m in r6("X", H, rep_st, gr_st)), str(r6("X", H, rep_st, gr_st)))
+        gr_st2 = json.loads(json.dumps(gr_st))
+        gr_st2["rows"][0]["state_observed"] = "EXERCISED"
+        chk("R6 pure: EXERCISED met by EXERCISED, APPLIED met by APPLIED -> admitted", r6("X", H, rep_st, gr_st2) == [], str(r6("X", H, rep_st, gr_st2)))
+        gr_st3 = json.loads(json.dumps(gr_st2))
+        gr_st3["rows"][1]["state_observed"] = "ABSENT"
+        chk("R6 pure: a REALIZED grade citing ABSENT -> refused", any("BELOW the card" in m and "FWD-2" in m for m in r6("X", H, rep_st, gr_st3)), "")
+        gr_st4 = json.loads(json.dumps(gr_st2))
+        gr_st4["rows"][1]["state_observed"] = "EXERCISED"
+        chk("R6 pure: APPLIED card met by EXERCISED -> admitted (a stronger state satisfies a weaker card)", r6("X", H, rep_st, gr_st4) == [], "")
         # loader end-to-end: CLOSED row with nothing under ledger/ -> R6; with two valid docs -> no R6
         est = fresh("t16r6")
         plant(est, "D8", "ETFS", "ETFS_GUARDRAIL", dep_stage="CLOSED")
