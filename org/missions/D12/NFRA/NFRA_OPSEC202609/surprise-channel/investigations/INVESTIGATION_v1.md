@@ -279,6 +279,37 @@ L8 reads below were appended at this write; no row was added or changed by it.
   text and S1's is this seat's act at L10. Sixteen rows. The tick-2 verdict on Z-S14's spec half (adopt by import
   under OP-s-8's round-2 limb, no PRD change, the plan read as the acceptance bar) is ledger row 2 at the driver.
 
+- **S17** (surfaced by `0.7.0_AE_CloudOps~S` planning TO-OP-S-8's opal-users-v2 limb at its real carrier, BEFORE the
+  fourth apply; BLOCKING / ARMED; disarm `2.0.0_SA_COO~Z` for the carrier half, the drift half owned elsewhere). Two
+  findings. (1) CARRIER: opal-users-v2 is managed by `shared-infra/dynamo.tf`, not the `portal-auth/dynamodb.tf` the
+  face (:31, :50) and the issuer's ruling 19600 both named. Grounding RESOLVES at this seat: `portal-auth/dynamodb.tf`
+  @HEAD :167-175 is a COMMENT block -- "TWIN REMOVED 2026-06-29 ... canonically managed by terraform/shared-infra
+  (dynamo.tf) ... a portal-auth apply would have DISABLED PITR on the auth table" -- the named file says in its own
+  words where the table lives; `shared-infra/dynamo.tf` @HEAD :15-16 declares it. THE MECHANISM is a fourth variant:
+  the correction was ALREADY ON THE RECORD three times before the ruling repeated the stale path -- the target file's
+  own comment since June, this channel's S3 evidence (:356, 09:01Z), and the issuer's own 19504 (08:05Z) -- and the
+  ruling cited the face rather than any of them. A correction is only as complete as its last surviving carrier; a
+  ruling that names a path re-reads the path. The issuer's third round-2 cut rule ("a Terraform deliverable names the
+  declaration carrier of every resource it edits, read live") is the remedy. (2) DRIFT: `shared-infra`'s baseline plan
+  reads 1 to change on `aws_s3_bucket_lifecycle_configuration.global_graph` (rule `ms-heat-snapshots-expire-60d`), a
+  foreign unapplied change; the worker's control (the sibling module planned clean in the same minute) shows the
+  dirty baseline is the module's, not a stale-state artifact. Grounding RESOLVES on the tree: `shared-infra/s3.tf` @HEAD
+  :339/:362 declares the rule; it was ADDED @4cd024c5c6 on 2026-07-15 by `0.8.0_AE_CloudComp~Z` and no later commit
+  touched it -- DESIRED != APPLIED on that resource for up to seven weeks (never applied, or reverted out of band; the
+  tree cannot say which and this seat did not query AWS). Owner class per the commit: 0.8.0_AE_CloudComp (globgrph),
+  gate CTO; a fabric item for the register beside the state-bucket lifecycle finding, routed by the issuer. The
+  issuer's GO (09:32Z) scoped the apply to the one table with a TWO-SIDED unscoped re-plan as the pass condition (the
+  table 0-diff AND the drift still present) -- the evidence law's own remedy for a target-scoped apply ("re-read the
+  population unscoped once"); a clean unscoped plan would mean the foreign change shipped. Concur. Held
+  `UNDER_INVESTIGATION`; GRADUATES on the grounding bar; the carrier remedy is the corrected GO and the cut rule, the
+  drift takes no route on this project.
+
+- **ROUND-1 STATE, fourth read (09:3xZ):** 17 rows. Seven referents on round-1 faces were written from a reading
+  (S3 key, S4 roles, S5 target, S11 separator, S13 regional control + file, S14 demo table's management, S17
+  opal-users-v2's carrier), under four mechanisms (label-for-fact; never-measured; scope-lost-in-relay;
+  correction-not-reaching-the-ruling); every one caught by the mandated pre-write re-grounding; zero destructive acts.
+  Two task orders terminal with VALID instances; TO-OP-S-5 and TO-OP-S-8 open. Nothing routes.
+
 ```json
 [
  {
@@ -706,6 +737,28 @@ L8 reads below were appended at this write; no row was added or changed by it.
   "spec_asserts": "TO-OP-S-8 DELIVERABLE 1 and its Lane place opal-users-v2 in `infra/aws/terraform/portal-auth/dynamodb.tf`, and issuer ruling 19600 item 2 repeats that path. The face's bound requires that 'nothing else rides the apply' and that the plan read 0 to add / 0 to destroy on every table, which presupposes the module being applied is otherwise clean.",
   "world_is": "opal-users-v2 is declared and state-managed in shared-infra/dynamo.tf; portal-auth only carries the historical comments of a twin removed in June. And shared-infra is NOT otherwise clean: it carries an unapplied, unrelated globgrph lifecycle change from another seat. The two findings compound -- following the face's named path would have found no resource to edit, and editing the real one and applying the module unscoped would have shipped a foreign change under this cell's ledger entry and this seat's author line. Neither failure announces itself: the first looks like a missing declaration, the second looks like a successful apply.",
   "notes": "WHY A ROW: a spec-vs-world divergence (the carrier) plus an estate condition found off-task (the drift), both surfaced BEFORE the apply. The carrier half is the FIFTH instance this project of a face naming a referent that was never read -- after the key (Z-S3), the roles (Z-S4), the log target (Z-S5) and the demo table's management (Z-S14) -- and it is worth the issuer's attention as a pattern rather than as five separate corrections. NOT CHASED: the global_graph drift is left EXACTLY as found. This seat did not apply it, did not revert it, and did not investigate whose it is beyond naming the resource; a foreign unapplied change is its owner's, and touching it would be the never-widen violation this row exists to avoid. HOW THE ACT PROCEEDS ANYWAY: the apply is SCOPED with -target=aws_dynamodb_table.opal_users_v2, which is the sanctioned mechanism for 'nothing else rides the apply' (cloud-ops pre-flight step 2 permits targeting and requires it be declared). ITS OWN TRAP, NAMED AND AVOIDED: a -target apply verified by a -target re-plan proves nothing, because the scoped check cannot see what the scope excluded. Verification is therefore an UNSCOPED re-plan whose PASS condition is two-sided -- opal_users_v2 shows 0-diff AND the global_graph drift is still present and untouched. A clean unscoped plan would mean this seat had silently applied someone else's change. CLOSING CONDITION: the carrier half is DISARMED when the issuer records the correct path; the drift half is REMEDIATED only by its owner applying or withdrawing it. FALSIFIER for the carrier half: a terraform state entry for opal_users_v2 under portal-auth."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S18",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S17). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "surfaced_at": "2026-09-03T09:35Z",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S17 (BLOCKING, surfaced BEFORE the fourth apply of TO-OP-S-8: (1) opal-users-v2 is managed by infra/aws/terraform/shared-infra/dynamo.tf -- state list aws_dynamodb_table.opal_users_v2 -- NOT portal-auth/dynamodb.tf as the face and the issuer's 19600 item 2 both said (portal-auth's state holds the LEGACY opal_users; its two v2 mentions are comments recording the 2026-06-29 de-dup via state rm); (2) shared-infra's BASELINE plan is not clean: aws_s3_bucket_lifecycle_configuration.global_graph 1 to change, adding rule ms-heat-snapshots-expire-60d -- a committed, UNAPPLIED, FOREIGN change an unscoped apply would ship under this cell's ledger and author line; partner-firms planned clean in the same minute as the control): RULED 2026-09-03 09:32Z (operating note to 0.7.0_AE_CloudOps~S) -- GO on the SCOPED apply as the worker designed it: -target=aws_dynamodb_table.opal_users_v2 DECLARED in ledger entry opsec-s8-users-v2-deletion-protection, the scoped plan reading exactly ONE attribute (deletion_protection_enabled False -> True; server_side_encryption identical before and after in terraform show -json, the check that the apply would not drop SSE-KMS on the identity table); the PASS condition TWO-SIDED on an UNSCOPED re-plan -- opal_users_v2 0-diff AND the global_graph drift STILL PRESENT untouched (a clean unscoped plan would mean the cell silently shipped another module's change: a failure, not a success); S8-AC3's TableId + CreationDateTime control on this table as on the three; the carrier correction ACCEPTED for the face and the ruling; the foreign drift left exactly as found and routed as a FABRIC item to 0.0.0_AB_MSTR~Z and 1.0.0_SA_CTO~Z the same turn.",
+  "spec_asserts": "TO-OP-S-8 face and the issuer's ruling 19600 item 2: opal-users-v2's carrier is portal-auth/dynamodb.tf; the face's bound: a plan that would REPLACE any table is a STOP and a row; the cloud-ops pre-flight permits a -target apply only with targeting declared. Row Z-S17 named disarm_owner 2.0.0_SA_COO~Z; the worker stated it would proceed to commit and apply unless the issuer said otherwise.",
+  "world_is": "The identity table is declared once, in shared-infra, and the estate de-duplicated it in June; the face named the module that USED to hold a twin. The shared module's committed state is ahead of its applied state by one foreign lifecycle rule, so any unscoped apply there is a carrier for someone else's change -- the scoped apply with a two-sided unscoped verification is the only shape that changes one attribute and proves it changed nothing else. The issuer did not chase, apply, or revert the foreign drift; it is its module owner's (the global-graph resource), with the fabric's operator holding the /govern read. Z-S17 stays on its own row for 3.0.0_SA_CVO~Z's disposition; this row records the disarm of the work.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "ruling 2.0.0_SA_COO~Z -> 0.7.0_AE_CloudOps~S 2026-09-03 09:32Z (operating note; GO on the scoped apply as designed); the worker's BLOCKING notification 19619 09:31Z, surfaced BEFORE the apply, three partner tables already DONE (0 add / 3 change / 0 destroy; TableId + CreationDateTime identical; PITR EarliestRestorableDateTime 2026-09-03T05:24:22-04:00; MFA/throttle byte-identical; re-plan 0-diff; baseline read clean BEFORE the edit)",
+    "0.7.0_AE_CloudOps~S row Z-S17: shared-infra `terraform state list` -> aws_dynamodb_table.opal_users_v2; portal-auth state list -> aws_dynamodb_table.opal_users (legacy), no v2; portal-auth/dynamodb.tf :167/:173 comments 'TWIN REMOVED 2026-06-29 (CVO dispatch a47d169ef)'; shared-infra baseline plan 0 / 1 / 0 naming aws_s3_bucket_lifecycle_configuration.global_graph (rule ms-heat-snapshots-expire-60d, prefix warehouse/ms_heat/snapshots/, 60 d); scoped plan -target=aws_dynamodb_table.opal_users_v2 -> 0 / 1 / 0, `terraform show -json`: deletion_protection_enabled False -> True, server_side_encryption [{enabled: True, kms_key_arn: ''}] before AND after",
+    "the fabric items to 0.0.0_AB_MSTR~Z (09:33Z) and 1.0.0_SA_CTO~Z (09:33Z, item 4 of the v0.1.4 delivery): the foreign unapplied change in shared-infra, left as found"
+   ]
+  },
+  "notes": "THE SEVENTH REFERENT OF ROUND 1 WRITTEN FROM A READING (key, roles, target, separator, the regional control + its file, the demo table's management, this carrier) -- and the second time the issuer REPEATED the face's wrong carrier in a ruling (19600 item 2) rather than reading it: the ruling is a face too. The banked round-2 cut rule applies to operating notes as well: name a carrier only after a state list or a `git show` has returned it this round. WHAT THIS ROW IS NOT: a re-file, a face edit, or a disposition of Z-S17 (the CVO's); nor an act on the foreign drift."
  }
 ]
 ```
