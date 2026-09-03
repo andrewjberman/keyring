@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **25 rows** (S1-S26, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 18:5xZ by `0.8.0_AE_CloudComp~O` on appending S26 (was 23; S25 did not restate the header); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **26 rows** (S1-S27, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 19:0xZ by `0.8.0_AE_CloudComp~O` on appending S27 (was 25); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1029,6 +1029,36 @@ but it leaves B2-AC6's required incremental artifact impossible under the curren
     "spec_asserts": "NFRA_CLDGRPH.TO-CG-C-3's compiler mandate names comp-to, comp-read, and comp-find as the required tool surfaces, and the launcher contract says the bare comp-* commands are provided to this Codex PowerShell seat through canonical user-bin command shims.",
     "world_is": "For 0.8.0_AE_CloudComp~O, the user-bin comp-to, comp-read, and comp-find shims carry explicit deny ACL entries and fail with Access is denied before their tools execute, while comp-which runs. The repository-local comp-read and comp-to entry points execute successfully, so the ordered C-3 work proceeds through those ruled entry points rather than collapsing into a stop or an unrecorded workaround.",
     "notes": "Ruling 1 explicitly forbids altering the user-bin ACLs and authorizes repository-local tool entry points; ruling 2 requires this one OBSERVATION row and names 1.0.0_SA_CTO as disarm owner. No ACL was changed, no task surface was widened, and no push is permitted or attempted."
+  }
+]
+```
+
+## S27 -- TO-CG-C-3 names cot-pipeline as Lambda-notification-bearing, but its declaration is EventBridge-only
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S27",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~O",
+    "surfaced_at": "2026-09-03T19:02Z",
+    "one_line": "TO-CG-C-3's measured-defect paragraph names bd-pipeline, cot-pipeline, and inf-pipeline as aws_s3_bucket_notification resources with Lambda targets, but cot-pipeline's complete 19-line resource declares only eventbridge=true and its resolved Terraform state contains lambda_function=[], so no honest cot S3-to-Lambda edge exists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/s3-notifications.tf:16-18: the complete aws_s3_bucket_notification.cot_data block names bucket=aws_s3_bucket.cot_data.id and eventbridge=true; the 19-line file has zero lambda_function blocks and zero lambda_function_arn attributes.",
+        "The deriver's own _load_all_tfstate() read of aws_s3_bucket_notification.cot_data resolved bucket/id opal-data-cot, eventbridge=true, and lambda_function=[] on the canonical Terraform declared-side state union.",
+        "The read-only targeted live exercise produced 14 S3_BUCKET-[TRIGGERS]->LAMBDA edges and 34/0 notification read state; bd-pipeline contributed three provenance=both targets and inf-pipeline contributed two, while cot-pipeline correctly contributed none."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-C-3 THE CELL says the estate declares real aws_s3_bucket_notification resources with Lambda targets in bd-pipeline, cot-pipeline, and inf-pipeline, and DELIVERABLE 4(a) requires the three declared targets to derive non-zero.",
+    "world_is": "bd-pipeline and inf-pipeline declare Lambda notification blocks, but cot-pipeline's notification resource is EventBridge-only in both HCL and resolved state. The implementation derives every real Lambda target and does not fabricate a cot Lambda edge; the acceptance arm remains exercisable using three actual bd-pipeline targets.",
+    "notes": "Not blocking the bounded implementation: C3-AC3's non-zero three-target arm is met by the three actual bd-pipeline Lambda configurations, with the two inf-pipeline configurations as additional evidence. Disarm by correcting the face's parenthetical or explicitly naming EventBridge as a different target class outside this cell; no Terraform change belongs here."
   }
 ]
 ```
