@@ -1,6 +1,6 @@
 ---
 name: deck-prompt
-description: Author a deck-prompt (`*.deck.md`) for `/deck-gen` and render it IN THE SESSION as boxed slide cards. The rendered cards (slide #, title, text-format, content) — printed in the chat by the deterministic tool `prompt_view.py` — are the deliverable; the `.deck.md` is just persistence. Two passes — (1) FLOW & LAYOUT: lay out the slides + copy, render the cards, approve; (2) VARIANT: per slide pick the card design (A/B/C/D). Use when the user says `/deck-prompt`, "make a deck prompt", "turn this doc into a deck", or "start a new deck". Pair skill: `/deck-gen` consumes the saved file.
+description: Author a `*.deck.md` deck prompt for `/deck-gen` and render it in-session as boxed slide cards (the cards are the deliverable; the file is persistence). Two passes: flow and layout, then the per-slide variant (A/B/C/D). Use on `/deck-prompt`, "make a deck prompt", "turn this doc into a deck". Pair: `/deck-gen`.
 ---
 
 # /deck-prompt — author a deck-prompt, rendered in the session
