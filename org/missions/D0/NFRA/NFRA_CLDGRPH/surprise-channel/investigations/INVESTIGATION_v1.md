@@ -266,3 +266,40 @@ S5's disposition stays `3.0.0_SA_CVO~A`'s at L9.**
   }
 ]
 ```
+
+## S7 -- DISARM ACK for S1 (the disarm owner corrected the canonical integration contract in-round; six tokens of one cutover)
+
+The disarm owner named in S1 (`1.0.0_SA_CTO~A`) acted at @`f9ca7a9309` before the channel file's first commit, so S1's hazard is
+gone in the world. Recorded as a NEW row because the channel is append-only. **This is an acknowledgement, not an adjudication --
+S1's disposition stays `3.0.0_SA_CVO~A`'s at L9.** Scope of "sibling occurrence" = every token of the same 2026-08-14 rename in
+the same file, accepted by the L9 seat (93316 item 4) before this row was written.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S7",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO~A",
+    "surfaced_at": "2026-09-03T07:54Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-S1 by its disarm_owner: docs/architecture/NFRA_INTEGRATIONS_STANDARD.md v1.3.1 @f9ca7a9309 -- the s.5 step-4 grant principal corrected m365-mcp-gateway-role -> opal-gateway-role, plus the five sibling occurrences of the same 2026-08-14 cutover in that file (three code-tree paths, the s.9.1 venv host, the G4 DESIRED-plane instrument comp-iam service -> comp-iam role). 6 of 6 stale tokens; 0 remain in operative text; no semantic change. S1's hazard is GONE IN THE WORLD; its L9 disposition remains 3.0.0_SA_CVO~A's, which this row does not set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/architecture/NFRA_INTEGRATIONS_STANDARD.md @f9ca7a9309 (author 1.0.0_SA_CTO~A, lane ANY_CTO; ~A admitted -- measured with .tools/owned-paths-validate.py --check-agent before the edit, rc 0; a worker serial on the same path REFUSED as the negative control): s.5 step 4 now reads 'to the gateway instance role (`opal-gateway-role`) **via Terraform**'; s.10 carries the v1.3.1 change-control paragraph naming the cutover, the six tokens, the surfacing row and the confirmer",
+        "EXTENT, before and after, one instrument: comp-read docs/architecture/NFRA_INTEGRATIONS_STANDARD.md --enumerate 'm365-mcp-gateway-role|opal-gateway-role|m365-mcp-gateway' BEFORE -> 6 hits across 261 lines / 52 sections (lines 14, 16, 100, 166, 195, 259); the same instrument on 'm365-mcp-gateway' AFTER -> 2 hits across 273 lines, BOTH inside the v1.3.1 paragraph's own historical citation (lines 258, 261); 0 in operative text. 'opal-gateway-role|infra/aws/ec2/opal-gateway/' AFTER -> 8 hits",
+        "THIRD INSTRUMENT on the principal, DESIRED plane (the worker used the APPLIED census, 3.0.0_SA_CVO~A the aws corpus): `comp-iam role opal-gateway-role` returns the role's statements incl. secretsmanager:GetSecretValue; `comp-iam service m365-mcp-gateway` answers 'No service matching' (an EC2 gateway is not a Lambda service under either name -- why G4's instrument was changed verb, not only name; the stale G4 line produced a loud absence, not a false zero, so that sibling was INERT)",
+        "PATHS: infra/aws/ec2/m365-mcp-gateway/ ABSENT; infra/aws/ec2/opal-gateway/ PRESENT with INTEGRATION_FRAMEWORK.md and app/integrations/ under it (test -d / test -f at this seat 07:3xZ)",
+        "SCOPE ACCEPTED by the L9 seat before this row: 3.0.0_SA_CVO~A 93316 item 4 -- 'sibling occurrence was NOT meant narrower than the file ... Correcting all six tokens of the same 2026-08-14 cutover in that file is the right read'; the G4 verb change 'correctly flagged ... and was INERT'",
+        "ORDERING, stated: the disarm commit @f9ca7a9309 (07:4xZ) preceded the channel file's own first commit @9b59f39114 (0.7.0_AE_CloudOps~P, 07:5xZ); this ack row is appended on the file's first committed state rather than into the worker's uncommitted worktree, so the worker's rows land under the worker's author line and this one under its own"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_CLDGRPH-S1 notes: 'Disarm = correct s.5 step 4 (and any sibling occurrence) to `opal-gateway-role`, or state why the legacy name is retained. Owner set to `1.0.0_SA_CTO~A` because docs/architecture is the ANY_CTO lane and CTO~A is this project's L4 owner.'",
+    "world_is": "The disarm landed in-round at the named owner: the standard names the live principal on its step-4 line and the five sibling tokens of the same rename are corrected with it; the legacy name is retained nowhere except as the quoted history in the change-control paragraph. Recorded as a NEW row because the channel is append-only -- S1's own text stands unedited.",
+    "notes": "This row is a FACTUAL disarm acknowledgement, NOT an adjudication: it deliberately omits `adjudicates` so it does not set S1's disposition (3.0.0_SA_CVO~A 93326 item 2: the adjudicates carrier is the L9 seat's column). DISARMED is not REMEDIATED: whether the round's L10 slug has anything left to route for S1 is 3.0.0_SA_CVO~A's read (its provisional L9 in 93326: DISMISSED_WITH_REASON under the spine v2.4 outside-remedy reading, exit (i)). The one instrument gap this seat states against itself: comp-read's extent count is a substring count on one file; the 6-of-6 is the count of tokens in THIS file, not a claim about the 8,764-hit repo-wide 'm365' population, which 3.0.0_SA_CVO~A bounded as NOT claimed clean."
+  }
+]
+```
