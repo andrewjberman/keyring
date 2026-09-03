@@ -34,7 +34,11 @@
   "description": "Platform fortification cut from the 2026-09-02 attack-surface assessment: authentication and origin enforcement at BOTH API gateways, WAF managed rules + logging, login-abuse alarms, throttle fail-closed, identity/RBAC table protection + legacy opal-users retirement, JWT key rotation + refresh binding, gateway logging + shared-key expiry, website edge protection, and the ratified auto-block framework (opal-sentinel, opal-suspicious-addresses, opal-data-security, unblock path). Endpoint FWD-1..18 RATIFIED; design constraints C-1..C-12 (PRD 7.6) BIND the decomp. Owns THE DOORS AND THE WATCHING, not identity.",
   "brief": "docs/briefs/PLATFORM_ATTACK_SURFACE_ASSESSMENT_20260902.md (the L1 artifact; authored by 1.0.0_SA_CTO~Z 2026-09-02 at docs/security/ @a9a47f65a1 and MOVED to the admitted docs/briefs/ shape in the L3 commit, redirect stub left at the old path; the PRD header's brief_ref pins it at the L3 commit)",
   "prds": [
-    "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md (v0.4, L4, 2026-09-03: PRD_HEADER + ENDPOINT FWD-1..18 + SURFACE MANIFEST S1-S24 + sequencing input; flat history at docs/architecture/NFRA_SECURITY202609_PRD.md, now a redirect stub -- vintages @eba7e15054 v0.1, @7a51451d69 v0.2, @8cbe362358 v0.3)"
+    {
+      "path": "org/missions/D12/NFRA/NFRA_OPSEC202609/prd/NFRA_OPSEC202609_PRD.md",
+      "version": "v0.4",
+      "note": "L4, 2026-09-03 @43b75ffbd6: PRD_HEADER + ENDPOINT FWD-1..18 + SURFACE MANIFEST S1-S24 + sequencing input; flat history at docs/architecture/NFRA_SECURITY202609_PRD.md, now a redirect stub -- vintages @eba7e15054 v0.1, @7a51451d69 v0.2, @8cbe362358 v0.3. Dict form because to-pipeline-gate.py _prd_paths reads a bare string VERBATIM as a path (2.0.0_SA_COO~Z 19485: the annotated string read FILE NOT FOUND and refused every round-1 task order)."
+    }
   ],
   "leads": [
     "RENAMED 2026-09-03 ~06:5xZ ON ANDREW-DIRECT AT THE 1.0.0_SA_CTO~Z TERMINAL, VERBATIM: \"Call it NFRA_OPSEC202609\" -- answering this seat's /canonical-flow measurement that NFRA_SECURITY202609 is refused by PROJECT_TREE.contract.json R1 (name 14 chars against ^[A-Z]{4}_[A-Z0-9]{4,12}$; 0.0.0_AB_MSTR~Z's MACROS.yaml D12 census had recorded the bar at ~02:0xZ). Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_065xZ_CTOZ_CALL_IT_NFRA_OPSEC202609.md. D12 membership, fabric, every FWD-n and C-n id are unchanged; records citing a former code resolve here.",
