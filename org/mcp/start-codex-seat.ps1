@@ -158,6 +158,19 @@ finally {
           -Value $savedClaudeSession.Value
     }
 }
+# FRESH SESSION ID PER CODEX CHILD (2026-09-03, 1.0.0_SA_CTO on 2.0.0_SA_COO's /drive tick-4 finding, row
+# NFRA_COMPEFFICACY-S28 by 0.8.0_AE_CloudComp~H): this launcher inherits the PARENT Claude session's
+# CLAUDE_CODE_SESSION_ID through the environment, so ten Codex lanes launched from one COO seat shared one
+# session id and every per-session file keyed on it (comp-to's .to_id, comp-which's .route) became
+# last-writer-wins across the lanes -- the COO's own .to_id read a task order it never set. The seat's
+# children (app-server, bridge, heartbeat) get a session id that is THEIRS; the serial file for that id is
+# written here so the session-keyed identity tier (comp_log_auto, the L6 gate's committer read) resolves for
+# a Codex seat exactly as it does for a Claude one. The parent's variable is untouched (this is a child
+# process of Start-Process).
+$env:CLAUDE_CODE_SESSION_ID = [guid]::NewGuid().ToString()
+$sessionsDir = Join-Path $Workspace 'org\mcp\sessions'
+New-Item -ItemType Directory -Force -Path $sessionsDir | Out-Null
+Set-Content -LiteralPath (Join-Path $sessionsDir ($env:CLAUDE_CODE_SESSION_ID + '.serial')) -Value $Serial -Encoding ascii -NoNewline
 if ($cleanupExitCode -ne 0) {
     throw "Serial-scoped orphan cleanup hook failed for $Serial (exit $cleanupExitCode)."
 }

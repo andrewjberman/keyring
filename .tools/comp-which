@@ -1611,11 +1611,17 @@ def _handoff_route(rid: str, n: int) -> None:
     sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
     if not sid:
         return
+    # SEAT + SESSION KEY (2026-09-03, 1.0.0_SA_CTO, row NFRA_COMPEFFICACY-S28): Codex children launched from one
+    # Claude seat inherit its session id, so a session-only key is last-writer-wins across them. When
+    # OPAL_AGENT_SERIAL is set the handoff is keyed <sid>.<serial>.route; comp_log_auto reads that first.
+    import re as _re
+    seat = os.environ.get("OPAL_AGENT_SERIAL", "")
+    key = "%s.%s" % (sid, _re.sub(r"[^A-Za-z0-9_.~-]", "_", seat)) if seat else sid
     try:
         import time  # local: comp-which does not import time at module scope
         d = os.path.join(WS, "org", "mcp", "sessions")
         os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "%s.route" % sid), "w", encoding="utf-8") as f:
+        with open(os.path.join(d, "%s.route" % key), "w", encoding="utf-8") as f:
             # id | emit epoch | N recommended tools. N is recorded so an ALL-of-N rate stays
             # derivable without a re-baseline; COO ruled ANY-of-N CONVERTS (065315Z).
             f.write("%s|%.3f|%d\n" % (rid, time.time(), n))
