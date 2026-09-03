@@ -24,7 +24,7 @@ not exist. Every `surprises` entry opens with the ROW ID it names ("<PROJECT>-S<
 (flat org/surprise_channel/<CODE>/, tree org/missions/D*/*/<CODE>/surprise-channel/investigations/).
 ENFORCED when the governing TO lives under the TREE root -- prospective by construction, every tree TO is
 new; ANNOUNCED (frame lines, no violation) for flat-root and unresolved TOs, so the 288 legacy instances
-with free-string entries are never re-graded. Because to-pipeline-gate.py's check_complete_flip runs this
+with free-string entries are never re-graded. Because to-workflow-gate.py's check_complete_flip runs this
 checker on a terminal <status> flip, a tree TO whose instance names a surprise with no row CANNOT flip
 to complete. Trap named: this gate reads FILES; it cannot see the broker plane, which is exactly why the
 carrier must be the row.
@@ -40,12 +40,12 @@ schema cannot express -- ALWAYS run, so absence of the jsonschema package degrad
 coverage LOUDLY rather than silently passing (the import-guard-answers-completion
 -not-presence class).
 
-PIPELINE GATE LAYER 1 (2026-08-24, 0.8.0_AE_CloudComp~F): every run also resolves the
+the L7 completion gate of the canonical fabric workflow (2026-08-24, 0.8.0_AE_CloudComp~F): every run also resolves the
 GOVERNING TO and checks decomp_ref + the bidirectional cell<->criterion alignment, with
 a denominator printed for each direction. ENFORCE vs ANNOUNCE is derived from that TO --
 a TO carrying <decomp_ref> obliges its instance to carry decomp_ref and to close the
-join; a TO without one is pre-pipeline work and stays VALID. The alignment frames print
-whether or not anything failed. See org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170.
+join; a TO without one is pre-workflow work and stays VALID. The alignment frames print
+whether or not anything failed. See org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md.
 decomp_ref.vintage_commit is also checked to RESOLVE to a real commit (CVO 66693,
 routed CTO 66702); CONTAINMENT of the doc at that vintage is a declared NON-GOAL.
 The BACKWARD direction enforces only against a DELIMITED <owned_cells> clause inside
@@ -312,7 +312,7 @@ def coverage_check(inst: dict, expected_arg: str) -> list[str]:
 
 # ---------------------------------------------------------------------------
 # PIPELINE GATE LAYER 1 -- decomp_ref + bidirectional cell<->criterion alignment.
-# org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:170 ("build routed", tooling lane;
+# org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md ("build routed", tooling lane;
 # Andrew's word granted in the ratification). Built by 0.8.0_AE_CloudComp~F.
 #
 # THE ENFORCE DISCRIMINATOR IS THE GOVERNING TO -- NEVER A DATE, NEVER AN OPERATOR

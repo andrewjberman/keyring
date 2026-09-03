@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""surprise-row-gate -- the STEP-7 / STEP-10 ROW VALIDATOR (Andrew-direct 2026-09-01).
+"""surprise-row-gate -- the L7 / L10 ROW GATE of the canonical fabric workflow (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md; Andrew-direct 2026-09-01).
 
 AUTHORIZATION: /open-calls card 2 of 9, REC "MANDATE the three that are already schema-backed
 (step 7's two trigger fields, step 9's disposition enum, step 10's route + loop_target) and DEFER

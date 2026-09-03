@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
-"""to-pipeline-gate.py -- LAYER 2 of the DIRECTIVE EXECUTION PIPELINE enforcement architecture.
+"""to-pipeline-gate.py -- the L6 gate of the canonical fabric workflow (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md).
+The file keeps its historical name; renaming a gate breaks the hook chain on every device.
 
 AUTHORITY: Andrew-direct 2026-09-01 at the 3.0.0_SA_CVO terminal -- "re-authorize the three
-enforcement layers and add the stage-3 preflight" / "we need these set up in a manner that they
+enforcement checks and add the stage-3 preflight" / "we need these set up in a manner that they
 are actually mandated" / "I prefer gates and deterministic methodology because anything that is
 simply 'guidance' may dissipate or otherwise be inconsistent over long-running sessions."
 
 WHAT THIS GATES, AND WHY IT IS THE KEYSTONE
-  org/ref/DIRECTIVE_EXECUTION_PIPELINE.md specifies five enforcement layers. Layer 1 (the
+  org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md specifies five enforcement checks. Check 1 (the
   proof-of-spec validation gate) IS BUILT and DOES enforce -- but only on an instance whose
   GOVERNING TO carries a naming <decomp_ref>. MEASURED 2026-09-01: 130 of 2233 TO files carry
-  one = 5.8%. Layer 1 is therefore inert on 94% of the estate, not because it is broken but
+  one = 5.8%. Check 1 is therefore inert on 94% of the estate, not because it is broken but
   because nothing ever required the TO to carry the element that activates it.
 
-  LAYER 2 IS THAT REQUIREMENT. Gate the neck of the funnel: a TO that conformantly requires a
+  CHECK 2 IS THAT REQUIREMENT. Gate the neck of the funnel: a TO that conformantly requires a
   decomp structurally requires the decomp, which requires the PRD, which requires registration.
   One gate at TO issuance enforces the entire upstream funnel without taxing any other act.
 
@@ -93,6 +94,42 @@ FABRIC_ENUM = ("laptop", "site-z")
 ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
 SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
 TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
+
+
+# GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
+# that does task orders"). A NEWLY ADDED tree task order commits only under 2.0.0_SA_COO or one of its ~lanes, read
+# from the committer identity the owned-paths hook already resolves (git var GIT_AUTHOR_IDENT). A MODIFICATION of an
+# existing task order -- the worker's own status flip, admitted by the lane grant that made task-orders/** ANY -- is
+# not this limb's: main() sends only newly-added paths through check_file. Prospective, tree projects only. An
+# unreadable identity REFUSES (fail-closed): a gate that cannot see who is committing must not admit an issuance.
+ISSUER_SERIAL = "2.0.0_SA_COO"
+
+
+def _committer_serial(root):
+    """The serial before ' <' in GIT_AUTHOR_IDENT, or '' when git cannot answer."""
+    try:
+        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+                               timeout=20).stdout
+    except Exception:  # noqa: BLE001
+        return ""
+    return ident.split(" <", 1)[0].strip()
+
+
+def _issuer_identity_violations(rel, author):
+    """GATE (iv): complaints about WHO is committing a NEW tree TO. [] for flat-root TOs (out of scope)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    if not author:
+        return ["%s: committer identity UNREADABLE -- a NEW tree task order commits only under %s; REFUSED, fail-closed"
+                % (rel, ISSUER_SERIAL)]
+    base = author.split("~", 1)[0].strip()
+    if base != ISSUER_SERIAL:
+        return ["%s: a NEW tree task order committed under %r. COO is the only agent that does task orders (LD-0521 "
+                "A3): a new file under org/missions/*/*/*/task-orders/ commits only under %s or a ~lane of it. A "
+                "worker's own <status> flip on an EXISTING task order is a modification and is not this limb's."
+                % (rel, author, ISSUER_SERIAL)]
+    return []
 
 
 def _issued_to_tier_violations(rel, text):
@@ -671,6 +708,8 @@ def check_file(root, rel):
 
     # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
     v.extend(_issued_to_tier_violations(rel, text))
+    # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
+    v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the

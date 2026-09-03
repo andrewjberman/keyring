@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""to-decomp-ref-lint -- PIPELINE GATE LAYER 2: a NEW task order for a pipeline-registered
+"""to-decomp-ref-lint -- the L6 issuance gate of the canonical fabric workflow: a NEW task order for a dep_stage-registered
 project must carry <decomp_ref>.
 
-org/ref/DIRECTIVE_EXECUTION_PIPELINE.md:171 ("build routed", tooling lane; Andrew's word
+org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md ("build routed", tooling lane; Andrew's word
 granted in the ratification). Built 2026-08-24 by 0.8.0_AE_CloudComp~F.
 
 THE CHOKE-POINT PRINCIPLE (:164): nothing executes without a TO. A TO that conformantly
@@ -15,15 +15,15 @@ SCOPE, deliberately narrow on three axes -- each one is a way this gate could ha
 become a tax on work it was never meant to touch:
   1. NEW FILES ONLY (git --diff-filter=A). Editing an existing TO is not issuance, and
      retro-fitting <decomp_ref> onto TOs whose criteria were never derived from cells
-     produces exactly the false alignment the layer-1 checker refuses.
-  2. PIPELINE-REGISTERED PROJECTS ONLY (a dep_stage key in org/projects/{CODE}.json --
+     produces exactly the false alignment the L7 completion checker refuses.
+  2. WORKFLOW-REGISTERED PROJECTS ONLY (a dep_stage key in org/projects/{CODE}.json --
      10 of 326 projects on 2026-08-24). dep_stage is OPTIONAL and FORWARD-ONLY by its own
      ratified design; a project that never opted in is not in this gate's scope.
   3. FILES UNDER **/task_orders/ ONLY.
 A file failing any of the three is NOT a pass -- it is OUT OF SCOPE, and the report says
 which, because "no findings" and "did not look" must never render identically.
 
-RAMP: ANNOUNCE by default; ENFORCE when org/mcp/pipeline-gate2.enforce exists (the
+RAMP: ANNOUNCE by default; ENFORCE when org/mcp/workflow-gate2.enforce exists (the
 NFRA_COMPRAIL announce-then-enforce shape, marker-file checked, so arming is one
 reviewable act and not a code change). Under ANNOUNCE this prints findings and exits 0.
   ⛔ THE MARKER IS THE AUTHORITY, NEVER A COMMENT ABOUT THE MARKER. Rule 21 records the
@@ -31,17 +31,17 @@ reviewable act and not a code change). Under ANNOUNCE this prints findings and e
   marker and reported a live gate as not-yet-enforcing.
 
 OVERRIDE: audited, and it must be a DELIBERATE SENTENCE, not a flag. Put
-`# pipeline-gate2-override: <reason>` in the commit message; every use is appended to
-org/mcp/pipeline-gate2-override.log with the file and the reason. A repeat override for
+`# workflow-gate2-override: <reason>` in the commit message; every use is appended to
+org/mcp/workflow-gate2-override.log with the file and the reason. A repeat override for
 one recurring intent is a COVERAGE GAP, not a habit -- route it, do not keep overriding.
 
 SEATING LINT (added 2026-08-25, Andrew-direct ~00:2xZ -- "Yeah thats fine you can build it"):
 the SAME new-TO pass also refuses a TO addressed to an instance ALREADY HOLDING OPEN TOs ON
-ANOTHER PIPELINE PROJECT -- one project per tier-2 seat instance, his 2026-08-24 ~19:29Z rule.
+ANOTHER WORKFLOW PROJECT -- one project per tier-2 seat instance, his 2026-08-24 ~19:29Z rule.
 "Unless it names a fresh lane" needs no separate detection: a fresh lane holds nothing and so
-passes BY CONSTRUCTION. Scoped to pipeline-registered projects on BOTH sides per Rule 27's own
+passes BY CONSTRUCTION. Scoped to dep_stage-registered projects on BOTH sides per Rule 27's own
 wording; unscoped it would fire on legacy debt (the base 0.8.0 serial alone carries 80 open
-pre-pipeline TOs) instead of on seating.
+pre-workflow TOs) instead of on seating.
 
 Usage:
   to-decomp-ref-lint [--enforce] [--override-reason TEXT] [paths...]
