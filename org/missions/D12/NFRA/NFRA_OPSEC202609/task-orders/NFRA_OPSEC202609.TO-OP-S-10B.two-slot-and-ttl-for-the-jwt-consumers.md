@@ -53,7 +53,7 @@
 <criterion id="S10B-AC4" cell_refs="OP-s-10"/> `S10B-AC4` -- NOTHING WAS ROTATED: `describe-secret` on both `opal/auth/jwt-private-key` and `-public-key` showing the version count and `LastChangedDate` **unchanged** from this face's cut, and a statement that no signing switch occurred. **This face makes rotation possible and does not perform it.**
 <criterion id="S10B-AC5" cell_refs="OP-s-10"/> `S10B-AC5` -- THE LIVE PATHS STILL SERVE, AND THE LEDGERS CLOSE ON ARTIFACTS: the nine HTTP-API data routes re-probed after the authorizer deploy with the 403-direct / 200-through-CloudFront discriminator, and the portal login path exercised after the edge deploy; ledgers CLOSED with proofs and rollbacks; the `CodeSha256` supersession recorded against `TO-OP-S-3`'s `S3-AC3` with both values ISO-vintaged; push state read by `ls-remote` + `is-ancestor` and stated as MEASURED.
 
-<expected_criteria>S10B-AC1, S10B-AC2, S10B-AC3, S10B-AC4, S10B-AC5</expected_criteria>
+<expected_criteria>S10B-AC0, S10B-AC1, S10B-AC2, S10B-AC3, S10B-AC4, S10B-AC5</expected_criteria>
 
 <decomp_ref>
 <decomp_doc>org/missions/D12/NFRA/NFRA_OPSEC202609/decompositions/NFRA_OPSEC202609_DECOMP.md</decomp_doc> (v0.1.14), cell `OP-s-10` (manifest S10; FWD-10) -- **the ENABLING limb.** `TO-OP-S-10` holds the rotation itself and is blocked until this lands.
@@ -68,7 +68,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S10B-AC1`, `S10B-AC2`, `S10B-AC3`, `S10B-AC4`, `S10B-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10B.two-slot-and-ttl-for-the-jwt-consumers.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S10B-AC1,S10B-AC2,S10B-AC3,S10B-AC4,S10B-AC5"` BEFORE the complete flip. **`S10B-AC2` is the control that must be able to fail: a redeploy anywhere in that window voids it, because a redeploy is the mechanism that already existed.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S10B-AC1`, `S10B-AC2`, `S10B-AC3`, `S10B-AC4`, `S10B-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10B.two-slot-and-ttl-for-the-jwt-consumers.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S10B-AC0,S10B-AC1,S10B-AC2,S10B-AC3,S10B-AC4,S10B-AC5"` BEFORE the complete flip. **`S10B-AC2` is the control that must be able to fail: a redeploy anywhere in that window voids it, because a redeploy is the mechanism that already existed.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>
