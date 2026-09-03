@@ -785,7 +785,7 @@ def _overlap_preamble(n_pop: int, considered: int, depth: int, selector, exclude
     print('   invisible to the graph, so overlap is a LOWER BOUND on both sides.')
 
 
-def _sweep_universe(args):
+def _sweep_universe(args, *, budgeted: bool = False, unbudgeted_label: str | None = None):
     """The statistical modes' universe: the SAME canonical graph, narrowed to a DECLARED TERRITORY.
 
     CTO arch call 2026-08-04 closed the interim exception these modes shipped under. The problem was
@@ -796,7 +796,11 @@ def _sweep_universe(args):
     inspectable and reproducible, that changes deliberately instead of by cache drift.
     """
     try:
-        g, prov, _path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+        g, prov, _path = _bu.load_kuzu_universe(
+            refresh=not getattr(args, "force", False),
+            budgeted=budgeted,
+            unbudgeted_label=unbudgeted_label,
+        )
     except _bu.KuzuUnavailable as ex:
         _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
         sys.exit(1)
@@ -812,7 +816,7 @@ def _blast_resolve_subject(g, query: str, exact: bool = False):
     return (_bu.RESOLVE_EXACT, [node]) if node is not None else (_bu.RESOLVE_NONE, [])
 
 
-def _blast_budget_walk(downstream, upstream, budget_s, source, cursor, direction):
+def _blast_budget_walk(downstream, upstream, budget_s, source, cursor, direction, clock=None):
     """Apply the shared Rule-T clock to the deterministic output traversal.
 
     The graph query is intentionally unchanged; this wrapper bounds the answer walk and carries a
@@ -831,7 +835,7 @@ def _blast_budget_walk(downstream, upstream, budget_s, source, cursor, direction
         else:
             _bu.aprint(f"WARNING: --cursor {cursor!r} does not match a completed traversal unit; "
                        "starting from the beginning.", file=sys.stderr)
-    clock = _compbudget.Clock(budget_s)
+    clock = clock or _compbudget.Clock(budget_s)
     # A sub-10ms ceiling is an intentional planted control, not a claim that Python can measure a
     # useful wall-clock slice at that granularity. Treat it as an immediately expired prefix so
     # Rule-T consumers get a deterministic non-clean answer instead of scheduler noise.
@@ -883,10 +887,26 @@ def cmd_blast(args):
     if getattr(args, "fresh", False):
         print(_FRESH_DEPRECATION, file=sys.stderr)
 
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as ex:
+        _bu.aprint(f"BUDGET USAGE ERROR: {ex}", file=sys.stderr)
+        sys.exit(1)
+    # A positive budget (including the documented 90 s default) bounds the WHOLE call.  `--force`
+    # is the existing explicit worktree re-derive mode and remains the unbudgeted refresh/serve path;
+    # --budget 0 is likewise explicitly unbounded.
+    budgeted_call = budget_s != 0 and not getattr(args, "force", False)
+    unbudgeted_label = None
+    if budget_s == 0:
+        unbudgeted_label = "--budget 0"
+    elif getattr(args, "force", False):
+        unbudgeted_label = "--force"
+    budget_clock = _compbudget.Clock(budget_s)
+
     _sweep_mode = bool(getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None)
                        or getattr(args, 'all_producers', False))
     if _sweep_mode:
-        g = _sweep_universe(args)
+        g = _sweep_universe(args, budgeted=budgeted_call, unbudgeted_label=unbudgeted_label)
     else:
         g = None      # the main path's universe is kuzu; resolved after the sweep blocks
 
@@ -1050,7 +1070,11 @@ def cmd_blast(args):
     # would do it invisibly -- the tool would answer from a universe the operator did not choose and
     # cannot see, which is strictly worse than the NOT-FOUND that started this.
     try:
-        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(
+            refresh=not getattr(args, "force", False),
+            budgeted=budgeted_call,
+            unbudgeted_label=unbudgeted_label,
+        )
     except _bu.KuzuUnavailable as ex:
         _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
         _bu.aprint("  comp-blast does NOT fall back to a private scan. Fix the graph, then re-run.",
@@ -1206,13 +1230,9 @@ def cmd_blast(args):
     # DOWNSTREAM) while CALLS/FETCHES/READS point consumer->producer (consumers are UPSTREAM).
     raw_downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
     raw_upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
-    try:
-        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
-    except ValueError as ex:
-        _bu.aprint(f"BUDGET USAGE ERROR: {ex}", file=sys.stderr)
-        sys.exit(1)
     downstream, upstream, budget_partial, scanned, total, last_cursor, used_s = _blast_budget_walk(
-        raw_downstream, raw_upstream, budget_s, budget_source, getattr(args, "cursor", None), direction)
+        raw_downstream, raw_upstream, budget_s, budget_source, getattr(args, "cursor", None), direction,
+        clock=budget_clock)
     _bu.aprint(_compbudget.disclosure_line(budget_s, budget_source), file=sys.stderr)
     if budget_partial:
         _bu.aprint(_kuzu_prov, file=sys.stderr)
@@ -1631,8 +1651,9 @@ def main():
                          help="Traversal direction: up/upstream callers, down/downstream consumers, "
                               "or both. Trace spellings are accepted as aliases.")
     p_blast.add_argument("--budget", metavar="N", default=None,
-                         help="Rule-T wall-clock ceiling for traversal (carrier: --budget > "
-                              "COMP_BUDGET_S > default 90s; --budget 0 = unbounded). "
+                         help="Rule-T wall-clock ceiling for the WHOLE call (carrier: --budget > "
+                              "COMP_BUDGET_S > default 90s; --budget 0 = unbounded; bounded calls "
+                              "serve stale graphs without rebuild/wait). "
                               "rc vocabulary: 0 clean, 1 tool-failed, 2 stale, 3 NOT-FOUND, "
                               "4 phantom-consumer, 5 ambiguous, 6 partial-budget.")
     p_blast.add_argument("--cursor", metavar="UNIT", default=None,

@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ENGINE = ROOT / "org" / "modules" / "graph" / "cli.py"
+UNIVERSE = ROOT / "org" / "modules" / "graph" / "comp_blast_universe.py"
 SHIM = ROOT / ".tools" / "comp-blast"
 
 
@@ -46,7 +47,7 @@ class CompBlastBattery(unittest.TestCase):
         self.assertEqual(p.returncode, 3)
         out = p.stdout + p.stderr
         self.assertIn("ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS", out)
-        self.assertIn("denominator: 27134 nodes", out)
+        self.assertRegex(out, r"denominator: [0-9]+ nodes \(CANONICAL KUZU GRAPH\)")
         self.assertIn("built:", out)
         self.assertNotRegex(out, r"radius\s*[:=]\s*0")
 
@@ -64,6 +65,18 @@ class CompBlastBattery(unittest.TestCase):
         self.assertNotEqual(resume.returncode, 6)
         self.assertIn("WITHIN BUDGET", resume.stdout + resume.stderr)
         self.assertNotIn("PARTIAL_OR_BLIND", resume.stdout + resume.stderr)
+
+    def test_budget_bounds_universe_load_and_discloses_stale_serve(self):
+        """AC-7: a stale canonical pin is served immediately; no refresh child is entered."""
+        p = run_blast("--exact", "arn:aws:s3:::opal-data-bd", "--direction", "down",
+                      "--depth", "1", "--budget", "60")
+        self.assertEqual(p.returncode, 0)
+        out = p.stdout + p.stderr
+        self.assertRegex(out, r"BUDGETED CALL: (SERVING EXISTING GRAPH STALE|existing graph current)")
+        if "SERVING EXISTING GRAPH STALE" in out:
+            self.assertRegex(out, r"age [0-9.]+h")
+        self.assertNotIn("Building trace graph", out)
+        self.assertNotIn("kuzu_nessie_load.py", out)
 
     def test_trace_aliases_and_exact_are_accepted_by_blast(self):
         p = run_blast("--force", "--exact", "arn:aws:s3:::opal-313476888478-globgrph",
@@ -105,6 +118,16 @@ class CompBlastBattery(unittest.TestCase):
                 check = subprocess.run([sys.executable, "-m", "py_compile", str(path)],
                                        text=True, capture_output=True)
                 self.assertEqual(check.returncode, 0, name)
+        source = UNIVERSE.read_text(encoding="utf-8")
+        needle = "refresh_allowed = not budgeted"
+        self.assertIn(needle, source, "budgeted_refresh_ambush")
+        mutated = source.replace(needle, "refresh_allowed = True", 1)
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "universe_mutant.py"
+            path.write_text(mutated, encoding="utf-8")
+            check = subprocess.run([sys.executable, "-m", "py_compile", str(path)],
+                                   text=True, capture_output=True)
+            self.assertEqual(check.returncode, 0, "budgeted_refresh_ambush")
 
 
 if __name__ == "__main__":

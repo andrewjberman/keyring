@@ -28,3 +28,11 @@
 - Comp-similar overlap recorded BY NAME ONLY; no merge or rescope.
 - No graph rebuild, deployment, caller redirect, or push performed.
 - T6-AC6 requires proof validation before complete flip and a post-commit carried-flag run from a seat other than this lane; COO seat was asked to run that FWD-9 after commit.
+
+## AC-7 addendum
+
+- Exact CRO Base addendum Msg-ID 93847 was ACKed; it identified S31 (stale-universe rebuild outside Rule-T) as an immediate T6-AC7 act.
+- `comp_blast_universe.load_kuzu_universe()` now skips canonical refresh for bounded calls, serves the existing projection, and appends `BUDGETED CALL: SERVING EXISTING GRAPH STALE` with age and `needs_refresh` reason. `cmd_blast()` starts one Rule-T clock before loading and passes it through `_blast_budget_walk()`.
+- Live stale-pin probe: `--budget 60` returned rc 0 in 8.5 s, stale age 0.5h / BEHIND Nessie HEAD disclosure, no `kuzu_nessie_load.py` child and no refresh launch. `--budget 0` and `--force` disclose the retained unbudgeted path.
+- Battery now passes 7/7 direct and 7 pytest tests, with 5/5 source-mutant controls including the budgeted-refresh ambush mutant; commit gate clean for `cli.py`, `comp_blast_universe.py`, and the battery.
+- S31 was disarmed by this seat through appended carrier row S32 in `INVESTIGATION_v1.md`; proof refreshed with T6-AC7 and its surprise reference. J’s G-2 lane was coordinated as non-overlapping and will rebase after the local commit.

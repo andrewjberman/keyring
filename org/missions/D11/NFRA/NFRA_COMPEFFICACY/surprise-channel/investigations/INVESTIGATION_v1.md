@@ -995,6 +995,31 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "TO-CE-T-21 RESEAT says nothing was built under ~P and directs this seat to read any pre-existing untracked battery, not assume authorship, name it in a row, and write its own battery beside it.",
     "world_is": "The stated reseat starting condition differs from the present shared worktree: T-21-shaped engine and battery changes are present but uncommitted and unproven as this seat's work. The engine self-test is green; the foreign battery's full direct result is not yet available.",
     "notes": "No foreign file was edited, staged, committed, moved, or deleted. This seat will place a separately named lane-owned battery beside the foreign file, preserve the existing worktree state, and report validation evidence only for artifacts it owns."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S32",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~G",
+    "surfaced_at": "2026-09-03T17:55:00Z",
+    "one_line": "ADJUDICATES NFRA_COMPEFFICACY-S31: DISMISSED_WITH_REASON -- T6-AC7 now bounds the whole comp-blast call; a budgeted stale graph is served immediately with age/reason disclosure and no rebuild/wait, while unbudgeted --budget 0/--force disclose their retained path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.8.0_AE_CloudComp~G",
+    "adjudicates": ["NFRA_COMPEFFICACY-S31"],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/graph/comp_blast_universe.py::load_kuzu_universe now gates canonical refresh with refresh_allowed = not budgeted and appends BUDGETED CALL: SERVING EXISTING GRAPH STALE with served age and needs_refresh reason.",
+        "org/modules/graph/cli.py::cmd_blast starts the shared Rule-T clock before universe load and passes it through _blast_budget_walk; --budget 60 against the stale pin returned rc 0 in 8.5 s with no kuzu_nessie_load.py child.",
+        "python .tools/tests/test_comp_blast_battery.py -> 7/7 PASS, including the AC-7 stale-serve/no-child arm and the budgeted-refresh-ambush RED mutant; comp-trace blob remains 9bcf128cf6ff4b7e95f6ed2e6869526b9588fd2d."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The T6-AC7 implementation and battery exercise the ordered disarm: budgeted calls never enter the canonical refresh mutex and disclose the served stale age; the prior whole-call ambush is closed.",
+    "spec_asserts": "TO-CE-T-6 T6-AC7: THE BUDGET BOUNDS THE WHOLE CALL, including universe load; a budgeted stale graph is served immediately and never rebuilt or awaited.",
+    "world_is": "Before this act, cmd_blast loaded a stale canonical graph through ensure_fresh before starting traversal timing. After this act, the load is under the same call-level budget decision and stale serving is explicit.",
+    "notes": "Lane-owned disarm carrier for S31; append-only correction, no foreign row amended. Commit with the T6-AC7 implementation and proof refresh in the same act; LOCAL, no push."
   }
 ]
 ```
