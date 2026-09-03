@@ -124,6 +124,15 @@ REMEDIATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/remediations/*",
 # INVESTIGATION rows -- `surfaced_by` is theirs; a remediation row is the CVO's act about another seat's remedy. An
 # unreadable committer or an unparseable surfaced_by REFUSES (fail-safe toward the wrong direction is not safe). The
 # gate's audited override covers a deliberate integration of peer rows.
+# BOUND, stated so the arm is never read as wider than it is (site Z's own scope correction, 93630): this is ROW-SCOPED.
+# It compares row-id sets, so its subject is commits that ADD ROWS; a commit that carries a peer's uncommitted PROSE
+# hunk (a correction bullet outside the row array) adds no row, yields an empty delta and PASSES -- one such case is on
+# site Z's record (7abe7552b5, disclosed and closed at the time). It is deliberately NOT widened to prose: prose has
+# nothing reliable to key an author on, and a guard that cannot decide its own question either fires constantly or is
+# relaxed into decoration. LAPTOP POPULATION, measured the same way at adoption (20 files, 431 commits, 227 rows over
+# their life): 104 commits carried 161 rows surfaced by another seat, all 104 authored by 3.0.0_SA_CVO -- not the
+# accident but the pre-law practice of the channel owner filing workers' relayed surprises, retired by the carrier law
+# of 2026-09-03; the arm refuses both shapes prospectively, which is what that law asks. Historical rows are not re-graded.
 def _committer_serial(root):
     env = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
     if env:
