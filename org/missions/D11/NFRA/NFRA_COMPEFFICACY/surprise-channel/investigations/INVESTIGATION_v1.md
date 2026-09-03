@@ -789,6 +789,94 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "LD-0530 / drive v2 obligation 6 (MSTR 93661, 93674): 'compile packet received -> L9 adjudication and the L10 stamp in the tick that reads it; a packet older than one tick without a stamp is your own defect row'.",
     "world_is": "The packet aged about 100 minutes before its stamp; the telemetry's last work row was 12:27:19Z and the next act at this seat was 14:0xZ.",
     "notes": "Filed by the seat that owns the defect, on the project the packet belonged to, so the round table MSTR's brief measured (idle 15-33 min at the CVO between limbs) carries this round's number with its cause. Not blocking; the stamp is in this commit."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S23",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~F",
+    "surfaced_at": "2026-09-03T14:51:33Z",
+    "one_line": "TO-CE-T-12 and PRD v0.5 row T-12 assert DEPLOYED != COMMITTED for summary_corpus.py, but a separate globgrph derive-image rebuild completed after the order was cut and before this cell executed. The current served ECR image now carries the committed bytes exactly: opal-globgrph-derive-runner:latest digest sha256:3a4e078d2c65c0243f2aac3c2ad033ac7a154c12cc46d7b9998cf37601188486, pushed 2026-09-03T14:32:35Z, contains /app/org/modules/graph/debtscan/summary_corpus.py at 92,840 bytes with SHA-256 2c56cd7d50e8b3115d283ea95c5a29f8485ff0ec16f36a4e961ac60add7c6c85, equal to both the build-input ZIP member and the repo file. The historical PRE-fix image gap is no longer live; this cell records the changed world and does not rebuild or redeploy anything.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ecr describe-images at 0.8.0_AE_CloudComp~F, 2026-09-03T14:4xZ: opal-globgrph-derive-runner:latest -> image digest sha256:3a4e078d2c65c0243f2aac3c2ad033ac7a154c12cc46d7b9998cf37601188486, tag 20260903-143221, imagePushedAt 2026-09-03T14:32:35Z",
+        "Rule-22a served-artifact read, not filename inference: aws ecr batch-get-image resolved Docker layer sha256:515c90b2a5b2a706939459cb0959dff4de573e312a06a2282f4b833ae4ef152f; get-download-url-for-layer + native tar extracted app/org/modules/graph/debtscan/summary_corpus.py, 92,840 bytes, SHA-256 2c56cd7d50e8b3115d283ea95c5a29f8485ff0ec16f36a4e961ac60add7c6c85",
+        "infra/aws/globgrph/.build/derive-runner-source.zip, LastWriteTimeUtc 2026-09-03T14:31:25Z, member org/modules/graph/debtscan/summary_corpus.py = 92,840 bytes, SHA-256 2c56cd7d50e8b3115d283ea95c5a29f8485ff0ec16f36a4e961ac60add7c6c85; current repo file has the same byte count and SHA-256",
+        "org/critical_paths/change_management/20260903T1409Z_nfra-cldgrph-b2-projection-worker_deploy_completion.md: L2 records corrective CodeBuild b72c8766-3ea5-4ce5-ab43-55bdb9599afa SUCCEEDED and the same latest image digest. This independent NFRA_CLDGRPH deployment post-dates TO-CE-T-12's 14:23Z preflight and explains the state transition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_COMPEFFICACY PRD v0.5 @5bbdab5ec7 s.7 row T-12 and TO-CE-T-12 @6e5d443ad3: summary_corpus.py is baked into the globgrph derive image with PRE-fix bytes; DEPLOYED != COMMITTED; carry the gap to the G-rows and name owner 0.7.0_AE_CloudOps.",
+    "world_is": "The premise was true at the order's cited earlier measurement but is false for the current served artifact. A post-cut shared-image rebuild for NFRA_CLDGRPH placed the current committed summary_corpus.py bytes into ECR latest. Deployed, build-input, and current repo SHA-256 values are now equal. Similarity semantics and the image were not changed by this cell.",
+    "notes": "No image remedy is performed or requested here. The owner named by the historical gap remains 0.7.0_AE_CloudOps; the carrier correction belongs to the PRD/decomposition owners at the next compile. TO-CE-T-12 continues on its actual s.4 audit scope, reporting the measured equality and this row rather than repeating a stale DEPLOYED != COMMITTED claim."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S24",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~J",
+    "surfaced_at": "2026-09-03T14:51:08Z",
+    "one_line": "TO-CE-T-23 AC3 requires the portal submodule's git status be clean while this cell only reads portal/src. Before and after the comp-cache scan, `git -C portal status --porcelain` reports 14 untracked paths (including .frontend-dev/, .runtmp/, catch404_final.png, org/, portal/, public/, and src/ subtrees). This seat made no portal edit and must not delete or move user-owned paths, so it cannot truthfully attest a clean portal worktree under this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured 2026-09-03T14:51:08Z: `git -C portal status --porcelain` -> 14 rows, all `??` (untracked): .frontend-dev/org/, .frontend-dev/screenshots/, five .frontend-dev/testing paths, .runtmp/, catch404_final.png, org/, portal/, public/__mockcot/, src/org/, src/pages/AdvisorIntelligence/org/.",
+        "TO-CE-T-23 BOUNDS: portal/src is READ, never edited; T23-AC3 requires zero changes under portal/ with a clean submodule status shown. This cell only ran comp-cache reads and fixture tests outside portal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T23-AC3: 'PORTAL READ, NEVER EDITED: zero changes under portal/ (git status of the submodule shown clean)'.",
+    "world_is": "The portal worktree is not clean at the measured read. The status is untracked-only, and provenance/ownership is not determined by this cell. No portal path was edited, deleted, moved, staged, or otherwise changed by 0.8.0_AE_CloudComp~J.",
+    "notes": "A clean-state disposition belongs to the portal worktree owner or the coordinator. This row is the surprise carrier required by the TO; it does not authorize cleanup and does not classify the existing paths as this seat's."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S25",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~M",
+    "surfaced_at": "2026-09-03T14:54:33Z",
+    "one_line": "comp-passcraft recon comp-pulse reports write_surface '(none matched by the write-pattern set)', while the actual .tools/comp-pulse wrapper invokes comp_log_auto.py after every engine run and appends a comp-tool-runs.jsonl telemetry record. The passcraft evidence pack therefore omits a real append-only write surface for this tool; no passcraft code or telemetry path was changed by T18.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2026-09-03T10:5x-04:00 at 0.8.0_AE_CloudComp~M: `comp-passcraft recon comp-pulse` printed write_surface=['(none matched by the write-pattern set)'] while identifying .tools/comp-pulse as the wrapper and org/modules/graph/comp_pulse.py as its backend.",
+        ".tools/comp-pulse:7 invokes `python \"$WORKSPACE/org/modules/graph/comp_log_auto.py\" \"comp-pulse\" \"$*\" $_exit`; the same command's subsequent real wrapper invocation wrote a new comp-pulse row in org/mcp/comp-tool-runs.jsonl.",
+        "The T18 code boundary is org/modules/graph/comp_pulse.py plus .tools/tests/test_comp_pulse_battery.py; the shim and comp-passcraft are READ-only under the task order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_COMPEFFICACY TO-CE-T-18 requires the s.4.5 passcraft moves and a truthful hook-driven usage audit; the passcraft output is evidence, not a substitute for reading the wrapper body.",
+    "world_is": "The comp-pulse wrapper has an append-only telemetry side effect that comp-passcraft's write-pattern report did not enumerate. The engine remains query-only with respect to the danger map after T18's change; the omitted write is the wrapper's telemetry append.",
+    "notes": "No action is taken outside T18. A future comp-passcraft owner can decide whether wrapper subprocess write surfaces belong in its detector; the per-tool report names the discrepancy and uses the actual telemetry census rather than the passcraft claim."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S26",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.8.0_AE_CloudComp~G",
+    "surfaced_at": "2026-09-03T15:08:48Z",
+    "one_line": "The required comp-read forwarder on this Windows seat returned rc=0 without the requested source content for drift_cli.py and drift-topology.yaml; the explicit .tools/comp-read rail was invoked and a marked direct read supplied the same inspection evidence. This is an integration-friction observation, not a production-tool defect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_COMPEFFICACY.TO-CE-T-14 execution at 0.8.0_AE_CloudComp~G: the bare comp-read command was unavailable on the Windows PATH; explicit .tools/comp-read invocations for the engine and topology returned exit 0 with empty output.",
+        "The T-14 report's integration-friction section records the fallback: direct rg/Get-Content inspection was marked with rail-checked comments; no seam engine or topology file was edited."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No source or runtime behavior was hidden: the explicit rail and direct read exposed the required three modes, fan-out, called engines, and rc mapping. The friction is local command wiring and requires no NFRA_COMPEFFICACY code remedy.",
+    "spec_asserts": "NFRA_COMPEFFICACY TO-CE-T-14 compiler_tools_mandate requires comp-read before write and truthful recording of any instrument limitation.",
+    "world_is": "The repository-local .tools/comp-read exists, but its Windows invocation did not emit content; the production audit and proof remain valid and the seam engines stayed read-only.",
+    "notes": "Filed by the owning seat as the required round-6 surprise row. No message to CVO and no additional scope or dependency was introduced."
   }
 ]
 ```
