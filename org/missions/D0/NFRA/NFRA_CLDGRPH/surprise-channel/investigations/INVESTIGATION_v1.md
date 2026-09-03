@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **18 rows** (S1-S19, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:3xZ by `0.7.0_AE_CloudOps~S` on appending S19 (was 17); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **19 rows** (S1-S20, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:5xZ by `2.0.0_SA_COO~A` on appending S20 (was 18); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -789,6 +789,38 @@ a source filter, and the task reads current HEAD only after a real `Records` bod
     "spec_asserts": "S14 declares the Pipe the consumer of record; S15 requires that consumer to tolerate Records and TestEvent; R5 requires real marker events to start the worker, whose source of truth is the marker oracle.",
     "world_is": "The ECS task cannot receive either attempted dynamic environment value on this applied target. Without a source filter it cannot distinguish TestEvent; with a body.Records marker filter the Pipe can delete TestEvent and invoke ECS only for real marker notifications, after which the task reads current HEAD.",
     "notes": "Disarm in this task: remove PROJECTION_EVENT_JSON from the Pipe target, add an exact SQS body filter for Records[*].s3 bucket/key, keep the 2048/16384 override, and let the task use a pipe-filtered-records sentinel before reading the marker. Repeat the TestEvent: main queue empty, no new ECS task, DLQ delta zero, projection absent. Then wait for a real producer stamp and show it does launch the task. Messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
+  }
+]
+```
+
+## S20 -- HANDED OFF from NFRA_COMPEFFICACY: the ported deriver reports a failed S3 notification read as a genuine zero (bare except), so the live graph's S3_BUCKET-[TRIGGERS]->LAMBDA edge is EMPTY estate-wide
+
+The base CVO's lateral record at commit b5d228fe62 places NFRA_COMPEFFICACY-S15 with the owning surface: the graph deriver is part of the build CG-s-2 ports, so a silent-zero ported is a silent-zero shipped twice. Filed here by the issuer as the seat that read the lateral; the measurement is 0.8.0_AE_CloudComp's and is marked RELAYED.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S20",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-03T14:55Z",
+    "one_line": "HANDED OFF from NFRA_COMPEFFICACY (row S15 there, dismissed as S21 naming the record): the graph deriver this project ports, org/modules/graph/comp_aws_cli.py derive_edges, swallows a failed get_bucket_notification_configuration read in a bare except, so a failed read equals a genuine zero -- the live graph's S3_BUCKET-[TRIGGERS]->LAMBDA edge is EMPTY estate-wide while Terraform declares real aws_s3_bucket_notification resources with Lambda targets (bd-pipeline, cot-pipeline, inf-pipeline); a forced refresh does not change it. A silent-zero in the engine the cloud worker runs is a silent-zero shipped twice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO lateral 93697 (14:33Z) and its record org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_HANDOFF_NFRA_COMPEFFICACY_S15_TO_NFRA_CLDGRPH_20260903T142xZ.md at commit b5d228fe62; the measurement is 0.8.0_AE_CloudComp's (NFRA_COMPEFFICACY-S15 at commit a140eed779): MATCH (b:CloudNode)-[e:CloudEdge]->(l:CloudNode) WHERE b.node_type='S3_BUCKET' AND e.edge_type='TRIGGERS' AND l.node_type='LAMBDA' returns 0 rows; opal-data-bd IS an S3_BUCKET node with zero outgoing TRIGGERS edges against three declared targets",
+        "cause at source as measured by that seat: org/modules/graph/comp_aws_cli.py:1439-1447 (derive_edges) -- get_bucket_notification_configuration inside a bare except: pass, with the node-property twin at :273-279 in the same shape; RELAYED, NOT RE-MEASURED BY THIS SEAT, and marked so",
+        "why this project: the deriver is part of the build CG-s-2 ports to the cloud worker (PRD v0.4 R5), the same class as rows S2/S3/S8 (defects in the thing being ported, routed SPEC_ERROR to the port orders at the round-1 stamp); the surfacing project dismissed its own row naming this record and does not write into this project's loop"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.4 R5 (@25c66d3358) and FWD-2/FWD-4 assume the worker runs the existing engine and that the projection it publishes is the estate's graph; a derived edge count of zero is read by every consumer as a genuine absence.",
+    "world_is": "The deriver reports a FAILED notification read as ZERO edges (bare except), so the TRIGGERS edge from S3 buckets to Lambda is empty on the live graph while the Terraform declares the resources; a consumer cannot distinguish that zero from a real absence, and the ported worker would publish the same zero under a fresh vintage every night.",
+    "notes": "Mid-round the spec is frozen: no order is amended for this. ISSUER'S ROUTE RECOMMENDATION for the round-2 stamp (3.0.0_SA_CVO~A's disposition): SPEC_ERROR with loop_target 6 and owner 2.0.0_SA_COO~A -- an L6 order against the engine files in a later round (the shape the surfacing seat would recognise: a failed notification read reported as UNREADABLE, never zero; the TRIGGERS edge derived from the declared aws_s3_bucket_notification resources as a second source; a denominator of buckets read versus unreadable on every build). Not a fix under TO-CG-B-2 (the four ruled fixes are S2/S3/S8/S9's) and not under TO-CG-B-3. The disarm this round is this row plus the route; the hazard stays ARMED until the derive reports the read state. Filed by the issuer as the seat that read the lateral, per the base CVO's 93697 (asked of nobody; a row by the seat that reads it)."
   }
 ]
 ```
