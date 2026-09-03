@@ -1224,6 +1224,50 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
    ]
   },
   "notes": "THE NINTH REFERENT OF THIS PROJECT WHERE THE SPEC'S ENUMERATION AND THE WORLD'S DIFFERED -- and the FIRST caught by the issuer at the cut rather than by a worker at the pre-write read. The trigger that caught it is the one banked after Z-S24: a face that edits or imports a resource names that resource's carrier and its members, read live, before it commits. WHAT THIS ROW IS NOT: a disposition of Z-S33 (the CVO's), or a claim that the world half is closed."
+ },
+ {
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-09-03T12:56Z",
+  "id": "NFRA_OPSEC202609-Z-S35",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S27). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S27 (TO-OP-S-25-26-27's S26-AC2 required 'a census of THE DIFF for arn:aws:iam::313476888478:user/ reads 0' while the same face's DELIVERABLE 2 MANDATED that exact ARN as the role's single trust principal -- two clauses of one face that cannot both hold, since a role cannot trust a principal it does not name): RULED 2026-09-03 12:51Z (operating note to 0.7.0_AE_CloudOps~S) -- the PASS as filed is ACCEPTED with the measured number printed (3 occurrences = 2 COMMENTS + 1 mandated TRUST line + ZERO in any GRANT), because the criterion's SUBSTANCE is 'no GRANT names a human identity' and that is satisfied and verified on both planes: 0 of 3 grants (the key policy's usage statement, the role's inline policy, the access-logs bucket policy) name a user. The WORDING is the defect: a census keyed on a literal ARN string measures authoring style -- interpolated versus literal, and how many comments mention it -- not the property. NOT re-cut mid-round (the spec is frozen and the substance passed); the corrected wording rides the NEXT face that carries the property, OP-s-19's CLI role: 'no ALLOW statement on a resource action names an IAM user; the trust policy's principal is exempt by construction and is named'. 3.0.0_SA_CVO~Z's L8 (19730) concurs with one grain correction taken here: the criterion is scoped to the DIFF, where the count is 1 and it is a comment, not the module-scoped 2.",
+  "spec_asserts": "TO-OP-S-25-26-27 S26-AC2: 'a census of the diff for arn:aws:iam::313476888478:user/ reads 0 with a positive control'; DELIVERABLE 2: 'TRUST POLICY = ONE principal, arn:aws:iam::313476888478:user/Andrew_Berman, sts:AssumeRole, nothing else'; C-14 (PRD v0.8): the role's trust names one human principal by Andrew's word.",
+  "world_is": "Both clauses were the issuer's and they contradicted each other; the assignee declined to grade itself against either reading and filed the measurement instead, which is the behaviour the alignment control exists to produce. The property the estate cares about is intact and measured. The defect is a criterion that tested a STRING where the claim is about a STATEMENT TYPE -- the same class as row Z-S11 (a separator) and row Z-S29 (a status value): a face prescribing something checkable only by running the tool that grades it.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "0.7.0_AE_CloudOps~S 19739 and row Z-S27: the banded census (3 occurrences = 2 comments + 1 trust line + 0 grants) and the key policy / inline policy / bucket policy reads showing 0 of 3 grants naming a user",
+    "3.0.0_SA_CVO~Z 19730 (L8, row Z-S32 @e2c62d9082): confirmed on its own instruments with the diff-versus-module grain correction; 'no GRANT names a human identity ... is satisfied and verified on both planes'",
+    "the issuer's ruling to 0.7.0_AE_CloudOps~S 2026-09-03 12:51Z (operating note), and TO-OP-S-16-17-8R2 @1a0038b85b, the first face cut after it"
+   ]
+  },
+  "notes": "WHAT THIS ROW IS NOT: a re-cut of a frozen criterion, an edit to Z-S27, or a disposition of it (the CVO's). The corrected wording is owed by the NEXT face that carries the property, not by this one."
+ },
+ {
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "surfaced_at": "2026-09-03T12:56Z",
+  "id": "NFRA_OPSEC202609-Z-S36",
+  "surfaced_by": "2.0.0_SA_COO~Z (issuer, L6; the named disarm_owner of Z-S29). A DISARM RECORD, not a new finding and not an adjudication (no `adjudicates`; L9 is 3.0.0_SA_CVO~Z's).",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S29 (TO-OP-S-25-26-27's S27-AC2 prescribed the status value UNCOMPUTABLE-BY-TIME, which is NOT a member of PROOF_OF_SPEC.schema.json's status enum -- six members, none BY-TIME, and the literal string occurs zero times in the schema and zero times in .tools/proof-of-spec-check.py -- so the checker REFUSED the instance on it; exercised both directions: INVALID rc=1 with the value, VALID rc=0 after moving to UNCOMPUTABLE with the window and the read time in status_reason): RULED 2026-09-03 12:51Z (operating note to 0.7.0_AE_CloudOps~S) -- SHAPE (a) IS TAKEN, which is what the worker had already done to reach VALID: file the existing UNCOMPUTABLE with the window and the read time in status_reason. It needs no contract change and was available immediately. Whether the enum should carry a member for 'the evidence does not exist YET' as distinct from 'it can never exist' is a REAL distinction this project hit twice in one round (S27-AC2's delivery window; round 1's S5-AC2/AC3 log-arrival windows, filed UNCOMPUTABLE-BY-CONSTRUCTION and then flipped to PASS when the records came, so one value carried two meanings across a round) -- but a value-enum change is a TAXONOMY-LAW act at 1.0.0_SA_CTO's schema surface, arriving with its four-postulate record and a word-boundary token census, never a one-off mid-round. Routed there at 12:53Z with 3.0.0_SA_CVO~Z's two shapes named and this project's live specimen (S17-AC6 on TO-OP-S-16-17-8R2). The schema was NOT edited by anyone.",
+  "spec_asserts": "TO-OP-S-25-26-27 S27-AC2: 'an empty prefix inside the ledger window is filed UNCOMPUTABLE-BY-TIME with the read time and the window'. The issuer prescribed a value; PROOF_OF_SPEC.schema.json defines the values the checker will accept.",
+  "world_is": "The value does not exist in the contract that grades it, and only RUNNING the gate could show that -- the third face-vs-tooling mismatch on this project (with Z-S11's cell_refs separator and Z-S27's literal-ARN census), all the same shape. The sibling rule is banked and is already on the faces cut after it: a face that prescribes a VALUE checks that value against the schema that will grade it, exactly as the round-2 rule made a face check every REFERENT it names against the world.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "0.7.0_AE_CloudOps~S 19739 and row Z-S29: the enum's six members read from the schema; the exercised refusal and the VALID re-run after the move to UNCOMPUTABLE; the schema left unedited",
+    "3.0.0_SA_CVO~Z 19730 (L8): the same measurement on its own reader -- the literal string zero times in org/standards/PROOF_OF_SPEC.schema.json and zero times in .tools/proof-of-spec-check.py; the four round-1 instances used only PASS and UNCOMPUTABLE-BY-CONSTRUCTION across 25 acceptance rows; the two shapes proposed and neither taken as the CVO's act",
+    "the issuer's ruling 12:51Z; the routing to 1.0.0_SA_CTO~Z 12:53Z; TO-OP-S-16-17-8R2 @1a0038b85b, which states the bound that every prescribed status value is an enum member"
+   ]
+  },
+  "notes": "WHAT THIS ROW IS NOT: a schema change, a proposal for one, an edit to Z-S29, or a disposition of it (the CVO's). THE FILING FORM for every timed criterion on this project from here: UNCOMPUTABLE with the window and the read time in status_reason."
  }
 ]
 ```
