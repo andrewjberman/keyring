@@ -278,7 +278,11 @@ def _blob(root, ref, rel):
     probe_cmd = (["git", "ls-tree", ref, "--", rel] if ref
                  else ["git", "ls-files", "-s", "--", rel])
     try:
-        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True, timeout=60)
+        # encoding= is EXPLICIT (2.0.0_SA_COO~Z finding 19466, 2026-09-03): text=True alone decodes the pipe with
+        # locale.getpreferredencoding() -- cp1252 on site Z -- so one non-cp1252 byte anywhere in the file
+        # (a U+2B50 star at HEAD) emptied stdout and the gate refused EVERY new row as "ZERO rows".
+        probe = subprocess.run(probe_cmd, cwd=root, capture_output=True, text=True,
+                               encoding="utf-8", errors="surrogateescape", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return ("ERROR", "%s raised %s" % (probe_cmd[1], exc))
     if probe.returncode != 0:
@@ -286,8 +290,8 @@ def _blob(root, ref, rel):
     if not probe.stdout.strip():
         return ("ABSENT", None)
     try:
-        r = subprocess.run(["git", "show", spec], cwd=root,
-                           capture_output=True, text=True, timeout=60)
+        r = subprocess.run(["git", "show", spec], cwd=root, capture_output=True, text=True,
+                           encoding="utf-8", errors="surrogateescape", timeout=60)
     except Exception as exc:  # noqa: BLE001
         return ("ERROR", "show raised %s" % exc)
     if r.returncode != 0:
