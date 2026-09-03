@@ -141,7 +141,9 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 - **Input:** new investigation rows on either channel root. **Output:** the compiled channel, append-only during the round.
 - **Tool:** `org/surprise_channel/surprise-watch.sh <serial> stream` (a read-only watermark on both roots, one line
   per new row, at-least-once) is the CVO's intake; `comp-surprise` is the rollup over both roots.
-- **Gate:** none; the watcher notifies and never blocks.
+- **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any Tier-2
+  serial while a tree project reads `dep_stage: EXECUTING`; the whole send is refused and nothing is written. The
+  watcher notifies and never blocks.
 - **Handoff:** every row to L9.
 
 ### L9 — Adjudication
@@ -176,9 +178,11 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
   atomic close.
 - **Tool:** the remediation row; `.tools/prd-header-notify.py kind:route` delivers a new route row to its owner and
   re-offers until READ.
-- **Gate:** `.tools/surprise-row-gate.py` refuses a route row while any task order under the project is not terminal,
-  a route and target off the locked map, and a `SCOPE_CHANGE` without its kind and outcome reference. The dispositioned
-  half of the precondition binds by reading.
+- **Gate:** `.tools/surprise-row-gate.py` refuses a route-carrying row (a remediation row with a `route`, or an
+  investigation row whose `disposition` is `DECOMP_INVALIDATING`) while any task order under the project is not
+  terminal or any investigation item under it is not dispositioned, a route and target off the locked map, and a
+  `SCOPE_CHANGE` without its kind and outcome reference. An existing item is dispositioned by a new investigation row
+  that names it in `adjudicates`; the channel stays append-only.
 - **Handoff:** the stamped row to the route owner and to no one else; `dep_stage: ROUND_CLOSE`, then `CLOSED` on the
   closing round, flipped by the row owner on the CVO's stamp.
 
@@ -214,7 +218,7 @@ of every done test, read by `ls-remote`, never a cell of a decomposition.
 | L5 decomposition | `2.0.0_SA_COO` | `DECOMP` | lane `TREE_COO` | — | — |
 | L6 task orders | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py`, lane `TREE_COO` | — | — |
 | L7 execution | Tier-2 worker | `EXECUTING` | `surprise-row-gate.py` (rows) | `proof-of-spec-check.py`; the terminal-flip limb of `to-pipeline-gate.py` | — |
-| L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | — | — | `surprise-watch.sh` to the CVO |
+| L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` | — | `surprise-watch.sh` to the CVO |
 | L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows), lane `TREE_CVO` | — | — |
 | L10 routing | `3.0.0_SA_CVO` stamps; owner acts | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (precondition, locked map) | — | `prd-header-notify.py kind:route` to the owner |
 
@@ -250,3 +254,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 | 1.0 | 2026-09-01 | `org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_CANONICAL_LOOP_INCORPORATION_20260901.md` | first text of the ten steps and the surprise flow |
 | 2.0 | 2026-09-03 | state of record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_024xZ_CANONICAL_WORKFLOW_L1_L10_STATE_OF_RECORD.md` @716a9bc7ce (LD-0521); brief `org/tier0_exec/0.0.0_AB_MSTR/deliverables/BRIEF_20260903_CANONICAL_FABRIC_WORKFLOW_SPEC_TEN_LIMBS_ONE_PROCESS.md` @ba9add4200; water test `workflows/atom_decomposition/runs/canonical-fabric-workflow-spec/20260903T0305Z/` | constitutional form; ten limbs with one owner each and the not-engaged set; the project tree homes; the surprise row as the only carrier; the L6 refusal of Tier-0/1 seating and the L10 precondition gate; the proof-of-spec surprises limb; worker commits its own status; the earlier second description of the process retired to a redirect |
 | 2.1 | 2026-09-03 | `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb; `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the L7 to L10 loop: the CVO's findings travel up to the COO (or the CTO for a scope change) and never down to a worker; remediations are one slug at L10; every task order finishes with its valid proof-of-spec before any loop-back; the pass re-enters at L5 or L6 as fresh and remediated task orders in dependency order; the L10 handoff is to the route owner only |
+| 2.2 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md` | two refusers for clauses that bound by reading: the L8 send guard on the broker path (CVO to a Tier-2 serial refused while a tree project is executing) and the second limb of the L10 gate (no route while an investigation item is undispositioned; both route shapes; the `adjudicates` carrier) |
