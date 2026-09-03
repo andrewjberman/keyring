@@ -71,7 +71,7 @@ Every inter-agent request follows **Request → Acknowledge → Validate → Clo
   (Andrew-ratified): `3.0.0_SA_CVO` MANS THE CHANNEL, and every new project runs the canonical
   pipeline — register → PRD → COO decomp-before-TOs → execute ON SPEC (frozen mid-round) →
   investigation/remediation rounds. Only BLOCKING/HAZARD classes interrupt; OBSERVATION never
-  does. Protocol: `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` (CLAUDE.md Rule 27).**
+  does. Protocol: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (CLAUDE.md Rule 27).**
 - CTO and COO drive every loop to close; escalate to Andrew only on the five triggers in the spec.
 - **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
   characters**. The HALTGT deploy checkpoint classifies on it. **A routine message must never begin with

@@ -22,9 +22,9 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     order is complete and every investigation is CVO-checked** (spec error → L6, decomp error → L5, scope
     change → L2). `0.0.0_AB_MSTR` integrates and never works a project. Mid-round the spec is FROZEN; the
     only off-spec act is a surprise ROW (§2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
-    Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (state of record @`716a9bc7ce`, LD-0521; the
-    five-stage `org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` keeps its mechanisms, two clauses VOID). This stub
-    is Andrew's form (2026-09-03: *"rule 27 just link out to the canonical spec doc"*); detail lives there.
+    Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` — the ONE process document (constitutional; state of
+    record @`716a9bc7ce`, LD-0521). There is no other process and no second description of it; a document that
+    describes one is retired to a redirect. This stub is Andrew's form; every detail lives in the spec.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 

@@ -89,6 +89,6 @@ carry existence.
 ## RELATED
 
 `.tools/proof-of-spec-check.py` (the enforcer, and the history of each branch in its comments) ·
-`org/ref/DIRECTIVE_EXECUTION_PIPELINE.md` (Rule 27) · CLAUDE.md Rule 24 (taxonomy law — a value-enum
+`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` (Rule 27) · CLAUDE.md Rule 24 (taxonomy law — a value-enum
 proposal arrives with its four-postulate record and a word-boundary token census, or it is not a
 proposal).
