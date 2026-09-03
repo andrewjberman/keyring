@@ -446,6 +446,23 @@ def _denominator(traces: list) -> dict:
 # ---------------------------------------------------------------------------------------------------
 _LAYER_TAG = {True: "SERVED", False: "ok"}
 
+# GATE'S RC VOCABULARY (FWD-10, NFRA_COMPEFFICACY CE-t-25, PRD v0.5 s.4.4 "verdict-bearing"): gate's
+# exit code IS its verdict, so a PARTIAL (budget-limited) sweep must never return the same rc as
+# either a clean or a failing COMPLETE sweep -- "a tool whose exit code is its verdict never returns
+# the clean verdict from a partial run." RC_NOT_DECIDABLE is that fourth, distinct value.
+RC_CLEAN = 0            # a COMPLETE sweep, zero findings
+RC_FINDINGS = 1         # a COMPLETE sweep, >=1 finding (unchanged from CE-t-7)
+RC_USAGE = 2            # a CLI usage error (a malformed --budget value; landed at CE-t-7)
+RC_REFUSED = 3          # input-resolution refusal -- the pathspec resolved to zero producer files
+RC_NOT_DECIDABLE = 4    # a PARTIAL (budget-limited) sweep, ALWAYS -- regardless of whether the units
+                        # actually reached happened to carry a finding. org/modules/graph/iam_cli.py:50
+                        # STATE_NOT_DECIDABLE returns rc=2 for the SAME enum state (the "family
+                        # precedent" the TO names) -- adopted here as rc=4 only because this tool's own
+                        # rc=2 was already occupied (RC_USAGE) before this cell; never a fresh mint.
+STATE_NOT_DECIDABLE = "NOT-DECIDABLE"   # org/standards/COMPTOOL_ANSWER_STATE.enum.json's own
+                                        # tool-voice token for PARTIAL_OR_BLIND; iam_cli.py:50 is the
+                                        # existing carrier this cell adopts verbatim, never re-minted.
+
 
 def cmd_origin(args) -> int:
     """QUERY form: value-origin trace of one script -- every read with its layer, served flagged."""
@@ -508,27 +525,42 @@ def cmd_gate(args) -> int:
     .tools/_compbudget.py (carrier: --budget > env COMP_BUDGET_S > default 90s). `origin` has no
     such loop (always exactly one file) and exposes no --budget flag at all -- a declared
     non-application, not an omission: there is no unit to bound there.
+
+    VERDICT-BEARING (NFRA_COMPEFFICACY CE-t-25, FWD-10, PRD v0.5 s.4.4): this tool's rc IS its
+    verdict, so a BUDGET-REACHED (partial) sweep returns RC_NOT_DECIDABLE -- ALWAYS, regardless of
+    whether the units actually reached happened to carry a finding -- never RC_CLEAN and never
+    RC_FINDINGS. "the clean verdict from a partial run" is exactly the defect CE-t-7's own F4 named
+    and this fixes. The BUDGET REACHED line still prints exactly as CE-t-7 landed it; only the rc
+    (and a new STATE: line carrying the enum's own tool-voice token) are added on top of it.
     """
     _emit_contract("gate")
     population = _iter_producers(args.paths)
     if not population:
         print(f"REFUSE: no producer .py files resolved under {args.paths} -- nothing swept, "
               f"nothing concluded (NOT a clean pass)")
-        return 3
+        return RC_REFUSED
     try:
         budget_s, budget_source = _compbudget.resolve_budget(args.budget)
     except ValueError as exc:
         print(f"comp-dataflow: ERROR: --budget {exc}")
-        return 2
+        return RC_USAGE
 
     units = sorted({str(p).replace("\\", "/") for p in population})  # deterministic scan order
-    total_units = len(units)
     if args.cursor:
         if args.cursor in units:
             units = [u for u in units if u > args.cursor]
         else:
             print(f"comp-dataflow: WARNING: --cursor {args.cursor!r} does not match any resolved "
                   f"producer -- running the full requested set (no units skipped).")
+    # NFRA_COMPEFFICACY CE-t-25 (found exercising FWD-10's DONE WHEN, not asked for but required to
+    # make the new rc correct): total_units MUST be measured AFTER the cursor filter, matching
+    # comp-find's own precedent (CE-t-1). Computed before it (this cell's own draft, and CE-t-7's
+    # landed code before this fix), a cursor-resumed run that completes 100% of ITS OWN remaining
+    # units still reads n < N against the PRE-cursor total, so it wrongly reports RC_NOT_DECIDABLE
+    # forever -- a resumed sweep could never reach a true verdict. EXERCISED live: the round-4
+    # cursor-follow-to-completion case (T25-AC2) reproduced exactly this before the fix (531 of a
+    # stale N=532 after the ONE cursor-skipped unit, BUDGET REACHED with 0 actually deferred).
+    total_units = len(units)
 
     clock = _compbudget.Clock(budget_s)
     by_unit: dict = {}
@@ -548,10 +580,12 @@ def cmd_gate(args) -> int:
     n, N, n_deferred = len(completed), total_units, len(deferred_reasons)
     used_s = round(clock.elapsed(), 2)
 
+    partial = n < N
     if args.json:
         print(json.dumps({"findings": findings, "denominator": d,
                           "budget": {"scanned": n, "total": N, "deferred": n_deferred,
-                                     "budget_s": budget_s, "source": budget_source, "used_s": used_s}},
+                                     "budget_s": budget_s, "source": budget_source, "used_s": used_s,
+                                     "state": STATE_NOT_DECIDABLE if partial else None}},
                          indent=2))
     else:
         print(f"comp-dataflow GATE (layer-grammar / PSTMRT item-9): {len(findings)} finding(s)")
@@ -570,14 +604,20 @@ def cmd_gate(args) -> int:
             args_repr = "comp-dataflow " + " ".join(sys.argv[1:])
             print("  " + _compbudget.budget_reached_line(budget_s, budget_source, n, N, "producer_file",
                                                           args_repr, completed[-1]))
+            print(f"  STATE: {STATE_NOT_DECIDABLE}  (rc={RC_NOT_DECIDABLE}, distinct from clean "
+                  f"rc={RC_CLEAN} and findings rc={RC_FINDINGS} -- a PREFIX carries no verdict)")
         else:
             print(f"  BUDGET REACHED: {_compbudget.fmt(budget_s)} s ({budget_source}); scanned 0 of "
                   f"{N} producer_file(s); results are a PREFIX, not the answer; NO CURSOR YET: no "
                   f"file completed before the budget hit, so there is no last-processed unit to "
                   f"resume from; resume: re-run with a larger --budget.")
+            print(f"  STATE: {STATE_NOT_DECIDABLE}  (rc={RC_NOT_DECIDABLE}, distinct from clean "
+                  f"rc={RC_CLEAN} and findings rc={RC_FINDINGS} -- a PREFIX carries no verdict)")
         for line in _compbudget.deferred_bucket(n_deferred, N, "producer_file", deferred_reasons):
             print("  " + line)
-    return 1 if findings else 0
+    if partial:
+        return RC_NOT_DECIDABLE
+    return RC_FINDINGS if findings else RC_CLEAN
 
 
 def cmd_self_test(_args) -> int:
@@ -613,7 +653,22 @@ def main() -> int:
     o.add_argument("--json", action="store_true")
     o.set_defaults(func=cmd_origin)
 
-    g = sub.add_parser("gate", help="layer-grammar gate (item-9) over a producer tree/files")
+    g = sub.add_parser(
+        "gate", help="layer-grammar gate (item-9) over a producer tree/files",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="RC VOCABULARY (VERDICT-BEARING, PRD v0.5 s.4.4 / FWD-10, NFRA_COMPEFFICACY CE-t-25):\n"
+               "  %d  clean     -- a COMPLETE sweep, zero findings\n"
+               "  %d  findings  -- a COMPLETE sweep, >=1 finding\n"
+               "  %d  usage     -- a CLI usage error (a malformed --budget value)\n"
+               "  %d  refused   -- the pathspec resolved to zero producer files (input-resolution)\n"
+               "  %d  %s -- a PARTIAL (budget-limited) sweep; ALWAYS this value at BUDGET\n"
+               "        REACHED, regardless of whether the units reached carried a finding -- never\n"
+               "        the clean rc and never the findings rc (a prefix carries no verdict). The\n"
+               "        family precedent: org/modules/graph/iam_cli.py:50 STATE_NOT_DECIDABLE\n"
+               "        returns rc=2 for this same enum state; this tool adopts rc=%d instead only\n"
+               "        because its own rc=2 was already occupied (usage) before this cell."
+               % (RC_CLEAN, RC_FINDINGS, RC_USAGE, RC_REFUSED, RC_NOT_DECIDABLE,
+                  STATE_NOT_DECIDABLE.lower(), RC_NOT_DECIDABLE))
     g.add_argument("paths", nargs="+", help="producer .py files or dirs (gold/silver/backfill swept)")
     g.add_argument("--json", action="store_true")
     g.add_argument("--budget", metavar="N", default=None,

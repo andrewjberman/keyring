@@ -1,7 +1,19 @@
 """Acceptance: comp-dataflow -- the 4/4 honest-unresolved specimens PRESERVED, the enriched
-UNRESOLVED-reason print, and Rule T's form on the gate sweep. NFRA_COMPEFFICACY CE-t-7.
+UNRESOLVED-reason print, Rule T's form on the gate sweep, and (CE-t-25, FWD-10) gate's VERDICT-BEARING
+rc: a partial (budget-limited) sweep never returns the clean or the failing rc, only RC_NOT_DECIDABLE.
+NFRA_COMPEFFICACY CE-t-7 + CE-t-25.
 
-No battery existed for this tool at cut (0 files in .tools/tests/ for comp-dataflow/comp_dataflow).
+No battery existed for this tool before CE-t-7 (0 files in .tools/tests/ for comp-dataflow).
+
+CE-t-25 ARMS 6-8 (added under FWD-10, PRD v0.5 s.4.4 "verdict-bearing"): a real budget-cut sweep
+over the full 532-file tree read as NOT-CLEAN by a real shell `&&` (arm 6), the three-way rc
+vocabulary confirmed distinct on the real binary -- clean/findings/not-decidable, no shared value
+(arm 7), and a mutant that returns the clean rc at expiry regardless goes RED (arm 8). EXERCISING
+arm 6/7 live (not asked for, required to build it) FOUND a real pre-existing bug: total_units was
+measured BEFORE the --cursor filter, so a cursor-resumed run that completed 100% of its OWN
+remaining units still read n < N against the STALE pre-cursor total and could never reach a true
+verdict -- fixed in the same commit (comp_dataflow.py, matching comp-find's own precedent: total_units
+is measured AFTER the cursor filter, not before).
 
 EIGHT REC()-CALLS, FOUR LOGICAL ARMS (a real+mutant pair per arm). The FIRST arm is the never-guess
 control (T7-AC3's own words: "a planted mutant that resolves one of them by reading deploy-time
@@ -297,6 +309,70 @@ def _run_battery():
             "resolution, not by an identity that would print it regardless"
             % ("still reports WITHIN BUDGET, never BUDGET REACHED" if ignored else
                "STILL reached BUDGET REACHED -- the mutant did not neuter the carrier"))
+
+    # --- 6. VERDICT-RC-CONSUMER (CE-t-25, FWD-10 DONE WHEN): a real rc-only consumer ------------
+    # bails on a budget-cut sweep, then following the cursor to completion yields the TRUE verdict.
+    cut = subprocess.run([sys.executable, str(_tool()), "gate", "data/", "--budget", "0.001"],
+                        cwd=str(_ws()), capture_output=True, timeout=30)
+    consumer_bailed = cut.returncode not in (0,)  # an rc-only `&&` would not proceed past this
+    full = subprocess.run([sys.executable, str(_tool()), "gate", "data/", "--budget", "30"],
+                         cwd=str(_ws()), capture_output=True, timeout=60)
+    completion_is_true_verdict = full.returncode in (0, 1)  # never 2/3/4 on a genuinely complete sweep
+    rec("VERDICT-RC-CONSUMER", consumer_bailed and completion_is_true_verdict,
+        "a real rc-only consumer (subprocess returncode, the same signal a shell && reads) does NOT "
+        "treat the budget-cut sweep as clean (rc=%d) -- 'PROCEED' logic never fires; the SAME "
+        "pathspec at an ample budget (--budget 30, full 532-file tree, no --cursor needed since 30s "
+        "comfortably covers the measured ~8.8s baseline) completes and returns a TRUE verdict rc=%d "
+        "(clean or findings, never usage/refused/not-decidable)"
+        % (cut.returncode, full.returncode))
+
+    # --- 7. VERDICT-RC-VOCABULARY: the three real outcomes are pairwise distinct on the real binary
+    clean_rc = subprocess.run([sys.executable, str(_tool()), "gate", "data/inf/scripts/silver"],
+                             cwd=str(_ws()), capture_output=True, timeout=30).returncode
+    findings_rc = subprocess.run([sys.executable, str(_tool()), "gate", "data/mdpf/scripts/backfill"],
+                                cwd=str(_ws()), capture_output=True, timeout=30).returncode
+    notdecidable_rc = subprocess.run([sys.executable, str(_tool()), "gate", "data/", "--budget", "0.001"],
+                                    cwd=str(_ws()), capture_output=True, timeout=30).returncode
+    all_distinct = len({clean_rc, findings_rc, notdecidable_rc}) == 3
+    rec("VERDICT-RC-VOCABULARY", all_distinct and clean_rc == 0 and findings_rc == 1 and notdecidable_rc == 4,
+        "three real gate invocations produce three PAIRWISE DISTINCT rc values on the real binary: "
+        "clean=%d (data/inf/scripts/silver, 0 findings), findings=%d (data/mdpf/scripts/backfill, "
+        ">=1 finding), not-decidable=%d (data/ at --budget 0.001) -- no shared value across any pair"
+        % (clean_rc, findings_rc, notdecidable_rc))
+
+    # --- 8. MUTANT-VERDICT-RC: a build that returns the clean rc at expiry regardless, RED-first --
+    src4 = _tool().read_text(encoding="utf-8")
+    mutant_src4, nsub4 = re.subn(
+        r"    if partial:\n        return RC_NOT_DECIDABLE\n",
+        "    if partial:\n        return RC_CLEAN  # MUTANT: FWD-10 violation, planted\n",
+        src4, count=1)
+    if nsub4 == 0:
+        rec("MUTANT-VERDICT-RC", False,
+            "could not plant the mutant: the 'if partial: return RC_NOT_DECIDABLE' block has moved "
+            "-- the arm certifies nothing and is reported FAIL, never skipped")
+    else:
+        with tempfile.TemporaryDirectory() as td5:
+            mp4 = Path(td5) / "mutant4"
+            (mp4 / "org" / "modules" / "graph").mkdir(parents=True)
+            (mp4 / ".tools").mkdir(parents=True)
+            (mp4 / "org" / "modules" / "__init__.py").write_text("", encoding="utf-8")
+            (mp4 / "org" / "modules" / "graph" / "__init__.py").write_text("", encoding="utf-8")
+            (mp4 / "org" / "modules" / "graph" / "comp_dataflow.py").write_text(mutant_src4, encoding="utf-8")
+            (mp4 / ".tools" / "_compbudget.py").write_text(
+                (_ws() / ".tools" / "_compbudget.py").read_text(encoding="utf-8"), encoding="utf-8")
+            mo4 = subprocess.run(
+                [sys.executable, str(mp4 / "org" / "modules" / "graph" / "comp_dataflow.py"),
+                 "gate", "data/", "--budget", "0.001"],
+                cwd=str(_ws()), capture_output=True, timeout=30)
+        violates_fwd10 = mo4.returncode == 0
+        rec("MUTANT-VERDICT-RC", violates_fwd10,
+            "the planted build that returns RC_CLEAN at BUDGET REACHED regardless %s at --budget "
+            "0.001 on the full data/ tree -- so arm 7's rc=4-for-not-decidable is produced by real "
+            "FWD-10 compliance, not by an identity that would print rc=0 (the exact defect FWD-10 "
+            "exists to catch, reproduced on demand)"
+            % ("DID return the clean rc from a partial run (rc=0) -- FWD-10 violation reproduced"
+               if violates_fwd10 else
+               "did NOT return the clean rc -- the mutant failed to plant, this arm certifies nothing"))
 
 
 def _report() -> int:
