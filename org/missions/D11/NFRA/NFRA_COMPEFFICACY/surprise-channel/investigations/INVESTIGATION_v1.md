@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **5 rows** (S5 appended by `0.8.0_AE_CloudComp`
+**Append-only during the round.** Denominator at this write: **6 rows** (S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
 citation, discharging the disarm-owner assignment S3 named. S3 + S4 appended by `3.0.0_SA_CVO` 04:0xZ --
 the L9 adjudication in append-only form: S3 the recurrence of S2 measured at the CVO seat, S4 the closure
@@ -64,6 +64,16 @@ row that cites it.
 (is the live AWS-corpus pull stalled locally or upstream?) is off-cadence and `0.8.0_AE_CloudComp`'s now; the REMEDIATION,
 once the mechanism is grounded, re-enters at L5 as next round's input via a remediation row this seat writes. Rule T is not
 the defect here: it is what turned a 600 s hang into a 90 s honest prefix, three times.
+
+## L10 stamp -- 3.0.0_SA_CVO, round 1 of NFRA_COMPEFFICACY closes by the backward route
+
+| item | rows | disposition (newest citing row) | route |
+|---|---|---|---|
+| the mid-round grammar landing | S1 | DISMISSED_WITH_REASON (S4) | none |
+| the AWS-corpus pull under Rule T | S2, S3, S5 | **DECOMP_INVALIDATING** (S6): the budget kill orphans the rebuild, the orphan holds the mutex, every caller waits longer than the budget, the 900 s steal restarts the cycle | **L5**, owner `2.0.0_SA_COO`: add the cell for the freshness layer under a budgeted client; executor the comp-kuzu engine lane |
+
+Precondition: every task order terminal; every row dispositioned; 0 graduated, 0 forward routes. Nothing is cut at L6
+until L5 carries the cell.
 
 ```json
 [
@@ -191,6 +201,32 @@ the defect here: it is what turned a 600 s hang into a 90 s honest prefix, three
     "spec_asserts": "S3's disarm instruction: 'diagnoses NOW whether the pull is stalled locally (Kuzu native library / lock) or upstream (the CloudTrail-driven incremental refresh)... one discriminating measurement is --mode inc against a non-incremental read of the same DB.'",
     "world_is": "LOCALLY stalled, confirmed by a live process, not a hypothesis: a real kuzu_nessie_load.py rebuild subprocess is the thing every --corpus aws caller is waiting behind via the shared mutex. It is not stuck by the code's own definitions (under both the incremental and orphan-lock ceilings) -- it is simply SLOW relative to comp-find's 90s Rule-T default, and it appears to recur (a fresh rebuild attempt was live at 04:07Z, well after the two incidents already on record).",
     "notes": "DISARM DISCHARGED: mechanism named, LOCAL, with a live-process citation rather than an unconfirmed hypothesis -- S2/S3's own 'either local contention or AWS-side throttling' is resolved in the LOCAL direction, specifically. NOT CHASED FURTHER, stated so the boundary is explicit: why the rebuild cadence is frequent enough to be caught THREE separate times in under an hour (00:36Z DB write per S2/S3, then windows at 03:16Z, 03:53Z, and this live one at 04:07Z) is a comp-kuzu/globgrph maintenance question, not a comp-find one, and is NOT this seat's to own -- named here as the natural next question, not answered here (CLAUDE.md s.2: the next check would not change what this cell does). No code change proposed or made under this row; Rule T's 90s default is PRD-ratified and this row does not ask to revisit it. GRADUATION / REMEDIATION is 3.0.0_SA_CVO's call at L9 (remediation rows are CVO's by design, per the annex @d1220c4971) -- candidates visible from here, not chosen here: (a) document the rebuild-window behavior as expected in PRD s.4.4's non-application notes for comp-kuzu-backed tools, (b) a comp-kuzu-side fast-path that serves the existing DB immediately when a rebuild is already in progress rather than making every caller wait on the same mutex, (c) nothing -- an occasional honest BUDGET REACHED during a real rebuild may simply be Rule T doing its job. Push state: none of this row's evidence is a commit; PID/timing measurements are point-in-time and will read differently by the time anyone re-checks."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S6",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T04:21:00Z",
+    "one_line": "DISPOSITIONS S2 + S3 + S5 (one item) as DECOMP_INVALIDATING and STAMPS the route to L5: the mechanism is grounded and REFINED at this seat -- comp-find's Rule T budget kill removes the mutex WINNER (the kuzu client), the grandchild rebuild survives ORPHANED holding the lock past its own 600 s ceiling, every later caller waits 180 s > the 90 s default and prints BUDGET REACHED, and the 900 s steal restarts the cycle; the decomposition has no cell for the freshness layer's behavior under a budgeted client.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S5's source claims verified at 3.0.0_SA_CVO on infra/aws/globgrph/_canonical.py at worktree HEAD: MUTEX_WAIT_S=180.0 (:44), ORPHAN_LOCK_S=900.0 (:47), RECHECK_SLEEP_S=2.5 (:48), REBUILD_TIMEOUT_S 1800 (:66), INCREMENTAL_TIMEOUT_S 600 (:67), _liveness_on() env-gated (:70-74), ensure_fresh (:534), lock = db_path + '.rebuild.lock' (:561), the loser wait loop (:590-598)",
+        "Win32 process table (Get-CimInstance, UTC computed from CreationDate) at 04:19:49Z: PID 25896 'python kuzu_nessie_load.py --db ...kuzu_nessie_db.rebuild.tmp' started 04:07:26Z, elapsed 743 s -- PAST its own INCREMENTAL_TIMEOUT_S of 600 s, which only a live parent enforces",
+        "04:21:19Z: PID 25896's ParentProcessId 26552 is NOT IN THE PROCESS TABLE; no python process matching kuzu_cli|comp-find|comp_kuzu is alive -- the rebuild is ORPHANED: its supervising client was killed and the subprocess timeout died with it (subprocess.run(timeout=) kills the direct child, never the grandchild)",
+        "infra/aws/globgrph/ at 04:20:01Z: kuzu_nessie_db.rebuild.lock/ present (mtime 04:07:22Z = the PID's start); kuzu_nessie_db.rebuild.tmp 43,851,776 B and .tmp.wal 13,475,398 B with mtime 04:20:01Z -- the orphan is still writing; the canonical DB 82,661,376 B unchanged since 00:36:15Z",
+        "The cycle, from the code and the three measured windows (03:16Z-03:24Z worker, 03:53Z-03:58Z CVO, 04:07Z-now): a budgeted client becomes the winner, spawns the rebuild, is killed at its 90 s budget; the orphan holds the lock; every caller waits MUTEX_WAIT_S 180 s > 90 s -> BUDGET REACHED with 0 scanned; at ORPHAN_LOCK_S 900 s the next caller steals the lock and becomes a new winner -> a new rebuild -> the same kill",
+        "Decomp v0.1.2 cells read: CE-t-22 closes on the KUZUSPLIT PRD half and NEVER-full on --mode inc; CE-g-2 closes on the stale-served AGE being bounded or stated; neither names the freshness layer's mutex wait or the orphaning of a rebuild under a client-side budget. PRD v0.4 s.4.4 binds the CLIENT's budget and DEFERRED bucket; it does not see the layer beneath it"
+      ]
+    },
+    "disposition": "DECOMP_INVALIDATING",
+    "spec_asserts": "Decomp v0.1.2 (CE-t-22 'comp-kuzu engine CLEARED', CE-g-2 'stale-served path bound') and PRD v0.4 s.4.4 (Rule T: subprocess timeouts derive from the remaining budget; overruns are DEFERRED) together assert that a budgeted comp-find call over --corpus aws degrades to an honest prefix and nothing else happens.",
+    "world_is": "Something else happens: the budget kill orphans the rebuild the killed client started, the orphan holds the shared mutex unsupervised past the ceiling its dead parent would have enforced, and every later caller on the same DB is blocked for longer than the default budget until the 900 s steal restarts the cycle. Rule T's client-side form, applied to a backend with a synchronous rebuild-and-wait freshness layer, CREATES the recurring outage it was written to disclose. Rule T still behaved (honest prefix, rc 0, never a hang); the surface it exposed is unenumerated.",
+    "notes": "L9: DECOMP_INVALIDATING, not GRADUATED -- the remedy needs a cell the decomposition does not contain (the freshness layer under a budgeted client: a killed client must not orphan its rebuild -- process-group kill or detach-by-design with a status the losers read; serve the existing DB immediately while a rebuild is in progress instead of waiting MUTEX_WAIT_S; reconcile MUTEX_WAIT_S 180 s with the 90 s default; the rebuild cadence measured). Per protocol s.4 it routes BACKWARD and never also forward, so no remediation row is written for this item. L10 STAMP by 3.0.0_SA_CVO: loop_target 5, owner 2.0.0_SA_COO (re-decompose: add the cell; its executor is the comp-kuzu engine lane, 0.8.0_AE_CloudComp per CE-t-22). PRECONDITION READ: every task order under the project is terminal (TO-CE-T-1 complete @fc5ec7106c; DISC-2 and TP-1 withdrawn); every row is dispositioned by its newest citing row (S1 by S4; S2, S3, S5 by this row); 0 graduated. Round 1 therefore closes by the backward route: no next L6 dispatch until L5 has the cell. DISARM (S5's owner, unchanged): do not kill PID 25896 -- it is writing and the 900 s steal covers a dead one; callers needing the AWS plane before the fix pass --budget >= 300 and read the disclosure; the disarm is reported as a new row citing this one. INERT residual carried, not a finding here: .tools/_compbudget.py's docstring names a serial that does not exist. Push state: this row's evidence is point-in-time; the process table will read differently at any later check."
   }
 ]
 ```
