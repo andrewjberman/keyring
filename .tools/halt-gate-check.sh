@@ -330,6 +330,12 @@ halt_gate_check() {
   for s in "${scan_serials[@]}"; do
     while IFS= read -r f; do
       [ -n "$f" ] || continue
+      # RACE GUARD (1.0.0_SA_CTO~Z, 2026-09-03; observed by 0.0.0_AB_MSTR~Z 08:12:32Z): a file the
+      # listing named but which is gone by the time it is read was moved to read/ by the agent's own inbox
+      # watcher between the find and this stat -- it is a DELIVERED message, not an unread one. Without this
+      # line the vanished file falls through both fail-safes (empty To: -> included; not stop-class ->
+      # routine) and blocks the push as "1 pending (age unknown)", inviting HALT_ACK=1 spent on a race.
+      [ -f "$f" ] || continue  # HALT-GATE-RACE-GUARD (the battery's mutant deletes exactly this line)
       to_field="$(halt_gate_recipient "$f")"
       if [ -n "$to_field" ]; then
         to_base="${to_field%%~*}"
