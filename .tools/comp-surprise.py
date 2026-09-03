@@ -45,16 +45,32 @@ def _blocks(path):
     return out, bad
 
 
+def _project_of(p):
+    """The project a channel file belongs to, from its PATH (the path is the membership).
+    flat: org/surprise_channel/<PROJECT>/INVESTIGATION_v1.md            -> the parent folder
+    tree: org/missions/D*/<MACRO>/<PROJECT>/surprise-channel/investigations/INVESTIGATION_v1.md
+          -> the folder TWO levels above surprise-channel/ (basename(dirname) would say 'investigations')."""
+    d = os.path.dirname(p).replace("\\", "/")
+    if d.endswith("/surprise-channel/investigations") or d.endswith("/surprise-channel/remediations"):
+        return os.path.basename(os.path.dirname(os.path.dirname(d)))
+    return os.path.basename(d)
+
+
 def load():
     items, malformed, files = [], [], 0
-    if not os.path.isdir(CHANNEL):
-        return items, malformed, 0, 0
+    # TWO ROOTS (2026-09-03, 1.0.0_SA_CTO -- found by the spec water test canonical-fabric-workflow-spec__20260903T0305Z,
+    # cell L8.comp-surprise-reader): this rollup read ONLY the flat channel, so `--project NFRA_COMPEFFICACY` reported
+    # 0 items while rows S1/S2 sat at the tree home org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/. The tree
+    # grammar is org/standards/PROJECT_TREE.contract.json surprise_channel_glob; the step-8 watcher and the row gate
+    # already read both roots -- a reader on one root is blind to every project registered since 2026-09-02.
     pats = [os.path.join(CHANNEL, "*", "INVESTIGATION_v*.md"),
-            os.path.join(CHANNEL, "*", "REMEDIATION_v*.md")]
+            os.path.join(CHANNEL, "*", "REMEDIATION_v*.md"),
+            os.path.join(ROOT, "org", "missions", "D*", "*", "*", "surprise-channel", "investigations", "INVESTIGATION_v*.md"),
+            os.path.join(ROOT, "org", "missions", "D*", "*", "*", "surprise-channel", "remediations", "REMEDIATION_v*.md")]
     paths = sorted({p for pat in pats for p in glob.glob(pat)})
     for p in paths:
         files += 1
-        project = os.path.basename(os.path.dirname(p))
+        project = _project_of(p)
         kind = "REMEDIATION" if "REMEDIATION" in os.path.basename(p) else "INVESTIGATION"
         blocks, bad = _blocks(p)
         malformed.extend(bad)

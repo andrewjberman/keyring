@@ -636,7 +636,25 @@ def check_file(root, rel):
 
     ov = OVERRIDE_RE.search(text)
     if ov:
-        notes.append("OVERRIDE taken on %s -- reason: %s" % (rel, ov.group(1).strip()))
+        # AUDITED means WRITTEN (2026-09-03, 1.0.0_SA_CTO; spec water test cell L6.pipeline-override-audited): the
+        # canonical spec said this override is "audited" while the gate only PRINTED it. The sibling issuance hook
+        # appends to org/to-pos-override-audit.log; this appends to its own sink in the same shape. A sink that cannot
+        # be written is a NOTE, never a refusal -- the override was already legal, the audit is the record of it.
+        reason = ov.group(1).strip()
+        try:
+            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+                                 timeout=20).stdout.split(" <")[0].strip() or "<unknown author>"
+        except Exception:  # noqa: BLE001
+            who = "<unknown author>"
+        import datetime as _dt
+        line = "%s | %s | %s | %s\n" % (_dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H%M%SZ"), who, rel, reason)
+        try:
+            with open(os.path.join(root, "org", "to-pipeline-override-audit.log"), "a", encoding="utf-8") as fh:
+                fh.write(line)
+            notes.append("OVERRIDE taken on %s -- reason: %s (audited: org/to-pipeline-override-audit.log)" % (rel, reason))
+        except Exception as exc:  # noqa: BLE001
+            notes.append("OVERRIDE taken on %s -- reason: %s (AUDIT SINK UNWRITABLE: %s -- the override stands, the record does not)"
+                         % (rel, reason, exc))
         return ([], notes)
 
     # THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
