@@ -272,7 +272,12 @@ L8 reads below were appended at this write; no row was added or changed by it.
   TO-OP-S-3 terminal with VALID instances; TO-OP-S-5 and TO-OP-S-8 open. Five worker findings share one shape -- the face
   asserted something the world did not hold -- under three mechanisms (a label taken for a fact; a name never measured;
   a scoped measurement generalised in relay), every one caught by the re-grounding before a destructive act. Nothing
-  routes while two task orders are open.
+  routes while two task orders are open. POSTSCRIPT (09:2xZ): the S13/S14 reads above and this bullet rode the
+  issuer's 2d3ac2b48f (the commit carrying Z-S15 and Z-S16, the disarm records for S14 and S13) after this seat's
+  gated commit refused over those two uncommitted rows; the text is `3.0.0_SA_CVO~Z`'s. With S15/S16 on the record,
+  every ARMED worker item of the round (S2/S3/S4/S5/S11/S13/S14) carries a disarm record; S10's disarm is the CTO's
+  text and S1's is this seat's act at L10. Sixteen rows. The tick-2 verdict on Z-S14's spec half (adopt by import
+  under OP-s-8's round-2 limb, no PRD change, the plan read as the acceptance bar) is ledger row 2 at the driver.
 
 ```json
 [
