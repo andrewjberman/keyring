@@ -30,14 +30,15 @@ the flat index entry `org/projects/<CODE>.json` is generated from it and carries
 
 **The shape of a round.** L1 to L5 run once, in order, each handing its artifact to the next. L6 cuts every task
 order of the decomposition in one issuance. Three tracks then run at once and share only files: the COO spawns the
-workers, feeds each its queue, merges each finished task order and never messages anyone; the CVO reads the
-surprise channel as rows land, investigates as deeply as a row needs, compiles the round's remediations and never
-messages anyone until the slug; the CTO waits. When every task order is terminal and every row dispositioned, the
-CVO issues the slug to the CTO, always to the CTO. The CTO reads coverage of the endpoint's outcomes: an outcome no
-cell served takes a PRD addendum; otherwise the round-N analysis goes to the COO with the remediations file, and the
-COO recuts in one issuance. When every outcome grades realized the CTO stamps the close. Signal is highest at the
-two ends of that chain, a clean cell and a real surprise row, and lowest in the middle, which is exactly what crosses
-the worker boundary; so provenance travels in the record and only the specification travels to the worker.
+workers, feeds each its queue, merges each finished task order and sends nothing until its drain-end read; the CVO
+reads the surprise channel as rows land, investigates as deeply as a row needs, compiles the round's remediations
+and never messages anyone until the slug; the CTO waits. When every task order is terminal and every row
+dispositioned, the CVO issues the slug to the CTO, always to the CTO. The CTO reads coverage of the endpoint's
+outcomes: an outcome no cell served takes a PRD addendum; otherwise the round-N analysis goes to the COO with the
+remediations file, and the COO recuts in one issuance. When every outcome grades realized the CTO stamps the close.
+Signal is highest at the two ends of that chain, a clean cell and a real surprise row, and lowest in the middle,
+which is exactly what crosses the worker boundary; so provenance travels in the record and only the specification
+travels to the worker.
 
 ```
   L1 brief -> L2 endpoint -> L3 register -> L4 PRD -> L5 decomposition + battery (frozen at the cut)
@@ -50,13 +51,13 @@ the worker boundary; so provenance travels in the record and only the specificat
    TRACK A  the COO                             TRACK B  the CVO                                TRACK C  the CTO
    spawns N workers, hands each its queue       reads worker rows as they land, investigates     waits for the slug
    merges as task orders close, hands the next  deep, adjudicates in its own document,
-   sends nothing                                compiles the remediations; sends nothing
-                                                until the slug
+   reads ARMED rows at each merge               compiles the remediations; sends nothing
+   sends nothing until the drain-end read       until the slug
             |                                              |
             v                                              v
    every task order terminal          +          every row dispositioned                 <- the L10 precondition
-                                                           |
-                                                           v
+   (the COO's one message: the                             |
+    drain-end read, to the CTO)                            v
   L10 the CVO's one slug -> the CTO, always
             |
             +-- an outcome no cell served ------> PRD addendum (rare) -> L4 forward
@@ -214,7 +215,9 @@ the worker boundary; so provenance travels in the record and only the specificat
 - **The drain.** When a task order is terminal the COO reads the worker's final report and the proof-of-spec instance,
   merges the worker's branch into the working branch when the instance is valid, pull-merge never rebase, removes the
   worktree and its branch explicitly, and hands the worker its next task order by continuing the same subagent with
-  its context intact; no respawn, no cold start. A worker with an empty queue ends. A worker that dies mid-task-order
+  its context intact; no respawn, no cold start. At each merge the COO reads every row the branch carries: an `ARMED`
+  row whose `disarm_owner` is dark is the COO's to re-seat, since the COO is the seat that spawns, and one it cannot
+  seat rides the COO's drain-end read to the CTO. A worker with an empty queue ends. A worker that dies mid-task-order
   leaves a branch; the COO merges it if its instance is valid and otherwise discards it and re-dispatches the task
   order to a fresh slot.
 - **Gate:** `.tools/surprise-row-gate.py` at commit refuses a new investigation row without both halves, off its
@@ -244,7 +247,8 @@ the worker boundary; so provenance travels in the record and only the specificat
   that what the CVO reads is short and its depth lands where the ambiguity is.
 - **Stall.** A dead watcher and a quiet channel read alike. When every task order is terminal the COO reads the CVO's
   watermark once against the channel's row count; if the watermark is behind, the COO tells the CTO, not the CVO, and
-  the CTO re-arms the watcher. One read, no monitor, no cron.
+  the CTO re-arms the watcher. That drain-end read is the COO's one message of a round: the watermark, and any armed
+  row whose disarm owner the COO could not seat. One read, no monitor, no cron.
 - **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any Tier-2
   serial while a tree project reads `dep_stage: EXECUTING`; the whole send is refused and nothing is written. The
   watcher notifies and never blocks. The CVO's single admitted send of a round, the slug to the CTO, binds by reading
@@ -356,7 +360,7 @@ measured property of every done test, read by `ls-remote`, never a cell of a dec
 |---|---|---|---|
 | L1 | `4.0.0_SA_CRO` | none (the brief's shape is refused at L6) | binds by reading |
 | L2–L4 | `1.0.0_SA_CTO` | lane `ANY_CTO` on `prd/`; lane `TREE_PROJECT_ROW` on the row | binds by reading |
-| L5–L6 | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading; the COO sends nothing during a round |
+| L5–L6, the drain | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading; the COO's one message of a round is the drain-end read to the CTO |
 | L7 | worker subagents of the COO | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>`; the worker agent type has no send tool | not applicable: a worker cannot be messaged and cannot message |
 | L8–L9, the slug | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/` and `adjudications/`; `investigations/` and `cards/` admit every seat | the CVO's one message of a round is the slug to the CTO |
 | L10 read, close | `1.0.0_SA_CTO` | lane `TREE_LEDGER` on `ledger/`; lane `ANY_CTO` on `prd/` | the CTO's one message of a round is the round-N analysis to the COO |
@@ -406,8 +410,8 @@ commit that uses it.
 - **The COO flips `EXECUTING` in the issuance commit.** The row lane admits only the CTO to `project.json`; until the
   registry grantor widens that lane to the COO for this act, the issuance commit that carries the flip is refused, and
   the CTO flips the row in the same window.
-- **The worker's toolkit.** The worker agent type does not exist; a worker spawned as a general-purpose subagent
-  carries every tool including the broker's, and its silence binds by reading.
+- **The worker's toolkit.** The worker agent type at `.claude/agents/worker.md` fixes the toolkit and the model; until
+  its first exercised spawn commits under a worker serial through the lane gates, its silence binds by reading.
 - **One clause per criterion.** The proof-of-spec instance carries a criterion's invocation, output and denominator
   and no expectation pattern or judgment flag; the checker grades no criterion's truth. The expectation match at the
   checker, the judgment flag on the criterion, and the L6 refusal of a compound criterion or of a mechanical criterion
@@ -451,3 +455,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 2.5 | 2026-09-03 | `org/standards/COMPLETION_REPORT.schema.json` (the grader's bar in the contract) | the close's grading bars stated in the process rather than in messages: a `REALIZED` grade cites artifacts covering every limb of the card's acceptance clause and a vacuous control window is not evidence; the observed state never sits below the card's state (mechanical in the tree check) |
 | 2.6 | 2026-09-03 | `.tools/surprise-row-gate.py` (the gate-model fork between the two fabrics' CTOs, ruled at the base) | a graduated row whose remedy was executed inside the round (`REMEDIATED`, and `DISARMED` if armed) carries no route and re-enters nowhere; every other route-less remediation row is refused |
 | 3.0 | 2026-09-03 | implementation spec `org/tier1_exec/4.0.0_SA_CRO/deliverables/SPEC_CANONICAL_FLOW_V3_SUBAGENT_WORKERS_ONE_SHOT_DISPATCH_20260903.md` @29bf9265ea (sections 3 to 9, on Andrew's word at the CRO terminal) and its section 13 @9dc97d860d (six levers read from one thread of NFRA_COMPEFFICACY's round 1-6 artifacts, on Andrew's question at the CRO terminal); Andrew's word at the CTO terminal, recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_200xZ_CANONICAL_FLOW_V3_RESTRUCTURE_SPINE_SKILL_CLAUDEMD_SINGLEHANDED.md`; Andrew's word at the MSTR terminal on the outage remediation (LD-0532, `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_200xZ_OUTAGE_REMEDIATION_CTO_CANONICAL_FLOW_COO_CVO_CLEANUP_RUN.md` @c44bd68273); the problems brief `docs/briefs/canonical-flow-l6-l10-mechanism-gaps-20260903.md` @6a1d845ecb that the spec answers | L6 is one issuance covering every cell, fan-out derived from the decomposition's chains and stated as data in the issuance commit with a default cap of eight; a task order has a worker face and a record face and only the worker face travels; one clause per criterion, a mechanical criterion carrying its invocation and expectation, a judgment criterion flagged and graded only by the CVO, a compound criterion refused; the decomposition frozen at the cut; workers are subagents of the COO, serial `0.9.0_WK_<CODE>~<n>`, a minimal toolkit with no send tool, one worktree each, a cursory verification bar, a queue drained by continuation; the spawn is the GO and no broker message carries it; three tracks share files and never messages, the CVO's one send is the slug to the CTO, the CTO's one send is the round-N analysis to the COO; the surprise channel split by writer into investigations, adjudications and remediations so L8 reads and L10 counts worker rows only; the three route tokens are retired and the CTO is the single router, answering the slug with a PRD addendum for an outcome no cell served or a round-N analysis the COO recuts in one issuance; the stall read by watermark at drain-end; the midstream restart as three reads, four for a round issued to seats, with a dead seat's unfinished edits finished or discarded by the COO under the CVO's validation; the close unchanged; eight clauses named in section 4 as binding by reading until their carriers land, four of them contradicted by a live gate or lane; the transition rule that an open round finishes under its cut task orders; an amendment of the round's mechanics graded on the compiled step log's share of acts outside the limbs |
+| 3.1 | 2026-09-03 | `3.0.0_SA_CVO`'s constitutional review of the annex at v3.0 (message 93939), which accepted the annex and upheld the adjudication document, and raised two findings for the scribe; the worker agent type landed at `.claude/agents/worker.md` | an `ARMED` row whose disarm owner is dark has a carrier: the COO reads every row a branch carries at the merge, re-seats a dark owner as the seat that spawns, and carries one it cannot seat in its drain-end read; the drain-end read is named as the COO's one message of a round, the watermark and any owner it could not seat, so section 2 and L8 agree; the worker-toolkit clause of section 4 now names its carrier and binds by reading only until the first exercised spawn |
