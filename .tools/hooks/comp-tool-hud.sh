@@ -80,6 +80,51 @@ emit_deny() {
   exit 0
 }
 
+# === CENSUS-FILTERED -- a census denominator cannot be post-filtered away (LD-0526 / BR-2) ===
+# Classify before the generic "already a comp-tool" escape below. The classifier operates on
+# shell segments and masks quoted bodies before looking for structural pipes, so a regex alternation
+# inside quotes is not mistaken for a pipeline. Every census pipeline is measured, including the
+# allowed forms; no historical telemetry carried the receiver at all.
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'comp-(read|find|surprise|schedule)'; then
+  _census_masked="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g")"
+  _census_segs="$(printf '%s' "$_census_masked" | sed -E 's/&&|\|\||;/\n/g')"
+  while IFS= read -r _cs; do
+    _cs="$(printf '%s' "$_cs" | sed -E 's/^[[:space:]]*//; s/^(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|env|sudo|time|nice)[[:space:]]+)*//; s/#.*$//')"
+    [ -z "$_cs" ] && continue
+    _cfirst="$(printf '%s' "$_cs" | sed -E 's/\|.*$//')"
+    _clead="$(printf '%s' "$_cfirst" | awk '{print $1}')"
+    _clead_base="${_clead##*/}"
+    if printf '%s' "$_clead_base" | grep -qE '^(python|python3|py|py\.exe)$'; then
+      _clead="$(printf '%s' "$_cfirst" | awk '{print $2}')"
+      _clead_base="${_clead##*/}"
+    fi
+    case "$_clead_base" in
+      comp-read|comp-find|comp-surprise|comp-schedule) : ;;
+      *) continue ;;
+    esac
+    printf '%s' "$_cs" | grep -q '|' || continue
+    _cstatus=ALLOW
+    if printf '%s' "$_cs" | grep -qE '\|[[:space:]]*(grep|egrep|fgrep|rg|head|tail|cut|awk|sed|wc)([[:space:]]|$)' \
+       && ! printf '%s' "$_orig_query" | grep -qE 'ENUMERATE|DENOMINATOR' \
+       && ! printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:'; then
+      _cstatus=DENY
+    fi
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  CENSUS-PIPE  $_cstatus  q=$(printf '%s' "$_orig_query" | tr '\n\r\t' '   ' | head -c 80)" >> "$RAIL_LOG" 2>/dev/null || true
+    if [ "$_cstatus" = DENY ]; then
+      class=CENSUS-FILTERED
+      msg="comp-tool on the HUD: a census command ($_clead_base) pipes into a receiver that can erase its denominator. Use the tool's own --limit, --page, --width, --band, or --json flags. Summary-aware filters containing ENUMERATE or DENOMINATOR are allowed. If no native flag fits, use '# rail-checked: <why>'."
+      emit_deny
+    elif printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:' \
+         && printf '%s' "$_cs" | grep -qE '\|[[:space:]]*(grep|egrep|fgrep|rg|head|tail|cut|awk|sed|wc)([[:space:]]|$)'; then
+      class=CENSUS-FILTERED
+      msg="census receiver allowed by audited rail-checked escape"
+      emit_deny
+    fi
+  done <<EOF
+$_census_segs
+EOF
+fi
+
 # === T1 -- THE PER-SEGMENT SEARCH RAIL (Andrew-direct 2026-08-28, "All approved" on the /open-calls
 # cards; audit org/tier1_exec/1.0.0_SA_CTO/deliverables/COMPRAIL_GREP_GATE_AUDIT_20260828.md) ======
 # The 07-08 LEADING-VERB gate exited on any operational lead verb unless a later segment was a
