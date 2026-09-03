@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.4 @43b75ffbd6 (ENDPOINT FWD-5, property 4; s.5 the moratorium exception FWD-5 by the commissioning word; 7.3 the `waf-logs/{scope}/` prefix; 7.6 C-8) - **Decomp cell:** `OP-s-5` (v0.1 @bff1f8d012, s.1a; ROUND 1; "the input for OP-s-6, OP-s-20, OP-s-23 and OP-s-14's subscription filter") - **Lane:** `infra/aws/terraform/portal-auth/waf-cloudfront.tf` + `cloudfront-distribution.tf` (imported; 0-diff bound), the gateway ALB / regional WAF Terraform under `infra/aws/ec2/opal-gateway/**`, and the NEW module OP-s-17 creates (the S3 legs' destination) - **Round:** 1 of NFRA_OPSEC202609, SECOND on this seat after TO-OP-S-3.
 
