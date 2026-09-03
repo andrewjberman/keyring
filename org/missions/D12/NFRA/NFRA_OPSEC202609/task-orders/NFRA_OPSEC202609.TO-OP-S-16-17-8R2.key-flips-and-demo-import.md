@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.8 @36786251af (ENDPOINT FWD-8 / FWD-16 / FWD-18; 7.6 C-8, C-9, C-10, C-13; s.6 the 08:1xZ key ruling) - **Decomp cells:** `OP-s-16` + `OP-s-17` (their round-2 key-flip limbs) + `OP-s-8` (its round-2 import limb) (v0.1.5 @df3c847ddc, s.1a; s.5 the round-2 line; s.9 item 8) - **Lane:** `infra/aws/terraform/opsec/` (the table and the bucket; 18 resources in state) and `infra/aws/terraform/partner-firms/` (the demo table's import home beside the three real instantiations of `modules/partner-firm-table`), AE lane - **Round:** 2 of NFRA_OPSEC202609. **Dispatch condition MET:** TO-OP-S-25-26-27's key is APPLIED and its ledger legs L1-L4 are CLOSED (19739).
 
