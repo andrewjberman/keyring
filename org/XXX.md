@@ -385,7 +385,7 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 ---
 
-**F. Loop arming — EVERY serial, including the COO, arms ZERO crons at launch. There is no exception.**
+### F. Loop arming — EVERY serial, including the COO, arms ZERO crons at launch. There is no exception.
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
