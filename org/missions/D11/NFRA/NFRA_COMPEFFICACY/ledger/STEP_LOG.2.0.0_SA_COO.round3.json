@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 3,
+  "seat": "2.0.0_SA_COO",
+  "written_utc": "2026-09-03T08:07Z",
+  "trigger": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md section 'L10 stamp -- round 3' @7ec9bf06dd (ZERO GRADUATION, 0 routed; CVO 93338); two round-4 rows S10/S11 appended after the stamp @ab44245fb7",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L10",
+      "started_utc": "2026-09-03T05:51Z",
+      "ended_utc": "2026-09-03T05:53Z",
+      "act": "receive CVO's round-2 stamp (ZERO GRADUATION; S8 adjudicates S1, S9 adjudicates S2/S3/S5 REMEDIED with the CE-g-5 fix exercised at CVO's seat); proceed to the next L6 dispatches",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93168"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md@88c961297b (S8, S9)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/STEP_LOG.2.0.0_SA_COO.round2.json@070907b56e"
+        }
+      ],
+      "spine_clause": "L10: a round whose remediation doc graduates zero rows proceeds to the next L6 dispatches",
+      "note": "the round-2 step log was written first, per Andrew's word @bcc26d2691"
+    },
+    {
+      "seq": 2,
+      "limb": "L5",
+      "started_utc": "2026-09-03T05:53Z",
+      "ended_utc": "2026-09-03T05:56Z",
+      "act": "decomp v0.2.1 (bookkeeping on the record): CE-g-5 and CE-t-2 moved to DONE-as-TO citing the workers' own status flips; CVO's INERT residual carried on CE-g-5; the ROUND 3 fence line added (CE-t-3 at the ~A lane, CE-t-8 at the base, no dependency); denominator unchanged 40 cells / 39 live",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93168"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-G-5.freshness-layer-under-a-budgeted-client.md@7e3b23578d"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.md@bf3f270e0c"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@070907b56e"
+        }
+      ],
+      "spine_clause": "L5 owner 2.0.0_SA_COO (the record moves on the stamp, no new round)",
+      "gate_or_notifier_touched": "missions-tree-check 0 violations",
+      "note": "one commit with the round-2 step log"
+    },
+    {
+      "seq": 3,
+      "limb": "L6",
+      "started_utc": "2026-09-03T05:56Z",
+      "ended_utc": "2026-09-03T06:07Z",
+      "act": "measure the two next cells' surfaces (comp-which 2,329 lines, :37 60 s, :1545-1552 NOFIT/ROUTE families, :1647-1651 the kill path; comp-iam = an 8-line shim over org/modules/graph/iam_cli.py 1,624 lines, cmd_simulate :668, the documented false-deny modes :673-:692, the stub suite :816); write TO-CE-T-3 and TO-CE-T-8; run the preflight battery on each (comp-schedule 19 gates / 0 name the subject at 05:57Z; comp-iam declared not applicable with the reason; comp-adversary compose rc 0 on each, 10/10 and 9/9 cited commits verified, flagged paths = the outputs); measure both workers' lanes on every surface (5 of 5, 7 of 7); commit both through the L6 gates",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/decompositions/NFRA_COMPEFFICACY_DECOMP.md@070907b56e"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": ".tools/comp-which@05b7e1c77e"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/modules/graph/iam_cli.py@070907b56e"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "comp-adversary compose: T-3 10/10 verified, 2 flagged = outputs; T-8 9/9 verified, 2 flagged = outputs"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.md@f11c72e808"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.md@f11c72e808"
+        }
+      ],
+      "spine_clause": "L6 owner 2.0.0_SA_COO; L6 gate to-pipeline-gate.py (limb iv admitted this seat by the fixed carrier, no env export)",
+      "gate_or_notifier_touched": "to-pipeline-gate OK 2 newly-added TO files; missions-tree-check 0 violations",
+      "note": "the T-8 order plants its simulate cases through the tool's own offline stub suite so the audit owes zero live IAM calls and changes nothing in IAM"
+    },
+    {
+      "seq": 4,
+      "limb": "L6",
+      "started_utc": "2026-09-03T06:08Z",
+      "ended_utc": "2026-09-03T06:10Z",
+      "act": "dispatch the two GOs (T-3 to 0.8.0_AE_CloudComp~A, T-8 to 0.8.0_AE_CloudComp); both acked",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/task-orders/@f11c72e808"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93190"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93192"
+        }
+      ],
+      "spine_clause": "L6 handoff; L7 owner Tier-2 workers",
+      "note": "seventeen minutes from the round-2 stamp to the round-3 dispatch"
+    },
+    {
+      "seq": 5,
+      "limb": "X",
+      "started_utc": "2026-09-03T06:09Z",
+      "ended_utc": "2026-09-03T06:14Z",
+      "act": "on CVO~A's collision surface for the parallel NFRA_CLDGRPH run (Andrew's 'entirely by this fabric' vs gate (i)), offer the base seat's reading to the four lanes (the ~A execs own every Tier-1 limb; COO~A spawns Tier-2 workers at L6; gate (i) stands); Andrew ruled the same at both ~A terminals",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93196"
+        },
+        {
+          "kind": "WORD",
+          "ref": "org/tier1_exec/1.0.0_SA_CTO~A/deliverables/ANDREW_DIRECT_20260903_051xZ_PARALLEL_CANONICAL_FLOW_NFRA_CLDGRPH_WITH_COOA_CVOA.md@8e134cc126"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93199"
+        }
+      ],
+      "spine_clause": "NONE (a second run shares the spine and gates and nothing else)",
+      "note": "no act on NFRA_CLDGRPH by the base seat; the reading was the one ruled"
+    },
+    {
+      "seq": 6,
+      "limb": "L6",
+      "started_utc": "2026-09-03T07:05Z",
+      "ended_utc": "2026-09-03T07:36Z",
+      "act": "on each worker's completion report re-run proof-of-spec-check at this seat (T-3 VALID 6/6 0 surprises; T-8 VALID 6/6 0 surprises), read the status flips on the record (both self-committed), census the round (7 task orders: 2 withdrawn, 5 complete, 0 pending; 0 round-3 rows), hand the state to 3.0.0_SA_CVO for the slug",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93295"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "93304"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-3.comp-which-s4-audit.proof_of_spec.json@d92fe43586"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp/NFRA_COMPEFFICACY.TO-CE-T-8.comp-iam-s4-audit.proof_of_spec.json@dace2c42b8"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93306"
+        }
+      ],
+      "spine_clause": "L10 precondition: every task order terminal with a valid proof-of-spec whose surprises resolve to rows",
+      "gate_or_notifier_touched": "proof-of-spec-check VALID rc 0 on both instances at this seat",
+      "note": "T-3's F2 (the router routes a syntactically valid but non-existent script id at full confidence) named as a future-cell candidate; STAGE 1 closed"
+    },
+    {
+      "seq": 7,
+      "limb": "L10",
+      "started_utc": "2026-09-03T08:05Z",
+      "ended_utc": "2026-09-03T08:07Z",
+      "act": "receive CVO's round-3 stamp (ZERO GRADUATION, 0 routed; precondition read on the record at CVO's seat: 5 complete / 2 withdrawn / 0 pending, both proof instances VALID at checker vintage e58250f261); write this log; proceed to the next L6 dispatches (the decomposition is not spent: STAGE 2 CE-t-9 / CE-t-7 / CE-t-6-after-CE-t-19, STAGE 3's audits)",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "93338"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md@7ec9bf06dd"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/STEP_LOG.2.0.0_SA_COO.round3.json (this file)"
+        }
+      ],
+      "spine_clause": "L10: zero graduation proceeds to the next L6 dispatches; a graduated row names its loop_target",
+      "note": "S10 (comp-surprise does not read the `adjudicates` carrier; disarm owner 1.0.0_SA_CTO) is a loop-mechanism fix in place, not a route; a CLOSE would wait on its disposition, the next L6 does not"
+    }
+  ]
+}
