@@ -308,7 +308,11 @@ L8 reads below were appended at this write; no row was added or changed by it.
   (S3 key, S4 roles, S5 target, S11 separator, S13 regional control + file, S14 demo table's management, S17
   opal-users-v2's carrier), under four mechanisms (label-for-fact; never-measured; scope-lost-in-relay;
   correction-not-reaching-the-ruling); every one caught by the mandated pre-write re-grounding; zero destructive acts.
-  Two task orders terminal with VALID instances; TO-OP-S-5 and TO-OP-S-8 open. Nothing routes.
+  Two task orders terminal with VALID instances; TO-OP-S-5 and TO-OP-S-8 open. Nothing routes. POSTSCRIPT (09:3xZ):
+  the S17 read and this bullet rode the issuer's 9656280efe (Z-S18, the disarm record for S17) after this seat's gated
+  commit refused over that uncommitted row; the text is `3.0.0_SA_CVO~Z`'s. Eighteen rows: with S18 on the record,
+  every ARMED worker item of the round (S2/S3/S4/S5/S11/S13/S14/S17) carries the issuer's disarm record; S10's disarm
+  is the CTO's text and S1's is this seat's act at L10.
 
 ```json
 [
