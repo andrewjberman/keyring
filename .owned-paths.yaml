@@ -489,7 +489,7 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
       - 1.0.0_SA_CTO
-    description: "ws-charter HARD-BLOCK audit log (org/ws-charter-hard-block-audit.log) -- MSTR-owned header content (TIER0_LAW-equivalent per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends per-fire HARD-EXIT entries. Init at LD-0080 (10f7ed154); lane added 2026-05-26 by ws CTO per MSTR INIT-REQUEST + LD-0080 authorization chain."
+    description: "RETIRED-IN-PLACE 2026-09-03 (LD-0525, Andrew-direct at the 0.0.0_AB_MSTR terminal ~05:2xZ: the /ws-charter skill is deleted and the CTO launch row no longer names it; MSTR 93153 routed the lane to the grantor). The audit log this lane guards is HISTORY and nobody writes it again; the lane and its one path rule are KEPT only so the path resolves in every census (an UNDEFINED rule reads as a registry gap), permitted set unchanged and unused. ORIGINAL: ws-charter HARD-BLOCK audit log (org/ws-charter-hard-block-audit.log) -- MSTR-owned header content (TIER0_LAW-equivalent per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends per-fire HARD-EXIT entries. Init at LD-0080 (10f7ed154); lane added 2026-05-26 by ws CTO per MSTR INIT-REQUEST + LD-0080 authorization chain."
 
   CVO_WORKSPACE:
     permitted_agents:
@@ -1228,6 +1228,9 @@ paths:
   "org/tier2_senior/0.8.0_AE_CloudComp/**":
     lane: CLOUD_COMP_TESTER
     note: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder per LD-0119. ws CTO substrate authoring + 0.8.0_AE_CloudComp self-commits + ws COO TO authoring."
+  "org/tier2_senior/0.8.0_AE_CloudComp~*/**":
+    lane: CLOUD_COMP_TESTER
+    note: "CloudComp tilde-lane homes (org/tier2_senior/0.8.0_AE_CloudComp~A/** et al.) -- agent folders use the FLAT tilde form (org/XXX.md reference table); same lane as the base home above; a ~lane is permitted wherever its base is enumerated (owned-paths-validate.py suffix strip). GRANTED 2026-09-03 ~05:4xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR on a measured refusal: 0.8.0_AE_CloudComp~A (spawned by the COO for NFRA_COMPEFFICACY CE-t-2) read UNDEFINED on its own logs/ path and filed its session log under the base folder as a workaround (report 93151). Before: org/tier2_senior/0.8.0_AE_CloudComp~A/logs/... -> UNDEFINED (no matching rule); after: CLOUD_COMP_TESTER, the lane permitted, the base still permitted, a foreign Tier-2 serial refused. Same shape as the Tier-1 ~*/** rules at org/tier1_exec/. Other Tier-2 base serials without a ~*/** rule are NOT widened here: each is granted on its own measured need."
 
   "org/tier2_senior/1.1.0_DS_CompLearns/**":
     lane: COMP_LEARNS
