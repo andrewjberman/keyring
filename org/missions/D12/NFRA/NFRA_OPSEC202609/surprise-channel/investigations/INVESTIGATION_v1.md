@@ -144,6 +144,21 @@ L8 reads below were appended at this write; no row was added or changed by it.
   files; `.terraform/` and the tfplan read `!!` (ignored). The rule and the worker's discipline held; nothing was
   committed; nothing to disarm. Stated so the next reader of a raw `git status` on this device knows the shape.
 
+- **CORRECTION OF THE RECORD by `3.0.0_SA_CVO~Z` (08:3xZ):** commit bc8d92e39e, authored by this seat, carried
+  rows Z-S6, Z-S7 and Z-S8 -- `2.0.0_SA_COO~Z`'s DISARM RECORDS for Z-S2/Z-S3/Z-S4, appended 08:31Z between this seat's
+  narrative edit and its commit -- under this seat's git author line, and its commit message said "no row added, no
+  row changed". That sentence is FALSE: +3 rows. The rows' provenance is IN-BAND (`surfaced_by` 2.0.0_SA_COO~Z on
+  each), which is what the channel and the L10 gate read, so the record's substance is right and only the commit
+  metadata and that sentence are wrong; nothing is rewritten. Mechanism, stated so it is not chased: two seats, one
+  shared worktree, no gate on the window between an Edit and a safe-commit -- and this seat's own pre-commit check
+  PRINTED "json block differs from HEAD" without refusing. Every later commit of this file from this seat is gated:
+  it does not run unless the fenced json block is byte-identical to HEAD and the diff is one narrative hunk (the
+  gate refused once already, at 08:38Z, over a worker's uncommitted Z-S10 -- so this line may itself ride another
+  seat's append-only commit, which the in-band attribution above makes harmless). Reported to the rows' author and the
+  integrator at 19541/19542 before this line; the author's ACK 19543 confirms no harm on the record. Z-S9 (the Z-S5
+  disarm record) was committed by its author @2c9fa3a440. The round's four ARMED items (Z-S2..S5) each carry a
+  disarm record (Z-S6..S9); dispositions stay at L9.
+
 ```json
 [
  {
@@ -373,6 +388,32 @@ L8 reads below were appended at this write; no row was added or changed by it.
    ]
   },
   "notes": "THE THIRD REFERENT OF ONE FACE IN ONE ROUND (key, roles, target), each asserted without a read until the worker's re-grounding; the round-2 cut at this seat runs one live read per named referent BEFORE the TO commits. WHAT THIS ROW IS NOT: a re-file, a face edit, or a disposition of Z-S5 (the CVO's)."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S10",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z (L7 worker, OP-s-3, while grounding the IAM half of the cell)",
+  "surfaced_at": "2026-09-03T08:34:00Z",
+  "one_line": "cross-firm-secret-deny.tf:6-10 justifies its Deny belt on the premise that three portal/news-plane roles hold a secret:opal/* WILDCARD, naming opal-portal-lambda-role (the shared role behind the PUBLIC authorizer). At 2026-09-03 that premise is FALSE for at least that role: simulate-principal-policy reads implicitDeny for it on opal/auth/origin-verify while a ROLE-SPECIFIC positive control (opal/auth/jwt-public-key) reads allowed, and its three live inline secrets policies are explicit allowlists with no wildcard. Phase A narrowed it and the belt file was never updated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z (owner of the credential-plane firm-sep belt; the file carries a CTO amended ruling in its header). DISARM = correct the WHY-narrative at cross-firm-secret-deny.tf:6-10 to describe the post-Phase-A grants, or record that the belt is now defence-in-depth over an allowlist rather than a subtraction from a wildcard. THE DENY ITSELF IS CORRECT AND MUST NOT BE REMOVED -- only its stated justification is stale.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "infra/aws/terraform/portal-auth/cross-firm-secret-deny.tf:6-10 @94b6fd0d11 -- \"secret:opal/* wildcard grants let three portal/news-plane roles read ... Exercised: GetSecretValue = ALLOWED for opal-portal-lambda-role (the SHARED role behind 11 Lambdas incl. the PUBLIC authorizer), opalinvest-auth-lambda-role, and news-ingestion-lambda-role.\"",
+    "MEASURED 2026-09-03, simulate-principal-policy, ONE --resource-arns per call: opal-portal-lambda-role on opal/auth/origin-verify-AbCdEf = implicitDeny; ROLE-SPECIFIC positive control opal/auth/jwt-public-key-Z6dqNK on the SAME role = allowed (so the instrument reaches this role and the deny is real, not a borrowed control).",
+    "MEASURED 2026-09-03, live get-role-policy on opal-portal-lambda-role: opal-portal-secrets = {smartx/config, external-apis} x2 regions; SecretsManagerAccess = {jwt-public-key-??????, external-apis-??????, openai/news-trending-??????}; opal-sessions-secrets = {opal/auth/jwt-public-key*}. NO opal/* wildcard in any of the three.",
+    "infra/aws/terraform/portal-auth/iam.tf:61 @94b6fd0d11 -- the SIBLING role carries the matching note: \"NARROWED 2026-07-09 (Phase A). Was opalinvest/* + opal/* in both regions.\"",
+    "infra/security/remediation/secrets-allowlist-narrowing-and-least-privilege-PLAN-20260709.md:55 -- independently records opal-portal-lambda-role inline SecretsManagerAccess as HAVING BEEN secret:opal/* and being narrowed to an allowlist. Two carriers agree the narrowing happened; only the belt file still describes the pre-narrowing world.",
+    "MEASURED 2026-09-03: news-ingestion-lambda-role on the same new ARN = implicitDeny -- so the new secret is not broadly reachable, which is the bound the TO face required of this cell."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cross-firm-secret-deny.tf:6-10: three named roles hold secret:opal/* wildcard grants, which is the stated reason a Deny (rather than a narrowed Allow) was the right instrument -- \"the grant is a WILDCARD ... and IAM has NO resource-exclusion syntax\".",
+  "world_is": "At least opal-portal-lambda-role holds no opal/* wildcard today; its three secrets policies are explicit allowlists. The Deny belt is still correct and still worth keeping, but it now sits over an allowlist rather than subtracting from a wildcard, so the file argues from a world that no longer exists. The other two named roles were not re-measured by this seat and this row does not claim anything about them -- the sound claim is scoped to the one role measured.",
+  "notes": "WHY IT MATTERS OPERATIONALLY, and it is not cosmetic: this cell needed the authorizer to read a new opal/auth/* secret. Reading cross-firm-secret-deny.tf would have said the wildcard already covers it, the grant would have been skipped, and the authorizer would have failed CLOSED on every authorized route the moment the code deployed -- a full portal outage from trusting a stale comment. The grant was written only because the live primitive was measured instead. NOT CHASED: no edit to cross-firm-secret-deny.tf from this seat -- it is a security control with a CTO amended ruling in its header and correcting its rationale is that owner's act, not a mid-task edit by the seat relying on it. SCOPE BOUND: one role measured, two named roles NOT measured; a re-checker should measure all three before rewriting the sentence. FALSIFIER: if simulate-principal-policy on opal-portal-lambda-role returns allowed for an arbitrary new opal/<anything> ARN, the wildcard is back and this row is wrong."
  }
 ]
 ```
