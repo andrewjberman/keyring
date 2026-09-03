@@ -268,3 +268,8 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\jq-ban-override-audit.log -->
 - log: org/jq-ban-override-audit.log
 - detail: live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\jq-ban-override-audit.log
+
+## 2026-09-01T214550Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/commit-msg-ascii-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/commit-msg-ascii-override-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude

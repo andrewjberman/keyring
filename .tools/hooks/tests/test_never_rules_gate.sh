@@ -42,6 +42,22 @@ PASS=0; FAIL=0
 # wrote fixtures into it as if they were real bypasses. 6 such records existed; ALL were phantoms.
 # Route ours to a scratch file, and assert on it at the end.
 export NEVER_GATE_AUDIT="$(mktemp 2>/dev/null || echo "/tmp/nrg_audit_$$")"
+# *** THE SUITE WAS NOT HERMETIC: ITS TOTALS DEPENDED ON WHO RAN IT. ***
+# Measured 2026-09-01 -- 1.0.0_SA_CTO~Z read 76 PASS/15 FAIL and 0.0.0_AB_MSTR~Z read 79/12 on the
+# SAME commit, same device, same file. Both totals summed to 91, so no arm appeared or vanished:
+# THREE ARMS FLIPPED. Reproduced by changing exactly one variable, the caller identity:
+#     env -u OPAL_AGENT_SERIAL            -> 79 PASS / 12 FAIL
+#     OPAL_AGENT_SERIAL=0.0.0_AB_MSTR~Z   -> 76 PASS / 15 FAIL
+# The three are the `git pull`-based rebase arms (git pull --rebase, -c pull.rebase one-shot,
+# generic-flag-before--c). GATE 5 resolves the caller from OPAL_AGENT_SERIAL when the payload
+# carries no session_id, and for a NON-INTEGRATOR it DENIES those pulls on IDENTITY -- so the arm
+# observed DENY and scored PASS WITHOUT GATE 1 EVER FIRING. Green for the wrong gate: a rebase arm
+# certifying the rebase gate while the push/pull gate did the denying.
+# PINNING the caller to the integrator makes GATE 5 transparent, so a GATE 1 arm measures GATE 1
+# and nothing else. It RAISES the failure count from 12 to 15 -- those three were always broken and
+# were being masked. A per-arm identity (check_as, below) overrides this for GATE 5's own arms.
+export OPAL_AGENT_SERIAL="0.0.0_AB_MSTR~Z"
+
 : > "$NEVER_GATE_AUDIT"
 
 # verdict: prints DENY or PASS for a given command string.
@@ -365,6 +381,55 @@ if grep -q 'reason=reason to bypass the gate' "$NEVER_GATE_AUDIT" 2>/dev/null; t
 else
     PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "F-020 no mention audited as an override" "clean"
 fi
+# =========================================================================================
+# DT PORTAL-PROD CARVE-OUT (Andrew-direct 2026-09-01 at the 1.0.0_SA_CTO~Z terminal:
+# "fix the gate so DT can push portal prod").
+#
+# THE POSITIVE ARM IS ONE LINE. THE SIX NEGATIVES ARE THE POINT -- the failure mode for a
+# carve-out is not that it fails to open, it is that it opens WIDER THAN ITS WORD, and a
+# too-wide gate passes its own positive test perfectly. Each negative is an independent cell
+# of the three-way scope (caller is DT / branch is PROD / repo is portal) plus the verb.
+#
+# PROVEN-RED: the positive arm renders DENY against the pre-carve-out hook --
+#     NRG_HOOK=<pre-carve-out build> bash tests/test_never_rules_gate.sh
+# An arm never observed to fail has not been shown it CAN fail.
+#
+# check_as drives the caller identity the way the gate actually resolves it: the payload
+# carries no session_id, so $_CALLER falls through to OPAL_AGENT_SERIAL.
+check_as() { # serial, name, cmd, expected
+    local got
+    export OPAL_AGENT_SERIAL="$1"
+    got=$(verdict "$3")
+    unset OPAL_AGENT_SERIAL
+    if [ "$got" = "$4" ]; then PASS=$((PASS+1)); printf '  PASS  %-58s -> %s
+' "$2" "$got"
+    else FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s (want %s)
+' "$2" "$got" "$4"; fi
+}
+
+echo ""
+echo "DT PORTAL CARVE-OUT (PROD 09-01, DEV 09-02) -- positives + negatives (over-widening is the failure mode):"
+check_as '0.4.0_DT_ClientPlatform~Z' "DT pushes portal PROD (the carve-out)"       'git -C portal push origin PROD' PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "DT pushes portal DEV (Andrew 2026-09-02)"    'git -C portal push origin DEV'  PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal DEV still DENIED"     'git -C portal pull origin DEV'  DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT pushing workspace CLOUD still DENIED" 'git push origin CLOUD'         DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal PROD still DENIED"    'git -C portal pull origin PROD' DENY
+check_as '1.0.0_SA_CTO~Z'            "neg: non-DT (CTO) on portal PROD DENIED"     'git -C portal push origin PROD' DENY
+check_as '0.4.0_DS_ClientPlatform~Z' "neg: DS is not DT, portal PROD DENIED"       'git -C portal push origin PROD' DENY
+check_as ''                          "neg: UNRESOLVED caller fails CLOSED on PROD" 'git -C portal push origin PROD' DENY
+check_as '0.0.0_AB_MSTR~Z'           "integrator unaffected: MSTR workspace CLOUD" 'git push origin CLOUD'          PASS
+
+# SITEZ IN SHARED_BRANCHES (Andrew-direct 2026-09-02, "all recs approved"). Before this, on the site-Z
+# device the working branch read as NOT shared, so GATE 1 and GATE 5 never fired there -- every rebase
+# arm above was red on that device for that reason alone. PROVEN-RED: the three DENY arms render
+# PASS (want DENY) against the pre-09-02 hook when run from a SITEZ checkout.
+echo ""
+echo "SITEZ IS A SHARED BRANCH (Andrew 2026-09-02):"
+check    "SITEZ: rebase onto origin/SITEZ DENIED (NEVER#7 fires here now)" 'git rebase origin/SITEZ'  DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator push DENIED (LD-0367 mechanical)" 'git push origin SITEZ' DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "SITEZ: non-integrator pull DENIED"              'git pull origin SITEZ' DENY
+check_as '0.0.0_AB_MSTR~Z'           "SITEZ: integrator push still PASS"              'git push origin SITEZ' PASS
+
 rm -f "$NEVER_GATE_AUDIT" 2>/dev/null || true
 
 echo ""
