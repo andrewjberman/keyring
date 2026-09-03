@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **31 rows** (S31 appended by `3.0.0_SA_CVO` 17:10Z, in-round: comp-blast's budget bounds the traversal only -- a stale graph runs the full rebuild inside a budgeted call, killed outside at the harness ceiling; ARMED, disarm owner `0.8.0_AE_CloudComp~G` via the COO; S23-S30 round 6's workers' rows, S28 remedied in place by `1.0.0_SA_CTO`).
+**Append-only during the round.** Denominator at this write: **33 rows** (S33 appended by `3.0.0_SA_CVO` 18:09Z, the round-6 tranche-1 L9: S23/S24/S25/S26/S27/S28/S30/S32 DISMISSED_WITH_REASON on this seat's reads; S29 and S31 wait for the stamp; S32 is a worker's adjudicating row on the CVO's item, a form note for the issuer).)
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -1020,6 +1020,44 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "TO-CE-T-6 T6-AC7: THE BUDGET BOUNDS THE WHOLE CALL, including universe load; a budgeted stale graph is served immediately and never rebuilt or awaited.",
     "world_is": "Before this act, cmd_blast loaded a stale canonical graph through ensure_fresh before starting traversal timing. After this act, the load is under the same call-level budget decision and stale serving is explicit.",
     "notes": "Lane-owned disarm carrier for S31; append-only correction, no foreign row amended. Commit with the T6-AC7 implementation and proof refresh in the same act; LOCAL, no push."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S33",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-03T18:09:00Z",
+    "one_line": "L9, round 6 tranche 1 (COO 93853): ADJUDICATES S23, S24, S25, S26, S27, S28, S30 and S32 -- DISMISSED_WITH_REASON, each on a read this seat made itself. S23 the T-12 premise superseded by a rebuilt image (deployed == build input == repo, measured by the cell); S24 the portal clean-state bar re-worded by the issuer to zero-delta @3318cfc9b7 and met; S25 comp-passcraft's write-pattern report omits the wrapper's telemetry append (a finding against the detector, carried into the CE-pass-1 roll-up, owner the comp-passcraft owner); S26 the comp-read forwarder on a Codex Windows seat returned rc 0 with no content while the explicit .tools/comp-read rail worked (outside this project's chain; named to the runtime owner as a false-empty-read class); S27 a starting-state census, no defect; S28 fixed in place by 1.0.0_SA_CTO @2f6dca8204 (per-session files keyed on seat+session; the launcher mints a GUID per Codex child); S30 the abandoned ~P worktree edit adopted by the issuer's reseat ruling @2bb17f9eb5; S32 a worker-authored adjudicating row on the CVO's item S31, read for its content, dismissed as a carrier -- S31's own disposition follows this seat's exercise. S29 (the comp-heat consumer boundary) and S31 are NOT adjudicated here: S29 graduates or not at L10 with its route, S31 on the exercise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S23",
+      "NFRA_COMPEFFICACY-S24",
+      "NFRA_COMPEFFICACY-S25",
+      "NFRA_COMPEFFICACY-S26",
+      "NFRA_COMPEFFICACY-S27",
+      "NFRA_COMPEFFICACY-S28",
+      "NFRA_COMPEFFICACY-S30",
+      "NFRA_COMPEFFICACY-S32"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S23 @HEAD (0.8.0_AE_CloudComp~F): ECR opal-globgrph-derive-runner:latest digest sha256:3a4e078d2c65..., pushed 2026-09-03T14:32:35Z, /app/org/modules/graph/debtscan/summary_corpus.py 92,840 B SHA-256 2c56cd7d50e8..., equal to the build-input ZIP member and the repo file -- the cell's own three-way read; TO-CE-T-12's instance VALID rc 0 at this seat (6 of 6, surprises 1 resolving to S23)",
+        "S24: 2.0.0_SA_COO's issuer ruling @3318cfc9b7 (T23-AC3 re-worded to zero-delta); the worker's before/after `git -C portal status --porcelain` byte-identical, `git diff --stat` empty, portal HEAD unchanged; TO-CE-T-23 complete @895b54ef8d, instance VALID rc 0 at this seat (surprises 1 resolving to S24)",
+        "S25: the comp-pulse deliverable s.4.6 'S25 is an inert observation for the comp-passcraft owner; it does not invalidate the engine controls'; the T-17 deliverable's passcraft moves_1_to_8[1] independently records 'wrapper appends telemetry' for comp-estate -- two tools, one detector gap; TO-CE-T-18 and TO-CE-T-17 instances VALID rc 0 at this seat, both citing S25",
+        "S26: the row's own measurement (the forwarder returned rc 0 without content; the explicit rail and a marked direct read supplied the evidence); no CE-t cell owns the ~/bin forwarders or the shim provisioning (.tools/provision-path-shims.sh is the runtime's, CLAUDE.md s.Git) -- the outside-remedy exit, 1.0.0_SA_CTO 93320 limb (ii)",
+        "S27: the row's own census (23 armed gates across five carriers, 138 prose entries) matches the cut preflight; a record, not a mismatch",
+        "S28: 1.0.0_SA_CTO 93794 and commit 2f6dca8204 (16:39Z) -- comp-to/comp-which key per-session files on <sid>.<serial>, comp_log_auto reads that key first; start-codex-seat.ps1 mints a GUID per child; exercised by the CTO with two seats under one sid",
+        "S30: 2.0.0_SA_COO's reseat ruling @2bb17f9eb5 (TO-CE-T-21 ~P -> ~N, the ~P worktree edit adopted); COO 93853 'S30 (~N, the abandoned ~P worktree edit -- adopted by ruling)'",
+        "S32 @HEAD (0.8.0_AE_CloudComp~G): an investigation row carrying `adjudicates: [NFRA_COMPEFFICACY-S31]` and a disposition, written by the T-6 lane; the gate admitted it (the schema allows the field on any row); T-6's instance re-run at this seat with the AC7 addendum: VALID rc 0, 7 of 7 rows"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Per item: S23 -- the premise 'DEPLOYED != COMMITTED' was true at the cut and false at execution; the served, build-input and repo bytes are equal by SHA-256; the stale carrier (PRD s.7 T-12, decomp CE-t-12) is the L4 owner's to correct at the next compile, no order. S24 -- the issuer's zero-delta bar is met; the 14 untracked portal paths are pre-existing and user-owned, nobody's to delete under an audit order. S25 -- the detector's gap is real and belongs to comp-passcraft's owner; it rides the CE-pass-1 roll-up as a finding against the detector, not as a defect of the audited tool. S26 -- an instrument fault outside this project's chain (the PATH forwarder on a Codex Windows seat), named to the runtime owner; the audit's evidence came through the explicit rail and is valid. S27 -- a measured starting state, no spec-versus-world. S28 -- remedied in place by its owner and exercised; nothing routes. S30 -- the issuer ruled the adoption; the provenance question is answered by the ruling, not by this seat. S32 -- a carrier row; read, not a disposition of S31.",
+    "spec_asserts": "The eight rows' own `spec_asserts` (the T-12, T-23, T-18, T-14, T-5, T-17, T-21 faces and the RESEAT message), and annex v2.3 s.4: a disposition is the CVO's field, set at L8/L9 by a row of the CVO's.",
+    "world_is": "Each item is either superseded, remedied in place by its owner, ruled by its issuer, or a record with no remedy owed inside this project's chain; two are placed with owners outside it (S25 the detector's, S26 the runtime's). One form fact for the issuer: five of the nine round-6 worker rows set their own disposition and one (S32) carries an `adjudicates` list on the CVO's item -- harmless on inert observations, but the field is the CVO's L9 carrier.",
+    "notes": "Documented at L9 ahead of the round-6 stamp because COO 93853 asks for L9 on tranche 1 now and Andrew's word at the COO terminal was pace; nothing here routes, so nothing waits for tranche 2. S29 stays UNDER_INVESTIGATION for the stamp (a routed row per the issuer's read: the consumer half under CE-t-12). S31 stays UNDER_INVESTIGATION until this seat's own exercise of T6-AC7 returns (running under a hard wrapper; the first attempt is S31's own subject). Named to 1.0.0_SA_CTO in the stamp message, not routed: S26's false-empty-read class on Codex seats; and a gate limb 'adjudicates only from the CVO' would close the S32 shape mechanically."
   }
 ]
 ```
