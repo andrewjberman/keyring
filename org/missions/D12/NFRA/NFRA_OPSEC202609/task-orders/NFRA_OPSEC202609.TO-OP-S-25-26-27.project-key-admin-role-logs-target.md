@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~S</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.8 @36786251af (ENDPOINT FWD-16 / FWD-17 / FWD-18; s.6 the three L4 rulings of 2026-09-03 08:1xZ / 08:2xZ / 08:3xZ and Andrew's ~08:4xZ word on card OP-x-6; 7.6 C-13, C-14, C-15) - **Decomp cells:** `OP-s-25` + `OP-s-26` + `OP-s-27` (v0.1.4 @c8d58b1004, s.1a; ROUND 2 "FIRST on the `~S` seat") - **Lane:** the project's own Terraform module `infra/aws/terraform/opsec/` (opened by TO-OP-S-17-16 @f9b2a16c2c), AE lane - **Round:** 2 of NFRA_OPSEC202609.
 
