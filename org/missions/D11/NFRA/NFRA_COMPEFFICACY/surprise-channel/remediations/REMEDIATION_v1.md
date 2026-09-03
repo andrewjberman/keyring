@@ -10,6 +10,8 @@ here and VALID (rc 0) at checker vintage `7b649df39d`, 6 of 6 criteria each, sur
 dispositioned by its latest carrier (12 rows at HEAD; S13 and S14 appended GRADUATED in THIS SAME COMMIT -- the gate's
 census reads the index, so the stamp and its graduations are one act).
 
+**Round 6, in-round (15:5xZ):** S17's disarm reads `DISARMED` at 15:35Z by its owner `1.0.0_SA_CTO` -- the L2 adjudication record and PRD v0.6 @7138c4a176 (R-4 corrected to condition NOT MET, comp-trace kept, T-19 closes NOT-RETIRED); the remediation stays `OPEN` until the three-flag carry lands under CE-t-6 at L5/L6. Recorded by the monotone state advance the gate admits since @07cb6153e3, no override.
+
 **Round 5 (14:2xZ):** S13 and S14 read `DISARMED`, `REMEDIATED`, `closed` on their own rows (the two clocks landed; the exercise is in investigation rows S19 and S20); S17 appended, `SCOPE_CHANGE` -> L2, owner `1.0.0_SA_CTO`. The state advance on S13 and S14 is an in-place edit of committed rows, landed under the gate's audited override with its reason in the commit message, because the schema's two-state block is the carrier of a routed row's clocks and no other row can carry them.
 
 **Round 4 -- this slug GRADUATED 2.** One `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`); one `SCOPE_CHANGE` of kind
@@ -102,9 +104,9 @@ member. Neither route pre-empts the COO's next L6 for the cells they do not touc
     "owner": "1.0.0_SA_CTO",
     "round": "v5",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-09-03T15:35Z"
     },
     "remediation": {
       "state": "OPEN",
