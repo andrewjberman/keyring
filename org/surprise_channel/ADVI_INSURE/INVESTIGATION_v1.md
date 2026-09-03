@@ -483,3 +483,34 @@ Divergence between the executor read and this read is itself the finding and is 
 **THREE INSTRUMENT ERRORS AT THIS SEAT, none of which reached a verdict, and the second is the one worth the entry.** (1) I queried CloudWatch for `bd-49f-reporting-pull`; the function is `opal-assets-bd49f-reporting-pull`. **A wrong-name metric query returns EMPTY, not an error**, so it read as "did not invoke" -- caught by listing the real function names before believing the zero. (2) **P3 WAS SCOPED TO THE WRONG PREFIX. I searched `blackdiamond/49f/`, measured ZERO new objects 38 minutes after the fire, and was one step from classifying a working fire as REFUSED.** The insurance leg writes to **`blackdiamond/49financial/`**. **AND MY CONTROL AGREED WITH THE ERROR:** I checked the 00:00Z MAIN fire as a control and it ALSO showed zero objects in that window -- because it sat in the SAME WRONG CORPUS. A control drawn from the wrong corpus agrees about the same wrong thing; my own law file says exactly that ("DISCRIMINATION passes inside a wrong GRAIN/COVERAGE -- every instrument then agrees about the same wrong thing"), and a zero from outside the corpus is OUT-OF-CORPUS, not absence, which is the other line I carry. **The aggravation: `blackdiamond/49f/` vs `49financial/` is the TWO-PREFIX PAIR MY OWN CLAUDE.md NAMES** -- the cross-firm guard's enumeration lapse (`blackdiamond/49f/` banned at 285 objects while `49financial/` at 8,862 went unbanned until 2026-08-27 @7b777cf0a0) is about precisely this pair. I had the fact in the law I load every session and pre-registered a single-prefix arm anyway. What broke the tie was reading the LAMBDA'S OWN LOG, which reported `receipt=LANDED (DRY_RUN=False)` and made the zero impossible -- **the self-report I was required to distrust is what revealed that my artifact read was the thing that was wrong.** (3) Two path failures fetching the pages: `/tmp/...` and a `/cygdrive/...` path handed to the AWS CLI, which is a WINDOWS binary and silently wrote nothing; the second printed `AGREES: False` -- an INSTRUMENT FAILURE wearing a verdict's clothes, reported only as such because the script printed the unreadable-file exception beside it. Fixed by passing `$TEMP`, a native Windows path.
 
 **THE KEEPER: a pre-registered arm fixes the QUESTION and the EXPECTED VALUE, but it cannot fix the CORPUS -- and a corpus error is invisible to every control drawn from that same corpus.** The pre-registration made this read honest; it did not make it correct. Only an instrument on a DIFFERENT PLANE -- the Lambda's log, against my S3 listing -- could see the difference, which is the practical form of the rule that a second reading through the first seat's method is repetition rather than corroboration. Applied to the next such read: name the CORPUS in the pre-registration the way the class, tokens and denominator are named, and require one arm on a plane that does not share it.
+
+### CHANNEL ROW ADVI_INSURE-S12 -- the HELD state instructed by COO 93365 is REFUSED by the contract tool, and the refusal is RIGHT: L4 is an ACTIVATION leg, so the entry is genuinely half-landed and the daily RED is the designed signal, not a misclassification
+
+0.7.0_AE_CloudOps~R, 2026-09-03T08:28Z. Surfaced against this lane's own prior reasoning. The rollback itself is unaffected and landed (@530977130b, served-artifact verified); this row is about the LEDGER STATE ONLY. Appended per the standing rule -- a spec-vs-world divergence is a ROW, and the row does not stop the work.
+
+```json
+{
+  "id": "ADVI_INSURE-S12",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T08:28Z",
+  "one_line": "deploy_ledger.py REFUSES the HELD state that COO 93365 instructed, and the refusal is doctrinally correct: L4 is kind=activation, an APPLY/DEPLOY leg, so the entry IS half-landed and the daily RED is the designed signal -- which falsifies the premise in my own 93348 that the RED mis-describes the entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deploy_ledger.py hold --slug advi-insure-iam-insurance-silver-read --gate-type external ... -> rc=1, verbatim: \"REFUSED: cannot HELD 'advi-insure-iam-insurance-silver-read' -- open APPLY/DEPLOY leg(s) ['L4'] -- a half-landed deploy cannot be HELD (stays RED).\"",
+      ".tools/deploy_ledger.py _qualifies_as_held guardrail (a), read at source: every APPLY/DEPLOY leg is defined as kind != 'verify' and must be CLOSED-WITH-PROOF; the code comment calls it 'THIS is the anti-escape-hatch'.",
+      ".tools/deploy_ledger.py cmd_hold docstring, read at source: a hold encodes 'a deploy whose apply legs are all proven but whose post-deploy VERIFY legs are blocked on a named sovereign/external gate is NOT half-landed'; L4's kind is 'activation', not 'verify'.",
+      "The entry's own manifest: L4 kind=activation, proof empty, state OPEN -- read from org/critical_paths/.open_deploys/advi-insure-iam-insurance-silver-read.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO 93365 asserts the hold is settable and consistent with 93306's 'it stays OPEN' -- 'a hold classifies an OPEN entry as gated on a NAMED event instead of firing RED daily as an AGED OPEN; it closes nothing and gates nobody's work', with the exact hold command given to run.",
+  "world_is": "The contract tool refuses that state unconditionally and offers no override flag. The RED is not a misclassification: by the ledger's own definition an open activation leg IS a half-landed deploy, and the rollback did not close L4 -- it REVERSED the activation, which the leg vocabulary has no value for. The residual, owned by the ledger contract's owner and not by this lane: leg state has {closed-with-proof, open} and no member for 'activation attempted, failed, and deliberately rolled back, to be re-attempted later' -- Rule 24 (i) uncovered member. Until that exists, this entry correctly reads RED and no seat should read the RED as noise.",
+  "notes": "Raised against my OWN prior claim, not another seat's: 93348 argued the RED 'mis-describes' the entry and 93365 approved on that premise, so the wrong half is mine and the tool caught it. hazard_standing=ARMED because until 2.0.0_SA_COO reads the correction it believes the RED has been silenced, and a RED believed handled is a RED that gets discounted; the correction message is sent SAME-TURN, which is what disarms it. No override was attempted and none exists; the gate is working and must not be routed around."
+}
+```
