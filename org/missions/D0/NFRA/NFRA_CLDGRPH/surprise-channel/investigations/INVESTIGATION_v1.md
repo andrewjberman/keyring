@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **16 rows** (S1-S17, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:2xZ by `0.7.0_AE_CloudOps~S` on appending S17 (was 15); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **17 rows** (S1-S18, id S11 vacated by the concurrent-append renumber). Corrected 2026-09-03 14:3xZ by `0.7.0_AE_CloudOps~S` on appending S18 (was 16); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -717,6 +717,41 @@ runtime decision and no graph or marker bytes were touched.
     "spec_asserts": "B2-AC1 fixes the ECS task at cpu 2048 and memory 16384 from the measured fit table, and B2-AC6 requires the real-event cloud task to run the engine rather than fail before entrypoint.",
     "world_is": "On the first applied Pipe calls, an environment-only container override yielded a 4 MiB cgroup memory request despite the 16 GiB task-level memory declaration, so both containers failed during runc initialization and no engine path ran.",
     "notes": "Disarm in this task: explicitly carry cpu=2048 and memory=16384 on the projection-worker container definition AND the Pipe container override, create task-definition revision 2, update the Pipe target, then show a real-event execution reaches PROJECTION_EVENT and the engine. This repeats the already-ruled sizing; it does not reopen B2-AC1. The two failed deliveries are not recoverable by SQS (S14), but a third real queued stamp remains and the nightly guarantee remains; never manufacture a marker. This row is messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
+  }
+]
+```
+
+## S18 -- the Pipe's SQS payload is a Records wrapper, so `$.body` was passed literally
+
+After S17's memory disarm, the revision-2 TestEvent task reached Python and failed in JSON decoding. The
+applied task override is the decisive carrier: `PROJECTION_EVENT_JSON` equals the literal string
+`<$.body>`. Pipe execution data shows the source value lives at `$.Records[0].body`, not `$.body`.
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S18",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~S",
+    "surfaced_at": "2026-09-03T14:25Z",
+    "one_line": "The EventBridge Pipe SQS source payload is a Records wrapper, not a top-level message: the revision-2 task override carried PROJECTION_EVENT_JSON='<$.body>' literally and Python failed JSONDecodeError before classifying the TestEvent. Pipe execution data locates the value at $.Records[0].body; the dynamic path must be <$.Records[0].body>.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~S",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "APPLIED task 52cd0f5035934db78e21cd070099cc9e on task definition revision 2 reached Python and exited 1 with PROJECTION_ERROR JSONDecodeError: Expecting value line 1 column 1",
+        "aws ecs describe-tasks overrides for that task returns environment [{name:PROJECTION_EVENT_JSON,value:<$.body>}] with cpu=2048 and memory=16384 -- S17 is disarmed and the unresolved expression is literal",
+        "Pipe ExecutionStarted payloads are shaped {Records:[{messageId,body,attributes,...}]}; therefore body is measured at $.Records[0].body",
+        "TestEvent message id 9bb1988c-45d7-49fe-aaad-a4132967a8fa was consumed from the real queue; DLQ remained at the disclosed baseline 3 and no projection/ object was written"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S15's disarm and B2-AC2 require the worker to receive and classify the queue body, including s3:TestEvent without Records in that body.",
+    "world_is": "The Terraform used <$.body>, but the actual Pipes SQS execution envelope nests the message body under Records[0]; the non-resolving expression was delivered to ECS as a literal string and the worker could not parse it.",
+    "notes": "Disarm in this task: set the Pipe container override value to <$.Records[0].body>, target-safe-apply the in-place Pipe update, and repeat the TestEvent control until the task exits 0 with test_event_ignored, the main queue is empty, DLQ delta is zero and projection/ remains absent. Messaged to 2.0.0_SA_COO~A in the same turn because class=BLOCKING."
   }
 ]
 ```
