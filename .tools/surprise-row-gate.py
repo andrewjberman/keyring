@@ -112,6 +112,71 @@ REMEDIATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/remediations/*",
                         "org/surprise_channel/%s/REMEDIATION_v*")
 
 
+# FOREIGN-ROW SWEEP (2026-09-03, proposed by 1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z 93627, accepted at the base): on a
+# shared append-only channel file, a seat that commits THE FILE carries every peer row sitting uncommitted in it under
+# its own author line -- content intact, each row's `surfaced_by` true, the commit's authorship wrong. Site Z measured
+# the class over the file's whole life: 28 commits, 32 rows, EXACTLY 3 sweeps carrying 6 foreign rows, no fourth; three
+# real guards (a printed git status chained with &&, a byte-identity check that a peer's re-serialisation defeats, a
+# habit) all missed it. The check is a SET question, stable under re-serialisation: every row NEW in this commit must
+# carry a `surfaced_by` whose seat is the committer's seat. The committer is read by the estate's actor precedence
+# ($OPAL_AGENT_SERIAL -> the session serial file -> GIT_AUTHOR_IDENT last), never the --author, because safe-commit's
+# gate stages run before --author is applied. Compared at BASE serial (a lane and its base are one seat). Scoped to
+# INVESTIGATION rows -- `surfaced_by` is theirs; a remediation row is the CVO's act about another seat's remedy. An
+# unreadable committer or an unparseable surfaced_by REFUSES (fail-safe toward the wrong direction is not safe). The
+# gate's audited override covers a deliberate integration of peer rows.
+def _committer_serial(root):
+    env = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+    if env:
+        return env
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    if sid:
+        try:
+            p = os.path.join(root, "org", "mcp", "sessions", sid + ".serial")
+            if os.path.isfile(p):
+                with open(p, encoding="utf-8") as fh:
+                    val = fh.read().strip()
+                if val:
+                    return val
+        except OSError:
+            pass
+    try:
+        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=20).stdout
+    except Exception:  # noqa: BLE001
+        return ""
+    return ident.split(" <", 1)[0].strip()
+
+
+SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
+
+
+def _base_serial(s):
+    return str(s or "").strip().split("~", 1)[0]
+
+
+def _foreign_row_violations(rel, kind, added, committer):
+    """PURE. Complaints for NEW investigation rows whose `surfaced_by` is not the committer's seat."""
+    if kind != "INVESTIGATION" or not added:
+        return []
+    who = _base_serial(committer)
+    if not who or not SERIAL_RE.match(who):
+        return ["%s: committer identity UNREADABLE (%r) while %d new row(s) are staged -- the foreign-row sweep "
+                "cannot be graded; REFUSED, fail-closed" % (rel, committer, len(added))]
+    foreign = []
+    for r in added:
+        sb = _base_serial(r.get("surfaced_by"))
+        if not SERIAL_RE.match(sb):
+            foreign.append("%s (surfaced_by %r unparseable)" % (r.get("id"), r.get("surfaced_by")))
+        elif sb != who:
+            foreign.append("%s (surfaced_by %s)" % (r.get("id"), r.get("surfaced_by")))
+    if foreign:
+        return ["%s: FOREIGN-ROW SWEEP -- %d of %d new row(s) were surfaced by a seat other than the committer %s: %s. "
+                "A peer's uncommitted row rides along under your author line; commit only your own rows (a seat commits "
+                "its own row), or integrate deliberately under the audited override."
+                % (rel, len(foreign), len(added), who, ", ".join(foreign))]
+    return []
+
+
 def _index_paths(root, patterns):
     """(paths, note): the index entries matching the pathspecs; (None, note) when git could not answer."""
     try:
@@ -614,6 +679,8 @@ def check_file(root, rel):
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
+    # FOREIGN-ROW SWEEP: every new investigation row must be the committer's own (site Z's measured class).
+    v.extend(_foreign_row_violations(rel, kind, added, _committer_serial(root)))
     for row in added:
         rid = row.get("id")
         if not rid or not ID_RE.match(str(rid)):
@@ -702,6 +769,22 @@ def _self_test(root):
             ("OPEN with route SPEC_ERROR + loop_target 6 -> no route complaint (unchanged)",
              lambda: not noroute(rem(route="SPEC_ERROR", loop_target=6))),
         ]
+    # FOREIGN-ROW SWEEP arms (pure), the class site Z measured; includes the mutant (a clean commit under the WRONG seat).
+    fr = lambda rows, who: _foreign_row_violations("f", "INVESTIGATION", rows, who)  # noqa: E731
+    mine = {"id": "X_PRJ-S1", "surfaced_by": "0.8.0_AE_CloudComp~B"}
+    theirs = {"id": "X_PRJ-S2", "surfaced_by": "3.0.0_SA_CVO"}
+    arms += [
+        ("sweep: own row under own seat (lane vs base) -> admitted", lambda: fr([mine], "0.8.0_AE_CloudComp") == []),
+        ("sweep: a peer's row under my seat -> refused, names the id and its surfacer",
+         lambda: any("FOREIGN-ROW SWEEP" in x and "X_PRJ-S2" in x and "3.0.0_SA_CVO" in x for x in fr([theirs], "0.8.0_AE_CloudComp"))),
+        ("sweep: one own + one foreign -> refused naming ONLY the foreign one",
+         lambda: any("1 of 2" in x and "X_PRJ-S2" in x and "X_PRJ-S1" not in x for x in fr([mine, theirs], "0.8.0_AE_CloudComp"))),
+        ("sweep MUTANT: a clean commit graded under the WRONG seat -> refused (discriminates on authorship, not count)",
+         lambda: fr([mine], "2.0.0_SA_COO") != []),
+        ("sweep: unparseable surfaced_by -> refused (fail-safe)", lambda: any("unparseable" in x for x in fr([{"id": "X_PRJ-S3", "surfaced_by": "someone"}], "0.8.0_AE_CloudComp"))),
+        ("sweep: committer unreadable -> refused fail-closed", lambda: any("UNREADABLE" in x for x in fr([mine], "Andrew Berman"))),
+        ("sweep: remediation rows out of scope", lambda: _foreign_row_violations("f", "REMEDIATION", [theirs], "0.8.0_AE_CloudComp") == []),
+    ]
     failed = 0
     for name, fn in arms:
         ok = False
