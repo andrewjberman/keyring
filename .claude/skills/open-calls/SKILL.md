@@ -122,7 +122,8 @@ able to keep cycling in its pattern and get the thing done."* Record:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md`.
 
 **When (and ONLY when):** a project is past L2 (Andrew has confirmed its `DONE WHEN` lines) and one of two things
-happens at L10 -- a `SCOPE_CHANGE` route reaches `1.0.0_SA_CTO`, or the COO's completion report is IN QUESTION on
+happens at L10 -- the CTO's own coverage read of the CVO's slug finds an outcome no cell served (the
+PRD-addendum path of spine v3.0; no route token exists), or the COO's completion report is IN QUESTION on
 receipt (a grade the CTO cannot turn REALIZED or NOT_REALIZED from the artifact). Everything else that is
 sovereign-class stays in Andrew's queue exactly as the sections above say; this mode never widens to a new project,
 a new directive, money, vendors or a standing hold.
@@ -138,7 +139,7 @@ a new directive, money, vendors or a standing hold.
 3. Records the whole frame verbatim at
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_<PROJECT_CODE>_<UTC-stamp>.md` and broadcasts it the
    same turn to `2.0.0_SA_COO`, `3.0.0_SA_CVO` and `0.0.0_AB_MSTR` with push state stated. The record is what the
-   grades' `adjudication_ref` and any `SCOPE_CHANGE` row cite.
+   grades' `adjudication_ref` and any PRD addendum cite.
 4. **Acts, then and there:** the endpoint is appended (new `FWD-<n>` ids at the next unused number, never renumbered,
    never reused), the PRD is re-issued or adjusted at L4 with its header's `endpoint_outcomes` updated, the L4
    notifier fires to the COO, and the loop runs forward from L4 -- L5 re-decomposition, L6 fresh task orders, and
@@ -146,7 +147,8 @@ a new directive, money, vendors or a standing hold.
 
 **What it is not:** not a gate on any other seat (the COO's L5/L6 and the CVO's L8-L10 proceed on the re-issued PRD
 as on any PRD); not a channel to Andrew (he reads the record if he wants to; the loop does not stop for him); not
-available to the COO or the CVO (their questions travel up to the CTO by the L10 route). A CTO that finds itself
+available to the COO or the CVO (the CVO's questions reach the CTO in the slug; the COO's in its drain
+report and its completion report). A CTO that finds itself
 unable to rule -- the call genuinely needs money, a vendor, or a directive-level change -- lists that ONE call in the
 ordinary `/open-calls` queue for Andrew and keeps every other card's ruling in force so the loop keeps cycling on
 everything it can.

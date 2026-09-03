@@ -27,11 +27,14 @@ terminal/total + assignee (`task-orders/*.md` faces); cells covered / cells serv
 
 ## 2. The obligations, in this order, every tick
 
-1. **Graduated round -> L5/L6 SAME TICK.** `SPEC_ERROR` rows -> orders cut; `DECOMP_INVALIDATING` -> decomposition
-   amended then orders cut. Never scheduled for later.
+1. **Round-N analysis in hand -> ONE issuance SAME TICK** (spine v3.0 L10): the choice between a
+   re-decomposition and a re-issue is the COO's own, recorded in the issuance commit; the route tokens are
+   retired. Never scheduled for later.
 2. **WIDTH at L6.** Every uncovered cell serving an ungraded FWD with no unmet dependency is cut THIS tick, one order per
-   cell, one cell per lane, through `.tools/to-pipeline-gate.py`; lanes seated the same tick (`/mstr-spawn`; Codex via
-   `ajb2 <FULL_SERIAL>` while Andrew holds Claude Tier-2 spawns). **No dispatch cap.** No cell is cut for coverage alone.
+   cell, one cell per lane, through `.tools/to-pipeline-gate.py`; under spine v3.0 the workers are
+   subagents the COO spawns in worktrees, fan-out `N of M chains, cap K` stated in the issuance commit
+   (default cap 8); a v2 lane is seated the same tick (`/mstr-spawn`; Codex via `ajb2 <FULL_SERIAL>`) only
+   for a round already open on v2. **The cap is stated, never silent.** No cell is cut for coverage alone.
 3. **Terminal orders -> L8 compile NOW**, by you, handed to the CVO. The compile is an act, never a wait.
 4. **L8 packet at the CVO:** no READ ack at one tick -> nudge with path + hash; two ticks -> `[STUCK]` to `0.0.0_AB_MSTR`.
 5. **Idle lane + uncovered FWD-serving cell = a DEFECT** in this tick's row; the remedy is 2, same tick.
@@ -54,7 +57,8 @@ with an open order is respawned or reseated this tick. **A dispatch into an unve
 
 ## 3. Dispatch, gate, log
 
-- Rule 27: an order comes from a cell, names one Tier-2 serial, passes the L6 gate on its own. Subject `[DRIVE]` /
+- Rule 27: an order comes from a cell, names one worker serial (`0.9.0_WK_<CODE>~<n>`; a Tier-2 seat only on a
+  round already open on v2), passes the L6 gate on its own. Subject `[DRIVE]` /
   `[STUCK]`; body = project, limb, order id, reason, RAVC window. A gate someone else legitimately holds is a gate;
   verify it is real; a self-inflicted wait is coasting.
 - **Hard gate:** a tick that read a graduated round, an uncompiled terminal order, an unacked packet past one tick, an
