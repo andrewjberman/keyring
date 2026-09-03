@@ -3,7 +3,7 @@
 **archetype:** IMPLEMENT
 **Date:** 2026-09-03
 **Task Order:** NFRA_COMPEFFICACY.TO-CE-T-5
-**Status:** IMPLEMENTATION AND AUDIT COMPLETE - independent FWD-9 receipt, proof validation, and complete flip remain
+**Status:** COMPLETE - implementation, audit, independent witness, and proof VALID; lane-owned complete flip prepared
 
 ---
 
@@ -29,7 +29,7 @@ state.
 | test battery | `python .tools/tests/test_comp_schedule_battery.py`; `python -m pytest -q .tools/tests/test_comp_schedule_battery.py` | PASS | 18/18 direct; 1 pytest file passed. RED mutants cover each new behavior. |
 | historical regression | `python .tools/tests/test_comp_schedule.py` | PASS | 9/9 direct, unchanged historical file. |
 | commit-gate | `bash .tools/commit-gate.sh .tools/tests/test_comp_schedule_battery.py` | PASS | Clean for 1 of 1 touched Python test files; the executable has no `.py` suffix and was separately compiled/exercised. |
-| proof-of-spec-check | `python .tools/proof-of-spec-check.py <T-5 proof> T5-AC1,T5-AC2,T5-AC3,T5-AC4,T5-AC5,T5-AC6` | PENDING | Must run after the independent FWD-9 receipt and before the complete flip. |
+| proof-of-spec-check | `python .tools/proof-of-spec-check.py <T-5 proof> T5-AC1,T5-AC2,T5-AC3,T5-AC4,T5-AC5,T5-AC6` | PASS | VALID rc 0 before complete flip: 6 rows, 0 violations, criterion alignment 6/6, owned-cell alignment 1/1, surprises 0. |
 
 Results: PASS=accurate+useful | PARTIAL=present but noisy | FAIL=wrong/crash/silent | SKIPPED=explain why | WARN=empty+correct WARN message
 
@@ -68,6 +68,11 @@ visible in the governing source/spec faces.
 6. Committed the engine and battery at `86b4ecc2656c3bb0319e777b230c82f9b68802fe`.
 7. Sent FWD-9 to `2.0.0_SA_COO` for `python .tools/comp-schedule --budget 0`.
 8. Wrote and committed the exact 31-field s.4 result at `f82be2192b`.
+9. Received an independent exact `--budget 0` witness from live lane ~G:
+   rc 0, 5/5 carriers, 19.032 seconds, C1=21/C2=4/C3=12/C4=20/C5=337,
+   21 armed gates, 138 needs-read fields, and correct C4/C5 tool voice.
+10. Committed the proof and witness update at `b5148c3456`; proof validator
+    returned VALID before the task-order status was changed.
 
 ## Decisions Made
 
@@ -88,33 +93,35 @@ visible in the governing source/spec faces.
 | `.tools/comp-schedule` | Four states, per-carrier state disclosure, Rule-T budget/cursor/rc behavior | Yes - `86b4ecc265` |
 | `.tools/tests/test_comp_schedule_battery.py` | New 18-arm file-grain and RED-mutant battery | Yes - `86b4ecc265` |
 | `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/comp-schedule.result.md` | Required 31-field s.4 result and evidence quotes | Yes - `f82be2192b` |
+| `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~K/NFRA_COMPEFFICACY.TO-CE-T-5.comp-schedule-s4-audit.proof_of_spec.json` | Six-row machine-readable proof, including independent witness | Yes - `b5148c3456` |
 
 ---
 
 ## Blockers
 
-The mandated FWD-9 observation from a seat other than this lane has been sent
-and is pending. It blocks proof finalization and the complete flip, not the
-already-completed implementation or local audit.
+None. The canonical COO base seat was offline and retained its exact FWD-9
+command unread, but live independent lane `0.8.0_AE_CloudComp~G` ran the same
+exact command and returned the required witness. Canonical COO routing remains
+delivered; no identity was impersonated.
 
 ---
 
 ## Current State
 
-Implementation commit `86b4ecc265` and result commit `f82be2192b` are local on
-`CLOUD`. The new battery is 18/18 direct and green under pytest file grain;
+Implementation commit `86b4ecc265`, result commit `f82be2192b`, log commit
+`b2bc206fba`, and proof commit `b5148c3456` are local on `CLOUD`. The new
+battery is 18/18 direct and green under pytest file grain;
 the historical battery is 9/9 direct. Default compilation completes 5/5
 carriers under the 90-second default; a 0.001-second cut returns rc 3 with a
 reached-denominator prefix. `origin/CLOUD` was measured at
 `351f309e0a6ded1a5a5bdf3aacec18a5f9f8dbee`, and the implementation ancestry
-probe returned rc 1. No push was performed.
+probe returned rc 1. The independent unbounded run returned rc 0 over all five
+carriers, and the final proof validator returned VALID. No push was performed.
 
 ---
 
 ## Next Steps
 
-1. Consume the exact hard-nudged FWD-9 response and append its independent
-   unbounded-run evidence to the result.
-2. Create and validate the T-5 proof instance for all six criteria.
-3. Flip the task-order status to complete in a lane-owned local commit.
-4. Send the per-criterion completion report to `2.0.0_SA_COO`; do not push.
+1. Commit the prepared task-order complete flip with these final evidence
+   updates.
+2. Send the per-criterion completion report to `2.0.0_SA_COO`; do not push.
