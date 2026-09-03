@@ -84,7 +84,8 @@ the old `codex.exe` writer to exit before `handoff-codex-seat.ps1` may resume it
 - Manual canonical recovery used `org/mcp/handoff-codex-seat.ps1`, never an in-place bridge restart.
   Waiting helper PID `66252` was stopped on the first pencils-down order. The later Andrew-direct log
   collector addendum authorized one log-only recovery, so helper PID `93132` was staged to wait for
-  legacy PID `89860` to exit before resuming the same thread.
+  legacy PID `89860` to exit before resuming the same thread. COO then relayed Andrew's frozen-system
+  ruling; the wait was stopped and helper `93132` was confirmed absent without touching `89860`.
 - The driver recorded each pass's status exit and GREEN/RED first line, not each component PID. The
   component PIDs above came from manual full `codex-seat-status.ps1` measurements; no historical
   per-pass component PID record is claimed. No `inbox-watch.sh`, `check-inbox.sh`, `agent-poller.py`,
@@ -140,8 +141,9 @@ the old `codex.exe` writer to exit before `handoff-codex-seat.ps1` may resume it
   issued certification; CTO did not convert implementation evidence into a PASS.
 - **Shutdown controls:** Andrew's first STOP caused `Stop-Process`/`Wait-Process` on final driver PID
   `80980` and waiting handoff PID `66252`, followed by a command-line scan proving no matching driver.
-  The later collector order authorized only CRO log recovery; helper `93132` is therefore waiting on
-  old writer `89860`, with no product or governance action authorized.
+  The later collector order authorized only CRO log recovery, so helper `93132` waited on old writer
+  `89860`, with no product or governance action authorized. Andrew's subsequent no-wait word ended that
+  recovery attempt; the helper and active poll were stopped and only old writer `89860` remained.
 
 ### Routing and return path
 
@@ -166,7 +168,8 @@ the old `codex.exe` writer to exit before `handoff-codex-seat.ps1` may resume it
   `C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/` and are intentionally uncommitted runtime state.
 - The shared `docs_abcdeg/fabric` generation-179 edits remained local at shutdown. Restart-log copies for
   CTO, KJ, and A0 were subsequently committed in `docs_abcdeg` at `4ac1227`; exact CRO~Y log collection
-  remained pending its log-only same-thread recovery.
+  was later ruled impossible before restart because the CRO TUI and system were frozen. The missing lane
+  log is recorded explicitly rather than substituting the available base-CRO log.
 - `$log` was invoked only for pencils-down shutdown. It was not part of the operational loop.
 
 ---
@@ -266,7 +269,28 @@ the old `codex.exe` writer to exit before `handoff-codex-seat.ps1` may resume it
 | `C:/Users/AndrewBerman/Downloads/docs_abcdeg/fabric/seats/1.1.0_SA_KJ~Y/SEAT.md` | KJ final handback state | No - shared local fabric |
 | `C:/Users/AndrewBerman/Downloads/docs_abcdeg/fabric/ledger/handoffs.jsonl` | HAN-0052 final handback/certification row | No - shared local fabric |
 | `C:/Users/AndrewBerman/Downloads/docs_abcdeg/fabric/snapshots/` | Generation-179 generated evidence | No - shared local fabric |
-| `C:/Users/AndrewBerman/Downloads/docs_abcdeg/session_logs/2026-09-03/restart_0120Z/` | Byte-identical restart copies for CTO~Y, KJ~Y, and A0~Y; CRO~Y pending | Yes - `4ac1227` |
+| `C:/Users/AndrewBerman/Downloads/docs_abcdeg/session_logs/2026-09-03/restart_0120Z/` | Byte-identical restart copies for CTO~Y, KJ~Y, and A0~Y plus a manifest recording CRO~Y unavailable | Yes - `4ac1227`, `1cac97d`, final collection commit |
+
+---
+
+## Shutdown Log Collection
+
+Andrew instructed CTO~Y to collect all four Codex-lane logs in `docs_abcdeg`. COO later relayed his
+governing exception verbatim: "Tell CTO~Y that there is no way of managing the CRO~Y TUI because the
+whole system is frozen." CTO therefore did not wait further and did not substitute the concurrent
+`4.0.0_SA_CRO` base-seat log for the required `4.0.0_SA_CRO~Y` lane record.
+
+| Seat | Source record | Collected record | Evidence/status |
+|------|---------------|------------------|-----------------|
+| `1.0.0_SA_CTO~Y` | `ajb_workspace/org/tier1_exec/1.0.0_SA_CTO/logs/2026-09-03/session_close_p3_to_06_drive_2300-0115Z.md` | `docs_abcdeg/session_logs/2026-09-03/restart_0120Z/1.0.0_SA_CTO~Y_session_close_p3_to_06_drive_2300-0115Z.md` | Canonical commits `9628b6c...`, `5841b7a...`, and this final collection amendment; byte-identical docs copy committed at `4ac1227` then `1cac97d`. |
+| `1.1.0_SA_KJ~Y` | `ajb_workspace/org/tier1_exec/1.1.0_SA_KJ/logs/2026-09-03/session_close_1654-0114Z.md` | `docs_abcdeg/session_logs/2026-09-03/restart_0120Z/1.1.0_SA_KJ~Y_session_close_1654-0114Z.md` | Source local/uncommitted; 8,359 bytes; SHA256 `D0A2C1DD77A624D1DB174FBAB498F7B2277C888658A7B9E1AB725A787A887BBC`; durable copy in `4ac1227`. |
+| `1.2.0_SA_A0~Y` | `ajb_workspace/org/tier1_exec/1.2.0_SA_A0/logs/2026-09-03/session_close_1654-0115Z.md` | `docs_abcdeg/session_logs/2026-09-03/restart_0120Z/1.2.0_SA_A0~Y_session_close_1654-0115Z.md` | Source local/uncommitted; 9,865 bytes; SHA256 `1876EFCF8A4727E72DD825C4F2346338DBEB053FA9A27E308F2CDAB3EFFB25BC`; durable copy in `4ac1227`. |
+| `4.0.0_SA_CRO~Y` | No lane-authored shutdown log obtainable | `docs_abcdeg/session_logs/2026-09-03/restart_0120Z/MANIFEST.md` | UNAVAILABLE by Andrew-direct frozen-system ruling. Last measurement: heartbeat `73312`, app server `127.0.0.1:65226`, dead bridge PID `105368`, dead detector PID `82560`, thread `01a05e60-2f05-7b63-8d20-e06f40c338ab`, old writer `89860`, unread 40. Last work: final P3-TO-06 candidate `3ea40af3...` was queued for certification after CRO's two prior typed FAIL-REPAIR rulings; no final disposition arrived. |
+
+The collection manifest carries the same four-seat status and explicitly identifies the CRO gap. The
+available base-seat file `org/tier1_exec/4.0.0_SA_CRO/logs/2026-09-03/session_close_2103-0114Z.md`
+was inspected only far enough to establish its header was `4.0.0_SA_CRO`, not `4.0.0_SA_CRO~Y`; it is
+not copied into the lane bundle.
 
 ---
 
@@ -283,17 +307,16 @@ lift of pencils down.
 
 Pencils are down. Product main is clean at `97d563eae9f67ce87ab67f983f35059bfe81eec8`; the unlanded KJ
 candidate is `3ea40af3aa84d227ad60a3f4eb648284e5caeeac` in a clean `scratchpad_kj` worktree. CRO's old writer
-PID `89860` remained alive; the original recovery helper and CTO drive were stopped, while log-collector
-helper PID `93132` now waits under the later Andrew-direct addendum. `docs_abcdeg` retains generation-179
-fabric edits locally and has durable CTO/KJ/A0 restart copies at `4ac1227`; the exact CRO~Y-authored log
-is still pending and the base CRO log must not be substituted.
+PID `89860` remained alive; both recovery helpers, the CTO drive, and the temporary active poll are
+stopped. `docs_abcdeg` retains generation-179 fabric edits locally and has durable CTO/KJ/A0 restart
+copies; the exact CRO~Y-authored log was unobtainable under Andrew's frozen-system ruling and the base CRO
+log was not substituted.
 
 ---
 
 ## Next Steps
 
 1. **[1.0.0_SA_CTO~Y] Remain idle until Andrew lifts pencils down** -- do not re-arm `$drive` or the CRO handoff from this log alone.
-2. **[4.0.0_SA_CRO~Y] Write and hand off the exact lane session log before restart** -- this is the sole action authorized by the collector addendum.
-3. **[1.0.0_SA_CTO~Y] Reload the exact seat after restart and remeasure all runtime state** -- verify old helper/driver absence and sweep the exact suffixed inbox first.
-4. **[4.0.0_SA_CRO~Y] Resume P3-TO-06 certification only after the hold lifts** -- the exact certification request is already queued.
-5. **[1.0.0_SA_CTO~Y] Act only on the typed CRO ruling** -- land and post-validate on PASS, or route the exact measured repair on FAIL.
+2. **[1.0.0_SA_CTO~Y] Reload the exact seat after restart and remeasure all runtime state** -- verify old helper/driver absence and sweep the exact suffixed inbox first.
+3. **[4.0.0_SA_CRO~Y] Resume P3-TO-06 certification only after the hold lifts** -- the exact certification request is already queued.
+4. **[1.0.0_SA_CTO~Y] Act only on the typed CRO ruling** -- land and post-validate on PASS, or route the exact measured repair on FAIL.
