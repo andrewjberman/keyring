@@ -176,8 +176,10 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 - **Input:** the remediation rows. **Output:** on each row a `route` and its `loop_target`, locked:
   `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`, re-cuts the task order), `DECOMP_INVALIDATING` to L5 (owner
   `2.0.0_SA_COO`, re-decomposes), `SCOPE_CHANGE` to L2 (owner `1.0.0_SA_CTO`, re-enters the endpoint; the row names
-  the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). The three routes answer one
-  question about this project's own chain: what the remedy needs that does not exist yet. A finding whose remedy lies
+  the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). A graduated row whose remedy was
+  executed inside the round by its owner, its remediation `REMEDIATED` and, if it was armed, its hazard `DISARMED`,
+  carries no route and re-enters nowhere; the gate admits that row and no other route-less one. The three routes answer
+  one question about this project's own chain: what the remedy needs that does not exist yet. A finding whose remedy lies
   outside that chain is not routed and no route targets another project: the row's `disarm_owner` fixes it in place
   when the fix lies inside that owner's lane, or the row is `DISMISSED_WITH_REASON` naming the brief or record that
   opens the owning surface's own project at L1; one project's loop never writes into another's. A round whose
@@ -280,3 +282,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 | 2.3 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md` | the close: the COO's completion report and the CTO's grades, two reads on two axes, the `CLOSED` flip mechanical on the grades (`missions-tree-index.py` R6, `COMPLETION_REPORT.schema.json`); autonomy after L2 -- Andrew confirms the `DONE WHEN` lines at L2 and no limb waits on him after; `SCOPE_CHANGE` and a questioned grade are adjudicated by the CTO (`/open-calls --adjudicate`) and the loop runs forward from L4 |
 | 2.4 | 2026-09-03 | `docs/architecture/NFRA_INTEGRATIONS_STANDARD.md` @f9ca7a9309 -- the in-place disarm of NFRA_CLDGRPH round 1's first finding, whose remedy lay in another surface's document; the question relayed by the run's L2 owner to the scribe | the routes are about this project's own chain; an outside remedy is a disarm in place within the owner's lane or a `DISMISSED_WITH_REASON` naming the brief that opens the owning surface's own project at L1; no route targets another project |
 | 2.5 | 2026-09-03 | `org/standards/COMPLETION_REPORT.schema.json` (the grader's bar in the contract) | the close's grading bars stated in the process rather than in messages: a `REALIZED` grade cites artifacts covering every limb of the card's acceptance clause and a vacuous control window is not evidence; the observed state never sits below the card's state (mechanical in the tree check) |
+| 2.6 | 2026-09-03 | `.tools/surprise-row-gate.py` (the gate-model fork between the two fabrics' CTOs, ruled at the base) | a graduated row whose remedy was executed inside the round (`REMEDIATED`, and `DISARMED` if armed) carries no route and re-enters nowhere; every other route-less remediation row is refused |
