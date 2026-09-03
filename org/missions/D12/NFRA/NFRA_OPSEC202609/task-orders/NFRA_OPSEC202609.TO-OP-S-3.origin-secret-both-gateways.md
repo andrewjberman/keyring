@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` v0.4 @43b75ffbd6 (ENDPOINT FWD-2, property 2; s.7.1 the dependency that comes first; 7.6 C-1) - **Decomp cell:** `OP-s-3` (v0.1 @bff1f8d012, s.1a; the ROUND 1 fence: "OP-s-3 first") - **Lane:** `infra/aws/terraform/portal-auth/**`, `infra/aws/terraform/shared-infra/apigateway-portal/**`, the HTTP API's authorizer/handler code under `infra/aws/opalinvest_dev/lambda/auth-handler/**` and `infra/aws/users/lambda/portal-authorizer/**` (AE lane; the OTP deploy @f4659653e8 is the precedent for the handler being in this lane) - **Round:** 1 of NFRA_OPSEC202609.
 
