@@ -176,8 +176,13 @@ mapping is in section 3. Route tokens are `SPEC_ERROR`, `DECOMP_INVALIDATING`, `
 - **Input:** the remediation rows. **Output:** on each row a `route` and its `loop_target`, locked:
   `SPEC_ERROR` to L6 (owner `2.0.0_SA_COO`, re-cuts the task order), `DECOMP_INVALIDATING` to L5 (owner
   `2.0.0_SA_COO`, re-decomposes), `SCOPE_CHANGE` to L2 (owner `1.0.0_SA_CTO`, re-enters the endpoint; the row names
-  the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). A round whose remediation doc
-  graduates zero rows proceeds to the next L6 dispatches, or, when the decomposition is spent, opens the close.
+  the contradicted `FWD-<n>`, or names a proposed outcome with `outcome_ref` null). The three routes answer one
+  question about this project's own chain: what the remedy needs that does not exist yet. A finding whose remedy lies
+  outside that chain is not routed and no route targets another project: the row's `disarm_owner` fixes it in place
+  when the fix lies inside that owner's lane, or the row is `DISMISSED_WITH_REASON` naming the brief or record that
+  opens the owning surface's own project at L1; one project's loop never writes into another's. A round whose
+  remediation doc graduates zero rows proceeds to the next L6 dispatches, or, when the decomposition is spent, opens
+  the close.
 - **The close:** two reads on two axes. `2.0.0_SA_COO`, the only seat that can say the decomposition is spent (every
   cell holds a terminal task order with a valid proof-of-spec), writes `ledger/COMPLETION_REPORT.round<N>.json`: one
   row per outcome in the PRD header, the cells that served it, each cell's proof-of-spec, and the claim `COVERED` or
@@ -271,3 +276,4 @@ describes this process in a second shape is retired to a redirect the day it is 
 | 2.1 | 2026-09-03 | `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_L7_L10_LOOP_CVO_RELAYS_TO_COO_NEVER_CONVERSES_WITH_WORKERS.md` @10a4beaffb; `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_043xZ_ALL_TOS_PROOF_OF_SPEC_BEFORE_LOOPBACK_CVO_REMEDIATION_SLUG_AT_L10.md` @de2d6d643c | the L7 to L10 loop: the CVO's findings travel up to the COO (or the CTO for a scope change) and never down to a worker; remediations are one slug at L10; every task order finishes with its valid proof-of-spec before any loop-back; the pass re-enters at L5 or L6 as fresh and remediated task orders in dependency order; the L10 handoff is to the route owner only |
 | 2.2 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md` | two refusers for clauses that bound by reading: the L8 send guard on the broker path (CVO to a Tier-2 serial refused while a tree project is executing) and the second limb of the L10 gate (no route while an investigation item is undispositioned; both route shapes; the `adjudicates` carrier) |
 | 2.3 | 2026-09-03 | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_052xZ_WHO_DECIDES_DONE_COO_COMPLETION_REPORT_CTO_GRADES_TWO_READS.md` | the close: the COO's completion report and the CTO's grades, two reads on two axes, the `CLOSED` flip mechanical on the grades (`missions-tree-index.py` R6, `COMPLETION_REPORT.schema.json`); autonomy after L2 -- Andrew confirms the `DONE WHEN` lines at L2 and no limb waits on him after; `SCOPE_CHANGE` and a questioned grade are adjudicated by the CTO (`/open-calls --adjudicate`) and the loop runs forward from L4 |
+| 2.4 | 2026-09-03 | `docs/architecture/NFRA_INTEGRATIONS_STANDARD.md` @f9ca7a9309 -- the in-place disarm of NFRA_CLDGRPH round 1's first finding, whose remedy lay in another surface's document; the question relayed by the run's L2 owner to the scribe | the routes are about this project's own chain; an outside remedy is a disarm in place within the owner's lane or a `DISMISSED_WITH_REASON` naming the brief that opens the owning surface's own project at L1; no route targets another project |
