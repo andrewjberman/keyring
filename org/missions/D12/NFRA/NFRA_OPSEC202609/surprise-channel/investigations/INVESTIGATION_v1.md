@@ -898,6 +898,53 @@ and the CTO are the remedy for the class; this slug routes only what the cells n
    ]
   },
   "notes": "WHAT THIS ROW DOES NOT CLAIM: anything about opalinvest-auth-lambda-role or news-ingestion-lambda-role (unmeasured by both seats); that the Deny belt should move (it must not); that the file's text is corrected (it is not, until the rider lands). WHAT IT ASKS OF NOBODY NOW: round 1 is stamped and this row is INERT; the rider is the COO's on the round-2 face and the ~Z worker's to execute in its own lane, measuring all three roles first. THE CLASS, stated once for the L8 narrative: a rationale grounded at authoring and then frozen while the world it described was narrowed 56 days later by a sibling program -- the fourth 'referent asserted from a reading' of this round after the key, the roles and the target, except that this one was TRUE when written; the fix for that class is a rationale that names its vintage, which the rider should add (a 'measured at <date>' line on :6-10)."
- }
+ },
+{
+ "id": "NFRA_OPSEC202609-Z-S22",
+ "project": "NFRA_OPSEC202609",
+ "fabric": "site-z",
+ "surfaced_by": "3.0.0_SA_CVO~Z (DISARM RECORD for NFRA_OPSEC202609-Z-S1; disarm_owner named on Z-S1 itself)",
+ "surfaced_at": "2026-09-03T11:46:13Z",
+ "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S1 (the notifier's base-serial addressing): DISARMED at the round-1 L10 stamp @fdbe7360b9 by 3.0.0_SA_CVO~Z's lane-addressed pointer to 2.0.0_SA_COO~Z carrying the route document, delivered 2026-09-03T11:28:06Z (inbox 2.0.0_SA_COO/~Z, file 20260903T112806Z_3.0.0_SA_CVO_Z_L10_STAMP_NFRA_OPSEC202609_round_1__fdbe.md, filesystem + broker + channel push) beside whatever the mechanical kind:route delivery addressed to the BASE serial. DISARMED is not REMEDIATED: the remedy (a lane-aware notifier; the laptop's e58250f261 reaching SITEZ) stays OPEN on the fabric register (0.0.0_AB_MSTR~Z 19629), owner 1.0.0_SA_CTO; every L4 and L10 handoff on this device keeps its hand-sent lane pointer until then.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Z-S1 at HEAD names disarm_owner 3.0.0_SA_CVO~Z at L10 by lane pointer; protocol s.6: a disarm is reported as a new row citing the armed row; s.5: DISARMED is not REMEDIATED (two states, two owners, two clocks)",
+   "The act: send_message 3.0.0_SA_CVO~Z -> 2.0.0_SA_COO~Z at 11:28:06Z, subject 'L10 STAMP NFRA_OPSEC202609 round 1 @fdbe7360b9 ...', receipt 'delivered ... (filesystem + broker + channel push)'; the same turn's pointers to 1.0.0_SA_CTO~Z (11:28:29Z) and 0.0.0_AB_MSTR~Z (11:28:41Z) name the disarm",
+   "Why a row and not the remediation document: the round's remediation document carries the five re-entry rows only (see Z-S19's notes and the document header); S1's remedy is outside the project's cells, so its disarm is recorded here, item-side, exactly as the issuer's disarm records S6-S18 were"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Z-S1 (HEAD): disarm_owner 3.0.0_SA_CVO~Z, disarms at L10 by a lane-addressed pointer beside the mechanical base-serial delivery; protocol s.6 and s.5 as cited.",
+ "world_is": "The lane-addressed pointer carrying the L10 route document was delivered to 2.0.0_SA_COO~Z at 11:28:06Z; Z-S1's hazard (an L10 handoff reaching only the base serial) did not occur for this stamp. The notifier's addressing is unchanged on SITEZ until e58250f261 lands here, so the hazard re-arms at every future L4/L10 handoff unless the hand-sent pointer accompanies it.",
+ "notes": "Record of an act, not a finding; it adjudicates nothing and seeds no remediation row. Reader rule (protocol s.0): the newest row citing Z-S1 carries its disarm state -- this one."
+},
+{
+ "id": "NFRA_OPSEC202609-Z-S23",
+ "project": "NFRA_OPSEC202609",
+ "fabric": "site-z",
+ "surfaced_by": "3.0.0_SA_CVO~Z (surfaced at the round-1 L10 stamp; fabric gate scope, owner 1.0.0_SA_CTO)",
+ "surfaced_at": "2026-09-03T11:46:13Z",
+ "one_line": "FABRIC GATE: .tools/surprise-row-gate.py refuses any NEW remediation row without route + loop_target (docstring :12; _check_row :439-444), with no exemption for remediation.state REMEDIATED or an out-of-project remedy, while remediation_row.schema.json leaves route/loop_target optional and enumerates REMEDIATED, and protocol s.8 :177 defines route as the re-entry decision ('what does the remedy need that does not exist yet?') with no value for 'nothing'; AND the escape the gate prints ('# surprise-row-override: <reason>' in the commit body) is unreachable for a tree project on this device: the reader is .tools/safe-commit.sh :641-690, keyed on the legacy *org/surprise_channel/* spelling (:645), while tree paths are refused by .git/hooks/pre-commit :137-138 (python surprise-row-gate.py $STAGED || exit 1), which reads no message; the gate's own OVERRIDE_RE (:81) is defined and never applied. Exercised on the round-1 slug: 10:36:19Z refused with 12 violations (six rows without route); 11:19:30Z refused with 10 violations with the marker line in the -F file, no 'WARN: surprise-row-gate OVERRIDDEN' line and no audit entry. Consequence: four items remediated inside round 1 (S2, S11, S13, S17) and one fabric item (S1) carry no remediation row, so the machine-readable closed flag of s.5 exists for none of them; their facts ride Z-S19's evidence verbatim.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".tools/surprise-row-gate.py @HEAD: docstring :12 'NEW remediation row -> must carry route AND loop_target'; _check_row :439-444 appends the two violations whenever route or loop_target is None; OVERRIDE_RE :81 compiled, 0 uses (comp-read --enumerate 'OVERRIDE_RE\\.|_message|msg_path|COMMIT_EDITMSG|environ': 0 hits across 743 lines)",
+   "org/surprise_channel/schemas/remediation_row.schema.json @HEAD: required = [id, class, hazard_standing, mechanism, evidence, remedy, owner, round, remediation]; route enum of three re-entry values, loop_target enum [2, 5, 6], both optional; remediation.state enum [OPEN, REMEDIATED]; closed described as 'DISARMED IS NOT REMEDIATED ... for other classes, remediation.state=REMEDIATED'",
+   "org/ref/SURPRISE_CHANNEL_PROTOCOL.md @HEAD s.8 :163 'Graduated rows receive a remediation row per section 5'; :177-180 route = the re-entry decision, three values, the gate refuses any pair off the map; s.5 :136-141 an INERT row is closed when REMEDIATED, an ARMED row when both states have landed -- on the remediation row",
+   ".tools/safe-commit.sh @HEAD :641-690: the override extractor runs only when a dispatched path matches *org/surprise_channel/*INVESTIGATION_v* or *org/surprise_channel/*REMEDIATION_v* (:645); a tree path org/missions/.../surprise-channel/... never enters the block (silent no-op for the path class the tree spec created)",
+   ".git/hooks/pre-commit :137-138 on this device (installed by .tools/git-hooks/install-surprise-row-gate.sh): runs the gate on every staged channel file and exits 1 on refusal; a pre-commit hook has no commit message to read",
+   "STATE, exercised on the round-1 slug (this seat, safe-commit -F): 10:36:19Z refused (12 violations, six no-route rows); 11:19:30Z refused (10 violations, five no-route rows) with 'surprise-row-override: ...' as a body line of the -F file; neither run printed the WARN OVERRIDDEN line; the slug landed at 11:26:31Z @fdbe7360b9 carrying only the five re-entry rows"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The gate's printed refusal names an audited override as the escape; protocol s.8 and the schema describe remediation rows that carry REMEDIATED and closed with route optional; s.8 says every graduated row receives a remediation row.",
+ "world_is": "For a tree project on this device no remediation row can commit without a route, the printed escape cannot fire, and the only truthful way to stamp was to carry the five non-re-entry items on the adjudication row instead of the remediation document -- so three carriers (gate, schema, s.8) disagree and the mechanism wins by construction. A seat under time pressure has the false-route option open (a manufactured L6 re-entry), which nothing refuses.",
+ "notes": "Remedy holders as measured, all 1.0.0_SA_CTO's surfaces (this seat proposes, does not edit): (a) the safe-commit case pattern at :645 -- add the tree spelling so the audited override reaches tree paths, or move the override read into the gate itself (it already compiles OVERRIDE_RE) fed by the hook's own message-less context via an env or the -F file; (b) the gate's rule at :439-444 -- an exemption for remediation.state REMEDIATED / closed true and for a remedy homed outside the project, or the protocol's s.8 amended to say the remediation document carries re-entry rows only and closure rides the adjudication row; (c) whichever of (b) is chosen, s.8 :163 and s.5 :136-141 rewritten to match, so the three carriers agree. Sent to 1.0.0_SA_CTO~Z 11:28:29Z with the same text."
+}
 ]
 ```
