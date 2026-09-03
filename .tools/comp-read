@@ -46,6 +46,7 @@ from __future__ import annotations
 
 import ast
 import bisect
+import json
 import os
 import re
 import sys
@@ -73,7 +74,7 @@ import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA
 # _self_report() -- so remaining() at self-report time reflects the WHOLE run's elapsed time, not
 # just the telemetry call's own microseconds. Starting it any later makes the pre-flight SKIP
 # branch below structurally unreachable for a single-unit tool (see _self_report()'s own comment).
-_BUDGET_STATE = {"s": None, "source": None, "quiet": False, "clock": None}
+_BUDGET_STATE = {"s": None, "source": None, "quiet": False, "clock": None, "trailer": None}
 
 # --------------------------------------------------------------------------- qualifier lexicon
 # The load-bearing panel. These are the shapes that INVERT, LIMIT, or RETRACT a nearby claim -- the
@@ -433,21 +434,56 @@ def _whole_value(src, start, end):
     return src[i:j] == src[start:end]
 
 
-def _enumerate(path, src, lines, sections, how, pattern, limit, page):
-    """comp-find's three earned properties at file grain: a zero carries its denominator, bands
-    are graded, nothing truncates silently."""
-    try:
-        rx = re.compile(pattern)
-    except re.error as e:
-        print("comp-read: ERROR: bad --enumerate pattern: %s" % e)
-        return 2
+def _enumerate(path, src, lines, sections, how, pattern, limit, page, width=160,
+               band_filter=None, json_mode=False):
+    """Enumerate file-local hits without letting a downstream filter erase the claim.
+
+    Every text row carries match-kind and ordinal/denominator.  Synthetic ABSENT and ERROR rows use
+    line 0 because the incident's exact receiver (``^\\s+[0-9]+ ``) cannot retain a negative line
+    number.  The tag, rather than an unfilterable sign, distinguishes the two outcomes.
+    """
     starts, off = [], 0
     for ln in lines:
         starts.append(off)
         off += len(ln) + 1
     bandset, ctx = _band_ctx(how, src, lines)
     counts = {b: 0 for b in (bandset or ("UNBANDED",))}
-    hits, whole, sub, enclosing = [], 0, 0, []
+    hits, whole, sub, enclosing, warnings = [], 0, 0, [], []
+    try:
+        rx = re.compile(pattern)
+    except re.error as exc:
+        summary = {
+            "hits": 0,
+            "lines": len(lines),
+            "sections": len(sections),
+            "whole": 0,
+            "sub": 0,
+            "bands": {"ERROR": 1},
+            "warn": ["bad --enumerate pattern: %s" % exc],
+        }
+        row = {
+            "line": 0,
+            "band": "ERROR",
+            "match": "ERROR",
+            "hit": {"index": 0, "total": 0},
+            "text": "bad --enumerate pattern: %s" % exc,
+        }
+        if json_mode:
+            print(json.dumps({"summary": summary, "rows": [row]}, sort_keys=True))
+        else:
+            print("comp-read: %s" % path)
+            print("  SOURCE: %d lines | %d section(s) via %s | enumerate: %r"
+                  % (len(lines), len(sections), how, pattern))
+            print()
+            print("  ENUMERATE: 0 hit(s) across %d lines / %d section(s) scanned"
+                  % (len(lines), len(sections)))
+            print("    whole-value matches: 0   |   substring matches: 0")
+            print()
+            print("    %6d  %-11s %-6s hit %d/%d %s"
+                  % (0, "ERROR", "ERROR", 0, 0, row["text"][:width]))
+            _BUDGET_STATE["trailer"] = (
+                "ENUMERATE-END: 0 hit(s) | 0 whole | 0 sub | ERROR=1")
+        return 2
     for m in rx.finditer(src):
         i = bisect.bisect_right(starts, m.start()) - 1
         if i < 0:
@@ -458,16 +494,63 @@ def _enumerate(path, src, lines, sections, how, pattern, limit, page):
         counts[band] = counts.get(band, 0) + 1
         if _whole_value(src, m.start(), m.end()):
             whole += 1
+            kind = "WHOLE"
         else:
             sub += 1
+            kind = "SUB"
             tok = _enclosing_value(src, m.start(), m.end())
             if len(enclosing) < 3 and tok not in enclosing:
                 enclosing.append(tok)
-        hits.append((lineno, band, line.strip()[:160]))
+        hits.append((lineno, band, kind, line.strip()))
     total = len(hits)
 
+    if total and whole == 0 and sub:
+        warnings.append("every hit is a fragment of a longer value")
+    if not bandset:
+        warnings.append("banding unavailable for backend %s" % how)
+    summary = {
+        "hits": total,
+        "lines": len(lines),
+        "sections": len(sections),
+        "whole": whole,
+        "sub": sub,
+        "bands": {b: counts.get(b, 0) for b in (bandset or ("UNBANDED",))},
+        "warn": warnings,
+    }
+    indexed = [(idx, hit) for idx, hit in enumerate(hits, 1)
+               if band_filter is None or hit[1] == band_filter]
+    pages = max(1, (len(indexed) + limit - 1) // limit)
+    page = max(1, min(page, pages))
+    lo = (page - 1) * limit
+    shown = indexed[lo:lo + limit]
+    rows = [
+        {
+            "line": hit[0],
+            "band": hit[1],
+            "match": hit[2],
+            "hit": {"index": idx, "total": total},
+            "text": hit[3][:width],
+        }
+        for idx, hit in shown
+    ]
+    if not total:
+        rows = [{
+            "line": 0,
+            "band": "ENUMERATE",
+            "match": "ABSENT",
+            "hit": {"index": 0, "total": 0},
+            "text": "scanned %d lines / %d sections; pattern absent from this file"
+                    % (len(lines), len(sections)),
+        }]
+
+    if json_mode:
+        print(json.dumps({"summary": summary, "rows": rows}, sort_keys=True))
+        return 0
+
     print("comp-read: %s" % path)
-    print("  %d lines | %d section(s) via %s | enumerate: %r"
+    # The SOURCE prefix is load-bearing: the incident's numeric-row grep retained the old bare
+    # ``N lines`` metadata line, creating one surviving line that still lacked the claim.
+    print("  SOURCE: %d lines | %d section(s) via %s | enumerate: %r"
           % (len(lines), len(sections), how, pattern))
     print()
     print("  ENUMERATE: %d hit(s) across %d lines / %d section(s) scanned"
@@ -493,22 +576,27 @@ def _enumerate(path, src, lines, sections, how, pattern, limit, page):
         print("      %-11s %d" % ("UNBANDED", total))
     print()
     if not total:
-        print("  0 hit(s). THE DENOMINATOR ABOVE IS THE POINT -- this file WAS scanned and the")
-        print("  pattern is absent from it. That is a different claim from silence, and from")
-        print("  'the wrong file was scanned'.")
-        return 0
-    pages = (total + limit - 1) // limit
-    page = max(1, min(page, pages))
-    lo = (page - 1) * limit
-    shown = hits[lo:lo + limit]
-    print("  PAGE %d of %d  (showing %d of %d)" % (page, pages, len(shown), total))
-    for lineno, band, text in shown:
-        print("    %6d  %-9s %s" % (lineno, band, text))
-    if pages > 1:
-        rest = total - len(shown)
+        row = rows[0]
+        print("    %6d  %-11s %-6s hit %d/%d %s"
+              % (row["line"], row["band"], row["match"], row["hit"]["index"],
+                 row["hit"]["total"], row["text"][:width]))
+    else:
+        suffix = " in band %s" % band_filter if band_filter else ""
+        print("  PAGE %d of %d  (showing %d of %d%s)"
+              % (page, pages, len(shown), len(indexed), suffix))
+        for row in rows:
+            print("    %6d  %-11s %-6s hit %d/%d %s"
+                  % (row["line"], row["band"], row["match"], row["hit"]["index"],
+                     row["hit"]["total"], row["text"]))
+    if len(indexed) > limit:
+        rest = len(indexed) - len(shown)
         print()
         print("  MORE: %d hit(s) not shown. Next: --page %d   (a PAGE IS NOT AN ANSWER)"
               % (rest, min(page + 1, pages)))
+    band_tail = " | ".join("%s=%d" % (b, summary["bands"][b]) for b in summary["bands"])
+    _BUDGET_STATE["trailer"] = (
+        "ENUMERATE-END: %d hit(s) | %d whole | %d sub | %s"
+        % (total, whole, sub, band_tail))
     return 0
 
 
@@ -767,7 +855,8 @@ def main() -> int:
     argv = sys.argv[1:]
     if not argv or argv[0] in ("-h", "--help"):
         print("comp-read <file> [--for \"<question>\"] [--at LINE] [--top N] [--all-quals] [--budget N]")
-        print("comp-read <file> --enumerate '<regex>' [--limit N] [--page N] [--budget N]")
+        print("comp-read <file> --enumerate '<regex>' [--limit N] [--page N] [--width N]")
+        print("               [--band BAND] [--json] [--budget N]")
         print("  --enumerate is a DISTINCT MODE, not part of the digest: where does this token")
         print("  occur in this file, how many times, and in what KIND of region. Prints its")
         print("  denominator, grades hits into bands, and reports whole-value vs substring.")
@@ -789,6 +878,7 @@ def main() -> int:
     t0 = time.perf_counter()
     question, at_line, top, all_quals = "", None, 6, False
     enum_pat, enum_limit, enum_page = None, 40, 1
+    enum_width, enum_band, enum_json = 160, None, False
     hud_mode = False
     budget_flag = None
     positional = []
@@ -813,6 +903,15 @@ def main() -> int:
         elif a == "--page":
             i += 1
             enum_page = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 1
+        elif a == "--width":
+            i += 1
+            enum_width = int(argv[i]) if i < len(argv) and argv[i].isdigit() else 160
+            enum_width = max(1, enum_width)
+        elif a == "--band":
+            i += 1
+            enum_band = argv[i].upper() if i < len(argv) else ""
+        elif a == "--json":
+            enum_json = True
         elif a == "--all-quals":
             all_quals = True
         elif a == "--hud":
@@ -839,7 +938,7 @@ def main() -> int:
         print("comp-read: ERROR: --budget %s" % exc)
         return 2
     _BUDGET_STATE["s"], _BUDGET_STATE["source"] = budget_s, budget_source
-    _BUDGET_STATE["quiet"] = hud_mode
+    _BUDGET_STATE["quiet"] = hud_mode or enum_json
     _BUDGET_STATE["clock"] = _compbudget.Clock(budget_s)   # starts NOW, before any read work
 
     if not positional:
@@ -861,7 +960,8 @@ def main() -> int:
     # digest, so folding enumeration into that output would silently alter every
     # validation_context_declaration the estate emits.
     if enum_pat is not None:
-        return _enumerate(path, src, lines, sections, how, enum_pat, enum_limit, enum_page)
+        return _enumerate(path, src, lines, sections, how, enum_pat, enum_limit, enum_page,
+                          enum_width, enum_band, enum_json)
     doc_ranges = _doc_ranges(src) if full.endswith(".py") else []
     _line_toks = [_toks(ln) for ln in lines]
     scores = _score_sections(sections, lines, question, _line_toks) if question else {}
@@ -1104,6 +1204,7 @@ def _self_report(rc: int) -> None:
         return
 
     quiet = _BUDGET_STATE.get("quiet")
+    trailer = _BUDGET_STATE.get("trailer")
     remaining = clock.remaining()          # every timeout= derives from remaining()
     if remaining is not None and remaining <= 0:
         if not quiet:
@@ -1115,6 +1216,8 @@ def _self_report(rc: int) -> None:
                       % (_compbudget.fmt(budget_s), budget_source))
             except Exception:
                 pass
+            if trailer:
+                print(trailer)
         return
     try:
         subprocess.run(
@@ -1137,6 +1240,8 @@ def _self_report(rc: int) -> None:
                 pass
     except Exception:
         pass
+    if trailer and not quiet:
+        print(trailer)
 
 
 if __name__ == "__main__":

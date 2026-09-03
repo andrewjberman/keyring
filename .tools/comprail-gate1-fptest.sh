@@ -54,6 +54,13 @@ except Exception: print("ALLOW")'
 
 # cases: state(on|off) | expected | command
 CASES=(
+  # ---- BR-2: census tools cannot pipe away their denominator ------------------
+  "on|DENY|comp-read f --enumerate x | grep -E '^\\s+[0-9]+ '"
+  "on|ALLOW|comp-read f --enumerate x | grep -E 'ENUMERATE|^\\s+[0-9]+ '"
+  "on|DENY|comp-find p --files | head"
+  "on|ALLOW|comp-read f --for q | tee o.txt"
+  "on|ALLOW|ps -ef | grep x"
+  "on|ALLOW|comp-read f --enumerate x | head # rail-checked: reading my own scratch output"
   # ---- T1: standalone repo searches -> DENY regardless of path / lead verb / pipe elsewhere ----
   "on|DENY|grep -rn foo ."
   "on|DENY|grep -rn foo org/"
