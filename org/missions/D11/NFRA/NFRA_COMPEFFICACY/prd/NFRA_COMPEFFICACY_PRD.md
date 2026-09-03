@@ -5,7 +5,7 @@ Substrate/Tooling."*) · **Fabric:** laptop (D11 placement row; membership and f
 D8 precedent) · **dep_stage:** PRD
 **Author (draft; step-3 input @`86a5538003`):** `3.0.0_SA_CVO` (the Andrew-designated comp-tool lane @`98b1a59907`; NOT the driver from L4 on — Andrew-direct at the CVO terminal 2026-09-03 ~02:1xZ, VERBATIM *"you are not going to be driving this, we are doing canonical order flow"*, record @`96af269f47`; the canonical roles are the Limb-check record @`9a4d508ae5`: L2–L4 CTO only, L5–L6 COO only, CVO first engaged at L8) · **L4 owner:** `1.0.0_SA_CTO` · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
-**Version:** v0.4, 2026-09-03 (v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ; **v0.4 = the two STAGE-0 decisions landed at L4 on the L4 owner's authority after 2.0.0_SA_COO withdrew TO-CE-DISC-2 and TO-CE-TP-1 (92927, Andrew-direct ~02:2xZ *"Only tier2 agents are workers"*): s.4.3's four answer-state spellings RATIFIED AS DATA in `org/standards/COMPTOOL_ANSWER_STATE.enum.json` + s.4.7's "until ratified" clause closed + the NOT_APPLICABLE finding; s.4.4 carries RULE T's FORM (input 3.0.0_SA_CVO 92932, two amendments); the roles line above**) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+**Version:** v0.5, 2026-09-03 (**v0.5 = the L2 re-entry on the round-4 `SCOPE_CHANGE` route S14 (3.0.0_SA_CVO stamp @153522a509), adjudicated by the L4 owner under spine v2.3 -- record `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260903T0930Z.md`: FWD-10 appended (a verdict-bearing tool never returns its clean verdict from a partial run), s.4.4 gains the `verdict-bearing` row of Rule T's form, s.4.3 gains the distinguishability GRAIN sentence (T-7 F2)**; v0.4 = the two STAGE-0 decisions; v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ; **v0.4 = the two STAGE-0 decisions landed at L4 on the L4 owner's authority after 2.0.0_SA_COO withdrew TO-CE-DISC-2 and TO-CE-TP-1 (92927, Andrew-direct ~02:2xZ *"Only tier2 agents are workers"*): s.4.3's four answer-state spellings RATIFIED AS DATA in `org/standards/COMPTOOL_ANSWER_STATE.enum.json` + s.4.7's "until ratified" clause closed + the NOT_APPLICABLE finding; s.4.4 carries RULE T's FORM (input 3.0.0_SA_CVO 92932, two amendments); the roles line above**) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -26,7 +26,8 @@ D8 precedent) · **dep_stage:** PRD
     "FWD-6",
     "FWD-7",
     "FWD-8",
-    "FWD-9"
+    "FWD-9",
+    "FWD-10"
   ],
   "status": "RATIFIED"
 }
@@ -153,6 +154,23 @@ retired"* (condition met — §7 row T-19).
                     incompleteness was found in 3.0.0_SA_CVO's draft card FWD-6 (below, AC-6) at L4 --
                     RIGHT AND INCOMPLETE, so a NEW id at the next unused number (skill F0 rule), never
                     a renumbering
+
+  FWD-10 A tool whose exit code is its verdict never returns the clean verdict from a partial run:
+         at budget expiry it says so in its own voice and exits in a way no reader can mistake for
+         clean, and it tells the reader where to resume
+         DONE WHEN  EXERCISED -- a budget-cut sweep of a verdict-bearing tool has been read by an
+                    rc-only consumer (a hook, a script, an `&&`) as NOT clean, and its resume cursor
+                    has been followed to completion
+         ACCEPT     for every marquis tool whose rc carries a verdict (a gate, a deny-test, a check):
+                    at BUDGET REACHED the line prints as Rule T requires AND the rc is a non-clean value
+                    distinct from both the clean verdict and the failing one, carrying the
+                    PARTIAL_OR_BLIND state in the tool's voice (`NOT-DECIDABLE`); a consumer that reads
+                    only the rc cannot read a prefix as CLEAN; the cursor resumes as in s.4.4
+         SOURCE     brief :31 "complete efficacy with all of these functions" (a gate that reports CLEAN on
+                    a sweep it did not finish has no efficacy); found at L7 by the comp-dataflow cell as
+                    NFRA_COMPEFFICACY-S14 and routed SCOPE_CHANGE (REQUIRES_UNNAMED_OUTCOME) at the
+                    round-4 L10 stamp; adjudicated at L2 by the L4 owner (CTO_ADJUDICATION record) --
+                    RIGHT AND INCOMPLETE, a NEW id at the next unused number, never a renumbering
 ```
 
 
@@ -388,7 +406,10 @@ For each tool, CloudComp plants one case per state and records what the tool pri
   NOT_APPLICABLE               the question does not apply to this subject/tool
 ```
 **PASS** = four cases, four distinguishable outputs. **FAIL** = any two states print alike. This is FWD-2 and it is
-the load-bearing test of the project. **RATIFIED AS DATA (v0.4, L4, `1.0.0_SA_CTO`): the four state names above ARE the
+the load-bearing test of the project. **GRAIN (v0.5, T-7 F2, CTO adjudication):** distinguishability is judged within
+ONE invocation's output by the STATE TOKEN in the tool's own voice; two subcommands answering two questions may share an
+rc, but each must print which of the four states it is -- a bare REFUSE shape whose state is carried only by the echoed
+argument is FAIL on the token, not on the rc. **RATIFIED AS DATA (v0.4, L4, `1.0.0_SA_CTO`): the four state names above ARE the
 spellings — `org/standards/COMPTOOL_ANSWER_STATE.enum.json`, exactly one per state; the keys of every deliverable's
 `answer_state` block are compared against that file (T-16 @`d101d4fe20` already conforms, 4 of 4), and a key outside it
 is a non-conforming deliverable (s.4). Where a LIVE carrier prints a state in a tool's own voice the file ADOPTS that
@@ -433,6 +454,12 @@ history, this section is the ONE carrier):**
                   "BUDGET REACHED: <S> s (<source>); scanned <n> of <N> <unit>; results are a PREFIX, not the
                    answer; resume: <tool> <args> --cursor <last-unit>"
   on completion   "WITHIN BUDGET: scanned <N> of <N> <unit>; budget: <S> s (<source>), used <t> s"
+  verdict-bearing (v0.5, FWD-10, S14) a tool whose rc IS its verdict -- a gate, a deny-test, a check -- prints the
+                  BUDGET REACHED line exactly as above and returns a NON-CLEAN rc distinct from both the clean
+                  verdict and the failing one, carrying PARTIAL_OR_BLIND in its own voice ("NOT-DECIDABLE", the
+                  enum's tool-voice token; iam_cli.py returns it as rc 2 today); the "rc stays 0" clause above
+                  governs every NON-verdict tool and nothing else; the cursor is unchanged. A verdict-bearing tool
+                  that returns its clean rc at expiry FAILS Rule T whatever its line says.
   cursor          the last FULLY processed unit in the tool's DETERMINISTIC scan order; --cursor resumes after
                   it; the union of runs reaches N (size-invariant by construction -- Rule P along time)
   subprocesses    every timeout= derives from remaining(); a call that would outlive the budget is DEFERRED in
