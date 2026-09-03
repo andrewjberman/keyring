@@ -2,7 +2,7 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-13</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_to>0.7.0_AE_CloudOps~U</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
@@ -32,7 +32,7 @@ The cell's `closes on`: *"a known-bad request REFUSED before WordPress handles i
 3. **`/wp-admin` and `xmlrpc.php` restricted by SOURCE ADDRESS at the edge, in this cell** -- the allowed addresses are an INPUT you do not invent. **If no allow-list is available, file a row and ask; do not guess an address and do not leave the paths open.**
 4. **DNS and certificate handling stated explicitly**, including whether the cutover is atomic and what a visitor sees during it. **A marketing site returning an error to visitors is a worse outcome than an unhardened one.**
 5. **A deploy-ledger entry**, opened before and closed after, rollback named -- **the rollback is DNS back to the origin and it must be stated with its propagation reality, not asserted as instant.**
-6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 **BROKER DRAIN IMMEDIATELY BEFORE THE DNS CUTOVER.**
 
@@ -59,7 +59,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S13-AC1`, `S13-AC2`, `S13-AC3`, `S13-AC4`, `S13-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S13-AC1,S13-AC2,S13-AC3,S13-AC4,S13-AC5"` BEFORE the complete flip. **The control that must be able to FAIL is `S13-AC1`'s 404 negative control -- without it, a catch-all edge returning 200 to everything would read as a working site.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S13-AC1`, `S13-AC2`, `S13-AC3`, `S13-AC4`, `S13-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-13.wordpress-edge.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S13-AC1,S13-AC2,S13-AC3,S13-AC4,S13-AC5"` BEFORE the complete flip. **The control that must be able to FAIL is `S13-AC1`'s 404 negative control -- without it, a catch-all edge returning 200 to everything would read as a working site.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>

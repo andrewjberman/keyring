@@ -2,7 +2,7 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-6</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_to>0.7.0_AE_CloudOps~T</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
@@ -32,7 +32,7 @@ CLAUDE.md carries a standing veto: **never build an alert, alarm, SNS topic, SES
 3. **THE DELIVERY PATH:** one SNS topic for these two alarms, subscription to the named address once you have it. **No other subscriber, no fan-out, no Lambda in the path.**
 4. **THE STAGED BURST, under the `OP-x-1` probe verdict:** exercise the alarm with a deliberate burst against the login path so the rule blocks and the alarm transitions to `ALARM`. **This is the probe the verdict authorises and it stays inside the verdict's bounds: read-only elsewhere, and the burst is against the fixture identity, never a real partner human's session.** Capture the alarm's `StateTransitionedTimestamp` and the state history entry.
 5. **A deploy-ledger entry** (`safe-apply`, never bare), opened before and closed after, with the module's UNSCOPED baseline quoted BEFORE the first edit and the rollback named.
-6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~T/NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 ## ACCEPTANCE -- criterion ids minted at cut
 
@@ -57,7 +57,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S6-AC1`, `S6-AC2`, `S6-AC3`, `S6-AC4`, `S6-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S6-AC1,S6-AC2,S6-AC3,S6-AC4,S6-AC5"` BEFORE the complete flip. **The controls that must be able to FAIL: `S6-AC2`'s pre-burst alarm state, `S6-AC4`'s account-wide dashboard census, and `S6-AC5`'s unscoped re-plan.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S6-AC1`, `S6-AC2`, `S6-AC3`, `S6-AC4`, `S6-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~T/NFRA_OPSEC202609.TO-OP-S-6.login-abuse-alarm.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S6-AC1,S6-AC2,S6-AC3,S6-AC4,S6-AC5"` BEFORE the complete flip. **The controls that must be able to FAIL: `S6-AC2`'s pre-burst alarm state, `S6-AC4`'s account-wide dashboard census, and `S6-AC5`'s unscoped re-plan.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>

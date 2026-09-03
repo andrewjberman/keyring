@@ -2,7 +2,7 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-10</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~V</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
@@ -27,7 +27,7 @@
 3. **THE SESSION-SURVIVAL EVIDENCE IS THE POINT.** A token minted under the OLD key BEFORE the rotation must still verify AFTER the signing switch, for as long as the overlap is meant to last. **Capture that token's identity and its expiry, and re-present it at each step.** This is the FWD-10 DONE WHEN made testable.
 4. **LEAVE THE ESTATE ABLE TO DO IT AGAIN.** A short runbook committed beside the work naming the steps, the wait at each, the two consumers, and the read that confirms each is serving the new slot. **Do NOT configure Secrets Manager automatic rotation** -- a rotation that fires unattended on a login path is a bigger change than this outcome asks for, and it is not in the endpoint. If you think it is warranted, that is a row and a recommendation.
 5. **A deploy-ledger entry** (`safe-apply` where Terraform is involved, never bare), opened before and closed after, **with the rollback named BEFORE the first act: the old key material must remain retrievable until the ledger closes.** ⛔ **Never schedule deletion of the old secret version inside this face.**
-6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+6. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 **BROKER DRAIN IMMEDIATELY BEFORE THE SIGNING SWITCH.** It is the irreversible step on a live login path.
 
@@ -54,7 +54,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S10-AC1`, `S10-AC2`, `S10-AC3`, `S10-AC4`, `S10-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~Z/NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S10-AC1,S10-AC2,S10-AC3,S10-AC4,S10-AC5"` BEFORE the complete flip. **The control that must be able to FAIL is `S10-AC3`'s negative control: a token signed by a never-installed key must be REFUSED, or the survival evidence only shows that the path accepts everything.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S10-AC1`, `S10-AC2`, `S10-AC3`, `S10-AC4`, `S10-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~V/NFRA_OPSEC202609.TO-OP-S-10.signing-key-rotation.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S10-AC1,S10-AC2,S10-AC3,S10-AC4,S10-AC5"` BEFORE the complete flip. **The control that must be able to FAIL is `S10-AC3`'s negative control: a token signed by a never-installed key must be REFUSED, or the survival evidence only shows that the path accepts everything.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>
