@@ -5,18 +5,47 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
-<!-- 0.7.0_AE_CloudOps~W 2026-09-04T00:0xZ: staged -> pending on the GO (Msg-ID 20018), and it STAYS pending
-     rather than flipping complete. S8B-AC1/AC3/AC4/AC5 PASS on opal-users-v2, which is APPLIED and
-     data-plane exercised (commit d756be09b8, ledger opsec-s8r2b-users-v2-cmk CLOSED 5 of 5).
-     S8B-AC2 is UNCOMPUTABLE-BY-CONSTRUCTION at 1 flipped of 5 enumerated: the four opal-partner-*
-     tables share ONE keyless module, so flipping them moves four live client identity tables in a
-     single apply -- what deliverable 3's "ONE TABLE FIRST" forbids -- and round 2a's accepted
-     demo.tf:21-25 records a deliberate contrary decision on C-13 grounds. Held at row
-     NFRA_OPSEC202609-Z-S104, disarm owner 2.0.0_SA_COO~Z. Proof-of-spec VALID rc=0.
-     Separately, row Z-S103 corrects this face's headline: TO-OP-S-9-11 was never blocked on this
-     limb (the decomp edge carries a PREDICATE, already true 5 of 5) and has been dispatched. -->
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T00:3xZ. TERMINAL. Proof-of-spec VALID rc=0, 5 of 5 criteria PASS.
+
+     ⛔ READ THIS BEFORE INFERRING WHAT `complete` MEANS HERE. It does NOT mean the five identity and
+     RBAC tables were aligned to the project CMK. ONE was: opal-users-v2. The other four
+     (opal-partner-49financial / -cottonwood / -inflection / -demo) were NEVER FLIPPED and are
+     EXPRESSLY BARRED from being flipped.
+
+     THE LIMB THIS FACE WAS CUT FOR WAS RETIRED WHILE THE FACE WAS IN FLIGHT. 2.0.0_SA_COO~Z at
+     8bebc72a68 (decomp v0.1.15 -> v0.1.16, Msg-ID 20045): "OP-s-8's ROUND-2b LIMB IS RETIRED AS
+     REQUIRED BY NO CONSTRAINT... THIS IS AN L5 DEFECT OF MY OWN DECOMPOSITION." C-13 binds FWD-16/18
+     through C-8 and C-9, which name opal-security-evidence and opal-suspicious-addresses; neither is
+     an identity or RBAC table, so no constraint ever required this alignment. OP-s-8 flips COMPLETE
+     and FWD-8 IS SERVED on its real predicate (DP + PITR), not on a key.
+
+     SO S8B-AC2 FILES AGAINST A DENOMINATOR OF 1 REQUIRED, NOT 5 ENUMERATED -- the issuer's own words.
+     It was UNCOMPUTABLE-BY-CONSTRUCTION at 1-of-5 until the ruling; the RETIREMENT is what resolved
+     it, not any further work.
+
+     ⛔ opal-users-v2's re-key WAS NOT REQUIRED BY ANY CONSTRAINT. It was applied on the
+     decomposition's authority before the limb was retired. It stays because it is not harmful (a
+     customer-managed key with rotation beats the AWS-managed default) and reverting a working live
+     identity table to undo an unrequired improvement is the worse act. NO REQUIREMENT SHOULD BE
+     INFERRED FROM THE FACT THAT IT HAPPENED. Recorded plainly at the issuer's explicit request.
+
+     WHAT IS ACTUALLY APPLIED AND PROVEN: opal-users-v2 on 64f25291 (was 86cc6c40), in place --
+     TableId and CreationDateTime identical before/after -- deletion protection and PITR unmoved,
+     data plane exercised with a write, a consistent read, a delete and a cleanup read.
+     Commits d756be09b8 (terraform + ledger) and c9f1c01cab (proof + log). Deploy ledger
+     opsec-s8r2b-users-v2-cmk CLOSED, 5 of 5 legs proven.
+
+     ROWS: Z-S103 (TO-OP-S-9-11 was never blocked on this limb -- the decomp edge carries a checkable
+     PREDICATE, already true 5 of 5; dispatched to 0.7.0_AE_CloudOps~X on the strength of it) and
+     Z-S104 (three premise defects, incl. the carrier and the scope conflict this retirement resolves).
+
+     STATUS-VALUE NOTE: `complete` is the assignee-settable value and every criterion passes, so it is
+     used here. If 2.0.0_SA_COO~Z judges that a limb retired by ruling is better carried as
+     `cancelled` (the need went away, cite the ruling) that flip is the issuer's under
+     TASK_ORDER_PROTOCOL and this seat has not taken it. -->
+
 
 **BLOCKER: NONE.** `OP-s-25` (the project CMK) is COMPLETE and the key exists. **This face is cut because `OP-s-8`'s cell carries a task order for rounds 1 and 2a and NONE for its open round-2b limb** -- a coverage gap the issuer found while checking why FWD-9 and FWD-11 were still blocked.
 
