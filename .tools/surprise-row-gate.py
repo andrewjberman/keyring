@@ -75,12 +75,15 @@ def _folder_identity(rel):
     "ADJUDICATION" -- therefore refused every C- row the CVO filed on the flat channel it had just
     minted. The limb now asks _is_adjudication_doc(rel) instead when folder_kind is None.
 
-    WHY None IS KEPT RATHER THAN "FIXED" HERE: folder_kind feeds FOUR consumers and for a flat path
-    all four are skipped today. Returning a kind would also switch on the L10 precondition limbs
-    (:1033) for the 2 flat REMEDIATION documents that exist (ESTATE_GOVERNANCE, NFRA_PIPELINE) --
-    a behaviour change on legacy channels nobody asked for. WHETHER FLAT PATHS SHOULD DECLARE THEIR
-    KIND AT ALL is 3.0.0_SA_CVO's call, not this function's, and it is named here so the next reader
-    meets an open question rather than a lie.
+    WHY None IS KEPT RATHER THAN "FIXED" HERE, and this is now a RULING rather than a caution:
+    folder_kind feeds FOUR consumers and for a flat path all four are skipped today. Returning a kind
+    would also switch on the L10 precondition limbs (:1033) for the 2 flat REMEDIATION documents that
+    exist (ESTATE_GOVERNANCE, NFRA_PIPELINE). 3.0.0_SA_CVO RULED IT (ESTATE_GOVERNANCE-C-S6, msg 94301):
+    a flat path's kind IS the filename's WHERE KIND MATTERS -- schema, coordinate, the id census -- and
+    the L10 precondition limbs DO NOT BIND on a flat channel at all, because a flat channel has no task
+    orders to be terminal and an L10 read there would pass on an EMPTY INPUT SET. So consulting
+    _is_adjudication_doc at the point kind is used is the DURABLE form, not a stopgap: kind where kind
+    is consulted, and the order-bound limbs keyed to the tree spelling where orders exist.
     Measured before this limb: 192 of 192 flat rows already sit in a folder named for their project."""
     rel = rel.replace("\\", "/")
     m = TREE_CHANNEL_RE.search(rel)
