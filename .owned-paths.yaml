@@ -32,6 +32,21 @@ rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 
 #   Always logs to org/git-author-override-audit.log regardless of phase.
 
 # =========================================================================
+# WORKER GRANT -- the task order IS the grant (spine v3 L7). Landed 2026-09-04
+# ~05:3xZ by 0.0.0_AB_MSTR as registry grantor (SoD) on Andrew-direct at the
+# 1.0.0_SA_CTO terminal ~04:58Z, "recs approved" (record @9ef9a40aae, LD-0534
+# Amendment 1). The stanza is the SWITCH: the resolver limb in
+# .tools/owned-paths-validate.py (1.0.0_SA_CTO's build, a 5th additive clause
+# consulted only after lane enumeration fails) READS it and admits nothing
+# without it; the stanza without the limb changes nothing. Either order fails
+# closed. No lane enumerates a worker serial, here or anywhere.
+# =========================================================================
+worker_grant:
+  serial_glob: "0.9.0_WK_*"
+  source: task-order-paths
+  note: "Spine v3 L7 (Andrew-direct 2026-09-04 ~04:58Z at the CTO terminal, 'recs approved', record @9ef9a40aae): a worker serial 0.9.0_WK_<CODE>~<n> is admitted to exactly the <paths> a NON-TERMINAL task order under <CODE>, issued_to that serial, names at HEAD -- resolved by .tools/owned-paths-validate.py from the order itself, never from a lane. Deliverables/<serial>/ stays the tree convention (ADHC_OWNPTH.004). A path the order does not name is a lane refusal; the override stays audited and singular. The COO's /dispatch pre-spawn census reads the same rule: the <paths> block is the worker's whole write surface."
+
+# =========================================================================
 # LANES
 # =========================================================================
 lanes:
