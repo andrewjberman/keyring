@@ -222,6 +222,13 @@ backticks stripped. **REFUSED AT THE CUT:** no block, an empty block, a leading 
 - `deliverables/<serial>/` needs **no** entry — the tree convention grants it.
 - **The investigation file NEEDS an entry if a row is possible:**
   `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`
+- ⛔ **AND `org/critical_paths/change_management/` IF THE CELL CAN PRODUCE A DEPLOY.** NEVER-2 obliges
+  the actor to open a ledger entry at the start and close it at completion — and an **IMAGE act** must
+  name in that entry **every task family that pulls the tag it moves** (a shared `:latest` reaches them
+  all at once and no Terraform-plane control sees it; NFRA_CLDGRPH-S31: two builds re-pointed **seven**
+  families in one night, **five** counted). **A worker cannot write a ledger it was not granted**, so an
+  order whose cell can deploy and does not name that directory forces the worker to choose between
+  breaking NEVER-2 and stopping. Name it at the cut.
 - The order's own `task-orders/` face is lane ANY, so the worker's completion flip is admitted.
 - The grant is read **at HEAD and only while the order is NON-TERMINAL** — so the order is committed
   before the spawn (it is; the spawn is the GO), and the worker's flip landing in the same commit as its
