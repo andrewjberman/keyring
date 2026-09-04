@@ -77,7 +77,14 @@ def _folder_identity(rel):
         return m.group(2), None
     return None, None
 FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
-ID_RE = re.compile(r"^[A-Z0-9_]+-(Z-)?S[0-9]+$")
+# THE ALLOCATOR COORDINATE (Andrew-direct 2026-09-04 ~04:58Z at this terminal, "recs approved", record @9ef9a40aae; the same
+# word "a for both" at the CVO's, @92af61a111; annex v3.2 + the schema half @4d65d9b496): a row minted in worker <n>'s worktree
+# carries W<n> (<n> = the worker's SLOT, the ~<n> of its serial), <k> restarting per coordinate; a seat's row on the main index
+# carries no W; the fabric coordinate Z- stays and nests first. C- is the CVO's coordinate for its rows in adjudications/ -- admitted
+# here as a superset, REQUIRED only once the staged schema's id pattern admits it (the schema is the switch; either half alone
+# fails closed). v3's first drain minted NFRA_COMPEFFICACY-S34 twice from two indexes; the coordinate makes that impossible at mint.
+ID_RE = re.compile(r"^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$")
+WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$")
 # /endpoint --forward Phase-0 outcome id. PERMANENT AND NEVER REUSED by contract
 # (1.0.0_SA_CTO @b3584ea86a, landed in the skill AND the PRD template together).
 OUTCOME_REF_RE = re.compile(r"^FWD-[0-9]+$")
@@ -348,6 +355,44 @@ def _latest_dispositions(root, code):
         rem_ids.extend(r.get("id") for r in rows if r.get("id"))
     latest, unknown = _resolve_latest(files, rem_ids)
     return latest, unknown, len(files) + len(rem_paths), ""
+
+
+def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema):
+    """PURE. THE ALLOCATOR DISCIPLINE on NEW rows (RULING 2 @9ef9a40aae; annex v3.2): a row committed by a worker
+    0.9.0_WK_<CODE>~<n> carries W<n> with n EQUAL to the committer's slot (a bare S<k> from a worktree is the race the
+    coordinate exists to remove; a wrong n is another worker's sequence); a seat's row carries no W; a C- row lives only
+    in adjudications/ and is the CVO's; a NEW row in adjudications/ carries C- once the staged schema admits it
+    (c_in_schema) -- until then the CVO's rows keep the seat form, prospective like everything in this gate."""
+    wm = WORKER_SERIAL_RE.match(str(committer or "").strip())
+    out = []
+    for r in added:
+        rid = str(r.get("id", ""))
+        m = ID_RE.match(rid)
+        if not m:
+            continue   # the grammar refusal is check_file's own
+        w, c = m.group("w"), m.group("c")
+        if wm:
+            if w is None:
+                out.append("%s: NEW row %s committed by worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
+                           "slot, the next unused k within it); a bare S<k> from a worktree is the allocator race that "
+                           "minted S34 twice at v3's first drain (94007)." % (rel, rid, committer, wm.group("n")))
+            elif int(w) != int(wm.group("n")):
+                out.append("%s: NEW row %s carries W%s but the committing worker %s's slot is %s -- a row is minted in "
+                           "its own coordinate, never another worker's." % (rel, rid, w, committer, wm.group("n")))
+        elif w is not None:
+            out.append("%s: NEW row %s carries W%s but the committer %s is not a worker -- a seat's row on the main index "
+                       "carries no W (the coordinate names the allocator, and a seat allocates on the main index)."
+                       % (rel, rid, w, committer))
+        if c:
+            if folder_kind != "ADJUDICATION":
+                out.append("%s: NEW row %s carries C- outside adjudications/ -- C- is the CVO's coordinate for its "
+                           "adjudication rows (annex 4a) and lives nowhere else." % (rel, rid))
+            elif _base_serial(committer) != "3.0.0_SA_CVO":
+                out.append("%s: NEW row %s carries C- but the committer %s is not 3.0.0_SA_CVO." % (rel, rid, committer))
+        elif folder_kind == "ADJUDICATION" and c_in_schema:
+            out.append("%s: NEW row %s in adjudications/ carries no C- while the staged schema admits it -- the CVO's rows "
+                       "mint in the C- coordinate (<CODE>-C-S<k>)." % (rel, rid))
+    return out
 
 
 def _plane_patterns(kind):
@@ -636,10 +681,8 @@ def _check_row(row, kind, schema):
     # ---- RC1 (P0-1, identity half): project + fabric are GATE-REQUIRED on new rows and must ----
     # ---- AGREE WITH THE ID. Two carriers of one quantity, compared instead of derived.     ----
     m = ID_RE.match(str(rid))
-    id_project = str(rid).rsplit("-S", 1)[0]
-    if id_project.endswith("-Z"):
-        id_project = id_project[:-2]
-    id_fabric = "site-z" if (m and m.group(1)) else "laptop"
+    id_project = m.group("project") if m else str(rid).rsplit("-S", 1)[0]
+    id_fabric = "site-z" if (m and m.group("z")) else "laptop"
     for fld in ("project", "fabric"):
         if not str(row.get(fld, "")).strip():
             out.append("%s: NEW row carries no %r. Step-3 identity (project + fabric) is required on "
@@ -885,16 +928,21 @@ def check_file(root, rel):
     if folder_project and added:
         _pd, _pn = _plane_docs(root, folder_project, kind, rel)
         v.extend(_duplicate_id_violations(rel, kind, added, folder_project, _pd, _pn))
+    # THE ALLOCATOR DISCIPLINE (RULING 2 @9ef9a40aae): W<n> from its own worker only; no W from a seat; C- the CVO's, in
+    # adjudications/ only, required once the staged schema admits it.
+    _cmt = _committer_serial(root)
+    _c_in_schema = "C-" in str(((schema.get("properties") or {}).get("id") or {}).get("pattern", ""))
+    v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
-    _fv, _fn = _foreign_row_violations(rel, kind, added, _committer_serial(root), coworkers=_cw)
+    _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw)
     v.extend(_fv)
     notes.extend(_fn)
     for row in added:
         rid = row.get("id")
         if not rid or not ID_RE.match(str(rid)):
-            v.append("%s: a NEW row has id=%r, which does not match the schema's id pattern "
-                     "{PROJECT}-S{n} / {PROJECT}-Z-S{n}" % (rel, rid))
+            v.append("%s: a NEW row has id=%r, which does not match the id grammar "
+                     "<CODE>-(Z-)?(W<n>-|C-)?S<k> (annex v3.2 section 4)" % (rel, rid))
             continue
         if folder_project and row.get("project") and row["project"] != folder_project:
             v.append("%s: NEW row %s says project=%r but the file sits in %r's folder. The path is the "
@@ -1083,6 +1131,37 @@ def _self_test(root):
         ("uniqueness limb: the planes are separate -- remediation rows read remediation documents only; investigation rows read investigations + adjudications",
          lambda: _plane_patterns("REMEDIATION") == REMEDIATION_PATTERNS
          and _plane_patterns("INVESTIGATION") == INVESTIGATION_PATTERNS + ADJUDICATION_PATTERNS),
+    ]
+    # THE ALLOCATOR COORDINATE (RULING 2 @9ef9a40aae): the grammar and the discipline, red and green.
+    WK = "0.9.0_WK_X_PRJ~2"
+    cv = lambda rows, who, fk="INVESTIGATION", cs=False: _coordinate_violations("f", fk, rows, who, cs)  # noqa: E731
+    arms += [
+        ("grammar: X_PRJ-W2-S1 parses (project, w=2); X_PRJ-Z-W3-S2 (z, w=3); X_PRJ-C-S1 (c); X_PRJ-S5 plain",
+         lambda: ID_RE.match("X_PRJ-W2-S1").group("project", "w") == ("X_PRJ", "2")
+         and ID_RE.match("X_PRJ-Z-W3-S2").group("z", "w") == ("Z-", "3")
+         and ID_RE.match("X_PRJ-C-S1").group("c") == "C-" and ID_RE.match("X_PRJ-S5").group("w", "c") == (None, None)),
+        ("grammar MUTANTS: W before Z, W without n, C and W together, no dash -> refused",
+         lambda: all(ID_RE.match(x) is None for x in ("X_PRJ-W2-Z-S1", "X_PRJ-W-S1", "X_PRJ-C-W2-S1", "X_PRJ-W2S1"))),
+        ("discipline: worker ~2 mints X_PRJ-W2-S1 -> admitted", lambda: cv([{"id": "X_PRJ-W2-S1"}], WK) == []),
+        ("discipline: worker ~2 mints X_PRJ-W3-S1 -> refused (another worker's coordinate)",
+         lambda: any("slot is 2" in x for x in cv([{"id": "X_PRJ-W3-S1"}], WK))),
+        ("discipline: worker ~2 mints a bare X_PRJ-S40 -> refused (the race)",
+         lambda: any("carries no W<n>" in x for x in cv([{"id": "X_PRJ-S40"}], WK))),
+        ("discipline: a seat mints X_PRJ-W2-S1 -> refused; a seat's bare X_PRJ-S40 -> admitted",
+         lambda: any("is not a worker" in x for x in cv([{"id": "X_PRJ-W2-S1"}], "2.0.0_SA_COO"))
+         and cv([{"id": "X_PRJ-S40"}], "2.0.0_SA_COO") == []),
+        ("discipline: the CVO mints X_PRJ-C-S1 in adjudications/ -> admitted; in investigations/ -> refused; the COO in adjudications/ -> refused",
+         lambda: cv([{"id": "X_PRJ-C-S1"}], "3.0.0_SA_CVO~A", "ADJUDICATION") == []
+         and any("outside adjudications/" in x for x in cv([{"id": "X_PRJ-C-S1"}], "3.0.0_SA_CVO", "INVESTIGATION"))
+         and any("not 3.0.0_SA_CVO" in x for x in cv([{"id": "X_PRJ-C-S1"}], "2.0.0_SA_COO", "ADJUDICATION"))),
+        ("discipline: a NEW seat-form row in adjudications/ -> admitted while the schema lacks C-, refused once it admits it",
+         lambda: cv([{"id": "X_PRJ-S40"}], "3.0.0_SA_CVO", "ADJUDICATION", False) == []
+         and any("carries no C-" in x for x in cv([{"id": "X_PRJ-S40"}], "3.0.0_SA_CVO", "ADJUDICATION", True))),
+        ("discipline: the underscore author form 0.9.0_WK_X_PRJ_2 resolves to slot 2",
+         lambda: cv([{"id": "X_PRJ-W2-S1"}], "0.9.0_WK_X_PRJ_2") == [] and cv([{"id": "X_PRJ-W3-S1"}], "0.9.0_WK_X_PRJ_2") != []),
+        ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
+         lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
+         and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
     ]
     failed = 0
     for name, fn in arms:

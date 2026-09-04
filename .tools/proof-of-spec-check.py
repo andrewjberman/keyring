@@ -943,7 +943,8 @@ def alignment_check(inst: dict) -> tuple[list, list]:
 # The id grammar is surprise-row-gate.py's ID_RE, anchored at the start of the entry and followed by a
 # boundary -- one carrier of the grammar would be better; until the two files share a module this is a
 # COPY and is named as one (a change there is a change here).
-SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?S[0-9]+)\b")
+# The allocator coordinate (RULING 2 @9ef9a40aae, annex v3.2): W<n> for a worker's row, C- for the CVO's, Z- nests first.
+SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\b")
 _TREE_TO_RE = re.compile(r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/task-orders/[^/]+\.md$")
 _FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 

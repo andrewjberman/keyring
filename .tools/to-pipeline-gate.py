@@ -94,6 +94,14 @@ FABRIC_ENUM = ("laptop", "site-z")
 ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
 SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
 TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
+# THE GRANT CANNOT BE EMPTY (Andrew-direct 2026-09-04 ~04:58Z at this terminal, "recs approved" on /open-calls CALL 1 REC (c),
+# record @9ef9a40aae; ADHC_OWNPTH.005; registry stanza @e08447ff7d): a spine-v3 worker 0.9.0_WK_<CODE>~<n> is enumerated in
+# no lane and is admitted to exactly the paths its NON-TERMINAL order names in its <paths> block at HEAD. So a NEW tree order
+# issued to a worker without that block -- or with an empty one -- is an order that cannot be executed without the override
+# the ruling retired, and the cut is where it is refused. Measured before this limb: 0 of 171 files under org/missions
+# carried a <paths> block; the first drain's worker committed both its surfaces through the override.
+WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_[A-Z0-9_]+?[~_][0-9]+$")
+PATHS_BLOCK_RE = re.compile(r"<paths>(.*?)</paths>", re.S | re.I)
 
 
 # GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
@@ -397,6 +405,18 @@ def _self_test():
          lambda: any("exactly one of each" in x for x in _criterion_grammar_violations(tree, noexp))),
         ("grammar: a flat-root order is not graded (legacy population)",
          lambda: _criterion_grammar_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v2) == []),
+        # GATE (v): the grant cannot be empty (RULING 1 @9ef9a40aae)
+        ("grant RED: a worker order with NO <paths> block -> refused, names the ruling",
+         lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n" + v3))),
+        ("grant GREEN: a worker order with two entries (a file, a glob) -> admitted",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n  org/modules/graph/cli.py\n  .tools/tests/test_x_*.py\n</paths>\n" + v3) == []),
+        ("grant RED: an EMPTY block (blank + comment lines only) -> refused",
+         lambda: any("EMPTY" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n\n  # nothing\n</paths>\n"))),
+        ("grant RED: an absolute entry and a climbing entry -> each refused",
+         lambda: len(_worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n/etc/x\norg/../secret\norg/ok.py\n</paths>\n")) == 2),
+        ("grant: a seat's order without <paths> is not graded (its grant is its lanes); a flat-root worker order is not graded",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.8.0_AE_CloudComp~J</issued_to>\n" + v3) == []
+         and _worker_grant_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n") == []),
     ]
     failed = 0
     for name, fn in arms:
@@ -429,6 +449,37 @@ def _issued_to_tier_violations(rel, text):
                        "task order and 0.0.0_AB_MSTR integrates and never works a project. Re-address to a "
                        "Tier-2 seat, or land the decision as SPEC at its L-owner (L4 CTO / L5 COO)."
                        % (rel, raw, tier))
+    return out
+
+
+def _worker_grant_violations(rel, text):
+    """GATE (v): a NEW tree order issued_to a worker carries a non-empty <paths> block -- one path per line, relative to
+    the repo root, globs allowed, '#' lines ignored -- because the lane resolver (ADHC_OWNPTH.005) admits the worker to
+    exactly those paths and nothing else. Entries that climb ('..') or start at a filesystem root are refused. [] for
+    flat-root orders and for orders issued to a seat (a seat's grant is its lanes)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    who = [m.group(1).strip() for m in ISSUED_TO_RE.finditer(text)]
+    if not any(WORKER_SERIAL_RE.match(w) for w in who):
+        return []
+    m = PATHS_BLOCK_RE.search(text)
+    if not m:
+        return ["%s: issued_to a worker (%s) with NO <paths> block. The order IS the worker's grant (Andrew-direct "
+                "2026-09-04 'recs approved' @9ef9a40aae, ADHC_OWNPTH.005): the lane resolver admits the worker to exactly "
+                "the paths this block names, so an order without one cannot be executed without the override the ruling "
+                "retired. Add <paths>...</paths>: one path per line, relative to the repo root, globs allowed, every file "
+                "the worker will write (deliverables/<serial>/ is the tree convention and needs no entry)."
+                % (rel, ", ".join(who))]
+    entries = [ln.strip().strip("`").strip() for ln in m.group(1).splitlines()]
+    entries = [e for e in entries if e and not e.startswith("#")]
+    out = []
+    if not entries:
+        out.append("%s: the <paths> block is EMPTY -- an empty grant. Name every file the worker will write." % rel)
+    for e in entries:
+        n = e.replace("\\", "/")
+        if n.startswith("/") or re.match(r"^[A-Za-z]:", n) or ".." in n.split("/"):
+            out.append("%s: <paths> entry %r is not a repo-relative path (no leading /, no drive letter, no '..')." % (rel, e))
     return out
 
 
@@ -1008,6 +1059,8 @@ def check_file(root, rel):
 
     # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
     v.extend(_issued_to_tier_violations(rel, text))
+    # GATE (v) -- a NEW tree TO issued to a worker carries its grant, the <paths> block (RULING 1 @9ef9a40aae).
+    v.extend(_worker_grant_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
     # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).

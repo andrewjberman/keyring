@@ -29,8 +29,9 @@ census, no re-measuring what the cut measured. Read with `comp-read <file> --for
 a path is elsewhere, an invocation does not produce the named result, a capability is missing): append
 ONE row to the investigation file the task order names
 (`org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`, inside the
-fenced json array, per `org/surprise_channel/schemas/investigation_item.schema.json`: `id` next
-`<CODE>-S<n>`, `surfaced_by` you, `spec_asserts`, `world_is`, `class`, `hazard_standing` with
+fenced json array, per `org/surprise_channel/schemas/investigation_item.schema.json`: `id`
+`<CODE>-W<n>-S<k>` -- `<n>` your slot (the `~<n>` of your serial), `<k>` the next unused within your coordinate,
+never a bare `S<k>`; `surfaced_by` you, `spec_asserts`, `world_is`, `class`, `hazard_standing` with
 `disarm_owner` if `ARMED`, `grounding`, `disposition` `UNDER_INVESTIGATION`), cite path@commit, never edit
 an existing row, keep working. You judge a surprise's form, never its significance.
 
@@ -40,8 +41,9 @@ you filed under `surprises`. Validate: `python .tools/proof-of-spec-check.py <in
 -- the ids are positional and ONLY the exit code is the verdict. rc 0, then flip the task order's
 `<status>` to `complete` and commit instance, deliverables and flip together.
 
-**Never:** edit outside the task order's `<paths>` and your deliverables folder; widen the order or fix a
-neighbouring defect; report mid-task-order.
+**Never:** edit outside the task order's `<paths>` and your deliverables folder -- `<paths>` IS your write grant
+(the lane gate admits a worker to exactly the paths its order names; a path you need that it lacks is a BLOCKING
+row on that criterion, never an override); widen the order or fix a neighbouring defect; report mid-task-order.
 
 **Final message, once per task order:**
 ```
