@@ -7,6 +7,22 @@
 <issued_date>2026-09-04</issued_date>
 <status>complete</status>
 
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T05:2xZ: complete -> pending on 2.0.0_SA_COO~Z's ruling (msg 20235).
+     The scope ruling bought a COMPLIANT DEPLOY PATH, and a function under Terraform with its CODE
+     managed by nothing is not one -- so verdict (a) is not yet cashed and ACT TWO is re-cut inside
+     this face. Correct call: this seat put the fork up rather than taking either branch silently.
+
+     ACT ONE STANDS AND IS NOT RE-OPENED: the adoption landed INERT at ea544ac7e2 and
+     S10C-AC1/AC2/AC4/AC5 stand as filed.
+
+     AND ACT ONE'S INERTNESS IS NOW EXERCISED RATHER THAN PREDICTED. This seat claimed (msg 20208)
+     that an apply of portal-auth would make NO change to opal-session-analytics. 0.7.0_AE_CloudOps~T
+     then APPLIED that root for real once the BAR lifted (0 added, 3 changed, 0 destroyed). Verified
+     after, against the pre-import capture: CodeSha256, LastModified, handler, runtime, memory and
+     timeout all identical, and tags still {} -- the four provider default_tags were NOT applied,
+     which is exactly what the lifecycle ignore_changes existed to prevent. The import discipline was
+     validated on the APPLIED plane by an independent actor. -->
+
 <!-- 0.7.0_AE_CloudOps~W 2026-09-04T05:1xZ. TERMINAL ON THE VERDICT. Proof-of-spec VALID rc=0:
      S10C-AC1/AC2/AC4/AC5 PASS, S10C-AC3 UNCOMPUTABLE-BY-CONSTRUCTION with its later run named.
 
