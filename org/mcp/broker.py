@@ -507,7 +507,7 @@ class BrokerHandler(BaseHTTPRequestHandler):
         # CALL 1) -- the same decision org/mcp/server.py applies before it posts here. This HTTP path is
         # reachable WITHOUT the server (a direct POST), so it grades on its own; a refused send inserts nothing.
         _l8 = cvo_send_guard.cvo_worker_send_refusal(
-            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=text)
         if _l8:
             _log_event("refused", from_serial, f"-> {to_serial} L8 guard: {_l8[:160]}")
             db.commit()

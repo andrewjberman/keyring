@@ -1830,8 +1830,10 @@ async def send_message(
     # AFTER the identity gate (a forged CVO is audited as a forgery first) and BEFORE any write, over the
     # whole recipient list (a partial delivery would let a cc to the COO carry the body to the worker).
     # Decision and census live in cvo_send_guard.py so the daemon's HTTP path grades with the same code.
+    # subject + body travel so the one other admitted class -- the CVO's same-turn broadcast of an Andrew-direct
+    # record (marker + record path; CVO review F1, 94134) -- is APPLIED here, not only described in the guard.
     _l8_refusal = cvo_send_guard.cvo_worker_send_refusal(
-        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=body)
     if _l8_refusal:
         _audit_identity("SEND_CVO_WORKER_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _l8_refusal[:200])
