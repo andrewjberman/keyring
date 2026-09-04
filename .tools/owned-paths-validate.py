@@ -123,7 +123,8 @@ def _owns_tree_deliverables(agent_norm: str, agent_base: str, path: str) -> bool
 _WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$")
 _TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
 _TO_ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
-_TO_PATHS_RE = re.compile(r"<paths>(.*?)</paths>", re.S | re.I)
+# line-anchored (94157 gap (a)): the tag alone on its line opens the block; a prose mention is not the block
+_TO_PATHS_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
 _TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
 
 
@@ -435,6 +436,8 @@ def _self_test(yaml_path: str) -> int:
         ("block parser: one entry per line, comments and blanks ignored, backticks stripped",
          lambda: _paths_block_entries("x\n<paths>\n  org/a.py\n\n  # note\n  `.tools/b.sh`\n</paths>\ny") == ["org/a.py", ".tools/b.sh"]),
         ("block parser: no block -> no entries (an order without <paths> grants nothing)", lambda: _paths_block_entries("<status>open</status>") == []),
+        ("block parser: a prose mention of <paths> before the block is skipped; the block is read (94157 gap (a))",
+         lambda: _paths_block_entries("the `<paths>` block names the grant\n<paths>\norg/ok.py\n</paths>\n") == ["org/ok.py"]),
         ("grant: worker ~2 on a path its order names -> admitted", lambda: own(WK, "org/modules/graph/cli.py")),
         ("grant: worker ~2 on a path its order does not name -> refused", lambda: not own(WK, "org/modules/graph/other.py")),
         ("grant MUTANT: worker ~3 (another slot) on ~2's path -> refused", lambda: not own("0.9.0_WK_X_PRJ~3", "org/modules/graph/cli.py")),

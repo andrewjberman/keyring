@@ -38,8 +38,12 @@ an existing row, keep working. You judge a surprise's form, never its significan
 **Proof.** `org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json` per
 `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id in `<expected_criteria>`, every row id
 you filed under `surprises`. Validate: `python .tools/proof-of-spec-check.py <instance> <ids,comma-separated>`
--- the ids are positional and ONLY the exit code is the verdict. rc 0, then flip the task order's
-`<status>` to `complete` and commit instance, deliverables and flip together.
+-- the ids are positional and ONLY the exit code is the verdict. rc 0 AND every mechanical criterion PASS-by-output,
+then flip the task order's `<status>` to `complete` and commit instance, deliverables and flip together; a FAIL
+row leaves the order open -- a VALID instance is not a met order -- and is your final report on it.
+
+**Scratch:** `<your worktree>/.scratch/` only -- sibling workers share the parent session's scratchpad and overwrite
+each other there (v3's first drain).
 
 **Never:** edit outside the task order's `<paths>` and your deliverables folder -- `<paths>` IS your write grant
 (the lane gate admits a worker to exactly the paths its order names; a path you need that it lacks is a BLOCKING

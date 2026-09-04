@@ -357,13 +357,17 @@ def _latest_dispositions(root, code):
     return latest, unknown, len(files) + len(rem_paths), ""
 
 
-def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema):
+def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merging=False):
     """PURE. THE ALLOCATOR DISCIPLINE on NEW rows (RULING 2 @9ef9a40aae; annex v3.2): a row committed by a worker
     0.9.0_WK_<CODE>~<n> carries W<n> with n EQUAL to the committer's slot (a bare S<k> from a worktree is the race the
     coordinate exists to remove; a wrong n is another worker's sequence); a seat's row carries no W; a C- row lives only
     in adjudications/ and is the CVO's; a NEW row in adjudications/ carries C- once the staged schema admits it
-    (c_in_schema) -- until then the CVO's rows keep the seat form, prospective like everything in this gate."""
-    wm = WORKER_SERIAL_RE.match(str(committer or "").strip())
+    (c_in_schema) -- until then the CVO's rows keep the seat form, prospective like everything in this gate.
+    AT A DRAIN (merging=True, MERGE_HEAD present; 2.0.0_SA_COO~A 94157, v3's first worker drain): the committer of the
+    merge commit is the DRAINING SEAT, never the allocator, so the discipline reads the ROW's own `surfaced_by` --
+    the worker that minted it -- and a seat's row riding the merge is graded as a seat's. The first drain refused 15 of
+    15 lawful W rows on the committer read while its own co-worker sweep admitted every one of them."""
+    committer_m = WORKER_SERIAL_RE.match(str(committer or "").strip())
     out = []
     for r in added:
         rid = str(r.get("id", ""))
@@ -371,18 +375,22 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema):
         if not m:
             continue   # the grammar refusal is check_file's own
         w, c = m.group("w"), m.group("c")
+        allocator = str(r.get("surfaced_by") or "").strip() if merging else str(committer or "").strip()
+        wm = WORKER_SERIAL_RE.match(allocator) if merging else committer_m
         if wm:
             if w is None:
-                out.append("%s: NEW row %s committed by worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
+                out.append("%s: NEW row %s %s worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
                            "slot, the next unused k within it); a bare S<k> from a worktree is the allocator race that "
-                           "minted S34 twice at v3's first drain (94007)." % (rel, rid, committer, wm.group("n")))
+                           "minted S34 twice at v3's first drain (94007)."
+                           % (rel, rid, "surfaced by" if merging else "committed by", allocator, wm.group("n")))
             elif int(w) != int(wm.group("n")):
-                out.append("%s: NEW row %s carries W%s but the committing worker %s's slot is %s -- a row is minted in "
-                           "its own coordinate, never another worker's." % (rel, rid, w, committer, wm.group("n")))
+                out.append("%s: NEW row %s carries W%s but the %s worker %s's slot is %s -- a row is minted in "
+                           "its own coordinate, never another worker's."
+                           % (rel, rid, w, "surfacing" if merging else "committing", allocator, wm.group("n")))
         elif w is not None:
-            out.append("%s: NEW row %s carries W%s but the committer %s is not a worker -- a seat's row on the main index "
+            out.append("%s: NEW row %s carries W%s but the %s %s is not a worker -- a seat's row on the main index "
                        "carries no W (the coordinate names the allocator, and a seat allocates on the main index)."
-                       % (rel, rid, w, committer))
+                       % (rel, rid, w, "surfacer" if merging else "committer", allocator))
         if c:
             if folder_kind != "ADJUDICATION":
                 out.append("%s: NEW row %s carries C- outside adjudications/ -- C- is the CVO's coordinate for its "
@@ -393,6 +401,17 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema):
             out.append("%s: NEW row %s in adjudications/ carries no C- while the staged schema admits it -- the CVO's rows "
                        "mint in the C- coordinate (<CODE>-C-S<k>)." % (rel, rid))
     return out
+
+
+def _merge_in_progress(root):
+    """True iff MERGE_HEAD exists -- the commit about to be created is a merge and its committer is the draining seat,
+    not the rows' allocator (the same predicate .tools/git-hooks/owned-paths-check.sh:73 exempts a merge on)."""
+    try:
+        r = subprocess.run(["git", "rev-parse", "-q", "--verify", "MERGE_HEAD"], cwd=root, capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=20)
+    except Exception:  # noqa: BLE001
+        return False
+    return r.returncode == 0 and bool(r.stdout.strip())
 
 
 def _plane_patterns(kind):
@@ -932,7 +951,7 @@ def check_file(root, rel):
     # adjudications/ only, required once the staged schema admits it.
     _cmt = _committer_serial(root)
     _c_in_schema = "C-" in str(((schema.get("properties") or {}).get("id") or {}).get("pattern", ""))
-    v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema))
+    v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema, merging=_merge_in_progress(root)))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
     _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw)
@@ -1159,6 +1178,17 @@ def _self_test(root):
          and any("carries no C-" in x for x in cv([{"id": "X_PRJ-S40"}], "3.0.0_SA_CVO", "ADJUDICATION", True))),
         ("discipline: the underscore author form 0.9.0_WK_X_PRJ_2 resolves to slot 2",
          lambda: cv([{"id": "X_PRJ-W2-S1"}], "0.9.0_WK_X_PRJ_2") == [] and cv([{"id": "X_PRJ-W3-S1"}], "0.9.0_WK_X_PRJ_2") != []),
+        # AT A DRAIN (94157): the allocator is the row's surfaced_by, never the merge committer
+        ("drain: worker ~2's W2 row surfaced_by ~2, merged by the COO~A -> admitted",
+         lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True) == []),
+        ("drain: a W3 row surfaced_by ~2 -> refused (another worker's coordinate, read on the row)",
+         lambda: any("slot is 2" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W3-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True))),
+        ("drain: a bare S<k> row surfaced_by a worker -> refused (the race)",
+         lambda: any("carries no W<n>" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True))),
+        ("drain: a seat's W row riding the merge -> refused (a seat's row carries no W)",
+         lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "3.0.0_SA_CVO"}], "2.0.0_SA_COO~A", False, merging=True))),
+        ("drain MUTANT: the same lawful W2 row graded NOT merging under the COO~A committer -> refused (the first drain's defect, kept as the negative control)",
+         lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=False) != []),
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),

@@ -101,7 +101,9 @@ TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
 # the ruling retired, and the cut is where it is refused. Measured before this limb: 0 of 171 files under org/missions
 # carried a <paths> block; the first drain's worker committed both its surfaces through the override.
 WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_[A-Z0-9_]+?[~_][0-9]+$")
-PATHS_BLOCK_RE = re.compile(r"<paths>(.*?)</paths>", re.S | re.I)
+# LINE-ANCHORED (94157 gap (a)): the block is the <paths> tag ALONE on its line through the </paths> tag alone on its
+# line; a prose mention of `<paths>` earlier in the file is not the block and is not graded as one.
+PATHS_BLOCK_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
 
 
 # GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
@@ -414,6 +416,10 @@ def _self_test():
          lambda: any("EMPTY" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n\n  # nothing\n</paths>\n"))),
         ("grant RED: an absolute entry and a climbing entry -> each refused",
          lambda: len(_worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n/etc/x\norg/../secret\norg/ok.py\n</paths>\n")) == 2),
+        ("grant: a prose mention of <paths> before the block is NOT the block (94157 gap (a)) -- the block after it is graded",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nthe `<paths>` block below names the grant\n<paths>\norg/ok.py\n</paths>\n" + v3) == []),
+        ("grant: a prose mention with NO block after it -> refused as NO block",
+         lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nsee <paths> in the protocol\n" + v3))),
         ("grant: a seat's order without <paths> is not graded (its grant is its lanes); a flat-root worker order is not graded",
          lambda: _worker_grant_violations(tree, "<issued_to>0.8.0_AE_CloudComp~J</issued_to>\n" + v3) == []
          and _worker_grant_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n") == []),
