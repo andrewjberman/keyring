@@ -5,7 +5,18 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
+
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T00:0xZ: staged -> pending on the GO (Msg-ID 20018), and it STAYS pending
+     rather than flipping complete. S8B-AC1/AC3/AC4/AC5 PASS on opal-users-v2, which is APPLIED and
+     data-plane exercised (commit d756be09b8, ledger opsec-s8r2b-users-v2-cmk CLOSED 5 of 5).
+     S8B-AC2 is UNCOMPUTABLE-BY-CONSTRUCTION at 1 flipped of 5 enumerated: the four opal-partner-*
+     tables share ONE keyless module, so flipping them moves four live client identity tables in a
+     single apply -- what deliverable 3's "ONE TABLE FIRST" forbids -- and round 2a's accepted
+     demo.tf:21-25 records a deliberate contrary decision on C-13 grounds. Held at row
+     NFRA_OPSEC202609-Z-S104, disarm owner 2.0.0_SA_COO~Z. Proof-of-spec VALID rc=0.
+     Separately, row Z-S103 corrects this face's headline: TO-OP-S-9-11 was never blocked on this
+     limb (the decomp edge carries a PREDICATE, already true 5 of 5) and has been dispatched. -->
 
 **BLOCKER: NONE.** `OP-s-25` (the project CMK) is COMPLETE and the key exists. **This face is cut because `OP-s-8`'s cell carries a task order for rounds 1 and 2a and NONE for its open round-2b limb** -- a coverage gap the issuer found while checking why FWD-9 and FWD-11 were still blocked.
 
