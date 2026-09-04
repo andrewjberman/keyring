@@ -71,6 +71,17 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-12.md, packet row A12). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Bronze-tier (raw) transaction records from the Black Diamond custodial source within the
+      partner-data estate. The "bd" tag is the Black Diamond custodial source fossilized into legacy
+      bucket naming ("just poor naming" per the sovereign note); it is not a tier name and not a
+      generic black-diamond store. Under the 2026-07-30 target architecture opal-data-assets is the
+      canonical singular source of truth for partner data, organized bronze (raw) -> silver
+      (parquet, structured/cleaned) -> gold (logic/derived/analytical); the legacy s3://opal-data-bd
+      bucket is migrating into it.
   - family: bd-canonical-prices
     named_thread: advi-bd
     owning_tool: comp-pipescript
@@ -203,6 +214,16 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-13.md, packet row A5). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Cottonwood partner-data pipeline whose historical landing zone is s3://opal-data-cot. That
+      bucket is not the terminal design: the 2026-07-30 PARTNER-DATA TARGET ARCHITECTURE ruling
+      makes opal-data-assets the canonical and singular source of truth for all partner data, with
+      the bd, inf and cot buckets migrating into its /bronze -> /silver -> /gold medallion. Until
+      the migration lands, opal-data-cot is a Cottonwood partner-data bucket in migrate-into-assets
+      state.
 
   # ---- comp-estate advi-inf (14) ----
   - family: PPI-08-shared-advisor-router
@@ -273,6 +294,13 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-18.md, packet row A21). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      EC2 host for the Inflection (inf) partner gold-layer dispatch. Its entrypoint,
+      orion-gold-dispatch.sh, pulls the shared runner bundle from s3://opal-runner-shared (script
+      lines 95-96) on each inf gold dispatch run.
   - family: inf-gold-qa-runner
     named_thread: advi-inf
     owning_tool: none
@@ -441,6 +469,15 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-18.md, packet row A22). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Fargate service in the globgrph estate carrying the service name nessie. The 2026-07-30
+      rulings group the DynamoDB tables nessie _objs and _refs into the globgrph resource set (all
+      globgrph resources are to be summarily terraformed) and record a shared-reader organization on
+      s3://opal-313476888478-globgrph (question Q-6). Both relationship claims rest on those rulings
+      and await confirmation in the terraform act.
   - family: kuzu-stitch-surface
     named_thread: graph-platform
     owning_tool: stitch
@@ -543,6 +580,15 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-17.md, packet row A24). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Executive-summary generation component of the FRED-06 surface. Its maintenance state is
+      unverified: the only measured signal is its test subtree tests/exec_summary, cold for >= 90
+      days; the citation leg is unmeasured and no production runtime paths were captured, so neither
+      live production use nor active development is confirmed. Consistent with the
+      dormant-suspect/unverified classification ratified 2026-08-20.
   - family: FRED-07-deck-generation
     named_thread: macroeconomics
     owning_tool: none
@@ -563,6 +609,17 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-28.md, packet row A23). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Deck-generation pipeline organized as five subtrees: lambda_api, mcp_server, scripts, specs
+      and tests. The whole deck_generation source tree is cold on the commit record (every subtree
+      last touched >= 90 days ago), consistent with the dormant classification ratified 2026-08-20.
+      This is a source-freshness statement, not a decommission: the runtime citation leg is
+      unmeasured, so a deployed Lambda built from this tree may still execute, and no sovereign
+      ruling covers deck_generation. *(CVO check 2026-09-04: the working tree agrees — newest file
+      under deck_generation/ is dated 2026-06-26, last commit 2026-06-23.)*
   - family: FRED-08-daily-agenda-generator
     named_thread: macroeconomics
     owning_tool: none
@@ -622,6 +679,16 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-12.md, packet row A10). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Toolchain for authoring market-update content. Its persistence layer is unresolved:
+      s3://opal-market-update has been associated with this entity by naming inference only, and
+      that bucket is delete-gated ("very likely delete") pending a consumer trace of the live fred
+      daily flow; the true owner of that bucket and flow may be
+      MA-07-causality-market-update-generator, causality-market-update, or an entity outside the
+      catalogued set. This description asserts no storage binding until the consumer trace lands.
   - family: MA-07-causality-market-update-generator
     named_thread: market-overview
     owning_tool: portal-consumer-tools
@@ -646,6 +713,15 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-11.md, packet row A17). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Causality record for the opal-market-update flow. Prose describing the flow as live,
+      generating market-update output with downstream consumption, is superseded: under the
+      2026-07-30 ruling s3://opal-market-update is delete-gated and judged very likely delete, the
+      gate being a consumer trace of the live fred daily flow; a teardown package was staged the
+      same day.
   - family: portfolio-version-get
     named_thread: market-overview
     owning_tool: portal-consumer-tools
@@ -695,6 +771,16 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-11.md, packet row A13). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      A view in the opal-data-mdpf estate, whose pipeline includes the mdpf-daily-trigger lambda.
+      The sovereign condemned the mdpf bucket on 2026-07-30 ("this whole bucket is garbage") and
+      explicitly denied that these resources have anything to do with the real ETF actual-holdings
+      flow, so any recorded linkage of this view to ETF holdings reporting is superseded and denied.
+      The mdpf estate is ordered dissolved into opal-data-assets (medallion) and opal-data-portal-v2
+      (platinum serving), with an investigation mandated.
   - family: MA-08-yang-generate-volatility
     named_thread: mdpf
     owning_tool: none
@@ -1023,6 +1109,15 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-12.md, packet row A2). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Opal session analytics system: the opal-sessions DynamoDB table, the opal-session-analytics
+      lambda, four /analytics/* API routes and the portal-side ingest calls that carried session
+      telemetry. Ordered decommissioned completely by sovereign ruling 2026-07-30, with the
+      destructive teardown staged under Q-23; every part named is in scope for removal. Prose
+      describing it as a live, connected system is superseded.
 
   # ---- comp-estate portfolio-management (9) ----
   - family: ops-infrastructure-monitors
@@ -1216,6 +1311,16 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-09-04 (estate-report loop, one sitting over 26 days, Andrew "approve all recs";
+    # decision record org/estate-reports/2026-08-12.md, packet row A8). Manifest description wins over
+    # census at regen (gen-estate-resolver.py:81) -- this is the durable home, not a hand-edit of the resolver.
+    description: >-
+      Parquet batch-export leg historically recorded under the trade-submission product.
+      Characterized at the 2026-07-30 sovereign session as the deprecated-looking parquet
+      batch-export leg and placed under REVIEW; it is not an active component of the kept, live
+      trade-submission product (opal-trade-submissions plus trade-security-identifiers), which must
+      not be swept by name association. The trade-users proto of the same product was ruled TEARDOWN
+      on 2026-07-30 because of its coupling to this leg (Q-7).
   - family: TS-6-trade-auth-handler
     named_thread: trade-submission
     owning_tool: none
