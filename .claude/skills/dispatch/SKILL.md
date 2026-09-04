@@ -295,6 +295,14 @@ another seat's staged work, because that union is not the one you mean to grade.
 exactly as v3's first drain did. The script converts "remember to check" into "one command that checks";
 that is smaller than a gate and larger than a paragraph, and the difference matters when you are tired.
 
+> ⭐ **AND IF YOU EVER BUILD A CHECK OF YOUR OWN HERE — FEED YOUR CHECKER BEFORE YOU TRUST IT.**
+> `safe-merge.sh` shipped calling the row gate **bare**. The gate takes its targets from argv, so it
+> graded **nothing** and returned clean: `denominator: 0 dispatched path(s)`, rc 0. **The number that
+> exposed it was printed on screen and read past**, and the collision was caught only by a hook one step
+> downstream. A checker handed an empty set answers a question you never asked, and answers it cleanly.
+> **Read the denominator, not the verdict** — and give any harness you write a GREEN arm, because a suite
+> of only refusals passes a tool that refuses everything.
+
    **A collision found before the merge is a re-mint; found after, it is permanent** — append-only binds
    both rows and there is no renumbering.
 
