@@ -1,0 +1,52 @@
+{
+  "project_code": "NFRA_OUTSET",
+  "macro_code": "NFRA",
+  "directive": "D11",
+  "fabric": "laptop",
+  "pipeline": "estate-report",
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-04",
+  "registered_under_tree": "2026-09-04",
+  "placement": "LAPTOP",
+  "pods": ["1.0", "2.0", "3.0", "4.0", "0.8", "0.7", "0.0"],
+  "related": [
+    "NFRA_COMPEFFICACY",
+    "NFRA_FEDOBS",
+    "NFRA_CLDGRPH",
+    "NFRA_GLOBGRPH",
+    "NFRA_COMPDRIFT",
+    "NFRA_COMPDIFF",
+    "NFRA_DEBTSCAN",
+    "NFRA_HEATMAP",
+    "NFRA_MOTIF",
+    "NFRA_PROMOTE"
+  ],
+  "name": "comp-heat and the tooling at the outset of the Semantic Estate Pipeline -- the front end of the daily estate analysis made to work, to compose, and to be consumed: a bounded freshness answer at any grain, a live federated question in one call, every deterministic report line traceable to the tool that produced it, and one working-order census in which a failed tool says so",
+  "description": "Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~09:5xZ, VERBATIM: 'recs approved except comp-heat, i want comp-heat to be figured out and developed properly' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260904_095xZ_RECS_APPROVED_EXCEPT_COMP_HEAT_DEVELOP_IT_PROPERLY.md @26da5ec0fa) -- his exception to the marquis ratification's retire-comp-heat recommendation, replaced with an instruction to develop it. Commissioned as a brief at the 4.0.0_SA_CRO terminal ~12:5xZ, VERBATIM: 'I would like you to make a brief focused on the comp-heat tool and the trino analytics tooling, fedobs, all of that. the premise of this brief is that we want to figure out how it works, why its not working currently, how to fix it, so that comp-heat can be a tool agents use and that any comp-tooling at the start of the Semantic Estate Pipeline, of which there are several (and convergence divergence aspects and combinations), all of which need to be analyzed, can be set in working order.' THE STANDING CONDITION THIS PROJECT CARRIES: LD-0522 Amendment 1 defers the 26 PENDING estate-report days 'until we have the comp-tool functions that feed that analysis 100% working and prioviding high signal data at the outset of the semantic estate pipeline' -- FWD-4 and FWD-5 are that condition in gradable form, and the deferral lifts on evidence rather than on assertion. THE MEASURED PREMISE, from the brief's Part IV and this seat's own read: comp-heat is NOT broken -- all five subcommands return rc 0 (freshness, drift, score, compare, and federated, which runs one in-VPC Fargate task against the live Trino federation in 86 s); what is absent is a consumer (0 CLI runs; comp-similar returns {} before reaching it; the estate-report runner names it in one docstring and zero code lines of 2,333), a bound (no --budget anywhere in 415 lines -- T20-AC4's standing FAIL, which the marquis ratification put against comp-heat's own development rather than against the marquis clause), a router row (comp-which has NO curated rule for a heat question), and a vintage on the federated answer. And the structural finding that shapes the work: THE PIPELINE'S OUTSET IS NOT THE COMP-TOOLS TODAY -- estate_report_runner.py computes co-change and lifecycle itself from a blobless clone and declares propagation UNAVAILABLE because the tools need a checked-out workspace, so the consumption seam has two possible shapes (tool outputs shipped to the host as artifacts, or a host that can run the tools) and the PRD picks one. Eight ratified capability outcomes FWD-1..FWD-8 in the PRD's ENDPOINT section. NOT in scope: the Kimi inferential half, the runner's own infrastructure, /estate-pull's adjudication loop, the Trino/Nessie/Iceberg serving plane (NFRA_CLDGRPH's), the fedobs producer (NFRA_FEDOBS, complete), and the engines behind comp-drift / comp-xray / comp-similar / comp-blast / comp-pipescript -- all consumed, none rebuilt.",
+  "phase": "L3 REGISTERED UNDER THE PROJECT TREE 2026-09-04 ~15:3xZ by 1.0.0_SA_CTO. || L1 BRIEF docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md @bc52eb658d (4.0.0_SA_CRO, 334 lines, eight outcomes O1-O8 and twelve measured findings). || L2 ENDPOINT org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_COMP_HEAT_AND_THE_OUTSET_TOOLING_20260904.md @33649224e1 -- FWD-1..FWD-8, seven EXERCISED and one APPLIED (FWD-6), the brief's O1-O8 1:1; three candidates for a ninth id tested and refused with their reasons (discoverability is a limb of FWD-1; the deferral's release is a CONSEQUENCE of FWD-4 and FWD-5; the consumption seam's shape is the PRD's choice). RATIFIED by Andrew at the 1.0.0_SA_CTO terminal ~14:2xZ, VERBATIM 'all approved' (record ANDREW_DIRECT_20260904_142xZ_ALL_APPROVED_ENDPOINT_CONFIRMED_FWD1_FWD8.md) -- the last point in this project's life at which the loop waits on him; from L4 onward it cycles on its own. || THE REGISTER LINE: 0.0.0_AB_MSTR added NFRA_OUTSET to org/missions/DIRECTIVES.yaml directives.D11.members.projects as the directive register's owner, having HELD the edit while a drain merge was live in the shared tree rather than committing into it -- the hazard this seat had just measured and fixed at .tools/safe-commit.sh @59c3163a96. || NEXT: L4 PRD at prd/NFRA_OUTSET_PRD.md carrying the ENDPOINT block verbatim and the surface manifest L5 decomposes from; the L4 notifier delivers the header to 2.0.0_SA_COO, which is that seat's cue for L5.",
+  "blocking": "Not blocked. Standing at registration: nothing in this project waits on Andrew -- his ~14:2xZ 'all approved' discharged the one confirmation his standing ruling reserved (2026-09-03 ~05:2xZ), and every later limb routes inside the loop. Two INHERITED conditions that are not blocks on this project's own work: LD-0522 Amendment 1's deferral of the 26 PENDING estate-report days, which this project's FWD-4 and FWD-5 are the gradable form of and which lifts on their evidence; and the push reservation (LD-0522), under which every commit is LOCAL until 0.0.0_AB_MSTR's window on Andrew's word -- origin/CLOUD @fa82d6b93c at registration, measured by ls-remote.",
+  "brief_ref": "docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md@bc52eb658d",
+  "prds": [
+    "org/missions/D11/NFRA/NFRA_OUTSET/prd/NFRA_OUTSET_PRD.md"
+  ],
+  "prd_lineage": [
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_COMP_HEAT_AND_THE_OUTSET_TOOLING_20260904.md -- the step-2 /endpoint --forward record, FWD-1..FWD-8 ratified 'all approved' (2026-09-04)",
+    "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md s.4 -- the per-tool result schema (identity, disclosure, four answer states, Rule T/P bounds, a battery with a RED mutant per arm), INHERITED as the bar every outset tool must meet; that project is at ROUND_CLOSE and is not re-opened",
+    "docs/architecture/NFRA_FEDOBS_PRD.md -- a sibling's, consumed: the five federated observers and the co-evolution signal this project decides the landing place of",
+    "docs/briefs/comp-heat-tool-spec-for-cto-20260625.md -- the tool's own birth spec: advisory-only, read-only, derived on demand from git; the purpose was clear at birth and the consumer was never named"
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents the COO's L6 issuance names (spine v3 L7: 0.9.0_WK_NFRA_OUTSET~<n>)"
+  },
+  "coo_lane": "2.0.0_SA_COO",
+  "fabric_ruling": "laptop -- the D11 placement row, as NFRA_COMPEFFICACY under the same directive and macro; the work is repository-local tooling plus one read-only federated query against a plane NFRA_CLDGRPH owns, so no site-Z placement question arises. Stated at registration by 1.0.0_SA_CTO; no Andrew ruling was sought or needed.",
+  "thread_counter": 0,
+  "threads": []
+}
