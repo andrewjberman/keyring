@@ -3,7 +3,8 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **50 rows** (S1-S34 with id S11 vacated by the concurrent-append renumber, plus W2-S1..W2-S7 and W1-S1..W1-S10). Restated 2026-09-04 14:0xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-1 (TO-CG-D-12) -- the branch and CLOUD appended concurrently for the second time this round and the merge conflicted textually again; resolved as the append-only UNION, reconstructed from the three blobs (base, ours, theirs) rather than by editing the conflicted text, with the ASSERTION that each side is exactly base-plus-an-appended-tail so that no row can be touched by the resolution: HEAD's S34 kept in place, the branch's W1-S9 and W1-S10 appended after it, no row edited, no id renumbered. Prior restatement: **48 rows**, 2026-09-04 12:5xZ by `2.0.0_SA_COO~A` on appending S34 (was 47), which itself restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.`0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
+**Append-only during the round.** Denominator at this write: **53 rows** (S1-S34 with id S11 vacated by the concurrent-append renumber, plus W1-S1..W1-S10 and W2-S1..W2-S10). Restated 2026-09-04 14:1xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-2 (the reopened TO-CG-D-2) -- the third textual conflict of the round on this file, resolved the same way as the second: the append-only UNION reconstructed from the three blobs (base d5ce612d16, ours, theirs) rather than by editing the conflicted text, under the assertion that each side is exactly base-plus-an-appended-tail so no row can be touched by the resolution. 47 base + 3 ours (S34, W1-S9, W1-S10, landed at the D-12 drain) + 3 theirs (W2-S8, W2-S9, W2-S10) = 53, every id unique, no row edited, no id renumbered. NOTE for any seat reading a WORKER's own header line: a branch counts only what IT can see, so wk-NFRA_CLDGRPH-2's header truthfully read 50 for a different 50 than CLOUD's -- the count is only ever correct at the merge, which is why it is restated here and not trusted from either side. Prior restatement: **50 rows**, 2026-09-04 14:0xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-1 (TO-CG-D-12), itself the union of CLOUD's S34 with that branch's W1-S9 and W1-S10; before that **48 rows**, 12:5xZ by `2.0.0_SA_COO~A` on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+`0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
 **Round 1 task orders:** two live -- `TO-CG-V-1` at `0.7.0_AE_CloudOps~Q`, `TO-CG-V-2` at `0.7.0_AE_CloudOps~P`.
@@ -1570,6 +1571,99 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "TO-CG-D-12 D12-AC4 names `bash .../triggers_query.sh` with expect `\"triggers\":\\s*[1-9][0-9]*` and calls it, with D12-AC2 and D12-AC3, one of 'the controls that must be able to FAIL'. TO-CG-D-1's D1-AC5 named the same script. Both orders treat that script's zero as the GRAPH's answer, on the strength of a shape control the order itself describes as the discrimination the silent-zero class needs.",
     "world_is": "The shape control could not see this failure: it shares the transport but NOT the hazard, because it carries no string literal. A control has to exercise the same failure mode as the measurement, and this one exercised only reachability. So the instrument answered 0 for the graph in exactly the world where the graph answers 171 -- and it would have gone on answering 0 after the IAM grant landed, converting a REPAIRED estate into evidence that the repair failed.",
     "notes": "REPAIRED IN THIS ORDER, disclosed rather than quietly fixed: both `triggers_query.sh` (inherited, in this seat's own deliverables folder, its write surface) and the new `bd_targets_query.sh` now carry the cypher as base64 and post it from a file with `--data-binary`, and both ECHO each query as the server received it beside the answer, so the evaluated bytes are always in the output and this class cannot hide again. The QUERIES are unchanged. D12-AC4 therefore PASSES on a REPAIRED instrument and the record says so out loud: pre-repair output at the same vintage was `{\"rows\":[{\"triggers\":0}]}`, post-repair `{\"rows\":[{\"triggers\":171}]}`, both in the deliverable. WHAT THE ADJUDICATOR SHOULD NOT CONCLUDE: that the IAM grant was unnecessary. Two independent causes stacked, and the derive-side one is measured on its own plane -- `buckets read=0 / unreadable=34` before the grant and `buckets read=34 / unreadable=0` after it, with TRIGGERS going 0 -> 182 in the derive's OWN edge summary, which never travelled through this transport. Fixing the instrument alone would still have served 0 TRIGGERS, because the edges did not exist to be counted. STILL ARMED, and this is why the row is not closed by the repair: the defect is a SHAPE, not a file. `.tools/comp-kuzu`, `infra/aws/globgrph/c2c3_liveness_acceptance.py` (whose own docstring warns about 're-quoting a cypher literal that itself contains double quotes'), the gateway integration `graph_cypher`, and any future seat that sends a cypher through `ssm send-command` inherit the same trap. The general form: A CONTROL THAT SHARES THE TRANSPORT BUT NOT THE HAZARD CERTIFIES THE WRONG THING, and a mangled query that stays syntactically valid returns a NUMBER, never an error. Owner 2.0.0_SA_COO~A to route the sweep -- this seat repaired only the two instruments its own order names, and widening to the others is not this order's grant."
+  }
+]
+```
+
+## W2-S8 -- G6's SERVED audit record cannot be produced by any seat holding only the capability bearer: the `/graph/*` HTTP path deliberately does not write an audit record, and the MCP surface that does is behind ALB authenticate-oidc
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S8",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T13:15Z",
+    "one_line": "TO-CG-D-2 step 8 asks G6 to be grounded on 'the audit record for one ok and one denied call read from the box's audit.jsonl'. After a SUCCESSFUL deploy with globgrph ENABLED, the box's audit.jsonl holds 41,489 records and ZERO containing 'graph_' -- because the only run-path that calls audit.log_call is run_integration_tool on the MCP surface, and this seat cannot reach /mcp (ALB authenticate-oidc, browser Entra login). The two /graph/* HTTP routes are audit-silent BY CONSTRUCTION, exactly as /ms/* and /otp/* are.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE, SSM AWS-RunShellScript on i-07dccb1615503ac99 2026-09-04 ~13:0xZ, AFTER the deploy that enabled globgrph: 'sudo wc -l < /opt/opal-gateway/audit.jsonl' = 41489; 'sudo grep -c graph_ /opt/opal-gateway/audit.jsonl' = 0. The file is live (11,595,518 bytes, mtime Sep 4 13:00) and its last record's keys are ['args','detail','outcome','tier','tool','ts','user'] -- a POSITIVE control that the read reached a real, currently-written audit file, so the 0 is an ABSENCE and not a broken read.",
+        "SOURCE, infra/aws/ec2/opal-gateway/app/server.py @03b1cb0f7d: the /graph/* handlers are `_graph_guard` (:596-604) + `graph_cypher` (:607-636) + `graph_health` (:638-647), mounted in the plain route table (:682-683) OUTSIDE the /mcp Mount; comp-read --enumerate 'graph' over that file returns 31 hits / 0 of them an audit.log_call. The same is true of the /ms/* (:526-582) and /otp/* (:462-517) precedents this path was built from.",
+        "SOURCE, app/integrations/base.py:93-148 @03b1cb0f7d (byte-identical to the cut, sha256 718246435530d59e853ed7dca99791d59e1b629e2df516b6a98c3146902cf616): run_integration_tool IS wired to audit.log_call on the denied, error and ok branches -- so G6's mechanism is present and source-grounded; what is missing is a CALLER, not the wiring.",
+        "LIVE, the box's startup integration report (journalctl, uvicorn[552785], Sep 04 12:52:31): globgrph -> {'tools': ['graph_cypher','graph_status'], ...} -- the two tools ARE registered on the live MCP surface, so the first authenticated MCP caller will mint exactly the records G6 wants."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-2 step 8: 'G6 the audit record for one ok and one denied call read from the box's audit.jsonl' -- i.e. that this order's own seat can produce a served audit record for a graph_ call once the integration is enabled and deployed.",
+    "world_is": "Enablement + deploy are NECESSARY but not SUFFICIENT for a graph_ audit record: the record is minted only by an MCP tool invocation through run_integration_tool, and the MCP surface requires an ALB authenticate-oidc session (a human Entra login) that a worker subagent holding AWS credentials plus the static capability bearer cannot complete. The HTTP capability path this order also built is audit-silent by design and by precedent. G6 is therefore recorded PARTIAL: mechanism source-grounded, tools live-registered, served record awaiting the first authenticated MCP caller.",
+    "notes": "Not blocking: G6 lives inside D2-AC10, which is judgment=true and carries NO verdict from this seat. Two candidate closures for whoever adjudicates -- (a) an authenticated MCP call by a seat that HAS an OIDC session (Andrew's client), which needs no code; (b) if the estate wants the HTTP capability path itself audited, that is a NEW requirement on server.py's /graph/* handlers and, by the same reading, on the /ms/* and /otp/* precedents -- a change to three paths, not one, and outside this order. Surfaced, not adjudicated."
+  }
+]
+```
+
+## W2-S9 -- safe-ec2-deploy.sh resolves its HALT-gate identity against the MAIN worktree, so a worker in a `git worktree` must write its session serial OUTSIDE the tree its task order grants
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S9",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T13:15Z",
+    "one_line": "The halt gate resolves its principal from ${HALT_GATE_REPO_ROOT}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial, and safe-ec2-deploy.sh sets HALT_GATE_REPO_ROOT to the MAIN worktree by design. A worker executing in wk-NFRA_CLDGRPH-2 therefore had to create that file in C:/Users/AndrewBerman/Desktop/ajb_workspace -- a path no <paths> block names -- or the wrapper exits 3 IDENTITY UNRESOLVED and, past the gate, refuses to record an unattributed deploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:52-57 @d5ce612d16 -- halt_gate_resolve_serial reads `local sess_file=\"${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial\"` where repo_root=\"${HALT_GATE_REPO_ROOT}\" (:38).",
+        "infra/aws/ec2/safe-ec2-deploy.sh @d5ce612d16, the MAIN_TREE block: 'Runtime state (agent inbox, session serial, .comp-graph markers) ALWAYS lives in the MAIN worktree, never in an ephemeral `git worktree add` build checkout' -> HALT_GATE_REPO_ROOT=\"$MAIN_TREE\" resolved via `git rev-parse --git-common-dir`. This is DELIBERATE (it fixes the stale-worktree-inbox hazard), not a bug.",
+        "MEASURED both ways, this session (id 3e63c2d6-a07e-4ea6-9780-7be73730e12c): with the serial written ONLY in the worktree, `HALT_GATE_REPO_ROOT=<main tree> bash .tools/halt-gate-check.sh` printed the IDENTITY UNRESOLVED banner; after `printf '%s\\n' 0.9.0_WK_NFRA_CLDGRPH~2 > <main tree>/org/mcp/sessions/3e63c2d6-....serial` the SAME command printed 'HALT-GATE: worker 0.9.0_WK_NFRA_CLDGRPH~2 has no inbox; scanning its issuer 2.0.0_SA_COO~A' and returned 0. The predecessor in this slot recorded the un-fixed form as row W2-S1's second failure mode.",
+        "RECORD IMPACT NIL, verified: .gitignore:423 ignores org/mcp/sessions/, and `git ls-files org/mcp/sessions/` returns EMPTY -- the file is untracked runtime state in both trees, so nothing entered any commit and no other seat's serial could be overwritten (the filename is keyed to THIS session's unique id).",
+        "The wrapper then attributed correctly: EC2_MANIFEST.json recorded deployed_by=0.9.0_WK_NFRA_CLDGRPH~2 and the wrapper's own safe-commit landed 480ffaf58e under that author."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-2: 'Your write surface is exactly the PATHS block below plus <deliverables>. A path you need that the block lacks is a BLOCKING row on that criterion' -- and Rule 12 requires the deploy to go through safe-ec2-deploy.sh, whose PATHS entry is the deploy script, not the session store.",
+    "world_is": "The wrapper's identity contract points at the MAIN tree ON PURPOSE, so the one file a worker must write to satisfy it can never be inside the worker's worktree, and therefore can never be inside any <paths> block a worktree-scoped order writes. Filed as OBSERVATION rather than BLOCKING because the write touches no tracked byte: the store is gitignored, the filename is session-unique, and the deploy attributed to the correct serial. But the general form -- 'the L7 worker face grants paths in a worktree; a required wrapper reads runtime state only from the main tree' -- is a gap between two live mechanisms, not this order's local difficulty.",
+    "notes": "Cheapest durable fix for the issuer, if wanted: name the session-serial write in the STANDING LAW section of any worker face whose order runs safe-ec2-deploy.sh (it is runtime state, not a repo edit, so it needs a sentence rather than a <paths> entry). Alternative for the tool owner: have safe-ec2-deploy.sh accept an explicit AGENT_NAME for attribution AND let the halt gate fall back to $OPAL_AGENT_SERIAL for principal resolution -- but that second half weakens a gate that deliberately refuses to guess, so it is named here and NOT recommended. Surfaced, not adjudicated."
+  }
+]
+```
+
+## W2-S10 -- the opal-gateway terraform tree carries FOUR non-no-op addresses of pre-existing drift, two of them DELETES of live WAF IP sets; an unscoped apply in this module would destroy them
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S10",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T13:15Z",
+    "one_line": "The C-1 control -- ONE unscoped `terraform plan` after this order's targeted apply -- shows this order CONVERGED (both its addresses no-op, 0 to add) and, in the same read, FOUR non-no-op addresses belonging to nobody in this project: `aws_instance.gw` [update], `aws_wafv2_web_acl.gw` [update], and `aws_wafv2_ip_set.opal_blocked_ips_regional_v4` + `_v6` [DELETE]. An unscoped apply by any seat in infra/aws/terraform/opal-gateway would destroy two live WAF IP sets.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform v1.9.8 `plan -input=false -lock=false -out=.build/cgd2-unscoped-postapply.tfplan` in infra/aws/terraform/opal-gateway, run 2026-09-04 ~13:0xZ AFTER this order's apply; rc=0; headline 'Plan: 0 to add, 2 to change, 2 to destroy'.",
+        "The plan JSON read by address list: resource_changes DENOMINATOR 66; non-no-op rows = 4 -- aws_instance.gw ['update'], aws_wafv2_ip_set.opal_blocked_ips_regional_v4 ['delete'], aws_wafv2_ip_set.opal_blocked_ips_regional_v6 ['delete'], aws_wafv2_web_acl.gw ['update'].",
+        "THIS ORDER'S OWN ADDRESSES ARE NOT AMONG THEM: aws_iam_role_policy.gw_graph_read_secret_read and aws_lb_listener_rule.graph_capability both appear in the same 66 and both read ['no-op'] -- which is what makes the same read simultaneously this order's C-1 PASS and this row's finding.",
+        "The 2 destroys are ip-set resources the module DECLARES but the plan says must be removed, i.e. a declared-vs-live divergence that pre-dates this order: this order applied only its two addresses (targeted plan '2 to add, 0 to change, 0 to destroy'; apply 'Resources: 2 added, 0 changed, 0 destroyed'), touched no WAF or instance file, and left the drift EXACTLY as found.",
+        "SIBLING, already on the record: NFRA_CLDGRPH-W2-S2 found the SAME class of divergence on aws_lb.gw (live access_logs enabled, declared nowhere) and disarmed it for this order only, with a lifecycle ignore_changes guard the CTO ruled KEPT. That guard is scoped to access_logs and does nothing for these four."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-2 step 4 treats the unscoped plan purely as a CONTROL on this order ('asserted BY ADDRESS LIST to contain none of your addresses'), which presumes the rest of the plan is somebody's already-managed business.",
+    "world_is": "The control passes and, on its own output, the module is NOT converged: four addresses drift, and two of them are deletions of live security infrastructure. Nothing in this order created, worsened or acted on any of the four; they are reported at the vintage this order measured them because a plan read is perishable and the next seat to run an unscoped apply in this tree is the one who eats it.",
+    "notes": "ARMED because the trigger is a routine act (an unscoped `safe-apply` in this module) and the consequence is a delete, not a diff. disarm_owner set to the cloud-ops lane that owns infra/aws/terraform/opal-gateway; if 3.0.0_SA_CVO~A routes it elsewhere that disposition supersedes this assignment. NOT remediated here: the WAF/instance files are outside this order's <paths>, and a lifecycle guard on somebody else's resource would be exactly the widening this channel exists to prevent. Surfaced, not adjudicated."
   }
 ]
 ```
