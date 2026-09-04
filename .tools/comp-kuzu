@@ -1,29 +1,13 @@
 #!/bin/bash
-# comp-kuzu — Cypher query wrapper for NFRA_GLOBGRPH Kuzu local DB
+# comp-kuzu -- Cypher against the SERVED GLOBGRPH projection. THIN CLIENT, no local database.
+# Transport: kuzu_cli.py POSTs one statement to https://mcp.opalinvest.dev/graph/cypher with a
+# Secrets-Manager bearer, and prints the service's rows plus its OWN vintage line on stderr.
 # Usage: comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.node_id LIMIT 10"
-#        comp-kuzu --json "..."         # JSON output
+#        comp-kuzu --json "..."         # JSON array on stdout, VINTAGE line on stderr
 #        comp-kuzu --limit 20 "..."     # auto-append LIMIT
-#        comp-kuzu --db-path PATH "..."
-# This wrapper runs kuzu_cli.py, which serves _canonical.CANONICAL_DB_PATH = kuzu_nessie_db.
-# DB is rebuilt via: comp-kuzu --mode full (force full) / comp-kuzu --mode inc (incremental-OR-
-# serve-labeled-stale, NEVER a mid-task full rebuild -- that guarantee lives on the FLAG; the
-# comp-kuzu-inc / comp-kuzu-full wrappers were retired 2026-09-02, NFRA_COMPEFFICACY unit 2) -- engine
-# infra/aws/globgrph/kuzu_nessie_load.py. NOT kuzu_load.py: that builds a DIFFERENT
-# 5-column schema (PK arn, no props) into a DIFFERENT dir (kuzu_db). Aimed at the
-# canonical path it answers every props/D1 query with a silent empty result.
+#        comp-kuzu --schema             # the CloudNode/CloudEdge dialect note
+# There is no refresh flag, mode or DB path: freshness is the service's property (FWD-6).
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
-# NFRA_GLOBGRPH: prefer the INCREMENTAL local-projection refresh (local analog of the cloud
-# incremental_updater) over the full ~55K-row reload on a BEHIND query -- 92x faster (3.9s vs
-# 356.7s), count-guarded + full-reload fallback (never worse). CTO arch-gate GO 195732Z; content-
-# exact exercise-confirmed. The nightly full-derive's whole-table overwrite still forces a full
-# rebuild (large-delta fallback) = the daily ground-truth reset. Unset this to revert to full-only.
-export GLOBGRPH_KUZU_INCREMENTAL_REFRESH=1
-# NFRA_GLOBGRPH #17: rebuild-winner LIVENESS -- a DIED rebuild winner (crash/kill/OOM/wedge) no
-# longer stales the shared surface fabric-wide for the full 900s. The winning AGENT heartbeats the
-# lock; losers steal a STALE-heartbeat lock in ~90s. Safe-by-design (per-unique tmp + ownership-
-# check-at-swap; self-test 26/26 incl the real-interleaving false-positive-steal). CTO GO 043605Z
-# (flip ON now, monitored first-post-nightly + revert-ready). Unset (or =0) to revert to pre-#17.
-export GLOBGRPH_KUZU_REBUILD_LIVENESS=1
 python "$WORKSPACE/infra/aws/globgrph/kuzu_cli.py" "$@"
 _exit=$?
 python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-kuzu" "$*" $_exit 2>/dev/null
