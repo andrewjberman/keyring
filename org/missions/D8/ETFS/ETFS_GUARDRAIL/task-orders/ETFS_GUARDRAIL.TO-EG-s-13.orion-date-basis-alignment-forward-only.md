@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-01 ruling cards 1 and 2, and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- proof-of-spec instance VALID (rc=0, `.tools/proof-of-spec-check.py` on S13-AC1..S13-AC6), 5 of 5 mechanical criteria PASS by output (S13-AC1..S13-AC5), S13-AC6 RECORDED for the CVO with no self-graded verdict. Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-01 ruling cards 1 and 2, and 2026-09-04 ~17:0xZ (94224/94225).</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S13; s.3 OWNS, the CVO-found gap; s.0 rulings table cards 1 and 2; s.6 ruling 5; brief s.6a) | **Decomp cell:** `EG-s-13` | **outcome_ref:** FWD-6 | **verb:** align | **depends_on:** --
 
