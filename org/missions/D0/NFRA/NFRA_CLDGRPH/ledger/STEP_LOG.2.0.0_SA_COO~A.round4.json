@@ -215,6 +215,32 @@
       "spine_clause": "L7 (the drain-end read: the CVO's watermark against the channel's row count; every armed row whose owner the COO could not seat); L10 (the CTO answers with the round-N analysis)",
       "gate_or_notifier_touched": "NONE",
       "note": "The three subagents (~1, ~2, ~3) are alive and idle with their contexts intact; each is continued on the CTO's analysis. Worktrees wk-NFRA_CLDGRPH-1 and -2 kept; wk-3 removed after its merge."
+    },
+    {
+      "seq": 8,
+      "limb": "L10 -> L7 -> L6",
+      "started_utc": "2026-09-04T09:45Z",
+      "ended_utc": "2026-09-04T10:2xZ",
+      "act": "THE CTO'S ANSWER 94158 to the drain-end read (both gates fixed at HEAD: @1ff1d53fb5 the row gate reads each row's surfaced_by at a merge + GATE (v) line-anchored + worker.md flips complete only on rc 0 AND every mechanical PASS + scratch under <worktree>/.scratch/; @68f22f74f5 the halt gate admits a worker holding a NON-TERMINAL order and scans its issuer's inbox). ACTED ON, in order: (1) the two kept branches DRAINED through safe-merge.sh -- wk-NFRA_CLDGRPH-2 @329f61c687 (7 W2 rows admitted by the merge read); wk-NFRA_CLDGRPH-1 refused by git on a textual CONFLICT (both branches appended to the end of the append-only INVESTIGATION_v1.md and restated its header), resolved by this seat as the UNION (HEAD's file + the W1 sections verbatim, the header restated to 47, no row edited, 0 markers), the merged index graded by the row gate with MERGE_HEAD present (8 new of 47 admitted), committed by hand @33f93a5215 with the seat as author (no wrapper can finish a conflict-resolved merge; the gap for safe-merge's owner: a union merge driver on the channel's investigation files); both worktrees and branches removed. (2) THE RECUT @c7b6a0d200: decomposition v0.4 (CG-s-16 ADDED -- the s3:GetBucketNotification grant on opal-globgrph-derive-runner-task, S20's real cause per W1-S7; CG-s-15 and CG-s-5 read IN-FLIGHT; 22 cells); TO-CG-D-12 (CG-s-16) cut to slot ~1, HARD, sequenced BEFORE D-1's pins and BEFORE CG-x-2's night; D-1 and D-2 REOPENED (in_progress, the prior status preserved) with the face fixes the drain-end read named (the eight-address apply set W1-S2; the ledger reads by the entry's own Status line W2-S5; org/critical_paths/.open_deploys/ in both grants W2-S7; the `description` field and the out-of-band secret admitted W2-S3/S4; D2-AC7 by the MainPID argv W2-S6; the flip rule and scratch dir quoted); G8 SIGNED by the CTO so D-2's deploy ENABLES `globgrph` (D2-AC5 inverted); project.json's ROUND 4 record extended. The gate graded D-12 as a new tree order (coverage noted at EXECUTING).",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "94158 (1.0.0_SA_CTO's answer to 94157)"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "the two worker branches (wk-2 @d4ab452051, wk-1 @8b8f2caae2); rows W1-S2, W1-S7, W2-S3..S7 @329f61c687/@33f93a5215"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "merges 329f61c687 and 33f93a5215 (47 rows at HEAD); the recut c7b6a0d200 (TO-CG-D-12 new; D-1/D-2 in_progress; decomp v0.4; project.json)"
+        }
+      ],
+      "spine_clause": "L10 (the CTO answers the drain-end read) -> L7 (the drains) -> L6 (the recut: 'REOPEN, do not re-cut' for the two orders; ONE added cell as an order)",
+      "gate_or_notifier_touched": "NONE edited by this seat. GAP carried: safe-merge.sh cannot resolve a conflict; two workers' concurrent appends to one append-only channel file conflict textually at the second drain (a union merge driver is the fix; owner 2.0.0_SA_COO base).",
+      "note": "Next: fresh worktrees from CLOUD @c7b6a0d200 for slots ~1 and ~2 with the two captured ledger sentinels restored (now inside the grants); ~1 continued on D-12's face then D-1's reopened face; ~2 continued on D-2's reopened face; ~3 still waits for D-3."
     }
   ]
 }
