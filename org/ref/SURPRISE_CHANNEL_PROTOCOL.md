@@ -14,7 +14,8 @@ admit writes to the channel files are the registry grantor's.
 mismatch met during on-spec execution: the worker had to do something the task order did not say, or could not do
 something it said. **Surfacing** is appending the row. **Compiling** and **adjudicating** are the CVO's two limbs over
 the rows; the **slug** is the CVO's one artifact of a round, the remediation document, issued to the CTO. An **open**
-item is a row whose newest citing row is not terminal.
+item is a row whose newest citing row is not terminal. A **grade** is the CVO's verdict on one judgment criterion of one
+proof-of-spec instance, carried in a row's `grades` field.
 
 ---
 
@@ -55,7 +56,7 @@ CVO cannot make in its own lane is a row, read by its owner from the channel. Th
 1. **compiles** the worker rows of the round's investigation document (section 4), at L8;
 2. **adjudicates** each row measurement-first, mechanism attributed at source, denominators printed, into the round's
    adjudication document (section 4a), at L9; a proof-of-spec criterion the task order flagged as judgment is graded
-   here too, against the specification, never by the instance's own verdict;
+   here too, against the specification, never by the instance's own verdict, in the `grades` field of a row of the CVO's;
 3. **graduates** valid grounded rows into the round's remediation document (section 5), at L9;
 4. **issues** the remediation document as ONE slug at L10, one artifact at one moment to the CTO and to no one else,
    once the round's task orders are terminal with valid proof-of-spec instances -- never as a stream of messages
@@ -150,6 +151,18 @@ new row in this document carrying `adjudicates` with the investigation row's id,
 reason or evidence; the investigation row is unchanged. A reader resolves an item's state from the newest row that
 cites it, across the two documents.
 
+**Grading a judgment criterion.** A criterion the task order could not reduce to an invocation and an expectation is
+graded by the CVO alone, in the `grades` field of a row of its own: one entry per criterion carrying the criterion id as
+the task order names it, the graded instance as `<path>@<commit>`, the verdict `PASS`, `FAIL` or `NOT_EVALUATED`, and
+the reason citing the bar. `NOT_EVALUATED` is the verdict when the instance, the artifact or the bar is unreachable; a
+grade never converts an instrument's limit into a pass or a fail. A grade lives in that field and nowhere else: a
+verdict in prose is a summary no consumer can reject on.
+
+**A row that opens nothing.** A row of the CVO's that adjudicates no item and opens no item -- a grade record, an
+observation -- carries `DISMISSED_WITH_REASON` with a reason naming it a record, so that the census reads it closed.
+The disposition enum has no record value and this version proposes none; a proposal arrives with its four-postulate
+record and token census or it is not a proposal.
+
 ---
 
 ## 5. The remediation document -- graduated rows only
@@ -166,7 +179,9 @@ analysis, which travels with this document; they are inputs to the COO's next is
 investigation row's id; `project`, `fabric`; `class`, `hazard_standing`; `mechanism` (the grounded attribution, carried
 verbatim); `evidence`; `remedy`; `owner` (the lane that builds); `round`; `remediation` `{state: OPEN or REMEDIATED,
 owner, round}`; for `ARMED` rows also `disarm` `{state: ARMED or DISARMED, owner, at}`; and `closed`. A remediation row
-carries no route and no loop target: the slug has one reader, the CTO, and the recut has one owner, the COO.
+carries no route and no loop target: the slug has one reader, the CTO, and the recut has one owner, the COO. The
+schema's route fields remain only until the gate's route limb is retired (section 9); a schema that forbids a field the
+gate demands refuses every slug.
 
 **Disarmed is not remediated.** Two states, two owners, two clocks. Disarm is urgent and off-cadence; remediation
 rides the round. An `ARMED` row is `closed` only when both states have landed; an `INERT` row when `REMEDIATED`. A
@@ -177,10 +192,13 @@ single terminal state would convert dangerous-and-visible into safe-and-invisibl
 ## 6. The escape valve -- an `ARMED` row rides outside round cadence
 
 An `ARMED` row is surfaced in the same turn like any other, and its disarm does not wait for the round. The surfacing
-row names the disarm owner: whoever can act on the armed artifact now. If that seat is dark, the row escalates in the
-same turn to the integrator, `0.0.0_AB_MSTR`, which seats a class on request. A disarm is reported as a new row citing
-the armed row. A valve whose actuator has no owner reads open and is shut. A worker names a disarm owner and never is
-one: it has no seat to be reached at.
+row names the disarm owner: whoever can act on the armed artifact now. A worker names a disarm owner and never is one:
+it has no seat to be reached at. If the named owner is dark, no seat in the round may carry that by message -- a worker
+has no send tool, the CVO's one send is the slug, the COO's one send is its drain-end read -- so the valve's actuator is
+the seat that reads every row a branch carries at the merge: `2.0.0_SA_COO` re-seats a dark disarm owner as the seat
+that spawns, and an owner it cannot seat rides its drain-end read to `1.0.0_SA_CTO`, who seats it or asks the
+integrator, `0.0.0_AB_MSTR`, to seat a class. A disarm is reported as a new row citing the armed row. A valve whose
+actuator has no owner reads open and is shut.
 
 ---
 
@@ -196,18 +214,19 @@ seat read anything. A row the CVO reads is acknowledged by its L9 act, never by 
 **The watermark is the stall control.** A dead watcher and a quiet channel read alike. The CVO's heartbeat summary
 carries the channel's watermark: rows seen, rows undispositioned, the watcher's process and its parent-tied banner. The
 COO reads it once, when every task order is terminal, against the channel's row count; a watermark behind the channel
-is reported by the COO to `1.0.0_SA_CTO`, never to the CVO, and the CTO re-arms the watcher. One read; no monitor, no
-cron.
+rides the COO's drain-end read to `1.0.0_SA_CTO`, never to the CVO, and the CTO re-arms the watcher. One read; no
+monitor, no cron.
 
 ---
 
 ## 8. L9 adjudication and L10 -- the slug
 
 **L9.** Every investigation row receives its disposition in the adjudication document per section 4a. Every judgment
-criterion of every proof-of-spec instance under the project receives its grade there too: a criterion the task order
-could not reduce to an invocation and an expectation is not self-graded by the worker, and the checker grades no
-criterion's truth; the CVO reads the instance against the specification and its row is the grade. Graduated rows
-receive a remediation row per section 5. A `DECOMP_INVALIDATING` row is carried in the slug and interrupts nothing.
+criterion of every proof-of-spec instance under the project receives its grade there too, in the `grades` field: a
+criterion the task order could not reduce to an invocation and an expectation is not self-graded by the worker, and
+the checker grades no criterion's truth; the CVO reads the instance against the specification and its row is the
+grade. Graduated rows receive a remediation row per section 5. A `DECOMP_INVALIDATING` row is carried in the slug and
+interrupts nothing.
 
 **L10 precondition.** Every task order under the project is terminal (`complete`, `superseded`, `cancelled`,
 `withdrawn`), each finished with a valid proof-of-spec instance whose `surprises` entries resolve to rows, and every
@@ -234,14 +253,21 @@ investigation row without `spec_asserts` and `world_is`, without `project` and `
 path, or off its schema; any pre-existing row changed in place; a new remediation row without its required fields, or
 a graduated row without grounded evidence; and a remediation row, or an adjudication row carrying `DECOMP_INVALIDATING`,
 while any task order under the project is not terminal or any investigation item under it is not dispositioned. It
-fails closed on an unreadable blob or an unparseable block. Two limbs of the gate contradict this annex and are retired
-or extended as build acts: its route limb, which still refuses an open remediation row that carries no route and admits
-only the locked map of the retired tokens, so that a slug lands only through the gate's audited override written into
-the commit that uses it; and its census, which reads the investigation document alone and does not yet know the
-adjudication document, so that until the tree contract gains the folder and the gate resolves `adjudicates` across the
-two documents, the CVO's rows stay in the investigation document as before. `.tools/proof-of-spec-check.py` refuses a
-worker's proof-of-spec instance whose `surprises` entries do not each open with a row id present in the project's
-investigation file, so a task order cannot complete on a surprise that has no row.
+fails closed on an unreadable blob or an unparseable block, and it reads the schema from the staged index, never the
+worktree, so a schema and the rows that need it land in one commit. `.tools/proof-of-spec-check.py` refuses a worker's
+proof-of-spec instance whose `surprises` entries do not each open with a row id present in the project's investigation
+file, so a task order cannot complete on a surprise that has no row.
+
+**Carriers named and not yet built.** Three limbs contradict this annex today and are retired or extended as build
+acts; until each lands the clause binds by reading and the gate's audited override, written into the commit that uses
+it, is the only lawful way through. The gate's route limb still refuses an open remediation row that carries no route
+and admits only the locked map of the retired tokens. The gate's census reads the investigation document alone and
+does not yet know the adjudication document, and the tree contract has no `adjudications/` folder; until the contract,
+the tree check, the lane and the cross-document resolution of `adjudicates` land, the CVO's rows sit in the
+investigation document as before. `org/mcp/cvo_send_guard.py` admits the CVO to the COO at every stage; the CVO's
+silence toward the COO during a round binds by reading until the guard is narrowed to the slug. The `grades` field is
+built: the investigation schema carries it and refuses a verdict off its enum, a grade without its reason, or an
+instance without its commit.
 
 **Validation of a document** extracts the single fenced block and validates each row against its schema, printing the
 row count as its denominator.
@@ -283,3 +309,4 @@ the day it is found.
 | 2.2 | 2026-09-03 | the reading of the channel mechanism's owner `1.0.0_SA_CTO` on the NFRA_CLDGRPH round-2 id collision (message 93459): the gate is the allocator and an id is minted at commit | an id is provisional until its commit and is not cited; a citation carries `<id>@<commit>`; the header's section pointers corrected (amendment is section 10, the changelog section 11); the changelog reordered by version |
 | 2.3 | 2026-09-03 | the gate-model ruling of the channel mechanism's owner `1.0.0_SA_CTO` (message 93572) on the fork with `1.0.0_SA_CTO~Z` over a site-Z slug that could only land as re-entry rows; the gate `.tools/surprise-row-gate.py` @ebe3a4caea (11 of 11 arms) | a new remediation row omits its route only when already remediated inside the round (and disarmed, if armed), the remedy cited in `evidence`, re-entering nothing; an open remediation without a route stays refused |
 | 3.0 | 2026-09-03 | spine v3.0 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, from the CRO's implementation spec `org/tier1_exec/4.0.0_SA_CRO/deliverables/SPEC_CANONICAL_FLOW_V3_SUBAGENT_WORKERS_ONE_SHOT_DISPATCH_20260903.md` @29bf9265ea and its section 13 @9dc97d860d (lever L-2 on judgment criteria, lever L-3 on the split channel); Andrew's word at the CTO terminal, recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_200xZ_CANONICAL_FLOW_V3_RESTRUCTURE_SPINE_SKILL_CLAUDEMD_SINGLEHANDED.md`; amended by the spine's scribe `1.0.0_SA_CTO` in the same window as the spine, per section 10 | the three route tokens and `loop_target` retired from the row grammar: a remediation row carries no route, the slug goes to the CTO and to no one else, and the CTO is the single router of every round; the CVO's one send of a round is the slug; the channel split into three documents by writer -- worker rows in `investigations/`, the CVO's dispositions, corrections and observations in a new `adjudications/` document, graduated remedies in `remediations/` -- so L8 reads and L10 counts surprises only; judgment criteria of a proof instance graded by the CVO at L9, never self-graded; `DECOMP_INVALIDATING` stays a disposition (what the remedy needs) and loses its mid-round interrupt; a `BLOCKING` row reaches the issuer in the worker's final report, workers having no inbox and no send tool; the watermark in the CVO's heartbeat as the stall control, read once by the COO at drain-end and escalated to the CTO; the gate's route limb and its single-document census named as contradicting this text and retired or extended as build acts, the audited override the only way through until then |
+| 3.1 | 2026-09-03 | `3.0.0_SA_CVO`'s constitutional review of v3.0, recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_CONSTITUTIONAL_REVIEW_SURPRISE_CHANNEL_PROTOCOL_v3.0_20260903T2100Z.md` @063118e837 and answered by spine v3.1 @20e1293216 (the COO at merge re-seats a dark disarm owner; the drain-end read is the COO's one message); Andrew's word at the CRO terminal on the eight v3 carriers, relayed as message 93972 and recorded at `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260903_222xZ_MECHANISMS_NOW_EIGHT_V3_CARRIERS_BUILD_IMMEDIATELY_CRO_CHECKS_OUT.md` @9f60e36398; the schema `org/surprise_channel/schemas/investigation_item.schema.json` in the same commit as this version | the `grades` field built and named in sections 4a and 8: one entry per judgment criterion carrying the criterion id, the instance as path@commit, the verdict `PASS` / `FAIL` / `NOT_EVALUATED` and the reason citing the bar, refused off its enum, without its reason or without its commit; a row of the CVO's that opens nothing carries `DISMISSED_WITH_REASON` naming itself a record, the enum gaining no value; section 6's escape valve reconciled to the spine's carrier (the COO at merge re-seats a dark disarm owner, one it cannot seat rides the drain-end read, the integrator seats a class on the CTO's or COO's request); section 7's stall report rides the COO's drain-end read; section 9's carriers named and not yet built brought current (the route limb, the adjudication document and its census, the send guard), the schema's route fields retiring only after the route limb |

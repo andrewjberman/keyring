@@ -107,6 +107,46 @@
    },
    "description": "L9 ADJUDICATION CARRIER. The channel is append-only, so the CVO dispositions an EXISTING item with a NEW row that names it here: this row's `disposition` becomes the named items' latest disposition (.tools/surprise-row-gate.py, gate (iii) second limb -- Andrew-direct 2026-09-03 'Recs approved'). Without this field an adjudication lives in prose ('S6 dispositions S2/S3/S5') where no gate can read it, and the L10 precondition 'every investigation CVO-checked' has no refuser. Every id named must exist under the project; a phantom target is refused. OPTIONAL: a row that adjudicates nothing omits it."
   },
+  "grades": {
+   "type": "array",
+   "minItems": 1,
+   "description": "L9 GRADE CARRIER for JUDGMENT criteria (spine v3 L9; annex v3.1 sections 4a and 8). A criterion a task order could not reduce to an invocation and an expectation is never self-graded by the worker and never graded by the checker; the CVO reads the proof-of-spec instance against the specification that issued it and its verdict lives HERE, one entry per criterion, on a row of the CVO's. Without this field a grade is free text in `one_line` or `notes` -- a summary field no consumer can reject on. OPTIONAL: a row that grades nothing omits it. A row carrying grades that adjudicates no item and opens nothing carries `disposition` DISMISSED_WITH_REASON with its reason naming it a grade record -- the enum has no record value and this version proposes none.",
+   "items": {
+    "type": "object",
+    "required": [
+     "criterion",
+     "instance",
+     "verdict",
+     "reason"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "criterion": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9]+-AC[0-9]+$",
+      "description": "the criterion id as the task order names it (T6-AC7, B2-AC6): the same string the proof-of-spec instance's acceptance row carries, so the grade and the row it grades resolve to one id."
+     },
+     "instance": {
+      "type": "string",
+      "pattern": "^.+\\.proof_of_spec\\.json@[0-9a-f]{7,40}$",
+      "description": "the graded proof-of-spec instance as <path>@<commit> -- the vintage is the grade's grain; a grade without the commit grades nothing citable."
+     },
+     "verdict": {
+      "enum": [
+       "PASS",
+       "FAIL",
+       "NOT_EVALUATED"
+      ],
+      "description": "PASS = the output meets the specification's bar as read by the CVO; FAIL = it does not; NOT_EVALUATED = the CVO could not read it against the bar (the instance, the artifact or the bar unreachable) and says so rather than converting an instrument's limit into a verdict. No fourth value: a grade that is none of these is not a grade."
+     },
+     "reason": {
+      "type": "string",
+      "minLength": 8,
+      "description": "the bar quoted or cited (PRD section, task-order clause) and what the output did against it; for NOT_EVALUATED, what was unreachable."
+     }
+    }
+   }
+  },
   "spec_asserts": {
    "type": "string",
    "minLength": 8,
