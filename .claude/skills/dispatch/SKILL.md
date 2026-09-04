@@ -302,10 +302,25 @@ done
    half is `1.0.0_SA_CTO`'s. Until one exists, the discipline is the only control, which is the weakest
    kind, and it is stated as weak on purpose.
 
-   ⚠ **The worker's `GIT_COMMIT_AUTHOR_OVERRIDE` audit lines do NOT reach the main tree.** They are
-   written to the *worktree's* copy of `org/git-author-override-audit.log`, and a merge carries tracked
-   files, not a device-local log. If the worker overrode a lane, **capture those lines at the drain** or
-   the override has no audit trail where anyone will look for it.
+   ⚠ **THE AUDIT-LOG CAVEAT IS NOW CONDITIONAL ON THE BRANCH BASE — and the condition is the point.**
+   Since `6bfaa233ed`, `owned-paths-check.sh:33,40` resolves the log to the MAIN worktree root
+   (`$MAIN_ROOT` from `git rev-parse --git-common-dir`), so a worker's PASS/BLOCK/OVERRIDE rows land
+   where a reader will look, **during** the round rather than after teardown. Verified at HEAD by
+   `git show`.
+
+   ⛔ **BUT A WORKTREE RUNS THE HOOK COPY ITS OWN CHECKOUT CARRIES.** So the fix reaches a worker only
+   if its branch base is **at or after** `6bfaa233ed`. **Base it earlier and the old behaviour is still
+   live: the rows go to the worktree's own gitignored copy and die with the teardown** — capture them at
+   the drain in that case.
+
+   > **The general form, worth more than this instance:** a hook fix does not apply to a worktree, it
+   > applies to a worktree's *base*. Every linked checkout runs the version it was branched from. So
+   > after any hook change, the question is never "has it landed" but "what is this worktree based on" —
+   > and since `/dispatch` always bases the slot on `CLOUD` (Step 4), a fresh spawn inherits it and an
+   > old branch you re-enter does not.
+
+   With RULING 1 applied, a worker on a `<paths>`-carrying order needs no override at all; a BLOCK row
+   it does hit is now readable in the main log while the round is still running.
 3. **Remove the worktree and its branch EXPLICITLY.** Not left for later.
 4. **Read every row the branch carries.** An `ARMED` row whose `disarm_owner` is dark is **yours to
    re-seat, because you are the seat that spawns.** One you cannot seat rides the drain-end read.
