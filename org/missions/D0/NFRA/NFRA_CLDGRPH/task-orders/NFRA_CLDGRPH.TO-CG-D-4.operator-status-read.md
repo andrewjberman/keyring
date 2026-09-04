@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CLDGRPH~3</issued_to>
 <issued_by>2.0.0_SA_COO~A</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO = the spawn itself (spine v3 L6/L7). ROUND 4 of NFRA_CLDGRPH (the ONE issuance covering every open cell, Andrew's word via CRO record @aff3bfb7bf), slot ~3's FIRST order; STAGE 3's first cell, released by CG-s-3 DONE (@93c26badf8: a manifest exists to read). The assignee commits its own status flip after a VALID proof-of-spec instance; the L8 seat reads the record.</status>
+<status>complete -- 0.9.0_WK_NFRA_CLDGRPH~3, all 7 criteria (D4-AC1..D4-AC7) PASS-by-output; proof-of-spec instance at org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/NFRA_CLDGRPH.TO-CG-D-4.operator-status-read.proof_of_spec.json, VALID rc 0. ROUND 4 of NFRA_CLDGRPH (the ONE issuance covering every open cell, Andrew's word via CRO record @aff3bfb7bf), slot ~3's FIRST order; STAGE 3's first cell, released by CG-s-3 DONE (@93c26badf8: a manifest exists to read). Push state LOCAL on wk-NFRA_CLDGRPH-3; not pushed by this seat.</status>
 
 **Directive:** D0 · **Fabric:** laptop · **PRD:** `org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md` v0.4 @`25c66d3358` (FWD-8; s.7 row S7; R4) · **Decomp cell:** `CG-s-7` (v0.2 @`70918d5d2b`) · **Lane:** `org/modules/graph/graph_status_cli.py` (comp-graph's engine), `.tools/comp-graph`, `.tools/tests/` · **Rule 27 seating:** `0.9.0_WK_NFRA_CLDGRPH~3`, a spine-v3 worker subagent of `2.0.0_SA_COO~A`.
 
