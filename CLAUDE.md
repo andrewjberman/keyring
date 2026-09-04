@@ -158,7 +158,12 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 
 - **NEVER** move served output without never-widen sign-off (CTO+COO); verified DELTA=0 needs no hold.
 - **NEVER** leave a confirmed deploy half-landed — finish in-session or roll back + escalate loud; ledger
-  entry in `org/critical_paths/change_management/` opened at start, closed at completion. ⛔ **An entry a
+  entry in `org/critical_paths/change_management/` opened at start, closed at completion. **An IMAGE act (a
+  build, a push, a tag move) names in that entry EVERY task family that pulls the tag it moves** — a shared
+  `:latest` reaches every family at once and no Terraform-plane control can see it (NFRA_CLDGRPH-S31: two
+  builds re-pointed seven families in one night, five counted); pin per family by digest where a family must
+  not move. COST: one `describe-task-definition` sweep per image act. NON-APPLICATION: a tag no task
+  definition references. ⛔ **An entry a
   device left OPEN proves only that THIS device saw no completion** — before acting on any open/`--red`
   entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with positive control); world-done →
   close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND). Annex §NEVER-2.
