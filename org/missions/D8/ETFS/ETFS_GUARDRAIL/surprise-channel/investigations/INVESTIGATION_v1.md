@@ -34,6 +34,55 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "PRD s.7.2 S4 bound: 'Discriminator = read upstream partition + count priced'; s.7.4: 'S4 classifier -> data/etfs/scripts/coverage/classifier.py. One home, importable by the renderer.' Read together: the classifier, running in the ETFS layer on the reporter box, reads the three firms' upstream silver partitions.",
     "world_is": "The ETFS layer's principals (etfs-reports-reporter-role; etfs-avgcap-reader-role) hold no grant on any firm prefix, by a design that names NEVER#1 as its reason. Granting the reporter role s3 reads on blackdiamond/cottonwood/*, schwab/08242234/* and orion/inflection/* in opal-data-assets would mint the cross-firm reader that design refused. The producers already hold exactly the per-firm read the discriminator needs.",
     "notes": "L5/L6 resolution (decomposition v0.1.1 s.6a): probe mode on EG-s-1/EG-s-2; the inf producer's own invoke answer for Inflection; EG-s-4 etfs-only with an injected probe and UNKNOWN as an honest value; EG-s-7 holds the invoke and the one IAM Sid (lambda:InvokeFunction on three producer ARNs, reporter role, ledgered). If the CTO's L10 read prefers a data grant instead, that is a PRD addendum at L4 and the cells re-cut; nothing in this round opens a firm prefix. Disarm needs nothing: INERT, an OBSERVATION for the record."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S1",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-04T20:11:30Z",
+    "one_line": "EG-s-10's suggested default (vendor lib/trading_calendar.py byte-identical as a new in-repo copy) and TO-EG-s-1/TO-EG-s-2's MANDATORY instruction to do exactly that (S1-AC3, S2-AC3 mechanically check for a fifth and sixth byte-identical vendored copy) run against a live CTO ruling, landed 11 days before this round's L6 issuance, that a fifth in-repo copy of this file IS inline vendoring needing explicit approval nobody gave, and that new consumers should get the Lambda layer instead -- scoped by that same ruling to ONE function only, not migrated to the pre-existing three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/etfs-positioning/producer-lambda.tf:169-183 @1da1e2b73b -- 'CTO~Z ruled (msg 5462): MINT THE LAYER, NOT A FIFTH COPY. Rule 3 is dispositive -- dependencies go in layers and inline vendoring needs explicit approval; a fifth in-repo copy IS inline vendoring and nobody approved one. The estate's four existing byte-identical copies are that exception taken four times without a word.' and '... this authorises the layer for THIS function and nothing else. The three pre-existing Lambda copies are NOT migrated -- a separate cell with its own owner.'",
+        "commit 1da1e2b73b @2026-08-24T18:47:25-04:00 (subject: 'a first-party trading_calendar layer that adds NO fifth in-repo copy') -- the ruling's landing date, 11 days before this round's L6 issuance @5376ecaa8b (2026-09-04T15:25:37-04:00)",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-1.cot-catch-up-port-reporting-obligation-window.md:23,36-37 @5376ecaa8b -- 'trading_calendar.py vendored byte-identical from lib/trading_calendar.py into the source dir ... and added to the source map files'; S1-AC3 mechanically checks CAL_VENDORED_IDENTICAL=True for infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/trading_calendar.py (a file that does not exist at HEAD per S10-AC4)",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-2.bd-49f-catch-up-port-the-tail-a-straight-port-misses.md:22,36-37 @5376ecaa8b -- 'Vendor trading_calendar.py byte-identical from lib/'; S2-AC3 mechanically checks the same for infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/trading_calendar.py",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/prd/ETFS_GUARDRAIL_PRD.md:399 @4e30d6b635 and decompositions/ETFS_GUARDRAIL_DECOMP.md:51 @5376ecaa8b -- neither the PRD's S10 row nor the decomp cell mentions the layer mechanism or the 2026-08-24 ruling; both describe only the 4-copies-vendored state"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-10 (this order) names vendoring byte-identical 'the same pattern inf-etf-ownership-daily already uses' as the presumptive answer, asking only for a reason if a different mechanism applies; TO-EG-s-1 and TO-EG-s-2, already issued in this same L6 batch to sibling workers, state vendoring as MANDATORY (not proposed) and grade it mechanically (S1-AC3, S2-AC3).",
+    "world_is": "A committed CTO ruling (producer-lambda.tf:169-183 @1da1e2b73b, 2026-08-24) already exists in the tree stating a fifth in-repo copy of trading_calendar.py needs explicit approval nobody has given, that the estate's four existing copies are an unapproved exception 'taken four times without a word', and that the Lambda-layer mechanism it mints is scoped to ONE function only -- not a retroactive fix for the three pre-existing copies, and (by its own terms) not a license for a fifth/sixth either without the same scoped authorization. The PRD (s.7.2 S10, written after the ruling) and this round's decomposition do not cite it; TO-EG-s-1/TO-EG-s-2 direct exactly the act ('mint a fifth copy without approval') the ruling names as the thing to stop doing.",
+    "notes": "This TO (EG-s-10) is VERIFY-only and changes no code; the conflict is recorded here for the CVO's L9 read and for whichever of EG-s-1/EG-s-2's workers reaches the vendoring step first. Disarm: the COO either (a) treats this ruling as the 'explicit approval' precondition and lets EG-s-1/EG-s-2 proceed as written (a decision, not a default), or (b) amends the two TOs to the layer mechanism before their vendoring criteria are exercised. Left alone, the round proceeds to mint the fifth and sixth copies exactly as the ruling forbade doing without a word."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S2",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-04T20:51:26Z",
+    "one_line": "TO-EG-s-10's <proof_of_spec> block obliges the assignee to flip the TO's own <status> line to complete and commit it, but the TO's <paths> grant (its write surface, and the assignee's write surface generally per canonical workflow L7) does not name org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ -- a cut defect that is systemic across this round's whole 14-TO issuance, not unique to this cell.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-10.the-trading-calendar-each-producer-resolves.md <paths> block @5376ecaa8b -- lists 7 paths (lib/trading_calendar.py, lib/tests/, 3 vendored copies, this worker's own deliverables/ dir, the investigation file); task-orders/ is absent",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-10...md <proof_of_spec> block @5376ecaa8b -- '...validates it with python .tools/proof-of-spec-check.py <instance> ... BEFORE the complete flip (the task order's <status> line set to complete), which you commit yourself together with the instance and the result'",
+        "systemic check across the same L6 issuance: TO-EG-s-1, TO-EG-s-2, TO-EG-s-3, TO-EG-s-4, TO-EG-s-11, TO-EG-s-12, TO-EG-s-13 <paths> blocks @5376ecaa8b -- none of the 7 sampled sibling TOs names org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ either, while each carries the identical '<status> flip ... which the assignee commits itself' instruction",
+        ".tools/safe-commit.sh:678-698 @HEAD -- the TO-issuance gate (to-pipeline-gate.py) is documented 'PROSPECTIVE ONLY: fires on NEWLY-ADDED task_orders/*.md; never refuses an existing TO', so no live mechanical gate would refuse an edit to an existing TO's status line -- the bound is the L7 identity line's write-surface rule, not a technical block, and this row exists because that rule is followed rather than tested against"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-10's own <proof_of_spec> block: '...which you commit yourself together with the instance and the result', following the harness identity line's general instruction 'flip the task order's <status> to complete and commit instance, deliverables and flip together'.",
+    "world_is": "The same TO's own BOUNDS clause: 'Your write surface is the <paths> block below and nothing else... A path you need that it does not name is a CUT DEFECT: file a BLOCKING row and stop that criterion. It is never an override.' The <paths> block does not name task-orders/. The two clauses of the same document are in direct tension, and the gap repeats across every sampled TO in this round's issuance -- a shared dependency (the issuance's path-grant template), not a one-off.",
+    "notes": "This worker does NOT edit the TO file to perform the flip; all 5 mechanical/judgment criteria (S10-AC1..AC5) are otherwise satisfied and the proof-of-spec instance validates VALID rc=0. The order is left at its issued status (pending) rather than mis-flipped. Disarm: the COO either widens the <paths> grant on this and the sibling TOs to include the task-orders/ file (or the specific TO path), or performs/authorizes the flip itself at L8 compile, or clarifies that the flip is intended to ride a different, unnamed mechanism (e.g., compiled at L8 rather than by the worker). Left alone, no worker in this round can close its own order without either violating its own write-surface bound or leaving it open."
   }
 ]
 ```
