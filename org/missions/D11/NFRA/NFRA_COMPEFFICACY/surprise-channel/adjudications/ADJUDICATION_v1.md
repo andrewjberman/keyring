@@ -5,8 +5,8 @@
 observation or a grade of the CVO's about the worker rows in `../investigations/`; a seat that contests one surfaces a
 new investigation row citing it. A reader resolves an item's state from the newest row that cites it, across the two
 documents.
-**Denominator at this write:** 2 rows (S34, S37). Restated by the appender: the investigation document held 33 rows
-(S1-S33) when S34 was cut and holds 36 (S1-S36) at S37's cut. ID COLLISION, recorded and not repaired in place: the
+**Denominator at this write:** 3 rows (S34, S37, S38). Restated by the appender: the investigation document held 33
+rows (S1-S33) when S34 was cut and holds 36 (S1-S36) at S37's and S38's cuts. ID COLLISION, recorded and not repaired in place: the
 worker 0.9.0_WK_NFRA_COMPEFFICACY~2 minted its own S34 in worktree wk-CE-2 after this document's S34 existed on CLOUD;
 both rows stand, append-only; every citation of either carries its vintage (`S34@b50a124783` is this document's,
 `S34@e7dda3d93c` is the worker's).
@@ -72,6 +72,33 @@ cross-document census).
     "spec_asserts": "Annex v3.1 section 4 and the row gate: an id is minted at commit, the row gate is the allocator, and a citation carries <id>@<commit>; spine v3 L7 'the drain': the COO merges the worker's branch into the working branch when the instance is valid; spine v3 L9/L10: L8 reads and L10 counts worker rows only.",
     "world_is": "Two indexes each minted the next id and the merge did not re-run the allocator, so one id names two rows; the citation form <id>@<commit> disambiguates them, the bare id does not. Also measured: the gate's census counts this document's rows as ITEMS (36 items across 3 files -- this document's S34 is not a 37th item only because its id collides), while the spine says L10 counts worker rows only; an UNDER_INVESTIGATION row of the CVO's in this document would therefore block the CVO's own slug. Named for 1.0.0_SA_CTO with the uniqueness limb; not adjudicated here.",
     "notes": "Sent to 1.0.0_SA_CTO, 2.0.0_SA_COO and 4.0.0_SA_CRO as 94007-94009 at 02:1xZ, before this row, because the CRO's check-out of items 3 and 5 was in progress; the row is the durable carrier, the messages are not. Item 3's exercised test: the worker's commit was NOT admitted by the lane on either surface the task order named (.owned-paths.yaml enumerates no 0.9.0_WK_* serial, the worker's own comp-find census 0 hits); it landed through the singular GIT_COMMIT_AUTHOR_OVERRIDE, one lane per commit, per CLAUDE.md 14a."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S38",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T04:58Z",
+    "one_line": "DISARM of S37 (the id collision), reported by the row its owner's remedy makes possible: 1.0.0_SA_CTO's gate limb @72d05b2642 refuses a NEW row whose id exists in any other document of its plane at the graded index, and the census no longer counts the CVO's adjudication rows as items -- EXERCISED at this seat on real bytes in an isolated scratch worktree (a planted duplicate refused rc 1 naming the sibling document; a planted fresh id admitted rc 0), and both instruments agree again on this project (36 items, 3 open, 1 duplicate id reported, 2 CVO rows beside). The two S34 rows stand; the worker's is the item, this document's is a CVO row beside it, and a later `adjudicates` of S34 lands on the worker's item.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "72d05b2642 (author 1.0.0_SA_CTO, git log read at this seat): .tools/surprise-row-gate.py + .tools/comp-surprise.py + infra/system/06_current_state.{md,json}; the gate's self-test at this seat: 'RESULT: 0 arm(s) failed of 42 (+ live census)', live line 'NFRA_COMPEFFICACY: 36 item(s) across 3 file(s); undispositioned 3: S34, S35, S36; phantom/ambiguous 0; duplicate ids across documents 1: NFRA_COMPEFFICACY-S34 in ADJUDICATION_v1.md, INVESTIGATION_v1.md'.",
+        "EXERCISED at 3.0.0_SA_CVO 2026-09-04 04:5xZ, scratch worktree C:/tmp/cvo-dup-probe at 72d05b2642 (detached; created, used, removed; the main worktree untouched, 0 status entries on the file after): PLANT A -- this document plus a row with id NFRA_COMPEFFICACY-S35 (an id the investigation document carries), staged, `python .tools/surprise-row-gate.py <file>` -> '[surprise-row-gate] BLOCKED -- 1 violation(s) on NEW rows: ... NEW row NFRA_COMPEFFICACY-S35 -- that id already exists in .../investigations/INVESTIGATION_v1.md (the same plane of NFRA_COMPEFFICACY's channel, at the graded index). An id is ONE row across the project's documents; mint the next unused number over EVERY document of the plane ...', rc 1. PLANT B -- the same file with a fresh id NFRA_COMPEFFICACY-S99 -> '[surprise-row-gate] OK: 1 file(s), all new rows carry their step-7/step-10 fields', rc 0. Same file, one field differs, opposite verdicts: the limb discriminates.",
+        "comp-surprise --project NFRA_COMPEFFICACY --json at this seat after 72d05b2642: denominators investigation_items 36, adjudication_rows 2, duplicate_ids 1, remediation_rows 3, open 3, armed 2, files 26; open = [S34, S35, S36] -- the worker's S34 reads OPEN again (an hour earlier it read DISMISSED by this document's S34); armed = [S35, S36].",
+        "What the limb cannot see, stated by its owner and agreed here: a worker's worktree index does not carry the main index's allocations, so the limb refuses what THIS index carries; the pre-merge gate on the union is 2.0.0_SA_COO's /dispatch step @e6351512fe, and the allocator coordinate (PROPOSAL @ddbbf3ce46) is the shape that removes the race. Prevention and detection are complementary."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A disarm record: the hazard S37 named (a new duplicate id admitted by the gate; a worker's row silently closed by the rollup) is closed by 72d05b2642 as exercised above; nothing is owed inside this project's chain. S37 itself stays as written (append-only); this row is its citing successor, the form annex section 6 names for a disarm.",
+    "adjudicates": [
+      "NFRA_COMPEFFICACY-S37"
+    ],
+    "spec_asserts": "Annex v3.1 section 6: a disarm is reported as a new row citing the armed row; S37's disarm_owner names 1.0.0_SA_CTO for the gate's uniqueness limb and the rollup's resolver.",
+    "world_is": "The limb and the resolver exist at 72d05b2642 and discriminate on planted bytes at this seat; the census counts worker rows as items and reads the CVO's rows beside them; the collided id S34 resolves toward OPEN and an adjudication by a collided id across two investigation documents is refused as ambiguous rather than applied. Both S34 rows remain, cited by vintage.",
+    "notes": "The disarm is the CVO's own exercise, not the builder's report: the builder's self-test (42 arms) is the same author's harness; the scratch-worktree plants are a different instrument on the committed bytes. Remaining open on this collision's family: the worker lane grant (0.0.0_AB_MSTR), the allocator coordinate (this seat's schema act, on Andrew's word via 4.0.0_SA_CRO)."
   }
 ]
 ```
