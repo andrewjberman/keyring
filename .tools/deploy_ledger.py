@@ -559,6 +559,16 @@ _STATUS_LINE_PATTERNS = (
     #    unreadable for 41 days. Structural, not another enumerated spelling: the value
     #    is simply "the rest of the line" when the span does not terminate on it.
     re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(?!.*\*\*)(.*)$", re.IGNORECASE),
+    # 5. TABLE-ROW form (STRUCTURAL, 1.0.0_SA_CTO~Z 2026-09-03; 2.0.0_SA_COO~Z 19601 item 3): a
+    #    header TABLE whose label cell is the bold word and whose VALUE is the NEXT cell --
+    #        | **State** | CLOSED -- COMPLETE 2026-09-01T15:31Z |
+    #    The segmenter splits this line at `|` into a label fragment and a value fragment, so no
+    #    single-segment pattern can ever see both; this one reads the WHOLE line (the first yield of
+    #    _status_segments). It accepts the label words Status and State -- two 2026-09-01 entries
+    #    (0.7.0_AE_CloudOps~Z, portal-auth) wrote State and read as UNINDEXED OPEN for 41 h while
+    #    saying CLOSED in their own header. Safety unchanged: the label must be the bold word ALONE
+    #    in the first cell, so a prose mention of "state" in a cell matches nothing.
+    re.compile(r"^\s*\|\s*\*\*(?:status|state)\*\*\s*\|\s*(.*?)\s*\|?\s*$", re.IGNORECASE),
 )
 
 # ===========================================================================================

@@ -670,6 +670,8 @@ def _parse_to(text: str) -> dict:
         # cell_refs="CG-s-2 CG-s-9" parsed as ONE phantom id and blocked the completion flip). A cell id never carries
         # whitespace, so commas, semicolons and whitespace are all separators -- the same tolerance <owned_cells>
         # already gets above. The encoding convention stays commas; the parser stops making a space a defect.
+        # Convention documented in org/standards/DECOMP_CELL_ID_CONVENTION.md; site Z hit the same class
+        # on NFRA_OPSEC202609-Z-S11 ("OP-s-17 OP-s-16" read as one literal, blaming the DECOMP).
         refs = [c.strip() for c in re.split(r"[\s,;]+", attrs.get("cell_refs", "")) if c.strip()]
         crits[cid] = refs
         if not refs:

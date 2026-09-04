@@ -144,6 +144,31 @@ def _is_chatter(rel):
     return any(rel.startswith(d) for d in CHATTER_DIRS)
 
 
+def _fenced_lines(flines):
+    """1-based line numbers sitting INSIDE a ``` fence -- a QUOTE of a sentinel, never a sentinel.
+
+    WHY A FENCE AND NOT A PATH. The inbox exclusion above is path-scoped, and 1.0.0_SA_CTO~Z measured
+    the consequence (msg 20360/20365): this tool's OWN build log quoted the G-4 sentinel inside a fenced
+    block and the tool counted it, inflating C1 from 20 lines/4 gates to 21/5. WIDENING THE PATH LIST WAS
+    THE OBVIOUS FIX AND IT RUNS IN THE UNSAFE DIRECTION -- excluding org/ or docs/ wholesale would
+    silently drop a REAL sentinel that ever lived there, and a MISSED gate is worse than a phantom one.
+    A fence is path-independent and is the thing that actually makes a quote a quote.
+
+    AND THE FENCE IS ALSO WHY THE PHANTOM WAS DANGEROUS RATHER THAN MERELY DOUBLE-COUNTED: _full_reason
+    reads a sentinel's CONTINUATION lines, and inside a fence the continuation stops at the closing
+    fence. The manufactured gate's reason therefore truncated PRECISELY at its satisfaction language and
+    never reached the live "[STOP] NO DEPLOY" clause below it -- which is why it presented as the
+    cleanest drift candidate in the ledger."""
+    fenced, inside = set(), False
+    for i, ln in enumerate(flines, 1):
+        if ln.lstrip().startswith("```"):
+            inside = not inside
+            continue
+        if inside:
+            fenced.add(i)
+    return fenced
+
+
 def _ascii(s):
     """This tool READS carriers it does not own, and CLAUDE.md's NEVER block carries non-ASCII.
 
@@ -239,9 +264,12 @@ def c1_sentinels(clock=None):
             scanned += 1
             c.work_cursor = rel
             continue
+        fenced = _fenced_lines(flines)
         for i, ln in enumerate(flines, 1):
             m = SERVE_HELD_RE.match(ln)
             if not m:
+                continue
+            if i in fenced:
                 continue
             lines += 1
             cond = _full_reason(flines, i, (m.group(1) or "").strip())
@@ -252,7 +280,8 @@ def c1_sentinels(clock=None):
     _materialize_c1_gates(c, by_cond)
     c.work_scanned, c.work_total, c.work_unit = scanned, len(population), "files"
     c.note = ("%d sentinel line(s) -> %d gate(s) grouped by DISCHARGE CONDITION; EXCLUDES "
-              "org/mcp/inbox (agents quoting a sentinel are not a sentinel). grammar=%s"
+              "org/mcp/inbox AND any line inside a ``` fence (agents quoting a sentinel are not a "
+              "sentinel -- path-scoped for inbox, fence-scoped everywhere else). grammar=%s"
               % (lines, len(c.gates), _GRAMMAR))
     return c
 
@@ -778,7 +807,18 @@ def self_test():
     print("control 5 (every gate carries OWNER + DISCHARGE + LAST-VERIFIED, or an explicit"
           " UNKNOWN): %s" % ("PASS" if t5 else "FAIL"))
     ok = ok and t5
-    print("self-test: %s" % ("PASS 5/5" if ok else "FAIL"))
+    # Control 6 is a REFUSE FIXTURE, not an assertion about the live repo: a control pinned to today's
+    # count would move the moment the fix works. It must show the helper can refuse a fenced line AND
+    # that it does NOT over-match an unfenced one -- a guard that excludes everything is as broken as
+    # one that excludes nothing, and only the second half of this fixture can catch that.
+    _fx = ["prose", "```", "  # DEPLOY-SERVE-HELD -- quoted, must NOT count", "```",
+           "# DEPLOY-SERVE-HELD -- real, must count"]
+    _f = _fenced_lines(_fx)
+    t6 = (3 in _f) and (5 not in _f) and (2 not in _f)
+    print("control 6 (a sentinel inside a ``` fence is a QUOTE and is refused; an unfenced one is"
+          " NOT refused): %s" % ("PASS" if t6 else "FAIL"))
+    ok = ok and t6
+    print("self-test: %s" % ("PASS 6/6" if ok else "FAIL"))
     return 0 if ok else 1
 
 

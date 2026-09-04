@@ -9,31 +9,24 @@
   "legs": [
     {
       "id": "SP-1",
-      "kind": "external",
-      "target": "AWS End User Messaging: toll-free number provisioning + CARRIER VERIFICATION. Docstring at infra/aws/opalinvest_dev/lambda/auth-handler/src/sms.ts:25 -- 'DOES NOT EXIST YET ... ~1-3wk ... is Andrew-gated and is the long pole.'",
+      "kind": "verify",
+      "target": "VERIFY (a read of AWS, nothing applied): AWS End User Messaging: toll-free number provisioning + CARRIER VERIFICATION. Docstring at infra/aws/opalinvest_dev/lambda/auth-handler/src/sms.ts:25 -- 'DOES NOT EXIST YET ... ~1-3wk ... is Andrew-gated and is the long pole.'",
       "proof_required": "the origination identity (toll-free number or ARN) EXISTS in the AWS account, read from AWS, not from a ticket status",
       "proof": null,
       "closed_at": null
     },
     {
-      "id": "SP-2",
-      "kind": "terraform",
-      "target": "set SMS_ORIGINATION_IDENTITY on the auth-handler. sms.ts:30 reads it from env and defaults to '' so assertSendable fails CLOSED and LOUD until it is real.",
-      "proof_required": "applied env var read back from the DEPLOYED function config, plus one exercised send",
-      "proof": null,
-      "closed_at": null
-    },
-    {
       "id": "SP-3",
-      "kind": "review",
-      "target": "SANDBOX-EXIT REVIEW. Re-read VERIFIED_DESTINATIONS + SMS_ALLOW_UNVERIFIED before/when the account leaves the SMS sandbox.",
+      "kind": "verify",
+      "target": "VERIFY (a re-read, nothing applied): SANDBOX-EXIT REVIEW. Re-read VERIFIED_DESTINATIONS + SMS_ALLOW_UNVERIFIED before/when the account leaves the SMS sandbox.",
       "proof_required": "a reviewed commit -- never a silent account-level change",
       "proof": null,
       "closed_at": null
     }
   ],
   "log": [
-    "2026-09-02T14:12:01.387471+00:00 OPENED by 1.0.0_SA_CTO~Z -- Andrew-direct 2026-09-02 at the CTO~Z terminal: 'We need to keep an eye out for the SMS permissions from AWS ... whoever is responsible for D12 (which is likely going to stay on sitez fabric), needs to be aware of that, because we need to assess when that goes through.' Opened in .open_deploys BECAUSE comp-schedule STORES NOTHING -- it compiles at read time from carriers, so a note anywhere else does not surface. Measured before writing: zero armed gates mentioned SMS provisioning."
+    "2026-09-02T14:12:01.387471+00:00 OPENED by 1.0.0_SA_CTO~Z -- Andrew-direct 2026-09-02 at the CTO~Z terminal: 'We need to keep an eye out for the SMS permissions from AWS ... whoever is responsible for D12 (which is likely going to stay on sitez fabric), needs to be aware of that, because we need to assess when that goes through.' Opened in .open_deploys BECAUSE comp-schedule STORES NOTHING -- it compiles at read time from carriers, so a note anywhere else does not surface. Measured before writing: zero armed gates mentioned SMS provisioning.",
+    "2026-09-03T07:21:12.362394+00:00 RESHAPED by 1.0.0_SA_CTO~Z (author) on 0.0.0_AB_MSTR~Z FYI 19464: the laptop reader classed this as OPEN 16.8h past a 0.0h window with [HELD-CLAIM REJECTED: open APPLY/DEPLOY leg(s) SP-1,SP-2,SP-3]. Read _qualifies_as_held at source: a held claim needs EVERY open leg to be kind=verify. This entry is a WATCH ITEM (opened because comp-schedule stores nothing), not a half-landed deploy: SP-1 and SP-3 are READS (verify), and SP-2 -- the future Terraform apply on Andrew's GO -- was never a leg of this watch; moved to deferred_apply. Nothing in AWS or the repo changed. window_hours 0.0 kept: a HELD entry is judged by held_at + reread, not by window."
   ],
   "last_red_at": "2026-09-03T13:10:52.553609+00:00",
   "gate": {
@@ -46,5 +39,13 @@
   },
   "owner_note": "D12 is expected to STAY ON THE SITE-Z FABRIC (Andrew, 2026-09-02). SMS backend surface owner: 0.7.0_AE_CloudOps (SB legs, sms.ts, sms-iam.tf). Client surface: 0.4.0_DE_ClientPlatform. Gate: 1.0.0_SA_CTO. Whoever holds D12 on site Z inherits this watch.",
   "held_at": "2026-09-02T14:12:01.387471+00:00",
-  "last_held_nudge_at": "2026-09-02T14:12:01.387471+00:00"
+  "last_held_nudge_at": "2026-09-02T14:12:01.387471+00:00",
+  "deferred_apply": {
+    "id": "SP-2",
+    "kind": "terraform",
+    "target": "set SMS_ORIGINATION_IDENTITY on the auth-handler. sms.ts:30 reads it from env and defaults to '' so assertSendable fails CLOSED and LOUD until it is real.",
+    "proof_required": "applied env var read back from the DEPLOYED function config, plus one exercised send",
+    "note": "NOT a leg of this entry: nothing has been applied and nothing will be until Andrew says GO after SP-1 verifies. When that GO comes, SP-2 opens as ITS OWN deploy_ledger entry (a real apply with a real window). Carried here so the future act is not lost."
+  },
+  "last_updated": "2026-09-03T07:21:12.362394+00:00"
 }

@@ -4,6 +4,9 @@
 `2.0.0_SA_COO~Z` (13737). **Enforced by** `.tools/proof-of-spec-check.py:CELL_ID_RE`.
 **Applies to** every `DECOMP.md` cell id, every `<owned_cells>` entry, and every `cell_refs`
 attribute on a `<criterion>`.
+**Separator (2026-09-03, `1.0.0_SA_CTO~Z`, row NFRA_OPSEC202609-Z-S11):** ids inside `<owned_cells>` and inside a
+`cell_refs` attribute are separated by commas and/or whitespace -- `OP-s-17 OP-s-16`, `OP-s-17,OP-s-16` and
+`OP-s-17, OP-s-16` are the same set; the checker splits on either (`proof-of-spec-check.py`, the `_parse_to` split).
 
 ---
 
