@@ -64,9 +64,23 @@ CHANNEL_RE = re.compile(FLAT_CHANNEL_RE.pattern + "|" + TREE_CHANNEL_RE.pattern)
 
 
 def _folder_identity(rel):
-    """(project, kind) the PATH declares, or (None, None). Flat: the <PROJECT>/ directory (kind is
-    the filename's). Tree: the project folder two levels above surprise-channel/, and the kind from
-    the sub-folder -- a REMEDIATION file filed under investigations/ is a path/content disagreement.
+    """(project, kind) the PATH declares, or (None, None). Tree: the project folder two levels above
+    surprise-channel/, and the kind from the sub-folder -- a REMEDIATION file filed under
+    investigations/ is a path/content disagreement.
+
+    FLAT RETURNS kind=None, DELIBERATELY, and this docstring used to claim otherwise ("kind is the
+    filename's") while the code returned None. That false line is what produced ESTATE_GOVERNANCE-S5
+    (3.0.0_SA_CVO): a reader checking the docstring would conclude a flat ADJUDICATION_v document
+    declares its kind, and the coordinate limb -- which refuses a C- row when folder_kind is not
+    "ADJUDICATION" -- therefore refused every C- row the CVO filed on the flat channel it had just
+    minted. The limb now asks _is_adjudication_doc(rel) instead when folder_kind is None.
+
+    WHY None IS KEPT RATHER THAN "FIXED" HERE: folder_kind feeds FOUR consumers and for a flat path
+    all four are skipped today. Returning a kind would also switch on the L10 precondition limbs
+    (:1033) for the 2 flat REMEDIATION documents that exist (ESTATE_GOVERNANCE, NFRA_PIPELINE) --
+    a behaviour change on legacy channels nobody asked for. WHETHER FLAT PATHS SHOULD DECLARE THEIR
+    KIND AT ALL is 3.0.0_SA_CVO's call, not this function's, and it is named here so the next reader
+    meets an open question rather than a lie.
     Measured before this limb: 192 of 192 flat rows already sit in a folder named for their project."""
     rel = rel.replace("\\", "/")
     m = TREE_CHANNEL_RE.search(rel)
@@ -417,12 +431,18 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
                        "carries no W (the coordinate names the allocator, and a seat allocates on the main index)."
                        % (rel, rid, w, "surfacer" if merging else "committer", allocator))
         if c:
-            if folder_kind != "ADJUDICATION":
+            # ESTATE_GOVERNANCE-S5 (3.0.0_SA_CVO): a FLAT ADJUDICATION_v document declares its kind in
+            # its FILENAME, not its folder, so _folder_identity returns None for it and this limb used to
+            # refuse every C- row the CVO filed there -- on the one document only that seat writes, again.
+            # The flat arm had never been exercised because no flat channel had carried a C- row before.
+            _is_adj = folder_kind == "ADJUDICATION" or (folder_kind is None and _is_adjudication_doc(rel))
+            if not _is_adj:
                 out.append("%s: NEW row %s carries C- outside adjudications/ -- C- is the CVO's coordinate for its "
                            "adjudication rows (annex 4a) and lives nowhere else." % (rel, rid))
             elif _base_serial(committer) != "3.0.0_SA_CVO":
                 out.append("%s: NEW row %s carries C- but the committer %s is not 3.0.0_SA_CVO." % (rel, rid, committer))
-        elif folder_kind == "ADJUDICATION" and c_in_schema:
+        elif (folder_kind == "ADJUDICATION" or (folder_kind is None and _is_adjudication_doc(rel))) \
+                and c_in_schema:
             out.append("%s: NEW row %s in adjudications/ carries no C- while the staged schema admits it -- the CVO's rows "
                        "mint in the C- coordinate (<CODE>-C-S<k>)." % (rel, rid))
     return out
@@ -1074,6 +1094,19 @@ def _self_test(root):
         # battery that guards the limb it fixes, silently, because a disarmed arm and a passing arm
         # print the same line. The False default means those seven arms need no edit and still mean
         # what they meant.
+        # ESTATE_GOVERNANCE-S5: the FLAT adjudication document. Three arms as 3.0.0_SA_CVO specified.
+        ("S5 flat: a C- row in a FLAT ADJUDICATION_v document is ADMITTED (was refused, x4)",
+         lambda: _coordinate_violations("org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v1.md", None,
+                                        [{"id": "ESTATE_GOVERNANCE-C-S1", "surfaced_by": "3.0.0_SA_CVO"}],
+                                        "3.0.0_SA_CVO", False) == []),
+        ("S5 flat NARROWNESS: a C- row in a FLAT INVESTIGATION_v is STILL REFUSED",
+         lambda: any("C- is the CVO's coordinate" in x or "C-" in x for x in _coordinate_violations(
+             "org/surprise_channel/ESTATE_GOVERNANCE/INVESTIGATION_v1.md", None,
+             [{"id": "ESTATE_GOVERNANCE-C-S1", "surfaced_by": "3.0.0_SA_CVO"}], "3.0.0_SA_CVO", False))),
+        ("S5: the TREE arm is unchanged -- a C- row under adjudications/ still admitted",
+         lambda: _coordinate_violations("org/missions/D0/NFRA/X_PRJ/surprise-channel/adjudications/ADJUDICATION_v1.md",
+                                        "ADJUDICATION", [{"id": "X_PRJ-C-S1", "surfaced_by": "3.0.0_SA_CVO"}],
+                                        "3.0.0_SA_CVO", False) == []),
         ("L10 MERGE: undispositioned items with merging=True -> NO violations",
          lambda: _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR",
