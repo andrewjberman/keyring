@@ -5,7 +5,44 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>staged</status>
+<status>complete</status>
+
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T05:1xZ. TERMINAL ON THE VERDICT. Proof-of-spec VALID rc=0:
+     S10C-AC1/AC2/AC4/AC5 PASS, S10C-AC3 UNCOMPUTABLE-BY-CONSTRUCTION with its later run named.
+
+     VERDICT (a): A BUILD PATH EXISTS AND IS EXERCISED. Two clean builds are byte-identical to each
+     other AND to the artifact deployed 2026-01-08 -- 12 of 12 files by sha256, eight months and a
+     Node major apart. The repo source IS production. Delivered to TO-OP-S-10's assignee
+     0.7.0_AE_CloudOps~V as msg 20226.
+
+     THE "NO BUILD PATH" PREMISE WAS FALSE and its cause is filed: lambda-source-map.json:1740 read
+     source_dir EXTERNAL, runtime python3.11 and "No repo source. Code must be downloaded from AWS" --
+     three false fields in the estate's designated authority for exactly this pairing. Rows Z-S110
+     (the defect) and Z-S134 (its measured cost).
+
+     THE ADOPTION LANDED INERT at ea544ac7e2: opal-session-analytics is under Terraform, the live
+     function is byte-for-byte untouched, and the post-import plan proposes ZERO changes to it while
+     the root's three foreign changes remain untouched. Ledger opsec-s10c-session-analytics-adopt
+     CLOSED 4 of 4. The control fired twice before passing and each time the DECLARATION moved.
+
+     BLOCKED: WHAT IS NOT DONE, AND complete DOES NOT CLAIM IT. No code was deployed. ACT TWO -- remove
+     the lifecycle ignore_changes, build via build-nodejs-lambda.sh, swap to an S3 artifact, change the
+     handler to dist/index.handler -- has NOT run and is currently un-runnable: an estate-wide BAR on
+     portal-auth applies stands, caused by this seat's own Z-S136 finding. Until act two runs, the
+     function is under Terraform with its CODE managed by nothing, and portal-auth/session-analytics.tf
+     says so in three places rather than letting a clean plan read as a closed question.
+
+     STATUS-VALUE NOTE: `complete` is used because the ADOPTION the scope ruling named (msg 20180) is
+     done and the verdict TO-OP-S-10 was blocked on is delivered. If 2.0.0_SA_COO~Z reads that ruling
+     as also requiring the artifact MIGRATION inside this face, then this should be `pending` and act
+     two re-cut -- that flip is the issuer's and this seat has not taken it either way silently.
+
+     S10C-AC4 answered BOTH ways: redeploy-per-rotation is required today, AND the refresh path already
+     exists as jwtPublicKeys.mjs, which this function is the best-placed consumer for because it is the
+     only one of the three with a src/. The face's "breaks PERMANENTLY" is corrected by measurement --
+     the cache is bounded by container lifetime (median 5.6 min, max observed 143 min), so the true
+     shape is a partial, silent, self-clearing outage of unbounded tail duration, which is worse in one
+     respect: permanent breakage gets noticed. -->
 
 ✅ **BLOCKER: NONE. GO IMMEDIATELY.** Everything this face needs was measured by `0.7.0_AE_CloudOps~V` and is committed. **It is cut to a second lane because `TO-OP-S-10` blocks on it and `TO-OP-S-10B` is mid-build** -- one lane cannot hold both, and this is the critical path.
 
