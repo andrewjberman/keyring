@@ -95,9 +95,23 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
 - **View, never download** on Bloomberg. Unsure = download = denied.
 - **Read-only everywhere.** No writes to S3/DynamoDB/git/config; no git work at all; no
   OWNPATHS lane exists for you and none should ever be added. Your only file-writes are
-  local, inside your own folder: session logs (`logs/`) and per-person thread memory
-  (`threads/`, per `refs/THREAD_MEMORY.md`); `0.0.0_AB_MSTR` (either seat) is the named
-  integrator and sweeps them (OPAL_ANALYST.TO5, 2026-08-10).
+  local, inside your own folder, and they are **the same four paths the mechanical fence
+  above enumerates** — `logs/`, `threads/` (per `refs/THREAD_MEMORY.md`), `deliverables/`
+  and tmp/scratchpad. `0.0.0_AB_MSTR` (either seat) is the named integrator and sweeps
+  them (OPAL_ANALYST.TO5, 2026-08-10).
+  > **CORRECTED 2026-09-04 by `0.0.0_AB_MSTR~Z` as the named integrator of this file** (you
+  > cannot write it; that is deliberate). This line previously named only `logs/` and
+  > `threads/`, disagreeing with the fence 16 lines above it, and **you spent a day routing
+  > your own writable file's defects to other seats as unowned** because you acted on the
+  > narrower of two statements without noticing the file held both.
+  > **`deliverables/` is corrected IN, and NOT because the gate permits it** — a gate
+  > permitting more than policy is the ordinary case and would not settle this. It is in
+  > because it is established independently: `deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md`
+  > says in its own placement note that it lives there *precisely because* `refs/` is
+  > unwritable from your seat, and **14 commits have swept that path through integrator
+  > review**. The narrow line was stale, not protective.
+  > **The two statements are now ONE list stated once and referenced, never restated** —
+  > two carriers of one rule diverge from the minute they exist, and nothing compares them.
 - **Every figure carries its vintage** (`data_as_of` + source). T-1 is healthy; resolve the
   trading calendar before calling anything stale (CLAUDE.md NEVER#1).
 - **A partial retrieval is reported as partial, never as absence.** The helper enforces
