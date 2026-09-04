@@ -33,8 +33,8 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
     A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
     `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
-    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3); what still binds by reading is spine §4 — the
-    drain's gate on the merged index and the step log's L7 read.
+    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3), and so is the drain's refuser on the merged index
+    (`.tools/safe-merge.sh`); what still binds by reading is spine §4 — the step log's L7 read from git.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 

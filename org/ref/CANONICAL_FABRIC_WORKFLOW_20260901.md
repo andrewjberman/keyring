@@ -221,9 +221,9 @@ travels to the worker.
   row is read by the COO in the worker's final report of that task order; an `ARMED` row is disarmed in the same turn
   by its named owner, and disarmed is not remediated.
 - **The drain.** When a task order is terminal the COO reads the worker's final report and the proof-of-spec instance,
-  merges the worker's branch into the working branch when the instance is valid, pull-merge never rebase, the row
-  gate run against the merged index and every id the branch mints censused across the project's documents before
-  the merge lands, removes the worktree and its branch explicitly, and hands the worker its next task order by continuing the same subagent with
+  merges the worker's branch into the working branch when the instance is valid, pull-merge never rebase, through
+  `.tools/safe-merge.sh`, which grades the merged index with the row gate and censuses every id the branch mints
+  before the merge lands and aborts the merge on a refusal, removes the worktree and its branch explicitly, and hands the worker its next task order by continuing the same subagent with
   its context intact; no respawn, no cold start. At each merge the COO reads every row the branch carries: an `ARMED`
   row whose `disarm_owner` is dark is the COO's to re-seat, since the COO is the seat that spawns, and one it cannot
   seat rides the COO's drain-end read to the CTO. A worker with an empty queue ends. A worker that dies mid-task-order
@@ -412,19 +412,11 @@ the worker's; the CVO's engagement beginning at L8; the grounding bar at L9; the
 precondition; role exclusivity against engagement by message at every limb; the integrator-only push. Everything
 else in section 3 refuses.
 
-The eight carriers the third version named are built, checked out and refuse; section 3 names each. Two clauses
-still name a carrier that is procedure rather than a refuser, and bind by reading until the refuser exists; where a
-live gate contradicts this text the gate's own audited override is the only lawful way through, written into the
-commit that uses it.
+The eight carriers the third version named are built, checked out and refuse, and so is the drain's refuser on the
+merged index; section 3 names each. One clause still names a carrier that does not exist, and binds by reading
+until it does; where a live gate contradicts this text the gate's own audited override is the only lawful way
+through, written into the commit that uses it.
 
-- **The drain grades the union.** The COO merges a worker's branch through `.tools/safe-merge.sh`, which runs the
-  row gate against the merged index and censuses every id the branch mints before the merge lands, because a merge
-  is not a commit and no pre-commit gate sees it; a collision found before the merge is a re-mint and after it is
-  permanent. The refuser exists and the drain step points at it; its deciding arm, a real collision at a merged
-  index aborted by the script itself, has not passed as exercised: as built the script hands the gate no paths, so
-  the gate grades nothing, and the pre-commit hook on the merge commit is what refuses today, leaving the merge
-  open. Until the script grades the merged index's changed paths and that arm passes at check-out, the clause
-  binds by reading and a drain that meets a collision is finished by hand from the open merge.
 - **The step log reads L7 from git.** A worker's acts leave no telemetry row; the compiled step log that grades an
   amendment (section 5) reads a worker's limb from its commits under its serial, its proof-of-spec instance and its
   final report. Until the compiler reads git, a worker's share of acts outside the limbs binds by reading.
@@ -462,3 +454,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.2 | 2026-09-04 | Andrew's word at the CRO terminal on the eight carriers (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/` @9f60e36398, message 93970) and their builds: the L6 coverage limb, criterion grammar, the checker's expectation match and judgment refusal, the row gate's route retirement and adjudication census @b4299fa5aa; the send guard @85bb815ad0; the sentinels @01b41e4f0b; the row lane and the `adjudications/` lane @7668568ed6 (LD-0534); the worker agent type @4df363de8f, @324fa75544, @d57b4c2523; the rollup @747da480bc; the adjudication document exercised @b50a124783; v3's first drain and its five gaps (`3.0.0_SA_CVO` 94007, 94010; `4.0.0_SA_CRO` 94014): the uniqueness limb and the item census @72d05b2642, the drain's union gate as procedure @e6351512fe; Andrew's word at the CTO terminal, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260904_0458Z_RECS_APPROVED_WORKER_LANE_IS_THE_TASK_ORDER_AND_ROW_ID_ALLOCATOR_COORDINATE.md` @9ef9a40aae (the same word at the CVO's @92af61a111 and the COO's @febe803b27): the task order as the worker's grant (`worker_grant` stanza @e08447ff7d, LD-0534 Amendment 1; the resolver's fifth clause and the L6 `<paths>` refusal @6efb43b9d0; `/dispatch` @788e3a7888, @febe803b27) and the allocator coordinate (annex v3.2/v3.3 and the schema half @4d65d9b496, @e3e999c139; the gate half @6efb43b9d0); the one audit log @6bfaa233ed; `4.0.0_SA_CRO`'s check-outs of all eight (94025, 94074) | every carrier of section 4 at v3.0 is built and refuses, and section 3 names each; a worker's write surface is exactly its order's `<paths>` while the order is non-terminal at HEAD, no lane enumerates a worker, and an order issued to a worker without `<paths>` is refused at the cut; a worker's first act is the worktree premise and every invocation is bounded; the row id carries an allocator coordinate, `W<n>` for a worker's slot and `C-` for the CVO's adjudication rows, uniqueness by full id across the plane's documents, and an adjudication that lands on no single item refused; the census counts worker rows as the items and never the CVO's; the CVO's send guard admits the CTO alone at every stage; the override-audit log is one file at the main worktree root; a worker writes no telemetry and the step log reads L7 from git; section 4 now holds two clauses, the drain's gate on the merged index and the step log's L7 read |
 | 3.3 | 2026-09-04 | `2.0.0_SA_COO`'s surface (message 94085) that `.tools/safe-merge.sh` @2187fac0f9 and the drain step re-pointed at it @f414b18822 are ancestors of the 3.2 commit @743d282408, which called the refuser unbuilt; the refuser's own report of its unexercised collision arm (94078) | section 4's drain clause names the refuser that exists and the arm it still owes: a real collision at a merged index aborting the merge; the L7 refuser cell of section 3 names `safe-merge.sh` at the drain |
 | 3.4 | 2026-09-04 | `4.0.0_SA_CRO`'s check-out of the drain refuser's deciding arm (message 94094): a real cross-document collision at the merged index did not land, rc 1, but by the pre-commit hook and not by the script -- `safe-merge.sh` calls the row gate with no paths, grades nothing, and exits with the merge open; the green arm merges correctly | section 4's drain clause states the exercised state: the script's own abort has not passed, the hook is what refuses today, the merge is left open, and the clause leaves this section when the script grades the merged index's changed paths and the arm passes at check-out |
+| 3.5 | 2026-09-04 | `2.0.0_SA_COO`'s fix of the drain refuser @747a0b23c3 (the gate fed the merged index's staged paths; an empty set refused; the merge aborted on refusal; two regression arms) and `4.0.0_SA_CRO`'s check-out of its deciding arm on its own instrument (message 94105): the collision refused by the script's own grade and aborted with no merge left open, the non-colliding branch merged | the drain clause leaves section 4: the L7 drain merges through `safe-merge.sh`, which grades the merged index and aborts on a refusal; section 4 holds one clause, the step log's L7 read from git |
