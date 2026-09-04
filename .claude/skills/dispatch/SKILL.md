@@ -235,9 +235,30 @@ When a task order goes terminal:
    > the cross-fabric two-certifiers-one-sequence class reappearing INSIDE one fabric, because v3 gave
    > every worker its own index.
 
-   **So, in order:** read the branch's rows → census each minted id across **every** document under
-   `surprise-channel/` at the merged index → only then merge. A collision found before the merge is a
-   re-mint on the branch; found after, it is permanent.
+   **THE INVOCATION — `--no-commit` is the whole mechanism.** It builds the merged index *without*
+   landing the commit, which is the only window where the gate can see the union and a collision is
+   still a re-mint rather than a permanent fact:
+
+```bash
+git merge --no-commit --no-ff wk-<CODE>-<n>     # merged INDEX, no commit yet
+python .tools/surprise-row-gate.py              # reads the STAGED index; prints its denominator
+# plus the cross-document id census the gate cannot do (it has no uniqueness limb):
+for id in <ids the branch mints>; do
+  for d in org/missions/D*/*/<CODE>/surprise-channel/*/*.md; do
+    python .tools/comp-read "$d" --enumerate "$id" --limit 3
+  done
+done
+# clean -> commit the merge.   collision -> `git merge --abort`, re-mint on the branch, re-run.
+```
+
+   **A collision found before the merge is a re-mint; found after, it is permanent** — append-only binds
+   both rows and there is no renumbering.
+
+   ⚠ **THIS STEP BINDS BY READING AND NOTHING REFUSES IT.** `git merge` runs no hook, so a COO that
+   skips the two commands above lands the collision exactly as this one did. The refuser — a merge that
+   goes through `safe-commit.sh`, or a uniqueness limb inside the gate — is a BUILD act and the gate's
+   half is `1.0.0_SA_CTO`'s. Until one exists, the discipline is the only control, which is the weakest
+   kind, and it is stated as weak on purpose.
 
    ⚠ **The worker's `GIT_COMMIT_AUTHOR_OVERRIDE` audit lines do NOT reach the main tree.** They are
    written to the *worktree's* copy of `org/git-author-override-audit.log`, and a merge carries tracked
