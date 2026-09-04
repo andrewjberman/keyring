@@ -503,9 +503,24 @@ def _duplicate_id_violations(rel, kind, added, code, plane_docs, note=""):
     return out
 
 
-def _investigations_precondition_violations(rel, row, code, route_word, dispositions):
+def _investigations_precondition_violations(rel, row, code, route_word, dispositions, merging=False):
     """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
-    _latest_dispositions (injectable for the self-test)."""
+    _latest_dispositions (injectable for the self-test).
+
+    AT A MERGE: not evaluated -- see the block below and _route_precondition_violations' twin."""
+    if merging:
+        # STOP: A MERGE INTRODUCES THE PROJECT THIS PRECONDITION IS ABOUT. The limb reads HEAD; on a merge
+        # HEAD is the PRE-MERGE commit, so the task orders and the channel files it needs are ABSENT --
+        # not missing, just not landed yet. It refuses fail-closed and is RIGHT to, on a question it was
+        # never able to ask. 0.0.0_AB_MSTR 94293, first cross-fabric reconcile: 5 rows x 2 limbs, and
+        # guaranteed to recur for every project any future merge introduces.
+        # LEGITIMACY, MEASURED PER LIMB rather than inherited from the sibling exemption: BOTH of these
+        # limbs exist on origin/SITEZ (:181, :227 of its 743-line copy) and graded these rows at their
+        # own authorship. The foreign-row sweep does NOT exist there -- so the same sentence is true here
+        # and would have been false there, which is why it was checked limb by limb.
+        # No violations. The ANNOUNCEMENT is the caller's note (one per row-bearing file
+        # rather than one per row), so the exemption is auditable without repeating itself.
+        return []
     rid = row.get("id", "<no id>")
     latest, unknown, nfiles, note = dispositions
     if latest is None:
@@ -549,9 +564,24 @@ def _open_tos_for_project(root, code):
     return open_ids, len(paths), ""
 
 
-def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None):
+def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False):
     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
-    red-first exercise; production passes None and the census runs."""
+    red-first exercise; production passes None and the census runs.
+
+    AT A MERGE: not evaluated -- see the block below and the twin limb's."""
+    if merging:
+        # STOP: A MERGE INTRODUCES THE PROJECT THIS PRECONDITION IS ABOUT. The limb reads HEAD; on a merge
+        # HEAD is the PRE-MERGE commit, so the task orders and the channel files it needs are ABSENT --
+        # not missing, just not landed yet. It refuses fail-closed and is RIGHT to, on a question it was
+        # never able to ask. 0.0.0_AB_MSTR 94293, first cross-fabric reconcile: 5 rows x 2 limbs, and
+        # guaranteed to recur for every project any future merge introduces.
+        # LEGITIMACY, MEASURED PER LIMB rather than inherited from the sibling exemption: BOTH of these
+        # limbs exist on origin/SITEZ (:181, :227 of its 743-line copy) and graded these rows at their
+        # own authorship. The foreign-row sweep does NOT exist there -- so the same sentence is true here
+        # and would have been false there, which is why it was checked limb by limb.
+        # No violations. The ANNOUNCEMENT is the caller's note (one per row-bearing file
+        # rather than one per row), so the exemption is auditable without repeating itself.
+        return []
     rid = row.get("id", "<no id>")
     route_word = route_word or row.get("route")
     if open_tos is None:
@@ -1006,11 +1036,20 @@ def check_file(root, rel):
         elif kind == "INVESTIGATION" and folder_kind in ("INVESTIGATION", "ADJUDICATION") and row.get("disposition") == "DECOMP_INVALIDATING":
             _route_word = "disposition=DECOMP_INVALIDATING (carried in the slug)"
         if folder_project and _route_word is not None:
-            pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word)
+            _mrg = _merge_in_progress(root)
+            pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word,
+                                                 merging=_mrg)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
-                                                               _latest_dispositions(root, folder_project)))
+                                                               _latest_dispositions(root, folder_project),
+                                                               merging=_mrg))
             v.extend(pre)
-            if not pre:
+            if _mrg:
+                notes.append("%s: MERGE COMMIT -- L10 precondition limbs for %s not evaluated; the project's "
+                             "task orders and channel files arrive in this commit and are ABSENT at HEAD by "
+                             "construction. Row graded at its own authorship on its own fabric "
+                             "(0.0.0_AB_MSTR 94293). NOT exempt on a merge: the duplicate-id limb."
+                             % (rel, folder_project))
+            elif not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
                 notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
@@ -1028,6 +1067,42 @@ def _self_test(root):
         ("one item UNDER_INVESTIGATION -> refused, names it",
          lambda: any("X_PRJ-S1" in x and "NOT dispositioned" in x for x in _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION", "X_PRJ-S2": "GRADUATED"}, [], 1, "")))),
+        # L10 MERGE EXEMPTION (0.0.0_AB_MSTR 94293) + the NARROWNESS arm that earns it. Written as a
+        # PARAMETER defaulting False on 94295's constraint: an exemption read INTERNALLY from
+        # MERGE_HEAD would put all SEVEN direct-call arms below on the exempt path whenever a merge
+        # happened to be open, and they would pass while testing nothing -- the fix disarming the
+        # battery that guards the limb it fixes, silently, because a disarmed arm and a passing arm
+        # print the same line. The False default means those seven arms need no edit and still mean
+        # what they meant.
+        ("L10 MERGE: undispositioned items with merging=True -> NO violations",
+         lambda: _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR",
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=True) == []),
+        ("L10 NARROWNESS: the SAME undispositioned items with merging=False are still REFUSED",
+         lambda: _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR",
+             ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), merging=False) != []),
+        ("L10 MERGE: the fail-closed path is ALSO exempt (an unreadable census on a merge is the merge)",
+         lambda: _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", (None, [], 0, "git rc=128"), merging=True) == []),
+        # ROUTE LIMB -- ITS FIRST BATTERY. 94295: this limb had ZERO arms and its only caller was the
+        # production path, so nothing would have caught a regression in it and nothing did catch the
+        # merge defect either. Red, green, fail-closed, then the merge pair.
+        ("route RED: an OPEN task order -> refused, names the count and cites the ruling",
+         lambda: any("1 of 3" in x and "LD-0521" in x for x in _route_precondition_violations(
+             None, "r", row, "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="route=SPEC_ERROR"))),
+        ("route GREEN: zero open task orders -> admitted",
+         lambda: _route_precondition_violations(
+             None, "r", row, "X_PRJ", open_tos=(set(), 3, ""), route_word="route=SPEC_ERROR") == []),
+        ("route: the open-order census could not run -> refused fail-closed",
+         lambda: any("fail-closed" in x for x in _route_precondition_violations(
+             None, "r", row, "X_PRJ", open_tos=(None, 0, "git rc=128"), route_word="route=SPEC_ERROR"))),
+        ("route MERGE: an OPEN task order with merging=True -> NO violations (94293)",
+         lambda: _route_precondition_violations(
+             None, "r", row, "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w", merging=True) == []),
+        ("route NARROWNESS: the SAME open order with merging=False is still REFUSED",
+         lambda: _route_precondition_violations(
+             None, "r", row, "X_PRJ", open_tos=({"TO-1"}, 3, ""), route_word="w", merging=False) != []),
         ("every item dispositioned -> admitted",
          lambda: _investigations_precondition_violations("r", row, "X_PRJ", "route=SPEC_ERROR",
                                                           ({"X_PRJ-S1": "DISMISSED_WITH_REASON", "X_PRJ-S2": "GRADUATED"}, [], 1, "")) == []),
