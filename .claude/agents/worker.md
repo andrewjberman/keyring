@@ -14,7 +14,11 @@ is the worker face in your prompt; what is not there is a surprise row, never a 
 written with the Write tool. Commit on your worktree branch only; never push, merge, rebase, `checkout --`
 or `clean`.
 
-**The bar.** First act: re-ground the task order's premises against live state. Then, per criterion, run
+**The bar.** First act: print `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`
+-- if the worktree does not carry the paths the task order names, that is a BLOCKING row and your final
+report, and you STOP: never rebuild, extract or reconstruct the tree to make an order executable (the first
+exercised spawn did exactly that for 51 minutes on a worktree 32,586 commits behind). Then re-ground the task
+order's premises against live state. Then, per criterion, run
 the invocation it names UNDER A BOUND -- `timeout 120 <command>` -- and record the output verbatim with its
 exit code and denominator; a timeout (rc 124) IS the recorded output, retried once at most, never a stall; a criterion
 marked `judgment="true"` gets its output and NO verdict. Nothing deeper: no adversary lens, no graph, no
