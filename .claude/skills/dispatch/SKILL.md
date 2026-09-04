@@ -74,12 +74,38 @@ The worker face carries, and a face missing any of these is not cut:
 **The record face never travels.** Status, seating, the preflight's disposition narrative, the authority
 chain, the provenance: they stay in the file for the gates and are not given to the worker.
 
-⛔ **THREE REFUSALS AT THE CUT, all yours, none automatic yet** (they bind by reading, spine s.4):
-- **A criterion that conjoins clauses is REFUSED.** Split it. One clause, one criterion.
-- **A mechanical criterion without its `<invocation>` AND its `<expect>` is REFUSED** — its pass must be
-  decided by a MATCH, not by the worker's opinion.
-- **A judgment criterion is flagged `judgment="true"`, is never self-graded, and carries no verdict.**
-  The CVO grades it at L9. A judgment row arriving with `PASS` on it is the failure this flag prevents.
+⛔ **THREE REFUSALS AT THE CUT. TWO ARE NOW MECHANICAL** (`.tools/to-pipeline-gate.py` @`b4299fa5aa`,
+verified at HEAD via `git show`), on **NEWLY ADDED tree orders only** — flat orders and existing files
+are untouched:
+
+- **COVERAGE (mechanical, at `DECOMP`).** The union of `<owned_cells>` across the staged orders must
+  equal the decomposition's cell set; a missing cell refuses **naming it**. ⚠ **At `EXECUTING` — a recut
+  — coverage is NOTED, NOT GRADED**, so the gate that catches a dropped cell on the first issuance does
+  not catch it on the recut. That one is still yours to read.
+- **ONE CLAUSE PER CRITERION (mechanical).** The grammar, exactly:
+
+```xml
+<criterion id=".." cell_refs=".."><invocation>..</invocation><expect>..</expect></criterion>
+<criterion id=".." cell_refs=".." judgment="true"/>
+```
+
+  **Exactly one `<invocation>` and one `<expect>`; two of either is COMPOUND and refused.** The
+  self-closing v2 shape `<criterion id=".." cell_refs=".."/>` is **refused with the grammar named** — so
+  copying an older task order's criteria forward is the way this bites you.
+- **A judgment criterion carries `judgment="true"`, no children, and NO verdict** (yours to hold). The
+  CVO grades it at L9; the instance records it under `UNVERIFIABLE-BY-INSTRUMENT` with a
+  `status_reason` naming the CVO. **`PASS` or `FAIL` on a judgment row is INVALID.**
+
+The audited `# pipeline-override:` remains the escape for either mechanical refusal. Using it to get
+past a coverage refusal means shipping a round that does not cover its decomposition; say why in the
+line.
+
+⛔ **AN INVOCATION YOU NAME MUST TERMINATE. The worker runs every invocation under `timeout 120`**
+(`.claude/agents/worker.md` @`324fa75544`) **and records the timeout AS the output** — so an unbounded
+command does not fail loudly, it produces a criterion whose evidence is the word "timeout". Bound it at
+the cut: prefer a tool's own `--budget`/`--limit`, scope the path, and never name a whole-corpus sweep
+as a criterion's invocation. This rule exists because the first exercised spawn stalled **600 s** on an
+unbounded `comp-read` against a syntax-broken `.py` and the harness killed the worker.
 
 ## Step 3 — ONE issuance commit
 
