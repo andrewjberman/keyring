@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "ETFS",
  "fabric": "laptop",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "ETF coverage guardrail -- the monthly ETF ownership report cannot go out over data it does not have; holes are detected pre-publish, a remediation ladder repairs them, and a hole that survives every rung is reported to Andrew by name, date, provider and partner",
  "generated_from": "org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-04T18:28:57Z"
+ "generated_at": "2026-09-04T19:16:55Z"
 }

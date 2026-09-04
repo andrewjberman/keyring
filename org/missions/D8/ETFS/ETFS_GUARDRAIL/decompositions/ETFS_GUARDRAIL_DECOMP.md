@@ -1,5 +1,13 @@
 # ETFS_GUARDRAIL -- DECOMPOSITION (L5)
 
+**v0.1.1** (2026-09-04 ~19:0xZ, `2.0.0_SA_COO~B`, in the issuance commit, BEFORE the cut freezes it): three
+amendments on evidence read after v0.1 -- (a) s.7 gains THE DISCRIMINATOR'S PRINCIPAL (the ETFS layer holds no
+firm-bucket grant by NEVER#1 design, measured at `infra/aws/terraform/etfs-reports/iam.tf:24-59` and
+`infra/aws/terraform/shared-infra/etfs-aggregation-iam.tf`, so the upstream-partition read is the producers',
+exposed as a non-writing PROBE), carried as seat row `ETFS_GUARDRAIL-S1`; (b) s.4 re-queues `EG-s-9` behind
+`EG-s-8` on slot 1 because both EDIT AND DEPLOY the same orchestrator Lambda (two branches deploying one function
+is a rewind), leaving slot 3 the alignment cell alone; (c) s.3 decision 2 counts `EG-s-7` among the deploying
+cells (one IAM Sid on the reporter role, ledgered). Cells, ids and edges UNCHANGED: 14 cells, 15 edges.
 **v0.1** (2026-09-04 ~18:0xZ, `2.0.0_SA_COO~B`) -- the L5 act on PRD v0.3 at the tree home
 `../prd/ETFS_GUARDRAIL_PRD.md` @`4e30d6b635` (byte-identical to the flat PRD @`7aa1554881`, ON ORIGIN; PRD_HEADER
 `status: RATIFIED`; the step-6 RED/HOLD lifted by `3.0.0_SA_CVO` 2026-09-02 21:26Z). **Authority for this lane's
@@ -137,8 +145,9 @@ log events, S3 object metadata, a deployed zip) and change nothing on the plane;
 recorded VERBATIM in the proof instance, so the CVO grades what was printed and never the worker's summary; (c)
 Andrew's word for this project is the worker drain. The blindness is carried in s.5 and inlined on both orders.
 
-**Decision 2 -- the deploying cells (`EG-s-1`, `EG-s-2`, `EG-s-8`, `EG-s-9`) are worker cells under NEVER-2 and
-NEVER-9, with the ledger paths GRANTED.** A Lambda change is EXERCISED only when deployed, and the deploy is
+**Decision 2 -- the deploying cells (`EG-s-1`, `EG-s-2`, `EG-s-8`, `EG-s-9`, and `EG-s-7` for its one IAM Sid;
+`EG-s-6` for the renderer's artifact upload) are worker cells under NEVER-2 and NEVER-9, with the ledger paths
+GRANTED.** A Lambda change is EXERCISED only when deployed, and the deploy is
 Terraform through `safe-apply` under a change-management entry opened at the start and closed at completion -- never
 `aws lambda update-function-code`. A worker cannot write a ledger it was not granted, so every deploying order names
 `org/critical_paths/change_management/` AND the sentinel `org/critical_paths/.open_deploys/<slug>.json` in `<paths>`
@@ -153,21 +162,30 @@ brief s.9.1) is explicitly out of scope with its own owner; it is not a cell and
 ## 4. THE FAN-OUT L6 WILL CARRY
 
 ```
-fanout: 3 of 10 chains, cap 8, reason: three poles drain in dependency order -- slot 1 the ladder pole
-        (EG-s-10, EG-s-12, EG-s-4, EG-s-7, EG-sb-7, EG-s-8: the calendar and classifier first because twelve
-        cells hang off them), slot 2 the producer pole (EG-s-3, EG-s-11, EG-s-1, EG-s-2, EG-s-5, EG-s-6), slot 3
-        the send pole (EG-s-13, EG-s-9); the 10 maximal paths share EG-s-10 and EG-s-4, so a 4th slot would wait
-        on slot 1's first two merges and cost a live worktree for nothing; the two cross-slot waits (slot 2's
-        ports on EG-s-10; slot 2's line and gate on EG-s-4) are hand-offs the COO sequences at the drain.
+fanout: 3 of 10 chains, cap 8, reason: three poles drain in dependency order -- slot 1 the ladder-and-orchestrator
+        pole (EG-s-10, EG-s-12, EG-s-4, EG-s-7, EG-sb-7, EG-s-8, EG-s-9: the calendar and classifier first
+        because twelve cells hang off them; EG-s-9 behind EG-s-8 because both edit AND deploy the one
+        orchestrator Lambda), slot 2 the producer-and-renderer pole (EG-s-3, EG-s-11, EG-s-1, EG-s-2, EG-s-5,
+        EG-s-6), slot 3 the alignment cell (EG-s-13); the 10 maximal paths share EG-s-10 and EG-s-4, so a 4th
+        slot would wait on slot 1's first two merges and cost a live worktree for nothing; the cross-slot waits
+        (slot 2's ports on EG-s-10; slot 2's line and gate on EG-s-4; slot 1's EG-s-9 on slot 3's EG-s-13; slot
+        2's EG-s-6 on slot 3's EG-s-13 for the renderer's one artifact upload) are hand-offs the COO sequences
+        at the drain.
 ```
 
 **The queues, in the order each slot drains them:**
 
 | slot | queue (dependency order) | cross-slot waits the COO sequences at the drain |
 |---|---|---|
-| `~1` | `EG-s-10` -> `EG-s-12` -> `EG-s-4` -> `EG-s-7` -> `EG-sb-7` -> `EG-s-8` | none (every predecessor is in this queue) |
-| `~2` | `EG-s-3` -> `EG-s-11` -> `EG-s-1` -> `EG-s-2` -> `EG-s-5` -> `EG-s-6` | `EG-s-1`/`EG-s-2` after `EG-s-10` merges; `EG-s-5`/`EG-s-6` after `EG-s-4` merges |
-| `~3` | `EG-s-13` -> `EG-s-9` | none |
+| `~1` | `EG-s-10` -> `EG-s-12` -> `EG-s-4` -> `EG-s-7` -> `EG-sb-7` -> `EG-s-8` -> `EG-s-9` | `EG-s-9` after `EG-s-13` merges (the PRD's ruling 5: alignment gates the send) |
+| `~2` | `EG-s-3` -> `EG-s-11` -> `EG-s-1` -> `EG-s-2` -> `EG-s-5` -> `EG-s-6` | `EG-s-1`/`EG-s-2` after `EG-s-10` merges; `EG-s-5`/`EG-s-6` after `EG-s-4` merges; `EG-s-6` after `EG-s-13` merges (it uploads the ONE merged renderer) |
+| `~3` | `EG-s-13` | none; the slot ends when its one cell is terminal |
+
+**Why `EG-s-9` moved off slot 3 (v0.1.1):** `EG-s-8` and `EG-s-9` both change `etfs-reports-orchestrator/lambda_function.py`
+and both apply `infra/aws/terraform/etfs-reports/`. Two worktrees each deploying that function would have the second
+apply ship a zip that lacks the first's merged change -- a REWIND on a served Lambda. One file, one deploy, one queue.
+The same rule puts the renderer's ONE artifact upload on `EG-s-6`, the last renderer cell in dependency order;
+`EG-s-5` and `EG-s-13` change the renderer in the repo and deploy nothing.
 
 Each hand-off is a fresh worktree from `CLOUD` at hand-off time, so a slot's later order sees every merge that landed
 before it -- which is what makes a cross-slot wait a sequencing act at the drain and not a blocked worker.
@@ -218,6 +236,29 @@ before it -- which is what makes a cross-slot wait a sequencing act at the drain
 8. **The spec is FROZEN mid-round.** A cell that looks wrong to a worker is a ROW at
    `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted
    `ETFS_GUARDRAIL-W<n>-S<k>`, never an edit; a seat's row carries no `W<n>`.
+
+## 6a. THE DISCRIMINATOR'S PRINCIPAL -- an L5 finding on PRD s.7.4's proposal, carried as row `ETFS_GUARDRAIL-S1`
+
+PRD s.7.2 row S4 binds the classifier's discriminator as *"read upstream partition + count priced"*, and s.7.4 homes
+the classifier in the ETFS layer (`data/etfs/scripts/coverage/`, run by the renderer on the reporter box). **Measured
+at HEAD, the ETFS layer holds no firm-bucket grant by explicit design:** the reporter role reads `opal-data-etfs/*`
+and the renderer artifact prefix only (`infra/aws/terraform/etfs-reports/iam.tf:24-59`), and the aggregation reader
+is scoped to `opal-data-etfs/daily/*` + `config/*` with the comment *"ZERO firm-bucket grants (NEVER#1: the metric
+layer never reads opal-data-inf / opal-data-cot / opal-data-schwab)"* (`shared-infra/etfs-aggregation-iam.tf`). An
+upstream-partition read of three firms' silver prefixes from ONE ETFS principal is the cross-firm reader that design
+refused, and CLAUDE.md's NEVER on foreign firm data is substrate-shaped: shared bucket, key-prefix, IAM condition.
+
+**The resolution L5 carries into L6 (s.7.4's own words: a decomp finding may overturn a step-4 proposal):** the
+discriminator stays where the grant already is -- **in the firm-scoped producers.** `EG-s-1` and `EG-s-2` add a
+NON-WRITING PROBE mode to the two owned producers (`{"date": d, "probe": true}` -> `{partition, priced, output_exists}`,
+writes nothing); the relied-on Inflection producer gets no probe (S3's bound: not owned, not modified), so for it the
+producer's OWN answer to a dated invoke is the discriminator (it loud-fails on an absent partition = D, skips an
+unpriced day = B, writes = C recovered). `EG-s-4`'s classifier reads ONLY `opal-data-etfs` plus the calendar and takes
+the probe as an injected callable, returning `UNKNOWN` (never a guess) where no probe answers. `EG-s-7`'s ladder holds
+the invoke: rung 0 the probe, rung 1 the dated invoke of the firm-scoped producer, rung 2 the re-read of the ETFS
+bucket, rung 3 the STOP. The one IAM change is `lambda:InvokeFunction` on the three producer ARNs for the reporter
+instance role -- an invoke grant, not a data grant; no firm prefix is opened to anyone. Property 4 holds by
+construction: a probe that answers B is never followed by an invoke.
 
 ## 7. What this decomposition does NOT decide
 
