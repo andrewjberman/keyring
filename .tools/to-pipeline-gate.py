@@ -420,6 +420,21 @@ def _self_test():
          lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nthe `<paths>` block below names the grant\n<paths>\norg/ok.py\n</paths>\n" + v3) == []),
         ("grant: a prose mention with NO block after it -> refused as NO block",
          lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nsee <paths> in the protocol\n" + v3))),
+        # _top_section BACKTICK TOLERANCE (94213 refusal 2). The RED arm is the bug that was LIVE:
+        # it fails against the pre-patch gate and passes after, which is what makes it a control.
+        ("endpoint RED: a heading whose command is fenced IS found (was a FALSE ABSENCE)",
+         lambda: _top_section("## ENDPOINT (step 2, `/endpoint --forward`)\nbody\n",
+                              ENDPOINT_HEADING) is not None),
+        ("endpoint GREEN: the bare template heading still found; a DIFFERENT heading still None",
+         lambda: _top_section("## ENDPOINT (step 2, /endpoint --forward)\nbody\n",
+                              ENDPOINT_HEADING) is not None
+         and _top_section("## ENDPOINTS (step 2, /endpoint --forward)\nbody\n",
+                          ENDPOINT_HEADING) is None
+         and _top_section("## ENDPOINT (step 3, /endpoint --forward)\nbody\n",
+                          ENDPOINT_HEADING) is None),
+        ("endpoint: a fenced heading INSIDE a ``` fence is still not a section (f1 falsifier holds)",
+         lambda: _top_section("```\n## ENDPOINT (step 2, `/endpoint --forward`)\n```\n",
+                              ENDPOINT_HEADING) is None),
         ("grant: a seat's order without <paths> is not graded (its grant is its lanes); a flat-root worker order is not graded",
          lambda: _worker_grant_violations(tree, "<issued_to>0.8.0_AE_CloudComp~J</issued_to>\n" + v3) == []
          and _worker_grant_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n") == []),
@@ -874,7 +889,20 @@ def _top_section(text, heading):
     One anchored, unindented, whole-line, fence-aware grammar closes all four at once."""
     blank = _blank_fences(text)
     if isinstance(heading, str):
-        pat = re.compile(r"(?m)^" + re.escape(heading) + r"[ \t]*$")
+        # BACKTICK-INSENSITIVE (2026-09-04, 1.0.0_SA_CTO, on 2.0.0_SA_COO 94213 refusal 2).
+        # An EXACT-string compare made this a FALSE-ABSENCE generator: NFRA_OUTSET's PRD wrote the
+        # heading as "## ENDPOINT (step 2, `/endpoint --forward`)" -- the template title with the
+        # command in code fences -- and the gate reported the MANDATORY section MISSING. That is the
+        # dangerous direction: the limb exists so step 10 can ask "does the PRD name this outcome?",
+        # and surprise-row-gate.py refuses route=SCOPE_CHANGE without an outcome_ref that only an
+        # ENDPOINT section supplies -- so a false absence makes a real scope change UNFILEABLE.
+        # Backticks are markdown decoration on the TITLE TEXT and carry no meaning here, so they are
+        # tolerated ANYWHERE inside the title. Nothing else loosens: every non-backtick character is
+        # still matched exactly and the match is still whole-line, anchored at column 0 and
+        # fence-aware, so no DIFFERENT heading becomes reachable.
+        # COST: one "`*" per character in the compiled pattern. NON-APPLICATION: a compiled-regex
+        # `heading` is passed through untouched -- its author already owns its own grammar.
+        pat = re.compile(r"(?m)^" + "`*".join(re.escape(c) for c in heading) + r"[ \t]*$")
     else:
         pat = heading
     m = pat.search(blank)
