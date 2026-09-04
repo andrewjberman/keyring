@@ -2,7 +2,7 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-22</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
@@ -34,7 +34,7 @@ A role that is under-permissioned fails loudly at first invocation. **A role tha
 2. **For each role, the enumerated action/resource pairs it MUST have** (from what its code actually does, read at source) **and the ones it MUST NOT** -- at minimum: the reconciler is the ONLY principal with `wafv2:UpdateIPSet` on the two sets (C-2), the CLI can write the table row and **cannot** touch the IP sets (C-11), and the sentinel can write rows and case files and **cannot** write the IP sets.
 3. **The verdict RETURNED to the owning faces in writing**, so their deployment step can cite it. **A verdict nobody receives has not gated anything.**
 4. **Any gap is a ROW and a recommendation, not a silent widening or narrowing.** ⛔ **Do not edit a role's policy inside this face** -- the roles belong to the faces that declare them. This cell produces a VERDICT.
-5. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+5. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 ## ACCEPTANCE -- criterion ids minted at cut
 
@@ -59,7 +59,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S22-AC1`, `S22-AC2`, `S22-AC3`, `S22-AC4`, `S22-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S22-AC1,S22-AC2,S22-AC3,S22-AC4,S22-AC5"` BEFORE the complete flip. **`S22-AC2` IS the control that must be able to fail, and it is written so that an all-allowed instance fails on its face.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S22-AC1`, `S22-AC2`, `S22-AC3`, `S22-AC4`, `S22-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-22.sentinel-chain-iam-verdict.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S22-AC1,S22-AC2,S22-AC3,S22-AC4,S22-AC5"` BEFORE the complete flip. **`S22-AC2` IS the control that must be able to fail, and it is written so that an all-allowed instance fails on its face.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>

@@ -2,12 +2,16 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-15-19</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_to>0.7.0_AE_CloudOps~T</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
 
-⛔ **BLOCKERS, NAMED: `OP-s-18` (the IP sets must exist to be reconciled INTO) and `OP-s-22` (the IAM verdict runs BEFORE any of these roles is deployed -- PRD s.9 item 7).** `OP-s-16` is DONE. **GO CONDITION: `TO-OP-S-4-18` terminal, and `TO-OP-S-22`'s verdict returned for the roles this face declares.** The ordering is circular only in appearance: **declare the roles in Terraform first, run the verdict on the declared-then-applied roles, then deploy the code.** That sequence is stated in deliverable 5.
+⛔ **BLOCKERS, NAMED: `OP-s-18` (the IP sets must exist to be reconciled INTO) and `OP-s-22` (the IAM verdict runs BEFORE any of these roles is deployed -- PRD s.9 item 7).** `OP-s-16` is DONE. **GO CONDITION: `TO-OP-S-4-18` terminal. THAT IS THE WHOLE CONDITION.**
+
+⛔ **CORRECTED 2026-09-04 00:4xZ ON ROW Z-S114: THIS GATE WAS SELF-CONTRADICTING AND `0.7.0_AE_CloudOps~W` REFUSED TO START ON IT.** It read *"and `TO-OP-S-22`'s verdict returned for the roles this face declares"* -- **but `TO-OP-S-22` verdicts the APPLIED roles, and the roles do not exist until THIS face declares and applies them.** The verdict cannot return before its subject exists. **This face's own deliverable 5 states the real sequence and always did:** declare and apply the ROLES, hand the applied ARNs to `TO-OP-S-22`, wait for the verdict, **then deploy the CODE.** The verdict gates the **code deploy**, which is inside the face, not the face's start.
+
+> **That is the same defect as the Z-S14 bar earlier tonight: a gate demanding a state that the gated work itself produces.** I wrote the resolution into the body and then wrote the unsatisfiable version into the gate, four lines apart. The ordering is circular only in appearance: **declare the roles in Terraform first, run the verdict on the declared-then-applied roles, then deploy the code.** That sequence is stated in deliverable 5.
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT FWD-14, FWD-17; C-2, C-5, C-7, C-11) - **Decomp cells:** `OP-s-15` + `OP-s-19` (v0.1.11, s.1a) - **Lane:** AE lane - **Round:** 3.
 
@@ -28,7 +32,7 @@
 5. **THE ROLE SEQUENCE, and it is how the `OP-s-22` circularity resolves:** declare the reconciler's and the CLI's IAM roles in Terraform and apply them; **hand those APPLIED role ARNs to `TO-OP-S-22` and wait for its verdict; deploy the code only after.** Do not deploy a function whose permissions have not been verdicted -- that is what s.9 item 7 means.
 6. **A short-TTL fixture for the lapse behaviour:** the cell's `closes on` requires that **a block nobody renews lapses by itself.** Build the TTL and demonstrate it on a fixture, not on a real address.
 7. **Deploy-ledger entries** per applied root (`safe-apply`, never bare), rollbacks named before each act.
-8. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-15-19.reconciler-and-unblock-path.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+8. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~T/NFRA_OPSEC202609.TO-OP-S-15-19.reconciler-and-unblock-path.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 ## ACCEPTANCE -- criterion ids minted at cut
 
@@ -55,7 +59,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S15-AC1`, `S15-AC2`, `S15-AC3`, `S19-AC1`, `S19-AC2`, `S19-AC3`, `S1519-AC4`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-15-19.reconciler-and-unblock-path.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S15-AC1,S15-AC2,S15-AC3,S19-AC1,S19-AC2,S19-AC3,S1519-AC4"` BEFORE the complete flip. **The controls that must be able to FAIL: `S19-AC2`'s pre-unblock refusal, and `S15-AC3`'s principal enumeration, which is the only thing standing between C-2 and a silent second writer.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S15-AC1`, `S15-AC2`, `S15-AC3`, `S19-AC1`, `S19-AC2`, `S19-AC3`, `S1519-AC4`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~T/NFRA_OPSEC202609.TO-OP-S-15-19.reconciler-and-unblock-path.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S15-AC1,S15-AC2,S15-AC3,S19-AC1,S19-AC2,S19-AC3,S1519-AC4"` BEFORE the complete flip. **The controls that must be able to FAIL: `S19-AC2`'s pre-unblock refusal, and `S15-AC3`'s principal enumeration, which is the only thing standing between C-2 and a silent second writer.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>
