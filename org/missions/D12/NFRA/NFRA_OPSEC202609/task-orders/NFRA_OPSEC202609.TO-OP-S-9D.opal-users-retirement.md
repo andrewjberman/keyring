@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~X</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>staged</status>
+<status>pending</status>
 
 ✅ **SOVEREIGN AUTHORISATION, THE ONLY THING THIS CELL WAS WAITING ON. Andrew, 2026-09-04 ~03:4xZ, verbatim: "Recs approved"** -- against the card *"Delete the legacy `opal-users` table, or keep it standing?"* whose REC was *"Delete -- but only after removing it from Terraform management first, or the next plan proposes to re-create it as an empty table wearing the retired one's name."* **`S9-AC4`'s bar was that the retirement be parked with a human. It was, and the human has ruled.**
 
