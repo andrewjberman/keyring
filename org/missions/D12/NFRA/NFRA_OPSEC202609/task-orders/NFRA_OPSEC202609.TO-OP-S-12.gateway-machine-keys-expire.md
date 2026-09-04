@@ -7,7 +7,7 @@
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
 
-**Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT **FWD-12** :145 -- *"The gateway records who called it, and its shared machine keys expire"*; s.8 row S12) - **Decomp cell:** `OP-s-12` (v0.1.10 @2fd3843047, s.1a) - **Lane:** `infra/aws/terraform/opal-gateway/` and the gateway's own source, AE lane - **Round:** 3 of NFRA_OPSEC202609. **Dispatch:** GO after `TO-OP-S-10` goes terminal -- one task order at a time.
+**Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT **FWD-12** :145 -- *"The gateway records who called it, and its shared machine keys expire"*; s.8 row S12) - **Decomp cell:** `OP-s-12` (v0.1.10 @2fd3843047, s.1a) - **Lane:** `infra/aws/terraform/opal-gateway/` and the gateway's own source, AE lane - **Round:** 3 of NFRA_OPSEC202609. **Dispatch:** ✅ **GO NOW. CORRECTED 2026-09-04 00:1xZ: this face's original dispatch line read "GO after `TO-OP-S-10` goes terminal", and that was LANE ORDERING, NOT A DEPENDENCY.** At the cut both faces sat with the same lane and I wrote a queue position as if it were a condition. **They share nothing**: `TO-OP-S-10` rotates the JWT signing keypair, this face expires the gateway's shared machine bearers -- different secrets, different consumers, different surfaces. `TO-OP-S-10` is now another lane's and is blocked on `TO-OP-S-10B`; **that has no bearing here and this face does NOT hold at its cutover.** Flagged by `0.7.0_AE_CloudOps~Z`, which read the written GO rather than assuming the message superseded it -- correctly, because a face outranks a message.
 
 ---
 
