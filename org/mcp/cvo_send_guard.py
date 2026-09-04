@@ -1,29 +1,31 @@
 #!/usr/bin/env python3
 """cvo_send_guard -- the L8 correspondence guard of the canonical fabric workflow.
 
-Spine (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md v2.1, L8 "Not engaged"): every worker is a
-correspondent the CVO does not have; the CVO's findings travel UP to 2.0.0_SA_COO (or to 1.0.0_SA_CTO
-for a scope change) and never DOWN to a worker. Andrew-direct 2026-09-03 ~04:5xZ at the CTO terminal,
-"Recs approved" on /open-calls CALL 1 (record org/tier1_exec/1.0.0_SA_CTO/deliverables/
-ANDREW_DIRECT_20260903_045xZ_RECS_APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md):
-a broker send from 3.0.0_SA_CVO to a Tier-2 serial is REFUSED -- not announced -- while any tree
-project reads dep_stage EXECUTING, the stage L7, L8 and L9 all carry (spine section 3).
+Spine (org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md v3.1, L8 and section 2): the CVO sends nothing to anyone
+during a round; its findings travel up in the slug at L10, to 1.0.0_SA_CTO and to no one else, and reach
+2.0.0_SA_COO through the CTO's round-N analysis. A worker never hears from the CVO. So the CVO's ONE admitted
+send is to the CTO, at EVERY dep_stage -- the v2.1 rule (refuse CVO -> Tier-2 only while a tree project reads
+EXECUTING; admit CVO -> COO) had two holes the round-1 step logs measured: the CVO -> COO stream of findings
+mid-round, and the ROUND_CLOSE window in which a CVO -> Tier-2 send was admitted. Both close by removing the
+stage condition rather than adding a stage (CRO v3 spec s.5 / s.8; Andrew-direct 2026-09-03 ~22:2xZ at the
+CRO terminal, "the mechanisms right now", item 7).
 
-WHY A REFUSAL: an announced message still reaches the worker, and the harm is the worker acting on it.
-WHY THE WHOLE SEND: a per-recipient partial delivery would let a "cc" to the COO carry the same body
-to the worker; either every recipient is lawful or the seat did not send, and nothing is written.
-MEASURED: the round-1 compiled step logs (org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/
-STEP_LOG_COMPILED.round1.md, gate-candidate class 4) hold four rows of this class, three after the
-ruling was known.
+WHY A REFUSAL: an announced message still reaches the recipient, and the harm is the recipient acting on it.
+WHY THE WHOLE SEND: a per-recipient partial delivery would let a "cc" to the CTO carry the same body to the
+COO or a worker; either every recipient is lawful or the seat did not send, and nothing is written.
 
 Two halves, kept apart so a harness exercises the decision without a repo:
-  executing_tree_projects(repo_root)      the ONE I/O read -- every org/missions/D*/*/*/project.json
-                                          and its dep_stage; (None, note) when the census cannot run.
-  cvo_worker_send_refusal(from, to, exe)  PURE decision -- the refusal text, or None to admit.
-A census that cannot run REFUSES (fail-closed): a guard that cannot see the loop's stage must not
-admit the send. Callers: org/mcp/server.py send_message (the MCP tool, which codex-send.py also uses)
-and org/mcp/broker.py /send-message (the daemon's HTTP path, reachable without the server).
-Self-test: python org/mcp/cvo_send_guard.py --self-test (8 arms, red and green, plus one live census).
+  executing_tree_projects(repo_root)      the ONE I/O read -- every org/missions/D*/*/*/project.json and its
+                                          dep_stage; (None, note) when the census cannot run. Under v3 it
+                                          DECIDES nothing (the rule is stage-free); it is read for the refusal
+                                          text's context and kept for the daemon's health line.
+  cvo_worker_send_refusal(from, to, exe)  PURE decision -- the refusal text, or None to admit. Signature unchanged
+                                          so both callers keep working: org/mcp/server.py send_message (the MCP
+                                          tool, which codex-send.py also uses) and org/mcp/broker.py /send-message
+                                          (the daemon's HTTP path). APPLIED on the MCP path at each session's
+                                          server load and on the daemon path at the broker's restart -- a
+                                          running process holds the module it imported.
+Self-test: python org/mcp/cvo_send_guard.py --self-test (red and green arms, plus one live census).
 """
 from __future__ import annotations
 
@@ -33,8 +35,9 @@ import sys
 from pathlib import Path
 
 CVO_SERIAL = "3.0.0_SA_CVO"
+CTO_SERIAL = "1.0.0_SA_CTO"
 LOOP_STAGE = "EXECUTING"
-UP_ROUTE = "2.0.0_SA_COO (or 1.0.0_SA_CTO for a scope change)"
+UP_ROUTE = "1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one send of a round)"
 # The same expression as .tools/to-pipeline-gate.py TIER01_RE: Tier-0 is 0.0.<n>_<XX>_..., Tier-1 is <n>.0.0_SA_...;
 # a serial that resolves in org and matches neither is a Tier-2 worker for this guard's purpose.
 TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
@@ -71,26 +74,24 @@ def executing_tree_projects(repo_root) -> tuple[list[str] | None, str]:
 
 
 def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple) -> str | None:
-    """PURE. The refusal text when `from_agent` is the CVO (any ~lane), at least one recipient is Tier-2, and
-    the tree holds a project in EXECUTING (or the census could not run); None admits the send."""
+    """PURE. spine v3.1 L8: a send from the CVO (any ~lane) is admitted only when EVERY recipient is the CTO
+    (any ~lane), at every dep_stage. Any other recipient -- the COO, a Tier-2 seat, MSTR, the CRO -- refuses the
+    WHOLE send. `executing` is read for context only; a census that cannot run does not change the verdict,
+    because the verdict no longer depends on the stage."""
     if base_serial(from_agent) != CVO_SERIAL:
         return None
-    workers = [r for r in (recipients or []) if is_tier2(r)]
-    if not workers:
+    recips = [r for r in (recipients or []) if (r or "").strip()]
+    others = [r for r in recips if base_serial(r) != CTO_SERIAL]
+    if not others:
         return None
     codes, note = executing
-    if codes is None:
-        return ("SEND REFUSED (L8 guard, fail-closed): %s -> %s could not be graded because the tree-project "
-                "census did not run (%s). A guard that cannot see the loop's stage admits nothing. Nothing was "
-                "written for any recipient." % (from_agent, ", ".join(workers), note))
-    if not codes:
-        return None
-    return ("SEND REFUSED (spine L8: the CVO's findings travel UP, never DOWN): %s -> %s while %d tree "
-            "project(s) read dep_stage=%s (L7-L9): %s [%s]. A worker hears from the CVO only through a task "
-            "order or an operating note 2.0.0_SA_COO issues; route the finding to %s. Nothing was written for "
-            "ANY recipient of this send (%d named). Andrew-direct 2026-09-03 'Recs approved' (CTO /open-calls "
-            "CALL 1)." % (from_agent, ", ".join(workers), len(codes), LOOP_STAGE, ", ".join(codes), note,
-                          UP_ROUTE, len(recipients or [])))
+    stage_word = ("census did not run (%s)" % note) if codes is None else (
+        ("%d tree project(s) EXECUTING: %s" % (len(codes), ", ".join(codes))) if codes else "no tree project EXECUTING")
+    return ("SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): %s -> %s. The CVO sends "
+            "to %s and to no one else, at every dep_stage [%s; %s]. A finding for the COO reaches it through the CTO's "
+            "round-N analysis; a worker never hears from the CVO. Nothing was written for ANY recipient of this send "
+            "(%d named). Andrew-direct 2026-09-03 ~22:2xZ at the CRO terminal (item 7 of the eight v3 carriers)."
+            % (from_agent, ", ".join(others), UP_ROUTE, stage_word, note, len(recips)))
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -210,24 +211,35 @@ def tier2_act_send_refusal(from_agent: str, recipients, subject: str, body: str,
 def _self_test() -> int:
     exe = (["NFRA_COMPEFFICACY"], "1 tree project(s) read")
     idle = ([], "1 tree project(s) read")
+    closing = (["NFRA_COMPEFFICACY"], "1 tree project(s) read; ROUND_CLOSE elsewhere")  # the window v2.1 left open
+    dead = (None, "git ls-files rc=128")
+    ref = cvo_worker_send_refusal
     arms = [
-        ("CVO -> Tier-2 while EXECUTING: REFUSED, names project + recipient",
-         lambda: (lambda r: r is not None and "NFRA_COMPEFFICACY" in r and "0.8.0_AE_CloudComp" in r)(
-             cvo_worker_send_refusal("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], exe))),
-        ("CVO -> COO while EXECUTING: admitted (up the loop)",
-         lambda: cvo_worker_send_refusal("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe) is None),
-        ("CVO -> CTO while EXECUTING: admitted (scope change route)",
-         lambda: cvo_worker_send_refusal("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], exe) is None),
-        ("CVO -> [COO, Tier-2] while EXECUTING: the WHOLE send refused",
-         lambda: cvo_worker_send_refusal("3.0.0_SA_CVO", ["2.0.0_SA_COO", "0.7.0_AE_CloudOps"], exe) is not None),
-        ("CVO -> Tier-2 with NO project EXECUTING: admitted",
-         lambda: cvo_worker_send_refusal("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], idle) is None),
-        ("CVO~A -> Tier-2~B while EXECUTING: refused (tilde-blind on both ends)",
-         lambda: cvo_worker_send_refusal("3.0.0_SA_CVO~A", ["0.8.0_AE_CloudComp~B"], exe) is not None),
-        ("MSTR -> Tier-2 while EXECUTING: admitted (not the CVO)",
-         lambda: cvo_worker_send_refusal("0.0.0_AB_MSTR", ["0.8.0_AE_CloudComp"], exe) is None),
-        ("CVO -> Tier-2, census could not run: REFUSED fail-closed",
-         lambda: "fail-closed" in (cvo_worker_send_refusal("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], (None, "x")) or "")),
+        # ---- spine v3.1 L8: the CVO's one send is the slug to the CTO, at every stage ----
+        ("CVO -> CTO while EXECUTING: admitted (the slug)", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], exe) is None),
+        ("CVO -> CTO with no project EXECUTING: admitted", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], idle) is None),
+        ("CVO~A -> CTO~Z: admitted (tilde-blind on both ends)", lambda: ref("3.0.0_SA_CVO~A", ["1.0.0_SA_CTO~Z"], exe) is None),
+        ("CVO -> COO while EXECUTING: REFUSED (v2.1 admitted this; the round-1 finding stream)",
+         lambda: (lambda r: r is not None and "2.0.0_SA_COO" in r and "one send" in r)(ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], exe))),
+        ("CVO -> COO at ROUND_CLOSE: REFUSED (stage-free)", lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], closing) is not None),
+        ("CVO -> COO with no project EXECUTING: REFUSED (stage-free)", lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], idle) is not None),
+        ("CVO -> Tier-2 while EXECUTING: REFUSED, names the recipient",
+         lambda: (lambda r: r is not None and "0.8.0_AE_CloudComp" in r)(ref("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], exe))),
+        ("CVO -> Tier-2 at ROUND_CLOSE: REFUSED (the window v2.1 left open)", lambda: ref("3.0.0_SA_CVO", ["0.7.0_AE_CloudOps"], closing) is not None),
+        ("CVO -> Tier-2 with no project EXECUTING: REFUSED (v2.1 admitted this)", lambda: ref("3.0.0_SA_CVO", ["0.8.0_AE_CloudComp"], idle) is not None),
+        ("CVO~A -> Tier-2~B: REFUSED", lambda: ref("3.0.0_SA_CVO~A", ["0.8.0_AE_CloudComp~B"], exe) is not None),
+        ("CVO -> [CTO, COO]: the WHOLE send refused (a cc does not launder)", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO", "2.0.0_SA_COO"], exe) is not None),
+        ("CVO -> [CTO, Tier-2]: the WHOLE send refused", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO", "0.7.0_AE_CloudOps"], exe) is not None),
+        ("CVO -> MSTR: REFUSED (not the CTO)", lambda: ref("3.0.0_SA_CVO", ["0.0.0_AB_MSTR"], idle) is not None),
+        ("CVO -> CRO: REFUSED (not the CTO)", lambda: ref("3.0.0_SA_CVO", ["4.0.0_SA_CRO"], idle) is not None),
+        ("CVO -> COO, census could not run: still REFUSED (the verdict is stage-free, not fail-closed-by-census)",
+         lambda: ref("3.0.0_SA_CVO", ["2.0.0_SA_COO"], dead) is not None),
+        ("CVO -> CTO, census could not run: admitted (the census decides nothing under v3)",
+         lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], dead) is None),
+        ("MSTR -> Tier-2 while EXECUTING: admitted here (not the CVO; LD-0529's guard below owns it)",
+         lambda: ref("0.0.0_AB_MSTR", ["0.8.0_AE_CloudComp"], exe) is None),
+        ("COO -> CVO: admitted here (the sender is not the CVO)", lambda: ref("2.0.0_SA_COO", ["3.0.0_SA_CVO"], exe) is None),
+        ("CVO -> nobody (empty recipients): admitted (nothing to refuse)", lambda: ref("3.0.0_SA_CVO", [], exe) is None),
     ]
     # ---- the generalised guard: the falsifier the record fixed (LD-0529) ----
     root = Path(__file__).resolve().parents[2]
