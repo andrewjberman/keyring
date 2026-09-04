@@ -110,6 +110,18 @@
 
 ⛔ **SO IT IS A CHANGE TO A LIVE EVIDENCE STORE, NOT AN INPUT TO AN UNBUILT CELL.** **S3 Object Lock is normally a BUCKET-CREATION flag.** ⭐ **This seat deliberately did NOT run `put-object-lock-configuration` to find out** -- that is a live change to a bucket holding 438 evidence records, it is a cell's act rather than the issuer's, **and a failed attempt on an evidence store is a poor way to learn an API constraint.** **NOT MEASURED: whether enabling it post-creation succeeds here.** ⛔ **The intent is sound and unquestioned; the executability is open, and the card Andrew approved did not mention a possible bucket rebuild and migration of 438 objects.** **Routed to `1.0.0_SA_CTO~Z`; no cell moves until it is answered.**
 
+## RULE 7 -- STATE THE COMPONENT, NOT THE TOTAL. AND A STATUS FIELD MUST NAME THE **BINDING** CONSTRAINT.
+
+⛔ **DECIDED 2026-09-04 14:0xZ. `3.0.0_SA_CVO~Z` found that my own trap clause -- the one I wrote into 23 faces to stop a reader "confirming" the corrected gate count -- IS ITSELF VINTAGE-BOUND**: it says *"a fresh run prints 21 because C2 has moved 4 -> 5"*, **which pins C2 at 5 and goes stale the moment C2 moves again.** ⭐ **A warning about staleness, written in a form that goes stale.**
+
+**THE DURABLE FORM IS COMPONENT-NOT-TOTAL: state `C1 SENTINEL = 4 gates` and do not reason about the sum at all.** ⛔ **A TOTAL IS A SUM OF MOVING PARTS, so it can be right for the wrong reasons and wrong for none of them** -- which is exactly how 20 was reached three separate ways in one night, and how five stale faces hid behind a total that already read 20.
+
+**DISPOSITION, and both Tier-1 seats converged on it: BUNDLED with a face amendment YES; a STANDALONE pass over 23 faces NO.** ⭐ **The clause is ORIENTATION, not a criterion; re-touching 23 faces to improve a warning is a worse trade than leaving a bounded one in place** -- and the 5-face amendment that would have carried it has already landed at `caf4bb4af1`. **So it is recorded HERE, once, and the faces are left alone.**
+
+**THE SIBLING DEFECT, same day, same shape, and it WAS worth fixing because it misleads rather than merely ages: `OP-s-23`'s status field read *"HELD on OP-s-5 + OP-s-14 (WATCH)"* -- and BOTH have since cleared.** ⛔ **The binding constraint was never in that column: it is the cell's VALUE, "a MEASURED distribution over >= 1 month of WATCH rows."** ⭐ **A status field naming its CLEARED preconditions while its real blocker sits one column over MISLEADS PRECISELY WHEN IT IS READ CORRECTLY** -- a careful reader checks the two named conditions, finds both satisfied, and concludes the cell is startable. **It is not, and cannot be before 2026-10-04.** Found by `0.7.0_AE_CloudOps~S` running this seat's own cell-vs-face census over its own faces, and **routed rather than edited**.
+
+**RULE: a status field names the BINDING constraint. When a named condition clears, the field is rewritten -- not annotated -- because a cleared condition left in place reads as a live one.**
+
 ## WHAT THESE SIX HAVE IN COMMON
 
 ⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's; ⭐ **and RULE 6 is the version where the two planes are THE RECORD AND THE WORLD -- with the record being the one that structurally CANNOT notice.** **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
