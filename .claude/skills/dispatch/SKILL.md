@@ -280,17 +280,20 @@ When a task order goes terminal:
    landing the commit, which is the only window where the gate can see the union and a collision is
    still a re-mint rather than a permanent fact:
 
+**USE THE REFUSER, NOT THE RAW MERGE:**
+
 ```bash
-git merge --no-commit --no-ff wk-<CODE>-<n>     # merged INDEX, no commit yet
-python .tools/surprise-row-gate.py              # reads the STAGED index; prints its denominator
-# plus the cross-INDEX census the gate still cannot do (its limb sees only the index it grades):
-for id in <ids the branch mints>; do
-  for d in org/missions/D*/*/<CODE>/surprise-channel/*/*.md; do
-    python .tools/comp-read "$d" --enumerate "$id" --limit 3
-  done
-done
-# clean -> commit the merge.   collision -> `git merge --abort`, re-mint on the branch, re-run.
+bash .tools/safe-merge.sh wk-<CODE>-<n> -m "drain(<CODE>.<TO>): merge worker <serial> ..."
 ```
+
+It opens the `--no-commit` window, runs the row gate against the **merged** index (whose duplicate-id
+limb then does the cross-document census for you), and on refusal **prints the collision and
+`git merge --abort`s** — the tree left exactly as found. It also refuses outright if the index carries
+another seat's staged work, because that union is not the one you mean to grade. `--self-test` = 5 arms.
+
+⛔ **NOTHING INVOKES IT FOR YOU.** `git merge` still runs no hook, so a bare merge lands a collision
+exactly as v3's first drain did. The script converts "remember to check" into "one command that checks";
+that is smaller than a gate and larger than a paragraph, and the difference matters when you are tired.
 
    **A collision found before the merge is a re-mint; found after, it is permanent** — append-only binds
    both rows and there is no renumbering.
