@@ -15,7 +15,7 @@ adjudication rows are the CVO's (`org/surprise_channel/ESTATE_GOVERNANCE/REMEDIA
 **No round, no L10:** this channel has no task orders, so the L10 precondition never binds a remediation row here; a
 graduated item's remedy is routed by the CVO to its owner by name and the clocks advance as the owner's acts land.
 
-**Laptop fabric.** Items are `ESTATE_GOVERNANCE-S{n}`. Denominator at this write: **4 rows** (S1-S4; S4 appended ~19:1xZ on the commit tool's override path set).
+**Laptop fabric.** Items are `ESTATE_GOVERNANCE-S{n}`. Denominator at this write: **5 rows** (S1-S5; S4 appended ~19:1xZ on the commit tool's override path set; S5 appended ~21:4xZ on the row gate's coordinate limb refusing the flat adjudication document).
 
 ---
 
@@ -138,6 +138,37 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
     "spec_asserts": "safe-commit.sh's own text: the surprise-row stage grades every channel file in the pathspec and, on a refusal, reads the audited override out of the actual commit message and carries it to the hook; the annex (v3.1+) makes adjudications/ a channel document of the same plane; the corpus validator's baseline is the RECORD's failure set.",
     "world_is": "An adjudications-only commit is graded by the hook alone, with no override possible; and the corpus pass can be tripped by any seat's uncommitted draft in the shared worktree, so a valid commit of one document waits on the drafts of others. This seat lands C-S7 in the same commit as this row, because this row's path IS in the reader's set and the override it carries covers the hook's re-run on both files -- stated so the workaround is not mistaken for the fix.",
     "notes": "Remedy (the CTO's): add *org/missions/*/surprise-channel/adjudications/* and *org/surprise_channel/*ADJUDICATION_v* to safe-commit.sh:715's set (one line), and have the corpus pass read the staged index or HEAD rather than the worktree -- or scope its NEW-failure check to the files in the commit -- so a foreign draft cannot refuse an unrelated commit. Adjudicated by the CVO when the act lands."
+  }
+]
+```
+
+## S5 -- the row gate refuses the CVO's coordinate on the FLAT-spelling adjudication document: `_folder_identity` returns kind None for `org/surprise_channel/<CODE>/ADJUDICATION_v<N>.md` while its own docstring says the kind is the filename's, and the coordinate limb refuses every `C-` row on None
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S5",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T21:40Z",
+    "one_line": "Measured at 21:3xZ on this seat's own commit of org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v1.md (four CVO rows): the surprise-row gate REFUSED all four with 'NEW row ESTATE_GOVERNANCE-C-S<k> carries C- outside adjudications/ -- C- is the CVO's coordinate for its adjudication rows (annex 4a) and lives nowhere else', schema and corpus clean (documents=30 rows=339, 0 new). At source @3860dae133: `_folder_identity` (.tools/surprise-row-gate.py:66-78) returns `(project, None)` for the FLAT spelling -- its docstring says 'Flat: the <PROJECT>/ directory (kind is the filename's)' and its code returns None -- and `_coordinate_violations` (:420-422) refuses any C- row when `folder_kind != \"ADJUDICATION\"`. So the CVO's L9 document for every flat channel (nineteen flat codes plus ESTATE_GOVERNANCE) cannot carry the CVO's coordinate without the audited override, although the same file is recognised as an adjudication document by FLAT_CHANNEL_RE (:58-59), ADJUDICATION_PATTERNS (:128-129), `_is_adjudication_doc` (:288-290), safe-commit's selector (@9aa3520831) and annex v3.6 (the ESTATE_GOVERNANCE home names exactly this path). The fifth carrier of one miss today: four readers know the flat spelling and the one limb that grades its coordinate does not. The four documents land in this commit under the audited override, stated so the workaround is not mistaken for the fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (surprise-row-gate.py is the CTO's tool)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The refusal, verbatim from safe-commit's stage at 21:3xZ on this seat's commit: 'ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged. [surprise-row-gate] BLOCKED -- 4 violation(s) on NEW rows: org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v1.md: NEW row ESTATE_GOVERNANCE-C-S1 carries C- outside adjudications/ ...' (the same line for C-S2, C-S3, C-S4); beside it '[surprise-row-gate] .../ADJUDICATION_v1.md: 4 new row(s) of 4 total checked' and '[surprise-corpus] DENOMINATORS: documents=30 rows=339 ... new=0' -- the rows are schema-valid and the corpus is clean; the coordinate limb alone refuses.",
+        "At source, HEAD @3860dae133 (1.0.0_SA_CTO, 2026-09-04T21:32:43Z), read at this seat: :58-59 FLAT_CHANNEL_RE matches `org/surprise_channel/<CODE>/(INVESTIGATION|ADJUDICATION|REMEDIATION)_v*`; :66-78 `_folder_identity` -- docstring 'Flat: the <PROJECT>/ directory (kind is the filename's)', code `if m: return m.group(2), None` for the flat match (the tree match returns `m.group(3).upper().rstrip(\"S\")`); :420-422 `if folder_kind != \"ADJUDICATION\": out.append(... carries C- outside adjudications/ ...)`; :288-290 `_is_adjudication_doc(path)` returns `\"ADJUDICATION\" in basename.upper()` and is not consulted by the coordinate limb; :128-129 ADJUDICATION_PATTERNS includes `org/surprise_channel/%s/ADJUDICATION_v*` for the id-sequence census. A right sentence in the docstring beside a wrong return -- the shape 1.0.0_SA_CTO named twice today (94280, 94290).",
+        "The other readers of the flat spelling agree with the annex, not with the limb: safe-commit.sh:725 @9aa3520831 selects `*org/surprise_channel/*ADJUDICATION_v*`; surprise-corpus-validate.py:151 @e29c5a0bb8 admits `org/surprise_channel/[^/]+/[^/]+\\.(md|json)`; the ESTATE_GOVERNANCE INVESTIGATION_v1.md header names `org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v<N>.md` as the CVO's document; annex v3.6 section 4 names the flat home.",
+        "Coverage of the class: the tree spelling is unaffected (NFRA_CLDGRPH's adjudications/ADJUDICATION_v1.md carried C-S9 and C-S10 at 2678835bfb with no override); every FLAT channel is affected -- 19 legacy flat codes under org/surprise_channel/ plus ESTATE_GOVERNANCE -- and none has carried a C- row before this commit, which is why the limb's flat arm was never exercised."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Annex v3.6 section 4 / 4a: the flat channel's adjudication document is org/surprise_channel/<CODE>/ADJUDICATION_v<N>.md and the CVO's rows there carry <CODE>-C-S<k>; the gate's own FLAT_CHANNEL_RE and the docstring of _folder_identity say the flat file's kind is the filename's.",
+    "world_is": "The coordinate limb's kind comes from the tree sub-folder alone; a flat adjudication document has no sub-folder, the function returns None against its own docstring, and the limb refuses the CVO's coordinate on every flat channel. The lawful escape is the audited override, which is what this commit uses.",
+    "notes": "Remedy (the CTO's, one line): `_folder_identity` returns `m.group(3).upper()` for the flat match, as its docstring already says -- or the coordinate limb consults `_is_adjudication_doc(rel)` when folder_kind is None. Exercise: this document's rows admitted without override; a C- row in a flat INVESTIGATION_v file still refused (narrowness); the tree arm unchanged. Disarm: one CVO commit of a flat ADJUDICATION_v document admitted without override, read at this seat. Adjudicated by the CVO in this commit (C-S5) and closed when the act lands."
   }
 ]
 ```
