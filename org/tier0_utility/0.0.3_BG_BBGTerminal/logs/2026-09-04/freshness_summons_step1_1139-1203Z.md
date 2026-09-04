@@ -140,11 +140,273 @@ writes). **I did not attempt them and did not route around the gate.** Named as 
   `comp-find`), and a `comp-read | head` (a census piped into a receiver that erases its denominator).
   I re-ran the second without the `head` rather than marking it rail-checked.
 
-## 7. STATE AT CLOSE
+## 7. LAUNCH STEPS 2a + 3 — identity gate and the Teams arm
 
-Registration LIVE (PID 17772). Monitor `bnl3oewlo` running, parent-tied. **Zero crons** — correct end
-state; the 07:15 clock is retired and a successor must not re-arm one. Inbox empty. Report delivered
-2/2 (`0.0.0_AB_MSTR~Z`, `1.0.0_SA_CTO~Z`), denominator printed by the send. Nothing blocking this seat.
+**2a IDENTITY ACCEPTANCE GATE: PASS.** `whoami` on `opal-gateway-bbg` → `Opal Bloomberg` /
+`opalbloomberg@opalinvest.com`. Not Andrew's proxy identity. Gate cleared before any Teams surface
+was touched.
+
+**3 TEAMS MONITOR: armed WITH the mandatory pin**, task `b1866ois3`, `TaskOutput` → running.
+Banner read at source before serving anything:
+
+```
+[teams-watch] armed interval=15s cursor=2026-08-25T21:11:24.527Z (incoming-only)
+              pin(server=opal-gateway-bbg, identity=opalbloomberg)
+[teams-watch] token selected: identity=opalbloomberg@opalinvest.com
+```
+
+**CURSOR ADJUDICATED, NOT ASSUMED.** `TEAMS_DUTY.md` requires SUSPECT-REPLAY treatment if the
+banner cursor is OLDER than the newest entry in thread memory. Newest daily file is
+`2026-08-25.md`, and its own record states I posted in-thread at **21:11:24Z** — the cursor is
+`2026-08-25T21:11:24.527Z`, i.e. **exactly at my last served act, not behind it.** So this arm is
+**NOT** suspect-replay, and the ~10-day window it opens is genuine, not history.
+
+**Then measured rather than inferred from the Monitor's silence** (an early stop and a true absence
+read identically): `poll_addressed_teams_messages(since_iso=2026-08-25T21:11:24Z)` → **count 1**,
+and that one is `from_name: "Opal Bloomberg"` with an empty preview — **own-authored, correctly
+suppressed by the incoming-only filter.** So the Monitor's quiet is right for the right reason.
+**Zero inbound asks in the window; nothing owed on the Teams surface.** *(Its chat_id
+`19:517aa5ee-...7aa72700-...` is not in `threads/INDEX.md`; not an inbound ask, so noted and not
+chased.)*
+
+**A standing item CLOSED by reading rather than left open:** the Andrew-direct of
+2026-08-25T21:10:05Z ("tell MSTR he needs to adjust your startup/operating tenets") was broadcast
+**QUEUED** to a non-live `0.0.0_AB_MSTR~Z`, and my 08-25 thread file lists it as owed. **It was
+discharged:** both recommended tenets are now live in `refs/TEAMS_DUTY.md` (section marked *added
+2026-08-25*) — "Let RECALL decide what is owed — never the emit" and "Never write a delay, an age,
+or an apology into an ack on the strength of an emit." A QUEUED receipt is not undelivered, and
+here it in fact landed.
+
+## 8. STATE AT CLOSE
+
+Registration LIVE (PID 17772). Inbox Monitor `bnl3oewlo` running, parent-tied pid 534938. Teams
+Monitor `b1866ois3` running, pinned. **Zero crons** — correct end state; the 07:15 clock is retired
+and a successor must not re-arm one. Inbox empty; msgs 20395 and 20397 ACKed on the READ clock.
+Report delivered 2/2 (`0.0.0_AB_MSTR~Z`, `1.0.0_SA_CTO~Z`), denominator printed by the send.
+
+`1.0.0_SA_CTO~Z` (msg 20397) accepted both routed items and sharpened the second: the `.cmd`
+contains **both sides** of the contradiction 50 lines apart — `:195-200` justifies the skip on
+"Bloomberg is unreachable or broken", while `:252-256` names the exact harm it causes ("convert one
+leg's fault into two legs' PERMANENT DATA LOSS"). That seat also **reframed my perishable ask
+correctly**: I argued it from my S3-write fence, but the binding constraint is **vendor egress**,
+reserved to Andrew's explicit per-use word — availability is not authorization. It is with Andrew,
+not self-granted. My framing was not wrong, it was the weaker of the two reasons.
+
+## 9. ANDREW-DIRECT 2026-09-04 ~13:00Z — both of my routed items RULED (via `1.0.0_SA_CTO~Z`, msg 20401)
+
+**VERBATIM: "Approved for all of these"** — five words to a five-card `/open-calls` frame, so the
+referent is the five RECs as written. Record @`c1c79c3729` (LOCAL; origin/SITEZ `360943fabb`,
+3 unpushed — stated because a push state is perishable).
+
+- **Call 1 — the perishable legs: EXECUTED, not merely authorised.** `1.0.0_SA_CTO~Z` fired both
+  immediately and verified on the object store, not on the producers' success lines:
+  **16 objects at `s3://opal-data-etfs/bbg/2026-09-03/`** (7 at 13:01:32Z, 9 under `constituents/`
+  at 13:02:17Z, all non-zero), counted with `length(Contents)` rather than `KeyCount` — which is
+  absent when the CLI auto-paginates. **Today's capture is SAVED.** Leg 1b's
+  `refused:entitlement` on all four tickers is the documented BQL state, not a fault.
+- **Call 2 — the duplicates are INTENTIONAL and the LOADER SUMS them.** That is Remedy A, the
+  option I exercised and recommended, ruled in. Implementation is `1.0.0_SA_CTO~Z`'s work order
+  along with the `:129` branch.
+
+⛔ **CALL 1 IS SPENT, NOT STANDING.** It covered TODAY's two legs only. A future skipped day is a
+fresh vendor-egress call until `:129` is fixed. Recorded so no successor reads it as permission.
+
+### THE ITEM NEITHER RULING CLOSES, and it is the one I still own
+Call 1 saved the **capture**; it did not produce the **models vintage**. The served object is
+unchanged at `data_as_of 2026-09-02` — **so the condition that summoned me is still live.**
+Projected rather than left to be rediscovered at 07:30 tomorrow: if the loader sum has not landed
+by the 09-05 07:00 fire, that run reads the same template, dies at the same pivot, served stays
+09-02, and `trading_days_behind` = **3** → a second summons **and a second `:129` skip that Call 1
+does not cover.** The loader fix removes both triggers at once, so it is doing more work than the
+branch fix alone.
+
+**I am the seat that fires the re-pull. Blocked on exactly one thing: the loader sum landing.**
+
+**Measured input handed to the implementer** (a real fork in the code — the loader rescales per
+date *before* the point duplicates would be summed, so before-vs-after is a live choice):
+**order-invariant.** Both orders built end to end on the live file — same 397-row key set, max
+absolute difference **5.55e-17**, affected rows identical either way (SPHY 0.0556, SPYM 0.1160).
+**Negative control so the equality is a result and not a test that cannot fail:** the same
+comparison against a MAX-aggregated variant differs by **0.02625274**. Reason: summing duplicates
+does not change the date's raw total, which is the rescale's divisor.
+
+**Scope of the fix, censused across all five templates rather than the failing one:** UST 136/12,
+ST 333/23, LT 378/28, ULT 301/23 all carry **zero** duplicate pairs; INT 399/25 carries the only 2.
+A groupby-sum is a no-op for four of five models.
+
+⚠ **LIMIT ON MY OWN EVIDENCE, stated not implied:** I exercised the **pivot step in isolation**.
+That proves the fix clears the step that failed; it does **not** prove no later cell is
+duplicate-sensitive. The re-pull is the exercise that settles it, and it is mine to run.
+
+## 10. TWO RELAYS OF ANDREW, ONE FORK LANDING ON MY OWN NEXT ACT (msgs 20401 + 20405)
+
+`0.0.0_AB_MSTR~Z` relayed a **second, EARLIER** Andrew-direct (~12:1xZ, *"Recs 1 and 2 approved"*,
+a **four**-card frame) against `1.0.0_SA_CTO~Z`'s ~13:00Z (*"Approved for all of these"*, a
+**five**-card frame). **Two different statements, two different frames — not necessarily a
+contradiction in his word.** But they name **different unblock conditions for the re-pull I hold:**
+
+| carrier | the remedy it names |
+|---|---|
+| 20401 | card 2 → **"(a) INTENTIONAL, loader SUMS them"** — duplicates STAY in the sheet |
+| 20405 | *"models data stays at 2026-09-02 until **the template is de-duplicated**"* |
+
+`20405` also declines the sheet half (*"NOT TAKEN BY THIS SEAT … Read as his or OCIO's; one word
+redirects it"*) while authorising the loader half — so it carries both, then states the precondition
+as the sheet. **A reader taking that sentence literally waits for an edit the other ruling does not
+call for.** Surfaced to both seats; **not adjudicated** — relaying is mine, adjudicating is not
+(CLAUDE.md: never widen or narrow Andrew's word to one seat into a gate on another).
+
+⭐ **The practical resolution needs no ruling: EITHER remedy clears me.** Both remove the duplicate
+pairs before the pivot. I am not waiting on the fork, I am waiting on a change. **The fork still
+matters to somebody** — if each half is left because the other is assumed to cover it, the models
+leg sits at 09-02 indefinitely. Named so that cannot happen quietly.
+
+**Correction I owe on my own wording:** I used both framings — "the moment the template is
+de-duplicated" to Andrew, "blocked on the loader sum landing" to CTO~Z. **The accurate statement is
+that either clears it.**
+
+### ONE RUN, TWO SEATS EACH DESCRIBING ITSELF AS ITS CAUSE
+Both relays cite **identical object timestamps to the second** — 7 at `13:01:32Z`, 9 under
+`constituents/` at `13:02:17Z`. So there was **ONE run, not two** (the good outcome — no double-fire
+against the vendor), yet two separate Andrew vendor grants exist for it and each seat reports having
+spent its own on it. **Reading the objects cannot tell you which process wrote them** — the banked
+producer-attribution class, live again. Nothing needs redoing; both treat their grant as SPENT,
+which is the conservative direction. Raised only because two seats moving to fire within the same
+minute is a race against a vendor API and a shared S3 prefix that happened to resolve cleanly.
+
+**Accepted from 20405 without note:** as-of `2026-09-03` on a capture made at 13:0xZ on 09-04 is
+CORRECT (the pipeline lands under `prev_trading_day`); what was perishable was *today's run of a
+current-day-only source*, not a file named for today. Constituents fill DIVZ 29 / IDVZ 44 / PFDE 90
+/ PFOE 24; leg 1b's entitlement refusal on all four is the documented state, not a fault.
+
+## 11. STEP 2 EXECUTED — THE RE-PULL. Fired 13:39Z, the turn the loader landed.
+
+✅ **CLOSED — the section was written open, mid-poll, and is now FINAL. THE SUMMONS IS DISCHARGED.**
+*(Written before the outcome because this log is this seat's only durable carrier and a session
+ending mid-poll would have left the whole recovery unrecorded.)*
+
+**Fork resolved by both seats, in my favour and against MSTR~Z's own rec:** `0.0.0_AB_MSTR~Z`
+(20415) **withdrew the sheet half on the merits** — merging intentional split lots destroys real
+information to work around a loader defect — and `1.0.0_SA_CTO~Z` (20417) landed the loader sum
+`@cd6dddab6f`, **dissolving** the fork rather than ruling it. Verified on disk before firing
+(`holdings_summed` groupby at nb line 431, pivot reads it at 432); the working tree is the plane
+that executes, so push state is irrelevant to whether it was live.
+
+```
+runner  integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py  (cma env)
+target  20260903          PULL EXIT CODE: 0
+  market_indices_data_pull.ipynb            OK 16s
+  model_portfolio_regression_analysis.ipynb OK 99s   <- died this morning
+  TRIPWIRE PASS, 18/18
+```
+
+⭐ **The fix is now EXERCISED END-TO-END, which is the thing neither seat had.** CTO~Z tested the
+extracted function against the five real templates — that proves the failing step clears. **I named
+the residual myself in 20408: it could not prove no LATER cell was duplicate-sensitive.** The full
+chain now runs, and `model.etf_returns: no duplicate ['date','ticker'] rows` + `model.summary: shape
+(25,10) exact` settle it. **Residual discharged by exercise, not argument.**
+
+⚠ **`model.holdings: 1547` looks like the fix did not apply, and it is the opposite.** 1547 is the
+UNSUMMED total (136+333+399+378+301). The fix assigns to a NEW variable and only the *pivot* reads
+it, so the stored artifact keeps both split-lot rows. **The merge happens where the math requires it
+and nowhere else** — exactly MSTR~Z's reasoning for withdrawing the sheet edit.
+
+### ⛔ WHAT I WILL NOT LET PASS AS A RE-PULL WHEN IT WAS NOT
+`market_indices_data_pull.ipynb` ran in **16s**; this morning the same notebook took **134s**. And
+`data 20260903 v1.pkl` carries mtime **07:02:25** — this morning's artifact, *not* rewritten by my
+09:39–09:41 run. Only `model 20260903 v1.pkl` (09:41:03) is mine.
+**So the re-pull did NOT re-fetch market-index data.** It reused the PKL the scheduled run's own
+successful first leg had already written before the model notebook killed the chain. **I did not
+establish the mechanism** (an idempotence check on an existing target is the obvious candidate; I
+did not read the notebook to confirm) **and am not asserting one.** Sound on the merits — it is a
+legitimate 09-03 vintage that passed the full tripwire in my run, identical to what the scheduled
+run would have published — and one fewer vendor call on a day that already had a double-fire. But
+*"ran in 16s"* and *"re-fetched"* are different claims and only the first is measured.
+
+### PUBLISH LEG — channel chosen against the runner's own instruction
+Ran the **production publisher** (`publish_to_portal.py` under PY_AWS, no args) — the exact form
+`scheduled_daily_pull.cmd`'s send leg uses, so this completes the failed scheduled run rather than
+opening a new path. It re-runs the as-of-scoped tripwire itself and refuses backward publishes
+(rc 40). **Pre-announced on the broker (20422) before firing**, per the remedy adopted in 20420
+after today's double-fire — though the re-pull itself was announced *mid-flight*, not pre-flight,
+and I said so rather than letting the timestamp imply otherwise.
+
+⛔ **A FOURTH STALE POINTER, and this one routes to the wrong channel.** `run_daily_pull.py`'s
+closing NEXT hint says to publish via `opal_data_refresh_upload(...confirm=True)` — the **old
+m365-gateway path**, which the `.cmd` deliberately abandoned because it "returns transport dropped,
+response lost on calls that ALREADY SUCCEEDED server-side" and "a scheduled retry against that shape
+double-fires the pipeline." **The runner's closing instruction points at a channel its own wrapper
+retired for double-fire reasons — on the day we already had one.** I took the `.cmd`'s path.
+
+**Today's tally of stale pointers, all in recovery-path documents:** STANDING_ORDER's rc=1 exit
+table · its §3a label caveat · its `workflows/` runner path (measured ABSENT) · `run_daily_pull.py`'s
+NEXT hint. Flagged, not fixed — no git lane.
+
+Publisher: `as-of-scoped tripwire PASS` · `portal currently serves 2026-09-02 -- 2026-09-03 is newer,
+safe to advance` · both PKLs uploaded (8,633,578 + 17,626,699 bytes) · `manifest.json uploaded LAST
+-- pipeline fired` · `served data_as_of 2026-09-03` · `served 1D matches the PKL for all five
+models` · **PUBLISH EXIT CODE: 0**.
+
+## 12. DISCHARGE — measured on a second instrument, not on the publisher's rc
+
+```
+portal_lookup.py (a different code path from the publisher and from freshness_check's boto3 read)
+  data_as_of    2026-09-03      (was 2026-09-02)
+  generated_at  2026-09-04T13:48:15Z
+  LastModified  2026-09-04 13:48:17Z
+  size          19172 bytes     (was 19194) -- CHANGED, so new content, not a re-upload
+                                of identical bytes wearing a fresh timestamp
+
+freshness_check --verdict-only (the checker's OWN logic, no S3, no summons fired)
+  as_of 2026-09-03 / today 2026-09-04 -> frontier 2026-09-04, behind=1 -> PASS  rc=0
+  CONTROL  as_of 2026-09-02 same day -> behind=2 -> STALE rc=2
+```
+The control matters: **PASS is not a constant** — the instrument still refuses the exact state it
+summoned me on. The publisher also ran a check the runner's tripwire does not — *"all 5 model
+portfolios have a bar ON the as-of 2026-09-03"* — so the advance is not merely a date field moving.
+
+### ⛔ A FIGURE I SENT TWO SEATS WAS WRONG — `behind=3` IS ACTUALLY `2`
+I projected in 20407/20408 and again in 20422/20423 that a 09-05 fire with nothing landed would read
+`trading_days_behind=3`. **Measured: 2.** `2026-09-05 IS A SATURDAY`, so
+`expected_last_trading_day` does not advance to 09-05 — it stays at 2026-09-04.
+
+**This is the exact failure CLAUDE.md NEVER#1 exists to prevent, and I walked into it after
+correctly avoiding it once the same session.** I resolved the calendar properly for the BACKWARD
+verdict this morning, with a four-point control sweep — then computed the FORWARD projection by
+counting calendar days, which is the *"a calendar-day subtraction would false-summon every Monday"*
+error the checker's own header names. **Direction right, magnitude wrong.** Corrected to both seats
+(20430/20431) because the wrong number reached their records, not because it still gates anything.
+
+The fuller picture, which changes the shape of any future projection:
+
+| date | trading day | frontier |
+|---|---|---|
+| Fri 2026-09-04 | yes | 2026-09-04 |
+| Sat 09-05 / Sun 09-06 / **Mon 09-07 (Labor Day)** | **no** | 2026-09-04 (flat) |
+| Tue 2026-09-08 | yes | 2026-09-08 |
+
+**The frontier is FLAT Friday through Monday.** Today's 2026-09-03 reads PASS across the whole long
+weekend; the next real test is Tuesday's fire.
+
+## 13. FINAL STATE
+
+**Summons `20260904T113002Z` DISCHARGED**, Step 1 → Step 2 → Step 3 complete in one session.
+Registration LIVE; inbox Monitor `bnl3oewlo` and Teams Monitor `b1866ois3` both running; zero crons;
+msgs 20395/20397/20401/20405/20415/20417/20420 ACKed on the READ clock.
+
+**Open, none of it mine:** `1.0.0_SA_CTO~Z` holds the `:129` branch and the rc=1 table. **Unowned:
+the four stale pointers** in recovery-path documents — an operator following STANDING_ORDER
+literally in a dark-morning recovery gets a file-not-found on the recovery step itself, then a
+publish hint pointing at the retired double-fire-prone gateway channel. Flagged, no git lane.
+
+---
+
+**Incidental live positive for a peer's fix, offered not claimed:** `0.0.0_AB_MSTR~Z` reported
+fixing a Tier-2 write-gate CRLF defect (`@fe85e5bf6c`) whose unexercised cell was *(to_agents ARRAY
+× Tier-0 recipient)*. My 20407/20408 send is exactly that shape from an **independent** seat and
+returned **2 DELIVERED / 0 REFUSED**. That is corroboration through a different actor than the
+author's own battery — which is the distinction their own note about the battery's uncrossed
+dimensions was making.
 
 **Open, owned elsewhere:** (1) de-duplicate the INT template or add the loader groupby-sum, then a
 re-pull — which I can fire the moment the input is fixed; (2) today's ETF + constituents capture,
