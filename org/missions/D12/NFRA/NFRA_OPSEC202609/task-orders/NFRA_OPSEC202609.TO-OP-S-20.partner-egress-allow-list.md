@@ -2,7 +2,7 @@
 
 <to_id>NFRA_OPSEC202609.TO-OP-S-20</to_id>
 <project>NFRA_OPSEC202609</project>
-<issued_to>0.7.0_AE_CloudOps~S</issued_to>
+<issued_to>0.7.0_AE_CloudOps~U</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
 <status>staged</status>
@@ -29,7 +29,7 @@
 4. **`allowlists/partner-egress.json` written and VERSIONED in the evidence store** (`opal-security-evidence`, under `allowlists/`), carrying its denominators inside the file -- **the numbers travel with the artifact, not only in the proof.**
 5. **MIRRORED AS ALLOW ROWS IN THE S16 TABLE.** The table is truth (C-2); the JSON is the versioned record of how the truth was derived.
 6. **NO BLOCK ARM AND NO IP-SET WRITE IN THIS FACE.** This face produces ALLOW rows and a file. **The reconciler is the only thing that writes a set.**
-7. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
+7. **The proof-of-spec instance** at `../deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json`, VALID with the expected ids BEFORE the complete flip.
 
 ## ACCEPTANCE -- criterion ids minted at cut
 
@@ -54,7 +54,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this face pins no commit-scoped claim
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `S20-AC1`, `S20-AC2`, `S20-AC3`, `S20-AC4`, `S20-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~S/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S20-AC1,S20-AC2,S20-AC3,S20-AC4,S20-AC5"` BEFORE the complete flip. **`S20-AC2` is the control that must be able to fail: a census that produces a clean list with no zero-address firms named has probably not looked for them.** Every `surprises` entry opens with a row id that resolves in the project's channel.
+Criterion ids minted at cut by the issuer: `S20-AC1`, `S20-AC2`, `S20-AC3`, `S20-AC4`, `S20-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at `org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/0.7.0_AE_CloudOps~U/NFRA_OPSEC202609.TO-OP-S-20.partner-egress-allow-list.proof_of_spec.json` and validates it with `.tools/proof-of-spec-check.py <instance> "S20-AC1,S20-AC2,S20-AC3,S20-AC4,S20-AC5"` BEFORE the complete flip. **`S20-AC2` is the control that must be able to fail: a census that produces a clean list with no zero-address firms named has probably not looked for them.** Every `surprises` entry opens with a row id that resolves in the project's channel.
 </proof_of_spec>
 
 <compiler_tools_mandate>
