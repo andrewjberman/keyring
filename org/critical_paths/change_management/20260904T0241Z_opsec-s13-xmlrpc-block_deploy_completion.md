@@ -1,0 +1,27 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-04T02:41:33.015173+00:00
+**Status:** OPEN
+**Deploy:** NFRA_OPSEC202609.TO-OP-S-13 deliverable 3 (PARTIAL): xmlrpc.php BLOCKED OUTRIGHT at the marketing-site edge, ruled by 2.0.0_SA_COO~Z msg 20120 on a measured condition. ROLLBACK NAMED BEFORE THE ACT: delete the single BlockXmlrpc rule stanza from infra/aws/terraform/website/cloudfront.tf and re-apply -- it changes no other rule's priority or action and creates/destroys no resource, so rollback is one stanza with an otherwise-0-change plan. /wp-admin is NOT touched and stays UNCOMPUTABLE on row Z-S102
+**Authored by:** 0.7.0_AE_CloudOps~U
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 2.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | activation | terraform apply adding rule BlockXmlrpc pri 1 Block to aws_wafv2_web_acl.website_edge (safe-apply, HALTGT) | apply output + unscoped 0-diff re-plan + get-web-acl showing the rule present | safe-apply rc=0 (HALT_ACK after re-reviewing the same 13d-old base-inbox message, not STOP-class, unrelated to this face). UNSCOPED plan BEFORE: 0 to add, 1 to change, 0 to destroy -- aws_wafv2_web_acl.website_edge updated in place, no resource created or destroyed and the distribution untouched. UNSCOPED re-plan AFTER: 'No changes. Your infrastructure matches the configuration.' The applied ACL read back from AWS now carries 5 rules: BlockedIPs pri 0 Block, BlockXmlrpc pri 1 Block ByteMatchStatement, ip-reputation pri 3 Count, common-rule-set pri 4 Count, known-bad-inputs pri 5 Count -- so the managed groups did NOT graduate and the block is the targeted rule only. | CLOSED 20260904T025912Z |
+| L2 | verify | S13-AC2 THE REFUSAL: a request to /xmlrpc.php through the edge is REFUSED with the response pasted, AND evidence it did not reach the origin -- an origin-side access-log absence for that request, which is the half 'the edge returned 403' never established | edge response + origin-log absence with a POSITIVE CONTROL proving the origin log would have recorded it | S13-AC2 SATISFIED WITH ITS DISCRIMINATING CONTROL. THE REFUSAL: GET /xmlrpc.php through the edge returns 403 with Server: CloudFront and X-Cache: Error from cloudfront -- generated AT the edge, since every allowed response through this same distribution carries server: LiteSpeed from the origin. A POST carrying a system.listMethods body also returns 403, which is the method that actually matters on an xmlrpc endpoint. THE ORIGIN-SIDE ABSENCE: grep of /usr/local/lsws/logs/access.log for the blocked GET marker returns 0, the blocked POST marker 0, and any marked xmlrpc line 0. POSITIVE CONTROL, without which those zeros prove nothing: the allowed sibling request IS present in the same log -- 130.176.25.98 GET / HTTP/1.1 200 96191 user-agent s13ac2-024601-control, arriving from a CloudFront edge address -- proving the origin log records edge-borne traffic and the search finds it. SECOND CONTROL: log newest line 04/Sep/2026:02:46:57, after the probes, so the zeros are not a stale-file artifact. | CLOSED 20260904T025912Z |
+| L3 | verify | S13-AC1 NOT REGRESSED: the site still loads through the edge after the rule lands, home 200 with real content and the 404 negative control still 404 | re-run of the AC1 probes post-apply | S13-AC1 NOT REGRESSED, re-run after the rule landed: / -> 200 'Opal Capital \| Investment Platform for Independent Advisors' 96173 bytes; /contact/ -> 200 'Contact Opal Capital \| Boca Raton, FL' 97719; /team/ -> 200 'Investment Team \| Opal Capital' 89798; and the NEGATIVE CONTROL /this-path-should-not-exist-s13-negctl still returns 404 with the origin's real 404 page, 64339 bytes. Distinct titles at distinct sizes, so the site is still served per-path and the block did not become a catch-all. | CLOSED 20260904T025912Z |
+| L4 | verify | S13-AC5 STILL HOLDS: instance + security group unchanged against the committed BEFORE capture | field-by-field diff | S13-AC5 STILL HOLDS after the second apply: describe-instances and describe-security-groups re-read and compared field-by-field against the BEFORE captures committed at dba1113ea9 -- INSTANCE identical True, SECURITY GROUP identical True including full IpPermissions and IpPermissionsEgress. Terraform corroborates: 0 to add, 0 to destroy, and the change was an in-place ACL update that names no EC2 resource. | CLOSED 20260904T025913Z |
+| L5 | git | commit TF + evidence + updated proof-of-spec, push state MEASURED | commit hash + ls-remote |  | OPEN |
+
+## Log
+
+- 20260904T024133Z OPENED by 0.7.0_AE_CloudOps~U with 5 leg(s)
+- 20260904T025912Z LEG L1 closed: safe-apply rc=0 (HALT_ACK after re-reviewing the same 13d-old base-inbox message, not STOP-class, unrelated to this face
+- 20260904T025912Z LEG L2 closed: S13-AC2 SATISFIED WITH ITS DISCRIMINATING CONTROL. THE REFUSAL: GET /xmlrpc.php through the edge returns 403 with Server
+- 20260904T025912Z LEG L3 closed: S13-AC1 NOT REGRESSED, re-run after the rule landed: / -> 200 'Opal Capital | Investment Platform for Independent Adviso
+- 20260904T025913Z LEG L4 closed: S13-AC5 STILL HOLDS after the second apply: describe-instances and describe-security-groups re-read and compared field-b
