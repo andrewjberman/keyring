@@ -5,10 +5,35 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
-<!-- 0.7.0_AE_CloudOps~W 2026-09-04T01:1xZ: staged -> pending on the re-address (Msg-ID 20078). PHASE 1
-     IS DONE AND THE VERDICT IS CORRECTLY UNSTARTABLE -- all three roles file UNCOMPUTABLE for now:
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T02:1xZ: COMPLETE. Proof-of-spec VALID rc=0, 5 of 5 criteria PASS.
+     THE VERDICT: all three roles PASS on the APPLIED plane. 45 simulations, ONE --resource-arns per
+     call, 28 allowed / 17 denied / 0 mismatches, stable across two runs. Applied-plane existence
+     confirmed at this seat (all three CreateDate 2026-09-04T01:51:56Z) with a fabricated-name
+     negative control returning NoSuchEntity.
+     C-2 AND C-11 VERDICTED ACROSS ALL FOUR IP SETS, not the two the criterion originally said:
+     reconciler allowed x4, sentinel explicitDeny x4, CLI explicitDeny x4. The four-set correction was
+     this face's own finding, adopted by the issuer at 7669a062e6 BEFORE the roles landed -- without it
+     this verdict would have certified the chain's founding invariant with half the population
+     unguarded and every simulation in it passing.
+     S22-AC2's GATE HELD: 17 denies of 45, so the instrument demonstrably says no.
+     THE ses:FromAddress TRAP WAS DEMONSTRATED IN BOTH DIRECTIONS -- allowed WITH the context entry,
+     implicitDeny WITHOUT it, same call otherwise. Without it this face would have filed a FALSE DENY
+     on a correctly-granted permission. The warning came from iam_sentinel.tf, written by
+     0.7.0_AE_CloudOps~S addressed to this face.
+     VERDICT DELIVERED: msg 20115 (~T, reconciler + CLI), 20116 (~S, sentinel), 20117 (COO~Z), all
+     preceding any function deployment -- no code for any of the three roles exists yet.
+     ZERO IAM POLICY EDITS by this face, with a positive control proving the census sees .tf files.
+     WHAT THIS VERDICT DOES NOT ESTABLISH, and it is in the instance rather than left to inference:
+     C-2's EXCLUSIVITY over the account. This face verdicted THREE principals; C-2 claims nothing else
+     in 221 roles ever calls UpdateIPSet, and a fourth holder would leave all 45 results unchanged.
+     That enumeration is S15-AC3's. Nor does it cover resource policies, SCPs, or whether the code
+     makes the calls -- an allowed pair is not an exercised pair.
+     ARTIFACTS: phase1-permission-pairs.md @a63dc951ec, simulation-log.txt @4d31522182.
+
+     Prior note, kept for the record -- 2026-09-04T01:1xZ, staged -> pending on the re-address
+     (Msg-ID 20078), when the verdict was correctly unstartable and all three roles filed UNCOMPUTABLE:
      aws iam list-roles over a TRUE denominator of 221 (counted client-side; --query length() returns
      the PAGE count and read 100) returns ZERO for ipset / reconcil / sentinel / unblock, positive
      control passing on two known roles.
