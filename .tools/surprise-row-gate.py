@@ -15,6 +15,8 @@ WHAT IT REFUSES, on a staged org/surprise_channel/**/{INVESTIGATION,REMEDIATION}
                             orders) keeps the pair on the LOCKED MAPPING  SPEC_ERROR->6 | DECOMP_INVALIDATING->5 |
                             SCOPE_CHANGE->2. The L10 precondition applies to EVERY new remediation row (below).
   ANY new row            -> must satisfy its schema's REQUIRED fields and closed enums
+  ANY new row            -> carries an id unused in every OTHER document of its plane under the project, at the
+                            graded index (the allocator race of v3's first drain, 3.0.0_SA_CVO 94007)
 
 =================================================================================================
 PROSPECTIVE BY CONSTRUCTION, AND THAT IS A DESIGN CHOICE WITH A REASON
@@ -251,22 +253,61 @@ def _index_paths(root, patterns):
     return [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()], ""
 
 
-def _resolve_latest(investigation_files, remediation_ids):
-    """PURE. investigation_files = [(path, rows)] in path order; remediation_ids = ids of remediation rows.
-    Returns (latest {item_id: disposition}, unknown_targets [ids named by `adjudicates` that no row carries])."""
-    latest, order = {}, []
-    for _p, rows in investigation_files:
+def _is_adjudication_doc(path):
+    """carrier 5 / annex 4a: the CVO's document. Its rows are ABOUT items and are not items (v3 L10 counts worker rows only)."""
+    return "ADJUDICATION" in os.path.basename(str(path)).upper()
+
+
+def _duplicate_ids(investigation_files):
+    """PURE. {id: [paths]} for every id carried by MORE THAN ONE document of the plane (v3's first drain, 2026-09-04
+    04:2xZ, 3.0.0_SA_CVO 94007: two worktrees, two indexes, one sequence -- NFRA_COMPEFFICACY-S34 minted by the CVO's
+    adjudication @b50a124783 and by worker ~2 @e7dda3d93c). A repeat WITHIN one file is _mutation_violations' limb."""
+    seen = {}
+    for p, rows in investigation_files:
         for r in rows:
             rid = r.get("id")
-            if rid and rid not in latest:
+            if rid and p not in seen.setdefault(rid, []):
+                seen[rid].append(p)
+    return {k: v for k, v in seen.items() if len(v) > 1}
+
+
+def _resolve_latest(investigation_files, remediation_ids):
+    """PURE. investigation_files = [(path, rows)] in path order; remediation_ids = ids of remediation rows.
+    Returns (latest {item_id: disposition}, unknown [`adjudicates` targets that land on no single item]).
+    ITEMS are the rows of INVESTIGATION documents. An ADJUDICATION document's rows are the CVO's rows ABOUT items
+    (annex 4a): their `adjudicates` applies, their own ids are NOT items -- spine v3 L10 counts worker rows only, and
+    seeding them made the CVO's own UNDER_INVESTIGATION row block the CVO's own slug (94010).
+    An id carried by TWO investigation documents (the allocator race) resolves toward OPEN -- any undispositioned
+    occurrence keeps it undispositioned -- and an `adjudicates` naming it is AMBIGUOUS and NOT applied (there is no
+    single item to land on); the collision is reported here and by _duplicate_ids, and the corrective record is a
+    NEW row. An `adjudicates` naming an adjudication row's own id is a real row, not a phantom: nothing to flip."""
+    latest, carried, item_docs = {}, set(), {}
+    for p, rows in investigation_files:
+        adj = _is_adjudication_doc(p)
+        for r in rows:
+            rid = r.get("id")
+            if not rid:
+                continue
+            carried.add(rid)
+            if adj:
+                continue
+            item_docs.setdefault(rid, set()).add(p)
+            if rid not in latest:
                 latest[rid] = r.get("disposition")
-                order.append(rid)
+            elif r.get("disposition") in UNDISPOSITIONED:
+                latest[rid] = r.get("disposition")   # a second carrier that is open keeps the item open
+    ambiguous = {rid for rid, docs in item_docs.items() if len(docs) > 1}
     unknown = []
     for _p, rows in investigation_files:
         for r in rows:
             for target in (r.get("adjudicates") or []):
+                if target in ambiguous:
+                    unknown.append("%s (by %s) -- AMBIGUOUS: %d investigation documents carry that id, so the adjudication "
+                                   "lands on no single item" % (target, r.get("id"), len(item_docs[target])))
+                    continue
                 if target not in latest:
-                    unknown.append("%s (by %s)" % (target, r.get("id")))
+                    if target not in carried:
+                        unknown.append("%s (by %s)" % (target, r.get("id")))
                     continue
                 latest[target] = r.get("disposition")
     for rid in remediation_ids:
@@ -309,6 +350,70 @@ def _latest_dispositions(root, code):
     return latest, unknown, len(files) + len(rem_paths), ""
 
 
+def _plane_patterns(kind):
+    """The documents that share ONE id sequence: the investigation plane (investigations + the CVO's adjudications) or
+    the remediation plane. ACROSS planes ids collide BY DESIGN (a remediation row bears its graduated item's id)."""
+    if kind == "REMEDIATION":
+        return REMEDIATION_PATTERNS
+    return INVESTIGATION_PATTERNS + ADJUDICATION_PATTERNS
+
+
+def _plane_docs(root, code, kind, exclude_rel):
+    """([(path, {ids})], note) for every OTHER document of the plane under the project, read from the INDEX;
+    (None, note) when the census could not run -- the caller fails closed."""
+    paths, note = _index_paths(root, [p % code for p in _plane_patterns(kind)])
+    if paths is None:
+        return None, note
+    docs, ex = [], exclude_rel.replace("\\", "/")
+    for p in paths:
+        if p == ex:
+            continue
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None, "%s unreadable in the index (%s)" % (p, st)
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None, "%s holds %d unparsed block(s)" % (p, bad)
+        docs.append((p, {r.get("id") for r in rows if r.get("id")}))
+    return docs, ""
+
+
+def _plane_duplicates(root, code):
+    """({id: [paths]}, note) over the project's investigation plane in the INDEX; (None, note) when it could not run."""
+    docs, note = _plane_docs(root, code, "INVESTIGATION", "")
+    if docs is None:
+        return None, note
+    return _duplicate_ids([(p, [{"id": i} for i in sorted(ids)]) for p, ids in docs]), ""
+
+
+def _duplicate_id_violations(rel, kind, added, code, plane_docs, note=""):
+    """PURE given `plane_docs`. UNIQUENESS ACROSS DOCUMENTS (2026-09-04, 3.0.0_SA_CVO 94007, v3's first drain): a NEW
+    row's id must exist in NO other document of its plane under the project at the graded index. Two worktrees, two
+    indexes, one sequence minted NFRA_COMPEFFICACY-S34 twice (@b50a124783 in adjudications/, @e7dda3d93c in
+    investigations/); the drain merged the union without a gate and the rollup let the last-read document win. This
+    limb refuses what THIS index carries -- a worker's worktree index cannot see the main index's allocations, so the
+    drain grades the MERGED index (the COO's half, /dispatch Step 5) and an allocator coordinate in the id (the annex's
+    Z- precedent) removes the race; neither is this limb. None = the census could not run -> refused, fail-closed."""
+    if not added:
+        return []
+    if plane_docs is None:
+        return ["%s: the id-uniqueness census over %s's %s plane could NOT run (%s) -- REFUSED, fail-closed"
+                % (rel, code, kind.lower(), note or "no reason given")]
+    out = []
+    for r in added:
+        rid = r.get("id")
+        if not rid:
+            continue
+        hits = [p for p, ids in plane_docs if rid in ids]
+        if hits:
+            out.append("%s: NEW row %s -- that id already exists in %s (the same plane of %s's channel, at the graded "
+                       "index). An id is ONE row across the project's documents; mint the next unused number over EVERY "
+                       "document of the plane (ids are permanent and never renumbered, @b3584ea86a). Two allocators "
+                       "minting one sequence is the collision the CVO measured at v3's first drain (94007)."
+                       % (rel, rid, ", ".join(hits), code))
+    return out
+
+
 def _investigations_precondition_violations(rel, row, code, route_word, dispositions):
     """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
     _latest_dispositions (injectable for the self-test)."""
@@ -319,8 +424,8 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
                 "evaluated (%s) -- REFUSED, fail-closed" % (rid, code, note)]
     out = []
     if unknown:
-        out.append("%s: `adjudicates` names %s, which no investigation row under %s carries -- an adjudication "
-                   "of a phantom item is refused" % (rid, ", ".join(unknown), code))
+        out.append("%s: `adjudicates` names %s -- an adjudication that lands on no single item under %s (a phantom "
+                   "id, or an id two investigation documents carry) is refused" % (rid, ", ".join(unknown), code))
     open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
     if open_items:
         out.append("%s: NEW row (%s) while %d of %d investigation item(s) under %s are NOT "
@@ -776,6 +881,10 @@ def check_file(root, rel):
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
+    # UNIQUENESS ACROSS DOCUMENTS (94007): every NEW id is unused in every OTHER document of its plane at the index.
+    if folder_project and added:
+        _pd, _pn = _plane_docs(root, folder_project, kind, rel)
+        v.extend(_duplicate_id_violations(rel, kind, added, folder_project, _pd, _pn))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
     _fv, _fn = _foreign_row_violations(rel, kind, added, _committer_serial(root), coworkers=_cw)
@@ -870,10 +979,10 @@ def _self_test(root):
                                      disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}))),
             ("legacy pair route SPEC_ERROR + loop_target 5 -> REFUSED (a pair that is present keeps the locked map)",
              lambda: any("MAPPING IS" in x for x in _check_row(rem(route="SPEC_ERROR", loop_target=5), "REMEDIATION", rschema))),
-            ("carrier 5: an adjudication document's row dispositions an investigation item across documents (pure resolver)",
-             lambda: _resolve_latest([("inv", [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"}]),
-                                      ("adj", [{"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S1"]}])], [])[0]
-             == {"X_PRJ-S1": "GRADUATED", "X_PRJ-S2": "GRADUATED"}),
+            ("carrier 5: an adjudication document's row dispositions an investigation item across documents; the CVO's row is NOT an item",
+             lambda: _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"}]),
+                                      (ADJ, [{"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S1"]}])], [])
+             == ({"X_PRJ-S1": "GRADUATED"}, [])),
             ("carrier 5: adjudications/ path resolves to (project, ADJUDICATION)",
              lambda: _folder_identity("org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md") == ("NFRA_CLDGRPH", "ADJUDICATION")),
             ("REMEDIATED and DISARMED, no route -> admitted",
@@ -932,6 +1041,49 @@ def _self_test(root):
          lambda: not _monotone_advance(base_row, adv(remediation={"state": "REMEDIATED"}, remedy="fix the other thing"))),
         ("advance: no change at all -> not an advance (False)", lambda: not _monotone_advance(base_row, adv())),
     ]
+    # THE ITEM CENSUS and THE ALLOCATOR RACE (94007 / 94010, v3's first drain): items vs the CVO's rows; one id, two documents.
+    ADJ = "org/missions/D11/NFRA/X_PRJ/surprise-channel/adjudications/ADJUDICATION_v1.md"
+    INV = "org/missions/D11/NFRA/X_PRJ/surprise-channel/investigations/INVESTIGATION_v1.md"
+    INV2 = "org/missions/D11/NFRA/X_PRJ/surprise-channel/investigations/INVESTIGATION_v2.md"
+    two_docs = lambda a, b: _resolve_latest([(INV, [{"id": "X_PRJ-S4", "disposition": a}]),  # noqa: E731
+                                             (INV2, [{"id": "X_PRJ-S4", "disposition": b}])], [])[0]
+    coll = _resolve_latest([(INV, [{"id": "X_PRJ-S4", "disposition": "UNDER_INVESTIGATION"}]),
+                            (INV2, [{"id": "X_PRJ-S4", "disposition": "UNDER_INVESTIGATION"}]),
+                            (ADJ, [{"id": "X_PRJ-S9", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S4"]}])], [])
+    arms += [
+        ("census: an UNDER_INVESTIGATION row of the CVO's own (adjudications/, no adjudicates) is not an item and does not block the slug",
+         lambda: _investigations_precondition_violations("r", row, "X_PRJ", "the slug", (
+             _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}]),
+                              (ADJ, [{"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION"}])], [])[0], [], 2, "")) == []),
+        ("census MUTANT: the same UNDER_INVESTIGATION row filed as an investigation row DOES block (the document decides, not the seat)",
+         lambda: _investigations_precondition_violations("r", row, "X_PRJ", "the slug", (
+             _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}, {"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION"}])], [])[0], [], 1, "")) != []),
+        ("census: `adjudicates` naming an adjudication-document row's own id -> a real row, not a phantom, nothing to flip",
+         lambda: _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}]),
+                                  (ADJ, [{"id": "X_PRJ-S2", "disposition": "DISMISSED_WITH_REASON"},
+                                         {"id": "X_PRJ-S3", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S2"]}])], [])
+         == ({"X_PRJ-S1": "GRADUATED"}, [])),
+        ("collision: one id in TWO investigation documents, one occurrence open -> OPEN whichever document is read first",
+         lambda: two_docs("DISMISSED_WITH_REASON", "UNDER_INVESTIGATION") == {"X_PRJ-S4": "UNDER_INVESTIGATION"}
+         and two_docs("UNDER_INVESTIGATION", "DISMISSED_WITH_REASON") == {"X_PRJ-S4": "UNDER_INVESTIGATION"}),
+        ("collision: `adjudicates` naming an id two investigation documents carry -> AMBIGUOUS, not applied, refused by the limb",
+         lambda: coll[0] == {"X_PRJ-S4": "UNDER_INVESTIGATION"} and any("AMBIGUOUS" in u for u in coll[1])
+         and any("no single item" in x for x in _investigations_precondition_violations("r", row, "X_PRJ", "the slug", (coll[0], coll[1], 3, "")))),
+        ("collision: _duplicate_ids reports the plane collision (the CVO's row and a worker's row on one id) and nothing else",
+         lambda: _duplicate_ids([(INV, [{"id": "X_PRJ-S1"}, {"id": "X_PRJ-S34"}]), (ADJ, [{"id": "X_PRJ-S34"}, {"id": "X_PRJ-S35"}])])
+         == {"X_PRJ-S34": [INV, ADJ]}),
+        ("uniqueness limb: a NEW row whose id sits in another document of the plane -> refused, names the document",
+         lambda: any(("already exists in " + ADJ) in x and "X_PRJ-S34" in x for x in _duplicate_id_violations(
+             INV, "INVESTIGATION", [{"id": "X_PRJ-S34"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})]))),
+        ("uniqueness limb: a NEW row with the next unused id -> admitted",
+         lambda: _duplicate_id_violations(INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})]) == []),
+        ("uniqueness limb: the plane census could not run -> refused fail-closed, names the reason",
+         lambda: any("fail-closed" in x and "rc=128" in x for x in _duplicate_id_violations(
+             INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", None, "git ls-files rc=128"))),
+        ("uniqueness limb: the planes are separate -- remediation rows read remediation documents only; investigation rows read investigations + adjudications",
+         lambda: _plane_patterns("REMEDIATION") == REMEDIATION_PATTERNS
+         and _plane_patterns("INVESTIGATION") == INVESTIGATION_PATTERNS + ADJUDICATION_PATTERNS),
+    ]
     failed = 0
     for name, fn in arms:
         ok = False
@@ -947,8 +1099,13 @@ def _self_test(root):
         failed += 1
     else:
         open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
-        print("  LIVE  NFRA_COMPEFFICACY: %d item(s) across %d file(s); undispositioned %d: %s; phantom %d"
-              % (len(latest), nfiles, len(open_items), ", ".join(open_items) or "-", len(unknown)))
+        dups, dnote = _plane_duplicates(root, "NFRA_COMPEFFICACY")
+        print("  LIVE  NFRA_COMPEFFICACY: %d item(s) across %d file(s); undispositioned %d: %s; phantom/ambiguous %d; "
+              "duplicate ids across documents %s"
+              % (len(latest), nfiles, len(open_items), ", ".join(open_items) or "-", len(unknown),
+                 ("DID NOT RUN (%s)" % dnote) if dups is None else
+                 ("%d: %s" % (len(dups), "; ".join("%s in %s" % (k, ", ".join(os.path.basename(x) for x in v))
+                                                    for k, v in sorted(dups.items())) or "-"))))
     print("RESULT: %d arm(s) failed of %d (+ live census)" % (failed, len(arms)))
     return 1 if failed else 0
 

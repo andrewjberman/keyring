@@ -178,6 +178,11 @@ def main():
     inv = [r for r in items if r.get("_kind") != "REMEDIATION"]
     rem = [r for r in items if r.get("_kind") == "REMEDIATION"]
     adj = [r for r in inv if r.get("_doc") == "ADJUDICATION"]
+    # ITEMS vs THE CVO'S ROWS (2026-09-04, 3.0.0_SA_CVO 94010, the census's second instrument): an ADJUDICATION document's
+    # rows are ABOUT items (annex 4a) and are not items -- spine v3 L10 counts worker rows only, and counting the CVO's own
+    # UNDER_INVESTIGATION row as an item would block the CVO's own slug. Their `adjudicates` applies below; their own ids
+    # seed nothing. ARMED is a hazard standing and is read over EVERY row, the CVO's included.
+    inv_items = [r for r in inv if r.get("_doc") != "ADJUDICATION"]
     # LATEST CARRIER, not own row (2026-09-03, 1.0.0_SA_CTO as disarm_owner of NFRA_COMPEFFICACY-S10, 3.0.0_SA_CVO
     # 93340): the channel is append-only, so an item's disposition moves by a LATER row that names it in
     # `adjudicates` (investigation_item.schema.json; the row gate's second limb resolves it the same way), or by a
@@ -185,27 +190,53 @@ def main():
     # phantom OPEN + ARMED items on one project after a round whose gate read 0 undispositioned. Same resolution as
     # .tools/surprise-row-gate.py _resolve_latest: own row first, adjudications in file order (later wins), then
     # remediation ids. Every item carries `_latest` so a JSON consumer can reject on it.
-    latest = {}
+    # ONE ID, TWO DOCUMENTS (2026-09-04, 3.0.0_SA_CVO 94007, v3's first drain): two worktrees allocated one sequence and
+    # NFRA_COMPEFFICACY-S34 landed in adjudications/ (the CVO @b50a124783) AND investigations/ (worker ~2 @e7dda3d93c);
+    # this rollup let the last-read document win and reported the worker's OPEN row as DISMISSED, which nobody decided.
+    # Now: an id carried by two ITEM documents resolves toward OPEN, an `adjudicates` naming it is AMBIGUOUS and not
+    # applied, and every plane collision (item or CVO row) is a DEFECT line and a JSON denominator -- as the gate resolves.
+    docs_of = {}
     for r in inv:
+        docs_of.setdefault(r.get("id"), set()).add(r["_file"])
+    dup_ids = {k: sorted(v) for k, v in docs_of.items() if k and len(v) > 1}
+    item_docs = {}
+    for r in inv_items:
+        item_docs.setdefault(r.get("id"), set()).add(r["_file"])
+    ambiguous = {k for k, v in item_docs.items() if k and len(v) > 1}
+    latest = {}
+    for r in inv_items:
         rid = r.get("id")
         if rid and rid not in latest:
             latest[rid] = r.get("disposition")
+        elif rid and (r.get("disposition") in OPEN_DISPOSITIONS or not r.get("disposition")):
+            latest[rid] = r.get("disposition")   # a second carrier that is open keeps the item open
+    ambiguous_adj = []
     for r in inv:
         for target in (r.get("adjudicates") or []):
-            if target in latest:
+            if target in ambiguous:
+                ambiguous_adj.append((r, "adjudicates %s, an id %d item documents carry -- AMBIGUOUS, NOT applied"
+                                      % (target, len(item_docs[target]))))
+            elif target in latest:
                 latest[target] = r.get("disposition")
     for r in rem:
         if r.get("id") in latest:
             latest[r["id"]] = "GRADUATED"
     for r in inv:
-        r["_latest"] = latest.get(r.get("id"), r.get("disposition"))
+        r["_latest"] = (r.get("disposition") if r.get("_doc") == "ADJUDICATION"
+                        else latest.get(r.get("id"), r.get("disposition")))
     disarmed_ids = {r.get("id") for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"}
-    openi = [r for r in inv if r.get("_latest") in OPEN_DISPOSITIONS]
+    openi = [r for r in inv_items if r.get("_latest") in OPEN_DISPOSITIONS]
     # ARMED means the hazard is still live: an open item, or a graduated one whose remediation row has not DISARMED it.
     armed = [r for r in inv if r.get("hazard_standing") == "ARMED"
              and (r.get("_latest") in OPEN_DISPOSITIONS or (r.get("_latest") == "GRADUATED" and r.get("id") not in disarmed_ids))]
     shown = armed if a.armed else (items if a.all else openi)
     dfx = defects(items)
+    for rid, docs in sorted(dup_ids.items()):
+        for r in inv:
+            if r.get("id") == rid:
+                dfx.append((r, "DUPLICATE ID across %d documents (%s) -- two allocators, one sequence; resolved toward OPEN"
+                            % (len(docs), ", ".join(docs))))
+    dfx.extend(ambiguous_adj)
 
     if a.json:
         print(json.dumps({"items": items, "open": openi, "armed": armed,
@@ -213,8 +244,9 @@ def main():
                                       for r, w in dfx],
                           "malformed": malformed,
                           "remediation_rows": rem,
-                          "denominators": {"investigation_items": len(inv),
+                          "denominators": {"investigation_items": len(inv_items),
                                            "adjudication_rows": len(adj),
+                                           "duplicate_ids": dup_ids,
                                            "remediation_rows": len(rem),
                                            "open": len(openi), "armed": len(armed),
                                            "files": files}},
@@ -227,12 +259,15 @@ def main():
     projects = sorted({r["_project"] for r in items})
     print("\n== DENOMINATORS (the two planes are NOT summed -- ids collide BY DESIGN) ==")
     print("  INVESTIGATION plane: %d item(s) across %d project(s), from %d file(s)"
-          % (len(inv), len(projects), files))
-    print("    of which ADJUDICATION rows (the CVO's document, annex 4a; counted as the row gate counts them): %d" % len(adj))
+          % (len(inv_items), len(projects), files))
+    print("    beside them, ADJUDICATION rows (the CVO's document, annex 4a) -- NOT items, L10 counts worker rows only: %d" % len(adj))
+    if dup_ids:
+        print("    DUPLICATE IDS across documents (two allocators, one sequence; resolved toward OPEN, an adjudication by that id"
+              " NOT applied): %d -- %s" % (len(dup_ids), "; ".join("%s in %s" % (k, ", ".join(v)) for k, v in sorted(dup_ids.items()))))
     print("    OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d   [by LATEST carrier: own row, then `adjudicates`, then remediation id]" % len(openi))
     print("    ARMED (hazard still live: open, or graduated and not DISARMED): %d" % len(armed))
     for d in ("GRADUATED", "DISMISSED_WITH_REASON"):
-        print("    %-46s %d" % (d + ":", len([r for r in inv if r.get("_latest") == d])))
+        print("    %-46s %d" % (d + ":", len([r for r in inv_items if r.get("_latest") == d])))
     print("  REMEDIATION plane:   %d row(s)  -- a remediation row's id EQUALS its graduated"
           % len(rem))
     print("                       investigation item's id, so these are reported beside the")
@@ -261,8 +296,8 @@ def main():
             print("   %s" % m)
 
     print("\nCOMP-SURPRISE-RESULT investigation_items=%d remediation_rows=%d open=%d armed=%d "
-          "projects=%d files=%d defects=%d malformed=%d"
-          % (len(inv), len(rem), len(openi), len(armed), len(projects), files, len(dfx), len(malformed)))
+          "projects=%d files=%d defects=%d malformed=%d duplicate_ids=%d"
+          % (len(inv_items), len(rem), len(openi), len(armed), len(projects), files, len(dfx), len(malformed), len(dup_ids)))
 
 
 if __name__ == "__main__":
