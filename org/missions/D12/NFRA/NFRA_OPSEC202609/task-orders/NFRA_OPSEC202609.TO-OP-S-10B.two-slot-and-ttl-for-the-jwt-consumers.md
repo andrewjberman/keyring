@@ -30,6 +30,24 @@
 
 > ⛔ **A GRANT IS NOT A READER AND THIS FACE DOES NOT CLAIM 25 CONSUMERS. It claims the true number is UNMEASURED between 2 and 25**, and that **teaching two consumers a second slot and then rotating could break up to twenty-three others.** Overstating the surface is as misleading as understating it. **This is the shared-dependency case CLAUDE.md names: a check scoped to the MEMBERS cannot see a defect in what the members SHARE.** The face checked two functions; the capability sits on the roles beneath them.
 
+✅ **DELIVERABLE 0 IS DISCHARGED AND THE ANSWER RE-CUTS THIS FACE. THE SET IS FOUR, NOT TWO, AND ONE OF THEM SIGNS.** `0.7.0_AE_CloudOps~V` ran it and STOPPED, reserving the re-cut here, which is correct. This is that re-cut.
+
+**THE GRANTING SET IS FIVE ROLES, NOT TWO** -- measured over ALL 221 roles and 50 managed policies in one page with no continuation token, every inline and attached statement evaluated with wildcard expansion: `lambda-edge-execution-role`, `lambda-execution-role`, `opal-portal-lambda-role`, `opalinvest-auth-lambda-role`, `portal-auth-lambda-role`. **Upper bound 31, not 25** (5 + 13 + 12 + 1 + 0 over a `list-functions` denominator of 201 with `NextMarker` absent).
+
+> ⛔ **AND THE ROLE THE EARLIER BOUND MISSED CARRIES ONE OF THE TWO CONSUMERS THE FACE ITSELF NAMES.** `auth-validator-edge` runs as `lambda-edge-execution-role`, which was not among the two roles that produced the bound of 25 -- **so that bound structurally excluded a named consumer.** A bound derived from the wrong role set is not a conservative bound; it is a different question's answer.
+
+**THE FOUR READERS, on the CODE plane** -- every live function on all five roles had its **DEPLOYED artifact downloaded** and every member file searched for the literal secret id, with no hit on the other 25:
+1. **`opal-portal-authorizer`** -- verifier, named by the face, single-slot, **no TTL**.
+2. **`auth-validator-edge`** -- verifier, named by the face, single-slot, 300 s TTL.
+3. **`opal-session-analytics`** -- verifier, **NOT named by either face**.
+4. **`opalinvest-auth-handler`** -- **THE SIGNER, and neither face named it.**
+
+⛔ **THE SIGNER IS A DIFFERENT PROBLEM FROM THE VERIFIERS AND MUST NOT BE TAUGHT THE SAME THING.** A verifier needs to ACCEPT current-or-previous. **A signer needs to know which key is CURRENT and to switch at the right moment** -- teaching it two slots would be meaningless at best and would let it sign under a retired key at worst. **State its handling separately.**
+
+**THE LIVE PLANE GIVES THREE AND IT IS NOT THE SAME SET, AND IT IS NOT A DENOMINATOR:** the CloudTrail read is a partial page (40 pages, 2,000 events, more remaining). **Do not reconcile the two planes by picking the larger or the smaller** -- state both, state that the code plane is the authoritative one for WHO CAN, and that the live plane is partial.
+
+**ONE FINDING THAT IS NOT THIS FACE'S TO FIX AND MUST NOT BE FIXED HERE:** `lambda-edge-execution-role`'s grant is on `opal/auth/*`, a prefix wildcard that **also covers the PRIVATE key**. That is a least-privilege finding on a role this face does not own. **File it as a row and route it; do not narrow the grant inside this face**, and do not let a rotation depend on narrowing it.
+
 **SO, BEFORE DELIVERABLE 1: enumerate who actually READS that secret, and state the instrument.** A source census across the 25 for the secret id, and a live read of `GetSecretValue` against it if one is obtainable, are two different planes and neither alone is the answer. **Print the denominator and say what it CANNOT see.** If the true consumer set is larger than two, **that is a finding and a STOP**: report it, and the scope of what must be taught two slots is the issuer's to re-cut. **Do not silently widen this face to 25 functions and do not silently proceed on 2.**
 
 ## DELIVERABLE
