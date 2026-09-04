@@ -1,0 +1,495 @@
+# ETFS_GUARDRAIL -- the monthly ETF ownership report cannot go out over data it does not have, and if a hole survives every repair, Andrew is told exactly what is missing
+
+```json
+{
+ "project": "ETFS_GUARDRAIL",
+ "directive": "D8",
+ "fabric": "laptop",
+ "prd_version": "v0.3",
+ "step": 4,
+ "brief_ref": "docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md@1890d7785c",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "status": "RATIFIED"
+}
+```
+*PRD_HEADER block -- schema `org/standards/PRD_HEADER.schema.json`. First fenced block in the file by contract; it is what a monitor and the step-6 gate read. `status: RATIFIED` = step 5 may proceed. The step-6 RED/HOLD that `3.0.0_SA_CVO~A` set @`0d272d257c` was LIFTED by `3.0.0_SA_CVO` 2026-09-02 21:26Z -- RC1-RC7 GREEN, limb 5 GREEN, `org/tier1_exec/3.0.0_SA_CVO/deliverables/CANONICAL_LOOP_RC7_LIMB5_GRADE_AND_HOLD_LIFT_20260902.md`; step 6 proceeds at `2.0.0_SA_COO`'s sequencing.*
+
+**PRD v0.1 (stage 2, purpose-level) -- `1.0.0_SA_CTO` -- 2026-09-02**
+**Pipeline position:** step 1 brief (`4.0.0_SA_CRO`, `1890d7785c`) -> step 2 `/endpoint --forward` (`153f59c3ef`) -> **step 3/4 PRD (this document)** -> step 5 `2.0.0_SA_COO` atom-decomp, BEFORE any TO.
+**Project code:** `ETFS_GUARDRAIL` -- ratified Andrew-direct 2026-09-02 (*"ETFS_GUARDRAIL is good"*).
+**Directive:** **D8** (Model Portfolios Pipeline Fortification) · **fabric: `laptop`** -- Andrew-direct 2026-09-02,
+verbatim: *"laptop fabric but this would go under D8 Pipeline Fortification"*. **Not D4**, despite the `ETFS_*`
+code: D8's stance names this exact defect class -- *"the staleness is INSIDE THE PAYLOAD ... every object-mtime
+freshness instrument reads HEALTHY and is correct about the FILE. That blindness is the condition D8 exists to
+end."* D8 is itself LAPTOP-placed, so membership and fabric agree rather than one overriding the other.
+**Source brief:** `docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md` @`1890d7785c` (18,680 bytes, read 299/299).
+
+---
+
+## 0. AUTHORITY -- his words, verbatim
+
+**(1) The original ask, 2026-09-01** (carried in the brief header):
+> *"I'd like to be able to have it go out to aj@opalinvest.com via email but I'm hesitant in the event that
+> there are holes for whatever reason in backfill. What I'm thinking is maybe we can build in some kind of
+> guardrail that checks for holes pre-publishing and if there it it has a remediation process that checks the
+> source files, if they are not there it does targeted egress."*
+> Then: *"yes do all of the above."*
+
+**(2) The rulings, 2026-09-01**, against `/open-calls` (5 cards):
+> *"I agree with the reporting obligation window."*
+> *"All recs approved. ALso I want to be on the email as well as aj@opalinvest.com should be him and me at
+> andrew@opalinvest.com."*
+
+**(3) The terminal-notification ruling, 2026-09-02** (this terminal, on the step-2 endpoint):
+> *"there is one point that is missing however, which i would call FWD-7 and make your 7 entry at 8. There
+> needs to be a SES Urgent email that I receive at andrew@opalinvest.com if we are unable to backfill and have
+> missing dates in the final output. This email must be a last resort, the backfill strategy must be effective
+> enough that it doesnt happen, but if with egress from the usual sources still cannot get the information
+> then i need to know. Your Fwd-7 actually can be folded into this because in that email there should be a
+> structured report of exactly what dates were missing and from what provider and for what partner."*
+
+### The rulings table (card 3 is an OVERRIDE, not an approval)
+
+| Call | Rec put to him | RULING |
+|---|---|---|
+| 1 | align three partners onto one date basis before automating the send | **APPROVED.** PREREQUISITE to the send (s.6a of brief). |
+| 2 | restate published figures, or forward-only | **APPROVED FORWARD-ONLY.** No restatement, no partner notification. |
+| 3 | `aj@` REPLACE or JOIN `andrew@` | **NOT AS RECOMMENDED -- RULED JOIN.** Both addresses. |
+| 4 | standing pre-auth for targeted egress | **APPROVED KEEP PER-USE.** Rung 3 stays per-use-authorized. |
+| 5 | activate `ETFS_CANON` now | **APPROVED LEAVE AT SCOPING.** Sequenced after this project. |
+
+> **CARD 3 IS THE ONE THAT GETS LOST.** *"All recs approved"* arrived in the same message as a sentence
+> contradicting card 3's rec. **The specific instruction governs the general one.** A seat reading only the
+> blanket phrase implements REPLACE and silently drops Andrew from the distribution of his own report.
+
+> **A STALE OPEN QUESTION SURVIVES INSIDE THE BRIEF AND IS SUPERSEDED HERE.** Brief s.6a still carries
+> *"OPEN -- ANDREW'S CALL: does `aj@` replace `andrew@`... Spec assumes REPLACE"*. That line sits LATER in the
+> document than the ruling that answers it. **JOIN governs.** A builder reading the brief top-down would hit
+> the ruling first and the stale question second, and the second reads like the live one.
+
+### MORATORIUM CARVE-OUT -- widened 2026-09-02, and the width is stated so it is not inherited
+
+CLAUDE.md carries a standing ban on building **alerts / alarms / SNS / SES-sends / notifications /
+freshness-checkers / monitors "unless Andrew explicitly asks."** He asked, twice, in the words above.
+
+```
+  AUTHORIZED (2026-09-01)  a coverage PRECONDITION inside the existing render path
+                           a catch-up inside the EXISTING producers
+  AUTHORIZED (2026-09-02)  ONE SES send, on the TERMINAL FAILURE PATH ONLY  <- NEW, ruling (3)
+  STILL BANNED             a new monitor, a new alarm, a new SNS topic, a standing
+                           freshness service, or any send on a SCHEDULE rather than
+                           on the terminal failure of the ladder
+```
+
+> **THE NEW SEND IS NOT A MONITOR AND MUST NOT BECOME ONE.** It has no schedule and no polling loop. It is
+> emitted by the remediation ladder when the ladder terminates unresolved -- the same act that already writes
+> the refusal. **A send that fires on a timer, or on any condition short of "every rung failed", is outside
+> this carve-out.** His own constraint is the governing one: *"This email must be a last resort, the backfill
+> strategy must be effective enough that it doesnt happen."*
+
+---
+
+## ENDPOINT (step 2, /endpoint --forward)
+
+Emitted at step 2 from the brief alone, before any task order existed. `FWD-n` ids are **permanent and never
+reused**; a retired outcome leaves its number vacant. **FWD-7 was inserted and the prior FWD-7 renumbered to
+FWD-8 on Andrew's explicit instruction 2026-09-02, BEFORE this list had ever landed in a PRD and while nothing
+cited it** -- which is the only condition under which a renumber is safe.
+
+> ⛔ **"FROZEN" IS A CONTRACT HERE, NOT A CONTROL -- and I wrote "frozen" before I could back it.**
+> Measured by `3.0.0_SA_CVO` (msg 92483, 2026-09-02) against its own gate: `.tools/surprise-row-gate.py:53`
+> @`c6c3627269` validates an `outcome_ref` with `^FWD-[0-9]+$` -- **it checks the SHAPE of the id and never its
+> EXISTENCE.** The permanence rule is asserted in the comment directly above that line (`:51-52`) and is
+> **checked by nothing.** A row citing `FWD-9` when no FWD-9 was ever cut PASSES; so does a row citing `FWD-7`
+> meaning the PRE-renumber FWD-7, which is exactly the object that no longer exists.
+> **Corroborating census, with its denominator and a positive control:** zero surprise-channel rows cite any
+> `ETFS_GUARDRAIL` FWD-n (0 hits / 26 files), positive control 29 hits / 144,514 files including this PRD --
+> so the renumber broke no live citation. **That census certifies TODAY and does not make the freeze
+> enforceable.** No fix is proposed here: existence-checking needs a resolvable per-project FWD-n registry that
+> does not exist, and building one on this seat's own judgment would be an agent-made gate Andrew never asked
+> for. **Named as the residual so the word "frozen" is not read as a mechanism.**
+
+```
+  FWD-1  A day that went missing from the monthly ETF report gets filled in
+         on its own, before anyone has to notice it was gone
+         DONE WHEN  EXERCISED -- a real missed day has actually been caught up
+                    without a person intervening
+         ACCEPT     a day the report should have covered but did not gets picked
+                    up on its own before the month goes out -- including one
+                    where the partner's own data does not reach us until nearly
+                    two weeks later
+         SOURCE     brief s.3 (81-129), lag table 93-110
+
+  FWD-2  The monthly report cannot go out over incomplete data unless a
+         person decides to let it
+         DONE WHEN  EXERCISED -- the check has actually refused a month, and the
+                    refusal reached a person
+         ACCEPT     when days are genuinely missing, the report does not go out,
+                    and someone is told which days and why -- rather than it
+                    arriving looking normal
+         SOURCE     brief s.4 (130-162), s.5 (163-189)
+
+  FWD-3  The report states how complete it is, on its own face
+         DONE WHEN  APPLIED -- the statement is in the report itself
+         ACCEPT     someone reading the report can tell, without asking anyone
+                    and without opening anything else, how much of the month it
+                    really covers and how much was filled by repeating the
+                    previous day
+         SOURCE     brief s.4 (155-158)
+
+  FWD-4  A day that is legitimately empty is never "repaired" into a number
+         nobody measured
+         DONE WHEN  EXERCISED -- the system has actually met such a day and left
+                    it alone
+         ACCEPT     on a day the market was shut, or a day the partner sent us
+                    holdings with no prices attached, nothing is invented and
+                    nothing is reported as broken
+         SOURCE     brief s.2 (63-80), s.5 (185-189)
+
+  FWD-5  Andrew and AJ both receive the monthly report automatically
+         DONE WHEN  EXERCISED -- both people have actually received one
+         ACCEPT     both get the same monthly report in their own inbox without
+                    anyone sending it by hand, and neither one is dropped
+         SOURCE     brief s.6 (190-205), ruling card 3 (JOIN, not replace)
+
+  FWD-6  The three partners' figures in the report describe the same day as
+         each other
+         DONE WHEN  APPLIED -- the alignment is in place
+         ACCEPT     a figure shown for one partner on a given date can be set
+                    beside another partner's figure for that same date without
+                    the two being a day apart
+         SOURCE     brief s.6a (206-232)
+
+  FWD-7  When a gap survives every attempt to repair it, Andrew finds out --
+         and finds out exactly what is missing, without having to ask
+         DONE WHEN  EXERCISED -- such a message has actually been sent and read
+         ACCEPT     if every attempt to fill a gap has failed, including asking
+                    the outside provider, Andrew receives an urgent message that
+                    lists each day still missing, which partner it belongs to,
+                    and which provider the data should have come from -- and he
+                    can act on it without a follow-up question. He should almost
+                    never receive one; if these become routine, the repair ahead
+                    of it has failed, not succeeded
+         SOURCE     Andrew-direct 2026-09-02, s.0 ruling (3)
+
+  FWD-8  Going outside Opal to ask a provider for missing data stays a
+         decision a person makes
+         DONE WHEN  EXERCISED -- the system has actually stopped and asked,
+                    rather than going ahead on its own
+         ACCEPT     if the only way to fill a gap is to ask the outside provider
+                    for it, the system stops, names the days it wants, and waits
+                    for a person to say yes
+         SOURCE     brief s.5 (163-189), ruling card 4
+```
+
+> **WHY FWD-8 SURVIVED THE FOLD, stated because Andrew raised folding it and this seat did not simply comply.**
+> He observed FWD-8 *"can be folded into"* FWD-7 because both name the missing dates. **The REPORT CONTENT is
+> genuinely shared and is folded** -- FWD-7's message carries the dates/partner/provider detail. **The
+> AUTHORIZATION is not, because the two sit at different moments in the ladder:** FWD-8 fires *before* we leave
+> Opal and asks permission; FWD-7 fires *after* leaving Opal already failed and reports the outcome. Folding
+> them would silently retire ruling card 4's per-use authorization -- and a message sent after egress failed
+> cannot ask permission for the egress that already happened. **Flagged rather than assumed: if he intended
+> card 4's capability to stop being a named outcome, FWD-8 retires and its number stays vacant forever.**
+> ✅ **RESOLVED 2026-09-02 ~17:0xZ, Andrew-direct via `/open-calls` CALL 3 of 3, "All recs approved" -- KEEP.**
+> FWD-8 stands as a named outcome; ruling card 4 is not retired. Record:
+> `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_ALL_RECS_APPROVED_LANES_STEP4_CHECK_FWD8.md`.
+
+---
+
+## 1. The arc
+
+**Not a list -- an ordered movement, and the order is itself a ruling.**
+
+```
+  STARTS   the producers stop losing days at all
+           port inf's catch-up into cot- and bd-49f-, on a REPORTING-OBLIGATION
+           window rather than a day count
+                |
+                |  unlocks: a gate can now be a PROOF instead of the primary defence
+                v
+  THEN     we can tell the four kinds of empty day apart
+           market-closed / unpriced / producer-never-fired / genuinely-absent
+                |
+                |  unlocks: repair without fabrication, and refusal without false alarms
+                v
+  THEN     the artifact carries its own completeness, and the gate blocks a bad month
+                |
+                |  unlocks: publishing becomes a decision with evidence attached
+                v
+  THEN     the ladder repairs what it can, unattended, and stops to ask before egress
+                |
+                |  unlocks: distribution can widen without widening a defect
+                v
+  THEN     the three partners are put on one date basis   ** PREREQUISITE TO THE SEND **
+                |
+                v
+  ENDS     the report goes out on its own to both people -- and in the one case where
+           a hole survived everything above it, an urgent message names exactly what
+           is missing rather than letting a quiet gap ship
+```
+
+**Two ordering constraints, two different reasons -- both ruled, neither stylistic:**
+
+- **Catch-up BEFORE the gate.** A gate shipped first converts a silent wrong number into a blocked report
+  without fixing the cause, and *"the first thing a blocked monthly produces is pressure to override the gate."*
+- **Alignment BEFORE the automated send.** Widening the distribution of a partner-incomparable file is the one
+  act that converts a contained defect into a circulated one. The defect has cost nothing so far **precisely
+  because distribution was one person.**
+
+---
+
+## 2. Purpose -- what DONE means
+
+**DONE =**
+
+1. **The recurrence is closed at the cause.** A day the producer failed to write is picked up by the producer
+   itself on a later run, over a window bounded by the reporting obligation rather than by a guessed vendor lag.
+2. **The artifact can no longer hide its own gaps.** Coverage is stated in the report, every month, whatever
+   the verdict.
+3. **A month with real holes does not publish**, and the refusal is visible.
+4. **Nothing fabricates.** A legitimately empty day stays empty and is reported as expected, not repaired.
+5. **The send is automatic, to both people, on one date basis.**
+6. **A surviving hole reaches Andrew as an urgent, structured message** -- and that message is rare enough that
+   its arrival is itself a signal, not background noise.
+
+**The measured problem this closes:** the served August report was rendered over a month missing **5 of 21
+Cottonwood trading days**; the July report was rendered **4h10m before** 8 late slices landed and was never
+rebuilt. **Neither failure was visible in the artifact** -- carry-forward renders a gap and a held position
+identically. All five August holes had upstream data present and fully priced the whole time: **the producer
+never fired, and no egress was ever required.**
+
+---
+
+## 3. Territory -- what this owns, and what it only relies on
+
+| | |
+|---|---|
+| **OWNS** | the catch-up inside `cot-etf-ownership-daily` and `bd-49f-etf-ownership-daily`; the coverage classifier; the pre-publish gate as a render precondition; the coverage line in the report; the remediation ladder; the terminal SES notification; `EMAIL_RECIPIENT`; **the Orion date-basis alignment (`orion_normalize_as_of`) — ADDED 2026-09-02, see below** |
+
+> ⛔ **THIS CELL WAS MISSING A SURFACE, AND THE MANIFEST FOUND IT BY LOOKING BACKWARDS.** `3.0.0_SA_CVO`
+> (Rule 24 verdict @`0e8d6127f3`) caught that the step-5 manifest's S13 carried `verb: align` — a WORK verb —
+> on Orion date-basis alignment, a surface this table placed in **no** row: not OWNS, not RELIES-ON, not
+> TOUCHES. Re-derived here on my own instrument rather than accepted on the relay: **7 of 8 outcomes carried
+> an OWNS surface; FWD-6 carried none.**
+> **Three outcomes were legal and the choice was mine: add it to OWNS, demote S13 to `verify`, or declare
+> FWD-6 out of scope. I ADDED IT.** Demoting the verb would have made the summary sentence true while leaving
+> real work unplaced, and declaring FWD-6 out of scope would have silently shrunk the endpoint *after* Andrew
+> approved ruling card 1 that made this a prerequisite to the send. **The cell was wrong; the manifest was right.**
+> ⚠ **And the residual is mine too:** postulate (i) is MECE over THIS cell, so a manifest can be perfectly
+> MECE over a domain that is itself incomplete. CVO verified the manifest against the cell and explicitly did
+> **not** verify the cell against the world. One gap is now closed; the cell is not thereby certified.
+| **RELIES ON, does not own** | `lib/trading_calendar.py`; the upstream silver/bronze partitions; the existing `REPORTS_SNS_TOPIC` (`etfs-reports-alerts`); the EventBridge schedule; SES identity verification; `inf-etf-ownership-daily`'s existing catch-up as the PORT SOURCE |
+| **TOUCHES BUT MUST NOT CHANGE** | the ZERO-vs-MISSING producer contract -- it is the thing that makes class B distinguishable, and "fixing" it would destroy the discriminator |
+
+**Lanes** (from the brief; COO sequences and seats): `0.7.0_AE_CloudOps` Lambda + Terraform + orchestrator;
+`0.4.0_DS_ClientPlatform` classifier + renderer + Orion alignment; `3.0.0_SA_CVO` exercises acceptance.
+
+---
+
+## 4. Acceptance properties
+
+Numbered, each disputable. **Each must be EXERCISED, not asserted -- a declared-but-unrun falsifier is a
+promise, not a control.**
+
+1. A deleted slice for a trading day whose upstream exists and is priced is **regenerated by the next
+   ordinary producer run**, and the run names the date it recovered.
+2. A partner day whose upstream does not arrive until **12-13 days late is still caught up.** *This is the
+   property a straight port fails while passing review* -- the shipped constant looks back 10 days and 49F's
+   observed tail already exceeds it.
+3. Run against August 2026 **as it stood before the 09-01 repair**, the gate **refuses** and names exactly
+   five real holes. Run against August as it stands now, it **publishes**.
+4. A day with an upstream partition and nothing priced is classified **expected, not a hole**, and **no
+   backfill is attempted against it.**
+5. On a refusal, **no report is sent**, and the refusal is visible on the existing topic.
+6. Every rendered report carries a per-partner coverage line **regardless of verdict**.
+7. Both `aj@` and `andrew@` receive a real send, verified **as delivery**, not as a successful API call --
+   a comma-joined recipient string can be accepted and mis-delivered, and that failure is silent.
+8. When every rung fails, **exactly one urgent message** reaches `andrew@opalinvest.com` naming each missing
+   date, its partner, and its provider -- and it does **not** fire when the ladder resolved the gap.
+9. **No rung, under any failure, writes a value that was not measured.** If all three fail, the day stays
+   missing and is reported as missing.
+
+> **Property 2 is the one that matters.** It is the only one that fails on a plausible, review-passing
+> implementation. Properties 3 and 4 are cheap to satisfy and cheap to fake; 2 is neither.
+
+---
+
+## 5. Out of scope
+
+- **No new catch-up engine.** Port `inf`'s. Two implementations of one convention drift, and only one gets
+  fixed -- exactly how `_carry` and `_carried_daily` diverged into a $200M chart error.
+- **No new monitor, alarm, SNS topic, or standing freshness service.** See the carve-out in s.0: one send, on
+  the terminal failure path.
+- **No parallel/shadow pipeline or standing parity comparator** (Andrew complete veto). Modify producers in place.
+- **No DynamoDB** -- the 2026-08-24 design gate ruled S3 gold parquet.
+- **No restatement of published figures and no partner notification** (ruling card 2, forward-only).
+- **`ETFS_CANON` activation** -- ruling card 5, sequenced after this project.
+- **Retiring `etfs-canon-fanin`** -- brief s.9.1, an independent finding with its own owner. It is ENABLED on a
+  daily schedule against a DynamoDB table that does not exist, so it fires daily and cannot succeed. **Carried
+  here so it is not lost, explicitly NOT in this project's scope.**
+
+---
+
+## 6. Rulings that BIND
+
+1. **Reporting-obligation window, not a day count.** Reconcile every trading day from the start of the prior
+   month until that month's report has shipped. **A day-count window is explicitly NOT TAKEN and is not to be
+   re-proposed** -- it makes correctness depend on a vendor lag distribution nobody controls.
+2. **The window's terminus is a SHIPPED SIGNAL, not a date** -- read whether the month's report exists. Deriving
+   it from a calendar assumption lets a blocked render silently end the very reconciliation that would unblock it.
+3. **JOIN, not replace** -- `aj@` AND `andrew@`, as a comma-separated variable so a future recipient is a
+   variable change, not a code change.
+4. **Rungs 1-2 unattended; rung 3 STOPS AND ASKS.** No standing pre-authorization for vendor egress.
+5. **Orion date-basis alignment gates the automated send** -- not the guardrail. The guardrail can and should
+   land first.
+6. **Egress is the THIRD fallback and should almost never fire**, correcting the framing of the original ask:
+   in the only real instance, all five days were already in our own bucket.
+7. **The terminal SES notification is a last resort** (Andrew-direct 2026-09-02). Its routine arrival is
+   evidence that the repair ahead of it is not working.
+
+> **ONE UNRESOLVED DEPENDENCY, CARRIED NOT BURIED** (brief s.9.2): Inflection's lineage does not reconcile --
+> repo source computes one bucket path, every recent slice cites another, and the deploy postdates the last
+> repo change. **Those three facts do not fit together.** This binds ladder rung 2, which must check the bucket
+> the producer *actually reads*, and for Inflection **nobody currently knows which that is from the code alone.**
+> Resolving it needs a deployed-bytes diff against the build input, not a source read.
+
+---
+
+## 7. SURFACE MANIFEST (step 4 -> step 5) -- CONTRACT ADOPTED
+
+**ADOPTION RULING (`1.0.0_SA_CTO`, 2026-09-02).** `2.0.0_SA_COO`'s step-4 surface manifest contract
+(@`4bb2c5d94f`) is **ADOPTED as the step-4 standard**, on `3.0.0_SA_CVO`'s Rule 24 verdict @`0e8d6127f3`:
+*"ADOPT THE CONTRACT, do not adopt the RECORD."* The gap it names is real and it is mine -- s.3 above named
+`cot-etf-ownership-daily` in PROSE, and **a comp-tool takes a SUBJECT, so step 5's first act was discovery
+rather than decomposition.** Discovery is the half that should be mechanical.
+
+⛔ **THE FOUR-POSTULATE RECORD IS NOT ADOPTED AS WRITTEN. Three edits, applied below:**
+1. **Postulate (iv) is corrected.** *"No remedy moves `absent`"* is contradicted by the instance it ships with
+   (S11/S12 are `absent`, seated, and depended on). What is meant is **no BUILD remedy moves `absent`** --
+   `verify` is precisely the act that does. The ratified state machine already exists and is used here
+   instead: `.tools/substrate-card-check.py:126` `BASIS_RANK = {absent:0, unmeasured:0, held:1, inferred:2,
+   measured:3}`; **every legal transition is a rank increase.**
+2. **S7 is SPLIT** (postulate ii, same grain): rungs 1-2 are unattended automation; rung 3 **stops and asks a
+   person** -- a different ACTOR, not a later step.
+3. **The claim enum is FIVE values, not four.** CLAUDE.md:155's four-value shorthand is the gap;
+   `substrate-card-check.py:57` `BASIS_VOCAB` carries five including `unmeasured`. Census cited from CVO
+   s.4 (2,570 hits / 144,571 files, DEF=3) -- **cited, deliberately not re-run.**
+
+### 7.1 Provenance of the rows below -- READ THIS BEFORE CITING ANY CELL
+
+**Most evidence cells are `2.0.0_SA_COO`'s runs, not this seat's.** They are carried WITH their attribution
+rather than restated as mine, because a relayed measurement that loses its origin becomes a second apparent
+carrier of one claim. **`MEASURED-BY` names the instrument's owner on every row.** `3.0.0_SA_CVO` explicitly
+did NOT re-measure the 13 evidence cells; its verdict is about the schema only.
+
+### 7.2 The manifest
+
+| id | outcome_ref | surface | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
+|---|---|---|---|---|---|---|---|---|---|
+| S1 | FWD-1 | `infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py` | measured | COO -- enumerate **0 hits / 177 lines** | AE_CloudOps | port | S3,S10 | 1,3 | window is REPORTING-OBLIGATION. **Do not port `CATCHUP_WINDOW_DAYS = 10`** |
+| S2 | FWD-1 | `infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py` | measured | COO -- enumerate **0 hits / 122 lines** | AE_CloudOps | port | S3,S10,S11 | 1,2 | 49F tail **12-13 d** exceeds the shipped 10-d constant; a straight port passes review and fails property 2 |
+| S3 | FWD-1 | `infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/lambda_function.py:271-314` | measured | COO -- 4 hits / 317 lines | AE_CloudOps | verify | -- | 1 | PORT SOURCE. Relied on, **not owned** -- do not modify to suit the port |
+| S4 | FWD-4 | **NEW -> `data/etfs/scripts/coverage/classifier.py`** (home RULED in 7.4) | unmeasured | -- | DS_ClientPlatform | classify | S10 | 4 | **Class B is the trap.** Discriminator = read upstream partition + count priced. Must not "fix" the ZERO-vs-MISSING contract |
+| S5 | FWD-3 | `data/etfs/scripts/presentation/render_month_end.py` | measured | COO -- path resolves, 3 hits / 148,724 files | DS_ClientPlatform | wire | S4 | 6 | coverage line prints **regardless of verdict** |
+| S6 | FWD-2 | **NEW -> precondition INSIDE `render_month_end.py`** (ambiguity RULED in 7.4) | unmeasured | -- | DS_ClientPlatform | wire | S1,S2,S4 | 3,5 | **NOT a standing service.** Catch-up before gate |
+| S7a | FWD-8 | **NEW -> `data/etfs/scripts/coverage/remediate.py`** -- rungs 1-2, unattended | unmeasured | -- | AE_CloudOps | wire | S4,S12 | 9 | **No rung may fabricate.** Rung 1 re-runs the producer; rung 2 re-checks upstream |
+| S7b | FWD-8 | same module, rung 3 -- **STOPS AND ASKS A PERSON** | unmeasured | -- | AE_CloudOps | wire | S7a | 9 | **DIFFERENT ACTOR, not a later step.** Per-use egress, no standing grant. Names the dates it wants and waits |
+| S8 | FWD-7 | **NEW -> `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py`**, reusing the existing SES path (RULED in 7.4) | unmeasured | -- | AE_CloudOps | wire | S7b | 8 | **ONE send, terminal path only.** Not a monitor, no schedule, no polling. Fires only when EVERY rung failed |
+| S9 | FWD-5 | `infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:49,158,189,221,277` | **measured** | **CTO, THIS SEAT** -- enumerate over split/Destinations/EMAIL_RECIPIENT/ToAddresses = **12 hits / 375 lines / 16 sections** | AE_CloudOps | wire | S13 | 7 | ⛔ **A VARIABLE-ONLY CHANGE CANNOT DELIVER FWD-5 -- see 7.3** |
+| S10 | -- | `lib/trading_calendar.py` **+ 3 vendored copies**; neither target producer has one | measured | COO -- 5 paths | AE_CloudOps | verify | -- | 4 | **RELIES-ON, shared beneath S1/S2/S4.** Rule 22 common-dependency limb. Which calendar each producer resolves is UNANSWERED |
+| S11 | -- | `bd-49f-etf-ownership-daily` **vs its `-canonical` twin** -- which writes the served slices | absent | COO -- 4 producer dirs; discriminator NOT run | AE_CloudOps | verify | -- | -- | WRONG-OBJECT risk under S2; comp-read cannot detect a wrong file (rule 21 limb ii) |
+| S12 | -- | Inflection lineage: repo computes one bucket, slices cite another, deploy POSTDATES the last repo change | absent | brief s.9.2 -- **attributed, re-measured by NOBODY** | AE_CloudOps | verify | -- | -- | Needs a **deployed-bytes diff vs build input**, NOT a source read. Binds rung 2 |
+| S13 | FWD-6 | `orion_normalize_as_of` -- **now placed in the s.3 OWNS cell** | held | brief s.6a -- **0 calls / 19 files, the brief's denominator, not mine** | DS_ClientPlatform | align | -- | -- | **PREREQUISITE TO THE SEND ONLY.** Guardrail lands first. Forward-only: restate nothing, notify no partner |
+
+**MECE, BOTH DIRECTIONS, run rather than asserted:**
+
+```
+  FORWARD   every OWNS item has >=1 row .......... 8 of 8   (7 original + Orion, added this turn)
+  REVERSE   every WORK row maps to an OWNS item .. S13 FAILED -> FIXED by placing Orion in OWNS
+  OUTCOMES  every FWD-n has >=1 owned surface .... 8 of 8   (was 7 of 8; FWD-6 was the gap)
+  S10/S11/S12 are RELIES-ON, verb=verify, correctly NOT work rows.
+```
+
+### 7.3 ⛔ S9 -- MEASURED AT SOURCE, AND IT REFUTES A PREMISE IN THE BRIEF
+
+The brief (s.6) says a comma-separated `EMAIL_RECIPIENT` makes a future recipient *"a variable change rather
+than a code change."* **That is FALSE against the source.**
+
+```
+  :49   EMAIL_RECIPIENT = os.environ.get("EMAIL_RECIPIENT", "andrew@opalinvest.com")   <- ONE string
+  :158  msg["To"] = EMAIL_RECIPIENT            <- header only
+  :221  msg["To"] = EMAIL_RECIPIENT
+  :189  _ses.send_raw_email(Source=SES_SENDER, Destinations=[EMAIL_RECIPIENT], ...)    <- THE ENVELOPE
+  :277  _ses.send_raw_email(Source=SES_SENDER, Destinations=[EMAIL_RECIPIENT], ...)
+```
+
+**`Destinations=[EMAIL_RECIPIENT]` is a ONE-ELEMENT list whose single element would be the entire
+comma-joined string** -- one malformed address, not two recipients. **There is no recipient parsing anywhere
+in the file.**
+
+⭐ **THE ENUMERATION CARRIES ITS OWN POSITIVE CONTROL, which is why the zero is trustworthy:** the pattern
+included `split` and DID match one -- `key.rsplit("/", 1)` at :181, a FILENAME split. **The lens can see a
+split in this file; there simply is no recipient split.** A bare zero would have been indistinguishable from
+a broken pattern.
+
+**CONSEQUENCE:** FWD-5 requires a **CODE change**, not an environment-variable change. Ruling card 3 (JOIN)
+**cannot be implemented by setting the variable alone.** `claim` moves `inferred -> measured` (BASIS_RANK
+2 -> 3), a legal rank increase. COO named S9 as the row it most wanted converted, because its failure mode is
+silent -- Andrew stops receiving his own report, which looks exactly like the render not running. **It was
+right to want it, and the answer is worse than "unverified": the change as specified would not have worked.**
+
+#### ⛔ 7.3a -- CORRECTION: FOUR SITES, NOT TWO, AND THE TWO SHAPES CONFLICT
+
+**My first version of this section said "a code change at :189 and :277." That is HALF THE FOOTPRINT, and a
+TO scoped to it would hand the builder the half that breaks the other half.** Found by `3.0.0_SA_CVO`
+(msg 92498) re-deriving on a DIFFERENT pattern from mine -- corroboration, not repetition -- and then
+**confirmed by this seat on its own read of the source**, not accepted on the relay.
+
+```
+  _build_report_email      (145-183)   :158  msg["To"] = EMAIL_RECIPIENT        HEADER
+  _email_report            (186-190)   :189  Destinations=[EMAIL_RECIPIENT]     ENVELOPE
+  _build_correction_email  (213-270)   :221  msg["To"] = EMAIL_RECIPIENT        HEADER
+  _send_correction_email   (273-278)   :277  Destinations=[EMAIL_RECIPIENT]     ENVELOPE
+```
+
+**TWO send paths, each with a header site AND an envelope site. I named only the two envelope halves.**
+
+>> **THE TWO HALVES WANT OPPOSITE SHAPES, WHICH IS WHY THIS IS NOT A LINE COUNT.**
+> `Destinations=` is the **SMTP envelope** and needs a **LIST** of two addresses.
+> `msg["To"]` is an **RFC 5322 header** and needs the **COMMA-JOINED STRING** -- so the header half is,
+> by luck, **already correct** under the brief's variable-only approach.
+> **ONE VARIABLE CANNOT BE BOTH.** The obvious fix -- make `EMAIL_RECIPIENT` a list, or `.split(",")` it at
+> :49 -- repairs :189/:277 and **SILENTLY DAMAGES :158/:221**, where a list assigned to `msg["To"]` does not
+> render a valid To header. <<
+
+**So FWD-5 is a TYPE decision landing at FOUR sites across TWO paired functions:** keep the joined string for
+the headers, derive a list for the envelopes, on **both** paths. A TO scoped to `:189` and `:277` is
+incomplete in the one direction that fails silently.
+
+⚠ **Cosmetic, not delivery, but worth knowing before a log line is read as evidence:** `:325` (failure-alert
+text) and `:373` (handler return `"recipient"`) both interpolate the raw variable and will print the joined
+string. Also, both send-path docstrings still say the mail goes *"to Andrew"* -- descriptive drift the moment
+JOIN lands, and the kind of stale self-description that later reads as a spec.
+
+### 7.4 DESIGN RULINGS -- the four unplaced homes (the step-4 question COO surfaced)
+
+COO reported *"half the OWNS surfaces have nowhere to land yet"* and correctly routed that to step 4.
+**The governing constraint is S10:** `trading_calendar.py` exists in FOUR places because a shared dependency
+was copied across the repo/Lambda boundary instead of being placed once. **Every ruling below is chosen to
+avoid minting a fifth instance of that same defect.**
+
+- **S4 classifier -> `data/etfs/scripts/coverage/classifier.py`.** One home, importable by the renderer.
+- **S6 gate -> INSIDE `render_month_end.py`, NOT the orchestrator.** The brief left this open (*"a
+  precondition inside `render_month_end.py` (or the orchestrator immediately before it)"*). **RULED: inside
+  the renderer.** Putting the gate in the Lambda would require the classifier on BOTH sides of the
+  repo/Lambda boundary -- which is exactly how S10 happened. The orchestrator gates only the SEND, on the
+  verdict the renderer returns.
+- **S7a/S7b ladder -> `data/etfs/scripts/coverage/remediate.py`**, beside the classifier it consumes.
+- **S8 terminal SES -> the ORCHESTRATOR, reusing the existing `_ses.send_raw_email` path.** The ladder returns
+  a structured unresolved-report; the orchestrator sends it. **Build-ladder rung 5: the orchestrator already
+  holds the SES client, the verified sender identity and the IAM.** A second SES sender in a repo script would
+  be a duplicate send path -- and a second place the carve-out's width would have to be restated.
+
+⚠ **These are step-4 PROPOSALS placed so step 5 has an address to run a lens against; they are NOT measured.
+A decomp finding may overturn any of them** -- and S11 (which of the two `bd-49f` twins actually writes the
+served slices) is the one most likely to move S2's address out from under this table.
