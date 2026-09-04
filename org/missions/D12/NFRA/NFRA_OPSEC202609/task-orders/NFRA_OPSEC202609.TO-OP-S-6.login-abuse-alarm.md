@@ -5,7 +5,8 @@
 <issued_to>0.7.0_AE_CloudOps~T</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>complete</status>
+<!-- COMPLETE 2026-09-04T00:2xZ by 0.7.0_AE_CloudOps~T. Proof-of-spec VALID rc=0 (checker-vintage 50ff3d674a), 4 of 5 criteria PASS and S6-AC3 UNCOMPUTABLE-BY-CONSTRUCTION exactly as this face prescribes, citing row NFRA_OPSEC202609-Z-S97. THE SINGLE OPEN LEG IS THE SNS SUBSCRIPTION: C-6's named recipient is an input this project does not hold, the issuer has routed it to Andrew, and Z-S97 stays ARMED at 2.0.0_SA_COO~Z until it is answered. Deploy ledger opsec-s6-login-abuse-alarm CLOSED, 6 of 6 legs proven. -->
 
 **Directive:** D12 - **Fabric:** site-z - **PRD:** `../prd/NFRA_OPSEC202609_PRD.md` **v0.12 @3619ebecd9** (ENDPOINT **FWD-4**; s.5 the exercise bars; C-6) - **Decomp cell:** `OP-s-6` (v0.1.10 @2fd3843047, s.1a) - **Lane:** `infra/aws/terraform/portal-auth/cloudwatch-alarms.tf`, AE lane - **Round:** 3 of NFRA_OPSEC202609. **Dispatch:** GO after `TO-OP-S-4-18` goes terminal -- one task order at a time.
 
