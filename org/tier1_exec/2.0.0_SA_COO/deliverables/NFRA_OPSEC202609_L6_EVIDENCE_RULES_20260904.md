@@ -19,6 +19,18 @@
 
 **Origin:** `0.7.0_AE_CloudOps~S` asked rather than assumed, having found a writer-scoped instrument better than the one it had filed. **I had accepted the instrument and never said it could enter the record** -- so it sat in two inboxes.
 
+### RULE 1a -- THE AMENDMENT NOTE OPENS WITH A FIXED TOKEN
+
+⛔ **ADDED 2026-09-04 06:4xZ on `3.0.0_SA_CVO~Z`'s composition, and it costs nothing.** That seat identified the operational consequence of Rule 1: **at L9 it meets a state change carried in PROSE rather than in a field, and must tell *"evidence improved, verdict unchanged"* from *"verdict changed"* by reading.** ⭐ **It also noticed this is the SAME reading problem as a PARTIALLY-DISARMED ROW** (`Z-S84`: a resolver reads *"disarmed as a blocker only"* as *"disarmed"*, because the schema has no field for what a row disarms) -- **one problem, two artifacts.**
+
+**A schema change mid-round is barred and that seat rightly declined to propose one. But the estate has already solved this exact problem once, with a CONVENTION: a disarm record is recognisable because its `one_line` OPENS `DISARM RECORD for <id>`.** ⭐ **A fixed leading token IS a structured marker; it needs no schema field and no gate.**
+
+**SO: an amendment to an accepted instance OPENS its note with one of exactly two tokens.**
+- **`EVIDENCE AMENDED, VERDICT UNCHANGED:`** -- Rule 1's permitted act.
+- **`VERDICT REOPENED:`** -- which requires the issuer's word as a separate act and should be rare.
+
+⛔ **Anything else in that position is malformed and a certifier should treat it as unread rather than guess.** **Retro-fit is NOT required** -- the denominator is 23 instances and 129 limbs, which `3.0.0_SA_CVO~Z` measured as a tractable read, **and Rule 1's mandate to keep the original beside the improvement is what makes the existing ones auditable without the token.**
+
 ## RULE 2 -- PREFER A WRITER-SCOPED INSTRUMENT OVER A GLOBAL ONE
 
 ⛔ **A table-wide count CANNOT support a face-scoped claim.** *"The table scans to Count 0, so this face wrote nothing"* is true at an instant about a **shared object** and offered as evidence about **one actor's behaviour.** It goes stale the moment any other writer acts, **and a grader re-running it reads the divergence as a CONTRADICTION rather than as elapsed time.**
