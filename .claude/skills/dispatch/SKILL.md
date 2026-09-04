@@ -154,9 +154,28 @@ refusal that never happened.
 
 ## Step 4 — Spawn: the spawn IS the GO
 
-Per worker slot, the harness subagent call with **`subagent_type: "worker"`** and
-**`isolation: "worktree"`**. The prompt is **the worker face of that slot's FIRST task order, verbatim**,
-plus the L7 identity line naming its serial.
+⛔ **DO NOT USE THE HARNESS'S `isolation: "worktree"` HERE. IT BASES THE WORKTREE ON `origin/main`, NOT
+ON `CLOUD`, AND THE WORKER LANDS IN AN ESTATE THAT DOES NOT EXIST.** Measured 2026-09-04 on the first
+exercised spawn and re-measured at this seat: `origin/HEAD` -> `refs/remotes/origin/main`, tip
+`af88fcdd01` dated **2026-01-19**, which `CLOUD` is **32,776 commits** ahead of, and whose tree carries
+**neither `org/` nor `.tools/`**. The worker finds no task order, no gate, no compiler tool. Three
+worktrees sit on that base already, so it is the harness's fixed behaviour here, not a one-off.
+
+**Make the worktree yourself, from CLOUD, and hand the worker its path:**
+
+```bash
+git worktree add -b wk-<CODE>-<n> <path> CLOUD
+```
+
+Then the subagent call with **`subagent_type: "worker"`** and **no `isolation`**, its prompt **the worker
+face of that slot's FIRST task order, verbatim**, plus the L7 identity line naming its serial **and the
+worktree path it must work in**.
+
+⚠ The worker's own first act now prints `git rev-parse --abbrev-ref HEAD` and tests for `org/` and
+`.tools/`, and **stops with a BLOCKING row** if they are absent — so a wrong base fails loudly at the
+worker instead of producing an hour of work against a January tree. **That guard is the second line of
+defence, not the first; the first is this step.** Whether the repository's default branch should become
+`CLOUD` is Andrew's call and is with him.
 
 ⛔ **NO BROKER MESSAGE CARRIES A GO, AND NO INBOX RECEIVES ONE.** A worker cannot register, send or
 receive. If you find yourself composing a message to a worker, the thing you are trying to say belonged
@@ -172,6 +191,13 @@ When a task order goes terminal:
 
 1. **Read the worker's final report AND the proof-of-spec instance.** Both. The report is the worker's
    account; the instance is the artifact the checker graded.
+
+   ⛔ **THERE IS NO THIRD SOURCE. A SUBAGENT'S TOOL CALLS WRITE NO TELEMETRY ROW.** Measured on the
+   first exercised spawn: 123 tool calls produced **zero** rows in `org/mcp/agent_telemetry/0.9.0_WK_*`
+   and zero in the parent's file. So `/stimulus-scan`, `/fabric-check` and the compiled step log
+   **cannot see a worker working** — a live worker is indistinguishable from no worker on every stream
+   instrument the estate has. Do not reach for one to check progress, and do not read a worker's silence
+   as a stall. The report and the instance are the whole oracle, exactly as the spine says.
 2. **Merge only when the instance is VALID.** `pull-merge, NEVER rebase` (NEVER#3 — `CLOUD` is shared).
 3. **Remove the worktree and its branch EXPLICITLY.** Not left for later.
 4. **Read every row the branch carries.** An `ARMED` row whose `disarm_owner` is dark is **yours to
