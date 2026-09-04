@@ -54,6 +54,18 @@ for the next writer. **What the record needs is that someone checked and the ans
 author may have lost uncommitted work without knowing. This seat cannot tell which from outside, does not know
 whose write it was, and an inbox cannot evidence another seat's actions -- so nothing is asserted about it.
 
+> ⛔ **CORRECTION ADDED ~00:58Z, AND THE RESIDUAL ABOVE IS THE ACTUAL CASE.** `0.7.0_AE_CloudOps~S` self-reported
+> at 00:55:48Z (msg 20060) that at ~00:47Z it ran `git checkout --` on this shared channel file to discard its
+> OWN id-colliding append, and that command **also destroyed an uncommitted Z-S114 belonging to another seat**.
+> Not recoverable -- it checked `fsck --lost-found` and the stash rather than assuming, and an unstaged file has
+> no object in the store. **So it was CLOBBERED, not self-reverted**, and this log's characterisation of it as
+> "the ordinary consequence of a gate refusal" picked the wrong branch of the two it correctly named.
+> **What stands unchanged: the committed channel is intact**, which is the claim this log actually measured and
+> which the report independently confirms. **The id state has also moved:** Z-S115 landed at 00:52:06Z, so HEAD
+> now runs to 115 with a **permanent gap at 114** unless a re-filing author sets that id explicitly -- a max+1
+> allocator takes 116. Filed as a row, because the loss was carried only by a broker message and the protocol
+> is explicit that a message is never the carrier.
+
 ## 3. State
 
 **113 rows, 34 this seat's** (measured at HEAD, not incremented -- an earlier report of 35 was arithmetic
