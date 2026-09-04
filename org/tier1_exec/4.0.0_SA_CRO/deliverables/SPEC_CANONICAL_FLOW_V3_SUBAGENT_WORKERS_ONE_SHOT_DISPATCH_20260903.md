@@ -157,6 +157,22 @@ rule), and removes the worktree. **Measured caveat:** the harness did NOT auto-r
 though it was unchanged; the COO's merge step removes it explicitly (`git worktree remove` + branch delete)
 and does not rely on auto-clean.
 
+⛔ **CORRECTED 2026-09-04 ON THE FIRST REAL SPAWN (item 3 of the eight, `1.0.0_SA_CTO` 94003; verified at this
+seat): the "1 entry vs 191" measurement above was TRUE and answered the wrong question.** The harness's
+`isolation: "worktree"` creates the worktree from **`origin/HEAD`, which on this repository is `main` @
+`af88fcdd01` (2026-01-19) -- 32,776 commits behind `CLOUD`, with no `org/` and no `.tools/`.** This seat's own
+probe printed that hash (`git rev-parse --short HEAD: af88fcdd01` against the main tree's `caa263b610`) and this
+seat did not resolve it. The item-3 worker's branch (`b039a63d2b`, correctly authored `0.9.0_WK_NFRA_COMPEFFICACY~1`)
+has merge-base `af88fcdd01` with `CLOUD` and does not merge; it spent 51 minutes reconstructing the gates from
+`origin/CLOUD` before it could commit (now a BLOCKING row + STOP in `worker.md` @`d57b4c2523`). **So bare
+`isolation: "worktree"` cannot be used for a v3 worker here.** Two remedies, Andrew's call: the COO creates the
+worktree itself from `CLOUD` (`git worktree add -b <branch> <path> CLOUD`) and the worker face names it; or the
+repository's default branch becomes `CLOUD`. `/dispatch` Step 4 carries `isolation: "worktree"` as written and
+inherits this until one lands. **A second structural finding from the same spawn:** a subagent's tool calls fire NO
+PostToolUse telemetry (0 worker files under `org/mcp/agent_telemetry/`, 0 of 45,218 rows in the parent's stream),
+so the compiled step log -- section 13 L-6's acceptance instrument -- cannot see a worker's acts; owner: the
+telemetry hook. Until it logs subagent acts, a v3 round's step-log census is a census of the seats only.
+
 ### 3.5 The worker's verification bar -- cursory by design
 
 Andrew: *"I don't think they need to be operating from a position of trying to 'verify' what they're doing
