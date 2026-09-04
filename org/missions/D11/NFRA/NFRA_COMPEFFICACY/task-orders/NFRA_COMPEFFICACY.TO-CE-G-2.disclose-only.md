@@ -2,12 +2,16 @@
 
 <to_id>NFRA_COMPEFFICACY.TO-CE-G-2</to_id>
 <project>NFRA_COMPEFFICACY</project>
-<issued_to>0.8.0_AE_CloudComp~J</issued_to>
+<issued_to>0.9.0_WK_NFRA_COMPEFFICACY~2</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending -- GO paired at cut. Authority: 1.0.0_SA_CTO's L4 RULING 93837 (CE-g-2 SPLIT: engine half CARRIED to NFRA_CLDGRPH CG-s-8 + CG-x-7; the DISCLOSURE half is this project's and is cut as the disclose-only order) with 3.0.0_SA_CVO's input 93833 (row S31 @ce5c7babea: a `--budget 60` comp-blast call ran the full ~17-minute rebuild and was killed outside with no line -- FWD-7's sentence false on the LOCAL path today); decomp v0.2.7 @9c4a688102; PRD v0.6 @7138c4a176 (v0.7 landing at the CTO with G-2 SPLIT / G-3 CARRIED, no FWD changed); Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b. Seated on the Codex lane that completed T-23 (continuity on one project).</status>
+<status>pending -- GO paired at cut. Authority: 1.0.0_SA_CTO's L4 RULING 93837 (CE-g-2 SPLIT: engine half CARRIED to NFRA_CLDGRPH CG-s-8 + CG-x-7; the DISCLOSURE half is this project's and is cut as the disclose-only order) with 3.0.0_SA_CVO's input 93833 (row S31 @ce5c7babea: a `--budget 60` comp-blast call ran the full ~17-minute rebuild and was killed outside with no line -- FWD-7's sentence false on the LOCAL path today); decomp v0.2.7 @9c4a688102; PRD v0.6 @7138c4a176 (v0.7 landing at the CTO with G-2 SPLIT / G-3 CARRIED, no FWD changed); Andrew's word "/drive COMPEFFICACY to completion." @dd040c447b. Seated on the Codex lane that completed T-23 (continuity on one project).
 
-**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.6 @`7138c4a176` (s.4.2 disclosure; s.7 rows G-2, G-5, T-6, T-19; FWD-7 "the freshness surface ... bounded or disclosed") · **Decomp cell:** `CE-g-2`, its DISCLOSURE half (closes on an EXERCISED comp-blast answer AND a comp-trace answer each carrying the served graph's vintage + age on the disclosure line; engine bytes byte-identical before/after) · **Lane:** the DISCLOSURE lines of `org/modules/graph/cli.py` (comp-blast's engine) and comp-trace's engine (name it from `.tools/comp-trace`'s header), reading the vintage the graph ALREADY carries (`built:` from the DB's own provenance -- the line comp-find --corpus aws prints today: `VINTAGE: DB: kuzu_nessie_db  (27206 nodes / 58550 edges)  built: 2026-09-03T17:13:01Z (age: 0.3h)`) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~J/g-2-disclosure.result.md`. **Rule 27 seating:** `0.8.0_AE_CloudComp~J` (a CODEX seat) holds NFRA_COMPEFFICACY only.
+RE-ADDRESSED 2026-09-04 ~02:4xZ by `2.0.0_SA_COO` (L6, the issuer's own act). The original assignee `0.8.0_AE_CloudComp~J` was killed in `0.0.0_AB_MSTR`'s audited Codex reap at ~21:0xZ (133 processes, 0 survivors, on Andrew's "kill all the codex runtimes") and reads STALE on the broker at this seat's own read; nobody is displaced. Re-addressed to the spine-v3 worker slot `0.9.0_WK_NFRA_COMPEFFICACY~2` as item 3's exercised spawn under Andrew's ~22:2xZ word (record @9f60e36398), with `4.0.0_SA_CRO` holding the check-out (94006). ACCEPTANCE RE-SHAPED TO v3 GRAMMAR in the same act -- one clause per criterion, each mechanical criterion carrying its own `<invocation>` and `<expect>` so its pass is decided by a MATCH and not by the worker, and the one criterion that is a reading act flagged `judgment="true"` for the CVO at L9. The SUBSTANCE of the acceptance is unchanged: the same disclosure line, the same byte-identical seam, the same battery, the same exercise. PREMISE RE-GROUNDED AT RE-CUT: this order's exercise runs tools that load the Kuzu universe, and the v3 worker bounds every invocation at `timeout 120` -- S31's ~17-minute unbounded rebuild would have recorded the word "timeout" as the criterion's evidence. T6-AC7 is COMPLETE (`0.8.0_AE_CloudComp~G`, 17:3xZ: "the budget bounds the whole call ... serves stale immediately under the Rule-T clock, with age/reason disclosure and no rebuild/wait"; S31 disarmed via S32), so every invocation below carries `--budget` and the order is executable inside the worker's ceiling. Had T6-AC7 not landed, this order could not have been a worker face.</status>
+
+**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.6 @`7138c4a176` (s.4.2 disclosure; s.7 rows G-2, G-5, T-6, T-19; FWD-7 "the freshness surface ... bounded or disclosed") · **Decomp cell:** `CE-g-2`, its DISCLOSURE half (closes on an EXERCISED comp-blast answer AND a comp-trace answer each carrying the served graph's vintage + age on the disclosure line; engine bytes byte-identical before/after) · **Lane:** the DISCLOSURE lines of `org/modules/graph/cli.py` (comp-blast's engine) and comp-trace's engine (name it from `.tools/comp-trace`'s header), reading the vintage the graph ALREADY carries (`built:` from the DB's own provenance -- the line comp-find --corpus aws prints today: `VINTAGE: DB: kuzu_nessie_db  (27206 nodes / 58550 edges)  built: 2026-09-03T17:13:01Z (age: 0.3h)`) + `.tools/tests/**`; the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/g-2-disclosure.result.md`. **Rule 27 seating:** `0.9.0_WK_NFRA_COMPEFFICACY~2`, a spine-v3 worker subagent of `2.0.0_SA_COO`, holds NFRA_COMPEFFICACY only.
+
+⭐ **MEASURED BY THE ISSUER AT RE-CUT, so the worker does not spend a discovery step on it: BOTH TOOLS SHARE ONE ENGINE.** `.tools/comp-trace` is a four-line shim whose body is `python "$WORKSPACE/org/modules/graph/cli.py" trace "$@"`, and `.tools/comp-blast` routes to `cli.py blast`. So "the two tools' disclosure code" is ONE FILE, `org/modules/graph/cli.py`, and one disclosure implementation serves both answers. Do not go looking for a second engine; if a second disclosure path appears to be needed, that is a surprise row.
 
 ---
 
@@ -25,12 +29,35 @@ CE-g-2 (PRD s.7 G-2, FWD-7): the stale-served path `kuzu_nessie_db.fallback.json
 
 ## ACCEPTANCE
 
-<criterion id="G2-AC1" cell_refs="CE-g-2"/> `G2-AC1` -- MEASURED FIRST: each tool's disclosure today quoted whole from a real run; the vintage carrier named at source (file:line, read only).
-<criterion id="G2-AC2" cell_refs="CE-g-2"/> `G2-AC2` -- THE LINE: every answer class of both tools carries `VINTAGE: DB ... built: <ts> (age: N.Nh)` and `STALE-SERVED: <label>` when the seam serves the stale graph; UNREAD/UNKNOWN on an unreadable `built:`, never a default; `--json` carries the field.
-<criterion id="G2-AC3" cell_refs="CE-g-2"/> `G2-AC3` -- NO ENGINE CHANGE: the five engine/seam files byte-identical (sha256 before/after quoted); any forced touch is a STOP-and-report naming the line.
-<criterion id="G2-AC4" cell_refs="CE-g-2"/> `G2-AC4` -- THE BATTERY: NEW, six arms, a RED mutant per arm, direct AND pytest at the FILE grain; commit-gate clean.
-<criterion id="G2-AC5" cell_refs="CE-g-2"/> `G2-AC5` -- EXERCISED: one real post-commit answer from each tool quoted with its VINTAGE line; FWD-9 from a distinct seat; push state MEASURED at report; the proof instance VALID with every `surprises` entry resolving to a row BEFORE the complete flip, which the lane commits itself.
-<expected_criteria>G2-AC1, G2-AC2, G2-AC3, G2-AC4, G2-AC5</expected_criteria>
+RE-SHAPED TO v3 GRAMMAR at re-cut. One clause per criterion. Every mechanical criterion carries exactly one
+`<invocation>` and one `<expect>`, so its pass is decided by the MATCH and never by the worker's opinion; the
+one criterion that is a reading act is `judgment="true"` and is graded by `3.0.0_SA_CVO` at L9. **Every
+invocation is BOUNDED** -- the worker runs each under `timeout 120` and records a timeout AS the output, so
+an unbounded universe load would silently become the evidence.
+
+<criterion id="G2-AC1" cell_refs="CE-g-2" judgment="true"/> `G2-AC1` -- MEASURED FIRST: each tool's disclosure as it stands TODAY, quoted whole from a real bounded run, and the vintage carrier named at source as `file:line` (read only). A reading-and-naming act with no machine-decidable output; recorded with its evidence and NO verdict.
+
+<criterion id="G2-AC2" cell_refs="CE-g-2"><invocation>.tools/comp-blast component:AdvisorsTab.tsx --budget 90</invocation><expect>VINTAGE: DB: .* built: .* (age: </expect></criterion>
+`G2-AC2` -- THE LINE ON comp-blast's ANSWER.
+
+<criterion id="G2-AC3" cell_refs="CE-g-2"><invocation>.tools/comp-trace AdvisorsTab.tsx --budget 90</invocation><expect>VINTAGE: DB: .* built: .* (age: </expect></criterion>
+`G2-AC3` -- THE SAME LINE ON comp-trace's ANSWER, from the one shared engine.
+
+<criterion id="G2-AC4" cell_refs="CE-g-2"><invocation>.tools/comp-blast component:AdvisorsTab.tsx --budget 90 --json</invocation><expect>"vintage"</expect></criterion>
+`G2-AC4` -- THE JSON FIELD: `vintage: {db, nodes, edges, built, age_h, stale_served}` present in `--json` mode.
+
+<criterion id="G2-AC5" cell_refs="CE-g-2"><invocation>for f in infra/aws/globgrph/_canonical.py infra/aws/globgrph/kuzu_nessie_load.py infra/aws/globgrph/kuzu_cli.py; do git show HEAD:$f | sha256sum | cut -d' ' -f1; done</invocation><expect>d494be6660b0dd9674383a2504756d4fb852677eee5729718cc3298ff69b2952
+8b79ca1bdfd51c1823c0c6780086d55d7e9c751d7651820f873cf1d4b42a5b3d
+37a8accbd12f9fc11d6b3de3c07393ac28c0529eb91f17af0f211f82e0eb7c49</expect></criterion>
+`G2-AC5` -- NO ENGINE CHANGE, the control that must be able to FAIL. The three seam files byte-identical against the values the ISSUER computed at cut. ⛔ **Hashed through `git show`, NOT `sha256sum <path>`** -- a worktree hash on this autocrlf box hashes the CHECKOUT and not the record, and would drift without a byte changing. A forced touch is a STOP-and-report naming the line, never a silent edit.
+
+<criterion id="G2-AC6" cell_refs="CE-g-2"><invocation>python .tools/tests/test_g2_disclosure_battery.py</invocation><expect>PASS</expect></criterion>
+`G2-AC6` -- THE BATTERY, NEW at `.tools/tests/test_g2_disclosure_battery.py`: arms for a fresh graph (age printed, no STALE-SERVED), a stale-served graph planted via the seam's OWN label (read-only to the seam; STALE-SERVED present with the label), an unreadable `built:` (UNREAD + UNKNOWN, never a default), the JSON field, a comp-trace arm and a comp-blast arm -- with a RED mutant per arm (prints today's block without `built:`; prints `age: 0.0h` on UNREAD; omits STALE-SERVED). Each arm prints its own denominator.
+
+<criterion id="G2-AC7" cell_refs="CE-g-2"><invocation>bash .tools/commit-gate.sh org/modules/graph/cli.py .tools/tests/test_g2_disclosure_battery.py</invocation><expect>pre-commit gate clean</expect></criterion>
+`G2-AC7` -- COMMIT GATE clean on every `.py` this order touches.
+
+<expected_criteria>G2-AC1, G2-AC2, G2-AC3, G2-AC4, G2-AC5, G2-AC6, G2-AC7</expected_criteria>
 
 ## SURFACES
 
@@ -60,13 +87,17 @@ comp-adversary: RUN -- rc 0 at read-vintage @afe26cae61 (2026-09-03T17:37:13Z); 
 </preflight>
 
 <proof_of_spec>
-Criterion ids minted at cut by the issuer: `G2-AC1`..`G2-AC5`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~J/NFRA_COMPEFFICACY.TO-CE-G-2.disclose-only.proof_of_spec.json`
-and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, which the lane commits itself. G2-AC3's byte-identical seam and G2-AC2's UNREAD arm are the controls that must be able to FAIL.
+Criterion ids re-minted at re-cut by the issuer: `G2-AC1`..`G2-AC7`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
+`org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-G-2.disclose-only.proof_of_spec.json`
+and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, which the WORKER commits itself on its own branch. `G2-AC5`'s byte-identical seam and `G2-AC6`'s UNREAD arm are the controls that must be able to FAIL. `G2-AC1` is `judgment="true"`: it is recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO`, and **`PASS` or `FAIL` on it is INVALID.**
 </proof_of_spec>
 
 <compiler_tools_mandate>
 BEFORE WRITE: `comp-read org/modules/graph/cli.py --for "every disclosure line the blast command prints, the provenance block, where the served DB's built timestamp is read, and the JSON output's shape"`; `comp-read .tools/comp-trace --for "the engine it names and its disclosure lines"`; `comp-read infra/aws/globgrph/_canonical.py --for "where the stale label and the served DB's build time are written and read"` (READ ONLY). BEFORE COMMIT: `.tools/commit-gate.sh` on every .py touched; the battery direct AND under pytest at the FILE grain. AFTER COMMIT: the two real answers quoted; FWD-9 from a distinct seat.
 </compiler_tools_mandate>
 
-**DELIVERABLE REPORT:** to `2.0.0_SA_COO` with per-criterion evidence, the two tools' disclosure before/after, the seam files' shas, the battery numbers at both grains, and push state as MEASURED. GO = this TO + the dispatch message.
+**THE REPORT IS YOUR FINAL MESSAGE, ONCE, IN THE `WORKER REPORT` SHAPE** (worker.md): serial / TO / branch / HEAD; BLOCKING; CRITERIA with each invocation and its deciding output line; PROOF with `proof-of-spec-check` rc; ROWS; COMMITS; NEXT. **You cannot send a message and nobody can send you one** -- there is no broker tool on your type. Anything you would have asked is a surprise row, and you keep working.
+
+⛔ **FWD-9 (the distinct-seat re-run) IS NOT YOURS.** Step 5's original wording said to ask the issuer for it; under spine v3 a worker cannot ask. `2.0.0_SA_COO` runs the distinct-seat re-run at the drain, from the invocations in `G2-AC2`/`G2-AC3`/`G2-AC4` above. Do not attempt it and do not treat its absence as a gap in your own criteria.
+
+**GO = the spawn itself.** No broker message carries it and none will arrive.
