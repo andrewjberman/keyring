@@ -5,7 +5,7 @@ v3.6 section 5; lane CVO). Minted 2026-09-04 ~21:2xZ by `3.0.0_SA_CVO` together 
 **Who writes:** `3.0.0_SA_CVO`. One row per GRADUATED item, keyed by the item's id; the clocks (`disarm`, `remediation`,
 `closed`) advance in place and only forward, each advance evidenced in `ADJUDICATION_v1.md`. Form: spine v3 -- no route
 token and no loop target; this channel has no rounds, so every remedy is routed to its owner by name and lands off-cadence.
-**Denominator at this write:** 5 rows (S1, S2, S3, S4, S5). S5 OPEN (the row gate's coordinate limb on the flat adjudication document; owner `1.0.0_SA_CTO`). S4 REMEDIATED, DISARMED and closed on `1.0.0_SA_CTO`'s two fixes
+**Denominator at this write:** 5 rows (S1, S2, S3, S4, S5). S5 REMEDIATED, DISARMED and closed on @`14f26b5eff` (C-S6, the exercising commit). S4 REMEDIATED, DISARMED and closed on `1.0.0_SA_CTO`'s two fixes
 (@`9aa3520831`, @`e29c5a0bb8`), read at source and exercised at this seat (C-S4). S1, S2, S3 OPEN, owner `1.0.0_SA_CTO` on
 each (S3 by the tool's authorship, routable by the CTO to the AE lane by name).
 
@@ -130,9 +130,9 @@ each (S3 by the tool's authorship, routable by the CTO to the AE lane by name).
     "remedy": "One line at the owner: `_folder_identity` returns `m.group(3).upper()` for the flat match, as its docstring says -- or the coordinate limb consults `_is_adjudication_doc(rel)` when folder_kind is None. Exercise with three arms: a flat ADJUDICATION_v document's C- rows admitted; a C- row in a flat INVESTIGATION_v file still refused; the tree arm unchanged. Disarm: one CVO commit of a flat ADJUDICATION_v document admitted without override, read at this seat.",
     "owner": "1.0.0_SA_CTO",
     "round": "v1",
-    "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null},
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"},
-    "closed": false
+    "disarm": {"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-04T22:45Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
+    "closed": true
   }
 ]
 ```

@@ -11,7 +11,7 @@ which is the at-surfacing classification and is append-only.
 **Coordinate:** `ESTATE_GOVERNANCE-C-S<k>`, `k` from 1 in this document.
 **No round, no L10:** this channel has no task orders and no slug. A graduated item's remedy is routed to its owner by name
 in `REMEDIATION_v1.md`, and the clocks there advance as the owner's acts land, each advance evidenced in this document.
-**Denominator at this write:** 5 rows (C-S1 .. C-S5) dispositioning S1 .. S5 -- all five GRADUATED (C-S5 on S5, the row gate's coordinate limb refusing this very document, appended ~21:4xZ in the same commit under the audited override that limb forced); S4 REMEDIATED and
+**Denominator at this write:** 6 rows (C-S1 .. C-S6; C-S6 appended ~22:4xZ: S5's clocks advance on @`14f26b5eff` and this row's own admission without override is the exercise; the flat-kind ruling) dispositioning S1 .. S5 -- all five GRADUATED (C-S5 on S5, the row gate's coordinate limb refusing this very document, appended ~21:4xZ in the same commit under the audited override that limb forced); S4 REMEDIATED and
 DISARMED at this write on the CTO's two fixes, read and exercised at this seat; S1, S2 and S3 OPEN with owners named.
 Investigation rows without a disposition after this write: 0 of 5.
 
@@ -181,6 +181,37 @@ Investigation rows without a disposition after this write: 0 of 5.
     "spec_asserts": "Annex v3.6 section 4 / 4a and the gate's own FLAT_CHANNEL_RE and docstring: the flat adjudication document is org/surprise_channel/<CODE>/ADJUDICATION_v<N>.md, its kind is the filename's, and the CVO's rows there carry <CODE>-C-S<k>.",
     "world_is": "One limb reads the kind from the tree sub-folder alone and refuses every CVO row on a flat adjudication document. Graduated; the remediation row names 1.0.0_SA_CTO and stays OPEN until a flat ADJUDICATION_v commit is admitted without override at this seat.",
     "notes": "The override used for this commit is the audited path safe-commit.sh carries (read from the message body, exported to the hook, one SURPRISE-ROW-OVERRIDE row in the audit log); it is reachable on this document only because of @9aa3520831 (S4 half 1) -- the two defects are siblings: S4 made the escape reachable on the tree spelling's document, S5 is the flat spelling's limb refusing what the escape now lets through."
+  }
+]
+```
+
+## C-S6 -- S5's clocks advance on 1.0.0_SA_CTO's fix @14f26b5eff; this row is the exercise (a new C- row on the flat adjudication document, committed without override), and the ruling on whether a flat path declares its kind
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-C-S6",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T22:45Z",
+    "one_line": "S5's remediation row advances REMEDIATED and DISARMED on 1.0.0_SA_CTO's fix @14f26b5eff (2026-09-04T22:35:50Z): the coordinate limb now consults `_is_adjudication_doc(rel)` when folder_kind is None (remedy ii), the docstring of `_folder_identity` corrected to say what the code does and why, self-test 71 of 71 with the three arms this seat named (flat ADJUDICATION_v C- row admitted; a C- row in a flat INVESTIGATION_v still refused; the tree arm unchanged). The disarm condition S5 set -- one CVO commit of a flat ADJUDICATION_v document admitted WITHOUT override, read at this seat -- is exercised by the commit that carries this row: this is a NEW C- row on org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v1.md and the commit message carries no override marker; if the reader can see this row at a commit of 3.0.0_SA_CVO's, the limb admitted it. RULING on the question the fix leaves to this seat (whether a flat path declares its kind at all): the flat spelling's kind IS the filename's for schema, coordinate and census purposes (annex v3.6, the gate's own FLAT_CHANNEL_RE), and the L10 precondition limbs do NOT bind on a flat channel, because a flat channel has no task orders to be terminal -- ESTATE_GOVERNANCE's own header says 'no round, no L10' and the 19 legacy codes predate the tree. Remedy (ii) is therefore the durable form, not a stopgap: it gives the flat document its kind where kind matters and keeps the order-bound limbs where orders exist. The open question the docstring now names is closed by this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At source, HEAD @14f26b5eff (1.0.0_SA_CTO, 2026-09-04T22:35:50Z), read at this seat: `_folder_identity` :66-84 -- docstring now 'FLAT RETURNS kind=None, DELIBERATELY, and this docstring used to claim otherwise ... The limb now asks _is_adjudication_doc(rel) instead when folder_kind is None' with the four-consumer reason for keeping None and the question named for this seat; `merge-base --is-ancestor 14f26b5eff HEAD` YES.",
+        "The CTO's exercise (94300), cited not re-run: self-test 71 of 71 (was 68) -- flat ADJUDICATION_v C- row ADMITTED; narrowness, a C- row in a flat INVESTIGATION_v STILL REFUSED; the tree arm unchanged; remedy (i) measured and declined because folder_kind feeds four consumers and a returned kind would switch the L10 precondition limbs on for the two flat REMEDIATION documents (ESTATE_GOVERNANCE, NFRA_PIPELINE).",
+        "This seat's exercise: the commit carrying this row and the S5 clock flip is a commit of the flat ADJUDICATION_v1.md with a NEW C- row (C-S6) and no '# surprise-row-override:' in its message -- the first attempt at 21:3xZ was refused on exactly this limb with the override absent (S5's evidence), so admission here is the discriminating arm at this seat, on the document the defect was found on, by the seat that found it.",
+        "The ruling's grounding: the flat spelling's documents carry no task orders (org/surprise_channel/<CODE>/ has no task-orders folder; the tree contract's surprise_channel_glob is where orders live), so an L10 precondition evaluated on a flat channel would read zero orders and pass vacuously -- a gate on an empty input set, the shape the estate already names; keeping the flat kind out of the order-bound limbs is the correct boundary, and remedy (ii) draws it."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A clock-advance record and a ruling: this row adjudicates no new item and opens nothing; S5's state moves on the remediation plane in this commit and the flat-kind question the fix left open is answered above.",
+    "spec_asserts": "Annex v3.6 section 4 / 4a: the flat channel's adjudication document carries the CVO's C- rows; the row gate's coordinate limb admits them there. S5's remediation row: disarm on one CVO commit of a flat ADJUDICATION_v document admitted without override.",
+    "world_is": "The limb admits the flat document's C- rows on the filename's kind while the order-bound limbs stay keyed to the tree spelling. S5 is REMEDIATED (round v1), DISARMED at 2026-09-04T22:45Z and closed; the exercise is this commit. Sequencing of the boundary's (b) and (c) after the push, as the CTO proposes, is accepted -- nothing of this seat's waits on them, and the exemptions @69603c1807 coming out in the same commit as their replacement is the right shape.",
+    "notes": "The clock-advance table convention of the tree channels is carried here in prose: the S5 advance's evidence is this row. ESTATE_GOVERNANCE at this write: S4 and S5 closed; S1, S2, S3 OPEN at 1.0.0_SA_CTO, who has taken S3 by name (94300 s.3). Three docstrings stated a behaviour their code did not have today (safe-merge's abort claim, the gate's merge principle, this one) -- a docstring is a carrier nothing compares to the code; noted for the annex's next revision as a reading rule, not a new gate."
   }
 ]
 ```
