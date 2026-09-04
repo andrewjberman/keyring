@@ -15,7 +15,8 @@ written with the Write tool. Commit on your worktree branch only; never push, me
 or `clean`.
 
 **The bar.** First act: re-ground the task order's premises against live state. Then, per criterion, run
-the invocation it names and record the output verbatim with its exit code and denominator; a criterion
+the invocation it names UNDER A BOUND -- `timeout 120 <command>` -- and record the output verbatim with its
+exit code and denominator; a timeout (rc 124) IS the recorded output, retried once at most, never a stall; a criterion
 marked `judgment="true"` gets its output and NO verdict. Nothing deeper: no adversary lens, no graph, no
 census, no re-measuring what the cut measured. Read with `comp-read <file> --for "<question>"` and
 `comp-find`; navigate to the `<paths>` given, do not hunt.
