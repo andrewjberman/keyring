@@ -8,7 +8,7 @@ documents.
 **Coordinate:** every row here carries the CVO's allocator coordinate `NFRA_CLDGRPH-C-S<k>` (annex v3.3 @`e3e999c139`,
 gate half @`6efb43b9d0`); `k` restarts at 1 in this document. This is the first live exercise of the coordinate on
 either plane.
-**Denominator at this write:** 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Denominator at this write:** 8 rows (C-S1 .. C-S8; C-S8 appended ~19:4xZ: the round-4 grade record's first tranche on the issuer's partial packet @5e801703d5 -- D12-AC7, D2-AC10, D3-AC8, D1-AC8 all PASS; 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -271,6 +271,63 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "CG-x-5 closes on the absence of the local DB proven before the ask, then the answer, then the SAME ANSWER AS A LAPTOP SEAT for the same question; TO-CG-D-6 makes the second half the issuer's at the drain and D6-AC4 the CVO's grade (judgment=true).",
     "world_is": "After CG-s-6 the recorded pair is two clients of one server and agrees by construction; the discriminating equivalence -- an independent local full build against the served artifact of the same snapshot -- was still takeable today and this seat took it: identical on three digests. FWD-5's outcome (one answer for everyone) holds on evidence that could have failed.",
     "notes": "Recorded here rather than routed: the CVO reads and exercises; it did not rebuild anything, delete anything or touch the mutex directory (S39's dead lock dir is still present beside a graph that rebuilt successfully at 07:13Z, which is a fact for CG-s-8's worker). The scratch outputs of the comparison are not durable; the digests and denominators in this row are the record."
+  }
+]
+```
+
+## C-S8 -- the round-4 grade record, first tranche (the issuer's partial L8 packet @5e801703d5): D12-AC7 PASS, D2-AC10 PASS, D3-AC8 PASS, D1-AC8 PASS, each read against its order's bar with an instrument other than the worker's; D6-AC4 already graded at C-S7
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S8",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T19:35Z",
+    "one_line": "L9 as rows land (spine v3.2; the CRO's relay of Andrew's word: L8-L9 as rows land, ONE slug per project): the GRADE RECORD for the four judgment criteria the issuer's partial L8 packet @5e801703d5 handed on six terminal orders -- the fifth, D6-AC4, was graded at C-S7. A partial packet is admitted: judgment criteria are graded when their instances are terminal, the slug alone waits for every order. Each grade below rests on this seat's own read beside the worker's record: the derive role's live inline policies (D12-AC7); a re-derivation of the image's COPY-source set intersected with the broad diff, plus the three task families' pinned digests (D1-AC8); the thin client's live disclosure line and JSON stdout (D3-AC8); the framework files' diff at the record and the arch-gate record's grounding per item (D2-AC10). Four PASS; no FAIL; no NOT_EVALUATED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "D12-AC7 at this seat: `iam list-roles` -> four roles containing 'derive'; only opal-globgrph-derive-runner-task carries the grant -- inline policy DeriveRunnerBucketNotificationRead, sid BucketNotificationRead, Resource '*', exactly ONE action (s3:GetBucketNotification); its sibling DeriveRunnerAccountDescribe, sid AccountWideReadOnly, Resource '*', 69 actions incl. s3:GetBucketPolicy and s3:ListAllMyBuckets (item2a.tf:129 and :217 at HEAD). One principal moved, one action added, the scope in force matched -- the worker's three reasons read against the live plane.",
+        "D1-AC8 at this seat, a different instrument: the broad diff 649164d75b..HEAD under infra/aws/globgrph/ and org/modules/graph/ changes SEVEN files (kuzu_cli.py, projection_client.py, cli.py, comp_aws_cli.py, estate-coverage-manifest.yaml, graph_status_cli.py, a test); intersected with the Dockerfile's 35 COPY sources at HEAD, exactly ONE is a COPY source: org/modules/graph/comp_aws_cli.py -- the worker's 'one file' holds even against the wider set; derive_runner.py:40 is the single importer. The three task families read at this seat: globgrph-projection-worker:4, globgrph-derive-runner:7 and globgrph-serving:2 all pin @sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778; the worker's Pipe-launched task 7b2d3bbefb2a4573bc5af5c8459f6e8a ran on :4 with that digest, exit 0, POINTER_PUT_OK at vintage 2026-09-04T16:38:39.485910Z -- a prefix this seat saw in the bucket listing at 18:3xZ.",
+        "D3-AC8 at this seat, exercised live at 19:2xZ: `.tools/comp-kuzu --json \"MATCH (n:CloudNode) RETURN count(n) AS c\"` -> rc 0; stderr exactly one line 'VINTAGE: Built from the estate as of 2026-09-04 18:11:48 UTC.  [vintage=2026-09-04T18:11:48.783142+00:00 manifest=a78b6836265e prefix=projection/2026-09-04T18:11:48.783142+00:00/]'; stdout a parseable JSON array [{\"c\": 27294}]. The plain sentence first and verbatim, the machine triple after in brackets, on stderr so --json stays parseable -- the six reasons in CG-s-6.thin-client.result.md s.2 each tie to a PROJECTION_CONTRACT.md clause or a named failure mode (no clock in the client; absence named on failure, never a stale vintage; the empty answer discloses identically); the before/after surfaces quoted whole (26 lines before, 12 after) and the 10 removed switches named.",
+        "D2-AC10 at this seat: `git diff --stat 5644fee152 HEAD -- app/integrations/base.py app/integrations/registry.py` -> EMPTY: the framework is unmodified at the record, as the worker read (base.py sha256 through git show); CG-s-5.gateway-traversal.result.md s.5 carries G1-G8 with a measurement per item (G1-G3 grounded live off the deployed process; G4 grounded on the applied plane by get-role-policy; G5 N/A-by-construction with the reason; G6 PARTIAL on its own measurement, 41,489 audit records and 0 with 'graph_', filed as W2-S8 rather than hidden; G7 before/after on the box; G8 SIGNED quoting 1.0.0_SA_CTO 94158 verbatim with its six conditions each answered) and answers the bar's question in the bar's own words: the capability path is BESIDE the 5-step checklist, with the /ms/* and /otp/* precedents cited by file and line."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record: this row adjudicates no item and opens nothing; the enum has no record value (annex v3.1 section 4a). Its content is the four grades below. The partial packet's own row census is a statement of standing and dispositions nothing, as it says; every disposition of round 4's rows is this seat's at the slug or as rows land.",
+    "grades": [
+      {
+        "criterion": "D12-AC7",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-12.derive-role-bucket-notification-grant.proof_of_spec.json@8f5a9a26f9",
+        "verdict": "PASS",
+        "reason": "The bar (D12-AC7): which scope, why, and the blast radius. The reading chose Resource '*' for one action beside the role's existing account-wide reads, with three reasons that hold against the estate's own law (an enumerated resource list lapses silently the way CLAUDE.md s.5's ban list did; the sibling statement is already '*'; the derive discovers the bucket set at run time) and a blast radius of one principal -- confirmed live at this seat: the grant sits on opal-globgrph-derive-runner-task alone, one action, beside AccountWideReadOnly on '*'."
+      },
+      {
+        "criterion": "D2-AC10",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json@84ac48c77d",
+        "verdict": "PASS",
+        "reason": "The bar (D2-AC10): the G1-G8 record with its grounding, G8 quoting 94158, and the framework diff read as the 5-step checklist with the capability path placed inside or beside it and the /ms/* precedent cited. All eight items carry a measurement (five grounded, three of them on the live or applied plane; one N/A by construction with its reason; one PARTIAL by measurement with a row filed; one SIGNED verbatim with six conditions each answered); the framework files are unmodified at the record (diff empty at this seat); the placement is answered plainly -- BESIDE the checklist -- with /ms/* and /otp/* cited by file and line. G8's signature itself is the CTO's at L10, not this grade's."
+      },
+      {
+        "criterion": "D3-AC8",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-3.thin-client.proof_of_spec.json@0f34580f86",
+        "verdict": "PASS",
+        "reason": "The bar (D3-AC8; FWD-3 'plain words'): why the disclosure line reads as it does and the before/after surfaces side by side. The line as exercised live at this seat reads the service's plain sentence first and verbatim with the machine triple after, on stderr so --json stdout stays a parseable array; the six stated reasons each tie to a contract clause or a named failure mode, including the one that matters most (on failure the line names an ABSENCE, never a stale vintage); the surfaces are quoted whole and the removed switches named. Plain words, met."
+      },
+      {
+        "criterion": "D1-AC8",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/NFRA_CLDGRPH.TO-CG-D-1.shared-image-rebuild-deriver-live.proof_of_spec.json@8c7708f9a5",
+        "verdict": "PASS",
+        "reason": "The bar (D1-AC8): the COPY-source diff per file with the families that depend on it, whether anything beyond the deriver fix rides the rebuild, and the projection family's launch on the pinned digest. Re-derived at this seat by a different route (a broad diff intersected with the Dockerfile's 35 COPY sources): exactly one COPY source changed, comp_aws_cli.py, imported by derive_runner.py:40 alone, so one family's code path moves and nothing beyond the fix rides; the three families pin sha256:1b89853f... at this seat's read and the Pipe-launched projection task ran on that digest, exit 0, POINTER_PUT_OK at a vintage this seat saw in the bucket. Safe to ship as read; the launch evidences the pin."
+      }
+    ],
+    "spec_asserts": "Spine v3 L9 / annex v3.1 section 4a: a judgment criterion is graded by the CVO against the specification that issued it, one entry per criterion on a row of the CVO's; the issuer's L8 packet may be partial (six of twelve orders terminal) and the slug alone waits for every order.",
+    "world_is": "Four judgment criteria on four terminal orders, each recorded by its worker with no verdict as the orders require, each now graded PASS on a read of this seat's own beside the record. The issuer's question -- whether a partial packet is admitted -- is answered by this row: it is, for grades; not for the slug.",
+    "notes": "Two rows the packet flags as outliving the round are noted for the analysis, not acted on here: W2-S10 (an unscoped post-apply plan carrying two DELETES of live WAF IP sets owned by nobody in this project, left as found, disarm owner 0.7.0_AE_CloudOps -- a seat not live) and W1-S8 (globgrph-resource-summaries-producer has no trigger on Rules or Scheduler, so a declared family is wired to nothing). The packet's disclosure on TO-CG-D-5 (the issuer's own unsatisfiable enumerate pattern, amended at 88c4db9dd4; the worker refused a PASS available by dropping the optional expect) is the right shape and is read as such."
   }
 ]
 ```
