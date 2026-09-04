@@ -1,0 +1,54 @@
+{
+ "schema_version": "1.0",
+ "project": "NFRA_COMPEFFICACY",
+ "round": 6,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-04T07:30:00Z",
+ "trigger": "the round-6 L10 slug (adjudication rows C-S1..C-S6 and investigation row S39 @f4b41b1c20; remediation rows S31/S35/S36; the closing deliverables CE-q-1, CE-pass-1 v2 and CE-g-4 design in this commit) on Andrew's word 'a' at the COO terminal (@6d1e252f3c) and the CTO's adjudication (a) of 07:15Z",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-03T17:1xZ",
+   "ended_utc": "2026-09-04T04:0xZ",
+   "act": "Tranche 1 read and dispositioned in S33 (eight rows); S31 filed at the L9 exercise of S17's carry; the first adjudication document under a tree project opened (S34 @b50a124783 dismissing S29); the S34 id collision recorded (S37) and disarmed (S38) on the gate's uniqueness limb @72d05b2642, exercised in a scratch worktree; the allocator coordinate proposed and, on Andrew's 'a for both', landed (annex v3.2 @4d65d9b496, v3.3 with C- @e3e999c139)",
+   "inputs": [{"kind": "MESSAGE", "ref": "93853"}, {"kind": "MESSAGE", "ref": "93972"}, {"kind": "MESSAGE", "ref": "94032"}],
+   "outputs": [{"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@3aa32a699e"}, {"kind": "ARTIFACT", "ref": "org/ref/SURPRISE_CHANNEL_PROTOCOL.md@e3e999c139"}],
+   "spine_clause": "L8 compile; annex sections 4a and 9 (the adjudication document, the coordinate)",
+   "note": "the coordinate is the record of one collision, not a renumbering; nothing existing moved"
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-04T06:4xZ",
+   "ended_utc": "2026-09-04T07:05Z",
+   "act": "Every round-6 instance re-validated at this seat (T-24, T-21, T-6, T-5, G-2, T-20: VALID rc 0, author read from git = the assignee). S31 exercised on a graph BEHIND Nessie HEAD (--budget 60 comp-blast returned in 7 s, no rebuild; 17 minutes before T6-AC7) and closed; the worker's S34 dismissed with the spawn's provisioning owner named; S35 graduated OPEN (the inert --budget on comp-trace); S36 graduated and closed on RULING 1's stanza + limb and the CRO's exercise; S39 filed and dismissed to the engine owner (a dead rebuild winner's mutex); grades T20-AC4 FAIL, G2-AC1 PASS, G2-AC3 PASS",
+   "inputs": [{"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-G-2.disclose-only.proof_of_spec.json@65a85beb44"}, {"kind": "MESSAGE", "ref": "94077"}],
+   "outputs": [{"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@f4b41b1c20"}, {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/remediations/REMEDIATION_v1.md@f4b41b1c20"}],
+   "spine_clause": "L9 adjudicate; annex v3.1 section 4a grades; the gate's L10 precondition line at commit: 25 task orders 0 open, 37 items 0 undispositioned",
+   "note": "the first live rows through the C coordinate on this project; six admitted"
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-04T07:05Z",
+   "ended_utc": "2026-09-04T07:3xZ",
+   "act": "The closing cells, on Andrew's 'a' (no issuance; the CVO's limbs close the project): CE-q-1 the seven answers written, each citing its row; CE-pass-1 v2 the second pass, 48 findings dispositioned, UNCLEAR 0, the last read by a non-fixer; CE-g-4 the design half on the CTO's adjudication (a), the exercise not attempted",
+   "inputs": [{"kind": "MESSAGE", "ref": "94114"}, {"kind": "MESSAGE", "ref": "94122"}, {"kind": "MESSAGE", "ref": "94055"}],
+   "outputs": [{"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-q-1.seven-answers.md"}, {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md"}, {"kind": "ARTIFACT", "ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-g-4.codex-rail-design.md"}],
+   "spine_clause": "decomp CE-q-1 / CE-pass-1 / CE-g-4 lanes; FWD-5, FWD-6, FWD-9",
+   "note": "CE-mrq-1 stays at Andrew (PRD s.5); FWD-9's exercise is a carried call (one Codex seat)"
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-04T07:3xZ",
+   "ended_utc": "2026-09-04T07:3xZ",
+   "act": "ONE slug to 1.0.0_SA_CTO: the record's path and vintage, the precondition as the gate printed it, the open remediation row (S35), the grades, the two findings carried ahead of the rest (comp-which F2, comp-find F1), the closing deliverables, and the questions the round-N analysis has to route",
+   "inputs": [],
+   "outputs": [{"kind": "MESSAGE", "ref": "the round-6 slug"}],
+   "spine_clause": "L10: the CVO's slug to the CTO only; the CTO routes",
+   "note": "v3 form throughout: no route token on any row; the transition rule froze the spec, not the row grammar"
+  }
+ ]
+}
