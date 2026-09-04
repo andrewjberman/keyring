@@ -241,6 +241,28 @@
       "spine_clause": "L10 (the CTO answers the drain-end read) -> L7 (the drains) -> L6 (the recut: 'REOPEN, do not re-cut' for the two orders; ONE added cell as an order)",
       "gate_or_notifier_touched": "NONE edited by this seat. GAP carried: safe-merge.sh cannot resolve a conflict; two workers' concurrent appends to one append-only channel file conflict textually at the second drain (a union merge driver is the fix; owner 2.0.0_SA_COO base).",
       "note": "Next: fresh worktrees from CLOUD @c7b6a0d200 for slots ~1 and ~2 with the two captured ledger sentinels restored (now inside the grants); ~1 continued on D-12's face then D-1's reopened face; ~2 continued on D-2's reopened face; ~3 still waits for D-3."
+    },
+    {
+      "seq": 9,
+      "limb": "L7",
+      "started_utc": "2026-09-04T10:2xZ",
+      "ended_utc": "2026-09-04T10:5xZ",
+      "act": "THE HAND-OFFS after the recut. Fresh worktrees wk-NFRA_CLDGRPH-1 and -2 made from CLOUD @c7b6a0d200 (org/ + .tools/ present); the two captured ledger sentinels restored into them (cgs15 -> wk-1, cgd2 -> wk-2; deploy_ledger.py check reads both OPEN in-window with their stranded legs). CONTINUATION ATTEMPTED as the spine says (SendMessage to the two idle subagents by the ids their spawns returned): the harness answered 'No transcript found for agent ID' for BOTH -- a completed subagent is not resumable in this session state, so 'hand the next task order by continuing the same subagent, context intact' was not available. FALLBACK (the /dispatch text: a worker that cannot be continued -> re-dispatch to a fresh slot): a FRESH worker subagent spawned in EACH slot with the SAME serial, its prompt = the identity line (worktree, branch, base, the predecessor's record at HEAD, the next row id) + the order's worker face verbatim: ~1 (opus) on TO-CG-D-12 (CG-s-16, the IAM grant), D-1's reopened face to follow after D-12's drain; ~2 (opus) on the REOPENED TO-CG-D-2, whose face was made coherent first @d5ce612d16 (the NEVER bullet no longer forbids the signed enable; step 4 names the out-of-band secret by data source and the two-address apply set; step 8's G8 row quotes 94158; the row hint starts at W2-S8) and CLOUD fast-forwarded into wk-2's branch before the spawn. Slot ~3 still waits for D-3 (which waits for D-2's live path).",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "the recut @c7b6a0d200; the D-2 face fix @d5ce612d16; the sentinels captured at rows 5-6"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "two worker subagents running in the background (a subagent writes no telemetry; their reports and instances are the oracle); worktrees wk-NFRA_CLDGRPH-1 (@c7b6a0d200) and -2 (@d5ce612d16)"
+        }
+      ],
+      "spine_clause": "L7 (the drain's hand-off: continue the same subagent -- NOT AVAILABLE here; the fallback re-dispatch to a fresh slot)",
+      "gate_or_notifier_touched": "NONE. FINDING for the spine's owner (1.0.0_SA_CTO) and the harness: a subagent that has returned its final report is not resumable by id in this harness ('No transcript found'), so the L7 clause 'hand the next task order by CONTINUING the same subagent, context intact' has no carrier once the worker's turn ends; the lawful shape today is a fresh spawn per order in the same slot, with the predecessor's deliverables at HEAD as its context. The cost is the cold read of the face; the W<n> coordinate and the serial carry across.",
+      "note": "Two continuations pending on their reports: ~1 -> D-1 (reopened) after D-12 drains; ~2 -> D-3 after D-2 drains. The round's night (CG-x-2) can only be the first 02:00Z after D-12's grant AND D-1's pins land."
     }
   ]
 }
