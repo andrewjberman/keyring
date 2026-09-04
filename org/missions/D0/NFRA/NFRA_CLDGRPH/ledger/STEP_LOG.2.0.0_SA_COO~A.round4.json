@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "project": "NFRA_CLDGRPH",
+  "round": 4,
+  "seat": "2.0.0_SA_COO~A",
+  "written_utc": "2026-09-04T07:45Z",
+  "trigger": "Andrew-direct 2026-09-04 ~05:1xZ at the 4.0.0_SA_CRO terminal (record @aff3bfb7bf, relayed 94046/94056): the midstream spine-v3 test on NFRA_CLDGRPH -- 'coo~a must be spawned by mstr ... first order of business is COOs come online and create all task orders for e2e projects'; this lane respawned by 0.0.0_AB_MSTR 05:41Z. Mid-cut the CTO's ROUND-3 ANALYSIS landed (@2dd381d969, 94108: ROUND_CLOSE; ten open cells + ONE added cell + the S27 text fix; CG-s-8 -> CG-x-7 last) and the issuance was reshaped to it before the commit. Law in force at the cut: spine v3.5 @08f579d00e (a worker order carries <paths>; rows mint <CODE>-W<n>-S<k>; the drain merges through .tools/safe-merge.sh @747a0b23c3; a worker writes no telemetry -- this log's L7 rows are read from git and the worker reports, never from a stream).",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L5",
+      "started_utc": "2026-09-04T06:55Z",
+      "ended_utc": "2026-09-04T07:20Z",
+      "act": "Decomposition v0.3 in the issuance commit: CG-s-15 ADDED (the digest-pinned rebuild of the shared image + one real cloud derive; the CTO's analysis s.2 item 2); CG-s-14's text corrected for S27 (cot-pipeline is EventBridge-only) and its status DONE AT SOURCE; s.1 denominator 21 cells; s.2 ROUND 4 restated as the ONE issuance with CG-s-8 -> CG-x-7 LAST; changelog 0.3. Then v0.3.1 (this seat, ~07:4xZ, on the CRO's check-out 94127): the `status now` column corrected on nine cells reading OPEN behind TERMINAL orders (CG-s-1/2/3/4/9/10/11/12/13).",
+      "inputs": [
+        {"kind": "RECORD", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round3.md @2dd381d969 (s.2 items 2-3; s.4)"},
+        {"kind": "RECORD", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/remediations/REMEDIATION_v3.md @8fc3921769; adjudications/ADJUDICATION_v1.md C-S3/C-S4/C-S5"},
+        {"kind": "RECORD", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.2 @70918d5d2b"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.3 @eedb24b906; v0.3.1 in the commit that lands this log"}
+      ],
+      "spine_clause": "L5 (decomposition, 2.0.0_SA_COO); L10 -> L6 (the CTO's round-N analysis is what the COO recuts)",
+      "gate_or_notifier_touched": "NONE (gates run, none edited)",
+      "note": "The added cell owns the LIVE-graph half of CG-s-14's closes-on (C-3 met it at source under a no-deploy bound). The v0.3.1 status fix is the stale-column defect the base COO fixed on COMPEFFICACY at v0.2.8 @4a9e7a79b2, found here by the CRO's coverage read."
+    },
+    {
+      "seq": 2,
+      "limb": "L6",
+      "started_utc": "2026-09-04T06:30Z",
+      "ended_utc": "2026-09-04T07:20Z",
+      "act": "ONE ISSUANCE @eedb24b906 (author 2.0.0_SA_COO~A; 15 files): eleven task orders TO-CG-D-1..D-11 over every open cell (CG-s-15, s-5, s-6, s-7, s-8, x-1, x-2, x-4, x-5, x-7, x-8) to three worker slots 0.9.0_WK_NFRA_CLDGRPH~1/~2/~3, each face carrying <paths> (the grant), one-clause criteria with every invocation bounded, the cell text inlined, the standing law inlined; `fanout: 3 of 5 chains, cap 8` as data in the commit message; rows S32 (S27 disarm ack) and S33 (S28 route ack) by this seat; project.json dep_stage ROUND_CLOUSE -> EXECUTING (TREE_PROJECT_ROW admits the COO lanes @7668568ed6) with the ROUND 4 phase record; the flat index regenerated. Gates at commit: to-pipeline-gate (11 of 11 faces: <decomp_ref>, complete <preflight>, GATE (v) <paths>, the criterion grammar; coverage NOTED at EXECUTING), to-proof-of-spec-check, surprise-row-gate (2 new rows of 32), missions-tree-check (0 violations after the index regenerate), lanes TREE_COO + TREE_PROJECT_ROW. Two refusals on the way, both fixed at the cut: (i) GATE (v) read the literal `<paths>` token from each face's PROSE as the block's start (the regex takes the first occurrence) -- the prose was reworded ('the PATHS block', '-- <files>') so each face carries exactly one block; (ii) INDEX-DRIFT on the flat index (ROUND_CLOSE vs the tree's EXECUTING) -- `missions-tree-index.py derive --write` regenerated it into the same commit.",
+      "inputs": [
+        {"kind": "RECORD", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.3"},
+        {"kind": "RECORD", "ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260904_051xZ_MIDSTREAM_V3_TEST_COMPEFFICACY_AND_CLDGRPH_COO_BASE_AND_COO_A_CVO_BOTH_CHANNELS.md @aff3bfb7bf"},
+        {"kind": "MESSAGE", "ref": "94056 (MSTR spawn-direct), 94068 + 94070 (the <paths> grammar and the W<n> id), 94082/94092/94097/94111 (spine v3.2 -> v3.5), 94108 (the round-3 analysis)"},
+        {"kind": "MEASUREMENT", "ref": "live at the cut 06:1xZ: pointer 2026-09-04T05:53:37.689093+00:00; 17 vintages under projection/ incl. the 02:09:19 nightly (derive_runner, full, built 02:22:43Z); seven task families on opal-globgrph-derive-runner:latest = sha256:68bd8b93... pushed 2026-09-03 18:51:14Z (pre-fix); comp-schedule GATES ARMED 21 across 5 carriers"}
+      ],
+      "outputs": [
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-1..D-11 @eedb24b906"},
+        {"kind": "ARTIFACT", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md rows S32, S33 @eedb24b906 (header denominator 32)"},
+        {"kind": "RECORD", "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/project.json dep_stage EXECUTING @eedb24b906; org/projects/NFRA_CLDGRPH.json regenerated"},
+        {"kind": "MESSAGE", "ref": "NONE SENT -- under spine v3 the COO sends nothing until the drain-end read; the CRO's check-out 94127 read the commit and graded the L6 act PASS"}
+      ],
+      "spine_clause": "L6 (task orders, 2.0.0_SA_COO only; one issuance; fanout as data; the flip in the issuance commit)",
+      "gate_or_notifier_touched": "NONE (gates run, none edited). FINDING for the gate's owner, carried to the drain-end read: GATE (v)'s PATHS_BLOCK_RE takes the FIRST `<paths>` occurrence in the file, so a face that mentions the token in prose before its block is graded on the prose -- the refusal names a prose line as an entry.",
+      "note": "The chain read: the open set's minimum chain cover is 5 ({CG-s-15}, {s-5 -> s-6 -> x-1/x-5}, {s-7 -> x-8}, {x-2 -> x-4}, {s-8 -> x-7}); N = 3 because only three orders are releasable at spawn; the two chains that release on merges and a night are queued behind slots 1 and 2. Queues: ~1 D-1 -> D-9 -> D-10; ~2 D-2 -> D-3 -> D-6 -> D-7 -> D-8; ~3 D-4 -> D-5 -> D-11. Five readings the issuer made are stated on the faces they bind (the gateway bearer path + dormant MCP integration with G8 the CTO's; the gateway host as x-7's second machine; the planted missed night for x-8; 'within minutes' <= 900 s and 'one cycle' = 24 h; the laptop's local DB deleted by the issuer at the drain after D-7)."
+    },
+    {
+      "seq": 3,
+      "limb": "L7",
+      "started_utc": "2026-09-04T07:24Z",
+      "ended_utc": "2026-09-04T07:38Z",
+      "act": "THE SPAWN IS THE GO. Three worktrees made by this seat from CLOUD (never the harness's isolation, which bases on origin/main): `git worktree add -b wk-NFRA_CLDGRPH-<n> C:/Users/AndrewBerman/Desktop/wk-NFRA_CLDGRPH-<n> CLOUD`, each verified org/ + .tools/ present and the local DB absent, HEAD 5644fee152 (CLOUD's tip; the issuance eedb24b906 is its ancestor). Three worker subagents spawned with subagent_type worker and NO isolation, each prompt = the L7 identity line (serial, worktree path, branch) + the slot's FIRST worker face verbatim with <status> and <preflight> stripped (the record face never travels): ~1 <- TO-CG-D-1 (opus, marked HARD), ~2 <- TO-CG-D-2 (opus, HARD), ~3 <- TO-CG-D-4 (sonnet, the worker type's default). No broker message carries a GO; none was sent.",
+      "inputs": [
+        {"kind": "ARTIFACT", "ref": "the three first faces at @eedb24b906 (D-1, D-2, D-4)"}
+      ],
+      "outputs": [
+        {"kind": "RECORD", "ref": "worktrees wk-NFRA_CLDGRPH-1/2/3 at C:/Users/AndrewBerman/Desktop/, branches wk-NFRA_CLDGRPH-1/2/3 from CLOUD @5644fee152"},
+        {"kind": "RECORD", "ref": "three subagent tasks running in the background under this session; their WORKER REPORTS and proof instances are the whole oracle (a subagent writes no telemetry)"}
+      ],
+      "spine_clause": "L6 tool clause + L7 (the worker: fresh context, its own worktree and branch, the face as its whole context)",
+      "gate_or_notifier_touched": "NONE",
+      "note": "The hand-offs the drain will make: D-3 to ~2 after D-2 merges; D-6 to ~2 after D-3; D-5 to ~3 after D-4 and D-3; D-9 to ~1 after D-1, D-3 and the first 02:00Z night under the pins; D-10 to ~1 after D-9 and one cycle; D-11 to ~3 after D-5 and D-9; D-7 to ~2 LAST after D-9/D-10/D-11; D-8 to ~2 after D-7 and the issuer's switch-off of the main workspace's local DB. Before each hand-off the COO merges CLOUD into the worker's branch (a worker never merges)."
+    }
+  ]
+}
