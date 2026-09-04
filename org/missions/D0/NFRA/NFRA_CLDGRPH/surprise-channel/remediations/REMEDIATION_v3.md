@@ -29,7 +29,7 @@ advanced are edited in place in REMEDIATION_v1.md (S2, S3, S8) and REMEDIATION_v
     "owner": "1.0.0_SA_CTO",
     "round": "v3",
     "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null},
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v3"},
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v3"},
     "closed": false
   }
 ]
@@ -54,9 +54,9 @@ advanced are edited in place in REMEDIATION_v1.md (S2, S3, S8) and REMEDIATION_v
     "remedy": "At the L5/L6 recut, in the CG-s-14 cell text and any successor face: name bd-pipeline and inf-pipeline as the aws_s3_bucket_notification resources with Lambda targets and name cot-pipeline's resource as EventBridge-only (a distinct target class outside this cell), so no reader expects a cot S3-to-Lambda edge. No Terraform change belongs to this item.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v3",
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~A", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v3"},
-    "closed": false
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~A", "at": "2026-09-04T07:20Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v3"},
+    "closed": true
   }
 ]
 ```

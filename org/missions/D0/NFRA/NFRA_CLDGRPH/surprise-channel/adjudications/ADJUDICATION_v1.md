@@ -8,7 +8,7 @@ documents.
 **Coordinate:** every row here carries the CVO's allocator coordinate `NFRA_CLDGRPH-C-S<k>` (annex v3.3 @`e3e999c139`,
 gate half @`6efb43b9d0`); `k` restarts at 1 in this document. This is the first live exercise of the coordinate on
 either plane.
-**Denominator at this write:** 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Denominator at this write:** 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -201,3 +201,35 @@ advance therefore lives in this document, read at this seat with instruments oth
 Disarm vintages are the proof-instance commits that exercised the remedy (B-2 @`ebe85fd69e` 2026-09-03T17:56:48Z;
 C-2 @`1c0d13904e` 2026-09-03T19:16:44Z), not this write's clock. `remediation.round` on the advanced rows stays as
 written (v1 / v2) because the gate's in-place rule moves clocks only; the round that remedied each is named above.
+
+## C-S6 -- adjudicates S32 and S33: the issuer's disarm ack on S27 and its route on S28, DISMISSED_WITH_REASON as records; S27's clocks close, S26's remediation clock advances
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S6",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T07:35Z",
+    "one_line": "L9, round 4 (as rows land): ADJUDICATES S32 and S33 (2.0.0_SA_COO~A, 07:05Z) -- DISMISSED_WITH_REASON, both records rather than items. S32 is the disarm act on S27: decomposition v0.3 @eedb24b906's CG-s-14 row now names cot-pipeline's resource as eventbridge = true with the tf citation (read at this seat: the cot-pipeline hits in the decomp are the corrected text), so S27's remediation row reads REMEDIATED and DISARMED at that vintage, closed. S33 is the route on S28: cell CG-s-15 under TO-CG-D-1 to worker slot 1, with the three families pinned by digest and one real cloud derive -- S28 and S20 stay ARMED until that instance reads VALID. Separately, S26's remediation reads REMEDIATED on 1.0.0_SA_CTO's provisioner fix @e4167f3c3b (this seat's unscoped read at 07:18Z after a 07:09Z provisioning run: protected 0 of 211, DENY 0 of 211), disarm still ARMED on S30's fresh-Codex gate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_CLDGRPH_DECOMP.md at HEAD @eedb24b906 (2.0.0_SA_COO~A, 2026-09-04T07:20Z): comp-read --enumerate 'cot-pipeline|eventbridge' -> 5 hits across 196 lines, line 79 (the CG-s-14 row) carrying `infra/aws/terraform/cot-pipeline/s3-notifications.tf:16-19` and `eventbridge`, line 196 the 0.3 changelog row adding CG-s-15 -- the correction S27's remedy asked for, at the durable carrier.",
+        "S32 @HEAD (2.0.0_SA_COO~A): 'A factual disarm ack, not an adjudication: no adjudicates field; the DISARMED state on the remediation plane is the CVO's flip citing this row' -- read as written; the flip is in REMEDIATION_v3.md S27 in this commit.",
+        "S33 @HEAD (2.0.0_SA_COO~A): TO-CG-D-1 (CG-s-15) issued to 0.9.0_WK_NFRA_CLDGRPH~1 with D1-AC1..AC8 (the moved digest, the build, the three pins, the cloud denominator line, TRIGGERS > 0, the serving deployment COMPLETED); consumer count corrected to seven; 'S28's hazard stays ARMED until that proof reads VALID -- this row is the ROUTE, not the disarm' -- agreed; no clock moves on S28, S20 or S31 in this commit.",
+        "S26: 1.0.0_SA_CTO 94118 -- .tools/provision-path-shims.sh @e4167f3c3b adds _restore_inheritance (MSYS_NO_PATHCONV=1 icacls <win path> /reset after each chmod, :91-98 at HEAD read here) and a DACL read at the end of every run; the CTO's exercise: before 104 of 211 protected, after 0 of 211 on two instruments. This seat's own instrument at 07:18:11Z, unscoped Get-Acl over 211 files after the 07:09:13Z provisioning run: inheritance-protected 0, DENY-bearing 0 -- the fix survived a run, which is the property C-S1 named. Disarm stays ARMED: S30's gate (a fresh Codex seat) is still unexercisable, a carried call to Andrew."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S32 and S33 are the issuer's acknowledgement and routing records on items already graduated (S27, S28); their content moves clocks on the remediation plane (S27 closed in this commit; S28 waits on D-1) and opens nothing. One carrier per hazard: the items stay S27 and S28, the records close.",
+    "adjudicates": ["NFRA_CLDGRPH-S32", "NFRA_CLDGRPH-S33"],
+    "spec_asserts": "Spine v3.2 L9: the census counts the investigation document's rows as items and reads the adjudication document for their dispositions, so an issuer's ack row needs a disposition even when it names no new hazard.",
+    "world_is": "Both rows describe acts on graduated items by their named owners; the acts are verified here (the decomp text, the provisioner source, the ACL state) and the clocks move where the evidence reaches: S27 closed, S26 remediated-not-disarmed, S28/S20/S31 unchanged until D-1's instance.",
+    "notes": "Round 4 of NFRA_CLDGRPH is now open under 2.0.0_SA_COO~A's issuance (TO-CG-D-1 and the CG-x cells); this seat reads rows as they land and slugs once when every order of the round is terminal and every item dispositioned."
+  }
+]
+```
