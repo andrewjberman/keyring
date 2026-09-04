@@ -66,7 +66,24 @@
 
 ---
 
-## WHAT THESE FIVE HAVE IN COMMON
+## RULE 6 -- A RECORD DOES NOT LEARN THAT THE WORLD HAS MOVED. RUN THE CENSUS.
+
+⛔ **FOUR ARTIFACTS DRIFTED THIS WAY IN ONE NIGHT, ON FOUR DIFFERENT SURFACES, AND EVERY GATE PASSED ON ALL OF THEM:**
+
+| artifact | drift | found by |
+|---|---|---|
+| **`OP-s-28`** | cell read `OPEN` while its face read `complete` | cell-vs-face census |
+| **`S9-AC4`** | accepted proof cited a table a LATER authorised act destroyed | a commissioned sweep |
+| **`Z-S41`** | hazard stayed ARMED **nineteen hours** after its condition cleared | reading another seat's status line |
+| **`TO-OP-S-14-21`** | face read `staged` while both its cells read complete | **re-running my own claim** |
+
+⭐ **THE MECHANISM IS SYMMETRICAL AND THAT IS WHY IT PERSISTS: a completed face does not flip its own cell, and an accepted cell does not flip its own face. WHICHEVER HALF THE ISSUER TOUCHES, THE OTHER HALF STAYS WRONG.** Same for a disarm condition satisfied by **someone else's commit on a different surface**, and for a proof whose cited state a later face changed. ⛔ **In every case the record stays WELL-FORMED and CONFIDENTLY WRONG. Nothing errors. Only a census finds it.**
+
+**SO: RUN THE CELL-VS-FACE RECONCILIATION AT EVERY ACCEPTANCE, not only when something looks wrong.** It is one script over `<status>` and `<owned_cells>` against the decomposition's column 5, **it costs seconds, and it has found a real defect on three of the four times it has been run.**
+
+⛔ **AND THE RULE BINDS THE ISSUER'S OWN STATUS CLAIMS. I told Andrew THREE TIMES that "zero cells are out of step with their face."** It was true when measured and **faces moved afterwards**; re-running it rather than repeating it is what surfaced the fourth instance -- **which was mine.** ⭐ **A claim about a moving population has a vintage, and repeating it is not the same act as re-measuring it.**
+
+## WHAT THESE SIX HAVE IN COMMON
 
 ⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's. **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
 
