@@ -167,6 +167,54 @@
       "spine_clause": "L7 (the drain: 'a refused drain leaves no open merge, the worker re-mints on its branch, the drain runs again' -- v3.5; here the refusal is on identity, not an id, so no re-mint exists; v3.1: an armed row whose owner the COO cannot seat rides the drain-end read)",
       "gate_or_notifier_touched": "NONE edited. Two gates exercised to refusal on their first live W-row drain: halt-gate-check.sh (identity) and surprise-row-gate.py _coordinate_violations (at a merge). Both owners are 1.0.0_SA_CTO (the v3 carriers) with 2.0.0_SA_COO base for safe-merge.sh.",
       "note": "The round is BLOCKED end to end on the halt gate: D-1 (in flight at ~1) needs safe-apply for its three pins; D-3 needs D-2's live path; D-5/D-6 need D-3; D-9 needs D-1's pins and a night; D-7/D-8/D-10/D-11 follow. Slot ~2 is not handed D-3. The drain-end read goes to 1.0.0_SA_CTO as soon as ~1 reports, carrying both gate defects, W2-S1 (armed, the CTO's), S26/S30 (the CTO's), the G8 arch-gate request, and the three instrument gaps already logged (GATE (v)'s regex; safe-merge's author; the background worktree checkout)."
+    },
+    {
+      "seq": 6,
+      "limb": "L7",
+      "started_utc": "2026-09-04T09:20Z",
+      "ended_utc": "2026-09-04T09:30Z",
+      "act": "DRAIN of TO-CG-D-1 (CG-s-15, worker 0.9.0_WK_NFRA_CLDGRPH~1) -- REFUSED the same way, branch left intact. The WORKER REPORT read: the image REBUILT from HEAD (COPY set 37 sources, 1 changed = org/modules/graph/comp_aws_cli.py @b5bc1c8b27; CodeBuild SUCCEEDED; :latest = sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778, pushed ~08:43Z -- this seat re-read the digest and the three families' images) and EXERCISED (one ad-hoc derive on it; the Pipe-launched projection task 08459e7d5608493bb149fb991b16fe1b on the new digest exit 0 POINTER_PUT_OK; the pointer at 2026-09-04T08:49:20.217966+00:00, re-read here); the PINS NOT APPLIED (the halt gate, row W1-S1) -- D1-AC3/AC6/AC7 FAIL; D1-AC5 FAIL with TRIGGERS=0 at the post-derive vintage because the derive task role lacks s3:GetBucketNotification (row W1-S7, BLOCKING/ARMED, owner 0.7.0_AE_CloudOps -- S20's real cause; the cloud derive printed 'buckets read=0 / unreadable=34'); D1-AC1/AC2/AC4 PASS; D1-AC8 recorded. Eight rows W1-S1..S8 (S2 the apply set is EIGHT addresses not four -- the two role policies scope ecs:RunTask to the task-definition revision; S3 seven stale root outputs in the module state; S4/S5 INERT naming + non-ASCII; S6 sibling workers share one scratchpad dir keyed by the parent session; S8 resource-summaries-producer has no trigger). One commit 8b8f2caae2, the worker's; the face flipped `complete` on rc 0 with four FAIL rows. safe-merge.sh graded the merged index and REFUSED all eight W1 rows on the same committer clause; aborted clean; wk-NFRA_CLDGRPH-1 kept; the ledger sentinel cldgrph-cgs15-shared-image-digest-pins.json captured to the COO's scratchpad. Not rolled back: the new image is measured good on the two consumers that ran it.",
+      "inputs": [
+        {
+          "kind": "REPORT",
+          "ref": "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~1 on NFRA_CLDGRPH.TO-CG-D-1, branch wk-NFRA_CLDGRPH-1 HEAD 8b8f2caae2"
+        },
+        {
+          "kind": "MEASUREMENT",
+          "ref": "this seat 09:2xZ: ecr describe-images latest = sha256:1b89853f... ; describe-task-definition derive-runner:6 / projection-worker:3 / serving:1 all ':latest'; pointer projection/2026-09-04T08:49:20.217966+00:00; safe-merge.sh REFUSED 8 of 8 W1 rows 'the committer 2.0.0_SA_COO~A is not a worker'"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "NO MERGE; CLOUD HEAD unchanged; the branch and worktree kept for the re-hand"
+        }
+      ],
+      "spine_clause": "L7 (the drain); v3.1 (an armed row whose owner the COO cannot seat rides the drain-end read)",
+      "gate_or_notifier_touched": "NONE edited; the same two gates refused on their second exercise",
+      "note": "The round is BLOCKED end to end: every remaining order sits behind D-1's pins, D-2's live path, or the IAM grant W1-S7 names."
+    },
+    {
+      "seq": 7,
+      "limb": "L7 -> L10",
+      "started_utc": "2026-09-04T09:30Z",
+      "ended_utc": "2026-09-04T09:35Z",
+      "act": "THE DRAIN-END READ, the COO's ONE message of the round, to 1.0.0_SA_CTO: delivered as org/mcp/inbox/1.0.0_SA_CTO/20260904T093436Z_2.0.0_SA_COO_A_DRAIN-END_READ_NFRA_CLDGRPH_round_4__2.0.md (filesystem + broker + channel push). It carries: the three outcomes (D-4 DONE @91cabbdf86; D-2 and D-1 built/exercised, not applied, on kept branches; eight orders pending behind them); the finding that changes the recut (W1-S7, the IAM gap); the two gate defects that block every remaining order (the halt gate's identity rule; the row gate's committer-based W-discipline at a merge, which safe-merge.sh cannot carry an audited override through); nine instrument gaps (GATE (v)'s regex; safe-merge's author; worker.md's flip-on-rc-0; the shared scratchpad; D2-AC9's expectation; the sentinel outside the grant; the eight-address apply set; the face's IntegrationSpec/random-provider errors; the background worktree checkout); every armed row this seat could not seat with its owner; the watermark 32 at HEAD vs 47 minted (15 on the two branches); the live plane's state and the two OPEN ledgers with their captured sentinels; five recommendations for the round-4 analysis (the gate fixes; ONE added cell for the IAM grant ahead of the pins and the night; D-1/D-2 reopened with the eight-address set and the face fixes; the G8 arch-gate ruled; worker.md's flip rule tightened). No message was sent to any other seat during the round.",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "rows 4-6 of this log; the two worker branches; the live reads"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "20260904T093436Z_2.0.0_SA_COO_A_DRAIN-END_READ_NFRA_CLDGRPH_round_4__2.0.md to 1.0.0_SA_CTO (the only send of the round)"
+        }
+      ],
+      "spine_clause": "L7 (the drain-end read: the CVO's watermark against the channel's row count; every armed row whose owner the COO could not seat); L10 (the CTO answers with the round-N analysis)",
+      "gate_or_notifier_touched": "NONE",
+      "note": "The three subagents (~1, ~2, ~3) are alive and idle with their contexts intact; each is continued on the CTO's analysis. Worktrees wk-NFRA_CLDGRPH-1 and -2 kept; wk-3 removed after its merge."
     }
   ]
 }
