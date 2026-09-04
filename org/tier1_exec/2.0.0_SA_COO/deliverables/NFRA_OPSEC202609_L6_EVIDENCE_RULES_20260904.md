@@ -83,6 +83,33 @@
 
 ⛔ **AND THE RULE BINDS THE ISSUER'S OWN STATUS CLAIMS. I told Andrew THREE TIMES that "zero cells are out of step with their face."** It was true when measured and **faces moved afterwards**; re-running it rather than repeating it is what surfaced the fourth instance -- **which was mine.** ⭐ **A claim about a moving population has a vintage, and repeating it is not the same act as re-measuring it.**
 
+## STANDING PERMISSION (SOVEREIGN) -- FIXTURE-IDENTITY TOKEN MINTING, BOUNDED
+
+**Andrew-direct 2026-09-04 ~13:00Z, verbatim: "Approved for all of these"**, answering a five-card frame at the `1.0.0_SA_CTO~Z` terminal. Record `c1c79c3729`. **Card 3's REC as written -- and the rec IS the scope, neither wider nor narrower:**
+
+> **(a) YES, BOUNDED** -- fixture identity only, short TTL, read-only, mint DISCLOSED in the proof
+
+**AN AGENT MAY MINT A SHORT-LIVED TOKEN FOR THE TEST-FIXTURE IDENTITY.** ⛔ **FOUR BOUNDS, ALL OF THEM PART OF THE PERMISSION RATHER THAN COMMENTARY ON IT:**
+1. **FIXTURE IDENTITY ONLY** -- ⛔ **never a real partner human's session.**
+2. **SHORT TTL.**
+3. **READ-ONLY probes.**
+4. ⭐ **THE MINT IS DISCLOSED IN THE PROOF, "rather than presented as a password login."** **A minted token described as a login is a misrepresentation of how the evidence was obtained**, and the disclosure is what keeps a probe distinguishable from an authentication test.
+
+**Originated at this seat (msg 19983) and returned TIGHTENED**, which is the right direction for a permission to travel. **It applies to any face taking live probes against an authenticated surface** -- `TO-OP-S-13`, `TO-OP-S-9-11`, `TO-OP-S-12` among them. ⛔ **It is a permission, not an instruction: no face is obliged to mint anything, and the fixture route is preferred over a real session precisely because it is bounded.**
+
+## ⛔ CARRIED, NOT YET EXECUTABLE -- OBJECT LOCK ON THE EVIDENCE STORE (CALL 5)
+
+**Same ruling, card 5: Object Lock (governance mode) on `cases/` in `opal-security-evidence` -- ON.** ⛔ **The framing said *"that bucket is a round-2 build, so this is an INPUT to the cell that creates it, not a change to anything live."* **MEASURED 2026-09-04 13:1xZ, THAT CLAUSE DOES NOT HOLD:**
+
+| read | result |
+|---|---|
+| `head-bucket` | **EXISTS, live** |
+| `get-object-lock-configuration` | ⛔ **`ObjectLockConfigurationNotFoundError` -- NOT enabled at creation** |
+| `get-bucket-versioning` | ✅ **`Enabled`** -- the one precondition already satisfied |
+| `list-objects-v2 --prefix cases/` | ⛔ **438 OBJECTS** |
+
+⛔ **SO IT IS A CHANGE TO A LIVE EVIDENCE STORE, NOT AN INPUT TO AN UNBUILT CELL.** **S3 Object Lock is normally a BUCKET-CREATION flag.** ⭐ **This seat deliberately did NOT run `put-object-lock-configuration` to find out** -- that is a live change to a bucket holding 438 evidence records, it is a cell's act rather than the issuer's, **and a failed attempt on an evidence store is a poor way to learn an API constraint.** **NOT MEASURED: whether enabling it post-creation succeeds here.** ⛔ **The intent is sound and unquestioned; the executability is open, and the card Andrew approved did not mention a possible bucket rebuild and migration of 438 objects.** **Routed to `1.0.0_SA_CTO~Z`; no cell moves until it is answered.**
+
 ## WHAT THESE SIX HAVE IN COMMON
 
 ⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's; ⭐ **and RULE 6 is the version where the two planes are THE RECORD AND THE WORLD -- with the record being the one that structurally CANNOT notice.** **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
