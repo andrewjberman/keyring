@@ -38,6 +38,12 @@ if [ "${1:-}" = "--self-test" ]; then
   chk "refuses with no branch argument"                          "! bash '$0' 2>/dev/null"
   chk "refuses a branch that does not exist"                     "! bash '$0' definitely-not-a-branch-xyz 2>/dev/null"
   chk "git supports --no-commit (the whole mechanism)"           "git merge --help 2>/dev/null | grep -q -- '--no-commit' || true"
+  # REGRESSION ARM for the bug this script shipped with: the gate takes argv, so a BARE
+  # call grades nothing and returns 0. If that ever reads as a pass, the refuser is blind.
+  chk "a BARE gate call reports ZERO dispatched paths (the vacuous-pass trap)" \
+      "python '$GATE' 2>&1 | grep -q '0 dispatched path'"
+  chk "the script feeds the gate from the staged set, never bare"  \
+      "grep -q 'STAGED_ARR\[@\]' '$0'"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   [ "$fails" -eq 0 ] && { echo "PASS"; exit 0; } || { echo "FAIL"; exit 1; }
 fi
@@ -67,8 +73,20 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   exit 1
 fi
 
-echo "safe-merge: grading the MERGED index --"
-if python "$GATE"; then
+# ⛔ THE GATE TAKES ITS FILE LIST FROM ARGV (surprise-row-gate.py:1196). Called bare it
+# grades NOTHING and prints "denominator: 0 dispatched path(s)" with rc 0 -- a VACUOUS
+# PASS that reads exactly like a clean one. The first version of this script did that and
+# the collision was caught only by the pre-commit hook downstream. Feed it the staged set.
+STAGED_ARR=()
+while IFS= read -r _f; do [ -n "$_f" ] && STAGED_ARR+=("$_f"); done < <(git diff --cached --name-only)
+if [ "${#STAGED_ARR[@]}" -eq 0 ]; then
+  echo "safe-merge: REFUSED -- the merge staged NO files. Nothing to grade; refusing rather than" >&2
+  echo "            reporting a pass over an empty set." >&2
+  git merge --abort 2>/dev/null || true
+  exit 1
+fi
+echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
+if python "$GATE" "${STAGED_ARR[@]}"; then
   :
 else
   rc=$?
@@ -82,6 +100,16 @@ else
 fi
 
 if [ -z "$SUBJECT" ]; then SUBJECT="drain: merge $BRANCH (row gate clean on the merged index)"; fi
-git commit --no-edit -m "$SUBJECT" || { echo "safe-merge: commit failed; index left staged for inspection" >&2; exit 1; }
+# A commit failure here means a DOWNSTREAM hook refused what this script's own grade let
+# through -- so the grade was wrong. ABORT; never leave a staged merge behind for someone
+# to find and finish by hand.
+if ! git commit --no-edit -m "$SUBJECT"; then
+  echo "safe-merge: *** COMMIT REFUSED DOWNSTREAM after this script's grade PASSED. ***" >&2
+  echo "            That is a defect in THIS script's grade, not only in the branch: a hook" >&2
+  echo "            saw something the merged-index grade above did not. Aborting the merge so" >&2
+  echo "            nothing is left staged, and REPORT the discrepancy." >&2
+  git merge --abort 2>/dev/null || true
+  exit 1
+fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."
