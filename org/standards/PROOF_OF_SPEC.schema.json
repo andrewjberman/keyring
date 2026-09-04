@@ -244,6 +244,15 @@
           "status_reason": {
             "type": "string",
             "description": "REQUIRED (enforced by validator) when status != PASS; for UNCOMPUTABLE-BY-CONSTRUCTION it names the later run, for UNVERIFIABLE-BY-INSTRUMENT the substitute oracle"
+          },
+          "expect": {
+            "type": "string",
+            "minLength": 1,
+            "description": "spine v3.0 L6/L7 (one clause per criterion): the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker. Carried from the task order's <expect>. OPTIONAL: an instance without it is graded as before (self-report), which is the pre-v3 state and is stated as such."
+          },
+          "judgment": {
+            "type": "boolean",
+            "description": "spine v3.0 L6/L9: true marks a criterion the task order could not reduce to an invocation and an expectation. A judgment row carries its output and NO verdict -- status PASS or FAIL is REFUSED by the checker; use UNVERIFIABLE-BY-INSTRUMENT with status_reason naming the CVO at L9 as the oracle. The grade lands in the CVO's adjudication row (annex 4a)."
           }
         }
       }

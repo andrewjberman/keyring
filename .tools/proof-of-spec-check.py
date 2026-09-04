@@ -79,6 +79,28 @@ def conditional_checks(inst: dict) -> list[str]:
             v.append(f"acceptance[{rid}]: status={row.get('status')} REQUIRES status_reason")
         if row.get("status") == "PASS" and len(row.get("output_evidence", "").strip()) < 8:
             v.append(f"acceptance[{rid}]: PASS with thin/empty output_evidence -- a bare value; INVALID")
+        # spine v3.0 L6/L7/L9 (one clause per criterion; Andrew-direct 2026-09-03 ~22:2xZ, carrier 4 of eight):
+        # a MECHANICAL criterion carries `expect`, the pattern its output must match -- PASS is decided by the
+        # match, never by the worker; a JUDGMENT criterion carries no verdict at all -- the CVO grades it at L9.
+        # Both fields are OPTIONAL in the schema so every pre-v3 instance still validates as it did.
+        if row.get("judgment") is True and row.get("status") in ("PASS", "FAIL"):
+            v.append(f"acceptance[{rid}]: judgment=true carries a verdict (status={row.get('status')}) -- a judgment "
+                     f"criterion is graded only by the CVO at L9 (spine v3 L9); record the output under "
+                     f"UNVERIFIABLE-BY-INSTRUMENT with status_reason naming the CVO, never PASS/FAIL")
+        exp = row.get("expect")
+        if isinstance(exp, str) and exp.strip():
+            import re as _re_x
+            try:
+                matched = _re_x.search(exp, row.get("output_evidence", "") or "", _re_x.S | _re_x.M) is not None
+            except _re_x.error as exc:
+                matched = None
+                v.append(f"acceptance[{rid}]: expect is not a valid pattern ({exc}) -- a criterion whose expectation "
+                         f"cannot be evaluated cannot pass")
+            if matched is False and row.get("status") == "PASS":
+                v.append(f"acceptance[{rid}]: status=PASS but output_evidence does NOT match expect {exp!r} -- "
+                         f"the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID")
+            if matched is True and row.get("status") == "FAIL" and not row.get("status_reason"):
+                v.append(f"acceptance[{rid}]: status=FAIL while output_evidence matches expect -- state the reason")
     m = inst.get("controls", {}).get("mutant", {})
     if m.get("status") == "DID-NOT-FIRE (deliverable INVALID)":
         v.append("controls.mutant: DID-NOT-FIRE -- the deliverable is INVALID by its own control")
@@ -1043,8 +1065,25 @@ def _self_test() -> int:
         dict(base, surprises=["legacy free-string surprise"]), False, rows, 0, "surprises-announce")
     arm("F ENFORCE + empty list -> 0 violations, frame says 0 entries",
         dict(base, surprises=[]), True, rows, 0, "0 entries")
+    # ---- spine v3 carrier 4: the expect match and the judgment refusal (pure, conditional_checks) ----
+    def _row(**kw):
+        r = {"criterion_id": "V3-AC1", "criterion_verbatim": "the deciding line is printed", "method": "command",
+             "invocation": "echo deciding=42", "output_evidence": "deciding=42", "denominator": "1 of 1", "status": "PASS"}
+        r.update(kw)
+        return r
+    def _v3(name, row, expect_n, needle):
+        got = [x for x in conditional_checks({"acceptance": [row]}) if x.startswith("acceptance[")]
+        ok = len(got) == expect_n and (expect_n == 0 or any(needle in x for x in got))
+        arms.append((name, ok, len(got), expect_n, got[0][:110] if got else ""))
+    _v3("G expect matches output + PASS -> 0 violations", _row(expect=r"deciding=\d+"), 0, "")
+    _v3("H expect does NOT match output + PASS -> 1 violation (the match decides)", _row(expect=r"deciding=7\b"), 1, "does NOT match expect")
+    _v3("I expect is an invalid pattern -> 1 violation", _row(expect="deciding=("), 1, "not a valid pattern")
+    _v3("J judgment=true with status PASS -> 1 violation (no verdict on a judgment criterion)", _row(judgment=True), 1, "carries a verdict")
+    _v3("K judgment=true under UNVERIFIABLE-BY-INSTRUMENT with a reason -> 0 violations",
+        _row(judgment=True, status="UNVERIFIABLE-BY-INSTRUMENT", status_reason="judgment criterion; the CVO grades it at L9"), 0, "")
+    _v3("L no expect, no judgment (a pre-v3 row) -> 0 violations (graded as before)", _row(), 0, "")
     passed = sum(1 for a in arms if a[1])
-    print("proof-of-spec-check --self-test (surprises limb)")
+    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4)")
     for name, ok, got, exp, tail in arms:
         print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
     print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))

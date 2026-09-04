@@ -164,6 +164,11 @@ def _issuer_identity_violations(rel, author):
 DECOMP_DOC_TAG_RE = re.compile(r"<decomp_doc>\s*([^<]+?)\s*</decomp_doc>", re.S)
 OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
 CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
+# spine v3.0 L6 carrier 4 (one clause per criterion): a criterion WITH a body carries its invocation and expectation as
+# children; the self-closing v2 shape is refused on a NEW tree order. The block regex refuses to open on a self-closing
+# tag (the lookbehind), so a v2 tag never swallows the text up to the next </criterion>.
+CRITERION_BLOCK_RE = re.compile(r"<criterion\b([^>]*?)(?<!/)>(.*?)</criterion>", re.S)
+CRITERION_SELFCLOSE_RE = re.compile(r"<criterion\b[^>]*?/>")
 ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
 # The same grammar as .tools/proof-of-spec-check.py CELL_ID_RE (its anchored branches included); a change there is a
 # change here, and the checker's battery (.tools/tests/test_proof_of_spec_cell_id_re.py) is the control for both.
@@ -245,6 +250,165 @@ def _cell_refs_violations(root, rel, text, decomp_text=None):
         notes.append("%s: %d owned cell(s) and %d criterion reference(s) resolve against %s (%d cell ids, %s)"
                      % (rel, len(owned), len(crit), doc, len(ids), where))
     return v, notes
+
+
+def _criterion_grammar_violations(rel, text):
+    """spine v3.0 L6 (carrier 4 of eight; Andrew-direct 2026-09-03 ~22:2xZ at the CRO terminal): ONE CLAUSE PER CRITERION
+    on a NEW tree task order. A mechanical criterion carries exactly one <invocation> and exactly one <expect> as children;
+    a judgment criterion carries judgment="true" and needs neither (the CVO grades it at L9); a criterion with two of either
+    is COMPOUND and refused; the self-closing v2 shape is refused with the grammar named, because the spine's transition
+    rule makes every NEW issuance v3. Flat-root orders are not graded (the legacy population)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    v = []
+    for m in CRITERION_SELFCLOSE_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(m.group(0)))
+        if attrs.get("judgment", "").strip().lower() == "true":
+            continue
+        v.append("%s: criterion %s is the v2 self-closing shape. spine v3.0 L6: a mechanical criterion is\n"
+                 "    <criterion id=\"..\" cell_refs=\"..\"><invocation>..</invocation><expect>..</expect></criterion>\n"
+                 "  (one of each; the checker decides PASS by the match), or judgment=\"true\" with no children (graded by\n"
+                 "  the CVO at L9). A compound criterion is split at the cut." % (rel, attrs.get("id", "<no id>")))
+    for m in CRITERION_BLOCK_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(m.group(1)))
+        cid = attrs.get("id", "<no id>")
+        if attrs.get("judgment", "").strip().lower() == "true":
+            continue
+        n_inv = len(re.findall(r"<invocation\b", m.group(2)))
+        n_exp = len(re.findall(r"<expect\b", m.group(2)))
+        if n_inv > 1 or n_exp > 1:
+            v.append("%s: criterion %s is COMPOUND (%d <invocation>, %d <expect>) -- one clause per criterion; split it "
+                     "into one criterion per invocation+expect pair (spine v3.0 L6)" % (rel, cid, n_inv, n_exp))
+        elif n_inv < 1 or n_exp < 1:
+            v.append("%s: criterion %s is mechanical (no judgment=\"true\") but carries %d <invocation> and %d <expect>; "
+                     "it needs exactly one of each, or judgment=\"true\" (spine v3.0 L6)" % (rel, cid, n_inv, n_exp))
+    return v
+
+
+def _coverage_gap(decomp_text, owned_union):
+    """PURE. (missing, unknown, ids): the decomposition's cell ids no staged order owns, the owned ids the decomposition
+    lacks, and the decomposition's id set."""
+    ids = set(CELL_ID_RE.findall(decomp_text or ""))
+    owned = set(owned_union)
+    return sorted(ids - owned), sorted(owned - ids), ids
+
+
+def _coverage_groups(root, targets):
+    """I/O half: {(code, rel_json, doc): [owned cell ids...]} over the NEWLY ADDED tree task orders."""
+    groups = {}
+    for rel in targets:
+        rel = rel.replace("\\", "/")
+        if not TREE_TO_RE.search(rel):
+            continue
+        code, rel_json, err = _project_row_rel(root, rel)
+        if not code or not rel_json or err:
+            continue
+        try:
+            with open(os.path.join(root, rel), "r", encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        except OSError:
+            continue
+        m = DECOMP_RE.search(text)
+        if not m or NONE_WORD_RE.match(m.group(1).strip()):
+            continue
+        dm = DECOMP_DOC_TAG_RE.search(m.group(1))
+        doc = dm.group(1).strip() if dm else ""
+        owned = _split_cells(" ".join(OWNED_CELLS_RE.findall(m.group(1))))
+        groups.setdefault((code, rel_json, doc), []).extend(owned)
+    return groups
+
+
+def _coverage_grade(groups, stage_of, decomp_of):
+    """PURE given its two readers. spine v3.0 L6 (carrier 1 of eight; Andrew-direct 2026-09-03 ~22:2xZ): ONE issuance
+    covers EVERY cell. For a tree project whose row reads dep_stage DECOMP (the issuance moment), the union of
+    <owned_cells> across the staged NEW orders must equal the named decomposition's cell set; a missing cell REFUSES,
+    naming it. A project already EXECUTING is a recut and is NOT graded here -- a recut covers the affected cells,
+    which no gate can enumerate. An unreadable decomposition is a NOTE (absence is to-decomp-ref-lint's)."""
+    v, notes = [], []
+    for (code, rel_json, doc), owned in sorted(groups.items()):
+        stage = stage_of(code, rel_json)
+        if stage != "DECOMP":
+            notes.append("%s: issuance coverage not graded (dep_stage=%r; only a DECOMP-stage issuance must cover every "
+                         "cell -- a recut covers its affected cells)" % (code, stage))
+            continue
+        if not doc:
+            notes.append("%s: issuance coverage not graded (no <decomp_doc> named)" % code)
+            continue
+        decomp_text = decomp_of(doc)
+        if decomp_text is None:
+            notes.append("%s: issuance coverage not graded (decomposition %s unreadable; absence is to-decomp-ref-lint's)"
+                         % (code, doc))
+            continue
+        missing, unknown, ids = _coverage_gap(decomp_text, owned)
+        if not ids:
+            notes.append("%s: issuance coverage not graded (%s carries no cell id by the grammar)" % (code, doc))
+            continue
+        if missing:
+            v.append("%s: the issuance under %s owns %d of %d cell(s) of %s -- MISSING: %s. spine v3.0 L6: ONE issuance "
+                     "covers EVERY cell of the decomposition; cut the missing order(s) in this same commit, or take the "
+                     "audited '# pipeline-override:' on one order with the reason" % (
+                         code, rel_json, len(ids) - len(missing), len(ids), doc, ", ".join(missing)))
+        else:
+            notes.append("%s: issuance coverage %d of %d cell(s) of %s owned by the staged orders" % (code, len(ids), len(ids), doc))
+    return v, notes
+
+
+def _coverage_violations(root, targets):
+    def stage_of(code, rel_json):
+        try:
+            import json as _j
+            with open(os.path.join(root, rel_json), "r", encoding="utf-8") as fh:
+                return _j.load(fh).get("dep_stage")
+        except Exception:  # noqa: BLE001
+            return None
+    return _coverage_grade(_coverage_groups(root, targets), stage_of, lambda doc: _decomp_text(root, doc)[0])
+
+
+def _self_test():
+    """RED/GREEN arms for carriers 1 (coverage) and 4 (criterion grammar), pure -- no repo read."""
+    decomp = "cells: CE-a-1 CE-a-2 CE-a-3 (three)"
+    grade = lambda owned, stage="DECOMP", text=decomp: _coverage_grade(  # noqa: E731
+        {("X_PRJ", "org/missions/D0/X/X_PRJ/project.json", "d.md"): owned}, lambda c, r: stage, lambda d: text)
+    tree = "org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-1.md"
+    v2 = '<criterion id="C1" cell_refs="CE-a-1"/>'
+    v3 = '<criterion id="C1" cell_refs="CE-a-1"><invocation>echo 1</invocation><expect>1</expect></criterion>'
+    comp = '<criterion id="C2" cell_refs="CE-a-1"><invocation>a</invocation><expect>x</expect><expect>y</expect></criterion>'
+    judg = '<criterion id="C3" cell_refs="CE-a-1" judgment="true"/>'
+    noexp = '<criterion id="C4" cell_refs="CE-a-1"><invocation>a</invocation></criterion>'
+    arms = [
+        ("coverage RED: two orders own a-1, a-2 of three -> refused naming CE-a-3",
+         lambda: any("MISSING: CE-a-3" in x for x in grade(["CE-a-1", "CE-a-2"])[0])),
+        ("coverage GREEN: three cells owned -> admitted, coverage noted 3 of 3",
+         lambda: grade(["CE-a-1", "CE-a-2", "CE-a-3"])[0] == [] and any("3 of 3" in n for n in grade(["CE-a-1", "CE-a-2", "CE-a-3"])[1])),
+        ("coverage NOT GRADED at EXECUTING (a recut): admitted, noted",
+         lambda: grade(["CE-a-1"], stage="EXECUTING")[0] == [] and any("not graded" in n for n in grade(["CE-a-1"], stage="EXECUTING")[1])),
+        ("coverage NOT GRADED when the decomposition is unreadable: admitted, noted",
+         lambda: grade(["CE-a-1"], text=None)[0] == []),
+        ("grammar: v2 self-closing criterion on a tree order -> refused, grammar named",
+         lambda: any("v2 self-closing" in x for x in _criterion_grammar_violations(tree, v2))),
+        ("grammar: v3 mechanical criterion (one invocation, one expect) -> admitted",
+         lambda: _criterion_grammar_violations(tree, v3) == []),
+        ("grammar: COMPOUND criterion (two expects) -> refused",
+         lambda: any("COMPOUND" in x for x in _criterion_grammar_violations(tree, comp))),
+        ("grammar: judgment=true self-closing -> admitted (graded by the CVO)",
+         lambda: _criterion_grammar_violations(tree, judg) == []),
+        ("grammar: mechanical criterion without <expect> -> refused",
+         lambda: any("exactly one of each" in x for x in _criterion_grammar_violations(tree, noexp))),
+        ("grammar: a flat-root order is not graded (legacy population)",
+         lambda: _criterion_grammar_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v2) == []),
+    ]
+    failed = 0
+    for name, fn in arms:
+        ok = False
+        try:
+            ok = bool(fn())
+        except Exception as exc:  # noqa: BLE001
+            name += " (raised %s: %s)" % (type(exc).__name__, exc)
+        print("  %s  %s" % ("PASS" if ok else "FAIL", name))
+        failed += 0 if ok else 1
+    print("[to-pipeline-gate --self-test] RESULT: %d arm(s) failed of %d" % (failed, len(arms)))
+    return 1 if failed else 0
 
 
 def _issued_to_tier_violations(rel, text):
@@ -850,6 +1014,8 @@ def check_file(root, rel):
     _cv, _cn = _cell_refs_violations(root, rel, text)
     v.extend(_cv)
     notes.extend(_cn)
+    # spine v3.0 L6 carrier 4: one clause per criterion on a NEW tree order.
+    v.extend(_criterion_grammar_violations(rel, text))
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the
@@ -1022,6 +1188,8 @@ def main(argv):
     root = _repo_root()
     if "--sweep" in argv[1:]:
         return sweep(root)
+    if "--self-test" in argv[1:]:
+        return _self_test()
     added = _newly_added(root)
     if added is None:
         print("[to-pipeline-gate] REFUSED: could not read the staged index. Fail-closed.",
@@ -1045,6 +1213,11 @@ def main(argv):
         v, notes = check_file(root, rel)
         all_v.extend(v)
         all_notes.extend(notes)
+    # spine v3.0 L6 carrier 1: ONE issuance covers EVERY cell -- graded over the staged set, not per file.
+    if targets:
+        _cov_v, _cov_n = _coverage_violations(root, targets)
+        all_v.extend(_cov_v)
+        all_notes.extend(_cov_n)
 
     # LAYER 1 half B runs on EVERY staged TO, added or modified -- a `complete` flip is almost
     # always a MODIFY, so scoping this to newly-added (as layers 2/3 correctly are) would make it

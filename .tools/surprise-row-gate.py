@@ -9,8 +9,11 @@ survives, and it is the half that carries the structured guarantee.
 
 WHAT IT REFUSES, on a staged org/surprise_channel/**/{INVESTIGATION,REMEDIATION}_v*.md:
   NEW investigation row  -> must carry spec_asserts AND world_is (the step-7 trigger's two halves)
-  NEW remediation row    -> must carry route AND loop_target, and the pair must satisfy the
-                            LOCKED MAPPING  SPEC_ERROR->6 | DECOMP_INVALIDATING->5 | SCOPE_CHANGE->2
+  NEW remediation row    -> carries NO route (spine v3.0/3.1 L9/L10, carrier 6 of eight: the slug goes to the CTO,
+                            the single router; the three route tokens are RETIRED). A row that still carries a
+                            legacy route + loop_target pair (a round issued under v2, finishing under its cut
+                            orders) keeps the pair on the LOCKED MAPPING  SPEC_ERROR->6 | DECOMP_INVALIDATING->5 |
+                            SCOPE_CHANGE->2. The L10 precondition applies to EVERY new remediation row (below).
   ANY new row            -> must satisfy its schema's REQUIRED fields and closed enums
 
 =================================================================================================
@@ -48,11 +51,13 @@ import sys
 # contract.json: surprise_channel_glob org/missions/D*/*/*/surprise-channel/{investigations,remediations}/**).
 # The flat channel org/surprise_channel/<PROJECT>/ stays; the tree adds a per-project channel whose
 # PATH carries the project AND the kind. A gate reading one root is blind to the other.
+# spine v3.0 carrier 5: the ADJUDICATION document (annex 4a) -- the CVO's rows about worker rows, same schema as the
+# investigation document, its own sub-folder, so L8 reads and L10 counts worker rows only.
 FLAT_CHANNEL_RE = re.compile(
-    r"(^|/)org/surprise_channel/([^/]+)/(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
+    r"(^|/)org/surprise_channel/([^/]+)/(INVESTIGATION|ADJUDICATION|REMEDIATION)_v[^/]*\.(md|json)$")
 TREE_CHANNEL_RE = re.compile(
-    r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/([^/]+)/surprise-channel/(investigations|remediations)/"
-    r"(INVESTIGATION|REMEDIATION)_v[^/]*\.(md|json)$")
+    r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/([^/]+)/surprise-channel/(investigations|adjudications|remediations)/"
+    r"(INVESTIGATION|ADJUDICATION|REMEDIATION)_v[^/]*\.(md|json)$")
 CHANNEL_RE = re.compile(FLAT_CHANNEL_RE.pattern + "|" + TREE_CHANNEL_RE.pattern)
 
 
@@ -110,6 +115,9 @@ INVESTIGATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/investigations/
                           "org/surprise_channel/%s/INVESTIGATION_v*")
 REMEDIATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/remediations/*",
                         "org/surprise_channel/%s/REMEDIATION_v*")
+# carrier 5: the CVO's adjudication rows resolve items across documents (their `adjudicates` names investigation ids).
+ADJUDICATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/adjudications/*",
+                         "org/surprise_channel/%s/ADJUDICATION_v*")
 
 
 # FOREIGN-ROW SWEEP (2026-09-03, proposed by 1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z 93627, accepted at the base): on a
@@ -273,6 +281,10 @@ def _latest_dispositions(root, code):
     inv_paths, note = _index_paths(root, [p % code for p in INVESTIGATION_PATTERNS])
     if inv_paths is None:
         return None, [], 0, note
+    adj_paths, note = _index_paths(root, [p % code for p in ADJUDICATION_PATTERNS])
+    if adj_paths is None:
+        return None, [], 0, note
+    inv_paths = list(inv_paths) + [p for p in adj_paths if p not in inv_paths]   # investigations first: items are seeded there
     rem_paths, note = _index_paths(root, [p % code for p in REMEDIATION_PATTERNS])
     if rem_paths is None:
         return None, [], 0, note
@@ -311,8 +323,8 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
                    "of a phantom item is refused" % (rid, ", ".join(unknown), code))
     open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
     if open_items:
-        out.append("%s: NEW row carries a route (%s) while %d of %d investigation item(s) under %s are NOT "
-                   "dispositioned (latest carrier reads UNDER_INVESTIGATION): %s. L10 routing waits until every "
+        out.append("%s: NEW row (%s) while %d of %d investigation item(s) under %s are NOT "
+                   "dispositioned (latest carrier reads UNDER_INVESTIGATION): %s. The slug waits until every "
                    "investigation is CVO-checked; an existing item is dispositioned by a NEW row that names it in "
                    "`adjudicates` (spine L10 precondition; Andrew-direct 2026-09-03 'Recs approved')."
                    % (rid, route_word, len(open_items), len(latest), code, ", ".join(open_items)))
@@ -356,8 +368,8 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
         return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
                 "-- REFUSED, fail-closed" % (rid, code, note)]
     if open_ids:
-        return ["%s: NEW remediation row carries route=%s while %d of %d task order(s) under %s are NOT "
-                "terminal at HEAD: %s. L10 routing waits until every task order is complete "
+        return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
+                "terminal at HEAD: %s. The slug waits until every task order is complete "
                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
                 "is over')." % (rid, route_word, len(open_ids), total, code, ", ".join(open_ids))]
     return []
@@ -477,6 +489,7 @@ def _schema(root, kind):
 
 
 def _kind(rel):
+    """The schema kind. An ADJUDICATION document (carrier 5) validates against the investigation schema."""
     return "REMEDIATION" if "REMEDIATION" in os.path.basename(rel).upper() else "INVESTIGATION"
 
 
@@ -559,17 +572,11 @@ def _check_row(row, kind, schema):
         # and `loop_target` IF AND ONLY IF remediation.state is REMEDIATED and, when ARMED, disarm.state is DISARMED;
         # the row's required `evidence` is where the executed remedy is cited. An OPEN row without a route is still a
         # graduated item whose remedy needs a task order, a cell or an outcome -- the route IS the decision -- refused.
-        rem_state = (row.get("remediation") or {}).get("state") if isinstance(row.get("remediation"), dict) else None
-        dis_state = (row.get("disarm") or {}).get("state") if isinstance(row.get("disarm"), dict) else None
-        remediated_in_round = (rem_state == "REMEDIATED"
-                               and (row.get("hazard_standing") != "ARMED" or dis_state == "DISARMED"))
-        if route is None and not remediated_in_round:
-            why = ("remediation.state=%r%s" % (rem_state, (" with disarm.state=%r on an ARMED row" % dis_state)
-                                                if row.get("hazard_standing") == "ARMED" else ""))
-            out.append("%s: NEW remediation row carries no `route`. One axis: what does the remedy "
-                       "need that does not exist yet? %s. A route is omitted only by a row whose remedy already "
-                       "happened inside the round (remediation.state=REMEDIATED, and DISARMED if ARMED); this row "
-                       "reads %s" % (rid, " | ".join(ROUTE_TO_STEP), why))
+        # spine v3.0/3.1 L9/L10 (carrier 6 of eight; Andrew-direct 2026-09-03 ~22:2xZ at the CRO terminal): a remediation
+        # row carries NO route -- the slug goes to 1.0.0_SA_CTO, the single router, who answers with a PRD addendum or the
+        # round-N analysis; the three route tokens are RETIRED. The limb that refused an OPEN route-less row ("the route
+        # IS the decision") is retired with them. A legacy pair that IS present (a round issued under v2, finishing under
+        # its cut orders) still keeps the locked mapping below, so the two carriers cannot drift while they exist.
         if target is None and route is not None:
             out.append("%s: NEW remediation row carries no `loop_target`" % rid)
         if route in ROUTE_TO_STEP and target is not None:
@@ -761,9 +768,11 @@ def check_file(root, rel):
     # THE PATH IS THE MEMBERSHIP (tree spec s.1/s.2 choice A): the folder's project and, in the tree,
     # the sub-folder's kind are carriers the row must agree with. Graded on NEW rows only, like the rest.
     folder_project, folder_kind = _folder_identity(rel)
-    if folder_kind and folder_kind != kind:
+    if folder_kind and folder_kind != kind and not (folder_kind == "ADJUDICATION" and kind == "INVESTIGATION"):
         v.append("%s: a %s file filed under the %s/ sub-folder -- the path says one kind, the filename "
-                 "says another" % (rel, kind, "investigations" if folder_kind == "INVESTIGATION" else "remediations"))
+                 "says another" % (rel, kind, folder_kind.lower() + "s"))
+    if folder_kind == "ADJUDICATION" and "ADJUDICATION" not in os.path.basename(rel).upper():
+        v.append("%s: a file under adjudications/ is named ADJUDICATION_v<N>.md (annex 4a); this one is not" % rel)
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
@@ -785,11 +794,15 @@ def check_file(root, rel):
         v.extend(_check_row(row, kind, schema))
         # GATE (iii), both limbs, both route shapes: a NEW tree row that carries a route waits for every TO under
         # the project to be terminal AND every investigation item under it to be dispositioned.
+        # spine v3.0 L10 carrier 6: the precondition applies to EVERY new remediation row under a tree project (the slug
+        # is cut at round close), not only to a route-carrying one; a DECOMP_INVALIDATING disposition (an investigation
+        # OR an adjudication row) waits the same way.
         _route_word = None
-        if kind == "REMEDIATION" and folder_kind == "REMEDIATION" and row.get("route") is not None:
-            _route_word = "route=%s" % row.get("route")
-        elif kind == "INVESTIGATION" and folder_kind == "INVESTIGATION" and row.get("disposition") == "DECOMP_INVALIDATING":
-            _route_word = "disposition=DECOMP_INVALIDATING, the route to L5"
+        if kind == "REMEDIATION" and folder_kind == "REMEDIATION":
+            _route_word = ("route=%s (a legacy v2 pair)" % row.get("route")) if row.get("route") is not None \
+                else "the slug (spine v3: every new remediation row)"
+        elif kind == "INVESTIGATION" and folder_kind in ("INVESTIGATION", "ADJUDICATION") and row.get("disposition") == "DECOMP_INVALIDATING":
+            _route_word = "disposition=DECOMP_INVALIDATING (carried in the slug)"
         if folder_project and _route_word is not None:
             pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
@@ -848,12 +861,21 @@ def _self_test(root):
     noroute = lambda r: any("carries no `route`" in x for x in _check_row(r, "REMEDIATION", rschema))  # noqa: E731
     if rschema is not None:
         arms += [
-            ("OPEN remediation, no route -> refused (the route IS the decision)", lambda: noroute(rem())),
-            ("REMEDIATED, INERT, no route -> admitted (remedy happened in-round)",
+            ("OPEN remediation, no route -> ADMITTED (spine v3 carrier 6: the route is retired; the slug goes to the CTO)",
+             lambda: not noroute(rem()) and _check_row(rem(), "REMEDIATION", rschema) == []),
+            ("REMEDIATED, INERT, no route -> admitted",
              lambda: not noroute(rem(remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"}))),
-            ("REMEDIATED but still ARMED (disarm ARMED), no route -> refused",
-             lambda: noroute(rem(hazard_standing="ARMED", remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
-                                 disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}))),
+            ("REMEDIATED but still ARMED (disarm ARMED), no route -> admitted by this limb (the clocks are the schema's allOf)",
+             lambda: not noroute(rem(hazard_standing="ARMED", remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
+                                     disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None}))),
+            ("legacy pair route SPEC_ERROR + loop_target 5 -> REFUSED (a pair that is present keeps the locked map)",
+             lambda: any("MAPPING IS" in x for x in _check_row(rem(route="SPEC_ERROR", loop_target=5), "REMEDIATION", rschema))),
+            ("carrier 5: an adjudication document's row dispositions an investigation item across documents (pure resolver)",
+             lambda: _resolve_latest([("inv", [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"}]),
+                                      ("adj", [{"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S1"]}])], [])[0]
+             == {"X_PRJ-S1": "GRADUATED", "X_PRJ-S2": "GRADUATED"}),
+            ("carrier 5: adjudications/ path resolves to (project, ADJUDICATION)",
+             lambda: _folder_identity("org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md") == ("NFRA_CLDGRPH", "ADJUDICATION")),
             ("REMEDIATED and DISARMED, no route -> admitted",
              lambda: not noroute(rem(hazard_standing="ARMED", remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
                                      disarm={"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-03T11:00Z"}))),
