@@ -59,6 +59,17 @@ fire allow 0.0.0_AB_MSTR~Z "MSTR -> 0.0.3_BG_BBGTerminal (Tier-0 utility)"     '
 fire allow 2.0.0_SA_COO~Z  "COO -> 0.7.0_AE_CloudOps~S (L6 dispatch, MUST work)" '{"to_agent":"0.7.0_AE_CloudOps~S"}'
 fire allow 1.0.0_SA_CTO~Z  "CTO -> Tier-2 (not this gate's subject)"            '{"to_agent":"0.7.0_AE_CloudOps~Z"}'
 fire allow 3.0.0_SA_CVO~Z  "CVO -> Tier-2 (not this gate's subject)"            '{"to_agent":"0.4.0_DS_ClientPlatform~J"}'
+
+# ---- THE CROSS-PRODUCT CELLS THE FIRST BATTERY LEFT UNTESTED ----
+# The original 16 arms varied TWO dimensions and never crossed them: every DENY control used the
+# to_agents ARRAY, every Tier-0 PASS control used the scalar to_agent. So (array x Tier-0) was
+# never exercised -- and that is the exact cell where jq.exe's CRLF welded a \r to the serial,
+# making a Tier-0 seat miss its own directory and refuse as Tier-2. Measured live 2026-09-04.
+fire allow 0.0.0_AB_MSTR~Z "ARRAY x Tier-0 utility: BG alone in to_agents"      '{"to_agents":["0.0.3_BG_BBGTerminal"]}'
+fire allow 0.0.0_AB_MSTR~Z "ARRAY x Tier-0 exec: the laptop peer alone"         '{"to_agents":["0.0.0_AB_MSTR"]}'
+fire allow 0.0.0_AB_MSTR~Z "ARRAY x mixed Tier-1 + Tier-0, all permitted"       '{"to_agents":["1.0.0_SA_CTO~Z","0.0.3_BG_BBGTerminal","2.0.0_SA_COO~Z"]}'
+fire allow 0.0.0_AB_MSTR~Z "ARRAY x Tier-0 LAST (trailing element, CRLF-prone)" '{"to_agents":["2.0.0_SA_COO~Z","0.0.3_BG_BBGTerminal"]}'
+fire deny  0.0.0_AB_MSTR~Z "SCALAR x Tier-2 (the mirror of the array denies)"   '{"to_agent":"0.7.0_AE_CloudOps~S"}'
 fire_other 0.0.0_AB_MSTR~Z mcp__opal-agent-comms__check_inbox
 fire_other 0.0.0_AB_MSTR~Z mcp__opal-agent-comms__heartbeat
 

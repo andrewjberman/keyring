@@ -119,9 +119,13 @@ TOOL=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_name // empty' 2>/dev/null || true
 [ "$TOOL" = "mcp__opal-agent-comms__send_message" ] || exit 0
 
 # Recipients: to_agent (single) + to_agents (array). Both shapes, one list.
+# tr -d '\r' IS LOAD-BEARING, NOT HYGIENE. The vendored jq.exe is a Windows binary and its
+# stdout carries CRLF, so every recipient line arrives with a trailing CR. `0.0.3_BG_BBGTerminal\r`
+# then misses `[ -d .../org/tier0_utility/0.0.3_BG_BBGTerminal ]` and a TIER-0 SEAT IS REFUSED AS
+# TIER-2 -- measured 2026-09-04, the gate blocking a legitimate send to the BG terminal.
 RECIPIENTS=$(printf '%s' "$INPUT" | "$JQ" -r '
   [ (.tool_input.to_agent // empty), ((.tool_input.to_agents // []) | .[]? ) ]
-  | map(select(. != null and . != "")) | .[]' 2>/dev/null || true)
+  | map(select(. != null and . != "")) | .[]' 2>/dev/null | tr -d '\r' || true)
 
 if [ -z "$RECIPIENTS" ]; then
     deny "BLOCKED (mstr-no-tier2-writes): the send names no readable recipient in to_agent or to_agents, so this fence cannot classify it. FAIL CLOSED for MSTR. Re-issue with an explicit recipient serial."
