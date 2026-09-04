@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **32 rows** (S1-S33, id S11 vacated by the concurrent-append renumber). Restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
+**Append-only during the round.** Denominator at this write: **39 rows** (S1-S33 with id S11 vacated by the concurrent-append renumber, plus W2-S1..W2-S7). Restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1012,6 +1012,217 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "S28 asserts the C-3 fix is committed locally but the live derive runner receives comp_aws_cli.py through a shared image tagged latest, so cloud application requires a separately routed image rebuild through the change-management path, preserving the canonical derive runner and checking all five consumers.",
     "world_is": "Routed as above; the consumer count is seven, not five (the 08-26 ledger's five plus the projection worker and the serving service added by this project on 2026-09-03); the route carries the CTO's digest-pin requirement for this project's three families so a later build cannot re-point them silently; the four NFRA_GLOBGRPH families stay on the tag and are named in the ledger.",
     "notes": "The disarm act is the worker's VALID proof on TO-CG-D-1; the issuer records it at the drain and the CVO flips the remediation-plane clock. Until then S28 reads ARMED honestly."
+  }
+]
+```
+## W2-S1 -- the safe-apply / safe-ec2-deploy HALT gate refuses EVERY spine-v3 worker serial, so the deploy half of a worker task order cannot execute
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S1",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "halt_gate_validate_serial (.tools/halt-gate-check.sh:134-154) accepts a serial only if (1) its base matches an agent HOME FOLDER under org/tier{0_exec,0_utility,1_exec,2_senior,3_junior}/*/ and (2) any ~lane suffix is a SINGLE UPPERCASE LETTER; a spine-v3 worker serial 0.9.0_WK_<CODE>~<n> fails BOTH (no home folder exists for any 0.9.0_WK_* seat -- 112 home folders censused, 0 match; the slot suffix is a DIGIT), so halt_gate_check returns exit 3 (fail-closed) and BOTH world-acting wrappers a worker TO must use -- .tools/safe-apply.sh:70-72 and infra/aws/ec2/safe-ec2-deploy.sh:144-149 -- refuse before any apply/deploy. MEASURED, not inferred: safe-apply on this order's saved targeted plan returned rc=3 with the SERIAL-RESOLVES-TO-NO-KNOWN-AGENT banner. The gate offers HALT_ACK (routine, exit 1) and HALT_OVERRIDE (STOP-class, exit 2) but NO override for exit 3, and its own banner says do not override -- so the worker cannot lawfully proceed. Consequence for TO-CG-D-2: the terraform apply (deliverable step 4) and the EC2 deploy (step 6) did not run; D2-AC3, D2-AC4, D2-AC6 and D2-AC9 record the world as it therefore stands.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:134-154 @5644fee152 -- halt_gate_validate_serial: `case \"$lane\" in [A-Z]) : ;; *) return 1 ;;` and the home-folder loop `for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do for d in \"${HALT_GATE_REPO_ROOT}/org/${tier}\"/*/ ... case \"$(basename \"$d\")\" in *\"$base\"*) found=1`.",
+        "APPLIED plane, this worktree @5644fee152: `ls -d org/tier*/*/` = 112 home folders; 0 contain '0.9.0'; 0 contain 'WK'. So no folder can substring-match the base 0.9.0_WK_NFRA_CLDGRPH.",
+        "MEASURED 2026-09-04 08:3xZ: `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -input=false .build/cgd2-targeted.tfplan` -> rc=3, banner 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed) / Resolved serial: 0.9.0_WK_NFRA_CLDGRPH~2'. The session serial file org/mcp/sessions/<session>.serial (gitignored, .gitignore:423) was written with this seat's own serial first, per the gate's printed remedy; the second banner is the validator, not the resolver.",
+        ".tools/halt-gate-check.sh:8-31 exit-code contract: '0 pass | 1 routine-unacked | 2 stop-block | 3 no-serial'; HALT_ACK covers 1 and HALT_OVERRIDE covers 2 only -- there is no audited path for 3.",
+        "infra/aws/ec2/safe-ec2-deploy.sh:144-149 @5644fee152 sources the same library and runs `halt_gate_check \"safe-ec2-deploy:$SERVICE_NAME\" || exit $?`, so the EC2 code-delivery path (CLAUDE.md Rule 12, the ONLY lawful route to the box) is closed to the same seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-2 orders `bash .tools/safe-apply` for the targeted apply and `infra/aws/ec2/safe-ec2-deploy.sh opal-gateway ...` for the box deploy, issued to 0.9.0_WK_NFRA_CLDGRPH~2, and forbids a bare terraform apply and any non-Rule-12 route to the box.",
+    "world_is": "Both wrappers gate on a serial validator that predates the spine-v3 worker seat and cannot resolve one. The commit lane was taught about workers (.owned-paths.yaml worker_grant @e08447ff7d, 'the task order IS the worker's grant'); the HALT gate was not -- the same half-landed-carrier shape this project keeps finding. The gate's protected property is 'the acting agent has no unread STOP addressed to it', and a worker has no inbox and cannot be messaged at all (its own TO says so), so the property is vacuously true for this seat -- but the gate cannot express that and this seat does not get to rule on it.",
+    "notes": "Two disarms are conceivable and BOTH are the CTO's, not this worker's: teach halt_gate_validate_serial the worker grammar (base 0.9.0_WK_<CODE>, digit slot) with a documented worker inbox (or an explicit 'no inbox -> vacuous pass' limb), or mint worker home folders. A third -- an exit-3 audited override -- would weaken the gate for every seat and is NOT recommended from here. Nothing was overridden and no bare terraform apply was run."
+  }
+]
+```
+
+## W2-S2 -- the live gateway ALB carries access_logs that NOTHING in the repo declares, so ANY apply in the module (even a -target'ed one) silently disables a security log feed
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S2",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "The LIVE opal-gateway ALB has access_logs {bucket=opal-data-security, prefix=waf-logs/alb-opal-gateway, enabled=true} while infra/aws/terraform/opal-gateway/alb.tf declares NO access_logs at all and the token is absent from the entire repo corpus (LIVE-no-DECLARED); because every listener rule's dependency closure reaches aws_lb.gw, even a strictly -target'ed apply planned `~ update aws_lb.gw` with access_logs.enabled true -> false, i.e. the next apply by ANY seat silently turns that log feed off. Guarded (not repaired) in this order's alb.tf edit with `lifecycle { ignore_changes = [access_logs] }` on aws_lb.gw, which leaves the live setting exactly as found and removes the unrelated diff from the targeted plan.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-04 08:1xZ: `terraform -chdir=infra/aws/terraform/opal-gateway plan -target=aws_iam_role_policy.gw_graph_read_secret_read -target=aws_lb_listener_rule.graph_capability` -> 'Plan: 2 to add, 1 to change, 0 to destroy'; the plan JSON's resource_changes (denominator 7) carried ['update'] aws_lb.gw whose ONLY attribute diff was access_logs [{bucket opal-data-security, prefix waf-logs/alb-opal-gateway, enabled True}] -> [{... enabled False}]. Re-planned with -refresh=false: identical, so the enabled=true is in STATE as well as live.",
+        "DECLARED plane @5644fee152: `comp-read infra/aws/terraform/opal-gateway/alb.tf --enumerate 'access_logs'` = 0 hits / 280 lines; `comp-find 'access_logs' infra/aws/terraform` = 0 hits across 496 files scanned [corpus=all]; `comp-find 'waf-logs/alb-opal-gateway'` = 0 hits across 28,361 files scanned. The enablement exists in no repo file.",
+        "infra/aws/terraform/opal-gateway/alb.tf @this branch: the aws_lb.gw lifecycle block now carries ignore_changes = [access_logs] with the measurement in a comment naming this row id; after it the same targeted plan's ONLY non-no-op rows are the two addresses this order owns."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-2 orders a 'Targeted safe-apply on exactly your new addresses + the ALB rule' -- i.e. the apply touches this order's two addresses and nothing else.",
+    "world_is": "Terraform's -target pulls the dependency closure, and inside that closure sits a pre-existing LIVE-no-DECLARED drift on a security-logging attribute, so 'exactly your new addresses' was NOT achievable as written. The guard makes it achievable without touching the live setting or adjudicating whether enabled=true or the config's silence is authoritative -- that adjudication belongs to the ALB's owner.",
+    "notes": "Scope of the guard, stated so it is not read as a fix: Terraform now IGNORES access_logs on aws_lb.gw. If the owner rules that access logging should be declared, the durable act is an access_logs block in alb.tf (and then this ignore_changes line should go). If the owner rules it should be off, the ignore_changes line must go FIRST or the apply will not act. Either way the live world today is unchanged by this order."
+  }
+]
+```
+
+## W2-S3 -- the TO's IntegrationSpec construction omits `description`, a REQUIRED field of the frozen framework dataclass
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S3",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "TO-CG-D-2 deliverable step 2 names the spec verbatim as IntegrationSpec(id=..., display_name=..., auth_kind=..., tool_prefix=..., read_only=True, min_tier=..., hosts=(...)), but IntegrationSpec (app/integrations/base.py:47-67) declares `description: str` with NO default between auth_kind and tool_prefix, so the literal construction raises TypeError; the framework is READ-ONLY under this order's bound, so the spec was authored WITH a description (the ycharts specimen carries one at integration.py:29-30) and D2-AC1 then returns [].",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/base.py:52-60 @2781aac326 (byte-identical at 5644fee152, sha256 718246435530d59e853ed7dca99791d59e1b629e2df516b6a98c3146902cf616): the @dataclass(frozen=True) field order id / display_name / description / auth_kind / tool_prefix, with defaults beginning only at secret_id.",
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py:26-43 @5644fee152 -- the live specimen passes description=, confirming the field is populated in practice, not vestigial.",
+        "MEASURED: `python -c \"...validate_integration_spec(GlobgrphIntegration().spec)\"` -> 'VALIDATE []' with the description present (D2-AC1)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The TO's step 2 spells the IntegrationSpec argument list in full, as if complete.",
+    "world_is": "The argument list is missing one required field. Nothing else in the order changes: the added description is a documentation string, it is not an axis validate_integration_spec scores, and no framework byte moved.",
+    "notes": "Filed for form, not significance: the divergence is between the ORDER's text and the frozen framework, and the record should carry which of the two the built artifact follows (the framework)."
+  }
+]
+```
+
+## W2-S4 -- the TO's random_password + secret_version instruction needs a provider this module does not carry, and its enabling files sit OUTSIDE the worker's write grant
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S4",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "TO-CG-D-2 deliverable step 4 orders a `random_password` (48 chars, no special) -> aws_secretsmanager_secret + aws_secretsmanager_secret_version in a new graph-read.tf, but the opal-gateway module declares only hashicorp/aws in required_providers (main.tf:16-21) and its lockfile pins only aws + archive, so hashicorp/random would require edits to main.tf and .terraform.lock.hcl -- NEITHER of which is in this order's <paths>; the secret VALUE would also enter TF state, which the module's own standing discipline forbids (secrets.tf:6 'METADATA ONLY -- never aws_secretsmanager_secret_version (the value never enters TF state)'). Built instead the way every other gateway secret is built: the 48-character alphanumeric value minted OUT-OF-BAND via boto3 and referenced metadata-only by a data source, with the scoped GetSecretValue grant the TO also names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-gateway/main.tf:13-31 @5644fee152 -- required_providers { aws }; backend s3 key opal-gateway/tfstate. `comp-read .terraform.lock.hcl --enumerate 'provider \"registry'` = 2 hits: hashicorp/archive, hashicorp/aws. No random provider on either carrier.",
+        "infra/aws/terraform/opal-gateway/secrets.tf:6 and ms-ingest.tf:9-10 @5644fee152 -- the out-of-band discipline, stated twice, for exactly this class of gateway secret.",
+        "MEASURED 2026-09-04 08:0xZ: boto3 secretsmanager create_secret -> 'CREATED arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/graph-read-token-MGAqlV', value 48 characters, isalnum()=True; the value was never printed, never written to a file, and is not in this repo, this row, or any commit.",
+        "infra/aws/terraform/opal-gateway/graph-read.tf @this branch -- data \"aws_secretsmanager_secret\" \"graph_read_bearer\" { name = \"opal/mcp/graph-read-token\" } + aws_iam_role_policy.gw_graph_read_secret_read scoped to that data source's .arn, copying ycharts-iam.tf's shape."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 4 names random_password + aws_secretsmanager_secret + aws_secretsmanager_secret_version as the construction, while the same order's <paths> grants only graph-read.tf and alb.tf inside the terraform module.",
+    "world_is": "The named construction is unexecutable inside the grant and contradicts the module's own secret discipline; the out-of-band form is executable, keeps the value out of TF state, and leaves the declared IAM shape the TO asked for byte-for-byte comparable to ms-ingest.tf / ycharts-iam.tf.",
+    "notes": "The secret EXISTS and is inert: with the grant unapplied (W2-S1) nothing can read it, and no consumer references it until the deploy lands. It is not a stranded half-deploy, it is the first leg of one -- recorded on the NEVER-2 ledger cldgrph-cgd2-gateway-graph-path leg L2."
+  }
+]
+```
+
+## W2-S5 -- D2-AC9's own invocation can never show a CLOSED ledger: `deploy_ledger.py close` DELETES the sentinel that `list` reads
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S5",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "D2-AC9 names invocation `python .tools/deploy_ledger.py list` with expectation `cldgrph-cgd2-gateway-graph-path.*CLOSED`, but cmd_list is a straight delegation to cmd_check (deploy_ledger.py:1240-1242) which reports OPEN / HELD-STALE / BYPASS entries from the sentinel state files, and cmd_close (:353-368) sets status CLOSED, writes the change_management entry and then UNLINKS the sentinel -- so a CLOSED slug is by construction ABSENT from `list` output and the criterion's expectation is unsatisfiable by its own invocation on ANY task order, not just this one. The state that criterion means to assert is carried by the entry FILE's `**Status:** CLOSED` line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:1240-1242 @5644fee152 -- `def cmd_list(args) -> int: return cmd_check(argparse.Namespace(window_hours=None, red=False, held_stale_days=DEFAULT_HELD_STALE_DAYS))`.",
+        ".tools/deploy_ledger.py:353-368 @5644fee152 -- cmd_close: `state[\"status\"] = \"CLOSED -- nothing stranded\"; ... _write_entry(state); _state_path(args.slug).unlink()`.",
+        "MEASURED 2026-09-04 08:0xZ: `python .tools/deploy_ledger.py list` printed 3 OPEN/HELD entries + 8 BYPASS lines + 'SCAN DENOMINATOR: 4 of 4 sentinel(s) scanned' -- every printed row is a non-terminal entry; no CLOSED row appears anywhere in the output shape."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D2-AC9 asserts that after a proven close, `deploy_ledger.py list` output matches `cldgrph-cgd2-gateway-graph-path.*CLOSED`.",
+    "world_is": "`list` enumerates only non-terminal entries; closing removes the slug from its universe. A criterion cut in this shape would read FAIL on a perfectly closed ledger and can only 'pass' while the ledger is still OPEN -- inverted. The sound oracle is `**Status:**` inside org/critical_paths/change_management/<stamp>_<slug>_deploy_completion.md, or `deploy_ledger.py check` returning rc 0 with the slug absent.",
+    "notes": "Prospective: the next cut of any TO carrying a NEVER-2 ledger criterion should name the entry file's Status line (or check's rc + absence) rather than a grep of `list`. On THIS order the point is moot in a second way -- the ledger could not be closed at all, because W2-S1 blocked the legs it would have to prove."
+  }
+]
+```
+
+## W2-S6 -- `ps -o args -C python3.11` returns only its header on the gateway box; the running argv is reachable via the unit's MainPID
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S6",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T08:39Z",
+    "one_line": "D2-AC7 names an SSM `ps -o args -C python3.11` on i-07dccb1615503ac99; run verbatim it prints the bare header 'COMMAND' and no row (SSM 2b69d667-a3ef-42ad-a7c7-2ea44beef1bc, Status Success), so the criterion's expectation `--workers 1` would read FAIL while the gateway is in fact running with exactly one worker. The unit's MainPID argv is the oracle that answers: MainPID=539593 -> `/opt/opal-gateway/.venv/bin/python3.11 /opt/opal-gateway/.venv/bin/uvicorn app.server:app --host 0.0.0.0 --port 8080 --workers 1`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-04 08:3xZ, SSM CommandId 2b69d667-a3ef-42ad-a7c7-2ea44beef1bc on i-07dccb1615503ac99, Status Success: StandardOutputContent = 'COMMAND\\nactive\\n' -- the ps -C selector matched no process.",
+        "MEASURED 2026-09-04 08:3xZ, SSM CommandId 81190559-8075-40a7-b930-7f73b69db6bd, Status Success: PROBE-1 (the same ps -C form) again printed only 'COMMAND'; PROBE-2 printed 'MainPID=539593' then '/opt/opal-gateway/.venv/bin/python3.11 /opt/opal-gateway/.venv/bin/uvicorn app.server:app --host 0.0.0.0 --port 8080 --workers 1'; PROBE-3 'active'.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/box_workers.sh @this branch -- the script keeps the TO's named ps form as PROBE-1 (so the negative is on the record) and adds the MainPID argv read as PROBE-2."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D2-AC7 assumes `ps -o args -C python3.11` on the box lists the uvicorn process carrying `--workers 1`.",
+    "world_is": "It lists nothing (the selector does not match this process's comm on this box), while the process itself carries --workers 1 unchanged. Disarmed in-place by widening the worker's own script, which is the deliverable the criterion invokes; the criterion's expectation is met by PROBE-2's line in the same output.",
+    "notes": "This order deployed nothing (W2-S1), so the argv read is a measurement of the PRE-EXISTING running gateway -- it proves --workers 1 was not touched, and proves nothing about a deploy that did not happen."
+  }
+]
+```
+## W2-S7 -- the NEVER-2 ledger's SENTINEL lives outside the task order's write grant, so an OPEN entry cut by a worker cannot travel with its branch
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S7",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T09:15Z",
+    "one_line": "deploy_ledger.py writes TWO carriers per entry: the human record org/critical_paths/change_management/<stamp>_<slug>_deploy_completion.md and the machine SENTINEL org/critical_paths/.open_deploys/<slug>.json that `check`/`list` actually enumerate. TO-CG-D-2's <paths> grants org/critical_paths/change_management/ and NOT org/critical_paths/.open_deploys/, and sentinels are TRACKED files (26 of them under git ls-files, not gitignored) -- so this worker committed the entry MD and left the sentinel untracked in its worktree. Consequence: when this branch is compiled, the COO's `deploy_ledger.py check --red` will NOT see this OPEN entry through the sentinel index; it surfaces only through the SECOND limb, the change_management/*.md sweep, as 'BYPASS: UNINDEXED OPEN LEDGER'. The entry still blares, but in the finding class that means 'a ledger with no sentinel' rather than 'an open deploy'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:155-156 (_state_path) and :166-169 (_save) + :222-224 (_write_entry) @5644fee152 -- every state change writes both the sentinel JSON and the entry MD; cmd_check enumerates sentinels (its own output line 'SCAN DENOMINATOR: 5 of 5 sentinel(s) scanned') and separately sweeps change_management/*.md for entries with no sentinel, printing them as 'BYPASS: UNINDEXED OPEN LEDGER'.",
+        "MEASURED in this worktree 2026-09-04 09:1xZ: `git status --porcelain` after both commits shows exactly one residue line, '?? org/critical_paths/.open_deploys/cldgrph-cgd2-gateway-graph-path.json'; `git check-ignore -v` on it prints NOTHING (not ignored) while `git ls-files org/critical_paths/.open_deploys/` lists tracked sentinels -- so the file is committable in principle and simply outside this order's grant.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.md <paths> block: 'org/critical_paths/change_management/' is listed; no other org/critical_paths/ path is."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order binds NEVER-2 ('open a deploy ledger BEFORE the first apply/deploy act with every leg; close each leg with proof; close the entry') and grants org/critical_paths/change_management/ as the write surface for it.",
+    "world_is": "The instrument NEVER-2 names writes a second, tracked carrier one directory up, which the grant does not cover -- so a worker can open a ledger it cannot fully commit. Nothing was written outside the grant: the sentinel is left untracked and named here instead.",
+    "notes": "Prospective and cheap: add org/critical_paths/.open_deploys/ to the <paths> of any task order that binds NEVER-2, or have the compiling seat run `deploy_ledger.py` state ops in the tree it will merge into. This row is filed for the ROUTE, not as a defect of the tool: two carriers is the tool's design, and the second limb is exactly why the entry is not invisible."
   }
 ]
 ```
