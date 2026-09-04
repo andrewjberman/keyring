@@ -263,6 +263,36 @@
       "spine_clause": "L7 (the drain's hand-off: continue the same subagent -- NOT AVAILABLE here; the fallback re-dispatch to a fresh slot)",
       "gate_or_notifier_touched": "NONE. FINDING for the spine's owner (1.0.0_SA_CTO) and the harness: a subagent that has returned its final report is not resumable by id in this harness ('No transcript found'), so the L7 clause 'hand the next task order by CONTINUING the same subagent, context intact' has no carrier once the worker's turn ends; the lawful shape today is a fresh spawn per order in the same slot, with the predecessor's deliverables at HEAD as its context. The cost is the cold read of the face; the W<n> coordinate and the serial carry across.",
       "note": "Two continuations pending on their reports: ~1 -> D-1 (reopened) after D-12 drains; ~2 -> D-3 after D-2 drains. The round's night (CG-x-2) can only be the first 02:00Z after D-12's grant AND D-1's pins land."
+    },
+    {
+      "seq": 10,
+      "limb": "L7",
+      "started_utc": "2026-09-04T12:4xZ",
+      "ended_utc": "2026-09-04T15:2xZ",
+      "act": "BOTH SLOTS DRAINED AND RE-HANDED. TO-CG-D-12 merged @b687429234 (CG-s-16, the s3:GetBucketNotification grant on the derive task role) and the reopened TO-CG-D-2 merged @57b6750101 (CG-s-5, the gateway traversal live on the CTO's SIGNED G8 gate). Both instances re-validated AT THIS SEAT with COVERAGE CHECKED -- the expected criterion ids taken from each ORDER at HEAD and passed as the checker's third argument, which the workers' own runs had not done (7 of 7 for D-12, 10 of 10 for D-2, 0 violations each). The deciding invocations were re-run here on the live plane, not read from the reports: simulate-principal-policy returns `allowed 1` for the grant, `implicitDeny 0` for the write twin AND `implicitDeny 0` for a PEER role; this seat's own filter-log-events call reads `buckets read=34 / unreadable=0` post-grant against `read=0 / unreadable=34` pre-grant on the same instrument; an unauthenticated POST to /graph/cypher answers 401 while a NON-EXISTENT path under the same prefix answers 302, so the 401 is that route's own rule and not a blanket. Then: the two worktrees torn down (unforced remove REFUSED on both, which is now a read signal, not a nuisance -- everything it would destroy was enumerated and preserved off-tree before forcing), two fresh worktrees cut from CLOUD @0df8682fa0 with the cgs15 sentinel restored byte-identical, and the next two orders handed: ~1 the reopened TO-CG-D-1, ~2 TO-CG-D-3.",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "two WORKER REPORTs + two proof-of-spec instances (the whole oracle; a subagent writes no telemetry row)"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "1.0.0_SA_CTO 94166 (Andrew-direct, the push window), 94176 (S34's CTO half landed @6dc8d4045f; the L6 half taken on this seat), 94187 (the drain SWEEP measured from the swept side); 0.0.0_AB_MSTR 94193 (the window landed, origin @fa82d6b93c)"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "COMMIT",
+          "ref": "b687429234 drain(D-12); 57b6750101 drain(D-2 reopened); a8136d19bb NFRA_CLDGRPH-S34; 66c81f2167 NFRA_CLDGRPH-S36; a7580fac0a + 0df8682fa0 the D-1 face"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "two worker subagents running on wk-NFRA_CLDGRPH-1 (TO-CG-D-1) and wk-NFRA_CLDGRPH-2 (TO-CG-D-3), both based @0df8682fa0"
+        }
+      ],
+      "spine_clause": "L7 (the drain: read the report AND the instance, re-run the deciding invocations, merge, read every row the branch carries, hand the next order) -- and L6 for the two face edits, which are not a recut: no criterion, no owned cell, no acceptance bar moved.",
+      "gate_or_notifier_touched": "surprise-row-gate: PASSED on both merged indexes (2 new of 50, 3 new of 53) -- the CTO's fix @1ff1d53fb5 is EXERCISED here, reading each row's own surfaced_by to admit worker rows under this seat's author line, the case that refused twice before it landed. safe-merge.sh: REFUSED AND ABORTED on both drains (textual conflict on the append-only channel file), so both merges were completed by hand -- filed as NFRA_CLDGRPH-S36, because the abort takes its index guard and its row gate with it and the conflict is structural, not incidental (3 of 3 of this round's drains). deploy_ledger.py check: read-only, 4 of 4 sentinels, two BYPASS lines -> NFRA_CLDGRPH-S34. proof-of-spec-check: rc=0 twice with coverage. to-pipeline-gate + missions-tree-check: clean on every commit.",
+      "note": "THREE THINGS A LATER SEAT SHOULD NOT HAVE TO RE-DERIVE. (1) W1-S10: the served-cypher instrument returned a FALSE ZERO for every WHERE-filtered query, so TO-CG-D-1's earlier D1-AC5 reading of `triggers:0` measured the tool and not the graph; the repaired script is at HEAD and the trap is inlined in BOTH re-handed faces, since D-3 is also about to build a cypher-carrying client. (2) A DEFECT OF THIS SEAT'S, found and repaired one merge later: the D-12 union script reassembled the channel file with no newline between the header and the rest, gluing 118 chars of continuation text onto the header line at b687429234. Every check run over it passed -- id census, uniqueness, json parse, the row gate -- because all of them are scoped to the ROWS and cannot see a defect in the prose they share. It was caught only because the script's own base-plus-appended-tail ASSERTION refused on the next merge instead of guessing. Repaired at 57b6750101, and the control now run beside every union is the UNSCOPED one: diff the merged file against base and require exactly ONE removed line, the old header. (3) The sweep: b687429234 carried 15 files, 14 the worker's and ONE foreign (1.0.0_SA_CTO's Andrew-direct record, left staged when its safe-commit hit git's refusal of --only mid-merge); 57b6750101 carried 7 and zero foreign because that seat was holding its commits by then. Same method, opposite outcome, decided by whether another seat happened to be mid-commit -- which is S36's whole point. NEXT: drain ~1's D-1 and ~2's D-3 on their reports; then ~1 -> D-9 (CG-x-2) which needs the FIRST 02:00Z night AFTER D-1's pins land, and ~2 -> D-6 (CG-x-5). CG-s-8 (D-7) stays LAST, with this seat's own deletion of the laptop's local Kuzu DB at that drain, then D-8 closes the run."
     }
   ]
 }
