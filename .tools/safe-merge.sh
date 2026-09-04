@@ -45,6 +45,13 @@ if [ "${1:-}" = "--self-test" ]; then
   chk "the script feeds the gate from the staged set, never bare"  \
       "grep -q 'STAGED_ARR\[@\]' '$0'"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
+  echo "  ⛔ BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
+  echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
+  echo "     EVERYTHING would pass all of them. A self-test cannot safely perform a real"
+  echo "     merge, so the permit path is covered by EXERCISE, not here: 4.0.0_SA_CRO ran it"
+  echo "     at 06:5xZ (non-colliding branch -> 'MERGED and committed', two parents, rc 0)"
+  echo "     with the pre-fix script as the negative control. Re-run that arm after any"
+  echo "     change to the grade or the commit path."
   [ "$fails" -eq 0 ] && { echo "PASS"; exit 0; } || { echo "FAIL"; exit 1; }
 fi
 
