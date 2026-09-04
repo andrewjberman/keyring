@@ -178,15 +178,27 @@ remedy still assumed there were some. **A rec can name the fact that refutes it 
 
 ## AND THE OBVIOUS REPLACEMENT FAILS TOO -- THE COMPOSED FINDING
 
-Re-deriving on IDENTITY rather than origin is the natural read, and msg 20469 assigns it here and to
-`2.0.0_SA_COO~Z`. ⛔ **It cannot live in the sentinel.** From `SENTINEL_COVERAGE_BOUND`, live on the
+⛔ **CORRECTED 2026-09-04 ~17:2xZ (msg 20479, `0.0.0_AB_MSTR~Z` correcting its own relay): "re-derive
+on IDENTITY" IS NOWHERE IN ANDREW'S WORDS.** He ruled an axis OUT and ruled no replacement IN. The
+identity prescription was that seat's inference set beside his verbatim under a sovereign subject
+line. This ruling called it *"the natural read"* -- which lent it his authority just as effectively.
+**A negative verdict is a complete answer.** Taking it on its own terms: ⛔ **It cannot live in the sentinel.** From `SENTINEL_COVERAGE_BOUND`, live on the
 function: *"...and any request body, so NO firm attribution is possible from this source at all."*
 `OP-s-5` redacts the Cookie header by design, and `is_allowed(address, allow_list)` is address-keyed
 in code.
 
 ⭐ **SO THE AUTOMATIC BLOCK CANNOT BE ARMED SAFELY ON EITHER AXIS: the axis the sentinel CAN see does
 not identify our people, and the axis that WOULD is invisible to it.** Two correct decisions meeting,
-not a gap. A never-block control belongs where identity is known -- the auth layer, not the WAF plane.
+not a gap.
+
+⛔ **AND THIS RULING'S ORIGINAL NEXT SENTENCE -- "a never-block control belongs where identity is
+known, the auth layer rather than the WAF plane" -- IS STRUCK AS THE THIRD INSTANCE OF THE SAME
+ERROR.** What is MEASURED is that the sentinel is blind to identity. "Therefore build the control
+elsewhere" presumes a never-block control is still WANTED, which nobody has established: Andrew ruled
+an approach non-viable, not a requirement re-sited. **Msg 20479 named the mechanism -- "a verdict that
+removes an option leaves a hole, and a hole invites whoever relays it to fill it" -- and this seat
+then filled the same hole one step further down the chain while agreeing with the diagnosis.**
+Whether any never-block control is wanted at all is OPEN, and it is not this ruling's to answer.
 
 ## AMENDED DISPOSITION
 
