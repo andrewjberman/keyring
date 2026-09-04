@@ -2,9 +2,10 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-7</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.7.0_AE_CloudOps</issued_to>
+<issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
+<!-- RE-ADDRESSED 2026-09-04 ~20:1xZ by 2.0.0_SA_COO (L6, the issuer's own act): from the BASE serial 0.7.0_AE_CloudOps to the dedicated lane ~W. MEASURED, not assumed: `to-check --all --assignee 0.7.0_AE_CloudOps` reads 17 ACTIVE task orders across 11 PROJECTS (ADHC_DSFLOW, D9_TAXSMA, MDPF_GLOBAL, WSE_COTMDL, OPAL_ADVIPOINTERS and more), so seating the base on a twelfth would be a Rule 27 one-project-per-instance collision. ~W is free on every plane: 0 runtime dir, 0 spawn-audit mentions, 0 hits across 149,497 files. -->
 <status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
 
 **Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_OUTSET_PRD.md` v0.1 @`7fb59f239b` (s.7 row OS-s-7; s.4 the bar; s.6 the rulings) · **Decomp cell:** `OS-s-7` (`../decompositions/NFRA_OUTSET_DECOMP.md` v0.1 @`6f1655f376`) · **outcome_ref:** FWD-2, FWD-3 · **verb:** audit · **depends_on:** --
@@ -17,7 +18,7 @@ OS-s-7 (PRD s.7, brief precondition P3, UNMEASURED): the parquet is glue-bound; 
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps/code-heat-parquet-cadence-and-owner.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/code-heat-parquet-cadence-and-owner.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -42,7 +43,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 - **NEVER `git push`**, under this or any order. Report push state as MEASURED (`git ls-remote`).
 
 <paths>
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -60,7 +61,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O7-AC1`, `O7-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps/NFRA_OUTSET.TO-OS-s-7.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-7.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O7-AC1,O7-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>
