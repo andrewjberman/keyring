@@ -222,6 +222,13 @@ backticks stripped. **REFUSED AT THE CUT:** no block, an empty block, a leading 
 - `deliverables/<serial>/` needs **no** entry — the tree convention grants it.
 - **The investigation file NEEDS an entry if a row is possible:**
   `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`
+- ⛔ **AND `org/critical_paths/.open_deploys/<slug>.json` — THE SENTINEL, WHICH IS A SECOND PATH AND THE
+  ONE THAT SURVIVES.** `deploy_ledger.py open` stages both the sentinel and the entry, but **staging is
+  not committing**: measured 2026-09-04, a staged sentinel makes `git worktree remove` refuse (rc 128)
+  and `--force` deletes it anyway — which is exactly how round 4's forced removals lost theirs. **Only a
+  COMMITTED sentinel survives a forced teardown**, and a worker committing with `--only -- <paths>` takes
+  its pathspec **from the order**. So a deploy-opening order that names `change_management/` but not the
+  sentinel leaves the worker unable to commit the one artifact that outlives its worktree. **Name both.**
 - ⛔ **AND `org/critical_paths/change_management/` IF THE CELL CAN PRODUCE A DEPLOY.** NEVER-2 obliges
   the actor to open a ledger entry at the start and close it at completion — and an **IMAGE act** must
   name in that entry **every task family that pulls the tag it moves** (a shared `:latest` reaches them
