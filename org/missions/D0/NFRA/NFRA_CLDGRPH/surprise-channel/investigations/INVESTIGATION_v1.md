@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **32 rows** (S1-S33, id S11 vacated by the concurrent-append renumber). Restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
+**Append-only during the round.** Denominator at this write: **40 rows** (S1-S33 with id S11 vacated by the concurrent-append renumber, plus the eight W1-coordinate rows W1-S1..W1-S8). Restated 2026-09-04 08:4xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S1 through W1-S8 under TO-CG-D-1 (was 32; W1-S1 is BLOCKING -- safe-apply's halt gate refuses the spine-v3 worker serial, so this order's terraform limb never ran). Previously restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1012,6 +1012,257 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "S28 asserts the C-3 fix is committed locally but the live derive runner receives comp_aws_cli.py through a shared image tagged latest, so cloud application requires a separately routed image rebuild through the change-management path, preserving the canonical derive runner and checking all five consumers.",
     "world_is": "Routed as above; the consumer count is seven, not five (the 08-26 ledger's five plus the projection worker and the serving service added by this project on 2026-09-03); the route carries the CTO's digest-pin requirement for this project's three families so a later build cannot re-point them silently; the four NFRA_GLOBGRPH families stay on the tag and are named in the ledger.",
     "notes": "The disarm act is the worker's VALID proof on TO-CG-D-1; the issuer records it at the drain and the CVO flips the remediation-plane clock. Until then S28 reads ARMED honestly."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S1 -- safe-apply's halt gate refuses the spine-v3 WORKER serial grammar, so no L7 worker subagent can run any terraform apply
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S1",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:32Z",
+    "one_line": "TO-CG-D-1 step 3 routes its apply through `bash .tools/safe-apply`, which fires `.tools/halt-gate-check.sh` before terraform. That gate's `halt_gate_validate_serial` refuses `0.9.0_WK_NFRA_CLDGRPH~1` on BOTH of its two limbs -- the `~1` lane suffix is a DIGIT where the gate requires a single `[A-Z]`, and the base `0.9.0_WK_NFRA_CLDGRPH` matches no agent home folder under the five tier dirs it scans (105 folders, 0 matches). The identity refusal returns 3 at :274, BEFORE the `HALT_OVERRIDE` consultation at :360, so no audited override can reach it. terraform is never invoked. The three digest pins (D1-AC3), the apply (L4), the serving rollout (D1-AC6) and the ledger close (D1-AC7) are unreachable by this seat.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:134-166 @5644fee152 -- `halt_gate_validate_serial()`: `lane=\"${serial#*~}\"; case \"$lane\" in [A-Z]) : ;; *) return 1 ;; esac` and a `for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior` loop requiring `*\"$base\"*` to match a home folder basename",
+        ".tools/halt-gate-check.sh:259-275 @5644fee152 -- the validator failure renders the 'SERIAL RESOLVES TO NO KNOWN AGENT' banner and `return 3`; .tools/halt-gate-check.sh:360 is where `HALT_OVERRIDE` is consulted, inside the LATER 'Verdict 3: STOP-class present' branch, so line order makes the override unreachable from an identity refusal",
+        "MEASURED, EMPIRICAL (a second instrument, not a re-read of the source): `HALT_OVERRIDE=\"probe...\" HALT_ACK=1 bash .tools/safe-apply.sh apply -input=false -no-color -target=aws_ecs_task_definition.derive_runner` -> the identity banner again, rc 3, terraform never invoked. Both env-var escapes set at once and the gate still fails closed.",
+        "CENSUS of the exact five tier dirs the validator scans, run with the validator's own `case ... in *\"$base\"*` shape: DENOMINATOR 105 home folders; matches for base `0.9.0_WK_NFRA_CLDGRPH` = 0; matches for any `*_WK_*` or `0.9.0*` folder = 0. POSITIVE CONTROL on the identical loop: `2.0.0_SA_COO` returns 3 (org/tier1_exec/2.0.0_SA_COO/, ~A/, ~X/), so the zero is an ABSENCE and not a broken loop.",
+        "The serial itself resolves correctly -- the gate PRINTS 'Resolved serial: 0.9.0_WK_NFRA_CLDGRPH~1' after `org/mcp/sessions/<session>.serial` was written per the gate's own first banner. The failure is VALIDATION, not resolution."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 STANDING LAW forbids a bare `terraform apply` and routes every apply through `bash .tools/safe-apply` targeted on named addresses; the deliverable's step 3 and ledger leg L4 are written on the premise that an L7 worker subagent CAN complete that apply. CLAUDE.md rule 27 seats L7 execution in worker subagents serialled `0.9.0_WK_<CODE>~<n>`, whose lane suffix is by construction a DIGIT.",
+    "world_is": "The spine-v3 worker serial grammar (`~<n>`, digit, no home folder) and the halt gate's serial contract (`~[A-Z]`, home folder required) are mutually exclusive, and the gate fails closed with no reachable override. Every terraform apply in the fabric is therefore closed to every L7 worker subagent, not just to this one -- the two carriers were authored against different seat grammars and this is the first spine-v3 worker to route an apply through the gate. The gate is behaving exactly as designed (it refuses to scan a nonexistent inbox); the defect is the missing worker limb in its resolver contract, the same limb the `.owned-paths.yaml worker_grant` stanza @e08447ff7d added on the COMMIT plane and that the halt gate has not received.",
+    "notes": "NOT an argument for an override: overriding an identity-class refusal means applying while blind to one's own STOP inbox, and the gate says so at :249. Disarm = give `halt_gate_validate_serial` a worker limb that admits `0.9.0_WK_<CODE>~<n>` (digit suffix, no home folder) and points its inbox scan at whatever a worker's inbox is -- or an explicit ruling that L7 workers never apply and the apply limb of a TO belongs to a lane seat. Owner set to `1.0.0_SA_CTO` because the CTO owns the resolver limb the worker_grant stanza @e08447ff7d was cut for and `.tools/` is that lane; if `3.0.0_SA_CVO` routes it elsewhere at L9 this assignment is superseded -- surfaced, not adjudicated. BLAST RADIUS beyond this TO: every future spine-v3 worker TO whose deliverable includes a terraform apply."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S2 -- the targeted apply's address set is 8, not the 4 the TO names; two IAM policies pin the OLD task-definition revisions
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S2",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:20Z",
+    "one_line": "TO-CG-D-1 names FOUR apply addresses (the three task definitions + `aws_pipes_pipe.projection_worker`). The measured plan shows EIGHT: the four named plus `aws_iam_role_policy.derive_runner_events_ecs`, `aws_iam_role_policy.projection_pipe`, `aws_cloudwatch_event_target.derive_runner_nightly` and `aws_ecs_service.globgrph_serving`. The two IAM role policies hard-code the task-definition ARN AT ITS REVISION (`globgrph-derive-runner:6`, `globgrph-projection-worker:3`) as their `ecs:RunTask` Resource, so a four-address apply would leave the EventBridge nightly rule and the Pipe authorized ONLY for the revisions the same apply just superseded -- the nightly derive and every Pipe-launched projection worker would fail AccessDenied, silently, from the next fire.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UNSCOPED `terraform plan` (saved at org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/unscoped_plan_pre.txt, run 2026-09-04 08:1xZ against the live S3 backend globgrph/tfstate): 13 resource addresses, `Plan: 5 to add, 8 to change, 3 to destroy.`",
+        "unscoped_plan_pre.txt -- `aws_iam_role_policy.derive_runner_events_ecs` diff carries `- Resource = \"arn:aws:ecs:us-east-1:313476888478:task-definition/globgrph-derive-runner:6\"` under `Sid = \"RunECSTask\"`; `aws_iam_role_policy.projection_pipe` carries `- Resource  = \"arn:aws:ecs:us-east-1:313476888478:task-definition/globgrph-projection-worker:3\"` under `Sid = \"RunProjectionTask\"`",
+        "TARGETED plan on the eight addresses (targeted_plan.txt): `Plan: 3 to add, 5 to change, 3 to destroy.`, exactly those eight and no foreign address; `Changes to Outputs` = the single output `derive_runner_task_definition_arn`",
+        "Every one of the four ADDITIONAL addresses changes ONLY because a task-definition ARN moves: a census of every task-definition ARN line in the plan diff returns 12 lines, all of the form `:6`/`:3`/`:1` -> `(known after apply)`; my own diff (git diff -- infra/aws/terraform/globgrph/) touches ONLY one `locals` entry and three `image` lines and no IAM, event-target or service text",
+        "PRECEDENT agreeing: TO-CG-C-2's result (org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~S/CG-s-2.worker-revision-three.result.md `terraform.targets`) applied THREE addresses for one task-definition bump -- `aws_ecs_task_definition.projection_worker`, `aws_iam_role_policy.projection_pipe`, `aws_pipes_pipe.projection_worker` -- i.e. it already carried the IAM policy that this TO's four-address list drops"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 deliverable step 1 leg L4 and step 3: `safe-apply` targeted on 'exactly the three task-definition addresses + the Pipe target update', and the BOUNDS clause 'Terraform edits are exactly: one local, three image lines, the Pipe target reference.'",
+    "world_is": "The EDIT set the TO bounds is correct and sufficient -- I made exactly those edits and no others. The APPLY set is not: a task-definition replacement drags four dependents that `-target` does not pull in, because `-target` includes a resource's dependencies and never its DEPENDENTS. Two of those four are `ecs:RunTask` grants scoped to the superseded revision. The TO's four-address list would have produced a green apply and a nightly derive that cannot start.",
+    "notes": "NOT acted on beyond planning: the apply is blocked by NFRA_CLDGRPH-W1-S1, so the eight-address set is a MEASURED PLAN and not an APPLIED state -- DESIRED, not APPLIED, and this row says so rather than claiming the wider set works. Whoever completes the apply should use the eight addresses, not four; the targeted plan proving all eight and no foreign address is saved at targeted_plan.txt. Owner is the issuer because it is the task order's address list that needs the correction."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S3 -- the globgrph terraform state carries seven root outputs its config no longer declares, residue of the 858554332d targeted teardown
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S3",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:20Z",
+    "one_line": "An unscoped `terraform plan` on infra/aws/terraform/globgrph shows SEVEN root outputs being removed (`-> null`) that no resource change accompanies -- `freeze_monitor_lambda_arn`, `freshness_alarm_lambda_arn`, `freshness_stale_alarm_arns` (10 ARNs), `parity_drift_alarm_arns` (2 ARNs), `tool_activity_freshness_lambda_arn`, `tool_activity_stale_alarm_arn`, `tool_activity_telemetry_stale_alarm_arn`. They are state residue of commit 858554332d, an authorized freshness teardown applied with `-target`: the RESOURCES were destroyed and the `output` blocks deleted from config, but a targeted apply does not reconcile root outputs, so the state still advertises ARNs for CloudWatch alarms and Lambdas that no longer exist.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/unscoped_plan_pre.txt:561-585 -- `Changes to Outputs:` with seven `- <name> = \"<arn>\" -> null` entries and NO corresponding resource in the plan's 13-address list",
+        "comp-find 'output \"(freeze_monitor_lambda_arn|...|tool_activity_telemetry_stale_alarm_arn)\"' over infra/aws/terraform/globgrph -> 0 hits across 27 files; POSITIVE CONTROL on the same alternation instrument, 'globgrph_serving_port|opal-globgrph-derive-runner' -> 28 hits, so the zero is an ABSENCE and not a broken pattern",
+        "git log -3 --diff-filter=D -- infra/aws/terraform/globgrph/ -> 858554332d 'teardown(globgrph freshness): remove freshness_alarm.tf + tool_activity_freshness.tf + freshguard_derive_watchdog.tf + item2d_freeze_monitor.tf ... (44 destroy). ... -target apply excludes ~D's COMPSIMILAR resource_summaries creates + the parked andrew@ critical-surface sub (both stay). git-recoverable; CTO GO 235109Z' -- the teardown was AUTHORIZED and its `-target` scope is exactly why the outputs survived",
+        "The stale outputs are NOT touched by this order's targeted plan: targeted_plan.txt `Changes to Outputs` carries the single entry `derive_runner_task_definition_arn`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Nothing in TO-CG-D-1 speaks to these outputs; the order asks only that ONE unscoped plan be saved and asserted by address list to contain none of this seat's addresses beyond the known foreign items. This row is what that control SAW while looking for something else.",
+    "world_is": "The module's remote state (s3 opal-313476888478-terraform-state, key globgrph/tfstate) publishes seven output values naming CloudWatch alarms and Lambda functions that the 858554332d teardown destroyed. Any consumer reading this module's outputs -- a remote_state data source, an operator, a graph builder -- reads live-looking ARNs for resources that do not exist, and the read cannot tell the difference. This is the DESIRED-vs-APPLIED split on the OUTPUT plane rather than the resource plane.",
+    "notes": "INERT for this order (the targeted apply leaves them alone) but ARMED for the estate: the next UNSCOPED apply in this module silently removes them, and until then any output consumer is misinformed. Disarm = an unscoped apply in this module (removes the seven outputs and also lands the four foreign items already sitting in the plan), or a deliberate `terraform state` reconciliation. Owner `0.7.0_AE_CloudOps` as the module's lane and the author of 858554332d. Do NOT read this row as authorizing an unscoped apply -- the same plan carries a `stitch_produce` buildspec re-render and three glue-partition changes nobody has adjudicated."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S4 -- the deploy ledger has no `exercise` leg kind, and safe-apply is `.tools/safe-apply.sh`
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S4",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T07:56Z",
+    "one_line": "Two naming divergences between TO-CG-D-1's deliverable text and the tools it names, both resolved without widening the order: (a) the TO declares legs L5/L6/L7 as kind `exercise`, which `.tools/deploy_ledger.py` refuses -- `LEG_KINDS = {git, s3-prefix, activation, ec2-baked-asset, verify, tf-lambda}` and an unknown kind is a hard `sys.exit`; the three legs were opened as `verify`, the kind whose documented meaning ('post-deploy live-state check') is exactly what the TO describes, with the TO's leg ids and proof text carried verbatim. (b) the TO writes `bash .tools/safe-apply`; the executable is `.tools/safe-apply.sh` and the bare name does not exist.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:69 @5644fee152 -- `LEG_KINDS = {\"git\", \"s3-prefix\", \"activation\", \"ec2-baked-asset\", \"verify\", \"tf-lambda\"}`; :299-300 -- `if kind not in LEG_KINDS: sys.exit(f\"ERROR: leg kind '{kind}' not in {sorted(LEG_KINDS)}\")`. `exercise` is absent, so the TO's literal text would have failed the `open` call outright.",
+        ".tools/deploy_ledger.py module docstring 'Leg kinds' table @5644fee152 -- `verify  post-deploy live-state check (0-diff plan, smoke, served artifact read)`, which is the definition L5/L6/L7 are written to",
+        "`ls -l .tools/safe-apply*` -> a single file, `.tools/safe-apply.sh` (17184 bytes); `sed -n '1,60p' .tools/safe-apply` -> `sed: can't read .tools/safe-apply: No such file or directory`, rc 2",
+        ".tools/safe-apply.sh:20-21 @5644fee152 -- its own usage line is `.tools/safe-apply.sh [-chdir=DIR] apply [apply-args...]`",
+        "The ledger opened successfully with the substitution: `OK: OPENED deploy ledger 'cldgrph-cgs15-shared-image-digest-pins' (7 legs)` -> org/critical_paths/change_management/20260904T0756Z_cldgrph-cgs15-shared-image-digest-pins_deploy_completion.md, with L5/L6/L7 listed as `[verify]`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 deliverable step 1 names seven legs of which 'L5 exercise', 'L6 exercise' and 'L7 exercise' are three; STANDING LAW and step 3 name `bash .tools/safe-apply`.",
+    "world_is": "`exercise` is not a leg kind the ledger contract defines, and `.tools/safe-apply` is not a path that exists. Both are surface-naming drift between the cut and the tools, not substantive divergence: `verify` carries the same proof discipline and `.tools/safe-apply.sh` is the same gate. Filed because a worker face is the worker's whole context, so a name in it that the world refuses is a defect in the cut even when the fix is obvious -- and the next worker reading the same TO spends the same two discovery steps.",
+    "notes": "INERT: no hazard, no disarm owner needed; both were resolved in-lane at zero cost to the deliverable. Recorded so the issuer can correct the TO template rather than have each worker re-derive it. NOT to be confused with W1-S1, which is the same file family (`.tools/safe-apply.sh`) but a real BLOCKING refusal rather than a name."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S5 -- non-ASCII in 8 of 22 terraform files in the globgrph module
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S5",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:10Z",
+    "one_line": "CLAUDE.md section 4 states 'No non-ASCII in production code/logs/AWS'. A byte census of infra/aws/terraform/globgrph finds 99 non-ASCII bytes across 8 of 22 `.tf` files -- item2b.tf 35, nessie.tf 23, item2a.tf 17, main.tf 9, vpc_endpoints.tf 6, glue_code_heat.tf 3, iam.tf 3, tool_activity.tf 3 -- em-dashes and arrows in comments and headers, all pre-existing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-process byte census over `infra/aws/terraform/globgrph/*.tf`, counting bytes > 127 per file: DENOMINATOR 22 `.tf` files scanned, 8 carry non-ASCII, 99 bytes total. Per file: item2b.tf 35, nessie.tf 23, item2a.tf 17, main.tf 9, vpc_endpoints.tf 6, glue_code_heat.tf 3, iam.tf 3, tool_activity.tf 3.",
+        "infra/aws/terraform/globgrph/item2a.tf:342 @5644fee152 -- `# ECS Task Definition -- derive-runner` renders with an em-dash, inside the resource block this order edits at :359",
+        "infra/aws/terraform/globgrph/main.tf:2 @5644fee152 -- `# NFRA_GLOBGRPH -- Versioned Global Opal Graph Platform` and :4 an arrow glyph in `EventBridge -> SQS -> Lambda`",
+        "The bytes are all in COMMENTS, not in any string that reaches an AWS API: the census location per file is a `#` line in every case inspected, and the module applies cleanly"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 4: 'No non-ASCII in production code/logs/AWS -- use OK:/WARN:/ERROR:/SKIP:/BLOCKED:.'",
+    "world_is": "The globgrph terraform module carries 99 non-ASCII bytes across 8 of its 22 `.tf` files, entirely in comments, entirely pre-existing. My own edits to three of those files are ASCII-only and `terraform fmt -check` on all three returns rc 0.",
+    "notes": "INERT and deliberately NOT remediated: fixing it would be widening this order (two of the eight files are outside this order's PATHS block, and the rule against fixing a neighbouring defect binds). Filed as a census with its denominator so whoever owns the module's hygiene has the whole population rather than the one line I happened to read. No disarm owner named because nothing is armed -- this is a standards observation, not a hazard."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S6 -- sibling worker subagents share ONE scratchpad directory, and a same-named file is silently overwritten between them
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S6",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:43Z",
+    "one_line": "Worker subagents spawned for the same project share ONE absolute scratchpad directory keyed by the parent session id, not by worker slot. I wrote my five draft surprise rows to <scratchpad>/rows.md; minutes later that exact file held SIX rows all carrying surfaced_by 0.9.0_WK_NFRA_CLDGRPH~2 and none of mine. The overwrite is silent -- no lock, no error, no rename -- and the harness surfaced it only as an incidental 'file changed on disk' notice whose default advice is to ACCEPT the new content as current.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The scratchpad path handed to this seat is C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/3e63c2d6-a07e-4ea6-9780-7be73730e12c/scratchpad -- keyed by the session id 3e63c2d6-a07e-4ea6-9780-7be73730e12c, with NO worker-slot component; the same id also names the halt gate's session serial file org/mcp/sessions/3e63c2d6-....serial, so both workers resolve the same session key.",
+        "MEASURED after the overwrite: `grep -oE 'surfaced_by\": \"[^\"]+\"' <scratchpad>/rows.md | sort | uniq -c` -> `6  surfaced_by\": \"0.9.0_WK_NFRA_CLDGRPH~2\"` and ZERO occurrences of ~1. The file I authored minutes earlier held 5 rows, all ~1.",
+        "The content that replaced mine is another worker's draft for a DIFFERENT task order (rows NFRA_CLDGRPH-W2-S1..S6, TO-CG-D-2, gateway ALB / opal-gateway module) -- so the collision is across task orders, not merely across two drafts of one.",
+        "NEGATIVE CONTROL on the blast radius, run in this worktree: the committed channel file org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/INVESTIGATION_v1.md holds 5 rows matching '\"id\": \"NFRA_CLDGRPH-W1-S' and 0 matching '\"id\": \"NFRA_CLDGRPH-W2-S'. The git worktrees are separate and were NOT cross-contaminated; only the shared /tmp-class scratchpad was.",
+        "My append to the channel happened BEFORE the overwrite (the append reported 37 row ids and a 1173-line file), which is the only reason no evidence was lost here -- timing, not a control."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face gives each worker its own git worktree and its own deliverables folder as its isolation boundary, and the standing scratchpad instruction says to use the given directory for ALL temporary files -- both of which read as 'this seat has a private working surface'.",
+    "world_is": "Isolation is per-WORKTREE, not per-SEAT: the scratchpad is shared by every worker subagent under one parent session. A worker that stages a deliverable, a commit message file, a plan output or a draft row under a generic name in that directory can have it replaced by a sibling between the write and the read, with no error at either end. The failure mode is silent substitution of ANOTHER SEAT'S content under this seat's authorship -- an attribution defect, and the two artifacts would agree with each other while both being wrong about who wrote what.",
+    "notes": "MITIGATED here, not repaired: this row was staged to a serial-qualified filename (rows_0.9.0_WK_NFRA_CLDGRPH~1_S6.md) rather than a generic one, and every load-bearing artifact of this order was written directly into the worktree deliverables folder instead of the scratchpad. Recommended disarm for the issuer: instruct workers to qualify every scratchpad filename with their serial, or stage under the worktree only. Owner is the issuer as the spawner of the sibling workers. Note the near-miss class: a commit message file staged in the shared scratchpad under a generic name and then passed to safe-commit -F would commit ANOTHER SEAT'S text under this seat's author line -- CLAUDE.md rule 14a already requires a non-shell writer for that file, but says nothing about a shared path."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S7 -- the silent-zero TRIGGERS defect is an IAM GAP: the cloud derive role cannot read S3 bucket notifications on ANY bucket (read=0 / unreadable=34)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S7",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T08:49Z",
+    "one_line": "The C-3 fix worked exactly as designed and its first cloud run NAMES the cause of S20's silent zero: the ad-hoc derive on the rebuilt image printed `s3 notifications buckets read=0 / buckets unreadable=34` and enumerated all 34 buckets as unreadable. The derive task role `opal-globgrph-derive-runner-task` is granted s3:GetBucketPolicy, GetBucketVersioning, GetBucketLocation, ListAllMyBuckets, GetObject, PutObject, DeleteObject and ListBucket -- and NOT s3:GetBucketNotification, which is the API that yields every S3_BUCKET-[TRIGGERS]->LAMBDA edge. So TRIGGERS on the cloud-derived graph is structurally 0 and will stay 0 on the 02:00Z nightly no matter how many times the image is rebuilt. The laptop derive's 34 read / 0 unreadable and TRIGGERS=188 came from a DIFFERENT PRINCIPAL (the Andrew_Berman IAM user), not from different code.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED plane, CloudWatch /ecs/globgrph/derive-runner stream derive-runner/derive-runner/7286e56c80614ab49fa2fba791bb8b43 (ad-hoc QA derive, task 7286e56c80614ab49fa2fba791bb8b43, imageDigest sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778, exit 0, startedAt 1788511057.509 stoppedAt 1788511860.622): `s3 notifications buckets read=0 / buckets unreadable=34; unreadable=opal-313476888478-globgrph,...,opalinvest-portal` -- all 34 named, none omitted.",
+        "APPLIED plane, iam get-role-policy over every inline policy of role opal-globgrph-derive-runner-task (list-role-policies DENOMINATOR 4: DeriveRunnerAccountDescribe, DeriveRunnerCWLogs, DeriveRunnerS3, DeriveRunnerSNS; list-attached-role-policies = EMPTY, so the 4 inline documents are the WHOLE grant): the complete S3 action set is s3:GetBucketPolicy, s3:GetBucketVersioning, s3:GetBucketLocation, s3:ListAllMyBuckets (Sid AccountWideReadOnly) and s3:GetObject, s3:PutObject, s3:DeleteObject, s3:ListBucket, s3:GetBucketLocation (Sids GlobgrphWarehouseRW, TerraformStateRead, P4CrossDomainServedRead). s3:GetBucketNotification is absent, and no statement carries a wildcard action.",
+        "DESIRED plane: comp-find 'GetBucketNotification' over infra/aws/terraform -> 0 hits across 495 files scanned [corpus=all]. POSITIVE CONTROL on the same instrument and scope: 'GetBucketLocation' -> 15 hits. The zero is an ABSENCE, not a broken pattern -- the grant is declared nowhere in the estate's terraform, so this is a gap in the DECLARATION, not drift between declaration and application.",
+        "SERVED plane, before this derive: triggers_query.sh against the live serving process (SSM to i-07dccb1615503ac99 -> projection.opal-globgrph.local:8181/cypher) returned `{\"rows\":[{\"triggers\":0}],\"vintage\":\"2026-09-04T05:53:37.689093+00:00\"}` with the SHAPE CONTROL on the same transport returning `{\"rows\":[{\"nodes\":27244}]}` -- so the 0 is the graph's answer and not a dead transport.",
+        "DISCRIMINATION, the reason this is an IAM finding and not a code finding: the identical code read 34 of 34 on the laptop under the Andrew_Berman user (TO-CG-D-1 records TRIGGERS=188, 34 read / 0 unreadable) and 0 of 34 in the cloud under opal-globgrph-derive-runner-task. Same bytes -- the container digest is the same image built from HEAD 5644fee152 -- different principal, opposite result."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1's cell CG-s-15 closes on 'the served projection at the post-derive vintage answers TRIGGERS > 0 for the declared Lambda targets (bd-pipeline's three; inf-pipeline's two as additional evidence)', and D1-AC5 expects a non-zero triggers count, on the premise that a HEAD carrying the C-3 deriver fix is the only thing standing between the cloud derive and a correct TRIGGERS edge set.",
+    "world_is": "The image rebuild was necessary and is not sufficient. The C-3 fix's contribution is real and is exactly what it was cut to do -- it converted an unfalsifiable silent zero into a named, counted, per-bucket read failure -- but the failure it names is an IAM grant the estate has never declared. D1-AC5 cannot pass on any image until s3:GetBucketNotification reaches the derive task role. The pre-fix world would have shown TRIGGERS=0 with no explanation and this order would have had to guess; the post-fix world shows read=0/unreadable=34 with all 34 names, which is why this row can be written at all.",
+    "notes": "NOT REMEDIATED, and deliberately so: the grant belongs in infra/aws/terraform/globgrph/iam.tf (aws_iam_role_policy on opal-globgrph-derive-runner-task), which is NOT in this task order's PATHS block -- and the apply route is closed to this seat anyway by W1-S1. Disarm = add s3:GetBucketNotification (account-wide read, alongside the existing Sid AccountWideReadOnly grants) and re-run one derive; the denominator line is now the acceptance instrument and should read read=34 / unreadable=0. Owner 0.7.0_AE_CloudOps as the module's IAM lane. This row is the ANSWER to S20 and the reason S28's disarm cannot complete on an image rebuild alone -- whoever adjudicates S20 should read this row before closing it, because closing S20 on the rebuild would close it on the wrong cause. NOTE the second-order lesson for the estate: an account-wide 'read-only describe' grant that enumerates its verbs will always lag the code that adds a new one, and the lag is invisible until something counts."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S8 -- one of the seven shared-image consumers has NO trigger at all, so "picks it up on its next scheduled fire" is unanswerable for it
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S8",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T09:02Z",
+    "one_line": "TO-CG-D-1 instructs recording each of the four NFRA_GLOBGRPH families' next fire time. Three resolve -- comp-learns 04:00Z and fedobs 04:30Z (EventBridge Rules), cse 03:30Z (EventBridge SCHEDULER, a different service that a Rules-only census misses). The fourth, globgrph-resource-summaries-producer, has NO trigger on either service: no rule, no schedule, and the ONLY reference to its task definition anywhere in infra/aws/terraform is a terraform `output`. Its next fire time is not late or misconfigured -- it does not exist, so this family can never pick up a rebuilt image on its own.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "APPLIED plane, EventBridge RULES: `events list-rules` filtered to globgrph gives a DENOMINATOR of 4 rules -- opal-globgrph-cloudtrail-mgmt (no schedule, no ECS target), opal-globgrph-comp-learns-producer-nightly cron(0 4 * * ? *) -> globgrph-comp-learns-producer:1, opal-globgrph-derive-runner-nightly cron(0 2 * * ? *) -> globgrph-derive-runner:6, opal-globgrph-fedobs-producer-nightly cron(30 4 * * ? *) -> globgrph-fedobs-producer:1. No rule targets globgrph-cse-producer or globgrph-resource-summaries-producer.",
+        "APPLIED plane, EventBridge SCHEDULER (the second carrier -- a Rules-only sweep reports a FALSE absence here): `scheduler list-schedules` -> the only globgrph entry is globgrph-cse-producer-nightly, `scheduler get-schedule` -> cron(30 3 * * ? *), ENABLED, target arn:aws:ecs:...:cluster/opal-globgrph. So cse IS scheduled, on a service the first census could not see; resource-summaries is on NEITHER.",
+        "DECLARED plane @5644fee152: comp-find 'aws_ecs_task_definition.resource_summaries_producer' over infra/aws/terraform returns exactly ONE hit, resource_summaries_producer.tf:188 `value = aws_ecs_task_definition.resource_summaries_producer.arn` -- an output, not a target. comp-read of resource_summaries_producer.tf enumerating 'schedule_expression|aws_scheduler|aws_cloudwatch_event_rule|resource \"' returns 5 resources: a log group, two IAM roles/policies pairs and the task definition. No trigger resource exists in the file.",
+        "EXERCISED plane, WEAK BY CONSTRUCTION and stated as such: `ecs list-tasks --family globgrph-resource-summaries-producer --desired-status STOPPED` returned empty. ECS retains stopped tasks for roughly an hour, so this is 'no run in the retention window', NOT 'never ran' -- it corroborates the declared-plane finding and cannot carry it alone."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 'MEASURED BY THE ISSUER': the four NFRA_GLOBGRPH families 'stay on `:latest` and pick the new image up on their next scheduled fire; you NAME them in the ledger and record DESIRED with each one's next fire time'.",
+    "world_is": "Three of the four have a next fire time and one does not. The premise that a `:latest` consumer necessarily picks a rebuild up 'on its next scheduled fire' holds only for consumers that HAVE a scheduled fire; globgrph-resource-summaries-producer is a fully declared task family -- image, IAM, log group, S3 grants -- wired to nothing. It is a consumer of the shared image in the blast-radius sense (it would run the new bytes if anything ever started it) while being invisible to any 'when does this land' question.",
+    "notes": "Recorded in the ledger as 'no trigger declared -- next fire time NONE' rather than left blank, because a blank reads as unmeasured. Not remediated: resource_summaries_producer.tf is outside this order's PATHS block and giving an untriggered family a schedule is a scope decision, not a fix. Disarm = either declare its trigger or retire the family; a third possibility the owner should rule on is that it is deliberately ad-hoc-only, in which case the blast-radius list should say so. NOTE the instrument lesson this row cost: EventBridge Rules and EventBridge Scheduler are two different services with two different list APIs, and a census of one returns a confident, wrong zero for schedules living in the other -- cse would have been reported unscheduled on the first sweep."
   }
 ]
 ```
