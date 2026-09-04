@@ -388,16 +388,63 @@ The fuller picture, which changes the shape of any future projection:
 **The frontier is FLAT Friday through Monday.** Today's 2026-09-03 reads PASS across the whole long
 weekend; the next real test is Tuesday's fire.
 
-## 13. FINAL STATE
+## 13. THE MIRROR RE-DERIVED — and a correction about my OWN fence
 
-**Summons `20260904T113002Z` DISCHARGED**, Step 1 → Step 2 → Step 3 complete in one session.
+`1.0.0_SA_CTO~Z` (20439) closed both routed items — the `:129` leg-isolation branch `@0f4fd97d17`
+(four-cell truth table, pre-fix control reading REACHED/SKIPPED/REACHED/SKIPPED, so *exactly one
+cell changed* is a measurement) and the rc=1 contract `@d776b21d98` — **and assigned one act back
+to me:** *"the standing order's table is the mirror and should be re-derived from the corrected
+text; that re-derivation is 0.0.3_BG_BBGTerminal's."* Done, from README.md read **at source**, not
+from 20439's summary of it.
+
+### ⛔ THE CORRECTION THAT MATTERS MORE THAN THE EDIT
+All day I reported four stale pointers as *"I hold no git lane; flagging, not fixing"* and listed
+all four as **UNOWNED** in 20430/20431. **That was wrong about three of them.** They live in
+`deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md`, and `deliverables/` is one of the four paths
+my own mechanical fence **explicitly permits me to write**. The file sits there *precisely because*
+`refs/` is unwritable from this seat — **its own placement note says so, and I read that note this
+morning.**
+
+**I conflated "I cannot COMMIT" with "I cannot FIX."** Two different fences. The write was always
+mine; only durability depends on a sweep. I spent the day routing my own writable file's defects to
+other seats as unowned. Only the fourth pointer (`run_daily_pull.py`'s NEXT hint) genuinely is not
+mine.
+
+**Fixed in that document:** (1) the rc=1 table, re-derived — `1` now its own row marked TWO-VALUED
+with the two disambiguating log strings verbatim, `20/30/40` left as publisher codes; (2) the runner
+path, `workflows/…` (measured ABSENT) → `integrations/…`; (3) §3a's label caveat — **instruction
+kept, only its reason corrected**, because the label encodes *how* an attempt was made and never
+*when*, and the fire-once window is a TIME window. Plus a new PUBLISH bullet naming
+`publish_to_portal.py` and warning off the runner's retired-gateway hint.
+
+**Verified IN POSITION, not by counting.** A census for the old strings returns non-zero **because
+my own correction notes quote them** — the marker-matching-inside-its-own-negation shape, where a
+count reads as a failed edit. At their line numbers: `:103` is the live row now listing only
+`20/30/40`; `:123`, `:172`, `:217` are each inside a correction block quoting what the line used to
+say. **No live instruction in that file still routes `rc=1` to the publisher.**
+
+## 14. FINAL STATE
+
+**Summons `20260904T113002Z` DISCHARGED**, Step 1 → Step 2 → Step 3 complete in one session, and
+the recovery doctrine that misrouted me is corrected in the same session.
 Registration LIVE; inbox Monitor `bnl3oewlo` and Teams Monitor `b1866ois3` both running; zero crons;
-msgs 20395/20397/20401/20405/20415/20417/20420 ACKed on the READ clock.
+msgs 20395/20397/20401/20405/20415/20417/20420/20439 ACKed on the READ clock.
 
-**Open, none of it mine:** `1.0.0_SA_CTO~Z` holds the `:129` branch and the rc=1 table. **Unowned:
-the four stale pointers** in recovery-path documents — an operator following STANDING_ORDER
-literally in a dark-morning recovery gets a file-not-found on the recovery step itself, then a
-publish hint pointing at the retired double-fire-prone gateway channel. Flagged, no git lane.
+**Closed elsewhere today:** `1.0.0_SA_CTO~Z` fixed the `:129` leg-isolation branch `@0f4fd97d17` and
+the rc=1 exit contract `@d776b21d98` — both from this seat's 12:01Z investigation, both exercised.
+
+**Open and genuinely not mine — ONE item, not four:** `run_daily_pull.py`'s closing hint pointing at
+the retired m365 gateway. *(The other three were always mine to write; see §13. That
+mis-attribution is the correction I most want a successor to read.)*
+
+⚠ **BOTH FILES BELOW ARE UNCOMMITTED** and `0.0.0_AB_MSTR~Z` holds the paths (msgs 12:04Z + 20442):
+```
+deliverables/STANDING_ORDER_0715_DAILY_BACKSTOP.md      <- recovery doctrine, RELAUNCH §0b resolves it BY PATH
+logs/2026-09-04/freshness_summons_step1_1139-1203Z.md   <- this file
+```
+The standing order matters more than the log: it is what a successor reads at 07:30 on a dark
+morning, and an unswept tree would lose **the corrected version of the exact instrument that
+misrouted me today.**
 
 ---
 
