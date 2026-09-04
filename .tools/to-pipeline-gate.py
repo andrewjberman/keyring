@@ -32,7 +32,9 @@ FAIL-CLOSED. An unreadable file, an unparseable block or an unexpected exception
 A gate that fails open is not a gate.
 """
 import os
+import inspect
 import re
+import pathlib
 import subprocess
 import sys
 
@@ -375,6 +377,56 @@ def _coverage_violations(root, targets):
     return _coverage_grade(_coverage_groups(root, targets), stage_of, lambda doc: _decomp_text(root, doc)[0])
 
 
+_SELF_SRC = pathlib.Path(__file__).read_text(encoding="utf-8", errors="replace") \
+    if "__file__" in dir() else ""
+
+
+def _merge_probe_is_merge_head_only():
+    """True iff _merge_in_progress tests MERGE_HEAD and nothing else, judged on its CODE lines.
+
+    STOP: read the FUNCTION, never grep the module. Two earlier cuts of this check split the
+    module source on a marker -- and found THIS helper's own occurrence of that marker first, so
+    it graded itself, and its own token list contains "parents". Adding the signature to the
+    marker just moved the collision. `inspect.getsource(fn)` returns that function and nothing
+    else, so there is no corpus for the checker to pollute.
+
+    Comments and the docstring are stripped because _merge_in_progress deliberately WARNS about
+    the parent-count shape in prose; an arm that greps the whole body convicts it for its own
+    warning. That is the difference between reading the tool and reading the world.
+    """
+    try:
+        body = inspect.getsource(_merge_in_progress)
+    except Exception:  # noqa: BLE001
+        return False
+    code, in_doc = [], False
+    for ln in body.split(chr(10)):
+        t = ln.strip()
+        if t.startswith(chr(34) * 3):
+            in_doc = not in_doc
+            continue
+        if in_doc or not t or t.startswith("#"):
+            continue
+        code.append(t)
+    body = chr(10).join(code)
+    if "MERGE_HEAD" not in body or "--git-path" not in body:
+        return False
+    return not any(tok in body for tok in ("rev-list", "parents", "HEAD^", "^2"))
+
+
+def _merge_exemption_precedes_checks():
+    """True iff main() consults the merge probe BEFORE it reads the staged-added set.
+
+    Same instrument rule as above: read main()'s own source, not the module's.
+    """
+    try:
+        body = inspect.getsource(main)
+    except Exception:  # noqa: BLE001
+        return False
+    i_probe = body.find("_merge_in_progress(root)")
+    i_added = body.find("added = _newly_added(root)")
+    return 0 <= i_probe < i_added
+
+
 def _self_test():
     """RED/GREEN arms for carriers 1 (coverage) and 4 (criterion grammar), pure -- no repo read."""
     decomp = "cells: CE-a-1 CE-a-2 CE-a-3 (three)"
@@ -420,6 +472,25 @@ def _self_test():
          lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nthe `<paths>` block below names the grant\n<paths>\norg/ok.py\n</paths>\n" + v3) == []),
         ("grant: a prose mention with NO block after it -> refused as NO block",
          lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nsee <paths> in the protocol\n" + v3))),
+        # MERGE EXEMPTION (94264). A self-test cannot safely open a real merge in the shared tree,
+        # so these are structural + a function-level probe; the behavioural arm is 0.0.0_AB_MSTR's
+        # own reconcile, which is the RED case that produced the finding.
+        ("merge: the gate HAS a merge exemption at all (its two siblings did; this one did not)",
+         lambda: "_merge_in_progress" in _SELF_SRC and "MERGE COMMIT -- task-order checks exempt" in _SELF_SRC),
+        # STOP: THIS ARM GRADES CODE, NOT PROSE. Its first cut asserted that the string "two
+        # parents" was absent from the function -- and FAILED on the function's own WARNING
+        # against that very shape. A check that parses prose reads the TOOL, not the world
+        # (the estate has that finding twice already). It now strips comments and the docstring
+        # and grades the EXECUTABLE lines only.
+        ("merge: the probe tests MERGE_HEAD and nothing else -- no parent-count test in the CODE",
+         lambda: _merge_probe_is_merge_head_only()),
+        ("merge: the exemption is NOT conditioned on how the staged list was sourced",
+         lambda: "OWNED_PATHS_STAGED_FILES" not in inspect.getsource(main).split("added = _newly_added")[0]
+         and _merge_exemption_precedes_checks()),
+        ("merge: _merge_in_progress returns False in a clean tree (positive control on the probe)",
+         lambda: _merge_in_progress(_repo_root()) is False),
+        ("merge: a NON-merge commit still reaches the task-order checks (the exemption is narrow)",
+         lambda: _merge_exemption_precedes_checks()),
         # _top_section BACKTICK TOLERANCE (94213 refusal 2). The RED arm is the bug that was LIVE:
         # it fails against the pre-patch gate and passes after, which is what makes it a control.
         ("endpoint RED: a heading whose command is fenced IS found (was a FALSE ABSENCE)",
@@ -1271,12 +1342,65 @@ def sweep(root):
     return 0
 
 
+def _merge_in_progress(root):
+    """True iff a merge is in progress -- MERGE_HEAD exists.
+
+    MERGE_HEAD *ONLY*. Do NOT add "HEAD has two parents" as a second condition: in a PRE-COMMIT
+    hook HEAD is the PREVIOUS commit, so a two-parent-HEAD test silently exempts the next ORDINARY
+    commit after any merge, for every agent. owned-paths-check.sh:69-75 carries that finding and it
+    was caught by exercising the hook while HEAD happened to be a merge.
+
+    `--git-path` rather than "$GIT_DIR/MERGE_HEAD": a linked worktree keeps its own.
+    """
+    try:
+        p = subprocess.run(["git", "rev-parse", "--git-path", "MERGE_HEAD"], cwd=root,
+                           capture_output=True, text=True)
+        if p.returncode != 0:
+            return False
+        return os.path.isfile(os.path.join(root, p.stdout.strip()))
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def main(argv):
     root = _repo_root()
     if "--sweep" in argv[1:]:
         return sweep(root)
     if "--self-test" in argv[1:]:
         return _self_test()
+
+    # ⛔ MERGE EXEMPTION (2026-09-04, 1.0.0_SA_CTO on 0.0.0_AB_MSTR's 94264). A MERGE IS NOT
+    # AUTHORSHIP. This gate had none while BOTH its siblings did -- owned-paths-check.sh:85 and
+    # surprise-row-gate.py -- so it graded the INTEGRATOR as the author of every task order any
+    # merge carried. Measured on the first cross-fabric reconcile: 27 of site Z's ALREADY-COMMITTED
+    # orders (each verified present at origin/SITEZ with `git cat-file -e`) were refused as "a NEW
+    # tree task order committed under 0.0.0_AB_MSTR", plus 153 criterion-grammar refusals because
+    # their fabric's orders are v2 and ours is v3. THAT BLOCKED EVERY CROSS-FABRIC RECONCILE THAT
+    # CARRIES A TASK ORDER, which from now on is all of them.
+    #
+    # AND THE VERSION-SKEW HALF IS A RULING, NOT A SIDE EFFECT: the spine's own transition rule is
+    # that a round open at an amendment finishes under the task orders ALREADY CUT. v3's criterion
+    # grammar binds orders cut AFTER v3; it does not retro-refuse orders that were valid when and
+    # where they were written. A merge is exactly the moment that rule has to hold, so the exemption
+    # IS the mechanism for it rather than a hole beside it.
+    #
+    # ⛔ NOT CONDITIONED ON HOW THE STAGED LIST WAS SOURCED. owned-paths-check.sh:76-84 shipped that
+    # guard and it KILLED the exemption in production -- the active pre-commit hoists the staged list
+    # into an env var, so the guard's condition was always false in a real run and true only on the
+    # direct-invocation path the author tested. A MERGE IS A MERGE REGARDLESS OF HOW THE STAGED LIST
+    # WAS SOURCED.
+    #
+    # RESIDUAL, STATED RATHER THAN PAPERED OVER: a merge can carry a task order that was never gated
+    # anywhere (a branch on which no hook ran). This exemption admits that case, exactly as both
+    # siblings do. The control for it is the DRAIN's refuser (safe-merge.sh), which grades the merged
+    # index before the merge commits -- not this gate, which cannot tell a fresh order from an
+    # already-landed one once both are simply "staged".
+    if _merge_in_progress(root):
+        print("[to-pipeline-gate] OK: MERGE COMMIT -- task-order checks exempt; merged orders were "
+              "gated at their own authorship, on their own fabric's spine version "
+              "(0.0.0_AB_MSTR 94264; siblings owned-paths-check.sh:85, surprise-row-gate.py).")
+        return 0
+
     added = _newly_added(root)
     if added is None:
         print("[to-pipeline-gate] REFUSED: could not read the staged index. Fail-closed.",
