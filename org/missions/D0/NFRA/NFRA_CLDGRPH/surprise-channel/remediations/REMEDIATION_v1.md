@@ -33,18 +33,18 @@ a decomposition cell. All three graduations route `SPEC_ERROR` to L6, owner `2.0
     "owner": "2.0.0_SA_COO~A",
     "round": "v1",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~A",
-      "at": null
+      "at": "2026-09-03T17:56Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~A",
       "round": "v1"
     },
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S3",
@@ -62,18 +62,18 @@ a decomposition cell. All three graduations route `SPEC_ERROR` to L6, owner `2.0
     "owner": "2.0.0_SA_COO~A",
     "round": "v1",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.7.0_AE_CloudOps~Q",
-      "at": null
+      "at": "2026-09-03T17:56Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~A",
       "round": "v1"
     },
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S8",
@@ -94,18 +94,18 @@ a decomposition cell. All three graduations route `SPEC_ERROR` to L6, owner `2.0
     "owner": "2.0.0_SA_COO~A",
     "round": "v1",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~A",
-      "at": null
+      "at": "2026-09-03T17:56Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~A",
       "round": "v1"
     },
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   }
 ]
 ```

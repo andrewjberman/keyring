@@ -27,11 +27,11 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "remedy": "Re-derive and state the engine-level default from the measured duration, correct the stale source comment, and exercise both an explicit-override caller and a caller that inherits the default. Preserve the current deployed 3600-second task override until that engine contract is independently certified.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~A", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v2"},
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~A", "at": "2026-09-03T19:16Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S12",
@@ -174,7 +174,7 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
     "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~A", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v2"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
     "closed": false
@@ -193,11 +193,11 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "remedy": "Deploy the conditional-create publisher with the round-3 worker revision, then exercise byte-identical same-vintage no-op and non-identical refusal on the running image.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
-    "disarm": {"state": "ARMED", "owner": "0.7.0_AE_CloudOps~T", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v2"},
+    "disarm": {"state": "DISARMED", "owner": "0.7.0_AE_CloudOps~T", "at": "2026-09-03T19:16Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S23",
@@ -213,11 +213,11 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "remedy": "Keep the valid live pointer, deploy the B-3 completeness/forward/conditional writer through the round-3 worker revision, and prove one authentic strictly-forward advance with the deployed fixed image.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
-    "disarm": {"state": "ARMED", "owner": "0.7.0_AE_CloudOps~T", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v2"},
+    "disarm": {"state": "DISARMED", "owner": "0.7.0_AE_CloudOps~T", "at": "2026-09-03T19:16Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S24",
@@ -233,11 +233,11 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "remedy": "Deploy compaction with the fixed publisher and replace the fixed cross-mode byte band with integrity checks over direct counts, hashes, and declared exact sizes, or a separately measured mode-specific diagnostic band; exercise the resulting publisher on a real incremental stamp.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
-    "disarm": {"state": "ARMED", "owner": "0.7.0_AE_CloudOps~S", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v2"},
+    "disarm": {"state": "DISARMED", "owner": "0.7.0_AE_CloudOps~S", "at": "2026-09-03T19:16Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   }
 ]
 ```

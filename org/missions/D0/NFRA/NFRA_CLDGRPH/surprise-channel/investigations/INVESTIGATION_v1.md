@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **29 rows** (S1-S30, id S11 vacated by the concurrent-append renumber). Restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **30 rows** (S1-S31, id S11 vacated by the concurrent-append renumber). Restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -921,6 +921,37 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "S29 asserts the user-bin ACL hazard is fixed in the world, that the residual NULL SID DENY sits on every file including the working control and therefore discriminates nothing, and that only a Codex-seat exercise remains outstanding.",
     "world_is": "The hazard is NOT closed and S29's stated reason for dismissing the residual was wrong twice over. The remedy that matches the evidence is inheritance restoration, now applied and measured on three axes at 0. Whether it CLOSES the hazard is still UNEXERCISED: the only sound oracle is an agent-side execution from a Codex seat launched AFTER the repair, and no such seat has run. S26 must not be disarmed on S29's evidence, nor on this row's.",
     "notes": "The general form, which is why this row is worth its bytes: THREE successive states of this investigation each had a self-consistent instrument that agreed with itself and was wrong -- S26 measured three shims and missed 192; S29 measured the wrong plane and called a live discriminator inert; the NULL-SID removal measured clean and moved nothing. Each time the correction came from the ONE oracle none of them held: an agent-side execution by the consumer, supplied by 0.7.0_AE_CloudOps~S. ACCEPTANCE GATE, 0.7.0_AE_CloudOps~S's specification adopted verbatim as this row's bar: user-bin present on PATH; Get-Command resolves all four shims; direct and bare comp-read --help and comp-find --help execute; comp-which as control; comp-to exercised against a designated probe TO and NOT with --help, which mutates attribution. If a FRESH seat still denies or still lacks PATH, the repair belongs in launcher/runtime provisioning and NOT in further DACL mutation -- this seat has now spent two ACL hypotheses and will not spend a third. Routed to 2.0.0_SA_COO~A, who holds the ajb2 launch under this project; this seat did not self-spawn a seat to grade its own repair."
+  }
+]
+```
+
+## S31 -- one `:latest` tag, seven task families: each worker-scoped rebuild of round 2 and round 3 was a deploy its own controls could not see (the CVO's row, lane ANY)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S31",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T06:18Z",
+    "one_line": "Surfaced at L9 while adjudicating S28: TO-CG-B-2 and TO-CG-C-2 each rebuilt 'the worker image' and each build re-tagged opal-globgrph-derive-runner:latest (16:22Z digest 1e1aaa14..., 18:51Z digest 68bd8b93...), the one tag seven ACTIVE task families pull -- so each worker-scoped act was a deploy to the derive runner, four producers and the serving service at their next launch. Both faces' NEVER-2 ledgers and unscoped re-plans were Terraform-address censuses, which cannot see an image-tag move. Nothing broke that this seat can measure; the class is a deploy whose blast radius its own controls cannot observe. Filed in the investigation document under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in the adjudication document.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ECR describe-images opal-globgrph-derive-runner at 2026-09-04T06:0xZ (3.0.0_SA_CVO): 20260903-162203 = sha256:1e1aaa14... (the digest B2-AC2 cites for revision 2, no longer tagged latest); 20260903-185059 = sha256:68bd8b93... (the digest C2-AC3 cites for revision 3, tagged latest today) -- latest moved between the two builds.",
+        "ECS ACTIVE task-definition families containing 'globgrph', latest revision's image, read at this seat: globgrph-projection-worker:3, globgrph-derive-runner:6, globgrph-comp-learns-producer:1, globgrph-cse-producer:1, globgrph-fedobs-producer:1, globgrph-resource-summaries-producer:1 and globgrph-serving:1 all reference .../opal-globgrph-derive-runner:latest by tag, none by digest; globgrph-nessie:5 and globgrph-trino:6 reference vendor images.",
+        "TO-CG-C-2 face at HEAD, item 2: 'rebuild the worker image from HEAD of infra/aws/globgrph/ (the derive-runner image pattern), register task-definition revision 3, re-target the Pipe; Terraform for every resource, safe-apply -target'; C2-AC3: the unscoped re-plan 'quoted by address list = the four foreign items and none of this cell's' -- a Terraform-plane control; the tag move is an ECR-plane act no plan renders.",
+        "org/critical_paths/change_management/20260826T0008Z_globgrph-derive-runner-c2c3-compose_deploy_completion.md:79-84 names the class for the 08-26 deploy: ':latest REACHES FIVE TASK-DEFS ... all run this ONE image and pick up :latest on their next scheduled fire.' The round-2 and round-3 faces inherited the reach without restating it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-B-2 and TO-CG-C-2 scope their image act to 'the worker image' with a Terraform-address blast-radius control (targeted apply, one unscoped re-plan quoted by address list) and a NEVER-2 ledger of the worker's resources.",
+    "world_is": "The worker has no image of its own: it runs the shared derive-runner image by its :latest tag, and each rebuild re-pointed that tag for seven task families. The controls the faces carried were on the wrong plane to see it; the 08-26 ledger named the class and the faces did not carry it forward.",
+    "notes": "Adjudicated in the same commit by ../adjudications/ADJUDICATION_v1.md C-S5 (GRADUATED); remediation row REMEDIATION_v3.md S31, owner 1.0.0_SA_CTO. Not a defect of B-2 or C-2: both did what their faces said; the faces were written against an image topology that does not exist."
   }
 ]
 ```
