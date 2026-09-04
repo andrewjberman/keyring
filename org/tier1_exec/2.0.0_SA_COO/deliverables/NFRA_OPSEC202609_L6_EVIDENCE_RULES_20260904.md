@@ -85,6 +85,8 @@
 
 ## WHAT THESE SIX HAVE IN COMMON
 
-⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's. **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
+⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's; ⭐ **and RULE 6 is the version where the two planes are THE RECORD AND THE WORLD -- with the record being the one that structurally CANNOT notice.** **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
+
+> ⛔ **This paragraph said "THESE SIX" over an enumeration of FOUR for one commit (`de53f1b11b`), because I added Rule 6 with an edit whose second half did not match its anchor and I committed on the first half's success.** ⭐ **It is the same shape as the two-segment shell call whose failing half printed a SyntaxError and whose succeeding half printed a commit hash -- the eye lands on the success.** **Fixed here, disclosed rather than quietly corrected, because a rules file that silently repairs its own contradictions teaches the opposite of what it says.**
 
 **And the meta-instance is this file: I ruled five times into inboxes while ruling that findings need durable carriers.**
