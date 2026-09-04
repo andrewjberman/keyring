@@ -35,9 +35,9 @@
    - `summarize(classes: dict) -> dict` -- counts per class plus `trading_days`, `covered`, `holes` (= C + UNKNOWN + D; B is NOT a hole), `expected_empty` (= B).
    - `coverage_line(partner: str, summary: dict) -> str` -- the per-partner line in exactly this shape: `"<covered>/<trading_days> trading days; <carried> carried for missing data"` where `carried` = trading days with no slice (B + C + D + UNKNOWN), because the renderer's carry-forward fills every one of them visually and the line's job is to say so (PRD FWD-3, brief s.4).
    - a CLI: `python data/etfs/scripts/coverage/classifier.py --partner <p> --month YYYY-MM [--no-probe]` printing one line `CLASSIFY: partner=<p> month=<m> trading_days=<n> COVERED=<n> A=<n> B=<n> C=<n> D=<n> UNKNOWN=<n>` then the coverage line. `--no-probe` is the only live mode this order exercises.
-   - the calendar: import `trading_calendar` through a small resolver -- `lib/trading_calendar.py` when run from the repo, else a sibling `data/etfs/scripts/coverage/trading_calendar.py` which you VENDOR byte-identical from `lib/trading_calendar.py` (sha256 of both recorded in the result; the same pattern `inf-etf-ownership-daily` uses; the renderer on the reporter box has no `lib/`).
+   - the calendar: import `trading_calendar` through a small resolver -- `lib/trading_calendar.py` when run from the repo, else a sibling `trading_calendar.py` beside the package on the reporter box, which the DEPLOY places at build time from `lib/` (EG-s-6's artifact upload) and which is NEVER committed (AMENDED BY THE ISSUER AT THE DRAIN on row ETFS_GUARDRAIL-W1-S1: CTO~Z's ruling @1da1e2b73b forbids a fifth in-repo copy of the calendar; the layer pattern -- copy from `lib/` at build time, commit nothing -- is the model; the renderer on the reporter box has no `lib/`).
 2. `data/etfs/scripts/coverage/tests/test_classifier.py` -- ZERO AWS calls (stub `series` and `probe`); arms: (a) a trading day with a slice -> COVERED; (b) a Saturday -> A; (c) probe `{partition: True, priced: 0}` -> B, and B is NOT in `holes` and IS in `expected_empty`; (d) probe `{partition: True, priced: 5}` and no slice -> C; (e) probe `{partition: False}` -> D; (f) no probe -> UNKNOWN, never B/C/D; (g) THE AUGUST FIXTURE: cottonwood August 2026 with slices for every trading day EXCEPT 08-04, 08-18, 08-20, 08-21, 08-31 and a probe answering present+priced for those five -> exactly 5 C, `holes == 5`, and the coverage line reads `16/21 trading days; 5 carried for missing data`; (h) the same fixture with all 21 present -> `21/21 trading days; 0 carried for missing data`. Both arms of the empty/non-empty pair are REQUIRED (a scan that cannot find a hole and a scan that finds nothing are different claims).
-3. `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-coverage-classifier.result.md` -- each criterion's invocation and output verbatim with rc and denominator; the vendored calendar's sha256 pair; the module's API as built.
+3. `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/the-coverage-classifier.result.md` -- each criterion's invocation and output verbatim with rc and denominator; the resolver's two paths; the module's API as built.
 
 ## ACCEPTANCE
 
@@ -52,8 +52,8 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 <criterion id="S4-AC3" cell_refs="EG-s-4"><invocation>python data/etfs/scripts/coverage/classifier.py --partner inflection --month 2026-08 --no-probe</invocation><expect>CLASSIFY: partner=inflection month=2026-08</expect></criterion>
 `S4-AC3` -- the live read runs for a calendar-day-delivered partner too (Inflection writes weekend files; A and COVERED must not collide -- record the counts).
 
-<criterion id="S4-AC4" cell_refs="EG-s-4"><invocation>python -c "import hashlib; a=hashlib.sha256(open('lib/trading_calendar.py','rb').read()).hexdigest(); b=hashlib.sha256(open('data/etfs/scripts/coverage/trading_calendar.py','rb').read()).hexdigest(); print('CAL_VENDORED_IDENTICAL=%s' % (a==b))"</invocation><expect>CAL_VENDORED_IDENTICAL=True</expect></criterion>
-`S4-AC4` -- the vendored calendar is byte-identical to the library.
+<criterion id="S4-AC4" cell_refs="EG-s-4"><invocation>python -c "import os; print('COMMITTED_CAL_COPY=%s' % os.path.exists('data/etfs/scripts/coverage/trading_calendar.py'))"</invocation><expect>COMMITTED_CAL_COPY=False</expect></criterion>
+`S4-AC4` -- AMENDED on row W1-S1: NO committed copy of the calendar inside the package; the resolver reaches `lib/` in the repo and the deploy-time sibling on the box.
 
 <criterion id="S4-AC5" cell_refs="EG-s-4"><invocation>bash .tools/commit-gate.sh data/etfs/scripts/coverage/classifier.py data/etfs/scripts/coverage/__init__.py data/etfs/scripts/coverage/tests/test_classifier.py</invocation><expect>pre-commit gate clean</expect></criterion>
 `S4-AC5` -- the commit gate is clean on every .py this order adds.
@@ -68,7 +68,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** A path you need that it does not name is a BLOCKING row, never an override. You do NOT touch the renderer (`EG-s-5`/`EG-s-6`, another queue), the producers, or the ladder (`EG-s-7`, your next order).
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override. You do NOT touch the renderer (`EG-s-5`/`EG-s-6`, another queue), the producers, or the ladder (`EG-s-7`, your next order).
 - **NO FIRM BUCKET, NO FIRM PREFIX, NO PROBE OF YOUR OWN.** The only live reads are `opal-data-etfs` (`daily/<partner>/`, `config/`). No `lambda invoke`, no read of `opal-data-assets`.
 - **No fabrication anywhere:** the module writes nothing to S3, ever.
 - **No new dependency; no second implementation** of the calendar (vendor the library byte-identical).

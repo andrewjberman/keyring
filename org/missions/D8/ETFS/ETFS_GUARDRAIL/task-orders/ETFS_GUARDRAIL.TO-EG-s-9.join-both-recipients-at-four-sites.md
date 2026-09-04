@@ -64,7 +64,7 @@
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** A path you need that it does not name is a BLOCKING row, never an override.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override.
 - **NO LIVE SEND OF ANY KIND in this order.** The rehearsal `email_qa` is send-free by construction; do not invoke `run` or `send_correction`.
 - **NEVER-2 / NEVER-9:** Terraform through `.tools/safe-apply.sh` only; ledger before/after; plan read before apply; 0-diff after; `aws lambda update-function-code` FORBIDDEN.
 - **Leave `EG-s-8`'s terminal send andrew@-only.**

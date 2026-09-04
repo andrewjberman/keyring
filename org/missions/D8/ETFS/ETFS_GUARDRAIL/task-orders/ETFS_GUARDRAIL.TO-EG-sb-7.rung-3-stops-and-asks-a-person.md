@@ -44,7 +44,7 @@ Rung 3 is therefore a STOP that produces an ARTIFACT a person can act on, and NO
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** A path you need that it does not name is a BLOCKING row, never an override. The orchestrator (which will carry the ask into the refusal text) is `EG-s-8`, your NEXT order -- not this one.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override. The orchestrator (which will carry the ask into the refusal text) is `EG-s-8`, your NEXT order -- not this one.
 - **NO PROVIDER CALL, NO HTTP CLIENT, NO CREDENTIAL, NO STANDING GRANT.** A rung-3 "ask" that does anything but write the artifact and return has EXCEEDED ruling card 4.
 - **No live S3 write in this order:** every exercise runs with `write=False` or a stubbed s3. The artifact's live write happens inside the renderer's gate (`EG-s-6`) on a real unresolved month.
 - **No fabrication** (property 9): an unresolved day stays missing; the ask is not a value.

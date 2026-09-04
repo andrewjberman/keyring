@@ -25,8 +25,8 @@ This is a VERIFY cell: you change nothing here. You prove the source is what the
 
 ## ACCEPTANCE
 
-<criterion id="S3-AC1" cell_refs="EG-s-3"><invocation>python -m pytest infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py -q</invocation><expect>passed</expect></criterion>
-`S3-AC1` -- the source's own battery is green at HEAD, both arms (record N passed).
+<criterion id="S3-AC1" cell_refs="EG-s-3"><invocation>python -m pytest infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py -q; echo BATTERY_RC=$?</invocation><expect>BATTERY_RC=</expect></criterion>
+`S3-AC1` -- AMENDED BY THE ISSUER AT THE DRAIN (2026-09-04 21:1xZ) on row ETFS_GUARDRAIL-W2-S1: the original expectation `passed` is UNREACHABLE at HEAD -- the source's own battery crashes at import (KeyError: 'ASSETS_BUCKET', 0 of 4 checks collected) because it was never updated across the 2026-08-03 repoint @001a73530a; a premise of this cell that does not hold, declared on the record. The criterion now RECORDS the battery's collection state (rc and the first error line, verbatim); the defect is W2-S1's, for the inf producer's owner, outside this order's read-only bound on the port source.
 
 <criterion id="S3-AC2" cell_refs="EG-s-3"><invocation>python -c "import re; s=open('infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/lambda_function.py').read(); m=re.search(r'CATCHUP_WINDOW_DAYS\s*=\s*(\d+)', s); print('CATCHUP_WINDOW_DAYS=%s' % (m.group(1) if m else 'ABSENT'))"</invocation><expect>CATCHUP_WINDOW_DAYS=10</expect></criterion>
 `S3-AC2` -- the shipped constant is 10 at HEAD (the number the PRD says a straight port would carry and fail property 2 with).
@@ -44,7 +44,7 @@ This is a VERIFY cell: you change nothing here. You prove the source is what the
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** No source file changes in this cell; the inf directory is named for READING and for running its battery, not for editing.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) No source file changes in this cell; the inf directory is named for READING and for running its battery, not for editing.
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W2-S<k>` (`W2` = your slot; `<k>` the next unused in your coordinate -- your first is `W2-S1`). Append inside the fenced json array per `org/surprise_channel/schemas/investigation_item.schema.json`, cite `path@commit`, never edit an existing row, keep working.

@@ -42,7 +42,7 @@ What the repo says at HEAD (read by the issuer, not to be trusted over the plane
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** No source change; the two lambda dirs and the TF file are named for READING.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) No source change; the two lambda dirs and the TF file are named for READING.
 - **READS ONLY on the live plane** (`lambda get-function-configuration`/`list-functions`, `events list-rule-names-by-target`, `logs filter-log-events`, `s3api list-objects-v2`/`get-object` on `opal-data-etfs/daily/49financial/`). No invoke, no write. A denied read is the honest output and a row.
 - **NEVER#1:** you read the AGGREGATION bucket's 49financial prefix and the function's configuration; you do NOT read `opal-data-assets/schwab/*` or any firm bucket.
 - **EVERY invocation is bounded.** `timeout 120`; `filter-log-events` with `--limit 20` and a 3-day window; paginated lists counted client-side, never `--no-paginate`.

@@ -49,7 +49,7 @@
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** A path you need that it does not name is a BLOCKING row, never an override. You do NOT touch `data/etfs/scripts/coverage/` (slot 1's), the orchestrator, or any producer.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override. You do NOT touch `data/etfs/scripts/coverage/` (slot 1's), the orchestrator, or any producer.
 - **No probe, no invoke, no firm bucket:** the line reads `opal-data-etfs` only.
 - **No PDF, no `--s3-out`, no upload in this order.** Local HTML only.
 - **Restate nothing:** the line describes the month; it changes no figure.

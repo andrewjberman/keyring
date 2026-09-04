@@ -46,7 +46,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** No source file changes in this cell. A path you need that it does not name is a BLOCKING row, never an override.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) No source file changes in this cell. A path you need that it does not name is a BLOCKING row, never an override.
 - **READS ONLY on the live plane.** `get-function-configuration`, `get-function` (download), `s3api list-objects-v2` / `get-object` on `opal-data-etfs/daily/inflection/`. No `update-function-code` (NEVER-9), no apply, no invoke, no write to any bucket. If a read is denied, that is a row and the honest output.
 - **EVERY invocation is bounded.** `timeout 120`; a timeout is RECORDED AS THE OUTPUT. The zip download is a single presigned GET; if it exceeds the bound, retry once, then record.
 - **Scratch:** `<your worktree>/.scratch/` only.

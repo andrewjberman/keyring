@@ -58,7 +58,7 @@
 
 ## BOUNDS
 
-- **Your write surface is the `<paths>` block below and nothing else.** A path you need that it does not name is a BLOCKING row, never an override.
+- **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override.
 - **NEVER-2 / NEVER-9:** Terraform through `.tools/safe-apply.sh` ONLY (never bare `terraform apply`); the ledger entry opened BEFORE the apply and closed with proof after; the plan read BEFORE the apply; a plan touching anything but `aws_iam_role_policy.reporter` is NOT applied. `HALT_ACK=1` acknowledges the routine halt-gate surface after you have read it.
 - **No firm bucket, no firm prefix, no data grant.** The Sid grants `lambda:InvokeFunction` on three ARNs and nothing else.
 - **No live invoke in this order** except through `--dry-run` (which invokes nothing). The live ladder is exercised by the renderer's gate (`EG-s-6`) and the scheduled fire.
