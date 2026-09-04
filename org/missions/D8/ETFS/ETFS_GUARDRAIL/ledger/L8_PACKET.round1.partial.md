@@ -10,8 +10,8 @@ terminal can run beside the drain instead of behind it. It is versioned in place
 
 ## 1. WHY PARTIAL
 
-Two of fourteen orders are terminal at HEAD; a third is terminal on its worker's branch and merges the moment the
-shared index is clear of another seat's staged files. The other eleven are behind the DAG the decomposition drew
+Three of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13; packet revised at `198f98a64a`). The other
+eleven are behind the DAG the decomposition drew
 (`decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1 s.1-s.2): the ports wait on the calendar cell (now terminal), the
 classifier's consumers wait on the classifier, the ladder on the classifier, the send cells on the ladder and the
 alignment. Nothing is late; three slots are draining in dependency order.
@@ -25,7 +25,7 @@ passed as the checker's third argument (coverage checked), on the merged tree, a
 |---|---|---|---|---|
 | TO-EG-s-10 | EG-s-10 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-10.the-trading-calendar-each-producer-resolves.proof_of_spec.json` | VALID rc 0, 5 rows | `e6689cc7cc` (deliverables), `d3e2d56f7c` (the flip) |
 | TO-EG-s-3 | EG-s-3 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-3.the-port-source-verified.proof_of_spec.json` | VALID rc 0, 5 rows (S3-AC1 recorded under the issuer's amendment) | `d008067fa3` (deliverables), `8786482cb0` (the close) |
-| TO-EG-s-13 | EG-s-13 | `0.9.0_WK_ETFS_GUARDRAIL~3/ETFS_GUARDRAIL.TO-EG-s-13.orion-date-basis-alignment-forward-only.proof_of_spec.json` | VALID rc 0, 6 rows, on branch `wk-ETFS_GUARDRAIL-3` @`d2dad22e38`; the issuer's checker run at HEAD follows the merge | PENDING the merge (the shared index carried another seat's staged files at 22:4xZ) |
+| TO-EG-s-13 | EG-s-13 | `0.9.0_WK_ETFS_GUARDRAIL~3/ETFS_GUARDRAIL.TO-EG-s-13.orion-date-basis-alignment-forward-only.proof_of_spec.json` | VALID rc 0, 6 rows, at HEAD (the issuer's own run after the merge); `data/etfs/scripts/coverage/_orion_vendor_asof.py` ABSENT at HEAD | `198f98a64a` (the alignment, then the ruling applied: no committed copy, one gate-named instance) |
 
 ## 3. THE JUDGMENT CRITERIA -- THIS IS THE L9 WORK
 
