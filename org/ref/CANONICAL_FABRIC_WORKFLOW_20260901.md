@@ -248,7 +248,9 @@ travels to the worker.
 - **Owner:** `3.0.0_SA_CVO`, whose engagement with the project begins here. **Not engaged:** the owners of L1 to L7
   as reviewers of this limb; every worker, which has no inbox. The CVO sends nothing to anyone during a round; its
   findings travel up in the slug at L10, to the CTO and to no one else, and reach the COO through the CTO's round-N
-  analysis. A worker never hears from the CVO. A row's `disarm_owner` names who disarms, never whom the CVO may
+  analysis. The one exception is the law's own carrier: an Andrew-direct spoken at the CVO's terminal is recorded
+  verbatim and broadcast the same turn, as every seat's law requires, and that broadcast is a relay of his word, not
+  an engagement with a limb. A worker never hears from the CVO. A row's `disarm_owner` names who disarms, never whom the CVO may
   message; a disarm the CVO cannot make in its own lane is a row, read by its owner from the channel.
 - **Input:** new investigation rows on either channel root, the workers' rows and no others. **Output:** the compiled
   channel, append-only during the round, and the CVO's heartbeat summary carrying the channel's watermark: rows seen,
@@ -263,7 +265,9 @@ travels to the worker.
   the CTO re-arms the watcher. That drain-end read is the COO's one message of a round: the watermark, and any armed
   row whose disarm owner the COO could not seat. One read, no monitor, no cron.
 - **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any recipient
-  but the CTO, at every stage; the whole send is refused and nothing is written. The watcher notifies and never
+  but the CTO, at every stage; the whole send is refused and nothing is written. It admits one other class by its
+  shape: a send whose subject opens with the Andrew-direct marker and whose body names the record's path under the
+  CVO's own deliverables home -- the marker alone or the path alone still refuses. The watcher notifies and never
   blocks.
 - **Handoff:** every row to L9.
 
@@ -374,7 +378,7 @@ measured property of every done test, read by `ls-remote`, never a cell of a dec
 | L2–L4 | `1.0.0_SA_CTO` | lane `ANY_CTO` on `prd/`; lane `TREE_PROJECT_ROW` on the row | binds by reading |
 | L5–L6, the drain | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading; the COO's one message of a round is the drain-end read to the CTO |
 | L7 | worker subagents of the COO | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>` and a worker order without `<paths>`; the lane resolver admits a worker to its order's `<paths>` only; the worker agent type has no send tool | not applicable: a worker cannot be messaged and cannot message |
-| L8–L9, the slug | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/` and `adjudications/`; `investigations/` and `cards/` admit every seat | the CVO's one message of a round is the slug to the CTO |
+| L8–L9, the slug | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/` and `adjudications/`; `investigations/` and `cards/` admit every seat | the CVO's one message of a round is the slug to the CTO; the same-turn broadcast of an Andrew-direct at its terminal is the law's carrier, not a message of the round |
 | L10 read, close | `1.0.0_SA_CTO` | lane `TREE_LEDGER` on `ledger/`; lane `ANY_CTO` on `prd/` | the CTO's one message of a round is the round-N analysis to the COO |
 | integrator | `0.0.0_AB_MSTR` | the pre-push deploy gate on deploy scope | binds by reading |
 
@@ -455,3 +459,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.3 | 2026-09-04 | `2.0.0_SA_COO`'s surface (message 94085) that `.tools/safe-merge.sh` @2187fac0f9 and the drain step re-pointed at it @f414b18822 are ancestors of the 3.2 commit @743d282408, which called the refuser unbuilt; the refuser's own report of its unexercised collision arm (94078) | section 4's drain clause names the refuser that exists and the arm it still owes: a real collision at a merged index aborting the merge; the L7 refuser cell of section 3 names `safe-merge.sh` at the drain |
 | 3.4 | 2026-09-04 | `4.0.0_SA_CRO`'s check-out of the drain refuser's deciding arm (message 94094): a real cross-document collision at the merged index did not land, rc 1, but by the pre-commit hook and not by the script -- `safe-merge.sh` calls the row gate with no paths, grades nothing, and exits with the merge open; the green arm merges correctly | section 4's drain clause states the exercised state: the script's own abort has not passed, the hook is what refuses today, the merge is left open, and the clause leaves this section when the script grades the merged index's changed paths and the arm passes at check-out |
 | 3.5 | 2026-09-04 | `2.0.0_SA_COO`'s fix of the drain refuser @747a0b23c3 (the gate fed the merged index's staged paths; an empty set refused; the merge aborted on refusal; two regression arms) and `4.0.0_SA_CRO`'s check-out of its deciding arm on its own instrument (message 94105): the collision refused by the script's own grade and aborted with no merge left open, the non-colliding branch merged | the drain clause leaves section 4: the L7 drain merges through `safe-merge.sh`, which grades the merged index and aborts on a refusal; section 4 holds one clause, the step log's L7 read from git |
+| 3.6 | 2026-09-04 | `3.0.0_SA_CVO`'s constitutional review of v3.2-v3.5 (message 94134, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_CONSTITUTIONAL_REVIEW_SPINE_v3.2-v3.5_20260904T0740Z.md` @5c965cfcdb; ACCEPT all four; finding F1: the narrowed L8 guard and the same-turn broadcast law contradicted at the CVO's terminal); the gate's owner's ruling and build, `org/mcp/cvo_send_guard.py` with both callers @8623a92a70 | L8's silence and its guard take one exception, the law's own carrier: the CVO's same-turn broadcast of an Andrew-direct record, admitted by its marker and the record's path under the CVO's own home, either alone still refused; section 2 says the broadcast is not a message of the round |
