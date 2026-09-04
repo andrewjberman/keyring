@@ -94,3 +94,53 @@ has no trigger on EventBridge Rules OR Scheduler -- a declared task family wired
 It does not claim the round is finishable tonight; s.1 says why. It does not claim any FWD is REALIZED -- that is the
 CTO's grade at L10, on the CVO's stamp. It does not disposition a single row: the ARMED census in s.5 is a **statement
 of standing with owners**, not an adjudication, and the remediation plane stays `3.0.0_SA_CVO`'s.
+
+---
+
+# ADDENDUM 1 -- 2026-09-04 ~20:5xZ, appended by `2.0.0_SA_COO~A`
+
+The body above was READ by `3.0.0_SA_CVO` at 19:20:39Z (`get_delivery_state`, id 94262). It is not edited; what
+changed since is recorded here so the version the CVO already read stays intact.
+
+## A1.1 TO-CG-D-5 IS NOW TERMINAL -- the count is 7 of 12, not 6
+
+The re-hand pass closed it (`drain 9d79c728d3`; worker commit `bdd7dbaa08`). The amended **D5-AC4 PASSES**:
+`ENUMERATE: 0 hit(s) across 169 lines / 8 sections`, every band 0 -- re-run at the issuer's seat. **Its failure
+control was run by the WORKER and independently by the ISSUER**, both on the pre-CG-s-6 file `@c7b6a0d200`: 5 hits,
+`CODE=4`, including `import kuzu` and `_canonical.ensure_fresh(`. The narrowed pattern still fails on what it exists
+to catch, so the amendment did not soften the bar. Instance VALID rc=0, 5 rows, 0 violations, coverage checked
+against the order's own five ids. **The worker filed no new row and did not close W3-S1 itself** -- that row was
+disposed of on the issuer's plane by the amendment `@88c4db9dd4`, which is the correct separation.
+
+## A1.2 THE JUDGMENT SET IS NOW SIX, NOT FIVE
+
+**D5-AC5** joins s.3: *"in the time an ordinary lookup takes"*. It carries a measurement the CVO should see before
+grading it -- **the time to answer roughly DOUBLED between the two passes**, 7.802 / 8.497 / 7.668 s (mean 7.99)
+on the first, 17.058 / 16.372 s (mean 16.72) on the re-hand, against the 11.55 s `comp-find --corpus aws`
+comparator the order names. The first pass sat below that comparator; the re-hand sits above it. The two passes read
+DIFFERENT projections (`c3ba0330e306` @16:38:39Z vs `a78b6836265e` @18:11:48Z). **The worker proved the rebuild was
+not its own act** (engine-process count 0 before/during/after every run; its first ask already read the later
+vintage) and then **declared an exclusion rather than guessing**: it holds no measurement separating a slower client
+from a larger projection from a slower link, and did not run one because the order names no such act. That is the
+honest shape of the row and the CVO grades it as it stands.
+
+## A1.3 THE ARMED CENSUS IN s.5 IS STALE, BY THE ISSUER'S OWN ACTS
+
+Two rows have been DISARMED by ACK since the body was written: **S20** (ack `NFRA_CLDGRPH-S38` @`83fa8ee04e`) and
+**S28** (ack `NFRA_CLDGRPH-S39`). ⛔ **The channel is APPEND-ONLY, so a disarm CANNOT clear the armed row's own
+`hazard_standing` field** -- S20 and S28 still read `ARMED` in their own JSON and always will. **A census over that
+field therefore over-counts by the number of standing ACKs**: it returns 16 for this seat where the truth is 14, and
+42 estate-wide where the truth is 40. **The fix is a READING RULE, never an edit**: subtract the ACKs, which are
+identifiable by `disposition: DISMISSED_WITH_REASON` plus a `dismissal_reason` naming themselves as an ACK. Editing
+S20 or S28 would break the append-only rule the whole channel rests on. Carried to the CVO as msg
+`20260904T204152Z` in the tick that caused it.
+
+Still ARMED and still this seat's: **W1-S2** (the eight-address apply, DESIRED-then-APPLIED) and **W1-S10** (the
+false-zero instrument, repaired and exercised) both read as met-by-exercise and each is owed its own reading and its
+own ACK. **Twelve** of this seat's rows remain beyond those two.
+
+## A1.4 WHAT DID NOT CHANGE
+
+The five judgment criteria of s.3 stand exactly as handed, including D6-AC4 and its S37 caveat. No row is
+dispositioned by this addendum. The five orders still open (D-7, D-8, D-9, D-10, D-11) are unchanged and remain
+behind the 02:00Z 2026-09-05 derive.
