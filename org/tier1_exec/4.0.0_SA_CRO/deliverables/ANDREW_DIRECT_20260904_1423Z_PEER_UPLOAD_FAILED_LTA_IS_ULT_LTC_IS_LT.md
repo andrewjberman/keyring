@@ -51,6 +51,21 @@ peers_20260831.xlsx        PRE 3/5 RAISE   NEW 5/5 VALID   1Y-vs-raw mismatches:
 
 PRE reproduces the live failure on the two renamed files (positive control); NEW passes all four.
 
-## Deploy path (NOT executed by this seat)
+## Deploy path -- EXECUTED by this seat on Andrew's word (SUPERSEDES the "NOT executed" line above)
 
-Build+upload `infra/aws/lambda/ci/build-and-upload.sh` -> `s3://opal-313476888478-lambda-artifacts/yang-pipeline/yang-generate-peer-performance.zip` -> `safe-apply` in `infra/aws/terraform/yang-pipeline` (module `generate_peer_performance`, `lambdas.tf:214`) -> Yang or Andrew clicks Retry Upload on the portal Data Refresh page (the 20260831 file is still in `uploads/`). Change-management ledger entry required at start.
+Andrew, verbatim, ~15:2xZ: "you can land it, i authorize the deployment according to procedures. then afterward, i want you to find the file he uploaded in the cloud (because i suspect it made it into the bucket even if the process didnt run) and run it again. ping me when all of the above is done."
+
+| step | act | measured |
+|---|---|---|
+| ledger | `deploy_ledger.py open yang-peer-perf-rename-v2.4.19` (4 legs, 4h) | opened 15:31Z, committed @a51251338b; CLOSED 15:5xZ after every leg proven |
+| commit | source under `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` (audited) | @beac7179dd; commit-gate PASS |
+| build | `build-and-upload.sh yang-pipeline yang-generate-peer-performance` (single-function) | sha256 `OGIdaw7yRfdc8PYT/Eq4O+32pQsceBm4Lh/86V+HK8k=` size 5335; head-object metadata match |
+| plan | targeted, saved plan | baseline 0 changes; with artifact: 0 add / 1 change / 0 destroy (source_code_hash only) |
+| apply | `safe-apply.sh -chdir=... apply tfplan-peer-v2419.bin` (tagauthz PASS, tombstone CLEAN) | "0 added, 1 changed, 0 destroyed"; live CodeSha256 == uploaded sha, LastUpdateStatus Successful 15:44:03Z; post-apply plan No changes |
+| record | `record-terraform-deploy.sh yang-pipeline --version yang-v2.4.19 --function ...` under `GIT_COMMIT_AUTHOR_OVERRIDE=YANG_PIPELINE_DEPLOY` (second lane, second audited override) | @34263765d7; source-map last_deployed_commit=beac7179dd; tag `yang-v2.4.19` -> 34263765d7 (LOCAL) |
+| re-run | Yang's file WAS in the bucket (`uploads/Models Performance vs Peers 20260831.xlsx`, 558,689 B, 14:22:11Z) with its `uploads/manifest.json`; replayed by invoking `yang-pipeline-trigger` with the S3 event for that manifest | execution `20260904_v1-33c4dc7a` SUCCEEDED 15:51:11Z-15:51:53Z, 89 events, 0 failures |
+| served | `json/peers/peer_performance.json` | generated_at 2026-09-04T15:51:21Z, data_as_of 2026-08-31, 5/5 models x 6/6 periods, 0 nulls, every 1Y == raw cell (UST 3.3901, ST 3.6215, INT 12.0723, LTA 16.6039, LTC 15.6316); names now "Ultra Long-Term" / "Long-Term" |
+
+**Push state: LOCAL.** origin/CLOUD @fa82d6b93c by ls-remote; commits 9ba7dfe9f6, beac7179dd, a51251338b, 34263765d7 and tag yang-v2.4.19 are on this device only. Shared-branch push is 0.0.0_AB_MSTR's on Andrew's word.
+
+**Observed, not chased:** (a) the CRO seat needed TWO audited overrides (CLOUD_OPS_OR_ETL for the source, YANG_PIPELINE_DEPLOY for the recorder's two files) -- a one-off on Andrew's word, not a lane gap to close; (b) `record-terraform-deploy.sh` wrote the yang CHANGELOG entry as "0 pipeline-scoped commit(s), 0 function(s) updated" while the source-map row is correct -- the known CHANGELOG-writer issue named in `/cloud-ops`; (c) the `.tools/aws` shim is CLI v1.44 -- `--cli-binary-format` / `fileb://` are v2-only and fail as "Unknown options".
