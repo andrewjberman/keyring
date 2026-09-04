@@ -235,6 +235,32 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(
         prog="opal-ipblock",
         description="NFRA_OPSEC202609 C-11: the audited unblock path. Edits the ROW, never the IP set.",
+        # THE EPILOG IS THE POINT-OF-ACTION WARNING, per the 2026-09-04 ruling on
+        # row NFRA_OPSEC202609-Z-S125: the real hazard is not the PERMISSION, it is
+        # the SILENCE. An administrator CAN edit the set by hand, nothing stops
+        # them, and nothing tells them it was undone. Naming it where they act is
+        # the sanctioned guard -- a DETECTOR is not, and would be a monitor under
+        # the standing moratorium.
+        epilog=(
+            'IF YOU WERE ABOUT TO EDIT A WAF IP SET BY HAND: do not. Account\n'
+            'administration lets you, and it will appear to work. The DynamoDB table\n'
+            'opal-suspicious-addresses is the SOURCE OF TRUTH and the four IP sets are a\n'
+            'PROJECTION of it, so the reconciler recomputes them from the table -- within\n'
+            'about a minute off the stream, and again on a daily pass. Your hand edit is\n'
+            'not in that computation, so it is ERASED with no error, no alert and no\n'
+            'notice. The reverse too: un-block by hand and the reconciler re-blocks it.\n'
+            'That is the design working (C-2), and the erasure is invisible to the person\n'
+            'it happens to -- which is why this text is here. The act IS recorded in\n'
+            'CloudTrail; it is simply not prevented and not alarmed.\n'
+            '\n'
+            'USE:  opal-ipblock allow <address> --reason "<why>"\n'
+            'The IP set is UNCHANGED when this returns. That is expected, and it is the\n'
+            'proof this tool is not a second writer. The reconciler enacts it in ~1 min.\n'
+            '\n'
+            'Runbook: org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/\n'
+            '         0.7.0_AE_CloudOps~T/RUNBOOK_blocked_addresses.md\n'
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
