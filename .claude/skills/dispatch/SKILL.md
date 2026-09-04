@@ -99,14 +99,32 @@ The message carries the `fanout:` line. `<msgfile>` is written with the **Write 
 failing L2/L4, row and folder disagreeing, or `<issued_to>` naming a Tier-0/Tier-1 seat → refuse; override
 lands in `org/to-pipeline-override-audit.log`), and lane `TREE_COO`.
 
-⚠ **THE FLIP AND THE ROW LANE.** The spine (:410-412) says the row lane admits only the CTO to
-`project.json`, so the issuance carrying the flip is refused until the grantor widens it. **MEASURE
-BEFORE YOU OVERRIDE:** exercise `check_agent()` from `.tools/owned-paths-validate.py` on your serial and
-that path, with a seat that should REFUSE as the negative control. Measured 2026-09-04 at the function
-grain, `2.0.0_SA_COO` on a tree `project.json` returned PERMIT while `0.8.0_AE_CloudComp` returned REFUSE
-— so the refusal the spine predicts may not occur. **An override taken against a gate that would have
-passed writes an audit row asserting a refusal that never happened.** If it does refuse, the CTO flips
-the row in the same window; you do not self-grant.
+⚠ **THE FLIP AND THE ROW LANE — RESOLVED, and the way it was got wrong first is the lesson.** The spine
+(:410-412) says the row lane admits only the CTO to `project.json`, so an issuance carrying the flip is
+refused until the grantor widens it. **That grant LANDED at `7668568ed6` (LD-0534):** `TREE_PROJECT_ROW`
+now admits `2.0.0_SA_COO`, verified by the grantor on the pre-edit bytes (REFUSED, rc=1) against the
+committed bytes (PERMIT, rc=0). The flip should pass; you do not self-grant, and if it ever refuses the
+CTO flips the row in the same window.
+
+⛔ **THE TRAP THAT COST THIS CLAUSE A RETRACTION — READ HEAD WITH `git show`, NEVER THE PATH.** Before
+that grant landed, this seat exercised `check_agent()` against `.owned-paths.yaml` **by path**, got
+PERMIT, and reported it *"at HEAD"* — concluding the grant was unnecessary. It was reading the
+**WORKTREE**, which already carried the grantor's uncommitted edit. **The HEAD bytes refused.** The
+controls were fine and the negative control was real; the **VINTAGE was asserted and never measured**,
+which is Rule 22's GRAIN limb — discrimination passes cleanly inside a wrong grain, and every arm agrees
+about the wrong object. On a tree this dirty, an unlanded edit by another seat is the normal case.
+
+```bash
+# WRONG on a dirty tree -- reads whoever's uncommitted edit is sitting there
+python -c "...load_yaml('.owned-paths.yaml')..."
+# RIGHT -- the record, at a stated vintage
+git show HEAD:.owned-paths.yaml > "$tmp"   # then resolve against "$tmp"
+```
+
+**Still true and still worth doing: MEASURE BEFORE YOU OVERRIDE.** Exercise the checker on your serial
+and the path, with a seat that should REFUSE as the negative control, **on bytes you pulled with
+`git show`**. An override taken against a gate that would have passed writes an audit row asserting a
+refusal that never happened.
 
 ## Step 4 — Spawn: the spawn IS the GO
 
