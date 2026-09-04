@@ -3121,6 +3121,58 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  "spec_asserts": "Z-S110: opal-session-analytics' lambda-source-map entry is 'WRONG ON THREE AXES' -- source_dir EXTERNAL with 'No repo source' while source exists in the repo, runtime python3.11 while the live function is nodejs20.x, and files [] so a CI zip build would package NOTHING.",
  "world_is": "All three axes read exactly as Z-S110 states for that entry. Across the whole registry, two of those three axes are NORMAL rather than defective -- EXTERNAL-with-empty-files is a correctly-used idiom on 9 entries and is how the map represents a function with no repo source. What is anomalous, and unique in 204, is the LANGUAGE-level runtime mismatch. The entry is not one of many broken rows; it is the single worst row in an otherwise maintained registry.",
  "notes": "WHY THIS SHARPENS Z-S110 RATHER THAN QUALIFYING IT. A reader could take 'wrong on three axes' as evidence the registry is unreliable and discount it as one more stale record in a rotten file -- which would be the wrong inference and would weaken a correct finding. The census says the opposite: the file is maintained, 181 of 204 are clean, and this entry is a genuine outlier. THE PART THAT MATTERS FOR THE BUILD is narrower than three axes: EXTERNAL-plus-empty-files is the map's ORDINARY way of saying 'no repo source', shared with 8 other entries, so on its own it is a claim to re-examine rather than a defect. The LANGUAGE mismatch is the defect, it is unique, and it means a CI zip built from this entry could not load under the live runtime. THIS SEAT'S OWN NEAR-MISS, recorded because it is the same shape as the night's others: the first pass produced a fourth defect class of 12 entries that dissolved to ZERO on one refinement, because EXTERNAL and Image entries have empty file lists BY DESIGN. A census that does not subtract the legitimate cases manufactures findings, and the direction of that error -- overstating -- is the one that gets caught, which is precisely why it must be caught BEFORE filing and not after. NOTHING HERE IS ROUTED: Z-S110 stays BLOCKING/ARMED with 2.0.0_SA_COO~Z as its owner, and the 9 stale entries belong to whoever owns the map, not to this project."
-}
+},
+
+ {
+  "id": "NFRA_OPSEC202609-Z-S112",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~X (TO-OP-S-9-11 Phase-1 pre-write re-grounding, unscoped IAM re-read)",
+  "surfaced_at": "2026-09-04T00:35:00Z",
+  "one_line": "A THIRD live grant on table/opal-users exists outside this face's lane: trade-submission-lambda-role holds dynamodb GetItem/PutItem/UpdateItem/DeleteItem/Query/Scan on arn:aws:dynamodb:us-east-1:313476888478:table/opal-users AND table/opal-users/index/*, declared in a DIFFERENT terraform root (infra/aws/terraform/trade-pipeline/iam.tf:63-64), and that role is the execution role of SEVEN live lambdas -- so removing portal-auth/iam.tf:50-51 does NOT leave the table ungranted, and S9-AC3's 'BOTH GRANTS ARE GONE' is scoped to a denominator of 2 when the measured live denominator is 3 statements across 2 roles.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer) -- ONE decision: is trade-pipeline/iam.tf:63-64 inside this face or a separate cut? The worker does NOT assume either. If OUT of scope, S9-AC3 must be read as 'the two portal-auth grants are gone' and the row carries the residue; if IN scope, the face crosses into a second terraform root and a second lane's surface, which is an L6 question, not a worker's.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "APPLIED plane: comp-iam refresh-census, api iam:GetAccountAuthorizationDetails, account 313476888478, vintage 2026-09-04T00:26:29Z -- 221 roles / 1173 inline statements scanned. Exact matcher table/opal-users(?![-\\w]) -- i.e. excluding -v2/-master/-trade -- returns 2 roles: opalinvest-auth-lambda-role (source inline:opalinvest-auth-permissions) and trade-submission-lambda-role (sid DynamoDBAccess, source inline:trade-submission-policy).",
+    "POSITIVE CONTROL on the same census and matcher family: table/opal-users-v2 returns 4 roles (opal-ticket-api-role, opalinvest-auth-lambda-role, partners-lambda-role, trade-submission-lambda-role) -- the matcher fires, so the 2-role result is a measurement and not an empty regex.",
+    "DESIRED plane: comp-find 'opal-users($|[^-])' over infra/aws/lambda/trade_pipeline + infra/aws/lambda/v2_portal + infra/aws/terraform/trade-pipeline -- DENOMINATOR 2 hits across 302 files; BOTH hits are the grant itself at infra/aws/terraform/trade-pipeline/iam.tf:63 and :64. ZERO trade-pipeline CODE references the table, so the grant is vestigial-by-code, not load-bearing-by-code.",
+    "Seven lambdas carry this role per org/modules/graph/aws-shapes/g2-edge-census-cut1.yaml:179-185 via lambda.Role: trade-auth-handler, trade-authorizer, trade-dashboard-api, trade-identifier-cache, trade-parquet-batch-export, trade-submission-handler, trade-workflow-handler.",
+    "Vintage of the repo reads: @9814dd7f50"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OP-S-9-11 s.'OP-s-9' and deliverable 2: 'the auth-handler grant on it AND on a us-east-2 copy (iam.tf:50-51)'; S9-AC3: 'BOTH GRANTS ARE GONE ... iam.tf diff showing the table grant and the us-east-2 ARN both removed'. The face's model of the grant population is TWO ARNs on ONE role in ONE terraform root.",
+  "world_is": "THREE grant statements on the exact table ARN across TWO roles in TWO terraform roots. portal-auth/iam.tf:50-51 (opalinvest-auth-lambda-role, us-east-1 + us-east-2) and trade-pipeline/iam.tf:63-64 (trade-submission-lambda-role, us-east-1 base + /index/*). The third was invisible to the face because the face names a FILE and the census that finds it must be UNSCOPED over principals.",
+  "notes": "THIS IS THE SCOPED-CHECK SHAPE FROM CLAUDE.md RULE 22, AND IT IS WHY THE UNSCOPED RE-READ IS MANDATED. A check scoped to iam.tf:50-51 verifies those two lines perfectly and certifies the table ungranted, while a grant in a sibling root stays live -- every per-line arm passes and nothing fails. The shared thing the members have in common is THE TABLE ARN, and the census that had to be run on THAT, unscoped across all 221 roles, is the one that found it. NOT A DEFECT IN THE FACE'S REASONING: the issuer inherited the two-ARN model from the cell text, which inherited it from the 2026-06-26 remediation plan, whose Part B was explicitly scoped to portal-auth as the sole manager ('opal_users (v1) is declared ONLY in portal-auth/dynamodb.tf:151-165'). That statement is TRUE about the TABLE RESOURCE and was never a statement about GRANTS -- the grain slipped between 'who declares the table' and 'who is granted on the table' somewhere in the ten weeks between. NOTHING IS BLOCKED ON MY SIDE BY THIS: the portal-auth work proceeds; what is blocked is the WORDING of S9-AC3, which cannot be filed as PASS as written without either the third grant leaving too or the criterion being read against a stated denominator of 2-of-3."
+ },
+ {
+  "id": "NFRA_OPSEC202609-Z-S113",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~X (TO-OP-S-9-11 Phase-1 pre-write re-grounding)",
+  "surfaced_at": "2026-09-04T00:35:00Z",
+  "one_line": "The us-east-2 opal-users table DOES NOT EXIST -- us-east-2 holds ZERO DynamoDB tables in account 313476888478 -- which resolves a 'status UNKNOWN/deferred' carried since 2026-06-26 and FALSIFIES THE STATED PREMISE of the standing CTO condition-2 that forbade pruning iam.tf:51 ('pruning :51 would revoke the us-east-2 grant ... and would BREAK access if us-east-2 is live'). It is not live. There is nothing to break, so this face's requirement that :50 and :51 leave together does not collide with that condition -- but the condition is a STANDING written record that says the opposite of this task order, and a worker must not silently pick one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer) -- acknowledge in writing that CTO condition-2 of the 2026-06-26 remediation plan is DISCHARGED BY MEASUREMENT (its premise 'if us-east-2 is live' is false), so removing iam.tf:51 is authorised by THIS face rather than in conflict with the earlier one. Cheap: one line. Without it the estate holds two records giving opposite instructions on the same line of the same file.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "aws dynamodb describe-table --table-name opal-users --region us-east-2 -> ResourceNotFoundException (rc!=0).",
+    "POSITIVE CONTROL, and the discriminating one: aws dynamodb list-tables --region us-east-2 -> {\"TableNames\": []} on a SUCCESSFUL call (rc=0). The region endpoint answers and the credentials work, so the empty enumeration is a measurement of the region, strictly stronger than a per-name probe that throws. us-east-2 has zero DynamoDB tables at all.",
+    "NEGATIVE CONTROL: describe-table on opal-users-zzz-nosuchtable-9999 in us-east-1 returns the SAME ResourceNotFoundException shape, and describe-table on opal-users in us-east-1 returns a live table -- so the instrument distinguishes present from absent.",
+    "aws sts get-caller-identity -> account 313476888478, matching ${local.account_id} in the ARN at portal-auth/iam.tf:51 and the live us-east-1 table ARN arn:aws:dynamodb:us-east-1:313476888478:table/opal-users. Same account, so the grant and the absence are on the same plane.",
+    "The record being reconciled: org/critical_paths/change_management/20260626T1748Z_opal-users-dedup-v2_and_v1-retire_REMEDIATION_PLAN.md B.1 ('us-east-2 scoping: a same-named opal-users table is GRANTED in us-east-2 (iam.tf:51, status UNKNOWN/deferred)'), B.3.4 (CTO condition-2, leave :51 intact) and its Follow-up section, which asks for exactly this dead-vs-live determination.",
+    "Vintage of the repo reads: @9814dd7f50"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OP-S-9-11 deliverable 2 + S9-AC3: remove the auth-handler grant AND the us-east-2 ARN in the SAME change, 'the cell requires they leave together'. The face describes :51 as a grant 'on a us-east-2 copy', i.e. it presumes a copy exists.",
+  "world_is": "There is no us-east-2 copy and there never was one that survives today; the region holds no DynamoDB tables. iam.tf:51 is a grant pointing at a resource that does not exist. Removing it revokes access to nothing, which makes this face's requirement SAFER than written rather than riskier -- and simultaneously discharges the 2026-06-26 deferral that has kept the line alive for ten weeks.",
+  "notes": "TWO RECORDS, OPPOSITE INSTRUCTIONS, SAME LINE. The 2026-06-26 plan says LEAVE iam.tf:51; this task order says REMOVE it. Both are reasonable given what each knew: the June plan explicitly conditioned its instruction on 'if us-east-2 is live' and explicitly deferred the determination to a future window, naming it as a follow-up. THIS IS THAT WINDOW AND THIS IS THAT DETERMINATION. The reason it is a row and not a silent proceed is that a worker who just follows the newer document has resolved a conflict between a CTO condition and a COO task order by date order alone, which is not a worker's call to make even when the newer one happens to be right. The measurement, not the recency, is what settles it -- and the measurement is in this row so that the settling is auditable. WHAT THIS ROW DOES NOT CLAIM: it does not claim the us-east-2 table never existed, only that it does not exist at this vintage; CloudTrail management events could answer when it went away and were not consulted, because the retirement decision does not turn on it."
+ }
 ]
 ```
