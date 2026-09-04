@@ -7,7 +7,7 @@ authorizing records are named only in the changelog (section 6).
 
 **Vocabulary.** A **limb** is one of the ten numbered hops; "step" is an accepted synonym. A **seat** is an agent
 serial registered on the broker. A **worker** is a subagent of the COO that issued its task order: it has a serial for
-commits and telemetry and no seat, no inbox and no send tool. **Owner** means the only seat that performs the limb;
+commits and no telemetry, and no seat, no inbox and no send tool. **Owner** means the only seat that performs the limb;
 **not engaged** means no other seat reviews, grades, certifies, or acts on that limb's artifact while the limb is open.
 An **issuance** is the one commit that cuts a task order for every cell of a decomposition; a **round** is one drain of
 an issuance. A task order has a **worker face**, the part a worker is given and the whole of its context, and a
@@ -174,12 +174,13 @@ travels to the worker.
 - **Gate:** at commit, `.tools/git-hooks/to-proof-of-spec-check.sh` refuses a new task order without `<proof_of_spec>`
   or without `<decomp_ref>`; `.tools/to-pipeline-gate.py` refuses a new task order whose project row is absent, whose
   `dep_stage` or `fabric` is off its enum, whose preflight is incomplete, whose PRD fails L2 or L4's conditions above,
-  whose row and folder disagree, or whose `<issued_to>` names a Tier-0 or Tier-1 seat; an override is written to
-  `org/to-pipeline-override-audit.log`. Lane `TREE_COO` refuses any other author's issuance. The coverage of every
-  cell by the issuance, and the refusal of a compound criterion or of a mechanical criterion without its invocation
-  and expectation, bind by reading (section 4).
+  whose row and folder disagree, whose `<issued_to>` names a Tier-0 or Tier-1 seat, whose criteria are not one
+  clause each (a compound criterion, or a mechanical criterion without exactly one invocation and one expectation),
+  whose issuance leaves a cell of the decomposition unowned, or which is issued to a worker without a `<paths>`
+  block; an override is written to `org/to-pipeline-override-audit.log`. Lane `TREE_COO` refuses any other
+  author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
-  arm with the act that starts it (section 4 on the row lane).
+  arm with the act that starts it.
 
 ### L7 — Execution
 
@@ -190,9 +191,14 @@ travels to the worker.
   no broker tool, so it cannot register, send or receive; no subagent tool, so it cannot nest; no skill, gateway or
   browser tool. Its model is the cheaper one unless the task order's preflight marks the cell hard and the COO
   overrides per task order. It exports its serial in every shell call and commits under it through `safe-commit.sh`
-  with that serial as author; the serial reads as Tier-2 to every guard and is registered nowhere. It runs in its own
-  worktree on its own branch, so a crashed worker leaves nothing in the shared tree. A capability it lacks that a task
-  order needs is a surprise row, never a tool request.
+  with that serial as author; the serial reads as Tier-2 to every guard and is registered nowhere. Its write surface
+  is its task order: no lane enumerates a worker, and the lane resolver admits it to exactly the paths its order
+  names in `<paths>` while that order is non-terminal at HEAD, to `deliverables/<serial>/` by convention, and to
+  nothing else; a path it needs that the order does not name is a `BLOCKING` row, never an override. It runs in its
+  own worktree on its own branch, so a crashed worker leaves nothing in the shared tree; its first act is to read
+  that the worktree carries the tree the order names, and one that does not is a `BLOCKING` row and a stop, never a
+  reconstruction. Every invocation it runs is bounded, and a timeout is the recorded output. A capability it lacks
+  that a task order needs is a surprise row, never a tool request.
 - **Input:** the worker face of the task order. **Output:** the deliverables and the proof-of-spec instance at
   `org/missions/D<n>/<MACRO>/<CODE>/deliverables/<serial>/<TO>.proof_of_spec.json`, one acceptance row per criterion
   carrying the invocation the task order named and the output it produced, and for a judgment criterion the output
@@ -205,7 +211,9 @@ travels to the worker.
 - **Surprise:** when the worker had to do something the task order did not say, or could not do something it said,
   the worker appends one row to `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`
   (`org/surprise_channel/<CODE>/INVESTIGATION_v<N>.md` on a project without a tree home; site Z writes
-  `INVESTIGATION_v<N>.Z.md`) carrying `spec_asserts`, `world_is`, `class` (`OBSERVATION` or `BLOCKING`),
+  `INVESTIGATION_v<N>.Z.md`) with the id `<CODE>-W<n>-S<k>`, `n` the worker's slot and `k` the next unused number
+  within that coordinate, so two worktrees never allocate one sequence; carrying `spec_asserts`, `world_is`,
+  `class` (`OBSERVATION` or `BLOCKING`),
   `hazard_standing` (`ARMED` or `INERT`, with `disarm_owner` when armed), and keeps working on the next criterion or
   the next task order in its queue. The row is the carrier; a message is never the carrier. The worker judges the
   form of a surprise, never its significance: a premise that does not hold, a path that is not where the task order
@@ -213,21 +221,26 @@ travels to the worker.
   row is read by the COO in the worker's final report of that task order; an `ARMED` row is disarmed in the same turn
   by its named owner, and disarmed is not remediated.
 - **The drain.** When a task order is terminal the COO reads the worker's final report and the proof-of-spec instance,
-  merges the worker's branch into the working branch when the instance is valid, pull-merge never rebase, removes the
-  worktree and its branch explicitly, and hands the worker its next task order by continuing the same subagent with
+  merges the worker's branch into the working branch when the instance is valid, pull-merge never rebase, the row
+  gate run against the merged index and every id the branch mints censused across the project's documents before
+  the merge lands, removes the worktree and its branch explicitly, and hands the worker its next task order by continuing the same subagent with
   its context intact; no respawn, no cold start. At each merge the COO reads every row the branch carries: an `ARMED`
   row whose `disarm_owner` is dark is the COO's to re-seat, since the COO is the seat that spawns, and one it cannot
   seat rides the COO's drain-end read to the CTO. A worker with an empty queue ends. A worker that dies mid-task-order
   leaves a branch; the COO merges it if its instance is valid and otherwise discards it and re-dispatches the task
   order to a fresh slot.
 - **Gate:** `.tools/surprise-row-gate.py` at commit refuses a new investigation row without both halves, off its
-  enums, or off its project. `.tools/proof-of-spec-check.py` at completion refuses an instance that fails its schema,
-  whose cells and criteria do not align in both directions, whose artifact rows do not resolve at their pins, or whose
-  `surprises` entries do not each open with a row id present in the project's investigation file; the L6 gate refuses
-  a terminal `<status>` flip without a valid instance. Lanes admit the worker on `deliverables/<serial>/`,
-  `task-orders/` for its own status flip, `surprise-channel/investigations/`, and `cards/`. The worker's toolkit is the
-  worker agent type's frontmatter, and the checker's match of an output against its expectation is the checker's
-  limb; until each exists it binds by reading (section 4).
+  enums, off its project, whose id is off the grammar or already carried by another document of the plane, or off
+  its coordinate: a worker's row carries its own slot's `W<n>` and a seat's row carries none.
+  `.tools/proof-of-spec-check.py` at completion refuses an instance that fails its schema, whose cells and criteria
+  do not align in both directions, whose artifact rows do not resolve at their pins, whose `surprises` entries do
+  not each open with a row id present in the project's investigation file, whose recorded output does not match
+  the criterion's expectation, or which carries a verdict on a judgment criterion; the L6 gate refuses a terminal
+  `<status>` flip without a valid instance. The lane resolver admits the worker to its order's `<paths>` and to
+  `deliverables/<serial>/`; `task-orders/` admits every seat for the status flip; the override-audit log is one
+  file at the main worktree root, written from every worktree. The worker's toolkit is the worker agent type's
+  frontmatter. A worker writes no telemetry: the compiled step log reads L7 from its commits under its serial, its
+  proof-of-spec instance and its final report.
 - **Handoff:** the investigation rows, to L8; the merged branch, to HEAD.
 
 ### L8 — Compilation
@@ -249,10 +262,9 @@ travels to the worker.
   watermark once against the channel's row count; if the watermark is behind, the COO tells the CTO, not the CVO, and
   the CTO re-arms the watcher. That drain-end read is the COO's one message of a round: the watermark, and any armed
   row whose disarm owner the COO could not seat. One read, no monitor, no cron.
-- **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any Tier-2
-  serial while a tree project reads `dep_stage: EXECUTING`; the whole send is refused and nothing is written. The
-  watcher notifies and never blocks. The CVO's single admitted send of a round, the slug to the CTO, binds by reading
-  until the guard is narrowed to it (section 4).
+- **Gate:** `org/mcp/cvo_send_guard.py`, on the broker's send path, refuses a message from the CVO to any recipient
+  but the CTO, at every stage; the whole send is refused and nothing is written. The watcher notifies and never
+  blocks.
 - **Handoff:** every row to L9.
 
 ### L9 — Adjudication
@@ -275,11 +287,10 @@ travels to the worker.
   the round by its owner carries `REMEDIATED` and, if it was armed, `DISARMED`, and re-enters nowhere.
 - **Tool:** the surprise-channel protocol and its row schemas at `org/surprise_channel/schemas/`.
 - **Gate:** `.tools/surprise-row-gate.py` refuses a new remediation row without its required fields, off its enums,
-  or a graduated row without grounded evidence. Lane `TREE_CVO` admits only the CVO to `remediations/` and to
-  `adjudications/`. The gate's route limb, which refuses an open remediation row that carries no route, and its
-  census, which reads the investigation document alone, each contradict this text and are retired or extended as a
-  build act; until then a slug lands only by the gate's audited override and the CVO's rows sit in the investigation
-  document (section 4).
+  or a graduated row without grounded evidence, and a new row in the adjudication document off the CVO's coordinate
+  `<CODE>-C-S<k>`. Lane `TREE_CVO` admits only the CVO to `remediations/` and to `adjudications/`. The census counts
+  the investigation document's rows as the items and reads the adjudication document for their dispositions; an
+  adjudication that names an id two investigation documents carry lands on no item and is refused.
 - **Handoff:** the remediation rows, to L10.
 
 ### L10 — The slug, the CTO's read, the recut, the close
@@ -323,7 +334,8 @@ travels to the worker.
 - **Tool:** the remediation document; `.tools/prd-header-notify.py` delivers an addendum's bumped header to the COO and
   re-offers until READ; the round-N analysis travels by one message from the CTO to the COO.
 - **Gate:** `.tools/surprise-row-gate.py` refuses a remediation row while any task order under the project is not
-  terminal or any investigation item under it is not dispositioned. An existing item is dispositioned by a new
+  terminal or any investigation item under it is not dispositioned; the items are the investigation document's rows,
+  and the CVO's own rows never count against the CVO's slug. An existing item is dispositioned by a new
   adjudication row that names it in `adjudicates`; the channel stays append-only. `.tools/missions-tree-index.py check`
   refuses a `CLOSED` row unless the completion report and the grades exist for the same round, cover exactly the
   header's outcomes, and every grade reads `REALIZED`.
@@ -361,7 +373,7 @@ measured property of every done test, read by `ls-remote`, never a cell of a dec
 | L1 | `4.0.0_SA_CRO` | none (the brief's shape is refused at L6) | binds by reading |
 | L2–L4 | `1.0.0_SA_CTO` | lane `ANY_CTO` on `prd/`; lane `TREE_PROJECT_ROW` on the row | binds by reading |
 | L5–L6, the drain | `2.0.0_SA_COO` | lane `TREE_COO` on `decompositions/`, and on `task-orders/` for issuance | binds by reading; the COO's one message of a round is the drain-end read to the CTO |
-| L7 | worker subagents of the COO | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>`; the worker agent type has no send tool | not applicable: a worker cannot be messaged and cannot message |
+| L7 | worker subagents of the COO | the L6 gate refuses a Tier-0 or Tier-1 `<issued_to>` and a worker order without `<paths>`; the lane resolver admits a worker to its order's `<paths>` only; the worker agent type has no send tool | not applicable: a worker cannot be messaged and cannot message |
 | L8–L9, the slug | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/` and `adjudications/`; `investigations/` and `cards/` admit every seat | the CVO's one message of a round is the slug to the CTO |
 | L10 read, close | `1.0.0_SA_CTO` | lane `TREE_LEDGER` on `ledger/`; lane `ANY_CTO` on `prd/` | the CTO's one message of a round is the round-N analysis to the COO |
 | integrator | `0.0.0_AB_MSTR` | the pre-push deploy gate on deploy scope | binds by reading |
@@ -380,15 +392,15 @@ measured channel backlog says otherwise.
 | L3 register | `1.0.0_SA_CTO` | `REGISTERED` | `missions-tree-check.sh` | — | — |
 | L4 PRD | `1.0.0_SA_CTO` | `PRD` | lane `ANY_CTO` | — | `prd-header-notify.py` to the COO |
 | L5 decomposition | `2.0.0_SA_COO` | `DECOMP` | lane `TREE_COO` | — | — |
-| L6 issuance | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py`, lane `TREE_COO` | — | — |
-| L7 execution | a worker subagent | `EXECUTING` | `surprise-row-gate.py` (rows) | `proof-of-spec-check.py`; the terminal-flip limb of `to-pipeline-gate.py` | — |
-| L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` | — | `surprise-watch.sh` to the CVO |
-| L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows), lane `TREE_CVO` | — | — |
-| L10 slug, read, recut, close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` reads and routes; `2.0.0_SA_COO` recuts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (precondition); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py` (an addendum's header) to the COO |
+| L6 issuance | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py` (coverage, criterion grammar, the worker's `<paths>`), lane `TREE_COO` | — | — |
+| L7 execution | a worker subagent | `EXECUTING` | `surprise-row-gate.py` (rows: halves, uniqueness, coordinate); `owned-paths-validate.py` (the order's `<paths>`) | `proof-of-spec-check.py` (the expectation match); the terminal-flip limb of `to-pipeline-gate.py` | — |
+| L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` (the CVO to the CTO only) | — | `surprise-watch.sh` to the CVO |
+| L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows; the `C-` coordinate), lane `TREE_CVO` | — | — |
+| L10 slug, read, recut, close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` reads and routes; `2.0.0_SA_COO` recuts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (the precondition over worker rows); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py` (an addendum's header) to the COO |
 
 Every notification and every acknowledgement is read on the broker's delivery ledger: sent, emitted and read are
-three states, and only an agent's own acknowledgement is read. A worker is on no ledger; its completion is its
-proof-of-spec instance at HEAD.
+three states, and only an agent's own acknowledgement is read. A worker is on no ledger and in no telemetry stream;
+its completion is its proof-of-spec instance at HEAD and its acts are its commits.
 
 ---
 
@@ -400,31 +412,18 @@ the worker's; the CVO's engagement beginning at L8; the grounding bar at L9; the
 precondition; role exclusivity against engagement by message at every limb; the integrator-only push. Everything
 else in section 3 refuses.
 
-Eight clauses of this text name a carrier that is not yet built or that a live mechanism contradicts. Each is a build
-act named in the authorizing record of the version that introduced it; until it lands the clause binds by reading,
-and where a live gate contradicts it the gate's own audited override is the only lawful way through, written into the
+The eight carriers the third version named are built, checked out and refuse; section 3 names each. Two clauses
+still name a carrier that is procedure rather than a refuser, and bind by reading until the refuser exists; where a
+live gate contradicts this text the gate's own audited override is the only lawful way through, written into the
 commit that uses it.
 
-- **The issuance covers every cell.** The L6 gate's coverage limb, one set comparison of the union of `<owned_cells>`
-  across the staged task orders against the decomposition's cell set, does not exist; the coverage binds by reading.
-- **The COO flips `EXECUTING` in the issuance commit.** The row lane admits only the CTO to `project.json`; until the
-  registry grantor widens that lane to the COO for this act, the issuance commit that carries the flip is refused, and
-  the CTO flips the row in the same window.
-- **The worker's toolkit.** The worker agent type at `.claude/agents/worker.md` fixes the toolkit and the model; until
-  its first exercised spawn commits under a worker serial through the lane gates, its silence binds by reading.
-- **One clause per criterion.** The proof-of-spec instance carries a criterion's invocation, output and denominator
-  and no expectation pattern or judgment flag; the checker grades no criterion's truth. The expectation match at the
-  checker, the judgment flag on the criterion, and the L6 refusal of a compound criterion or of a mechanical criterion
-  without its invocation and expectation are build acts; until they land, a worker's pass is self-graded as before and
-  the CVO's L9 read of the instance against the specification is the only grade.
-- **The adjudication document.** The tree contract has no `adjudications/` folder, the row gate's census reads the
-  investigation document alone, and `adjudicates` resolves within one document; until the folder, the census and the
-  cross-document resolution land, the CVO's rows sit in the investigation document as before.
-- **A remediation row carries no route.** The row gate's route limb refuses an open remediation row without one; a
-  slug lands through the gate's audited override until the limb is retired.
-- **The CVO's single send.** The send guard admits the CVO to the COO at every stage; the CVO's silence toward the COO
-  during a round binds by reading until the guard is narrowed to the slug.
-- **The fail-closed sentinels.** The pre-commit sentinels match the flat channel and task-order paths, not the tree's.
+- **The drain grades the union.** The COO runs the row gate against the merged index and censuses every id the
+  branch mints before the merge lands, because a merge is not a commit and no pre-commit gate sees it; a collision
+  found before the merge is a re-mint and after it is permanent. The refuser on the merge itself is a build act at
+  the COO.
+- **The step log reads L7 from git.** A worker's acts leave no telemetry row; the compiled step log that grades an
+  amendment (section 5) reads a worker's limb from its commits under its serial, its proof-of-spec instance and its
+  final report. Until the compiler reads git, a worker's share of acts outside the limbs binds by reading.
 
 ---
 
@@ -456,3 +455,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 2.6 | 2026-09-03 | `.tools/surprise-row-gate.py` (the gate-model fork between the two fabrics' CTOs, ruled at the base) | a graduated row whose remedy was executed inside the round (`REMEDIATED`, and `DISARMED` if armed) carries no route and re-enters nowhere; every other route-less remediation row is refused |
 | 3.0 | 2026-09-03 | implementation spec `org/tier1_exec/4.0.0_SA_CRO/deliverables/SPEC_CANONICAL_FLOW_V3_SUBAGENT_WORKERS_ONE_SHOT_DISPATCH_20260903.md` @29bf9265ea (sections 3 to 9, on Andrew's word at the CRO terminal) and its section 13 @9dc97d860d (six levers read from one thread of NFRA_COMPEFFICACY's round 1-6 artifacts, on Andrew's question at the CRO terminal); Andrew's word at the CTO terminal, recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_200xZ_CANONICAL_FLOW_V3_RESTRUCTURE_SPINE_SKILL_CLAUDEMD_SINGLEHANDED.md`; Andrew's word at the MSTR terminal on the outage remediation (LD-0532, `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260903_200xZ_OUTAGE_REMEDIATION_CTO_CANONICAL_FLOW_COO_CVO_CLEANUP_RUN.md` @c44bd68273); the problems brief `docs/briefs/canonical-flow-l6-l10-mechanism-gaps-20260903.md` @6a1d845ecb that the spec answers | L6 is one issuance covering every cell, fan-out derived from the decomposition's chains and stated as data in the issuance commit with a default cap of eight; a task order has a worker face and a record face and only the worker face travels; one clause per criterion, a mechanical criterion carrying its invocation and expectation, a judgment criterion flagged and graded only by the CVO, a compound criterion refused; the decomposition frozen at the cut; workers are subagents of the COO, serial `0.9.0_WK_<CODE>~<n>`, a minimal toolkit with no send tool, one worktree each, a cursory verification bar, a queue drained by continuation; the spawn is the GO and no broker message carries it; three tracks share files and never messages, the CVO's one send is the slug to the CTO, the CTO's one send is the round-N analysis to the COO; the surprise channel split by writer into investigations, adjudications and remediations so L8 reads and L10 counts worker rows only; the three route tokens are retired and the CTO is the single router, answering the slug with a PRD addendum for an outcome no cell served or a round-N analysis the COO recuts in one issuance; the stall read by watermark at drain-end; the midstream restart as three reads, four for a round issued to seats, with a dead seat's unfinished edits finished or discarded by the COO under the CVO's validation; the close unchanged; eight clauses named in section 4 as binding by reading until their carriers land, four of them contradicted by a live gate or lane; the transition rule that an open round finishes under its cut task orders; an amendment of the round's mechanics graded on the compiled step log's share of acts outside the limbs |
 | 3.1 | 2026-09-03 | `3.0.0_SA_CVO`'s constitutional review of the annex at v3.0 (message 93939), which accepted the annex and upheld the adjudication document, and raised two findings for the scribe; the worker agent type landed at `.claude/agents/worker.md` | an `ARMED` row whose disarm owner is dark has a carrier: the COO reads every row a branch carries at the merge, re-seats a dark owner as the seat that spawns, and carries one it cannot seat in its drain-end read; the drain-end read is named as the COO's one message of a round, the watermark and any owner it could not seat, so section 2 and L8 agree; the worker-toolkit clause of section 4 now names its carrier and binds by reading only until the first exercised spawn |
+| 3.2 | 2026-09-04 | Andrew's word at the CRO terminal on the eight carriers (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/` @9f60e36398, message 93970) and their builds: the L6 coverage limb, criterion grammar, the checker's expectation match and judgment refusal, the row gate's route retirement and adjudication census @b4299fa5aa; the send guard @85bb815ad0; the sentinels @01b41e4f0b; the row lane and the `adjudications/` lane @7668568ed6 (LD-0534); the worker agent type @4df363de8f, @324fa75544, @d57b4c2523; the rollup @747da480bc; the adjudication document exercised @b50a124783; v3's first drain and its five gaps (`3.0.0_SA_CVO` 94007, 94010; `4.0.0_SA_CRO` 94014): the uniqueness limb and the item census @72d05b2642, the drain's union gate as procedure @e6351512fe; Andrew's word at the CTO terminal, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260904_0458Z_RECS_APPROVED_WORKER_LANE_IS_THE_TASK_ORDER_AND_ROW_ID_ALLOCATOR_COORDINATE.md` @9ef9a40aae (the same word at the CVO's @92af61a111 and the COO's @febe803b27): the task order as the worker's grant (`worker_grant` stanza @e08447ff7d, LD-0534 Amendment 1; the resolver's fifth clause and the L6 `<paths>` refusal @6efb43b9d0; `/dispatch` @788e3a7888, @febe803b27) and the allocator coordinate (annex v3.2/v3.3 and the schema half @4d65d9b496, @e3e999c139; the gate half @6efb43b9d0); the one audit log @6bfaa233ed; `4.0.0_SA_CRO`'s check-outs of all eight (94025, 94074) | every carrier of section 4 at v3.0 is built and refuses, and section 3 names each; a worker's write surface is exactly its order's `<paths>` while the order is non-terminal at HEAD, no lane enumerates a worker, and an order issued to a worker without `<paths>` is refused at the cut; a worker's first act is the worktree premise and every invocation is bounded; the row id carries an allocator coordinate, `W<n>` for a worker's slot and `C-` for the CVO's adjudication rows, uniqueness by full id across the plane's documents, and an adjudication that lands on no single item refused; the census counts worker rows as the items and never the CVO's; the CVO's send guard admits the CTO alone at every stage; the override-audit log is one file at the main worktree root; a worker writes no telemetry and the step log reads L7 from git; section 4 now holds two clauses, the drain's gate on the merged index and the step log's L7 read |

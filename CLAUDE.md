@@ -29,10 +29,12 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
     analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
     the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below). Gate:
-    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.0
+    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
     — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
-    ⚠ EIGHT v3 clauses BIND BY READING until their carriers land (spine §4) — four are contradicted by a
-    live gate or lane TODAY, and the only lawful way through is that gate's audited override.
+    A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
+    `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
+    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3); what still binds by reading is spine §4 — the
+    drain's gate on the merged index and the step log's L7 read.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
