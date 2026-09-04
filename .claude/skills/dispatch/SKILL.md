@@ -185,6 +185,19 @@ in the worker face and the task order is defective.
 
 Model: the cheaper one, unless the preflight marks the cell hard and you override **per task order**.
 
+⛔ **BEFORE YOU SPAWN, CHECK THE WORKER'S LANE AGAINST THE TASK ORDER'S `<paths>` — ALL OF THEM, NOT
+JUST THE TWO THE SPINE NAMES.** A worker is admitted to `deliverables/<serial>/` **by path** (no grant
+needed) and to `task-orders/` for its own flip. **Every other surface the order names needs a real
+lane, and `.owned-paths.yaml` enumerates NO `0.9.0_WK_*` serial anywhere** (`comp-find '0.9.0_WK'` over
+it → 0 hits). Measured on v3's first drain: the worker's two code surfaces were both REFUSED in block
+mode and it committed through `GIT_COMMIT_AUTHOR_OVERRIDE`, one lane per commit. That is the documented
+audited escape and it is SINGULAR, but it means the acceptance test "admitted by owned-paths-check"
+**did not pass as exercised — the override did.**
+
+> **The error to avoid is the one this skill's author made:** checking the two paths the SPINE names and
+> concluding the worker "has no lane blocker". Those two are grant-free by construction, so testing them
+> proves nothing about the order's actual write surface. **Census the `<paths>` block, not the doctrine.**
+
 ## Step 5 — The drain, per terminal task order
 
 When a task order goes terminal:
@@ -199,6 +212,37 @@ When a task order goes terminal:
    instrument the estate has. Do not reach for one to check progress, and do not read a worker's silence
    as a stall. The report and the instance are the whole oracle, exactly as the spine says.
 2. **Merge only when the instance is VALID.** `pull-merge, NEVER rebase` (NEVER#3 — `CLOUD` is shared).
+
+   ⛔ **BEFORE THE MERGE COMMIT LANDS, RUN THE ROW GATE AGAINST THE *MERGED* INDEX — AND CHECK EVERY
+   ROW ID THE BRANCH MINTS AGAINST EVERY CHANNEL DOCUMENT OF THE PROJECT, NOT JUST `investigations/`.**
+   A validated instance does NOT imply a mergeable branch.
+
+   > **The mechanism, because it is not obvious and it bit on v3's first drain.** The row gate allocates
+   > against *the index it grades*. A worker's worktree branched before the main index moved, so the id
+   > it minted was genuinely next **there**. Two indexes, two allocators, one sequence. The merge then
+   > lands the branch **without any gate seeing the union** — a merge commit is made by `git merge`, not
+   > through `safe-commit.sh`, so no hook runs on the merged state. Verified at source: `.tools/`
+   > `surprise-row-gate.py` has **no cross-document uniqueness limb at all** (an `--enumerate` for
+   > `duplicate|uniqueness|already exists|collision` over 1,026 lines returns **one COMMENT hit and zero
+   > CODE**), so nothing refuses a new row whose id already exists in a sibling document.
+   >
+   > **MEASURED, v3's first drain (this skill's own author, 2026-09-04):** worker
+   > `0.9.0_WK_NFRA_COMPEFFICACY~2` minted `NFRA_COMPEFFICACY-S34` in `investigations/` while the CVO had
+   > already minted `S34` in `adjudications/` two hours earlier. Both are at HEAD. **The harm is silent
+   > and it runs the wrong way:** the rollup resolves `S34` to whichever document it reads last and
+   > reported the worker's still-open observation as `DISMISSED_WITH_REASON` — **a row closed by a
+   > decision nobody made.** Append-only binds both rows, so there is no renumbering afterwards. This is
+   > the cross-fabric two-certifiers-one-sequence class reappearing INSIDE one fabric, because v3 gave
+   > every worker its own index.
+
+   **So, in order:** read the branch's rows → census each minted id across **every** document under
+   `surprise-channel/` at the merged index → only then merge. A collision found before the merge is a
+   re-mint on the branch; found after, it is permanent.
+
+   ⚠ **The worker's `GIT_COMMIT_AUTHOR_OVERRIDE` audit lines do NOT reach the main tree.** They are
+   written to the *worktree's* copy of `org/git-author-override-audit.log`, and a merge carries tracked
+   files, not a device-local log. If the worker overrode a lane, **capture those lines at the drain** or
+   the override has no audit trail where anyone will look for it.
 3. **Remove the worktree and its branch EXPLICITLY.** Not left for later.
 4. **Read every row the branch carries.** An `ARMED` row whose `disarm_owner` is dark is **yours to
    re-seat, because you are the seat that spawns.** One you cannot seat rides the drain-end read.
