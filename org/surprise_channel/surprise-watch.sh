@@ -73,11 +73,12 @@ for _old in "$_OLD_STATE_DIR/${SERIAL}".*; do
 done
 
 # The id pattern is the SCHEMA's own (investigation_item.schema.json "id"):
-#   ^[A-Z0-9_]+-(Z-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z.
+#   ^[A-Z0-9_]+-(Z-)?(W[0-9]+-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z,
+#                                              {PROJECT}-W{n}-S{k} a worker worktree's row (the allocator coordinate).
 # Anchoring the count to it is what makes this a ROW count and not a `"id"` substring count --
 # evidence strings in these files routinely contain quoted fragments, and a naive grep for '"id"'
 # scores them. Counting is a MEASUREMENT (Rule 21 non-application limb i), not a search.
-ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?S[0-9]+"'
+ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?(W[0-9]+-)?S[0-9]+"'
 
 # ---------------------------------------------------------------------------------------------
 # ID/HASH WATERMARK -- RC2, the watcher half (CVO~A re-grade @0dbf12ebb3).

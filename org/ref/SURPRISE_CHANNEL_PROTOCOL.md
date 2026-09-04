@@ -15,7 +15,8 @@ mismatch met during on-spec execution: the worker had to do something the task o
 something it said. **Surfacing** is appending the row. **Compiling** and **adjudicating** are the CVO's two limbs over
 the rows; the **slug** is the CVO's one artifact of a round, the remediation document, issued to the CTO. An **open**
 item is a row whose newest citing row is not terminal. A **grade** is the CVO's verdict on one judgment criterion of one
-proof-of-spec instance, carried in a row's `grades` field.
+proof-of-spec instance, carried in a row's `grades` field. An **allocator** is the index a row's id was minted against:
+the main index, site Z's, or a worker worktree's.
 
 ---
 
@@ -117,7 +118,7 @@ read surprises and nothing else.
 
 | field | content |
 |---|---|
-| `id` | `<CODE>-S<n>` on the laptop fabric; `<CODE>-Z-S<n>` on site Z. Stable; cited by later rows and by remediation rows. An id is minted at commit: the row gate is the allocator, and until the commit that carries it lands the id is provisional and is not cited; a citation of a row carries the row's vintage as `<id>@<commit>`, so a provisional id has no citable form. |
+| `id` | `<CODE>-S<n>` for a seat's row on the laptop fabric; `<CODE>-Z-S<n>` on site Z; `<CODE>-W<n>-S<k>` for a row minted in worker `<n>`'s worktree (`<CODE>-Z-W<n>-S<k>` on site Z; the coordinates nest fabric-then-allocator). The coordinates name the ALLOCATOR: two certifiers on two machines and two worktrees on one machine never share a sequence. `<k>` restarts at 1 per coordinate; a seat's row carries no `W`; the gate requires `W<n>` to equal the committing worker's suffix. Stable; cited by later rows and by remediation rows. An id is minted at commit: the row gate is the allocator, and until the commit that carries it lands the id is provisional and is not cited; a citation of a row carries the row's vintage as `<id>@<commit>`, so a provisional id has no citable form. Within a coordinate an id is one row across every document of its plane; the gate refuses a second. |
 | `project`, `fabric` | the project code and fabric, each equal to what the id and the path declare; the gate compares them. |
 | `surfaced_by`, `surfaced_at` | seat or worker serial; UTC. |
 | `one_line` | the surprise as surfaced. |
@@ -137,7 +138,9 @@ one fenced block, the same schema as the investigation document. The lane admits
 
 **Who writes.** The CVO, and only the CVO: every disposition, every scoped correction, every closure row, every
 observation it makes at L8 or L9, and the grade of every judgment criterion. A worker or seat that wishes to contest
-an adjudication surfaces a new investigation row citing it; it never writes here.
+an adjudication surfaces a new investigation row citing it; it never writes here. The census counts the investigation
+document's rows as the items and reads this document's rows for their dispositions and grades; a row here is never an
+item, so a row of the CVO's cannot hold the CVO's own slug.
 
 **Disposition axis.** One intent: what the row's end at this limb is. `UNDER_INVESTIGATION` is the only active state;
 the three terminals partition every row's end: valid and grounded graduates and seeds a remediation row; not valid or
@@ -149,7 +152,8 @@ call on reading the CTO's round-N analysis. The three terminals take three diffe
 **Setting a disposition.** An investigation row is appended with `UNDER_INVESTIGATION`. The CVO's adjudication is a
 new row in this document carrying `adjudicates` with the investigation row's id, the terminal disposition and its
 reason or evidence; the investigation row is unchanged. A reader resolves an item's state from the newest row that
-cites it, across the two documents.
+cites it, across the two documents. An `adjudicates` that names an id two investigation documents carry lands on no
+single item and is refused as ambiguous, never applied.
 
 **Grading a judgment criterion.** A criterion the task order could not reduce to an invocation and an expectation is
 graded by the CVO alone, in the `grades` field of a row of its own: one entry per criterion carrying the criterion id as
@@ -159,9 +163,9 @@ grade never converts an instrument's limit into a pass or a fail. A grade lives 
 verdict in prose is a summary no consumer can reject on.
 
 **A row that opens nothing.** A row of the CVO's that adjudicates no item and opens no item -- a grade record, an
-observation -- carries `DISMISSED_WITH_REASON` with a reason naming it a record, so that the census reads it closed.
-The disposition enum has no record value and this version proposes none; a proposal arrives with its four-postulate
-record and token census or it is not a proposal.
+observation, a disarm's citing successor -- carries `DISMISSED_WITH_REASON` with a reason naming it a record, so that
+the census reads it closed. The disposition enum has no record value and this version proposes none; a proposal
+arrives with its four-postulate record and token census or it is not a proposal.
 
 ---
 
@@ -176,12 +180,12 @@ one message carrying the document's path and vintage. Its rows reach `2.0.0_SA_C
 analysis, which travels with this document; they are inputs to the COO's next issuance and are not task orders.
 
 **Row fields** (`org/surprise_channel/schemas/remediation_row.schema.json` is normative): `id` equal to the graduated
-investigation row's id; `project`, `fabric`; `class`, `hazard_standing`; `mechanism` (the grounded attribution, carried
-verbatim); `evidence`; `remedy`; `owner` (the lane that builds); `round`; `remediation` `{state: OPEN or REMEDIATED,
-owner, round}`; for `ARMED` rows also `disarm` `{state: ARMED or DISARMED, owner, at}`; and `closed`. A remediation row
-carries no route and no loop target: the slug has one reader, the CTO, and the recut has one owner, the COO. The
-schema's route fields remain only until the gate's route limb is retired (section 9); a schema that forbids a field the
-gate demands refuses every slug.
+investigation row's id, in the same grammar; `project`, `fabric`; `class`, `hazard_standing`; `mechanism` (the grounded
+attribution, carried verbatim); `evidence`; `remedy`; `owner` (the lane that builds); `round`; `remediation` `{state:
+OPEN or REMEDIATED, owner, round}`; for `ARMED` rows also `disarm` `{state: ARMED or DISARMED, owner, at}`; and `closed`.
+A remediation row carries no route and no loop target: the slug has one reader, the CTO, and the recut has one owner,
+the COO. The schema's route fields remain only until the last round issued under the prior text has landed its slug;
+a schema that forbids a field a live round's slug carries refuses that slug.
 
 **Disarmed is not remediated.** Two states, two owners, two clocks. Disarm is urgent and off-cadence; remediation
 rides the round. An `ARMED` row is `closed` only when both states have landed; an `INERT` row when `REMEDIATED`. A
@@ -250,24 +254,30 @@ reading of the next round's rows are separate acts.
 
 **Gates.** `.tools/surprise-row-gate.py` at commit, reading staged bytes against HEAD, refuses on either root: a new
 investigation row without `spec_asserts` and `world_is`, without `project` and `fabric` agreeing with its id and its
-path, or off its schema; any pre-existing row changed in place; a new remediation row without its required fields, or
-a graduated row without grounded evidence; and a remediation row, or an adjudication row carrying `DECOMP_INVALIDATING`,
-while any task order under the project is not terminal or any investigation item under it is not dispositioned. It
-fails closed on an unreadable blob or an unparseable block, and it reads the schema from the staged index, never the
-worktree, so a schema and the rows that need it land in one commit. `.tools/proof-of-spec-check.py` refuses a worker's
+path, or off its schema; a new row whose id exists in any other document of its plane under the project at the graded
+index (the investigation plane is the investigation and adjudication documents; the remediation plane is its own;
+across planes ids coincide by design); any pre-existing row changed in place; a new remediation row without its
+required fields, or a graduated row without grounded evidence; and a remediation row, or an adjudication row carrying
+`DECOMP_INVALIDATING`, while any task order under the project is not terminal or any investigation item under it is not
+dispositioned. It fails closed on an unreadable blob or an unparseable block, and it reads the schema from the staged
+index, never the worktree, so a schema and the rows that need it land in one commit. A collision already at HEAD is
+reported by the census, never re-graded and never renumbered. `.tools/proof-of-spec-check.py` refuses a worker's
 proof-of-spec instance whose `surprises` entries do not each open with a row id present in the project's investigation
 file, so a task order cannot complete on a surprise that has no row.
 
-**Carriers named and not yet built.** Three limbs contradict this annex today and are retired or extended as build
-acts; until each lands the clause binds by reading and the gate's audited override, written into the commit that uses
-it, is the only lawful way through. The gate's route limb still refuses an open remediation row that carries no route
-and admits only the locked map of the retired tokens. The gate's census reads the investigation document alone and
-does not yet know the adjudication document, and the tree contract has no `adjudications/` folder; until the contract,
-the tree check, the lane and the cross-document resolution of `adjudicates` land, the CVO's rows sit in the
-investigation document as before. `org/mcp/cvo_send_guard.py` admits the CVO to the COO at every stage; the CVO's
-silence toward the COO during a round binds by reading until the guard is narrowed to the slug. The `grades` field is
-built: the investigation schema carries it and refuses a verdict off its enum, a grade without its reason, or an
-instance without its commit.
+**What the uniqueness limb cannot see, and what covers it.** The limb refuses what the graded index carries; a worker
+worktree's index does not carry the main index's allocations, so two indexes can still each mint the next id of ONE
+sequence. Two carriers close that: the drain runs the row gate against the merged index and censuses every id the
+branch mints across every document of the plane before the merge commit lands (the COO's step); and the allocator
+coordinate in the id grammar (section 4) gives each worktree its own sequence, so no merge can collide two of them.
+
+**Carriers named and not yet built.** Until each lands the clause binds by reading and the gate's audited override,
+written into the commit that uses it, is the only lawful way through. The gate's requirement that a worker's row carry
+`W<n>` equal to the committing worker's suffix and that a seat's row carry none, and the checker's and the corpus
+validator's acceptance of the coordinate, are the coordinate's gate half; until they land no `W` row is admitted and
+the grammar binds by reading. `org/mcp/cvo_send_guard.py` admits the CVO to the COO at every stage; the CVO's silence
+toward the COO during a round binds by reading until the guard is narrowed to the slug. The `grades` field, the
+adjudication document, its lane, the cross-document census and the uniqueness limb are built.
 
 **Validation of a document** extracts the single fenced block and validates each row against its schema, printing the
 row count as its denominator.
@@ -276,8 +286,9 @@ row count as its denominator.
 `INVESTIGATION_v<N>.md`; site Z writes `INVESTIGATION_v<N>.Z.md`; the same for adjudication and remediation files unless
 the two certifiers agree at handover on one merged remediation authored by one of them. The two files are never merged;
 a same-path add on both branches resolves by rename, keeping each file's content. Ids carry the fabric coordinate
-(`<CODE>-S<n>` and `<CODE>-Z-S<n>`) so that two certifiers on two machines never allocate one sequence; bridged messages
-cite the namespaced id.
+(`<CODE>-S<n>` and `<CODE>-Z-S<n>`) and, for a worker's rows, the allocator coordinate (`<CODE>-W<n>-S<k>`), so that two
+certifiers on two machines and two worktrees on one machine never allocate one sequence; bridged messages cite the
+namespaced id.
 
 **Mirror versus collision.** This rule applies where both fabrics independently author a channel for one project, not
 where a file merely exists at the same path on both branches. A file one fabric authored and the other pulled is a
@@ -310,3 +321,4 @@ the day it is found.
 | 2.3 | 2026-09-03 | the gate-model ruling of the channel mechanism's owner `1.0.0_SA_CTO` (message 93572) on the fork with `1.0.0_SA_CTO~Z` over a site-Z slug that could only land as re-entry rows; the gate `.tools/surprise-row-gate.py` @ebe3a4caea (11 of 11 arms) | a new remediation row omits its route only when already remediated inside the round (and disarmed, if armed), the remedy cited in `evidence`, re-entering nothing; an open remediation without a route stays refused |
 | 3.0 | 2026-09-03 | spine v3.0 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, from the CRO's implementation spec `org/tier1_exec/4.0.0_SA_CRO/deliverables/SPEC_CANONICAL_FLOW_V3_SUBAGENT_WORKERS_ONE_SHOT_DISPATCH_20260903.md` @29bf9265ea and its section 13 @9dc97d860d (lever L-2 on judgment criteria, lever L-3 on the split channel); Andrew's word at the CTO terminal, recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_200xZ_CANONICAL_FLOW_V3_RESTRUCTURE_SPINE_SKILL_CLAUDEMD_SINGLEHANDED.md`; amended by the spine's scribe `1.0.0_SA_CTO` in the same window as the spine, per section 10 | the three route tokens and `loop_target` retired from the row grammar: a remediation row carries no route, the slug goes to the CTO and to no one else, and the CTO is the single router of every round; the CVO's one send of a round is the slug; the channel split into three documents by writer -- worker rows in `investigations/`, the CVO's dispositions, corrections and observations in a new `adjudications/` document, graduated remedies in `remediations/` -- so L8 reads and L10 counts surprises only; judgment criteria of a proof instance graded by the CVO at L9, never self-graded; `DECOMP_INVALIDATING` stays a disposition (what the remedy needs) and loses its mid-round interrupt; a `BLOCKING` row reaches the issuer in the worker's final report, workers having no inbox and no send tool; the watermark in the CVO's heartbeat as the stall control, read once by the COO at drain-end and escalated to the CTO; the gate's route limb and its single-document census named as contradicting this text and retired or extended as build acts, the audited override the only way through until then |
 | 3.1 | 2026-09-03 | `3.0.0_SA_CVO`'s constitutional review of v3.0, recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_CONSTITUTIONAL_REVIEW_SURPRISE_CHANNEL_PROTOCOL_v3.0_20260903T2100Z.md` @063118e837 and answered by spine v3.1 @20e1293216 (the COO at merge re-seats a dark disarm owner; the drain-end read is the COO's one message); Andrew's word at the CRO terminal on the eight v3 carriers, relayed as message 93972 and recorded at `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260903_222xZ_MECHANISMS_NOW_EIGHT_V3_CARRIERS_BUILD_IMMEDIATELY_CRO_CHECKS_OUT.md` @9f60e36398; the schema `org/surprise_channel/schemas/investigation_item.schema.json` in the same commit as this version | the `grades` field built and named in sections 4a and 8: one entry per judgment criterion carrying the criterion id, the instance as path@commit, the verdict `PASS` / `FAIL` / `NOT_EVALUATED` and the reason citing the bar, refused off its enum, without its reason or without its commit; a row of the CVO's that opens nothing carries `DISMISSED_WITH_REASON` naming itself a record, the enum gaining no value; section 6's escape valve reconciled to the spine's carrier (the COO at merge re-seats a dark disarm owner, one it cannot seat rides the drain-end read, the integrator seats a class on the CTO's or COO's request); section 7's stall report rides the COO's drain-end read; section 9's carriers named and not yet built brought current (the route limb, the adjudication document and its census, the send guard), the schema's route fields retiring only after the route limb |
+| 3.2 | 2026-09-04 | Andrew's word at the CVO terminal on `/open-calls`, verbatim "a for both", recorded at `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260904_050xZ_A_FOR_BOTH_ALLOCATOR_COORDINATE_AND_ESTATE_SITTING.md`; the proposal `org/tier1_exec/3.0.0_SA_CVO/deliverables/PROPOSAL_CHANNEL_ID_ALLOCATOR_COORDINATE_20260904.md` @ddbbf3ce46 with its Rule 24 record and consumer census; the collision it answers, `NFRA_COMPEFFICACY-S37` @f357b84197 and its disarm `S38` @3aa32a699e; the gate's uniqueness limb and item census `.tools/surprise-row-gate.py` @72d05b2642 and the rollup @747da480bc; the two schemas and the intake `org/surprise_channel/surprise-watch.sh` in the same commit as this version | the allocator coordinate: a row minted in worker `<n>`'s worktree carries `W<n>` (`<CODE>-(Z-)?(W<n>-)?S<k>`, fabric first), `<k>` restarting per coordinate, a seat's row carrying none, existing ids unchanged and nothing renumbered -- the two schema patterns, the `adjudicates` pattern and the intake's row-count regex accept it; the gate half (a worker's `W<n>` equal to the committer's suffix, none on a seat's row; the checker's and the corpus validator's acceptance) named as the carrier not yet built; section 4a states that the census counts investigation rows as items and reads this document for dispositions and grades, and that an adjudication of an id two investigation documents carry is refused as ambiguous; section 9 carries the uniqueness limb, its bound and the two carriers that cover it, and drops the route limb and the adjudication document from the not-yet-built list; the remediation schema's route fields retire when the last round under the prior text has landed its slug |

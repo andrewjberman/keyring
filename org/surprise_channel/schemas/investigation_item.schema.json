@@ -15,8 +15,8 @@
  "properties": {
   "id": {
    "type": "string",
-   "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$",
-   "description": "Fabric-namespaced item id. {PROJECT}-S{n} = laptop fabric; {PROJECT}-Z-S{n} = site Z. The fabric coordinate is REQUIRED for site Z because both certifiers otherwise allocate the same sequence by construction -- measured 2026-08-21: 7 colliding ids, 14 distinct findings, zero identical. Bridged messages cite the namespaced id."
+   "pattern": "^[A-Z0-9_]+-(Z-)?(W[0-9]+-)?S[0-9]+$",
+   "description": "Allocator-namespaced item id. {PROJECT}-S{n} = a seat's row on the laptop fabric; {PROJECT}-Z-S{n} = site Z; {PROJECT}-W{n}-S{k} = a row minted in worker {n}'s worktree (0.9.0_WK_{PROJECT}~{n}); {PROJECT}-Z-W{n}-S{k} composes, fabric first. The fabric coordinate is REQUIRED for site Z because both certifiers otherwise allocate the same sequence by construction -- measured 2026-08-21: 7 colliding ids, 14 distinct findings, zero identical. The allocator coordinate W{n} is REQUIRED for a worker's rows for the same reason inside one fabric: spine v3 gives every worker its own worktree index and the row gate allocates against the index it grades -- measured 2026-09-04: two allocators minted one S34 (record NFRA_COMPEFFICACY-S37). {k} restarts at 1 per coordinate; a seat's row carries no W; the gate requires W{n} to equal the committing worker's suffix. Existing ids are the seat form and stay as they are; nothing is renumbered. Bridged messages cite the namespaced id; a citation carries the vintage as <id>@<commit>."
   },
   "project": {
    "type": "string",
@@ -103,7 +103,7 @@
    "minItems": 1,
    "items": {
     "type": "string",
-    "pattern": "^[A-Z0-9_]+-(Z-)?S[0-9]+$"
+    "pattern": "^[A-Z0-9_]+-(Z-)?(W[0-9]+-)?S[0-9]+$"
    },
    "description": "L9 ADJUDICATION CARRIER. The channel is append-only, so the CVO dispositions an EXISTING item with a NEW row that names it here: this row's `disposition` becomes the named items' latest disposition (.tools/surprise-row-gate.py, gate (iii) second limb -- Andrew-direct 2026-09-03 'Recs approved'). Without this field an adjudication lives in prose ('S6 dispositions S2/S3/S5') where no gate can read it, and the L10 precondition 'every investigation CVO-checked' has no refuser. Every id named must exist under the project; a phantom target is refused. OPTIONAL: a row that adjudicates nothing omits it."
   },
