@@ -169,6 +169,48 @@ def _save(state: dict) -> None:
         json.dumps(state, indent=2), encoding="utf-8")
 
 
+def _stage_open_artifacts(state: dict) -> list:
+    """NFRA_CLDGRPH-S34 (2026-09-04; 2.0.0_SA_COO~A 94170, disarm owner 1.0.0_SA_CTO). THE SENTINEL DIED WITH THE
+    WORKTREE. Under spine v3 a WORKER opens its deploy inside its own worktree; `open` writes the sentinel as a
+    side-effect file that no commit pathspec necessarily names (the worker commits the change_management/*.md, which
+    :726 itself calls a RENDERING of the sentinel); the drain then runs `git worktree remove` and the sentinel is gone.
+    Round 4 lost 2 of 3 that way -- the gate's ONLY input destroyed, leaving the *.md rendering as an UNINDEXED OPEN
+    LEDGER that `check --red`'s sentinel-only scan cannot see (:900 exists to catch exactly that, and did).
+
+    WHAT STAGING BUYS, MEASURED AND NOT OVERSTATED (probe worktree, 2026-09-04): with the sentinel staged,
+    `git worktree remove` REFUSES -- "contains modified or untracked files, use --force to delete it", rc 128 -- and
+    `git worktree remove --force` returns 0 and deletes it anyway. An UNCOMMITTED sentinel already made the worktree
+    dirty before this change, so the round-4 removals that destroyed one were FORCED; staging does not stop a forced
+    removal and this docstring does not claim it does. What it buys is that the sentinel sits in the INDEX rather than
+    among untracked files, so the worker composing its commit and the drain reading `git status` both see it as an
+    added path, and an unforced removal refuses.
+
+    THE HALF THAT ACTUALLY SURVIVES A FORCED REMOVAL is committing the sentinel, and the receipt below names it as a
+    REQUIRED commit pathspec because a worker committing with `--only -- <paths>` takes its pathspec from the ORDER,
+    not from the index -- so the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's <paths>
+    block is the other carrier (2.0.0_SA_COO~A's, offered in 94170 and taken).
+
+    NOT DONE HERE, deliberately: writing the sentinel to the MAIN worktree root (the fix @6bfaa233ed used for the
+    gitignored override-audit log). The sentinel is a TRACKED path, so that would have a worker dirtying the shared
+    tree -- the one thing v3's worktree isolation exists to prevent.
+
+    Best-effort and LOUD: git failing here never fails the open (the ledger's own state is already on disk), but the
+    WARN says so, because a silent staging failure would restore the class this closes. Returns the staged rel paths."""
+    import subprocess
+    rels = [str(_state_path(state["slug"]).relative_to(WORKSPACE)).replace("\\", "/"), state["entry_path"]]
+    try:
+        r = subprocess.run(["git", "add", "--"] + rels, cwd=str(WORKSPACE), capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=30)
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: could not stage the ledger artifacts ({type(exc).__name__}: {exc}) -- commit them by hand: "
+              f"{' '.join(rels)}", file=sys.stderr)
+        return rels
+    if r.returncode != 0:
+        print(f"WARN: git add returned {r.returncode} for the ledger artifacts ({r.stderr.strip()[:160]}) -- "
+              f"commit them by hand: {' '.join(rels)}", file=sys.stderr)
+    return rels
+
+
 def _render_entry(state: dict) -> str:
     """The human-readable s10.6 change_management entry, regenerated from state on every
     mutation THAT GOES THROUGH THIS TOOL.
@@ -328,9 +370,17 @@ def cmd_open(args) -> int:
     }
     _save(state)
     _write_entry(state)
+    staged = _stage_open_artifacts(state)
     print(f"OK: OPENED deploy ledger '{args.slug}' ({len(legs)} legs) -> {entry_rel}")
     for leg in legs:
         print(f"  OPEN {leg['id']} [{leg['kind']}] {leg['target']}")
+    # S34: the sentinel is the gate's ONLY input and dies with a worktree that never commits it.
+    print("  REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and\n"
+          "  a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger):")
+    for s in staged:
+        print(f"    {s}")
+    print("  (both are STAGED, so an UNFORCED `git worktree remove` refuses; a FORCED one still deletes them --\n"
+          "   committing them is what survives the drain)")
     return 0
 
 
