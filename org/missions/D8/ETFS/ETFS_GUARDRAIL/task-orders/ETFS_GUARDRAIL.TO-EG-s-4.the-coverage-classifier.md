@@ -98,7 +98,8 @@ lane: the `<paths>` block above IS the grant (RULING 1 @`9ef9a40aae`).
 
 <proof_of_spec>
 Criterion ids minted at cut: `S4-AC1` .. `S4-AC7`. Instance at
-`org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-4.proof_of_spec.json`,
+`org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-4.the-coverage-classifier.proof_of_spec.json`
+(AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W3-S2: the instance file is named by the TASK ORDER'S OWN BASENAME stem, which is what `.tools/to-pipeline-gate.py` `check_complete_flip` globs for under `deliverables/*/`; the short `to_id` form this face carried before would have refused every flip. ONE instance file, this name, no duplicate.),
 validated with `python .tools/proof-of-spec-check.py <instance> S4-AC1,S4-AC2,S4-AC3,S4-AC4,S4-AC5,S4-AC6,S4-AC7` BEFORE the complete flip, which the assignee commits itself with the module, the tests and the result. A `complete` flip WITHDRAWS YOUR OWN GRANT: flip only when every MECHANICAL criterion PASSES by output.
 </proof_of_spec>
 
