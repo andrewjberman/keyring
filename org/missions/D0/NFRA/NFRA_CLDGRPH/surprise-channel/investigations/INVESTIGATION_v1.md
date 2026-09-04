@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **30 rows** (S1-S31, id S11 vacated by the concurrent-append renumber). Restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **32 rows** (S1-S33, id S11 vacated by the concurrent-append renumber). Restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -952,6 +952,66 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "TO-CG-B-2 and TO-CG-C-2 scope their image act to 'the worker image' with a Terraform-address blast-radius control (targeted apply, one unscoped re-plan quoted by address list) and a NEVER-2 ledger of the worker's resources.",
     "world_is": "The worker has no image of its own: it runs the shared derive-runner image by its :latest tag, and each rebuild re-pointed that tag for seven task families. The controls the faces carried were on the wrong plane to see it; the 08-26 ledger named the class and the faces did not carry it forward.",
     "notes": "Adjudicated in the same commit by ../adjudications/ADJUDICATION_v1.md C-S5 (GRADUATED); remediation row REMEDIATION_v3.md S31, owner 1.0.0_SA_CTO. Not a defect of B-2 or C-2: both did what their faces said; the faces were written against an image topology that does not exist."
+  }
+]
+```
+
+## S32 -- DISARM ACK for S27: cot-pipeline's notification is EventBridge-only; CG-s-14's cell text corrected at decomposition v0.3, no Terraform change
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S32",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T07:05Z",
+    "one_line": "S27's disarm act taken by its named owner at the round-4 recut: the decomposition's CG-s-14 cell text (v0.3, this issuance) now reads the declared Lambda targets as bd-pipeline's three and inf-pipeline's two, and names cot-pipeline's aws_s3_bucket_notification.cot_data as eventbridge=true with no Lambda target (infra/aws/terraform/cot-pipeline/s3-notifications.tf:16-19); TO-CG-C-3's terminal face is not edited (append-only record); no Terraform change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/decompositions/NFRA_CLDGRPH_DECOMP.md v0.3 (this issuance's commit; v0.2 @70918d5d2b): s.1a CG-s-14 evidence and closes-on columns carry the correction; changelog row 0.3 records it.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round3.md @2dd381d969 section 2 item 3: 'One text correction in CG-s-14's cell at the recut ... no Terraform change. Route: the decomposition at the recut (v0.3), the COO's act.'",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md @8fc3921769 C-S3 (the CVO's graduation of S27); REMEDIATION_v3.md @8fc3921769 row S27 (remediation OPEN, owner 2.0.0_SA_COO~A) -- the remediation-plane clock flip is 3.0.0_SA_CVO's on this evidence."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S27 asserts TO-CG-C-3's cell paragraph named cot-pipeline among the Terraform-declared Lambda-notification targets and that the disarm is a correction of that text or an explicit naming of EventBridge as a different target class.",
+    "world_is": "The correction is made where the cell text lives from this round on: the decomposition (v0.3). The terminal C-3 face keeps its original wording as the record of what the worker was told; the worker's row S27 and this ack are the two carriers of the correction. Implementation derived no fabricated cot edge (C-3 proof C3-AC3, 14 TRIGGERS edges on the targeted exercise, cot contributing none).",
+    "notes": "A factual disarm ack, not an adjudication: no adjudicates field; the DISARMED state on the remediation plane is the CVO's flip citing this row. The issuer also carries the corrected reading into TO-CG-D-1 (CG-s-15) so the cloud exercise's TRIGGERS bar names bd-pipeline's three targets, not 'the three declared'."
+  }
+]
+```
+
+## S33 -- ROUTE ACK for S28: the shared-image rebuild is CG-s-15 (decomposition v0.3) under TO-CG-D-1, change-managed, with this project's three families pinned by digest; the disarm completes on that order's VALID proof
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S33",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T07:05Z",
+    "one_line": "S28's route, taken by its named owner: the rebuild of opal-globgrph-derive-runner from a HEAD carrying b5bc1c8b27 is cell CG-s-15 (decomposition v0.3) under task order NFRA_CLDGRPH.TO-CG-D-1 (this issuance), issued to worker 0.9.0_WK_NFRA_CLDGRPH~1 as slot 1's first order, ahead of CG-x-2; NEVER-2 ledger with all seven consumers named; the three families of this project pinned by digest; one real cloud derive proving TRIGGERS > 0 on the live graph. S28's hazard stays ARMED until that proof reads VALID -- this row is the ROUTE, not the disarm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-1.shared-image-rebuild-deriver-live.md (this issuance's commit): owned_cells CG-s-15; criteria D1-AC1..AC8 (the moved digest, the build, the three pins, the cloud denominator line, TRIGGERS > 0, the serving deployment COMPLETED, the ledger CLOSED, the COPY diff as judgment).",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/ROUND_ANALYSIS.round3.md @2dd381d969 section 2 item 2 (the added cell) and item 4 (the digest pin as S31's inside half); ADJUDICATION_v1.md @8fc3921769 C-S4.",
+        "Measured at the cut 2026-09-04 06:2xZ: seven task families reference opal-globgrph-derive-runner:latest (derive-runner 6, projection-worker 3, serving 1, comp-learns 1, cse 1, fedobs 1, resource-summaries 1); ECR latest = sha256:68bd8b932689a331928c1c3a6cc00fe124d24e04e7a9b64ba008f1a2d3de10e8 pushed 2026-09-03 18:51:14Z; the fix commit b5bc1c8b27 authored 19:12:54Z."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S28 asserts the C-3 fix is committed locally but the live derive runner receives comp_aws_cli.py through a shared image tagged latest, so cloud application requires a separately routed image rebuild through the change-management path, preserving the canonical derive runner and checking all five consumers.",
+    "world_is": "Routed as above; the consumer count is seven, not five (the 08-26 ledger's five plus the projection worker and the serving service added by this project on 2026-09-03); the route carries the CTO's digest-pin requirement for this project's three families so a later build cannot re-point them silently; the four NFRA_GLOBGRPH families stay on the tag and are named in the ledger.",
+    "notes": "The disarm act is the worker's VALID proof on TO-CG-D-1; the issuer records it at the drain and the CVO flips the remediation-plane clock. Until then S28 reads ARMED honestly."
   }
 ]
 ```
