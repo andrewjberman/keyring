@@ -12,7 +12,7 @@ under the same directive and macro) · **dep_stage at write:** `REGISTERED` → 
   "project": "NFRA_OUTSET",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
   "brief_ref": "docs/briefs/comp-heat-and-the-semantic-estate-pipeline-outset-tooling-brief-20260904.md@bc52eb658d",
   "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -244,7 +244,7 @@ cloud principal or a Terraform surface re-homes to `0.7.0_AE_CloudOps`.
 | OS-s-14 | FWD-6, FWD-3 | `comp-fedobs`'s co-evolution signal — where it lands | measured | served vintage fresh daily; producer rule ENABLED; the reader is read by nothing | CloudComp | wire | OS-s-10, OS-s-13 | the co-evolution signal reaches the report through the seam, or the PRD's own reason it does not |
 | OS-s-15 | FWD-8 | the heat engine's O2–O4 legs (locality, verify-before-recommend, hygiene report) | measured | seven modules from 2026-06-25; the CLI reaches O1 only | CloudComp | decide | OS-s-1 | each leg reachable from `comp-heat` under never-auto-delete, or retired with the ruling cited — a reachability decision, not a build |
 | OS-s-16 | FWD-8 | the archive-candidate answer itself | **absent** | nothing answers "what is safe to put away" through the rail | CloudComp | build | OS-s-15 | a ranked list with a reason per line that a person can dispute; nothing is removed by the tool |
-| OS-s-17 | FWD-4 | the sitting's evidence citation — a proposal points at its finding | **absent** | the 2026-08-05 finding: the model had never seen the corpus | CVO | build | OS-s-11, OS-s-12 | one day's proposals each cite the tool row behind them, and the argument at the sitting is about the finding |
+| OS-s-17 | FWD-4 | the sitting's evidence citation — a proposal points at the TOOL ROW behind it | measured (partial) | `estate_report_runner.py` ALREADY discards a proposal that cannot cite what it saw (:1516, :1828 `discarded_proposals`); what it cannot cite is a tool row, because none is published | CloudComp | build | OS-s-11, OS-s-12 | one day's proposals each carry a resolvable citation to the tool row behind them, and a proposal whose tool row does not resolve is discarded with its reason, as the uncited case already is |
 
 **MECE check against the declared domain, run not asserted:** the domain is the brief's Part II OWNS list (comp-heat's five
 subcommands, the federated caller contract, fedobs's consumer wiring, the composition contract, the consumption seam, the
@@ -253,6 +253,8 @@ cover all eight of those items and both preconditions; 0 uncovered.** Reverse: e
 precondition, and no row is work on a surface the brief placed in RELIES-ON. **Every outcome carries at least one row** —
 FWD-1: OS-s-1/2/3 · FWD-2: OS-s-4/5/6/7 · FWD-3: OS-s-9/10/11 · FWD-4: OS-s-17 · FWD-5: OS-s-12 · FWD-6: OS-s-9/13/14 · FWD-7: OS-s-8 ·
 FWD-8: OS-s-15/16.
+
+**CORRECTION 2026-09-04 ~18:2xZ, `1.0.0_SA_CTO`, pre-issuance and therefore legal: `OS-s-17`'s lane read `CVO` and was WRONG, and the error was this document's.** It made the cell UNISSUABLE — the L6 gate refuses `<issued_to>` naming a Tier-1 seat (LD-0521) — and it made `2.0.0_SA_COO` read the cell as a certification act reserved to the CVO. That reading was correct on what this manifest declared: a decomposition reads the DECLARED lane, not the work. MEASURED, and it is what settles the lane: the proposals have a PRODUCER and it is code in this repo — `infra/aws/ec2/estate-report-runner/estate_report_runner.py`, the SAME file `OS-s-9` and `OS-s-11` already target — which builds the proposal list at :2107-2161 and already discards any proposal whose citation does not resolve (:1516, :1828). Making that citation point at a published tool row is a producer change of exactly `OS-s-11`'s kind, one surface over; nothing in it is certification. THE COMPOUND WAS THE ROOT CAUSE: the old accept carried a build limb ("proposals cite the tool row") AND an observation limb ("the argument at the sitting is about the finding"), and the lane column followed the second. The second limb is NOT an acceptance criterion of a task order — it is what L9 observes once the artifact exists, and it is graded there, by the CVO, on the evidence. The spine refuses a compound criterion AT THE CUT; this one hid in prose and reached L6 as an unissuable cell instead.
 
 **What this manifest does NOT assert:** the usage numbers are the brief's and the round-6 record's, not re-measured here; the
 `claim` column describes the surface, never the tool's worth; and no row is sequenced — sequencing is L5's.
