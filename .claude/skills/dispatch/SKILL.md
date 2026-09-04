@@ -199,12 +199,33 @@ the order is not an oversight the worker can route around — it is a wall.** So
   worker will read or write**, absolute from the root.
 - A worker cannot ask you to add one. It files a surprise row and stops on that criterion.
 
-⚠ **STATE OF THE MECHANISM: the ruling is DESIRED, the resolver is being built.** `1.0.0_SA_CTO` owns
-the `owned-paths-validate.py` limb that admits a worker's staged path by reading its order at HEAD;
-`0.0.0_AB_MSTR` lands the registry stanza declaring the policy. **Until both land, a worker's commit on
-a real surface is still REFUSED and still needs the audited, singular `GIT_COMMIT_AUTHOR_OVERRIDE`** —
-which is how v3's first drain actually committed, and why item 3's "admitted by owned-paths-check" limb
-did not pass as exercised.
+✅ **APPLIED, NOT MERELY RULED, SINCE `e08447ff7d` + `6efb43b9d0`** (MSTR's registry stanza and the CTO's
+resolver limb). This binds MECHANICALLY now; it is not a discipline. The override that v3's first drain
+had to take is no longer the path.
+
+**THE GRAMMAR the resolver and the L6 gate actually read** (`owned-paths-validate.py`
+`_paths_block_entries`; `to-pipeline-gate.py` GATE (v)):
+
+```
+<paths>
+org/modules/graph/cli.py
+.tools/tests/test_g2_*.py
+docs/architecture/
+</paths>
+```
+
+One entry per line, **relative to the repo root**. An exact file; a **glob** only when the entry carries
+`*` `?` `[` (fnmatch); a **directory prefix** only when the entry ends in `/`. `#` lines ignored,
+backticks stripped. **REFUSED AT THE CUT:** no block, an empty block, a leading `/`, a drive letter, or
+`..`.
+
+- `deliverables/<serial>/` needs **no** entry — the tree convention grants it.
+- **The investigation file NEEDS an entry if a row is possible:**
+  `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v<N>.md`
+- The order's own `task-orders/` face is lane ANY, so the worker's completion flip is admitted.
+- The grant is read **at HEAD and only while the order is NON-TERMINAL** — so the order is committed
+  before the spawn (it is; the spawn is the GO), and the worker's flip landing in the same commit as its
+  deliverables is admitted because HEAD still carries the order open.
 
 > **The error to avoid is the one this skill's author made:** checking the two paths the SPINE names
 > (`deliverables/<serial>/` and `task-orders/`) and concluding the worker "has no lane blocker". Those
