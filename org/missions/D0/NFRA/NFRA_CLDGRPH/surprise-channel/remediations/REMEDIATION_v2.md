@@ -173,11 +173,11 @@ in-round and five `SPEC_ERROR -> L6` carries. S16 and S21 are `DISMISSED_WITH_RE
     "remedy": "Represent a failed notification read as UNREADABLE rather than zero, derive declared S3-to-Lambda notification targets from Terraform as a second source, and publish read-versus-unreadable denominators on every build.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v2",
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~A", "at": null},
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~A", "at": "2026-09-04T12:49Z"},
     "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v2"},
     "route": "SPEC_ERROR",
     "loop_target": 6,
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_CLDGRPH-S22",
