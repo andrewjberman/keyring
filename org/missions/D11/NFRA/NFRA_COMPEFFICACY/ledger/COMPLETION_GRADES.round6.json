@@ -4,7 +4,7 @@
   "project": "NFRA_COMPEFFICACY",
   "round": 6,
   "graded_by": "1.0.0_SA_CTO",
-  "graded_utc": "2026-09-04T08:05Z",
+  "graded_utc": "2026-09-04T13:24Z",
   "report_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/COMPLETION_REPORT.round6.json@002ecfc42a",
   "rows": [
     {
@@ -72,10 +72,10 @@
     },
     {
       "fwd_id": "FWD-10",
-      "verdict": "NOT_EVALUATED",
-      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@f4b41b1c20",
-      "state_observed": "APPLIED",
-      "note": "The ACCEPT clause's denominator is 'every marquis tool whose rc carries a verdict', and the marquis list is not ratified (FWD-8), so the set the outcome quantifies over is undefined at this close. Within what is measured: comp-blast at budget returns rc 3 with the BEHIND warning and starts no rebuild (C-S1); T-24's Rule-T form carries AC2/AC5 UNCOMPUTABLE-BY-CONSTRUCTION, disclosed; and one verdict-bearing tool fails the clause outright -- comp-heat accepts no --budget and scores the whole repo (T20-AC4 FAIL, C-S5), unfixed under Andrew's 'a' with its owner named in the round-6 analysis (org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/ROUND_ANALYSIS.round6.md@de9a194c7b) and a REC to retire it at his FWD-4 read."
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-25.comp-dataflow-gate-under-fwd10.proof_of_spec.json@1bf60cae74",
+      "state_observed": "EXERCISED",
+      "note": "RE-GRADED from NOT_EVALUATED on the marquis ratification (Andrew-direct 2026-09-04 ~09:5xZ 'recs approved except comp-heat', record @26da5ec0fa; the fourteen named by 3.0.0_SA_CVO @35c86c93e4), which DEFINED the ACCEPT clause's denominator -- 'every marquis tool whose rc carries a verdict' -- that the first grade could not read. DONE WHEN, both limbs on ONE artifact, exercised by 0.8.0_AE_CloudComp~A (not the grader), order complete, instance VALID rc=0 re-run at HEAD: T25-AC2 run 1 -- 'comp-dataflow gate data/ --budget 0.001 >/dev/null && echo PROCEEDED || echo CORRECTLY DID NOT PROCEED' -- an rc-only consumer (the shell &&) read the budget-cut sweep as NOT clean (rc=4) beside the tool's BUDGET REACHED + 'STATE: NOT-DECIDABLE' lines; run 2 -- the exact printed cursor followed with --budget 30 -- completed 531 of 531 producer_file, 0 deferred, WITHIN BUDGET, rc=1 (the TRUE verdict), so the resume cursor was followed to completion and n1+n2 == N. The card says 'a verdict-bearing tool', not 'a marquis tool'; comp-dataflow's gate is verdict-bearing (rc 0/1/2/3/4) and is kept-not-marquis, which the DONE WHEN admits. ACCEPT, all five limbs covered across the verdict-bearing subset of the ratified fourteen, each with its own artifact: comp-system --check rc 3, comp-pulse diff rc 2, comp-pipescript deployed rc 4, comp-iam rc 2/3 -- each printing the Rule T BUDGET REACHED line, each rc non-clean and distinct from its own clean and failing values, each carrying PARTIAL_OR_BLIND in the tool's voice (NOT-DECIDABLE), each resuming by cursor (comp-pipescript's indivisible remote unit leaves the cursor unchanged and directs a larger-budget re-run, stated in its own row). The no-CLEAN-prefix limb carries a DISCRIMINATING control, not a construction: T25-AC4's MUTANT-VERDICT-RC plants 'if partial: return RC_CLEAN' in a scratch mirror and reproduces the FWD-10 violation on demand (rc=0 from a budget-cut sweep), RED-first. TWO THINGS STATED SO THE GRADE IS NOT READ WIDER: (1) comp-adversary is marquis and carries NO budget at all ('size_invariance.time: NOT budgeted', Rule T 'NOT MET ... owed'), but its own graded archetype is an evidence-pack COMPOSER whose rc is bound to composition and is NOT a verdict, so it sits outside this clause; its Rule T debt is real, on the record, and routed on the account axis, not here. (2) comp-heat is NOT among the fourteen, so T20-AC4's FAIL stands against comp-heat's own development (his 'figured out and developed properly', now at L1) and not against this clause."
     }
   ]
 }
