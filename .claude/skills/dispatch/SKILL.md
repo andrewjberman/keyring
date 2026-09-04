@@ -221,10 +221,16 @@ When a task order goes terminal:
    > against *the index it grades*. A worker's worktree branched before the main index moved, so the id
    > it minted was genuinely next **there**. Two indexes, two allocators, one sequence. The merge then
    > lands the branch **without any gate seeing the union** — a merge commit is made by `git merge`, not
-   > through `safe-commit.sh`, so no hook runs on the merged state. Verified at source: `.tools/`
-   > `surprise-row-gate.py` has **no cross-document uniqueness limb at all** (an `--enumerate` for
-   > `duplicate|uniqueness|already exists|collision` over 1,026 lines returns **one COMMENT hit and zero
-   > CODE**), so nothing refuses a new row whose id already exists in a sibling document.
+   > through `safe-commit.sh`, so no hook runs on the merged state.
+   >
+   > ✅ **THE GATE NOW HAS A DUPLICATE-ID LIMB — AND IT DOES NOT CLOSE THIS.** `_duplicate_id_violations`
+   > landed at `72d05b2642` (`surprise-row-gate.py:389`, called at `:887`, three self-test arms at
+   > `:1076-1081`; verified at HEAD by `git show`, not by the worktree path). It refuses a new row whose
+   > id already exists in a sibling document — cross-plane included, `investigations/` against
+   > `adjudications/`. **THE BOUND IS THE WHOLE POINT: it sees ONLY THE INDEX IT GRADES, and a worker's
+   > worktree is a DIFFERENT INDEX that cannot see the main tree's rows.** It catches a collision minted
+   > in the tree it runs in; it cannot catch two indexes racing. That residue is this step, and this step
+   > stays.
    >
    > **MEASURED, v3's first drain (this skill's own author, 2026-09-04):** worker
    > `0.9.0_WK_NFRA_COMPEFFICACY~2` minted `NFRA_COMPEFFICACY-S34` in `investigations/` while the CVO had
@@ -242,7 +248,7 @@ When a task order goes terminal:
 ```bash
 git merge --no-commit --no-ff wk-<CODE>-<n>     # merged INDEX, no commit yet
 python .tools/surprise-row-gate.py              # reads the STAGED index; prints its denominator
-# plus the cross-document id census the gate cannot do (it has no uniqueness limb):
+# plus the cross-INDEX census the gate still cannot do (its limb sees only the index it grades):
 for id in <ids the branch mints>; do
   for d in org/missions/D*/*/<CODE>/surprise-channel/*/*.md; do
     python .tools/comp-read "$d" --enumerate "$id" --limit 3
@@ -254,7 +260,8 @@ done
    **A collision found before the merge is a re-mint; found after, it is permanent** — append-only binds
    both rows and there is no renumbering.
 
-   ⚠ **THIS STEP BINDS BY READING AND NOTHING REFUSES IT.** `git merge` runs no hook, so a COO that
+   ⚠ **THIS STEP BINDS BY READING AND NOTHING REFUSES *IT*** — the gate's new limb refuses a duplicate
+   inside one index, but no hook runs on a merge. `git merge` fires nothing, so a COO that
    skips the two commands above lands the collision exactly as this one did. The refuser — a merge that
    goes through `safe-commit.sh`, or a uniqueness limb inside the gate — is a BUILD act and the gate's
    half is `1.0.0_SA_CTO`'s. Until one exists, the discipline is the only control, which is the weakest
