@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all five criteria PASS-by-output/RECORDED at HEAD after the issuer's amendment on S3-AC1 (row ETFS_GUARDRAIL-W2-S1, face vintage @de8693863c); instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2 per the amended proof_of_spec bound.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S3; s.5 "No new catch-up engine. Port inf's"; s.6 rulings 1 and 2; brief s.3) | **Decomp cell:** `EG-s-3` | **outcome_ref:** FWD-1 | **verb:** verify | **depends_on:** --
 
