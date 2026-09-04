@@ -4067,6 +4067,31 @@ one-line path amendment; sent UP to 2.0.0_SA_COO~Z at the read. The worker is st
  "spec_asserts": "2.0.0_SA_COO~Z msg-id 20294 commissions a sweep of every proof-of-spec instance in the project, complete ones included, for evidence citing a global or shared-object reading to support a face-scoped claim, stating that six instances were accepted tonight without checking for the shape, requiring printed denominators, requiring STALE-BUT-SOUND to be distinguished from ACTUALLY-UNSUPPORTED with only the latter treated as a defect, requiring urgent items be routed to the holding lane first, and stating that a clean result is a result.",
  "world_is": "23 of 23 instances and 129 of 129 limbs examined. ZERO ACTUALLY-UNSUPPORTED. THREE STALE-BUT-SOUND, of which one was self-reported before the sweep reached it, one is this seat's own and is now amended, and one is routed to its lane as a suggestion. No verdict in the project is disturbed. Five limbs across four lanes already name the exposure in their own text and one instrument had already been corrected for it by the issuer.",
  "notes": "THE COMMISSION'S PREMISE WAS THAT SIX INSTANCES HAD BEEN ACCEPTED TONIGHT WITHOUT CHECKING FOR THIS SHAPE. That is true of the checking, and the sweep still comes back clean -- which is worth stating precisely rather than as reassurance: the instances survive not because the shape is absent but because the seats writing them reached for writer-scoped instruments by habit. A LockToken, a changed-resource list, a git porcelain read and a data-plane fixture are all writer-scoped, and they were chosen as PRIMARY evidence with the global count offered as corroboration. THE ONE PLACE THAT HABIT SLIPPED IS INSTRUCTIVE AND IT IS THIS SEAT'S: S20-AC5 carried TWO global limbs, and the second was missed while writing a message to a peer about the first, in the same paragraph. APPLYING A FINDING ONCE DOES NOT DISCHARGE IT ACROSS THE ARTIFACT -- the sweep has to cover the whole instance, not the sentence that prompted it. WHAT THIS DOES NOT COVER, stated so the denominator is not read wider than it is: this sweep examined ACCEPTANCE limbs. It did not examine artifacts_produced, controls, declared_exclusions or compiler_tools entries, which can carry the same shape and were out of the commission's stated scope. Nor did it re-verify any verdict -- it asked only whether the EVIDENCE could support the claim, never whether the claim was true. A limb reported here as STALE-BUT-SOUND is a statement about instrument scope and not an endorsement of the finding it supports."
-}
+},
+ {
+  "id": "NFRA_OPSEC202609-Z-S149",
+  "project": "NFRA_OPSEC202609",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-04T07:16:35Z",
+  "one_line": "DISARM RECORD for NFRA_OPSEC202609-Z-S41 -- the declaration is TRACKED, COMMITTED and BYTE-IDENTICAL to the file the row named: demo.tf at HEAD hashes 5c19df6ab8715341a58647fdb52f481168dd0b7a76d09c8a30ffadc875a9d807, the exact sha256 recorded in Z-S41 when it was filed as UNTRACKED. The state-without-declaration hazard is discharged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git ls-files --error-unmatch infra/aws/terraform/partner-firms/demo.tf returns the path, so it is TRACKED -- the condition whose absence the row was filed about.",
+    "git status --porcelain on that path returns EMPTY, so nothing is uncommitted and there is no working-copy divergence from HEAD.",
+    "git log -1 on the path: f570d3981e by 0.7.0_AE_CloudOps~S, 2026-09-03 12:09:54 -0400, under TO-OP-S-16-17-8R2 C-10.",
+    "sha256 of git show HEAD:<path> is 5c19df6ab8715341a58647fdb52f481168dd0b7a76d09c8a30ffadc875a9d807, MATCHING BYTE-FOR-BYTE the hash Z-S41 recorded at filing. The committed file is the SAME file the row was about, not a different file at the same path.",
+    "Three earlier disarm records already narrowed this row: Z-S43, Z-S70 and Z-S79. This record closes the remaining limb -- durability of the declaration itself."
+   ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "A resource in Terraform state must have a DURABLE declaration justifying it. Z-S41 recorded that opal-partner-demo was imported into state under module.firm_demo.aws_dynamodb_table.partner_table while demo.tf was UNTRACKED.",
+  "world_is": "demo.tf is tracked, committed at f570d3981e, clean in the worktree, and byte-identical to the file the row named. State and declaration are both durable and they describe the same object.",
+  "notes": "WHY THE HASH MATCH IS THE LOAD-BEARING EVIDENCE AND NOT THE TRACKED-STATUS: a file can be tracked at the same path and be a DIFFERENT file. Z-S41 recorded a sha256 at filing time precisely so a later reader could tell 'the declaration was committed' from 'a declaration was committed'. It matches exactly, so the durability claim is about the artifact the hazard was filed against rather than about its name. THE ORIGINAL HAZARD'S SHAPE, worth preserving because the mechanism recurs: an import puts a resource in STATE immediately, while the DECLARATION that justifies it lives in a file that must be separately committed -- and on this shared checkout an uncommitted file has a measured lifetime in minutes. Two rows were destroyed uncommitted on the surprise channel itself the same night, so the hazard was not theoretical. WHAT THIS RECORD DOES NOT CLAIM: it does not re-grade C-10, it does not certify the declaration's CONTENT, and it does not touch the July decision recorded at demo.tf:18-30 that this table was deliberately NOT moved to the project CMK -- that reading was separately confirmed correct against the PRD and is unaffected. It claims exactly one thing: the declaration is durable and it is the one the row named. TIMING NOTE, disclosed rather than smoothed: the condition was met at 2026-09-03 12:09:54 -0400 and this disarm is filed 2026-09-04. The row stayed ARMED for roughly nineteen hours after its own condition cleared, because the disarm owner was not watching the condition -- nothing in the fabric tells a disarm owner that their condition has been satisfied by someone else's commit. That is the same class as an unflipped cell and a proof superseded by a later face: A RECORD DOES NOT LEARN THAT THE WORLD HAS MOVED, and only a census finds it."
+ }
 ]
 ```
