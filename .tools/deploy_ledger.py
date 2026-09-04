@@ -62,6 +62,25 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# OUTPUT ENCODING GUARD (0.0.0_AB_MSTR~Z, 2026-09-04). This file already reads every
+# authored ledger with errors="replace" in EIGHT places -- it knows hand-written content
+# carries characters it did not choose. That care stopped at the read: nothing guarded
+# stdout, so `list` CRASHED on this device with UnicodeEncodeError U+26D4 while printing
+# a BYPASS line, on a console whose encoding is cp1252.
+# WHY IT MATTERS MORE THAN A COSMETIC CRASH: the line it died on belongs to the
+# GATE-BYPASS SCAN -- the fix for the false-clean class where a sentinel-only sweep could
+# not see hand-authored markdown ledgers. It died AFTER printing five entries, so the
+# operator sees a plausible-looking listing and never learns the bypass section did not
+# run. A crash that truncates a census reads exactly like a census with nothing to report.
+# FIXED AT THE STREAM, NOT AT THE CALL SITE: the offending character arrives from AUTHORED
+# text and can surface in any print in this file, so patching the one line that happened to
+# fire would leave the identical landmine in every other one.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass  # not a real stream (piped/captured); the caller's encoding governs
+
 WORKSPACE = Path(__file__).resolve().parent.parent
 CM_DIR = WORKSPACE / "org" / "critical_paths" / "change_management"
 STATE_DIR = WORKSPACE / "org" / "critical_paths" / ".open_deploys"
