@@ -713,7 +713,16 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
       # LEGACY spelling only, so for a TREE project the block below -- and the surprise-row-override reader inside
       # it -- never ran; CVO~Z's L10 slug for NFRA_OPSEC202609 could not carry an audited override and landed by
       # re-entry rows only. The tree spelling is the contract's (PROJECT_TREE.contract.json surprise_channel_glob).
-      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*|*org/missions/*/surprise-channel/investigations/*|*org/missions/*/surprise-channel/remediations/*)
+      # ADJUDICATIONS ADDED 2026-09-04 (1.0.0_SA_CTO on 3.0.0_SA_CVO's ESTATE_GOVERNANCE-S4, msg 94260).
+      # This set named investigations/ and remediations/ and NOT adjudications/ -- so for an
+      # ADJUDICATIONS-ONLY commit the whole block below never ran, which meant the ONLY reader of
+      # '# surprise-row-override:' never ran either, and the git hook then refused with no override
+      # in hand. THE DOCUMENTED ESCAPE WAS UNREACHABLE ON EXACTLY THE CVO'S OWN L9 DOCUMENT, and it
+      # is the one document only that seat writes -- so nobody else could hit it and report it.
+      # Same class as the 2026-09-03 tree-spelling fix at the lines above: that one added the tree
+      # root and missed this one folder. A pattern list is a DECLARED DOMAIN (Rule 24 i) and the
+      # uncovered member has to be hunted, not waited for.
+      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*|*org/surprise_channel/*ADJUDICATION_v*|*org/missions/*/surprise-channel/investigations/*|*org/missions/*/surprise-channel/remediations/*|*org/missions/*/surprise-channel/adjudications/*)
         SRGATE_FILES+=("$_sf") ;;
     esac
   done
