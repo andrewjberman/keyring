@@ -348,6 +348,18 @@ that is smaller than a gate and larger than a paragraph, and the difference matt
 **A worker with an empty queue ends. A worker that dies mid-task-order leaves a branch:** merge it if its
 instance is valid, otherwise discard it and re-dispatch that task order to a fresh slot.
 
+⛔ **A MIS-FLIPPED ORDER IS *REOPENED* BY THE ISSUER — NEVER RE-CUT.** This falls straight out of RULING 1
+and is not obvious until it bites: **the grant is read from an order that is NON-TERMINAL at HEAD, so a
+worker flipping its own order `complete` WITHDRAWS ITS OWN GRANT.** Measured on CLDGRPH's first drain —
+two workers flipped orders `complete` while carrying FAIL rows, and the halt gate then refused their
+next acts because a terminal order grants nothing. `worker.md` now flips only when every mechanical
+criterion PASSES.
+
+> **The drain's move is to set the order's `<status>` back to `in_progress` with a note**, so the SAME
+> subagent continues on the SAME face with its context intact. **Re-cutting would be the wrong repair
+> twice over:** it spawns a cold worker that re-reads everything, and it mints a second order for one
+> cell — which the coverage limb then counts twice.
+
 ⛔ **A `BLOCKING` row is read in the worker's final report of that task order.** An `OBSERVATION` never
 interrupts.
 

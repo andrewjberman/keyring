@@ -44,6 +44,11 @@ if [ "${1:-}" = "--self-test" ]; then
       "python '$GATE' 2>&1 | grep -q '0 dispatched path'"
   chk "the script feeds the gate from the staged set, never bare"  \
       "grep -q 'STAGED_ARR\[@\]' '$0'"
+  # REGRESSION ARM: the drain commit must name the draining seat, never the git-config identity.
+  chk "the merge commit carries --author (no silent git-config attribution)" \
+      "grep -q 'git commit --no-edit --author' '$0'"
+  chk "an unset OPAL_AGENT_SERIAL REFUSES rather than guessing an author" \
+      "grep -q 'OPAL_AGENT_SERIAL is unset' '$0'"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   echo "  ⛔ BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
@@ -110,7 +115,22 @@ if [ -z "$SUBJECT" ]; then SUBJECT="drain: merge $BRANCH (row gate clean on the 
 # A commit failure here means a DOWNSTREAM hook refused what this script's own grade let
 # through -- so the grade was wrong. ABORT; never leave a staged merge behind for someone
 # to find and finish by hand.
-if ! git commit --no-edit -m "$SUBJECT"; then
+# ⛔ THE DRAIN COMMIT CARRIES THE DRAINING SEAT'S AUTHOR, OR THIS SCRIPT REFUSES.
+# Without --author the merge is attributed to the git-config identity, not the seat that
+# drained it (measured on CLDGRPH's first drain, 91cabbdf86). A commit that names the wrong
+# actor is a FALSE ATTRIBUTION of a good act -- the kind nobody ever goes back and contests.
+# owned-paths-check.sh exempts a merge on MERGE_HEAD, so --author costs nothing here.
+# REFUSING beats guessing: a wrong serial is worse than a stopped drain.
+if [ -z "${OPAL_AGENT_SERIAL:-}" ]; then
+  echo "safe-merge: REFUSED -- OPAL_AGENT_SERIAL is unset, so this script cannot name the" >&2
+  echo "            draining seat on the merge commit. Export it and re-run; it will not" >&2
+  echo "            guess an author. Aborting the merge." >&2
+  git merge --abort 2>/dev/null || true
+  exit 2
+fi
+_AUTH="${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>"
+echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL}"
+if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
   echo "safe-merge: *** COMMIT REFUSED DOWNSTREAM after this script's grade PASSED. ***" >&2
   echo "            That is a defect in THIS script's grade, not only in the branch: a hook" >&2
   echo "            saw something the merged-index grade above did not. Aborting the merge so" >&2
