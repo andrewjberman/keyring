@@ -5,7 +5,24 @@
 <issued_to>0.7.0_AE_CloudOps~W</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>staged</status>
+<status>pending</status>
+
+<!-- 0.7.0_AE_CloudOps~W 2026-09-04T01:1xZ: staged -> pending on the re-address (Msg-ID 20078). PHASE 1
+     IS DONE AND THE VERDICT IS CORRECTLY UNSTARTABLE -- all three roles file UNCOMPUTABLE for now:
+     aws iam list-roles over a TRUE denominator of 221 (counted client-side; --query length() returns
+     the PAGE count and read 100) returns ZERO for ipset / reconcil / sentinel / unblock, positive
+     control passing on two known roles.
+     PHASE-1 ARTIFACT: ../deliverables/0.7.0_AE_CloudOps~W/NFRA_OPSEC202609.TO-OP-S-22.phase1-permission-pairs.md
+     -- the MUST-HAVE / MUST-NOT action-resource pairs per role with every resource ARN pre-resolved,
+     so each verdict is a mechanical run the moment an ARN lands. It is SPEC-derived, not code-derived,
+     and says so: no implementation exists for any of the three roles (11 hits, all spec, over 51,747
+     files; positive control 474 on 'def lambda_handler'). It MUST be re-derived against source before
+     any verdict is filed -- a spec list cannot see a helper call the design never mentioned, and those
+     are exactly the pairs an over-permissioned role gets padded with.
+     ONE FINDING ALREADY: S22-AC3 says "both sets" but the applied plane carries FOUR IP sets
+     (cloudfront, cloudfront-ipv6, regional, regional-ipv6). A verdict written to "both" covers 2 of 4
+     and reads as complete. This face verdicts all four, denominator printed. -->
+
 
 ⛔ **BLOCKER, NAMED: the three roles must EXIST ON THE APPLIED PLANE first.** The cell's `depends_on` is `OP-s-14`, `OP-s-15`, `OP-s-19` -- *"their roles must exist in Terraform first; the verdict is on the APPLIED role."* **GO CONDITION: `TO-OP-S-15-19` has applied its two roles, and `TO-OP-S-14-21` has applied the sentinel's.** **The verdict may run per role as each becomes available; it does NOT wait for all three.**
 
