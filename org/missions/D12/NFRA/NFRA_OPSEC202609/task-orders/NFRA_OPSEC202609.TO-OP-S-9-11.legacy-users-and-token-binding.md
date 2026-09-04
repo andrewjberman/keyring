@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~X</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 ✅ **BLOCKER CLEARED 2026-09-03 23:4xZ ON ROW Z-S103 -- AND THE BLOCKER I ORIGINALLY WROTE WAS WRONG.** This face said the GO condition was `OP-s-8` reaching DONE, because PRD s.9 item 5 sequences S9 after S8 and the CMK limb is open. **`0.7.0_AE_CloudOps~W` read the decomposition's actual EDGE and it carries a PREDICATE, not a cell state:** `OP-s-8 --[DP + PITR read ON per table]--> OP-s-9 (snapshot-then-delete), OP-s-11` (s.4, line 135). **MEASURED AT THE ISSUER'S SEAT: `DeletionProtectionEnabled` TRUE and PITR `ENABLED` on 5 of 5 tables** -- `opal-users-v2`, `opal-partner-49financial`, `opal-partner-cottonwood`, `opal-partner-inflection`, `opal-partner-demo`. **The predicate is satisfied and this face is dispatchable now; the CMK alignment is a different limb and does not gate it.**
 
