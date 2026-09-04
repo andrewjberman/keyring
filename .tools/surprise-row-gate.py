@@ -206,7 +206,7 @@ def _seats_with_open_orders(root, code):
     return seats, ""
 
 
-def _foreign_row_violations(rel, kind, added, committer, coworkers=None):
+def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging=False):
     """PURE given `coworkers`. Complaints for NEW investigation rows whose `surfaced_by` is not the committer's seat.
 
     CO-WORKER ADMISSION (2026-09-03, 2.0.0_SA_COO 93746, measured under round 6 of NFRA_COMPEFFICACY): ten Codex lanes
@@ -216,9 +216,34 @@ def _foreign_row_violations(rel, kind, added, committer, coworkers=None):
     worktree, not a sweep of a stranger's: it is ADMITTED and NAMED in the gate's notes (the author-line mismatch stays
     on the record without an override). A row whose surfacer holds no open order on the project -- site Z's accident
     class, a Tier-1 seat's row, a stranger -- is still refused. `coworkers` None = the census could not run -> refused.
+
+    AT A MERGE (merging=True, MERGE_HEAD present; 0.0.0_AB_MSTR 94283, the first cross-fabric reconcile): the sweep
+    does not fire, and the rows are NAMED in the notes instead. THIS IS THE SAME PRINCIPLE _coordinate_violations
+    ALREADY CARRIES three hundred lines below -- the committer of a merge commit is the INTEGRATOR, never the
+    allocator -- and this limb, written 2026-09-03, was simply never wired to it. MEASURED: the reconcile of
+    origin/SITEZ refused on 147 of 150 new rows, every one correctly stamped with its own surfaced_by
+    (3.0.0_SA_CVO~Z, 0.7.0_AE_CloudOps~Z/~S, 2.0.0_SA_COO~Z) and every one already graded by site Z's own row gate at
+    ITS authorship. 147-of-150 foreign is not the signature of a sweep; it is the signature of an INTEGRATION, and the
+    sweep exists to catch attribution THEFT -- a seat pulling a stranger's rows under its own author line -- which a
+    merge is not: the rows arrive attributed and the merge commit is the only honest carrier for them.
+
+    WHY THE CO-WORKER MECHANISM DOES NOT ALREADY COVER IT: a project drain passes because the worker's serial HOLDS AN
+    OPEN ORDER on that project. A cross-fabric integrator carries rows from seats with no order on this fabric at all,
+    so every one reads foreign. The two cases need different admissions and only one of them existed.
+
+    ⛔ CONSEQUENCE WORTH STATING BECAUSE IT IS NOT OBVIOUS: safe-merge.sh grades the MERGED INDEX by calling this gate
+    while MERGE_HEAD is present, so the sweep is skipped there too. That is acceptable and it is not silent -- the
+    DUPLICATE-ID limb, which is the reason the drain grades the merged index at all, is untouched, and the co-worker
+    admission already covered the drain case. The residual is a branch on which no hook ever ran, which is the same
+    residual both sibling gates accept.
     Returns (violations, notes)."""
     if kind != "INVESTIGATION" or not added:
         return [], []
+    if merging:
+        _seats = sorted({_base_serial(r.get("surfaced_by")) or "<unparseable>" for r in added})
+        return [], ["%s: MERGE COMMIT -- foreign-row sweep exempt; %d new row(s) arrive attributed to %d seat(s) "
+                    "(%s) and were graded at their own authorship. The integrator is not their author "
+                    "(0.0.0_AB_MSTR 94283)." % (rel, len(added), len(_seats), ", ".join(_seats))]
     who = _base_serial(committer)
     if not who or not SERIAL_RE.match(who):
         return ["%s: committer identity UNREADABLE (%r) while %d new row(s) are staged -- the foreign-row sweep "
@@ -954,7 +979,8 @@ def check_file(root, rel):
     v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema, merging=_merge_in_progress(root)))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
-    _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw)
+    _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw,
+                                       merging=_merge_in_progress(root))
     v.extend(_fv)
     notes.extend(_fn)
     for row in added:
@@ -1074,6 +1100,19 @@ def _self_test(root):
          lambda: fr([mine], "2.0.0_SA_COO") != []),
         ("sweep: unparseable surfaced_by -> refused (fail-safe)", lambda: any("unparseable" in x for x in fr([{"id": "X_PRJ-S3", "surfaced_by": "someone"}], "0.8.0_AE_CloudComp"))),
         ("sweep: committer unreadable -> refused fail-closed", lambda: any("UNREADABLE" in x for x in fr([mine], "Andrew Berman"))),
+        # MERGE EXEMPTION (94283). The NARROWNESS arm is the one that earns it: the same rows,
+        # merging=False, must still refuse -- an exemption that cannot be shown to STOP applying
+        # is a hole. Mirrors the arm that earned to-pipeline-gate's exemption an hour earlier.
+        ("sweep MERGE: foreign rows on a merge -> NO violations (0.0.0_AB_MSTR 94283)",
+         lambda: _foreign_row_violations("f", "INVESTIGATION", [theirs, mine], "0.0.0_AB_MSTR",
+                                         coworkers=set(), merging=True)[0] == []),
+        ("sweep MERGE: the exemption ANNOUNCES itself and names the surfacing seats (not a silent pass)",
+         lambda: any("MERGE COMMIT -- foreign-row sweep exempt" in n and "3.0.0_SA_CVO" in n
+                     for n in _foreign_row_violations("f", "INVESTIGATION", [theirs, mine],
+                                                      "0.0.0_AB_MSTR", coworkers=set(), merging=True)[1])),
+        ("sweep NARROWNESS: the SAME rows with merging=False are still REFUSED",
+         lambda: _foreign_row_violations("f", "INVESTIGATION", [theirs, mine], "0.0.0_AB_MSTR",
+                                         coworkers=set(), merging=False)[0] != []),
         ("sweep: remediation rows out of scope", lambda: _foreign_row_violations("f", "REMEDIATION", [theirs], "0.8.0_AE_CloudComp", coworkers=set())[0] == []),
         # co-worker admission (the shared-worktree class of 93746)
         ("co-worker: a row whose surfacer holds an open order on the project -> admitted, NAMED in notes",
