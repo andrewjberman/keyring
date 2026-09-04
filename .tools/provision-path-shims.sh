@@ -81,6 +81,23 @@ WS_WIN="$(cygpath -w "$WS" 2>/dev/null || echo "$WS")"
 BIN="$HOME/bin"
 mkdir -p "$BIN"
 
+# INHERITANCE RESTORE (NFRA_CLDGRPH-S26, 2026-09-04; 3.0.0_SA_CVO C-S1 @8fc3921769). On an ACL-emulating MSYS the
+# chmod +x below is honoured by writing a PROTECTED explicit DACL with two DENY ACEs onto the file -- the exact state
+# that denied a Codex seat every shim (S26; this seat's S29/S30). Measured: S30's reset left 0 of 211 protected and
+# every forwarder worked all evening; the next provisioning run re-protected 105 of 211 within two seconds. So the
+# mode write is followed by `icacls /reset` (default inherited ACLs), the state proven to work; the .cmd twins never
+# needed it. Fail-open with a WARN naming the file -- a shim that exists with a bad DACL beats no shim; the DACL read
+# at the end of the run prints the count either way. No-op where icacls is absent (a non-Windows host).
+_restore_inheritance() {
+  command -v icacls >/dev/null 2>&1 || return 0
+  local _w
+  _w="$(cygpath -w "$1" 2>/dev/null || echo "$1")"
+  # MSYS_NO_PATHCONV: without it MSYS rewrites the /reset switch into "C:/Program Files/Git/reset" and icacls refuses
+  # every file (measured at the first exercise: 105 of 211 still protected, one WARN per file). The variable is
+  # scoped to this one call; it is the ARN/TF-import exemption CLAUDE.md names, on a Windows switch.
+  MSYS_NO_PATHCONV=1 icacls "$_w" /reset >/dev/null 2>&1 || echo "WARN: icacls /reset failed on $1 -- its DACL may still carry a chmod's DENY ACEs (S26)"
+}
+
 echo "provision-path-shims: workspace=$WS  ~/bin=$BIN"
 
 # ---- aws: PATH-strip-then-reinvoke, so .tools/aws's own self-discovery never sees this file ----
@@ -115,6 +132,7 @@ fi
 exec aws "\$@"
 EOF
 chmod +x "$BIN/aws" || echo "WARN: chmod EINVAL on $BIN/aws (ACL-inherited fs; file is executable by ACL) -- continuing"
+_restore_inheritance "$BIN/aws"
 
 cat > "$BIN/aws.cmd" << EOF
 @echo off
@@ -205,6 +223,7 @@ fi
 exec "\$_t" "\$@"
 EOF
     chmod +x "$BIN/$tool" || echo "WARN: chmod EINVAL on $BIN/$tool (ACL-inherited fs; file is executable by ACL) -- continuing"
+    _restore_inheritance "$BIN/$tool"
 
     cat > "$BIN/$tool.cmd" << EOF
 @echo off
@@ -224,3 +243,17 @@ done
 _written=$(ls "$BIN" 2>/dev/null | grep -cv '\.cmd$')
 echo "provision-path-shims: wrote $_written tool(s) x2 forms to $BIN -- $(ls "$BIN" | grep -v '\.cmd$' | tr '\n' ' ')"
 echo "provision-path-shims: SCOPE = DERIVED from .tools/comp-* ($(ls "$WS"/.tools/comp-* 2>/dev/null | wc -l) on disk) + the named non-comp set. Interpreter per-tool from its OWN shebang."
+
+# THE DACL READ (NFRA_CLDGRPH-S26, 2026-09-04): the number that names whether a Codex seat can resolve a shim. Every
+# chmod above is followed by _restore_inheritance, so this prints 0 unless a chmod's DACL survived; a non-zero
+# count is the finding, printed with its denominator, never hidden. Windows only; elsewhere the read is DECLARED-N/A.
+if command -v powershell.exe >/dev/null 2>&1; then
+  _prot="$(powershell.exe -NoProfile -Command "\$f=Get-ChildItem -File '$(cygpath -w "$BIN" 2>/dev/null || echo "$BIN")'; \$p=(\$f | Where-Object { (Get-Acl \$_.FullName).AreAccessRulesProtected }).Count; Write-Output \"\$p of \$(\$f.Count)\"" 2>/dev/null | tr -d '\r')"
+  case "$_prot" in
+    0\ of\ *) echo "provision-path-shims: DACL inheritance intact -- protected $_prot (S26 expects 0)" ;;
+    "")       echo "provision-path-shims: WARN: the DACL read could not run (PowerShell answered nothing) -- protected count UNREAD" ;;
+    *)        echo "provision-path-shims: WARN: protected $_prot files carry an explicit DACL (S26: a chmod's emulation survived; a Codex seat may be denied) -- run icacls /reset on them" ;;
+  esac
+else
+  echo "provision-path-shims: DACL read DECLARED-N/A (no powershell.exe on this host)"
+fi
