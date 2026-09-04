@@ -51,7 +51,7 @@ def _project_of(p):
     tree: org/missions/D*/<MACRO>/<PROJECT>/surprise-channel/investigations/INVESTIGATION_v1.md
           -> the folder TWO levels above surprise-channel/ (basename(dirname) would say 'investigations')."""
     d = os.path.dirname(p).replace("\\", "/")
-    if d.endswith("/surprise-channel/investigations") or d.endswith("/surprise-channel/remediations"):
+    if d.endswith(("/surprise-channel/investigations", "/surprise-channel/adjudications", "/surprise-channel/remediations")):
         return os.path.basename(os.path.dirname(os.path.dirname(d)))
     return os.path.basename(d)
 
@@ -63,15 +63,23 @@ def load():
     # 0 items while rows S1/S2 sat at the tree home org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/. The tree
     # grammar is org/standards/PROJECT_TREE.contract.json surprise_channel_glob; the step-8 watcher and the row gate
     # already read both roots -- a reader on one root is blind to every project registered since 2026-09-02.
+    # THREE DOCUMENTS (spine v3.0 carrier 5, annex 4a; found by 3.0.0_SA_CVO 93999 the hour the folder landed): the
+    # CVO's adjudication document carries the rows that DISPOSITION worker rows. This rollup read only the other two,
+    # so it reported 33 items / 1 OPEN while the row gate's census read 34 / 0 -- a VIEW lagging its REFUSER, which is
+    # the instrument disagreement Rule 22 names. An adjudication file is investigation-kind (same schema); its rows are
+    # counted with the investigation plane, as the gate counts them, and shown as their own line.
     pats = [os.path.join(CHANNEL, "*", "INVESTIGATION_v*.md"),
+            os.path.join(CHANNEL, "*", "ADJUDICATION_v*.md"),
             os.path.join(CHANNEL, "*", "REMEDIATION_v*.md"),
             os.path.join(ROOT, "org", "missions", "D*", "*", "*", "surprise-channel", "investigations", "INVESTIGATION_v*.md"),
+            os.path.join(ROOT, "org", "missions", "D*", "*", "*", "surprise-channel", "adjudications", "ADJUDICATION_v*.md"),
             os.path.join(ROOT, "org", "missions", "D*", "*", "*", "surprise-channel", "remediations", "REMEDIATION_v*.md")]
     paths = sorted({p for pat in pats for p in glob.glob(pat)})
     for p in paths:
         files += 1
         project = _project_of(p)
         kind = "REMEDIATION" if "REMEDIATION" in os.path.basename(p) else "INVESTIGATION"
+        doc = "ADJUDICATION" if "ADJUDICATION" in os.path.basename(p) else kind
         blocks, bad = _blocks(p)
         malformed.extend(bad)
         for b in blocks:
@@ -82,6 +90,7 @@ def load():
                 r = dict(r)
                 r["_project"] = project
                 r["_kind"] = kind
+                r["_doc"] = doc
                 r["_file"] = os.path.relpath(p, ROOT)
                 items.append(r)
     return items, malformed, files, len(paths)
@@ -168,6 +177,7 @@ def main():
     # beside it, never merged into it.
     inv = [r for r in items if r.get("_kind") != "REMEDIATION"]
     rem = [r for r in items if r.get("_kind") == "REMEDIATION"]
+    adj = [r for r in inv if r.get("_doc") == "ADJUDICATION"]
     # LATEST CARRIER, not own row (2026-09-03, 1.0.0_SA_CTO as disarm_owner of NFRA_COMPEFFICACY-S10, 3.0.0_SA_CVO
     # 93340): the channel is append-only, so an item's disposition moves by a LATER row that names it in
     # `adjudicates` (investigation_item.schema.json; the row gate's second limb resolves it the same way), or by a
@@ -204,6 +214,7 @@ def main():
                           "malformed": malformed,
                           "remediation_rows": rem,
                           "denominators": {"investigation_items": len(inv),
+                                           "adjudication_rows": len(adj),
                                            "remediation_rows": len(rem),
                                            "open": len(openi), "armed": len(armed),
                                            "files": files}},
@@ -217,6 +228,7 @@ def main():
     print("\n== DENOMINATORS (the two planes are NOT summed -- ids collide BY DESIGN) ==")
     print("  INVESTIGATION plane: %d item(s) across %d project(s), from %d file(s)"
           % (len(inv), len(projects), files))
+    print("    of which ADJUDICATION rows (the CVO's document, annex 4a; counted as the row gate counts them): %d" % len(adj))
     print("    OPEN (UNDER_INVESTIGATION / DECOMP_INVALIDATING): %d   [by LATEST carrier: own row, then `adjudicates`, then remediation id]" % len(openi))
     print("    ARMED (hazard still live: open, or graduated and not DISARMED): %d" % len(armed))
     for d in ("GRADUATED", "DISMISSED_WITH_REASON"):
