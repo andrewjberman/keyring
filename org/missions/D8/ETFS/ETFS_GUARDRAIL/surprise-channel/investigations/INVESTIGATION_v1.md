@@ -107,6 +107,31 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-10's own <proof_of_spec> block: '...which you commit yourself together with the instance and the result', following the harness identity line's general instruction 'flip the task order's <status> to complete and commit instance, deliverables and flip together'.",
     "world_is": "The same TO's own BOUNDS clause: 'Your write surface is the <paths> block below and nothing else... A path you need that it does not name is a CUT DEFECT: file a BLOCKING row and stop that criterion. It is never an override.' The <paths> block does not name task-orders/. The two clauses of the same document are in direct tension, and the gap repeats across every sampled TO in this round's issuance -- a shared dependency (the issuance's path-grant template), not a one-off.",
     "notes": "This worker does NOT edit the TO file to perform the flip; all 5 mechanical/judgment criteria (S10-AC1..AC5) are otherwise satisfied and the proof-of-spec instance validates VALID rc=0. The order is left at its issued status (pending) rather than mis-flipped. Disarm: the COO either widens the <paths> grant on this and the sibling TOs to include the task-orders/ file (or the specific TO path), or performs/authorizes the flip itself at L8 compile, or clarifies that the flip is intended to ride a different, unnamed mechanism (e.g., compiled at L8 rather than by the worker). Left alone, no worker in this round can close its own order without either violating its own write-surface bound or leaving it open."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S2",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-04T22:19:59Z",
+    "one_line": "TO-EG-s-3's own <proof_of_spec> block names the instance path 'ETFS_GUARDRAIL.TO-EG-s-3.proof_of_spec.json' (short form, to_id only), but .tools/to-pipeline-gate.py's check_complete_flip derives the required filename as the TO FILE'S FULL basename stem + '.proof_of_spec.json' -- so the exact path the TO's own text instructs the assignee to write is mechanically REFUSED at the complete flip (BLOCKED, files unstaged); EG-s-10's instance (a sibling worker's, also merged into this branch) carries the same short-form name and is also not flippable as named. This is a template-wide defect in the L6 issuance's <proof_of_spec> block wording, not unique to this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/to-pipeline-gate.py:1259-1265 @HEAD -- check_complete_flip: 'stem = os.path.basename(rel).rsplit(\".md\", 1)[0]; names = (stem + \".proof_of_spec.json\", stem + \"_PROOF_OF_SPEC.json\")' where rel is the TO file's own path, i.e. the expected instance name is the FULL TO-file stem including its descriptive suffix",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-3.the-port-source-verified.md:73 @de8693863c -- '<proof_of_spec>' block names 'org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-3.proof_of_spec.json' (short form: PROJECT.TO-ID only, missing the file's own '.the-port-source-verified' suffix), unchanged by the drain amendment",
+        "attempted this turn: bash .tools/safe-commit.sh ... -- <the three files including the status flip to 'complete'> -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' / '[to-pipeline-gate] REFUSED ... flips to \\'complete\\' on PIPELINE-REGISTERED project ETFS_GUARDRAIL, and NO proof-of-spec instance was found beside it.'",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-10.proof_of_spec.json @HEAD -- the sibling worker's instance carries the SAME short-form naming convention (comp-find --name '*.proof_of_spec.json' returns exactly these 2 files project-wide, both short-form), and TO-EG-s-10's own <status> line is still 'pending' despite the merge commit describing it as 'instance VALID, 5 of 5 criteria' -- consistent with the same mechanical refusal, not tested to confirm but the naming pattern is identical",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.proof_of_spec.json @HEAD -- the estate's own working convention elsewhere uses the FULL TO-file stem (matching the gate), so this is a template regression local to this round's L6 issuance, not a gate defect"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-3's <proof_of_spec> block: 'Instance at org/.../deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-3.proof_of_spec.json ... validated with python .tools/proof-of-spec-check.py <instance> ... which you commit yourself together with the instance and the result.'",
+    "world_is": ".tools/to-pipeline-gate.py's check_complete_flip (the mechanical gate that actually runs at commit time on a status:complete flip for a PIPELINE-REGISTERED project) looks for the instance under the TO file's OWN FULL basename, not the short to_id form the TO's prose names -- so following the TO's <proof_of_spec> block literally produces a file the gate cannot find, and the commit is refused.",
+    "notes": "Resolved for THIS cell by renaming (not duplicating) the instance to org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-3.the-port-source-verified.proof_of_spec.json (the gate-satisfying name, re-validated VALID rc=0 at that path), within this worker's own deliverables/<serial>/ write grant -- a single canonical instance, not a second carrier. The TO's own <proof_of_spec> prose is left unedited (outside this worker's narrow status-line-only grant on that file) and now cites a stale filename; the WORKER REPORT for this order names the actual committed path. Left alone this blocks every worker's own attempt to flip its own order project-wide (same template, all 14 cells), a defect the issuer/COO can fix once at the template rather than per-worker."
   }
 ]
 ```
