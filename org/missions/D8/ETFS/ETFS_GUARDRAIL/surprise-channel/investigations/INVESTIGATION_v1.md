@@ -107,6 +107,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-10's own <proof_of_spec> block: '...which you commit yourself together with the instance and the result', following the harness identity line's general instruction 'flip the task order's <status> to complete and commit instance, deliverables and flip together'.",
     "world_is": "The same TO's own BOUNDS clause: 'Your write surface is the <paths> block below and nothing else... A path you need that it does not name is a CUT DEFECT: file a BLOCKING row and stop that criterion. It is never an override.' The <paths> block does not name task-orders/. The two clauses of the same document are in direct tension, and the gap repeats across every sampled TO in this round's issuance -- a shared dependency (the issuance's path-grant template), not a one-off.",
     "notes": "This worker does NOT edit the TO file to perform the flip; all 5 mechanical/judgment criteria (S10-AC1..AC5) are otherwise satisfied and the proof-of-spec instance validates VALID rc=0. The order is left at its issued status (pending) rather than mis-flipped. Disarm: the COO either widens the <paths> grant on this and the sibling TOs to include the task-orders/ file (or the specific TO path), or performs/authorizes the flip itself at L8 compile, or clarifies that the flip is intended to ride a different, unnamed mechanism (e.g., compiled at L8 rather than by the worker). Left alone, no worker in this round can close its own order without either violating its own write-surface bound or leaving it open."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-04T22:21:13Z",
+    "one_line": "TO-EG-s-10's own <proof_of_spec> text names the instance path 'ETFS_GUARDRAIL.TO-EG-s-10.proof_of_spec.json' (the short to_id form), but .tools/to-pipeline-gate.py's check_complete_flip derives the expected filename from the TO markdown's FULL basename stem plus '.proof_of_spec.json' -- so the status flip was REFUSED ('NO proof-of-spec instance was found beside it') against the correctly-named, already-VALID instance until this worker renamed the file (git mv, within its own deliverables/ grant) to match the gate's derivation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-10.the-trading-calendar-each-producer-resolves.md <proof_of_spec> block @5376ecaa8b -- 'The ASSIGNEE fills a ... instance at org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-10.proof_of_spec.json' (short to_id form, no descriptive suffix)",
+        ".tools/to-pipeline-gate.py:1259-1266 @HEAD -- check_complete_flip computes `stem = os.path.basename(rel).rsplit('.md', 1)[0]` (the FULL TO filename minus .md) then globs `deliverables/*/{stem}.proof_of_spec.json` -- for this TO that resolves to 'ETFS_GUARDRAIL.TO-EG-s-10.the-trading-calendar-each-producer-resolves.proof_of_spec.json', not the short form the TO's own text names",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.7.0_AE_CloudOps~P/NFRA_CLDGRPH.TO-CG-V-2.reachability-iam-authkind-verified.proof_of_spec.json @HEAD -- the established convention IS the full-stem form (matches the gate's derivation), so this TO's own <proof_of_spec> text is the outlier, not the gate",
+        "safe-commit run this session, first attempt (pre-rename): '[to-pipeline-gate] REFUSED -- ... flips to complete on PIPELINE-REGISTERED project ETFS_GUARDRAIL, and NO proof-of-spec instance was found beside it', rc=1 -- reproduced live, not inferred"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-10's own <proof_of_spec> block names the instance file 'ETFS_GUARDRAIL.TO-EG-s-10.proof_of_spec.json', and this worker filled and validated exactly that file (VALID rc=0 twice, once per worktree).",
+    "world_is": "The live mechanical gate that actually decides whether a complete flip is admitted (.tools/to-pipeline-gate.py check_complete_flip) does not read the TO's <proof_of_spec> text at all -- it derives the expected filename purely from the TO markdown's own basename, which includes the descriptive suffix the TO's prose form omits. A worker following the TO's own instructions verbatim produces a file the gate cannot find.",
+    "notes": "Disarmed by this worker's own act (git mv to the gate-derived filename, re-validated VALID rc=0, artifact-resolution pins corrected to the commits that actually carry the two co-authored artifacts), which is within this worker's write grant (its own deliverables/<serial>/ folder). Filed as OBSERVATION/ARMED because the SAME short-form naming instruction appears verbatim in every sibling TO's <proof_of_spec> block in this round (S1-AC.., S2-AC.. etc. all name '<PROJECT>.<TO-ID>.proof_of_spec.json' without the descriptive suffix) -- any sibling worker who fills the instance exactly as instructed and then attempts the flip will hit the identical refusal. Disarm: amend the <proof_of_spec> text on the remaining round faces to the full-stem form, or teach the gate to also try the short-id form."
   }
 ]
 ```
