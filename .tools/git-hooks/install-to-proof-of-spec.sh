@@ -27,7 +27,7 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # Wired by .tools/git-hooks/install-to-proof-of-spec.sh.
 if [ -f "$ROOT/.tools/git-hooks/to-proof-of-spec-check.sh" ]; then
     ROOT="$ROOT" STAGED="$STAGED" bash "$ROOT/.tools/git-hooks/to-proof-of-spec-check.sh" "$@" || exit 1
-elif git diff --cached --name-only --diff-filter=A 2>/dev/null | grep -qE '(^|/)task_orders/[^/]+\.(md|xml)$'; then
+elif git diff --cached --name-only --diff-filter=A 2>/dev/null | grep -qE '(^|/)task[_-]orders/[^/]+\.(md|xml)$'; then
     echo "BLOCKED: a NEW task_orders file is staged but .tools/git-hooks/to-proof-of-spec-check.sh is missing." >&2
     exit 1
 fi
