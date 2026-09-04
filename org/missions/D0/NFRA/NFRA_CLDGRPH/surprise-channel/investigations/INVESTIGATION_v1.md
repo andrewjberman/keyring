@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **38 rows** (S1-S33 with id S11 vacated by the concurrent-append renumber, plus W2-S1..W2-S6). Restated 2026-09-04 08:39Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
+**Append-only during the round.** Denominator at this write: **39 rows** (S1-S33 with id S11 vacated by the concurrent-append renumber, plus W2-S1..W2-S7). Restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against. [S32/S33: the round-4 issuance, this commit].
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1194,6 +1194,35 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "D2-AC7 assumes `ps -o args -C python3.11` on the box lists the uvicorn process carrying `--workers 1`.",
     "world_is": "It lists nothing (the selector does not match this process's comm on this box), while the process itself carries --workers 1 unchanged. Disarmed in-place by widening the worker's own script, which is the deliverable the criterion invokes; the criterion's expectation is met by PROBE-2's line in the same output.",
     "notes": "This order deployed nothing (W2-S1), so the argv read is a measurement of the PRE-EXISTING running gateway -- it proves --workers 1 was not touched, and proves nothing about a deploy that did not happen."
+  }
+]
+```
+## W2-S7 -- the NEVER-2 ledger's SENTINEL lives outside the task order's write grant, so an OPEN entry cut by a worker cannot travel with its branch
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S7",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T09:15Z",
+    "one_line": "deploy_ledger.py writes TWO carriers per entry: the human record org/critical_paths/change_management/<stamp>_<slug>_deploy_completion.md and the machine SENTINEL org/critical_paths/.open_deploys/<slug>.json that `check`/`list` actually enumerate. TO-CG-D-2's <paths> grants org/critical_paths/change_management/ and NOT org/critical_paths/.open_deploys/, and sentinels are TRACKED files (26 of them under git ls-files, not gitignored) -- so this worker committed the entry MD and left the sentinel untracked in its worktree. Consequence: when this branch is compiled, the COO's `deploy_ledger.py check --red` will NOT see this OPEN entry through the sentinel index; it surfaces only through the SECOND limb, the change_management/*.md sweep, as 'BYPASS: UNINDEXED OPEN LEDGER'. The entry still blares, but in the finding class that means 'a ledger with no sentinel' rather than 'an open deploy'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:155-156 (_state_path) and :166-169 (_save) + :222-224 (_write_entry) @5644fee152 -- every state change writes both the sentinel JSON and the entry MD; cmd_check enumerates sentinels (its own output line 'SCAN DENOMINATOR: 5 of 5 sentinel(s) scanned') and separately sweeps change_management/*.md for entries with no sentinel, printing them as 'BYPASS: UNINDEXED OPEN LEDGER'.",
+        "MEASURED in this worktree 2026-09-04 09:1xZ: `git status --porcelain` after both commits shows exactly one residue line, '?? org/critical_paths/.open_deploys/cldgrph-cgd2-gateway-graph-path.json'; `git check-ignore -v` on it prints NOTHING (not ignored) while `git ls-files org/critical_paths/.open_deploys/` lists tracked sentinels -- so the file is committable in principle and simply outside this order's grant.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.md <paths> block: 'org/critical_paths/change_management/' is listed; no other org/critical_paths/ path is."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order binds NEVER-2 ('open a deploy ledger BEFORE the first apply/deploy act with every leg; close each leg with proof; close the entry') and grants org/critical_paths/change_management/ as the write surface for it.",
+    "world_is": "The instrument NEVER-2 names writes a second, tracked carrier one directory up, which the grant does not cover -- so a worker can open a ledger it cannot fully commit. Nothing was written outside the grant: the sentinel is left untracked and named here instead.",
+    "notes": "Prospective and cheap: add org/critical_paths/.open_deploys/ to the <paths> of any task order that binds NEVER-2, or have the compiling seat run `deploy_ledger.py` state ops in the tree it will merge into. This row is filed for the ROUTE, not as a defect of the tool: two carriers is the tool's design, and the second limb is exactly why the entry is not invisible."
   }
 ]
 ```
