@@ -1058,6 +1058,77 @@ per the pitch 93644) is not pre-empted.
     "spec_asserts": "The eight rows' own `spec_asserts` (the T-12, T-23, T-18, T-14, T-5, T-17, T-21 faces and the RESEAT message), and annex v2.3 s.4: a disposition is the CVO's field, set at L8/L9 by a row of the CVO's.",
     "world_is": "Each item is either superseded, remedied in place by its owner, ruled by its issuer, or a record with no remedy owed inside this project's chain; two are placed with owners outside it (S25 the detector's, S26 the runtime's). One form fact for the issuer: five of the nine round-6 worker rows set their own disposition and one (S32) carries an `adjudicates` list on the CVO's item -- harmless on inert observations, but the field is the CVO's L9 carrier.",
     "notes": "Documented at L9 ahead of the round-6 stamp because COO 93853 asks for L9 on tranche 1 now and Andrew's word at the COO terminal was pace; nothing here routes, so nothing waits for tranche 2. S29 stays UNDER_INVESTIGATION for the stamp (a routed row per the issuer's read: the consumer half under CE-t-12). S31 stays UNDER_INVESTIGATION until this seat's own exercise of T6-AC7 returns (running under a hard wrapper; the first attempt is S31's own subject). Named to 1.0.0_SA_CTO in the stamp message, not routed: S26's false-empty-read class on Codex seats; and a gate limb 'adjudicates only from the CVO' would close the S32 shape mechanically."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S34",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~2",
+    "surfaced_at": "2026-09-04T03:37:46Z",
+    "one_line": "TO-CE-G-2's step 1 ('MEASURE FIRST: one real default run of each tool on a real subject') could not run on comp-blast as spawned: this fresh worktree carries no copy of the gitignored canonical kuzu DB, so comp-blast's first run was TOOL-FAILED, not a real answer -- resolved by copying the DB + manifest (read-only, gitignored runtime artifacts) from the main workspace into this worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git check-ignore -v infra/aws/globgrph/kuzu_nessie_db infra/aws/globgrph/kuzu_nessie_db._build_manifest.json -> both matched by infra/aws/globgrph/.gitignore:3 and :10 -- runtime artifacts, never committed, never shipped into a worktree checkout.",
+        "First run in this worktree (pre-copy): `.tools/comp-blast component:AdvisorsTab.tsx --budget 90` -> rc=1, stdout: 'TOOL-FAILED: canonical kuzu DB not found at C:\\tmp\\wk-CE-2\\infra\\aws\\globgrph\\kuzu_nessie_db. comp-blast's universe IS this graph; it does NOT fall back to a private scan.'",
+        "Remedy: `cp -p` of kuzu_nessie_db (217,927,680 bytes) and kuzu_nessie_db._build_manifest.json from C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\infra\\aws\\globgrph\\ into this worktree's infra/aws/globgrph/ (filesystem copy only -- no git operation, no edit to any tracked path). Re-run: rc=3 NOT-FOUND (a real answer against 27,223 real nodes), with the ordered VINTAGE line present.",
+        "The same fresh-worktree gap also emptied comp-trace's local cache (.comp-graph/graph.json absent) -- that one self-healed via the engine's OWN pre-existing rebuild-on-absence path (_get_graph, org/modules/graph/cli.py, unedited by this order) in 66.9s, well inside the 120s bound; no action was needed there."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CE-G-2 deliverable step 1: 'one real default run of each tool on a real subject, output captured whole'; compiler_tools_mandate: 'AFTER COMMIT: the two real answers quoted'.",
+    "world_is": "A spine-v3 worktree does not carry the gitignored canonical kuzu DB (217 MB, machine-local runtime state) that comp-blast's universe IS -- a fresh worktree spawned for a comp-blast/comp-trace task order cannot exercise a real comp-blast answer without first provisioning that DB from a source that already built it. G2-AC2/AC4's proof-of-spec evidence and G2-AC6's comp_blast_cli battery arm all depend on this copy remaining in place in THIS worktree for a re-run to reproduce the same PASS.",
+    "notes": "No engine file touched (G2-AC5's three seam files are untouched and byte-identical); this is a worktree DATA-PROVISIONING fact, not a code change. Named for whoever owns spine-v3 worktree spawning for graph-touching task orders, and for 2.0.0_SA_COO's FWD-9 distinct-seat re-run: a re-run in a worktree without this copy will reproduce the SAME TOOL-FAILED comp-blast start this row measured, not a defect in the disclosure code this order shipped."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S35",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~2",
+    "surfaced_at": "2026-09-04T03:37:46Z",
+    "one_line": "G2-AC3's own invocation ('.tools/comp-trace AdvisorsTab.tsx --budget 90') failed with an argparse usage error (rc=1) BEFORE this order: comp-trace's subparser never accepted --budget (only comp-blast's did). Added --budget to comp-trace's argparse as an ACCEPTED-BUT-INERT flag (parsed, stored, never consulted) so the criterion's literal invocation reaches the shared disclosure code; comp-trace's local TraceGraph still has NO Rule-T bound on its own rebuild-on-drift path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (routes CE-t-6/NFRA_CLDGRPH CG-s-8, the Rule-T binding comp-trace's OWN local-graph rebuild still lacks)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Pre-edit `git show HEAD:org/modules/graph/cli.py` p_trace block (lines 1749-1761 of that blob): --exact, --direction, --depth, --json, --all are declared; no --budget. p_blast (same file) DOES declare --budget with the Rule-T help text.",
+        "First run in this worktree, pre-edit: `.tools/comp-trace AdvisorsTab.tsx --budget 90` -> rc=1, stdout: 'usage: cli.py [-h] {build,trace,blast,diff,xref} ...' / 'cli.py: error: unrecognized arguments: --budget 90'.",
+        "Post-edit: the same invocation reaches `_emit_trace_provenance` and prints the VINTAGE line at rc=3 (a real NOT-FOUND, not a usage error). p_trace's new --budget carries an explicit help string stating it is currently INERT and naming CG-s-8 as the engine that would have to bind it for real.",
+        "Measured cold-cache cost this order's --budget on trace does NOT bound: a fresh worktree's first comp-trace call rebuilt the local TraceGraph in 66.9s (Building trace graph... Graph built: 2129 nodes, 2920 edges (66.9s)) with no ceiling consulting the caller's --budget value at all -- inside this order's 120s test bound, but not bounded BY the flag a caller supplies."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CE-G-2 criterion G2-AC3: <invocation>.tools/comp-trace AdvisorsTab.tsx --budget 90</invocation> naming the SAME shape as G2-AC2's comp-blast invocation, implying --budget already works uniformly on both tools' CLI surface.",
+    "world_is": "comp-trace's argparse had no --budget flag at all; the literal criterion invocation was a usage error, not a disclosure exercise, until this order's own cli.py edit added acceptance. The acceptance is COSMETIC ONLY: a caller who now passes --budget to comp-trace expecting a Rule-T ceiling (the way it works on comp-blast) gets none -- a drifted/absent local cache can still take upwards of a minute to rebuild with no budget enforcement, which is the exact class of silent-ambush risk CE-t-6/T6-AC7 closed on comp-blast's side.",
+    "notes": "Scoped strictly to cli.py's argparse surface (the DISCLOSURE lane this order owns); binding comp-trace's local rebuild to Rule-T for real is out of this disclose-only order's bounds (NO ENGINE CHANGE governs the kuzu seam; comp-trace's own rebuild path is a different engine again, unowned by any cell this order claims). Left ARMED rather than INERT because a future caller reading --budget's presence on comp-trace, without reading its help text, will reasonably assume it bounds the call the way it does on comp-blast -- it does not."
+  },
+  {
+    "id": "NFRA_COMPEFFICACY-S36",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_COMPEFFICACY~2",
+    "surfaced_at": "2026-09-04T03:52:41Z",
+    "one_line": ".owned-paths.yaml carries NO spine-v3 worker (0.9.0_WK_*) entry in ANY lane's permitted_agents -- this TO's own explicitly-named surfaces (org/modules/graph/cli.py, lane ANY_EXEC_OR_AE; the new .tools/tests/test_g2_disclosure_battery.py, lane TOOL_BATTERIES) both BLOCKED this worker's safe-commit.sh call in block mode, contrary to the TO's own commit instructions. Routed around via the documented SINGULAR GIT_COMMIT_AUTHOR_OVERRIDE=<LANE> escape hatch (CLAUDE.md 14a), one commit per violated lane, both audited in org/git-author-override-audit.log.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (issuer of spine-v3 worker task orders; owns .owned-paths.yaml grants per its own history, e.g. the 0.8.0_AE_CloudComp~D / NFRA_GRAPHUNI addition)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bash .tools/safe-commit.sh --author \"0.9.0_WK_NFRA_COMPEFFICACY~2 <...>\" -F <msgfile> -- org/modules/graph/cli.py .tools/tests/test_g2_disclosure_battery.py` -> rc=1: 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: .tools/tests/test_g2_disclosure_battery.py -- lane=TOOL_BATTERIES ... agent=0.9.0_WK_NFRA_COMPEFFICACY~2 not in permitted_agents; VIOLATION: org/modules/graph/cli.py -- lane=ANY_EXEC_OR_AE ... agent=0.9.0_WK_NFRA_COMPEFFICACY~2 not in permitted_agents'.",
+        "comp-find '0.9.0_WK' .owned-paths.yaml -> 0 hit(s) across 1 file(s) scanned -- a measured, whole-file zero: no spine-v3 worker serial pattern is enumerated anywhere in the lane file.",
+        ".owned-paths.yaml TREE_COO note (task-orders/ lane): 'task-orders/ LEFT this lane 2026-09-03 (-> ANY, Andrew-direct @a4c9b25b4c: workers commit freely where their work is; the L6 gates are the control)' -- the estate's own stated direction for WORKER commits is already ANY-shaped elsewhere; the gap is that spine-v3 workers were never enumerated when TOOL_BATTERIES (2026-09-02) and the ANY_EXEC_OR_AE lane's later tilde-additions were cut, both predating this worker TYPE.",
+        "Both files pass commit-gate.sh and G2-AC5/AC6/AC7 clean before the lane refusal fired -- the block is purely an authorship-enumeration gap, not a content defect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CE-G-2's own commit mechanics: 'Commit ONLY on branch wk-CE-2 via: bash .tools/safe-commit.sh --author ... -F <msgfile> -- <paths>', naming org/modules/graph/cli.py and .tools/tests/test_g2_disclosure_battery.py as this worker's own surfaces to create and commit.",
+    "world_is": "The literal safe-commit.sh invocation the TO specifies is refused in block mode for BOTH named surfaces, because .owned-paths.yaml has never been extended to recognize the spine-v3 worker serial grammar (0.9.0_WK_<PROJECT>~<n>) introduced by the v3 pipeline -- a class gap, not specific to this worker or this project.",
+    "notes": "Every future spine-v3 worker task order that names an ANY_EXEC_OR_AE or TOOL_BATTERIES (or any other non-ANY-lane) path as its surface will reproduce this identical refusal until .owned-paths.yaml is extended (a wildcard or an explicit 0.9.0_WK_* grant per lane, mirroring the TREE_COO task-orders/ precedent). Left ARMED because the recurrence is certain, not merely possible, and no seat currently owns closing it. This worker used the SINGULAR override (one lane per commit) per CLAUDE.md 14a rather than escalating and stalling; the audit trail is org/git-author-override-audit.log, two OVERRIDE lines, one per lane, timestamped this session."
   }
 ]
 ```
