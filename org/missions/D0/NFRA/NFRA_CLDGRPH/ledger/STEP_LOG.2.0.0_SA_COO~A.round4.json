@@ -137,6 +137,36 @@
       "spine_clause": "L7 (the drain: report + instance read, merge when valid through the refuser, worktree and branch removed, the worker continued for its next order)",
       "gate_or_notifier_touched": "NONE (gates run, none edited). FINDING for the drain-end read, owner 2.0.0_SA_COO base (the script's owner): safe-merge.sh commits the merge under the git-config identity ('Andrew Berman <andrew@opalinvest.com>'), not the draining seat's serial -- it passes no --author, so the merge commit is not attributed to the COO on the record.",
       "note": "First drain of the round: green arm of safe-merge.sh exercised (a clean branch merges and commits as designed); the collision arm stays unexercised (this branch minted no row)."
+    },
+    {
+      "seq": 5,
+      "limb": "L7",
+      "started_utc": "2026-09-04T09:12Z",
+      "ended_utc": "2026-09-04T09:40Z",
+      "act": "DRAIN of TO-CG-D-2 (CG-s-5, worker 0.9.0_WK_NFRA_CLDGRPH~2) -- REFUSED, branch left intact. The WORKER REPORT read: BLOCKING row NFRA_CLDGRPH-W2-S1 (owner 1.0.0_SA_CTO) -- .tools/halt-gate-check.sh:134-154 halt_gate_validate_serial admits a serial only with an agent HOME FOLDER under org/tier*/ and a single-uppercase-letter lane, so every spine-v3 worker serial 0.9.0_WK_<CODE>~<digit> fails both; .tools/safe-apply.sh rc=3 'SERIAL RESOLVES TO NO KNOWN AGENT' and infra/aws/ec2/safe-ec2-deploy.sh rc=3 'IDENTITY UNRESOLVED'; nothing overridden, no bare apply, no non-Rule-12 route to the box. The cell is BUILT and DECLARED (the globgrph IntegrationSpec + graph_ tools, the /graph/cypher + /graph/health bearer path, config, the deploy-script fetch line, graph-read.tf, alb.tf's graph_capability rule; targeted plan '2 to add, 0 to change, 0 to destroy'; the secret minted out-of-band, value only in Secrets Manager) and NOT APPLIED: acceptance D2-AC1/AC2/AC5/AC7/AC8 PASS, D2-AC3/AC4/AC6/AC9 FAIL honest, D2-AC10 no verdict; the instance VALID rc=0 by the COO's own run (7 surprises resolving); the worker flipped the face `complete` on rc 0 as worker.md instructs, with the closes-on unmet on the record. Seven rows minted in the W2 coordinate: W2-S1 BLOCKING/ARMED (the halt gate, CTO), W2-S2 OBSERVATION/ARMED (the live ALB's access_logs are LIVE-no-DECLARED; the worker added lifecycle ignore_changes=[access_logs] on aws_lb.gw so a targeted apply would not flip the live flag; owner 0.7.0_AE_CloudOps), W2-S3/S4 INERT (two defects of the ISSUER'S face: IntegrationSpec requires `description`; the module has no random provider), W2-S5 ARMED (D2-AC9's expectation can never print CLOSED: deploy_ledger.py list enumerates only OPEN sentinels; owner this seat), W2-S6 INERT (D2-AC7's `ps -C python3.11` prints only its header; the unit's MainPID argv is the oracle), W2-S7 ARMED (the ledger's tracked SENTINEL lives under org/critical_paths/.open_deploys/, outside the order's grant; owner this seat). All four commits authored by the worker serial; override audit PASS on 13/4/2/1 paths in-lane. THE MERGE: .tools/safe-merge.sh @747a0b23c3+ graded the merged index (16 staged paths) and REFUSED with 7 violations, one clause: surprise-row-gate.py _coordinate_violations reads the COMMITTER (the draining seat 2.0.0_SA_COO~A via OPAL_AGENT_SERIAL) and refuses every W row from a seat -- 'a seat's row on the main index carries no W'; the same gate's co-worker sweep had admitted the same seven rows as a co-worker's riding along; no id collided. Re-run twice to read the verdict whole; the script aborted clean each time (no MERGE_HEAD). The gate prints its audited override ('# surprise-row-override: <reason>'), but the ONLY carrier that audits it and exports SURPRISE_ROW_OVERRIDE to the hook is safe-commit.sh, which commits with `git commit --only -- <pathspec>` -- refused by git during a merge; safe-merge.sh's pre-grade takes no message; a direct git commit with the env var would leave the override unaudited. So the drain was NOT finished by hand. wk-NFRA_CLDGRPH-2 and its branch (HEAD d4ab452051) stay intact for the re-hand; the ledger sentinel org/critical_paths/.open_deploys/cldgrph-cgd2-gateway-graph-path.json (untracked, outside the grant) was captured to the COO's scratchpad.",
+      "inputs": [
+        {
+          "kind": "REPORT",
+          "ref": "WORKER REPORT 0.9.0_WK_NFRA_CLDGRPH~2 on NFRA_CLDGRPH.TO-CG-D-2, branch wk-NFRA_CLDGRPH-2 HEAD d4ab452051 (commits 4c3999de4a, 711ca339e8, 7b73d459fb, d4ab452051)"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-2.gateway-traversal-integration.proof_of_spec.json @d4ab452051 (VALID rc=0 at this seat; 4 FAIL rows)"
+        },
+        {
+          "kind": "MEASUREMENT",
+          "ref": "safe-merge.sh on wk-NFRA_CLDGRPH-2: 'grading the MERGED index -- 16 staged path(s)'; surprise-row-gate BLOCKED 7 violation(s) on NEW rows, every one 'carries W2 but the committer 2.0.0_SA_COO~A is not a worker'; aborted clean"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "NO MERGE. CLOUD HEAD unchanged by this drain; the branch and worktree kept; two gate defects carried to the drain-end read: (1) halt-gate-check.sh admits no worker serial (blocks every worker apply/deploy: D-2 now, D-1's pins next); (2) surprise-row-gate's W-discipline reads the merge committer, so safe-merge.sh cannot land any worker branch that carries a row -- the fix reads the row's surfaced_by slot at a drain, or safe-merge grades as the branch's author"
+        }
+      ],
+      "spine_clause": "L7 (the drain: 'a refused drain leaves no open merge, the worker re-mints on its branch, the drain runs again' -- v3.5; here the refusal is on identity, not an id, so no re-mint exists; v3.1: an armed row whose owner the COO cannot seat rides the drain-end read)",
+      "gate_or_notifier_touched": "NONE edited. Two gates exercised to refusal on their first live W-row drain: halt-gate-check.sh (identity) and surprise-row-gate.py _coordinate_violations (at a merge). Both owners are 1.0.0_SA_CTO (the v3 carriers) with 2.0.0_SA_COO base for safe-merge.sh.",
+      "note": "The round is BLOCKED end to end on the halt gate: D-1 (in flight at ~1) needs safe-apply for its three pins; D-3 needs D-2's live path; D-5/D-6 need D-3; D-9 needs D-1's pins and a night; D-7/D-8/D-10/D-11 follow. Slot ~2 is not handed D-3. The drain-end read goes to 1.0.0_SA_CTO as soon as ~1 reports, carrying both gate defects, W2-S1 (armed, the CTO's), S26/S30 (the CTO's), the G8 arch-gate request, and the three instrument gaps already logged (GATE (v)'s regex; safe-merge's author; the background worktree checkout)."
     }
   ]
 }
