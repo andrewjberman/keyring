@@ -185,18 +185,32 @@ in the worker face and the task order is defective.
 
 Model: the cheaper one, unless the preflight marks the cell hard and you override **per task order**.
 
-⛔ **BEFORE YOU SPAWN, CHECK THE WORKER'S LANE AGAINST THE TASK ORDER'S `<paths>` — ALL OF THEM, NOT
-JUST THE TWO THE SPINE NAMES.** A worker is admitted to `deliverables/<serial>/` **by path** (no grant
-needed) and to `task-orders/` for its own flip. **Every other surface the order names needs a real
-lane, and `.owned-paths.yaml` enumerates NO `0.9.0_WK_*` serial anywhere** (`comp-find '0.9.0_WK'` over
-it → 0 hits). Measured on v3's first drain: the worker's two code surfaces were both REFUSED in block
-mode and it committed through `GIT_COMMIT_AUTHOR_OVERRIDE`, one lane per commit. That is the documented
-audited escape and it is SINGULAR, but it means the acceptance test "admitted by owned-paths-check"
-**did not pass as exercised — the override did.**
+⛔⛔ **THE TASK ORDER IS THE WORKER'S GRANT — SO THE `<paths>` BLOCK IS A PERMISSION, NOT A HINT.**
+Andrew-direct 2026-09-04 ~04:58Z, "recs approved" on the CTO's card, RULING 1 shape **(c)**: a worker
+serial is admitted to **exactly the paths a task order under that project, issued to that serial and
+non-terminal at HEAD, names in `<paths>` — and to nothing else.** No lane in `.owned-paths.yaml`
+enumerates a worker, and none will.
 
-> **The error to avoid is the one this skill's author made:** checking the two paths the SPINE names and
-> concluding the worker "has no lane blocker". Those two are grant-free by construction, so testing them
-> proves nothing about the order's actual write surface. **Census the `<paths>` block, not the doctrine.**
+**CONSEQUENCE FOR THE CUT, and it is the whole reason this matters at L6:** a surface you leave out of
+`<paths>` is a surface the worker is **REFUSED** on, exactly like a lane refusal. **A path missing from
+the order is not an oversight the worker can route around — it is a wall.** So before you spawn:
+
+- Walk the deliverable and every criterion's invocation, and confirm `<paths>` names **every file the
+  worker will read or write**, absolute from the root.
+- A worker cannot ask you to add one. It files a surprise row and stops on that criterion.
+
+⚠ **STATE OF THE MECHANISM: the ruling is DESIRED, the resolver is being built.** `1.0.0_SA_CTO` owns
+the `owned-paths-validate.py` limb that admits a worker's staged path by reading its order at HEAD;
+`0.0.0_AB_MSTR` lands the registry stanza declaring the policy. **Until both land, a worker's commit on
+a real surface is still REFUSED and still needs the audited, singular `GIT_COMMIT_AUTHOR_OVERRIDE`** —
+which is how v3's first drain actually committed, and why item 3's "admitted by owned-paths-check" limb
+did not pass as exercised.
+
+> **The error to avoid is the one this skill's author made:** checking the two paths the SPINE names
+> (`deliverables/<serial>/` and `task-orders/`) and concluding the worker "has no lane blocker". Those
+> two are grant-free BY CONSTRUCTION, so testing them proves nothing about the order's real write
+> surface. **Census the `<paths>` block, not the doctrine** — and under (c) that census is the grant
+> itself.
 
 ## Step 5 — The drain, per terminal task order
 
