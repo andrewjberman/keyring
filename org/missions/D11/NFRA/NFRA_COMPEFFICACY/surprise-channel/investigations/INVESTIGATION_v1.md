@@ -7,7 +7,7 @@
 **Round 1 task orders:** ONE live -- `TO-CE-T-1` at `0.8.0_AE_CloudComp` (TO-CE-DISC-2 and TO-CE-TP-1 WITHDRAWN 02:25Z,
 their decisions landed at L4 in PRD v0.4 @19bf1c7322). L10 routing waits on that TO's completion AND every row below
 CVO-checked.
-**Append-only during the round.** Denominator at this write: **33 rows** (S33 appended by `3.0.0_SA_CVO` 18:09Z, the round-6 tranche-1 L9: S23/S24/S25/S26/S27/S28/S30/S32 DISMISSED_WITH_REASON on this seat's reads; S29 and S31 wait for the stamp; S32 is a worker's adjudicating row on the CVO's item, a form note for the issuer).)
+**Append-only during the round.** Denominator at this write: **37 rows** (S1-S36 and S39; S39 appended by `3.0.0_SA_CVO` 2026-09-04 06:5xZ at the round-6 L9; S34, S35 and S36 are the worker 0.9.0_WK_NFRA_COMPEFFICACY~2's, merged @46ff7f8c8a without a restatement; S37 and S38 are CVO rows in `../adjudications/` and are not items. The previous restatement: **33 rows** (S33 appended by `3.0.0_SA_CVO` 18:09Z, the round-6 tranche-1 L9: S23/S24/S25/S26/S27/S28/S30/S32 DISMISSED_WITH_REASON on this seat's reads; S29 and S31 wait for the stamp; S32 is a worker's adjudicating row on the CVO's item, a form note for the issuer).)
 04:26:20Z, the disarm ack on S6: PID 25896 left untouched, the docstring residual confirmed already
 fixed at S5's own commit. S6 appended by `3.0.0_SA_CVO` 04:2xZ, the L9 disposition and L10 stamp of the S2/S3/S5 item; S5 appended by `0.8.0_AE_CloudComp`
 04:16:43Z -- the S3 disarm: grounds the BUDGET REACHED phenomenon as LOCAL via a live rebuild-process
@@ -1134,3 +1134,34 @@ per the pitch 93644) is not pre-empted.
 ```
 
 -- S1: `3.0.0_SA_CVO` (L8 assembly). S2, S5, S7: `0.8.0_AE_CloudComp` (direct append, tree-channel lane ANY, CLAUDE.md s.2 2026-09-03 correction). S3, S4, S6: `3.0.0_SA_CVO` (L9 adjudication, direct append per the corrected law).
+
+## S39 -- a kuzu rebuild winner died at 01:36Z and its mkdir-mutex and WAL are still on disk five hours later (the CVO's row, lane ANY; found while exercising S31's fix)
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-S39",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T06:55Z",
+    "one_line": "infra/aws/globgrph/kuzu_nessie_db.rebuild.lock is an EMPTY DIRECTORY created 2026-09-04T01:35:59Z, beside kuzu_nessie_db.rebuild.tmp (4,096 B, 01:36:12Z) and kuzu_nessie_db.rebuild.tmp.wal (6,574,411 B, last written 01:36:38Z); no python process running kuzu_nessie_load, kuzu_incremental or cli.py blast/trace/build exists at 06:5xZ (Win32 census). A rebuild winner took the mkdir-mutex, wrote for 39 seconds and died; _canonical.py's own comment (:659-660) names this case: 'a winner hard-killed between mkdir(lock) and the finally-rmdir leaves .rebuild.lock forever, so EVERY default query would pay the full wait then serve stale'. The budgeted path is unaffected (a --budget 60 comp-blast served the BEHIND graph in 7 s at 06:43Z); whether an UNBUDGETED default query steals the 5-hour-old lock (the token steal at :204-217) or waits REBUILD_TIMEOUT_S = 1800 s is UNEXERCISED here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (the kuzu engine's owner) via NFRA_CLDGRPH cell CG-s-8, the local rebuild path's retirement",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la infra/aws/globgrph/kuzu_nessie_db.rebuild.lock/ at 06:5xZ: a directory, 0 entries, created 2026-09-04T01:35:59Z; siblings kuzu_nessie_db.rebuild.tmp 4,096 B (01:36:12Z) and kuzu_nessie_db.rebuild.tmp.wal 6,574,411 B (01:36:38Z); the served kuzu_nessie_db 217,927,680 B and its manifest built_at 2026-09-04T01:27:09Z (so the dead rebuild started 8 minutes after a successful one).",
+        "Get-CimInstance Win32_Process at 06:5xZ filtered on kuzu_nessie_load|kuzu_incremental|cli.py (blast|trace|build): 0 processes -- the mutex holder is dead.",
+        "infra/aws/globgrph/_canonical.py at HEAD (comp-read --enumerate): :650 lock = db_path + '.rebuild.lock'; :655 os.mkdir(lock) atomic acquire; :659-660 the hard-killed-winner comment quoted above; :66 REBUILD_TIMEOUT_S = 1800 (GLOBGRPH_REBUILD_TIMEOUT_S); :204-217 a steal path (rmdir + re-mkdir writes a NEW token; the stolen-from winner reads a mismatch and aborts).",
+        "Budgeted control at 06:43:18Z-06:43:25Z: .tools/comp-blast gold:A_00.accounts_dimension --exact --budget 60 -> rc 3 in 7 s with 'WARN: BEHIND Nessie HEAD -- pin 1686878912724079672 != HEAD 92487625797322719 (writer=incremental_updater, committed_at=2026-09-04T05:53:37Z)', age 5.3h -- the budgeted client serves stale and never touches the mutex (T6-AC7 @5bba38864c). The unbudgeted default path against this lock was NOT exercised at this seat (a 1800 s wait is not a control this seat runs inside a slug)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "_canonical.py's rebuild contract: a stale or BEHIND canonical DB is rebuilt under a mkdir-mutex, a dead winner's lock is stolen by token after the timeout, and a budgeted caller (PRD s.4.4 / CE-g-5 / T6-AC7) is served the existing graph labeled stale and never waits on a rebuild.",
+    "world_is": "A winner died at 01:36:38Z leaving the mutex directory and a 6.5 MB WAL; five hours later both persist. The budgeted contract holds (measured). Whether the next unbudgeted default query steals the lock promptly, waits 1800 s, or serves stale after the wait is unmeasured; the engine's own comment says the pre-steal behaviour was 'the full wait then serve stale'. This is the local rebuild path NFRA_CLDGRPH CG-s-8 exists to retire; filed here because it was found at this project's L9 exercise and named in the round-6 slug for the CTO to route.",
+    "notes": "Adjudicated in the same commit by ../adjudications/ADJUDICATION_v1.md C-S6 (DISMISSED_WITH_REASON, owner named outside this project's chain). Not repaired at this seat: removing another process's mutex is the engine owner's act, and the WAL may be evidence of why the winner died."
+  }
+]
+```

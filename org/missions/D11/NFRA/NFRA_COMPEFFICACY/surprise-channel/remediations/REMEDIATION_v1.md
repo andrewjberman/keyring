@@ -10,6 +10,8 @@ here and VALID (rc 0) at checker vintage `7b649df39d`, 6 of 6 criteria each, sur
 dispositioned by its latest carrier (12 rows at HEAD; S13 and S14 appended GRADUATED in THIS SAME COMMIT -- the gate's
 census reads the index, so the stamp and its graduations are one act).
 
+**Round 6 slug (2026-09-04 ~07:0xZ):** three rows appended at the end of this document (the round-6 section) -- S31 REMEDIATED under CE-t-6 / T6-AC7 @5bba38864c and DISARMED 06:43Z by this seat's exercise on a BEHIND graph (closed); S36 REMEDIATED outside the project on Andrew's RULING 1 (stanza @e08447ff7d, limb @6efb43b9d0) and DISARMED 05:57Z by 4.0.0_SA_CRO's check-out (closed); S35 OPEN, owner 2.0.0_SA_COO on the CTO's route, in v3 form (no route token). Graduations: `../adjudications/ADJUDICATION_v1.md` C-S1, C-S3, C-S4. Rows in this document after the write: 6 (S13, S14, S17, S31, S35, S36); open 1 (S35).
+
 **Round 6, in-round (17:1xZ):** S17 reads `REMEDIATED` and `closed`: the forward half landed -- decomp v0.2.5 @e2b6c1fc96 (CE-t-6's closes-on gains the three-flag carry; TO-CE-T-19's face CLOSED NOT-RETIRED), TO-CE-T-6 complete @dad11b5207 with a VALID instance (6 of 6 at this seat) carrying --exact, --all and the direction spellings into comp-blast, exercised by a seat other than the builder on the face (2.0.0_SA_COO's distinct-seat FWD-9 read, rc 0, 507/507 traversal). This seat's own exercise of the carry met the ambush recorded as S30 and did not return; it is not evidence either way. Monotone advance, no override.
 
 **Round 6, in-round (15:5xZ):** S17's disarm reads `DISARMED` at 15:35Z by its owner `1.0.0_SA_CTO` -- the L2 adjudication record and PRD v0.6 @7138c4a176 (R-4 corrected to condition NOT MET, comp-trace kept, T-19 closes NOT-RETIRED); the remediation stays `OPEN` until the three-flag carry lands under CE-t-6 at L5/L6. Recorded by the monotone state advance the gate admits since @07cb6153e3, no override.
@@ -119,6 +121,84 @@ member. Neither route pre-empts the COO's next L6 for the cells they do not touc
     "loop_target": 2,
     "scope_change_kind": "CONTRADICTS_NAMED_OUTCOME",
     "outcome_ref": "FWD-5",
+    "closed": true
+  }
+]
+```
+
+## Round 6 slug (2026-09-04 ~07:0xZ) -- S31 closed on this seat's exercise, S36 closed on the grant landing outside the project, S35 OPEN
+
+Form: spine v3 -- no route token on the OPEN row; the CTO routes from the slug. Rows below carry the item's id per
+section 5; their graduations are C-S1, C-S3 and C-S4 in `../adjudications/ADJUDICATION_v1.md`.
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-S31",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "comp-blast's Rule T carrier bounded the traversal only; the universe load before it (cli.py load_kuzu_universe(refresh=True), the auto path) ran a FULL kuzu rebuild when the served graph was stale, inside a budgeted call and outside its clock -- a --budget 60 call ran past a 300 s harness ceiling on 2026-09-03T16:56Z and was killed outside with no line printed (S31's own measurement).",
+    "evidence": [
+      "S31 @ce5c7babea (3.0.0_SA_CVO, 2026-09-03T17:10Z): the pre-fix measurement -- rebuild mutex taken 2 s into a --budget 60 call, kuzu_nessie_load.py spawned at +9 s, the call still alive with the WAL growing at +10 min.",
+      "THE FIX, TO-CE-T-6 addendum T6-AC7 @5bba38864c (0.8.0_AE_CloudComp~G): comp_blast_universe.py refresh_allowed = not budgeted; cli.py whole-call clock; the BUDGETED CALL disclosure line. The T-6 instance @483ac095ae VALID rc 0 at this seat, 7 of 7.",
+      "THE EXERCISE, 3.0.0_SA_CVO 2026-09-04T06:43:18Z-06:43:25Z on a graph that is BEHIND Nessie HEAD (pin 1686878912724079672 != HEAD 92487625797322719, writer incremental_updater committed_at 05:53:37Z, age 5.3h): .tools/comp-blast gold:A_00.accounts_dimension --exact --budget 60 -> rc 3 (SUBJECT_ABSENT_FROM_CORPUS) in 7 s, the provenance block printing the BEHIND warning, no rebuild started (no new mutex, no loader process). Same call, same subject, same budget as the 16:56Z measurement that ran 17 minutes: the discriminator moved.",
+      "Not the fixer's read: 0.8.0_AE_CloudComp~G's S32 dismissed S31 on its own fix; S33 (this seat) declined that carrier; this row's disarm rests on this seat's exercise, by a seat other than the builder, on a real stale graph."
+    ],
+    "remedy": "comp-blast's universe load under a budget takes the CE-g-5 contract: the existing graph served labeled stale with its age, never a rebuild inside a budgeted call; the whole call on one clock; the full refresh stays comp-kuzu-full / MSTR startup. Landed under CE-t-6 / T6-AC7 in round 6.",
+    "owner": "0.8.0_AE_CloudComp~G (under CE-t-6, TO-CE-T-6 AC7)",
+    "round": "v6",
+    "disarm": {"state": "DISARMED", "owner": "3.0.0_SA_CVO", "at": "2026-09-04T06:43Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "0.8.0_AE_CloudComp~G", "round": "v6"},
+    "closed": true
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-S35",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "TO-CE-G-2's worker added --budget to comp-trace's argparse as an ACCEPTED-BUT-INERT flag so G2-AC3's literal invocation would reach the shared disclosure code (it had been an argparse usage error, rc 1). The flag is parsed, stored and never consulted: comp-trace's local TraceGraph rebuild-on-drift path has no Rule T bound (a fresh worktree's first call rebuilt for 66.9 s under no ceiling). A flag that lies by presence: a caller who passes --budget to comp-trace expecting the comp-blast contract gets none.",
+    "evidence": [
+      "S35 @e7dda3d93c (0.9.0_WK_NFRA_COMPEFFICACY~2, 2026-09-04T03:37Z): pre-edit p_trace declared --exact, --direction, --depth, --json, --all and no --budget; post-edit the invocation reaches _emit_trace_provenance at rc 3; the help string names the flag INERT and CG-s-8 as the engine that would bind it.",
+      "G-2 instance @65a85beb44 G2-AC3 PASS on its own expectation (the VINTAGE line prints on comp-trace, rc 3) -- graded PASS by this seat in C-S5 with the flag's inertness carried HERE, not as AC3's failure.",
+      "TO-CE-T-19 (comp-trace) WITHDRAWN and CLOSED NOT-RETIRED (PRD v0.6 R-4): no cell of this decomp owns comp-trace's own engine; CE-t-6 owns comp-blast; the local TraceGraph rebuild is a third engine (the worker's reading, agreed here)."
+    ],
+    "remedy": "Either bind comp-trace's local rebuild to Rule T (the flag then means what it says) or make comp-trace REFUSE --budget with one line naming the missing bound until it does; never accept a budget it will not honour. The CTO routes: a cell of this decomp (a CE-t-6 sibling for comp-trace) or NFRA_CLDGRPH CG-s-8 (the local path's retirement makes the question moot).",
+    "owner": "2.0.0_SA_COO (at the recut, on the CTO's route)",
+    "round": "v6",
+    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO", "at": null},
+    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO", "round": "v6"},
+    "closed": false
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_COMPEFFICACY-S36",
+    "project": "NFRA_COMPEFFICACY",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": ".owned-paths.yaml carried no spine-v3 worker (0.9.0_WK_*) grant in any lane, so TO-CE-G-2's own named surfaces (org/modules/graph/cli.py, .tools/tests/test_g2_disclosure_battery.py) refused the worker's safe-commit in block mode; the worker committed through the audited singular override, one lane per commit. A class gap: every v3 worker order naming a non-ANY lane would reproduce it.",
+    "evidence": [
+      "S36 @e7dda3d93c (0.9.0_WK_NFRA_COMPEFFICACY~2, 2026-09-04T03:52Z): the two VIOLATION lines verbatim; comp-find '0.9.0_WK' .owned-paths.yaml -> 0 hits across 1 file; two OVERRIDE lines in org/git-author-override-audit.log.",
+      "THE REMEDY, built outside this project on Andrew's RULING 1 (@9ef9a40aae, 'recs approved': the task order is the worker's grant): 0.0.0_AB_MSTR's worker_grant stanza @e08447ff7d (LD-0534 Amendment 1) + 1.0.0_SA_CTO's resolver limb @6efb43b9d0 (a worker is admitted to exactly the <paths> its non-terminal order names at HEAD; the L6 gate refuses a worker order without a <paths> block).",
+      "THE EXERCISE, 4.0.0_SA_CRO 94077 at 2026-09-04T05:57Z on committed bytes in a scratch worktree: worker ~7 on org/modules/graph/cli.py named by a non-terminal order -> ADMITTED rc 0, no override, no lane; the same worker on an unnamed surface -> REFUSED; worker ~2 on the same file -> REFUSED (another serial's order); the deliverables directory prefix -> ADMITTED; a terminal order grants nothing (worker ~2 on both G-2 surfaces REFUSED). Item 3 limb (b) PASS without an override -- eight of eight v3 carriers."
+    ],
+    "remedy": "The worker's grant is its non-terminal task order's <paths> at HEAD (RULING 1): the registry stanza and the resolver limb, both landed and exercised. No lane enumerates a worker and none will.",
+    "owner": "0.0.0_AB_MSTR (the stanza) and 1.0.0_SA_CTO (the limb), on Andrew's RULING 1",
+    "round": "v6",
+    "disarm": {"state": "DISARMED", "owner": "4.0.0_SA_CRO", "at": "2026-09-04T05:57Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v6"},
     "closed": true
   }
 ]
