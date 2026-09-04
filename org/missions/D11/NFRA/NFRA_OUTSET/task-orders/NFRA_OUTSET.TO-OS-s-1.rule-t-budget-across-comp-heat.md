@@ -26,8 +26,9 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 <criterion id="O1-AC1" cell_refs="OS-s-1"><invocation>.tools/comp-heat --help</invocation><expect>--budget</expect></criterion>
 `O1-AC1` -- `--help` DISCLOSES the budget carrier -- flag > COMP_BUDGET_S > default, in the s.4.4 form.
 
-<criterion id="O1-AC2" cell_refs="OS-s-1"><invocation>.tools/comp-heat freshness .tools --budget 5</invocation><expect>WITHIN BUDGET</expect></criterion>
+<criterion id="O1-AC2" cell_refs="OS-s-1"><invocation>.tools/comp-heat freshness .tools --budget 60</invocation><expect>WITHIN BUDGET</expect></criterion>
 `O1-AC2` -- a completing run prints WITHIN BUDGET with `scanned n of N`.
+⛔ **AMENDED at the drain on row `NFRA_OUTSET-W1-S1`, and the defect was the ISSUER'S.** The budget was `5`, and `5` DEMANDED A RESULT THE HONEST IMPLEMENTATION CANNOT PRODUCE: the engine has no path-scoped git call -- that is `OS-s-2`'s own UNBUILT cell -- so every freshness invocation, scoped or not, pays the whole-repo git-log cost, MEASURED 6.2-11.7 s. A correctly-wired 5 s ceiling therefore reaches BUDGET REACHED on every attempt, and the only way to pass the criterion as written was to wire the budget DISHONESTLY. **The criterion was a trap for a correct implementation.** Raised to `60`, which clears the measured floor with margin; the criterion's INTENT (a completing run discloses WITHIN BUDGET with its denominator) is unchanged. The 5 s case is not lost -- it is `O1-AC3`'s BUDGET REACHED arm, which is where a sub-floor budget belongs.
 
 <criterion id="O1-AC3" cell_refs="OS-s-1"><invocation>.tools/comp-heat freshness --budget 0.001</invocation><expect>BUDGET REACHED</expect></criterion>
 `O1-AC3` -- a cut run prints BUDGET REACHED with its REACHED denominator, never a silent partial.
@@ -55,12 +56,16 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 
 <paths>
 .tools/comp-heat
+infra/system/06_current_state.json
+infra/system/06_current_state.md
 org/modules/heatmap/
 .tools/_compbudget.py
 .tools/tests/
 org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
+
+⛔ **`infra/system/06_current_state.{json,md}` ADDED at the drain on row `NFRA_OUTSET-W1-S5`, and it is the same CUT-DEFECT class the BOUNDS above describe.** `safe-commit.sh`'s comp-system gate refuses ANY commit touching a `comp-*` tool unless that pair is regenerated in the same commit. So the original block granted the tool but not the gate's own precondition -- the worker could edit `comp-heat` and then could not commit it, which is a WALL and not an oversight. **A `<paths>` block must name what the GATES require, not only what the CELL touches.**
 
 <decomp_ref>
 <decomp_doc>org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md</decomp_doc> @`6f1655f376` (v0.1), cell `OS-s-1`.
@@ -76,7 +81,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O1-AC1`, `O1-AC2`, `O1-AC3`, `O1-AC4`, `O1-AC5`, `O1-AC6`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-1.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-1.rule-t-budget-across-comp-heat.proof_of_spec.json` (CORRECTED at the drain on row `NFRA_OUTSET-W1-S4`: the face named a SHORTER name than the dispatch did, so the worker had two names for one artifact and picked the dispatch's. One artifact, one name -- the face is now the dispatch's.)
 and validates it with `python .tools/proof-of-spec-check.py <instance> O1-AC1,O1-AC2,O1-AC3,O1-AC4,O1-AC5,O1-AC6` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>
