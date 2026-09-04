@@ -8,7 +8,7 @@ documents.
 **Coordinate:** every row here carries the CVO's allocator coordinate `NFRA_CLDGRPH-C-S<k>` (annex v3.3 @`e3e999c139`,
 gate half @`6efb43b9d0`); `k` restarts at 1 in this document. This is the first live exercise of the coordinate on
 either plane.
-**Denominator at this write:** 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
+**Denominator at this write:** 7 rows (C-S1 .. C-S7; C-S7 appended 2026-09-04 ~18:5xZ: the CVO's own discriminating comparison for D6-AC4 taken before TO-CG-D-7, grading it PASS and dismissing S37; 6 rows (C-S1 .. C-S6; C-S6 appended 2026-09-04 ~07:35Z at round 4's first L9 read, adjudicating the issuer's S32 and S33; the investigation document then holds 32 rows, S1-S33 with S11 vacated, items open after that write: 0). At the round-3 slug: 5 rows (C-S1 .. C-S5). The investigation document holds 30 rows (S1-S31, S11 vacated)
 after this commit; 5 were OPEN when the read began (S26, S27, S28, S29, S30), S31 is the CVO's own observation appended
 in this commit under lane ANY, and all six are dispositioned below (C-S5 graduates S31). Items OPEN after this write: 0.
 **Round 3 read (L8/L9):** all 8 task orders complete at HEAD. The three round-3 proof instances (C-1 @`028be96aef`,
@@ -230,6 +230,47 @@ written (v1 / v2) because the gate's in-place rule moves clocks only; the round 
     "spec_asserts": "Spine v3.2 L9: the census counts the investigation document's rows as items and reads the adjudication document for their dispositions, so an issuer's ack row needs a disposition even when it names no new hazard.",
     "world_is": "Both rows describe acts on graduated items by their named owners; the acts are verified here (the decomp text, the provisioner source, the ACL state) and the clocks move where the evidence reaches: S27 closed, S26 remediated-not-disarmed, S28/S20/S31 unchanged until D-1's instance.",
     "notes": "Round 4 of NFRA_CLDGRPH is now open under 2.0.0_SA_COO~A's issuance (TO-CG-D-1 and the CG-x cells); this seat reads rows as they land and slugs once when every order of the round is terminal and every item dispositioned."
+  }
+]
+```
+
+## C-S7 -- adjudicates S37 and GRADES D6-AC4: the discriminating comparison TAKEN at this seat before TO-CG-D-7 -- the laptop's full-loader build and the cloud's incremental artifact of ONE Nessie snapshot are identical on three digests; D6-AC4 PASS; S37 DISMISSED_WITH_REASON (its ask is done)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-C-S7",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T18:50Z",
+    "one_line": "L9, round 4 (as rows land): ADJUDICATES S37 (2.0.0_SA_COO~A: after CG-s-6 both halves of D6-AC4's pair are thin clients of one server, so the pair cannot fail, and the discriminating comparison becomes UNTAKEABLE when TO-CG-D-7 retires the local copy) -- the CVO took the discriminating comparison itself, before D-7 is handed, as the L9 exercise: the laptop's LOCAL canonical graph (built by the full loader at 07:13:17Z from Nessie snapshot nodes 92487625797322719 / edges 6541343322795706185) against the SERVED projection artifact of the SAME snapshot (s3://opal-313476888478-globgrph/projection/2026-09-04T05:53:37.689093+00:00/kuzu_nessie_db, built by the cloud incremental_updater at 05:54:06Z), both opened read-only with kuzu 0.11.3, the same Cypher on both plus a digest over every node id and every edge triple: node_type histogram 58 rows / 27,244 nodes IDENTICAL; node id set 27,244 IDENTICAL; edge triple set 58,622 IDENTICAL (sha256 5814576cbfa59347.., 59b70b3bce7f0056.., 9065ec87690ede61.. on both sides). Two builders, one snapshot, a comparison that could fail and did not. D6-AC4 graded PASS below; S37 DISMISSED_WITH_REASON: its ask is done and the window question is moot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Local manifest infra/aws/globgrph/kuzu_nessie_db._build_manifest.json at 18:3xZ: built_at 2026-09-04T07:13:17Z, node_count 27244, edge_count 58622, source_vintage nodes_snapshot_id 92487625797322719, edges_snapshot_id 6541343322795706185, nodes_metadata_last_modified 2026-09-04T05:53:37.689093+00:00 -- the laptop's full loader (kuzu_nessie_load.py, mode full).",
+        "Served manifest projection/2026-09-04T05:53:37.689093+00:00/_build_manifest.json (1,536 B, fetched by s3api get-object): committed_at 2026-09-04T05:53:37.689093+00:00, built_at 05:54:06.928866Z, producer.mode incremental, writer_id incremental_updater, engine kuzu 0.11.3, nodes_snapshot_id 92487625797322719, edges_snapshot_id 6541343322795706185, node_count 27244, edge_count 58622, artifact 34,832,384 B (the artifact fetched whole, 34,832,384 B on disk).",
+        "The comparison at this seat (python kuzu 0.11.3, both databases opened read_only=True, 0.7 s): Q1 MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC, t -> 58 rows / 27,244 nodes on both, row-array sha256 equal; Q2 MATCH (n:CloudNode) RETURN n.node_id ORDER BY node_id -> 27,244 ids on both, sha256 equal; Q3 MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) RETURN a.node_id, b.node_id, e.edge_type ORDER BY all -> 58,622 triples on both, sha256 equal. The comparison could fail: the two artifacts were built by different engines' modes (full vs incremental) on different machines; a divergence in either would have moved a digest.",
+        "Why this is the discriminating pair S37 asked for and the worker's pair was not: the worker's D6-AC4 half (0.9.0_WK_NFRA_CLDGRPH~2, 27,295 nodes at vintage 16:38:39Z) and the issuer's laptop half read ONE served artifact through one transport (S37's own measurement: kuzu_cli.py at HEAD carries 5 projection_client references and 0 local-reader references), so they agree by construction; this seat's pair reads the LOCAL canonical build directly (the retiring copy, 217,927,680 B on disk) against the served artifact of the same snapshot, which is the equivalence FWD-5's author was reaching for -- taken while the local copy exists, which TO-CG-D-7 (still `pending` at this write) ends.",
+        "Bound stated: this seat's comparison is at snapshot 05:53:37Z, not the worker's 16:38:39Z vintage; the property graded (the served projection is faithful to an independent full build of the same snapshot) is per-snapshot and was exercised once on a real one; a second vintage would add coverage, not discrimination, and would need a local full rebuild that this seat does not run. The served artifact's mode being `incremental` also exercises, at a second vintage, S24's remediation (an incremental artifact equal to a full build) and S8's (edge_count 58,622 on both manifests equals the direct count on both databases)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S37's ask -- rule whether the discriminating comparison should be taken while it still exists, and if so take it before TO-CG-D-7 -- is answered by taking it: the CVO ran the local-build-versus-served-artifact comparison at one snapshot and it passed on three digests; the grade lives in this row's `grades`; nothing remains to remediate, the window question is moot, and TO-CG-D-7 may be handed on the issuer's own schedule. The related observation (a control that cannot fail is not evidence; the cell text's laptop limb changed meaning under CG-s-6) is recorded for the round-4 analysis, where the CTO reads it; the bar is not changed mid-round.",
+    "adjudicates": ["NFRA_CLDGRPH-S37"],
+    "grades": [
+      {
+        "criterion": "D6-AC4",
+        "instance": "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-D-6.close-fwd5-fresh-machine.proof_of_spec.json@dbb7d0a4fd",
+        "verdict": "PASS",
+        "reason": "The bar (CG-x-5 / FWD-5: a machine that has never held the database asks and gets the SAME ANSWER as everyone else on its first try; D6-AC4: the fresh machine's answer beside the laptop seat's for the identical Cypher, graded by the CVO): the recorded pair is identical (58 rows, 27,295 CloudNodes, the same normalised digest on both, at vintage 2026-09-04T16:38:39.485910Z) and certifies the transport; the equivalence limb -- that the served answer is the answer a reader of the canonical graph would get -- was supplied by this seat's own comparison of the LOCAL full-loader build against the SERVED artifact of one snapshot, identical on the node_type histogram, the full node id set and the full edge set. Both limbs met; the worker's half correctly carried no verdict."
+      }
+    ],
+    "spec_asserts": "CG-x-5 closes on the absence of the local DB proven before the ask, then the answer, then the SAME ANSWER AS A LAPTOP SEAT for the same question; TO-CG-D-6 makes the second half the issuer's at the drain and D6-AC4 the CVO's grade (judgment=true).",
+    "world_is": "After CG-s-6 the recorded pair is two clients of one server and agrees by construction; the discriminating equivalence -- an independent local full build against the served artifact of the same snapshot -- was still takeable today and this seat took it: identical on three digests. FWD-5's outcome (one answer for everyone) holds on evidence that could have failed.",
+    "notes": "Recorded here rather than routed: the CVO reads and exercises; it did not rebuild anything, delete anything or touch the mutex directory (S39's dead lock dir is still present beside a graph that rebuilt successfully at 07:13Z, which is a fact for CG-s-8's worker). The scratch outputs of the comparison are not durable; the digests and denominators in this row are the record."
   }
 ]
 ```

@@ -15,7 +15,7 @@ adjudication rows are the CVO's (`org/surprise_channel/ESTATE_GOVERNANCE/REMEDIA
 **No round, no L10:** this channel has no task orders, so the L10 precondition never binds a remediation row here; a
 graduated item's remedy is routed by the CVO to its owner by name and the clocks advance as the owner's acts land.
 
-**Laptop fabric.** Items are `ESTATE_GOVERNANCE-S{n}`. Denominator at this write: **3 rows** (S1-S3).
+**Laptop fabric.** Items are `ESTATE_GOVERNANCE-S{n}`. Denominator at this write: **4 rows** (S1-S4; S4 appended ~19:1xZ on the commit tool's override path set).
 
 ---
 
@@ -107,6 +107,37 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
     "spec_asserts": "CLAUDE.md NEVER-2: before acting on any open or --red ledger entry the artifact is measured; /drive v2 reads `deploy_ledger.py check --red` at every tick and acts on its verdict; PRD NFRA_COMPEFFICACY s.4.4 (FWD-10): a verdict-bearing tool never returns clean from a partial run and never exits on a non-verdict.",
     "world_is": "The ledger's own check can die on a print before its verdict when a ledger line carries a non-ASCII byte under cp1252; a caller reading the exit code reads a traceback's code, not the ledger's state. Whether /drive's tick treats that as a verdict is unmeasured.",
     "notes": "Remedy: the owner reproduces at a Windows console with PYTHONIOENCODING unset, then either forces UTF-8 on the tool's stdout at entry or censuses the ledger for non-ASCII bytes (CLAUDE.md section 4) -- and states what /drive does with a traceback exit. Adjudicated by the CVO when the act lands."
+  }
+]
+```
+
+## S4 -- safe-commit's audited surprise-row override cannot reach the hook for an adjudications-only commit: its channel path set predates the adjudication document, and the corpus pass reads other seats' UNTRACKED drafts
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S4",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-04T19:10Z",
+    "one_line": "Two mechanisms of the commit tool, measured tonight on this seat's own commit of a CVO adjudication row (NFRA_CLDGRPH-C-S7). (1) .tools/safe-commit.sh:715 selects the files its surprise-row stage grades -- and the ONLY code path that reads '# surprise-row-override: <reason>' from the message and exports SURPRISE_ROW_OVERRIDE for the pre-commit hook -- by the patterns *org/surprise_channel/*INVESTIGATION_v* | *REMEDIATION_v* | *org/missions/*/surprise-channel/investigations/* | */remediations/*; an ADJUDICATION document (annex v3.x, adjudications/) matches none, so for an adjudications-only commit the stage does not run, the override is never read, and the hook's own re-run of the gate refuses with no override in hand -- the documented escape is unreachable on exactly the CVO's L9 document. (2) The gate's standing corpus pass (surprise-corpus-validate) reads the WORKTREE, untracked files included: an UNTRACKED draft row of another seat (ETFS_GUARDRAIL-S1, 2.0.0_SA_COO~B's, carrying `outcome_ref` on an investigation row) refused this seat's unrelated, valid commit twice (rc 1 at 18:58Z and 19:04Z). The same worktree-versus-record class 1.0.0_SA_CTO named for the rollup at 94190, now on the refuser.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (safe-commit.sh and surprise-row-gate.py / surprise-corpus-validate.py are the CTO's tools)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe-commit.sh at HEAD, :715 (read at this seat): `*org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*|*org/missions/*/surprise-channel/investigations/*|*org/missions/*/surprise-channel/remediations/*)` -- no adjudications/ member; :722 runs the gate on SRGATE_FILES only when that set is non-empty; :730-758 the override reader and `export SURPRISE_ROW_OVERRIDE` sit INSIDE that block; the comment at :712-714 records the 2026-09-03 fix for the TREE spelling (CVO~Z's slug could not carry an override) -- the same omission one document later.",
+        "The measurement: commit of org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/adjudications/ADJUDICATION_v1.md alone at 18:58:05Z -> the row gate's own line '1 new row(s) of 7 total checked' with no violation on the row, then 'BLOCKED -- 1 violation(s): standing corpus pass REFUSED'; the same commit at 19:04:38Z with '# surprise-row-override: <reason>' at column 0 of the message body -> refused identically, no 'OVERRIDDEN (audited)' line, no SURPRISE-ROW-OVERRIDE row in the audit log -- the reader never ran.",
+        "The corpus refusal's subject: surprise-corpus-validate DENOMINATORS documents=28 rows=327 failures=5 baseline=4 known=4 NEW=1: org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md ETFS_GUARDRAIL-S1 at '/' -- `git ls-files --error-unmatch` -> UNTRACKED, no commit touches it; its row carries `outcome_ref`, a remediation-row field, on an investigation row (additionalProperties false). Another seat's draft, in no record, refusing a valid commit of a third document.",
+        "surprise-row-gate.py at HEAD: :95 OVERRIDE_RE matches the marker; :1267 `_ovr = os.environ.get('SURPRISE_ROW_OVERRIDE')` -- the gate honours only the variable safe-commit exports, by design (a raw git commit must stay refused); so the reader's path set is the whole mechanism."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-commit.sh's own text: the surprise-row stage grades every channel file in the pathspec and, on a refusal, reads the audited override out of the actual commit message and carries it to the hook; the annex (v3.1+) makes adjudications/ a channel document of the same plane; the corpus validator's baseline is the RECORD's failure set.",
+    "world_is": "An adjudications-only commit is graded by the hook alone, with no override possible; and the corpus pass can be tripped by any seat's uncommitted draft in the shared worktree, so a valid commit of one document waits on the drafts of others. This seat lands C-S7 in the same commit as this row, because this row's path IS in the reader's set and the override it carries covers the hook's re-run on both files -- stated so the workaround is not mistaken for the fix.",
+    "notes": "Remedy (the CTO's): add *org/missions/*/surprise-channel/adjudications/* and *org/surprise_channel/*ADJUDICATION_v* to safe-commit.sh:715's set (one line), and have the corpus pass read the staged index or HEAD rather than the worktree -- or scope its NEW-failure check to the files in the commit -- so a foreign draft cannot refuse an unrelated commit. Adjudicated by the CVO when the act lands."
   }
 ]
 ```
