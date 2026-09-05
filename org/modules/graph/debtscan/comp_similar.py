@@ -147,6 +147,22 @@ def _norm_band(raw: str) -> str:
     return "UNKNOWN"
 
 
+# One resource NAME can be carried by SEVERAL repo paths with different bands. HOT wins, then
+# WARM, then COLD, then UNKNOWN -- never let one cold path make a resource look COLDER than its
+# hottest evidence, because the cold member of a divergent pair is emitted as a decommission
+# CANDIDATE and NEVER-AUTO-DELETE (PRD R-5) makes the conservative direction the only safe one.
+# Deterministic by construction: unlike the setdefault it replaces, the merge is order-free.
+_BAND_RANK = {"HOT": 3, "WARM": 2, "COLD": 1, "UNKNOWN": 0}
+
+
+def _merge_band(heat: dict, name: str, axis: str, band: str) -> None:
+    entry = heat.setdefault(name, {})
+    if _BAND_RANK.get(band, 0) > _BAND_RANK.get(entry.get(axis, "UNKNOWN"), 0):
+        entry[axis] = band
+    else:
+        entry.setdefault(axis, band)
+
+
 def is_cold(entry: dict) -> bool:
     """A resource is COLD only if >=1 axis reads COLD and NO axis reads HOT (ambiguous
     data-cold-but-invoke-hot is NOT cold -- it is still in use)."""
@@ -304,6 +320,27 @@ def pairwise(a_arn, b_arn, corpus, index):
 # Live heat assembly -- shell the canonical tools ONCE, index by resource name. GRACEFUL: a
 # tool failure/timeout leaves that axis UNKNOWN for all (never assume cold -- C3).
 # ==========================================================================================
+def _tool_argv(tool: Path, *args: str) -> list[str]:
+    """argv that ACTUALLY EXECUTES an extensionless .tools/ shim on this fabric.
+    MEASURED 2026-09-04 (laptop, Windows): subprocess.run(['.tools/comp-heat', ...]) raises
+    OSError [WinError 193] '%1 is not a valid Win32 application' because the shim carries a
+    shebang and no extension -- _run_json swallowed that as None, so load_heat_live returned {}
+    WITHOUT EVER REACHING comp-heat (PRD s.7 row OS-s-8 / row S29). Resolve the interpreter from
+    the shebang instead: python shims run under THIS interpreter, bash shims under Git Bash via
+    the estate's own resolver (build ladder rung 2 -- never bare 'bash', the WSL-stub trap)."""
+    tool = Path(tool)
+    try:
+        shebang = tool.open(encoding="utf-8", errors="replace").readline()
+    except OSError:
+        shebang = ""
+    if "python" in shebang:
+        return [sys.executable, str(tool), *args]
+    if "bash" in shebang or shebang.startswith("#!/bin/sh"):
+        from git_bash_resolver import bash_argv          # .tools is already on sys.path
+        return bash_argv(str(tool), *args)
+    return [str(tool), *args]
+
+
 def _run_json(cmd, timeout=180):
     try:
         p = subprocess.run(cmd, cwd=str(REPO), capture_output=True, text=True, timeout=timeout)
@@ -317,7 +354,7 @@ def _run_json(cmd, timeout=180):
 def normalize_heat(raw: dict) -> dict:
     """Accept EITHER a pre-normalized {name: {data, invoke}} snapshot OR the raw JSON of
     comp-debris (invoke bands under reap_rank_cold_dormant/hot/too_young/unknown/... , each row
-    {name, band}) and comp-heat freshness ({paths: [{path, class}]}), and fold both into the
+    {name, band}) and comp-heat freshness ({paths: [{path, band}]}), and fold both into the
     canonical {name -> {data, invoke}} map. UNKNOWN where unread -- the blind-row control (C3)."""
     heat: dict[str, dict] = {}
     if not isinstance(raw, dict):
@@ -335,11 +372,28 @@ def normalize_heat(raw: dict) -> dict:
                 heat.setdefault(row["name"], {})["invoke"] = _norm_band(row.get("band", ""))
     for held in (raw.get("held_excluded") or []):        # held names -> recorded, not cold
         heat.setdefault(str(held), {}).setdefault("invoke", "UNKNOWN")
-    # (c) raw comp-heat freshness: path-keyed data bands (map basename -> resource name)
+    # (c) raw comp-heat freshness: path-keyed data bands, joined to resource NAMES.
+    # FIELD: comp-heat emits `band` (hot/warm/cold) on every freshness row; `class` was never a
+    # key it writes and is kept only as a back-compat alias for a hand-rolled snapshot. Measured
+    # 2026-09-04 on .tools/tests: reading `class` banded 43 of 43 rows UNKNOWN.
+    # KEY: a resource name is joined under EVERY key its repo path can plausibly carry -- the
+    # basename, its extension-stripped stem, and each path COMPONENT + stem (a lambda's source
+    # DIRECTORY is the usual carrier). Measured on the live corpus: basename alone joined 0 of
+    # 1774 corpus names; component+stem joins 184. A name join is a HYPOTHESIS, never a verdict:
+    # heat only ever CORROBORATES a summary twin (C1), and collisions resolve HOT-wins.
     for row in (raw.get("paths") or []):
-        if isinstance(row, dict) and row.get("path"):
-            base = os.path.basename(str(row["path"]).rstrip("/"))
-            heat.setdefault(base, {}).setdefault("data", _norm_band(row.get("class", "")))
+        if not (isinstance(row, dict) and row.get("path")):
+            continue
+        band = _norm_band(str(row.get("band", row.get("class", "")) or ""))
+        keys = set()
+        for part in str(row["path"]).rstrip("/").split("/"):
+            if not part or part in (".", ".."):
+                continue
+            keys.add(part)
+            keys.add(os.path.splitext(part)[0])
+        for key in keys:
+            if key:
+                _merge_band(heat, key, "data", band)
     return heat
 
 
@@ -363,19 +417,27 @@ def load_heat_live(timeout=280, *, clock=None, deferred=None) -> dict:
         return None if remaining is None else min(timeout, remaining)
 
     debris_timeout = remaining_timeout("comp-debris")
-    dbg = (_run_json([str(REPO / ".tools" / "comp-debris"), "--json"],
+    dbg = (_run_json(_tool_argv(REPO / ".tools" / "comp-debris", "--json"),
                      timeout=debris_timeout) if debris_timeout != 0 else None)
     if dbg:
-        heat.update(normalize_heat(dbg))
+        for name, v in normalize_heat(dbg).items():
+            for axis, band in v.items():
+                _merge_band(heat, name, axis, band)
     out_json = _GRAPH / "debtscan" / ".comp_similar_heat.json"
     heat_timeout = remaining_timeout("comp-heat freshness")
     if heat_timeout != 0:
-        _run_json([str(REPO / ".tools" / "comp-heat"), "freshness", "--json", str(out_json)],
-                  timeout=heat_timeout)
+        heat_args = ["freshness", "--json", str(out_json)]
+        # OS-s-1 wired Rule T's --budget across comp-heat's five subcommands. Hand the CALLER's
+        # remaining budget down, or the child silently runs to its own 90s default inside a
+        # possibly-shorter outer timeout and reports WITHIN BUDGET against the wrong clock.
+        if heat_timeout is not None:
+            heat_args += ["--budget", str(max(1, int(heat_timeout)))]
+        _run_json(_tool_argv(REPO / ".tools" / "comp-heat", *heat_args), timeout=heat_timeout)
     try:
         if out_json.exists():
             for name, v in normalize_heat(json.loads(out_json.read_text())).items():
-                heat.setdefault(name, {}).update(v)
+                for axis, band in v.items():
+                    _merge_band(heat, name, axis, band)
     except (OSError, ValueError):
         pass
     finally:
@@ -784,6 +846,12 @@ def main(argv=None) -> int:
             elif args.live_heat:
                 heat = load_heat_live(clock=clock, deferred=deferred)
                 heat_src = "live (comp-debris+comp-heat)"
+            # THE CONSUMPTION MEASUREMENT: len(heat) counts KEYS THE HEAT SOURCE OFFERED, which
+            # is not the question -- the question is how many CORPUS resources the heat actually
+            # reached with a usable band. An all-UNKNOWN heat map is a heat map in NAME ONLY, and
+            # counting its keys reported a confident denominator for a blind result.
+            heat_banded = sum(1 for d in corpus.values()
+                              if any(b != "UNKNOWN" for b in (heat.get(d.name) or {}).values()))
             # One deterministic outer sweep produces both views. Their similarity thresholds and
             # neighbor widths remain the legacy 8 (supersede) / 6 (pool); only scheduling changed.
             pool = []
@@ -795,7 +863,7 @@ def main(argv=None) -> int:
                 progress, budget_s, budget_source, clock, _resume_args(args, mode))
             resume_note = f"RESUMED AFTER: {args.cursor}" if args.cursor else None
             state, state_detail = _supersede_answer_state(
-                progress, cov, heat_present=bool(heat), result_count=len(cands))
+                progress, cov, heat_present=bool(heat_banded), result_count=len(cands))
             state_text = answer_state_line(state, state_detail) if state else None
             deferred_lines = _compbudget.deferred_bucket(
                 len(deferred), 2 if args.live_heat else 0, "heat subprocess", deferred)
@@ -804,7 +872,9 @@ def main(argv=None) -> int:
                                   "answer_state": state,
                                   "answer_state_detail": state_detail,
                                   "deferred": deferred_lines, "coverage": cov, "heat_source": heat_src,
-                                  "heat_resources": len(heat), "candidates": cands,
+                                  "heat_keys": len(heat), "heat_banded": heat_banded,
+                                  "heat_corpus_denominator": len(corpus),
+                                  "heat_resources": heat_banded, "candidates": cands,
                                   "summary_twin_pool": pool}, indent=2))
                 return 0
             if resume_note:
@@ -815,11 +885,19 @@ def main(argv=None) -> int:
             if state_text:
                 print(state_text)
             print(cov["note"])
-            print(f"heat: source={heat_src}, {len(heat)} resources banded "
+            print(f"heat: source={heat_src}, {heat_banded} of {len(corpus)} corpus "
+                  f"resources banded from {len(heat)} heat key(s) "
                   f"(UNKNOWN heat -> never a candidate -- C3)")
-            if not heat:
-                print("\nNO HEAT SOURCE -> 0 supersede verdicts (similarity alone is never a "
-                      "verdict -- C1). Provide --heat-json <snapshot> or --live-heat (slow).")
+            if not heat_banded:
+                if not heat:
+                    print("\nNO HEAT SOURCE -> 0 supersede verdicts (similarity alone "
+                          "is never a verdict -- C1). Provide --heat-json <snapshot> or "
+                          "--live-heat (slow).")
+                else:
+                    print(f"\nHEAT READ BUT 0 OF {len(corpus)} CORPUS RESOURCES BANDED "
+                          f"(source={heat_src}, {len(heat)} key(s) offered) -> 0 supersede "
+                          f"verdicts. The heat source did not JOIN this corpus by name: this "
+                          f"is a BLIND result, not a measured zero -- C1/C3.")
                 print(f"\n=== summary-twin POOL (supersede candidates PENDING heat corroboration) "
                       f"[{len(pool)}] ===")
                 for c in pool:

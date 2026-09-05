@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 25 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 31 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -618,6 +618,150 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "2.0.0_SA_COO to this worker, accompanying amendment b630052d6a: `.tools/owned-paths-validate.py:213-215` keys the worker grant on `_normalize_serial(<issued_to>) == _normalize_serial(agent)`, so `you held NO grant on any path and every commit would have been refused -- after you had done the whole judgment`; and `the deliverable paths are keyed to the ORDER, not to the slot, so no work moves`.",
     "world_is": "The <issued_to> key is ONE of two limbs and it governs only the paths whose lane is resolved per-serial. For a worker face the practical blast radius of a mis-addressed <issued_to> is the `deliverables/<SERIAL>/**` limb ALONE: the two lane-ANY paths a worker needs to discharge an order -- its own task-order status flip and the surprise channel -- are admitted regardless, which is why this worker could file five rows and flip its own order while being refused its deliverables folder. CONSEQUENCE FOR THE POPULATION QUESTION THE ISSUER SAID IT WOULD RUN: a face that has not yet committed is fully repaired by the re-address, but a face that already worked around the refusal has its artifacts in `deliverables/<its own serial>/` rather than the `<paths>` folder, so work DID move for this cell -- the deliverable and the proof-of-spec instance are at `org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/`, with the order's specified FILENAMES unchanged so the proof-of-spec glob still resolves. They were NOT moved back after the amendment landed: the order is now terminal at this branch's HEAD, and ADHC_OWNPTH.005 grants only from a NON-TERMINAL order, so a move back into the ~1 folder would now be refused for the same reason the original write was. That relocation is the issuer's to make at the drain if it wants the artifacts under ~1, and it is a rename, not a re-run.",
     "notes": "Filed because the issuer explicitly asked for the SHAPE of a defect rather than the instance, and the shape here is narrower than the premise stated: mis-addressed <issued_to> disables the deliverables limb, not 'any path'. hazard_standing INERT -- the amendment is absorbed, the field reads ~3 in this worktree, and the flip survived. NO WORK WAS REDONE and no measurement in this cell depends on <issued_to>; both criteria were fully measured before either commit was attempted. The instruction's literal form (`git checkout CLOUD -- <path>`) is recorded above as a hazard on an already-committed face, not as a criticism of the instruction, which was written for a worker that had not yet committed."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S1",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T03:20:00Z",
+    "one_line": "OS-s-8 named ONE defect ('load_heat_live returns {} before reaching comp-heat') and the world held THREE stacked defects on the same wire. Fixing only the named one would have left comp-similar heat-blind while LOOKING fixed: the two beneath it are an all-UNKNOWN normalization (field name) and a 0-of-1774 name join (key), and neither produces an empty dict -- they produce a CONFIDENT ZERO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXEC (the named defect, cause NOT as named): org/modules/graph/debtscan/comp_similar.py:373 @79ec54bb37 called subprocess.run([str(REPO/'.tools'/'comp-heat'), ...]); measured on this fabric that argv raises OSError [WinError 193] '%1 is not a valid Win32 application' (extensionless shebang shim), _run_json:311-315 catches OSError and returns None, out_json is never written, and load_heat_live returns {}. The empty dict is REAL; its cause is the exec plane, not comp_similar's control flow -- there is no early return in the function.",
+        "FIELD: comp_similar.py:342 @79ec54bb37 read row.get('class', ''); comp-heat freshness emits row['band'] (values hot/warm/cold) -- measured `python .tools/comp-heat freshness .tools/tests --json OUT` -> 43 of 43 rows carry `band`, 0 carry `class`, and normalize_heat banded 43 of 43 UNKNOWN.",
+        "KEY: comp_similar.py:341 @79ec54bb37 keyed the data band by os.path.basename(path); measured against the live corpus (build_corpus -> 1774 distinct names, comp-heat whole-repo freshness -> 30546 path rows), basename joined 0 of 1774 corpus names, basename-stem joined 70, path-component+stem joined 184.",
+        "AFTER (same instruments): `bash .tools/comp-similar supersede --heat-json <comp-heat freshness json> --budget 60 --top 8` prints `heat: source=snapshot:..., 208 of 1929 corpus resources banded from 51846 heat key(s)` and 8 of 8 candidates cite a comp-heat-derived band; battery `.tools/tests/test_os8_heat_consumed.py` PASS 8/8 with RED mutants for all three defects.",
+        "Row S29 as cited by the PRD (org/missions/D11/NFRA/NFRA_OUTSET/prd/NFRA_OUTSET_PRD.md:238 @79ec54bb37) is the only prior carrier of this finding and it names the symptom, not the three causes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-8 THE CELL and PRD s.7 row OS-s-8: '`load_heat_live` at org/modules/graph/debtscan/comp_similar.py:346 returns an empty dict before reaching comp-heat' -- one defect, on one seam.",
+    "world_is": "Three defects on the same seam, in series. (1) EXEC: the empty dict is produced by an OSError on the subprocess argv, not by any branch of load_heat_live -- the function's own control flow always reaches the comp-heat call. (2) FIELD: normalize_heat read a key comp-heat has never emitted (`class` vs `band`), so heat that DID arrive banded 43 of 43 rows UNKNOWN. (3) KEY: the data band was joined to resource names by path basename, which matched 0 of 1774 live corpus names. Defects 2 and 3 do NOT return an empty dict -- they return a large, non-empty, entirely useless heat map, and the tool then printed a confident '0 candidates' from a blind read. All three are inside this cell's <paths> and all three are fixed in this order.",
+    "notes": "Filed as FORM, not significance: the divergence is that the cell's premise located the defect in one place and the world had it in three, two of which a fix aimed only at the named symptom would not have touched. class OBSERVATION and hazard_standing INERT because all three are repaired within this order's own grant and the repair is exercised by O8-AC1's battery with a RED mutant per defect. The estate-wide half of defect (1) is a SEPARATE row (W2-S2) because it is outside every <paths> grant this project has cut."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S2",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T03:25:00Z",
+    "one_line": "The exec cause under OS-s-8 is a CLASS, not one call site: on this fabric a python module that subprocesses an EXTENSIONLESS .tools/ shim by path gets OSError [WinError 193], and the near-universal `except OSError: return None` around such a call converts a tool that never ran into a clean-looking empty result. Measured 2 of 2 shims tried; 16 of 269 python files under org/modules/ import subprocess AND name an extensionless .tools/ shim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct measurement, this worktree @79ec54bb37: subprocess.run([str(REPO/'.tools'/'comp-heat'),'--help']) -> OSError [WinError 193] '%1 is not a valid Win32 application'; same for .tools/comp-debris. 2 of 2 shims tried, 0 of 2 executed. comp-heat carries `#!/usr/bin/env python3`, comp-debris carries `#!/bin/bash`; neither carries an extension, and Windows CreateProcess cannot run either.",
+        "The swallow: org/modules/graph/debtscan/comp_similar.py:311-315 @79ec54bb37 `except (subprocess.SubprocessError, OSError, ValueError): return None` -- the caller cannot distinguish 'the tool ran and found nothing' from 'the tool could not be started', which is exactly the false-green shape.",
+        "POPULATION INDICATOR, denominator printed: 269 .py files under org/modules/; 16 of them import subprocess AND name an extensionless .tools/ shim -- org/modules/graph/{cli.py, comp_aws_cli.py, comp_iam_census.py, comp_passcraft.py, comp_pydeps.py, comp_system.py, cse_schema.py, manifest_check_cli.py} (8), org/modules/graph/compproof/tool_probe.py (9), org/modules/graph/debtscan/{comp_similar.py, summary_corpus.py} (11), and 5 files under org/modules/graph/tests/ (16). THIS IS AN INDICATOR, NOT A DEFECT COUNT: naming a shim is not the same as executing it bare, and this worker did not open the 15 other call sites -- they are outside its <paths>.",
+        "The estate already carries the remedy primitive: .tools/git_bash_resolver.py bash_argv() (bash shims) and sys.executable (python shims). This order used both via a local _tool_argv() helper inside its own granted file; it did NOT extract a shared helper, because .tools/ beyond .tools/comp-similar and .tools/tests/ is not in this order's <paths>."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-8 scopes the fix to comp-similar's own heat consumption ('the heat consumer that exists in name only'), and its <paths> admit only org/modules/graph/debtscan/comp_similar.py, .tools/comp-similar, .tools/tests/, this project's deliverables and channel, and the 06_current_state pair.",
+    "world_is": "The defect that produced the empty dict is not specific to comp-similar: it is a property of how any python module on this fabric starts an extensionless .tools/ shim, and the 15 other candidate call sites are outside every <paths> block this project has cut. This worker repaired only its own call site and did not widen its grant.",
+    "notes": "ARMED because, left alone, the class keeps producing empty results that read as measured zeros through future normal operation of any of the other call sites; INERT is not available for a hazard whose remaining instances were not opened. disarm_owner 2.0.0_SA_COO as the issuer who can cut a cell for the population -- the comp-tool lane owner (0.8.0_AE_CloudComp) is the likely executor but this worker cannot assign it. NOT a request to widen this order: the row is the carrier precisely so the work is not done off-grant. Standing moratorium respected: no monitor, alarm or checker was built for this."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S3",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T03:30:00Z",
+    "one_line": "IDENTITY MISMATCH IN THE FACE: TO-OS-s-8's <issued_to> is `0.9.0_WK_NFRA_OUTSET~1` and its DELIVERABLE + proof_of_spec paths are under deliverables/0.9.0_WK_NFRA_OUTSET~1/, but the order was spawned to `0.9.0_WK_NFRA_OUTSET~2`, whose rows must carry the W2 coordinate. The worker's serial and the folder its work must land in disagree, and both are named by the same document.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-8.comp-similar-heat-weighting-consumes.md@79ec54bb37: `<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>`; DELIVERABLE `.../deliverables/0.9.0_WK_NFRA_OUTSET~1/comp-similar-heat-weighting-consumes.result.md`; <proof_of_spec> `.../deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-8....proof_of_spec.json`; <paths> admits `.../deliverables/0.9.0_WK_NFRA_OUTSET~1/`.",
+        "The spawning instruction to this worker names the serial `0.9.0_WK_NFRA_OUTSET~2`, the worktree C:/tmp/wk-OUTSET-2 on branch wk-OUTSET-2, and directs rows to be minted `NFRA_OUTSET-W2-S<k>` because the W1 coordinate is already occupied (W1-S1..W1-S9 exist in this channel @79ec54bb37).",
+        "The two are not reconcilable by choosing one: the row-id coordinate MUST be W2 (the surprise-row gate requires W{n} to equal the committing worker's suffix, schema description of `id`), while the deliverables folder MUST be the ~1 path (it is the only deliverables path the <paths> grant names, and writing to a ~2 folder would be off-grant)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-8 <issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>, with every deliverable path under deliverables/0.9.0_WK_NFRA_OUTSET~1/.",
+    "world_is": "The order executes on slot 2 as `0.9.0_WK_NFRA_OUTSET~2`. This worker resolved it the only way its grant allows: commits and rows are authored as ~2 (so the lane and the row gate see the actual committer), and the result document and proof-of-spec instance are written at the EXACT paths the order names under deliverables/0.9.0_WK_NFRA_OUTSET~1/ (so the proof-of-spec glob and the <paths> grant both resolve). The consequence is a deliverables folder whose name attributes the work to a serial that did not do it.",
+    "notes": "ARMED, not INERT: left alone, the L8 compile and any later provenance read of deliverables/0.9.0_WK_NFRA_OUTSET~1/ will attribute two different workers' output to one serial (that folder already holds OS-s-1's work from the real ~1), and a shared-worktree attribution defect is a known class in this estate. disarm_owner 2.0.0_SA_COO as the issuer of the face -- it can amend <issued_to> or record the reassignment; this worker did not edit <issued_to>, because changing the identity clause of its own order is not a worker act. Flagged plainly as a CUT DEFECT per the spawning instruction rather than worked around silently."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S4",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T04:15:00Z",
+    "one_line": "BLOCKING, and it is the MECHANICAL half of W2-S3: the <issued_to>/spawn-serial mismatch is not cosmetic -- safe-commit REFUSED this worker's completed OS-s-8 commit on 3 of 4 pathspecs, because owned-paths-validate.py keys the worker grant on _normalize_serial(<issued_to>) == _normalize_serial(agent) and this order's <issued_to> is ~1 while the executing agent is ~2. Positive control on the SAME paths, SAME order, SAME HEAD: 4 of 4 granted to ~1, 0 of 4 to ~2. The work is done, measured and green; it cannot land.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The refusal, verbatim from safe-commit.sh (3 VIOLATION lines, one per path): 'VIOLATION: org/modules/graph/debtscan/comp_similar.py -- lane=ANY_EXEC_OR_AE ... agent=0.9.0_WK_NFRA_OUTSET~2 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. Same text for .tools/tests/test_os8_heat_consumed.py (lane=TOOL_BATTERIES) and for org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/comp-similar-heat-weighting-consumes.result.md (lane=TREE_DELIVERABLES). Terminal line: 'ERROR: safe-commit did NOT commit (rc=1)'; 'Unstaged 4 file(s) staged by THIS call'. Verified against the REPOSITORY, not the tool's prose: git rev-parse HEAD is unchanged at 79ec54bb378424207b8dd2ba7a3788ab1c95bff3 and git status shows the four artifacts still modified/untracked.",
+        "The mechanism, cited at source: .tools/owned-paths-validate.py:213-215 @79ec54bb37 -- `for _to, issued_to, entries in orders:` / `if _normalize_serial(issued_to) != agent_norm:` / `continue`. The docstring at :191-193 states the rule: 'a non-terminal task order under <CODE> at HEAD, ISSUED_TO THAT SERIAL, names `path` in its <paths> block'.",
+        "POSITIVE CONTROL, run in this worktree at this HEAD, discriminating on the serial ALONE (same 4 paths, same grant stanza, same order, same commit): _owns_task_order_paths('0.9.0_WK_NFRA_OUTSET~1', ...) -> 4 of 4 True; _owns_task_order_paths('0.9.0_WK_NFRA_OUTSET~2', ...) -> 0 of 4 False. The live parse also confirms the order is NON-TERMINAL and visible (14 non-terminal worker-visible NFRA_OUTSET orders at HEAD) and that its parsed <paths> entries are exactly the seven the face prints -- so the <paths> block is NOT the defect. The serial is.",
+        "The channel file itself was NOT among the three violations: org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md is lane ANY and was accepted by both the surprise-corpus gate ('OK: corpus matches the exact legacy baseline') and the surprise-row gate ('3 new row(s) of 17 total checked (14 pre-existing, NOT re-graded); OK: all new rows carry their step-7/step-10 fields') on the refused run. That is why this BLOCKING row can be committed when the work it describes cannot."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-8 <issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to> with a <paths> block that the order's own preflight calls the grant ('lane: the <paths> block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58Z) -- a worker serial is admitted to exactly these paths while this order is NON-TERMINAL at HEAD').",
+    "world_is": "The grant is admitted to a SERIAL, not to a face, and the serial it admits is the one in <issued_to>. This order executes on slot 2 as 0.9.0_WK_NFRA_OUTSET~2, so the grant admits nobody who is actually doing the work. All acceptance work for OS-s-8 is COMPLETE and measured green in worktree C:/tmp/wk-OUTSET-2 on branch wk-OUTSET-2 (O8-AC1: `python .tools/tests/test_os8_heat_consumed.py` -> 'test_os8_heat_consumed: PASS (8/8)', rc 0; O8-AC2 evidence captured; commit-gate clean 2 of 2; ruff clean; comp-system gate rc 0 NOT_APPLICABLE; comp-similar --self-test 11/11 and test_comp_similar_battery.py 12/12 unregressed) and NONE of it is committed.",
+    "notes": "NOT WORKED AROUND, deliberately, and the two available workarounds are named so the issuer can see they were considered and refused. (a) GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>: refused -- the assigning instruction is explicit that a path the grant lacks is 'a BLOCKING row on that criterion, never an override', and ADHC_OWNPTH.005's own refusal text says the same. (b) Re-authoring the commit as 0.9.0_WK_NFRA_OUTSET~1: refused for two independent reasons -- it would attribute this worker's acts to a DIFFERENT, concurrently-live worker (the real ~1 executed OS-s-1 and minted W1-S1..W1-S9 in its own worktree), and the surprise-row gate ties the row coordinate to the COMMITTING serial, so it would force these rows to renumber into W1-S10.. against a live allocator -- the exact collision the W<n> coordinate exists to prevent (schema id description: 'measured 2026-09-04: two allocators minted one S34'). THE FIX IS ONE LINE AND IT IS THE ISSUER'S: amend <issued_to> to 0.9.0_WK_NFRA_OUTSET~2 (task-orders/** is lane ANY for modification, and 2.0.0_SA_COO is the issuing identity), or re-spawn the face on slot 1. Nothing in the completed work needs to change either way -- the deliverables were written at the exact ~1 paths the order names, so an <issued_to> amendment alone unblocks the identical commit. hazard_standing ARMED because, left alone, finished and verified work sits unlanded in a worktree while the order reads pending."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S5",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T04:40:00Z",
+    "one_line": "SECOND INDEPENDENT MEASUREMENT of W1-S11 on a DIFFERENT surface (org/modules/graph/ rather than .tools/comp-), and it splits the finding in two: (i) the comp-system wall did NOT fire on this surface at all -- the trigger is not the pathspec class, it is whether a changed file is a comp-system _SOURCE, and org/modules/graph/debtscan/comp_similar.py is not one (NOT_APPLICABLE rc 0 from BOTH arms); (ii) the wrong-tree pinning W1-S11 names is real and CORROBORATED, with a consequence beyond a wrong fingerprint -- from inside a linked worktree the PATH shim FAILS OPEN, returning gate-open rc 0 on the same argument for which the worktree-local tool returns SYSTEM DRIFT fail-closed rc 2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THIS SURFACE, both arms, same changeset, same minute, worktree C:/tmp/wk-OUTSET-2 @9766fe6d32. ARM 1 (PATH shim, /c/Users/AndrewBerman/bin/comp-system): `comp-system --gate --changed org/modules/graph/debtscan/comp_similar.py .tools/tests/test_os8_heat_consumed.py` -> 'NOT_APPLICABLE: subject=--gate --changed; no comp-system _SOURCE in the changeset; not a trigger-surface commit, gate open', rc 0. ARM 2 (worktree-local): `bash .tools/comp-system --gate --changed <same two paths>` -> byte-identical NOT_APPLICABLE line, rc 0. The two arms AGREE here, so the verdict is a property of the CHANGESET, not of which tree is graded.",
+        "CONFIRMED AT THE COMMIT ITSELF, not only ad hoc: the refused safe-commit run over these paths printed [risk-reflex], [commit-gate], [to-pipeline-gate], [surprise-corpus] and [surprise-row-gate] lines and NO [comp-system-gate] line at all. safe-commit.sh:789's grep on `org/modules/graph/` DID match and comp-system IS on PATH, so the gate spawned and returned a quiet rc 0 -- the trigger grep decides whether to SPAWN comp-system; comp-system decides APPLICABILITY. The commit was refused by owned-paths (row W2-S4), never by the comp-system gate.",
+        "POSITIVE CONTROL, and it is what makes the negative above readable: the SAME two arms run against a KNOWN comp-system _SOURCE, `.tools/comp-heat` (slot 1's own surface). ARM 1 (PATH shim) -> 'SYSTEM CURRENT (no genuine drift) -- gate open.', rc 0. ARM 2 (worktree-local) -> 'SYSTEM DRIFT (fail-closed): source drift: fingerprint (content-sha256, file_count) (67dff3036cb97a0fcb117b28b466b1a1f5c24d20b3a116e47f96985af1bf5dd6, 260) -> (7c2df46efcb7c99ef172db77c5b665719479618fe8b9c72c57676ef51a832a12, 260) -- regenerate (comp-system) or add an audited override.', rc 2. Same command, same argument, same minute, OPPOSITE VERDICTS. The arms are alive, and they disagree exactly where W1-S11 predicts.",
+        "The mechanism at source, read in both places: /c/Users/AndrewBerman/bin/comp-system hard-codes `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-system\"` and `exec \"$_t\" \"$@\"`; .tools/comp-system:20-21 @79ec54bb37 sets `WORKSPACE=\"$(cd \"$(dirname \"$0\")/..\" && pwd)\"` then runs `$WORKSPACE/org/modules/graph/comp_system.py`. So the PATH shim always grades the MAIN workspace, whatever worktree the caller stands in. safe-commit.sh:789 reaches the tool by `command -v comp-system` -- i.e. through PATH -- so the gate that actually runs at commit time from a linked worktree is the arm that grades the wrong tree.",
+        "Slot 1's own numbers for comparison, cited not restated (NFRA_OUTSET-W1-S11): shim 7c2df46efc vs worktree-local 45ec711d24, both from baseline 67dff3036c. This worker measures the same baseline 67dff3036c and its own worktree-local target 7c2df46efc, with the shim arm reporting no drift at all. The fingerprints differ between the two workers because the two worktrees differ; the STRUCTURE -- one baseline, two arms, two answers -- reproduces."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's mid-task heads-up to this worker, verbatim in part: 'Your grant includes org/modules/graph/debtscan/comp_similar.py and .tools/comp-similar, so it WILL fire on you', with the sanctioned remedy being an audited `system-current-override:` trailer plus a second regeneration commit.",
+    "world_is": "It did not fire on this surface, and no override was needed or used. Both arms return NOT_APPLICABLE rc 0 because no file in this changeset is a comp-system _SOURCE; the pathspec class (org/modules/graph/**) only decides whether comp-system is SPAWNED. Answering the issuer's own question directly -- 'whether the cause is the pathspec class or the tool' -- on this surface the cause is NEITHER: it is the SOURCE MEMBERSHIP of the specific changed file. The tool-level defect the issuer names is separately real and is corroborated here by the positive control, with an added consequence: the PATH shim does not merely grade the wrong tree, it FAILS OPEN from a linked worktree (gate-open rc 0 where the worktree-local tool is fail-closed rc 2).",
+    "notes": "NOTHING WAS OVERRIDDEN, REGENERATED OR EDITED under this row. No `system-current-override:` trailer was used, infra/system/06_current_state.{json,md} was NOT touched, and 0 regeneration runs were performed -- so the issuer's constraint 3 (verify the second commit moved only the granted pair) has an empty denominator here rather than a satisfied one, and this worker says so rather than reporting a vacuous pass. The positive control was a READ against .tools/comp-heat: no file was written, and .tools/comp-heat is not in this order's <paths> and was not modified -- another worker holds that surface. hazard_standing ARMED for the FAIL-OPEN limb only: left alone, any seat committing a genuine comp-system _SOURCE from a linked worktree gets a gate-open verdict computed on a tree it did not change, which is a live gate failing open and silent. disarm_owner 2.0.0_SA_COO to route it; the shim is generated by .tools/provision-path-shims.sh and neither it, nor .tools/comp-system, nor safe-commit.sh is in this order's <paths>, so this worker measured the defect and fixed nothing."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S6",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T05:05:00Z",
+    "one_line": "The unblock instruction offered `git checkout CLOUD -- <task order>` as sufficient to restore the grant. It is not: owned-paths-validate.py sources every order with `git show HEAD:<path>` and its own comment says 'a task order staged but absent at HEAD grants nothing yet', so an amended order that is only in the worktree (even STAGED) grants nothing. Measured: 0 of 4 paths granted with the amendment checked out and staged; 5 of 5 after committing it. The amendment must LAND on the worker's branch before its artifacts can.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Mechanism at source: .tools/owned-paths-validate.py:173-181 @79ec54bb37 -- `show = subprocess.run([\"git\", \"show\", \"HEAD:%s\" % p], ...)` then `if show.returncode != 0: continue   # a task order staged but absent at HEAD grants nothing yet`. The census that feeds it (:159-172) enumerates with `git ls-files`, but every order's BYTES are read from HEAD, so an ls-files hit whose content differs at HEAD is graded on the HEAD content.",
+        "MEASURED, three points on one axis in worktree C:/tmp/wk-OUTSET-2. (i) Before the amendment: _owns_task_order_paths('0.9.0_WK_NFRA_OUTSET~2', <4 paths>) -> 0 of 4. (ii) After `git checkout CLOUD -- org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-8.comp-similar-heat-weighting-consumes.md`, with the file verified to read `<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>` at line 5 in the worktree AND staged by the checkout: STILL 0 of 4 -- byte-identical to the pre-amendment refusal. (iii) After committing that one file (26a8bc43f8): 5 of 5 granted. Only step (iii) moved the number.",
+        "The failure mode this arms: (i) and (ii) are INDISTINGUISHABLE at the point of use -- the same 0 of 4, the same safe-commit refusal text naming the same three lanes -- so a worker that follows the instruction, sees the amended field in its own worktree and is still refused has no signal separating 'the issuer did not amend it' from 'the amendment is not at HEAD on my branch'. The correct diagnosis is one `git show HEAD:<order> | grep issued_to` away, and the incorrect one is a round trip to the issuer.",
+        "Provenance of the amendment, cited not assumed: 2.0.0_SA_COO, CLOUD @b630052d6a, 'amend(NFRA_OUTSET, OS-s-8 + OS-s-15): re-address <issued_to> to the slots actually seated -- a FAN-OUT WIDENING IS ALSO AN ADDRESSING ACT, and I widened without re-addressing'. That commit also amends TO-OS-s-15 for slot ~3, which is a DIFFERENT worker on a different branch and is deliberately not carried by this worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's unblock instruction, verbatim in part: 'bring the amended order into your branch, then commit the four files you have standing ... `git checkout CLOUD -- org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-8.comp-similar-heat-weighting-consumes.md` (surgical, no conflict risk)', with the verification step given as 'Confirm the field reads `~2` in your worktree before you commit'.",
+    "world_is": "Confirming the field in the WORKTREE is necessary and not sufficient, because the grant is not read from the worktree. The checkout restores the bytes; only a commit restores the grant. The instruction's own verification step therefore reads the one plane that cannot answer the question it is asked -- the same reading-by-path-versus-reading-at-HEAD distinction the task assignment itself warned about for content claims, arriving here as a PERMISSION claim. This worker committed the carried file first (26a8bc43f8, <status> untouched) and re-measured before committing anything else.",
+    "notes": "hazard_standing ARMED and it is time-boxed but live: b630052d6a amends TWO orders, and the second (TO-OS-s-15, slot ~3) is in exactly this position right now on its own branch, so the identical instruction is likely in flight to a worker who will hit the identical indistinguishable refusal. class OBSERVATION rather than BLOCKING: it cost this worker one measurement and one extra commit, and it blocks nothing once diagnosed. disarm_owner 2.0.0_SA_COO -- the cheap disarm is one clause in the instruction ('commit the carried order first; the grant is read with git show HEAD'), not a code change; .tools/owned-paths-validate.py is outside this order's <paths> and its HEAD-only read is CORRECT behaviour (an uncommitted grant is not a grant), so nothing here proposes changing it."
   }
 ]
 ```
