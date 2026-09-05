@@ -432,6 +432,29 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S8-AC4 (amended): 'the TARGETED plan changes EXACTLY aws_lambda_function.orchestrator (source hash): 0 to add, 1 to change, 0 to destroy ... Any other resource in the targeted plan -> do NOT apply, BLOCKING row.' S8-AC7 assumes the deploy landed and invokes the LIVE function with mode=terminal_qa.",
     "world_is": "The targeted plan shows 2 resources (not 1) because of a real, pre-existing config dependency this order did not create and cannot remove without an out-of-scope Terraform refactor (decoupling REPORTER_INSTANCE_ID from a direct resource-attribute reference). No apply was attempted. Because the deploy did not land, this worker also declined to run S8-AC7's invocation live -- against the UNCHANGED deployed function, an unrecognized mode string silently falls through to the real production render path, which is a genuinely dangerous, out-of-scope side effect to risk for a checkbox.",
     "notes": "S8-AC4 is graded FAIL by output this turn (targeted plan does not match '1 to change'); S8-AC5 (the apply + 0-diff) is UNCOMPUTABLE-BY-CONSTRUCTION, riding the same later run S7's W1-S7 finding rides (the pre-existing drift dispositioned by whoever owns the etfs-reports stack). S8-AC6 (served-vs-built hash) WAS run -- it is a pure read/local-hash comparison with no side effect -- and honestly returns MISMATCH (nothing new was deployed), also a correct, expected FAIL given AC4's block. S8-AC7 was NOT run at all (declared exclusion, not a FAIL) because running it against the undeployed function risks a real, expensive, unauthorized production side effect; this is a stop, not a hazard left live (INERT) since nothing was invoked. Disarm: whoever owns the etfs-reports stack either (a) accepts a decoupling of REPORTER_INSTANCE_ID onto a data-source lookup instead of a direct resource attribute reference (removing the dependency edge, a real code change out of this order's scope), or (b) dispositions the pre-existing aws_instance.reporter drift first (the same fix W1-S7 already asked for), after which THIS resource's targeted plan would also read clean."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T07:54:30Z",
+    "one_line": "S9-AC2's byte census expects HEADER_SITES=2, but a CORRECT implementation of this order's own BOUNDS ('leave EG-s-8's terminal send andrew@-only') necessarily yields HEADER_SITES=3: EG-s-8 (this same file, deployed immediately before this order per its own dependency chain) already added a third `msg[\"To\"] = ...` assignment (`_build_terminal_email`), which the census was not updated to account for.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured BEFORE any EG-s-9 envelope edit (with only EMAIL_RECIPIENTS added): `python -c \"import re; s=open('infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py').read(); print(len(re.findall(r'msg\\\\[\\\\\"To\\\\\\\"\\\\]\\\\s*=', s)))\"` -> 3 (report, correction, terminal) -- the gap pre-exists this worker's own envelope changes, it is not introduced by them",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:137-148 @HEAD (EG-s-8, commit b124e0223b/merged @f036a438fb) -- `_build_terminal_email` sets `msg[\"To\"] = EMAIL_RECIPIENT`, a THIRD header-assignment call site the PRD s.7.3a four-site table (written before EG-s-8 existed) does not name",
+        "this TO's own BOUNDS: 'Leave EG-s-8's terminal send andrew@-only' -- satisfying this literally REQUIRES the terminal header to keep assigning msg[\"To\"] to SOMETHING (now a dedicated TERMINAL_RECIPIENT constant, not the shared EMAIL_RECIPIENT/EMAIL_RECIPIENTS this order changes), so the assignment syntax `msg[\"To\"] = ...` cannot drop to 2 without either leaving the terminal header vulnerable to the JOIN (a real bug) or restructuring it to a different, inconsistent API purely to dodge the regex (not attempted)",
+        "post-fix measured: `ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0` -- 2 of 3 sub-counts match the criterion's expectation exactly (ENVELOPE_LIST_SITES, SINGLE_ELEMENT_ENVELOPES); only HEADER_SITES differs, by exactly the one pre-existing terminal site"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S9-AC2 expects the exact output string 'ENVELOPE_LIST_SITES=2 HEADER_SITES=2 SINGLE_ELEMENT_ENVELOPES=0'.",
+    "world_is": "The measured output is 'ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0' -- HEADER_SITES is 3, not 2, because EG-s-8 (this order's own named predecessor, 'same file, same deploy') added a third MIME-header-assignment call site that the PRD's four-site table and this criterion's census predate.",
+    "notes": "This worker did NOT restructure the terminal header's assignment syntax to artificially suppress the count -- that would trade a real, correct fix (decoupling the urgent internal alert from the JOIN variable, which BOUNDS explicitly requires) for a cosmetic match against a census that was never updated for EG-s-8's addition. S9-AC2 is graded FAIL by output this turn (the literal string does not match); the substance -- exactly 2 envelope sites take the list, 0 single-element-envelope shapes remain, and the terminal path is correctly isolated -- is otherwise exactly as specified. Disarm: the issuer either amends S9-AC2's expected string to HEADER_SITES=3 (reflecting the post-EG-s-8 file), or clarifies a different regex/count that would legitimately read 2 (e.g. counting only sites this order's own deliverable table names) -- either is a face amendment, not a code change."
   }
 ]
 ```
