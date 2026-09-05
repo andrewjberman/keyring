@@ -455,6 +455,27 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S9-AC2 expects the exact output string 'ENVELOPE_LIST_SITES=2 HEADER_SITES=2 SINGLE_ELEMENT_ENVELOPES=0'.",
     "world_is": "The measured output is 'ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0' -- HEADER_SITES is 3, not 2, because EG-s-8 (this order's own named predecessor, 'same file, same deploy') added a third MIME-header-assignment call site that the PRD's four-site table and this criterion's census predate.",
     "notes": "This worker did NOT restructure the terminal header's assignment syntax to artificially suppress the count -- that would trade a real, correct fix (decoupling the urgent internal alert from the JOIN variable, which BOUNDS explicitly requires) for a cosmetic match against a census that was never updated for EG-s-8's addition. S9-AC2 is graded FAIL by output this turn (the literal string does not match); the substance -- exactly 2 envelope sites take the list, 0 single-element-envelope shapes remain, and the terminal path is correctly isolated -- is otherwise exactly as specified. Disarm: the issuer either amends S9-AC2's expected string to HEADER_SITES=3 (reflecting the post-EG-s-8 file), or clarifies a different regex/count that would legitimately read 2 (e.g. counting only sites this order's own deliverable table names) -- either is a face amendment, not a code change."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S10",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T08:47:31Z",
+    "one_line": "This worker closed the etfs-guardrail-eg-s-9-orchestrator-join-recipients ledger after the FIRST apply, then discovered deliverable item 4 required a small additional code change (email_qa surfacing the To header) that needed a SECOND apply -- made without re-opening the ledger first, a NEVER-2 sequencing deviation (ledger opened BEFORE, not after, an apply).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this session: `python .tools/deploy_ledger.py close --slug etfs-guardrail-eg-s-9-orchestrator-join-recipients` -> 'CLOSED ... all 1 legs proven; sentinel removed' (commit 1d7c53e6eb/19b11f082b), followed LATER by a code edit (email_qa 'to' field) and a SECOND `HALT_ACK=1 .tools/safe-apply.sh ... apply ... -target=aws_lambda_function.orchestrator` (rc=0, 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.') with no ledger entry open at the time of that second apply",
+        "CLAUDE.md HARD STOPS: 'NEVER leave a confirmed deploy half-landed -- ledger entry opened at start, closed at completion'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This TO's deliverable item 3: 'apply through safe-apply under the ledger entry ... entry + sentinel COMMITTED' -- read together with NEVER-2's 'ledger entry opened at start, closed at completion' for EVERY apply.",
+    "world_is": "The second apply (email_qa's To-header fix) ran through the same safe-apply.sh gates (HALT-GATE, comp-tagauthz, tombstone-gate) as the first, and both applies are part of the SAME task order's SAME deliverable (deliverable item 4 explicitly required the To-header evidence the fix enables) -- but no ledger entry was open across that second apply's window.",
+    "notes": "Remediated same-turn: a supplementary ledger entry is opened and closed immediately after this row, with proof from the SAME final measurements (served-vs-built MATCH, live rehearsal outputs) already gathered post-second-apply, so the deploy history carries a ledger trail for both applies rather than leaving the second one unrecorded. INERT: both applies succeeded, are 0-diff-confirmed, and the underlying resource (aws_lambda_function.orchestrator) is not half-landed by any measure -- the gap is in the LEDGER's bookkeeping order, not in the infrastructure's state."
   }
 ]
 ```
