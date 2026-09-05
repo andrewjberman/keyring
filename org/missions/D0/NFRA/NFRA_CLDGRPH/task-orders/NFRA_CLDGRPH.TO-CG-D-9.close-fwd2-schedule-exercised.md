@@ -73,6 +73,46 @@
 <criterion id="D9-AC4" cell_refs="CG-x-2"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/behind.sh | grep -E '^(BEHIND_CAUGHT|POINTER_MOVED_BY_READ|LEGIT_REBUILD_REPORTED)='</invocation><expect>BEHIND_CAUGHT=true[\s\S]*POINTER_MOVED_BY_READ=false[\s\S]*LEGIT_REBUILD_REPORTED=true</expect></criterion>
 `D9-AC4` -- LIMB (iii), TESTED BY TRYING: the behind window caught, the read moved nothing, and the same detector later reported the legitimate rebuild. A NOT-CAUGHT prints `BEHIND_CAUGHT=false` and FAILS honestly (the COO re-hands).
 
+> ### AMENDMENT 2026-09-05 ~10:4xZ BY THE ISSUER -- PASS 3 SCOPE AND TWO CLAUSES. THE BAR DOES NOT
+> MOVE: the criterion element above, its invocation and its `expect` are UNCHANGED.
+>
+> **PASS 3 IS D9-AC4 ONLY.** D9-AC1, D9-AC2, D9-AC3 and D9-AC5 PASSED in pass 2 and their evidence is
+> merged at HEAD; D9-AC6 is recorded for `3.0.0_SA_CVO`. Cite them, re-measure only this one.
+>
+> **CLAUSE 1 -- TIME THE POLL TO A SCHEDULED FIRE, NOT TO AN ARBITRARY HOUR.** Two honest
+> `BEHIND_CAUGHT=false` results are on the record, and the cause is measured as an ABSENT TRIGGER, not
+> a dead instrument: pass 2 held the marker at `2026-09-05T05:55:42.571886+00:00` for its whole run,
+> and the issuer re-read the same value at 10:18Z and 10:38Z with the served pointer EQUAL to it, so
+> the projection is caught up and there is nothing to catch. Stamps are BURSTY and seat-driven --
+> pass 2 measured clusters at 00:28-00:52Z and 05:31-05:55Z with a 6h17m silence between 18:11Z and
+> 00:28Z. **Open the poll to straddle a scheduled fire** (the 02:00Z derive, or the 03:30Z / 04:00Z /
+> 04:30Z producers), or the face's own first branch, the first real `incremental_updater` stamp after
+> 13:00Z, which is also limb (ii)'s *working hours* frame. ⛔ **PROVOKING A STAMP REMAINS FORBIDDEN**
+> -- an arm satisfied by staging its own trigger measures the stager, not the world -- so a THIRD
+> honest NOT-CAUGHT is an acceptable outcome and a manufactured true is not.
+>
+> **CLAUSE 2 -- THE TWO READS MUST FAIL LOUD (row `NFRA_CLDGRPH-S57`).** `behind.sh` at HEAD has
+> `marker_iso()` and `pointer_vintage()` each piping an `aws s3 cp ... -` into `jq` with **stderr
+> silenced**, and the file carries no `set -e`, no `set -o pipefail`, no rc capture and no emptiness
+> guard on either (censused: `set -e` 0, `pipefail` 0, `rc=` 0, `READ_FAILED` 0, `EMPTY` 0). Two empty
+> strings compare EQUAL, so `behind` computes false, no evidence row carries `"behind":true`, and the
+> report prints `BEHIND_CAUGHT=false` -- **the same verdict line a genuinely not-behind world
+> produces.** CLAUDE.md: never `2>/dev/null` a read whose EMPTINESS carries a verdict.
+> **REQUIRED IN PASS 3:** drop the silencer on those two reads, capture the `s3 cp` rc, and write a
+> `read_ok` field into EVERY evidence row, so the report can emit **`READ_FAILED` as a THIRD outcome**
+> distinct from both `BEHIND_CAUGHT=true` and `BEHIND_CAUGHT=false`. A verdict vocabulary with no
+> NOT-EVALUATED value encodes non-evaluation AS a verdict.
+> ⛔ **THIS IS NOT A RETRACTION OF EITHER NOT-CAUGHT.** Both are corroborated: `DISTINCT_MARKERS`
+> carries TWO distinct values across the passes, so the reads demonstrably worked and the detector is
+> alive. The clause is about what the NEXT run must be able to distinguish, and S57 stays ARMED until
+> the instrument prints that third outcome -- the face is not the exercise.
+>
+> **AND KEEP WHAT PASS 2 GOT RIGHT:** the report already prints `DISTINCT_MARKERS`, `DISTINCT_SERVED`
+> and EVERY marker/served pair observed, and the NOT-CAUGHT branch prints the halves of limb (iii)
+> that ARE established rather than withholding them. That richness is what made S57 findable at all;
+> do not trade it for a tidier output.
+
+
 <criterion id="D9-AC5" cell_refs="CG-x-2"><invocation>python .tools/comp-read infra/aws/globgrph/kuzu_cli.py --enumerate 'ensure_fresh|kuzu_nessie_load|_incremental_or_serve_stale' --limit 3</invocation><expect>ENUMERATE: 0 hit\(s\)</expect></criterion>
 `D9-AC5` -- NO QUESTION CAN START A REBUILD: the client the reads went through has no rebuild path (the S12 contrast, after CG-s-8).
 
