@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 38 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 39 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -936,6 +936,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "Brief Part II names `comp-pipescript deployed` among the outset tools, and brief O5 / PRD FWD-5 require that for every outset tool a seat can read 'rc, answer state, vintage, budget honoured' from one census, with a tool that could not answer saying so 'in its own voice with its denominator, never as an empty section that reads like a clean result'.",
     "world_is": "One of the nine cannot meet the O5 bar as it stands: it returns no answer within 75 s, discloses no answer-state, no vintage and no budget line, and exposes no `--budget` for a caller to bound it with. The census reports it as FAILED with its bound and its denominator rather than omitting it, which is O5's requirement satisfied ABOUT the tool -- but the tool itself is the population's one gap.",
     "notes": "hazard_standing INERT: this is a measured state of another project's tool (`comp-pipescript` is NFRA_COMPDIFF/graph-family, listed in the brief's RELIES-ON as consumed and not rebuilt here), not a hazard this cell arms or can disarm, and nothing was changed. Recorded as a row as well as in the census table because it is the one row a reader of the table will want to act on, and because a FAILED verdict that lives only in a run output is not durable. No fix attempted; `.tools/comp-pipescript` is outside this order's `<paths>`."
+  },
+  {
+    "id": "NFRA_OUTSET-S10",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T07:10:00Z",
+    "one_line": "The decomposition's fan-out is computed from DEPENDENCY chains and does not predict achievable parallelism, because the binding constraint on the remaining work is FILE CONTENTION. 8 of 17 cells are complete and every one of the 9 remaining is either dependency-blocked or contends for .tools/comp-heat with a live slot -- so the real width for the rest of this project is 1 to 2, against a declared cap of 8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The decomposition's chain read at HEAD states M=3 dependency-independent chains, longest depth 6, and the issuance carries `fanout: 3 of 3 chains, cap 8` as data. Both are computed purely from the PRD manifest's depends_on edges.",
+        "DEPENDENCY STATE MEASURED from the PRD manifest's own depends_on column, not from the decomp's prose: OS-s-10 <- OS-s-1, OS-s-4 (BOTH COMPLETE, so OS-s-10 is dependency-FREE); OS-s-9 <- OS-s-10; OS-s-11 <- OS-s-10; OS-s-13 <- OS-s-9; OS-s-14 <- OS-s-10, OS-s-13; OS-s-17 <- OS-s-11, OS-s-12. Five of the nine remaining cells hang off OS-s-10.",
+        "CONTENTION STATE MEASURED from each order's own <paths> block: OS-s-10 and OS-s-16 are both dependency-free and both name `.tools/comp-heat` and `org/modules/heatmap/`, which slot 1 holds for OS-s-5. So the project's critical-path cell is blocked by a FILE LOCK and not by any dependency.",
+        "CORRECTION TO THIS SEAT'S OWN FIRST READING, made before acting on it: `.tools/tests/` appeared as a clash across seven cells and is NOT contention -- each cell writes its own distinct file (11 of 11 verified: test_os1_..., test_os2_..., test_os12_... and so on). Treating a shared DIRECTORY as contended would have falsely serialised cells that can run beside each other, and would have made this row overstate the problem.",
+        "OBSERVED RATE, offered as the practical consequence rather than as a model: round 2 ran three slots and drained OS-s-2, OS-s-4, OS-s-8, OS-s-12 and OS-s-15. The remaining nine cannot be seated that way at any worker count."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The decomposition's s.1 chain read computes M=3 and presents the chain count as the ceiling on useful workers, and s.4 carries `cap 8`.",
+    "world_is": "The chain count bounds parallelism from ABOVE on the dependency axis only. The binding constraint for the back half of this project is a single shared FILE, `.tools/comp-heat`, which four cells write. A fan-out chosen from the chain count alone would spawn workers that cannot commit rather than workers that block -- a strictly worse failure, because a blocked worker waits while a contending one produces a guaranteed merge conflict on one file.",
+    "notes": "⛔ THIS IS NOT A DEFECT IN THE DECOMPOSITION AND THE ROW SHOULD NOT BE READ AS ONE. L5's chain read was computed correctly from the manifest's own edges and its cap of 8 was never reached. The gap is that DEPENDENCY WIDTH AND CONTENTION WIDTH ARE TWO DIFFERENT QUANTITIES, and the spine's fan-out line only ever names the first. Dependency width says how many cells COULD start; contention width says how many can FINISH without fighting over one file. On this project the two diverge sharply: dependency width for round 2 was 5, contention width was 3, and for the remaining nine it is 1 to 2. FILED RATHER THAN FIXED because changing what a decomposition must compute is an L5 spec question and this project's decomposition is FROZEN mid-round; the honest act now is to record the measurement and let 1.0.0_SA_CTO decide at round-N analysis whether a fan-out line should carry a contention read beside its chain read. PRACTICAL CONSEQUENCE, stated so nobody reads an idle slot as a stall: worker slot 3 is deliberately idle and is NOT blocked on any act of its own. It waits for slot 1 to finish OS-s-5 and release `.tools/comp-heat`, after which OS-s-10 goes to whichever slot holds that surface. Spawning a fourth worker would not help; it would guarantee a conflict."
   }
 ]
 ```
