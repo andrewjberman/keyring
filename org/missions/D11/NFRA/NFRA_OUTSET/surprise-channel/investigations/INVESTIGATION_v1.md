@@ -6,7 +6,7 @@ that sees a divergence appends its own row and keeps working (CLAUDE.md s.2).
 **First appends:** worker `0.9.0_WK_NFRA_OUTSET~1` on `NFRA_OUTSET.TO-OS-s-1` (Rule T budget wiring across
 `.tools/comp-heat`'s five subcommands). This file did not exist before this worker's write; created here.
 
-## What this worker measured, filed as six rows below
+## What this worker measured, filed as seven rows below
 
 - **S1** -- `O1-AC2`'s own `<expect>` ("WITHIN BUDGET" at `freshness .tools --budget 5`) is contradicted by a
   reproducible, measured runtime: the underlying engine (`org/modules/heatmap/object_freshness.py`) always scans
@@ -186,6 +186,27 @@ that sees a divergence appends its own row and keeps working (CLAUDE.md s.2).
     "spec_asserts": "S1 (this same channel, same worker): 'An honest Rule T implementation therefore reports BUDGET REACHED, not WITHIN BUDGET, at the criterion's own invocation' -- stated as the durable behavior of `.tools/comp-heat freshness .tools --budget 5`.",
     "world_is": "The SAME invocation, same code, same repository, later in the same session, now reliably (17 of 17) prints WITHIN BUDGET instead. S1's claim was true of the COLD-CACHE state it measured and remains true then; it did not anticipate that OS-level file-cache warmth (itself produced by ordinary session activity, not a deliberate 'get it to pass' action) would move the SAME criterion's outcome. Neither measurement set is wrong; they are two different, both-real machine states.",
     "notes": "This worker updates the proof-of-spec instance (NFRA_OUTSET.TO-OS-s-1.rule-t-budget-across-comp-heat.proof_of_spec.json) O1-AC2 row from FAIL to PASS, citing this row, in a follow-up commit -- per 'verify the STATE you claimed, not the EDIT you made' and 'a correction is a census too': the LATEST, most-repeated (17x), currently-reproducible measurement is what a grader re-running this exact criterion right now would also see. S1's disposition is UNCHANGED (append-only; this row is the correction carrier) and its ROOT-CAUSE claim (no path-scoped git call; every freshness call pays the whole-repo cost) remains TRUE and ARMED -- disarm owner unchanged, OS-s-2's assignee -- because a cold-cache caller (a fresh checkout, a machine reboot, a CI runner with no warm git object cache) would very plausibly see S1's original BUDGET REACHED behavior again at a 5s budget. This is precisely why the finding is filed as a HAZARD rather than closed: comp-heat's OWN default budget is 90s specifically because the tool cannot know its caller's cache state, and a caller passing a tight budget close to the FORM's stated default-below-outer-ceiling margin should not assume this engine's cold-start cost."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S7",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-04T23:40:00Z",
+    "one_line": "With all six acceptance criteria now PASS/RECORDED (S6 corrects O1-AC2 to PASS), this order's own PROOF AND COMPLETION section instructs flipping the TO's <status> to complete -- but this order's own <paths> block does not name the task-orders/ folder the TO file lives in, so this worker cannot perform the flip regardless of the acceptance outcome; the TO stays 'pending' on the record though the deliverable is complete and VALID.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-1.rule-t-budget-across-comp-heat.md@772631cac2 <paths> block: `.tools/comp-heat`, `org/modules/heatmap/`, `.tools/_compbudget.py`, `.tools/tests/`, the deliverables folder, this investigation file -- `org/missions/D11/NFRA/NFRA_OUTSET/task-orders/` (where the TO file itself lives) is not named",
+        "python .tools/proof-of-spec-check.py <instance @13065056db> O1-AC1,O1-AC2,O1-AC3,O1-AC4,O1-AC5,O1-AC6 -> VALID (rc=0); acceptance rows: O1-AC1 PASS, O1-AC2 PASS (corrected per S6), O1-AC3 PASS, O1-AC4 PASS, O1-AC5 PASS, O1-AC6 UNVERIFIABLE-BY-INSTRUMENT (judgment=true, not a mechanical criterion) -- every MECHANICAL criterion PASSES"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuing worker prompt's PROOF AND COMPLETION section: 'Flip to complete ONLY when every MECHANICAL criterion PASSES, and commit the instance, deliverables and flip together.'",
+    "world_is": "Every mechanical criterion passes, but this specific order's own <paths> grant excludes the folder the flip target lives in. A worker's write grant is read from the order's own <paths> block (RULING 1 cited in this TO's <preflight>); this worker does not widen it to perform the flip.",
+    "notes": "Not filed as BLOCKING: no acceptance criterion is stopped by this (all six already have full evidence and gradings); it blocks only the RECORD-KEEPING flip action described outside the acceptance section. Left for whichever seat holds write access to org/missions/D11/NFRA/NFRA_OUTSET/task-orders/ (issuer 2.0.0_SA_COO, or the CVO at L9) to flip the <status> field once this report and the VALID proof instance are read. hazard_standing INERT: an unflipped-but-complete TO is a record-freshness lag, not an operational hazard -- the work itself is committed, valid, and this worker's final report states the true completion state plainly."
   }
 ]
 ```
