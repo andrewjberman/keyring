@@ -2,7 +2,9 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-8</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>
+⛔ **`<issued_to>` RE-ADDRESSED from `~1` to `~2` at the drain, and this is an ISSUER defect, not a re-assignment.** The issuance addressed all thirteen worker cells to `~1` because the decomposition's chain read put chain A on ONE slot. Round 2 was then widened to THREE slots on a FILE-CONTENTION read (four cells write `.tools/comp-heat`, so they queue; this cell's surfaces are disjoint, so it runs beside them) -- and the orders were never re-addressed to match. `.tools/owned-paths-validate.py:213-215` keys the worker grant on `_normalize_serial(<issued_to>) == _normalize_serial(agent)`, so the seated worker held NO grant and could not commit finished, green work. Measured by `0.9.0_WK_NFRA_OUTSET~2` on OS-s-8 with a positive control discriminating on the serial alone: 4 of 4 paths granted to `~1`, 0 of 4 to `~2`. Rows `NFRA_OUTSET-W2-S3` (descriptive) and `NFRA_OUTSET-W2-S4` (mechanical, BLOCKING). **A FAN-OUT DECISION IS ALSO AN ADDRESSING ACT: widening the slot count re-addresses every order it moves, or the new slots hold nothing.**
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
 <status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
