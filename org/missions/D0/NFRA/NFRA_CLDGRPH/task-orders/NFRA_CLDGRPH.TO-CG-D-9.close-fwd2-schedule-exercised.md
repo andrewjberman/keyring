@@ -26,7 +26,19 @@
 
 **PRD FWD-2 (R2, verbatim):** *"The graph gets newer on the estate's own schedule -- nightly in full and within minutes of any cloud change."* **Acceptance 2:** *"Left alone overnight it is newer in the morning; a cloud change made during the day is visible without anyone requesting a refresh; and no question is ever the cause of a rebuild."*
 
-## MEASURED BY THE ISSUER AT THE CUT (2026-09-04 06:1xZ) -- the night is already on the record
+## MEASURED BY THE ISSUER AT THE CUT (2026-09-04 06:1xZ) -- SUPERSEDED IN PART, READ THE AMENDMENT BELOW FIRST
+
+> ### AMENDMENT 2026-09-05 ~02:4xZ BY THE ISSUER, BEFORE THE HAND-OFF -- THE NIGHT IS NOT THE ONE THIS BLOCK DESCRIBES
+> The block below was written on 2026-09-04 06:1xZ and treats the **2026-09-04 02:09:19Z** nightly as the evidence. **It is not.** TO-CG-D-1's digest pins landed 2026-09-04 ~17:2xZ, AFTER that nightly, so the 09-04 night ran on PRE-PIN bytes -- and `ROUND_ANALYSIS.round3.md` s.2 item 2 rules that *a night under pre-fix bytes is not the night FWD-2 means*. **THE NIGHT THAT COUNTS IS 2026-09-05.** The issuer measured it live and it is on the record at `STEP_LOG.2.0.0_SA_COO~A.round4.json` row 12:
+> - derive task `be97f46226f74bae86b9cf853e78763c`, **startedBy `events-rule/opal-globgrph-derive-runner-nightly`** (the rule, not an ad-hoc run, not a producer stamp), task definition `globgrph-derive-runner:7`, **imageDigest `sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778`** -- the pin.
+> - created `2026-09-05T02:00:05.778Z`, started `02:00:30.164Z`, stopped `02:12:51.092Z`, **exit 0**.
+> - its denominator line: **`s3 notifications buckets read=34 / buckets unreadable=0; unreadable=none`**.
+> - `MARKER_STAMPED hash=c336d1e8bac0321c442677ecd5e3150ff7006eb9b47ec0ad86250f36b4ce2e6d nodes_snap=4606138319900821475 edges_snap=8760077255054959316`.
+> - **the served vintage `2026-09-05T02:11:10.919000+00:00` is THIS derive's product, joined 3 of 3** on `nodes_snapshot_id` / `edges_snapshot_id` / `nessie_commit_hash` in its `_build_manifest.json` (`built_at 02:23:22.179Z`). ⛔ **USE THAT JOIN, NOT 'newest vintage'** -- a PRODUCER stamp advanced the pointer to `2026-09-05T00:52:45.603Z` earlier the same night with NO derive in the window at all, and 'newest' would have picked the wrong one.
+> **YOUR LIMB (i) WINDOW IS THEREFORE 2026-09-04 21:00Z -> 2026-09-05 06:00Z**, and the previous evening's vintage is the last one before it. Every date in the block below that says 09-03/09-04 is the OLD frame, kept for its METHOD (the commands, the two invocation logs, the denominators) and not for its dates.
+> D9-AC5's pattern also lost `--mode` in this amendment: `--mode` matches `kuzu_cli.py`'s own DOCSTRING documenting that `--mode` is gone, so the expectation was unsatisfiable while the property held (DOCSTRING=1, CODE=0) -- the identical defect amended in D5-AC4 at `88c4db9dd4`. The bar does not move: the amended pattern reads 0 on the thin client and D3-AC2 still grades `--mode` on the live `--help` surface.
+
+## THE CUT-TIME BLOCK (method good, dates superseded)
 
 - **The vintages under `projection/`** (`.tools/aws s3api list-objects-v2 --bucket opal-313476888478-globgrph --prefix projection/ --delimiter / --query 'CommonPrefixes[].Prefix' --output text`): 17 prefixes from `2026-09-03T13:23:54` to `2026-09-04T05:53:37`; in the night window 21:00Z-06:00Z: `21:12:54`, `23:54:15`, `00:28:42`, `00:37:01`, `00:49:25`, `00:51:35`, **`02:09:19` (the NIGHTLY: manifest `writer_id=derive_runner`, `producer.mode=full`, `built_at=2026-09-04T02:22:43Z`, 27,246 nodes / 58,646 edges)**, `03:31:02`, `04:14:01`, `05:29:24`, `05:37:31`, `05:53:37` (`incremental_updater`, `incremental`, built 05:54:06Z). The pointer at 06:14Z read `2026-09-04T05:53:37.689093+00:00`. The previous evening's vintage: `2026-09-03T19:02:18` (C-2's authentic advance).
 - **The nightly schedule:** `cron(0 2 * * ? *)` on the derive task (`infra/aws/terraform/globgrph/item2a.tf:439`); the intraday producer is the CloudTrail-fed `opal-globgrph-incremental-updater` Lambda (item2b) which stamps the marker on real cloud changes; the marker stamp -> S3 notification -> SQS `opal-globgrph-projection-events` -> EventBridge Pipe -> projection worker task -> `projection/<vintage>/` + pointer PUT -> the serving service's 60 s watcher swaps (`projection_server.py:382-410`).
@@ -44,7 +56,7 @@
 
 ## ACCEPTANCE (v3 grammar: one clause per criterion; every mechanical invocation bounded)
 
-<criterion id="D9-AC1" cell_refs="CG-x-2"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/night.sh | grep -E '^(NIGHT_VINTAGE|PREV_EVENING)='</invocation><expect>NIGHT_VINTAGE=2026-09-04T0[0-9][\s\S]*PREV_EVENING=2026-09-03T</expect></criterion>
+<criterion id="D9-AC1" cell_refs="CG-x-2"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/night.sh | grep -E '^(NIGHT_VINTAGE|PREV_EVENING)='</invocation><expect>NIGHT_VINTAGE=2026-09-05T0[0-9][\s\S]*PREV_EVENING=2026-09-0[34]T</expect></criterion>
 `D9-AC1` -- LIMB (i), THE NIGHT'S VINTAGE: a full-mode `derive_runner` vintage dated the morning, later than the previous evening's.
 
 <criterion id="D9-AC2" cell_refs="CG-x-2"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/night.sh | grep -E '^(SEAT_INVOCATIONS_IN_WINDOW|RUNTASK_NONPIPE_IN_WINDOW)='</invocation><expect>SEAT_INVOCATIONS_IN_WINDOW=0 of [0-9]+[\s\S]*RUNTASK_NONPIPE_IN_WINDOW=0 of [0-9]+</expect></criterion>
@@ -56,7 +68,7 @@
 <criterion id="D9-AC4" cell_refs="CG-x-2"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/behind.sh | grep -E '^(BEHIND_CAUGHT|POINTER_MOVED_BY_READ|LEGIT_REBUILD_REPORTED)='</invocation><expect>BEHIND_CAUGHT=true[\s\S]*POINTER_MOVED_BY_READ=false[\s\S]*LEGIT_REBUILD_REPORTED=true</expect></criterion>
 `D9-AC4` -- LIMB (iii), TESTED BY TRYING: the behind window caught, the read moved nothing, and the same detector later reported the legitimate rebuild. A NOT-CAUGHT prints `BEHIND_CAUGHT=false` and FAILS honestly (the COO re-hands).
 
-<criterion id="D9-AC5" cell_refs="CG-x-2"><invocation>python .tools/comp-read infra/aws/globgrph/kuzu_cli.py --enumerate 'ensure_fresh|kuzu_nessie_load|_incremental_or_serve_stale|--mode' --limit 3</invocation><expect>ENUMERATE: 0 hit\(s\)</expect></criterion>
+<criterion id="D9-AC5" cell_refs="CG-x-2"><invocation>python .tools/comp-read infra/aws/globgrph/kuzu_cli.py --enumerate 'ensure_fresh|kuzu_nessie_load|_incremental_or_serve_stale' --limit 3</invocation><expect>ENUMERATE: 0 hit\(s\)</expect></criterion>
 `D9-AC5` -- NO QUESTION CAN START A REBUILD: the client the reads went through has no rebuild path (the S12 contrast, after CG-s-8).
 
 <criterion id="D9-AC6" cell_refs="CG-x-2" judgment="true"/> `D9-AC6` -- THE THREE LIMBS READ TOGETHER against FWD-2's DONE WHEN, with "within minutes" and "working hours" as you had to read them, and any arm that was VOIDED or NOT-CAUGHT with its evidence. A reading act; NO verdict; graded by `3.0.0_SA_CVO` at L9.
