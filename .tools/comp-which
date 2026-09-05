@@ -788,7 +788,23 @@ RULES = [
       # NFRA_TOOLCHECK P3 req#2a (2026-07-08): "which directories are dead and safe to DELETE"
       # (word order reversed from "dead directories" + "archive"->"delete") previously routed
       # only via a stopword-coincidence fuzzy hit; real vocabulary covering the reversed order.
-      "are dead", "dead and safe", "safe to delete", "directories are dead"],
+      "are dead", "dead and safe", "safe to delete", "directories are dead",
+      # NFRA_OUTSET OS-s-3 (2026-09-05): the LAST-TOUCHED / write-AGE phrasing of this same
+      # question had NO curated vocabulary at all. MEASURED before the add: `comp-which "what
+      # have I not touched in months"` scored ZERO here, fell through to the never-dead-end
+      # primitive, and RAN a comp-find content search for the token "touched" -- 8269 hits
+      # across 28853 files, a text answer to a write-history question. comp-heat freshness IS
+      # this question by construction: its bands ARE age vs barriers (hot<=7d, warm<=30d,
+      # cold>30d) and its ranked output is the coldest paths.
+      # DELIBERATELY TIME-SCOPED so it does not steal the existing WHO-touched routes, which ask
+      # which AGENT touched a thing rather than WHEN it was last written: "node touching a
+      # symbol" -> comp-xref (:164), "who touched the bucket" -> comp-cloudtrail-ish (:1026),
+      # "touching a gold script" (:766). None of those phrasings contains a negation or a
+      # last/never qualifier, and none of the keywords below matches them.
+      "not touched", "not been touched", "havent touched", "haven't touched",
+      "hasnt been touched", "hasn't been touched", "never touched", "untouched",
+      "nobody has touched", "no one has touched", "last touched", "when did i last touch",
+      "gone cold", "went cold"],
      "estate object write-freshness / hygiene (comp-heat)",
      ["comp-heat freshness [path]", "comp-heat drift"],
      "what's stale/dead/safe-to-archive (cold subtrees) or written-but-not-committed (drift) -- repo/estate OBJECT hygiene; DISTINCT from comp-freshness (data-pipeline S3/DDB)"),
@@ -1211,7 +1227,9 @@ HEAT_RX = re.compile(
     r"\b(safe to archive|archive candidates?|cold subtrees?|dead director(y|ies)|"
     r"stale (files?|dirs?|directories)|repo hygiene|estate hygiene|"
     r"writes? not (in a |)commit(ted)?|uncommitted (writes?|changes?|work)|"
-    r"what have i written|written but not committed)\b", re.IGNORECASE)
+    r"what have i written|written but not committed|"
+    r"(not|never|nobody has|no one has) touched|(have|has)n'?t (been )?touched|"
+    r"not been touched|last touched|untouched|(gone|went) cold)\b", re.IGNORECASE)
 
 # Text-search intent: a verb that means "find this string/symbol in the repo" -- the cases
 # with NO rich tool, where comp-which must RUN the on-rails primitive instead of dead-ending.

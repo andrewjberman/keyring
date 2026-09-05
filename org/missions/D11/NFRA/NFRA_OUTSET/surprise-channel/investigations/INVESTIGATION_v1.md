@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 42 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 49 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1034,6 +1034,173 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "comp-heat's own module docstring: 'never writes to the repo or any store'; and this order's BOUNDS: 'No new dependency. No second implementation.'",
     "world_is": "The read-only claim is a DOCSTRING, not a control, and the --sql surface is exactly where a caller could contradict it. This worker did not build a guard, for two reasons stated rather than implied: (1) CLAUDE.md forbids implementing an approval gate on work Andrew did not ask for, and a statement-verb filter on a caller's own query is precisely that; (2) a keyword filter over arbitrary SQL is a FALSE sense of safety -- it would read as enforcement while being trivially evadable, which is worse than a documented gap. The cell asked for a BOUND on time and cost, and that is what was built.",
     "notes": "hazard_standing ARMED because the gap is reachable today by any caller with a budget at or above the 200 s floor. NOT CLAIMED, and deliberately not tested: that a write would actually SUCCEED. That depends on the Trino catalog configuration and the task role's IAM, neither of which this cell read, and establishing it would mean issuing a destructive statement against a live shared store -- which no criterion asks for and which NEVER-AUTO-DELETE and the estate's own hard stops forbid. The claim here is exactly and only that NOTHING IN THE TOOL CHECKS, which is a code read at a named commit."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S7",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:20:00Z",
+    "one_line": "BLOCKING on O3-AC3: the criterion's own invocation `python .tools/comp-which-routing-test.py` CANNOT produce its <expect> of PASS under the order's own mandatory `timeout 120`. It shells comp-which ONCE PER COHORT QUESTION and the frozen cohort is 562+87 questions plus ~69 self-route probes and ~45 controls -- at a measured 1.01 s per comp-which invocation that is >= 763 subprocesses and >= ~770 s, i.e. >= 6.4x the bound. Measured three times: rc-expiry at 120 s twice and at 600 s once, no verdict line produced in any run. PRE-EXISTING: two of the three runs were on the COMMITTED router before this cell changed anything.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THREE BOUNDED RUNS, all in worktree C:/tmp/wk-OUTSET-2 @22e38e7963. (i) `timeout 120 python .tools/comp-which-routing-test.py` -- bound expired, no verdict. (ii) `timeout 120 python .tools/comp-which-routing-test.py --out .scratch/os3_routing_baseline.json` (the non-clobbering regression form the tool's own --help prescribes) -- bound expired. (iii) `timeout 600 python .tools/comp-which-routing-test.py --out .scratch/os3_routing_prefix.json` -- rc=124 at 600 s, started 05:46:25Z finished 05:56:27Z. Runs (i) and (iii) were launched BEFORE this cell edited .tools/comp-which, so the failure is not caused by the change under test. A fourth run, the literal form AFTER the change, produced 152 lines and `grep -c -E '^\\s*(PASS|FAIL)\\b'` = 0 -- the harness never reaches a verdict line.",
+        "THE ARCHITECTURAL REASON, cited at source: .tools/comp-which-routing-test.py:284 `r = subprocess.run([sys.executable, COMP_WHICH, q], ...)` -- ONE comp-which SUBPROCESS PER QUESTION -- with a second subprocess site at :606 (`--route-only`) and a third at :996 (the positive control). Cohort sizes read from the harness's own frozen artifact org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp-which-routing-cohort.frozen.json: cohort_R_raw 562, cohort_R_strict 556, cohort_C 87. Plus self_route_verdicts (:484) over the tool set (~69) and the instrument controls the run's own header prints (POSITIVE, GIBBERISH n=40, r[1] ANTI-CONTROL, two MUTATION arms, scorer-restore).",
+        "THE PER-CALL COST, measured on this fabric, same session: 3 consecutive `python .tools/comp-which --route-only \"what is stale and safe to archive\"` subprocesses took 3.03 s total = 1.01 s each. 763 x 1.01 s = ~770 s as a FLOOR (a bracket, not a point: the second measure() pass at :1193-1195 and the --route-only site may raise the call count further, which only widens the gap).",
+        "CONTRIBUTING, not causal, and outside this grant: every comp-which invocation prints `ALARM: POTION semantic embedder unavailable -> falling back to lexical relevance (ValueError: POTION hash-mismatch on tokenizer.json ... (FAIL-CLOSED))`, so each of those >=763 subprocesses pays a failed embedder load. See NFRA_OUTSET-W2-S11 -- that row is about the ROUTING SEMANTICS the fallback changes, and it is not offered as the cause of this timeout, which is the subprocess-per-question architecture."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-3 `<criterion id=\"O3-AC3\"><invocation>python .tools/comp-which-routing-test.py</invocation><expect>PASS</expect></criterion>`, under the order's BOUNDS clause: 'EVERY invocation is bounded. You run each under `timeout 120` and a timeout is RECORDED AS THE OUTPUT'.",
+    "world_is": "The two clauses are mutually unsatisfiable for this invocation. The harness needs an order of magnitude more wall clock than the bound the same order mandates, so the only output the criterion can have is the timeout, and a timeout is not the string PASS. The BOUNDS clause anticipates this exact outcome ('an unbounded command yields a criterion whose evidence is the word timeout') but the acceptance clause still requires PASS. Nothing this worker may do inside its <paths> closes the gap: the harness is not in the grant, its cost is architectural rather than a tunable, and it exposes no --budget/--limit/--sample flag (its only flags are --freeze, --binary-ref, --mutate, --out).",
+    "notes": "NOT BENT TO PASS, and the temptations are named so the issuer can see they were refused. This worker did NOT substitute a cheaper battery of its own and grade AC3 against that -- a different instrument answering a different question is not the criterion, and the order's own acceptance preamble says a mechanical criterion's pass is decided by THE MATCH. It did NOT raise the bound and call the result PASS. It did NOT edit the harness (outside <paths>) or the criterion. WHAT IT DID INSTEAD, as the regression evidence AC3 exists to provide: ran `python org/modules/graph/tests/test_compwhich_toolpass_rules.py` (a routing-rank battery, run-only, not edited) against BOTH the committed router and the changed router and got the identical result on each -- `1 failed, 26 passed, 1 xpassed` -- with the single failure being the pre-existing retired-comp-surface-check case, unrelated to this change. That is a REGRESSION control on a different instrument; it is offered as evidence, never as a substitute verdict for AC3, which stays FAIL. Consequence: this order's <status> is NOT flipped. Possible disarms, all the issuer's: amend AC3's bound; amend AC3 to the harness's own --mutate arm or another sub-run that terminates; or name a different battery. disarm_owner 2.0.0_SA_COO."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S8",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:22:00Z",
+    "one_line": "SECOND, INDEPENDENT limb on O3-AC3: the criterion's LITERAL invocation carries no --out, and the harness's default output path is org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp-which-routing-baseline.json -- ANOTHER SEAT'S deliverables tree, outside this order's <paths>. The tool's own --help calls this a clobber hazard that has already fired once. So the criterion as written instructs its assignee to write a file the grant forbids, and the assignee has no sanctioned verb to restore it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-which-routing-test.py:190-192 @22e38e7963 -- `_DELIV = os.path.join(WS, \"org\", \"tier2_senior\", \"0.8.0_AE_CloudComp\", \"deliverables\")` and `BASELINE = os.path.join(_DELIV, \"comp-which-routing-baseline.json\")`; :1570 `out_path = args.out or BASELINE`. With no --out, the default IS the committed baseline artifact.",
+        "The tool's own --help, verbatim: '--out PATH write the report JSON here instead of the committed TO-1 baseline artifact. A LATER VINTAGE MUST NOT CLOBBER A COMMITTED BASELINE: the default path IS the blob-pinned PRE record, and the first post-fix run of this harness overwrote it in the working tree (caught at git-status, restored from HEAD -- NFRA_COMPCLOSE 2026-07-14). Regression runs pass --out; only a deliberate re-baseline omits it.' The criterion's invocation is the RE-BASELINE form, not the regression form.",
+        "TO-OS-s-3 <paths> @c3449745ec names .tools/comp-which, .tools/tests/, this order's deliverables folder, the channel file and the infra/system/06_current_state pair. org/tier2_senior/** is not among them.",
+        "NO WRITE OCCURRED, verified rather than assumed: `git status --porcelain -- org/tier2_senior/` is EMPTY after every run, because the harness writes its report only after reaching the verdict stage and no run reached it (see W2-S7). The hazard is therefore LATENT here -- it fires on the first assignee whose run completes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-3 O3-AC3 <invocation>python .tools/comp-which-routing-test.py</invocation> (no --out), alongside the BOUNDS clause 'Your write surface is the <paths> block below and nothing else'.",
+    "world_is": "That invocation's own default behaviour writes outside the <paths> block. The two clauses conflict, and the conflict is invisible until a run completes -- which on this fabric it does not (W2-S7), so the first person to make the harness faster is also the first to clobber the baseline. This worker used the documented regression form (--out into its own scratch) for every diagnostic run, and ran the literal form only under the bound where it provably cannot reach the write.",
+    "notes": "Filed SEPARATELY from W2-S7 rather than folded into it, following the issuer's own lesson from the addressing defect: a criterion can fail on two INDEPENDENT limbs, and fixing the limb you noticed leaves the other armed. Raising AC3's timeout WITHOUT adding --out would convert this latent hazard into a live one -- a faster or longer-bounded run is exactly what makes the clobber reachable. hazard_standing ARMED for that reason. disarm_owner 2.0.0_SA_COO: the fix is one flag in the criterion's invocation, e.g. `python .tools/comp-which-routing-test.py --out <the assignee's own scratch or deliverables path>`. This worker did not edit the harness (outside <paths>) and did not restore-by-checkout anything (that verb is withheld from this worker)."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S9",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:24:00Z",
+    "one_line": "The cell's premise and its criteria measure DIFFERENT questions, and one criterion was already green before this cell touched anything: O3-AC1's question routed to comp-heat at score 2.00 on the COMMITTED router. Measured across seven phrasings of the heat intent, 1 of 7 routed to comp-heat BEFORE and 7 of 7 AFTER -- so AC1+AC2 alone cannot discriminate a real fix from a no-op, and the held-out set is what carries the evidence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE, on the FAITHFUL instrument (the committed binary restored to its real path .tools/comp-which, invoked exactly as the criteria invoke it, then the changed bytes restored and verified byte-identical): 'what is stale and safe to archive' -> `1. score 2.00 comp-heat freshness [path]`, rc 0, NO 'NO CURATED RULE MATCHED' banner. O3-AC1 passed before this cell existed.",
+        "PRE, same instrument, the other six heat-intent phrasings: 'what have I not touched in months' -> RAN the never-dead-end comp-find primitive (8371 hits across 28886 files); 'files I haven'\\''t touched since June' -> RAN comp-find (8388 hits); 'which paths have not been touched in a long time' -> RAN comp-find (8395 hits); 'when was this last touched' -> RAN comp-find (8378 hits); 'show me untouched directories' -> `1. score 0.28 comp-adversary` (a sub-vetted fuzzy guess); 'what went cold in the repo' -> `1. score 1.50 comp-iam-usage role-cold` -- a CONFIDENT curated-band answer to a different question (IAM role coldness, not repo write-age), which is the worse failure of the two shapes.",
+        "POST, same instrument: all 7 -> `1. score 2.00 comp-heat freshness [path]`. DENOMINATOR: 1 of 7 PRE, 7 of 7 POST.",
+        "The CELL text names a third question again: PRD s.7 row OS-s-3 says `comp-which \"what is comp-heat\"` returns NO CURATED RULE MATCHED across 79 tools ranked, TOP SCORE 0.36. Measured at 22e38e7963: the banner is still there and 79 tools are still ranked, but the top score is 0.61 (comp-cochange and comp-heat TIED at 0.61, with the tool's own '*** TOP SCORES ARE TIED -- THE ORDER IS NOT A RANKING ***' warning), not 0.36. Neither criterion tests that question, and this cell's change does not address it: 'what is comp-heat' is a DESCRIBE-THE-TOOL question, not a freshness question."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL: 'OS-s-3 (PRD s.7): `comp-which \"what is comp-heat\"` returns NO CURATED RULE MATCHED across 79 tools ranked, top score 0.36.' ACCEPTANCE: O3-AC1 'the question routes to comp-heat rather than NO CURATED RULE MATCHED'; O3-AC2 'a second phrasing of the same question routes the same way'.",
+    "world_is": "Three different questions are in play. (a) The cell's premise question ('what is comp-heat') is a DESCRIBE question and is still unrouted at 22e38e7963, with a top score of 0.61 rather than the 0.36 the PRD records. (b) O3-AC1's question already routed correctly before any change, so its PASS is not evidence of work. (c) O3-AC2's question is the only criterion that was actually red. This worker therefore did not treat AC1+AC2 as the evidence: it measured seven phrasings PRE and POST on the faithful instrument (1 of 7 -> 7 of 7) and five negative controls that must NOT move (5 of 5 unchanged, plus a sixth confirming 'cold roles and unused permissions' still routes to comp-iam-usage role-cold at 1.67).",
+    "notes": "hazard_standing INERT: nothing operational is armed by this; it is a statement about what the criteria can and cannot prove. Filed because the issuer's own warning on this cut was that 'a routing table edit that makes the string appear is not the same as the router answering the question well, and the criterion cannot tell them apart' -- this row is the measurement showing precisely HOW MUCH of the criterion set is insensitive (AC1 is green either way) and what was used instead. NOT PROPOSED: no change to the criteria, and no attempt to make 'what is comp-heat' route, which is a DESCRIBE-intent gap and a different cell's question."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S10",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:26:00Z",
+    "one_line": "INSTRUMENT TRAP, caught by contradiction and reported against this worker's own first two answers: BOTH cheap ways of measuring the router's PRE behaviour gave FALSE results, in OPPOSITE directions, and each looked clean. A copy of comp-which run from .scratch/ reported 0 of 7 heat questions routing PRE; an in-process exec of the same PRE source reported 7 of 7. The faithful instrument -- the committed bytes restored to the REAL path and invoked exactly as the criterion invokes them -- says 1 of 7.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FALSE NEGATIVE, mechanism at source: .tools/comp-which:33 @22e38e7963 `WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))`. A copy at .scratch/comp-which.PRE resolves WS to <repo>/.scratch's parent chain rather than the repo, finds no manifest/index, and FAILS SOFT to the never-dead-end primitive for every query. It reported '0 of 7 route to comp-heat BEFORE' -- including for 'what is stale and safe to archive', which a direct pre-change CLI run had ALREADY shown routing at 2.00. comp-which exposes no workspace env override (grep of environ.get returns CLAUDE_CODE_SESSION_ID, OPAL_AGENT_SERIAL, COMP_WHICH_LIVE_AFFINITY, COMP_WHICH_TOPK -- none is a WS override), so there is no supported way to run a copy out of place.",
+        "FALSE POSITIVE: compiling the PRE source with the REAL filename and calling main() in-process under --route-only reported 7 of 7 heat questions routing PRE, contradicting the same direct measurement in the other direction. Both proxies were discarded.",
+        "THE FAITHFUL INSTRUMENT and its result: `git show HEAD:.tools/comp-which > .tools/comp-which` (a write to this worker's OWN granted file), then the criteria's own invocations, then `cp` the changed bytes back and `cmp -s` to prove restoration -- 'RESTORED: bytes identical to POST' printed on each of the two swaps, and `git diff --stat -- .tools/comp-which` afterwards showed the expected 20 insertions / 2 deletions and nothing else. PRE = 1 of 7.",
+        "WHAT CAUGHT IT: not a control, a CONTRADICTION. The first proxy disagreed with a measurement already taken on the real binary earlier in the same session. Had the pre-change CLI run not been recorded first, '0 of 7 before, 7 of 7 after' would have been reported as a clean, flattering result -- an overstatement of this cell's own effect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's evidence discipline: 'each criterion's invocation and its output verbatim with rc and denominator', with the issuer's warning that a routing edit making a string appear is not the router routing.",
+    "world_is": "For a path-derived-workspace tool, a PROXY for the criterion's invocation is not evidence about the criterion. Two proxies that are obvious, cheap and superficially rigorous both returned confident wrong numbers here, one in each direction, with no error, no exception and no missing denominator. The only instrument whose answer can be trusted is the criterion's own invocation against the real file at the real path.",
+    "notes": "hazard_standing ARMED: every comp-tool in .tools/ derives its workspace from __file__ the same way, so any future seat verifying a comp-tool edit by running a COPY of the old version gets a silent fail-soft rather than a comparison, and the direction of the error flatters the change under test. This is the same false-clean family as NFRA_OUTSET-W2-S1 (a defect whose observable signature is indistinguishable from a clean answer) arriving in the VERIFICATION rather than in the tool. disarm_owner 2.0.0_SA_COO to route it; nothing is proposed as a code change, and this worker fixed nothing -- the WS derivation is correct behaviour for a tool run from its own directory. The cheap discipline that catches it: take one measurement on the real binary BEFORE editing, and treat any later proxy that disagrees with it as the proxy being wrong."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S11",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:28:00Z",
+    "one_line": "EVERY routing measurement on this fabric -- including both of this cell's routing criteria -- was taken against a DEGRADED router: comp-which prints `ALARM: POTION semantic embedder unavailable -> falling back to lexical relevance` on every single invocation, because of a FAIL-CLOSED hash mismatch on the vendored tokenizer.json. The criteria are therefore graded on the lexical path, and nothing measured here says how the semantic path routes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The ALARM, verbatim on stderr of every comp-which invocation at 22e38e7963: 'ALARM: POTION semantic embedder unavailable -> falling back to lexical relevance (ValueError: POTION hash-mismatch on tokenizer.json: manifest=e67e803f624fb4d67dea1c730d06e1067e1b14d830e2c2202569e3ef0f70bb50 vendored=0a1168df8209a591defdc781567f11f8ea5b400c60b994350f8892e7bdfe829b (FAIL-CLOSED))'. Reproduced on every one of the dozens of invocations this cell made, including the two criterion invocations and both arms of every PRE/POST comparison, and on a nonsense query ('xyzzy') -- so it is unconditional, not query-dependent.",
+        "It is a FAIL-CLOSED guard behaving correctly, not a crash: the manifest sha and the vendored file's sha disagree, so the embedder refuses to load and the router degrades to lexical relevance rather than scoring against a tokenizer it cannot vouch for.",
+        "WHY IT MATTERS TO THIS CELL SPECIFICALLY: the change this cell makes is CURATED-RULE vocabulary plus a forced-score regex, and both are evaluated on the lexical path (`_score_rule` at .tools/comp-which:1259 is pure substring/token matching, and HEAT_RX is a regex). Those two mechanisms are unaffected by the embedder. But the RANKING they compete in, and the fuzzy base-band the 'NO CURATED RULE MATCHED' banner is computed against, are not -- so a claim of the form 'this question now routes to comp-heat' is sound for the lexical path and UNMEASURED for the semantic one.",
+        "OUT OF GRANT and not touched: the vendored tokenizer and the POTION manifest are not in TO-OS-s-3's <paths> (.tools/comp-which, .tools/tests/, this order's deliverables, the channel file, the 06_current_state pair). This worker changed nothing about the embedder and did not suppress the alarm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-3's two routing criteria assert that a question routes to comp-heat, with no qualifier about which relevance backend is live; and the acceptance preamble says a mechanical criterion's pass 'is decided by the MATCH and never by your opinion'.",
+    "world_is": "The match is decided against a router that is announcing, on every invocation, that its semantic half is unavailable. The MATCH is real and this worker records it as such; what it does not record, because it cannot measure it here, is whether the same question routes the same way once the embedder loads. A criterion graded on a degraded instrument is still a criterion graded, but the qualifier belongs in the record rather than in nobody's head.",
+    "notes": "hazard_standing ARMED and it is wider than this cell: the alarm fires for every agent that uses comp-which, which CLAUDE.md Rule 21 makes the DEFAULT search reflex for the whole estate, so the fabric's router has been running lexical-only for at least the span this worker can observe. The cost is silent quality loss, not an error. NOT ACTED ON, deliberately: diagnosing or re-vendoring the POTION artifact is out of this order's <paths> and would be a second implementation the BOUNDS forbid; a hash mismatch is also exactly the kind of FAIL-CLOSED guard that must not be worked around by a passer-by. disarm_owner 2.0.0_SA_COO to route it to whoever owns the comp-which vendored assets. Recorded here so no later reader mistakes this cell's routing numbers for measurements of the full router."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S12",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T06:35:00Z",
+    "one_line": "The W2-S5 FAILS-OPEN hazard is now measured on a changeset that GENUINELY IS a comp-system _SOURCE, which is the case that matters: the worktree-local tool returns SYSTEM BLOCKED-ON-PEER-LANDING rc 2 on .tools/comp-which while the PATH shim -- the arm safe-commit actually reaches, via `command -v` -- returns `SYSTEM CURRENT (no genuine drift) -- gate open` rc 0. On W2-S5's changeset both arms agreed NOT_APPLICABLE and failing open cost nothing. Here they disagree, and the commit-time gate opens on drift it did not grade.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BOTH ARMS, same argument, same minute, worktree C:/tmp/wk-OUTSET-2 @22e38e7963 with .tools/comp-which modified and uncommitted. ARM 1 (PATH shim /c/Users/AndrewBerman/bin/comp-system): `comp-system --gate --changed .tools/comp-which` -> 'SYSTEM CURRENT (no genuine drift) -- gate open.', rc 0. ARM 2 (worktree-local): `bash .tools/comp-system --gate --changed .tools/comp-which` -> 'SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (source drift: fingerprint (content-sha256, file_count) (45ec711d24276cc32fa3451f9e7e0cac9cdd9eced40d78aa6570f8d397be7c3f, 260) -> (ae4a1905cf70757e7d978a9f4cf5601b11f1bb23c4fc6eb9dda50ab9854c31f4, 260)), but source file(s) are uncommitted -- .tools/comp-which. Wait for landing, then re-run.', rc 2.",
+        "WHY THE SHIM ARM IS THE ONE THAT COUNTS AT COMMIT TIME: safe-commit.sh:789 gates on `command -v comp-system` -- PATH resolution. /c/Users/AndrewBerman/bin/comp-system hard-codes `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-system\"` and execs it; .tools/comp-system:20 sets `WORKSPACE=\"$(cd \"$(dirname \"$0\")/..\" && pwd)\"`. From a linked worktree the graded tree is therefore always the MAIN workspace, which does not contain this worker's change.",
+        "THE ESCALATION OVER W2-S5, stated as a difference and not a repetition: W2-S5's changeset (org/modules/graph/debtscan/comp_similar.py) is not a comp-system _SOURCE, so BOTH arms returned NOT_APPLICABLE rc 0 and the wrong-tree read was harmless. This changeset IS a _SOURCE (.tools/comp-which), the arms DISAGREE, and the disagreement is in the permissive direction. That is the difference between a latent defect and a live one, and it took a second cell on a different surface to reach it.",
+        "The issuer's own mid-task note to this worker on OS-s-8 predicted the shim would 'grade the WRONG TREE' with slot 1's discriminator 7c2df46efc-vs-45ec711d24 from baseline 67dff3036c. This measurement is consistent and adds the consequence: not merely a wrong fingerprint but an OPEN GATE. Note this worktree's own baseline now reads 45ec711d24, which was slot 1's WORKTREE-LOCAL target -- i.e. the estate moved under both of us between the two measurements, which is exactly why a fingerprint pair is quoted with its vintage here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-3's <paths> note: 'safe-commit.sh:789 fires comp-system --gate --changed on any pathspec matching .tools/comp- ... and BLOCKS at :837 when 06_current_state is stale -- so the assignee must be able to regenerate and COMMIT that pair or it can edit its surface and then not land it.'",
+    "world_is": "On this surface the gate does not block, because the arm safe-commit reaches grades a tree that does not contain the change. The <paths> grant of the 06_current_state pair is still NECESSARY and this worker uses it -- but it is used because the drift is REAL (the worktree-local arm says so), not because a gate forced the issue. An assignee who trusted the commit-time gate as its oracle would have landed a comp-system source and left 06 stale, with a green gate line in its transcript.",
+    "notes": "ACTED ON WITHIN THE GRANT, and only within it: this worker will land the source and then regenerate infra/system/06_current_state.{json,md} WORKTREE-LOCALLY (the arm that can actually see the change) and commit the pair, verifying that regeneration moves nothing outside those two granted files. NOT ACTED ON: the shim, .tools/comp-system, .tools/provision-path-shims.sh and safe-commit.sh are all outside this order's <paths> and none was touched; no gate was edited, no --force and no GIT_COMMIT_AUTHOR_OVERRIDE was used. hazard_standing ARMED: unchanged from W2-S5 and now with a demonstrated live consequence. disarm_owner 2.0.0_SA_COO. This row does not extend W2-S5 -- rows are append-only -- it cites it."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S13",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T07:40:00Z",
+    "one_line": "CORRECTS ONE EVIDENCE LINE IN W2-S7, on the issuer's catch and verified at source here: the detector `grep -c -E '^\\s*(PASS|FAIL)\\b'` returning 0 does NOT show that no verdict was produced. The harness prints `VERDICT: PASS`, so the token never begins a line -- and reading its source shows the detector returns 0 on ALL FOUR outcomes (PASS, SUBJECT FAILED, and both INSTRUMENT FAILED arms). It is not merely false-on-pass; it is UNINFORMATIVE, a constant wearing a measurement's clothes. W2-S7's CONCLUSION SURVIVES: the expired bound is independent evidence and is sound.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FAULTY LINE, quoted from NFRA_OUTSET-W2-S7 (this same channel): 'A fourth run, the literal form AFTER the change, produced 152 lines and `grep -c -E '^\\s*(PASS|FAIL)\\b'` = 0 -- the harness never reaches a verdict line.' The count is real; the INFERENCE from it is not.",
+        "VERIFIED AT SOURCE rather than accepted on the issuer's word -- .tools/comp-which-routing-test.py @d9bd63b35a, every print of a verdict: :1600 `print(\"VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on\"`; :1593 `print(\"VERDICT: SUBJECT FAILED (exit 1) -- comp-which ROUTED GIBBERISH.\")`; :1581 and :1588 `print(\"VERDICT: *** INSTRUMENT FAILED (exit 2) *** ...\")`. In all four the line begins with VERDICT:, so `^\\s*(PASS|FAIL)\\b` matches none of them. The detector's output is 0 whatever the harness decides.",
+        "CORROBORATION FROM A DIFFERENT MACHINE: 2.0.0_SA_COO reports its own COMPLETED run of the same harness (rc 0, baseline written, `VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on 100% of generated gibberish.`) also scored 0 on the same grep. A completed PASS and this worker's cut-short run are indistinguishable to that detector.",
+        "WHAT THE CONCLUSION ACTUALLY RESTED ON, unchanged and independent of the faulty line: three bounded runs whose BOUND EXPIRED -- `timeout 120` literal (expired), `timeout 120 --out` (expired), `timeout 600 --out` (rc=124, 05:46:25Z -> 05:56:27Z) -- plus the architectural cost measured at source (comp-which-routing-test.py:284 shells comp-which once per cohort question; cohort_R_raw 562 + cohort_C 87 + ~69 self-route probes + ~45 controls, at a measured 1.01 s per comp-which subprocess = >= 763 invocations, >= ~770 s). An expired bound is a fact about the clock and needs no verdict parser.",
+        "The issuer's amendment df14ecd5f1 sets O3-AC3's <expect> to the string `VERDICT: PASS` rather than a bare `PASS` for exactly this reason, and this worker grades the amended criterion by matching that line, never by the retired detector."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_OUTSET-W2-S7 (this worker's own row) offered `grep -c -E '^\\s*(PASS|FAIL)\\b'` = 0 as evidence that 'the harness never reaches a verdict line'.",
+    "world_is": "That grep cannot answer that question. The harness's verdict lines all begin with `VERDICT:`, so the detector returns 0 for a completed PASS, a completed SUBJECT FAILED and both INSTRUMENT FAILED arms exactly as it does for a run killed mid-flight. A count of zero from an instrument that can only ever count zero is not a measurement, and quoting it beside a sound measurement lent it unearned support. The sound measurement -- the expired bound, three times, with the per-call cost read at source -- is untouched, so W2-S7 stays BLOCKING-as-filed for the pre-amendment criterion and its disposition is unchanged.",
+    "notes": "APPEND-ONLY: W2-S7 is not edited; this row is the correction carrier, the same shape W1-S6 used for W1-S1 and W1-S9 for W1-S7. hazard_standing INERT -- nothing operational is armed; the faulty line supported a conclusion that was independently true, and the criterion it concerned has since been amended. CAUGHT BY THE ISSUER, NOT BY THIS WORKER, and that is worth recording plainly: this is the THIRD false-zero/false-clean instrument this worker used in one order (the .scratch/ copy of comp-which that failed soft, the in-process exec that disagreed in the other direction, and now this grep), and it is the only one of the three that survived into a filed row. The two that did not survive were caught by CONTRADICTION with an earlier real measurement; this one produced no contradiction because a zero from a constant-zero detector agrees with everything. THE GENERAL FORM, which is the reusable part: A DETECTOR THAT CANNOT PRODUCE A NON-ZERO ON THE POSITIVE CASE IS NOT A DETECTOR -- run it once against a known PASS before quoting its zero. This worker did not at the time, and the control was available (the issuer had already completed a passing run). IT HAS NOW BEEN RUN: against this worker's own COMPLETED passing run of the amended criterion (rc 0, 07:33:57Z-07:46:28Z, 331 lines), `grep -c -E '^[[:space:]]*(PASS|FAIL)\\b'` = 0 while `grep -c 'VERDICT: PASS'` = 1. The retired detector scores a PASS and a killed run identically; the amended <expect> string `VERDICT: PASS` discriminates. This row is filed with the positive control EXECUTED rather than merely named."
   }
 ]
 ```
