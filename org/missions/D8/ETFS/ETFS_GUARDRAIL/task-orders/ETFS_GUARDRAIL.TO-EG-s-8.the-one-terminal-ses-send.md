@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-02 (PRD s.0 ruling (3), the SES carve-out) and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- proof-of-spec instance `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-8.the-one-terminal-ses-send.proof_of_spec.json` VALID (rc=0). All 9 criteria S8-AC1..AC7,AC9 PASS by output (targeted plan 1-to-change after the issuer's row-S2 LF correction; ledger opened/applied BY TARGET/0-diff/closed; served CodeSha256 MATCHES the built zip; the live `terminal_qa` rehearsal ran safely post-deploy; the `--gate` seam from row S3 present); S8-AC8 judgment RECORDED for CVO L9 grading. Row `ETFS_GUARDRAIL-W1-S8` stays as filed, dispositioned by the issuer's rulings on rows S2/S3. Flip made by the assignee per the tree-convention grant. Prior: pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct 2026-09-02 (PRD s.0 ruling (3), the SES carve-out) and 2026-09-04 ~17:0xZ (94224/94225).</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S8; s.7.4 the home; s.0 MORATORIUM CARVE-OUT; s.6 ruling 7; s.4 property 8) | **Decomp cell:** `EG-s-8` | **outcome_ref:** FWD-7 | **verb:** wire | **depends_on:** `EG-sb-7` (your previous order)
 

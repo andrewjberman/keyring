@@ -409,6 +409,29 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "Decomposition v0.1.1 cell EG-s-6 / PRD s.7.4: 'The orchestrator gates only the SEND, on the verdict the renderer returns' and EG-s-6's face: the gate is entered by the --gate flag which the orchestrator passes once EG-s-8 lands.",
     "world_is": "No cell's text assigns the one-line change to _render_command; the flag would never be passed on a scheduled fire. Corrected by the issuer's amendment of TO-EG-s-8 (deliverable item 5, criterion S8-AC9) while the order is open on slot 1.",
     "notes": "The decomposition's edge EG-s-8 -> EG-s-6 named the seam ('the seam EG-s-6 produces') but assigned only the read side of it. A seam is a cell's line, not a dependency's."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S8",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T04:38:05Z",
+    "one_line": "S8-AC4's amended invocation (`-target=aws_lambda_function.orchestrator`, mirroring EG-s-7's W1-S7 fix) does NOT isolate the pre-existing aws_instance.reporter user_data drift here: the orchestrator's own config references `aws_instance.reporter.id` (REPORTER_INSTANCE_ID env var), a REAL Terraform dependency edge absent in EG-s-7's IAM-policy case, so the targeted plan still shows 2 resources changing; this worker did NOT apply, and additionally did NOT run S8-AC7's live invoke (which would have hit the OLD, unmodified deployed function's fallback path and triggered a REAL production render).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this worktree, this session: `.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -target=aws_lambda_function.orchestrator` -> 'Plan: 0 to add, 2 to change, 0 to destroy', listing BOTH `aws_lambda_function.orchestrator` (expected) AND `aws_instance.reporter` (the pre-existing user_data drift, `e47b615c...->434774b5...`, byte-identical hashes to the reading already recorded in EG-s-7's own row W1-S7)",
+        "infra/aws/terraform/etfs-reports/orchestrator.tf, environment.variables block @HEAD -- 'REPORTER_INSTANCE_ID = aws_instance.reporter.id' -- a genuine Terraform config reference from the lambda resource to the instance resource, which Terraform's -target semantics include in the target's dependency closure (documented in `terraform plan -help`: '-target=resource Limit the planning operation to only the given module...' -- no `-exclude` flag exists in this v1.9.8 binary's help output, confirmed by grep)",
+        "contrast: EG-s-7's `aws_iam_role_policy.reporter` (the IAM policy) has NO config reference to `aws_instance.reporter` anywhere in iam.tf -- that targeting worked because no dependency edge existed, not because -target can generally separate unrelated same-directory drift",
+        "the CURRENT deployed (pre-this-order) lambda_function.py's handler(): `mode = (event or {}).get('mode','run'); if mode==\"absence_check\": ...; if mode==\"email_qa\": ...; if mode==\"send_correction_qa\": ...; if mode==\"send_correction\": ...; _run(); return {\"mode\":\"run\",\"ok\":True}` -- 'terminal_qa' matches NONE of these branches on the deployed (old) code, so S8-AC7's invocation, if run before a successful apply, would fall through to the REAL `_run()` path (start the reporter EC2 instance, attempt a real render, potentially a real SES send)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S8-AC4 (amended): 'the TARGETED plan changes EXACTLY aws_lambda_function.orchestrator (source hash): 0 to add, 1 to change, 0 to destroy ... Any other resource in the targeted plan -> do NOT apply, BLOCKING row.' S8-AC7 assumes the deploy landed and invokes the LIVE function with mode=terminal_qa.",
+    "world_is": "The targeted plan shows 2 resources (not 1) because of a real, pre-existing config dependency this order did not create and cannot remove without an out-of-scope Terraform refactor (decoupling REPORTER_INSTANCE_ID from a direct resource-attribute reference). No apply was attempted. Because the deploy did not land, this worker also declined to run S8-AC7's invocation live -- against the UNCHANGED deployed function, an unrecognized mode string silently falls through to the real production render path, which is a genuinely dangerous, out-of-scope side effect to risk for a checkbox.",
+    "notes": "S8-AC4 is graded FAIL by output this turn (targeted plan does not match '1 to change'); S8-AC5 (the apply + 0-diff) is UNCOMPUTABLE-BY-CONSTRUCTION, riding the same later run S7's W1-S7 finding rides (the pre-existing drift dispositioned by whoever owns the etfs-reports stack). S8-AC6 (served-vs-built hash) WAS run -- it is a pure read/local-hash comparison with no side effect -- and honestly returns MISMATCH (nothing new was deployed), also a correct, expected FAIL given AC4's block. S8-AC7 was NOT run at all (declared exclusion, not a FAIL) because running it against the undeployed function risks a real, expensive, unauthorized production side effect; this is a stop, not a hazard left live (INERT) since nothing was invoked. Disarm: whoever owns the etfs-reports stack either (a) accepts a decoupling of REPORTER_INSTANCE_ID onto a data-source lookup instead of a direct resource attribute reference (removing the dependency edge, a real code change out of this order's scope), or (b) dispositions the pre-existing aws_instance.reporter drift first (the same fix W1-S7 already asked for), after which THIS resource's targeted plan would also read clean."
   }
 ]
 ```
