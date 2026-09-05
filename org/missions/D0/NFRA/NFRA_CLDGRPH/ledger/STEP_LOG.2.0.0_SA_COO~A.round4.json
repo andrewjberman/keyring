@@ -425,6 +425,40 @@
       "spine_clause": "L7 drain then L6 hand. The compile is an act and not a wait, so ADDENDUM 2 was written in the same tick the order went terminal rather than deferred to the slug.",
       "gate_or_notifier_touched": "safe-merge.sh: NO conflict this drain (this seat had not appended since S57, so ours == base on the channel and only the worker's tail applied); the row gate still graded the MERGED index -- '1 new row(s) of 88 total checked (87 pre-existing, NOT re-graded)'. No bare git merge, no override.",
       "note": "\u26d4 AN INSTRUMENT TRAP THIS DRAIN PAID FOR, AND IT NEARLY COST A VALID INSTANCE ITS MERGE: the issuer first ran proof-of-spec-check.py FROM THE MAIN TREE against the branch's instance file and got INVALID (rc=1) with three violations -- two artifacts 'PENDING-THIS-COMMIT but does NOT exist in the working tree' and W1-S19 'resolves to NO row in the channel'. ALL THREE WERE THE WRONG PLANE, not defects: the checker resolves artifact paths and the channel against the WORKING TREE IT RUNS IN, and the branch had not merged yet, so every one of them said only 'this has not landed here'. Re-run INSIDE the worker's worktree: VALID rc 0, violations 0, surprises-frame 7 of 7 resolving. A drain that read the first result as a verdict would have refused a valid instance and re-handed a met order. || A SECOND TRAP IN THE SAME BREATH: the first run was piped to `tail`, so the `echo $?` beside it read 0 while the checker's own text said INVALID -- a pipeline's rc is its LAST command's. The rc that decided anything was read UNPIPED. || WHAT THE WORKER FOUND IN ITS OWN NEW CODE, by running the controls rather than trusting the patches, and TWO OF THE THREE WERE MASKING EACH OTHER: an empty TSV field shifting columns left (tab is IFS whitespace), the .tools/aws shim's CR making the READ_FAILED row unparseable JSON, and -- visible only once the CR was fixed -- jq's // firing on `false`, silently counting an explicit read_ok:false as OK. That last one is the S57 defect reappearing one layer down inside S57's own fix."
+    },
+    {
+      "seq": 15,
+      "limb": "L7",
+      "started_utc": "2026-09-05T14:46Z",
+      "ended_utc": "2026-09-05T15:3xZ",
+      "act": "CG-x-8 CLOSES and ANDREW'S WORD ON THE LAPTOP COPY IS RECORDED. TO-CG-D-11 came back MET: the morning read says REFRESHED LAST NIGHT: YES at 2026-09-05T02:23:22.179104+00:00, and the vintage it names (02:11:10.919000+00:00) equals TO-CG-D-9's night to the MICROSECOND -- read from the estate first and compared afterwards, not fitted. The planted missed-night reads NO with a 2026-09-02 last-full, differing from the real read in three independent places, on a FIXTURE inside the worker's own folder with nothing in the world stopped or provoked (plant sha256 identical before and after). PROCS=0 against a POSITIVE CONTROL of 27 matches on a running pattern, stable across 5 runs over 38 minutes. Instance VALID rc 0 unpiped, twice. Drained at 5b2346ada4; NINE of twelve orders terminal. SEPARATELY: Andrew, unprompted, answered the one open decision -- 'we can switch off laptop copy' -- recorded VERBATIM at 61d5ef55dd with the act HELD to the D-7 drain.",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "the WORKER REPORT of 0.9.0_WK_NFRA_CLDGRPH~3, branch HEAD fd13236b20"
+        },
+        {
+          "kind": "ANDREW-DIRECT",
+          "ref": "2026-09-05 ~15:0xZ at this terminal, VERBATIM 'we can switch off laptop copy'; record ANDREW_DIRECT_20260905_150xZ_SWITCH_OFF_THE_LAPTOP_COPY.md"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "COMMIT",
+          "ref": "5b2346ada4 -- the D-11 drain merge; TO-CG-D-11 reads complete at HEAD"
+        },
+        {
+          "kind": "COMMIT",
+          "ref": "61d5ef55dd -- the authorization record, scope held narrow and the gate named"
+        },
+        {
+          "kind": "COMMIT",
+          "ref": "c1475c69d0 -- row S58, the disarm ACK for S57, disarmed BY EXERCISE"
+        }
+      ],
+      "spine_clause": "L7 drain. Both oracle halves read again -- report AND instance -- and the instance was verified INSIDE the worker's worktree, which the previous drain established is the only plane where its paths resolve.",
+      "gate_or_notifier_touched": "safe-merge.sh: no conflict; the row gate graded the MERGED index -- '3 new row(s) of 91 total checked (88 pre-existing, NOT re-graded)', foreign-row sweep exempt for the 3 rows a parent carried.",
+      "note": "\u26d4 THE AUTHORIZATION IS HELD, NOT SPENT, AND THE HOLD IS THE ORDER'S TEXT RATHER THAN THIS SEAT'S PREFERENCE. TO-CG-D-7 says twice that the laptop's copy is 'the issuer's to delete at the drain, never yours', and the cell it serves says 'S8 STARTS when a reader exists and CLOSES when CG-x-7 passes ... Retiring earlier breaks the estate's only graph.' The hazard is measured, not theoretical: D-7's own criteria run comp-find and comp-blast, which route through _canonical.ensure_fresh, and that REBUILDS a BEHIND local database by design (row S12) -- so deleting before D-7 removes that seam would either recreate the file or break the criteria that prove the seam is gone. Measured what the word covers, rather than describing it: SIX entries totalling 56,548,885 bytes, all gitignored (.gitignore:3) and untracked, so removing them changes no commit. || WHAT D-11 SURFACED IS BIGGER THAN D-11: its three rows are all on the order's TELEMETRY negative control, and W3-S4 REFUTES A CLAIM THIS SEAT REPEATED ALL SESSION -- that worker subagents write no telemetry. They do. The hook resolves the serial from org/mcp/sessions/<session_id>.serial BEFORE OPAL_AGENT_SERIAL, and this session's entry still names a SIBLING worker from 2026-09-04, so this worker's calls AND ITS PARENT'S were written live into that sibling's file -- 1,342 rows, one session id, 100% serial_source session-id-keyed, including send_message and Agent rows no worker can make. The zero every seat has been citing is a NAMING artifact, not an absence, and it means the fabric's per-seat telemetry census has been silently misattributing work for at least a day. Filed, not fixed: that hook is outside this round's frozen scope and outside this seat's lane."
     }
   ]
 }
