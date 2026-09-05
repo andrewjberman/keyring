@@ -204,6 +204,23 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     (Write tool / python): a `printf`/heredoc-built file re-opens the injection one step earlier. `--force`
     bypasses only contamination checks, never a lane refusal — that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=
     <LANE>`, audited, SINGULAR (N lanes = N commits). `docs/architecture/ADHC_OWNPTH.md`.
+14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked
+    worktree and merge it back in a gap** — five seats plus their worker subagents share ONE MUTABLE
+    INDEX, so the check-then-act window is now shorter than the staging cadence: `2.0.0_SA_COO` measured
+    `staged=0` and had the very next merge refuse on a file staged in the seconds between. Mechanism:
+    `git worktree add ../<slot> -b <branch>` — a linked worktree carries its OWN index AND its own merge
+    state, which is why `/dispatch` already mandates one per worker slot; merge back with
+    `.tools/safe-merge.sh` (its `--continue` limb keeps a conflicted drain inside the guards).
+    ⛔ **THE GUARDS ARE NOT THE PROBLEM — every refusal measured so far was CORRECT and each prevented a
+    real sweep** (`org/git-author-override-audit.log`: 3 audited `MERGE-REFUSED`, 2 on `2.0.0_SA_COO`
+    and 1 on `1.0.0_SA_CTO`, each naming the foreign MERGE_HEAD and `nothing staged by this run`; plus 2
+    further refusals of other classes the same evening). The refusal RATE rises with the live-seat count,
+    and a correct refusal you could have avoided still costs a retry and sometimes a round trip.
+    COST: one `git worktree add` plus a merge back. NON-APPLICATION: a trivial one-file commit; a seat
+    working alone; and any commit that MUST be graded against the shared index (a drain — that is what
+    `safe-merge.sh` grades). Found by `2.0.0_SA_COO` 2026-09-04 after it and `0.0.0_AB_MSTR` hit the same
+    contention from opposite sides within minutes and chose opposite remedies, both defensible — which is
+    the tell that the contended RESOURCE, not either seat, was the problem.
 16. **Local bash = Git Bash 3.6.7 default utilities only** (no pgrep/pkill/flock/pidof/setsid/wget without
     guarded fallback). `.tools/jq.exe` is vendored — resolve it first, fail closed loud. ⛔ **Never
     `2>/dev/null` a read whose EMPTINESS carries a verdict.** `docs/architecture/ADHC_BASHFIX.md`.
