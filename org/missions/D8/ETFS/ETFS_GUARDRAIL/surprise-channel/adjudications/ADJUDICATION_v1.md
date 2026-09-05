@@ -18,8 +18,9 @@ instance but is `UNVERIFIABLE-BY-INSTRUMENT` with the CVO named, and is graded a
 disposition rests on this seat's own read beside the record: the served Lambda code hashes, environment and the
 deployed Inflection zip, the reporter role's inline grant, SES's account state, the report bucket, the source at HEAD,
 the vendored-copy census, the published layer, and `.gitattributes`.
-**Denominator at this write:** 4 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
-the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason).
+**Denominator at this write:** 5 rows (C-S1 the grade record; C-S2 the eight worker-form items graduated and closed on
+the issuer's in-round acts; C-S3 the three items graduated and OPEN; C-S4 the ten records dismissed with reason; C-S5 the
+correction carrying the CTO's L10 @0557afa38a -- FWD-4 NOT_EVALUATED, seven fire-gated outcomes, not six).
 Investigation rows without a disposition after this write: 0 of 21. Remediation rows minted: S2 (OPEN), S3 (closed).
 
 ---
@@ -185,6 +186,36 @@ Investigation rows without a disposition after this write: 0 of 21. Remediation 
     "spec_asserts": "Spine v3.2 L9: the census counts the investigation document's rows as items and reads the adjudication document for their dispositions, so every row needs one even when it names no hazard.",
     "world_is": "Ten rows describe acts and states already resolved on the record; with C-S2 and C-S3, 21 of 21 rows are dispositioned and the L10 precondition is met on the investigation plane.",
     "notes": "For the CTO's analysis from these records: two stops on a false premise cost two orders their untargeted applies (S2's eol rule closes that class); one ledger-sequencing deviation was self-repaired (W1-S10); the round's issuance defects were repaired on the population, not the member (W1-S2, W1-S3)."
+  }
+]
+```
+
+## C-S5 -- a correction of this seat's own framing: the CTO's L10 @0557afa38a grades FWD-4 NOT_EVALUATED, and the slug's list of fire-gated outcomes was six where the analysis reads seven; the cell's PASS stands, the outcome's state does not follow from it
+
+```json
+[
+  {
+    "id": "ETFS_GUARDRAIL-C-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-05T10:40Z",
+    "one_line": "A correction record, cited against C-S1 and the slug of 10:21Z. The CTO's L10 analysis (org/missions/D8/ETFS/ETFS_GUARDRAIL/ledger/ROUND_ANALYSIS.round1.md @0557afa38a; dep_stage now ROUND_CLOSE; 8 of 8 outcomes served, no addendum) grades FWD-6 REALIZED and seven outcomes NOT_EVALUATED. This seat's slug named six outcomes as waiting on scheduled fires (FWD-1, -2, -3, -5, -7, -8) and left FWD-4 reading as gradable now, because S4-AC7 passed. That was a conflation of two questions the spine keeps apart: the CELL (the classifier's taxonomy, graded PASS at C-S1 and undisturbed) and the OUTCOME (FWD-4's DONE WHEN is EXERCISED -- 'the system has ACTUALLY MET such a day and left it alone' -- on a real market-shut day or a real unpriced partner file). Every B-class proof on the record is a unit test with a synthetic fixture, which is APPLIED; the round's live evidence (August refused with five holes, August published clean) exercises C, UNKNOWN and D, not B. The CTO's grade is right on Rule 22's STATE axis and this row carries it into this document so C-S1's world_is is read with seven fire-gated outcomes, not six. The discriminator, so it is graded the day it exists: a legitimately-empty day appearing in a live render's expected_empty with holes unaffected and nothing written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO 94367 and ledger/ROUND_ANALYSIS.round1.md @0557afa38a, in HEAD at this seat; org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json at HEAD reads dep_stage ROUND_CLOSE (the CTO's flip, spine :347).",
+        "C-S1's grade of S4-AC7 (PASS on the taxonomy's four postulates, the module's absent write surface and the recorded sums) is not disturbed; what this row corrects is the outcome-level sentence in C-S1's world_is and in the slug, which listed six fire-gated outcomes.",
+        "The distinction the correction rests on is the estate's own: a cell's PASS certifies the instrument; an outcome's REALIZED certifies the world met the condition; a fixture that represents the condition scores the instrument, not the world (CLAUDE.md section 4 and the memory rule 'a fixture that cannot represent the failure cannot score it')."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record about this seat's own framing; it adjudicates no item and opens nothing. The CTO's instrument note adoption (worker-form clocks on adjudication rows; annex section 5) is also recorded here as carried by the CTO.",
+    "spec_asserts": "Spine v3 L10: the CTO grades outcomes (REALIZED / NOT_REALIZED / NOT_EVALUATED) on the slug and the artifact; L9 grades criteria. FWD-4's DONE WHEN as cut: EXERCISED.",
+    "world_is": "ETFS_GUARDRAIL round 1 is at ROUND_CLOSE: FWD-6 REALIZED; FWD-1, -2, -3, -4, -5, -7, -8 NOT_EVALUATED pending real fires and a real legitimately-empty day. Three open items carry owners: W2-S1 the inf-pipeline lane, W1-S5 CLOUD_OPS_OR_ETL, S2 the CTO's own queue.",
+    "notes": "Scope of the retraction, stated so it is not read wider: the slug's grades, dispositions, precondition measurement and open-item routing stand; the single refuted clause is the count and membership of the fire-gated outcome list, which now includes FWD-4."
   }
 ]
 ```
