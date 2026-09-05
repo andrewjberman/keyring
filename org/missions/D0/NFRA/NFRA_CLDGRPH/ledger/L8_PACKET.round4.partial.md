@@ -224,3 +224,75 @@ D-10/D-11; **D-7 is LAST by ruling R7**, and two things are already recorded aga
 D7-AC5 pins three sha256 hashes (verified matching at HEAD 2026-09-05 11:4xZ, and **re-verify at hand-off -- a
 pinned hash is a baseline that decays**), and the local Kuzu DB deletion D-8 observes is the ISSUER's act and a
 **recursive deletion requiring Andrew's word**.
+
+# ADDENDUM 3 -- 2026-09-05 ~22:3xZ, appended by `2.0.0_SA_COO~A`
+
+**TO-CG-D-10 IS TERMINAL. The count is 10 of 12; the two still open are TO-CG-D-7 and TO-CG-D-8, in
+that order, and both are gated only on each other now.** Drained at merge `ea9320066d` from
+`0.9.0_WK_NFRA_CLDGRPH~1`'s branch `wk-cldgrph-1-d10p3` (worker HEAD `b20444334d`, LOCAL).
+
+## A3.1 D-10 TOOK THREE PASSES, AND THE THIRD DIFFERS FROM THE SECOND ONLY IN THE WINDOW
+
+Pass 2 failed honestly at `HAND_ENFORCED_CEILING=1 of 3`. Pass 3 passes at `0 of 0`. **The bar was
+not touched between them** -- same `<expect>`, five criteria before and after -- and the CVO should
+grade that claim rather than take it: the amendment is at `497ffff69c`, the struck example at
+`374ba4d106`, and no criterion has been edited since. What changed is the CYCLE: a window opening
+after BOTH the last hand RunTask and the last serving of a hand-built artifact, which did not exist
+until 2026-09-05T21:18:54Z.
+
+## A3.2 THE FIVE CRITERIA AS THE CHECKER GRADED THEM (instance VALID, rc 0, 8 of 8 artifacts, 0 violations)
+
+| criterion | measured | verdict |
+|---|---|---|
+| `D10-AC1` | `OLDEST_AGE_SERVED_S=27049.418` against `CEILING_S=87191.260`, `WITHIN_CEILING=true` (31.0% of budget) | PASS |
+| `D10-AC2` | `ANSWERS_IN_CYCLE=212`, `SWAPS_IN_CYCLE=31`, `NIGHTLY_SWAP_AT=2026-09-05T02:23:34Z` | PASS |
+| `D10-AC3` | `HAND_ENFORCED_CEILING=0 of 0`, `HANDS_OFF_RUNTASK=0 of 51`, `WRITERS_IN_CYCLE={cse_producers_nightly, derive_runner, incremental_updater}` | PASS |
+| `D10-AC4` | `3 passed, 4 deselected in 0.22s` | PASS |
+| `D10-AC5` | recorded, UNVERIFIABLE-BY-INSTRUMENT, **no verdict** | **FOR THE CVO** |
+
+The instance was re-validated by this seat **inside the worker's own worktree** and the rc read
+unpiped: `VALID (rc=0)`. Running it from the main tree is the wrong plane and produces false
+violations; that error was made once in this round and is not repeated.
+
+## A3.3 ⛔ THE ONE THING A GRADER SHOULD LOOK AT: A ZERO OVER AN EMPTY DENOMINATOR
+
+`HAND_ENFORCED_CEILING=0 of 0` is a pass whose denominator is zero, which is the exact shape of a
+vacuous control. **Three independent things say it is not vacuous, and the third is the strongest:**
+
+1. **The effect arm fired in this very window.** `EFFECT_POSITIVE_CONTROL=FIRED` -- the same
+   counterfactual re-ageing, run against the cycle's own SCHEDULED nightly before any zero was
+   reported, ages 30 answers by up to 4,705.316 s.
+2. **The label census agrees with its own denominator.** `PIPE 47 + SCHEDULER_CHRONOS 1 +
+   SCHEDULER_EVENTS_RULE 3 = 51 = RUNTASK_EVENTS_CLASSIFIED`, printed as `AGREE`.
+3. **THE CLASSIFIER FAILS *TOWARD* HAND, NOT AWAY FROM IT.** Read at the source by this seat:
+   `cycle_hand_effect.py:152 label_of()` walks the provenance patterns and **returns `"HAND"` as the
+   fall-through default**. So a pattern that failed to match would produce MORE hand-labelled tasks,
+   never fewer -- the instrument's failure mode is anti-correlated with the risk the criterion
+   guards. A positive control bounds under-firing; this bounds it structurally.
+
+## A3.4 ROWS THIS ADDENDUM ADDS TO THE CVO'S DESK
+
+The channel is at **101 rows**. Two are new since ADDENDUM 2's window and both concern **the
+issuer's own hand-off prose, caught by the worker's measurement**:
+
+- **`W1-S26` (worker, ARMED at filing, now DISARMED by `S60`)** -- this seat's hand-off set
+  `CYCLE_START` to the exact eventTime of the last hand RunTask; CloudTrail's `--start-time` is
+  INCLUSIVE at the second, so verbatim it would have contained the event it exists to exclude.
+  Cost: a denominator (`0 of 51` vs `1 of 52`) and the literal truth of the sentence. Not the
+  verdict -- that task attributes zero served vintages on either side of the boundary.
+- **`S60` (this seat)** -- the DISARM ACK, which states the convention (*a window meant to exclude an
+  event opens at its timestamp PLUS ONE SECOND, and the boundary is tested on both sides*) and
+  measures that **no remaining order in this round cuts a window that way**: D-7 matches zero
+  window/timestamp tokens; D-8's only `WINDOW_S` is a duration between two instants the worker itself
+  stamps. ⛔ **THE GENERAL CASE IS NOT CLOSED AND TRAVELS TO L10 NAMED** -- the population is every
+  future hand-off that names a boundary by an event's own timestamp, and closing that against the
+  member that hit it is how a shared defect survives. **No gate was built for it; inventing one
+  mid-round is not this seat's to do.**
+
+**W1-S25 and S59 remain on the desk from the pass-2 window** (a retracted counterfactual figure
+inside an append-only row, corrected only by a sibling row).
+
+## A3.5 WHAT DID NOT CHANGE
+
+FWD-4's endpoint, cell CG-x-4, the four untouched criteria, and every number pass 1 measured. The
+spec and the decomposition remain FROZEN. Push state LOCAL.
