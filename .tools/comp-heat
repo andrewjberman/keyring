@@ -614,6 +614,51 @@ def _add_json(sp, with_value=True):
 
 FEDERATED_LIVE_FLOOR_S = 200.0   # _trino_fed.py's own docstring: "~3-4 min/call" (180-240s)
 
+# OS-s-5. The transport's OWN bounding parameters, which the caller had never been passing.
+# `_trino_fed.run_federated_query(sqls, *, delay=15, max_attempts=40)` bounds the ECS
+# `tasks_stopped` waiter at delay*max_attempts seconds. Called with neither -- as this wrapper did
+# until OS-s-5 -- that is 15 x 40 = 600 s of waiting, fixed, and COMPLETELY INDEPENDENT of the
+# caller's --budget. Deriving both from clock.remaining() is what carries Rule T's own clause
+# ("every timeout= derives from remaining()") ACROSS THE MODULE BOUNDARY without editing
+# .tools/_trino_fed.py, which is outside this order's <paths>. Build ladder rung 4: the transport
+# already had the parameter; nothing new is implemented here.
+FEDERATED_WAITER_DELAY_S = 5
+# Wall-clock the dispatch needs for everything that is NOT the waiter: boto3 client construction,
+# ecs:RunTask, and the logs:GetLogEvents read afterwards. Held back so the waiter's own ceiling
+# cannot consume the whole budget and leave the log read to run past it.
+FEDERATED_NON_WAIT_RESERVE_S = 25.0
+
+
+def _federated_waiter_bound(remaining):
+    """(delay, max_attempts, ceiling_s, basis) for _trino_fed.run_federated_query.
+
+    `remaining is None` means the CALLER asked for unbounded (`--budget 0`); this returns the
+    transport's own defaults and says so, rather than inventing a ceiling the caller declined.
+    """
+    if remaining is None:
+        return 15, 40, 600.0, "caller asked for unbounded (--budget 0); transport defaults"
+    usable = max(float(remaining) - FEDERATED_NON_WAIT_RESERVE_S, float(FEDERATED_WAITER_DELAY_S))
+    attempts = max(1, int(usable // FEDERATED_WAITER_DELAY_S))
+    ceiling = float(FEDERATED_WAITER_DELAY_S * attempts)
+    return (FEDERATED_WAITER_DELAY_S, attempts, ceiling,
+            f"derived from clock.remaining()={float(remaining):.1f}s minus a "
+            f"{FEDERATED_NON_WAIT_RESERVE_S:.0f}s non-wait reserve")
+
+
+def _federated_dispatch_bound_line(delay, attempts, ceiling, basis) -> str:
+    """WHAT THE BOUND DOES AND WHAT IT DOES NOT DO, printed together so neither can be read alone.
+
+    It bounds THIS PROCESS'S WAIT. It does NOT cancel the remote work: `run_federated_query` never
+    returns the ECS task ARN, so there is nothing for this wrapper to call `ecs:StopTask` on, and
+    .tools/_trino_fed.py is outside this order's <paths>. A caller that reads "bounded" as "the
+    Fargate task stopped" would be wrong, so the line says which one it is.
+    """
+    return ("comp-heat federated: dispatch BOUNDED -- ECS tasks_stopped waiter capped at "
+            "%ds x %d attempts = %.0fs (%s). THIS BOUNDS THIS PROCESS'S WAIT, NOT THE REMOTE TASK: "
+            "the task ARN is not returned across .tools/_trino_fed.py's boundary, so no StopTask "
+            "is issued and the in-VPC task runs to its own completion (OS-s-5 residue, row "
+            "NFRA_OUTSET-W1-S2)" % (delay, attempts, ceiling, basis))
+
 
 def _federated_sqls(a):
     """The SQL this invocation WOULD run, resolved once and used for BOTH the vintage block and the
@@ -695,7 +740,9 @@ def cmd_federated(a) -> int:
                   "_trino_fed.py: '~3-4 min/call')" if insufficient
                   else "an already-spent budget")
         print(f"comp-heat federated: refusing to dispatch to the LIVE Trino plane -- {reason} "
-              "(a live call cannot be bounded once started -- .tools/_trino_fed.py, OS-s-5)")
+              "(the transport starts a remote task this wrapper cannot cancel, so a budget that "
+              "could not cover one call is refused BEFORE dispatch rather than cut after it "
+              "-- .tools/_trino_fed.py, OS-s-5)")
         # The vintage of what this call WOULD have joined is still the caller's business, and this
         # is the only path a sub-floor budget can reach -- see _print_federated_vintage().
         _print_federated_vintage(qs, clock)
@@ -704,7 +751,30 @@ def cmd_federated(a) -> int:
     from _trino_fed import run_federated_query, render_table                # noqa: E402
     print(disclosure)
     _print_federated_vintage(qs, clock)
-    for res in run_federated_query(qs):
+
+    # OS-s-5: the caller's ceiling now reaches the transport's own waiter parameters. Before this,
+    # `run_federated_query(qs)` was called with neither, i.e. a fixed 600 s wait no --budget could
+    # shorten -- which is what made `--sql` an unbounded remote query rather than a bounded one.
+    delay, attempts, ceiling, basis = _federated_waiter_bound(clock.remaining())
+    print(_federated_dispatch_bound_line(delay, attempts, ceiling, basis))
+    try:
+        results = run_federated_query(qs, delay=delay, max_attempts=attempts)
+    except Exception as e:                                                  # noqa: BLE001
+        # A waiter that ran out of attempts is a BUDGET event, not a crash, and it is reported in
+        # the Rule T vocabulary with a NON-CLEAN rc: unlike refuse-before-dispatch (a complete and
+        # correct answer to "should I run this?", rc 0), a cut AFTER dispatch leaves the caller
+        # with NO answer at all, so rc 0 there would say "fine" about nothing.
+        if type(e).__name__ != "WaiterError":
+            raise
+        print(_reached_line(budget_s, budget_source, 0, len(qs), "queries",
+                            "comp-heat federated" + (f" --sql {a.sql!r}" if a.sql else ""),
+                            "DISPATCHED"))
+        print("comp-heat federated: the in-VPC task did not stop within this caller's derived "
+              f"ceiling ({ceiling:.0f}s); results are NOT claimed. The remote task was NOT "
+              "cancelled -- see the dispatch bound line above.")
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+    for res in results:
         print(f"\n# {res['sql'][:90]}")
         print(render_table(res))
     print(_compbudget.within_budget_line(len(qs), len(qs), "queries", budget_s, budget_source,
@@ -754,7 +824,12 @@ def main(argv=None) -> int:
     fed = sub.add_parser("federated",
         help="hot/cold across estate ASSETS x their git code-heat (LIVE Trino federation; graph-joined)")
     fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
-    fed.add_argument("--sql", help="run an arbitrary federated Trino query instead")
+    fed.add_argument("--sql",
+                     help="run an arbitrary federated Trino query instead. BOUNDED like every "
+                          "other subcommand: a budget below the transport's own ~200s floor is "
+                          "REFUSED before dispatch, and once dispatched the ECS waiter is capped "
+                          "from --budget (the remote task is not cancelled -- the bound is on "
+                          "this process's wait, and the output says so)")
     _add_budget(fed)
     fed.set_defaults(fn=cmd_federated)
 
