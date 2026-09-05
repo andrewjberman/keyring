@@ -98,12 +98,16 @@ PRD s.4 result schema every face inherits), the `/dispatch` skill (the COO's cut
 
 ## PART IV -- THE SUBSTRATE: what happened, measured
 
-### F1. The census: 13 of 93 commits on NFRA_OUTSET round 1 were issuance repairs
-`git log` over `org/missions/D11/NFRA/NFRA_OUTSET/` since the issuance (2026-09-04 19:38Z), classified by subject
-prefix at this seat: 93 commits -- 44 work (worker + lane), 15 drains, 13 issuance repairs (`amend` / `carry` /
-`re-address` / `L6 AMENDMENT`), 9 surprise, 3 L5, 2 L4, 2 adjudication, 1 L8, 1 L3, 2 issuance, 1 other. -- One
-commit in seven was the cut being repaired after the fact; the PRD buys the cut-time checks that move that to zero
-before the spawn.
+### F1. The census: 13 of 93 commits on NFRA_OUTSET were issuance repairs
+POPULATION AND CLOCK, stated because the number moves with both: `git log` (merges included) over
+`org/missions/D11/NFRA/NFRA_OUTSET/` since 2026-09-04 15:00Z -- the register row, so the pre-issuance L3/L4/L5 commits
+are in the denominator -- read at 2026-09-05 14:0xZ, classified by subject prefix at this seat. 93 commits: 44 work
+(worker + lane), 15 drains, 13 issuance repairs (`amend` / `carry` / `re-address` / `L6 AMENDMENT`), 9 surprise, 3 L5,
+2 L4, 2 adjudication, 1 L8, 1 L3, 2 issuance, 1 other -- eleven classes, and they sum to 93. A later read gives a
+larger total (the round keeps committing) and a `--no-merges` read gives 12 repairs, not 13: the thirteenth
+(`2ad5fe800f`) is carried by a merge (parents `ea4a3f99f6` / `ddff1d8eeb`) -- the issuer verified both facts on its
+own tree (94424). -- One commit in seven was the cut being repaired after the fact; the PRD buys the cut-time checks
+that move that to zero before the spawn.
 
 ### F2. The grant covered the tool and not the gate the tool's edit fires -- on 9 of 17 faces
 `safe-commit.sh` fires `comp-system --gate --changed` on any path matching `.tools/comp-`, `org/modules/graph/` or the
@@ -186,6 +190,11 @@ worker could not flip it. -- The face is small enough to be checked whole by a p
 - **P6.** The round census (O6) is derivable from git alone, so it is comparable across projects and fabrics.
 - **P7.** Nothing here adds an approval or a message to any limb; every check is a refusal in a gate's or a skill's
   own voice, before a spawn.
+- **P8.** A spawn-time binding of `<issued_to>` (O5) cannot be VERIFIED by commit ancestry: the carry a worker makes
+  of an issuer's amendment is a path-scoped checkout that copies content without history, so the worktree's commits
+  are not descendants of the amendment (measured with a positive control by `0.0.0_AB_MSTR` 94397, confirmed by
+  `1.0.0_SA_CTO` 94393, relayed by the issuer 94424). Whatever verifies the binding reads content or a recorded
+  vintage, never `merge-base --is-ancestor`.
 
 ---
 
@@ -208,7 +217,9 @@ Measured at this seat 2026-09-05 13:3xZ-14:0xZ at HEAD (LOCAL; origin/CLOUD @`cb
 ## PART VII -- WHAT THIS BRIEF DOES NOT CLAIM
 
 - It classified commits by subject prefix; a subject can mislabel its act. The 13 repairs were each read by hand; the
-  44 / 15 split was not.
+  44 / 15 split was not. The total is a function of the population (the project path, merges included, since the
+  register row) and the clock (14:0xZ) named in F1; four other scopings the issuer ran at 18:5xZ read 71, 71, 86 and
+  114, none of them wrong -- a census without its population and clock beside it is not comparable to anything.
 - It did not classify CLDGRPH round 4's ten post-issuance L6 commits (re-cuts and reopens under a different issuer);
   a third project may agree or disagree with the two.
 - It did not measure hours per defect or the time from spawn to first wall; "the most expensive moment" is the COO's
