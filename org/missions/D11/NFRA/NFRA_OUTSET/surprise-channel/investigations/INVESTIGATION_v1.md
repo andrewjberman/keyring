@@ -1468,6 +1468,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "O9-AC1 requires \"a battery proving the report's co-change rows come from the tool's ARTIFACT, with a RED mutant restoring the host-git path\" -- i.e. the arms are only worth what their mutants are.",
     "world_is": "A mutant is a coverage claim about a POPULATION OF CARRIERS, and this one was written against a single carrier while two existed. It is the same defect class this worker filed as NFRA_OUTSET-W2-S13 (a detector that cannot produce a non-zero on the positive case) reached from the opposite direction: there the detector could never fire, here the mutant could never falsify. Both produce a green arm that measured nothing, and neither is visible from the arm's own output.",
     "notes": "hazard_standing INERT: caught and fixed in the same turn, before the battery was committed, and the corrected battery is what O9-AC1 is graded on. Filed anyway because the cost of the class is high and the tell is cheap: BEFORE TRUSTING A MUTANT, COUNT THE CARRIERS OF WHAT IT REMOVES -- a mutant applied at a USE SITE is only as wide as that site, while one applied at the DEFINITION covers every use. This worker now prefers the definition site for exactly this reason. Third instrument-failure this worker has self-reported on this project (W2-S10 the two PRE/POST proxies, W2-S13 the constant-zero detector, this one), and all three were caught by a CONTRADICTION or a FAILING arm rather than by a passing check."
+  },
+  {
+    "id": "NFRA_OUTSET-S12",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-05T10:53:47Z",
+    "one_line": "After OS-s-3 (comp-which routes heat questions; its drain e182d33c39 reads 7 of 7 phrasings), the check-out asked three heat questions in the brief's own words: 'what have I written that is not committed' -> comp-heat freshness 2.00 (ROUTES); 'what is stale under org/tier1_exec' -> comp-pipescript deployed 1.50 (MISSES comp-heat); 'is this file hot or cold: .tools/comp-heat' -> comp-axes 1.50 (MISSES). 1 of 3 reader phrasings reaches comp-heat; the cell's 7 of 7 are the cell's own members. FWD-1's ACCEPT ('a person who does not know the thing exists is pointed at it when they ask in their own words') is graded by the reader's phrasing, not the cut's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "4.0.0_SA_CRO 2026-09-05 ~10:4xZ at HEAD 1f61036d7d: comp-which \"what have I written that is not committed\" --limit 3 -> '1. score 2.00 comp-heat freshness [path]'.",
+        "comp-which \"what is stale under org/tier1_exec\" --limit 3 -> '1. score 1.50 comp-pipescript deployed [script]' -- comp-heat not first; the brief's O1 names exactly this question ('what is stale under this path').",
+        "comp-which \"is this file hot or cold: .tools/comp-heat\" --limit 3 -> '1. score 1.50 comp-axes' -- comp-heat not first; the 2026-06-25 spec's third question ('is this code hot?').",
+        "Before OS-s-3 (2026-09-04 12:5xZ, brief F3): comp-which \"what is comp-heat ...\" -> NO CURATED RULE MATCHED, top 0.36. So OS-s-3 moved the router from 0 to at least 1 of 3 reader phrasings; the cell's own PASS on its seven phrasings stands and is not disputed here.",
+        "Not measured: which of the two misses is a routing-rule gap versus a correct route (comp-pipescript deployed IS the GIT->DEPLOY hop and may be a defensible second reading of 'stale'); that is the L9 judgment on O3-AC-judgment and the L10 grade on FWD-1, not this row's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_OUTSET PRD FWD-1 ACCEPT: 'a person who does not know the thing exists is pointed at it when they ask the question in their own words'; brief O1 / spec 2026-06-25: the three estate-cognition questions.",
+    "world_is": "At HEAD the router sends one of the three canonical heat questions to comp-heat and the other two elsewhere; the cell that closed the routing measured its own seven phrasings, which is a check scoped to the members (CLAUDE.md Rule 22) -- the population of phrasings a reader brings is wider than the set the cut enumerated.",
+    "notes": "Filed as a ROW at the check-out, per CLAUDE.md s.2. INERT: no seat is hazarded; it is evidence for L9 (the judgment criterion on OS-s-3) and L10 (FWD-1's grade). Owner of any routing-rule addition: comp-which's (0.8.0_AE_CloudComp) via the CTO's round-N analysis, not this row. No fix attempted; the check-out seat does not edit the router."
   }
 ]
 ```
