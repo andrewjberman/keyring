@@ -74,7 +74,9 @@ FIVE criteria before and after.
 > **WHAT TO MEASURE NOW.** `HAND_ENFORCED_CEILING=<n> of <N>` -- over every hand-started task in the
 > cycle (`<N>` printed as the denominator), the count `<n>` whose EFFECT was to make a served answer
 > fresher than the schedule alone would have made it. A hand-started task that rebuilt something else,
-> or that served nothing, **does not enforce the ceiling and does not void the arm.** Read the effect
+> or that served nothing, **does not enforce the ceiling and does not void the arm.**
+>
+> ⛔ **CORRECTION 2026-09-05 ~18:2xZ, ROW `NFRA_CLDGRPH-W1-S25`: THE ISSUER'S OWN WORKED EXAMPLE WAS WRONG AND IS STRUCK.** The hand-off prose for pass 2 offered the `wk-cldgrph-1-cgs15` RunTask as an instance of the first excuse -- *a digest-pinned rebuild for a DIFFERENT cell*. **MEASURED, IT IS NEITHER EXCUSE.** That task's warehouse commit at `2026-09-04T16:38:39.485910Z` IS the vintage the service swapped to at 16:51:51Z and served until 18:12:58Z, and removing it ages 20 of the cycle's 261 answers by up to 6,798.156 s. **The issuer read pass 1's claim about the task's PURPOSE as a claim about its EFFECT -- the exact substitution this criterion exists to forbid, committed one level up while writing it.** Take NO example on the issuer's word: **read the effect from the task and the artifact it produced.** The two excuses above stand as written; only the illustration is withdrawn. Read the effect
 > from the task and the artifact it produced, never from the fact that a hand started it.
 >
 > ⛔ **AND PRINT BOTH OLD NUMBERS BESIDE IT, UNCHANGED** -- `HANDS_OFF_RUNTASK=<n> of <N>` and the FULL
