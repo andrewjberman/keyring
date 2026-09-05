@@ -12,8 +12,9 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 14 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` minted by
-`0.9.0_WK_NFRA_OUTSET~1`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
+**Denominator at this write: 16 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+`0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
+`2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
 reordered within its own space, or dropped.
 
@@ -372,6 +373,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "CLAUDE.md Rule 21: comp-find is the DEFAULT search instrument and prints its denominator; NFRA_COMPEFFICACY PRD s.4.4 Rule T: a tool never exceeds a ceiling it was not told, and the LINE is the rejectable state -- a budgeted call discloses WITHIN BUDGET or BUDGET REACHED with what it scanned.",
     "world_is": "comp-find content mode under an explicit --budget printed a complete-looking denominator and no budget line at all, so a truncated-or-not scan and a complete one render identically to the caller; with S2 (a timeout that emits zero bytes on both streams) the default search instrument has two silent shapes at its bound.",
     "notes": "Filed as a ROW beside S2 rather than a message, per CLAUDE.md s.2 (the notifier watches files). Owner named as S2's. Not this project's cell to fix: comp-find is a marquis tool outside NFRA_OUTSET's Part II; the row rides the COO's drain-end read and the CVO's L9 disposition. No fix attempted."
+  },
+  {
+    "id": "NFRA_OUTSET-S7",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T03:00:00Z",
+    "one_line": "Worker slot 3 was seated on a HALF-PROVISIONED worktree: git worktree add was killed by a 2-minute tool timeout after materialising 12 of 29 top-level entries (stopping alphabetically at infra/, so org/ was absent), leaving a 0-byte index.lock and NO index file -- which made git status report 30,552 phantom staged deletions and every index write return rc=128. Filed by the ISSUER because the worker could not: filing a row was itself one of the blocked index writes.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.9.0_WK_NFRA_OUTSET~3 refused to execute and reported: 12 of 29 top-level entries present, last being infra/; org/ absent, .tools/ present; .git/worktrees/wk-OUTSET-3/ held a 0-byte index.lock (Sep 4 22:06) and NO index file; `git add -f` on a scratch probe -> fatal: Unable to create index.lock: File exists, rc=128; `git status --porcelain` -> 30,552 'D ' entries, artifacts of the empty index and not of any deletion",
+        "DISCRIMINATOR that it was slot-3-only and not systemic (the worker's own, filesystem census, denominator 3 of 3): wk-OUTSET-1 and wk-OUTSET-2 each carried 29 top-level entries with org/ and .tools/ present at the same registered HEAD 79ec54bb37; wk-OUTSET-3 carried 12",
+        "ONE POINT OF THE WORKER'S EVIDENCE DID NOT REPRODUCE AT THE ISSUER'S SEAT and is corrected here rather than inherited: the report states `tasklist | grep -i git` returned rc=1, no git.exe running, concluding the lock was stale. At 02:5xZ the same probe at this seat returned THREE live processes (git.exe 3368, git.exe 50056, git-remote-https.exe 3472). The lock's staleness was therefore NOT established by that probe; the removal below rested on the branch carrying 0 commits (rev-list CLOUD..wk-OUTSET-3 = 0) and a reflog holding only the branch-creation entry, so nothing could be lost either way.",
+        "DISARMED at 03:0xZ by 2.0.0_SA_COO: `git worktree remove --force` rc=0, `git worktree prune`, `git branch -D wk-OUTSET-3` (was 79ec54bb37, 0 commits ahead), then re-provisioned with `git worktree add -b wk-OUTSET-3 <path> CLOUD` RUN IN BACKGROUND so no 2-minute cap could truncate it again -- 'Updating files: 100% (30559/30559), done.'",
+        "RE-PROVISION VERIFIED on an instrument that can SEE the defect, unlike the pre-spawn check that missed it: index file PRESENT, no index.lock, `git status --porcelain` 0 dirty entries (against 30,552 before), and each of the four ordered paths tested for existence individually -- the TO-OS-s-15 face, INVESTIGATION_v1.md, .tools/comp-heat and org/modules/heatmap all PRESENT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker slot runs in a complete worktree carrying every path its task order's <paths> block names; `git worktree add` either provisions the tree or fails loudly.",
+    "world_is": "The provisioning was interrupted mid-checkout by the issuer's own 2-minute foreground tool cap and left a half-tree that reported itself, through git status, as a repository with 30,552 deleted files. The order TO-OS-s-15 was never defective and is executable as cut; only the checkout was broken. OS-s-15 is NOT-EVALUATED-BLOCKED rather than failed, and OS-s-16 stays fenced behind a question nobody has answered.",
+    "notes": "RE-IDENTIFIED AT THE COMMIT, and the gate was right: this row was first minted `NFRA_OUTSET-W3-S1`, copying the id the blocked worker proposed. `surprise-row-gate.py` REFUSED it -- \"a seat's row on the main index carries no W (the coordinate names the ALLOCATOR, and a seat allocates on the main index)\". The `W3-` coordinate belongs to worker slot 3's own index, and slot 3 could not allocate anything, which is the whole subject of this row. A row ABOUT a worker is not a row BY one. THE HAZARD WAS REAL AND IT WAS THE ISSUER'S TO OWN: a worktree whose status reports 30,552 staged deletions is a live sweep hazard -- any seat running a bulk `git add -A` there once the lock cleared would stage the deletion of the entire repository. The worker named that hazard, named this seat as its disarm owner, and deliberately did NOT repair it, on the grounds that removing a lock inside the SHARED .git where thirteen worktrees are registered was not a worker's call. That restraint was correct twice over: it is out of a worker's grant, and the repair genuinely needed a seat that could weigh the other registered worktrees. It also declined to create INVESTIGATION_v1.md fresh in its own empty checkout, reasoning that a single-row file would arrive at the drain looking like the entire append-only channel -- a destructive union against a file this project resolves by union. That is the sharpest thing in the report and it is exactly right. ⛔ THE PRE-SPAWN CHECK THAT MISSED IT WAS MINE, AND IT WAS BLIND BY CONSTRUCTION, NOT UNLUCKY. Two instruments were run against all three worktrees before seating: `git merge-base --is-ancestor` for the drained commits, and a grep of `.tools/comp-heat` for the budget carrier. The first reads the OBJECT DATABASE, which is shared by every worktree and is identical whether a checkout completed or not. The second reads a file under `.tools/`, which sorts BEFORE `infra/` and was therefore inside the materialised prefix of even the broken tree. Both instruments returned green on a tree missing 18,000 files, and both would have returned green on an empty one. A third check in the same batch DID print `task-orders: NO` for slot 3 -- the true answer was on my own screen -- and I read past it because two later greens agreed with each other. Two agreeing instruments blind to the same axis are ONE instrument counted twice, and a discriminating check must be able to differ if the claim is false: entry count against a known-good sibling, or existence of the ordered paths themselves, either of which takes one second. ⛔ AND THE REPAIR I ATTEMPTED BEFORE SPAWNING REPORTED SUCCESS FALSELY, FOR A SECOND INSTRUMENT REASON: `git checkout -f HEAD 2>&1 | tail -2 && echo DONE` was backgrounded and returned exit code 0, which I read as the checkout having completed. A pipeline's exit status is its LAST command's, so that 0 belonged to `tail`, not to git. The checkout had in fact failed against the same stale lock. Read rc from the command whose rc you mean -- never through a pipe."
   }
 ]
 ```
