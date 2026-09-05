@@ -456,6 +456,50 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-6 s.\"What you build\" item 1: 'probe injected: boto3 lambda.invoke(<producer>, {\"date\": d, \"probe\": true}) parsed into the probe's shape; where a producer answers with a written slice instead (probe mode not deployed), treat as UNKNOWN' -- read as applying uniformly across all three partners' producers.",
     "world_is": "inf-etf-ownership-daily (Inflection's producer) has no probe-key handling whatsoever; invoking it with {\"date\": d, \"probe\": true} for a date whose upstream partition exists does not 'answer with a written slice instead' as an alternative RESPONSE shape to detect after the fact -- it performs the producer's REAL compute-and-write path, i.e. the invoke itself causes the write, not merely an ambiguous answer. Detecting this post-hoc (by response shape) does not prevent the write from having already happened.",
     "notes": "This worker's own coverage_gate implementation defends against this by construction: Inflection is never probed (a small partner allowlist -- cottonwood + 49financial only -- gates whether the invoke is attempted at all), so a real Inflection hole always classifies UNKNOWN via the 'no probe supplied' path inside classify_month, with zero invokes and zero risk of an unintended write. This is stricter than, but consistent with, the TO's own stated fallback intent. Not exercised as a live risk by THIS order's own graded criteria (S6-AC2/AC3): the current live August 2026 data has zero Inflection holes (EG-s-5's S5-AC3 confirmed 21/21 for all three partners), so the hazard is LATENT for a future month/scheduled fire, not triggered today. Disarm: either the COO amends future guidance to name the allowlist explicitly (matching this worker's implementation), or a future cell adds a genuine writes-nothing probe mode to inf-etf-ownership-daily before the classifier is ever asked to probe it for real."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S9",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T07:54:30Z",
+    "one_line": "S9-AC2's byte census expects HEADER_SITES=2, but a CORRECT implementation of this order's own BOUNDS ('leave EG-s-8's terminal send andrew@-only') necessarily yields HEADER_SITES=3: EG-s-8 (this same file, deployed immediately before this order per its own dependency chain) already added a third `msg[\"To\"] = ...` assignment (`_build_terminal_email`), which the census was not updated to account for.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured BEFORE any EG-s-9 envelope edit (with only EMAIL_RECIPIENTS added): `python -c \"import re; s=open('infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py').read(); print(len(re.findall(r'msg\\\\[\\\\\"To\\\\\\\"\\\\]\\\\s*=', s)))\"` -> 3 (report, correction, terminal) -- the gap pre-exists this worker's own envelope changes, it is not introduced by them",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:137-148 @HEAD (EG-s-8, commit b124e0223b/merged @f036a438fb) -- `_build_terminal_email` sets `msg[\"To\"] = EMAIL_RECIPIENT`, a THIRD header-assignment call site the PRD s.7.3a four-site table (written before EG-s-8 existed) does not name",
+        "this TO's own BOUNDS: 'Leave EG-s-8's terminal send andrew@-only' -- satisfying this literally REQUIRES the terminal header to keep assigning msg[\"To\"] to SOMETHING (now a dedicated TERMINAL_RECIPIENT constant, not the shared EMAIL_RECIPIENT/EMAIL_RECIPIENTS this order changes), so the assignment syntax `msg[\"To\"] = ...` cannot drop to 2 without either leaving the terminal header vulnerable to the JOIN (a real bug) or restructuring it to a different, inconsistent API purely to dodge the regex (not attempted)",
+        "post-fix measured: `ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0` -- 2 of 3 sub-counts match the criterion's expectation exactly (ENVELOPE_LIST_SITES, SINGLE_ELEMENT_ENVELOPES); only HEADER_SITES differs, by exactly the one pre-existing terminal site"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S9-AC2 expects the exact output string 'ENVELOPE_LIST_SITES=2 HEADER_SITES=2 SINGLE_ELEMENT_ENVELOPES=0'.",
+    "world_is": "The measured output is 'ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0' -- HEADER_SITES is 3, not 2, because EG-s-8 (this order's own named predecessor, 'same file, same deploy') added a third MIME-header-assignment call site that the PRD's four-site table and this criterion's census predate.",
+    "notes": "This worker did NOT restructure the terminal header's assignment syntax to artificially suppress the count -- that would trade a real, correct fix (decoupling the urgent internal alert from the JOIN variable, which BOUNDS explicitly requires) for a cosmetic match against a census that was never updated for EG-s-8's addition. S9-AC2 is graded FAIL by output this turn (the literal string does not match); the substance -- exactly 2 envelope sites take the list, 0 single-element-envelope shapes remain, and the terminal path is correctly isolated -- is otherwise exactly as specified. Disarm: the issuer either amends S9-AC2's expected string to HEADER_SITES=3 (reflecting the post-EG-s-8 file), or clarifies a different regex/count that would legitimately read 2 (e.g. counting only sites this order's own deliverable table names) -- either is a face amendment, not a code change."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S10",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T08:47:31Z",
+    "one_line": "This worker closed the etfs-guardrail-eg-s-9-orchestrator-join-recipients ledger after the FIRST apply, then discovered deliverable item 4 required a small additional code change (email_qa surfacing the To header) that needed a SECOND apply -- made without re-opening the ledger first, a NEVER-2 sequencing deviation (ledger opened BEFORE, not after, an apply).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this session: `python .tools/deploy_ledger.py close --slug etfs-guardrail-eg-s-9-orchestrator-join-recipients` -> 'CLOSED ... all 1 legs proven; sentinel removed' (commit 1d7c53e6eb/19b11f082b), followed LATER by a code edit (email_qa 'to' field) and a SECOND `HALT_ACK=1 .tools/safe-apply.sh ... apply ... -target=aws_lambda_function.orchestrator` (rc=0, 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.') with no ledger entry open at the time of that second apply",
+        "CLAUDE.md HARD STOPS: 'NEVER leave a confirmed deploy half-landed -- ledger entry opened at start, closed at completion'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This TO's deliverable item 3: 'apply through safe-apply under the ledger entry ... entry + sentinel COMMITTED' -- read together with NEVER-2's 'ledger entry opened at start, closed at completion' for EVERY apply.",
+    "world_is": "The second apply (email_qa's To-header fix) ran through the same safe-apply.sh gates (HALT-GATE, comp-tagauthz, tombstone-gate) as the first, and both applies are part of the SAME task order's SAME deliverable (deliverable item 4 explicitly required the To-header evidence the fix enables) -- but no ledger entry was open across that second apply's window.",
+    "notes": "Remediated same-turn: a supplementary ledger entry is opened and closed immediately after this row, with proof from the SAME final measurements (served-vs-built MATCH, live rehearsal outputs) already gathered post-second-apply, so the deploy history carries a ledger trail for both applies rather than leaving the second one unrecorded. INERT: both applies succeeded, are 0-diff-confirmed, and the underlying resource (aws_lambda_function.orchestrator) is not half-landed by any measure -- the gap is in the LEDGER's bookkeeping order, not in the infrastructure's state."
   }
 ]
 ```
