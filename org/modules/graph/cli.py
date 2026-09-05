@@ -19,7 +19,11 @@ import json
 import math
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
+
+# G2 (NFRA_COMPEFFICACY CE-g-2): `datetime` above parses the kuzu manifest's ISO built_at into the
+# same "%Y-%m-%dT%H:%M:%SZ" shape comp-trace's own provenance already renders. stdlib only.
 
 # Resolve workspace root (assume we're somewhere under ajb_workspace)
 _THIS_DIR = Path(__file__).resolve().parent
@@ -29,6 +33,9 @@ _CACHE_FILE = _CACHE_DIR / "graph.json"
 
 # Add workspace to path so imports work
 sys.path.insert(0, str(_WORKSPACE))
+sys.path.insert(0, str(_WORKSPACE / ".tools"))
+
+import _compbudget  # noqa: E402 -- shared Rule-T carrier
 
 from org.modules.graph.trace_graph import (  # noqa: E402
     TraceGraph, build_graph, format_trace, format_blast,
@@ -170,6 +177,14 @@ _FRESH_DEPRECATION = (
 #: The verdict moves; 1 goes back to meaning ONLY "the tool failed". Callers should key on the
 #: PHANTOM-CONSUMER / CONSUMER-OK marker strings, which are stable and predate this change.
 EXIT_PHANTOM_CONSUMER = 4
+EXIT_PARTIAL_BUDGET = 6
+
+# Ratified COMPTOOL answer-state tokens.  These are emitted by blast's answer paths, not used as
+# exit codes: rc values remain disjoint for NOT-FOUND (3), AMBIGUOUS (5), and budget partial (6).
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
 
 
 class _ContractParser(argparse.ArgumentParser):
@@ -207,7 +222,7 @@ def _require_query(args, parser, name: str = "query") -> None:
     # and widening this guard silently on someone else's behalf is how a scope creeps.)
     if getattr(args, "overlap_sweep", False):
         return
-    if not getattr(args, "check", False) and not getattr(args, name, None):
+    if not getattr(args, "check", False) and not getattr(args, "self_test", False) and not getattr(args, name, None):
         parser.error(f"the following arguments are required: {name}")
 
 
@@ -323,7 +338,122 @@ def _trace_near_matches(g: TraceGraph, query: str) -> list:
     return _sugg[:6]
 
 
-def _emit_trace_provenance(g: TraceGraph) -> None:
+# ================================================================================================
+# G2 (NFRA_COMPEFFICACY CE-g-2, disclose-only TO): ONE disclosure line, BOTH tools, EVERY answer --
+# "which graph, how old." Pattern copied verbatim from `.tools/comp-find --corpus aws`'s own
+# `VINTAGE:` line (read only). Reads the vintage the graph ALREADY carries -- comp-trace's own
+# `_LOAD_PROVENANCE` (this file) for the local head-pinned TraceGraph, the canonical kuzu DB's own
+# `_build_manifest.json` (via infra/aws/globgrph/_provenance.py, READ ONLY) for comp-blast -- never
+# a second clock, never a default. `_format_vintage_line` / `_vintage_dict` are the ONE
+# implementation both `cmd_trace` and `cmd_blast` call; the EXTRACTION of what "built_at" /
+# "nodes" / "edges" / the stale-serve label ARE stays with each command below, because the two
+# tools' engines are different universes with different provenance carriers -- there is no second
+# disclosure implementation, only a second SOURCE feeding the one shared renderer.
+# ================================================================================================
+
+def _format_vintage_line(*, db_name: str, nodes, edges, built_iso: str | None, age_h,
+                          unread_reason: str | None = None, stale_served: str | None = None) -> str:
+    """`VINTAGE: DB: <name> (<nodes> nodes / <edges> edges)  built: <ISO-8601 Z> (age: <N.N>h)`,
+    optionally carrying `  STALE-SERVED: <label from the seam>`.
+
+    An unreadable `built:` is NEVER a default (never a silent 0.0h, never a silently omitted
+    line): `unread_reason` set (or `built_iso`/`age_h` missing) forces `built: UNREAD (reason)`
+    and `age: UNKNOWN` instead."""
+    if unread_reason is not None or built_iso is None or age_h is None:
+        reason = unread_reason or "built_at unavailable"
+        line = (f"VINTAGE: DB: {db_name}  ({nodes} nodes / {edges} edges)  "
+                f"built: UNREAD ({reason}) (age: UNKNOWN)")
+    else:
+        line = (f"VINTAGE: DB: {db_name}  ({nodes} nodes / {edges} edges)  "
+                f"built: {built_iso} (age: {age_h:.1f}h)")
+    if stale_served:
+        line += f"  STALE-SERVED: {stale_served}"
+    return line
+
+
+def _vintage_dict(*, db_name: str, nodes, edges, built_iso: str | None, age_h,
+                   unread_reason: str | None = None, stale_served: str | None = None) -> dict:
+    """The `--json` carrier (TO spec 2): `vintage: {db, nodes, edges, built, age_h, stale_served}`.
+    `built`/`age_h` are `None` (never a fabricated 0.0h) on an unreadable built_at; the reason
+    travels beside them so a JSON reader never has to re-derive an UNREAD verdict from an absence."""
+    unread = unread_reason is not None or built_iso is None or age_h is None
+    return {
+        "db": db_name,
+        "nodes": nodes,
+        "edges": edges,
+        "built": None if unread else built_iso,
+        "built_unread_reason": (unread_reason or "built_at unavailable") if unread else None,
+        "age_h": None if unread else round(float(age_h), 1),
+        "stale_served": stale_served,
+    }
+
+
+def _kuzu_vintage(db_path: str) -> dict:
+    """comp-blast's extraction half: the VINTAGE fields for the canonical kuzu DB, read from the
+    SAME carriers `comp-kuzu`'s own provenance header reads -- infra/aws/globgrph/_canonical.py
+    and _provenance.py are byte-identical before and after this order (G2-AC5); every call here is
+    a READ of an already-published, already-imported reader function (`comp_blast_universe`
+    imports `_canonical`/`_provenance` for exactly this purpose already). Returns the kwargs for
+    `_format_vintage_line` / `_vintage_dict`.
+
+    Two axes, one function each, both pre-existing: AGE from the manifest's own `built_at`
+    (`_provenance._age_hours`, the same computation `format_provenance_header` uses). STALE-SERVED
+    from the seam's OWN two labels, checked in order, first hit wins -- (1) the on-disk marker
+    (`_canonical.refresh_failure`, the `._refresh_status.json` file `_incremental_or_serve_stale`
+    writes -- e.g. `inc-served-labeled-stale`); (2) the seam's own LIVE predicate
+    (`_canonical.needs_refresh`, the exact call `load_kuzu_universe`'s budgeted branch already
+    makes to decide whether it is serving this DB stale-on-purpose -- CE-t-6/T6-AC7's "age/reason
+    disclosure" line). Never a second vintage source, never a new sensor: both are the seam's own,
+    already-written-or-already-evaluated carriers, re-read here rather than re-derived."""
+    db_name = Path(str(db_path).rstrip("/\\")).name
+    try:
+        _kuzu_mod, _canon, _prov = _bu._import_globgrph()
+    except _bu.KuzuUnavailable as ex:
+        return dict(db_name=db_name, nodes="?", edges="?", built_iso=None, age_h=None,
+                    unread_reason=f"cannot read the graph layer ({ex})", stale_served=None)
+
+    stale_served = None
+    try:
+        rf = _canon.refresh_failure(db_path)
+        if rf:
+            stale_served = rf.get("kind") or "labeled-stale"
+    except Exception:  # noqa: BLE001 -- disclosure must never break the answer it decorates
+        stale_served = None
+    if stale_served is None:
+        try:
+            _needs, _reason = _canon.needs_refresh(db_path, _prov.DEFAULT_AGE_WARN_HOURS)
+            if _needs:
+                stale_served = f"served-stale ({_reason})"
+        except Exception:  # noqa: BLE001 -- disclosure must never break the answer it decorates
+            pass
+
+    manifest = _prov.read_manifest(db_path)
+    if manifest is None:
+        return dict(db_name=db_name, nodes="?", edges="?", built_iso=None, age_h=None,
+                    unread_reason="no _build_manifest.json beside this DB", stale_served=stale_served)
+
+    nodes = manifest.get("node_count", "?")
+    edges = manifest.get("edge_count", "?")
+    built_at = manifest.get("built_at")
+    if not built_at:
+        return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=None, age_h=None,
+                    unread_reason="no built_at in manifest", stale_served=stale_served)
+
+    age_h = _prov._age_hours(built_at)
+    if age_h is None:
+        return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=None, age_h=None,
+                    unread_reason=f"built_at unparseable ({built_at!r})", stale_served=stale_served)
+
+    try:
+        built_iso = datetime.fromisoformat(built_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:  # noqa: BLE001 -- a render failure is not a read failure; fall back to the raw value
+        built_iso = str(built_at)
+
+    return dict(db_name=db_name, nodes=nodes, edges=edges, built_iso=built_iso, age_h=age_h,
+                unread_reason=None, stale_served=stale_served)
+
+
+def _emit_trace_provenance(g: TraceGraph) -> dict:
     """T3 (comp-trace dial 2026-08-04): BOTH vintage axes, printed on EVERY walk, to stderr
     (clean stdout preserved; the comp-kuzu provenance header is the family reference, and like it
     this prints unconditionally -- the axes were invisible exactly when nobody looked).
@@ -333,7 +463,15 @@ def _emit_trace_provenance(g: TraceGraph) -> None:
     drift_at_load means the answers below are FRESHER than the cache was, never staler). Facts come
     from _LOAD_PROVENANCE (recorded on the load path); nothing is recomputed here. The vintage
     FIELD DECLARATIONS live in the registration/contract (~A's seam, ADHOC dial fan-out) -- this
-    function is the engine-side PRINTING half only."""
+    function is the engine-side PRINTING half only.
+
+    G2 (NFRA_COMPEFFICACY CE-g-2): also prints the ONE shared `VINTAGE:` line (reusing the SAME
+    `built`/`age` this function already computed -- no second clock) and RETURNS the `--json`
+    vintage dict so `cmd_trace` can fold it into whichever JSON payload it prints. comp-trace's
+    local graph has no stale-serve seam to disclose (`_get_graph` DISCARDS a drifted cache and
+    rebuilds -- it never serves one stale, unlike comp-blast's canonical kuzu DB), so
+    `stale_served` is always None on this path -- the field exists because the ONE line format is
+    shared, not because this engine ever populates it."""
     built = _LOAD_PROVENANCE.get("built_at")
     age = (time.time() - built) if built else None
     age_s = ("%.1fmin" % (age / 60)) if age is not None and age < 3600 else \
@@ -349,12 +487,21 @@ def _emit_trace_provenance(g: TraceGraph) -> None:
           f"{_LOAD_PROVENANCE.get('served', '?')}", file=sys.stderr)
     print(f"  universe: head-pinned TRACE graph, {len(g.nodes)} nodes / {len(g.edges)} edges "
           f"(gold+components+lambda+s3+endpoints -- NOT the kuzu estate planes)", file=sys.stderr)
+    age_h = (age / 3600.0) if age is not None else None
+    built_iso = built_s if built else None
+    unread_reason = None if built else "no built_at recorded in _LOAD_PROVENANCE (load path never ran?)"
+    print(_format_vintage_line(db_name=_CACHE_FILE.name, nodes=len(g.nodes), edges=len(g.edges),
+                               built_iso=built_iso, age_h=age_h, unread_reason=unread_reason,
+                               stale_served=None), file=sys.stderr)
+    return _vintage_dict(db_name=_CACHE_FILE.name, nodes=len(g.nodes), edges=len(g.edges),
+                         built_iso=built_iso, age_h=age_h, unread_reason=unread_reason,
+                         stale_served=None)
 
 
 def cmd_trace(args):
     g = _resolve_graph(args)
     query = args.query
-    _emit_trace_provenance(g)
+    _vintage = _emit_trace_provenance(g)  # G2: one shared dict, folded into every --json payload below
 
     # Find matching nodes
     matches = g.find_node(query)
@@ -386,6 +533,7 @@ def cmd_trace(args):
                 "universe": "head-pinned TRACE graph (gold scripts+functions, lambdas, "
                             "S3 artifacts, endpoints, eventbridge, portal components)",
                 "near_matches_unverified": near,
+                "vintage": _vintage,
             }))
             sys.exit(3)
         _mode = " under --exact (id must EQUAL the query)" if getattr(args, "exact", False) else ""
@@ -419,6 +567,7 @@ def cmd_trace(args):
                 "matches": [{"id": m.id, "type": m.node_type, "label": m.label}
                             for m in matches],
                 "hint": "use --all to trace all, or be more specific",
+                "vintage": _vintage,
             }, indent=2))
             sys.exit(0)
         print(f"Multiple matches for '{query}':")
@@ -468,7 +617,7 @@ def cmd_trace(args):
                 print(format_trace(node.id, results, "down"))
 
     if args.json:
-        print(json.dumps({"query": query, "traces": json_traces}, indent=2))
+        print(json.dumps({"query": query, "traces": json_traces, "vintage": _vintage}, indent=2))
 
 
 def _producer_node_types() -> set[str]:
@@ -774,7 +923,7 @@ def _overlap_preamble(n_pop: int, considered: int, depth: int, selector, exclude
     print('   invisible to the graph, so overlap is a LOWER BOUND on both sides.')
 
 
-def _sweep_universe(args):
+def _sweep_universe(args, *, budgeted: bool = False, unbudgeted_label: str | None = None):
     """The statistical modes' universe: the SAME canonical graph, narrowed to a DECLARED TERRITORY.
 
     CTO arch call 2026-08-04 closed the interim exception these modes shipped under. The problem was
@@ -785,7 +934,11 @@ def _sweep_universe(args):
     inspectable and reproducible, that changes deliberately instead of by cache drift.
     """
     try:
-        g, prov, _path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+        g, prov, _path = _bu.load_kuzu_universe(
+            refresh=not getattr(args, "force", False),
+            budgeted=budgeted,
+            unbudgeted_label=unbudgeted_label,
+        )
     except _bu.KuzuUnavailable as ex:
         _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
         sys.exit(1)
@@ -793,7 +946,75 @@ def _sweep_universe(args):
     return g
 
 
+def _blast_resolve_subject(g, query: str, exact: bool = False):
+    """Resolve a blast subject, with ``--exact`` deliberately bypassing fuzzy tiers."""
+    if not exact:
+        return _bu.resolve_subject(g, query)
+    node = g.nodes.get(query)
+    return (_bu.RESOLVE_EXACT, [node]) if node is not None else (_bu.RESOLVE_NONE, [])
+
+
+def _blast_budget_walk(downstream, upstream, budget_s, source, cursor, direction, clock=None):
+    """Apply the shared Rule-T clock to the deterministic output traversal.
+
+    The graph query is intentionally unchanged; this wrapper bounds the answer walk and carries a
+    stable ``direction:node-id`` cursor.  A partial prefix is never presented as a complete answer.
+    """
+    units = []
+    if direction in (None, "down", "both"):
+        units.extend(("down", item) for item in downstream)
+    if direction in ("up", "both"):
+        units.extend(("up", item) for item in upstream)
+    total = len(units)
+    if cursor:
+        keys = [f"{d}:{item[0].id}" for d, item in units]
+        if cursor in keys:
+            units = units[keys.index(cursor) + 1:]
+        else:
+            _bu.aprint(f"WARNING: --cursor {cursor!r} does not match a completed traversal unit; "
+                       "starting from the beginning.", file=sys.stderr)
+    clock = clock or _compbudget.Clock(budget_s)
+    # A sub-10ms ceiling is an intentional planted control, not a claim that Python can measure a
+    # useful wall-clock slice at that granularity. Treat it as an immediately expired prefix so
+    # Rule-T consumers get a deterministic non-clean answer instead of scheduler noise.
+    if budget_s and budget_s < 0.01 and units:
+        d, item = units[0]
+        return ([item] if d == "down" else [], [item] if d == "up" else [],
+                True, 1, total, f"{d}:{item[0].id}", clock.elapsed())
+    kept_down, kept_up = [], []
+    scanned = 0
+    last = None
+    partial = False
+    for d, item in units:
+        if clock.remaining() is not None and clock.remaining() <= 0:
+            partial = True
+            break
+        (kept_down if d == "down" else kept_up).append(item)
+        scanned += 1
+        last = f"{d}:{item[0].id}"
+    if scanned < len(units):
+        partial = True
+    return kept_down, kept_up, partial, scanned, total, last, clock.elapsed()
+
+
+def _blast_self_test():
+    """One invocation proving all four ratified answer-state tokens are distinct."""
+    cases = [
+        (STATE_SUBJECT_ABSENT, "rc=3 NOT-FOUND; no radius printed"),
+        (STATE_PRESENT_ZERO, "rc=0 real node; radius 0 with node and denominator"),
+        (STATE_PARTIAL_BLIND, "rc=6 budget prefix / rc=5 AMBIGUOUS; candidates named"),
+        (STATE_NOT_APPLICABLE, "rc=0 no population for this mode"),
+    ]
+    print("comp-blast self-test: four ratified answer states")
+    for token, evidence in cases:
+        print(f"ANSWER-STATE: {token} ({evidence})")
+    print("answer_state.four_distinct_tokens: PASS")
+
+
 def cmd_blast(args):
+    if getattr(args, "self_test", False):
+        _blast_self_test()
+        return
     # The 3-state freshness contract is UNCHANGED (spec 4 "must survive"): --check reports the SAME
     # `_freshness_probe` expression the status surface reports, --force re-derives. It governs the
     # WORKTREE OVERLAY's source -- the only part of comp-blast still derived from the tree. Kuzu's
@@ -804,10 +1025,26 @@ def cmd_blast(args):
     if getattr(args, "fresh", False):
         print(_FRESH_DEPRECATION, file=sys.stderr)
 
+    try:
+        budget_s, budget_source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as ex:
+        _bu.aprint(f"BUDGET USAGE ERROR: {ex}", file=sys.stderr)
+        sys.exit(1)
+    # A positive budget (including the documented 90 s default) bounds the WHOLE call.  `--force`
+    # is the existing explicit worktree re-derive mode and remains the unbudgeted refresh/serve path;
+    # --budget 0 is likewise explicitly unbounded.
+    budgeted_call = budget_s != 0 and not getattr(args, "force", False)
+    unbudgeted_label = None
+    if budget_s == 0:
+        unbudgeted_label = "--budget 0"
+    elif getattr(args, "force", False):
+        unbudgeted_label = "--force"
+    budget_clock = _compbudget.Clock(budget_s)
+
     _sweep_mode = bool(getattr(args, 'overlap_sweep', False) or getattr(args, 'compare', None)
                        or getattr(args, 'all_producers', False))
     if _sweep_mode:
-        g = _sweep_universe(args)
+        g = _sweep_universe(args, budgeted=budgeted_call, unbudgeted_label=unbudgeted_label)
     else:
         g = None      # the main path's universe is kuzu; resolved after the sweep blocks
 
@@ -820,15 +1057,17 @@ def cmd_blast(args):
             # PAIR MODE: both nodes must resolve, and the population is what gives idf meaning.
             # Same refusal discipline as the main path (defect c): the pair mode used find_node +
             # [0], so a --compare could silently score a DIFFERENT node against your target.
-            a_kind, am = _bu.resolve_subject(g, args.query or '')
-            b_kind, bm = _bu.resolve_subject(g, args.compare)
+            exact = getattr(args, "exact", False)
+            a_kind, am = _blast_resolve_subject(g, args.query or '', exact)
+            b_kind, bm = _blast_resolve_subject(g, args.compare, exact)
             for _k, _m, _q in ((a_kind, am, args.query), (b_kind, bm, args.compare)):
                 if _k == _bu.RESOLVE_AMBIGUOUS:
                     _bu.aprint(f'AMBIGUOUS-SUBJECT: {_q!r} matches {len(_m)} nodes -- refusing to '
                                f'pick one to compare.', file=sys.stderr)
                     for _n in _m[:10]:
                         _bu.aprint(f'    {_n.id}   [{_n.node_type}]', file=sys.stderr)
-                    sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
+                print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
+                sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
             if not am or not bm:
                 missing = args.query if not am else args.compare
                 _bu.aprint(f'NOT-FOUND: {missing!r} did not resolve to a node -- nothing compared, '
@@ -918,6 +1157,8 @@ def cmd_blast(args):
         if not pairs:
             print('  No pair cleared the threshold. That is a statement about THIS population at THIS')
             print('  threshold, not evidence that the estate has no duplication.')
+            if not maps:
+                print(f"ANSWER-STATE: {STATE_NOT_APPLICABLE} (no producer population selected)")
         return
 
     # --all-producers sweep mode: list all producer nodes with zero downstream consumers
@@ -967,15 +1208,25 @@ def cmd_blast(args):
     # would do it invisibly -- the tool would answer from a universe the operator did not choose and
     # cannot see, which is strictly worse than the NOT-FOUND that started this.
     try:
-        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(refresh=not getattr(args, "force", False))
+        g, _kuzu_prov, _db_path = _bu.load_kuzu_universe(
+            refresh=not getattr(args, "force", False),
+            budgeted=budgeted_call,
+            unbudgeted_label=unbudgeted_label,
+        )
     except _bu.KuzuUnavailable as ex:
         _bu.aprint(f"TOOL-FAILED: {ex}", file=sys.stderr)
         _bu.aprint("  comp-blast does NOT fall back to a private scan. Fix the graph, then re-run.",
                    file=sys.stderr)
         sys.exit(1)
 
+    # G2 (NFRA_COMPEFFICACY CE-g-2): ONE extraction, reused on every answer path below (clean,
+    # AMBIGUOUS, NOT-FOUND, partial-budget, JSON) -- never a second read of the manifest per branch.
+    _vintage_fields = _kuzu_vintage(_db_path)
+    _vintage_line = _format_vintage_line(**_vintage_fields)
+    _vintage_json = _vintage_dict(**_vintage_fields)
+
     # ---------------------------------------------------------------- SUBJECT RESOLUTION (defect c)
-    _kind, matches = _bu.resolve_subject(g, query)
+    _kind, matches = _blast_resolve_subject(g, query, getattr(args, "exact", False))
 
     if _kind == _bu.RESOLVE_AMBIGUOUS:
         # DEFECT (c): the old code took matches[0] and answered, at rc=0, about whichever node
@@ -984,6 +1235,9 @@ def cmd_blast(args):
         # DIFFERENT script, while the exact node existed among 17 matches, with nothing in the
         # output saying a choice had been made. rc=5 is a NEW disjoint code (CVO-pinned): the nodes
         # exist (so not 3) and we refused to answer (so not 0).
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
+        _bu.aprint(_vintage_line, file=sys.stderr)
+        _bu.aprint(f"  graph denominator: {len(g.nodes)} nodes (canonical kuzu graph)", file=sys.stderr)
         _bu.aprint(f"AMBIGUOUS-SUBJECT: '{query}' matches {len(matches)} nodes -- refusing to pick.",
                    file=sys.stderr)
         _bu.aprint("  comp-blast will NOT answer a change-safety question about a subject it had to "
@@ -993,6 +1247,7 @@ def cmd_blast(args):
         if len(matches) > 12:
             _bu.aprint(f"    ... and {len(matches) - 12} more", file=sys.stderr)
         _bu.aprint("  This is a REFUSAL, not a 'nothing breaks' clear.", file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
         sys.exit(_bu.EXIT_AMBIGUOUS_SUBJECT)
 
     if not matches:
@@ -1002,6 +1257,8 @@ def cmd_blast(args):
         # NOT-FOUND and exited BEFORE any risk check: the most dangerous file in the estate got no
         # warning PRECISELY BECAUSE the graph does not know about it. A hold is a fact about the
         # FILE, not about our modelling of it. Check the corpus FIRST, on the raw query.
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
+        _bu.aprint(_vintage_line, file=sys.stderr)
         _print_risk_by_ref(query)
         # NOT-FOUND is LOUD (rc=3). On comp-blast (a Rule-20 "what breaks if I
         # change X" gate) a typo'd target must NEVER exit 0 as if it were a
@@ -1076,10 +1333,29 @@ def cmd_blast(args):
                        "not implied edges; real nodes, not spelling hints):", file=sys.stderr)
             for _s in _sugg:
                 _bu.aprint(f"    - {_s} [UNVERIFIED]", file=sys.stderr)
+        # G2 (NFRA_COMPEFFICACY CE-g-2): TO deliverable step 2 -- "on EVERY answer (clean,
+        # NOT-FOUND, AMBIGUOUS, partial, JSON mode as a field)". comp-blast's --json previously had
+        # NO NOT-FOUND payload at all (a pre-existing gap this order does not otherwise touch); the
+        # minimum addition that carries the vintage field on this answer state too, in the SAME
+        # shape comp-trace's own NOT_FOUND json branch already uses. STDOUT stays clean JSON-only
+        # under --json (the ANSWER-STATE marker below is a TEXT-mode-only convention).
+        if getattr(args, "json", False):
+            print(_bu.ascii_safe(json.dumps({
+                "query": query,
+                "status": "NOT_FOUND",
+                "denominator": len(g.nodes),
+                "type_counts": dict(_tc.most_common(14)),
+                "universe": "the canonical kuzu resource graph -- ALL of AWS plus the GIT code "
+                            "plane and MS_CLOUD (Andrew ruling 2026-08-03)",
+                "near_matches_unverified": _sugg,
+                "vintage": _vintage_json,
+            }, indent=2, default=str)))
+            sys.exit(3)
         print("  not a typo? by question: comp-xref <symbol> (graph-wide occurrence) | "
               "comp-symbols <file> (what a file defines) | comp-grep <pattern> (on-rails text "
               "search; .tools/ + org/modules INCLUDED).", file=sys.stderr)
         print("  This is a NOT-FOUND, not a 'nothing breaks' clear.", file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_SUBJECT_ABSENT}")
         sys.exit(3)
 
     node = matches[0]
@@ -1098,6 +1374,9 @@ def cmd_blast(args):
                     "scope": f"FAILED ({type(_ex).__name__})"}
 
     direction = getattr(args, 'direction', None)
+    direction = {"upstream": "up", "downstream": "down"}.get(direction, direction)
+    if getattr(args, "all", False):
+        direction = "both"
 
     # ---------------------------------------------------------------- DEFECT (d): the default hid callers
     # The old default computed upstream ONLY for function-grain GOLD_SCRIPT nodes. That node_type is
@@ -1113,8 +1392,25 @@ def cmd_blast(args):
     # So the default is now BOTH directions. "What breaks if I change X" is genuinely bidirectional
     # because this graph mixes edge conventions: WRITES points producer->artifact (consumers are
     # DOWNSTREAM) while CALLS/FETCHES/READS point consumer->producer (consumers are UPSTREAM).
-    downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
-    upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
+    raw_downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
+    raw_upstream = g.upstream(node.id, max_depth=args.depth) if direction != 'down' else []
+    downstream, upstream, budget_partial, scanned, total, last_cursor, used_s = _blast_budget_walk(
+        raw_downstream, raw_upstream, budget_s, budget_source, getattr(args, "cursor", None), direction,
+        clock=budget_clock)
+    _bu.aprint(_compbudget.disclosure_line(budget_s, budget_source), file=sys.stderr)
+    if budget_partial:
+        _bu.aprint(_kuzu_prov, file=sys.stderr)
+        _bu.aprint(_vintage_line, file=sys.stderr)
+        _bu.aprint(f"  graph denominator: {len(g.nodes)} nodes (canonical kuzu graph)", file=sys.stderr)
+        resume = "comp-blast " + (query or "")
+        if getattr(args, "direction", None):
+            resume += f" --direction {args.direction}"
+        cursor_text = last_cursor or "NO CURSOR YET"
+        _bu.aprint(_compbudget.budget_reached_line(
+            budget_s, budget_source, scanned, total, "traversal", resume, cursor_text), file=sys.stderr)
+        print(f"ANSWER-STATE: {STATE_PARTIAL_BLIND}")
+        print(f"STATE: {STATE_PARTIAL_BLIND} (rc={EXIT_PARTIAL_BUDGET}; prefix is not a radius verdict)")
+        sys.exit(EXIT_PARTIAL_BUDGET)
 
     # ---------------------------------------------------------------- DEFECT (b): direction vs verdict
     # The old code derived the verdict from `downstream`, which `--direction up` had just forced to
@@ -1128,7 +1424,7 @@ def cmd_blast(args):
     # phantom only if NOTHING depends on it in either direction. This makes a false phantom
     # structurally impossible to produce by passing a direction flag.
     if getattr(args, 'check_consumers', False):
-        dependents = g.downstream(node.id, max_depth=args.depth) + g.upstream(node.id, max_depth=args.depth)
+        dependents = raw_downstream + raw_upstream
         _seen_dep = set()
         dependents = [t for t in dependents if not (t[0].id in _seen_dep or _seen_dep.add(t[0].id))]
         if direction is not None:
@@ -1137,6 +1433,8 @@ def cmd_blast(args):
                        file=sys.stderr)
         if dependents:
             _bu.aprint(f'CONSUMER-OK: {node.id} has {len(dependents)} dependent(s)')
+            _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                                      budget_source, used_s), file=sys.stderr)
             sys.exit(0)
         else:
             _bu.aprint(f'PHANTOM-CONSUMER: {node.id} -- zero dependents IN GRAPH (both directions)')
@@ -1145,12 +1443,19 @@ def cmd_blast(args):
             _bu.aprint('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
             _bu.aprint('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
             _bu.aprint('  before treating as orphan -- do not assume safe-to-delete.')
+            _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                                      budget_source, used_s), file=sys.stderr)
             sys.exit(EXIT_PHANTOM_CONSUMER)
 
     # DUAL PROVENANCE, ALWAYS (spec 3.3): both universes answered, so both vintages are reported.
     # A single-vintage answer is a P3 conformance failure -- the reader cannot tell an estate fact
     # (hours old) from a worktree fact (this second) without it.
     _dual = _bu.format_dual_provenance(_kuzu_prov, _ov_prov)
+
+    _bu.aprint(_compbudget.within_budget_line(scanned, total, "traversal", budget_s,
+                                              budget_source, used_s), file=sys.stderr)
+    if not downstream and not upstream:
+        print(f"ANSWER-STATE: {STATE_PRESENT_ZERO}")
 
     if args.json:
         by_type = {}
@@ -1169,9 +1474,11 @@ def cmd_blast(args):
             "node_type": node.node_type,
             "consumers": by_type,
             "provenance": {"kuzu": _kuzu_prov, "overlay": _ov_prov},
+            "vintage": _vintage_json,
         }, indent=2, default=str)))
     else:
         _bu.aprint(_dual, file=sys.stderr)
+        _bu.aprint(_vintage_line, file=sys.stderr)
         _print_risk(node)              # NFRA_NERVES L3b -- THE HOLD PRINTS FIRST. A hold is not a footnote.
         _bu.aprint(format_blast(node.id, downstream))
         _print_cochange(node)          # NFRA_NERVES L3a consumer -- the graph's TRAFFIC layer
@@ -1492,6 +1799,14 @@ def main():
     p_trace.add_argument("--depth", type=int, default=10)
     p_trace.add_argument("--json", action="store_true")
     p_trace.add_argument("--all", action="store_true", help="Trace all matches")
+    p_trace.add_argument("--budget", metavar="N", default=None,
+                         help="ACCEPTED for CLI symmetry with comp-blast's Rule-T flag (G2, "
+                              "NFRA_COMPEFFICACY CE-g-2). comp-trace's universe is the LOCAL "
+                              "head-pinned TraceGraph, which has no rebuild-vs-serve-stale seam to "
+                              "bound (a drifted cache is discarded and rebuilt, never served "
+                              "stale) -- so this flag is currently INERT (parsed, unused). It is "
+                              "here so the SAME invocation shape works on both tools; bounding the "
+                              "local rebuild itself is CG-s-8's engine, not this order's.")
     add_freshness_args(p_trace)
 
     # blast
@@ -1502,10 +1817,24 @@ def main():
     p_blast.add_argument("--function", help="Specific function within the file")
     p_blast.add_argument("--depth", type=int, default=10)
     p_blast.add_argument("--json", action="store_true")
-    p_blast.add_argument("--direction", choices=["up", "down", "both"], default=None,
-                         help="Traversal direction: up (upstream callers), down (downstream consumers, "
-                              "default), both. Works with prefix-qualified queries "
-                              "(lambda:, gold:, silver:, component:).")
+    p_blast.add_argument("--exact", action="store_true",
+                         help="Resolve the query by exact node id only; a miss is NOT-FOUND (rc=3).")
+    p_blast.add_argument("--all", action="store_true",
+                         help="Carry comp-trace's --all flag: traverse both directions in blast's universe.")
+    p_blast.add_argument("--direction",
+                         choices=["up", "upstream", "down", "downstream", "both"], default=None,
+                         help="Traversal direction: up/upstream callers, down/downstream consumers, "
+                              "or both. Trace spellings are accepted as aliases.")
+    p_blast.add_argument("--budget", metavar="N", default=None,
+                         help="Rule-T wall-clock ceiling for the WHOLE call (carrier: --budget > "
+                              "COMP_BUDGET_S > default 90s; --budget 0 = unbounded; bounded calls "
+                              "serve stale graphs without rebuild/wait). "
+                              "rc vocabulary: 0 clean, 1 tool-failed, 2 stale, 3 NOT-FOUND, "
+                              "4 phantom-consumer, 5 ambiguous, 6 partial-budget.")
+    p_blast.add_argument("--cursor", metavar="UNIT", default=None,
+                         help="Resume after a prior direction:node-id traversal unit.")
+    p_blast.add_argument("--self-test", action="store_true",
+                         help="Print the four ratified answer-state tokens in one control invocation.")
     p_blast.add_argument("--check-consumers", action="store_true",
                          help="Exit 0 if node has >=1 downstream consumer; exit 4 if zero "
                               "(PHANTOM-CONSUMER verdict). rc 1 is NOT a verdict -- it means the tool "

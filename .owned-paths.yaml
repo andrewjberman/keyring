@@ -32,6 +32,21 @@ rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 
 #   Always logs to org/git-author-override-audit.log regardless of phase.
 
 # =========================================================================
+# WORKER GRANT -- the task order IS the grant (spine v3 L7). Landed 2026-09-04
+# ~05:3xZ by 0.0.0_AB_MSTR as registry grantor (SoD) on Andrew-direct at the
+# 1.0.0_SA_CTO terminal ~04:58Z, "recs approved" (record @9ef9a40aae, LD-0534
+# Amendment 1). The stanza is the SWITCH: the resolver limb in
+# .tools/owned-paths-validate.py (1.0.0_SA_CTO's build, a 5th additive clause
+# consulted only after lane enumeration fails) READS it and admits nothing
+# without it; the stanza without the limb changes nothing. Either order fails
+# closed. No lane enumerates a worker serial, here or anywhere.
+# =========================================================================
+worker_grant:
+  serial_glob: "0.9.0_WK_*"
+  source: task-order-paths
+  note: "Spine v3 L7 (Andrew-direct 2026-09-04 ~04:58Z at the CTO terminal, 'recs approved', record @9ef9a40aae): a worker serial 0.9.0_WK_<CODE>~<n> is admitted to exactly the <paths> a NON-TERMINAL task order under <CODE>, issued_to that serial, names at HEAD -- resolved by .tools/owned-paths-validate.py from the order itself, never from a lane. Deliverables/<serial>/ stays the tree convention (ADHC_OWNPTH.004). A path the order does not name is a lane refusal; the override stays audited and singular. The COO's /dispatch pre-spawn census reads the same rule: the <paths> block is the worker's whole write surface."
+
+# =========================================================================
 # LANES
 # =========================================================================
 lanes:
@@ -859,7 +874,7 @@ lanes:
   TREE_CVO:
     permitted_agents:
     - 3.0.0_SA_CVO
-    description: Project tree, surprise-channel/remediations/ -- rows CVO routes at step 10. Spec s.6.
+    description: 'Project tree, surprise-channel/remediations/ -- rows CVO routes at step 10 -- AND surprise-channel/adjudications/ (v3 L9: the CVO''s adjudication document, ADJUDICATION_v<N>.md; JUDGMENT criteria are graded there and never self-graded). adjudications/ added 2026-09-03 ~22:3xZ by 0.0.0_AB_MSTR AS REGISTRY GRANTOR (SoD) on Andrew-direct at the 4.0.0_SA_CRO terminal ~22:2xZ, relayed verbatim in CRO 93973 (record @9f60e36398), spine v3 s.4 carrier item 5, the lane half; the contract (PROJECT_TREE.contract.json), the tree check and the surprise-row gate''s census over the folder are 1.0.0_SA_CTO''s half and land separately -- until they do, a file under adjudications/ passes THIS lane and is still refused by the tree check. Spec s.6.'
   TREE_CRO:
     permitted_agents:
     - 4.0.0_SA_CRO
@@ -867,7 +882,8 @@ lanes:
   TREE_PROJECT_ROW:
     permitted_agents:
     - 1.0.0_SA_CTO
-    description: Project tree, <PROJECT>/project.json -- the register row moved into its folder (s.2 choice B, RULED). Registration is mkdir + this file in ONE commit at step 3 (CTO). The flat index org/projects/<CODE>.json and DIRECTIVES.yaml rows are DERIVED by COO's generator and need no lane. Spec s.6.
+    - 2.0.0_SA_COO
+    description: 'Project tree, <PROJECT>/project.json -- the register row moved into its folder (s.2 choice B, RULED). Registration is mkdir + this file in ONE commit at step 3 (CTO). The flat index org/projects/<CODE>.json and DIRECTIVES.yaml rows are DERIVED by COO''s generator and need no lane. Spec s.6. WIDENED to 2.0.0_SA_COO 2026-09-03 ~22:3xZ by 0.0.0_AB_MSTR AS REGISTRY GRANTOR (SoD: the grantee never writes its own grant) on Andrew-direct at the 4.0.0_SA_CRO terminal ~22:2xZ, relayed verbatim in CRO 93973 (record @9f60e36398), spine v3 s.4 carrier item 2: the COO flips dep_stage to EXECUTING IN THE ISSUANCE COMMIT (v3 L6, one issuance covering every cell), which this lane refused while it admitted only the CTO -- one of the two carriers that made v3 unexecutable as written. Tilde lanes of both auto-permit. Everyone else (workers, AE, DS) still REFUSED; the flip is the issuer''s act, never a worker''s.'
   TREE_LEDGER:
     permitted_agents:
     - 0.5.0_AE_OpalETL
@@ -907,6 +923,9 @@ paths:
   org/missions/*/*/*/surprise-channel/remediations/**:
     lane: TREE_CVO
     note: 'Project tree: remediation rows CVO routes at step 10.'
+  org/missions/*/*/*/surprise-channel/adjudications/**:
+    lane: TREE_CVO
+    note: 'Project tree: the CVO''s L9 adjudication document (v3 spine s.4 item 5). Lane half granted 2026-09-03 ~22:3xZ by 0.0.0_AB_MSTR as registry grantor on Andrew-direct (CRO 93973 @9f60e36398); the contract + tree-check + census half is 1.0.0_SA_CTO''s.'
   org/missions/*/*/*/ledger/**:
     lane: ANY
     note: "Project tree: ledger/ (deploy-completion + change-management for THIS project). WIDENED TREE_LEDGER -> ANY 2026-09-03 ~04:0xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR, same word as task-orders/** (@a4c9b25b4c: 'commit freely to the directives folder path as thats where their work is'): a DS lane deploying under rule 13 writes THIS project's deploy-completion entry and was REFUSED (measured: 0.4.0_DS_ClientPlatform~V) -- the same loose end one folder over. The CTO/COO co-sign in TREE_LEDGER's description was a convention, never a lane control (any single member could commit alone). TREE_LEDGER stays defined for any flat-root rule that still cites it. INCUMBENTS RE-ASSERTED: ANY permits every serial. NEVER-2's ledger discipline (entry opened at start, closed at completion) is the control and is unchanged."

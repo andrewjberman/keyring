@@ -61,6 +61,12 @@ from collections import Counter, defaultdict
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _WS = os.path.normpath(os.path.join(_HERE, "..", "..", ".."))
 sys.path.insert(0, _HERE)
+_TOOLS = os.path.join(_WS, ".tools")
+if _TOOLS not in sys.path:
+    sys.path.insert(0, _TOOLS)
+
+from _compbudget import (Clock, budget_reached_line, disclosure_line,  # noqa: E402
+                         resolve_budget, within_budget_line)
 
 RAIL = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
 RUNS = os.path.join(_WS, "org", "mcp", "comp-tool-runs.jsonl")
@@ -128,80 +134,6 @@ class Source:
 
 
 # ---------------------------------------------------------------------------
-# danger-map auto-refresh (bundle item 6, census G1 @e7952ccba)
-# ---------------------------------------------------------------------------
-# The map sat 207h stale while this tool printed `!! STALE` on EVERY commit
-# fabric-wide for 8 days -- honestly, and nothing acted (COO's exhibit: ~13
-# commits, two sessions, the tool knows, says so, and it changes nothing).
-# An honest flag nobody owns is halfway to no flag (CTO, 213649Z); the repair
-# is removing the ACTOR-DEPENDENCE: refresh-on-stale-read at the shared
-# consumer, so the first reflex after TTL breach heals the map for everyone.
-# THE FIX IS THE TRIGGER, NOT THE REPORTING (COO, 220729Z) -- the STALE tag
-# and the honest-degradation paths are unchanged.
-_REFRESH_LOCK = RISK + ".refresh.lock"
-_REFRESH_TIMEOUT_S = 120   # a hung build must never hang every commit
-_LOCK_FRESH_S = 300        # a lock younger than this = another refresh runs NOW
-
-
-def _ensure_fresh_danger_map() -> str | None:
-    """Rebuild the danger map iff stale/absent. Returns a one-line note for the
-    report (None = map was fresh, nothing happened). NEVER raises, NEVER blocks
-    the commit path: every failure mode degrades to the pre-existing honest
-    stale/absent behavior, with the failure SAID."""
-    try:
-        probe = Source(RISK, "danger map (nerves_lexical)")
-        if probe.exists and not probe.stale:
-            return None
-        was = ("%.1fh stale" % probe.age_h) if probe.age_h is not None else "ABSENT"
-        # Single-refresher lock: nerves_lexical's writer is not atomic (flagged
-        # to its owner ~Z), so concurrent commit-path rebuilds must not race it.
-        now = dt.datetime.now().timestamp()
-        try:
-            fd = os.open(_REFRESH_LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-            os.write(fd, str(os.getpid()).encode())
-            os.close(fd)
-        except FileExistsError:
-            try:
-                lock_age = now - os.path.getmtime(_REFRESH_LOCK)
-            except OSError:
-                lock_age = 0.0
-            if lock_age < _LOCK_FRESH_S:
-                return ("AUTO-REFRESH SKIPPED: another refresh holds the lock "
-                        "(%.0fs old); proceeding on the %s map, STALE tag stands"
-                        % (lock_age, was))
-            # stale lock from a dead refresher -- take it over
-            try:
-                os.remove(_REFRESH_LOCK)
-                fd = os.open(_REFRESH_LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-                os.write(fd, str(os.getpid()).encode())
-                os.close(fd)
-            except OSError:
-                return ("AUTO-REFRESH SKIPPED: could not take the stale lock; "
-                        "proceeding on the %s map, STALE tag stands" % was)
-        try:
-            r = subprocess.run(
-                [sys.executable, os.path.join(_HERE, "nerves_lexical.py"), "build"],
-                capture_output=True, text=True, timeout=_REFRESH_TIMEOUT_S,
-                cwd=os.path.dirname(os.path.dirname(os.path.dirname(_HERE))),
-            )
-            if r.returncode == 0:
-                return ("AUTO-REFRESHED: danger map was %s -> rebuilt now "
-                        "(trigger-on-stale-read; census G1)" % was)
-            tail = (r.stderr or r.stdout or "").strip().splitlines()
-            return ("AUTO-REFRESH FAILED rc=%d (%s); proceeding on the %s map, "
-                    "STALE tag stands" % (r.returncode,
-                                          tail[-1][:120] if tail else "no output", was))
-        finally:
-            try:
-                os.remove(_REFRESH_LOCK)
-            except OSError:
-                pass
-    except Exception as e:  # noqa: BLE001 -- advisory path; a refresh bug must not block commits
-        return ("AUTO-REFRESH ERROR %s: %s; proceeding on the existing map, "
-                "honest vintage stands" % (type(e).__name__, str(e)[:120]))
-
-
-# ---------------------------------------------------------------------------
 # signals
 # ---------------------------------------------------------------------------
 _RAIL_RX = re.compile(r"^(\S+)\s+(\S+)\s+(.*)$")
@@ -209,7 +141,43 @@ _KV_RX = re.compile(r"(\w+)=(\S+)")
 _PHANTOM_TAGS = {"NOFIT-POSTERIOR", "DENY"}
 
 
-def rail_signals(days: int):
+class _TelemetryScan:
+    """One deterministic cursor across the two append-only telemetry streams.
+    `False` means a row belongs to a prior cursor; `None` means the Rule-T
+    ceiling was reached before this row could be claimed."""
+
+    def __init__(self, clock: Clock, total: int, cursor: int):
+        self.clock = clock
+        self.total = total
+        self.cursor = cursor
+        self.position = 0
+        self.last_completed = cursor
+        self.scanned = 0
+        self.exhausted = False
+
+    def take(self):
+        if self.exhausted:
+            return None
+        self.position += 1
+        if self.position <= self.cursor:
+            return False
+        if self.clock.remaining() <= 0:
+            self.exhausted = True
+            return None
+        self.scanned += 1
+        self.last_completed = self.position
+        return True
+
+
+def _line_count(path: str) -> int:
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return sum(1 for _ in fh)
+    except OSError:
+        return 0
+
+
+def rail_signals(days: int, scan: _TelemetryScan | None = None):
     """-> (attention Counter{ref: decayed_weight}, phantoms Counter{term: n}, denominators).
     The rail is the ONLY stream that carries BOTH what an agent looked for AND whether they found
     it, which is why the phantom-limb map lives here."""
@@ -224,6 +192,12 @@ def rail_signals(days: int):
     now = dt.datetime.now(dt.timezone.utc)
     with open(RAIL, encoding="utf-8", errors="replace") as fh:
         for line in fh:
+            if scan is not None:
+                claimed = scan.take()
+                if claimed is None:
+                    break
+                if not claimed:
+                    continue
             m = _RAIL_RX.match(line.strip())
             if not m:
                 continue
@@ -252,7 +226,7 @@ def rail_signals(days: int):
     return att, phantom, newest, {"rail_rows": rows, "rows_in_window": considered, "available": True}
 
 
-def run_signals(days: int):
+def run_signals(days: int, scan: _TelemetryScan | None = None):
     """-> Counter{tool: decayed}. The run sink carries OUTCOMES -- the Goodhart-safe weight."""
     c = Counter()
     fails = Counter()
@@ -262,6 +236,12 @@ def run_signals(days: int):
     now = dt.datetime.now(dt.timezone.utc).timestamp()
     with open(RUNS, encoding="utf-8", errors="replace") as fh:
         for line in fh:
+            if scan is not None:
+                claimed = scan.take()
+                if claimed is None:
+                    break
+                if not claimed:
+                    continue
             try:
                 r = json.loads(line)
             except Exception:  # noqa: BLE001
@@ -301,20 +281,35 @@ def _risk_index(edges):
     return by_key
 
 
-def risk_reflex(risk_src: Source, paths):
+def risk_reflex(risk_src: Source, paths, clock: Clock | None = None, cursor: int = 0):
     """THE PRE-COMMIT REFLEX (NFRA_NERVES L5 endgame): score a PROPOSED file set against the danger
     map BEFORE the commit exists. Returns (hits|None, denominators). None = the map is absent --
     the reflex CANNOT clear the diff, which is not the same as clearing it."""
+    # This is a query-only pre-commit reflex. A stale map is as unable to clear
+    # a diff as an absent one: freshness is part of the measured corpus.
+    if not risk_src.exists or risk_src.stale:
+        condition = "STALE" if risk_src.stale else "ABSENT"
+        return None, {"files_checked": 0, "danger_nodes": 0, "total_files": len(paths),
+                      "cursor": cursor, "reason": "danger map %s" % condition}
     d = risk_src.load_json()
     if d is None:
-        return None, {"files_checked": 0, "danger_nodes": 0}
+        return None, {"files_checked": 0, "danger_nodes": 0, "total_files": len(paths),
+                      "cursor": cursor, "reason": "danger map UNREADABLE"}
     edges = d.get("edges", [])
     by_key = _risk_index(edges)
     hits, seen = [], set()
-    for p in paths:
+    checked = 0
+    for index, p in enumerate(paths, start=1):
+        if index <= cursor:
+            continue
+        if clock is not None and clock.remaining() <= 0:
+            return None, {"files_checked": checked, "danger_nodes": len(edges),
+                          "total_files": len(paths), "cursor": index - 1,
+                          "reason": "budget reached"}
         rel = str(p).replace("\\", "/").strip()
         if not rel:
             continue
+        checked += 1
         for k in (os.path.basename(rel).lower(), rel.lower(), "file:" + rel.lower()):
             for e in by_key.get(k, []):
                 if e["severity"] not in ("HOLD", "RISK"):
@@ -327,8 +322,8 @@ def risk_reflex(risk_src: Source, paths):
                              "kinds": e.get("kinds", []), "n_claims": e["n_claims"],
                              "claim": e["claims"][0]})
     hits.sort(key=lambda h: ({"HOLD": 0, "RISK": 1}[h["severity"]], h["path"]))
-    return hits, {"files_checked": len([p for p in paths if str(p).strip()]),
-                  "danger_nodes": len(edges)}
+    return hits, {"files_checked": checked, "danger_nodes": len(edges),
+                  "total_files": len(paths), "cursor": len(paths), "reason": None}
 
 
 def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
@@ -336,12 +331,15 @@ def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
          "  INVOCATION (pin beside any quoted result): %s" % invocation,
          "  danger map: %s" % risk_src.vintage]
     if hits is None:
-        L += ["  UNKNOWN-VINTAGE: the danger map is ABSENT -- the reflex CANNOT clear this diff,",
-              "  and 'could not check' is NOT 'checked clean'. Regenerate: nerves_lexical build."]
+        reason = denom.get("reason") or "danger map unavailable"
+        L += ["  ANSWER STATE: PARTIAL_OR_BLIND",
+              "  NOT-DECIDABLE: %s -- the reflex CANNOT clear this diff," % reason,
+              "  and 'could not check' is NOT 'checked clean'."]
         return "\n".join(L)
     L.append("  DENOMINATOR: %d file(s) checked against %d danger node(s)"
              % (denom["files_checked"], denom["danger_nodes"]))
     if not hits:
+        L.append("  ANSWER STATE: PRESENT_WITH_ZERO_RESULTS")
         L.append("  REFLEX CLEAN -- a MEASURED result (map read, every file checked), not a default.")
         return "\n".join(L)
     L.append("")
@@ -385,15 +383,21 @@ def danger_x_traffic(risk_src: Source, attention: Counter, top: int, newest=None
 
 
 # ---------------------------------------------------------------------------
-def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
+def compile_pulse(days: int = 7, top: int = 8, invocation: str = "",
+                  budget_s: float | None = None, budget_source: str = "", cursor: int = 0) -> dict:
     edges_src = Source(EDGES, "co-change edges (nerves_accrete)")
-    refresh_note = _ensure_fresh_danger_map()   # item 6: heal-on-read, then load
     risk_src = Source(RISK, "danger map (nerves_lexical)")
 
-    att, phantom, newest, rail_stats = rail_signals(days)
-    runs, run_fails, run_stats = run_signals(days)
-    evo, evo_stats = evolving(edges_src, top)
-    dxt_res = danger_x_traffic(risk_src, att, top, newest)
+    scan = None
+    if budget_s is not None:
+        scan = _TelemetryScan(Clock(budget_s), _line_count(RAIL) + _line_count(RUNS), cursor)
+    att, phantom, newest, rail_stats = rail_signals(days, scan=scan)
+    runs, run_fails, run_stats = run_signals(days, scan=scan)
+    # The co-change and danger projections must not turn a telemetry prefix
+    # into an apparently complete estate conclusion.
+    partial = scan is not None and scan.exhausted
+    evo, evo_stats = (None, None) if partial else evolving(edges_src, top)
+    dxt_res = None if partial else danger_x_traffic(risk_src, att, top, newest)
     dxt, dxt_total = (None, None) if dxt_res is None else dxt_res
 
     return {
@@ -412,7 +416,7 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
                          "stale": edges_src.stale},
             "danger": {"available": risk_src.exists, "vintage": risk_src.vintage,
                        "stale": risk_src.stale,
-                       "auto_refresh": refresh_note},
+                       "query_only": "never rebuilt by comp-pulse"},
         },
         "hot": [{"ref": r, "attention": round(w, 2),
                  "newest_age_d": round(newest[r], 1) if r in newest else None}
@@ -431,6 +435,15 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
                    "need C2/C3 materialized in the graph; C2 measured at 7 nodes 2026-07-14, "
                    "materialization rides MOTIF.P0 (0.8.0~Z, gated on the globgrph apply). This "
                    "band switches on when that lands -- it is declared, never silently omitted.",
+        "budget": None if scan is None else {
+            "reached": scan.exhausted,
+            "scanned": scan.scanned,
+            "total": scan.total,
+            "cursor": scan.last_completed,
+            "budget_s": budget_s,
+            "source": budget_source,
+            "used_s": scan.clock.elapsed(),
+        },
     }
 
 
@@ -527,6 +540,15 @@ def render(p: dict) -> str:
 
     # ---- SYSTEMS (declared UNKNOWN until C2/C3 materialize) ----
     L += ["", "-" * W, "[SYSTEMS]", "-" * W, "  " + p["systems"], "=" * W]
+    budget = p.get("budget")
+    if budget:
+        if budget["reached"]:
+            L += ["ANSWER STATE: PARTIAL_OR_BLIND", "NOT-DECIDABLE: telemetry scan reached its budget;",
+                  budget_reached_line(budget["budget_s"], budget["source"], budget["scanned"],
+                                      budget["total"], "telemetry row(s)", "comp-pulse", str(budget["cursor"]))]
+        else:
+            L.append(within_budget_line(budget["scanned"], budget["total"], "telemetry row(s)",
+                                        budget["budget_s"], budget["source"], budget["used_s"]))
     return "\n".join(L)
 
 
@@ -647,6 +669,27 @@ def _staged_files() -> list:
         return []
 
 
+def _missing_subject_paths(paths: list[str]) -> list[str]:
+    """Paths given to `diff` are repository subjects, not arbitrary strings.
+    A nonexistent subject is a distinct answer-state from a measured clean
+    result, so test it before consulting the danger map."""
+    missing = []
+    for path in paths:
+        candidate = path if os.path.isabs(path) else os.path.join(_WS, path)
+        if not os.path.exists(candidate):
+            missing.append(str(path))
+    return missing
+
+
+def _render_reflex_state(invocation: str, state: str, detail: str) -> str:
+    return "\n".join([
+        "comp-pulse diff -- THE PRE-COMMIT RISK REFLEX (NFRA_NERVES L5)",
+        "  INVOCATION (pin beside any quoted result): %s" % invocation,
+        "  ANSWER STATE: %s" % state,
+        "  %s" % detail,
+    ])
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="comp-pulse",
                                  description="the estate's vital signs (NFRA_NERVES L5); read first each morning")
@@ -655,6 +698,12 @@ def main() -> int:
     ap.add_argument("paths", nargs="*", help="diff mode: files to score (default: the staged set)")
     ap.add_argument("--days", type=int, default=7, help="attention window (default 7)")
     ap.add_argument("--top", type=int, default=8)
+    ap.add_argument("--budget", type=float,
+                    help="Rule T work ceiling in seconds (flag > COMP_BUDGET_S > default 90; 0 = unbounded)")
+    ap.add_argument("--cursor", type=int, default=0,
+                    help="resume after this last fully processed deterministic unit")
+    ap.add_argument("--no-population", action="store_true",
+                    help="diff mode: state that there is no file population to score")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -668,29 +717,56 @@ def main() -> int:
     if args.self_test:
         return _self_test()
 
+    if args.cursor < 0:
+        ap.error("--cursor must be >= 0")
+    try:
+        budget_s, budget_source = resolve_budget(args.budget)
+    except ValueError as exc:
+        ap.error(str(exc))
+
     invocation = "cmd=%s days=%d top=%d (argv: %s)" % (
         args.cmd, args.days, args.top, " ".join(sys.argv[1:]) or "<defaults>")
 
     if args.cmd == "diff":
-        paths = args.paths or _staged_files()
-        refresh_note = _ensure_fresh_danger_map()   # item 6: heal-on-read
+        paths = [] if args.no_population else (args.paths or _staged_files())
         risk_src = Source(RISK, "danger map (nerves_lexical)")
-        hits, denom = risk_reflex(risk_src, paths)
+        if not paths:
+            print(_render_reflex_state(
+                invocation, "NOT_APPLICABLE",
+                "no staged or supplied paths: this diff mode has no population to score."))
+            print("  " + disclosure_line(budget_s, budget_source))
+            return 0
+        missing = _missing_subject_paths(paths)
+        if missing:
+            print(_render_reflex_state(
+                invocation, "SUBJECT_ABSENT_FROM_CORPUS",
+                "the supplied repository subject(s) do not exist: %s" % ", ".join(missing)))
+            print("  " + disclosure_line(budget_s, budget_source))
+            return 2
+        clock = Clock(budget_s)
+        hits, denom = risk_reflex(risk_src, paths, clock=clock, cursor=args.cursor)
         if args.json:
             print(json.dumps({"invocation": invocation, "hits": hits, "denominators": denom,
                               "map_vintage": risk_src.vintage,
-                              "auto_refresh": refresh_note}, indent=1, default=str))
+                              "budget": disclosure_line(budget_s, budget_source)}, indent=1, default=str))
         else:
-            if refresh_note:
-                print("  [risk-reflex] " + refresh_note)
             print(render_reflex(hits, denom, risk_src, invocation))
+            if denom.get("reason") == "budget reached":
+                print("  " + budget_reached_line(
+                    budget_s, budget_source, denom["files_checked"], denom["total_files"],
+                    "file(s)", "comp-pulse diff", str(denom["cursor"])))
+            else:
+                print("  " + within_budget_line(
+                    denom.get("files_checked", 0), denom.get("total_files", len(paths)), "file(s)",
+                    budget_s, budget_source, clock.elapsed()))
         # exit contract: 0 clean / 1 the reflex FIRED / 2 the map is absent (CANNOT clear --
         # distinct from clean, because 'could not check' must never read as 'checked clean').
         if hits is None:
             return 2
         return 1 if hits else 0
 
-    p = compile_pulse(args.days, args.top, invocation)
+    p = compile_pulse(args.days, args.top, invocation, budget_s=budget_s,
+                      budget_source=budget_source, cursor=args.cursor)
     if args.json:
         print(json.dumps(p, indent=1, default=str))
     else:
@@ -698,6 +774,8 @@ def main() -> int:
     # EXIT 1 when the immune response is FIRING: a held/incident node is under active traffic. This
     # is a report, but that condition is not merely informational -- it is the one thing on this
     # page that should stop someone mid-keystroke.
+    if (p.get("budget") or {}).get("reached"):
+        return 0
     if p["danger_x_traffic"]:
         return 1
     return 0

@@ -1,6 +1,6 @@
 ---
 name: prune-quant
-description: The MECHANISM half of the prune pair (sibling: /prune-qual for prose/PRDs/design). Apply to a script, function, pipeline, trigger, record file, or running process: "how can we simplify this without losing anything of material value?" Produces a KEEP/CUT/DEFER report grounded in a consumer census + value ranking -- never silent deletion. Deletion beats redirection beats sharding beats compilation; unbuilt is the best outcome. Any agent; report-only (execution routes to the owner's lane). Born 2026-07-29 from the comp-log arc: four proposed mechanisms collapsed to one deleted write once someone asked who actually reads the file.
+description: The MECHANISM half of the prune pair (sibling /prune-qual): for a script, function, pipeline, trigger, record file or running process, how to simplify without losing material value -- a KEEP/CUT/DEFER report grounded in a consumer census and value ranking, never silent deletion. Deletion beats redirection beats sharding beats compilation. Any agent; report-only, execution routes to the owner's lane.
 ---
 
 # /prune-quant — simplify a MECHANISM without losing material value

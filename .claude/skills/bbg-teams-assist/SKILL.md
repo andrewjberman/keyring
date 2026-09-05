@@ -1,6 +1,6 @@
 ---
 name: bbg-teams-assist
-description: The 0.0.3_BG_BBGTerminal Teams concierge serve loop with the ACK-FIRST rule (Andrew-direct 2026-08-07) — on every inbound Teams message to the Opal Bloomberg account, send an immediate short receipt in-thread ("let me look into that and get back to you"), THEN research through the request catalog, THEN come back with the substantive reply (vintage attached), THEN record to thread memory, all in the same session. Event-driven off the Teams Monitor; bare "/bbg-teams-assist" processes any unhandled inbound now (backlog catch-up). Seat-scoped — 0.0.3_BG_BBGTerminal only, opal-gateway-bbg identity only. NOT /teams-assist: that is the OPERATOR'S ad-hoc read-only catch-up digest of their own chats; this is the CONCIERGE's serve loop on the Opal Bloomberg account, and it replies.
+description: The 0.0.3_BG_BBGTerminal Teams concierge serve loop: ack first in-thread, research through the request catalog, reply with the vintage attached, record to thread memory. Event-driven off the Teams Monitor; bare `/bbg-teams-assist` processes the backlog. Seat-scoped to 0.0.3_BG_BBGTerminal. NOT /teams-assist (the operator's read-only catch-up).
 ---
 
 # /bbg-teams-assist — the concierge serve loop (ACK first, research second, reply third)

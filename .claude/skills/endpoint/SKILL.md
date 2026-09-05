@@ -1,6 +1,6 @@
 ---
 name: endpoint
-description: Project the TERMINAL STATE of one or more directives -- "if every active task order completes as written, what do we actually HAVE?" -- then reorient it to the endpoint Andrew actually wants. Answers the one question no other skill answers: not what stage we are at (/exec-sum), not what is on the register (/directives-check), not which gates are armed (/comp-schedule), not which TOs are open (/to-check), but whether THE WORK IN FLIGHT ADDS UP TO SOMETHING WORTH HAVING. Phase 1 PROJECTS the endpoint as numbered capability outcomes, each tagged DESIRED/APPLIED/EXERCISED and carrying its acceptance test, plus an explicit UNCOVERED partition for endpoint-necessary work that NO task order covers. Phase 2 takes Andrew's desired endpoint, computes the DELTA, and emits a dispatch-ready restructuring package -- TOs to CUT / AMEND / RETIRE -- handed to 2.0.0_SA_COO to sequence and dispatch. It never dispatches itself. PHASE 0 (`--forward`) runs EARLIER than both -- at pipeline step 2, BEFORE the PRD and before any task order exists -- reading the step-1 CRO brief instead of the register and emitting the QUALITATIVE endpoint that gets written into the PRD, so step 10 can answer "does the PRD name this outcome?" without it collapsing into the spec-error route. Invoke as `/endpoint D2`, `/endpoint D2 D8`, `/endpoint ADVI_PERFRP`, `/endpoint --forward <topic|brief-path>`. Andrew-commissioned 2026-09-01 at the CTO terminal; Phase 0 added same day per SPEC_CANONICAL_LOOP_INCORPORATION_20260901 s.1.2.
+description: Project a directive's TERMINAL STATE -- if every open task order completes as written, what do we have -- as numbered capability outcomes tagged DESIRED/APPLIED/EXERCISED with an UNCOVERED partition, then compute the delta to the endpoint Andrew wants as a CUT/AMEND/RETIRE package handed to 2.0.0_SA_COO (never dispatched here). `--forward <brief>` runs at L2 on a CRO brief and emits the qualitative endpoint the PRD carries. `/endpoint D2`, `/endpoint D2 D8`, `/endpoint <CODE>`, `/endpoint --forward <brief>`. Not /exec-sum (stage), not /directives-check (register), not /to-check (open TOs).
 ---
 
 # /endpoint -- the terminal-state projector
@@ -56,20 +56,22 @@ third — SCOPE CHANGE — is decided by *"does the PRD name this OUTCOME?"*
    amendment instead of on CTO as a PRD revision. **The loop degrades quietly rather than failing
    loudly**, which is the worst available failure mode. <<
 
-## Step F0 -- RE-ENTRY: when step 10 routes a SCOPE CHANGE back here
+## Step F0 -- RE-ENTRY: when the CTO's L10 coverage read finds an outcome no cell served
 
-⛔ **THIS IS NOT THE GREENFIELD PATH AND MUST NOT REFUSE THE CALLER.** Step 10 routes every
-`route=SCOPE_CHANGE` remediation row to `loop_target: 2` — **here**. That arrival has an EXISTING
-PRD, EXISTING outcomes and NO new brief, so the F1 refusal (*no brief, no phase*) would turn a
-correctly-routed finding into a dead end at the wrong seat.
+⛔ **THIS IS NOT THE GREENFIELD PATH AND MUST NOT REFUSE THE CALLER.** Under spine v3.0 no row routes
+here and no route token exists: the CTO's OWN coverage read at L10 (per `FWD-<n>`, against the proof-of-spec
+instances at HEAD, on receipt of the CVO's slug) finds an outcome no cell served, or a grade the artifact
+cannot settle, and the CTO re-enters **here** itself -- the PRD-addendum path. That arrival has an EXISTING
+PRD, EXISTING outcomes and NO new brief, so the F1 refusal (*no brief, no phase*) would turn the CTO's own
+correctly-measured gap into a dead end at the wrong seat.
 
-**WHAT ARRIVES** (`remediation_row.schema.json` @`c6c3627269`, agreed with `3.0.0_SA_CVO`):
+**WHAT ARRIVES** (the CTO's own L10 read; the slug `REMEDIATION_v<N>.md` and the rows it graduated are the
+evidence, never a routed instruction):
 
 ```
-  route         SCOPE_CHANGE          loop_target  2   (locked in a gate; never drifts)
-  outcome_ref   FWD-n                 <- WHICH outcome the world contradicted
-  remedy        what to do
-  id            {PROJECT}-S{n}        <- chains back to the investigation item, which carries:
+  coverage      FWD-n UNCOVERED (no cell served it) | IN QUESTION (the artifact cannot settle the grade)
+  slug          surprise-channel/remediations/REMEDIATION_v<N>.md @vintage   <- the CVO's one artifact
+  id            {PROJECT}-S{n}        <- each graduated row chains back to the investigation item, which carries:
      spec_asserts   what the TO SAID
      world_is       what the world TURNED OUT TO BE
 ```
@@ -109,8 +111,8 @@ and say on the record that the outcome was unratified** — do not use it as gro
 The input is the step-1 CRO brief (`docs/briefs/**`) or a topic naming one. Print the path, its
 `generated` line if it carries one, and its byte size.
 
-⛔ **NO BRIEF, NO PHASE 0 — ON THE GREENFIELD PATH ONLY.** ⚠ **A step-10 SCOPE_CHANGE re-entry has
-no brief BY DESIGN and this refusal MUST NOT fire on it — see Step F0, which runs first.** Applying
+⛔ **NO BRIEF, NO PHASE 0 — ON THE GREENFIELD PATH ONLY.** ⚠ **An L10 re-entry from the CTO's own coverage read has
+no brief BY DESIGN and this refusal MUST NOT fire on it -- see Step F0, which runs first.** Applying
 F1 to a re-entry turns a correctly-routed finding into a dead end. On the greenfield path:
 print `UNMEASURABLE: no brief at <path>; step 1 has not produced one`
 and stop. **Do not synthesise an endpoint from the topic string** — an endpoint invented from a
@@ -135,12 +137,13 @@ Once an outcome lands in a PRD its id is fixed for the life of the project.
 - A retired outcome **leaves its number vacant** — the gap is the record that it existed.
 - **Never renumber to close a gap.** Renumbering silently re-points every citation ever made to the
   old id, and nothing announces it.
->> **WHY IT IS A CONTRACT: step 10's remediation rows cite `outcome_ref` back into this list.** A
-   scope-change row saying *"the world contradicted FWD-3"* is worthless if FWD-3 later means a
-   different outcome. **A drifting id turns a grounded finding into a wrong one, and the finding
-   still looks grounded.** <<
-Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on the remediation
-schema (`route=SCOPE_CHANGE` only).
+>> **WHY IT IS A CONTRACT: the CTO's round-N analysis and any PRD addendum cite `FWD-<n>` back into this
+   list, and a graduated row may name the outcome it contradicts.** An analysis row saying *"the world
+   contradicted FWD-3"* is worthless if FWD-3 later means a different outcome. **A drifting id turns a
+   grounded finding into a wrong one, and the finding still looks grounded.** <<
+Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on the remediation schema; the
+route tokens that field once rode with were retired at spine v3.0, and the permanence contract stands on its
+own.
 
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond

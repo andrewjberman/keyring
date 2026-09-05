@@ -1,6 +1,6 @@
 ---
 name: overview
-description: Executive, non-technical status of the Opal multi-agent fabric. Read-only, fixed-format, zero dispatches. THREE modes, auto-selected from invoker tier + argument shape. `/overview` (no arg) from a Tier-0/1 agent = whole-fabric briefing (Mode A). `/overview` (no arg) from a Tier-2/3 agent = self-scoped briefing (Mode C-self). With an argument, the Step-0a classifier routes by shape — a **macro code** (e.g., `ADVI`) → all active projects under that macro, combined Mode-B view; a **project code** (e.g., `ADVI_DEMOV1`) → that single project, Mode B; a **bare serial** (e.g., `0.4.0_DS_ClientPlatform`) or a **natural-language agent-status question** (e.g., `what is your current status`, `what is ws COO doing`) → that agent's current work, Mode C-target; any other **free-text topic** → Mode B with REGISTRY narrative resolution. Built for a human operator who needs "what's going on" without technical context. Invoke on-demand. Adapted for ajb_workspace from corporeal's status skill — confirms who is working from the agent_telemetry stream + the opal-agent-comms broker.
+description: Executive, non-technical status of the fabric, read-only, zero dispatches. `/overview` from a Tier-0/1 seat = the whole fabric; from a Tier-2/3 seat = self-scoped; with an argument -- a macro code, a project code, a bare serial, or an agent-status question -- the matching mode. Grounded on the agent_telemetry stream and the broker.
 ---
 
 # /overview — Executive Status

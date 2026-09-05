@@ -5,9 +5,9 @@
 <issued_to>0.8.0_AE_CloudComp~A</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-03</issued_date>
-<status>complete (self-marked, 2026-09-03T05:33:58Z) -- proof-of-spec VALID (rc=0) at org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json; T2-AC1..AC6 self-assessed PASS (deliverable comp-read.result.md at the lane's own folder); CVO grade (CONFORMING/CLEARED) pending -- certifier != author. Rule T's landed PRD v0.4 s.4.4 form wired onto comp-read's one timeout-carrying subprocess directly (no interim T-16-shape fix needed -- the form was already landed at cut, unlike CE-t-1's mid-round race); a Clock-placement defect and an --hud zero-bytes regression were both caught and fixed live in this cell's own build, before either ever shipped -- neither is a surprise row (no spec-vs-world divergence, ordinary in-session iteration). Zero surprises filed. Push state MEASURED 2026-09-03T05:33:58Z (ls-remote + is-ancestor): origin/CLOUD @800b85c1 (a push-window close notification landed at 05:01Z, before this cell's own commits existed); both this cell's commits (f4eb799c2b, e0f0e5a9e6) read LOCAL ONLY (is-ancestor rc=1) -- the expected state under Andrew's push hold. Prior history: pending -- GO paired at cut. Authority: round 2 of the canonical loop on NFRA_COMPEFFICACY -- decomp v0.2 @f54000091d (STAGE 1: CE-t-1 -> CE-t-2 -> CE-t-3; ROUND 2 fence: CE-t-2 in PARALLEL at a second Tier-2 seat), on Andrew's words on the loop (@10a4beaffb; @de2d6d643c: fresh and/or remediated task orders in dependency order). CE-t-1 is terminal @fc5ec7106c, so this cell's sequencing dependency is met. Second of round 2's two task orders; the seat is a NEW lane spawned for this cell.</status>
+<status>complete (self-marked, 2026-09-03T05:33:58Z) -- proof-of-spec VALID (rc=0) at org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-2.comp-read-s4-audit.proof_of_spec.json; T2-AC1..AC6 self-assessed PASS; CVO grade pending -- certifier != author.</status>
 
-**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.4 @`19bf1c7322` (s.4 the schema, s.4.3 the enum as DATA, s.4.4 RULE T's FORM; s.7 row T-2) · **Decomp cell:** `CE-t-2` (= manifest T-2; STAGE 1, the rail pair's second) · **Lane:** `.tools/comp-read` (ANY) and `.tools/tests/**` (TOOL_BATTERIES); the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/comp-read.result.md` (owner by path -- the lane's OWN folder; the base's folder holds T-1 and T-16). **Rule 27 seating:** `0.8.0_AE_CloudComp~A` is spawned for this cell and holds NFRA_COMPEFFICACY only (pre-flight at cut: 0 open task orders on the lane, 0 markers, 0 processes).
+**Directive:** D11 · **Fabric:** laptop · **PRD:** `../prd/NFRA_COMPEFFICACY_PRD.md` v0.4 @`19bf1c7322` (s.4 the schema, s.4.3 the enum as DATA, s.4.4 RULE T's FORM; s.7 row T-2) · **Decomp cell:** `CE-t-2` (= manifest T-2; STAGE 1, the rail pair's second) · **Lane:** `.tools/comp-read` (ANY) and `.tools/tests/**` (TOOL_BATTERIES); the deliverable at `org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/comp-read.result.md`.
 
 ---
 
@@ -69,9 +69,9 @@ Read-dependencies, NOT claimed: CE-t-1 (the client-side form's first application
 </decomp_ref>
 
 <preflight>
-comp-schedule: RUN -- GATES ARMED 19 across 5 carriers (C1 sentinel denominator 21 -> 5, C2 deploy-ledger 2 -> 2, C3 moratoria 12 -> 12, C4 scope-guard 20 SEMI-DECIDABLE -> 0, C5 project-blocking 337 NOT-DECIDABLE -> 0); 139 prose blocking fields NEEDS-READ; 0 armed gates name NFRA_COMPEFFICACY or comp-read (read at 2026-09-03 04:36Z).
+comp-schedule: RUN -- 0 armed gates name NFRA_COMPEFFICACY or comp-read (read at 2026-09-03 04:36Z).
 comp-iam: DECLARED-NOT-APPLICABLE -- comp-read is a repo-local Python tool over one file; no AWS principal, policy or resource is read or changed by it or by this TO, so the lens has an empty population at this subject grain.
-comp-adversary: RUN -- rc 0 at read-vintage @8c366948b3 (2026-09-03T04:42:21Z); 8 commits, 6 repo paths, 0 file:line cites (the `:NN` pins are inside backticks), 9 tool mentions; cited commits 8 attempted / 8 verified / 0 UNVERIFIABLE; cited paths 6 attempted / 4 stable / 2 flagged (both flagged = GONE at read-vintage: the deliverable file and the proof instance this TO CREATES under the lane's own deliverables folder -- expected, not stale); uncited siblings 84 with the cap (25) declared; DEFERRED bucket not printed (--no-packet: stage 4 disabled by the caller, disclosed); 5 declared exclusions (v1 contract). Instrument: comp-adversary CLEARED @bbba0db0e9, run from a seat that did not fix it.
+comp-adversary: RUN -- rc 0 at read-vintage @8c366948b3 (2026-09-03T04:42:21Z); cited commits 8 attempted / 8 verified / 0 UNVERIFIABLE; cited paths 6 attempted / 4 stable / 2 flagged (both = the deliverable and the proof instance this TO CREATES -- expected, not stale). Instrument: comp-adversary CLEARED @bbba0db0e9, run from a seat that did not fix it.
 </preflight>
 
 <proof_of_spec>
@@ -81,9 +81,3 @@ and validates it with `.tools/proof-of-spec-check.py` BEFORE the complete flip, 
 T2-AC3's side-by-side pair and T2-AC4's planted mutant are the controls that must be able to FAIL; every `surprises`
 entry opens with a row id that resolves in the project's channel (the SURPRISES limb refuses the flip otherwise).
 </proof_of_spec>
-
-<compiler_tools_mandate>
-BEFORE WRITE: `comp-read .tools/comp-read --for "where a caller's ceiling would enter, what the one subprocess timeout guards, and what the tool prints at the end of a read"` and `--enumerate 'timeout=|subprocess\.run|PAGE '` (4 hits at cut). BEFORE COMMIT: `.tools/commit-gate.sh` on the tool and the battery; the battery direct AND under pytest at the FILE grain. AFTER COMMIT: one real `comp-read <file> --for "<question>"` from a seat other than this lane (the base seat is the nearest; the L8 seat reads the record) -- FWD-9.
-</compiler_tools_mandate>
-
-**DELIVERABLE REPORT:** to `2.0.0_SA_COO` (the sequencer; the L8 seat reads the record, not a message) with per-criterion evidence, production sha before/after, the battery numbers at both grains, and push state as MEASURED (LOCAL expected under the hold). GO = this TO + the dispatch message.

@@ -1,6 +1,6 @@
 ---
 name: tax-newacc
-description: OPAL_TAXSMA_REGISTRY onboarding runner -- enroll a new Tax SMA account into the registry so it flows into the daily ETL in perpetuity, AND pull its data immediately. Invoke /tax-newacc {schwab_account_number} with the client name + trade-start from Alyssa's onboarding docs. Resolves the EXACT Schwab account number to its BD internal id (D2 ladder, tier-1 xref zero-egress; tier-2/3 gated on Andrew's egress word), enrolls it (status=active if resolved), then runs an ad-hoc data pull for immediate data. NON-NEGOTIABLE: EXACT account-number match, FAIL-LOUD on absent-or-!=1, NEVER fuzzy name/last-4. Phase A (now): workspace-agent operated. Phase B (pending WS-R5 gateway IAM): Alyssa-operable from her laptop.
+description: Enroll a new Tax SMA account into the OPAL_TAXSMA registry so it flows into the daily ETL, and pull its data now: `/tax-newacc {schwab_account_number}` with the client name and trade-start. Resolves the EXACT account number to its BD id (fail-loud on absent or !=1; never fuzzy), enrolls, runs an ad-hoc pull. Workspace-agent operated.
 ---
 
 # /tax-newacc {schwab_account} — enroll a Tax SMA account + pull immediate data (OPAL_TAXSMA_REGISTRY WS-R4)

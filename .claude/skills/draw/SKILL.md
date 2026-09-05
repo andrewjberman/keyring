@@ -1,6 +1,6 @@
 ---
 name: draw
-description: Render a system, architecture, pipeline, or data-flow as a monospace ASCII diagram in the canonical "two-plane" house style — labeled boxes and arrows split into a build/identity/data plane and a query/access plane, plus one analogy table and a concrete end-to-end example. Use when the user asks to "draw", "diagram", "visualize", "sketch", or "map out" a system, or says "in the same style" referring to a prior ASCII diagram.
+description: Render a system, pipeline or data-flow as a monospace ASCII diagram in the two-plane house style (a build/identity/data plane and a query/access plane), plus one analogy table and a concrete end-to-end example. Use on "draw", "diagram", "visualize", "sketch", "map out", or "in the same style".
 ---
 
 # /draw — house-style ASCII system diagrams

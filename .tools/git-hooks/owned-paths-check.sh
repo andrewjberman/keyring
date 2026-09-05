@@ -24,8 +24,20 @@ set -euo pipefail
 REPO_ROOT="${PRECOMP_REPO_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 YAML="$REPO_ROOT/.owned-paths.yaml"
 VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
+# ONE LOG FOR EVERY WORKTREE (gap 4 of v3's first drain, 2026-09-04; 3.0.0_SA_CVO 94007, 4.0.0_SA_CRO 94014; placement
+# 0.0.0_AB_MSTR 94049): the audit log is gitignored, so a LINKED worktree (a spine-v3 worker's) wrote its PASS/BLOCK/OVERRIDE
+# rows into its own checkout's copy, which died with the worktree -- worker ~2's two OVERRIDE lines never reached the main
+# tree. The log now resolves to the MAIN worktree root (the parent of `git rev-parse --git-common-dir`), same filename, so
+# every reader keeps looking where it always did and every linked worktree writes the one log. In the main worktree the
+# two roots coincide; a git that cannot answer falls back to REPO_ROOT (never to nowhere).
+_GCD="$(git rev-parse --git-common-dir 2>/dev/null || true)"
+case "$_GCD" in
+    "") MAIN_ROOT="$REPO_ROOT" ;;
+    /*|[A-Za-z]:*) MAIN_ROOT="$(cd "$_GCD/.." 2>/dev/null && pwd || echo "$REPO_ROOT")" ;;
+    *) MAIN_ROOT="$(cd "$REPO_ROOT/$_GCD/.." 2>/dev/null && pwd || echo "$REPO_ROOT")" ;;
+esac
 # Test seam: OWNED_PATHS_AUDIT_LOG lets unit tests redirect the audit log.
-AUDIT_LOG="${OWNED_PATHS_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
+AUDIT_LOG="${OWNED_PATHS_AUDIT_LOG:-$MAIN_ROOT/org/git-author-override-audit.log}"
 MODE="${OWNED_PATHS_MODE:-block}"  # ADHC_OWNPTH.005 phase-2 flip 2026-04-30: was warn, flipped to block per Andrew directive
 OVERRIDE="${GIT_COMMIT_AUTHOR_OVERRIDE:-}"
 

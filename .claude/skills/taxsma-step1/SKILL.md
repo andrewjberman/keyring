@@ -1,6 +1,6 @@
 ---
 name: taxsma-step1
-description: PFMG_TAXSMA step-1 daily runner -- pull the morning's FIS "Short Sale Avail File" attachments from the monitored mailbox and file them into the SharePoint TAX/Short Sale folder with Yang's exact naming (S0.3 rule). Uses the m365 gateway's list_email_attachments + save_email_attachment_to_site (server-side transfer; the 10-15MB .ASC never rides the MCP channel). Run every trading morning after ~7:00 ET, or on demand ("run the tax sma step 1" / "pull the short sale files"). Any agent with the m365 gateway connected; the writing identity must be write_files-entitled (master; standard needs the ENTITLEMENTS_PATH line). Idempotent: conflictBehavior=fail means a re-run can never overwrite -- collisions are loud.
+description: PFMG_TAXSMA step 1, the daily runner: pull the morning's FIS Short Sale Avail File attachments from the monitored mailbox into SharePoint TAX/Short Sale with Yang's exact naming, via the m365 gateway's server-side transfer. Every trading morning after ~7:00 ET, or on "run the tax sma step 1". Needs a write_files-entitled identity. Idempotent.
 ---
 
 # /taxsma-step1 — Short Sale file intake (PFMG_TAXSMA step 1)

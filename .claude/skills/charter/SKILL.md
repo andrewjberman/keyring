@@ -1,6 +1,6 @@
 ---
 name: charter
-description: DEPRECATED per LD-0066 (`c4ec7f7a0`). 3-way split into /ws-charter (ws CTO cron-loop body) + /cl-charter (CL CTO queue-pull) + /mstr-charter (MSTR rare-use dual-division). This generic /charter body preserved for reference until /mstr-charter scribe lands; prefer the role-specific skills.
+description: DEPRECATED (LD-0066): split into /ws-charter, /cl-charter and /mstr-charter. Kept for reference only; prefer the role-specific skills.
 ---
 
 # /charter — DEPRECATED per LD-0066 — see /ws-charter / /cl-charter / /mstr-charter

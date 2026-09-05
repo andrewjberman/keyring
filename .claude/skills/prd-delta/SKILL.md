@@ -1,6 +1,6 @@
 ---
 name: prd-delta
-description: Per-project PRD-vs-reality completeness assessment. For each not-closed project it cross-references the PRD's promised deliverables against real TO status + real commit evidence and produces a completeness percentage, a natural-language list of what's still missing, a registry-mismatch flag, and an undocumented-activity flag. Runs IN THE MAIN SESSION (single agent, sequential) -- NOT a subagent fan-out -- so the assessment has the session's accumulated context, comp-tool rails, and CLAUDE.md discipline. Mechanical evidence-gathering is a deterministic script (.tools/prd-delta.py); the judgment is the session agent's. Renders a text report + a Desktop HTML dashboard (completion bars + missing-bullets). Read-only. Engine: .tools/prd-delta.py.
+description: Per-project PRD-vs-reality completeness: for each not-closed project, cross-reference the PRD's promised deliverables against real TO status and commit evidence -> a completeness percentage, what is still missing, registry-mismatch and undocumented-activity flags. Runs in the main session (no subagent fan-out); mechanics in `.tools/prd-delta.py`, judgment the session's. Text report + Desktop HTML dashboard. Read-only.
 ---
 
 # /prd-delta -- per-project PRD-vs-reality completeness assessment

@@ -79,6 +79,28 @@ def conditional_checks(inst: dict) -> list[str]:
             v.append(f"acceptance[{rid}]: status={row.get('status')} REQUIRES status_reason")
         if row.get("status") == "PASS" and len(row.get("output_evidence", "").strip()) < 8:
             v.append(f"acceptance[{rid}]: PASS with thin/empty output_evidence -- a bare value; INVALID")
+        # spine v3.0 L6/L7/L9 (one clause per criterion; Andrew-direct 2026-09-03 ~22:2xZ, carrier 4 of eight):
+        # a MECHANICAL criterion carries `expect`, the pattern its output must match -- PASS is decided by the
+        # match, never by the worker; a JUDGMENT criterion carries no verdict at all -- the CVO grades it at L9.
+        # Both fields are OPTIONAL in the schema so every pre-v3 instance still validates as it did.
+        if row.get("judgment") is True and row.get("status") in ("PASS", "FAIL"):
+            v.append(f"acceptance[{rid}]: judgment=true carries a verdict (status={row.get('status')}) -- a judgment "
+                     f"criterion is graded only by the CVO at L9 (spine v3 L9); record the output under "
+                     f"UNVERIFIABLE-BY-INSTRUMENT with status_reason naming the CVO, never PASS/FAIL")
+        exp = row.get("expect")
+        if isinstance(exp, str) and exp.strip():
+            import re as _re_x
+            try:
+                matched = _re_x.search(exp, row.get("output_evidence", "") or "", _re_x.S | _re_x.M) is not None
+            except _re_x.error as exc:
+                matched = None
+                v.append(f"acceptance[{rid}]: expect is not a valid pattern ({exc}) -- a criterion whose expectation "
+                         f"cannot be evaluated cannot pass")
+            if matched is False and row.get("status") == "PASS":
+                v.append(f"acceptance[{rid}]: status=PASS but output_evidence does NOT match expect {exp!r} -- "
+                         f"the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID")
+            if matched is True and row.get("status") == "FAIL" and not row.get("status_reason"):
+                v.append(f"acceptance[{rid}]: status=FAIL while output_evidence matches expect -- state the reason")
     m = inst.get("controls", {}).get("mutant", {})
     if m.get("status") == "DID-NOT-FIRE (deliverable INVALID)":
         v.append("controls.mutant: DID-NOT-FIRE -- the deliverable is INVALID by its own control")
@@ -171,7 +193,7 @@ _COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
+def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], list[str]]:
     """ARTIFACT ROW RESOLUTION (2026-08-30, 1.0.0_SA_CTO~X on 2.0.0_SA_COO~X's proposal 85753). Two
     instances in one night passed this checker VALID and were caught BY HAND: TO-L3W3-COX @c36a309f4d
     named its own proof at a path that never existed in git; TO-L3W3-CCX @fa7b34274a carried the
@@ -238,6 +260,57 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
         except Exception:  # noqa: BLE001 -- a git that cannot run is announced below, not a pass
             return False
 
+    def _git_out(*args: str) -> str:
+        try:
+            o = subprocess.run(["git", *args], cwd=str(_REPO_ROOT), capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=30)
+        except Exception:  # noqa: BLE001
+            return ""
+        return o.stdout if o.returncode == 0 else ""
+
+    # CO-COMMIT RESOLUTION OF PENDING ROWS (2026-09-03, 1.0.0_SA_CTO on 3.0.0_SA_CVO~A's NFRA_CLDGRPH finding,
+    # relayed 93334/93337): a PENDING-THIS-COMMIT row was HONEST at write time and PERMANENTLY UNVERIFIED after it
+    # -- before the commit there was no hash to compare, after the commit nobody re-ran the checker, and the
+    # co-commit that opens the gap is the spine's own prescribed L7 shape (status, proof and artifacts in one
+    # commit by the actor). The CCX class ("PENDING on a row whose artifact had ALREADY landed") was disclosed as
+    # NOT COVERED. It is covered now, in both contexts the checker runs in, by reading the INDEX or the RECORD:
+    #   PRE-COMMIT  (the instance file is staged or untracked): the artifact must be STAGED in this same commit
+    #               (`git diff --cached --name-only -- <path>` non-empty) -> CO-COMMITTED. Already committed at
+    #               HEAD and not staged -> the CCX violation (pin the commit that carried it). In the worktree but
+    #               not staged -> a violation (it cannot ride this commit).
+    #   POST-COMMIT (the instance is tracked and unstaged; a certifier's re-run): the artifact must be TOUCHED
+    #               by the instance's own commit (`git diff-tree --name-only <c> -- <path>` non-empty) ->
+    #               CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation. Absent -> a
+    #               violation.
+    #   UNKNOWN     (no instance path handed in): the old presence-only read, announced as such.
+    # The content rung on a PENDING row now compares the index blob (or <c>:<path>) against its parent instead of
+    # the worktree against HEAD. Fails toward a LOUD violation, never toward absence.
+    inst_rel = None
+    ctx = "UNKNOWN"
+    inst_commit = None
+    dry_run = False
+    if inst_path is not None:
+        try:
+            inst_rel = Path(inst_path).resolve().relative_to(_REPO_ROOT).as_posix()
+        except ValueError:
+            inst_rel = None
+    if inst_rel:
+        staged_inst = _git_out("diff", "--cached", "--name-only", "--", inst_rel).strip()
+        tracked_inst = _git_ok("ls-files", "--error-unmatch", "--", inst_rel)
+        if staged_inst or not tracked_inst:
+            ctx = "PRE-COMMIT"
+            # DRY RUN vs HOOK RUN (2.0.0_SA_COO~A 93362, measured): the faces say "VALID BEFORE the flip" and 14a says
+            # a seat does not pre-`git add`, so a worker's natural dry run is an UNTRACKED instance with UNTRACKED
+            # artifacts and nothing staged. Inside safe-commit's hook the INSTANCE is staged; in a dry run it is not.
+            # An UNTRACKED artifact (never committed anywhere) in a dry run is honestly PENDING -- it rides the commit
+            # if staged, and the hook run refuses if it is not. The CCX refusal (already at HEAD, not staged) stands in
+            # both, because that artifact cannot ride this commit whatever gets staged.
+            dry_run = not staged_inst
+        else:
+            inst_commit = _git_out("log", "-1", "--format=%H", "--", inst_rel).strip() or None
+            ctx = "POST-COMMIT" if inst_commit else "UNKNOWN"
+    n_cocommit = 0
+
     for a in rows:
         if not isinstance(a, dict):
             continue
@@ -251,17 +324,49 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
             v.append(f"artifact-resolution/content: {path!r} carries `introduces` that is not a list of non-empty strings")
             tokens = []
         if pin == PENDING_SENTINEL:
-            if path and (_REPO_ROOT / path).exists():
-                n_pending += 1
-                if tokens:
-                    err = _content_rung(path, tokens, (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING)")
-                    if err:
-                        v.append(err)
-                    else:
-                        n_content += 1
-            else:
+            present_somewhere = bool(path) and ((_REPO_ROOT / path).exists()
+                                                or (inst_commit is not None and _git_ok("cat-file", "-e", f"{inst_commit}:{path}")))
+            if not present_somewhere:
                 v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but does NOT exist in the "
-                         "working tree -- a dead path cannot ride the commit that carries this proof")
+                         "working tree (nor at the instance's commit) -- a dead path cannot ride the commit that carries this proof")
+                continue
+            if ctx == "PRE-COMMIT":
+                if _git_out("diff", "--cached", "--name-only", "--", path).strip():
+                    n_cocommit += 1
+                    here, parent, where = _blob(f":{path}"), _blob(f"HEAD:{path}"), "the index (co-committed)"
+                elif _git_ok("ls-files", "--error-unmatch", "--", path):
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
+                             "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
+                    continue
+                elif dry_run:
+                    n_pending += 1
+                    here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (dry run; untracked, rides the commit if staged with the proof)"
+                else:
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but exists only in the working tree and "
+                             "is NOT staged while the proof IS -- it cannot ride the commit that carries this proof; stage it in the same commit")
+                    continue
+            elif ctx == "POST-COMMIT":
+                if _git_out("diff-tree", "--no-commit-id", "--name-only", "-r", inst_commit, "--", path).strip():
+                    n_cocommit += 1
+                    here, parent, where = (_blob(f"{inst_commit}:{path}"), _blob(f"{inst_commit}~1:{path}"),
+                                           f"the instance's commit {inst_commit[:10]} (co-committed)")
+                elif _git_ok("cat-file", "-e", f"{inst_commit}:{path}"):
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but PREDATES the instance's commit "
+                             f"{inst_commit[:10]} (present there, not touched by it) -- pin the row to the commit that carried it (CCX class)")
+                    continue
+                else:
+                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ABSENT at the instance's commit "
+                             f"{inst_commit[:10]} -- it did not ride the commit that carries this proof")
+                    continue
+            else:
+                n_pending += 1
+                here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (PENDING; instance path unknown, presence only)"
+            if tokens:
+                err = _content_rung(path, tokens, here, parent, where)
+                if err:
+                    v.append(err)
+                else:
+                    n_content += 1
             continue
         if not _COMMITISH_RE.match(pin):
             v.append(f"artifact-resolution: {path!r} carries commit_or_etag {pin!r}, which is neither "
@@ -283,10 +388,12 @@ def artifact_resolution_check(inst: dict) -> tuple[list[str], list[str]]:
         else:
             v.append(f"artifact-resolution: {path!r} does NOT exist at its declared pin {pin} -- "
                      "the row names a (commit, path) pair git refutes")
-    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_pending} pending-on-worktree / "
+    frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_cocommit} PENDING co-committed "
+              f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
+              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
-              "a PENDING row whose artifact is ALREADY committed is NOT covered here",
+              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
               f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
               "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"
@@ -418,7 +525,7 @@ def _tracked_task_orders() -> set:
         try:
             out = subprocess.run(
                 ["git", "ls-files", "--", "*/task_orders/*.md", "*/task-orders/*.md"],  # R-ii: both roots
-                cwd=WORKSPACE, capture_output=True, text=True, check=True).stdout
+                cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace", check=True).stdout
             _TRACKED_TOS = {ln.strip().replace("\\", "/") for ln in out.splitlines() if ln.strip()}
         except Exception:  # noqa: BLE001
             _TRACKED_TOS = set()
@@ -435,7 +542,7 @@ def _is_tracked(rel: str) -> bool:
     try:
         rc = subprocess.run(
             ["git", "ls-files", "--error-unmatch", "--", rel.replace("\\", "/")],
-            cwd=WORKSPACE, capture_output=True, text=True).returncode
+            cwd=WORKSPACE, capture_output=True, text=True, encoding="utf-8", errors="replace").returncode
         return rc == 0
     except Exception:  # noqa: BLE001
         return False
@@ -559,12 +666,13 @@ def _parse_to(text: str) -> dict:
         cid = attrs.get("id", "").strip()
         if not cid:
             continue
-        # cell_refs separator = comma AND/OR whitespace, the same convention the <owned_cells> read above
-        # already accepts (CELL_ID_RE.findall is separator-blind). A comma-only split read the pair
-        # "OP-s-17 OP-s-16" as ONE literal and refused an otherwise-clean instance with a message that
-        # blamed the DECOMP (row NFRA_OPSEC202609-Z-S11, 2026-09-03; 3.0.0_SA_CVO~Z 19577). Documented in
-        # org/standards/DECOMP_CELL_ID_CONVENTION.md.
-        refs = [c for c in re.split(r"[,\s]+", attrs.get("cell_refs", "")) if c]
+        # DELIMITER-TOLERANT (2026-09-03, 3.0.0_SA_CVO~A 93412 -- NFRA_CLDGRPH-S5's class recurred within the hour:
+        # cell_refs="CG-s-2 CG-s-9" parsed as ONE phantom id and blocked the completion flip). A cell id never carries
+        # whitespace, so commas, semicolons and whitespace are all separators -- the same tolerance <owned_cells>
+        # already gets above. The encoding convention stays commas; the parser stops making a space a defect.
+        # Convention documented in org/standards/DECOMP_CELL_ID_CONVENTION.md; site Z hit the same class
+        # on NFRA_OPSEC202609-Z-S11 ("OP-s-17 OP-s-16" read as one literal, blaming the DECOMP).
+        refs = [c.strip() for c in re.split(r"[\s,;]+", attrs.get("cell_refs", "")) if c.strip()]
         crits[cid] = refs
         if not refs:
             no_refs.append(cid)
@@ -837,7 +945,8 @@ def alignment_check(inst: dict) -> tuple[list, list]:
 # The id grammar is surprise-row-gate.py's ID_RE, anchored at the start of the entry and followed by a
 # boundary -- one carrier of the grammar would be better; until the two files share a module this is a
 # COPY and is named as one (a change there is a change here).
-SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?S[0-9]+)\b")
+# The allocator coordinate (RULING 2 @9ef9a40aae, annex v3.2): W<n> for a worker's row, C- for the CVO's, Z- nests first.
+SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\b")
 _TREE_TO_RE = re.compile(r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/task-orders/[^/]+\.md$")
 _FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 
@@ -959,8 +1068,25 @@ def _self_test() -> int:
         dict(base, surprises=["legacy free-string surprise"]), False, rows, 0, "surprises-announce")
     arm("F ENFORCE + empty list -> 0 violations, frame says 0 entries",
         dict(base, surprises=[]), True, rows, 0, "0 entries")
+    # ---- spine v3 carrier 4: the expect match and the judgment refusal (pure, conditional_checks) ----
+    def _row(**kw):
+        r = {"criterion_id": "V3-AC1", "criterion_verbatim": "the deciding line is printed", "method": "command",
+             "invocation": "echo deciding=42", "output_evidence": "deciding=42", "denominator": "1 of 1", "status": "PASS"}
+        r.update(kw)
+        return r
+    def _v3(name, row, expect_n, needle):
+        got = [x for x in conditional_checks({"acceptance": [row]}) if x.startswith("acceptance[")]
+        ok = len(got) == expect_n and (expect_n == 0 or any(needle in x for x in got))
+        arms.append((name, ok, len(got), expect_n, got[0][:110] if got else ""))
+    _v3("G expect matches output + PASS -> 0 violations", _row(expect=r"deciding=\d+"), 0, "")
+    _v3("H expect does NOT match output + PASS -> 1 violation (the match decides)", _row(expect=r"deciding=7\b"), 1, "does NOT match expect")
+    _v3("I expect is an invalid pattern -> 1 violation", _row(expect="deciding=("), 1, "not a valid pattern")
+    _v3("J judgment=true with status PASS -> 1 violation (no verdict on a judgment criterion)", _row(judgment=True), 1, "carries a verdict")
+    _v3("K judgment=true under UNVERIFIABLE-BY-INSTRUMENT with a reason -> 0 violations",
+        _row(judgment=True, status="UNVERIFIABLE-BY-INSTRUMENT", status_reason="judgment criterion; the CVO grades it at L9"), 0, "")
+    _v3("L no expect, no judgment (a pre-v3 row) -> 0 violations (graded as before)", _row(), 0, "")
     passed = sum(1 for a in arms if a[1])
-    print("proof-of-spec-check --self-test (surprises limb)")
+    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4)")
     for name, ok, got, exp, tail in arms:
         print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
     print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))
@@ -976,7 +1102,7 @@ def checker_vintage() -> str:
     try:
         out = subprocess.run(
             ["git", "log", "-1", "--format=%H|%cI", "--", str(Path(__file__).resolve())],
-            capture_output=True, text=True, cwd=str(_REPO_ROOT), timeout=20)
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(_REPO_ROOT), timeout=20)
         if out.returncode != 0 or "|" not in out.stdout:
             return "UNREAD (git log failed; the hash is not knowable here)"
         h, ci = out.stdout.strip().split("|", 1)
@@ -994,7 +1120,7 @@ def worktree_dirty_suffix(path, repo_root) -> str:
     announced as +DIRTY(UNREAD) rather than passed off as clean."""
     try:
         out = subprocess.run(["git", "diff", "--numstat", "HEAD", "--", str(path)],
-                             capture_output=True, text=True, cwd=str(repo_root), timeout=20)
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(repo_root), timeout=20)
     except Exception:  # noqa: BLE001
         return "+DIRTY(UNREAD)"
     if out.returncode != 0:
@@ -1065,7 +1191,7 @@ def main() -> int:
     violations.extend(align_violations)
     # ARTIFACT ROW RESOLUTION (2026-08-30): runs on every instance; its frame prints its denominator
     # and names the class it does NOT cover, so a clean line cannot be read wider than it is.
-    res_violations, res_frames = artifact_resolution_check(inst)
+    res_violations, res_frames = artifact_resolution_check(inst, inst_path=Path(sys.argv[1]))
     violations.extend(res_violations)
     align_frames = list(align_frames) + res_frames
     # SURPRISES LIMB (2026-09-03): runs on every instance; ENFORCE vs ANNOUNCE is derived from the

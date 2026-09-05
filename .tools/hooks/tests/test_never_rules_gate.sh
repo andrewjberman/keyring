@@ -84,11 +84,19 @@ check() { # name, cmd, expected
 
 echo "never-rules-gate -- EXERCISED (branch: $(git rev-parse --abbrev-ref HEAD 2>/dev/null))"
 echo ""
+# The `-C portal` arms are judged against PORTAL's branch (gate :267-305), so their expectation follows the
+# submodule's actual state: DENY when portal sits on a shared branch (DEV on site Z), PASS when it is detached
+# at a pointer (this device after a merge that carried the portal pointer). Measured 2026-09-03: MSTR read the
+# two arms as FAIL on a detached portal and named them gate under-enforcement; they were the harness assuming
+# DEV. The line below prints which expectation is in force so a reader never mistakes one for the other.
+_PORTAL_BRANCH=$(git -C portal rev-parse --abbrev-ref HEAD 2>/dev/null || echo UNKNOWN)
+if printf '%s' "$_PORTAL_BRANCH" | grep -qE '^(CLOUD|DEV|PROD|SITEZ|main|master)$'; then PORTAL_EXPECT=DENY; else PORTAL_EXPECT=PASS; fi
+echo "portal branch: $_PORTAL_BRANCH -> the -C portal arms expect $PORTAL_EXPECT on this device"
 echo "POSITIVE -- must DENY (these are the NEVER rules, on a shared branch):"
 check "git rebase -i"                     'git rebase -i HEAD~3'                              DENY
 check "git rebase (bare)"                 'git rebase origin/CLOUD'                           DENY
 check "git pull --rebase"                 'git pull --rebase origin CLOUD'                    DENY
-check "git -C portal rebase"              'git -C portal rebase origin/DEV'                   DENY
+check "git -C portal rebase"              'git -C portal rebase origin/DEV'                   "$PORTAL_EXPECT"
 
 # --- F-XXX (2026-08-05): TWO-TOKEN GIT GLOBAL OPTIONS STRAND THE _GIT OPTION-CONSUMER ---
 # Found by 2.0.0_SA_COO (hit the `-c` cell live, self-disclosed before anyone found it); CTO
@@ -105,7 +113,7 @@ check "F-XXX --git-dir two-token"         'git --git-dir .git rebase origin/CLOU
 check "F-XXX --work-tree two-token"       'git --work-tree . rebase origin/CLOUD'             DENY
 check "F-XXX --namespace two-token"       'git --namespace ns rebase origin/CLOUD'            DENY
 check "F-XXX -c repeated"                 'git -c a=1 -c b=2 rebase origin/CLOUD'             DENY
-check "F-XXX -C and -c combined"          'git -C portal -c a=1 rebase origin/DEV'            DENY
+check "F-XXX -C and -c combined"          'git -C portal -c a=1 rebase origin/DEV'            "$PORTAL_EXPECT"
 check "F-XXX generic flag before -c"      'git --no-pager -c pull.rebase=true pull origin CLOUD' DENY
 check "F-XXX --git-dir= single-token"     'git --git-dir=.git rebase origin/CLOUD'            DENY
 # NEGATIVE CONTROLS for the widened consumer -- the fix must not start eating verbs. If the

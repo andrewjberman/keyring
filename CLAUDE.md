@@ -17,14 +17,24 @@ stable, citations resolve there. DS/AE seats read their sections before touching
 
 27. **Every directive/project runs the CANONICAL WORKFLOW L1–L10, ONE OWNER PER STEP, IN ORDER: L1 brief
     (`4.0.0_SA_CRO` only) → L2 endpoint → L3 register → L4 PRD (`1.0.0_SA_CTO` only — no COO, no CVO) →
-    L5 decomp + battery → L6 task orders (`2.0.0_SA_COO` only — no CVO) → L7 execute (Tier-2 workers ONLY)
-    → L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement) → L10 route, ONLY after every task
-    order is complete and every investigation is CVO-checked** (spec error → L6, decomp error → L5, scope
-    change → L2). `0.0.0_AB_MSTR` integrates and never works a project. Mid-round the spec is FROZEN; the
-    only off-spec act is a surprise ROW (§2 below). Gate: `.tools/to-pipeline-gate.py` (the L6 neck).
-    Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` — the ONE process document (constitutional; state of
-    record @`716a9bc7ce`, LD-0521). There is no other process and no second description of it; a document that
-    describes one is retired to a redirect. This stub is Andrew's form; every detail lives in the spec.
+    L5 decomp + battery → L6 ONE ISSUANCE covering EVERY cell (`2.0.0_SA_COO` only; fan-out derived from the
+    decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8) → L7
+    execute (WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, NO send tool; the TO's
+    WORKER FACE is the worker's whole context — cell text, absolute paths, ONE clause per criterion with its
+    invocation and expectation; the RECORD FACE never travels; a compound criterion is refused at the cut) →
+    L8 compile → L9 adjudicate (`3.0.0_SA_CVO`, its FIRST engagement; JUDGMENT criteria are graded HERE and
+    never self-graded) → L10 ONE SLUG to the CTO, ALWAYS, only after every TO is terminal and every row
+    dispositioned; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
+    COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
+    Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
+    analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
+    the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below). Gate:
+    `.tools/to-pipeline-gate.py` (the L6 neck). Spec: `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` v3.2
+    — the ONE process document (constitutional; v3 from the CRO's spec @`29bf9265ea` + §13 @`9dc97d860d`).
+    A worker's write surface is exactly the `<paths>` its non-terminal order names (no lane enumerates a worker;
+    `.tools/owned-paths-validate.py`), its rows mint `<CODE>-W<n>-S<k>`, and it writes no telemetry (L7 reads from
+    git). ⚠ The eight v3 carriers are BUILT and refuse (spine §3), and so is the drain's refuser on the merged index
+    (`.tools/safe-merge.sh`); what still binds by reading is spine §4 — the step log's L7 read from git.
 
 ## 2. HOW MUCH TO CHECK — the speed governor
 
@@ -49,11 +59,7 @@ later — a CORRECTNESS cost, not a speed one.
     ⛔ **A CHECK SCOPED TO THE MEMBERS CANNOT SEE A DEFECT IN WHAT THE MEMBERS SHARE.** Verifying each
     member of a set certifies the set CLEAN while a shared dependency beneath it is broken — and every
     per-member arm passes, so nothing fails. **Ask what the members have in COMMON, and check THAT on
-    its own; then re-read the population UNSCOPED once.** Four instances in one night (2026-08-31): a
-    `-target` apply verified by a `-target` re-plan; 11 wrappers all reading MATCH over one STALE
-    shared core; an acceptance scoped to the same set as the act it graded; and a serve precondition
-    censused on ONE leaf of FOUR, where the leaf examined held **57** rows and an unexamined sibling
-    held **8,632**. COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
+    its own; then re-read the population UNSCOPED once.** COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
     no shared dependency, and a scoped check that IS the whole question rather than evidence for a
     wider one.
     **"proof / root cause / definitively / source-confirmed" are RESERVED** — legal only past STATE at
@@ -63,10 +69,8 @@ later — a CORRECTNESS cost, not a speed one.
     Catalogue: `docs/doctrine/CONTROLS_OVER_CARE.md`.
 
 ⛔ **FOUND SOMETHING ODD OFF-TASK? Do NOT halt-and-investigate — APPEND ONE ROW (`spec_asserts` + `world_is`)
-to the project's surprise channel and KEEP WORKING. A broker message is NEVER the carrier** (Andrew-direct
-2026-09-03: *"claude.md should not have that rule to do this over mcp"* — a notifier watching files cannot see
-an inbox). Tree project: `org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md`
-or legacy flat `org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md` — BOTH lane ANY (COO grant @`bfec7d99b5`):
+to the project's surprise channel and KEEP WORKING. A broker message is NEVER the carrier** (a notifier watching files cannot see an inbox). Tree project: `org/missions/D*/<MACRO>/<CODE>/surprise-channel/investigations/INVESTIGATION_v{N}.md`
+or legacy flat `org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md` — BOTH lane ANY:
 the seat that sees it appends its own row; REMEDIATION rows stay CVO's. An ARMED hazard still disarms same-turn via the row's
 `disarm_owner`. Gates: `.tools/surprise-row-gate.py` (the row, at commit) + `.tools/proof-of-spec-check.py`
 SURPRISES LIMB (a `surprises` entry with no resolving row id blocks a tree TO's `complete` flip).
@@ -81,77 +85,39 @@ another** — verbatim scope; relay, never adjudicate wider OR narrower; if wide
 ## 3. FINDING THINGS FAST
 
 21. **`comp-which "<plain-English question>"` is the reflex; a comp-tool is the DEFAULT for search +
-    inspection, raw grep the exception** (text-local, connection-blind). ⛔ **T1 (Andrew-direct
-    2026-08-28 "All approved", CTO~D): EVERY standalone repo search in Bash — `grep/rg/egrep/fgrep/
-    findstr/ack/ag` recursive or directory-scoped, `find` with anything — is DENIED per SEGMENT
-    (`&&`/`;`/newline split; any path, any lead verb, a `|` after it or not) and routed to
-    `comp-find`; raw-`aws` INSPECTION is classified on ITS OWN SEGMENT, which closes the
-    `cd X && aws iam …` hole that made the 08-28 "did not fire for 2 seats" measurement.** Mechanism:
-    `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`; falsifier
-    `.tools/comprail-gate1-fptest.sh`, 43 cases, red 18/43 against the pre-T1 hook). Cost: one `grep`
-    per non-search Bash call; ~0.5–1 s more on a Bash call that DOES carry a search token (MSYS process
-    spawn). NOT gated: a pipe-RECEIVER grep (`cmd | grep`), `# rail-checked: <why>`, `/freeform`,
-    native `Grep`/`Glob` (nudge-and-proceed, re-affirmed 08-28), `Read`, operational `aws`.
-    `comp-grep` is a forwarder onto `comp-find`.
-    ⛔ **A SINGLE-FILE GREP IS NO LONGER THE EXCEPTION — IT ROUTES TO `comp-read`** (Andrew-direct
-    2026-09-01, RETIRING the T2 `ALLOW-SEARCH shape=single-file` carve-out). `comp-read <file> --for
-    "<question>"` returns the file's SHAPE, regions tagged AUTHORITATIVE-vs-DESCRIPTIVE, every
-    QUALIFIER that limits/negates/corrects a nearby claim, intra-file CONTRADICTIONS, and an UNREAD
-    LEDGER — **the four things a grep of one file structurally cannot show.** Why it earns the swap:
-    a seat read `perfrp_emit_core.py`'s git LOG all evening and never its LINE 1, where a
-    `DEPLOY-SERVE-HELD` sentinel sat blocking the very act it was planning (2026-08-31); and the `head`
-    clause below records 3 seats truncating a grep of ONE file inside one hour. **COST:** a heavier
-    read per call than `grep`, over MEASURED traffic of ~340 single-file reads/day (1,021
-    `ALLOW-SEARCH shape=single-file` rows in ~3 days, `org/mcp/comp-which-rail.log`) — so a
-    `comp-read` that failed toward ABSENCE would be the estate's DEFAULT read instrument failing
-    toward absence, strictly worse than the grep it replaces. **NON-APPLICATION, THREE LIMBS:**
-    **(i) DISCHARGED 2026-09-01 — `--enumerate` HAS LANDED AND IS CERTIFIED** (Andrew-direct,
-    `/open-calls` card 9, "All recs approved"; graded 8/8 on committed bytes; exercised at
-    certification). **A COUNT IS NO LONGER A REASON TO REACH FOR `grep`:** `comp-read <file>
-    --enumerate '<regex>'` is a distinct mode that prints its DENOMINATOR, bands hits
-    (DOCSTRING/COMMENT/DEF/CODE), separates WHOLE-VALUE from SUBSTRING, and WARNs when every hit is
-    a fragment — *"an anchored probe would report ZERO against this file"*, which is the false-zero
-    a bare `grep -c` hands you silently. **Still non-application: `grep -q` as a pure predicate, and
-    any pipe-RECEIVER.** ⭐ The expiry fired as designed — **a bound with a named successor cannot
-    silently outlive its cause**; without that pointer this clause would have asserted a false
-    limitation about a tool it simultaneously mandates, with nothing able to fail (prose cannot
-    fail; the `/watcher` doc drifted six weeks that way). **(iii) FILES OUTSIDE THE REPO CORPUS.** This rule is scoped to REPO SOURCE. A transient tool
-    log, a `/tmp` run output, a scratch file — anything that will not exist tomorrow — has no shape,
-    no qualifier lexicon and no unread ledger worth computing, and grepping one is NOT off-rail.
-    ⚠ **Stated because the omission would have KILLED the rule rather than softened it:** without
-    this limb every seat reading its own tool output is technically in violation, and **a rule that
-    makes compliant behaviour impossible gets ignored wholesale — including where it matters.**
-    Found by `3.0.0_SA_CVO~C` against its OWN behaviour 40 minutes after the clause landed.
-    **(ii) WRONG-OBJECT errors are OUT OF SCOPE.** comp-read fixes
-    RIGHT-object/WRONG-question — it hands you the qualifiers, contradictions and line 1 you did not
-    ask for. **It cannot tell you that you handed it the WRONG FILE.** Specimen: the 00:3xZ mint error
-    read the SECRET's `LastChangedDate` correctly FOUR times while the deciding evidence sat in
-    `bd-49f-session-trigger`'s CloudWatch log — a different object on a different plane. Wrong-object
-    needs a different remedy and this rule is not it. ⚠ **MECHANISM IS DESIRED-NOT-APPLIED until `comp-tool-hud.sh` changes:**
-    the carve-out is live at `:138`/`:141` (shape detection), `:155-156` (ALLOW-SEARCH log) and `:182`
-    (`path ends in a file extension` -> `exit 0`). Until those route to `comp-read`, this clause binds
-    agents by reading and nothing by enforcement.
+    inspection, raw grep the exception** (text-local, connection-blind). ⛔ **EVERY standalone repo search
+    in Bash — `grep/rg/egrep/fgrep/findstr/ack/ag` recursive or directory-scoped, `find` with anything — is
+    DENIED per SEGMENT (`&&`/`;`/newline split) and routed to `comp-find`; raw-`aws` INSPECTION is classified
+    on ITS OWN SEGMENT.** Mechanism: `.tools/hooks/comp-tool-hud.sh` (kill switch `org/mcp/comprail-gate1.enforce`;
+    falsifier `.tools/comprail-gate1-fptest.sh`). NOT gated: a pipe-RECEIVER grep (`cmd | grep`),
+    `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob`, `Read`, operational `aws`. `comp-grep` is a
+    forwarder onto `comp-find`.
+    ⛔ **A SINGLE-FILE GREP ROUTES TO `comp-read`.** `comp-read <file> --for "<question>"` returns the file's
+    SHAPE, regions tagged AUTHORITATIVE-vs-DESCRIPTIVE, every QUALIFIER that limits/negates/corrects a nearby
+    claim, intra-file CONTRADICTIONS, and an UNREAD LEDGER; `comp-read <file> --enumerate '<regex>'` prints its
+    DENOMINATOR, bands hits (DOCSTRING/COMMENT/DEF/CODE), separates WHOLE-VALUE from SUBSTRING, and WARNs when
+    every hit is a fragment — a count is not a reason to reach for `grep`. **NON-APPLICATION:** `grep -q` as a
+    pure predicate; any pipe-RECEIVER; FILES OUTSIDE THE REPO CORPUS (a transient tool log, a `/tmp` run output,
+    a scratch file — grepping one is NOT off-rail); WRONG-OBJECT errors (comp-read cannot tell you that you
+    handed it the WRONG FILE). ⚠ **MECHANISM IS DESIRED-NOT-APPLIED until `comp-tool-hud.sh` changes:** the
+    single-file carve-out is live at `:138`/`:141`, `:155-156` and `:182`; until those route to `comp-read`, this
+    clause binds agents by reading and nothing by enforcement.
     Traps before quoting any comp-find number (case, substring, denominator certifies the SWEEP not
     the pattern): `docs/architecture/NFRA_COMPRAIL_PRD.md`.
-    ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Scoping this to comp-find is what let 3
-    seats truncate a grep of ONE file within one hour (2026-08-28); a catch-all 4 lines from the bottom
-    survived all three, and each census was pattern- and control-correct. Use `--band HEAD/DEF`,
-    `--files`, `--limit/--page`, `--all`, and `-i` for any token census.
+    ⛔ **Never `head` ANY census — `comp-find` OR A RAW GREP.** Use `--band HEAD/DEF`, `--files`,
+    `--limit/--page`, `--all`, and `-i` for any token census.
     ⛔ **A PAGE IS NOT AN ANSWER; never conclude from page 1.**
     ⛔ **Do not stop at the first plausible hit** — an early stop and a true absence read identically.
-    ⛔ **SCOPED COVERAGE QUALIFIERS (2026-08-27, @701036f38f; DEFAULT FLIPPED 2026-08-28, Andrew-direct):
-    the corpus is `.gitignore`-BOUNDED, NOT tracked-only** — **the DEFAULT is now `all`** = tracked +
-    untracked + gitignored minus a PRINTED ephemeral floor (168,349 gitignored files at the root were
-    invisible to the old default); `default` = the old tracked + untracked-not-ignored population;
-    `ignored` = only-gitignored MINUS the same printed floor; `raw` = everything (an every-file
-    denominator uses `raw` — `all` AND `ignored` understate by the floor, disclosed on their own
-    denominator lines). comp-find is REPO-ONLY by ruling (a pathspec outside the worktree is not a
-    zero, it is `git rc=128`) — **except `--corpus aws` (2026-08-28, Andrew-direct "based off of the
-    comp-kuzu surface"): the LIVE AWS plane** — regex over every aws CloudNode's name+arn+props,
-    pathspecs = node_type filters, `drift_class` per hit (`LIVE-no-DECLARED` = in AWS, not in the
-    repo), denominator = nodes scanned, vintage = the DB's own `built:` line. **`--hidden <path>` is the census verb: run it before
-    converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS OUT-OF-CORPUS, NOT ABSENCE.**
-    Log: `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-08-27/` @592e0255b1.
+    ⛔ **SCOPED COVERAGE QUALIFIERS: the corpus is `.gitignore`-BOUNDED, NOT tracked-only** — **the DEFAULT is
+    `all`** = tracked + untracked + gitignored minus a PRINTED ephemeral floor; `default` = tracked +
+    untracked-not-ignored; `ignored` = only-gitignored MINUS the same printed floor; `raw` = everything (an
+    every-file denominator uses `raw` — `all` AND `ignored` understate by the floor, disclosed on their own
+    denominator lines). comp-find is REPO-ONLY by ruling (a pathspec outside the worktree is not a zero, it is
+    `git rc=128`) — **except `--corpus aws`: the LIVE AWS plane** — regex over every aws CloudNode's
+    name+arn+props, pathspecs = node_type filters, `drift_class` per hit (`LIVE-no-DECLARED` = in AWS, not in
+    the repo), denominator = nodes scanned, vintage = the DB's own `built:` line. **`--hidden <path>` is the
+    census verb: run it before converting a zero into an absence, and `0 hit(s) across 0 file(s)` IS
+    OUT-OF-CORPUS, NOT ABSENCE.**
 20. **Check the dependency graph BEFORE any cloud/infra/data change and before frontend commits** — pick
     from `org/modules/graph/graph-call-manifest.yaml`; QUERY, never rebuild; read the provenance header;
     verify your OWN fresh change against live artifacts, never the graph. `comp-surface-check` is RETIRED
@@ -184,8 +150,7 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 28. **THE SUBSTRATE TEST — before you BUILD ON a resource, card it: 7 questions, 3 grains** — PROCESS
     (1 methodology, 2 cadence/trigger DESIRED-vs-APPLIED), ARTIFACT (3 persistence/authority, 4 exact
     location), TRUST (5 coverage + denominator, 6 key/identity space, 7 failure mode distinguishable from
-    a genuine negative). **Every row carries its OWNER** (remedies do not move together). **5/6/7 are the
-    always-skipped ones and the ones that draw blood.** Binds only when the resource becomes LOAD-BEARING;
+    a genuine negative). **Every row carries its OWNER** (remedies do not move together). Binds only when the resource becomes LOAD-BEARING;
     never card what you merely consult. Contract: `org/standards/SUBSTRATE_CARD.schema.json`. Annex §28.
 - **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
 
@@ -193,7 +158,12 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 
 - **NEVER** move served output without never-widen sign-off (CTO+COO); verified DELTA=0 needs no hold.
 - **NEVER** leave a confirmed deploy half-landed — finish in-session or roll back + escalate loud; ledger
-  entry in `org/critical_paths/change_management/` opened at start, closed at completion. ⛔ **An entry a
+  entry in `org/critical_paths/change_management/` opened at start, closed at completion. **An IMAGE act (a
+  build, a push, a tag move) names in that entry EVERY task family that pulls the tag it moves** — a shared
+  `:latest` reaches every family at once and no Terraform-plane control can see it (NFRA_CLDGRPH-S31: two
+  builds re-pointed seven families in one night, five counted); pin per family by digest where a family must
+  not move. COST: one `describe-task-definition` sweep per image act. NON-APPLICATION: a tag no task
+  definition references. ⛔ **An entry a
   device left OPEN proves only that THIS device saw no completion** — before acting on any open/`--red`
   entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with positive control); world-done →
   close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND). Annex §NEVER-2.
@@ -218,9 +188,7 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   the other two are imperatives enforced by nobody. Annex §NEVER-9.
 - **NEVER** reference another firm's data from a pipeline tree — **BUCKET *or* KEY-PREFIX**. ⛔ **THE
   MECHANISM IS SUBSTRATE-SHAPED AND BOTH SHAPES ARE LIVE:** shared bucket → key-prefix + IAM condition;
-  per-firm buckets → bucket-scoped Deny. **An enumerated ban list lapses SILENTLY when a name changes** —
-  the cot guard banned `blackdiamond/49f/` (285 obj) while `49financial/` (8,862, live) went unbanned
-  until 2026-08-27 @`7b777cf0a0`. Gate: `.tools/ds-precommit-check.py`
+  per-firm buckets → bucket-scoped Deny. **An enumerated ban list lapses SILENTLY when a name changes**. Gate: `.tools/ds-precommit-check.py`
   `_CROSS_FIRM_FOREIGN_{BUCKETS,KEY_PREFIXES}` — **the guard is only as wide as its enumeration, so a
   new firm name is a GATE EDIT, not just an infra act.** ⚠ IAM limb: **DESIRED, apply UNVERIFIED**.
 
@@ -236,6 +204,39 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     (Write tool / python): a `printf`/heredoc-built file re-opens the injection one step earlier. `--force`
     bypasses only contamination checks, never a lane refusal — that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=
     <LANE>`, audited, SINGULAR (N lanes = N commits). `docs/architecture/ADHC_OWNPTH.md`.
+14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked
+    worktree and merge it back in a gap** — five seats plus their worker subagents share ONE MUTABLE
+    INDEX, so the check-then-act window is now shorter than the staging cadence: `2.0.0_SA_COO` measured
+    `staged=0` and had the very next merge refuse on a file staged in the seconds between. Mechanism:
+    `git worktree add ../<slot> -b <branch>` — a linked worktree carries its OWN index AND its own merge
+    state, which is why `/dispatch` already mandates one per worker slot; merge back with
+    `.tools/safe-merge.sh` (its `--continue` limb keeps a conflicted drain inside the guards).
+    ⛔ **THE GUARDS ARE NOT THE PROBLEM — every refusal measured so far was CORRECT and each prevented a
+    real sweep** (`org/git-author-override-audit.log`: 3 audited `MERGE-REFUSED`, 2 on `2.0.0_SA_COO`
+    and 1 on `1.0.0_SA_CTO`, each naming a FOREIGN MERGE_HEAD and `nothing staged by this run`). Only
+    those three are offered as contention evidence: two further refusals the same evening were traced by
+    their own author partly to itself, and a self-inflicted block is not a crowding measurement.
+    The refusal RATE rises with the live-seat count, and a correct refusal you could have avoided still
+    costs a retry and sometimes a round trip.
+    ⛔ **IT INVERTS FOR AN APPEND-ONLY SHARED FILE AND YOU MUST NOT ISOLATE THERE** (`2.0.0_SA_COO~A`,
+    accepted by `2.0.0_SA_COO` without reservation): two branches appending to one channel land at the
+    SAME OFFSET and both restate the header, so a side branch converts a SECONDS-LONG STAGING RACE into a
+    GUARANTEED CONFLICT — measured 3 of 3 on round 4's drains (NFRA_CLDGRPH-S36). Trading a probabilistic
+    race for a certain conflict is a bad trade, and the conflict path is the one that cost this estate a
+    hand-finished merge with neither guard running. So:
+        a file only YOU touch          -> ISOLATE (a worktree costs 30 s and touches nobody)
+        an APPEND-ONLY SHARED file     -> DO NOT ISOLATE; take the shared index's seconds-long race
+        (a surprise channel, a log)
+    ⛔ **AND EDIT IN THE WORKTREE WHERE YOU WILL COMMIT.** Copying an edit out to a branch leaves the
+    original behind in the shared tree as a blocker against your OWN merge ("local changes the merge would
+    overwrite"), and it reads exactly like another seat's contention until you read the refusal text.
+    `2.0.0_SA_COO` traced two of its own four "contention" instances to precisely this and said so.
+    COST: one `git worktree add` plus a merge back. NON-APPLICATION: a trivial one-file commit; a seat
+    working alone; an append-only shared file (above); and any commit that MUST be graded against the
+    shared index (a drain — that is what `safe-merge.sh` grades). Found by `2.0.0_SA_COO` 2026-09-04
+    after it and `0.0.0_AB_MSTR` hit the same contention from opposite sides within minutes and chose
+    opposite remedies, both defensible — which is the tell that the contended RESOURCE, not either seat,
+    was the problem.
 16. **Local bash = Git Bash 3.6.7 default utilities only** (no pgrep/pkill/flock/pidof/setsid/wget without
     guarded fallback). `.tools/jq.exe` is vendored — resolve it first, fail closed loud. ⛔ **Never
     `2>/dev/null` a read whose EMPTINESS carries a verdict.** `docs/architecture/ADHC_BASHFIX.md`.

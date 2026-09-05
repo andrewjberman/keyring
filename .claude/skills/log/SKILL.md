@@ -1,6 +1,6 @@
 ---
 name: log
-description: Universal session-log writer — EVERY agent, every tier (lanes included). Writes your canonically-formatted session log per org/ref/SESSION_LOG_STANDARD.md (base template + your role's additions + the archetype tag) for the work since your last log, and commits it under your own author line via safe-commit.sh. Bare `/log` = AD-HOC one-shot, log now. `/log 90m` / `/log [90m]` / `/log 30m` / `/log 2h` = arm a recurring CronCreate loop at that cadence for long-running processes (operator-initiated only — NEVER auto-armed at launch per LD-0175); each tick logs the delta since the previous tick and SKIPS silently (heartbeat only, no noise file) when there is no substantive delta. `/log once` = same as bare. `/log off` = cancel the running /log cron. Compiler Tools section is mandatory in every log (one-sentence why if none were run — blank is not acceptable).
+description: Write your session log per org/ref/SESSION_LOG_STANDARD.md for the work since your last log and commit it under your own author line via safe-commit.sh. Bare `/log` = now; `/log 90m` / `30m` / `2h` = arm a recurring cron (operator-initiated only, never at launch), each tick logging the delta and skipping silently when there is none; `/log off`. The Compiler Tools section is mandatory. Every agent, every tier.
 ---
 
 # /log — canonical session log (ad-hoc or looped)

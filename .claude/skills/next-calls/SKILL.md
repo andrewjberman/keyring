@@ -1,6 +1,6 @@
 ---
 name: next-calls
-description: The HOLISTIC view of /open-calls and /next-steps in one pass -- what decisions wait on Andrew, what steps this seat could take next, and HOW THE TWO SIT AGAINST EACH OTHER: which calls gate which steps, which steps are free, and the recommended SEQUENCE across both (his answers and the seat's acts, interleaved, in order). Every call and every option carries a recommendation; the sequence is itself the top recommendation. Bare `/next-calls` = this seat's live context; `/next-calls <CODE or topic>` = scoped. Zero writes. Any agent.
+description: /open-calls and /next-steps in one pass: the decisions waiting on Andrew, the steps this seat could take, which calls gate which steps, and the recommended interleaved sequence. Every item carries a recommendation. Bare `/next-calls`; `/next-calls <CODE or topic>`. Zero writes. Any agent.
 ---
 
 # /next-calls -- calls and steps together, with the sequence between them

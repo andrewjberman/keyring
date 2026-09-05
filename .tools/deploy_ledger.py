@@ -62,24 +62,30 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-# OUTPUT ENCODING GUARD (0.0.0_AB_MSTR~Z, 2026-09-04). This file already reads every
-# authored ledger with errors="replace" in EIGHT places -- it knows hand-written content
-# carries characters it did not choose. That care stopped at the read: nothing guarded
-# stdout, so `list` CRASHED on this device with UnicodeEncodeError U+26D4 while printing
-# a BYPASS line, on a console whose encoding is cp1252.
-# WHY IT MATTERS MORE THAN A COSMETIC CRASH: the line it died on belongs to the
-# GATE-BYPASS SCAN -- the fix for the false-clean class where a sentinel-only sweep could
-# not see hand-authored markdown ledgers. It died AFTER printing five entries, so the
-# operator sees a plausible-looking listing and never learns the bypass section did not
-# run. A crash that truncates a census reads exactly like a census with nothing to report.
-# FIXED AT THE STREAM, NOT AT THE CALL SITE: the offending character arrives from AUTHORED
-# text and can surface in any print in this file, so patching the one line that happened to
-# fire would leave the identical landmine in every other one.
+# STOP: THIS TOOL READS FILES OTHER SEATS WROTE, AND 167 OF 644 LEDGER SURFACES CARRY NON-ASCII.
+# On Windows with PYTHONIOENCODING/PYTHONUTF8 unset, stdout is cp1252 and printing one of those
+# bytes raises UnicodeEncodeError MID-SWEEP. Measured by 3.0.0_SA_CVO (ESTATE_GOVERNANCE-S3) and
+# reproduced here: `check --red` died after 16 stdout lines on U+26D4 with rc=1.
+# THE DANGEROUS PART IS NOT THE CRASH, IT IS THE EXIT CODE. rc=1 is also this command's HONEST
+# verdict for "red entries exist", so a caller -- /drive chains `check --red` every tick -- cannot
+# tell a verdict from a traceback, and the sweep it thinks completed was TRUNCATED at the first
+# non-ASCII surface. A partial sweep reporting a plausible failure is worse than a loud one.
+# The tool must not die on data it exists to read; this does NOT license new non-ASCII in output
+# (CLAUDE.md still binds -- use OK:/WARN:/ERROR:/SKIP:/BLOCKED:).
+# FOLD-IN from the site-Z rendering of this same fix (0.0.0_AB_MSTR~Z @cecfb9e081), which LOST
+# the pick and is discarded except for these two facts, neither of which is in the text above.
+# (1) THE DIAGNOSIS: this file reads authored ledgers with errors="replace" in EIGHT places -- it
+#     already knew hand-written content carries characters it did not choose -- and guarded its
+#     OUTPUT nowhere. Input hardened, output bare. That asymmetry is why the defect existed.
+# (2) WHY THE STREAM AND NOT THE CALL SITE: the offending character arrives from AUTHORED text and
+#     can surface in ANY print in this 1300-line file, so repairing the one line that happened to
+#     fire would leave the identical landmine in every other one. Do not "fix" a future instance
+#     locally; it is already fixed here.
 for _stream in (sys.stdout, sys.stderr):
     try:
         _stream.reconfigure(encoding="utf-8", errors="replace")
-    except Exception:
-        pass  # not a real stream (piped/captured); the caller's encoding governs
+    except Exception:  # noqa: BLE001 -- older Python, or a stream that cannot be reconfigured
+        pass
 
 WORKSPACE = Path(__file__).resolve().parent.parent
 CM_DIR = WORKSPACE / "org" / "critical_paths" / "change_management"
@@ -186,6 +192,48 @@ def _save(state: dict) -> None:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     _state_path(state["slug"]).write_text(
         json.dumps(state, indent=2), encoding="utf-8")
+
+
+def _stage_open_artifacts(state: dict) -> list:
+    """NFRA_CLDGRPH-S34 (2026-09-04; 2.0.0_SA_COO~A 94170, disarm owner 1.0.0_SA_CTO). THE SENTINEL DIED WITH THE
+    WORKTREE. Under spine v3 a WORKER opens its deploy inside its own worktree; `open` writes the sentinel as a
+    side-effect file that no commit pathspec necessarily names (the worker commits the change_management/*.md, which
+    :726 itself calls a RENDERING of the sentinel); the drain then runs `git worktree remove` and the sentinel is gone.
+    Round 4 lost 2 of 3 that way -- the gate's ONLY input destroyed, leaving the *.md rendering as an UNINDEXED OPEN
+    LEDGER that `check --red`'s sentinel-only scan cannot see (:900 exists to catch exactly that, and did).
+
+    WHAT STAGING BUYS, MEASURED AND NOT OVERSTATED (probe worktree, 2026-09-04): with the sentinel staged,
+    `git worktree remove` REFUSES -- "contains modified or untracked files, use --force to delete it", rc 128 -- and
+    `git worktree remove --force` returns 0 and deletes it anyway. An UNCOMMITTED sentinel already made the worktree
+    dirty before this change, so the round-4 removals that destroyed one were FORCED; staging does not stop a forced
+    removal and this docstring does not claim it does. What it buys is that the sentinel sits in the INDEX rather than
+    among untracked files, so the worker composing its commit and the drain reading `git status` both see it as an
+    added path, and an unforced removal refuses.
+
+    THE HALF THAT ACTUALLY SURVIVES A FORCED REMOVAL is committing the sentinel, and the receipt below names it as a
+    REQUIRED commit pathspec because a worker committing with `--only -- <paths>` takes its pathspec from the ORDER,
+    not from the index -- so the L6 cut naming org/critical_paths/.open_deploys/<slug>.json in the order's <paths>
+    block is the other carrier (2.0.0_SA_COO~A's, offered in 94170 and taken).
+
+    NOT DONE HERE, deliberately: writing the sentinel to the MAIN worktree root (the fix @6bfaa233ed used for the
+    gitignored override-audit log). The sentinel is a TRACKED path, so that would have a worker dirtying the shared
+    tree -- the one thing v3's worktree isolation exists to prevent.
+
+    Best-effort and LOUD: git failing here never fails the open (the ledger's own state is already on disk), but the
+    WARN says so, because a silent staging failure would restore the class this closes. Returns the staged rel paths."""
+    import subprocess
+    rels = [str(_state_path(state["slug"]).relative_to(WORKSPACE)).replace("\\", "/"), state["entry_path"]]
+    try:
+        r = subprocess.run(["git", "add", "--"] + rels, cwd=str(WORKSPACE), capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=30)
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: could not stage the ledger artifacts ({type(exc).__name__}: {exc}) -- commit them by hand: "
+              f"{' '.join(rels)}", file=sys.stderr)
+        return rels
+    if r.returncode != 0:
+        print(f"WARN: git add returned {r.returncode} for the ledger artifacts ({r.stderr.strip()[:160]}) -- "
+              f"commit them by hand: {' '.join(rels)}", file=sys.stderr)
+    return rels
 
 
 def _render_entry(state: dict) -> str:
@@ -347,9 +395,17 @@ def cmd_open(args) -> int:
     }
     _save(state)
     _write_entry(state)
+    staged = _stage_open_artifacts(state)
     print(f"OK: OPENED deploy ledger '{args.slug}' ({len(legs)} legs) -> {entry_rel}")
     for leg in legs:
         print(f"  OPEN {leg['id']} [{leg['kind']}] {leg['target']}")
+    # S34: the sentinel is the gate's ONLY input and dies with a worktree that never commits it.
+    print("  REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and\n"
+          "  a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger):")
+    for s in staged:
+        print(f"    {s}")
+    print("  (both are STAGED, so an UNFORCED `git worktree remove` refuses; a FORCED one still deletes them --\n"
+          "   committing them is what survives the drain)")
     return 0
 
 

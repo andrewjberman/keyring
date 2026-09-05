@@ -98,6 +98,7 @@ def _boto(svc, region="us-east-1"):
 TFSTATE_BUCKET = "opal-313476888478-terraform-state"
 _TFSTATE_CACHE = {}
 _S3_SUBCFG_CACHE = {}   # WAVE-4: per-bucket lifecycle/cors/website cache (live_s3 called repeatedly)
+_S3_NOTIFICATION_CACHE = {}  # per-build READ / UNREADABLE notification result; never collapse failure to zero
 
 def _load_all_tfstate():
     """Discover + read every root-module state from S3. Returns the union of
@@ -197,6 +198,150 @@ def _hcl_declared(resource_types):
                                  "tf_type": rt, "tf_kind": "hcl-config"}
     return out
 
+
+def _read_s3_notification_configuration(client, bucket):
+    """Read one bucket notification configuration with an explicit two-state result.
+
+    A missing configuration is a successful READ whose three configuration arrays are
+    empty.  An exception is UNREADABLE and carries no configuration object at all.  The
+    distinction is cached because live_s3() and derive_edges() share this read during a
+    full build.
+    """
+    if bucket in _S3_NOTIFICATION_CACHE:
+        return _S3_NOTIFICATION_CACHE[bucket]
+    try:
+        configuration = client.get_bucket_notification_configuration(Bucket=bucket)
+        result = {"state": "READ", "configuration": configuration, "error": None}
+    except Exception as exc:  # the error is data; never turn it into an empty configuration
+        result = {
+            "state": "UNREADABLE",
+            "configuration": None,
+            "error": f"{type(exc).__name__}: {exc}",
+        }
+    _S3_NOTIFICATION_CACHE[bucket] = result
+    return result
+
+
+def _s3_notification_read_summary():
+    read = sorted(k for k, v in _S3_NOTIFICATION_CACHE.items() if v["state"] == "READ")
+    unreadable = sorted(k for k, v in _S3_NOTIFICATION_CACHE.items() if v["state"] == "UNREADABLE")
+    return {
+        "buckets_read": len(read),
+        "buckets_unreadable": len(unreadable),
+        "unreadable_buckets": unreadable,
+    }
+
+
+def _print_s3_notification_read_summary():
+    summary = _s3_notification_read_summary()
+    names = ",".join(summary["unreadable_buckets"]) or "none"
+    print("  s3 notifications buckets read=%d / buckets unreadable=%d; unreadable=%s" % (
+        summary["buckets_read"], summary["buckets_unreadable"], names))
+
+
+def _declared_s3_lambda_notifications():
+    """Resolved Lambda targets from Terraform's declared-side state union.
+
+    _load_all_tfstate() is this compiler's canonical terraform-show-equivalent plane:
+    it retains the source module/resource while providing resolved bucket names and
+    Lambda ARNs that raw HCL expressions cannot supply reliably.
+    """
+    rows = []
+    for resource in _load_all_tfstate():
+        if resource.get("type") != "aws_s3_bucket_notification":
+            continue
+        attrs = resource.get("attrs") or {}
+        bucket = attrs.get("bucket") or resource.get("id") or resource.get("name")
+        if not bucket:
+            continue
+        provenance = {
+            "tf_module": resource.get("module"),
+            "tf_resource": "aws_s3_bucket_notification.%s" % resource.get("tf_name"),
+            "tf_kind": resource.get("tf_kind", "managed"),
+        }
+        for configuration in attrs.get("lambda_function") or []:
+            target = configuration.get("lambda_function_arn")
+            if not target:
+                continue
+            rows.append({
+                "bucket": bucket,
+                "target": target,
+                "configuration_id": configuration.get("id"),
+                "events": configuration.get("events") or [],
+                "filter_prefix": configuration.get("filter_prefix"),
+                "filter_suffix": configuration.get("filter_suffix"),
+                "provenance": provenance,
+            })
+    return rows
+
+
+def _derive_s3_lambda_trigger_edges(client, s3_nodes, declared=None):
+    """Merge live and Terraform-declared S3->Lambda trigger observations.
+
+    Provenance is exactly live / declared / both.  A successful live read can
+    disagree with Terraform; an UNREADABLE live read stays unknown and leaves the
+    declared edge standing instead of manufacturing a zero.
+    """
+    observations = {}
+    live_states = {}
+
+    def observation(bucket, target):
+        return observations.setdefault((bucket, target), {
+            "live": [], "declared": [], "declared_provenance": [],
+        })
+
+    for node in s3_nodes:
+        bucket = node["id"]
+        result = _read_s3_notification_configuration(client, bucket)
+        live_states[bucket] = result["state"]
+        if result["state"] != "READ":
+            continue
+        for configuration in (result["configuration"] or {}).get("LambdaFunctionConfigurations", []):
+            target = configuration.get("LambdaFunctionArn")
+            if target:
+                observation(bucket, target)["live"].append(configuration)
+
+    declared_rows = _declared_s3_lambda_notifications() if declared is None else declared
+    for row in declared_rows:
+        bucket, target = row.get("bucket"), row.get("target")
+        if not (bucket and target):
+            continue
+        item = observation(bucket, target)
+        item["declared"].append({
+            "configuration_id": row.get("configuration_id"),
+            "events": row.get("events") or [],
+            "filter_prefix": row.get("filter_prefix"),
+            "filter_suffix": row.get("filter_suffix"),
+        })
+        if row.get("provenance") and row["provenance"] not in item["declared_provenance"]:
+            item["declared_provenance"].append(row["provenance"])
+
+    edges = []
+    for (bucket, target), item in sorted(observations.items()):
+        live_present, declared_present = bool(item["live"]), bool(item["declared"])
+        provenance = "both" if live_present and declared_present else ("live" if live_present else "declared")
+        read_state = live_states.get(bucket, "NOT_LISTED")
+        if live_present and declared_present:
+            disagreement = "NONE"
+        elif live_present:
+            disagreement = "LIVE_ONLY"
+        elif read_state == "UNREADABLE":
+            disagreement = "UNKNOWN_LIVE_UNREADABLE"
+        else:
+            disagreement = "DECLARED_ONLY"
+        edges.append({
+            "source": f"arn:aws:s3:::{bucket}",
+            "target": target,
+            "edge_type": "TRIGGERS",
+            "provenance": provenance,
+            "live_read_state": read_state,
+            "source_disagreement": disagreement,
+            "live_configuration_count": len(item["live"]),
+            "declared_configuration_count": len(item["declared"]),
+            "declared_provenance": item["declared_provenance"],
+        })
+    return edges
+
 def dual_managed():
     """Resources whose ARN is 'managed' in >1 root-module state -- a DUAL-MANAGEMENT
     conflict (both modules' applies fight over the same resource; an attribute can
@@ -269,16 +414,19 @@ def live_s3():
             node["has_policy"] = True
         except Exception:
             node["has_policy"] = False
-        try:
-            nc = c.get_bucket_notification_configuration(Bucket=name)
+        notification = _read_s3_notification_configuration(c, name)
+        node["notification_read_state"] = notification["state"]
+        node["notification_read_error"] = notification["error"]
+        if notification["state"] == "READ":
+            nc = notification["configuration"]
             node["event_notifications"] = len(nc.get("LambdaFunctionConfigurations", []))
             # WAVE-4 node-typing depth: full notification target census (not just Lambda)
             node["notify_sns"] = len(nc.get("TopicConfigurations", []))
             node["notify_sqs"] = len(nc.get("QueueConfigurations", []))
-        except Exception:
-            node["event_notifications"] = 0
-            node["notify_sns"] = 0
-            node["notify_sqs"] = 0
+        else:
+            node["event_notifications"] = None
+            node["notify_sns"] = None
+            node["notify_sqs"] = None
         # WAVE-4 node-typing depth: lifecycle / CORS / website sub-configs (S3 typing gap),
         # cached per bucket -- live_s3 is called several times per derive; bound to once/bucket.
         sub = _S3_SUBCFG_CACHE.get(name)
@@ -1436,15 +1584,11 @@ def derive_edges():
                 E(esm["FunctionArn"], onf, "DEAD_LETTERS_TO")
     except Exception:
         pass
-    # S3_BUCKET -[NOTIFIES]-> LAMBDA
+    # S3_BUCKET -[TRIGGERS]-> LAMBDA, merged from live reads and Terraform declarations.
+    # A failed live read remains UNREADABLE; declared edges survive with that state visible.
     s3c = _boto("s3")
-    for n in live_s3():
-        try:
-            nc = s3c.get_bucket_notification_configuration(Bucket=n["id"])
-            for lf in nc.get("LambdaFunctionConfigurations", []):
-                E(f"arn:aws:s3:::{n['id']}", lf["LambdaFunctionArn"], "TRIGGERS")
-        except Exception:
-            pass
+    _s3_nodes = live_s3()
+    edges.extend(_derive_s3_lambda_trigger_edges(s3c, _s3_nodes))
     # S3_BUCKET -[HAS_POLICY]-> S3_BUCKET_POLICY -[GRANTS]-> principal
     for p in live_s3_policies():
         barn = f"arn:aws:s3:::{p['bucket']}"
@@ -1676,11 +1820,11 @@ def derive_edges():
         pass
 
     # S3_BUCKET -[NOTIFIES]-> SNS_TOPIC | SQS_QUEUE (cert modeled only S3->Lambda NOTIFIES)
-    for n in live_s3():
-        try:
-            nc = s3c.get_bucket_notification_configuration(Bucket=n["id"])
-        except Exception:
+    for n in _s3_nodes:
+        notification = _read_s3_notification_configuration(s3c, n["id"])
+        if notification["state"] != "READ":
             continue
+        nc = notification["configuration"]
         barn = f"arn:aws:s3:::{n['id']}"
         for tc in nc.get("TopicConfigurations", []):
             if tc.get("TopicArn") in _sns_arns:
@@ -2576,6 +2720,10 @@ def cmd_derive(args):
     the nightly DOES persist, and a "NOT PERSISTED" banner printed here would write a
     falsehood into the nightly's log.
     """
+    # One invocation is one read denominator. Repeated live_s3()/derive_edges() calls
+    # share this cache, but a later in-process build must measure the world again.
+    _S3_NOTIFICATION_CACHE.clear()
+
     # Bounded derive: --resource <arn> restricts to just that class (NFRA_GLOBGRPH Item-2b)
     resource_arn = getattr(args, "resource", None)
     if resource_arn:
@@ -2657,6 +2805,8 @@ def cmd_derive(args):
         why = "--class given" if args.cls else "--no-edges given"
         print(f"  edges        NOT COMPUTED ({why}) -- this graph carries 0 relationships.")
         print("               Edge derivation is a whole-account pass; run a full derive for edges.")
+    graph["meta"]["s3_notification_reads"] = _s3_notification_read_summary()
+    _print_s3_notification_read_summary()
     # AC-GRAIN refuse-to-emit (NFRA_GRAPHS D5): a full derive must not emit a
     # wrong-grain graph (e.g. an S3 object-key minted as an S3_BUCKET). Identity-
     # format bar only (no baseline here -> no magnitude false-fire); structurally

@@ -160,6 +160,20 @@ has never reaped or it never writes the line, **and those are byte-identical in 
 
 ---
 
+## §4a — The liveness-oracle block, moved whole from the skill (LD-0530, 2026-09-03; same wording)
+
+> ### ⚠ EVERY LIVENESS DETECTOR HERE HAS BEEN WRONG AT LEAST ONCE. **Two signals agreeing convict. One absence convicts nothing.**
+> - **Telemetry has BLACKOUT WINDOWS.** `0 work-calls` **only opens an inquiry** — never convicts. Corroborate with a telemetry-independent writer (commits).
+> - **`u` (undelivered) and `w` (watcher `ps` count) are BANNED as delivery oracles, jointly and severally.** A single orphaned watcher sets both green — it *drains* the inbox (`u==0`) while its agent is deaf. **A fully deaf agent produces the strongest possible REACHABLE verdict.**
+> - **A file in `read/` observes the WATCHER, not the AGENT.** `mv` preserves mtime, so no artifact on disk can date a delivery.
+> - **`channel push` measures `liveness.json`, not deafness.** `pushed=False` is a fact about the SENDER. Never report it as a recipient verdict.
+> - **`ps -ef | grep …` needs `grep -v grep`** (it matches itself) and **cannot see detached native-Windows processes.** MSYS `ps -p 1` returns zero rows, so a healthy `ppid=1` wrapper reads as an orphan.
+> - **The only sound oracle is something only a live consumer can produce: an agent-side ACK.** It does not exist yet.
+>
+> **Do NOT run `/watcher rearm`** — `TaskStop` does not reap the grandchild, so the repair procedure *generates* the orphan it is meant to clear. **REAP BEFORE RESPAWN.**
+> **Do NOT "clean up" `flat_orphans`** — they are the only evidence the dispatch path is broken.
+> → `DRIVE.md §4`
+
 ## §5 — Verification discipline (the rules that cost the most to learn)
 
 - **Substantive-tick logging (Andrew-direct 2026-08-27 ~22:1xZ at the COO terminal, verbatim: "we

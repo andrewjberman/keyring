@@ -1,6 +1,6 @@
 ---
 name: git-pull
-description: Keep this workspace checkout current with the shared remote by RE-PULLING on a cadence. Bare `/git-pull` arms a 15-minute in-session loop that fetches `origin/<current-branch>` and fast-forwards to it (`merge --ff-only`) — NEVER a rebase, NEVER a messy auto-merge; it stays silent on no-ops and notifies only when it advances HEAD or hits a blocker (auth failure / non-fast-forward needing reconcile). `/git-pull 5m` / `30m` / `1h` / `90s` set a different cadence; `/git-pull once` does a single pull now (no loop); `/git-pull status` reports the loop + HEAD-vs-origin; `/git-pull off` / `stop` cancels the running loop. Runs as a background Monitor (no agent-turn cost per tick) and is IN-SESSION (dies with the session / on reboot — re-arm next session). Use when asked to "keep pulling", "stay current with the repo", "auto-pull", or to start/stop the repull loop.
+description: Keep this checkout current with the remote on a cadence: bare `/git-pull` arms a 15-minute in-session Monitor that fetches and fast-forwards (never rebases, never auto-merges), notifying only on an advance or a blocker. `/git-pull 5m|30m|1h|90s`; `/git-pull once`; `/git-pull status`; `/git-pull off`. In-session only (re-arm after a restart). At MSTR launch `/integrate` absorbs this step.
 ---
 
 # /git-pull — recurring fast-forward pull of the shared checkout

@@ -5,7 +5,7 @@ Substrate/Tooling."*) · **Fabric:** laptop (D11 placement row; membership and f
 D8 precedent) · **dep_stage:** PRD
 **Author (draft; step-3 input @`86a5538003`):** `3.0.0_SA_CVO` (the Andrew-designated comp-tool lane @`98b1a59907`; NOT the driver from L4 on — Andrew-direct at the CVO terminal 2026-09-03 ~02:1xZ, VERBATIM *"you are not going to be driving this, we are doing canonical order flow"*, record @`96af269f47`; the canonical roles are the Limb-check record @`9a4d508ae5`: L2–L4 CTO only, L5–L6 COO only, CVO first engaged at L8) · **L4 owner:** `1.0.0_SA_CTO` · **Executor:** `0.8.0_AE_CloudComp`
 (Andrew-direct @`1bb6769055`) · **Sequencer:** `2.0.0_SA_COO` · **PRD gate:** `1.0.0_SA_CTO` · **Register owner:** `0.0.0_AB_MSTR`
-**Version:** v0.4, 2026-09-03 (v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ; **v0.4 = the two STAGE-0 decisions landed at L4 on the L4 owner's authority after 2.0.0_SA_COO withdrew TO-CE-DISC-2 and TO-CE-TP-1 (92927, Andrew-direct ~02:2xZ *"Only tier2 agents are workers"*): s.4.3's four answer-state spellings RATIFIED AS DATA in `org/standards/COMPTOOL_ANSWER_STATE.enum.json` + s.4.7's "until ratified" clause closed + the NOT_APPLICABLE finding; s.4.4 carries RULE T's FORM (input 3.0.0_SA_CVO 92932, two amendments); the roles line above**) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
+**Version:** v0.8, 2026-09-04 (**v0.8 = FWD-5's written answers landed as s.5a from CE-q-1 @22388f7195 -- the CVO's text, the CTO's version, on Andrew's "a" (the project closes on its CVO limbs) and the round-6 analysis @de9a194c7b; no outcome, ruling or manifest row changed. v0.7 = s.7 rows G-2 and G-3 CARRIED to `NFRA_CLDGRPH`'s cells CG-s-8 / CG-s-9 / CG-x-7 on the L5 owner's tick-7 call -- the sibling's port retires the very surface these cells would bound, so an order here would be a second writer on an engine being ported (the S15 precedent); FWD-7's ask keeps an owner, which is its `DONE WHEN APPLIED` bar; no FWD changed**; v0.6 = the second L2 re-entry, on the round-5 `SCOPE_CHANGE` route S17 (3.0.0_SA_CVO stamp @b5d228fe62), adjudicated by the L4 owner -- record `CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260903T1535Z.md`: R-4's condition measured NOT MET, comp-trace NOT retired, T-19 CLOSED NOT-RETIRED, the three carryable flags into blast under CE-t-6; s.6 R-4 and s.7 T-19 corrected; no FWD changed**; v0.5 = the L2 re-entry on the round-4 `SCOPE_CHANGE` route S14 (3.0.0_SA_CVO stamp @153522a509), adjudicated by the L4 owner under spine v2.3 -- record `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260903T0930Z.md`: FWD-10 appended (a verdict-bearing tool never returns its clean verdict from a partial run), s.4.4 gains the `verdict-bearing` row of Rule T's form, s.4.3 gains the distinguishability GRAIN sentence (T-7 F2)**; v0.4 = the two STAGE-0 decisions; v0.2 landed at the tree home @e906c6f156 -- L4; v0.3 = 3.0.0_SA_CVO's four L4-read deltas D1-D4 + the AC reading rule, 00:3xZ; **v0.4 = the two STAGE-0 decisions landed at L4 on the L4 owner's authority after 2.0.0_SA_COO withdrew TO-CE-DISC-2 and TO-CE-TP-1 (92927, Andrew-direct ~02:2xZ *"Only tier2 agents are workers"*): s.4.3's four answer-state spellings RATIFIED AS DATA in `org/standards/COMPTOOL_ANSWER_STATE.enum.json` + s.4.7's "until ratified" clause closed + the NOT_APPLICABLE finding; s.4.4 carries RULE T's FORM (input 3.0.0_SA_CVO 92932, two amendments); the roles line above**) · **Vintage of every measurement below:** repo HEAD `f90ab3936b` unless a cell pins otherwise
 **archetype:** IMPLEMENT (spec) / VALIDATE (rows)
 
 ```json
@@ -14,7 +14,7 @@ D8 precedent) · **dep_stage:** PRD
   "project": "NFRA_COMPEFFICACY",
   "directive": "D11",
   "fabric": "laptop",
-  "prd_version": "v0.4",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20260902_1715Z_COMPTOOL_EFFICACY_PROJECT.md@f90ab3936b",
   "endpoint_outcomes": [
@@ -26,7 +26,8 @@ D8 precedent) · **dep_stage:** PRD
     "FWD-6",
     "FWD-7",
     "FWD-8",
-    "FWD-9"
+    "FWD-9",
+    "FWD-10"
   ],
   "status": "RATIFIED"
 }
@@ -153,6 +154,23 @@ retired"* (condition met — §7 row T-19).
                     incompleteness was found in 3.0.0_SA_CVO's draft card FWD-6 (below, AC-6) at L4 --
                     RIGHT AND INCOMPLETE, so a NEW id at the next unused number (skill F0 rule), never
                     a renumbering
+
+  FWD-10 A tool whose exit code is its verdict never returns the clean verdict from a partial run:
+         at budget expiry it says so in its own voice and exits in a way no reader can mistake for
+         clean, and it tells the reader where to resume
+         DONE WHEN  EXERCISED -- a budget-cut sweep of a verdict-bearing tool has been read by an
+                    rc-only consumer (a hook, a script, an `&&`) as NOT clean, and its resume cursor
+                    has been followed to completion
+         ACCEPT     for every marquis tool whose rc carries a verdict (a gate, a deny-test, a check):
+                    at BUDGET REACHED the line prints as Rule T requires AND the rc is a non-clean value
+                    distinct from both the clean verdict and the failing one, carrying the
+                    PARTIAL_OR_BLIND state in the tool's voice (`NOT-DECIDABLE`); a consumer that reads
+                    only the rc cannot read a prefix as CLEAN; the cursor resumes as in s.4.4
+         SOURCE     brief :31 "complete efficacy with all of these functions" (a gate that reports CLEAN on
+                    a sweep it did not finish has no efficacy); found at L7 by the comp-dataflow cell as
+                    NFRA_COMPEFFICACY-S14 and routed SCOPE_CHANGE (REQUIRES_UNNAMED_OUTCOME) at the
+                    round-4 L10 stamp; adjudicated at L2 by the L4 owner (CTO_ADJUDICATION record) --
+                    RIGHT AND INCOMPLETE, a NEW id at the next unused number, never a renumbering
 ```
 
 
@@ -388,7 +406,10 @@ For each tool, CloudComp plants one case per state and records what the tool pri
   NOT_APPLICABLE               the question does not apply to this subject/tool
 ```
 **PASS** = four cases, four distinguishable outputs. **FAIL** = any two states print alike. This is FWD-2 and it is
-the load-bearing test of the project. **RATIFIED AS DATA (v0.4, L4, `1.0.0_SA_CTO`): the four state names above ARE the
+the load-bearing test of the project. **GRAIN (v0.5, T-7 F2, CTO adjudication):** distinguishability is judged within
+ONE invocation's output by the STATE TOKEN in the tool's own voice; two subcommands answering two questions may share an
+rc, but each must print which of the four states it is -- a bare REFUSE shape whose state is carried only by the echoed
+argument is FAIL on the token, not on the rc. **RATIFIED AS DATA (v0.4, L4, `1.0.0_SA_CTO`): the four state names above ARE the
 spellings — `org/standards/COMPTOOL_ANSWER_STATE.enum.json`, exactly one per state; the keys of every deliverable's
 `answer_state` block are compared against that file (T-16 @`d101d4fe20` already conforms, 4 of 4), and a key outside it
 is a non-conforming deliverable (s.4). Where a LIVE carrier prints a state in a tool's own voice the file ADOPTS that
@@ -433,6 +454,12 @@ history, this section is the ONE carrier):**
                   "BUDGET REACHED: <S> s (<source>); scanned <n> of <N> <unit>; results are a PREFIX, not the
                    answer; resume: <tool> <args> --cursor <last-unit>"
   on completion   "WITHIN BUDGET: scanned <N> of <N> <unit>; budget: <S> s (<source>), used <t> s"
+  verdict-bearing (v0.5, FWD-10, S14) a tool whose rc IS its verdict -- a gate, a deny-test, a check -- prints the
+                  BUDGET REACHED line exactly as above and returns a NON-CLEAN rc distinct from both the clean
+                  verdict and the failing one, carrying PARTIAL_OR_BLIND in its own voice ("NOT-DECIDABLE", the
+                  enum's tool-voice token; iam_cli.py returns it as rc 2 today); the "rc stays 0" clause above
+                  governs every NON-verdict tool and nothing else; the cursor is unchanged. A verdict-bearing tool
+                  that returns its clean rc at expiry FAILS Rule T whatever its line says.
   cursor          the last FULLY processed unit in the tool's DETERMINISTIC scan order; --cursor resumes after
                   it; the union of runs reaches N (size-invariant by construction -- Rule P along time)
   subprocesses    every timeout= derives from remaining(); a call that would outlive the budget is DEFERRED in
@@ -572,6 +599,26 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
 
 ---
 
+## 5a. His seven questions, answered in writing (FWD-5 -- CE-q-1: `3.0.0_SA_CVO` authors, `1.0.0_SA_CTO` lands)
+
+The CVO's text from `../deliverables/3.0.0_SA_CVO/CE-q-1.seven-answers.md` @22388f7195, landed here unchanged at v0.8 as the
+written answers FWD-5 names ("each question has a written answer he can dispute"). Each answer points at the s.7 row and the
+proof-of-spec instance that measured it; every instance was re-validated by the CVO with the author read from git. What the
+answers do not decide: the marquis list (s.5, his), any retirement (T-11, T-13 -- candidates surfaced; his and the CTO's), and
+CE-g-4 (HELD, `CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260904T0715Z.md`). R-4 in s.6 is the same answer to question 4 in ruling form.
+
+| # | His question | The answer | Row |
+|---|---|---|---|
+| 1 | **How is comp-platinum defined; what coverage universe?** | A composite: portal component dataflow -> routing table -> firm gold DAG (transform + routes + pipescript), page-first. Universe: **22 component files under `portal/src/pages`**, named by stem (four `index` stems collide and are disclosed as a limitation). One `--budget` carrier over the three legs; `page FactorTilts --budget 0` traced 3 of 3 components in 3.2 s at the issuer's FWD-9. Honest state: two of four boundary modes and the executable red-mutant arms are unbuilt (T24-AC2, AC5 disclosed as UNCOMPUTABLE-BY-CONSTRUCTION in the instance). | T-24 @`3052545c56` (0.8.0_AE_CloudComp~L), `comp-platinum.result.md` |
+| 2 | **What does comp-system do?** | It compiles repository-local cross-surface evidence into `infra/system/06_current_state.{md,json}` -- the SYSTEM home's dynamic half (584 runs). `--check` is the auto-refresh verdict surface (rc 0 current / 2 / 1; `--check --budget` prints BUDGET REACHED, rc 3). Its invariant is no fabrication: an unreadable required source is named, the compile reads NOT-DECIDABLE with `compile_complete=false`, and no complete record is written on a partial. It is not a monitor and not a report; it is the compiler of one file pair. | T-21 @`82b73ff68f` (0.8.0_AE_CloudComp~N), `comp-system.result.md` |
+| 3 | **Is comp-cache the same thing as comp-platinum?** | **No.** comp-cache is React Query cache-key analysis across `portal/src` (415 of 415 files scanned, 118 useQuery call sites captured) -- a portal-local grain: shared keys, collisions, type mismatches. comp-platinum is the portal-page -> gold-script plane. Different corpus, different question; the deliverable names the two planes apart. | T-23 (0.8.0_AE_CloudComp~J), `comp-cache.result.md` |
+| 4 | **Is comp-trace just dataflow?** (and, the R-4 form: just a subset of blast?) | **No, on both.** Not dataflow: comp-dataflow answers origin / gate questions over pipeline data lineage with a verdict-bearing rc; comp-trace walks the code graph from a file or symbol. Not a subset of blast: measured two ways (S17, PRD v0.6 R-4) -- trace carries `--exact`, `--all` and the direction spellings that blast rejects (rc 1), and blast resolves only 38.6% of trace's own node ids (58.2% under the most generous mapping). R-4's condition failed, so its conditional ruling did not fire: comp-trace is **kept**, T-19 closed NOT-RETIRED, and the three carryable flags moved into blast under CE-t-6. (The decomp's cell text still reads "it is a subset of BLAST" -- that is the superseded v0.4 line-range read; this answer follows the measurement.) | T-19 WITHDRAWN / NOT-RETIRED; S17 @`a140eed779`; CE-t-6 @`dad11b5207` |
+| 5 | **Is comp-denytest needed?** | It **works** (four exact answer states; a conditioned-grant false deny is deferred as NOT-DECIDABLE rc 2 rather than reported as a verdict; the AWS subprocess is Rule-T bound; battery 4 of 4) and it is **barely used**: 2 runs in 30 days, 8 ever; a zero population when no IAM change is in the plan is correct behaviour, not disuse. It is the only tool that derives the *expected* verdict from an IAM change type. **REC: keep**, as the gate-side check an IAM change runs, not a daily tool; its retirement is surfaced as a candidate on usage and the decision is yours. | T-11 @`7c2dbf6611` (0.8.0_AE_CloudComp~E), `comp-denytest.result.md` |
+| 6 | **Does comp-similar supplant the three roll-ups (dups, drift, similar)?** | **No.** comp-similar compares *purpose summaries* (1,871 ARN resources; 1,514 with a summary, 357 UNKNOWN-thin) and joins heat; comp-dups compares *names and bodies* -- its own engine by CTO ruling 3, 0 runs ever, a RETIRE-candidate whose disposition is the CTO's; comp-drift is *propagation* across seam engines (13 topology bindings, 15 sweep units), not function. The overlap with similar is by name only. | T-12 @`685023581d` (~F); T-13 (CTO, record); T-14 @`9334701e71` (~G) |
+| 7 | **What do comp-pulse and comp-heat do, and do they work?** | **comp-pulse** is the pre-commit risk reflex: 8,359 of 8,364 runs were the commit hook's `diff`, 5 by hand; it scores a proposed file set against the danger map before commit. It works (issuer FWD-9: rc 0, PRESENT_WITH_ZERO_RESULTS, a 1,906-node denominator) and it is a hook, not a morning read. **comp-heat** is a five-subcommand freshness / drift / score CLI over one git-history snapshot; it works as a CLI (four answer states, battery 2 tests / 8 subtests) and **is used by nothing**: 0 CLI runs, its only library consumer (`comp-similar.load_heat_live`) returned `{}` before reaching it (S29), the daily-report wiring @`09355b6d93` invokes it from nowhere. One grade against it stands in this round: T20-AC4 **FAIL** -- `comp-heat freshness` with no path scores the whole repo and accepts no `--budget` (adjudication C-S5). | T-18 @`cd5e84ae2f` (~M); T-20 @`4e96cfba07` (~I) |
+
+---
+
 ## 6. Rulings that BIND
 - **R-1 (Andrew, 16:53Z):** team with CVO base; delegation-parallelised. Lane ownership unchanged (three seats
   concurred: 92605/92607/92611).
@@ -579,8 +626,14 @@ Cite `NFRA_PASSCRAFT_PRD.md` §3a/3b; do not restate the taxonomy in the deliver
 - **R-3 (Andrew, 2026-07-17, KUZUSPLIT O-3) vs (Andrew, 2026-09-02, "consolidate"):** same engine, two words on
   the CLI surface. **HELD at Andrew** — reconciliation options put to him via `/open-calls` CALL 1. No kuzu wrapper
   moves until his word.
-- **R-4 (Andrew, 2026-09-02):** *"comp-trace ... if so it should be retired."* Condition MET (trace ⊂ blast at
-  `cli.py:1478-1530`). Executable as row T-19 on the s.7 evidence.
+- **R-4 (Andrew, 2026-09-02):** *"comp-trace ... if so it should be retired."* **Condition NOT MET (v0.6, CTO
+  adjudication `CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260903T1535Z.md`, on S17 @a140eed779):** the v0.4 note "Condition
+  MET (trace ⊂ blast at `cli.py:1478-1530`)" was the L4 owner's line-range read taken as a measurement; the lane
+  measured two ways -- at the flag grain trace carries `--exact`, `--all` and the direction spellings that blast rejects
+  (rc 1), and at the traversal grain the two tools answer over different graphs (blast resolves 38.6% of trace's own
+  node ids; 58.2% under the most generous mapping). A conditional ruling whose condition fails does not fire:
+  **comp-trace is NOT retired; T-19 closes NOT-RETIRED**; the three carryable flags enter blast under CE-t-6; the
+  universe axis is the graph engine's (NFRA_CLDGRPH). This IS the written answer to his question for FWD-5.
 - **R-5 (CTO arch-gate ruling 3, 2026-07-19):** comp-dups is its own tool, not a comp-similar mode. Disposition of
   comp-dups (0 runs ever) is CTO's.
 - **R-6 (CLAUDE.md Rule 21, Andrew-direct 2026-08-28):** comp-find/comp-read are the rail. Their batteries and
@@ -617,15 +670,15 @@ the engine's owner if not CloudComp.** Usage = 30d, both instruments, at `f90ab3
 | T-16 | FWD-2, FWD-3, FWD-4, FWD-9 | `comp-adversary` → `.tools/comp-adversary` (Python, 526) | measured | 0 runs.jsonl/30d; gate-ENFORCED at `to-pipeline-gate.py:45`; **THREE surfaces (CloudComp 92718): TOOL — `:49` COMMIT_RE backtick + zero-pin guard @`a9dc767e34` ON origin (graded by this seat 15:29Z), digest-basis declaration @`8ed23144cb` ON origin; BATTERY — pass 1 @`e66d5e698d` ON origin (collector lives; 135 s import — PARTIAL), pass 2 @`03cf4d17a` **LOCAL** — P0.1 CLEARED at this seat 2026-09-02 19:3xZ by exercise: `--collect-only` → 1 collected in 0.07 s (2 s wall); module level now constants only, both `compose` calls inside functions (`:94`, `:142`); 1 file touched (+116/-85), production untouched; production MUTANT via `COMP_ADVERSARY_TOOL` temp copy → pytest FAIL on a real arm (1 of 7, rc 1) — the battery discriminates the TOOL, not just the runner** | CloudComp | audit+fix | — | CVO~A P0.1 **MET** | P0.1 limbs all met → RC5 may close (~A's call; CTO gate). **CLEARED @`bbba0db0e9`** (3.0.0_SA_CVO 92842, 2026-09-03 00:2xZ: the s.4 deliverable landed and both re-measurements met on CVO's own run; the row closes on AC-2 per the reading rule under the re-pointing table); **Unit-1 gap CLOSED — unit 3a @`4c3b848c97` ON origin: `comp_log_auto` 0→2; exercised at this seat, one `compose` → exactly one runs.jsonl row (serial, rc, args_head); the third traffic-feed blind spot is gone.** `--json` = native L0a form (ruled 92527), separate row |
 | T-17 | FWD-2, FWD-3, FWD-4, FWD-7 | `comp-estate` → `org/modules/graph/opal_estate_infrastructure.py` | measured | 281 runs; `<name>`/`--list`/`--resource` | CloudComp | audit | T-22 | 4.2 | his word: *"need to lock in C(N) ontology for this to actually be useful"* — C(N) is `NFRA_C3MATERIALIZE` (D11 sibling); depends_on, not owns |
 | T-18 | FWD-2, FWD-3, FWD-4 | `comp-pulse` → `org/modules/graph/comp_pulse.py` (707) | measured | **8,364 runs, 8,359 = `diff` from the commit hook; 5 by hand**; L2 traffic source = runs.jsonl | CloudComp | audit | T-1,T-2 | 4.2 | it is a HOOK, not a morning read; its traffic was blind to T-1/T-2 until unit 1 — re-measure after |
-| T-19 | FWD-4, FWD-5, FWD-8 | `comp-trace` → `org/modules/graph/cli.py trace` | measured | 45 runs; **strict subset of blast** (`cli.py:1478-1530`) | CloudComp | retire | T-6 | R-4 | his conditional ruling, condition met; redirect 45 callers (`0.7.0_AE_CloudOps~F` 18, `~D` 14, CVO 11) to `comp-blast`; **not platinum** |
+| T-19 | FWD-4, FWD-5, FWD-8 | `comp-trace` → `org/modules/graph/cli.py trace` | measured (v0.6: two instruments, S17) | 45 runs; **NOT a subset of blast** -- flags `--exact`/`--all`/direction spellings blast rejects; blast resolves 38.6% of trace's node ids (58.2% best mapping) | CloudComp | **keep -- CLOSED NOT-RETIRED** | T-6 | R-4 | his conditional ruling, **condition NOT MET**; the three carryable flags move into blast under CE-t-6; the universe axis is NFRA_CLDGRPH's; the 45 callers keep comp-trace; **not platinum** |
 | T-20 | FWD-2, FWD-3, FWD-4 | `comp-heat` → `.tools/comp-heat` (377) | measured | 0 CLI runs; library consumer = comp-similar `load_heat_live()`; named in the estate-report runner's docstring, **invoked by nothing** | CloudComp | audit | — | 4.2 | his interest; "delivered/described better" — the disclosure fields ARE that; wiring into the daily report is `@09355b6d93`'s, not this row's |
 | T-21 | FWD-2, FWD-3, FWD-4 | `comp-system` → `org/modules/graph/comp_system.py` (1751) | measured | 584 runs; compiles `infra/system/06_current_state.{md,json}`; `--check` 0/2/1; self-test carries the no-fabrication invariant | CloudComp | audit | — | 4.2 | his ask: "understand what this one does" — the deliverable's purpose_1line + 4.2 answer it; it regenerated on unit 1's commit (side effect, not a scope widening) |
 | T-22 | FWD-4, FWD-5, FWD-7, FWD-8 | `comp-kuzu` + `comp-kuzu-inc` + `comp-kuzu-full` → `infra/aws/globgrph/kuzu_cli.py` (`--mode inc|full`) | measured | 1,591 + 14 + ? runs; three wrappers, one engine, one flag | CloudComp | **retire** | — | R-3 **RULED (a)** | **UNHELD 18:12Z — Andrew: "recs approved except 2."** `--mode inc|full` is the surface (already exists: `kuzu_cli.py:165`, choices auto/full/inc); both name-wrappers retire; NEVER-full moves onto `--mode inc` EXPLICITLY. ⛔ **RE-SCOPED 19:3xZ on CloudComp's census (92718, denominator 145,054 files): ~15 LIVE carriers, not 5** — comp-describe, comp-kuzu, both wrappers, comp-which, `kuzu_cli.py:39/:168`, COMPTOOL_REGISTRATION_FLOW.md, comp-coverage-map.yaml, comp-output-contracts.yaml, comp-tools.yaml, NFRA_COMPREG.json, NFRA_KUZUSPLIT.json, KUZUSPLIT PRD, two dated briefs. **Split by lane, not one commit:** CODE+REGISTRY carriers (CloudComp, one commit) · KUZUSPLIT PRD P1/P3 (CTO, same window) · the two briefs are dated RECORDS and are NOT rewritten. **CODE HALF LANDED @`dffbee781c` (15 files, +87/−145, LOCAL) — CLEARED by exercise at this seat 21:1xZ:** both wrappers deleted; forwarders no longer resolve on this device (positive control `comp-kuzu` resolves); `retired_aliases` declared with successor + dated order (manifest `:63`, `:75`); `comp-manifest-check retired-alias` PASS (9 declared / 99 live); `--mode inc` on a live query took the inc branch, 6 s, 27,122 nodes, `built:` unchanged; comp-which routes "behind" → `--mode inc` and "full reset" → `--mode full`. **Still open: the KUZUSPLIT PRD P1/P3 amendment (CTO) — until it lands, the PRD text names wrappers that do not exist.** Acceptance baseline for this unit: `comp-which-routing-baseline.json` @`610bb9e31e` (the routing test rewrote it mid-edit; CloudComp measured and recorded it rather than letting the 74-file revert closure look reopened). Forwarders on OTHER devices are DESIRED until each re-provisions (the provisioner only ADDS; a stale one fails loud) |
 | T-23 | FWD-2, FWD-3, FWD-4 | `comp-cache` → `.tools/comp-cache` | measured | 35 runs; React Query cache keys across `portal/src`; `map`/`collisions`/`key` | CloudComp | audit | — | 4.1-4.6 | **not comp-platinum** — portal-local grain; record the distinction |
 | T-24 | FWD-2, FWD-3, FWD-4 | `comp-platinum` → `org/modules/graph/platinum_cli.py` | measured | 7 runs; composite of transform+routes+pipescript; portal-page → gold-script | CloudComp | audit | T-10 | 4.2 | his question *"how is comp-platinum defined? what coverage universe?"* — the deliverable's corpus_or_backend + denominator fields answer it |
 | G-1 | FWD-7 | `comp-graph status` freshness surface | measured | reports `kuzu_db 81d` + `stitch_graph 38d`; canonical is `kuzu_nessie_db` built 2026-09-01T16:18Z (globgrph F6, attributed to CRO) | NFRA_GRAPHS lane | fix | — | brief O7 | surfaced by CRO, not chased; **re-homes to the comp-graph owner** — this row records the dependency |
-| G-2 | FWD-7 | stale-served path `kuzu_nessie_db.fallback.jsonl` | held | 16 `inc-served-labeled-stale` events, ~34h behind (F5, CRO's measurement) | CloudComp | verify | T-22 | brief O3b | KUZUSPLIT working AS RATIFIED; the cost is unbounded age — bound it or disclose it on the answer |
-| G-3 | FWD-7 | `kuzu_nessie_load` key asymmetry (node stripped `:150`, edge raw `:184`) | held | carded QUALIFIED @`5da9e7fffc` by `0.7.0_AE_CloudOps~K` (F4) | CloudComp | verify | T-22 | brief F4 | a port carries or fixes it, never silently |
+| G-2 | FWD-7 | stale-served path `kuzu_nessie_db.fallback.jsonl` | **SPLIT (v0.7): engine half CARRIED, disclosure half OWNED** | 16 `inc-served-labeled-stale` events, ~34h behind (F5); **S31 @ce5c7babea: the local path is UNBOUNDED today -- a `--budget 60` comp-blast call ran the full rebuild ~17 min and was killed outside with no line printed** | engine half: **`NFRA_CLDGRPH` CG-s-8** (the retirement of the local copy, the `_canonical.py` rebuild/labeled-stale seam and its fallback sink) + CG-x-7. Disclosure half: **this project, CloudComp, a DISCLOSE-ONLY order** | disclose-only here; the seam is never written here | T-22 | brief O3b | the port retires the seam, so no engine change is made in this project (S15 precedent); but the path SERVES for the weeks until the port, so the served graph's VINTAGE and AGE go on every answer's disclosure line across the tools that load the universe (comp-blast, comp-trace; comp-find `--corpus aws` already does) -- no engine change, no second writer. FWD-7's local-path limb then reads on this project's own exercised artifact, its engine limb on the sibling's cells. S31's DISARM (a budgeted comp-blast call serves the existing graph labeled stale and never rebuilds inside the budget) rides CE-t-6 as the T-6 lane's own act |
+| G-3 | FWD-7 | `kuzu_nessie_load` key asymmetry (node stripped `:150`, edge raw `:184`) | **CARRIED (v0.7)** | carded QUALIFIED @`5da9e7fffc` by `0.7.0_AE_CloudOps~K` (F4) | **`NFRA_CLDGRPH` cell CG-s-9** ("aligned at the port -- the port is the moment"; a control at the two sites that FAILS on the pre-port bytes and PASSES on the ported ones) | carried, never a second writer | T-22 | brief F4 | same reading as G-2; the port carries or fixes it with a control, never silently, which is exactly this row's closes-on |
 | G-4 | FWD-9 | **Codex-runtime rail: design** | absent | Andrew-direct 2026-09-02 ~23:0xZ (CTO terminal, "Both recs accepted"), ruling 2(a): this project carries the row; ruling 2(b) EFFECTIVE NOW: a Codex-runtime seat issues NO comp-tool-grounded adjudication until a rail exists on that runtime. The T1 rail is a Claude PreToolUse hook (`.tools/hooks/comp-tool-hud.sh`); the Codex runtime contract (`org/mcp/CODEX_INBOX_MONITOR.md`, MSTR) has no hook at all — `FINDING_COMPRAIL_DENY_NOT_ENFORCED_20260902.md` addendum 2 | CVO drives; CloudComp executes | design | T-1, T-2 | Rule 21 | **what the rail IS is this row's work.** Acceptance: a rail EXERCISED at a Codex seat — a DENY observed as the BODY NOT EXECUTING (a rail-log row is not a block; the 5s-timeout lesson). Rule 21's enforcement bound stays HELD until then. Not a mechanical gate on any seat's word; a design deliverable |
 
 **MECE check against the DECLARED domain (his text block), run not asserted:** 22 named tools + 3 roll-up questions

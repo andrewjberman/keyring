@@ -90,6 +90,40 @@ else {
     $Workspace = (Resolve-Path -LiteralPath $Workspace).Path
 }
 
+# Codex tool calls run through PowerShell, where the extensionless Python and
+# Bash entrypoints under .tools are not executable by bare command name. The
+# canonical repository provisioner writes the full derived comp-* forwarding
+# set as both Bash scripts and PowerShell/cmd .cmd shims in the persistent
+# user bin. Run it idempotently for each Codex seat and put that directory
+# first on this launcher's child PATH, so every Codex app-server/TUI/tool call
+# resolves `comp-which`, `comp-read`, and the rest exactly as a Claude seat
+# does. Do not hand-maintain a second subset here.
+$compShimProvisioner = Join-Path $Workspace '.tools\provision-path-shims.sh'
+$gitBash = 'C:\Program Files\Git\bin\bash.exe'
+foreach ($requiredCompShimDependency in @($compShimProvisioner, $gitBash)) {
+    if (-not (Test-Path -LiteralPath $requiredCompShimDependency)) {
+        throw "Codex comp-tool shim dependency not found: $requiredCompShimDependency"
+    }
+}
+$compShimOutput = @(
+    & $gitBash $compShimProvisioner 2>&1
+)
+$compShimExitCode = $LASTEXITCODE
+if ($compShimExitCode -ne 0) {
+    $detail = ($compShimOutput | ForEach-Object { [string]$_ }) -join "`n"
+    throw "Codex comp-tool shim provisioning failed (exit $compShimExitCode): $detail"
+}
+$compShimDir = Join-Path $env:USERPROFILE 'bin'
+if (-not (Test-Path -LiteralPath $compShimDir)) {
+    throw "Codex comp-tool shim directory was not created: $compShimDir"
+}
+if (-not (($env:PATH -split ';') -contains $compShimDir)) {
+    $env:PATH = "$compShimDir;$env:PATH"
+}
+if (-not (($env:PATHEXT -split ';') -contains '.CMD')) {
+    $env:PATHEXT = (($env:PATHEXT -split ';') + '.CMD' | Where-Object { $_ }) -join ';'
+}
+
 # The full launcher serial is the process identity for ajb2, direct starts,
 # and handoffs alike. Downstream startup checks must never infer it elsewhere.
 $env:OPAL_AGENT_SERIAL = $Serial
@@ -128,6 +162,13 @@ if ([string]::IsNullOrWhiteSpace($startupPrompt)) {
     throw 'Codex seat startup context produced an empty prompt.'
 }
 
+# Windows PowerShell 5.1 serializes native-process arguments through a single
+# command-line string. Literal double quotes inside an otherwise single prompt
+# argument would reopen that command line and split the prompt at the quoted
+# text (for example, comp-which "your question"). Escape only for the native
+# invocation; keep $startupPrompt unchanged for the persisted diagnostic file.
+$startupPromptArgument = $startupPrompt.Replace('"', '\"')
+
 Set-CodexSeatTitle -SeatSerial $Serial
 
 # Reuse the estate's serial-scoped registration cleanup before asserting that
@@ -158,6 +199,19 @@ finally {
           -Value $savedClaudeSession.Value
     }
 }
+# FRESH SESSION ID PER CODEX CHILD (2026-09-03, 1.0.0_SA_CTO on 2.0.0_SA_COO's /drive tick-4 finding, row
+# NFRA_COMPEFFICACY-S28 by 0.8.0_AE_CloudComp~H): this launcher inherits the PARENT Claude session's
+# CLAUDE_CODE_SESSION_ID through the environment, so ten Codex lanes launched from one COO seat shared one
+# session id and every per-session file keyed on it (comp-to's .to_id, comp-which's .route) became
+# last-writer-wins across the lanes -- the COO's own .to_id read a task order it never set. The seat's
+# children (app-server, bridge, heartbeat) get a session id that is THEIRS; the serial file for that id is
+# written here so the session-keyed identity tier (comp_log_auto, the L6 gate's committer read) resolves for
+# a Codex seat exactly as it does for a Claude one. The parent's variable is untouched (this is a child
+# process of Start-Process).
+$env:CLAUDE_CODE_SESSION_ID = [guid]::NewGuid().ToString()
+$sessionsDir = Join-Path $Workspace 'org\mcp\sessions'
+New-Item -ItemType Directory -Force -Path $sessionsDir | Out-Null
+Set-Content -LiteralPath (Join-Path $sessionsDir ($env:CLAUDE_CODE_SESSION_ID + '.serial')) -Value $Serial -Encoding ascii -NoNewline
 if ($cleanupExitCode -ne 0) {
     throw "Serial-scoped orphan cleanup hook failed for $Serial (exit $cleanupExitCode)."
 }
@@ -207,6 +261,15 @@ if ($Port -eq 0) {
 
 $endpoint = "ws://127.0.0.1:$Port"
 $runtimeDir = Join-Path $Workspace ('.runtime\codex-seats\' + ($Serial -replace '[^A-Za-z0-9_.~-]', '_'))
+# THE LANE'S INBOX AND ITS read/ EXIST BEFORE THE FIRST TURN (2026-09-03, 2.0.0_SA_COO 93817): a Claude seat's watcher
+# creates <lane>/read/ when it arms; this runtime has no watcher, and a fresh lane (~N, ~U) met its first mail with an
+# inbox root and no read/ folder. The broker now creates read/ on every delivery too; this is the launch-time half so a
+# seat's very first sweep has the folder whether or not anything has been delivered yet. Same path grammar as
+# server.py's _deliver_to_one: base serial folder, then ~suffix for a lane.
+$inboxBase = ($Serial -split '~', 2)[0]
+$inboxLane = Join-Path $Workspace ('org\mcp\inbox\' + $inboxBase)
+if ($Serial -match '~') { $inboxLane = Join-Path $inboxLane ('~' + ($Serial -split '~', 2)[1]) }
+New-Item -ItemType Directory -Force -Path (Join-Path $inboxLane 'read') | Out-Null
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 $startupPromptPath = Join-Path $runtimeDir 'startup-prompt.txt'
 [System.IO.File]::WriteAllText(
@@ -396,10 +459,10 @@ Preflight detail: $detail
 
     if ($ThreadId) {
         & codex @codexPermissionArgs resume --remote $endpoint -C $Workspace `
-          $ThreadId $startupPrompt
+          $ThreadId $startupPromptArgument
     }
     else {
-        & codex @codexPermissionArgs --remote $endpoint -C $Workspace $startupPrompt
+        & codex @codexPermissionArgs --remote $endpoint -C $Workspace $startupPromptArgument
     }
 }
 finally {

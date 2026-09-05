@@ -42,7 +42,7 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # FAIL-CLOSED on the sentinel: a staged task_orders file with the checker missing = DENY.
 if [ -f "$ROOT/.tools/to-pipeline-gate.py" ]; then
     python "$ROOT/.tools/to-pipeline-gate.py" $STAGED || exit 1
-elif git diff --cached --name-only 2>/dev/null | grep -qE '(^|/)task_orders/[^/]+\.md$'; then
+elif git diff --cached --name-only 2>/dev/null | grep -qE '(^|/)task[_-]orders/[^/]+\.md$'; then
     echo "BLOCKED: a task_orders file is staged but .tools/to-pipeline-gate.py is missing." >&2
     exit 1
 fi

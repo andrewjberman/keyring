@@ -40,12 +40,50 @@ Engine: org/modules/heatmap/{heat_map.py (S0), object_freshness.py (O1)} (0.4.0_
 from __future__ import annotations
 
 import argparse
+import datetime as _dt
+import json
 import os
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(_HERE)                       # .tools/ -> repo root
-HEATMAP_DIR = os.path.join(REPO_ROOT, "org", "modules", "heatmap")
+HEATMAP_DIR = os.environ.get("COMP_HEATMAP_DIR", os.path.join(REPO_ROOT, "org", "modules", "heatmap"))
+
+STATE_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL = "PARTIAL_OR_BLIND"
+STATE_NA = "NOT_APPLICABLE"
+RC_BY_STATE = {STATE_ABSENT: 2, STATE_ZERO: 0, STATE_PARTIAL: 3, STATE_NA: 1}
+
+
+def _vintage():
+    """The JSON carrier's measurement time; consumers need not infer it from a file mtime."""
+    return {"measured_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+            "source": "git-history-derived heatmap"}
+
+
+def _write_json(a, payload):
+    text = json.dumps(payload, indent=2)
+    if a.json is True or a.json == "":
+        print(text)
+    else:
+        with open(a.json, "w", encoding="utf-8") as fh:
+            fh.write(text)
+        print(f"OK: wrote freshness snapshot -> {a.json}")
+
+
+def _state_result(a, state, message):
+    """One machine-readable exceptional answer, never an empty structure read as clean."""
+    payload = {"answer_state": state, "vintage": _vintage(), "message": message}
+    json_value = getattr(a, "json", None)
+    if json_value is True or isinstance(json_value, str):
+        _write_json(a, payload)
+    else:
+        print(f"ANSWER-STATE: {state}")
+        if state == STATE_PARTIAL:
+            print("STATE: NOT-DECIDABLE (rc=3; distinct from a clean answer)")
+        print(message)
+    return RC_BY_STATE[state]
 
 
 def cmd_freshness(a) -> int:
@@ -53,27 +91,30 @@ def cmd_freshness(a) -> int:
     # BE the repo root). Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's
     # pure analytic (build/summarize/cluster) -- reused, not re-implemented.
     if not os.path.isdir(HEATMAP_DIR):
-        sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
-        return 3
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unavailable at {HEATMAP_DIR}; no heat answer is claimed")
     sys.path.insert(0, HEATMAP_DIR)
     try:
         import time
         from heat_map import HeatParams, cluster_by_locality, summarize  # noqa: E402
         from object_freshness import build                                # noqa: E402
     except Exception as e:                                                 # noqa: BLE001
-        sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
-        return 3
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unreadable: {e}; no heat answer is claimed")
+
+    rel = a.path.replace("\\", "/").strip("/") if a.path else ""
+    if rel and not os.path.exists(os.path.join(REPO_ROOT, rel)):
+        return _state_result(a, STATE_ABSENT,
+                             f"comp-heat freshness: subject '{rel}' is absent from the repository corpus")
 
     p = HeatParams(half_life_days=a.half_life)
     scores, src = build(REPO_ROOT, p, time.time())
 
-    rel = a.path.replace("\\", "/").strip("/") if a.path else ""
     if rel:
         scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
         if not scores:
-            print(f"comp-heat freshness: no tracked/untracked files under '{rel}/' "
-                  f"(check the path is repo-root-relative).")
-            return 0
+            return _state_result(a, STATE_ZERO,
+                                 f"comp-heat freshness: subject '{rel}' exists but has zero scored files")
 
     summ = summarize(scores)
     clusters = cluster_by_locality(scores, lambda path: os.path.dirname(path) or ".")
@@ -98,7 +139,6 @@ def cmd_freshness(a) -> int:
             print(f"    {v['n_cold']:4d}/{v['n']:<4d} cold  oldest={v['oldest_age_days']:.0f}d  {k}/")
 
     if a.json is not None:
-        import json
         snap = {"scope": rel or None, "half_life_days": a.half_life,
                 "basis": {"half_life_days": p.half_life_days,
                           "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
@@ -107,14 +147,9 @@ def cmd_freshness(a) -> int:
                 "paths": [{"path": s.item_id, "age_days": round(s.age_days, 2),
                            "score": round(s.score, 6), "band": s.band,
                            "source": src.get(s.item_id, "?")} for s in scores],
-                "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs]}
-        text = json.dumps(snap, indent=2)
-        if a.json == "":
-            print(text)
-        else:
-            with open(a.json, "w", encoding="utf-8") as fh:
-                fh.write(text)
-            print(f"OK: wrote freshness snapshot -> {a.json} ({summ['n']} paths)")
+                "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs],
+                "answer_state": None, "vintage": _vintage()}
+        _write_json(a, snap)
     return 0
 
 
@@ -191,6 +226,9 @@ def cmd_compare(a) -> int:
     extends the heat engine's own git helper, no new walker); output = current heat delta
     (absolute + bands + basis) + a CONVERGING/DIVERGING/PARALLEL verdict + denominators
     (windows, commits per side, shared commits)."""
+    if a.a == a.b:
+        return _state_result(a, STATE_NA,
+                             "comp-heat compare: one path cannot form a two-resource comparison")
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3

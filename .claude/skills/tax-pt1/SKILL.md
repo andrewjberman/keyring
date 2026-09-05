@@ -1,6 +1,6 @@
 ---
 name: tax-pt1
-description: OPAL_TAXSMA part-1 daily runner (Andrew naming ruling 2026-07-14, "/tax-pt1; tax-pt2 etc as needed") -- pull the morning's FIS "Short Sale Avail File" attachments from the monitored mailbox and file them into the SharePoint TAX/Short Sale folder with Yang's exact naming (S0.3 rule). THE SSAVAIL EMAIL INTAKE/PARSING IS THE PRINCIPAL AUTOMATION ASPECT OF THIS PROJECT (Andrew ruling #2, 2026-07-14). Uses the m365 gateway's list_email_attachments + save_email_attachment_to_site (server-side transfer; the 10-15MB .ASC never rides the MCP channel). TRIGGER: the /tax-pt1 skill invocation (Andrew ruling 2026-07-15 -- the slash command IS the interface, not a natural-language phrase). Run every trading morning after ~7:00 ET. Alyssa-operable: master AND standard tiers are write_files-entitled (standard granted on-box 2026-07-14 per Andrew ruling #4). Idempotent: conflictBehavior=fail means a re-run can never overwrite -- collisions are loud.
+description: OPAL_TAXSMA part 1, the daily runner: pull the morning's FIS Short Sale Avail File attachments from the monitored mailbox and file them into SharePoint TAX/Short Sale with Yang's exact naming, via the m365 gateway's server-side transfer. The trigger is the `/tax-pt1` invocation itself, every trading morning after ~7:00 ET. Idempotent: a re-run never overwrites.
 ---
 
 # /tax-pt1 — Short Sale file intake (OPAL_TAXSMA part 1)

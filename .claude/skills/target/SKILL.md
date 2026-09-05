@@ -1,6 +1,6 @@
 ---
 name: target
-description: Take a company or a person surfaced by /find and enrich it via the Lusha API. Two tiers -- COMPANY level (e.g. "/target Fairway Financial Partners") draws the firm's org chart (names/titles/seniority, the cheaper Lusha prospecting call); PERSON level (e.g. "/target Paul Tinnirello") returns full contact detail (emails/phones -- the true Lusha reveal, more credits). Use when the operator types "/target <company or person>", or asks who works at a firm, to break out employees, find decision-makers, or get a person's contact details. Paid Lusha calls are CONFIRM-FIRST. Driver = data/find/dualbiz/scripts/target.py; key = Secrets Manager find-insure/lusha-ai/api-key (AE owns the cost-gate).
+description: Enrich a company or person surfaced by /find via the Lusha API: `/target <company>` draws the org chart (names, titles, seniority); `/target <person>` returns contact detail (emails, phones -- the credit-costing reveal). Use on `/target ...`, or asks for who works at a firm, decision-makers, or a person's contacts. Paid calls are confirm-first. Driver data/find/dualbiz/scripts/target.py; AE owns the cost gate.
 ---
 
 # /target -- Lusha enrichment of a company or person

@@ -1,6 +1,6 @@
 ---
 name: prune-qual
-description: The MEANING half of the prune pair (sibling: /prune-quant for mechanisms). Apply to a PRD, proposal, design, rule, or any written artifact -- NOT a copy-edit: high-intensity meta-analysis from OUTSIDE the document's own frame. Find what the thing is actually about, what is FOUNDATIONAL vs incidental (negation-tested), whether it should exist at all, and rebuild the shortest honest path from purpose to foundation. The sentence-level cut is the last and least step. Premise (Andrew-direct 2026-07-29): "meta analyze the point of this proposal and really get in touch with the meaning and know what is foundationally important and what is not."
+description: The MEANING half of the prune pair (sibling /prune-quant): meta-analyze a PRD, proposal, design, rule or any written artifact from outside its own frame -- what it is about, what is foundational versus incidental (negation-tested), whether it should exist at all, and the shortest honest path from purpose to foundation. Not a copy-edit; the sentence-level cut is the last step.
 ---
 
 # /prune-qual — find the meaning, keep the foundation, rebuild the clean path

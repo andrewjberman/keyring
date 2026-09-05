@@ -46,7 +46,7 @@ BASELINE_REL = "org/surprise_channel/.corpus-baseline.json"
 
 def _root() -> str:
     try:
-        out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if out.returncode == 0 and out.stdout.strip():
             return out.stdout.strip()
     except OSError:
@@ -113,15 +113,63 @@ def _channel_docs(root: str) -> list:
     org/missions/<D>/<MACRO>/<PROJECT>/surprise-channel/{investigations,remediations}/ (spec s.7,
     Andrew-ruled 2026-09-02, prospective only). A corpus pass -- and the watcher's --index, which is
     this function -- that reads one root is blind to the other for the whole dual-register period."""
-    found = []
-    flat = os.path.join(root, "org", "surprise_channel")
-    for pattern in ("*/*.md", "*/*.json"):
-        found.extend(glob.glob(os.path.join(flat, pattern)))
-    tree = os.path.join(root, "org", "missions")
-    for pattern in ("*/*/*/surprise-channel/investigations/*.md", "*/*/*/surprise-channel/investigations/*.json",
-                    "*/*/*/surprise-channel/remediations/*.md", "*/*/*/surprise-channel/remediations/*.json"):
-        found.extend(glob.glob(os.path.join(tree, pattern)))
+    found, source = [], "index"
+    rels = _index_paths(root)
+    if rels is None:
+        # FAIL LOUD, NEVER SILENTLY. A fallback nobody is told about is how the defect above
+        # survived: the corpus looked complete and was reading a different population.
+        print("[surprise-corpus] WARN: could not read the git index; falling back to the WORKTREE, "
+              "which includes UNTRACKED files and can refuse another seat's commit. "
+              "Denominator below is a worktree denominator.", file=sys.stderr)
+        source = "worktree"
+        flat = os.path.join(root, "org", "surprise_channel")
+        for pattern in ("*/*.md", "*/*.json"):
+            found.extend(glob.glob(os.path.join(flat, pattern)))
+        tree = os.path.join(root, "org", "missions")
+        for pattern in _TREE_GLOBS:
+            found.extend(glob.glob(os.path.join(tree, pattern)))
+    else:
+        for rel in rels:
+            if _CHANNEL_REL_RE.search(rel):
+                found.append(os.path.join(root, rel.replace("/", os.sep)))
+    _channel_docs.last_source = source
     return sorted(p for p in found if CHANNEL_FILE_RE.search(os.path.basename(p)))
+
+
+# STOP: adjudications/ WAS MISSING FROM BOTH LISTS UNTIL 2026-09-04. The tree patterns named
+# investigations/ and remediations/ only, so the CVO's own L9 documents were never in the corpus --
+# the same uncovered member that safe-commit.sh:715's selector was missing, in a third carrier.
+_TREE_GLOBS = (
+    "*/*/*/surprise-channel/investigations/*.md", "*/*/*/surprise-channel/investigations/*.json",
+    "*/*/*/surprise-channel/remediations/*.md", "*/*/*/surprise-channel/remediations/*.json",
+    "*/*/*/surprise-channel/adjudications/*.md", "*/*/*/surprise-channel/adjudications/*.json",
+)
+
+_CHANNEL_REL_RE = re.compile(
+    r"^org/surprise_channel/[^/]+/[^/]+\.(md|json)$"
+    r"|^org/missions/[^/]+/[^/]+/[^/]+/surprise-channel/"
+    r"(investigations|remediations|adjudications)/[^/]+\.(md|json)$")
+
+
+def _index_paths(root: str):
+    """Every path in the GIT INDEX, or None if git cannot be read.
+
+    THE INDEX, NOT THE WORKTREE (3.0.0_SA_CVO ESTATE_GOVERNANCE-S4 half 2). The index holds every
+    TRACKED file plus everything THIS commit has STAGED -- which is exactly the population a
+    commit-time gate should grade -- and excludes another seat's UNTRACKED draft, which is not this
+    commit's business and cannot be fixed by the seat being refused.
+
+    Returns None rather than an empty list on failure: an empty corpus and an unreadable one are
+    different answers, and only one of them is a clean estate.
+    """
+    try:
+        p = subprocess.run(["git", "ls-files", "--cached", "-z"], cwd=root,
+                           capture_output=True, text=True)
+        if p.returncode != 0:
+            return None
+        return [x for x in p.stdout.split("\0") if x]
+    except Exception:  # noqa: BLE001
+        return None
 
 
 def _tuple(doc: str, row: dict, err) -> list:

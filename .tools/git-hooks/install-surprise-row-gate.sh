@@ -39,7 +39,7 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # FAIL-CLOSED on the sentinel: a staged channel file with the checker missing = DENY.
 if [ -f "$ROOT/.tools/surprise-row-gate.py" ]; then
     python "$ROOT/.tools/surprise-row-gate.py" $STAGED || exit 1
-elif git diff --cached --name-only 2>/dev/null | grep -qE 'org/surprise_channel/[^/]+/(INVESTIGATION|REMEDIATION)_v'; then
+elif git diff --cached --name-only 2>/dev/null | grep -qE '(org/surprise_channel/[^/]+|/surprise-channel/(investigations|adjudications|remediations))/(INVESTIGATION|ADJUDICATION|REMEDIATION)_v'; then
     echo "BLOCKED: a surprise-channel row file is staged but .tools/surprise-row-gate.py is missing." >&2
     exit 1
 fi

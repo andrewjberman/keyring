@@ -1,0 +1,81 @@
+{
+  "kind": "COMPLETION_GRADES",
+  "schema_version": "1.0",
+  "project": "NFRA_COMPEFFICACY",
+  "round": 6,
+  "graded_by": "1.0.0_SA_CTO",
+  "graded_utc": "2026-09-04T13:24Z",
+  "report_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/ledger/COMPLETION_REPORT.round6.json@002ecfc42a",
+  "rows": [
+    {
+      "fwd_id": "FWD-1",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9",
+      "state_observed": "APPLIED",
+      "note": "The list is in the PRD: s.7 SURFACE MANIFEST T-1..T-24 + G-1..G-4 with the MECE check run (25 names -> 24 rows, 0 uncovered, both directions), the two non-tools recorded as DOES-NOT-EXIST rows (T-4, T-15). The report's coverage axis reads UNCOVERED because this was an L4 decision no order could carry; the outcome is served on the PRD itself, read at v0.8."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195",
+      "state_observed": "EXERCISED",
+      "note": "Every per-tool account sits under deliverables/<serial>/ in one shape (22 complete orders, 22 proof instances 1:1 per the report's denominators); the reviewer's read is on the record -- the CVO's roll-up v2 read 11 deliverables at full width and the L9 adjudications re-validated each instance with the author read from git. The shape survived the reading: the roll-up compares accounts line for line across 48 findings."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.9.0_WK_NFRA_COMPEFFICACY~2/NFRA_COMPEFFICACY.TO-CE-G-2.proof_of_spec.json@65a85beb44",
+      "state_observed": "EXERCISED",
+      "note": "A real run's output read against its stated disclosure: G-2's instance carries comp-blast's and comp-trace's VINTAGE line from real bounded runs (G2-AC2/AC3 PASS-by-output; G2-AC1 graded PASS by the CVO at org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@f4b41b1c20 C-S5); comp-find's denominator/floor lines and the T-cells' disclosure fields are the same property across the list."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "verdict": "NOT_EVALUATED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195",
+      "state_observed": "APPLIED",
+      "note": "Every tool's state is on the record (cleared / retired / short-list candidate) in s.7 and the roll-up, but the DONE WHEN is 'the last tool's state has been read by Andrew' -- his act at the estate sitting (the packet is in front of him), which no seat's artifact can stand in for. NOT_EVALUATED, not NOT_REALIZED: the artifact is ready and the missing limb is his read. Grades when the sitting's record names it."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9",
+      "state_observed": "APPLIED",
+      "note": "His seven questions answered in writing, each disputable, each pointing at its row and instance: PRD v0.8 s.5a (CE-q-1, the CVO's text landed by the CTO @3284d996a9). The report's COVERED row cites CE-t-14, which only contributes evidence, as its own note says; the artifact graded is s.5a."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/3.0.0_SA_CVO/CE-pass-1.rollup.md@22388f7195",
+      "state_observed": "EXERCISED",
+      "note": "The passcraft findings used up: 48 findings across 11 deliverables dispositioned FIXED-IN-CELL 9 / NOT-FIXED-owner-named 24 / RECORDED 11 / ROUTED-TO-ROW 9, UNCLEAR 0, and the last disposition (comp-schedule F3) read by the CVO, which fixed nothing -- the non-fixer read the DONE WHEN names. The report's coverage axis reads UNCOVERED because the roll-up is a certification no order could carry."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/prd/NFRA_COMPEFFICACY_PRD.md@3284d996a9",
+      "state_observed": "APPLIED",
+      "note": "Each of the cloud-compile brief's asks is in a plan with an owner or ruled out with a reason: G-1 re-homed to the comp-graph owner, G-2's engine half and G-3 CARRIED to NFRA_CLDGRPH's cells CG-s-8 / CG-s-9 / CG-x-7 at PRD v0.7 with the disclosure half owned and DONE here (G-2), and the rest of the brief IS NFRA_CLDGRPH (round 4 open under 2.0.0_SA_COO~A)."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "verdict": "NOT_EVALUATED",
+      "state_observed": "ABSENT",
+      "note": "The short list exists as a draft (org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_PROPOSAL_COMPTOOL_MARQUIS_RETIRE_ELEVATE_DRAFT_20260902.md@ac52464f82; v2 against s.7's dispositions owed by the CVO after the sitting), its ratification is Andrew's by PRD s.5, and no seat has started work from an unratified list -- two of the three limbs wait on him. The report's COVERED row cites CE-t-14 (usage evidence only), as its note says."
+    },
+    {
+      "fwd_id": "FWD-9",
+      "verdict": "NOT_EVALUATED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md@f4b41b1c20",
+      "state_observed": "APPLIED",
+      "adjudication_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_NFRA_COMPEFFICACY_20260904T0715Z.md@6b21ce6010",
+      "note": "One limb is met on the record: a cleared tool used from a seat other than the one that fixed it and behaving as cleared (C-S1 -- comp-blast's budgeted contract exercised from the CVO's seat on a BEHIND graph, rc 3 in 7 s, no rebuild). Two limbs no artifact covers: 'the fix is on the shared branch' (every remediation commit is LOCAL under the push hold LD-0522; origin/CLOUD @351f309e0a) and CE-g-4's exercise (the Codex-runtime rail; HELD per the adjudication cited; design covered, exercise uncovered because no Codex seat exists since Andrew's 2026-09-03 ~21:0xZ word). Both wait on his word: the push, and one Codex seat."
+    },
+    {
+      "fwd_id": "FWD-10",
+      "verdict": "REALIZED",
+      "artifact_ref": "org/missions/D11/NFRA/NFRA_COMPEFFICACY/deliverables/0.8.0_AE_CloudComp~A/NFRA_COMPEFFICACY.TO-CE-T-25.comp-dataflow-gate-under-fwd10.proof_of_spec.json@1bf60cae74",
+      "state_observed": "EXERCISED",
+      "note": "RE-GRADED from NOT_EVALUATED on the marquis ratification (Andrew-direct 2026-09-04 ~09:5xZ 'recs approved except comp-heat', record @26da5ec0fa; the fourteen named by 3.0.0_SA_CVO @35c86c93e4), which DEFINED the ACCEPT clause's denominator -- 'every marquis tool whose rc carries a verdict' -- that the first grade could not read. DONE WHEN, both limbs on ONE artifact, exercised by 0.8.0_AE_CloudComp~A (not the grader), order complete, instance VALID rc=0 re-run at HEAD: T25-AC2 run 1 -- 'comp-dataflow gate data/ --budget 0.001 >/dev/null && echo PROCEEDED || echo CORRECTLY DID NOT PROCEED' -- an rc-only consumer (the shell &&) read the budget-cut sweep as NOT clean (rc=4) beside the tool's BUDGET REACHED + 'STATE: NOT-DECIDABLE' lines; run 2 -- the exact printed cursor followed with --budget 30 -- completed 531 of 531 producer_file, 0 deferred, WITHIN BUDGET, rc=1 (the TRUE verdict), so the resume cursor was followed to completion and n1+n2 == N. The card says 'a verdict-bearing tool', not 'a marquis tool'; comp-dataflow's gate is verdict-bearing (rc 0/1/2/3/4) and is kept-not-marquis, which the DONE WHEN admits. ACCEPT, all five limbs covered across the verdict-bearing subset of the ratified fourteen, each with its own artifact: comp-system --check rc 3, comp-pulse diff rc 2, comp-pipescript deployed rc 4, comp-iam rc 2/3 -- each printing the Rule T BUDGET REACHED line, each rc non-clean and distinct from its own clean and failing values, each carrying PARTIAL_OR_BLIND in the tool's voice (NOT-DECIDABLE), each resuming by cursor (comp-pipescript's indivisible remote unit leaves the cursor unchanged and directs a larger-budget re-run, stated in its own row). The no-CLEAN-prefix limb carries a DISCRIMINATING control, not a construction: T25-AC4's MUTANT-VERDICT-RC plants 'if partial: return RC_CLEAN' in a scratch mirror and reproduces the FWD-10 violation on demand (rc=0 from a budget-cut sweep), RED-first. TWO THINGS STATED SO THE GRADE IS NOT READ WIDER: (1) comp-adversary is marquis and carries NO budget at all ('size_invariance.time: NOT budgeted', Rule T 'NOT MET ... owed'), but its own graded archetype is an evidence-pack COMPOSER whose rc is bound to composition and is NOT a verdict, so it sits outside this clause; its Rule T debt is real, on the record, and routed on the account axis, not here. (2) comp-heat is NOT among the fourteen, so T20-AC4's FAIL stands against comp-heat's own development (his 'figured out and developed properly', now at L1) and not against this clause."
+    }
+  ]
+}

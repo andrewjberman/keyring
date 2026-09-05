@@ -1,6 +1,6 @@
 ---
 name: agentbus
-description: Make this device REACHABLE on the cross-device agent bus (OPAL_SQSCHAT / NFRA_AGENTBUS Port 2) and prep the agent to send and receive in canonical form. Bare `/agentbus` resolves which device you are on, arms the persistent SQS consumer Monitor for YOUR inbound queue, verifies the arm, and prints the send/ack forms. `/agentbus status` reports the consumer + both queue depths without changing anything; `/agentbus send <device> <body>` sends one canonical message; `/agentbus off` stops the consumer. Use at session start on either machine, whenever cross-device mail seems undelivered, or when asked to "arm the bus", "watch the queue", "message the other device", or to reach an agent on the laptop from site Z (or vice versa) -- opal-agent-comms is a LOCALHOST broker and cannot cross devices, so this is the only live delivery channel between them.
+description: Make this device reachable on the cross-device agent bus (SQS). `/agentbus` arms the persistent consumer Monitor for this device's inbound queue; `/agentbus status`; `/agentbus send <device> <body>`; `/agentbus off`. Use at session start on either machine or when cross-device mail seems undelivered -- opal-agent-comms is localhost-only and cannot cross devices.
 ---
 
 # /agentbus — cross-device agent messaging (SQS Port 2)

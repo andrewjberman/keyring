@@ -20,17 +20,8 @@
 #   comp-similar supersede [--top N] [--json]    # the superseded-twin scan (headline)
 #   comp-similar cluster [--type T] [--json]     # functional-overlap census
 #   comp-similar --self-test                     # offline mutant gate (the 5 controls; no graph/AWS)
-if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-  echo "comp-similar -- BM25 SUMMARY similarity + superseded-twin scan (NFRA_COMPSIMILAR PH2)."
-  echo "Usage:"
-  echo "  comp-similar <arn-or-name> [<arn-or-name>]   one-vs-corpus neighbors | pairwise score"
-  echo "  comp-similar supersede [--top N] [--json]    superseded-twin decommission candidates"
-  echo "  comp-similar cluster [--type T] [--json]     functional-overlap census"
-  echo "  comp-similar --self-test                     offline mutant gate (no graph/AWS)"
-  echo "Reads the live comp-kuzu derive-at-scan corpus + comp-heat/comp-debris heat."
-  echo "Advisory / read-only / hold-aware. Similarity is a hypothesis, never a verdict alone."
-  exit 2
-fi
+# Help deliberately reaches the engine's import-inert argparse path. That keeps the public shim
+# and engine on one identity/Rule-T contract instead of maintaining a second, stale help dialect.
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 python "$WORKSPACE/org/modules/graph/debtscan/comp_similar.py" "$@"
 _exit=$?

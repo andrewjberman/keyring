@@ -45,11 +45,71 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 WS = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
+_TOOLS = os.path.join(WS, ".tools")
+if _TOOLS not in sys.path:
+    sys.path.insert(0, _TOOLS)
+import _compbudget  # noqa: E402 -- shared Rule T carrier; one implementation, never a local copy
+
 OUT_MD = os.path.join(WS, "infra", "system", "06_current_state.md")
 OUT_JSON = os.path.join(WS, "infra", "system", "06_current_state.json")
 
 UNKNOWN = "UNKNOWN-VINTAGE"            # the honest not-grounded sentinel -- NEVER a fabricated number
 NO_PRODUCER = "no-live-producer"      # a class with no SYSTEM-groundable runtime (static-only)
+
+# NFRA_COMPEFFICACY s.4.3 -- exact spellings from the ratified data enum.  State and tool-voice
+# are distinct grains: PARTIAL_OR_BLIND adopts NOT-DECIDABLE as its engine token.
+ANSWER_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+ANSWER_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+ANSWER_PARTIAL = "PARTIAL_OR_BLIND"
+ANSWER_NOT_APPLICABLE = "NOT_APPLICABLE"
+TOOL_VOICE_NOT_DECIDABLE = "NOT-DECIDABLE"
+RC_NOT_DECIDABLE = 3       # --check: distinct from 0=CURRENT, 2=STALE and 1=ERROR
+
+# The Rule T clock is one CLI-run context.  Library callers and the engine's pure self-test helpers
+# remain unbudgeted unless main() explicitly installs a context.
+_ACTIVE_BUDGET = None
+
+
+def _answer_state_line(state: str, subject: str, detail: str, tool_voice: str = "") -> str:
+    voice = " (%s)" % tool_voice if tool_voice else ""
+    return "%s%s: subject=%s; %s" % (state, voice, subject, detail)
+
+
+def _new_budget(flag_value, unit: str, resume_args: str) -> dict:
+    budget_s, source = _compbudget.resolve_budget(flag_value)
+    return {"budget_s": budget_s, "source": source, "clock": _compbudget.Clock(budget_s),
+            "unit": unit, "resume_args": resume_args, "reached": False,
+            "deferred": [], "timeout_command": None}
+
+
+def _budget_expired(ctx=None) -> bool:
+    state = ctx if ctx is not None else _ACTIVE_BUDGET
+    if not state or state["budget_s"] == 0:
+        return False
+    if state.get("reached") or state["clock"].remaining() <= 0:
+        state["reached"] = True
+        return True
+    return False
+
+
+def _budget_line(ctx: dict, complete: bool) -> str:
+    if complete:
+        return _compbudget.within_budget_line(
+            1, 1, ctx["unit"], ctx["budget_s"], ctx["source"],
+            round(ctx["clock"].elapsed(), 3))
+    # comp-system's output is one atomic cross-surface record.  BEGIN is the only honest cursor:
+    # no prefix is persisted, so resume means re-run the whole unit rather than splice a stale prior
+    # record into a new one and call that complete.
+    return _compbudget.budget_reached_line(
+        ctx["budget_s"], ctx["source"], 0, 1, ctx["unit"],
+        ctx["resume_args"], "BEGIN")
+
+
+def _deferred_lines(ctx: dict, complete: bool) -> list:
+    reason = [] if complete else [
+        "%s: budget expired; atomic output was not written" % ctx["unit"]
+    ]
+    return _compbudget.deferred_bucket(0 if complete else 1, 1, ctx["unit"], reason)
 
 # The NFRA_LOCALROOT_P2 SS2 knowledge-class taxonomy. slug (== the infra/README index anchor, 1:1),
 # static_home, and whether a SYSTEM comp-tool can GROUND its runtime current-state. Non-groundable classes
@@ -76,12 +136,34 @@ KNOWLEDGE_CLASSES = [
 # NEVER a fabricated fallback number.
 # ---------------------------------------------------------------------------
 def _run(cmd: list, timeout: int = 30) -> tuple:
-    """Run a comp-tool; return (stdout, stderr, rc) or (None, None, None) on failure/timeout. Never raises."""
+    """Run a comp-tool under the active Rule T clock.
+
+    The caller's per-subprocess cap remains a ceiling, but the effective timeout is always
+    ``min(cap, remaining())``.  Exhausting the run budget marks the whole atomic compile partial;
+    an ordinary inner timeout/unavailable optional backend keeps the historical UNKNOWN/carry
+    behavior.  Returns (None, None, None) on either failure and never raises.
+    """
+    state = _ACTIVE_BUDGET
+    effective_timeout = timeout
+    if state and state["budget_s"] != 0:
+        remaining = state["clock"].remaining()
+        if remaining <= 0:
+            state["reached"] = True
+            state["timeout_command"] = " ".join(str(x) for x in cmd[:3])
+            return None, None, None
+        effective_timeout = max(0.001, min(float(timeout), remaining))
+    elif state and state["budget_s"] == 0:
+        effective_timeout = None
     try:
-        p = subprocess.run(cmd, cwd=WS, capture_output=True, text=True, timeout=timeout,
+        p = subprocess.run(cmd, cwd=WS, capture_output=True, text=True, timeout=effective_timeout,
                            encoding="utf-8", errors="replace")
         return p.stdout or "", p.stderr or "", p.returncode
-    except Exception:  # noqa: BLE001  -- unavailable source -> UNKNOWN, never a crash
+    except subprocess.TimeoutExpired:
+        if state and state["budget_s"] != 0 and state["clock"].remaining() <= 0.01:
+            state["reached"] = True
+            state["timeout_command"] = " ".join(str(x) for x in cmd[:3])
+        return None, None, None
+    except Exception:  # noqa: BLE001  -- unavailable optional source -> UNKNOWN, never a crash
         return None, None, None
 
 
@@ -284,9 +366,10 @@ def _unknown_class(slug, static_home) -> dict:
     """A class the SYSTEM comp-tools cannot ground-live -> an HONEST UNKNOWN-VINTAGE anchor (scope-(a);
     surfaces 'no live producer' as a finding, never a fabricated current-state)."""
     return _class_obj(slug, static_home,
-                      current_state="%s: the SYSTEM comp-tools have no live producer for this class's runtime "
-                                    "state (static home is the SSOT; a P3/P4 candidate if a runtime producer "
-                                    "is wanted)" % NO_PRODUCER,
+                      current_state="%s: %s: the SYSTEM comp-tools have no live producer for this "
+                                    "class's runtime state (static home is the SSOT; a P3/P4 candidate "
+                                    "if a runtime producer is wanted)" %
+                                    (ANSWER_SUBJECT_ABSENT, NO_PRODUCER),
                       components=[], source=NO_PRODUCER, vintage=UNKNOWN)
 
 
@@ -557,6 +640,89 @@ _MANIFEST_PATH = "org/modules/graph/graph-call-manifest.yaml"
 _LEDGER_PATH = "org/modules/graph/comp-coverage-map.yaml"
 _CSE_SCHEMA_PATH = "org/modules/graph/cse_schema.py"
 _RULEBANK_PATH = "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+_EXTRA_REQUIRED_SOURCE_ENV = "COMP_SYSTEM_REQUIRED_SOURCE"
+_REQUIRED_SOURCE_FILES = (
+    ".tools/comp-system",
+    "org/modules/graph/comp_system.py",
+    "org/modules/graph/graph_cache.py",
+    _MANIFEST_PATH,
+    _LEDGER_PATH,
+    _CSE_SCHEMA_PATH,
+    _RULEBANK_PATH,
+)
+
+
+def _required_source_issues(paths=None) -> list:
+    """Return every required local compiler source that cannot be read.
+
+    Globs alone cannot distinguish a deliberately moved-aside file from a smaller healthy
+    population, so the load-bearing local sources are named exactly.  Optional/live backends keep
+    their historical grounded-or-UNKNOWN/carry behavior; these files are the minimum substrate a
+    record must read before it may call itself complete.  COMP_SYSTEM_REQUIRED_SOURCE adds one
+    exact path for the planted real-binary acceptance case without moving a shared repository file.
+    """
+    required = list(_REQUIRED_SOURCE_FILES if paths is None else paths)
+    if paths is None:
+        extra = os.environ.get(_EXTRA_REQUIRED_SOURCE_ENV, "").strip()
+        if extra:
+            required.append(extra)
+    issues = []
+    for item in required:
+        path = item if os.path.isabs(str(item)) else os.path.join(WS, str(item))
+        try:
+            with open(path, "rb") as fh:
+                fh.read(1)
+        except OSError as exc:
+            issues.append("%s (%s: %s)" % (path, type(exc).__name__, exc))
+    return issues
+
+
+def _partial_model(reason: str, issues: list, ctx=None) -> dict:
+    """A rejectable partial record.  It is printable but the default path never writes it."""
+    now = time.time()
+    unit = ctx["unit"] if ctx else "cross_surface_compile"
+    if ctx and _budget_expired(ctx):
+        status_line = _budget_line(ctx, complete=False)
+        deferred = _deferred_lines(ctx, complete=False)
+    else:
+        disclosure = ("; %s" % _compbudget.disclosure_line(ctx["budget_s"], ctx["source"])) if ctx else ""
+        status_line = ("NOT-DECIDABLE: required source unreadable before the atomic %s; "
+                       "scanned 0 of 1 %s%s" % (unit, unit, disclosure))
+        deferred = _compbudget.deferred_bucket(
+            1, 1, unit,
+            ["%s: required source unreadable; atomic output was not written" % unit])
+    return {
+        "header": {
+            "generated_by": "comp-system (NFRA_SYSTEM P3)",
+            "compile_complete": False,
+            "answer_state": ANSWER_PARTIAL,
+            "tool_voice": TOOL_VOICE_NOT_DECIDABLE,
+            "as_of_head": _git_head(),
+            "source_fingerprint": None,
+            "emitted_at": now,
+            "emitted_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)),
+            "grounding": ("partial compile; no complete record was emitted or written. "
+                          "Unreadable inputs are named, never filled."),
+            "auto_refresh": "NOT-DECIDABLE: restore/read the named source and rerun comp-system.",
+            "partial_reason": reason,
+            "unreadable_sources": issues,
+            "unit": unit,
+            "rule_t": {
+                "status_line": status_line,
+                "deferred": deferred,
+            },
+        },
+        "metrics": {},
+        "diversity_metric": {
+            "metric": "NOT-DECIDABLE",
+            "coevolution_pairs": UNKNOWN,
+            "coevolution_pairs_surfaced": UNKNOWN,
+            "cse_measures": UNKNOWN,
+            "note": "partial compile -- values deliberately not filled",
+            "vintage": UNKNOWN,
+        },
+        "classes": [],
+    }
 
 
 def compute_metrics() -> dict:
@@ -725,14 +891,59 @@ def refresh_managed_regions(metrics: dict, write: bool):
     return changes, problems, {"regions": scanned_regions, "files": scanned_files}
 
 
+def _decorate_answer_states(model: dict) -> tuple:
+    """Attach the measured managed-region answer before render/write.
+
+    Zero changes is a real zero only when the denominator is non-zero.  A zero-region scan is
+    PARTIAL_OR_BLIND, never PRESENT_WITH_ZERO_RESULTS.  The static/no-producer classes already
+    carry SUBJECT_ABSENT_FROM_CORPUS in their own current_state; --gate's no-trigger branch carries
+    NOT_APPLICABLE, and partial models carry PARTIAL_OR_BLIND/NOT-DECIDABLE.
+    """
+    if not model.get("header", {}).get("compile_complete"):
+        return [], [], {"regions": 0, "files": 0}
+    changes, problems, scanned = refresh_managed_regions(model.get("metrics", {}), write=False)
+    if scanned["regions"] == 0:
+        state = ANSWER_PARTIAL
+        line = _answer_state_line(
+            state, "managed-region refresh",
+            "0 regions across %d files; no population was compared" % scanned["files"],
+            TOOL_VOICE_NOT_DECIDABLE)
+    elif not changes:
+        state = ANSWER_PRESENT_ZERO
+        line = _answer_state_line(
+            state, "managed-region drift",
+            "0 changed rows across %d regions in %d files" %
+            (scanned["regions"], scanned["files"]))
+    else:
+        state = "PLAIN_POSITIVE_RESULT"
+        line = ("PLAIN_POSITIVE_RESULT: subject=managed-region drift; %d changed row(s) "
+                "across %d regions in %d files" %
+                (len(changes), scanned["regions"], scanned["files"]))
+    model["header"]["managed_region_answer"] = {
+        "state": state,
+        "line": line,
+        "changed": len(changes),
+        "regions": scanned["regions"],
+        "files": scanned["files"],
+        "problems": len(problems),
+    }
+    return changes, problems, scanned
+
+
 # ---------------------------------------------------------------------------
 # Compile -- assemble the model + the provenance header + the diversity metric.
 # ---------------------------------------------------------------------------
-def compile_model() -> dict:
+def compile_model(ctx=None) -> dict:
+    issues = _required_source_issues()
+    if issues:
+        return _partial_model("required source unreadable", issues, ctx=ctx)
+    if ctx and _budget_expired(ctx):
+        return _partial_model("budget expired before the atomic compile began", [], ctx=ctx)
     fed = _read_fedobs()
     snap = _read_snap_realized()
     header = {
         "generated_by": "comp-system (NFRA_SYSTEM P3)",
+        "compile_complete": True,
         # PROVENANCE, not the staleness predicate. It truthfully records the HEAD this was compiled
         # against; it no longer decides freshness (see check_stale: committing the artifact advances
         # HEAD, so as_of==HEAD was unsatisfiable for the committed state).
@@ -746,7 +957,9 @@ def compile_model() -> dict:
         "grounding": "every value below is grounded against a live comp-tool/artifact/marker, or UNKNOWN-VINTAGE. "
                      "ZERO fabrication (CTO hard-line / GOV-A / Rule 22).",
         "auto_refresh": "stale iff a source input drifted OR the compile exceeds the TTL: "
-                        "run comp-system --check (0=fresh 2=stale 1=error) then comp-system.",
+                        "run comp-system --check (0=fresh 2=stale 1=error "
+                        "3=NOT-DECIDABLE) then comp-system.",
+        "source_health": {"required": len(_REQUIRED_SOURCE_FILES), "unreadable": []},
     }
     diversity = {"metric": "observe-surface DIVERSITY (co-evolution pairs; CTO Q4: diversity not raw volume)",
                  "coevolution_pairs": snap.get("realized_pairs", UNKNOWN),
@@ -787,6 +1000,8 @@ def compile_model() -> dict:
         since = prior_h.get("graph_carried_since") or prior_h.get("emitted_at")
         if since:
             header["graph_carried_since"] = float(since)
+    if ctx and _budget_expired(ctx):
+        return _partial_model("budget expired during the atomic compile", [], ctx=ctx)
     return {"header": header, "metrics": metrics, "diversity_metric": diversity, "classes": classes}
 
 
@@ -808,6 +1023,31 @@ def _render_metrics(metrics: dict) -> list:
 
 def render_markdown(model: dict) -> str:
     h = model["header"]
+    if not h.get("compile_complete", True):
+        out = [
+            "# comp-system partial result -- NOT A COMPLETE 06 RECORD",
+            "",
+            "**Generated: %s (HEAD %s)**" %
+            (h.get("emitted_at_utc", "UNKNOWN"), h.get("as_of_head", UNKNOWN)),
+            "",
+            _answer_state_line(
+                h.get("answer_state", ANSWER_PARTIAL), h.get("unit", "cross_surface_compile"),
+                h.get("partial_reason", "compile incomplete"),
+                h.get("tool_voice", TOOL_VOICE_NOT_DECIDABLE)),
+            "",
+            "**NO COMPLETE RECORD WAS WRITTEN.** Unreadable inputs are named; values are never filled.",
+            "",
+            "## Unreadable sources",
+        ]
+        issues = h.get("unreadable_sources", [])
+        out.extend("- %s" % issue for issue in issues)
+        if not issues:
+            out.append("- none; the incomplete state is budget-caused")
+        out += ["", "## Rule T"]
+        rule_t = h.get("rule_t", {})
+        out.append(rule_t.get("status_line", "NOT-DECIDABLE"))
+        out.extend(rule_t.get("deferred", []))
+        return "\n".join(out) + "\n"
     d = model["diversity_metric"]
     # The usage model, Andrew-direct 2026-07-14 (verbatim: "it should just have a timestamp on it
     # and you run the compiler attached to it to update it ... its clear in the top of the document
@@ -822,7 +1062,8 @@ def render_markdown(model: dict) -> str:
            "**To update: run `comp-system`. That is the whole procedure.** It regenerates this doc AND "
            "refreshes every `<!--cs:NAME-->` managed-region span across `infra/system/` (tool counts, "
            "recognizer count, observe-diversity, graph marker) from the live sources. "
-           "(`comp-system --check` first if you only want to know whether anything is stale: 0=fresh 2=stale.)",
+           "(`comp-system --check` first if you only want to know whether anything is stale: "
+           "0=current 2=stale 1=error 3=NOT-DECIDABLE.)",
            "",
            "**AUTO-GENERATED by `comp-system` (NFRA_SYSTEM P3). Do NOT hand-edit -- regenerate.**",
            "",
@@ -830,8 +1071,16 @@ def render_markdown(model: dict) -> str:
            "- generated_by: %s" % h["generated_by"],
            "- generated_at (UTC): %s" % h.get("emitted_at_utc", "UNKNOWN"),
            "- as_of (HEAD): %s" % h["as_of_head"],
+           "- compile_complete: %s" % h.get("compile_complete", True),
            "- grounding: %s" % h["grounding"],
            "- auto-refresh: %s" % h["auto_refresh"],
+           "- required-source health: %d required / %d unreadable" %
+           (h.get("source_health", {}).get("required", 0),
+            len(h.get("source_health", {}).get("unreadable", []))),
+           "- answer-state: %s" %
+           h.get("managed_region_answer", {}).get("line", "not evaluated"),
+           "- rule-t: %s" % h.get("rule_t", {}).get("status_line", "not applied"),
+           ] + ["- rule-t: %s" % line for line in h.get("rule_t", {}).get("deferred", [])] + [
            "",
            ] + _render_metrics(model.get("metrics", {})) + [
            "## Observe-surface diversity (loop/federated maturity headline)",
@@ -881,6 +1130,51 @@ def self_test() -> int:
     def chk(name, cond):
         ok.append(bool(cond))
         print("  [%s] %s" % ("PASS" if cond else "FAIL", name))
+
+    # 0. NFRA_COMPEFFICACY T-21 FIRST ARM.  Move a scratch source aside, then prove the
+    #    compiler's partial record names the unreadable source and cannot call itself complete.
+    #    Scratch-only: the real-binary acceptance separately drives this through the env carrier.
+    import tempfile as _t21_tempfile
+    with _t21_tempfile.TemporaryDirectory(prefix="comp_system_unreadable_") as _t21_dir:
+        _t21_source = os.path.join(_t21_dir, "required.json")
+        _t21_aside = _t21_source + ".aside"
+        with open(_t21_source, "w", encoding="utf-8") as _t21_fh:
+            _t21_fh.write("{}\n")
+        os.replace(_t21_source, _t21_aside)
+        _t21_issues = _required_source_issues([_t21_source])
+        _t21_partial = _partial_model("required source unreadable", _t21_issues)
+    chk("0  no-fabrication: moved-aside required source -> PARTIAL_OR_BLIND / "
+        "NOT-DECIDABLE, source named, compile_complete false",
+        bool(_t21_issues)
+        and _t21_partial["header"].get("compile_complete") is False
+        and _t21_partial["header"].get("answer_state") == ANSWER_PARTIAL
+        and _t21_partial["header"].get("tool_voice") == TOOL_VOICE_NOT_DECIDABLE
+        and _t21_source in _t21_partial["header"].get("unreadable_sources", [""])[0])
+
+    # 0a. Four planted answer-state cases in ONE self-test invocation.  The enum file is an
+    #     independent oracle: a mutated engine constant cannot move the ratified set with it.
+    with open(os.path.join(WS, "org", "standards", "COMPTOOL_ANSWER_STATE.enum.json"),
+              encoding="utf-8") as _t21_fh:
+        _t21_ratified = {x["state"] for x in json.load(_t21_fh)["states"]}
+    _t21_produced = {
+        ANSWER_SUBJECT_ABSENT, ANSWER_PRESENT_ZERO, ANSWER_PARTIAL, ANSWER_NOT_APPLICABLE}
+    _t21_cases = [
+        _answer_state_line(ANSWER_SUBJECT_ABSENT, "scope-class fixture",
+                           "no source carries this class"),
+        _answer_state_line(ANSWER_PRESENT_ZERO, "real-present fixture",
+                           "0 rows across 1 present surface"),
+        _answer_state_line(ANSWER_PARTIAL, "moved-aside required source",
+                           "source unreadable; no complete record written",
+                           TOOL_VOICE_NOT_DECIDABLE),
+        _answer_state_line(ANSWER_NOT_APPLICABLE, "mode fixture",
+                           "the mode has no population for this subject"),
+    ]
+    for _t21_case in _t21_cases:
+        print("  [CASE] %s" % _t21_case)
+    chk("0a ratified answer-state spellings: four planted cases emit four exact tokens in one invocation",
+        _t21_produced == _t21_ratified
+        and len(_t21_cases) == 4
+        and all(any(state in line for line in _t21_cases) for state in _t21_ratified))
 
     m = compile_model()
     # 1. every LOCALROOT SS2 class has an anchor (scope-(a): no static home without a runtime anchor).
@@ -1299,10 +1593,8 @@ def _dirty_sources():
     treated as fresh/safe; see check_stale's/gate's own except-blocks)."""
     import fnmatch
     rels = [(os.path.relpath(d, WS).replace(os.sep, "/"), g) for d, g in _SOURCES]
-    try:
-        out = subprocess.run(["git", "status", "--porcelain"], cwd=WS, capture_output=True,
-                              text=True, timeout=10, check=True).stdout
-    except Exception:  # noqa: BLE001 -- inconclusive, not clean; caller treats None as unverifiable
+    out, _err, rc = _run(["git", "status", "--porcelain"], timeout=10)
+    if out is None or rc != 0:
         return None
     dirty = []
     for line in out.splitlines():
@@ -1464,7 +1756,10 @@ def _staleness(header: dict):
 
 
 def check_stale() -> int:
-    """The --check PROBE. Reports staleness, never rebuilds.  0 = fresh | 2 = stale | 1 = tool error.
+    """The --check PROBE. Reports staleness, never rebuilds.
+
+    Complete evaluation preserves 0 = current | 2 = stale | 1 = tool error.  main() adds
+    3 = NOT-DECIDABLE only when Rule T expires or a required compiler source is unreadable.
 
     Exit codes per CTO 20260709T195217Z: 2 (not 1) for stale, mirroring
     `terraform plan -detailed-exitcode`. Returning 1 on stale CONFLATED "your artifact is stale" with
@@ -1496,7 +1791,9 @@ def check_stale() -> int:
     """
     try:
         if not os.path.exists(OUT_JSON):
-            print("06 STALE: not yet emitted -- run comp-system.")
+            print(_answer_state_line(
+                ANSWER_SUBJECT_ABSENT, "infra/system/06_current_state.json",
+                "06 is not yet emitted; run comp-system"))
             return 2
         with open(OUT_JSON, encoding="utf-8") as fh:
             header = json.load(fh).get("header", {})
@@ -1549,10 +1846,11 @@ def check_stale() -> int:
             # took EVERY region down at once would look identical to "no regions exist yet" if
             # worded the same as the normal case. Distinct wording, same rc (a genuinely
             # region-free /system is not itself an error -- the wording is what must not lie).
-            print("SYSTEM CURRENT BUT NOTHING WAS COMPARED (0 managed-region spans found across %d "
-                  "file(s) in infra/system/ -- this is 'clean' because nothing was watched, not "
-                  "because nothing drifted; check <!--cs:NAME--> marker syntax if regions were "
-                  "expected)" % region_scan["files"])
+            print(_answer_state_line(
+                ANSWER_PARTIAL, "managed-region staleness check",
+                "0 spans found across %d file(s); nothing was compared, so CURRENT is not decidable"
+                % region_scan["files"], TOOL_VOICE_NOT_DECIDABLE))
+            return 0
         else:
             print("SYSTEM CURRENT (06: %s; managed regions: %d compared across %d file(s), 0 drifted)"
                   % (reason, region_scan["regions"], region_scan["files"]))
@@ -1660,8 +1958,9 @@ def gate(changed=None) -> int:
     drift moment (a source-touching commit), never on unrelated commits (CTO WS-2 ruling)."""
     try:
         if changed is not None and not _file_touches_sources(changed):
-            print("SYSTEM gate: no comp-system _SOURCE in the changeset -- not a trigger-surface "
-                  "commit (gate n/a, open).")
+            print(_answer_state_line(
+                ANSWER_NOT_APPLICABLE, "--gate --changed",
+                "no comp-system _SOURCE in the changeset; not a trigger-surface commit, gate open"))
             return 0
         if not os.path.exists(OUT_JSON):
             print("SYSTEM DRIFT (fail-closed): 06 not emitted -- run comp-system.")
@@ -1685,20 +1984,82 @@ def gate(changed=None) -> int:
 
 
 _KNOWN_ARGS = {"--self-test", "--check", "--gate", "--changed", "--json", "--stdout", "--help", "-h"}
+_VALUE_ARGS = {"--budget", "--cursor"}
 _USAGE = """comp-system -- the NFRA_SYSTEM current-state COMPILER. Usage:
-  comp-system              compile -> WRITE infra/system/06_current_state.{md,json} + refresh managed spans
-  comp-system --stdout     compile -> print the markdown (no write)
-  comp-system --json       compile -> print the json model (no write)
-  comp-system --check      staleness probe (0=fresh 2=stale 1=error; never writes)
+  comp-system [--budget <seconds>] [--cursor BEGIN]
+                           compile -> WRITE infra/system/06_current_state.{md,json} + refresh managed spans
+  comp-system --stdout [--budget <seconds>] [--cursor BEGIN]
+                           compile -> print the markdown (no write)
+  comp-system --json [--budget <seconds>] [--cursor BEGIN]
+                           compile -> print the json model (no write)
+  comp-system --check [--budget <seconds>] [--cursor BEGIN]
+                           staleness probe (0=current 2=stale 1=error 3=NOT-DECIDABLE; never writes)
   comp-system --gate [--changed <files...>]   fail-closed genuine-drift gate (never writes)
   comp-system --self-test  the invariant battery (scratch-only writes)
   comp-system --help | -h  this usage (never compiles, never writes)
+Rule T carrier: --budget <seconds> > COMP_BUDGET_S > default 90 s; --budget 0 is unbounded.
+The compile is one atomic cross_surface_compile.  On expiry it prints BUDGET REACHED and
+DEFERRED with resume --cursor BEGIN, returns 3, and writes no complete record.  --check likewise
+returns 3/NOT-DECIDABLE on expiry or an unreadable required source; its complete-run 0/2/1
+meanings are unchanged.
 An UNKNOWN flag REFUSES (rc 2) -- it must never fall through to the default COMPILE, which
 writes the SHARED estate record (measured at site-Z 2026-08-20: '--help' fell through, ran the
 compile, and wrote 06 -- the device-axis class through a UX door; MSTR relay @f5155c2aba)."""
 
 
+def _parse_cli(args: list) -> tuple:
+    """Parse flags without letting value tokens fall through as a default compile.
+
+    Everything after --changed remains the gate's path list, matching the historical interface.
+    Returns (budget_value, cursor, error_text).  Mode selection continues in main().
+    """
+    prefix = args[:args.index("--changed")] if "--changed" in args else args
+    values = {}
+    unknown = []
+    i = 0
+    while i < len(prefix):
+        arg = prefix[i]
+        if arg in _VALUE_ARGS:
+            if arg in values:
+                return None, None, "%s may be supplied only once" % arg
+            if i + 1 >= len(prefix):
+                return None, None, "%s requires a value" % arg
+            values[arg] = prefix[i + 1]
+            i += 2
+            continue
+        if arg not in _KNOWN_ARGS:
+            unknown.append(arg)
+        i += 1
+    if unknown:
+        return None, None, "UNKNOWN argument(s): %s" % ", ".join(unknown)
+    if "--changed" in args and "--gate" not in prefix:
+        return None, None, "--changed requires --gate"
+    cursor = values.get("--cursor")
+    if cursor is not None and cursor != "BEGIN":
+        return None, None, "--cursor accepts only BEGIN (the compile is one atomic unit)"
+    if cursor is not None and any(m in prefix for m in ("--self-test", "--gate")):
+        return None, None, "--cursor BEGIN applies only to compile mode and --check"
+    budget_value = values.get("--budget")
+    if budget_value is not None and any(m in prefix for m in ("--self-test", "--gate")):
+        return None, None, "--budget applies to compile mode and --check"
+    return budget_value, cursor, None
+
+
+def _install_budget(flag_value, unit: str, resume_args: str):
+    """Resolve a Rule T context, returning (context, usage_error)."""
+    try:
+        return _new_budget(flag_value, unit, resume_args), None
+    except (TypeError, ValueError) as exc:
+        return None, "invalid --budget/COMP_BUDGET_S value (%s)" % exc
+
+
+def _finish_rule_t(ctx: dict, complete: bool) -> list:
+    """The shared terminal line plus the always-printed T-16 deferred bucket."""
+    return [_budget_line(ctx, complete=complete)] + _deferred_lines(ctx, complete=complete)
+
+
 def main(argv=None) -> int:
+    global _ACTIVE_BUDGET
     for _s in (sys.stdout, sys.stderr):
         try:
             _s.reconfigure(errors="replace")
@@ -1708,43 +2069,95 @@ def main(argv=None) -> int:
     if "--help" in args or "-h" in args:
         print(_USAGE)
         return 0
-    # Everything AFTER --changed is its file list; every argument BEFORE it must be a known flag.
-    flagspan = args[:args.index("--changed")] if "--changed" in args else args
-    unknown = [a for a in flagspan if a not in _KNOWN_ARGS]
-    if unknown:
-        print("comp-system: UNKNOWN argument(s): %s -- REFUSED (rc 2), nothing written.\n%s"
-              % (", ".join(unknown), _USAGE), file=sys.stderr)
+    budget_value, cursor, parse_error = _parse_cli(args)
+    if parse_error:
+        print("comp-system: %s -- REFUSED (rc 2), nothing written.\n%s"
+              % (parse_error, _USAGE), file=sys.stderr)
         return 2
     if "--self-test" in args:
         return self_test()
-    if "--check" in args:
-        return check_stale()
     if "--gate" in args:
         changed = None
         if "--changed" in args:
             changed = args[args.index("--changed") + 1:]
         return gate(changed=changed)
-    model = compile_model()
-    if "--json" in args:
-        print(json.dumps(model, indent=2))
+    if "--check" in args:
+        ctx, budget_error = _install_budget(
+            budget_value, "check_verdict", "comp-system --check")
+        if budget_error:
+            print("comp-system: %s -- REFUSED (rc 2), nothing written." % budget_error,
+                  file=sys.stderr)
+            return 2
+        _ACTIVE_BUDGET = ctx
+        try:
+            issues = _required_source_issues()
+            if issues:
+                print(render_markdown(_partial_model("required source unreadable", issues, ctx=ctx)),
+                      end="")
+                return RC_NOT_DECIDABLE
+            if _budget_expired(ctx):
+                print(render_markdown(
+                    _partial_model("budget expired before the check began", [], ctx=ctx)), end="")
+                return RC_NOT_DECIDABLE
+            import contextlib as _ctx
+            import io as _io
+            verdict_output = _io.StringIO()
+            with _ctx.redirect_stdout(verdict_output):
+                rc = check_stale()
+            if _budget_expired(ctx):
+                print(render_markdown(
+                    _partial_model("budget expired during the check", [], ctx=ctx)), end="")
+                return RC_NOT_DECIDABLE
+            print(verdict_output.getvalue(), end="")
+            for line in _finish_rule_t(ctx, complete=True):
+                print(line)
+            return rc
+        finally:
+            _ACTIVE_BUDGET = None
+
+    ctx, budget_error = _install_budget(
+        budget_value, "cross_surface_compile", "comp-system" +
+        (" --stdout" if "--stdout" in args else " --json" if "--json" in args else ""))
+    if budget_error:
+        print("comp-system: %s -- REFUSED (rc 2), nothing written." % budget_error,
+              file=sys.stderr)
+        return 2
+    _ACTIVE_BUDGET = ctx
+    try:
+        model = compile_model(ctx=ctx)
+        if model.get("header", {}).get("compile_complete"):
+            _decorate_answer_states(model)
+            if _budget_expired(ctx):
+                model = _partial_model("budget expired during the atomic compile", [], ctx=ctx)
+            else:
+                model["header"]["rule_t"] = {
+                    "status_line": _budget_line(ctx, complete=True),
+                    "deferred": _deferred_lines(ctx, complete=True),
+                    "cursor": cursor or "BEGIN",
+                }
+        complete = bool(model.get("header", {}).get("compile_complete"))
+        if "--json" in args:
+            print(json.dumps(model, indent=2))
+            return 0 if complete else RC_NOT_DECIDABLE
+        if "--stdout" in args or not complete:
+            print(render_markdown(model), end="")
+            return 0 if complete else RC_NOT_DECIDABLE
+        changes = _write(model)
+        print("comp-system: wrote %s + %s (grounded-against-live; as_of HEAD=%s)"
+              % (os.path.relpath(OUT_MD, WS), os.path.relpath(OUT_JSON, WS), model["header"]["as_of_head"]))
+        span_changes = [c for c in changes if c[0] != "PROBLEM"]
+        problems = [c for c in changes if c[0] == "PROBLEM"]
+        if span_changes:
+            print("comp-system: refreshed %d managed-region span(s) in the sibling docs:" % len(span_changes))
+            for fn, name, old, new in span_changes:
+                print("  %s  cs:%s  %s -> %s" % (fn, name, old, new))
+        else:
+            print(model["header"]["managed_region_answer"]["line"])
+        for _tag, fn, name, why in problems:
+            print("  WARN %s cs:%s -- %s" % (fn, name, why))
         return 0
-    if "--stdout" in args:
-        print(render_markdown(model))
-        return 0
-    changes = _write(model)
-    print("comp-system: wrote %s + %s (grounded-against-live; as_of HEAD=%s)"
-          % (os.path.relpath(OUT_MD, WS), os.path.relpath(OUT_JSON, WS), model["header"]["as_of_head"]))
-    span_changes = [c for c in changes if c[0] != "PROBLEM"]
-    problems = [c for c in changes if c[0] == "PROBLEM"]
-    if span_changes:
-        print("comp-system: refreshed %d managed-region span(s) in the sibling docs:" % len(span_changes))
-        for fn, name, old, new in span_changes:
-            print("  %s  cs:%s  %s -> %s" % (fn, name, old, new))
-    else:
-        print("comp-system: managed-region spans already current (0 changed).")
-    for _tag, fn, name, why in problems:
-        print("  WARN %s cs:%s -- %s" % (fn, name, why))
-    return 0
+    finally:
+        _ACTIVE_BUDGET = None
 
 
 if __name__ == "__main__":

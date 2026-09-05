@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Validate that something is actually COMPLETE and correct, across three axes -- MECHANICAL (does it really work / run / connect / exist, not just look configured?), DECLARATIVE (does the record / claim / name / status match the real implementation -- no map-vs-territory drift?), and SEMANTIC (is the content / output the RIGHT thing with validated quality -- correct values, sane magnitude/sign/units, decision-useful -- not merely present?). Grounds every axis against the REAL artifact / live state -- never a self-report, a "done" claim, or stale memory. Sharpest-test-binds; could-not-verify is a finding; the verifier is not the do-er. Use to check a deliverable before calling it done (the gate in /goal-set), to re-check a "complete" claim, or for any "is this actually finished AND right?" QA. Any agent; invoke /verify <target>.
+description: Validate that something is actually COMPLETE and correct on three axes -- MECHANICAL (does it really work, run, connect, exist), DECLARATIVE (does the record match the implementation), SEMANTIC (is the output the right thing with validated quality). Grounds against the real artifact or live state, never a self-report; could-not-verify is a finding; the verifier is not the do-er. `/verify <target>`; the completion gate in /goal-set. Any agent.
 ---
 
 # /verify -- is it actually done + right? (mechanical / declarative / semantic)

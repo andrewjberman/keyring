@@ -1,6 +1,6 @@
 ---
 name: fabric-check
-description: Deterministic, structured whole-fabric status — a 4-script suite covering both the AGENT axis and the PROJECT axis. AGENTS (fabric-check.py): telemetry-derived dual-signal liveness (LD-0070: LIVE<120s/ALIVE<600s/STALE) fused with the broker summary -> WORKING/IDLE/BLOCKED/SOVEREIGN/STALE-VERIFY/NEEDS-STATUS/DEAF, plus `--agents` mapping each live agent to its project with a one-line what-it's-doing. PROJECTS (fabric-projects.py): not-closed registered projects partitioned HOT (worked <72h) / COLD (>72h, still not closed), each with a <=2-sentence status. COMMITS (fabric-commits.py): scrapes git -> maps commits to project codes + authors, enriching both. Read-only, pure-filesystem/git, no MCP. Any agent ad hoc; COO chains it into /drive. Run: `python .tools/fabric-check.py` (agents, +--blocks/--agents/--json), `python .tools/fabric-projects.py` (--hot/--cold/--json), `python .tools/fabric-commits.py` (--project/--by-author/--json).
+description: Deterministic whole-fabric status on both axes: `python .tools/fabric-check.py` (agent liveness fused with the broker summary -> WORKING/IDLE/BLOCKED/SOVEREIGN/STALE-VERIFY/NEEDS-STATUS/DEAF; `--agents`, `--blocks`, `--json`), `.tools/fabric-projects.py` (HOT/COLD not-closed projects), `.tools/fabric-commits.py` (commits mapped to projects and authors). Read-only, no MCP. Any agent.
 ---
 
 # /fabric-check — Fused Fabric Telemetry + Status

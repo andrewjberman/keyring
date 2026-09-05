@@ -131,10 +131,48 @@ halt_gate_resolve_serial() {
 #   (2) a ~lane suffix must be a single uppercase letter (every fabric lane is:
 #       ~A..~E, ~Z; "Zn" is exactly the corruption shape that got through).
 # Unknown -> caller renders the loud exit-3 fail-closed banner. NEVER silent.
+# --- SPINE v3 WORKER (2026-09-04; 2.0.0_SA_COO~A 94157, gate 1 of v3's first worker drain) ---------
+# 0.9.0_WK_<CODE>~<n> has no home folder and a DIGIT lane, so the two checks below refused every
+# worker and no L7 worker could safe-apply or safe-ec2-deploy; the commit lane learned about workers
+# at e08447ff7d and this gate did not. A worker is a REAL principal iff a NON-TERMINAL task order
+# under <CODE> at HEAD is issued_to it -- the same grant rule the commit lane reads
+# (ADHC_OWNPTH.005; the terminal words are the TO protocol's). Its STOPs are its ISSUER's: a worker
+# has no inbox by design (spine v3 L7), so the gate scans the inbox of the issuer that order names
+# and a [STOP] to the issuer halts its workers' deploys. Fail-closed: no such order, no admission.
+halt_gate_worker_issuer() {
+  # Prints the <issued_by> of a NON-TERMINAL task order under the worker's project that is
+  # issued_to the worker, read at HEAD; rc 1 when none. A `git show` that fails is a `continue`
+  # (toward refusal), never an absence verdict.
+  local serial="$1" code p text issued_to status issued_by
+  code="${serial#0.9.0_WK_}"; code="${code%%~*}"
+  [ -n "$code" ] || return 1
+  while IFS= read -r p; do
+    [ -n "$p" ] || continue
+    text="$(git -C "$HALT_GATE_REPO_ROOT" show "HEAD:$p")" || continue
+    issued_to="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_to>[^<]*</issued_to>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
+    [ "$issued_to" = "$serial" ] || continue
+    status="$(printf '%s\n' "$text" | grep -m1 -oiE '<status>[[:space:]]*[A-Za-z_-]+' | sed -E 's/<status>[[:space:]]*//' | tr 'A-Z' 'a-z')"
+    case "$status" in
+      complete|completed|closed|done|superseded|cancelled|canceled|withdrawn) continue ;;
+    esac
+    issued_by="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_by>[^<]*</issued_by>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
+    [ -n "$issued_by" ] || continue
+    printf '%s\n' "$issued_by"
+    return 0
+  done < <(git -C "$HALT_GATE_REPO_ROOT" ls-files -- "org/missions/D*/*/${code}/task-orders/*.md")
+  return 1
+}
+
 halt_gate_validate_serial() {
   local serial="$1" base lane tier d found=0
   base="${serial%%~*}"
   [ -n "$base" ] || return 1
+  case "$serial" in
+    0.9.0_WK_*~[0-9]*)
+      HALT_GATE_WORKER_ISSUER="$(halt_gate_worker_issuer "$serial")" || return 1
+      export HALT_GATE_WORKER_ISSUER
+      return 0 ;;
+  esac
   if [ "$serial" != "$base" ]; then
     lane="${serial#*~}"
     case "$lane" in
@@ -263,7 +301,9 @@ halt_gate_check() {
     printf '======================================================================\n' >&2
     printf '  Resolved serial: %s\n' "$serial" >&2
     printf '  No agent home folder under org/tier*_*/ matches its base, or its\n' >&2
-    printf '  ~lane suffix is not a single uppercase letter. This is usually a\n' >&2
+    printf '  ~lane suffix is not a single uppercase letter; a spine-v3 worker\n' >&2
+    printf '  (0.9.0_WK_<CODE>~<n>) is admitted only while a NON-TERMINAL task\n' >&2
+    printf '  order under <CODE> at HEAD is issued_to it. This is usually a\n' >&2
     printf '  CORRUPTED session serial file (escaping slip / stray character):\n' >&2
     printf '    org/mcp/sessions/%s.serial\n' "${CLAUDE_CODE_SESSION_ID:-<unset>}" >&2
     printf '  Scanning a nonexistent inbox would PASS while a real [STOP] to the\n' >&2
@@ -272,6 +312,15 @@ halt_gate_check() {
       "${CLAUDE_CODE_SESSION_ID:-<CLAUDE_CODE_SESSION_ID-IS-UNSET>}" >&2
     printf '======================================================================\n' >&2
     return 3
+  fi
+
+  # A WORKER scans its ISSUER (the block above): a worker has no inbox, and a [STOP] addressed to
+  # the seat that issued its order is the STOP that halts it. Printed so the scan's principal is
+  # never silent.
+  if [ -n "${HALT_GATE_WORKER_ISSUER:-}" ]; then
+    printf 'HALT-GATE: worker %s has no inbox; scanning its issuer %s (a [STOP] to the issuer halts its workers)\n' \
+      "$serial" "$HALT_GATE_WORKER_ISSUER" >&2
+    serial="$HALT_GATE_WORKER_ISSUER"
   fi
 
   # Scan the serial's own inbox AND the base-serial inbox (strip ~X suffix) --

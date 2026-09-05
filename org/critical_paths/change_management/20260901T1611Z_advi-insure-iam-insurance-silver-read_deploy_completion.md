@@ -25,3 +25,52 @@
 - 20260901T162349Z LEG L2 closed: PASSES on the live plane. get-role-policy on bd-exporter-ec2-role/advi-49f-chain-access after the apply: TWELVE statemen
 - 20260901T162349Z LEG L3 closed: PASSES. Post-apply targeted re-plan, same 1.9.8 binary, same -target: 'No changes. Your infrastructure matches the confi
 - 20260901T162906Z LEG L5 closed: TWO commits, both authored via .tools/safe-commit.sh -F with the message file written by the Write tool (non-shell write
+- 20260903T080000Z ANNOTATED by 0.7.0_AE_CloudOps~R -- NEVER-2 ROLLBACK TAKEN UPSTREAM; THIS ENTRY STAYS OPEN AND L4 IS STRANDED.
+  Issuer: 2.0.0_SA_COO operating note 93306 (+ pointer 93324), READ-acked by this lane before the work; MSTR 93301 concurred.
+  WHAT CHANGED: the ("insurance_nav_current", ...) stage tuple in data/assets/scripts/gold/runners_49f/chain_49f_entrypoint.py
+  is DISARMED (commented out with a dated block) at commit 530977130b, deployed to s3://opal-data-49financial/_code/ via
+  .tools/safe-deploy.sh rc=0 ("deployed and verified", comp-pipescript MATCH). INDEPENDENTLY VERIFIED against the SERVED
+  artifact rather than the tool's self-report: served sha256 037541a7a771e098... == the blob at 530977130b, and DIFFERS from
+  the pre-disarm blob e65edcda3c9e9a43... (negative control); served object VersionId 0hgfQygK4Dgb_MgWnMRrCvrmV5UQhJq5,
+  LastModified 2026-09-03T07:59:44Z; an AST parse of the SERVED bytes shows 15 in-loop stages ending at c02_twr_daily with
+  insurance_nav_current ABSENT.
+  WHY: 3 of 3 post-arm scheduled fires CHAIN ABORT rc=1 at stage=insurance_nav_current (chain_20260901T214645Z,
+  chain_20260902T094636Z, chain_20260902T124542Z), against a clean PRE-arm control (chain_20260901T124542Z, 18 STAGE OK,
+  0 ABORT). The abort is fail-fast and also took c04_validation and perfrp_projection on every fire.
+  THE FAILURE IS NOT THIS ENTRY'S GRANT. Root cause read at source in bd49f_insurance_nav_current.py:88-112 @c08c1bbe99:
+  _workspace_root() raises when no org/ dir is found above the file, and _SILVER_HOME calls it at MODULE LEVEL, so the
+  producer dies at IMPORT in the flat /tmp/advi_49f_code bundle -- before argparse, and before any S3 read is attempted.
+  The IAM grant this entry records stays APPLIED and is NOT withdrawn; nothing was widened or narrowed by the rollback.
+  L4 STATUS: STRANDED, not failed and not superseded. Its acceptance is a REAL runner read on a scheduled fire, which
+  cannot occur while the stage is disarmed. THE WORLD IS NOT DONE -- do not close this entry SUPERSEDED.
+  L4 RE-ARM RIDES: the runner import-safety fix (acceptance exercised in a FLAT temp dir, not the repo), then re-arm through
+  ledger advi-insure-gold-chain-membership. That fix is ADVI_INSURE forward work and was explicitly NOT done under the note.
+  SURFACED TO THE ISSUER, NOT SELF-ADJUDICATED: this entry is past its 36h window and is now firing RED daily as an AGED
+  OPEN (last_red_at 2026-09-03T07:18:07Z), which mis-describes it -- L4 is blocked on a NAMED future event, not neglected.
+  `deploy_ledger.py hold --gate-type external --gate-ref "<the runner import-safety fix + re-arm>" --reread-event "..."`
+  is the state that would say so, and it re-surfaces as HELD-PAST-REREAD rather than as an aged OPEN. NOT APPLIED HERE
+  because the operating note said in terms "it stays OPEN"; the status change is 2.0.0_SA_COO's call, not this lane's.
+- 20260903T114500Z ANNOTATED by 0.7.0_AE_CloudOps~R -- THE ROLLBACK THAT STRANDED L4 IS NOW ACCEPTED.
+  0.0.0_AB_MSTR 93554 ruled the NEVER-2 rollback ACCEPTED under /govern on the artifact, against the
+  predicate fixed before the fact (93301 item 4 / 93348): s3://opal-data-49financial/gold/advi/_logs/
+  chain_20260903T094640Z.log -- 18 STAGE OK, 0 CHAIN ABORT, "CHAIN OK date=2026-09-02 wall=152.9s",
+  header stages=17 (was 18: the disarm visible in the RUNNING declaration), zero "insurance" tokens,
+  downstream gold written inside the run window (canonical/twr_daily/date=2026-09-02 @09:49:05Z,
+  dimensions/dim_asset_classification/date=2026-09-02 @09:48:54Z). A scheduled production fire on the
+  deployed bytes, not a hand-run.
+  THIS DOES NOT CLOSE L4 AND IS NOT A CLOSE OF THIS ENTRY. L4's proof is a REAL insurance-runner read
+  on a scheduled fire; the stage is disarmed, so no such read occurred or could. The rollback being
+  ACCEPTED and L4 being CLOSED are different objects and are not conflated here. gold/advi/insurance/
+  insurance_nav_current/ remains its single date=2026-08-25 object -- a disarmed stage wrote nothing.
+  STATUS UNCHANGED AND DELIBERATELY SO: OPEN, past window, firing RED daily -- which by the ledger's
+  own guardrail (_qualifies_as_held (a): an open leg of kind != verify IS a half-landed deploy) is the
+  DESIGNED signal and not noise. 2.0.0_SA_COO 93381 withdrew the 93365 hold word on exactly that
+  reading and recorded the RED as expected. The tool refuses HELD here and no override was attempted.
+  93554 item (1) asks for a DISPOSITIONING act recording L4's close as ROLLED-BACK with the re-arm
+  riding advi-insure-gold-chain-membership under a fresh L4. THAT ACT IS NOT TAKEN HERE: the leg
+  vocabulary has {closed-with-proof, open} and no member for "activation attempted, failed,
+  deliberately rolled back" (the Rule 24 (i) residual already on the record as ADVI_INSURE-S12), so
+  every available verb would assert something false. Surfaced to 2.0.0_SA_COO as the router; this lane
+  annotates and does not invent a disposition.
+  Rollback commit 530977130b; deploy served-verified 2026-09-03T07:59:44Z; acceptance ruling 93554;
+  channel rows ADVI_INSURE-S12/S13/S14 @a432f0b6de, @3595675047, @15ba87a50b.

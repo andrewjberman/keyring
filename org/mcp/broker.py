@@ -507,11 +507,18 @@ class BrokerHandler(BaseHTTPRequestHandler):
         # CALL 1) -- the same decision org/mcp/server.py applies before it posts here. This HTTP path is
         # reachable WITHOUT the server (a direct POST), so it grades on its own; a refused send inserts nothing.
         _l8 = cvo_send_guard.cvo_worker_send_refusal(
-            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+            from_serial, [to_serial], cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=text)
         if _l8:
             _log_event("refused", from_serial, f"-> {to_serial} L8 guard: {_l8[:160]}")
             db.commit()
             self._json_response({"ok": False, "refused": _l8}, 403)
+            return
+        # LD-0529 -- the generalised Tier-0/Tier-1 -> Tier-2 act guard, the same decision the server applies.
+        _t2 = cvo_send_guard.tier2_act_send_refusal(from_serial, [to_serial], subject, text, _REPO_ROOT)
+        if _t2:
+            _log_event("refused", from_serial, f"-> {to_serial} LD-0529 guard: {_t2[:160]}")
+            db.commit()
+            self._json_response({"ok": False, "refused": _t2}, 403)
             return
 
         # Always accept the insert. A recipient does not need to be currently

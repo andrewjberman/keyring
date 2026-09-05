@@ -25,6 +25,9 @@ _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
+sys.path.insert(0, str(_WORKSPACE / ".tools"))
+
+import _compbudget  # noqa: E402 -- one shared Rule-T carrier for the composite
 
 from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows  # noqa: E402
 from org.modules.graph.extract_routes import build_routing_table  # noqa: E402
@@ -93,6 +96,32 @@ def _freshness(args) -> gc.Freshness:
     return gc.resolve_freshness(getattr(args, "force", False), getattr(args, "fresh", False))
 
 
+def _budget_state(args):
+    """One wall-clock budget shared by transform, routes, and pipescript/DAG."""
+    try:
+        budget_s, source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    except ValueError as exc:
+        print(f"comp-platinum: ERROR: --budget {exc}")
+        return None
+    return budget_s, source, _compbudget.Clock(budget_s)
+
+
+def _partial(budget_s, source, clock, completed, total, component):
+    print("  " + _compbudget.budget_reached_line(
+        budget_s, source, completed, total, "component", "comp-platinum page", component))
+    print("  ANSWER-STATE: PARTIAL_OR_BLIND  (%s did not complete; no-script is not inferred)" % component)
+    for line in _compbudget.deferred_bucket(total - completed, total, "component",
+                                             ["%s: budget exhausted before this component" % component]):
+        print("  " + line)
+
+
+def _within(budget_s, source, clock, completed, total):
+    print("  " + _compbudget.within_budget_line(completed, total, "component", budget_s, source,
+                                                 round(clock.elapsed(), 3)))
+    for line in _compbudget.deferred_bucket(0, total, "component", []):
+        print("  " + line)
+
+
 def _firm_origin(route, firm: str):
     """The EFFECTIVE serving bucket for an S3-origin ADVI route under a given firm. The static
     CloudFront origin is the bd default; at runtime shared-advisor-router rewrites it to the firm
@@ -133,20 +162,35 @@ def _find_component(query: str) -> Path | None:
 
 
 def cmd_page(args):
+    state = _budget_state(args)
+    if state is None:
+        return 2
+    budget_s, budget_source, clock = state
     path = _find_component(args.component)
     if not path:
         print(f"Component not found: {args.component}")
-        sys.exit(1)
+        print("ANSWER-STATE: SUBJECT_ABSENT_FROM_CORPUS")
+        return 1
 
     flow = build_component_dataflow(path, _WORKSPACE)
     if not flow:
         print(f"Could not parse: {path}")
-        sys.exit(1)
+        print("ANSWER-STATE: PARTIAL_OR_BLIND  (component parser could not answer)")
+        return 0
+    if clock.remaining() is not None and clock.remaining() <= 0:
+        _partial(budget_s, budget_source, clock, 1, 3, "transform")
+        return 0
 
     firm = FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd")
     freshness = _freshness(args)
     rt = _get_routing(freshness)
+    if clock.remaining() is not None and clock.remaining() <= 0:
+        _partial(budget_s, budget_source, clock, 2, 3, "routes")
+        return 0
     dag = _get_dag(firm, freshness)
+    if clock.remaining() is not None and clock.remaining() <= 0:
+        _partial(budget_s, budget_source, clock, 3, 3, "pipescript")
+        return 0
 
     print(f"FULL-STACK TRACE: {flow.component_name}")
     print(f"  File: {flow.file_path}")
@@ -160,7 +204,9 @@ def cmd_page(args):
 
     if not flow.fetches:
         print("  No fetches detected in this component.")
-        return
+        print("  ANSWER-STATE: PRESENT_WITH_ZERO_RESULTS  (real component, zero fetch/script paths)")
+        _within(budget_s, budget_source, clock, 3, 3)
+        return 0
 
     for fb in flow.fetches:
         print(f"  FETCH: {fb.fetch_function}()")
@@ -237,6 +283,9 @@ def cmd_page(args):
                 print(f"      ... +{len(unique) - 10} more")
 
         print()
+
+    _within(budget_s, budget_source, clock, 3, 3)
+    return 0
 
     # Response type field summary
     if flow.response_types:
@@ -1003,6 +1052,11 @@ def main():
     p_page.add_argument('--firm', default=None,
                         help='Firm to trace: bd|49financial (default), inf|inflection, cot|cottonwood. '
                              'ADVI is firm-isolated -- each routes to a different bucket + gold tree.')
+    p_page.add_argument('--budget', metavar='N', default=None,
+                        help='RULE T: one wall-clock ceiling shared by transform, routes, and '
+                             'pipescript/DAG (carrier: --budget > env COMP_BUDGET_S > default %s s); '
+                             '--budget 0 = unbounded. Partial work prints PARTIAL_OR_BLIND.'
+                             % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
     gc.add_freshness_args(p_page)
 
     p_rev = sub.add_parser('reverse', help='S3 key -> routes -> components')
@@ -1032,7 +1086,9 @@ def main():
         'tab-audit': cmd_tab_audit,
         'summary': cmd_summary,
     }
-    commands[args.command](args)
+    rc = commands[args.command](args)
+    if isinstance(rc, int) and rc:
+        sys.exit(rc)
 
 
 if __name__ == '__main__':

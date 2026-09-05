@@ -1,6 +1,6 @@
 ---
 name: brief-create
-description: Write the STEP-1 BRIEF that starts the canonical fabric loop -- the document a CRO seat produces from a plain-English prompt describing what to look into and spec out. Invoked as `/brief-create {what I want you to look into}`. Its consumer is `/endpoint --forward` at step 2, which cuts numbered capability outcomes from it and cites its sections, so this skill's whole job is producing a brief that is CITABLE, cut from OUTCOMES a person can perform rather than systems that emit, and honest about what it did not check. Default mode NEW (greenfield). Mode `--midstream` briefs a project already in flight, where the load-bearing constraint is that the brief is authored BLIND to the current task-order set. Self-contained: everything needed to write a conformant brief is in this file. Andrew-commissioned 2026-09-01 at the CTO terminal.
+description: Write the L1 BRIEF that starts the canonical loop, from a plain-English prompt: `/brief-create {what to look into}`; `--midstream` for a project already in flight (authored blind to the open task-order set). Its consumer is `/endpoint --forward` at L2, which cuts outcomes from it, so the brief must be citable and outcome-shaped. Self-contained. 4.0.0_SA_CRO.
 ---
 
 # /brief-create — step 1 of the canonical fabric loop

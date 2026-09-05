@@ -32,7 +32,9 @@ FAIL-CLOSED. An unreadable file, an unparseable block or an unexpected exception
 A gate that fails open is not a gate.
 """
 import os
+import inspect
 import re
+import pathlib
 import subprocess
 import sys
 
@@ -94,6 +96,16 @@ FABRIC_ENUM = ("laptop", "site-z")
 ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
 SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+")
 TIER01_RE = re.compile(r"^(?:0\.0\.\d+_[A-Z]{2}_|\d+\.\d+\.\d+_SA_)")
+# THE GRANT CANNOT BE EMPTY (Andrew-direct 2026-09-04 ~04:58Z at this terminal, "recs approved" on /open-calls CALL 1 REC (c),
+# record @9ef9a40aae; ADHC_OWNPTH.005; registry stanza @e08447ff7d): a spine-v3 worker 0.9.0_WK_<CODE>~<n> is enumerated in
+# no lane and is admitted to exactly the paths its NON-TERMINAL order names in its <paths> block at HEAD. So a NEW tree order
+# issued to a worker without that block -- or with an empty one -- is an order that cannot be executed without the override
+# the ruling retired, and the cut is where it is refused. Measured before this limb: 0 of 171 files under org/missions
+# carried a <paths> block; the first drain's worker committed both its surfaces through the override.
+WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_[A-Z0-9_]+?[~_][0-9]+$")
+# LINE-ANCHORED (94157 gap (a)): the block is the <paths> tag ALONE on its line through the </paths> tag alone on its
+# line; a prose mention of `<paths>` earlier in the file is not the block and is not graded as one.
+PATHS_BLOCK_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
 
 
 # GATE (iv) -- LD-0521 Amendment 3 (Andrew at the 0.0.0_AB_MSTR terminal 2026-09-03 ~04:0xZ: "COO is the only agent
@@ -128,7 +140,7 @@ def _committer_serial(root):
         except OSError:
             pass
     try:
-        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+        ident = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
                                timeout=20).stdout
     except Exception:  # noqa: BLE001
         return ""
@@ -152,6 +164,365 @@ def _issuer_identity_violations(rel, author):
     return []
 
 
+# CELL-REFERENCE RESOLUTION AT THE CUT (2026-09-03, 1.0.0_SA_CTO on 3.0.0_SA_CVO~A 93412 + the issuer's own evidence
+# 93419): NFRA_CLDGRPH-S5's class recurred 62 minutes after its instance was fixed -- a criterion whose cell_refs did not
+# resolve against the decomposition passed this gate at issuance and could only fail at the worker's proof check, after
+# the order was cut, dispatched and worked; S5 cost a round trip and a BLOCKING row when found at the flip. Every tree
+# task order already names its decomposition (<decomp_doc>) and its cells (<owned_cells>, criterion cell_refs), so the
+# resolution is knowable the moment the face is written. This limb reads the decomposition from the INDEX (what the
+# commit contains), then HEAD, then the worktree; every cell token (commas, semicolons or whitespace between them) must
+# match the cell-id grammar AND be a cell of that decomposition. An unreadable or absent decomposition is a NOTE, never a
+# refusal here -- to-decomp-ref-lint.py owns absence. Tree task orders only, NEW files only (this gate's standing model).
+DECOMP_DOC_TAG_RE = re.compile(r"<decomp_doc>\s*([^<]+?)\s*</decomp_doc>", re.S)
+OWNED_CELLS_RE = re.compile(r"<owned_cells>(.*?)</owned_cells>", re.S)
+CRITERION_TAG_RE = re.compile(r"<criterion\b([^>]*?)/?>")
+# spine v3.0 L6 carrier 4 (one clause per criterion): a criterion WITH a body carries its invocation and expectation as
+# children; the self-closing v2 shape is refused on a NEW tree order. The block regex refuses to open on a self-closing
+# tag (the lookbehind), so a v2 tag never swallows the text up to the next </criterion>.
+CRITERION_BLOCK_RE = re.compile(r"<criterion\b([^>]*?)(?<!/)>(.*?)</criterion>", re.S)
+CRITERION_SELFCLOSE_RE = re.compile(r"<criterion\b[^>]*?/>")
+ATTR_RE = re.compile(r'(\w+)\s*=\s*"([^"]*)"')
+# The same grammar as .tools/proof-of-spec-check.py CELL_ID_RE (its anchored branches included); a change there is a
+# change here, and the checker's battery (.tools/tests/test_proof_of_spec_cell_id_re.py) is the control for both.
+CELL_ID_RE = re.compile(
+    r"\b(?:[A-Z][A-Z0-9]*-(?:m-[a-z0-9_]+|[a-z]{1,4}-[a-z]?\d+)"
+    r"|L3W3-[0-9a-f]{4}-\d+"
+    r"|L3S7B-[0-9a-f]{4}-\d+"
+    r"|CARD-R-(?:m-\d+|[0-9a-f]{4}-\d+)"
+    r"|INGEST-(?:T\d|CONV|INV)-\d+)\b")
+
+
+def _split_cells(value):
+    return [c for c in re.split(r"[\s,;]+", value or "") if c]
+
+
+def _decomp_text(root, doc):
+    """(text, where) for the decomposition at `doc`: the index first, then HEAD, then the worktree; (None, why)."""
+    for ref, where in ((":" + doc, "index"), ("HEAD:" + doc, "HEAD")):
+        try:
+            r = subprocess.run(["git", "show", ref], cwd=root, capture_output=True, text=True, encoding="utf-8",
+                               errors="replace", timeout=30)
+        except Exception as exc:  # noqa: BLE001
+            return None, "git show raised %s" % exc
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout, where
+    p = os.path.join(root, doc)
+    if os.path.isfile(p):
+        try:
+            with open(p, encoding="utf-8", errors="replace") as fh:
+                return fh.read(), "worktree"
+        except OSError as exc:
+            return None, "worktree read failed (%s)" % exc
+    return None, "not in the index, not at HEAD, not in the worktree"
+
+
+def _cell_refs_violations(root, rel, text, decomp_text=None):
+    """(violations, notes) for a NEW tree TO's cell references. `decomp_text` is injectable for the battery."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return [], []
+    m = DECOMP_RE.search(text)
+    if not m or NONE_WORD_RE.match(m.group(1).strip()):
+        return [], []
+    body = m.group(1)
+    dm = DECOMP_DOC_TAG_RE.search(body)
+    doc = dm.group(1).strip() if dm else ""
+    owned = _split_cells(" ".join(OWNED_CELLS_RE.findall(body)))
+    crit = []
+    for tag in CRITERION_TAG_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(tag.group(1)))
+        for c in _split_cells(attrs.get("cell_refs", "")):
+            crit.append((attrs.get("id", "").strip() or "<no id>", c))
+    v, notes = [], []
+    for label, tok in [("owned_cells", c) for c in owned] + [("criterion %s" % cid, c) for cid, c in crit]:
+        if not CELL_ID_RE.fullmatch(tok):
+            v.append("%s: %s names %r, which is not a cell id by the decomposition grammar (a stray delimiter, a typo, "
+                     "or prose in an attribute)" % (rel, label, tok))
+    if not doc:
+        notes.append("%s: <decomp_ref> names no <decomp_doc>; cell references graded on grammar only" % rel)
+        return v, notes
+    if decomp_text is None:
+        decomp_text, where = _decomp_text(root, doc)
+    else:
+        where = "injected"
+    if decomp_text is None:
+        notes.append("%s: decomposition %s unreadable (%s) -- cell references graded on grammar only; absence is "
+                     "to-decomp-ref-lint's" % (rel, doc, where))
+        return v, notes
+    ids = set(CELL_ID_RE.findall(decomp_text))
+    if not ids:
+        notes.append("%s: decomposition %s carries no cell id by the grammar -- cell references graded on grammar only" % (rel, doc))
+        return v, notes
+    for label, tok in [("owned_cells", c) for c in owned] + [("criterion %s" % cid, c) for cid, c in crit]:
+        if CELL_ID_RE.fullmatch(tok) and tok not in ids:
+            v.append("%s: %s names cell %r, which is not a cell of %s (%d cell ids read from the %s) -- a criterion that "
+                     "cites a cell the decomposition lacks cannot be proved by the assignee (NFRA_CLDGRPH-S5 class)"
+                     % (rel, label, tok, doc, len(ids), where))
+    if not v:
+        notes.append("%s: %d owned cell(s) and %d criterion reference(s) resolve against %s (%d cell ids, %s)"
+                     % (rel, len(owned), len(crit), doc, len(ids), where))
+    return v, notes
+
+
+def _criterion_grammar_violations(rel, text):
+    """spine v3.0 L6 (carrier 4 of eight; Andrew-direct 2026-09-03 ~22:2xZ at the CRO terminal): ONE CLAUSE PER CRITERION
+    on a NEW tree task order. A mechanical criterion carries exactly one <invocation> and exactly one <expect> as children;
+    a judgment criterion carries judgment="true" and needs neither (the CVO grades it at L9); a criterion with two of either
+    is COMPOUND and refused; the self-closing v2 shape is refused with the grammar named, because the spine's transition
+    rule makes every NEW issuance v3. Flat-root orders are not graded (the legacy population)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    v = []
+    for m in CRITERION_SELFCLOSE_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(m.group(0)))
+        if attrs.get("judgment", "").strip().lower() == "true":
+            continue
+        v.append("%s: criterion %s is the v2 self-closing shape. spine v3.0 L6: a mechanical criterion is\n"
+                 "    <criterion id=\"..\" cell_refs=\"..\"><invocation>..</invocation><expect>..</expect></criterion>\n"
+                 "  (one of each; the checker decides PASS by the match), or judgment=\"true\" with no children (graded by\n"
+                 "  the CVO at L9). A compound criterion is split at the cut." % (rel, attrs.get("id", "<no id>")))
+    for m in CRITERION_BLOCK_RE.finditer(text):
+        attrs = dict(ATTR_RE.findall(m.group(1)))
+        cid = attrs.get("id", "<no id>")
+        if attrs.get("judgment", "").strip().lower() == "true":
+            continue
+        n_inv = len(re.findall(r"<invocation\b", m.group(2)))
+        n_exp = len(re.findall(r"<expect\b", m.group(2)))
+        if n_inv > 1 or n_exp > 1:
+            v.append("%s: criterion %s is COMPOUND (%d <invocation>, %d <expect>) -- one clause per criterion; split it "
+                     "into one criterion per invocation+expect pair (spine v3.0 L6)" % (rel, cid, n_inv, n_exp))
+        elif n_inv < 1 or n_exp < 1:
+            v.append("%s: criterion %s is mechanical (no judgment=\"true\") but carries %d <invocation> and %d <expect>; "
+                     "it needs exactly one of each, or judgment=\"true\" (spine v3.0 L6)" % (rel, cid, n_inv, n_exp))
+    return v
+
+
+def _coverage_gap(decomp_text, owned_union):
+    """PURE. (missing, unknown, ids): the decomposition's cell ids no staged order owns, the owned ids the decomposition
+    lacks, and the decomposition's id set."""
+    ids = set(CELL_ID_RE.findall(decomp_text or ""))
+    owned = set(owned_union)
+    return sorted(ids - owned), sorted(owned - ids), ids
+
+
+def _coverage_groups(root, targets):
+    """I/O half: {(code, rel_json, doc): [owned cell ids...]} over the NEWLY ADDED tree task orders."""
+    groups = {}
+    for rel in targets:
+        rel = rel.replace("\\", "/")
+        if not TREE_TO_RE.search(rel):
+            continue
+        code, rel_json, err = _project_row_rel(root, rel)
+        if not code or not rel_json or err:
+            continue
+        try:
+            with open(os.path.join(root, rel), "r", encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        except OSError:
+            continue
+        m = DECOMP_RE.search(text)
+        if not m or NONE_WORD_RE.match(m.group(1).strip()):
+            continue
+        dm = DECOMP_DOC_TAG_RE.search(m.group(1))
+        doc = dm.group(1).strip() if dm else ""
+        owned = _split_cells(" ".join(OWNED_CELLS_RE.findall(m.group(1))))
+        groups.setdefault((code, rel_json, doc), []).extend(owned)
+    return groups
+
+
+def _coverage_grade(groups, stage_of, decomp_of):
+    """PURE given its two readers. spine v3.0 L6 (carrier 1 of eight; Andrew-direct 2026-09-03 ~22:2xZ): ONE issuance
+    covers EVERY cell. For a tree project whose row reads dep_stage DECOMP (the issuance moment), the union of
+    <owned_cells> across the staged NEW orders must equal the named decomposition's cell set; a missing cell REFUSES,
+    naming it. A project already EXECUTING is a recut and is NOT graded here -- a recut covers the affected cells,
+    which no gate can enumerate. An unreadable decomposition is a NOTE (absence is to-decomp-ref-lint's)."""
+    v, notes = [], []
+    for (code, rel_json, doc), owned in sorted(groups.items()):
+        stage = stage_of(code, rel_json)
+        if stage != "DECOMP":
+            notes.append("%s: issuance coverage not graded (dep_stage=%r; only a DECOMP-stage issuance must cover every "
+                         "cell -- a recut covers its affected cells)" % (code, stage))
+            continue
+        if not doc:
+            notes.append("%s: issuance coverage not graded (no <decomp_doc> named)" % code)
+            continue
+        decomp_text = decomp_of(doc)
+        if decomp_text is None:
+            notes.append("%s: issuance coverage not graded (decomposition %s unreadable; absence is to-decomp-ref-lint's)"
+                         % (code, doc))
+            continue
+        missing, unknown, ids = _coverage_gap(decomp_text, owned)
+        if not ids:
+            notes.append("%s: issuance coverage not graded (%s carries no cell id by the grammar)" % (code, doc))
+            continue
+        if missing:
+            v.append("%s: the issuance under %s owns %d of %d cell(s) of %s -- MISSING: %s. spine v3.0 L6: ONE issuance "
+                     "covers EVERY cell of the decomposition; cut the missing order(s) in this same commit, or take the "
+                     "audited '# pipeline-override:' on one order with the reason" % (
+                         code, rel_json, len(ids) - len(missing), len(ids), doc, ", ".join(missing)))
+        else:
+            notes.append("%s: issuance coverage %d of %d cell(s) of %s owned by the staged orders" % (code, len(ids), len(ids), doc))
+    return v, notes
+
+
+def _coverage_violations(root, targets):
+    def stage_of(code, rel_json):
+        try:
+            import json as _j
+            with open(os.path.join(root, rel_json), "r", encoding="utf-8") as fh:
+                return _j.load(fh).get("dep_stage")
+        except Exception:  # noqa: BLE001
+            return None
+    return _coverage_grade(_coverage_groups(root, targets), stage_of, lambda doc: _decomp_text(root, doc)[0])
+
+
+_SELF_SRC = pathlib.Path(__file__).read_text(encoding="utf-8", errors="replace") \
+    if "__file__" in dir() else ""
+
+
+def _merge_probe_is_merge_head_only():
+    """True iff _merge_in_progress tests MERGE_HEAD and nothing else, judged on its CODE lines.
+
+    STOP: read the FUNCTION, never grep the module. Two earlier cuts of this check split the
+    module source on a marker -- and found THIS helper's own occurrence of that marker first, so
+    it graded itself, and its own token list contains "parents". Adding the signature to the
+    marker just moved the collision. `inspect.getsource(fn)` returns that function and nothing
+    else, so there is no corpus for the checker to pollute.
+
+    Comments and the docstring are stripped because _merge_in_progress deliberately WARNS about
+    the parent-count shape in prose; an arm that greps the whole body convicts it for its own
+    warning. That is the difference between reading the tool and reading the world.
+    """
+    try:
+        body = inspect.getsource(_merge_in_progress)
+    except Exception:  # noqa: BLE001
+        return False
+    code, in_doc = [], False
+    for ln in body.split(chr(10)):
+        t = ln.strip()
+        if t.startswith(chr(34) * 3):
+            in_doc = not in_doc
+            continue
+        if in_doc or not t or t.startswith("#"):
+            continue
+        code.append(t)
+    body = chr(10).join(code)
+    if "MERGE_HEAD" not in body or "--git-path" not in body:
+        return False
+    return not any(tok in body for tok in ("rev-list", "parents", "HEAD^", "^2"))
+
+
+def _merge_exemption_precedes_checks():
+    """True iff main() consults the merge probe BEFORE it reads the staged-added set.
+
+    Same instrument rule as above: read main()'s own source, not the module's.
+    """
+    try:
+        body = inspect.getsource(main)
+    except Exception:  # noqa: BLE001
+        return False
+    i_probe = body.find("_merge_in_progress(root)")
+    i_added = body.find("added = _newly_added(root)")
+    return 0 <= i_probe < i_added
+
+
+def _self_test():
+    """RED/GREEN arms for carriers 1 (coverage) and 4 (criterion grammar), pure -- no repo read."""
+    decomp = "cells: CE-a-1 CE-a-2 CE-a-3 (three)"
+    grade = lambda owned, stage="DECOMP", text=decomp: _coverage_grade(  # noqa: E731
+        {("X_PRJ", "org/missions/D0/X/X_PRJ/project.json", "d.md"): owned}, lambda c, r: stage, lambda d: text)
+    tree = "org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-1.md"
+    v2 = '<criterion id="C1" cell_refs="CE-a-1"/>'
+    v3 = '<criterion id="C1" cell_refs="CE-a-1"><invocation>echo 1</invocation><expect>1</expect></criterion>'
+    comp = '<criterion id="C2" cell_refs="CE-a-1"><invocation>a</invocation><expect>x</expect><expect>y</expect></criterion>'
+    judg = '<criterion id="C3" cell_refs="CE-a-1" judgment="true"/>'
+    noexp = '<criterion id="C4" cell_refs="CE-a-1"><invocation>a</invocation></criterion>'
+    arms = [
+        ("coverage RED: two orders own a-1, a-2 of three -> refused naming CE-a-3",
+         lambda: any("MISSING: CE-a-3" in x for x in grade(["CE-a-1", "CE-a-2"])[0])),
+        ("coverage GREEN: three cells owned -> admitted, coverage noted 3 of 3",
+         lambda: grade(["CE-a-1", "CE-a-2", "CE-a-3"])[0] == [] and any("3 of 3" in n for n in grade(["CE-a-1", "CE-a-2", "CE-a-3"])[1])),
+        ("coverage NOT GRADED at EXECUTING (a recut): admitted, noted",
+         lambda: grade(["CE-a-1"], stage="EXECUTING")[0] == [] and any("not graded" in n for n in grade(["CE-a-1"], stage="EXECUTING")[1])),
+        ("coverage NOT GRADED when the decomposition is unreadable: admitted, noted",
+         lambda: grade(["CE-a-1"], text=None)[0] == []),
+        ("grammar: v2 self-closing criterion on a tree order -> refused, grammar named",
+         lambda: any("v2 self-closing" in x for x in _criterion_grammar_violations(tree, v2))),
+        ("grammar: v3 mechanical criterion (one invocation, one expect) -> admitted",
+         lambda: _criterion_grammar_violations(tree, v3) == []),
+        ("grammar: COMPOUND criterion (two expects) -> refused",
+         lambda: any("COMPOUND" in x for x in _criterion_grammar_violations(tree, comp))),
+        ("grammar: judgment=true self-closing -> admitted (graded by the CVO)",
+         lambda: _criterion_grammar_violations(tree, judg) == []),
+        ("grammar: mechanical criterion without <expect> -> refused",
+         lambda: any("exactly one of each" in x for x in _criterion_grammar_violations(tree, noexp))),
+        ("grammar: a flat-root order is not graded (legacy population)",
+         lambda: _criterion_grammar_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v2) == []),
+        # GATE (v): the grant cannot be empty (RULING 1 @9ef9a40aae)
+        ("grant RED: a worker order with NO <paths> block -> refused, names the ruling",
+         lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n" + v3))),
+        ("grant GREEN: a worker order with two entries (a file, a glob) -> admitted",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n  org/modules/graph/cli.py\n  .tools/tests/test_x_*.py\n</paths>\n" + v3) == []),
+        ("grant RED: an EMPTY block (blank + comment lines only) -> refused",
+         lambda: any("EMPTY" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n\n  # nothing\n</paths>\n"))),
+        ("grant RED: an absolute entry and a climbing entry -> each refused",
+         lambda: len(_worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n<paths>\n/etc/x\norg/../secret\norg/ok.py\n</paths>\n")) == 2),
+        ("grant: a prose mention of <paths> before the block is NOT the block (94157 gap (a)) -- the block after it is graded",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nthe `<paths>` block below names the grant\n<paths>\norg/ok.py\n</paths>\n" + v3) == []),
+        ("grant: a prose mention with NO block after it -> refused as NO block",
+         lambda: any("NO <paths> block" in x for x in _worker_grant_violations(tree, "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\nsee <paths> in the protocol\n" + v3))),
+        # MERGE EXEMPTION (94264). A self-test cannot safely open a real merge in the shared tree,
+        # so these are structural + a function-level probe; the behavioural arm is 0.0.0_AB_MSTR's
+        # own reconcile, which is the RED case that produced the finding.
+        ("merge: the gate HAS a merge exemption at all (its two siblings did; this one did not)",
+         lambda: "_merge_in_progress" in _SELF_SRC and "MERGE COMMIT -- task-order checks exempt" in _SELF_SRC),
+        # STOP: THIS ARM GRADES CODE, NOT PROSE. Its first cut asserted that the string "two
+        # parents" was absent from the function -- and FAILED on the function's own WARNING
+        # against that very shape. A check that parses prose reads the TOOL, not the world
+        # (the estate has that finding twice already). It now strips comments and the docstring
+        # and grades the EXECUTABLE lines only.
+        ("merge: the probe tests MERGE_HEAD and nothing else -- no parent-count test in the CODE",
+         lambda: _merge_probe_is_merge_head_only()),
+        ("merge: the exemption is NOT conditioned on how the staged list was sourced",
+         lambda: "OWNED_PATHS_STAGED_FILES" not in inspect.getsource(main).split("added = _newly_added")[0]
+         and _merge_exemption_precedes_checks()),
+        ("merge: _merge_in_progress returns False in a clean tree (positive control on the probe)",
+         lambda: _merge_in_progress(_repo_root()) is False),
+        ("merge: a NON-merge commit still reaches the task-order checks (the exemption is narrow)",
+         lambda: _merge_exemption_precedes_checks()),
+        # _top_section BACKTICK TOLERANCE (94213 refusal 2). The RED arm is the bug that was LIVE:
+        # it fails against the pre-patch gate and passes after, which is what makes it a control.
+        ("endpoint RED: a heading whose command is fenced IS found (was a FALSE ABSENCE)",
+         lambda: _top_section("## ENDPOINT (step 2, `/endpoint --forward`)\nbody\n",
+                              ENDPOINT_HEADING) is not None),
+        ("endpoint GREEN: the bare template heading still found; a DIFFERENT heading still None",
+         lambda: _top_section("## ENDPOINT (step 2, /endpoint --forward)\nbody\n",
+                              ENDPOINT_HEADING) is not None
+         and _top_section("## ENDPOINTS (step 2, /endpoint --forward)\nbody\n",
+                          ENDPOINT_HEADING) is None
+         and _top_section("## ENDPOINT (step 3, /endpoint --forward)\nbody\n",
+                          ENDPOINT_HEADING) is None),
+        ("endpoint: a fenced heading INSIDE a ``` fence is still not a section (f1 falsifier holds)",
+         lambda: _top_section("```\n## ENDPOINT (step 2, `/endpoint --forward`)\n```\n",
+                              ENDPOINT_HEADING) is None),
+        ("grant: a seat's order without <paths> is not graded (its grant is its lanes); a flat-root worker order is not graded",
+         lambda: _worker_grant_violations(tree, "<issued_to>0.8.0_AE_CloudComp~J</issued_to>\n" + v3) == []
+         and _worker_grant_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<issued_to>0.9.0_WK_X_PRJ~2</issued_to>\n") == []),
+    ]
+    failed = 0
+    for name, fn in arms:
+        ok = False
+        try:
+            ok = bool(fn())
+        except Exception as exc:  # noqa: BLE001
+            name += " (raised %s: %s)" % (type(exc).__name__, exc)
+        print("  %s  %s" % ("PASS" if ok else "FAIL", name))
+        failed += 0 if ok else 1
+    print("[to-pipeline-gate --self-test] RESULT: %d arm(s) failed of %d" % (failed, len(arms)))
+    return 1 if failed else 0
+
+
 def _issued_to_tier_violations(rel, text):
     """GATE (i): complaints about a NEW tree TO's <issued_to>. [] for flat-root TOs (out of scope)."""
     rel = rel.replace("\\", "/")
@@ -173,10 +544,41 @@ def _issued_to_tier_violations(rel, text):
     return out
 
 
+def _worker_grant_violations(rel, text):
+    """GATE (v): a NEW tree order issued_to a worker carries a non-empty <paths> block -- one path per line, relative to
+    the repo root, globs allowed, '#' lines ignored -- because the lane resolver (ADHC_OWNPTH.005) admits the worker to
+    exactly those paths and nothing else. Entries that climb ('..') or start at a filesystem root are refused. [] for
+    flat-root orders and for orders issued to a seat (a seat's grant is its lanes)."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    who = [m.group(1).strip() for m in ISSUED_TO_RE.finditer(text)]
+    if not any(WORKER_SERIAL_RE.match(w) for w in who):
+        return []
+    m = PATHS_BLOCK_RE.search(text)
+    if not m:
+        return ["%s: issued_to a worker (%s) with NO <paths> block. The order IS the worker's grant (Andrew-direct "
+                "2026-09-04 'recs approved' @9ef9a40aae, ADHC_OWNPTH.005): the lane resolver admits the worker to exactly "
+                "the paths this block names, so an order without one cannot be executed without the override the ruling "
+                "retired. Add <paths>...</paths>: one path per line, relative to the repo root, globs allowed, every file "
+                "the worker will write (deliverables/<serial>/ is the tree convention and needs no entry)."
+                % (rel, ", ".join(who))]
+    entries = [ln.strip().strip("`").strip() for ln in m.group(1).splitlines()]
+    entries = [e for e in entries if e and not e.startswith("#")]
+    out = []
+    if not entries:
+        out.append("%s: the <paths> block is EMPTY -- an empty grant. Name every file the worker will write." % rel)
+    for e in entries:
+        n = e.replace("\\", "/")
+        if n.startswith("/") or re.match(r"^[A-Za-z]:", n) or ".." in n.split("/"):
+            out.append("%s: <paths> entry %r is not a repo-relative path (no leading /, no drive letter, no '..')." % (rel, e))
+    return out
+
+
 def _repo_root():
     try:
         out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                             capture_output=True, text=True, timeout=20)
+                             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20)
         if out.returncode == 0:
             return out.stdout.strip()
     except Exception:  # noqa: BLE001
@@ -192,7 +594,7 @@ def _newly_added(root):
     """
     try:
         out = subprocess.run(["git", "diff", "--cached", "--name-status"],
-                             cwd=root, capture_output=True, text=True, timeout=30)
+                             cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30)
     except Exception:  # noqa: BLE001
         return None  # fail closed: caller refuses
     if out.returncode != 0:
@@ -477,7 +879,13 @@ PRD_FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 # MEASURED before this limb existed: a bare id sweep of ETFS_GUARDRAIL_PRD.md read NINE outcomes
 # against a header listing EIGHT, because the ENDPOINT section QUOTES a CVO finding about FWD-9.
 # A limb counting mentions would refuse its own first PRD on a quotation.
-FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)[ \t]{2,}\S", re.M)
+# COLUMN-ALIGNED IDS (2026-09-03, 2.0.0_SA_COO 93532 -- three round-5 orders refused on ONE character): the card form
+# pads the id to one text column, so a one-digit id is followed by TWO spaces and a two-digit id by ONE. The first
+# two-digit outcome in the estate (NFRA_COMPEFFICACY FWD-10, PRD v0.5) therefore read as a MENTION and the header was
+# refused for listing an outcome the section "did not define". A definition is the id at line start followed by
+# whitespace up to the text column: 2+ spaces after any id, or exactly one after an id of two or more digits. The
+# mention exclusions stand: an apostrophe ("FWD-7's"), a backtick, or a mid-line citation still do not match.
+FWD_DEF_RE = re.compile(r"^[ \t]*(FWD-[0-9]+)(?:[ \t]{2,}|(?<=[0-9]{2})[ \t])\S", re.M)
 
 
 # A fence OPENER by the CommonMark grammar the estate's documents actually use: 0-3 spaces of indent,
@@ -552,7 +960,20 @@ def _top_section(text, heading):
     One anchored, unindented, whole-line, fence-aware grammar closes all four at once."""
     blank = _blank_fences(text)
     if isinstance(heading, str):
-        pat = re.compile(r"(?m)^" + re.escape(heading) + r"[ \t]*$")
+        # BACKTICK-INSENSITIVE (2026-09-04, 1.0.0_SA_CTO, on 2.0.0_SA_COO 94213 refusal 2).
+        # An EXACT-string compare made this a FALSE-ABSENCE generator: NFRA_OUTSET's PRD wrote the
+        # heading as "## ENDPOINT (step 2, `/endpoint --forward`)" -- the template title with the
+        # command in code fences -- and the gate reported the MANDATORY section MISSING. That is the
+        # dangerous direction: the limb exists so step 10 can ask "does the PRD name this outcome?",
+        # and surprise-row-gate.py refuses route=SCOPE_CHANGE without an outcome_ref that only an
+        # ENDPOINT section supplies -- so a false absence makes a real scope change UNFILEABLE.
+        # Backticks are markdown decoration on the TITLE TEXT and carry no meaning here, so they are
+        # tolerated ANYWHERE inside the title. Nothing else loosens: every non-backtick character is
+        # still matched exactly and the match is still whole-line, anchored at column 0 and
+        # fence-aware, so no DIFFERENT heading becomes reachable.
+        # COST: one "`*" per character in the compiled pattern. NON-APPLICATION: a compiled-regex
+        # `heading` is passed through untouched -- its author already owns its own grammar.
+        pat = re.compile(r"(?m)^" + "`*".join(re.escape(c) for c in heading) + r"[ \t]*$")
     else:
         pat = heading
     m = pat.search(blank)
@@ -671,6 +1092,21 @@ def check_prd_conformance(root, rel):
         txt = _staged_blob(root, rp)
         if txt is None or _top_section(txt, ENDPOINT_HEADING) is None:
             continue  # limb 4 reports absent/unreadable/endpoint-less PRDs
+        # PARENT PRD (2026-09-03, 1.0.0_SA_CTO, the ADVI_INSURE / ADVI_49F retrofits): a project's prds[] may list a
+        # PARENT program PRD for context (ADVI_INSURE lists D2_ADVI_49F_E2E_PRD.md, whose header names ADVI_49F). Grading
+        # that header against this project's row would refuse every child of every program PRD on identity. A listed PRD
+        # whose header names ANOTHER project is graded by that project's own row and is NOTED here, not graded; a PRD with
+        # no header, or a header naming THIS project, is graded exactly as before.
+        _hm = PRD_FENCE_RE.search(txt)
+        if _hm:
+            try:
+                _hp = (_json.loads(_hm.group(1)) or {}).get("project")
+            except Exception:  # noqa: BLE001
+                _hp = None
+            if _hp and _hp != expect.get("project"):
+                notes.append("%s: %s carries a PRD_HEADER for project %s (a parent or sibling PRD listed for context) -- "
+                             "graded by that project's row, not this one" % (rel, rp, _hp))
+                continue
         graded += 1
         for c in _prd_conformance(txt, header_schema, expect):
             v.append("%s: %s: %s" % (rel, rp, c))
@@ -699,7 +1135,7 @@ def check_file(root, rel):
         # be written is a NOTE, never a refusal -- the override was already legal, the audit is the record of it.
         reason = ov.group(1).strip()
         try:
-            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True,
+            who = subprocess.run(["git", "var", "GIT_AUTHOR_IDENT"], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
                                  timeout=20).stdout.split(" <")[0].strip() or "<unknown author>"
         except Exception:  # noqa: BLE001
             who = "<unknown author>"
@@ -728,8 +1164,16 @@ def check_file(root, rel):
 
     # GATE (i) -- Tier-0/1 in <issued_to> on a NEW tree TO is refused (2026-09-03, @716a9bc7ce call 3).
     v.extend(_issued_to_tier_violations(rel, text))
+    # GATE (v) -- a NEW tree TO issued to a worker carries its grant, the <paths> block (RULING 1 @9ef9a40aae).
+    v.extend(_worker_grant_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
+    # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).
+    _cv, _cn = _cell_refs_violations(root, rel, text)
+    v.extend(_cv)
+    notes.extend(_cn)
+    # spine v3.0 L6 carrier 4: one clause per criterion on a NEW tree order.
+    v.extend(_criterion_grammar_violations(rel, text))
 
     # LAYER 3's teeth -- and this is what ACTIVATES the sibling gate above. That gate fires only
     # when the project is "pipeline-registered", whose predicate is `dep_stage` present in the
@@ -839,7 +1283,7 @@ def check_complete_flip(root, rel):
                 "whose validator cannot run" % rel]
     try:
         r = subprocess.run(["python", chk, inst], cwd=root,
-                           capture_output=True, text=True, timeout=180)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180)
     except Exception as exc:  # noqa: BLE001
         return ["%s: could not run the validator (%s) -- fail-closed" % (rel, exc)]
     if r.returncode != 0:
@@ -898,10 +1342,65 @@ def sweep(root):
     return 0
 
 
+def _merge_in_progress(root):
+    """True iff a merge is in progress -- MERGE_HEAD exists.
+
+    MERGE_HEAD *ONLY*. Do NOT add "HEAD has two parents" as a second condition: in a PRE-COMMIT
+    hook HEAD is the PREVIOUS commit, so a two-parent-HEAD test silently exempts the next ORDINARY
+    commit after any merge, for every agent. owned-paths-check.sh:69-75 carries that finding and it
+    was caught by exercising the hook while HEAD happened to be a merge.
+
+    `--git-path` rather than "$GIT_DIR/MERGE_HEAD": a linked worktree keeps its own.
+    """
+    try:
+        p = subprocess.run(["git", "rev-parse", "--git-path", "MERGE_HEAD"], cwd=root,
+                           capture_output=True, text=True)
+        if p.returncode != 0:
+            return False
+        return os.path.isfile(os.path.join(root, p.stdout.strip()))
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def main(argv):
     root = _repo_root()
     if "--sweep" in argv[1:]:
         return sweep(root)
+    if "--self-test" in argv[1:]:
+        return _self_test()
+
+    # ⛔ MERGE EXEMPTION (2026-09-04, 1.0.0_SA_CTO on 0.0.0_AB_MSTR's 94264). A MERGE IS NOT
+    # AUTHORSHIP. This gate had none while BOTH its siblings did -- owned-paths-check.sh:85 and
+    # surprise-row-gate.py -- so it graded the INTEGRATOR as the author of every task order any
+    # merge carried. Measured on the first cross-fabric reconcile: 27 of site Z's ALREADY-COMMITTED
+    # orders (each verified present at origin/SITEZ with `git cat-file -e`) were refused as "a NEW
+    # tree task order committed under 0.0.0_AB_MSTR", plus 153 criterion-grammar refusals because
+    # their fabric's orders are v2 and ours is v3. THAT BLOCKED EVERY CROSS-FABRIC RECONCILE THAT
+    # CARRIES A TASK ORDER, which from now on is all of them.
+    #
+    # AND THE VERSION-SKEW HALF IS A RULING, NOT A SIDE EFFECT: the spine's own transition rule is
+    # that a round open at an amendment finishes under the task orders ALREADY CUT. v3's criterion
+    # grammar binds orders cut AFTER v3; it does not retro-refuse orders that were valid when and
+    # where they were written. A merge is exactly the moment that rule has to hold, so the exemption
+    # IS the mechanism for it rather than a hole beside it.
+    #
+    # ⛔ NOT CONDITIONED ON HOW THE STAGED LIST WAS SOURCED. owned-paths-check.sh:76-84 shipped that
+    # guard and it KILLED the exemption in production -- the active pre-commit hoists the staged list
+    # into an env var, so the guard's condition was always false in a real run and true only on the
+    # direct-invocation path the author tested. A MERGE IS A MERGE REGARDLESS OF HOW THE STAGED LIST
+    # WAS SOURCED.
+    #
+    # RESIDUAL, STATED RATHER THAN PAPERED OVER: a merge can carry a task order that was never gated
+    # anywhere (a branch on which no hook ran). This exemption admits that case, exactly as both
+    # siblings do. The control for it is the DRAIN's refuser (safe-merge.sh), which grades the merged
+    # index before the merge commits -- not this gate, which cannot tell a fresh order from an
+    # already-landed one once both are simply "staged".
+    if _merge_in_progress(root):
+        print("[to-pipeline-gate] OK: MERGE COMMIT -- task-order checks exempt; merged orders were "
+              "gated at their own authorship, on their own fabric's spine version "
+              "(0.0.0_AB_MSTR 94264; siblings owned-paths-check.sh:85, surprise-row-gate.py).")
+        return 0
+
     added = _newly_added(root)
     if added is None:
         print("[to-pipeline-gate] REFUSED: could not read the staged index. Fail-closed.",
@@ -925,6 +1424,11 @@ def main(argv):
         v, notes = check_file(root, rel)
         all_v.extend(v)
         all_notes.extend(notes)
+    # spine v3.0 L6 carrier 1: ONE issuance covers EVERY cell -- graded over the staged set, not per file.
+    if targets:
+        _cov_v, _cov_n = _coverage_violations(root, targets)
+        all_v.extend(_cov_v)
+        all_notes.extend(_cov_n)
 
     # LAYER 1 half B runs on EVERY staged TO, added or modified -- a `complete` flip is almost
     # always a MODIFY, so scoping this to newly-added (as layers 2/3 correctly are) would make it

@@ -57,6 +57,17 @@ Use the full serial literally. Never drop, add, or infer a `~Lane` suffix.
    continue with the assigned work. Repeat the root-level inbox sweep at the
    beginning of every active turn; do not launch a second monitor.
 
+8. SHARED-BRANCH LAW (stated here because this runtime carries no hook for it;
+   measured 2026-09-03 when a Codex worker pushed `CLOUD` inside Andrew's hold
+   with 144 commits of every seat): a shared branch (`CLOUD`, `DEV`, `PROD`,
+   `main`, `SITEZ`) is pushed ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and
+   only on Andrew's word while he is at the terminal. You commit through
+   `.tools/safe-commit.sh` and NEVER push; every report states its push state
+   as LOCAL with the origin hash from `git ls-remote`. A rejected push is not
+   yours to retry. Your acts come only from a task order in your own
+   `task_orders/` home, issued by `2.0.0_SA_COO` (or its lane); an ask that
+   arrives without an order is routed back to its sender, never worked.
+
 For an already-open embedded session, migration is not an improvised startup.
 Use `org/mcp/handoff-codex-seat.ps1` from a separate PowerShell as specified by
 the canonical monitor guide.

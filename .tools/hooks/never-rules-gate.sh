@@ -381,6 +381,18 @@ if printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES"; then
     if [ "$PR" = "true" ] && [ -n "$(scan PULL_REBASE_CFG '--no-rebase' "$_RE_PULL")" ]; then
         deny "BLOCKED (CLAUDE.md NEVER#7): 'git pull' on shared branch '$BRANCH' with pull.rebase=true SILENTLY REBASES -- this is the cell nobody types and nobody gated (headmove-guard.sh carries 'pull' x0, and the remedy for a rejected push sends you straight here). Use: git pull --no-rebase. Or fix the config by running 'git config pull.rebase false' AS ITS OWN SEPARATE COMMAND -- do NOT inline it as 'git -c pull.rebase=false pull' (F-XXX: the inline one-shot was the shape that EVADED this gate until 2026-08-05; it is gated now, but the standalone form is the one to reach for). Audited override: '# never-override: <reason>'."
     fi
+
+    # THE INLINE ONE-SHOT, gated ON ITS OWN TEXT (2026-09-03, 1.0.0_SA_CTO on 0.0.0_AB_MSTR's suite read 93288):
+    # `git -c pull.rebase=true pull` rebases REGARDLESS of the repo config, but the limb above only fires when
+    # `git config pull.rebase` already reads true -- so on a repo configured false (this device: false on both
+    # ajb and portal) the one-shot sailed through, while the deny text above claimed it was gated. The suite's
+    # two `-c pull.rebase=true` arms are the measurement: PASS (want DENY) against the hook before this limb.
+    # Matched as a simple command whose git carries `-c pull.rebase=<truthy>` BEFORE its `pull` verb; the
+    # `--no-rebase` excuse stands because that flag overrides the -c on the same command line.
+    _RE_PULL_INLINE="${_LEAD}"'git([[:space:]]+[^[:space:]]+)*[[:space:]]+-c[[:space:]]+pull\.rebase=(true|1|yes|on|merges|interactive)([[:space:]]+[^[:space:]]+)*[[:space:]]+pull([[:space:]]|$)'
+    if [ -n "$(scan PULL_REBASE_INLINE '--no-rebase' "$_RE_PULL_INLINE")" ]; then
+        deny "BLOCKED (CLAUDE.md NEVER#7): 'git -c pull.rebase=true pull' on shared branch '$BRANCH' is a rebase written as a config one-shot -- it rebases whatever the repo config says. Use: git pull --no-rebase. Audited override: '# never-override: <reason>'."
+    fi
 fi
 
 # =========================================================================================

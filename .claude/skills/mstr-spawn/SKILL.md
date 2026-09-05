@@ -1,6 +1,6 @@
 ---
 name: mstr-spawn
-description: MSTR + COO event-triggered skill — provision a new agent session by serial via spawn-agent.ps1, with concurrency-cap pre-check, optional first-message direction, broker-registration verification, and audited bypass for legitimate overflow. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane) — a COO function in addition to MSTR since Andrew-direct 2026-08-28. Sibling to /mstr-kill.
+description: Provision a new agent session by serial via spawn-agent.ps1: concurrency-cap pre-check, optional first-message direction, broker-registration verification, audited bypass for legitimate overflow. Invoked by 0.0.0_AB_MSTR or 2.0.0_SA_COO (base or ~lane). Sibling to /mstr-kill.
 ---
 
 # /mstr-spawn — provision an agent session

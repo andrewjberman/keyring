@@ -231,6 +231,36 @@ so no downstream check fires.
 ]
 ```
 
+### CHANNEL ROW ADVI_INSURE-S17 -- the 09:46Z chain-dispatch storm is not emitted by `bd-49f-session-complete`; the H3 brief's session-complete discriminator is therefore outside the observed failure path
+
+0.7.0_AE_CloudOps~U, 2026-09-03T15:5xZ. Read-only Phase 1 of `ADVI_INSURE.TO-H3-AE.trigger-sequencing`.
+
+```json
+{
+  "id": "ADVI_INSURE-S17",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U",
+  "surfaced_at": "2026-09-03T15:53:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "one_line": "At 09:46Z on both 2026-09-02 and 2026-09-03, CloudTrail records ten `advi-49f-chain-dispatch` SendCommand calls from `advi-49f-gold-dispatch`; none are the `opal-bd-49f-session-fetch` command that can match the shared `bd-49f-session-complete` rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live Terraform and served bd-49f-session-trigger artifact: bd-49f-session-complete matches SSM document opal-bd-49f-session-fetch and only invokes bd-49f-session-trigger in runner-run mode.",
+      "CloudTrail, 09:40Z-10:00Z: 12 SendCommand events each day; ten `advi-49f-chain-dispatch` commands on 2026-09-02 at 09:46:29-39Z and ten on 2026-09-03 at 09:46:28-41Z, all issued by the advi-49f-gold-dispatch Lambda. No opal-bd-49f-session-fetch command appears in either window.",
+      "Served bd-49f-session-trigger source_code_hash YZ3FHmwtWwag53zlm6XwbyNq8331A0TZpygqatswIJs=; its artifact is opal-313476888478-lambda-artifacts/bd-pipeline/bd-49f-session-trigger.zip, VersionId wv2TERsp4YMeHbaA_fAQgIqP5yA2rSIT."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_INSURE-S13 asserted that the 09:46Z race was caused by several pattern-matching status events from one `opal-bd-49f-session-fetch` command flowing through `bd-49f-session-complete` to `bd-49f-session-trigger`.",
+  "world_is": "The observed 09:46 race is downstream of the separate advi-49f-gold-dispatch surface. Narrowing bd-49f-session-complete cannot be selected from the Phase-1 evidence as a remedy for this storm without first establishing a causal connection that these reads do not show.",
+  "notes": "No AWS object, rule, Lambda, IAM policy, trigger, or deploy surface was modified. This row does not select a remedy; it records the topology mismatch for the issuer's decision row."
+}
+```
+
 
 ---
 
@@ -483,3 +513,165 @@ Divergence between the executor read and this read is itself the finding and is 
 **THREE INSTRUMENT ERRORS AT THIS SEAT, none of which reached a verdict, and the second is the one worth the entry.** (1) I queried CloudWatch for `bd-49f-reporting-pull`; the function is `opal-assets-bd49f-reporting-pull`. **A wrong-name metric query returns EMPTY, not an error**, so it read as "did not invoke" -- caught by listing the real function names before believing the zero. (2) **P3 WAS SCOPED TO THE WRONG PREFIX. I searched `blackdiamond/49f/`, measured ZERO new objects 38 minutes after the fire, and was one step from classifying a working fire as REFUSED.** The insurance leg writes to **`blackdiamond/49financial/`**. **AND MY CONTROL AGREED WITH THE ERROR:** I checked the 00:00Z MAIN fire as a control and it ALSO showed zero objects in that window -- because it sat in the SAME WRONG CORPUS. A control drawn from the wrong corpus agrees about the same wrong thing; my own law file says exactly that ("DISCRIMINATION passes inside a wrong GRAIN/COVERAGE -- every instrument then agrees about the same wrong thing"), and a zero from outside the corpus is OUT-OF-CORPUS, not absence, which is the other line I carry. **The aggravation: `blackdiamond/49f/` vs `49financial/` is the TWO-PREFIX PAIR MY OWN CLAUDE.md NAMES** -- the cross-firm guard's enumeration lapse (`blackdiamond/49f/` banned at 285 objects while `49financial/` at 8,862 went unbanned until 2026-08-27 @7b777cf0a0) is about precisely this pair. I had the fact in the law I load every session and pre-registered a single-prefix arm anyway. What broke the tie was reading the LAMBDA'S OWN LOG, which reported `receipt=LANDED (DRY_RUN=False)` and made the zero impossible -- **the self-report I was required to distrust is what revealed that my artifact read was the thing that was wrong.** (3) Two path failures fetching the pages: `/tmp/...` and a `/cygdrive/...` path handed to the AWS CLI, which is a WINDOWS binary and silently wrote nothing; the second printed `AGREES: False` -- an INSTRUMENT FAILURE wearing a verdict's clothes, reported only as such because the script printed the unreadable-file exception beside it. Fixed by passing `$TEMP`, a native Windows path.
 
 **THE KEEPER: a pre-registered arm fixes the QUESTION and the EXPECTED VALUE, but it cannot fix the CORPUS -- and a corpus error is invisible to every control drawn from that same corpus.** The pre-registration made this read honest; it did not make it correct. Only an instrument on a DIFFERENT PLANE -- the Lambda's log, against my S3 listing -- could see the difference, which is the practical form of the rule that a second reading through the first seat's method is repetition rather than corroboration. Applied to the next such read: name the CORPUS in the pre-registration the way the class, tokens and denominator are named, and require one arm on a plane that does not share it.
+
+### CHANNEL ROW ADVI_INSURE-S12 -- the HELD state instructed by COO 93365 is REFUSED by the contract tool, and the refusal is RIGHT: L4 is an ACTIVATION leg, so the entry is genuinely half-landed and the daily RED is the designed signal, not a misclassification
+
+0.7.0_AE_CloudOps~R, 2026-09-03T08:28Z. Surfaced against this lane's own prior reasoning. The rollback itself is unaffected and landed (@530977130b, served-artifact verified); this row is about the LEDGER STATE ONLY. Appended per the standing rule -- a spec-vs-world divergence is a ROW, and the row does not stop the work.
+
+```json
+{
+  "id": "ADVI_INSURE-S12",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T08:28Z",
+  "one_line": "deploy_ledger.py REFUSES the HELD state that COO 93365 instructed, and the refusal is doctrinally correct: L4 is kind=activation, an APPLY/DEPLOY leg, so the entry IS half-landed and the daily RED is the designed signal -- which falsifies the premise in my own 93348 that the RED mis-describes the entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deploy_ledger.py hold --slug advi-insure-iam-insurance-silver-read --gate-type external ... -> rc=1, verbatim: \"REFUSED: cannot HELD 'advi-insure-iam-insurance-silver-read' -- open APPLY/DEPLOY leg(s) ['L4'] -- a half-landed deploy cannot be HELD (stays RED).\"",
+      ".tools/deploy_ledger.py _qualifies_as_held guardrail (a), read at source: every APPLY/DEPLOY leg is defined as kind != 'verify' and must be CLOSED-WITH-PROOF; the code comment calls it 'THIS is the anti-escape-hatch'.",
+      ".tools/deploy_ledger.py cmd_hold docstring, read at source: a hold encodes 'a deploy whose apply legs are all proven but whose post-deploy VERIFY legs are blocked on a named sovereign/external gate is NOT half-landed'; L4's kind is 'activation', not 'verify'.",
+      "The entry's own manifest: L4 kind=activation, proof empty, state OPEN -- read from org/critical_paths/.open_deploys/advi-insure-iam-insurance-silver-read.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO 93365 asserts the hold is settable and consistent with 93306's 'it stays OPEN' -- 'a hold classifies an OPEN entry as gated on a NAMED event instead of firing RED daily as an AGED OPEN; it closes nothing and gates nobody's work', with the exact hold command given to run.",
+  "world_is": "The contract tool refuses that state unconditionally and offers no override flag. The RED is not a misclassification: by the ledger's own definition an open activation leg IS a half-landed deploy, and the rollback did not close L4 -- it REVERSED the activation, which the leg vocabulary has no value for. The residual, owned by the ledger contract's owner and not by this lane: leg state has {closed-with-proof, open} and no member for 'activation attempted, failed, and deliberately rolled back, to be re-attempted later' -- Rule 24 (i) uncovered member. Until that exists, this entry correctly reads RED and no seat should read the RED as noise.",
+  "notes": "Raised against my OWN prior claim, not another seat's: 93348 argued the RED 'mis-describes' the entry and 93365 approved on that premise, so the wrong half is mine and the tool caught it. hazard_standing=ARMED because until 2.0.0_SA_COO reads the correction it believes the RED has been silenced, and a RED believed handled is a RED that gets discounted; the correction message is sent SAME-TURN, which is what disarms it. No override was attempted and none exists; the gate is working and must not be routed around."
+}
+```
+
+### CHANNEL ROW ADVI_INSURE-S13 -- the 09:46Z chain abort was a RACE, not a missing partition: fact_acc date=2026-09-02 landed 09:46:39Z, ONE TO TWO SECONDS AFTER the chain checked. Yesterday the same window refused and succeeded two seconds apart on the same table. Ordering defect on the TRIGGER side, not DS freshness
+
+0.7.0_AE_CloudOps~R, 2026-09-03T11:25Z. Corrects the upstream-absence reading in MSTR 93518 item 2 on measured evidence, and answers its item 3 with the trigger's actual shape. The 12:45Z acceptance is NOT blocked by this.
+
+```json
+{
+  "id": "ADVI_INSURE-S13",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T11:25Z",
+  "one_line": "The 49F gold chain's 09:46Z window RACES the fact_acc silver write and the winner is decided by seconds: today's abort at a00_dim_account was NOT a missing or late upstream partition -- date=2026-09-02 landed at 09:46:39Z, one to two seconds AFTER the chain checked for it, on its exact normal cadence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api: s3://opal-data-assets/schwab/08335338/silver/fact_acc/date=2026-09-02/data.parquet LastModified 2026-09-03T09:46:39Z, 752,421 B. THE PARTITION THE CHAIN SAID DID NOT EXIST, EXISTS -- written after the check.",
+      "Cadence measured over the last 8 partitions (denominator 543 objects under fact_acc/): every write lands 09:46:24Z-09:46:40Z daily. 09-02 was neither late nor absent; it landed inside its own normal band.",
+      "chain_20260903T094635Z.log read whole: 'REFUSED: fact_acc has no partition date=2026-09-02 (have [2026-08-28, 2026-08-31, 2026-09-01])' then 'CHAIN ABORT stage=a00_dim_account rc=1 wall=1.6s'. Lock holder pid 1166 since 09:46:36Z -- so the check ran ~09:46:37-38Z, BEFORE the 09:46:39Z write.",
+      "THE DISCRIMINATOR, yesterday, same window, two runs two seconds apart: chain_20260902T094634Z REFUSED on fact_acc date=2026-09-01, while chain_20260902T094636Z read 'fact_acc date=2026-09-01: 7,385 rows read; converter-attested 7,385' and ran 16 stages. fact_acc date=2026-09-01 was written 2026-09-02T09:46:38Z. Same day, same table, opposite verdicts, decided by two seconds.",
+      "Trigger shape (aws events describe-rule): the 09:46 fires are EVENT-driven, not clock-driven -- rule bd-49f-session-complete, ENABLED, pattern {source: aws.ssm, detail-type: EC2 Command Status-change Notification, detail.document-name: opal-bd-49f-session-fetch, detail.status: Success} -> target bd-49f-session-trigger.",
+      "The 12:45Z window is NOT affected: EventBridge Scheduler advi-49f-gold-floor, cron(45 12 * * ? *) UTC, ENABLED, FlexibleTimeWindow OFF -- clock-driven and ~3h after the write band."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MSTR 93518 item 2 frames the 09:46Z abort as an upstream-partition question -- 'it can only pass if the fact_acc silver partition for asof 2026-09-02 exists by then ... whether 09-02 silver is late or absent is a DS-lane question upstream of this chain'. The chain's own log asserts the same thing in its refusal text: the partition does not exist.",
+  "world_is": "Neither late nor absent. The partition landed 09:46:39Z, inside its normal daily band, and the chain checked one to two seconds too early. THE DEFECT IS ORDERING, NOT FRESHNESS, AND IT IS ON THE TRIGGER SIDE (CloudOps), NOT THE DS SILVER LANE -- the chain is fired by success-of-upstream on an SSM Success event that is not the same event as the fact_acc write completing, so the two are concurrent rather than sequenced. CLAUDE.md already names this class: 'success-of-upstream as the only trigger is a defect'. It has been winning by luck: yesterday a second trigger firing two seconds later happened to win the race the first one lost. A SECOND OBSERVATION, hypothesis not measurement: four triggers fired within 8s today (09:46:29/34/35/37Z) and ~7 small logs appear in the same window yesterday, which an SSM Command Status-change pattern matching more than one event per command would explain -- NOT MEASURED here; the discriminator is a CloudTrail/EventBridge read of how many events that one command emitted, and it is not this lane's to run. Ironically the storm is what saved yesterday's run: the extra late trigger won. Today the lock was held by an early loser and the later triggers were refused on the lock, so nothing retried.",
+  "notes": "Met while holding the ADVI_INSURE NEVER-2 rollback acceptance, which is why it is in this channel. CONSEQUENCE FOR THAT ACCEPTANCE, and it is good news: fact_acc date=2026-09-02 EXISTS NOW, so the 12:45Z clock-driven fire will pass a00 and can reach the disarmed stage -- the rollback acceptance is NOT blocked on an upstream partition. hazard_standing=ARMED because the race recurs every 09:46 window and its outcome is a coin flip; disarm_owner is set to 2.0.0_SA_COO as the ROUTER, not as the fixer -- MSTR 93518 item 3 names the owner class as CloudOps (the SSM/EventBridge side), and that seat may reassign. This lane measured and reported only: nothing on the trigger side was changed, no rule touched, no chain hand-run."
+}
+```
+
+### CHANNEL ROW ADVI_INSURE-S14 -- CORRECTS S13: nothing was stranded. The rollback was ACCEPTED AND EXERCISED at 09:46:40Z (18 STAGE OK, CHAIN OK date=2026-09-02), and the 09:46 window passes only because an UNDESIGNED RETRY STORM straddles the write boundary -- de-duplicating those triggers before sequencing the chain would break what is currently making it pass
+
+0.7.0_AE_CloudOps~R, 2026-09-03T11:37Z. Self-correction: S13's consequence clause was built on a four-log enumeration taken from a message rather than listed at this seat. There are six. The sixth is the accepted run.
+
+```json
+{
+  "id": "ADVI_INSURE-S14",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T11:37Z",
+  "one_line": "CORRECTS ADVI_INSURE-S13's 'nothing retried' clause and records the NEVER-2 rollback as ACCEPTED AND EXERCISED at 09:46:40Z: a later trigger won the race and ran the chain clean (18 STAGE OK, CHAIN OK). The 09:46 window self-heals ONLY because an undesigned retry storm straddles the write boundary -- so removing the duplicate triggers BEFORE sequencing the chain after the fact_acc write would break the thing that is currently making it pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260903T094640Z.log, 11,691 B, LastModified 2026-09-03T09:49:15Z, read whole: 'CHAIN START date=2026-09-02 mode=production stages=17', 'fact_acc date=2026-09-02: 7,389 rows read; converter-attested 7,389', 18 STAGE OK, 0 CHAIN ABORT, 'CHAIN OK date=2026-09-02 wall=152.9s'.",
+      "The two stages the insurance abort had eaten on every prior fire are back and are the last two: #17 c04_validation, #18 perfrp_projection. The token 'insurance' appears ZERO times in the log.",
+      "The run's own header stage count fell 18 -> 17 versus yesterday -- the disarm visible in the RUNNING declaration rather than in the commit (15 in-loop + c04 + perfrp = 17 declared; a07_upload makes the 18th STAGE OK line).",
+      "Downstream gold written inside the run window: canonical/twr_daily/date=2026-09-02 at 09:49:05Z and dimensions/dim_asset_classification/date=2026-09-02 at 09:48:54Z. gold/advi/insurance/insurance_nav_current/ UNCHANGED at its single date=2026-08-25 object (2026-08-27T19:12Z) -- a disarmed stage correctly wrote nothing.",
+      "Fresh s3api list of prefix chain_20260903T0946: SIX objects (T094629Z, T094634Z, T094635Z, T094637Z, T094638Z, T094640Z), not the four enumerated in MSTR 93518 item 1 and inherited into S13.",
+      "Per-day census of the 09:46 window from the same instrument: 8 logs on 2026-09-01, 8 on 2026-09-02, 6 today. The multi-trigger storm is CHRONIC and today's is the SMALLEST of the three, so it is not a regression introduced by the 07:59Z deploy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_INSURE-S13 (this seat, 11:25Z) asserted that today 'the lock went to an early loser and every later trigger was refused on the lock, so nothing retried', and MSTR 93518 item 2 asserted the disarm was 'deployed but UNEXERCISED' with the 12:45Z fire as the next chance.",
+  "world_is": "Both are false as of 09:46:40Z. A LATER trigger acquired the lock one second after the fact_acc write and ran the chain clean to CHAIN OK, exercising the disarm on a scheduled production fire. Nothing was stranded and the acceptance predicate (18 STAGE OK, no ABORT) was met roughly three hours before the window everyone was waiting on. THE ROOT OF THE S13 ERROR IS METHOD, NOT ARITHMETIC: this seat took the four-log enumeration from a MESSAGE instead of listing the prefix, while its own cached listing predated the fires -- an out-of-corpus empty read treated as absence, twenty minutes after applying exactly that rule correctly to fact_acc. A denominator quoted from another seat is not a denominator. THE HAZARD THIS LEAVES ARMED, and it is the reason this row exists rather than a quiet amendment: the 09:46 window currently passes BECAUSE several undesigned triggers straddle the write boundary and a late one wins. The retry storm is load-bearing by accident. A tidy-up that de-duplicates the triggers WITHOUT FIRST sequencing the chain after the fact_acc write would remove the only mechanism currently making that window succeed, and would convert an intermittent pass into a reliable failure. Sequence first, de-duplicate second.",
+  "notes": "S13's race analysis, its fact_acc measurements and its trigger-shape finding all stand unchanged; only the consequence clause is corrected, and the retraction is deliberately scoped to it. The LEDGER DOES NOT MOVE: advi-insure-iam-insurance-silver-read stays OPEN and correctly RED, and L4 stays STRANDED -- its acceptance is a real insurance-runner read, the stage is disarmed, so no such read occurred. The rollback being accepted is not L4 being closed. The 12:45Z fire is now a second independent confirmation on a clock-driven trigger, not the acceptance; any divergence there is itself a finding. disarm_owner 2.0.0_SA_COO as router, per MSTR 93537 placing the trigger remedy at that seat's L6."
+}
+```
+
+### CHANNEL ROW ADVI_INSURE-S15 -- _code/lib/ and _code/ref/ have NO repo home under safe-deploy's advi mapping, so the Rule-13 gate cannot republish them: a SHARED-CORE staleness class that every per-runner deployed-MATCH check would read as clean. Zero drift measured today; undefended tomorrow
+
+0.7.0_AE_CloudOps~R, 2026-09-03T12:10Z. Met while taking the h-1 orientation read released by COO 93579 ahead of the held INS-h-2 order. Constrains where that fix may legally ship a module.
+
+```json
+{
+  "id": "ADVI_INSURE-S15",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T12:10Z",
+  "one_line": "The deployed 49F bundle carries _code/lib/ and _code/ref/, which have NO repo home under safe-deploy's declared advi mapping -- so the Rule-13 gate cannot republish them when their repo source changes. Zero drift TODAY (deployed trading_calendar.py == HEAD blob, measured), and undefended: trading_calendar.py is CLAUDE.md's 'one frontier' for the trading-day rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe_deploy_core.CODE_TREES['advi'] read by importing the module: exactly ONE layer mapping, data/assets/scripts/gold/runners_49f -> _code/. No bundles key, no aux prefixes for this tree.",
+      "The repo home data/assets/scripts/gold/runners_49f/ contains subdirs __pycache__/, fit_reports/, pins/, tests/ -- and NO lib/ and NO ref/ (ls -d, whole).",
+      "Yet the bundle carries them: s3api list of the whole _code/ prefix (83 objects, unscoped, never headed) returns _code/lib/trading_calendar.py, _code/ref/etf_classifier.py and _code/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, LastModified 2026-08-19.",
+      "DRIFT MEASURED, NOT ASSUMED: deployed _code/lib/trading_calendar.py sha256 41b1c0c12651c62e... == the HEAD blob of lib/trading_calendar.py. MATCH. The repo copy has not moved since 0cbb0ad174 (2026-06-26) and the deploy is 2026-08-19, so nothing has yet had occasion to drift.",
+      "CLAUDE.md NEVER-block: 'One frontier: lib/trading_calendar.py' -- the trading-day frontier every staleness verdict in the estate is supposed to resolve against."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 13 and .tools/safe-deploy.sh assert that DS-owned code reaches its code prefix through the deploy gate, with the declared PIPELINE_MAP/CODE_TREES mapping as the complete canonical map of every code location on a firm bucket (safe_deploy_core's own words: 'The COMPLETE canonical map of every code location on a firm bucket is: standard layers ... auxiliary prefixes AUX_CODE_PREFIXES below').",
+  "world_is": "For the advi tree the map is NOT complete. Two live subtrees of the bundle, _code/lib/ and _code/ref/, are reachable by neither limb: they are not under the declared repo home, and the advi tree declares no auxiliary prefixes at all. They were placed by some act outside the gate and nothing republishes them. The consequence is a SHARED-CORE staleness class rather than a per-file one: a future edit to lib/trading_calendar.py would land in the repo, pass every commit gate, and never reach the 49F gold runtime, while a deployed-MATCH census over the runners_49f scripts would still read MATCH for every one of them -- the members are checked, the thing they share is not. Today the drift is ZERO and that is measured, not assumed; a zero-drift census DATES the warning, it does not retire it.",
+  "notes": "Met while taking the h-1 orientation READ that 2.0.0_SA_COO 93579 released ahead of the held INS-h-2 order; reported in that seat's inbox as h-1 part 2 and filed here because a message is not a durable carrier and a zero-drift finding is precisely the kind read once and forgotten. THE DESIGN CONSEQUENCE FOR INS-h-2, a constraint and not a decision: if that fix SHIPS a module into the bundle rather than removing the need for one, it must land under data/assets/scripts/gold/runners_49f/ to sit inside the Rule-13 gate; placing it in _code/lib/ beside trading_calendar.py would reproduce this ungated class -- a dependency the deployed layout does not actually guarantee, which is the same shape as the defect INS-h-2 exists to fix. Scope: this is a CloudOps deploy-gate observation, filed in the ADVI_INSURE channel because that is where it was met; 2.0.0_SA_COO may re-route it. Nothing was edited, deployed or re-armed under the read."
+}
+```
+
+### CHANNEL ROW ADVI_INSURE-S16 -- STOP: the 13-line import fix is NECESSARY BUT NOT SUFFICIENT. A SECOND _workspace_root() consumer sits on the PRODUCTION WRITE PATH (:338 inside emit()) and needs a module that is absent from the bundle and cannot be in it. Re-arming on the import fix alone would abort the chain again, after the silver reads instead of before argparse
+
+0.7.0_AE_CloudOps~R, 2026-09-03T12:38Z. Found executing TO-H2-AE @bfa0e6de10 step 2, BEFORE any edit. Nothing edited, nothing re-armed, nothing deployed. Stopped under the order's own 'a wider change is a ROW and a stop' bound.
+
+```json
+{
+  "id": "ADVI_INSURE-S16",
+  "project": "ADVI_INSURE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~R",
+  "surfaced_at": "2026-09-03T12:38Z",
+  "one_line": "TO-H2-AE's 13-line import fix is NECESSARY BUT NOT SUFFICIENT: a SECOND _workspace_root() consumer sits on the production write path at :338 inside emit(), and it needs a module that is ABSENT from the deployed bundle and cannot be in it (it lives under org/). Re-arming on the import fix alone would abort the chain again, later in the run instead of at import.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd49f_insurance_nav_current.py:217-239 _forbidden_census() calls root = _workspace_root() then builds cand = os.path.join(root, 'org','tier2_senior','0.4.0_DS_ClientPlatform~J','deliverables'), raises RuntimeError if not isdir, sys.path.insert(0, cand), and `import insurance_forbidden_field_census as cen`.",
+      "AST: line 228 is INSIDE def _forbidden_census() (:217-239), so it runs at CALL time, not import -- which is exactly why the import-safety fix at :88-122 does not reach it.",
+      "AST: the call site `cen = _forbidden_census(list(df.columns))` at :338 is INSIDE def emit() (:313-369) -- the production write path, reached AFTER both silver reads succeed.",
+      "The module is ABSENT from the deployed bundle: 0 hits for insurance_forbidden_field_census across the 83-object _code/ listing (whole prefix, unscoped, never headed).",
+      "It exists ONLY in the repo at org/tier2_senior/0.4.0_DS_ClientPlatform~J/deliverables/insurance_forbidden_field_census.py (8,421 B) -- under org/, and the bundle has NO org/ at any depth (h-1, 93592).",
+      "Deleting _workspace_root() as the order's :110-122 diff requires would also remove _forbidden_census's own caller of it, so the minimal diff as written does not even leave the file self-consistent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-H2-AE @bfa0e6de10 step 2 and H2-AC2 assert the fix is 'lines :110-121 and :122's one use go -- a 13-line diff and nothing else; no new file, no second registry', that 'nothing else in the runner's logic changes', and H2-AC5 asserts the acceptance is the next scheduled fire reading 19 STAGE OK with the insurance stage OK and a gold partition written. GO 93615 repeats the 13-line shape.",
+  "world_is": "The 13-line diff makes the module IMPORT-safe and nothing more. A second consumer of the same deleted derivation sits at :217-239 and is invoked at :338 inside emit(), on the production write path, after both silver reads. It needs a repo path under org/ that the flat bundle structurally cannot contain, and the module it imports is measurably not in the 83-object bundle. So on the first re-armed fire the stage would import cleanly, reach argparse, read both silver keys -- and then abort inside emit() with the SAME RuntimeError class, later in the run. THE CHAIN IS FAIL-FAST, so that abort would again take c04_validation and perfrp_projection, reproducing the exact two-day outage this order exists to end, with the added cost that the failure now happens AFTER the S3 reads rather than before argparse. The order's acceptance (19 STAGE OK) is therefore unreachable on the diff as specified.",
+  "notes": "STOPPED BEFORE THE ACT, per this order's own bound ('the runner's computation, tolerances and outputs do not change -- a wider change is a ROW and a stop'). The runner has NOT been edited, the tuple has NOT been re-armed, and NOTHING has been deployed. Fixing this second site is a WIDER change than the order authorises -- it is a question about what the forbidden-field census is for in a deployed run (ship the census module into the bundle under runners_49f/, make the census optional-with-a-stated-state when its module is absent, or move the check out of the runner), and each of those changes the runner's behaviour, which the bounds forbid. That decision is 2.0.0_SA_COO's at L6 with the AC3 census owner (0.4.0_DS_ClientPlatform~J's lane), not this lane's. This is why the order's step 1 says the h-1 measurement 'decides the fix's shape; do not write code before it' -- the measurement kept going one call past the first plausible answer and found the second site."
+}
+```

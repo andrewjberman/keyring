@@ -1,6 +1,6 @@
 ---
 name: govern
-description: MSTR ALWAYS-PROCEED loop per LD-0090 sovereign ratification. Recurring sweep of open subjects + Andrew-pending decisions; for each item where Andrew silent ≥1 turn, MSTR proceeds with discretion on the dispositioned rec. Three-clause constitutional binding (ALWAYS proceed / NEVER delay / 1-turn-no-response = proceed). Reserves explicit Andrew-ask only for S3/S4 sovereign-class decisions. MSTR-only. RESTORED post-LD-0069 retire as the operational materialization of the LD-0090 constitutional principle.
+description: MSTR-only ALWAYS-PROCEED loop (LD-0090): sweep open subjects and Andrew-pending decisions; where Andrew has been silent one turn, proceed with discretion on the dispositioned recommendation; explicit Andrew-asks are reserved for S3/S4 sovereign-class decisions.
 ---
 
 # /govern — MSTR ALWAYS-PROCEED loop

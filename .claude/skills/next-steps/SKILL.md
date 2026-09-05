@@ -1,10 +1,6 @@
 ---
 name: next-steps
-description: Ranked where-do-we-go-from-here options from THIS agent's live context -- 3-5 concrete
-  candidate next steps, each a card with the step on top and the ranking rationale beneath (the
-  /open-calls card discipline applied to DIRECTION instead of DECISIONS). Rank 1 is the DEFAULT
-  (what a bare "go" means). Options needing Andrew's word are marked, never self-executed. Bare
-  `/next-steps` = current session/seat context; `/next-steps <CODE or topic>` = scoped. Any agent.
+description: Ranked where-to-next options from this seat's live context: 3-5 candidate steps as cards, the step on top and the rationale beneath; rank 1 is what a bare "go" means; options needing Andrew's word are marked, never self-executed. Bare `/next-steps`; `/next-steps <CODE or topic>`. Any agent.
 ---
 
 # /next-steps — ranked direction options from the live context

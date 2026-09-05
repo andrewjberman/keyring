@@ -198,8 +198,12 @@ class LauncherIntegrationTests(unittest.TestCase):
         self.assertIn("$env:OPAL_AGENT_SERIAL = $Serial", source)
         self.assertIn("--format prompt", source)
         self.assertGreaterEqual(source.count("$startupPrompt"), 8)
-        self.assertIn("$ThreadId $startupPrompt", source)
-        self.assertIn("-C $Workspace $startupPrompt", source)
+        self.assertIn(
+            r"""$startupPromptArgument = $startupPrompt.Replace('"', '\"')""",
+            source,
+        )
+        self.assertIn("$ThreadId $startupPromptArgument", source)
+        self.assertIn("-C $Workspace $startupPromptArgument", source)
 
     def test_ajb2_exposes_automatic_load_topology(self):
         source = (REPO_ROOT / ".tools/ajb2.ps1").read_text(encoding="utf-8")

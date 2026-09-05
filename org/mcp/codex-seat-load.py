@@ -135,7 +135,11 @@ def build_prompt(context: dict[str, object]) -> str:
         f"Use $load to initialize the exact Codex seat {serial}. "
         "The full serial was supplied by the ajb2 launcher; do not infer or "
         "alter it, and do not ask the user to repeat it. Execute the skill's "
-        "repository-local startup sequence before other work."
+        "repository-local startup sequence before other work. The launcher "
+        "provides bare `comp-*` commands to this Codex PowerShell seat via "
+        "the repository's canonical command shims: run `comp-which "
+        "\"your question\"` before searches and inspections, then run the "
+        "routed compiler tool by its bare name."
     )
 
 

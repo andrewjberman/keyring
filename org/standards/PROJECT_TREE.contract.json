@@ -54,6 +54,7 @@
       "task-orders",
       "deliverables",
       "surprise-channel/investigations",
+      "surprise-channel/adjudications",
       "surprise-channel/remediations",
       "ledger",
       "cards"
@@ -62,7 +63,7 @@
     "prd_path": "prd/{project_code}_PRD.md",
     "task_orders_dir": "task-orders",
     "task_orders_glob": "org/missions/D*/*/*/task-orders/*.md",
-    "surprise_channel_glob": "org/missions/D*/*/*/surprise-channel/{investigations,remediations}/**",
+    "surprise_channel_glob": "org/missions/D*/*/*/surprise-channel/{investigations,adjudications,remediations}/**",
     "note": "sub-folders are created when their step first writes; an absent sub-folder is not a violation"
   },
   "value_enums": {

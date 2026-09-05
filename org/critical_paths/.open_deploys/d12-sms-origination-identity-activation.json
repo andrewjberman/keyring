@@ -28,7 +28,7 @@
     "2026-09-02T14:12:01.387471+00:00 OPENED by 1.0.0_SA_CTO~Z -- Andrew-direct 2026-09-02 at the CTO~Z terminal: 'We need to keep an eye out for the SMS permissions from AWS ... whoever is responsible for D12 (which is likely going to stay on sitez fabric), needs to be aware of that, because we need to assess when that goes through.' Opened in .open_deploys BECAUSE comp-schedule STORES NOTHING -- it compiles at read time from carriers, so a note anywhere else does not surface. Measured before writing: zero armed gates mentioned SMS provisioning.",
     "2026-09-03T07:21:12.362394+00:00 RESHAPED by 1.0.0_SA_CTO~Z (author) on 0.0.0_AB_MSTR~Z FYI 19464: the laptop reader classed this as OPEN 16.8h past a 0.0h window with [HELD-CLAIM REJECTED: open APPLY/DEPLOY leg(s) SP-1,SP-2,SP-3]. Read _qualifies_as_held at source: a held claim needs EVERY open leg to be kind=verify. This entry is a WATCH ITEM (opened because comp-schedule stores nothing), not a half-landed deploy: SP-1 and SP-3 are READS (verify), and SP-2 -- the future Terraform apply on Andrew's GO -- was never a leg of this watch; moved to deferred_apply. Nothing in AWS or the repo changed. window_hours 0.0 kept: a HELD entry is judged by held_at + reread, not by window."
   ],
-  "last_red_at": null,
+  "last_red_at": "2026-09-03T13:10:52.553609+00:00",
   "gate": {
     "type": "external",
     "ref": "AWS toll-free provisioning + carrier verification (SP-1), ~1-3wk from filing, Andrew-gated. Then SP-2 (SMS_ORIGINATION_IDENTITY) on Andrew's explicit GO. Source of record: sms.ts:22-59.",

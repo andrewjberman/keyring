@@ -15,10 +15,17 @@ set -uo pipefail
 WS="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || WS="."
 TO_ID="${1:-}"
 sid="${CLAUDE_CODE_SESSION_ID:-}"
+# SEAT + SESSION KEY (2026-09-03, 1.0.0_SA_CTO on row NFRA_COMPEFFICACY-S28): a session id alone is not a seat --
+# Codex children launched from one Claude seat INHERIT its CLAUDE_CODE_SESSION_ID, so ten lanes wrote one file
+# last-writer-wins. When OPAL_AGENT_SERIAL is set (every seat, Claude or Codex) the file is keyed on BOTH:
+# <sid>.<serial>.to_id. comp_log_auto reads that key first and the bare <sid>.to_id second (legacy).
+seat="${OPAL_AGENT_SERIAL:-}"
+key="$sid"
+if [ -n "$sid" ] && [ -n "$seat" ]; then key="${sid}.$(printf '%s' "$seat" | tr -c 'A-Za-z0-9_.~-' '_')"; fi
 if [ -n "$sid" ]; then
   mkdir -p "$WS/org/mcp/sessions" 2>/dev/null || true
-  printf '%s\n' "$TO_ID" > "$WS/org/mcp/sessions/${sid}.to_id"
-  echo "OK: comp-to -- session TO_ID = '${TO_ID}' (org/mcp/sessions/${sid}.to_id; race-free per-session)"
+  printf '%s\n' "$TO_ID" > "$WS/org/mcp/sessions/${key}.to_id"
+  echo "OK: comp-to -- session TO_ID = '${TO_ID}' (org/mcp/sessions/${key}.to_id; race-free per seat+session)"
 else
   # No session id (non-Claude-Code shell): fall back to the legacy shared-file TO_ID line.
   echo "WARN: comp-to -- CLAUDE_CODE_SESSION_ID unset; cannot write session-keyed .to_id."

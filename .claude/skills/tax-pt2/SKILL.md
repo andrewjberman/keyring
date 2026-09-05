@@ -1,6 +1,6 @@
 ---
 name: tax-pt2
-description: OPAL_TAXSMA part-2 runner (commissioned by Andrew-direct 2026-07-16, superseding the 07-14 "reserved name / step-2 stays manual" ruling -- its factual premise died when the 0833 monolith feed landed 07-14 with the Tax SMA accounts IN it). Per-account cost-basis + gains-net-of-fees assessment computed from the Schwab 0833 master data in s3://opal-data-assets -- NO Schwab login, NO browser automation, NO credentials. Invoke /tax-pt2 {account-number} (e.g. /tax-pt2 27265115). Produces the step-2 audit artifact (lot-level CostBasis CSV in the exact Schwab lot-level-export shape that /tax-pt3's converter consumes unchanged, plus a fees/performance run report) into SharePoint TAX/Tax Lot/{YYYYMMDD}/. Phase A (live now): workspace-agent operated, direct S3 reads. Phase B (pending gateway tool + IAM leg): Alyssa-operable from her laptop via the m365 gateway, entitlement-gated to alyssa@opalinvest.com; nobody outside the gateway role touches AWS.
+description: OPAL_TAXSMA part 2: per-account cost-basis and gains-net-of-fees assessment from the Schwab 0833 master data in s3://opal-data-assets -- no Schwab login, no browser, no credentials. `/tax-pt2 {account-number}`. Produces the lot-level CostBasis CSV (the shape /tax-pt3 consumes) and a fees/performance report into SharePoint TAX/Tax Lot/{YYYYMMDD}/. Workspace-agent operated.
 ---
 
 # /tax-pt2 {account} — cost basis + gains net of fees (OPAL_TAXSMA part 2)

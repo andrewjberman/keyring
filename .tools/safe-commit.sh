@@ -153,6 +153,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
 AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+
 # Extract agent name from --author "agent <email>" for audit attribution + the request.
 RAW_AUTHOR=""
 n=${#COMMIT_ARGS[@]}
@@ -169,6 +170,72 @@ while [ $i -lt $n ]; do
 done
 AGENT="${RAW_AUTHOR%% <*}"
 AGENT="${AGENT:-UNKNOWN}"
+
+# --------------------------------------------------------------------------
+# MERGE IN PROGRESS -> REFUSE BEFORE ANYTHING IS STAGED (2026-09-04, 1.0.0_SA_CTO;
+# NFRA_CLDGRPH-S35, the class measured from both sides: 2.0.0_SA_COO~A 94170 named it
+# from the drain, this seat took it from the swept side, 2.0.0_SA_COO 94196 confirmed
+# the file is lane ANY and the fix belongs here).
+#
+# THE CHAIN THIS CUTS, every step measured on 2026-09-04:
+#   1. a drain merge is in progress in the SHARED worktree (MERGE_HEAD present);
+#   2. another seat runs safe-commit; `git commit --only -- <pathspec>` is REFUSED by
+#      git during a merge -> rc 128, and the run dies AFTER its staging step;
+#   3. the failed run leaves the seat's file STAGED in the shared index;
+#   4. the drain's own merge commit carries it -- measured: b687429234, 15 files, 14 the
+#      worker's and 1 this seat's Andrew-direct record -- under the DRAINING seat's
+#      authorship, and `git log -- <that file>` names the merge as its only commit;
+#   5. nothing refuses, because owned-paths-check EXEMPTS merges by design (correctly,
+#      for files a merge really carries -- that one it did not).
+#
+# >> THE RESIDUE IS THE WHOLE MECHANISM. Refusing here, before the mutex and before the
+#    staging step, leaves nothing for a merge to sweep. Anything downstream of the
+#    staging is a control on a symptom. <<
+#
+# TWO PROPERTIES, both named by 2.0.0_SA_COO 94196 out of its own tool's mirror defect:
+#   (a) REFUSE -- never fall back to a commit without `--only`. That would sweep the
+#       MERGE's own staged set under the committing seat: the same false attribution one
+#       layer over, and worse because it would look like a success.
+#   (b) Read the TARGET WORKTREE's own merge state via `git rev-parse --git-path
+#       MERGE_HEAD`, not "$REPO_ROOT/.git/MERGE_HEAD" -- a linked worktree keeps its
+#       merge state in its own gitdir, and the shared-tree case is exactly where this
+#       bites.
+# NO OVERRIDE IS OFFERED. An override here would re-open the sweep, and the remedy is
+# never a flag: wait for the drain, or finish the merge. rc 3 is NOT a new code: it is
+# this file's existing NOTHING-LANDED-TRY-AGAIN family (the queue timeout at :279 and the
+# mutex timeout at :349 already use it), which is exactly what a merge in flight is --
+# contention, not a fault in the caller's commit.
+_MERGE_HEAD_PATH="$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo "")"
+if [ -n "$_MERGE_HEAD_PATH" ] && [ -f "$_MERGE_HEAD_PATH" ]; then
+  _merge_other="$(cat "$_MERGE_HEAD_PATH" 2>/dev/null | head -1)"
+  _merge_staged="$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')"
+  {
+    echo "======================================================================"
+    echo "safe-commit: REFUSED -- A MERGE IS IN PROGRESS IN THIS WORKTREE"
+    echo "======================================================================"
+    echo "  MERGE_HEAD : ${_merge_other:-<unreadable>}"
+    echo "  worktree   : $REPO_ROOT"
+    echo "  staged now : ${_merge_staged} path(s) -- the MERGE's, not yours"
+    echo ""
+    echo "  git refuses 'commit --only -- <pathspec>' during a merge, so this run"
+    echo "  would fail at the commit step AFTER staging your files -- and the next"
+    echo "  merge commit would then carry them under the MERGING seat's authorship,"
+    echo "  where the owned-paths merge exemption means no lane check sees it."
+    echo "  Measured 2026-09-04: merge b687429234 carried 15 files, 1 of them a"
+    echo "  foreign seat's record (NFRA_CLDGRPH-S35)."
+    echo ""
+    echo "  NOTHING WAS STAGED BY THIS RUN. Your files are untouched."
+    echo ""
+    echo "  Do one of:"
+    echo "    - wait for the merge to finish (a drain closes in its own time), then re-run;"
+    echo "    - if the merge is YOURS, finish it (git merge --continue / --abort) first."
+    echo "  There is deliberately no override: a flag here re-opens the sweep."
+    echo "======================================================================"
+  } >&2
+  echo "${ISO_TS} MERGE-REFUSED  ${AGENT:-UNKNOWN}  ${_merge_staged}  (MERGE_HEAD ${_merge_other:0:12} present; nothing staged by this run)" \
+    >> "$AUDIT_LOG" 2>/dev/null || true
+  exit 3
+fi
 
 # --------------------------------------------------------------------------
 # Source the shared libs (queue primitives + the SHARED sensitive-leak gate).
@@ -642,7 +709,20 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
   SRGATE_FILES=()
   for _sf in "${PATHSPEC[@]}"; do
     case "$_sf" in
-      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*)
+      # BOTH ROOTS (2026-09-03, 1.0.0_SA_CTO on 0.0.0_AB_MSTR~Z's site-Z finding, relay 93546): this set keyed on the
+      # LEGACY spelling only, so for a TREE project the block below -- and the surprise-row-override reader inside
+      # it -- never ran; CVO~Z's L10 slug for NFRA_OPSEC202609 could not carry an audited override and landed by
+      # re-entry rows only. The tree spelling is the contract's (PROJECT_TREE.contract.json surprise_channel_glob).
+      # ADJUDICATIONS ADDED 2026-09-04 (1.0.0_SA_CTO on 3.0.0_SA_CVO's ESTATE_GOVERNANCE-S4, msg 94260).
+      # This set named investigations/ and remediations/ and NOT adjudications/ -- so for an
+      # ADJUDICATIONS-ONLY commit the whole block below never ran, which meant the ONLY reader of
+      # '# surprise-row-override:' never ran either, and the git hook then refused with no override
+      # in hand. THE DOCUMENTED ESCAPE WAS UNREACHABLE ON EXACTLY THE CVO'S OWN L9 DOCUMENT, and it
+      # is the one document only that seat writes -- so nobody else could hit it and report it.
+      # Same class as the 2026-09-03 tree-spelling fix at the lines above: that one added the tree
+      # root and missed this one folder. A pattern list is a DECLARED DOMAIN (Rule 24 i) and the
+      # uncovered member has to be hunted, not waited for.
+      *org/surprise_channel/*INVESTIGATION_v*|*org/surprise_channel/*REMEDIATION_v*|*org/surprise_channel/*ADJUDICATION_v*|*org/missions/*/surprise-channel/investigations/*|*org/missions/*/surprise-channel/remediations/*|*org/missions/*/surprise-channel/adjudications/*)
         SRGATE_FILES+=("$_sf") ;;
     esac
   done
@@ -678,6 +758,13 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
         echo "${ISO_TS} SURPRISE-ROW-OVERRIDE  ${AGENT}  reason=${SR_OVR}" >> "$AUDIT_LOG" 2>/dev/null || true
         echo "WARN: surprise-row-gate OVERRIDDEN (audited): ${SR_OVR}" >&2
         printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
+        # CARRY THE AUDITED OVERRIDE TO THE HOOK (2026-09-03, 1.0.0_SA_CTO~Z's measurement via 0.0.0_AB_MSTR~Z 93575,
+        # landed at the base): this stage audits and warns, but .git/hooks/pre-commit block 10 re-runs the gate with no
+        # knowledge of the message and exits 1 regardless -- so the audited override never worked on ANY path. The gate
+        # honours this variable (prints the violations as WARN, exits 0) and ONLY safe-commit sets it, after the audit
+        # line above; a raw `git commit` has no such variable and stays refused, which is the asymmetry the installer
+        # exists to close. Scoped to this process: git inherits it for the hook, nothing else does.
+        export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
       else
         for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
         echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2

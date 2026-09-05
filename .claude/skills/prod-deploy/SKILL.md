@@ -1,6 +1,6 @@
 ---
 name: prod-deploy
-description: DT-only — the canonical portal DEV->PROD promote procedure (Andrew-direct 2026-06-12). The exact process, in order — clean up the DEV tree, zero typescript errors, re-assert local PROD from origin, merge forward to PROD in an EPHEMERAL worktree (the main portal tree NEVER leaves DEV), push (CI deploys to the server + tags), verify the CI conclusion via gh run view --json (gh run watch can hang on benign warnings), update the workspace submodule pointer on CLOUD, tear down the worktree, confirm the main tree is back on DEV, end at the workspace root. Folds every banked promote footgun: PROD-branch dry-run pollution (Step-2 update-ref), MSYS_NO_PATHCONV breaking the VALGATE pre-push gate, the not-a-frozen-snapshot re-merge window (hold DEV pushes), foreground-only bun install, annotated-tag peeling for verification. Other agents invoking this halt at Step 0 — portal PROD promotes are a DT lane.
+description: DT-only: the canonical portal DEV->PROD promote, in order -- clean DEV, zero TypeScript errors, re-assert local PROD from origin, merge forward in an ephemeral worktree (the main portal tree never leaves DEV), push (CI deploys and tags), verify the CI conclusion via gh run view --json, update the workspace submodule pointer on CLOUD, tear down, confirm DEV, end at the workspace root. Other agents halt at Step 0.
 ---
 
 # /prod-deploy — portal DEV → PROD promote (DT canonical procedure)

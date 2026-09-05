@@ -1830,12 +1830,22 @@ async def send_message(
     # AFTER the identity gate (a forged CVO is audited as a forgery first) and BEFORE any write, over the
     # whole recipient list (a partial delivery would let a cc to the COO carry the body to the worker).
     # Decision and census live in cvo_send_guard.py so the daemon's HTTP path grades with the same code.
+    # subject + body travel so the one other admitted class -- the CVO's same-turn broadcast of an Andrew-direct
+    # record (marker + record path; CVO review F1, 94134) -- is APPLIED here, not only described in the guard.
     _l8_refusal = cvo_send_guard.cvo_worker_send_refusal(
-        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT))
+        from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=body)
     if _l8_refusal:
         _audit_identity("SEND_CVO_WORKER_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _l8_refusal[:200])
         return _l8_refusal
+    # --- LD-0529 (Andrew-direct 2026-09-03 ~13:1xZ, "Mechanism works"): a Tier-0/Tier-1 -> Tier-2 send that
+    # carries an ACT is refused unless it cites a task order assigned to that recipient. The issuer's dispatch
+    # passes; acks and act-free information pass. Decision and citation resolver live in cvo_send_guard.py.
+    _t2_refusal = cvo_send_guard.tier2_act_send_refusal(from_agent, _recipients, subject, body, _REPO_ROOT)
+    if _t2_refusal:
+        _audit_identity("SEND_TIER2_ACT_REFUSED", from_agent, os.getpid(),
+                        "to=" + ",".join(_recipients), _t2_refusal[:200])
+        return _t2_refusal
 
     _results = []
     for _rcpt in _recipients:
@@ -1891,6 +1901,12 @@ async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: st
     else:
         inbox = INBOX_DIR / to_folder.name
     inbox.mkdir(parents=True, exist_ok=True)
+    # THE read/ FOLDER RIDES WITH THE ROOT (2026-09-03, 2.0.0_SA_COO 93817, measured on fresh Codex lanes ~N and ~U):
+    # on the Claude path inbox-watch.sh creates <lane>/read/ when it arms; a Codex seat has no watcher, so a lane whose
+    # first mail arrived before anything else touched it had an inbox root and no read/, and its move-to-read contract
+    # had nowhere to move to (it correctly refused to invent the path). Every delivery now creates read/ beside the
+    # root it creates, whatever runtime reads the lane.
+    (inbox / "read").mkdir(exist_ok=True)
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     safe_from = re.sub(r"[^a-zA-Z0-9._-]", "_", from_agent)

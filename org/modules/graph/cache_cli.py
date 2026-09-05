@@ -47,6 +47,10 @@ from pathlib import Path
 _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
 _PORTAL_SRC = _WORKSPACE / "portal" / "src"
+_TOOLS = _WORKSPACE / ".tools"
+if str(_TOOLS) not in sys.path:
+    sys.path.insert(0, str(_TOOLS))
+import _compbudget  # noqa: E402 -- Rule T shared carrier (NFRA_COMPEFFICACY T-23)
 
 # useQuery, not useQueryClient / useQueries / useInfiniteQuery. Word-boundary before, and the
 # next char is `<` (generic) or `(` (call) -- which excludes the longer identifiers.
@@ -68,6 +72,25 @@ class Unparseable:
     file_path: str
     line_number: int
     reason: str
+
+
+@dataclass
+class SkippedFile:
+    file_path: str
+    reason: str
+
+
+@dataclass
+class ScanResult:
+    entries: list[CacheEntry]
+    unparseable: list[Unparseable]
+    total_call_sites: int
+    total_files: int
+    scanned_files: int
+    skipped_files: list[SkippedFile]
+    source_exists: bool
+    last_cursor: str
+    budget_reached: bool
 
 
 # ---- string-aware balanced-delimiter scanning ---------------------------------------------
@@ -265,33 +288,77 @@ def _extract_from_content(content: str, rel_path: str,
     return seen
 
 
-def extract(portal_src: Path | None = None):
-    """(entries, unparseable, total_call_sites) over ALL of portal/src (.ts + .tsx).
+def _file_label(path: Path, portal_src: Path) -> str:
+    """A deterministic cursor/file label, even for an explicit fixture outside the workspace."""
+    try:
+        return str(path.relative_to(_WORKSPACE)).replace("\\", "/")
+    except ValueError:
+        return "portal/src/" + str(path.relative_to(portal_src)).replace("\\", "/")
 
-    portal_src defaults to the module global _PORTAL_SRC RESOLVED AT CALL TIME (not bound at
-    def time), so a caller/test that reassigns _PORTAL_SRC is honored.
-    """
+
+def _is_generated(content: str, path: Path) -> bool:
+    """Generated TS is an explicit blind spot, never silently parsed as source-of-record."""
+    return ("@generated" in content[:512].lower()
+            or path.name.endswith(".generated.ts")
+            or path.name.endswith(".generated.tsx"))
+
+
+def scan(portal_src: Path | None = None, cursor: str | None = None,
+         clock: _compbudget.Clock | None = None) -> ScanResult:
+    """Scan the deterministic TS/TSX corpus once, preserving every partial-scan denominator."""
     portal_src = portal_src if portal_src is not None else _PORTAL_SRC
     entries: list[CacheEntry] = []
     unparseable: list[Unparseable] = []
+    skipped: list[SkippedFile] = []
     total = 0
     if not portal_src.exists():
-        return entries, unparseable, total
-    for f in sorted(list(portal_src.rglob("*.tsx")) + list(portal_src.rglob("*.ts"))):
+        return ScanResult(entries, unparseable, total, 0, 0, skipped, False, "START", False)
+
+    files = sorted(list(portal_src.rglob("*.tsx")) + list(portal_src.rglob("*.ts")),
+                   key=lambda p: _file_label(p, portal_src))
+    labels = [_file_label(f, portal_src) for f in files]
+    start_at = 0
+    if cursor and cursor != "START":
+        if cursor not in labels:
+            raise ValueError(f"cursor is not a portal source unit: {cursor}")
+        start_at = labels.index(cursor) + 1
+
+    scanned = 0
+    last_cursor = cursor or "START"
+    budget_reached = False
+    for f, rel in zip(files[start_at:], labels[start_at:]):
+        if clock is not None and clock.remaining() is not None and clock.remaining() <= 0:
+            budget_reached = True
+            break
         try:
-            content = f.read_text(encoding="utf-8", errors="replace")
-        except Exception:
+            content = f.read_text(encoding="utf-8", errors="strict")
+        except Exception as exc:
+            skipped.append(SkippedFile(rel, f"unreadable: {type(exc).__name__}"))
+            last_cursor = rel
             continue
-        if "useQuery" not in content:
+        if _is_generated(content, f):
+            skipped.append(SkippedFile(rel, "generated source is outside the parser's declared corpus"))
+            last_cursor = rel
             continue
-        rel = str(f.relative_to(_WORKSPACE)).replace("\\", "/")
-        total += _extract_from_content(_blank_comments(content), rel, entries, unparseable)
-    return entries, unparseable, total
+        scanned += 1
+        if "useQuery" in content:
+            total += _extract_from_content(_blank_comments(content), rel, entries, unparseable)
+        last_cursor = rel
+
+    return ScanResult(entries, unparseable, total, len(files), scanned, skipped, True,
+                      last_cursor, budget_reached)
 
 
-def _denominator_line(entries, unparseable, total) -> str:
-    return (f"captured {len(entries)} of {total} useQuery call-site(s); "
-            f"{len(unparseable)} unparseable "
+def extract(portal_src: Path | None = None):
+    """Compatibility surface: (entries, unparseable, total_call_sites) over portal/src."""
+    result = scan(portal_src)
+    return result.entries, result.unparseable, result.total_call_sites
+
+
+def _denominator_line(result: ScanResult) -> str:
+    return (f"scanned {result.scanned_files} of {result.total_files} portal source file(s); "
+            f"skipped {len(result.skipped_files)} file(s); captured {len(result.entries)} of "
+            f"{result.total_call_sites} useQuery call-site(s); {len(result.unparseable)} unparseable "
             f"(useQueries / useInfiniteQuery / useAutoSaveQuery are NOT audited by this tool)")
 
 
@@ -303,16 +370,67 @@ def _print_unparseable(unparseable):
         print()
 
 
+def _print_skipped(skipped):
+    if skipped:
+        print("  SKIPPED FILES (listed, not silently read as clean):")
+        for item in skipped:
+            print(f"    {item.file_path} -- {item.reason}")
+        print()
+
+
+def _base_answer_state(result: ScanResult) -> str | None:
+    if not result.source_exists:
+        return "SUBJECT_ABSENT_FROM_CORPUS"
+    if result.budget_reached or result.skipped_files or result.unparseable:
+        return "PARTIAL_OR_BLIND"
+    if result.total_call_sites == 0:
+        return "NOT_APPLICABLE"
+    return None
+
+
+def _print_answer_state(state: str | None):
+    if state:
+        print(f"ANSWER_STATE: {state}")
+
+
+def _run_context(args):
+    budget_s = getattr(args, "_budget_s", None)
+    source = getattr(args, "_budget_source", None)
+    clock = getattr(args, "_clock", None)
+    if budget_s is None:
+        budget_s, source = _compbudget.resolve_budget(getattr(args, "budget", None))
+    if clock is None:
+        clock = _compbudget.Clock(budget_s)
+    portal_arg = getattr(args, "portal_src", None)
+    portal_src = Path(portal_arg).resolve() if portal_arg else None
+    return scan(portal_src, getattr(args, "cursor", None), clock), budget_s, source, clock
+
+
+def _print_budget(result: ScanResult, args, budget_s: float, source: str,
+                  clock: _compbudget.Clock):
+    if result.budget_reached:
+        print(_compbudget.budget_reached_line(
+            budget_s, source, result.scanned_files + len(result.skipped_files), result.total_files,
+            "file", f"comp-cache {args.command}", result.last_cursor))
+    else:
+        print(_compbudget.within_budget_line(
+            result.scanned_files + len(result.skipped_files), result.total_files, "file",
+            budget_s, source, clock.elapsed()))
+
+
 # ---- commands ------------------------------------------------------------------------------
 
 def cmd_map(args):
-    entries, unparseable, total = extract()
-    print(f"REACT QUERY CACHE MAP -- {_denominator_line(entries, unparseable, total)}")
+    result, budget_s, source, clock = _run_context(args)
+    entries = result.entries
+    print(f"REACT QUERY CACHE MAP -- {_denominator_line(result)}")
+    _print_answer_state(_base_answer_state(result))
     distinct = {str(e.key_parts) for e in entries}
     print(f"  {len(entries)} entries -> {len(distinct)} distinct keys "
           f"across {len({e.file_path for e in entries})} files")
     print()
-    _print_unparseable(unparseable)
+    _print_skipped(result.skipped_files)
+    _print_unparseable(result.unparseable)
 
     by_key: dict[str, list[CacheEntry]] = {}
     for e in entries:
@@ -330,13 +448,18 @@ def cmd_map(args):
             print(f"    types: {', '.join(types)}")
         print(f"    fns:   {', '.join(fns)}")
         print()
+    _print_budget(result, args, budget_s, source, clock)
 
 
 def cmd_collisions(args):
-    entries, unparseable, total = extract()
-    print(f"CACHE KEY COLLISIONS -- {_denominator_line(entries, unparseable, total)}")
+    result, budget_s, source, clock = _run_context(args)
+    entries = result.entries
+    state = _base_answer_state(result)
+    print(f"CACHE KEY COLLISIONS -- {_denominator_line(result)}")
+    _print_answer_state(state)
     print()
-    _print_unparseable(unparseable)
+    _print_skipped(result.skipped_files)
+    _print_unparseable(result.unparseable)
 
     by_key: dict[str, list[CacheEntry]] = {}
     for e in entries:
@@ -344,10 +467,20 @@ def cmd_collisions(args):
     # a collision = same key across >1 distinct FILE (not stem)
     shared = {k: v for k, v in by_key.items() if len({e.file_path for e in v}) > 1}
 
+    if state == "PARTIAL_OR_BLIND":
+        print("COLLISION VERDICT: INCOMPLETE -- skipped/unparseable source means this prefix is not clean.")
+        _print_budget(result, args, budget_s, source, clock)
+        return
+
+    if state in {"SUBJECT_ABSENT_FROM_CORPUS", "NOT_APPLICABLE"}:
+        print("COLLISION VERDICT: NOT EVALUATED -- no clean collision claim is made.")
+        _print_budget(result, args, budget_s, source, clock)
+        return
+
     if not shared:
         print("No cross-file cache-key collisions among the captured call-sites.")
-        print("  (NOT 'no collisions': see the denominator above -- unparseable/uncaptured")
-        print("   call-sites are not asserted collision-free.)")
+        print("  (The completed denominator above is the scope of this execution-only result.)")
+        _print_budget(result, args, budget_s, source, clock)
         return
 
     mismatches = [k for k, v in shared.items() if len({e.response_type for e in v if e.response_type}) > 1]
@@ -362,41 +495,74 @@ def cmd_collisions(args):
         if len(types) > 1:
             print(f"    WARNING: different response types share this key: {', '.join(sorted(types))}")
         print()
+    _print_budget(result, args, budget_s, source, clock)
 
 
 def cmd_key(args):
-    entries, unparseable, total = extract()
+    result, budget_s, source, clock = _run_context(args)
+    entries = result.entries
     q = args.query.lower()
     matches = [e for e in entries
                if q in e.key_str.lower() or q in e.fetch_function.lower()
                or any(q in p.lower() for p in e.key_parts)]
     print(f"CACHE KEYS matching '{args.query}' ({len(matches)} hit(s)) -- "
-          f"{_denominator_line(entries, unparseable, total)}")
+          f"{_denominator_line(result)}")
+    state = _base_answer_state(result)
+    if state is None and not matches:
+        state = "PRESENT_WITH_ZERO_RESULTS"
+    _print_answer_state(state)
     print()
+    _print_skipped(result.skipped_files)
+    _print_unparseable(result.unparseable)
     for e in matches:
         t = f" <{e.response_type}>" if e.response_type else ""
         print(f"  {e.file_path}:{e.line_number}")
         print(f"    key: [{e.key_str}]")
         print(f"    fn:  {e.fetch_function}(){t}")
         print()
+    _print_budget(result, args, budget_s, source, clock)
 
 
 def main():
     parser = argparse.ArgumentParser(
         prog="comp-cache",
         description="React Query cache key analysis across portal/src (useQuery).",
+        epilog=("Rule T carrier: --budget SECONDS (flag > COMP_BUDGET_S > default 90); "
+                "--budget 0 is unbounded. --cursor resumes after the stated source-file unit."),
     )
+    parser.add_argument("--budget", type=float, default=None,
+                        help="Rule T work ceiling in seconds (0 = unbounded)")
+    parser.add_argument("--cursor", default=None,
+                        help="Resume after this deterministic portal source-file cursor")
+    parser.add_argument("--portal-src", default=None,
+                        help="Read-only source root (defaults to portal/src; useful for a fixture)")
     sub = parser.add_subparsers(dest="command")
-    sub.add_parser("map", help="All cache keys -> files (+ capture denominator)")
-    sub.add_parser("collisions", help="Keys shared across files, typed")
+    def add_common(command_parser):
+        command_parser.add_argument("--budget", type=float, default=argparse.SUPPRESS,
+                                    help="Rule T work ceiling in seconds (0 = unbounded)")
+        command_parser.add_argument("--cursor", default=argparse.SUPPRESS,
+                                    help="Resume after this deterministic portal source-file cursor")
+        command_parser.add_argument("--portal-src", default=argparse.SUPPRESS,
+                                    help="Read-only source root (defaults to portal/src; useful for a fixture)")
+
+    pm = sub.add_parser("map", help="All cache keys -> files (+ capture denominator)")
+    pc = sub.add_parser("collisions", help="Keys shared across files, typed")
     pk = sub.add_parser("key", help="Find uses of a cache-key substring")
+    add_common(pm)
+    add_common(pc)
+    add_common(pk)
     pk.add_argument("query", help="Key substring to search")
 
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
         sys.exit(0)
-    {"map": cmd_map, "collisions": cmd_collisions, "key": cmd_key}[args.command](args)
+    try:
+        args._budget_s, args._budget_source = _compbudget.resolve_budget(args.budget)
+        args._clock = _compbudget.Clock(args._budget_s)
+        {"map": cmd_map, "collisions": cmd_collisions, "key": cmd_key}[args.command](args)
+    except ValueError as exc:
+        parser.error(str(exc))
 
 
 if __name__ == "__main__":

@@ -18,7 +18,9 @@ CLI modes:
 from __future__ import annotations
 
 import fnmatch
+import os
 import re
+import subprocess
 import sys
 from typing import Any
 
@@ -109,6 +111,113 @@ def _owns_tree_deliverables(agent_norm: str, agent_base: str, path: str) -> bool
     return agent_base != agent_norm and owner == agent_base
 
 
+# ADHC_OWNPTH.005 (2026-09-04): THE TASK ORDER IS THE WORKER'S GRANT -- Andrew-direct ~04:58Z at the 1.0.0_SA_CTO terminal,
+# "recs approved" on /open-calls CALL 1 REC (c), record @9ef9a40aae. A spine-v3 worker 0.9.0_WK_<CODE>~<n> is enumerated in
+# NO lane; it is admitted to exactly the paths that a NON-TERMINAL task order under <CODE>, issued_to that serial, names in its
+# <paths> block AT HEAD -- and to nothing else. Fifth additive clause, consulted only after enumeration, tilde-strip, the
+# home-folder and the tree-deliverables conventions all fail; never revokes. THE SWITCH is the registry's `worker_grant:`
+# stanza (0.0.0_AB_MSTR as grantor, SoD): absent, no worker is admitted anywhere; present, the order decides. Reads HEAD, never
+# the worktree -- the worker's own commit flips its order to complete in the same commit, and HEAD still carries it open.
+# A census that cannot run admits nothing (fail-closed). Rationale, measured: v3's first drain (worker ~2, 2026-09-04
+# 03:5xZ) committed both real surfaces its order named through the audited override because no lane admitted it.
+_WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$")
+_TO_STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+_TO_ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
+# line-anchored (94157 gap (a)): the tag alone on its line opens the block; a prose mention is not the block
+_TO_PATHS_RE = re.compile(r"^[ \t]*<paths>[ \t]*\r?\n(.*?)^[ \t]*</paths>[ \t]*$", re.S | re.I | re.M)
+_TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
+
+
+def _paths_block_entries(text: str) -> list[str]:
+    """The <paths> block's entries: one per line, absolute from the repo root, '#' lines ignored, backslashes normalized."""
+    m = _TO_PATHS_RE.search(text or "")
+    if not m:
+        return []
+    out = []
+    for line in m.group(1).splitlines():
+        e = line.strip().strip("`").strip()
+        if not e or e.startswith("#"):
+            continue
+        out.append(e.replace("\\", "/").lstrip("/"))
+    return out
+
+
+def _order_grants(path: str, entries: list[str]) -> bool:
+    """PURE. True iff one entry names `path`: exactly, as a glob (fnmatch, only when the entry carries * ? [), or as a
+    directory prefix (an entry ending in '/'). Never a prefix by accident: 'org/a' does not grant 'org/ab'."""
+    p = path.replace("\\", "/").lstrip("/")
+    for e in entries:
+        if e == p:
+            return True
+        if any(ch in e for ch in "*?[") and fnmatch.fnmatch(p, e):
+            return True
+        if e.endswith("/") and p.startswith(e):
+            return True
+    return False
+
+
+def _worker_orders(root: str, code: str):
+    """[(to_path, issued_to, entries)] for the project's NON-TERMINAL tree task orders at HEAD; None when git could not
+    answer (the caller fails closed). Terminal orders grant nothing: a finished order is not a standing permission."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "org/missions/D*/*/%s/task-orders/*.md" % code], cwd=root,
+                            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        print("WARN: worker-grant census raised %s -- admitting nothing" % exc, file=sys.stderr)
+        return None
+    if ls.returncode != 0:
+        print("WARN: worker-grant census git ls-files rc=%d -- admitting nothing" % ls.returncode, file=sys.stderr)
+        return None
+    orders = []
+    for p in [x.strip().replace("\\", "/") for x in ls.stdout.splitlines() if x.strip()]:
+        try:
+            show = subprocess.run(["git", "show", "HEAD:%s" % p], cwd=root, capture_output=True, text=True,
+                                  encoding="utf-8", errors="replace", timeout=60)
+        except Exception as exc:  # noqa: BLE001
+            print("WARN: worker-grant census git show raised %s on %s -- admitting nothing" % (exc, p), file=sys.stderr)
+            return None
+        if show.returncode != 0:
+            continue   # a task order staged but absent at HEAD grants nothing yet
+        text = show.stdout
+        sm = _TO_STATUS_RE.search(text)
+        if sm and sm.group(1).lower() in _TERMINAL_TO_WORDS:
+            continue
+        im = _TO_ISSUED_TO_RE.search(text)
+        if not im:
+            continue
+        orders.append((p, im.group(1).strip(), _paths_block_entries(text)))
+    return orders
+
+
+def _owns_task_order_paths(agent: str, path: str, grant, root: str | None, cache: dict | None = None) -> bool:
+    """ADHC_OWNPTH.005. True iff `grant` is the registry's worker_grant stanza (source task-order-paths), `agent` matches its
+    serial_glob and parses as 0.9.0_WK_<CODE>~<n>, and a non-terminal task order under <CODE> at HEAD, issued_to that serial,
+    names `path` in its <paths> block. `cache` (per process) keeps the census to one read per project."""
+    if not isinstance(grant, dict) or grant.get("source") != "task-order-paths" or not root:
+        return False
+    glob_ = str(grant.get("serial_glob") or "")
+    if not glob_ or not (fnmatch.fnmatch(agent, glob_) or fnmatch.fnmatch(_normalize_serial(agent), glob_)):
+        return False
+    m = _WORKER_SERIAL_RE.match(agent.strip())
+    if not m:
+        return False
+    code = m.group("code")
+    if cache is None:
+        cache = {}
+    if code not in cache:
+        cache[code] = _worker_orders(root, code)
+    orders = cache[code]
+    if orders is None:
+        return False
+    agent_norm = _normalize_serial(agent)
+    for _to, issued_to, entries in orders:
+        if _normalize_serial(issued_to) != agent_norm:
+            continue
+        if _order_grants(path, entries):
+            return True
+    return False
+
+
 try:
     import yaml as _yaml
     def _load_yaml(path: str) -> dict:
@@ -147,8 +256,10 @@ def resolve_lane(path: str, paths_config: dict[str, Any]) -> str | None:
 
 
 def check_agent(agent: str, path: str, lanes: dict[str, Any],
-                paths_config: dict[str, Any]) -> bool:
-    """Return True if agent is permitted to commit to path."""
+                paths_config: dict[str, Any], grant=None, root: str | None = None,
+                cache: dict | None = None) -> bool:
+    """Return True if agent is permitted to commit to path. `grant`/`root`/`cache` feed ADHC_OWNPTH.005 (the
+    worker_grant stanza; the repo root for the HEAD read); the three older callers pass none and lose nothing."""
     lane_name = resolve_lane(path, paths_config)
     if lane_name is None:
         return False  # unmapped path
@@ -196,6 +307,10 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
         # ADHC_OWNPTH.004 (2026-09-02): the project tree's deliverables/<SERIAL>/ convention -- 4th
         # clause, same additive-after posture. See _owns_tree_deliverables.
         if _owns_tree_deliverables(agent_norm, agent_base, path):
+            return True
+        # ADHC_OWNPTH.005 (2026-09-04, Andrew-direct "recs approved" @9ef9a40aae): the task order is the worker's
+        # grant -- 5th clause, same additive-after posture. See _owns_task_order_paths.
+        if _owns_task_order_paths(agent, path, grant, root, cache):
             return True
         return False
 
@@ -266,6 +381,10 @@ def _cmd_check_agent(agent: str, yaml_path: str) -> int:
     data = load_yaml(yaml_path)
     lanes = data.get("lanes") or {}
     paths_config = data.get("paths") or {}
+    grant = data.get("worker_grant")
+    root = os.path.dirname(os.path.abspath(yaml_path))
+    cache: dict = {}
+    is_worker = bool(_WORKER_SERIAL_RE.match(agent.strip()))
 
     violations: list[str] = []
     for line in sys.stdin:
@@ -278,12 +397,17 @@ def _cmd_check_agent(agent: str, yaml_path: str) -> int:
                 f"VIOLATION: {path} -- UNDEFINED (no matching path rule; agent={agent})"
             )
             continue
-        if not check_agent(agent, path, lanes, paths_config):
+        if not check_agent(agent, path, lanes, paths_config, grant, root, cache):
             lane = lanes.get(lane_name, {})
             desc = lane.get("description", "")
+            why = ""
+            if is_worker:
+                why = (" -- WORKER: no worker_grant stanza in the registry" if not isinstance(grant, dict) else
+                       " -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block"
+                       " (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)")
             violations.append(
                 f"VIOLATION: {path} -- lane={lane_name} ({desc}); "
-                f"agent={agent} not in permitted_agents"
+                f"agent={agent} not in permitted_agents{why}"
             )
 
     for v in violations:
@@ -292,8 +416,67 @@ def _cmd_check_agent(agent: str, yaml_path: str) -> int:
     return 1 if violations else 0
 
 
+def _self_test(yaml_path: str) -> int:
+    """ADHC_OWNPTH.005 battery: pure arms on the grant resolution, red and green, plus a live parse of a real project's
+    orders at HEAD. The registry's stanza is INJECTED for the arms (the real one is 0.0.0_AB_MSTR's to land), so the
+    battery grades the limb, not the registry."""
+    grant = {"serial_glob": "0.9.0_WK_*", "source": "task-order-paths"}
+    root = os.path.dirname(os.path.abspath(yaml_path))
+    WK = "0.9.0_WK_X_PRJ~2"
+    orders = [("org/missions/D9/X/X_PRJ/task-orders/X_PRJ.TO-1.md", "0.9.0_WK_X_PRJ~2",
+               ["org/modules/graph/cli.py", ".tools/tests/test_x_*.py", "docs/x/"])]
+    cache = {"X_PRJ": orders}
+    own = lambda agent, path, g=grant, c=cache: _owns_task_order_paths(agent, path, g, root, c)  # noqa: E731
+    arms = [
+        ("entries: exact path granted", lambda: _order_grants("org/modules/graph/cli.py", orders[0][2])),
+        ("entries: glob granted; directory prefix granted", lambda: _order_grants(".tools/tests/test_x_battery.py", orders[0][2])
+         and _order_grants("docs/x/deep/file.md", orders[0][2])),
+        ("entries MUTANT: a sibling file is NOT a prefix match (org/modules/graph/cli.py vs cli.pyc); an unlisted file refused",
+         lambda: not _order_grants("org/modules/graph/cli.pyc", orders[0][2]) and not _order_grants("infra/aws/x.tf", orders[0][2])),
+        ("block parser: one entry per line, comments and blanks ignored, backticks stripped",
+         lambda: _paths_block_entries("x\n<paths>\n  org/a.py\n\n  # note\n  `.tools/b.sh`\n</paths>\ny") == ["org/a.py", ".tools/b.sh"]),
+        ("block parser: no block -> no entries (an order without <paths> grants nothing)", lambda: _paths_block_entries("<status>open</status>") == []),
+        ("block parser: a prose mention of <paths> before the block is skipped; the block is read (94157 gap (a))",
+         lambda: _paths_block_entries("the `<paths>` block names the grant\n<paths>\norg/ok.py\n</paths>\n") == ["org/ok.py"]),
+        ("grant: worker ~2 on a path its order names -> admitted", lambda: own(WK, "org/modules/graph/cli.py")),
+        ("grant: worker ~2 on a path its order does not name -> refused", lambda: not own(WK, "org/modules/graph/other.py")),
+        ("grant MUTANT: worker ~3 (another slot) on ~2's path -> refused", lambda: not own("0.9.0_WK_X_PRJ~3", "org/modules/graph/cli.py")),
+        ("grant MUTANT: a seat serial never resolves through the order", lambda: not own("2.0.0_SA_COO", "org/modules/graph/cli.py")),
+        ("grant: the underscore author form 0.9.0_WK_X_PRJ_2 resolves to the same worker", lambda: own("0.9.0_WK_X_PRJ_2", "org/modules/graph/cli.py")),
+        ("switch: no stanza -> nothing admitted; wrong source -> nothing admitted",
+         lambda: not own(WK, "org/modules/graph/cli.py", None) and not own(WK, "org/modules/graph/cli.py", {"serial_glob": "0.9.0_WK_*", "source": "lanes"})),
+        ("fail-closed: a census that could not run (None) admits nothing", lambda: not _owns_task_order_paths(WK, "org/modules/graph/cli.py", grant, root, {"X_PRJ": None})),
+        ("terminal orders grant nothing (live parse of NFRA_COMPEFFICACY at HEAD returns a list; every order in it is non-terminal)",
+         lambda: isinstance(_worker_orders(root, "NFRA_COMPEFFICACY"), list)),
+    ]
+    failed = 0
+    for name, fn in arms:
+        ok = False
+        try:
+            ok = bool(fn())
+        except Exception as exc:  # noqa: BLE001
+            name += " (raised %s: %s)" % (type(exc).__name__, exc)
+        print("  %s  %s" % ("PASS" if ok else "FAIL", name))
+        failed += 0 if ok else 1
+    live = _worker_orders(root, "NFRA_COMPEFFICACY")
+    if live is None:
+        print("  LIVE  NFRA_COMPEFFICACY census DID NOT RUN")
+        failed += 1
+    else:
+        wk = [(os.path.basename(p), who, len(e)) for p, who, e in live if _WORKER_SERIAL_RE.match(who)]
+        print("  LIVE  NFRA_COMPEFFICACY: %d non-terminal order(s) at HEAD; issued to a worker: %d -- %s"
+              % (len(live), len(wk), "; ".join("%s -> %s (%d path entries)" % t for t in wk) or "-"))
+    data = load_yaml(yaml_path)
+    print("  REGISTRY worker_grant stanza: %s" % ("PRESENT (%s)" % data.get("worker_grant") if isinstance(data.get("worker_grant"), dict) else "ABSENT -- no worker admitted anywhere until 0.0.0_AB_MSTR lands it"))
+    print("RESULT: %d arm(s) failed of %d (+ live census)" % (failed, len(arms)))
+    return 1 if failed else 0
+
+
 def main() -> None:
     args = sys.argv[1:]
+
+    if args and args[0] == "--self-test":
+        sys.exit(_self_test(args[1] if len(args) > 1 else ".owned-paths.yaml"))
 
     if not args:
         print(

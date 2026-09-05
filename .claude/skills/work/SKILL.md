@@ -1,6 +1,6 @@
 ---
 name: work
-description: Tier-2/3 worker self-execution body. NO LONGER AUTO-ARMED AT LAUNCH (LD-0157, Andrew direct 2026-06-05, supersedes LD-0072's 20m-loop). Workers are now event-driven via the persistent inbox Monitor; COO's /drive + /fabric-check is the centralized tick driver that finds blocks. This skill is AD-HOC ONLY now (run it for an off-cycle pass if useful) — do NOT arm it as a cron. Keep your broker status accurate (WORKING:/IDLE:/BLOCKED:) so COO's scan classifies you. Tier-2/3 only.
+description: Tier-2/3 worker self-execution body, ad hoc only -- never armed as a cron; workers are event-driven via the inbox Monitor. Run it for an off-cycle pass. Keep your broker status accurate (WORKING: / IDLE: / BLOCKED:). Tier-2/3 only.
 ---
 
 # /work — Tier-2/3 worker self-execution body (ad-hoc; NOT a launch loop)

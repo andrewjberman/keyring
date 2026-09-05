@@ -69,6 +69,13 @@ def _disclose_drop(workspace: Optional[Path], tool: str, reason: str) -> None:
         pass  # only reachable if BOTH the marker file AND stderr are unavailable
 
 
+def _seat_session_key(sid: str, seat: str) -> str:
+    """<sid>.<serial sanitized as the launcher does> -- the key comp-to and comp-which write when a seat is known.
+    A session id alone is not a seat: Codex children launched from one Claude seat share their parent's id."""
+    import re as _re
+    return "%s.%s" % (sid, _re.sub(r"[^A-Za-z0-9_.~-]", "_", seat)) if seat else sid
+
+
 def _read_session_file(path: Path) -> str:
     """Read a single-value session-keyed file (org/mcp/sessions/<sid>.serial|.to_id).
     Returns the stripped first non-empty line, or '' on any error/absence."""
@@ -106,7 +113,12 @@ def _read_context(workspace: Path) -> tuple[str, str]:
         if not serial:
             serial = _read_session_file(sess_dir / f"{sid}.serial")
         if not to_id:
-            to_id = _read_session_file(sess_dir / f"{sid}.to_id")
+            # SEAT + SESSION KEY FIRST (2026-09-03, row NFRA_COMPEFFICACY-S28): Codex children launched from one
+            # Claude seat inherit its session id, so the bare <sid>.to_id was last-writer-wins across ten lanes.
+            # comp-to now writes <sid>.<serial>.to_id when OPAL_AGENT_SERIAL is set; the bare key is the legacy read.
+            to_id = _read_session_file(sess_dir / f"{_seat_session_key(sid, serial)}.to_id") if serial else ""
+            if not to_id:
+                to_id = _read_session_file(sess_dir / f"{sid}.to_id")
             if to_id:
                 to_id_source = "session"
 
@@ -257,7 +269,11 @@ def _carried_route(workspace: Path, tool: str) -> Optional[tuple]:
     if not sid:
         return None
     try:
-        p = workspace / "org" / "mcp" / "sessions" / f"{sid}.route"
+        # seat+session key first (comp-which writes it when OPAL_AGENT_SERIAL is set), bare session key second
+        seat = os.environ.get("OPAL_AGENT_SERIAL", "")
+        p = workspace / "org" / "mcp" / "sessions" / f"{_seat_session_key(sid, seat)}.route" if seat else None
+        if p is None or not p.exists():
+            p = workspace / "org" / "mcp" / "sessions" / f"{sid}.route"
         if not p.exists():
             return None
         raw = p.read_text(encoding="utf-8").strip()

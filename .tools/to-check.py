@@ -49,7 +49,7 @@ def clean(t: str) -> str:
     return re.sub(r"\s+", " ", t).strip()
 
 COMPLETE_WORDS = {"complete", "completed", "closed", "cancelled", "canceled",
-                  "superseded", "done", "merged", "decommissioned", "dropped",
+                  "superseded", "withdrawn", "done", "merged", "decommissioned", "dropped",
                   "archived", "shipped", "impl-complete", "impl_complete", "implemented"}
 
 STATUS_LABELS = {

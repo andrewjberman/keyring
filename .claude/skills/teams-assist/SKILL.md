@@ -1,6 +1,6 @@
 ---
 name: teams-assist
-description: An ad-hoc Microsoft Teams catch-up. You run "/teams-assist" on demand and it pulls your most-recent chat threads (default the 5 most-recently-active, last ~10 messages in each), reads them, and renders a compact PREVIEW + per-thread SUMMARY -- who, the gist, where the thread stands, and whether anything looks like it wants your attention. NOT a background monitor and NOT a poll: nothing wakes you, nothing interrupts, nothing is queued -- it only runs when you ask. Read-only + per-user (sees only YOUR DMs + @-mention threads via the Opal M365 gateway); it never posts to Teams and never auto-acts. "/teams-assist" for the default catch-up, "/teams-assist 8 15" to widen, "/teams-assist <name>" to focus one thread. OPAL-SPECIFIC -- needs the Opal M365 MCP gateway connected.
+description: Ad-hoc Microsoft Teams catch-up: `/teams-assist` pulls your most-recent chat threads (default 5, ~10 messages each) and renders a preview plus a per-thread summary -- who, the gist, where it stands, whether it wants attention. `/teams-assist 8 15` widens; `/teams-assist <name>` focuses one thread. Not a monitor: nothing wakes you. Read-only, per-user, never posts. Needs the Opal M365 gateway.
 ---
 
 # /teams-assist -- an ad-hoc Teams catch-up

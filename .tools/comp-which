@@ -27,14 +27,35 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-3)
+
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml")
 
+# RULE T (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-3): resolved ONCE per run, in main(), before any
+# subprocess-bearing path can be reached -- so BOTH ceilings below (the _run_primitive fallback and
+# the _self_report telemetry sink) derive their timeout from the SAME wall-clock budget for this
+# run, cumulative across whichever of them actually fire (0, 1, or 2 depending on the routing
+# path). Module-level because _run_primitive and _self_report are called from callers (main(),
+# __main__) that do not thread state through return values, mirroring _ROUTE_ONLY/_JSON's existing
+# idiom in this file rather than importing comp-read's dict-based carrier.
+_BUDGET_S = None
+_BUDGET_SOURCE = None
+_CLOCK = None
+
 # NFRA_TOOLARCH.GATEBOUND Stage B (0.8.0_AE_CloudComp~D, 2026-07-25): the fallback subprocess
 # _run_primitive() shells out to (comp-grep/comp-glob) had NO timeout -- the confirmed source of
-# an 84-minute hang the self-route commit gate inherited via its warm in-process call. 60s matches
+# an 84-minute hang the self-route commit gate inherited via its warm in-process call. 60s matched
 # the existing subprocess-timeout convention already used elsewhere for a comp-which invocation
 # (.tools/comp-which-routing-test.py's _run_comp_which, timeout=60) -- not a new arbitrary number.
+# SUPERSEDED as the LIVE ceiling by RULE T (NFRA_COMPEFFICACY CE-t-3, PRD v0.4 s.4.4): the two
+# GATEBOUND-era ad-hoc mutant verifications that read `mod.FALLBACK_TIMEOUT_S` directly
+# (org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_GATEBOUND/STAGE_A_REPORT.md,
+# 2026-07-25) were one-time exercises, already delivered, not a standing consumer -- confirmed by
+# census, 0 live callers of this name outside _run_primitive itself. Kept defined for the history
+# above; _run_primitive now derives its ceiling from the shared _compbudget carrier (--budget > env
+# COMP_BUDGET_S > default 90s) via the module-level Clock, never this constant.
 FALLBACK_TIMEOUT_S = 60
 # NFRA_COMPUNIFY S3: the coverage ledger is the SOURCE OF TRUTH the surface-first router reads
 # (CTO ruling #1 -- route from the ledger, never a parallel hand-maintained routing catalog).
@@ -1590,11 +1611,17 @@ def _handoff_route(rid: str, n: int) -> None:
     sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
     if not sid:
         return
+    # SEAT + SESSION KEY (2026-09-03, 1.0.0_SA_CTO, row NFRA_COMPEFFICACY-S28): Codex children launched from one
+    # Claude seat inherit its session id, so a session-only key is last-writer-wins across them. When
+    # OPAL_AGENT_SERIAL is set the handoff is keyed <sid>.<serial>.route; comp_log_auto reads that first.
+    import re as _re
+    seat = os.environ.get("OPAL_AGENT_SERIAL", "")
+    key = "%s.%s" % (sid, _re.sub(r"[^A-Za-z0-9_.~-]", "_", seat)) if seat else sid
     try:
         import time  # local: comp-which does not import time at module scope
         d = os.path.join(WS, "org", "mcp", "sessions")
         os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "%s.route" % sid), "w", encoding="utf-8") as f:
+        with open(os.path.join(d, "%s.route" % key), "w", encoding="utf-8") as f:
             # id | emit epoch | N recommended tools. N is recorded so an ALL-of-N rate stays
             # derivable without a re-baseline; COO ruled ANY-of-N CONVERTS (065315Z).
             f.write("%s|%.3f|%d\n" % (rid, time.time(), n))
@@ -1605,6 +1632,11 @@ def _handoff_route(rid: str, n: int) -> None:
 def _run_primitive(kind: str, term: str) -> int:
     """RUN the on-rails primitive (the never-dead-end). kind in {grep, glob}. Invokes the
     sibling comp-find via sys.executable (NOT a bash launcher -> Windows-safe).
+
+    RULE T (NFRA_COMPEFFICACY CE-t-3, PRD v0.4 s.4.4): this is one of comp-which's TWO
+    timeout-carrying subprocess sites (the other is _self_report()'s telemetry call). Its ceiling
+    now reads _CLOCK.remaining() instead of the fixed FALLBACK_TIMEOUT_S -- both sites share ONE
+    Clock started in main(), so the budget is a wall-clock allowance for the WHOLE run.
 
     >> RULE-21 REPOINT, 2026-08-07, 1.0.0_SA_CTO. Andrew-direct: "(A) lift it" (the rollout hold
     on "comp-find replaces grep", discharged on TRIAL-1 -- a non-author field trial, verdict "I
@@ -1652,14 +1684,39 @@ def _run_primitive(kind: str, term: str) -> int:
         # an int, and _run_primitive is typed `-> int` (its value becomes an exit code) -- the explicit
         # Popen form is what lets a bounded call return an rc gracefully instead of propagating an
         # exception out of a function callers expect to always return an int.
+        #
+        # RULE T (NFRA_COMPEFFICACY CE-t-3, PRD v0.4 s.4.4): the ceiling now derives from
+        # _CLOCK.remaining() -- the SAME shared clock _self_report() also reads, so the budget is
+        # ONE wall-clock allowance for the whole run, not a fresh 60s handed to every fallback call.
+        remaining = _CLOCK.remaining() if _CLOCK is not None else FALLBACK_TIMEOUT_S
+        if remaining is not None and remaining <= 0:
+            # DEFERRED, never silently skipped: the budget is already exhausted before this
+            # indivisible unit could even start -- the same pre-flight shape CE-t-2 established.
+            print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 fallback_primitive_call; results "
+                  "are a PREFIX, not the answer; the fallback was SKIPPED, not run; NO CURSOR: "
+                  "this is one indivisible call -- nothing to resume, only to re-run with a "
+                  "larger --budget; the on-rail call itself: %s"
+                  % (_compbudget.fmt(_BUDGET_S), _BUDGET_SOURCE, call))
+            return 1
         proc = subprocess.Popen(argv, cwd=WS, env=env)
         try:
-            return proc.wait(timeout=FALLBACK_TIMEOUT_S)
+            rc = proc.wait(timeout=remaining)
+            if _CLOCK is not None:
+                print("  " + _compbudget.within_budget_line(
+                    1, 1, "fallback_primitive_call", _BUDGET_S, _BUDGET_SOURCE,
+                    round(_CLOCK.elapsed(), 2)))
+            return rc
         except subprocess.TimeoutExpired:
             proc.kill()
             proc.wait()  # reap -- an un-waited killed child is a zombie, not a closed hang
-            print("comp-which: WARN: %s did not finish inside %ss and was KILLED. Run it "
-                  "yourself with a narrower scope: %s" % (call, FALLBACK_TIMEOUT_S, call))
+            print("comp-which: WARN: %s did not finish inside its remaining budget and was "
+                  "KILLED. Run it yourself with a narrower scope: %s" % (call, call))
+            if _CLOCK is not None:
+                print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 fallback_primitive_call; "
+                      "results are a PREFIX, not the answer; the subprocess did not return "
+                      "within the remaining budget (TimeoutExpired); NO CURSOR: this is one "
+                      "indivisible call -- nothing to resume, only to re-run with a larger "
+                      "--budget." % (_compbudget.fmt(_BUDGET_S), _BUDGET_SOURCE))
             return 1
     except Exception as e:
         # absolute last resort -- still NOT a dead-end: hand the agent the exact on-rail call
@@ -2069,11 +2126,38 @@ def main() -> int:
         global _JSON
         _JSON = True
         sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--json"]
+    # RULE T (NFRA_COMPEFFICACY CE-t-3, PRD v0.4 s.4.4): strip --budget the same way, BEFORE the
+    # question is joined -- it takes a value, so pull the following token too. Resolved and
+    # Clock-started here, before ANY other logic (including the bare-argv usage print below), so
+    # both timeout-carrying subprocess sites (_run_primitive, _self_report) always find a live
+    # Clock -- comp-which has no --help/-h path that would need a carve-out the way comp-read did.
+    global _BUDGET_S, _BUDGET_SOURCE, _CLOCK
+    _budget_flag = None
+    if "--budget" in sys.argv[1:]:
+        _bi = sys.argv.index("--budget")
+        if _bi + 1 < len(sys.argv):
+            _budget_flag = sys.argv[_bi + 1]
+            sys.argv = sys.argv[:_bi] + sys.argv[_bi + 2:]
+        else:
+            print("comp-which: ERROR: --budget wants a number of seconds (0 = unbounded)")
+            return 2
+    try:
+        _BUDGET_S, _BUDGET_SOURCE = _compbudget.resolve_budget(_budget_flag)
+    except ValueError as exc:
+        print("comp-which: ERROR: --budget %s" % exc)
+        return 2
+    _CLOCK = _compbudget.Clock(_BUDGET_S)
     if len(sys.argv) < 2 or not sys.argv[1].strip():
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
         print('  Browse: pipescript --list   |   full catalog: org/modules/graph/graph-call-manifest.yaml')
         print('  Surface-first taxonomy: comp-which --surfaces')
+        print('  --budget N    RULE T (PRD s.4.4, shared .tools/_compbudget): ceiling in seconds')
+        print('               for this run\'s TWO timeout-carrying subprocesses (the comp-find')
+        print('               fallback and the self-report telemetry sink), one shared wall-clock')
+        print('               allowance (carrier: --budget > env COMP_BUDGET_S > default %s s);'
+              % _compbudget.fmt(_compbudget.DEFAULT_BUDGET_S))
+        print('               --budget 0 = unbounded.')
         return 0
     if sys.argv[1].strip() in ("--surfaces", "--taxonomy"):  # NFRA_COMPUNIFY S3 -- the data view
         return _print_surfaces()
@@ -2311,14 +2395,46 @@ def _self_report(rc: int) -> None:
     AGENTS ASKED -- the exact population error that inflated a prior defect estimate by 4 points.
 
     Never raises: a telemetry sink must never break the tool it measures.
+
+    RULE T (NFRA_COMPEFFICACY CE-t-3, PRD v0.4 s.4.4): the second of comp-which's two
+    timeout-carrying subprocesses, reading the SAME _CLOCK _run_primitive() reads -- so a run
+    that already spent most of its budget on the fallback primitive has correspondingly less
+    left for this telemetry call, never a fresh independent allowance. Never printed for
+    --route-only (unchanged: no rail row, no telemetry row, no Rule T line either -- the
+    documented side-effect-free contract binds this print too).
     """
     if _ROUTE_ONLY:
+        return
+    remaining = _CLOCK.remaining() if _CLOCK is not None else 20
+    if remaining is not None and remaining <= 0:
+        try:
+            print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 telemetry_call; results are a "
+                  "PREFIX, not the answer; the self-report subprocess was SKIPPED, not run; NO "
+                  "CURSOR: this is one indivisible timeout-carrying subprocess -- nothing to "
+                  "resume, only to re-run with a larger --budget."
+                  % (_compbudget.fmt(_BUDGET_S), _BUDGET_SOURCE))
+        except Exception:
+            pass
         return
     try:
         subprocess.run(
             [sys.executable, os.path.join(WS, "org", "modules", "graph", "comp_log_auto.py"),
              "comp-which", " ".join(sys.argv[1:])[:200], str(rc)],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=remaining)
+        if _CLOCK is not None:
+            print("  " + _compbudget.within_budget_line(
+                1, 1, "telemetry_call", _BUDGET_S, _BUDGET_SOURCE, round(_CLOCK.elapsed(), 2)))
+    except subprocess.TimeoutExpired:
+        if _CLOCK is not None:
+            try:
+                print("  BUDGET REACHED: %s s (%s); scanned 0 of 1 telemetry_call; results are "
+                      "a PREFIX, not the answer; the self-report subprocess did not return "
+                      "within the remaining budget (TimeoutExpired); NO CURSOR: this is one "
+                      "indivisible timeout-carrying subprocess -- nothing to resume, only to "
+                      "re-run with a larger --budget."
+                      % (_compbudget.fmt(_BUDGET_S), _BUDGET_SOURCE))
+            except Exception:
+                pass
     except Exception:
         pass
 

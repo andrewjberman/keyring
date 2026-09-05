@@ -1,6 +1,6 @@
 ---
 name: goal-set
-description: Point yourself at a goal and let the org drive it to a verified finish. Asks up to 3 quick questions about what you want (answer fewer, or just hand over the goal -- no pushing), crystallizes that into a goal, then ARMS A SELF-DRIVING LOOP -- /loop [interval] <Drive the goal to completion; /verify at completion and adjust if necessary>. The loop ticks the goal forward each wake, /verify (mechanical/declarative/semantic) gates completion, and it adjusts until /verify is SOUND. Use when you say "/goal-set" or "/goal-set <rough idea>". The CEO, an exec, or any agent handed a goal runs it.
+description: Point yourself at a goal and drive it to a verified finish: up to three quick questions, crystallize the goal, then arm `/loop [interval] <drive the goal; /verify at completion and adjust>`; /verify gates completion. Use on `/goal-set` or `/goal-set <rough idea>`. Any agent handed a goal.
 ---
 
 # /goal-set -- set a goal, arm a loop that drives it to a verified finish

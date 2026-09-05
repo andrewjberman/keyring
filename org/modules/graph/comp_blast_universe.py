@@ -145,7 +145,9 @@ def kuzu_provenance(db_path: str) -> str:
         return f"=== kuzu provenance UNAVAILABLE ({type(ex).__name__}: {ex}) ==="
 
 
-def load_kuzu_universe(db_path: str | None = None, refresh: bool = True) -> tuple[TraceGraph, str, str]:
+def load_kuzu_universe(db_path: str | None = None, refresh: bool = True, *,
+                       budgeted: bool = False,
+                       unbudgeted_label: str | None = None) -> tuple[TraceGraph, str, str]:
     """Project the canonical kuzu graph into a TraceGraph.
 
     Returns (graph, provenance_block, db_path).
@@ -161,7 +163,11 @@ def load_kuzu_universe(db_path: str | None = None, refresh: bool = True) -> tupl
     kuzu, _canonical, _provenance = _import_globgrph()
     path = db_path or _canonical.CANONICAL_DB_PATH
 
-    if refresh and _canonical.is_canonical(path):
+    # AC-7 / CE-g-5: a bounded client must never enter the refresh mutex.  The existing projection
+    # is a complete, queryable prior vintage; serve it now and disclose its age below instead of
+    # allowing a stale HEAD to launch the ~17-minute loader outside Rule T.
+    refresh_allowed = not budgeted
+    if refresh and _canonical.is_canonical(path) and refresh_allowed:
         try:
             _canonical.ensure_fresh(path)
         except Exception as ex:  # noqa: BLE001 -- staleness is REPORTED (provenance), never fatal
@@ -175,6 +181,21 @@ def load_kuzu_universe(db_path: str | None = None, refresh: bool = True) -> tupl
         )
 
     prov = ascii_safe(_provenance.format_provenance_header(path))
+    if budgeted and _canonical.is_canonical(path):
+        try:
+            needs, reason = _canonical.needs_refresh(path, _provenance.DEFAULT_AGE_WARN_HOURS)
+            age = _canonical._served_age_str(path)
+            if needs:
+                prov += ("\n  BUDGETED CALL: SERVING EXISTING GRAPH STALE (age %s); refresh skipped "
+                         "to keep the whole call within Rule-T (%s)." % (age, reason))
+            else:
+                prov += "\n  BUDGETED CALL: existing graph current; no refresh required."
+        except Exception as ex:  # noqa: BLE001 -- disclosure must not make a readable DB unusable
+            prov += ("\n  BUDGETED CALL: serving existing graph; staleness disclosure unavailable "
+                     "(%s)." % type(ex).__name__)
+    elif unbudgeted_label:
+        prov += ("\n  UNBUDGETED CALL (%s): today's canonical refresh/serve path retained; "
+                 "no Rule-T ceiling applied to universe loading." % unbudgeted_label)
 
     try:
         db = kuzu.Database(path, read_only=True)

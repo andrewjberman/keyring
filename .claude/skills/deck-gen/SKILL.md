@@ -1,6 +1,6 @@
 ---
 name: deck-gen
-description: Generate a brand-compliant, fidelity-checked Opal PowerPoint (.pptx) from a deck-prompt file (`*.deck.md`). Runs the brand-derivative composer (engine/compose.py) — compose from primitives, enforce DESIGN_BIBLE.md via the [AUTO] linter, verify slide-count + line-coverage fidelity, render to images via PowerPoint COM, visually QA every slide, and drop the deck on the Desktop with a report. Use when the user says `/deck-gen <prompt.deck.md>`, asks to "generate/build the deck" from a prompt, or to turn a `*.deck.md` into slides. Pair skill: `/deck-prompt` writes the prompt file this consumes.
+description: Generate a brand-compliant, fidelity-checked Opal .pptx from a `*.deck.md` prompt file: compose, lint against DESIGN_BIBLE.md, verify slide count and line coverage, render and QA every slide, drop on the Desktop with a report. Use on `/deck-gen <prompt.deck.md>` or "build the deck". Pair: `/deck-prompt` writes the file this consumes.
 ---
 
 # /deck-gen — build a deck from a prompt file

@@ -57,10 +57,17 @@ Read-only over the repo. No AWS calls, no model calls, no network, deterministic
 
 USAGE:
   comp-schedule                      every armed gate, per-carrier denominators
+  comp-schedule --budget <seconds>   Rule T: flag > COMP_BUDGET_S > default 90 s
+  comp-schedule --cursor <START|C1..C5>  resume AFTER the last fully compiled carrier
   comp-schedule --drift              EXCEPTIONS ONLY: discharge condition looks satisfied, still armed
   comp-schedule --owner <serial>     gates naming that owner
   comp-schedule --gate <id>          one gate in full, with its evidence
+  comp-schedule --answer-state-cases plant all four s.4.3 states in ONE invocation
   comp-schedule --self-test
+
+RC VOCABULARY (verdict-bearing at the five-carrier compile boundary):
+  0 complete view; 1 failed self-test; 2 usage/repository error;
+  3 PARTIAL_OR_BLIND / NOT-DECIDABLE (BUDGET REACHED; never a clean prefix)
 """
 import json
 import os
@@ -78,6 +85,27 @@ try:
 except Exception as _e:                                    # never guess the grammar
     SERVE_HELD_RE = None
     _GRAMMAR = "UNAVAILABLE (%s)" % type(_e).__name__
+
+try:
+    import _compbudget
+except Exception as _budget_error:                         # fail in main(), in the tool's voice
+    _compbudget = None
+    _budget_error_name = type(_budget_error).__name__
+else:
+    _budget_error_name = None
+
+
+STATE_SUBJECT_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
+STATE_PRESENT_ZERO = "PRESENT_WITH_ZERO_RESULTS"
+STATE_PARTIAL_OR_BLIND = "PARTIAL_OR_BLIND"
+STATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+STATE_NOT_DECIDABLE = "NOT-DECIDABLE"
+STATE_POSITIVE = "POSITIVE_RESULT"
+
+RC_COMPLETE = 0
+RC_SELF_TEST_FAILED = 1
+RC_USAGE = 2
+RC_NOT_DECIDABLE = 3
 
 # The switch the acceptance battery plants against. It is a named constant rather than an inline
 # condition precisely so a mutant can flip it and prove the separation is enforced, not incidental.
@@ -171,48 +199,99 @@ class Carrier:
         self.gates = []
         self.note = ""
         self.unreadable = None            # None = readable; a string = why not
+        self.budget_reached = False
+        self.work_scanned = 0
+        self.work_total = 0
+        self.work_unit = "items"
+        self.work_cursor = "START"
+        # These flags make the four s.4.3 states explicit without changing a carrier's gate
+        # semantics. Production carriers are present and applicable; the planted-case command
+        # changes the flags on in-memory carriers only.
+        self.subject_present = True
+        self.population_applicable = True
 
 
-def c1_sentinels():
+def _budget_is_spent(clock):
+    remaining = clock.remaining() if clock is not None else None
+    return remaining is not None and remaining <= 0
+
+
+def _budget_cut(c, scanned, total, unit, cursor):
+    c.budget_reached = True
+    c.work_scanned = scanned
+    c.work_total = total
+    c.work_unit = unit
+    c.work_cursor = cursor or "START"
+    total_text = str(total) if total is not None else "UNKNOWN (enumeration itself hit budget)"
+    c.note = ("BUDGET PARTIAL: scanned %d of %s %s; native denominator reached=%d; "
+              "this carrier must be rerun, never read as zero or complete"
+              % (scanned, total_text, unit, c.denominator))
+    return c
+
+
+def c1_sentinels(clock=None):
     """CODE SENTINELS -- the grammar is owned elsewhere and enforced at deploy time."""
     c = Carrier("C1", "SENTINEL", "DECIDABLE")
     if SERVE_HELD_RE is None:
         c.unreadable = "sentinel grammar could not be imported: %s" % _GRAMMAR
         return c
     by_cond, lines = {}, 0
+    population = []
     for dirpath, dirnames, filenames in os.walk(repo_root()):
+        if _budget_is_spent(clock):
+            return _budget_cut(c, 0, None, "files", "START")
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
         for fn in filenames:
+            if _budget_is_spent(clock):
+                return _budget_cut(c, 0, None, "files", "START")
             if not fn.endswith(TEXT_EXT):
                 continue
             rel = _rel(os.path.join(dirpath, fn))
             if _is_chatter(rel):
                 continue
-            try:
-                with open(os.path.join(dirpath, fn), encoding="utf-8", errors="replace") as fh:
-                    flines = fh.read().splitlines()
-            except (OSError, UnicodeDecodeError):
+            population.append((rel, os.path.join(dirpath, fn)))
+    population.sort(key=lambda item: item[0])
+    scanned = 0
+    for rel, path in population:
+        if _budget_is_spent(clock):
+            c.denominator = lines
+            _materialize_c1_gates(c, by_cond)
+            return _budget_cut(c, scanned, len(population), "files", c.work_cursor)
+        try:
+            with open(path, encoding="utf-8", errors="replace") as fh:
+                flines = fh.read().splitlines()
+        except (OSError, UnicodeDecodeError):
+            scanned += 1
+            c.work_cursor = rel
+            continue
+        fenced = _fenced_lines(flines)
+        for i, ln in enumerate(flines, 1):
+            m = SERVE_HELD_RE.match(ln)
+            if not m:
                 continue
-            fenced = _fenced_lines(flines)
-            for i, ln in enumerate(flines, 1):
-                m = SERVE_HELD_RE.match(ln)
-                if not m:
-                    continue
-                if i in fenced:
-                    continue
-                lines += 1
-                cond = _full_reason(flines, i, (m.group(1) or "").strip())
-                by_cond.setdefault(cond, []).append("%s:%d" % (rel, i))
+            if i in fenced:
+                continue
+            lines += 1
+            cond = _full_reason(flines, i, (m.group(1) or "").strip())
+            by_cond.setdefault(cond, []).append("%s:%d" % (rel, i))
+        scanned += 1
+        c.work_cursor = rel
     c.denominator = lines
-    for cond, ev in sorted(by_cond.items(), key=lambda kv: (-len(kv[1]), kv[0])):
-        c.gates.append({"owner": _owner_from_condition(cond), "discharge": cond,
-                        "last_verified": _last_touched(ev[0].split(":")[0]),
-                        "evidence": ev, "carrier": "C1"})
+    _materialize_c1_gates(c, by_cond)
+    c.work_scanned, c.work_total, c.work_unit = scanned, len(population), "files"
     c.note = ("%d sentinel line(s) -> %d gate(s) grouped by DISCHARGE CONDITION; EXCLUDES "
               "org/mcp/inbox AND any line inside a ``` fence (agents quoting a sentinel are not a "
               "sentinel -- path-scoped for inbox, fence-scoped everywhere else). grammar=%s"
               % (lines, len(c.gates), _GRAMMAR))
     return c
+
+
+def _materialize_c1_gates(c, by_cond):
+    """Build the same gate rows from a complete or budget-prefix sentinel read."""
+    for cond, ev in sorted(by_cond.items(), key=lambda kv: (-len(kv[1]), kv[0])):
+        c.gates.append({"owner": _owner_from_condition(cond), "discharge": cond,
+                        "last_verified": _last_touched(ev[0].split(":")[0]),
+                        "evidence": ev, "carrier": "C1"})
 
 
 def _full_reason(flines, idx, first):
@@ -254,7 +333,7 @@ def _owner_from_condition(cond):
     return m.group(1) if m else "UNNAMED"
 
 
-def c2_ledger():
+def c2_ledger(clock=None):
     """OPEN DEPLOY LEDGER -- file presence IS the armedness, and the entry names its own author."""
     c = Carrier("C2", "DEPLOY-LEDGER", "DECIDABLE")
     d = os.path.join(repo_root(), "org", "critical_paths", ".open_deploys")
@@ -271,7 +350,9 @@ def c2_ledger():
         c.unreadable = "listdir failed: %s" % type(e).__name__
         return c
     c.denominator = len(names)
-    for n in names:
+    for index, n in enumerate(names):
+        if _budget_is_spent(clock):
+            return _budget_cut(c, index, len(names), "ledger entries", c.work_cursor)
         rel = "org/critical_paths/.open_deploys/" + n
         try:
             j = json.load(open(os.path.join(d, n), encoding="utf-8"))
@@ -279,16 +360,19 @@ def c2_ledger():
             c.gates.append({"owner": "UNKNOWN", "discharge": "UNPARSEABLE ledger entry (%s)"
                             % type(e).__name__, "last_verified": _last_touched(rel),
                             "evidence": [rel], "carrier": "C2"})
+            c.work_cursor = rel
             continue
         c.gates.append({"owner": j.get("author") or "UNNAMED",
                         "discharge": "ledger entry OPEN, status=%s" % (j.get("status") or "?"),
                         "last_verified": (j.get("held_at") or j.get("opened_at") or "UNKNOWN")[:10],
                         "evidence": [rel], "carrier": "C2"})
+        c.work_cursor = rel
+    c.work_scanned, c.work_total, c.work_unit = len(names), len(names), "ledger entries"
     c.note = "%d open deploy-ledger entry(ies); OPEN file = ARMED gate" % len(names)
     return c
 
 
-def c3_moratoria():
+def c3_moratoria(clock=None):
     """CLAUDE.md standing moratoria -- the NEVER block. Hand-few and rarely changing."""
     c = Carrier("C3", "MORATORIA", "DECIDABLE")
     rel = "CLAUDE.md"
@@ -301,44 +385,74 @@ def c3_moratoria():
     except OSError as e:
         c.unreadable = "read failed: %s" % type(e).__name__
         return c
-    hits = [(i, ln) for i, ln in enumerate(lines, 1)
-            if re.match(r"^\s*[-*]\s*\*\*NEVER\b", ln) or re.match(r"^\s*-\s*\*\*NEVER", ln)]
+    hits = []
+    scanned = 0
+    for i, ln in enumerate(lines, 1):
+        if _budget_is_spent(clock):
+            c.denominator = len(hits)
+            for hit_i, hit_ln in hits:
+                txt = re.sub(r"[*`]", "", hit_ln).strip(" -")[:110]
+                c.gates.append({"owner": "Andrew (standing moratorium)", "discharge": txt,
+                                "last_verified": _last_touched(rel),
+                                "evidence": ["%s:%d" % (rel, hit_i)], "carrier": "C3"})
+            return _budget_cut(c, scanned, len(lines), "lines", str(scanned))
+        if (re.match(r"^\s*[-*]\s*\*\*NEVER\b", ln)
+                or re.match(r"^\s*-\s*\*\*NEVER", ln)):
+            hits.append((i, ln))
+        scanned += 1
     c.denominator = len(hits)
     for i, ln in hits:
         txt = re.sub(r"[*`]", "", ln).strip(" -")[:110]
         c.gates.append({"owner": "Andrew (standing moratorium)", "discharge": txt,
                         "last_verified": _last_touched(rel),
                         "evidence": ["%s:%d" % (rel, i)], "carrier": "C3"})
+    c.work_scanned, c.work_total, c.work_unit = len(lines), len(lines), "lines"
+    c.work_cursor = str(len(lines))
     c.note = "%d standing NEVER clause(s) in the law" % len(hits)
     return c
 
 
-def c4_scope_guards():
+def c4_scope_guards(clock=None):
     """TASK-ORDER scope_guard -- SEMI: decidable only once chatter is excluded."""
     c = Carrier("C4", "SCOPE-GUARD", "SEMI-DECIDABLE")
-    found, n = [], 0
+    found, n, population = [], 0, []
     for base in ("org/tier0", "org/tier0_exec", "org/tier1_exec", "org/tier2_senior",
                  "org/tier3_junior"):
         b = os.path.join(repo_root(), base)
         if not os.path.isdir(b):
             continue
         for dirpath, dirnames, filenames in os.walk(b):
+            if _budget_is_spent(clock):
+                return _budget_cut(c, 0, None, "files", "START")
             dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
             for fn in filenames:
+                if _budget_is_spent(clock):
+                    return _budget_cut(c, 0, None, "files", "START")
                 if not fn.endswith((".json", ".md")):
                     continue
                 rel = _rel(os.path.join(dirpath, fn))
                 if _is_chatter(rel):
                     continue
-                try:
-                    txt = open(os.path.join(dirpath, fn), encoding="utf-8",
-                               errors="replace").read()
-                except OSError:
-                    continue
-                if "scope_guard" in txt:
-                    n += 1
-                    found.append(rel)
+                population.append((rel, os.path.join(dirpath, fn)))
+    population.sort(key=lambda item: item[0])
+    scanned = 0
+    for rel, path in population:
+        if _budget_is_spent(clock):
+            c.denominator = n
+            return _budget_cut(c, scanned, len(population), "files", c.work_cursor)
+        try:
+            txt = open(path, encoding="utf-8", errors="replace").read()
+        except OSError:
+            scanned += 1
+            c.work_cursor = rel
+            continue
+        if "scope_guard" in txt:
+            n += 1
+            found.append(rel)
+        scanned += 1
+        c.work_cursor = rel
     c.denominator = n
+    c.work_scanned, c.work_total, c.work_unit = scanned, len(population), "files"
     c.note = ("%d task-order file(s) carry a scope_guard; EXCLUDES org/mcp/inbox. SEMI: a "
               "scope_guard is a SCOPE statement, and whether it is still ARMED is not stated in "
               "its own bytes -- listed, never counted as discharged-or-not." % n)
@@ -347,7 +461,7 @@ def c4_scope_guards():
     return c
 
 
-def c5_prose():
+def c5_prose(clock=None):
     """org/projects/*.json `blocking` -- NOT-DECIDABLE. The load-bearing refusal in this tool."""
     c = Carrier("C5", "PROJECT-BLOCKING", "NOT-DECIDABLE")
     d = os.path.join(repo_root(), "org", "projects")
@@ -362,14 +476,20 @@ def c5_prose():
     total = withkey = empty = nonelike = 0
     prose, neg, closed = [], 0, 0
     unread = 0
-    for n in names:
+    for index, n in enumerate(names):
+        if _budget_is_spent(clock):
+            c.denominator = withkey
+            c.needs_read = prose
+            return _budget_cut(c, index, len(names), "project jsons", c.work_cursor)
         total += 1
         try:
             j = json.load(open(os.path.join(d, n), encoding="utf-8"))
         except Exception:
             unread += 1
+            c.work_cursor = n
             continue
         if not isinstance(j, dict) or "blocking" not in j:
+            c.work_cursor = n
             continue
         withkey += 1
         v = (j.get("blocking") or "").strip()
@@ -383,8 +503,10 @@ def c5_prose():
                 neg += 1
             if _CLOSED_RX.search(v):
                 closed += 1
+        c.work_cursor = n
     c.denominator = withkey
     c.needs_read = prose
+    c.work_scanned, c.work_total, c.work_unit = len(names), len(names), "project jsons"
     if not PROSE_IS_NEVER_A_GATE:
         # THE SWITCH IS LOAD-BEARING, NOT DECORATIVE. It was declared and never consulted in the
         # first cut, so the acceptance mutant flipped it and NOTHING CHANGED -- a switch that
@@ -444,8 +566,7 @@ def _drift_flags(g):
     return out
 
 
-def compile_view():
-    cs = [c1_sentinels(), c2_ledger(), c3_moratoria(), c4_scope_guards(), c5_prose()]
+def _number_and_drift(cs):
     gid = 0
     for c in cs:
         for g in c.gates:
@@ -455,7 +576,148 @@ def compile_view():
     return cs
 
 
-def render(cs, drift_only=False, owner=None, gate=None):
+def compile_view():
+    cs = [c1_sentinels(), c2_ledger(), c3_moratoria(), c4_scope_guards(), c5_prose()]
+    return _number_and_drift(cs)
+
+
+_CARRIER_FACTORIES = (c1_sentinels, c2_ledger, c3_moratoria, c4_scope_guards, c5_prose)
+_CARRIER_IDS = ("C1", "C2", "C3", "C4", "C5")
+
+
+def _answer_state(c):
+    """Classify one carrier answer at the s.4.3 RUN grain.
+
+    A positive, complete answer is outside the four-state non-positive domain and is named as
+    POSITIVE_RESULT. Every other branch returns exactly one ratified state spelling. The carrier
+    decidability label remains a separate axis: C4 stays SEMI-DECIDABLE while its run-state is the
+    PARTIAL_OR_BLIND state whose adopted tool-voice token is NOT-DECIDABLE.
+    """
+    if not c.subject_present:
+        return STATE_SUBJECT_ABSENT, None
+    if not c.population_applicable:
+        return STATE_NOT_APPLICABLE, None
+    if c.budget_reached or c.unreadable or c.decid in ("SEMI-DECIDABLE", "NOT-DECIDABLE"):
+        return STATE_PARTIAL_OR_BLIND, STATE_NOT_DECIDABLE
+    if not c.gates:
+        return STATE_PRESENT_ZERO, None
+    return STATE_POSITIVE, None
+
+
+def _state_suffix(c):
+    state, voice = _answer_state(c)
+    suffix = "answer-state=%s" % state
+    if voice:
+        suffix += " tool-voice=%s" % voice
+    if state == STATE_POSITIVE:
+        suffix += " [outside the s.4.3 non-positive domain]"
+    return suffix
+
+
+def _answer_state_cases():
+    """Plant all four answer states in memory and print them in one CLI invocation."""
+    absent = Carrier("P1", "PLANTED-MISSING-LEDGER", "DECIDABLE")
+    absent.subject_present = False
+
+    zero = Carrier("P2", "PLANTED-EMPTY-LEDGER", "DECIDABLE")
+    zero.denominator = 1
+
+    blind = Carrier("P3", "PLANTED-FREE-PROSE", "NOT-DECIDABLE")
+    blind.denominator = 7
+
+    not_applicable = Carrier("P4", "PLANTED-NO-POPULATION", "DECIDABLE")
+    not_applicable.population_applicable = False
+
+    cases = (
+        (STATE_SUBJECT_ABSENT, absent, RC_USAGE,
+         "carrier/project subject has no ledger in the corpus"),
+        (STATE_PRESENT_ZERO, zero, RC_COMPLETE,
+         "carrier is present and compiles to 0 gate(s) across denominator=1"),
+        (STATE_PARTIAL_OR_BLIND, blind, RC_NOT_DECIDABLE,
+         "free-prose carrier cannot decide gate armedness across denominator=7"),
+        (STATE_NOT_APPLICABLE, not_applicable, RC_COMPLETE,
+         "selected mode has no population"),
+    )
+    print("ANSWER-STATE CASES -- PLANTED in ONE invocation (case-rc is the branch rc):")
+    seen = []
+    for expected, carrier, case_rc, planted in cases:
+        state, voice = _answer_state(carrier)
+        seen.append(state)
+        print("  case=%s case-rc=%d ANSWER-STATE: %s%s denominator=%d -- %s"
+              % (expected, case_rc, state,
+                 " tool-voice=%s" % voice if voice else "",
+                 carrier.denominator, planted))
+    ok = seen == [STATE_SUBJECT_ABSENT, STATE_PRESENT_ZERO,
+                  STATE_PARTIAL_OR_BLIND, STATE_NOT_APPLICABLE]
+    print("answer-state cases: %s 4/4 distinct state tokens" % ("PASS" if ok else "FAIL"))
+    return RC_COMPLETE if ok else RC_SELF_TEST_FAILED
+
+
+def _arg_value(args, flag):
+    if flag not in args:
+        return None
+    i = args.index(flag)
+    if i + 1 >= len(args) or args[i + 1].startswith("--"):
+        raise ValueError("%s requires a value" % flag)
+    return args[i + 1]
+
+
+def _compile_budgeted(clock, cursor=None):
+    """Compile deterministic carrier units until Rule T's shared clock expires.
+
+    A carrier is the resumable unit because its native denominator is only knowable after that
+    carrier is read. We therefore finish the current carrier, report its reached denominator, and
+    never start the next one after expiry. This preserves each carrier's existing compiler bytes
+    and its five distinct semantics while making the cross-carrier view a resumable prefix.
+    """
+    start = 0
+    if cursor:
+        if cursor == "START":
+            start = 0
+        elif cursor in _CARRIER_IDS:
+            start = _CARRIER_IDS.index(cursor) + 1
+        else:
+            raise ValueError("--cursor must be START or one of %s" % ",".join(_CARRIER_IDS))
+
+    cs = []
+    expired = False
+    for factory in _CARRIER_FACTORIES[start:]:
+        carrier = factory(clock=clock)
+        cs.append(carrier)
+        if carrier.budget_reached:
+            expired = True
+            break
+        remaining = clock.remaining()
+        if remaining is not None and remaining <= 0:
+            expired = start + len(cs) < len(_CARRIER_FACTORIES)
+            if expired:
+                break
+    scanned = start + len(cs) - (1 if cs and cs[-1].budget_reached else 0)
+    return _number_and_drift(cs), scanned, expired
+
+
+def _reached_denominators(cs, scanned):
+    got = {}
+    for c in cs:
+        if c.budget_reached:
+            work_total = c.work_total if c.work_total is not None else "UNKNOWN"
+            got[c.cid] = ("%d (PARTIAL; scanned %d of %s %s)"
+                          % (c.denominator, c.work_scanned, work_total, c.work_unit))
+        else:
+            got[c.cid] = str(c.denominator)
+    parts = []
+    for i, cid in enumerate(_CARRIER_IDS, 1):
+        if cid in got:
+            parts.append("%s=%s" % (cid, got[cid]))
+        elif i <= scanned:
+            parts.append("%s=RESUMED-BEFORE" % cid)
+        else:
+            parts.append("%s=NOT-SCANNED" % cid)
+    return "REACHED-DENOMINATORS: " + "; ".join(parts)
+
+
+def render(cs, drift_only=False, owner=None, gate=None, budget_disclosure=None,
+           budget_terminal=None, reached_denominators=None, partial=False):
     gates = [g for c in cs for g in c.gates]
     if owner:
         gates = [g for g in gates if owner.lower() in str(g["owner"]).lower()]
@@ -467,6 +729,15 @@ def render(cs, drift_only=False, owner=None, gate=None):
     needs = len(getattr(prose, "needs_read", []) or []) if prose else 0
 
     print("comp-schedule -- the gate ledger (VIEW-TIME COMPILED; no artifact, nothing to go stale)")
+    if budget_disclosure:
+        print(budget_disclosure)
+    if budget_terminal:
+        print(budget_terminal)
+    if partial:
+        print("ANSWER-STATE: %s tool-voice=%s -- the carrier view is a PREFIX, never clean"
+              % (STATE_PARTIAL_OR_BLIND, STATE_NOT_DECIDABLE))
+    if reached_denominators:
+        print(reached_denominators)
     print()
     print("GATES ARMED: %d%s" % (len(gates), "   [--drift: exceptions only]" if drift_only else ""))
     print("NEEDS-READ:  %d project `blocking` field(s) carrying non-null PROSE -- NOT counted as"
@@ -476,12 +747,13 @@ def render(cs, drift_only=False, owner=None, gate=None):
     print("CARRIERS -- each with its OWN denominator and its OWN decidability:")
     for c in cs:
         if c.unreadable:
-            print("  %-3s %-16s UNREADABLE -- %s" % (c.cid, c.name, _ascii(c.unreadable)))
+            print("  %-3s %-16s UNREADABLE %s -- %s"
+                  % (c.cid, c.name, _state_suffix(c), _ascii(c.unreadable)))
             print("      (UNREADABLE is NOT zero rows. A carrier that could not be read and a"
                   " carrier with nothing in it are opposite facts.)")
             continue
-        print("  %-3s %-16s %-15s denominator=%d -> %d gate(s)"
-              % (c.cid, c.name, c.decid, c.denominator, len(c.gates)))
+        print("  %-3s %-16s %-15s denominator=%d -> %d gate(s) %s"
+              % (c.cid, c.name, c.decid, c.denominator, len(c.gates), _state_suffix(c)))
         print("      %s" % _ascii(c.note))
     print()
     if not gates:
@@ -557,10 +829,38 @@ def main():
         return 0
     if "--self-test" in args:
         return self_test()
-    owner = args[args.index("--owner") + 1] if "--owner" in args else None
-    gate = args[args.index("--gate") + 1] if "--gate" in args else None
-    render(compile_view(), drift_only=("--drift" in args), owner=owner, gate=gate)
-    return 0
+    if "--answer-state-cases" in args:
+        return _answer_state_cases()
+    if _compbudget is None:
+        print("ERROR: Rule T carrier .tools/_compbudget.py unavailable: %s"
+              % _budget_error_name)
+        return RC_USAGE
+    try:
+        owner = _arg_value(args, "--owner")
+        gate = _arg_value(args, "--gate")
+        cursor = _arg_value(args, "--cursor")
+        budget_flag = _arg_value(args, "--budget")
+        budget_s, budget_source = _compbudget.resolve_budget(budget_flag)
+        clock = _compbudget.Clock(budget_s)
+        cs, scanned, expired = _compile_budgeted(clock, cursor=cursor)
+    except ValueError as e:
+        print("ERROR: %s" % e)
+        return RC_USAGE
+
+    if expired:
+        last = _CARRIER_IDS[scanned - 1] if scanned else "START"
+        terminal = _compbudget.budget_reached_line(
+            budget_s, budget_source, scanned, len(_CARRIER_FACTORIES), "carriers",
+            "comp-schedule", last)
+    else:
+        terminal = _compbudget.within_budget_line(
+            scanned, len(_CARRIER_FACTORIES), "carriers", budget_s, budget_source,
+            round(clock.elapsed(), 3))
+    render(cs, drift_only=("--drift" in args), owner=owner, gate=gate,
+           budget_disclosure=_compbudget.disclosure_line(budget_s, budget_source),
+           budget_terminal=terminal,
+           reached_denominators=_reached_denominators(cs, scanned), partial=expired)
+    return RC_NOT_DECIDABLE if expired else RC_COMPLETE
 
 
 if __name__ == "__main__":
