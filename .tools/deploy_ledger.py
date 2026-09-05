@@ -72,6 +72,15 @@ from pathlib import Path
 # non-ASCII surface. A partial sweep reporting a plausible failure is worse than a loud one.
 # The tool must not die on data it exists to read; this does NOT license new non-ASCII in output
 # (CLAUDE.md still binds -- use OK:/WARN:/ERROR:/SKIP:/BLOCKED:).
+# FOLD-IN from the site-Z rendering of this same fix (0.0.0_AB_MSTR~Z @cecfb9e081), which LOST
+# the pick and is discarded except for these two facts, neither of which is in the text above.
+# (1) THE DIAGNOSIS: this file reads authored ledgers with errors="replace" in EIGHT places -- it
+#     already knew hand-written content carries characters it did not choose -- and guarded its
+#     OUTPUT nowhere. Input hardened, output bare. That asymmetry is why the defect existed.
+# (2) WHY THE STREAM AND NOT THE CALL SITE: the offending character arrives from AUTHORED text and
+#     can surface in ANY print in this 1300-line file, so repairing the one line that happened to
+#     fire would leave the identical landmine in every other one. Do not "fix" a future instance
+#     locally; it is already fixed here.
 for _stream in (sys.stdout, sys.stderr):
     try:
         _stream.reconfigure(encoding="utf-8", errors="replace")

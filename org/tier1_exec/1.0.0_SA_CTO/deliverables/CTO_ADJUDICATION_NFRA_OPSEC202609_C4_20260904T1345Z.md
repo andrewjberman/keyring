@@ -152,3 +152,66 @@ unit, the 20-day block distribution with a positive control, and the sentinel's 
 source. I did NOT re-derive the "two sign-in events in twenty days" figure, the 23-user / 4-firm
 partner population, or `Z-S90`'s 111,904-record census -- those remain `0.7.0_AE_CloudOps~W`'s
 measurements, cited and not re-taken, and the ruling does not rest on them.
+
+
+---
+
+# AMENDMENT 2026-09-04 ~17:2xZ -- SECTION 3's REMEDY IS STRUCK. IT WAS THE SAME AXIS.
+
+**Cause:** Andrew-direct ~16:5xZ, /open-calls Card 1 (record: `0.0.0_AB_MSTR~Z` msg 20469), verbatim:
+
+> "there are none is probably the best we can do at this time. The issue is that there are really
+> just are no stable IPs. There are opal users who don't... who do not even come to the office. So
+> it's just not really viable to approach it that way."
+
+## WHAT THIS RULING GOT WRONG
+
+Section 3 struck *"populated from MEASURED sign-in addresses per firm"* as unsatisfiable by
+construction -- **that half stands** -- and replaced it with *"non-empty, carrying Opal's own known
+egress addresses (office / VPN), supplied by a named human."*
+
+⛔ **THE REPLACEMENT IS THE SAME AXIS.** The defect was never that the partner half could not be
+MEASURED; it is that **SOURCE ADDRESS is not a property this population has**. I diagnosed an
+unmeasurable census and prescribed a smaller census on the identical axis. The card I sent even
+carried the escape hatch -- *"'there are no fixed addresses' is an equally usable answer"* -- and the
+remedy still assumed there were some. **A rec can name the fact that refutes it and still be wrong.**
+
+## AND THE OBVIOUS REPLACEMENT FAILS TOO -- THE COMPOSED FINDING
+
+⛔ **CORRECTED 2026-09-04 ~17:2xZ (msg 20479, `0.0.0_AB_MSTR~Z` correcting its own relay): "re-derive
+on IDENTITY" IS NOWHERE IN ANDREW'S WORDS.** He ruled an axis OUT and ruled no replacement IN. The
+identity prescription was that seat's inference set beside his verbatim under a sovereign subject
+line. This ruling called it *"the natural read"* -- which lent it his authority just as effectively.
+**A negative verdict is a complete answer.** Taking it on its own terms: ⛔ **It cannot live in the sentinel.** From `SENTINEL_COVERAGE_BOUND`, live on the
+function: *"...and any request body, so NO firm attribution is possible from this source at all."*
+`OP-s-5` redacts the Cookie header by design, and `is_allowed(address, allow_list)` is address-keyed
+in code.
+
+⭐ **SO THE AUTOMATIC BLOCK CANNOT BE ARMED SAFELY ON EITHER AXIS: the axis the sentinel CAN see does
+not identify our people, and the axis that WOULD is invisible to it.** Two correct decisions meeting,
+not a gap.
+
+⛔ **AND THIS RULING'S ORIGINAL NEXT SENTENCE -- "a never-block control belongs where identity is
+known, the auth layer rather than the WAF plane" -- IS STRUCK AS THE THIRD INSTANCE OF THE SAME
+ERROR.** What is MEASURED is that the sentinel is blind to identity. "Therefore build the control
+elsewhere" presumes a never-block control is still WANTED, which nobody has established: Andrew ruled
+an approach non-viable, not a requirement re-sited. **Msg 20479 named the mechanism -- "a verdict that
+removes an option leaves a hole, and a hole invites whoever relays it to fill it" -- and this seat
+then filled the same hole one step further down the chain while agreeing with the diagnosis.**
+Whether any never-block control is wanted at all is OPEN, and it is not this ruling's to answer.
+
+## AMENDED DISPOSITION
+
+- **STRUCK:** the "Opal's own known egress addresses" replacement. C-4's list is not populatable on
+  the address axis at all; no seat builds or applies one. The `Z-S90`-derived candidate list must NOT
+  be applied (msg 20469, and because it would allow-list a Moldovan scanner).
+- **RULED:** `SENTINEL_BLOCK_ARMED` stays `false`. The code's own `if not allow_list_present ->
+  WATCH` fail-safe and this ruling now agree rather than one holding the other back.
+- ⛔ **NOT RULED, AND DELIBERATELY NOT ABSORBED:** `FWD-14`'s automatic-block half is unreachable on
+  the plane it was specified for. That is a **SCOPE_CHANGE at L2**, not a cell to re-cut at L6, and
+  routing it is `2.0.0_SA_COO~Z`'s -- a ratified outcome should not be quietly narrowed from L4. The
+  WATCH / case-file / evidence half of `FWD-14` is untouched and still delivers.
+
+**UNCHANGED AND STILL LOAD-BEARING:** the composed rate bar (3 trips x 100-in-5-min) means no Opal or
+partner user plausibly trips the sentinel anyway. **The exposure this closes is small; the wrongness
+of the remedy was not.**
