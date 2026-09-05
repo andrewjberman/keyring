@@ -348,6 +348,58 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "S7 (this same channel, same worker): 'this worker does not widen it to perform the flip' -- treating the TO's own <paths> block as the complete and controlling write grant for every action, including the status flip.",
     "world_is": "The TO's own <paths> block is the grant for the SUBSTANTIVE work; the fabric-wide mechanical lane gate (.owned-paths.yaml, enforced by safe-commit.sh's owned-paths hook) separately and explicitly grants ANY worker permission to modify (not create) its own project's task-orders/** file, specifically so the status flip is not stranded the way it was before LD-0521 Amendment 2. S7's textual observation (the TO's own <paths> block omits task-orders/) is unchanged and true; its conclusion (therefore the flip is blocked) was reached without checking the gate that actually decides it.",
     "notes": "hazard_standing INERT: no operational hazard, a corrected reading. S7's disposition is UNCHANGED (append-only; this row is the correction carrier), consistent with how S6 corrected S1. NOT ACTED ON: the issuer (2.0.0_SA_COO) directed this worker mid-session, explicitly and after this row was drafted, NOT to flip <status> and to reserve the flip for itself at the drain -- a management decision this worker follows regardless of what this row finds about the mechanical gate's own permission. This row states what the gate allows; it does not by itself authorize this worker to act against the issuer's own explicit instruction on its own order."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S10",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T03:38:38Z",
+    "one_line": "DISARM RECORD for W1-S1 / W1-S6 / W1-S8, whose shared open root cause was 'no path-scoped git call -- every comp-heat freshness call pays the whole-repo history walk'. OS-s-2 makes the path-scoped call real: build_budgeted() now takes a `scope` and passes `-- <scope>` (plus --full-history on the log pass) to ALL THREE of its git calls. Measured on this worktree: `freshness .tools --budget 60` engine time 5.25s -> 0.797-1.016s and its printed denominator 30543-of-30543 files -> 388-of-388; `freshness org/modules/heatmap --budget 60` 4.234s -> 0.594-1.094s and 30544 -> 8. The NO-PATH form is deliberately unchanged (30549 of 30549), so those rows' hazard is closed for a NAMED CORNER only, which is the whole of what they asserted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.9.0_WK_NFRA_OUTSET~1 (OS-s-2 assignee, the disarm owner the spawn face names for W1-S1/W1-S6/W1-S8) -- this row IS that disarm record; their own rows are not edited",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BEFORE, org/modules/heatmap/object_freshness.py@79ec54bb37 (this worktree's HEAD before this commit), build_budgeted PHASE 2: `_git_bounded(root, \"log\", \"--format=__TS__%ct\", \"--name-only\", \"--no-renames\", timeout=_remaining())` -- no pathspec, whatever path the caller named; and .tools/comp-heat@79ec54bb37 cmd_freshness's own comment, verbatim: 'Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's pure analytic' -- i.e. applied AFTER the cost",
+        "AFTER (this commit): object_freshness._scope_pathspec() + build_budgeted(scope=...) wire `-- <scope>` into enumerate / tracked-history / untracked-mtime, and .tools/comp-heat cmd_freshness passes scope=rel and prints a `denominator:` line naming the grain and the exact git call",
+        "MEASURED, before: `timeout 120 .tools/comp-heat freshness .tools --budget 60` -> 'WITHIN BUDGET: scanned 30543 of 30543 files; budget: 60 s (flag), used 5.25 s' (rc=0, wall 5.611s); `... org/modules/heatmap --budget 60` -> 'scanned 30544 of 30544 files ... used 4.234 s' (rc=0, wall 4.805s)",
+        "MEASURED, after, 3 consecutive runs each: `.tools` -> 'WITHIN BUDGET: scanned 388 of 388 files ... used {0.875, 0.797, 1.016} s' (rc=0, wall 1859/1612/1897 ms); `org/modules/heatmap` -> 'scanned 8 of 8 files ... used {1.094, 0.594, 1.062} s' (rc=0, wall 2372/2200/2168 ms)",
+        "INDEPENDENT OF THE TIMING INSTRUMENT (the axis W1-S1/W1-S6 got wrong by ranking warm runs over cold ones): .tools/tests/test_os2_path_grain.py arm G reads the git ARGV in-process -- 'scoped calls=3 all-pathspec=True log--full-history=True | NEGATIVE CONTROL unscoped calls=3 none-carry-a-pathspec=True'. The structural claim (the whole-history walk is no longer in the scoped code path) does not rest on any wall-clock reading or on OS file-cache state",
+        "PARITY, so the cheaper answer is the SAME answer: same battery arm F -- 'compared 388 scoped vs 388 unscoped-filtered rows: key-diff=0 band-diff=0 age-diff(>0.01d)=0'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-2 THE CELL: 'A caller naming one corner must get that corner's denominator'; and the spawn face for this worker: 'Rows NFRA_OUTSET-W1-S1, W1-S6 and W1-S8 are ARMED with YOU as the disarm owner. When your work makes a path-scoped call real, say so against those rows -- append a new row recording it, never edit theirs.'",
+    "world_is": "The path-scoped call is real and measured on two corners plus an argv-level control. The residual is NAMED rather than implied: the no-path form still walks the whole history (that is what it is for, and the battery asserts it still does), so a caller who passes NO path still pays the 5-8s cost W1-S1 measured cold at 6.2-11.7s. Anyone reading W1-S1 as 'comp-heat freshness is slow' should read it now as 'the WHOLE-ESTATE form is, by design; a named corner is not'.",
+    "notes": "hazard_standing INERT for the scoped path and stated as such, not for the tool as a whole. class OBSERVATION, not REMEDIATION: a remediation row is the CVO's (CLAUDE.md s.2). This row does not edit, reorder or re-disposition W1-S1/W1-S6/W1-S8 -- append-only."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S11",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T03:39:10Z",
+    "one_line": "The comp-system 06_current_state grant this cut added (generalising W1-S5) does NOT let a linked-worktree worker clear the gate, for TWO independent reasons measured here. (1) DEADLOCK: comp-system refuses to compile from an UNCOMMITTED source -- 'SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift ... but source file(s) are uncommitted -- .tools/comp-heat. Wait for landing, then re-run.' (rc=2) -- so 06 cannot be regenerated BEFORE the very commit the gate blocks. (2) WRONG TREE: safe-commit.sh:789 resolves `comp-system` through PATH, and ~/bin/comp-system hard-codes the MAIN workspace's copy, whose own WORKSPACE=$(dirname $0)/.. is the MAIN workspace -- so the gate deciding a WORKTREE commit grades the MAIN workspace's 06 against the MAIN workspace's sources, which this worker must not touch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (issuer of this cut and owner of the <paths> note that asserts the grant is sufficient; the fix is a cut/tooling decision, not a worker act)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-2.freshness-at-a-path-grain.md@79ec54bb37, the <paths> note, verbatim: 'the assignee must be able to regenerate and COMMIT that pair or it can edit its surface and then not land it'",
+        "MEASURED, worktree-local instrument: `timeout 120 bash .tools/comp-system --gate --changed .tools/comp-heat org/modules/heatmap/object_freshness.py .tools/tests/test_os2_path_grain.py` from /c/tmp/wk-OUTSET-1 -> rc=2, 'SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (source drift: fingerprint (content-sha256, file_count) (67dff3036c..., 260) -> (45ec711d24..., 260)), but source file(s) are uncommitted -- .tools/comp-heat. Wait for landing, then re-run.'",
+        "MEASURED, the instrument safe-commit ACTUALLY runs (a DIFFERENT tree, same command): `timeout 120 comp-system --gate --changed <same three paths>` -> rc=2, 'SYSTEM DRIFT (fail-closed): source drift: fingerprint ... (67dff3036c..., 260) -> (7c2df46efc..., 260) -- regenerate (comp-system) or add an audited override.' The TARGET fingerprint differs from the worktree-local one (7c2df46efc vs 45ec711d24) from the SAME baseline, which is the discriminator: the two runs are grading two different trees",
+        "/c/Users/AndrewBerman/bin/comp-system (the PATH shim, read this session): `_t=\"/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-system\" ... exec \"$_t\" \"$@\"` -- an absolute path into the MAIN workspace, with no worktree resolution",
+        ".tools/comp-system@79ec54bb37:20 -- `WORKSPACE=\"$(cd \"$(dirname \"$0\")/..\" && pwd)\"`, i.e. the workspace is derived from the SCRIPT's location, so the shim's exec fixes the graded tree to the main workspace regardless of the caller's cwd",
+        ".tools/safe-commit.sh@79ec54bb37:789 -- the trigger `printf '%s\\n' \"${PATHSPEC[@]}\" | grep -qE '\\.tools/comp-|org/modules/graph/|...' && command -v comp-system` : `command -v` is the PATH lookup that reaches the shim"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-2 <paths> grants infra/system/06_current_state.{json,md} on the stated ground that 'the assignee must be able to regenerate and COMMIT that pair'; the spawn face restates it as 'Regenerate and commit it with your change.'",
+    "world_is": "The grant is necessary but not sufficient. Regeneration is refused until the source lands (so the pair cannot ride the same commit as the change that dirties it), and the gate that actually decides the commit reads a DIFFERENT worktree's 06 and sources, which no act inside this worktree can make current. This worker therefore lands the source with the gate's own audited `system-current-override:` trailer (the same escape W1-S5 recorded), and regenerates + commits this worktree's 06 pair in a SECOND commit once the source has landed -- honouring the grant as far as the world allows and saying where it stopped.",
+    "notes": "hazard_standing ARMED because it recurs for every future comp-* cell cut to a linked worktree, which spine v3 makes the normal case; class OBSERVATION because a sanctioned audited escape exists and no criterion of this order is blocked by it. NOT a claim that either gate is wrong: each is correct on its own terms (comp-system must not launder an unlanded source; safe-commit must not trust a caller-supplied tool path). The composition is what has no worker-side answer."
   }
 ]
 ```

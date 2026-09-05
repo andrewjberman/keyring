@@ -115,9 +115,32 @@ def uncommitted_writes(root: str, now_ts: float) -> list[dict]:
 PHASES = ("enumerate", "tracked-history", "untracked-mtime", "score")
 
 
-def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str | None = None) -> dict:
+def _scope_pathspec(scope: str | None) -> list[str]:
+    """The PATH-SCOPED git call's own argv tail (OS-s-2). Empty for the whole-estate form, so the
+    no-path call is byte-identical to what it always was; `["--", scope]` for a named corner.
+
+    `--full-history` (added by the caller alongside this tail, never without it) is LOAD-BEARING,
+    not decoration: `git log -- <path>` DEFAULT-simplifies history and can prune a side branch's
+    own write to that path, which would make a scoped answer disagree with the unscoped one on the
+    same file. The unscoped walk applies no simplification at all, so the scoped walk must not
+    either -- that is the parity the OS-s-2 battery asserts arm-by-arm (measured 0 key-diff and
+    0 value-diff against the unscoped walk on 3 corners: 387, 1125 and 8 paths).
+    """
+    return ["--", scope] if scope else []
+
+
+def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str | None = None,
+                   scope: str | None = None) -> dict:
     """Rule T budgeted twin of build() -- IDENTICAL scores/src on a completing run; on a cut run,
     returns whatever phases fully finished instead of raising or blocking past the caller's clock.
+
+    `scope` (OS-s-2) is a repo-root-relative subtree or file. When given, EVERY git call in this
+    function is PATH-SCOPED to it (`-- <scope>`, plus `--full-history` on the log pass), so a
+    caller naming one corner pays that corner's cost and gets THAT CORNER'S DENOMINATOR --
+    `scanned n of N` counts the corner, never the whole repo. When it is None the behaviour is
+    unchanged: the whole estate is enumerated, walked and scored, and N is the repo's own census.
+    The caller may still prefix-filter the returned scores; with `scope` set that filter is a
+    no-op safety net rather than the scoping mechanism it used to be.
 
     DETERMINISTIC PHASE ORDER (the tool's own scan order): enumerate -> tracked-history ->
     untracked-mtime -> score. Each phase's git subprocess is bounded by clock.remaining() (`every
@@ -135,9 +158,11 @@ def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str |
     dependent work -- the same shape as the FORM's own named uncovered member, KILLED-OUTSIDE.
 
     Returns a dict: scores, src, phase (last phase FULLY reached), scanned, total (None if not yet
-    known), deferred (list[str]), cut (bool).
+    known), deferred (list[str]), cut (bool), scope (echoed back so a caller can DISCLOSE which
+    grain its denominator counts, rather than the caller and the engine each asserting one).
     """
     deferred: list[str] = []
+    ps = _scope_pathspec(scope)
 
     def _remaining():
         return clock.remaining()
@@ -148,28 +173,38 @@ def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str |
 
     if _spent():
         return {"scores": [], "src": {}, "phase": "START", "scanned": 0, "total": None,
-                "deferred": deferred, "cut": True}
+                "deferred": deferred, "cut": True, "scope": scope}
 
     # PHASE 1: enumerate -- cheap, and re-derived even after a --cursor past it (no persistence).
-    out, timed_out = _git_bounded(root, "ls-files", timeout=_remaining())
+    # PATH-SCOPED when `scope` is given (OS-s-2): the census IS the corner, so `total` below is
+    # that corner's denominator and not the repo's.
+    out, timed_out = _git_bounded(root, "ls-files", *ps, timeout=_remaining())
     if timed_out:
-        deferred.append("enumerate: `git ls-files` did not return within the remaining budget")
+        deferred.append("enumerate: `git ls-files%s` did not return within the remaining "
+                        "budget" % (" -- " + scope if scope else ""))
         return {"scores": [], "src": {}, "phase": "START", "scanned": 0, "total": None,
-                "deferred": deferred, "cut": True}
+                "deferred": deferred, "cut": True, "scope": scope}
     current = set(out.splitlines())
     total = len(current)
     if _spent():
         return {"scores": [], "src": {}, "phase": "enumerate", "scanned": 0, "total": total,
-                "deferred": deferred, "cut": True}
+                "deferred": deferred, "cut": True, "scope": scope}
 
-    # PHASE 2: tracked-history -- the expensive phase (one whole-history `git log` pass).
-    raw, timed_out = _git_bounded(root, "log", "--format=__TS__%ct", "--name-only",
-                                  "--no-renames", timeout=_remaining())
+    # PHASE 2: tracked-history -- the expensive phase (one `git log` pass). THIS is the call
+    # OS-s-2 scopes: unscoped it walks the whole history for every caller, however small the
+    # corner named (measured 2.4-11.7 s); with `-- <scope>` it walks only the commits that
+    # touched that corner (measured 0.3-0.7 s on the same worktree). `--full-history` rides the
+    # pathspec so the scoped walk applies the SAME (zero) history simplification as the unscoped
+    # one -- see _scope_pathspec().
+    log_args = ["log", "--format=__TS__%ct", "--name-only", "--no-renames"]
+    if ps:
+        log_args.append("--full-history")
+    raw, timed_out = _git_bounded(root, *log_args, *ps, timeout=_remaining())
     if timed_out:
-        deferred.append("tracked-history: `git log --name-only` did not return within the "
-                        "remaining budget")
+        deferred.append("tracked-history: `git log --name-only%s` did not return within the "
+                        "remaining budget" % (" --full-history -- " + scope if scope else ""))
         return {"scores": [], "src": {}, "phase": "enumerate", "scanned": 0, "total": total,
-                "deferred": deferred, "cut": True}
+                "deferred": deferred, "cut": True, "scope": scope}
     tracked: dict[str, int] = {}
     cur_ts: int | None = None
     for line in raw.splitlines():
@@ -180,18 +215,18 @@ def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str |
     if _spent():
         scores = score_items(list(tracked.items()), now_ts, p)
         return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "tracked-history",
-                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True}
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
 
     # PHASE 3: untracked-mtime -- filesystem mtime for not-ignored untracked paths.
-    out2, timed_out = _git_bounded(root, "ls-files", "--others", "--exclude-standard",
+    out2, timed_out = _git_bounded(root, "ls-files", "--others", "--exclude-standard", *ps,
                                    timeout=_remaining())
     untracked: dict[str, int] = {}
     if timed_out:
-        deferred.append("untracked-mtime: `git ls-files --others` did not return within the "
-                        "remaining budget")
+        deferred.append("untracked-mtime: `git ls-files --others%s` did not return within the "
+                        "remaining budget" % (" -- " + scope if scope else ""))
         scores = score_items(list(tracked.items()), now_ts, p)
         return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "tracked-history",
-                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True}
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
     for rel in out2.splitlines():
         if not rel:
             continue
@@ -204,7 +239,7 @@ def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str |
     if _spent():
         scores = score_items(list(tracked.items()), now_ts, p)
         return {"scores": scores, "src": {k: "git" for k in tracked}, "phase": "untracked-mtime",
-                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True}
+                "scanned": len(tracked), "total": total, "deferred": deferred, "cut": True, "scope": scope}
 
     # PHASE 4: score -- pure in-process arithmetic, no subprocess, effectively free.
     src = {**{k: "git" for k in tracked}, **{k: "mtime" for k in untracked}}
@@ -218,7 +253,7 @@ def build_budgeted(root: str, p: HeatParams, now_ts: float, clock, cursor: str |
     # (what this pipeline actually resolved a score for), never the earlier raw census -- a phase-1
     # or phase-3 CUT still reports the raw census because the yield is not yet knowable then.
     return {"scores": scores, "src": src, "phase": "score", "scanned": len(items),
-            "total": len(items), "deferred": deferred, "cut": False}
+            "total": len(items), "deferred": deferred, "cut": False, "scope": scope}
 
 
 def uncommitted_writes_budgeted(root: str, now_ts: float, clock) -> dict:
