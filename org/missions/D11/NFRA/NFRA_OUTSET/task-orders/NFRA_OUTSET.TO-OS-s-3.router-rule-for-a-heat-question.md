@@ -2,7 +2,9 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-3</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>
+⛔ **RE-ADDRESSED TO `~2` BEFORE SEATING -- BOTH LIMBS, and the second limb is the one two workers had to find the hard way.** A mis-addressed order fails on TWO independent gate limbs, not one: `ADHC_OWNPTH.005` keys the worker grant on `<issued_to>`, AND clause 4 keys it on the DELIVERABLES FOLDER NAME. Amending only `<issued_to>` leaves the assignee admitted to a folder carrying another slot's serial. Measured on OS-s-8 (`NFRA_OUTSET-W2-S4`, 4 of 4 paths granted to `~1` and 0 of 4 to `~2`) and on OS-s-15 (`NFRA_OUTSET-W3-S6`, which corrected my own over-wide claim: only the TREE_DELIVERABLES limb refuses, because `task-orders/**` and the surprise channel are lane ANY and consult no serial). **This face was amended BEFORE its worker was seated rather than after it hit the wall** -- the first time on this project the population question was asked ahead of the second victim instead of behind it.
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
 <status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
@@ -17,7 +19,7 @@ OS-s-3 (PRD s.7): `comp-which "what is comp-heat"` returns NO CURATED RULE MATCH
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/router-rule-for-a-heat-question.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/router-rule-for-a-heat-question.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -47,7 +49,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 <paths>
 .tools/comp-which
 .tools/tests/
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 infra/system/06_current_state.json
 infra/system/06_current_state.md
@@ -69,7 +71,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O3-AC1`, `O3-AC2`, `O3-AC3`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-3.router-rule-for-a-heat-question.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-3.router-rule-for-a-heat-question.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O3-AC1,O3-AC2,O3-AC3` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>
