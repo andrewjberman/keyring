@@ -224,7 +224,8 @@ def _seats_with_open_orders(root, code):
     return seats, ""
 
 
-def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging=False):
+def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging=False,
+                            parent_ids=None):
     """PURE given `coworkers`. Complaints for NEW investigation rows whose `surfaced_by` is not the committer's seat.
 
     CO-WORKER ADMISSION (2026-09-03, 2.0.0_SA_COO 93746, measured under round 6 of NFRA_COMPEFFICACY): ten Codex lanes
@@ -258,10 +259,33 @@ def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging
     if kind != "INVESTIGATION" or not added:
         return [], []
     if merging:
-        _seats = sorted({_base_serial(r.get("surfaced_by")) or "<unparseable>" for r in added})
-        return [], ["%s: MERGE COMMIT -- foreign-row sweep exempt; %d new row(s) arrive attributed to %d seat(s) "
-                    "(%s) and were graded at their own authorship. The integrator is not their author "
-                    "(0.0.0_AB_MSTR 94283)." % (rel, len(added), len(_seats), ", ".join(_seats))]
+        # BOUNDARY (b), 3.0.0_SA_CVO 94299: the exemption is PER ROW and it is a MEASUREMENT, not an
+        # inference. A row whose id a PARENT carried was CARRIED by this merge; a row in NEITHER parent
+        # was MINTED in the merge commit -- the merging seat's own act -- and is swept as the
+        # committer's, exactly as off a merge. Without this, "the integrator did not mint it" rests on
+        # `surfaced_by`, which the integrator writes.
+        if parent_ids is None:
+            return ["%s: MERGE COMMIT but the parents' row ids could NOT be read, so no row can be shown "
+                    "to have been CARRIED rather than MINTED here -- REFUSED, fail-closed (boundary (b))"
+                    % rel], []
+        carried = [r for r in added if str(r.get("id") or "").strip() in parent_ids]
+        minted = [r for r in added if str(r.get("id") or "").strip() not in parent_ids]
+        notes = []
+        if carried:
+            _seats = sorted({_base_serial(r.get("surfaced_by")) or "<unparseable>" for r in carried})
+            notes.append("%s: MERGE COMMIT -- foreign-row sweep exempt for %d row(s) a PARENT carried, "
+                         "attributed to %d seat(s) (%s) and graded at their own authorship. The integrator "
+                         "is not their author (0.0.0_AB_MSTR 94283; boundary (b) 3.0.0_SA_CVO 94299)."
+                         % (rel, len(carried), len(_seats), ", ".join(_seats)))
+        if not minted:
+            return [], notes
+        # rows minted IN the merge fall through and are swept as the committer's
+        added = minted
+        notes.append("%s: %d row(s) are in NEITHER parent -- MINTED in this merge commit, so they are graded "
+                     "as the committer's own (boundary (b))." % (rel, len(minted)))
+        _carry_notes = notes
+    else:
+        _carry_notes = []
     who = _base_serial(committer)
     if not who or not SERIAL_RE.match(who):
         return ["%s: committer identity UNREADABLE (%r) while %d new row(s) are staged -- the foreign-row sweep "
@@ -280,7 +304,7 @@ def _foreign_row_violations(rel, kind, added, committer, coworkers=None, merging
             carried.append("%s (surfaced_by %s, an open order on this project)" % (r.get("id"), r.get("surfaced_by")))
         else:
             foreign.append("%s (surfaced_by %s)" % (r.get("id"), r.get("surfaced_by")))
-    notes = []
+    notes = list(_carry_notes)
     if carried:
         notes.append("%s: CO-WORKER ROWS carried under %s's author line (shared worktree; each row's own surfaced_by "
                      "holds an open order on this project): %s" % (rel, who, ", ".join(carried)))
@@ -400,7 +424,8 @@ def _latest_dispositions(root, code):
     return latest, unknown, len(files) + len(rem_paths), ""
 
 
-def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merging=False):
+def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merging=False,
+                           parent_ids=None):
     """PURE. THE ALLOCATOR DISCIPLINE on NEW rows (RULING 2 @9ef9a40aae; annex v3.2): a row committed by a worker
     0.9.0_WK_<CODE>~<n> carries W<n> with n EQUAL to the committer's slot (a bare S<k> from a worktree is the race the
     coordinate exists to remove; a wrong n is another worker's sequence); a seat's row carries no W; a C- row lives only
@@ -418,8 +443,12 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         if not m:
             continue   # the grammar refusal is check_file's own
         w, c = m.group("w"), m.group("c")
-        allocator = str(r.get("surfaced_by") or "").strip() if merging else str(committer or "").strip()
-        wm = WORKER_SERIAL_RE.match(allocator) if merging else committer_m
+        # BOUNDARY (b): read the ROW's surfacer only for a row a PARENT carried. A row minted IN
+        # this merge is the committer's act and is graded against the COMMITTER, on a merge or off.
+        _carried = bool(merging and parent_ids is not None
+                        and str(r.get("id") or "").strip() in parent_ids)
+        allocator = str(r.get("surfaced_by") or "").strip() if _carried else str(committer or "").strip()
+        wm = WORKER_SERIAL_RE.match(allocator) if _carried else committer_m
         if wm:
             if w is None:
                 out.append("%s: NEW row %s %s worker %s carries no W<n>. A worker mints <CODE>-W%s-S<k> (its own "
@@ -433,7 +462,7 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         elif w is not None:
             out.append("%s: NEW row %s carries W%s but the %s %s is not a worker -- a seat's row on the main index "
                        "carries no W (the coordinate names the allocator, and a seat allocates on the main index)."
-                       % (rel, rid, w, "surfacer" if merging else "committer", allocator))
+                       % (rel, rid, w, "surfacer" if _carried else "committer", allocator))
         if c:
             # ESTATE_GOVERNANCE-S5 (3.0.0_SA_CVO): a FLAT ADJUDICATION_v document declares its kind in
             # its FILENAME, not its folder, so _folder_identity returns None for it and this limb used to
@@ -451,10 +480,10 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
                 # their author. A ~lane counts -- a 3.0.0_SA_CVO~Z row minted on the other fabric is
                 # the CVO's. Off a merge the arm is unchanged: a C- row committed by anyone but the
                 # CVO refuses, which is the narrowness arm in both directions.
-                _c_who = str(r.get("surfaced_by") or "").strip() if merging else committer
+                _c_who = str(r.get("surfaced_by") or "").strip() if _carried else committer
                 if _base_serial(_c_who) != "3.0.0_SA_CVO":
                     out.append("%s: NEW row %s carries C- but the %s %s is not 3.0.0_SA_CVO."
-                               % (rel, rid, "surfacer" if merging else "committer", _c_who))
+                               % (rel, rid, "surfacer" if _carried else "committer", _c_who))
         elif (folder_kind == "ADJUDICATION" or (folder_kind is None and _is_adjudication_doc(rel))) \
                 and c_in_schema:
             out.append("%s: NEW row %s in adjudications/ carries no C- while the staged schema admits it -- the CVO's rows "
@@ -576,6 +605,31 @@ def _duplicate_id_violations(rel, kind, added, code, plane_docs, note=""):
                        "minting one sequence is the collision the CVO measured at v3's first drain (94007)."
                        % (rel, rid, ", ".join(hits), code))
     return out, notes
+
+
+def _parent_row_ids(root, rel):
+    """(ids, note): every row id the MERGE'S PARENTS carry in `rel`, or (None, note) if unreadable.
+
+    BOUNDARY (b), 3.0.0_SA_CVO 94299. The parents are HEAD (this branch) and MERGE_HEAD (the branch
+    being merged). A row whose id appears in either was CARRIED by the merge; a row in neither was
+    MINTED in the merge commit and is the merging seat's own act.
+
+    None on failure, never an empty set: "the parents carry nothing" and "the parents could not be
+    read" are different answers and only one of them may exempt a row. The callers fail closed.
+    """
+    ids, notes = set(), []
+    for ref in ("HEAD", "MERGE_HEAD"):
+        st, text = _blob(root, ref, rel)
+        if st == "ERROR":
+            return None, "%s unreadable at %s" % (rel, ref)
+        if st == "ABSENT" or not text:
+            continue          # a parent that never had this file carries no ids from it
+        rows, _bad = _rows(text, rel.lower().endswith(".json"))
+        for r in rows:
+            rid = str((r or {}).get("id") or "").strip()
+            if rid:
+                ids.add(rid)
+    return ids, "; ".join(notes)
 
 
 def _row_is_other_fabric(row):
@@ -1142,12 +1196,16 @@ def check_file(root, rel):
     # THE ALLOCATOR DISCIPLINE (RULING 2 @9ef9a40aae): W<n> from its own worker only; no W from a seat; C- the CVO's, in
     # adjudications/ only, required once the staged schema admits it.
     _cmt = _committer_serial(root)
+    # BOUNDARY (b): one read of the merge's parents per channel file, shared by both limbs.
+    _mrg_now = _merge_in_progress(root)
+    _pids, _pnote = _parent_row_ids(root, rel) if _mrg_now else (None, "")
     _c_in_schema = "C-" in str(((schema.get("properties") or {}).get("id") or {}).get("pattern", ""))
-    v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema, merging=_merge_in_progress(root)))
+    v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema,
+                                    merging=_mrg_now, parent_ids=_pids))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
     _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw,
-                                       merging=_merge_in_progress(root))
+                                       merging=_mrg_now, parent_ids=_pids)
     v.extend(_fv)
     notes.extend(_fn)
     for row in added:
@@ -1199,6 +1257,11 @@ def check_file(root, rel):
     return (v, notes)
 
 
+# The parent set for the DRAIN arms: every row id those arms treat as having been CARRIED by the
+# worker branch being merged. Boundary (b) makes that explicit -- an arm about "the worker minted
+# this" must SAY the parent carried it, or the row is minted in the merge and graded as the
+# committing seat's, which for a bare S<k> from a SEAT is lawful and would silently pass.
+_DRAIN_PIDS = {"X_PRJ-W2-S1", "X_PRJ-W3-S1", "X_PRJ-S9", "X_PRJ-W2-S2", "X_PRJ-S40"}
 _S34_INV = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md"
 _S34_ADJ = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md"
 
@@ -1255,15 +1318,32 @@ def _self_test(root):
         ("C- MERGE: a CVO-surfaced C- row carried by a DIFFERENT committer on a merge -> admitted",
          lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md",
                                         "ADJUDICATION", [{"id": "X-C-S7", "surfaced_by": "3.0.0_SA_CVO"}],
-                                        "0.0.0_AB_MSTR", False, merging=True) == []),
+                                        "0.0.0_AB_MSTR", False, merging=True,
+                                        parent_ids={"X-C-S7"}) == []),
         ("C- MERGE: a ~lane surfacer (3.0.0_SA_CVO~Z, the other fabric's) is the CVO -> admitted",
          lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md",
                                         "ADJUDICATION", [{"id": "X-C-S8", "surfaced_by": "3.0.0_SA_CVO~Z"}],
-                                        "0.0.0_AB_MSTR", False, merging=True) == []),
+                                        "0.0.0_AB_MSTR", False, merging=True,
+                                        parent_ids={"X-C-S8"}) == []),
         ("C- MERGE MUTANT: a C- row the INTEGRATOR surfaced (not the CVO) -> still REFUSED on a merge",
          lambda: any("is not 3.0.0_SA_CVO" in x and "surfacer" in x for x in _coordinate_violations(
              "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
-             [{"id": "X-C-S9", "surfaced_by": "0.0.0_AB_MSTR"}], "0.0.0_AB_MSTR", False, merging=True))),
+             [{"id": "X-C-S9", "surfaced_by": "0.0.0_AB_MSTR"}], "0.0.0_AB_MSTR", False, merging=True,
+             parent_ids={"X-C-S9"}))),
+        # BOUNDARY (b) -- THE ARM THAT MAKES THE EXEMPTION A MEASUREMENT RATHER THAN AN INFERENCE:
+        # the same CVO-surfaced row, but present in NEITHER parent, was MINTED in the merge commit and
+        # is graded as the COMMITTER's. Without this the integrator could exempt any row by writing a
+        # surfaced_by it chose.
+        ("(b) C- MINTED: a CVO-surfaced C- row in NEITHER parent -> graded as the COMMITTER's, REFUSED",
+         lambda: any("is not 3.0.0_SA_CVO" in x and "committer" in x for x in _coordinate_violations(
+             "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
+             [{"id": "X-C-S7", "surfaced_by": "3.0.0_SA_CVO"}], "0.0.0_AB_MSTR", False, merging=True,
+             parent_ids=set()))),
+        ("(b) FAIL-CLOSED: merging with parent_ids=None exempts NOTHING",
+         lambda: _coordinate_violations(
+             "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
+             [{"id": "X-C-S7", "surfaced_by": "3.0.0_SA_CVO"}], "0.0.0_AB_MSTR", False, merging=True,
+             parent_ids=None) != []),
         ("C- NARROWNESS: the SAME CVO-surfaced row off a merge under a foreign committer -> still REFUSED",
          lambda: any("is not 3.0.0_SA_CVO" in x and "committer" in x for x in _coordinate_violations(
              "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
@@ -1396,11 +1476,25 @@ def _self_test(root):
         # is a hole. Mirrors the arm that earned to-pipeline-gate's exemption an hour earlier.
         ("sweep MERGE: foreign rows on a merge -> NO violations (0.0.0_AB_MSTR 94283)",
          lambda: _foreign_row_violations("f", "INVESTIGATION", [theirs, mine], "0.0.0_AB_MSTR",
-                                         coworkers=set(), merging=True)[0] == []),
+                                         coworkers=set(), merging=True,
+                                         parent_ids={"X_PRJ-S1", "X_PRJ-S2"})[0] == []),
         ("sweep MERGE: the exemption ANNOUNCES itself and names the surfacing seats (not a silent pass)",
          lambda: any("MERGE COMMIT -- foreign-row sweep exempt" in n and "3.0.0_SA_CVO" in n
                      for n in _foreign_row_violations("f", "INVESTIGATION", [theirs, mine],
-                                                      "0.0.0_AB_MSTR", coworkers=set(), merging=True)[1])),
+                                                      "0.0.0_AB_MSTR", coworkers=set(), merging=True,
+                                                      parent_ids={"X_PRJ-S1", "X_PRJ-S2"})[1])),
+        ("(b) sweep MINTED: a foreign row in NEITHER parent -> swept as the committer's, REFUSED",
+         lambda: _foreign_row_violations("f", "INVESTIGATION", [theirs], "0.0.0_AB_MSTR",
+                                         coworkers=set(), merging=True, parent_ids=set())[0] != []),
+        ("(b) sweep MIXED: a carried row is exempt and a minted one in the SAME file still refuses",
+         lambda: (lambda vn: vn[0] != [] and any("MINTED in this merge commit" in n for n in vn[1])
+                  and any("a PARENT carried" in n for n in vn[1]))(
+             _foreign_row_violations("f", "INVESTIGATION", [mine, theirs], "0.0.0_AB_MSTR",
+                                     coworkers=set(), merging=True, parent_ids={"X_PRJ-S1"}))),
+        ("(b) sweep FAIL-CLOSED: merging with parent_ids=None refuses rather than exempting",
+         lambda: any("fail-closed" in x for x in _foreign_row_violations(
+             "f", "INVESTIGATION", [theirs], "0.0.0_AB_MSTR", coworkers=set(), merging=True,
+             parent_ids=None)[0])),
         ("sweep NARROWNESS: the SAME rows with merging=False are still REFUSED",
          lambda: _foreign_row_violations("f", "INVESTIGATION", [theirs, mine], "0.0.0_AB_MSTR",
                                          coworkers=set(), merging=False)[0] != []),
@@ -1526,13 +1620,13 @@ def _self_test(root):
          lambda: cv([{"id": "X_PRJ-W2-S1"}], "0.9.0_WK_X_PRJ_2") == [] and cv([{"id": "X_PRJ-W3-S1"}], "0.9.0_WK_X_PRJ_2") != []),
         # AT A DRAIN (94157): the allocator is the row's surfaced_by, never the merge committer
         ("drain: worker ~2's W2 row surfaced_by ~2, merged by the COO~A -> admitted",
-         lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True) == []),
+         lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS) == []),
         ("drain: a W3 row surfaced_by ~2 -> refused (another worker's coordinate, read on the row)",
-         lambda: any("slot is 2" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W3-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True))),
+         lambda: any("slot is 2" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W3-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         ("drain: a bare S<k> row surfaced_by a worker -> refused (the race)",
-         lambda: any("carries no W<n>" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True))),
+         lambda: any("carries no W<n>" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         ("drain: a seat's W row riding the merge -> refused (a seat's row carries no W)",
-         lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "3.0.0_SA_CVO"}], "2.0.0_SA_COO~A", False, merging=True))),
+         lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "3.0.0_SA_CVO"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         ("drain MUTANT: the same lawful W2 row graded NOT merging under the COO~A committer -> refused (the first drain's defect, kept as the negative control)",
          lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=False) != []),
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
