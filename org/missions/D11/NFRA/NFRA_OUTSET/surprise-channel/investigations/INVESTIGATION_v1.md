@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 54 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 56 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1325,6 +1325,56 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "S9 asserted that arm F no longer depends on repository traffic, and this seat wrote that the fix 'holds under the exact condition that broke it'.",
     "world_is": "The fix held under the condition that produced the FIRST failure. A second, unrelated mechanism in the same arm survived it and fired three weeks' worth of runs later in the same session. The arm was not fixed; one of its two failure modes was.",
     "notes": "⛔ THE ERROR IS MINE AND IT IS THE ONE I HAD ALREADY WRITTEN DOWN. Hours before filing S9 this seat banked the rule that a control aimed at one mechanism is not evidence about another, and then certified a two-mechanism arm against one mechanism and reported it fixed. Worse, the falsifier I ran was COPIED FROM THE ASSIGNEE'S OWN, so my 'independent' certification inherited exactly the blind spot of the control it was meant to be independent of -- a second seat's confirmation via the FIRST seat's method is repetition, not corroboration, which is Rule 22 in as many words. ⭐ THE SCOPE ERROR IS IN THE SENTENCE, NOT THE MEASUREMENT: what I ran showed 'the mtime-race mechanism is fixed'; what I wrote was 'the fix holds'. A certification's WORDING is a claim about coverage, and mine claimed a denominator I never measured. The honest form would have named the mechanism exercised and said which others were not. FILED AGAINST S9 RATHER THAN EDITING IT -- rows are append-only and 3.0.0_SA_CVO grades both at L9. S9's disarm of the FIRST mechanism stands; its implied disarm of the arm does not."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S22",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T10:11:31Z",
+    "one_line": "DISARM RECORD for NFRA_OUTSET-W3-S4, whose disarm this cell was given. Both halves are closed. (1) THE ROLL-UP IS NOW REAL: `comp-heat archive` wires O2's aggregate_tree + maximal_cold_subtrees and O3's verify-before-recommend, so the question W3-S4 said the label was falsely claiming to answer is now actually answered -- on slot 3's own synthetic shape the flat grouping still returns 0 and the CLI returns the maximal root 'dead'. (2) THE FALSE LABEL IS GONE: `freshness` no longer prints 'cold SUBTREES' over an immediate-parent grouping; it prints 'cold LEAF DIRS (immediate-parent grouping)' and names `comp-heat archive` as the roll-up answer, with a `cold_subtrees_basis` object added beside the unchanged JSON key. AND THE MEASUREMENT W3-S4 EXPLICITLY DEFERRED TO THIS CELL: on the real corpus the flat grouping lists 1,412 cold LEAF DIRS while the roll-up finds 364 MAXIMAL cold subtrees, and 50 of those 364 roots NEVER APPEAR in the flat list at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.9.0_WK_NFRA_OUTSET~1 (the OS-s-16 assignee, the placement 2.0.0_SA_COO made on W3-S4's disarm_owner) -- this row IS that disarm record; W3-S4 itself is not edited",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MEASUREMENT W3-S4 LEFT OPEN, verbatim from that row: 'NOT MEASURED HERE: how many real cold subtrees in this estate the flat grouper misses. That needs a full-corpus comp-heat freshness run against an O2 run over the same scores, which is OS-s-16's measurement to make'. Made, this session, both runs at --budget 90 on the same worktree: `comp-heat freshness --json` -> 1412 entries in cold_subtrees; `comp-heat archive --json` -> 364 maximal cold subtrees; scored paths 30703 and 30704 respectively (one file changed between the two runs); 50 of the 364 maximal roots do not appear anywhere in the flat list -- e.g. 'org/tier3_junior', 'tools', 'data/black_diamond', 'org/tier2_senior/0.4.0_DS_ClientPlatform/logs', 'org/tier2_senior/0.6.0_AE_PartnerETL', 'org/tier2_senior/0.1.0_DS_MarketIntelligence'",
+        "ROLL-UP COVERAGE IS WHOLE, checked rather than assumed: the O2 TreeAgg's own disclosure attributes read clustered_n=30704 of total_n=30704, so no scored path silently failed to find a directory -- the exact drop O2's own _ancestors docstring records as an 82-of-5560 measured bug",
+        "THE WIRE, and it is a wire rather than a build (OS-s-15's ruling): .tools/comp-heat cmd_archive imports build_budgeted (O1), aggregate_tree + maximal_cold_subtrees (O2) and assess (O3) and writes no analytic of its own",
+        "EXERCISED ON SLOT 3'S OWN SHAPE, through the CLI rather than through the engines: .tools/tests/test_os16_archive_answer.py arm B builds the same 8-of-8-cold tree at 400 days across 4 leaf dirs and reports 'flat immediate-parent grouping -> [] (0 candidates) ; O2 roll-up -> [dead] ; and `comp-heat archive` reports [dead]'",
+        "THE LABEL CORRECTION: .tools/comp-heat@8c231d47bf:283 printed 'cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY)'; it now prints 'cold LEAF DIRS (immediate-parent grouping, n>=3, cold_frac>=0.8): N -- NOT a subtree roll-up; for maximal cold SUBTREES with an inbound-reference check per line, run `comp-heat archive` (ADVISORY, removes nothing)'. The JSON key `cold_subtrees` is UNCHANGED (a rename would break any consumer) and a `cold_subtrees_basis` object is added beside it, asserted by battery arm J"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_OUTSET-W3-S4: 'the live answer to FWD-8's question under-reports whole dead subtrees, and the label asserts the roll-up the code does not do', ARMED with the disarm placed on the OS-s-16 assignee; and the issuer's instruction to this worker: 'either your wire makes the grouping real, or it does not and the row stays ARMED with the reason.'",
+    "world_is": "The wire makes the grouping real and the label no longer asserts what the code does not do. THE RESIDUE, NAMED RATHER THAN IMPLIED: `freshness`'s COMPUTATION is unchanged -- it still groups by immediate parent, and a caller who runs only `freshness` still sees the 1,412-entry flat list rather than the 364 roots. That is now a correctly-labelled answer to a different question instead of a mislabelled answer to this one, and the roll-up answer exists one subcommand away. Changing what `freshness` COMPUTES would alter a drained cell's output shape for every existing consumer, which is not this cell's to do.",
+    "notes": "hazard_standing INERT: the false claim is removed and the true answer exists. W3-S4 is not edited, reordered or re-dispositioned -- this row is the carrier, the shape S6 used for S1 and S15 used for S2. NOT CLAIMED: that the 364 roots are safe to archive. 0 of the 5 top-ranked were RECOMMENDed on the real corpus -- all 5 came back HOLD_REFERENCED -- and every RECOMMEND anywhere still carries a mandatory graph gate this tool does not run."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S23",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T10:12:00Z",
+    "one_line": "O3's name-vs-edge inbound check matches a candidate's path as a BARE SUBSTRING, so a short or common directory name is HELD on evidence that does not reference it. Measured: `referenced_index('.', ['tools'])` returns .claude/settings.json and five others, and docs/architecture/ADHC_BASHFIX.md carries 5 substring hits for 'tools' while an anchored search for the actual 'tools/' path in that file returns NOTHING -- every hit is `.tools/`, a DIFFERENT directory. The direction is over-HOLD, so R-5 is not breached and nothing is wrongly recommended; the harm is that a shallow candidate can essentially never reach RECOMMEND, whatever its real reference count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route. org/modules/heatmap/object_recommend.py IS in this order's <paths>, so the constraint is not the grant -- it is that anchoring the pattern would flip HOLDs to RECOMMENDs on an ARCHIVE recommender, i.e. make it LESS conservative, and under R-5 that is not a change a worker makes on its own reading mid-cell",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the mechanism, at org/modules/heatmap/object_recommend.py@8c231d47bf: `alt = \"|\".join(re.escape(d) for d in ordered)` then `git grep -I -o -E -e <alt>` -- re.escape neutralises metacharacters but adds NO word or path boundary, so the alternation matches the candidate's name anywhere in any line of any tracked file",
+        "MEASURED, this session: `referenced_index('.', ['tools','deck_generation'], timeout_s=90)` -> tools mapped to ['.claude/agents/worker.md', '.claude/settings.json', '.claude/settings.local.json', '.claude/skills/activity-check/SKILL.md', '.claude/skills/activity-check/render_activity_dashboard.py', '.claude/skills/agentbus/SKILL.md']",
+        "THE DISCRIMINATOR, run because a substring hit and a real reference look identical in the output: `git grep -c -I -o -E -e 'tools' -- docs/architecture/ADHC_BASHFIX.md` -> 5 hits, while `git grep -o -E -e '(^|[^./a-zA-Z])tools/' -- <same file>` -> no output. All five are `.tools/`, which is a different directory from `tools/`",
+        "CONSEQUENCE ON THE REAL ANSWER: the whole-estate run assessed the 5 highest-ranked of 364 maximal cold subtrees and returned 0 RECOMMEND_ARCHIVE / 5 HOLD_REFERENCED, with 'infra' (depth 1) held on .claude/settings.json among others -- a one-segment name that appears as a substring in a large fraction of the corpus",
+        "DIRECTION, stated because it decides the hazard: the error is a FALSE POSITIVE ON REFERENCE, which yields a FALSE NEGATIVE ON RECOMMEND -- conservative. Nothing is proposed for archive that should not be, and R-5 is not breached by it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "object_recommend.py's own docstring: 'NAME-VS-EDGE (automated here, via `git grep`): does any tracked file OUTSIDE the subtree reference the subtree's path (import / config path / doc link / deploy script)?' -- and PRD FWD-8's accept, 'a ranked list with the reason for each line that a person can dispute'.",
+    "world_is": "The check answers 'does the candidate's name appear as a substring anywhere', not 'does anything reference this path'. A person disputing a HOLD line is handed file names that may not reference the subtree at all, which is a reason they cannot act on. The engine's own docstring already anticipates the direction ('a noisy/common path that over-matches just yields HOLD, the safe direction'), so this is a known-by-design property being MEASURED for the first time rather than a defect discovered -- what is new is the size of it on this corpus and the fact that it now shapes a shipped answer.",
+    "notes": "hazard_standing ARMED on the ANSWER's quality, not on any artifact: FWD-8 asks for a reason a person can dispute, and an unanchored substring hit is a reason that does not survive being disputed. DELIBERATELY NOT FIXED IN THIS CELL. Anchoring the pattern would move candidates from HOLD to RECOMMEND on an archive recommender -- a reduction in conservatism on the exact axis R-5 governs -- and the correct sequence is a ruling and then a measured change, not a worker's mid-cell judgement. NOT MEASURED: how many of the 364 candidates would move if the pattern were anchored; that needs the full assessment pass this cell ran only over the top 5."
   }
 ]
 ```

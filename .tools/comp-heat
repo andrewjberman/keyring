@@ -280,7 +280,15 @@ def cmd_freshness(a) -> int:
         for s in sorted(scores, key=lambda s: s.age_days, reverse=True)[:a.top]:
             print(f"    {s.age_days:7.0f}d  score={s.score:.4f}  {s.band:4s}  "
                   f"[{src.get(s.item_id, '?'):5s}]  {s.item_id}")
-        print(f"  cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY): {len(cold_dirs)}")
+        # LABEL CORRECTED (OS-s-16, row NFRA_OUTSET-W3-S4): this list is grouped by
+        # os.path.dirname -- each file's IMMEDIATE parent -- so no ancestor ever accumulates a
+        # count and a whole dead subtree whose leaf dirs each hold fewer than 3 files is
+        # INVISIBLE here. Calling it "cold SUBTREES" asserted a roll-up the code does not do.
+        # The roll-up answer is `comp-heat archive`, which consumes O2's aggregate_tree +
+        # maximal_cold_subtrees and then O3's verify-before-recommend chain.
+        print(f"  cold LEAF DIRS (immediate-parent grouping, n>=3, cold_frac>=0.8): "
+              f"{len(cold_dirs)} -- NOT a subtree roll-up; for maximal cold SUBTREES with an "
+              f"inbound-reference check per line, run `comp-heat archive` (ADVISORY, removes nothing)")
         for k, v in cold_dirs[:a.top]:
             print(f"    {v['n_cold']:4d}/{v['n']:<4d} cold  oldest={v['oldest_age_days']:.0f}d  {k}/")
 
@@ -301,10 +309,194 @@ def cmd_freshness(a) -> int:
                            "score": round(s.score, 6), "band": s.band,
                            "source": src.get(s.item_id, "?")} for s in scores],
                 "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs],
+                # ADDITIVE, never a rename: the key is kept for any existing consumer, and the
+                # basis beside it says what the key actually contains (OS-s-16 / W3-S4).
+                "cold_subtrees_basis": {
+                    "grouping": "IMMEDIATE-PARENT (os.path.dirname), not a directory roll-up",
+                    "consequence": "a subtree that is wholly cold but whose leaf dirs each hold "
+                                   "fewer than 3 files does not appear here -- the miss is a "
+                                   "FALSE NEGATIVE, never a false archive candidate",
+                    "filter": "n>=3 and cold_frac>=0.8",
+                    "the_rollup_answer": "comp-heat archive (O2 maximal_cold_subtrees + O3 "
+                                         "verify-before-recommend)",
+                    "claim": "measured"},
                 "answer_state": None, "vintage": _vintage(),
                 "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}}
         _write_json(a, snap)
     return 0
+
+
+def cmd_archive(a) -> int:
+    """OS-s-16 -- THE ARCHIVE-CANDIDATE ANSWER, and it is a WIRE, not a build.
+
+    OS-s-15 ruled none of the O2/O3/O4 legs is a retire candidate, so this subcommand connects
+    legs that already exist rather than writing a fourth one (build ladder rung 2):
+        O1  object_freshness.build_budgeted   per-path heat, path-scoped and budgeted (OS-s-2/1)
+        O2  object_locality.aggregate_tree    roll heat UP THE DIRECTORY TREE, every ancestor
+            + maximal_cold_subtrees           the highest wholly-cold dir, never its children too
+        O3  object_recommend.assess           VERIFY BEFORE RECOMMEND -- any inbound reference
+                                              from outside the subtree is a HOLD
+
+    WARN: WHY THIS EXISTS BESIDE `freshness`, and it is row NFRA_OUTSET-W3-S4. `freshness` groups
+    by `os.path.dirname` -- each file's IMMEDIATE parent -- and printed that under the label "cold
+    SUBTREES". No ancestor ever accumulates a count, so a wholly dead tree whose leaf dirs each
+    hold fewer than three files is INVISIBLE to it: exercised by slot 3 on a synthetic 8-of-8-cold
+    tree at 400 days across four leaf dirs, the CLI returned 0 candidates and O2 returned 1
+    maximal cold root. The direction is a FALSE NEGATIVE -- it under-reports what is safe to put
+    away and never over-reports -- so R-5 was not breached, but the label asserted a roll-up the
+    code did not do. That label is corrected in `freshness`, and the roll-up answer is here.
+
+    WARN: NEVER-AUTO-DELETE (PRD R-5, ABSOLUTE) IS THE POINT OF THIS SUBCOMMAND, NOT A CAVEAT ON
+    IT. Nothing here removes, moves, renames or writes anything anywhere: the only writes this
+    process makes are to stdout and, if the caller names one, a --json file the caller chose. A
+    RECOMMEND is a sentence a person can dispute, and it still carries a MANDATORY graph gate that
+    has to be run by a human before anything is acted on. `.tools/tests/test_os16_archive_answer.py`
+    asserts the tree is byte-identical before and after a run, and its RED mutant -- a copy of this
+    tool that deletes one file -- fails that arm.
+    """
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+    if not os.path.isdir(HEATMAP_DIR):
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unavailable at {HEATMAP_DIR}; no archive "
+                             "answer is claimed")
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import time
+        from heat_map import HeatParams                                    # noqa: E402
+        from object_freshness import build_budgeted                        # noqa: E402
+        from object_locality import aggregate_tree, maximal_cold_subtrees  # noqa: E402
+        from object_recommend import assess                                # noqa: E402
+    except Exception as e:                                                 # noqa: BLE001
+        return _state_result(a, STATE_PARTIAL,
+                             f"comp-heat: heatmap source unreadable: {e}; no archive answer is "
+                             "claimed")
+
+    root = os.path.abspath(a.root) if getattr(a, "root", None) else REPO_ROOT
+    rel = a.path.replace("\\", "/").strip("/") if a.path else ""
+    if rel and not os.path.exists(os.path.join(root, rel)):
+        return _state_result(a, STATE_ABSENT,
+                             f"comp-heat archive: subject '{rel}' is absent from the repository "
+                             "corpus")
+    p = HeatParams(half_life_days=a.half_life)
+    result = build_budgeted(root, p, time.time(), clock, scope=rel or None)
+    if result["cut"]:
+        resume = "comp-heat archive" + (f" {rel}" if rel else "")
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", resume, result["phase"])
+        print(disclosure)
+        print(terminal)
+        print("comp-heat archive: no candidate list is claimed from a PREFIX -- a subtree that "
+              "looks wholly cold in a partial scan may not be.")
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+
+    scores = result["scores"]
+    if rel:
+        scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+    if not scores:
+        return _state_result(a, STATE_ZERO,
+                             f"comp-heat archive: subject '{rel or '(whole estate)'}' exists but "
+                             "has zero scored files")
+
+    agg = aggregate_tree(scores)
+    cold = maximal_cold_subtrees(agg, a.cold_threshold, a.min_files)
+    # The ranked head is what gets the (bounded) inbound-reference pass; the tail is disclosed as
+    # UNASSESSED rather than dropped, because an unassessed candidate is not a cleared one.
+    head, tail = cold[:a.top], cold[a.top:]
+    remaining = clock.remaining()
+    assessed = assess(root, head, timeout_s=remaining) if head else []
+    rec = [x for x in assessed if x["verdict"] == "RECOMMEND_ARCHIVE"]
+    hold = [x for x in assessed if x["verdict"] == "HOLD_REFERENCED"]
+    grep_failed = [x for x in assessed if "<grep-error>" in (x.get("inbound_refs") or [])]
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
+
+    if a.json != "":
+        scope = f"{rel}/" if rel else "(whole estate)"
+        print(f"=== comp-heat archive  scope={scope}  ADVISORY-ONLY -- NOTHING IS REMOVED ===")
+        print(disclosure)
+        print(terminal)
+        print(_archive_denominator_line(rel, agg, scores, cold, head, tail))
+        print(f"  basis: a candidate is a MAXIMAL cold subtree -- the highest directory whose "
+              f"whole subtree is >= {a.cold_threshold:.0%} cold with >= {a.min_files} files, whose "
+              f"parent does not itself qualify. cold = age > {p.warm_days:.0f}d "
+              f"(hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d); "
+              f"score = exp(-ln2*age/{p.half_life_days:.0f}d half-life).")
+        print(f"  verdicts: {len(rec)} RECOMMEND_ARCHIVE / {len(hold)} HOLD_REFERENCED / "
+              f"{len(tail)} UNASSESSED (beyond --top {a.top})"
+              + (f" / {len(grep_failed)} REFERENCE-CHECK-FAILED (held, conservatively)"
+                 if grep_failed else ""))
+        for i, x in enumerate(assessed, 1):
+            print(f"    {i:3d}. {x['verdict']:18s} {x['dir']}/")
+            print(f"         REASON: {x['n_cold']} of {x['n']} files in this subtree are cold "
+                  f"(cold_frac={x['cold_frac']}), oldest write {x['oldest_age_days']:.0f} days ago, "
+                  f"mean heat {x['mean_score']:.4f}, depth {x['depth']}.")
+            if x["verdict"] == "RECOMMEND_ARCHIVE":
+                print(f"         DISPUTE IT BY: naming any file outside this subtree that "
+                      f"references it -- the name-vs-edge pass found none. THEN RUN THE MANDATORY "
+                      f"GRAPH GATE, which this tool does NOT run: {x['mandatory_graph_gate']}")
+            else:
+                refs = ", ".join(x["inbound_refs"][:3]) or "(reference check failed)"
+                print(f"         DISPUTE IT BY: showing these references are stale -- HELD because "
+                      f"{len(x['inbound_refs'])} file(s) outside it reference it: {refs}")
+        for x in tail[:a.top]:
+            print(f"    ---. UNASSESSED        {x['dir']}/  ({x['n_cold']} of {x['n']} cold) -- "
+                  f"beyond --top; NOT cleared, just not examined")
+        print("  REMINDER: ADVISORY ONLY. This tool removes nothing, moves nothing and writes "
+              "nothing outside its own --json. Every RECOMMEND still needs the graph gate above "
+              "and a human. cold != safe.")
+
+    if a.json is not None:
+        _write_json(a, {
+            "scope": rel or None, "root": root, "advisory_only": True,
+            "never_removes": True, "removals_performed": 0,
+            "denominator": _archive_denominator(rel, agg, scores, cold, head, tail),
+            "basis": {"cold_threshold": a.cold_threshold, "min_files": a.min_files,
+                      "half_life_days": p.half_life_days,
+                      "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
+                      "maximality": "a candidate's parent does not itself qualify",
+                      "claim": "measured"},
+            "candidates": assessed,
+            "unassessed": tail,
+            "answer_state": None, "vintage": _vintage(),
+            "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}})
+    return 0
+
+
+def _archive_denominator(rel, agg, scores, cold, head, tail) -> dict:
+    """Every population this answer stands on, named. A ranked list with no denominator invites
+    'these are the cold subtrees'; what is true is 'these are the N examined of M found among K
+    scored paths'."""
+    return {
+        "scope": rel or "(whole estate)",
+        "scored_paths": len(scores),
+        "rollup_clustered_n": getattr(agg, "clustered_n", None),
+        "rollup_total_n": getattr(agg, "total_n", None),
+        "directories_rolled_up": len(agg),
+        "maximal_cold_subtrees_found": len(cold),
+        "assessed": len(head),
+        "unassessed": len(tail),
+        "claim": "measured",
+    }
+
+
+def _archive_denominator_line(rel, agg, scores, cold, head, tail) -> str:
+    d = _archive_denominator(rel, agg, scores, cold, head, tail)
+    cov = ""
+    if d["rollup_clustered_n"] is not None and d["rollup_clustered_n"] != d["rollup_total_n"]:
+        cov = (f"; WARN: the roll-up placed only {d['rollup_clustered_n']} of "
+               f"{d['rollup_total_n']} scored paths into any directory")
+    return ("  denominator: %d maximal cold subtree(s) found across %d directory(ies) rolled up "
+            "from %d scored path(s) under %s; %d assessed, %d UNASSESSED%s"
+            % (d["maximal_cold_subtrees_found"], d["directories_rolled_up"], d["scored_paths"],
+               d["scope"], d["assessed"], d["unassessed"], cov))
 
 
 def cmd_drift(a) -> int:
@@ -796,7 +988,9 @@ def main(argv=None) -> int:
                "<subcommand> --help`.")
     sub = ap.add_subparsers(dest="cmd")
 
-    f = sub.add_parser("freshness", help="per-path hot/warm/cold + cold SUBTREES (archive candidates)")
+    f = sub.add_parser("freshness",
+                       help="per-path hot/warm/cold + cold LEAF DIRS (immediate-parent grouping; "
+                            "the SUBTREE roll-up answer is `comp-heat archive`)")
     f.add_argument("path", nargs="?", default="",
                    help="subtree (or single file) to scope to (default: repo root). A named path "
                         "is PATH-SCOPED at the git call, so the printed denominator counts THAT "
@@ -806,6 +1000,26 @@ def main(argv=None) -> int:
     _add_json(f)
     _add_budget(f)
     f.set_defaults(fn=cmd_freshness)
+
+    ar = sub.add_parser("archive",
+                        help="ranked MAXIMAL cold subtrees with a disputable reason per line "
+                             "(O2 roll-up + O3 verify-before-recommend). ADVISORY: removes nothing")
+    ar.add_argument("path", nargs="?", default="", help="subtree to scope to (default: repo root)")
+    ar.add_argument("--root", default=None,
+                    help="repository root to analyse (default: this tool's own repo). Present "
+                         "because O2 and O3 both take one, and because the battery's RED mutant "
+                         "must be pointed at a THROWAWAY tree -- a mutant that deletes must never "
+                         "be able to reach the real one")
+    ar.add_argument("--cold-threshold", type=float, default=0.9,
+                    help="fraction of a subtree that must be cold to qualify (default 0.9)")
+    ar.add_argument("--min-files", type=int, default=5,
+                    help="minimum files in a subtree before it can be a candidate (default 5)")
+    ar.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
+    ar.add_argument("--top", type=int, default=25,
+                    help="assess the N highest-ranked candidates; the rest are printed UNASSESSED")
+    _add_json(ar)
+    _add_budget(ar)
+    ar.set_defaults(fn=cmd_archive)
 
     d = sub.add_parser("drift", help="writes NOT in a commit (untracked + modified, freshest first)")
     d.add_argument("--top", type=int, default=25, help="show N (default 25)")
