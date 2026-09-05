@@ -200,6 +200,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "The TO's own <proof_of_spec> section states the instance path using the short to_id form: 'ETFS_GUARDRAIL.TO-EG-s-13.proof_of_spec.json'.",
     "world_is": "to-pipeline-gate.py's check_complete_flip computes the expected instance filename from the TO FILE'S basename (including its full descriptive suffix), not from to_id -- a different, longer string. A worker following the TO's own instructed filename literally cannot flip the order to complete without the gate refusing.",
     "notes": "Disarmed same-turn, no owner needed for THIS order: a second, byte-identical proof_of_spec.json was committed at the gate-expected long-stem filename beside the TO-instructed short one; both are structurally VALID (rc=0) and carry identical content. Left for a wider owner: every OTHER ETFS_GUARDRAIL TO whose own <proof_of_spec> section (if any) names the short to_id form will hit the same refusal on its complete flip -- a generic fix (gate accepts EITHER form, or every TO's <proof_of_spec> section is authored to the gate's actual convention) is outside this order's <paths>."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-04T23:12:08Z",
+    "one_line": "TO-EG-s-11's prescribed invocation `logs filter-log-events --start-time <ms> --filter-pattern \"OK: wrote\" --limit 20` (a single, un-paginated call under the .tools/aws CLI v1 shim) returns exactly 1 matching event with a nextToken present, not the 3 that actually exist in the same 3-day window -- filter-log-events does not auto-paginate to --limit the way list_objects_v2/list_functions do, so a literal single-call reading of the TO's own text under-counts EVIDENCE by 2 of 3 (a coverage trap, not a WRITER-determination error: even the 1-event undercount names the correct function).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/aws logs filter-log-events --log-group-name /aws/lambda/bd-49f-etf-ownership-daily --start-time 1788302696123 --filter-pattern '\"OK: wrote\"' --limit 20 --output json @8226ee82b0, run this turn -- returned exactly 1 event (timestamp 1788345911186, stream 2026/09/02) with a top-level 'nextToken' present in the JSON body",
+        "manual nextToken follow-through, same window, run this turn -- page 2: 1 more event (1788432311925, stream 2026/09/03); page 3: 1 more event (1788518711493, stream 2026/09/04); page 4: 0 events, no nextToken (true end) -- 3 total matching events across 4 pages, not the 1 a single un-paginated call returns",
+        ".tools/aws logs describe-log-streams --log-group-name /aws/lambda/bd-49f-etf-ownership-daily --order-by LastEventTime --descending --max-items 10 @8226ee82b0, run this turn -- confirms daily streams for 09-02, 09-03, 09-04 (lastEventTimestamp 1788345911188 / 1788432311926 / 1788518711495) all fall inside the 3-day window, i.e. all 3 runs' log groups exist and were reachable, so the undercount is a pagination artifact of filter-log-events, not an absence of the underlying events",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/twin_writer_census.py wrote_events() @committed-this-turn -- follows nextToken to the true end (bounded 20 pages) and reports 'LOGS bd-49f-etf-ownership-daily: 4 page(s) followed (manual nextToken), 3 'OK: wrote' event(s)', the corrected denominator this deliverable's WRITER=... EVIDENCE=3 line rests on"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-11's DELIVERABLE section: 'the newest CloudWatch log events matching \"OK: wrote\" in /aws/lambda/<fn> over the last 3 days (`logs filter-log-events --start-time <epoch ms> --filter-pattern \"OK: wrote\" --limit 20`)' -- a single named invocation, no pagination instruction.",
+    "world_is": "That exact invocation, run once as named, returns 1 of the 3 matching events that exist in the same window and log group, with an unfollowed nextToken -- CLAUDE.md Rule 22a's paginated-list trap ('paginated list-* + --query length() returns the PAGE count') applies here in a variant form: filter-log-events silently under-fills a page below --limit while still signaling more data via nextToken, and neither --no-paginate nor any other obvious flag was used to cause it.",
+    "notes": "Resolved for this cell's own script (twin_writer_census.py) by manually following nextToken to the true end, bounded at 20 pages; the WRITER determination is unaffected (1 of 3 events already names the correct function), but the reported EVIDENCE count and, in principle, a sparser window's ONLY matching event could be missed by a literal single-call reading of the TO's own prescribed invocation. Disarm: the COO/CTO names filter-log-events' pagination behavior as a general instrument trap (candidate addition to Rule 22a's catalogue) so future TOs prescribing it also prescribe following nextToken, or explicitly bound the acceptable undercount."
   }
 ]
 ```
