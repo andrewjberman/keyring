@@ -47,10 +47,16 @@ RUNNER_ENV = {
 
 # The mutation arm O10-AC1 names: a FAILED publish that reads ABSENT (a clean empty) instead of
 # FAILED. The anchor is the consumer's ABSENT branch.
+# RE-POINTED by NFRA_OUTSET OS-s-14, which added the `absent=True` FIELD to this very return
+# so a caller choosing between seam sources can distinguish 'never published' from 'published
+# and BROKEN' structurally instead of by grepping the error prose. The anchor's uniqueness
+# assert refused the battery rather than mutating nothing -- the correct loud failure
+# (NFRA_OUTSET-W2-S19, and W2-S17 for why a silently-no-op mutant is the thing to avoid).
+# THE MUTANT'S INTENT IS UNCHANGED: an ABSENT artifact reads as a clean empty.
 ABSENT_ANCHOR = (
     '    except FileNotFoundError:\n'
     '        return fail("artifact ABSENT at %s -- the publish FAILED or never ran. This is a FAILED "\n'
-    '                    "stratum, never an omitted one." % source)'
+    '                    "stratum, never an omitted one." % source, absent=True)'
 )
 ABSENT_MUTANT = (
     '    except FileNotFoundError:\n'

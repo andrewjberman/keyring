@@ -55,16 +55,53 @@ RUNNER_ENV = {
 # same return. The anchor's uniqueness assert REFUSED rather than mutating nothing -- which
 # is the W2-S17 failure mode (a mutant that silently stops falsifying) caught by design.
 # The anchor is deliberately the WHOLE branch, so any future edit to it breaks loudly here.
+# RE-POINTED A SECOND TIME by NFRA_OUTSET OS-s-14, which replaced this branch with a DECLARED
+# SOURCE PRECEDENCE (comp_cochange.json then comp_fedobs_coevolution.json, where only ABSENCE
+# advances the search). The uniqueness assert refused again, exactly as NFRA_OUTSET-W2-S19
+# predicted on the face of this very order -- a re-point job, not a break. The mutant's INTENT
+# is unchanged: ignore any configured prefix so the host-git path is restored.
 SEAM_BRANCH_ANCHOR = '''    prefix = OUTSET_SEAM_PREFIX if prefix is ... else prefix
     if prefix:
-        src = prefix.rstrip("/") + "/" + OUTSET_COCHANGE_KEY
-        r = _outset_read(src, loader or _outset_loader,
-                         now or datetime.now(timezone.utc),
-                         OUTSET_SEAM_MAX_AGE_HOURS if max_age_hours is None else max_age_hours)
-        return _stratum("B_relationships", GROUP_QUESTIONS["B"], r["rows"],
-                        "%s @%s" % (r["vintage"], pin), r["denominator"],
-                        status=r["status"], error=r["error"],
-                        reproduce=_outset_trace(r, src))
+        rd = loader or _outset_loader
+        rnow = now or datetime.now(timezone.utc)
+        age = OUTSET_SEAM_MAX_AGE_HOURS if max_age_hours is None else max_age_hours
+        tried = []
+        for key, grain, grain_note in OUTSET_GROUP_B_SOURCES:
+            src = prefix.rstrip("/") + "/" + key
+            r = _outset_read(src, rd, rnow, age)
+            tried.append(key)
+            if r["status"] != "OK" and r.get("absent"):
+                continue          # ONLY absence advances the search -- see OUTSET_GROUP_B_SOURCES
+            den = r["denominator"]
+            vin = "%s @%s" % (r["vintage"], pin)
+            if grain_note:
+                den = "%s -- %s" % (den, grain_note)
+                vin = "%s [grain=%s, NOT resource-grain]" % (vin, grain)
+            return _stratum("B_relationships", GROUP_QUESTIONS["B"], r["rows"], vin, den,
+                            status=r["status"], error=r["error"],
+                            reproduce=_outset_trace(r, src))
+        # Every declared source was ABSENT. A prefix IS configured, so a publish was expected:
+        # this is a FAILED stratum carrying what it looked for, never a silent fall-through to
+        # the host stand-in (which would render a host number under a "seam configured" run and
+        # tell the reader nothing about the missing publishes).
+        return _stratum(
+            "B_relationships", GROUP_QUESTIONS["B"], [],
+            "UNREAD (seam configured at %s) @%s" % (prefix, pin),
+            "UNREAD -- no GROUP B seam artifact is published under this prefix",
+            status="INSTRUMENT_FAILED",
+            error="every declared GROUP B seam source is ABSENT under a CONFIGURED prefix: "
+                  "%s. Each was looked for and none was published. A configured-and-empty "
+                  "prefix is a FAILED publish, not a reason to quietly compute a host "
+                  "number instead." % ", ".join(tried),
+            reproduce=_trace(
+                "comp-cochange (resource grain) or comp-fedobs coevolution (file-pair grain)",
+                ["python .tools/comp-fedobs coevolution --json",
+                 "# then publish through org/modules/heatmap/outset_seam.py as "
+                 "<prefix>/" + OUTSET_FEDOBS_KEY],
+                "no artifact @%s" % pin, "not-reproducible",
+                "nothing was read, so there is nothing to re-run: the recipe here is what WOULD "
+                "make this stratum reproducible. Neither producer is registered in "
+                "SEAM_PRODUCERS (NFRA_OUTSET-W2-S15)."))
 '''
 SEAM_BRANCH_MUTANT = '''    prefix = None   # RED MUTANT: seam ignored, host-git path restored
 '''
