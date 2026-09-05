@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 39 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 42 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -961,6 +961,79 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "The decomposition's s.1 chain read computes M=3 and presents the chain count as the ceiling on useful workers, and s.4 carries `cap 8`.",
     "world_is": "The chain count bounds parallelism from ABOVE on the dependency axis only. The binding constraint for the back half of this project is a single shared FILE, `.tools/comp-heat`, which four cells write. A fan-out chosen from the chain count alone would spawn workers that cannot commit rather than workers that block -- a strictly worse failure, because a blocked worker waits while a contending one produces a guaranteed merge conflict on one file.",
     "notes": "⛔ THIS IS NOT A DEFECT IN THE DECOMPOSITION AND THE ROW SHOULD NOT BE READ AS ONE. L5's chain read was computed correctly from the manifest's own edges and its cap of 8 was never reached. The gap is that DEPENDENCY WIDTH AND CONTENTION WIDTH ARE TWO DIFFERENT QUANTITIES, and the spine's fan-out line only ever names the first. Dependency width says how many cells COULD start; contention width says how many can FINISH without fighting over one file. On this project the two diverge sharply: dependency width for round 2 was 5, contention width was 3, and for the remaining nine it is 1 to 2. FILED RATHER THAN FIXED because changing what a decomposition must compute is an L5 spec question and this project's decomposition is FROZEN mid-round; the honest act now is to record the measurement and let 1.0.0_SA_CTO decide at round-N analysis whether a fan-out line should carry a contention read beside its chain read. PRACTICAL CONSEQUENCE, stated so nobody reads an idle slot as a stall: worker slot 3 is deliberately idle and is NOT blocked on any act of its own. It waits for slot 1 to finish OS-s-5 and release `.tools/comp-heat`, after which OS-s-10 goes to whichever slot holds that surface. Spawning a fourth worker would not help; it would guarantee a conflict."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S15",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T07:08:00Z",
+    "one_line": "W1-S2 CLOSED BY LIMB, NOT WHOLESALE, and this row is the disarm record for the limb that closes. LIMB 1 -- the RACE: DISARMED. The nominal-budget floor check added on OS-s-1 does cover this cell's --sql path, and it is nominal rather than elapsed-time, which is demonstrated rather than asserted: --budget 199.9 REFUSES and --budget 200.1 DISPATCHES, two runs separated by 0.2 s of DECLARED budget and by nothing at all in wall-clock, so no elapsed-time check could tell them apart. LIMB 2 -- the CALLER'S WAIT: NEWLY BOUNDED by this cell; the wrapper now derives the transport's own delay/max_attempts from clock.remaining(), measured 5 x 45 = 225 s at --budget 250 and 5 x 75 = 375 s at --budget 400, where before it passed neither and every dispatch waited on a fixed 15 x 40 = 600 s no budget could shorten. LIMB 3 -- CANCELLING THE REMOTE TASK: STILL ARMED, and not by this worker's choice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- NOT this worker and NOT the OS-s-5 assignee any longer: cancelling the remote task requires the ECS task ARN, which never crosses .tools/_trino_fed.run_federated_query()'s return, and that file is NOT in OS-s-5's <paths> (see NFRA_OUTSET-W1-S16). The disarm is a cut/grant decision, not a worker act",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the row being closed, NFRA_OUTSET-W1-S2 (this same channel), whose disarm_owner is the OS-s-5 assignee and whose notes require the implementer to 'either extend this floor-check pattern or edit .tools/_trino_fed.py ... to bound the live call's own duration'",
+        "LIMB 1, measured this session by .tools/tests/test_os5_sql_bound.py arm C: '--budget 199.9 -> refused (rc=0) ; --budget 200.1 -> dispatched to the STUB (transport received {delay: 5, max_attempts: 35, ceiling_s: 175})'. The 200.1 side runs against a STUB transport, never the live plane",
+        "LIMB 1, also measured on the --sql path specifically (W1-S2's arms were on the no-sql path): arm B, `--sql 'SELECT 1' --budget 0.0001` -> rc=0, 'refusing to dispatch to the LIVE Trino plane', and the real transport's own dispatch banner absent from stdout+stderr",
+        "LIMB 2, the defect: .tools/comp-heat@2eabc5197e called `run_federated_query(qs)` with NEITHER bounding parameter, while .tools/_trino_fed.py@2eabc5197e:82 declares `def run_federated_query(sqls, *, delay: int = 15, max_attempts: int = 40)` -- a 600 s ECS tasks_stopped wait independent of the caller's --budget",
+        "LIMB 2, the fix and its discrimination: arm D reads what the transport ACTUALLY RECEIVED via a stub -- '--budget 250 -> {delay: 5, max_attempts: 45, ceiling_s: 225} ; --budget 400 -> {delay: 5, max_attempts: 75, ceiling_s: 375} ; monotone=True', and arm G's RED MUTANT restores the pre-cell call and is caught receiving '{delay: 15, max_attempts: 40, ceiling_s: 600}' at the SAME --budget 250",
+        "LIMB 3, why it cannot be closed here: run_federated_query returns only [{sql, columns, rows}] per query (.tools/_trino_fed.py@2eabc5197e:82-105); the task_arn it computes internally is never returned, so this wrapper has no argument to pass to ecs:StopTask, and .tools/_trino_fed.py is not in this order's <paths>",
+        "LIMB 3, stated in the tool's own output rather than only here: every dispatch now prints 'THIS BOUNDS THIS PROCESS'S WAIT, NOT THE REMOTE TASK: the task ARN is not returned across .tools/_trino_fed.py's boundary, so no StopTask is issued and the in-VPC task runs to its own completion'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's instruction to this worker on OS-s-5, verbatim: 'either the independent nominal-budget floor check you added on OS-s-1 covers this cell's path, or it does not and the row stays ARMED with the reason. Do not disarm it by having reached this cell.'",
+    "world_is": "It covers the path, and it is demonstrably nominal rather than a race. But 'bounded' is three claims and only two of them are now true: the caller cannot be made to wait past its budget, and a budget that could not cover one call is refused before anything starts -- while the remote Fargate task, once started, runs to completion regardless. This row disarms the two that closed and leaves the third ARMED with its reason and a disarm owner who can actually act on it.",
+    "notes": "hazard_standing ARMED for limb 3 only; limbs 1 and 2 are disarmed on the measurements above. W1-S2 is not edited, re-dispositioned or reordered -- this row is the carrier, the same shape S6 used to correct S1. NOT CLAIMED: that a bounded caller wait reduces the COST of a dispatched query. It does not -- the Fargate task and its Trino work are paid for either way. What it changes is that the caller gets a stated PARTIAL_OR_BLIND answer at its own ceiling instead of blocking for up to 600 s on a wait it never asked for."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S16",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T07:08:30Z",
+    "one_line": "This face's TITLE asserts a property its <paths> cannot fully deliver: 'an unbounded remote query is not a mode' is achievable for the CALLER's wait and for refuse-before-dispatch, both done, but not for the remote task's own duration -- that needs .tools/_trino_fed.py, which OS-s-5's <paths> does not name. NOT BLOCKING and no criterion is stopped: O5-AC1 and O5-AC2 are both satisfiable, and were satisfied, entirely within .tools/comp-heat and .tools/tests/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the face's own title, org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-5.bound-the-arbitrary-federated-query.md@2eabc5197e: 'comp-heat federated --sql is BOUNDED like every other subcommand, or refused with its reason -- an unbounded remote query is not a mode'",
+        "that same face's <paths> block, read at HEAD with `git show HEAD:` rather than from the checkout: .tools/comp-heat, org/modules/heatmap/, .tools/tests/, the deliverables folder, the investigation file, infra/system/06_current_state.{json,md} -- .tools/_trino_fed.py is absent",
+        "NFRA_OUTSET-W1-S2's own note (this channel), which predicted otherwise: a future implementer 'must either extend this floor-check pattern or edit .tools/_trino_fed.py (outside OS-s-1's grant, INSIDE OS-S-5'S LIKELY ONE)'. The floor-check limb of that disjunction is the one this cell could take",
+        "NOT BLOCKING, and that is a measurement rather than a concession: O5-AC1's own invocation `.tools/comp-heat federated --sql \"SELECT 1\" --budget 30` returns rc=0 and matches its <expect> `budget` on the REFUSAL path, since 30 is below the tool's 200 s floor; O5-AC2's battery reaches every other branch with a stub transport. Neither needs the transport file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-5: '--sql runs an arbitrary federated query against the live Trino plane with no bound', to be fixed such that 'an unbounded remote query is not a mode'; and the BOUNDS clause 'A path you need that it does not name is a CUT DEFECT: file a BLOCKING row and stop that criterion.'",
+    "world_is": "No criterion needs the missing path, so this is deliberately NOT filed as BLOCKING -- filing a blocking row on a criterion that passes would be a false stop. What the missing path costs is the THIRD limb of the title's claim (the remote task's own duration), which is recorded in NFRA_OUTSET-W1-S15 as the limb that stays ARMED. Recorded here so the gap is visible at the CUT level rather than only as a hazard: a future face that wants the remote-cancel limb closed has to name .tools/_trino_fed.py in its <paths>.",
+    "notes": "hazard_standing INERT: the operational hazard lives on W1-S15, not here; this row is about the grant. class OBSERVATION and explicitly NOT BLOCKING -- the worker judges the row's FORM, never its significance, and the form of a blocking row is 'this criterion cannot proceed', which is not true of either criterion on this face."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S17",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T07:09:00Z",
+    "one_line": "comp-heat's own module docstring asserts 'ADVISORY-ONLY + READ-ONLY ... never writes to the repo OR ANY STORE', but `federated --sql` passes the caller's SQL string through to the Trino REST API unread and unrestricted -- neither .tools/comp-heat nor .tools/_trino_fed.py inspects it. The tool's stated contract is therefore not ENFORCED on the one path that could violate it. Found while bounding that path; deliberately NOT fixed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route -- the choice between narrowing the docstring's claim and adding a restriction to the surface is a tool-owner decision (comp-heat's registry owner is 1.0.0_SA_CTO per its own header), and either way it is not this cell",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-heat@2eabc5197e:11-13, verbatim: 'ADVISORY-ONLY + READ-ONLY: comp-heat SCORES / CLUSTERS / FLAGS. It never recommends-to-delete (that is O3, separately guardrailed) and never writes to the repo or any store'",
+        "the --sql path at the same commit: cmd_federated builds `qs = [a.sql]` and passes it to run_federated_query, which embeds it in the runtime bash with only SHELL-QUOTE escaping (.tools/_trino_fed.py `_runtime_script`, whose own docstring says the escaping exists so a SQL with single quotes 'transports intact'). Nothing anywhere reads the statement's verb",
+        "the federation's own surface is not read-only by construction: .tools/_trino_fed.py:20 names `iceberg.globgrph.{graph_nodes,graph_edges,graph_contracts}` (Nessie-backed Iceberg), and Iceberg tables are a writable table type"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "comp-heat's own module docstring: 'never writes to the repo or any store'; and this order's BOUNDS: 'No new dependency. No second implementation.'",
+    "world_is": "The read-only claim is a DOCSTRING, not a control, and the --sql surface is exactly where a caller could contradict it. This worker did not build a guard, for two reasons stated rather than implied: (1) CLAUDE.md forbids implementing an approval gate on work Andrew did not ask for, and a statement-verb filter on a caller's own query is precisely that; (2) a keyword filter over arbitrary SQL is a FALSE sense of safety -- it would read as enforcement while being trivially evadable, which is worse than a documented gap. The cell asked for a BOUND on time and cost, and that is what was built.",
+    "notes": "hazard_standing ARMED because the gap is reachable today by any caller with a budget at or above the 200 s floor. NOT CLAIMED, and deliberately not tested: that a write would actually SUCCEED. That depends on the Trino catalog configuration and the task role's IAM, neither of which this cell read, and establishing it would mean issuing a destructive statement against a live shared store -- which no criterion asks for and which NEVER-AUTO-DELETE and the estate's own hard stops forbid. The claim here is exactly and only that NOTHING IN THE TOOL CHECKS, which is a code read at a named commit."
   }
 ]
 ```
