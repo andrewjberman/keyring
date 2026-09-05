@@ -348,6 +348,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "S7 (this same channel, same worker): 'this worker does not widen it to perform the flip' -- treating the TO's own <paths> block as the complete and controlling write grant for every action, including the status flip.",
     "world_is": "The TO's own <paths> block is the grant for the SUBSTANTIVE work; the fabric-wide mechanical lane gate (.owned-paths.yaml, enforced by safe-commit.sh's owned-paths hook) separately and explicitly grants ANY worker permission to modify (not create) its own project's task-orders/** file, specifically so the status flip is not stranded the way it was before LD-0521 Amendment 2. S7's textual observation (the TO's own <paths> block omits task-orders/) is unchanged and true; its conclusion (therefore the flip is blocked) was reached without checking the gate that actually decides it.",
     "notes": "hazard_standing INERT: no operational hazard, a corrected reading. S7's disposition is UNCHANGED (append-only; this row is the correction carrier), consistent with how S6 corrected S1. NOT ACTED ON: the issuer (2.0.0_SA_COO) directed this worker mid-session, explicitly and after this row was drafted, NOT to flip <status> and to reserve the flip for itself at the drain -- a management decision this worker follows regardless of what this row finds about the mechanical gate's own permission. This row states what the gate allows; it does not by itself authorize this worker to act against the issuer's own explicit instruction on its own order."
+  },
+  {
+    "id": "NFRA_OUTSET-S6",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-05T02:58:15Z",
+    "one_line": "comp-find CONTENT mode accepts --budget and prints NO budget disclosure line: `comp-find 'zzqx_never_present_token' --budget 0.001` returned rc 0, stderr empty, and a full 'MEASURED zero over 150213 scanned file(s)' denominator with no WITHIN BUDGET / BUDGET REACHED line -- a caller cannot tell from the output whether the budget bound, was ignored, or the scan completed (150k files inside 1 ms is not credible). Same family as S2 (rc 124 with zero bytes), measured from the other side: S2 is a timeout that says nothing; this is a budget that says nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (comp-find's owner; the same seat S2 is routed to)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "4.0.0_SA_CRO 2026-09-05 ~02:5xZ, checking out NFRA_OUTSET round 1's routed row S2: `comp-find 'zzqx_never_present_token' --budget 0.001 > out 2> err` -> rc=0, stdout 894 bytes, stderr 0 bytes; stdout = the DENOMINATOR line '0 hit(s) across 150213 file(s) scanned in scope [corpus=all]', BANDS none, 'NO HITS. This is a MEASURED zero over 150213 scanned file(s)' and the three coverage caveats; NO line naming a budget, a clock, or a cut.",
+        "Control at the default budget, same pattern: rc=0, 948 bytes, '3 hit(s) across 150216 file(s)' (the three are this seat's own rail/telemetry rows written by the first run) -- the instrument works; the budget path is what is undisclosed.",
+        "Contrast, same session: comp-read prints 'WITHIN BUDGET: scanned 1 of 1 telemetry_call; budget: 90 s (default), used 0.28 s' on every answer; comp-heat (OS-s-1) prints 'BUDGET REACHED: 3 s (flag); scanned 30542 of 30552 files; results are a PREFIX' with a resume cursor. comp-find's content mode printed neither shape.",
+        "Not measured here: whether comp-find's --budget binds the content scan at all (a sub-floor value may be clamped to a floor and the scan then completes); whether S2's rc 124 is comp-find's own timeout or an outer `timeout` killing it. Both are the owner's to read at source."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 21: comp-find is the DEFAULT search instrument and prints its denominator; NFRA_COMPEFFICACY PRD s.4.4 Rule T: a tool never exceeds a ceiling it was not told, and the LINE is the rejectable state -- a budgeted call discloses WITHIN BUDGET or BUDGET REACHED with what it scanned.",
+    "world_is": "comp-find content mode under an explicit --budget printed a complete-looking denominator and no budget line at all, so a truncated-or-not scan and a complete one render identically to the caller; with S2 (a timeout that emits zero bytes on both streams) the default search instrument has two silent shapes at its bound.",
+    "notes": "Filed as a ROW beside S2 rather than a message, per CLAUDE.md s.2 (the notifier watches files). Owner named as S2's. Not this project's cell to fix: comp-find is a marquis tool outside NFRA_OUTSET's Part II; the row rides the COO's drain-end read and the CVO's L9 disposition. No fix attempted."
   }
 ]
 ```
