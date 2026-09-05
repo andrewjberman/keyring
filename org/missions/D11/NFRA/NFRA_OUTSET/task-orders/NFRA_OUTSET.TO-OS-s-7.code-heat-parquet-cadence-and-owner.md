@@ -61,7 +61,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O7-AC1`, `O7-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-7.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-7.code-heat-parquet-cadence-and-owner.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O7-AC1,O7-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>
