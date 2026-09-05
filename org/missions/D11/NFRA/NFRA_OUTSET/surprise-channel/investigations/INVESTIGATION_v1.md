@@ -449,6 +449,82 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-2 <paths> grants infra/system/06_current_state.{json,md} on the stated ground that 'the assignee must be able to regenerate and COMMIT that pair'; the spawn face restates it as 'Regenerate and commit it with your change.'",
     "world_is": "The grant is necessary but not sufficient. Regeneration is refused until the source lands (so the pair cannot ride the same commit as the change that dirties it), and the gate that actually decides the commit reads a DIFFERENT worktree's 06 and sources, which no act inside this worktree can make current. This worker therefore lands the source with the gate's own audited `system-current-override:` trailer (the same escape W1-S5 recorded), and regenerates + commits this worktree's 06 pair in a SECOND commit once the source has landed -- honouring the grant as far as the world allows and saying where it stopped.",
     "notes": "hazard_standing ARMED because it recurs for every future comp-* cell cut to a linked worktree, which spine v3 makes the normal case; class OBSERVATION because a sanctioned audited escape exists and no criterion of this order is blocked by it. NOT a claim that either gate is wrong: each is correct on its own terms (comp-system must not launder an unlanded source; safe-commit must not trust a caller-supplied tool path). The composition is what has no worker-side answer."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S12",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T05:49:00Z",
+    "one_line": "This worker edited a DRAINED cell's artifact -- .tools/tests/test_os2_path_grain.py, OS-s-2's battery -- while executing OS-s-4, on the issuer's own explicit conditional instruction, and reproduced the flake first that justified it. Arm F (F-SCOPED-ANSWER-IS-PARITY-WITH-THE-UNSCOPED-ANSWER) failed once here as a regression check (9/10, age-diff=1) and passed on the immediate re-run -- the same flaky RED 2.0.0_SA_COO measured at the OS-s-2 drain. CAUSE: the arm compares two SEPARATE comp-heat invocations seconds apart, and an UNTRACKED file's age comes from its live filesystem mtime, so any write to the worktree between the passes moves it. FIXED without weakening: the path SET is still compared exactly over every row, band+age are now compared over the GIT-SOURCED rows (whose age is a commit timestamp and cannot move mid-run), the mtime-sourced rows are compared on membership with their count PRINTED as a stated exclusion, and every difference now names its members.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the issuer's own mid-round instruction to this worker, verbatim: 'arm F is now a FLAKY RED on a live repo, and a flaky red is worse than a missing arm, because it trains every future reader to re-run until green -- which is exactly how a real regression gets waved through ... you do not need to act on it unless a later order puts you back in that file, in which case fix the empty-list reporting at minimum'",
+        "the condition is met: TO-OS-s-4's <paths> grants `.tools/tests/`, the directory that file lives in (org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-4.federated-vintage-and-catalog-disclosure.md@b630052d6a)",
+        "REPRODUCED HERE BEFORE FIXING, this session, running the drained battery as a regression check on the OS-s-4 code: 'OS2-PATH-GRAIN BATTERY: 9/10 PASS' rc=1, then the immediate re-run 'OS2-PATH-GRAIN BATTERY: 10/10 PASS' rc=0 with no code change between them",
+        "the reporting defect the issuer named, at .tools/tests/test_os2_path_grain.py@2ab06d0a96: the detail string printed `age-diff=%d %s` with `sorted(key_diff)[:3]` as its `%s` -- the COUNT came from age_diff and the LIST from key_diff, two different quantities, so a failing arm printed `age-diff(>0.01d)=1 []` and named no member",
+        "FALSIFIER RUN AFTER THE FIX (not a promise -- CLAUDE.md: an unrun falsifier is a promise, not a control): the battery re-run while a background loop touched an untracked file inside the scoped corner every 0.3 s for the duration -- exactly the condition that produced the flake -- returned 'OS2-PATH-GRAIN BATTERY: 10/10 PASS' rc=0 with arm F reporting '389 scoped vs 389 unscoped-filtered rows; 388 git-sourced (band+age compared) + 1 mtime-sourced (membership only ...): key-diff=0 [] band-diff=0 [] age-diff(>0.01d)=0 [] ; HEAD held during the arm (b630052d6a)'",
+        "NOT VACUOUS after the narrowing: 388 of 389 rows are still compared on band AND age, and that count is printed, so a future state in which the comparison had nothing left to compare would be visible in the arm's own output rather than reading as a pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-4's cell is the federated VINTAGE disclosure; nothing in this order's ACCEPTANCE or DELIVERABLE names OS-s-2's battery, and CLAUDE.md's worker contract says never fix a neighbouring defect.",
+    "world_is": "The issuer instructed this worker directly, mid-round, to fix that file's reporting IF a later order admitted it to that file, and TO-OS-s-4's <paths> does. The work is therefore instructed rather than self-widened, but it is still work outside this cell and this row is where that is recorded rather than buried in a commit message. Scope held to what was instructed plus the de-flake the instruction's own reasoning identified; no other arm, file or cell was touched.",
+    "notes": "hazard_standing INERT: the flake is fixed and the fix was falsified under the producing condition. The narrowing is disclosed in the file itself, not just here, because a reader of the arm needs to know which rows it compares on which axis."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S13",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T05:49:30Z",
+    "one_line": "THIS WORKER EXECUTED CODE FROM THE MAIN WORKSPACE AND WROTE A FILE THERE, believing it was in its own worktree. In the Bash tool, `cd X && A & B; C` backgrounds the WHOLE `cd X && A` list, so B and C run in the session's DEFAULT cwd -- C:/Users/AndrewBerman/Desktop/ajb_workspace -- not in the worktree the `cd` named. The foreground command ran the MAIN tree's DRAINED copy of test_os2_path_grain.py and wrote C:/Users/AndrewBerman/Desktop/ajb_workspace/.scratch/os2_falsifier.txt (2146 B, 2026-09-05 01:33). THE TELL WAS A STALE STRING: the battery printed the PRE-EDIT detail format, which is the only reason this was caught -- a run whose output happened to look identical in both trees would have been indistinguishable from a correct one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- two limbs: (1) remove or keep C:/Users/AndrewBerman/Desktop/ajb_workspace/.scratch/os2_falsifier.txt, which this worker deliberately did NOT delete because the main workspace is outside its grant and a second unauthorised act there is worse than a stray scratch file; (2) decide whether the worker face should carry this shell trap the way it carries the comp-find rc=124 one",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the offending invocation, this session, verbatim in shape: `cd /c/tmp/wk-OUTSET-1 && rm -rf .tools/tests/__pycache__ && (for i in $(seq 1 90); do touch ...; done) & sleep 1; timeout 120 python .tools/tests/test_os2_path_grain.py > .scratch/os2_falsifier.txt 2>&1` -- bash binds `&` to the entire preceding AND-list, so the `cd` was backgrounded with it",
+        "DISCRIMINATOR 1, the stale output: that run printed 'compared 389 scoped vs 389 unscoped-filtered rows: key-diff=0 band-diff=0 age-diff(>0.01d)=0 []' -- the PRE-EDIT format -- while the immediately preceding and following runs from the correct cwd printed the post-edit format carrying '388 git-sourced ... HEAD held during the arm'",
+        "DISCRIMINATOR 2, the missing file: `wc -l /c/tmp/wk-OUTSET-1/.scratch/os2_falsifier.txt` -> 'No such file or directory', while `ls -la /c/Users/AndrewBerman/Desktop/ajb_workspace/.scratch/` shows os2_falsifier.txt at 2146 bytes timestamped 01:33",
+        "DISCRIMINATOR 3, the two trees differ at exactly the edited line: `grep -c 'git-sourced (band+age compared)' /c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/tests/test_os2_path_grain.py` -> 0, against 1 in this worktree",
+        "BLAST RADIUS MEASURED, not assumed: the stray run created exactly one file (the main workspace's .scratch/ already existed at 01:23 with another seat's wk3-d5/ directory, so nothing was clobbered), and left no mutant copies -- `ls /c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/ | grep -c 'comp-heat-os'` -> 0, the battery's own finally having cleaned up. No git object, index or tracked file in the main workspace was touched",
+        "this is the same FAMILY as the two traps already in the estate's memory -- 'A failed cd on its own line redirects every later command to the project root' and 'Reading a config BY PATH reads the WORKTREE, not HEAD' -- but a DIFFERENT cause: operator precedence around `&`, with no failure and no error message anywhere"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The spawn face for this slot: 'Work there and ONLY there ... Do NOT work in C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace -- other seats are live in that tree and editing there while committing here is a measured failure mode (CLAUDE.md 14b).'",
+    "world_is": "A single Bash call with a backgrounded AND-list silently relocated the foreground commands to the main workspace, so this worker read a DRAINED file's output as if it were its own edit's, and wrote one scratch file into a tree it is forbidden to write to. Nothing tracked was modified and no commit was made there. The falsifier was re-run correctly afterwards, from an absolute path with the background loop cd-ing itself, and the conclusion it supports is unchanged -- but the FIRST reading of that falsifier was worthless and was reported as if it were evidence for about two minutes.",
+    "notes": "hazard_standing ARMED and it is not about the stray file, which is trivial: it is about a worker being unable to tell WHICH TREE its evidence came from. The only reason this was caught is that the two trees' bytes happened to differ in the printed string; a worker measuring an unchanged file, or one whose output is identical in both trees, gets a clean-looking reading from the wrong tree and no signal at all. Filed by the worker against itself: a self-attribution is the least audited claim in the fabric, so every limb above is a measurement someone else can re-run rather than a recollection."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S14",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T05:50:00Z",
+    "one_line": "The federated join's ICEBERG side cannot be dated in-band, and the reason is a growth condition rather than a permission or a reachability wall: iceberg.globgrph.graph_nodes carries 183,447 S3 objects, 134,616 of them under metadata/, of which 20,374 are *.metadata.json -- one per Iceberg commit, none expired. A COMPLETE listing (the only listing from which a max is valid) took 36.6 s for the table and 25.5 s for metadata/ alone, measured 2026-09-05. So comp-heat federated reports that table UNREAD-with-reason under any sane per-call ceiling, while the code_heat side is measured in 0.9 s from 2 objects.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO AS ROUTER -- this cell could not establish an owner for the graph-side Iceberg table's snapshot retention, and OS-s-7 established there is none for the code_heat side either (0.7.0_AE_CloudOps~W: Glue Owner null, 0 of 142 EventBridge rules). Naming the router rather than inventing a producer owner",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED out-of-band by this worker, boto3 list_objects_v2 paginated to completion against s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/: 183,447 objects over 184 pages in 36.55 s; scoped to metadata/: 134,616 objects over 135 pages in 25.51 s; scoped to metadata/00000- (the *.metadata.json shape): 20,374 objects over 21 pages in 4.88 s",
+        "AND THE VALUE DOES EXIST once the listing completes: max(LastModified) = 2026-09-05T02:11:10Z on metadata/00000-686be3f1-d023-4bb5-a810-c05ed4dd4388.metadata.json -- about three hours before this read. So the two sides of the federated join differ in age by roughly 51 days, the graph side hours old and the code_heat side frozen",
+        "the code_heat side's freeze is NOT re-derived here: it is 0.7.0_AE_CloudOps~W's measurement on OS-s-7 (org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/code-heat-parquet-cadence-and-owner.result.md@b630052d6a) -- producer host-bound by a CTO revert 2026-07-16, 0 of 142 EventBridge rules fire it, Glue Owner null. This worker's own tool independently re-reads the same object plane and prints 2026-07-16T03:40:46Z, which AGREES with that measurement but is the same PLANE through a different client (boto3 vs the .tools/aws CLI), so it is corroboration on the client axis only and is not independent on the plane axis",
+        "what the answer prints instead of a value, verbatim from `timeout 120 .tools/comp-heat federated --budget 120`: 'iceberg.globgrph.graph_nodes build_time=UNREAD claim=absent' / 'reason: listing did not complete within this table's probe ceiling (9001 object(s) read under s3://...); S3 lists lexicographically, not by time, so no max is claimed from a partial read'",
+        "the alternatives were checked and each is closed from here: the table is NOT in the Glue Data Catalog (get_tables globgrph -> ['code_heat','obs_findings','tool_activity']; get_databases -> ['cloudtrail_forensics','default','globgrph','opal_mcp']); there is no Iceberg metadata/version-hint.text (head_object -> 404); warehouse/snap_ingest/last_append/ carries pointers for code_heat_snap, fedobs_coevolution_snap, fedobs_coverage_snap and ms_heat_snap but NOT for graph_nodes; and the Nessie pointer itself is in-VPC only, the same reachability wall as the Trino coordinator (.tools/_trino_fed.py:10-14)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-4 THE CELL: 'every comp-heat federated answer carries the catalogs joined and each one's BUILD time', with O4-AC3 anticipating that some catalog may not be able to report one.",
+    "world_is": "One of the two joined catalogs cannot report a build time within any per-call ceiling a shared plane should be asked to pay, and the barrier is 20,374 unexpired snapshot metadata files rather than an authorisation or an outage. That number grows with every derive run, so this disclosure gets strictly more expensive over time and the UNREAD is not a stable state -- it is a widening one. Recorded, not fixed: expiring Iceberg snapshots is a producer-side act on infra/ paths this order does not grant, and it is not this cell.",
+    "notes": "hazard_standing ARMED on the GROWTH, not on the current UNREAD -- the UNREAD is the honest answer and the tool prints it correctly today. class OBSERVATION: no criterion of this order is blocked by it; O4-AC1 passes with 1 measured / 1 UNREAD and O4-AC3 exists to record exactly this. NOT CLAIMED: that the join's answers are wrong. This worker did not run the join -- comp-heat refuses to dispatch below a 200 s budget and this order's own invocation is 120 s -- so what a 51-day skew does to a consumer's question is OS-s-8's and OS-s-10's to say, not this cell's."
   }
 ]
 ```

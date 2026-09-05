@@ -170,23 +170,56 @@ def _run_battery() -> None:                                                # noq
 
     # ---- ARM F: PARITY -- the denominator changed, the ANSWER did not ----
     # The scoped run's per-path rows must agree with the whole-repo run's own rows for the same
-    # corner. age_days is derived from each run's own wall clock, so it is compared with a 0.01d
-    # (~14 min) tolerance; band and the path SET are compared exactly.
+    # corner. The path SET is compared EXACTLY over every row (that is what a scoping regression
+    # would move); band and age are compared exactly over the GIT-SOURCED rows only.
+    #
+    # WARN: WHY AGE IS NOT COMPARED ON MTIME-SOURCED ROWS, and why that is not a weakening.
+    # This arm reads two SEPARATE comp-heat invocations seconds apart. A TRACKED file's age comes
+    # from its commit timestamp and is stable between them; an UNTRACKED file's age comes from its
+    # live filesystem mtime, so ANY write to the worktree between the two passes -- another seat
+    # committing, or this battery's own author saving a file -- moves it and fails the arm. That
+    # happened twice: once for 2.0.0_SA_COO at the OS-s-2 drain (age-diff=1, two immediate re-runs
+    # both clean) and once here on 2026-09-05. A FLAKY RED IS WORSE THAN A MISSING ARM: it trains
+    # every future reader to re-run until green, which is how a real regression gets waved through.
+    # The property this arm exists to protect -- "the path-scoped git walk returns the same answer
+    # as the unscoped one" -- lives entirely in the git-sourced rows, so restricting the AGE
+    # comparison to them removes the race without giving up the discrimination. The mtime rows are
+    # still compared on MEMBERSHIP (a scoping regression in the untracked leg still fails the arm)
+    # and their count is PRINTED as a stated exclusion, never silently dropped.
+    #
+    # WARN: AND EVERY DIFFERENCE NAMES ITS MEMBERS. The earlier version printed `age-diff=1` beside an
+    # empty `[]`, because the count and the list were different quantities -- a failure that could
+    # not be diagnosed from its own output.
     parity_detail, ok_f = "no JSON to compare", False
+    head_before = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
+                                 capture_output=True, timeout=60).stdout.strip()
     if ja is not None and jn is not None:
         scoped = {r["path"]: r for r in ja["paths"]}
         unscoped = {r["path"]: r for r in jn["paths"]
                     if r["path"] == CORNER_A or r["path"].startswith(CORNER_A + "/")}
-        key_diff = set(scoped) ^ set(unscoped)
-        band_diff = [k for k in set(scoped) & set(unscoped)
+        shared = set(scoped) & set(unscoped)
+        key_diff = sorted(set(scoped) ^ set(unscoped))
+        git_rows = sorted(k for k in shared
+                          if scoped[k].get("source") == "git" and unscoped[k].get("source") == "git")
+        mtime_rows = sorted(shared - set(git_rows))
+        band_diff = [(k, scoped[k]["band"], unscoped[k]["band"]) for k in git_rows
                      if scoped[k]["band"] != unscoped[k]["band"]]
-        age_diff = [k for k in set(scoped) & set(unscoped)
+        age_diff = [(k, scoped[k]["age_days"], unscoped[k]["age_days"]) for k in git_rows
                     if abs(scoped[k]["age_days"] - unscoped[k]["age_days"]) > 0.01]
         ok_f = not key_diff and not band_diff and not age_diff and len(scoped) > 0
-        parity_detail = ("compared %d scoped vs %d unscoped-filtered rows: key-diff=%d "
-                         "band-diff=%d age-diff(>0.01d)=%d %s"
-                         % (len(scoped), len(unscoped), len(key_diff), len(band_diff),
-                            len(age_diff), sorted(key_diff)[:3]))
+        head_after = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
+                                    capture_output=True, timeout=60).stdout.strip()
+        parity_detail = (
+            "compared %d scoped vs %d unscoped-filtered rows; %d git-sourced (band+age compared) "
+            "+ %d mtime-sourced (membership only -- their age is a live filesystem clock): "
+            "key-diff=%d %s band-diff=%d %s age-diff(>0.01d)=%d %s ; HEAD %s during the arm (%s)"
+            % (len(scoped), len(unscoped), len(git_rows), len(mtime_rows),
+               len(key_diff), key_diff[:3],
+               len(band_diff), band_diff[:3],
+               len(age_diff), age_diff[:3],
+               "held" if head_before == head_after else "MOVED",
+               head_before[:10] if head_before == head_after
+               else "%s -> %s" % (head_before[:10], head_after[:10])))
     _record("F-SCOPED-ANSWER-IS-PARITY-WITH-THE-UNSCOPED-ANSWER", ok_f, parity_detail)
 
     # ---- ARM G: the pathspec really reaches git, WITH A NEGATIVE CONTROL ----

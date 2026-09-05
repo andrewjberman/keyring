@@ -615,6 +615,46 @@ def _add_json(sp, with_value=True):
 FEDERATED_LIVE_FLOOR_S = 200.0   # _trino_fed.py's own docstring: "~3-4 min/call" (180-240s)
 
 
+def _federated_sqls(a):
+    """The SQL this invocation WOULD run, resolved once and used for BOTH the vintage block and the
+    dispatch -- so the catalogs disclosed are provably the catalogs joined, and not a second list
+    that could drift away from the first."""
+    from _trino_fed import Q_CODE_BANDS, Q_CODE_COLDEST                    # noqa: E402
+    if a.sql:
+        return [a.sql]
+    return [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
+
+
+def _print_federated_vintage(sqls, clock) -> int:
+    """OS-s-4: print the VINTAGE block for the artifacts these SQL statements join.
+
+    PRINTED ON EVERY PATH, INCLUDING REFUSE-BEFORE-DISPATCH. An artifact's build time is a property
+    of the artifact, not of whether this process got as far as querying it -- so a caller told
+    "refusing to dispatch" is still told what it would have been reading and how old it is. That is
+    also the only path a sub-floor budget (anything under FEDERATED_LIVE_FLOOR_S) can ever reach,
+    so putting the vintage only on the dispatch path would hide it from every bounded caller.
+
+    Returns the number of tables that could NOT report a build time (0 = all measured).
+    """
+    if not os.path.isdir(HEATMAP_DIR):
+        print("VINTAGE: UNREAD -- claim=absent")
+        print(f"      reason: heatmap engine directory unavailable at {HEATMAP_DIR}; no vintage "
+              "is claimed")
+        return 1
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import federated_vintage                                           # noqa: E402
+    except Exception as e:                                                 # noqa: BLE001
+        print("VINTAGE: UNREAD -- claim=absent")
+        print(f"      reason: federated_vintage engine unreadable: {type(e).__name__}: {e}; "
+              "no vintage is claimed")
+        return 1
+    rows = federated_vintage.vintage_rows(sqls, budget_remaining=clock.remaining())
+    for line in federated_vintage.render_vintage(rows):
+        print(line)
+    return sum(1 for r in rows if r["claim"] != federated_vintage.CLAIM_MEASURED)
+
+
 def cmd_federated(a) -> int:
     # comp-heat federated = the LIVE-Trino graph x code-heat view (the federation's net-new over
     # the git-local freshness/drift engines). Engine: .tools/_trino_fed.py (0.8.0_AE, S5; transport
@@ -641,6 +681,9 @@ def cmd_federated(a) -> int:
         return 2
     disclosure = _compbudget.disclosure_line(budget_s, budget_source)
 
+    sys.path.insert(0, _HERE)            # .tools/ -- for _trino_fed
+    qs = _federated_sqls(a)
+
     insufficient = budget_s != 0 and budget_s < FEDERATED_LIVE_FLOOR_S
     if _spent(clock) or insufficient:
         terminal = _reached_line(
@@ -653,13 +696,14 @@ def cmd_federated(a) -> int:
                   else "an already-spent budget")
         print(f"comp-heat federated: refusing to dispatch to the LIVE Trino plane -- {reason} "
               "(a live call cannot be bounded once started -- .tools/_trino_fed.py, OS-s-5)")
+        # The vintage of what this call WOULD have joined is still the caller's business, and this
+        # is the only path a sub-floor budget can reach -- see _print_federated_vintage().
+        _print_federated_vintage(qs, clock)
         return 0
 
-    sys.path.insert(0, _HERE)            # .tools/ -- for _trino_fed
-    from _trino_fed import (run_federated_query, render_table,
-                            Q_CODE_BANDS, Q_CODE_COLDEST)
+    from _trino_fed import run_federated_query, render_table                # noqa: E402
     print(disclosure)
-    qs = [a.sql] if a.sql else [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
+    _print_federated_vintage(qs, clock)
     for res in run_federated_query(qs):
         print(f"\n# {res['sql'][:90]}")
         print(render_table(res))
