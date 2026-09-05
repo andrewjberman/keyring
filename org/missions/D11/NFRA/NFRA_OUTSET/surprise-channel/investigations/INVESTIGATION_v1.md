@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 49 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 53 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1201,6 +1201,105 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "NFRA_OUTSET-W2-S7 (this worker's own row) offered `grep -c -E '^\\s*(PASS|FAIL)\\b'` = 0 as evidence that 'the harness never reaches a verdict line'.",
     "world_is": "That grep cannot answer that question. The harness's verdict lines all begin with `VERDICT:`, so the detector returns 0 for a completed PASS, a completed SUBJECT FAILED and both INSTRUMENT FAILED arms exactly as it does for a run killed mid-flight. A count of zero from an instrument that can only ever count zero is not a measurement, and quoting it beside a sound measurement lent it unearned support. The sound measurement -- the expired bound, three times, with the per-call cost read at source -- is untouched, so W2-S7 stays BLOCKING-as-filed for the pre-amendment criterion and its disposition is unchanged.",
     "notes": "APPEND-ONLY: W2-S7 is not edited; this row is the correction carrier, the same shape W1-S6 used for W1-S1 and W1-S9 for W1-S7. hazard_standing INERT -- nothing operational is armed; the faulty line supported a conclusion that was independently true, and the criterion it concerned has since been amended. CAUGHT BY THE ISSUER, NOT BY THIS WORKER, and that is worth recording plainly: this is the THIRD false-zero/false-clean instrument this worker used in one order (the .scratch/ copy of comp-which that failed soft, the in-process exec that disagreed in the other direction, and now this grep), and it is the only one of the three that survived into a filed row. The two that did not survive were caught by CONTRADICTION with an earlier real measurement; this one produced no contradiction because a zero from a constant-zero detector agrees with everything. THE GENERAL FORM, which is the reusable part: A DETECTOR THAT CANNOT PRODUCE A NON-ZERO ON THE POSITIVE CASE IS NOT A DETECTOR -- run it once against a known PASS before quoting its zero. This worker did not at the time, and the control was available (the issuer had already completed a passing run). IT HAS NOW BEEN RUN: against this worker's own COMPLETED passing run of the amended criterion (rc 0, 07:33:57Z-07:46:28Z, 331 lines), `grep -c -E '^[[:space:]]*(PASS|FAIL)\\b'` = 0 while `grep -c 'VERDICT: PASS'` = 1. The retired detector scores a PASS and a killed run identically; the amended <expect> string `VERDICT: PASS` discriminates. This row is filed with the positive control EXECUTED rather than merely named."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S18",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:01:33Z",
+    "one_line": "CORRECTS W1-S12: my de-flake of OS-s-2's arm F was INCOMPLETE, and the falsifier I ran could not have caught what it missed. Arm F failed again in this cell's regression sweep -- this time on a GIT-SOURCED row, `.tools/deregister-all` 141.7 vs 141.71 -- because comp-heat publishes age_days as round(x, 2), so the value is QUANTISED to 0.01 d steps and the arm's tolerance WAS 0.01: two adjacent steps differ by exactly the tolerance and compare as greater in float. W1-S12 removed the mtime race and its falsifier churned an UNTRACKED file's mtime, which is a different mechanism on a different row class, so it was structurally incapable of firing on this one. Tolerance raised to 0.02 (two quanta) with the quantum named in the arm's own printed detail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the failing arm, this session, running OS-s-2's drained battery as a regression check on OS-s-10's code: 'OS2-PATH-GRAIN BATTERY: 9/10 PASS' rc=1, arm F detail '392 git-sourced (band+age compared) + 1 mtime-sourced ... age-diff(>0.01d)=1 [(.tools/deregister-all, 141.7, 141.71)] ; HEAD held during the arm (6dcd8c92eb)' -- note HEAD HELD, so this is not the contention mechanism W1-S12 fixed",
+        "the quantisation, in the producer: .tools/comp-heat@6dcd8c92eb emits '\"age_days\": round(s.age_days, 2)' in its JSON snapshot, so 0.01 d IS the representable step and a tolerance of 0.01 d is exactly one step -- 141.71 - 141.70 evaluates to 0.010000000000019 and trips a `> 0.01` test",
+        "WHY THE EARLIER FALSIFIER COULD NOT CATCH IT: W1-S12's control ran the battery while a background loop touched an UNTRACKED file every 0.3 s. That exercises the mtime-sourced class, which this fix had already moved OUT of the age comparison. The row that failed here is GIT-SOURCED, whose age comes from a commit timestamp and moves only by rounding. A control aimed at one mechanism is not evidence about the other",
+        "the fix and its check: tolerance raised to 0.02 with the reason in the code, and the printed detail now names it ('age-diff(>0.02d, 2 quanta of the tool's own 0.01d rounding)'); 3 of 3 consecutive runs 'OS2-PATH-GRAIN BATTERY: 10/10 PASS' rc=0",
+        "NOT A WIDENING THAT COSTS DISCRIMINATION: a real scoping regression moves an age by DAYS or drops the row from the key set entirely, and the key set is still compared EXACTLY over all 393 rows; 0.02 d is 28.8 minutes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W1-S12, my own row: 'FIXED without weakening ... the fix was falsified under the producing condition' -- and the issuer certified it on that evidence, running the same concurrent-write shape itself and getting 10/10.",
+    "world_is": "The fix was correct for the mechanism it addressed and the falsifier was honest about that mechanism. There was a SECOND, independent mechanism in the same arm -- a tolerance equal to the data's own quantisation -- which neither the fix nor its control touched, and which surfaced the first time the arm ran against a corner whose file count had grown. A certified fix is evidence about the failure it reproduced, not about the arm.",
+    "notes": "hazard_standing INERT: fixed and re-run 3 of 3 clean. Filed against MYSELF and against a row the issuer had already certified, because a correction is a census too and this one would otherwise read as 'arm F was fixed' when what is true is 'arm F had two flake mechanisms and each was found by a different accident'. Touching OS-s-2's battery again is admitted by OS-s-10's own <paths> (`.tools/tests/`) and by the issuer's standing instruction about that file; nothing else in that battery was changed."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S19",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:02:00Z",
+    "one_line": "THE REPORT RUNNER'S ROLE CANNOT READ ANY LOCATION A SEAM PRODUCER COULD PUBLISH TO. estate-report-runner-role's s3:GetObject is resource-scoped to exactly four things -- opal-estate-report/{daily/*, code/*, manifest/*} and the single exact key kuzu_nessie_db -- and it holds NOTHING on opal-313476888478-globgrph, where the estate's existing served/ artifacts live. So OS-s-10's seam works end to end in code and cannot be turned on in production without an iam.tf change, which this order's <paths> does not name. NOT BLOCKING: O10-AC1 and O10-AC2 are both satisfiable without it, and were.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route -- infra/aws/terraform/estate-report/iam.tf is a CloudOps surface (the PRD re-homes a row touching a cloud principal to 0.7.0_AE_CloudOps) and OS-s-6 is the project's IAM audit cell. One added resource line is the whole ask",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "APPLIED PLANE, read live 2026-09-05 with iam:GetRolePolicy (not inferred from Terraform): role estate-report-runner-role, inline policy estate-report-runner, Sid ReadPredecessorAndOwnCode, Action s3:GetObject, Resource = ['arn:aws:s3:::opal-estate-report/daily/*', '.../code/*', '.../manifest/*', 'arn:aws:s3:::opal-estate-report/kuzu_nessie_db'] -- four entries, no seam prefix, nothing on the globgrph bucket",
+        "DESIRED PLANE agrees: infra/aws/terraform/estate-report/iam.tf@6dcd8c92eb:156-186 carries the same four resources. DESIRED and APPLIED are read separately here because they are two different claims",
+        "the file itself already names this exact trap, verbatim at that Sid: 'THE EXISTING GRANT ABOVE IS PREFIX-SCOPED TO daily/* AND code/*, so WITHOUT THIS LINE a root-level GetObject is AccessDenied ... comp-iam models (action), never (action, resource), so an action-level check would have reported this GRANTED'",
+        "and it names the SHAPE of the fix: kuzu_nessie_db is granted as an EXACT KEY with the reason 'a `/*` here would silently grant every future root object as well' -- so an outset seam wants either one exact key per artifact or a dedicated prefix, decided by whoever owns that file",
+        "measured consequence, and it is why this is ARMED rather than merely noted: with no grant, ESTATE_OUTSET_SEAM_PREFIX must stay unset, and with it unset the propagation stratum keeps reading INSTRUMENT_UNAVAILABLE every day -- which is exactly the claim PRD s.7's OS-s-10 row was cut to end"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-10's accept: 'one artifact per outset tool with answer state, vintage and denominators; the runner reads it; a failed publish reads FAILED, never absent', with a <paths> block naming .tools/comp-heat, org/modules/heatmap/, the runner .py, .tools/tests/, the deliverables folder, the investigation file and the 06 pair.",
+    "world_is": "The seam's code is complete and demonstrated on real bytes, but the production wire needs one line in a file this order does not grant. Deliberately handled by DEFAULTING THE SEAM OFF rather than by pointing it somewhere it cannot read: ESTATE_OUTSET_SEAM_PREFIX is unset by default, so the runner's behaviour in production is byte-unchanged until both a producer cadence and this grant land, and the code says so at the point a reader would otherwise assume it was live.",
+    "notes": "hazard_standing ARMED because a future seat could wire ESTATE_OUTSET_SEAM_PREFIX at a globgrph path, see it work from an agent's own credentials, and ship a stratum that reads INSTRUMENT_FAILED every day on the actual host -- an AccessDenied is indistinguishable from an absent publish in the reader's own vocabulary, by design. NOT filed as BLOCKING: no criterion of this order is stopped by it, and a blocking row on a criterion that passes is a false stop (the same call as W1-S16)."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S20",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:02:30Z",
+    "one_line": "PRD s.3's FALSIFIER, MEASURED AND SPLIT IN TWO -- and as literally stated it DOES NOT FIRE. The 09:00 window is real and scheduled (EventBridge Scheduler `estate-report-0900et`, cron(0 9 * * ? *) tz=America/New_York, ENABLED). The artifact-on-a-cadence pattern is real and FRESH: served/comp_learns_status.json, a COMP-TOOL status artifact, was written at 2026-09-05T04:01:03Z, 0.18 d old at read time, on its own cron(0 4 * * ? *) -- about 9 h of margin before the window. So the seam's cadence machinery demonstrably holds FOR A TOOL WHOSE INPUTS ARE CLOUD-REACHABLE. It does NOT hold for a GIT-HISTORY-SHAPED tool: there is no such producer, 0 of 142 EventBridge rules fire one, and the estate's one git-history-shaped artifact (code_heat) has been frozen 51 days. comp-heat's freshness and drift are git-history-shaped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- this is a CUT-LEVEL question, not a worker act: no cell among the 17 in the PRD s.7 manifest owns PRODUCING or SCHEDULING the artifacts, and PRD s.5 does not place it out of scope either. Whether that is a scope change at L2 or a missing cell is the issuer's call and the CVO's to grade",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WINDOW, live: EventBridge Scheduler, 18 schedules total, 2 name-matching estate|report; `estate-report-0900et` cron(0 9 * * ? *) tz=America/New_York ENABLED, target arn:aws:lambda:us-east-1:313476888478:function:estate-report-orchestrator. The runner's own code agrees (estate_report_runner.py:63-64, ESTATE_SCHEDULE_HOUR_LOCAL default 9, ESTATE_SCHEDULE_TZ default America/New_York)",
+        "THE CADENCE THAT HOLDS, live: EventBridge rules, DENOMINATOR 142, 4 name-matching; three nightly Fargate producers on cluster opal-globgrph -- opal-globgrph-derive-runner-nightly cron(0 2 * * ? *), opal-globgrph-comp-learns-producer-nightly cron(0 4 * * ? *), opal-globgrph-fedobs-producer-nightly cron(30 4 * * ? *), all ENABLED",
+        "AND ITS ARTIFACT IS ACTUALLY FRESH, which is the part that distinguishes a schedule from a working cadence: s3 list of s3://opal-313476888478-globgrph/served/ returned DENOMINATOR 1 object, comp_learns_status.json, 25776 B, LastModified 2026-09-05T04:01:03Z, age 0.18 d at a read time of 2026-09-05T08:22:27Z -- matching its cron to the minute. That producer's own source (infra/aws/globgrph/comp_learns_produce.py@6dcd8c92eb) reads the LIVE Trino federation, i.e. its inputs are cloud-reachable",
+        "THE ARM THAT DOES NOT HOLD: comp-heat's freshness and drift are git-history-shaped -- org/modules/heatmap/object_freshness.py@6dcd8c92eb shells `git ls-files`, `git log --name-only` and `git status --porcelain` against a CHECKED-OUT workspace with full history. The estate has already ruled on that shape once: infra/aws/terraform/globgrph/item2a.tf:404-409, CTO revert 2026-07-16, verbatim in part 'code_heat is git-history-shaped (shells git -C against workspace+portal repos), so the container flag gated an import that can NEVER resolve in the Fargate derive ... code_heat now runs on DEV-BOX CADENCE (option a)'",
+        "AND WHAT DEV-BOX CADENCE DELIVERED, cited from 0.7.0_AE_CloudOps~W on OS-s-7 and NOT re-derived here: 0 of 142 EventBridge rules fire the code_heat producer, Glue Owner null, last write 2026-07-16T03:40:46Z -- 50.7 days at their read, 51.1 days at the OS-s-4 read. 'DEV-BOX CADENCE' is not a cadence; it is whenever a human runs it",
+        "THE UNCOVERED MEMBER, hunted rather than assumed (TAXONOMY LAW i): reading all 17 rows of PRD s.7's manifest, OS-s-10's accept is 'one artifact per outset tool ... the runner reads it', i.e. the SHAPE and the READ. No row says produce, schedule or own the publisher. PRD s.5's out-of-scope list names the report runner's own infrastructure but not a producer for the outset tools. So the cost PRD s.3 itself declares -- 'a publishing step and a freshness question per artifact' -- has an owner for the freshness question (this cell, built) and NO owner for the publishing step"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.3: 'What would falsify the choice: if the artifacts cannot be produced on a cadence the 09:00 window can rely on, the seam is wrong and the decision re-enters at L2 as a scope change.' TO-OS-s-10's O10-AC2 restates it: 'if the artifacts cannot be produced on a cadence the 09:00 window can rely on ... file a BLOCKING row saying so and STOP this criterion.'",
+    "world_is": "A one-armed question with a two-armed answer. The cadence machinery exists, is enabled, has ~9 h of margin before the window, and its artifact is measurably fresh today -- for a cloud-reachable tool. For a git-history-shaped tool no producer exists at all, and the estate has a 51-day demonstration of what the only available alternative delivers. I did NOT file the falsifier's BLOCKING row, because 'cannot be produced' is not what I measured: I measured 'is not produced, and nobody owns producing it'. Inflating that into an impossibility would be as wrong as softening it, and this criterion is judgment=true precisely so the call is not mine.",
+    "notes": "hazard_standing ARMED on the unowned publishing step, not on the seam's shape. NOT CLAIMED: that a Fargate producer for a git-history-shaped tool is impossible -- the report runner itself clones the repo, so a purpose-built producer that clones WITH history is conceivable; I did not build or cost one, because task definitions, images, EventBridge rules and IAM are all outside this order's <paths>. NO VERDICT is written here or in the proof-of-spec: O10-AC2 is judgment=true and 3.0.0_SA_CVO grades it at L9."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S21",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:30:00Z",
+    "one_line": "PROOF_OF_SPEC.schema.json closes `deployed_state` to {DEPLOYED-VERIFIED, COMMITTED-NOT-DEPLOY-SCOPE, STAGED-AWAITING-GATE}, and NONE of the three can describe a DEPLOY-SCOPE artifact that is committed and deliberately NOT deployed. OS-s-10 edits estate_report_runner.py, which the report host pulls from s3://opal-estate-report/code/ on every boot -- so it IS deploy-scope, and this order's <paths> does not admit the S3 upload that deploys it. COMMITTED-NOT-DEPLOY-SCOPE would be FALSE; this instance records STAGED-AWAITING-GATE, which is the LEAST-WRONG value rather than a true one, with the truth in the prose beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route -- org/standards/PROOF_OF_SPEC.schema.json is a fabric standard, not a project surface, and it is not in this order's <paths>. The remedy is a schema decision (a fourth value, or an explicit ruling that STAGED-AWAITING-GATE covers this case), not a worker act",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the refusal, measured: `python .tools/proof-of-spec-check.py <instance> O10-AC1,O10-AC2` -> 'VIOLATION: schema: artifacts_produced/1/deployed_state: 'COMMITTED-NOT-DEPLOYED' is not one of ['DEPLOYED-VERIFIED', 'COMMITTED-NOT-DEPLOY-SCOPE', 'STAGED-AWAITING-GATE']' -- INVALID rc=1. The enum is closed and the checker is right to refuse an invented value",
+        "why the artifact IS deploy-scope: infra/aws/terraform/estate-report/instance.tf@6dcd8c92eb:94-96 and :215, verbatim in part 'THE JOB CODE ITSELF IS NOT BAKED IN (Rule 12: S3 is the artifact store for ALL EC2 code, never write code on a VM) -- the unit pulls estate_report_runner.py from s3://opal-estate-report/code/ on every boot, so a deploy is an S3 upload' and 'ExecStartPre=/usr/bin/aws s3 cp s3://<bucket>/code/estate_report_runner.py /opt/estate-report/estate_report_runner.py'",
+        "why the upload was not performed: it is not in TO-OS-s-10's <paths>, and PRD s.5 places 'the report runner's own infrastructure -- the box, the orchestrator, the manifest contract, the self-parking host' out of scope. The change is instead built INERT: ESTATE_OUTSET_SEAM_PREFIX is unset by default, so the deployed behaviour is byte-unchanged whenever the upload does happen",
+        "the estate has already ruled that a verdict vocabulary needs a value for the state it cannot evaluate -- the same reason investigation_item.schema.json's `grades` enum carries NOT_EVALUATED, described in its own text as 'says so rather than converting an instrument's limit into a verdict'. deployed_state has no such value and this is the symmetric gap on the deploy axis"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json: `deployed_state` is a closed enum of three values, and every artifacts_produced row must carry one of them.",
+    "world_is": "There is a fourth real state -- deploy-scope, committed, deliberately undeployed because the deploying act belongs to another lane -- and the enum has no member for it. A closed enum with no value for a real state does not prevent the state; it makes every instance carrying that state say something false in a MACHINE-READ field, while the truth survives only in the adjacent prose that no consumer parses. That is the failure mode a claim field exists to prevent, appearing in the claim field itself.",
+    "notes": "hazard_standing ARMED because it recurs for every future cell that edits a deploy-scope artifact without owning the deploy -- which spine v3's lane split makes common, not exotic. class OBSERVATION and NOT BLOCKING: the instance validates with the least-wrong value and no criterion of this order is stopped. NOT PROPOSED HERE: a specific fourth value. TAXONOMY LAW says a value-enum proposal arrives with its four-postulate record and a word-boundary token census over the corpus of existing instances, and that census is not this cell's work -- naming the gap is."
   }
 ]
 ```
