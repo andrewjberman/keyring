@@ -1,21 +1,20 @@
 # ETFS_GUARDRAIL round 1 -- L8 PACKET (PARTIAL, and the word is load-bearing)
 
-**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ and ~01:1xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
+**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ, ~01:1xZ and ~02:3xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
 **For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the COO's one message of
 the round is the drain-end read). **This is NOT the L10 slug** -- the slug goes once, after EVERY order is terminal and
-EVERY row is dispositioned, and eight orders are still open. This packet exists so the CVO's L9 work on what IS
+EVERY row is dispositioned, and seven orders are still open. This packet exists so the CVO's L9 work on what IS
 terminal can run beside the drain instead of behind it. It is versioned in place as more orders go terminal.
 
 ---
 
 ## 1. WHY PARTIAL
 
-Six of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13, EG-s-11, EG-s-12, EG-s-4; packet revised at
-`62cc386d94`). The other eight are behind the DAG the decomposition drew
-(`decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1 s.1-s.2): the ladder (handed) waited on the classifier and EG-s-12,
-both terminal now; the two ports wait on nothing and the first is in flight; the renderer cells wait on the classifier
-and the ladder; the send cells on the ladder and the alignment. Nothing is late; two slots are draining in dependency
-order and the third is spent.
+Seven of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13, EG-s-11, EG-s-12, EG-s-4, EG-s-1; packet
+revised at `2baa6af162`). The other seven are behind the DAG the decomposition drew
+(`decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1 s.1-s.2): the ladder is in flight under a ruling (s.4, W1-S7), the
+second port is handed, the renderer cells wait on the ladder, the send cells on the ladder and the alignment. Nothing
+is late; two slots are draining in dependency order and the third is spent.
 
 ## 2. THE TERMINAL ORDERS, each with the instance the checker graded AT THE ISSUER'S SEAT
 
@@ -30,6 +29,7 @@ passed as the checker's third argument (coverage checked), on the merged tree, a
 | TO-EG-s-11 | EG-s-11 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-11.which-49f-twin-writes-the-served-slices.proof_of_spec.json` | VALID rc 0, 5 rows | `108d9fa67f` (the channel conflict united: 9 rows) |
 | TO-EG-s-12 | EG-s-12 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-12.inflection-deployed-bytes-vs-build-input.proof_of_spec.json` | VALID rc 0, 5 rows | `a8e3ac7927` (the channel conflict united: 11 rows) |
 | TO-EG-s-4 | EG-s-4 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-4.the-coverage-classifier.proof_of_spec.json` | VALID rc 0, 7 rows | `62cc386d94` (clean merge, 7 paths; no rows on the branch) |
+| TO-EG-s-1 | EG-s-1 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-1.cot-catch-up-port-reporting-obligation-window.proof_of_spec.json` | VALID rc 0, 9 rows | `c866edd324` (clean merge, 11 paths; 12 rows at HEAD after) -- a DEPLOY: ledger `etfs-guardrail-eg-s-1-cot-catchup-port` OPEN @`13ed1ab775`, CLOSED @`091681fe45`, `ci: record deploy cot-pipeline` @`a8ef1ca328` |
 
 ## 3. THE JUDGMENT CRITERIA -- THIS IS THE L9 WORK
 
@@ -42,6 +42,8 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
 - **S3-AC5** (EG-s-3) -- the PORT CONTRACT: the verbatim set, the one replacement (the reporting-obligation window
   with a shipped-signal terminus), the invariants, the probe addition, the 49F-tail test arm. Grade it as the spec the
   two port orders (EG-s-1, EG-s-2) build to; the contract's calendar mechanism is now the layer, per the amendment.
+  NOTE for the grade: the contract's battery SHAPE (a bare script ending in a module-level `sys.exit()`) is refuted by
+  row W2-S4 -- it crashes pytest at collection; EG-s-1 shipped real test functions and EG-s-2's face now names them.
 - **S13-AC6** (EG-s-13) -- one date basis from the cutover month forward, nothing restated, no partner notified, the
   alignment gates the send and not the guardrail. Grade against the exercised renders (2026-09 aligned, 2026-08 not).
 - **S11-AC5** (EG-s-11) -- WHICH 49F TWIN WRITES THE SERVED SLICES: `WRITER=bd-49f-etf-ownership-daily`, 3 of 3
@@ -68,6 +70,16 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   the eight test arms and the two live counts in the result document s.8. The worker self-caught a first-draft
   docstring that named a firm bucket (`FIRM_BUCKET_REFS=1`), reworded it and re-ran the whole battery -- on the
   record in the report, not a row.
+- **S1-AC9** (EG-s-1) -- THE COT PORT AS DEPLOYED: the window is the reporting obligation (prior month's 1st while
+  its report is not shipped, else the current month's 1st, through yesterday) with the shipped-signal terminus
+  (`platinum/reports/<YYYY-MM>/etf_ownership.pdf`, a denied read counts as NOT shipped and is logged `WARN:`); the
+  source's three skips kept; no day-count constant (`DAYCOUNT_WINDOW=False`); the ZERO-vs-MISSING contract untouched;
+  the probe mode writes nothing and answered live for 2026-08-04 (`partition=true priced=10958 output_exists=true`);
+  the calendar from the published layer (`opal-trading-calendar-layer:1` attached beside `pandas-pyarrow-requests-layer:1`,
+  no committed copy); the plan changed exactly the Lambda and its role policy (`2 to change`), 0-diff after, served
+  `CodeSha256` == built `artifact_sha256`. FWD-1's EXERCISED grade ("a real missed day caught up without a person") is
+  the next scheduled fire naming a recovered date in `catchup_processed`, which the order did not manufacture. Grade
+  the design against rulings 1 and 2 and property 1; eight test arms in the result document.
 
 ## 4. THE ROWS THE BRANCHES CARRIED, and their standing at this seat
 
@@ -81,13 +93,16 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
 | W3-S1 | OBSERVATION, INERT | -- | the CSVs are written by a separate call path from `render_month`; the alignment needed a second call site | disarmed by the worker in-order |
 | W2-S3 | OBSERVATION, ARMED | this seat | TO-EG-s-11's suggested single-call `logs filter-log-events --limit 20` returns 1 of 3 events with a `nextToken` unfollowed (the CLI v1 shim does not auto-paginate that verb) | DISARMED @`108d9fa67f` (the criterion's instrument was the worker's paginating script, so S11-AC3's 3-of-3 stands; the order is terminal, no face edit; a cut lesson for any future face that names `filter-log-events`) |
 | W1-S4 | OBSERVATION, INERT | -- | one `iam list-role-policies` call outside TO-EG-s-12's enumerated live-read surface (policy names only, not relied on for the graded answer) | disarmed by the worker in-order; recorded |
-| W1-S5 | OBSERVATION, ARMED | this seat | `infra/aws/lambda/ci/build-zip.sh:66` hardcodes `touch -t "202600010000"` (month 00) and fails rc=1 on every invocation, since `e046072434` (2026-02-19) | DISARMED FOR THIS ROUND at this seat: the project's deploying faces (EG-s-1, EG-s-2, EG-s-8, EG-s-9) name `build-and-upload.sh`, which has ZERO callers of `build-zip.sh` in `infra/aws/lambda/ci/` (measured at HEAD); only TO-EG-s-12's face named `build-zip.sh` and its named fallback was used. The shared-script defect sits in lane `CLOUD_OPS_OR_ETL` (this seat is refused on the path) and is ROUTED to `1.0.0_SA_CTO` in the drain-end read, not touched here |
+| W1-S5 | OBSERVATION, ARMED | this seat | `infra/aws/lambda/ci/build-zip.sh:66` hardcodes `touch -t "202600010000"` (month 00) and fails rc=1 on every invocation, since `e046072434` (2026-02-19) | DISARMED FOR THIS ROUND at this seat: the project's deploying faces name `build-and-upload.sh`, which has ZERO callers of `build-zip.sh` in `infra/aws/lambda/ci/` (measured at HEAD; EG-s-1's deploy went through it); only TO-EG-s-12's face named `build-zip.sh` and its named fallback was used. The shared-script defect sits in lane `CLOUD_OPS_OR_ETL` (this seat is refused on the path) and is ROUTED to `1.0.0_SA_CTO` in the drain-end read, not touched here |
+| W2-S4 | OBSERVATION, ARMED | this seat | the port contract's bare-script battery (module-level `sys.exit()`) crashes pytest at collection (INTERNALERROR rc=3) whatever the arms say; EG-s-1 shipped real `def test_*` functions instead; inf's `test_catchup_scan.py` would hit this too once its KeyError is fixed | DISARMED @`2baa6af162` (EG-s-2's S2-AC1 names real test functions); the inf-battery half belongs with W2-S1 at the CVO |
+| W1-S6 | OBSERVATION, INERT (filed) -- RULED | this seat | `.tools/terraform.exe` (v1.9.8) is gitignored and absent in a fresh worker worktree; the worker used PATH `terraform` v1.14.5 for one plan | RULED @`2baa6af162`: the issuer provisions the binary into each worker worktree at hand-off (done for wk-1 and wk-2); the deploying faces forbid the PATH substitution. Measured at this seat 02:2xZ: the three remote states (cot-pipeline, etfs-reports, bd-pipeline) all still carry `terraform_version` 1.9.8 -- nothing was re-pinned; EG-s-1's apply went through 1.9.8 |
+| W1-S7 | BLOCKING, INERT (a stop) | -- | TO-EG-s-7's untargeted plan in `etfs-reports` reads `2 to change`: the order's `aws_iam_role_policy.reporter` AND a pre-existing `aws_instance.reporter` `user_data` drift (`e47b615c` -> `434774b5`), deferred as benign by NFRA_TERRAFORM-P2 @`1502fdd6f9` (2026-07-08); the worker refused the apply per its bound | RULED @`2baa6af162`: the drift is NOT this order's and is NOT applied (a `user_data` change on `aws_instance` is applied by the provider through a STOP and START of the reporter instance -- a confirm-with-Andrew class this seat does not take); EG-s-7, EG-s-8 and EG-s-9 plan, apply and 0-diff BY TARGET to the one resource each changes, the target stated in the ledger entry, the full plan's drift line recorded verbatim; the worker continued in place under the ruling. THE DRIFT ITSELF is ROUTED to `1.0.0_SA_CTO` in the drain-end read (whether to apply it is Andrew's, the instance being the renderer's host) |
 
 An ARMED standing on a row this seat has disarmed is the append-only channel's carrier lag; the disposition is the
-CVO's at L9 and the disarm's evidence is the commit named beside it. EG-s-4's branch carried no row.
+CVO's at L9 and the disarm's evidence is the commit named beside it.
 
-## 5. WHAT IS OPEN (eight orders), and the hand-off order the drain follows
+## 5. WHAT IS OPEN (seven orders), and the hand-off order the drain follows
 
-slot 1: EG-s-7 (HANDED 2026-09-05 ~01:1xZ, worktree re-created @`62cc386d94`; its two dependencies EG-s-4 and EG-s-12 terminal) -> EG-sb-7 -> EG-s-8 -> EG-s-9.
-slot 2: EG-s-1 (in flight since ~00:2xZ: the producer edited and the battery written on its branch at the last read) -> EG-s-2 -> EG-s-5 -> EG-s-6 (EG-s-6 last, the one renderer upload; its dependency EG-s-4 is now terminal).
+slot 1: EG-s-7 (IN PLACE under the W1-S7 ruling, branch @`0f80e6f7ed` + the targeted apply to come) -> EG-sb-7 -> EG-s-8 -> EG-s-9.
+slot 2: EG-s-2 (HANDED 2026-09-05 ~02:3xZ, worktree re-created @`a1a94a25f6`, the amended face @`2baa6af162` passed verbatim) -> EG-s-5 -> EG-s-6 (EG-s-6 last, the one renderer upload).
 slot 3: spent.
