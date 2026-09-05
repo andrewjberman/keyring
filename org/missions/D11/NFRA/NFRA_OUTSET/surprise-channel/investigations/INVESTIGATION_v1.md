@@ -1034,6 +1034,81 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "comp-heat's own module docstring: 'never writes to the repo or any store'; and this order's BOUNDS: 'No new dependency. No second implementation.'",
     "world_is": "The read-only claim is a DOCSTRING, not a control, and the --sql surface is exactly where a caller could contradict it. This worker did not build a guard, for two reasons stated rather than implied: (1) CLAUDE.md forbids implementing an approval gate on work Andrew did not ask for, and a statement-verb filter on a caller's own query is precisely that; (2) a keyword filter over arbitrary SQL is a FALSE sense of safety -- it would read as enforcement while being trivially evadable, which is worse than a documented gap. The cell asked for a BOUND on time and cost, and that is what was built.",
     "notes": "hazard_standing ARMED because the gap is reachable today by any caller with a budget at or above the 200 s floor. NOT CLAIMED, and deliberately not tested: that a write would actually SUCCEED. That depends on the Trino catalog configuration and the task role's IAM, neither of which this cell read, and establishing it would mean issuing a destructive statement against a live shared store -- which no criterion asks for and which NEVER-AUTO-DELETE and the estate's own hard stops forbid. The claim here is exactly and only that NOTHING IN THE TOOL CHECKS, which is a code read at a named commit."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S18",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:01:33Z",
+    "one_line": "CORRECTS W1-S12: my de-flake of OS-s-2's arm F was INCOMPLETE, and the falsifier I ran could not have caught what it missed. Arm F failed again in this cell's regression sweep -- this time on a GIT-SOURCED row, `.tools/deregister-all` 141.7 vs 141.71 -- because comp-heat publishes age_days as round(x, 2), so the value is QUANTISED to 0.01 d steps and the arm's tolerance WAS 0.01: two adjacent steps differ by exactly the tolerance and compare as greater in float. W1-S12 removed the mtime race and its falsifier churned an UNTRACKED file's mtime, which is a different mechanism on a different row class, so it was structurally incapable of firing on this one. Tolerance raised to 0.02 (two quanta) with the quantum named in the arm's own printed detail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the failing arm, this session, running OS-s-2's drained battery as a regression check on OS-s-10's code: 'OS2-PATH-GRAIN BATTERY: 9/10 PASS' rc=1, arm F detail '392 git-sourced (band+age compared) + 1 mtime-sourced ... age-diff(>0.01d)=1 [(.tools/deregister-all, 141.7, 141.71)] ; HEAD held during the arm (6dcd8c92eb)' -- note HEAD HELD, so this is not the contention mechanism W1-S12 fixed",
+        "the quantisation, in the producer: .tools/comp-heat@6dcd8c92eb emits '\"age_days\": round(s.age_days, 2)' in its JSON snapshot, so 0.01 d IS the representable step and a tolerance of 0.01 d is exactly one step -- 141.71 - 141.70 evaluates to 0.010000000000019 and trips a `> 0.01` test",
+        "WHY THE EARLIER FALSIFIER COULD NOT CATCH IT: W1-S12's control ran the battery while a background loop touched an UNTRACKED file every 0.3 s. That exercises the mtime-sourced class, which this fix had already moved OUT of the age comparison. The row that failed here is GIT-SOURCED, whose age comes from a commit timestamp and moves only by rounding. A control aimed at one mechanism is not evidence about the other",
+        "the fix and its check: tolerance raised to 0.02 with the reason in the code, and the printed detail now names it ('age-diff(>0.02d, 2 quanta of the tool's own 0.01d rounding)'); 3 of 3 consecutive runs 'OS2-PATH-GRAIN BATTERY: 10/10 PASS' rc=0",
+        "NOT A WIDENING THAT COSTS DISCRIMINATION: a real scoping regression moves an age by DAYS or drops the row from the key set entirely, and the key set is still compared EXACTLY over all 393 rows; 0.02 d is 28.8 minutes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W1-S12, my own row: 'FIXED without weakening ... the fix was falsified under the producing condition' -- and the issuer certified it on that evidence, running the same concurrent-write shape itself and getting 10/10.",
+    "world_is": "The fix was correct for the mechanism it addressed and the falsifier was honest about that mechanism. There was a SECOND, independent mechanism in the same arm -- a tolerance equal to the data's own quantisation -- which neither the fix nor its control touched, and which surfaced the first time the arm ran against a corner whose file count had grown. A certified fix is evidence about the failure it reproduced, not about the arm.",
+    "notes": "hazard_standing INERT: fixed and re-run 3 of 3 clean. Filed against MYSELF and against a row the issuer had already certified, because a correction is a census too and this one would otherwise read as 'arm F was fixed' when what is true is 'arm F had two flake mechanisms and each was found by a different accident'. Touching OS-s-2's battery again is admitted by OS-s-10's own <paths> (`.tools/tests/`) and by the issuer's standing instruction about that file; nothing else in that battery was changed."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S19",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:02:00Z",
+    "one_line": "THE REPORT RUNNER'S ROLE CANNOT READ ANY LOCATION A SEAM PRODUCER COULD PUBLISH TO. estate-report-runner-role's s3:GetObject is resource-scoped to exactly four things -- opal-estate-report/{daily/*, code/*, manifest/*} and the single exact key kuzu_nessie_db -- and it holds NOTHING on opal-313476888478-globgrph, where the estate's existing served/ artifacts live. So OS-s-10's seam works end to end in code and cannot be turned on in production without an iam.tf change, which this order's <paths> does not name. NOT BLOCKING: O10-AC1 and O10-AC2 are both satisfiable without it, and were.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route -- infra/aws/terraform/estate-report/iam.tf is a CloudOps surface (the PRD re-homes a row touching a cloud principal to 0.7.0_AE_CloudOps) and OS-s-6 is the project's IAM audit cell. One added resource line is the whole ask",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "APPLIED PLANE, read live 2026-09-05 with iam:GetRolePolicy (not inferred from Terraform): role estate-report-runner-role, inline policy estate-report-runner, Sid ReadPredecessorAndOwnCode, Action s3:GetObject, Resource = ['arn:aws:s3:::opal-estate-report/daily/*', '.../code/*', '.../manifest/*', 'arn:aws:s3:::opal-estate-report/kuzu_nessie_db'] -- four entries, no seam prefix, nothing on the globgrph bucket",
+        "DESIRED PLANE agrees: infra/aws/terraform/estate-report/iam.tf@6dcd8c92eb:156-186 carries the same four resources. DESIRED and APPLIED are read separately here because they are two different claims",
+        "the file itself already names this exact trap, verbatim at that Sid: 'THE EXISTING GRANT ABOVE IS PREFIX-SCOPED TO daily/* AND code/*, so WITHOUT THIS LINE a root-level GetObject is AccessDenied ... comp-iam models (action), never (action, resource), so an action-level check would have reported this GRANTED'",
+        "and it names the SHAPE of the fix: kuzu_nessie_db is granted as an EXACT KEY with the reason 'a `/*` here would silently grant every future root object as well' -- so an outset seam wants either one exact key per artifact or a dedicated prefix, decided by whoever owns that file",
+        "measured consequence, and it is why this is ARMED rather than merely noted: with no grant, ESTATE_OUTSET_SEAM_PREFIX must stay unset, and with it unset the propagation stratum keeps reading INSTRUMENT_UNAVAILABLE every day -- which is exactly the claim PRD s.7's OS-s-10 row was cut to end"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-10's accept: 'one artifact per outset tool with answer state, vintage and denominators; the runner reads it; a failed publish reads FAILED, never absent', with a <paths> block naming .tools/comp-heat, org/modules/heatmap/, the runner .py, .tools/tests/, the deliverables folder, the investigation file and the 06 pair.",
+    "world_is": "The seam's code is complete and demonstrated on real bytes, but the production wire needs one line in a file this order does not grant. Deliberately handled by DEFAULTING THE SEAM OFF rather than by pointing it somewhere it cannot read: ESTATE_OUTSET_SEAM_PREFIX is unset by default, so the runner's behaviour in production is byte-unchanged until both a producer cadence and this grant land, and the code says so at the point a reader would otherwise assume it was live.",
+    "notes": "hazard_standing ARMED because a future seat could wire ESTATE_OUTSET_SEAM_PREFIX at a globgrph path, see it work from an agent's own credentials, and ship a stratum that reads INSTRUMENT_FAILED every day on the actual host -- an AccessDenied is indistinguishable from an absent publish in the reader's own vocabulary, by design. NOT filed as BLOCKING: no criterion of this order is stopped by it, and a blocking row on a criterion that passes is a false stop (the same call as W1-S16)."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S20",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:02:30Z",
+    "one_line": "PRD s.3's FALSIFIER, MEASURED AND SPLIT IN TWO -- and as literally stated it DOES NOT FIRE. The 09:00 window is real and scheduled (EventBridge Scheduler `estate-report-0900et`, cron(0 9 * * ? *) tz=America/New_York, ENABLED). The artifact-on-a-cadence pattern is real and FRESH: served/comp_learns_status.json, a COMP-TOOL status artifact, was written at 2026-09-05T04:01:03Z, 0.18 d old at read time, on its own cron(0 4 * * ? *) -- about 9 h of margin before the window. So the seam's cadence machinery demonstrably holds FOR A TOOL WHOSE INPUTS ARE CLOUD-REACHABLE. It does NOT hold for a GIT-HISTORY-SHAPED tool: there is no such producer, 0 of 142 EventBridge rules fire one, and the estate's one git-history-shaped artifact (code_heat) has been frozen 51 days. comp-heat's freshness and drift are git-history-shaped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- this is a CUT-LEVEL question, not a worker act: no cell among the 17 in the PRD s.7 manifest owns PRODUCING or SCHEDULING the artifacts, and PRD s.5 does not place it out of scope either. Whether that is a scope change at L2 or a missing cell is the issuer's call and the CVO's to grade",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WINDOW, live: EventBridge Scheduler, 18 schedules total, 2 name-matching estate|report; `estate-report-0900et` cron(0 9 * * ? *) tz=America/New_York ENABLED, target arn:aws:lambda:us-east-1:313476888478:function:estate-report-orchestrator. The runner's own code agrees (estate_report_runner.py:63-64, ESTATE_SCHEDULE_HOUR_LOCAL default 9, ESTATE_SCHEDULE_TZ default America/New_York)",
+        "THE CADENCE THAT HOLDS, live: EventBridge rules, DENOMINATOR 142, 4 name-matching; three nightly Fargate producers on cluster opal-globgrph -- opal-globgrph-derive-runner-nightly cron(0 2 * * ? *), opal-globgrph-comp-learns-producer-nightly cron(0 4 * * ? *), opal-globgrph-fedobs-producer-nightly cron(30 4 * * ? *), all ENABLED",
+        "AND ITS ARTIFACT IS ACTUALLY FRESH, which is the part that distinguishes a schedule from a working cadence: s3 list of s3://opal-313476888478-globgrph/served/ returned DENOMINATOR 1 object, comp_learns_status.json, 25776 B, LastModified 2026-09-05T04:01:03Z, age 0.18 d at a read time of 2026-09-05T08:22:27Z -- matching its cron to the minute. That producer's own source (infra/aws/globgrph/comp_learns_produce.py@6dcd8c92eb) reads the LIVE Trino federation, i.e. its inputs are cloud-reachable",
+        "THE ARM THAT DOES NOT HOLD: comp-heat's freshness and drift are git-history-shaped -- org/modules/heatmap/object_freshness.py@6dcd8c92eb shells `git ls-files`, `git log --name-only` and `git status --porcelain` against a CHECKED-OUT workspace with full history. The estate has already ruled on that shape once: infra/aws/terraform/globgrph/item2a.tf:404-409, CTO revert 2026-07-16, verbatim in part 'code_heat is git-history-shaped (shells git -C against workspace+portal repos), so the container flag gated an import that can NEVER resolve in the Fargate derive ... code_heat now runs on DEV-BOX CADENCE (option a)'",
+        "AND WHAT DEV-BOX CADENCE DELIVERED, cited from 0.7.0_AE_CloudOps~W on OS-s-7 and NOT re-derived here: 0 of 142 EventBridge rules fire the code_heat producer, Glue Owner null, last write 2026-07-16T03:40:46Z -- 50.7 days at their read, 51.1 days at the OS-s-4 read. 'DEV-BOX CADENCE' is not a cadence; it is whenever a human runs it",
+        "THE UNCOVERED MEMBER, hunted rather than assumed (TAXONOMY LAW i): reading all 17 rows of PRD s.7's manifest, OS-s-10's accept is 'one artifact per outset tool ... the runner reads it', i.e. the SHAPE and the READ. No row says produce, schedule or own the publisher. PRD s.5's out-of-scope list names the report runner's own infrastructure but not a producer for the outset tools. So the cost PRD s.3 itself declares -- 'a publishing step and a freshness question per artifact' -- has an owner for the freshness question (this cell, built) and NO owner for the publishing step"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD s.3: 'What would falsify the choice: if the artifacts cannot be produced on a cadence the 09:00 window can rely on, the seam is wrong and the decision re-enters at L2 as a scope change.' TO-OS-s-10's O10-AC2 restates it: 'if the artifacts cannot be produced on a cadence the 09:00 window can rely on ... file a BLOCKING row saying so and STOP this criterion.'",
+    "world_is": "A one-armed question with a two-armed answer. The cadence machinery exists, is enabled, has ~9 h of margin before the window, and its artifact is measurably fresh today -- for a cloud-reachable tool. For a git-history-shaped tool no producer exists at all, and the estate has a 51-day demonstration of what the only available alternative delivers. I did NOT file the falsifier's BLOCKING row, because 'cannot be produced' is not what I measured: I measured 'is not produced, and nobody owns producing it'. Inflating that into an impossibility would be as wrong as softening it, and this criterion is judgment=true precisely so the call is not mine.",
+    "notes": "hazard_standing ARMED on the unowned publishing step, not on the seam's shape. NOT CLAIMED: that a Fargate producer for a git-history-shaped tool is impossible -- the report runner itself clones the repo, so a purpose-built producer that clones WITH history is conceivable; I did not build or cost one, because task definitions, images, EventBridge rules and IAM are all outside this order's <paths>. NO VERDICT is written here or in the proof-of-spec: O10-AC2 is judgment=true and 3.0.0_SA_CVO grades it at L9."
   }
 ]
 ```

@@ -204,19 +204,33 @@ def _run_battery() -> None:                                                # noq
         mtime_rows = sorted(shared - set(git_rows))
         band_diff = [(k, scoped[k]["band"], unscoped[k]["band"]) for k in git_rows
                      if scoped[k]["band"] != unscoped[k]["band"]]
+        # WARN: THE TOLERANCE MUST EXCEED THE QUANTISATION, AND 0.01 DID NOT.
+        # comp-heat publishes age_days as `round(age_days, 2)`, so the value is quantised to 0.01 d
+        # steps. Two runs seconds apart can land on adjacent steps -- 141.70 and 141.71 -- whose
+        # difference IS the tolerance, and float representation makes it compare as GREATER. That
+        # is a boundary artifact, not a divergence, and it fired here on 2026-09-05 for
+        # '.tools/deregister-all' (141.7 vs 141.71) on a GIT-SOURCED row.
+        # The earlier de-flake (NFRA_OUTSET-W1-S12) removed the mtime race and its falsifier
+        # exercised exactly that -- churning an UNTRACKED file's mtime -- so it could not have
+        # caught this second, independent mechanism on a TRACKED row. Recorded as
+        # NFRA_OUTSET-W1-S18 rather than quietly widened.
+        # TWO quanta, so a real divergence (a scoping regression moves a value by DAYS or drops the
+        # row from the key set entirely) still fails while an adjacent-step rounding does not.
+        AGE_TOLERANCE_D = 0.02
         age_diff = [(k, scoped[k]["age_days"], unscoped[k]["age_days"]) for k in git_rows
-                    if abs(scoped[k]["age_days"] - unscoped[k]["age_days"]) > 0.01]
+                    if abs(scoped[k]["age_days"] - unscoped[k]["age_days"]) > AGE_TOLERANCE_D]
         ok_f = not key_diff and not band_diff and not age_diff and len(scoped) > 0
         head_after = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True,
                                     capture_output=True, timeout=60).stdout.strip()
         parity_detail = (
             "compared %d scoped vs %d unscoped-filtered rows; %d git-sourced (band+age compared) "
             "+ %d mtime-sourced (membership only -- their age is a live filesystem clock): "
-            "key-diff=%d %s band-diff=%d %s age-diff(>0.01d)=%d %s ; HEAD %s during the arm (%s)"
+            "key-diff=%d %s band-diff=%d %s age-diff(>%.2fd, 2 quanta of the tool's own 0.01d "
+            "rounding)=%d %s ; HEAD %s during the arm (%s)"
             % (len(scoped), len(unscoped), len(git_rows), len(mtime_rows),
                len(key_diff), key_diff[:3],
                len(band_diff), band_diff[:3],
-               len(age_diff), age_diff[:3],
+               AGE_TOLERANCE_D, len(age_diff), age_diff[:3],
                "held" if head_before == head_after else "MOVED",
                head_before[:10] if head_before == head_after
                else "%s -> %s" % (head_before[:10], head_after[:10])))
