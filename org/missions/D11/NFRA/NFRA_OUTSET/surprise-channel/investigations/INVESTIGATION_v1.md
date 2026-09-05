@@ -6,7 +6,7 @@ that sees a divergence appends its own row and keeps working (CLAUDE.md s.2).
 **First appends:** worker `0.9.0_WK_NFRA_OUTSET~1` on `NFRA_OUTSET.TO-OS-s-1` (Rule T budget wiring across
 `.tools/comp-heat`'s five subcommands). This file did not exist before this worker's write; created here.
 
-## What this worker measured, filed as seven rows below
+## What this worker measured, filed as nine rows below
 
 - **S1** -- `O1-AC2`'s own `<expect>` ("WITHIN BUDGET" at `freshness .tools --budget 5`) is contradicted by a
   reproducible, measured runtime: the underlying engine (`org/modules/heatmap/object_freshness.py`) always scans
@@ -45,6 +45,24 @@ that sees a divergence appends its own row and keeps working (CLAUDE.md s.2).
   never `BUDGET REACHED`. The behavior is OS-file-cache-dependent, not a code difference: S1's root-cause finding
   (no path-scoped git call; every freshness call pays the whole-repo cost, OS-s-2's own open cell) stays TRUE and
   ARMED; its FAIL verdict for O1-AC2 is corrected to PASS on this worker's proof-of-spec instance, citing this row.
+- **S7** -- with all six acceptance criteria PASS/RECORDED, this order's own `<paths>` block did not name the
+  `task-orders/` folder the TO file lives in, so this worker read that as blocking its own `<status>` flip
+  regardless of acceptance outcome. **CORRECTED BY S9 BELOW** -- the `<paths>` block was never the controlling
+  grant for this specific action; the mechanical lane gate (`.owned-paths.yaml`) already reads `task-orders/**`
+  as lane `ANY` for exactly this case.
+- **S8** -- the issuer amended `O1-AC2` at `ddff1d8eeb` (raising `--budget 5` -> `--budget 60`, repairing the
+  cache-flaky criterion S1/S6 measured). Re-measured against the amended invocation: 5 of 5 consecutive runs
+  print `WITHIN BUDGET` (3.0-6.3s), comfortably inside the new 60s ceiling and more than 5x the worst cold-cache
+  cost S1 measured (11.7s) -- this criterion no longer depends on cache state to pass. S1/S6's root-cause finding
+  (no path-scoped git call, OS-s-2's own open cell) is unchanged and still governs any caller who passes a budget
+  close to the measured floor.
+- **S9** -- CORRECTS S7: `.owned-paths.yaml:914` (`org/missions/*/*/*/task-orders/**` -> lane `ANY`, widened
+  2026-09-03 by LD-0521 Amendment 2, Andrew-direct `@a4c9b25b4c`) names this EXACT scenario verbatim -- "a
+  worker's own `<status>` flip on a TO it holds" -- as the loose end the widening retires. S7 read the TO's own
+  `<paths>` prose block as the sole write grant without checking the mechanical lane gate that actually governs
+  a commit's permission; that gate already permits this worker to modify (not create) its own task order file.
+  S7's underlying textual observation stands (the TO's own `<paths>` block omits `task-orders/`); its conclusion
+  that the flip is blocked does not.
 
 ```json
 [
@@ -207,6 +225,51 @@ that sees a divergence appends its own row and keeps working (CLAUDE.md s.2).
     "spec_asserts": "The issuing worker prompt's PROOF AND COMPLETION section: 'Flip to complete ONLY when every MECHANICAL criterion PASSES, and commit the instance, deliverables and flip together.'",
     "world_is": "Every mechanical criterion passes, but this specific order's own <paths> grant excludes the folder the flip target lives in. A worker's write grant is read from the order's own <paths> block (RULING 1 cited in this TO's <preflight>); this worker does not widen it to perform the flip.",
     "notes": "Not filed as BLOCKING: no acceptance criterion is stopped by this (all six already have full evidence and gradings); it blocks only the RECORD-KEEPING flip action described outside the acceptance section. Left for whichever seat holds write access to org/missions/D11/NFRA/NFRA_OUTSET/task-orders/ (issuer 2.0.0_SA_COO, or the CVO at L9) to flip the <status> field once this report and the VALID proof instance are read. hazard_standing INERT: an unflipped-but-complete TO is a record-freshness lag, not an operational hazard -- the work itself is committed, valid, and this worker's final report states the true completion state plainly."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S8",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T00:20:00Z",
+    "one_line": "The issuer amended O1-AC2 at ddff1d8eeb, raising --budget 5 -> --budget 60 to repair the cache-flaky criterion S1/S6 measured. Re-run against the amended invocation: 5 of 5 consecutive runs print WITHIN BUDGET (3.0-6.3s, rc=0), more than 5x under the worst cold-cache cost S1 measured (11.7s) -- the criterion no longer depends on cache warmth to pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.8.0_AE_CloudComp (OS-s-2 assignee, NFRA_OUTSET_PRD.md s.7 row OS-s-2, depends_on OS-s-1)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-1.rule-t-budget-across-comp-heat.md@ddff1d8eeb, O1-AC2 block, verbatim on the repair: 'The budget was 5, and 5 DEMANDED A RESULT THE HONEST IMPLEMENTATION CANNOT PRODUCE ... A correctly-wired 5 s ceiling therefore reaches BUDGET REACHED on every attempt, and the only way to pass the criterion as written was to wire the budget DISHONESTLY ... Raised to 60, which clears the measured floor with margin'",
+        "this worker, this session, 5 consecutive `timeout 30 .tools/comp-heat freshness .tools --budget 60` runs: 'WITHIN BUDGET: scanned 30275 of 30275 files; budget: 60 s (flag), used' 6.343s, 3.281s, 3.016s, 3.938s, 3.407s -- rc=0 every time, 5 of 5",
+        "NFRA_OUTSET-W1-S1's own cold-cache worst measurement (this same channel): 11.72s -- the amended 60s ceiling clears it by >5x, versus the original 5s ceiling which the same measurement exceeded outright"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "O1-AC2 (amended, ddff1d8eeb): a completing run prints WITHIN BUDGET with scanned n of N, at --budget 60.",
+    "world_is": "The amended invocation passes robustly and repeatedly, independent of the OS file-cache state S1/S6 found the original --budget 5 criterion sensitive to. This worker updates the proof-of-spec instance's O1-AC2 row to grade against the amended invocation, citing this row; S1's and S6's measurements are preserved in full as history, not deleted, because the underlying engine characteristic they found (no path-scoped git call, OS-s-2's own open cell) is unchanged and would still make a tight caller-supplied budget (close to the measured 6-12s floor) cache-dependent.",
+    "notes": "hazard_standing ARMED, same disarm_owner as S1/S6 (unchanged): this row does not close the underlying hazard, it records that the issuer's own repair of the CRITERION (not the engine) removes this order's exposure to it. Class OBSERVATION: the amendment and the re-measurement are both facts, not a judgment call by this worker."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S9",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T00:25:00Z",
+    "one_line": "CORRECTS S7: S7 concluded this worker could not flip its own TO's <status> because the TO's own <paths> block omits task-orders/. The mechanical lane gate that actually governs a commit (.owned-paths.yaml) already reads org/missions/*/*/*/task-orders/** as lane ANY, and its own note names this EXACT scenario ('a worker's own <status> flip on a TO it holds') as the case the 2026-09-03 widening retires. S7 checked the TO's own prose, not the gate; the flip is not blocked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".owned-paths.yaml:914-916 (this worktree, HEAD): `org/missions/*/*/*/task-orders/**: lane: ANY`, note verbatim in part: 'WIDENED TREE_COO -> ANY 2026-09-03 ~04:0xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR on Andrew-direct at the 0.0.0_AB_MSTR terminal ~03:5xZ (record @a4c9b25b4c, LD-0521 A2) ... THE LOOSE END THIS RETIRES: a worker's own <status> flip on a TO it holds sat in the worktree because this lane refused the worker ... THE GATES ARE THE CONTROL, not the lane'",
+        "org/tier0/ledger/LD-0521.md, AMENDMENT 2 (2026-09-03 ~03:5xZ), verbatim: Andrew-direct 'worker agents should be able to commit freely to the directives folder path as thats where their work is', ruled on 0.8.0_AE_CloudComp's report that its own task order's status flip sat in a directory it may not commit to; 'the worker's status flip is the worker's own commit; the controls on the tree paths are the gates ... not the lane'",
+        "org/tier0/ledger/LD-0521.md, AMENDMENT 3 (2026-09-03 ~04:0xZ): confirms the widening is for MODIFICATION of an existing task order (the worker's status flip); a NEW task order commit is the only thing still gated to 2.0.0_SA_COO's identity"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7 (this same channel, same worker): 'this worker does not widen it to perform the flip' -- treating the TO's own <paths> block as the complete and controlling write grant for every action, including the status flip.",
+    "world_is": "The TO's own <paths> block is the grant for the SUBSTANTIVE work; the fabric-wide mechanical lane gate (.owned-paths.yaml, enforced by safe-commit.sh's owned-paths hook) separately and explicitly grants ANY worker permission to modify (not create) its own project's task-orders/** file, specifically so the status flip is not stranded the way it was before LD-0521 Amendment 2. S7's textual observation (the TO's own <paths> block omits task-orders/) is unchanged and true; its conclusion (therefore the flip is blocked) was reached without checking the gate that actually decides it.",
+    "notes": "hazard_standing INERT: no operational hazard, a corrected reading. S7's disposition is UNCHANGED (append-only; this row is the correction carrier), consistent with how S6 corrected S1. NOT ACTED ON: the issuer (2.0.0_SA_COO) directed this worker mid-session, explicitly and after this row was drafted, NOT to flip <status> and to reserve the flip for itself at the drain -- a management decision this worker follows regardless of what this row finds about the mechanical gate's own permission. This row states what the gate allows; it does not by itself authorize this worker to act against the issuer's own explicit instruction on its own order."
   }
 ]
 ```
