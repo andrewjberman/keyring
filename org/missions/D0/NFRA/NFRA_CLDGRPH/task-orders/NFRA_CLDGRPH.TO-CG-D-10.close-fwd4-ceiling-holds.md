@@ -48,8 +48,44 @@
 <criterion id="D10-AC2" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(ANSWERS_IN_CYCLE|SWAPS_IN_CYCLE|NIGHTLY_SWAP_AT)='</invocation><expect>ANSWERS_IN_CYCLE=[1-9][0-9]*[\s\S]*SWAPS_IN_CYCLE=[1-9][0-9]*[\s\S]*NIGHTLY_SWAP_AT=20[0-9]{2}-[0-9]{2}-[0-9]{2}T0[2-3]:</expect></criterion>
 `D10-AC2` -- THE CYCLE IS REAL: at least one answer and one swap on the log, and the nightly's swap inside the window at 02:xx-03:xxZ (the denominators).
 
-<criterion id="D10-AC3" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(HANDS_OFF_RUNTASK|WRITERS_IN_CYCLE)='</invocation><expect>HANDS_OFF_RUNTASK=0 of [0-9]+[\s\S]*WRITERS_IN_CYCLE=\{?('?(derive_runner|incremental_updater)'?,? ?)+\}?$</expect></criterion>
-`D10-AC3` -- NOBODY ENFORCED IT BY HAND: zero non-Pipe/non-scheduler RunTasks; every vintage in the cycle written by a producer, never a seat.
+<criterion id="D10-AC3" cell_refs="CG-x-4"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~1/cycle.sh | grep -E '^(HAND_ENFORCED_CEILING|HANDS_OFF_RUNTASK|WRITERS_IN_CYCLE)='</invocation><expect>HAND_ENFORCED_CEILING=0 of [0-9]+[\s\S]*HANDS_OFF_RUNTASK=[0-9]+ of [0-9]+[\s\S]*WRITERS_IN_CYCLE=</expect></criterion>
+`D10-AC3` -- **NOBODY ENFORCED THE CEILING BY HAND.** AMENDED 2026-09-05 ~16:4xZ by the issuer on
+`1.0.0_SA_CTO`'s RULING @`9f4a57262f` (msg 94405), which adopted this seat's rec. **Scope: D10-AC3
+ONLY.** FWD-4 is not amended, CG-x-4 is not amended, D10-AC1/AC2/AC4/AC5 are untouched, and there are
+FIVE criteria before and after.
+
+> **WHY, in the ruling's own four steps.** (1) **The cell already says causal** -- CG-x-4 reads
+> *"nobody enforcing the ceiling BY HAND"* and this criterion's own prose read *"never a seat"*, so
+> the `<expect>` encoded PROXIES for the sentence directly above it: the proxy was the outlier inside
+> its own cell. (2) **Limb A convicted the round for being worked** -- of its 3 hits in 61 events, one
+> was `startedBy wk-cldgrph-1-cgs15`, THIS ROUND'S OWN worker slot 1 exercising CG-s-15, a
+> digest-pinned rebuild for a DIFFERENT cell and not ceiling enforcement; and it was unsatisfiable by
+> any window at that HEAD, the latest hand RunTask being 2026-09-04T21:18:53Z. (3) **Limb B was a
+> closed list over an open set** -- three writers where it named two, the third
+> `cse_producers_nightly`, a chronos-scheduled producer, so the clause the enumeration CARRIES was true
+> of all three while the enumeration was not. (4) **Waiting fixes half** -- limb B's producer is in
+> every cycle.
+>
+> ⛔ **THE RE-CUT MOVES THE READING, NEVER THE EVIDENCE, AND IT MUST NOT HIDE THE SUBSTANCE.** Pass 1
+> measured the ceiling holding at **20.8% of budget** (oldest served 18,138.643 s against 87,191.260
+> s), **261 of 261** answers placed, **0 unplaced of 3,151** http lines, zero refusals, the can-fail
+> control **3 of 3**. None of that is in question and none of it is re-opened by this amendment.
+>
+> **WHAT TO MEASURE NOW.** `HAND_ENFORCED_CEILING=<n> of <N>` -- over every hand-started task in the
+> cycle (`<N>` printed as the denominator), the count `<n>` whose EFFECT was to make a served answer
+> fresher than the schedule alone would have made it. A hand-started task that rebuilt something else,
+> or that served nothing, **does not enforce the ceiling and does not void the arm.** Read the effect
+> from the task and the artifact it produced, never from the fact that a hand started it.
+>
+> ⛔ **AND PRINT BOTH OLD NUMBERS BESIDE IT, UNCHANGED** -- `HANDS_OFF_RUNTASK=<n> of <N>` and the FULL
+> `WRITERS_IN_CYCLE=` set with every member named. They are no longer the bar; they are still the
+> evidence, and the ruling requires that no number the failing instrument measured is lost. **Keep the
+> per-row labels and the label-vs-denominator agreement control** that made pass 1's 61-event census
+> readable (`PIPE 54 / EVENTS_RULE 3 / CHRONOS 1 / HAND 3`, summing to 61).
+>
+> **A CRITERION THAT FAILS BECAUSE THE WORK IS WRONG IS NEVER IN THIS CLASS.** This one failed because
+> the instrument named the wrong thing while the property held; if the property itself fails, this arm
+> FAILS honestly and the order stays open.
 
 <criterion id="D10-AC4" cell_refs="CG-x-4"><invocation>python -m pytest infra/aws/globgrph/tests/test_projection_server.py -q -k "backward or refus"</invocation><expect>[1-9][0-9]* passed</expect></criterion>
 `D10-AC4` -- THE CONTROL: a planted stale/backward artifact is NOT served (the reader's own seam, re-run at your HEAD).
