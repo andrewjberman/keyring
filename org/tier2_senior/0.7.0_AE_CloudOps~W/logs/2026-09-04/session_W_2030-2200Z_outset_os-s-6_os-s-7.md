@@ -10,6 +10,11 @@
 
 ## Current State
 
+> ⚠ **SUPERSEDED BY THE ROUND 2 DELTA AT THE FOOT OF THIS FILE.** Everything below was true at
+> 2026-09-04 22:00Z and is left unedited as the round-1 record. As of 2026-09-05 ~01:0xZ **both orders
+> are complete**: the issuer amended `O6-AC1` at `8d13fc6b80`, the re-run passes, and `TO-OS-s-6` is
+> flipped. Read the delta before acting on any "Blockers" or "Next Steps" line here.
+
 Both orders executed to their acceptance clauses. `TO-OS-s-7` is complete and flipped. `TO-OS-s-6` is
 executed but **NOT flipped**: its only mechanical criterion cannot pass as cut, which is a CUT DEFECT
 belonging to the issuer, filed as `NFRA_OUTSET-S1` and reported rather than worked around.
@@ -108,3 +113,56 @@ join refreshes nightly.
 **AE role minimums -- truthful non-application.** `comp-pipescript deployed` / `postdeps`: N/A, no gold
 run was triggered. `comp-iam gaps`: N/A, no `iam.tf` was changed. `comp-blast`: N/A, no infra change --
 both orders are READ-ONLY audits and nothing on AWS was created, modified or deleted.
+
+
+---
+
+# Round 2 delta -- 2026-09-05 00:50-01:10Z: OS-s-6 re-armed and CLOSED
+
+**archetype:** VALIDATE
+
+The issuer repaired BOTH cut defects at `8d13fc6b80` and re-armed `TO-OS-s-6` (msg 94322, READ-acked).
+`TO-OS-s-7` was certified as ISSUER and CLOSED -- no act for this lane.
+
+**What I did, and only this.** The re-arm was explicit that `O6-AC2`/`O6-AC3` were NOT to be re-run --
+both are executed, evidenced and accepted, and re-running the census would only re-date a sound reading.
+So the act was exactly one criterion:
+
+1. Verified the amendment was in lineage BEFORE relying on it -- `git merge-base --is-ancestor
+   8d13fc6b80 HEAD` -> rc=0 -- and re-read the criterion from HEAD with `git show`, not from the
+   worktree (reading it by path would have read my own checkout and fabricated the vintage).
+2. Re-ran `O6-AC1`: `comp-iam --help` -> **rc=0, 1 match for `usage`, PASS**, rc captured before any pipe.
+3. Determinism: two same-input repeats, both rc=0, both `md5=534a89df4a440cd8`.
+4. **Negative control, which is the part that makes the PASS mean anything:** the superseded cut form
+   `python .tools/comp-iam --help` STILL fails at the same moment (rc=1, 0 matches). Without it, a green
+   here is equally consistent with the environment having drifted, and would not show the amendment is
+   what fixed it.
+5. Flipped `TO-OS-s-6` to `complete`; proof re-validated **VALID (rc=0), violations=0**.
+
+**Rows.** Appended `NFRA_OUTSET-S5` -- a DISARM ACK on S1 and S4, measured here rather than accepted from
+the issuer's report. It grades nothing and writes no disposition on either row (append-only; the CVO
+grades at L9); it exists because S1 named this exact re-run as its own closing condition, and a closing
+condition with no recorded outcome leaves an ARMED row looking live forever. `S2` and `S3` stay ARMED and
+are routed out of this lane -- `S2` to `0.8.0_AE_CloudComp` as comp-rail owner, `S3` to the trap catalogue.
+
+**A third error of my own, and it is the same shape as the other two.** In msg 94310 I reported that 16 of
+17 faces carried the short-stem defect and that "the other 15" remained for the issuer. The census was
+right; the arithmetic was not. Repairing `OS-s-7`'s *instance* did not repair `OS-s-7`'s *face*, whose
+prose still named the short stem -- so 16 faces needed amendment, not 15. That is the same class as the
+two errors already logged above: **fixing the artifact and assuming the record pointing at it moved too.**
+Nobody else would have audited that number, which is exactly why it is written into `S5` rather than left
+in a superseded message.
+
+## Compiler Tools -- round 2
+
+| tool | invocation | result |
+|---|---|---|
+| `git` (lineage) | `git merge-base --is-ancestor 8d13fc6b80 HEAD` | rc=0 -- amendment confirmed in lineage at HEAD `7cf450942b` before any reliance on it. |
+| `git show` | `git show HEAD:<OS-s-6 face>` | Line 27 reads the amended criterion; the proof path now reads the FULL stem, matching the committed instance. Read from HEAD, not by path. |
+| `comp-iam` | `comp-iam --help` | rc=0, 1 match for `usage`. **`O6-AC1` PASS.** Two repeats identical (md5 534a89df4a440cd8). |
+| `comp-iam` (negative control) | `python .tools/comp-iam --help` | rc=1, 0 matches -- the superseded form still fails, so the PASS is the amendment and not drift. |
+| `proof-of-spec-check` | `<instance> O6-AC1,O6-AC2,O6-AC3` | **VALID (rc=0)**, violations=0; 5 surprise entries, 5 resolving to channel rows. |
+| `jsonschema` | 5 rows vs `investigation_item.schema.json` | 5/5 SCHEMA VALID. |
+
+**AE role minimums -- truthful non-application, unchanged:** no gold run, no `iam.tf` change, no infra
+change. Round 2 touched no AWS surface at all -- it was one local tool invocation, two controls and a flip.

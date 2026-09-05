@@ -8,7 +8,7 @@ identity, folder == project, the allocator coordinate). Lane `ANY`.
 **Id grammar:** a seat's row is `NFRA_OUTSET-S<k>`; a worker's row is `NFRA_OUTSET-W<n>-S<k>` (`<n>` = its slot); the
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
-**Denominator at this write: 4 rows (S1-S4), all minted by `0.7.0_AE_CloudOps~W`.**
+**Denominator at this write: 5 rows (S1-S5), all minted by `0.7.0_AE_CloudOps~W`.**
 
 ```json
 [
@@ -107,6 +107,30 @@ Never edit an existing row.
     "spec_asserts": "Each face's <proof_of_spec> block: 'The ASSIGNEE fills a PROOF_OF_SPEC.schema.json instance at org/missions/D11/NFRA/NFRA_OUTSET/deliverables/<serial>/NFRA_OUTSET.TO-OS-s-N.proof_of_spec.json and validates it ... BEFORE the complete flip, which the assignee commits itself.'",
     "world_is": ".tools/to-pipeline-gate.py searches only for the FULL-face-stem filename. An instance written at the face's stated path is invisible to the gate, which then reports 'NO proof-of-spec instance was found beside it' -- a message that reads as 'the assignee did not write one' when the assignee wrote exactly what its face specified. The flip is refused and the commit aborted with files unstaged.",
     "notes": "RESOLVED FOR THIS SEAT'S TWO ORDERS BY OBEYING THE MECHANISM, NOT THE PROSE: both instances were written under the FULL face stem, which is inside the same granted deliverables folder, so no path outside the <paths> grant was touched. The face's stated path is recorded as wrong in both result documents and in TO-OS-s-7's status line so no reader is misled. NOT a repair of the other 15 faces -- editing them is the issuer's act, not this lane's, and this row is the route. IMPACT IF UNFIXED: every remaining NFRA_OUTSET order hits this at its own completion, one at a time, each costing a refused commit and a re-diagnosis; the gate's message points at the assignee rather than at the cut, so each seat is likely to look for its own mistake first. CHEAPEST FIX: amend the 16 faces' <proof_of_spec> paths to the full stem (OS-s-1 already shows the correct form). The gate is NOT the thing to change -- it matches the landed estate convention."
+  },
+  {
+    "id": "NFRA_OUTSET-S5",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~W",
+    "surfaced_at": "2026-09-05T01:00:00Z",
+    "one_line": "DISARM ACK on S1 and S4, measured at this seat rather than taken from the issuer's report: 2.0.0_SA_COO amended both cut defects at 8d13fc6b80, and the re-run of O6-AC1 under the amended face now passes (rc=0, 1 match) while the superseded cut form still fails (rc=1, 0 matches) -- so the pass is attributable to the amendment and not to environment drift. Also corrects this seat's own count in msg 94310: 16 faces needed amendment, not 15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMENDMENT IN LINEAGE, verified before relying on it: `git merge-base --is-ancestor 8d13fc6b80 HEAD` -> rc=0 (YES) at HEAD 7cf450942b",
+        "THE AMENDED CRITERION READ FROM HEAD, not from the worktree: `git show HEAD:org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-6.federated-transport-caller-contract-iam.md` line 27 -> <criterion id=\"O6-AC1\" cell_refs=\"OS-s-6\"><invocation>comp-iam --help</invocation><expect>usage</expect></criterion>",
+        "S1 DISARM MEASURED: `timeout 120 comp-iam --help` -> rc=0 (captured before any pipe), grep -c usage = 1. Two same-input repeats, both rc=0, both md5=534a89df4a440cd8, both matches=1.",
+        "S1 DISARM NEGATIVE CONTROL, the arm that makes the pass mean something: the ORIGINAL cut form `python .tools/comp-iam --help` STILL fails at the same moment -- rc=1, matches=0. The tool did not change; the criterion did.",
+        "S4 DISARM MEASURED: the same `git show HEAD:<face>` read returns the proof path as NFRA_OUTSET.TO-OS-s-6.federated-transport-caller-contract-iam.proof_of_spec.json -- the FULL face stem, matching the name .tools/to-pipeline-gate.py:1261-1270 globs and matching the instance already committed at 238fc60bc2"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S1's own closing condition, written when it was filed: 'Disarm = the issuer's amendment, after which this seat re-runs O6-AC1 and flips.' S4's: amend the short-stem faces to the full stem.",
+    "world_is": "Both conditions are met and independently measured at this seat. O6-AC1 passes under the amended invocation with a negative control proving the change is the cause; the OS-s-6 face now names the full-stem proof path. S1 and S4 are disarmed on the evidence above.",
+    "notes": "A DISARM ACK, NOT AN ADJUDICATION. This row records what this seat MEASURED after the issuer's repair; it writes no disposition on S1 or S4 and grades nothing -- 3.0.0_SA_CVO does that at L9, and rows are append-only so S1 and S4 stand unedited. Filed because S1 named this exact re-run as its own closing condition and a closing condition with no recorded outcome leaves an ARMED row looking live forever. A CORRECTION TO THIS SEAT'S OWN COUNT: msg 94310 said 16 of 17 faces carried the short stem and that 'the other 15' remained for the issuer. The first half was right; the second was wrong. Repairing OS-s-7's INSTANCE did not repair OS-s-7's FACE, whose prose still named the short stem, so 16 faces needed amendment and not 15. The error is the same class this project keeps surfacing -- fixing the artifact and believing the record that points at it was fixed too -- and it is recorded here rather than left in a superseded message, because the arithmetic was mine and nobody else would have audited it."
   }
 ]
 ```
