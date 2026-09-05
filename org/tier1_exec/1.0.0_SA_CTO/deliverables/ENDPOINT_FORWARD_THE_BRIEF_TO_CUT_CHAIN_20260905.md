@@ -2,7 +2,8 @@
 
 **Seat:** `1.0.0_SA_CTO` · **Stamp:** 2026-09-05 ~19:0xZ
 **On:** `4.0.0_SA_CRO`'s L1 brief `docs/briefs/the-brief-to-cut-chain-where-a-v3-round-spends-its-cost-brief-20260905.md`
-@`b6c6e33060` (239 lines, O1-O7, F1-F10, B1-B6)
+@`fd9b987a87` (AMENDED; this endpoint was cut from @`b6c6e33060` and RE-READ against the
+amendment before going anywhere -- see the amendment note below)
 **Commissioned by:** Andrew-direct 2026-09-05 ~13:3xZ at the `4.0.0_SA_CRO` terminal, VERBATIM **"recs
 approved"**, record @`8e89f1127f`. **He confirms the DONE WHEN lines below; that is the last point in this
 project's life at which the loop waits on him.**
@@ -59,13 +60,28 @@ it does not re-implement a single gate it reads.
                     per-worktree carries; the eight addressing repairs of F6 become zero.
                     ⛔ THE MECHANISM IS NOT RULED HERE -- the brief calls binding-at-spawn "the
                     design question, not the answer", and this line grades the OUTCOME so L4 is
-                    free to reach it another way
+                    free to reach it another way.
+                    BUT ONE CONSTRAINT ON THAT ANSWER IS ALREADY MEASURED AND L4 MUST NOT
+                    REDISCOVER IT (brief P8): a worker's carry of an issuer's amendment is a
+                    PATH-SCOPED CHECKOUT that copies CONTENT WITHOUT HISTORY, so a spawn-time
+                    binding CANNOT be verified by `merge-base --is-ancestor` -- it reads CONTENT
+                    or a RECORDED VINTAGE. This seat measured it from the other side today: the
+                    issuer's amendment commit is NOT an ancestor of the worker's carry. A design
+                    that verifies binding by ancestry WILL REFUSE THE ORDINARY DRAIN ON ITS FIRST
+                    DAY, which is the exact failure a gate of this seat's was reverted for hours
+                    earlier.
 
   FWD-6  A reader can see WHERE A ROUND'S COST WENT from one census
          DONE WHEN  EXERCISED -- run on a closed round and read by someone who did not run it
-         ACCEPT     one command prints the cut / work / drain split with its DENOMINATOR and
-                    the issuance repairs listed BY CAUSE; F1's hand census is the shape, and
-                    two rounds are comparable under it
+         ACCEPT     one command prints the cut / work / drain split with its DENOMINATOR, its
+                    POPULATION and its CLOCK, and the issuance repairs listed BY CAUSE; two
+                    rounds are comparable under it.
+                    THE WORKED CASE IS F1'S OWN CORRECTION: the brief's first F1 carried neither
+                    population nor clock, and FOUR HONEST READINGS OF THE SAME ROUND -- 71, 71,
+                    86, 114 -- disagreed with it and with each other, every one correct for its
+                    own scoping. A CENSUS WITHOUT ITS POPULATION AND CLOCK IS NOT COMPARABLE TO
+                    ITSELF, let alone to the next round. That is the defect FWD-6 exists to end,
+                    and the brief demonstrated it on itself while being written.
 
   FWD-7  A worker's first wall is the ISSUER's, and it is found BEFORE the worker exists
          DONE WHEN  EXERCISED -- an issuer runs it pre-spawn and reads a real refusal in its
@@ -107,6 +123,24 @@ A brief's outcome list is not automatically the endpoint's. Each of these was wr
   re-seating costs nothing on HEAD, however that is reached.
 - **Anything about CLDGRPH round 4's ten post-issuance L6 commits**, which the brief explicitly leaves
   unclassified (Part VII), and no hours-per-defect clock, which was never taken.
+
+## AMENDMENT NOTE -- re-read against the brief's amendment BEFORE going to Andrew
+
+The brief was amended at @`fd9b987a87` AFTER this endpoint was cut from @`b6c6e33060`. Re-read rather than
+assumed: **confirming an endpoint built on a superseded brief is worse than a delay**, and his confirmation is
+the one thing this project still waits on.
+
+- **NO OUTCOME, BAR, BOUNDARY OR FINDING F2-F10 CHANGED.** The seven lines stand as cut.
+- **F1 gained its POPULATION and CLOCK** (the project path, merges included, since the register row at
+  15:00Z 09-04, read 14:0xZ) and now names the merge-carried thirteenth repair, so an auditor running
+  `--no-merges` does not "correct" 13 to 12. FWD-6's ACCEPT is strengthened by it.
+- **P8 was added** and is carried into FWD-5's line as a named constraint on L4's answer.
+
+⭐ **AND THE ATTRIBUTION, because it is easy to get backwards:** the `13 / 44 / 15` that did not add up was in
+the ANNOUNCING MESSAGE, not the brief -- the brief carried all eleven classes summing to 93. `2.0.0_SA_COO`
+read the sentence, as any reader would, and was RIGHT to check it; two real imprecisions in the brief were
+found because it did. **A SUMMARY THAT ABBREVIATES A CENSUS INHERITS NONE OF ITS DENOMINATOR AND CAN
+CONTRADICT THE DOCUMENT IT SUMMARISES** -- which is FWD-6's own subject, arriving one layer up.
 
 ## THE STANDING ITEM THIS PROJECT'S PRD WILL CARRY
 
