@@ -509,6 +509,39 @@ def _plane_duplicates(root, code):
     return _duplicate_ids([(p, [{"id": i} for i in sorted(ids)]) for p, ids in docs]), ""
 
 
+
+# THE ONE DECLARED DUPLICATE-ID BASELINE (3.0.0_SA_CVO 94346). EXACT, not a pattern: this id, in
+# THESE TWO documents, and nowhere else -- keyed the way surprise-corpus-validate keys its four
+# legacy failures (a known pair admitted, anything NEW refuses).
+# WHY IT MUST EXIST: without it, EVERY fabric's first merge of this history refuses once on a defect
+# the record already closed. That is what happened to site Z's return leg.
+# RESOLVED ON THE RECORD BY C-S2 @f4b41b1c20: it adjudicates the WORKER's S34 and states that the
+# adjudication document's own S34 is a CVO row and NOT an item under the census fix @72d05b2642, so
+# the id resolves to the worker's. S37 and S38 cite it.
+# MINTED @b50a124783 (3.0.0_SA_CVO, adjudications/, BEFORE the C- coordinate existed at annex v3.3)
+#    and @e7dda3d93c (0.9.0_WK_NFRA_COMPEFFICACY~2, investigations/).
+# NOT REPAIRABLE: re-iding either row is an in-place edit of an id in an APPEND-ONLY channel -- the
+# mutation this gate refuses and the class the channel exists to prevent; a new row cannot unmint an
+# old id. 0.0.0_AB_MSTR routed rather than repaired and was right to.
+_DUPLICATE_ID_BASELINE = {
+    "NFRA_COMPEFFICACY-S34": frozenset({
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md",
+        "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md",
+    }),
+}
+
+
+def _duplicate_is_declared(rid, docs):
+    """True iff this id AND the COMPLETE set of documents carrying it are the declared pair.
+
+    The whole collision must sit inside the declared set: S34 in a THIRD document is a NEW collision
+    and refuses. The baseline is a fact about two files, never an amnesty for an id.
+    """
+    known = _DUPLICATE_ID_BASELINE.get(str(rid or "").strip())
+    if not known:
+        return False
+    return {str(d).replace("\\", "/") for d in docs} <= known
+
 def _duplicate_id_violations(rel, kind, added, code, plane_docs, note=""):
     """PURE given `plane_docs`. UNIQUENESS ACROSS DOCUMENTS (2026-09-04, 3.0.0_SA_CVO 94007, v3's first drain): a NEW
     row's id must exist in NO other document of its plane under the project at the graded index. Two worktrees, two
@@ -518,23 +551,31 @@ def _duplicate_id_violations(rel, kind, added, code, plane_docs, note=""):
     drain grades the MERGED index (the COO's half, /dispatch Step 5) and an allocator coordinate in the id (the annex's
     Z- precedent) removes the race; neither is this limb. None = the census could not run -> refused, fail-closed."""
     if not added:
-        return []
+        return [], []
     if plane_docs is None:
         return ["%s: the id-uniqueness census over %s's %s plane could NOT run (%s) -- REFUSED, fail-closed"
-                % (rel, code, kind.lower(), note or "no reason given")]
-    out = []
+                % (rel, code, kind.lower(), note or "no reason given")], []
+    out, notes = [], []
     for r in added:
         rid = r.get("id")
         if not rid:
             continue
         hits = [p for p, ids in plane_docs if rid in ids]
+        if hits and _duplicate_is_declared(rid, list(hits) + [rel]):
+            # DECLARED, AND SAID OUT LOUD. A pass that hides a known collision is the vacuous-pass
+            # class; the note carries the resolving record so the reader meets the adjudication.
+            notes.append("%s: %s is the DECLARED duplicate-id baseline -- two allocators, one sequence, minted "
+                         "@b50a124783 and @e7dda3d93c before the C- coordinate existed; RESOLVED on the record by "
+                         "C-S2 @f4b41b1c20 and not repairable in an append-only channel. Admitted here; a THIRD "
+                         "document carrying this id, or any other duplicate, still REFUSES." % (rel, rid))
+            continue
         if hits:
             out.append("%s: NEW row %s -- that id already exists in %s (the same plane of %s's channel, at the graded "
                        "index). An id is ONE row across the project's documents; mint the next unused number over EVERY "
                        "document of the plane (ids are permanent and never renumbered, @b3584ea86a). Two allocators "
                        "minting one sequence is the collision the CVO measured at v3's first drain (94007)."
                        % (rel, rid, ", ".join(hits), code))
-    return out
+    return out, notes
 
 
 def _row_is_other_fabric(row):
@@ -1095,7 +1136,9 @@ def check_file(root, rel):
     # UNIQUENESS ACROSS DOCUMENTS (94007): every NEW id is unused in every OTHER document of its plane at the index.
     if folder_project and added:
         _pd, _pn = _plane_docs(root, folder_project, kind, rel)
-        v.extend(_duplicate_id_violations(rel, kind, added, folder_project, _pd, _pn))
+        _dv, _dn = _duplicate_id_violations(rel, kind, added, folder_project, _pd, _pn)
+        v.extend(_dv)
+        notes.extend(_dn)
     # THE ALLOCATOR DISCIPLINE (RULING 2 @9ef9a40aae): W<n> from its own worker only; no W from a seat; C- the CVO's, in
     # adjudications/ only, required once the staged schema admits it.
     _cmt = _committer_serial(root)
@@ -1154,6 +1197,10 @@ def check_file(root, rel):
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
                  % (rel, len(added), len(new_rows), len(old_ids)))
     return (v, notes)
+
+
+_S34_INV = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/investigations/INVESTIGATION_v1.md"
+_S34_ADJ = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudications/ADJUDICATION_v1.md"
 
 
 def _self_test(root):
@@ -1424,12 +1471,28 @@ def _self_test(root):
          == {"X_PRJ-S34": [INV, ADJ]}),
         ("uniqueness limb: a NEW row whose id sits in another document of the plane -> refused, names the document",
          lambda: any(("already exists in " + ADJ) in x and "X_PRJ-S34" in x for x in _duplicate_id_violations(
-             INV, "INVESTIGATION", [{"id": "X_PRJ-S34"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})]))),
+             INV, "INVESTIGATION", [{"id": "X_PRJ-S34"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})])[0])),
         ("uniqueness limb: a NEW row with the next unused id -> admitted",
-         lambda: _duplicate_id_violations(INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})]) == []),
+         lambda: _duplicate_id_violations(INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", [(ADJ, {"X_PRJ-S34"})])[0] == []),
         ("uniqueness limb: the plane census could not run -> refused fail-closed, names the reason",
          lambda: any("fail-closed" in x and "rc=128" in x for x in _duplicate_id_violations(
-             INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", None, "git ls-files rc=128"))),
+             INV, "INVESTIGATION", [{"id": "X_PRJ-S35"}], "X_PRJ", None, "git ls-files rc=128")[0])),
+        # THE DECLARED BASELINE (3.0.0_SA_CVO 94346) and its NARROWNESS, which is the whole point: the
+        # baseline is a fact about TWO named files, never an amnesty for an id.
+        ("baseline: the declared S34 pair -> ADMITTED, and the note names the resolving record C-S2",
+         lambda: (lambda vn: vn[0] == [] and any("C-S2 @f4b41b1c20" in n for n in vn[1]))(
+             _duplicate_id_violations(_S34_INV, "INVESTIGATION", [{"id": "NFRA_COMPEFFICACY-S34"}],
+                                      "NFRA_COMPEFFICACY", [(_S34_ADJ, {"NFRA_COMPEFFICACY-S34"})]))),
+        ("baseline NARROWNESS: the SAME id in a THIRD document -> still REFUSED",
+         lambda: _duplicate_id_violations(_S34_INV, "INVESTIGATION", [{"id": "NFRA_COMPEFFICACY-S34"}],
+                                          "NFRA_COMPEFFICACY",
+                                          [(_S34_ADJ, {"NFRA_COMPEFFICACY-S34"}),
+                                           ("org/surprise_channel/X/INVESTIGATION_v1.md",
+                                            {"NFRA_COMPEFFICACY-S34"})])[0] != []),
+        ("baseline NARROWNESS: a DIFFERENT id in the same two documents -> still REFUSED",
+         lambda: _duplicate_id_violations(_S34_INV, "INVESTIGATION", [{"id": "NFRA_COMPEFFICACY-S40"}],
+                                          "NFRA_COMPEFFICACY",
+                                          [(_S34_ADJ, {"NFRA_COMPEFFICACY-S40"})])[0] != []),
         ("uniqueness limb: the planes are separate -- remediation rows read remediation documents only; investigation rows read investigations + adjudications",
          lambda: _plane_patterns("REMEDIATION") == REMEDIATION_PATTERNS
          and _plane_patterns("INVESTIGATION") == INVESTIGATION_PATTERNS + ADJUDICATION_PATTERNS),
