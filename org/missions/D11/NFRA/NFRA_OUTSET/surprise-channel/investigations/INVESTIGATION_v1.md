@@ -1811,6 +1811,55 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-14 BOUNDS: 'EVERY invocation is bounded ... Use a tool's own --budget/--limit; never name a whole-corpus sweep.'",
     "world_is": "This tool has no --budget/--limit to use. Every invocation of it in this cell was bounded by `timeout 120` at the shell, which the order also mandates, and a timeout would have been RECORDED AS THE OUTPUT -- none occurred. So the order's bound was satisfiable, but only by the outer mechanism and not by the tool's own, and a run cut by the outer bound produces no partial-state report at all: it produces nothing.",
     "notes": "hazard_standing ARMED as a Rule T coverage gap rather than a live failure; disarm_owner 2.0.0_SA_COO to route it to whoever owns comp-fedobs (NFRA_FEDOBS.P3, 0.5.0_AE_OpalETL per the tool's own header). NOT DONE, deliberately: .tools/comp-fedobs IS in this order's <paths>, so this worker could have added a --budget flag -- and did not, because Rule T wiring is another project's family (NFRA_COMPEFFICACY, and OS-s-1's own cell on this project), the tool is a read-model whose bound would have to reach the S3 transport to mean anything, and adding a flag that bounds nothing real would be a Rule T carrier that lies. Recorded rather than half-built."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S26",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T12:47:06Z",
+    "one_line": "OS-s-17's producer change is BUILT and exercised, and it CANNOT REACH A PUBLISHED DAY -- so a green criterion here must not be read as a live effect. The runner now asks the author call for `tool_row_cited`, shows it the row `<stratum>@<vintage>` taken from the stratum's own OS-s-11 recipe, and discards a proposal whose tool row does not resolve, with its OWN code and reason, in series after the unchanged anti-fabrication gate. But the served producer is 11 days behind HEAD and no deploy is authorised, so the next published day will look exactly like the 61 proposals censused in W1-S24.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO -- the deploy is an S3 upload of code/estate_report_runner.py (instance.tf:94-96) that no cell of the 17 owns, and the issuer stated in terms that it is not authorised and not this worker's to fix",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHAT WAS BUILT, in infra/aws/ec2/estate-report-runner/estate_report_runner.py: `tool_row_ref(stratum)` mints `<stratum>@<vintage>` from the stratum's OS-s-11 `reproduce` recipe and returns None when there is none; `tool_row_resolves(cited, stratum)` requires the stratum NAME **and** the VINTAGE to appear in the citation (an AND, because the name is guessable from the prompt's own headings and the vintage is shared by every stratum of the day); `citation_verdict()` runs the two gates IN SERIES and returns (ok, code, reason); the author prompt shows the row and demands it back; an accepted proposal carries `tool_row_cited` AND the full `tool_row` recipe so the artifact resolves without leaving the document",
+        "THE ANTI-FABRICATION GATE IS UNTOUCHED AND VERIFIED STILL FIRING, which was the issuer's first constraint: `evidence_resolves()` is byte-unchanged, it runs FIRST, and a proposal that fails it is reported against IT even when its tool row is perfect. Exercised: a fabricated evidence_cited with a perfect tool row -> (False, 'CITATION_UNRESOLVED'); an honest one -> (True, 'OK')",
+        "AND THAT ASSERTION IS A LIVE CONTROL, not a restatement: .tools/tests/test_os17_tool_row.py arm F weakens `evidence_resolves` back to the 2026-08-06 defect in a temporary copy, and under the mutant the same fabricated input is ACCEPTED. Arm G removes the tool-row gate and the same 'nonsense' citation is ACCEPTED. Battery: 'OS17-TOOL-ROW BATTERY: 10/10 PASS (denominator 10; 0 model calls, 0 AWS, 0 network)', rc=0, stable across 2 runs plus pytest",
+        "WHY IT CANNOT REACH A PUBLISHED DAY, measured rather than assumed and re-derived this session on a stronger token set than W1-S25 used (see W1-S27): the served artifact s3://opal-estate-report/code/estate_report_runner.py is 125,857 B dated 2026-08-25T05:36:35Z; at HEAD `_outset_read` appears 4 times and 0 in the served bytes, `OUTSET_ANSWER_STATE_TO_STATUS` 3 and 0, `reproduce` 18 and 1, `render_trace` 2 and 0 -- while `_stratum(` appears 16 and 11, confirming it is the same program at an older vintage rather than a different one",
+        "REGRESSION, because this cell edits a file three other drained cells own: test_os9_cochange_source 16/16, test_os10_seam 12/12, test_os11_traceability 12/12, test_os14_fedobs_reaches 11/11, all rc=0; commit-gate 'OK: pre-commit gate clean for 2 of 2 file(s)'",
+        "ONE REFACTOR, NAMED because it changed a shape rather than only adding to it: the author loop's citation decision was INLINE, so the only way to check which gate refused first was to read the source and believe it. It is now `citation_verdict()`, one named function the battery exercises directly with no model call. The loop's behaviour is unchanged; what changed is that it can be watched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-17's O17-AC1 and PRD s.7's accept: 'one day's proposals each carry a resolvable citation to the tool row behind them, and a proposal whose tool row does not resolve is discarded with its reason, as the uncited case already is.'",
+    "world_is": "The producer half of that accept is now true and exercised. The published-day half is not and cannot be made true from here: the box runs whatever bytes sit at s3://opal-estate-report/code/, those bytes are from 2026-08-25, and putting new ones there is a deploy the issuer has explicitly not authorised. So the accept is reached in the producer and unreached in the artifact, and this row exists so nobody reads the first as the second.",
+    "notes": "hazard_standing ARMED on the READING, not on the code: the danger is a terminal cell and a green battery being taken as evidence that a day's proposals now cite tool rows. They do not, and the next published day will look exactly like the seven censused in W1-S24. NOT CLAIMED: that a deploy would be safe or correct now. NOT DONE: no deploy, no S3 write of any kind; the only AWS calls this cell made were the read-only ones in W1-S24."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S27",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T12:47:40Z",
+    "one_line": "CORRECTS MY OWN W1-S25's INSTRUMENT, re-derived here rather than accepted from the issuer's report of it. Two of the five tokens that row cited as evidence the served producer lacks this project's work -- `rerun_recipe` and `tool_invocation` -- are ZERO AT HEAD AS WELL as in the served bytes, so they discriminate nothing: I named fields that do not exist on either side. The conclusion is unchanged and now rests on tokens that actually separate the two: `_outset_read` 4 vs 0, `OUTSET_ANSWER_STATE_TO_STATUS` 3 vs 0, `reproduce` 18 vs 1, `render_trace` 2 vs 0, against the positive control `_stratum(` 16 vs 11 which shows it is the same program at an older vintage.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-DERIVED, not inherited: `grep -c` for each token against infra/aws/ec2/estate-report-runner/estate_report_runner.py at HEAD and against the served artifact fetched to .scratch/os17/deployed_runner.py -> _outset_read HEAD=4 DEPLOYED=0 ; OUTSET_ANSWER_STATE_TO_STATUS HEAD=3 DEPLOYED=0 ; rerun_recipe HEAD=0 DEPLOYED=0 ; tool_invocation HEAD=0 DEPLOYED=0 ; reproduce HEAD=18 DEPLOYED=1 ; render_trace HEAD=2 DEPLOYED=0 ; _stratum( HEAD=16 DEPLOYED=11",
+        "the defect in my own row: W1-S25 listed four 'new' tokens and reported all four as 0 in the served bytes. Two of them are 0 everywhere, so their zero carried no information at all -- a detector that cannot return non-zero on the case it is looking for is not evidence, which is the same rule I applied correctly to the citation census in W1-S24 and failed to apply to my own token list two rows earlier",
+        "WHY IT DID NOT CHANGE THE ANSWER: the other tokens are genuinely asymmetric, and `_stratum(` non-zero on BOTH sides is the positive control that makes 'same program, older vintage' the reading rather than 'different file'. The row's conclusion was right; two of its five limbs were inert",
+        "the issuer independently reached the same correction and recorded it as NFRA_OUTSET-S14; this row is the assignee's own re-derivation, filed so the correction is not carried on one seat's word"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_OUTSET-W1-S25, my own row: 'the deployed bytes contain 0 occurrences of _outset_read, OUTSET_ANSWER_STATE_TO_STATUS, rerun_recipe and tool_invocation', offered as the evidence that the served producer predates OS-s-9/10/11.",
+    "world_is": "Two of those four tokens are absent from HEAD too. A zero from a token that exists nowhere is not a measurement of the served artifact; it is a measurement of my own spelling. The claim survives on the tokens that do discriminate, and it is stated here with them rather than with the original list.",
+    "notes": "hazard_standing INERT: no operational hazard, a weaker instrument than it looked, corrected on stronger evidence. W1-S25 is NOT edited or re-dispositioned -- append-only; this row is the carrier, the same shape W1-S18 used for W1-S12. THE GENERAL FORM, since it has now bitten me twice in one project: every token in a presence/absence census needs its own positive control, and a census of four tokens is four detectors, not one."
   }
 ]
 ```
