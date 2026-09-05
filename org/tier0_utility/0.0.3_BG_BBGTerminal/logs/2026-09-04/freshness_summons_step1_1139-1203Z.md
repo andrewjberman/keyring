@@ -423,6 +423,51 @@ count reads as a failed edit. At their line numbers: `:103` is the live row now 
 `20/30/40`; `:123`, `:172`, `:217` are each inside a correction block quoting what the line used to
 say. **No live instruction in that file still routes `rc=1` to the publisher.**
 
+## 13a. THE ROOT OF §13 — prompt.md STATES THIS SEAT'S WRITE SCOPE TWICE AND THEY DISAGREE
+
+Verified at source (and `1.0.0_SA_CTO~Z` re-verified independently, msg 20450):
+
+```
+:81-82  THE MECHANICAL FENCE -- "file-writes allowed ONLY in your own logs/, threads/,
+        deliverables/ and tmp/scratchpad"                              -> FOUR paths
+:97-99  THE HARD LINES       -- "Your only file-writes are local ... session logs (logs/)
+        and per-person thread memory (threads/...)"                    -> TWO paths
+```
+
+**`deliverables/` and the scratchpad appear in one and are absent from the other.** I acted on the
+narrower one — the safe direction — and that is why §13 happened.
+
+⛔ **NOT two symmetric carriers, and my first framing was loose.** `:81` describes what the GATE
+enforces; `:97` states POLICY. A gate permitting more than policy is ordinary. **What makes this a
+real defect is that `:81` does not present itself as a coarse backstop — it says it "ENFORCES YOUR
+HARD LINES."** A paragraph claiming to enforce the hard lines while enumerating a wider set than the
+hard lines themselves is not a normal gate/policy gap; one of the two is wrong on its face.
+
+⛔ **A FIGURE I GOT WRONG TWICE, and the second time the measurement was on my screen.** I wrote
+*"five lines above"* and then *"FOUR LINES APART"*. **Measured: sixteen.** The grep output showing
+`:81`, `:82`, `:97`, `:98`, `:99` was in my own context when I typed the second one. **And the true
+figure makes the finding WORSE, not better** — sixteen lines is far enough apart to be read on
+separate occasions and never side by side, which is exactly how it survived. An unmeasured constant
+asserted as if measured, twice, inside a message *about* reading artifacts rather than recollections.
+
+**Why my edits still stand:** not because I resolved the ambiguity in my own favour. `1.0.0_SA_CTO~Z`
+explicitly assigned the re-derivation (20439), and the file's own committed placement note —
+swept by the integrator three times — presupposes `deliverables/` is writable. Gate permission is
+the weakest of the three reasons and ranks last. **Had I been relying on my own reading of prompt.md
+alone, the narrower sentence should have stopped me.**
+
+⭐ **The rule, and the half that actually cost the day:** *when a document states a scope twice, the
+narrower statement wins by default and the discrepancy is a FINDING, not a tie-break.* The default
+is right — but **stopping at the default is what cost the day.** A seat that resolves the conflict
+silently and proceeds has done the safe thing and left the defect armed for its successor.
+**And the sharpest form is that the rule was never MISREMEMBERED — it was never read on the point at
+issue.** "Read the artifact, not the recollection" would not have caught this: *the artifact itself
+said both things.*
+
+Routed to `0.0.0_AB_MSTR~Z` — `org/XXX.md` bars editing another agent's core document, `:82` makes
+it unwritable from this seat, and `:99` names that seat integrator. **The one seat that needs it
+cannot write it; the one that found it must not.**
+
 ## 14. FINAL STATE
 
 **Summons `20260904T113002Z` DISCHARGED**, Step 1 → Step 2 → Step 3 complete in one session, and
@@ -436,6 +481,19 @@ the rc=1 exit contract `@d776b21d98` — both from this seat's 12:01Z investigat
 **Open and genuinely not mine — ONE item, not four:** `run_daily_pull.py`'s closing hint pointing at
 the retired m365 gateway. *(The other three were always mine to write; see §13. That
 mis-attribution is the correction I most want a successor to read.)*
+
+**Harboured against the measured 00:48Z threat.** `1.0.0_SA_CTO~Z` (20443) named a same-day event —
+two uncommitted artifacts destroyed in this shared tree by a peer's `git checkout --`. Both files
+copied to the scratchpad harbour, verified by **content** (sha + byte count, with a negative control
+showing the two files' own hashes differ, so MATCH is a result and not a constant).
+⚠ **The harbour defeats the `git checkout --` class and NOT session end — it is session-scoped.** It
+narrows the window; it does not replace the sweep. Saying "backed up" without that limit is the
+shape that stops the real fix happening.
+⛔ **AND A HARBOUR COPY IS A SNAPSHOT, NOT A MIRROR — it rots silently on the next edit.** Measured:
+after adding §13a, a drift check read the log **STALE** (`b4b471…` vs `7da7d1…`) while the standing
+order was still in sync. **One of two files had rotted and nothing would have said so.** Re-synced;
+both verified. *The drift check is the act, not the copy* — same class as a closed deploy record
+being a snapshot rather than an oracle.
 
 ⚠ **BOTH FILES BELOW ARE UNCOMMITTED** and `0.0.0_AB_MSTR~Z` holds the paths (msgs 12:04Z + 20442):
 ```
