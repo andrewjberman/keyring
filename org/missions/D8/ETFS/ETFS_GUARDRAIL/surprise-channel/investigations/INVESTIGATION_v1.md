@@ -293,6 +293,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-1 S1-AC1: `python -m pytest infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/test_catchup_window.py -q`, expect `passed`; the TO's own build instructions model the battery on EG-s-3's port contract, whose own deliverable in turn modeled inf's existing test_catchup_scan.py shape verbatim.",
     "world_is": "A bare script ending in a module-level `sys.exit()` cannot be collected by pytest without an INTERNALERROR, so 'N passed' is unreachable from that shape under ANY arm outcome -- a structural defect in the battery-script CONVENTION this project has propagated across at least two cells (inf's pre-existing test_catchup_scan.py, and this order's own first draft), not a bug in any one file's logic.",
     "notes": "Resolved for THIS cell by writing genuine pytest test_* functions (test_catchup_window.py, 8 tests, 8 passed) instead of reproducing the inherited bare-script shape -- same arms (a)-(h), same real _catchup_missing_dates/_window_dates driven, same collaborators stubbed, just packaged as pytest natively collects. Left unresolved: inf-etf-ownership-daily's test_catchup_scan.py (EG-s-3, ETFS_GUARDRAIL-W2-S1's subject) carries the SAME sys.exit() shape and would ALSO INTERNALERROR under pytest even if its KeyError were fixed -- a second, independent reason 'passed' was never reachable there, layered on top of the KeyError already filed. EG-s-2's battery (test_catchup_window.py for bd-49f) should use this order's real-pytest-function shape rather than inf's, if not already handed with that instruction."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-05T03:19:26Z",
+    "one_line": "TO-EG-s-2's deploy sequence names `bash infra/aws/lambda/ci/record-terraform-deploy.sh bd-pipeline --function bd-49f-etf-ownership-daily ...` verbatim, and that script itself is on the TO's <paths> grant -- but running it also stages a write to `infra/aws/terraform/bd-pipeline/CHANGELOG.json`, a file the TO's <paths> block does NOT name (only `bd-49f-etf-ownership-daily.tf` and `.terraform.lock.hcl` are granted under that directory, not the whole tree or its CHANGELOG.json), so the commit is REFUSED by the owned-paths lane gate. Per the TO's own BOUNDS ('A path you need that it does not name is a BLOCKING row, never an override'), filed BLOCKING rather than widening the grant myself or forcing the commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-2.bd-49f-catch-up-port-the-tail-a-straight-port-misses.md <paths> block @2baa6af162 -- lists exactly 'infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf' and 'infra/aws/terraform/bd-pipeline/.terraform.lock.hcl' under that directory; no entry for CHANGELOG.json or the bare directory",
+        "run this turn: `bash infra/aws/lambda/ci/record-terraform-deploy.sh bd-pipeline --function bd-49f-etf-ownership-daily --author \"0.9.0_WK_ETFS_GUARDRAIL~2 <...>\"` -> 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: infra/aws/terraform/bd-pipeline/CHANGELOG.json -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_ETFS_GUARDRAIL~2 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' -- 'ERROR: safe-commit did NOT commit (rc=1)'",
+        "git status --porcelain immediately after -- both infra/aws/lambda/ci/lambda-source-map.json (IN the grant) and infra/aws/terraform/bd-pipeline/CHANGELOG.json (NOT in the grant) staged by the script's own internal git add, before its git commit step was refused; the source-map diff is a clean 2-field update (last_deployed_commit, last_deployed_at) + one top-level timestamp, the CHANGELOG.json diff is a 124-line new entry",
+        "compare EG-s-1's TO (ETFS_GUARDRAIL.TO-EG-s-1) <paths>: names the WHOLE 'infra/aws/terraform/cot-pipeline/' directory (no CHANGELOG.json problem there, record-terraform-deploy.sh committed clean at a8ef1ca328) -- this order's narrower two-file grant under bd-pipeline is the difference, likely because bd-pipeline is described in THE CELL/S2-AC5 as 'a wide directory' the issuer deliberately did not hand over wholesale"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-2 s.\"What you build\": 'The deploy sequence exactly as in EG-s-1 with bd-pipeline / bd-49f-etf-ownership-daily'; BOUNDS: 'A path you need that it does not name is a BLOCKING row, never an override.'",
+    "world_is": "record-terraform-deploy.sh's own internal contract writes BOTH the function's source-map row AND a per-pipeline-directory CHANGELOG.json entry in one commit; the TO's <paths> grants the source map file but not the CHANGELOG.json file (nor the bare bd-pipeline directory), so the script's own commit step is refused by the owned-paths gate exactly as designed.",
+    "notes": "Resolved for THIS cell by unstaging the CHANGELOG.json half (git reset, non-destructive, left as an unstaged worktree difference this worker does not further touch) and committing ONLY infra/aws/lambda/ci/lambda-source-map.json (in-grant) with the same last_deployed_commit/last_deployed_at values the script computed. The deploy itself is independently verified without this commit (served CodeSha256 == built artifact_sha256 via bd49f_served_vs_built.py, 0-diff replan) -- the missing piece is purely the CHANGELOG.json audit-trail entry and the source map's own bookkeeping being split across two commits instead of one. Disarm: the COO widens EG-s-2's <paths> to include infra/aws/terraform/bd-pipeline/CHANGELOG.json (or the bare directory) for this or the next order touching this pipeline, or authorizes/commits that file itself."
   }
 ]
 ```
