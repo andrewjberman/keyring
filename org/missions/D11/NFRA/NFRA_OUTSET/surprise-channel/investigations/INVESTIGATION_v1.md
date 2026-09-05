@@ -1109,6 +1109,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "PRD s.3: 'What would falsify the choice: if the artifacts cannot be produced on a cadence the 09:00 window can rely on, the seam is wrong and the decision re-enters at L2 as a scope change.' TO-OS-s-10's O10-AC2 restates it: 'if the artifacts cannot be produced on a cadence the 09:00 window can rely on ... file a BLOCKING row saying so and STOP this criterion.'",
     "world_is": "A one-armed question with a two-armed answer. The cadence machinery exists, is enabled, has ~9 h of margin before the window, and its artifact is measurably fresh today -- for a cloud-reachable tool. For a git-history-shaped tool no producer exists at all, and the estate has a 51-day demonstration of what the only available alternative delivers. I did NOT file the falsifier's BLOCKING row, because 'cannot be produced' is not what I measured: I measured 'is not produced, and nobody owns producing it'. Inflating that into an impossibility would be as wrong as softening it, and this criterion is judgment=true precisely so the call is not mine.",
     "notes": "hazard_standing ARMED on the unowned publishing step, not on the seam's shape. NOT CLAIMED: that a Fargate producer for a git-history-shaped tool is impossible -- the report runner itself clones the repo, so a purpose-built producer that clones WITH history is conceivable; I did not build or cost one, because task definitions, images, EventBridge rules and IAM are all outside this order's <paths>. NO VERDICT is written here or in the proof-of-spec: O10-AC2 is judgment=true and 3.0.0_SA_CVO grades it at L9."
+  },
+  {
+    "id": "NFRA_OUTSET-W1-S21",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~1",
+    "surfaced_at": "2026-09-05T09:30:00Z",
+    "one_line": "PROOF_OF_SPEC.schema.json closes `deployed_state` to {DEPLOYED-VERIFIED, COMMITTED-NOT-DEPLOY-SCOPE, STAGED-AWAITING-GATE}, and NONE of the three can describe a DEPLOY-SCOPE artifact that is committed and deliberately NOT deployed. OS-s-10 edits estate_report_runner.py, which the report host pulls from s3://opal-estate-report/code/ on every boot -- so it IS deploy-scope, and this order's <paths> does not admit the S3 upload that deploys it. COMMITTED-NOT-DEPLOY-SCOPE would be FALSE; this instance records STAGED-AWAITING-GATE, which is the LEAST-WRONG value rather than a true one, with the truth in the prose beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO to route -- org/standards/PROOF_OF_SPEC.schema.json is a fabric standard, not a project surface, and it is not in this order's <paths>. The remedy is a schema decision (a fourth value, or an explicit ruling that STAGED-AWAITING-GATE covers this case), not a worker act",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the refusal, measured: `python .tools/proof-of-spec-check.py <instance> O10-AC1,O10-AC2` -> 'VIOLATION: schema: artifacts_produced/1/deployed_state: 'COMMITTED-NOT-DEPLOYED' is not one of ['DEPLOYED-VERIFIED', 'COMMITTED-NOT-DEPLOY-SCOPE', 'STAGED-AWAITING-GATE']' -- INVALID rc=1. The enum is closed and the checker is right to refuse an invented value",
+        "why the artifact IS deploy-scope: infra/aws/terraform/estate-report/instance.tf@6dcd8c92eb:94-96 and :215, verbatim in part 'THE JOB CODE ITSELF IS NOT BAKED IN (Rule 12: S3 is the artifact store for ALL EC2 code, never write code on a VM) -- the unit pulls estate_report_runner.py from s3://opal-estate-report/code/ on every boot, so a deploy is an S3 upload' and 'ExecStartPre=/usr/bin/aws s3 cp s3://<bucket>/code/estate_report_runner.py /opt/estate-report/estate_report_runner.py'",
+        "why the upload was not performed: it is not in TO-OS-s-10's <paths>, and PRD s.5 places 'the report runner's own infrastructure -- the box, the orchestrator, the manifest contract, the self-parking host' out of scope. The change is instead built INERT: ESTATE_OUTSET_SEAM_PREFIX is unset by default, so the deployed behaviour is byte-unchanged whenever the upload does happen",
+        "the estate has already ruled that a verdict vocabulary needs a value for the state it cannot evaluate -- the same reason investigation_item.schema.json's `grades` enum carries NOT_EVALUATED, described in its own text as 'says so rather than converting an instrument's limit into a verdict'. deployed_state has no such value and this is the symmetric gap on the deploy axis"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json: `deployed_state` is a closed enum of three values, and every artifacts_produced row must carry one of them.",
+    "world_is": "There is a fourth real state -- deploy-scope, committed, deliberately undeployed because the deploying act belongs to another lane -- and the enum has no member for it. A closed enum with no value for a real state does not prevent the state; it makes every instance carrying that state say something false in a MACHINE-READ field, while the truth survives only in the adjacent prose that no consumer parses. That is the failure mode a claim field exists to prevent, appearing in the claim field itself.",
+    "notes": "hazard_standing ARMED because it recurs for every future cell that edits a deploy-scope artifact without owning the deploy -- which spine v3's lane split makes common, not exotic. class OBSERVATION and NOT BLOCKING: the instance validates with the least-wrong value and no criterion of this order is stopped. NOT PROPOSED HERE: a specific fourth value. TAXONOMY LAW says a value-enum proposal arrives with its four-postulate record and a word-boundary token census over the corpus of existing instances, and that census is not this cell's work -- naming the gap is."
   }
 ]
 ```
