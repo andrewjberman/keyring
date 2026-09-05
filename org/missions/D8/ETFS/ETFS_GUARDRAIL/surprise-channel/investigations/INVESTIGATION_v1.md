@@ -269,6 +269,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-12's deliverable step 3 names `bash infra/aws/lambda/ci/build-zip.sh ...` as the primary method to build the repo-side comparison zip.",
     "world_is": "That script cannot complete on this box (or any box with the same GNU/BusyBox touch semantics) for ANY function/file-list combination, because its own hardcoded reproducibility timestamp is not a valid date -- a defect shared by every caller of this script, not scoped to Inflection or this project.",
     "notes": "This worker does not edit build-zip.sh (out of this cell's BOUNDS: 'No source file changes in this cell'); the deliverable used the TO's own named fallback and recorded which. Filed OBSERVATION/ARMED because any OTHER worker or CI run invoking this script hits the identical rc=1 -- disarm is a one-line fix (`202601010000` or any valid month) by whichever seat owns infra/aws/lambda/ci/."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-05T00:55:55Z",
+    "one_line": "TO-EG-s-1's S1-AC1 names `python -m pytest test_catchup_window.py -q` with expect='passed', following the EG-s-3 port contract's own battery shape (a bare script driving real functions, ending in a module-level `sys.exit(1 if FAILURES else 0)`, exactly inf-etf-ownership-daily's test_catchup_scan.py pattern) -- that shape can NEVER report 'N passed' under pytest, because a module-level sys.exit() raised DURING COLLECTION crashes pytest with an INTERNALERROR (rc=3, 'no tests ran'), independent of whether every arm's own check would have succeeded. Built this order's battery as real pytest test_* functions instead (8 passed, rc=0) rather than reproducing the broken shape.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "minimal repro this session (two lines, no project code): a module containing only `print(\"hi\"); sys.exit(0)` run as `python -m pytest <file> -q` -> rc=3, 'INTERNALERROR> ... SystemExit: 0' raised from _pytest/python.py's collection machinery (import_path -> exec_module), 'no tests ran in 0.02s' -- reproduces on this box with no dependency on any ETFS_GUARDRAIL file",
+        "infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py@96c7ee4a3f -- ends with the identical shape, `sys.exit(1 if FAILURES else 0)` at module level (line 122), the pattern EG-s-3's port contract (this worker's own prior deliverable) described as the port source's battery to mirror",
+        "this order's ORIGINAL first draft of test_catchup_window.py (same bare-script shape, all 8 arms internally passing per its own print output) run via `python -m pytest ... -q` this session -> the identical INTERNALERROR/rc=3/'no tests ran', confirming the trap fires even when every underlying check is correct -- 'passed' was structurally unreachable from that shape regardless of the arms' outcomes",
+        "the rebuilt test_catchup_window.py@this-commit (8 real `def test_*` functions, no module-level sys.exit) run via the SAME literal S1-AC1 invocation this session -> '8 passed in 2.07s', rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-1 S1-AC1: `python -m pytest infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/test_catchup_window.py -q`, expect `passed`; the TO's own build instructions model the battery on EG-s-3's port contract, whose own deliverable in turn modeled inf's existing test_catchup_scan.py shape verbatim.",
+    "world_is": "A bare script ending in a module-level `sys.exit()` cannot be collected by pytest without an INTERNALERROR, so 'N passed' is unreachable from that shape under ANY arm outcome -- a structural defect in the battery-script CONVENTION this project has propagated across at least two cells (inf's pre-existing test_catchup_scan.py, and this order's own first draft), not a bug in any one file's logic.",
+    "notes": "Resolved for THIS cell by writing genuine pytest test_* functions (test_catchup_window.py, 8 tests, 8 passed) instead of reproducing the inherited bare-script shape -- same arms (a)-(h), same real _catchup_missing_dates/_window_dates driven, same collaborators stubbed, just packaged as pytest natively collects. Left unresolved: inf-etf-ownership-daily's test_catchup_scan.py (EG-s-3, ETFS_GUARDRAIL-W2-S1's subject) carries the SAME sys.exit() shape and would ALSO INTERNALERROR under pytest even if its KeyError were fixed -- a second, independent reason 'passed' was never reachable there, layered on top of the KeyError already filed. EG-s-2's battery (test_catchup_window.py for bd-49f) should use this order's real-pytest-function shape rather than inf's, if not already handed with that instruction."
   }
 ]
 ```
