@@ -204,6 +204,39 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     (Write tool / python): a `printf`/heredoc-built file re-opens the injection one step earlier. `--force`
     bypasses only contamination checks, never a lane refusal — that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=
     <LANE>`, audited, SINGULAR (N lanes = N commits). `docs/architecture/ADHC_OWNPTH.md`.
+14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked
+    worktree and merge it back in a gap** — five seats plus their worker subagents share ONE MUTABLE
+    INDEX, so the check-then-act window is now shorter than the staging cadence: `2.0.0_SA_COO` measured
+    `staged=0` and had the very next merge refuse on a file staged in the seconds between. Mechanism:
+    `git worktree add ../<slot> -b <branch>` — a linked worktree carries its OWN index AND its own merge
+    state, which is why `/dispatch` already mandates one per worker slot; merge back with
+    `.tools/safe-merge.sh` (its `--continue` limb keeps a conflicted drain inside the guards).
+    ⛔ **THE GUARDS ARE NOT THE PROBLEM — every refusal measured so far was CORRECT and each prevented a
+    real sweep** (`org/git-author-override-audit.log`: 3 audited `MERGE-REFUSED`, 2 on `2.0.0_SA_COO`
+    and 1 on `1.0.0_SA_CTO`, each naming a FOREIGN MERGE_HEAD and `nothing staged by this run`). Only
+    those three are offered as contention evidence: two further refusals the same evening were traced by
+    their own author partly to itself, and a self-inflicted block is not a crowding measurement.
+    The refusal RATE rises with the live-seat count, and a correct refusal you could have avoided still
+    costs a retry and sometimes a round trip.
+    ⛔ **IT INVERTS FOR AN APPEND-ONLY SHARED FILE AND YOU MUST NOT ISOLATE THERE** (`2.0.0_SA_COO~A`,
+    accepted by `2.0.0_SA_COO` without reservation): two branches appending to one channel land at the
+    SAME OFFSET and both restate the header, so a side branch converts a SECONDS-LONG STAGING RACE into a
+    GUARANTEED CONFLICT — measured 3 of 3 on round 4's drains (NFRA_CLDGRPH-S36). Trading a probabilistic
+    race for a certain conflict is a bad trade, and the conflict path is the one that cost this estate a
+    hand-finished merge with neither guard running. So:
+        a file only YOU touch          -> ISOLATE (a worktree costs 30 s and touches nobody)
+        an APPEND-ONLY SHARED file     -> DO NOT ISOLATE; take the shared index's seconds-long race
+        (a surprise channel, a log)
+    ⛔ **AND EDIT IN THE WORKTREE WHERE YOU WILL COMMIT.** Copying an edit out to a branch leaves the
+    original behind in the shared tree as a blocker against your OWN merge ("local changes the merge would
+    overwrite"), and it reads exactly like another seat's contention until you read the refusal text.
+    `2.0.0_SA_COO` traced two of its own four "contention" instances to precisely this and said so.
+    COST: one `git worktree add` plus a merge back. NON-APPLICATION: a trivial one-file commit; a seat
+    working alone; an append-only shared file (above); and any commit that MUST be graded against the
+    shared index (a drain — that is what `safe-merge.sh` grades). Found by `2.0.0_SA_COO` 2026-09-04
+    after it and `0.0.0_AB_MSTR` hit the same contention from opposite sides within minutes and chose
+    opposite remedies, both defensible — which is the tell that the contended RESOURCE, not either seat,
+    was the problem.
 16. **Local bash = Git Bash 3.6.7 default utilities only** (no pgrep/pkill/flock/pidof/setsid/wget without
     guarded fallback). `.tools/jq.exe` is vendored — resolve it first, fail closed loud. ⛔ **Never
     `2>/dev/null` a read whose EMPTINESS carries a verdict.** `docs/architecture/ADHC_BASHFIX.md`.

@@ -200,6 +200,75 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "The TO's own <proof_of_spec> section states the instance path using the short to_id form: 'ETFS_GUARDRAIL.TO-EG-s-13.proof_of_spec.json'.",
     "world_is": "to-pipeline-gate.py's check_complete_flip computes the expected instance filename from the TO FILE'S basename (including its full descriptive suffix), not from to_id -- a different, longer string. A worker following the TO's own instructed filename literally cannot flip the order to complete without the gate refusing.",
     "notes": "Disarmed same-turn, no owner needed for THIS order: a second, byte-identical proof_of_spec.json was committed at the gate-expected long-stem filename beside the TO-instructed short one; both are structurally VALID (rc=0) and carry identical content. Left for a wider owner: every OTHER ETFS_GUARDRAIL TO whose own <proof_of_spec> section (if any) names the short to_id form will hit the same refusal on its complete flip -- a generic fix (gate accepts EITHER form, or every TO's <proof_of_spec> section is authored to the gate's actual convention) is outside this order's <paths>."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-04T23:12:08Z",
+    "one_line": "TO-EG-s-11's prescribed invocation `logs filter-log-events --start-time <ms> --filter-pattern \"OK: wrote\" --limit 20` (a single, un-paginated call under the .tools/aws CLI v1 shim) returns exactly 1 matching event with a nextToken present, not the 3 that actually exist in the same 3-day window -- filter-log-events does not auto-paginate to --limit the way list_objects_v2/list_functions do, so a literal single-call reading of the TO's own text under-counts EVIDENCE by 2 of 3 (a coverage trap, not a WRITER-determination error: even the 1-event undercount names the correct function).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/aws logs filter-log-events --log-group-name /aws/lambda/bd-49f-etf-ownership-daily --start-time 1788302696123 --filter-pattern '\"OK: wrote\"' --limit 20 --output json @8226ee82b0, run this turn -- returned exactly 1 event (timestamp 1788345911186, stream 2026/09/02) with a top-level 'nextToken' present in the JSON body",
+        "manual nextToken follow-through, same window, run this turn -- page 2: 1 more event (1788432311925, stream 2026/09/03); page 3: 1 more event (1788518711493, stream 2026/09/04); page 4: 0 events, no nextToken (true end) -- 3 total matching events across 4 pages, not the 1 a single un-paginated call returns",
+        ".tools/aws logs describe-log-streams --log-group-name /aws/lambda/bd-49f-etf-ownership-daily --order-by LastEventTime --descending --max-items 10 @8226ee82b0, run this turn -- confirms daily streams for 09-02, 09-03, 09-04 (lastEventTimestamp 1788345911188 / 1788432311926 / 1788518711495) all fall inside the 3-day window, i.e. all 3 runs' log groups exist and were reachable, so the undercount is a pagination artifact of filter-log-events, not an absence of the underlying events",
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~2/twin_writer_census.py wrote_events() @committed-this-turn -- follows nextToken to the true end (bounded 20 pages) and reports 'LOGS bd-49f-etf-ownership-daily: 4 page(s) followed (manual nextToken), 3 'OK: wrote' event(s)', the corrected denominator this deliverable's WRITER=... EVIDENCE=3 line rests on"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-11's DELIVERABLE section: 'the newest CloudWatch log events matching \"OK: wrote\" in /aws/lambda/<fn> over the last 3 days (`logs filter-log-events --start-time <epoch ms> --filter-pattern \"OK: wrote\" --limit 20`)' -- a single named invocation, no pagination instruction.",
+    "world_is": "That exact invocation, run once as named, returns 1 of the 3 matching events that exist in the same window and log group, with an unfollowed nextToken -- CLAUDE.md Rule 22a's paginated-list trap ('paginated list-* + --query length() returns the PAGE count') applies here in a variant form: filter-log-events silently under-fills a page below --limit while still signaling more data via nextToken, and neither --no-paginate nor any other obvious flag was used to cause it.",
+    "notes": "Resolved for this cell's own script (twin_writer_census.py) by manually following nextToken to the true end, bounded at 20 pages; the WRITER determination is unaffected (1 of 3 events already names the correct function), but the reported EVIDENCE count and, in principle, a sparser window's ONLY matching event could be missed by a literal single-call reading of the TO's own prescribed invocation. Disarm: the COO/CTO names filter-log-events' pagination behavior as a general instrument trap (candidate addition to Rule 22a's catalogue) so future TOs prescribing it also prescribe following nextToken, or explicitly bound the acceptable undercount."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S4",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-04T23:22:24Z",
+    "one_line": "TO-EG-s-12's BOUNDS enumerates the live-read surface as get-function-configuration, get-function, and s3api list-objects-v2/get-object on opal-data-etfs/daily/inflection/ only; this worker ran `.tools/aws iam list-role-policies --role-name inf-etf-ownership-daily-role`, a call outside that enumeration, while checking whether the .tf-declared IAM increment had also gone live alongside the env-var increment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-12.inflection-deployed-bytes-vs-build-input.md BOUNDS @HEAD -- 'READS ONLY on the live plane. get-function-configuration, get-function (download), s3api list-objects-v2 / get-object on opal-data-etfs/daily/inflection/.' No mention of any iam:* call.",
+        "this worker's own invocation this session: '.tools/aws iam list-role-policies --role-name inf-etf-ownership-daily-role --output json' -> {\"PolicyNames\": [\"cloudwatch-metrics\", \"cross-firm-bucket-deny\", \"s3-etf-ownership\"]} -- read-only, no policy content fetched, no write, run under the launching seat's borrowed credentials as the cell itself states ('every AWS read you make is recorded verbatim ... the CVO grades what was printed')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-12 BOUNDS: 'READS ONLY on the live plane' followed by a specific enumerated list of calls, with no 'e.g.' or 'including' qualifier.",
+    "world_is": "This worker called an IAM read (list-role-policies) not in that enumeration, to check whether the .tf-declared IAM increment (MonolithFactPositionsRead/List, MonolithDedupMetaReadWrite) had also gone live alongside the ENV increment this TO's own investigation surfaced. The call is read-only, non-destructive, returned only policy NAMES (not content), and this worker stopped that line of inquiry on noticing the overreach rather than calling get-role-policy for the statement bodies.",
+    "notes": "INERT: no write, no policy fetched, no credential of this worker's own used (the launching seat's), and this worker does not rely on this call's output for S12-AC5's graded answer -- the IAM-liveness question is named here as an open follow-on for EG-s-7 rather than answered from an out-of-bounds read. Disposition left to the CVO; no disarm owner needed (INERT)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-04T23:32:31Z",
+    "one_line": "infra/aws/lambda/ci/build-zip.sh's reproducible-build step hardcodes `touch -t \"202600010000\"` (month '00', invalid) and fails rc=1 on every invocation with any file list on this box -- a shared cross-project CI script defect, not specific to this TO, discovered while following TO-EG-s-12's own deliverable spec verbatim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-zip.sh @HEAD, the line `touch -t \"202600010000\" \"$TMPDIR/$f\"` -- touch -t format is [[CC]YY]MMDDhhmm[.ss]; '202600010000' parses as year=2026 month=00 day=01 hour=00 min=00, and month 00 is not a valid calendar month",
+        "reproduced live this session: `bash infra/aws/lambda/ci/build-zip.sh inf-etf-ownership-daily infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily .scratch/build lambda_function.py dedup_core.py trading_calendar.py` -> 'touch: invalid date format 202600010000', rc=1",
+        "positive control run standalone this session: `touch -t \"202601010000\" .scratch/testdate` (month 01) -> rc=0, confirming the literal string in the script (not the box/toolchain) is the defect",
+        "TO-EG-s-12's own deliverable text anticipates this exact failure mode ('or an equivalent deterministic zip of the same files if that script's output dir convention refuses -- say which') -- this worker used that fallback (Python zipfile with a fixed date_time) rather than editing the script, since the TO's BOUNDS forbid any source change in this cell"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-12's deliverable step 3 names `bash infra/aws/lambda/ci/build-zip.sh ...` as the primary method to build the repo-side comparison zip.",
+    "world_is": "That script cannot complete on this box (or any box with the same GNU/BusyBox touch semantics) for ANY function/file-list combination, because its own hardcoded reproducibility timestamp is not a valid date -- a defect shared by every caller of this script, not scoped to Inflection or this project.",
+    "notes": "This worker does not edit build-zip.sh (out of this cell's BOUNDS: 'No source file changes in this cell'); the deliverable used the TO's own named fallback and recorded which. Filed OBSERVATION/ARMED because any OTHER worker or CI run invoking this script hits the identical rc=1 -- disarm is a one-line fix (`202601010000` or any valid month) by whichever seat owns infra/aws/lambda/ci/."
   }
 ]
 ```

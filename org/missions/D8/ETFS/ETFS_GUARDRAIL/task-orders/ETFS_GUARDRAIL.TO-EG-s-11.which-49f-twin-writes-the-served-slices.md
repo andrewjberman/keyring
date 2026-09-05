@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all five criteria PASS-by-output/RECORDED at HEAD: WRITER=bd-49f-etf-ownership-daily EVIDENCE=3, confirming EG-s-2's premise (no BLOCKING row owed); instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2 per the tree-convention flip grant.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S11; s.7.4 last paragraph) | **Decomp cell:** `EG-s-11` | **outcome_ref:** none (a RELIES-ON row beneath FWD-1; the WRONG-OBJECT risk under `EG-s-2`) | **verb:** verify | **depends_on:** --
 

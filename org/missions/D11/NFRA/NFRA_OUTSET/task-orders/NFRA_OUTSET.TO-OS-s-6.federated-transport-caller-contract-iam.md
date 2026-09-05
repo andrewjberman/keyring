@@ -24,7 +24,7 @@ OS-s-6 (PRD s.7, brief precondition P2, UNMEASURED): the transport requires `ecs
 
 One clause per criterion. A mechanical criterion carries exactly one `<invocation>` and one `<expect>`, so its pass is decided by the MATCH and never by your opinion. A `judgment="true"` criterion is RECORDED with its evidence and NO verdict -- `3.0.0_SA_CVO` grades it at L9, and a PASS or FAIL written on one is INVALID.
 
-<criterion id="O6-AC1" cell_refs="OS-s-6"><invocation>python .tools/comp-iam --help</invocation><expect>usage</expect></criterion>
+<criterion id="O6-AC1" cell_refs="OS-s-6"><invocation>comp-iam --help</invocation><expect>usage</expect></criterion>
 `O6-AC1` -- the instrument is named and its own disclosure read before use.
 
 <criterion id="O6-AC2" cell_refs="OS-s-6" judgment="true"/>
@@ -64,7 +64,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O6-AC1`, `O6-AC2`, `O6-AC3`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-6.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-6.federated-transport-caller-contract-iam.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O6-AC1,O6-AC2,O6-AC3` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>

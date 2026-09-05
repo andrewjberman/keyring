@@ -65,7 +65,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O3-AC1`, `O3-AC2`, `O3-AC3`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-3.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-3.router-rule-for-a-heat-question.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O3-AC1,O3-AC2,O3-AC3` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>

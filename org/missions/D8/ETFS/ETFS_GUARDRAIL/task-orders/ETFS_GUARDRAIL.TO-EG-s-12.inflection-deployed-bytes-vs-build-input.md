@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- proof-of-spec instance `org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-12.inflection-deployed-bytes-vs-build-input.proof_of_spec.json` VALID (rc=0, `.tools/proof-of-spec-check.py`, long-stem name per the amended round faces). All 5 criteria S12-AC1..AC4 PASS by output (VERDICT: MISMATCH -- deployed bytes match commit `af4f123e2c` (2026-08-01), predating the committed-not-applied Orion repoint at `001a73530a`); S12-AC5 judgment RECORDED for CVO L9 grading. Rows ETFS_GUARDRAIL-W1-S4 (INERT) and ETFS_GUARDRAIL-W1-S5 (ARMED, disarm 2.0.0_SA_COO~B) filed. Flip made by the assignee per the amended BOUNDS grant (task-orders/ own-file flip, tree convention). Prior: pending -- GO paired at cut (the spawn IS the GO). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance; Andrew-direct at the 1.0.0_SA_CTO terminal 2026-09-04 ~17:0xZ (94224/94225).</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S12; s.6 "ONE UNRESOLVED DEPENDENCY, CARRIED NOT BURIED"; brief s.9.2) | **Decomp cell:** `EG-s-12` | **outcome_ref:** none (a RELIES-ON row that binds ladder rung 2, `EG-s-7`) | **verb:** verify | **depends_on:** --
 
