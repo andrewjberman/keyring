@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 66 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 67 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1614,6 +1614,30 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "comp-heat@f2ef16d70a:36: 'Chain them for the full local->git->deploy view.' PRD s.7 OS-s-13's manifest evidence: 'comp-heat's header states ONE hop of the composition; nothing states the rest.'",
     "world_is": "The header's one stated hop is CORRECT about WHICH tools to chain and silent about the DOMAIN over which the chain closes. 'Full' is a whole-estate word attached to a join whose right side covers 1.8% of the tracked corpus, and the two sides are not merely differently keyed -- `comp-pipescript deployed` does accept a repo-root-relative path and auto-detects the tree, so the KEY composes fine; it is the POPULATION that does not. A reader taking 'full local->git->deploy view' at face value would expect an estate-wide answer and would get a correct refusal on 98.2% of the paths comp-heat can score.",
     "notes": "hazard_standing INERT: the tool refuses out-of-domain rather than returning a false clean zero, so the failure mode is a caller's disappointed expectation, not a wrong answer. Recorded because THIS CELL'S OWN DELIVERABLE is the place the gap gets closed: docs/architecture/NFRA_OUTSET_COMPOSITION_CONTRACT.md s.1 and s.2.1 now state the domain, the shared key, the 554/30,659 intersection and the three non-interchangeable rc values. NOT PROPOSED: an edit to comp-heat's header. `.tools/comp-heat` is outside this order's `<paths>` and this is a `record` cell -- whether the header should gain a domain clause is the comp-tool owner's call, and the contract now gives that owner the measurement to make it with."
+  },
+  {
+    "id": "NFRA_OUTSET-S13",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T11:20:00Z",
+    "one_line": "The DECOMPOSITION states 'OS-s-17 IS THE CVO's. Its lane in the manifest is CVO' -- and the PRD manifest at HEAD reads lane=CloudComp, verb=build. The decomposition asserted a fact about the PRD that the PRD does not contain, then reasoned a seating decision from it. The issuance did NOT follow the decomposition here and is correct; the decomposition is wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DECOMPOSITION at HEAD, :83-86: 'OS-s-17 IS THE CVO's. Its lane in the manifest is CVO and its acceptance is that a day's proposals each cite the tool row behind them -- a certification act. The spine reserves that to 3.0.0_SA_CVO.'",
+        "PRD MANIFEST at HEAD, the OS-s-17 row read column by column: lane=CloudComp, verb=build, evidence='measured (partial)', depends_on='OS-s-11, OS-s-12', and the evidence note 'estate_report_runner.py ALREADY discards a proposal that cannot cite what it rests on'. There is no CVO in that row.",
+        "THE ISSUANCE addressed OS-s-17 to 0.9.0_WK_NFRA_OUTSET~1, matching the PRD and not the decomposition. 4.0.0_SA_CRO's check-out (msg 94330) noticed the divergence and listed it under PASS: 'owned cells 17 of 17 (OS-s-17 included, issued to the worker, not the CVO)'.",
+        "The order's own <paths> grants ONLY the deliverables folder and the investigation channel -- no repo surface -- which is consistent with an inspection of an already-partly-built mechanism and not with a certification act reserved to a Tier-1 seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The decomposition asserts the PRD manifest gives OS-s-17 the lane CVO.",
+    "world_is": "The PRD manifest gives it lane CloudComp and verb build. The decomposition's cited fact does not exist in the cited document.",
+    "notes": "⛔ THE ERROR IS L5's AND IT IS MINE, AND IT IS THE SECOND INSTANCE OF ONE CLASS IN THIS PROJECT. The issuance commit claimed 'the row reads PRD at HEAD' when the project row read DECOMP, and declined a flip on that basis; here the decomposition claimed 'its lane in the manifest is CVO' when the manifest reads CloudComp, and moved a cell's seating on that basis. Both times I reasoned from an unverified claim about a document's contents, and both times the conclusion was wrapped in a correct-sounding principle -- there, not skipping another seat's stage; here, not handing a worker a certification act -- which is what made each survive its own writing. **A wrong fact inside a right-sounding principle is harder to catch than a bare error, because the principle is what the reader checks.** ⭐ THE ARGUMENT AROUND THE FACT WAS ALSO WRONG, WHICH IS THE PART I WOULD OTHERWISE HAVE DEFENDED: the cell is not a certification act at all. Its evidence class is 'measured (partial)' because the runner ALREADY discards an uncitable proposal, so the cell inspects what a day's proposals carry. Reserving that to the CVO would have idled a Tier-1 seat on an inspection a worker can do, and the estate's two prior refusals I cited were about a COO's worker performing a CERTIFICATION -- a different act. NOT FIXED IN PLACE, deliberately: the decomposition is FROZEN mid-round (CLAUDE.md s.1 Rule 27), and the only off-spec act available is this row. DISARM OWNER 1.0.0_SA_CTO rather than this seat, because whether a frozen decomposition gets a factual correction, and whether that correction is a v0.3 or a round-N note, is the CTO's call at round-N analysis and not the author's. NOTHING DOWNSTREAM IS WRONG: the issuance, the order, its grant and its seating all follow the PRD. Only the decomposition's prose is."
   }
 ]
 ```
