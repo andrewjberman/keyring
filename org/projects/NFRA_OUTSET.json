@@ -4,10 +4,10 @@
  "directive": "D11",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "DECOMP",
  "status": "active",
  "name": "comp-heat and the tooling at the outset of the Semantic Estate Pipeline -- the front end of the daily estate analysis made to work, to compose, and to be consumed: a bounded freshness answer at any grain, a live federated question in one call, every deterministic report line traceable to the tool that produced it, and one working-order census in which a failed tool says so",
  "generated_from": "org/missions/D11/NFRA/NFRA_OUTSET/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-04T15:36:29Z"
+ "generated_at": "2026-09-04T16:52:29Z"
 }

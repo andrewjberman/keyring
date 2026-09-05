@@ -62,6 +62,22 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# STOP: THIS TOOL READS FILES OTHER SEATS WROTE, AND 167 OF 644 LEDGER SURFACES CARRY NON-ASCII.
+# On Windows with PYTHONIOENCODING/PYTHONUTF8 unset, stdout is cp1252 and printing one of those
+# bytes raises UnicodeEncodeError MID-SWEEP. Measured by 3.0.0_SA_CVO (ESTATE_GOVERNANCE-S3) and
+# reproduced here: `check --red` died after 16 stdout lines on U+26D4 with rc=1.
+# THE DANGEROUS PART IS NOT THE CRASH, IT IS THE EXIT CODE. rc=1 is also this command's HONEST
+# verdict for "red entries exist", so a caller -- /drive chains `check --red` every tick -- cannot
+# tell a verdict from a traceback, and the sweep it thinks completed was TRUNCATED at the first
+# non-ASCII surface. A partial sweep reporting a plausible failure is worse than a loud one.
+# The tool must not die on data it exists to read; this does NOT license new non-ASCII in output
+# (CLAUDE.md still binds -- use OK:/WARN:/ERROR:/SKIP:/BLOCKED:).
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:  # noqa: BLE001 -- older Python, or a stream that cannot be reconfigured
+        pass
+
 WORKSPACE = Path(__file__).resolve().parent.parent
 CM_DIR = WORKSPACE / "org" / "critical_paths" / "change_management"
 STATE_DIR = WORKSPACE / "org" / "critical_paths" / ".open_deploys"

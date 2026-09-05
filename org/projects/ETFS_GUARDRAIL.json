@@ -1,35 +1,13 @@
 {
  "project_code": "ETFS_GUARDRAIL",
- "macro_code": "ETFS",
+ "home": "org/missions/D8/ETFS/ETFS_GUARDRAIL",
  "directive": "D8",
+ "macro_code": "ETFS",
  "fabric": "laptop",
- "pipeline": null,
+ "dep_stage": "EXECUTING",
  "status": "active",
- "dep_stage": "PRD",
- "created": "2026-09-02",
- "pods": [],
- "related": [
-  "ETFS_POSITIONING",
-  "ETFS_INGEST",
-  "ETFS_CANON"
- ],
  "name": "ETF coverage guardrail -- the monthly ETF ownership report cannot go out over data it does not have; holes are detected pre-publish, a remediation ladder repairs them, and a hole that survives every rung is reported to Andrew by name, date, provider and partner",
- "phase": "REGISTERED 2026-09-02 by 0.0.0_AB_MSTR (register owner), AFTER the PRD rather than before it. ANDREW-DIRECT 2026-09-02 at the 1.0.0_SA_CTO terminal, relayed verbatim @92481. Project code RATIFIED by his own word: \"ETFS_GUARDRAIL is good\", with \"write the PRD\" in the same message. Stage-2 PRD docs/architecture/ETFS_GUARDRAIL_PRD.md @7aa1554881 (ON ORIGIN). Rule 27 stage 3 (COO atom-decomp) precedes any TO.",
- "blocking": "Not blocked. dep_stage PRD -- the decomp is next and no TO may precede it. THE SES CARVE-OUT AUTHORIZES ONE SEND ON THE TERMINAL FAILURE PATH ONLY and authorizes no monitor, alarm, SNS topic, freshness service or scheduled send of any kind.",
- "prds": [
-  {
-   "path": "docs/architecture/ETFS_GUARDRAIL_PRD.md",
-   "version": "v0.1",
-   "note": "Stage-2 purpose-level PRD @7aa1554881, authored by 1.0.0_SA_CTO. Source brief docs/briefs/ETFS_COVERAGE_GUARDRAIL_BUILD_SPEC_20260901.md @1890d7785c, read 299/299 lines. Carries the moratorium carve-out and its bounds in s.0."
-  }
- ],
- "leads": [
-  "THE REGISTER STEP WAS SKIPPED AND THIS ROW IS THE REPAIR, NOT A FORMALITY. Rule 27's order is register -> PRD -> decomp, and this project reached a stage-2 PRD (docs/architecture/ETFS_GUARDRAIL_PRD.md @7aa1554881) with no register row behind it. 1.0.0_SA_CTO SURFACED that gap rather than silently patching it -- correctly, since the register is not that seat's surface -- so the row is cut here, after the fact, and says so on its own face rather than pretending the order held.",
-  "THE ALERT MORATORIUM IS WIDENED FOR THIS PROJECT AND ONLY THIS PROJECT, ON HIS EXPLICIT WORD. CLAUDE.md bans building any alert, alarm, SNS, SES-send, notification, freshness-checker or monitor \"unless Andrew explicitly asks\". HE ASKED, VERBATIM: \"There needs to be a SES Urgent email that I receive at andrew@opalinvest.com if we are unable to backfill and have missing dates in the final output. This email must be a last resort, the backfill strategy must be effective enough that it doesnt happen.\" AUTHORIZED: ONE SES send, on the TERMINAL FAILURE PATH ONLY, emitted by the remediation ladder when the ladder terminates unresolved -- the same act that already writes the refusal. STILL BANNED: a new monitor, a new alarm, a new SNS topic, a standing freshness service, or ANY send on a SCHEDULE rather than on terminal failure. A seat that builds this as a polling monitor has EXCEEDED the carve-out rather than implemented it, and his own sentence -- last resort -- is the governing constraint.",
-  "THE WIDTH IS WRITTEN DOWN BECAUSE AN UNSTATED WIDTH IS INHERITED AS LICENCE. That is 1.0.0_SA_CTO's reasoning for broadcasting rather than filing, and it is adopted here: the next seat to read this row must be able to see where the carve-out stops without re-deriving it from a transcript.",
-  "PLACEMENT TENSION RESOLVED BY ANDREW 2026-09-02, and the resolution moved the DIRECTIVE, not just the fabric. MSTR filed this row under D4 on SUBJECT grounds and flagged the tension: D4 is SITEZ-placed while the brief, endpoint and PRD were all authored on the LAPTOP. Put to Andrew; he ruled at the 1.0.0_SA_CTO terminal, VERBATIM: \"laptop fabric but this would go under D8 Pipeline Fortification\". So directive D4 -> D8 and fabric = laptop. THE TWO HALVES ARE CONSISTENT AND NOT A COMPROMISE: D8 (\"Model Portfolios Pipeline Fortification\") is itself LAPTOP-placed as of 2026-09-01 (\"This is all correct but D8 on laptop\"), so membership and fabric agree rather than the fabric key overriding a placement. Step 3 is COMPLETE at this edit; the fabric fork was ABSENT until now and to-pipeline-gate.py:208-215 would have refused every TO cut against this project.",
-  "WHY D8 FITS BETTER THAN D4, recorded because a subject-grounds filing looked obviously right and was not the best read. D4 is the ETF product line, so ETFS_* membership is the surface similarity. D8's STANCE is the actual match: \"the served objects are REWRITTEN DAILY ... so the publisher succeeds and the staleness is INSIDE THE PAYLOAD -- every object-mtime freshness instrument reads HEALTHY and is correct about the FILE. That blindness is the condition D8 exists to end.\" That is this project's defect stated in D8's own words: carry-forward fills a hole so a gap and a held position render identically, the monthly average was computed over incomplete data, and NEITHER FAILURE WAS VISIBLE IN THE ARTIFACT. The guardrail ends the same blindness on the ETF ownership report that D8 exists to end on model portfolios. Filed by SUBJECT it is a D4 project; filed by DEFECT CLASS it is a D8 one, and the directive is a defect-class grouping.",
-  "TWO THINGS THE PRD ITSELF SURFACES AND DOES NOT PATCH, carried so they are not lost with the message. (a) FWD-8 IS NOT FOLDED AWAY: he observed FWD-8 \"can be folded into\" FWD-7, and the REPORT CONTENT is genuinely folded, but the AUTHORIZATION is not -- FWD-8 fires BEFORE egress and ASKS PERMISSION, FWD-7 fires AFTER egress has already failed and REPORTS. A message sent after egress failed cannot ask permission for the egress that already happened, so folding them would silently retire ruling card 4's capability. Whether card 4 stops being a named outcome is HIS call. (b) The source brief s.6a still carries a stale \"OPEN -- ANDREW'S CALL: does aj@ replace andrew@\" line that his card-3 ruling already answered (JOIN, BOTH addresses); it sits LATER in the brief than the ruling, so a top-down reader meets the answer first and the stale question second.",
-  "IDS ARE FROZEN FROM 7aa1554881 FORWARD. FWD-7 was inserted and the prior FWD-7 renumbered to FWD-8. A renumber is normally FORBIDDEN because it silently re-points every citation ever made and nothing announces it; it was legal exactly once here because at the moment of the change the list had never landed in a PRD and NOTHING cited it -- no remediation row, no outcome_ref, no TO. Any row citing an ETFS_GUARDRAIL FWD-n written before 2026-09-02 does not exist; none were cut."
- ]
+ "generated_from": "org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-04T19:16:55Z"
 }

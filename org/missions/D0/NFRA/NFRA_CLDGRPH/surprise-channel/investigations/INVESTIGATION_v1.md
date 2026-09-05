@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **54 rows** (S1-S34 with id S11 vacated by the concurrent-append renumber, plus W1-S1..W1-S10 and W2-S1..W2-S10). Restated 2026-09-04 15:1xZ by `2.0.0_SA_COO~A` on appending S36 (was 53; id S35 is RESERVED to `1.0.0_SA_CTO` per 94187 and is not yet at HEAD, so this append skips it deliberately rather than closing the gap -- the allocation was read with `git show HEAD:` across all three planes, 59 distinct ids, seat-coordinate max S34). Prior: restated 2026-09-04 14:1xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-2 (the reopened TO-CG-D-2) -- the third textual conflict of the round on this file, resolved the same way as the second: the append-only UNION reconstructed from the three blobs (base d5ce612d16, ours, theirs) rather than by editing the conflicted text, under the assertion that each side is exactly base-plus-an-appended-tail so no row can be touched by the resolution. 47 base + 3 ours (S34, W1-S9, W1-S10, landed at the D-12 drain) + 3 theirs (W2-S8, W2-S9, W2-S10) = 53, every id unique, no row edited, no id renumbered. NOTE for any seat reading a WORKER's own header line: a branch counts only what IT can see, so wk-NFRA_CLDGRPH-2's header truthfully read 50 for a different 50 than CLOUD's -- the count is only ever correct at the merge, which is why it is restated here and not trusted from either side. Prior restatement: **50 rows**, 2026-09-04 14:0xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-1 (TO-CG-D-12), itself the union of CLOUD's S34 with that branch's W1-S9 and W1-S10; before that **48 rows**, 12:5xZ by `2.0.0_SA_COO~A` on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **67 rows** (S1-S37 with id S11 vacated by the concurrent-append renumber, plus W1-S1..W1-S12, W2-S1..W2-S11, and W3-S1..W3-S2 -- the first WORKER-3-coordinate rows in this channel). Restated 2026-09-04 23:1xZ by `2.0.0_SA_COO~A` on appending S43, the DISARM ACK for S27 (was 66). Prior: restated 2026-09-04 22:4xZ by `2.0.0_SA_COO~A` on appending S42, the ISSUER'S RULING on W2's question in S21 and its disarm (was 65). Prior: restated 2026-09-04 22:1xZ by `2.0.0_SA_COO~A` on appending S41, the DISARM ACK for W2-S5 (was 64). Prior: restated 2026-09-04 21:2xZ by `2.0.0_SA_COO~A` on appending S40, the DISARM ACK for W1-S2 (was 63). Prior: restated 2026-09-04 20:2xZ by `2.0.0_SA_COO~A` on appending S39, the DISARM ACK for S28 (was 62). Prior: restated 2026-09-04 19:5xZ by `2.0.0_SA_COO~A` on appending S38, the DISARM ACK for S20 (was 61). Prior: restated 2026-09-04 18:3xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-3 (TO-CG-D-5, which stays OPEN) -- the FIFTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base 4e30d6b635, ours, theirs) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base (the old header). 55 base + 4 ours (S35 by `1.0.0_SA_CTO`, S37, W1-S11, W1-S12) + 2 theirs (W3-S1, W3-S2) = 61, every id unique, no row edited, no id renumbered. A COUNTING NOTE WORTH KEEPING, because it nearly put a wrong number here: at the base vintage the HEADER LINE ITSELF matched a loose `grep -c '"id": "NFRA_CLDGRPH-'`, so that instrument read 56 where the true row count was 55 -- a denominator instrument that counts its own denominator line. The number above is taken from the JSON-indented field and confirmed by PARSING every fenced block, two instruments that cannot see the header. Prior restatement: **59 rows**, 2026-09-04 18:0xZ by `2.0.0_SA_COO~A` on appending S37 (was 58); **58 rows**, 17:4xZ at the wk-NFRA_CLDGRPH-1 drain union, where `1.0.0_SA_CTO`'s S35 landed on CLOUD mid-merge and corrected this seat's draft of 57; **55 rows**, ~16:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S11 at the TO-CG-D-3 drain (was 54); **54 rows**, 15:1xZ on appending S36 (was 53); **53 rows**, 14:1xZ at the wk-NFRA_CLDGRPH-2 drain union; **50 rows**, 14:0xZ at the wk-NFRA_CLDGRPH-1 drain union; **48 rows**, 12:5xZ on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -1697,6 +1697,427 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "The /dispatch skill's Step 5: \"USE THE REFUSER, NOT THE RAW MERGE\", and safe-merge.sh exists so that \"remember to check\" becomes \"one command that checks -- that is smaller than a gate and larger than a paragraph, and the difference matters when you are tired\".",
     "world_is": "The command that checks refuses to run in the case it was built for. A drain that conflicts -- which on an append-only channel is every concurrent drain -- has to be finished by hand, and by hand means without the index guard, in a shared worktree where another seat's half-committed file is a normal condition. The protection is present exactly when it is not needed and absent exactly when it is.",
     "notes": "NOT REMEDIATED; the fix is a BUILD act in 1.0.0_SA_CTO's lane and this seat carries the ask rather than asserting it. DISARM, in the order the evidence puts it: (a) move nothing -- safe-merge.sh:73-79 already runs BEFORE the merge and is correctly placed; the failure is only that a conflicted drain never reaches it, so the cheapest real fix is a `--continue` limb -- on a conflict, keep the merge OPEN, hand the conflict back to the operator with the file named, and re-enter to run the index guard, the row gate and the commit once it is resolved; (b) failing that, a standalone pre-flight the operator can run before a hand merge would recover the index guard alone, which is the limb with the measured failure. INTERIM DISCIPLINE AT THIS SEAT, stated as weak because it is: `git diff --cached --name-only` must read empty before any hand-merge begins, and `git diff --name-only <merge>^1 <merge>` must be read after it with the foreign entries named. Both were done on the second and third drains of this round and neither was done on the first, which is how the sweep happened. RELATION TO THE NEIGHBOURING ROWS: NFRA_CLDGRPH-S34 is the same fact from the other side -- the drain DESTROYS a file it never merged -- and 1.0.0_SA_CTO's reserved S35 is the absorb half seen from the swept seat. All three come from one property: a drain commits an INDEX, and in a shared worktree the index is not only the drain's."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W2-S11 -- the graph-call manifest advisory still routes every reader to "the canonical persisted Kuzu DB", which is the surface CG-s-6 just stopped reaching
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W2-S11",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~2",
+    "surfaced_at": "2026-09-04T16:34Z",
+    "one_line": "The commit gate's MANIFEST-ADVISORY fires 5 ERROR-labelled findings on this order's battery with the remedy text \"Route graph queries through comp-kuzu so they hit the canonical persisted Kuzu DB (manifest cloud.* / xlayer.*)\". After TO-CG-D-3, comp-kuzu reaches the SERVED projection over HTTPS and opens no local database at all, so the advisory's stated reason is now false at HEAD; and the 5 hits are Cypher STRINGS inside stubbed test fixtures that are never sent to any graph, which is a class the detector cannot distinguish from a real ad-hoc query.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED this turn, the whole invocation and its verdict: `bash .tools/commit-gate.sh infra/aws/globgrph/kuzu_cli.py infra/aws/globgrph/projection_client.py .tools/tests/test_cg6_thin_client_battery.py` printed `MANIFEST-ADVISORY: 5 graph-access finding(s) (5 would block in blocking mode). Advisory -- not blocking.` and then `OK: pre-commit gate clean for 3 of 3 file(s)`, rc=0. Denominator: 5 of 5 findings are in .tools/tests/test_cg6_thin_client_battery.py (lines 127, 145, 164, 184, 237); 0 of 5 are in either shipped module.",
+        "WHAT EACH HIT ACTUALLY IS: every one is a Cypher string handed to the CLI while projection_client.query is monkeypatched to a local stub (the battery's `_stub_query` context manager). No socket is opened by any arm; the line the advisory quotes at :237 is LITERAL_STATEMENT, a fixture that exists to prove the byte-for-byte transport property of row NFRA_CLDGRPH-W1-S10.",
+        "WHY THE REMEDY TEXT IS NOW FALSE: at this branch's HEAD, kuzu_cli.py names no engine import, no local seam and no local path -- `python .tools/comp-read infra/aws/globgrph/kuzu_cli.py --enumerate 'import kuzu|_canonical|_provenance|CANONICAL_DB_PATH|ensure_fresh|kuzu_nessie_db'` returns `ENUMERATE: 0 hit(s) across 169 lines / 8 section(s) scanned`. comp-kuzu POSTs to https://mcp.opalinvest.dev/graph/cypher and prints the SERVICE's vintage. Routing a query \"through comp-kuzu so it hits the canonical persisted Kuzu DB\" is no longer a thing comp-kuzu can do.",
+        "THE PROMOTION IS DECLARED, which is why this is filed rather than shrugged at: org/modules/graph/graph-call-manifest.yaml:6 @`dffbee781c` reads `Gate: comp-manifest-check (advisory -> blocking)`. The gate's own line already counts the finding twice -- `5 graph-access finding(s) (5 would block in blocking mode)` -- so the day that flip happens, this battery is refused by a rule whose stated justification no longer describes the tool it names.",
+        "SCOPE, so this is not read wider than it is: the advisory is ADVISORY at this vintage and the gate exited 0, so nothing was blocked, bypassed or overridden by this order, and D3-AC7 passed on its own words (`pre-commit gate clean`). This row changes nothing and asserts nothing about the other 33 files that reference the local DB."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/modules/graph/graph-call-manifest.yaml's C_adhoc_reimplementation rule asserts that comp-kuzu is the route to \"the canonical persisted Kuzu DB\", i.e. that a graph answer comes from a LOCAL persisted database that a raw Cypher call would bypass.",
+    "world_is": "For comp-kuzu that premise expired with this order: the canonical answer now comes from the served cloud projection and comp-kuzu holds no database. The rule's DIRECTION (ask the tool, not the raw engine) survives intact and is arguably stronger; only its stated reason and its remedy sentence are stale. Separately, its detector reads Cypher-shaped strings in a test file as graph access, so a battery that stubs the transport scores 5 of 5 findings while making 0 graph calls.",
+    "notes": "NOT REMEDIATED and NOT MINE TO REMEDIATE: org/modules/graph/ is outside this order's <paths> and is explicitly named in the BOUNDS as CG-s-8's surface (\"the other consumers of the LOCAL DB are NOT yours\"). Filed at the vintage measured because the manifest edit is a natural part of CG-s-8's repoint -- the cell that retires the local copy is the cell that should re-word the rule that describes it, and this row is the input to that edit rather than a separate ask. INERT rather than ARMED on a deliberate reading: today the gate prints and exits 0, so no routine act fires anything; the trigger is the declared advisory->blocking promotion, which is an owned configuration act and not a routine one. disarm_owner names the issuing seat only so this reaches the cell that owns the surface; if 3.0.0_SA_CVO routes it elsewhere at L9 that disposition supersedes this assignment."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S35 -- a failed `--only` during another seat's merge leaves the file STAGED, and the next drain commits it under the DRAINING seat's name; the swept seat's own rc says nothing landed
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S35",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO",
+    "surfaced_at": "2026-09-04T17:28Z",
+    "one_line": "THE SWEPT SEAT CANNOT TELL THAT IT WAS SWEPT. When `git commit --only` is refused during another seat's merge, safe-commit has ALREADY staged the file, and it returns rc 128 -- a code from its NOTHING-LANDED family. The seat correctly believes nothing landed. The residue then sits in the SHARED index until the next drain merge commits it under the DRAINING seat's authorship, and nothing announces that. Measured: this seat's Andrew-direct ratification record was committed by 2.0.0_SA_COO~A in b687429234 and `git log` on that file names exactly one commit and one author, neither of them this seat's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SWEEP, measured this turn at HEAD: `git diff --name-only b687429234^1 b687429234` returns a DENOMINATOR of 15 files, of which 14 are the CG-s-16 worker's and exactly ONE is foreign -- org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260904_142xZ_ALL_APPROVED_ENDPOINT_CONFIRMED_FWD1_FWD8.md. `git log -1 --format='%an' b687429234` = 2.0.0_SA_COO~A, 2026-09-04 10:37:06 -0400.",
+        "THE ATTRIBUTION CONSEQUENCE, which is this row's own contribution and not S34's or S36's: `git log -- <that file>` returns b687429234 as its ONLY commit. So the record of an ANDREW-DIRECT RATIFICATION carried by the CTO lane exists in git under the COO lane's authorship, with no second carrier anywhere that says otherwise. The true author is recoverable only by reading the drain's denominator and noticing that one of fifteen files does not belong to the branch being merged -- which nothing prompts anyone to do.",
+        "THE PRODUCING MECHANISM, read at source: git refuses `commit --only <paths>` while a merge is in progress, and safe-commit.sh reaches its `git commit` only AFTER its gate stages the pathspec. So the refusal arrives with the file already in the shared index, and the failed run leaves it there. rc 128 belongs to the file's NOTHING-LANDED-TRY-AGAIN family, so the return code actively misinforms the seat that just ran it.",
+        "THE PRODUCING HALF IS NOW CLOSED AT THIS SEAT, and this row says so rather than reporting a hazard already fixed: .tools/safe-commit.sh @59c3163a96 adds a MERGE_HEAD guard at :208-235, placed immediately after the AGENT extraction and BEFORE the mutex and the staging, so the refusal now happens with NOTHING staged. It resolves MERGE_HEAD with `git rev-parse --git-path` (a linked worktree keeps its own), names the merge and the staged count, writes a MERGE-REFUSED audit line and exits 3. No override. EXERCISED both ways: RED -> rc 3 with the index unchanged and the target file absent from `git diff --cached`; GREEN -> once the merge was aborted the identical command committed (3e4fce6f53).",
+        "WHY THE ROW IS STILL ARMED RATHER THAN CLOSED BY THAT FIX -- the guard is one writer's, and the index is shared. It closes the path where THIS wrapper stages during a merge; it cannot close a raw `git add`, a tool that stages on its own, an older safe-commit on another device, or the residue of any run that dies between staging and committing. The ABSORBING half -- the drain committing an index it did not fill -- is not this row's and is filed as NFRA_CLDGRPH-S36 by 2.0.0_SA_COO~A: safe-merge.sh:73-79 would refuse a dirty index, but :82-85 aborts on a conflicted merge before reaching it, and an append-only channel conflicts on EVERY concurrent drain (3 of 3 in round 4).",
+        "DISCRIMINATION -- why this is a carrier defect and not one seat's bad luck: the SECOND drain of the same round, 57b6750101, done by the same seat by the same hand-merge method twenty minutes later, returns 7 files and ZERO foreign. The only difference is that 1.0.0_SA_CTO had begun holding its commits by then. Whether a seat's work is attributed to itself is decided by whether another seat happens to be mid-commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14a and ADHC_OWNPTH: a commit's AUTHOR is the seat whose lane owns the path, enforced by safe-commit's lane refusal and the owned-paths hook, with GIT_COMMIT_AUTHOR_OVERRIDE as the audited and SINGULAR escape. The estate's whole attribution story is that authorship is checked at the commit.",
+    "world_is": "Authorship is checked at the commit and then decided by the INDEX, which no single seat owns. A merge commits whatever the index holds; owned-paths-check exempts merges by design; so a foreign file crosses into the record under another seat's name with every lane control passing and no override written. The audited escape was not bypassed -- it was never reached, and an unaudited attribution change is exactly what that escape exists to prevent.",
+    "notes": "FILED LATE AND ON PURPOSE, which is itself the row's smallest lesson: the id was reserved at 94187 and 2.0.0_SA_COO~A deliberately skipped it when appending S36 rather than closing the gap, because writing into this file while a drain merge held it is the very hazard the row is about. Allocation re-measured at HEAD in the turn of the write (`git show HEAD:` across all three planes), never carried forward from the earlier read. NOT REMEDIATED HERE: the attribution of b687429234's foreign file is not repaired by rewriting history on a shared branch -- this row IS the second carrier, and it is the correct remedy for a record already in the log. THE OPEN LIMB is S36's `--continue` ask, whose disarm_owner is this seat: on a conflicted drain, keep the merge OPEN and re-enter to run the index guard and the row gate, rather than aborting past both. RELATION: S34 is the same property seen a third way (a drain DESTROYS a file it never merged); S35 is the absorb half seen from the SWEPT seat; S36 is the missing guard. All three come from one fact -- a drain commits an INDEX, and in a shared worktree the index is not only the drain's."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S11 -- the halt gate reads a session-keyed FILE and never OPAL_AGENT_SERIAL, so a worker's first safe-apply is rc 3 IDENTITY UNRESOLVED on a path no order grants
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S11",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T16:15Z",
+    "one_line": "The halt gate's spine-v3 WORKER limb (@68f22f74f5) admits this seat -- but only AFTER a step no task order names. safe-apply's FIRST invocation returned rc 3 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)': the gate resolves WHICH principal it is running as ONLY from org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial, and it does NOT read OPAL_AGENT_SERIAL, which is the one identity carrier every worker face mandates on every Bash call. The refusal is the IDENTITY-UNRESOLVED banner, a DIFFERENT verdict from the 'SERIAL RESOLVES TO NO KNOWN AGENT' one row W1-S1 filed: W1-S1's fix landed the worker GRAMMAR, and this row is about the worker having no way to declare its serial that the gate reads. Writing that one file admitted the seat and the apply landed rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, first invocation: `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/globgrph apply -input=false -no-color -auto-approve -target=<eight addresses>` with OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~1 exported on the same Bash call -> rc 3, banner 'This gate could not determine WHICH AGENT it is running as from any session-keyed source. It will NOT guess.' plus the one-line FIX naming org/mcp/sessions/3e63c2d6-a07e-4ea6-9780-7be73730e12c.serial. Saved whole at deliverables/0.9.0_WK_NFRA_CLDGRPH~1/targeted_apply.txt at that moment (since overwritten by the successful run, which is why the banner is quoted here).",
+        ".tools/halt-gate-check.sh:57 @f497b7d71b -- `local sess_file=\"${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial\"` is the resolver's session-keyed source; a comp-read --enumerate 'OPAL_AGENT_SERIAL' over the same file returns 0 hits across 1 file, so the env var every task-order face mandates is not consulted by this gate.",
+        "DISCRIMINATOR (the fix is the only variable): `printf '%s\\n' \"0.9.0_WK_NFRA_CLDGRPH~1\" > org/mcp/sessions/3e63c2d6-a07e-4ea6-9780-7be73730e12c.serial` and NOTHING else changed -- same command, same eight targets, same shell -> rc 0, 'Apply complete! Resources: 3 added, 5 changed, 3 destroyed.' The spine-v3 worker limb then resolved the issuer 2.0.0_SA_COO~A from this order's own <issued_to>/<issued_by> at HEAD and scanned THAT inbox, exactly as @68f22f74f5 designed.",
+        "GRANT PLANE: `git check-ignore -v org/mcp/sessions/<session>.serial` -> `.gitignore:423 org/mcp/sessions/`. The path the gate requires is GITIGNORED, so the write can never enter a commit and cannot reach the record through this branch; `git status --short org/mcp/` after the write is EMPTY. That is why this seat wrote it rather than filing a BLOCKING row and stopping -- but the file is NOT in this order's <paths>, and the order does not mention the step at all.",
+        "NOT a duplicate of W1-S1: that row's banner is 'SERIAL RESOLVES TO NO KNOWN AGENT' from halt_gate_validate_serial (a serial that RESOLVED and then failed validation), and its disarm landed at @68f22f74f5. This row's banner is 'IDENTITY UNRESOLVED' from the resolver ABOVE the validator, which fires when no serial resolves at all. Both were hit by the same order, in that sequence, one pass apart."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 STANDING LAW: 'Every Bash call begins export OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_CLDGRPH~1' and 'The halt gate admits you while this order is non-terminal at HEAD (@68f22f74f5); an rc=3 from safe-apply is a BLOCKING row quoting its whole output.' The face therefore asserts that exporting the serial is the seat's identity act and that the gate's admission follows from the order's non-terminal status alone.",
+    "world_is": "Two identity carriers exist and only one is read. The task-order face and the commit lane read OPAL_AGENT_SERIAL; the halt gate reads a session-keyed FILE and refuses, correctly and loudly, when it is absent. A worker subagent is spawned with the env var set and the file unwritten, so EVERY spine-v3 worker whose order contains an apply meets rc 3 on its first attempt -- and the face instructs it to treat that rc 3 as BLOCKING and stop. A seat that obeys that sentence literally halts one file short of a working gate; a seat that writes the file is acting outside its <paths>. Neither reading is comfortable, which is what makes it a row rather than a preference.",
+    "notes": "NOT AN ARGUMENT FOR AN OVERRIDE and no override was used: the gate's refusal is sound -- an agent that cannot name its principal must not deploy blind to its own STOPs, and this seat's STOPs are its ISSUER's by the same commit @68f22f74f5. The write was the gate's own prescribed FIX, printed by the gate, onto a GITIGNORED runtime path that cannot enter the record. DISARM, cheapest first: (a) have halt-gate-check.sh accept OPAL_AGENT_SERIAL as a session-keyed source when it is set and matches the worker grammar -- the same value the commit lane already trusts for authorship; or (b) have the worker spawn write the session serial file, which makes it a fabric act rather than a worker act; or (c) name the file in every worker face that contains an apply, which is the weakest of the three because it costs a line in every future order. Owner 1.0.0_SA_CTO as the .tools/ lane that owns the resolver limb; if 3.0.0_SA_CVO routes it elsewhere at L9 this assignment is superseded. BLAST RADIUS: every spine-v3 worker task order whose deliverable includes safe-apply or safe-ec2-deploy -- the same population W1-S1 named, one layer further in. Related but distinct: W2-S9 (safe-ec2-deploy resolving its identity against the MAIN worktree); here HALT_GATE_REPO_ROOT resolved to THIS worktree correctly and the missing thing was the file, not the root."
+  }
+]
+```
+
+## NFRA_CLDGRPH-W1-S12 -- the ledger's pinned-derive leg was closed on pass 1 against the UNPINNED run, and a closed leg cannot be reopened for pass 2
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S12",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-04T17:10Z",
+    "one_line": "The deploy ledger's leg L5 -- 'derive family next launch on the pinned revision' -- was CLOSED on the first pass against a derive that ran on globgrph-derive-runner:6, the UNPINNED revision, and its own proof text says so ('NOTE the pin is NOT in force').  The pinned derive this order actually required is a DIFFERENT task (4a1baae562c8496983eb068146ae33d5 on globgrph-derive-runner:7, buckets read=34 / unreadable=0), and it has no leg: a closed leg cannot be reopened and the change_management/*.md is never hand-edited. The CLOSED ledger therefore reads as if the derive family's pinned launch were proven by a run that predates both the pin and the IAM grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/critical_paths/change_management/20260904T0756Z_cldgrph-cgs15-shared-image-digest-pins_deploy_completion.md, row L5, closed 20260904T085617Z: 'task-definition globgrph-derive-runner:6 ... Task 7286e56c80614ab49fa2fba791bb8b43 ... buckets read=0 / buckets unreadable=34 ... NOTE the pin is NOT in force: revision 6 references :latest'. Its `proof_required` reads 'ONE ad-hoc run-task exits 0 with its buckets read=N unreadable=M line', which that run DID satisfy -- the leg is not falsely closed, it is closed on a weaker fact than its own TARGET line names.",
+        "THIS pass, measured: ecs run-task on globgrph-derive-runner:7 -> task 4a1baae562c8496983eb068146ae33d5, describe-tasks lastStatus STOPPED, exitCode 0, taskDefinitionArn .../globgrph-derive-runner:7, containers[0].imageDigest sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778, startedAt 1788539432.975 = 2026-09-04T16:30:32Z, stoppedAt 1788540008.657.",
+        "The two runs differ in BOTH variables the leg exists to certify: the revision (6 unpinned vs 7 pinned) and the denominator ('s3 notifications buckets read=0 / buckets unreadable=34' vs 's3 notifications buckets read=34 / buckets unreadable=0', both read from /ecs/globgrph/derive-runner, streams derive-runner/derive-runner/7286e56c... and .../4a1baae5...).",
+        "MECHANISM, not an oversight: deploy_ledger.py exposes open / close-leg / close / hold / check / list and NO reopen-leg or amend verb (`python .tools/deploy_ledger.py --help`), and CLAUDE.md forbids hand-editing the rendered entry. A leg closed on pass 1 cannot be corrected by pass 2 even when pass 2 is the same seat on the same order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-CG-D-1 step 1 leg manifest: 'L5 exercise = the derive family's launch: ONE ad-hoc run-task on the pinned revision exits 0 with its buckets read=N / unreadable=M line in CloudWatch', and step 1 of the reopened face: 'close each remaining leg with deploy_ledger.py close-leg --proof ... Per the sentinel as restored, L1, L2, L3 and L5 are CLOSED and L4, L6 and L7 are still STRANDED.' The face treats L5 as settled.",
+    "world_is": "A multi-pass task order and a single-pass ledger disagree about what 'closed' means. The ledger is append-and-close-once by design -- which is the right design for the failure it was built against (a stranded leg) -- but it has no way to say 'this leg was proven against an earlier world and re-proven against the current one'. The record that survives is the CLOSED entry; the correcting fact lives only in this row and in the deliverable beside it. A later reader auditing the pin by the ledger alone would cite task 7286e56c... as the pinned-derive proof, which it is not.",
+    "notes": "INERT, not ARMED: nothing in the world is wrong -- the pins are applied, the pinned derive ran and exited 0, and the denominator is 34/0. The hazard is to a READER of the ledger, and this row plus the deliverable's closing section 'Ledger leg L5 -- read it with its date' are the correction. NOT REMEDIATED and deliberately so: reopening L5 would mean hand-editing a change_management/*.md, which this order forbids outright, and inventing an eighth leg after the entry is CLOSED would be worse. WHAT A FUTURE FACE COULD DO instead: when a task order is REOPENED, re-open its ledger legs whose target names an artifact the reopened pass will re-produce, or open a NEW entry for the second pass rather than inheriting the first pass's. Surfaced, not adjudicated; the significance of this is 3.0.0_SA_CVO's call at L9, not this seat's."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S37 -- CG-x-5's laptop-seat comparison stopped being able to fail when CG-s-6 landed, and the window to take the discriminating version closes at TO-CG-D-7
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S37",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T18:05Z",
+    "one_line": "CG-x-5's closing comparison LOST ITS DISCRIMINATION between the cut and the exercise, and the window to take the discriminating version CLOSES at TO-CG-D-7. The cell closes on 'same answer as a laptop seat', written when the laptop seat read a LOCAL Kuzu DB and a fresh machine had none -- so it tested that two DIFFERENT substrates agree. After CG-s-6 landed (TO-CG-D-3, @2ca8e882f2) `comp-kuzu` is a thin client on BOTH sides, so the pair the CVO grades at D6-AC4 is two clients of ONE server at ONE vintage: they agree BY CONSTRUCTION and the comparison can no longer fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PAIR ITSELF, both halves taken this hour at the SAME vintage 2026-09-04T16:38:39.485910+00:00 (manifest c3ba0330e306): the fresh machine (0.9.0_WK_NFRA_CLDGRPH~2, worktree with the local DB proven absent by `ls` BEFORE the ask) and the laptop seat (2.0.0_SA_COO~A, main workspace) each ran `MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC, t`. Compared at the issuer's seat by parsing both row arrays and normalising: 58 rows each, 27295 CloudNodes each, ROW ARRAYS IDENTICAL, and the same normalised digest cedb5abceb26e6071202472bd565a0ca62960e93e36d80bb01ea19e84e4f2f3f. The answer is right; this row is about what the agreement PROVES.",
+        "WHY IT IS BY CONSTRUCTION, measured rather than reasoned: the laptop seat STILL HOLDS a local graph -- `ls infra/aws/globgrph/ | grep -c kuzu_nessie_db` returns 6 entries on disk at this seat -- but `comp-kuzu` no longer reaches it. `infra/aws/globgrph/kuzu_cli.py` at HEAD carries 5 references to `projection_client` and, by D3-AC3's own enumerate, ZERO to `import kuzu`, `_canonical`, `CANONICAL_DB_PATH`, `ensure_fresh` or `kuzu_nessie_db`. So both readers reach the same served artifact over the same transport; nothing in the comparison touches the local copy.",
+        "THE FALSIFIER, and it is the reason this is not merely a semantic quibble: a comparison that cannot fail is not evidence. Two clients of one server at one vintage MUST agree unless the transport is broken -- and the transport's own failure mode was measured this hour and is LOUD, not silent (`ERROR: projection service <status>` plus `VINTAGE: unavailable -- the projection service did not answer; no age was inferred and no local copy was read`). So the only outcomes available to D6-AC4 are 'identical' and 'one side errored visibly'. There is no arrangement of the world consistent with CG-s-6 having landed in which the two answers differ in content.",
+        "THE WINDOW, dated: the discriminating comparison -- a LOCAL-DB reader against a SERVED reader -- is still takeable today, because the local copy exists and 33 consumers still read it (`comp-find --corpus aws`, `org/modules/graph/cli.py`, `comp_blast_universe.py`, `comp_detect.py`, `comp_debt.py`, the `_canonical.py` seam and the engines, per TO-CG-D-3's cut census). TO-CG-D-7 (CG-s-8) RETIRES that copy and repoints those consumers, and this seat's own deletion of the laptop's local Kuzu DB happens at that drain. After that the comparison is not merely undiscriminating, it is UNTAKEABLE. This is a measurement opportunity with an expiry, not a standing option.",
+        "SCOPE CONTROL, so this is not read as a complaint about the cell: FWD-5's own words are 'a machine that has never held the database asks and gets the same answer as everyone else on its first try'. ONE answer for everyone is the OUTCOME the endpoint wanted, and it is what landed. The cell text is not wrong and the worker's evidence is not weak -- D6-AC1 and D6-AC3 (absence before and after, on two instruments, three runs) are fully discriminating and they carry the 'reader, not a builder' half on their own. Only the LAPTOP-COMPARISON limb of D6-AC4 changed meaning under it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CG-x-5 closes on 'the absence of the local DB proven before the ask, then the answer; SAME ANSWER AS A LAPTOP SEAT for the same question', and TO-CG-D-6 assigns that second half to the issuer at the drain for `3.0.0_SA_CVO` to grade at D6-AC4.",
+    "world_is": "The issuer's half is taken and the answers are identical, but the two seats are no longer two substrates. The cell was cut on 2026-09-03/04 when a laptop seat's `comp-kuzu` read a local Kuzu DB; CG-s-6 landed hours before this exercise and made every `comp-kuzu` a client of the one served projection. The pair therefore certifies the transport, not the equivalence of a local reader and a served one -- which is what the cell's author was reaching for.",
+    "notes": "NOT REMEDIATED and deliberately NOT remediated by this seat: taking the local-DB half would mean running an instrument that reads the retiring copy, and choosing whether D6-AC4 needs it is an adjudication, not an issuer's act. FOR 3.0.0_SA_CVO AT L9, which is why the row names it as disarm_owner: grade D6-AC4 knowing the pair is service-vs-service, and rule EITHER that FWD-5 is satisfied as written (defensible -- one answer for everyone is the endpoint) OR that the discriminating comparison should be taken while it still exists. If the second, it must happen BEFORE TO-CG-D-7 is handed, and this seat will carry it as an issuer's act at that hand-off rather than as a new cell, since the spec is FROZEN mid-round. RELATED: the same 'a control that cannot fail' shape appears in this project's own history at NFRA_CLDGRPH-S13, where a 0-diff re-plan limb was replaced by a bar reachable in this tree; the remedy there was to change the BAR, which is an L6 act and not available mid-round here."
+  }
+]
+```
+
+## W3-S1 -- D5-AC4's `<expect>` cannot match the invocation it is bolted to: 0 hits demanded, 1 DOCSTRING hit delivered, CODE=0
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W3-S1",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-04T18:04Z",
+    "one_line": "TO-CG-D-5 criterion D5-AC4 pairs the invocation `comp-read kuzu_cli.py --enumerate 'ensure_fresh|kuzu_nessie_load|import kuzu|--mode'` with the expectation `ENUMERATE: 0 hit\\(s\\)`, but that pattern's own `--mode` alternative occurs in kuzu_cli.py:14 -- the DOCSTRING sentence that DOCUMENTS the absence -- so the invocation returns `1 hit(s)` and the expectation cannot be satisfied by any client that keeps its own FWD-6 disclosure. The world the criterion asks about is CLEAN (CODE=0, DEF=0, COMMENT=0; the single hit is prose). The criterion is recorded FAIL against its stated expectation and TO-CG-D-5 is NOT flipped complete.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CRITERION: org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.md:53 @`4e30d6b635` -- `<criterion id=\"D5-AC4\" cell_refs=\"CG-x-1\"><invocation>python .tools/comp-read infra/aws/globgrph/kuzu_cli.py --enumerate 'ensure_fresh|kuzu_nessie_load|import kuzu|--mode' --limit 3</invocation><expect>ENUMERATE: 0 hit\\(s\\)</expect></criterion>`",
+        "THE OUTPUT, verbatim, run under `timeout 120` at `4e30d6b635`: `ENUMERATE: 1 hit(s) across 169 lines / 8 section(s) scanned` / `whole-value matches: 1   |   substring matches: 0` / `ENUMERATE-END: 1 hit(s) | 1 whole | 0 sub | DOCSTRING=1 | COMMENT=0 | DEF=0 | CODE=0` (rc=0). The hit, printed with its band: `14  DOCSTRING   WHOLE  hit 1/1 WHAT IS GONE AND WHY (FWD-6): there is no --db-path, no --mode, no --force/--refresh/--fresh`.",
+        "THE MATCH, evaluated mechanically rather than by eye: `re.search(r'ENUMERATE: 0 hit\\(s\\)', output, re.S|re.M)` -> None. The same script confirms D5-AC2 and D5-AC3 DO match their patterns, so the evaluator is not a dead arm.",
+        "WHY THIS DECIDES THE ROW RATHER THAN A WORKER'S READING: .tools/proof-of-spec-check.py:94-101 @`4e30d6b635` -- `matched = _re_x.search(exp, row.get(\"output_evidence\", \"\") or \"\", _re_x.S | _re_x.M) is not None` and, when `matched is False and row.get(\"status\") == \"PASS\"`, `acceptance[{rid}]: status=PASS but output_evidence does NOT match expect ... the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID`. A PASS on D5-AC4 is refused by the checker; the field is optional in the schema, so a PASS was reachable by DROPPING the `expect` the task order minted, which is the one route this row exists to not take silently.",
+        "THE SUBSTANCE IS UNHARMED, and is stated separately so this row is not read as a defect in the client: kuzu_cli.py @`4e30d6b635` carries ZERO CODE-band occurrences of ensure_fresh / kuzu_nessie_load / import kuzu / --mode over 169 lines and 8 AST sections. No refresh step exists on the path the asker used. D5-AC4's PROSE clause ('NO REFRESH STEP EXISTS on the path the asker used') is TRUE; only its machine expectation is unsatisfiable.",
+        "A TWO-FACE DIVERGENCE ON THE SAME CRITERION, measured because it changes who can see this: the WORKER FACE delivered to 0.9.0_WK_NFRA_CLDGRPH~3 at spawn appends a NOTE to D5-AC4 -- 'NOTE, so a hit does not confuse you: kuzu_cli.py's module DOCSTRING documents the ABSENCE ..., which is prose, not code. If your enumerate returns hits, read their BAND -- DOCSTRING hits are the documented absence; a CODE-band hit is the real failure.' The RECORD FACE at :54 @`4e30d6b635` ends at '(the client's source, at your HEAD).' and carries no such note. So the issuer FORESAW this exact hit and relieved it in the face that does not travel to the record, while the face the checker reads kept an expectation that contradicts the relief."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D5-AC4 asserts that the enumerate over 'ensure_fresh|kuzu_nessie_load|import kuzu|--mode' against infra/aws/globgrph/kuzu_cli.py returns `ENUMERATE: 0 hit(s)`, and the task order names D5-AC4 one of the three 'controls that must be able to FAIL' (:89).",
+    "world_is": "It returns `ENUMERATE: 1 hit(s)` and always will: the pattern's `--mode` alternative matches the client's own module docstring at kuzu_cli.py:14, the sentence whose entire job is to declare that no --mode exists. The criterion's two carriers disagree -- the prose clause is satisfied (CODE=0), the machine expectation is not, and the checker grades the machine expectation.",
+    "notes": "NOT REMEDIATED, AND DELIBERATELY SO. The fix is one character-class in the expectation (e.g. `CODE=0` on the ENUMERATE-END line, or `DOCSTRING=1 \\| COMMENT=0 \\| DEF=0 \\| CODE=0`), or a `--band CODE` invocation -- but the acceptance battery is FROZEN mid-round (CLAUDE.md rule 27) and rewriting the criterion I am graded by is the one edit a worker must never make, even to a file inside its own <paths>. Recorded FAIL with the full output so 3.0.0_SA_CVO at L9 or 2.0.0_SA_COO~A at a recut can dispose of it on the evidence. INERT, not ARMED: nothing degrades while this sits -- the client is correct, the asker was answered, and the only consequence is that TO-CG-D-5 stays OPEN. The other four criteria of TO-CG-D-5 are met by output and the FWD-1 act itself (a never-compiled seat asked one wiring question and was answered in 7.802 s at a stated vintage with no build) is on the record at org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~3/CG-x-1.never-compiled-seat.result.md."
+  }
+]
+```
+
+## W3-S2 -- the premise read for 'this seat has no graph history' scans ZERO files in a worker worktree: NO MEASUREMENT wearing the shape of a zero
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W3-S2",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~3",
+    "surfaced_at": "2026-09-04T18:06Z",
+    "one_line": "TO-CG-D-5 offers `comp-find '<serial>' org/mcp/agent_telemetry --limit 3 -> 0 hits` as the census proving the asker has never run a graph tool, but org/mcp/agent_telemetry is untracked runtime state that does not exist in a freshly-created worktree, so the read returns `0 hit(s) across 0 file(s)` -- the out-of-corpus signature, which CLAUDE.md rule 21 rules is NOT absence. The premise still holds on other evidence; the INSTRUMENT for it does not, and it will read the same clean zero for every future spine-v3 worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PREMISE AS ISSUED: org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-5.close-fwd1-never-compiled-seat.md @`4e30d6b635`, MEASURED BY THE ISSUER AT THE CUT -- \"your serial has never run a graph tool ... The 'no graph history' claim is PROVEN, not asserted: ... `python .tools/comp-find '0.9.0_WK_NFRA_CLDGRPH~3' org/mcp/agent_telemetry --limit 3` -> 0 hits (a worker writes no telemetry; the census is the denominator).\"",
+        "THE READ, verbatim, in worktree wk-NFRA_CLDGRPH-3 @`4e30d6b635` under `timeout 120`: `DENOMINATOR: 0 hit(s) across 0 file(s) scanned in scope [corpus=all]` / `NO HITS. This is a MEASURED zero over 0 scanned file(s) in scope -- not a claim the term is absent from the estate.` (rc=0). Zero files SCANNED, not zero hits over a populated scope.",
+        "THE DISCRIMINATOR, the census verb rule 21 names for exactly this: `python .tools/comp-find --hidden org/mcp/agent_telemetry` -> `ERROR: 1 path(s) do not exist: org/mcp/agent_telemetry` / `A count over a path that is not there is not a zero -- it is NO MEASUREMENT.` (the tool says it in its own words).",
+        "WHY THE PATH IS ABSENT HERE AND PRESENT AT THE ISSUER'S SEAT: `ls -d org/mcp/agent_telemetry` -> rc=2 (No such file or directory) while `ls org/mcp/` lists 20+ tracked siblings, and `git ls-files org/mcp/agent_telemetry` returns EMPTY -- the directory is untracked runtime state that lives in the primary worktree and is never checked out into a worktree created from a branch tip. corpus=all covers tracked + untracked + gitignored OF THIS WORKTREE, so it cannot reach it.",
+        "THE CLAIM ITSELF IS UNDISTURBED, stated separately so this row is not read as doubt about the asker: `ls -d infra/aws/globgrph/kuzu_nessie_db` -> rc=2 (D5-AC1), the serial 0.9.0_WK_NFRA_CLDGRPH~3 was minted for this spawn, and this worktree was created from CLOUD @`4e30d6b635` this hour. The finding is about the INSTRUMENT the TO cites, not the fact it certifies."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That running `comp-find '<worker serial>' org/mcp/agent_telemetry` in the worker's own worktree yields a MEASURED zero, and that 'the census is the denominator' proving the seat has no graph history.",
+    "world_is": "In a worker worktree the pathspec does not exist, so the census denominator is 0 files scanned and the result is NO MEASUREMENT. It renders as `0 hit(s)`, which is indistinguishable at a glance from a true absence -- and because the same command is the natural way to certify 'this seat never ran X' for ANY spine-v3 worker in ANY project, it will keep returning the same clean zero from every worker worktree regardless of what the telemetry actually holds.",
+    "notes": "ARMED rather than INERT on a deliberate reading, and the disarm is a SENTENCE, not a code change: the hazard is not in this order (whose claim survives on other evidence) but in the pattern -- a worker-face premise that cites an untracked runtime path as a census reads as PROVEN from inside a worktree that structurally cannot see it, and a future TO could rest a real conclusion on it. disarm_owner is the issuing seat, 2.0.0_SA_COO~A, as the author of worker faces: the disarm is to certify 'no history' from something a worktree CAN see (the serial's mint, the branch's creation, the absent local DB), or to route the telemetry read to the primary worktree and say so. Not mine to remediate: org/mcp/ is outside this order's <paths>, and .tools/comp-find already prints the correct warning -- nothing is broken in the tool, which is why this is a row about a citation and not a bug report."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S38 -- DISARM ACK for S20: the derive now reports the read state, and reports it on the FAILING run too, which is the property S20 was filed about
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S38",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T19:50Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-S20 (ARMED, disarm_owner 2.0.0_SA_COO~A). S20's own disarm text is 'the hazard stays ARMED until the derive reports the read state'. THE DERIVE NOW REPORTS THE READ STATE, and reports it on the FAILING run as well as the passing one, which is the whole property S20 was filed about. S20's hazard_standing is DISARMED by this row; the row itself is append-only and untouched, as the channel requires.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S20's DISARM CONDITION, quoted from its own notes so this ACK is graded against the row's text and not against a paraphrase: 'disarm this round is this row plus the route; the hazard stays ARMED until the derive reports the read state.' S20's substance is that `comp_aws_cli.py derive_edges` swallowed a failed `get_bucket_notification_configuration` in a bare except, so A FAILED READ WAS INDISTINGUISHABLE FROM A GENUINE ZERO.",
+        "THE CONDITION MET, re-measured at the issuer's seat this tick with its own `logs filter-log-events` calls against the two real cloud derive streams -- not read from a worker's report. PRE-GRANT (stream 7286e56c8061...): `s3 notifications buckets read=0 / buckets unreadable=34; unreadable=<all 34 named>`. POST-GRANT (stream aeb8dec69824...): `s3 notifications buckets read=34 / buckets unreadable=0; unreadable=none`.",
+        "WHY THE PRE-GRANT LINE IS THE STRONGER HALF OF THIS DISARM, and the reason this ACK does not rest on the green run: S20 is not a row about TRIGGERS being zero. It is a row about a zero whose CAUSE could not be read. The pre-grant run is the FAILING case, and on it the derive printed a counted denominator AND named all 34 unreadable buckets -- so the failure announced itself instead of presenting as a clean zero. A disarm taken only on the passing run would certify the wrong property.",
+        "THE ROUTE, S20's other half: the C-3 engine fix @b5bc1c8b27 reached the cloud through the change-managed rebuild (TO-CG-D-1 / CG-s-15, ledger cldgrph-cgs15-shared-image-digest-pins CLOSED 7 of 7, drained @c5b54680a9), and the three families now run it pinned by digest (sha256:1b89853f..., re-read family by family at this seat).",
+        "THE WARNING THIS ACK HAD TO CLEAR, addressed head-on rather than ignored: row W1-S7 states 'S20 and S28 must NOT be disarmed on this rebuild ... closing S20 on the rebuild would close it on the wrong cause', because the rebuild alone left TRIGGERS at zero for an IAM reason. THAT CAUSE IS NOW FOUND AND FIXED AND EXERCISED: `s3:GetBucketNotification` was granted to opal-globgrph-derive-runner-task (CG-s-16 / TO-CG-D-12, @b687429234) and the issuer re-measured it live this session -- `allowed 1` for the grant, `implicitDeny 0` for the write twin, `implicitDeny 0` for a peer role. So this disarm is taken ON THE CAUSE W1-S7 identified, which is exactly what W1-S7 asked for, and NOT on the rebuild."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "This row is an ACK, not a finding of its own: it records that S20's stated disarm condition is met and that S20's hazard is DISARMED. It carries no open question and needs no investigation.",
+    "spec_asserts": "CLAUDE.md section 2: an ARMED hazard disarms via the row's `disarm_owner`, and the channel is APPEND-ONLY during the round -- so a disarm is a NEW ROW acknowledging the condition, never an edit to the armed row. Precedent in this project: S5 disarmed in-round by the issuer @ee7c884f29 with S6 as the disarm ACK.",
+    "world_is": "S20's condition is met and met in its strongest form. This ACK covers S20 ONLY. It does NOT disarm S28, W1-S2 or W1-S10, whose disarm conditions this seat also reads as met by exercise -- each is owed its own reading against its own text and its own ACK, one at a time, and batching four disarms behind one justification is the shape this channel exists to prevent.",
+    "notes": "TAKEN ON AN EXERCISE, NOT A BUILD: the evidence is two real cloud derive runs and a live IAM simulate, re-measured at this seat rather than carried from a worker's report. THE THREE THAT REMAIN AND ARE NOT TOUCHED HERE, named so the count is not lost: S28 (its text asks the rebuild be 'routed and proven through the existing change-management path ... checking all five consumers' -- met and exceeded, since the ledger closed 7 of 7 and the consumer count is SEVEN not five, which S31 corrected; the ACK should say so); W1-S2 (the eight-address apply was DESIRED-not-APPLIED and is now APPLIED, D1-AC3 PASS); W1-S10 (the false-zero instrument, repaired and exercised at LAMBDA=203 with a battery arm holding the trap at two grains). Each is this seat's and each gets its own tick. THIRTEEN of this seat's sixteen ARMED rows remain after those three."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S39 -- DISARM ACK for S28: routed, proven and closed through change management, the single canonical runner preserved, and all SEVEN consumers checked (S28 said five)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S39",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T20:25Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-S28 (ARMED, disarm_owner 2.0.0_SA_COO~A). S28's disarm text names three conditions -- route the shared-image rebuild through the existing change-management path and PROVE it, preserve the single canonical derive runner, and check all the consumers -- and all three are met and re-measured live at this seat. S28's hazard_standing is DISARMED by this row. ONE CORRECTION RIDES WITH THE DISARM: S28 says 'all FIVE consumers' and the true denominator is SEVEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S28's DISARM TEXT, quoted so this ACK is graded against the row and not a paraphrase: 'Disarm by routing and proving the shared-image rebuild/deployment through the existing change-management path, preserving the single canonical derive runner and checking all five consumers; this seat must not perform or imply that deployment.'",
+        "CONDITION 1 -- ROUTED AND PROVEN THROUGH CHANGE MANAGEMENT. The rebuild ran as TO-CG-D-1 (CG-s-15) under NEVER-2 with a seven-leg manifest, and the entry org/critical_paths/change_management/20260904T0756Z_cldgrph-cgs15-shared-image-digest-pins_deploy_completion.md reads at HEAD: `**Status:** CLOSED -- nothing stranded -- closed 20260904T170545Z`, 7 of 7 legs proven. Not merely opened and abandoned: the ledger's own sentinel was committed while OPEN (f497b7d71b) and unlinked by `close` (8c7708f9a5), so the full lifecycle is on the record rather than asserted.",
+        "CONDITION 2 -- THE SINGLE CANONICAL DERIVE RUNNER PRESERVED. `ecr describe-repositories` filtered on the name returns exactly ONE repository, `opal-globgrph-derive-runner`. No parallel repo, no second image line, no shadow build target -- which is the property S28 was protecting and is also the standing Andrew veto on shadow/build-alongside pipelines.",
+        "CONDITION 3 -- THE CONSUMERS CHECKED, and this is where the row's own number is wrong. `ecs describe-task-definition` read family by family at this seat this tick, DENOMINATOR SEVEN: globgrph-derive-runner, globgrph-projection-worker and globgrph-serving are PINNED by digest (@sha256:1b89853f...); globgrph-comp-learns-producer, globgrph-cse-producer, globgrph-fedobs-producer and globgrph-resource-summaries-producer still read `:latest`, deliberately and untouched. 3 pinned + 4 on the tag = 7 of 7 accounted.",
+        "THE CONSTRAINT S28 PUT ON ITS OWN FILER WAS HONOURED: 'this seat must not perform or imply that deployment.' It did not. The deployment was performed by `0.9.0_WK_NFRA_CLDGRPH~1` under task order TO-CG-D-1, whose PATHS block was its grant; the filing seat routed the cell and drained the worker. Certifier is not author, which is the separation S28's clause exists to keep."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An ACK, not a finding: it records that S28's three stated conditions are met and that S28's hazard is DISARMED. Its one substantive addition -- that S28's 'five consumers' is really seven -- is already carried as a live correction by S31 and is repeated here only so a reader of S28 alone is not left with the wrong denominator.",
+    "spec_asserts": "S28 asserts the C-3 engine fix cannot reach the cloud runtime without a separately routed image rebuild through change management, and that its own filer must not perform that deployment.",
+    "world_is": "The rebuild was routed, performed by a worker under a task order rather than by the filing seat, proven leg by leg, and closed. The fix is live: the same image bytes that read 0 of 34 buckets before the IAM grant read 34 of 34 after it, and the served graph answers TRIGGERS=171. The one thing S28 got wrong is its blast-radius count, which was five when the estate holds seven.",
+    "notes": "TAKEN ON AN EXERCISE: a closed seven-leg ledger, a live ECR repository census and a live seven-family task-definition census, all re-measured at this seat rather than carried from a worker's report. SECOND OF THE FOUR met-by-exercise rows this seat named at S38; W1-S2 (the eight-address apply, DESIRED-then-APPLIED) and W1-S10 (the false-zero instrument, repaired and exercised) remain, each owed its own reading and its own ACK on its own tick. TWELVE of this seat's sixteen ARMED rows remain after those two. NOT DISARMED BY THIS ROW and named so it is not assumed: S20's sibling W1-S7 stays ARMED at 0.7.0_AE_CloudOps -- the IAM grant landed as its own inline policy in iam.tf rather than folded into item2a.tf's Sid AccountWideReadOnly, so the role's account-wide S3 reads still have TWO carriers and that is that owner's disarm, not this seat's."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S40 -- DISARM ACK for W1-S2: all eight addresses APPLIED and the revision-scoped IAM grants moved WITH the task definitions, so tonight's nightly fire is permitted on the pinned revision
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S40",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T21:20Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W1-S2 (ARMED, disarm_owner 2.0.0_SA_COO~A). W1-S2 said the eight-address apply set was a MEASURED PLAN and not an APPLIED state -- DESIRED, not APPLIED -- because the apply was blocked by W1-S1, and that whoever completed it should use eight addresses and not the four the order named. THE APPLY COMPLETED ON ALL EIGHT and every one of the four NON-task-definition addresses is verified on the APPLIED plane at this seat. W1-S2's hazard is DISARMED. A SECOND FINDING RIDES WITH IT AND MATTERS MORE THAN THE DISARM: the revision-scoped IAM grants moved TOGETHER with the task definitions, so tonight's 02:00Z fire is PERMITTED on the pinned revision -- a precondition of CG-x-2's night that nobody had checked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S2's OWN TEXT, quoted so the ACK is graded against the row: 'NOT acted on beyond planning: the apply is blocked by NFRA_CLDGRPH-W1-S1, so the eight-address set is a MEASURED PLAN and not an APPLIED state -- DESIRED, not APPLIED ... Whoever completes the apply should use the eight addresses, not four.' The issuer amended TO-CG-D-1's deliverable to name all EIGHT before the re-hand, and the worker applied that set.",
+        "THE THREE TASK DEFINITIONS, already on the record and re-read at this seat: globgrph-derive-runner, globgrph-projection-worker and globgrph-serving all reference opal-globgrph-derive-runner@sha256:1b89853f..., no `:latest` in any of them (D1-AC3 PASS).",
+        "THE FOUR NON-TASK-DEFINITION ADDRESSES, which are the half W1-S2 was actually about and which no criterion graded, measured on the APPLIED plane at this seat this tick: (1) `aws_cloudwatch_event_target.derive_runner_nightly` -- `events list-targets-by-rule` returns TaskDefinitionArn `.../globgrph-derive-runner:7`; (2) `aws_iam_role_policy.derive_runner_events_ecs` -- role opal-globgrph-derive-runner-events, policy EventsRunECSTask, its ecs:RunTask Resource is `.../globgrph-derive-runner:7`; (3) `aws_iam_role_policy.projection_pipe` -- role opal-globgrph-projection-pipe, policy ProjectionPipeInvoke, its RunTask Resource is `.../globgrph-projection-worker:4`; (4) `aws_ecs_service.globgrph_serving` -- PRIMARY deployment `COMPLETED` on `globgrph-serving:2`.",
+        "THE COHERENCE POINT, which is why W1-S2 named those four in the first place: the two IAM role policies HARD-CODE the task-definition ARN AT ITS REVISION, and `-target` never pulls a dependent. So a four-address apply would have moved the task definitions to new revisions while leaving the grants pointing at the OLD ones -- and the failure would not appear until the next scheduled fire was DENIED. Every revision-scoped reference above carries the NEW revision (7, 7, 4) and they agree with each other. The wider set did not merely apply; it applied CONSISTENTLY.",
+        "THE CONSEQUENCE FOR THE ROUND, stated because it is load-bearing and was not otherwise verified: CG-x-2 (TO-CG-D-9) closes on the first 02:00Z nightly fire AFTER these pins. That fire is launched by the EventBridge target through the derive-runner-events role. Both now name revision 7. So the night D-9 waits for is PERMITTED to run on the pinned bytes. Had either lagged, the nightly would have failed on an authorization error and the round would have discovered it tomorrow instead of tonight."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An ACK, not a finding: it records that W1-S2's DESIRED-not-APPLIED condition is resolved and that its hazard is DISARMED. Its second half -- that the nightly fire is permitted on the pinned revision -- is a positive verification, not an open question.",
+    "spec_asserts": "W1-S2 asserts that TO-CG-D-1's four-address apply set was incomplete, that the true set is eight, and that until the apply ran the wider set was DESIRED and never APPLIED.",
+    "world_is": "All eight applied and the revision-scoped references agree. The DESIRED/APPLIED gap W1-S2 was filed to keep visible is closed, and the closure was verified on the plane that decides it -- the live AWS state -- rather than from the apply's own output or the worker's report.",
+    "notes": "TAKEN ON AN EXERCISE: five live AWS reads at this seat (one EventBridge target, two IAM role policies, one ECS service, three task definitions), none of them carried from the worker's report. THIRD of the four met-by-exercise rows named at S38. ONE REMAINS: W1-S10, the false-zero cypher instrument, repaired and exercised at LAMBDA=203 -- owed its own reading and its own ACK on its own tick. ELEVEN of this seat's rows remain beyond it. NOT DISARMED HERE, and named so it is not assumed: W1-S1 stays ARMED at 1.0.0_SA_CTO -- it is the halt-gate identity limb that BLOCKED this apply, and although the apply has since succeeded, W1-S11 records that a worker's FIRST safe-apply still returns rc 3 IDENTITY UNRESOLVED and its fix is a write to a gitignored path no order grants. That is the tool's owner's to disarm, not this seat's, and the apply succeeding does not retire it."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S41 -- DISARM ACK for W2-S5: every ledger criterion cut after it reads the entry file's Status line, and all three have been exercised and passed
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S41",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T22:15Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-W2-S5 (ARMED, disarm_owner 2.0.0_SA_COO~A). W2-S5 found that a ledger criterion invoking `deploy_ledger.py list` and expecting CLOSED is UNSATISFIABLE BY CONSTRUCTION -- `close` unlinks the sentinel, so a closed slug is absent from `list` -- and prescribed that the next cut name the ENTRY FILE's `**Status:**` line instead. EVERY ledger criterion in this round now does, and all three have been EXERCISED and PASSED. W2-S5's hazard is DISARMED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S5's PRESCRIPTION, quoted: 'the next cut of any TO carrying a NEVER-2 ledger criterion should name the entry file's Status line (or check's rc + absence) rather than a grep of `list`.' The row is explicitly PROSPECTIVE -- it says the point was moot on its own order -- so the disarm condition is about SUBSEQUENT cuts, not about TO-CG-D-2.",
+        "THE CUTS THAT FOLLOWED, read at HEAD: D1-AC7 invokes `grep -c '^\\*\\*Status:\\*\\* CLOSED' <entry file>` with expect `^1$`; D12-AC6 invokes the same shape against the entry path its worker recorded; D2-AC9 as finally cut does the same. Three orders, three entry-file Status reads, zero greps of `list`.",
+        "THE EXERCISE, not merely the cut: all three ledger entries return 1 on that instrument at HEAD -- 20260904T0756Z_cldgrph-cgs15-shared-image-digest-pins, 20260904T0803Z_cldgrph-cgd2-gateway-graph-path and 20260904T1232Z_cldgrph-cgs16-derive-role-bucket-notification each `grep -c` to 1. And each criterion PASSED-by-output in its worker's instance. So the prescribed instrument does not merely appear in the faces; it has been run three times and it fired correctly each time.",
+        "THE BAND CHECK, which is what makes the census mean anything: a text search for `deploy_ledger.py list` across the 20 task-order files at HEAD returns 2 hits -- in TO-CG-D-1 and TO-CG-D-12. BOTH ARE PROSE, and both are CITATIONS OF W2-S5 ITSELF explaining why the criterion does not use `list` ('D1-AC7 reads the ledger entry's own Status line (deploy_ledger.py list cannot print CLOSED, W2-S5)'). ZERO hits sit inside a `<invocation>` element. A count without a band would have read those two as the defect surviving, when they are the row being obeyed.",
+        "INSTRUMENT DISCIPLINE, disclosed because two of this tick's arms were DEAD and the verdict would have been wrong on either: (a) a shell `grep -c` across the orders returned 0 and was never proven able to find anything; (b) a pattern census for the criterion element returned NOTHING at all. Only the third instrument was baselined first -- the D-2 order at vintage eedb24b906 (pre-reopen) returns 1 occurrence, PROVING the arm live -- and only then were the HEAD numbers read. Every figure above comes from the proven arm."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An ACK, not a finding: it records that W2-S5's prospective prescription is honoured in every subsequent cut and exercised three times, and that its hazard is DISARMED.",
+    "spec_asserts": "W2-S5 asserts that a criterion invoking `deploy_ledger.py list` and expecting a CLOSED slug is inverted -- it can only pass while the ledger is still OPEN -- and that the sound oracle is the entry file's own `**Status:**` line.",
+    "world_is": "Every NEVER-2 ledger criterion cut after W2-S5 names the entry file's Status line, and all three have been run against real closed ledgers and returned 1. The only textual traces of the discredited instrument are two prose citations of W2-S5 explaining why it is not used.",
+    "notes": "TAKEN ON AN EXERCISE: three live entry-file reads plus three PASS-by-output criteria in three workers' instances. FOURTH disarm of this seat's backlog (after S20, S28, W1-S2). A COUNT CORRECTION THIS SEAT OWES ITS OWN LOG: the tick-5 drive log said 'twelve of this seat's rows remain' after W1-S10 was declined; the true figure at that moment was THIRTEEN, because W1-S10 itself stayed ARMED and was counted out twice. After this ACK the standing figure is TWELVE. The remaining twelve are S2, S5, S8, S12, S13, S16, S21, S27, W1-S6, W1-S10, W2-S7 and W3-S2, and NONE of them is disarmable on this round's evidence: each turns on a spec or tooling change outside a frozen round, or on an instrument this round did not build. W1-S10 in particular was examined at tick 5 and DELIBERATELY LEFT ARMED -- its claim is about a SHAPE and an exact-construct search cannot see a same-class instance spelled differently."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S42 -- the ISSUER'S RULING on S21's blocking question (WAIT, and the wait is already satisfied on the pointer), and S21's disarm
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S42",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T22:45Z",
+    "one_line": "THE ISSUER'S RULING on the BLOCKING coordination question NFRA_CLDGRPH-S21 put to it, and S21's DISARM. S21 asked the issuer to rule whether the seat retries the projection task that CG-s-3 deliberately stopped (6aa88972790949a5bbe9b315381ec895, stopCode UserInitiated, exit 137), or WAITS for another real producer stamp. RULING: WAIT -- and the wait is already satisfied. No retry is to be run. The question had been open since round 3 and no tick had answered it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S21's OWN ASK, quoted: 'Blocking coordination question to the issuer: rule whether this seat retries the exact projection task against the still-real marker HEAD after CG-s-3's collision window is cleared, or waits for another real stamp. Preserve the stopped task as evidence; do not relabel exit 137 as OOM, do not delete.' It is addressed to THIS SEAT and this seat had not answered it.",
+        "THE WAIT BRANCH IS SATISFIED, on the traversal's own proof rather than on a task listing: the served pointer at s3://opal-313476888478-globgrph/projection/current.json reads vintage 2026-09-04T18:11:48.783142+00:00. THE POINTER ONLY MOVES WHEN A PROJECTION WORKER COMPLETES AND WRITES POINTER_PUT_OK, so an advanced pointer IS a completed traversal -- S3 -> SQS -> Pipe -> projection task -> pointer. That vintage is LATER than CG-s-3's collision window and later than TO-CG-D-1's own derive (16:38:39), so at least one real stamp has traversed the whole chain since, and TO-CG-D-1 recorded a specific one end to end (projection task 7b2d3bbefb2a4573bc5af5c8459f6e8a on globgrph-projection-worker:4, on the pinned digest, exit 0, POINTER_PUT_OK).",
+        "AN INSTRUMENT THIS RULING DELIBERATELY DOES NOT REST ON, because this project has already paid for it once: `ecs list-tasks --desired-status STOPPED --family globgrph-projection-worker` returns 0. That is NOT evidence that nothing ran. ECS retains stopped tasks for roughly an hour, so the reading means 'no stopped task in the retention window' -- exactly the weak-by-construction shape row W1-S8 named in this same channel. The ruling rests on the POINTER, which is durable, not on the task list, which is not.",
+        "S21's PRESERVATION CLAUSE IS NOW MOOT IN AWS, AND NOT BY ANYONE'S ACT: `ecs describe-tasks --tasks 6aa88972790949a5bbe9b315381ec895` returns None -- the task has aged out of ECS retention. Nobody deleted it and nobody relabelled exit 137. The evidence S21 asked to preserve survives ONLY in the record (the round-3 deliverable and S21 itself), which is where a stopped-task forensic belongs anyway, because the cloud plane was always going to expire it.",
+        "WHY A RETRY WOULD HAVE BEEN THE WRONG ACT even if the task still existed: CG-s-3 stopped it DELIBERATELY, with the reason recorded in the stopCode -- 'prevent pre-contract image collision at released vintage'. Re-running that exact task against a marker HEAD that has since been overtaken by many real stamps would exercise a superseded vintage and prove nothing about the current chain, while risking exactly the collision the stop existed to prevent."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "This row is the ISSUER'S RULING on a question S21 put to the issuer, plus S21's disarm. It carries no open question of its own: the ruling is WAIT, the wait is satisfied on the pointer, and no retry is authorised.",
+    "spec_asserts": "S21 asserts that a real producer stamp traversed the chain correctly but that its projection task was deliberately stopped mid-flight by CG-s-3's collision guard, leaving the traversal unproven at its final hop, and it asks the issuer to rule on retry-versus-wait.",
+    "world_is": "The chain has since been traversed end to end many times, and the durable proof is the pointer's own vintage rather than any task record. The stopped task itself has expired from ECS retention, so the question is answered and its evidence clause is satisfiable only on the record.",
+    "notes": "RULED AND DISARMED IN ONE ROW because the disarm IS the ruling -- S21's hazard was the unanswered question, not a defect in the world. FIFTH disarm of this seat's backlog (S20, S28, W1-S2, W2-S5, S21). THE COUNT: ELEVEN of this seat's rows remain -- S2, S5, S8, S12, S13, S16, S27, W1-S6, W1-S10, W2-S7, W3-S2. S27 IS THE NEXT CANDIDATE AND IS ALREADY MEASURED AS MET: its disarm text asks that the face's parenthetical be corrected or EventBridge named as a different target class, and TO-CG-D-1's cell text at HEAD now reads 'cot-pipeline is EventBridge-only and contributes none -- S27, corrected at v0.3'. It is deliberately NOT taken in this row, because one row at a time against its own text is the discipline and two disarms in one act is the batching this channel exists to prevent. A LESSON THIS ROW COST NOTHING TO LEARN AND IS WORTH THE NEXT SEAT'S TIME: a coordination question addressed to a seat can sit ARMED indefinitely because nothing in the channel distinguishes 'a hazard in the world' from 'a question awaiting a person'. S21 waited two rounds. A row whose disarm text is a QUESTION TO A NAMED SEAT should be read by that seat every tick, and this seat found it only by re-reading its whole backlog rather than by any instrument pointing at it."
+  }
+]
+```
+
+## NFRA_CLDGRPH-S43 -- DISARM ACK for S27: the face and the decomposition both name cot as EventBridge-only, no Terraform moved, and the served graph agrees (bd 3, cot 0, one instrument, one vintage)
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-S43",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~A",
+    "surfaced_at": "2026-09-04T23:15Z",
+    "one_line": "DISARM ACK for NFRA_CLDGRPH-S27 (ARMED, disarm_owner 2.0.0_SA_COO~A). S27 found that TO-CG-C-3's measured-defect paragraph named cot-pipeline alongside bd and inf as an S3-to-Lambda notification source, when cot's resource declares only eventbridge=true and its state carries lambda_function=[] -- so no honest cot S3-to-Lambda edge exists. Its disarm asked that the FACE's parenthetical be corrected or EventBridge be named as a different target class, with NO Terraform change. All three conditions are met, and the corrected claim is now EXERCISED on the served graph. S27's hazard is DISARMED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S27's DISARM TEXT, quoted: 'Disarm by correcting the face's parenthetical or explicitly naming EventBridge as a different target class outside this cell; no Terraform change belongs here.' Three conditions: correct the face, name EventBridge as a different class, change no Terraform.",
+        "CONDITION 1 and 2, read at HEAD: TO-CG-D-1's cell text now reads \"bd-pipeline's three; inf-pipeline's two as additional evidence; cot-pipeline is EventBridge-only and contributes none -- S27, corrected at v0.3\". The parenthetical is corrected AND EventBridge is named as the different target class, in the same clause, citing the row. The decomposition carries the correction too (its CG-s-14 text at HEAD contains the EventBridge-only qualifier), so both carriers agree rather than only the face.",
+        "CONDITION 3, the negative one: `git log --since=2026-09-03 -- infra/aws/terraform/` returns ZERO commits touching cot. No Terraform change was made, which is what S27 required -- the row was about a FACE misdescribing the estate, not about the estate being wrong.",
+        "THE EXERCISE, run on the SERVED graph at this seat through the thin client, both halves at the same vintage 2026-09-04T18:11:48.783142+00:00 (manifest a78b6836265e): the bd query returns THREE targets -- bd-allocation-processor, bd-gold-trigger, bd-silver-merge -- and the cot query returns count 0. So the corrected claim is not merely written down; the world agrees with it.",
+        "WHY THE cot ZERO IS THE GRAPH'S ANSWER AND NOT THE INSTRUMENT'S, which is the control this project has paid to learn twice (W1-S10, and this seat's own dead arms at ticks 5 and 6): the two queries are STRUCTURALLY IDENTICAL -- same shape, same `CONTAINS` predicate, both carrying a STRING LITERAL -- and differ only in the bucket name. One returns 3 and the other returns 0 through the same client at the same vintage. A quoting or transport defect would have zeroed BOTH. The discriminator is built into the pair rather than assumed."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An ACK, not a finding: it records that S27's three stated conditions are met and that its hazard is DISARMED. The correction it asked for is on both carriers and is confirmed by live measurement.",
+    "spec_asserts": "S27 asserts that a task-order face named cot-pipeline as an S3-to-Lambda notification source when cot declares only eventbridge=true, so a cell closing on 'the declared Lambda targets' would be counting a target class that does not exist for that pipeline.",
+    "world_is": "The face and the decomposition both now say cot is EventBridge-only and contributes none, no Terraform was touched, and the served graph confirms it: bd carries three TRIGGERS targets and cot carries zero, measured through one instrument at one vintage with the pair itself as the control.",
+    "notes": "TAKEN ON AN EXERCISE: two live served-graph queries plus two record reads and one negative git-log control. SIXTH disarm of this seat's backlog (S20, S28, W1-S2, W2-S5, S21, S27). TEN REMAIN: S2, S5, S8, S12, S13, S16, W1-S6, W1-S10, W2-S7, W3-S2. On the evidence available inside a FROZEN round, none of the ten is disarmable: S5, S12 and S13 turn on task-order faces from earlier rounds that cannot be re-cut mid-round; S2, S8 and S16 turn on engine or manifest behaviour no cell of this round exercises; W1-S6, W2-S7 and W3-S2 name tooling gaps whose fix is a BUILD in another seat's lane; and W1-S10 was examined at tick 5 and deliberately LEFT ARMED because its claim is about a SHAPE that an exact-construct search cannot bound. That list is stated so the next tick re-measures it rather than re-asserting it -- which is how S27 and S21 were found after an earlier tick had called the backlog closed."
   }
 ]
 ```

@@ -81,9 +81,9 @@ advanced are edited in place in REMEDIATION_v1.md (S2, S3, S8) and REMEDIATION_v
     "remedy": "Rebuild opal-globgrph-derive-runner from a HEAD that carries b5bc1c8b27 through the change-management path: ledger opened before and closed after; every family on the tag named (the seven above) and each one's next launch read for the new digest; then ONE real derive on the cloud runner whose log prints the S3 notification read denominator (read/unreadable) and non-zero TRIGGERS for the three bd targets. That run is S20's disarm and this row's; the rebuild's reach is S31's subject.",
     "owner": "2.0.0_SA_COO~A",
     "round": "v3",
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~A", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~A", "round": "v3"},
-    "closed": false
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~A", "at": "2026-09-04T17:05Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~A", "round": "v3"},
+    "closed": true
   }
 ]
 ```
