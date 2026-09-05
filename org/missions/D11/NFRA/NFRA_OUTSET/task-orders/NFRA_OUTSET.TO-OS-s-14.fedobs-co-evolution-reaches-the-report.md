@@ -2,7 +2,10 @@
 
 <to_id>NFRA_OUTSET.TO-OS-s-14</to_id>
 <project>NFRA_OUTSET</project>
-<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>
+<issued_to>0.9.0_WK_NFRA_OUTSET~2</issued_to>
+⛔ **RE-ADDRESSED TO `~2` ON BOTH LIMBS BEFORE SEATING** -- `<issued_to>` and every deliverables reference, because a mis-addressed order is refused on two independent limbs (`ADHC_OWNPTH.005` on the first, clause 4 on the DELIVERABLES FOLDER NAME). Slot `~2` because this cell writes `estate_report_runner.py`, which `~2` has held through `OS-s-9` and `OS-s-11`; those three are serial on one slot by FILE contention regardless of what the dependency graph permits. `OS-s-17` runs BESIDE this one on `~1` because its `<paths>` name no repo surface at all.
+⛔ **READ `NFRA_OUTSET-W2-S19` BEFORE YOUR FIRST EDIT.** `0.9.0_WK_NFRA_OUTSET~2` left it for this cell specifically: `OS-s-11` re-pointed the source anchor that `OS-s-9`'s battery mutates, and this order edits the same file next. Run BOTH pre-existing batteries first; an `AssertionError: seam-branch anchor not unique` is a RE-POINT job, not a break -- and that assert firing is `W2-S17`'s failure mode (a mutant that silently no-ops and passes) prevented by construction.
+
 <issued_by>2.0.0_SA_COO</issued_by>
 <issued_date>2026-09-04</issued_date>
 <status>pending -- GO paired at cut (the spawn IS the GO for a worker face; a seat order is dispatched by its issuance). Authority: PRD v0.1 @`7fb59f239b` RATIFIED on Andrew's "all approved" (FWD-1..FWD-8) @`26da5ec0fa`; decomposition v0.1 @`6f1655f376`; Andrew-direct at this terminal 2026-09-04 ~15:5xZ, VERBATIM: "youre clear, first write every single task order" then "proceed with internal fan out".</status>
@@ -17,7 +20,7 @@ OS-s-14 (PRD s.7): the served vintage is fresh daily and the producer rule is EN
 
 ## DELIVERABLE
 
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/fedobs-co-evolution-reaches-the-report.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/fedobs-co-evolution-reaches-the-report.result.md` -- the result document: what you measured, what you changed, each criterion's invocation and its output verbatim with rc and denominator, and any row you filed.
 
 ## ACCEPTANCE
 
@@ -45,7 +48,7 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 .tools/comp-fedobs
 infra/aws/ec2/estate-report-runner/estate_report_runner.py
 .tools/tests/
-org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
+org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 infra/system/06_current_state.json
 infra/system/06_current_state.md
@@ -67,7 +70,7 @@ lane: the `<paths>` block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58
 
 <proof_of_spec>
 Criterion ids minted at cut by the issuer: `O14-AC1`, `O14-AC2`. The ASSIGNEE fills a `PROOF_OF_SPEC.schema.json` instance at
-`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-14.fedobs-co-evolution-reaches-the-report.proof_of_spec.json`
+`org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-14.fedobs-co-evolution-reaches-the-report.proof_of_spec.json`
 and validates it with `python .tools/proof-of-spec-check.py <instance> O14-AC1,O14-AC2` BEFORE the complete flip, which the assignee commits itself.
 ⛔ **A `complete` flip WITHDRAWS YOUR OWN GRANT** (the grant is read from a NON-TERMINAL order): flip only when every MECHANICAL criterion PASSES. A mis-flip is REOPENED by the issuer, never re-cut.
 </proof_of_spec>
