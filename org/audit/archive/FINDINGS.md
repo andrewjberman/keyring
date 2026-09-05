@@ -273,3 +273,23 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/commit-msg-ascii-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/commit-msg-ascii-override-audit.log
 - detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-03T064251Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/to-pos-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/to-pos-override-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-03T135828Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/to-pipeline-override-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/to-pipeline-override-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-05T095621Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pos-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pos-override-audit.log -->
+- log: org/to-pos-override-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pos-override-audit.log
+
+## 2026-09-05T095621Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pipeline-override-audit.log -->
+- log: org/to-pipeline-override-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pipeline-override-audit.log
