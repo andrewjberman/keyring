@@ -269,6 +269,51 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-12's deliverable step 3 names `bash infra/aws/lambda/ci/build-zip.sh ...` as the primary method to build the repo-side comparison zip.",
     "world_is": "That script cannot complete on this box (or any box with the same GNU/BusyBox touch semantics) for ANY function/file-list combination, because its own hardcoded reproducibility timestamp is not a valid date -- a defect shared by every caller of this script, not scoped to Inflection or this project.",
     "notes": "This worker does not edit build-zip.sh (out of this cell's BOUNDS: 'No source file changes in this cell'); the deliverable used the TO's own named fallback and recorded which. Filed OBSERVATION/ARMED because any OTHER worker or CI run invoking this script hits the identical rc=1 -- disarm is a one-line fix (`202601010000` or any valid month) by whichever seat owns infra/aws/lambda/ci/."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S6",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T01:40:43Z",
+    "one_line": "TO-EG-s-7's S7-AC5 names the exact invocation `.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan ...`, but `.tools/terraform.exe` does not exist in this worker's worktree (a fresh worktree carries no gitignored per-device binaries); this worker substituted the PATH-resolved `terraform` (v1.14.5), the same fallback `.tools/safe-apply.sh` itself already implements and documents.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this worktree: `timeout 120 .tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports init -input=false` -> 'timeout: failed to run command .tools/terraform.exe: No such file or directory', rc=127; `ls .tools/terraform*` -> no match; `git ls-files .tools | grep -i terra` -> 0 matches (never tracked)",
+        ".gitignore:191-206 @HEAD -- 'terraform.exe stays ignored (per-device, large...)' and the `**/.terraform/` / `**/.terraform.lock.hcl` rules, with the historical note that a committed .terraform/ once stranded a push on GitHub's 100MB limit",
+        ".tools/safe-apply.sh:24,32-46 @HEAD -- 'SAFE_APPLY_TERRAFORM  Override the terraform binary (default: sibling terraform.exe)' and 'The sibling terraform.exe exists on some devices and NOT on others -- site Z has no .tools/terraform.exe and resolves terraform v1.15.8 on PATH' -- the script's own resolution order (env override -> sibling -> PATH) already treats this as a normal, expected variance, not a defect",
+        "PATH resolution confirmed: `terraform version` -> 'Terraform v1.14.5 on windows_amd64' (present and runnable); the sibling binary DOES exist in the main workspace tree (C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/terraform.exe) but worktrees do not inherit untracked/gitignored files from the tree they were created from"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7-AC5's invocation names `.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false` literally.",
+    "world_is": "That exact binary path does not resolve in this worktree; a PATH-resolved `terraform` binary (v1.14.5, one minor version behind the sibling's documented v1.15.8 seen at site Z) does. `.tools/safe-apply.sh`'s own documented behavior treats this exact absence as ordinary and falls back automatically; this worker's plan-read command (a direct `terraform` invocation, not through safe-apply.sh, since a plan is read-only) does the same substitution by hand and records it here rather than silently swapping binaries.",
+    "notes": "INERT: the substitute is the SAME instrument class (terraform CLI) the estate's own gate script already treats as interchangeable for this exact absence, one minor version apart within the same major series; no plan semantics are expected to differ for an IAM policy JSON diff. The plan output is quoted verbatim in the result document with the binary used named. No disarm owner needed -- provisioning a `.tools/terraform.exe` per-worktree is a workflow/tooling question for whoever owns worktree provisioning, not a defect this TO's surface can fix (the file is deliberately per-device and gitignored)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W1-S7",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~1",
+    "surfaced_at": "2026-09-05T01:52:30Z",
+    "one_line": "S7-AC5's plan, after ONLY the InvokeProducersForRemediation Sid was added to iam.tf, shows TWO resources changing (Plan: 0 to add, 2 to change, 0 to destroy) -- aws_iam_role_policy.reporter (this order's own, expected, edit) AND aws_instance.reporter (a user_data in-place diff this worker never touched, instance.tf 0-diff in git) -- so the criterion's <expect> '1 to change' does not match; per the TO's own BOUNDS ('a plan touching anything but aws_iam_role_policy.reporter is NOT applied'), this worker did NOT apply.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this worktree, this session: `terraform -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false` -> 'Plan: 0 to add, 2 to change, 0 to destroy', listing `aws_iam_role_policy.reporter` (the added InvokeProducersForRemediation Sid, expected) and `aws_instance.reporter` (`user_data = \"e47b615c...\" -> \"434774b5...\"`, NOT expected)",
+        "`git status --short infra/aws/terraform/etfs-reports/` -> only `M iam.tf`; `git diff infra/aws/terraform/etfs-reports/instance.tf` -> 0 bytes -- this worker made no edit that could explain the aws_instance.reporter diff",
+        "infra/aws/terraform/etfs-reports/instance.tf:57-70 @HEAD -- a static heredoc `user_data`, unchanged by this worker; commit 1502fdd6f9 (2026-07-08, 'NFRA_TERRAFORM-P2 BATCH A') already documents this exact drift class by name: 'residuals are BENIGN non-replace (astn/etfs pending SNS sub=TIER-C; crawl user_data in-place; bd-49f egress-rule-desc in-place + public_ip refresh) -> deferred to a TIER-B/C safe-apply batch' -- i.e. a KNOWN, pre-existing, ~2-month-old committed-but-unapplied user_data edit on this same instance, never landed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7-AC5: 'the plan after the edit changes EXACTLY the reporter role policy (aws_iam_role_policy.reporter): 0 to add, 1 to change, 0 to destroy ... If the plan shows ANY other resource, do NOT apply: BLOCKING row, stop this criterion.'",
+    "world_is": "The plan shows 2 resources changing: the expected policy edit plus a pre-existing, already-documented (2026-07-08) benign user_data drift on aws_instance.reporter that this worker did not cause and whose disposition ('deferred to a TIER-B/C safe-apply batch') was never carried out. The criterion's own bound is unconditional ('ANY other resource') regardless of whether that other diff is benign or pre-existing, so this worker stopped rather than applying.",
+    "notes": "S7-AC5 is graded FAIL by output this turn (plan does not match '1 to change'); S7-AC6 (the apply + get-role-policy read) is UNCOMPUTABLE-BY-CONSTRUCTION as a direct consequence -- its own text makes it conditional on AC5's exactly-one-resource plan ('which you run only after AC5's plan read exactly one resource'). No apply was attempted; no ledger entry was opened (opening one for a deploy this worker does not execute would itself be a stray entry). Hazard is INERT: the drift is 2 months old, already named BENIGN by its own commit, and unrelated to this project's IAM grant, which remains DESIRED-not-APPLIED, safely, until the pre-existing drift is dispositioned by whoever owns the etfs-reports stack (no disarm_owner named -- this is a stop, not a hazard this worker leaves live)."
   }
 ]
 ```
