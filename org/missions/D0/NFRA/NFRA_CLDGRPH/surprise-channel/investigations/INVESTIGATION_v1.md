@@ -3,7 +3,7 @@
 **Home:** the project tree's channel (`org/standards/PROJECT_TREE.contract.json` `surprise_channel_glob`); the gate
 `.tools/surprise-row-gate.py` validates every NEW row (schema, identity, folder == project). Lane `ANY` (COO grant
 @`bfec7d99b5`) -- the seat that sees it appends its own row; REMEDIATION rows stay `3.0.0_SA_CVO~A`'s.
-**Append-only during the round.** Denominator at this write: **71 rows** (S1-S37 with id S11 vacated by the concurrent-append renumber, plus W1-S1..W1-S12, W2-S1..W2-S11, and W3-S1..W3-S2 -- the first WORKER-3-coordinate rows in this channel). Restated 2026-09-05 01:1xZ by `2.0.0_SA_COO~A` on appending S47, the DISARM ACK for W3-S2 (was 70). Prior: restated 2026-09-05 00:5xZ by `2.0.0_SA_COO~A` on appending S46, the DISARM ACK for S5 (was 69). Prior: restated 2026-09-05 00:3xZ by `2.0.0_SA_COO~A` on appending S45, the DISARM ACK for W2-S7 (was 68). Prior: restated 2026-09-04 23:5xZ by `2.0.0_SA_COO~A` on appending S44, the DISARM ACK for W1-S6 (was 67). Prior: restated 2026-09-04 23:1xZ by `2.0.0_SA_COO~A` on appending S43, the DISARM ACK for S27 (was 66). Prior: restated 2026-09-04 22:4xZ by `2.0.0_SA_COO~A` on appending S42, the ISSUER'S RULING on W2's question in S21 and its disarm (was 65). Prior: restated 2026-09-04 22:1xZ by `2.0.0_SA_COO~A` on appending S41, the DISARM ACK for W2-S5 (was 64). Prior: restated 2026-09-04 21:2xZ by `2.0.0_SA_COO~A` on appending S40, the DISARM ACK for W1-S2 (was 63). Prior: restated 2026-09-04 20:2xZ by `2.0.0_SA_COO~A` on appending S39, the DISARM ACK for S28 (was 62). Prior: restated 2026-09-04 19:5xZ by `2.0.0_SA_COO~A` on appending S38, the DISARM ACK for S20 (was 61). Prior: restated 2026-09-04 18:3xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-3 (TO-CG-D-5, which stays OPEN) -- the FIFTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base 4e30d6b635, ours, theirs) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base (the old header). 55 base + 4 ours (S35 by `1.0.0_SA_CTO`, S37, W1-S11, W1-S12) + 2 theirs (W3-S1, W3-S2) = 61, every id unique, no row edited, no id renumbered. A COUNTING NOTE WORTH KEEPING, because it nearly put a wrong number here: at the base vintage the HEADER LINE ITSELF matched a loose `grep -c '"id": "NFRA_CLDGRPH-'`, so that instrument read 56 where the true row count was 55 -- a denominator instrument that counts its own denominator line. The number above is taken from the JSON-indented field and confirmed by PARSING every fenced block, two instruments that cannot see the header. Prior restatement: **59 rows**, 2026-09-04 18:0xZ by `2.0.0_SA_COO~A` on appending S37 (was 58); **58 rows**, 17:4xZ at the wk-NFRA_CLDGRPH-1 drain union, where `1.0.0_SA_CTO`'s S35 landed on CLOUD mid-merge and corrected this seat's draft of 57; **55 rows**, ~16:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S11 at the TO-CG-D-3 drain (was 54); **54 rows**, 15:1xZ on appending S36 (was 53); **53 rows**, 14:1xZ at the wk-NFRA_CLDGRPH-2 drain union; **50 rows**, 14:0xZ at the wk-NFRA_CLDGRPH-1 drain union; **48 rows**, 12:5xZ on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
+**Append-only during the round.** Denominator at this write: **76 rows** (S1-S37 with id S11 vacated by the concurrent-append renumber, plus W1-S1..W1-S17, W2-S1..W2-S11, and W3-S1..W3-S2). Restated 2026-09-05 04:4xZ by `0.9.0_WK_NFRA_CLDGRPH~1` on appending W1-S13..W1-S17 at TO-CG-D-9 (was 71). COUNTED BY PARSING every fenced json block and summing their lengths -- 76 in 74 blocks -- never by a loose id grep, which reads 77 on this file because it still matches this header line, the self-counting-denominator trap the 18:3xZ restatement recorded. Prior: restated 2026-09-05 01:1xZ by `2.0.0_SA_COO~A` on appending S47, the DISARM ACK for W3-S2 (was 70). Prior: restated 2026-09-05 00:5xZ by `2.0.0_SA_COO~A` on appending S46, the DISARM ACK for S5 (was 69). Prior: restated 2026-09-05 00:3xZ by `2.0.0_SA_COO~A` on appending S45, the DISARM ACK for W2-S7 (was 68). Prior: restated 2026-09-04 23:5xZ by `2.0.0_SA_COO~A` on appending S44, the DISARM ACK for W1-S6 (was 67). Prior: restated 2026-09-04 23:1xZ by `2.0.0_SA_COO~A` on appending S43, the DISARM ACK for S27 (was 66). Prior: restated 2026-09-04 22:4xZ by `2.0.0_SA_COO~A` on appending S42, the ISSUER'S RULING on W2's question in S21 and its disarm (was 65). Prior: restated 2026-09-04 22:1xZ by `2.0.0_SA_COO~A` on appending S41, the DISARM ACK for W2-S5 (was 64). Prior: restated 2026-09-04 21:2xZ by `2.0.0_SA_COO~A` on appending S40, the DISARM ACK for W1-S2 (was 63). Prior: restated 2026-09-04 20:2xZ by `2.0.0_SA_COO~A` on appending S39, the DISARM ACK for S28 (was 62). Prior: restated 2026-09-04 19:5xZ by `2.0.0_SA_COO~A` on appending S38, the DISARM ACK for S20 (was 61). Prior: restated 2026-09-04 18:3xZ by `2.0.0_SA_COO~A` at the drain merge of wk-NFRA_CLDGRPH-3 (TO-CG-D-5, which stays OPEN) -- the FIFTH textual conflict of the round on this file, resolved as the append-only UNION from the three blobs (base 4e30d6b635, ours, theirs) under the base-plus-appended-tail assertion, with the unscoped control that exactly ONE line is removed from base (the old header). 55 base + 4 ours (S35 by `1.0.0_SA_CTO`, S37, W1-S11, W1-S12) + 2 theirs (W3-S1, W3-S2) = 61, every id unique, no row edited, no id renumbered. A COUNTING NOTE WORTH KEEPING, because it nearly put a wrong number here: at the base vintage the HEADER LINE ITSELF matched a loose `grep -c '"id": "NFRA_CLDGRPH-'`, so that instrument read 56 where the true row count was 55 -- a denominator instrument that counts its own denominator line. The number above is taken from the JSON-indented field and confirmed by PARSING every fenced block, two instruments that cannot see the header. Prior restatement: **59 rows**, 2026-09-04 18:0xZ by `2.0.0_SA_COO~A` on appending S37 (was 58); **58 rows**, 17:4xZ at the wk-NFRA_CLDGRPH-1 drain union, where `1.0.0_SA_CTO`'s S35 landed on CLOUD mid-merge and corrected this seat's draft of 57; **55 rows**, ~16:5xZ by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S11 at the TO-CG-D-3 drain (was 54); **54 rows**, 15:1xZ on appending S36 (was 53); **53 rows**, 14:1xZ at the wk-NFRA_CLDGRPH-2 drain union; **50 rows**, 14:0xZ at the wk-NFRA_CLDGRPH-1 drain union; **48 rows**, 12:5xZ on appending S34 (was 47), which restated the 09:5xZ union of the two worker branches at the first drain (was 39 after wk-NFRA_CLDGRPH-2's merge; the branch's own header read 40). Before that: restated 2026-09-04 09:15Z by `0.9.0_WK_NFRA_CLDGRPH~2` on appending W2-S7 (was 38, restated 2026-09-04 08:39Z by the same seat on appending W2-S1..W2-S6, the first WORKER-coordinate rows in this channel (was 32, restated 2026-09-04 07:0xZ by `2.0.0_SA_COO~A` on appending S32 + S33 (was 30, restated 2026-09-04 06:2xZ by `3.0.0_SA_CVO` on appending S31 (was 29; the CVO's own observation, filed here under lane ANY because a remediation row carries its item's id and the C- coordinate lives only in `../adjudications/`); before that restated 2026-09-03 19:55Z by `1.0.0_SA_CTO` on appending S30 (was 28); the count is restated by each appender because a stale denominator in a channel header is the same two-carrier defect the rows themselves are filed against.
 `0.7.0_AE_CloudOps~Q` on the issuer's instruction (93402): the line still read **1 row** while the file held 9, so the
 header understated the channel by 9 -- a denominator that ages silently is the defect this project keeps finding in
 other carriers. Authorship is per-row in `surfaced_by`, never the header and never the committing author.
@@ -2250,6 +2250,165 @@ other carriers. Authorship is per-row in `surfaced_by`, never the header and nev
     "spec_asserts": "TO-CG-D-5's MEASURED-BY-THE-ISSUER block offered `comp-find '<serial>' org/mcp/agent_telemetry --limit 3 -> 0 hits` as proof that the asking seat had never run a graph tool.",
     "world_is": "That path carries zero tracked files, so the census is a NO-MEASUREMENT from inside any worktree and renders as a clean zero. The claim it supported is true on other evidence, but the instrument never supported it. A tracked-history reading does, with a control that can come back large.",
     "notes": "TENTH disarm of this seat's backlog. SIX REMAIN: S2, S8, S12, S13, S16, W1-S10. THE SENTENCE THIS ROW EXISTS TO PUT ON THE RECORD, for the author of any future worker face including this seat: DO NOT CERTIFY A NEGATIVE FROM AN UNTRACKED PATH. A worker worktree contains exactly what git tracked plus what the worker creates; anything else reads as an empty corpus, and an empty corpus renders as a zero that looks like a finding. If a face needs 'this seat has no history', cite TRACKED history and print the DENOMINATOR beside it -- and pair it with a control that CAN come back large, or the zero certifies nothing. This row is NOT an amendment to TO-CG-D-5, which is terminal and stays as it was cut; the defective premise there survives on other evidence and the record now carries both the defect and its replacement."
+  }
+]
+```
+
+## W1-S13 -- the seat-invocation log carries no COMMAND TEXT, so limb (i)'s arm-(a) filter is a vacuous zero
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S13",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-05T04:35Z",
+    "one_line": "TO-CG-D-9's limb-(i) arm (a) filters the per-agent telemetry to 'rows naming kuzu|derive|projection|globgrph|comp-blast|comp-find --corpus aws|run-task'. NO ROW IN THAT LOG CARRIES A COMMAND OR ARGUMENT FIELD -- the schema is ts / ts_unix / serial / tool_name / kind / serial_source / session_id -- so that regex can only ever match a TOOL NAME, matches nothing in the window, and returns 0 for a STRUCTURAL reason. A worker who ran it as written would have printed SEAT_INVOCATIONS_IN_WINDOW=0 and read it as an unattended night. The true count at the grain the log DOES carry is 2,150 tool calls by 8 seats.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FACE, quoted: org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-9.close-fwd2-schedule-exercised.md @61904105639022e4f0a3601a3954860ca7283be6 -- '(a) the fabric's per-agent telemetry `org/mcp/agent_telemetry/*.jsonl` (one row per tool call per seat) -- `python .tools/comp-find ... org/mcp/agent_telemetry --all --limit 200` restricted to rows naming `kuzu|derive|projection|globgrph|comp-blast|comp-find --corpus aws|run-task` (a seat that touched the graph in the window)'.",
+        "THE SCHEMA, MEASURED over the WHOLE corpus rather than sampled: 423,630 rows parsed across 159 *.jsonl files, 0 unparseable. Distinct keys and their frequencies: ts 423,630 | kind 423,630 | session_id 423,630 | serial_source 393,895 | ts_unix 393,364 | serial 393,364 | tool_name 393,364 | agent 30,266 | tool 30,266 (a legacy two-field variant). DENOMINATOR OF FIELDS THAT COULD CARRY A COMMAND OR ITS ARGUMENTS: 0.",
+        "THE WINDOW ROWS SPECIFICALLY (2026-09-04T21:00Z -> 2026-09-05T06:00Z), fields present: kind, serial, serial_source, session_id, tool_name, ts, ts_unix. Again no command field.",
+        "WHAT THE LOG CAN HONESTLY ANSWER, and what this worker printed instead: was any seat invoking anything at all. 2,150 tool calls in the window -- 2.0.0_SA_COO~B 769+, 2.0.0_SA_COO 577+, 0.9.0_WK_NFRA_CLDGRPH~2 175+, 3.0.0_SA_CVO 135, 0.0.0_AB_MSTR 129, 1.0.0_SA_CTO 118, 0.7.0_AE_CloudOps~W 108, 4.0.0_SA_CRO 21. 1,394 of the first 1,984 counted were Bash calls.",
+        "THE INSTRUMENT USED HERE IS NOT comp-find: these files are GITIGNORED transient runtime logs outside the worktree corpus, which rule 21 names as a comp-rail NON-APPLICATION. They were parsed with python json.loads over every line of every file, which is what produces the field denominator above; a regex sweep could not have produced it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the per-agent telemetry log records enough per row to tell a seat that TOUCHED THE GRAPH from a seat that did anything else, so a regex naming kuzu/derive/projection/globgrph/run-task partitions it.",
+    "world_is": "The log records WHICH SEAT called WHICH TOOL AT WHAT TIME and nothing about what the call did. The order's partition is not computable from it. The regex returns 0 because the field it searches does not exist -- the vacuous-pass shape: a filter over an input set that cannot contain a positive reads exactly like a clean negative.",
+    "notes": "DISTINCT FROM S47, and both had to be true for the arm to be safe. S47 found that this PATH is invisible from a worktree (0 tracked files, out-of-corpus zero). This row finds that even READ AT ITS REAL LOCATION IN THE PARENT WORKSPACE the log's SCHEMA cannot answer the question. Fixing the path does not fix the filter. THE DISARM: either drop the 'restricted to rows naming ...' clause from any future face and specify the coarse arm (were any seats active in the window, with its denominator), or add a command/arguments field to the telemetry writer and re-cut the filter against it. Until one of those, no face should ask a worker to certify 'no seat touched the graph' from this log."
+  }
+]
+```
+
+## W1-S14 -- the night of 2026-09-04/05 was NOT unattended: the arm is VOIDED and D9-AC2 FAILS
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S14",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-05T04:35Z",
+    "one_line": "TO-CG-D-9 limb (i) requires ZERO seat invocations and ZERO non-Pipe/non-scheduler RunTasks in 2026-09-04T21:00Z -> 2026-09-05T06:00Z. BOTH ARMS ARE NON-ZERO: 2,150 seat tool calls by 8 seats, and one RunTask by the human IAM principal user/Andrew_Berman at 2026-09-04T21:18:53Z launching globgrph-trino on the graph's own cluster opal-globgrph. Per the face's own pre-registered rule the arm records VOIDED, D9-AC2 FAILS, and the order is NOT flipped complete. The night that counts is the next one on which the fabric is idle.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RULE THIS ROW APPLIES, quoted from the face @61904105639022e4f0a3601a3954860ca7283be6: 'An invocation in the window voids the arm: if you find one, the arm records VOIDED with the row, and the NEXT night is the record (the COO re-hands this order after it; you do not wait).' And D9-AC2's own clause: '(an invocation voids the arm -- the arm then reads VOIDED and this criterion FAILS honestly)'.",
+        "ARM (b), CloudTrail lookup-events EventName=RunTask, --start-time 2026-09-04T21:00:00Z --end-time 2026-09-05T06:00:00Z: 11 events. TEN carry a non-human starter (7x the projection Pipe role 'Started by Eventbridge Pipes'; events-rule/opal-globgrph-derive-runner-nightly; chronos-schedule/globgrph-cse-produc; events-rule/opal-globgrph-comp-learns-producer-nightly). ONE does not: eventTime 2026-09-04T21:18:53Z, userIdentity.type IAMUser, arn:aws:iam::313476888478:user/Andrew_Berman, cluster opal-globgrph, taskDefinition globgrph-trino, startedBy absent. RUNTASK_NONPIPE_IN_WINDOW=1 of 11.",
+        "THAT CALL SUCCEEDED AND LAUNCHED A TASK -- it is not a refused attempt: responseElements.tasks length 1, responseElements.failures [], errorCode null, sourceIPAddress 73.84.214.103, userAgent Boto3/1.42.54 ... os/windows#10.0.26100, requestParameters.overrides.containerOverrides[0].name 'trino' with a redacted command override.",
+        "ARM (a): SEAT_INVOCATIONS_IN_WINDOW=2,150 of 2,150 across 8 serials (see W1-S13 for why this is the coarse grain and not the face's filter).",
+        "WHAT IS **NOT** REFUTED, stated so the failure is not read wider than it is: the nightly itself was unprovoked and is fully attributed. CloudTrail 2026-09-05T02:00:05Z, AssumedRole opal-globgrph-derive-runner-events, startedBy events-rule/opal-globgrph-derive-runner-nightly, taskDefinition globgrph-derive-runner:7 -- the RULE fired it, no seat did. Its own log stream derive-runner/derive-runner/be97f46226f74bae86b9cf853e78763c is the ONLY derive stream in the window (the 7 next-newest streams are all outside it) and carries 's3 notifications buckets read=34 / buckets unreadable=0; unreadable=none' and 'MARKER_STAMPED writer=derive_runner hash=c336d1e8... nodes_snap=4606138319900821475 edges_snap=8760077255054959316'. D9-AC1 PASSES on that evidence.",
+        "THE HUMAN RUNTASK IS ALSO NOT THE CAUSE OF THE NIGHTLY: globgrph-trino is the query engine family, the nightly is globgrph-derive-runner fired by its own cron rule 2h41m later, and no comp-* read can start either (D9-AC5 reads 0 rebuild-path hits in the client). The arm fails on its PRECONDITION -- an idle fabric -- not on FWD-2's substance."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That 2026-09-05 is 'ONE UNATTENDED NIGHT' -- the pointer's vintage advancing with no seat and no human invoking anything in the 21:00Z-06:00Z window.",
+    "world_is": "The vintage advanced exactly as FWD-2 describes and the nightly is cleanly attributed to its own EventBridge rule, but the window was a WORKING night for the fabric, not an idle one: 8 seats made 2,150 tool calls and a human launched a task on the graph's cluster 19 minutes into it. 'Unattended' is a claim about the WINDOW, and this window does not support it.",
+    "notes": "THE SHAPE OF THE EVIDENCE THE CELL WANTS is the 2026-09-03/04 night quoted in the face -- '12 producer vintages between 21:12Z and 05:53Z, the nightly full at 02:09Z, EVERY SEAT DOWN'. The pins that make a night countable landed 2026-09-04 ~17:2xZ, and every night since has been worked by the round-4 drain. THE STRUCTURAL TENSION WORTH NAMING FOR THE ISSUER: this criterion can only pass on a night when nobody is working, but the project is being driven hardest at night, so the arm and the work compete for the same hours. Re-handing after 'the next night' does not resolve that on its own -- the re-hand needs a night the fabric is deliberately idle, or the arm needs to be re-cut to ask what it actually cares about (did any invocation CAUSE a rebuild) rather than whether anyone was awake."
+  }
+]
+```
+
+## W1-S15 -- the face's legitimate-starter enumeration names two of four, and scoring to it triples the human count
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S15",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-05T04:35Z",
+    "one_line": "TO-CG-D-9 limb (i) arm (b) says every RunTask in the window 'must be the Pipe's role or the EventBridge scheduler's, never a human/seat principal' -- a TWO-name enumeration. The window contains FOUR distinct non-human starters; the two the face does not name (opal-globgrph-cse-producer-scheduler via chronos-schedule/, and opal-globgrph-comp-learns-producer-events via its own events-rule) are both legitimate schedulers. A classifier written to the face's enumeration scores them NONPIPE and reports 3 human invocations where there is 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FACE, quoted @61904105639022e4f0a3601a3954860ca7283be6: 'every RunTask's `userIdentity` must be the Pipe's role or the EventBridge scheduler's, never a human/seat principal.'",
+        "THE FOUR STARTERS ACTUALLY PRESENT in 2026-09-04T21:00Z -> 2026-09-05T06:00Z, from CloudTrail requestParameters.startedBy + userIdentity.arn: (1) assumed-role/opal-globgrph-projection-pipe, startedBy 'Started by Eventbridge Pipes', 7 events -- NAMED by the face; (2) assumed-role/opal-globgrph-derive-runner-events, startedBy 'events-rule/opal-globgrph-derive-runner-nightly', 1 event at 02:00:05Z -- NAMED; (3) assumed-role/opal-globgrph-cse-producer-scheduler, startedBy 'chronos-schedule/globgrph-cse-produc', 1 event at 2026-09-05T03:30:13Z, taskDefinition globgrph-cse-producer:1 -- NOT NAMED; (4) assumed-role/opal-globgrph-comp-learns-producer-events, startedBy 'events-rule/opal-globgrph-comp-learns-producer-nightly', 1 event at 2026-09-05T04:00:28Z, taskDefinition globgrph-comp-learns-producer:1 -- NOT NAMED.",
+        "THE MISCLASSIFICATION IS NOT HYPOTHETICAL -- IT HAPPENED IN THIS ORDER AND WAS CAUGHT BY A CONTROL. night.sh's first classifier allow-listed the two role names the face gives and printed RUNTASK_NONPIPE_IN_WINDOW=2 of 10, counting the cse-producer scheduler as a human invocation. The tell was that the per-row labels disagreed with the count, so both were rebuilt onto ONE classifier keyed on userIdentity.type == AssumedRole AND a startedBy prefix in {'Started by Eventbridge Pipes', events-rule/, chronos-schedule/, ecs-svc/}. The corrected reading is 1 of 11.",
+        "PROVENANCE, NOT NAME, IS THE DISCRIMINATOR: the one true positive carries userIdentity.type IAMUser and NO startedBy at all, which no scheduler ever does. That property does not lapse when a new producer is added; a role-name allow-list does."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That the set of legitimate RunTask starters on the opal-globgrph cluster is {the projection Pipe's role, the EventBridge scheduler's role} and anything else is a human or seat.",
+    "world_is": "The cluster carries at least four scheduled producers, each with its OWN role and its own startedBy form (events-rule/, chronos-schedule/), and the set grows as producers are added. The face's enumeration was already stale at the moment it was read -- globgrph-cse-producer and globgrph-comp-learns-producer both fired inside this very window.",
+    "notes": "This is the enumerated-allow-list-lapses-silently shape CLAUDE.md names for the cross-firm ban list, in its inverting direction: there the list is of things to REFUSE and a new name escapes it; here the list is of things to ADMIT and a new name is falsely convicted. Both fail closed on the list's vintage, not on the world. THE DISARM: re-cut arm (b) to classify on PROVENANCE (AssumedRole + a startedBy that names a rule/schedule/service) rather than on an enumeration of role names, and say so in any future face. A face that lists role names must be re-measured against `ecs list-task-definition-families` every time it is re-cut, which is a maintenance obligation nobody owns."
+  }
+]
+```
+
+## W1-S16 -- ECS aged the nightly derive out before it could be read; the amendment's ECS-sourced facts are only re-derivable elsewhere
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S16",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-05T04:35Z",
+    "one_line": "TO-CG-D-9's amendment cites the nightly derive's startedBy, task definition, imageDigest, createdAt/startedAt/stoppedAt and exit code from ECS. By the time this worker read them (~03:1xZ, about an hour after the task stopped at 02:12:51Z) `ecs describe-tasks --tasks be97f46226f74bae86b9cf853e78763c` returned **null** -- the task had aged out. A positive control proves the arm was alive. The facts were re-derived from two durable instruments instead, and they corroborate the amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE NULL: `.tools/aws ecs describe-tasks --cluster opal-globgrph --tasks be97f46226f74bae86b9cf853e78763c --query 'tasks[0].{...}' --output json` -> `null`, read 2026-09-05T03:1xZ. The task stopped 2026-09-05T02:12:51.092Z.",
+        "THE POSITIVE CONTROL, run BEFORE the null was believed: the same verb against the cluster's live set returned FOUR task objects (globgrph-serving:2 RUNNING, globgrph-trino:6 RUNNING, globgrph-nessie:5 RUNNING, globgrph-nessie:5 STOPPED). The arm finds tasks; it did not find THIS one. `ecs list-tasks --desired-status STOPPED` on the whole cluster returned exactly 1 arn, none of them the derive.",
+        "RE-DERIVATION 1, CloudWatch Logs (durable): log group /ecs/globgrph/derive-runner, stream derive-runner/derive-runner/be97f46226f74bae86b9cf853e78763c, events 2026-09-05T02:00:48Z -> 02:12:26Z. It carries 's3 notifications buckets read=34 / buckets unreadable=0; unreadable=none' and 'OK: MARKER_STAMPED writer=derive_runner hash=c336d1e8bac0321c442677ecd5e3150ff7006eb9b47ec0ad86250f36b4ce2e6d nodes_snap=4606138319900821475 edges_snap=8760077255054959316' -- the amendment's denominator line and marker, verbatim.",
+        "RE-DERIVATION 2, CloudTrail (durable): RunTask at 2026-09-05T02:00:05Z, AssumedRole opal-globgrph-derive-runner-events, startedBy 'events-rule/opal-globgrph-derive-runner-nightly', taskDefinition globgrph-derive-runner:7 -- the amendment's startedBy and revision, verbatim, and this is the ONLY instrument left that carries startedBy for a task ECS has forgotten.",
+        "THE PIN, read on the live plane rather than from the aged-out task: describe-task-definition on all three families returns 313476888478.dkr.ecr.us-east-1.amazonaws.com/opal-globgrph-derive-runner@sha256:1b89853fe44133f10a60dc2b3e7b463c0d3b68b827a2ddff249bf427ecde2778 for globgrph-derive-runner:7, globgrph-projection-worker:4 and globgrph-serving:2 -- the digest TO-CG-D-1 pinned.",
+        "NOT RE-DERIVED ANYWHERE: the container EXIT CODE. Neither CloudWatch Logs nor CloudTrail carries it once ECS forgets the task. It is taken from the issuer's live read on the record at STEP_LOG.2.0.0_SA_COO~A.round4.json row 12, and this worker cites it as the ISSUER'S measurement, not its own. The derive's success is independently attested by the completed publish (a 3-of-3 manifest join) rather than by the exit code."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That a worker handed a task id can read that task's attribution and outcome from ECS.",
+    "world_is": "ECS retains a stopped task on the order of an hour. Any face that hands a worker a task id and expects an ECS read has a shelf life shorter than the gap between issuance and execution, and the failure renders as `null` rather than as an error -- indistinguishable from a wrong task id if no positive control is run.",
+    "notes": "Filed as an instrument note for future faces rather than as a defect in this one: the amendment was written ~02:4xZ when the task was still readable, and everything it asserted has now been corroborated on instruments that do NOT share ECS's retention. THE PRACTICAL RULE: cite a stopped ECS task by its LOG STREAM and its CloudTrail RunTask event, both of which outlive it, and treat describe-tasks as a perishable convenience. The exit code is the one field with no durable carrier -- if a face needs it graded, the ISSUER must record it at measurement time, which this one did."
+  }
+]
+```
+
+## W1-S17 -- limb (ii) does not say which clock STAMP->ANSWER ends on, and the two readings differ by 32x
+
+```json
+[
+  {
+    "id": "NFRA_CLDGRPH-W1-S17",
+    "project": "NFRA_CLDGRPH",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_CLDGRPH~1",
+    "surfaced_at": "2026-09-05T04:35Z",
+    "one_line": "D9-AC3 grades STAMP_TO_ANSWER_S against a 900 s ceiling, but limb (ii) never says whether the ANSWER clock stops when the served answer FIRST carries the vintage or when the worker happens to run its query. On the same stamp the two readings are 82.186 s and 2,660.328 s -- one passes, one fails, and only the first is a property of the estate. This worker printed the first as STAMP_TO_ANSWER_S and the second beside it, labelled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~A",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FACE, quoted @61904105639022e4f0a3601a3954860ca7283be6: 'Limb (ii), the latency, is measured from FOUR timestamps on ONE stamp: the marker's `committed_at_iso` (= the vintage), the pointer object's `LastModified`, ..., the service's `last_swap` ..., and an ANSWER read carrying that vintage. Print `STAMP->POINTER=<s>`, `POINTER->SWAP=<s>`, `STAMP->ANSWER=<s>`'. The fourth timestamp is named; which of the two clocks it stops is not.",
+        "THE MEASUREMENT, stamp 2026-09-05T03:31:16.793943+00:00 (manifest writer_id cse_producers_nightly, producer.mode incremental): pointer LastModified 2026-09-05T03:31:47Z -> STAMP_TO_POINTER_S=30.206. Serving log 'projection swap complete' last_swap 2026-09-05T03:32:38.979596+00:00 -> POINTER_TO_SWAP_S=51.980. Swap minus stamp = 82.186 s.",
+        "THE SAME STAMP ON THE OTHER CLOCK: this worker's confirming client read at 2026-09-05T04:15:37.122041Z -> 2,660.328 s after the stamp. The answer it returned is the same answer that was available at 03:32:38; the extra 2,578 s is this seat's schedule, nothing about the estate.",
+        "THE ANSWER READ IS REAL AND CARRIES THE STAMP, so the 82.186 s is confirmed rather than asserted: `.tools/comp-kuzu --json 'MATCH (n) RETURN count(n) AS c'` -> 27295, stderr 'VINTAGE: Built from the estate as of 2026-09-05 03:31:16 UTC. [vintage=2026-09-05T03:31:16.793943+00:00 manifest=78fecbbdf4ef prefix=projection/2026-09-05T03:31:16.793943+00:00/]'. node_count 27295 equals the manifest's node_count exactly.",
+        "WHY THE WALL-CLOCK READING IS NOT FALSIFIABLE: it is bounded below by nothing and above by how long the worker waits, so any worker can make it any number by choosing when to type. A criterion whose value the measurer controls is not a control."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "That 'STAMP->ANSWER' names one unambiguous quantity that a 900 s threshold can grade.",
+    "world_is": "It names two, differing by 32x on this stamp, and the face's own framing supports either. The estate's latency is stamp -> the moment the served answer first carries the vintage (= last_swap, confirmed by a read that returns it); the worker's wall-clock is stamp -> whenever the worker asked.",
+    "notes": "DECLARED BECAUSE A CRITERION'S PASS TURNS ON IT: D9-AC3 is recorded PASS on 82.186 s, the swap-based reading. Under the wall-clock reading the same evidence FAILS at 2,660.328 s. Both numbers are printed by latency.sh and both are in the result document, so 3.0.0_SA_CVO can grade either without re-running anything. THE DISARM: fix the wording in any future face -- 'STAMP->ANSWER = the service's last_swap for that vintage minus the marker's committed_at_iso, confirmed by a client read returning that vintage' -- or, if the wall-clock really is wanted, the face must require the worker to be POLLING at the stamp, which is limb (iii)'s job and not limb (ii)'s."
   }
 ]
 ```
