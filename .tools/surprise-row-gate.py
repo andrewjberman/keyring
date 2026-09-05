@@ -442,8 +442,18 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
             if not _is_adj:
                 out.append("%s: NEW row %s carries C- outside adjudications/ -- C- is the CVO's coordinate for its "
                            "adjudication rows (annex 4a) and lives nowhere else." % (rel, rid))
-            elif _base_serial(committer) != "3.0.0_SA_CVO":
-                out.append("%s: NEW row %s carries C- but the committer %s is not 3.0.0_SA_CVO." % (rel, rid, committer))
+            else:
+                # THE C- ARM UNDER merging -- the W- arm's own principle at :420, applied here
+                # (3.0.0_SA_CVO 94313, the coordinate's owner stating the rule; 0.0.0_AB_MSTR 94311
+                # finding the gap). On a merge the identity graded is the ROW's own surfaced_by, NEVER
+                # the committer: an integrator carrying the CVO's adjudication rows forward is not
+                # their author. A ~lane counts -- a 3.0.0_SA_CVO~Z row minted on the other fabric is
+                # the CVO's. Off a merge the arm is unchanged: a C- row committed by anyone but the
+                # CVO refuses, which is the narrowness arm in both directions.
+                _c_who = str(r.get("surfaced_by") or "").strip() if merging else committer
+                if _base_serial(_c_who) != "3.0.0_SA_CVO":
+                    out.append("%s: NEW row %s carries C- but the %s %s is not 3.0.0_SA_CVO."
+                               % (rel, rid, "surfacer" if merging else "committer", _c_who))
         elif (folder_kind == "ADJUDICATION" or (folder_kind is None and _is_adjudication_doc(rel))) \
                 and c_in_schema:
             out.append("%s: NEW row %s in adjudications/ carries no C- while the staged schema admits it -- the CVO's rows "
@@ -1097,6 +1107,24 @@ def _self_test(root):
         # battery that guards the limb it fixes, silently, because a disarmed arm and a passing arm
         # print the same line. The False default means those seven arms need no edit and still mean
         # what they meant.
+        # THE C- ARM UNDER merging (0.0.0_AB_MSTR 94311, rule stated by 3.0.0_SA_CVO 94313). The MUTANT is
+        # the arm that earns it: an integrator MINTING a C- row by hand on a merge must still refuse.
+        ("C- MERGE: a CVO-surfaced C- row carried by a DIFFERENT committer on a merge -> admitted",
+         lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md",
+                                        "ADJUDICATION", [{"id": "X-C-S7", "surfaced_by": "3.0.0_SA_CVO"}],
+                                        "0.0.0_AB_MSTR", False, merging=True) == []),
+        ("C- MERGE: a ~lane surfacer (3.0.0_SA_CVO~Z, the other fabric's) is the CVO -> admitted",
+         lambda: _coordinate_violations("org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md",
+                                        "ADJUDICATION", [{"id": "X-C-S8", "surfaced_by": "3.0.0_SA_CVO~Z"}],
+                                        "0.0.0_AB_MSTR", False, merging=True) == []),
+        ("C- MERGE MUTANT: a C- row the INTEGRATOR surfaced (not the CVO) -> still REFUSED on a merge",
+         lambda: any("is not 3.0.0_SA_CVO" in x and "surfacer" in x for x in _coordinate_violations(
+             "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
+             [{"id": "X-C-S9", "surfaced_by": "0.0.0_AB_MSTR"}], "0.0.0_AB_MSTR", False, merging=True))),
+        ("C- NARROWNESS: the SAME CVO-surfaced row off a merge under a foreign committer -> still REFUSED",
+         lambda: any("is not 3.0.0_SA_CVO" in x and "committer" in x for x in _coordinate_violations(
+             "org/missions/D0/NFRA/X/surprise-channel/adjudications/ADJUDICATION_v1.md", "ADJUDICATION",
+             [{"id": "X-C-S7", "surfaced_by": "3.0.0_SA_CVO"}], "0.0.0_AB_MSTR", False, merging=False))),
         # ESTATE_GOVERNANCE-S5: the FLAT adjudication document. Three arms as 3.0.0_SA_CVO specified.
         ("S5 flat: a C- row in a FLAT ADJUDICATION_v document is ADMITTED (was refused, x4)",
          lambda: _coordinate_violations("org/surprise_channel/ESTATE_GOVERNANCE/ADJUDICATION_v1.md", None,
