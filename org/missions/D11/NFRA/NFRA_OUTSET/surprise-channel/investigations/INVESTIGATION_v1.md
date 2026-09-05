@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 18 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 19 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -449,6 +449,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-2 <paths> grants infra/system/06_current_state.{json,md} on the stated ground that 'the assignee must be able to regenerate and COMMIT that pair'; the spawn face restates it as 'Regenerate and commit it with your change.'",
     "world_is": "The grant is necessary but not sufficient. Regeneration is refused until the source lands (so the pair cannot ride the same commit as the change that dirties it), and the gate that actually decides the commit reads a DIFFERENT worktree's 06 and sources, which no act inside this worktree can make current. This worker therefore lands the source with the gate's own audited `system-current-override:` trailer (the same escape W1-S5 recorded), and regenerates + commits this worktree's 06 pair in a SECOND commit once the source has landed -- honouring the grant as far as the world allows and saying where it stopped.",
     "notes": "hazard_standing ARMED because it recurs for every future comp-* cell cut to a linked worktree, which spine v3 makes the normal case; class OBSERVATION because a sanctioned audited escape exists and no criterion of this order is blocked by it. NOT a claim that either gate is wrong: each is correct on its own terms (comp-system must not launder an unlanded source; safe-commit must not trust a caller-supplied tool path). The composition is what has no worker-side answer."
+  },
+  {
+    "id": "NFRA_OUTSET-S8",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T04:30:00Z",
+    "one_line": "OS-s-2's acceptance battery arm F is a FLAKY RED on a live repository: it compares the scoped and unscoped answers for age parity, and a commit landing from any other seat between its two passes moves one file's age and fails the arm. Measured at issuer certification -- 9/10 rc=1 on the first run, 10/10 rc=0 on two immediate re-runs, same bytes. The arm also prints its failure count beside an EMPTY key list, so its own output names no member and cannot be diagnosed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER CERTIFICATION run 1, main worktree, `timeout 180 python .tools/tests/test_os2_path_grain.py` -> rc=1, `9/10 PASS (denominator 10)`, sole failure `[FAIL] F-SCOPED-ANSWER-IS-PARITY-WITH-THE-UNSCOPED-ANSWER -- compared 388 scoped vs 388 unscoped-filtered rows: key-diff=0 band-diff=0 age-diff(>0.01d)=1 []`",
+        "runs 2 and 3, same command, same bytes, minutes later -> rc=0, `10/10 PASS (denominator 10)` both times. Not a regression.",
+        "CAUSE, from the repo's own log: `e17adfafa3` (2.0.0_SA_COO~B, 00:25:32) landed during run 1. The arm's threshold is age-diff > 0.01 day = 864 s; a file committed BETWEEN the arm's scoped pass and its unscoped pass has its age move by the gap between them, so a concurrent commit is sufficient to trip it.",
+        "DISCRIMINATOR that the fix is sound and only the arm is brittle: on the failing run key-diff=0 and band-diff=0, i.e. the identity and the classification of all 388 of 388 files agreed exactly. Only the time-derived field moved.",
+        "The path-grain claim itself re-measured at the issuer's seat and it MOVES with the path, which a faked scoping could not do: `.tools` 388 of 388, `org/modules/heatmap` 9 of 9, no-path 30783 of 30783, all rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An acceptance battery arm returns the same verdict for the same bytes, and a failing arm names the members that failed it.",
+    "world_is": "Arm F's verdict depends on whether any other seat commits during the run -- on this fabric five seats plus worker subagents commit continuously, so the arm is a coin weighted by traffic. And when it does fail it prints `age-diff(>0.01d)=1 []`: a count of one beside an empty list of offending keys, so the reader cannot tell WHICH file moved or by how much.",
+    "notes": "⛔ A FLAKY RED IS WORSE THAN A MISSING ARM, WHICH IS WHY THIS IS ARMED RATHER THAN NOTED. A missing control is a known gap. A control that fails intermittently on correct code trains every future reader to re-run until green -- and that habit is exactly how a REAL regression gets waved through, because the real one also goes green on the run you keep. The arm is measuring something worth measuring (that the cheap scoped answer is the SAME answer, not merely a smaller one), so the remedy is to make it robust, not to delete it: compare the age fields as of a SINGLE snapshot taken once and reused by both passes, or exclude paths whose git mtime changed during the run and print that exclusion as a denominator. Second, independent defect in the same arm: the empty key list. A failure that reports a count without its members is undiagnosable from its own output, and it is the same shape as a denominator printed without the population behind it. DISARM OWNER is the OS-s-2 assignee if a later order returns it to that file; otherwise 2.0.0_SA_COO carries it to the L8 completion report. NOT A DEFECT IN OS-s-2's DELIVERABLE and the drain at 2ab06d0a96 stands: the cell's claim is that freshness answers at a path grain, and that is carried by the three moving denominators above, not by arm F. Filed by the ISSUER because certification is where it surfaced -- the assignee ran the battery in a quieter minute and saw 10/10 honestly.",
+    "disarm_owner": "2.0.0_SA_COO"
   }
 ]
 ```
