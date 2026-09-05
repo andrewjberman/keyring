@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 53 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 54 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1300,6 +1300,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json: `deployed_state` is a closed enum of three values, and every artifacts_produced row must carry one of them.",
     "world_is": "There is a fourth real state -- deploy-scope, committed, deliberately undeployed because the deploying act belongs to another lane -- and the enum has no member for it. A closed enum with no value for a real state does not prevent the state; it makes every instance carrying that state say something false in a MACHINE-READ field, while the truth survives only in the adjacent prose that no consumer parses. That is the failure mode a claim field exists to prevent, appearing in the claim field itself.",
     "notes": "hazard_standing ARMED because it recurs for every future cell that edits a deploy-scope artifact without owning the deploy -- which spine v3's lane split makes common, not exotic. class OBSERVATION and NOT BLOCKING: the instance validates with the least-wrong value and no criterion of this order is stopped. NOT PROPOSED HERE: a specific fourth value. TAXONOMY LAW says a value-enum proposal arrives with its four-postulate record and a word-boundary token census over the corpus of existing instances, and that census is not this cell's work -- naming the gap is."
+  },
+  {
+    "id": "NFRA_OUTSET-S11",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T09:30:00Z",
+    "one_line": "CORRECTION to NFRA_OUTSET-S9: my disarm of the arm F flake was OVERCLAIMED. I certified against ONE mechanism (an untracked row's live mtime, under adversarial concurrency) and wrote that the fix held. 0.9.0_WK_NFRA_OUTSET~1 then hit a SECOND mechanism on OS-s-10 -- a git-sourced row with HEAD held, where the tool quantises age_days to 0.01d and the arm's tolerance WAS 0.01, so adjacent quanta differ by exactly the tolerance. My falsifier was structurally incapable of catching it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S9 recorded a falsifier that churned an UNTRACKED file's mtime inside the arm's scope every 0.3 s for a whole battery run, 10/10 PASS. That measurement stands and is not withdrawn -- it is evidence about the mtime-race mechanism and about nothing else.",
+        "W1-S18 (0.9.0_WK_NFRA_OUTSET~1, OS-s-10 regression): arm F failed again at 9/10 on a GIT-SOURCED row with HEAD HELD -- neither concurrency nor an mtime is involved, so it is a different mechanism on a different row class.",
+        "MECHANISM CONFIRMED AT SOURCE BY THIS SEAT, not inherited from the report: `.tools/comp-heat` publishes `round(s.age_days, 2)` at :300 and :428 and renders `:.2f` at :371 and :441, so the value is quantised to 0.01 d. The arm's tolerance was 0.01 -- EXACTLY ONE QUANTUM -- so two adjacent quantisation steps differ by exactly the tolerance, and float representation makes that comparison read as GREATER.",
+        "FIX at 508d4ce31d raises AGE_TOLERANCE_D to 0.02 with the reasoning written into the arm at :207-219 and the quantum printed in the arm's own detail line; the key set is still compared EXACTLY over all 393 rows, so the tolerance change did not weaken the identity check. 3 of 3 clean at the assignee.",
+        "COVERAGE OF THE ORIGINAL CERTIFICATION, measured rather than estimated: 1 of at least 2 mechanisms exercised. The falsifier's churn file was untracked by construction, so no run of it could ever place a git-sourced row at a quantisation boundary."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S9 asserted that arm F no longer depends on repository traffic, and this seat wrote that the fix 'holds under the exact condition that broke it'.",
+    "world_is": "The fix held under the condition that produced the FIRST failure. A second, unrelated mechanism in the same arm survived it and fired three weeks' worth of runs later in the same session. The arm was not fixed; one of its two failure modes was.",
+    "notes": "⛔ THE ERROR IS MINE AND IT IS THE ONE I HAD ALREADY WRITTEN DOWN. Hours before filing S9 this seat banked the rule that a control aimed at one mechanism is not evidence about another, and then certified a two-mechanism arm against one mechanism and reported it fixed. Worse, the falsifier I ran was COPIED FROM THE ASSIGNEE'S OWN, so my 'independent' certification inherited exactly the blind spot of the control it was meant to be independent of -- a second seat's confirmation via the FIRST seat's method is repetition, not corroboration, which is Rule 22 in as many words. ⭐ THE SCOPE ERROR IS IN THE SENTENCE, NOT THE MEASUREMENT: what I ran showed 'the mtime-race mechanism is fixed'; what I wrote was 'the fix holds'. A certification's WORDING is a claim about coverage, and mine claimed a denominator I never measured. The honest form would have named the mechanism exercised and said which others were not. FILED AGAINST S9 RATHER THAN EDITING IT -- rows are append-only and 3.0.0_SA_CVO grades both at L9. S9's disarm of the FIRST mechanism stands; its implied disarm of the arm does not."
   }
 ]
 ```
