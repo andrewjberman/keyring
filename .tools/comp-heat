@@ -21,7 +21,9 @@ The two are complementary; both help texts cross-link.
 Usage:
   comp-heat freshness [path] [--half-life N] [--top N] [--json [OUT]]
         per-path hot/warm/cold + ranked COLD SUBTREES (archive candidates). [O1 build]
-        path = subtree to scope to (default: the repo root / whole estate).
+        path = subtree to scope to (default: the repo root / whole estate). A NAMED path is
+        answered at a PATH GRAIN (OS-s-2): every git call is scoped to that corner, so the cost
+        and the printed `denominator:` line are that corner's, never the whole repo's.
   comp-heat drift [--top N] [--json [OUT]]
         WRITES NOT IN A COMMIT (untracked + modified working-tree, freshest first) -- the
         LOCAL->GIT layer. "what have I written that isn't committed?" [O1 uncommitted_writes]
@@ -143,6 +145,37 @@ def _add_budget(sp):
                     help="Rule T resume cursor from a prior BUDGET REACHED line")
 
 
+def _scoped_git_call(rel: str) -> str:
+    """The git call the answer's denominator actually came from -- printed, not implied, so a
+    reader can re-run it. OS-s-2: the scoped form names its pathspec."""
+    if rel:
+        return f"git log --format=%ct --name-only --no-renames --full-history -- {rel}"
+    return "git log --format=%ct --name-only --no-renames"
+
+
+def _denominator_line(rel: str, scanned, total, dropped: int = 0, cut: bool = False) -> str:
+    """OS-s-2's own disclosure: WHICH POPULATION the number beside this answer counts.
+
+    Before OS-s-2 a caller naming one corner was answered with the WHOLE REPO's `scanned n of N`
+    beside that corner's per-path rows -- two grains in one output, neither labelled. This line
+    labels the grain, prints the pathspec that produced it, and states the prefix filter's residue
+    (0 on a correct scoped run: the engine, not the filter, did the scoping).
+    """
+    total_s = "UNKNOWN" if total is None else str(total)
+    if rel:
+        head = (f"  denominator: {scanned} of {total_s} files under {rel}/ -- PATH-SCOPED to this "
+                f"corner, NOT the whole repository")
+    else:
+        head = (f"  denominator: {scanned} of {total_s} files -- WHOLE-ESTATE (the no-path form "
+                f"scores the whole repository, by design)")
+    tail = f"; git call: `{_scoped_git_call(rel)}`"
+    if cut:
+        return head + tail + "; PREFIX ONLY (budget reached before this population was finished)"
+    if rel:
+        tail += f"; wrapper prefix-filter dropped {dropped} row(s) (0 = the engine scoped it)"
+    return head + tail
+
+
 def cmd_freshness(a) -> int:
     if _compbudget is None:
         return _budget_unavailable(a)
@@ -153,9 +186,14 @@ def cmd_freshness(a) -> int:
         return 2
     disclosure = _compbudget.disclosure_line(budget_s, budget_source)
 
-    # The O1 engine scores the WHOLE repo (git history is repo-root-relative, so its --root must
-    # BE the repo root). Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's
-    # pure analytic (build/summarize/cluster) -- reused, not re-implemented.
+    # The O1 engine's --root must BE the repo root (git history is repo-root-relative), but as of
+    # OS-s-2 the SCOPE travels into the engine and every git call it makes is PATH-SCOPED to the
+    # named corner (`build_budgeted(..., scope=rel)`). A caller naming one corner therefore pays
+    # that corner's cost and is answered with THAT CORNER'S DENOMINATOR -- `scanned n of N` counts
+    # the corner, not the estate. Before OS-s-2 the scoping was a wrapper-side PREFIX FILTER over a
+    # whole-repo scan, so every scoped call paid the full history walk and then disclosed the
+    # repo's denominator beside a corner's answer. The prefix filter below is RETAINED as a no-op
+    # safety net (it must find nothing left to drop on a scoped run), never as the scoping.
     if not os.path.isdir(HEATMAP_DIR):
         return _state_result(a, STATE_PARTIAL,
                              f"comp-heat: heatmap source unavailable at {HEATMAP_DIR}; no heat answer is claimed")
@@ -174,7 +212,8 @@ def cmd_freshness(a) -> int:
                              f"comp-heat freshness: subject '{rel}' is absent from the repository corpus")
 
     p = HeatParams(half_life_days=a.half_life)
-    result = build_budgeted(REPO_ROOT, p, time.time(), clock, cursor=getattr(a, "cursor", None))
+    result = build_budgeted(REPO_ROOT, p, time.time(), clock, cursor=getattr(a, "cursor", None),
+                            scope=rel or None)
     scores, src = result["scores"], result["src"]
 
     if result["cut"]:
@@ -198,14 +237,22 @@ def cmd_freshness(a) -> int:
         else:
             print(disclosure)
             print(terminal)
+            print(_denominator_line(rel, result["scanned"], result["total"], cut=True))
             for line in _compbudget.deferred_bucket(len(result["deferred"]), total_for_line,
                                                      "files", result["deferred"]):
                 print(line)
             print(f"ANSWER-STATE: {STATE_PARTIAL}")
         return RC_BY_STATE[STATE_PARTIAL]
 
+    # SAFETY NET, NOT THE SCOPING (OS-s-2): the engine's git calls are already path-scoped, so on a
+    # scoped run this filter must have NOTHING to drop. `dropped` is carried into the denominator
+    # disclosure so a future regression (the engine silently returning unscoped rows again) shows
+    # up as a non-zero number in the output rather than being quietly absorbed here.
+    dropped = 0
     if rel:
-        scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+        kept = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+        dropped = len(scores) - len(kept)
+        scores = kept
         if not scores:
             return _state_result(a, STATE_ZERO,
                                  f"comp-heat freshness: subject '{rel}' exists but has zero scored files")
@@ -221,6 +268,7 @@ def cmd_freshness(a) -> int:
         print(f"=== comp-heat freshness  scope={scope}  files={summ['n']}  half_life={a.half_life}d ===")
         print(disclosure)
         print(terminal)
+        print(_denominator_line(rel, result["scanned"], result["total"], dropped=dropped))
         # BASIS-IN-OUTPUT (Andrew-ratified CH-3 elevation, 2026-08-04): a band NEVER prints
         # without the numbers that produced it -- the barrier definition rides every output.
         print(f"  basis: band = age vs barriers [hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, "
@@ -238,6 +286,13 @@ def cmd_freshness(a) -> int:
 
     if a.json is not None:
         snap = {"scope": rel or None, "half_life_days": a.half_life,
+                "denominator": {"grain": "PATH-SCOPED" if rel else "WHOLE-ESTATE",
+                                "counts": rel or "(whole estate)",
+                                "scanned": result["scanned"], "total": result["total"],
+                                "scored": summ["n"],
+                                "git_call": _scoped_git_call(rel),
+                                "prefix_filter_dropped": dropped,
+                                "claim": "measured"},
                 "basis": {"half_life_days": p.half_life_days,
                           "barriers": {"hot_days": p.hot_days, "warm_days": p.warm_days},
                           "freq_weight": p.freq_weight},
@@ -628,7 +683,10 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd")
 
     f = sub.add_parser("freshness", help="per-path hot/warm/cold + cold SUBTREES (archive candidates)")
-    f.add_argument("path", nargs="?", default="", help="subtree to scope to (default: repo root)")
+    f.add_argument("path", nargs="?", default="",
+                   help="subtree (or single file) to scope to (default: repo root). A named path "
+                        "is PATH-SCOPED at the git call, so the printed denominator counts THAT "
+                        "corner; the no-path form scores the whole repository.")
     f.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     f.add_argument("--top", type=int, default=25, help="show N coldest (default 25)")
     _add_json(f)
