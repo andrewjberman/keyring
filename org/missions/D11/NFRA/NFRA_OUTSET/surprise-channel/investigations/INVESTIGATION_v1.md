@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 69 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 70 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1690,6 +1690,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "PRD s.2: this project owns 'the consumption seam between the outset tools and the estate-report runner: that the runner CONSUMES tool outputs with their answer state, vintage and denominators instead of re-deriving them (FWD-3)', and PRD s.5 excludes only 'the report runner's own infrastructure -- the box, the orchestrator, the manifest contract, the self-parking host'.",
     "world_is": "Three cells changed the runner and none of the changes is running. The exclusion in s.5 is about the BOX; the code artifact is the thing this project changes, and its deploy is a single S3 upload that no cell of the 17 owns. So the project can land every criterion it was cut for and the daily report can continue to be produced by code from before the project started, with nothing in the record saying so.",
     "notes": "hazard_standing ARMED because it grows quietly: each further cell that edits the runner widens the gap between the committed and the served program, and the report keeps looking healthy throughout. class OBSERVATION, not BLOCKING: no criterion of this order needs the deploy, and W1-S24 carries the blocking half. NOT CLAIMED: that deploying it would be safe or correct today -- OS-s-14 is being written into that same file as this row is filed, and a deploy mid-round is a change-management act with its own ledger, not a worker's. What is claimed is only the measurement: committed != served, by 11 days and by three cells."
+  },
+  {
+    "id": "NFRA_OUTSET-S14",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T12:10:00Z",
+    "one_line": "ISSUER CONFIRMATION of W1-S25 on a live AWS read, with a correction to its instrument: the SERVED estate-report producer is dated 2026-08-25 (11 days behind) and lacks OS-s-10's seam AND OS-s-11's recipe vocabulary. Two of the five tokens W1-S25 cites are DEAD ARMS -- zero at HEAD as well as served -- so they discriminate nothing; six other tokens do, and the conclusion is stronger than the row that reported it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object on s3://opal-estate-report/code/estate_report_runner.py -> LastModified 'Tue, 25 Aug 2026 05:36:35 GMT', ContentLength 125857. s3api renders UTC (Rule 22a), unlike `aws s3 ls`.",
+        "SAME PROGRAM, OLDER VERSION, decided on CONTENT rather than filename: `_stratum(` appears 11 times in the served bytes and 15 at HEAD.",
+        "SIX DISCRIMINATING TOKENS, each non-zero at HEAD and zero in the served bytes: `_outset_read` 4/0, `OUTSET_ANSWER_STATE_TO_STATUS` 3/0, `ESTATE_OUTSET_SEAM_PREFIX` 5/0 (all OS-s-10); `rail-reproducible` 5/0, `host-reproducible` 7/0, `not-reproducible` 4/0 (all OS-s-11's claim vocabulary).",
+        "CORRECTION TO W1-S25's INSTRUMENT: of the five tokens it cites, `rerun_recipe` and `tool_invocation` are 0 in the served bytes AND 0 at HEAD. They would read zero whether or not the served copy were current, so they are dead arms and prove nothing. `reproduce` is 1 served against 15 at HEAD -- a weak discriminator, since the bare word occurs incidentally; the claim-vocabulary tokens are the clean ones.",
+        "CONSEQUENCE, unchanged by the correction: every one of the 7 published days OS-s-17 censused was produced by code that predates OS-s-10 and OS-s-11 entirely."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A cell that lands its criteria has changed the report the estate actually reads.",
+    "world_is": "COMMITTED is not SERVED. The producer that ran every measured day is 11 days and at least two landed cells behind HEAD, and the deploy that would close that gap is a single S3 upload which NO CELL OF THE 17 OWNS.",
+    "notes": "⛔ THIS IS THE SAME UNCOVERED-MEMBER SHAPE OS-s-10 FOUND, ONE HOP FURTHER OUT. There, the freshness question had an owner and the PUBLISHING step had none. Here, every code cell has an owner and the DEPLOY has none. In both cases the PRD costs the work without placing the step, and in both cases the project can pass every criterion it was cut for while the thing the estate actually reads is unchanged. That is the finding L8 must lead with, ahead of any per-cell result. ⭐ AND THE CORRECTION MATTERS EVEN THOUGH THE CONCLUSION SURVIVES: two of five cited tokens could not have failed, which is the detector-that-cannot-fire family this project has now met on both sides -- a detector that never fires (W2-S13) and a mutant that never falsifies (W2-S17). A conclusion resting five-fifths on cited evidence actually rests three-fifths, and nobody would have known. Re-derived here on a DIFFERENT instrument from W1-S25's (the aws shim's s3api and s3 cp, against that cell's boto3 reads) and on a different axis, so this is corroboration rather than repetition. NOT PROPOSING A MID-ROUND DEPLOY: OS-s-14 is being written into that same file as this row is filed, and 0.9.0_WK_NFRA_OUTSET~1 explicitly declined to propose one for the same reason. DISARM OWNER 1.0.0_SA_CTO -- placing a deploy step is a PRD-level act at round-N analysis, not an issuer's amendment."
   }
 ]
 ```
