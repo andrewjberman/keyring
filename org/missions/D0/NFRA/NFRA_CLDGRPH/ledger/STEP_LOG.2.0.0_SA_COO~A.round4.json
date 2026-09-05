@@ -459,6 +459,44 @@
       "spine_clause": "L7 drain. Both oracle halves read again -- report AND instance -- and the instance was verified INSIDE the worker's worktree, which the previous drain established is the only plane where its paths resolve.",
       "gate_or_notifier_touched": "safe-merge.sh: no conflict; the row gate graded the MERGED index -- '3 new row(s) of 91 total checked (88 pre-existing, NOT re-graded)', foreign-row sweep exempt for the 3 rows a parent carried.",
       "note": "\u26d4 THE AUTHORIZATION IS HELD, NOT SPENT, AND THE HOLD IS THE ORDER'S TEXT RATHER THAN THIS SEAT'S PREFERENCE. TO-CG-D-7 says twice that the laptop's copy is 'the issuer's to delete at the drain, never yours', and the cell it serves says 'S8 STARTS when a reader exists and CLOSES when CG-x-7 passes ... Retiring earlier breaks the estate's only graph.' The hazard is measured, not theoretical: D-7's own criteria run comp-find and comp-blast, which route through _canonical.ensure_fresh, and that REBUILDS a BEHIND local database by design (row S12) -- so deleting before D-7 removes that seam would either recreate the file or break the criteria that prove the seam is gone. Measured what the word covers, rather than describing it: SIX entries totalling 56,548,885 bytes, all gitignored (.gitignore:3) and untracked, so removing them changes no commit. || WHAT D-11 SURFACED IS BIGGER THAN D-11: its three rows are all on the order's TELEMETRY negative control, and W3-S4 REFUTES A CLAIM THIS SEAT REPEATED ALL SESSION -- that worker subagents write no telemetry. They do. The hook resolves the serial from org/mcp/sessions/<session_id>.serial BEFORE OPAL_AGENT_SERIAL, and this session's entry still names a SIBLING worker from 2026-09-04, so this worker's calls AND ITS PARENT'S were written live into that sibling's file -- 1,342 rows, one session id, 100% serial_source session-id-keyed, including send_message and Agent rows no worker can make. The zero every seat has been citing is a NAMING artifact, not an absence, and it means the fabric's per-seat telemetry census has been silently misattributing work for at least a day. Filed, not fixed: that hook is outside this round's frozen scope and outside this seat's lane."
+    },
+    {
+      "seq": 16,
+      "limb": "L7",
+      "started_utc": "2026-09-05T15:5xZ",
+      "ended_utc": "2026-09-05T16:2xZ",
+      "act": "TO-CG-D-10 DRAINED AND STAYS OPEN. The CEILING HOLDS on its own terms -- over the pinned closed cycle 2026-09-04T13:00Z -> 2026-09-05T13:00Z the oldest answer served was 18,138.643 s against a ceiling of 87,191.260 s (20.8% of budget), 261 of 261 served answers placed, UNPLACED_ANSWERS=0 of 3,151 http lines, zero refusals, and the stricter arm over all 2,887 /health reads reads 22,649.197 s, also within. D10-AC4's can-fail control passes 3 of 3, rc 0 read unpiped. Instance VALID rc 0, verified in the worker's OWN worktree. D10-AC3 FAILS ON BOTH LIMBS and the order was NOT flipped. Merged at 0b1a4440f1; the channel unioned from three blobs 88 + 4 + 4 = 96; worktree and branch removed. NINE of twelve terminal, unchanged by this drain.",
+      "inputs": [
+        {
+          "kind": "RECORD",
+          "ref": "the WORKER REPORT of 0.9.0_WK_NFRA_CLDGRPH~1, branch HEAD 590487a9de"
+        },
+        {
+          "kind": "RECORD",
+          "ref": "CG-x-4's own DONE WHEN: 'a full cycle has passed with nobody enforcing the ceiling by hand'"
+        },
+        {
+          "kind": "RULING",
+          "ref": "1.0.0_SA_CTO @b8eaa3323b -- the causal re-cut of CG-x-2 limb (i) arm (b), SCOPED to that arm"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "COMMIT",
+          "ref": "0b1a4440f1 -- the D-10 drain merge; TO-CG-D-10 still reads pending at HEAD"
+        },
+        {
+          "kind": "MESSAGE",
+          "ref": "[DRIVE NFRA_CLDGRPH tick 55] to 1.0.0_SA_CTO, one call for adjudication with a rec and a stated alternative; delivered 20260905T162316Z"
+        },
+        {
+          "kind": "ROW",
+          "ref": "W1-S20, W1-S21, W1-S23 (disarm_owner 3.0.0_SA_CVO) and W1-S22 (this seat's) landed with the merge"
+        }
+      ],
+      "spine_clause": "L7 drain, then obligation 7: a spec/scope call is PITCHED to 1.0.0_SA_CTO with a rec in the same tick, never ruled by the issuer. The FLIP RULE held: rc 0 is not a met order while a mechanical row reads FAIL.",
+      "gate_or_notifier_touched": "safe-merge.sh: the SEVENTH channel conflict of the round, resolved as the append-only union under the base-plus-appended-tail assertion with the unscoped control (exactly ONE line removed from base and it is the old header); re-entered through --continue so the row gate graded the MERGED index -- '4 new row(s) of 96 total checked (92 pre-existing, NOT re-graded)'. \u26a0 `git worktree remove` FAILED on this box with 'Function not implemented' (a Windows filesystem limit, not a state problem); cleaned with rm -rf plus `git worktree prune`, then the branch deleted.",
+      "note": "\u26d4 D10-AC3 FAILS ON TWO PROXIES WHILE THE PROPERTY THEY STAND FOR HOLDS, WHICH IS THE @b8eaa3323b SHAPE ARRIVING ON A SECOND CELL. CG-x-4 reads 'nobody enforcing the ceiling BY HAND' and the criterion's own prose reads 'every vintage written by a producer, NEVER A SEAT' -- both causal. Limb A (HANDS_OFF_RUNTASK=0 of N) measured 3 of 61 across 2 CloudTrail pages with all 61 labelled and the labels summing to the denominator, AND ONE OF THE THREE IS THIS ROUND'S OWN WORKER SLOT 1 exercising CG-s-15, a digest-pinned rebuild for a DIFFERENT cell rather than ceiling enforcement: the arm and the round compete for the same hours, verbatim the D9-AC2 pass-1 finding. It is also unsatisfiable by any window at this HEAD, the latest hand RunTask being 2026-09-04T21:18:53Z. Limb B (a two-name writer enumeration) measured THREE, the third being cse_producers_nightly, a chronos-scheduled producer -- so the clause the enumeration CARRIES is true of all three while the enumeration is not: W1-S15's shape, already corrected once by the CTO on the sibling cell. || \u26d4 AND THE DISCLOSURE THAT BELONGS IN THIS RECORD RATHER THAN ONLY IN THE PITCH: THIS SEAT AUDITED THIS FACE AT TICK 39 AND PASSED LIMB B, on the reasoning that a two-name enumeration bounding a set the order itself fixes 'fails loud on a third member, which is the safe direction'. It did fail loud, exactly as predicted -- the audit was right about the DIRECTION and wrong about the CONCLUSION. A loud failure on a legitimate actor is still a false conviction; it is only better than a silent one. The audit found four defect classes and cleared this one, and clearing it was the error. || HELD, NOT RE-CUT: extending a ruling scoped to CG-x-2 to another cell is the adjudicate-wider CLAUDE.md forbids, so nothing is edited pending the CTO's word. D-7 (LAST by R7) is gated on D-10 terminal and D-8 behind it, so the round's last two orders wait on this one call. The alternative was stated honestly in the pitch: waiting past 2026-09-05T21:19Z satisfies limb A for ~5.5 h of delay but does NOT fix limb B, because that producer fires nightly."
     }
   ]
 }
