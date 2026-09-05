@@ -50,6 +50,33 @@
 <criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'kuzu\.Database\(|CANONICAL_DB_PATH|kuzu_nessie_db' org/modules/graph .tools --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
 `D7-AC2` -- NO USER-FACING CONSUMER OPENS A LOCAL DATABASE: zero hits under the tool homes (`infra/aws/globgrph/` is excluded here because the cloud engine legitimately names the DB it BUILDS; D7-AC5 pins those files).
 
+> ### AMENDMENT 2026-09-05 ~20:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- A REQUIRED CONTROL ON BOTH
+> ABSENCE ARMS. **THE BAR DOES NOT MOVE:** D7-AC1 and D7-AC2 still expect `0 hit(s) across`, their
+> invocations are unchanged, and there are EIGHT criteria before and after.
+>
+> ⛔ **A ZERO FROM `comp-find` IS NOT AN ABSENCE UNTIL THE INSTRUMENT HAS BEEN SHOWN TO FIND
+> SOMETHING.** That tool's content mode has **two measured false-zero modes**: `rc=124` with zero
+> bytes, and -- the nastier one -- **`rc=0` with a full confident DENOMINATOR and no budget line**.
+> Neither is distinguishable from a true zero by reading the verdict, and this round has already paid
+> for the general shape four times (rows W1-S13, W1-S18, S57, W3-S3: an instrument that answers `0`
+> for a structural reason while the thing it was pointed at is present).
+>
+> **REQUIRED IN YOUR REPORT, one per arm:** beside each `0 hit(s)` you print a POSITIVE CONTROL --
+> the SAME verb, the SAME paths, a pattern that IS present -- returning non-zero, with its own
+> denominator. D9-AC5 is the worked precedent: `0 hits` beside a control returning 13 on the same
+> file and verb. **A zero with no control beside it is reported as UNVERIFIED, not as PASS**, and
+> this seat will re-hand rather than drain it.
+>
+> **AND THE DENOMINATOR IS PART OF THE ANSWER:** `0 hit(s) across 0 file(s)` is OUT-OF-CORPUS, not
+> absence. If the file count is zero, say so and stop -- that is a different finding and a BLOCKING
+> row, not a pass.
+>
+> **D7-AC5's three pinned hashes were RE-VERIFIED at 2026-09-05 19:4xZ and all three still match**
+> (`8b79ca1bdfd51c18...`, `80d60f8ffa3c3c5d...`, `9dd104db29d558e4...`, by the criterion's own
+> `git show HEAD:<f> | sha256sum`). ⚠ **A PINNED HASH IS A BASELINE THAT DECAYS:** if any of the
+> three has moved by the time you run, that is NOT a failure of this cell -- report it, name the
+> commit that moved it, and this seat re-pins. Do not edit the pin yourself.
+
 <criterion id="D7-AC3" cell_refs="CG-s-8"><invocation>bash .tools/comp-find --corpus aws 'opal-globgrph' --budget 120 --limit 5 2>&1</invocation><expect>VINTAGE: Built from the estate as of[\s\S]*hit\(s\) across</expect></criterion>
 `D7-AC3` -- THE ESTATE'S GRAPH TOOLS STILL WORK, from the served graph: `comp-find --corpus aws` answers with the served vintage line and its denominator (the bound that can fail: "retiring earlier breaks the estate's only graph").
 
