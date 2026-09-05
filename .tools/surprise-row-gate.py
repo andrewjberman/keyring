@@ -43,6 +43,7 @@ established that as the correct read, and a worktree read grades bytes the commi
 FAIL-CLOSED. An unreadable blob, an unparseable block, or an unexpected exception REFUSES.
 A gate that fails open is not a gate.
 """
+import inspect
 import json
 import os
 import re
@@ -573,7 +574,7 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
     return out
 
 
-def _open_tos_for_project(root, code):
+def _open_tos_for_project(root, code, merging=False):
     """(open_ids, total, note): the project's task orders on BOTH roots (tracked at HEAD) whose <status>
     is not terminal. open_ids is None when the census could not run -- the caller fails closed."""
     try:
@@ -587,9 +588,15 @@ def _open_tos_for_project(root, code):
     paths = [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()]
     open_ids = []
     for p in paths:
-        st, text = _blob(root, "HEAD", p)
+        # (c) THE READ (3.0.0_SA_CVO 94299): at a merge the record is the MERGED INDEX, not HEAD. A
+        # task order arriving IN this commit is present at stage 0 and ABSENT at HEAD, so the HEAD read
+        # reported "unreadable at HEAD" about a file that is right there -- a WRONG DIAGNOSIS, which is a
+        # defect even where the verdict would not change. `_blob(root, "", p)` is the index
+        # (`git show :<path>`), the same source _latest_dispositions has always used.
+        st, text = _blob(root, "" if merging else "HEAD", p)
         if st != "OK":
-            return None, len(paths), "%s unreadable at HEAD (%s)" % (p, st)
+            return None, len(paths), "%s unreadable at %s (%s)" % (
+                p, "the merged index" if merging else "HEAD", st)
         m = TO_STATUS_RE.search(text)
         word = m.group(1).lower() if m else "<no status tag>"
         if word not in TERMINAL_TO_WORDS:
@@ -618,7 +625,7 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
     rid = row.get("id", "<no id>")
     route_word = route_word or row.get("route")
     if open_tos is None:
-        open_ids, total, note = _open_tos_for_project(root, code)
+        open_ids, total, note = _open_tos_for_project(root, code, merging=merging)
     else:
         open_ids, total, note = open_tos
     if open_ids is None:
@@ -1111,6 +1118,13 @@ def _self_test(root):
         # battery that guards the limb it fixes, silently, because a disarmed arm and a passing arm
         # print the same line. The False default means those seven arms need no edit and still mean
         # what they meant.
+        # (c) THE READ. Structural, and read from the FUNCTION not the module -- a checker that greps its
+        # module finds its own occurrence first (learned twice tonight in to-pipeline-gate).
+        ("(c) read: _open_tos_for_project takes the ref from `merging`, not always HEAD",
+         lambda: '_blob(root, "" if merging else "HEAD", p)' in inspect.getsource(_open_tos_for_project)),
+        ("(c) read: the production caller passes merging through",
+         lambda: "_open_tos_for_project(root, code, merging=merging)"
+         in inspect.getsource(_route_precondition_violations)),
         # THE C- ARM UNDER merging (0.0.0_AB_MSTR 94311, rule stated by 3.0.0_SA_CVO 94313). The MUTANT is
         # the arm that earns it: an integrator MINTING a C- row by hand on a merge must still refuse.
         ("C- MERGE: a CVO-surfaced C- row carried by a DIFFERENT committer on a merge -> admitted",
