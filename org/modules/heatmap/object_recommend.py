@@ -60,7 +60,8 @@ def referenced_by(root: str, subtree_dir: str, limit: int = 5) -> list[str]:
     return [h for h in r.stdout.splitlines() if h][:limit]
 
 
-def referenced_index(root: str, subtree_dirs: list[str], limit: int = 5) -> dict[str, list[str]]:
+def referenced_index(root: str, subtree_dirs: list[str], limit: int = 5,
+                     timeout_s: float | None = 180.0) -> dict[str, list[str]]:
     """name-vs-edge inbound check for ALL candidates in ONE git-grep pass (COO-pointed: a
     reference INDEX, not 225 sequential greps -- the real --all perf fix). One
     `git grep -o -E "<alt of all paths>"` emits `file:matched-path` for every reference; we map
@@ -75,8 +76,10 @@ def referenced_index(root: str, subtree_dirs: list[str], limit: int = 5) -> dict
     valid = set(subtree_dirs)
     try:
         # one pass: `git grep -o` emits `file:matched-path` per reference (-I skips binaries)
+        # RULE T (OS-s-16 wire): the bound comes from the CALLER's remaining budget, not from a
+        # constant. Default unchanged at 180 s so every existing caller behaves identically.
         r = subprocess.run(["git", "-C", root, "grep", "-I", "-o", "-E", "-e", alt],
-                           capture_output=True, text=True, timeout=180)
+                           capture_output=True, text=True, timeout=timeout_s)
     except Exception:
         return {d: ["<grep-error>"] for d in subtree_dirs}   # uncertainty -> HOLD all (safe)
     if r.returncode not in (0, 1):
@@ -96,8 +99,9 @@ def _blast_node(subtree_dir: str) -> str:
     return f"comp-blast {subtree_dir} --direction up --check-consumers"
 
 
-def assess(root: str, candidates: list[dict]) -> list[dict]:
-    ref_map = referenced_index(root, [c["dir"] for c in candidates])   # ONE git-grep pass
+def assess(root: str, candidates: list[dict], timeout_s: float | None = 180.0) -> list[dict]:
+    ref_map = referenced_index(root, [c["dir"] for c in candidates],
+                               timeout_s=timeout_s)   # ONE git-grep pass
     out: list[dict] = []
     for c in candidates:
         refs = ref_map.get(c["dir"], [])
