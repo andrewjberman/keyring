@@ -39,9 +39,15 @@ One clause per criterion. A mechanical criterion carries exactly one `<invocatio
 - **NEVER `git push`**, under this or any order. Report push state as MEASURED (`git ls-remote`).
 
 <paths>
+infra/aws/ec2/estate-report-runner/estate_report_runner.py
+.tools/tests/
 org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/
 org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
+⛔ **`<paths>` AMENDED at the drain on row `NFRA_OUTSET-W1-S24`, and the defect was the ISSUER'S.** The PRD manifest gives this cell verb=**build** and lane=CloudComp, and the original grant named NO REPO SURFACE AT ALL -- only the deliverables folder and the channel. **A build cell with nothing to build on is unsatisfiable by construction**, and `0.9.0_WK_NFRA_OUTSET~1` correctly executed the inspection, filed a BLOCKING row and declined to flip rather than working around it.
+⭐ **THE ROOT OF IT IS RECORDED AS `NFRA_OUTSET-S13`:** the decomposition asserted 'its lane in the manifest is CVO' when the manifest reads CloudComp, concluded the cell was a Tier-1 CERTIFICATION act, and cut a grant to match that belief. One unverified claim about a document produced a grant that could not carry its own verb. The issuance's ADDRESSING was right all along; only the write surface followed the error.
+**VERIFIED AT SOURCE BEFORE AMENDING, rather than taken from the report:** `estate_report_runner.py:1989 evidence_resolves()` passes when a nugget id appears OR when any distinctive token of the `evidence_ref` THE RUNNER ITSELF PUT IN THE PROMPT survives into the citation. That is a sound ANTI-FABRICATION control -- its own docstring records the 2026-08-06 repair that made it one -- and it is scoped by the same set as the act: it establishes the model quoted what it was shown, never that what it was shown came from a named tool at a named vintage. Closing that is a PRODUCER change, so the producer is granted. `.tools/tests/` is granted beside it because a producer change with no battery is not a change this project accepts.
+
 
 <decomp_ref>
 <decomp_doc>org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md</decomp_doc> @`6f1655f376` (v0.1), cell `OS-s-17`.
