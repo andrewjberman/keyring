@@ -338,6 +338,30 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "S7-AC5: 'the plan after the edit changes EXACTLY the reporter role policy (aws_iam_role_policy.reporter): 0 to add, 1 to change, 0 to destroy ... If the plan shows ANY other resource, do NOT apply: BLOCKING row, stop this criterion.'",
     "world_is": "The plan shows 2 resources changing: the expected policy edit plus a pre-existing, already-documented (2026-07-08) benign user_data drift on aws_instance.reporter that this worker did not cause and whose disposition ('deferred to a TIER-B/C safe-apply batch') was never carried out. The criterion's own bound is unconditional ('ANY other resource') regardless of whether that other diff is benign or pre-existing, so this worker stopped rather than applying.",
     "notes": "S7-AC5 is graded FAIL by output this turn (plan does not match '1 to change'); S7-AC6 (the apply + get-role-policy read) is UNCOMPUTABLE-BY-CONSTRUCTION as a direct consequence -- its own text makes it conditional on AC5's exactly-one-resource plan ('which you run only after AC5's plan read exactly one resource'). No apply was attempted; no ledger entry was opened (opening one for a deploy this worker does not execute would itself be a stray entry). Hazard is INERT: the drift is 2 months old, already named BENIGN by its own commit, and unrelated to this project's IAM grant, which remains DESIRED-not-APPLIED, safely, until the pre-existing drift is dispositioned by whoever owns the etfs-reports stack (no disarm_owner named -- this is a stop, not a hazard this worker leaves live)."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-W2-S5",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_ETFS_GUARDRAIL~2",
+    "surfaced_at": "2026-09-05T03:19:26Z",
+    "one_line": "TO-EG-s-2's deploy sequence names `bash infra/aws/lambda/ci/record-terraform-deploy.sh bd-pipeline --function bd-49f-etf-ownership-daily ...` verbatim, and that script itself is on the TO's <paths> grant -- but running it also stages a write to `infra/aws/terraform/bd-pipeline/CHANGELOG.json`, a file the TO's <paths> block does NOT name (only `bd-49f-etf-ownership-daily.tf` and `.terraform.lock.hcl` are granted under that directory, not the whole tree or its CHANGELOG.json), so the commit is REFUSED by the owned-paths lane gate. Per the TO's own BOUNDS ('A path you need that it does not name is a BLOCKING row, never an override'), filed BLOCKING rather than widening the grant myself or forcing the commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-2.bd-49f-catch-up-port-the-tail-a-straight-port-misses.md <paths> block @2baa6af162 -- lists exactly 'infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf' and 'infra/aws/terraform/bd-pipeline/.terraform.lock.hcl' under that directory; no entry for CHANGELOG.json or the bare directory",
+        "run this turn: `bash infra/aws/lambda/ci/record-terraform-deploy.sh bd-pipeline --function bd-49f-etf-ownership-daily --author \"0.9.0_WK_ETFS_GUARDRAIL~2 <...>\"` -> 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: infra/aws/terraform/bd-pipeline/CHANGELOG.json -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_ETFS_GUARDRAIL~2 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' -- 'ERROR: safe-commit did NOT commit (rc=1)'",
+        "git status --porcelain immediately after -- both infra/aws/lambda/ci/lambda-source-map.json (IN the grant) and infra/aws/terraform/bd-pipeline/CHANGELOG.json (NOT in the grant) staged by the script's own internal git add, before its git commit step was refused; the source-map diff is a clean 2-field update (last_deployed_commit, last_deployed_at) + one top-level timestamp, the CHANGELOG.json diff is a 124-line new entry",
+        "compare EG-s-1's TO (ETFS_GUARDRAIL.TO-EG-s-1) <paths>: names the WHOLE 'infra/aws/terraform/cot-pipeline/' directory (no CHANGELOG.json problem there, record-terraform-deploy.sh committed clean at a8ef1ca328) -- this order's narrower two-file grant under bd-pipeline is the difference, likely because bd-pipeline is described in THE CELL/S2-AC5 as 'a wide directory' the issuer deliberately did not hand over wholesale"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EG-s-2 s.\"What you build\": 'The deploy sequence exactly as in EG-s-1 with bd-pipeline / bd-49f-etf-ownership-daily'; BOUNDS: 'A path you need that it does not name is a BLOCKING row, never an override.'",
+    "world_is": "record-terraform-deploy.sh's own internal contract writes BOTH the function's source-map row AND a per-pipeline-directory CHANGELOG.json entry in one commit; the TO's <paths> grants the source map file but not the CHANGELOG.json file (nor the bare bd-pipeline directory), so the script's own commit step is refused by the owned-paths gate exactly as designed.",
+    "notes": "Resolved for THIS cell by unstaging the CHANGELOG.json half (git reset, non-destructive, left as an unstaged worktree difference this worker does not further touch) and committing ONLY infra/aws/lambda/ci/lambda-source-map.json (in-grant) with the same last_deployed_commit/last_deployed_at values the script computed. The deploy itself is independently verified without this commit (served CodeSha256 == built artifact_sha256 via bd49f_served_vs_built.py, 0-diff replan) -- the missing piece is purely the CHANGELOG.json audit-trail entry and the source map's own bookkeeping being split across two commits instead of one. Disarm: the COO widens EG-s-2's <paths> to include infra/aws/terraform/bd-pipeline/CHANGELOG.json (or the bare directory) for this or the next order touching this pipeline, or authorizes/commits that file itself."
   }
 ]
 ```

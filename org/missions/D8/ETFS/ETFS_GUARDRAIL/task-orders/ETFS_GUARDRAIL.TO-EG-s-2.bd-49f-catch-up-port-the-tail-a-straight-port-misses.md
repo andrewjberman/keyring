@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO); in your queue after EG-s-1; premise-bound to EG-s-11's WRITER determination (your earlier order). Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance (s.6a: the probe); Andrew-direct 2026-09-01 and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all nine criteria PASS-by-output/RECORDED at HEAD: 10/10 arms passed (tail arm (i) + negative control (j) included), no day-count constant, calendar via the published layer only, DS module untouched, plan 0/2/0 as bound, 0-diff over the whole (wide) bd-pipeline directory, served CodeSha256 MATCH, deployed probe partition=true; deploy ledger etfs-guardrail-eg-s-2-bd49f-catchup-port CLOSED; instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S2; s.6 rulings 1 and 2; s.4 properties 1 and 2 -- "Property 2 is the one that matters"; brief s.3 the lag table) | **Decomp cell:** `EG-s-2` | **outcome_ref:** FWD-1 | **verb:** port | **depends_on:** `EG-s-3`, `EG-s-10`, `EG-s-11` (all earlier in your queue or slot 1's, merged before this hand-off)
 
