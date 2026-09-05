@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 60 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 64 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1492,6 +1492,78 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "NFRA_OUTSET PRD FWD-1 ACCEPT: 'a person who does not know the thing exists is pointed at it when they ask the question in their own words'; brief O1 / spec 2026-06-25: the three estate-cognition questions.",
     "world_is": "At HEAD the router sends one of the three canonical heat questions to comp-heat and the other two elsewhere; the cell that closed the routing measured its own seven phrasings, which is a check scoped to the members (CLAUDE.md Rule 22) -- the population of phrasings a reader brings is wider than the set the cut enumerated.",
     "notes": "Filed as a ROW at the check-out, per CLAUDE.md s.2. INERT: no seat is hazarded; it is evidence for L9 (the judgment criterion on OS-s-3) and L10 (FWD-1's grade). Owner of any routing-rule addition: comp-which's (0.8.0_AE_CloudComp) via the CTO's round-N analysis, not this row. No fix attempted; the check-out seat does not edit the router."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S18",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:55:00Z",
+    "one_line": "THE REACH OF THE TRACEABILITY CLAIM, stated so a 12-of-12 arm count cannot imply more than it measured: 4 of 4 deterministic strata now CARRY a re-run recipe, but only ONE has a DEMONSTRATED end-to-end reproduction. Stratum C was re-derived EXACTLY (17 of 17 rows, independent fold, with a negative control proving the arm can fail). The other three carry recipes that are untested (D, B-host) or untestable on this fabric (A and B via the seam, because nothing publishes and the runner holds no grant).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEMONSTRATED (1 of 4): stratum C_lifecycle. Its own printed recipe -- `git -C <repo> ls-tree -r --name-only <branch>` and `git -C <repo> log <branch> --since <ts> --name-only --no-merges --pretty=format:` at pin f2ef16d70a -- was re-run by the battery, folded by an INDEPENDENT implementation of the documented fold (depth-2 prefix, universe MINUS touched, sort, first 30), and compared: runner rows=17, independent re-derivation rows=17, IDENTICAL. Arm E of .tools/tests/test_os11_traceability.py.",
+        "AND THE ARM CAN FAIL, which is what makes the 17-of-17 worth quoting: arm E3 corrupts the recipe's --since from 90 days to 2 and re-derives -- 107 cold subtrees instead of 17, rows differ. Without that control 'the rows matched' would be a green arm that never showed it could go red.",
+        "CARRIED BUT NOT DEMONSTRATED (2 of 4): D_naming's recipe names the compile step and the pin but was not re-run here (it needs the manifest this host pulls at that pin, which this worktree does not have); B_relationships' host stand-in recipe is a git log command plus the attribute_path fold, reproducible in principle and not exercised end to end.",
+        "CARRIED AND UNTESTABLE ON THIS FABRIC (2 of 4 exits, the seam ones): A_propagation and B_relationships read through the OS-s-10 seam, and their recipes are composed from the artifact's OWN `tool` and `argv` fields. Those arms run against an INJECTED artifact in a tempfile directory. Nothing publishes to a seam prefix (NFRA_OUTSET-W2-S15) and the applied estate-report-runner-role grants nothing on one (NFRA_OUTSET-W1-S19), so `rail-reproducible` is a claim about the RECIPE and has never been exercised against a real publish here.",
+        "The distinction is written into the code rather than only into this row: REPRODUCIBILITY_CLAIMS (estate_report_runner.py:1220-1240) declares three values and the block above it states, in the module itself, that the claim 'describes the RECIPE, never the reader's ACCESS' -- so an IAM gap cannot later read as an evidence gap."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL: 'nothing in the report is re-runnable through the rail today', with the manifest's evidence class for this row recorded as ABSENT; and O11-AC2: 'TAKE ONE deterministic row, re-run the tool it names at the vintage it names, and SHOW the row reproduced. A row that cannot be reproduced IS the finding.'",
+    "world_is": "After this cell every deterministic row names a tool, a vintage, a concrete invocation and a claim, and ONE of them is demonstrably re-derivable end to end. That is a real change from 'nothing is re-runnable', and it is not the same as 'the report is now reproducible'. The seam-fed half is re-runnable THROUGH THE RAIL only in the sense that the producer recorded the tool and argv; no such publish exists on this fabric to point at. Stated in the terms the issuer asked for: A GREEN ARM COUNT IS NOT A LIVE PATH -- 12 of 12 arms pass, 1 of 4 strata has been reproduced, and 2 of the remaining 3 cannot be until a producer and a grant land.",
+    "notes": "hazard_standing ARMED for one specific misreading, which is cheap to make and expensive to correct: a later reader (or an L8 compile) seeing 'O11-AC1 PASS 12/12' plus 'every deterministic row carries tool + vintage' can conclude the report is now reproducible end to end. It is not; one stratum is. The disarm is wording, not code -- carry the 1-of-4 denominator wherever the 12-of-12 goes. disarm_owner 2.0.0_SA_COO. NOT DONE, deliberately: this worker did not reproduce D_naming by reconstructing a manifest (that would be a second implementation of the compile step), and did not stand up a producer or touch IAM to make the seam arms live (both outside <paths>, and W2-S15/W1-S19 already carry them)."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S19",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:57:00Z",
+    "one_line": "CROSS-ORDER COUPLING ON THE SHARED RUNNER FILE, and it behaved exactly as designed: OS-s-11's edit to the co-change seam branch invalidated the mutation ANCHOR that OS-s-9's battery pins to that same branch. The anchor's uniqueness assert REFUSED the whole battery rather than silently mutating nothing -- which is precisely the W2-S17 failure mode, prevented by construction. Re-pointed in-grant; OS-s-14 will hit the same coupling.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE BREAK, verbatim: after OS-s-11 added `reproduce=_outset_trace(r, src)` to the B_relationships seam return, `python .tools/tests/test_os9_cochange_source.py` raised `AssertionError: seam-branch anchor not unique` and exited 1 -- the battery refused to run at all rather than applying a no-op mutation and reporting PASS.",
+        "WHY THAT IS THE DESIGN WORKING: NFRA_OUTSET-W2-S17 records this worker shipping a mutant that silently stopped falsifying because a second carrier existed. The OS-s-9 battery asserts `src.count(SEAM_BRANCH_ANCHOR) == 1` before mutating, so an anchor that no longer matches is LOUD. A mutant that quietly matches nothing is the same class as a detector that can never fire (W2-S13) -- all three are green results with no measurement behind them.",
+        "THE REPAIR, inside this order's grant (.tools/tests/ is named in TO-OS-s-11's <paths>): the anchor was re-pointed to the branch as it now reads, INCLUDING the new `reproduce=` line, and a comment recording why. .tools/tests/test_os9_cochange_source.py is back to 16 of 16 PASS, and .tools/tests/test_os10_seam.py is unaffected at 12 of 12.",
+        "THE POPULATION, because the next order is the same file: OS-s-9, OS-s-11 and OS-s-14 all write infra/aws/ec2/estate-report-runner/estate_report_runner.py and are serialised on this slot by file contention. Two batteries now pin source anchors into it -- test_os9_cochange_source.py (the seam branch, and the COCHANGE_STANDS_IN_FOR definition) and test_os11_traceability.py (the `\"reproduce\": reproduce,` line in _stratum, and the first line of render_trace's absent-recipe return)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-11's <paths> admit the runner and .tools/tests/, and the order is cut on the understanding that OS-s-9, OS-s-11 and OS-s-14 run SERIALLY on one slot because they share the runner file.",
+    "world_is": "The contention the serialisation solves is on the FILE; there is a second, quieter coupling on the ANCHOR TEXT that source-mutating batteries pin into that file. Serialising the orders does not remove it -- it only guarantees the breakage is discovered by the next order rather than by a concurrent one. Here it cost one re-point and was loud; had the anchors been substring-matched rather than uniqueness-asserted, it would have cost a silently non-falsifying mutant instead.",
+    "notes": "hazard_standing INERT: repaired in the same turn, both batteries green, and the failure mode is loud by construction. Filed for the NEXT worker on this file rather than for its own sake -- OS-s-14 edits estate_report_runner.py again and will break one or both anchor sets if it touches _stratum, render_trace or the co-change seam branch. The cheap discipline: after editing the runner, run BOTH .tools/tests/test_os9_cochange_source.py and .tools/tests/test_os11_traceability.py before anything else, and treat an 'anchor not unique' AssertionError as a re-point job, never as a broken test. Both batteries deliberately anchor on WHOLE BLOCKS rather than short fragments, so a drifting edit breaks loudly instead of matching something adjacent."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S20",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T11:00:00Z",
+    "one_line": "THIS CELL WIDENED A CONTRACT SHAPE IT CANNOT AMEND: `_stratum()` now returns a `reproduce` key, and the shape it implements is 'the SPEC s.5 contract shape' defined in a commit-pinned CVO document (SPEC @58505c291) that is not a file in this order's <paths> and not a file in this repo path at all. The code and the specification now differ by one field, in the code's favour, and only the CVO can close that.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "3.0.0_SA_CVO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "estate_report_runner.py:1248-1250 @f2ef16d70a -- `_stratum` is documented as 'One stratum in the SPEC s.5 contract shape'. The SPEC is cited throughout the module as a COMMIT PIN, not a path: ':13 SPEC @58505c291', ':93', ':144 Architecture per SPEC @58505c291', ':1141 SPEC @58505c291 (CVO, 2026-08-05)'. There is no spec file under infra/aws/ec2/estate-report-runner/ (the directory holds estate_report_runner.py and __pycache__ only).",
+        "WHAT WAS WIDENED AND WHAT DELIBERATELY WAS NOT: a new OPTIONAL key `reproduce` (default None) on the returned dict. The STATUS VOCABULARY is untouched -- the module's own OS-s-10 comment at :1587 says 'The seam does not widen _stratum()'s status set (that contract is SPEC s.5's); it maps into it', and this cell held that line: no status value was added, renamed or re-mapped.",
+        "BLAST RADIUS, measured rather than reasoned: every existing caller keeps its behaviour because the parameter is optional and defaults to None, and the two independent batteries that read this shape both still pass -- .tools/tests/test_os10_seam.py 12 of 12 and .tools/tests/test_os9_cochange_source.py 16 of 16, neither of which was written by this cell's criteria.",
+        "The new field is CONSUMED, not merely emitted: render_stratum renders it through render_trace, and an ABSENT recipe renders loudly ('NO RECIPE ... UNVERIFIABLE BY THE READER') rather than as a blank -- so a spec reader who never learns of the field still cannot mistake an untraceable stratum for a traceable one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-11 BOUNDS: 'Your write surface is the <paths> block below and nothing else' -- the runner, .tools/tests/, this order's deliverables folder and the channel; and the runner's own docstring, which binds `_stratum` to the SPEC s.5 contract shape.",
+    "world_is": "Building O11-AC1's deliverable REQUIRES the stratum to carry tool and vintage per row, and the stratum shape is where that lives. The order grants the code and not the specification, so the only way to satisfy the criterion is to move the code ahead of the document. This worker did that in the narrowest form available -- one optional additive key, no change to the status vocabulary, no existing caller altered -- and is recording the divergence rather than leaving it for a later reader to discover as a surprise.",
+    "notes": "disarm_owner 3.0.0_SA_CVO because the SPEC is the CVO's document (:1141 'SPEC @58505c291 (CVO, 2026-08-05)') and amending it is not a worker act; the CVO also grades O11-AC2 at L9 and will be reading this shape anyway. hazard_standing ARMED in the specific sense that a specification and an implementation that disagree drift further with every subsequent cell -- OS-s-14 is the next order on this same file. NOT DONE: this worker did not edit any spec document, did not add a second status value, and did not make the field mandatory in the shape (a required field would have broken every caller and every consumer at once; making it optional and letting the BATTERY require it of the four deterministic strata puts the obligation where it can be enforced without widening the contract for callers that have no recipe to give)."
   }
 ]
 ```

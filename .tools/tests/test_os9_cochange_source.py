@@ -51,6 +51,10 @@ RUNNER_ENV = {
 
 # The RED MUTANT the criterion names: restore the host-git path by deleting the seam branch, so
 # a configured prefix is ignored and GROUP B is computed on the host again.
+# RE-POINTED by NFRA_OUTSET OS-s-11, which added `reproduce=_outset_trace(r, src)` to this
+# same return. The anchor's uniqueness assert REFUSED rather than mutating nothing -- which
+# is the W2-S17 failure mode (a mutant that silently stops falsifying) caught by design.
+# The anchor is deliberately the WHOLE branch, so any future edit to it breaks loudly here.
 SEAM_BRANCH_ANCHOR = '''    prefix = OUTSET_SEAM_PREFIX if prefix is ... else prefix
     if prefix:
         src = prefix.rstrip("/") + "/" + OUTSET_COCHANGE_KEY
@@ -59,7 +63,8 @@ SEAM_BRANCH_ANCHOR = '''    prefix = OUTSET_SEAM_PREFIX if prefix is ... else pr
                          OUTSET_SEAM_MAX_AGE_HOURS if max_age_hours is None else max_age_hours)
         return _stratum("B_relationships", GROUP_QUESTIONS["B"], r["rows"],
                         "%s @%s" % (r["vintage"], pin), r["denominator"],
-                        status=r["status"], error=r["error"])
+                        status=r["status"], error=r["error"],
+                        reproduce=_outset_trace(r, src))
 '''
 SEAM_BRANCH_MUTANT = '''    prefix = None   # RED MUTANT: seam ignored, host-git path restored
 '''
