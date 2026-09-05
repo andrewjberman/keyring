@@ -1,0 +1,289 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_OUTSET",
+ "round": 1,
+ "written_by": "2.0.0_SA_COO",
+ "written_utc": "2026-09-05T13:40Z",
+ "decomposition_ref": "org/missions/D11/NFRA/NFRA_OUTSET/decompositions/NFRA_OUTSET_DECOMP.md@6f1655f376",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 17,
+  "task_orders": 17,
+  "task_orders_terminal_with_valid_proof": 17
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone has asked and been answered",
+   "cells": [
+    {
+     "cell_id": "OS-s-1",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-1.rule-t-budget-across-comp-heat.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-2",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-2.freshness-at-a-path-grain.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-3",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-3.router-rule-for-a-heat-question.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and this seat believes it the strongest row in the report. comp-heat now carries Rule T --budget across five subcommands (OS-s-1), answers at a PATH grain with that corner own denominator -- 388 of 388 under .tools against 30543 before (OS-s-2) -- and comp-which routes a heat question to it, 1 of 7 heat phrasings before and 7 of 7 after on the faithful instrument (OS-s-3). All three re-measured by this seat on its own runs. THE DISCRIMINATING EVIDENCE IS A PAIR, never one arm: --budget 60 completing beside --budget 0.001 returning rc=3 BUDGET REACHED. Either alone is fully consistent with a budget flag wired to nothing. Unlike most rows here these tools run where a person is, so the EXERCISED test does not depend on the stale served producer named in the FWD-4 note."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone has asked and been answered",
+   "cells": [
+    {
+     "cell_id": "OS-s-4",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-4.federated-vintage-and-catalog-disclosure.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-5",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-5.bound-the-arbitrary-federated-query.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-6",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-6.federated-transport-caller-contract-iam.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-7",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-7.code-heat-parquet-cadence-and-owner.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and the grader should weigh what the cells MEASURED above what they passed. comp-heat federated now discloses the catalogs joined and each ARTIFACT build time (OS-s-4), and the caller budget finally reaches the transport (OS-s-5) -- before that, cmd_federated called run_federated_query with NEITHER delay nor max_attempts, so every dispatch sat on a fixed 600 s ceiling that no --budget could shorten. The caller ceiling never reached the transport at all. BUT THE DISCLOSURE OWN ANSWER IS THE FINDING: one side of the federation is 51 days stale with NO refresh cadence and NO owner (OS-s-7), corroborated on the live schedule plane where 0 of 142 rules fire its producer while four sibling producers on the same federation DO carry nightly crons -- a positive control on that negative. The other side cannot be dated in-band. So a person asking today does get a single answer saying when each source was built, and one of those answers is that it has not been built for 51 days."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a reader has followed one line back and reproduced it",
+   "cells": [
+    {
+     "cell_id": "OS-s-7",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.7.0_AE_CloudOps~W/NFRA_OUTSET.TO-OS-s-7.code-heat-parquet-cadence-and-owner.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-9",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-9.report-cochange-from-the-tool.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-10",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-10",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-10.the-consumption-seam-artifacts.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-11",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-11",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-11.traceability-on-deterministic-lines.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-14",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-14",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-14.fedobs-co-evolution-reaches-the-report.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and the honest denominator is the assignee own rather than the arm count: 4 of 4 deterministic strata now CARRY a re-run recipe, and 1 of 4 has a DEMONSTRATED end-to-end reproduction -- re-derived with a fold written INDEPENDENTLY of the runner, 17 rows against 17, identical, with a corruption arm producing 107 to prove the comparison can fail. A second call to the same function would have proved only that a function is deterministic. Both seam exits are untestable on this fabric: nothing publishes to the seam and the runner applied role grants nothing on a seam prefix. In the assignee own words, adopted here verbatim: TWELVE GREEN ARMS ARE NOT A REPRODUCED REPORT. See also the report-wide fact in the FWD-4 note -- the producer serving the daily report is 11 days behind HEAD and contains none of this work."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one day has been decided that way",
+   "cells": [
+    {
+     "cell_id": "OS-s-17",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-17",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-17.the-sittings-evidence-citation.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and this is the row where the coverage claim and the realization verdict will most plainly part company, so the measurement is placed here rather than left for the grader to find. OS-s-17 built the gate: a proposal must cite the stratum AND its vintage -- an AND and not an OR, because the name is guessable from the prompt own headings and the vintage is shared across every stratum of the day, so either alone resolves to a REGION rather than to a ROW. The 2026-08-06 anti-fabrication control is BYTE-UNCHANGED (verified at this seat), runs FIRST, and is watched by a RED mutant that restores the old defect and shows the same input then accepted. BUT THE CENSUS OF WHAT ACTUALLY HAPPENED: 61 proposals across 7 published days, 61 of 61 carrying a non-empty citation, 0 discarded, and 0 of 61 citing a tool row -- with a live positive control (2 of 61 carry a bare at-hex token) proving those zeros are absences from a working instrument and not dead reads. REPORT-WIDE AND LOAD-BEARING FOR SEVERAL ROWS: the served producer at s3://opal-estate-report/code/estate_report_runner.py is dated 2026-08-25, 11 days behind HEAD, and lacks OS-s-10 and OS-s-11 work entirely -- confirmed by this seat on a live s3api read with six discriminating tokens. No published day carries this gate and none will without a deploy that NO CELL OF THE 17 OWNS. One day has been decided that way has NOT happened."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the working order has been read from one place on a real day",
+   "cells": [
+    {
+     "cell_id": "OS-s-12",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-12",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/NFRA_OUTSET.TO-OS-s-12.working-order-census.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, with a KNOWN-FALSE ROW IN THE DELIVERED CENSUS that the grader must not inherit. OS-s-12 censused 9 of 9 outset tools -- 8 WORKING, 1 FAILED -- and disclosed the harder finding beside the verdict: answer-state 2 of 9, vintage 2 of 9, budget-line 2 of the 4 tools that accept --budget. Most of the surface cannot tell a caller what state its answer is in or how old it is. THE SINGLE FAILED ROW IS WRONG: OS-s-13 later found comp-pipescript DOES accept --budget, on the deployed SUBCOMMAND parser rather than the top-level parser the census probed. Bounded, it answers rc=0 in 8.4 s with a real MATCH row. Only the timing clause about the unbounded sweep survives, and the retraction was scoped to the capability claim. Row W3-S10 is ARMED: the committed census will keep emitting that false FAILED on every run. The cell that found it could not repair it -- the file sits outside its grant -- and NO ORDER OF THIS ROUND OWNS THE FIX."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- the one account of how they fit is written and nothing does another job over again",
+   "cells": [
+    {
+     "cell_id": "OS-s-9",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-9.report-cochange-from-the-tool.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-13",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-13",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/NFRA_OUTSET.TO-OS-s-13.the-composition-contract.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-14",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-14",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~2/NFRA_OUTSET.TO-OS-s-14.fedobs-co-evolution-reaches-the-report.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and the only APPLIED row, so it is gradable against a written artifact rather than a run. The account exists at docs/architecture/NFRA_OUTSET_COMPOSITION_CONTRACT.md, and its load-bearing new fact is that ALL FOUR HOPS SHARE THE REPO-ROOT-RELATIVE PATH AS THEIR KEY -- which is what makes the composition a two-call expression, and was written down nowhere before. The conjunction runs: three limbs, one key, about 10.5 s, every call bounded, all rc=0, evaluating FALSE for the demonstrated path, which is an answer and not a failure. ON THE SECOND HALF OF THE DONE WHEN, nothing doing another job over again: THE DUPLICATE IS NOT RETIRABLE. comp-cochange answers agent-type co-movement (grain=type, 14 agent-tag pairs, 0 resource labels) while the report stratum pairs resource and pipeline-chain labels -- the same word on a different axis, and substituting would answer a different question under the same heading, which is worse than the duplication the cell set out to remove. The cell took the clause other branch: the host copy stays and DECLARES what it stands in for, on both exits. Six gaps are recorded in the contract as open rather than smoothed."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a run shows a reader own material carrying them",
+   "cells": [
+    {
+     "cell_id": "OS-s-8",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-8.comp-similar-heat-weighting-consumes.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED on the coverage axis, and this seat expects the grader to find the served artifact does not yet carry it. OS-s-8 fixed the consumer wire and the finding is larger than the cell: THE ORDER NAMED ONE DEFECT AND THE WIRE HAD THREE. Beyond the named execution fault, a field read of class where comp-heat emits band, and a join keyed on basename that matched 0 of 1774 corpus names. NEITHER raises an error nor returns an empty result -- both produce a large well-formed heat map in which every band is UNKNOWN, and the tool then correctly emits zero candidates beside a confident five-figure denominator. Fixing only the named symptom would have gone green with the consumer still blind. Live now: 208 of 1929 corpus resources banded from 51861 heat keys, 6 of 6 candidates citing a comp-heat band. That is a run anyone can repeat at a terminal. Whether it is a reader OWN material depends on the deploy this project does not own -- see the FWD-4 note."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone has asked and got a list they could argue with",
+   "cells": [
+    {
+     "cell_id": "OS-s-15",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-15",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.proof_of_spec.json@1992b00493"
+      }
+     ]
+    },
+    {
+     "cell_id": "OS-s-16",
+     "task_orders": [
+      {
+       "id": "NFRA_OUTSET.TO-OS-s-16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-16.the-archive-candidate-answer.proof_of_spec.json@1992b00493"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED, and the two cells serving it disagreed productively. OS-s-15 decided none of the engine O2/O4 legs is a retire candidate and that OS-s-16 is a WIRE rather than a build -- reached with a two-engine falsifier rather than by reasoning about the substitute, and with a positive control on every zero. OS-s-16 then built the roll-up and DISARMED the row OS-s-15 had deferred to it, on the real corpus: the flat grouping lists 1412 cold leaf dirs, the roll-up finds 364 maximal cold subtrees, and 50 OF THOSE 364 ROOTS NEVER APPEAR IN THE FLAT LIST AT ALL. The advisory ranking runs and 0 of 5 top candidates reached RECOMMEND -- all HOLD_REFERENCED -- so nothing in this estate is proposed for archive today. NEVER-AUTO-DELETE WAS ENFORCED RATHER THAN ASSERTED: a RED mutant spliced a recursive delete into a copy of the tool, removed 8 files from its OWN throwaway tree, and the snapshot caught it; every mutant runs against a temporary repository so a mutant that deletes cannot reach the estate. ONE OPEN DEFECT THE GRADER SHOULD WEIGH (W1-S23, ARMED): the inbound-reference check matches a candidate path as a BARE SUBSTRING, so a shallow candidate can essentially never reach RECOMMEND whatever its true reference count. Direction is over-HOLD, so R-5 is not breached. The assignee HELD the grant and still declined to change it, because anchoring the pattern reduces conservatism on the exact axis R-5 governs -- a ruling first and a measured change second."
+  }
+ ]
+}
