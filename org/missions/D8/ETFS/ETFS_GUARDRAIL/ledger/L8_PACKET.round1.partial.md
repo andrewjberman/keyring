@@ -1,10 +1,10 @@
-# ETFS_GUARDRAIL round 1 -- L8 PACKET (PARTIAL, and the word is load-bearing)
+# ETFS_GUARDRAIL round 1 -- L8 PACKET (COMPLETE: the drain-end revision; the filename keeps the history of its versions in place)
 
-**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ, ~01:1xZ, ~02:3xZ, ~03:1xZ, ~04:1xZ, ~05:3xZ and ~07:4xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
+**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ, ~01:1xZ, ~02:3xZ, ~03:1xZ, ~04:1xZ, ~05:3xZ, ~07:4xZ, and this DRAIN-END revision ~09:2xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
 **For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the COO's one message of
-the round is the drain-end read). **This is NOT the L10 slug** -- the slug goes once, after EVERY order is terminal and
-EVERY row is dispositioned, and ONE order is still open. This packet exists so the CVO's L9 work on what IS terminal
-can run beside the drain instead of behind it. It is versioned in place; the next revision is the drain-end one.
+the round is the drain-end read to `1.0.0_SA_CTO`, sent once, naming this revision). **This is NOT the L10 slug** --
+the slug is the CVO's, after L9. Every order of round 1 is terminal at HEAD; every row carries its standing at this seat;
+nothing is open on the issuer's side.
 
 **A CORRECTION TO EARLIER VERSIONS OF THIS PACKET (s.4, rows W1-S7 and W1-S8, and the seat row S2 that corrects them):**
 the `aws_instance.reporter` `user_data` "drift" that earlier revisions described as "pre-existing ... deferred as benign
@@ -16,11 +16,15 @@ and was applied to a premise that turned out false. Evidence in row S2.
 
 ---
 
-## 1. WHY PARTIAL
+## 1. THE ROUND, CLOSED AT L7
 
-Thirteen of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13, EG-s-11, EG-s-12, EG-s-4, EG-s-1, EG-s-7,
-EG-s-2, EG-sb-7, EG-s-5, EG-s-8, EG-s-6; packet revised at `c17da2f4a8`). The last, EG-s-9 (the JOIN, the orchestrator's
-second deploy), is in flight on slot 1. Slots 2 and 3 are spent and torn down.
+Fourteen of fourteen orders are terminal at HEAD (packet revised at `9ce1de85e7`). One issuance @`5376ecaa8b` covered
+the decomposition's fourteen cells on three worker slots (`fanout: 3 of 3 chains, cap 8`); slot 3 was spent after one
+order, slots 1 and 2 drained their chains in dependency order. Every worktree and branch is removed. Six deploys landed
+under NEVER-2 ledger entries, every apply through `safe-apply` on the estate's terraform v1.9.8, and the three remote
+states (`cot-pipeline`, `etfs-reports`, `bd-pipeline`) still carry `terraform_version` 1.9.8. No open deploy sentinel
+for any `etfs-guardrail` slug exists at HEAD. `dep_stage` stays `EXECUTING` until the CTO's receipt of the CVO's slug
+(spine :347); this seat flips nothing here.
 
 ## 2. THE TERMINAL ORDERS, each with the instance the checker graded AT THE ISSUER'S SEAT
 
@@ -35,13 +39,14 @@ passed as the checker's third argument (coverage checked), on the merged tree, a
 | TO-EG-s-11 | EG-s-11 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-11.which-49f-twin-writes-the-served-slices.proof_of_spec.json` | VALID rc 0, 5 rows | `108d9fa67f` (the channel conflict united: 9 rows) |
 | TO-EG-s-12 | EG-s-12 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-12.inflection-deployed-bytes-vs-build-input.proof_of_spec.json` | VALID rc 0, 5 rows | `a8e3ac7927` (the channel conflict united: 11 rows) |
 | TO-EG-s-4 | EG-s-4 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-4.the-coverage-classifier.proof_of_spec.json` | VALID rc 0, 7 rows | `62cc386d94` (clean merge, 7 paths; no rows on the branch) |
-| TO-EG-s-1 | EG-s-1 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-1.cot-catch-up-port-reporting-obligation-window.proof_of_spec.json` | VALID rc 0, 9 rows | `c866edd324` (clean merge, 11 paths; 12 rows at HEAD after) -- a DEPLOY: ledger `etfs-guardrail-eg-s-1-cot-catchup-port` OPEN @`13ed1ab775`, CLOSED @`091681fe45`, `ci: record deploy cot-pipeline` @`a8ef1ca328` |
+| TO-EG-s-1 | EG-s-1 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-1.cot-catch-up-port-reporting-obligation-window.proof_of_spec.json` | VALID rc 0, 9 rows | `c866edd324` (clean merge, 11 paths) -- a DEPLOY: ledger `etfs-guardrail-eg-s-1-cot-catchup-port` OPEN @`13ed1ab775`, CLOSED @`091681fe45`, `ci: record deploy cot-pipeline` @`a8ef1ca328` |
 | TO-EG-s-7 | EG-s-7 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-7.the-remediation-ladder-rungs-1-2-and-the-invoke-grant.proof_of_spec.json` | VALID rc 0, 7 rows (S7-AC5/S7-AC6 PASS under the amended, targeted criteria) | `745cd6b354` (the channel conflict united: 14 rows) -- an IAM DEPLOY BY TARGET: ledger `etfs-guardrail-eg-s-7-reporter-invoke-grant` OPEN @`d1c4204aa1`, CLOSED @`3f19353c05`; `aws_iam_role_policy.reporter` changed, nothing else |
 | TO-EG-s-2 | EG-s-2 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-2.bd-49f-catch-up-port-the-tail-a-straight-port-misses.proof_of_spec.json` | VALID rc 0, 9 rows | `fb0776daae` (the channel conflict united: 15 rows) -- a DEPLOY: ledger `etfs-guardrail-eg-s-2-bd49f-catchup-port` OPEN @`a1c372983f`, CLOSED @`fcb3e42f31`; the plan changed exactly the two bound addresses in the wide `bd-pipeline` directory, `No changes.` after over the whole directory; the deploy's CHANGELOG.json entry landed by the issuer @`4b35d14ff4` (s.4, W2-S5) |
 | TO-EG-sb-7 | EG-sb-7 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-sb-7.rung-3-stops-and-asks-a-person.proof_of_spec.json` | VALID rc 0, 5 rows | `c50c72f92a` (clean merge, 5 paths; no rows on the branch) |
 | TO-EG-s-5 | EG-s-5 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-5.the-coverage-line-in-the-report.proof_of_spec.json` | VALID rc 0, 6 rows | `1c5603a696` (clean merge, 5 paths; no rows on the branch); no deploy |
 | TO-EG-s-8 | EG-s-8 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-8.the-one-terminal-ses-send.proof_of_spec.json` | VALID rc 0, 9 rows (S8-AC9 minted on row S3) | `f036a438fb` (the channel conflict united: 18 rows; the face conflict resolved to the issuer's amended text with the worker's flip) -- a LAMBDA DEPLOY BY TARGET: ledger `etfs-guardrail-eg-s-8-orchestrator-terminal-send` OPEN @`d0edf02b28`, CLOSED @`3472ad97cc`, `ci: record deploy etfs-reports` @`ee6e7e0580`; `aws_lambda_function.orchestrator` changed, nothing else; the live `terminal_qa` rehearsal invoked (StatusCode 200, no send); `_render_command` at HEAD passes `--gate` (`lambda_function.py:211`) |
-| TO-EG-s-6 | EG-s-6 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-6.the-pre-publish-gate-inside-the-renderer.proof_of_spec.json` | VALID rc 0, 8 rows | `c17da2f4a8` (the channel conflict united: 19 rows) -- the ONE RENDERER ARTIFACT UPLOAD: ledger `etfs-guardrail-eg-s-6-renderer-artifact-upload` OPEN @`d0823cd564`, CLOSED @`4cc172fe3d`; head-object MATCH 6 of 6 (the renderer, `__init__.py`, `classifier.py`, `remediate.py`, and the two build-time copies `trading_calendar.py` and `_orion_vendor_asof.py`); the coverage package listed at the box's pull prefix. The deploy-order window of row S3 is CLOSED: the box's renderer now accepts `--gate` |
+| TO-EG-s-6 | EG-s-6 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-6.the-pre-publish-gate-inside-the-renderer.proof_of_spec.json` | VALID rc 0, 8 rows | `c17da2f4a8` (the channel conflict united: 19 rows) -- the ONE RENDERER ARTIFACT UPLOAD: ledger `etfs-guardrail-eg-s-6-renderer-artifact-upload` OPEN @`d0823cd564`, CLOSED @`4cc172fe3d`; head-object MATCH 6 of 6 (the renderer, `__init__.py`, `classifier.py`, `remediate.py`, and the two build-time copies `trading_calendar.py` and `_orion_vendor_asof.py`); the coverage package listed at the box's pull prefix. The deploy-order window of row S3 is CLOSED: the box's renderer accepts `--gate` |
+| TO-EG-s-9 | EG-s-9 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-9.join-both-recipients-at-four-sites.proof_of_spec.json` | VALID rc 0, 8 rows (S9-AC2 under the W1-S9 amendment @`e32bdf96ea`) | `9ce1de85e7` (the channel conflict united: 21 rows; the face merged clean) -- TWO LAMBDA DEPLOYS BY TARGET: the JOIN under ledger `etfs-guardrail-eg-s-9-orchestrator-join-recipients` OPEN @`1d7c53e6eb` (`ci: record deploy` @`19b11f082b`), then the `email_qa` To-header change (`3d3fc81b7f`, `ci: record deploy` @`c6ddc5d6c4`) under a SUPPLEMENTARY entry opened after the fact (row W1-S10) and closed with the flip @`5fb0fb7de0`; `EMAIL_RECIPIENT=aj@opalinvest.com,andrew@opalinvest.com` on the applied plane; SES `ProductionAccessEnabled=True`; served == built |
 
 ## 3. THE JUDGMENT CRITERIA -- THIS IS THE L9 WORK
 
@@ -53,10 +58,9 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   issuer ADOPTED it (@`de8693863c`; rows W1-S1). Grade the answer; the adoption is on the record.
 - **S3-AC5** (EG-s-3) -- the PORT CONTRACT: the verbatim set, the one replacement (the reporting-obligation window
   with a shipped-signal terminus), the invariants, the probe addition, the 49F-tail test arm. Grade it as the spec the
-  two port orders (EG-s-1, EG-s-2) built to -- both are now deployed against it; the contract's calendar mechanism is
-  the layer, per the amendment. NOTE for the grade: the contract's battery SHAPE (a bare script ending in a
-  module-level `sys.exit()`) is refuted by row W2-S4 -- it crashes pytest at collection; both ports shipped real test
-  functions.
+  two port orders (EG-s-1, EG-s-2) built to -- both are deployed against it; the contract's calendar mechanism is the
+  layer, per the amendment. NOTE for the grade: the contract's battery SHAPE (a bare script ending in a module-level
+  `sys.exit()`) is refuted by row W2-S4 -- it crashes pytest at collection; both ports shipped real test functions.
 - **S13-AC6** (EG-s-13) -- one date basis from the cutover month forward, nothing restated, no partner notified, the
   alignment gates the send and not the guardrail. Grade against the exercised renders (2026-09 aligned, 2026-08 not).
 - **S11-AC5** (EG-s-11) -- WHICH 49F TWIN WRITES THE SERVED SLICES: `WRITER=bd-49f-etf-ownership-daily`, 3 of 3
@@ -123,7 +127,7 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   `CLASSIFIER_IMPORTED=True SECOND_IMPL=0`) and rendered on EVERY path through `render_month` -- beneath each
   partner's SUMMARY row in the HTML and as the last `# coverage:` row of each firm's CSV with the numeric grid
   unchanged; four arms; the live August render carries three lines (21/21 for every partner). Grade property 6 and
-  FWD-3's APPLIED grade ("the statement is in the report itself"); the REFUSE-path half is now verified at EG-s-6
+  FWD-3's APPLIED grade ("the statement is in the report itself"); the REFUSE-path half is verified at EG-s-6
   (S6-AC4: `COVERAGE_LINES_ON_REFUSE=3`).
 - **S8-AC8** (EG-s-8) -- THE ONE TERMINAL SEND: exactly three `send_raw_email` call sites after the order (the two
   existing plus the terminal one), no topic created; the terminal send fires only from `_run`'s refusal branch when
@@ -145,8 +149,23 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   month) and property 5. FWD-2's EXERCISED grade ("has actually refused a month, and the refusal reached a person") is
   a real refusal on a scheduled fire, which this order rehearsed and did not manufacture. Row W2-S6's mitigation (the
   gate never probes Inflection; its uncovered days classify UNKNOWN and go to rung 1) is part of what is graded here.
+- **S9-AC8** (EG-s-9) -- JOIN, NOT REPLACE, AT FOUR SITES: the two report/correction envelopes take the list
+  `EMAIL_RECIPIENTS`, the two report/correction headers keep the joined string, EG-s-8's terminal header stays andrew@
+  alone (`ENVELOPE_LIST_SITES=2 HEADER_SITES=3 SINGLE_ELEMENT_ENVELOPES=0`, the amended census); the variable
+  `EMAIL_RECIPIENT=aj@opalinvest.com,andrew@opalinvest.com` on the applied plane so a future recipient is a variable
+  change; SES `ProductionAccessEnabled=True`, so a send to an unverified recipient cannot fail silently at delivery;
+  five arms (both build paths, both send paths, whitespace tolerance, the terminal send unchanged, `email_qa` still
+  send-free); the live send-free rehearsals show `email_qa` To = both addresses and `terminal_qa` To = andrew@. Grade
+  ruling card 3 (JOIN) and property 7. FWD-5's EXERCISED grade ("both people have actually received one") is the
+  scheduled `etfs-reports-monthly-run` fire (`cron(0 10 1 * ? *)` America/New_York) read as DELIVERY at both inboxes;
+  the order sent nothing to AJ ahead of it. Row W1-S10 (a second apply before its ledger entry, remediated the same
+  turn with a supplementary entry) is part of what is graded here.
 
 ## 4. THE ROWS THE BRANCHES CARRIED, and their standing at this seat
+
+Twenty-one rows at HEAD: S1-S3 (this seat), W1-S1..S10 (slot 1), W2-S1..S6 (slot 2), W3-S1..S2 (slot 3). Four are
+BLOCKING (W1-S2, W1-S7, W2-S5, W1-S8), all dispositioned; the rest are OBSERVATIONS. Every row reads
+`disposition: UNDER_INVESTIGATION` because that field is the CVO's at L9; the standing below is the issuer's.
 
 | row | class / standing | disarm owner | what it is | the issuer's act |
 |---|---|---|---|---|
@@ -163,20 +182,28 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
 | W1-S6 | OBSERVATION, INERT -- RULED | this seat | `.tools/terraform.exe` (v1.9.8) is gitignored and absent in a fresh worker worktree; the worker used PATH `terraform` v1.14.5 for one plan | RULED @`2baa6af162`: the issuer provisions the binary into each worker worktree at hand-off (done at every re-create since); the deploying faces forbid the PATH substitution. Measured at this seat 02:2xZ: the three remote states all still carry `terraform_version` 1.9.8 -- nothing was re-pinned; every apply of the round went through 1.9.8 |
 | W1-S7 | BLOCKING, INERT (a stop) | -- | TO-EG-s-7's untargeted plan in `etfs-reports` read `2 to change`: the order's `aws_iam_role_policy.reporter` AND an `aws_instance.reporter` `user_data` diff (`e47b615c` -> `434774b5`); the worker refused the apply per its bound | RULED @`2baa6af162` and EXECUTED @`3f19353c05` (merged @`745cd6b354`): apply BY TARGET, the instance untouched -- correct. THE PREMISE CORRECTED by row S2: the diff was a CRLF checkout artifact, not a real drift, and the July commit the row cited (`1502fdd6f9`) is about `ami` and the public IP. The stop was still right (a plan naming a second resource is not applied), and nothing live was touched |
 | W2-S5 | BLOCKING, ARMED | this seat | `record-terraform-deploy.sh`'s own commit also writes `infra/aws/terraform/bd-pipeline/CHANGELOG.json`, which TO-EG-s-2's deliberately narrow `<paths>` (two files under a wide directory) did not grant; the owned-paths gate refused the tool's commit; the worker committed the in-grant source-map half, left the CHANGELOG edit untouched in its worktree, and filed the row | DISARMED in two acts: the grant widened by that one path @`75985f2068` (the worker had already flipped, and a terminal order grants nothing, so no worker commit could carry it); the deploy record then landed from the issuer's seat @`4b35d14ff4` under the AUDITED lane override `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` (rule 14a's named escape for a lane refusal; `org/git-author-override-audit.log` 2026-09-05T04:03:26Z), one file, byte-for-byte from the worker's worktree, the entry verified to be this deploy's. The cut lesson: a deploying face's `<paths>` must name every file the deploy TOOL writes, not only the files the worker edits |
-| W1-S8 | BLOCKING, INERT (a stop) | -- | TO-EG-s-8's TARGETED plan (`-target=aws_lambda_function.orchestrator`) still read `2 to change`: the orchestrator's config references `aws_instance.reporter.id` (`REPORTER_INSTANCE_ID`), a real dependency edge `-target` includes; the worker refused the apply and declined S8-AC7's live invoke against the undeployed function (its old fallback would have run a real render) | The stop and the declined invoke were both right. DISPOSITIONED by row S2 (the instance had no real change; with LF `.tf` files in the worktree it showed none) and the ruling @`446a064491`: the worker continued in place, the targeted plan read one resource (`0 to add, 1 to change, 0 to destroy`), the deploy landed, S8-AC7 ran AFTER it -- EXECUTED @`3472ad97cc`, merged @`f036a438fb` |
-| S2 | OBSERVATION, ARMED | this seat | THE FALSE DRIFT: live `user_data` sha1 `e47b615c` == the LF rendering of `instance.tf` at HEAD; the plan's `434774b5` == the CRLF rendering; a fresh worktree on this `core.autocrlf=true` box checks out 414 of 414 `.tf` with CRLF (no `*.tf` eol rule in `.gitattributes`); the July commit is about `ami` and the public IP; the heredoc is unchanged since the file's creation | DISARMED at this seat: every `.tf` in every worker worktree normalized to LF at hand-off (eol-only; `git diff --ignore-cr-at-eol` empty); EG-s-8's and EG-s-9's faces carry the corrected text @`446a064491`; EG-s-8's targeted plan then read exactly one resource. The durable fix (`*.tf text eol=lf` in `.gitattributes`) is outside this lane and ROUTED to `1.0.0_SA_CTO` at drain-end. Cut lesson: a worker's worktree is a DIFFERENT CHECKOUT; a hash-sensitive plan there can differ from the main tree's by line endings alone |
-| S3 | OBSERVATION, ARMED | this seat | THE `--gate` SEAM NO CELL OWNED: EG-s-6's face says the orchestrator "will pass it once EG-s-8 lands"; EG-s-8's face, EG-s-9's, the decomposition and the PRD carry no such line (0 hits); `_render_command` at HEAD passed no flag; the 10-01 fire would have rendered ungated and FWD-2 could never reach EXERCISED | DISARMED at this seat @`446a064491` and EXECUTED: TO-EG-s-8 gained deliverable item 5 and the minted criterion S8-AC9; `_render_command` at HEAD now passes `--gate` (`lambda_function.py:211`, deployed @`3472ad97cc`); the deploy-order window CLOSED when EG-s-6's renderer upload landed (`4cc172fe3d`, merged @`c17da2f4a8`) -- the box's renderer accepts the flag. Cut lesson: a seam is a cell's line, not a dependency's |
+| W1-S8 | BLOCKING, INERT (a stop) | -- | TO-EG-s-8's TARGETED plan (`-target=aws_lambda_function.orchestrator`) still read `2 to change`: the orchestrator's config references `aws_instance.reporter.id` (`REPORTER_INSTANCE_ID`), a real dependency edge `-target` includes; the worker refused the apply and declined S8-AC7's live invoke against the undeployed function (its old fallback would have run a real render) | The stop and the declined invoke were both right. DISPOSITIONED by row S2 (the instance had no real change; with LF `.tf` files in the worktree it showed none) and the ruling @`446a064491`: the worker continued in place, the targeted plan read one resource, the deploy landed, S8-AC7 ran AFTER it -- EXECUTED @`3472ad97cc`, merged @`f036a438fb` |
+| S2 | OBSERVATION, ARMED | this seat | THE FALSE DRIFT: live `user_data` sha1 `e47b615c` == the LF rendering of `instance.tf` at HEAD; the plan's `434774b5` == the CRLF rendering; a fresh worktree on this `core.autocrlf=true` box checks out 414 of 414 `.tf` with CRLF (no `*.tf` eol rule in `.gitattributes`); the July commit is about `ami` and the public IP; the heredoc is unchanged since the file's creation | DISARMED at this seat: every `.tf` in every worker worktree normalized to LF at hand-off (eol-only; `git diff --ignore-cr-at-eol` empty); EG-s-8's and EG-s-9's faces carry the corrected text @`446a064491`; both later targeted plans read exactly one resource. The durable fix (`*.tf text eol=lf` in `.gitattributes`) is outside this lane and ROUTED to `1.0.0_SA_CTO` at drain-end. Cut lesson: a worker's worktree is a DIFFERENT CHECKOUT; a hash-sensitive plan there can differ from the main tree's by line endings alone |
+| S3 | OBSERVATION, ARMED | this seat | THE `--gate` SEAM NO CELL OWNED: EG-s-6's face says the orchestrator "will pass it once EG-s-8 lands"; EG-s-8's face, EG-s-9's, the decomposition and the PRD carry no such line (0 hits); `_render_command` at HEAD passed no flag; the 10-01 fire would have rendered ungated and FWD-2 could never reach EXERCISED | DISARMED at this seat @`446a064491` and EXECUTED: TO-EG-s-8 gained deliverable item 5 and the minted criterion S8-AC9; `_render_command` at HEAD passes `--gate` (`lambda_function.py:211`, deployed @`3472ad97cc`); the deploy-order window CLOSED when EG-s-6's renderer upload landed (`4cc172fe3d`, merged @`c17da2f4a8`) -- the box's renderer accepts the flag. Cut lesson: a seam is a cell's line, not a dependency's |
 | W2-S6 | OBSERVATION, ARMED | this seat | TO-EG-s-6's probe design (`{"date": d, "probe": true}` for every partner, a non-probe answer read as UNKNOWN) is unsafe for Inflection: `inf-etf-ownership-daily` has NO probe-key handling (the ports added it to cot and 49F only; inf was a verify-only source, EG-s-3), so a probe invoke against a real Inflection hole would run the ordinary dated path and WRITE a real slice -- the invoke itself causes the write, and detecting it by response shape afterwards does not prevent it | DISARMED by the worker's own mitigation, confirmed at this seat: the gate never probes Inflection (`_PROBE_CAPABLE_PARTNERS` = cottonwood + 49financial); Inflection's uncovered days classify UNKNOWN with zero invokes and go to the ladder's rung 1, which is the intended dated re-run; `remediate.py` sends NO probe of its own (rung 0 is the classifier's injected probe, read from `classes`). Not triggered by the round's live criteria (August has zero Inflection holes). For the CTO's L10 read: EG-s-7's face said rung 0 would be "SKIPPED ... detected by the response shape" for a producer without probe mode -- a post-hoc detection that the gate's allowlist replaces with a pre-hoc one |
+| W1-S9 | OBSERVATION, INERT | -- | S9-AC2's byte census expected `HEADER_SITES=2`, but EG-s-8 (the same file, deployed immediately before) had added a third `msg["To"]` site (`_build_terminal_email`), so a correct implementation of the order's own BOUNDS necessarily reads 3; the worker measured `HEADER_SITES=3` and filed the row rather than editing the census or the third site | DISARMED at this seat @`e32bdf96ea`: the expect amended to 3 with the reasoning on the face; S9-AC2 PASS by its measured output. A cut defect of this seat: a census written before the predecessor cell added a site to the same file |
+| W1-S10 | OBSERVATION, INERT | -- | the worker closed the JOIN ledger after the first apply, then found deliverable item 4 required a second small code change (`email_qa` surfacing the To header) and applied it BEFORE opening a ledger for it -- a NEVER-2 sequencing deviation (the entry must be opened before the apply) | disclosed and remediated by the worker the same turn: a supplementary entry opened after the fact and closed with proof (@`5fb0fb7de0`); both applies were by target, both recorded (`ci: record deploy` @`19b11f082b`, @`c6ddc5d6c4`), served == built after the second. Recorded for the CVO; no act owed at this seat beyond the record. For the CTO's L10 read: an order whose deliverable can require a second apply should say so, and the ledger tool could refuse an apply-record without an open entry |
 
 An ARMED standing on a row this seat has disarmed is the append-only channel's carrier lag; the disposition is the
 CVO's at L9 and the disarm's evidence is the commit named beside it.
 
-## 5. WHAT IS OPEN (one order)
+## 5. WHAT IS OPEN
 
-slot 1: EG-s-9 (HANDED 2026-09-05 ~07:4xZ, worktree re-created @`df14ecd5f1` with LF `.tf` files and the terraform binary; the JOIN at four sites, the variable, the SES production-access read, the second by-target deploy of the orchestrator).
-slots 2 and 3: spent; their worktrees and branches removed.
+Nothing on the issuer's side. All three worker slots are spent; their worktrees and branches are removed.
 
-**What the drain-end read to the CTO will carry (sent once, after EG-s-9 drains):** the seat rows S1, S2, S3; the
-inf battery (W2-S1/W2-S4) and the Inflection probe gap (W2-S6) for the CVO's disposition; `build-zip.sh` (W1-S5, lane
-CLOUD_OPS_OR_ETL); the `*.tf text eol=lf` `.gitattributes` rule (S2); the Orion repoint's COMMITTED-NOT-APPLIED state
-(S12-AC5); the CVO's watermark against the channel's row count.
+**The CVO's side at this revision, measured at HEAD @`9ce1de85e7` 09:2xZ:** `surprise-channel/adjudications/` and
+`surprise-channel/remediations/` do not exist yet for this project; every one of the 21 rows reads
+`disposition: UNDER_INVESTIGATION`; `comp-surprise --project ETFS_GUARDRAIL` lists 21 items, 21 open, 12 armed by
+carrier standing. The CVO's L9 begins here.
+
+**What the drain-end read to the CTO carries (sent once, naming this revision's commit):** L7 complete; the CVO's
+watermark against 21 rows (none dispositioned yet); the seat rows S1, S2, S3; the inf battery (W2-S1/W2-S4) and the
+Inflection probe gap (W2-S6) for the CVO's disposition; `build-zip.sh` (W1-S5, lane CLOUD_OPS_OR_ETL); the
+`*.tf text eol=lf` `.gitattributes` rule (S2); the Orion repoint's COMMITTED-NOT-APPLIED state (S12-AC5); the
+ledger-sequencing gap (W1-S10); the EXERCISED grades that only scheduled fires can produce (FWD-1, FWD-2, FWD-5,
+FWD-7, FWD-8) and the dates they fall on.
