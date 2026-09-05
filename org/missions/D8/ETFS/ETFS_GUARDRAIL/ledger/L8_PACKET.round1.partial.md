@@ -1,20 +1,27 @@
 # ETFS_GUARDRAIL round 1 -- L8 PACKET (PARTIAL, and the word is load-bearing)
 
-**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ, ~01:1xZ, ~02:3xZ, ~03:1xZ and ~04:1xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
+**Compiled by** `2.0.0_SA_COO~B` 2026-09-04 ~22:4xZ, revised 2026-09-05 ~00:2xZ, ~01:1xZ, ~02:3xZ, ~03:1xZ, ~04:1xZ and ~05:3xZ, on the `/drive` obligation "terminal orders -> L8 compile NOW".
 **For** `3.0.0_SA_CVO` at L9, as a FILE (the spine's three tracks share files, never messages; the COO's one message of
 the round is the drain-end read). **This is NOT the L10 slug** -- the slug goes once, after EVERY order is terminal and
-EVERY row is dispositioned, and four orders are still open. This packet exists so the CVO's L9 work on what IS
+EVERY row is dispositioned, and three orders are still open. This packet exists so the CVO's L9 work on what IS
 terminal can run beside the drain instead of behind it. It is versioned in place as more orders go terminal.
+
+**A CORRECTION TO EARLIER VERSIONS OF THIS PACKET (s.4, rows W1-S7 and W1-S8, and the seat row S2 that corrects them):**
+the `aws_instance.reporter` `user_data` "drift" that earlier revisions described as "pre-existing ... deferred as benign
+by NFRA_TERRAFORM-P2 @1502fdd6f9" was a FALSE drift -- a CRLF checkout artifact of the worker worktrees on this
+`core.autocrlf=true` box. The live instance and the LF rendering of `instance.tf` at HEAD carry the same bytes (sha1
+`e47b615c`); the plan's "new" hash (`434774b5`) is the CRLF rendering of the same heredoc. The July commit is about `ami`
+and the public IP. Nothing live was ever touched by the false reading; the RESERVED classification stands as a class
+and was applied to a premise that turned out false. Evidence in row S2.
 
 ---
 
 ## 1. WHY PARTIAL
 
-Ten of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13, EG-s-11, EG-s-12, EG-s-4, EG-s-1, EG-s-7,
-EG-s-2, EG-sb-7; packet revised at `c50c72f92a`). The other four are the last of each slot's chain
-(`decompositions/ETFS_GUARDRAIL_DECOMP.md` v0.1.1 s.1-s.2): the orchestrator's two cells (EG-s-8 handed, EG-s-9 after
-it, one Lambda deployed twice in order) and the renderer's two cells (EG-s-5 handed next, EG-s-6 last with the one
-artifact upload). Nothing is late; two slots are draining in dependency order and the third is spent.
+Eleven of fourteen orders are terminal at HEAD (EG-s-10, EG-s-3, EG-s-13, EG-s-11, EG-s-12, EG-s-4, EG-s-1, EG-s-7,
+EG-s-2, EG-sb-7, EG-s-5; packet revised at `446a064491`). The other three are the last of each slot's chain: the
+orchestrator's two cells (EG-s-8 in flight under two rulings, EG-s-9 after it) and the renderer's gate with the one
+artifact upload (EG-s-6, handed). Nothing is late; two slots are draining in dependency order and the third is spent.
 
 ## 2. THE TERMINAL ORDERS, each with the instance the checker graded AT THE ISSUER'S SEAT
 
@@ -30,9 +37,10 @@ passed as the checker's third argument (coverage checked), on the merged tree, a
 | TO-EG-s-12 | EG-s-12 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-12.inflection-deployed-bytes-vs-build-input.proof_of_spec.json` | VALID rc 0, 5 rows | `a8e3ac7927` (the channel conflict united: 11 rows) |
 | TO-EG-s-4 | EG-s-4 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-4.the-coverage-classifier.proof_of_spec.json` | VALID rc 0, 7 rows | `62cc386d94` (clean merge, 7 paths; no rows on the branch) |
 | TO-EG-s-1 | EG-s-1 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-1.cot-catch-up-port-reporting-obligation-window.proof_of_spec.json` | VALID rc 0, 9 rows | `c866edd324` (clean merge, 11 paths; 12 rows at HEAD after) -- a DEPLOY: ledger `etfs-guardrail-eg-s-1-cot-catchup-port` OPEN @`13ed1ab775`, CLOSED @`091681fe45`, `ci: record deploy cot-pipeline` @`a8ef1ca328` |
-| TO-EG-s-7 | EG-s-7 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-7.the-remediation-ladder-rungs-1-2-and-the-invoke-grant.proof_of_spec.json` | VALID rc 0, 7 rows (S7-AC5/S7-AC6 PASS under the amended, targeted criteria) | `745cd6b354` (the channel conflict united: 14 rows) -- an IAM DEPLOY BY TARGET: ledger `etfs-guardrail-eg-s-7-reporter-invoke-grant` OPEN @`d1c4204aa1`, CLOSED @`3f19353c05`; `aws_iam_role_policy.reporter` changed, nothing else; the pre-existing `aws_instance.reporter` drift NOT applied |
+| TO-EG-s-7 | EG-s-7 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-s-7.the-remediation-ladder-rungs-1-2-and-the-invoke-grant.proof_of_spec.json` | VALID rc 0, 7 rows (S7-AC5/S7-AC6 PASS under the amended, targeted criteria) | `745cd6b354` (the channel conflict united: 14 rows) -- an IAM DEPLOY BY TARGET: ledger `etfs-guardrail-eg-s-7-reporter-invoke-grant` OPEN @`d1c4204aa1`, CLOSED @`3f19353c05`; `aws_iam_role_policy.reporter` changed, nothing else |
 | TO-EG-s-2 | EG-s-2 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-2.bd-49f-catch-up-port-the-tail-a-straight-port-misses.proof_of_spec.json` | VALID rc 0, 9 rows | `fb0776daae` (the channel conflict united: 15 rows) -- a DEPLOY: ledger `etfs-guardrail-eg-s-2-bd49f-catchup-port` OPEN @`a1c372983f`, CLOSED @`fcb3e42f31`; the plan changed exactly the two bound addresses in the wide `bd-pipeline` directory, `No changes.` after over the whole directory; the deploy's CHANGELOG.json entry landed by the issuer @`4b35d14ff4` (s.4, W2-S5) |
 | TO-EG-sb-7 | EG-sb-7 | `0.9.0_WK_ETFS_GUARDRAIL~1/ETFS_GUARDRAIL.TO-EG-sb-7.rung-3-stops-and-asks-a-person.proof_of_spec.json` | VALID rc 0, 5 rows | `c50c72f92a` (clean merge, 5 paths; no rows on the branch) |
+| TO-EG-s-5 | EG-s-5 | `0.9.0_WK_ETFS_GUARDRAIL~2/ETFS_GUARDRAIL.TO-EG-s-5.the-coverage-line-in-the-report.proof_of_spec.json` | VALID rc 0, 6 rows | `1c5603a696` (clean merge, 5 paths; no rows on the branch); no deploy |
 
 ## 3. THE JUDGMENT CRITERIA -- THIS IS THE L9 WORK
 
@@ -63,7 +71,10 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   function and the running code never references them; it reads the legacy `opal-data-inf/gold/canonical/holdings_`
   path via `INF_BUCKET`/`HOLDINGS_PREFIX`, and every row of the 2026-09-04 slice cites that path. Grade the finding
   and its consequence the worker drew: rung 2 for Inflection is stated against the LEGACY path, not repo HEAD
-  (EG-s-7 built it so; EG-sb-7's provider map follows it).
+  (EG-s-7 built it so; EG-sb-7's provider map follows it). NOTE: unlike the reporter's `user_data` (s.4, S2), THIS
+  mismatch was measured on the deployed zip's bytes against the build input, not on a hash of a checkout -- the
+  worker diffed file contents (`dedup_core.py` and `trading_calendar.py` absent from the zip), which line endings
+  cannot produce.
   **For the CTO's L10 read, not this round's remedy:** the Orion repoint is COMMITTED-NOT-APPLIED under another
   seat's ruling; this project classifies against the world as it runs and applies nothing to Inflection.
 - **S4-AC7** (EG-s-4) -- THE CLASSIFIER'S TAXONOMY: B is excluded from `holes` by construction and counted in
@@ -85,8 +96,8 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   rung2=0 unresolved=0`); the grant `InvokeProducersForRemediation` names exactly three function ARNs and no bucket,
   read back on the APPLIED plane; rung 3 absent by construction and left to EG-sb-7; the Inflection re-check stated
   against the deployed producer's legacy bucket; the 49F map following EG-s-11's confirmed writer. The apply was BY
-  TARGET under the W1-S7 ruling -- the result carries the full untargeted plan's drift line verbatim beside the
-  targeted summary. Grade against rulings 4 and 6 and property 9.
+  TARGET under the W1-S7 ruling; the "drift" that ruling worked around was false (s.4, S2), and the targeted apply
+  changed exactly the one resource it meant to. Grade against rulings 4 and 6 and property 9.
 - **S2-AC9** (EG-s-2) -- THE 49F PORT AS DEPLOYED, WITH THE TAIL: ten arms including (i) a partition for day D that
   appears only on D+13 with today = D+14 -> D is returned and processed, and (j) the same fixture under the source's
   `CATCHUP_WINDOW_DAYS = 10` semantics -> D would NOT have been found (the negative control that tells the two designs
@@ -104,6 +115,13 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
   gate (EG-s-6), which this order did not manufacture; the eight arms and the direct `write=False` call are its
   exercise. The worker re-scoped test arm (e) to the post-rung-3 invariant and disclosed it in the result and the
   commit message rather than as a row -- read s.7 and decide whether that disclosure was the right carrier.
+- **S5-AC6** (EG-s-5) -- THE COVERAGE LINE IN THE REPORT: computed from the classifier (imported through the package;
+  `CLASSIFIER_IMPORTED=True SECOND_IMPL=0`) and rendered on EVERY path through `render_month` -- beneath each
+  partner's SUMMARY row in the HTML and as the last `# coverage:` row of each firm's CSV with the numeric grid
+  unchanged; four arms (16 of 21 -> `16/21 trading days; 5 carried for missing data`; 21 of 21 -> `0 carried`; three
+  partners -> three lines; the CSV's grid unchanged in count and values); the live August render carries three lines
+  (21/21 for every partner). Grade property 6 and FWD-3's APPLIED grade ("the statement is in the report itself");
+  the REFUSE-path half of the claim is verified at EG-s-6 (S6-AC4).
 
 ## 4. THE ROWS THE BRANCHES CARRIED, and their standing at this seat
 
@@ -119,15 +137,23 @@ Each carries **no verdict** and is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a 
 | W1-S4 | OBSERVATION, INERT | -- | one `iam list-role-policies` call outside TO-EG-s-12's enumerated live-read surface (policy names only, not relied on for the graded answer) | disarmed by the worker in-order; recorded |
 | W1-S5 | OBSERVATION, ARMED | this seat | `infra/aws/lambda/ci/build-zip.sh:66` hardcodes `touch -t "202600010000"` (month 00) and fails rc=1 on every invocation, since `e046072434` (2026-02-19) | DISARMED FOR THIS ROUND at this seat: the project's deploying faces name `build-and-upload.sh`, which has ZERO callers of `build-zip.sh` in `infra/aws/lambda/ci/` (measured at HEAD; both port deploys went through it); only TO-EG-s-12's face named `build-zip.sh` and its named fallback was used. The shared-script defect sits in lane `CLOUD_OPS_OR_ETL` (this seat is refused on the path) and is ROUTED to `1.0.0_SA_CTO` in the drain-end read, not touched here |
 | W2-S4 | OBSERVATION, ARMED | this seat | the port contract's bare-script battery (module-level `sys.exit()`) crashes pytest at collection (INTERNALERROR rc=3) whatever the arms say; both ports shipped real `def test_*` functions instead; inf's `test_catchup_scan.py` would hit this too once its KeyError is fixed | DISARMED @`2baa6af162` (EG-s-2's S2-AC1 named real test functions; it shipped ten); the inf-battery half belongs with W2-S1 at the CVO |
-| W1-S6 | OBSERVATION, INERT -- RULED | this seat | `.tools/terraform.exe` (v1.9.8) is gitignored and absent in a fresh worker worktree; the worker used PATH `terraform` v1.14.5 for one plan | RULED @`2baa6af162`: the issuer provisions the binary into each worker worktree at hand-off (done at every re-create since); the deploying faces forbid the PATH substitution. Measured at this seat 02:2xZ: the three remote states (cot-pipeline, etfs-reports, bd-pipeline) all still carry `terraform_version` 1.9.8 -- nothing was re-pinned; every apply of the round went through 1.9.8 |
-| W1-S7 | BLOCKING, INERT (a stop) | -- | TO-EG-s-7's untargeted plan in `etfs-reports` reads `2 to change`: the order's `aws_iam_role_policy.reporter` AND a pre-existing `aws_instance.reporter` `user_data` drift (`e47b615c` -> `434774b5`), deferred as benign by NFRA_TERRAFORM-P2 @`1502fdd6f9` (2026-07-08); the worker refused the apply per its bound | RULED @`2baa6af162` and EXECUTED @`3f19353c05` (merged @`745cd6b354`): the drift is NOT this order's and is NOT applied (a `user_data` change on `aws_instance` is applied by the provider through a STOP and START of the reporter instance -- a confirm-with-Andrew class this seat does not take); EG-s-7, EG-s-8 and EG-s-9 plan, apply and 0-diff BY TARGET to the one resource each changes, the target stated in the ledger entry, the full plan's drift line recorded verbatim. THE DRIFT ITSELF is ROUTED to `1.0.0_SA_CTO` in the drain-end read (whether to apply it is Andrew's, the instance being the renderer's host) |
-| W2-S5 | BLOCKING, ARMED | this seat | `record-terraform-deploy.sh`'s own commit also writes `infra/aws/terraform/bd-pipeline/CHANGELOG.json`, which TO-EG-s-2's deliberately narrow `<paths>` (two files under a wide directory) did not grant; the owned-paths gate refused the tool's commit; the worker committed the in-grant source-map half, left the CHANGELOG edit untouched in its worktree, and filed the row | DISARMED in two acts: the grant widened by that one path @`75985f2068` (the worker had already flipped, and a terminal order grants nothing, so no worker commit could carry it); the deploy record then landed from the issuer's seat @`4b35d14ff4` under the AUDITED lane override `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` (rule 14a's named escape for a lane refusal; `org/git-author-override-audit.log` 2026-09-05T04:03:26Z), one file, byte-for-byte from the worker's worktree, the entry verified to be this deploy's (`functions_updated: bd-49f-etf-ownership-daily`, deploy commit `a1c37298`). The cut lesson: a deploying face's `<paths>` must name every file the deploy TOOL writes, not only the files the worker edits |
+| W1-S6 | OBSERVATION, INERT -- RULED | this seat | `.tools/terraform.exe` (v1.9.8) is gitignored and absent in a fresh worker worktree; the worker used PATH `terraform` v1.14.5 for one plan | RULED @`2baa6af162`: the issuer provisions the binary into each worker worktree at hand-off (done at every re-create since); the deploying faces forbid the PATH substitution. Measured at this seat 02:2xZ: the three remote states all still carry `terraform_version` 1.9.8 -- nothing was re-pinned; every apply of the round went through 1.9.8 |
+| W1-S7 | BLOCKING, INERT (a stop) | -- | TO-EG-s-7's untargeted plan in `etfs-reports` read `2 to change`: the order's `aws_iam_role_policy.reporter` AND an `aws_instance.reporter` `user_data` diff (`e47b615c` -> `434774b5`); the worker refused the apply per its bound | RULED @`2baa6af162` and EXECUTED @`3f19353c05` (merged @`745cd6b354`): apply BY TARGET, the instance untouched -- correct. THE PREMISE CORRECTED by row S2: the diff was a CRLF checkout artifact, not a real drift, and the July commit the row cited (`1502fdd6f9`) is about `ami` and the public IP. The stop was still right (a plan naming a second resource is not applied), and nothing live was touched |
+| W2-S5 | BLOCKING, ARMED | this seat | `record-terraform-deploy.sh`'s own commit also writes `infra/aws/terraform/bd-pipeline/CHANGELOG.json`, which TO-EG-s-2's deliberately narrow `<paths>` (two files under a wide directory) did not grant; the owned-paths gate refused the tool's commit; the worker committed the in-grant source-map half, left the CHANGELOG edit untouched in its worktree, and filed the row | DISARMED in two acts: the grant widened by that one path @`75985f2068` (the worker had already flipped, and a terminal order grants nothing, so no worker commit could carry it); the deploy record then landed from the issuer's seat @`4b35d14ff4` under the AUDITED lane override `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` (rule 14a's named escape for a lane refusal; `org/git-author-override-audit.log` 2026-09-05T04:03:26Z), one file, byte-for-byte from the worker's worktree, the entry verified to be this deploy's. The cut lesson: a deploying face's `<paths>` must name every file the deploy TOOL writes, not only the files the worker edits |
+| W1-S8 | BLOCKING, INERT (a stop) | -- | TO-EG-s-8's TARGETED plan (`-target=aws_lambda_function.orchestrator`) still read `2 to change`: the orchestrator's config references `aws_instance.reporter.id` (`REPORTER_INSTANCE_ID`), a real dependency edge `-target` includes; the worker refused the apply and declined S8-AC7's live invoke against the undeployed function (its old fallback would have run a real render) | The stop and the declined invoke were both right. DISPOSITIONED by row S2 (the instance had no real change; with LF `.tf` files in the worktree it shows none) and the ruling @`446a064491`: the worker continues in place, the targeted plan now reads one resource, S8-AC7 runs AFTER the deploy |
+| S2 | OBSERVATION, ARMED | this seat | THE FALSE DRIFT: live `user_data` sha1 `e47b615c` == the LF rendering of `instance.tf` at HEAD; the plan's `434774b5` == the CRLF rendering; a fresh worktree on this `core.autocrlf=true` box checks out 414 of 414 `.tf` with CRLF (no `*.tf` eol rule in `.gitattributes`); the July commit is about `ami` and the public IP; the heredoc is unchanged since the file's creation | DISARMED at this seat: every `.tf` in both worker worktrees normalized to LF (eol-only; `git diff --ignore-cr-at-eol` empty); EG-s-8's and EG-s-9's faces carry the corrected text @`446a064491`. The durable fix (`*.tf text eol=lf` in `.gitattributes`) is outside this lane and ROUTED to `1.0.0_SA_CTO` at drain-end. Cut lesson: a worker's worktree is a DIFFERENT CHECKOUT; a hash-sensitive plan there can differ from the main tree's by line endings alone |
+| S3 | OBSERVATION, ARMED | this seat | THE `--gate` SEAM NO CELL OWNED: EG-s-6's face says the orchestrator "will pass it once EG-s-8 lands"; EG-s-8's face, EG-s-9's, the decomposition and the PRD carry no such line (0 hits); `_render_command` at HEAD passes no flag; the 10-01 fire would render ungated and FWD-2 could never reach EXERCISED | DISARMED at this seat @`446a064491`: TO-EG-s-8 (open, slot 1) gains deliverable item 5 (`--gate` in `_render_command`) and the minted criterion S8-AC9 (`GATE_FLAG_IN_RENDER_COMMAND=True`); the deploy-order window (the orchestrator passing the flag before EG-s-6's renderer upload lands) is stated on the face, both land tonight, and the issuer holds the rollback if EG-s-6 does not land before the fire. Cut lesson: a seam is a cell's line, not a dependency's |
 
 An ARMED standing on a row this seat has disarmed is the append-only channel's carrier lag; the disposition is the
 CVO's at L9 and the disarm's evidence is the commit named beside it.
 
-## 5. WHAT IS OPEN (four orders), and the hand-off order the drain follows
+## 5. WHAT IS OPEN (three orders), and the hand-off order the drain follows
 
-slot 1: EG-s-8 (HANDED 2026-09-05 ~04:1xZ, worktree re-created @`c50c72f92a`; the orchestrator's terminal send, deployed by target) -> EG-s-9 (the same Lambda, the JOIN, deployed after).
-slot 2: EG-s-5 (HANDED 2026-09-05 ~04:1xZ; the coverage line in the report, no deploy) -> EG-s-6 (the gate inside the renderer, the one artifact upload; its dependencies EG-s-4, EG-s-7 and EG-sb-7 are terminal).
+slot 1: EG-s-8 (IN PLACE under the S2/S3 rulings @`446a064491`: the targeted plan now one resource, `--gate` added, S8-AC9 minted; the by-target deploy, then the live `terminal_qa` rehearsal) -> EG-s-9 (the same Lambda, the JOIN, deployed after).
+slot 2: EG-s-6 (HANDED 2026-09-05 ~05:3xZ, worktree re-created @`1c5603a696` with LF `.tf` files; the gate, the six-arm battery, the two live QA renders, the ONE renderer artifact upload under a ledger entry).
 slot 3: spent.
+
+**What the drain-end read to the CTO will carry (not sent until the last three drain):** the seat rows S1, S2, S3; the
+inf battery (W2-S1/W2-S4) for the CVO; `build-zip.sh` (W1-S5, lane CLOUD_OPS_OR_ETL); the `*.tf text eol=lf`
+`.gitattributes` rule (S2); the Orion repoint's COMMITTED-NOT-APPLIED state (S12-AC5); the CVO's watermark against the
+channel's row count.
