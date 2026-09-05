@@ -61,7 +61,7 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 - **Your write surface is the `<paths>` block below, PLUS the two grants the tree convention gives every worker without an entry -- your own `deliverables/<serial>/` folder, and THIS ORDER'S OWN FILE under `task-orders/` (lane ANY) for the `<status>` flip -- and nothing else.** (Restated by the issuer at the drain on row ETFS_GUARDRAIL-W1-S2: the flip was always admitted; the wording withheld it.) A path you need that it does not name is a BLOCKING row, never an override. The `-canonical` twin and the DS module are NOT edited.
 - **NEVER#1 / NEVER#2:** this producer reads `schwab/08242234/silver/fact_rps/*` ONLY (49F's own data; the Sid stays scoped to `fact_rps/*` exactly); the new Sid is on the aggregation bucket's `platinum/reports/` key; nothing on `opal-data-bd`, `opal-data-cot`, `opal-data-inf` or `blackdiamond/`.
 - **NO SERVED DELETE, NO FABRICATION, no dated non-probe invoke in this order** (it writes; overwrite-per-date is the AVGCAP per-day invariant and a scheduled floor exists).
-- **NEVER-2 / NEVER-9:** `.tools/safe-apply.sh` only; ledger before/after; plan read before apply; 0-diff after; artifact upload before the plan.
+- **NEVER-2 / NEVER-9:** `.tools/safe-apply.sh` only; ledger before/after; plan read before apply; 0-diff after; artifact upload before the plan. (AMENDED BY THE ISSUER at the drain on the worker's row: `record-terraform-deploy.sh` writes `infra/aws/terraform/bd-pipeline/CHANGELOG.json` as the deploy record, and this order's `<paths>` named only two files under that wide directory, so the record sat outside the grant; the path is now granted -- commit the CHANGELOG entry with the deploy record BEFORE the flip.)
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W2-S<k>`.
@@ -72,6 +72,7 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/
 infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf
 infra/aws/terraform/bd-pipeline/.terraform.lock.hcl
+infra/aws/terraform/bd-pipeline/CHANGELOG.json
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/lambda/ci/build-and-upload.sh
 infra/aws/lambda/ci/record-terraform-deploy.sh
