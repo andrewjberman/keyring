@@ -50,6 +50,39 @@
 <criterion id="D8-AC3" cell_refs="CG-x-7"><invocation>ls infra/aws/globgrph/ | grep -c kuzu_nessie_db</invocation><expect>^0$</expect></criterion>
 `D8-AC3` -- NO LOCAL DB ON THE LAPTOP READER (this worktree).
 
+> ### AMENDMENT 2026-09-05 ~23:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- D8-AC3 CANNOT FAIL AS
+> WRITTEN, AND THE REPORT MUST CARRY THE MEASUREMENT THAT CAN. **THE BAR DOES NOT MOVE:** D8-AC3's
+> invocation and its `^0$` expect are unchanged, and there are FIVE criteria before and after.
+>
+> ⛔ **MEASURED BY THE ISSUER 2026-09-05 22:5xZ, WITH THE LAPTOP COPY FULLY INTACT:** the exact
+> command this criterion runs (`ls infra/aws/globgrph/ | grep -c kuzu_nessie_db`) returns **0 in a
+> fresh worktree TODAY**, while the main workspace at
+> `C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/globgrph/` holds **6 entries** of exactly
+> that name. The reason is structural: `infra/aws/globgrph/.gitignore:3` ignores `kuzu_nessie_db`,
+> so it is **never checked out into any worktree**. **This arm therefore passes whether or not the
+> local copy is ever switched off** -- it measures the WORKTREE while its own prose says *the
+> laptop reader*, and FWD-7 asks whether there is *no local copy left that either machine could
+> have read instead*.
+>
+> **REQUIRED IN YOUR REPORT, beside D8-AC3's zero:** the same census run against the MAIN WORKSPACE
+> BY ABSOLUTE PATH --
+> `ls C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/globgrph/ | grep -c kuzu_nessie_db` --
+> printed as `MAIN_WORKSPACE_LOCAL_DB_COUNT=<n>`, with the directory listing quoted if `<n>` is not
+> zero. That path is OUTSIDE your worktree and this is a **READ**, which your grant does not
+> restrict; you write nothing there and you delete nothing there.
+>
+> ⛔ **WHY IT MUST BE YOU WHO MEASURES IT: the deletion is the ISSUER'S act, and the only evidence
+> the record would otherwise carry is the ISSUER'S OWN step-log line.** A producer's self-report is
+> not verification of the produced state. Your count is the independent read. **If
+> `MAIN_WORKSPACE_LOCAL_DB_COUNT` is non-zero, that is NOT your failure and NOT a reason to stop:
+> report it, print the listing, and file a row** -- it means the issuer's drain act did not land,
+> and this seat owns that.
+>
+> ⚠ **AND SAY WHICH ZERO IS WHICH IN THE DELIVERABLE.** D8-AC3's zero is a worktree property that
+> was already true before the retirement began; `MAIN_WORKSPACE_LOCAL_DB_COUNT` is the one that
+> carries FWD-7's claim. The CVO grades D8-AC5 on exactly that distinction, so do not let the two
+> zeros stand side by side unlabelled.
+
 <criterion id="D8-AC4" cell_refs="CG-x-7"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/gateway_no_db.sh</invocation><expect>GATEWAY_LOCAL_DB_COUNT=0</expect></criterion>
 `D8-AC4` -- NO LOCAL DB ON THE SECOND MACHINE (`gateway_no_db.sh`, yours: the bounded SSM `find` above, its count printed as `GATEWAY_LOCAL_DB_COUNT=<n>`).
 
