@@ -372,6 +372,126 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "CLAUDE.md Rule 21: comp-find is the DEFAULT search instrument and prints its denominator; NFRA_COMPEFFICACY PRD s.4.4 Rule T: a tool never exceeds a ceiling it was not told, and the LINE is the rejectable state -- a budgeted call discloses WITHIN BUDGET or BUDGET REACHED with what it scanned.",
     "world_is": "comp-find content mode under an explicit --budget printed a complete-looking denominator and no budget line at all, so a truncated-or-not scan and a complete one render identically to the caller; with S2 (a timeout that emits zero bytes on both streams) the default search instrument has two silent shapes at its bound.",
     "notes": "Filed as a ROW beside S2 rather than a message, per CLAUDE.md s.2 (the notifier watches files). Owner named as S2's. Not this project's cell to fix: comp-find is a marquis tool outside NFRA_OUTSET's Part II; the row rides the COO's drain-end read and the CVO's L9 disposition. No fix attempted."
+  },
+  {
+    "id": "NFRA_OUTSET-W3-S1",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~3",
+    "surfaced_at": "2026-09-05T03:56:49Z",
+    "one_line": "TO-OS-s-15 carries <issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to> and its <paths> block grants deliverables/0.9.0_WK_NFRA_OUTSET~1/, but the order was executed by 0.9.0_WK_NFRA_OUTSET~3 on a re-seat after slot ~1's worktree was found broken. The worker face's identity clause ('your serial is the task order's issued_to') and the worker's actual serial disagree, so the deliverable and the proof-of-spec instance land under a folder named for a slot that did not do the work.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.md@61904105639022e4f0a3601a3954860ca7283be6, line 5: `<issued_to>0.9.0_WK_NFRA_OUTSET~1</issued_to>`; DELIVERABLE section and <paths> block both name `org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/`; <proof_of_spec> names the instance stem under the same ~1 folder.",
+        "This worker's serial is 0.9.0_WK_NFRA_OUTSET~3 (issuer's spawn instruction, and the OPAL_AGENT_SERIAL exported on every Bash call of this session); worktree C:/tmp/wk-OUTSET-3 on branch wk-OUTSET-3 at HEAD 61904105639022e4f0a3601a3954860ca7283be6.",
+        "RESOLVED IN FAVOUR OF THE ORDER, NOT THE SERIAL: the <paths> block IS the write grant (RULING 1, Andrew 2026-09-04 ~04:58Z, quoted in the order's <preflight> lane clause), and it names the ~1 folder and not a ~3 folder. Writing to a ~3 folder would have been a write OUTSIDE the grant. The gate that reads the proof-of-spec instance globs the exact stem the order names, so the order's path is also the only one that is graded."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face's identity clause: a worker's serial IS the task order's <issued_to> (`0.9.0_WK_<CODE>~<n>`), and its deliverables land at `deliverables/<serial>/`. TO-OS-s-15 states that serial as 0.9.0_WK_NFRA_OUTSET~1.",
+    "world_is": "The order was executed by slot ~3 after a re-seat (slot ~1's worktree was provisioned from a killed mid-checkout and was missing org/ entirely; recorded as NFRA_OUTSET-S7 in the seat space). The order text was not re-cut for the new assignee, so <issued_to>, the DELIVERABLE path and the <paths> grant all still name ~1. This worker wrote its deliverable and proof-of-spec under the ~1 folder the order names -- inside the grant and inside the gate's glob -- and its rows under the W3- coordinate, which is the one identity only this worker can allocate. Consequence for the record: the deliverables folder name is no longer a reliable carrier of WHICH worker produced the artifact; the artifact's own authorship line and the commit author are.",
+    "notes": "Filed as form, not significance. No path outside the order's <paths> block was written. The row exists so the L8 compile and the CVO at L9 do not read `deliverables/0.9.0_WK_NFRA_OUTSET~1/reachability-of-the-heat-engine-legs.result.md` as slot ~1's output. Cheapest durable fix is the issuer's, not this worker's: a re-seat either re-cuts <issued_to> and the two paths, or records the substitution at the cut."
+  },
+  {
+    "id": "NFRA_OUTSET-W3-S2",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~3",
+    "surfaced_at": "2026-09-05T03:56:50Z",
+    "one_line": "O15-AC1's answer vocabulary is two-valued (REACHABLE-FROM-CLI or RETIRE-CANDIDATE) and is not MECE over the world this cell measured: object_locality.py (O2) is NOT reachable from comp-heat (0 of comp-heat's 6 heatmap imports name it) AND is NOT a retire candidate (ms_heat_index.py:62 imports it, and that script is the live stager for the ms_heat_snap Iceberg table). Neither value fits the one leg whose answer most changes what OS-s-16 should build.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D11/NFRA/NFRA_OUTSET/task-orders/NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.md@61904105639022e4f0a3601a3954860ca7283be6, criterion O15-AC1 verbatim: 'FOR EACH of object_locality.py, object_recommend.py, object_report.py: state REACHABLE-FROM-CLI or RETIRE-CANDIDATE'.",
+        "AST import census over the whole tracked corpus (denominator 30,559 tracked files = 5,624 files matching *.py, all 5,624 AST-parsed with 0 unparseable, PLUS 42 extensionless python-shebang tracked scripts of which 39 parsed and 3 failed, all 3 numpy .pyx/.pxd vendored under infra/aws/lambda/layers/ and none heatmap-related): importers of object_locality = 3, namely org/modules/heatmap/ms_heat_index.py:62, object_recommend.py:43, object_report.py:38. Importers named by .tools/comp-heat = heat_map (S0) at :165/:349/:418 and object_freshness (O1) at :166/:271/:419, and nothing else.",
+        "Corroborated by a DIFFERENT instrument, native Grep (text) rather than AST: `object_locality` = 75 occurrences across 51 files, of which the only *.py import statements are the same three lines. Positive control in the same invocation shape on the same instrument: `object_freshness` = 239 occurrences across 73 files, confirming the search was live and not a false zero (the comp-find false-zero modes recorded as NFRA_OUTSET-S2 and NFRA_OUTSET-S6 do not apply to native Grep, which is why it was chosen here).",
+        "ms_heat_index.py is a live producer, not a spike: org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/C.sidecar.json:41 records the S3 object `warehouse/ms_heat/ms_heat_index.json` at last_modified_utc 2026-07-17T18:09:45Z, size 2,626,103 bytes, and :44 names `producer_script: org/modules/heatmap/ms_heat_index.py`; base.sidecar.json:169 records the prefix's role as 'feeds ms_heat_snap Iceberg table via snap_ingest staging'. READ FROM ANOTHER SEAT'S ARTIFACT, NOT MEASURED HERE -- this worker read no S3 plane.",
+        "org/modules/heatmap/object_locality.py@262cda2e8896869e43fc05be2ee0f4cc5ea911fe, `python object_locality.py --self-test` -> rc=0, 'OK: object_locality self-test passed (5/5)'. The leg is not merely present, it still executes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "O15-AC1: 'FOR EACH of object_locality.py, object_recommend.py, object_report.py: state REACHABLE-FROM-CLI or RETIRE-CANDIDATE, with the file:line the CLI would call and the measured fact that the CLI reaches O1 only.' The disjunction presumes that a leg the CLI does not reach is thereby a retire candidate.",
+    "world_is": "CLI-reachability and retire-candidacy are two different axes, and O2 separates them: it is unreached BY THE CLI and simultaneously load-bearing for a non-CLI live consumer. Answering O15-AC1 with either permitted value would have been false -- 'REACHABLE-FROM-CLI' is contradicted by the import census, and 'RETIRE-CANDIDATE' would have pointed a downstream retire ruling at a module whose removal breaks the ms_heat_snap stager. This cell therefore recorded a third reading (NOT-REACHABLE-FROM-CLI / NOT-A-RETIRE-CANDIDATE, live non-CLI consumer) with its evidence, rather than bending the answer to the vocabulary. TAXONOMY LAW postulate (i), MECE over a declared domain: the uncovered member is 'unreached by the named caller but reached by an unnamed one'.",
+    "notes": "Form, not significance -- the grade is 3.0.0_SA_CVO's at L9 and this row does not pre-empt it. Flagged because the criterion's vocabulary, not the evidence, is what would have forced a wrong answer, and because the same two-value shape appears in the PRD s.7 OS-s-15 row ('each leg reachable from comp-heat under never-auto-delete, or retired with the ruling cited'). No verdict is written on either criterion in this cell's proof-of-spec instance."
+  },
+  {
+    "id": "NFRA_OUTSET-W3-S3",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~3",
+    "surfaced_at": "2026-09-05T03:56:51Z",
+    "one_line": "object_recommend.py (O3) hardcodes subprocess timeout=180 on its `git grep` inbound-reference scan at :78 (and timeout=60 at :52), neither derived from nor overridable by a caller's budget. If OS-s-16 wires O3 behind comp-heat, a single O3 candidate scan can outlive comp-heat's Rule T default budget of 90 s that OS-s-1 wired across all five subcommands, and comp-heat's --budget would not bind it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/modules/heatmap/object_recommend.py@d0645a2c898113f151822c56ae36987f054f52e0, referenced_index() at :76-79 verbatim: `r = subprocess.run([\"git\", \"-C\", root, \"grep\", \"-I\", \"-o\", \"-E\", \"-e\", alt], capture_output=True, text=True, timeout=180)`; referenced_by() at :52-55 uses the same shape with `timeout=60`. Neither call takes a deadline parameter and neither function accepts one.",
+        ".tools/comp-heat@53092092cf92eb28df99be4ef9d7e822094bc57e, epilog verbatim: 'every subcommand accepts --budget <seconds> (flag > env COMP_BUDGET_S > default 90s; 0 = unbounded)'. Measured: `python .tools/comp-heat --help` -> rc=0, that line present.",
+        ".tools/comp-heat@53092092cf92eb28df99be4ef9d7e822094bc57e:112-122, the _spent() docstring names the mechanism that makes Rule T load-bearing elsewhere: 'the DEEPER and load-bearing enforcement is the subprocess-level `timeout=remaining()` on each git call (object_freshness.py's _git_bounded)'. O1 threads the caller's remaining budget into its git subprocesses; O3 does not have that wiring, so the same guarantee does not transfer to it by being imported.",
+        "PRECEDENT IN THIS SAME TOOL, same failure shape already named at a cut: cmd_federated at .tools/comp-heat:563-600 documents 'RULE T, CUT DEFECT NAMED' for _trino_fed.run_federated_query() taking no timeout parameter, and responds by REFUSING to dispatch when the resolved budget is below the transport's known floor rather than by pretending the call is bounded.",
+        "NOT A LIVE HAZARD TODAY: measured 0 importers of object_recommend outside org/modules/heatmap/object_report.py:39, and 0 importers of object_report anywhere, so nothing currently invokes either path (same 30,559-file AST census as NFRA_OUTSET-W3-S2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-15 BOUNDS: 'EVERY invocation is bounded ... Use a tool's own --budget/--limit; never name a whole-corpus sweep.' OS-s-1 (drained at b3bf6c98d8) wired the Rule T --budget carrier across comp-heat's five subcommands, and PRD s.8 rules OS-s-1 'before everything that prints a denominator', so a leg reached through comp-heat is expected to honour the caller's ceiling.",
+    "world_is": "O3's two git subprocess bounds are literals in its source (180 s and 60 s), set per-call and not per-caller, and O3 exposes no parameter through which comp-heat's resolved clock could reach them. The budget carrier OS-s-1 wired stops at comp-heat's own frame; importing O3 would not extend it. This is a SCOPING CONSTRAINT ON THE FENCED CELL rather than a defect in anything running today: OS-s-16, if it wires the verify-before-recommend chain, must either thread the remaining budget into referenced_index/referenced_by or adopt cmd_federated's refuse-below-floor pattern, and either way that is work the OS-s-16 face has to name.",
+    "notes": "Filed by the cell that measured it rather than carried in prose to the drain, per CLAUDE.md s.2. This cell is read-only on .tools/comp-heat and org/modules/heatmap/ and changed neither; no fix attempted and none authorized here. The disarm question does not arise (hazard_standing INERT, 0 live callers), which is precisely why it is cheap to address at the cut of OS-s-16 rather than after it lands."
+  },
+  {
+    "id": "NFRA_OUTSET-W3-S4",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~3",
+    "surfaced_at": "2026-09-05T04:12:00Z",
+    "one_line": "`comp-heat freshness` prints its archive-candidate list under the label 'cold SUBTREES' but computes it with heat_map.cluster_by_locality, which groups by IMMEDIATE dirname only and never rolls up the tree. Exercised falsifier: a synthetic directory that is 8-of-8 cold at 400 days, spread 2 files across 4 leaf dirs, yields 0 'cold SUBTREES' from the CLI's own grouper+filter and 1 maximal cold root ('dead', 8/8, cold_frac 1.0) from O2. The live answer to FWD-8's question under-reports whole dead subtrees, and the label asserts the roll-up the code does not do.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO, to place on the OS-s-16 assignee (the sibling cells that hold the .tools/comp-heat write grant this round); NOT disarmable by 0.9.0_WK_NFRA_OUTSET~3, which is read-only on .tools/comp-heat and org/modules/heatmap/ by its own cut and did not write either.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-heat@53092092cf92eb28df99be4ef9d7e822094bc57e:214-216 verbatim: `clusters = cluster_by_locality(scores, lambda path: os.path.dirname(path) or \".\")` then `cold_dirs = sorted(((k, v) for k, v in clusters.items() if v[\"n\"] >= 3 and v[\"cold_frac\"] >= 0.8), ...)`; :236 renders them verbatim as `cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY)`. The grouping key is os.path.dirname, i.e. the file's IMMEDIATE parent, so no ancestor above it ever accumulates a count.",
+        "org/modules/heatmap/heat_map.py@53092092cf92eb28df99be4ef9d7e822094bc57e:102-123, cluster_by_locality docstring: 'Group scored items by a domain LOCALITY key' -- one key per item, by construction a FLAT partition. Its own docstring names the intended consumer: 'O2 consumes cold_frac to detect dead subtrees.' The CLI consumes it directly instead of through O2.",
+        "org/modules/heatmap/object_locality.py@262cda2e8896869e43fc05be2ee0f4cc5ea911fe:80-108 aggregate_tree accumulates into EVERY ancestor via _ancestors(); :112-134 maximal_cold_subtrees returns only roots whose parent does not itself qualify. These are different functions computing different quantities, not two names for one.",
+        "EXERCISED, not read: scratch harness importing both engines unmodified, 8 synthetic HeatScore rows all band=cold age_days=400 at dead/{a,b,c,d}/f{1,2}.py -> `S0 cluster_by_locality: 4 keys = ['dead/a','dead/b','dead/c','dead/d']; CLI filter n>=3 and cold_frac>=0.8 -> 0 'cold SUBTREES': []` versus `O2 aggregate_tree: 5 keys (clustered_n=8/total_n=8); maximal_cold_subtrees -> 1 root(s): ['dead']; detail n=8 n_cold=8 cold_frac=1.0 oldest_age_days=400.0`. rc=0 read directly from the process, not through a pipe.",
+        "DIRECTION OF THE ERROR, stated because it decides the hazard: the miss is a FALSE NEGATIVE. The CLI under-reports what is safe to put away; it does not over-report. Nothing is proposed for archive that should not be, and R-5 is not breached by it. The harm is to the ANSWER FWD-8 exists to give, not to any artifact.",
+        "NOT MEASURED HERE: how many real cold subtrees in this estate the flat grouper misses. That needs a full-corpus comp-heat freshness run against an O2 run over the same scores, which is OS-s-16's measurement to make and is outside this decide cell's bounds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-8 (@7fb59f239b:117-122): '\"Is this safe to put away?\" is answerable, advisory, and never acts on its own', ACCEPT 'a person asking what is safe to put away gets a ranked list with the reason for each line'. comp-heat's own rendered label at :236 asserts the list IS of cold SUBTREES, and the tool docstring at :5-8 offers it as the answer to \"what's stale / safe to archive?\".",
+    "world_is": "The rendered list is of cold LEAF DIRECTORIES that individually clear n>=3, not of cold subtrees. A subtree that is entirely cold but whose files sit in leaf dirs of fewer than 3 files each is invisible to it, and conversely a deep chain of cold dirs is listed once per level with no maximal-root de-duplication (the exact redundancy maximal_cold_subtrees:112-116 exists to remove). The engine that computes the labelled quantity is present, self-tests 5/5, and is not called by the CLI.",
+    "notes": "This is the measurement that decided this cell's O2 answer: it establishes that O2 is NOT redundant with the S0 grouper the CLI already uses, so 'the CLI already has locality' does not support retiring O2. Filed as a row rather than repaired in place, per the issuer's standing instruction to this worker that a needed write to .tools/comp-heat is a finding to report and not an act to take; three sibling cells hold that write grant this round. No fix attempted, no byte of .tools/comp-heat or org/modules/heatmap/ changed by this worker."
+  },
+  {
+    "id": "NFRA_OUTSET-W3-S5",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~3",
+    "surfaced_at": "2026-09-05T04:30:00Z",
+    "one_line": "MEASURED CONSEQUENCE OF W3-S1, which W3-S1 predicted the wrong way round: the lane gate REFUSED this worker's commit into `deliverables/0.9.0_WK_NFRA_OUTSET~1/`, the exact folder the order's <paths> block grants. owned-paths clause 4 resolves the owner from the SERIAL IN THE PATH, so a re-seated worker cannot write the deliverables folder its own order names. Resolved same-turn by landing in `deliverables/0.9.0_WK_NFRA_OUTSET~3/`, which the order's own <preflight> separately grants.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh refusal verbatim (first commit attempt, TRUE-RC=1 read directly from the command and not through a pipe): `ERROR: owned-paths lane violation(s) detected (block mode):` then `VIOLATION: org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/NFRA_OUTSET.TO-OS-s-15.reachability-of-the-heat-engine-legs.proof_of_spec.json -- lane=TREE_DELIVERABLES (Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it) ...); agent=0.9.0_WK_NFRA_OUTSET~3 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)`. The identical violation was raised for the result document.",
+        "THE GATE'S SECOND CLAUSE IS THE DECISIVE ONE AND IT CANNOT BE SATISFIED BY THIS ORDER AT ALL: ADHC_OWNPTH.005 looks for a non-terminal task order at HEAD `issued_to this serial`. NO task order in the project is issued_to 0.9.0_WK_NFRA_OUTSET~3 -- the order this worker executes is issued_to ~1 (TO@61904105639022e4f0a3601a3954860ca7283be6:5). So the <paths> block's grant of the ~1 folder is unreachable by BOTH of the gate's limbs for a re-seated serial: clause 4 fails on the folder name, and clause 5 fails on <issued_to>.",
+        "Negative control that the refusal was real and nothing landed: `git log -1 --format=%h~%an~%s` -> `6190410563~2.0.0_SA_COO~A~L6(NFRA_CLDGRPH.TO-CG-D-9 ...)`, i.e. HEAD is still the issuer's pre-existing commit and carries neither this worker's author line nor its subject. Read from the REPOSITORY, not from safe-commit's own stdout, per that tool's own printed warning.",
+        "THE GRANT THAT DOES ADMIT THE LANDING PATH, from the same order: <preflight> lane clause verbatim, TO@61904105639022e4f0a3601a3954860ca7283be6:64 -- `the <paths> block above IS the grant (RULING 1, Andrew 2026-09-04 ~04:58Z) -- a worker serial is admitted to exactly these paths while this order is NON-TERMINAL at HEAD, and to its own deliverables folder by the tree convention.` `deliverables/0.9.0_WK_NFRA_OUTSET~3/` IS this worker's own deliverables folder by the tree convention, and it is the folder clause 4 permits.",
+        "The two other paths in the same commit were NOT refused: `org/missions/*/*/*/task-orders/**` is lane ANY at HEAD (.owned-paths.yaml:914-916, read with `git show HEAD:.owned-paths.yaml`) and the surprise-channel file is lane ANY. Only the deliverables limb refused, which is what isolates the defect to the folder-name resolution."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-15 <paths> grants `org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~1/`, its DELIVERABLE section names the result document under that folder, and its <proof_of_spec> names the instance stem under it. The order's BOUNDS state `Your write surface is the <paths> block below and nothing else` and `A path you need that it does not name is a CUT DEFECT: file a BLOCKING row and stop that criterion. It is never an override.`",
+    "world_is": "The <paths> block granted a folder the mechanical gate refuses this worker, and refuses on two independent limbs (folder-serial and <issued_to>). A <paths> grant is therefore NOT self-executing: it can name a deliverables path that no gate will admit for the serial actually holding the order, and a re-seat is the condition that produces it. This was NOT resolved by overriding the gate and no override token was used: the artifacts were relocated to the worker's own serial folder, which the SAME order grants in its <preflight> lane clause, so the landing path is inside the grant on the order's own words. W3-S1 called this divergence INERT and reasoned that writing to the ~1 folder was the in-grant choice; the gate falsified that reasoning at commit time. Append-only, so this row is the correction carrier rather than an edit to W3-S1 -- the same pattern S6 used on S1 and W1-S9 used on S7 in this channel.",
+    "notes": "class BLOCKING because it stopped the commit and the turn could not proceed until it was resolved; hazard_standing INERT because it is resolved and leaves nothing armed. NO CRITERION WAS STOPPED: O15-AC1 and O15-AC2 were both fully measured before the commit was attempted and neither depends on the folder name. THE DURABLE FIX IS THE ISSUER'S, not this worker's: a re-seat should re-cut <issued_to> and the two deliverable paths together, or the deliverables lane should resolve a re-seated worker. Reported to 2.0.0_SA_COO in the worker report as a cut defect. Deliverable and proof-of-spec instance now live at org/missions/D11/NFRA/NFRA_OUTSET/deliverables/0.9.0_WK_NFRA_OUTSET~3/ with the filenames the order specifies unchanged, so the proof-of-spec gate's filename glob still resolves."
   }
 ]
 ```
