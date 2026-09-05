@@ -1,0 +1,29 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-03T23:43:40.162924+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260904T000147Z
+**Deploy:** NFRA_OPSEC202609.TO-OP-S-8R2B -- opal-users-v2 SSE from the AWS-managed key 86cc6c40 to the project CMK 64f25291 (alias/opal-security), at its REAL carrier shared-infra/dynamo.tf, SCOPED -target apply. ROLLBACK: arn:aws:kms:us-east-1:313476888478:key/86cc6c40-2387-4446-b7e1-de79392e06b3 (the AWS-managed key ARN captured BEFORE the first flip). UNSCOPED baseline BEFORE any edit: 'No changes. Your infrastructure matches the configuration.' -- so nothing foreign was pending and nothing else can ride
+**Authored by:** 0.7.0_AE_CloudOps~W
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | git | shared-infra/dynamo.tf server_side_encryption block committed under 0.7.0_AE_CloudOps~W | commit hash | commit d756be09b8 on SITEZ, author 0.7.0_AE_CloudOps~W -- shared-infra/dynamo.tf server_side_encryption{enabled=true,kms_key_arn=data.aws_kms_alias.opal_security.target_key_arn} + the data source + round-1 note rewritten; 2 files changed, 70 insertions, 8 deletions; commit-gate clean, msg-verify MATCH len=6135 | CLOSED 20260904T000106Z |
+| L2 | activation | safe-apply -target=aws_dynamodb_table.opal_users_v2 -- MUST read 0 to add, 0 to destroy, 0 forces-replacement | apply output | safe-apply rc=0 from the SAVED PLAN FILE w-s8r2b-users-v2.tfplan (not -target: the UNSCOPED baseline was 'No changes', so the whole plan contained only this change -- strictly stronger than targeting and it avoids the scoped-apply-verified-by-scoped-re-plan trap). HALT_ACK=1 after reviewing the one pending message: a 13-day-old base-serial note about another seat's GW-APPLY deploy destination, not STOP-class, unrelated. comp-tagauthz PASSED, tombstone-gate CLEAN (0 creates vs 7 tombstones). Plan-wide census: 0 'forces replacement', 0 'must be replaced', 0 'will be destroyed', 0 '-/+'. 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' | CLOSED 20260904T000106Z |
+| L3 | verify | live AFTER read: KMSMasterKeyArn 64f25291 (not 86cc6c40); TableId 8e590a34 and CreationDateTime IDENTICAL before/after = updated not replaced; DeletionProtectionEnabled still true; PITR still ENABLED | pasted reads | Live AFTER read: KMSMasterKeyArn arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7 (was 86cc6c40-2387-4446-b7e1-de79392e06b3). UPDATED NOT REPLACED, measured: TableId 8e590a34-53b1-4b6a-8c91-02bbc5e981ea and CreationDateTime 2026-01-08T12:46:52.652000-05:00 IDENTICAL before/after; ItemCount 75 both sides. S8B-AC4: DeletionProtectionEnabled true->true; PITR ENABLED->ENABLED with RecoveryPeriodInDays 35 both sides. Neither setting this face is not entitled to has moved. | CLOSED 20260904T000107Z |
+| L4 | verify | UNSCOPED re-plan 0-diff (never a -target re-plan -- a scoped check cannot see what the scope excluded) | unscoped plan output | UNSCOPED re-plan (never a -target re-plan): 'No changes. Your infrastructure matches the configuration.' IT DISCRIMINATES DESPITE MATCHING THE CLEAN BASELINE: between baseline and now this commit ADDED a server_side_encryption block declaring kms_key_arn, so had the apply not landed the plan would still show the 1-to-change diff it showed pre-apply. A clean plan now means declaration and live table agree. Baseline before the first edit was also 'No changes', so nothing foreign was pending and nothing else rode. | CLOSED 20260904T000107Z |
+| L5 | verify | S8B-AC3 DATA-PLANE exercise: fixture item put + get-item read back on the NEW key, then delete + read the deletion back. Control-plane key ARN is NOT this leg | data-plane call output | S8B-AC3 DATA PLANE, four steps on fixture PK=FIXTURE#opsec-s8r2b-cmk-verify SK=PROBE#20260903T235458Z: (1) put-item OK, ConsumedCapacity 1.0 = encrypt path on the new CMK; (2) get-item --consistent-read returned the item byte-exact from storage not cache = decrypt path on the new CMK; (3) delete-item --return-values ALL_OLD returned the item; (4) get-item --consistent-read returned an empty response with no Item key = fixture gone, table back to 75 items. NEGATIVE CONTROL: a failure would have been AccessDeniedException or KMSInvalidStateException on the write or the consistent read; the consistent read is the discriminating leg because an unusable key cannot decrypt and would error rather than return the row. SECOND INSTRUMENT, DIFFERENT PLANE: kms list-grants on the CMK shows a grant Named 8e590a34-53b1-4b6a-8c91-02bbc5e981ea -- the table's own TableId -- with EncryptionContextSubset aws:dynamodb:tableName=opal-users-v2, minted by DynamoDB because the table now uses this key. | CLOSED 20260904T000108Z |
+
+## Log
+
+- 20260903T234340Z OPENED by 0.7.0_AE_CloudOps~W with 5 leg(s)
+- 20260904T000106Z LEG L1 closed: commit d756be09b8 on SITEZ, author 0.7.0_AE_CloudOps~W -- shared-infra/dynamo.tf server_side_encryption{enabled=true,kms
+- 20260904T000106Z LEG L2 closed: safe-apply rc=0 from the SAVED PLAN FILE w-s8r2b-users-v2.tfplan (not -target: the UNSCOPED baseline was 'No changes', s
+- 20260904T000107Z LEG L3 closed: Live AFTER read: KMSMasterKeyArn arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7 (was 86cc6c
+- 20260904T000107Z LEG L4 closed: UNSCOPED re-plan (never a -target re-plan): 'No changes. Your infrastructure matches the configuration.' IT DISCRIMINATE
+- 20260904T000108Z LEG L5 closed: S8B-AC3 DATA PLANE, four steps on fixture PK=FIXTURE#opsec-s8r2b-cmk-verify SK=PROBE#20260903T235458Z: (1) put-item OK, 
+- 20260904T000147Z CLOSED -- all 5 legs proven

@@ -25,6 +25,7 @@ directory an engagement's artifacts live in.
 | **RCN-0004** | 2026-08-03 | **The Opal repo itself** — Repo Coherence Graph (NFRA_REPOCOHERENCEGRAPH): knowledge-plane debt cleanout spec | 1 (implementation PRD) + project registration | Andrew's RCG proposal docx (326 paras) + the NFRA_VELOCITY record (program, 2 PRDs, type dictionary, constitution, contracts folder, 3 CVO logs) + repo census (25,273 tracked files) + 4 Andrew design rounds | `4.0.0_SA_CRO` | **DELIVERED** — spec staged for Andrew review; build HELD at CTO arch-gate + COO decomposition |
 | **RCN-0005** | 2026-08-05 | **Opal MDPF portfolio ontology** -- five-category taxonomy, Model lifecycle, Client Mandates, Sleeves, selection/advisory axes, and fee basis | 2 (research/design specification + visual ontology diagram) | MDPF_GLOBAL PRD + Andrew recording + MDPF_3FIRMS PRD + live crosswalk source + Andrew/Yang direction + 5 Andrew/CRO design rounds + exact-contract repo scan across 5 roots | 4.0.0_SA_CRO | **RATIFIED** -- Andrew-direct 2026-08-06 (CRO terminal), VERBATIM: *"it is already ratified i worked on that"* -- superseding the STAGED-FOR-REVIEW state this row carried; he worked the spec himself. Still no build/serve mutation from this row -- build authorization flows through CTO/COO as ever |
 | **RCN-0006** | 2026-08-07 | **The Opal ontology itself** — a proposed "Script I/O" (S-layer) for line-level field flow, Python + React/JS | 5 (spec REV1-3, axis field test, disposition, Python feasibility, **`LAYER_FIELD_ANATOMY.md`**) | live `comp-kuzu` graph (20,585 nodes / 41,144 edges @2026-08-07T00:32Z, HEAD current) + 8 first-party extractor surfaces read at source + 2 hand-classified code samples + an exercised SDK run (CVO~C) + 4 non-held-out tree censuses | `4.0.0_SA_CRO` | **DELIVERED — CONCLUSION IS A NEGATIVE.** The S-layer is **DISSOLVED**: all 7 specified capabilities already exist on live D1 edges. Real gap = D1 field grain has **no Python producer**. Build LEFT the CRO lane → CTO~D PRD |
+| **RCN-0007** | 2026-09-03 | **`.tools/comp-read` itself** — instrument misattachment: four measured instances in one exchange where the tool was correct and the answer was attached to a different question | 1 (brief) | 9 comp-read calls across 2 modes over 3 files at stated vintages (`.tools/deploy_ledger.py` @`79c0e68071` clean, `.tools/comp-read` 1250 ln, `INVESTIGATION_v1.md`) + 3-seat round trip (`0.0.0_AB_MSTR~Z`, `3.0.0_SA_CVO~Z`) | `4.0.0_SA_CRO~Z` | **DELIVERED — PROPOSALS ONLY, none dispatched.** 5 changes proposed, suggested owner the CVO lane (authorship-measured). P5 marked UNTESTED for feasibility; P3's contrast is n=2 and no threshold is proposed |
 
 ---
 
@@ -549,3 +550,73 @@ raised against another seat's index hours earlier, while its own register listed
 Recorded rather than quietly backfilled: an append-only register whose rows arrive after the fact is
 a weaker instrument than one written at delivery, and saying so is the only thing that keeps the next
 row honest. **The in-band `Recon ID:` tags on the five artifacts remain OWED, not done.**
+
+---
+
+## RCN-0007 -- `.tools/comp-read` itself: instrument misattachment, four instances in one exchange
+
+| Field | Value |
+|---|---|
+| **Target** | `.tools/comp-read` (1250 lines, HEAD @`dc944897c5`), the estate's mandated default single-file read instrument |
+| **Date** | 2026-09-03 |
+| **Commissioned** | Andrew-direct at the CRO~Z terminal, VERBATIM: *"write a brief about this and commit it"*, following *"is there an obvious way to make this tool better from this?"* |
+| **Owner** | `4.0.0_SA_CRO~Z` |
+| **Question asked** | Is a comp-read `--for` output useful, is it too much, and is it more effective than a handful of greps -- then: why does `--for` exist at all if `--enumerate` is available? |
+
+### Evidence basis + denominators
+
+**9 comp-read invocations, 2 modes, 3 subject files, every figure re-run at a stated vintage rather
+than recalled.** `.tools/deploy_ledger.py` 1328 lines / 43 sections @`79c0e68071` with
+`git status --porcelain` EMPTY on both this seat's and the peer's runs (blob confirmed identical
+across both HEADs by `0.0.0_AB_MSTR~Z`). `.tools/comp-read` 1250 lines / 32 sections.
+`INVESTIGATION_v1.md` 1969 lines here against 2017 at the peer -- **a vintage skew this seat did not
+detect at the time and which contributed to instance 1.4.**
+
+### The finding
+
+**Four errors, one class: the instrument was CORRECT in all four, the answer was attached to a
+DIFFERENT QUESTION, and no output disclosed the gap.** One `--for` failure (a ranker served the limb
+the file's commentary talked about most) and **three `--enumerate` failures** (wrong token for a
+concept; a probe aimed at bracket-access read as a predicate census; a false absence keyed on the
+asker's vocabulary rather than the row's).
+
+**Load-bearing negative result: defaulting to `--enumerate` would have prevented ONE of the four and
+CAUSED THE OTHER THREE.** The modes fail in opposite directions -- `--for` toward false completeness,
+`--enumerate` toward false absence -- and `--enumerate` requires the vocabulary you do not have when
+you open an unfamiliar file. They are SEQUENTIAL, not alternatives.
+
+### Artifact (committed)
+
+| Artifact | Path |
+|---|---|
+| The brief | `org/tier1_exec/4.0.0_SA_CRO/briefs/COMP_READ_INSTRUMENT_MISATTACHMENT_BRIEF_20260903.md` |
+
+### Disposition
+
+**PROPOSALS ONLY. Nothing dispatched, nothing staffed, no code written** (charter s.3: research
+proposes on the build side). Five changes proposed; suggested owner the CVO lane with CloudComp
+second, from measured commit authorship over the last 12 commits, not from assumption.
+
+### Declared gaps, in-band
+
+- **P5 (`--schema` mode) is UNTESTED FOR FEASIBILITY** -- comp-read's AST backend was not read to
+  confirm it can enumerate dict literals by binding.
+- **P3's contrast is n=2 and directional only.** Two authoritative-ratio points exist (3 of 18 on the
+  read that missed, 8 of 18 on one that landed). **No threshold is proposed and none should be
+  inferred** -- a band minted from two points is an unmeasured exact constant.
+- **Nothing was measured on a second device.**
+
+### Provenance
+
+**Three of the four instances were found by a peer, not by the seat that made them.** Instances 1.3
+and 1.4 were caught by `0.0.0_AB_MSTR~Z` auditing this seat's work; the better half of 1.2 by that
+seat against its own instruction; the control-selection sentence in s.1.4 is `3.0.0_SA_CVO~Z`'s
+formulation of this seat's finding. **Recorded because the method rests on it: the round trip is what
+produced the result, and a register row that took sole credit would misdescribe how it was obtained.**
+
+### Downstream (NOT part of this engagement)
+
+The eight sites defining "open leg" in `deploy_ledger.py` -- seven predicates plus the renderer at
+`:211` -- belong on NFRA_OPSEC202609 row **Z-S47** (`3.0.0_SA_CVO~Z`, confirmed by that seat as the
+standing carrier). The INSTANCE is that project's r2b ledger; **the CLASS is a fabric item on the
+deploy-ledger contract and closing NFRA_OPSEC202609 would not close it.**

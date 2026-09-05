@@ -99,7 +99,33 @@ control** (a date you know is stale) so a `1` would have been distinguishable fr
 | `9` | interpreter / runner missing | NOT a DAPI verdict; escalate, do not sign in |
 | **`50`** | **DAPI precondition FAILED — THE PULL WAS NOT ATTEMPTED** | Step 2 — **but Step 2a FIRST** |
 | pull's own non-zero | pull ran and failed; nothing sent | diagnose the pull, not the Terminal |
-| `1` / `20` / `30` / `40` | publisher failures (`:pub_failed`) | pull succeeded; this is the publish leg |
+| **`1`** | ⛔ **TWO-VALUED — SEE BELOW. DO NOT READ IT OFF THIS ROW.** | **open the log first** |
+| `20` / `30` / `40` | publisher failures (`:pub_failed`) | pull succeeded; this is the publish leg |
+
+⛔ **`1` IS TWO-VALUED AT THE `LastTaskResult` LAYER AND A TABLE CANNOT DISAMBIGUATE IT.** The `.cmd`
+sets `RC=1` on **two disjoint paths**: `:pull`, where `RC` is the runner's own rc, and `:pub_failed`,
+where `RC=RC_PUB` and `1` means a publisher gate refused. **A reader who takes `1` as "publisher"
+diagnoses the wrong leg.**
+
+**DISAMBIGUATE ON THE LOG, NEVER ON THE CODE** — the codes are disjoint *within* a leg, not *across*
+legs:
+
+```
+RESULT: PULL FAILED rc=1 -- nothing sent, publish NOT attempted   -> THE PULL died
+RESULT: PULL OK but PUBLISH rc=1                                  -> the PUBLISHER refused
+```
+
+Every other code in this contract genuinely is disjoint; **`1` is the single exception, and it is the
+one an operator meets most often.**
+
+> **RE-DERIVED 2026-09-04 from the corrected contract at
+> `integrations/bloomberg/pipeline/README.md` (`@d776b21d98`), which is the SOURCE and this table is
+> its MIRROR.** The prior row read "`1` / `20` / `30` / `40` | publisher failures | pull succeeded"
+> — and on 2026-09-04 I followed it and reported a publisher failure when a duplicated spreadsheet
+> row had killed the PULL. **The log inverted my own instrument within one read.**
+> ⭐ **`1.0.0_SA_CTO~Z` fixed the CONTRACT rather than this mirror, and that ordering is the lesson:
+> patching this table alone would have re-armed the identical defect for the next reader who went to
+> the source.** A mirror is re-derived from a corrected source; it is never corrected in place.
 
 ⚠ **`50` MEANS NO PARTIAL DATA** — the pull was never attempted; no half-written PKL, no half-published artifact.
 Do not hunt for corruption; the fault is entirely upstream of the pull.
@@ -139,8 +165,26 @@ landed at `7284baa5c7`, 08:36:33 ET, **96 minutes after** the 07:00:01 fire. Abs
   Bloomberg credential — it is this seat's MS ENTRA login.** This seat holds two authentication systems whose
   names do not distinguish them; resolving it wrongly buys a failed Bloomberg login, i.e. the lockout risk.
   **The NAME is citable; the VALUE never** enters chat, a log, Teams, a commit, or any artifact.
-- **Re-pull:** production runner `workflows/bloomberg/tplus1/tools/run_daily_pull.py` under the `cma` env —
-  **not** the OneDrive `.bat` an operator would reach for. **NEVER send/publish on a tripwire FAIL.**
+- **Re-pull:** production runner **`integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py`**
+  under the `cma` env — **not** the OneDrive `.bat` an operator would reach for.
+  **NEVER send/publish on a tripwire FAIL.**
+  > ⛔ **PATH CORRECTED 2026-09-04. This line previously read
+  > `workflows/bloomberg/tplus1/tools/run_daily_pull.py`, MEASURED ABSENT** — consolidation moved the
+  > tree into `integrations/` on 2026-08-12 (Andrew-direct) and this order kept the old address.
+  > **An operator following it literally in a dark-morning recovery gets a file-not-found on the
+  > recovery step itself.** The corrected path is the one `scheduled_daily_pull.cmd` invokes, and it
+  > is what I ran on 2026-09-04 (`PULL EXIT 0`, tripwire 18/18).
+- **Publish:** **`integrations/bloomberg/pipeline/publish_to_portal.py` under `PY_AWS`, no args** —
+  the exact form the `.cmd`'s send leg uses, so a recovery *completes* the failed scheduled run
+  rather than opening a second path. It re-runs the as-of-scoped tripwire itself and refuses a
+  BACKWARD publish (rc 40).
+  > ⛔ **DO NOT FOLLOW `run_daily_pull.py`'s OWN CLOSING HINT.** It prints
+  > `opal_data_refresh_upload(date=..., confirm=True)` — the **retired m365-gateway channel**. The
+  > `.cmd`'s send-leg comment records why it was abandoned: that gateway "returns transport dropped,
+  > response lost on calls that ALREADY SUCCEEDED server-side", and "a scheduled retry against that
+  > shape double-fires the pipeline." **The runner's last instruction points at a channel its own
+  > wrapper retired for double-firing.** Found 2026-09-04, the same day the fabric had a real
+  > double-fire from a different cause.
 - **If the Terminal was signed in fresh, run the `.ST` CIX content check** — CIX resolution is **login-scoped**,
   so a pull right after a sign-in is exactly the case that can succeed and still carry wrong custom-index data
   (08-03 incident). Row count must advance by **exactly** the trading days elapsed; inception 2023-12-29 @ 100.0;
@@ -166,9 +210,20 @@ Mine would be the **second attempt in the window** — exactly what `bbg_fallbac
 that *"Bloomberg locks on repeats. Human must clear."* **Fire-once is per-WINDOW, not per-ACTOR** — reading it as
 per-actor is how two "first" attempts become one lockout.
 
-⚠ **DO NOT DISCRIMINATE ON THE `outcome` LABEL.** The `SUBMITTED-UNATTENDED-FALLBACK` / `SUBMITTED-SUPERVISED`
-split lives in an unintegrated lane commit; until it lands **every row reads `SUBMITTED-SUPERVISED-MSTRZ`,
-including genuinely unattended ones.** **Discriminate on the TIMESTAMP and the 6 h COUNT.**
+⚠ **DO NOT DISCRIMINATE ON THE `outcome` LABEL — the rule stands, its stated REASON has expired.**
+**Discriminate on the TIMESTAMP and the 6 h COUNT.**
+> **CAVEAT CORRECTED 2026-09-04, MEASURED ON THE LIVE LEDGER.** This paragraph said the
+> `SUBMITTED-UNATTENDED-FALLBACK` / `SUBMITTED-SUPERVISED` split "lives in an unintegrated lane
+> commit; until it lands **every** row reads `SUBMITTED-SUPERVISED-MSTRZ`." **That commit HAS
+> landed.** Of 9 entries read 2026-09-04: **5 read `SUBMITTED-UNATTENDED-FALLBACK`**, 3
+> `SUBMITTED-SUPERVISED-MSTRZ`, 1 `SUBMITTED-SUPERVISED`.
+> ⭐ **The instruction was right anyway, and that is why the stale reason cost nothing here:** I
+> discriminated on the timestamp on 2026-09-04 (9 entries, **0 within 6 h**, most recent 24.8 h) and
+> would have reached the same verdict under either label regime. **A rule that survives the death of
+> its own justification is the safe kind; one that depends on it is not.** Left in place with the
+> reason corrected rather than deleted, because the label is still not the discriminator — it now
+> encodes something real, but it encodes *how* an attempt was made, never *when*, and the fire-once
+> window is a **time** window.
 
 **⚡ MEASURED LIVE 2026-08-20 1537Z — THIS IS NOT HYPOTHETICAL.** At the drill's Step-1 I read the ledger and
 found **1 attempt at `2026-08-20T11:00:41Z`, 4.55 h old — INSIDE the window** (today's 07:00 unattended self-heal,

@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+"""opal-ipblock -- NFRA_OPSEC202609 cell OP-s-19 (FWD-17, C-11).
+
+THE AUDITED UNBLOCK PATH. It lifts a block by FLIPPING THE ROW, and it never
+touches a WAF IP set. The address reaches us again within minutes because the
+reconciler (OP-s-15) observes the row change on the table's stream and enacts
+it -- not because this tool wrote to a set.
+
+WHY THAT SEPARATION IS THE WHOLE POINT (C-2). The table is TRUTH and the IP
+sets are its PROJECTION. A tool that wrote an address straight into a set would
+make the table a lie, and the next full reconcile would silently undo the
+unblock -- the operator would see success, the address would still be blocked,
+and nothing would report an error. So this tool is DENIED wafv2:UpdateIPSet at
+the IAM layer as well as declining to call it: see the CliMayNeverWriteAnIpSet
+statement in infra/aws/terraform/opsec/iam_reconciler_and_cli.tf. The property
+is enforced, not merely intended.
+
+    opal-ipblock allow <address> --reason "<why>"
+    opal-ipblock status <address>
+
+--reason IS MANDATORY and is recorded. An unblock with no recorded reason is an
+untraceable change to who can reach the estate.
+
+AUDIT LANDS IN TWO PLACES, ON PURPOSE:
+  THE ROW      -- unblocked_by / unblocked_at / notes. Readable by anything that
+                  can read the table, including a future portal Admin page.
+  A REPO LOG   -- org/opal-ipblock-audit.log, append-only, the estate's existing
+                  convention for audited CLI actions. The row holds only the
+                  LATEST unblock, so an address blocked and lifted repeatedly
+                  would lose its earlier entries; the log keeps the history.
+It writes NO S3 object. That was settled against the schema rather than assumed:
+S19-AC3 needs actor, address, reason and timestamp, and all four fit in the row,
+so an s3:PutObject grant would be permission the tool does not need.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime
+import json
+import os
+import subprocess
+import sys
+import time
+
+try:
+    import boto3
+except ImportError:  # pragma: no cover
+    sys.stderr.write("ERROR: boto3 is not importable in this Python.\n")
+    sys.exit(2)
+
+TABLE_NAME = os.environ.get("ADDRESS_TABLE", "opal-suspicious-addresses")
+REGION = "us-east-1"
+CLI_ROLE_ARN = os.environ.get(
+    "IPBLOCK_CLI_ROLE_ARN", "arn:aws:iam::313476888478:role/opal-ipblock-cli"
+)
+AUDIT_LOG = os.environ.get("IPBLOCK_AUDIT_LOG", "org/opal-ipblock-audit.log")
+
+
+def _now_iso() -> str:
+    return datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def normalize(address: str) -> str:
+    """Apply the table's documented normalization rule.
+
+    dynamodb.tf: IPv4 -> /32, IPv6 -> /64, and the partition key IS the
+    normalized CIDR. An already-suffixed address is passed through unchanged so
+    an operator can paste exactly what an alarm showed.
+
+    WARNING, AND IT IS A REAL TWO-CARRIERS RISK RATHER THAN A STYLE NOTE: the
+    CANONICAL implementation of this rule belongs to the sentinel (OP-s-14) --
+    dynamodb.tf says so in terms. This is a SECOND implementation of the same
+    rule, and if the two ever disagree this tool silently fails to find the row
+    it means to lift: the operator sees "no such address", the block stays up,
+    and nothing errors. If OP-s-14 exposes a shared normalizer, this function
+    should be replaced by a call to it rather than kept in step by hand.
+    """
+    address = address.strip()
+    if "/" in address:
+        return address
+    return address + ("/64" if ":" in address else "/32")
+
+
+def _table():
+    """Assume the scoped CLI role, then bind the table.
+
+    Assuming rather than using ambient operator credentials is what makes the
+    role's explicit Deny on wafv2:UpdateIPSet actually bind. Running as a broadly
+    privileged principal would leave C-11 resting on this file's good behaviour
+    alone.
+    """
+    sts = boto3.client("sts", region_name=REGION)
+    try:
+        creds = sts.assume_role(
+            RoleArn=CLI_ROLE_ARN,
+            RoleSessionName="opal-ipblock-%d" % int(time.time()),
+        )["Credentials"]
+    except Exception as exc:  # noqa: BLE001
+        sys.stderr.write(
+            "ERROR: could not assume %s: %s\n"
+            "       The role is declared in infra/aws/terraform/opsec/"
+            "iam_reconciler_and_cli.tf and must be APPLIED before this tool works.\n"
+            % (CLI_ROLE_ARN, exc)
+        )
+        sys.exit(3)
+    session = boto3.Session(
+        aws_access_key_id=creds["AccessKeyId"],
+        aws_secret_access_key=creds["SecretAccessKey"],
+        aws_session_token=creds["SessionToken"],
+        region_name=REGION,
+    )
+    return session.resource("dynamodb").Table(TABLE_NAME)
+
+
+def _actor() -> str:
+    """Who is doing this. Recorded, never inferred from a default."""
+    who = os.environ.get("OPAL_AGENT_SERIAL") or os.environ.get("USERNAME") or os.environ.get("USER")
+    return who or "UNKNOWN"
+
+
+def _repo_root() -> str:
+    try:
+        out = subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"], stderr=subprocess.DEVNULL
+        )
+        return out.decode("utf-8", "replace").strip()
+    except Exception:  # noqa: BLE001
+        return os.getcwd()
+
+
+def _append_audit(record: dict) -> str:
+    """Append-only, one JSON object per line, never rewritten."""
+    path = os.path.join(_repo_root(), AUDIT_LOG)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    line = json.dumps(record, sort_keys=True) + "\n"
+    with open(path, "a", encoding="ascii", newline="\n") as handle:
+        handle.write(line)
+    return path
+
+
+def cmd_status(args: argparse.Namespace) -> int:
+    address = normalize(args.address)
+    item = _table().get_item(Key={"address": address}).get("Item")
+    if not item:
+        print("ABSENT: %s is not in %s" % (address, TABLE_NAME))
+        return 1
+    expires_at = item.get("expires_at")
+    print("address    : %s" % address)
+    print("status     : %s" % item.get("status"))
+    print("blocked_at : %s" % item.get("blocked_at"))
+    print("blocked_by : %s" % item.get("blocked_by"))
+    print("expires_at : %s" % expires_at)
+    if expires_at is not None:
+        try:
+            remaining = int(expires_at) - int(time.time())
+            # Printed because TTL deletion lags by up to ~48h: a row can read
+            # BLOCKED long after its block has actually lapsed, and the
+            # reconciler treats a lapsed row as NOT blocking.
+            print("lapsed     : %s" % ("YES -- no longer blocking" if remaining <= 0 else "no"))
+        except (TypeError, ValueError):
+            print("lapsed     : UNKNOWN (expires_at is not an integer)")
+    print("unblocked_by: %s" % item.get("unblocked_by"))
+    print("unblocked_at: %s" % item.get("unblocked_at"))
+    return 0
+
+
+def cmd_allow(args: argparse.Namespace) -> int:
+    reason = args.reason.strip()
+    if not reason:
+        sys.stderr.write("ERROR: --reason must not be empty.\n")
+        return 2
+
+    address = normalize(args.address)
+    actor = _actor()
+    stamp = _now_iso()
+    table = _table()
+
+    before = table.get_item(Key={"address": address}).get("Item")
+    if not before:
+        sys.stderr.write(
+            "ERROR: %s is not in %s -- nothing to lift.\n"
+            "       If the address was expected here, check the normalization: the\n"
+            "       partition key is the NORMALIZED CIDR (v4 -> /32, v6 -> /64).\n"
+            % (address, TABLE_NAME)
+        )
+        return 1
+
+    print("BEFORE: status=%s blocked_by=%s" % (before.get("status"), before.get("blocked_by")))
+
+    # THE ROW IS THE ONLY THING WRITTEN. No IP set is touched here or anywhere in
+    # this tool -- that is C-11, and S19-AC1 proves it by showing the set is
+    # UNCHANGED at the instant this returns and changes only after the reconciler
+    # acts. That gap IS the evidence, so do not "helpfully" add a set write.
+    updated = table.update_item(
+        Key={"address": address},
+        UpdateExpression=(
+            "SET #s = :allow, unblocked_by = :who, unblocked_at = :when, notes = :why"
+        ),
+        ExpressionAttributeNames={"#s": "status"},
+        ExpressionAttributeValues={
+            ":allow": "ALLOW",
+            ":who": actor,
+            ":when": stamp,
+            ":why": reason,
+        },
+        ReturnValues="ALL_NEW",
+    ).get("Attributes", {})
+
+    record = {
+        "ts": stamp,
+        "action": "allow",
+        "address": address,
+        "actor": actor,
+        "reason": reason,
+        "status_before": str(before.get("status")),
+        "status_after": str(updated.get("status")),
+        "table": TABLE_NAME,
+    }
+    path = _append_audit(record)
+
+    print("AFTER : status=%s unblocked_by=%s unblocked_at=%s" % (
+        updated.get("status"), updated.get("unblocked_by"), updated.get("unblocked_at")))
+    print("AUDIT : %s" % path)
+    print(json.dumps(record, sort_keys=True))
+    print(
+        "OK: the ROW is flipped. The IP set is UNCHANGED right now by design --\n"
+        "    the reconciler enacts it from the table's stream, typically within\n"
+        "    a minute. Confirm with: aws wafv2 get-ip-set ..."
+    )
+    return 0
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="opal-ipblock",
+        description="NFRA_OPSEC202609 C-11: the audited unblock path. Edits the ROW, never the IP set.",
+        # THE EPILOG IS THE POINT-OF-ACTION WARNING, per the 2026-09-04 ruling on
+        # row NFRA_OPSEC202609-Z-S125: the real hazard is not the PERMISSION, it is
+        # the SILENCE. An administrator CAN edit the set by hand, nothing stops
+        # them, and nothing tells them it was undone. Naming it where they act is
+        # the sanctioned guard -- a DETECTOR is not, and would be a monitor under
+        # the standing moratorium.
+        epilog=(
+            'IF YOU WERE ABOUT TO EDIT A WAF IP SET BY HAND: do not. Account\n'
+            'administration lets you, and it will appear to work. The DynamoDB table\n'
+            'opal-suspicious-addresses is the SOURCE OF TRUTH and the four IP sets are a\n'
+            'PROJECTION of it, so the reconciler recomputes them from the table -- within\n'
+            'about a minute off the stream, and again on a daily pass. Your hand edit is\n'
+            'not in that computation, so it is ERASED with no error, no alert and no\n'
+            'notice. The reverse too: un-block by hand and the reconciler re-blocks it.\n'
+            'That is the design working (C-2), and the erasure is invisible to the person\n'
+            'it happens to -- which is why this text is here. The act IS recorded in\n'
+            'CloudTrail; it is simply not prevented and not alarmed.\n'
+            '\n'
+            'USE:  opal-ipblock allow <address> --reason "<why>"\n'
+            'The IP set is UNCHANGED when this returns. That is expected, and it is the\n'
+            'proof this tool is not a second writer. The reconciler enacts it in ~1 min.\n'
+            '\n'
+            'Runbook: org/missions/D12/NFRA/NFRA_OPSEC202609/deliverables/\n'
+            '         0.7.0_AE_CloudOps~T/RUNBOOK_blocked_addresses.md\n'
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_allow = sub.add_parser("allow", help="Lift a block by flipping the row to ALLOW.")
+    p_allow.add_argument("address", help="Address or normalized CIDR (v4 -> /32, v6 -> /64).")
+    # MANDATORY. argparse enforces it, so an unblock cannot be recorded without
+    # a stated reason even by a hurried operator.
+    p_allow.add_argument("--reason", required=True, help="Why this block is being lifted. RECORDED.")
+    p_allow.set_defaults(func=cmd_allow)
+
+    p_status = sub.add_parser("status", help="Read one address's row. Read-only.")
+    p_status.add_argument("address")
+    p_status.set_defaults(func=cmd_status)
+
+    args = parser.parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

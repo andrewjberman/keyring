@@ -1,0 +1,131 @@
+# NFRA_OPSEC202609 -- L6 EVIDENCE RULES established 2026-09-04, and why they are HERE rather than in an inbox
+
+**Issued by `2.0.0_SA_COO~Z`.** These five rules were ruled during the 00:00-06:3xZ window and **each of them existed only inside a broker message until this file.** That is `Z-S147`'s class -- **a real finding with no durable carrier** -- and three seats hit it tonight on three different subjects before I noticed I had done it four times myself while ruling on theirs.
+
+⛔ **A RULING THAT LIVES ONLY IN AN INBOX BINDS NOBODY WHO WAS NOT ADDRESSED, AND NOBODY AT ALL IN OCTOBER.**
+
+---
+
+## RULE 1 -- AN ACCEPTED PROOF INSTANCE MAY BE AMENDED TO CARRY A BETTER INSTRUMENT FOR THE SAME CLAIM
+
+**That is NOT reopening the acceptance.** The distinction that governs it:
+
+| act | permitted | why |
+|---|---|---|
+| **amend the EVIDENCE, verdict unchanged** | **yes, with the issuer's word -- and positively WANTED** | the record's job is to be readable months later |
+| **change a VERDICT, or amend evidence such that a verdict would change** | **no -- reopens acceptance, different act, different bar** | acceptance is a judgment, not a formatting state |
+
+**HOW: substitute the better instrument as primary and KEEP the original reading beside it, labelled as filed-at-acceptance with its vintage.** ⛔ **Never delete the original.** ⭐ **A record showing what was filed AND what replaced it lets a reader audit the amendment; one showing only the improved version asks to be trusted.**
+
+**Origin:** `0.7.0_AE_CloudOps~S` asked rather than assumed, having found a writer-scoped instrument better than the one it had filed. **I had accepted the instrument and never said it could enter the record** -- so it sat in two inboxes.
+
+### RULE 1a -- THE AMENDMENT NOTE OPENS WITH A FIXED TOKEN
+
+⛔ **ADDED 2026-09-04 06:4xZ on `3.0.0_SA_CVO~Z`'s composition, and it costs nothing.** That seat identified the operational consequence of Rule 1: **at L9 it meets a state change carried in PROSE rather than in a field, and must tell *"evidence improved, verdict unchanged"* from *"verdict changed"* by reading.** ⭐ **It also noticed this is the SAME reading problem as a PARTIALLY-DISARMED ROW** (`Z-S84`: a resolver reads *"disarmed as a blocker only"* as *"disarmed"*, because the schema has no field for what a row disarms) -- **one problem, two artifacts.**
+
+**A schema change mid-round is barred and that seat rightly declined to propose one. But the estate has already solved this exact problem once, with a CONVENTION: a disarm record is recognisable because its `one_line` OPENS `DISARM RECORD for <id>`.** ⭐ **A fixed leading token IS a structured marker; it needs no schema field and no gate.**
+
+**SO: an amendment to an accepted instance OPENS its note with one of exactly two tokens.**
+- **`EVIDENCE AMENDED, VERDICT UNCHANGED:`** -- Rule 1's permitted act.
+- **`VERDICT REOPENED:`** -- which requires the issuer's word as a separate act and should be rare.
+
+⛔ **Anything else in that position is malformed and a certifier should treat it as unread rather than guess.** **Retro-fit is NOT required** -- the denominator is 23 instances and 129 limbs, which `3.0.0_SA_CVO~Z` measured as a tractable read, **and Rule 1's mandate to keep the original beside the improvement is what makes the existing ones auditable without the token.**
+
+## RULE 2 -- PREFER A WRITER-SCOPED INSTRUMENT OVER A GLOBAL ONE
+
+⛔ **A table-wide count CANNOT support a face-scoped claim.** *"The table scans to Count 0, so this face wrote nothing"* is true at an instant about a **shared object** and offered as evidence about **one actor's behaviour.** It goes stale the moment any other writer acts, **and a grader re-running it reads the divergence as a CONTRADICTION rather than as elapsed time.**
+
+- **Where a writer-scoped form exists, use it** -- `blocked_by=auto:<writer>`, a `LockToken`, a changed-resource list. **No other lane can move it.**
+- **Where none exists, the global reading STAYS but carries its VINTAGE and its shared-object status in terms.**
+
+**Measured: 23 proof instances, 129 limbs, 3 STALE-BUT-SOUND, 0 ACTUALLY-UNSUPPORTED.**
+
+## RULE 3 -- FORWARD POINTERS: ACCEPTANCE IS NOT THE END OF A PROOF'S EXPOSURE TO THE WORLD
+
+**A proof accepted at T can be contradicted by an AUTHORISED act at T+1, and nothing links them** -- the later face does not know which earlier proofs cited the state it changed.
+
+⛔ **When a face changes whether a resource EXISTS or what state it is in, add a forward pointer to any accepted proof that cited it.**
+
+⭐ **The sting is the failure MODE: a grader re-running `S9-AC4` does not get a different count, it gets `ResourceNotFoundException`. A WRONG NUMBER INVITES A QUESTION; AN ERROR INVITES A CONCLUSION** -- that the face lied.
+
+## RULE 4 -- THE STALE-PROCEDURE TEST
+
+⭐ **A stale STATE misleads a grader. A stale PROCEDURE RECRUITS THE NEXT ACTOR INTO A FORBIDDEN PATH**, and it reads as authoritative precisely because the proof around it was accepted.
+
+**Specimen:** an accepted instance carried, in durable form, *"the order has to be `state rm`, then `delete-table`…"* -- **a recommendation reversed before execution, and the successor criterion `S9D-AC3` FAILS on evidence of exactly those commands.**
+
+⛔ **So when amending for supersession, do not only ask "did this object change". Ask "DOES THIS LIMB TELL ANYONE TO DO ANYTHING, and was that instruction overtaken."** ⭐ **Quoted guidance inside evidence is not evidence -- it is instruction wearing evidence's clothes, and it ages faster than the measurement beside it.**
+
+**Origin:** `0.7.0_AE_CloudOps~S`, found while re-reading its own quoted text to add a pointer for an unrelated reason. **Neither the finding that prompted the amendment nor my ruling on it named this.**
+
+## RULE 5 -- NO EXERCISE MAY WRITE A PARTITION KEY A LIVE SYSTEM ALSO WRITES
+
+**Unless it (a) captures the pre-existing item first and restores it, or (b) declares in the face that it will destroy observations.** ⛔ **`put_item` on a shared key is barred outright in favour of a conditional or attribute-scoped update -- THE SILENCE IS THE HAZARD, NOT THE OVERWRITE.**
+
+**Origin: `S19-AC2` mandates an exercise that destroys the observation of itself.** It requires a real edge refusal; the only address this device can originate from is its own egress; the sentinel necessarily observes that address; **and the address IS the partition key.** ⭐ **Two lanes destroyed that row within minutes, from opposite directions, and both disclosed immediately -- a DESIGN defect, not a discipline failure.** Also carried at `TO-OP-S-15-19` `S19-AC2`.
+
+---
+
+## RULE 6 -- A RECORD DOES NOT LEARN THAT THE WORLD HAS MOVED. RUN THE CENSUS.
+
+⛔ **FOUR ARTIFACTS DRIFTED THIS WAY IN ONE NIGHT, ON FOUR DIFFERENT SURFACES, AND EVERY GATE PASSED ON ALL OF THEM:**
+
+| artifact | drift | found by |
+|---|---|---|
+| **`OP-s-28`** | cell read `OPEN` while its face read `complete` | cell-vs-face census |
+| **`S9-AC4`** | accepted proof cited a table a LATER authorised act destroyed | a commissioned sweep |
+| **`Z-S41`** | hazard stayed ARMED **nineteen hours** after its condition cleared | reading another seat's status line |
+| **`TO-OP-S-14-21`** | face read `staged` while both its cells read complete | **re-running my own claim** |
+
+⭐ **THE MECHANISM IS SYMMETRICAL AND THAT IS WHY IT PERSISTS: a completed face does not flip its own cell, and an accepted cell does not flip its own face. WHICHEVER HALF THE ISSUER TOUCHES, THE OTHER HALF STAYS WRONG.** Same for a disarm condition satisfied by **someone else's commit on a different surface**, and for a proof whose cited state a later face changed. ⛔ **In every case the record stays WELL-FORMED and CONFIDENTLY WRONG. Nothing errors. Only a census finds it.**
+
+**SO: RUN THE CELL-VS-FACE RECONCILIATION AT EVERY ACCEPTANCE, not only when something looks wrong.** It is one script over `<status>` and `<owned_cells>` against the decomposition's column 5, **it costs seconds, and it has found a real defect on three of the four times it has been run.**
+
+⛔ **AND THE RULE BINDS THE ISSUER'S OWN STATUS CLAIMS. I told Andrew THREE TIMES that "zero cells are out of step with their face."** It was true when measured and **faces moved afterwards**; re-running it rather than repeating it is what surfaced the fourth instance -- **which was mine.** ⭐ **A claim about a moving population has a vintage, and repeating it is not the same act as re-measuring it.**
+
+## STANDING PERMISSION (SOVEREIGN) -- FIXTURE-IDENTITY TOKEN MINTING, BOUNDED
+
+**Andrew-direct 2026-09-04 ~13:00Z, verbatim: "Approved for all of these"**, answering a five-card frame at the `1.0.0_SA_CTO~Z` terminal. Record `c1c79c3729`. **Card 3's REC as written -- and the rec IS the scope, neither wider nor narrower:**
+
+> **(a) YES, BOUNDED** -- fixture identity only, short TTL, read-only, mint DISCLOSED in the proof
+
+**AN AGENT MAY MINT A SHORT-LIVED TOKEN FOR THE TEST-FIXTURE IDENTITY.** ⛔ **FOUR BOUNDS, ALL OF THEM PART OF THE PERMISSION RATHER THAN COMMENTARY ON IT:**
+1. **FIXTURE IDENTITY ONLY** -- ⛔ **never a real partner human's session.**
+2. **SHORT TTL.**
+3. **READ-ONLY probes.**
+4. ⭐ **THE MINT IS DISCLOSED IN THE PROOF, "rather than presented as a password login."** **A minted token described as a login is a misrepresentation of how the evidence was obtained**, and the disclosure is what keeps a probe distinguishable from an authentication test.
+
+**Originated at this seat (msg 19983) and returned TIGHTENED**, which is the right direction for a permission to travel. **It applies to any face taking live probes against an authenticated surface** -- `TO-OP-S-13`, `TO-OP-S-9-11`, `TO-OP-S-12` among them. ⛔ **It is a permission, not an instruction: no face is obliged to mint anything, and the fixture route is preferred over a real session precisely because it is bounded.**
+
+## ⛔ CARRIED, NOT YET EXECUTABLE -- OBJECT LOCK ON THE EVIDENCE STORE (CALL 5)
+
+**Same ruling, card 5: Object Lock (governance mode) on `cases/` in `opal-security-evidence` -- ON.** ⛔ **The framing said *"that bucket is a round-2 build, so this is an INPUT to the cell that creates it, not a change to anything live."* **MEASURED 2026-09-04 13:1xZ, THAT CLAUSE DOES NOT HOLD:**
+
+| read | result |
+|---|---|
+| `head-bucket` | **EXISTS, live** |
+| `get-object-lock-configuration` | ⛔ **`ObjectLockConfigurationNotFoundError` -- NOT enabled at creation** |
+| `get-bucket-versioning` | ✅ **`Enabled`** -- the one precondition already satisfied |
+| `list-objects-v2 --prefix cases/` | ⛔ **438 OBJECTS** |
+
+⛔ **SO IT IS A CHANGE TO A LIVE EVIDENCE STORE, NOT AN INPUT TO AN UNBUILT CELL.** **S3 Object Lock is normally a BUCKET-CREATION flag.** ⭐ **This seat deliberately did NOT run `put-object-lock-configuration` to find out** -- that is a live change to a bucket holding 438 evidence records, it is a cell's act rather than the issuer's, **and a failed attempt on an evidence store is a poor way to learn an API constraint.** **NOT MEASURED: whether enabling it post-creation succeeds here.** ⛔ **The intent is sound and unquestioned; the executability is open, and the card Andrew approved did not mention a possible bucket rebuild and migration of 438 objects.** **Routed to `1.0.0_SA_CTO~Z`; no cell moves until it is answered.**
+
+## RULE 7 -- STATE THE COMPONENT, NOT THE TOTAL. AND A STATUS FIELD MUST NAME THE **BINDING** CONSTRAINT.
+
+⛔ **DECIDED 2026-09-04 14:0xZ. `3.0.0_SA_CVO~Z` found that my own trap clause -- the one I wrote into 23 faces to stop a reader "confirming" the corrected gate count -- IS ITSELF VINTAGE-BOUND**: it says *"a fresh run prints 21 because C2 has moved 4 -> 5"*, **which pins C2 at 5 and goes stale the moment C2 moves again.** ⭐ **A warning about staleness, written in a form that goes stale.**
+
+**THE DURABLE FORM IS COMPONENT-NOT-TOTAL: state `C1 SENTINEL = 4 gates` and do not reason about the sum at all.** ⛔ **A TOTAL IS A SUM OF MOVING PARTS, so it can be right for the wrong reasons and wrong for none of them** -- which is exactly how 20 was reached three separate ways in one night, and how five stale faces hid behind a total that already read 20.
+
+**DISPOSITION, and both Tier-1 seats converged on it: BUNDLED with a face amendment YES; a STANDALONE pass over 23 faces NO.** ⭐ **The clause is ORIENTATION, not a criterion; re-touching 23 faces to improve a warning is a worse trade than leaving a bounded one in place** -- and the 5-face amendment that would have carried it has already landed at `caf4bb4af1`. **So it is recorded HERE, once, and the faces are left alone.**
+
+**THE SIBLING DEFECT, same day, same shape, and it WAS worth fixing because it misleads rather than merely ages: `OP-s-23`'s status field read *"HELD on OP-s-5 + OP-s-14 (WATCH)"* -- and BOTH have since cleared.** ⛔ **The binding constraint was never in that column: it is the cell's VALUE, "a MEASURED distribution over >= 1 month of WATCH rows."** ⭐ **A status field naming its CLEARED preconditions while its real blocker sits one column over MISLEADS PRECISELY WHEN IT IS READ CORRECTLY** -- a careful reader checks the two named conditions, finds both satisfied, and concludes the cell is startable. **It is not, and cannot be before 2026-10-04.** Found by `0.7.0_AE_CloudOps~S` running this seat's own cell-vs-face census over its own faces, and **routed rather than edited**.
+
+**RULE: a status field names the BINDING constraint. When a named condition clears, the field is rewritten -- not annotated -- because a cleared condition left in place reads as a live one.**
+
+## WHAT THESE SIX HAVE IN COMMON
+
+⭐ **Every one is an instance of the night's dominant class: A CHECK OR A RECORD SCOPED TO ONE PLANE CERTIFIES THE OTHER CLEAN.** Rules 2 and 3 are the record's version; Rule 5 is the key space's; Rule 4 is the instruction's; ⭐ **and RULE 6 is the version where the two planes are THE RECORD AND THE WORLD -- with the record being the one that structurally CANNOT notice.** **The sharpest instance was `Z-S136`, where a 231-principal IAM census was true and worthless because the second writer was the DECLARATION rather than an identity.**
+
+> ⛔ **This paragraph said "THESE SIX" over an enumeration of FOUR for one commit (`de53f1b11b`), because I added Rule 6 with an edit whose second half did not match its anchor and I committed on the first half's success.** ⭐ **It is the same shape as the two-segment shell call whose failing half printed a SyntaxError and whose succeeding half printed a commit hash -- the eye lands on the success.** **Fixed here, disclosed rather than quietly corrected, because a rules file that silently repairs its own contradictions teaches the opposite of what it says.**
+
+**And the meta-instance is this file: I ruled five times into inboxes while ruling that findings need durable carriers.**
