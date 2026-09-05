@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 70 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 74 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -1715,6 +1715,102 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "A cell that lands its criteria has changed the report the estate actually reads.",
     "world_is": "COMMITTED is not SERVED. The producer that ran every measured day is 11 days and at least two landed cells behind HEAD, and the deploy that would close that gap is a single S3 upload which NO CELL OF THE 17 OWNS.",
     "notes": "⛔ THIS IS THE SAME UNCOVERED-MEMBER SHAPE OS-s-10 FOUND, ONE HOP FURTHER OUT. There, the freshness question had an owner and the PUBLISHING step had none. Here, every code cell has an owner and the DEPLOY has none. In both cases the PRD costs the work without placing the step, and in both cases the project can pass every criterion it was cut for while the thing the estate actually reads is unchanged. That is the finding L8 must lead with, ahead of any per-cell result. ⭐ AND THE CORRECTION MATTERS EVEN THOUGH THE CONCLUSION SURVIVES: two of five cited tokens could not have failed, which is the detector-that-cannot-fire family this project has now met on both sides -- a detector that never fires (W2-S13) and a mutant that never falsifies (W2-S17). A conclusion resting five-fifths on cited evidence actually rests three-fifths, and nobody would have known. Re-derived here on a DIFFERENT instrument from W1-S25's (the aws shim's s3api and s3 cp, against that cell's boto3 reads) and on a different axis, so this is corroboration rather than repetition. NOT PROPOSING A MID-ROUND DEPLOY: OS-s-14 is being written into that same file as this row is filed, and 0.9.0_WK_NFRA_OUTSET~1 explicitly declined to propose one for the same reason. DISARM OWNER 1.0.0_SA_CTO -- placing a deploy step is a PRD-level act at round-N analysis, not an issuer's amendment."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S21",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T11:45:00Z",
+    "one_line": "THE SEAM SILENTLY DROPS 35,752 ROWS AND PUBLISHES A HEALTHY ARTIFACT: outset_seam.run_and_build extracts rows with a HAND-ENUMERATED KEY ROSTER -- doc.get('paths') or doc.get('rows') or doc.get('uncommitted') -- and comp-fedobs nests its data one level down at signals.coevolution.rows (row_count 35752). The artifact publishes with rc=0, answer_state=OK, correct vintage and correct denominators, and the report renders 'zero rows -- this is a RESULT, the instrument ran and found nothing'. Nothing is broken; the answer is simply empty when it should not be.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ROSTER, at source: org/modules/heatmap/outset_seam.py @7771968abd, inside run_and_build -- `rows=doc.get(\"paths\") or doc.get(\"rows\") or doc.get(\"uncommitted\") or []`. Three top-level keys, which are exactly the shapes the TWO registered producers emit (SEAM_PRODUCERS holds comp_heat_freshness_tools -> `paths`, and comp_heat_drift -> `uncommitted`/`paths`).",
+        "WHERE comp-fedobs ACTUALLY PUTS ITS ROWS, measured: `python .tools/comp-fedobs coevolution --json` (rc 0) returns top-level keys [computed_at, marker_head, source_table, cse_log_total, pinned_snapshot_id, vintage_note, schema_version_note, signals, provenance_instrument, marker_head_end, marker_pin]. The data is at signals.coevolution.rows -- a list of 35752 with its OWN row_count=35752 and columns [subject_a, subject_b, co_sessions, producers, sessions]. doc.get('paths'), doc.get('rows') and doc.get('uncommitted') are ALL None, so the extractor yields [].",
+        "THE END-TO-END DEMONSTRATION, run rather than reasoned: the REAL producer half (outset_seam.run_and_build, imported read-only) was pointed at a LIVE comp-fedobs run and published through publish_artifact (published=True, 1306 bytes); the REAL runner then read it as GROUP B and rendered `status=OK  row_count=0` with the line 'rows: 0' and '(zero rows -- this is a RESULT, the instrument ran and found nothing)'. The same rendered stratum carries a CORRECT vintage (produced 2026-09-05T11:46:51Z), CORRECT denominators (tool_scalars.marker_head=f437d60b3c65..., source_table=iceberg.globgrph.cse) and a CORRECT re-run recipe. Every honesty control in the seam passes. The only wrong number is the row count.",
+        "WHY NO CONSUMER-SIDE GUARD IS PROPOSED, tested rather than assumed: the obvious rule -- 'a non-trivial denominator beside zero rows is suspicious' -- would fire on comp-heat drift, whose legitimate answer on a clean tree IS zero rows beside a real denominator. A remedy that cannot tell a true zero from this one is not a remedy, and this module's own contract explicitly defends 'zero rows -- this is a RESULT'. So the fix belongs in the EXTRACTOR, not in the reader.",
+        "OUT OF GRANT, both candidate fixes: org/modules/heatmap/outset_seam.py is not in TO-OS-s-14's <paths> (which name .tools/comp-fedobs, the runner, .tools/tests/, this order's deliverables, the channel and the 06_current_state pair). And .tools/comp-fedobs, which IS granted, is the wrong place: its --json is documented as 'raw served JSON' and NFRA_MOTIF and NFRA_PROMOTE consume the same served artifact, so reshaping its output to suit one consumer would move a contract three readers share."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-14: comp-fedobs's co-evolution signal 'is served fresh daily and READ BY NOTHING -- it reaches the report through the seam', and O14-AC1 asks for 'a battery proving the signal reaches the report through the seam'.",
+    "world_is": "The signal reaches the report's PLUMBING -- correct vintage, correct denominators, a correct re-run recipe naming comp-fedobs, and a grain declaration -- and its ROWS do not survive the producer's row extraction. The consumer half this cell built is exercised and green; what arrives through it today is an empty answer wearing a healthy answer's clothes. This is the project's recurring false-clean family (NFRA_OUTSET-W2-S1, -W2-S13, -W2-S14, -W2-S17) reaching the seam itself: the failure's observable signature is indistinguishable from a clean measured zero, and this module is precisely the one that says a broken instrument and a clean zero must never be byte-identical.",
+    "notes": "hazard_standing ARMED and it is the most consequential row this worker has filed on this project: the moment a producer for comp-fedobs is registered, the estate report will publish a confident 'zero co-evolution pairs' drawn from a signal carrying 35,752 of them, and every control in the seam will say OK. NOT FIXED, and the two ways to fix it are both refused for stated reasons above rather than for lack of effort. THE REPAIR IS SMALL AND BELONGS TO WHOEVER HOLDS outset_seam.py: the roster is a DECLARED DOMAIN whose uncovered member is a nested payload, and a tool that publishes its own row_count beside its rows (as comp-fedobs does) can be honoured generically -- e.g. accept a nested {rows, row_count} block, or REFUSE to publish answer_state=OK when a tool's JSON contains a row_count the extractor could not reach. The second shape is the safer one: it converts a silent zero into a loud producer error, which is this seam's own doctrine."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S22",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T11:47:00Z",
+    "one_line": "WHY W2-S21 SURVIVED THREE BATTERIES AND FOUR ORDERS: every seam fixture in the estate is shaped like the two comp-heat producers, with rows at the TOP LEVEL. OS-s-10's, OS-s-9's, OS-s-11's and this cell's own arms all inject {\"rows\": [...]}, so the extractor's key roster is satisfied by construction in every test and its uncovered member cannot appear. The defect was only reachable by pushing a REAL non-comp-heat tool through the real producer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FIXTURES, all four: .tools/tests/test_os10_seam.py builds artifacts through the producer from comp-heat itself (whose JSON does carry top-level `paths`); .tools/tests/test_os9_cochange_source.py's _artifact() emits top-level \"rows\": ARTIFACT_ROWS; .tools/tests/test_os11_traceability.py's _seam_artifact() emits top-level \"rows\": [{\"x\": 1}]; and .tools/tests/test_os14_fedobs_reaches.py's own _doc() emits top-level \"rows\": rows. Four of four inject a shape the roster already covers.",
+        "CONSEQUENCE, measured: 16 of 16, 12 of 12, 12 of 12 and 11 of 11 arms pass across those four batteries with the extractor defect live and unaltered. No arm in the estate exercises a tool whose payload nests its rows, so no arm can see it.",
+        "WHAT DID SEE IT: pushing the REAL comp-fedobs through the REAL outset_seam.run_and_build and publish_artifact, then reading the result with the REAL runner -- rows=0 against a tool payload carrying row_count=35752. A fixture built from the implementation's own assumptions cannot score the assumption's blind spot.",
+        "This is the estate's own recorded discipline arriving late rather than a new idea: a fixture that cannot represent the failure cannot score it, and a check scoped to the members cannot see a defect in what the members SHARE. The four batteries verify four consumers; what all four share is the producer's row extractor, and none of them checks THAT on its own."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The seam's contract test .tools/tests/test_os10_seam.py is described in its own header as 'the contract between the two halves' and asserts the producer's and consumer's vocabularies cover each other EXACTLY, in both directions.",
+    "world_is": "It covers the ANSWER-STATE vocabulary in both directions and does not cover the ROW-EXTRACTION roster in either. The two halves agree perfectly about how to name a failure and have never been tested about where a tool's rows live, which is the one thing that has to work for any producer that is not comp-heat. The contract's coverage is real; its DENOMINATOR is narrower than the word 'contract' suggests.",
+    "notes": "hazard_standing ARMED because it is the reason W2-S21 will stay invisible to CI: whoever fixes the extractor will fix it against fixtures that already passed, and no existing arm will confirm the fix. THE CHEAP REMEDY, and it is a different remedy from W2-S21's -- naming that distinction is the point of filing this separately: add ONE fixture whose payload nests its rows (a `signals.<name>.rows` shape with its own row_count) to the seam contract test, so the roster's uncovered member has a permanent witness. NOT DONE HERE: .tools/tests/ IS in this order's <paths>, so this worker COULD have added such an arm -- and deliberately did not, because an arm asserting the CURRENT (defective) behaviour enshrines the defect and breaks when it is fixed, while an arm asserting the CORRECT behaviour would make O14-AC1 fail on a defect this cell does not own and cannot repair. The arm belongs with the extractor fix, in one commit, by whoever holds outset_seam.py."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S23",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T11:49:00Z",
+    "one_line": "CORRECTS THIS WORKER'S OWN W2-S19: the population of batteries that pin source anchors into estate_report_runner.py is THREE, not two. W2-S19 named test_os9_cochange_source.py and test_os11_traceability.py; test_os10_seam.py also anchors on the consumer's ABSENT branch, and this cell broke it. The count was wrong in the direction that matters -- an under-count of a population whose whole purpose is to be re-checked before an edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE MISSED MEMBER, at source: .tools/tests/test_os10_seam.py's ABSENT_ANCHOR pins the exact text of _outset_read's FileNotFoundError branch, including its full two-line fail(...) call. This cell added the `absent=True` field to that same call, and the battery refused with `AssertionError: mutation anchor count != 1: 0`.",
+        "THE PREDICTED MEMBER also fired, exactly as W2-S19 said it would: test_os9_cochange_source.py refused with `AssertionError: seam-branch anchor not unique` when this cell replaced the GROUP B seam branch with a declared source precedence. That row was written for this assignee and named this file; it was right about the mechanism and short by one member.",
+        "BOTH RE-POINTED IN-GRANT (.tools/tests/ is named in TO-OS-s-14's <paths>), with the mutants' INTENT unchanged in each case -- OS-s-9's still ignores a configured prefix to restore the host-git path, OS-s-10's still makes an ABSENT artifact read as a clean empty. Final state, all three green: test_os9_cochange_source.py 16/16, test_os10_seam.py 12/12, test_os11_traceability.py 12/12.",
+        "ONE OF THE THREE DID NOT BREAK: test_os11_traceability.py's anchors are the `\"reproduce\": reproduce,` line in _stratum and render_trace's absent-recipe return, neither of which this cell touched. So the population is three and the HIT RATE for any given edit is not one -- which is the argument for running all three rather than reasoning about which could be affected."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_OUTSET-W2-S19, this worker's own row, carried onto this order's face by the issuer: 'Two batteries now pin source anchors into it -- test_os9_cochange_source.py ... and test_os11_traceability.py'.",
+    "world_is": "Three do. The row enumerated the batteries THIS WORKER had written and silently omitted the one written by another order for the same file -- a census scoped to my own work, presented as a census of the file. The operational advice in W2-S19 (run the batteries first, treat an anchor assert as a re-point job) was correct and is what made the omission cheap: running everything under .tools/tests/ that touches the runner surfaced the third member immediately.",
+    "notes": "hazard_standing INERT: no operational hazard, and both broken anchors were re-pointed in the same turn. Append-only -- W2-S19 is not edited; this row is the correction carrier, the shape W1-S6 used for W1-S1 and W2-S13 used for W2-S7. THE GENERAL FORM, which is the part worth keeping: A CENSUS OF 'WHAT DEPENDS ON THIS FILE' WRITTEN FROM MEMORY IS A CENSUS OF WHAT YOU BUILT, and the members you did not build are exactly the ones you will not think to list. The cheap fix is mechanical rather than mnemonic: before editing a shared file, run every battery that names it, and let the anchors report the population."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S24",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T11:51:00Z",
+    "one_line": "CONFIRMS slot 3's finding on this worker's own surface and adds the consequence: comp-fedobs accepts NO --budget, so when the seam runs it the only bound is the producer's subprocess timeout -- a bound on the CALL, not a budget the tool honours. A cut run is therefore killed rather than self-reported, and cannot emit the Rule T terminal line ('scanned N of N') that the seam's own denominator extractor looks for.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on .tools/comp-fedobs @7771968abd: its usage block lists `comp-fedobs`, `comp-fedobs coevolution|coverage|direff|provenance`, `--json` and `--uri <s3://...>`. There is no --budget and no --cursor at the top level or on any subcommand. This confirms, on a different surface, what slot 3 recorded from the OS-s-13 composition contract.",
+        "THE CONSEQUENCE, at source: org/modules/heatmap/outset_seam.py's _denominators_of reads `(doc.get(\"budget\") or {}).get(\"terminal\")` and calls it out as 'Rule T's terminal line (which IS a denominator -- scanned N of N)'. comp-fedobs publishes no `budget` object, so a comp-fedobs artifact can never carry that denominator. Measured on the live artifact: denominators resolve to tool_scalars only (computed_at, marker_head, source_table, cse_log_total, pinned_snapshot_id).",
+        "AND THE BOUND THAT DOES EXIST IS EXTERNAL: run_and_build takes timeout_s and _default_runner applies it as a subprocess timeout, whose own docstring warns that `timeout=` does NOT bound a shell LAUNCHER. This cell invoked comp-fedobs under sys.executable rather than through a bash launcher for exactly that reason, and because .tools/comp-fedobs carries a `#!/usr/bin/env python3` shebang -- running it under `bash` reproduces this worker's NFRA_OUTSET-W2-S2 class in mirror form (measured here: `bash .tools/comp-fedobs --help` -> 'from: command not found', 'import: command not found', rc 141).",
+        "NOT CURRENTLY LOAD-BEARING, stated so the row is not read as more urgent than it is: comp-fedobs is a READ-MODEL over a served artifact (SS3: read-model, no recompute) and returned rc 0 in seconds on every invocation this cell made. The gap matters when a producer is registered and the served surface grows or the transport slows."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-14 BOUNDS: 'EVERY invocation is bounded ... Use a tool's own --budget/--limit; never name a whole-corpus sweep.'",
+    "world_is": "This tool has no --budget/--limit to use. Every invocation of it in this cell was bounded by `timeout 120` at the shell, which the order also mandates, and a timeout would have been RECORDED AS THE OUTPUT -- none occurred. So the order's bound was satisfiable, but only by the outer mechanism and not by the tool's own, and a run cut by the outer bound produces no partial-state report at all: it produces nothing.",
+    "notes": "hazard_standing ARMED as a Rule T coverage gap rather than a live failure; disarm_owner 2.0.0_SA_COO to route it to whoever owns comp-fedobs (NFRA_FEDOBS.P3, 0.5.0_AE_OpalETL per the tool's own header). NOT DONE, deliberately: .tools/comp-fedobs IS in this order's <paths>, so this worker could have added a --budget flag -- and did not, because Rule T wiring is another project's family (NFRA_COMPEFFICACY, and OS-s-1's own cell on this project), the tool is a read-model whose bound would have to reach the S3 transport to mean anything, and adding a flag that bounds nothing real would be a Rule T carrier that lies. Recorded rather than half-built."
   }
 ]
 ```
