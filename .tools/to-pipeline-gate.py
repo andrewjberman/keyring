@@ -1342,6 +1342,38 @@ def sweep(root):
     return 0
 
 
+_GATE_TAG = "to-pipeline-gate"
+
+def _dispatched_from_argv_or_env(argv):
+    """The paths to grade: ARGV first, the STAGED env var only when argv is empty.
+
+    THE ~32 KB ARGV CLIFF (0.0.0_AB_MSTR 94338): the pre-commit hook passed this list as UNQUOTED
+    ARGV, and Windows caps a command line near 32,767 chars -- so on a large merge python NEVER
+    STARTED (rc 126, "Argument list too long") and the gate that carries the merge exemptions was
+    exactly the gate that could not run. Bisected on this box: 300 paths / 29,098 B rc 0;
+    400 paths / 38,798 B rc 126. The estate's real paths put the cliff near 320 files. It fails
+    CLOSED, so nothing landed -- but the only escape left was blanket `--no-verify`, which discards
+    every other gate too.
+    MEASURED: the ENVIRONMENT removes the cliff rather than raising it (516,000 B -> rc 0 here).
+
+    ARGV REMAINS THE CONTRACT. A bare call with no env still grades NOTHING, because safe-merge.sh
+    relies on exactly that and says so. And the SOURCE is printed whenever it is not argv: an input
+    whose origin is invisible is how a vacuous pass reads as a clean one.
+    """
+    args = [a for a in argv if a and not a.startswith("--")]
+    if args:
+        return args, "argv"
+    env = os.environ.get("STAGED", "")
+    if env.strip():
+        paths = [p.strip() for p in env.replace("\r", "").split("\n") if p.strip()]
+        if paths:
+            print("[%s] input: %d path(s) from the STAGED environment variable "
+                  "(argv was empty; the ~32 KB argv cliff, 0.0.0_AB_MSTR 94338)"
+                  % (_GATE_TAG, len(paths)))
+            return paths, "env"
+    return [], "none"
+
+
 def _merge_in_progress(root):
     """True iff a merge is in progress -- MERGE_HEAD exists.
 
@@ -1408,7 +1440,8 @@ def main(argv):
         return 1
 
     # Consider only paths the caller dispatched AND that git says are newly added.
-    dispatched = [a.replace("\\", "/") for a in argv[1:]]
+    _disp, _src = _dispatched_from_argv_or_env(argv[1:])
+    dispatched = [a.replace("\\", "/") for a in _disp]
     targets = sorted(p for p in dispatched
                      if TO_PATH_RE.search(p) and p in added)
 
