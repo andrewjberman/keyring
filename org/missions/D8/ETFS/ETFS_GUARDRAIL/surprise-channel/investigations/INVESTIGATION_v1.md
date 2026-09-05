@@ -362,6 +362,53 @@ slots (`0.9.0_WK_ETFS_GUARDRAIL~1`, `~2`, `~3`).
     "spec_asserts": "TO-EG-s-2 s.\"What you build\": 'The deploy sequence exactly as in EG-s-1 with bd-pipeline / bd-49f-etf-ownership-daily'; BOUNDS: 'A path you need that it does not name is a BLOCKING row, never an override.'",
     "world_is": "record-terraform-deploy.sh's own internal contract writes BOTH the function's source-map row AND a per-pipeline-directory CHANGELOG.json entry in one commit; the TO's <paths> grants the source map file but not the CHANGELOG.json file (nor the bare bd-pipeline directory), so the script's own commit step is refused by the owned-paths gate exactly as designed.",
     "notes": "Resolved for THIS cell by unstaging the CHANGELOG.json half (git reset, non-destructive, left as an unstaged worktree difference this worker does not further touch) and committing ONLY infra/aws/lambda/ci/lambda-source-map.json (in-grant) with the same last_deployed_commit/last_deployed_at values the script computed. The deploy itself is independently verified without this commit (served CodeSha256 == built artifact_sha256 via bd49f_served_vs_built.py, 0-diff replan) -- the missing piece is purely the CHANGELOG.json audit-trail entry and the source map's own bookkeeping being split across two commits instead of one. Disarm: the COO widens EG-s-2's <paths> to include infra/aws/terraform/bd-pipeline/CHANGELOG.json (or the bare directory) for this or the next order touching this pipeline, or authorizes/commits that file itself."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S2",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-05T05:15:00Z",
+    "one_line": "The aws_instance.reporter user_data 'drift' that blocked TO-EG-s-7 (row W1-S7) and TO-EG-s-8 (row W1-S8) is a FALSE drift: the live instance's user_data (sha1 e47b615c4b7a16df31146d6834cb30ef1693c80f, 570 bytes, read by ec2 describe-instance-attribute) is byte-identical to the LF rendering of instance.tf's heredoc at HEAD (same sha1), and the plan's 'new' hash 434774b5a5facfeb4931f837e1b93edc13bbec35 is exactly the sha1 of the CRLF rendering of that same heredoc. A fresh `git worktree add` on this core.autocrlf=true box checked every .tf out with CRLF (414 of 414 under infra/aws/terraform in each worker worktree; the main tree's copy is LF; .gitattributes has eol=lf for *.sh/*.py/Dockerfile but no *.tf rule), and Terraform hashes what it reads. The July commit 1502fdd6f9 the rows cited concerns ami and associate_public_ip_address, not user_data. Consequence: EG-s-7's by-target apply was correct but its premise (a real deferred drift) was not; EG-s-8's targeted plan pulled the instance in through the REPORTER_INSTANCE_ID dependency and read the same false diff. Disarm at this seat: every .tf in both worker worktrees normalized to LF (eol-only; `git diff --ignore-cr-at-eol` empty), after which the instance shows no change in any plan. The durable fix -- a `*.tf text eol=lf` line in .gitattributes -- is outside this lane and is routed to 1.0.0_SA_CTO at drain-end.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ec2 describe-instance-attribute --instance-id i-070477bf35fc54409 --attribute userData (05:1xZ): base64 -> 570 bytes, sha1 e47b615c4b7a16df31146d6834cb30ef1693c80f; the remote state etfs-reports/tfstate records user_data e47b615c... and instance_state stopped",
+        "git show HEAD:infra/aws/terraform/etfs-reports/instance.tf @1c5603a696 -- 0 CR bytes; the <<-EOF heredoc rendered with LF hashes to e47b615c... and equals the live bytes exactly; the same rendering with CRLF hashes to 434774b5a5facfeb4931f837e1b93edc13bbec35, the plan's target value in rows W1-S7 and W1-S8",
+        "file C:/Users/AndrewBerman/Desktop/wk-ETFS_GUARDRAIL-1/infra/aws/terraform/etfs-reports/instance.tf before normalization: 'ASCII text, with CRLF line terminators'; git config core.autocrlf = true; .gitattributes @HEAD: eol=lf rules for *.sh, *.py, Dockerfile only",
+        "git log -p -3 -- infra/aws/terraform/etfs-reports/instance.tf: 1502fdd6f9 adds ami to ignore_changes; 04400d0a2e adds the lifecycle block for associate_public_ip_address; ed506fbd36 creates the file -- the user_data heredoc is unchanged since creation"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rows ETFS_GUARDRAIL-W1-S7 and W1-S8 (and the issuer's amendment @2baa6af162 built on them): 'a pre-existing aws_instance.reporter user_data drift ... deferred as benign by NFRA_TERRAFORM-P2 @1502fdd6f9' -- a real config-vs-live difference in the etfs-reports directory.",
+    "world_is": "Config at HEAD (LF) and the live instance carry the SAME user_data bytes. The difference the plan reported exists only in a CRLF checkout of the .tf file; it is a checkout artifact of fresh worktrees on this box, reproducible from the two hashes, and it has now been removed from both worker worktrees by normalizing the files to LF. No apply of the instance was ever attempted, so nothing live was touched by the false reading.",
+    "notes": "The issuer's earlier RESERVED classification (a user_data apply stops and starts the reporter instance) stands as a class; it was applied to a premise that turned out false. EG-s-8's and EG-s-9's faces carry the corrected text (this row cited); EG-s-7 is terminal and its record is corrected by the packet. Cut lesson: a worker's worktree is a DIFFERENT CHECKOUT, and a hash-sensitive plan run there can differ from the main tree's by line endings alone -- provision worktrees with the repo's eol discipline, or put it in .gitattributes."
+  },
+  {
+    "id": "ETFS_GUARDRAIL-S3",
+    "project": "ETFS_GUARDRAIL",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-05T05:25:00Z",
+    "one_line": "A seam no cell owned: EG-s-6's face says the gate runs 'when --gate is given (the orchestrator's _render_command will pass it once EG-s-8 lands)', but EG-s-8's face, EG-s-9's face, the decomposition and the PRD contain no instruction to add --gate to _render_command (0 hits for '--gate' across all four), and the orchestrator at HEAD runs 'python3 render_month_end.py --month {month} --pdf --s3-out {out}' with no flag. Left as cut, the scheduled 10-01 fire would render without the gate and FWD-2 could never reach EXERCISED. Disarm at this seat: TO-EG-s-8 (mid-order, its owner slot 1) amended to add the flag as deliverable item 5 with a new mechanical criterion S8-AC9 (GATE_FLAG_IN_RENDER_COMMAND=True); the deploy-order window (the orchestrator passing --gate before EG-s-6's renderer upload lands) is stated on the face and the issuer holds the rollback if EG-s-6 does not land before the fire.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ETFS/ETFS_GUARDRAIL/task-orders/ETFS_GUARDRAIL.TO-EG-s-6.the-pre-publish-gate-inside-the-renderer.md @1c5603a696 'What you build' item 1: 'when --gate is given (the orchestrator's _render_command will pass it once EG-s-8 lands; locally you pass it)' and item 2: 'The orchestrator's _render_command is NOT edited by this order'",
+        "grep -c -- '--gate' over TO-EG-s-8, TO-EG-s-9, decompositions/ETFS_GUARDRAIL_DECOMP.md, prd/ETFS_GUARDRAIL_PRD.md @1c5603a696: 0 hits in each",
+        "infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py:107-132 @1c5603a696 -- _render_command's inner shell ends 'python3 render_month_end.py --month {month} --pdf --s3-out {out}'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v0.1.1 cell EG-s-6 / PRD s.7.4: 'The orchestrator gates only the SEND, on the verdict the renderer returns' and EG-s-6's face: the gate is entered by the --gate flag which the orchestrator passes once EG-s-8 lands.",
+    "world_is": "No cell's text assigns the one-line change to _render_command; the flag would never be passed on a scheduled fire. Corrected by the issuer's amendment of TO-EG-s-8 (deliverable item 5, criterion S8-AC9) while the order is open on slot 1.",
+    "notes": "The decomposition's edge EG-s-8 -> EG-s-6 named the seam ('the seam EG-s-6 produces') but assigned only the read side of it. A seam is a cell's line, not a dependency's."
   }
 ]
 ```
