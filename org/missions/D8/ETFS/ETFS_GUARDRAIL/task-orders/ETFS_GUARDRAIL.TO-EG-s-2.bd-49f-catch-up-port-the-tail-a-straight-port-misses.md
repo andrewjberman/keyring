@@ -28,7 +28,7 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 ## ACCEPTANCE
 
 <criterion id="S2-AC1" cell_refs="EG-s-2"><invocation>python -m pytest infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/test_catchup_window.py -q</invocation><expect>passed</expect></criterion>
-`S2-AC1` -- the ten-arm battery is green, the tail arm (i) and its negative control (j) included (record N passed).
+`S2-AC1` -- the ten-arm battery is green, the tail arm (i) and its negative control (j) included (record N passed). (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W2-S4: the battery is REAL `def test_*` functions that pytest collects, exactly the shape you built for EG-s-1 -- NEVER the port contract's bare-script shape ending in a module-level `sys.exit()`, which crashes pytest at collection with INTERNALERROR rc=3 whatever the arms say.)
 
 <criterion id="S2-AC2" cell_refs="EG-s-2"><invocation>python -c "s=open('infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py').read(); print('DAYCOUNT_WINDOW=%s SHIPPED_SIGNAL=%s PROBE=%s EMPTY_SOURCE_GUARD=%s' % ('CATCHUP_WINDOW_DAYS' in s, 'etf_ownership.pdf' in s, '\"probe\"' in s, 'skipped-empty-source' in s))"</invocation><expect>DAYCOUNT_WINDOW=False SHIPPED_SIGNAL=True PROBE=True EMPTY_SOURCE_GUARD=True</expect></criterion>
 `S2-AC2` -- no day-count constant; the shipped signal; the probe; the contract guard survives.
@@ -65,6 +65,7 @@ The shell, the test, the vendored calendar, the source map update, the IAM Sid, 
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W2-S<k>`.
+- **THE TERRAFORM BINARY (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S6):** `.tools/terraform.exe` (v1.9.8) is the estate's terraform and it is GITIGNORED, so a fresh worktree lacks it; the issuer provisions a copy into your worktree's `.tools/` at hand-off (confirm `.tools/terraform.exe version` before any plan). NEVER substitute the PATH `terraform` (v1.14.5) for an apply: a newer CLI re-pins the remote state's `terraform_version` and the estate's binary can no longer read that state. If the copy is absent, that is a BLOCKING row, not a substitution.
 - **NEVER `git push`.** Report push state as MEASURED.
 
 <paths>

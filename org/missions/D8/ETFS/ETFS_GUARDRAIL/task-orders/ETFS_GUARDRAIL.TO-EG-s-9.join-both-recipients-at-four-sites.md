@@ -48,8 +48,8 @@
 <criterion id="S9-AC4" cell_refs="EG-s-9"><invocation>bash .tools/commit-gate.sh infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py infra/aws/lambda/etfs-reports-orchestrator/test_recipients_join.py</invocation><expect>pre-commit gate clean</expect></criterion>
 `S9-AC4` -- the commit gate is clean.
 
-<criterion id="S9-AC5" cell_refs="EG-s-9"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false</invocation><expect>1 to change</expect></criterion>
-`S9-AC5` -- the plan changes EXACTLY `aws_lambda_function.orchestrator` (code hash + the one environment variable): `0 to add, 1 to change, 0 to destroy`. Anything else -> do NOT apply, BLOCKING row.
+<criterion id="S9-AC5" cell_refs="EG-s-9"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/etfs-reports plan -no-color -input=false -lock=false -target=aws_lambda_function.orchestrator</invocation><expect>1 to change</expect></criterion>
+`S9-AC5` -- the TARGETED plan changes EXACTLY `aws_lambda_function.orchestrator` (code hash + the one environment variable): `0 to add, 1 to change, 0 to destroy`. Anything else in the targeted plan -> do NOT apply, BLOCKING row. (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S7: the `etfs-reports` directory carries a PRE-EXISTING `aws_instance.reporter` `user_data` drift (deferred as benign by NFRA_TERRAFORM-P2 @`1502fdd6f9`, 2026-07-08; found by row ETFS_GUARDRAIL-W1-S7) that is NOT this order's and is NOT applied -- a `user_data` change on `aws_instance` is applied by the provider through a STOP and START of the reporter instance, a confirm-with-Andrew act; plan, apply and the 0-diff read BY TARGET to `aws_lambda_function.orchestrator` -- `HALT_ACK=1 .tools/safe-apply.sh -chdir=infra/aws/terraform/etfs-reports apply -input=false -auto-approve -target=aws_lambda_function.orchestrator` -- state the target in the ledger entry, record the full untargeted plan's summary and its `aws_instance.reporter` line verbatim in the result.)
 
 <criterion id="S9-AC6" cell_refs="EG-s-9"><invocation>.tools/aws lambda get-function-configuration --function-name etfs-reports-orchestrator --query Environment.Variables.EMAIL_RECIPIENT --output text</invocation><expect>aj@opalinvest.com,andrew@opalinvest.com</expect></criterion>
 `S9-AC6` -- the APPLIED plane carries the joined variable (read after `HALT_ACK=1 .tools/safe-apply.sh -chdir=infra/aws/terraform/etfs-reports apply -input=false -auto-approve` and a 0-diff plan, both recorded).
@@ -71,6 +71,7 @@
 - **EVERY invocation is bounded.** `timeout 120`.
 - **Scratch:** `<your worktree>/.scratch/` only.
 - **A spec-vs-world divergence is a ROW** at `org/missions/D8/ETFS/ETFS_GUARDRAIL/surprise-channel/investigations/INVESTIGATION_v1.md`, minted `ETFS_GUARDRAIL-W1-S<k>`.
+- **THE TERRAFORM BINARY (AMENDED BY THE ISSUER at the drain on row ETFS_GUARDRAIL-W1-S6):** `.tools/terraform.exe` (v1.9.8) is the estate's terraform and it is GITIGNORED, so a fresh worktree lacks it; the issuer provisions a copy into your worktree's `.tools/` at hand-off (confirm `.tools/terraform.exe version` before any plan). NEVER substitute the PATH `terraform` (v1.14.5) for an apply: a newer CLI re-pins the remote state's `terraform_version` and the estate's binary can no longer read that state. If the copy is absent, that is a BLOCKING row, not a substitution.
 - **NEVER `git push`.** Report push state as MEASURED.
 
 <paths>
