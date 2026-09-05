@@ -144,3 +144,83 @@ own ACK. **Twelve** of this seat's rows remain beyond those two.
 The five judgment criteria of s.3 stand exactly as handed, including D6-AC4 and its S37 caveat. No row is
 dispositioned by this addendum. The five orders still open (D-7, D-8, D-9, D-10, D-11) are unchanged and remain
 behind the 02:00Z 2026-09-05 derive.
+
+---
+
+# ADDENDUM 2 -- 2026-09-05 ~13:2xZ, appended by `2.0.0_SA_COO~A`
+
+**WHAT CHANGED: TO-CG-D-9 IS TERMINAL. CG-x-2 CLOSES AND FWD-2 IS EXERCISED.** Eight of twelve orders are now
+`complete` at HEAD (D-1, D-2, D-3, D-4, D-5, D-6, **D-9**, D-12); four remain open (D-7, D-8, D-10, D-11), and
+**D-10 and D-11 are handed and running as this addendum is written** -- both were released the moment D-9 merged.
+
+## A2.1 D-9 TOOK THREE PASSES AND THE RECORD SHOULD SAY WHY
+
+| pass | outcome | what it cost and what it bought |
+|---|---|---|
+| 1 | NOT MET | D9-AC2 unsatisfiable as cut: the arm asked "no seat invoked anything" and read `2150 of 2150`, because the issuing seat was driving the round all night. Two instrument defects surfaced with it (rows W1-S13, W1-S15). |
+| 2 | NOT MET | D9-AC2 **PASSES** on the CAUSAL re-cut (`1.0.0_SA_CTO` @`b8eaa3323b`). D9-AC4 an honest `BEHIND_CAUGHT=false` -- the marker had been frozen 5h40m. Rows W1-S16, W1-S17, W1-S18. |
+| 3 | **MET** | D9-AC4 **CAUGHT** on a real producer burst, nothing provoked. Order flipped `complete`. Row W1-S19. |
+
+**THE THING WORTH THE CVO'S ATTENTION IS THAT NOTHING WAS PROVOKED.** The one act that would have flipped D9-AC4
+at any point was forbidden, and it was refused twice in writing before it was met honestly. The face's own words:
+*an arm satisfied by staging its own trigger measures the stager, not the world.* Passes 1 and 2's NOT-CAUGHTs are
+**explained, not retracted** -- they polled 5h40m against a marker frozen at `05:55:42.571886+00:00`; pass 3 was
+timed into a burst (8 stamps `12:10:36Z -> 12:23:09Z` at 60-90 s, a second burst `12:47-12:54Z`) and caught 14
+behind-reads out of 115 cumulative, `READS_OK=115 of 115`.
+
+## A2.2 THE SIX CRITERIA AS THE CHECKER GRADED THEM (instance VALID, rc 0, violations 0)
+
+- **D9-AC1 PASS** -- `NIGHT_VINTAGE=2026-09-05T02:11:10.919000+00:00` vs `PREV_EVENING=2026-09-04T18:11:48.783142+00:00`;
+  8 of 8 in-window manifests read and JOIN-SCORED, one 3/3, out of 56 prefixes.
+- **D9-AC2 PASS** -- `REBUILD_TRIGGER=events-rule/opal-globgrph-derive-runner-nightly`, `SEAT_CAUSED_REBUILDS=0 of 15`
+  over 16 CloudTrail RunTask events, with the amendment's own control agreeing: `LABELS_AGREE_WITH_DENOMINATOR=true (16 == 16)`.
+- **D9-AC3 PASS** -- `STAMP_TO_ANSWER_S=82.186`. ⚠ **W1-S17 is the CVO's to grade**: limb (ii) never says which clock
+  stops, and the two readings on the same stamp are 82.186 s and 2,660.328 s. **Both are printed in the record**, so
+  either can be graded without a re-run. This packet takes no position.
+- **D9-AC4 PASS** -- `BEHIND_CAUGHT=true` / `POINTER_MOVED_BY_READ=false` / `LEGIT_REBUILD_REPORTED=true`.
+- **D9-AC5 PASS** -- `ENUMERATE: 0 hit(s) across 169 lines`, with a positive control of 13 on the same file and verb.
+- **D9-AC6 UNVERIFIABLE-BY-INSTRUMENT** -- `judgment="true"`, recorded with **no verdict**, for `3.0.0_SA_CVO`.
+  A `PASS` or `FAIL` on it would be INVALID.
+
+## A2.3 ⛔ THE ONE THING A GRADER MUST LOOK AT, SURFACED BY THE WORKER ITSELF
+
+`POINTER_MOVED_BY_READ=false` is **ATTRIBUTED, not a bare difference**, and the worker says so in its own row
+(**W1-S19, ARMED, disarm_owner `3.0.0_SA_CVO`** -- a grading question, not a fix). A ~40 s client read straddles a
+60-90 s stamp cadence by arithmetic, so **10 of the 14 behind-reads had the pointer advance mid-read**; the strict
+field would have printed `true` and FAILED the criterion on a world that satisfies it -- the exact mirror of row
+S57, same script, opposite direction. Attribution uses the order's own prescribed method, three limbs each able to
+fail: provenance 10/10 `Started by Eventbridge Pipes` read from the tasks themselves; keying 10/10 to an observed
+marker; and a negative control -- **94 marker-static reads advanced the pointer 0 times** against 20 marker-moved
+reads carrying all 10. **The strict number `POINTER_ADVANCED_DURING_A_BEHIND_READ=10 of 14` prints on the adjacent
+line, unhidden.** The CVO grades whether attribution is the right reading of limb (iii); the packet's position is
+only that the worker neither hid the strict number nor let it decide silently.
+
+## A2.4 ROWS THIS ADDENDUM ADDS TO THE CVO'S DESK
+
+The channel is at **88 rows**. Since ADDENDUM 1 this seat took **eight disarms** -- S48 (S12), S50 (S13), S51 (S2),
+S52 (S8), S54 (W1-S10), S55 (W1-S13), S56 (W1-S15) -- and filed three findings: **S49** (an amendment reached a
+criterion and not the cell text inlined beside it), **S53** (four manifest producers, one field, two meanings;
+disarm_owner `1.0.0_SA_CTO`), and **S57** (`behind.sh` silenced both reads its verdict rested on).
+
+**S57 IS DISARMED BY EXERCISE, NOT BY THE FACE.** The worker proved the third outcome exists rather than asserting
+it: a scratch copy pointed at a non-existent bucket prints `READS_OK=0 of 1`, `BEHIND_CAUGHT=READ_FAILED`,
+`POINTER_MOVED_BY_READ=UNREAD`, `LEGIT_REBUILD_REPORTED=UNREAD`, with the 404s verbatim and their rc.
+
+**TWO ROWS TRAVEL TO L10 NAMED AND UNDISARMED, for stated reasons and not by neglect:**
+- **S16** -- has **no disarm clause at all**. There is no act that closes it; the CVO decides what it means.
+- **W1-S17** -- a grading question, above this seat's limb (see A2.2).
+Plus **W1-S19**, filed to the CVO by its own author.
+
+**AND THE READING RULE FROM ADDENDUM 1 STILL BINDS AND NOW MATTERS MORE:** a census over `hazard_standing`
+over-counts, because a disarm is a NEW ROW and the original keeps its ARMED field forever. **Eight rows this round
+had their remedy IN THE WORLD while the register still read ARMED** -- S12, S13, S2, S8, W1-S10, W1-S13, W1-S15 and
+the S49 carrier defect, one of them the round's only BLOCKING row. The drift runs in ONE direction only: the fix
+lands and the register stays alarmed, never the reverse.
+
+## A2.5 WHAT DID NOT CHANGE
+
+No judgment criterion is graded here. No row is dispositioned by this addendum. D-7 and D-8 remain open and behind
+D-10/D-11; **D-7 is LAST by ruling R7**, and two things are already recorded against the ticks that will meet it:
+D7-AC5 pins three sha256 hashes (verified matching at HEAD 2026-09-05 11:4xZ, and **re-verify at hand-off -- a
+pinned hash is a baseline that decays**), and the local Kuzu DB deletion D-8 observes is the ISSUER's act and a
+**recursive deletion requiring Andrew's word**.
