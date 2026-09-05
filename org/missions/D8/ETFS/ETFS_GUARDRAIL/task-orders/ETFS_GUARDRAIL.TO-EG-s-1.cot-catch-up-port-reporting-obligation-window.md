@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ETFS_GUARDRAIL~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-04</issued_date>
-<status>pending -- GO paired at cut (the spawn IS the GO); HANDED to the slot only after EG-s-10's proof instance is VALID at HEAD. Authority: PRD v0.3 @`4e30d6b635` (flat lineage @`7aa1554881`, ON ORIGIN) RATIFIED; decomposition v0.1 @`c4ab429993`, v0.1.1 in this issuance (s.6a: the probe); Andrew-direct 2026-09-01 ("I agree with the reporting obligation window") and 2026-09-04 ~17:0xZ (94224/94225).</status>
+<status>complete -- all nine criteria PASS-by-output/RECORDED at HEAD: 8/8 arms passed, no day-count constant, calendar via the published layer only, plan 0/2/0 as bound, 0-diff after apply, served CodeSha256 MATCH, deployed probe partition=true; deploy ledger etfs-guardrail-eg-s-1-cot-catchup-port CLOSED; instance VALID (proof-of-spec-check rc=0, 0 violations); flipped by 0.9.0_WK_ETFS_GUARDRAIL~2.</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `../prd/ETFS_GUARDRAIL_PRD.md` v0.3 (s.7.2 row S1; s.6 rulings 1 and 2; s.4 properties 1 and 3; s.3 TOUCHES-BUT-MUST-NOT-CHANGE; brief s.3) | **Decomp cell:** `EG-s-1` | **outcome_ref:** FWD-1 | **verb:** port | **depends_on:** `EG-s-3` (your previous order: the port contract), `EG-s-10` (slot 1: the calendar answer)
 
