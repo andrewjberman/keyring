@@ -49,6 +49,18 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(_HERE)                       # .tools/ -> repo root
 HEATMAP_DIR = os.environ.get("COMP_HEATMAP_DIR", os.path.join(REPO_ROOT, "org", "modules", "heatmap"))
 
+# RULE T (NFRA_COMPEFFICACY PRD v0.4 s.4.4; shared carrier .tools/_compbudget.py, never a
+# per-tool copy -- build ladder rung 2). Import failure is reported IN main(), in the tool's own
+# voice, never a bare traceback.
+sys.path.insert(0, _HERE)
+try:
+    import _compbudget
+except Exception as _budget_error:                          # noqa: BLE001
+    _compbudget = None
+    _BUDGET_ERROR_NAME = type(_budget_error).__name__
+else:
+    _BUDGET_ERROR_NAME = None
+
 STATE_ABSENT = "SUBJECT_ABSENT_FROM_CORPUS"
 STATE_ZERO = "PRESENT_WITH_ZERO_RESULTS"
 STATE_PARTIAL = "PARTIAL_OR_BLIND"
@@ -86,7 +98,61 @@ def _state_result(a, state, message):
     return RC_BY_STATE[state]
 
 
+def _budget_unavailable(a) -> int:
+    return _state_result(a, STATE_PARTIAL,
+                         "comp-heat: Rule T budget carrier .tools/_compbudget.py unavailable: "
+                         f"{_BUDGET_ERROR_NAME}; no heat answer is claimed")
+
+
+def _resolve_clock(a):
+    """THE CARRIER: flag > env COMP_BUDGET_S > default 90s. Raises ValueError on a bad flag
+    value -- the caller reports that as a usage error, never a silent fall-through."""
+    budget_s, budget_source = _compbudget.resolve_budget(getattr(a, "budget", None))
+    return _compbudget.Clock(budget_s), budget_s, budget_source
+
+
+def _spent(clock) -> bool:
+    """True iff the caller's remaining budget has hit zero -- the fast-path pre-check every
+    subcommand consults before starting a phase of bounded work. NAMED, NOT OVERCLAIMED: for
+    freshness/drift/compare, the DEEPER and load-bearing enforcement is the subprocess-level
+    `timeout=remaining()` on each git call (object_freshness.py's `_git_bounded`) -- a cut still
+    lands even if THIS pre-check were skipped, because the subprocess itself refuses to outlive
+    its own timeout. `_spent()` is the SOLE guard only where there is no bounded subprocess to
+    fall back on: score's O(1) work and federated's refuse-before-dispatch. The one thing every
+    path shares is `_compbudget.resolve_budget()` -- a caller's --budget genuinely has nowhere
+    else to be ignored from, which is why the battery's RED mutant targets THAT, not this line."""
+    r = clock.remaining()
+    return r is not None and r <= 0
+
+
+def _reached_line(budget_s, budget_source, n, total, unit, resume_args, cursor):
+    """Same wording as _compbudget.budget_reached_line(), widened for the one case that module's
+    int-typed `total` cannot carry: a cut before enumeration even finished, when N genuinely is
+    not yet known (comp-schedule's own printed convention: 'UNKNOWN (enumeration itself hit
+    budget)') -- never a fabricated 0, which would misreport a stopped census as an empty one."""
+    total_text = str(total) if total is not None else "UNKNOWN (enumeration itself hit budget)"
+    return ("BUDGET REACHED: %s s (%s); scanned %d of %s %s; results are a PREFIX, not the "
+            "answer; resume: %s --cursor %s"
+            % (_compbudget.fmt(budget_s), budget_source, n, total_text, unit, resume_args, cursor))
+
+
+def _add_budget(sp):
+    sp.add_argument("--budget", type=float, default=None,
+                    help="Rule T: flag > env COMP_BUDGET_S > default 90s; 0 = unbounded")
+    sp.add_argument("--cursor", default=None,
+                    help="Rule T resume cursor from a prior BUDGET REACHED line")
+
+
 def cmd_freshness(a) -> int:
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     # The O1 engine scores the WHOLE repo (git history is repo-root-relative, so its --root must
     # BE the repo root). Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's
     # pure analytic (build/summarize/cluster) -- reused, not re-implemented.
@@ -97,7 +163,7 @@ def cmd_freshness(a) -> int:
     try:
         import time
         from heat_map import HeatParams, cluster_by_locality, summarize  # noqa: E402
-        from object_freshness import build                                # noqa: E402
+        from object_freshness import build_budgeted                       # noqa: E402
     except Exception as e:                                                 # noqa: BLE001
         return _state_result(a, STATE_PARTIAL,
                              f"comp-heat: heatmap source unreadable: {e}; no heat answer is claimed")
@@ -108,7 +174,35 @@ def cmd_freshness(a) -> int:
                              f"comp-heat freshness: subject '{rel}' is absent from the repository corpus")
 
     p = HeatParams(half_life_days=a.half_life)
-    scores, src = build(REPO_ROOT, p, time.time())
+    result = build_budgeted(REPO_ROOT, p, time.time(), clock, cursor=getattr(a, "cursor", None))
+    scores, src = result["scores"], result["src"]
+
+    if result["cut"]:
+        # VERDICT-BEARING (PRD s.4.4): freshness's rc already distinguishes answer states
+        # (RC_BY_STATE) -- a BUDGET REACHED run returns the SAME non-clean rc as a genuine
+        # PARTIAL_OR_BLIND answer (3), never the clean 0, so a caller checking rc alone cannot
+        # mistake a cut run for a complete one.
+        resume_args = "comp-heat freshness" + (f" {rel}" if rel else "")
+        total_for_line = result["total"] if result["total"] is not None else 0
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", resume_args, result["phase"])
+        if a.json is not None:
+            payload = {"answer_state": STATE_PARTIAL, "vintage": _vintage(),
+                       "budget": {"seconds": budget_s, "source": budget_source},
+                       "rule_t": {"terminal": terminal, "phase_reached": result["phase"],
+                                  "scanned": result["scanned"], "total": result["total"],
+                                  "deferred": result["deferred"]},
+                       "message": "comp-heat freshness: BUDGET REACHED -- results are a PREFIX, "
+                                  "not the answer"}
+            _write_json(a, payload)
+        else:
+            print(disclosure)
+            print(terminal)
+            for line in _compbudget.deferred_bucket(len(result["deferred"]), total_for_line,
+                                                     "files", result["deferred"]):
+                print(line)
+            print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
 
     if rel:
         scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
@@ -120,9 +214,13 @@ def cmd_freshness(a) -> int:
     clusters = cluster_by_locality(scores, lambda path: os.path.dirname(path) or ".")
     cold_dirs = sorted(((k, v) for k, v in clusters.items() if v["n"] >= 3 and v["cold_frac"] >= 0.8),
                        key=lambda kv: (-kv[1]["n_cold"], -kv[1]["oldest_age_days"]))
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
     if a.json != "":                                      # human render (skip when JSON->stdout)
         scope = f"{rel}/" if rel else "(whole estate)"
         print(f"=== comp-heat freshness  scope={scope}  files={summ['n']}  half_life={a.half_life}d ===")
+        print(disclosure)
+        print(terminal)
         # BASIS-IN-OUTPUT (Andrew-ratified CH-3 elevation, 2026-08-04): a band NEVER prints
         # without the numbers that produced it -- the barrier definition rides every output.
         print(f"  basis: band = age vs barriers [hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, "
@@ -148,29 +246,72 @@ def cmd_freshness(a) -> int:
                            "score": round(s.score, 6), "band": s.band,
                            "source": src.get(s.item_id, "?")} for s in scores],
                 "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs],
-                "answer_state": None, "vintage": _vintage()}
+                "answer_state": None, "vintage": _vintage(),
+                "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}}
         _write_json(a, snap)
     return 0
 
 
 def cmd_drift(a) -> int:
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
     sys.path.insert(0, HEATMAP_DIR)
     try:
         import time
-        from object_freshness import uncommitted_writes    # noqa: E402
+        from object_freshness import uncommitted_writes_budgeted   # noqa: E402
     except Exception as e:                                  # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
         return 3
-    rows = uncommitted_writes(REPO_ROOT, time.time())
+    result = uncommitted_writes_budgeted(REPO_ROOT, time.time(), clock)
+
+    # NON-VERDICT (PRD s.4.4): drift's rc is 0 whether it finds 0 or 500 uncommitted writes --
+    # never a verdict a caller branches on -- so rc STAYS 0 at BUDGET REACHED too; the terminal
+    # LINE (not the rc) is the rejectable state, exactly the FORM's default clause.
+    if result["cut"]:
+        total_for_line = result["total"] if result["total"] is not None else 0
+        terminal = _reached_line(budget_s, budget_source, result["scanned"], result["total"],
+                                 "files", "comp-heat drift", "START")
+        if a.json is not None:
+            import json
+            payload = {"n": 0, "cut": True, "rule_t": {"terminal": terminal,
+                       "scanned": result["scanned"], "total": result["total"],
+                       "deferred": result["deferred"]}}
+            text = json.dumps(payload, indent=2)
+            if a.json == "":
+                print(text)
+            else:
+                with open(a.json, "w", encoding="utf-8") as fh:
+                    fh.write(text)
+                print(f"OK: wrote drift snapshot -> {a.json}")
+        else:
+            print(disclosure)
+            print(terminal)
+            for line in _compbudget.deferred_bucket(len(result["deferred"]), total_for_line,
+                                                     "files", result["deferred"]):
+                print(line)
+        return 0
+
+    rows = result["rows"]
     n_un = sum(1 for r in rows if r["class"] == "untracked")
     n_mod = sum(1 for r in rows if r["class"] == "modified")
+    terminal = _compbudget.within_budget_line(result["scanned"], result["total"], "files",
+                                              budget_s, budget_source, round(clock.elapsed(), 3))
 
     if a.json != "":                                        # human render (skip when JSON->stdout)
         print(f"=== comp-heat drift: writes NOT in a commit  ({len(rows)}: "
               f"{n_mod} modified + {n_un} untracked, freshest first) ===")
+        print(disclosure)
+        print(terminal)
         for r in rows[:a.top]:
             age = f"{r['mtime_age_days']:.2f}d" if r["mtime_age_days"] is not None else "  -  "
             print(f"    {age:>9}  {r['class']:9s} [{r['status'] or ' '}]  {r['path']}")
@@ -178,7 +319,8 @@ def cmd_drift(a) -> int:
 
     if a.json is not None:
         import json
-        snap = {"n": len(rows), "n_modified": n_mod, "n_untracked": n_un, "uncommitted": rows}
+        snap = {"n": len(rows), "n_modified": n_mod, "n_untracked": n_un, "uncommitted": rows,
+                "budget": {"seconds": budget_s, "source": budget_source, "terminal": terminal}}
         text = json.dumps(snap, indent=2)
         if a.json == "":
             print(text)
@@ -190,6 +332,15 @@ def cmd_drift(a) -> int:
 
 
 def cmd_score(a) -> int:
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
@@ -199,8 +350,24 @@ def cmd_score(a) -> int:
     except Exception as e:                                 # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import S0 heat_map: {e}\n")
         return 3
+
+    # RULE T NON-APPLICATION (PRD s.4.4, named not silent): score_item is O(1) -- no loop whose
+    # iteration count depends on corpus width, no subprocess. It cannot be usefully CUT; the
+    # carrier still runs so --budget/--cursor are uniform across all five subcommands and the
+    # disclosure line still prints (Rule P's own baseline), but a BUDGET REACHED here would only
+    # ever fire if the clock is already spent before this line runs (astronomically unlikely).
+    if _spent(clock):
+        terminal = _compbudget.budget_reached_line(budget_s, budget_source, 0, 1, "items",
+                                                    f"comp-heat score {a.id} --age-days {a.age_days}",
+                                                    "START")
+        print(disclosure)
+        print(terminal)
+        return 0
+
     p = HeatParams(half_life_days=a.half_life)
     s = score_item(a.id, a.age_days, p=p)
+    terminal = _compbudget.within_budget_line(1, 1, "items", budget_s, budget_source,
+                                              round(clock.elapsed(), 3))
     if a.json:
         import json
         print(json.dumps({"item_id": s.item_id, "age_days": round(s.age_days, 2),
@@ -208,10 +375,14 @@ def cmd_score(a) -> int:
                           "score": round(s.score, 6), "band": s.band,
                           "basis": {"half_life_days": p.half_life_days,
                                     "barriers": {"hot_days": p.hot_days,
-                                                 "warm_days": p.warm_days}}}))
+                                                 "warm_days": p.warm_days}},
+                          "budget": {"seconds": budget_s, "source": budget_source,
+                                     "terminal": terminal}}))
     else:
         # BASIS-IN-OUTPUT: the band verdict prints WITH every number that produced it.
         print(f"=== comp-heat score: {s.item_id} ===")
+        print(disclosure)
+        print(terminal)
         print(f"  band={s.band.upper()}  <- age={s.age_days:.2f}d vs barriers "
               f"[hot<={p.hot_days:.0f}d, warm<={p.warm_days:.0f}d, cold>{p.warm_days:.0f}d]")
         print(f"  score={s.score:.4f}  recency={s.recency_score:.4f}  "
@@ -229,6 +400,15 @@ def cmd_compare(a) -> int:
     if a.a == a.b:
         return _state_result(a, STATE_NA,
                              "comp-heat compare: one path cannot form a two-resource comparison")
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
     if not os.path.isdir(HEATMAP_DIR):
         sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
         return 3
@@ -236,7 +416,7 @@ def cmd_compare(a) -> int:
     try:
         import time
         from heat_map import HeatParams, recency_score, classify_band   # noqa: E402
-        from object_freshness import _git                                # noqa: E402
+        from object_freshness import _git_bounded                        # noqa: E402
     except Exception as e:                                               # noqa: BLE001
         sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
         return 3
@@ -246,8 +426,11 @@ def cmd_compare(a) -> int:
     D, W = a.window_days, a.windows
     span_start = now - W * D * 86400
 
-    def side(path):
-        raw = _git(REPO_ROOT, "log", "--format=%H|%at", "--", path)
+    def side(path, timeout):
+        raw, timed_out = _git_bounded(REPO_ROOT, "log", "--format=%H|%at", "--", path,
+                                      timeout=timeout)
+        if timed_out:
+            return "TIMEOUT"
         commits = []
         for line in raw.splitlines():
             if "|" in line:
@@ -279,7 +462,31 @@ def cmd_compare(a) -> int:
                             "heat": round(recency_score(cur_age, p.half_life_days), 4),
                             "band": classify_band(cur_age, p)}}
 
-    A, B = side(a.a), side(a.b)
+    # The two sides ('a' then 'b') are the tool's DETERMINISTIC scan order/resume unit; each
+    # fetch's `git log` is bounded by clock.remaining() (Rule T: "every timeout= derives from
+    # remaining()"). HONEST NON-APPLICATION: like freshness's phases, the FINAL verdict needs
+    # BOTH sides, so a --cursor naming a completed side cannot skip real work without a
+    # persistence layer this order does not add -- it is accepted and echoed, not a real skip.
+    results = {}
+    for label, path in (("a", a.a), ("b", a.b)):
+        if _spent(clock):
+            break
+        r = side(path, clock.remaining())
+        if r == "TIMEOUT":
+            break
+        results[label] = r
+
+    if len(results) < 2:
+        cursor_val = "a" if "a" in results else "START"
+        terminal = _compbudget.budget_reached_line(
+            budget_s, budget_source, len(results), 2, "resources",
+            f"comp-heat compare {a.a} {a.b}", cursor_val)
+        print(disclosure)
+        print(terminal)
+        print(f"ANSWER-STATE: {STATE_PARTIAL}")
+        return RC_BY_STATE[STATE_PARTIAL]
+
+    A, B = results["a"], results["b"]
     for name, s in ((a.a, A), (a.b, B)):
         if s is None:
             print(f"comp-heat compare: NO git history for {name!r} "
@@ -314,11 +521,16 @@ def cmd_compare(a) -> int:
                             "commits_a_in_span": A["commits_in_span"],
                             "commits_b_in_span": B["commits_in_span"],
                             "shared_commits_in_span": shared}}
+    terminal = _compbudget.within_budget_line(2, 2, "resources", budget_s, budget_source,
+                                              round(clock.elapsed(), 3))
+    out["budget"] = {"seconds": budget_s, "source": budget_source, "terminal": terminal}
     if a.json:
         import json
         print(json.dumps(out, indent=2))
         return 0
     print(f"=== comp-heat compare: {a.a}  vs  {a.b} ===")
+    print(disclosure)
+    print(terminal)
     print(f"  VERDICT: {verdict}  ({out['verdict_rule']})")
     print(f"  current heat delta: {cur_delta}")
     for name, s in ((a.a, A), (a.b, B)):
@@ -345,18 +557,59 @@ def _add_json(sp, with_value=True):
         sp.add_argument("--json", action="store_true", help="emit JSON to stdout")
 
 
+FEDERATED_LIVE_FLOOR_S = 200.0   # _trino_fed.py's own docstring: "~3-4 min/call" (180-240s)
+
+
 def cmd_federated(a) -> int:
     # comp-heat federated = the LIVE-Trino graph x code-heat view (the federation's net-new over
     # the git-local freshness/drift engines). Engine: .tools/_trino_fed.py (0.8.0_AE, S5; transport
     # = in-VPC run-task->Trino-REST->CloudWatch, zero new attack surface; the persistent endpoint is
     # SCTY-gated/HELD). Shares the substrate comp-diff's lakehouse axis will reuse.
+    #
+    # RULE T, CUT DEFECT NAMED (not silently missing): _trino_fed.run_federated_query() takes NO
+    # timeout/deadline parameter and .tools/_trino_fed.py is OUTSIDE this order's <paths> write
+    # grant, so the LIVE call's OWN internal duration (~3-4 min/call, its own docstring) cannot be
+    # bounded from here -- that is OS-s-5's row ("comp-heat federated --sql -- the unbounded
+    # arbitrary-query path", depends_on OS-s-1). What THIS wrapper can and does do without touching
+    # the transport: resolve the carrier, disclose it, and REFUSE to dispatch to the live plane
+    # whenever the resolved budget could not possibly cover one call. A clock-elapsed check ALONE
+    # is a race here (there is no bounded subprocess between resolving the budget and dispatching,
+    # unlike every other subcommand -- nothing burns wall-clock to make a near-zero budget register
+    # as spent before the live call fires), so this is the one subcommand that ALSO gates on the
+    # NOMINAL budget against the transport's own known floor, not on elapsed time alone.
+    if _compbudget is None:
+        return _budget_unavailable(a)
+    try:
+        clock, budget_s, budget_source = _resolve_clock(a)
+    except ValueError as e:
+        sys.stderr.write(f"comp-heat: {e}\n")
+        return 2
+    disclosure = _compbudget.disclosure_line(budget_s, budget_source)
+
+    insufficient = budget_s != 0 and budget_s < FEDERATED_LIVE_FLOOR_S
+    if _spent(clock) or insufficient:
+        terminal = _reached_line(
+            budget_s, budget_source, 0, None, "queries",
+            "comp-heat federated" + (f" --sql {a.sql!r}" if a.sql else ""), "START")
+        print(disclosure)
+        print(terminal)
+        reason = (f"budget below the transport's own known floor (~{FEDERATED_LIVE_FLOOR_S:.0f}s; "
+                  "_trino_fed.py: '~3-4 min/call')" if insufficient
+                  else "an already-spent budget")
+        print(f"comp-heat federated: refusing to dispatch to the LIVE Trino plane -- {reason} "
+              "(a live call cannot be bounded once started -- .tools/_trino_fed.py, OS-s-5)")
+        return 0
+
     sys.path.insert(0, _HERE)            # .tools/ -- for _trino_fed
     from _trino_fed import (run_federated_query, render_table,
                             Q_CODE_BANDS, Q_CODE_COLDEST)
+    print(disclosure)
     qs = [a.sql] if a.sql else [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
     for res in run_federated_query(qs):
         print(f"\n# {res['sql'][:90]}")
         print(render_table(res))
+    print(_compbudget.within_budget_line(len(qs), len(qs), "queries", budget_s, budget_source,
+                                         round(clock.elapsed(), 3)))
     return 0
 
 
@@ -366,7 +619,12 @@ def main(argv=None) -> int:
         description="Estate OBJECT write-freshness + hygiene (NFRA_HEATMAP_OBJECT). "
                     "ADVISORY-ONLY, read-only. Distinct from comp-freshness (data-pipeline S3/DDB).",
         epilog="compose: `comp-heat drift` is LOCAL->GIT; the GIT->DEPLOY hop is "
-               "`comp-pipescript deployed` + `comp-freshness`.")
+               "`comp-pipescript deployed` + `comp-freshness`. "
+               "RULE T (NFRA_COMPEFFICACY PRD s.4.4): every subcommand accepts "
+               "--budget <seconds> (flag > env COMP_BUDGET_S > default 90s; 0 = unbounded) and a "
+               "--cursor resume hint; a cut run prints BUDGET REACHED with its scanned-of-total "
+               "denominator instead of running past the caller's ceiling -- see `comp-heat "
+               "<subcommand> --help`.")
     sub = ap.add_subparsers(dest="cmd")
 
     f = sub.add_parser("freshness", help="per-path hot/warm/cold + cold SUBTREES (archive candidates)")
@@ -374,11 +632,13 @@ def main(argv=None) -> int:
     f.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     f.add_argument("--top", type=int, default=25, help="show N coldest (default 25)")
     _add_json(f)
+    _add_budget(f)
     f.set_defaults(fn=cmd_freshness)
 
     d = sub.add_parser("drift", help="writes NOT in a commit (untracked + modified, freshest first)")
     d.add_argument("--top", type=int, default=25, help="show N (default 25)")
     _add_json(d)
+    _add_budget(d)
     d.set_defaults(fn=cmd_drift)
 
     s = sub.add_parser("score", help="ad-hoc S0 heat score for one item")
@@ -386,12 +646,14 @@ def main(argv=None) -> int:
     s.add_argument("--age-days", type=float, required=True, help="days since last write/activity")
     s.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     _add_json(s, with_value=False)
+    _add_budget(s)
     s.set_defaults(fn=cmd_score)
 
     fed = sub.add_parser("federated",
         help="hot/cold across estate ASSETS x their git code-heat (LIVE Trino federation; graph-joined)")
     fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
     fed.add_argument("--sql", help="run an arbitrary federated Trino query instead")
+    _add_budget(fed)
     fed.set_defaults(fn=cmd_federated)
 
     cp = sub.add_parser("compare",
@@ -402,6 +664,7 @@ def main(argv=None) -> int:
     cp.add_argument("--window-days", type=int, default=14, help="days per window (default 14)")
     cp.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     _add_json(cp, with_value=False)
+    _add_budget(cp)
     cp.set_defaults(fn=cmd_compare)
 
     args = ap.parse_args(argv)
