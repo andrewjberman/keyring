@@ -1300,6 +1300,99 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json: `deployed_state` is a closed enum of three values, and every artifacts_produced row must carry one of them.",
     "world_is": "There is a fourth real state -- deploy-scope, committed, deliberately undeployed because the deploying act belongs to another lane -- and the enum has no member for it. A closed enum with no value for a real state does not prevent the state; it makes every instance carrying that state say something false in a MACHINE-READ field, while the truth survives only in the adjacent prose that no consumer parses. That is the failure mode a claim field exists to prevent, appearing in the claim field itself.",
     "notes": "hazard_standing ARMED because it recurs for every future cell that edits a deploy-scope artifact without owning the deploy -- which spine v3's lane split makes common, not exotic. class OBSERVATION and NOT BLOCKING: the instance validates with the least-wrong value and no criterion of this order is stopped. NOT PROPOSED HERE: a specific fourth value. TAXONOMY LAW says a value-enum proposal arrives with its four-postulate record and a word-boundary token census over the corpus of existing instances, and that census is not this cell's work -- naming the gap is."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S14",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:05:00Z",
+    "one_line": "THE CELL'S PREMISE IS HALF TRUE AND THE OTHER HALF CHANGES THE FIX: `_stratum_cochange` is indeed host-computed with 0 tool calls, but there is NO TOOL TO RETIRE IT IN FAVOUR OF. It pairs RESOURCE / pipeline-chain labels; the estate's co-change tool `.tools/comp-cochange` answers AGENT-TYPE or SERIAL co-movement (--grain {type,serial}) and emits no resource label anywhere. Same word, different axis. Substituting it would answer a different question under the same report heading, which is worse than the second implementation the cell set out to remove.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HOST GRAIN, at source: infra/aws/ec2/estate-report-runner/estate_report_runner.py:1308-1345 @8c231d47bf -- `_stratum_cochange` walks commits and, for each path, calls `attribute_path(p, maps)` keeping only `kind == \"chain\"` labels, then pairs them. `attribute_path` (:903-925) resolves a path to a pipeline THREAD or producer via maps[\"lambda_prefixes\"], maps[\"ec2_prefixes\"], maps[\"producer_paths\"] and maps[\"prod_to_thread\"]. The emitted row is {\"pair\": \"<chain-label> <-> <chain-label>\", \"co_commits\": n, \"each_total\": [...]}.",
+        "THE TOOL'S GRAIN, measured live rather than read off its name: `python org/modules/graph/comp_cochange.py matrix --since \"14 days ago\" --json` (run via sys.executable directly, never a bash launcher) returned rc 0 in 1.3 s with `grain: \"type\"`, `active_tags: [\"AB\",\"AE\",\"BG\",\"DE\",\"DS\",\"DT\",\"SA\",\"WK\"]` and `pairs` of AGENT TAGS -- [\"AE\",\"SA\"], [\"AB\",\"SA\"], [\"AE\",\"DT\"] -- with shared_files/jaccard/commits_a_on_shared columns. 14 pairs, 0 of them a resource or chain label. Its own shim header says it answers \"which agent TYPES change the same files together\" and its only grain flag is --grain {type,serial}.",
+        "THE ROUTER AGREES THERE IS NO RESOURCE-GRAIN TOOL: `.tools/comp-which` asked three ways -- \"which resources change together in the same commit\" -> comp-blast 1.50 (call-sites / blast radius, a third question); \"which pipeline chains co-move\" -> NO CURATED RULE MATCHED, top 0.34 comp-cochange; \"co-change between resources not agents\" -> NO CURATED RULE MATCHED, top 0.28 comp-cochange. (Caveat, and it is this worker's own row: the router is in LEXICAL FALLBACK on this fabric -- NFRA_OUTSET-W2-S11 -- so this is a corroborating instrument, not the primary one. The primary evidence is comp-cochange's own live output.)",
+        "WHAT WAS BUILT INSTEAD, and it is the retirement path rather than a refusal to do the cell: `_stratum_cochange` now READS the OS-s-10 seam artifact <prefix>/comp_cochange.json when a prefix is configured, reusing `_outset_read` unchanged (build-ladder rung 2 -- no second reader), and only falls back to host git when none is. The fallback now DECLARES what it stands in for, in the RENDERED denominator, on BOTH of its exits."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell (PRD s.7 row OS-s-9) and the issuer's own framing: `_stratum_cochange` \"computes co-change from git metadata on the host, 16 git calls and 0 tool calls -- that is the SECOND IMPLEMENTATION the cell exists to retire in favour of the tool\".",
+    "world_is": "There is no tool at this grain to retire it in favour of. The \"0 tool calls\" half is true and is the load-bearing half; the \"second implementation\" half presumes a first implementation that answers the same question, and the only co-change tool in the estate answers a different one. (A smaller correction on the same clause: the stratum's own path makes ONE git subprocess call, via `commits_in_window` at :282; the runner as a whole carries 8 distinct \"git\" argv sites, so the 16 is a runner-wide figure and not this stratum's.) The cell's ACCEPTANCE anticipates exactly this: O9-AC2 says \"If the host copy must stay, it DECLARES which tool it stands in for -- FWD-6's own words\", which is the branch this cell took.",
+    "notes": "hazard_standing ARMED, and the hazard is a FUTURE act rather than a present state: the obvious way to \"finish\" this cell later is to point the stratum at comp-cochange, which would fill GROUP B's resource-co-change heading with agent-co-movement rows and read as a completed retirement. Nothing in the report would look broken. The declaration constant COCHANGE_STANDS_IN_FOR is the guard -- it names the grain mismatch in the rendered denominator, and the battery's arm D fails if it is dropped -- but a guard that lives in one paragraph is a guard someone can delete, so this row is the second carrier. disarm_owner 2.0.0_SA_COO: the real disarm is a resource-grain producer (see NFRA_OUTSET-W2-S15), not a code change here. NOT DONE: this worker did not add a --grain resource mode to comp-cochange (a second implementation and outside <paths>), and did not delete the host stand-in (that would remove the measurement entirely)."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S15",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:08:00Z",
+    "one_line": "THE SEAM BRANCH THIS CELL BUILT IS DORMANT BY CONSTRUCTION AND WILL STAY DORMANT: nothing publishes <prefix>/comp_cochange.json. Registering a producer means editing SEAM_PRODUCERS in org/modules/heatmap/outset_seam.py, which is NOT in this order's <paths>; and even once registered, the runner's applied IAM grant covers no seam prefix at all. Two independent blockers, both outside this grant, and the consumer half cannot make either one true.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRODUCER LIMB: org/modules/heatmap/outset_seam.py:243-250 @8c231d47bf -- SEAM_PRODUCERS holds exactly TWO entries, `comp_heat_freshness_tools` and `comp_heat_drift`, both comp-heat. There is no co-change producer, and `main()` publishes one artifact per entry (`dest = a.out_dir.rstrip(\"/\") + \"/\" + key + \".json\"`, :265). TO-OS-s-9's <paths> admit infra/aws/ec2/estate-report-runner/estate_report_runner.py, .tools/tests/, this order's deliverables folder and the channel file -- org/modules/heatmap/ is not among them.",
+        "IAM LIMB, inherited not introduced: the consumer half's own WARN block (estate_report_runner.py:1440-1447 @8c231d47bf) records that the applied estate-report-runner-role grants s3:GetObject on exactly opal-estate-report/{daily/*,code/*,manifest/*} plus one exact key, and NOTHING on the globgrph bucket -- which is why ESTATE_OUTSET_SEAM_PREFIX is unset by default and OS-s-10 changed nothing in production. Filed there as NFRA_OUTSET-W1-S19. This cell adds a SECOND key under the SAME prefix, so it inherits that gap exactly and widens nothing.",
+        "CONSEQUENCE, stated as a state and not a worry: with ESTATE_OUTSET_SEAM_PREFIX unset (the default, unchanged by this cell), `_stratum_cochange` takes the host-git branch on every production run and production bytes are unchanged. The seam branch is exercised only by .tools/tests/test_os9_cochange_source.py, which injects a prefix and a loader -- 16 of 16 arms PASS, including all six publish-failure modes.",
+        "The artifact CONTRACT is already satisfied on this side: the reader is `_outset_read`, unchanged, so whatever producer eventually lands must emit the OS-s-10 shape (seam tag NFRA_OUTSET/OS-s-10, answer_state in the declared domain, vintage.answer_produced_utc, denominators, rows). .tools/tests/test_os10_seam.py is the contract test that keeps both ends agreeing, and it still passes 12 of 12 after this change."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OS-s-9 asks that the report's co-change rows come from the tool's ARTIFACT (O9-AC1), with <paths> limited to the runner, .tools/tests/, this order's deliverables and the channel.",
+    "world_is": "The consumer half can be built inside the grant and was; the producer half cannot. So O9-AC1 is satisfiable only as a CONTRACT test against an injected artifact -- which is exactly what the battery does and what OS-s-10's own battery does for the same reason -- and never as a live end-to-end read on this fabric. This is a truthful statement of what the criterion can prove, recorded so no reader mistakes 16 of 16 green arms for a live seam.",
+    "notes": "NOT WORKED AROUND: this worker did not edit org/modules/heatmap/outset_seam.py to register a producer, did not touch iam.tf, and did not set a default for ESTATE_OUTSET_SEAM_PREFIX (a default would make the runner read a prefix nobody publishes to and turn a quiet INSTRUMENT_UNAVAILABLE into a daily INSTRUMENT_FAILED). hazard_standing ARMED because the dormancy is invisible from inside this cell's own evidence -- every arm is green and the seam still never fires in production. disarm_owner 2.0.0_SA_COO to cut the producer cell; the IAM limb is already carried by NFRA_OUTSET-W1-S19 and this row cites it rather than restating it as new."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S16",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:10:00Z",
+    "one_line": "LINE-CITATION DRIFT in the cell and in O9-AC2: `:1308` is correct for `_stratum_cochange`, but `:1996` is not the wiring -- at HEAD that line is a bare `#` inside a comment block, and the wiring is at `:2149`. A criterion that says QUOTE file:line cannot be satisfied literally when one of the two lines has moved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git show HEAD:infra/aws/ec2/estate-report-runner/estate_report_runner.py | sed -n '1308p;1996p'` at 8c231d47bf returns two lines: `def _stratum_cochange(repo_dir: str, end, maps: dict, pin: str) -> dict:` and `#`. The first matches the cell; the second is a comment-block filler line.",
+        "The actual wiring at HEAD, found by search rather than by trusting the citation: line 2149, `\"B\": _stratum_cochange(repo, end_local, maps, pin),` inside the stratum dict alongside D/C/A at :2148/:2150/:2151. AFTER this cell's change it sits at :2221 (the change adds 72 lines above it).",
+        "The drift is consistent with a file that has grown since the PRD was written: OS-s-10 landed a ~130-line seam block into the same file at 508d4ce31d, which is above :1996 and moves everything below it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE CELL: \"`_stratum_cochange` at infra/aws/ec2/estate-report-runner/estate_report_runner.py:1308 computes co-change from git metadata on the host; it is wired at :1996.\" O9-AC2: \"QUOTE estate_report_runner.py:1308 and :1996 at file:line, before and after.\"",
+    "world_is": "At HEAD, :1308 is the function and :1996 is a comment filler; the wiring is :2149 (pre-change) and :2221 (post-change). This worker quoted BOTH the cited line and the line the citation clearly means, labelled as such, rather than quoting a `#` and calling it the wiring or silently substituting a different line number and leaving the reader to notice.",
+    "notes": "hazard_standing INERT: no operational hazard, and O9-AC2 is a judgment criterion whose evidence 3.0.0_SA_CVO grades, so the substitution is disclosed rather than decided here. The general shape is worth one sentence because it will recur on every cell that cites a line in a file another cell is also editing: A LINE NUMBER IS A POINTER INTO A MOVING FILE, and a cut that pairs it with a symbol name (`_stratum_cochange`, the `\"B\":` wiring entry) survives the move while a bare number does not. Not proposed as a change to any cut; recorded."
+  },
+  {
+    "id": "NFRA_OUTSET-W2-S17",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OUTSET~2",
+    "surfaced_at": "2026-09-05T10:12:00Z",
+    "one_line": "SELF-REPORTED, and the same family as W2-S13 in a new costume: this cell's FIRST attempt at the declaration mutant left a SECOND LIVE CARRIER, so the mutant arm PASSED while the declaration was still being rendered. A mutant that does not remove every carrier of the thing it targets is not a mutant -- it is a green light with no measurement behind it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE FIRST MUTANT replaced ONE use of the declaration constant -- the computed exit's denominator f-string (`len(rows), GROUP_B_TRAILING_DAYS, COCHANGE_STANDS_IN_FOR))` -> `... \"\"))`) -- and arm D3 asserted the declaration was gone. It reported PASS.",
+        "IT WAS PASSING ON THE WRONG EXIT. Arm D3 called the stratum with a nonexistent repo, which takes the git-FAILED early return, and by then this cell had ALSO put the declaration on that exit. So the mutant removed the carrier the arm did not exercise, and left the carrier it did. Both halves of the arm were wrong in a way that cancelled: PASS.",
+        "THE FIX, both halves: the mutant now empties the constant AT ITS DEFINITION (`COCHANGE_STANDS_IN_FOR = (` -> `COCHANGE_STANDS_IN_FOR = \"\"` plus a dead binding for the original literal), so every carrier dies at once; and arm D2 was split into D2a (git-FAILED exit) and D2b (COMPUTED exit, against the live repo), with D3 asserting the mutant breaks BOTH. Final battery: 16 of 16 PASS, and D3's detail line prints `declaration still in failed-exit=False computed-exit=False`.",
+        "WHAT SURFACED IT was the arm that FAILED, not the arm that passed: D2 failed first (`vintage=repo @PIN`) because this cell's own change had left the git-FAILED early return rendering without the declaration -- a real gap in the change, which the battery caught. Fixing that gap is what made the flawed mutant visible."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "O9-AC1 requires \"a battery proving the report's co-change rows come from the tool's ARTIFACT, with a RED mutant restoring the host-git path\" -- i.e. the arms are only worth what their mutants are.",
+    "world_is": "A mutant is a coverage claim about a POPULATION OF CARRIERS, and this one was written against a single carrier while two existed. It is the same defect class this worker filed as NFRA_OUTSET-W2-S13 (a detector that cannot produce a non-zero on the positive case) reached from the opposite direction: there the detector could never fire, here the mutant could never falsify. Both produce a green arm that measured nothing, and neither is visible from the arm's own output.",
+    "notes": "hazard_standing INERT: caught and fixed in the same turn, before the battery was committed, and the corrected battery is what O9-AC1 is graded on. Filed anyway because the cost of the class is high and the tell is cheap: BEFORE TRUSTING A MUTANT, COUNT THE CARRIERS OF WHAT IT REMOVES -- a mutant applied at a USE SITE is only as wide as that site, while one applied at the DEFINITION covers every use. This worker now prefers the definition site for exactly this reason. Third instrument-failure this worker has self-reported on this project (W2-S10 the two PRE/POST proxies, W2-S13 the constant-zero detector, this one), and all three were caught by a CONTRADICTION or a FAILING arm rather than by a passing check."
   }
 ]
 ```
