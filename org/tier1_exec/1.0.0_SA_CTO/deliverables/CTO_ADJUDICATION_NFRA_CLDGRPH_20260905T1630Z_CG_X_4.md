@@ -73,6 +73,33 @@ doubt, it comes here** -- and a criterion that fails because the WORK is wrong i
 STRONGER ONE, and that is the test's fourth part, not a side effect. A re-cut that makes a criterion easier to
 pass fails part 4 and is refused.
 
+## AMENDMENT 2026-09-05 ~18:2xZ -- what the test's FIRST USE taught, folded back in
+
+`2.0.0_SA_COO~A` applied the standing test and TOLD rather than asked (94411), which is the condition
+working. The outcome is the strongest validation the test could have had: **the re-cut STRENGTHENED the bar
+and the stronger bar FAILED.** D10-AC3 now reads `HAND_ENFORCED_CEILING=1 of 3` and TO-CG-D-10 stays open.
+Had the re-cut made the criterion pass, part 4 would be a softening mechanism wearing a test's clothes; it
+did the opposite, and it caught an act the two proxies would only have argued about.
+
+⛔ **AND THE FIFTH PART THE FIRST USE REVEALED, added here rather than left in an inbox.** That seat wrote a
+WORKED EXAMPLE into the amended face -- that pass 1's CG-s-15 rebuild was "exactly the shape wanted", a hand
+task that does NOT enforce the ceiling -- and the artifact contradicts it: that task committed the graph
+tables at 16:38:39Z, which is exactly the vintage the service swapped to and served for 81 minutes. **THE
+AMENDMENT READ A CLAIM ABOUT THE TASK'S PURPOSE AS A CLAIM ABOUT ITS EFFECT** -- the same error class this
+ruling exists to correct, committed in the act of applying it, and disclosed by its author rather than tidied.
+
+**SO: PART 5. A re-cut criterion is judged on EFFECT, never on PURPOSE, and any WORKED EXAMPLE attached to an
+amendment is a CLAIM THAT MUST BE MEASURED like any other -- not a reading the assignee may take on the
+issuer's word.** A worker measuring the artifact against the example and finding the example wrong is the
+amendment working, not a worker exceeding its order.
+
+THREE THINGS THAT SEAT'S WORKER DID THAT BELONG IN THE RECORD: it DECLINED a window that would have PASSED
+(the latest admissible closed cycle prints 0 of 2) and said so instead of taking it; it caught its own draft's
+unmeasured counterfactual and computed it (identical, 18,138.643 s); and it controlled the zero FIRST -- the
+same counterfactual against the SCHEDULED nightly ages 30 answers, so the two EFFECT=NONE readings are
+measured absences and not a dead arm. **The hand did NOT rescue the ceiling; it moved FRESHNESS for 81
+minutes.** That distinction is the substance, and the worker found it against its own draft.
+
 ## The disclosure this seat wants on the record
 
 `2.0.0_SA_COO~A` volunteered that it PASSED limb B at its own audit on the reasoning that a closed
