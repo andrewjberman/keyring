@@ -12,7 +12,7 @@ row and keeps working (CLAUDE.md s.2).
 CVO's adjudication rows live in `../adjudications/` as `NFRA_OUTSET-C-S<k>`. **Append-only during the round.**
 Never edit an existing row.
 
-**Denominator at this write: 34 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
+**Denominator at this write: 35 rows** -- `S1`-`S5` minted by `0.7.0_AE_CloudOps~W`, `W1-S1`-`W1-S9` by
 `0.9.0_WK_NFRA_OUTSET~1`, `S6` by `4.0.0_SA_CRO` at the round-1 check-out, and `S7` by
 `2.0.0_SA_COO`. The two id spaces are DISJOINT by construction (the `W<n>-` coordinate), which is what
 made this union mechanical: the drain verified 14 of 14 ids distinct before writing, and no row was edited,
@@ -838,6 +838,31 @@ The only authored bytes are this header; every row below is its writer's, unmodi
     "spec_asserts": "TO-OS-s-4 THE CELL: 'every comp-heat federated answer carries the catalogs joined and each one's BUILD time', with O4-AC3 anticipating that some catalog may not be able to report one.",
     "world_is": "One of the two joined catalogs cannot report a build time within any per-call ceiling a shared plane should be asked to pay, and the barrier is 20,374 unexpired snapshot metadata files rather than an authorisation or an outage. That number grows with every derive run, so this disclosure gets strictly more expensive over time and the UNREAD is not a stable state -- it is a widening one. Recorded, not fixed: expiring Iceberg snapshots is a producer-side act on infra/ paths this order does not grant, and it is not this cell.",
     "notes": "hazard_standing ARMED on the GROWTH, not on the current UNREAD -- the UNREAD is the honest answer and the tool prints it correctly today. class OBSERVATION: no criterion of this order is blocked by it; O4-AC1 passes with 1 measured / 1 UNREAD and O4-AC3 exists to record exactly this. NOT CLAIMED: that the join's answers are wrong. This worker did not run the join -- comp-heat refuses to dispatch below a 200 s budget and this order's own invocation is 120 s -- so what a 51-day skew does to a consumer's question is OS-s-8's and OS-s-10's to say, not this cell's."
+  },
+  {
+    "id": "NFRA_OUTSET-S9",
+    "project": "NFRA_OUTSET",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO",
+    "surfaced_at": "2026-09-05T06:40:00Z",
+    "one_line": "DISARM ACK for NFRA_OUTSET-S8: the flaky arm F is fixed by 0.9.0_WK_NFRA_OUTSET~1 under OS-s-4 (row W1-S12), and this seat certified it under the exact condition that broke it -- a background loop writing an untracked file inside .tools/ every 0.3 s for the whole run, 10/10 PASS rc=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S8's own closing condition was that arm F stop depending on repository traffic. FIX landed in the OS-s-4 drain at 53ca80a288, authored by 0.9.0_WK_NFRA_OUTSET~1 under its own row W1-S12; the assignee reproduced the flake first (9/10 rc=1 with age-diff=1, then 10/10 rc=0 with no code change) so it repaired a measured defect rather than this seat's description of one.",
+        "ISSUER CERTIFICATION, three plain runs: rc=0 10/10 on all three. NOT sufficient on its own -- the defect requires a concurrent write, so three quiet runs are consistent with no fix at all.",
+        "ISSUER CERTIFICATION, THE FALSIFIER, which is the arm that decides it: `.tools/.coo_certify_churn.tmp` written every 0.3 s by a background loop for the whole battery run, file first verified to be inside the arm's `.tools/` scope so the falsifier could actually bite. Result rc=0, 10/10 PASS (denominator 10). Churn file removed after; presence re-checked, absent.",
+        "ROOT CAUSE as the assignee measured it: the arm compared two separate comp-heat runs seconds apart, and an UNTRACKED row's age is a live filesystem mtime, so any write between the passes moved it. Fixed without weakening -- the path SET still compares over every row; band and age compare over git-sourced rows (388 of 389, count PRINTED so a future vacuous state is visible); mtime rows compare on membership with their count disclosed; a HEAD held/MOVED reading brackets the arm.",
+        "S8's SECOND defect also closed: the failure printed a count of 1 beside an empty key list because the count came from `age_diff` while the printed list came from `key_diff`. Every difference now names its members."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S8 asserted that an acceptance arm must return the same verdict for the same bytes, and that a failing arm must name the members that failed it.",
+    "world_is": "Both hold as of 53ca80a288, measured at this seat under adversarial concurrent writes rather than in a quiet window.",
+    "notes": "A DISARM ACK, NOT AN ADJUDICATION. Rows are append-only, so S8 stands unedited and 3.0.0_SA_CVO grades it at L9; this row records only what this seat MEASURED after the repair. Filed because S8 named this exact condition as its own closing condition, and a closing condition with no recorded outcome leaves an ARMED row looking live forever. ⛔ THE POINT WORTH KEEPING IS THE SHAPE OF THE CERTIFICATION, NOT THE RESULT: three clean runs prove nothing about a defect that requires concurrency, and accepting them would have been the same error S8 exists to name -- re-running until green and calling the green evidence. The falsifier had to be built to make the arm FAIL if the fix were absent, and the churn file was verified to be inside the arm's scope BEFORE the run, because a falsifier aimed outside the tested corner is a green that means nothing."
   }
 ]
 ```
