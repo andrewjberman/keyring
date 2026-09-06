@@ -1,5 +1,11 @@
 # NFRA_OUTSET — DECOMPOSITION (L5)
 
+**v0.3** (2026-09-06 ~03:1xZ, `2.0.0_SA_COO`) — the L5 act on the CTO's ROUND-1 ANALYSIS
+@`a0500abe18` and PRD **v0.3**, which adds two manifest rows (`OS-s-18`, `OS-s-19`) to §7. The analysis
+directs: *"2.0.0_SA_COO recuts from this analysis: two rows, both CloudOps, no worker fan-out."* Round 2's
+sections are §7–§9 below; §0–§6 are round 1's and are LEFT UNEDITED so the record of what was decided
+before the round ran is not rewritten by what the round found.
+
 **v0.1** (2026-09-04 ~15:5xZ, `2.0.0_SA_COO`) — the L5 act on PRD v0.1 @`7fb59f239b` (RATIFIED; Andrew's
 "all approved" on FWD-1..FWD-8 @`26da5ec0fa` and the L4 notifier frame id 94205). **Input:** the PRD's
 17-row surface manifest (s.7), its two ordering rulings (s.8) and its one architectural choice (s.3).
@@ -121,3 +127,92 @@ chains for the record, and the issuance addresses those two to `0.7.0_AE_CloudOp
   agrees rather than absorbing it.
 
 — `2.0.0_SA_COO`, L5
+
+
+---
+
+## 7. ROUND 2 — the two cells the round-1 analysis placed
+
+**Input:** PRD **v0.3** §7 rows `OS-s-18` and `OS-s-19`, added by the CTO's L10 addendum @`a0500abe18`.
+**This document invents neither.** Both are the manifest's, verb and lane included; L5 adds only the order,
+the seating and the fan-out.
+
+| cell | outcome | verb | lane | depends_on | why it exists |
+|---|---|---|---|---|---|
+| `OS-s-18` | FWD-3 | build | CloudOps | `OS-s-10` — COMPLETE | THE PUBLISH. Nothing publishes to the consumption seam and the runner's role holds no grant on any seam prefix. |
+| `OS-s-19` | FWD-2, FWD-4, FWD-7 | deploy | CloudOps | `OS-s-11` — COMPLETE | THE DEPLOY. The served runner is dated 2026-08-25 and the upload belongs to no cell. |
+
+⛔ **NEITHER IS A NEW IDEA AND THAT IS THE POINT.** Round 1 passed every criterion it was cut for while the
+estate kept reading an eleven-day-old runner. The analysis names the cause as the PRD's own §3: it COSTED a
+publishing step and assigned it to an ACCEPTANCE LIMB rather than to a MANIFEST ROW. **Naming a cost is not
+assigning it.** These two rows are that cost, finally placed where work is owned.
+
+## 8. THE CHAIN READ — round 2
+
+```
+  M (dependency-independent chains) = 2
+    chain D  1 cell   OS-s-18   (depends_on OS-s-10, COMPLETE -> free)
+    chain E  1 cell   OS-s-19   (depends_on OS-s-11, COMPLETE -> free)
+
+  longest dependency depth = 1;  no edge joins OS-s-18 and OS-s-19
+```
+
+**Both are free NOW.** Their dependencies landed in round 1, so nothing sequences them against each other.
+
+⛔ **BUT THE FAN-OUT IS 1, NOT 2, AND THE REASON IS NOT DEPENDENCY.** Row `NFRA_OUTSET-S10` recorded that
+DEPENDENCY WIDTH and CONTENTION WIDTH are different quantities and that only the first is what a chain read
+computes. Here a third quantity binds tighter than either: **both cells act on the SAME LIVE CLOUD ESTATE**,
+and `OS-s-19` is a DEPLOY of the very runner `OS-s-18` must prove readable. Running them concurrently means
+one seat granting an IAM role and publishing an artifact while another replaces the binary that reads it.
+Neither a dependency graph nor a file-contention read shows that; the shared object is the ESTATE, not a file.
+
+## 9. SEATING — one CloudOps seat, in order, and no worker
+
+**Both cells to a single `0.7.0_AE_CloudOps` lane, `OS-s-18` first, `OS-s-19` second.**
+
+⛔ **NEITHER IS A WORKER'S, AND THE BOUNDARY IS THE ONE THAT SENT `OS-s-6`/`OS-s-7` TO CLOUDOPS AT THE
+ORIGINAL CUT** — an S3 deploy and an IAM grant are LIVE CLOUD ACTS. That ruling is now stronger than it was:
+`OS-s-6` MEASURED that a worker subagent holds no cloud identity of its own and inherits the box's ambient
+credentials, resolving to `Action:*` on `Resource:*`. Andrew accepted that posture for now @`8e89f1127f` as a
+standing item for the next PRD that seats workers. **A worker performing these two cells would do so holding
+unrestricted credentials under an attribution the estate cannot check.** The analysis says "no worker fan-out"
+and the measurement says why.
+
+**ORDER MATTERS AND IS NOT ARBITRARY:** `OS-s-18` proves the seam is readable by the runner's own role;
+`OS-s-19` replaces the runner. Deploying first would put a new binary in front of a seam it cannot yet read,
+and `OS-s-18`'s accept would then be graded against a runner that changed underneath it.
+
+⛔ **`OS-s-19` IS A NEVER-2 CELL AND ITS ORDER MUST SAY SO.** It is a deploy to a served artifact, so its
+`<paths>` grant names `org/critical_paths/change_management/` and `org/critical_paths/.open_deploys/`, its
+accept requires the ledger entry OPENED at start and CLOSED at completion, and the assignee measures the
+ARTIFACT before acting on any open entry it finds. A deploy cell whose order does not grant the ledger is the
+same defect class as round 1's `<paths>` omissions — the assignee can do the work and cannot record it.
+
+## 10. THE FAN-OUT L6 WILL CARRY — round 2
+
+```
+fanout: 1 of 2 chains, cap 8, reason: both cells are dependency-free and mutually independent, but both act on
+        ONE LIVE CLOUD ESTATE and OS-s-19 replaces the runner OS-s-18 must prove readable. The binding
+        constraint is neither dependency nor file contention but a shared live substrate, so the useful width
+        is 1 and the two are seated in order on one CloudOps lane.
+```
+
+## 11. WHAT ROUND 2's DECOMPOSITION DOES NOT DECIDE
+
+- **Which `0.7.0_AE_CloudOps` lane.** Seating is settled at L6 against a live read, not asserted here.
+- **The IAM shape of the grant.** `OS-s-18`'s accept names the property (readable at the seam by the runner's
+  own role); how it is expressed is the assignee's, on the estate's own IAM traps.
+- **Whether the deploy needs a never-widen sign-off beyond the ledger.** That is CTO+COO at the act, per the
+  standing NEVER rule, and is not pre-granted by this document.
+
+## 12. A ROUND-1 CORRECTION CARRIED FORWARD, NOT SILENTLY FIXED
+
+§3 above states *"`OS-s-17` IS THE CVO's. Its lane in the manifest is `CVO`"*. **That is FALSE against the
+manifest, which reads `CloudComp` / `build`** — recorded as row `NFRA_OUTSET-S13`, disarm owner
+`1.0.0_SA_CTO`. The issuance addressed `OS-s-17` to a worker and was right; only this document's prose was
+wrong, and its downstream cost was a `build` cell cut with no write surface, repaired at `ed5c4e2b5b`.
+**§3 is left as written rather than edited**: it is round 1's record, the row carries the correction, and the
+disarm is not this seat's to take. This section exists so a reader of §3 meets the correction in the same
+document.
+
+— `2.0.0_SA_COO`, L5 round 2
