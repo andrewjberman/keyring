@@ -519,6 +519,26 @@
       "spine_clause": "L7 (execute/drain); the drain's read is the report AND the instance, and the merge is graded on the MERGED index",
       "gate_or_notifier_touched": ".tools/proof-of-spec-check.py (rc 0, in the worker's plane); .tools/safe-merge.sh (row gate, merged index); .tools/safe-commit.sh",
       "note": "TEN OF TWELVE TERMINAL. Open: TO-CG-D-7 (CG-s-8, LAST by ruling R7) then TO-CG-D-8, which closes the run. D-7's face was amended before the wall at 9197bc0f1b with a REQUIRED POSITIVE CONTROL on both absence arms; its three pinned hashes were re-verified at 19:4xZ and the face tells the assignee a moved hash is a report, not a failure. Andrew's word on the laptop copy is recorded and fires at the D-7 drain, never before. Push state LOCAL: every commit in this round is local until 0.0.0_AB_MSTR's window on Andrew's word."
+    },
+    {
+      "seq": 18,
+      "limb": "L6/L7",
+      "started_utc": "2026-09-06T02:37Z",
+      "ended_utc": "2026-09-06T03:0xZ",
+      "act": "D-7 PASS 2 DRAINED WITHOUT A MERGE AND PASS 3 HANDED; THE CTO'S RULING 94456 RECORDED; A TIMESTAMP DEFECT OF THIS SEAT'S CORRECTED. Pass 2 REMOVED the seam (_canonical.py 746 -> a 78-line tombstone raising RuntimeError on every retired attribute, verified by the issuer on three symbols) with a VALID rc=0 instance, and AC1/AC2 still FAILED because they count TEXT while the property is BEHAVIOUR: of AC1's 36 hits, classified by the issuer by file and band, NOT ONE is a call into the seam -- 22 are two other freshness families the unanchored pattern collides with, 10 are batteries that must NAME the symbols to assert they refuse -- and the count ROSE 29 -> 36 under a pass that improved the retirement. AMENDED @e27c871ccf: AC1 now measures the tombstone's refusal with a probe control, AC2 is re-scoped to the closed enumerated consumer population with a planted-opener control, and AC2 STILL FAILS on two real openers under tsgraph_spike -- which is how the re-cut is shown not to be a softening. PITCHED the scope half (94454/94455) rather than taking a third grant widening; the CTO ADOPTED it @622ffb9631 and SHARPENED it: naming a cost is not assigning it, so the recut must PLACE both surfaces as MANIFEST ROWS with a lane and an accept clause, because a channel row records that something is true while a manifest row makes it someone's work. AND THE CVO IS TOLD BEFORE IT GRADES: FWD-7 cannot read REALIZED while graph-call-manifest.yaml still routes a repointed consumer back to the retired surface, since under rule 20 a manifest entry manufactures a path rather than describing one.",
+      "inputs": [
+        "worker report, D-7 pass 2, branch wk-cldgrph-2-d7 @1a5a104b29",
+        "1.0.0_SA_CTO msg 94456, record @622ffb9631",
+        "org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:97 and load_clusters_scratch.py:43"
+      ],
+      "outputs": [
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/NFRA_CLDGRPH.TO-CG-D-7.retire-local-copy.md @e27c871ccf",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/ledger/L8_PACKET.round4.partial.md (ADDENDUM 4)",
+        "D-7 pass 3 spawned on wk-cldgrph-2-d7"
+      ],
+      "spine_clause": "L6 (the issuer's re-cut under the standing four-part test) + L7 (drain, no merge on a failing order)",
+      "gate_or_notifier_touched": ".tools/safe-commit.sh; send_message 94454/94455 (2 DELIVERED of 2)",
+      "note": "\u26d4 A CORRECTION TO THIS SEAT'S OWN RECORD, MEASURED NOT RECALLED: the pass-3 amendment's face header reads ~03:1xZ against a real author date of 2026-09-06T02:49:40Z, and drive_log_20260906T0325Z.md against 02:55:02Z -- both AHEAD by 25-30 minutes because the tick ran long, the clock was never re-read, and a time was extrapolated from an assumed interval. That is the same class this seat enforced all round: a vintage asserted rather than measured. The filename stands as committed; renaming a record to hide a defect is worse than one carrying its own correction. || FOUR OF THIS ORDER'S DEFECTS ARE THE ISSUER'S and all four were found by a worker measuring rather than believing the face."
     }
   ]
 }

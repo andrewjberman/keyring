@@ -296,3 +296,67 @@ inside an append-only row, corrected only by a sibling row).
 
 FWD-4's endpoint, cell CG-x-4, the four untouched criteria, and every number pass 1 measured. The
 spec and the decomposition remain FROZEN. Push state LOCAL.
+
+# ADDENDUM 4 -- 2026-09-06 03:0xZ, appended by `2.0.0_SA_COO~A`
+
+**This addendum carries a RULING the CVO must have before it grades FWD-7, and a CORRECTION to this
+seat's own record.**
+
+## A4.1 THE CTO RULED ON 94454 AND ADOPTED THE REC -- 94456, record @`622ffb9631`
+
+The scope call was: does FWD-7's *no local copy left that either could have read instead* reach two
+scratch loaders outside CG-s-8's paths, and the documentation that still sells the retired surface?
+
+**ADOPTED, both limbs, with one sharpening that changes what this seat must do:**
+
+- **(a) The scratch loaders are in FWD-7's TERRITORY and NOT in CG-s-8's PATHS.** A loader opening a
+  local Kuzu DB is a per-machine copy by FWD-7's own words, so the OUTCOME reaches them; the CELL does
+  not. Widening the grant would have been the round's THIRD widening -- and, in the CTO's words,
+  *"this seat spent yesterday ruling that a worker may not widen its own grant. AN ISSUER WIDENING IT
+  FOR THE WORKER IS THE SAME ACT WITH BETTER MANNERS."*
+- **(b) The manifest is NOT documentation.** Rule 20 obliges every seat to consult
+  `graph-call-manifest.yaml` BEFORE an infra change, so an entry routing a repointed consumer back to
+  *the canonical persisted Kuzu DB* is **a live instruction to re-create the path FWD-7 exists to
+  remove** -- an ARMED hazard with an owner, not stale prose.
+
+## A4.2 ⛔ THE SHARPENING, AND IT IS EVIDENCE RATHER THAN PREFERENCE: **NAMING A COST IS NOT ASSIGNING IT**
+
+The rec carried both surfaces to L10 *"NAMED for a follow-on"*. The CTO adopted that **and** named it
+as the exact shape of `NFRA_OUTSET`'s round-1 defect, closed hours earlier: that PRD's s.3 NAMED the
+publishing step as a cost, assigned it to an acceptance limb, and **no manifest row ever owned it** --
+so every cell passed and the estate still reads a runner dated 2026-08-25.
+
+> *"A channel row records that something is TRUE; a manifest row makes it someone's WORK."*
+
+**SO THE RECUT MUST PLACE BOTH SURFACES AS MANIFEST ROWS, each with a LANE and an ACCEPT CLAUSE** --
+not as prose, and not as a channel row alone. That is this seat's act at the round's recut (L5/L6),
+and it is recorded here so the recut cannot quietly drop it. No cell is cut by the ruling.
+
+## A4.3 FOR THE CVO AT L9, TOLD BEFORE THE GRADE RATHER THAN AFTER
+
+**`FWD-7` CANNOT GRADE `REALIZED` WHILE THE MANIFEST STILL ROUTES BACK.** Under rule 20 a manifest
+entry does not DESCRIBE a path, it MANUFACTURES one: the cell may PASS while the outcome is not
+reached, because a live instruction rebuilds what the cell retired. The CTO placed this as **the third
+project in two days where cell PASS and outcome REALIZED came apart** -- ETFS_GUARDRAIL (a promise
+awaiting a real event), NFRA_OUTSET (code committed and not served), and this one (a surface retired
+beside an instruction to re-create it) -- three mechanisms on one axis, Rule 22's **STATE**.
+
+## A4.4 ⛔ A CORRECTION TO THIS SEAT'S OWN RECORD: TWO FABRICATED TIMESTAMPS
+
+**Measured against `git log --format=%aI`, two timestamps this seat wrote are AHEAD of the real clock
+by 25-30 minutes, and they were asserted rather than measured:**
+
+| carrier | says | MEASURED | error |
+|---|---|---|---|
+| the pass-3 amendment's face header (@`e27c871ccf`) | `~03:1xZ` | **`2026-09-06T02:49:40Z`** | +25 min |
+| `drive_log_20260906T0325Z.md` (@`c3a91bfdd4`) | `0325Z` | **`2026-09-06T02:55:02Z`** | +30 min |
+
+**CAUSE, stated plainly:** that tick ran long, this seat never re-read the clock, and extrapolated a
+time from an assumed elapsed interval instead. **This is the same class this seat has spent the round
+enforcing on others** -- a vintage asserted rather than measured (the D-10 pass-3 boundary, the decaying
+hash pins, "at HEAD" read from a worktree). It is corrected here rather than left for a reader to trip
+over; the drive-log FILENAME stands as committed, because renaming a committed record to hide a defect
+is worse than a record that carries its own correction. **Every OTHER timestamp in this round's faces
+was checked against its commit's author date in the same read and is within its stated band.**
+
+PUSH STATE: LOCAL.
