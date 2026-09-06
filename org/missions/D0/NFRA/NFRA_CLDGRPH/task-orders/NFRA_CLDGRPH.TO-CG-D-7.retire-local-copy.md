@@ -44,8 +44,59 @@
 
 ## ACCEPTANCE (v3 grammar: one clause per criterion; every mechanical invocation bounded)
 
-<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'ensure_fresh|_full_rebuild_only|_incremental_or_serve_stale|GLOBGRPH_KUZU_INCREMENTAL_REFRESH|GLOBGRPH_KUZU_REBUILD_LIVENESS|_FALLBACK_SINK_SUFFIX' .tools org/modules/graph org/modules/heatmap --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
+<criterion id="D7-AC1" cell_refs="CG-s-8"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/seam_unreachable.sh</invocation><expect>SEAM_REACHABLE=0 of 3[\s\S]*SEAM_PROBE_CONTROL=FIRED</expect></criterion>
 `D7-AC1` -- THE REBUILD / LABELED-STALE SEAM AND ITS SINK ARE GONE from every tool surface (the census; the tool prints its denominator).
+
+> ### AMENDMENT 2026-09-06 ~03:1xZ BY THE ISSUER, ON PASS 2's REPORT -- BOTH ABSENCE ARMS ARE THE
+> WRONG INSTRUMENT, AND THIS IS THE ISSUER'S FOURTH DEFECT IN THIS ORDER. Pass 2 REMOVED THE SEAM
+> (`_canonical.py` 746 lines to a 78-line tombstone) and its instance is **VALID rc=0**, yet AC1 and
+> AC2 both FAILED. They failed because they count TEXT while the property is BEHAVIOUR.
+>
+> ⛔ **AC1'S ZERO IS STRUCTURALLY UNREACHABLE, AND THE COUNT RISES AS THE RETIREMENT GETS BETTER.**
+> The issuer classified all 36 hits independently, by file and by band, and **NOT ONE is a call into
+> the retired seam**: 22 are two OTHER freshness families the unanchored pattern collides with
+> (`tool_probe.ensure_fresh` at `comp_tool_health.py:754`, `_ensure_fresh_danger_map` in the pulse
+> tests), 10 are batteries that must NAME the retired symbols to assert they refuse, and the rest
+> are comments and config. In `ms_heat_index.py` -- the consumer this order repointed -- the two
+> hits are DOCSTRING lines describing the history while the CODE reads `import projection_client`
+> and `projection_client.connect()`. **The count went 29 -> 36 under a pass that improved the
+> retirement**, because pinning an absence requires naming it. An arm that rises when the property
+> strengthens is anti-correlated with what it certifies.
+>
+> **AC1 NOW MEASURES THE PROPERTY DIRECTLY,** through `seam_unreachable.sh` (yours): import the
+> tombstone and touch **three** retired symbols -- `ensure_fresh`, `_full_rebuild_only`,
+> `_append_fallback_sink` -- printing `SEAM_REACHABLE=<n> of 3`. **The issuer exercised this before
+> writing it:** all three raise `RuntimeError` naming R7/FWD-7/CG-s-8, and `RuntimeError` is the
+> right class because an `AttributeError` reads to a caller as *older build, carry on*. **Print a
+> `SEAM_PROBE_CONTROL=FIRED` line beside it** -- a symbol that IS present and does NOT raise, so a
+> module that failed to import cannot masquerade as a clean absence.
+>
+> ⛔ **AC2 IS NARROWED TO THE NAMED CONSUMER POPULATION, AND IT STILL FAILS -- WHICH IS THE POINT.**
+> Its 54 hits are dominated by carriers that are not consumers: 18 in a `.jsonl` advisory tally, 8
+> in the new battery's own mutant strings, 6 in `tool_index.py` HELP TEXT, 5 in a YAML manifest, the
+> rest in JSON reports and design markdown. **But narrowing to the opener alone (`kuzu\.Database\(`)
+> still returns 18, and TWO ARE REAL OPENERS:** `org/modules/graph/tsgraph_spike/load_scratch_kuzu.py:97`
+> and `org/modules/graph/tsgraph_spike/load_clusters_scratch.py:43`, both `db = kuzu.Database(DB_PATH)`.
+> **So AC2 does NOT fail only on prose, and it is NOT re-cut to pass.** `consumers_no_local_db.sh`
+> (yours) walks the CONSUMER FILES THIS ORDER NAMES -- the class-B list in `<paths>`, a closed and
+> enumerated population -- and prints `CONSUMERS_OPENING_LOCAL_DB=<n> of <N>` with `<N>` the file
+> count, plus `CONSUMER_PROBE_CONTROL=FIRED` from a planted opener line the probe must catch.
+>
+> **THE TWO SPIKE OPENERS ARE NOT YOURS TO FIX AND NOT YOURS TO IGNORE.** They sit under
+> `org/modules/graph/tsgraph_spike/`, outside your `<paths>`. **DECLARE them** in the census table
+> with their line numbers and what they open, and file a ROW naming them. Whether FWD-7's *no local
+> copy left that either could have read instead* obliges THIS cell to retire a scratch loader is a
+> SCOPE question, and the issuer has put it to `1.0.0_SA_CTO` in the same tick as this amendment --
+> you are not waiting on that answer, because declaring them is your act either way.
+>
+> **AND THE CENSUS FOUND REAL RESIDUE THAT IS NOT NOISE -- carry it into D7-AC8's reading:**
+> `.tools/tool_index.py` help text (6 places) still tells a user the DEFAULT surface is
+> `kuzu_nessie_db` which *auto-refreshes ENGINE-INTERNALLY*; `comp_aws_cli.py:2857,2866` prints the
+> same; `comp_similar.py:591` compares `cap.get("corpus_db") == "kuzu_nessie_db"` in CODE; and
+> `graph-call-manifest.yaml` still advises routing a repointed consumer BACK through `comp-kuzu`
+> (your row W2-S23). **A retired surface that the estate's own manifest still recommends is the
+> shadow path R7 exists to close.** Name each with its line; the CVO grades whether the retirement
+> is real while the documentation still sells the old one.
 
 > ### AMENDMENT 2026-09-06 ~00:5xZ BY THE ISSUER, ON PASS 1's REPORT -- THREE DEFECTS IN THIS CUT,
 > ALL THREE THE ISSUER'S, ALL THREE MEASURED BEFORE BEING FIXED. Pass 1 is NOT a failed pass: it
@@ -104,7 +155,7 @@
 > `D7-AC6` and `D7-AC7` PASSED at pass 1 and are carried by citation unless your own re-run moves
 > them; **`D7-AC5`'s pins did not decay under pass 1 and are re-verified at your new base.**
 
-<criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>python .tools/comp-find 'kuzu\.Database\(|CANONICAL_DB_PATH|kuzu_nessie_db' org/modules/graph .tools --all --limit 50</invocation><expect>0 hit\(s\) across</expect></criterion>
+<criterion id="D7-AC2" cell_refs="CG-s-8"><invocation>bash org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/consumers_no_local_db.sh</invocation><expect>CONSUMERS_OPENING_LOCAL_DB=0 of [0-9]+[\s\S]*CONSUMER_PROBE_CONTROL=FIRED</expect></criterion>
 `D7-AC2` -- NO USER-FACING CONSUMER OPENS A LOCAL DATABASE: zero hits under the tool homes (`infra/aws/globgrph/` is excluded here because the cloud engine legitimately names the DB it BUILDS; D7-AC5 pins those files).
 
 > ### AMENDMENT 2026-09-05 ~20:0xZ BY THE ISSUER, BEFORE THE HAND-OFF -- A REQUIRED CONTROL ON BOTH
